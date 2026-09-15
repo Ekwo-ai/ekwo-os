@@ -31,6 +31,11 @@ export {
   type Step,
 } from './bootstrap.js';
 export { DEMO_SEED, migrationsDir, resolveBundleDir, seedDir } from './bundle.js';
+export {
+  OPERATOR_CHECKLIST,
+  printOperatorChecklist,
+  type OperatorInstruction,
+} from './checklist.js';
 export { describeCertification, needsWarning, type Certification, type CertificationFacts } from './pack/certification.js';
 export {
   compileAssetsSeed,
@@ -40,10 +45,12 @@ export {
   frameworkSeedFileName,
   moduleSeedFileName,
   seedFileName,
+  seedFileNames,
 } from './pack/compile.js';
 export {
   DEFAULT_CHART,
   GENERIC_PACK,
+  declaredSeedSequences,
   listPacks,
   packsDir,
   parseCsv,
@@ -53,6 +60,7 @@ export {
   repoRootDir,
   resolveBoxRef,
   seedOutputDir,
+  sourcesOf,
   PackError,
   type FrameworkManifest,
   type FrameworkPack,
@@ -67,9 +75,23 @@ export {
   type PackStatementLine,
   type PackStatementRule,
   type PackTax,
+  type PackCertification,
+  type PackSource,
   type PackAssets,
   type PackAssetCategory,
+  type PackGolden,
+  type PackGoldenContact,
+  type PackGoldenDocument,
+  type PackGoldenPayment,
 } from './pack/read.js';
+export {
+  CATEGORY_CODES,
+  TREATMENT_CODES,
+  taxCodes,
+  type CodeIssue,
+  type TaxCodes,
+  type TreatmentCodes,
+} from './pack/vat-codes.js';
 export { validate, type Issue } from './pack/schema.js';
 export {
   packDiff,
@@ -113,7 +135,35 @@ export {
   type Connection,
   type Probe,
 } from './connection.js';
-export { doctor, type Check, type DoctorReport, type Severity } from './doctor.js';
+export { doctor, type Check, type DoctorOptions, type DoctorReport, type Severity } from './doctor.js';
+export {
+  compareCatalogue,
+  describeDifferences,
+  installedSections,
+  readExpectedObjects,
+  readGrants,
+  resolveInventoryPath,
+  InventoryError,
+  type CatalogueComparison,
+  type CategoryDiff,
+  type ExpectedObjects,
+  type ExpectedSchema,
+  type ExpectedModule,
+  type SectionComparison,
+} from './inventory.js';
+export {
+  GRANT_ROLES,
+  compareSection,
+  describeFinding,
+  describeGrants,
+  type Difference,
+  type GrantFinding,
+  type GrantRole,
+  type GrantedObject,
+  type GrantsSection,
+  type HeldBy,
+  type QueryRows,
+} from './grants.js';
 export {
   applyMigration,
   applyMigrations,

@@ -16,12 +16,17 @@ npm test
 | `reconciliation.test.ts` | partial then full matching under one letter, refusals beyond the open amount, un-matching |
 | `locks.test.ts` | `lock_date`, `tax_lock_date`, closed years, and that matching stays possible after a lock |
 | `reporting.test.ts` | the trial balance balances and excludes drafts, twelve VAT boxes to the cent, the aged balance ties to the receivable account |
-| `rls.test.ts` | every table has row level security and a policy, a non-member sees nothing, a viewer cannot write, two companies cannot see each other, `anon` sees nothing |
+| `rls.test.ts` | every table has row level security and a policy, a non-member sees nothing, a viewer cannot write, two companies cannot see each other, `anon` is refused at the table |
+| `grants.test.ts` | the privileges the schema grants itself: the catalogue against the `grants` section of `packages/cli/assets/expected-objects.json`, `anon` holding nothing on any table, a grant on a table saying exactly what the policies of that table say, a trigger body callable by nobody — and a database whose three roles start with nothing at all, where a whole country pack's golden year is booked as `authenticated` and then stops the moment one grant is taken away |
 | `hardening.test.ts` | what someone who is not a member of anything can reach: `anon` executes the eight policy helpers and nothing else, no function of `public` is executable by PUBLIC (a migration that forgets its revoke fails here), and a signed-in stranger sees neither the administrators nor a company |
+| `document_shares.test.ts` | publishing a document behind a link: an owner and an accountant create one and a viewer and a stranger are refused, a purchase and a draft are refused by name, the token is 43 base64url characters and only its hash is in the table, an anonymous visitor reads the document and gets exactly the header, lines, VAT breakdown, totals and the pack's own legal mentions in the document's language, the same null for an unknown, withdrawn, expired or no-longer-shareable link, the view count moving, what is still owed going down after a matched payment, and the audit trail carrying both acts |
 | `instance.test.ts` | the instance row is a true singleton, only an instance administrator creates a company, registration is optional and reversible, no table carries a `tenant_id` |
 | `line_defaults.test.ts` | the account a line with none falls back to — the line, the company default, the country model — including under `set role authenticated`, and the refusal when nothing anywhere has an answer |
 | `fec.test.ts` | the eighteen columns in order, the formats, `checkFec()`, and a golden file against the demo company |
+| `ec_sales_list.test.ts` | the recapitulative statement of intra-Community supplies: for every pack that has such taxes, that the statement and the declaration agree period by period — over the boxes the pack's own form keeps to intra-Community supplies, with the sign that turns a box back into a statement line — that both natures of supply are exercised, that a supply which cannot be declared comes back with its reason instead of vanishing, and that the statement refuses no period where the return refuses one |
+| `ec_sales_formats.test.ts` | where a pack and a format brick meet: one golden year of books, through `ec_sales_list()`, into the Belgian listing, the French DES, the Luxembourg eCDF file and the Estonian form VD |
 | `pack_install.test.ts` | what the pack migrations added: `country_packs` with the checksum of the files on disk, the version each company copied, the fallback a pre-pack installation gets, a chart installed in Dutch and one installed in English, a corrected pack that changes the template and leaves the company alone, the declaration form named on every posting and backfilled by the migration's own statements, the province on a company and a contact, the packs that used to call themselves certified moved to `maintained`, and row level security on the two new tables |
+| `vat_codes.test.ts` | the three code lists a tax tells one fact in: the treatment vocabulary written identically in the Postgres enum, the TypeScript constant and the pack schema; every treatment covered by the correspondence `ekwo pack check` reads; every pack agreeing with its EN 16931 category and its VATEX reason; and each way of contradicting them refused, one at a time |
 | `packs.test.ts` | the compiled country packs against the four hand-written seeds they replace, row by row on the five template tables; the round trip pack → seed → database → pack; the committed seeds being the exact output of their pack; and the format itself — the CSV subset, a manifest field nobody defined, and the absence of any field through which a pack could execute something |
 
 The installer and the MCP server have their own folders, `tests/cli/` and
@@ -33,7 +38,7 @@ The installer and the MCP server have their own folders, `tests/cli/` and
 | `cli/bootstrap.test.ts` | the six steps of the installation sequence, twice over with nothing created the second time, the refusal of an unseeded country, and the refusal to hand the administrator seat to a second person |
 | `cli/init-sequence.test.ts` | the whole non-interactive install end to end, ending in a posted invoice; `ekwo.json` with no secret in it; the demo seed applied on behalf of a real administrator |
 | `cli/auth.test.ts` | the Supabase Auth admin call: created, already registered, invite link, refused |
-| `cli/status-doctor.test.ts` | what `status` reports, and each doctor check with exactly one thing broken |
+| `cli/status-doctor.test.ts` | what `status` reports, and each doctor check with exactly one thing broken — including the privileges: a grant the database lost, a table opened to `anon`, a verb no policy accepts, a default privilege put back by hand |
 | `cli/registry.test.ts` | registering writes the instance row and posts six fields, an unreachable endpoint is not a failure, unregistering puts it back, and a non-administrator is refused |
 | `cli/package.test.ts` | the SQL copied into the published package is byte for byte the repository's, and nothing from `ee/` ships |
 | `cli/cli.test.ts` | argument parsing and its refusals, the connection-string helpers, and what the help promises |
@@ -46,6 +51,7 @@ does — including once through a real client over the in-memory transport.
 | `mcp/accounting.test.ts` | a quarter of bookkeeping through the tools an assistant calls: a contact, a Belgian invoice at 21 %, posting it to 704 / 451 / 400, two payments matched against it, un-matching and re-matching, then the trial balance, the VAT return and the FEC read back |
 | `mcp/guards.test.ts` | the refusals, all of them the database's: a locked period, a viewer who may read and not write, an owner of one company who cannot see or write the other, a stranger who sees nothing |
 | `mcp/surface.test.ts` | what a client actually sees, over the in-memory transport: every tool this release ships, a valid JSON Schema for each, the read-only and destructive annotations, the two resources, the two prompts, and a refusal arriving as a tool error rather than a broken connection |
+| `mcp/shares.test.ts` | the three sharing tools: the token in the answer and only its hash in the table, the list without token or hash and with the withdrawn ones on request, the database's refusals handed back unsoftened, and `shared_document` deliberately not offered as a tool |
 | `mcp/products.test.ts` | the catalogue: a viewer refused and an accountant writing, a product of another company invisible, an invoice of three lines of which two are products, the account each resolved to and the entry they posted, a line overriding the catalogue, a product changed afterwards leaving the posted line alone, retiring rather than deleting, and the EN 16931 item terms out of `document_line_items` |
 | `mcp/bank.test.ts` | the setup path an operator used to have to do in SQL: a viewer refused a bank account, an accountant given one wired to the bank journal and its ledger account, the same IBAN twice returning the first, another company seeing none of it, and a payment that books 550000 against 400000 |
 | `mcp/config.test.ts` | what the server refuses to start with: a `service_role` key, and a database connection with no user to act for |
@@ -67,6 +73,14 @@ sequence that exercises the PostgREST route against a real project.
   `auth.jwt()`) and the roles `anon`, `authenticated`, `service_role`. It is
   applied **before** the migrations, because the security-definer functions
   will not create without it, and it never ships.
+
+  It grants those roles nothing on `public`. It used to end with the default
+  privileges a Supabase project carries, and `freshDatabase` with a `grant …
+  on all tables in schema public`, so every test here passed against
+  privileges no installation was guaranteed to have — which is how a
+  `pack_upgrade()` that could not work through PostgREST went unnoticed for a
+  release. Since `20260914151207` the schema grants its own rights by name, so
+  what a role can reach in these tests is exactly what a migration granted it.
 - `fixtures/demo-fec.txt` — the golden FEC of the demo company. If a change
   to the seeds moves it, regenerate it on purpose and say so in the commit.
 - `fixtures/seeds-before-packs/` — the four chart and tax seeds as they were

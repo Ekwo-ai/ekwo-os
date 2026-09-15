@@ -27,9 +27,14 @@ afterAll(async () => {
 });
 
 describe('the anonymous role', () => {
-  it('still reads an empty set, because the policy helpers stay executable', async () => {
-    const seen = await asUser(db, strangerId, () => rows(db, `select id from documents`), 'anon');
-    expect(seen).toEqual([]);
+  it('holds no privilege on a table at all, so a read is refused outright', async () => {
+    const message = await asUser(
+      db,
+      strangerId,
+      () => expectError(db, `select id from documents`),
+      'anon',
+    );
+    expect(message).toMatch(/permission denied for table documents/);
   });
 
   it('cannot execute a report', async () => {
@@ -72,6 +77,14 @@ describe('the anonymous role', () => {
     // word `is_company_member` already does. Both answer about `auth.uid()`,
     // which is null for `anon`. Without the grants, an anonymous select would
     // raise "permission denied for function" instead of returning nothing.
+    //
+    // `shared_document` is the eleventh and the only one of a different kind:
+    // it does not answer about the caller, it *is* the public door of
+    // `20260915153000`. What it gives away is bounded by the token presented
+    // to it — one document, or the same null for every token that is not a
+    // live link — and it reaches no table on the caller's behalf. A twelfth
+    // entry here is a decision about what an anonymous visitor may reach, not
+    // a detail of a migration.
     expect(callable.map((r) => r.proname)).toEqual([
       'can_write_company',
       'company_has_no_member',
@@ -83,6 +96,7 @@ describe('the anonymous role', () => {
       'is_company_owner',
       'is_instance_admin',
       'module_enabled',
+      'shared_document',
     ]);
   });
 

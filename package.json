@@ -1,6 +1,6 @@
 {
   "name": "ekwo",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "description": "Ekwo OS — an open accounting core for Postgres and Supabase.",
   "license": "AGPL-3.0-only",
@@ -20,7 +20,10 @@
     "build": "npm run build --workspaces --if-present",
     "check:no-private-data": "node scripts/check-no-private-data.mjs",
     "check:rounding": "node scripts/check-rounding.mjs",
-    "docs:schema": "node scripts/generate-schema-doc.mjs"
+    "check:no-country-literals": "node scripts/check-no-country-literals-in-tests.mjs",
+    "docs:schema": "node scripts/generate-schema-doc.mjs",
+    "inventory": "node scripts/generate-expected-objects.mjs",
+    "e2e:supabase": "node scripts/e2e-supabase.mjs"
   },
   "devDependencies": {
     "@electric-sql/pglite": "^0.3.0",

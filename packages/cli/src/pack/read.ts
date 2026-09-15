@@ -12,6 +12,7 @@ import { existsSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { validate, type Issue } from './schema.js';
+import { taxCodes } from './vat-codes.js';
 
 /**
  * The chart a pack has when it declares none, and the name of the framework
@@ -20,6 +21,56 @@ import { validate, type Issue } from './schema.js';
  */
 export const DEFAULT_CHART = 'default';
 export const GENERIC_PACK = 'generic';
+
+/**
+ * One text of a pack's source register.
+ *
+ * The register is where a link lives, and the only place: a tax, a box of the
+ * declaration or a sentence of an invoice writes the article it claims in its
+ * own `legal_reference` and names the key of the text that article is in. So a
+ * publisher that reorganises its site is one line of the pack to change, and a
+ * reviewer opening a pack has the reading list before they have read a rule.
+ *
+ * Nothing here is a copy of the text. A pack says where the law is, never what
+ * it says: a quotation ages without anybody noticing, and a country pack that
+ * carried one would be a second, unversioned edition of a statute.
+ */
+export interface PackSource {
+  /** How the rest of the pack names this text. Unique inside one register. */
+  key: string;
+  title: string;
+  /** Who publishes it officially — the half of a source a link cannot carry. */
+  publisher: string;
+  /** Absolute, https, and a permanent identifier wherever the publisher has one. */
+  url: string;
+  /** The day somebody opened it. What says how old the reading is. */
+  consulted_on: string;
+  /** law | regulation | form | standard | portal | guidance. */
+  kind: string;
+}
+
+/**
+ * What a manifest says about who stands behind a pack.
+ *
+ * `sources` holds the register above and — for a pack written before it —
+ * bare strings, which are titles with nowhere to read them. Both are accepted
+ * so that a community pack goes on compiling; `ekwo pack check` warns on the
+ * string, and a pack that is not `community` has to carry at least one entry
+ * of the register.
+ */
+export interface PackCertification {
+  status: string;
+  by?: string | null;
+  on?: string;
+  sources?: (string | PackSource)[];
+}
+
+/** The register of a pack: the entries, with the deprecated bare titles dropped. */
+export function sourcesOf(certification: PackCertification | null | undefined): PackSource[] {
+  return (certification?.sources ?? []).filter(
+    (source): source is PackSource => typeof source !== 'string',
+  );
+}
 
 export interface PackAccount {
   code: string;
@@ -59,6 +110,8 @@ export interface PackTax {
   valid_from: string;
   valid_to: string | null;
   legal_reference: string | null;
+  /** Key of the register entry where that reference can be read. Null where the pack names none. */
+  source: string | null;
   vat_category: string | null;
   exemption_code: string | null;
   /** False when the buyer never gets the tax back. */
@@ -89,8 +142,10 @@ export interface PackChart {
   audience: string | null;
   /** Codes of the statements this chart reports on. */
   statements: string[];
-  certification: { status: string; by?: string | null; on?: string; sources?: string[] } | null;
+  certification: PackCertification | null;
   legal_reference: string | null;
+  /** Key of the register entry where that reference can be read. */
+  source: string | null;
 }
 
 /** One rule bringing accounts of a chart to a line of a statement. */
@@ -110,11 +165,20 @@ export interface PackStatementLine {
   name: string;
   sequence: number;
   sign: 1 | -1;
+  /**
+   * Whether the line wrote `sign` itself, as opposed to taking the 1 every
+   * line reads with. The checker needs the difference: a total that declares
+   * `"sign": 1` is saying something about a total that a total cannot say,
+   * and it is worth telling its author so while they are writing the pack.
+   */
+  declares_sign: boolean;
   is_total: boolean;
   plus: string[];
   minus: string[];
   xbrl: string | null;
   legal_reference: string | null;
+  /** Key of the register entry where that reference can be read. */
+  source: string | null;
   rules: PackStatementRule[];
 }
 
@@ -134,6 +198,8 @@ export interface PackStatement {
   valid_from: string;
   valid_to: string | null;
   legal_reference: string | null;
+  /** Key of the register entry where that reference can be read. */
+  source: string | null;
   /** Chart this statement belongs to, or null for every chart of the country. */
   chart_code: string | null;
   lines: PackStatementLine[];
@@ -151,6 +217,8 @@ export interface PackReportBox {
   hidden: boolean;
   xml_element: string | null;
   legal_reference: string | null;
+  /** Key of the register entry where that reference can be read. */
+  source: string | null;
 }
 
 /** One sentence a country requires on an invoice, and when it applies. */
@@ -164,6 +232,8 @@ export interface PackMention {
   valid_from: string;
   valid_to: string | null;
   legal_reference: string | null;
+  /** Key of the register entry where that reference can be read. */
+  source: string | null;
 }
 
 /**
@@ -199,11 +269,93 @@ export interface PackDocumentRules {
 export interface PackReport {
   code: string;
   name: string;
-  period: string;
+  /**
+   * The cadences this form is filed on, in the order month, quarter, year.
+   *
+   * A list because a country may file one set of boxes on more than one
+   * cadence, and because the single value it replaced had no honest answer
+   * for the country that files three: the word `month_or_quarter` was two
+   * cadences pretending to be one, and there was no `month_or_quarter_or_year`
+   * to invent next. A pack written before the list still says
+   * `"period": "month_or_quarter"`, and that is read as the two it names.
+   */
+  periods: string[];
   valid_from: string;
   valid_to: string | null;
   legal_reference: string | null;
+  /** Key of the register entry where that reference can be read. */
+  source: string | null;
   boxes: PackReportBox[];
+}
+
+/**
+ * `packs/<cc>/golden/scenario.json` — one year of books, declared.
+ *
+ * A country pack says what its taxes are and where they post. Nothing in the
+ * pack says what comes *out* of all that on a real year, so nothing in the
+ * pack could be wrong in a way anyone would notice: a box that sums the wrong
+ * postings and a posting that writes the wrong box agree with each other and
+ * the pack still compiles. The golden scenario is the second opinion — a set
+ * of documents and payments, and beside them, in their own files, the
+ * declaration, the statements and the trial balance the engine makes of them,
+ * to the cent.
+ *
+ * It proves internal coherence and nothing else, which is why every tax and
+ * every box also cites its source and why the manifest carries a
+ * certification status. A golden test is not a reviewer.
+ */
+export interface PackGolden {
+  name: string;
+  /** Chart the scenario installs. Null takes the pack's default. */
+  chart: string | null;
+  language: string | null;
+  fiscalYear: { name: string; start: string; end: string };
+  /** The periods the declaration is filed for, in the order they are filed. */
+  periods: { code: string; from: string; to: string }[];
+  /** Statement codes to evaluate. Empty takes the statements of the chart. */
+  statements: string[];
+  contacts: PackGoldenContact[];
+  documents: PackGoldenDocument[];
+  payments: PackGoldenPayment[];
+}
+
+export interface PackGoldenContact {
+  ref: string;
+  name: string;
+  type: 'customer' | 'supplier';
+  country: string;
+  vat_number: string | null;
+  auxiliary_code: string | null;
+}
+
+export interface PackGoldenDocument {
+  ref: string;
+  type: 'sale_invoice' | 'sale_credit_note' | 'purchase_invoice' | 'purchase_credit_note';
+  contact: string;
+  date: string;
+  due_date: string | null;
+  /** What this document is in the scenario for. */
+  why: string;
+  lines: {
+    name: string;
+    quantity: number;
+    unit_price: number;
+    discount_percent: number;
+    tax: string | null;
+    account: string;
+  }[];
+}
+
+export interface PackGoldenPayment {
+  ref: string;
+  direction: 'inbound' | 'outbound';
+  date: string;
+  amount: number;
+  contact: string;
+  journal: string;
+  /** `ref` of the document this settles, or null for a payment on account. */
+  match: string | null;
+  why: string;
 }
 
 /** One line of `assets.json`: what a kind of asset is usually depreciated over. */
@@ -218,6 +370,8 @@ export interface PackAssetCategory {
   account_type: string | null;
   sequence: number;
   legal_reference: string | null;
+  /** Key of the register entry where that reference can be read. */
+  source: string | null;
 }
 
 /**
@@ -237,6 +391,8 @@ export interface PackAssets {
   declining_switch_to_linear: boolean;
   disposal_style: string | null;
   legal_reference: string | null;
+  /** Key of the register entry where that reference can be read. */
+  source: string | null;
   categories: PackAssetCategory[];
 }
 
@@ -268,10 +424,31 @@ export interface Pack {
   reportCode: string | null;
   /** `assets.json`, or null where this country says nothing about fixed assets. */
   assets: PackAssets | null;
+  /** `golden/scenario.json`, or null where the manifest says why there is none. */
+  golden: PackGolden | null;
+  /** The reason the manifest gives for carrying no golden. Null where it carries one. */
+  goldenExemption: string | null;
   /** sha256 of every file of the pack, so a change is visible without a diff. */
   checksum: string;
   /** Sections the schema accepts and this release does not compile. */
   deferred: string[];
+  /**
+   * The source register: every text this pack was built from, with the
+   * publisher that serves it and the day somebody opened it.
+   *
+   * Only the entries. A bare title the manifest still carries is the
+   * deprecated form and reaches `warnings` instead, because a title nobody can
+   * open is not a source — it is the memory of having read one.
+   */
+  sources: PackSource[];
+  /**
+   * What a reader should know and what nothing refuses over.
+   *
+   * A pack that keeps a bare title in its register, or one this release
+   * compiles less of than the schema accepts, still builds. The difference
+   * between this and an issue is whether a figure could come out wrong.
+   */
+  warnings: string[];
 }
 
 export interface Manifest {
@@ -279,8 +456,9 @@ export interface Manifest {
   name: string;
   version: string;
   schema_min: string;
+  seed_sequence: number;
   released_at?: string;
-  certification?: { status: string; by?: string | null; on?: string; sources?: string[] };
+  certification?: PackCertification;
   defaults: {
     currency: string;
     language?: string;
@@ -297,8 +475,9 @@ export interface Manifest {
     default?: boolean;
     audience?: string;
     statements?: string[];
-    certification?: { status: string; by?: string | null; on?: string; sources?: string[] };
+    certification?: PackCertification;
     legal_reference?: string | null;
+    source?: string | null;
   }[];
   [key: string]: unknown;
 }
@@ -311,7 +490,8 @@ export interface FrameworkManifest {
   schema_min: string;
   released_at?: string;
   language?: string;
-  certification?: { status: string; by?: string | null; on?: string; sources?: string[] };
+  certification?: PackCertification;
+  golden?: { exempt: string };
 }
 
 /**
@@ -349,6 +529,8 @@ export interface FrameworkPack {
   dir: string;
   manifest: FrameworkManifest;
   statements: PackStatement[];
+  /** Why this pack carries no golden scenario. Never null: it can carry none. */
+  goldenExemption: string | null;
   checksum: string;
 }
 
@@ -374,6 +556,25 @@ export function packsDir(root = repoRootDir()): string {
 
 export function seedOutputDir(root = repoRootDir()): string {
   return join(root, 'supabase', 'seed');
+}
+
+/**
+ * The seed number each pack of a checkout declares, by slug.
+ *
+ * Read on its own, one field out of each manifest, rather than through
+ * `readPack`: naming the seed file of a pack must not depend on every other
+ * pack in the checkout being valid, or `ekwo pack build be` would fail because
+ * somebody's work in progress next door does not compile yet.
+ */
+export async function declaredSeedSequences(dir = packsDir()): Promise<Map<string, number>> {
+  const declared = new Map<string, number>();
+  for (const slug of await listPacks(dir)) {
+    const path = join(dir, slug, 'pack.json');
+    if (!existsSync(path)) continue;
+    const manifest = (await readJson(path)) as { seed_sequence?: unknown };
+    if (typeof manifest.seed_sequence === 'number') declared.set(slug, manifest.seed_sequence);
+  }
+  return declared;
 }
 
 /** The packs of this repository, by directory name, alphabetically. */
@@ -402,6 +603,7 @@ export async function readPack(slug: string, dir = packsDir()): Promise<Pack> {
   const schema = await readSchema(dir);
   const defs = (schema['$defs'] ?? {}) as Record<string, Record<string, unknown>>;
   const issues: Issue[] = [];
+  const warnings: string[] = [];
   const deferred: string[] = [];
 
   const manifest = (await readJson(join(root, 'pack.json'))) as unknown as Manifest;
@@ -444,6 +646,7 @@ export async function readPack(slug: string, dir = packsDir()): Promise<Pack> {
       statements: entry.statements ?? [],
       certification: entry.certification ?? null,
       legal_reference: entry.legal_reference ?? null,
+      source: entry.source ?? null,
     });
   }
   charts.sort((a, b) => (a.is_default === b.is_default ? a.code.localeCompare(b.code) : a.is_default ? -1 : 1));
@@ -478,6 +681,33 @@ export async function readPack(slug: string, dir = packsDir()): Promise<Pack> {
     issues.push(...validate(raw, defs['module_assets'] ?? {}, schema, 'assets.json'));
     assets = normaliseAssets(raw as Record<string, unknown>);
     issues.push(...assetReferences(assets, manifest));
+  }
+
+  // The golden scenario. Read after the taxes, the charts and the form,
+  // because every reference it makes is checked against them.
+  const goldenExemption =
+    ((manifest['golden'] as { exempt?: string } | undefined)?.exempt ?? null) || null;
+  let golden: PackGolden | null = null;
+  const goldenPath = join(root, 'golden', 'scenario.json');
+  if (existsSync(goldenPath)) {
+    const raw = await readJson(goldenPath);
+    issues.push(...validate(raw, defs['golden'] ?? {}, schema, 'golden/scenario.json'));
+    golden = normaliseGolden(raw as Record<string, unknown>);
+    if (goldenExemption !== null) {
+      issues.push({
+        path: 'pack.json golden',
+        message: 'claims an exemption and the pack carries golden/scenario.json. Drop one of the two.',
+      });
+    }
+    issues.push(...goldenReferences(golden, charts, manifest, taxes, statements, accounts));
+  } else if (goldenExemption === null) {
+    issues.push({
+      path: `packs/${slug}`,
+      message:
+        'carries no golden/scenario.json. A country pack is replayed against one year of books ' +
+        'before anyone trusts its figures; see docs/packs.md, "Golden scenario". A pack that ' +
+        'cannot have one says why in pack.json, under "golden": { "exempt": "…" }.',
+    });
   }
 
   // The languages. Read last, because a label is checked against the section
@@ -584,9 +814,21 @@ export async function readPack(slug: string, dir = packsDir()): Promise<Pack> {
   }
 
   issues.push(...crossReferences(manifest, charts, taxes));
+  // The three code lists a tax tells the same fact in: its treatment, its
+  // EN 16931 category and its VATEX reason. Nothing in the ledger reads the
+  // last two, so nothing else would ever notice them disagreeing.
+  issues.push(...taxCodes(taxes));
   issues.push(...reportReferences(report, taxes));
+  issues.push(...proposedPeriod(manifest, report));
   issues.push(...statementReferences(statements, charts));
   issues.push(...documentReferences(documents));
+
+  // The register, and every rule that points into it. Last of the cross-checks,
+  // because a source is named by a tax, a box, a statement line and a mention,
+  // and all four have to have been read before the references can be resolved.
+  const register = sourceRegister(manifest, charts, taxes, report, statements, documents, assets);
+  issues.push(...register.issues);
+  warnings.push(...register.warnings);
 
   if (issues.length > 0) {
     // The cause before the consequence. A label problem is almost always
@@ -624,9 +866,170 @@ export async function readPack(slug: string, dir = packsDir()): Promise<Pack> {
     report,
     reportCode,
     assets,
+    golden,
+    goldenExemption,
     checksum: await checksum(root),
     deferred,
+    sources: register.sources,
+    warnings,
   };
+}
+
+/**
+ * The source register, and every reference the pack makes to it.
+ *
+ * `legal_reference` says which article a rule comes from and has been required
+ * on a tax and on a box since the format existed. What it never said is where
+ * that article can be read, so a reviewer opening a pack had a citation and a
+ * search engine. The register answers that once — a key, a title, the official
+ * publisher, an absolute link and the day somebody opened it — and every rule
+ * names a key instead of repeating a URL.
+ *
+ * Four things are refused here, and one is only warned about.
+ *
+ * A **duplicate key** is refused, because a reference would resolve to
+ * whichever entry happened to come first. A **key nothing declares** is
+ * refused: it reads as a source and is a typo. A pack that is not `community`
+ * and carries **no entry at all** is refused, because `maintained` and
+ * `reviewed` are claims that somebody keeps this current, and neither is
+ * sayable about a list of titles. And on a **reviewed** pack every tax and
+ * every box has to name a key — the reviewer read something, and this is where
+ * they say what.
+ *
+ * On a `maintained` pack that last one is a warning. The register arrived
+ * after four packs did; failing them the day it landed would have made the
+ * feature the reason the repository was red, and the gap it names is a link
+ * that is missing, never a figure that is wrong.
+ *
+ * The shape of an entry — the fields, the key, the https URL, the closed
+ * vocabulary of `kind` — is the published schema's job and is checked there,
+ * so an editor validating against `pack.1.json` refuses the same things.
+ */
+function sourceRegister(
+  manifest: Manifest,
+  charts: PackChart[],
+  taxes: PackTax[],
+  report: PackReport | null,
+  statements: PackStatement[],
+  documents: PackDocumentRules,
+  assets: PackAssets | null,
+): { sources: PackSource[]; issues: Issue[]; warnings: string[] } {
+  const issues: Issue[] = [];
+  const warnings: string[] = [];
+  const status = manifest.certification?.status ?? 'community';
+
+  // A chart may say how much it in particular has been read, and name the
+  // texts that reading went through. Those texts are in the same register: a
+  // key is unique in a pack, not in a section of one.
+  const declared: { where: string; entry: string | PackSource }[] = [
+    ...(manifest.certification?.sources ?? []).map((entry) => ({ where: 'certification.sources', entry })),
+    ...charts.flatMap((chart) =>
+      (chart.certification?.sources ?? []).map((entry) => ({
+        where: `charts.${chart.code}.certification.sources`,
+        entry,
+      })),
+    ),
+  ];
+
+  const sources: PackSource[] = [];
+  const byKey = new Map<string, PackSource>();
+  for (const { where, entry } of declared) {
+    if (typeof entry === 'string') {
+      warnings.push(
+        `pack.json ${where}: "${entry}" is a title with nowhere to read it. ` +
+          'The register takes an object — key, title, publisher, url, consulted_on, kind — ' +
+          'and the bare string is deprecated; see docs/packs.md, "The register of sources".',
+      );
+      continue;
+    }
+    if (byKey.has(entry.key)) {
+      issues.push({
+        path: `pack.json ${where}`,
+        message: `two sources claim the key ${entry.key}; a reference would resolve to whichever came first`,
+      });
+      continue;
+    }
+    byKey.set(entry.key, entry);
+    sources.push(entry);
+  }
+
+  if (status !== 'community' && sources.length === 0) {
+    issues.push({
+      path: 'pack.json certification.sources',
+      message:
+        `a ${status} pack carries a register of sources: a key, a title, the publisher and an ` +
+        'absolute https link per text. Nobody can maintain or review what they cannot open.',
+    });
+  }
+
+  // Every place the format lets a legal reference name where it is read.
+  const references: { path: string; source: string | null; kind: 'tax' | 'box' | 'other' }[] = [
+    ...charts.map((chart) => ({ path: `pack.json charts.${chart.code}`, source: chart.source, kind: 'other' as const })),
+    ...taxes.map((tax) => ({ path: `taxes.json ${tax.code}`, source: tax.source, kind: 'tax' as const })),
+    ...(report === null ? [] : [{ path: `tax_report.json ${report.code}`, source: report.source, kind: 'other' as const }]),
+    ...(report?.boxes ?? []).map((box) => ({
+      path: `tax_report.json ${box.box}:${box.kind}`,
+      source: box.source,
+      kind: 'box' as const,
+    })),
+    ...statements.flatMap((statement) => [
+      { path: `statements.json ${statement.code}`, source: statement.source, kind: 'other' as const },
+      ...statement.lines.map((line) => ({
+        path: `statements.json ${statement.code}.${line.code}`,
+        source: line.source,
+        kind: 'other' as const,
+      })),
+    ]),
+    ...documents.mentions.map((mention) => ({
+      path: `pack.json documents.mentions.${mention.code}`,
+      source: mention.source,
+      kind: 'other' as const,
+    })),
+    ...(assets === null ? [] : [{ path: 'assets.json', source: assets.source, kind: 'other' as const }]),
+    ...(assets?.categories ?? []).map((category) => ({
+      path: `assets.json ${category.code}`,
+      source: category.source,
+      kind: 'other' as const,
+    })),
+  ];
+
+  for (const reference of references) {
+    if (reference.source === null) continue;
+    if (byKey.has(reference.source)) continue;
+    issues.push({
+      path: reference.path,
+      message:
+        `names the source ${reference.source}, which this pack's register does not carry. ` +
+        (sources.length === 0
+          ? 'The register is empty.'
+          : `It holds: ${sources.map((s) => s.key).join(', ')}.`),
+    });
+  }
+
+  // A reviewer read something before they put their name on a rate or a grid.
+  // Saying which text is the difference between a review and a signature.
+  const unsourced = references.filter(
+    (reference) => reference.source === null && (reference.kind === 'tax' || reference.kind === 'box'),
+  );
+  if (status === 'reviewed') {
+    for (const reference of unsourced) {
+      issues.push({
+        path: reference.path,
+        message: 'a reviewed pack says which text its legal reference is in: add "source": "<key>"',
+      });
+    }
+  } else if (status === 'maintained' && unsourced.length > 0) {
+    warnings.push(
+      `${unsourced.length} tax(es) and box(es) carry a legal reference and name no source: ` +
+        `${unsourced
+          .slice(0, 3)
+          .map((reference) => reference.path)
+          .join(', ')}${unsourced.length > 3 ? ', …' : ''}. ` +
+        'A reviewed pack is refused for this; a maintained one is told.',
+    );
+  }
+
+  return { sources, issues, warnings };
 }
 
 function normaliseAssets(raw: Record<string, unknown>): PackAssets {
@@ -650,6 +1053,10 @@ function normaliseAssets(raw: Record<string, unknown>): PackAssets {
       (depreciation['legal_reference'] as string | null | undefined) ??
       (disposal?.['legal_reference'] as string | null | undefined) ??
       null,
+    source:
+      (depreciation['source'] as string | null | undefined) ??
+      (disposal?.['source'] as string | null | undefined) ??
+      null,
     categories: categories.map((category, index) => ({
       code: String(category['code']),
       name: String(category['name']),
@@ -664,6 +1071,7 @@ function normaliseAssets(raw: Record<string, unknown>): PackAssets {
       account_type: (category['account_type'] as string | null | undefined) ?? null,
       sequence: Number(category['sequence'] ?? (index + 1) * 10),
       legal_reference: (category['legal_reference'] as string | null | undefined) ?? null,
+      source: (category['source'] as string | null | undefined) ?? null,
     })),
   };
 }
@@ -764,13 +1172,31 @@ export async function readFrameworkPack(slug = GENERIC_PACK, dir = packsDir()): 
   }
   issues.push(...statementReferences(statements, []));
 
+  // A framework has no chart, no tax and no journal, so no company can be
+  // installed on it and no scenario replayed through it. That is a reason and
+  // it is written down: the rule is that a pack without a golden says why.
+  if ((manifest.golden?.exempt ?? '') === '') {
+    issues.push({
+      path: `packs/${slug}`,
+      message:
+        'carries no golden scenario and gives no reason. Add "golden": { "exempt": "…" } to pack.json.',
+    });
+  }
+
   if (issues.length > 0) {
     const shown = issues.slice(0, 20).map((i) => `  ${i.path}: ${i.message}`);
     const more = issues.length > shown.length ? `\n  … and ${issues.length - shown.length} more` : '';
     throw new PackError(`pack_invalid: packs/${slug} — ${issues.length} problem(s)\n${shown.join('\n')}${more}`);
   }
 
-  return { slug, dir: root, manifest, statements, checksum: await checksum(root) };
+  return {
+    slug,
+    dir: root,
+    manifest,
+    statements,
+    goldenExemption: manifest.golden?.exempt ?? null,
+    checksum: await checksum(root),
+  };
 }
 
 function codesOfCharts(charts: PackChart[]): Set<string> {
@@ -861,9 +1287,22 @@ function languageCoverage(
  * It lands in `country_packs.checksum`, so an instance can be compared to a
  * pack without shipping the pack.
  */
+/**
+ * A fingerprint of the pack as somebody wrote it.
+ *
+ * `golden/scenario.json` is in it — a scenario is a decision about what a
+ * country's books look like, and moving it moves the pack. The expectation
+ * files beside it are not: they are what the engine made of that scenario,
+ * regenerated by `UPDATE_GOLDEN=1`, and a build artefact does not belong in
+ * the fingerprint of its own source. A hash that moved because the statements
+ * function gained a line would tell every operator that Belgium had changed.
+ */
+const GOLDEN_EXPECTATIONS = /^golden\/(?!scenario\.json$)/;
+
 async function checksum(dir: string): Promise<string> {
   const hash = createHash('sha256');
   for (const file of await filesUnder(dir)) {
+    if (GOLDEN_EXPECTATIONS.test(file)) continue;
     hash.update(file);
     hash.update('\0');
     hash.update(await readFile(join(dir, file)));
@@ -908,6 +1347,7 @@ function normaliseTax(raw: Record<string, unknown>, index: number): PackTax {
     valid_from: String(raw['valid_from']),
     valid_to: (raw['valid_to'] as string | undefined) ?? null,
     legal_reference: (raw['legal_reference'] as string | undefined) ?? null,
+    source: (raw['source'] as string | undefined) ?? null,
     vat_category: (raw['vat_category'] as string | undefined) ?? null,
     exemption_code: (raw['exemption_code'] as string | undefined) ?? null,
     recoverable: typeof raw['recoverable'] === 'boolean' ? raw['recoverable'] : true,
@@ -919,6 +1359,33 @@ function normaliseTax(raw: Record<string, unknown>, index: number): PackTax {
     postings: { invoice: kind('invoice'), credit_note: kind('credit_note') },
     ...(Array.isArray(raw['group']) ? { group: raw['group'] as string[] } : {}),
   };
+}
+
+/**
+ * The cadences a form declares, from either shape of the field.
+ *
+ * An empty list is what a pack that says nothing gets — not a cadence guessed
+ * for it. `month_or_quarter` used to be the column's default, so every country
+ * that had not spoken filed Belgium's and France's return without anybody
+ * deciding that. `ekwo pack check` names the omission instead.
+ */
+const PERIOD_ORDER = ['month', 'quarter', 'year'];
+
+function normalisePeriods(raw: unknown): string[] {
+  const listed =
+    raw === undefined || raw === null
+      ? []
+      : Array.isArray(raw)
+        ? raw.map(String)
+        : String(raw) === 'month_or_quarter'
+          ? ['month', 'quarter']
+          : [String(raw)];
+  const unique = [...new Set(listed)];
+  return unique.sort(
+    (a, b) =>
+      (PERIOD_ORDER.indexOf(a) === -1 ? PERIOD_ORDER.length : PERIOD_ORDER.indexOf(a)) -
+      (PERIOD_ORDER.indexOf(b) === -1 ? PERIOD_ORDER.length : PERIOD_ORDER.indexOf(b)),
+  );
 }
 
 function normaliseReport(raw: Record<string, unknown>): PackReport {
@@ -933,17 +1400,216 @@ function normaliseReport(raw: Record<string, unknown>): PackReport {
     hidden: box['hidden'] === true,
     xml_element: (box['xml_element'] as string | undefined) ?? null,
     legal_reference: (box['legal_reference'] as string | undefined) ?? null,
+    source: (box['source'] as string | undefined) ?? null,
   })) satisfies PackReportBox[];
 
   return {
     code: String(raw['code']),
     name: String(raw['name'] ?? raw['code']),
-    period: String(raw['period'] ?? 'month_or_quarter'),
+    periods: normalisePeriods(raw['period']),
     valid_from: String(raw['valid_from'] ?? '1970-01-01'),
     valid_to: (raw['valid_to'] as string | undefined) ?? null,
     legal_reference: (raw['legal_reference'] as string | undefined) ?? null,
+    source: (raw['source'] as string | undefined) ?? null,
     boxes,
   };
+}
+
+function normaliseGolden(raw: Record<string, unknown>): PackGolden {
+  const year = (raw['fiscal_year'] ?? {}) as Record<string, string>;
+  return {
+    name: String(raw['name'] ?? ''),
+    chart: (raw['chart'] as string | undefined) ?? null,
+    language: (raw['language'] as string | undefined) ?? null,
+    fiscalYear: {
+      name: String(year['name'] ?? ''),
+      start: String(year['start'] ?? ''),
+      end: String(year['end'] ?? ''),
+    },
+    periods: ((raw['periods'] ?? []) as Record<string, string>[]).map((p) => ({
+      code: String(p['code']),
+      from: String(p['from']),
+      to: String(p['to']),
+    })),
+    statements: (raw['statements'] as string[] | undefined) ?? [],
+    contacts: ((raw['contacts'] ?? []) as Record<string, unknown>[]).map((c) => ({
+      ref: String(c['ref']),
+      name: String(c['name']),
+      type: c['type'] as 'customer' | 'supplier',
+      country: String(c['country']),
+      vat_number: (c['vat_number'] as string | undefined) ?? null,
+      auxiliary_code: (c['auxiliary_code'] as string | undefined) ?? null,
+    })),
+    documents: ((raw['documents'] ?? []) as Record<string, unknown>[]).map((d) => ({
+      ref: String(d['ref']),
+      type: d['type'] as PackGoldenDocument['type'],
+      contact: String(d['contact']),
+      date: String(d['date']),
+      due_date: (d['due_date'] as string | undefined) ?? null,
+      why: String(d['why'] ?? ''),
+      lines: ((d['lines'] ?? []) as Record<string, unknown>[]).map((l) => ({
+        name: String(l['name']),
+        quantity: typeof l['quantity'] === 'number' ? l['quantity'] : 1,
+        unit_price: Number(l['unit_price']),
+        discount_percent: typeof l['discount_percent'] === 'number' ? l['discount_percent'] : 0,
+        tax: (l['tax'] as string | undefined) ?? null,
+        account: String(l['account']),
+      })),
+    })),
+    payments: ((raw['payments'] ?? []) as Record<string, unknown>[]).map((p) => ({
+      ref: String(p['ref']),
+      direction: p['direction'] as 'inbound' | 'outbound',
+      date: String(p['date']),
+      amount: Number(p['amount']),
+      contact: String(p['contact']),
+      journal: String(p['journal']),
+      match: (p['match'] as string | undefined) ?? null,
+      why: String(p['why'] ?? ''),
+    })),
+  };
+}
+
+/**
+ * What the scenario names has to exist, and when it happened has to be inside
+ * the year it is filed for.
+ *
+ * A golden whose references are loose fails later, in a test, with a message
+ * from Postgres about a null account. Here it fails with the name of the tax
+ * nobody declared, which is the same defect found a minute earlier by the
+ * person who can still fix it.
+ */
+function goldenReferences(
+  golden: PackGolden,
+  charts: PackChart[],
+  manifest: Manifest,
+  taxes: PackTax[],
+  statements: PackStatement[],
+  accounts: PackAccount[],
+): Issue[] {
+  const issues: Issue[] = [];
+  const where = 'golden/scenario.json';
+
+  const chart =
+    golden.chart === null
+      ? charts.find((c) => c.is_default)
+      : charts.find((c) => c.code === golden.chart);
+  if (chart === undefined) {
+    issues.push({
+      path: `${where} chart`,
+      message: `${String(golden.chart)} is not a chart of this pack (${charts.map((c) => c.code).join(', ')})`,
+    });
+  }
+  const codes = new Set((chart?.accounts ?? accounts).map((a) => a.code));
+  const taxCodes = new Map(taxes.map((t) => [t.code, t]));
+  const journals = new Set(manifest.journals.map((j) => j.code));
+
+  const { start, end } = golden.fiscalYear;
+  if (start >= end) {
+    issues.push({ path: `${where} fiscal_year`, message: `${start} is not before ${end}` });
+  }
+
+  const inYear = (path: string, date: string): void => {
+    if (date < start || date > end) {
+      issues.push({ path, message: `${date} falls outside the financial year ${start}..${end}` });
+    }
+  };
+
+  for (const period of golden.periods) {
+    if (period.from > period.to) {
+      issues.push({ path: `${where} periods.${period.code}`, message: `${period.from} is after ${period.to}` });
+    }
+    inYear(`${where} periods.${period.code}.from`, period.from);
+    inYear(`${where} periods.${period.code}.to`, period.to);
+  }
+
+  const known = new Set(statements.map((st) => st.code));
+  for (const code of golden.statements) {
+    if (!known.has(code)) {
+      issues.push({ path: `${where} statements`, message: `${code} is not a statement of this pack` });
+    }
+  }
+
+  const contacts = new Set<string>();
+  for (const contact of golden.contacts) {
+    if (contacts.has(contact.ref)) {
+      issues.push({ path: `${where} contacts.${contact.ref}`, message: 'duplicate ref' });
+    }
+    contacts.add(contact.ref);
+  }
+
+  const documents = new Map<string, PackGoldenDocument>();
+  for (const document of golden.documents) {
+    const at = `${where} documents.${document.ref}`;
+    if (documents.has(document.ref)) issues.push({ path: at, message: 'duplicate ref' });
+    documents.set(document.ref, document);
+    if (!contacts.has(document.contact)) {
+      issues.push({ path: at, message: `contact ${document.contact} is not declared by this scenario` });
+    }
+    inYear(`${at}.date`, document.date);
+    const sale = document.type.startsWith('sale');
+    for (const [index, line] of document.lines.entries()) {
+      if (!codes.has(line.account)) {
+        issues.push({
+          path: `${at}.lines[${index}]`,
+          message: `account ${line.account} is not in chart ${chart?.code ?? '?'}`,
+        });
+      }
+      if (line.tax === null) continue;
+      const tax = taxCodes.get(line.tax);
+      if (tax === undefined) {
+        issues.push({ path: `${at}.lines[${index}]`, message: `tax ${line.tax} is not a tax of this pack` });
+        continue;
+      }
+      // A purchase tax on a sale posts nothing and reports nothing: the
+      // scenario would run and its return would be quietly short.
+      if (tax.scope !== 'both' && tax.scope !== (sale ? 'sale' : 'purchase')) {
+        issues.push({
+          path: `${at}.lines[${index}]`,
+          message: `tax ${line.tax} is scoped ${tax.scope} and this document is a ${sale ? 'sale' : 'purchase'}`,
+        });
+      }
+      if (document.date < tax.valid_from || (tax.valid_to !== null && document.date > tax.valid_to)) {
+        issues.push({
+          path: `${at}.lines[${index}]`,
+          message: `tax ${line.tax} is not in force on ${document.date}`,
+        });
+      }
+    }
+  }
+
+  const seenPayments = new Set<string>();
+  for (const payment of golden.payments) {
+    const at = `${where} payments.${payment.ref}`;
+    if (seenPayments.has(payment.ref)) issues.push({ path: at, message: 'duplicate ref' });
+    seenPayments.add(payment.ref);
+    if (!contacts.has(payment.contact)) {
+      issues.push({ path: at, message: `contact ${payment.contact} is not declared by this scenario` });
+    }
+    if (!journals.has(payment.journal)) {
+      issues.push({ path: at, message: `journal ${payment.journal} is not a journal of this pack` });
+    }
+    inYear(`${at}.date`, payment.date);
+    if (payment.match === null) continue;
+    const settled = documents.get(payment.match);
+    if (settled === undefined) {
+      issues.push({ path: at, message: `matches ${payment.match}, which is not a document of this scenario` });
+      continue;
+    }
+    // A matching is between two sides of the same third-party account, so a
+    // customer receipt cannot settle a supplier bill however the amounts add up.
+    const expected = settled.type.startsWith('sale') ? 'inbound' : 'outbound';
+    if (payment.direction !== expected) {
+      issues.push({
+        path: at,
+        message: `is ${payment.direction} and settles ${settled.type} ${settled.ref}, which needs an ${expected} payment`,
+      });
+    }
+    if (payment.date < settled.date) {
+      issues.push({ path: at, message: `is dated before the document it settles (${settled.date})` });
+    }
+  }
+
+  return issues;
 }
 
 /**
@@ -984,6 +1650,7 @@ function normaliseDocumentRules(manifest: Manifest): PackDocumentRules {
         valid_from: String(mention['valid_from'] ?? '1970-01-01'),
         valid_to: (mention['valid_to'] as string | undefined) ?? null,
         legal_reference: (mention['legal_reference'] as string | undefined) ?? null,
+        source: (mention['source'] as string | undefined) ?? null,
       }) satisfies PackMention,
   );
 
@@ -1108,11 +1775,13 @@ function normaliseStatements(raw: Record<string, unknown>, charts: PackChart[]):
       name: String(line['name']),
       sequence: typeof line['sequence'] === 'number' ? line['sequence'] : (index + 1) * 10,
       sign: (line['sign'] === -1 ? -1 : 1) as 1 | -1,
+      declares_sign: line['sign'] !== undefined,
       is_total: line['is_total'] === true,
       plus: (line['plus'] as string[] | undefined) ?? [],
       minus: (line['minus'] as string[] | undefined) ?? [],
       xbrl: (line['xbrl'] as string | undefined) ?? null,
       legal_reference: (line['legal_reference'] as string | undefined) ?? null,
+      source: (line['source'] as string | undefined) ?? null,
       rules: ((line['rules'] ?? []) as Record<string, unknown>[]).map((rule, position) => ({
         kind: rule['kind'] as PackStatementRule['kind'],
         code_from: (rule['code_from'] as string | undefined) ?? null,
@@ -1132,6 +1801,7 @@ function normaliseStatements(raw: Record<string, unknown>, charts: PackChart[]):
       valid_from: String(statement['valid_from'] ?? '1970-01-01'),
       valid_to: (statement['valid_to'] as string | undefined) ?? null,
       legal_reference: (statement['legal_reference'] as string | undefined) ?? null,
+      source: (statement['source'] as string | undefined) ?? null,
       chart_code: named.length === 1 ? (named[0] as string) : null,
       lines,
     } satisfies PackStatement;
@@ -1265,6 +1935,22 @@ function statementReferences(statements: PackStatement[], charts: PackChart[]): 
         issues.push({
           path: `${where} ${line.code}`,
           message: 'only a total is computed from other lines; mark it is_total or drop the formula',
+        });
+      }
+      // A sign on a computed line is applied a second time. Every line a
+      // formula names already carries the sign the scheme reads it with —
+      // `financial_statement()` applies it when it sums the line from the
+      // ledger — and the evaluator then multiplies the total by the total's
+      // own sign, so a scheme that flips a credit line and flips the subtotal
+      // above it gets the figure back the way it started. It cost the
+      // Luxembourg pack a wrong set of golden figures, caught by reading them
+      // rather than by any check. `minus` is how a total subtracts.
+      if (line.declares_sign && line.plus.length + line.minus.length > 0) {
+        issues.push({
+          path: `${where} ${line.code}`,
+          message:
+            'a computed line takes no sign of its own: the lines it names already carry theirs, ' +
+            'and a sign here is applied to them a second time. Use minus to subtract.',
         });
       }
     }
@@ -1406,10 +2092,66 @@ export function resolveBoxRef(ref: string, boxes: PackReportBox[]): PackReportBo
  * itself, and it never names a total that is computed after it — the totals
  * are evaluated once, in the order the form declares them.
  */
+/**
+ * The cadence the pack proposes, against the cadences its form accepts.
+ *
+ * `defaults.vat_period` is what a company of this country files on unless it
+ * says otherwise, and it is wired onto `companies.vat_period` at install. A
+ * pack may leave it out, and three of the four here do: Belgium, France and
+ * Luxembourg all make the cadence follow turnover, so proposing one of two
+ * lawful answers would be choosing a filing deadline for a company the pack
+ * knows nothing about. What a pack may not do is propose a cadence its own
+ * form does not accept.
+ */
+function proposedPeriod(manifest: Manifest, report: PackReport | null): Issue[] {
+  const proposed = manifest.defaults['vat_period'] as string | undefined;
+  if (proposed === undefined) return [];
+  if (report === null) {
+    return [
+      {
+        path: 'defaults.vat_period',
+        message: `${proposed}, but this pack carries no declaration form to file on that cadence`,
+      },
+    ];
+  }
+  if (!report.periods.includes(proposed)) {
+    return [
+      {
+        path: 'defaults.vat_period',
+        message:
+          `${proposed} is not a cadence ${report.code} is filed on ` +
+          `(${report.periods.join(', ') || 'none declared'})`,
+      },
+    ];
+  }
+  return [];
+}
+
 function reportReferences(report: PackReport | null, taxes: PackTax[]): Issue[] {
   if (report === null) return [];
   const issues: Issue[] = [];
   const where = 'tax_report.json';
+
+  // How often the form is filed. There is no default for this and there must
+  // not be one: `tax_report_templates.period` carried `month_or_quarter` as a
+  // column default, so a pack that had never thought about its cadence filed
+  // on Belgium's, and nothing anywhere said so.
+  if (report.periods.length === 0) {
+    issues.push({
+      path: where,
+      message:
+        'the form names no cadence; add "period": ["month", "quarter"] — how often it is filed, ' +
+        'which nothing can work out on its behalf',
+    });
+  }
+  for (const period of report.periods) {
+    if (!PERIOD_ORDER.includes(period)) {
+      issues.push({
+        path: `${where} period`,
+        message: `${period} is not a cadence; use ${PERIOD_ORDER.join(', ')}`,
+      });
+    }
+  }
 
   const seen = new Set<string>();
   for (const box of report.boxes) {

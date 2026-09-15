@@ -5,6 +5,7 @@ import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { compilePack, listPacks, readPack, readSchema, validate } from '../packages/cli/src/index.js';
 import { asUser, expectError, freshDatabase, one, repoRoot, rows, seedFiles } from './helpers/db.js';
 import { newCompany, newContact, newDocument } from './helpers/factory.js';
+import { packWhere } from './helpers/packs.js';
 
 // What a country requires on a document is data. Twelve columns of
 // `country_defaults`, one table of sentences, and two views that read them —
@@ -196,6 +197,46 @@ describe('the mentions that apply to one document', () => {
     expect(await mentionsOf(documentId)).toEqual(['intracom_goods', 'late_payment']);
   });
 
+  it('prints the reverse charge on a service bought from a supplier who is not established here', async () => {
+    // The treatment `foreign_services_received` names the general
+    // business-to-business rule — articles 44 and 196 — which is the same
+    // mechanism as a domestic reverse charge under a different article, so it
+    // is the reverse-charge sentence that comes out and not the one about a
+    // supply between two Member States. The pack is found by the property,
+    // not named: a second country declaring such a tax changes nothing here.
+    const pack = packWhere('taxing a service received from a supplier established elsewhere', (p) =>
+      p.taxes.some((t) => t.treatment === 'foreign_services_received'),
+    );
+    const tax = pack.taxes.find((t) => t.treatment === 'foreign_services_received')!;
+    const country = pack.manifest.country;
+    const purchases = (
+      await one<{ code: string }>(
+        db,
+        'select purchase_account_code as code from country_defaults where country = $1',
+        [country],
+      )
+    ).code;
+
+    const { companyId } = await newCompany(db, { name: 'Hors Union SRL', country });
+    const contactId = await newContact(db, companyId, { type: 'supplier', country });
+    const documentId = await newDocument(db, companyId, {
+      docType: 'purchase_invoice',
+      contactId,
+      date: tax.valid_from,
+      lines: [{ unitPrice: 800, taxCode: tax.code, accountCode: purchases }],
+    });
+
+    const printed = await mentionsOf(documentId);
+    const conditions = await rows<{ applies_when: string }>(
+      db,
+      `select distinct m.applies_when::text as applies_when
+         from document_legal_mentions m where m.document_id = $1`,
+      [documentId],
+    );
+    expect(conditions.map((c) => c.applies_when)).toEqual(['reverse_charge']);
+    expect(printed.length).toBe(1);
+  });
+
   it('prints only what a plain domestic sale owes: the late payment terms', async () => {
     const { companyId } = await newCompany(db, { name: 'Domestique SRL' });
     const contactId = await newContact(db, companyId);
@@ -291,20 +332,22 @@ describe('the mentions under row level security', () => {
       const seen = await one<{ n: number }>(db, 'select count(*)::int as n from legal_mention_templates');
       expect(seen.n).toBeGreaterThan(5);
 
-      // An insert is the statement that raises: with no policy for it, there
-      // is nothing to check the new row against. An update and a delete find
-      // no row they are allowed to touch and quietly change nothing, which is
-      // the same refusal without the message — so the assertion is on what is
-      // still there afterwards.
-      const message = await expectError(
-        db,
+      // All three raise, and for the same reason: `20260914151207` grants
+      // `authenticated` SELECT on this table and nothing else, so a write is
+      // refused before row level security is consulted. The assertion on what
+      // is still there afterwards stays, because a refusal that changed
+      // something would be the interesting failure.
+      for (const sql of [
         `insert into legal_mention_templates (country, code, applies_when, text)
          values ('ZZ', 'mine', 'always', 'À moi')`,
-      );
-      expect(message).toMatch(/row-level security|permission denied/);
+        `update legal_mention_templates set text = 'À moi'`,
+        `delete from legal_mention_templates`,
+      ]) {
+        expect(await expectError(db, sql), sql).toMatch(
+          /permission denied for table legal_mention_templates/,
+        );
+      }
 
-      await db.query(`update legal_mention_templates set text = 'À moi'`);
-      await db.query('delete from legal_mention_templates');
       const after = await one<{ n: number; rewritten: number }>(
         db,
         `select count(*)::int as n,
@@ -316,13 +359,16 @@ describe('the mentions under row level security', () => {
     });
   });
 
-  it('reads as an empty set for a caller with no session at all', async () => {
+  it('is refused to a caller with no session at all', async () => {
     // The policy is `auth.uid() is not null`, like every other reference
-    // table: a signed-in user of any company reads the law of every country,
-    // and a caller with no session reads nothing.
+    // table: a signed-in user of any company reads the law of every country.
+    // A caller with no session never reaches it — `20260914151207` leaves
+    // `anon` holding no privilege on any table of this schema.
     await db.exec(`select set_config('request.jwt.claims', '', false); set role anon;`);
     try {
-      expect(await rows(db, 'select code from legal_mention_templates')).toEqual([]);
+      expect(await expectError(db, 'select code from legal_mention_templates')).toMatch(
+        /permission denied for table legal_mention_templates/,
+      );
     } finally {
       await db.exec('reset role;');
     }

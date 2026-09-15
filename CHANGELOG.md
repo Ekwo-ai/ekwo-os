@@ -9,6 +9,569 @@ somewhere has already run it.
 
 ## [Unreleased]
 
+## [0.3.0] — 2026-09-15
+
+### Added
+
+- **The sources of a pack become a register somebody can open.**
+  `legal_reference` said which article a rule claimed and never where to read
+  it, and `certification.sources` was a list of bare titles: a reviewer holding
+  *Arrêté royal n° 20, tableau A* had a citation and a search engine. It is now
+  a register — a key, a title, the official publisher, an absolute `https` URL
+  and the day somebody opened it, out of a closed vocabulary of six kinds
+  (`law`, `regulation`, `form`, `standard`, `portal`, `guidance`) — and every
+  tax, box, chart, statement, statement line, legal mention and fixed-asset
+  rule names a key beside the article it already carried. The article stays on
+  the rule and the link stays in the register, so a publisher that reorganises
+  its site is one line of a pack to change. No pack copies a word of the law:
+  a quotation ages without anybody noticing.
+  The four packs carry 53 texts between them, every URL opened on 15 September
+  2026, and 462 rules point at one — including all 110 taxes and all 243 boxes.
+  `ekwo pack check` refuses a duplicate key, a key the register does not
+  carry, an entry that is not shaped like one, a non-`community` pack whose
+  register is empty, and — on a `reviewed` pack — a tax or a box that names no
+  source, which is the substance of a review; a `maintained` pack is warned
+  instead. The bare string is still read so that a pack written before this
+  compiles, and is warned about as deprecated.
+  `ekwo pack check --links` opens every URL and names the ones that went
+  quiet. It is opt-in, the CI never runs it, and it never changes the exit
+  code: Légifrance refuses a request with no browser behind it, and a gate on
+  that would fail a contributor's pull request for something nobody in it did.
+  The register compiles into `country_packs.sources`, the key travels with the
+  rule in `tax_templates.source_key` and `tax_report_box_templates.source_key`,
+  and the MCP tool `describe_pack` returns all of it, so an application can
+  answer "where do these rules come from" without reading a pack. The
+  walkthrough in `docs/packs.md` now starts at step 0: open the consolidated
+  text, the decree, the form with its notice and the filing portal, and write
+  them down before a line of JSON.
+  No figure moved. The three golden expectation files of every pack are
+  byte-for-byte what they were.
+
+- **A treatment for a service bought from a supplier who is not established
+  here, and a check that a tax's three code lists agree.**
+  `tax_treatment` gains `foreign_services_received`: the general
+  business-to-business rule of articles 44 and 196 of Directive 2006/112/EC,
+  which the vocabulary had no word for — `intracom_acquisition_services`
+  covers a supplier in another Member State and `import` is goods declared to
+  customs, so the Estonian pack had been declaring such a tax as an import and
+  saying so in its own legal reference. The name is about establishment rather
+  than about the border, which is why it is not `import_services`. It resolves
+  to the reverse-charge mention on an invoice, and `EE-P-VS-24` now carries
+  it.
+  `ekwo pack check` gains the correspondence between `treatment`, the EN 16931
+  category (BT-118, BT-151) and the VATEX reason (BT-121), transcribed from
+  UNCL5305, from the Commission's *Technical guidance for tax codes in
+  EN 16931* version 1 and from the pairings the VATEX list publishes on its
+  own codes. Neither of those two columns is read by the ledger or by the
+  declaration, so nothing had ever compared them to anything: a pack could
+  declare an export at the standard rate and the whole suite passed. Twenty
+  taxes across the four packs were corrected — the intra-Community supplies
+  and acquisitions carried the reverse-charge pair where the supplier's
+  invoice carries `K` and `VATEX-EU-IC`, and the imports of goods claimed a
+  standard rate no supplier had levied. `docs/packs.md` carries the table and
+  the two decisions behind it.
+
+- **A document can be sent to the person it is addressed to, behind a link they
+  open without an account.**
+  `document_shares` holds a link onto one sales document; `share_document()`
+  creates one and returns its token once; `revoke_share()` stops it, for good;
+  and `shared_document(token)` — the one function `anon` may execute that is not
+  a policy helper — returns that document as jsonb: the header, the lines, the
+  VAT breakdown, the totals, the legal mentions in the document's own language,
+  the seller's identity and payment details, and what is still owed today with
+  the date of the last payment, so a link a customer keeps stays worth opening
+  after they have paid.
+  The token is the whole secret: 32 bytes as 43 base64url characters, stored
+  only as a sha256, returned by the call that creates it and by nothing else.
+  It is drawn from two `gen_random_uuid()` rather than `gen_random_bytes(32)`,
+  because `pgcrypto` is not available under PGlite and an invariant that cannot
+  be tested is an invariant nobody is keeping.
+  `anon` holds no privilege on `document_shares` or on any view: the invariant
+  of `20260911210131` is kept, not bent. An unknown token, a withdrawn link, an
+  expired link and a document that may no longer be shared all answer with the
+  same null, so the function is an oracle for nothing. Sales documents only —
+  a purchase invoice is a third party's own document — never a draft, never a
+  cancelled one.
+  A new capability, `documents.share`, on the owner and accountant presets;
+  `instance.public_base_url`, nullable and with no default, which the returned
+  `url` is built on; `share_document`, `revoke_share` and `list_shares` as MCP
+  tools, and `shared_document` deliberately not one; and the count of live
+  links per company in `ekwo status`. [`docs/sharing.md`](docs/sharing.md) is
+  the reference and `docs/decisions.md` carries the reasoning.
+
+- **The recapitulative statement of intra-Community supplies, as one function
+  of the core and four format bricks.**
+  Every Member State asks a seller the same question — to whom, in another
+  Member State, did you supply goods and services without charging VAT, and for
+  how much — and then wants the answer in a file of its own shape. Nothing here
+  could answer it: the boxes of the return hold the totals and not the
+  customers, and a listing per customer cannot be read back out of them.
+  **`ec_sales_list(company, from, to)`** returns one line per customer VAT
+  number and per nature of supply, summed from the posted ledger in the
+  company's currency with credit notes deducted. The nature comes from the
+  treatment of the tax with its `intracom_` prefix removed, so the day that
+  vocabulary gains the triangular operation all four forms print, the function
+  returns it without a line changing. A supply that cannot be declared — a
+  customer with no VAT number, a number that is not in another Member State —
+  comes back with the reason in `issue` rather than being dropped, because a
+  file that balances against nothing is worse than a file with a hole in it.
+  It is exposed as an MCP tool beside `vat_return`, and the prompt that prepares
+  a return now asks for it.
+  **It refuses no period**, where `vat_return()` refuses one the company does
+  not file on. `companies.vat_period` records how often the *return* is filed,
+  and the statement has its own cadence in three of the four countries read
+  while writing this — that gap, and four more, are written down in
+  `docs/international.md` rather than patched.
+  **The files are four MIT bricks**, each written only from a specification
+  that could be read and each citing it: `@ekwo-ai/intra-consignment` for the
+  Belgian listing of Intervat, `@ekwo-ai/des` for the French déclaration
+  européenne de services, `@ekwo-ai/ecdf` for the Luxembourg interface file and
+  its four statement forms, `@ekwo-ai/vd` for the Estonian form VD. They agree
+  on almost nothing — one line per nature against one line per customer, a
+  country field apart from the number against the two joined, cents against
+  whole euros — which is what organising by format and never by country is for.
+  The French état récapitulatif TVA on goods is **not** among them: its XML is
+  the INSTAT envelope, whose habilitation number and statistical fields a set of
+  books does not hold, and `packages/formats/des/README.md` says so with the
+  documents a successor would start from.
+  Each pack's golden scenario gained the supply of services it was missing, and
+  the Belgian one a credit note on an intra-Community supply — the document that
+  proves the listing and the return do not read alike, since Belgium reports
+  that credit note positively in a box of its own and the statement deducts it
+  from the customer.
+
+- **A company opens on the part of its chart it actually works with.**
+  A country pack is a transcription of the regulation — 120 accounts in
+  Estonia, 353 in Belgium, 394 in France, 1 026 in Luxembourg — and a company
+  uses a fraction of it: two production installations measured on a full year
+  of books used 60 accounts out of roughly 300 and 126 out of roughly 300.
+  Nothing about the packs changes; a second question is added beside the chart.
+  **`accounts_in_use(company, from, to)`** (migration `20260914143915`) returns
+  the accounts a company is working with: those carrying a line of a posted
+  entry — in the period when one is given, ever when none is — those its
+  configuration points at by foreign key (the role defaults, a contact
+  override, a journal, a tax posting, the transition account of a cash-basis
+  tax, a bank account, a product), those a module it has enabled holds, and
+  those somebody pinned; minus the deprecated ones. A configuration reference
+  is not dated; only the movement is.
+  **`accounts.pinned`** is the column an operator edits to add an account the
+  rules cannot know about, or to keep one that has stopped being referenced.
+  `install_country_template()` now pins what it wires — eleven accounts on
+  Belgium, Estonia and Luxembourg, fifteen on France: the roles of the country
+  model, the accounts of its financial journals and the accounts its taxes
+  post to. A country model names about a dozen accounts whatever the size of
+  its chart. Pinning is display and never a restriction: any account of the
+  chart that is not deprecated may still be booked on.
+  **The socle still ignores its modules.** It does not name `assets` or
+  `budgets`: it asks each module the company has enabled for
+  `<schema>.accounts_in_use(uuid)`, the convention `disable_module()` already
+  reads for `can_disable`. A module that references no account writes no such
+  function.
+  **`list_accounts` starts from that set**, says which scope it answered with,
+  and takes `include_all` for the whole chart, `include_deprecated` for the
+  whole chart with the retired accounts, and `in_use_from` / `in_use_to` to
+  narrow the movements to a period. **`pin_accounts`** pins or unpins by code.
+  The `ekwo://companies/{id}/chart` resource is unchanged and still carries
+  everything.
+
+- **How often a company files its VAT return is data, and the return reads it.**
+  `vat_return()` takes two dates, which is right, but nothing held how often
+  the company files at all, so a quarterly filer could be handed a July return
+  and nothing said so. Three columns, each where the answer belongs:
+  **`tax_report_templates.periods`** is what the form accepts — a list, because
+  one set of boxes may be filed on more than one cadence;
+  **`companies.vat_period`** is what this company files, nullable and with no
+  default; **`country_defaults.vat_period_default`** is what the pack proposes.
+  The vocabulary is an enum, `month | quarter | year`, and
+  `month_or_quarter` — never a cadence anybody files on — is read as the two it
+  names, so a pack written before the list keeps working.
+  **`vat_return()` refuses a period the company does not file on**, by name,
+  and only when the refusal is certain: the form offers the recorded cadence,
+  the dates are themselves a whole cadence of that form, and the two differ. A
+  fortnight, a half-year and the annual form a quarterly filer also files go
+  through, because the function is a control query as often as a filing.
+  **`ekwo init` asks** when the country's form offers several and the pack
+  proposes none, `--vat-period` answers outside a terminal, and a company that
+  has not decided is recorded as not having decided. **`ekwo status` prints
+  it.** **Estonia is the only pack here that proposes a cadence** — the
+  taxable period is the calendar month for everybody, käibemaksuseadus § 27
+  lõige 1. Belgium, France and Luxembourg all make it follow turnover, so each
+  cites the article that says so on its form and leaves the proposal empty.
+  Migration `20260914163943`; packs `be` 1.6.0, `fr` 1.7.0, `lu` 1.1.0,
+  `ee` 1.1.0 — one bump each, covering this and the `seed_sequence` field the
+  Estonian pack added to the three manifests without bumping them.
+
+- **Luxembourg, as `packs/lu/`.** The third country pack, and the first
+  contributed from published sources rather than from books somebody keeps.
+  It carries the **plan comptable normalisé** of the *règlement grand-ducal du
+  12 septembre 2019* whole — **1 026 accounts, 747 of them postable**, the
+  depth the regulation prescribes, because Luxembourg publishes no abridged
+  chart: what it abridges for a small company is the presentation.
+  **35 taxes**: the four rates of article 39 — 17 %, 14 %, 8 %, 3 % — with the
+  **temporary 2023 rates beside them**, 16 %, 13 % and 7 %, each with its own
+  validity, so a document dated in 2023 books at the rate of its own year and
+  lands in the boxes the form keeps for it. Intra-Union supplies and
+  acquisitions of goods and of services, export, exemption under article 44 and
+  the domestic reverse charge on both sides.
+  **The eCDF periodic VAT return**, `LU-VAT-PERIODIC`, with the **156 numbered
+  fields** of its four sections and the totals its own validation rules state.
+  The monthly form and the quarterly form carry the same numbering, so one
+  definition covers both.
+  **The two abridged schemes of annual accounts**, `LU-ECDF-BS-ABR` and
+  `LU-ECDF-PL-ABR`, whose **line codes are the eCDF field identifiers** — `203`,
+  `651` — so a future filing brick maps a line to a field without a table in
+  between. All 747 postable accounts reach exactly one line, by the State's own
+  *tableau de passage*, transcribed account by account.
+  **French, German and English**, all three complete, and the German and the
+  English are the versions the State itself publishes on the eCDF forms rather
+  than a translation made here.
+  A golden year of ten documents and three payments, `certification.status`
+  **`community`**, and a pack README that ends on the ten points a Luxembourg
+  reviewer should look at first. Out of scope in v1 and said so: the XML of an
+  eCDF deposit, the FAIA audit file, the annual VAT return, the franchise and
+  group regimes, and corporate income tax.
+- **Estonia, as `packs/ee/`, a pack written from the outside in.**
+  **`packs/ee/`** carries an original chart of 120 accounts, 29 taxes, form KMD
+  and the two statements of the annual report, and it compiles to
+  `supabase/seed/11_pack_ee.sql`. Nothing in the core changed for it: no
+  migration, no function, no column, and `tests/golden.test.ts` replayed its
+  fourteen documents without knowing that Estonia exists.
+  **The rate history is in the pack, because a code is a rate at a date.** The
+  standard rate is there three times — 20 % to the end of 2023, 22 % to 30 June
+  2025, 24 % since — so a document dated in 2024 books at the rate of 2024 and
+  a credit note correcting it lands in the box today's form keeps for it. The
+  24 % carries no end date: the reversion to 22 % in 2029 was enacted and then
+  repealed with the Act that carried it.
+  **The chart is written, not copied.** Estonia prescribes none, so this one
+  follows the convention Estonian practice shares — four digits, four classes,
+  equity inside class 2 — and is blocked so that each range of codes maps onto
+  one line of the statutory balance sheet or income statement.
+  **Form KMD nests, and the pack says how it handled that.** A tax reports its
+  base to one box; the form asks for the same amount in a box, in the memo box
+  inside it, and sometimes in a third. The pack posts to the innermost box and
+  rebuilds every printed parent as a total, which takes six boxes the form does
+  not print, all marked `hidden`. `packs/ee/README.md` lists them.
+  **Status `community`**, and it stays there until an Estonian accountant has
+  read it and put their name in the manifest. Every rate, box and mention cites
+  its article; six things the core could not express are recorded in
+  [`docs/international.md`](docs/international.md) with a proposed fix, and none
+  of them was patched into the core for one country.
+- **A pack declares the number its compiled seed carries, and a published
+  number never changes.**
+  It was the pack's rank in the alphabetical list of slugs, so inserting a
+  country in the middle of the alphabet renamed the seed of every country after
+  it — a release renaming a file that installations already hold. **`seed_sequence`
+  is now a required field of the manifest**: Belgium 10, France 11, Luxembourg
+  12, Estonia 13, and nothing sorts anything. `ekwo pack check` refuses a pack
+  that declares no number and `ekwo pack build` refuses two packs claiming one.
+  The three published seeds keep their names; each gains one changed line, the
+  checksum of a manifest that now carries the field.
+
+- **`ekwo doctor` compares the database to an inventory of what the release
+  defines.**
+  The check knew how to say that a table had no policy; it could not say that a
+  table was gone. **`packages/cli/assets/expected-objects.json`** is now the
+  list of everything a release defines — tables and their columns, views,
+  functions with their signature, policies, triggers and types, per schema —
+  and it is **generated from the migrations** by
+  `scripts/generate-expected-objects.mjs`, exactly as `docs/schema.md` is, never
+  kept by hand. It ships inside the package, so `npx ekwo doctor` carries it,
+  and two CI jobs hold it there: one regenerates it and fails on a difference,
+  one diffs the shipped copy against the repository's.
+  **Missing, extra and a policy are three different answers.** Missing means the
+  installation is behind or damaged, and fails. Extra means the operator added
+  their own object, and is reported as information. A policy missing *or* added
+  on a table of this schema fails either way round, because row level security
+  is the security model. A column whose type has moved is reported as changed.
+  `ekwo doctor` still exits `1` on a problem and `0` on everything else, so it
+  stays usable as a deployment gate.
+  **A module is required of a database that carries it**, and a module whose
+  migrations never ran is named and skipped. **A database older than the CLI is
+  compared anyway**, and the report says which version each side is at.
+  `--json` carries the whole comparison, section by section. `npm run inventory`
+  regenerates the file in a checkout.
+
+- **A golden year of books per country pack, and a legal source on every tax
+  and every box.**
+  A pack could describe a country but could not be wrong in a way anyone would
+  notice: a tax that posts to the wrong grid and a grid that expects the wrong
+  postings agree with each other, the seed compiles and the return is wrong.
+  **`packs/<cc>/golden/`** is the second opinion — `scenario.json`, ten
+  documents at least of one financial year with the payments that settle some
+  of them, and beside it three generated files holding what the engine makes of
+  them to the cent: `vat_return.json` period by period, `statements.json` line
+  by line, `trial_balance.json` account by account.
+  **One runner, and no country inside it.** `tests/golden.test.ts` reads
+  `packs/`, installs a company on each pack from what that pack's own scenario
+  declares, replays it through `post_document`, `post_payment` and `reconcile`,
+  and compares. What it demands of a scenario it demands of the pack: a tax due
+  on collection is required of a scenario whose pack has one, and of no other.
+  `UPDATE_GOLDEN=1 npm test -- tests/golden.test.ts` rewrites the three
+  expectation files and never the scenario.
+  **A pack without a golden is refused** — by `readPack`, so by `ekwo pack
+  check` and by the CI. A pack that cannot have one says why in its manifest,
+  under `"golden": { "exempt": "…" }`, and the commands print the sentence.
+  `packs/generic` is the only exemption here: a framework has no chart, no
+  journal, no tax and no currency, so no company can be installed on it.
+  **`legal_reference` is now required on every tax and on every box of a
+  declaration**, and the thirty-one Belgian grids and twenty-two French lines
+  carry theirs. A golden proves internal coherence and never legal truth, which
+  is exactly why the source and `certification.status` have to carry the rest.
+  **`.github/CODEOWNERS`** names an owner per pack.
+  The first run found two things in the French pack, reported rather than
+  patched away: line 01 of the CA3 can come out negative when a quarter's
+  credit notes exceed its sales, and line 08 does not tie to itself on an
+  intra-Union acquisition, whose base goes to line 03 and whose tax goes to
+  line 08. Both are in [`docs/decisions.md`](docs/decisions.md).
+  Belgium moves to 1.5.1, France to 1.6.1 and the generic framework to 1.1.1:
+  a legal source is a patch.
+
+- **An end-to-end test: the same release installed two ways, and a whole
+  financial year played out.**
+  `npx ekwo init` and `supabase db push` + `psql -f` have always been
+  documented as interchangeable, and nothing checked it. `tests/e2e/` now
+  installs the release both ways into two databases and compares the migration
+  history, every column of every table, the body of every function and every
+  row of every table the seeds write, rendered and sorted. The second path
+  imports nothing from the CLI, so what is compared is two installers rather
+  than one installer twice.
+  **It found one difference, in the documentation rather than the code.** The
+  by-hand instructions in the README named two seed files of the four
+  `config.toml` lists, so an installation made that way came up with a chart of
+  accounts and no generic financial statements, and nothing failed until
+  somebody asked for a balance sheet. The README is corrected and a test reads
+  it: every seed file the installer applies must be named there. On every byte
+  of reference data, the two paths agree.
+  **Then the year.** A company installed from the frozen 1.0.0 seeds is brought
+  to this release, its pack upgraded through `ekwo pack upgrade`, and carried
+  through the opening balance, a sale, a purchase, the VAT return, both
+  financial statements, the close, the re-opening and the close again — once
+  per country the frozen seeds carry, naming none of them: the accounts, the
+  journals, the tax, the declaration form and the schemes all come out of the
+  pack. Every figure is compared to one the test works out itself from
+  `sum(debit) - sum(credit)` and the pack's own rows, including the rule engine
+  that puts an account on a line and the evaluator the forms and the statements
+  share. Closing is what makes a balance sheet balance, and both sides of that
+  are asserted: out by exactly the result before, nil after.
+  **`npm run e2e:supabase`** does the same against a real Supabase project,
+  through the published binary, a GoTrue sign-in and PostgREST — the four
+  things PGlite is not. It installs at the previous tag, migrates, upgrades the
+  pack, signs in, books, files and closes, and prints a pass/fail table. It is
+  run by hand before a release is tagged, never by the CI, and it refuses a
+  database that already holds an `instance` row.
+
+- **The country pack is documented end to end, and an installation says what it
+  leaves for its operator to do.**
+  [`docs/packs.md`](docs/packs.md) now describes the format file by file, the
+  compiler and the three kinds of seed it writes, the checksum that makes a seed
+  stale when any file of its pack moves, **every rule `ekwo pack check`
+  applies** grouped by what it guards — manifest, chart, roles, closing style,
+  taxes, declaration form, statements and their fact keys, legal mentions,
+  languages, golden scenario, module sections — and what it deliberately does
+  not refuse. The certification policy says who may set `community`,
+  `maintained` and `reviewed`, what a reviewer puts their name to, and what
+  `.github/CODEOWNERS` is and is not. "Adding a country in a day" is a ten-step
+  walkthrough a contributor can follow from `cp -r packs/be packs/xx` to the
+  pull request.
+  [`CONTRIBUTING.md`](CONTRIBUTING.md) states the seven invariants of a country
+  pack: data never code, no country literal in the core, an account resolved by
+  its role, a legal reference on every tax and every box, a golden scenario or a
+  written reason there is none, a review that is a named professional, and
+  nothing ever deleted from a pack.
+  [`supabase/seed/README.md`](supabase/seed/README.md) says what each seed file
+  holds, which five are generated and must not be edited, the order they are
+  applied in and who applies each, with the counts corrected against the packs
+  as they stand.
+  [`docs/international.md`](docs/international.md) records phase 0 as delivered,
+  item by item, without moving the roadmap.
+  **And `ekwo init` prints, at the end of a successful installation, the four
+  things it cannot do for you**: turn off self sign-up on your Supabase project,
+  keep two administrators, keep the `service_role` key off machines that do not
+  need it, and read [`DISCLAIMER.md`](DISCLAIMER.md) before filing anything.
+  Three of the four are settings of a project rather than rows in a database, so
+  no connection string reaches them and `ekwo doctor` does not pretend to check
+  them. The installation guide carries the same four in the same words, and a
+  test reads both.
+  The installation guide also gains what a script hits before it hits anything
+  else: **`ekwo init` refuses to pick a country, a chart of accounts or a
+  language for you** outside a terminal, and names the flag; the four reference
+  seeds are named, in the order they are applied; and the catalogue check of
+  `ekwo doctor` says what it does **not** cover — constraints, indexes and
+  function bodies. **Where table access comes from is written down**: it was a
+  known gap when this guide was written, and the entry above closed it in the
+  same release, so the section says what the schema grants and keeps the
+  history that explains the symptom — an installation nobody has migrated,
+  whose `public` schema was recreated without the project's default
+  privileges, is one the doctor calls healthy and PostgREST answers
+  `permission denied for table companies` on.
+  Two examples in that guide were broken and are corrected: the non-interactive
+  `ekwo init` one-liner and the scratch-project procedure both omitted
+  `--chart` and `--language`, which the Belgian pack has made mandatory since it
+  gained a second chart of accounts.
+
+### Changed
+
+- **A test may book in a country. It may not expect one.**
+  Eleven test files named `BE`, `FR` and `LU` by hand: six loops over a literal
+  pair of pack slugs, and tables keyed by country for the statements, the
+  declaration forms, the charts, the exchange accounts, the closing parameters
+  and the fixed-asset rules. Adding Luxembourg meant editing most of them, and
+  until they were edited the pack was checked by nothing.
+  Every one of those now walks `listPacks()` through the new
+  `tests/helpers/packs.ts` and takes its expectation from the pack itself — a
+  role of the manifest, an account of a chart, a box of the form. A test that
+  needs the pack with a particular property asks for that property
+  (`packWhere('taxes on collection', …)`) instead of naming the country that
+  has it. The set of certification statuses comes from the published schema
+  rather than a literal pair.
+  A claim only one pack can make — a fact key of a national filing taxonomy —
+  moves to **`packs/<cc>/golden/expectations.json`**, beside the golden and
+  outside the pack checksum, read by one generic runner. Adding a country now
+  touches the pack folder and its `golden/`, and nothing under `tests/`.
+  `scripts/check-no-country-literals-in-tests.mjs` runs in the CI and keeps it
+  that way; `docs/packs.md` describes the two places a pack is written.
+
+- **A base is written once, and printed as often as the form likes.**
+  A tax carries one `base` posting per kind of document, so a taxable amount
+  has one definition and reaches one box — and a national form that prints that
+  base a second time gets a computed `total`, not a second posting. The rule
+  was enforced by `ekwo pack check` and written down nowhere. `docs/packs.md`
+  now carries it where the postings are defined and again in the walkthrough,
+  with the Luxembourg return as the worked example: box `472` adds the rate
+  bases of section II instead of being posted to, and the Estonian `6.1` / `6`
+  / `1` nesting is the same shape three deep. Documentation only: no pack and
+  no function changed.
+
+- **The code and the type of an account stop moving once it is in use.**
+  Every reference to an account inside a company is a foreign key on
+  `accounts(id)`, so renumbering one appeared to break nothing. The rules do
+  not follow the key: a financial statement maps an account to a line by its
+  code, and the eighteen account types are what put an account on one side of
+  the balance sheet or in the income statement. Moving `700000` to `701000`
+  moved a year of bookkeeping to another line of a statement somebody had
+  already filed, and the `accounts_write` policy had nothing to say about it.
+  A trigger (migration `20260914144731`) now refuses a change of `code`
+  (`account_code_frozen`) or of `account_type` (`account_type_frozen`) on an
+  account that carries a ledger line, is named by a tax posting, or plays one
+  of the company's roles. The label, the translations, the notes, the parent,
+  `reconcilable`, `deprecated` and `pinned` stay free, and deprecating remains
+  the way to retire an account that was wrong.
+  One consequence is deliberate: `pack_upgrade(…, apply => true)` now fails by
+  name rather than moving a used account between statements. That difference
+  was already a `review`, which is the rule that exists for a person to look.
+
+- **`tax_report_templates.period` is now `periods`, a list, with no default.**
+  The column defaulted to `month_or_quarter`, so a pack that had never
+  considered its own cadence filed on Belgium's and France's, silently, in a
+  column a reader would take for data. There is no default now, and
+  `ekwo pack check` refuses a form that names none. `tax_report.json` accepts
+  either the list or the single word it used to take.
+
+- **The real-project end-to-end run times every step.** `npm run e2e:supabase`
+  printed a pass/fail table; it now prints how long each step took and the
+  total beside it. Over a pooler and a hosted PostgREST what matters about a
+  release is not the total but which step holds it — a migration set that
+  doubled, a first query waiting on a cold project, a close that got slower as
+  the ledger grew — and a number that moved between two releases is a question
+  worth asking before the tag, not after.
+
+### Fixed
+
+- **`ekwo pack check` refuses a sign on a statement line computed from other
+  lines.** `sign: -1` is how a scheme prints a credit balance as a positive
+  figure, and `financial_statement()` applies it when it sums the line from the
+  ledger. A total is worked out from lines that already read that way, and the
+  evaluator then multiplied the total by the total's own sign as well — so a
+  scheme that flipped a credit line and flipped the subtotal above it got the
+  figure back the way it started, silently. It cost the Luxembourg pack a wrong
+  set of golden figures, caught by somebody reading them. The two are refused
+  together, the explicit `1` included; `minus` is how a total subtracts. The
+  evaluator is unchanged and no pack combined the two, so no golden figure
+  moved.
+
+- **`ekwo pack upgrade` left a company on the old version when the release
+  changed nothing the difference compares.**
+  The command asked for the difference first and returned early when it was
+  empty, saying the company was already at the version this installation holds.
+  Those are two different claims: a patch release — a legal source added to a
+  tax, a box renamed — moves the pack version and touches no natural key, so
+  the difference is empty and `company_packs` went on recording the old
+  version for ever, with `ekwo pack status` calling the company behind every
+  time. `pack_upgrade()` already handled an empty difference by recording the
+  version, so the early return is gone rather than corrected. Found by the
+  end-to-end run against a real project, upgrading an installation made at
+  v0.2.0: Belgium moved 1.5.0 to 1.5.1 and the company stayed on 1.5.0.
+
+- **`ekwo status` and `ekwo doctor` reported an ordinary installation as ahead
+  of the CLI.**
+  `ekwo migrate` applies the modules' migrations beside the socle's and records
+  them in the same history, which is what it is meant to do. The other two
+  computed their gap against the socle alone, read those versions as history
+  they had no file for, and told the operator to upgrade a CLI that was already
+  current. All three now build the same set.
+
+- **`docs/schema.md` no longer reorders its overloads on its own.** The
+  function table was ordered by name alone, and two functions of the same name
+  were left in whatever order the rows came off `pg_proc` — so rewriting one of
+  them could move the pair in a document nobody had edited. It now orders by
+  name and `oid`, and the two `resolve_line_account` entries swapped places
+  once, for good.
+
+### Security
+
+- **The schema grants its own rights, and the anonymous role holds none on any
+  table.**
+  Until now not one migration gave `anon` or `authenticated` a privilege on a
+  table. A Supabase project carries default privileges on `public` that hand
+  `all` on every new table, sequence and function to the three API roles, so
+  everything worked — and `anon`, the role behind the publishable key any
+  visitor holds, had INSERT, UPDATE and DELETE on every table of the ledger
+  with row level security as the only thing in the way.
+  **Migration `20260914151207` declares the privileges by name**, table by
+  table and view by view, with one migration each for the `assets` and
+  `budgets` modules. `authenticated` may attempt exactly the verbs the policies
+  of that table are prepared to judge: the four on the twenty-six a policy
+  `for all` governs, SELECT alone on the twenty-four a country pack or a
+  `security definer` function writes, and SELECT alone on `audit_log`, which
+  is append-only by trigger for everyone including its owner. `anon` gets
+  nothing on any table, view or sequence, and keeps the ten policy helpers it
+  already had. `service_role` gets what a person gets. The twenty-nine trigger
+  bodies stop being callable at all.
+  **No wildcard, and no `alter default privileges` as the mechanism** — that
+  is the hidden dependency being removed. The project's defaults are taken
+  back and stopped; Ekwo's own EXECUTE default from `20260911210131` goes with
+  them. From here, **a migration that creates a table, a view or a function
+  grants it in the same file**.
+  **`anon` could read every table of the `assets` and `budgets` modules**,
+  whose opening migrations carried `grant select on all tables … to anon`.
+  Row level security answered every such read with an empty set, so nothing
+  leaked; the surface is closed now.
+  **`ekwo pack upgrade` could not have worked through PostgREST.**
+  `pack_upgrade()` writes its own audit line and was `security invoker`, so it
+  called `audit_record()` — closed to `authenticated` since `20260914103412` —
+  as the caller. On a real project the upgrade committed and the trail did
+  not. `20260914152840` makes the function `security definer`, like its peers,
+  and the capability test it already carried is unchanged.
+  **What enforces it**: the `grants` section of
+  `packages/cli/assets/expected-objects.json` — the inventory that already
+  carries the objects a release defines, because a privilege and the object it
+  sits on ship in the same migration — generated by `npm run inventory` and
+  refused by the CI when it drifts; `tests/grants.test.ts`, which compares the catalogue to it,
+  checks the doctrine against `pg_policy`, and books a whole country pack's
+  golden year on a database whose roles start with nothing at all; and
+  `ekwo doctor`, which reports a missing grant or an extra one to `anon` as a
+  problem and a wider grant to `authenticated` as a warning.
+  **The test harness stopped supplying privileges.** The Supabase shim and
+  `freshDatabase` used to grant the three roles everything, which made the
+  whole suite pass against privileges no installation was guaranteed to have.
+  Every test file is now also a test of the grants.
+  **The installation guide says the new answer and keeps the old symptom.**
+  `packages/cli/README.md` described where table access comes from as a known
+  gap; it now says that the schema grants its own rights, what that means for
+  an application that reads a table without signing a user in, and why an
+  installation nobody has migrated can still answer `permission denied for
+  table companies`.
+
 ## [0.2.0] — 2026-09-14
 
 The first published release. `0.1.0` below was the first schema and was never
@@ -978,5 +1541,6 @@ against the latest tag, and a mistake is corrected by a new migration, always.
   period locks, reports, row level security, the instance singleton and its
   roles, and a golden FEC export.
 
-[Unreleased]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.2.0...HEAD
+[Unreleased]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.3.0...HEAD
+[0.3.0]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/Ekwo-ai/ekwo-os/releases/tag/v0.2.0

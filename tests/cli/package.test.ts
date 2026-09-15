@@ -65,6 +65,15 @@ describe('the assets copied into the package', () => {
     expect(await sqlFiles(join(temp, 'seed'))).toContain(DEMO_SEED);
   });
 
+  it('carry the inventory the doctor compares a database against, byte for byte', async () => {
+    temp = await mkdtemp(join(tmpdir(), 'ekwo-assets-'));
+    const copied = await copyAssets(temp);
+
+    expect(copied).toContain('expected-objects.json');
+    const source = join(repoRoot, 'packages', 'cli', 'assets', 'expected-objects.json');
+    expect(await digest(join(temp, 'expected-objects.json'))).toBe(await digest(source));
+  });
+
   it('contain nothing from ee/', async () => {
     temp = await mkdtemp(join(tmpdir(), 'ekwo-assets-'));
     const copied = await copyAssets(temp);
@@ -78,6 +87,8 @@ describe('the assets copied into the package', () => {
     }
 
     // And the runtime resolver never points there either.
+    // country-literal: `ee/` is the enterprise-edition folder of this
+    // repository. It is not the Estonian pack, which lives in `packs/ee/`.
     expect(migrationsDir(resolveBundleDir())).not.toContain(`${join('ee', 'supabase')}`);
   });
 });

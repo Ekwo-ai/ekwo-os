@@ -156,6 +156,7 @@ the return say the same thing, because they are the same rows.
 | [`currencies`](#currencies) | ISO 4217 currencies known to this instance. |
 | [`currency_rates`](#currency_rates) | Dated exchange rates. A document stores the rate it used; this table is the history. |
 | [`document_lines`](#document_lines) | Document lines in a table, not JSON: EN 16931 needs a VAT category per line and the FEC needs the detail. |
+| [`document_shares`](#document_shares) | Public links onto a document. The token is handed over once and kept only as a sha256; the link is withdrawn by revoking it, never by editing it. |
 | [`documents`](#documents) | Sales and purchase invoices, credit notes, quotes and orders. `state` is the document, `payment_state` the settlement. |
 | [`entries`](#entries) | Journal entries. A document and its entry are two layers joined by a foreign key. |
 | [`entry_line_analytics`](#entry_line_analytics) | Analytic split of a ledger line. One row per value, share in percent. |
@@ -230,6 +231,7 @@ Chart of accounts, one per company.
 | `updated_at` | `timestamp with time zone` | not null |
 | `name_i18n` | `jsonb` | not null — Label by language, copied from the template at install. `name` holds the language the company chose. |
 | `statement_hint` | `text` | Free note: the statement line this account is meant for. Read by nothing — the rules of a statement decide — and kept so a chart can carry the intent. |
+| `pinned` | `boolean` | not null — Whether this account belongs to the working chart of the company whatever the ledger says. Set by install_country_template() on everything it wires, and by an operator afterwards. Display only: pinning restricts nothing. |
 
 Constraints:
 
@@ -510,6 +512,7 @@ Legal entities kept in this instance. One instance may hold several.
 | `activity_scheme` | `text` | Which register activity_code belongs to. A code without its scheme cannot be looked up. |
 | `default_bank_account_id` | `uuid` | The account a customer is asked to pay into. It fills documents.payee_iban (BT-84) when a sales document names none. |
 | `document_template` | `text` | A code the renderer interprets. The core never reads it: what a document looks like is not an accounting question. |
+| `vat_period` | `declaration_period` | How often this company files its periodic return. Null means it has not been recorded, which is not an error and not a cadence: the books are kept the same either way, vat_return() imposes nothing, and `ekwo status` says "not recorded" rather than naming a cadence nobody chose. |
 
 Constraints:
 
@@ -696,6 +699,7 @@ Which template account plays which role, per country.
 | `name_i18n` | `jsonb` | not null — The country's own name by language, from packs/<cc>/i18n/. `name` holds it in English, which is what a country pack manifest is written in. |
 | `languages` | `text[]` | not null — Languages this country pack publishes every label in, the language of the pack itself first. An installer offers them; nothing in the schema restricts a company to them. |
 | `opening_entry_label` | `text` | Wording the computed opening lines of an export carry, from the pack, in the language the administration of this country reads. Null falls back to a neutral English label: the format fixes no wording, so there is no wrong answer to guess at. |
+| `vat_period_default` | `declaration_period` | Cadence a company of this country files on unless it says otherwise, from the pack. Null wherever the law makes the cadence depend on a fact about the company — turnover in Belgium, France and Luxembourg — because a pack proposing one of two lawful answers there would be choosing a filing deadline for somebody it knows nothing about. Set where the law gives one answer for everybody, as in Estonia. Read at install; never read by the return. |
 
 Constraints:
 
@@ -723,6 +727,7 @@ Country packs loaded in this installation, with their version and certification.
 | `certified_at` | `date` |  |
 | `checksum` | `text` | sha256 of the pack files, so a changed pack is visible without a diff. |
 | `installed_at` | `timestamp with time zone` | not null |
+| `sources` | `jsonb` | not null — Register of the texts this pack was built from, in the pack's own order: [{key, title, publisher, url, consulted_on, kind}]. `kind` is one of law, regulation, form, standard, portal, guidance. Written by the generated seed; never a copy of the text itself. |
 
 Constraints:
 
@@ -798,6 +803,33 @@ Constraints:
 - `CHECK (((discount_percent >= (0)::numeric) AND (discount_percent < (100)::numeric)))`
 - `CHECK (((line_type <> 'product'::document_line_type) OR (account_id IS NOT NULL)))`
 - `PRIMARY KEY (id)`
+
+### `document_shares`
+
+Public links onto a document. The token is handed over once and kept only as a sha256; the link is withdrawn by revoking it, never by editing it.
+
+| Column | Type | Notes |
+|---|---|---|
+| `id` | `uuid` | not null |
+| `company_id` | `uuid` | not null |
+| `subject_kind` | `share_subject_kind` | not null |
+| `document_id` | `uuid` |  |
+| `token_hash` | `text` | not null — sha256 of the token, hex. The token itself is returned by share_document() and stored nowhere. |
+| `expires_at` | `timestamp with time zone` | When the link stops answering. Null means it answers until it is revoked, which is a deliberate choice and not an oversight: an invoice is looked at years later. |
+| `revoked_at` | `timestamp with time zone` | When the link was withdrawn. A withdrawn link answers exactly like one that never existed. |
+| `created_by` | `uuid` | auth.users.id of whoever created it. No foreign key, for the same reason company_members has none. |
+| `created_at` | `timestamp with time zone` | not null |
+| `view_count` | `integer` | not null — How many times the document was read through this link. No address and no user agent: who opened it and from where is a log the application keeps, with the retention policy that goes with it. |
+| `last_viewed_at` | `timestamp with time zone` |  |
+
+Constraints:
+
+- `CHECK (((expires_at IS NULL) OR (expires_at > created_at)))`
+- `CHECK (((subject_kind = 'document'::share_subject_kind) = (document_id IS NOT NULL)))`
+- `CHECK ((token_hash ~ '^[0-9a-f]{64}$'::text))`
+- `CHECK ((view_count >= 0))`
+- `PRIMARY KEY (id)`
+- `UNIQUE (token_hash)`
 
 ### `documents`
 
@@ -980,10 +1012,12 @@ The installation itself. Exactly one row. Registration with Ekwo is optional and
 | `contact_email` | `text` | Opt-in only: an address to reach the operator. Empty unless they asked to register. |
 | `registered_at` | `timestamp with time zone` | Opt-in only: when the operator registered with Ekwo. Empty means not registered, which is a supported state. |
 | `updated_at` | `timestamp with time zone` | not null |
+| `public_base_url` | `text` | Where this installation answers on the public internet, as an origin with no trailing slash — the base a shared document link is built on. Null where the operator has not said, and then a share returns its token with no URL. |
 
 Constraints:
 
 - `CHECK ((country ~ '^[A-Z]{2}$'::text))`
+- `CHECK (((public_base_url IS NULL) OR (public_base_url ~ '^https?://[^[:space:]]+$'::text)))`
 - `CHECK (((registered_at IS NULL) OR (contact_email IS NOT NULL)))`
 - `CHECK ((id = 1))`
 - `PRIMARY KEY (id)`
@@ -1371,6 +1405,7 @@ The boxes of a declaration form, and the plus/minus lists a total is computed fr
 | `legal_reference` | `text` |  |
 | `valid_from` | `date` | Null means the validity of the form itself. Filled only when a box appears or disappears inside one version of a form. |
 | `valid_to` | `date` |  |
+| `source_key` | `text` | Key of the entry in country_packs.sources where this box's legal_reference can be read. Null where the pack names none. |
 
 Constraints:
 
@@ -1389,7 +1424,7 @@ Declaration forms per country, from packs/<cc>/tax_report.json. Reference data: 
 | `code` | `text` | not null — BE-VAT-PERIODIC, FR-CA3. Immutable once published; a new version of a form is a new code with its own validity. |
 | `name` | `text` | not null |
 | `name_i18n` | `jsonb` | not null — Label by language. The pack format has no key for it yet, so it stays empty until i18n/ carries one. |
-| `period` | `text` | not null |
+| `periods` | `declaration_period[]` | not null — Cadences this form is filed on, from packs/<cc>/tax_report.json. A list because one set of boxes may be filed monthly, quarterly or annually depending on turnover. No default: a pack that names none is refused by `ekwo pack check`. |
 | `valid_from` | `date` | not null |
 | `valid_to` | `date` |  |
 | `legal_reference` | `text` |  |
@@ -1398,7 +1433,7 @@ Declaration forms per country, from packs/<cc>/tax_report.json. Reference data: 
 Constraints:
 
 - `CHECK ((country ~ '^[A-Z]{2}$'::text))`
-- `CHECK ((period = ANY (ARRAY['month'::text, 'quarter'::text, 'month_or_quarter'::text, 'year'::text])))`
+- `CHECK ((cardinality(periods) >= 1))`
 - `CHECK (((valid_to IS NULL) OR (valid_to >= valid_from)))`
 - `PRIMARY KEY (country, code)`
 
@@ -1430,6 +1465,7 @@ Reference taxes per country, with their period of validity.
 | `cash_basis` | `boolean` | not null — The tax falls due when the invoice is paid rather than when it is issued, which is how France taxes services. post_document() books it on the transition account below and on no declaration box; reconcile() moves the settled share to the account and the box it is declared on. |
 | `cash_basis_transition_account_code` | `text` | Account the tax waits on between the invoice and its payment, by code in the chart of this country. Only read when cash_basis is true. |
 | `name_i18n` | `jsonb` | not null — Label by language, from packs/<cc>/i18n/. A translation of the same tax, never a different rate or a different rule. |
+| `source_key` | `text` | Key of the entry in country_packs.sources where this tax's legal_reference can be read. Null where the pack names none. |
 
 Constraints:
 
@@ -1503,6 +1539,8 @@ Constraints:
 |---|---|
 | `accept_invitation(p_token text)` | Turns an invitation into a membership for the signed-in user, whose address has to be the one invited. Single use, and refused once expired. |
 | `account_id_by_code(p_company_id uuid, p_code text)` | Account of a company by its code, or NULL. |
+| `accounts_guard_frozen()` | Refuses a change of code or of account_type on an account that carries ledger lines, is named by a tax posting or plays a company role. The label, the translations, the parent, reconcilable, deprecated and pinned stay editable. |
+| `accounts_in_use(p_company_id uuid, p_from date, p_to date)` | The accounts of a company that are in use: moved by a posted entry in the period — ever, when no period is given — or referenced by the configuration of the company — a role default, a contact override, a journal, a tax posting, a cash-basis transition, a bank account, a product — or held by a module the company has enabled, or pinned. Deprecated accounts are left out. A configuration reference is not dated; only the movement is. This is a reading: nothing here restricts what may be booked. |
 | `aged_balance(p_company_id uuid, p_at date, p_group text)` | Ageing of what is still open, read from the ledger and from the matching, written at the decimals of the company's currency. Two groups, receivable and payable; anything else is refused by name. |
 | `amount_text_format(p_rounding money_rounding)` | The to_char mask an amount of this currency is written with. Two decimals for the euro, none for the yen, three for the dinar. |
 | `assert_period_open(p_company_id uuid, p_date date, p_is_tax boolean)` | Raises when a date is protected by a lock date or a closed fiscal year. |
@@ -1525,10 +1563,13 @@ Constraints:
 | `currency_of_company()` | Fills currency_code from the company when the caller named none. The one place the question is answered for a table that belongs to a company. |
 | `currency_unit(p_rounding money_rounding)` | The smallest amount a currency has: a cent in the euro, a yen in the yen. A tolerance is written as a fraction of this rather than as a fraction of a cent. |
 | `current_api_key()` | The key presented in this transaction, or nothing. What a client reads back to know what it may do. |
+| `declaration_period_of(p_from date, p_to date)` | The cadence a pair of dates is a whole one of — month, quarter, year — or null when the two dates are not a filing period at all. |
 | `disable_module(p_company_id uuid, p_code text)` | Disables a module on a company, unless the module says it still holds data — `<schema>.can_disable(company)` returning a sentence refuses, returning null allows. Nothing the module wrote is deleted. Needs company.write. |
 | `document_lines_amount_untaxed()` | Derives a line's amount from its quantity, price and discount, rounded once at the decimals of the document's currency. What the generated column used to do, minus the assumption that every currency has cents. |
+| `document_share_refusal(p_document documents)` | Why this document may not be shared, or null when it may. Sales only, never cancelled, never an unposted invoice, always numbered. |
 | `documents_default_payee_iban()` | A sales document with no payee IBAN takes the company's default bank account. A purchase document never does: the payee there is somebody else. |
 | `documents_refresh_amount_paid(p_document_id uuid)` | Recomputes what a document has been settled by, from the matched amounts on its third-party lines. |
+| `ec_sales_list(p_company_id uuid, p_from date, p_to date)` | The recapitulative statement of intra-Community supplies for a period: one line per customer VAT number and per nature — goods, services, and whatever the treatment vocabulary gains next — summed from the posted ledger in the company's currency, credit notes deducted. A supply that cannot be declared comes back with the reason in `issue` rather than being left out. No country rule lives in this function, and it refuses no period: how often a statement is filed is not what companies.vat_period records. |
 | `ekwo_schema_version()` | Schema version of the installed release. Bumped by a migration, never by hand. |
 | `enable_module(p_company_id uuid, p_code text, p_settings jsonb)` | Enables a module on a company, and updates its settings when it is already enabled. Needs company.write, checked here because the table has no write policy. |
 | `entries_guard_kind()` | Keeps entries.kind on `normal` outside the three functions that open and close a year. A label any client may set is a label a statement cannot be built on. |
@@ -1544,7 +1585,7 @@ Constraints:
 | `has_capability(p_company_id uuid, p_capability text)` | Whether the current caller may do one named thing in one company — a signed-in member by their preset and their adjustments, or a machine key by its own list. Revoked beats granted, and a non-member holding no key holds nothing. |
 | `has_opening_entry(p_fiscal_year_id uuid)` | Whether a fiscal year already carries an opening entry that still stands — an imported balance or the re-opening of the year before. |
 | `init_instance(p_organization_name text, p_country character, p_edition instance_edition)` | Records the installation. Called once, by the installer. Leaves the registration fields empty. |
-| `install_country_template(p_company_id uuid, p_country character, p_language character, p_chart_code text)` | Copies one chart of a country pack into a company in one language, with the country's journals and taxes, wires the default roles, and records the pack version and the chart in company_packs. |
+| `install_country_template(p_company_id uuid, p_country character, p_language character, p_chart_code text)` | Copies one chart of a country pack into a company in one language, with the country's journals and taxes, wires the default roles, pins the accounts it wired, and records the pack version and the chart in company_packs. |
 | `invite_member(p_company_id uuid, p_email text, p_role member_role, p_capabilities jsonb, p_valid_for interval)` | Invites an address into a company and returns the token once. Only the hash is stored; re-inviting the same address revokes the pending invitation. |
 | `is_any_company_member()` | Whether the current user belongs to at least one company of this installation. |
 | `is_company_owner(p_company_id uuid)` | Whether the current user is on the owner preset of a company. False, never NULL, for somebody who is not a member — a guard written as `if not is_company_owner(…)` has to fire for a stranger. |
@@ -1563,8 +1604,9 @@ Constraints:
 | `numbering_rules(p_company_id uuid, OUT number_format text, OUT numbering_gapless boolean)` | What the country of a company says about its document numbers: the pattern, and whether the law forbids a hole. The only function that reads either column. |
 | `opening_balance(p_company_id uuid, p_fiscal_year_id uuid, p_lines jsonb, p_allow_result_accounts boolean)` | Posts a trial balance from a previous system as the opening entry of a fiscal year. Balance-sheet accounts only, unless the caller allows the others. |
 | `opening_journal_id(p_company_id uuid)` | The journal the opening and year-end entries go on, named by the pack of this company's country. Null when the pack names none, and the callers refuse rather than guessing at a code. |
-| `pack_upgrade(p_company_id uuid, p_country character, p_apply boolean)` | Moves a company to the country pack version this installation holds: additions copied in, closed validities applied, everything else listed and left alone unless the caller asks for it. Records what it did in the audit trail. The recorded version moves only when nothing is left waiting. |
+| `pack_upgrade(p_company_id uuid, p_country character, p_apply boolean)` | Moves a company to the country pack version this installation holds: additions copied in, closed validities applied, everything else listed and left alone unless the caller asks for it. Records what it did in the audit trail. The recorded version moves only when nothing is left waiting. Definer, because the line it records goes through audit_record(), which no client may call; the caller still needs company.write on the company. |
 | `pack_upgrade_diff(p_company_id uuid, p_country character)` | What separates a company from the country pack this installation now holds, by natural key, each difference carrying the rule that decides what an upgrade does with it. |
+| `pin_referenced_accounts(p_company_id uuid)` | Pins every account this company points at by a role, a journal, a tax posting or a cash-basis transition, and returns how many accounts are pinned afterwards. Called by install_country_template(); callable again after an upgrade added a tax. |
 | `post_document(p_document_id uuid)` | Books a document: base lines, tax lines from tax_postings — the non-deductible share on the accounts of the lines, a cash-basis tax on its transition account and on no box — a counterpart that balances by construction, and the company currency in the ledger at the rate the document carries. |
 | `post_entry(p_entry_id uuid)` | Validates, numbers and posts an entry. Raises rather than warning: a swallowed error is a missing entry. Where the country forbids a hole in the sequence it refuses a number chosen by hand, unless the caller holds entries.import — and then the counter catches up to it. |
 | `post_module_entry(p_company_id uuid, p_module_code text, p_ref text, p_date date, p_description text, p_lines jsonb, p_journal_id uuid)` | The only way a module reaches the ledger: it hands over lines as data and this builds the draft and calls post_entry(). The tag (module_code, ref) is unique per company, so posting the same thing twice is refused by the database. |
@@ -1575,15 +1617,18 @@ Constraints:
 | `register_instance(p_contact_email text)` | Opt-in: records an address and a date so Ekwo can reach the operator. Never required, and reversible with unregister_instance(). |
 | `reopen_fiscal_year(p_fiscal_year_id uuid)` | Undoes a close: reverses the appropriation and closing entries it wrote and clears is_closed. Refused once a later year is closed or holds entries of its own. |
 | `resolve_counterpart_account(p_company_id uuid, p_contact_id uuid, p_is_sale boolean)` | Third-party account by role: contact override first, company default second. Never by code prefix. |
-| `resolve_line_account(p_company_id uuid, p_doc_type doc_type, p_product_id uuid, p_account_id uuid)` | Account of a document line: the line, the product, the company default, the country model. Never a code prefix. |
 | `resolve_line_account(p_company_id uuid, p_doc_type doc_type, p_account_id uuid)` | Account of a document line: the line, then the company default, then the country model. Never a code prefix. |
+| `resolve_line_account(p_company_id uuid, p_doc_type doc_type, p_product_id uuid, p_account_id uuid)` | Account of a document line: the line, the product, the company default, the country model. Never a code prefix. |
 | `revoke_api_key(p_api_key_id uuid)` | Withdraws a key. There is no un-withdraw: a secret that has been out of the building is issued again, not brought back. |
 | `revoke_invitation(p_invitation_id uuid)` | Withdraws an invitation that has not been accepted. An accepted one is a member, and members are removed from company_members. |
+| `revoke_share(p_share_id uuid)` | Withdraws a link, now and for good. A withdrawn link answers exactly like one that never existed; there is no un-withdraw, because a secret that has been out of the building is issued again rather than brought back. |
 | `round_amount(p_amount numeric, p_rounding money_rounding)` | Rounds an amount at the decimals of its currency, by the method of its country. The only function of the schema that names a rounding method; every other one asks rounding_of() and passes the answer here. |
 | `rounding_of(p_company_id uuid, p_currency_code text)` | How this company writes an amount in this currency, or in its own when none is named. The only place currencies.decimal_places and country_defaults.rounding_method are read. |
 | `set_preferences(p_patch jsonb)` | Writes the signed-in user's preferences. A key that is present is written, null included; a key that is absent is left alone; a key nobody declared is refused. |
 | `set_updated_at()` | Generic BEFORE UPDATE trigger keeping updated_at honest. |
 | `settle_cash_basis_tax(p_document_id uuid, p_date date)` | Moves the share of a cash-basis tax that settlement has made due, from the transition account to the account and the box it is declared on. Derived from the ledger, so it is the same call whether a matching was made or undone. |
+| `share_document(p_document_id uuid, p_expires_at timestamp with time zone)` | Publishes a sales document behind a link and returns the token once — only its hash is stored. `url` is the instance's public base plus /shared/<token>, or null where the instance has not recorded one. A share is never edited: revoke it and make another. |
+| `shared_document(p_token text)` | One document, read by whoever holds its link: the header, the lines, the tax breakdown, the totals, the legal mentions in the document's own language, and what is still owed today. Returns null — the same null, in the same shape — for a token that is unknown, withdrawn, expired, or onto a document that may no longer be shared. |
 | `statement_account_matches(p_company_id uuid, p_statement_code text, p_from date, p_to date)` | Every account of a company with a balance in the period, and the statement line it falls on — null when no rule catches it. An income statement and an allocation section leave the closing entry out; a balance sheet keeps it. The single decision financial_statement() and unmapped_accounts() both read. |
 | `tax_rate_at(p_tax_id uuid, p_date date)` | Percentage in force at a date, NULL when the tax does not apply then. |
 | `touch_api_key(p_api_key_id uuid)` | Records that a key was used just now. A key that has never been used, and one that has not been used for a year, are both things an operator should be able to see. |
@@ -1592,7 +1637,7 @@ Constraints:
 | `unreconcile(p_reconciliation_id uuid)` | Undoes a matching, and with it what the matching had booked: the exchange difference it realised and the share of a cash-basis tax it had made due. |
 | `unregister_instance()` | Undoes register_instance(). Opting in is reversible, or it is not a choice. |
 | `use_api_key(p_secret text)` | Presents a machine key for the current transaction: has_capability() answers for it until the transaction ends. Refuses a key that is unknown, withdrawn or expired. |
-| `vat_return(p_company_id uuid, p_from date, p_to date, p_report_code text)` | Declaration boxes for a period: summed from the ledger, then the totals of the country's form worked out by evaluate_totals(), the same evaluator financial_statement() uses. No country rule lives in this function. |
+| `vat_return(p_company_id uuid, p_from date, p_to date, p_report_code text)` | Declaration boxes for a period: summed from the ledger, then the totals of the country's form worked out by evaluate_totals(), the same evaluator financial_statement() uses. Refuses a period the company does not file on, when it has recorded one. No country rule lives in this function. |
 
 ---
 
@@ -1615,6 +1660,8 @@ Fixed assets, their depreciation schedule and their disposal. Durations, declini
 | [`country_rules`](#assets-country_rules) | How one country depreciates and derecognises. Filled by `ekwo pack build` from packs/<cc>/assets.json, read where it stands, never copied into a company. |
 | [`depreciation_lines`](#assets-depreciation_lines) | One planned period of depreciation. `entry_id` is the entry that booked it, and is what makes running the depreciation of a period twice a no-op. |
 | [`disposals`](#assets-disposals) | What leaving the books cost or earned: one row per asset, written by assets.dispose_asset(). There is no undo, for the reason there is no unpost. |
+
+<a id="assets-assets"></a>
 
 #### `assets`
 
@@ -1657,6 +1704,8 @@ Constraints:
 - `PRIMARY KEY (id)`
 - `UNIQUE (company_id, code)`
 
+<a id="assets-category_templates"></a>
+
 #### `category_templates`
 
 The usual duration and method of a kind of asset in one country, with the source it comes from. A suggestion an asset may depart from, which is why it is never copied into a company.
@@ -1681,6 +1730,8 @@ Constraints:
 - `CHECK ((duration_months > 0))`
 - `PRIMARY KEY (country, code)`
 
+<a id="assets-country_rules"></a>
+
 #### `country_rules`
 
 How one country depreciates and derecognises. Filled by `ekwo pack build` from packs/<cc>/assets.json, read where it stands, never copied into a company.
@@ -1701,6 +1752,8 @@ Constraints:
 - `CHECK (((declining_cap_percent IS NULL) OR ((declining_cap_percent > (0)::numeric) AND (declining_cap_percent <= (100)::numeric))))`
 - `CHECK ((country ~ '^[A-Z]{2}$'::text))`
 - `PRIMARY KEY (country)`
+
+<a id="assets-depreciation_lines"></a>
 
 #### `depreciation_lines`
 
@@ -1729,6 +1782,8 @@ Constraints:
 - `PRIMARY KEY (id)`
 - `UNIQUE (asset_id, period_end)`
 - `UNIQUE (asset_id, sequence)`
+
+<a id="assets-disposals"></a>
 
 #### `disposals`
 
@@ -1760,6 +1815,7 @@ Constraints:
 
 | Function | Purpose |
 |---|---|
+| `accounts_in_use(p_company_id uuid)` | The accounts this module points at for one company: what its assets are booked, depreciated and charged on, and what a disposal was settled against. Read by public.accounts_in_use() through the module convention. |
 | `can_disable(p_company_id uuid)` | Why this company cannot disable the assets module, or null when it can. The convention disable_module() reads. |
 | `create_asset(p_company_id uuid, p_code text, p_name text, p_acquisition_date date, p_cost numeric, p_asset_account text, p_depreciation_account text, p_expense_account text, p_category_code text, p_duration_months integer, p_method assets.depreciation_method, p_coefficient numeric, p_residual_value numeric, p_in_service_date date, p_document_line_id uuid, p_contact_id uuid, p_description text)` | Creates an asset and its schedule in one call. A category of the country pack fills in the method, the duration and the coefficient; anything the caller passes wins over it. |
 | `days360(p_from date, p_to date)` | Days between two dates on a year of 360 days and months of 30, the day capped at the 30th. Half-open: days360(1 January, 1 January of the next year) is 360. |
@@ -1782,6 +1838,8 @@ A budget per financial year, its lines per account and period, and the variance 
 | [`budgets`](#budgets-budgets) | One budget of one company, usually for one financial year. A company may hold several — a plan and a revision are two budgets and not two columns. |
 | [`lines`](#budgets-lines) | What one account is expected to carry over one period, in the sign a business says it: an income and a cost are both positive. |
 
+<a id="budgets-budgets"></a>
+
 #### `budgets`
 
 One budget of one company, usually for one financial year. A company may hold several — a plan and a revision are two budgets and not two columns.
@@ -1802,6 +1860,8 @@ Constraints:
 
 - `PRIMARY KEY (id)`
 - `UNIQUE (company_id, code)`
+
+<a id="budgets-lines"></a>
 
 #### `lines`
 
@@ -1830,6 +1890,7 @@ Constraints:
 
 | Function | Purpose |
 |---|---|
+| `accounts_in_use(p_company_id uuid)` | The accounts this module points at for one company: every account a budget line plans an amount on. Read by public.accounts_in_use() through the module convention. |
 | `variance(p_company_id uuid, p_budget_id uuid, p_from date, p_to date)` | Budget against ledger, per account, over a period, at the decimals of the company's currency. Both figures are in the sign a business states them in — an income account's credit balance is flipped — and the variance is the actual less the plan. Reads posted entries of kind `normal` only: a closing or appropriation entry is not what a period earned. |
 
 ---

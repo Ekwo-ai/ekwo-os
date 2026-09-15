@@ -191,9 +191,45 @@ export const ListAccountsInput = z.object({
   code_prefix: z.string().min(1).optional().describe('Only accounts whose code starts with this, e.g. "70".'),
   account_type: z.string().min(1).optional().describe('One of the eighteen account types, e.g. asset_receivable.'),
   search: z.string().min(1).optional().describe('Case-insensitive match on the account name.'),
-  include_deprecated: z.boolean().optional(),
+  in_use_from: isoDate
+    .optional()
+    .describe('Narrows the movements to entries on or after this date. References and pinned accounts are not dated and stay in.'),
+  in_use_to: isoDate.optional().describe('The other end of that period.'),
+  include_all: z
+    .boolean()
+    .optional()
+    .describe('Return the whole chart instead of the accounts in use. Use it when a search over the working chart found nothing.'),
+  include_deprecated: z
+    .boolean()
+    .optional()
+    .describe('Include deprecated accounts. A deprecated account is never in use, so this returns the whole chart.'),
   limit: z.number().int().min(1).max(2000).optional(),
 });
+
+/**
+ * The account ids `accounts_in_use()` gives back.
+ *
+ * A function returning `setof uuid` arrives as a list of strings over
+ * PostgREST and as a list of one-column rows over Postgres, the same split
+ * `member_capabilities` has. Both are read here.
+ */
+async function accountsInUse(
+  backend: Backend,
+  args: { company_id: string; in_use_from?: string | undefined; in_use_to?: string | undefined },
+): Promise<string[]> {
+  const rows = await backend.rpc<unknown>('accounts_in_use', {
+    p_company_id: args.company_id,
+    p_from: args.in_use_from ?? null,
+    p_to: args.in_use_to ?? null,
+  });
+  return rows
+    .map((row) =>
+      typeof row === 'string'
+        ? row
+        : ((row as Record<string, unknown>)['accounts_in_use'] as string | undefined),
+    )
+    .filter((id): id is string => typeof id === 'string');
+}
 
 export async function listAccounts(
   backend: Backend,
@@ -205,6 +241,28 @@ export async function listAccounts(
   if (args.search !== undefined) where.push({ column: 'name', op: 'ilike', value: `%${args.search}%` });
   if (args.include_deprecated !== true) where.push({ column: 'deprecated', op: 'eq', value: false });
 
+  // A country pack is a transcription of the regulation — three hundred
+  // accounts in Belgium, a thousand in Luxembourg — and a company works with a
+  // few dozen of them. The default is therefore the working chart the schema
+  // computes, and the whole thing is one flag away. Asking for deprecated
+  // accounts is asking for the whole chart by definition: a deprecated account
+  // is never in use.
+  const wholeChart = args.include_all === true || args.include_deprecated === true;
+  let scope: 'in_use' | 'whole_chart' = 'whole_chart';
+  if (!wholeChart) {
+    scope = 'in_use';
+    const ids = await accountsInUse(backend, args);
+    if (ids.length === 0) {
+      return {
+        accounts: [],
+        count: 0,
+        scope,
+        note: 'No account of this company is in use yet. Pass include_all to see the whole chart.',
+      };
+    }
+    where.push({ column: 'id', op: 'in', value: ids });
+  }
+
   const accounts = await backend.select<Row>({
     table: 'accounts',
     columns: columns.ACCOUNT,
@@ -212,7 +270,15 @@ export async function listAccounts(
     order: [{ column: 'code' }],
     limit: args.limit ?? 200,
   });
-  return { accounts, count: accounts.length };
+  return {
+    accounts,
+    count: accounts.length,
+    scope,
+    note:
+      scope === 'in_use'
+        ? 'The accounts this company works with: moved, referenced by its settings, held by a module, or pinned. Pass include_all for the whole chart — any account of it may still be booked on.'
+        : 'The whole chart of the company.',
+  };
 }
 
 export const SearchContactsInput = z.object({
@@ -644,6 +710,50 @@ export async function listInvitations(
   };
 }
 
+export const ListSharesInput = z.object({
+  company_id: companyId,
+  document_id: uuid.optional().describe('Only the links onto this document. Left out, the whole company.'),
+  include_withdrawn: z
+    .boolean()
+    .optional()
+    .describe('Also the ones withdrawn or expired. Default false.'),
+});
+
+export async function listShares(
+  backend: Backend,
+  args: z.infer<typeof ListSharesInput>,
+): Promise<unknown> {
+  const where: Filter[] = [{ column: 'company_id', op: 'eq', value: args.company_id }];
+  if (args.document_id !== undefined) {
+    where.push({ column: 'document_id', op: 'eq', value: args.document_id });
+  }
+
+  const shares = await backend.select<Row>({
+    table: 'document_shares',
+    columns: columns.DOCUMENT_SHARE,
+    where,
+    order: [{ column: 'created_at', ascending: false }],
+  });
+
+  const now = Date.now();
+  const described = shares.map((share) => ({ ...share, state: shareState(share, now) }));
+  return {
+    shares:
+      args.include_withdrawn === true
+        ? described
+        : described.filter((share) => share.state === 'live'),
+    note: 'The token of a link exists only in the answer that created it. A link that is lost is withdrawn and made again.',
+  };
+}
+
+/** Live, expired or withdrawn — three states off two columns. */
+function shareState(share: Row, now: number): string {
+  if (share['revoked_at'] !== null && share['revoked_at'] !== undefined) return 'withdrawn';
+  const expires = share['expires_at'];
+  if (typeof expires === 'string' && Date.parse(expires) <= now) return 'expired';
+  return 'live';
+}
+
 /** Pending, expired, accepted or withdrawn — four states off three columns. */
 function invitationState(invitation: Row, now: number): string {
   if (invitation['accepted_at'] !== null && invitation['accepted_at'] !== undefined) return 'accepted';
@@ -774,6 +884,31 @@ export async function vatReturn(
   };
 }
 
+export const EcSalesListInput = z.object({
+  company_id: companyId,
+  from: isoDate,
+  to: isoDate,
+});
+
+export async function ecSalesList(
+  backend: Backend,
+  args: z.infer<typeof EcSalesListInput>,
+): Promise<unknown> {
+  const rows = await backend.rpc<Record<string, unknown>>('ec_sales_list', {
+    p_company_id: args.company_id,
+    p_from: args.from,
+    p_to: args.to,
+  });
+  const undeclarable = rows.filter((row) => row['issue'] !== null);
+  return {
+    period: { from: args.from, to: args.to },
+    lines: moneyFields(rows, ['amount']),
+    undeclarable_lines: undeclarable.length,
+    note:
+      'One line per customer VAT number and per nature of supply — goods, services — summed from the posted ledger in the company currency, credit notes deducted. A line carrying an issue cannot be filed as it stands: no_vat_number means the customer has none recorded, vat_country_is_the_company_country means the number is not in another Member State. Report those separately instead of adding them into the total, and do not remove them from the figures. It prepares a statement; it files nothing.',
+  };
+}
+
 export const ListStatementsInput = z.object({
   company_id: companyId,
   at: isoDate
@@ -885,6 +1020,65 @@ export async function generateFec(
     filename,
     filename_note,
     file,
+  };
+}
+
+// ---------------------------------------------------------------------------
+// describe_pack
+// ---------------------------------------------------------------------------
+
+export const DescribePackInput = z.object({
+  country: z
+    .string()
+    .length(2)
+    .optional()
+    .describe('ISO 3166-1 alpha-2, upper case. Left out, every pack this installation holds.'),
+});
+
+/**
+ * Where a country's rules come from, and how much anyone has read them.
+ *
+ * The pack is the transcription of a régime — a chart of accounts, the taxes
+ * and the boxes of the return — and a transcription is only worth what its
+ * sources are worth. `certification_status` says whether a named professional
+ * has read it, and `sources` is the register the pack declares: the texts it
+ * was built from, each with the publisher that serves it, an absolute link and
+ * the day somebody opened it.
+ *
+ * It answers a question that used to have no answer here: shown a rate or a
+ * grid, where is the text it comes from. The article itself is on the tax and
+ * on the box — `legal_reference` — and `source_key` there names which of these
+ * entries it is in.
+ */
+export async function describePack(
+  backend: Backend,
+  args: z.infer<typeof DescribePackInput>,
+): Promise<unknown> {
+  const where: Filter[] =
+    args.country === undefined ? [] : [{ column: 'country', op: 'eq', value: args.country.toUpperCase() }];
+  const packs = await backend.select<Row>({
+    table: 'country_packs',
+    columns: columns.COUNTRY_PACK,
+    where,
+    order: [{ column: 'country' }],
+  });
+
+  if (packs.length === 0) {
+    return {
+      packs: [],
+      count: 0,
+      note:
+        args.country === undefined
+          ? 'This installation holds no country pack. Its seeds have not been applied.'
+          : `No pack is loaded for ${args.country.toUpperCase()}. A company of that country cannot be installed until its seed has run.`,
+    };
+  }
+
+  return {
+    packs,
+    count: packs.length,
+    note:
+      'certification_status is what somebody claims, not a certificate: community means nobody has read it, maintained means the maintainers keep it current and nobody has reviewed it, reviewed means the named professional in certified_by read it on certified_at. `sources` is the register the pack declares — each entry is a text, its official publisher, an absolute link and the day it was opened — and it holds no copy of the law itself. A tax and a box of the declaration each carry their own article in legal_reference and name the register entry it is in; a link that no longer answers is the register being stale, never the rule being wrong.',
   };
 }
 

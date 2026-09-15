@@ -22,6 +22,12 @@ import {
   type SqlClient,
 } from '../../packages/cli/src/index.js';
 import { emptyDatabase, fakeFetch, makeAuthUser, migrationsPath, seedPath } from './helpers.js';
+import { allPacks, somePack } from '../helpers/packs.js';
+
+// The instance these tests register is in some country, named once.
+const HOME = somePack.manifest.country;
+/** A second one, for the correction that changes the country of an instance. */
+const abroad = allPacks.find((pack) => pack.slug !== somePack.slug)!.manifest.country;
 
 let db: SqlClient;
 let userId: string;
@@ -33,7 +39,7 @@ beforeEach(async () => {
   userId = await makeAuthUser(db, 'first@example.test');
   await bootstrap(db, {
     organization: 'Example Group',
-    country: 'BE',
+    country: HOME,
     company: 'Example One',
     fiscalYear: 2026,
     adminUserId: userId,
@@ -93,7 +99,7 @@ describe('register', () => {
     ]);
     expect(calls[0]?.body).toMatchObject({
       organization: 'Example Group',
-      country: 'BE',
+      country: HOME,
       edition: 'community',
       contact_email: 'operator@example.test',
     });
@@ -136,12 +142,13 @@ describe('register', () => {
       adminUserId: userId,
       email: 'operator@example.test',
       organization: 'Example Group SRL',
-      country: 'fr',
+      country: abroad.toLowerCase(),
       fetchImpl,
     });
     const instance = await readInstance(db);
     expect(instance?.organization_name).toBe('Example Group SRL');
-    expect(instance?.country).toBe('FR');
+    // Given in lower case, stored upper: the correction under test.
+    expect(instance?.country).toBe(abroad);
   });
 
   it('refuses anyone who is not an instance administrator', async () => {
@@ -176,7 +183,7 @@ describe('payloadFor', () => {
     expect(payload).toEqual({
       instance_id: instance.instance_id,
       organization: 'Example Group',
-      country: 'BE',
+      country: HOME,
       edition: 'community',
       schema_version: instance.schema_version,
       contact_email: 'operator@example.test',

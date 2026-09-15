@@ -137,15 +137,16 @@ thing you need locally: no Supabase CLI, no Docker, no clone.
 npx ekwo init
 ```
 
-It asks for the connection string, the country, your organisation, the first
-company and the address of the first administrator, then applies the
+It asks for the connection string, the country, the chart of accounts and the
+language where the pack offers a choice, your organisation, the first company
+and the address of the first administrator, then applies the
 migrations, seeds the chart of accounts and the VAT codes, creates that
 administrator in *your* Supabase Auth and runs the six steps below. Every step
 checks before it acts, so running it twice creates nothing twice.
 
 Ekwo does not create the project and does not pay for it. Your books are on
 your account from the first row, which is the only version of "you own your
-data" that survives us going away. Full flags, environment variables and the
+data" that survives the maintainer going away. Full flags, environment variables and the
 non-interactive form are in [`packages/cli`](packages/cli/).
 
 ### What it does underneath
@@ -210,8 +211,15 @@ git clone https://github.com/Ekwo-ai/ekwo-os.git && cd ekwo-os
 supabase link --project-ref <your-project-ref>
 supabase db push                       # applies supabase/migrations in order
 psql "$DATABASE_URL" -f supabase/seed/00_currencies.sql
-psql "$DATABASE_URL" -f supabase/seed/10_pack_be.sql    # or 11_pack_fr.sql
+psql "$DATABASE_URL" -f supabase/seed/05_framework_generic.sql
+psql "$DATABASE_URL" -f supabase/seed/10_pack_be.sql    # or 11_pack_fr.sql, 12_pack_lu.sql, 13_pack_ee.sql
 ```
+
+Those five files are the ones `config.toml` lists under `[db.seed]`, which is
+what `supabase db reset` applies on a local project — and the same set
+`ekwo init` loads. Leave `05_framework_generic.sql` out and the installation
+has a chart of accounts but no financial statements for a chart that declares
+none of its own.
 
 Skip `supabase/seed/90_demo_company.sql` unless you want the sample data, and
 then run the six statements above as a signed-in user. The two routes are
@@ -223,7 +231,7 @@ interchangeable: `ekwo migrate` and `supabase db push` read and write the same
 ```sh
 npx ekwo status    # schema version installed against available, instance, companies
 npx ekwo migrate   # apply what a new release adds
-npx ekwo doctor    # row level security everywhere, orphaned memberships, statements
+npx ekwo doctor    # every object this release defines, row level security, orphaned memberships, statements
 npx ekwo demo      # the sample company, on explicit request only
 ```
 
@@ -266,8 +274,8 @@ the end, and the default answer is no. Community works unregistered, forever,
 and `edition` gates no feature.
 
 `post_document(id)` turns a document into an entry. `trial_balance`,
-`general_ledger`, `aged_balance`, `vat_return`, `financial_statement` and
-`fec_lines` read it back — `financial_statement` on the schemes of the country
+`general_ledger`, `aged_balance`, `vat_return`, `ec_sales_list`,
+`financial_statement` and `fec_lines` read it back — `financial_statement` on the schemes of the country
 pack, the Belgian abbreviated model or the French liasse, or on a generic
 framework by account type that fits any chart of accounts. The FEC of a
 financial year opens on its *à-nouveaux*, computed from the ledger and never

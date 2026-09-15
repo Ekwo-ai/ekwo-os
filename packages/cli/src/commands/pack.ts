@@ -3,14 +3,17 @@
  *
  *   ekwo pack build <cc>|--all   compile packs/<cc> into supabase/seed/
  *   ekwo pack check <cc>|--all   recompile in memory and refuse a stale seed
+ *   ekwo pack check --links      … and open the source register's URLs
  *   ekwo pack list               what this checkout carries
  *   ekwo pack status             what an installation holds, company by company
  *   ekwo pack upgrade <company>  move a company to the version loaded here
  *
  * The first three are files in, one SQL file out: no database, no network, and
  * they only run in a checkout, because a published installation has the
- * compiled seeds and no pack to compile. The last two are the opposite — they
- * need a connection and know nothing about `packs/`.
+ * compiled seeds and no pack to compile. `--links` is the one exception and it
+ * is an option for exactly that reason: it reaches the publishers a register
+ * names, reports what did not answer, and decides nothing. The last two are
+ * the opposite — they need a connection and know nothing about `packs/`.
  */
 
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
@@ -18,7 +21,7 @@ import { join } from 'node:path';
 import { rejectUnknownFlags, boolFlag, stringFlag, UsageError, type ParsedArgs } from '../args.js';
 import { CONNECTION_FLAGS, openDatabase } from '../context.js';
 import { isInteractive } from '../prompt.js';
-import { packDiff, packStatus, packUpgrade, resolveCompany, type PackChange } from '../pack/upgrade.js';
+import { packStatus, packUpgrade, resolveCompany, type PackChange } from '../pack/upgrade.js';
 import {
   compileFrameworkPack,
   compileModuleSeeds,
@@ -26,10 +29,18 @@ import {
   frameworkSeedFileName,
   seedFileName,
 } from '../pack/compile.js';
-import { GENERIC_PACK, listPacks, packsDir, readFrameworkPack, readPack, seedOutputDir } from '../pack/read.js';
+import {
+  GENERIC_PACK,
+  declaredSeedSequences,
+  listPacks,
+  packsDir,
+  readFrameworkPack,
+  readPack,
+  seedOutputDir,
+} from '../pack/read.js';
 import { bold, dim, fail, heading, line, note, pairs, skipped, step, warn, yellow } from '../ui.js';
 
-export const PACK_FLAGS = [...CONNECTION_FLAGS, 'all', 'yes', 'apply', 'country', 'json'] as const;
+export const PACK_FLAGS = [...CONNECTION_FLAGS, 'all', 'yes', 'apply', 'country', 'json', 'links'] as const;
 
 export async function packCommand(args: ParsedArgs): Promise<number> {
   rejectUnknownFlags(args, PACK_FLAGS);
@@ -57,6 +68,9 @@ export async function packCommand(args: ParsedArgs): Promise<number> {
         `${framework.statements.length} statements · no country · ` +
         `certification ${framework.manifest.certification?.status ?? 'none'}`,
     );
+    if (framework.goldenExemption !== null) {
+      note(dim(`        no golden — ${framework.goldenExemption}`));
+    }
     for (const slug of available) {
       const pack = await readPack(slug, dir);
       note(
@@ -64,8 +78,17 @@ export async function packCommand(args: ParsedArgs): Promise<number> {
           `${pack.charts.length} chart(s), ${pack.charts.reduce((n, c) => n + c.accounts.length, 0)} accounts · ` +
           `${pack.taxes.length} taxes · ${pack.statements.length} statements · ` +
           `${pack.languages.join(', ')} · ` +
-          `certification ${pack.manifest.certification?.status ?? 'none'}`,
+          `certification ${pack.manifest.certification?.status ?? 'none'} · ` +
+          (pack.golden === null
+            ? 'no golden'
+            : `golden: ${pack.golden.documents.length} documents, ` +
+              `${pack.golden.payments.length} payments, ${pack.golden.periods.length} period(s)`),
       );
+      // An exemption is a claim somebody made, so it is printed rather than
+      // inferred from the absence of a folder.
+      if (pack.goldenExemption !== null) {
+        note(dim(`        no golden — ${pack.goldenExemption}`));
+      }
       for (const chart of pack.charts) {
         note(
           dim(
@@ -80,6 +103,10 @@ export async function packCommand(args: ParsedArgs): Promise<number> {
   }
 
   const wanted = selection(args, available);
+  // The number a pack's seed carries is the pack's own, and a number that has
+  // shipped never moves — so it is read from every manifest of the checkout
+  // before any file is named, and nothing sorts anything.
+  const declared = await declaredSeedSequences(dir);
   const seedDir = seedOutputDir();
   let stale = 0;
 
@@ -109,7 +136,7 @@ export async function packCommand(args: ParsedArgs): Promise<number> {
 
   for (const slug of wanted.filter((s) => s !== GENERIC_PACK)) {
     const pack = await readPack(slug, dir);
-    const file = seedFileName(slug, available);
+    const file = seedFileName(slug, available, declared);
     const sql = compilePack(pack);
     const path = join(seedDir, file);
     const current = await readFile(path, 'utf8').catch(() => undefined);
@@ -130,6 +157,21 @@ export async function packCommand(args: ParsedArgs): Promise<number> {
       fail(`${file} is not the output of packs/${slug}${current === undefined ? ' (it does not exist)' : ''}`);
     } else {
       step(`${file}`);
+    }
+
+    // What the figures of this pack are replayed against. A seed that
+    // compiles says nothing about whether the country's boxes add up; the
+    // golden is what does, and a pack exempt from one says so out loud.
+    if (pack.golden === null) {
+      note(dim(`        no golden — ${pack.goldenExemption ?? 'and no reason given'}`));
+    } else {
+      note(
+        dim(
+          `        golden: ${pack.golden.documents.length} documents, ` +
+            `${pack.golden.payments.length} payments, ` +
+            `${pack.golden.periods.length} period(s) of ${pack.golden.fiscalYear.name}`,
+        ),
+      );
     }
 
     // The sections of a module compile beside the pack seed, under the module's
@@ -161,6 +203,17 @@ export async function packCommand(args: ParsedArgs): Promise<number> {
     for (const section of pack.deferred) {
       warn(`packs/${slug}: ${section}`);
     }
+    // What a reader should know and what nothing fails over: a bare title left
+    // in the register, a tax of a maintained pack whose article nobody linked.
+    for (const warning of pack.warnings) {
+      warn(`packs/${slug}: ${warning}`);
+    }
+  }
+
+  // `--links` opens what the register points at. It is asked for by hand and it
+  // never decides the exit code — see `followLinks`.
+  if (action === 'check' && boolFlag(args, 'links')) {
+    await followLinks(wanted.filter((s) => s !== GENERIC_PACK), dir);
   }
 
   if (stale > 0) {
@@ -169,6 +222,71 @@ export async function packCommand(args: ParsedArgs): Promise<number> {
     return 1;
   }
   return 0;
+}
+
+/**
+ * `--links`: open every URL of every register and say which ones went quiet.
+ *
+ * Off by default, never run by the CI, and it cannot fail a check. Three
+ * reasons, and they are the whole design of this option.
+ *
+ * A link that does not answer **today** is not a wrong pack. Légifrance
+ * refuses a request with no browser behind it, Riigi Teataja serves the same
+ * page shell for a text and for a typo, and a ministry moves a form the week
+ * before a deadline. A gate that turned any of those into a red build would
+ * make every contributor's pull request fail for something nobody in it did,
+ * and the fix would be to delete the link.
+ *
+ * It also reaches the network, which `pack build`, `pack check` and everything
+ * else under `packs/` deliberately do not: they are files in, one SQL file out.
+ * An option is how that stays true of the command and available to a person.
+ *
+ * So what it reports is a reading, not a verdict: a maintainer runs it when
+ * they refresh a pack, reads what did not answer, and opens the ones that look
+ * real. A HEAD is tried first and a GET follows, because some publishers
+ * answer one and not the other.
+ */
+async function followLinks(slugs: string[], dir: string): Promise<void> {
+  heading('Links');
+  for (const slug of slugs) {
+    const pack = await readPack(slug, dir);
+    if (pack.sources.length === 0) {
+      note(dim(`${slug} — no register to follow`));
+      continue;
+    }
+    let quiet = 0;
+    for (const source of pack.sources) {
+      const answer = await reach(source.url);
+      if (answer === null) {
+        step(dim(`${slug} ${source.key}`));
+        continue;
+      }
+      quiet += 1;
+      warn(`${slug} ${source.key} — ${answer}: ${source.url}`);
+    }
+    note(
+      dim(
+        `        ${slug}: ${pack.sources.length - quiet} of ${pack.sources.length} answered` +
+          (quiet === 0
+            ? ''
+            : '. A refusal may be the publisher turning away anything without a browser — open it yourself before deleting it.'),
+      ),
+    );
+  }
+}
+
+/** Null when the URL answered, else what it said instead. */
+async function reach(url: string): Promise<string | null> {
+  for (const method of ['HEAD', 'GET'] as const) {
+    try {
+      const response = await fetch(url, { method, redirect: 'follow', signal: AbortSignal.timeout(15_000) });
+      if (response.ok) return null;
+      if (method === 'GET') return `HTTP ${response.status}`;
+    } catch (error) {
+      if (method === 'GET') return error instanceof Error ? error.message : 'no answer';
+    }
+  }
+  return null;
 }
 
 function selection(args: ParsedArgs, available: string[]): string[] {
@@ -268,13 +386,20 @@ async function upgradeSubcommand(args: ParsedArgs): Promise<number> {
     const country = stringFlag(args, 'country');
     const apply = boolFlag(args, 'apply');
 
-    const before = await packDiff(db, company.id, country);
-    if (before.length === 0) {
-      heading(company.name);
-      skipped('already the version this installation holds');
-      return 0;
-    }
-
+    // No special case for "nothing differs", and there used to be one: the
+    // command asked for the difference first and returned early when it was
+    // empty, saying the company was already at the version this installation
+    // holds. Those are two different claims. A pack release whose only change
+    // is a legal reference on a tax — a patch, and the commonest kind there is
+    // — moves the version and produces no difference this diff compares, so
+    // the company went on recording the old version for ever and `ekwo pack
+    // status` went on calling it behind. Found by the end-to-end run against a
+    // real project, upgrading an installation made at v0.2.0: the pack moved
+    // 1.5.0 to 1.5.1 and the company stayed on 1.5.0.
+    //
+    // `pack_upgrade()` handles an empty difference on its own — it applies
+    // nothing and records the version — so the branch is gone rather than
+    // corrected.
     const result = await packUpgrade(db, company.id, {
       apply,
       ...(country === undefined ? {} : { country }),
@@ -346,6 +471,10 @@ function usage(): string {
   ekwo pack build <cc>     Write supabase/seed/<n>_pack_<cc>.sql from packs/<cc>.
   ekwo pack build --all    Every pack of this checkout.
   ekwo pack check --all    Refuse a seed that is not the output of its pack.
+      --links              Also open every URL of every pack's source register
+                           and say which ones went quiet. Off by default, never
+                           run by the CI, and it never changes the exit code:
+                           a publisher that refuses a robot is not a wrong pack.
   ekwo pack list           What this checkout carries, and its certification.
 
   ekwo pack status         What each company of an installation copied, against

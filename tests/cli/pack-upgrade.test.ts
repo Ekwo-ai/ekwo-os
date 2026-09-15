@@ -24,6 +24,10 @@ import {
   type SqlClient,
 } from '../../packages/cli/src/index.js';
 import { emptyDatabase, makeAuthUser, migrationsPath, seedPath } from './helpers.js';
+import { somePack } from '../helpers/packs.js';
+
+// The installation these tests bootstrap is in some country, named once.
+const HOME = somePack.manifest.country;
 
 let db: SqlClient;
 let migrations: Migration[];
@@ -37,7 +41,7 @@ beforeEach(async () => {
   const userId = await makeAuthUser(db, 'first@example.test');
   const result = await bootstrap(db, {
     organization: 'Example Group',
-    country: 'BE',
+    country: HOME,
     company: 'Example One',
     fiscalYear: 2026,
     adminUserId: userId,
@@ -53,10 +57,10 @@ describe('pack status', () => {
   it('reports the packs loaded here and where each company stands', async () => {
     const report = await packStatus(db);
 
-    expect(report.packs.map((p) => p.country)).toContain('BE');
+    expect(report.packs.map((p) => p.country)).toContain(HOME);
     const company = report.companies.find((c) => c.name === 'Example One');
     expect(company).toBeDefined();
-    expect(company?.country).toBe('BE');
+    expect(company?.country).toBe(HOME);
     expect(company?.chartCode).toBe('default');
     expect(company?.heldVersion).toBe(company?.packVersion);
     expect(company?.behind).toBe(false);
@@ -120,6 +124,31 @@ describe('pack upgrade', () => {
       [companyId],
     );
     expect(held[0]?.version).toBe(result.to_version);
+  });
+
+  it('records the version when the release changed nothing the diff compares', async () => {
+    // A patch release — a legal reference added to a tax, a box renamed — moves
+    // the pack version and leaves every natural key exactly as it was. The
+    // difference is empty, and the company must still stop being behind:
+    // `ekwo pack status` reads the recorded version, not the difference.
+    const diff = await packDiff(db, companyId);
+    expect(diff).toHaveLength(0);
+
+    const result = await packUpgrade(db, companyId);
+    expect(result.from_version).toBe('1.0.0');
+    expect(result.applied).toHaveLength(0);
+    expect(result.listed).toHaveLength(0);
+    expect(result.version_moved).toBe(true);
+
+    const held = await db.query<{ version: string }>(
+      `select version from company_packs where company_id = $1`,
+      [companyId],
+    );
+    expect(held[0]?.version).toBe(result.to_version);
+    expect(held[0]?.version).not.toBe('1.0.0');
+
+    const status = await packStatus(db);
+    expect(status.companies.find((c) => c.companyId === companyId)?.behind).toBe(false);
   });
 
   it('lists what differs and changes nothing, until it is asked', async () => {

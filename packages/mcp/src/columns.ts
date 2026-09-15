@@ -58,6 +58,7 @@ export const ACCOUNT = [
   'reconcilable',
   'currency_code',
   'deprecated',
+  'pinned',
 ];
 
 export const JOURNAL = ['id', 'code', 'name', 'journal_type', 'active'];
@@ -403,6 +404,20 @@ export const API_KEY = [
   'revoked_at::text',
 ];
 
+/** A public link onto a document, without its secret. There is only a hash. */
+export const DOCUMENT_SHARE = [
+  'id',
+  'company_id',
+  'document_id',
+  'subject_kind',
+  'created_by',
+  'created_at::text',
+  'expires_at::text',
+  'revoked_at::text',
+  'view_count',
+  'last_viewed_at::text',
+];
+
 export const INSTANCE = [
   'instance_id',
   'organization_name',
@@ -441,4 +456,23 @@ export const AUDIT_LOG = [
   'action',
   'old_values',
   'new_values',
+];
+
+/**
+ * `country_packs` — which pack this installation holds, and where its rules
+ * come from. `sources` is the register the pack declares: a reader that wants
+ * to check a rate rather than trust it starts there.
+ */
+export const COUNTRY_PACK = [
+  'country',
+  'name',
+  'version',
+  'released_at::text',
+  'schema_min',
+  'certification_status',
+  'certified_by',
+  'certified_at::text',
+  'checksum',
+  'sources',
+  'installed_at::text',
 ];

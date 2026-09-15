@@ -26,7 +26,7 @@ export const SERVER_NAME = '@ekwo-ai/mcp';
  * `tests/mcp/surface.test.ts` keeps the two equal, so a release that bumps one
  * and forgets the other fails the build.
  */
-export const SERVER_VERSION = '0.2.0';
+export const SERVER_VERSION = '0.3.0';
 
 /** Everything a tool returns: JSON, pretty-printed, as one text block. */
 function ok(payload: unknown): CallToolResult {
@@ -108,7 +108,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     {
       title: 'Chart of accounts',
       description:
-        'The chart of accounts of a company, filtered by code prefix, by account type, or by a search on the name. Use it to find the income or expense account a document line should carry. Deprecated accounts are left out unless you ask for them.',
+        'The accounts a company actually works with, filtered by code prefix, by account type, or by a search on the name. Use it to find the income or expense account a document line should carry. By default it returns the working chart — the accounts that carry entries, that the company\'s settings or an enabled module point at, or that somebody pinned — because a country pack transcribes the whole regulation and a company uses a few dozen of its several hundred accounts; `in_use_from` and `in_use_to` narrow the movements to a period, `include_all` returns the whole chart, and `include_deprecated` returns it with the retired accounts too. This is a reading and not a restriction: any account of the chart that is not deprecated may still be booked on.',
       inputSchema: read.ListAccountsInput.shape,
       annotations: { readOnlyHint: true, openWorldHint: false },
     },
@@ -188,6 +188,18 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
   );
 
   server.registerTool(
+    'list_shares',
+    {
+      title: 'Public links onto documents',
+      description:
+        'The links a company has published onto its own sales documents, with how many times each was opened and when it was last opened. No token is in here: a link is shown once, when it is made. Use it to answer "did the customer open the invoice?" and to find the link to withdraw.',
+      inputSchema: read.ListSharesInput.shape,
+      annotations: { readOnlyHint: true, openWorldHint: false },
+    },
+    async (args) => guard(() => read.listShares(backend, args)),
+  );
+
+  server.registerTool(
     'list_bank_transactions',
     {
       title: 'Bank transactions',
@@ -248,6 +260,18 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
   );
 
   server.registerTool(
+    'ec_sales_list',
+    {
+      title: 'Recapitulative statement of intra-Community supplies',
+      description:
+        'Who, in another Member State, was supplied without VAT over a period, and for how much: one line per customer VAT number and per nature — goods, services — read from the treatment of the tax on each sale line, with credit notes deducted. The totals tie back to the intra-Community boxes of vat_return for the same period. A line that carries an issue cannot be filed as it stands, most often because the customer has no VAT number recorded: say so rather than leaving it out of the answer. No country rule lives in this tool. It prepares a statement; it files nothing.',
+      inputSchema: read.EcSalesListInput.shape,
+      annotations: { readOnlyHint: true, openWorldHint: false },
+    },
+    async (args) => guard(() => read.ecSalesList(backend, args)),
+  );
+
+  server.registerTool(
     'list_statements',
     {
       title: 'List financial statements',
@@ -281,6 +305,18 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
       annotations: { readOnlyHint: true, openWorldHint: false },
     },
     async (args) => guard(() => read.generateFec(backend, args)),
+  );
+
+  server.registerTool(
+    'describe_pack',
+    {
+      title: 'Where a country pack comes from',
+      description:
+        "The country packs this installation holds, with their version, how much anyone has read them, and the register of texts each was built from — the title, the official publisher, an absolute link and the day somebody opened it, per text. Use it whenever you are asked where a rate, a chart of accounts or a box of the declaration comes from, and before repeating a figure a pack gave you: a community pack has not been read by an accountant, and the status says so. The article behind a single rule is on that rule itself — legal_reference on a tax or on a box — and the register is where that article can be read. It carries no copy of the law: a link that has gone quiet means the register is stale, never that the rule is wrong.",
+      inputSchema: read.DescribePackInput.shape,
+      annotations: { readOnlyHint: true, openWorldHint: false },
+    },
+    async (args) => guard(() => read.describePack(backend, args)),
   );
 
   server.registerTool(
@@ -550,6 +586,42 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
   );
 
   server.registerTool(
+    'share_document',
+    {
+      title: 'Publish a document behind a link',
+      description:
+        'Publishes a posted sales invoice, credit note or quote behind a link the customer opens without an account and without a password: the token in the url is the whole secret. It returns that token once and stores only its hash, so give the url to the customer and say it cannot be read back. The page shows the document as it was sent and what is still owed on it today, so the link stays worth opening after a payment. A purchase document is refused — it is a third party\u2019s own document — and so is a draft. A link is never edited: to change when it expires, withdraw it and make another.',
+      inputSchema: write.ShareDocumentInput.shape,
+      annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: false, openWorldHint: true },
+    },
+    async (args) => guard(() => write.shareDocument(backend, args)),
+  );
+
+  server.registerTool(
+    'revoke_share',
+    {
+      title: 'Withdraw a published link',
+      description:
+        'Stops a link working, now and for good. Whoever holds it sees exactly what they would see for a link that never existed. There is no un-withdraw: a secret that has been out of the building is issued again rather than brought back, so say so before calling it.',
+      inputSchema: write.RevokeShareInput.shape,
+      annotations: { readOnlyHint: false, destructiveHint: true, idempotentHint: true, openWorldHint: false },
+    },
+    async (args) => guard(() => write.revokeShare(backend, args)),
+  );
+
+  server.registerTool(
+    'pin_accounts',
+    {
+      title: 'Pin accounts to the working chart',
+      description:
+        'Adds accounts to the working chart of a company, so list_accounts offers them whether or not anything has been booked on them. Pass pinned: false to take one back out. Pinning is display and nothing else: an unpinned account may still be booked on, and a pinned one is still hidden once it is deprecated.',
+      inputSchema: write.PinAccountsInput.shape,
+      annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: true, openWorldHint: false },
+    },
+    async (args) => guard(() => write.pinAccounts(backend, args)),
+  );
+
+  server.registerTool(
     'lock_period',
     {
       title: 'Lock a period',
@@ -742,7 +814,8 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
               '1. vat_return for the period. Report every box with its amount, and say which ones are computed from the others.',
               '2. Check that nothing is missing: list_documents with state "draft" over the period. A draft invoice is in no box, and that is usually the error.',
               '3. Tie the VAT accounts back to the ledger: general_ledger on the VAT payable and VAT recoverable accounts for the period, and compare with the boxes.',
-              '4. Say what is due or refundable, and what would have to be corrected before filing.',
+              '4. If the company supplied anything to another Member State: ec_sales_list for the period, and check its total against the intra-Community boxes of the return. Name every line it flags — a customer with no VAT number is a statement that cannot be filed.',
+              '5. Say what is due or refundable, and what would have to be corrected before filing.',
               '',
               'This prepares figures. It files nothing, and it changes nothing in the books.',
             ].join('\n'),

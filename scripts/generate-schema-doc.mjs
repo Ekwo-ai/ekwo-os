@@ -44,6 +44,11 @@ async function describe(schema, { anchor = (name) => name, heading = '##' } = {}
   out.push('');
 
   for (const t of tables) {
+    // A module's table is linked as `#<schema>-<table>`, so that two modules
+    // may both carry a `lines`. GitHub derives an anchor from the heading text,
+    // which here is the bare table name, so the qualified one is written out.
+    // The socle needs none: its anchor is the heading GitHub already makes.
+    if (anchor(t.name) !== t.name) out.push(`<a id="${anchor(t.name)}"></a>\n`);
     out.push(`${heading}# \`${t.name}\`\n`);
     if (t.comment) out.push(`${t.comment}\n`);
 
@@ -103,7 +108,11 @@ async function describe(schema, { anchor = (name) => name, heading = '##' } = {}
            obj_description(p.oid, 'pg_proc') as comment
       from pg_proc p join pg_namespace n on n.oid = p.pronamespace
      where n.nspname = $1 and obj_description(p.oid, 'pg_proc') is not null
-     order by p.proname
+     -- The name alone is not a key: an overload shares it, and the tie was
+     -- being broken by whatever order the rows came off the heap. A create or
+     -- replace rewrites a tuple and moves it, so two overloads could swap
+     -- places in the document with no schema change behind it.
+     order by p.proname, p.oid
   `,
     [schema],
   );

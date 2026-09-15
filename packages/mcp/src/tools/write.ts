@@ -115,6 +115,45 @@ export async function createContact(
 }
 
 // ---------------------------------------------------------------------------
+// The working chart
+// ---------------------------------------------------------------------------
+
+export const PinAccountsInput = z.object({
+  company_id: companyId,
+  account_codes: z
+    .array(z.string().min(1))
+    .min(1)
+    .describe('Codes in this company\'s chart. list_accounts with include_all says what exists.'),
+  pinned: z
+    .boolean()
+    .optional()
+    .describe('True pins, false unpins. Defaults to true.'),
+});
+
+export async function pinAccounts(
+  backend: Backend,
+  args: z.infer<typeof PinAccountsInput>,
+): Promise<unknown> {
+  const pinned = args.pinned ?? true;
+  const ids = await idsByCode(backend, 'accounts', args.company_id, args.account_codes);
+  const updated = await backend.update<Row>(
+    'accounts',
+    { pinned },
+    [
+      { column: 'company_id', op: 'eq', value: args.company_id },
+      { column: 'id', op: 'in', value: [...ids.values()] },
+    ],
+    ['code', 'name', 'pinned'],
+  );
+  if (updated.length === 0) {
+    throw new EkwoMcpError(
+      'not_found: none of those accounts could be changed. Either they are not in this company, or your role on it does not allow writing its chart.',
+    );
+  }
+  return { accounts: updated, pinned, count: updated.length };
+}
+
+// ---------------------------------------------------------------------------
 // Products
 // ---------------------------------------------------------------------------
 
@@ -1333,6 +1372,47 @@ export async function revokeInvitation(
     'the invitation could not be withdrawn',
   );
   return { invitation: answer };
+}
+
+export const ShareDocumentInput = z.object({
+  document_id: uuid.describe('The sales document to publish. A purchase document and a draft are refused.'),
+  expires_at: z
+    .string()
+    .nullable()
+    .optional()
+    .describe('When the link stops answering, as a timestamp. Left out, it answers until it is withdrawn.'),
+});
+
+export async function shareDocument(
+  backend: Backend,
+  args: z.infer<typeof ShareDocumentInput>,
+): Promise<unknown> {
+  const share = only(
+    await backend.rpc<Row>('share_document', {
+      p_document_id: args.document_id,
+      p_expires_at: args.expires_at ?? null,
+    }),
+    'the link could not be created',
+  );
+  return {
+    share,
+    note: 'The token is in this answer and nowhere else — only its hash is stored. Give the url to the customer; anyone holding it can open the document without an account. A link is never edited: to change when it expires, withdraw it and make another. `url` is null when the installation has not recorded its public address.',
+  };
+}
+
+export const RevokeShareInput = z.object({
+  share_id: uuid,
+});
+
+export async function revokeShare(
+  backend: Backend,
+  args: z.infer<typeof RevokeShareInput>,
+): Promise<unknown> {
+  const share = only(
+    await backend.rpc<Row>('revoke_share', { p_share_id: args.share_id }),
+    'the link could not be withdrawn',
+  );
+  return { share };
 }
 
 export const LockPeriodInput = z.object({

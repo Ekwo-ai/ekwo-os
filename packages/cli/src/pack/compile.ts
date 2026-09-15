@@ -22,13 +22,56 @@
  */
 
 import { describeCertification } from './certification.js';
-import type { FrameworkPack, Pack, PackStatement } from './read.js';
+import { sourcesOf, type FrameworkPack, type Pack, type PackSource, type PackStatement } from './read.js';
 
-/** `packs/be` → `10_pack_be.sql`, `packs/fr` → `11_pack_fr.sql`. */
-export function seedFileName(slug: string, allSlugs: readonly string[]): string {
-  const index = [...allSlugs].sort().indexOf(slug);
-  if (index === -1) throw new Error(`unknown_pack: ${slug}`);
-  return `${10 + index}_pack_${slug}.sql`;
+/**
+ * Which number each pack's compiled seed carries, by slug.
+ *
+ * **The number is the pack's own, and a number that has shipped never moves.**
+ * The seeds are applied in file-name order and are listed by name in
+ * `supabase/config.toml`, so a release that renamed one would rename a file an
+ * installation already holds — harmless, because the seeds upsert, and
+ * inexplicable to whoever reads the list a year later.
+ *
+ * It used to be the pack's rank in the alphabetical list of slugs, which is
+ * stable exactly until a country is added in the middle of it: inserting `ee`
+ * between `be` and `fr` moved France and Luxembourg one place each. So a pack
+ * **declares** its number, in `seed_sequence`, and nothing here sorts anything.
+ */
+export function seedFileNames(
+  allSlugs: readonly string[],
+  sequences: ReadonlyMap<string, number>,
+): Map<string, string> {
+  const names = new Map<string, string>();
+  const taken = new Map<number, string>();
+
+  for (const slug of allSlugs) {
+    const own = sequences.get(slug);
+    if (own === undefined) {
+      throw new Error(`seed_sequence_missing: packs/${slug} declares no seed_sequence`);
+    }
+    const other = taken.get(own);
+    if (other !== undefined) {
+      throw new Error(
+        `seed_sequence_conflict: packs/${other} and packs/${slug} both declare ${own}`,
+      );
+    }
+    taken.set(own, slug);
+    names.set(slug, `${own}_pack_${slug}.sql`);
+  }
+
+  return names;
+}
+
+/** `packs/be` → `10_pack_be.sql`, `packs/ee` → `13_pack_ee.sql`. */
+export function seedFileName(
+  slug: string,
+  allSlugs: readonly string[],
+  sequences: ReadonlyMap<string, number>,
+): string {
+  const file = seedFileNames(allSlugs, sequences).get(slug);
+  if (file === undefined) throw new Error(`unknown_pack: ${slug}`);
+  return file;
 }
 
 export function compilePack(pack: Pack): string {
@@ -61,11 +104,15 @@ export function compilePack(pack: Pack): string {
  * module, and a seed that half fails is a seed nobody can re-run. So the
  * module migration runner applies these, and only for the modules it installed.
  *
- * The numbering is the pack's own — `10_pack_be`, `11_pack_fr` — so the file
+ * The numbering is the pack's own — `10_pack_be`, `13_pack_ee` — so the file
  * of a country is recognisable wherever it sits.
  */
-export function moduleSeedFileName(slug: string, allSlugs: readonly string[]): string {
-  return seedFileName(slug, allSlugs);
+export function moduleSeedFileName(
+  slug: string,
+  allSlugs: readonly string[],
+  sequences: ReadonlyMap<string, number>,
+): string {
+  return seedFileName(slug, allSlugs, sequences);
 }
 
 /**
@@ -184,7 +231,7 @@ export function compileFrameworkPack(pack: FrameworkPack): string {
   if (manifest.certification !== undefined) {
     out.push(`-- ${capitalise(describeCertification(manifest.certification))}.`);
     out.push('-- Written from:');
-    for (const source of manifest.certification.sources ?? []) out.push(`--   ${source}`);
+    for (const source of manifest.certification.sources ?? []) out.push(...citation(source));
     out.push('--');
   }
   out.push(
@@ -210,7 +257,7 @@ function header(pack: Pack): string[] {
   if (certification !== undefined) {
     lines.push(`-- ${capitalise(describeCertification(certification))}.`);
     lines.push('-- Written from:');
-    for (const source of certification.sources ?? []) lines.push(`--   ${source}`);
+    for (const source of certification.sources ?? []) lines.push(...citation(source));
     lines.push('--');
   }
   if (pack.deferred.length > 0) {
@@ -412,14 +459,15 @@ function taxes(pack: Pack, country: string): string[] {
       `${date(t.valid_from)}, ${date(t.valid_to)}, ${text(t.legal_reference)}, ` +
       `${text(t.vat_category)}, ${text(t.exemption_code)}, ${t.sequence}, ` +
       `${text(t.kind)}, ${bool(t.recoverable)}, ${text(t.jurisdiction)}, ` +
-      `${bool(t.price_include)}, ${bool(t.cash_basis)}, ${text(t.cash_basis_transition_account)})`,
+      `${bool(t.price_include)}, ${bool(t.cash_basis)}, ${text(t.cash_basis_transition_account)}, ` +
+      `${text(t.source)})`,
   );
   return [
     'insert into tax_templates',
     '  (country, code, name, name_i18n, description, amount_type, amount, applies_to, treatment,',
     '   valid_from, valid_to, legal_reference, vat_category, exemption_code, sequence,',
     '   tax_kind, recoverable, jurisdiction, price_include, cash_basis,',
-    '   cash_basis_transition_account_code)',
+    '   cash_basis_transition_account_code, source_key)',
     'values',
     values.join(',\n'),
     'on conflict (country, code) do update set',
@@ -441,7 +489,8 @@ function taxes(pack: Pack, country: string): string[] {
     '  jurisdiction    = excluded.jurisdiction,',
     '  price_include   = excluded.price_include,',
     '  cash_basis      = excluded.cash_basis,',
-    '  cash_basis_transition_account_code = excluded.cash_basis_transition_account_code;',
+    '  cash_basis_transition_account_code = excluded.cash_basis_transition_account_code,',
+    '  source_key      = excluded.source_key;',
     '',
   ];
 }
@@ -500,13 +549,13 @@ function taxReport(pack: Pack, country: string): string[] {
 
   const out = [
     'insert into tax_report_templates',
-    '  (country, code, name, period, valid_from, valid_to, legal_reference, is_periodic_return)',
+    '  (country, code, name, periods, valid_from, valid_to, legal_reference, is_periodic_return)',
     'values',
-    `  (${text(country)}, ${text(report.code)}, ${text(report.name)}, ${text(report.period)}, ` +
+    `  (${text(country)}, ${text(report.code)}, ${text(report.name)}, ${periods(report.periods)}, ` +
       `${date(report.valid_from)}, ${date(report.valid_to)}, ${text(report.legal_reference)}, true)`,
     'on conflict (country, code) do update set',
     '  name               = excluded.name,',
-    '  period             = excluded.period,',
+    '  periods            = excluded.periods,',
     '  valid_from         = excluded.valid_from,',
     '  valid_to           = excluded.valid_to,',
     '  legal_reference    = excluded.legal_reference,',
@@ -520,13 +569,14 @@ function taxReport(pack: Pack, country: string): string[] {
       `  (${text(country)}, ${text(report.code)}, ${text(b.box)}, ${text(b.kind)}, ${text(b.name)}, ` +
       `${json(pack.labels.tax_report_boxes[`${b.box}|${b.kind}`])}, ${b.sequence}, ` +
       `${array(b.plus)}, ${array(b.minus)}, ${b.floor_zero ? 'true' : 'false'}, ` +
-      `${b.hidden ? 'true' : 'false'}, ${text(b.xml_element)}, ${text(b.legal_reference)})`,
+      `${b.hidden ? 'true' : 'false'}, ${text(b.xml_element)}, ${text(b.legal_reference)}, ` +
+      `${text(b.source)})`,
   );
 
   out.push(
     'insert into tax_report_box_templates',
     '  (country, report_code, box, kind, name, name_i18n, sequence,',
-    '   plus_boxes, minus_boxes, floor_zero, hidden, xml_element, legal_reference)',
+    '   plus_boxes, minus_boxes, floor_zero, hidden, xml_element, legal_reference, source_key)',
     'values',
     values.join(',\n'),
     'on conflict (country, report_code, box, kind) do update set',
@@ -538,7 +588,8 @@ function taxReport(pack: Pack, country: string): string[] {
     '  floor_zero      = excluded.floor_zero,',
     '  hidden          = excluded.hidden,',
     '  xml_element     = excluded.xml_element,',
-    '  legal_reference = excluded.legal_reference;',
+    '  legal_reference = excluded.legal_reference,',
+    '  source_key      = excluded.source_key;',
     '',
   );
   return out;
@@ -604,6 +655,15 @@ function defaults(pack: Pack, country: string): string[] {
     // a neutral one, because a format that fixes no wording has no wrong
     // answer to give, and a missing label is not a reason to refuse a file.
     text((pack.manifest.defaults['opening_entry_label'] as string | undefined) ?? null),
+    // How often a company of this country files, when the law of that country
+    // gives one answer. No fallback, and for once the reason is not that the
+    // fallback would be another country's: it is that both answers are this
+    // country's, and which one applies is a fact about the company. `ekwo init`
+    // asks rather than this file choosing.
+    enumeration(
+      (pack.manifest.defaults['vat_period'] as string | undefined) ?? null,
+      'declaration_period',
+    ),
   ];
   return [
     'insert into country_defaults',
@@ -614,7 +674,8 @@ function defaults(pack: Pack, country: string): string[] {
     '   current_year_result_loss_code, retained_earnings_loss_code, opening_journal_code,',
     '   rounding_method, cash_rounding_unit, fx_gain_code, fx_loss_code,',
     '   asset_disposal_gain_code, asset_disposal_loss_code,',
-    '   asset_disposal_proceeds_code, asset_disposal_value_code, opening_entry_label)',
+    '   asset_disposal_proceeds_code, asset_disposal_value_code, opening_entry_label,',
+    '   vat_period_default)',
     'values',
     `  (${row.join(', ')})`,
     'on conflict (country) do update set',
@@ -648,7 +709,8 @@ function defaults(pack: Pack, country: string): string[] {
     '  asset_disposal_loss_code        = excluded.asset_disposal_loss_code,',
     '  asset_disposal_proceeds_code    = excluded.asset_disposal_proceeds_code,',
     '  asset_disposal_value_code       = excluded.asset_disposal_value_code,',
-    '  opening_entry_label             = excluded.opening_entry_label;',
+    '  opening_entry_label             = excluded.opening_entry_label,',
+    '  vat_period_default              = excluded.vat_period_default;',
   ];
 }
 
@@ -736,11 +798,16 @@ function manifestRow(pack: Pack, country: string): string[] {
     text(certification?.by ?? null),
     date(certification?.on ?? null),
     text(pack.checksum),
+    // The register, as the pack declares it and in that order. A bare title of
+    // the deprecated form carries no link and reaches no column: what an
+    // application shows under "where do these rules come from" is a list of
+    // things a reader can open, or it is nothing.
+    register(sourcesOf(certification)),
   ];
   return [
     'insert into country_packs',
     '  (country, name, version, released_at, schema_min, certification_status,',
-    '   certified_by, certified_at, checksum)',
+    '   certified_by, certified_at, checksum, sources)',
     'values',
     `  (${row.join(', ')})`,
     'on conflict (country) do update set',
@@ -751,9 +818,23 @@ function manifestRow(pack: Pack, country: string): string[] {
     '  certification_status = excluded.certification_status,',
     '  certified_by         = excluded.certified_by,',
     '  certified_at         = excluded.certified_at,',
-    '  checksum             = excluded.checksum;',
+    '  checksum             = excluded.checksum,',
+    '  sources              = excluded.sources;',
     '',
   ];
+}
+
+/**
+ * One text of the register, in the header of the seed it produced.
+ *
+ * Two lines rather than one, because the link is the half a reader of the
+ * generated SQL cannot reconstruct: an operator who opens a seed to find out
+ * what their installation believes about their country should be able to go
+ * and read the law it came from without leaving the file.
+ */
+function citation(source: string | PackSource): string[] {
+  if (typeof source === 'string') return [`--   ${source}`];
+  return [`--   ${source.title} (${source.publisher})`, `--     ${source.url}`];
 }
 
 function capitalise(text: string): string {
@@ -778,9 +859,23 @@ function number(value: number): string {
 }
 
 /** A `text[]` literal, empty included, in the order the pack wrote it. */
+/**
+ * The cadences a form is filed on. Its own helper rather than `array()`,
+ * because the column is an enum array and a text array will not cast itself
+ * into one silently.
+ */
+function periods(values: readonly string[]): string {
+  return `array[${values.map((value) => text(value)).join(', ')}]::declaration_period[]`;
+}
+
 function array(values: readonly string[]): string {
   if (values.length === 0) return `'{}'::text[]`;
   return `array[${values.map((value) => text(value)).join(', ')}]::text[]`;
+}
+
+/** A value of a PostgreSQL enum, or a null the column keeps as one. */
+function enumeration(value: string | null, type: string): string {
+  return value === null ? 'null' : `${text(value)}::${type}`;
 }
 
 function bool(value: boolean): string {
@@ -817,6 +912,26 @@ function defaulted<T>(value: T | null | undefined, render: (value: T) => string)
 }
 
 /** A jsonb literal, with its keys in a fixed order so the output is stable. */
+/**
+ * The source register, as one jsonb array.
+ *
+ * In the order the pack declares, not sorted: a register is a reading list,
+ * and the text a country's chart of accounts comes from belongs at the top of
+ * it. The fields are written out by name rather than stringified whole, so a
+ * field added to the format later is a field somebody decided to compile.
+ */
+function register(sources: PackSource[]): string {
+  const rows = sources.map((source) => ({
+    key: source.key,
+    title: source.title,
+    publisher: source.publisher,
+    url: source.url,
+    consulted_on: source.consulted_on,
+    kind: source.kind,
+  }));
+  return `${text(JSON.stringify(rows))}::jsonb`;
+}
+
 function json(value: Record<string, string> | undefined): string {
   const entries = Object.entries(value ?? {}).sort(([a], [b]) => (a < b ? -1 : 1));
   const object: Record<string, string> = {};

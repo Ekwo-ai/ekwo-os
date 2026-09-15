@@ -11,13 +11,20 @@ import {
   applySeeds,
   bootstrap,
   doctor,
+  applyMigration,
+  allModuleMigrations,
   listMigrations,
+  listModules,
   status,
   syncSchemaVersion,
   type Migration,
   type SqlClient,
 } from '../../packages/cli/src/index.js';
 import { emptyDatabase, makeAuthUser, migrationsPath, seedPath } from './helpers.js';
+import { somePack } from '../helpers/packs.js';
+
+// The installation these tests bootstrap is in some country, named once.
+const HOME = somePack.manifest.country;
 
 let db: SqlClient;
 let migrations: Migration[];
@@ -32,7 +39,7 @@ beforeEach(async () => {
   userId = await makeAuthUser(db, 'first@example.test');
   const result = await bootstrap(db, {
     organization: 'Example Group',
-    country: 'BE',
+    country: HOME,
     company: 'Example One',
     fiscalYear: 2026,
     adminUserId: userId,
@@ -61,12 +68,34 @@ describe('status', () => {
 
     expect(report.companies).toHaveLength(1);
     expect(report.companies[0]?.name).toBe('Example One');
-    expect(report.companies[0]?.country).toBe('BE');
-    expect(report.companies[0]?.accounts).toBeGreaterThan(300);
+    expect(report.companies[0]?.country).toBe(HOME);
+    expect(report.companies[0]?.accounts).toBe(
+      (somePack.charts.find((chart) => chart.is_default) ?? somePack.charts[0]!).accounts.length,
+    );
     expect(report.companies[0]?.fiscalYears).toBe(1);
     // A fresh installation has nothing closed; `close_fiscal_year` is the
     // only thing that changes this number.
     expect(report.companies[0]?.closedFiscalYears).toBe(0);
+  });
+
+  it('says how often each company files, and says so when nothing was recorded', async () => {
+    // What a reminder and any client offering "file the current period" read.
+    // Null is printed as an absence rather than filled in with a cadence
+    // nobody chose: every pack here makes it follow turnover.
+    const unrecorded = await status(db, migrations);
+    expect(unrecorded.companies[0]?.vatPeriod).toBeNull();
+
+    const second = await bootstrap(db, {
+      organization: 'Example Group',
+      country: 'BE',
+      company: 'Example Two',
+      fiscalYear: 2026,
+      adminUserId: userId,
+      vatPeriod: 'quarter',
+    });
+    expect(second.vatPeriod).toBe('quarter');
+    const report = await status(db, migrations);
+    expect(report.companies.find((c) => c.name === 'Example Two')?.vatPeriod).toBe('quarter');
   });
 
   it('shows the gap when a migration has not been applied', async () => {
@@ -76,6 +105,29 @@ describe('status', () => {
     );
     const report = await status(db, migrations);
     expect(report.pending).toHaveLength(1);
+  });
+
+  it('counts the modules, so an installation kept up to date is not "ahead"', async () => {
+    // `ekwo migrate` applies the socle's migrations and the modules' into one
+    // history. A gap computed against the socle alone reads the module
+    // versions as history this release has no file for, and tells the operator
+    // to upgrade a CLI that is already current — which is what `ekwo doctor`
+    // did on a real project on 14 September 2026, one command after `ekwo
+    // migrate` had put them there.
+    const modules = allModuleMigrations(await listModules());
+    expect(modules.length).toBeGreaterThan(0);
+    for (const migration of modules) {
+      await applyMigration(db, migration);
+    }
+
+    expect((await status(db, migrations)).unknown).toHaveLength(modules.length);
+    const everything = [...migrations, ...modules];
+    expect((await status(db, everything)).unknown).toHaveLength(0);
+    expect((await status(db, everything)).pending).toHaveLength(0);
+
+    const report = await doctor(db, everything);
+    const gap = report.checks.find((c) => c.name === 'migrations');
+    expect(gap?.severity).toBe('ok');
   });
 
   it('says so when nothing is installed at all', async () => {
@@ -97,8 +149,10 @@ describe('doctor', () => {
     expect(report.warnings, JSON.stringify(report.checks, null, 2)).toBe(0);
     expect(report.checks.map((c) => c.name)).toEqual([
       'migrations',
+      'catalogue',
       'row level security',
       'policies',
+      'grants',
       'company members',
       'instance administrators',
       'bank accounts',
@@ -195,5 +249,57 @@ describe('doctor', () => {
     const check = report.checks.find((c) => c.name === 'instance administrators');
     expect(check?.severity).toBe('warning');
     expect(check?.summary).toContain('nobody can create a company');
+  });
+});
+
+/**
+ * The privileges, which are the half of access control that row level security
+ * does not cover and that nothing else in this file would notice.
+ *
+ * These four break a live database in the four ways an installation drifts: a
+ * grant the schema declared and the database lost, a table opened to the
+ * anonymous role, a verb given to a signed-in user that no policy will ever
+ * accept, and a default privilege put back by hand.
+ */
+describe('doctor: the privileges the schema declares', () => {
+  it('is content with an installation the migrations built', async () => {
+    const report = await doctor(db, migrations);
+    const check = report.checks.find((c) => c.name === 'grants');
+    expect(check?.severity, JSON.stringify(check, null, 2)).toBe('ok');
+    expect(check?.summary).toContain('public');
+  });
+
+  it('fails on a grant that is missing, and names the table and the role', async () => {
+    await db.exec('revoke insert on table documents from authenticated;');
+    const report = await doctor(db, migrations);
+    const check = report.checks.find((c) => c.name === 'grants');
+    expect(check?.severity).toBe('problem');
+    expect(check?.details?.join('\n')).toContain('public.table documents: authenticated is missing insert');
+    expect(report.problems).toBeGreaterThan(0);
+  });
+
+  it('fails on a table opened to the anonymous role', async () => {
+    await db.exec('grant select on table entries to anon;');
+    const report = await doctor(db, migrations);
+    const check = report.checks.find((c) => c.name === 'grants');
+    expect(check?.severity).toBe('problem');
+    expect(check?.details?.join('\n')).toContain('public.table entries: anon holds an extra select');
+  });
+
+  it('warns about a signed-in user who gained a verb no policy accepts', async () => {
+    await db.exec('grant delete on table currencies to authenticated;');
+    const report = await doctor(db, migrations);
+    const check = report.checks.find((c) => c.name === 'grants');
+    expect(check?.severity).toBe('warning');
+    expect(check?.details?.join('\n')).toContain('public.table currencies: authenticated holds an extra delete');
+    expect(report.problems).toBe(0);
+  });
+
+  it('warns about a default privilege somebody put back', async () => {
+    await db.exec('alter default privileges in schema public grant select on tables to anon;');
+    const report = await doctor(db, migrations);
+    const check = report.checks.find((c) => c.name === 'grants');
+    expect(check?.severity).toBe('warning');
+    expect(check?.details?.join('\n')).toContain('a default privilege still stands');
   });
 });

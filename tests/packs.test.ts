@@ -1,18 +1,25 @@
 import type { PGlite } from '@electric-sql/pglite';
-import { readFile, readdir } from 'node:fs/promises';
+import { cp, mkdtemp, readFile, readdir, rm, writeFile } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import {
+  CATEGORY_CODES,
+  TREATMENT_CODES,
   compilePack,
+  declaredSeedSequences,
   listPacks,
   packsDir,
   parseCsv,
   readPack,
   readSchema,
   seedFileName,
+  sourcesOf,
+  seedFileNames,
   validate,
 } from '../packages/cli/src/index.js';
 import { freshDatabase, repoRoot, rows } from './helpers/db.js';
+import { allPacks, certificationStatuses, defaultChartOf, somePack, sourceKinds } from './helpers/packs.js';
 
 // The country packs replaced four hand-written seeds. The point of this file
 // is that the replacement changed nothing: the same template rows, from a
@@ -75,6 +82,43 @@ const KEYS: Record<string, (row: TemplateRow) => string> = {
   country_defaults: (r) => String(r['country']),
 };
 
+const identity = (row: TemplateRow): TemplateRow => row;
+
+/**
+ * One hand-written row, with the EN 16931 category its treatment actually
+ * asks for.
+ *
+ * The hand-written seeds gave every self-assessed tax the reverse-charge pair
+ * — `AE` and `VATEX-EU-AE` — and gave an import of goods the standard rate,
+ * and nothing ever compared those columns to anything. `ekwo pack check` does
+ * now, from `TREATMENT_CODES`, and the packs were corrected to match; so this
+ * file stops claiming those two columns never moved and says instead exactly
+ * how they moved, from the same table the check reads.
+ *
+ * Everything else still has to be identical, which is the claim that matters.
+ * A treatment that leaves the pack a choice — `domestic` is `S` or `Z`, an
+ * exemption is `E` under whichever article the country claims — is left as
+ * the seed wrote it, because there the seed was already saying something the
+ * check has no quarrel with.
+ */
+function asCorrected(row: TemplateRow): TemplateRow {
+  const codes = TREATMENT_CODES[row['treatment'] as string];
+  if (codes === undefined || codes.categories.length > 1) return row;
+  const category = codes.categories[0] ?? null;
+  const reserved = category === null ? null : (CATEGORY_CODES[category]?.exemption ?? undefined);
+  return {
+    ...row,
+    // Padded, because the column is `char(2)` and every EN 16931 category but
+    // `AE` is one character — so the database hands back `S `, `K `, `E `.
+    // That is a defect and not an expectation; it is written up in
+    // `docs/international.md`, and this line is what it looks like from here.
+    vat_category: category === null ? null : category.padEnd(2),
+    // `undefined` is the article-based case: the pack picks the reason, so
+    // whatever the seed wrote is what is expected back.
+    exemption_code: reserved === undefined ? row['exemption_code'] : reserved,
+  };
+}
+
 async function templateRows(db: PGlite): Promise<Record<string, TemplateRow[]>> {
   const out: Record<string, TemplateRow[]> = {};
   for (const [table, sql] of Object.entries(QUERIES)) {
@@ -116,23 +160,33 @@ describe('the compiled packs against the seeds they replace', () => {
     await after.close();
   });
 
-  it('leave every row they already held exactly as it was', async () => {
+  it('leave every row they already held exactly as it was, but for the categories since corrected', async () => {
     const left = await templateRows(before);
     const right = await templateRows(after);
     for (const table of Object.keys(QUERIES)) {
       const key = KEYS[table]!;
       const held = new Set((left[table] ?? []).map(key));
-      expect((right[table] ?? []).filter((row) => held.has(key(row))), table).toEqual(left[table]);
+      const expected = (left[table] ?? []).map(table === 'tax_templates' ? asCorrected : identity);
+      expect((right[table] ?? []).filter((row) => held.has(key(row))), table).toEqual(expected);
     }
   });
 
   it('add the four taxes the tax engine brought, and not a row more', async () => {
     const left = await templateRows(before);
     const right = await templateRows(after);
+    // The question is what a change to an existing country added. A country
+    // the released seeds never carried is a new pack, and every one of its
+    // rows is new: it would drown the answer rather than inform it, so the
+    // diff is taken over the countries both sides hold.
+    const known = new Set(
+      Object.values(left).flatMap((table) => (table ?? []).map((row) => row['country'] as string)),
+    );
     const added = (table: string): TemplateRow[] => {
       const key = KEYS[table]!;
       const held = new Set((left[table] ?? []).map(key));
-      return (right[table] ?? []).filter((row) => !held.has(key(row)));
+      return (right[table] ?? []).filter(
+        (row) => known.has(row['country'] as string) && !held.has(key(row)),
+      );
     };
 
     expect(added('journal_templates')).toEqual([]);
@@ -163,12 +217,31 @@ describe('the compiled packs against the seeds they replace', () => {
   it('load the counts the packs claim', async () => {
     const right = await templateRows(after);
     const accounts = right['account_templates'] ?? [];
-    expect(accounts.filter((a) => a['country'] === 'BE')).toHaveLength(353);
-    expect(accounts.filter((a) => a['country'] === 'FR')).toHaveLength(394);
-    expect(right['tax_templates']).toHaveLength(46);
-    expect(right['tax_posting_templates']).toHaveLength(166);
-    expect(right['journal_templates']).toHaveLength(12);
-    expect(right['country_defaults']).toHaveLength(2);
+    // The query above reads the default chart only, which is the chart the
+    // hand-written seeds knew. Every count is the pack's own.
+    for (const pack of allPacks) {
+      expect(accounts.filter((a) => a['country'] === pack.manifest.country), pack.slug).toHaveLength(
+        defaultChartOf(pack).accounts.length,
+      );
+    }
+    expect(right['tax_templates']).toHaveLength(
+      allPacks.reduce((n, pack) => n + pack.taxes.length, 0),
+    );
+    expect(right['tax_posting_templates']).toHaveLength(
+      allPacks.reduce(
+        (n, pack) =>
+          n +
+          pack.taxes.reduce(
+            (m, tax) => m + tax.postings.invoice.length + tax.postings.credit_note.length,
+            0,
+          ),
+        0,
+      ),
+    );
+    expect(right['journal_templates']).toHaveLength(
+      allPacks.reduce((n, pack) => n + pack.manifest.journals.length, 0),
+    );
+    expect(right['country_defaults']).toHaveLength(allPacks.length);
   });
 });
 
@@ -206,6 +279,51 @@ describe('pack, seed, database, pack again', () => {
             sequence: account.sequence,
           });
         });
+      }
+    }
+  });
+
+  it('gives back the register, and the text each tax and each box is in', async () => {
+    for (const pack of allPacks) {
+      const [loaded] = await rows<{ sources: unknown }>(
+        db,
+        'select sources from country_packs where country = $1',
+        [pack.manifest.country],
+      );
+      expect(loaded, pack.slug).toBeDefined();
+      // jsonb comes back parsed on one route and as text on the other.
+      const held = (typeof loaded!.sources === 'string'
+        ? (JSON.parse(loaded!.sources) as unknown[])
+        : (loaded!.sources as unknown[])) as Record<string, string>[];
+      expect(held.map((source) => source['key']), pack.slug).toEqual(
+        sourcesOf(pack.manifest.certification).map((source) => source.key),
+      );
+      for (const source of held) {
+        expect(source['url'], `${pack.slug} ${String(source['key'])}`).toMatch(/^https:\/\//);
+      }
+
+      // The key travels with the rule, so an application showing a rate can
+      // say which of those texts it came from without reading the pack.
+      const keys = new Set(held.map((source) => source['key']));
+      const taxKeys = await rows<{ code: string; source_key: string | null }>(
+        db,
+        'select code, source_key from tax_templates where country = $1 order by code',
+        [pack.manifest.country],
+      );
+      expect(taxKeys.length, pack.slug).toBe(pack.taxes.length);
+      for (const row of taxKeys) {
+        expect(row.source_key, `${pack.slug} tax ${row.code}`).not.toBeNull();
+        expect(keys.has(row.source_key!), `${pack.slug} tax ${row.code}`).toBe(true);
+      }
+      const boxKeys = await rows<{ box: string; source_key: string | null }>(
+        db,
+        'select box, source_key from tax_report_box_templates where country = $1 order by box',
+        [pack.manifest.country],
+      );
+      expect(boxKeys.length, pack.slug).toBe((pack.report?.boxes ?? []).length);
+      for (const row of boxKeys) {
+        expect(row.source_key, `${pack.slug} box ${row.box}`).not.toBeNull();
+        expect(keys.has(row.source_key!), `${pack.slug} box ${row.box}`).toBe(true);
       }
     }
   });
@@ -280,11 +398,12 @@ describe('pack, seed, database, pack again', () => {
 describe('the committed seeds', () => {
   it('are the exact output of their pack — what `ekwo pack check` runs in CI', async () => {
     const slugs = await listPacks(packs);
-    expect(slugs).toContain('be');
-    expect(slugs).toContain('fr');
+    const declared = await declaredSeedSequences(packs);
+    expect(slugs, 'this repository ships no pack at all').not.toHaveLength(0);
+    expect(slugs).toEqual([...slugs].sort());
     for (const slug of slugs) {
       const pack = await readPack(slug, packs);
-      const file = seedFileName(slug, slugs);
+      const file = seedFileName(slug, slugs, declared);
       const committed = await readFile(join(seedDir, file), 'utf8');
       expect(committed, `${file} is stale: run \`ekwo pack build --all\``).toBe(compilePack(pack));
     }
@@ -293,31 +412,91 @@ describe('the committed seeds', () => {
   it('are the only country seeds `supabase db push` applies', async () => {
     const config = await readFile(join(repoRoot, 'supabase', 'config.toml'), 'utf8');
     const slugs = await listPacks(packs);
+    const declared = await declaredSeedSequences(packs);
     for (const slug of slugs) {
-      expect(config).toContain(`./seed/${seedFileName(slug, slugs)}`);
+      expect(config).toContain(`./seed/${seedFileName(slug, slugs, declared)}`);
     }
     expect(config).not.toContain('chart_be');
+  });
+
+  // The numbers that shipped in v0.2.0 and in the release after it. A pack
+  // renamed here is a file an installation already holds, renamed by a
+  // release — which the seeds survive, because they upsert, and which nobody
+  // reading `supabase/config.toml` a year later would understand.
+  it('keep the number they shipped with, whatever is added beside them', async () => {
+    const slugs = await listPacks(packs);
+    const declared = await declaredSeedSequences(packs);
+    // country-literal: these three numbers are history, not a list of packs —
+    // they are the file names released installations already hold, and a pack
+    // that landed later cannot change them.
+    expect(seedFileName('be', slugs, declared)).toBe('10_pack_be.sql');
+    expect(seedFileName('fr', slugs, declared)).toBe('11_pack_fr.sql');
+    expect(seedFileName('lu', slugs, declared)).toBe('12_pack_lu.sql');
+  });
+
+  it('take the number the pack declares, and nothing else', () => {
+    // Not the alphabetical rank: `zz` sorts last and carries 10.
+    expect(
+      seedFileNames(
+        ['aa', 'zz'],
+        new Map([
+          ['aa', 42],
+          ['zz', 10],
+        ]),
+      ),
+    ).toEqual(
+      new Map([
+        ['aa', '42_pack_aa.sql'],
+        ['zz', '10_pack_zz.sql'],
+      ]),
+    );
+  });
+
+  it('refuse a pack that declares no number, and two that declare one', () => {
+    expect(() => seedFileNames(['aa', 'zz'], new Map([['aa', 10]]))).toThrow(
+      /seed_sequence_missing: packs\/zz/,
+    );
+    expect(() =>
+      seedFileNames(
+        ['aa', 'zz'],
+        new Map([
+          ['aa', 12],
+          ['zz', 12],
+        ]),
+      ),
+    ).toThrow(/seed_sequence_conflict/);
   });
 });
 
 describe('the pack format', () => {
+  // The refusals below are about the reader and the schema, not about a
+  // country: they break a pack in a temporary directory and read the message
+  // back. `somePack` is whichever pack comes first, so a failure is reproducible.
+  const sampleDir = join(packs, somePack.slug);
+  const manifestPath = join(sampleDir, 'pack.json');
+
   it('validates the packs of this repository against the published schema', async () => {
     // readPack throws on the first problem; this states what it checked.
     for (const slug of await listPacks(packs)) {
       const pack = await readPack(slug, packs);
       expect(pack.manifest.version).toMatch(/^\d+\.\d+\.\d+$/);
-      // Maintained, not certified: writing a pack and testing that it holds
-      // together is not an accountant reading it against the law.
-      expect(pack.manifest.certification?.status).toBe('maintained');
+      // Never certified: writing a pack and testing that it holds together is
+      // not an accountant reading it against the law. `maintained` is what the
+      // maintainers keep current, `community` what was contributed and nobody
+      // has read; neither names a person.
+      expect(certificationStatuses).toContain(pack.manifest.certification?.status);
+      expect(pack.manifest.certification?.status, 'no pack here has been reviewed').not.toBe(
+        'reviewed',
+      );
       expect(pack.manifest.certification?.by, 'only a review names someone').toBeUndefined();
       expect((pack.manifest.certification?.sources ?? []).length).toBeGreaterThan(0);
-      expect(pack.accounts.length).toBeGreaterThan(300);
+      expect(pack.accounts.length).toBeGreaterThan(100);
     }
   });
 
   it('refuses a manifest with a field nobody defined', async () => {
     const schema = await readSchema(packs);
-    const manifest = JSON.parse(await readFile(join(packs, 'be', 'pack.json'), 'utf8')) as Record<string, unknown>;
+    const manifest = JSON.parse(await readFile(manifestPath, 'utf8')) as Record<string, unknown>;
     expect(validate(manifest, schema)).toEqual([]);
     expect(validate({ ...manifest, script: 'rm -rf /' }, schema)).toEqual([
       { path: '(root)', message: 'unknown field "script"' },
@@ -326,11 +505,12 @@ describe('the pack format', () => {
 
   it('refuses a rate that is not a number and a country that is not two letters', async () => {
     const schema = await readSchema(packs);
-    const manifest = JSON.parse(await readFile(join(packs, 'be', 'pack.json'), 'utf8')) as Record<string, unknown>;
+    const manifest = JSON.parse(await readFile(manifestPath, 'utf8')) as Record<string, unknown>;
+    // Three letters, which is not an ISO 3166-1 alpha-2 code whatever it says.
     expect(validate({ ...manifest, country: 'BEL' }, schema)).toHaveLength(1);
 
     const taxes = (schema['$defs'] as Record<string, Record<string, unknown>>)['taxes']!;
-    const one = JSON.parse(await readFile(join(packs, 'be', 'taxes.json'), 'utf8')) as Record<string, unknown>[];
+    const one = JSON.parse(await readFile(join(sampleDir, 'taxes.json'), 'utf8')) as Record<string, unknown>[];
     expect(validate(one, taxes, schema)).toEqual([]);
     expect(validate([{ ...one[0], rate: '21' }], taxes, schema)).toHaveLength(1);
   });
@@ -369,6 +549,307 @@ describe('the pack format', () => {
     }
   });
 
+  // -------------------------------------------------------------------
+  // The golden scenario, and the sources that go with it.
+  //
+  // A golden proves that a pack is coherent with itself. It cannot prove that
+  // a rate is the law or that a box is the right box: a posting written to the
+  // wrong grid and a grid that expects the wrong postings agree, and the test
+  // passes. So the two travel together — the scenario, and a source on every
+  // tax and every box that a human being can go and read.
+  // -------------------------------------------------------------------
+
+  it('gives every country pack a golden scenario of at least ten documents', async () => {
+    for (const slug of await listPacks(packs)) {
+      const pack = await readPack(slug, packs);
+      expect(pack.golden, `packs/${slug} has no golden scenario`).not.toBeNull();
+      expect(pack.golden!.documents.length, slug).toBeGreaterThanOrEqual(10);
+      expect(pack.golden!.payments.length, slug).toBeGreaterThan(0);
+      expect(pack.golden!.periods.length, slug).toBeGreaterThan(0);
+    }
+  });
+
+  it('refuses a pack that carries no golden and gives no reason', async () => {
+    const dir = await mkdtemp(join(tmpdir(), 'ekwo-golden-'));
+    await cp(join(packs, 'schema'), join(dir, 'schema'), { recursive: true });
+    await cp(sampleDir, join(dir, somePack.slug), { recursive: true });
+    await rm(join(dir, somePack.slug, 'golden'), { recursive: true });
+
+    await expect(readPack(somePack.slug, dir)).rejects.toThrow(/carries no golden\/scenario\.json/);
+
+    // And the way out is a sentence somebody wrote, not a silence.
+    const broken = join(dir, somePack.slug, 'pack.json');
+    const manifest = JSON.parse(await readFile(broken, 'utf8')) as Record<string, unknown>;
+    manifest['golden'] = { exempt: 'A fixture that exists for the length of one test.' };
+    await writeFile(broken, JSON.stringify(manifest), 'utf8');
+    const exempt = await readPack(somePack.slug, dir);
+    expect(exempt.golden).toBeNull();
+    expect(exempt.goldenExemption).toMatch(/length of one test/);
+  });
+
+  it('refuses a golden that names a tax, an account or a document it does not carry', async () => {
+    const dir = await mkdtemp(join(tmpdir(), 'ekwo-golden-'));
+    await cp(join(packs, 'schema'), join(dir, 'schema'), { recursive: true });
+    await cp(sampleDir, join(dir, somePack.slug), { recursive: true });
+    const path = join(dir, somePack.slug, 'golden', 'scenario.json');
+    const scenario = JSON.parse(await readFile(path, 'utf8')) as Record<string, unknown>;
+
+    const documents = scenario['documents'] as Record<string, unknown>[];
+    const lines = documents[0]!['lines'] as Record<string, unknown>[];
+    // A tax code shaped like the pack's own and carried by no pack.
+    const absentTax = `${somePack.manifest.country}-S-99`;
+    lines[0]!['tax'] = absentTax;
+    lines[0]!['account'] = '999999';
+    (scenario['payments'] as Record<string, unknown>[])[0]!['match'] = 'nothing';
+    await writeFile(path, JSON.stringify(scenario), 'utf8');
+
+    const error = await readPack(somePack.slug, dir).catch((e: Error) => e.message);
+    expect(error).toMatch(new RegExp(`tax ${absentTax} is not a tax of this pack`));
+    expect(error).toMatch(/account 999999 is not in chart default/);
+    expect(error).toMatch(/is not a document of this scenario/);
+  });
+
+  it('refuses a golden of fewer than ten documents', async () => {
+    const dir = await mkdtemp(join(tmpdir(), 'ekwo-golden-'));
+    await cp(join(packs, 'schema'), join(dir, 'schema'), { recursive: true });
+    await cp(sampleDir, join(dir, somePack.slug), { recursive: true });
+    const path = join(dir, somePack.slug, 'golden', 'scenario.json');
+    const scenario = JSON.parse(await readFile(path, 'utf8')) as Record<string, unknown>;
+    scenario['documents'] = (scenario['documents'] as unknown[]).slice(0, 4);
+    await writeFile(path, JSON.stringify(scenario), 'utf8');
+
+    await expect(readPack(somePack.slug, dir)).rejects.toThrow(/needs at least 10 item\(s\)/);
+  });
+
+  it('asks every tax and every declaration box where it comes from', async () => {
+    for (const slug of await listPacks(packs)) {
+      const pack = await readPack(slug, packs);
+      for (const tax of pack.taxes) {
+        expect(tax.legal_reference, `${slug} tax ${tax.code}`).toBeTruthy();
+      }
+      for (const box of pack.report?.boxes ?? []) {
+        expect(box.legal_reference, `${slug} box ${box.box} (${box.kind})`).toBeTruthy();
+      }
+    }
+  });
+
+  it('refuses a tax and a box that cite nothing', async () => {
+    const schema = await readSchema(packs);
+    const defs = schema['$defs'] as Record<string, Record<string, unknown>>;
+
+    const taxes = JSON.parse(await readFile(join(sampleDir, 'taxes.json'), 'utf8')) as Record<string, unknown>[];
+    const { legal_reference: _dropped, ...silent } = taxes[0]!;
+    expect(validate([silent], defs['taxes']!, schema)).toEqual([
+      { path: '[0]', message: 'missing "legal_reference"' },
+    ]);
+
+    const report = JSON.parse(await readFile(join(sampleDir, 'tax_report.json'), 'utf8')) as Record<string, unknown>;
+    const boxes = report['boxes'] as Record<string, unknown>[];
+    const { legal_reference: _also, ...quiet } = boxes[0]!;
+    expect(validate({ ...report, boxes: [quiet] }, defs['tax_report']!, schema)).toEqual([
+      { path: 'boxes[0]', message: 'missing "legal_reference"' },
+    ]);
+  });
+
+  // -------------------------------------------------------------------
+  // The register of sources.
+  //
+  // `legal_reference` says which article a rule claims. The register says
+  // where that article can be read, once per text rather than once per rule,
+  // and every tax and every box names the key of the text it is in. What is
+  // tested here is that the two halves cannot drift: a key nothing declares, a
+  // key two texts claim, and a register a maintained pack does not carry.
+  // -------------------------------------------------------------------
+
+  it('gives every pack a register whose texts somebody can open', async () => {
+    for (const pack of allPacks) {
+      const register = sourcesOf(pack.manifest.certification);
+      expect(register.length, `packs/${pack.slug} declares no source anybody can open`).toBeGreaterThan(0);
+      const keys = new Set<string>();
+      for (const source of register) {
+        expect(keys.has(source.key), `packs/${pack.slug} declares ${source.key} twice`).toBe(false);
+        keys.add(source.key);
+        expect(source.url, `packs/${pack.slug} ${source.key}`).toMatch(/^https:\/\//);
+        expect(source.title.length, `packs/${pack.slug} ${source.key}`).toBeGreaterThan(0);
+        expect(source.publisher.length, `packs/${pack.slug} ${source.key}`).toBeGreaterThan(0);
+        expect(source.consulted_on, `packs/${pack.slug} ${source.key}`).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+        expect(sourceKinds, `packs/${pack.slug} ${source.key}`).toContain(source.kind);
+      }
+      // A portal is the other half of a reading list: where the declaration a
+      // pack transcribes is actually filed. Every pack of this repository
+      // names one, and the walkthrough asks a new country for it first.
+      expect(
+        register.some((source) => source.kind === 'portal'),
+        `packs/${pack.slug} names no filing portal`,
+      ).toBe(true);
+    }
+  });
+
+  it('resolves every source a rule names, and links the taxes and the boxes', async () => {
+    for (const pack of allPacks) {
+      const keys = new Set(sourcesOf(pack.manifest.certification).map((source) => source.key));
+      // The chart of the pack that carries its own reading joins the same
+      // register: a key is unique in a pack, not in a section of one.
+      for (const chart of pack.charts) {
+        for (const source of sourcesOf(chart.certification)) keys.add(source.key);
+      }
+      const named: [string, string | null][] = [
+        ...pack.charts.map((chart): [string, string | null] => [`chart ${chart.code}`, chart.source]),
+        ...pack.taxes.map((tax): [string, string | null] => [`tax ${tax.code}`, tax.source]),
+        ...(pack.report?.boxes ?? []).map((box): [string, string | null] => [`box ${box.box}`, box.source]),
+        ...pack.statements.flatMap((statement): [string, string | null][] => [
+          [`statement ${statement.code}`, statement.source],
+          ...statement.lines.map((line): [string, string | null] => [
+            `line ${statement.code}.${line.code}`,
+            line.source,
+          ]),
+        ]),
+        ...pack.documents.mentions.map((mention): [string, string | null] => [
+          `mention ${mention.code}`,
+          mention.source,
+        ]),
+        ...(pack.assets?.categories ?? []).map((category): [string, string | null] => [
+          `asset ${category.code}`,
+          category.source,
+        ]),
+      ];
+      for (const [where, key] of named) {
+        if (key === null) continue;
+        expect(keys.has(key), `packs/${pack.slug} ${where} names the source ${key}`).toBe(true);
+      }
+      // The two the format is strictest about. Every tax and every box of
+      // every pack here says which text its article is in, which is what a
+      // reviewed pack is refused for leaving out.
+      for (const tax of pack.taxes) {
+        expect(tax.source, `packs/${pack.slug} tax ${tax.code}`).not.toBeNull();
+      }
+      for (const box of pack.report?.boxes ?? []) {
+        expect(box.source, `packs/${pack.slug} box ${box.box} (${box.kind})`).not.toBeNull();
+      }
+    }
+  });
+
+  it('refuses a source key the register does not carry, and two texts claiming one key', async () => {
+    const dir = await mkdtemp(join(tmpdir(), 'ekwo-sources-'));
+    await cp(join(packs, 'schema'), join(dir, 'schema'), { recursive: true });
+    await cp(sampleDir, join(dir, somePack.slug), { recursive: true });
+    const path = join(dir, somePack.slug, 'taxes.json');
+    const taxes = JSON.parse(await readFile(path, 'utf8')) as Record<string, unknown>[];
+    taxes[0]!['source'] = 'a-text-nobody-declared';
+    await writeFile(path, JSON.stringify(taxes), 'utf8');
+    await expect(readPack(somePack.slug, dir)).rejects.toThrow(
+      /names the source a-text-nobody-declared, which this pack's register does not carry/,
+    );
+
+    await cp(sampleDir, join(dir, somePack.slug), { recursive: true, force: true });
+    const manifestFile = join(dir, somePack.slug, 'pack.json');
+    const manifest = JSON.parse(await readFile(manifestFile, 'utf8')) as Record<string, unknown>;
+    const certification = manifest['certification'] as Record<string, unknown>;
+    const register = certification['sources'] as Record<string, unknown>[];
+    certification['sources'] = [...register, { ...register[0] }];
+    await writeFile(manifestFile, JSON.stringify(manifest), 'utf8');
+    await expect(readPack(somePack.slug, dir)).rejects.toThrow(
+      new RegExp(`two sources claim the key ${String(register[0]!['key'])}`),
+    );
+  });
+
+  it('reads the bare title the register replaced, and says it is deprecated rather than refusing', async () => {
+    const dir = await mkdtemp(join(tmpdir(), 'ekwo-sources-'));
+    await cp(join(packs, 'schema'), join(dir, 'schema'), { recursive: true });
+    await cp(sampleDir, join(dir, somePack.slug), { recursive: true });
+    const manifestFile = join(dir, somePack.slug, 'pack.json');
+    const manifest = JSON.parse(await readFile(manifestFile, 'utf8')) as Record<string, unknown>;
+    const certification = manifest['certification'] as Record<string, unknown>;
+    const register = certification['sources'] as Record<string, unknown>[];
+    certification['sources'] = [...register, 'A text somebody read and nobody linked'];
+    await writeFile(manifestFile, JSON.stringify(manifest), 'utf8');
+
+    // It compiles — a pack written before the register still builds — and the
+    // reader is told, because a title is not somewhere anyone can go and read.
+    const read = await readPack(somePack.slug, dir);
+    expect(read.warnings.join('\n')).toMatch(/is a title with nowhere to read it/);
+    // The title reaches nothing. What the pack holds is what it held before,
+    // the manifest's entries and whichever chart declared a reading of its own.
+    const chartsOwn = somePack.charts.flatMap((chart) => sourcesOf(chart.certification));
+    expect(read.sources).toHaveLength(register.length + chartsOwn.length);
+  });
+
+  it('refuses a maintained pack with no register, and a reviewed pack whose rules name none', async () => {
+    const dir = await mkdtemp(join(tmpdir(), 'ekwo-sources-'));
+    await cp(join(packs, 'schema'), join(dir, 'schema'), { recursive: true });
+    await cp(sampleDir, join(dir, somePack.slug), { recursive: true });
+    const manifestFile = join(dir, somePack.slug, 'pack.json');
+    const manifest = JSON.parse(await readFile(manifestFile, 'utf8')) as Record<string, unknown>;
+    const certification = manifest['certification'] as Record<string, unknown>;
+
+    // `community` is the honest answer for a pack nobody has read, and it
+    // carries no such obligation. The two statuses above it do.
+    const claimed = certificationStatuses.filter((status) => status !== 'community');
+    // Every register of the pack, the manifest's and any chart's: the claim
+    // the two statuses make is that somebody can open something, and a chart
+    // that carries its own reading is part of the same register.
+    const emptied = {
+      ...manifest,
+      charts: (manifest['charts'] as Record<string, unknown>[] | undefined)?.map((chart) => {
+        const { certification: _own, ...rest } = chart;
+        return rest;
+      }),
+    };
+    for (const status of claimed) {
+      await writeFile(
+        manifestFile,
+        JSON.stringify({ ...emptied, certification: { ...certification, status, sources: [] } }),
+        'utf8',
+      );
+      await expect(readPack(somePack.slug, dir), status).rejects.toThrow(
+        new RegExp(`a ${status} pack carries a register of sources`),
+      );
+    }
+
+    // And a review says which text it read, per tax and per box.
+    await cp(sampleDir, join(dir, somePack.slug), { recursive: true, force: true });
+    const reviewed = JSON.parse(await readFile(manifestFile, 'utf8')) as Record<string, unknown>;
+    reviewed['certification'] = {
+      ...(reviewed['certification'] as Record<string, unknown>),
+      status: 'reviewed',
+      by: 'A. Example, chartered accountant',
+      on: '2026-09-15',
+    };
+    await writeFile(manifestFile, JSON.stringify(reviewed), 'utf8');
+    await expect(readPack(somePack.slug, dir)).resolves.toBeDefined();
+
+    const taxFile = join(dir, somePack.slug, 'taxes.json');
+    const taxes = JSON.parse(await readFile(taxFile, 'utf8')) as Record<string, unknown>[];
+    const code = String(taxes[0]!['code']);
+    delete taxes[0]!['source'];
+    await writeFile(taxFile, JSON.stringify(taxes), 'utf8');
+    await expect(readPack(somePack.slug, dir)).rejects.toThrow(
+      new RegExp(`taxes\\.json ${code}: a reviewed pack says which text its legal reference is in`),
+    );
+  });
+
+  it('accepts the two shapes of a source and nothing between them', async () => {
+    const schema = await readSchema(packs);
+    const defs = schema['$defs'] as Record<string, Record<string, unknown>>;
+    const source = defs['source']!;
+    const entry = {
+      key: 'a-text',
+      title: 'A consolidated statute',
+      publisher: 'The official gazette',
+      url: 'https://example.invalid/eli/1/2/3',
+      consulted_on: '2026-09-15',
+      kind: sourceKinds[0],
+    };
+    expect(validate(entry, source, schema)).toEqual([]);
+    expect(validate('A text somebody read', source, schema)).toEqual([]);
+    // Half an entry is neither, and a link that is not absolute and https is
+    // not a place anybody can be sent.
+    expect(validate({ key: 'a-text', title: 'Half of one' }, source, schema)).toHaveLength(1);
+    expect(validate({ ...entry, url: 'www.example.invalid' }, source, schema)).toHaveLength(1);
+    expect(validate({ ...entry, kind: 'a-kind-nobody-defined' }, source, schema)).toHaveLength(1);
+    expect(validate({ ...entry, note: 'a copy of what it says' }, source, schema)).toHaveLength(1);
+  });
+
   it('reserves the group of taxes phase 1 will need, and refuses it until then', async () => {
     const schema = await readSchema(packs);
     const defs = schema['$defs'] as Record<string, Record<string, unknown>>;
@@ -376,8 +857,14 @@ describe('the pack format', () => {
     const properties = tax['properties'] as Record<string, unknown>;
     expect(properties['group']).toBeDefined();
 
-    const taxes = JSON.parse(await readFile(join(packs, 'be', 'taxes.json'), 'utf8')) as Record<string, unknown>[];
-    const grouped = [{ ...taxes[0], code: 'BE-GROUP', group: ['BE-S-21', 'BE-S-06'] }];
+    const taxes = JSON.parse(await readFile(join(sampleDir, 'taxes.json'), 'utf8')) as Record<string, unknown>[];
+    const grouped = [
+      {
+        ...taxes[0],
+        code: `${somePack.manifest.country}-GROUP`,
+        group: somePack.taxes.slice(0, 2).map((tax) => tax.code),
+      },
+    ];
     expect(validate(grouped, defs['taxes']!, schema)).toEqual([]); // the schema accepts it
   });
 });
