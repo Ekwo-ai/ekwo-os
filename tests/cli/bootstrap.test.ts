@@ -66,8 +66,13 @@ describe('before anything is installed', () => {
   it('offers the packs it holds, named as the pack names itself', async () => {
     // `ekwo init` has no list of countries and no default one: the question
     // is built from this, so adding a pack is what adds a choice.
+    // In the order the question is asked in, which is by name: `allPacks` is
+    // ordered by directory, and the two stopped agreeing with the first pack
+    // whose name does not sort where its slug does.
     expect(await installedPacks(db)).toEqual(
-      allPacks.map((pack) => ({ country: pack.manifest.country, name: pack.manifest.name })),
+      allPacks
+        .map((pack) => ({ country: pack.manifest.country, name: pack.manifest.name }))
+        .sort((a, b) => (a.name === b.name ? a.country.localeCompare(b.country) : a.name.localeCompare(b.name))),
     );
   });
 
@@ -352,9 +357,9 @@ describe('bootstrap', () => {
     const files = choice.report!.periods[1]!;
     const notFiled = CADENCES.find((cadence) => !choice.report!.periods.includes(cadence))!;
 
-    // Nothing said, and nothing invented: a pack proposes a cadence only where
-    // the law of its country gives one answer for everybody, and this one does
-    // not, so the company is recorded as not having decided.
+    // Nothing said. What is recorded is what the pack's own form proposes,
+    // which is a cadence where the law gives one to everybody and nothing where
+    // it makes the answer a fact about the company.
     const silent = await bootstrap(db, {
       organization: 'Example Group',
       country,
@@ -362,12 +367,28 @@ describe('bootstrap', () => {
       fiscalYear: 2026,
       adminUserId: userId,
     });
-    expect(silent.vatPeriod).toBeUndefined();
+    expect(silent.vatPeriod).toBe(choice.report!.period_default ?? undefined);
     const unrecorded = await db.query<{ vat_period: string | null }>(
       'select vat_period from companies where id = $1',
       [silent.companyId],
     );
-    expect(unrecorded[0]?.vat_period).toBeNull();
+    expect(unrecorded[0]?.vat_period).toBe(choice.report!.period_default);
+
+    // A pack whose law proposes nothing records nothing, and the company is
+    // read back as not having decided rather than as filing monthly.
+    const undecided = packWhere(
+      'whose form offers several cadences and whose law proposes none',
+      (pack) => (pack.report?.periods.length ?? 0) > 1 && pack.report?.period_default === null,
+    );
+    const nothing = await bootstrap(db, {
+      organization: 'Example Group',
+      country: undecided.manifest.country,
+      company: 'Example Undecided',
+      fiscalYear: 2026,
+      adminUserId: userId,
+    });
+    expect(nothing.vatPeriod).toBeUndefined();
+    expect(nothing.filingPeriods).toEqual({});
 
     const chosen = await bootstrap(db, {
       organization: 'Example Group',
@@ -383,6 +404,15 @@ describe('bootstrap', () => {
       [chosen.companyId],
     );
     expect(recorded[0]?.vat_period).toBe(files);
+
+    // The cadence is recorded against the declaration it is about, and the
+    // deprecated column on the company is the mirror of that one row.
+    const rows = await db.query<{ report_code: string; period: string }>(
+      'select report_code, period::text as period from company_filing_periods where company_id = $1',
+      [chosen.companyId],
+    );
+    expect(rows).toEqual([{ report_code: choice.report!.code, period: files }]);
+    expect(chosen.filingPeriods).toEqual({ [choice.report!.code]: files });
 
     // A cadence the form is not filed on. The refusal names what the form does
     // accept, so the operator can see the answer rather than guess again.

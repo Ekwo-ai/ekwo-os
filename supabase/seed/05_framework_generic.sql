@@ -13,10 +13,11 @@
 -- directly, and nothing here is copied into a company.
 
 insert into statement_templates
-  (code, country, chart_code, name, kind, framework, valid_from, valid_to, legal_reference)
+  (code, country, chart_code, name, kind, framework, valid_from, valid_to, legal_reference,
+   source_key)
 values
-  ('IFRS-SME-BS', null, null, 'Statement of financial position', 'balance_sheet', 'IFRS-SME', date '1970-01-01', null, 'IFRS for SMEs, section 4'),
-  ('IFRS-SME-IS', null, null, 'Income statement', 'income_statement', 'IFRS-SME', date '1970-01-01', null, 'IFRS for SMEs, section 5')
+  ('IFRS-SME-BS', null, null, 'Statement of financial position', 'balance_sheet', 'IFRS-SME', date '1970-01-01', null, 'IFRS for SMEs, section 4', null),
+  ('IFRS-SME-IS', null, null, 'Income statement', 'income_statement', 'IFRS-SME', date '1970-01-01', null, 'IFRS for SMEs, section 5', null)
 on conflict (code) do update set
   country         = excluded.country,
   chart_code      = excluded.chart_code,
@@ -25,37 +26,38 @@ on conflict (code) do update set
   framework       = excluded.framework,
   valid_from      = excluded.valid_from,
   valid_to        = excluded.valid_to,
-  legal_reference = excluded.legal_reference;
+  legal_reference = excluded.legal_reference,
+  source_key      = excluded.source_key;
 
 insert into statement_line_templates
   (statement_code, code, parent_code, name, name_i18n, sequence, sign, is_total,
-   plus_lines, minus_lines, xbrl_element, legal_reference)
+   plus_lines, minus_lines, xbrl_element, legal_reference, source_key)
 values
-  ('IFRS-SME-BS', 'A-NC-FIX', 'A-NC', 'Property, plant, equipment and intangible assets', '{}'::jsonb, 10, 1, false, '{}'::text[], '{}'::text[], null, null),
-  ('IFRS-SME-BS', 'A-NC-OTH', 'A-NC', 'Other non-current assets', '{}'::jsonb, 20, 1, false, '{}'::text[], '{}'::text[], null, null),
-  ('IFRS-SME-BS', 'A-NC', null, 'Non-current assets', '{}'::jsonb, 30, 1, true, array['A-NC-FIX', 'A-NC-OTH']::text[], '{}'::text[], null, null),
-  ('IFRS-SME-BS', 'A-C-REC', 'A-C', 'Trade and other receivables', '{}'::jsonb, 40, 1, false, '{}'::text[], '{}'::text[], null, null),
-  ('IFRS-SME-BS', 'A-C-OTH', 'A-C', 'Inventories, prepayments and other current assets', '{}'::jsonb, 50, 1, false, '{}'::text[], '{}'::text[], null, null),
-  ('IFRS-SME-BS', 'A-C-CASH', 'A-C', 'Cash and cash equivalents', '{}'::jsonb, 60, 1, false, '{}'::text[], '{}'::text[], null, null),
-  ('IFRS-SME-BS', 'A-C', null, 'Current assets', '{}'::jsonb, 70, 1, true, array['A-C-REC', 'A-C-OTH', 'A-C-CASH']::text[], '{}'::text[], null, null),
-  ('IFRS-SME-BS', 'A-TOT', null, 'Total assets', '{}'::jsonb, 80, 1, true, array['A-NC', 'A-C']::text[], '{}'::text[], null, null),
-  ('IFRS-SME-BS', 'E-CAP', 'E-TOT', 'Capital and reserves', '{}'::jsonb, 90, -1, false, '{}'::text[], '{}'::text[], null, null),
-  ('IFRS-SME-BS', 'E-RET', 'E-TOT', 'Retained earnings', '{}'::jsonb, 100, -1, false, '{}'::text[], '{}'::text[], null, null),
-  ('IFRS-SME-BS', 'E-RESULT', 'E-TOT', 'Result for the period, not yet allocated', '{}'::jsonb, 105, -1, false, '{}'::text[], '{}'::text[], null, null),
-  ('IFRS-SME-BS', 'E-TOT', null, 'Total equity', '{}'::jsonb, 110, 1, true, array['E-CAP', 'E-RET', 'E-RESULT']::text[], '{}'::text[], null, null),
-  ('IFRS-SME-BS', 'L-NC', 'L-TOT', 'Non-current liabilities', '{}'::jsonb, 120, -1, false, '{}'::text[], '{}'::text[], null, null),
-  ('IFRS-SME-BS', 'L-C-PAY', 'L-C', 'Trade and other payables', '{}'::jsonb, 130, -1, false, '{}'::text[], '{}'::text[], null, null),
-  ('IFRS-SME-BS', 'L-C-OTH', 'L-C', 'Other current liabilities', '{}'::jsonb, 140, -1, false, '{}'::text[], '{}'::text[], null, null),
-  ('IFRS-SME-BS', 'L-C', null, 'Current liabilities', '{}'::jsonb, 150, 1, true, array['L-C-PAY', 'L-C-OTH']::text[], '{}'::text[], null, null),
-  ('IFRS-SME-BS', 'L-TOT', null, 'Total liabilities', '{}'::jsonb, 160, 1, true, array['L-NC', 'L-C']::text[], '{}'::text[], null, null),
-  ('IFRS-SME-BS', 'EL-TOT', null, 'Total equity and liabilities', '{}'::jsonb, 170, 1, true, array['E-TOT', 'L-TOT']::text[], '{}'::text[], null, null),
-  ('IFRS-SME-IS', 'REV', null, 'Revenue', '{}'::jsonb, 10, -1, false, '{}'::text[], '{}'::text[], null, null),
-  ('IFRS-SME-IS', 'COST', null, 'Cost of sales', '{}'::jsonb, 20, 1, false, '{}'::text[], '{}'::text[], null, null),
-  ('IFRS-SME-IS', 'GROSS', null, 'Gross profit', '{}'::jsonb, 30, 1, true, array['REV']::text[], array['COST']::text[], null, null),
-  ('IFRS-SME-IS', 'OTH-INC', null, 'Other income', '{}'::jsonb, 40, -1, false, '{}'::text[], '{}'::text[], null, null),
-  ('IFRS-SME-IS', 'OPEX', null, 'Operating expenses', '{}'::jsonb, 50, 1, false, '{}'::text[], '{}'::text[], null, null),
-  ('IFRS-SME-IS', 'DEPR', null, 'Depreciation and amortisation', '{}'::jsonb, 60, 1, false, '{}'::text[], '{}'::text[], null, null),
-  ('IFRS-SME-IS', 'PROFIT', null, 'Profit (loss) for the period', '{}'::jsonb, 70, 1, true, array['GROSS', 'OTH-INC']::text[], array['OPEX', 'DEPR']::text[], null, null)
+  ('IFRS-SME-BS', 'A-NC-FIX', 'A-NC', 'Property, plant, equipment and intangible assets', '{}'::jsonb, 10, 1, false, '{}'::text[], '{}'::text[], null, null, null),
+  ('IFRS-SME-BS', 'A-NC-OTH', 'A-NC', 'Other non-current assets', '{}'::jsonb, 20, 1, false, '{}'::text[], '{}'::text[], null, null, null),
+  ('IFRS-SME-BS', 'A-NC', null, 'Non-current assets', '{}'::jsonb, 30, 1, true, array['A-NC-FIX', 'A-NC-OTH']::text[], '{}'::text[], null, null, null),
+  ('IFRS-SME-BS', 'A-C-REC', 'A-C', 'Trade and other receivables', '{}'::jsonb, 40, 1, false, '{}'::text[], '{}'::text[], null, null, null),
+  ('IFRS-SME-BS', 'A-C-OTH', 'A-C', 'Inventories, prepayments and other current assets', '{}'::jsonb, 50, 1, false, '{}'::text[], '{}'::text[], null, null, null),
+  ('IFRS-SME-BS', 'A-C-CASH', 'A-C', 'Cash and cash equivalents', '{}'::jsonb, 60, 1, false, '{}'::text[], '{}'::text[], null, null, null),
+  ('IFRS-SME-BS', 'A-C', null, 'Current assets', '{}'::jsonb, 70, 1, true, array['A-C-REC', 'A-C-OTH', 'A-C-CASH']::text[], '{}'::text[], null, null, null),
+  ('IFRS-SME-BS', 'A-TOT', null, 'Total assets', '{}'::jsonb, 80, 1, true, array['A-NC', 'A-C']::text[], '{}'::text[], null, null, null),
+  ('IFRS-SME-BS', 'E-CAP', 'E-TOT', 'Capital and reserves', '{}'::jsonb, 90, -1, false, '{}'::text[], '{}'::text[], null, null, null),
+  ('IFRS-SME-BS', 'E-RET', 'E-TOT', 'Retained earnings', '{}'::jsonb, 100, -1, false, '{}'::text[], '{}'::text[], null, null, null),
+  ('IFRS-SME-BS', 'E-RESULT', 'E-TOT', 'Result for the period, not yet allocated', '{}'::jsonb, 105, -1, false, '{}'::text[], '{}'::text[], null, null, null),
+  ('IFRS-SME-BS', 'E-TOT', null, 'Total equity', '{}'::jsonb, 110, 1, true, array['E-CAP', 'E-RET', 'E-RESULT']::text[], '{}'::text[], null, null, null),
+  ('IFRS-SME-BS', 'L-NC', 'L-TOT', 'Non-current liabilities', '{}'::jsonb, 120, -1, false, '{}'::text[], '{}'::text[], null, null, null),
+  ('IFRS-SME-BS', 'L-C-PAY', 'L-C', 'Trade and other payables', '{}'::jsonb, 130, -1, false, '{}'::text[], '{}'::text[], null, null, null),
+  ('IFRS-SME-BS', 'L-C-OTH', 'L-C', 'Other current liabilities', '{}'::jsonb, 140, -1, false, '{}'::text[], '{}'::text[], null, null, null),
+  ('IFRS-SME-BS', 'L-C', null, 'Current liabilities', '{}'::jsonb, 150, 1, true, array['L-C-PAY', 'L-C-OTH']::text[], '{}'::text[], null, null, null),
+  ('IFRS-SME-BS', 'L-TOT', null, 'Total liabilities', '{}'::jsonb, 160, 1, true, array['L-NC', 'L-C']::text[], '{}'::text[], null, null, null),
+  ('IFRS-SME-BS', 'EL-TOT', null, 'Total equity and liabilities', '{}'::jsonb, 170, 1, true, array['E-TOT', 'L-TOT']::text[], '{}'::text[], null, null, null),
+  ('IFRS-SME-IS', 'REV', null, 'Revenue', '{}'::jsonb, 10, -1, false, '{}'::text[], '{}'::text[], null, null, null),
+  ('IFRS-SME-IS', 'COST', null, 'Cost of sales', '{}'::jsonb, 20, 1, false, '{}'::text[], '{}'::text[], null, null, null),
+  ('IFRS-SME-IS', 'GROSS', null, 'Gross profit', '{}'::jsonb, 30, 1, true, array['REV']::text[], array['COST']::text[], null, null, null),
+  ('IFRS-SME-IS', 'OTH-INC', null, 'Other income', '{}'::jsonb, 40, -1, false, '{}'::text[], '{}'::text[], null, null, null),
+  ('IFRS-SME-IS', 'OPEX', null, 'Operating expenses', '{}'::jsonb, 50, 1, false, '{}'::text[], '{}'::text[], null, null, null),
+  ('IFRS-SME-IS', 'DEPR', null, 'Depreciation and amortisation', '{}'::jsonb, 60, 1, false, '{}'::text[], '{}'::text[], null, null, null),
+  ('IFRS-SME-IS', 'PROFIT', null, 'Profit (loss) for the period', '{}'::jsonb, 70, 1, true, array['GROSS', 'OTH-INC']::text[], array['OPEX', 'DEPR']::text[], null, null, null)
 on conflict (statement_code, code) do update set
   parent_code     = excluded.parent_code,
   name            = excluded.name,
@@ -66,7 +68,8 @@ on conflict (statement_code, code) do update set
   plus_lines      = excluded.plus_lines,
   minus_lines     = excluded.minus_lines,
   xbrl_element    = excluded.xbrl_element,
-  legal_reference = excluded.legal_reference;
+  legal_reference = excluded.legal_reference,
+  source_key      = excluded.source_key;
 
 insert into statement_line_rules
   (statement_code, line_code, sequence, rule_kind, code_from, code_to,

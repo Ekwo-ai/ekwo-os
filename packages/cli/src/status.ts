@@ -34,6 +34,16 @@ export interface CompanySummary {
    */
   vatPeriod: string | null;
   /**
+   * How often this company files each declaration it is subject to, by the
+   * code of the form, with the name the pack gives it.
+   *
+   * `vatPeriod` above is one entry of this — the periodic return — kept because
+   * it is published. A company files its return and its recapitulative
+   * statement on cadences of their own, and printing only the first is how a
+   * lawful monthly statement from a quarterly filer looks like a mistake.
+   */
+  filingPeriods: { reportCode: string; reportName: string | null; period: string }[];
+  /**
    * Links onto this company's documents that still answer: not withdrawn, and
    * not past their expiry. It is here because it is the one thing about an
    * installation that is reachable without signing in, and an operator looking
@@ -113,11 +123,21 @@ export async function status(db: SqlClient, migrations: Migration[]): Promise<St
     pack_version: string | null;
     chart_code: string | null;
     vat_period: string | null;
+    filing_periods: { report_code: string; report_name: string | null; period: string }[] | null;
     live_shares: string;
   }>(
     `select c.name,
             c.country,
             c.vat_period,
+            (select coalesce(jsonb_agg(jsonb_build_object(
+                      'report_code', f.report_code,
+                      'report_name', t.name,
+                      'period', f.period)
+                    order by t.is_periodic_return desc nulls last, f.report_code), '[]'::jsonb)
+               from company_filing_periods f
+               left join tax_report_templates t
+                 on t.country = c.fiscal_country and t.code = f.report_code
+              where f.company_id = c.id) as filing_periods,
             (select count(*) from accounts a where a.company_id = c.id)::text as accounts,
             (select count(*) from entries e where e.company_id = c.id)::text as entries,
             (select count(*) from fiscal_years f where f.company_id = c.id)::text as fiscal_years,
@@ -175,6 +195,11 @@ export async function status(db: SqlClient, migrations: Migration[]): Promise<St
       packVersion: c.pack_version,
       chartCode: c.chart_code,
       vatPeriod: c.vat_period,
+      filingPeriods: (c.filing_periods ?? []).map((row) => ({
+        reportCode: row.report_code,
+        reportName: row.report_name,
+        period: row.period,
+      })),
       liveShares: Number(c.live_shares),
     })),
     packs: packs.map((p) => ({

@@ -1,0 +1,56 @@
+{
+  "name": "@ekwo-ai/vat-consignment",
+  "version": "0.4.0",
+  "description": "The Belgian periodic VAT return for Intervat (VATConsignment XML, schema NewTVA-in v0.9) in TypeScript, from the figures a declaration was filed with. Zero dependencies.",
+  "keywords": [
+    "intervat",
+    "vatconsignment",
+    "vat-return",
+    "declaration-tva",
+    "tva",
+    "vat",
+    "belgium",
+    "spf-finances",
+    "xml"
+  ],
+  "license": "MIT",
+  "author": "Ekwo AI",
+  "homepage": "https://github.com/Ekwo-ai/ekwo-os/tree/main/packages/formats/vat-consignment#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ekwo-ai/ekwo-os.git",
+    "directory": "packages/formats/vat-consignment"
+  },
+  "bugs": {
+    "url": "https://github.com/Ekwo-ai/ekwo-os/issues"
+  },
+  "type": "module",
+  "sideEffects": false,
+  "engines": {
+    "node": ">=18"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "typescript": "^5.9.0",
+    "vitest": "^3.2.0",
+    "xmllint-wasm": "^5.3.0"
+  }
+}

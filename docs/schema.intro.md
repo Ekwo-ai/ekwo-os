@@ -13,7 +13,7 @@ row written by the installer.
 ```
 instance                                 one row: who installed it, where, which edition
 instance_admins                          instance administrators
-companies ─┬─ company_members            who may read or write, in three roles
+companies ─┬─ company_members            who may read or write, in four presets
            ├─ fiscal_years               periods, open or closed
            ├─ accounts                   chart of accounts, eighteen types
            ├─ journals ── journal_sequences
@@ -48,8 +48,9 @@ the four template tables plus `country_defaults` that
 5. **A third-party account is reconcilable.** A check constraint refuses an
    `asset_receivable` or `liability_payable` account that is not.
 6. **Every table has row level security.** At instance level, a row in
-   `instance_admins` creates companies and invites members. Per company, `company_members` gives `viewer` read, `accountant`
-   write, and `owner` administration of the company and its members. An
+   `instance_admins` creates companies and invites members. Per company, `company_members` gives `viewer` read, `client`
+   read and the right to hand a piece over, `accountant` write, and `owner`
+   administration of the company and its members. An
    instance administrator can see the list of companies and invite people
    into them; they cannot read a ledger they were not invited to.
 7. **The instance row is a singleton.** A primary key of `1` and a check
@@ -87,12 +88,17 @@ A tax says how much. Its postings say where.
 For each tax and each document kind (`invoice` or `credit_note`), `tax_postings`
 holds at most one `base` posting and any number of `tax` postings. Each one
 carries a `factor_percent`, a ledger account (for tax postings) and a
-`declaration_box` with its own `box_factor_percent`.
+`declaration_box` with its own `box_factor_percent` — and, beside it,
+`declaration_boxes`, every box the form prints that one amount in. It is almost
+always the single box `declaration_box` names, and it is longer on a form that
+shows one figure in boxes that are not sums of one another.
 
 `post_document()` applies them:
 
 - the base amount goes to the account of the document line, and picks up the
-  box of the base posting;
+  box of the base posting — one line and one box, whatever the form does with
+  the figure afterwards: `vat_return()` is what reads the list and sums the
+  line into each box of it;
 - for each tax posting, `round(tax x |factor| / 100, 2)` goes to that
   posting's account — on the same side as the base when `factor_percent` is
   positive, on the opposite side when it is negative;

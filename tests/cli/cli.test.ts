@@ -16,6 +16,7 @@ import {
   numberFlag,
   rejectUnknownFlags,
   stringFlag,
+  stringFlags,
 } from '../../packages/cli/src/args.js';
 import {
   NoPoolerHostError,
@@ -51,6 +52,30 @@ describe('parsing', () => {
     // `--org` was given no value, so it is a switch and `--country` stands.
     expect(() => stringFlag(args, 'org')).toThrow(/--org needs a value/);
     expect(stringFlag(args, 'country')).toBe('BE');
+  });
+
+  it('keeps every value of a flag that is answered once per thing', () => {
+    // A company files several declarations, so the cadence flag is answered
+    // once per declaration. A map keeps the last value, which would silently
+    // drop every answer but one.
+    const args = parseArgs([
+      'init',
+      '--filing-period',
+      'A-FORM=month',
+      '--filing-period=B-FORM=quarter',
+      '--country',
+      'BE',
+    ]);
+    expect(stringFlags(args, 'filing-period')).toEqual(['A-FORM=month', 'B-FORM=quarter']);
+    // Everything answered once reads exactly as it did.
+    expect(stringFlag(args, 'country')).toBe('BE');
+    expect(stringFlags(args, 'language')).toEqual([]);
+  });
+
+  it('refuses a repeatable flag given with no value', () => {
+    expect(() => stringFlags(parseArgs(['init', '--filing-period', '--demo']), 'filing-period')).toThrow(
+      /--filing-period needs a value/,
+    );
   });
 
   it('refuses an unknown short option', () => {
@@ -152,9 +177,13 @@ describe('help', () => {
     expect(help()).toContain('supabase db push');
   });
 
-  it('says the CLI creates no Supabase project and writes no secret', () => {
+  it('says the CLI creates no Supabase project, and the one thing it keeps on disk', () => {
     expect(help()).toContain('It does not create or pay for a Supabase project');
-    expect(help()).toContain('It never writes a secret to disk');
+    // "Never writes a secret" stopped being true the day `ekwo login` kept a
+    // session, so the sentence says what is kept, where, and what never is.
+    expect(help()).toContain('It never writes a password or a key to disk');
+    expect(help()).toContain('refused anywhere inside a repository');
+    expect(help()).toContain('It never keeps books with a service_role key');
   });
 
   it('is what an empty invocation prints, and that is a success', async () => {

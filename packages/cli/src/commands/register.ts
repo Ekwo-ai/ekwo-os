@@ -11,8 +11,8 @@
  */
 
 import { boolFlag, rejectUnknownFlags, stringFlag, type ParsedArgs } from '../args.js';
-import { CONNECTION_FLAGS, openDatabase } from '../context.js';
-import { askRequired, isInteractive } from '../prompt.js';
+import { CONNECTION_FLAGS, openDatabase, type CommandDeps } from '../context.js';
+import { NotInteractiveError, askRequired, isInteractive } from '../prompt.js';
 import {
   anyAdminId,
   announce,
@@ -23,6 +23,7 @@ import {
   unregister,
 } from '../registry.js';
 import { dim, heading, line, note, skipped, step, warn } from '../ui.js';
+import { setResult } from '../output.js';
 
 export const REGISTER_FLAGS = [
   ...CONNECTION_FLAGS,
@@ -38,11 +39,11 @@ export const UNREGISTER_FLAGS = [...CONNECTION_FLAGS, 'admin-user-id', 'yes'] as
 
 export async function registerCommand(
   args: ParsedArgs,
-  deps: { fetchImpl?: typeof globalThis.fetch } = {},
+  deps: CommandDeps & { fetchImpl?: typeof globalThis.fetch | undefined } = {},
 ): Promise<number> {
   rejectUnknownFlags(args, REGISTER_FLAGS);
   const interactive = !boolFlag(args, 'yes') && isInteractive();
-  const { db } = await openDatabase(args, { interactive });
+  const { db } = await openDatabase(args, { interactive, connect: deps.connect });
 
   try {
     const instance = await readInstance(db);
@@ -64,10 +65,7 @@ export async function registerCommand(
       stringFlag(args, 'email') ??
       instance.contact_email ??
       (interactive ? await askRequired('Contact address?') : undefined);
-    if (email === undefined) {
-      warn('an address is needed: pass --email.');
-      return 1;
-    }
+    if (email === undefined) throw new NotInteractiveError('the contact address', '--email');
 
     heading('Registration');
     if (instance.registered_at !== null && stringFlag(args, 'email') === undefined) {
@@ -77,6 +75,7 @@ export async function registerCommand(
         ...(deps.fetchImpl !== undefined ? { fetchImpl: deps.fetchImpl } : {}),
       });
       report(result.announced, url, result.reason);
+      setResult(registration(true, instance.contact_email ?? email, url, result));
       return 0;
     }
 
@@ -93,10 +92,26 @@ export async function registerCommand(
     step(`recorded on the instance row: ${email}`);
     note(dim(`Sent: ${JSON.stringify(result.payload)}`));
     report(result.announced, url, result.reason);
+    setResult(registration(true, email, url, result));
     return 0;
   } finally {
     await db.close();
   }
+}
+
+function registration(
+  registered: boolean,
+  email: string,
+  url: string,
+  result: { announced: boolean; reason?: string | undefined },
+): Record<string, unknown> {
+  return {
+    registered,
+    email,
+    registryUrl: url,
+    announced: result.announced,
+    ...(result.reason === undefined ? {} : { reason: result.reason }),
+  };
 }
 
 function report(announced: boolean, url: string, reason?: string): void {
@@ -109,10 +124,10 @@ function report(announced: boolean, url: string, reason?: string): void {
   line();
 }
 
-export async function unregisterCommand(args: ParsedArgs): Promise<number> {
+export async function unregisterCommand(args: ParsedArgs, deps: CommandDeps = {}): Promise<number> {
   rejectUnknownFlags(args, UNREGISTER_FLAGS);
   const interactive = !boolFlag(args, 'yes') && isInteractive();
-  const { db } = await openDatabase(args, { interactive });
+  const { db } = await openDatabase(args, { interactive, connect: deps.connect });
 
   try {
     const instance = await readInstance(db);
@@ -124,6 +139,7 @@ export async function unregisterCommand(args: ParsedArgs): Promise<number> {
     heading('Registration');
     if (instance.registered_at === null) {
       skipped('this installation is not registered');
+      setResult({ registered: false, changed: false });
       line();
       return 0;
     }
@@ -135,6 +151,7 @@ export async function unregisterCommand(args: ParsedArgs): Promise<number> {
     }
 
     await unregister(db, adminUserId);
+    setResult({ registered: false, changed: true });
     step('the address and the date are cleared on the instance row');
     note(
       dim(

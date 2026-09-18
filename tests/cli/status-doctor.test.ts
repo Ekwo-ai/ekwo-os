@@ -78,24 +78,38 @@ describe('status', () => {
     expect(report.companies[0]?.closedFiscalYears).toBe(0);
   });
 
-  it('says how often each company files, and says so when nothing was recorded', async () => {
+  it('says how often each company files each declaration', async () => {
     // What a reminder and any client offering "file the current period" read.
-    // Null is printed as an absence rather than filled in with a cadence
-    // nobody chose: every pack here makes it follow turnover.
-    const unrecorded = await status(db, migrations);
-    expect(unrecorded.companies[0]?.vatPeriod).toBeNull();
+    // A company that has recorded nothing is printed as an absence rather than
+    // filled in with a cadence nobody chose.
+    const installed = await status(db, migrations);
+    const first = installed.companies[0];
+    expect(first?.vatPeriod).toBe(somePack.report?.period_default ?? null);
+    expect(first?.filingPeriods.map((f) => f.reportCode)).toEqual(
+      somePack.report?.period_default === undefined ||
+        somePack.report?.period_default === null
+        ? []
+        : [somePack.report.code],
+    );
 
+    // A cadence chosen against the country's own form, read back beside the
+    // form it is about and not only as a column named after one of them.
+    const filed = somePack.report!.periods.find((p) => p !== somePack.report!.period_default)!;
     const second = await bootstrap(db, {
       organization: 'Example Group',
-      country: 'BE',
+      country: HOME,
       company: 'Example Two',
       fiscalYear: 2026,
       adminUserId: userId,
-      vatPeriod: 'quarter',
+      vatPeriod: filed,
     });
-    expect(second.vatPeriod).toBe('quarter');
+    expect(second.vatPeriod).toBe(filed);
     const report = await status(db, migrations);
-    expect(report.companies.find((c) => c.name === 'Example Two')?.vatPeriod).toBe('quarter');
+    const company = report.companies.find((c) => c.name === 'Example Two');
+    expect(company?.vatPeriod).toBe(filed);
+    expect(company?.filingPeriods).toEqual([
+      { reportCode: somePack.report!.code, reportName: somePack.report!.name, period: filed },
+    ]);
   });
 
   it('shows the gap when a migration has not been applied', async () => {

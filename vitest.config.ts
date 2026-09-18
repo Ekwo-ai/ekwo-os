@@ -26,6 +26,19 @@ export default defineConfig({
         new URL('./packages/formats/ecdf/src/index.ts', import.meta.url),
       ),
       '@ekwo-ai/vd': fileURLToPath(new URL('./packages/formats/vd/src/index.ts', import.meta.url)),
+      '@ekwo-ai/vat-consignment': fileURLToPath(
+        new URL('./packages/formats/vat-consignment/src/index.ts', import.meta.url),
+      ),
+      '@ekwo-ai/peppol-ubl': fileURLToPath(
+        new URL('./packages/formats/peppol-ubl/src/index.ts', import.meta.url),
+      ),
+      '@ekwo-ai/camt053': fileURLToPath(
+        new URL('./packages/formats/camt053/src/index.ts', import.meta.url),
+      ),
+      '@ekwo-ai/coda': fileURLToPath(new URL('./packages/formats/coda/src/index.ts', import.meta.url)),
+      '@ekwo-ai/cfonb120': fileURLToPath(
+        new URL('./packages/formats/cfonb120/src/index.ts', import.meta.url),
+      ),
     },
   },
   test: {

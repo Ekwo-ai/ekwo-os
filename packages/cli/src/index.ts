@@ -37,6 +37,7 @@ export {
   type OperatorInstruction,
 } from './checklist.js';
 export { describeCertification, needsWarning, type Certification, type CertificationFacts } from './pack/certification.js';
+export { describeFiling, filingReadiness, type FilingReadiness } from './pack/filing.js';
 export {
   compileAssetsSeed,
   compileFrameworkPack,
@@ -61,6 +62,7 @@ export {
   resolveBoxRef,
   seedOutputDir,
   sourcesOf,
+  vatRegime,
   PackError,
   type FrameworkManifest,
   type FrameworkPack,
@@ -86,12 +88,24 @@ export {
 } from './pack/read.js';
 export {
   CATEGORY_CODES,
+  COMMON_SYSTEM,
   TREATMENT_CODES,
   taxCodes,
   type CodeIssue,
   type TaxCodes,
   type TreatmentCodes,
+  type VatRegime,
 } from './pack/vat-codes.js';
+export {
+  euVatScopeOf,
+  parseTerritorySeed,
+  readTerritories,
+  territoryOf,
+  territoryWithin,
+  TerritoryError,
+  type EuVatScope,
+  type Territory,
+} from './pack/territories.js';
 export { validate, type Issue } from './pack/schema.js';
 export {
   packDiff,
@@ -118,9 +132,47 @@ export {
   type ModuleManifest,
 } from './module/read.js';
 export { applyModuleMigrations, moduleCommand, MODULE_FLAGS } from './commands/module.js';
+export {
+  companyCommand,
+  COMPANY_FLAGS,
+  readArchive,
+  type ArchiveManifest,
+  type ArchiveTable,
+} from './commands/company.js';
 export { snapshotRecommendation } from './commands/migrate.js';
 export { SCHEMA_MIN } from './schema.js';
-export { COMMANDS, help, run, version } from './cli.js';
+export { COMMANDS, help, run, version, type RunDeps } from './cli.js';
+export {
+  EXIT_ERROR,
+  EXIT_OK,
+  EXIT_REFUSED,
+  EXIT_USAGE,
+  classify,
+  commandLabel,
+  execute,
+  setContext,
+  setResult,
+  type ErrorKind,
+  type OutputContext,
+  type OutputDocument,
+  type OutputError,
+} from './output.js';
+export type { CommandDeps, Connector } from './context.js';
+export { matchCompany } from './company.js';
+export { IDENTITY_FLAGS, actAsUser, type Acting, type UserDeps } from './identity.js';
+export {
+  ENV_CONFIG_DIR,
+  ENV_PROFILE,
+  assertOutsideRepository,
+  configDir,
+  readProfiles,
+  readSession,
+  type Profile,
+  type ProfilesFile,
+  type StoredSession,
+} from './profiles.js';
+export { RestError, UserClient } from './rest.js';
+export { AuthError, refreshSession, signIn } from './session.js';
 export { CONFIG_FILE, readConfig, writeConfig, type EkwoConfig } from './config.js';
 export {
   NoPoolerHostError,

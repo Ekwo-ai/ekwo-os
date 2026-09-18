@@ -282,12 +282,12 @@ function charts(pack: Pack, country: string): string[] {
     (c) =>
       `  (${text(country)}, ${text(c.code)}, ${text(c.name)}, ${json(c.name_i18n)}, ` +
       `${c.is_default ? 'true' : 'false'}, ${text(c.audience)}, ${array([...c.statements].sort())}, ` +
-      `${text(c.certification?.status ?? null)}, ${text(c.legal_reference)})`,
+      `${text(c.certification?.status ?? null)}, ${text(c.legal_reference)}, ${text(c.source)})`,
   );
   return [
     'insert into chart_templates',
     '  (country, code, name, name_i18n, is_default, audience, statements,',
-    '   certification_status, legal_reference)',
+    '   certification_status, legal_reference, source_key)',
     'values',
     values.join(',\n'),
     'on conflict (country, code) do update set',
@@ -297,7 +297,8 @@ function charts(pack: Pack, country: string): string[] {
     '  audience             = excluded.audience,',
     '  statements           = excluded.statements,',
     '  certification_status = excluded.certification_status,',
-    '  legal_reference      = excluded.legal_reference;',
+    '  legal_reference      = excluded.legal_reference,',
+    '  source_key           = excluded.source_key;',
     '',
   ];
 }
@@ -345,7 +346,8 @@ function statements(
 
   out.push(
     'insert into statement_templates',
-    '  (code, country, chart_code, name, kind, framework, valid_from, valid_to, legal_reference)',
+    '  (code, country, chart_code, name, kind, framework, valid_from, valid_to, legal_reference,',
+    '   source_key)',
     'values',
     [...list]
       .sort(byCode)
@@ -353,7 +355,7 @@ function statements(
         (s) =>
           `  (${text(s.code)}, ${text(country)}, ${text(s.chart_code)}, ${text(s.name)}, ` +
           `${text(s.kind)}, ${text(s.framework)}, ${date(s.valid_from)}, ${date(s.valid_to)}, ` +
-          `${text(s.legal_reference)})`,
+          `${text(s.legal_reference)}, ${text(s.source)})`,
       )
       .join(',\n'),
     'on conflict (code) do update set',
@@ -364,7 +366,8 @@ function statements(
     '  framework       = excluded.framework,',
     '  valid_from      = excluded.valid_from,',
     '  valid_to        = excluded.valid_to,',
-    '  legal_reference = excluded.legal_reference;',
+    '  legal_reference = excluded.legal_reference,',
+    '  source_key      = excluded.source_key;',
     '',
   );
 
@@ -376,7 +379,7 @@ function statements(
         `  (${text(statement.code)}, ${text(line.code)}, ${text(line.parent)}, ${text(line.name)}, ` +
           `${json(labels[`${statement.code}:${line.code}`])}, ${line.sequence}, ${line.sign}, ` +
           `${line.is_total ? 'true' : 'false'}, ${array(line.plus)}, ${array(line.minus)}, ` +
-          `${text(line.xbrl)}, ${text(line.legal_reference)})`,
+          `${text(line.xbrl)}, ${text(line.legal_reference)}, ${text(line.source)})`,
       );
       for (const rule of [...line.rules].sort((a, b) => a.sequence - b.sequence)) {
         rules.push(
@@ -390,7 +393,7 @@ function statements(
   out.push(
     'insert into statement_line_templates',
     '  (statement_code, code, parent_code, name, name_i18n, sequence, sign, is_total,',
-    '   plus_lines, minus_lines, xbrl_element, legal_reference)',
+    '   plus_lines, minus_lines, xbrl_element, legal_reference, source_key)',
     'values',
     lines.join(',\n'),
     'on conflict (statement_code, code) do update set',
@@ -403,7 +406,8 @@ function statements(
     '  plus_lines      = excluded.plus_lines,',
     '  minus_lines     = excluded.minus_lines,',
     '  xbrl_element    = excluded.xbrl_element,',
-    '  legal_reference = excluded.legal_reference;',
+    '  legal_reference = excluded.legal_reference,',
+    '  source_key      = excluded.source_key;',
     '',
   );
 
@@ -458,16 +462,19 @@ function taxes(pack: Pack, country: string): string[] {
       `${text(t.amount_type)}, ${number(t.rate)}, ${text(t.scope)}, ${text(t.treatment)}, ` +
       `${date(t.valid_from)}, ${date(t.valid_to)}, ${text(t.legal_reference)}, ` +
       `${text(t.vat_category)}, ${text(t.exemption_code)}, ${t.sequence}, ` +
-      `${text(t.kind)}, ${bool(t.recoverable)}, ${text(t.jurisdiction)}, ` +
+      `${text(t.kind)}, ${bool(t.recoverable)}, ${conditions(t.conditions)}, ` +
+      `${text(t.jurisdiction)}, ` +
       `${bool(t.price_include)}, ${bool(t.cash_basis)}, ${text(t.cash_basis_transition_account)}, ` +
-      `${text(t.source)})`,
+      `${text(t.source)}, ${text(t.applies_seller_territory)}, ${text(t.applies_buyer_territory)}, ` +
+      `${text(t.applies_supply_territory)})`,
   );
   return [
     'insert into tax_templates',
     '  (country, code, name, name_i18n, description, amount_type, amount, applies_to, treatment,',
     '   valid_from, valid_to, legal_reference, vat_category, exemption_code, sequence,',
-    '   tax_kind, recoverable, jurisdiction, price_include, cash_basis,',
-    '   cash_basis_transition_account_code, source_key)',
+    '   tax_kind, recoverable, conditions, jurisdiction, price_include, cash_basis,',
+    '   cash_basis_transition_account_code, source_key,',
+    '   applies_seller_territory, applies_buyer_territory, applies_supply_territory)',
     'values',
     values.join(',\n'),
     'on conflict (country, code) do update set',
@@ -486,11 +493,15 @@ function taxes(pack: Pack, country: string): string[] {
     '  sequence        = excluded.sequence,',
     '  tax_kind        = excluded.tax_kind,',
     '  recoverable     = excluded.recoverable,',
+    '  conditions      = excluded.conditions,',
     '  jurisdiction    = excluded.jurisdiction,',
     '  price_include   = excluded.price_include,',
     '  cash_basis      = excluded.cash_basis,',
     '  cash_basis_transition_account_code = excluded.cash_basis_transition_account_code,',
-    '  source_key      = excluded.source_key;',
+    '  source_key      = excluded.source_key,',
+    '  applies_seller_territory = excluded.applies_seller_territory,',
+    '  applies_buyer_territory  = excluded.applies_buyer_territory,',
+    '  applies_supply_territory = excluded.applies_supply_territory;',
     '',
   ];
 }
@@ -504,6 +515,7 @@ function postings(pack: Pack, country: string): string[] {
         values.push(
           `    (${text(tax.code)}, ${text(kind)}, ${text(posting.type)}, ` +
             `${number(posting.factor)}, ${text(posting.account)}, ${text(posting.box)}, ` +
+            `${posting.boxes.length === 0 ? 'null' : array(posting.boxes)}, ` +
             `${number(posting.box_factor)}, ${text(posting.report)}, ${posting.sequence})`,
         );
       }
@@ -513,25 +525,27 @@ function postings(pack: Pack, country: string): string[] {
   return [
     'insert into tax_posting_templates',
     '  (tax_template_id, document_kind, posting_type, factor_percent, account_code,',
-    '   declaration_box, box_factor_percent, report_code, sequence)',
+    '   declaration_box, declaration_boxes, box_factor_percent, report_code, sequence)',
     'select t.id,',
     '       v.document_kind::tax_document_kind,',
     '       v.posting_type::tax_posting_type,',
     '       v.factor_percent::numeric,',
     '       v.account_code::text,',
     '       v.declaration_box::text,',
+    '       v.declaration_boxes::text[],',
     '       v.box_factor_percent::numeric,',
     '       v.report_code::text,',
     '       v.sequence::integer',
     '  from (values',
     values.join(',\n'),
     '  ) as v (tax_code, document_kind, posting_type, factor_percent, account_code,',
-    '          declaration_box, box_factor_percent, report_code, sequence)',
+    '          declaration_box, declaration_boxes, box_factor_percent, report_code, sequence)',
     `  join tax_templates t on t.country = ${text(country)} and t.code = v.tax_code`,
     'on conflict (tax_template_id, document_kind, posting_type, sequence) do update set',
     '  factor_percent     = excluded.factor_percent,',
     '  account_code       = excluded.account_code,',
     '  declaration_box    = excluded.declaration_box,',
+    '  declaration_boxes  = excluded.declaration_boxes,',
     '  box_factor_percent = excluded.box_factor_percent,',
     '  report_code        = excluded.report_code;',
     '',
@@ -540,8 +554,10 @@ function postings(pack: Pack, country: string): string[] {
 
 /**
  * The declaration form and its boxes. Not copied into a company: a chart of
- * accounts is customisable and a form is not. The order is the order the form
- * declares, because that is the order `vat_return()` evaluates the totals in.
+ * accounts is customisable and a form is not. The rows are written in the
+ * order the pack declares them, which is the order `vat_return()` answers in;
+ * `print_sequence` carries the order the administration prints, and the order
+ * the totals are worked out in is their dependencies and neither of the two.
  */
 function taxReport(pack: Pack, country: string): string[] {
   const report = pack.report;
@@ -549,17 +565,31 @@ function taxReport(pack: Pack, country: string): string[] {
 
   const out = [
     'insert into tax_report_templates',
-    '  (country, code, name, periods, valid_from, valid_to, legal_reference, is_periodic_return)',
+    '  (country, code, name, periods, period_default, valid_from, valid_to, legal_reference,',
+    '   is_periodic_return, deadline_rule, deadline_day, deadline_plus_days,',
+    '   deadline_reference, deadline_source_key, file_format)',
     'values',
     `  (${text(country)}, ${text(report.code)}, ${text(report.name)}, ${periods(report.periods)}, ` +
-      `${date(report.valid_from)}, ${date(report.valid_to)}, ${text(report.legal_reference)}, true)`,
+      `${enumeration(report.period_default, 'declaration_period')}, ` +
+      `${date(report.valid_from)}, ${date(report.valid_to)}, ${text(report.legal_reference)}, true,` +
+      `${enumeration(report.deadline?.rule ?? null, 'filing_deadline_rule')}, ` +
+      `${number(report.deadline?.day ?? null)}, ${number(report.deadline?.plus_days ?? null)}, ` +
+      `${text(report.deadline?.legal_reference ?? null)}, ${text(report.deadline?.source ?? null)}, ` +
+      `${text(report.file_format)})`,
     'on conflict (country, code) do update set',
-    '  name               = excluded.name,',
-    '  periods            = excluded.periods,',
-    '  valid_from         = excluded.valid_from,',
-    '  valid_to           = excluded.valid_to,',
-    '  legal_reference    = excluded.legal_reference,',
-    '  is_periodic_return = excluded.is_periodic_return;',
+    '  name                = excluded.name,',
+    '  periods             = excluded.periods,',
+    '  period_default      = excluded.period_default,',
+    '  valid_from          = excluded.valid_from,',
+    '  valid_to            = excluded.valid_to,',
+    '  legal_reference     = excluded.legal_reference,',
+    '  is_periodic_return  = excluded.is_periodic_return,',
+    '  deadline_rule       = excluded.deadline_rule,',
+    '  deadline_day        = excluded.deadline_day,',
+    '  deadline_plus_days  = excluded.deadline_plus_days,',
+    '  deadline_reference  = excluded.deadline_reference,',
+    '  deadline_source_key = excluded.deadline_source_key,',
+    '  file_format         = excluded.file_format;',
     '',
   ];
 
@@ -568,23 +598,30 @@ function taxReport(pack: Pack, country: string): string[] {
     (b) =>
       `  (${text(country)}, ${text(report.code)}, ${text(b.box)}, ${text(b.kind)}, ${text(b.name)}, ` +
       `${json(pack.labels.tax_report_boxes[`${b.box}|${b.kind}`])}, ${b.sequence}, ` +
-      `${array(b.plus)}, ${array(b.minus)}, ${b.floor_zero ? 'true' : 'false'}, ` +
+      `${b.print_sequence === null ? 'null' : number(b.print_sequence)}, ` +
+      `${array(b.plus)}, ${array(b.minus)}, ` +
+      `${b.rate === null ? 'null' : number(b.rate)}, ${text(b.rate_of)}, ` +
+      `${b.floor_zero ? 'true' : 'false'}, ` +
       `${b.hidden ? 'true' : 'false'}, ${text(b.xml_element)}, ${text(b.legal_reference)}, ` +
       `${text(b.source)})`,
   );
 
   out.push(
     'insert into tax_report_box_templates',
-    '  (country, report_code, box, kind, name, name_i18n, sequence,',
-    '   plus_boxes, minus_boxes, floor_zero, hidden, xml_element, legal_reference, source_key)',
+    '  (country, report_code, box, kind, name, name_i18n, sequence, print_sequence,',
+    '   plus_boxes, minus_boxes, rate, rate_of_box, floor_zero, hidden, xml_element,',
+    '   legal_reference, source_key)',
     'values',
     values.join(',\n'),
     'on conflict (country, report_code, box, kind) do update set',
     '  name            = excluded.name,',
     '  name_i18n       = excluded.name_i18n,',
     '  sequence        = excluded.sequence,',
+    '  print_sequence  = excluded.print_sequence,',
     '  plus_boxes      = excluded.plus_boxes,',
     '  minus_boxes     = excluded.minus_boxes,',
+    '  rate            = excluded.rate,',
+    '  rate_of_box     = excluded.rate_of_box,',
     '  floor_zero      = excluded.floor_zero,',
     '  hidden          = excluded.hidden,',
     '  xml_element     = excluded.xml_element,',
@@ -649,21 +686,27 @@ function defaults(pack: Pack, country: string): string[] {
     text(roles['asset_disposal_loss'] ?? null),
     text(roles['asset_disposal_proceeds'] ?? null),
     text(roles['asset_disposal_value'] ?? null),
+    // Where a declared period lands once its tax accounts are cleared: what is
+    // owed to the administration, and — where the chart keeps the two apart —
+    // what it owes back. No fallback for the same reason as every other
+    // account code, and the second one falls back to the first inside the
+    // database, for a chart that keeps one control account for both signs.
+    text(roles['tax_payable'] ?? null),
+    text(roles['tax_receivable'] ?? null),
     // The wording the computed opening lines of an export carry, in the
     // language the administration of this country reads. No fallback here
     // either, but for the opposite reason to an account code: the schema keeps
     // a neutral one, because a format that fixes no wording has no wrong
     // answer to give, and a missing label is not a reason to refuse a file.
     text((pack.manifest.defaults['opening_entry_label'] as string | undefined) ?? null),
-    // How often a company of this country files, when the law of that country
-    // gives one answer. No fallback, and for once the reason is not that the
-    // fallback would be another country's: it is that both answers are this
-    // country's, and which one applies is a fact about the company. `ekwo init`
-    // asks rather than this file choosing.
-    enumeration(
-      (pack.manifest.defaults['vat_period'] as string | undefined) ?? null,
-      'declaration_period',
-    ),
+    // How often a company of this country files its periodic return, when the
+    // law gives one answer for everybody. Deprecated by
+    // `tax_report_templates.period_default` and written from it, so the two can
+    // never disagree: the proposal is stated once, on the form, and this column
+    // carries a copy for the readers that already have it. Null where the law
+    // makes the cadence depend on a fact about the company — `ekwo init` asks
+    // rather than this file choosing.
+    enumeration(pack.report?.period_default ?? null, 'declaration_period'),
   ];
   return [
     'insert into country_defaults',
@@ -674,7 +717,8 @@ function defaults(pack: Pack, country: string): string[] {
     '   current_year_result_loss_code, retained_earnings_loss_code, opening_journal_code,',
     '   rounding_method, cash_rounding_unit, fx_gain_code, fx_loss_code,',
     '   asset_disposal_gain_code, asset_disposal_loss_code,',
-    '   asset_disposal_proceeds_code, asset_disposal_value_code, opening_entry_label,',
+    '   asset_disposal_proceeds_code, asset_disposal_value_code,',
+    '   tax_payable_code, tax_receivable_code, opening_entry_label,',
     '   vat_period_default)',
     'values',
     `  (${row.join(', ')})`,
@@ -709,6 +753,8 @@ function defaults(pack: Pack, country: string): string[] {
     '  asset_disposal_loss_code        = excluded.asset_disposal_loss_code,',
     '  asset_disposal_proceeds_code    = excluded.asset_disposal_proceeds_code,',
     '  asset_disposal_value_code       = excluded.asset_disposal_value_code,',
+    '  tax_payable_code                = excluded.tax_payable_code,',
+    '  tax_receivable_code             = excluded.tax_receivable_code,',
     '  opening_entry_label             = excluded.opening_entry_label,',
     '  vat_period_default              = excluded.vat_period_default;',
   ];
@@ -716,8 +762,14 @@ function defaults(pack: Pack, country: string): string[] {
 
 /**
  * What a country requires on a document, how the document is exchanged, and
- * the formats its banks speak: twelve columns of `country_defaults` and the
+ * the formats its banks speak: twenty columns of `country_defaults` and the
  * sentences of `legal_mention_templates`.
+ *
+ * Eight of the twenty are citations — the article behind the numbering, the
+ * payment term, the tax point and the e-invoicing profile, and the register
+ * key each of them is read at. They ride in the same update as the rule they
+ * belong to, because a rule and the text that imposes it going into the
+ * database by two different routes is how one of them gets left behind.
  *
  * An `update` rather than a second `insert`. The row exists — `defaults()`
  * writes it immediately above — and an insert would have to restate the name,
@@ -735,18 +787,26 @@ function documentRules(pack: Pack, country: string): string[] {
   const out = [
     '',
     'update country_defaults set',
-    `  numbering_gapless       = ${orNull(rules.numbering_gapless, bool)},`,
-    `  number_format           = ${text(rules.number_format)},`,
-    `  legal_payment_days      = ${orNull(rules.legal_payment_days, number)},`,
-    `  late_payment_reference  = ${text(rules.late_payment_reference)},`,
-    `  tax_point_rule          = ${text(rules.tax_point_rule)},`,
-    `  einvoice_profile        = ${text(rules.einvoice_profile)},`,
-    `  einvoice_mandatory_from = ${date(rules.einvoice_mandatory_from)},`,
-    `  party_scheme            = ${text(rules.party_scheme)},`,
-    `  vat_scheme              = ${text(rules.vat_scheme)},`,
-    `  bank_statement_formats  = ${listOrNull(rules.bank_statement_formats)},`,
-    `  payment_formats         = ${listOrNull(rules.payment_formats)},`,
-    `  fiscal_year_default     = ${text(rules.fiscal_year_default)}`,
+    `  numbering_gapless             = ${orNull(rules.numbering_gapless, bool)},`,
+    `  number_format                 = ${text(rules.number_format)},`,
+    `  legal_payment_days            = ${orNull(rules.legal_payment_days, number)},`,
+    `  late_payment_reference        = ${text(rules.late_payment_reference)},`,
+    `  numbering_legal_reference     = ${text(rules.numbering_reference.legal_reference)},`,
+    `  numbering_source_key          = ${text(rules.numbering_reference.source)},`,
+    `  payment_terms_legal_reference = ${text(rules.payment_terms_reference.legal_reference)},`,
+    `  payment_terms_source_key      = ${text(rules.payment_terms_reference.source)},`,
+    `  tax_point_rule                = ${text(rules.tax_point_rule)},`,
+    `  tax_point_legal_reference     = ${text(rules.tax_point_reference.legal_reference)},`,
+    `  tax_point_source_key          = ${text(rules.tax_point_reference.source)},`,
+    `  einvoice_profile              = ${text(rules.einvoice_profile)},`,
+    `  einvoice_mandatory_from       = ${date(rules.einvoice_mandatory_from)},`,
+    `  einvoice_legal_reference      = ${text(rules.einvoice_reference.legal_reference)},`,
+    `  einvoice_source_key           = ${text(rules.einvoice_reference.source)},`,
+    `  party_scheme                  = ${text(rules.party_scheme)},`,
+    `  vat_scheme                    = ${text(rules.vat_scheme)},`,
+    `  bank_statement_formats        = ${listOrNull(rules.bank_statement_formats)},`,
+    `  payment_formats               = ${listOrNull(rules.payment_formats)},`,
+    `  fiscal_year_default           = ${text(rules.fiscal_year_default)}`,
     ` where country = ${text(country)};`,
   ];
 
@@ -854,8 +914,8 @@ function date(value: string | null | undefined): string {
   return value === null || value === undefined ? 'null' : `date '${value}'`;
 }
 
-function number(value: number): string {
-  return String(value);
+function number(value: number | null | undefined): string {
+  return value === null || value === undefined ? 'null' : String(value);
 }
 
 /** A `text[]` literal, empty included, in the order the pack wrote it. */
@@ -871,6 +931,12 @@ function periods(values: readonly string[]): string {
 function array(values: readonly string[]): string {
   if (values.length === 0) return `'{}'::text[]`;
   return `array[${values.map((value) => text(value)).join(', ')}]::text[]`;
+}
+
+/** What a tax turns on, as the closed vocabulary the column is typed on. */
+function conditions(values: readonly string[]): string {
+  if (values.length === 0) return `'{}'::tax_condition[]`;
+  return `array[${values.map((value) => text(value)).join(', ')}]::tax_condition[]`;
 }
 
 /** A value of a PostgreSQL enum, or a null the column keeps as one. */

@@ -1,6 +1,6 @@
 {
-  "schemaVersion": "0.3.0",
-  "migration": "20260915170500",
+  "schemaVersion": "0.4.0",
+  "migration": "20260918174312",
   "socle": {
     "schema": "public",
     "tables": [
@@ -405,6 +405,31 @@
         ]
       },
       {
+        "name": "bank_statement_lines",
+        "columns": [
+          {
+            "name": "company_id",
+            "type": "uuid"
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp with time zone"
+          },
+          {
+            "name": "position",
+            "type": "integer"
+          },
+          {
+            "name": "statement_id",
+            "type": "uuid"
+          },
+          {
+            "name": "transaction_id",
+            "type": "uuid"
+          }
+        ]
+      },
+      {
         "name": "bank_statements",
         "columns": [
           {
@@ -444,7 +469,27 @@
             "type": "text"
           },
           {
+            "name": "period_start",
+            "type": "date"
+          },
+          {
+            "name": "sequence_number",
+            "type": "numeric(18,0)"
+          },
+          {
             "name": "source",
+            "type": "text"
+          },
+          {
+            "name": "source_checksum",
+            "type": "text"
+          },
+          {
+            "name": "source_file_name",
+            "type": "text"
+          },
+          {
+            "name": "source_format",
             "type": "text"
           },
           {
@@ -454,6 +499,10 @@
           {
             "name": "statement_date",
             "type": "date"
+          },
+          {
+            "name": "statement_ref",
+            "type": "text"
           },
           {
             "name": "updated_at",
@@ -507,6 +556,10 @@
           {
             "name": "id",
             "type": "uuid"
+          },
+          {
+            "name": "import_key",
+            "type": "text"
           },
           {
             "name": "raw",
@@ -597,6 +650,10 @@
           {
             "name": "name_i18n",
             "type": "jsonb"
+          },
+          {
+            "name": "source_key",
+            "type": "text"
           },
           {
             "name": "statements",
@@ -700,6 +757,14 @@
             "type": "uuid"
           },
           {
+            "name": "peppol_identifier",
+            "type": "text"
+          },
+          {
+            "name": "peppol_scheme",
+            "type": "text"
+          },
+          {
             "name": "phone",
             "type": "text"
           },
@@ -752,6 +817,10 @@
             "type": "date"
           },
           {
+            "name": "territory_code",
+            "type": "text"
+          },
+          {
             "name": "trade_name",
             "type": "text"
           },
@@ -770,6 +839,64 @@
           {
             "name": "website",
             "type": "text"
+          }
+        ]
+      },
+      {
+        "name": "company_archive_registry",
+        "columns": [
+          {
+            "name": "disposition",
+            "type": "text"
+          },
+          {
+            "name": "load_order",
+            "type": "integer"
+          },
+          {
+            "name": "reason",
+            "type": "text"
+          },
+          {
+            "name": "table_name",
+            "type": "text"
+          },
+          {
+            "name": "table_schema",
+            "type": "text"
+          },
+          {
+            "name": "via_column",
+            "type": "text"
+          },
+          {
+            "name": "via_table",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "name": "company_filing_periods",
+        "columns": [
+          {
+            "name": "company_id",
+            "type": "uuid"
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp with time zone"
+          },
+          {
+            "name": "period",
+            "type": "declaration_period"
+          },
+          {
+            "name": "report_code",
+            "type": "text"
+          },
+          {
+            "name": "updated_at",
+            "type": "timestamp with time zone"
           }
         ]
       },
@@ -914,6 +1041,83 @@
         ]
       },
       {
+        "name": "contact_patterns",
+        "columns": [
+          {
+            "name": "active",
+            "type": "boolean"
+          },
+          {
+            "name": "amount_max",
+            "type": "numeric(16,2)"
+          },
+          {
+            "name": "amount_min",
+            "type": "numeric(16,2)"
+          },
+          {
+            "name": "amount_typical",
+            "type": "numeric(16,2)"
+          },
+          {
+            "name": "company_id",
+            "type": "uuid"
+          },
+          {
+            "name": "confidence",
+            "type": "numeric(4,3)"
+          },
+          {
+            "name": "contact_id",
+            "type": "uuid"
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp with time zone"
+          },
+          {
+            "name": "currency_code",
+            "type": "character(3)"
+          },
+          {
+            "name": "exclude_words",
+            "type": "text[]"
+          },
+          {
+            "name": "id",
+            "type": "uuid"
+          },
+          {
+            "name": "kind",
+            "type": "contact_pattern_kind"
+          },
+          {
+            "name": "last_matched_at",
+            "type": "timestamp with time zone"
+          },
+          {
+            "name": "source",
+            "type": "contact_pattern_source"
+          },
+          {
+            "name": "success_count",
+            "type": "integer"
+          },
+          {
+            "name": "updated_at",
+            "type": "timestamp with time zone"
+          },
+          {
+            "name": "usage_count",
+            "type": "integer"
+          },
+          {
+            "name": "value",
+            "type": "text"
+          }
+        ]
+      },
+      {
         "name": "contacts",
         "columns": [
           {
@@ -938,6 +1142,10 @@
           },
           {
             "name": "city",
+            "type": "text"
+          },
+          {
+            "name": "client_ref",
             "type": "text"
           },
           {
@@ -985,6 +1193,10 @@
             "type": "text"
           },
           {
+            "name": "name_words",
+            "type": "text[]"
+          },
+          {
             "name": "notes",
             "type": "text"
           },
@@ -1026,6 +1238,10 @@
           },
           {
             "name": "registration_number",
+            "type": "text"
+          },
+          {
+            "name": "territory_code",
             "type": "text"
           },
           {
@@ -1094,11 +1310,19 @@
             "type": "text"
           },
           {
+            "name": "einvoice_legal_reference",
+            "type": "text"
+          },
+          {
             "name": "einvoice_mandatory_from",
             "type": "date"
           },
           {
             "name": "einvoice_profile",
+            "type": "text"
+          },
+          {
+            "name": "einvoice_source_key",
             "type": "text"
           },
           {
@@ -1150,6 +1374,14 @@
             "type": "boolean"
           },
           {
+            "name": "numbering_legal_reference",
+            "type": "text"
+          },
+          {
+            "name": "numbering_source_key",
+            "type": "text"
+          },
+          {
             "name": "opening_entry_label",
             "type": "text"
           },
@@ -1168,6 +1400,14 @@
           {
             "name": "payment_formats",
             "type": "text[]"
+          },
+          {
+            "name": "payment_terms_legal_reference",
+            "type": "text"
+          },
+          {
+            "name": "payment_terms_source_key",
+            "type": "text"
           },
           {
             "name": "purchase_account_code",
@@ -1210,7 +1450,23 @@
             "type": "text"
           },
           {
+            "name": "tax_payable_code",
+            "type": "text"
+          },
+          {
+            "name": "tax_point_legal_reference",
+            "type": "text"
+          },
+          {
             "name": "tax_point_rule",
+            "type": "text"
+          },
+          {
+            "name": "tax_point_source_key",
+            "type": "text"
+          },
+          {
+            "name": "tax_receivable_code",
             "type": "text"
           },
           {
@@ -1334,6 +1590,10 @@
             "type": "uuid"
           },
           {
+            "name": "amount_incl_tax",
+            "type": "numeric(16,2)"
+          },
+          {
             "name": "amount_untaxed",
             "type": "numeric(16,2)"
           },
@@ -1394,12 +1654,16 @@
             "type": "numeric(16,6)"
           },
           {
+            "name": "unit_price_includes_tax",
+            "type": "boolean"
+          },
+          {
             "name": "updated_at",
             "type": "timestamp with time zone"
           },
           {
             "name": "vat_category",
-            "type": "character(2)"
+            "type": "text"
           },
           {
             "name": "vat_rate",
@@ -1488,6 +1752,10 @@
             "type": "text"
           },
           {
+            "name": "client_ref",
+            "type": "text"
+          },
+          {
             "name": "company_id",
             "type": "uuid"
           },
@@ -1560,6 +1828,10 @@
             "type": "uuid"
           },
           {
+            "name": "language",
+            "type": "character(2)"
+          },
+          {
             "name": "note",
             "type": "text"
           },
@@ -1618,6 +1890,14 @@
           {
             "name": "supplier_reference",
             "type": "text"
+          },
+          {
+            "name": "supply_territory_code",
+            "type": "text"
+          },
+          {
+            "name": "tax_point_date",
+            "type": "date"
           },
           {
             "name": "updated_at",
@@ -1819,6 +2099,10 @@
             "type": "text"
           },
           {
+            "name": "posting_type",
+            "type": "tax_posting_type"
+          },
+          {
             "name": "sequence",
             "type": "integer"
           },
@@ -1829,6 +2113,10 @@
           {
             "name": "tax_line",
             "type": "boolean"
+          },
+          {
+            "name": "tax_point_date",
+            "type": "date"
           },
           {
             "name": "updated_at",
@@ -2109,6 +2397,43 @@
         ]
       },
       {
+        "name": "matching_settings",
+        "columns": [
+          {
+            "name": "amount_tolerance_units",
+            "type": "integer"
+          },
+          {
+            "name": "company_id",
+            "type": "uuid"
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp with time zone"
+          },
+          {
+            "name": "date_window_days",
+            "type": "integer"
+          },
+          {
+            "name": "minimum_word_length",
+            "type": "integer"
+          },
+          {
+            "name": "name_threshold",
+            "type": "numeric(4,3)"
+          },
+          {
+            "name": "sum_tolerance_units",
+            "type": "integer"
+          },
+          {
+            "name": "updated_at",
+            "type": "timestamp with time zone"
+          }
+        ]
+      },
+      {
         "name": "modules",
         "columns": [
           {
@@ -2159,6 +2484,10 @@
           {
             "name": "bank_account_id",
             "type": "uuid"
+          },
+          {
+            "name": "client_ref",
+            "type": "text"
           },
           {
             "name": "company_id",
@@ -2430,6 +2759,10 @@
             "type": "smallint"
           },
           {
+            "name": "source_key",
+            "type": "text"
+          },
+          {
             "name": "statement_code",
             "type": "text"
           },
@@ -2475,12 +2808,171 @@
             "type": "jsonb"
           },
           {
+            "name": "source_key",
+            "type": "text"
+          },
+          {
             "name": "valid_from",
             "type": "date"
           },
           {
             "name": "valid_to",
             "type": "date"
+          }
+        ]
+      },
+      {
+        "name": "tax_filing_boxes",
+        "columns": [
+          {
+            "name": "amount",
+            "type": "numeric(16,2)"
+          },
+          {
+            "name": "box",
+            "type": "text"
+          },
+          {
+            "name": "filing_id",
+            "type": "uuid"
+          },
+          {
+            "name": "kind",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "name": "tax_filing_deposits",
+        "columns": [
+          {
+            "name": "acknowledgement_id",
+            "type": "uuid"
+          },
+          {
+            "name": "channel",
+            "type": "filing_channel"
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp with time zone"
+          },
+          {
+            "name": "filing_id",
+            "type": "uuid"
+          },
+          {
+            "name": "id",
+            "type": "uuid"
+          },
+          {
+            "name": "message",
+            "type": "text"
+          },
+          {
+            "name": "outcome",
+            "type": "tax_filing_state"
+          },
+          {
+            "name": "outcome_at",
+            "type": "timestamp with time zone"
+          },
+          {
+            "name": "reference",
+            "type": "text"
+          },
+          {
+            "name": "sent_at",
+            "type": "timestamp with time zone"
+          },
+          {
+            "name": "sent_by",
+            "type": "uuid"
+          },
+          {
+            "name": "sent_file_id",
+            "type": "uuid"
+          },
+          {
+            "name": "sequence",
+            "type": "integer"
+          },
+          {
+            "name": "service",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "name": "tax_filings",
+        "columns": [
+          {
+            "name": "company_id",
+            "type": "uuid"
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp with time zone"
+          },
+          {
+            "name": "credit_treatment",
+            "type": "tax_credit_treatment"
+          },
+          {
+            "name": "due_date",
+            "type": "date"
+          },
+          {
+            "name": "filed_at",
+            "type": "timestamp with time zone"
+          },
+          {
+            "name": "filed_by",
+            "type": "uuid"
+          },
+          {
+            "name": "id",
+            "type": "uuid"
+          },
+          {
+            "name": "notes",
+            "type": "text"
+          },
+          {
+            "name": "period_end",
+            "type": "date"
+          },
+          {
+            "name": "period_start",
+            "type": "date"
+          },
+          {
+            "name": "prepared_at",
+            "type": "timestamp with time zone"
+          },
+          {
+            "name": "reference",
+            "type": "text"
+          },
+          {
+            "name": "report_code",
+            "type": "text"
+          },
+          {
+            "name": "settlement_entry_id",
+            "type": "uuid"
+          },
+          {
+            "name": "state",
+            "type": "tax_filing_state"
+          },
+          {
+            "name": "supersedes_id",
+            "type": "uuid"
+          },
+          {
+            "name": "updated_at",
+            "type": "timestamp with time zone"
           }
         ]
       },
@@ -2498,6 +2990,10 @@
           {
             "name": "declaration_box",
             "type": "text"
+          },
+          {
+            "name": "declaration_boxes",
+            "type": "text[]"
           },
           {
             "name": "document_kind",
@@ -2551,6 +3047,10 @@
           {
             "name": "declaration_box",
             "type": "text"
+          },
+          {
+            "name": "declaration_boxes",
+            "type": "text[]"
           },
           {
             "name": "document_kind",
@@ -2630,6 +3130,18 @@
             "type": "text[]"
           },
           {
+            "name": "print_sequence",
+            "type": "integer"
+          },
+          {
+            "name": "rate",
+            "type": "numeric"
+          },
+          {
+            "name": "rate_of_box",
+            "type": "text"
+          },
+          {
             "name": "report_code",
             "type": "text"
           },
@@ -2667,6 +3179,30 @@
             "type": "character(2)"
           },
           {
+            "name": "deadline_day",
+            "type": "smallint"
+          },
+          {
+            "name": "deadline_plus_days",
+            "type": "smallint"
+          },
+          {
+            "name": "deadline_reference",
+            "type": "text"
+          },
+          {
+            "name": "deadline_rule",
+            "type": "filing_deadline_rule"
+          },
+          {
+            "name": "deadline_source_key",
+            "type": "text"
+          },
+          {
+            "name": "file_format",
+            "type": "text"
+          },
+          {
             "name": "is_periodic_return",
             "type": "boolean"
           },
@@ -2681,6 +3217,10 @@
           {
             "name": "name_i18n",
             "type": "jsonb"
+          },
+          {
+            "name": "period_default",
+            "type": "declaration_period"
           },
           {
             "name": "periods",
@@ -2708,6 +3248,18 @@
             "type": "tax_amount_type"
           },
           {
+            "name": "applies_buyer_territory",
+            "type": "text"
+          },
+          {
+            "name": "applies_seller_territory",
+            "type": "text"
+          },
+          {
+            "name": "applies_supply_territory",
+            "type": "text"
+          },
+          {
             "name": "applies_to",
             "type": "tax_scope"
           },
@@ -2722,6 +3274,10 @@
           {
             "name": "code",
             "type": "text"
+          },
+          {
+            "name": "conditions",
+            "type": "tax_condition[]"
           },
           {
             "name": "country",
@@ -2789,7 +3345,7 @@
           },
           {
             "name": "vat_category",
-            "type": "character(2)"
+            "type": "text"
           }
         ]
       },
@@ -2807,6 +3363,18 @@
           {
             "name": "amount_type",
             "type": "tax_amount_type"
+          },
+          {
+            "name": "applies_buyer_territory",
+            "type": "text"
+          },
+          {
+            "name": "applies_seller_territory",
+            "type": "text"
+          },
+          {
+            "name": "applies_supply_territory",
+            "type": "text"
           },
           {
             "name": "applies_to",
@@ -2898,6 +3466,47 @@
           },
           {
             "name": "vat_category",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "name": "territories",
+        "columns": [
+          {
+            "name": "code",
+            "type": "text"
+          },
+          {
+            "name": "code_source",
+            "type": "territory_code_source"
+          },
+          {
+            "name": "eu_vat_from",
+            "type": "date"
+          },
+          {
+            "name": "eu_vat_scope",
+            "type": "eu_vat_scope"
+          },
+          {
+            "name": "eu_vat_to",
+            "type": "date"
+          },
+          {
+            "name": "legal_reference",
+            "type": "text"
+          },
+          {
+            "name": "name",
+            "type": "text"
+          },
+          {
+            "name": "parent_code",
+            "type": "text"
+          },
+          {
+            "name": "vat_prefix",
             "type": "character(2)"
           }
         ]
@@ -2945,6 +3554,7 @@
       }
     ],
     "views": [
+      "bank_statement_continuity",
       "document_header",
       "document_legal_mentions",
       "document_line_items",
@@ -2980,6 +3590,10 @@
         "arguments": ""
       },
       {
+        "name": "assert_may_export_company",
+        "arguments": "p_company_id uuid"
+      },
+      {
         "name": "assert_may_post_document",
         "arguments": ""
       },
@@ -3012,8 +3626,20 @@
         "arguments": ""
       },
       {
+        "name": "auto_settle",
+        "arguments": "p_company_id uuid, p_from date, p_to date, p_apply boolean"
+      },
+      {
         "name": "available_statements",
         "arguments": "p_company_id uuid, p_at date"
+      },
+      {
+        "name": "bank_statement_lines_refresh_balance",
+        "arguments": ""
+      },
+      {
+        "name": "bank_statement_movement",
+        "arguments": "p_statement_id uuid"
       },
       {
         "name": "bank_statements_recompute",
@@ -3052,6 +3678,38 @@
         "arguments": ""
       },
       {
+        "name": "companies_vat_period_is_a_filing_period",
+        "arguments": ""
+      },
+      {
+        "name": "companies_with_capability",
+        "arguments": "p_capability text"
+      },
+      {
+        "name": "company_archive_predicate",
+        "arguments": "p_schema text, p_table text, p_alias text"
+      },
+      {
+        "name": "company_archive_row_count",
+        "arguments": "p_company_id uuid, p_table text"
+      },
+      {
+        "name": "company_archive_tables",
+        "arguments": ""
+      },
+      {
+        "name": "company_archive_unclassified",
+        "arguments": ""
+      },
+      {
+        "name": "company_filing_periods_mirror",
+        "arguments": ""
+      },
+      {
+        "name": "company_filing_periods_names_a_form",
+        "arguments": ""
+      },
+      {
         "name": "company_has_no_member",
         "arguments": "p_company_id uuid"
       },
@@ -3062,6 +3720,18 @@
       {
         "name": "company_role",
         "arguments": "p_company_id uuid"
+      },
+      {
+        "name": "company_scoped_tables",
+        "arguments": ""
+      },
+      {
+        "name": "confirm_contact",
+        "arguments": "p_transaction_id uuid, p_contact_id uuid"
+      },
+      {
+        "name": "contacts_language_reaches_drafts",
+        "arguments": ""
       },
       {
         "name": "create_api_key",
@@ -3096,7 +3766,15 @@
         "arguments": "p_company_id uuid, p_code text"
       },
       {
+        "name": "document_amount_paid",
+        "arguments": "p_document_id uuid"
+      },
+      {
         "name": "document_lines_amount_untaxed",
+        "arguments": ""
+      },
+      {
+        "name": "document_lines_guard_posted",
         "arguments": ""
       },
       {
@@ -3108,11 +3786,31 @@
         "arguments": ""
       },
       {
+        "name": "document_lines_snapshot_tax",
+        "arguments": ""
+      },
+      {
         "name": "document_share_refusal",
         "arguments": "p_document documents"
       },
       {
+        "name": "document_territory",
+        "arguments": "p_document_id uuid, p_party text"
+      },
+      {
+        "name": "documents_allocate_included_tax",
+        "arguments": "p_document_id uuid"
+      },
+      {
         "name": "documents_default_payee_iban",
+        "arguments": ""
+      },
+      {
+        "name": "documents_guard_language",
+        "arguments": ""
+      },
+      {
+        "name": "documents_guard_posted",
         "arguments": ""
       },
       {
@@ -3129,7 +3827,7 @@
       },
       {
         "name": "ec_sales_list",
-        "arguments": "p_company_id uuid, p_from date, p_to date"
+        "arguments": "p_company_id uuid, p_from date, p_to date, p_report_code text"
       },
       {
         "name": "ekwo_schema_version",
@@ -3152,6 +3850,10 @@
         "arguments": ""
       },
       {
+        "name": "entries_guard_posted",
+        "arguments": ""
+      },
+      {
         "name": "entries_refresh_totals",
         "arguments": ""
       },
@@ -3160,11 +3862,59 @@
         "arguments": ""
       },
       {
+        "name": "entry_lines_guard_posted",
+        "arguments": ""
+      },
+      {
+        "name": "eu_vat_scope_of",
+        "arguments": "p_code text, p_on date"
+      },
+      {
         "name": "evaluate_totals",
         "arguments": "p_values jsonb, p_formulas jsonb, p_rounding money_rounding, p_keep_zero boolean"
       },
       {
+        "name": "export_company",
+        "arguments": "p_company_id uuid"
+      },
+      {
+        "name": "export_company_manifest",
+        "arguments": "p_company_id uuid"
+      },
+      {
+        "name": "export_company_table",
+        "arguments": "p_company_id uuid, p_table text"
+      },
+      {
+        "name": "export_company_tables",
+        "arguments": "p_company_id uuid"
+      },
+      {
         "name": "fec_lines",
+        "arguments": "p_company_id uuid, p_from date, p_to date"
+      },
+      {
+        "name": "file_filing",
+        "arguments": "p_filing_id uuid, p_reference text, p_filed_at timestamp with time zone, p_channel filing_channel, p_service text"
+      },
+      {
+        "name": "filing_deadline",
+        "arguments": "p_company_id uuid, p_report_code text, p_period_end date"
+      },
+      {
+        "name": "filing_drift",
+        "arguments": "p_filing_id uuid"
+      },
+      {
+        "name": "filing_period",
+        "arguments": "p_company_id uuid, p_report_code text"
+      },
+      {
+        "name": "filing_tax_movements",
+        "arguments": "p_filing_id uuid"
+      },
+      {
+        "name": "filings_touched_since",
         "arguments": "p_company_id uuid, p_from date, p_to date"
       },
       {
@@ -3204,6 +3954,14 @@
         "arguments": "p_fiscal_year_id uuid"
       },
       {
+        "name": "import_bank_statement",
+        "arguments": "p_company_id uuid, p_file jsonb, p_source jsonb, p_bank_account_id uuid"
+      },
+      {
+        "name": "import_company",
+        "arguments": "p_archive jsonb, p_owner_user_id uuid"
+      },
+      {
         "name": "init_instance",
         "arguments": "p_organization_name text, p_country character, p_edition instance_edition"
       },
@@ -3232,6 +3990,10 @@
         "arguments": "p_company_id uuid"
       },
       {
+        "name": "is_eu_member",
+        "arguments": "p_code text, p_on date"
+      },
+      {
         "name": "is_installer",
         "arguments": ""
       },
@@ -3244,8 +4006,20 @@
         "arguments": "p_name text, p_i18n jsonb, p_languages text[]"
       },
       {
+        "name": "legal_mention_treatments",
+        "arguments": "p_applies_when text"
+      },
+      {
         "name": "locale_of_country_pack",
         "arguments": ""
+      },
+      {
+        "name": "lock_filed_period",
+        "arguments": "p_filing_id uuid"
+      },
+      {
+        "name": "matching_policy_of",
+        "arguments": "p_company_id uuid"
       },
       {
         "name": "member_capabilities",
@@ -3276,12 +4050,20 @@
         "arguments": "p_company_id uuid"
       },
       {
+        "name": "note_company_export",
+        "arguments": "p_company_id uuid"
+      },
+      {
         "name": "number_counter",
         "arguments": "p_format text, p_number text"
       },
       {
         "name": "numbering_rules",
         "arguments": "p_company_id uuid, OUT number_format text, OUT numbering_gapless boolean"
+      },
+      {
+        "name": "open_items",
+        "arguments": "p_company_id uuid, p_contact_id uuid, p_as_of date"
       },
       {
         "name": "opening_balance",
@@ -3300,8 +4082,20 @@
         "arguments": "p_company_id uuid, p_country character"
       },
       {
+        "name": "periodic_return_code",
+        "arguments": "p_company_id uuid"
+      },
+      {
         "name": "pin_referenced_accounts",
         "arguments": "p_company_id uuid"
+      },
+      {
+        "name": "portfolio_filings_touched_since",
+        "arguments": "p_from date, p_to date"
+      },
+      {
+        "name": "portfolio_upcoming_filings",
+        "arguments": "p_from date, p_to date"
       },
       {
         "name": "post_document",
@@ -3324,6 +4118,14 @@
         "arguments": "p_company_id uuid"
       },
       {
+        "name": "preferred_languages",
+        "arguments": "p_language text, p_company_id uuid"
+      },
+      {
+        "name": "prepare_filing",
+        "arguments": "p_company_id uuid, p_from date, p_to date, p_report_code text"
+      },
+      {
         "name": "purge_audit_log",
         "arguments": "p_before date"
       },
@@ -3336,8 +4138,20 @@
         "arguments": ""
       },
       {
+        "name": "record_filing_outcome",
+        "arguments": "p_filing_id uuid, p_state tax_filing_state, p_reference text, p_message text"
+      },
+      {
         "name": "register_instance",
         "arguments": "p_contact_email text"
+      },
+      {
+        "name": "rehearse_post_document",
+        "arguments": "p_document_id uuid"
+      },
+      {
+        "name": "reopen_filing",
+        "arguments": "p_filing_id uuid"
       },
       {
         "name": "reopen_fiscal_year",
@@ -3388,6 +4202,14 @@
         "arguments": "p_document_id uuid, p_date date"
       },
       {
+        "name": "settle_filing",
+        "arguments": "p_filing_id uuid, p_credit tax_credit_treatment, p_reference text, p_contact_id uuid, p_date date"
+      },
+      {
+        "name": "settle_from_statement",
+        "arguments": "p_transaction_id uuid, p_line_ids uuid[]"
+      },
+      {
         "name": "share_document",
         "arguments": "p_document_id uuid, p_expires_at timestamp with time zone"
       },
@@ -3396,12 +4218,60 @@
         "arguments": "p_token text"
       },
       {
+        "name": "significant_words",
+        "arguments": "p_text text, p_minimum_length integer"
+      },
+      {
         "name": "statement_account_matches",
         "arguments": "p_company_id uuid, p_statement_code text, p_from date, p_to date"
       },
       {
+        "name": "suggest_combination",
+        "arguments": "p_transaction_id uuid"
+      },
+      {
+        "name": "suggest_contacts",
+        "arguments": "p_transaction_id uuid"
+      },
+      {
+        "name": "suggest_matches",
+        "arguments": "p_transaction_id uuid"
+      },
+      {
+        "name": "supersede_filing",
+        "arguments": "p_filing_id uuid"
+      },
+      {
+        "name": "tax_filing_boxes_are_frozen",
+        "arguments": ""
+      },
+      {
+        "name": "tax_filings_report_exists",
+        "arguments": ""
+      },
+      {
+        "name": "tax_point_of",
+        "arguments": "p_company_id uuid, p_document_date date, p_delivery_date date, p_payment_date date"
+      },
+      {
+        "name": "tax_posting_boxes_agree",
+        "arguments": ""
+      },
+      {
         "name": "tax_rate_at",
         "arguments": "p_tax_id uuid, p_date date"
+      },
+      {
+        "name": "taxes_reach_draft_lines",
+        "arguments": ""
+      },
+      {
+        "name": "territory_of",
+        "arguments": "p_code text"
+      },
+      {
+        "name": "territory_within",
+        "arguments": "p_code text, p_of text"
       },
       {
         "name": "touch_api_key",
@@ -3424,12 +4294,24 @@
         "arguments": ""
       },
       {
+        "name": "upcoming_filings",
+        "arguments": "p_company_id uuid, p_from date, p_to date"
+      },
+      {
         "name": "use_api_key",
         "arguments": "p_secret text"
       },
       {
+        "name": "vat_prefix_of",
+        "arguments": "p_code text"
+      },
+      {
         "name": "vat_return",
         "arguments": "p_company_id uuid, p_from date, p_to date, p_report_code text"
+      },
+      {
+        "name": "version_at_least",
+        "arguments": "p_version text, p_floor text"
       }
     ],
     "policies": [
@@ -3475,7 +4357,17 @@
       },
       {
         "table": "attachments",
+        "name": "attachments_deposit",
+        "command": "insert"
+      },
+      {
+        "table": "attachments",
         "name": "attachments_select",
+        "command": "select"
+      },
+      {
+        "table": "attachments",
+        "name": "attachments_select_own_deposit",
         "command": "select"
       },
       {
@@ -3496,6 +4388,16 @@
       {
         "table": "bank_accounts",
         "name": "bank_accounts_write",
+        "command": "all"
+      },
+      {
+        "table": "bank_statement_lines",
+        "name": "bank_statement_lines_select",
+        "command": "select"
+      },
+      {
+        "table": "bank_statement_lines",
+        "name": "bank_statement_lines_write",
         "command": "all"
       },
       {
@@ -3549,6 +4451,21 @@
         "command": "update"
       },
       {
+        "table": "company_archive_registry",
+        "name": "company_archive_registry_select",
+        "command": "select"
+      },
+      {
+        "table": "company_filing_periods",
+        "name": "company_filing_periods_select",
+        "command": "select"
+      },
+      {
+        "table": "company_filing_periods",
+        "name": "company_filing_periods_write",
+        "command": "all"
+      },
+      {
         "table": "company_invitations",
         "name": "company_invitations_select",
         "command": "select"
@@ -3586,6 +4503,16 @@
       {
         "table": "company_packs",
         "name": "company_packs_write",
+        "command": "all"
+      },
+      {
+        "table": "contact_patterns",
+        "name": "contact_patterns_select",
+        "command": "select"
+      },
+      {
+        "table": "contact_patterns",
+        "name": "contact_patterns_write",
         "command": "all"
       },
       {
@@ -3744,6 +4671,16 @@
         "command": "select"
       },
       {
+        "table": "matching_settings",
+        "name": "matching_settings_select",
+        "command": "select"
+      },
+      {
+        "table": "matching_settings",
+        "name": "matching_settings_write",
+        "command": "all"
+      },
+      {
         "table": "modules",
         "name": "modules_select",
         "command": "select"
@@ -3799,6 +4736,36 @@
         "command": "select"
       },
       {
+        "table": "tax_filing_boxes",
+        "name": "tax_filing_boxes_select",
+        "command": "select"
+      },
+      {
+        "table": "tax_filing_boxes",
+        "name": "tax_filing_boxes_write",
+        "command": "all"
+      },
+      {
+        "table": "tax_filing_deposits",
+        "name": "tax_filing_deposits_select",
+        "command": "select"
+      },
+      {
+        "table": "tax_filing_deposits",
+        "name": "tax_filing_deposits_write",
+        "command": "all"
+      },
+      {
+        "table": "tax_filings",
+        "name": "tax_filings_select",
+        "command": "select"
+      },
+      {
+        "table": "tax_filings",
+        "name": "tax_filings_write",
+        "command": "all"
+      },
+      {
         "table": "tax_posting_templates",
         "name": "tax_posting_templates_select",
         "command": "select"
@@ -3837,6 +4804,11 @@
         "table": "taxes",
         "name": "taxes_write",
         "command": "all"
+      },
+      {
+        "table": "territories",
+        "name": "territories_select",
+        "command": "select"
       },
       {
         "table": "user_preferences",
@@ -3886,6 +4858,10 @@
         "name": "bank_accounts_set_updated_at"
       },
       {
+        "table": "bank_statement_lines",
+        "name": "bank_statement_lines_refresh_balance"
+      },
+      {
         "table": "bank_statements",
         "name": "bank_statements_recompute"
       },
@@ -3926,6 +4902,26 @@
         "name": "companies_set_updated_at"
       },
       {
+        "table": "companies",
+        "name": "companies_vat_period_is_a_filing_period"
+      },
+      {
+        "table": "company_filing_periods",
+        "name": "company_filing_periods_audit"
+      },
+      {
+        "table": "company_filing_periods",
+        "name": "company_filing_periods_mirror"
+      },
+      {
+        "table": "company_filing_periods",
+        "name": "company_filing_periods_names_a_form"
+      },
+      {
+        "table": "company_filing_periods",
+        "name": "company_filing_periods_set_updated_at"
+      },
+      {
         "table": "company_invitations",
         "name": "company_invitations_audit"
       },
@@ -3946,8 +4942,20 @@
         "name": "company_packs_audit"
       },
       {
+        "table": "contact_patterns",
+        "name": "contact_patterns_audit"
+      },
+      {
+        "table": "contact_patterns",
+        "name": "contact_patterns_set_updated_at"
+      },
+      {
         "table": "contacts",
         "name": "contacts_audit"
+      },
+      {
+        "table": "contacts",
+        "name": "contacts_language_reaches_drafts"
       },
       {
         "table": "contacts",
@@ -3960,6 +4968,10 @@
       {
         "table": "country_packs",
         "name": "country_packs_audit"
+      },
+      {
+        "table": "document_lines",
+        "name": "document_lines_00_guard_posted"
       },
       {
         "table": "document_lines",
@@ -3976,6 +4988,10 @@
       {
         "table": "document_lines",
         "name": "document_lines_set_updated_at"
+      },
+      {
+        "table": "document_lines",
+        "name": "document_lines_snapshot_tax"
       },
       {
         "table": "documents",
@@ -3996,6 +5012,14 @@
       {
         "table": "documents",
         "name": "documents_default_payee_iban"
+      },
+      {
+        "table": "documents",
+        "name": "documents_guard_language"
+      },
+      {
+        "table": "documents",
+        "name": "documents_guard_posted"
       },
       {
         "table": "documents",
@@ -4031,11 +5055,19 @@
       },
       {
         "table": "entries",
+        "name": "entries_guard_posted"
+      },
+      {
+        "table": "entries",
         "name": "entries_set_updated_at"
       },
       {
         "table": "entry_lines",
         "name": "entry_lines_guard_period"
+      },
+      {
+        "table": "entry_lines",
+        "name": "entry_lines_guard_posted"
       },
       {
         "table": "entry_lines",
@@ -4090,6 +5122,14 @@
         "name": "journals_set_updated_at"
       },
       {
+        "table": "matching_settings",
+        "name": "matching_settings_audit"
+      },
+      {
+        "table": "matching_settings",
+        "name": "matching_settings_set_updated_at"
+      },
+      {
         "table": "modules",
         "name": "modules_set_updated_at"
       },
@@ -4126,8 +5166,32 @@
         "name": "reconciliations_refresh_lines"
       },
       {
+        "table": "tax_filing_boxes",
+        "name": "tax_filing_boxes_are_frozen"
+      },
+      {
+        "table": "tax_filings",
+        "name": "tax_filings_audit"
+      },
+      {
+        "table": "tax_filings",
+        "name": "tax_filings_report_exists"
+      },
+      {
+        "table": "tax_filings",
+        "name": "tax_filings_set_updated_at"
+      },
+      {
+        "table": "tax_posting_templates",
+        "name": "tax_posting_templates_boxes_agree"
+      },
+      {
         "table": "tax_postings",
         "name": "tax_postings_audit"
+      },
+      {
+        "table": "tax_postings",
+        "name": "tax_postings_boxes_agree"
       },
       {
         "table": "tax_postings",
@@ -4136,6 +5200,10 @@
       {
         "table": "taxes",
         "name": "taxes_audit"
+      },
+      {
+        "table": "taxes",
+        "name": "taxes_reach_draft_lines"
       },
       {
         "table": "taxes",
@@ -4204,6 +5272,24 @@
           "retained_earnings",
           "result_accounts",
           "appropriation_accounts"
+        ]
+      },
+      {
+        "name": "contact_pattern_kind",
+        "kind": "enum",
+        "labels": [
+          "counterparty_account",
+          "name_variation",
+          "description_keyword",
+          "amount_range"
+        ]
+      },
+      {
+        "name": "contact_pattern_source",
+        "kind": "enum",
+        "labels": [
+          "declared",
+          "learned"
         ]
       },
       {
@@ -4276,6 +5362,31 @@
         ]
       },
       {
+        "name": "eu_vat_scope",
+        "kind": "enum",
+        "labels": [
+          "full",
+          "goods",
+          "none"
+        ]
+      },
+      {
+        "name": "filing_channel",
+        "kind": "enum",
+        "labels": [
+          "portal",
+          "service"
+        ]
+      },
+      {
+        "name": "filing_deadline_rule",
+        "kind": "enum",
+        "labels": [
+          "day_of_month_after_period",
+          "last_day_of_month_after_period"
+        ]
+      },
+      {
         "name": "instance_edition",
         "kind": "enum",
         "labels": [
@@ -4296,13 +5407,18 @@
         ]
       },
       {
+        "name": "matching_policy",
+        "kind": "composite"
+      },
+      {
         "name": "member_role",
         "kind": "enum",
         "labels": [
           "owner",
           "accountant",
           "viewer",
-          "instance_admin"
+          "instance_admin",
+          "client"
         ]
       },
       {
@@ -4399,11 +5515,43 @@
         ]
       },
       {
+        "name": "tax_condition",
+        "kind": "enum",
+        "labels": [
+          "buyer_certificate",
+          "buyer_status",
+          "transport_evidence",
+          "seller_threshold",
+          "supply_nature"
+        ]
+      },
+      {
+        "name": "tax_credit_treatment",
+        "kind": "enum",
+        "labels": [
+          "carry_forward",
+          "refund"
+        ]
+      },
+      {
         "name": "tax_document_kind",
         "kind": "enum",
         "labels": [
           "invoice",
           "credit_note"
+        ]
+      },
+      {
+        "name": "tax_filing_state",
+        "kind": "enum",
+        "labels": [
+          "draft",
+          "ready",
+          "filed",
+          "accepted",
+          "rejected",
+          "paid",
+          "superseded"
         ]
       },
       {
@@ -4441,8 +5589,10 @@
         "labels": [
           "domestic",
           "domestic_reverse_charge",
+          "self_assessed",
           "intracom_goods",
           "intracom_services",
+          "intracom_triangular",
           "intracom_acquisition_goods",
           "intracom_acquisition_services",
           "foreign_services_received",
@@ -4450,6 +5600,16 @@
           "import",
           "exempt",
           "not_subject"
+        ]
+      },
+      {
+        "name": "territory_code_source",
+        "kind": "enum",
+        "labels": [
+          "iso_3166_1",
+          "iso_3166_2",
+          "eu",
+          "named"
         ]
       }
     ],
@@ -4578,6 +5738,22 @@
           ]
         },
         {
+          "name": "bank_statement_lines",
+          "anon": [],
+          "authenticated": [
+            "delete",
+            "insert",
+            "select",
+            "update"
+          ],
+          "service_role": [
+            "delete",
+            "insert",
+            "select",
+            "update"
+          ]
+        },
+        {
           "name": "bank_statements",
           "anon": [],
           "authenticated": [
@@ -4646,6 +5822,32 @@
           ]
         },
         {
+          "name": "company_archive_registry",
+          "anon": [],
+          "authenticated": [
+            "select"
+          ],
+          "service_role": [
+            "select"
+          ]
+        },
+        {
+          "name": "company_filing_periods",
+          "anon": [],
+          "authenticated": [
+            "delete",
+            "insert",
+            "select",
+            "update"
+          ],
+          "service_role": [
+            "delete",
+            "insert",
+            "select",
+            "update"
+          ]
+        },
+        {
           "name": "company_invitations",
           "anon": [],
           "authenticated": [
@@ -4683,6 +5885,22 @@
         },
         {
           "name": "company_packs",
+          "anon": [],
+          "authenticated": [
+            "delete",
+            "insert",
+            "select",
+            "update"
+          ],
+          "service_role": [
+            "delete",
+            "insert",
+            "select",
+            "update"
+          ]
+        },
+        {
+          "name": "contact_patterns",
           "anon": [],
           "authenticated": [
             "delete",
@@ -4948,6 +6166,22 @@
           ]
         },
         {
+          "name": "matching_settings",
+          "anon": [],
+          "authenticated": [
+            "delete",
+            "insert",
+            "select",
+            "update"
+          ],
+          "service_role": [
+            "delete",
+            "insert",
+            "select",
+            "update"
+          ]
+        },
+        {
           "name": "modules",
           "anon": [],
           "authenticated": [
@@ -5046,6 +6280,54 @@
           ]
         },
         {
+          "name": "tax_filing_boxes",
+          "anon": [],
+          "authenticated": [
+            "delete",
+            "insert",
+            "select",
+            "update"
+          ],
+          "service_role": [
+            "delete",
+            "insert",
+            "select",
+            "update"
+          ]
+        },
+        {
+          "name": "tax_filing_deposits",
+          "anon": [],
+          "authenticated": [
+            "delete",
+            "insert",
+            "select",
+            "update"
+          ],
+          "service_role": [
+            "delete",
+            "insert",
+            "select",
+            "update"
+          ]
+        },
+        {
+          "name": "tax_filings",
+          "anon": [],
+          "authenticated": [
+            "delete",
+            "insert",
+            "select",
+            "update"
+          ],
+          "service_role": [
+            "delete",
+            "insert",
+            "select",
+            "update"
+          ]
+        },
+        {
           "name": "tax_posting_templates",
           "anon": [],
           "authenticated": [
@@ -5118,6 +6400,16 @@
           ]
         },
         {
+          "name": "territories",
+          "anon": [],
+          "authenticated": [
+            "select"
+          ],
+          "service_role": [
+            "select"
+          ]
+        },
+        {
           "name": "user_preferences",
           "anon": [],
           "authenticated": [
@@ -5135,6 +6427,16 @@
         }
       ],
       "views": [
+        {
+          "name": "bank_statement_continuity",
+          "anon": [],
+          "authenticated": [
+            "select"
+          ],
+          "service_role": [
+            "select"
+          ]
+        },
         {
           "name": "document_header",
           "anon": [],
@@ -5257,6 +6559,17 @@
           "service_role": []
         },
         {
+          "name": "assert_may_export_company",
+          "arguments": "p_company_id uuid",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
           "name": "assert_may_post_document",
           "arguments": "",
           "trigger": true,
@@ -5325,8 +6638,38 @@
           "service_role": []
         },
         {
+          "name": "auto_settle",
+          "arguments": "p_company_id uuid, p_from date, p_to date, p_apply boolean",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
           "name": "available_statements",
           "arguments": "p_company_id uuid, p_at date",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "bank_statement_lines_refresh_balance",
+          "arguments": "",
+          "trigger": true,
+          "anon": [],
+          "authenticated": [],
+          "service_role": []
+        },
+        {
+          "name": "bank_statement_movement",
+          "arguments": "p_statement_id uuid",
           "anon": [],
           "authenticated": [
             "execute"
@@ -5425,6 +6768,85 @@
           "service_role": []
         },
         {
+          "name": "companies_vat_period_is_a_filing_period",
+          "arguments": "",
+          "trigger": true,
+          "anon": [],
+          "authenticated": [],
+          "service_role": []
+        },
+        {
+          "name": "companies_with_capability",
+          "arguments": "p_capability text",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "company_archive_predicate",
+          "arguments": "p_schema text, p_table text, p_alias text",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "company_archive_row_count",
+          "arguments": "p_company_id uuid, p_table text",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "company_archive_tables",
+          "arguments": "",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "company_archive_unclassified",
+          "arguments": "",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "company_filing_periods_mirror",
+          "arguments": "",
+          "trigger": true,
+          "anon": [],
+          "authenticated": [],
+          "service_role": []
+        },
+        {
+          "name": "company_filing_periods_names_a_form",
+          "arguments": "",
+          "trigger": true,
+          "anon": [],
+          "authenticated": [],
+          "service_role": []
+        },
+        {
           "name": "company_has_no_member",
           "arguments": "p_company_id uuid",
           "anon": [
@@ -5457,6 +6879,36 @@
           "service_role": [
             "execute"
           ]
+        },
+        {
+          "name": "company_scoped_tables",
+          "arguments": "",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "confirm_contact",
+          "arguments": "p_transaction_id uuid, p_contact_id uuid",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "contacts_language_reaches_drafts",
+          "arguments": "",
+          "trigger": true,
+          "anon": [],
+          "authenticated": [],
+          "service_role": []
         },
         {
           "name": "create_api_key",
@@ -5541,7 +6993,26 @@
           ]
         },
         {
+          "name": "document_amount_paid",
+          "arguments": "p_document_id uuid",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
           "name": "document_lines_amount_untaxed",
+          "arguments": "",
+          "trigger": true,
+          "anon": [],
+          "authenticated": [],
+          "service_role": []
+        },
+        {
+          "name": "document_lines_guard_posted",
           "arguments": "",
           "trigger": true,
           "anon": [],
@@ -5565,6 +7036,14 @@
           "service_role": []
         },
         {
+          "name": "document_lines_snapshot_tax",
+          "arguments": "",
+          "trigger": true,
+          "anon": [],
+          "authenticated": [],
+          "service_role": []
+        },
+        {
           "name": "document_share_refusal",
           "arguments": "p_document documents",
           "anon": [],
@@ -5576,7 +7055,45 @@
           ]
         },
         {
+          "name": "document_territory",
+          "arguments": "p_document_id uuid, p_party text",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "documents_allocate_included_tax",
+          "arguments": "p_document_id uuid",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
           "name": "documents_default_payee_iban",
+          "arguments": "",
+          "trigger": true,
+          "anon": [],
+          "authenticated": [],
+          "service_role": []
+        },
+        {
+          "name": "documents_guard_language",
+          "arguments": "",
+          "trigger": true,
+          "anon": [],
+          "authenticated": [],
+          "service_role": []
+        },
+        {
+          "name": "documents_guard_posted",
           "arguments": "",
           "trigger": true,
           "anon": [],
@@ -5615,7 +7132,7 @@
         },
         {
           "name": "ec_sales_list",
-          "arguments": "p_company_id uuid, p_from date, p_to date",
+          "arguments": "p_company_id uuid, p_from date, p_to date, p_report_code text",
           "anon": [],
           "authenticated": [
             "execute"
@@ -5671,6 +7188,14 @@
           "service_role": []
         },
         {
+          "name": "entries_guard_posted",
+          "arguments": "",
+          "trigger": true,
+          "anon": [],
+          "authenticated": [],
+          "service_role": []
+        },
+        {
           "name": "entries_refresh_totals",
           "arguments": "",
           "trigger": true,
@@ -5687,6 +7212,25 @@
           "service_role": []
         },
         {
+          "name": "entry_lines_guard_posted",
+          "arguments": "",
+          "trigger": true,
+          "anon": [],
+          "authenticated": [],
+          "service_role": []
+        },
+        {
+          "name": "eu_vat_scope_of",
+          "arguments": "p_code text, p_on date",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
           "name": "evaluate_totals",
           "arguments": "p_values jsonb, p_formulas jsonb, p_rounding money_rounding, p_keep_zero boolean",
           "anon": [],
@@ -5698,7 +7242,117 @@
           ]
         },
         {
+          "name": "export_company",
+          "arguments": "p_company_id uuid",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "export_company_manifest",
+          "arguments": "p_company_id uuid",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "export_company_table",
+          "arguments": "p_company_id uuid, p_table text",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "export_company_tables",
+          "arguments": "p_company_id uuid",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
           "name": "fec_lines",
+          "arguments": "p_company_id uuid, p_from date, p_to date",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "file_filing",
+          "arguments": "p_filing_id uuid, p_reference text, p_filed_at timestamp with time zone, p_channel filing_channel, p_service text",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "filing_deadline",
+          "arguments": "p_company_id uuid, p_report_code text, p_period_end date",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "filing_drift",
+          "arguments": "p_filing_id uuid",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "filing_period",
+          "arguments": "p_company_id uuid, p_report_code text",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "filing_tax_movements",
+          "arguments": "p_filing_id uuid",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "filings_touched_since",
           "arguments": "p_company_id uuid, p_from date, p_to date",
           "anon": [],
           "authenticated": [
@@ -5804,6 +7458,28 @@
           ]
         },
         {
+          "name": "import_bank_statement",
+          "arguments": "p_company_id uuid, p_file jsonb, p_source jsonb, p_bank_account_id uuid",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "import_company",
+          "arguments": "p_archive jsonb, p_owner_user_id uuid",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
           "name": "init_instance",
           "arguments": "p_organization_name text, p_country character, p_edition instance_edition",
           "anon": [],
@@ -5889,6 +7565,17 @@
           ]
         },
         {
+          "name": "is_eu_member",
+          "arguments": "p_code text, p_on date",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
           "name": "is_installer",
           "arguments": "",
           "anon": [],
@@ -5924,12 +7611,45 @@
           ]
         },
         {
+          "name": "legal_mention_treatments",
+          "arguments": "p_applies_when text",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
           "name": "locale_of_country_pack",
           "arguments": "",
           "trigger": true,
           "anon": [],
           "authenticated": [],
           "service_role": []
+        },
+        {
+          "name": "lock_filed_period",
+          "arguments": "p_filing_id uuid",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "matching_policy_of",
+          "arguments": "p_company_id uuid",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
         },
         {
           "name": "member_capabilities",
@@ -6011,6 +7731,17 @@
           ]
         },
         {
+          "name": "note_company_export",
+          "arguments": "p_company_id uuid",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
           "name": "number_counter",
           "arguments": "p_format text, p_number text",
           "anon": [],
@@ -6024,6 +7755,17 @@
         {
           "name": "numbering_rules",
           "arguments": "p_company_id uuid, OUT number_format text, OUT numbering_gapless boolean",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "open_items",
+          "arguments": "p_company_id uuid, p_contact_id uuid, p_as_of date",
           "anon": [],
           "authenticated": [
             "execute"
@@ -6077,8 +7819,41 @@
           ]
         },
         {
+          "name": "periodic_return_code",
+          "arguments": "p_company_id uuid",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
           "name": "pin_referenced_accounts",
           "arguments": "p_company_id uuid",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "portfolio_filings_touched_since",
+          "arguments": "p_from date, p_to date",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "portfolio_upcoming_filings",
+          "arguments": "p_from date, p_to date",
           "anon": [],
           "authenticated": [
             "execute"
@@ -6143,6 +7918,28 @@
           ]
         },
         {
+          "name": "preferred_languages",
+          "arguments": "p_language text, p_company_id uuid",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "prepare_filing",
+          "arguments": "p_company_id uuid, p_from date, p_to date, p_report_code text",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
           "name": "purge_audit_log",
           "arguments": "p_before date",
           "anon": [],
@@ -6171,8 +7968,41 @@
           "service_role": []
         },
         {
+          "name": "record_filing_outcome",
+          "arguments": "p_filing_id uuid, p_state tax_filing_state, p_reference text, p_message text",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
           "name": "register_instance",
           "arguments": "p_contact_email text",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "rehearse_post_document",
+          "arguments": "p_document_id uuid",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "reopen_filing",
+          "arguments": "p_filing_id uuid",
           "anon": [],
           "authenticated": [
             "execute"
@@ -6311,6 +8141,28 @@
           ]
         },
         {
+          "name": "settle_filing",
+          "arguments": "p_filing_id uuid, p_credit tax_credit_treatment, p_reference text, p_contact_id uuid, p_date date",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "settle_from_statement",
+          "arguments": "p_transaction_id uuid, p_line_ids uuid[]",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
           "name": "share_document",
           "arguments": "p_document_id uuid, p_expires_at timestamp with time zone",
           "anon": [],
@@ -6335,6 +8187,17 @@
           ]
         },
         {
+          "name": "significant_words",
+          "arguments": "p_text text, p_minimum_length integer",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
           "name": "statement_account_matches",
           "arguments": "p_company_id uuid, p_statement_code text, p_from date, p_to date",
           "anon": [],
@@ -6344,6 +8207,85 @@
           "service_role": [
             "execute"
           ]
+        },
+        {
+          "name": "suggest_combination",
+          "arguments": "p_transaction_id uuid",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "suggest_contacts",
+          "arguments": "p_transaction_id uuid",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "suggest_matches",
+          "arguments": "p_transaction_id uuid",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "supersede_filing",
+          "arguments": "p_filing_id uuid",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "tax_filing_boxes_are_frozen",
+          "arguments": "",
+          "trigger": true,
+          "anon": [],
+          "authenticated": [],
+          "service_role": []
+        },
+        {
+          "name": "tax_filings_report_exists",
+          "arguments": "",
+          "trigger": true,
+          "anon": [],
+          "authenticated": [],
+          "service_role": []
+        },
+        {
+          "name": "tax_point_of",
+          "arguments": "p_company_id uuid, p_document_date date, p_delivery_date date, p_payment_date date",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "tax_posting_boxes_agree",
+          "arguments": "",
+          "trigger": true,
+          "anon": [],
+          "authenticated": [],
+          "service_role": []
         },
         {
           "name": "tax_rate_at",
@@ -6357,12 +8299,40 @@
           ]
         },
         {
-          "name": "touch_api_key",
-          "arguments": "p_api_key_id uuid",
+          "name": "taxes_reach_draft_lines",
+          "arguments": "",
+          "trigger": true,
+          "anon": [],
+          "authenticated": [],
+          "service_role": []
+        },
+        {
+          "name": "territory_of",
+          "arguments": "p_code text",
           "anon": [],
           "authenticated": [
             "execute"
           ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "territory_within",
+          "arguments": "p_code text, p_of text",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "touch_api_key",
+          "arguments": "p_api_key_id uuid",
+          "anon": [],
+          "authenticated": [],
           "service_role": [
             "execute"
           ]
@@ -6412,6 +8382,17 @@
           ]
         },
         {
+          "name": "upcoming_filings",
+          "arguments": "p_company_id uuid, p_from date, p_to date",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
           "name": "use_api_key",
           "arguments": "p_secret text",
           "anon": [],
@@ -6423,8 +8404,30 @@
           ]
         },
         {
+          "name": "vat_prefix_of",
+          "arguments": "p_code text",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
           "name": "vat_return",
           "arguments": "p_company_id uuid, p_from date, p_to date, p_report_code text",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "version_at_least",
+          "arguments": "p_version text, p_floor text",
           "anon": [],
           "authenticated": [
             "execute"
@@ -6748,6 +8751,10 @@
           "arguments": "p_company_id uuid"
         },
         {
+          "name": "archive_tables",
+          "arguments": ""
+        },
+        {
           "name": "assert_may_post",
           "arguments": ""
         },
@@ -6999,6 +9006,17 @@
           {
             "name": "accounts_in_use",
             "arguments": "p_company_id uuid",
+            "anon": [],
+            "authenticated": [
+              "execute"
+            ],
+            "service_role": [
+              "execute"
+            ]
+          },
+          {
+            "name": "archive_tables",
+            "arguments": "",
             "anon": [],
             "authenticated": [
               "execute"
@@ -7272,6 +9290,10 @@
           "arguments": "p_company_id uuid"
         },
         {
+          "name": "archive_tables",
+          "arguments": ""
+        },
+        {
           "name": "variance",
           "arguments": "p_company_id uuid, p_budget_id uuid, p_from date, p_to date"
         }
@@ -7372,6 +9394,17 @@
           {
             "name": "accounts_in_use",
             "arguments": "p_company_id uuid",
+            "anon": [],
+            "authenticated": [
+              "execute"
+            ],
+            "service_role": [
+              "execute"
+            ]
+          },
+          {
+            "name": "archive_tables",
+            "arguments": "",
             "anon": [],
             "authenticated": [
               "execute"

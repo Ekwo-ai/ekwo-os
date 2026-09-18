@@ -56,6 +56,35 @@ describe('row level security', () => {
     expect(bare).toEqual([]);
   });
 
+  it('asks who the caller is once per statement, on every table of a company', async () => {
+    // `has_capability(company_id, …)` in a policy is called for every row the
+    // scan visits: `stable` lets Postgres assume the answer holds, not
+    // remember it. `20260918141627` rewrote the policies of that shape to
+    // compare `company_id` against a sub-select, which runs once — and a table
+    // added tomorrow with the old shape would be slow as a member and fast as
+    // the owner, which is how the first fifty-two went unnoticed. The policies
+    // that mix the test with another condition, or reach the company through a
+    // parent row, are the exceptions `docs/decisions.md` lists; none of them
+    // guards a table a report walks.
+    const perRow = await rows<{ policy: string }>(
+      db,
+      `select tablename || '.' || policyname as policy
+         from pg_policies
+        where schemaname = 'public'
+          and qual ~ '^has_capability\\(company_id, ''[a-z_.]+''::text\\)$'
+        order by 1`,
+    );
+    expect(perRow.map((p) => p.policy)).toEqual([]);
+
+    const once = await rows<{ policy: string }>(
+      db,
+      `select tablename || '.' || policyname as policy
+         from pg_policies
+        where schemaname = 'public' and qual like '%companies_with_capability(%'`,
+    );
+    expect(once.length).toBeGreaterThan(40);
+  });
+
   it('hides a company from a user who is not a member', async () => {
     const visible = await asUser(db, strangerId, async () =>
       rows(db, `select id from companies`),

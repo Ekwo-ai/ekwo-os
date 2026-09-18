@@ -141,7 +141,7 @@ describe('installing a company on a chart', () => {
          from company_packs p where p.company_id = $1`,
       [companyId],
     );
-    expect(copied).toEqual({ chart_code: 'default', accounts: 353 });
+    expect(copied).toEqual({ chart_code: 'default', accounts: 355 });
 
     const capital = await one<{ name: string }>(
       db,
@@ -168,7 +168,7 @@ describe('installing a company on a chart', () => {
          from company_packs p where p.company_id = $1`,
       [company.id],
     );
-    expect(copied).toEqual({ chart_code: 'asbl', accounts: 349, taxes: 22, journals: 6 });
+    expect(copied).toEqual({ chart_code: 'asbl', accounts: 351, taxes: 22, journals: 6 });
 
     // The association chart calls 100000 something else, and the roles and the
     // VAT accounts still resolve — which is the constraint `pack check` keeps.

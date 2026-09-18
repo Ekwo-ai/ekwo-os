@@ -84,6 +84,49 @@ export const sourceKinds: string[] = (() => {
 })();
 
 /**
+ * The ways a pack may close its year, from the published schema.
+ *
+ * Read there for the same reason as the statuses above: the vocabulary is
+ * closed, and a test that listed the styles by hand would stop noticing the
+ * day a pack used one no pack had used before — which is what happened to the
+ * first pack that closes straight into retained earnings.
+ */
+export const closingStyles: string[] = (() => {
+  const defs = (schema['$defs'] ?? {}) as Record<string, Record<string, unknown>>;
+  const properties = (defs['defaults']?.['properties'] ?? {}) as Record<
+    string,
+    Record<string, unknown>
+  >;
+  const values = properties['closing_style']?.['enum'];
+  if (!Array.isArray(values) || values.length === 0) {
+    throw new Error('packs/schema/pack.1.json defines no closing style');
+  }
+  return values as string[];
+})();
+
+/**
+ * The tax points a country may declare, from the published schema.
+ *
+ * Same reason as the statuses above: the vocabulary is closed so that a rule
+ * reads the same across countries, and the two words that say "the principle,
+ * except where an invoice is due" were added to it after three packs had been
+ * found declaring the exception alone. A test that listed the values by hand
+ * would not have noticed either.
+ */
+export const taxPointRules: string[] = (() => {
+  const defs = (schema['$defs'] ?? {}) as Record<string, Record<string, unknown>>;
+  const properties = (defs['documents']?.['properties'] ?? {}) as Record<
+    string,
+    Record<string, unknown>
+  >;
+  const values = properties['tax_point']?.['enum'];
+  if (!Array.isArray(values) || values.length === 0) {
+    throw new Error('packs/schema/pack.1.json defines no tax point');
+  }
+  return values as string[];
+})();
+
+/**
  * The cadences a declaration form may be filed on, from the published schema.
  *
  * Same reason as the statuses above: a test that listed `month`, `quarter` and
@@ -159,8 +202,22 @@ export interface PackExpectations {
    * would compare a file to itself.
    */
   statement_facts?: Record<string, Record<string, string>>;
-  /** Boxes of the periodic return whose value is an arithmetic of other boxes. */
-  report_arithmetic?: { box: string; kind: string; plus: string[]; minus: string[] }[];
+  /**
+   * Boxes of the periodic return whose value is an arithmetic of other boxes,
+   * as the form's own instructions write it: a list to add and a list to
+   * subtract, or a percentage of one box. It is the one thing a pack's own
+   * files cannot check themselves against — `tax_report.json` is where the
+   * arithmetic is transcribed, so a test comparing the two would compare a
+   * file to itself. Written here, a typo on either side shows up.
+   */
+  report_arithmetic?: {
+    box: string;
+    kind: string;
+    plus?: string[];
+    minus?: string[];
+    rate?: number;
+    rate_of?: string;
+  }[];
 }
 
 const EXPECTATIONS = new Map<string, PackExpectations>();

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Two invented statements in one message: two accounts of one holder, which
+     is how a bank delivers them when it delivers them together. The second
+     account is identified by an IBAN whose check digits are wrong on purpose. -->
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:camt.053.001.02">
+  <BkToCstmrStmt>
+    <GrpHdr>
+      <MsgId>MSG-TWO-0001</MsgId>
+      <CreDtTm>2026-02-01T05:00:00Z</CreDtTm>
+    </GrpHdr>
+    <Stmt>
+      <Id>A-2026-01</Id>
+      <CreDtTm>2026-02-01T05:00:00Z</CreDtTm>
+      <Acct><Id><IBAN>BE19999000000808</IBAN></Id></Acct>
+      <Bal>
+        <Tp><CdOrPrtry><Cd>PRCD</Cd></CdOrPrtry></Tp>
+        <Amt Ccy="EUR">10.00</Amt>
+        <CdtDbtInd>CRDT</CdtDbtInd>
+        <Dt><Dt>2025-12-31</Dt></Dt>
+      </Bal>
+      <Bal>
+        <Tp><CdOrPrtry><Cd>CLBD</Cd></CdOrPrtry></Tp>
+        <Amt Ccy="EUR">10.00</Amt>
+        <CdtDbtInd>CRDT</CdtDbtInd>
+        <Dt><Dt>2026-01-31</Dt></Dt>
+      </Bal>
+    </Stmt>
+    <Stmt>
+      <Id>B-2026-01</Id>
+      <CreDtTm>2026-02-01T05:00:00Z</CreDtTm>
+      <Acct><Id><IBAN>BE08999000000908</IBAN></Id><Ccy>EUR</Ccy></Acct>
+      <Bal>
+        <Tp><CdOrPrtry><Cd>CLBD</Cd></CdOrPrtry></Tp>
+        <Amt Ccy="EUR">5.00</Amt>
+        <CdtDbtInd>CRDT</CdtDbtInd>
+        <Dt><Dt>2026-01-31</Dt></Dt>
+      </Bal>
+      <Ntry>
+        <Amt Ccy="EUR">5.00</Amt>
+        <CdtDbtInd>CRDT</CdtDbtInd>
+        <Sts>BOOK</Sts>
+        <ValDt><Dt>2026-01-20</Dt></ValDt>
+        <BkTxCd><Prtry><Cd>IN</Cd></Prtry></BkTxCd>
+      </Ntry>
+    </Stmt>
+  </BkToCstmrStmt>
+</Document>

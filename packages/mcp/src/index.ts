@@ -18,7 +18,7 @@ export {
   type SelectQuery,
 } from './backend.js';
 export { ENV, isServiceRoleKey, openBackend, readConfig, type Config } from './config.js';
-export { amountIn, decimal, money, moneyFields, type Decimal } from './format.js';
+export { amountIn, decimal, money, moneyFields, type Decimal } from '@ekwo-ai/core';
 export { connect, sqlBackend, type SqlBackendOptions, type SqlClient } from './sql.js';
 export { postgrestBackend, type PostgrestBackendOptions } from './postgrest.js';
 export { SERVER_NAME, SERVER_VERSION, buildServer, type ServerOptions } from './server.js';

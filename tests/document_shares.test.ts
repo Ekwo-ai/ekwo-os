@@ -17,7 +17,7 @@
 import type { PGlite } from '@electric-sql/pglite';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import type { Pack, PackGolden } from '../packages/cli/src/index.js';
-import { asUser, expectError, freshDatabase, one, rows } from './helpers/db.js';
+import { asUser, expectError, freshDatabase, one, rows, withoutTrigger } from './helpers/db.js';
 import { newCompany, newDocument, newUser } from './helpers/factory.js';
 import { replayScenario } from './helpers/golden-scenario.js';
 import { packWhere } from './helpers/packs.js';
@@ -347,13 +347,18 @@ describe('a visitor who holds the link', () => {
     }
   });
 
-  it('reads a document written for a customer in another language in that language', async () => {
-    // A pack publishes its labels in more than one language, and the customer
-    // is the one who reads the invoice: their language wins over the books'.
+  it('stays in the language it was sent in when the customer changes theirs', async () => {
+    // The link is onto a document that was posted, and a posted document
+    // records the language it was written in. A customer who switches
+    // afterwards switches what they are sent next — not what they were sent.
     const other = (pack.manifest.languages ?? []).find(
       (code) => code !== (pack.manifest.defaults.language ?? null),
     );
     if (other === undefined) throw new Error(`packs/${pack.slug} publishes only one language`);
+
+    const sent = (await readAsVisitor(share.token)) as SharedDocument;
+    const written = sent.document['language'] as string;
+    expect(written).not.toBe(other);
 
     const contactId = await one<{ contact_id: string }>(
       db,
@@ -366,10 +371,10 @@ describe('a visitor who holds the link', () => {
     ]);
 
     const seen = (await readAsVisitor(share.token)) as SharedDocument;
-    expect(seen.document['language']).toBe(other);
+    expect(seen.document['language']).toBe(written);
     for (const mention of seen.legal_mentions) {
       const fromPack = pack.documents.mentions.find((m) => m.code === mention.code);
-      expect(mention.text, mention.code).toBe(fromPack?.text_i18n[other] ?? fromPack?.text);
+      expect(mention.text, mention.code).toBe(fromPack?.text_i18n[written] ?? fromPack?.text);
     }
 
     await db.query(`update contacts set language = null where id = $1`, [contactId.contact_id]);
@@ -461,10 +466,18 @@ describe('a token that is not a live link', () => {
     const share = await shareAs(ownerId, invoiceId);
     expect(await readAsVisitor(share.token)).not.toBeNull();
 
-    await db.query(`update documents set state = 'cancelled' where id = $1`, [invoiceId]);
+    // No path leads a posted document to `cancelled` any more —
+    // `documents_guard_posted` refuses it — so the state is arranged with the
+    // guard off. What is held here is the floor under it: a link is judged
+    // again at every read, whatever brought the document where it is.
+    const setState = (state: string) =>
+      withoutTrigger(db, 'documents', 'documents_guard_posted', () =>
+        db.query(`update documents set state = $2 where id = $1`, [invoiceId, state]),
+      );
+    await setState('cancelled');
     expect(await readAsVisitor(share.token)).toBeNull();
 
-    await db.query(`update documents set state = 'posted' where id = $1`, [invoiceId]);
+    await setState('posted');
     expect(await readAsVisitor(share.token)).not.toBeNull();
     await asUser(db, ownerId, () => db.query(`select revoke_share($1)`, [share.share_id]));
   });

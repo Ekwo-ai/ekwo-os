@@ -1185,6 +1185,17 @@ itself; the service rule is `taxes.cash_basis`, which the tax engine landed and
 cash-basis VAT gives behaviour to. So France declares `delivery_date` and its service taxes
 will say the rest themselves.
 
+*Amended 16 September 2026.* The decision holds — a rule that varies by tax is
+still a property of the tax — but the vocabulary was one word short of saying a
+rule that varies by *nothing*. Most of Europe puts the fait générateur at the
+supply and derogates to the invoice, which is one rule and not two, and three
+packs had declared the derogation alone. `invoice_if_issued` and
+`earliest_of_delivery_or_payment` join the three original values, and
+`tax_point_of()` becomes the column's only reader — `post_document()` dates a
+tax by them and `vat_return()` files it by them, so the word is no longer a
+comment. `docs/international.md` has the texts and what each one actually
+says.
+
 **`party_scheme` and `vat_scheme` are both there because they are not the same
 identifier.** A company is addressed on the network by its registration
 number — ISO 6523 `0208` in Belgium, `0009` in France — and taxed on its VAT
@@ -3258,3 +3269,2602 @@ before a deadline. A gate on any of that fails a contributor's pull request for
 something nobody in it did, and the cheapest way to make it green is to delete
 the link, which is the opposite of what the register is for. It reports a
 reading. A maintainer decides.
+
+## A price that already holds its tax (15 September 2026)
+
+`taxes.price_include` had been a column since the tax engine landed and was
+read by nothing. A retail price in the United Kingdom, in Australia and in
+almost anything sold to a consumer is quoted with the tax already in it, and a
+line carrying such a tax was booked with the tax added *on top* of the price
+the customer had paid.
+
+**The group is the unit of the conversion, not the line.** For every tax group
+of a document quoted gross, the tax is `round(gross - gross / (1 + rate/100))`
+— rounded once, at the decimals of the document's currency, by the method of
+its country — and the base is the gross less that tax. EN 16931 BR-CO-14 asks
+for exactly that one rounding per group, and HMRC's VAT Notice 700 admits it to
+a retailer in §§ 17.5 and 17.6 as the invoice-by-invoice method, beside a
+line-by-line one. Nothing here invents a word for the choice between them:
+`rounding_method` is the *arithmetic* of a country and not the unit the
+arithmetic is applied to, and a pack declaring "per line" would be declaring an
+invoice that fails validation. Where a country really does let a trader choose,
+that is a gap, and `docs/international.md` is where it is written down.
+
+**The base is subtracted, never computed.** `gross x 100 / (100 + rate)`
+rounded on its own, beside a tax rounded on its own, misses the gross by a unit
+about one price in fifty at 20 %. Subtracting makes `base + tax = gross` true by
+construction, which is the one thing a customer holding the receipt can check.
+
+**And the tax is never re-derived from the base.** The breakdown used to
+compute every group's tax as `round(base x rate / 100)`. Applied to a base that
+came out of the subtraction, that is not always the tax that produced it: 99,99
+at 20 % gives a tax of 16,67 and a base of 83,32, and 83,32 at 20 % rounds back
+to 16,66 — a total of 99,98 against a price of 99,99. So `document_tax_summary`
+computes an inclusive group's tax from the gross it was quoted at, and every
+other group exactly as before. No figure of any pack that prices without the
+tax moves by a cent.
+
+**The base is shared over the lines, and the last one takes the remainder.**
+The same technique `post_document` uses to share a `tax_on_base` over the
+accounts it lands on, for the same reason: the shares have to add up to the
+figure that was rounded once. `document_lines.amount_untaxed` stays the truth
+and stays derived — its `before` trigger writes what one line on its own comes
+to, which is the whole answer when the group has one line, and the `after`
+trigger that refreshes the document's totals replaces it with the line's share.
+
+**The line keeps the gross and the flag.** `amount_incl_tax` is the price as it
+was quoted, which is the only figure a retailer recognises and the only one the
+conversion can be redone from; `unit_price_includes_tax` is a snapshot taken
+from the tax while the document is a draft and frozen when it is posted, the
+rule BT-151 and BT-152 already follow. A pack upgrade that turns the flag on a
+tax must not rewrite an invoice somebody has already sent.
+
+**`unit_price` is the price as it was keyed, and that is no longer BT-146.**
+`document_line_items` publishes the flag and the gross beside the base, and
+`shared_document()` carries both into the payload behind a link — it names every
+field of a line by hand, so a column added to the view does not reach it on its
+own, and a customer opening a retail invoice would otherwise have been shown a
+gross price beside a net line amount with nothing saying which is which. Neither
+publishes the net unit price. The honest definition is
+the base divided by the quantity — the only one that keeps BR-CO-10, quantity
+times BT-146 equals BT-131, true after the group's remainder has landed on a
+line — and writing it needs the precision of the *price* column rather than the
+currency's, which `round_amount` does not express and a cast would smuggle past
+the one place decimals are decided. It is a gap, and `docs/international.md`
+carries it rather than an exception to the rounding rule.
+
+**Three refusals, each as early as it can be made.** A fixed-amount tax cannot
+price with the tax in it, because there is no rate to divide by: a check
+constraint on `taxes` and on `tax_templates`, and `ekwo pack check` before a
+seed is written. A line whose price includes a tax has to name one: a check
+constraint. And a tax group cannot be half inclusive — the only way to build
+one is to change the tax between two line writes of the same draft —
+`mixed_price_include` says so where it happens rather than letting the document
+be posted with a gross line added to a net one.
+
+**What still rounds at two decimals.** `document_lines.amount_untaxed` and
+`amount_incl_tax` are `numeric(16, 2)` like every other monetary column here,
+so a currency with three decimals loses the third on the way into the column
+rather than in the rule. That gap is named above and in
+`tests/currency_rounding.test.ts`, and it is why the three-decimal case is
+asserted on the figure the view computes and not on the one the column stores.
+## A posting names its boxes, and a list is not a table (15 September 2026)
+
+A tax carries one `base` posting per kind of document. That rule is what keeps
+a taxable amount from having two definitions, and it is not what is being
+relaxed here. What it could not express is a form that prints one amount in
+boxes **no total can derive from one another** — and two of the four packs
+that carry a periodic return meet it.
+
+Form KMD reports an intra-Community acquisition of goods in box 6.1, in box 6
+around it and in box 1 around that. Box 6 looks like a sum of what is printed
+under it, and it is not: the rest of box 6 is services received from another
+Member State, which the form never prints on its own. The British VAT Return
+does the same thing sideways, with the value of a service received from a
+supplier established abroad in box 6, which is outputs, and in box 7, which is
+inputs. Until now each pack invented a leaf box, marked it `hidden`, posted
+there and rebuilt every printed parent as a total: six such boxes on a form of
+thirty, three on a form of nine. Both were exact and both were a reader's
+problem.
+
+**A posting names a list of boxes.** `box` in `taxes.json` takes a string or a
+list of strings; the amount is written to each, with the same `box_factor`,
+because a form that prints one figure in three places prints the same figure in
+all three. Nine hidden boxes disappeared and not one golden figure moved.
+
+**A `text[]` beside the column, not a junction table, and not a posting per
+box.** Three shapes were on the table.
+
+*A posting per box* was rejected first, and it is the one worth being explicit
+about, because it looks like the tidy answer. Two base postings are two
+definitions of one taxable amount, kept in step by whoever reads the pack next;
+`ekwo pack check` refuses them, and that refusal is load-bearing. A variant —
+a new posting type that reports to a box and writes nothing to the ledger —
+would have been worse in a quieter way: it puts a row on the *ledger* side of
+the format for something that is not a ledger fact at all.
+
+*A junction table* is the answer a schema review gives, and it is the right one
+when the rows have an identity. These do not. A posting has no identity of its
+own in this schema — `pack upgrade` compares the postings of a tax as one
+object and replaces them all when anything differs, because "this tax now books
+its non-deductible share somewhere else" is one fact and not four — so the rows
+of a junction would carry a primary key nothing ever names. Against that: a
+table is a policy, a grant, an inventory entry, a cascade and a second order to
+keep, for a list that is one element long in four hundred and forty of the four
+hundred and sixty-six postings of these five packs that name a box at all.
+
+*An array* is what was built. `vat_return()` reads it with one `unnest` where a
+junction is a join, and the expansion stays where it belongs — in the return,
+not in the books. The ledger still gets one line per posting, carrying one box.
+
+**`declaration_box` stays, and stays first.** It is what a posting is known by,
+what a line is read back on, and what every reader written before this change
+still sees. A check constraint holds `declaration_boxes[1] = declaration_box`,
+and a trigger fills whichever of the two a writer did not give — read from what
+*moved*, never from what is null, because a trigger that took `declaration_box
+is null` to mean "say nothing" would put the box back from the list and quietly
+undo a write that cleared it.
+
+**Duplicates are refused by `ekwo pack check` and not by the database.** A
+check constraint cannot hold a subquery, and there is no way to say "this array
+has no repeated element" without one. A duplicate changes no figure that a
+constraint could protect — `unnest` would add the same line to the same box
+twice, which is a defect in the pack — so it is refused at the moment somebody
+is writing the pack, which is where every other pack rule is refused.
+
+**What a `hidden` box means now.** One thing: an intermediate `total` the form
+works out inside a formula and does not print, which is what Belgium's two are.
+A hidden box a posting writes into was the workaround, and a test refuses one.
+
+## A box may be a rate of a box, and print order is not evaluation order (16 September 2026)
+
+Two changes that turned out to be one. Both come from the sixth pack, and
+neither was made for it.
+
+**A rate is not an expression.** A computed box was a list of boxes to add and
+a list to subtract, and that covered five packs because a European return
+reports a tax the ledger already worked out, document by document. CDTFA-401-A
+does not: it works the taxable total out for the period, on line 12, and then
+says *multiply line 12 by 0.06*, *by 0.0025*, *by 0.01*. There is nothing to
+add up. The pack's answer until now was to apportion — one `tax` posting per
+line of the form, each carrying the share its rate is of the combined rate, the
+last one taking the remainder — which agreed with the form to the cent in all
+three quarters of the golden year and was never promised to, because the form
+multiplies once and the apportionment shares a figure that was rounded document
+by document.
+
+The field is `rate`, a percentage, with `rate_of`, the one box it applies to,
+resolved exactly as a `plus` reference is. Two named fields, closed vocabulary,
+nothing to parse, nothing a pack could execute; a reviewer reads *six per cent
+of line 12* in the diff and can check it against the instruction. The
+alternative was an expression language, which is what `20260912090407` refused
+and what this deliberately does not reopen: a rate is the **one** arithmetic a
+declaration form actually writes out in words, and a second shape for the one
+case that exists is not the first step of a syntax.
+
+Three rules keep it that way, all of them constraints: only a computed box
+carries a rate, a box is a list or a rate and never both, and the percentage and
+the box it applies to are declared together. `evaluate_totals()` — still the
+one evaluator, still shared with the financial statements — treats the rate's
+reference exactly as it treats a member of a plus list, so a rate is worked out
+when its source has been and a cycle is `formula_cycle` rather than a loop.
+
+**And a total is a `total`, whatever the form calls the line.** Line 13 prints
+as a tax and the pack declares it `kind: "total"`, which moved three keys of the
+American golden from `13:tax` to `13:total` and not one cent of any figure.
+`kind` says how a box gets its amount — the ledger fills a `base` or a `tax`,
+the form works out a `total` — and letting a `tax` box carry a formula would
+have made `kind` mean two things at once and put two sources on one key. What
+the line *is* on the form is said by its name and its legal reference.
+
+**Print order and evaluation order stop being one field.** `sequence` had meant
+both since the boxes became data, and three packs paid for it: every eCDF
+subtotal prints above what it adds, Estonia's box 1 escaped by luck, and
+CDTFA-401-A prints line 11 on page one and computes it from page three. The
+evaluation half had already been fiction since `20260912104719`, when
+`evaluate_totals()` started resolving by dependency; what held the conflation in
+place was one rule in `ekwo pack check` refusing a total that named a total
+declared after it, which forced a pack to spend its only ordering field on the
+evaluator. That rule is gone, replaced by the cycle check the statements have
+always had, which names the boxes. `print_sequence` is optional on a box and
+means `sequence` where it is left out, so no pack written before this changes,
+and `vat_return()` answers the resolved value beside `sequence` so a renderer
+orders by one column and never two.
+
+The two changes are one because the first forces the second: a box worked out
+from another box carries a dependency the administration's print order knows
+nothing about, and a pack cannot be asked which of the two it would rather
+write down.
+## A tax follows the territory of the parties (16 September 2026)
+
+Two packs stopped at the same wall from opposite sides. `packs/gb/` cannot
+carry the Northern Ireland taxes, because a company in Manchester would be
+offered them; `packs/us/` offers a Californian company the New York and the
+Oregon codes, because `jurisdiction` is a label on the tax that nothing reads.
+Both notes in [`international.md`](international.md) proposed the same fix in
+the same words — *let a tax name a territory, and let a party record the one it
+is in* — and the American one added the half the British one did not need: a
+sale is taxed where the goods are delivered, so the tax follows the **buyer**
+and not only the seller.
+
+The fix is two questions, and the second is worthless without a good answer to
+the first.
+
+### Where a party's territory comes from
+
+A company and a contact each carry a country. A country is not a territory: the
+tax that matters here is levied by California and not by the United States, and
+Northern Ireland is not spelled `GB-NI` in any register the Union uses — it is
+`XI`, a code of the Union's own systems with no parent in ISO 3166-2 at all. So
+a territory cannot be composed out of the two columns that exist.
+
+It was tried. `companies.region` holds `CA`, `fiscal_country` holds `US`, and
+`fiscal_country || '-' || region` reaches `US-CA` and never reaches `XI`. A
+rule with one exception written into it is a rule that will collect the second
+exception silently. And `region` is documented as ISO 3166-2 *without* the
+prefix, for a Canadian pack that will want to ask "which province" as a
+question with a short list of answers — which is a different question from
+"which body of tax law is this party under".
+
+**So a territory is a column of its own, and it is a key of `territories`.**
+Four of them:
+
+| Column | Says |
+|---|---|
+| `companies.territory_code` | where this company is established for tax |
+| `contacts.territory_code` | where this party is |
+| `documents.supply_territory_code` | where the supply takes place |
+| `taxes.applies_*_territory` | where each party has to be for this tax to apply |
+
+All four are foreign keys to `territories(code)`, which is what makes them
+reviewable: a code nobody can look up is a string, and a string is what
+`jurisdiction` has been since the day it was added.
+
+**Null is the ordinary case and it resolves rather than refuses.** A Belgian
+company will never set `territory_code`, and asking every installation in
+Europe to answer a question the common system does not pose would be the
+country-default mistake with the sign flipped. So each of the three party
+territories has a ladder, and every rung of it is a fact somebody already
+recorded:
+
+- **The seller and the buyer** are the company on one side and the contact on
+  the other, decided by the kind of document and never by the row: on a sale
+  the company is the seller, on a purchase it is the buyer. Each resolves to
+  its own `territory_code`, and failing that to its country —
+  `companies.fiscal_country`, which is the country whose rules the company
+  files under, and `contacts.country`.
+- **The supply** is `documents.supply_territory_code`, failing that
+  `documents.delivery_country` — BG-15 of EN 16931, which `documents` has
+  carried since the day it existed and which is exactly the statement that the
+  place of delivery is not the billing address — and failing that the
+  **buyer's** territory, because a supply nobody said anything else about is
+  delivered to the person who bought it.
+
+The last rung is the one worth arguing about, and the argument is that the
+alternative is worse. A supply with no delivery address is not an unknown
+place; it is the ordinary case of a seller and a buyer in one room, and
+refusing to post it would refuse every invoice in Belgium the day a pack there
+conditioned one tax on a territory. What is refused is the case where the
+ladder runs out — a contact with no country and no territory, on a document
+with no delivery address, carrying a tax that asks where the supply was. Then
+`post_document()` raises `no_party_territory` and names the party, the tax and
+the column that would answer, which is the rule `CONTRIBUTING.md` states as
+*raise, do not warn*.
+
+### What a tax may say about it
+
+`applies_when` on a tax, and it is a closed vocabulary in the same sense the
+mentions' `applies_when` is one — three keys, each naming one territory:
+
+```json
+{ "code": "US-CA-S-725", "rate": 7.25, "scope": "sale",
+  "applies_when": { "seller_in": "US-CA", "supply_in": "US-CA" } }
+```
+
+Every key present has to hold. There is no operator, no negation, no
+disjunction and no nesting: what a pack can say is that a party is in a place,
+and the only arithmetic anywhere near it is the one `valid_from` and `valid_to`
+already do with dates. A reviewer reads two lines and knows which sales the
+code is for.
+
+**A condition is satisfied by the territory named and by every territory inside
+it.** `territories.parent_code` already draws that tree — `XI` hangs off `GB`,
+`ES-CE` off `ES` — so `seller_in: "GB"` covers a seller in Northern Ireland and
+`seller_in: "XI"` does not cover a seller in Great Britain. This is what lets
+one country's pack carry two sets of taxes: the British VAT codes say nothing
+and reach everybody, the Northern Irish ones say `XI` and reach only a company
+that recorded it.
+
+Three shapes were weighed against it.
+
+*A list of conditions* — `[{party, territory}, …]` — reads better in a schema
+and is the beginning of an expression language. The moment a list exists,
+somebody wants two entries for one party, and two entries for one party is a
+disjunction with no word for itself. Three keys cannot grow an operator without
+a migration and a review, which is the property the format is built on.
+
+*Reusing `jurisdiction`* was tempting, because for the Californian sales tax
+the levying state and the required place of supply are the same string.
+They are not the same fact. `jurisdiction` says who levies the tax and belongs
+on the invoice and in a report; `applies_when` says when the tax can be
+reached, and for `US-P-0` — a purchase not subject to sales tax — the two
+would have to disagree. They stay separate, and `ekwo pack check` now asks that
+a `jurisdiction`, where a pack gives one, name a territory the table carries —
+the field has been a free string with no reader since it was added, which is
+exactly the state a second pack spelling the same state differently would never
+be caught in.
+
+*A rule table* — `tax_rule_templates` and a `suggest_tax()` — is phase 1 and is
+still phase 1. It answers a different question: *which tax should this line
+carry*. The core deliberately chooses no tax for anyone, in any country, and
+nothing here changes that. What the core may do is refuse a tax that cannot
+apply, which is the difference between an assistant and an authority.
+
+### What the engine does with it
+
+`post_document()` resolves the three party territories once per document and
+refuses a tax whose conditions the document contradicts:
+
+```
+tax_territory_mismatch: tax US-CA-S-725 applies where the supply is in US-CA;
+on this document the supply is in US-NY
+```
+
+It does not choose, substitute or suggest. A bookkeeper who picks the
+California code on a delivery to New York is told, by name, on the document,
+before anything reaches the ledger — which is the first time in this repository
+that a tax code and a place have ever been compared.
+
+`ekwo pack check` reads the same conditions from the other end, and one of its
+refusals moved because of them. Whether the VATEX list of EN 16931 reaches a
+tax was a question about the pack's country; it is now a question about the
+territory the tax applies in, where the tax names one. That is what makes
+Northern Ireland expressible: `eu_vat_scope` of `XI` is `goods`, so a tax
+applying in `XI` is inside the common system exactly where its treatment is a
+supply or an acquisition of **goods**, and outside it everywhere else — which
+is the Protocol on Ireland/Northern Ireland written as a check rather than as a
+paragraph of a README.
+
+### What this does not reach
+
+**The New York tax still joins no box.** It can now be attached to `US-NY` and
+refused on a Californian delivery, which is what was asked of this change. It
+cannot be *declared*, because `packs/us/` carries one declaration form and that
+form is California's. A list of forms per pack, each naming the territory it
+belongs to, is the fix `international.md` proposes and it is not this one.
+
+**A supply outside the taxing territory has no word of its own.** `applies_when`
+names a place a party is in and cannot name a place a party is *not* in, which
+is what `US-CA-S-SHIPPED` — a sale the contract requires to be shipped out of
+California — would need. A fourth key, `supply_outside`, is the obvious shape
+and is deliberately not added: nothing in this repository would read it yet,
+and the gap it belongs to is the missing `treatment`, not the missing
+condition. What this change gives that work is its anchor — a tax now names the
+territory that levies it and a document now names the territory of the supply,
+so a treatment that says "outside the taxing territory" finally has two things
+to be checked against.
+
+**Nexus and resale certificates are untouched**, as `international.md` says
+they must be: whether a seller must collect in a state is a running total
+nobody keeps here, and whether a buyer handed over a certificate is a document
+nobody files here. A territory condition says which taxes *exist* for a party.
+It does not say which one is right.
+
+## Recognising a counterparty, and what teaches it (17 September 2026)
+
+The schema could record that a statement line belongs to a contact and had
+nowhere to record **how that was known**, so the same decision was made again
+every month. `contact_patterns` is that memory, and three choices in it are
+worth writing down.
+
+**The vocabulary is closed and the values are learned.** Four kinds — an
+account, a spelling of a name, a word of the description, a band of amounts —
+and a fifth needs a migration. Nothing stored is executed: no regular
+expression, no expression language, no threshold written beside a rule. This is
+the same invariant the packs are held to, applied to something a *user*
+produces rather than a contributor, which is the case where it matters most.
+
+**Ambiguity replaces a stop list.** Comparing two names needs a way to ignore
+`sarl`, `bvba`, `gmbh`, `llc` — and such a list is country data, which the core
+does not carry. So the rule is the count instead: `suggest_contacts()` says how
+many contacts each piece of evidence reached, and evidence that reached two
+contacts is evidence of nothing. It is strictly better than the list it
+replaces, because it also catches the words a list forgets — a town, a trade,
+the name of a group — and it adapts to the company rather than to the language.
+
+**Being wrong has to cost something.** `confirm_contact()` charges a use
+without a success to every motif that named somebody else. A learning system
+that only records its successes is a system that never unlearns: after enough
+months every motif is certain and the earliest mistake outranks the correction.
+The confidence is the two counters and nothing else — `(success + 1) / (usage +
+2)`, the smoothing making an unused motif worth half rather than worth
+everything after one lucky match.
+
+**And the numbers are data.** Five of them, in `matching_settings`, per
+company, null meaning the shipped answer. Each is a number the production this
+design comes from carries as a literal, moved to the one place a company can
+disagree without forking. A tolerance is expressed in **units of the currency's smallest
+denomination** rather than in cents, because `round_amount` and
+`currencies.decimal_places` already say that a cent is a fact about the euro.
+
+**What this does not do, and must not.** Knowing who the money came from is not
+knowing what it pays. `confirm_contact()` writes a contact, never a matching,
+never a paid invoice — the distinction between `matched` and `validated`, and
+the one whose loss marks an invoice paid that nobody paid.
+Reconciling a payment against a document is the next piece of work.
+
+## Settling a statement line: what is applied and what is only offered (17 September 2026)
+
+Recognising a counterparty misfiles a line when it is wrong. Settling misstates
+a debt: it marks an invoice paid that nobody paid, and the error is invisible
+because the books balance either way. So the two halves of the matching are
+held to different standards, and the line between them is written here.
+
+**Applied: identification.** A reference the statement carries, or an amount
+that matches exactly one open item inside the company's own window and
+tolerance. In both cases a single piece of evidence points at a single thing.
+
+**Offered, never applied: resemblance.** A subset of invoices that adds up to
+the transaction is the ordinary shape of a customer paying a month at once, and
+the greedy oldest-first walk finds it — deterministically, the same answer every
+time. What it cannot do is prove that no other subset also adds up. The
+production this design comes from applies combinations at two units of
+tolerance and is right often enough to make this tempting; the reason not to is
+that a wrong combination is the one mistake the ledger cannot show you
+afterwards. Both sides balance, both documents are marked paid, and the
+discovery happens months later when a customer disputes an invoice that was
+never actually settled.
+
+**Never automatic: a partial payment.** Less money than is open is a deposit, a
+discount, a short payment or an error — four accounting treatments, and nothing
+in the books distinguishes them. The machine proposes and a person decides,
+which is the same rule as the tax the core refuses to choose for anybody.
+
+**Never a settlement at all: an internal transfer.** Money moving between two
+accounts of the same company settles nothing, and left unnamed it gets matched
+to whatever invoice happens to carry the same amount. It is recognised by the
+counterparty account being one of the company's own, named, and left.
+
+**And a statement line becomes a payment, not an entry.** The alternative — a
+function writing the ledger directly from a statement — would be a second way
+of booking money, with its own idea of the counterpart account, the journal and
+the currency. `post_payment()` and `reconcile()` already do the accounting;
+this only decides what to hand them.
+
+## Where the second incident is kept, and a comment that named one file (17 September 2026)
+
+`20260917090000_a_counterparty_that_learns` says, in its header, that it
+carries **two** incidents of the production this design comes from as tests,
+and that both are in `tests/contact_matching.test.ts`. When it was written only
+one of them was: the name matched on five characters, which made `SARL` equal
+to `SASU`.
+
+The second is now written, and it could not live in that file. It is about the
+pass over a period — a hard-coded upper bound on the date sent a whole year of
+statement lines past the matching in silence — so it belongs beside
+`auto_settle()`, in `tests/statement_settlement.test.ts`, under *nothing is
+skipped in silence*. What it pins is not that the window is a parameter, which
+is necessary and not sufficient, but that **every line inside the window comes
+back with an action and a reason**, even when the answer is that nothing
+matches. Silence is not a possible output.
+
+The migration's comment is not corrected, and that is the rule rather than an
+oversight: a published migration is never edited, including its prose, because
+it has run on databases we do not control and a file that changes after the
+fact is no longer the thing that ran. This entry is where the record is put
+straight.
+
+## A filed declaration is frozen, and a nil one is still a declaration (17 September 2026)
+
+**The figures are kept, not recomputed.** Everything else in this schema is
+derived on demand — a trial balance, an aged balance, a VAT return — and that
+is the right default: one source, no copies to drift. A filed declaration is
+the exception, and the reason is that it has left the building. The
+administration holds a set of figures; the ledger will hold different ones the
+moment anything is posted into the period; and without the freeze the database
+cannot say which were sent. A copy that exists **because the original went
+somewhere else** is not a duplicate of the truth, it is the record of what was
+claimed.
+
+**Box by box, in rows.** A JSON snapshot would have been less code and would
+have made the filed figures the only numbers here nobody can query — no sum, no
+comparison between periods, no join to the form. A box is already an object of
+this schema; a filed box is one too.
+
+**A nil return is a return.** The first version refused to file a declaration
+with no lines, which reads as a sensible guard and is wrong: a period where
+nothing happened still has to be declared in most countries, and the fine is
+for not filing it. What is checked instead is that the figures were *computed*
+— `prepared_at` — which is a different question from whether there are any.
+A test keeps it.
+
+**Frozen by the database.** The trigger refuses a change to the figures of a
+declaration that has gone, rather than a convention that nobody should. This is
+the one property the whole table exists for, so it is not left to discipline.
+
+**A corrective never overwrites.** The filing that went becomes `superseded`
+and the new one points at it. Administrations differ on what a corrective *is*
+— a full replacement, an adjustment on the next period, a threshold below which
+nothing is done — and that is pack data nobody has written yet. What does not
+differ is that the first declaration was really sent.
+
+## A deadline is a rule of the country, and a null is an answer (17 September 2026)
+
+**The date is pack data.** It could have been a function with a `case` on the
+country — twenty lines, no migration, and the exact mistake this repository was
+built to stop making. A deadline is a rule of a country, it changes when that
+country changes it, and it belongs beside the form it applies to, with the
+article that sets it.
+
+**Two shapes, and the third is a gap rather than an operator.** A fixed day of
+the month that follows, or the last day of it, plus an optional number of days
+for an administration that grants an extension. That covers four of the six
+packs. It does not cover France, whose dates are assigned from the taxpayer's
+identification number and legal form — and the answer there is that the pack
+says nothing and the function returns null. A null that means *this country
+does not publish a rule of this shape* is worth more than a date that is right
+for one filer in ten, and it is visible in `upcoming_filings()`, which lists
+the period with no date rather than hiding it.
+
+**The extension is stated where it usually applies, and the exception is
+named.** The United Kingdom's seven days do not reach a business on annual
+accounting or payments on account. The pack carries the seven days, because
+that is the ordinary case, and says the exception in the reference — because
+nothing in this schema records which scheme a company is in, and pretending
+otherwise would make the wrong date look authoritative.
+
+**No working-day shift.** Moving a deadline to the next working day needs a
+calendar of public holidays, which is national, sometimes regional, and
+amended by law. No pack carries one, none should invent one, and a date that
+lands on a Sunday is a visible gap rather than a silent error.
+
+## What a declaration owes, and where it lands (17 September 2026)
+
+**The accounts are roles of the pack.** Where the net of a declared period goes
+is a fact about a chart of accounts, so `tax_payable` and `tax_receivable` sit
+with `rounding` and `retained_earnings`, and a pack that names neither gets a
+refusal that says which role to set. Three packs name them today. Belgium and
+Estonia do not, and the reason is worth keeping: their charts post the taxes
+themselves on the account the role would want, so naming one there means adding
+a control account to a national chart — a change to those packs, made with
+their own goldens, rather than a line of code that assumes it.
+
+**It settles the ledger, not the boxes.** The lines cleared are the ones the
+return read — same window, same tax-point rule — and the figure carried to the
+debt is what those lines sum to, not what the frozen boxes say. The two can
+differ, and `filing_drift()` is the function that says so. An account invented
+here to absorb the difference would hide exactly what the freeze exists to
+show.
+
+**A credit has two outcomes and no default.** Carried forward it is absorbed by
+the next declaration; claimed back it is a receivable somebody is waiting on.
+Administrations ask, some make the answer conditional on an amount, and the
+choice belongs to the company — so `settle_filing()` refuses a credit until it
+is told, and records what it was told.
+
+**The administration is a third party like any other.** Naming it as the
+contact of the settlement is what lets the payment match by itself, and it only
+works if that contact's account is the one the pack names — otherwise the
+payment lands in the payables and the debt stays open for ever. That is checked
+when the entry is written, where the sentence can still name what to change,
+rather than discovered later as a line nobody reconciled.
+
+**A late entry in a settled period is not picked up.** It falls inside the
+window of a declaration that has gone. Its treatment is a corrective, and a
+corrective supersedes the filing and settles the difference — which is D5, and
+is not this.
+
+**No rounding of the debt.** Some administrations claim whole units and carry
+the fraction forward. That is a rule of a country and no pack carries it, so
+nothing here rounds: the debt is the sum of the lines, to the cent.
+
+## Two things the test found (17 September 2026)
+
+**A box is a number and a kind.** `tax_filing_boxes` was keyed on the box
+alone. That is right on a form that prints a base and a tax on separate lines,
+and it is a unique-constraint violation on the French CA3, where line 08 prints
+both — so preparing a French declaration failed outright. The key carries the
+kind now, and so does `filing_drift()`. The lesson is older than this table: a
+key that works in the country you wrote it in is a key you have not tested.
+
+**A pass must not die on one line.** `auto_settle()` called
+`settle_from_statement()`, which refuses an open item that names nobody — a
+payment is made to or by somebody — and the exception walked straight out of
+the pass, rolling back everything already settled and reporting nothing at all.
+The refusal was right; what it did to the run was not. It is caught now,
+reported against its line in the database's own words, and the walk continues.
+The rule it serves is the one written the day before: a report has a row for
+every line of the window, because silence is not an available answer.
+
+## Signalled, not refused — and the lock that has to come last (17 September 2026)
+
+**An entry in a declared period is ordinary.** Invoices arrive late, adjustments
+are made, corrections land. Refusing them would be refusing bookkeeping, and a
+product that refuses bookkeeping gets worked around. What the schema owes is
+that none of it is invisible: `filings_touched_since()` lists the declarations
+that have gone and whose period moved afterwards.
+
+**Listed on the entry, not on the difference.** An entry whose amounts net to
+nothing in every box is still an entry somebody posted into a period that had
+been declared, and it is worth seeing. `filing_drift()` answers the other
+question — how much the figures moved — and the two are kept apart on purpose.
+
+**One test of what concerns a declaration.** A line that names a box, which is
+the same test the tax lock uses. Two readings of "an entry that concerns the
+declaration" would drift apart, and a payroll entry landing in a declared
+quarter is not news. It also leaves the settlement out, which names no box.
+
+**The lock is its own function, and the test is why.** It was a flag on
+`file_filing()` first, which reads well and is wrong: `post_entry()` checks the
+tax lock for every entry it posts, so locking at the moment of filing locks the
+declaration's own settlement out of its period — permanently. The order the
+work actually has is file, hear back, settle, then shut, and
+`lock_filed_period()` refuses while there are still tax accounts to clear
+rather than letting somebody close a door on themselves.
+
+**A corrective settles the difference.** The period was cleared once; clearing
+it again would book the debt twice. `filing_tax_movements()` nets the window
+against the settlement entries of the declarations that came before it on the
+same period, restricted to the accounts the window itself moved — which is what
+leaves out their counterpart line on the debt account. Nothing moved, nothing
+to settle, and the refusal says so.
+
+**What a country does with a correction is not modelled.** A replacement
+return, an adjustment carried on the next period, a threshold below which
+nothing is filed at all: three different mechanisms, none of them universal,
+and the texts have not been read. `supersede_filing()` does the one thing that
+is true everywhere — what was sent stays sent, and the new declaration points
+at it.
+
+## The file a declaration is deposited as (18 September 2026)
+
+**A brick per format, and the first one for a periodic return.** Seven bricks
+existed and none of them wrote the declaration a company actually files. The
+new one is Belgian in what it writes and not in how it is organised: it is
+named after the document — `VATConsignment` — the way `intra-consignment` is,
+and a second country depositing the same shape would name the same brick.
+
+**Its input is the freeze, not a computation.** `generateVatConsignment()`
+takes `tax_filing_boxes` — the figures as they were filed — because what is
+deposited has to be what the declaration says. A brick that recomputed from the
+ledger would drift from the filing it is meant to carry, which is exactly the
+failure D1 exists to prevent.
+
+**One value per grid, and the refusal that says so.** This form gives every
+grid a single figure. A form that prints a base and a tax on one line has no
+representation here, so the same grid twice comes back as a violation rather
+than one of the two being dropped. That is a fact about this file, not a defect
+in the figures — and it is the mirror of the key that was wrong on
+`tax_filing_boxes` yesterday.
+
+**Nothing is invented to satisfy a validator.** The production this design
+comes from defaults an absent telephone number to a made-up one so the schema
+is happy. A made-up number travels to an administration as a number. Here an
+absent field is an absent element, and where the schema turns out to require
+one, the answer is to let the caller supply it.
+
+**The XSD was not read offline**, and the README says so. The structure is the
+one a filing service writes and Intervat accepts; validating an instance
+against the published schema, inside the brick's own tests, is what it needs
+next and is written down rather than implied.
+
+**A form names its file.** `tax_report_templates.file_format` holds the name of
+the brick, not of the country, and null is the ordinary answer: most forms have
+no brick, and filing by hand on a portal is how that is done. The guard that
+refuses a pack naming a format nobody can write belongs with the one owed to
+`bank_statement_formats` and `payment_formats` — one guard over the three.
+
+## A deposit is an event, and a rejection is not a correction (18 September 2026)
+
+**Rejected is a state you send again from.** The schema treated a refusal as an
+end state: `file_filing()` took drafts only, so the sole way out of a rejected
+declaration was `supersede_filing()`. That is wrong in the one way that
+matters — a corrective replaces what an administration holds, and a refused
+declaration is not held by anybody. Now a rejection is answered by sending
+again, and each send is a row.
+
+**Sending is operated; what comes back is not.** The credentials, the
+certificate, the portal session and the person answerable when a return is late
+stay in `ee/`. The deposit number, the acknowledgement, the sentence the
+administration wrote and the file that went are the company's proof that it
+filed, and they live in its own database under the same policies as its books.
+Stopping the subscription must not take the proof with it.
+
+**Two words for the channel, and no list of providers.** `portal` is a person
+uploading the file themselves — complete, free, and how most installations will
+do it. `service` is a transmission somebody holds, whose name is text. A closed
+list of providers in the core is the coupling this project refuses: one
+interface, one provider at a time, and the core never knows which.
+
+**The answer is written on the send it answers.** A declaration sent three
+times has three references and up to three refusals, and reading the last one
+off the declaration would lose the first two. The state on `tax_filings` stays
+the current one, because that is the question everybody asks; the history is
+the deposits.
+
+**Reopening is safe because the sends are kept.** `reopen_filing()` empties
+`filed_at` and the reference — the schema's own rule that a draft carries no
+filing date — and nothing is lost, because the refused send is a row. Archiving
+the file that went is what makes it lossless; the core cannot impose that, so
+it makes it possible, names the column, and says so.
+
+## How far a pack got is the assertion (18 September 2026)
+
+**A test that measures instead of failing.** Six packs declare a form. One
+names a file a brick can write, three name the account a return settles to,
+none does both. A test that required the whole chain would be red for every
+pack; a test that checked only what each pack happens to do would prove
+nothing about the repository. So each pack walks as far as it can, the steps it
+cannot take are skipped **by reading the pack** and not by naming it, and the
+last block refuses a checkout where nobody can do each of the three.
+
+**The number is printed.** `be: freezes, writes a file, no settlement` is worth
+more in a CI log than a green tick, because it is what changes when somebody
+adds a brick or a role — and it is the honest answer to "does this country
+file?".
+
+**One reading, two readers.** `filingReadiness()` answers five questions from
+the pack, and both `ekwo pack list` and the end-to-end test read it. It holds
+no list of formats on purpose: whether a brick exists is proved by writing the
+file, and a list in the CLI would be a second place a country model lives.
+
+## Reading the schema, and what it cost not to (18 September 2026)
+
+**A production that files is evidence, not proof.** The first version of the
+Belgian return brick reproduced the structure of a service that really deposits
+on Intervat, and its README said plainly that the XSD had not been read. Both
+statements were true, and the brick was still wrong four times: a nil return
+was invalid, a required element was optional, negative amounts went through,
+and any two digits passed for a grid. The production never hit them because it
+never filed a nil return, always sent the element, and never had a negative
+grid. **What a working system does not do is not visible in what it does.**
+
+**The schemas are fixtures, not dependencies.** Five files, unmodified, under
+the brick's `test/xsd/` with where each came from and when. The package ships
+none of them and reads none at runtime; `xmllint-wasm` is a development
+dependency, so validation runs on a laptop and in the CI with no network and no
+system tool, and the published package still depends on nothing.
+
+**A violation is something the schema would have refused.** The test puts each
+one back into the file and watches validation fail. That is the line between a
+rule of the format and an opinion of the package, and it keeps the list honest.
+
+**The nil return is a choice the schema forces and does not make.** One
+`Amount` is required and no grid is named. Zero on the grid that carries what
+is owed says exactly what a nil return means; it is exported as `NIL_GRID` and
+described as ours.
+
+## Two accounts beneath 411 and 451 (18 September 2026)
+
+**Apart from the accounts the taxes post to.** The Belgian pack books collected
+VAT on 451000 and deductible VAT on 411000. Settling a period into either would
+net it against itself, which `settle_filing()` refuses by name. So the debt and
+the claim get sub-accounts of their own, reconcilable, because a payment is
+matched against them.
+
+**Two and not one.** A control account carrying both signs is what the United
+Kingdom pack does, because that chart has one. The PCMN keeps a claim on the
+State among the assets and a debt to it among the liabilities, so a credit on a
+451 would sit on the wrong side of a Belgian balance sheet.
+
+**Named after what they hold.** Not after the *compte courant* — the
+administration replaced it with a provisions account, and an account named
+after an instrument is wrong the day the instrument changes.
+
+**The ratchet.** `tests/filing_golden.test.ts` now refuses a checkout where no
+country freezes, writes its file and settles. One country doing all three is
+worth more than six doing two, and the test is what keeps it that way.
+
+## One file for every client of a firm (18 September 2026)
+
+**The shape was in the schema all along.** `VATDeclaration` repeats,
+`VATDeclarationsNbr` counts them, and `VATConsignment` opens on an optional
+`Representative`. The format was drawn so that a firm deposits the returns of
+all its clients at once, in its own name; the brick wrote one return and nobody
+filing it. A firm holding several companies in one instance is the normal case
+of this project, so its file has to be too.
+
+**Entirely or not at all.** The block is optional and every field inside it is
+required — identifier, name, street, post code, city, country, e-mail,
+telephone. A declarant's missing telephone is left out, because the schema lets
+it be. A representative's is refused by exception: completing it would send an
+invented fact to an administration, and dropping the block would send the file
+under another authority than the one that was meant. Neither is a violation to
+report next to a valid file; there is no valid file.
+
+**The schema's states, not ISO's.** The identifier is issued by a
+`MSCountryCode`, a closed list where Greece is `EL` and `XI` and `XU` exist.
+It is exported as `ISSUERS` and compared with the schema file code for code,
+like the grids.
+
+**The sequence number is the only thing that tells two returns apart** in one
+file, so two under one number are refused, and a violation carries the number
+of the return it is in — only when there are several, where it says something.
+
+**Not checked, and written.** Whether the representative holds a mandate for
+each declarant is a fact of the administration's records. The mandate as an
+object of the ledger — who may file for whom, with which administration, from
+when to when — is a table this project does not have yet.
+
+## A client is a guest who reads and hands over (18 September 2026)
+
+**The case.** A firm keeps the books of N companies in one installation — the
+normal case this schema was shaped for — and the person who runs one of them is
+invited into it. They read, they hand pieces over, and they never write a line.
+`viewer` could not hand anything over; `accountant` can draft an invoice.
+
+**It was not only data.** The brief was "the capabilities exist, a preset is a
+row". They did not quite: a piece is a row of `attachments`, and the one policy
+that admitted an insert tested `documents.write` — the capability whose
+description reads *create and change draft documents, their lines and their
+attachments*. Granting it to a client to let them drop a receipt would have let
+them write the purchase invoice the firm is paid to write. So one capability
+was added, `documents.deposit`, and it is as narrow as the act:
+
+- **Insert only.** No update and no delete ride on it. What was handed over is
+  the firm's to file, to move onto the document it becomes, or to discard, and
+  all three are `documents.write`.
+- **On the company, and nowhere else.** `attachments` is polymorphic and
+  nothing checks that `entity_id` exists. A deposit that could name any row
+  could sit on a `tax_filing`, beside the acknowledgement the administration
+  sent, and be read as one. `entity_type = 'company'` with `entity_id` equal to
+  the company is the one target every depositor can name without reading
+  anything, and a file sitting on the company is what an in-tray is. No
+  `inbox` table: it would have been `attachments` again with fewer columns.
+- **Signed.** `uploaded_by` defaults to `auth.uid()` and the policy refuses a
+  deposit that says anybody else, or nobody. It was a free column before.
+
+**Reading back.** `insert … returning` is checked against the SELECT policies.
+A client holds `documents.read`, so theirs passes; a scanner key granted
+`documents.deposit` alone would have been refused a row it may write. A second
+SELECT policy — own deposits, for a holder of the capability — covers it, and
+it reads no table, so it cannot recurse the way a self-referencing SELECT
+policy does.
+
+**What the preset holds: what `viewer` holds, plus the deposit.** Copied from
+`role_capabilities` rather than listed again, so the two cannot drift at the
+day of the migration. The ledger is in it on purpose. The principle every
+product in this market ends on is that the client owns the books and the
+accountant is the guest, even when the installation is the accountant's; a
+preset that hid a company's entries from the person answerable for them would
+describe another relationship. A firm that wants less revokes per member.
+`settings.read`, `contacts.read` and `products.read` are in it because a
+document without its contact and a ledger without its chart are not readable.
+
+**`owner` and `accountant` hold `documents.deposit` too.** They could already
+do the act through `documents.write`. Naming it on them means an interface asks
+one question — may this person drop a file here — and a company that revokes
+`documents.write` from somebody does not silently take the in-tray away.
+
+**Modules.** `assets` and `budgets` each gained a migration that gives their
+`.read` to `client`. The label is read from `pg_enum` instead of written as a
+literal, because a module can be applied on a socle that predates the preset,
+where the literal does not parse; there it inserts nothing, and the socle's
+migration copies the row from `viewer` the day it arrives. A module's
+`requires_socle_min` is one value and every migration of the module has to sort
+after it, so raising it was not available.
+
+**No approval.** The brief allowed an approval "if the socle already has one
+that is not a write". It does not: `tax_filings.state = 'ready'` is reached
+through `filings.write`. An approval a client can give is its own act with its own capability, and it
+belongs with the separation between preparing and filing, not here.
+
+**What the test found.** `tests/client_preset.test.ts` sweeps the catalogue
+rather than a list: every writable table, every callable volatile function,
+the database fingerprinted before and after. Row level security held
+everywhere — no table let a client write, and no table or function showed them
+the other company. Two `SECURITY DEFINER` functions did not check their caller
+and are fixed in `20260918114322`: `catch_up_journal_sequence()` moved the
+counter of any journal for anybody signed in, and `touch_api_key()` stamped any
+key as used. Neither needed the `client` preset to be reached; the preset is
+what made somebody walk every door.
+
+**Left as it is, and written down.**
+
+- *Eleven functions answer a guest without raising.* `record_filing_outcome()`,
+  `reopen_filing()`, `unreconcile()`, `auto_settle()`, `confirm_contact()`,
+  `settle_cash_basis_tax()`, `pin_referenced_accounts()`, the three
+  `documents_refresh_*` and `assets.run_depreciation()` run an update that row
+  level security empties, and return. Nothing moves — the test asserts it — but
+  a caller is told nothing, where `post_document()` says `unknown_document`.
+  The list is frozen in the test so it cannot grow unnoticed.
+- *The proof of a filing is read through `documents.read`, not
+  `filings.read`,* because it is an attachment. A client holds both. A member
+  granted `filings.read` alone reads the deposit and not its two files, and
+  anybody with `documents.write` can delete them; `on delete set null` keeps
+  the deposit row. Attachments of a `tax_filing` should follow the filing's
+  capabilities.
+- *A guest reads a little of the firm.* `instance` and `instance_admins` are
+  readable by any member of any company, and `audit_log` by any member of the
+  company it is about — so a client sees the firm's name, the user ids of its
+  administrators, and which user id posted what in their own books. Nothing of
+  another company. It is what a client of a firm would expect to know; it is
+  written here because nobody had decided it.
+- *There is no MCP tool and no CLI command that deposits.* The policy is the
+  floor; uploading the bytes to storage and inserting the row is the
+  application's, and the storage bucket needs a policy that mirrors this one.
+- *A deposit cannot be withdrawn by its author.* Deliberate for now: the firm
+  may already have booked from it.
+
+## The output contract of the command line (18 September 2026)
+
+The first card of the epic that gives the CLI the verbs the MCP server has.
+It adds no verb. It decides what every command answers, so the verbs that
+follow are usable by a caller that has a shell and nothing else.
+
+**One document, one shape, whatever happened.** Under `--json` the standard
+output is a single JSON document — `ok`, `command`, `exitCode`, `data`,
+`warnings`, `error` — on success, on a finding and on a refusal alike, and the
+prose moves to the standard error. `status`, `doctor`, `pack status` and
+`pack upgrade` used to print their report bare; it is now under `data`. That
+breaks a script that read them, at 0.3, once, in exchange for a caller never
+having to know which command it is parsing before it knows whether it worked.
+
+**`--json` is accepted by the parser, not listed by each command.** A command
+added next year answers in JSON because it runs under `execute()`, not because
+somebody remembered a flag. The test reads the list of commands from the CLI
+and fails when one has no case.
+
+**Exit code 3 is decided by the SQLSTATE, never by the wording.** `P0001` and
+`P0002` (a raise of the schema's own), `42501` (a capability, a policy),
+`55006` (a lock, a closed year) and class `23` (a constraint) are the database
+declining. Anything else from Postgres, and anything that did not come from
+Postgres, is 1. A message of the CLI's own that starts like a refusal —
+`module_not_migrated:` — keeps its name in the document and is not promoted to
+3: the books were never asked.
+
+**Exit code 1 keeps its second meaning.** `doctor`, `status`, `pack check`,
+`pack status` and `pack upgrade` already ended on 1 when they found something,
+and CI jobs are built on that. Rather than spend a fifth code, a finding is 1
+with `data` and no `error`, and a failure is 1 with an `error`. A caller that
+needs to tell them apart reads one field.
+
+**What a refusal is called is read in one place, and that place moved.**
+`socleCode()` lived in the MCP server. The CLI needs the same reading, so it
+moved to `@ekwo-ai/core` beside `isRefusalState()`, and the MCP server
+re-exports it under the name it always had. This makes the core a runtime
+dependency of the CLI, which amends "one runtime dependency, the Postgres
+driver" above to *one from outside this repository*. The argument was about
+who can read a secret: the core is published by the same hands as the CLI, and
+a test now refuses a core that depends on anything which is not ours. The
+verbs to come need the access layer shared the same way, so the question was
+going to be answered in this epic; it is answered here on three lines of code
+rather than on three thousand. The build order says so too: the root
+`workspaces` names `packages/core` before `packages/*`.
+
+**A prompt cannot block, by construction.** Each command already refused to ask
+off a terminal. Now `--json` counts as "nobody to ask", and the prompt
+functions themselves stop with exit code 2 when reached with no terminal — for
+the day a command forgets.
+
+**Bad arguments in `init` are exit code 2.** `--chart` naming no chart, a date
+that is not one, a missing `--country` with nobody to ask: they were plain
+errors, so they would have been 1, "it failed", for what is a wrong call.
+
+**Known gaps, written down.**
+
+- *No shipped command can reach a locked period.* The test that proves code 3
+  and `period_locked` provokes the refusal through `execute()` — the function
+  every command runs under — with a handler that calls `post_document()`, which
+  is what the first booking verb will do. A shipped command is refused for
+  real in the same file (`module enable` acting for a stranger, `42501`). The
+  day a verb exists, the locked-period test should go through it.
+- *`data` is validated per command by the test, not by the schema alone.* The
+  schema describes each shape under `$defs/data/<command>`; choosing the branch
+  from `command` needs `if`/`then`, which the CLI's small validator does not
+  read. A stock validator checks the envelope and leaves `data` an object.
+- *The reports under `data` keep the spelling they had.* `pack upgrade` passes
+  on what `pack_upgrade()` returned, snake case included, beside camel case
+  elsewhere. Re-spelling a function's answer in the CLI is how two spellings
+  become three.
+- *A refusal that reaches the CLI without an SQLSTATE is 1.* Both drivers in
+  use carry it. A future transport that does not — PostgREST, when the CLI
+  signs in as a user — has to bring its own mapping to the same three kinds.
+- *No amount is printed by any command yet*, so "amounts are decimal strings"
+  is a rule of the schema with nothing to break it. It binds the first report
+  that carries one.
+- *`NO_COLOR` set to the empty string still switches colour off*, where the
+  convention says it should not. Left as it was.
+
+## A portfolio is what the caller may read (18 September 2026)
+
+**The case.** `upcoming_filings()` and `filings_touched_since()` answer for one
+company. A firm that keeps N of them in one installation asks one question of
+all of them: what falls due in the fortnight, and what moved after it went.
+`portfolio_upcoming_filings(from, to)` and
+`portfolio_filings_touched_since(from, to)` answer it.
+
+**No firm, no client list, no `tenant_id`.** The portfolio is not an object. It
+is the set of companies on which the caller holds `filings.read`, worked out at
+the moment of the call. That serves the accountant of forty companies, the
+person who runs one of them, and a group keeping three of its own, with one
+sentence and no new table. Groups of collaborators, when they come, will write
+rows of `company_members` or something that resolves to them, and this reading
+will not change. The name says `portfolio` and not `firm` for the same reason.
+
+**`security invoker`, and one filter in the open.** Both functions read what
+the caller could have read by asking company by company, so neither needs the
+owner's rights, and after the two definer functions found on 18 September that
+checked nobody, the default is not to write a third. But row level security
+settles *which declarations* are read, not *which companies are walked*:
+`companies` admits any member and the administrator of the instance, while
+`tax_filings` asks for `filings.read`. Walking every visible company would list
+a calendar with every state empty — which reads as "nothing has been started"
+and means "you may not know". So the list of companies is filtered on
+`has_capability(id, 'filings.read')`, written in the function and not left to
+a policy that was never about this. The test revokes the capability from a
+member and watches the company leave their portfolio on both readings.
+
+**The administrator of the instance has an empty portfolio.** Checked rather
+than assumed: they read every row of `companies`, because they create them, and
+no row of `tax_filings`, because that policy never named them. A firm's
+administrator who also keeps books is a member of those companies, and gets
+them as a member. Nothing was changed; it is now a test.
+
+**Silence is not an output.** Every company of the portfolio is in every
+answer, at least once. `reason` is a closed vocabulary of three words, in text
+like `ec_sales_list().issue`: `no_deadline_rule`, `nothing_due`, `no_form`. The
+first is the one that matters — a pack that names no deadline on purpose,
+because its schedule depends on who is filing, must not make its companies
+disappear from the list a firm plans its fortnight on. On the other reading a
+company nothing moved in is a row with no filing, and `filed` says how many
+declarations were looked at, because "six returns, none disturbed" and "no
+return has ever gone" are different news.
+
+**The window is on the due date.** `upcoming_filings()` takes two dates and
+generates the *periods* that start between them, which is a calendar; asked for
+the next fifteen days it answers with the period that has just begun, due in
+two months. A portfolio is asked what is *due*, so the new function asks the
+per-company one for a calendar reaching back two months and the longest
+`deadline_plus_days` of the installation — a return is due in the month after
+its period, plus those days — and keeps the rows whose date is in the window.
+A period with no date is kept while the month after it overlaps the window: it
+is the only place either rule of the vocabulary puts a date, so it is where a
+person would look for one. A third rule that reaches further than a month
+moves the reach with it.
+
+**Built on the two functions, not beside them.** A second implementation of
+"which periods does this company owe" would be a second answer to it. Both
+portfolio functions call the per-company ones in a lateral join.
+
+**Cost, as far as it was looked at.** The per-company function is a single
+SQL statement and the planner inlines it: the plan for forty companies is one
+nested loop, and each turn of it is index probes — the company by key, its
+cadences by key, the form by key, the live filing of a period through
+`tax_filings_live_period_idx` — plus `has_capability()` once. Forty companies
+answer in about forty milliseconds in PGlite, linear in the companies, and the
+most repeated cost is `periodic_return_code()`, called several times per
+company by the function underneath. On the other reading the ledger is only
+touched for declarations that have gone, through the partial index on
+`entry_lines (company_id, declaration_box)`, and `filing_drift()` — the one
+heavy call, a `vat_return()` — runs only for a declaration that *was*
+disturbed, since it sits in the select list behind `entries > 0`. Without a
+window it looks at every declaration ever filed; a caller with years of
+history passes `p_from`. Nothing was measured at thousands of companies or on
+a real ledger: that is the load card, and it is not this one.
+
+**What is missing, and written.**
+
+- **A machine key has no portfolio.** A key is not a session: the company row
+  stays closed to it, as stated on 13 September. So a key holding
+  `filings.read` gets an empty answer here — and, found on the way, cannot use
+  `upcoming_filings()` or `filings_touched_since()` on its own company either:
+  the first answers nothing because it cannot read the country of the company,
+  the second raises `unknown_company` the moment a declaration was disturbed,
+  from the figures `filing_drift()` recomputes. Reading tables under a key
+  works; these functions do not. It needs a decision about
+  what of `companies` a key may read, not a patch here. Tested as it stands.
+- **`upcoming_filings()` still answers somebody who may see a company and not
+  its declarations** — the administrator of the instance, a member whose
+  `filings.read` was revoked — with a calendar whose states are all empty. It
+  leaks nothing; it says "nothing started" where it means "not yours to know".
+  The portfolio does not have the defect; the per-company function was left as
+  published.
+- **`service_role` has no portfolio either**: it holds no capability, because
+  it is nobody. A scheduler that reminds every company walks `companies` and
+  calls the per-company function, which row level security does not stop it
+  doing.
+- **A form of another country has no date.** `filing_deadline()` looks for the
+  form among those of the company's country and fiscal country, so a company
+  filing a return abroad gets `no_deadline_rule` even where that pack names
+  one. The word is then wrong by one notch — the rule exists and was not
+  found.
+- **Periods follow the calendar year**, as they do underneath; no mandate, no
+  "who files for whom" — that is the next card of the same epic.
+
+## An invoice is written from the books, and judged by the published rules (18 September 2026)
+
+**The brick that was missing.** `einvoicing.profile` has said `peppol-bis-3` in
+four packs since the packs had the key, and `packages/formats/` wrote EN 16931
+in one syntax only: CII, inside Factur-X. `@ekwo-ai/peppol-ubl` writes the other
+one. It is not a module — invoicing is `documents` and `post_document()`, in the
+core — and it is not a transmission: that takes a certified access point and
+stays in `ee/`, on the line the bank feed and the deposit of a return are
+already on.
+
+**It does not reuse the input of `factur-x`, and that is decided, not
+overlooked.** Both bricks write the same semantic model, and the older one
+takes an `Invoice` object, computes its totals and defaults its currency to the
+euro, its unit to `C62` and its payment means to `58`. Every one of those is
+what the bricks written since are forbidden: a file that recomputes can
+disagree with the ledger it carries, and a default is a value nobody chose
+travelling to somebody who will believe it. So this brick reads what
+`packages/formats/README.md` says a brick reads — the flat rows of
+`document_header`, `document_line_items` and `document_tax_summary` — and
+writes the figures as posted. Two types that look alike are two types; the day
+`factur-x` is brought to the same contract, it is `factur-x` that moves.
+
+**No figure is a `number`.** The rules compare with `=`. Amounts arrive as the
+text of a `numeric`, are compared as `bigint` decimals, and leave as the same
+digits. This is not `rounding.ts`, and the brick has no copy of it: it rounds
+nothing it writes. The one rounding in it is XPath's — half towards positive
+infinity — used to re-read rules that are written with it.
+
+**A violation is named by the rule, and the rule is checked.** `code` is
+`BR-CO-15`, not `total_mismatch`: it is what an access point will answer, and a
+caller should not need a table to translate. That is only honest if the
+re-reading was compared with the original, so:
+
+- the UBL 2.1 schemas of OASIS are fixtures and every file is validated;
+- the code lists are generated from the Schematron and compared code for code;
+- the Schematron is XSLT 2.0. SaxonJS is the only processor that runs on Node;
+  it is not a dependency this repository takes for a test, and its licence is
+  not an open-source one. **It was played out of tree** against 100 committed
+  files, and `verdicts.json` is what it said. The suite pins the files byte for
+  byte and the reported rules to the recorded ones exactly, requires every named
+  rule to have been reported by the real thing at least once, and the README
+  says in so many words that agreement on a hundred documents is not agreement
+  on all of them. Taking `saxon-js` as a development dependency would turn the
+  record into a test; that is a decision about a licence and is left open.
+
+**The Peppol Schematron is not vendored.** Its repository has no licence. The
+EN 16931 one is EUPL 1.2 and is a fixture, in the copy Peppol ships — which is
+not CEN's own 1.3.15: Peppol added an identifier scheme to it, and what the
+network validates with is what counts.
+
+**What the sources refuted.** Written from the specification, then played:
+`0999999999`, the company number of every test here, fails the check digits
+Peppol verifies (the fixtures use `0999999922`); EN 16931 lists seven
+electronic address schemes Peppol refuses; `BR-DEC-13` cannot fire as it is
+written; `BR-CO-16` rounds in one branch only; an absent price also breaks
+`BR-27`, a group without a rate `BR-S-09`, a VAT total without a breakdown two
+Peppol rules and not one; and the UBL binding has rules of its own beside the
+standard's, so three decimals are `UBL-DT-01` as well as `BR-DEC-*` and a line
+without a category `UBL-SR-48` as well as `BR-CO-04`. Nine lines of
+`src/rules.ts` that reading alone got wrong.
+
+**What the end-to-end test found in the core and the packs.** None of it is
+fixed here — the card asks for a brick — and all of it is now visible:
+
+- `document_lines.vat_category` and `.vat_rate` are **never filled**: every
+  line of every golden year has them null, and the view publishes them as
+  BT-151 and BT-152. The brick reads a silent line through its tax, by
+  `tax_id`. The columns should be filled at posting or dropped from the view.
+- `party_scheme` is documented as the scheme a party is *addressed* by and was
+  first read here as the scheme of its registration number (BT-30-1). For two
+  of the four packs that is not an ISO 6523 scheme at all (`BR-CL-11`). The
+  brick takes the scheme of a registration number as an option and reads
+  nothing from the pack for it.
+- `companies` has **no electronic address**. `contacts` has `peppol_scheme` and
+  `peppol_identifier`; the company that sends has neither, and BT-34 is
+  mandatory. The test registers the company under its VAT number and says it
+  is the test's choice.
+- `document_header` does not carry `tax_point_date`, the delivery address, the
+  buyer's electronic address or the text of an exemption (`legal_reference`);
+  `document_tax_summary` does not carry the exemption code. The brick declares
+  them as optional columns of its rows, marked *not in the view today*.
+- The United Kingdom pack gives its exempt, export and reverse-charge taxes
+  **no exemption code**, so those invoices break `BR-E-10`, `BR-G-10` and
+  `BR-AE-10`. The other three packs code theirs.
+- A price keyed with its tax in it still has no BT-146, as
+  `docs/international.md` already says. The brick reports `BR-26` and works
+  nothing out.
+- A golden scenario records no order reference, no delivery and no buyer
+  address, because no ledger asks. Its documents are therefore not sendable,
+  and the test derives, document by document, exactly which rules say so —
+  then posts one that is, and expects nothing.
+- `docs/releasing.md` names the ninth brick after the eighth, before the core
+  that no brick depends on: twelve packages to publish.
+
+## Who the command line is, and where it keeps that (18 September 2026)
+
+The second card of the epic. It still adds no verb that books anything; it
+decides who every such verb will act as, on which instance and for which
+company, so that the verbs can be written without any of them taking a
+connection string.
+
+**A person, over the instance's API — never the connection the installer
+uses.** `--db-url` is the owner of the database: `auth.uid()` is null and no
+policy applies. That is right for `init` and `migrate` and wrong for anything
+that touches a ledger. So the bookkeeping side signs in to the instance and
+goes through PostgREST with the user's own token, which is the route the MCP
+server recommends and the one on which row level security is *satisfied*
+rather than imitated. The commands that connect as the owner now say so when
+they connect — all of them, not only `init` and `migrate`, because `status`
+and `doctor` are the same exception and a reader of a log should not have to
+know which is which.
+
+**The session is a file, in the user's configuration directory, and refused
+inside a repository.** `$EKWO_CONFIG_DIR`, else `$XDG_CONFIG_HOME/ekwo`, else
+`~/.config/ekwo`; two files at `0600` in a `0700` directory. `profiles.json`
+holds what a dashboard already shows (URL, publishable key, address, company
+in use) and `credentials.json` holds the two tokens, so the first can be
+looked at, diffed and backed up without the second. The write is a temporary
+file renamed over the old one, because the instance rotates the refresh token
+and a half-written file would be a session lost. "Never in the repository" is
+enforced and not only promised: a `.git` in the directory or above it is
+`config_dir_in_repository`, before anything is sent. This amends "the CLI
+never writes a secret to disk", which was true of an installer and cannot be
+true of a command used twenty times a day; the help and the README now say
+what is kept, where, and what never is — a password, a database password, a
+`service_role` key.
+
+**Written on `fetch`, where the MCP server uses `@supabase/supabase-js`.** The
+two packages answer the same question differently and both answers stand. The
+server says a library known to work beats code of ours that no test can run
+against a real project. The CLI says it is handed a password, and that every
+package it loads could read it — the argument that made it parse its own
+arguments. What decided it: the exchange is three auth requests and two
+PostgREST ones, and unlike the server's it *is* tested here, against a real
+Postgres behind a stand-in for the two HTTP surfaces
+(`tests/cli/fake-supabase.ts`), rotation and a lost token included. The CLI
+still has one runtime dependency from outside this repository.
+
+**What moved to the core, and what did not.** `isServiceRoleKey()`, the
+sentence of the refusal and the names of the five variables moved from the MCP
+server to `@ekwo-ai/core` (`identity.ts`, which imports nothing); the server
+re-exports the first under the name it had, and its two messages are byte for
+byte what they were. The refusal takes who is speaking as an argument — "this
+server", "this command line" — so it is one sentence with two subjects and
+not two sentences. The PostgREST client did *not* move: the server's is a
+wrapper over a library the CLI does not load. It is shaped to grow into the
+`Backend` interface the MCP tools are written against (`rpc`, `select`), and
+the card that brings the first verb has to move those tools to the core and
+decide that — it is the large version of the question answered here on a
+small one.
+
+**The environment first, whole, and without a file.** The order is the card's.
+"Whole" is ours: `EKWO_ACCESS_TOKEN` in the environment with the instance
+taken from a profile would send a token to a host nobody wrote next to it, so
+it is `missing_configuration` and not a fallback. A command run this way reads
+no profile and writes nothing, which is also why `ekwo use` refuses there
+(`no_profile`): the environment has nowhere to keep a company, and `--company`
+is the answer. `EKWO_COMPANY` was not added — the card names the flag only.
+
+**The company is in the document, not only in `data`.** `context` is a field
+of the envelope — profile, instance, company or `null` — set as soon as it is
+known and emitted on a refusal too, because the refusal is where a caller on
+the wrong company most needs to see it. It is an addition to
+`output.1.json`, optional, so a reader of version 1 is not broken; the
+commands that install carry none, since they act as nobody. No company is
+ever picked on the user's behalf, not even the only one: `null` is an answer.
+Signing in to a profile as somebody else, or somewhere else, drops the company
+it held.
+
+**Exit codes of the new refusals.** Nothing here is the books saying no, so
+nothing here is 3. Nobody to act as — `not_signed_in`, `unknown_profile`,
+`session_expired` — is 2: the call has to change (sign in) and retrying it
+will not help, which is what separates 2 from 1 for a caller. A
+`service_role` key is 2 for the same reason. A wrong password is 1
+(`sign_in_failed`, the MCP server's name for it): the instance was asked and
+declined, and the CLI cannot tell a typo from an account that is locked.
+
+**Code 3 over the new route.** PostgREST answers an error of the database with
+the fields Postgres gave it, so the error the client throws carries `code`,
+`detail` and `hint` as both SQL drivers do, and `classify()` did not change. A
+`PGRST…` code is not five characters of the SQL alphabet and stays a failure.
+This closes the gap written under the output contract.
+
+**Found on the way.**
+
+- *The CLI resolved a company three ways*: `pack upgrade` by id or name,
+  case-insensitively, as a plain error (exit 1); `module enable` by exact name,
+  as a usage error (exit 2), picking the only company when none is named. The
+  new commands share the first one's matching (`company.ts`), which becomes a
+  usage error — so `pack upgrade` on an unknown company now ends on 2.
+  `module enable` was left as it is; its silent pick of the only company is
+  the behaviour this card decided against, and changing it belongs to the card
+  that gives `module` a signed-in route.
+- *A test asserted "It never writes a secret to disk"* as a sentence of the
+  help. It was rewritten with the sentence, rather than kept true by calling a
+  session something else.
+
+**Known gaps, written down.**
+
+- *The session is not in the operating system's keychain.* A file at `0600` is
+  what `gh` and the Supabase CLI fall back to; a keychain needs a native
+  module or a process spawned per platform, and either is a dependency with a
+  view on the token. `ekwo logout` and the environment are the two ways to
+  keep nothing.
+- *File modes mean nothing on Windows.* The directory is under the user's
+  profile there, and the exposure warning is skipped.
+- *A home directory that is itself a repository* (dotfiles kept with a `.git`
+  in `~`) is refused like any other; `EKWO_CONFIG_DIR` is the way out and the
+  refusal names it. A bare-repository dotfiles setup is not detected.
+- *No self-hosted route.* The MCP server can act for a user over a direct
+  connection (`EKWO_DB_URL` with `EKWO_ACT_AS_USER_ID`); the CLI's person side
+  speaks PostgREST only. An installation with no PostgREST in front of it has
+  `whoami` to wait for.
+- *No sign-in other than address and password*: no magic link, no OAuth, no
+  second factor. A holder of a token obtained otherwise sets
+  `EKWO_ACCESS_TOKEN`, which is not renewed. *(Corrected the same day: this
+  line first said the schema has no API key of its own. It has — `api_keys`
+  and `use_api_key()`, above — and what is missing is a way for the CLI to use
+  one: a key authenticates per transaction, over a direct connection, and the
+  CLI's person side speaks PostgREST only. Same gap as the self-hosted route.)*
+- *`whoami` reads the capabilities of the company in use only.* One call per
+  visible company would be two hundred calls for a firm; `--company` asks for
+  another.
+- *Two commands at the same moment can both renew.* The instance rotates the
+  refresh token and tolerates a reuse within a few seconds; outside that window
+  the slower one gets `session_expired` and signs in again. There is no lock
+  file.
+- *Numbers over this route are JSON numbers.* Nothing read here is an amount.
+  The first report that carries one has to ask for `amount::text`, as the MCP
+  server's columns do, or the decimal-string rule of the contract breaks on
+  this route first.
+- *The stand-in instance is ours.* It runs the real policies and the real
+  raises, and it is not GoTrue: the shape of its auth errors was written from
+  the documented ones. `npm run e2e:supabase` does not cover `login` yet.
+
+## A setting that was never set (18 September 2026)
+
+**The defect.** `is_installer()` compared `current_setting('ekwo.installing',
+true)` with `'on'`. Emptied, the setting answers `''` and the comparison is
+false. Never set, it answers NULL and so did the function — and
+`if not NULL and not false` does not raise. Every guard of the family let the
+caller with no session and no key through: `service_role` over PostgREST, a
+direct connection. Found while writing the import of a company, by reloading a
+database into a new instance; the migration that introduced the function was,
+of all things, the one about guards that could answer NULL.
+
+**Why no test saw it.** The harness sets the variable on the one connection it
+has — `'on'` for the owner, `''` inside `asUser` — so "never set" did not exist
+in any test. *A test that prepares the session cannot test the session nobody
+prepared.* `tests/fresh_session.test.ts` dumps the data directory and loads it
+into a second instance, and asks there.
+
+**The rule that follows.** A boolean a guard negates answers true or false.
+The test sweeps the catalogue for every argument-less boolean function of the
+schema and asks each as the caller with nothing; a new helper that can answer
+NULL fails the build.
+
+**What it does not change.** `service_role` bypasses row level security on the
+platform it comes from, by that platform's design, and nothing here pretends
+otherwise. It does not bypass a function that raises, which is why the rules
+of an installation are in functions — and why a guard that is skipped matters
+more than a policy that is.
+
+## A brick that reads, and what a reader has to prove (18 September 2026)
+
+**The gap.** Six packs say their banks send `camt.053`, the core has held
+statements and their lines since the first migration of the bank, and
+`suggest_matches()` and `auto_settle()` work on those lines. Nothing produced
+one. `@ekwo-ai/camt053` reads the file; importing what it returns is the next
+change and is not in this one.
+
+**Named after the document.** `camt053`, not `camt` and not `bank-statement`.
+camt.052 and camt.054 share most types with the statement and would read with
+the same code — and a report has no closing booked balance to check and a
+notification has no balance at all. The guarantee this brick gives is the
+balance; a document that cannot carry it is another document, and is refused by
+name (`not_a_statement`) until somebody needs it. CODA, CFONB 120 and MT940 are
+other bricks: two formats that look alike are two formats.
+
+**The output is declared by the brick, and an account is not an IBAN.** A brick
+that writes declares the rows it reads; one that reads declares the rows it
+returns, in its own `types.ts`, importing nothing. `AccountIdentifier` is
+`{ kind: 'iban', value }` or `{ kind: 'other', value, scheme, issuer }` because
+that is the choice ISO 20022 gives (`IBAN` | `Othr`), and because six columns of
+the core already made the opposite assumption and have a change of their own
+waiting for it. The reader must not be the seventh place. An IBAN's check
+digits are verified — ISO 7064 is part of what "IBAN" means — and a failure is
+a violation, the value returned as written; an `other` identifier is validated
+by nothing, since its scheme is a label the bank chose.
+
+**One line per transaction where it is provably the same money; one per entry
+otherwise.** The question was which of `Ntry` and `TxDtls` is a line.
+Reconciliation wants the transaction: a batch of thirty customer payments
+booked as one credit matches no invoice. The balance wants the entry: it is
+what moved on the account, and the bank's own arithmetic is over entries. So an
+entry with several transactions is split **only if** each transaction carries
+an amount in the entry's currency and they add up to the entry exactly — and
+then each line carries `entry`, `detail`, `detailCount` and `entryAmount`, so
+whoever stores them can rebuild the batch. When they do not add up (charges
+netted, amounts absent, mixed currencies) the entry stays one line with
+`batch_not_split`. In both cases the lines of a statement sum to its movement,
+so the balance check never depends on the choice, and neither does an
+importer's.
+
+**A statement that does not add up is reported, not refused and not
+corrected.** The roadmap card said "refused". What it meant is kept: the
+difference is named to the last decimal and `balanced` is `false`, so nothing
+downstream can take the statement for a sound one without having been told. But
+the brick returns it, because refusing to *read* is the wrong place for the
+decision: a person looking for the missing line needs the other three hundred,
+and an importer that wants to refuse can — on one boolean. Correcting is never
+an option: a computed closing balance substituted for the declared one erases
+the only evidence of a truncated file. Only booked entries are summed; a
+pending one is returned and marked.
+
+**Exceptions are for files, violations for lines.** Thrown: what leaves no
+statement to report on — not XML, not UTF-8, over a limit, not a camt.053, no
+account. Returned: everything about a line or a balance. The test of the split
+is whether the rest of the file is still worth having.
+
+**The XML reader is in the brick, and refuses more than it reads.** Zero
+runtime dependencies is the rule of the directory, and it is the right rule
+here for a second reason: the dangerous features of XML are features of
+general parsers. No DOCTYPE means no entity declarations, internal or external,
+so the billion-laughs and XXE families are refused at one `startsWith`. Limits
+on size (before reading), depth and element count (while reading), no
+recursion, fatal UTF-8 decoding, ASCII names. A bank whose export needs a DTD
+or ISO-8859-1 will be refused by name, and that is preferred to the
+alternative.
+
+**Dates are the day the bank wrote.** A `DtTm` with an offset is not moved to
+UTC: a booking at 23:30 +02:00 is that day's booking, and the ledger of a
+company east or west of Greenwich should not depend on where the code ran.
+
+**Amounts are strings with the digits the file wrote.** `100.00` stays
+`100.00` and `749.5` stays `749.5`; sums are `bigint` hundred-thousandths,
+because the schema allows five decimals. Rounding to a currency's decimals is
+the importer's, which knows the currency table; the reader does not.
+
+**What the sources refuted**, the hour they were fetched: `BIC` became `BICFI`
+in version 03, not 04 as the draft had it (the schema of 03 refused the
+fixture); ISO serves a version 14, dated March 2026, the draft did not know;
+and it serves a version 01 whose message element is `BkToCstmrStmtV01`, whose
+balance type and account choice are shaped differently — read by a lenient
+reader it would have come back as a statement with no balances. It is refused
+(`unsupported_version`).
+
+**What is not proved, written where a user will read it.** No real statement
+was used: every fixture is invented, since a real one is somebody's account,
+and the schema says what a bank may send, not what any bank does. Which
+reference a given bank fills, whether it details its batches, how it writes a
+card payment: unknown until the first file from each. No usage guideline (EPC,
+CGI-MP, national federations) is tested. That the parties of a reversed entry
+keep their original roles is a reading of the message definition, not a fact
+of the schema. Paginated statements (interim balances as opening and closing)
+are returned and not interpreted. The brick's README lists these under *Not
+verified*.
+## What the core says for a posted invoice to be sendable (18 September 2026)
+
+The section above ends on a list of what the end-to-end test of the Peppol
+brick found missing in the core and the packs. This closes it, largest first,
+in three migrations — `20260918141107`, `20260918141342`, `20260918141605` —
+and the test that found the list is the test that checks it: a posted sale now
+comes out with no rule broken from **three reads of three views and no
+option**.
+
+**A line keeps the category and the rate it was posted with.**
+`document_lines.vat_category` and `.vat_rate` were never written, and three
+migrations had cited them as the precedent for a snapshot. The choice was to
+fill them or to take them out of the view and read through `tax_id`. They are
+filled, because reading through `tax_id` reads the tax *of today*, and a tax is
+rewritten in place by a pack upgrade — `amount` and `vat_category` among the
+columns of one `update`. A rate that changes on 1 January would restate
+every invoice of December the first time one was rendered.
+
+The rule is the one `documents.language` follows, and deliberately the same
+shape: derived and never keyed; a draft follows its tax, including when the
+tax moves under a draft nobody touches (`taxes_reach_draft_lines`, which also
+brings a draft's totals up to the new rate — until now they waited for
+somebody to edit a line); a line of a document that is no longer a draft
+refuses the change by name, `document_line_tax_frozen`. `vat_rate` is a
+percentage, so a fixed-amount tax leaves it null.
+
+**And the breakdown reads the line.** This went further than the finding, and
+it had to: `document_tax_summary` is BT-118 and BT-119, and it took both from
+the tax. Filling the lines and leaving the breakdown on the tax would make the
+two halves of one invoice disagree on the day a rate moves — BR-S-08 on a
+document nobody touched. It would also have kept an older hazard nobody had
+written down: `documents_refresh_totals()` reads that view on every write of a
+line, so correcting a description on a posted invoice recomputed its totals at
+the rate of the day. The view now groups on what the lines carry, which for a
+draft is the tax by construction. `post_document()` reads the same view at the
+moment the snapshot and the tax are equal, so no figure of any golden year
+moves.
+
+**The lines already there take the tax as it stands, once.** A posted line is
+not rewritten — that is the rule being installed — and yet every posted line
+has these two columns empty. The precedent is the backfill of
+`documents.language`: the chain applied once, called a guess, and nothing
+guessed afterwards. Here the ledger kept the amounts and not the percentage, so
+the tax of today is the only evidence there is; it is what every read of those
+documents has answered until now and what their totals were last computed
+from, so the backfill changes no figure, and the test checks that on a
+database built without the migration. A line an application had stamped itself
+keeps its stamp. This is not the deprecate-and-mirror of
+`companies.vat_period`: nothing is deprecated, the columns finally do what
+their comment said.
+
+*Left open, and smaller:* the share of a tax that reaches the buyer
+(`tax_charged`) still reads `tax_postings` as they stand, and BT-121 and
+BT-120 still read the tax and the pack. None changes a base or a rate. And no
+trigger refuses a change of `quantity`, `unit_price` or `tax_id` on a posted
+line: the ledger is immutable and the document that produced it is only partly
+so. That is wider than this change and is the next thing to look at.
+
+**A company has an electronic address.** `companies.peppol_scheme` and
+`.peppol_identifier`, the names `contacts` has used from the first day: a
+scheme and a value, the shape `docs/international.md` asks of every identifier
+after finding that a bank account is not an IBAN. No list of schemes in the
+core — `contacts` has none, the list is revised twice a year, and EN 16931 and
+Peppol do not even share one; the brick carries both and names the rule. One
+constraint `contacts` does not have: the pair is whole or absent
+(`companies_electronic_address_whole`). On new columns it refuses nothing that
+exists; on `contacts` it could refuse an unrelated edit of a row somebody
+half-filled, so it waits for a release that looks at the data first. Writing it
+is `company.write`, because it is the company's row and `companies_update`
+judges the row.
+
+**The views carry what the schema knew.** `document_header` gains the tax
+point, the four delivery columns `documents` has, and both electronic
+addresses. What the schema does not know is absent rather than approximated: a
+second delivery line, a delivery region, a deliver-to party (BT-70), a location
+identifier (BT-71).
+
+**BT-120 is a sentence for a customer, not the pack's argument.** The finding
+named `taxes.legal_reference` as the text of an exemption, and it is the
+obvious column and the wrong one. A legal reference is written for whoever
+reviews the pack — which article, why this code, what the pack declined to do.
+Some are six words; one discusses this repository's own choice of codes. None
+was written to be printed on an invoice. The sentence a country wants on an
+invoice that charges no tax already exists, per country, translated and dated,
+in `legal_mention_templates`, and is printed at the foot of the same document.
+So `document_tax_summary.exemption_reason` is the mention of the tax's
+treatment, in `documents.language`, valid on the document's date; null where
+the pack has no sentence for the treatment, which includes every tax that
+charges something — a reason on a standard-rated group is BR-S-10.
+`legal_reference` is published beside it under its own name. Which treatments a
+condition covers was a `case` inside `document_legal_mentions`; it is now
+`legal_mention_treatments()`, read by both views, because a second copy would
+drift the day a treatment is added.
+
+**The United Kingdom pack gets no exemption code, and no longer needs one.**
+The finding read "the other three packs code theirs". Looked at again, the pack
+had not forgotten: its `legal_reference` says that the VATEX list names
+articles of Directive 2006/112/EC and national codes of Member States, and the
+United Kingdom is neither. The list bears that out (CEF, *VATEX*, as Peppol BIS
+Billing 3.0 publishes it). `VATEX-EU-132` is "Exempt based on article 132 of
+Council Directive 2006/112/EC", which is not the law Schedule 9 of the Value
+Added Tax Act 1994 exempts under. `VATEX-EU-G` is "Export outside the EU", and
+since 1 January 2021 a British export to a Member State is an export *into*
+it. `VATEX-EU-AE`, "Reverse charge", and `VATEX-EU-O`, "Not subject to VAT",
+are worded generally and could be argued; they sit in the same list under the
+same prefix, no source says a third country may use them, and a pack that
+codes two of its four cases on an argument is harder to review than one that
+codes none on a principle. They stay empty.
+
+What made those invoices break BR-E-10, BR-G-10 and BR-AE-10 was never the
+missing code: each rule asks for a code **or a text**, the pack has had the
+text since it had mentions, and the view did not carry it. With
+`exemption_reason` in the breakdown the three rules pass for every sale of the
+British golden year, and the end-to-end test now says so for every pack rather
+than deriving who fails. The pack is unchanged, at the same version. One case
+is still open and is a gap of the vocabulary, not of the pack:
+`applies_when` has no condition for a supply outside the scope of the tax, so
+a category-O sale (`GB-S-OUTSIDE`) has neither code nor sentence and would
+break BR-O-10. No golden year sells one.
+
+**`party_scheme` was misread because it was misdescribed.** Its comment said
+"ISO 6523 ICD", and so did `vat_scheme`'s. The packs fill both from the EAS
+list, which contains the ICD list and more — the VAT schemes of the 99xx range
+are not ISO 6523 at all. The comments now say EAS, say that the column is a
+default an application may propose and not anybody's address, and say that it
+is not the scheme a registration number is written in.
+
+**The brick loses its two workarounds.** The join of a silent line to its tax
+by `tax_id` is gone — a line that does not say its category has none, which is
+BR-CO-04 and is true — and the electronic addresses are read from the header,
+the options remaining for a caller whose header has none or who sends under
+another address. The 100 fixtures and the recorded verdicts did not move by a
+byte: same input, same file.
+
+Still out of scope and still written down: BT-146 for a price keyed with its
+tax in it, order and delivery references in the golden scenarios, allowances
+and charges.
+
+## The plan is the assertion, the clock is a report (18 September 2026)
+
+The question was whether the schema holds with tens of thousands of invoices,
+and the honest answer was that nobody knew. 173 indexes and two guards in
+`tests/schema.test.ts` proved that indexes exist; every test booked fifteen
+documents at most, and Postgres plans fifteen rows the same way with or without
+them. `tests/load/` is the first test that gives the planner something to
+decide. `docs/load.md` is the reference; this is why it is built the way it is.
+
+**The build breaks on the shape of a plan and never on a time.** A time on a
+shared runner, on Postgres compiled to WebAssembly, is noise with a trend in
+it; a test that fails on it gets re-run until it passes, and then it guards
+nothing. What is stable over deterministic data is whether a hot path reaches
+`entry_lines` through an index or walks it. Times are reported next to a
+budget, and no `expect()` reads them. The times worth quoting come from a real
+Postgres, through `scripts/e2e-supabase.mjs`, which reads the same six
+definitions — wired, and like the rest of that script not yet run.
+
+**"Does not appear", not "appears".** The assertion is that no sequential scan
+of a large table occurs inside a hot path. It is not that a given index is
+used: which of two good indexes wins depends on statistics and cost constants,
+and pinning it would make the test fail on a PGlite upgrade for no reason a
+user would care about. The same file passes unchanged on four packs with
+different charts and row counts.
+
+**Several companies, or the test forbids the right plan.** With one company in
+the instance `company_id = $1` keeps every row, and a sequential scan of the
+ledger is then the correct plan for a trial balance. A selective predicate is
+what turns "which plan" into a question, so the instance holds five.
+
+**The volume is a copy of what the engine posted.** Three options were on the
+table. Posting every document through `post_document()` is the only one that
+proves the rows are real, and it costs seven milliseconds a document on PGlite:
+over a minute for 10 000, a quarter of an hour for 100 000. Inserting invented
+ledger rows is fast and proves nothing about coherence — they balance because
+the generator says so, and they drift from the engine the day it learns
+something. So each company books its pack's golden year through the real
+functions, and that year is cloned by SQL with new identifiers and the dates
+moved back by whole financial years, the column lists read from the catalogue.
+A copy skips triggers and foreign keys, which is what makes it take one second
+per 10 000 documents; the price is paid afterwards, by re-checking every
+foreign key of the copied tables with an anti-join, every entry for balance,
+and by posting one more document through the engine into the loaded company.
+A test also watches which tables a replay writes to and fails, by name, the
+day the engine writes to one the generator does not know.
+
+**Plans are read with `auto_explain`, because `EXPLAIN` cannot see them.**
+`explain select * from vat_return(…)` answers "Function Scan". The statements
+that matter are inside plpgsql, and `auto_explain` with
+`log_nested_statements` reports each with the plan the executor really used.
+The alternative — extracting the query text from the function body and
+explaining a copy — tests the copy.
+
+### The three things the roadmap suspected
+
+**1. `vat_return()` cannot use an index on its period — confirmed, not fixed.**
+No sequential scan: it reaches the declaration lines through
+`entry_lines_box_idx (company_id, declaration_box)`. But `coalesce(l.tax_point_date,
+e.entry_date) between …` spans two tables and no index can serve it, so it
+reads every declaration line the company ever wrote and discards the ones
+outside the period — 86 000 rows read for the ten boxes of one quarter out of
+twenty. 37 ms today at 10 000 documents, 255 ms at 100 000, and linear in the
+years kept. It is left for its own card because the same filter now stands in
+four functions (`vat_return()`, and three of the filing functions of 17
+September), and the right fix touches all four and the posting engine: a
+stored `declared_on` date on the ledger line, written where `tax_point_date` is
+written, indexed `(company_id, declared_on) where declaration_box is not null`,
+and one predicate the four functions share. Splitting the filter into two
+indexable branches inside each function was considered and rejected: four
+copies of a union, to avoid one column.
+
+**2. `suggest_contacts()` is linear in the contacts — confirmed, fixed.** 3.5 s
+for a month of statement against 500 contacts, all of it spent entering a SQL
+function once per contact. `20260918143352` stores the words of a name and sets
+aside the contacts that share none with the line before anything is scored.
+The argument that this is a filter and never a change of answer is in the
+migration header; the evidence is the old and the new body run side by side
+over 167 lines, 974 suggestions compared field by field. It is still linear in
+the contacts that *do* share a word — thirty suppliers called "… Services" are
+thirty scorings — which is the behaviour the function documents. A GIN index on
+the column was tried, used by the planner, and worth a tenth of the time; it
+was left out, and an index nobody needed yet is the kind of thing this card
+was opened against. One observation in passing: the sentence in `because`
+lists the shared words in the order `intersect` yields them, which is not
+stable from one execution to the next. Harmless to a reader, and a reason not
+to compare that column as a string.
+
+**3. Row level security under load — never measured, and the worst of the
+three.** The roadmap said `has_capability()` is `stable`, "so evaluated once
+per query". `stable` is a promise made *to* the planner, not a cache: with a
+column as argument the function runs for every row the scan visits, and being
+`security definer` it cannot be inlined. 359 000 calls for one trial balance;
+3 266 ms as a member against 72 ms as the owner, on the same plan. It went
+unnoticed because every measurement anybody had made was made as the owner of
+the database — which is also why the load test runs each path twice.
+
+The fix keeps one definition of who may do what.
+`companies_with_capability()` does not restate the rules of
+`has_capability()`; it lists the companies where the answer *can* be yes — the
+caller's memberships and the company of a presented key — and asks
+`has_capability()` about each. A policy compares `company_id` against that
+array inside a sub-select, which Postgres evaluates once per statement, and
+the comparison being a plain `=` on an indexed column, the planner may now use
+the policy to find rows where it could only filter them before: the trial
+balance is *faster* as a member than as the owner, because the function itself
+never says which company's ledger lines it wants and the policy does.
+
+**What was left per-row, on purpose:** the policies that combine the test with
+another condition (`attachments`, `api_keys`, `company_members`, `companies`),
+those that reach the company through a parent row (`journal_sequences`,
+`tax_filing_boxes`, `tax_filing_deposits`), the three written on
+`is_company_member()`, and the ten of the modules, which also ask
+`module_enabled()`. None guards a table a report walks. `with check` clauses
+are untouched everywhere: once per row written is what a check is. The module
+policies are the first candidates if a module table ever grows.
+
+**Not granted to `anon`.** The policy helpers are executable by `anon`
+because a policy may be evaluated on its behalf. Since `20260914151207` `anon`
+holds no privilege on any table, so no policy is, and one more helper in that
+list would be a decision with nothing behind it.
+## The verbs that keep books, and where their code lives (18 September 2026)
+
+The third card of the epic, and the one the two before it were for: the
+command line writes a contact, a draft and its lines, posts, records a
+payment, matches a statement line and lists what is owed.
+
+**The functions moved; they were not written again.** The MCP server held
+them, written against a `Backend` of five operations. Between a database
+function and a tool there is real code that is not an accounting rule and is
+still not nothing: codes turned into ids in one query per table, a product
+filling in what a line left out, a creation that is two inserts, which open
+items a payment is offered to and on which currency's scale. A second copy of
+that in the CLI would have been a second implementation in everything but
+name — two surfaces that book the same invoice differently the day one of
+them is fixed. So the interface, the column lists, the amount formatting and
+the functions for contacts, documents, posting, payments and matching moved
+to `packages/core/src/books`, which still imports nothing from outside this
+repository. What stayed in the server is what is the server's: the zod inputs
+and the descriptions a model reads, `explain()` and its hints, the two
+backends. The functions take plain argument types, and the server re-exports
+them under the names they had, so its tests did not change. The rounding copy
+that `tests/rounding.test.ts` pins byte for byte against the two format bricks
+is now the core's.
+
+The rest of the server's tools — products, the bank, the reports, the closing —
+did not move, because no verb of this card calls them. They move when one
+does; the path is now worn.
+
+**The CLI's `Backend` is its PostgREST client.** The one written for `whoami`
+grew the three operations it lacked. It throws what PostgREST answered, with
+the SQLSTATE, so a refusal met inside a shared function is still exit code 3.
+The server's own backends pass the message through `explain()`, which keeps
+the name and drops the SQLSTATE — right for a model, and the reason the CLI
+could not borrow them even without the dependency argument.
+
+**Three kinds of "no", three places they come from.** The database refusing
+is 3. The CLI's own checks are 2. The shared layer's refusals (`BooksError`:
+`unknown_account_code`, `document_not_draft`, `nothing_open`, `not_found`) are
+2 as well: they are decided before the database is asked, or about a row it
+did not return, and what the caller has to do is change the call. `not_found`
+is the debatable one — a row a policy hid looks like a row that is not there —
+and it is 2 because the CLI cannot tell the two apart and should not pretend
+to. Their sentences were written for a model and name MCP tools
+(`list_accounts`, `search_products`); they are repeated as they are rather
+than rewritten per surface, which is a known roughness.
+
+**No amount is computed on this side, and a test holds the means away.**
+`tests/cli/no-rules.test.ts` reads every file under `commands/` and `books.ts`
+and refuses `Number(`, `parseFloat`, `toFixed`, `Math.`, and arithmetic on
+anything called an amount, a price or a total; and refuses a bookkeeping
+command that queries a table or calls a function of the schema itself. It
+cannot prove there is no rule. It proves a command cannot add.
+
+**`--ref` needed a column, so it got one.** An idempotency key that lives in
+a client is a lookup, and a lookup is a race. `client_ref` is on `contacts`,
+`documents` and `payments`, unique per company where given, trimmed and not
+blank so two spellings cannot be one reference. The shared functions look it
+up first and return the row with `replayed: true`; the index refuses the
+slower of two racing callers, which is then a 3. A replay also *finishes*: a
+document is a header and then lines, a payment is an insert and then
+`post_payment()` and then the matching, and a connection can drop between any
+two. A draft found with no lines gets them; a payment found unbooked is
+booked; matching runs again, and matches only what is still open. What a
+replay does not do is compare: the same reference with different content
+returns the first creation and says `replayed`, and does not notice the
+difference.
+
+**`--dry-run` is the database rehearsing, or it does not exist.** The card
+said "where the database can answer without writing", and before this card it
+could nowhere. `rehearse_post_document()` calls `post_document()` inside a
+block and leaves it by an exception of its own, so the subtransaction is
+rolled back and the answer, held in a variable, survives. It is the only
+honest rehearsal: any description of what posting would do is a second
+implementation of posting. The test counts entries, lines, journal counters
+and audit rows before and after. The number it shows is the one the entry
+would take *now*. Only `post` has it. `payment record --dry-run` would need
+the same treatment of `post_payment()` and the matching, and is not in this
+card.
+
+**The short line syntax was arbitrated out.** `"Audit 1 500 EUR@21"` reads
+well and parses three ways: `1 500` is one number or two; `@21` is a rate
+where the books need a tax, and several taxes share a rate — choosing among
+them is a rule; the currency is the document's. `--line` takes named fields,
+by code, and `--stdin` takes JSON with the MCP tool's field names, refused
+when a field is unknown. JSON is the authoritative form, as the card asked.
+
+**`payment record --doc` reads the ledger, not the document type.** Which way
+the money goes and who it is from come from `open_items()` — the side of what
+is still open — rather than from a table of document types in TypeScript,
+which would be a rule. The matching is then offered to that document alone,
+where `record_payment` without one takes the contact's oldest items first.
+`match` is `settle_from_statement()` with the document's open items as the
+lines named; it chooses nothing.
+
+**Two defaults, both said aloud.** `invoice new` without `--type` is a
+`sale_invoice`, and without `--date` is dated today on the machine running
+it; the answer says so. Neither is a country, a currency or a language, and
+whether the date may be booked on remains the database's decision. No
+contact type is defaulted here: the column has its own default and the CLI
+leaves it to it.
+
+**Known gaps, written down.**
+
+- *`match` and `invoice line add` have no MCP tool.* The functions are in the
+  core (`settleFromStatement`, `addDocumentLine`) for the server to register;
+  the statement tools are another card's work in progress, and the server
+  already replaces a draft's lines wholesale.
+- *A creation is still two requests.* `--ref` makes the cut recoverable, not
+  impossible. One transaction needs a `create_document(jsonb)` in the schema.
+- *`open_items()` is read whole and filtered here* for one document; it takes
+  a contact and a date, not a document.
+- *The line table of `doc show` prints the ledger account's name where
+  `post` prints its code*: they are two answers of two functions, and
+  re-spelling one is how two spellings become three.
+- *Flags come after positionals.* `ekwo post --dry-run job-7` reads `job-7` as
+  the value of `--dry-run` and is refused as such; the parser is the one the
+  installer has always had.
+- *An older database* without this migration answers `--ref` and `--dry-run`
+  with a failure of PostgREST, exit code 1, not with a sentence about
+  migrating. `whoami` warns about the schema version; the verbs do not check.
+- *Numbers from a function over PostgREST are still JSON numbers* where the
+  function returns `numeric` (`reconcile`, `post_payment`), and `money()`
+  puts them back to two decimals as it does for the server. A currency with
+  three decimals is misprinted by both surfaces alike; the rows read from
+  tables are exact.
+
+
+## A company leaves with its books (18 September 2026)
+
+**The case.** Several companies in one installation is the normal case, and
+`pg_dump` takes the installation or nothing. So the company whose owner changes
+accountant could not be handed its ledger by anything in this repository — only
+by the goodwill of the firm. "The client owns the books" was a sentence.
+`export_company()` writes one company out and `import_company()` takes it into
+another installation, where it is a living company. The format is
+[`company-archive.md`](company-archive.md).
+
+**What belongs to a company is read from the catalogue.** A table is of a
+company when it carries `company_id` or a foreign key leads from it to
+`companies`, directly or through another such table. A list would have been
+right on the day it was written. `company_archive_registry` says of each such
+table `exported`, or `excluded` with a sentence, and a table that says neither
+is unclassified — which fails a test, and **stops every export at run time**,
+by name. The second half matters more than the first: a test protects this
+repository, and an installation is not this repository. An operator who adds a
+table of their own, or a module written elsewhere, meets a refusal that names
+the table instead of an archive that silently lacks it. Classifying is a row.
+
+**A module answers through a function in its own schema**,
+`<schema>.archive_tables()`, looked up the way `can_disable()` is. Rows in the
+socle's registry would have been simpler and wrong: a module migration may be
+applied on a socle that predates the registry — the constraint `client` met the
+same morning — and a function in the module's schema depends on nothing. A
+module that ships without one is caught by the same refusal as any other
+unclassified table.
+
+**The right is its own, `company.export`, and the client holds it.** Not part
+of a reading capability: it reads everything at once, and carries it out. The
+question was whether only `owner` should hold it. In the firm's installation
+the firm is the `owner` of every company and the person whose company it is
+holds `client`. A right to leave that only the firm can exercise is not a right
+of the client, it is a courtesy of the firm — the very lock-in this card exists
+to remove, moved from the software into a permission. So `owner` and `client`
+hold it, `accountant` and `viewer` do not: a collaborator of the firm has no
+business walking out with a client's ledger, and a reader was invited to read.
+A firm that must withhold it — a dispute, a lien where the law gives one —
+revokes it per member like any other capability, and that revocation is a row
+on the audit trail of the company, where the client can point at it.
+
+**Under row level security, and whole or not written.** Every export function
+is `security invoker`, and `service_role` and the owner of the database are
+refused outright: for a role that bypasses row level security "what the caller
+may read" means nothing, and whoever holds such a role already has `pg_dump`.
+The CLI's connection is the owner's, so it steps down to `authenticated` inside
+one transaction with the claim of the member it acts for. But row level
+security alone fails in the wrong direction — it hands back fewer rows and says
+nothing, so a member whose `bank.read` was revoked would leave with books that
+have no bank in them and a manifest that looks complete. Each table is
+therefore counted twice, as the caller and by `company_archive_row_count()`, a
+definer function guarded by the same capability that answers a number and
+nothing else. A difference is `export_incomplete`. The test found that a
+`client` holds every reading the archive needs, modules included; it would have
+said so if one had been missing.
+
+**One snapshot.** An archive whose lines were read a moment after their
+entries fails on arrival — after the company has left. `export_company_table()`
+and `export_company_manifest()` are therefore `stable`: they read the snapshot
+of the statement that calls them, and `export_company()` calls both in one
+statement. Called table after table, as the CLI does to stream a large company,
+they need a repeatable read transaction around them, which the CLI opens, and
+it checks each file against the manifest as it writes it. The first draft had
+them volatile, each statement on a snapshot of its own; a read of the functions
+found it, not a test — PGlite has one connection and nobody to book meanwhile.
+
+**An export is recorded, and the record is not a control.** `company_exported`
+goes on the audit trail, written by `export_company()` and by the CLI before
+they read, because a firm should know a ledger left and a client should know
+the firm took a copy. It cannot be more than a record: the export reads nothing
+its caller could not read table by table, without any function at all. It is
+written by a definer function guarded by `company.export`; a holder could write
+the line without exporting, which claims only that they could have.
+
+**The format is rows.** JSON Lines per table, a manifest with the versions an
+installation needs and a sha256 per file. Not `pg_dump`: it cannot cut one
+company out, and its output is not something a living installation can take in.
+Not SQL inserts either, which was the brief of the card this one reads
+(`export --everything`): an `insert` script is restorable on an empty database
+by whoever owns it, and runs with their rights — it cannot be refused row by
+row, and an archive offered to a firm's installation by a stranger must be.
+Decimals are strings because `1210.00` parsed as a float is how a ledger loses
+a cent in transit. `jsonb` columns are carried as stored, so a tool that
+rewrites an archive must copy lines and not parse them; the CLI does, and the
+first run of the round trip is what found that it had to.
+
+**Identifiers are kept.** A uuid is referenced from places no foreign key
+knows: `attachments.entity_id`, `audit_log.record_id`, `entries.module_ref`,
+the `jsonb` of the trail. A mapping would have to find all of them, forever.
+Kept identifiers also decide what a second import does: the company is already
+here, and `company_already_here` is the answer. An import never merges. It
+follows that a company cannot come home while its original is still there,
+which is right — two living copies of one ledger is the state to refuse.
+
+**The people stay and their trace travels.** Members, invitations, keys and
+shared links are excluded, each with its reason in the registry. The columns
+that say who acted — `created_by`, `filed_by`, `sent_by`, the `actor_id` of the
+trail — are not foreign keys, by the decision about `company_members` at the
+top of this file, so they arrive unchanged and name nobody. A table of
+correspondence was considered and not built: it would carry names and addresses
+of the firm's staff into the client's hands, to make a trace prettier. If the
+two installations share an identity provider the identifiers still mean
+something; if not, they still tell two acts of one person from two people.
+
+**Rows are inserted, not replayed.** Replaying through `post_entry()` draws new
+numbers, stamps today on every act of the trail, and asks the period locks for
+leave to rebuild what they protect. So `import_company()` inserts, with the
+user triggers of the tables it fills switched off inside its own transaction —
+`alter table … disable trigger user`, which leaves foreign keys on and takes a
+lock that makes every other writer of the table wait, so nobody books without
+guards in the meantime. `session_replication_role` would have been one line,
+and switches the foreign keys off too. `audit_log` is never touched: its only
+trigger refuses updates and deletes, and the function reads the catalogue to
+see there is nothing to switch off. A reference that points forward or at its
+own table — `companies` to its accounts, an entry to the one it reverses — is
+filled in a second pass; which those are is read from the foreign keys and the
+load order, not listed.
+
+**What the triggers would have guaranteed is checked afterwards, and the
+archive is not trusted.** It may come from anywhere. Before writing: checksums,
+every row's `company_id`, no unknown table, no unknown column — data this
+installation would drop in silence is a reason to refuse. After: every table
+holds exactly the rows that arrived when read through the company, which
+catches a row hung on a parent of a company that was already here; every
+foreign key between exported tables stays inside the company, read from the
+catalogue because most of them carry `company_id` and some do not; entries
+agree with their lines and posted ones balance; matched amounts agree with the
+matchings; no journal counter is behind a number already used. One failure and
+nothing stays. The letters of the matching are held to their counter the same
+way, and two financial years may not overlap. What is *not* re-derived: the
+totals of a document against its lines, `amount_paid` against the matchings,
+the computed balance of a statement, that a module tag names a module the
+company holds, that the boxes of a tax posting agree — each is a trigger that
+was off, each is content the archive is believed on, and none of them lets a
+row reach another company. Nor is the law of a country: that a frozen
+declaration's figures are what the ledger said then is taken from the archive,
+as an opening balance is taken from a previous system.
+
+**`security definer`, guarded on its first line.** Nobody holds a right on a
+company that does not exist yet, so it cannot be invoker. The guard is
+`create_company()`'s, in the same words: the installer, or an administrator of
+the installation. After 18 September's two definer functions that checked
+nobody, the refusal is tested for a member, for `service_role` and for a
+client, and the function is in the sweep of `tests/client_preset.test.ts`.
+
+**Where the new installation's testimony starts.** `company_imported` is
+written on the trail with the origin, the date and the member who exported.
+Everything before that line is what the archive said; everything after is what
+this installation saw. The imported rows of the trail get new ids — an identity
+is local — and keep their order.
+
+**What the round trip found.**
+
+- *`service_role` with a member's claim left with the books.* `has_capability()`
+  reads `auth.uid()` whatever the role, so the first draft, which asked for the
+  capability and nothing else, exported for a backend that put a user id in its
+  claims — with row level security bypassed and the completeness check
+  comparing a number with itself. The refusal of roles that bypass row level
+  security came from there.
+- *`is_installer()` answered NULL, and a guard that says `not` lets NULL
+  through.* The first draft of `import_company()` took a company in for
+  `service_role` with no claim at all. It was the whole family of guards, not
+  this one: the section above is what came of it, and `20260918140000` makes
+  the helper answer false. The guards of this migration are written
+  `is not true` all the same, so that they hold whatever a helper answers, and
+  the test asks them from a session where nothing was ever set.
+- *A parsed archive is a changed archive.* `{"fee": 1.50}` inside a `jsonb`
+  column came back `1.5` from `JSON.parse`, and the import refused its own
+  export as corrupt. The checksum was right; the test was the tool that should
+  not exist. The rule is now written in the format and the CLI never parses a
+  row.
+- *No leak between companies, in either direction.* The sweep compares every
+  identifier in the archive of the company that leaves with every identifier in
+  the archive of the one that stays, furnished the same way on purpose, on
+  every pack that files: the two sets share the installation's id and nothing else. A
+  predicate broken on purpose is caught three times — by the completeness
+  check, by the sweep, and by the import.
+- *The client can leave.* Every reading an archive needs is in the preset.
+
+**Missing, and written.**
+
+- **The files.** The bytes of the attachments are in a storage bucket. The
+  manifest lists them and both commands say how many are to be carried by hand.
+  A bucket-to-bucket copy is a job for the CLI signed in to both projects, and
+  needs the storage policy that mirrors `attachments` — which does not exist
+  yet either.
+- **`attachments.storage_path` arrives as written.** Nothing in the database
+  reads it as a permission, and the storage policy that will exist must not
+  either: a hostile archive can name any path.
+- **One call, one document.** `import_company()` takes the archive as one
+  `jsonb`, bounded by Postgres at a gigabyte and by the client's memory well
+  before. Tens of thousands of entries are comfortable; a company with millions
+  of lines needs a staged load — rows into a staging table, then the same
+  checks — and the checks are written so that they would not change.
+- **The lock.** Importing makes every other writer of the filled tables wait.
+  Nothing was measured on a busy installation.
+- **A module turned off with rows in it stops the export** until somebody who
+  may turns it back on, because turning a module off hides its rows from
+  everybody. Honest, and a door the firm holds; an export that reads a disabled
+  module's rows needs the module's policies to say so.
+- **A machine key cannot export**, for the reason it has no portfolio: the
+  company row is closed to it. Tested as it stands.
+- **A company cannot be removed.** Leaving copies; nothing in the schema
+  deletes a company and its ledger, and `audit_log` would outlive it by design.
+  So "come home" and "move, then close the original" both wait for that card.
+- **Older archives.** An archive of an older socle imports while every column
+  it names still exists. There is no migration of archives; the day a column is
+  renamed, `format_version` moves or the import learns the old name.
+- **No MCP tool**, and no legal formats in the archive (FEC, XBRL, the invoices
+  as files): the first is a small card, the second is `export --everything`
+  proper, of which this is the part that had to exist before a firm is sold to.
+- **Not run against a real Supabase project.** `alter table … disable trigger
+  user` needs the function's owner to own the tables, which is how `ekwo
+  migrate` leaves them. `scripts/e2e-supabase.mjs` does not walk this yet.
+## A statement is imported once, and what "once" is keyed on (18 September 2026)
+
+**A statement never becomes an entry.** `import_bank_statement()` stops at
+`bank_transactions`, state `pending`. The doctrine of the settlement holds one
+step earlier: a statement line becomes a payment when something says what it
+pays, and an import that booked would be a second way of booking money.
+
+**The contract is a list of keys, not a package.** The function takes jsonb —
+what `@ekwo-ai/camt053` returns — and its header lists the keys it reads. The
+core does not import the brick and the brick does not know the core; a reader
+of another format returns the same keys or the importer is taught new ones.
+That is not a shared abstraction between bricks: it is the core saying what it
+takes, the way a brick that writes says what rows it reads.
+
+**The key of a line.** Idempotence had to be an index, not a lookup — a module
+already showed the form (`entries.module_code` / `module_ref`). What goes in it
+was the question.
+
+- *With a bank reference*: the reference, the position in a split batch, the
+  booking date and the amount. The reference is the identity. Date and amount
+  are not there to identify but to contain a bank that reuses references over
+  the years, and they cost nothing, since a replayed movement has both
+  unchanged. What the bank may reword between an intraday view and the final
+  statement — the text, the counterparty's name — is deliberately left out, and
+  a test rewords a line to show it is still known.
+- *Without one*: everything the statement says about the line, **plus its
+  occurrence among identical lines of the same file**. The alternative keys
+  each lose something. Position in the statement is not stable across
+  overlapping statements. A plain fingerprint merges two identical transfers on
+  one day — two tenants, the same rent, the same word — and the ledger is then
+  short of money nobody can find. The occurrence number keeps them apart and
+  stays stable under replay and under overlap, because an overlapping statement
+  lists the same day's identical lines in the same number.
+- *What it cannot do*: two different, non-overlapping files that each carry one
+  line identical in every field, from a bank that gives no reference and no
+  end-to-end identifier. The second is taken for the first. It takes two
+  statements of one account on one day to get there; it is written down rather
+  than guessed around, because every guess (period overlap, statement order)
+  breaks a commoner case.
+- The file's checksum is **kept and not used** as a key: the same statement
+  arrives in files that differ by a creation timestamp.
+
+**A statement lists lines; a line exists once.** The published model had a line
+belong to one statement, and `is_consistent` proved the closing balance over
+the lines a statement owned. An overlapping statement would then either
+duplicate lines or fail its own proof. `bank_statement_lines` is the list; the
+line stays stored under the first statement that brought it; the two trigger
+functions that compute `balance_end_computed` were replaced — not edited — to
+sum what a statement lists or holds. A line entered by hand under a statement
+counts as before.
+
+**The balance is recomputed in the database.** The reader reports `balanced`,
+and the function does not read that flag: a client is not a check. It sums the
+booked lines it was given and refuses `unbalanced_statement` with the
+difference. This is where the roadmap's "refused, by name" lives — the reader
+returns the statement so a person can find the missing line; the importer
+refuses it so the books never hold a statement that does not add up.
+
+**The whole file or none of it.** A file of two statements with one unknown
+account imports neither. Half a file imported is a state nobody asked for and
+nobody can name afterwards.
+
+**An unknown account is refused, never created.** A bank account decides a
+journal and a ledger account; one created by an import is mapped to neither
+and was decided by nobody. The message names the identifier.
+
+**A break in the chain is a view, not a column.** "Previous" is the latest
+statement that closed on or before the day this one opens *and opened before
+it* — the second half keeps a fortnight from being the predecessor of the
+month that contains it. Stored at import, a gap would stay recorded after the
+missing month was imported; computed at read, it closes itself.
+
+**`security invoker`.** The policies on the three tables already test
+`bank.write`; nothing here needed to pass them. The explicit check at the top
+exists for the message only. One consequence, kept: somebody who is not a
+member is told `unknown_company`, because under their own eyes there is none.
+
+**The guard "a pack names a format nobody reads"** is a test, not a command:
+`tests/bank_statement_formats.test.ts` holds each name a pack gives as read or
+owed. The `pack check` half belongs to the command line and is left for it.
+
+**Not done, and written in `docs/international.md`**: amounts finer than two
+decimals are refused because the columns hold two; an entry in another
+currency than its account is refused rather than converted through
+`currency_rates`, because no file that does it has been met; a CODA and a
+camt.053 of the same month would import twice, and the test that says so waits
+for the second reader. No CLI command. The MCP tool takes the file as text,
+which bounds it to what a model can carry: a large statement wants the CLI.
+
+## What produced an entry does not move (18 September 2026)
+
+The previous section left one line open — "no trigger refuses a change of
+`quantity`, `unit_price` or `tax_id` on a posted line" — and called it wider
+than the change it was found in. It was wider than that sentence too.
+
+**What went through, established before anything was written.** From the seat
+of a member holding `documents.write` and nothing more — the `accountant`
+preset — under row level security, in an open period, on an invoice
+`post_document()` had just posted at 150:
+
+- every column of `document_lines`: quantity, price, discount, tax (another, or
+  none), account, name, description, unit, sequence, line type; a line inserted;
+  a line deleted. The totals of the document followed each time — 750, 1 149,
+  50 — against a ledger that still said 150;
+- every column of `documents`: the three totals, `amount_paid`,
+  `payment_state`, the number, the document date, the accounting date, the tax
+  point, the customer, the currency and its rate, the type, the journal;
+  `entry_id` nulled, which unhooks the document from its entry; `state` back
+  to `draft`, after which `post_document()` books it a second time; `state` to
+  `cancelled`, which no function of the schema does and which reverses nothing;
+  and the row deleted, its entry left behind with no document.
+
+What was refused: the language of the document and the category and rate of a
+line, each by a guard of the last three days, and a second `post_document()`.
+The period locks guard `entries` and `entry_lines` and say nothing of a
+document.
+
+The same probe found that the entry was no better off in an open period. That
+is the section after this one, on its own, because every internal path that
+writes an entry had to be read first. This one is the document.
+
+**The rule is a closed list of what may still move, and the default is
+frozen.** `20260918161204`, in the shape `tax_filing_boxes_are_frozen` has: a
+`before` trigger that asks whether the state has left `draft` and refuses by
+name, with SQLSTATE `55006` — the state of the period locks, which
+`isRefusalState()` reads as the books saying no, so the command line exits 3
+and the MCP server hands the name to the model. The guard compares the whole
+row as JSON and lets through only the keys it names, so a column added next
+month is frozen the day it is added; the test reads the columns from the
+catalogue and tries every one, from three seats — an accountant, the owner, a
+machine key — so that column has to be classified the day it lands.
+
+On a document that is no longer a draft, what still moves:
+
+| column | why |
+|---|---|
+| `amount_paid` | only to the figure the matching gives: `document_amount_paid()`, taken out of `documents_refresh_amount_paid()` so the writer and the judge cannot disagree. The guard judges the **value and not the path** — `reconcile()`, `unreconcile()` and whatever settles a document tomorrow pass without the guard knowing them; a figure keyed by hand is `document_amount_paid_is_derived` |
+| `payment_state`, `amount_residual` | follow from it, by trigger and by the column's own definition; keyed, `document_payment_state_is_derived` |
+| `sent_at`, `peppol_status`, `peppol_message_id` | what happened to the document *after* it was issued, which by definition is written after |
+| `updated_at` | |
+
+Nothing else. Not `due_date`: it is BT-9 on the invoice and the maturity of
+the receivable in the ledger. Not `note`: BT-22 is printed, this table has no
+internal note, and the day it has one it joins the list by name. Not
+`reversed_document_id`: a credit note says what it credits while it is a
+draft. Not `entry_id`: deleting the entry of a document would null it, so a
+document now holds the entry it produced. Its **lines** keep every column and
+lose none. Attachments and share links are rows of other tables and are
+untouched: filing a scan under an invoice changes nothing the customer was
+issued.
+
+**The state goes one way.** `draft` to `posted` is one statement of
+`post_document()` on a row that is still a draft, so it passes without the
+guard knowing the function exists; the guard adds only that a document does not
+become posted without an entry (`document_posted_without_entry`). `draft` to
+`cancelled` is a draft abandoned. Out of `posted` there is no way, `cancelled`
+included: no function cancels a posted document, and until one does — writing
+the reversal with it — an `update` that says `cancelled` is a lie about the
+ledger.
+
+**How an issued invoice is corrected, then.** By a credit note: a document of
+type `sale_credit_note` or `purchase_credit_note`, naming the invoice in
+`reversed_document_id`, posted by the same `post_document()`, whose entry
+mirrors the first, and matched against it with `reconcile()` so that both read
+`paid`. That path existed and is now tested end to end as the accountant. It is
+four statements where it should be one: `credit_document()` is the obvious next
+function.
+
+**Nobody is exempt, because nobody needed to be.** Nothing in the file asks
+who the caller is. `post_document()` passes because
+of *when* it writes; the matching because of *what* it writes;
+`taxes_reach_draft_lines` and `contacts_language_reaches_drafts` because they
+only ever touched drafts; a pack upgrade because it rewrites taxes and never a
+document. The whole suite — every golden year, every module, the closing and
+reopening of a year — ran against the guard and the only function that changed
+is the one the figure was taken out of. One exemption is a fact rather than a
+privilege: when the *company* is deleted the cascade removes its documents, and
+the company's row is already gone when the cascade arrives.
+
+**Nobody is born posted either, and an exemption was written and then
+withdrawn.** A document inserted already posted, or a line inserted under one,
+has no draft to have been: it is somebody loading books that were kept
+elsewhere, which is what `import_company()` does. The first version of this
+change opened the insert — and the insert only — to whoever may load a company,
+the installer and an administrator of the instance. It would have been the one
+exemption by identity in the file, and on most self-hosted installations the
+administrator of the instance *is* the accountant.
+
+It is gone, because the import does not need it: `import_company()` switches
+the triggers of the tables it fills off, by name, inside its own transaction,
+behind its own guard, and switches them back on. That is the rule this change
+sets for a backfill, applied by a function — the guard is stepped around in one
+place, where a reviewer reads it, and asks nobody who they are. So
+`document_born_posted` is refused to everybody, the connection that installed
+the schema included, and "nobody is exempt" is true of the whole file: no
+statement in it reads `is_installer()` or `is_instance_admin()`.
+
+Two other ways of letting a load through were looked at and dropped. Going
+through a draft — the order the books were written in — is not faithful to the
+cent: a draft line takes its snapshot and its amounts from the tax *as it
+stands*. And a criterion of fact, "the line arrives in the transaction that
+created its document", reads `xmin` and stops being true at the first
+savepoint, which is every `exception` block of a function that loads a company.
+
+`tests/posted_archive.test.ts` holds what that arrangement owes. The guards
+are back on after a load that succeeded and after one that failed in the
+middle. What arrived posted is frozen for the owner it was given to and for
+the administrator who loaded it. And **the archive wins over the tax of the
+day**, shown on a contradiction rather than assumed: an invoice posted at one
+rate, the tax moved afterwards, the company exported — the archive carries a
+tax at the new rate and a line frozen at the old one, and the line that arrives
+is the old one, with a breakdown that still adds up.
+
+**A document becomes posted only with an entry that is itself posted.**
+`post_document()` posts the entry first and then the document, in that order,
+so the guard can ask for it: `document_posted_without_entry` covers a missing
+entry and one that is still a draft, since a draft entry is not yet in the
+ledger the document claims to have produced. Being born posted dispenses from
+nothing either: what `import_company()` loads is judged by the constraints, which
+no trigger switch turns off — `documents_posted_has_number`,
+`entries_posted_is_balanced` — and by the checks the import runs on the result.
+
+**The totals of a posted document are no longer recomputed.** The trigger that
+derived them fired on every write of a line, whatever the state — which is how
+a changed line restated a sent invoice. The lines no longer move, so it acts on
+drafts. `documents_refresh_totals()` is unchanged.
+
+**The guards read as the schema, not as the caller** — and a test found it, not
+foresight. The first version asked "is the company still there?" under the
+caller's row level security. A machine key cannot read `companies`, was
+answered *no row*, and "no row" was the answer that let the delete through: a
+key could delete a posted invoice that an owner could not. Both guards are
+`security definer`: what a guard decides must not depend on what the person it
+guards against is allowed to see. That is why the third seat is in the test
+for good.
+
+The same seat found a defect that is older and not closed here: **a machine key
+cannot write a document line at all**, draft or not. The line's own trigger
+rounds by the company (`rounding_of()`), which reads `companies` as the caller,
+and `companies_select` knows members and not keys — `unknown_company`.
+
+**One guard on a line, not two.** `document_line_tax_frozen`, a day old, is
+folded into `document_posted`; `document_lines_snapshot_tax()` keeps writing
+the snapshot of a draft and refuses nothing. The guard of a line is named to
+fire first among the `before` triggers of its table, so that a posted line is
+refused by this name and not by whatever an older trigger trips over on the
+way, and so that a derived column keyed on a posted line is judged as it was
+keyed. `documents_guard_language` stays: it fires first and its sentence is the
+better one for what it refuses.
+
+**What the tests had to give up.** Two tests reached a posted row to stand on a
+floor — a check constraint proved on a posted line, a share link judged on a
+document made `cancelled`. They now switch the guard off *by name*
+(`withoutTrigger` in the test helpers). That is also the instruction for a
+future migration that must restate posted rows: it will be refused, and has to
+disable the trigger in its own file, where a reviewer reads it. Two more replay
+an older backfill last, on a database built without it; they now leave this
+guard out of that database too, since on a real one the backfill ran before
+anything froze the rows. Three tests that edited a posted line to prove
+something about a snapshot prove it without touching the line.
+
+## A posted entry is immutable, in an open period too (18 September 2026)
+
+The schema has said so from the first day — in its comments, in every decision
+that leans on it, and in the description of the audit trail the MCP server
+hands to a model: "a posted entry is immutable and is corrected by a reversal,
+so what is recorded is the act of posting and never the lines". What enforced
+it was `entries_guard_period`, and that guards a *locked* period.
+
+**What went through in an open one**, from the seat of a member holding
+`entries.write`, under row level security: the lines of a posted entry deleted,
+all of them; the entry deleted; its state set back to `draft`, after which it
+is an ordinary draft. One amount changed on its own was refused — by
+`entries_posted_is_balanced`, which two amounts changed together satisfy. And
+because the audit trail records the posting and not the lines, on the ground
+that they cannot change, none of it left a trace. The sentence the model was
+given was false, and it was false about the one table an accountant must be
+able to take on trust.
+
+**Every path that writes an entry was read first**, because a guard nobody is
+exempt from has to be one nobody needs an exemption from. They all do one
+thing — insert a `draft`, insert its lines, call `post_entry()`:
+`post_document()`, `post_payment()`, `post_module_entry()` (which is how every
+module reaches the ledger), `opening_balance()`, `settle_cash_basis_tax()`,
+`settle_filing()`, and `close_fiscal_year()` twice — its one `delete from
+entries` is of a closing entry it has just created as a draft and found nothing
+to put in. Where the schema undoes an entry it already does it by a **mirror**
+naming the first in `reversed_entry_id`: `unreconcile()` for an exchange
+difference, `reopen_fiscal_year()` for the entries of a close. Two functions
+write to a posted row: `reconciliations_refresh_lines()`, the two matching
+columns; and `entries_refresh_totals()`, which rewrote the totals on every
+write of a line whatever the state. So the reversal was already the only way
+this schema undoes an entry. What was missing is that nothing made it the only
+way for anybody else.
+
+**The same guard as the document's**, `20260918161538`, with the same closed
+lists, the same SQLSTATE and the same absence of an exemption on `update` and
+`delete`: once an entry has left `draft` it is not deleted, its state does not
+change, no column of it moves but `updated_at`, and its lines take no delete
+and keep every column but `matching_number` and `matched_amount` — the
+exception `entry_lines_guard_period` has made for a locked period since the
+first migration, because matching is not a change to the accounts. `entry_posted`,
+by name. The whole suite ran against it and no function had to change to keep
+working; `entries_refresh_totals()` changed for the reason below.
+
+**Nobody is born posted**, as for a document: an entry inserted already
+posted, or a line inserted under one, is `entry_born_posted` for everybody, the
+installer included, and the exemption by identity that was first written for a
+load was withdrawn here too. Books kept elsewhere arrive through
+`import_company()`, which switches the triggers of the tables it fills off by
+name. What it loads is still judged by what no switch turns off —
+`entries_posted_is_balanced`, `entries_posted_has_number` — and by the checks
+the import runs on the result; the period guards are triggers and are off with
+the rest, which is right for an archive that brings its closed years with it
+and is the import's question to answer, not this guard's.
+`tests/posted_archive.test.ts` holds that the four guards are back on after a
+load, failed or not, and that the entry which arrived is frozen for the
+administrator who loaded it. `entries_refresh_totals()` now acts on drafts: a
+trigger that restates the totals of a posted entry from its lines is how a
+changed line used to become a changed entry.
+
+**Definer**, for the reason found on the document: a guard asked under the
+caller's policies is answered *no row* by whoever cannot read. Not named to
+fire first, unlike the guard of a document line: the older guards of these two
+tables — who may post, what a module tag may become, which period is locked —
+refuse more precisely what they refuse, and keep answering first where they
+do.
+
+**The period guards keep their job.** A draft dated in a locked period is theirs
+to refuse. The two are different questions — *may anything be written at this
+date* and *may this row still change* — and the second no longer depends on the
+first.
+
+Still open: `reverse_entry()` does not exist. The path is sound and tested as
+the accountant — a second entry, the sides swapped, naming the first — and it
+is five statements where it should be one. And an entry's *date* in a closed
+year is still only as safe as the lock: the freeze is about the row, not about
+when it may be born.
+
+## Two formats of fixed positions, and the same month twice (18 September 2026)
+
+**The gap.** The Belgian pack says its banks send CODA and the French one
+CFONB 120, and `tests/bank_statement_formats.test.ts` held both as owed.
+`@ekwo-ai/coda` and `@ekwo-ai/cfonb120` read them. Both were written from the
+published lay-out — Febelfin's standard 2.6 and 2.8, the CFONB brochure of 2004
+and its SEPA addendum of 2010 — and from no example.
+
+**Two bricks, and the same fields.** A format is not a country, and two formats
+that look alike are two formats: 128 positions and 120, a sign in its own
+position and a sign written over a digit, three decimals always and a number of
+decimals read from the record. They share no code — each carries its own
+decoder, its own forty lines of MOD 97. They do return the same fields under
+the same names as `@ekwo-ai/camt053`, each in its own `types.ts`. That is the
+decision of the import, which said "the contract is a list of keys, not a
+package", applied from the other side: a reader returns those keys, and an
+integration test hands what it returns to `import_bank_statement()` with
+nothing in between. What only one format says comes after, under its own name.
+
+**A wrong length is thrown, a wrong sum is returned.** The camt.053 reader drew
+the line — thrown when there is no statement to hang a violation on, returned
+when there is — and these two keep it. A record that is not exactly as long as
+the format says moves every field after it, so it is thrown, with its number,
+and nothing is padded: a reader that pads cannot tell a trimmed record from a
+truncated one. An unknown record, a record out of place, a record of another
+account in the middle of a statement: thrown. A balance that does not follow, a
+trailer that disagrees with the file (CODA counts its records and totals its
+debits and credits), a structured communication that fails its modulo 97:
+returned, as written, never corrected.
+
+**An encoding is said, never guessed.** UTF-8 decoded fatally reads the ASCII
+both standards write. ISO-8859-1 is an option the caller sets, because every
+sequence of bytes is valid ISO-8859-1 and a fallback that cannot fail is not a
+check. EBCDIC, which the CFONB brochure describes, is refused by name.
+
+**A total and its details are never both counted.** CODA's trailer defines its
+own totals as "the sum of the amounts in type 2 records with detail number
+0000", which settles what a movement is. The records under the same sequence
+number are its details; the movement is split into them when, and only when,
+they add up to it exactly — the rule of the camt.053 reader, word for word —
+and a type 9 is followed beneath its type 7 by the same rule. The globalisation
+code is returned and not used: the hierarchy the transaction type gives is the
+one the trailer's arithmetic supports.
+
+**The Belgian structured communication comes back as twelve digits**, with
+`type: 'SCOR'` and `issuer: 'BBA'`, because that is how a camt.053 carries the
+same payment and the core strips everything but letters and digits before it
+compares. `+++…/…/…+++` is how it is printed, and a function gives it.
+
+**CFONB 120 carries no country, so the reader supplies none.** Its account is a
+bank code, a branch code and a number; the core finds an account by what is in
+`bank_accounts.iban`. The reader returns the three joined unless the caller
+names a country (`ibanCountry`), and then returns the IBAN they make there —
+the key of the relevé d'identité bancaire, then ISO 13616. The country is an
+argument of whoever imports, which knows where the account is held; it is not a
+default, and the MCP tool passes it on (`iban_country`) and never fills it in.
+
+**A year on two digits** is read around a pivot the caller can move (80). It is
+a limit of both formats, written in both READMEs.
+
+**The same month in two formats — what is guaranteed, and what is not.** The
+roadmap named this trap, and the import had written it down to wait for the
+second reader. Measured in `tests/coda_cfonb120.test.ts`:
+
+- *Guaranteed*: a format replayed against itself creates nothing. A CODA line
+  is keyed on its bank reference, its position in a split total, its date and
+  its amount; a CFONB 120 line, which has no bank reference, on the fingerprint
+  of everything the file says about it and its occurrence among identical
+  lines.
+- *Holds when the bank is consistent*: a CODA then a camt.053 of the same day
+  whose `AcctSvcrRef` is the CODA reference — the lines are known, none is
+  imported twice. The statement is still stored twice, because the two formats
+  name it differently (`2026-042`, made of the year and the sequence number,
+  against whatever `Stmt/Id` the bank chose); each lists the same lines and
+  proves its own balance, which is what `bank_statement_lines` was made for.
+- *Not guaranteed, and asserted as it is*: when the references differ or the
+  camt.053 has none, **the day is imported twice and no warning is raised**.
+  Febelfin's own standard (§ 7.4) calls the reference "purely informative",
+  says the bank "may change this reference without prior notice" and advises
+  against "any kind of programming in this field". So the good case is a
+  courtesy of the bank.
+- *Never*: a CFONB 120 and a camt.053 of the same month. The format gives a
+  movement nothing the bank calls it by — the entry number is a cheque number
+  or zeros, the `REF` complement is the payer's — so there is nothing to
+  recognise a line by, and the month is imported twice.
+
+This is a gap and is not dressed up as anything else. The fix is not in the
+key: a fingerprint across formats compares a name cut at thirty-five characters
+with one that is not, a label with a remittance. What *is* comparable across
+formats is the statement — same account, same closing date, same two balances,
+another `source_format` — and an import that met one could say so by name. It
+needs a migration and a decision about fortnights and months, and is written in
+`docs/international.md` as the next change.
+
+**What reading the standards found.**
+
+- The import's numbering check (`statement_number_gap`) subtracts sequence
+  numbers, and CODA's **restarts at 001 every year**: the first statement of
+  January is "numbered 1 and the previous one 250", a gap of −250. It is a
+  warning and not a refusal, and it will be wrong once a year per account.
+  For the same reason the reader does not offer the *paper* statement number as
+  `legalSequenceNumber`, which the import prefers: the standard lets a bank
+  write a Julian date or zeros there, and a Monday would be two missing
+  statements.
+- A CODA **day without movement has no new balance record** — header, old
+  balance, trailer — so it has no closing balance and the import refuses it
+  (`statement_without_balances`). The reader invents none. Importing nothing
+  for a day on which nothing moved loses nothing; the hole it leaves in the
+  numbering is the warning above.
+- `source_format` is read from a key called `namespace`, which is XML's word.
+  The two readers fill it (`coda.2`, `cfonb120`) rather than teach the import a
+  second key in a change that has no migration; a `format` key is returned too,
+  for the day it is read.
+
+**MT940: a separate card, and the argument.** The roadmap asked for the choice
+to be made here. Not now. The balance, the dates and the amounts of an MT940
+read as reliably as a CODA's; the counterparty and the communication do not —
+they arrive in field `:86:`, whose sub-fields (`?20`…`?32`, or none, or
+`/NAME/`-style tags) differ by country and by bank, with no single published
+lay-out to read them from. A reader that returned the money and a blob of text
+would import lines the reconciliation can never match, and it would look
+finished. The two formats in this change each have one public specification
+that says where the counterparty is; MT940 has the dialects of the banks that
+send it. It wants a user with files, and the first dialect named after the
+bank it was read from.
+
+**Not done.** No file from a real bank was read by either reader — every
+fixture is invented, and builder and reader share an author. CODA's annex II
+(what each transaction code means) and twenty of its structured communications
+are returned as written, not decoded. No CLI command imports a statement yet,
+in any format. Windows-1252 and EBCDIC are refused rather than read.
+## An entry is posted by post_entry(), and the guard judges facts (18 September 2026)
+
+The two guards of this morning froze what is posted and looked only at the way
+*out*. The way in was left alone on the ground that it is one statement of
+`post_entry()`. It is also one statement of anybody's.
+
+**What went through.** As the `accountant` preset, which holds `entries.post`,
+under row level security, on a balanced draft: `update entries set state =
+'posted', number = 'HAND/1'`. Two check constraints, the capability and the
+period lock stood in the way. What did not: the number was chosen by hand in a
+country whose law forbids a hole in the sequence — the one thing
+`post_entry()` refuses by name, `numbering_gapless`; `posted_at` and
+`fiscal_year_id` stayed null; an entry with no line balances at zero and was
+accepted; the period was not asked the stricter question. And the guard then
+froze the result for good. On a document, `update documents set state =
+'posted', entry_id = …` pointing at a legitimately posted entry that was *not*
+the one the document produced went through as well: `document_posted_without_entry`
+only asked that the entry be posted.
+
+**A flag would not have held.** The obvious fix is a transaction-local setting
+raised by `post_entry()` and read by the guard. A custom setting is writable by
+any session that can run `set_config`, and `post_entry()` runs as its caller,
+so there is no privilege to hide the flag behind: it would say "post_entry is
+running" for whoever said so first. `is_installer()` reads a setting too, but
+it also requires that there be no session and no key, which is exactly what
+cannot be required here.
+
+**So the transition is held to what `post_entry()` produces**, all of which is
+on the row or in the counter (`20260918171946`): an instant it was posted at;
+no financial year but the one the date falls in; at least one line; an open
+period, asked the way the function asks; and the number. In a country that
+numbers without a hole, for a caller who does not hold `entries.import`, the
+number has to be the last one the counter of its journal delivered.
+`next_entry_number()` advances that counter in the same statement and holds
+its row until the transaction ends, and a number already used is refused by
+the unique index — so "equal to the last delivered, and unique" *is* "just
+drawn". Elsewhere a number chosen by hand is what `post_entry()` allows too, and
+the guard brings the counter up to it as the function does. `entry_posted_by_hand`.
+
+A row that satisfies all of it is, fact for fact, the row `post_entry()`
+writes, and is let through whoever wrote it. That is not a door left open: a
+rule about facts cannot refuse the facts, and nothing is lost by it.
+`post_entry()` and the seven functions that call it are unchanged, as are
+`rehearse_post_document()`, `post_module_entry()` and the golden years;
+`import_company()` switches the guard off for a load, as before.
+
+**The cost, said plainly**: the conditions of `post_entry()` are now read in two
+places. `tests/posted_by_hand.test.ts` walks each refusal of the function
+beside the same attempt by hand, from three seats, so that a condition added to
+one and not to the other fails a test. The check is written inside the trigger
+and not in a function beside it: a function nobody may call is one the grants
+doctrine has no honest line for, and `tests/grants.test.ts` said so.
+
+**For a document the facts are on two rows**: the entry names this document —
+`entries.document_id`, written by `post_document()` when it builds the entry
+and frozen with it —, the document is booked on its entry's day, and it carries
+the number it had or its entry's. `document_posted_by_hand` otherwise. A member
+can still build, by hand, a draft entry that names their draft document, post
+it through `post_entry()`, and then flip the document: every fact is then true,
+and what they have done is keep books by hand, which `entries.write` is the
+right to do. What they cannot do any more is hang an invoice on somebody
+else's entry.
+
+Found on the way, not closed here: **a machine key posts an entry with no
+financial year.** `post_entry()` reads `fiscal_years` as its caller, a key
+cannot, and the year comes back null — which is why the guard accepts null and
+refuses only a year that is wrong. It belongs with the other defect of the same
+seat, `rounding_of()` reading `companies`.
+

@@ -14,74 +14,36 @@
  * date; it is the company telling the assistant that the month is closed.
  */
 
+import { createHash } from 'node:crypto';
+import { StatementFileError, readCamt053 } from '@ekwo-ai/camt053';
+import { StatementFileError as Cfonb120FileError, readCfonb120 } from '@ekwo-ai/cfonb120';
+import { StatementFileError as CodaFileError, readCoda } from '@ekwo-ai/coda';
 import { z } from 'zod';
 import { EkwoMcpError, type Backend, type Filter, type Row } from '../backend.js';
-import * as columns from '../columns.js';
-import { amountIn, moneyFields } from '../format.js';
-import { companyId, getDocument, isoDate, uuid } from './read.js';
+import {
+  DOC_TYPES,
+  amountIn,
+  columns,
+  companyCurrency,
+  idsByCode,
+  moneyFields,
+  only,
+} from '@ekwo-ai/core';
+import { companyId, isoDate, uuid } from './read.js';
 
-/** The row, or a refusal naming what row level security did not return. */
-function only<T>(rows: T[], what: string): T {
-  const row = rows[0];
-  if (row === undefined) {
-    throw new EkwoMcpError(
-      `not_found: ${what}. Either it does not exist, or your role on that company does not allow this.`,
-    );
-  }
-  return row;
-}
-
-/** Resolves codes to ids in one query, and says which code was unknown. */
-/**
- * The currency an amount is in when the caller names none: the company's own.
- *
- * Never a literal. A company that keeps its books in Canadian dollars would
- * get a euro invoice out of a euro written here, and a wrong answer is worse
- * than a refusal. `companies.currency_code` is never null, so there is always
- * one to find.
- */
-async function companyCurrency(backend: Backend, company: string): Promise<string> {
-  const rows = await backend.select<{ currency_code: string }>({
-    table: 'companies',
-    columns: ['currency_code'],
-    where: [{ column: 'id', op: 'eq', value: company }],
-  });
-  const currency = rows[0]?.currency_code;
-  if (currency === undefined) {
-    throw new EkwoMcpError(
-      `not_found: company ${company}. Either it does not exist or you are not a member of it.`,
-    );
-  }
-  return currency;
-}
-
-async function idsByCode(
-  backend: Backend,
-  table: 'accounts' | 'taxes' | 'journals',
-  company: string,
-  codes: string[],
-): Promise<Map<string, string>> {
-  const singular = { accounts: 'account', taxes: 'tax', journals: 'journal' }[table];
-  const wanted = [...new Set(codes)];
-  if (wanted.length === 0) return new Map();
-  const rows = await backend.select<{ id: string; code: string }>({
-    table,
-    columns: ['id', 'code'],
-    where: [
-      { column: 'company_id', op: 'eq', value: company },
-      { column: 'code', op: 'in', value: wanted },
-    ],
-  });
-  const found = new Map(rows.map((row) => [row.code, row.id]));
-  for (const code of wanted) {
-    if (!found.has(code)) {
-      throw new EkwoMcpError(
-        `unknown_${singular}_code: no ${singular} "${code}" in this company. list_accounts, get_company and the ekwo://companies/{id}/taxes resource say what exists.`,
-      );
-    }
-  }
-  return found;
-}
+// What a contact, a document, a payment and a matching are written with moved
+// to the core, where the command line calls the same functions. The inputs a
+// model fills in stay here, beside their descriptions; the functions are
+// exported from here under the names they always had.
+export {
+  createContact,
+  createDocument,
+  postDocument,
+  reconcile,
+  recordPayment,
+  unreconcile,
+  updateDocumentLines,
+} from '@ekwo-ai/core';
 
 // ---------------------------------------------------------------------------
 // Contacts
@@ -99,20 +61,8 @@ export const CreateContactInput = z.object({
   address_line1: z.string().min(1).optional(),
   postal_code: z.string().min(1).optional(),
   city: z.string().min(1).optional(),
+  client_ref: z.string().min(1).max(200).optional().describe('Your own reference for this creation. Calling again with the same one returns what was created the first time (`replayed: true`) instead of creating a second — use it whenever a call might be repeated after a timeout.'),
 });
-
-export async function createContact(
-  backend: Backend,
-  args: z.infer<typeof CreateContactInput>,
-): Promise<unknown> {
-  const { company_id, ...rest } = args;
-  const row: Row = { company_id, ...rest };
-  const created = only(
-    await backend.insert<Row>('contacts', [row], columns.CONTACT),
-    'the contact could not be created',
-  );
-  return { contact: created };
-}
 
 // ---------------------------------------------------------------------------
 // The working chart
@@ -358,15 +308,6 @@ const LineInput = z.object({
   tax_code: z.string().min(1).optional().describe('The tax, by code, e.g. BE-S-21. Left out, the tax of the product. With no product either, the line books a base with no VAT box, which is not the same as 0 %.'),
 });
 
-const DOC_TYPES = [
-  'sale_invoice',
-  'sale_credit_note',
-  'sale_quote',
-  'purchase_invoice',
-  'purchase_credit_note',
-  'purchase_order',
-] as const;
-
 export const CreateDocumentInput = z.object({
   company_id: companyId,
   doc_type: z.enum(DOC_TYPES),
@@ -379,296 +320,22 @@ export const CreateDocumentInput = z.object({
   currency_code: z.string().length(3).optional(),
   journal_id: uuid.optional(),
   payment_reference: z.string().min(1).optional(),
+  client_ref: z.string().min(1).max(200).optional().describe('Your own reference for this creation. Calling again with the same one returns what was created the first time (`replayed: true`) instead of creating a second — use it whenever a call might be repeated after a timeout.'),
   lines: z.array(LineInput).min(1),
 });
-
-export async function createDocument(
-  backend: Backend,
-  args: z.infer<typeof CreateDocumentInput>,
-): Promise<unknown> {
-  const resolved = await resolveLineInputs(backend, args.company_id, args.doc_type, args.lines);
-  const currency = args.currency_code ?? (await companyCurrency(backend, args.company_id));
-
-  const document = only(
-    await backend.insert<Row>(
-      'documents',
-      [
-        {
-          company_id: args.company_id,
-          doc_type: args.doc_type,
-          contact_id: args.contact_id,
-          document_date: args.document_date,
-          due_date: args.due_date ?? null,
-          accounting_date: args.accounting_date ?? null,
-          number: args.number ?? null,
-          supplier_reference: args.supplier_reference ?? null,
-          currency_code: currency,
-          journal_id: args.journal_id ?? null,
-          payment_reference: args.payment_reference ?? null,
-        },
-      ],
-      ['id'],
-    ),
-    'the document could not be created',
-  );
-
-  await insertLines(backend, args.company_id, document['id'] as string, resolved);
-  return getDocument(backend, { document_id: document['id'] as string });
-}
-
-type LineArgs = z.infer<typeof LineInput>;
-
-type DocType = (typeof DOC_TYPES)[number];
-
-/** A line, with every code turned into an id and every gap the product fills. */
-interface ResolvedLine {
-  product_id: string | null;
-  name: string;
-  description: string | null;
-  unit_code: string;
-  unit_price: string;
-  quantity: string;
-  discount_percent: string;
-  account_id: string | null;
-  tax_id: string | null;
-}
-
-function isSale(docType: DocType): boolean {
-  return docType.startsWith('sale_');
-}
-
-/**
- * Turns the lines a model wrote into the rows the schema takes.
- *
- * Two things happen here and nowhere else. Codes become ids — one query per
- * table, so twenty lines are three round trips and not sixty. And a product
- * fills in what the line left out: the text, the description, the unit, the
- * price and the tax. Those are *pre-fills*, in the sense an accounting
- * package has always meant: the line is what is invoiced, and everything the
- * caller gave wins over everything the catalogue says.
- *
- * The account is deliberately not resolved here. The database does it, in
- * `resolve_line_account`, because a product line with no account is refused
- * by a check constraint — so a null can only mean "resolve it", and every
- * client has to get the same answer. A null tax is the opposite: it means no
- * tax at all, which is why it is filled from the product only when the line
- * named none.
- */
-async function resolveLineInputs(
-  backend: Backend,
-  company: string,
-  docType: DocType,
-  lines: LineArgs[],
-): Promise<ResolvedLine[]> {
-  const [accounts, taxes, products] = await Promise.all([
-    idsByCode(
-      backend,
-      'accounts',
-      company,
-      lines.map((line) => line.account_code).filter((code): code is string => typeof code === 'string'),
-    ),
-    idsByCode(
-      backend,
-      'taxes',
-      company,
-      lines.map((line) => line.tax_code).filter((code): code is string => typeof code === 'string'),
-    ),
-    productsFor(backend, company, lines),
-  ]);
-
-  const sale = isSale(docType);
-
-  return lines.map((line, index) => {
-    const productId =
-      line.product_id ?? (line.product_code === undefined ? null : (products.byCode.get(line.product_code)?.['id'] as string));
-    const product =
-      productId === null || productId === undefined ? undefined : products.byId.get(productId);
-
-    if (productId !== null && productId !== undefined && product === undefined) {
-      throw new EkwoMcpError(
-        `unknown_product: no product ${productId} in this company. search_products says what exists; a product of another company is invisible here, not merely refused.`,
-      );
-    }
-
-    const name = line.name ?? (product?.['name'] as string | undefined);
-    if (name === undefined) {
-      throw new EkwoMcpError(
-        `missing_line_name: line ${index + 1} has no name and no product to take one from. A line has to say what is being billed.`,
-      );
-    }
-
-    const catalogPrice = product?.[sale ? 'sale_price' : 'purchase_price'];
-    const unitPrice = line.unit_price ?? (typeof catalogPrice === 'string' ? catalogPrice : undefined);
-    if (unitPrice === undefined) {
-      throw new EkwoMcpError(
-        `missing_unit_price: line ${index + 1} ("${name}") has no price, and ${
-          product === undefined
-            ? 'no product to take one from'
-            : `product ${String(product['code'])} has no ${sale ? 'sale' : 'purchase'} price`
-        }.`,
-      );
-    }
-
-    const productTax = product?.[sale ? 'sale_tax_id' : 'purchase_tax_id'];
-
-    return {
-      product_id: productId ?? null,
-      name,
-      description:
-        line.description ?? ((product?.['description'] as string | null | undefined) ?? null),
-      unit_code: line.unit_code ?? ((product?.['unit_code'] as string | undefined) ?? 'C62'),
-      unit_price: amountIn(unitPrice),
-      quantity: amountIn(line.quantity ?? 1),
-      discount_percent: amountIn(line.discount_percent ?? 0),
-      account_id:
-        line.account_id ?? (line.account_code === undefined ? null : (accounts.get(line.account_code) ?? null)),
-      tax_id:
-        line.tax_id ??
-        (line.tax_code === undefined
-          ? (typeof productTax === 'string' ? productTax : null)
-          : (taxes.get(line.tax_code) ?? null)),
-    };
-  });
-}
-
-/** The products named by a set of lines, by id and by code, in one query each. */
-async function productsFor(
-  backend: Backend,
-  company: string,
-  lines: LineArgs[],
-): Promise<{ byId: Map<string, Row>; byCode: Map<string, Row> }> {
-  const ids = [...new Set(lines.map((line) => line.product_id).filter((id): id is string => typeof id === 'string'))];
-  const codes = [
-    ...new Set(lines.map((line) => line.product_code).filter((code): code is string => typeof code === 'string')),
-  ];
-  if (ids.length === 0 && codes.length === 0) return { byId: new Map(), byCode: new Map() };
-
-  const where: Filter[] = [{ column: 'company_id', op: 'eq', value: company }];
-  const rows =
-    ids.length > 0 && codes.length > 0
-      ? [
-          ...(await backend.select<Row>({
-            table: 'products',
-            columns: columns.PRODUCT,
-            where: [...where, { column: 'id', op: 'in', value: ids }],
-          })),
-          ...(await backend.select<Row>({
-            table: 'products',
-            columns: columns.PRODUCT,
-            where: [...where, { column: 'code', op: 'in', value: codes }],
-          })),
-        ]
-      : await backend.select<Row>({
-          table: 'products',
-          columns: columns.PRODUCT,
-          where: [
-            ...where,
-            ids.length > 0
-              ? { column: 'id', op: 'in', value: ids }
-              : { column: 'code', op: 'in', value: codes },
-          ],
-        });
-
-  const byId = new Map(rows.map((row) => [row['id'] as string, row]));
-  const byCode = new Map(rows.map((row) => [row['code'] as string, row]));
-  for (const code of codes) {
-    if (!byCode.has(code)) {
-      throw new EkwoMcpError(
-        `unknown_product_code: no product "${code}" in this company. search_products says what exists, and create_product adds one.`,
-      );
-    }
-  }
-  return { byId, byCode };
-}
-
-async function insertLines(
-  backend: Backend,
-  company: string,
-  documentId: string,
-  lines: ResolvedLine[],
-): Promise<void> {
-  const rows: Row[] = lines.map((line, index) => ({
-    document_id: documentId,
-    company_id: company,
-    sequence: (index + 1) * 10,
-    line_type: 'product',
-    ...line,
-  }));
-  await backend.insert('document_lines', rows, ['id']);
-}
 
 export const UpdateDocumentLinesInput = z.object({
   document_id: uuid,
   lines: z.array(LineInput).min(1).describe('The complete new set of lines; what is there now is replaced.'),
 });
 
-export async function updateDocumentLines(
-  backend: Backend,
-  args: z.infer<typeof UpdateDocumentLinesInput>,
-): Promise<unknown> {
-  const document = only(
-    await backend.select<Row>({
-      table: 'documents',
-      columns: ['id', 'company_id', 'state', 'doc_type'],
-      where: [{ column: 'id', op: 'eq', value: args.document_id }],
-    }),
-    `document ${args.document_id}`,
-  );
-  if (document['state'] !== 'draft') {
-    throw new EkwoMcpError(
-      `document_not_draft: document ${args.document_id} is ${String(document['state'])}. A posted document is not edited; correct it with a credit note.`,
-    );
-  }
-
-  const company = document['company_id'] as string;
-  const resolved = await resolveLineInputs(
-    backend,
-    company,
-    document['doc_type'] as DocType,
-    args.lines,
-  );
-
-  await backend.remove('document_lines', [{ column: 'document_id', op: 'eq', value: args.document_id }]);
-  await insertLines(backend, company, args.document_id, resolved);
-  return getDocument(backend, { document_id: args.document_id });
-}
-
-export const PostDocumentInput = z.object({ document_id: uuid });
-
-export async function postDocument(
-  backend: Backend,
-  args: z.infer<typeof PostDocumentInput>,
-): Promise<unknown> {
-  const entries = await backend.rpc<Row>('post_document', { p_document_id: args.document_id });
-  const entry = only(
-    moneyFields(entries, ['total_debit', 'total_credit']),
-    `document ${args.document_id} produced no entry`,
-  );
-  const lines = await backend.select<Row>({
-    table: 'entry_lines',
-    columns: columns.ENTRY_LINE,
-    where: [{ column: 'entry_id', op: 'eq', value: entry['id'] as string }],
-    order: [{ column: 'sequence' }],
-  });
-  const accounts = await backend.select<{ id: string; code: string; name: string }>({
-    table: 'accounts',
-    columns: ['id', 'code', 'name'],
-    where: [
-      {
-        column: 'id',
-        op: 'in',
-        value: lines.map((line) => line['account_id']).filter((id): id is string => typeof id === 'string'),
-      },
-    ],
-  });
-  const byId = new Map(accounts.map((account) => [account.id, account]));
-
-  return {
-    entry,
-    entry_lines: lines.map((line) => ({ ...line, account: byId.get(line['account_id'] as string) ?? null })),
-    note: 'The document is posted and carries the entry number. Nothing here can be unposted; a mistake is corrected with a credit note.',
-  };
-}
+export const PostDocumentInput = z.object({
+  document_id: uuid,
+  dry_run: z
+    .boolean()
+    .optional()
+    .describe('True: the database posts for real and takes it back, and the entry it would have written is returned. Nothing is written; a refusal is the one posting would give.'),
+});
 
 // ---------------------------------------------------------------------------
 // Payments and matching
@@ -676,7 +343,7 @@ export async function postDocument(
 
 export const RecordPaymentInput = z.object({
   company_id: companyId,
-  direction: z.enum(['inbound', 'outbound']).describe('inbound: a customer paid you. outbound: you paid a supplier.'),
+  direction: z.enum(['inbound', 'outbound']).optional().describe('inbound: a customer paid you. outbound: you paid a supplier. May be left out when document_id is given.'),
   amount: z.union([z.string(), z.number()]).describe('A positive decimal string; the direction carries the sign.'),
   payment_date: isoDate,
   contact_id: uuid.optional().describe('Who paid or was paid. Needed for the payment to be matched against their invoices.'),
@@ -689,210 +356,10 @@ export const RecordPaymentInput = z.object({
   memo: z.string().min(1).optional(),
   currency_code: z.string().length(3).optional().describe('Left out: the currency the company keeps its books in.'),
   exchange_rate: z.union([z.string(), z.number()]).optional().describe('Units of the payment currency for one unit of the company currency, as a rate table states it. Only needed when the payment is in another currency; the realised difference against the invoice is booked at matching.'),
+  document_id: uuid.optional().describe('The posted document this money pays. It names the contact and the direction, read off what is still open on it, and the matching is offered to that document alone rather than to the oldest open items.'),
+  client_ref: z.string().min(1).max(200).optional().describe('Your own reference for this creation. Calling again with the same one returns what was created the first time (`replayed: true`) instead of creating a second — use it whenever a call might be repeated after a timeout.'),
   match_open_items: z.boolean().optional().describe('Default true: match the payment against the oldest open invoices of that contact, up to the amount paid.'),
 });
-
-export async function recordPayment(
-  backend: Backend,
-  args: z.infer<typeof RecordPaymentInput>,
-): Promise<unknown> {
-  let journalId = args.journal_id;
-  if (journalId === undefined && args.journal_code !== undefined) {
-    journalId = (await idsByCode(backend, 'journals', args.company_id, [args.journal_code])).get(
-      args.journal_code,
-    ) as string;
-  }
-  if (journalId === undefined && args.bank_account_id !== undefined) {
-    // A bank account knows the journal it moves through; asking the caller
-    // to repeat it was the first thing the real test tripped over.
-    const account = await backend.select<{ journal_id: string | null }>({
-      table: 'bank_accounts',
-      columns: ['journal_id'],
-      where: [
-        { column: 'id', op: 'eq', value: args.bank_account_id },
-        { column: 'company_id', op: 'eq', value: args.company_id },
-      ],
-    });
-    journalId = account[0]?.journal_id ?? undefined;
-  }
-  if (journalId === undefined) {
-    throw new EkwoMcpError(
-      'missing_journal: a payment needs the bank or cash book it goes through — give bank_account_id (list_bank_accounts), or journal_id / journal_code (get_company lists the journals).',
-    );
-  }
-
-  const payment = only(
-    await backend.insert<Row>(
-      'payments',
-      [
-        {
-          company_id: args.company_id,
-          direction: args.direction,
-          payment_date: args.payment_date,
-          amount: amountIn(args.amount),
-          // Never a literal, for the reason `create_document` gives: a company
-          // that keeps its books in another currency would get a euro payment
-          // out of a euro written here.
-          currency_code:
-            args.currency_code ?? (await companyCurrency(backend, args.company_id)),
-          exchange_rate: args.exchange_rate === undefined ? 1 : String(args.exchange_rate),
-          contact_id: args.contact_id ?? null,
-          journal_id: journalId,
-          bank_account_id: args.bank_account_id ?? null,
-          reference: args.reference ?? null,
-          memo: args.memo ?? null,
-        },
-      ],
-      ['id'],
-    ),
-    'the payment could not be created',
-  );
-
-  const entry = only(
-    moneyFields(await backend.rpc<Row>('post_payment', { p_payment_id: payment['id'] as string }), [
-      'total_debit',
-      'total_credit',
-    ]),
-    'the payment produced no entry',
-  );
-
-  const lines = await backend.select<Row>({
-    table: 'entry_lines',
-    columns: columns.ENTRY_LINE,
-    where: [{ column: 'entry_id', op: 'eq', value: entry['id'] as string }],
-    order: [{ column: 'sequence' }],
-  });
-
-  const matched =
-    args.match_open_items === false || args.contact_id === undefined
-      ? []
-      : await matchOpenItems(backend, args.company_id, args.contact_id, lines);
-
-  const settled = await backend.select<Row>({
-    table: 'payments',
-    columns: columns.PAYMENT,
-    where: [{ column: 'id', op: 'eq', value: payment['id'] as string }],
-  });
-
-  return {
-    payment: settled[0] ?? null,
-    entry,
-    entry_lines: lines,
-    matched,
-    note:
-      args.contact_id === undefined
-        ? 'No contact was given, so the payment landed on the company default third-party account and nothing was matched.'
-        : 'Matching is what makes a document paid: documents.amount_paid is derived from it.',
-  };
-}
-
-/**
- * Matches the payment against the open items of a contact, oldest first.
- *
- * Only lines on the same third-party account, on the other side, still
- * carrying a residual. Each pairing is a call to `reconcile`, which is what
- * draws the letter and keeps the residual honest; this function decides
- * nothing about amounts beyond "the smaller of what is left on either side".
- */
-async function matchOpenItems(
-  backend: Backend,
-  company: string,
-  contact: string,
-  paymentLines: Row[],
-): Promise<unknown[]> {
-  const accounts = await backend.select<{ id: string; reconcilable: boolean }>({
-    table: 'accounts',
-    columns: ['id', 'reconcilable'],
-    where: [
-      {
-        column: 'id',
-        op: 'in',
-        value: paymentLines
-          .map((line) => line['account_id'])
-          .filter((id): id is string => typeof id === 'string'),
-      },
-    ],
-  });
-  const reconcilable = new Set(accounts.filter((account) => account.reconcilable).map((a) => a.id));
-  const paymentLine = paymentLines.find(
-    (line) => typeof line['account_id'] === 'string' && reconcilable.has(line['account_id']),
-  );
-  if (paymentLine === undefined) return [];
-
-  const accountId = paymentLine['account_id'] as string;
-  const paymentIsDebit = Number(paymentLine['debit'] ?? 0) > 0;
-
-  const candidates = await backend.select<Row>({
-    table: 'entry_lines',
-    columns: [...columns.ENTRY_LINE, 'company_id'],
-    where: [
-      { column: 'company_id', op: 'eq', value: company },
-      { column: 'contact_id', op: 'eq', value: contact },
-      { column: 'account_id', op: 'eq', value: accountId },
-    ] satisfies Filter[],
-    limit: 500,
-  });
-
-  const entryIds = [...new Set(candidates.map((line) => line['entry_id'] as string))];
-  const entries = await backend.select<{ id: string; state: string; entry_date: string }>({
-    table: 'entries',
-    columns: ['id', 'state', 'entry_date::text'],
-    where: [{ column: 'id', op: 'in', value: entryIds }],
-  });
-  const posted = new Map(entries.filter((entry) => entry.state === 'posted').map((e) => [e.id, e]));
-
-  // Which scale the allocation is worked out on. `reconcile` matches two
-  // lines in the same foreign currency in *that* currency, because that is
-  // where they are equal, and reads `p_amount` the same way. So when the
-  // payment is foreign the amounts below are its currency's, and a candidate
-  // in another currency is left alone rather than matched at the wrong scale.
-  const home = await companyCurrency(backend, company);
-  const currency = paymentLine['currency_code'] as string | null;
-  const foreign =
-    currency !== null && currency !== home && paymentLine['amount_currency'] !== null;
-
-  /** What is still open on a line, on the scale the matching uses. */
-  const openOf = (line: Row): number => {
-    const ledger = Math.abs(Number(line['balance'] ?? 0));
-    const left = ledger - Number(line['matched_amount'] ?? 0);
-    if (!foreign) return left;
-    const inCurrency = Math.abs(Number(line['amount_currency'] ?? 0));
-    return ledger === 0 ? 0 : Math.round((inCurrency * left * 100) / ledger) / 100;
-  };
-
-  const open = candidates
-    .filter((line) => line['id'] !== paymentLine['id'])
-    .filter((line) => posted.has(line['entry_id'] as string))
-    .filter((line) => (Number(line['debit'] ?? 0) > 0) !== paymentIsDebit)
-    .filter((line) => !foreign || line['currency_code'] === currency)
-    .map((line) => ({
-      line,
-      residual: openOf(line),
-      due: String(line['date_maturity'] ?? posted.get(line['entry_id'] as string)?.entry_date ?? ''),
-    }))
-    .filter((item) => item.residual > 0.005)
-    .sort((a, b) => a.due.localeCompare(b.due));
-
-  let remaining = openOf(paymentLine);
-  const done: unknown[] = [];
-
-  for (const item of open) {
-    if (remaining <= 0.005) break;
-    const amount = Math.min(remaining, item.residual).toFixed(2);
-    const reconciliation = moneyFields(
-      await backend.rpc<Row>('reconcile', {
-        p_line_a: paymentLine['id'],
-        p_line_b: item.line['id'],
-        p_amount: amount,
-      }),
-      ['amount'],
-    );
-    done.push(reconciliation[0] ?? null);
-    remaining -= Number(amount);
-  }
-
-  return done;
-}
 
 export const ReconcileInput = z.object({
   line_a: uuid.describe('A ledger line to match. Either side; the schema works out which is the debit.'),
@@ -900,35 +367,9 @@ export const ReconcileInput = z.object({
   amount: z.union([z.string(), z.number()]).optional().describe('Left out: the smaller of the two open amounts.'),
 });
 
-export async function reconcile(
-  backend: Backend,
-  args: z.infer<typeof ReconcileInput>,
-): Promise<unknown> {
-  const rows = moneyFields(
-    await backend.rpc<Row>('reconcile', {
-      p_line_a: args.line_a,
-      p_line_b: args.line_b,
-      p_amount: args.amount === undefined ? null : amountIn(args.amount),
-    }),
-    ['amount'],
-  );
-  return { reconciliation: rows[0] ?? null };
-}
-
 export const UnreconcileInput = z.object({
   reconciliation_id: uuid.describe('The matching to undo, as returned by reconcile or read from the ledger line.'),
 });
-
-export async function unreconcile(
-  backend: Backend,
-  args: z.infer<typeof UnreconcileInput>,
-): Promise<unknown> {
-  await backend.rpcVoid('unreconcile', { p_reconciliation_id: args.reconciliation_id });
-  return {
-    unreconciled: args.reconciliation_id,
-    note: 'The matching is undone. The entries themselves are untouched: matching changes no account.',
-  };
-}
 
 // ---------------------------------------------------------------------------
 // Bank
@@ -1107,6 +548,90 @@ export async function createBankTransaction(
   };
 }
 
+/**
+ * The statement formats this server has a reader for. A pack names more than
+ * these — MT940, OFX, BAI2 — and a format is offered here the day a brick
+ * reads it, not the day a pack mentions it.
+ */
+export const STATEMENT_FORMATS = ['camt.053', 'coda', 'cfonb120'] as const;
+
+/** What each format is delivered as, for the attachment the caller may have stored. */
+const STATEMENT_MIME_TYPES: Record<(typeof STATEMENT_FORMATS)[number], string> = {
+  'camt.053': 'application/xml',
+  coda: 'text/plain',
+  cfonb120: 'text/plain',
+};
+
+export const ImportBankStatementInput = z.object({
+  company_id: companyId,
+  format: z
+    .enum(STATEMENT_FORMATS)
+    .describe('What the file is. Required, and never guessed from the content: `camt.053` is the ISO 20022 XML statement, `coda` the coded statement of account of 128-character records, `cfonb120` the statement of 120-character records.'),
+  content: z.string().min(1).describe('The file itself, as text (UTF-8).'),
+  file_name: z.string().min(1).optional().describe('The name the file had, kept on the statement.'),
+  storage_path: z
+    .string()
+    .min(1)
+    .optional()
+    .describe('Where the caller stored the file, if it did. With it the file is recorded in attachments, on the statement; this server stores no bytes.'),
+  bank_account_id: uuid
+    .optional()
+    .describe('Only for a file of one statement whose account the company identifies otherwise than the file does. Left out, the account is found by the identifier the statement carries, and an unknown one is refused.'),
+  iban_country: z
+    .string()
+    .length(2)
+    .optional()
+    .describe('Only for `cfonb120`, which identifies an account by a bank code, a branch code and a number, and names no country. With the two letters of the country the account is held in, the statement is matched on the IBAN those make there; left out, on the three joined, as written. Never guessed.'),
+});
+
+export async function importBankStatement(
+  backend: Backend,
+  args: z.infer<typeof ImportBankStatementInput>,
+): Promise<unknown> {
+  let file;
+  try {
+    if (args.format === 'coda') file = readCoda(args.content);
+    else if (args.format === 'cfonb120') {
+      file = readCfonb120(args.content, args.iban_country === undefined ? {} : { ibanCountry: args.iban_country });
+    } else file = readCamt053(args.content);
+  } catch (error) {
+    if (
+      error instanceof StatementFileError ||
+      error instanceof CodaFileError ||
+      error instanceof Cfonb120FileError
+    ) {
+      throw new EkwoMcpError(`unreadable_statement_file: ${error.message}`, {
+        code: error.code,
+        hint: `Nothing was imported. The file is not a ${args.format} this server can read; the message says what stopped it.`,
+      });
+    }
+    throw error;
+  }
+  const bytes = Buffer.from(args.content, 'utf8');
+  const source = {
+    file_name: args.file_name ?? null,
+    checksum: `sha256:${createHash('sha256').update(bytes).digest('hex')}`,
+    byte_size: bytes.byteLength,
+    mime_type: STATEMENT_MIME_TYPES[args.format],
+    storage_path: args.storage_path ?? null,
+  };
+  const statements = await backend.rpc<Row>('import_bank_statement', {
+    p_company_id: args.company_id,
+    p_file: file,
+    p_source: source,
+    ...(args.bank_account_id !== undefined ? { p_bank_account_id: args.bank_account_id } : {}),
+  });
+  return {
+    format: args.format,
+    version: file.version,
+    version_verified: 'versionVerified' in file ? file.versionVerified : null,
+    checksum: source.checksum,
+    statements,
+    violations: file.violations,
+    note: 'A statement is not an entry: every imported line waits as `pending`, and nothing was booked or paid. Importing the same file again creates nothing; a statement that overlaps an earlier one imports only what is new (`lines_known` is the rest). `warnings` names a missing statement — an opening balance that is not the previous closing one — which is signalled and never refused.',
+  };
+}
+
 // ---------------------------------------------------------------------------
 // Locks
 // ---------------------------------------------------------------------------
@@ -1281,9 +806,11 @@ export const InviteMemberInput = z.object({
   company_id: companyId,
   email: z.string().min(3).describe('The address the invitation is for. Matched when it is accepted.'),
   role: z
-    .enum(['owner', 'accountant', 'viewer'])
+    .enum(['owner', 'accountant', 'viewer', 'client'])
     .optional()
-    .describe('The preset. Default viewer, which reads and changes nothing.'),
+    .describe(
+      'The preset. Default viewer, which reads and changes nothing. client is the person whose company it is, invited by whoever keeps their books: it reads the same, and may also hand a file over (documents.deposit).',
+    ),
   capabilities: z
     .array(z.string())
     .optional()

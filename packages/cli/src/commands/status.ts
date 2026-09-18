@@ -5,15 +5,16 @@
 import { boolFlag, rejectUnknownFlags, type ParsedArgs } from '../args.js';
 import { migrationsDir } from '../bundle.js';
 import { describeCertification } from '../pack/certification.js';
-import { CONNECTION_FLAGS, openDatabase } from '../context.js';
+import { CONNECTION_FLAGS, openDatabase, type CommandDeps } from '../context.js';
 import { listMigrations, type Migration } from '../migrations.js';
 import { allModuleMigrations, listModules } from '../module/read.js';
 import { isInteractive } from '../prompt.js';
 import { SCHEMA_MIN } from '../schema.js';
 import { status } from '../status.js';
+import { setResult } from '../output.js';
 import { dim, heading, line, note, pairs, warn, yellow } from '../ui.js';
 
-export const STATUS_FLAGS = [...CONNECTION_FLAGS, 'json', 'yes'] as const;
+export const STATUS_FLAGS = [...CONNECTION_FLAGS, 'yes'] as const;
 
 /**
  * The migrations this release carries, the socle's and the modules'.
@@ -35,19 +36,16 @@ async function everything(): Promise<Migration[]> {
   );
 }
 
-export async function statusCommand(args: ParsedArgs): Promise<number> {
+export async function statusCommand(args: ParsedArgs, deps: CommandDeps = {}): Promise<number> {
   rejectUnknownFlags(args, STATUS_FLAGS);
   const interactive = !boolFlag(args, 'yes') && isInteractive();
-  const { db, connection } = await openDatabase(args, { interactive });
+  const { db, connection } = await openDatabase(args, { interactive, connect: deps.connect });
 
   try {
     const migrations = await everything();
     const report = await status(db, migrations);
 
-    if (boolFlag(args, 'json')) {
-      line(JSON.stringify(report, null, 2));
-      return report.pending.length > 0 ? 1 : 0;
-    }
+    setResult(report);
 
     if (!report.schemaInstalled) {
       heading('Schema');
@@ -120,7 +118,13 @@ export async function statusCommand(args: ParsedArgs): Promise<number> {
         report.companies.map((c) => [
           c.name,
           `${c.country} · pack ${c.packVersion ?? 'unknown'} · chart ${c.chartCode ?? 'unknown'} · ` +
-            `files ${c.vatPeriod === null ? 'on no recorded cadence' : `every ${c.vatPeriod}`} · ` +
+            `files ${
+              c.filingPeriods.length === 0
+                ? 'nothing on a recorded cadence'
+                : c.filingPeriods
+                    .map((f) => `${f.reportName ?? f.reportCode} every ${f.period}`)
+                    .join(', ')
+            } · ` +
             `${c.accounts} accounts · ${c.entries} entries · ` +
             `${c.fiscalYears} financial year(s), ${c.fiscalYears - c.closedFiscalYears} open` +
             (c.liveShares === 0 ? '' : ` · ${c.liveShares} document(s) published behind a link`),

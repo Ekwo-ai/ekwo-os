@@ -33,6 +33,7 @@ An empty cell means there is no counterpart, which is itself information.
 | `companies.vat_number` | `res.company.vat` | BT-31 seller VAT identifier | |
 | `companies.registration_number` | `res.company.company_registry` | BT-30 seller legal registration | |
 | `companies.country` | `res.company.country_id` | BT-40 seller country | |
+| `companies.peppol_scheme`, `.peppol_identifier` | `res.partner.peppol_eas`, `.peppol_endpoint` on `res.company.partner_id` | BT-34 seller electronic address, with its scheme (BT-34-1) | |
 | `companies.fiscal_country` | `res.company.account_fiscal_country_id` | | |
 | `companies.address_line1`, `.postal_code`, `.city` | on `res.company.partner_id` | BG-5 seller postal address | |
 | `companies.currency_code` | `res.company.currency_id` | BT-5 invoice currency | `Idevise` (when it differs) |
@@ -87,7 +88,7 @@ An empty cell means there is no counterpart, which is itself information.
 | `contacts.receivable_account_id` | `property_account_receivable_id` | | |
 | `contacts.payable_account_id` | `property_account_payable_id` | | |
 | `contacts.iban` | `res.partner.bank_ids` | BT-84 payment account identifier | |
-| `contacts.peppol_scheme`, `.peppol_identifier` | `res.partner.peppol_eas`, `.peppol_endpoint` | BT-49 buyer electronic address | |
+| `contacts.peppol_scheme`, `.peppol_identifier` | `res.partner.peppol_eas`, `.peppol_endpoint` | BT-49 buyer electronic address, with its scheme (BT-49-1) | |
 | `contacts.currency_code` | `res.partner.property_purchase_currency_id` | | |
 
 ## Taxes
@@ -95,20 +96,21 @@ An empty cell means there is no counterpart, which is itself information.
 | Ekwo | Odoo | EN 16931 | FEC |
 |---|---|---|---|
 | `taxes.code` | `account.tax.name` | | |
-| `taxes.amount` | `account.tax.amount` | BT-119 category rate | |
+| `taxes.amount` | `account.tax.amount` | BT-119 category rate, through the snapshot the line keeps | |
 | `taxes.amount_type` | `account.tax.amount_type` | | |
 | `taxes.applies_to` | `account.tax.type_tax_use` | | |
 | `taxes.treatment` | `account.fiscal.position` | | |
-| `taxes.vat_category` | `account.tax.tax_group_id` and country data | BT-118 category code | |
+| `taxes.vat_category` | `account.tax.tax_group_id` and country data | BT-118 category code, through the snapshot the line keeps | |
 | `taxes.exemption_code` | *(localisation data)* | BT-121 exemption reason code | |
 | `taxes.valid_from`, `.valid_to` | *(no counterpart: a rate change is a new tax)* | | |
-| `taxes.legal_reference` | *(no counterpart)* | BT-120 exemption reason text | |
+| `taxes.legal_reference` | *(no counterpart)* | *(the article the tax rests on, written for a reviewer; BT-120 is `document_tax_summary.exemption_reason`)* | |
 | `taxes.price_include` | `account.tax.price_include` | | |
 | `tax_postings` | `account.tax.repartition.line` | | |
 | `tax_postings.factor_percent` | `.factor_percent` | | |
 | `tax_postings.posting_type` | `.repartition_type` | | |
 | `tax_postings.account_id` | `.account_id` | | |
 | `tax_postings.declaration_box` | `.tag_ids` → `account.account.tag` | | |
+| `tax_postings.declaration_boxes` | `.tag_ids`, where one posting carries several | | |
 | `tax_postings.box_factor_percent` | *(carried by the sign of the tag)* | | |
 | `tax_postings.document_kind` | `.document_type` | | |
 
@@ -166,6 +168,7 @@ An empty cell means there is no counterpart, which is itself information.
 | `documents.contract_reference` | *(no standard field)* | BT-12 contract reference | |
 | `documents.order_reference` | `account.move.invoice_origin` | BT-13 purchase order reference | |
 | `documents.delivery_date` | `account.move.delivery_date` | BT-72 actual delivery date | |
+| `documents.tax_point_date` | *(no counterpart: `account.move.date` is the accounting date)* | BT-7 value added tax point date | |
 | `documents.delivery_address_line1`, `.delivery_postal_code`, `.delivery_city`, `.delivery_country` | `account.move.partner_shipping_id` | BG-15 deliver-to address | |
 | `documents.payment_terms` | `account.move.invoice_payment_term_id` | BT-20 payment terms | |
 | `documents.payment_means_code` | `account.move.payment_method_line_id` | BT-81 payment means type code | |
@@ -223,13 +226,36 @@ no move, and there is deliberately no counterpart to them.
 | `document_lines.amount_untaxed` | `.price_subtotal` | BT-131 line net amount | |
 | `document_lines.tax_id` | `.tax_ids` | | |
 | `document_lines.account_id` | `.account_id` | | `CompteNum` |
-| `document_lines.vat_category` | derived from the tax | BT-151 line VAT category code | |
-| `document_lines.vat_rate` | derived from the tax | BT-152 line VAT rate | |
-| `document_tax_summary` (view) | `account.move.tax_totals` | BG-23 VAT breakdown | |
+| `document_lines.vat_category` | derived from the tax while the document is a draft, frozen when it is posted | BT-151 line VAT category code | |
+| `document_lines.vat_rate` | derived from the tax while the document is a draft, frozen when it is posted | BT-152 line VAT rate | |
+| `document_tax_summary` (view) | `account.move.tax_totals` | BG-23 VAT breakdown, one row per tax: two taxes of one category and rate are one group of the standard | |
+| `document_tax_summary.vat_category` | | BT-118 category code, as the lines carry it | |
+| `document_tax_summary.tax_rate` | | BT-119 category rate, as the lines carry it | |
 | `document_tax_summary.base_amount` | | BT-116 category taxable amount | |
-| `document_tax_summary.tax_amount` | | BT-117 category tax amount | |
+| `document_tax_summary.tax_charged` | | BT-117 category tax amount: what the buyer is charged, nothing where the tax is self-assessed | |
+| `document_tax_summary.tax_amount` | | *(the tax the return reports, which a reverse charge has and its invoice does not)* | |
+| `document_tax_summary.exemption_code` | `taxes.exemption_code` | BT-121 exemption reason code | |
+| `document_tax_summary.exemption_reason` | `legal_mention_templates.text` for the treatment of the tax, in `documents.language` | BT-120 exemption reason text | |
+| `document_tax_summary.legal_reference` | `taxes.legal_reference` | | |
+| `document_header` (view) | `account.move` with its company and its partner | BG-2 to BG-19, everything above the lines | |
+| `document_header.tax_point_date` | `documents.tax_point_date` | BT-7 value added tax point date | |
+| `document_header.delivery_address_line1`, `.delivery_postal_code`, `.delivery_city`, `.delivery_country` | `documents.delivery_*` | BG-15 deliver-to address (BT-75, BT-78, BT-77, BT-80) | |
+| `document_header.seller_peppol_scheme`, `.seller_peppol_identifier` | `companies.peppol_*` | BT-34-1, BT-34 | |
+| `document_header.buyer_peppol_scheme`, `.buyer_peppol_identifier` | `contacts.peppol_*` | BT-49-1, BT-49 | |
 | `document_line_items` (view) | `account.move.invoice_line_ids` | BG-25 with BG-31 | |
 | `document_line_items.seller_item_identifier` | `product.default_code` | BT-155 item seller identifier | |
+
+### To the Peppol invoice
+
+[`@ekwo-ai/peppol-ubl`](../packages/formats/peppol-ubl/) reads one row of
+`document_header`, the rows of `document_line_items` and the rows of
+`document_tax_summary`, under the column names above, and nothing else: no
+join to a table and no option is needed for a posted sale to come out with no
+rule broken. Dates are selected `::text`. What the views do not say yet, and
+the brick therefore reports rather than writes: the net price of a line keyed
+with its tax in it (BT-146, BR-26), document and line allowances and charges,
+and a reason for a supply outside the scope of the tax where the pack gives it
+no code (BR-O-10).
 
 ### To the Factur-X invoice object
 

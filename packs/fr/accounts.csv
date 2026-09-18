@@ -168,10 +168,10 @@ code,parent,type,reconcilable,name,sequence
 444000,444,liability_current,false,État — impôt sur les bénéfices,1670
 445,44,liability_current,false,État — Taxes sur le chiffre d'affaires,1680
 445200,445,liability_current,false,TVA due intracommunautaire,1690
-445510,445,liability_current,false,TVA à décaisser,1700
+445510,445,liability_current,true,TVA à décaisser,1700
 445660,445,asset_current,false,TVA déductible sur autres biens et services,1710
 445662,445,asset_current,false,TVA déductible sur immobilisations,1720
-445670,445,asset_current,false,Crédit de TVA à reporter,1730
+445670,445,asset_current,true,Crédit de TVA à reporter,1730
 445710,445,liability_current,false,TVA collectée,1740
 445800,445,asset_current,false,Taxes sur le chiffre d'affaires à régulariser ou en attente,1750
 445860,445,asset_current,false,TVA déductible sur décaissements — en attente,1752

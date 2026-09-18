@@ -4,7 +4,7 @@
  * `packs/schema/pack.1.json` is a real draft 2020-12 schema — an editor, a
  * contributor and a CI elsewhere can all use it — but this CLI is handed a
  * database password and a service_role key, so it has one runtime dependency
- * and that dependency is the Postgres driver. Ajv would be the eleventh
+ * from outside this repository and that dependency is the Postgres driver. Ajv would be the eleventh
  * package in the tree of the thing that holds the secrets.
  *
  * So this walks the subset the pack schema actually uses: `$ref` inside the

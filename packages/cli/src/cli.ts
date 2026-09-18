@@ -1,20 +1,28 @@
 /**
- * The command line itself: parse, dispatch, and turn a thrown error into an
- * exit code and one readable line.
+ * The command line itself: parse and dispatch. What a command answers and
+ * which exit code it ends on is `output.ts`, for every command at once.
  */
 
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
-import { UsageError, parseArgs, type ParsedArgs } from './args.js';
+import { UsageError, boolFlag, parseArgs, type ParsedArgs } from './args.js';
+import { companyCommand } from './commands/company.js';
+import { contactCommand } from './commands/contact.js';
 import { demoCommand } from './commands/demo.js';
+import { docCommand, invoiceCommand, postCommand } from './commands/document.js';
 import { doctorCommand } from './commands/doctor.js';
 import { initCommand, type InitDeps } from './commands/init.js';
+import { loginCommand, logoutCommand, type LoginDeps } from './commands/login.js';
 import { migrateCommand } from './commands/migrate.js';
 import { moduleCommand } from './commands/module.js';
 import { packCommand } from './commands/pack.js';
+import { matchCommand, paymentCommand } from './commands/payment.js';
 import { registerCommand, unregisterCommand } from './commands/register.js';
 import { statusCommand } from './commands/status.js';
-import { bold, cyan, dim, fail, line } from './ui.js';
+import { useCommand, whoamiCommand } from './commands/whoami.js';
+import type { BooksDeps } from './books.js';
+import { askedForJson, commandLabel, execute, reportFailure, setResult } from './output.js';
+import { bold, cyan, dim, line } from './ui.js';
 
 export function version(): string {
   try {
@@ -33,10 +41,24 @@ export const COMMANDS = [
   'doctor',
   'module',
   'pack',
+  'company',
   'register',
   'unregister',
   'demo',
+  'login',
+  'logout',
+  'use',
+  'whoami',
+  'contact',
+  'invoice',
+  'post',
+  'payment',
+  'match',
+  'doc',
 ] as const;
+
+/** What a test may hand a command instead of the network, the disk and the environment. */
+export type RunDeps = InitDeps & LoginDeps & BooksDeps;
 
 export function help(): string {
   return `${bold('ekwo')} — install and operate Ekwo OS on a Supabase project you own.
@@ -58,9 +80,18 @@ ${bold('Commands')}
   ${cyan('pack')}        Compile a country pack into its seed, check that the committed
               seed is still the exact output of the pack, and move a company
               onto the version an installation holds.
+  ${cyan('company')}     One company leaves an installation with its books, as an archive
+              anybody can read, and arrives in another one alive.
   ${cyan('register')}    Opt in to security advisories and release notes. Never required.
   ${cyan('unregister')}  Opt back out. Clears the address and the date.
   ${cyan('demo')}        Load the sample company. Fictional data; ask for it explicitly.
+
+  ${cyan('login')}       Sign in to an instance as yourself and keep the session, in your
+              own configuration directory and never in a repository.
+  ${cyan('logout')}      End that session, here and on the instance.
+  ${cyan('use')}         Pick the company the next commands run on.
+  ${cyan('whoami')}      Who you are on which instance, the companies you can see, and
+              what you may do on the one in use.
 
 ${bold('Connecting')} ${dim('(every command)')}
   --db-url <url>            Postgres connection string. Supabase dashboard →
@@ -70,6 +101,51 @@ ${bold('Connecting')} ${dim('(every command)')}
   --db-region <region>      Use the pooler in this region, e.g. eu-central-1.
   --supabase-url <url>      https://<ref>.supabase.co — needed to create a user.
   --service-role-key <key>  Project Settings → API. Needed to create a user.
+
+  ${cyan('contact')}     add <name> | list — the people and companies the books name.
+  ${cyan('invoice')}     new | line add <document> — a draft and its lines. Any kind of
+              document, with --type; a draft books nothing.
+  ${cyan('post')}        <document> — book it, through post_document(). --dry-run shows
+              the entry the database would write, and writes nothing.
+  ${cyan('payment')}     record — money in or out, booked and matched.
+  ${cyan('match')}       <bank transaction> <document> — a statement line pays a document.
+  ${cyan('doc')}         list | show <document> — what exists, and what is still owed.
+
+${bold('Acting as a person')} ${dim('(login … whoami, and every verb that keeps books — never a service_role key)')}
+  --profile <name>          Which profile: a demo instance, production, one client
+                            of a firm. Defaults to the one last signed in to.
+  --company <name|id>       The company for this one command, over the one in use.
+  --supabase-url <url>      ${dim('login')}  https://<ref>.supabase.co. Read from ekwo.json
+                            when the working directory has one.
+  --anon-key <key>          ${dim('login')}  The publishable key. Project Settings → API.
+  --email <address>         ${dim('login')}  Who signs in.
+  --password <password>     ${dim('login')}  Prompted, masked, if omitted. Sent to the
+                            instance once and never written to disk.
+
+${bold('Keeping books')} ${dim('(each verb is one function the MCP server calls too; no rule lives here)')}
+  --ref <reference>         On what creates — contact add, invoice new, payment
+                            record. Your own reference: the same one a second
+                            time returns what the first created, and creates
+                            nothing. Pass it whenever a call might be repeated.
+  --stdin                   Read one JSON document on the standard input, with
+                            the fields of the MCP tool of the same meaning.
+                            The form that is authoritative; flags beside it win.
+  --line "k=v,k=v"          invoice new, repeatable. Keys: name, price, qty,
+                            account, tax, product, unit, discount, description.
+                            Codes, never rates; a comma in a value is \\,.
+  --dry-run                 post. Ask the database what it would write.
+  <document>                Its id, its number, or the --ref it was created under.
+  Amounts are decimal strings, in and out: 1500.00. Nothing is computed here.
+
+${bold('Output')} ${dim('(every command)')}
+  --json                    One JSON document on the standard output, and the
+                            prose on the standard error. Never asks a question.
+                            The shape is packages/cli/schema/output.1.json.
+  --yes, -y                 Never ask a question, in either form.
+
+  Exit codes: 0 done · 1 it failed, or a check found something · 2 the command
+  was called wrong · 3 the database refused — a locked period, a capability
+  you do not hold. The refusal is printed as the database wrote it.
 
 ${bold('ekwo init')}
   --country <cc>            Which pack: its chart of accounts and its VAT rules.
@@ -88,7 +164,11 @@ ${bold('ekwo init')}
   --language <xx>           Language of the books. Defaults to the country pack's.
   --vat-period <cadence>    How often the company files its VAT return: month,
                             quarter or year. Asked when the country's form
-                            offers several; left unrecorded when nothing says.
+                            offers several and the law proposes none.
+  --filing-period <c>=<p>   The same, for any declaration the country files, by
+                            the code of its form. Repeatable, one per
+                            declaration: a company files its return and its
+                            recapitulative statement on cadences of their own.
   --demo                    Also load the sample company.
   --register                Register without being asked. --register-email sets
                             the address; otherwise --admin-email is used.
@@ -113,11 +193,30 @@ ${bold('ekwo pack')} ${dim('(build, check and list need a checkout of the reposi
                             a closed validity are applied; everything else is
                             listed and left alone until --apply.
 
+${bold('ekwo company')}
+  export <company> --out <dir>
+                            Write the archive of one company: manifest.json and
+                            one data/<table>.jsonl per table. Read as a member
+                            who holds company.export (--as-user, an owner by
+                            default), under row level security.
+  import <dir>              Take an archive in, whole or not at all. The
+                            installer or an administrator of the installation
+                            (--as-user); --owner names the first owner. A
+                            company already here is refused.
+
 ${bold('Environment')}
   EKWO_DB_URL               Same as --db-url. SUPABASE_DB_URL also works.
   EKWO_DB_PASSWORD          Same as --db-password.
   SUPABASE_URL              Same as --supabase-url.
   SUPABASE_SERVICE_ROLE_KEY Same as --service-role-key.
+  SUPABASE_ANON_KEY         Same as --anon-key.
+  EKWO_EMAIL, EKWO_PASSWORD Sign in for this one command. With SUPABASE_URL and
+                            SUPABASE_ANON_KEY they come before any profile, and
+                            nothing is read from or written to the disk: a CI job.
+  EKWO_ACCESS_TOKEN         The same, with a session token already in hand.
+  EKWO_PROFILE              Same as --profile.
+  EKWO_CONFIG_DIR           Where profiles and sessions are kept. Defaults to
+                            $XDG_CONFIG_HOME/ekwo, else ~/.config/ekwo.
   EKWO_REGISTRY_URL         Where registrations are announced.
   NO_COLOR                  Plain output.
 
@@ -126,10 +225,16 @@ ${bold('What this CLI does not do')}
   plan is enough — and the CLI connects to it. Your data is on your account
   from the first row, and there is nothing for us to hold back.
 
-  It never writes a secret to disk. The database password and the service_role
-  key are read from a flag, the environment or a masked prompt, used, and
-  forgotten. ${cyan('ekwo.json')} holds the project URL, the country and the schema
-  version, and nothing else.
+  It never writes a password or a key to disk. The database password and the
+  service_role key are read from a flag, the environment or a masked prompt,
+  used, and forgotten. ${cyan('ekwo.json')} holds the project URL, the country and the
+  schema version, and nothing else. The one thing kept is the session
+  ${cyan('ekwo login')} obtains, in your own configuration directory, readable by you
+  alone, and refused anywhere inside a repository.
+
+  It never keeps books with a service_role key. ${cyan('init')} and ${cyan('migrate')} install,
+  as the owner of the database, and say so; everything else that touches a
+  ledger acts as the person signed in, under row level security.
 
   There is no ${cyan('eject')} command, because there is nothing to eject from. The
   schema is in your database, the migrations are in this repository under
@@ -140,60 +245,82 @@ ${bold('Docs')}  https://github.com/Ekwo-ai/ekwo-os
 `;
 }
 
-export async function run(argv: string[], deps: InitDeps = {}): Promise<number> {
+export async function run(argv: string[], deps: RunDeps = {}): Promise<number> {
   let args: ParsedArgs;
   try {
     args = parseArgs(argv);
   } catch (error) {
-    fail((error as Error).message);
-    return 2;
+    return reportFailure('ekwo', askedForJson(argv), error);
   }
 
-  if (args.flags.get('version') === true && args.command === undefined) {
-    line(version());
-    return 0;
-  }
-
-  if (args.command === undefined || args.command === 'help' || args.flags.get('help') === true) {
-    if (args.command !== undefined && args.command !== 'help' && !isKnown(args.command)) {
-      fail(`unknown command: ${args.command}`);
-      return 2;
-    }
-    process.stdout.write(help());
-    return 0;
-  }
-
+  let json: boolean;
   try {
+    json = boolFlag(args, 'json');
+  } catch (error) {
+    return reportFailure(commandLabel(args), false, error);
+  }
+
+  return execute(args, json, async () => {
+    if (args.flags.get('version') === true && args.command === undefined) {
+      setResult({ version: version() });
+      line(version());
+      return 0;
+    }
+
+    if (args.command === undefined || args.command === 'help' || args.flags.get('help') === true) {
+      if (args.command !== undefined && args.command !== 'help' && !isKnown(args.command)) {
+        throw new UsageError(`unknown command: ${args.command}`);
+      }
+      setResult({ version: version(), commands: [...COMMANDS] });
+      line(help().trimEnd());
+      return 0;
+    }
+
     switch (args.command) {
       case 'init':
         return await initCommand(args, deps);
       case 'migrate':
-        return await migrateCommand(args);
+        return await migrateCommand(args, deps);
       case 'status':
-        return await statusCommand(args);
+        return await statusCommand(args, deps);
       case 'doctor':
-        return await doctorCommand(args);
+        return await doctorCommand(args, deps);
       case 'module':
-        return await moduleCommand(args);
+        return await moduleCommand(args, deps);
       case 'pack':
-        return await packCommand(args);
+        return await packCommand(args, deps);
+      case 'company':
+        return await companyCommand(args, deps);
       case 'register':
-        return await registerCommand(args, deps.fetchImpl !== undefined ? { fetchImpl: deps.fetchImpl } : {});
+        return await registerCommand(args, deps);
       case 'unregister':
-        return await unregisterCommand(args);
+        return await unregisterCommand(args, deps);
       case 'demo':
-        return await demoCommand(args);
+        return await demoCommand(args, deps);
+      case 'login':
+        return await loginCommand(args, deps);
+      case 'logout':
+        return await logoutCommand(args, deps);
+      case 'use':
+        return await useCommand(args, deps);
+      case 'whoami':
+        return await whoamiCommand(args, deps);
+      case 'contact':
+        return await contactCommand(args, deps);
+      case 'invoice':
+        return await invoiceCommand(args, deps);
+      case 'post':
+        return await postCommand(args, deps);
+      case 'payment':
+        return await paymentCommand(args, deps);
+      case 'match':
+        return await matchCommand(args, deps);
+      case 'doc':
+        return await docCommand(args, deps);
       default:
-        fail(`unknown command: ${args.command}`);
-        line(dim('Run `ekwo --help` for the list.'));
-        return 2;
+        throw new UsageError(`unknown command: ${args.command}\nRun \`ekwo --help\` for the list.`);
     }
-  } catch (error) {
-    const message = (error as Error).message;
-    fail(message);
-    if (error instanceof UsageError) return 2;
-    return 1;
-  }
+  });
 }
 
 function isKnown(command: string): boolean {

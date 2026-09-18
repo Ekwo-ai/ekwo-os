@@ -31,6 +31,11 @@ const ALLOWED_DEPENDENCIES: Record<string, readonly string[]> = {
   '@ekwo-ai/des': [],
   '@ekwo-ai/ecdf': [],
   '@ekwo-ai/vd': [],
+  '@ekwo-ai/vat-consignment': [],
+  '@ekwo-ai/peppol-ubl': [],
+  '@ekwo-ai/camt053': [],
+  '@ekwo-ai/coda': [],
+  '@ekwo-ai/cfonb120': [],
 };
 
 interface Brick {
@@ -154,6 +159,28 @@ describe('the format libraries are bricks, not parts of the core', () => {
         for (const dependency of declared) {
           if (!allowed.includes(dependency)) guilty.push(`${brick.name}: ${field} ${dependency}`);
         }
+      }
+    }
+    expect(guilty).toEqual([]);
+  });
+
+  it('lets every one of them run its own tests, from its own directory', async () => {
+    // A brick is meant to be read, and run, outside this repository. `npm test`
+    // in its directory has to run its tests and nothing else, which it does
+    // only if the package carries a vitest configuration of its own: without
+    // one the root configuration is found, whose patterns are written from the
+    // repository root, and vitest exits non-zero having run no test at all.
+    const guilty: string[] = [];
+    for (const brick of await bricks()) {
+      const scripts = (brick.manifest['scripts'] as Record<string, string> | undefined) ?? {};
+      if (!scripts['test']) guilty.push(`${brick.name}: no test script`);
+      try {
+        const config = await readFile(join(brick.dir, 'vitest.config.ts'), 'utf8');
+        if (!/include:\s*\[\s*'test\/\*\*\/\*\.test\.ts'/.test(config)) {
+          guilty.push(`${brick.name}: vitest.config.ts does not include its own tests`);
+        }
+      } catch {
+        guilty.push(`${brick.name}: no vitest.config.ts of its own`);
       }
     }
     expect(guilty).toEqual([]);

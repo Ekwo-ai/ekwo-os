@@ -42,6 +42,14 @@ const FROM_VERSION = '20260914120500';
  */
 const ALLOWED = new Map([
   // 'supabase/migrations/00000000000000_example.sql': 'a percentage, not an amount',
+  [
+    'supabase/migrations/20260918141107_a_line_keeps_the_tax_it_was_posted_with.sql',
+    'a percentage, and a widening: document_lines.vat_rate is numeric(7, 4) and the view column it now feeds was published as numeric(12, 4), which `create or replace view` will not let change',
+  ],
+  [
+    'supabase/migrations/20260918141605_an_invoice_reads_whole_from_the_views.sql',
+    'the same view, replaced again with more columns: the same widening of the same percentage',
+  ],
 ]);
 
 /** `-- …` comments stripped, so a call quoted in a comment is not a finding. */

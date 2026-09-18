@@ -9,12 +9,12 @@ two is **operational, not functional**: it is not about which features are
 good enough to charge for, it is about what requires Ekwo to operate something
 continuously on your behalf.
 
-The test, applied without exception: **if Ekwo disappeared tomorrow, would it
-keep working?**
+The test, applied without exception: **does it keep working on its own, with us
+or without us?**
 
 If yes, it belongs in the open core. A trial balance computed by Postgres, a
 VAT return read off the ledger, an invoice rendered to a PDF, a chart of
-accounts — none of these need Ekwo to exist. They are here, under AGPL, and
+accounts — none of these needs anything of ours to be running. They are here, under AGPL, and
 no licence key gates them.
 
 If no, it belongs in `ee/`, and you are entitled to know that before you buy:
@@ -26,6 +26,15 @@ If no, it belongs in `ee/`, and you are entitled to know that before you buy:
 | Filing to Intervat, Teledec, the NBB | Transmission credentials, and someone answerable when a return is late |
 | The AI agents that book, match and check | Models Ekwo trains, runs and supervises |
 | The multi-instance control plane | Monitoring, upgrades, backups across a fleet |
+
+And the counterpart, which matters as much: **what comes back from a filing is
+open core.** The deposit number, the acknowledgement, the words the
+administration used and the file that was sent are rows and attachments of your
+own database — `tax_filing_deposits`, under the same policies as the rest of
+your books. A company that stops paying for the transmission keeps every proof
+that it filed. The channel is recorded as two words, `portal` or `service`, and
+the name of a service as free text: the core records what was used and holds no
+list of what may be.
 
 ## What will never be in `ee/`
 

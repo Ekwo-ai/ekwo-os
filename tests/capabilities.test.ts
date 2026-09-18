@@ -354,3 +354,62 @@ describe('the anonymous role', () => {
     expect(message).toMatch(/permission denied for function member_capabilities/);
   });
 });
+
+// ---------------------------------------------------------------------------
+// `companies_with_capability()` is what the policies of a company's tables
+// compare `company_id` against since `20260918141627`, so that the question is
+// asked once per statement and not once per row. It is a second way of asking
+// what `has_capability()` answers, and two ways of asking are two answers the
+// day one of them changes. They are compared here over everybody this file
+// knows, in every company, for every capability of the vocabulary — after the
+// adjustments above, so a grant and a revoke are both in the comparison.
+// ---------------------------------------------------------------------------
+
+describe('the question asked once per statement', () => {
+  it('names exactly the companies has_capability() says yes to', async () => {
+    const second = await newCompany(db, { name: 'Seconde SRL', ownerId: viewerId });
+    const codes = (await rows<{ code: string }>(db, `select code from capabilities order by code`)).map(
+      (r) => r.code,
+    );
+    expect(codes.length).toBeGreaterThan(10);
+
+    let yes = 0;
+    for (const who of [ownerId, accountantId, viewerId, strangerId]) {
+      const disagreements = await asUser(db, who, () =>
+        rows<{ company: string; capability: string }>(
+          db,
+          `select c.id::text as company, k.code as capability
+             from unnest($1::uuid[]) as c(id)
+             cross join unnest($2::text[]) as k(code)
+            where has_capability(c.id, k.code)
+                  is distinct from (c.id = any (companies_with_capability(k.code)))`,
+          [[companyId, second.companyId], codes],
+        ),
+      );
+      expect(disagreements, `as ${who}`).toEqual([]);
+      const held = await asUser(db, who, () =>
+        one<{ n: number }>(
+          db,
+          `select coalesce(sum(cardinality(companies_with_capability(k.code))), 0)::int as n
+             from unnest($1::text[]) as k(code)`,
+          [codes],
+        ),
+      );
+      yes += held.n;
+      if (who === strangerId) expect(held.n).toBe(0);
+    }
+    // Agreement between two functions that both say no to everything would
+    // pass the comparison above and prove nothing.
+    expect(yes).toBeGreaterThan(codes.length);
+  });
+
+  it('is not something the anonymous role may ask', async () => {
+    const message = await asUser(
+      db,
+      strangerId,
+      () => expectError(db, `select companies_with_capability('documents.read')`),
+      'anon',
+    );
+    expect(message).toMatch(/permission denied for function companies_with_capability/);
+  });
+});

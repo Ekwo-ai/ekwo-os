@@ -2,10 +2,10 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "LU",
   "name": "Luxembourg",
-  "version": "1.3.1",
-  "schema_min": "20260914163943",
+  "version": "1.7.0",
+  "schema_min": "20260916126000",
   "seed_sequence": 12,
-  "released_at": "2026-09-15",
+  "released_at": "2026-09-16",
   "certification": {
     "status": "community",
     "sources": [
@@ -22,7 +22,7 @@
         "title": "Loi modifiée du 12 février 1979 concernant la taxe sur la valeur ajoutée",
         "publisher": "Legilux — Journal officiel du Grand-Duché de Luxembourg",
         "url": "https://legilux.public.lu/eli/etat/leg/loi/1979/02/12/n1/jo",
-        "consulted_on": "2026-09-15",
+        "consulted_on": "2026-09-16",
         "kind": "law"
       },
       {
@@ -142,7 +142,9 @@
       "bank": "5131",
       "cash": "516",
       "fx_gain": "7562",
-      "fx_loss": "6562"
+      "fx_loss": "6562",
+      "tax_payable": "461412",
+      "tax_receivable": "421612"
     },
     "journal_roles": {
       "sales": "SAL",
@@ -178,7 +180,21 @@
     "number_format": "{CODE}/{YYYY}/{NNNN}",
     "legal_payment_days": 30,
     "late_payment_reference": "Loi modifiée du 18 avril 2004 relative aux délais de paiement et aux intérêts de retard, art. 3 et 5 — intérêt au taux directeur de la Banque centrale européenne majoré de huit points de pourcentage, et indemnité forfaitaire de 40 euros pour les frais de recouvrement",
-    "tax_point": "invoice_date",
+    "tax_point": "invoice_if_issued",
+    "references": {
+      "numbering": {
+        "legal_reference": "Loi modifiée du 12 février 1979, art. 63, par. 8, alinéa 1er, point 2° — la facture mentionne « un numéro séquentiel, basé sur une ou plusieurs séries, qui identifie la facture de façon unique », transposition de l'art. 226, point 2, de la directive 2006/112/CE. Le texte impose la séquence, la série et l'unicité, jamais une forme.",
+        "source": "loi-tva"
+      },
+      "payment_terms": {
+        "legal_reference": "Loi modifiée du 18 avril 2004, art. 3, par. (3), point b), sous i), dans sa rédaction issue de la loi du 29 mars 2013 — lorsque la date ou le délai de paiement n'est pas fixé dans le contrat, le créancier a droit à des intérêts de retard dès l'expiration d'un délai de trente jours après la date de réception, par le débiteur, de la facture ou d'une demande de paiement équivalente ; le par. (4) plafonne à soixante jours le délai que le contrat peut fixer.",
+        "source": "delais-de-paiement"
+      },
+      "tax_point": {
+        "legal_reference": "Loi modifiée du 12 février 1979, art. 21 — « Le fait générateur de la taxe intervient et la taxe devient exigible au moment où la livraison de biens ou la prestation de services est effectuée » : la livraison est le principe. Art. 24, par. 1er — « Par dérogation aux articles 21, 22 et 23, lorsqu'il y a obligation d'émettre une facture, la taxe devient exigible : a) lors de l'émission de la facture si elle est émise dans le délai visé à l'article 63, paragraphe 5 ; b) le jour où expire le délai visé au point a) en l'absence d'émission de la facture dans ce délai. » La dérogation ne joue ni pour les opérations sans obligation de facture, ni pour les prestations de services pour lesquelles le preneur est le redevable en application de l'art. 61, par. 5. invoice_if_issued dit les deux ensemble ; invoice_date, déclaré jusqu'ici, ne disait que la dérogation.",
+        "source": "loi-tva"
+      }
+    },
     "mentions": [
       {
         "code": "reverse_charge",

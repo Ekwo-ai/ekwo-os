@@ -3,8 +3,9 @@
   "code": "FR-CA3",
   "name": "Déclaration de TVA 3310-CA3",
   "period": ["month", "quarter"],
+  "period_default": "month",
   "valid_from": "2022-01-01",
-  "legal_reference": "CGI, art. 287 — formulaire 3310-CA3. Cadence : CGI, art. 287, 2 (déclaration mensuelle ; dépôt trimestriel admis lorsque la taxe exigible annuellement est inférieure à 4 000 euros)", "source": "cgi",
+  "legal_reference": "CGI, art. 287 — formulaire 3310-CA3. Cadence : CGI, art. 287, 2, premier alinéa — la déclaration est mensuelle, et c'est la cadence proposée ici parce que la loi la donne à tout le monde ; second alinéa — le dépôt trimestriel est admis lorsque la taxe exigible annuellement est inférieure à 4 000 euros, ce qui est un fait sur l'entreprise et non un défaut", "source": "cgi",
   "boxes": [
     { "box": "01", "kind": "total", "name": "Ventes, prestations de services", "sequence": 10, "plus": ["08:base", "09:base", "9B:base", "13:base"], "legal_reference": "Code général des impôts, art. 287, 2 — formulaire 3310-CA3 (cerfa 10963), cadre A, ligne 01", "source": "cgi" },
     { "box": "03", "kind": "base", "name": "Acquisitions intracommunautaires", "sequence": 20, "legal_reference": "Code général des impôts, art. 256 bis — acquisitions intracommunautaires — formulaire 3310-CA3 (cerfa 10963), cadre A, ligne 03", "source": "cgi" },

@@ -2,10 +2,10 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "EE",
   "name": "Estonia",
-  "version": "1.3.1",
-  "schema_min": "20260914163943",
+  "version": "1.8.0",
+  "schema_min": "20260917170000",
   "seed_sequence": 13,
-  "released_at": "2026-09-15",
+  "released_at": "2026-09-16",
   "certification": {
     "status": "community",
     "sources": [
@@ -14,7 +14,7 @@
         "title": "Käibemaksuseadus",
         "publisher": "Riigi Teataja",
         "url": "https://www.riigiteataja.ee/akt/kms",
-        "consulted_on": "2026-09-15",
+        "consulted_on": "2026-09-16",
         "kind": "law"
       },
       {
@@ -96,7 +96,6 @@
     "language": "et",
     "rounding_method": "half_up",
     "closing_style": "result_accounts",
-    "vat_period": "month",
     "roles": {
       "receivable": "1200",
       "payable": "2100",
@@ -120,7 +119,9 @@
     },
     "fiscal_year_default": "calendar"
   },
-  "languages": ["en"],
+  "languages": [
+    "en"
+  ],
   "journals": [
     {
       "code": "MUU",
@@ -166,7 +167,10 @@
       "accounts": "accounts.csv",
       "default": true,
       "audience": "companies",
-      "statements": ["EE-RPS-BS", "EE-RPS-IS1"],
+      "statements": [
+        "EE-RPS-BS",
+        "EE-RPS-IS1"
+      ],
       "legal_reference": "Raamatupidamise seadus § 8 — Eestis ei ole seadusega kehtestatud kontoplaani, vaid iga raamatupidamiskohustuslane koostab oma kontoplaani. Käesolev kontoplaan on originaalne ja järgib Eesti tava nelja klassi ning neljakohaliste kontonumbritega, liigendatuna raamatupidamise seaduse lisade 1 ja 2 kirjete järgi.",
       "source": "rps"
     }
@@ -176,7 +180,21 @@
     "number_format": "{CODE}-{YYYY}-{NNNN}",
     "legal_payment_days": 30,
     "late_payment_reference": "Võlaõigusseadus § 113 lõige 1 — viivis on § 94 alusel poolaastati avaldatav Euroopa Keskpanga põhirefinantseerimisoperatsioonide intressimäär, mida on suurendatud kaheksa protsendipunkti võrra; § 113¹ lõige 1 — sissenõudmiskulude hüvitis 40 eurot",
-    "tax_point": "delivery_date",
+    "tax_point": "earliest_of_delivery_or_payment",
+    "references": {
+      "numbering": {
+        "legal_reference": "Käibemaksuseadus § 37 lõige 7 punkt 1 — arvele tuleb märkida arve järjekorranumber ja väljastamise kuupäev. Seadus nõuab järjekorranumbrit ega sea numbrile vormi. Katkematut, lünkadeta numeratsiooni käibemaksuseadus ei nõua, mistõttu numbering on siin sequential ja mitte gapless.",
+        "source": "kms"
+      },
+      "payment_terms": {
+        "legal_reference": "Võlaõigusseadus § 82¹ lõige 1 — kui vastastikuse lepingu puhul ei ole tasu maksmise tähtpäeva või tähtaega kokku lepitud, muutub tasu maksmise kohustus sissenõutavaks hiljemalt 30 päeva möödumisel arve või muu sellise makseettepaneku võlgniku kätte jõudmisest, või kauba, teenuse või muu hüve saamisest, kui arve kättesaamise aeg ei ole selge. Lõige 2 piirab lepinguga kokku lepitavat tähtaega 60 päevaga.",
+        "source": "vos"
+      },
+      "tax_point": {
+        "legal_reference": "Käibemaksuseadus § 11 lõige 1 — käibe tekkimise ajaks loetakse päev, mil esimesena tehti üks lõikes nimetatud toimingutest: punkt 1 kauba ostjale lähetamine või kättesaadavaks tegemine või teenuse osutamine, punkt 2 kauba või teenuse eest osalise või täieliku makse laekumine. Käive tekib seega kahest sündmusest varasemal, ja lõige 3 piirab makse haru laekunud summaga. Arve kuupäev ei ole lõike 1 haru: arve kuulub lõikesse 2, mis on kauba ühendusesisese käibe eraldi reegel. earliest_of_delivery_or_payment kannab mõlemat haru; delivery_date, mis oli siin varem, kandis ainult punkti 1. Riigi Teataja ametlik ingliskeelne tõlge ütleb sedasama: „the date on which the first of one of the following acts is performed”.",
+        "source": "kms"
+      }
+    },
     "mentions": [
       {
         "code": "reverse_charge",
@@ -232,11 +250,17 @@
     "profile": "peppol-bis-3",
     "party_scheme": "0191",
     "vat_scheme": "9931",
-    "legal_reference": "Raamatupidamise seadus § 7¹ lõige 7, kehtiv alates 01.07.2025 — äriregistris e-arve vastuvõtjaks märgitud raamatupidamiskohustuslane võib nõuda müüjalt e-arve esitamist, ja e-arve eeldatakse nõuetekohaseks, kui see vastab Euroopa standardile EN 16931-1; pooled võivad kokku leppida muu standardi kasutamises. Seadus ei kehtesta üldist e-arve kohustust ega ühtki tähtpäeva, mistõttu mandatory_from on tühi. Deklareeritud profiil peppol-bis-3 on EN 16931-1 kitsendus, mida Eesti operaatorid tegelikkuses vahetavad; see ei ole seadusest tulenev nõue. Riigisisene standard EVS 923 kaotas õigusliku aluse 01.07.2025, kui rahandusministri määrus „Masintöödeldava algdokumendi juhendi kehtestamine“ kehtetuks tunnistati.", "source": "rps",
+    "legal_reference": "Raamatupidamise seadus § 7¹ lõige 7, kehtiv alates 01.07.2025 — äriregistris e-arve vastuvõtjaks märgitud raamatupidamiskohustuslane võib nõuda müüjalt e-arve esitamist, ja e-arve eeldatakse nõuetekohaseks, kui see vastab Euroopa standardile EN 16931-1; pooled võivad kokku leppida muu standardi kasutamises. Seadus ei kehtesta üldist e-arve kohustust ega ühtki tähtpäeva, mistõttu mandatory_from on tühi. Deklareeritud profiil peppol-bis-3 on EN 16931-1 kitsendus, mida Eesti operaatorid tegelikkuses vahetavad; see ei ole seadusest tulenev nõue. Riigisisene standard EVS 923 kaotas õigusliku aluse 01.07.2025, kui rahandusministri määrus „Masintöödeldava algdokumendi juhendi kehtestamine“ kehtetuks tunnistati.",
+    "source": "rps",
     "mandatory_from": null
   },
   "bank": {
-    "statement_formats": ["camt.053", "camt.052"],
-    "payment_formats": ["pain.001"]
+    "statement_formats": [
+      "camt.053",
+      "camt.052"
+    ],
+    "payment_formats": [
+      "pain.001"
+    ]
   }
 }

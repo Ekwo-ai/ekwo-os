@@ -1,0 +1,700 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/statements",
+  "statements": [
+    {
+      "code": "US-SX-BS",
+      "kind": "balance_sheet",
+      "framework": "US-GAAP",
+      "name": "Balance sheet — Regulation S-X, Rule 5-02",
+      "legal_reference": "17 CFR 210.5-02 — Balance sheets, of Regulation S-X. The United States prescribes no chart of accounts and no statutory statement scheme for a company that is not a registrant; Regulation S-X is the one published, openable text that names the captions of a commercial balance sheet and fixes their order, and it is what an American balance sheet is laid out on whether or not the company files with the Commission. Every line code below is the rule's own caption number and every name is the rule's own wording.",
+      "source": "reg-s-x",
+      "taxonomy": null,
+      "lines": [
+        {
+          "code": "1",
+          "name": "Cash and cash items",
+          "sequence": 10,
+          "sign": 1,
+          "legal_reference": "17 CFR 210.5-02 — Balance sheets. The caption of this line is the numbered caption of that rule and the wording is the rule's own. Rule 4-01(a)(1) of the same Regulation makes financial statements that are not prepared in accordance with generally accepted accounting principles presumed to be misleading, which is where the accounting behind these captions comes from; Regulation S-X fixes the form in which they are presented.",
+          "source": "reg-s-x",
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1000",
+              "code_to": "1019"
+            }
+          ]
+        },
+        {
+          "code": "2",
+          "name": "Marketable securities",
+          "sequence": 20,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1020",
+              "code_to": "1029"
+            }
+          ]
+        },
+        {
+          "code": "3",
+          "name": "Accounts and notes receivable",
+          "sequence": 30,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1100",
+              "code_to": "1189"
+            }
+          ]
+        },
+        {
+          "code": "4",
+          "name": "Allowances for doubtful accounts and notes receivable",
+          "sequence": 40,
+          "sign": 1,
+          "legal_reference": "17 CFR 210.5-02.4 — the allowance is set out separately in the balance sheet or in a note. It carries a credit balance, so this line reads negative and is added to the captions above it rather than subtracted from them.",
+          "source": "reg-s-x",
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1190",
+              "code_to": "1194"
+            }
+          ]
+        },
+        {
+          "code": "5",
+          "name": "Unearned income",
+          "sequence": 50,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1195",
+              "code_to": "1199"
+            }
+          ]
+        },
+        {
+          "code": "6",
+          "name": "Inventories",
+          "sequence": 60,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1200",
+              "code_to": "1299"
+            }
+          ]
+        },
+        {
+          "code": "7",
+          "name": "Prepaid expenses",
+          "sequence": 70,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1300",
+              "code_to": "1399"
+            }
+          ]
+        },
+        {
+          "code": "8",
+          "name": "Other current assets",
+          "sequence": 80,
+          "sign": 1,
+          "legal_reference": "17 CFR 210.5-02.8 — any amount in excess of five per cent of total current assets is stated separately. The suspense account reaches this line while it is in debit and the other current liabilities caption while it is in credit, which is the one account of this chart that reaches two lines.",
+          "source": "reg-s-x",
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1400",
+              "code_to": "1499"
+            },
+            {
+              "kind": "account_code",
+              "code_from": "2390",
+              "side": "debit"
+            }
+          ]
+        },
+        {
+          "code": "9",
+          "name": "Total current assets",
+          "sequence": 90,
+          "is_total": true,
+          "plus": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8"
+          ]
+        },
+        {
+          "code": "10",
+          "name": "Securities of related parties",
+          "sequence": 100,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1500",
+              "code_to": "1509"
+            }
+          ]
+        },
+        {
+          "code": "11",
+          "name": "Indebtedness of related parties — not current",
+          "sequence": 110,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1510",
+              "code_to": "1519"
+            }
+          ]
+        },
+        {
+          "code": "12",
+          "name": "Other investments",
+          "sequence": 120,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1520",
+              "code_to": "1599"
+            }
+          ]
+        },
+        {
+          "code": "13",
+          "name": "Property, plant and equipment",
+          "sequence": 130,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1600",
+              "code_to": "1699"
+            }
+          ]
+        },
+        {
+          "code": "14",
+          "name": "Accumulated depreciation, depletion, and amortization of property, plant and equipment",
+          "sequence": 140,
+          "sign": 1,
+          "legal_reference": "17 CFR 210.5-02.14 — the accumulated depreciation is a caption of its own and not a deduction folded into the one above it. It carries a credit balance, so this line reads negative and is added.",
+          "source": "reg-s-x",
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1700",
+              "code_to": "1749"
+            }
+          ]
+        },
+        {
+          "code": "15",
+          "name": "Intangible assets",
+          "sequence": 150,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1750",
+              "code_to": "1779"
+            }
+          ]
+        },
+        {
+          "code": "16",
+          "name": "Accumulated depreciation and amortization of intangible assets",
+          "sequence": 160,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1780",
+              "code_to": "1799"
+            }
+          ]
+        },
+        {
+          "code": "17",
+          "name": "Other assets",
+          "sequence": 170,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1800",
+              "code_to": "1899"
+            }
+          ]
+        },
+        {
+          "code": "18",
+          "name": "Total assets",
+          "sequence": 180,
+          "is_total": true,
+          "plus": [
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17"
+          ]
+        },
+        {
+          "code": "19",
+          "name": "Accounts and notes payable",
+          "sequence": 190,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "2000",
+              "code_to": "2099"
+            }
+          ]
+        },
+        {
+          "code": "20",
+          "name": "Other current liabilities",
+          "sequence": 200,
+          "sign": -1,
+          "legal_reference": "17 CFR 210.5-02.20 — any amount in excess of five per cent of total current liabilities is stated separately. The sales and use tax a seller has collected and not yet remitted sits here; there is no asset caption facing it, because a purchaser in the United States takes no credit for the tax charged to them.",
+          "source": "reg-s-x",
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "2100",
+              "code_to": "2389"
+            },
+            {
+              "kind": "account_code",
+              "code_from": "2390",
+              "side": "credit"
+            }
+          ]
+        },
+        {
+          "code": "21",
+          "name": "Total current liabilities",
+          "sequence": 210,
+          "is_total": true,
+          "plus": [
+            "19",
+            "20"
+          ]
+        },
+        {
+          "code": "22",
+          "name": "Bonds, mortgages and other long-term debt, including capitalized leases",
+          "sequence": 220,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "2400",
+              "code_to": "2499"
+            }
+          ]
+        },
+        {
+          "code": "23",
+          "name": "Indebtedness to related parties — noncurrent",
+          "sequence": 230,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "2500",
+              "code_to": "2519"
+            }
+          ]
+        },
+        {
+          "code": "24",
+          "name": "Other liabilities",
+          "sequence": 240,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "2520",
+              "code_to": "2599"
+            }
+          ]
+        },
+        {
+          "code": "25",
+          "name": "Commitments and contingent liabilities",
+          "sequence": 250,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "2600",
+              "code_to": "2699"
+            }
+          ]
+        },
+        {
+          "code": "26",
+          "name": "Deferred credits",
+          "sequence": 260,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "2700",
+              "code_to": "2799"
+            }
+          ]
+        },
+        {
+          "code": "27",
+          "name": "Preferred stocks subject to mandatory redemption requirements or whose redemption is outside the control of the issuer",
+          "sequence": 270,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "3000",
+              "code_to": "3099"
+            }
+          ]
+        },
+        {
+          "code": "28",
+          "name": "Preferred stocks which are not redeemable or are redeemable solely at the option of the issuer",
+          "sequence": 280,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "3100",
+              "code_to": "3199"
+            }
+          ]
+        },
+        {
+          "code": "29",
+          "name": "Common stocks",
+          "sequence": 290,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "3200",
+              "code_to": "3299"
+            }
+          ]
+        },
+        {
+          "code": "30",
+          "name": "Other stockholders' equity",
+          "sequence": 300,
+          "sign": -1,
+          "legal_reference": "17 CFR 210.5-02.30 — additional paid-in capital, other additional capital and retained earnings are stated separately or combined in a note. The result of the year reaches this caption only once close_fiscal_year() has carried it to retained earnings: until then the assets of an open year exceed the liabilities and equity by exactly the net income of the income statement.",
+          "source": "reg-s-x",
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "3300",
+              "code_to": "3499"
+            }
+          ]
+        },
+        {
+          "code": "31",
+          "name": "Noncontrolling interests in consolidated subsidiaries",
+          "sequence": 310,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "3500",
+              "code_to": "3599"
+            }
+          ]
+        },
+        {
+          "code": "32",
+          "name": "Total liabilities and equity",
+          "sequence": 320,
+          "is_total": true,
+          "plus": [
+            "21",
+            "22",
+            "23",
+            "24",
+            "25",
+            "26",
+            "27",
+            "28",
+            "29",
+            "30",
+            "31"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "US-SX-IS",
+      "kind": "income_statement",
+      "framework": "US-GAAP",
+      "name": "Income statement — Regulation S-X, Rule 5-03",
+      "legal_reference": "17 CFR 210.5-03 — Statements of comprehensive income, of Regulation S-X. Rule 5-03 classifies by function — cost of sales, then selling, general and administrative — which is the shape of an American income statement. Every line code is the rule's own caption number and every name is the rule's own wording.",
+      "source": "reg-s-x",
+      "taxonomy": null,
+      "lines": [
+        {
+          "code": "1",
+          "name": "Net sales and gross revenues",
+          "sequence": 10,
+          "sign": -1,
+          "legal_reference": "17 CFR 210.5-03 — Statements of comprehensive income. The caption of this line is the numbered caption of that rule and the wording is the rule's own. Captions 15 to 17 are reserved in the rule itself and are absent here for that reason; captions 19, 20, 23, 24 and 25 are the noncontrolling-interest allocations and the earnings per share, which are not sums of ledger accounts, and this pack does not state them.",
+          "source": "reg-s-x",
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "4000",
+              "code_to": "4199"
+            }
+          ]
+        },
+        {
+          "code": "2",
+          "name": "Costs and expenses applicable to sales and revenues",
+          "sequence": 20,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "5000",
+              "code_to": "5299"
+            }
+          ]
+        },
+        {
+          "code": "3",
+          "name": "Other operating costs and expenses",
+          "sequence": 30,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "5500",
+              "code_to": "5599"
+            }
+          ]
+        },
+        {
+          "code": "4",
+          "name": "Selling, general and administrative expenses",
+          "sequence": 40,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "6000",
+              "code_to": "6899"
+            }
+          ]
+        },
+        {
+          "code": "5",
+          "name": "Provision for doubtful accounts and notes",
+          "sequence": 50,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "6900",
+              "code_to": "6949"
+            }
+          ]
+        },
+        {
+          "code": "6",
+          "name": "Other general expenses",
+          "sequence": 60,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "6950",
+              "code_to": "6999"
+            }
+          ]
+        },
+        {
+          "code": "7",
+          "name": "Non-operating income",
+          "sequence": 70,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "7000",
+              "code_to": "7099"
+            }
+          ]
+        },
+        {
+          "code": "8",
+          "name": "Interest and amortization of debt discount and expense",
+          "sequence": 80,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "7100",
+              "code_to": "7199"
+            }
+          ]
+        },
+        {
+          "code": "9",
+          "name": "Non-operating expenses",
+          "sequence": 90,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "7200",
+              "code_to": "7299"
+            }
+          ]
+        },
+        {
+          "code": "10",
+          "name": "Income or loss before income tax expense and appropriate items below",
+          "sequence": 100,
+          "is_total": true,
+          "plus": [
+            "1",
+            "7"
+          ],
+          "minus": [
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "8",
+            "9"
+          ]
+        },
+        {
+          "code": "11",
+          "name": "Income tax expense",
+          "sequence": 110,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "8000",
+              "code_to": "8099"
+            }
+          ]
+        },
+        {
+          "code": "12",
+          "name": "Equity in earnings of unconsolidated subsidiaries and 50 percent or less owned persons",
+          "sequence": 120,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "8100",
+              "code_to": "8199"
+            }
+          ]
+        },
+        {
+          "code": "13",
+          "name": "Income or loss from continuing operations",
+          "sequence": 130,
+          "is_total": true,
+          "plus": [
+            "10",
+            "12"
+          ],
+          "minus": [
+            "11"
+          ]
+        },
+        {
+          "code": "14",
+          "name": "Discontinued operations",
+          "sequence": 140,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "8200",
+              "code_to": "8299"
+            }
+          ]
+        },
+        {
+          "code": "18",
+          "name": "Net income or loss",
+          "sequence": 180,
+          "is_total": true,
+          "plus": [
+            "13",
+            "14"
+          ]
+        },
+        {
+          "code": "21",
+          "name": "Other comprehensive income",
+          "sequence": 210,
+          "sign": -1,
+          "legal_reference": "17 CFR 210.5-03.21 — other comprehensive income is presented, net of tax, below net income. The accounts behind it are closed to retained earnings by close_fiscal_year() like every other income account, which is not where generally accepted accounting principles put them; the gap is written up in docs/international.md.",
+          "source": "reg-s-x",
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "8400",
+              "code_to": "8499"
+            }
+          ]
+        },
+        {
+          "code": "22",
+          "name": "Comprehensive income",
+          "sequence": 220,
+          "is_total": true,
+          "plus": [
+            "18",
+            "21"
+          ]
+        }
+      ]
+    }
+  ]
+}

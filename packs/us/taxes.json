@@ -1,0 +1,539 @@
+[
+  {
+    "code": "US-CA-S-725",
+    "name": "Sale in California, combined state and local rate 7.25 %",
+    "description": "No district tax: the statewide base rate on its own",
+    "rate": 7.25,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "jurisdiction": "US-CA",
+    "applies_when": {
+      "seller_in": "US-CA",
+      "supply_in": "US-CA"
+    },
+    "recoverable": false,
+    "legal_reference": "Revenue and Taxation Code, section 6051 — for the privilege of selling tangible personal property at retail a tax is imposed upon all retailers, measured by their gross receipts. CDTFA publishes the composition of the 7.25 per cent statewide rate: 3.6875 per cent under sections 6051 and 6201, 0.25 per cent under sections 6051.3 and 6201.3, 0.50 per cent under section 35 of article XIII of the State Constitution, 0.50 per cent under sections 6051.2 and 6201.2, 1.0625 per cent under sections 6051.15 and 6201.15, and 1.25 per cent of local tax under sections 7202 and 7203. This code is the rate a seller charges where no district tax applies. The form works the tax out itself — lines 13, 14 and 15 are line 12 multiplied by 0.06, by 0.0025 and by 0.01 — and the pack states them that way, so no posting of this tax reaches those boxes. What the postings still do is split the liability across the state, county and local accounts of the chart, in the proportion each share is of the combined rate, the last posting of the side taking the remainder: that is a question about the ledger and not about the return. The district share is the exception and keeps its box, because line 16 is carried over from a schedule and is not a rate of line 12.",
+    "source": "cdtfa-rates",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "1"
+        },
+        {
+          "type": "tax",
+          "factor": 82.759,
+          "account": "2200"
+        },
+        {
+          "type": "tax",
+          "factor": 3.448,
+          "account": "2202"
+        },
+        {
+          "type": "tax",
+          "factor": 13.793,
+          "account": "2204"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "1",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": 82.759,
+          "account": "2200"
+        },
+        {
+          "type": "tax",
+          "factor": 3.448,
+          "account": "2202"
+        },
+        {
+          "type": "tax",
+          "factor": 13.793,
+          "account": "2204"
+        }
+      ]
+    },
+    "kind": "sales_tax",
+    "sequence": 10
+  },
+  {
+    "code": "US-CA-S-1075",
+    "name": "Sale in the City of Oakland, combined rate 10.75 %",
+    "description": "The statewide 7.25 % plus a 3.50 % district tax, as one representative combined rate",
+    "rate": 10.75,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "jurisdiction": "US-CA",
+    "applies_when": {
+      "seller_in": "US-CA",
+      "supply_in": "US-CA"
+    },
+    "recoverable": false,
+    "legal_reference": "Revenue and Taxation Code, section 7261 — a transactions and use tax district imposes the tax at one eighth of one per cent or a multiple of it on every retailer in the district. CDTFA-531-A2, Schedule A2, gives the City of Oakland a district rate of 3.50 per cent under reporting code D10, effective 1 October 2025, on top of the 7.25 per cent statewide rate. This code is one worked combined rate and not a rate engine: California has hundreds of district combinations and they change monthly, which is a feed and not a pack. The README says so, and docs/international.md records what a pack cannot do about it. The form works the tax out itself — lines 13, 14 and 15 are line 12 multiplied by 0.06, by 0.0025 and by 0.01 — and the pack states them that way, so no posting of this tax reaches those boxes. What the postings still do is split the liability across the state, county and local accounts of the chart, in the proportion each share is of the combined rate, the last posting of the side taking the remainder: that is a question about the ledger and not about the return. The district share is the exception and keeps its box, because line 16 is carried over from a schedule and is not a rate of line 12.",
+    "source": "cdtfa-531-a2",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "1"
+        },
+        {
+          "type": "tax",
+          "factor": 55.814,
+          "account": "2200"
+        },
+        {
+          "type": "tax",
+          "factor": 2.326,
+          "account": "2202"
+        },
+        {
+          "type": "tax",
+          "factor": 9.302,
+          "account": "2204"
+        },
+        {
+          "type": "tax",
+          "factor": 32.558,
+          "account": "2206",
+          "box": "16",
+          "box_factor": 32.558
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "1",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": 55.814,
+          "account": "2200"
+        },
+        {
+          "type": "tax",
+          "factor": 2.326,
+          "account": "2202"
+        },
+        {
+          "type": "tax",
+          "factor": 9.302,
+          "account": "2204"
+        },
+        {
+          "type": "tax",
+          "factor": 32.558,
+          "account": "2206",
+          "box": "16",
+          "box_factor": -32.558
+        }
+      ]
+    },
+    "kind": "sales_tax",
+    "sequence": 20
+  },
+  {
+    "code": "US-CA-S-RESALE",
+    "name": "Sale for resale, against a resale certificate",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2026-01-01",
+    "jurisdiction": "US-CA",
+    "conditions": [
+      "buyer_certificate"
+    ],
+    "applies_when": {
+      "seller_in": "US-CA",
+      "supply_in": "US-CA"
+    },
+    "recoverable": false,
+    "legal_reference": "Revenue and Taxation Code, section 6091 — every gross receipt is presumed subject to the tax until the contrary is established, and the burden of proving that a sale is not a sale at retail is on the seller unless they take from the purchaser a certificate that the property is purchased for resale. Sales and Use Tax Regulation 1668 says what the certificate has to contain. The exemption is therefore a fact about a document the seller holds, and this code is the seller's answer once the certificate is in hand. `conditions` says that much and no more: `buyer_certificate` records that there is a certificate behind this code, so that an application asks rather than assumes. What it does not record is the certificate itself — there is still no place on a contact for one and for its validity, which docs/international.md keeps on the list. The line carries no exemption reason code, because BT-121 comes from the VATEX list of EN 16931, whose codes name articles of Directive 2006/112/EC, and the United States is outside the common system of VAT.",
+    "source": "cdtfa-reg-1668",
+    "vat_category": "E",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": [
+            "1",
+            "32"
+          ]
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": [
+            "1",
+            "32"
+          ],
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "sales_tax",
+    "sequence": 30
+  },
+  {
+    "code": "US-CA-S-FOOD",
+    "name": "Nontaxable sale of food products",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2026-01-01",
+    "jurisdiction": "US-CA",
+    "conditions": [
+      "supply_nature"
+    ],
+    "applies_when": {
+      "seller_in": "US-CA",
+      "supply_in": "US-CA"
+    },
+    "recoverable": false,
+    "legal_reference": "Revenue and Taxation Code, section 6359 — the gross receipts from the sale of food products for human consumption are exempted from the taxes imposed by this part. The exemption has conditions the ledger cannot see: CDTFA-401-INST puts alcoholic and carbonated beverages, hot prepared food and meals consumed where admission is charged outside it. No exemption reason code, for the reason given on US-CA-S-RESALE.",
+    "source": "ca-rtc",
+    "vat_category": "E",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": [
+            "1",
+            "33"
+          ]
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": [
+            "1",
+            "33"
+          ],
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "sales_tax",
+    "sequence": 40
+  },
+  {
+    "code": "US-CA-S-GOV",
+    "name": "Sale to the United States government",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2026-01-01",
+    "jurisdiction": "US-CA",
+    "conditions": [
+      "buyer_status"
+    ],
+    "applies_when": {
+      "seller_in": "US-CA",
+      "supply_in": "US-CA"
+    },
+    "recoverable": false,
+    "legal_reference": "Revenue and Taxation Code, section 6381 — the gross receipts from the sale of tangible personal property to the United States, its unincorporated agencies and instrumentalities, to an incorporated agency wholly owned by the United States, and to the American National Red Cross are exempted. No exemption reason code, for the reason given on US-CA-S-RESALE.",
+    "source": "ca-rtc",
+    "vat_category": "E",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": [
+            "1",
+            "35"
+          ]
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": [
+            "1",
+            "35"
+          ],
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "sales_tax",
+    "sequence": 50
+  },
+  {
+    "code": "US-CA-S-SHIPPED",
+    "name": "Sale shipped to a point outside California",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2026-01-01",
+    "jurisdiction": "US-CA",
+    "conditions": [
+      "transport_evidence"
+    ],
+    "applies_when": {
+      "seller_in": "US-CA"
+    },
+    "recoverable": false,
+    "legal_reference": "Revenue and Taxation Code, section 6396 — gross receipts are exempted from the computation of the sales tax where the contract of sale requires the property to be shipped, and it is shipped, to a point outside this state by the retailer's own facilities or by delivery to a carrier, customs broker or forwarding agent. This is the code for a sale into another state on which the seller charges no California tax and no other state's tax either, because they have no obligation to collect there. The treatment is `exempt` and not `export`, which in this vocabulary means goods leaving the country: the Ekwo treatments have no word for a supply outside the taxing territory but inside the country, and docs/international.md records that. No exemption reason code, for the reason given on US-CA-S-RESALE.",
+    "source": "ca-rtc",
+    "vat_category": "E",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": [
+            "1",
+            "36"
+          ]
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": [
+            "1",
+            "36"
+          ],
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "sales_tax",
+    "sequence": 60
+  },
+  {
+    "code": "US-NY-S-8875",
+    "name": "Sale delivered in New York City, combined rate 8.875 %",
+    "description": "A sale into a state where the seller has economic nexus: charged, collected, and declared on a form this pack does not carry",
+    "rate": 8.875,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "jurisdiction": "US-NY",
+    "conditions": [
+      "seller_threshold"
+    ],
+    "applies_when": {
+      "supply_in": "US-NY"
+    },
+    "recoverable": false,
+    "legal_reference": "Tax Bulletin ST-825 of the New York State Department of Taxation and Finance — the combined rate equals the state rate, currently 4 per cent, plus any local rate imposed by a city, county or school district, plus an additional three eighths of one per cent within the Metropolitan Commuter Transportation District, which New York City is in. Publication 718, effective 1 March 2025, gives New York City a combined rate of 8⅞ per cent under reporting code 8081, against 4 per cent for New York State only under code 0021. Whether this code is charged at all turns on economic nexus: since South Dakota v. Wayfair, Inc. (No. 17-494, 21 June 2018) overruled the physical presence rule, a State may require a seller with no establishment in it to register and collect, and Assembly Bill 147 sets California's own threshold at 500,000 dollars of sales into the State in the preceding or current calendar year. `conditions` records that the answer is a running total the seller crossed — `seller_threshold` — and records no total and no figure: there is nowhere in the core to keep a rolling sum per territory, and docs/international.md keeps that on the list. New York adds the local share to the state share as one combined rate reported against a jurisdiction code, where California prints the state, county, local and district shares on four separate lines of one form: two states, two ways of adding the same kind of tax, and one pack. The tax posts to no box, because the form it is declared on is New York's ST-100 and this pack carries California's return; the base is on the California return as an interstate sale. The gap is written up in docs/international.md.",
+    "source": "ny-pub-718",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": [
+            "1",
+            "36"
+          ]
+        },
+        {
+          "type": "tax",
+          "account": "2215"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": [
+            "1",
+            "36"
+          ],
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2215"
+        }
+      ]
+    },
+    "kind": "sales_tax",
+    "sequence": 70
+  },
+  {
+    "code": "US-OR-S-0",
+    "name": "Sale delivered in Oregon, no sales tax",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "not_subject",
+    "valid_from": "2026-01-01",
+    "jurisdiction": "US-OR",
+    "applies_when": {
+      "supply_in": "US-OR"
+    },
+    "recoverable": false,
+    "legal_reference": "Oregon has no general sales or use tax. The Oregon Department of Revenue says so in as many words — the State does levy a vehicle use tax on a new vehicle bought outside it, which is not a general sales tax and is not this code. A territory with no sales tax is the case this code exists to prove a pack can state: the rate is zero because nobody levies one, not because an exemption was claimed. On the California return the sale is an interstate one and reaches line 1 and line 8. No exemption reason code: BT-121 comes from the VATEX list of EN 16931, which belongs to the common system of VAT and does not reach a United States seller.",
+    "source": "oregon-dor",
+    "vat_category": "O",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": [
+            "1",
+            "36"
+          ]
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": [
+            "1",
+            "36"
+          ],
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "sales_tax",
+    "sequence": 80
+  },
+  {
+    "code": "US-CA-P-725",
+    "name": "Purchase in California, sales tax reimbursement charged by the seller 7.25 %",
+    "description": "The buyer's side of a taxed purchase: the tax is a cost and never a claim on the State",
+    "rate": 7.25,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "jurisdiction": "US-CA",
+    "applies_when": {
+      "buyer_in": "US-CA",
+      "supply_in": "US-CA"
+    },
+    "recoverable": false,
+    "legal_reference": "Revenue and Taxation Code, section 6051 imposes the tax on the retailer, who adds it to the price as sales tax reimbursement. The purchaser has no credit for it: the Sales and Use Tax Law contains no deduction of an input tax against an output tax, which is the whole difference between a sales tax and a value added tax. So `recoverable` is false and the tax is booked by a `tax_on_base` posting at the full amount, which lands it on the accounts of the lines it taxes — a machine bought for 10,000 dollars is capitalised at 10,725. Neither the base nor the tax reaches a box: CDTFA-401-A has no input side at all, and a purchase on which the seller charged the tax is invisible to the buyer's return.",
+    "source": "ca-rtc",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax_on_base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax_on_base"
+        }
+      ]
+    },
+    "kind": "sales_tax",
+    "sequence": 90
+  },
+  {
+    "code": "US-CA-P-USE-725",
+    "name": "Purchase subject to California use tax, self-assessed 7.25 %",
+    "description": "Nobody collected the tax, so the buyer declares it and pays it, and it is still a cost",
+    "rate": 7.25,
+    "scope": "purchase",
+    "treatment": "self_assessed",
+    "valid_from": "2026-01-01",
+    "jurisdiction": "US-CA",
+    "applies_when": {
+      "buyer_in": "US-CA"
+    },
+    "recoverable": false,
+    "legal_reference": "Revenue and Taxation Code, section 6201 imposes an excise tax on the storage, use or other consumption in this state of tangible personal property purchased from any retailer, at the same rate as the sales tax; section 6202(a) makes every person storing, using or consuming the property liable for it, and that liability is not extinguished until the tax has been paid to the State or to a retailer who collects it. This code is the case where no retailer collected it — an out-of-state seller with no obligation to register — so the purchaser declares it themselves on line 2 of their own return. The treatment is `self_assessed`: a tax a buyer owes directly to an administration under that administration's own law, and computes and declares themselves. It is not the reverse charge of article 196 of Directive 2006/112/EC, which this pack said until the vocabulary had a word for the American mechanism: there is no exempt supply behind this, no supplier who was relieved of anything and no recapitulative statement. Nothing is recovered: the `tax_on_base` posting puts the whole of the tax on the accounts of the lines, and the three `tax` postings credit the liability to CDTFA. The form works the tax out itself — lines 13, 14 and 15 are line 12 multiplied by 0.06, by 0.0025 and by 0.01 — and the pack states them that way, so no posting of this tax reaches those boxes. What the postings still do is split the liability across the state, county and local accounts of the chart, in the proportion each share is of the combined rate, the last posting of the side taking the remainder: that is a question about the ledger and not about the return. The district share is the exception and keeps its box, because line 16 is carried over from a schedule and is not a rate of line 12. The three `tax` postings carry a negative `factor`, which flips the ledger side so the liability is credited against a debit base; what the form is owed is worked out from line 2 upward, by line 12 and the three rates applied to it.",
+    "source": "ca-rtc",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "2"
+        },
+        {
+          "type": "tax_on_base"
+        },
+        {
+          "type": "tax",
+          "factor": -82.759,
+          "account": "2200"
+        },
+        {
+          "type": "tax",
+          "factor": -3.448,
+          "account": "2202"
+        },
+        {
+          "type": "tax",
+          "factor": -13.793,
+          "account": "2204"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "2",
+          "box_factor": -100
+        },
+        {
+          "type": "tax_on_base"
+        },
+        {
+          "type": "tax",
+          "factor": -82.759,
+          "account": "2200"
+        },
+        {
+          "type": "tax",
+          "factor": -3.448,
+          "account": "2202"
+        },
+        {
+          "type": "tax",
+          "factor": -13.793,
+          "account": "2204"
+        }
+      ]
+    },
+    "kind": "sales_tax",
+    "sequence": 100
+  },
+  {
+    "code": "US-P-0",
+    "name": "Purchase not subject to sales tax",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "not_subject",
+    "valid_from": "2026-01-01",
+    "jurisdiction": "US-CA",
+    "recoverable": false,
+    "legal_reference": "Revenue and Taxation Code, section 6051 taxes the retail sale of tangible personal property and nothing else: California does not tax most services, so professional fees, rent, payroll services and software delivered electronically carry no sales tax and give rise to no use tax. This code is the ordinary untaxed purchase, and it reaches no box of the return, which has no input side.",
+    "source": "ca-rtc",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        }
+      ]
+    },
+    "kind": "sales_tax",
+    "sequence": 110
+  }
+]

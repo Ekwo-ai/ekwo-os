@@ -1,0 +1,613 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/Ekwo-ai/ekwo-os/blob/main/packages/cli/schema/output.1.json",
+  "title": "What every `ekwo` command writes to the standard output under --json",
+  "$comment": "One document per run, whatever happened. `data` is what the command has to say and its shape depends on the command: it is described under $defs/data, keyed by the value of `command`. An amount is always a decimal string and never a JSON number; a date is ISO 8601; a count is an integer.",
+  "type": "object",
+  "required": ["ok", "command", "exitCode", "warnings"],
+  "additionalProperties": false,
+  "properties": {
+    "ok": { "type": "boolean", "$comment": "exitCode is 0." },
+    "command": { "type": "string", "minLength": 1 },
+    "exitCode": {
+      "enum": [0, 1, 2, 3],
+      "$comment": "0 done. 1 a technical failure, or a check that found something (then `data` says what). 2 the command was called wrong. 3 the database refused."
+    },
+    "data": { "type": "object" },
+    "context": { "$ref": "#/$defs/context" },
+    "warnings": { "type": "array", "items": { "type": "string" } },
+    "error": { "$ref": "#/$defs/error" }
+  },
+  "$defs": {
+    "error": {
+      "type": "object",
+      "required": ["kind", "message"],
+      "additionalProperties": false,
+      "properties": {
+        "kind": { "enum": ["refusal", "usage", "technical"] },
+        "name": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]{3,}$",
+          "$comment": "The name the message starts with, e.g. period_locked. Absent when the message carries none; never invented."
+        },
+        "message": { "type": "string", "$comment": "Word for word. For a refusal, what the database raised." },
+        "sqlstate": { "type": "string", "pattern": "^[0-9A-Z]{5}$" },
+        "detail": { "type": "string" },
+        "hint": { "type": "string" }
+      }
+    },
+    "context": {
+      "$comment": "On whose behalf the answer was rendered. Present on every command that acts as a person (login, use, whoami, and every bookkeeping verb), on success and on a refusal alike, as soon as it is known; absent on the commands that install and operate. `company` is null when none is in use: check it before believing the rest.",
+      "type": "object",
+      "required": ["profile", "instance", "company"],
+      "additionalProperties": false,
+      "properties": {
+        "profile": { "oneOf": [{ "type": "string" }, { "type": "null" }], "$comment": "null when the environment said who." },
+        "instance": { "type": "string" },
+        "company": { "oneOf": [{ "$ref": "#/$defs/companyRef" }, { "type": "null" }] }
+      }
+    },
+    "row": {
+      "$comment": "A row as the database holds it, in the columns the MCP server reads too: snake case, amounts and dates as strings. The columns are the schema's (docs/schema.md), not this file's.",
+      "type": "object"
+    },
+    "documentAnswer": {
+      "$comment": "What getDocument() of @ekwo-ai/core answers — the MCP server's get_document. Every total is the database's. `replayed` is true when the document had already been created under this --ref.",
+      "type": "object",
+      "required": ["document", "lines"],
+      "properties": {
+        "document": { "$ref": "#/$defs/row" },
+        "lines": { "type": "array", "items": { "$ref": "#/$defs/row" } },
+        "entry": { "oneOf": [{ "$ref": "#/$defs/row" }, { "type": "null" }] },
+        "entry_lines": { "type": "array" },
+        "replayed": { "const": true }
+      }
+    },
+    "companyRef": {
+      "type": "object",
+      "required": ["id", "name"],
+      "additionalProperties": false,
+      "properties": { "id": { "type": "string" }, "name": { "type": "string" } }
+    },
+    "visibleCompany": {
+      "type": "object",
+      "required": ["id", "name", "country", "currency_code"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "country": { "type": "string" },
+        "currency_code": { "type": "string" },
+        "inUse": { "type": "boolean" }
+      }
+    },
+    "sessionUser": {
+      "type": "object",
+      "required": ["id", "email"],
+      "additionalProperties": false,
+      "properties": { "id": { "type": "string" }, "email": { "oneOf": [{ "type": "string" }, { "type": "null" }] } }
+    },
+    "migrationFile": {
+      "type": "object",
+      "required": ["version", "file"],
+      "properties": { "version": { "type": "string" }, "name": { "type": "string" }, "file": { "type": "string" } }
+    },
+    "packChange": {
+      "type": "object",
+      "required": ["object", "key", "change", "rule"],
+      "properties": {
+        "object": { "type": "string" },
+        "key": { "type": "string" },
+        "change": { "type": "string" },
+        "rule": { "enum": ["addition", "closure", "review"] },
+        "detail": { "type": "object" }
+      }
+    },
+    "data": {
+      "help": {
+        "type": "object",
+        "required": ["version", "commands"],
+        "additionalProperties": false,
+        "properties": {
+          "version": { "type": "string" },
+          "commands": { "type": "array", "items": { "type": "string" } }
+        }
+      },
+      "version": {
+        "type": "object",
+        "required": ["version"],
+        "additionalProperties": false,
+        "properties": { "version": { "type": "string" } }
+      },
+      "init": {
+        "type": "object",
+        "required": [
+          "organization", "instanceId", "adminUserId", "company", "fiscalYear", "filingPeriods",
+          "bankAccountId", "migrations", "steps", "schemaVersion", "demo", "configFile"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "organization": { "type": "string" },
+          "instanceId": { "type": "string" },
+          "adminUserId": { "type": "string" },
+          "company": {
+            "type": "object",
+            "required": ["id", "name", "country", "currency", "language", "chart", "packVersion"],
+            "additionalProperties": false,
+            "properties": {
+              "id": { "type": "string" },
+              "name": { "type": "string" },
+              "country": { "type": "string" },
+              "currency": { "type": "string" },
+              "language": { "type": "string" },
+              "chart": { "type": ["string", "null"] },
+              "packVersion": { "type": ["string", "null"] }
+            }
+          },
+          "fiscalYear": {
+            "type": "object",
+            "required": ["name", "start", "end"],
+            "additionalProperties": false,
+            "properties": {
+              "name": { "type": "string" },
+              "start": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
+              "end": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" }
+            }
+          },
+          "filingPeriods": { "type": "object" },
+          "bankAccountId": { "type": ["string", "null"] },
+          "migrations": {
+            "type": "object",
+            "required": ["applied", "alreadyApplied"],
+            "additionalProperties": false,
+            "properties": {
+              "applied": { "type": "array", "items": { "type": "string" } },
+              "alreadyApplied": { "type": "integer", "minimum": 0 }
+            }
+          },
+          "steps": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["name", "outcome"],
+              "properties": {
+                "name": { "type": "string" },
+                "outcome": { "type": "string" },
+                "detail": { "type": "string" }
+              }
+            }
+          },
+          "schemaVersion": { "type": ["string", "null"] },
+          "demo": { "type": "boolean" },
+          "configFile": { "type": "string" }
+        }
+      },
+      "migrate": {
+        "type": "object",
+        "required": ["applied"],
+        "additionalProperties": false,
+        "properties": {
+          "alreadyApplied": { "type": "integer", "minimum": 0 },
+          "applied": { "type": "array", "items": { "type": "string" } },
+          "moduleMigrations": { "type": "integer", "minimum": 0 },
+          "seeds": { "type": "array", "items": { "type": "string" } },
+          "schemaVersion": { "type": ["string", "null"] },
+          "pending": { "type": "array", "items": { "type": "string" } },
+          "unknown": {
+            "type": "array",
+            "items": { "type": "string" },
+            "$comment": "Versions this database ran that this release does not carry. When present nothing was applied: upgrade the CLI first."
+          }
+        }
+      },
+      "status": {
+        "type": "object",
+        "required": [
+          "schemaInstalled", "installedVersion", "availableVersion", "appliedCount",
+          "pending", "unknown", "admins", "companies", "packs"
+        ],
+        "properties": {
+          "schemaInstalled": { "type": "boolean" },
+          "installedVersion": { "type": ["string", "null"] },
+          "availableVersion": { "type": ["string", "null"] },
+          "appliedCount": { "type": "integer", "minimum": 0 },
+          "pending": { "type": "array", "items": { "$ref": "#/$defs/migrationFile" } },
+          "unknown": { "type": "array", "items": { "type": "string" } },
+          "instance": { "type": "object" },
+          "admins": { "type": "integer", "minimum": 0 },
+          "companies": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["name", "country", "accounts", "entries", "fiscalYears", "closedFiscalYears", "filingPeriods"],
+              "properties": {
+                "name": { "type": "string" },
+                "country": { "type": "string" },
+                "accounts": { "type": "integer" },
+                "entries": { "type": "integer" },
+                "fiscalYears": { "type": "integer" },
+                "closedFiscalYears": { "type": "integer" },
+                "packVersion": { "type": ["string", "null"] },
+                "chartCode": { "type": ["string", "null"] },
+                "vatPeriod": { "type": ["string", "null"] },
+                "filingPeriods": { "type": "array", "items": { "type": "object" } },
+                "liveShares": { "type": "integer" }
+              }
+            }
+          },
+          "packs": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["country", "name", "version", "charts", "certificationStatus"],
+              "properties": {
+                "country": { "type": "string" },
+                "name": { "type": "string" },
+                "version": { "type": "string" },
+                "charts": { "type": "array", "items": { "type": "object" } },
+                "certificationStatus": { "type": "string" },
+                "certifiedBy": { "type": ["string", "null"] },
+                "certifiedAt": { "type": ["string", "null"] },
+                "einvoiceProfile": { "type": ["string", "null"] }
+              }
+            }
+          }
+        }
+      },
+      "doctor": {
+        "type": "object",
+        "required": ["checks", "problems", "warnings"],
+        "additionalProperties": false,
+        "properties": {
+          "checks": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["name", "severity", "summary"],
+              "additionalProperties": false,
+              "properties": {
+                "name": { "type": "string" },
+                "severity": { "enum": ["ok", "warning", "problem"] },
+                "summary": { "type": "string" },
+                "details": { "type": "array", "items": { "type": "string" } },
+                "data": { "type": "object" }
+              }
+            }
+          },
+          "problems": { "type": "integer", "minimum": 0 },
+          "warnings": { "type": "integer", "minimum": 0 }
+        }
+      },
+      "module list": {
+        "type": "object",
+        "required": ["modules", "notInThisRelease"],
+        "additionalProperties": false,
+        "properties": {
+          "modules": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["code", "name", "version", "schema", "description", "migrations", "installed", "installedVersion", "status", "companies"],
+              "additionalProperties": false,
+              "properties": {
+                "code": { "type": "string" },
+                "name": { "type": "string" },
+                "version": { "type": "string" },
+                "schema": { "type": "string" },
+                "description": { "type": ["string", "null"] },
+                "migrations": { "type": "integer", "minimum": 0 },
+                "installed": { "type": "boolean" },
+                "installedVersion": { "type": ["string", "null"] },
+                "status": { "type": ["string", "null"] },
+                "companies": { "type": "integer", "minimum": 0 }
+              }
+            }
+          },
+          "notInThisRelease": { "type": "array", "items": { "type": "object" } }
+        }
+      },
+      "module migrate": {
+        "type": "object",
+        "required": ["modules", "applied"],
+        "additionalProperties": false,
+        "properties": {
+          "modules": { "type": "array", "items": { "type": "string" } },
+          "applied": { "type": "integer", "minimum": 0 }
+        }
+      },
+      "module enable": { "$ref": "#/$defs/moduleToggle" },
+      "module disable": { "$ref": "#/$defs/moduleToggle" },
+      "pack list": {
+        "type": "object",
+        "required": ["packs"],
+        "additionalProperties": false,
+        "properties": {
+          "packs": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "required": ["pack", "name", "version", "charts", "taxes", "statements", "languages", "certification", "golden", "goldenExemption"],
+              "additionalProperties": false,
+              "properties": {
+                "pack": { "type": "string" },
+                "name": { "type": "string" },
+                "version": { "type": "string" },
+                "charts": { "type": "array", "items": { "type": "object" } },
+                "taxes": { "type": "integer", "minimum": 0 },
+                "statements": { "type": "integer", "minimum": 0 },
+                "languages": { "type": "array", "items": { "type": "string" } },
+                "certification": { "type": ["string", "null"] },
+                "golden": { "type": "boolean" },
+                "goldenExemption": { "type": ["string", "null"] }
+              }
+            }
+          }
+        }
+      },
+      "pack build": { "$ref": "#/$defs/packFiles" },
+      "pack check": { "$ref": "#/$defs/packFiles" },
+      "pack status": {
+        "type": "object",
+        "required": ["packs", "companies"],
+        "additionalProperties": false,
+        "properties": {
+          "packs": { "type": "array", "items": { "type": "object", "required": ["country", "version", "name"] } },
+          "companies": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["companyId", "name", "country", "heldVersion", "packVersion", "behind"],
+              "properties": {
+                "companyId": { "type": "string" },
+                "name": { "type": "string" },
+                "country": { "type": "string" },
+                "chartCode": { "type": ["string", "null"] },
+                "heldVersion": { "type": ["string", "null"] },
+                "packVersion": { "type": ["string", "null"] },
+                "behind": { "type": "boolean" },
+                "differences": { "type": "object" }
+              }
+            }
+          }
+        }
+      },
+      "pack upgrade": {
+        "type": "object",
+        "required": ["company", "company_id", "country", "from_version", "to_version", "version_moved", "applied", "listed", "never_applied"],
+        "$comment": "Everything but `company` is what pack_upgrade() returned, keys included: the function's answer is passed on, not re-spelled.",
+        "properties": {
+          "company": { "type": "object", "required": ["id", "name"] },
+          "company_id": { "type": "string" },
+          "country": { "type": "string" },
+          "chart_code": { "type": ["string", "null"] },
+          "from_version": { "type": ["string", "null"] },
+          "to_version": { "type": ["string", "null"] },
+          "version_moved": { "type": "boolean" },
+          "applied": { "type": "array", "items": { "$ref": "#/$defs/packChange" } },
+          "listed": { "type": "array", "items": { "$ref": "#/$defs/packChange" } },
+          "never_applied": { "type": "array", "items": { "$ref": "#/$defs/packChange" } }
+        }
+      },
+      "register": {
+        "type": "object",
+        "required": ["registered", "email", "registryUrl", "announced"],
+        "additionalProperties": false,
+        "properties": {
+          "registered": { "const": true },
+          "email": { "type": "string" },
+          "registryUrl": { "type": "string" },
+          "announced": { "type": "boolean" },
+          "reason": { "type": "string" }
+        }
+      },
+      "unregister": {
+        "type": "object",
+        "required": ["registered", "changed"],
+        "additionalProperties": false,
+        "properties": { "registered": { "const": false }, "changed": { "type": "boolean" } }
+      },
+      "demo": {
+        "type": "object",
+        "required": ["applied"],
+        "additionalProperties": false,
+        "properties": {
+          "applied": { "type": "boolean" },
+          "reason": { "enum": ["already_there", "not_confirmed"] }
+        }
+      },
+      "contact add": {
+        "$comment": "What createContact() of @ekwo-ai/core answers — the MCP server's create_contact. `replayed` is true when the contact had already been created under this --ref and nothing was written.",
+        "type": "object",
+        "required": ["contact"],
+        "properties": { "contact": { "$ref": "#/$defs/row" }, "replayed": { "const": true } }
+      },
+      "contact list": {
+        "type": "object",
+        "required": ["contacts", "count"],
+        "properties": { "contacts": { "type": "array", "items": { "$ref": "#/$defs/row" } }, "count": { "type": "integer" } }
+      },
+      "invoice new": { "$ref": "#/$defs/documentAnswer" },
+      "invoice line add": { "$ref": "#/$defs/documentAnswer" },
+      "doc show": { "$ref": "#/$defs/documentAnswer" },
+      "doc list": {
+        "type": "object",
+        "required": ["documents", "count"],
+        "properties": { "documents": { "type": "array", "items": { "$ref": "#/$defs/row" } }, "count": { "type": "integer" } }
+      },
+      "post": {
+        "$comment": "The entry post_document() wrote — or, under --dry-run, the one it would write: `dry_run` is then true and nothing was written. Amounts are decimal strings.",
+        "type": "object",
+        "required": ["document_id", "entry", "entry_lines", "note"],
+        "properties": {
+          "document_id": { "type": "string" },
+          "dry_run": { "const": true },
+          "entry": { "$ref": "#/$defs/row" },
+          "entry_lines": { "type": "array", "items": { "$ref": "#/$defs/row" } },
+          "note": { "type": "string" }
+        }
+      },
+      "payment record": {
+        "type": "object",
+        "required": ["payment", "entry", "entry_lines", "matched", "note"],
+        "properties": {
+          "payment": { "$ref": "#/$defs/row" },
+          "entry": { "$ref": "#/$defs/row" },
+          "entry_lines": { "type": "array", "items": { "$ref": "#/$defs/row" } },
+          "matched": { "type": "array" },
+          "replayed": { "const": true },
+          "note": { "type": "string" }
+        }
+      },
+      "match": {
+        "type": "object",
+        "required": ["document_id", "transaction", "settled_lines"],
+        "properties": {
+          "document_id": { "type": "string" },
+          "transaction": { "$ref": "#/$defs/row" },
+          "settled_lines": { "type": "array", "items": { "type": "string" } }
+        }
+      },
+      "login": {
+        "$comment": "No token is ever printed, in either form.",
+        "type": "object",
+        "required": ["profile", "instance", "user", "company", "expiresAt", "configDir"],
+        "additionalProperties": false,
+        "properties": {
+          "profile": { "type": "string" },
+          "instance": {
+            "type": "object",
+            "required": ["url"],
+            "additionalProperties": false,
+            "properties": { "url": { "type": "string" } }
+          },
+          "user": { "$ref": "#/$defs/sessionUser" },
+          "company": { "oneOf": [{ "$ref": "#/$defs/companyRef" }, { "type": "null" }] },
+          "expiresAt": { "type": "string", "$comment": "ISO 8601. When the access token lapses; it is renewed on its own." },
+          "configDir": { "type": "string" }
+        }
+      },
+      "logout": {
+        "type": "object",
+        "required": ["profile", "signedOut", "revoked"],
+        "additionalProperties": false,
+        "properties": {
+          "profile": { "oneOf": [{ "type": "string" }, { "type": "null" }] },
+          "signedOut": { "type": "boolean", "$comment": "There was a session here and it is gone." },
+          "revoked": { "type": "boolean", "$comment": "The instance was told, so the refresh token is dead there too." }
+        }
+      },
+      "use": {
+        "type": "object",
+        "required": ["profile", "company"],
+        "additionalProperties": false,
+        "properties": {
+          "profile": { "type": "string" },
+          "company": { "$ref": "#/$defs/visibleCompany" }
+        }
+      },
+      "company export": {
+        "type": "object",
+        "required": ["company", "actingAs", "out", "tables", "rows", "files"],
+        "additionalProperties": false,
+        "properties": {
+          "company": { "$ref": "#/$defs/companyRef" },
+          "actingAs": { "type": "string", "$comment": "The member the archive was read as, under row level security." },
+          "out": { "type": "string", "$comment": "The directory the archive was written into, absolute." },
+          "tables": { "type": "integer", "minimum": 0 },
+          "rows": { "type": "integer", "minimum": 0 },
+          "files": {
+            "type": "object",
+            "required": ["listed", "transported"],
+            "additionalProperties": false,
+            "properties": {
+              "listed": { "type": "integer", "minimum": 0 },
+              "transported": { "const": false, "$comment": "The bytes of the attachments are not in the archive; manifest.json lists them." }
+            }
+          }
+        }
+      },
+      "company import": {
+        "type": "object",
+        "required": ["company", "rows", "owner", "tables", "files"],
+        "additionalProperties": false,
+        "properties": {
+          "company": { "$ref": "#/$defs/companyRef" },
+          "rows": { "type": "integer", "minimum": 0 },
+          "owner": { "type": ["string", "null"], "$comment": "The first owner. Members do not travel; null when nobody was named." },
+          "tables": {
+            "type": "object",
+            "$comment": "Rows taken in, by table name.",
+            "additionalProperties": { "type": "integer", "minimum": 0 }
+          },
+          "files": {
+            "type": "object",
+            "required": ["toCarry"],
+            "additionalProperties": false,
+            "properties": { "toCarry": { "type": "integer", "minimum": 0 } }
+          }
+        }
+      },
+      "whoami": {
+        "type": "object",
+        "required": ["source", "profile", "profiles", "instance", "user", "company", "capabilities", "companies"],
+        "additionalProperties": false,
+        "properties": {
+          "source": { "enum": ["environment", "profile"] },
+          "profile": { "oneOf": [{ "type": "string" }, { "type": "null" }] },
+          "profiles": { "type": "array", "items": { "type": "string" } },
+          "instance": {
+            "type": "object",
+            "required": ["url", "schemaVersion"],
+            "additionalProperties": false,
+            "properties": {
+              "url": { "type": "string" },
+              "schemaVersion": { "oneOf": [{ "type": "string" }, { "type": "null" }] }
+            }
+          },
+          "user": { "$ref": "#/$defs/sessionUser" },
+          "company": { "oneOf": [{ "$ref": "#/$defs/visibleCompany" }, { "type": "null" }] },
+          "capabilities": {
+            "$comment": "What member_capabilities() answers for the company in use; null when none is.",
+            "oneOf": [{ "type": "array", "items": { "type": "string" } }, { "type": "null" }]
+          },
+          "companies": { "type": "array", "items": { "$ref": "#/$defs/visibleCompany" } }
+        }
+      }
+    },
+    "moduleToggle": {
+      "type": "object",
+      "required": ["module", "schema", "companyId", "actingAs", "enabled"],
+      "additionalProperties": false,
+      "properties": {
+        "module": { "type": "string" },
+        "schema": { "type": "string" },
+        "companyId": { "type": "string" },
+        "actingAs": { "type": "string" },
+        "enabled": { "type": "boolean" }
+      }
+    },
+    "packFiles": {
+      "type": "object",
+      "required": ["action", "files", "stale"],
+      "additionalProperties": false,
+      "properties": {
+        "action": { "enum": ["build", "check"] },
+        "files": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["file", "pack", "state"],
+            "additionalProperties": false,
+            "properties": {
+              "file": { "type": "string" },
+              "pack": { "type": "string" },
+              "state": { "enum": ["written", "unchanged", "stale"] }
+            }
+          }
+        },
+        "stale": { "type": "integer", "minimum": 0 }
+      }
+    }
+  }
+}

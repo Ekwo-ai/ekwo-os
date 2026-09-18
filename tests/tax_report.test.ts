@@ -5,7 +5,14 @@ import { join } from 'node:path';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { PackError, readPack, resolveBoxRef, type Pack } from '../packages/cli/src/index.js';
 import { asUser, expectError, freshDatabase, one, repoRoot, rows } from './helpers/db.js';
-import { allPacks, declarationPeriods, packWhere, packsRoot } from './helpers/packs.js';
+import {
+  allPacks,
+  declarationPeriods,
+  expectationsOf,
+  packWhere,
+  packsWhere,
+  packsRoot,
+} from './helpers/packs.js';
 import { demoCompanyId, newCompany, newContact, newDocument } from './helpers/factory.js';
 
 // A declaration form is data. `vat_return()` used to sum the ledger
@@ -36,6 +43,7 @@ interface Box {
   computed: boolean;
   name: string | null;
   sequence: number | null;
+  print_sequence: number | null;
   hidden: boolean;
   report_code: string | null;
 }
@@ -464,7 +472,25 @@ describe('what `ekwo pack check` refuses in a formula', () => {
       // A country pack of a VAT jurisdiction carries a periodic return, its
       // code is the one the seed loaded, and its boxes are not a stub.
       expect(pack.report, pack.slug).not.toBeNull();
-      expect(pack.report!.boxes.length, pack.slug).toBeGreaterThan(20);
+      // Not a stub, asked of the pack rather than of a number: the form carries
+      // every box this pack's taxes post to, at least one of them, and at least
+      // one total computed from them. How many boxes a return has is the
+      // country's own answer — nine printed in the United Kingdom, a hundred
+      // and fifty-six in Luxembourg — and a threshold here would be a country
+      // nobody named.
+      const declared = new Set(pack.report!.boxes.map((box) => box.box));
+      // Every box of every posting, not just the one it is known by: a
+      // posting may print its amount in more than one, and a box named only
+      // second is a box the form still has to carry.
+      const posted = new Set(
+        pack.taxes.flatMap((tax) => Object.values(tax.postings).flat()).flatMap((posting) => posting.boxes),
+      );
+      expect([...posted].filter((box) => !declared.has(box)), pack.slug).toEqual([]);
+      expect(posted.size, pack.slug).toBeGreaterThan(0);
+      expect(
+        pack.report!.boxes.some((box) => box.kind === 'total'),
+        pack.slug,
+      ).toBe(true);
       expect(pack.reportCode, pack.slug).toBe(pack.report!.code);
       expect(pack.report!.code.startsWith(pack.manifest.country), pack.slug).toBe(true);
     }
@@ -498,14 +524,55 @@ describe('what `ekwo pack check` refuses in a formula', () => {
     ).rejects.toThrow(/16 is the box itself/);
   });
 
-  it('refuses a total that names a total computed after it', async () => {
+  it('accepts a total that names a total declared after it', async () => {
+    // The rule that refused this is gone. A form prints a subtotal above the
+    // boxes it adds up — an eCDF section, line 11 of CDTFA-401-A — and the
+    // evaluator has resolved by dependency since it became the one evaluator,
+    // so the declaration order was never the evaluation order. What made the
+    // two look like one was this check, and a pack had to spend its ordering
+    // field on the evaluator to get past it.
+    //
+    // The whole real form is used, with two sequences swapped: a fabricated
+    // form of two boxes would be refused for everything else it is missing.
+    const boxes = JSON.parse(
+      await readFile(join(packs, broken.slug, 'tax_report.json'), 'utf8'),
+    ).boxes as { box: string; kind: string; sequence?: number; plus?: string[]; minus?: string[] }[];
+    const read = broken.report!.boxes;
+    const named = read.find(
+      (b) =>
+        b.kind === 'total' &&
+        [...b.plus, ...b.minus].some((ref) => {
+          const target = resolveBoxRef(ref, read);
+          return typeof target !== 'string' && target.kind === 'total';
+        }),
+    );
+    expect(named, 'no total of this form names another total').toBeDefined();
+    const behind = [...named!.plus, ...named!.minus]
+      .map((ref) => resolveBoxRef(ref, read))
+      .filter((target) => typeof target !== 'string' && target.kind === 'total');
+
+    // Every total this one names is declared after it, which is exactly what
+    // the removed rule refused.
+    for (const target of behind) {
+      const raw = boxes.find(
+        (b) => b.box === (target as { box: string }).box && b.kind === 'total',
+      )!;
+      raw.sequence = named!.sequence + 100_000;
+    }
+    await packWith(boxes);
+  });
+
+  it('refuses two boxes that are worked out from each other', async () => {
+    // A cycle is what a dependency order cannot survive, and it is named here
+    // rather than met at runtime, where `evaluate_totals()` raises
+    // `formula_cycle` instead of looping.
     await expect(
       packWith([
         { ...base, box: '08' },
-        { ...total, box: '28', sequence: 20, plus: ['16'] },
-        { ...total, box: '16', sequence: 30, plus: ['08:base'] },
+        { ...total, box: '16', sequence: 20, plus: ['28'] },
+        { ...total, box: '28', sequence: 30, plus: ['16'] },
       ]),
-    ).rejects.toThrow(/16 is a total computed at sequence 30, after this one at 20/);
+    ).rejects.toThrow(/the boxes 16, 28 depend on each other and on nothing else/);
   });
 
   it('refuses a formula on a box that is summed from the ledger', async () => {
@@ -515,6 +582,58 @@ describe('what `ekwo pack check` refuses in a formula', () => {
         { box: '09', kind: 'tax', name: 'Taxe', sequence: 20, plus: ['08:base'] },
       ]),
     ).rejects.toThrow(/only a total is computed from other boxes/);
+  });
+
+  it('refuses a rate on a box that is summed from the ledger', async () => {
+    await expect(
+      packWith([
+        { ...base, box: '08' },
+        { box: '09', kind: 'tax', name: 'Taxe', sequence: 20, rate: 6, rate_of: '08:base' },
+      ]),
+    ).rejects.toThrow(/only a total is a rate of another box/);
+  });
+
+  it('refuses a rate beside a list, which would be two ways of computing one box', async () => {
+    await expect(
+      packWith([
+        { ...base, box: '08' },
+        { ...total, box: '16', sequence: 20, plus: ['08:base'], rate: 6, rate_of: '08:base' },
+      ]),
+    ).rejects.toThrow(/a box is a list of boxes or a rate of one box, never both/);
+  });
+
+  it('refuses a rate with no box to apply it to, and a box with no rate', async () => {
+    await expect(
+      packWith([
+        { ...base, box: '08' },
+        { ...total, box: '16', sequence: 20, rate: 6 },
+      ]),
+    ).rejects.toThrow(/rate is a percentage of nothing/);
+    await expect(
+      packWith([
+        { ...base, box: '08' },
+        { ...total, box: '16', sequence: 20, rate_of: '08:base' },
+      ]),
+    ).rejects.toThrow(/rate_of names a box and no rate is applied to it/);
+  });
+
+  it('refuses a box that is a rate of itself', async () => {
+    await expect(
+      packWith([
+        { ...base, box: '08' },
+        { ...total, box: '16', sequence: 20, rate: 6, rate_of: '16' },
+      ]),
+    ).rejects.toThrow(/16 is the box itself/);
+  });
+
+  it('refuses two boxes that are each a rate of the other', async () => {
+    await expect(
+      packWith([
+        { ...base, box: '08' },
+        { ...total, box: '16', sequence: 20, rate: 6, rate_of: '28' },
+        { ...total, box: '28', sequence: 30, rate: 50, rate_of: '16' },
+      ]),
+    ).rejects.toThrow(/the boxes 16, 28 depend on each other and on nothing else/);
   });
 
   it('refuses the same box declared twice with the same kind', async () => {
@@ -547,11 +666,194 @@ describe('what `ekwo pack check` refuses in a formula', () => {
   });
 });
 
+// ---------------------------------------------------------------------------
+// A box that is a rate of another box, and the order the two are worked out in.
+// ---------------------------------------------------------------------------
+
+describe('evaluate_totals, where a total is a rate of one key', () => {
+  /** The evaluator, with the rounding of the company this file already has. */
+  async function evaluate(values: unknown, formulas: unknown): Promise<Record<string, string>> {
+    const row = await one<{ out: Record<string, string> }>(
+      db,
+      `select evaluate_totals($1::jsonb, $2::jsonb, rounding_of($3), true) as out`,
+      [JSON.stringify(values), JSON.stringify(formulas), companyId],
+    );
+    return row.out;
+  }
+
+  it('applies the percentage to the key it names', async () => {
+    const out = await evaluate(
+      { 'A|base': 24000 },
+      [{ key: 'B|total', sequence: 10, rate: 6, rate_of: 'A' }],
+    );
+    expect(Number(out['B|total'])).toBeCloseTo(1440, 2);
+  });
+
+  it('works a rate out after its source, even where the sequence puts it first', async () => {
+    // This is the whole point of separating the two orders. `B` is a rate of
+    // `A`, `A` is a total of a ledger box, and `B` is declared — and printed —
+    // first. An evaluator that followed the sequence would read a nil `A` and
+    // answer nothing; this one answers six per cent of what `A` comes to.
+    const out = await evaluate({ 'X|base': 24000 }, [
+      { key: 'B|total', sequence: 10, rate: 6, rate_of: 'A' },
+      { key: 'A|total', sequence: 20, plus: ['X'] },
+    ]);
+    expect(Number(out['A|total'])).toBeCloseTo(24000, 2);
+    expect(Number(out['B|total'])).toBeCloseTo(1440, 2);
+  });
+
+  it('says which keys are in a cycle rather than looping on one', async () => {
+    const message = await expectError(
+      db,
+      `select evaluate_totals($1::jsonb, $2::jsonb, rounding_of($3), true)`,
+      [
+        JSON.stringify({}),
+        JSON.stringify([
+          { key: 'A|total', sequence: 10, rate: 50, rate_of: 'B' },
+          { key: 'B|total', sequence: 20, rate: 50, rate_of: 'A' },
+        ]),
+        companyId,
+      ],
+    );
+    expect(message).toMatch(/formula_cycle: .*A\|total, B\|total/);
+  });
+});
+
+describe('vat_return, where a box is printed before the box it is worked out from', () => {
+  it('answers the rate of its source, and prints where the form prints', async () => {
+    // Two boxes added to the form this company files, inside a transaction
+    // that is rolled back: the fixture is a real form with real figures on it,
+    // and nothing outside this test ever sees the two extra boxes.
+    const before = await vatReturn(companyId, '2026-07-01', '2026-09-30');
+    const source = before.find((b) => b.computed && n(b.amount) !== 0);
+    expect(source, 'this form derives no total from the ledger').toBeDefined();
+    const form = await one<{ country: string; code: string }>(
+      db,
+      `select country, code from tax_report_templates where code = $1`,
+      [source!.report_code],
+    );
+
+    await db.exec('begin');
+    try {
+      await db.query(
+        `insert into tax_report_box_templates
+           (country, report_code, box, kind, name, sequence, print_sequence, plus_boxes)
+         values ($1, $2, 'ZZS', 'total', 'The source, printed last', 900000, 900000, array[$3])`,
+        [form.country, form.code, `${source!.box}:${source!.kind}`],
+      );
+      await db.query(
+        `insert into tax_report_box_templates
+           (country, report_code, box, kind, name, sequence, print_sequence, rate, rate_of_box)
+         values ($1, $2, 'ZZR', 'total', 'A half of it, printed first', 1, 1, 50, 'ZZS')`,
+        [form.country, form.code],
+      );
+      // And one that says nothing about where it is printed, which is what
+      // every box written before this said.
+      await db.query(
+        `insert into tax_report_box_templates
+           (country, report_code, box, kind, name, sequence, plus_boxes)
+         values ($1, $2, 'ZZQ', 'total', 'Silent about its print order', 900001, array['ZZR'])`,
+        [form.country, form.code],
+      );
+
+      const boxes = await vatReturn(companyId, '2026-07-01', '2026-09-30');
+      const derived = boxes.find((b) => b.box === 'ZZR');
+      const root = boxes.find((b) => b.box === 'ZZS');
+      const silent = boxes.find((b) => b.box === 'ZZQ');
+      expect(n(root?.amount)).toBeCloseTo(n(source!.amount), 2);
+      expect(n(derived?.amount)).toBeCloseTo(n(source!.amount) / 2, 2);
+      expect(derived?.computed).toBe(true);
+
+      // It prints first and is worked out last, which is the whole point.
+      expect(derived?.print_sequence).toBe(1);
+      expect(root?.print_sequence).toBe(900000);
+      expect(derived?.sequence).toBeLessThan(root?.sequence ?? 0);
+
+      // A box that declares no print order prints where it is declared.
+      expect(silent?.print_sequence).toBe(silent?.sequence);
+      expect(boxes.every((b) => b.print_sequence !== null)).toBe(true);
+    } finally {
+      await db.exec('rollback');
+    }
+  });
+
+  it('refuses a rate on a box the ledger fills, and a rate that names itself', async () => {
+    const country = await one<{ country: string; code: string }>(
+      db,
+      `select t.country, t.code from tax_report_templates t
+        where t.is_periodic_return order by t.country limit 1`,
+    );
+    const cases: [string, RegExp][] = [
+      [
+        `insert into tax_report_box_templates (country, report_code, box, kind, name, rate, rate_of_box)
+         values ($1, $2, 'ZZ1', 'tax', 'Essai', 6, '54')`,
+        /tax_report_box_templates_rate_is_a_total/,
+      ],
+      [
+        `insert into tax_report_box_templates (country, report_code, box, kind, name, rate)
+         values ($1, $2, 'ZZ2', 'total', 'Essai', 6)`,
+        /tax_report_box_templates_rate_names_a_box/,
+      ],
+      [
+        `insert into tax_report_box_templates (country, report_code, box, kind, name, rate, rate_of_box, plus_boxes)
+         values ($1, $2, 'ZZ3', 'total', 'Essai', 6, '54', array['54'])`,
+        /tax_report_box_templates_rate_or_a_list/,
+      ],
+      [
+        `insert into tax_report_box_templates (country, report_code, box, kind, name, rate, rate_of_box)
+         values ($1, $2, 'ZZ4', 'total', 'Essai', 6, 'ZZ4:total')`,
+        /tax_report_box_templates_rate_is_not_itself/,
+      ],
+    ];
+    for (const [sql, expected] of cases) {
+      expect(await expectError(db, sql, [country.country, country.code]), sql).toMatch(expected);
+    }
+  });
+});
+
+describe('what a pack claims about the arithmetic of its own form', () => {
+  // `packs/<cc>/golden/expectations.json` is where a claim only one country can
+  // make is written down: the form's instructions say "add lines 1 and 2" and
+  // "multiply line 12 by 0.06", and the pack is the transcription. Comparing
+  // the two catches a typo on either side, which no golden figure would — a
+  // box that adds the wrong boxes and a tax that posts to the wrong box agree.
+  it('is what the form the pack carries actually says, box by box', () => {
+    let claimed = 0;
+    for (const pack of allPacks) {
+      for (const claim of expectationsOf(pack).report_arithmetic ?? []) {
+        const where = `${pack.slug} box ${claim.box}`;
+        const box = (pack.report?.boxes ?? []).find(
+          (b) => b.box === claim.box && b.kind === claim.kind,
+        );
+        expect(box, where).toBeDefined();
+        expect(box!.plus, where).toEqual(claim.plus ?? []);
+        expect(box!.minus, where).toEqual(claim.minus ?? []);
+        expect(box!.rate, where).toBe(claim.rate ?? null);
+        expect(box!.rate_of, where).toBe(claim.rate_of ?? null);
+        claimed += 1;
+      }
+    }
+    expect(claimed, 'no pack states the arithmetic of its own form').toBeGreaterThan(0);
+  });
+});
+
 describe('resolveBoxRef', () => {
+  const shape = {
+    print_sequence: null,
+    plus: [],
+    minus: [],
+    rate: null,
+    rate_of: null,
+    floor_zero: false,
+    hidden: false,
+    xml_element: null,
+    legal_reference: null,
+    source: null,
+  };
   const boxes = [
-    { box: '08', kind: 'base' as const, name: 'Base', sequence: 10, plus: [], minus: [], floor_zero: false, hidden: false, xml_element: null, legal_reference: null, source: null },
-    { box: '08', kind: 'tax' as const, name: 'Taxe', sequence: 20, plus: [], minus: [], floor_zero: false, hidden: false, xml_element: null, legal_reference: null, source: null },
-    { box: '19', kind: 'tax' as const, name: 'Immobilisations', sequence: 30, plus: [], minus: [], floor_zero: false, hidden: false, xml_element: null, legal_reference: null, source: null },
+    { box: '08', kind: 'base' as const, name: 'Base', sequence: 10, ...shape },
+    { box: '08', kind: 'tax' as const, name: 'Taxe', sequence: 20, ...shape },
+    { box: '19', kind: 'tax' as const, name: 'Immobilisations', sequence: 30, ...shape },
   ];
 
   it('takes a bare code when only one box carries it', () => {
@@ -759,21 +1061,31 @@ describe('a return asked for a period the company does not file', () => {
 });
 
 describe('what `ekwo pack check` refuses about a cadence', () => {
+  /** A pack in a temporary directory, with some of its files edited. */
+  async function packWithFiles(
+    pack: Pack,
+    edits: Record<string, (content: Record<string, unknown>) => void>,
+  ): Promise<Pack> {
+    const dir = await mkdtemp(join(tmpdir(), 'ekwo-period-'));
+    await cp(join(packsRoot, 'schema'), join(dir, 'schema'), { recursive: true });
+    await cp(join(packsRoot, pack.slug), join(dir, pack.slug), { recursive: true });
+    for (const [file, edit] of Object.entries(edits)) {
+      const content = JSON.parse(
+        await readFile(join(packsRoot, pack.slug, file), 'utf8'),
+      ) as Record<string, unknown>;
+      edit(content);
+      await writeFile(join(dir, pack.slug, file), JSON.stringify(content), 'utf8');
+    }
+    return readPack(pack.slug, dir);
+  }
+
   /** A pack in a temporary directory, with one of its files edited. */
   async function packWith(
     pack: Pack,
     file: string,
     edit: (content: Record<string, unknown>) => void,
   ): Promise<Pack> {
-    const dir = await mkdtemp(join(tmpdir(), 'ekwo-period-'));
-    await cp(join(packsRoot, 'schema'), join(dir, 'schema'), { recursive: true });
-    await cp(join(packsRoot, pack.slug), join(dir, pack.slug), { recursive: true });
-    const content = JSON.parse(
-      await readFile(join(packsRoot, pack.slug, file), 'utf8'),
-    ) as Record<string, unknown>;
-    edit(content);
-    await writeFile(join(dir, pack.slug, file), JSON.stringify(content), 'utf8');
-    return readPack(pack.slug, dir);
+    return packWithFiles(pack, { [file]: edit });
   }
 
   it('reads every form of this repository as a list of cadences', async () => {
@@ -814,8 +1126,8 @@ describe('what `ekwo pack check` refuses about a cadence', () => {
     );
     const absent = declarationPeriods.find((c) => !two.report!.periods.includes(c))!;
     await expect(
-      packWith(two, 'pack.json', (m) => {
-        (m['defaults'] as Record<string, unknown>)['vat_period'] = absent;
+      packWith(two, 'tax_report.json', (r) => {
+        r['period_default'] = absent;
       }),
     ).rejects.toThrow(new RegExp(`not a cadence ${two.report!.code} is filed on`));
   });
@@ -826,40 +1138,367 @@ describe('what `ekwo pack check` refuses about a cadence', () => {
       (p) => (p.report?.periods.length ?? 0) > 1,
     );
     const offered = two.report!.periods[1]!;
-    const proposing = await packWith(two, 'pack.json', (m) => {
-      (m['defaults'] as Record<string, unknown>)['vat_period'] = offered;
+    const proposing = await packWith(two, 'tax_report.json', (r) => {
+      r['period_default'] = offered;
     });
-    expect(proposing.manifest.defaults['vat_period']).toBe(offered);
+    expect(proposing.report?.period_default).toBe(offered);
   });
 
-  it('lets a pack propose a cadence only where its form is filed on one', () => {
-    // The policy, stated as an assertion rather than as four country names.
-    // A form filed on a single cadence leaves nothing to choose, so the pack
-    // answers and `ekwo init` never asks. A form filed on several means the
-    // answer is a fact about the company — turnover, everywhere in Europe —
-    // and a pack proposing one of two lawful answers would be choosing a
-    // filing deadline for somebody it knows nothing about. It cites the
-    // article on the form instead.
+  it('still reads a proposal a pack written before the move put in its manifest', async () => {
+    // `defaults.vat_period` is where the proposal used to live, and a pack
+    // outside this repository still says it there. It is read from there when
+    // the form says nothing, so such a pack keeps working unchanged.
+    const two = packWhere(
+      'whose periodic return is filed on more than one cadence',
+      (p) => (p.report?.periods.length ?? 0) > 1,
+    );
+    const offered = two.report!.periods[1]!;
+    const legacy = await packWithFiles(two, {
+      'tax_report.json': (r) => {
+        delete r['period_default'];
+      },
+      'pack.json': (m) => {
+        (m['defaults'] as Record<string, unknown>)['vat_period'] = offered;
+      },
+    });
+    expect(legacy.report?.period_default).toBe(offered);
+  });
+
+  it('refuses a pack that proposes one cadence on the form and another in the manifest', async () => {
+    const two = packWhere(
+      'whose form proposes a cadence',
+      (p) => p.report?.period_default !== null && p.report?.period_default !== undefined,
+    );
+    const other = two.report!.periods.find((c) => c !== two.report!.period_default)!;
+    await expect(
+      packWith(two, 'pack.json', (m) => {
+        (m['defaults'] as Record<string, unknown>)['vat_period'] = other;
+      }),
+    ).rejects.toThrow(/The form is where a proposal belongs now/);
+  });
+
+  it('lets a pack propose only a cadence its own form is filed on', () => {
+    // The policy, stated as an assertion rather than as five country names,
+    // and it is no longer a count of the list.
+    //
+    // A form filed on a single cadence leaves nothing to choose. A form filed
+    // on several may still have a default, because whether the law gives one
+    // is a reading of the law and not a length: reg. 25(1) of the Value Added
+    // Tax Regulations 1995 makes three months the prescribed accounting period
+    // for everybody while a month and a year are both available on
+    // application. Where the cadence follows turnover instead, the pack
+    // proposes nothing, because it would be choosing a filing deadline for
+    // somebody it knows nothing about.
     for (const pack of allPacks) {
-      const proposed = pack.manifest.defaults['vat_period'] as string | undefined;
-      if (pack.report === null || pack.report.periods.length > 1) {
-        expect(proposed, pack.slug).toBeUndefined();
-      } else {
-        expect(proposed, pack.slug).toBe(pack.report.periods[0]);
+      const proposed = pack.report?.period_default ?? null;
+      if (pack.report === null || proposed === null) continue;
+      expect(pack.report.periods, pack.slug).toContain(proposed);
+    }
+  });
+
+  it('has a pack of each kind, so neither half of that policy is vacuous', () => {
+    expect(
+      packsWhere(
+        'whose form is filed on several cadences and still proposes one',
+        (p) => (p.report?.periods.length ?? 0) > 1 && p.report?.period_default !== null,
+      ).length,
+    ).toBeGreaterThan(0);
+    expect(
+      packsWhere(
+        'whose form is filed on several cadences and proposes none',
+        (p) => (p.report?.periods.length ?? 0) > 1 && p.report?.period_default === null,
+      ).length,
+    ).toBeGreaterThan(0);
+  });
+
+  it('installs exactly what each form proposes, and null where it proposes none', async () => {
+    for (const pack of allPacks) {
+      if (pack.report === null) continue;
+      const form = await one<{ period_default: string | null }>(
+        db,
+        'select period_default::text as period_default from tax_report_templates where country = $1 and code = $2',
+        [pack.manifest.country, pack.report.code],
+      );
+      expect(form.period_default, pack.slug).toBe(pack.report.period_default);
+      // The deprecated column carries a copy of the periodic return's own
+      // default, written from the same one place, so the two cannot disagree.
+      const country = await one<{ vat_period_default: string | null }>(
+        db,
+        'select vat_period_default::text as vat_period_default from country_defaults where country = $1',
+        [pack.manifest.country],
+      );
+      expect(country.vat_period_default, pack.slug).toBe(pack.report.period_default);
+    }
+  });
+});
+
+// ---------------------------------------------------------------------------
+// One posting, printed in as many boxes as the form asks for.
+//
+// A tax carries one `base` posting per kind of document, and every further
+// place the form shows that amount is a `total` naming the box it was written
+// to. That holds wherever the parent is a sum. Where it is not — form KMD
+// nests box 6.1 inside box 6 inside box 1 and prints only the innermost, the
+// British VAT Return prints a service received from abroad in box 6 and in
+// box 7 at once — the posting names every box instead, and `vat_return()`
+// sums the line into each of them.
+// ---------------------------------------------------------------------------
+
+describe('a posting that names more than one box', () => {
+  const host = packWhere('carries a periodic return', (pack) => pack.report !== null);
+
+  let own: PGlite;
+  let ownCompany: string;
+  const form = `${host.manifest.country}-FIXTURE`;
+
+  beforeAll(async () => {
+    own = await freshDatabase();
+    const fixture = await newCompany(own, { country: host.manifest.country, name: 'Two Boxes' });
+    ownCompany = fixture.companyId;
+
+    // A form of this test's own rather than a country's: three boxes, two of
+    // them printed side by side and neither the sum of the other, and a total
+    // above one of the two. It is not a periodic return, so it is asked for
+    // by name and the pack's own form is left alone.
+    await own.query(
+      `insert into tax_report_templates (country, code, name, periods, is_periodic_return)
+       values ($1, $2, 'A form of one test', array[$3]::declaration_period[], false)`,
+      [host.manifest.country, form, host.report!.periods[0]!],
+    );
+    await own.query(
+      `insert into tax_report_box_templates (country, report_code, box, kind, name, sequence)
+       values ($1, $2, 'AA', 'base', 'Outputs', 10), ($1, $2, 'BB', 'base', 'Inputs', 20)`,
+      [host.manifest.country, form],
+    );
+    await own.query(
+      `insert into tax_report_box_templates
+         (country, report_code, box, kind, name, sequence, plus_boxes)
+       values ($1, $2, 'PP', 'total', 'Outputs, totalled', 30, array['AA'])`,
+      [host.manifest.country, form],
+    );
+
+    const tax = await one<{ id: string }>(
+      own,
+      `insert into taxes (company_id, code, name, amount_type, amount, applies_to,
+                          treatment, country, valid_from)
+       values ($1, 'FIXTURE-TWO-BOX', 'Printed twice', 'percent', 0, 'sale',
+               'domestic', $2, date '2026-01-01')
+       returning id`,
+      [ownCompany, host.manifest.country],
+    );
+    await own.query(
+      `insert into tax_postings (tax_id, company_id, document_kind, posting_type,
+                                 declaration_box, declaration_boxes, report_code)
+       values ($1, $2, 'invoice', 'base', 'AA', array['AA', 'BB'], $3)`,
+      [tax.id, ownCompany, form],
+    );
+
+    const income = await one<{ code: string }>(
+      own,
+      `select code from accounts
+        where company_id = $1 and account_type = 'income' order by code limit 1`,
+      [ownCompany],
+    );
+    const customer = await newContact(own, ownCompany, {
+      name: 'A Customer',
+      country: host.manifest.country,
+    });
+    const document = await newDocument(own, ownCompany, {
+      docType: 'sale_invoice',
+      number: 'FIXTURE-1',
+      contactId: customer,
+      date: '2026-06-15',
+      lines: [{ unitPrice: 100, taxCode: 'FIXTURE-TWO-BOX', accountCode: income.code }],
+    });
+    await own.query(`select post_document($1)`, [document]);
+  }, 300_000);
+
+  afterAll(async () => {
+    await own.close();
+  });
+
+  it('writes one ledger line, carrying the box the posting is known by', async () => {
+    const lines = await rows<{ declaration_box: string | null; box_amount: string | null }>(
+      own,
+      `select l.declaration_box, l.box_amount::text as box_amount
+         from entry_lines l
+        where l.company_id = $1 and l.declaration_box is not null`,
+      [ownCompany],
+    );
+    // The expansion belongs to the return and not to the books: one amount is
+    // booked once, whatever the form does with it afterwards.
+    expect(lines).toEqual([{ declaration_box: 'AA', box_amount: '100.00' }]);
+  });
+
+  it('reports the amount in each box the posting names', async () => {
+    const boxes = await rows<Box>(
+      own,
+      `select * from vat_return($1, date '2026-01-01', date '2026-12-31', $2)`,
+      [ownCompany, form],
+    );
+    const byBox = Object.fromEntries(boxes.map((b) => [`${b.box}:${b.kind}`, n(b.amount)]));
+    expect(byBox['AA:base']).toBeCloseTo(100, 2);
+    expect(byBox['BB:base']).toBeCloseTo(100, 2);
+  });
+
+  it('gives a total above one of them that amount once, not once per box', async () => {
+    const boxes = await rows<Box>(
+      own,
+      `select * from vat_return($1, date '2026-01-01', date '2026-12-31', $2)`,
+      [ownCompany, form],
+    );
+    const parent = boxes.find((b) => b.box === 'PP');
+    expect(parent?.computed).toBe(true);
+    expect(n(parent?.amount)).toBeCloseTo(100, 2);
+  });
+
+  it('hands the list to a writer that knows only the box, and takes it back', async () => {
+    // Everything that wrote a posting before this existed names one column.
+    // Rather than make each of them learn a second, the row fills the half it
+    // was not given — and a writer that *clears* the box clears the list with
+    // it, because a trigger that put the box back from the list would be a
+    // write that does not take.
+    const posting = await one<{ id: string }>(
+      own,
+      `select id from tax_postings
+        where company_id = $1 and declaration_box is not null order by id limit 1`,
+      [ownCompany],
+    );
+    await own.query(`update tax_postings set declaration_box = 'ZZ' where id = $1`, [posting.id]);
+    const moved = await one<{ declaration_box: string; declaration_boxes: string[] }>(
+      own,
+      `select declaration_box, declaration_boxes from tax_postings where id = $1`,
+      [posting.id],
+    );
+    expect(moved).toEqual({ declaration_box: 'ZZ', declaration_boxes: ['ZZ'] });
+
+    await own.query(`update tax_postings set declaration_box = null where id = $1`, [posting.id]);
+    const cleared = await one<{ declaration_box: string | null; declaration_boxes: string[] | null }>(
+      own,
+      `select declaration_box, declaration_boxes from tax_postings where id = $1`,
+      [posting.id],
+    );
+    expect(cleared).toEqual({ declaration_box: null, declaration_boxes: null });
+
+    await own.query(
+      `update tax_postings set declaration_boxes = array['AA', 'BB'] where id = $1`,
+      [posting.id],
+    );
+    const relisted = await one<{ declaration_box: string; declaration_boxes: string[] }>(
+      own,
+      `select declaration_box, declaration_boxes from tax_postings where id = $1`,
+      [posting.id],
+    );
+    expect(relisted).toEqual({ declaration_box: 'AA', declaration_boxes: ['AA', 'BB'] });
+  });
+
+  it('refuses a list that does not start at the box the posting is known by', async () => {
+    const message = await expectError(
+      own,
+      `update tax_postings set declaration_box = 'AA', declaration_boxes = array['BB', 'AA']
+        where company_id = $1`,
+      [ownCompany],
+    );
+    expect(message).toMatch(/tax_postings_boxes_start_at_the_box/);
+  });
+});
+
+describe('what `ekwo pack check` refuses about the boxes a posting names', () => {
+  const packs = packsRoot;
+  const broken = packWhere('carries a periodic return', (pack) => pack.report !== null);
+
+  /** A copy of that pack whose first base posting names `box` instead. */
+  async function postingNaming(box: unknown): Promise<string> {
+    const dir = await mkdtemp(join(tmpdir(), 'ekwo-pack-'));
+    await cp(join(packs, 'schema'), join(dir, 'schema'), { recursive: true });
+    await cp(join(packs, broken.slug), join(dir, broken.slug), { recursive: true });
+    const path = join(dir, broken.slug, 'taxes.json');
+    const taxes = JSON.parse(await readFile(path, 'utf8')) as Record<string, unknown>[];
+    let done = false;
+    for (const tax of taxes) {
+      const postings = (tax['postings'] ?? {}) as Record<string, Record<string, unknown>[]>;
+      for (const posting of postings['invoice'] ?? []) {
+        if (done || posting['type'] !== 'base' || posting['box'] === undefined) continue;
+        posting['box'] = box;
+        done = true;
+      }
+    }
+    expect(done, `packs/${broken.slug} has no base posting naming a box`).toBe(true);
+    await writeFile(path, JSON.stringify(taxes), 'utf8');
+    const outcome = await readPack(broken.slug, dir).catch((e: unknown) => e as PackError);
+    expect(outcome, 'the pack was accepted').toBeInstanceOf(Error);
+    return (outcome as PackError).message;
+  }
+
+  it('accepts the packs of this repository as they are', async () => {
+    for (const pack of allPacks) {
+      for (const tax of pack.taxes) {
+        for (const postings of Object.values(tax.postings)) {
+          for (const posting of postings) {
+            expect(posting.box, `${pack.slug} ${tax.code}`).toBe(posting.boxes[0] ?? null);
+          }
+        }
       }
     }
   });
 
-  it('installs exactly what each pack proposes, and null where it proposes none', async () => {
+  it('refuses a list with nothing in it', async () => {
+    // The published schema says a list of boxes has at least one, so this is
+    // refused before the structural checks run and the reader is told which
+    // posting of which file it is.
+    expect(await postingNaming([])).toMatch(/postings\.invoice\[0\]\.box: is neither/);
+  });
+
+  it('refuses the same box named twice by one posting', async () => {
+    const box = broken.taxes
+      .flatMap((tax) => tax.postings.invoice)
+      .find((posting) => posting.type === 'base' && posting.box !== null)!.box!;
+    expect(await postingNaming([box, box])).toMatch(
+      new RegExp(`box ${box} is named twice by one posting`),
+    );
+  });
+
+  it('refuses a box the form declares a total', async () => {
+    // A total is added up from the boxes below it, so an amount written
+    // straight into one would be counted twice: once by itself and once by
+    // the sum that was already going to carry it.
+    const total = broken.report!.boxes.find((b) => b.kind === 'total')!.box;
+    expect(await postingNaming([total])).toMatch(
+      new RegExp(`box ${total}:base is not a base box of this form`),
+    );
+  });
+
+  it('refuses a box the form does not carry, wherever it stands in the list', async () => {
+    const first = broken.taxes
+      .flatMap((tax) => tax.postings.invoice)
+      .find((posting) => posting.type === 'base' && posting.box !== null)!.box!;
+    expect(await postingNaming([first, 'ZZZ'])).toMatch(
+      /ZZZ:base is not a base box of this form/,
+    );
+  });
+});
+
+describe('the hidden boxes the packs still carry', () => {
+  it('are intermediate totals, and never a box a posting writes into', () => {
+    // A hidden box used to be two different things. One is a subtotal the
+    // form works out and does not print, which is a fact about the form and
+    // stays. The other was a leaf invented so that a posting reporting to one
+    // box could feed a printed parent that is not a sum — the Estonian KMD
+    // cost six of them and the British VAT Return three — and that reason is
+    // gone: a posting names every box it prints in.
     for (const pack of allPacks) {
-      const row = await one<{ vat_period_default: string | null }>(
-        db,
-        'select vat_period_default from country_defaults where country = $1',
-        [pack.manifest.country],
+      const written = new Set(
+        pack.taxes.flatMap((tax) => Object.values(tax.postings).flat()).flatMap((p) => p.boxes),
       );
-      expect(row.vat_period_default, pack.slug).toBe(
-        (pack.manifest.defaults['vat_period'] as string | undefined) ?? null,
-      );
+      const wrong = (pack.report?.boxes ?? [])
+        .filter((box) => box.hidden && (box.kind !== 'total' || written.has(box.box)))
+        .map((box) => `${box.box}:${box.kind}`);
+      expect(wrong, pack.slug).toEqual([]);
     }
+  });
+
+  it('are still exercised somewhere, so the flag is not a dead column', () => {
+    const hidden = allPacks.flatMap((pack) => (pack.report?.boxes ?? []).filter((b) => b.hidden));
+    expect(hidden.length, 'no pack carries a hidden box any more').toBeGreaterThan(0);
   });
 });

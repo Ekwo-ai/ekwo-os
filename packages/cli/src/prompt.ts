@@ -9,10 +9,30 @@
 
 import { createInterface, type Interface } from 'node:readline';
 import { Writable } from 'node:stream';
-import { cyan, dim } from './ui.js';
+import { cyan, dim, isJsonMode } from './ui.js';
 
+/**
+ * Whether there is somebody to ask.
+ *
+ * Both ends have to be a terminal, and `--json` means there is nobody: the
+ * standard output is promised to one JSON document, and the caller that asked
+ * for it is a program that would wait on a question for ever.
+ */
 export function isInteractive(): boolean {
-  return process.stdin.isTTY === true && process.stdout.isTTY === true;
+  return process.stdin.isTTY === true && process.stdout.isTTY === true && !isJsonMode();
+}
+
+/**
+ * The last line of defence, under every question this file can ask.
+ *
+ * Each command already decides whether it may ask and says which flag was
+ * missing when it may not. This is for the day one of them forgets: a question
+ * put to a pipe does not fail, it waits, and an agent driving a shell has no
+ * way to tell a wait from work. So a prompt that is reached with nobody to
+ * answer stops the command instead, with the exit code of a wrong call.
+ */
+function refuseToBlock(question: string): void {
+  if (!isInteractive()) throw new NotInteractiveError(`an answer to "${question}"`, 'the matching flag');
 }
 
 /** Thrown when a question has to be asked and there is nobody to answer it. */
@@ -34,6 +54,7 @@ function withInterface<T>(fn: (rl: Interface) => Promise<T>): Promise<T> {
 
 /** A free-text question. `defaultValue` is offered in brackets and accepted on Enter. */
 export async function ask(question: string, defaultValue?: string): Promise<string> {
+  refuseToBlock(question);
   const suffix = defaultValue !== undefined ? dim(` [${defaultValue}]`) : '';
   const answer = await withInterface(
     (rl) =>
@@ -71,6 +92,7 @@ class MutableOutput extends Writable {
 
 /** A question whose answer is not echoed. */
 export async function askSecret(question: string): Promise<string> {
+  refuseToBlock(question);
   const output = new MutableOutput();
   const rl = createInterface({ input: process.stdin, output, terminal: true });
   try {

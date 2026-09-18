@@ -10,10 +10,10 @@
  * VAT rounding or the transport.
  */
 
-import { EkwoMcpError } from './backend.js';
+import { BooksError } from './backend.js';
 import { roundCurrency } from './rounding.js';
+import type { Decimal } from '../types.js';
 
-export type Decimal = string;
 
 /** A numeric, as the decimal string the ledger holds. */
 export function money(value: unknown): Decimal | null {
@@ -45,7 +45,7 @@ export function moneyFields<T extends Record<string, unknown>>(rows: T[], keys: 
 export function amountIn(value: string | number): string {
   const text = typeof value === 'number' ? roundCurrency(value, 2).toFixed(2) : value.trim();
   if (!/^-?\d+(\.\d+)?$/.test(text)) {
-    throw new EkwoMcpError(`bad_amount: ${String(value)} is not a decimal amount`);
+    throw new BooksError(`bad_amount: ${String(value)} is not a decimal amount`);
   }
   return text;
 }

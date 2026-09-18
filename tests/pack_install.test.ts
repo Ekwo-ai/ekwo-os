@@ -326,6 +326,23 @@ describe('report_code, and the province a party sits in', () => {
          join tax_templates t on t.id = p.tax_template_id
         group by 1, 2 order by 1`,
     );
+    // `order by 1` is the country and nothing else, so two groups of one
+    // country come back in whatever order the grouping produced them. Every
+    // pack until the sixth had one form and one unboxed group, and the two
+    // happened to arrive the way this comparator puts them; the first pack
+    // with a form whose code sorts after the word `null` showed that the
+    // query was never asked for a total order. So both sides are sorted here,
+    // by the same comparator, and neither depends on the database's.
+    const order = (
+      a: { country: string; report_code: string | null },
+      b: { country: string; report_code: string | null },
+    ): number =>
+      a.country === b.country
+        ? String(a.report_code).localeCompare(String(b.report_code))
+        : a.country < b.country
+          ? -1
+          : 1;
+
     // Every posting of every pack, grouped the way the pack writes it: a
     // posting carrying a box is on the pack's periodic return, and one that
     // carries none is ledger only — the `tax_on_base` share of a purchase,
@@ -346,14 +363,8 @@ describe('report_code, and the province a party sits in', () => {
           n,
         }));
       })
-      .sort((a, b) =>
-        a.country === b.country
-          ? String(a.report_code).localeCompare(String(b.report_code))
-          : a.country < b.country
-            ? -1
-            : 1,
-      );
-    expect(forms).toEqual(expected);
+      .sort(order);
+    expect([...forms].sort(order)).toEqual(expected);
   });
 
   it('carries it into a company, so a posted line knows which return it feeds', async () => {

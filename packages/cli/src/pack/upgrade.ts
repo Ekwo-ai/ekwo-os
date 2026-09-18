@@ -9,6 +9,7 @@
  * the same answer.
  */
 
+import { matchCompany } from '../company.js';
 import type { SqlClient } from '../sql.js';
 
 /** One company, and how far it is from the pack this installation holds. */
@@ -119,28 +120,11 @@ export async function packStatus(db: SqlClient): Promise<PackStatusReport> {
  * the same day.
  */
 export async function resolveCompany(db: SqlClient, wanted: string): Promise<{ id: string; name: string }> {
-  const matches = await db.query<{ id: string; name: string }>(
-    `select id, name from companies
-      where id::text = $1 or lower(name) = lower($1)
-      order by name`,
-    [wanted],
+  const companies = await db.query<{ id: string; name: string }>(
+    'select id::text as id, name from companies order by name',
   );
-  if (matches.length === 0) {
-    const known = await db.query<{ name: string }>('select name from companies order by name');
-    throw new Error(
-      `unknown_company: no company called ${wanted}. This installation has: ${
-        known.length === 0 ? 'none' : known.map((c) => c.name).join(', ')
-      }`,
-    );
-  }
-  if (matches.length > 1) {
-    throw new Error(
-      `ambiguous_company: ${matches.length} companies are called ${wanted}. Name one by its id: ${matches
-        .map((c) => c.id)
-        .join(', ')}`,
-    );
-  }
-  return matches[0] as { id: string; name: string };
+  // The matching is in one place, where `ekwo use` reads it too.
+  return matchCompany(companies, wanted);
 }
 
 export interface UpgradeOptions {

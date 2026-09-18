@@ -9,10 +9,12 @@
  * offered no way out of it.
  */
 
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
 import type { PGlite } from '@electric-sql/pglite';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { readTools, writeTools, type Backend } from '../../packages/mcp/src/index.js';
-import { freshDatabase, rows } from '../helpers/db.js';
+import { freshDatabase, repoRoot, rows } from '../helpers/db.js';
 import { newCompany, type Fixture } from '../helpers/factory.js';
 import { backendFor, ledgerOfEntry, list, record } from './helpers.js';
 
@@ -223,5 +225,116 @@ describe('a payment on that account', () => {
         payment_date: '2026-06-21',
       }),
     ).rejects.toThrow(/missing_journal/);
+  });
+});
+
+describe('import_bank_statement', () => {
+  // The brick's own invented statement: eleven booked lines and one pending,
+  // on an account that exists nowhere.
+  const content = readFileSync(
+    join(repoRoot, 'packages', 'formats', 'camt053', 'test', 'fixtures', 'golden.camt.053.001.08.xml'),
+    'utf8',
+  );
+  const input = { format: 'camt.053' as const, content, file_name: 'statement-2026-03.xml' };
+
+  it('refuses the statement of an account the company does not have, and creates none', async () => {
+    const before = await rows(db, 'select id from bank_accounts where company_id = $1', [one.companyId]);
+    await expect(
+      writeTools.importBankStatement(accountant, { company_id: one.companyId, ...input }),
+    ).rejects.toThrow(/unknown_bank_account.*BE96999000000101/);
+    const after = await rows(db, 'select id from bank_accounts where company_id = $1', [one.companyId]);
+    expect(after).toHaveLength(before.length);
+  });
+
+  it('is refused to a viewer, and says it is about bank.write', async () => {
+    await writeTools.createBankAccount(accountant, { company_id: one.companyId, iban: 'BE96999000000101' });
+    await expect(
+      writeTools.importBankStatement(viewer, { company_id: one.companyId, ...input }),
+    ).rejects.toThrow(/not_allowed.*bank\.write/);
+  });
+
+  it('is refused to the owner of another company', async () => {
+    await expect(
+      writeTools.importBankStatement(otherOwner, { company_id: one.companyId, ...input }),
+    ).rejects.toThrow(/unknown_company|not_allowed/);
+  });
+
+  it('imports the file, books nothing, and says what it read', async () => {
+    const entries = await rows(db, 'select id from entries where company_id = $1', [one.companyId]);
+    const result = record(await writeTools.importBankStatement(accountant, { company_id: one.companyId, ...input }));
+    expect(result['version']).toBe('08');
+    expect(String(result['checksum'])).toMatch(/^sha256:[0-9a-f]{64}$/);
+    expect(result['violations']).toEqual([]);
+    expect(list(result['statements'])[0]).toMatchObject({
+      statement_ref: 'STMT-2026-003',
+      already_imported: false,
+      lines_read: 11,
+      lines_imported: 11,
+      lines_not_booked: 1,
+      warnings: [],
+    });
+    expect(await rows(db, 'select id from entries where company_id = $1', [one.companyId])).toHaveLength(entries.length);
+    const stored = await rows<{ source_file_name: string; source_checksum: string }>(
+      db,
+      'select source_file_name, source_checksum from bank_statements where company_id = $1',
+      [one.companyId],
+    );
+    expect(stored).toEqual([{ source_file_name: 'statement-2026-03.xml', source_checksum: result['checksum'] }]);
+  });
+
+  it('a second time, creates nothing', async () => {
+    const result = record(await writeTools.importBankStatement(accountant, { company_id: one.companyId, ...input }));
+    expect(list(result['statements'])[0]).toMatchObject({ already_imported: true, lines_imported: 0, lines_known: 11 });
+  });
+
+  it('refuses a file written to hurt the reader before the database hears of it', async () => {
+    const hostile = content.replace('<Document', '<!DOCTYPE d [<!ENTITY x SYSTEM "file:///etc/passwd">]><Document');
+    await expect(
+      writeTools.importBankStatement(accountant, { company_id: one.companyId, format: 'camt.053', content: hostile }),
+    ).rejects.toMatchObject({ code: 'doctype_forbidden' });
+  });
+
+  it('reads the two formats of fixed positions by the same road, and never guesses which one a file is', async () => {
+    const fixture = (brick: string, name: string): string =>
+      readFileSync(join(repoRoot, 'packages', 'formats', brick, 'test', 'fixtures', name), 'utf8');
+    // The brick's own invented CODA, which happens to be of the account above.
+    const coda = record(
+      await writeTools.importBankStatement(accountant, {
+        company_id: one.companyId,
+        format: 'coda',
+        content: fixture('coda', 'golden.cod'),
+      }),
+    );
+    expect(coda).toMatchObject({ format: 'coda', version: '2', version_verified: null, violations: [] });
+    expect(list(coda['statements'])[0]).toMatchObject({ statement_ref: '2026-042', lines_imported: 11 });
+
+    // A CFONB 120 names no country: without one its account is the three
+    // codes joined, which this company does not hold.
+    await expect(
+      writeTools.importBankStatement(accountant, {
+        company_id: one.companyId,
+        format: 'cfonb120',
+        content: fixture('cfonb120', 'golden.cfonb120.txt'),
+      }),
+    ).rejects.toThrow(/unknown_bank_account.*99999000010000000101A/);
+
+    // And a file given under the wrong name is refused by the reader, by name.
+    await expect(
+      writeTools.importBankStatement(accountant, {
+        company_id: one.companyId,
+        format: 'cfonb120',
+        content: fixture('coda', 'golden.cod'),
+      }),
+    ).rejects.toMatchObject({ code: 'invalid_record_length' });
+  });
+
+  it('passes on a statement that does not add up as the refusal of the database, not its own', async () => {
+    await expect(
+      writeTools.importBankStatement(accountant, {
+        company_id: one.companyId,
+        format: 'camt.053',
+        content: content.replace('1562.36', '1562.35').replace('STMT-2026-003', 'STMT-OTHER'),
+      }),
+    ).rejects.toThrow(/unbalanced_statement/);
   });
 });

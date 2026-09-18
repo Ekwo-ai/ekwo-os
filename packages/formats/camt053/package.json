@@ -1,0 +1,56 @@
+{
+  "name": "@ekwo-ai/camt053",
+  "version": "0.4.0",
+  "description": "Reads an ISO 20022 bank-to-customer statement (camt.053) into plain objects in TypeScript: account, balances and lines, amounts as decimal strings, and what does not add up. Zero dependencies, its own strict XML reader.",
+  "keywords": [
+    "camt.053",
+    "camt053",
+    "iso20022",
+    "bank-statement",
+    "bank-to-customer-statement",
+    "reconciliation",
+    "sepa",
+    "xml",
+    "parser"
+  ],
+  "license": "MIT",
+  "author": "Ekwo AI",
+  "homepage": "https://github.com/Ekwo-ai/ekwo-os/tree/main/packages/formats/camt053#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ekwo-ai/ekwo-os.git",
+    "directory": "packages/formats/camt053"
+  },
+  "bugs": {
+    "url": "https://github.com/Ekwo-ai/ekwo-os/issues"
+  },
+  "type": "module",
+  "sideEffects": false,
+  "engines": {
+    "node": ">=18"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "typescript": "^5.9.0",
+    "vitest": "^3.2.0",
+    "xmllint-wasm": "^5.3.0"
+  }
+}

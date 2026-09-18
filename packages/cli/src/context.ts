@@ -6,7 +6,7 @@
  */
 
 import type { ParsedArgs } from './args.js';
-import { stringFlag } from './args.js';
+import { UsageError, stringFlag } from './args.js';
 import {
   ENV_DB_URL,
   ENV_DB_URL_FALLBACK,
@@ -44,6 +44,23 @@ export interface ResolveOptions {
    * exists.
    */
   probe?: Probe;
+  /** How the database is opened. See `CommandDeps`. */
+  connect?: Connector | undefined;
+}
+
+/** Opens a connection string. The network driver, unless a test says otherwise. */
+export type Connector = (dbUrl: string) => Promise<SqlClient>;
+
+/**
+ * What a command may be handed instead of reaching for it.
+ *
+ * One thing: the way a database is opened. The tests plug PGlite in here and
+ * then run the commands themselves — flags, output, exit code — rather than
+ * the functions underneath them, which is the only way to hold every command
+ * to the same output contract.
+ */
+export interface CommandDeps {
+  connect?: Connector | undefined;
 }
 
 /** Opens the connection, closes it, and answers whether that worked. */
@@ -111,7 +128,7 @@ export async function resolveConnection(
       'Postgres connection string (Supabase dashboard → Connect → Session pooler):',
     );
     if (!looksLikeConnectionString(answer)) {
-      throw new Error(
+      throw new UsageError(
         `bad_connection_string: expected something starting with postgresql://, got "${answer.slice(0, 24)}…"`,
       );
     }
@@ -141,6 +158,11 @@ export async function openDatabase(
   options: ResolveOptions,
 ): Promise<Context> {
   const connection = await resolveConnection(args, options);
-  const db = await connect(connection.dbUrl);
+  const db = await (options.connect ?? connect)(connection.dbUrl);
+  // The exception, announced. Everything that keeps books signs in as a
+  // person; what installs and operates connects as the owner of the database,
+  // to whom no policy applies, and a reader of the log should not have to
+  // know which commands are which.
+  note(dim('Connected as the owner of the database: installing and operating, not keeping books. Row level security does not apply to this connection.'));
   return { db, connection };
 }

@@ -12,7 +12,14 @@ import { existsSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { validate, type Issue } from './schema.js';
-import { taxCodes } from './vat-codes.js';
+import { taxCodes, TREATMENT_CODES, type TaxCodes, type VatRegime } from './vat-codes.js';
+import {
+  euVatScopeOf,
+  readTerritories,
+  territoryOf,
+  territoryWithin,
+  type Territory,
+} from './territories.js';
 
 /**
  * The chart a pack has when it declares none, and the name of the framework
@@ -47,6 +54,19 @@ export interface PackSource {
   consulted_on: string;
   /** law | regulation | form | standard | portal | guidance. */
   kind: string;
+  /**
+   * True on the one entry that publishes the list an exemption reason code of
+   * this country comes from — BT-121, outside the common system of VAT, where
+   * the VATEX list of EN 16931 does not reach.
+   *
+   * At most one entry of a register carries it, and it has to be a `standard`,
+   * because a code list is one. It exists because the opposite is not true: a
+   * `standard` is "a technical norm or code list", so FRS 102 and the FASB
+   * Accounting Standards Codification are `standard` entries too, and reading
+   * the first of them as this list authorised a reason code on any tax of the
+   * pack in declaration order.
+   */
+  reason_codes?: boolean;
 }
 
 /**
@@ -72,6 +92,172 @@ export function sourcesOf(certification: PackCertification | null | undefined): 
   );
 }
 
+/**
+ * Which VAT the country of a pack levies, as the three code lists see it.
+ *
+ * Two of those lists are the Union's — EN 16931 is a European standard and the
+ * VATEX list is published by the European Commission — so whether a pack may
+ * carry a code from them is a question about its country. The answer is a row
+ * of `territories`, read from the seed the database reads, and never a country
+ * written into this repository's code.
+ *
+ * **The day is the pack's `released_at`, not today.** A pack is a transcription
+ * of a country's law, and `released_at` is the day it says that transcription
+ * is true; it is in the manifest, it is inside the pack's checksum, and asking
+ * it makes `ekwo pack check` answer the same thing about the same commit for
+ * ever. Today would not: a pack that passes in the morning and fails in the
+ * evening with nothing committed in between is the one thing a check must
+ * never be, and the day a State acceded or left is exactly when it would
+ * happen. A tax's own `valid_from` would be worse still — the taxes of a pack
+ * span decades, so one pack would speak two regimes at once and a British rate
+ * of 1994 would be asked for a VATEX code from a list that did not exist. A
+ * pack whose manifest names no day falls back on today, because a pack that
+ * does not say when it speaks of is speaking of now.
+ *
+ * **A table that says nothing is not a table saying no.** `eu_vat_scope_of()`
+ * answers `none` for a code it does not carry, which is right for its own
+ * question — a supply to a place the Union has never heard of is not an
+ * intra-Community one. It is not right for this one. Every refusal below
+ * *narrows* what a pack may say, and narrowing on the strength of a missing
+ * row would refuse a valid pack for a country somebody has not added to the
+ * reference data yet. So a country the table carries no row for is held to the
+ * table as published — the Union's — and the gap is closed where it belongs:
+ * `tests/territories.test.ts` refuses a pack of this repository whose country
+ * is not in `territories`, and the test beside it says the same of the seed the
+ * CLI reads.
+ *
+ * `full` and nothing else counts as being in the system **for a pack**. The
+ * third value, `goods`, is Northern Ireland, and it is not a fact about a pack
+ * at all: the Union's rules reach goods there and not services, so half the
+ * table applies and which half depends on the tax. A pack whose country is
+ * such a territory is therefore still held to the rules of a country outside
+ * the system, which refuses a code rather than accepting a wrong one — and a
+ * *tax* that names the territory it applies in is judged on that territory
+ * instead, by `regimeOfTerritory` below.
+ *
+ * **Whether BT-151 is read is a second question, and the manifest answers the
+ * other half of it.** The category codes are UNCL5305, a UN/CEFACT list, and
+ * they hold wherever a pack is; being *asked* for one is about whether an
+ * invoice governed by the standard exists. Inside the common system it does.
+ * Outside it, it does where the pack declares an e-invoicing profile —
+ * `peppol-bis-3`, `factur-x-en16931`, `xrechnung`, a PINT — every one of which
+ * is built on the semantic model of EN 16931 and carries the field. Where the
+ * pack declares neither, as the first pack of a country with no value added
+ * tax did, nothing reads BT-151 and nothing demands it.
+ *
+ * **Which list a reason code may come from is named by the entry itself.**
+ * `reasonList` was the title of the first entry of the register whose `kind`
+ * was `standard`, and `standard` covers a code list *and* an accounting
+ * standard, so a pack naming FRS 102 or the FASB Codification was silently
+ * declaring a list of exemption reason codes. An entry now says so with
+ * `reason_codes`, at most one per pack, and `sourceRegister` refuses the rest.
+ */
+export async function vatRegime(manifest: Manifest, root?: string): Promise<VatRegime> {
+  const territories = await readTerritories(root ?? repoRootDir());
+  const released = manifest.released_at ?? '';
+  const on = /^\d{4}-\d{2}-\d{2}$/.test(released)
+    ? released
+    : (new Date().toISOString().slice(0, 10) as string);
+  // The entry that says it is the reason code list, and not whichever
+  // `standard` was written down first: an accounting standard is a `standard`
+  // too, and reading it as this one authorised a code nobody published.
+  const list = sourcesOf(manifest.certification).find((source) => source.reason_codes === true);
+  const reasonList = list?.title ?? null;
+  const day = manifest.released_at === on ? `${on}, the day this pack speaks of` : on;
+  // Every e-invoicing profile the format names is built on the semantic model
+  // of EN 16931 and carries BT-151, so a pack that declares one is a pack
+  // whose sellers put a category on an invoice somebody reads. A pack that
+  // declares none, in a country the common system does not reach, issues no
+  // invoice the standard governs and is not asked for one.
+  const profile = ((manifest['einvoicing'] as { profile?: unknown } | undefined)?.profile ?? null) as
+    | string
+    | null;
+  const hasProfile = typeof profile === 'string' && profile.trim() !== '';
+
+  if (territoryOf(manifest.country, territories) === null) {
+    return {
+      commonSystem: true,
+      because: `territories carries no row for ${manifest.country}, so where its VAT stands is unknown`,
+      readsCategories: true,
+      reasonList,
+    };
+  }
+
+  const scope = euVatScopeOf(manifest.country, on, territories);
+  return {
+    commonSystem: scope === 'full',
+    because:
+      `${manifest.country} is ${scope === 'full' ? 'in' : 'outside'} the common system of VAT on ` +
+      `${day} (territories gives it eu_vat_scope ${scope})`,
+    readsCategories: scope === 'full' || hasProfile,
+    reasonList,
+  };
+}
+
+/**
+ * The day a pack speaks of: its `released_at`, or today where it names none.
+ *
+ * Lifted out of `vatRegime` so that a tax's own territory can be asked the
+ * same question on the same day. The argument for the day being the manifest's
+ * and not today's is above, and it holds identically here.
+ */
+function packDay(manifest: Manifest): string {
+  const released = manifest.released_at ?? '';
+  return /^\d{4}-\d{2}-\d{2}$/.test(released)
+    ? released
+    : (new Date().toISOString().slice(0, 10) as string);
+}
+
+/**
+ * Which VAT reaches **one tax**, when the tax names the territory it applies
+ * in.
+ *
+ * This is the half of Northern Ireland a pack could not have. `packs/gb/` is
+ * keyed on a country the common system left on 31 December 2020, so every tax
+ * in it is outside the system — and a tax that says `seller_in: "XI"` is not:
+ * `eu_vat_scope` of `XI` is `goods`, which means the Union's rules reach a
+ * supply or an acquisition of goods there and nothing else. So the answer is
+ * the territory's scope, narrowed by what the treatment is about:
+ *
+ *   `full`   in, whatever the treatment is
+ *   `goods`  in exactly where `TREATMENT_CODES` marks the treatment as goods
+ *   `none`   out
+ *
+ * The **seller's** territory decides it, because the regime asked about here
+ * is the one governing the invoice the seller issues. A tax that conditions
+ * only the buyer or only the place of supply is left to its pack's country,
+ * which is where it was before this existed.
+ */
+function regimeOfTerritory(
+  territory: string,
+  treatment: string,
+  on: string,
+  territories: Territory[],
+  reasonList: string | null,
+  packReadsCategories: boolean,
+): VatRegime {
+  const scope = euVatScopeOf(territory, on, territories);
+  const goods = TREATMENT_CODES[treatment]?.goods === true;
+  const inside = scope === 'full' || (scope === 'goods' && goods);
+  const detail =
+    scope === 'goods' && !goods
+      ? ', which reaches supplies of goods and not this treatment'
+      : '';
+  return {
+    commonSystem: inside,
+    because:
+      `this tax applies in ${territory}, which is ${inside ? 'in' : 'outside'} the common system ` +
+      `of VAT on ${on} (territories gives it eu_vat_scope ${scope}${detail})`,
+    // Whether BT-151 is read is the pack's question and not the territory's:
+    // a category is asked for on an invoice governed by EN 16931, which is
+    // every invoice inside the system and, outside it, every invoice of a pack
+    // that declares an e-invoicing profile. A tax whose territory is inside
+    // the system is asked for one either way.
+    readsCategories: inside || packReadsCategories,
+    reasonList,
+  };
+}
+
 export interface PackAccount {
   code: string;
   parent: string | null;
@@ -90,7 +276,20 @@ export interface PackPosting {
   type: 'base' | 'tax' | 'tax_on_base';
   factor: number;
   account: string | null;
+  /**
+   * The box the posting is known by: the first of `boxes`, and null when it
+   * reports to none. It is what the natural key of a posting is read on, and
+   * what a reader that knows nothing of several boxes still sees.
+   */
   box: string | null;
+  /**
+   * Every box this one amount is printed in. One box is the ordinary case;
+   * several is a form that prints the same figure in boxes no total can
+   * derive from one another — box 6.1 inside box 6 inside box 1 on the
+   * Estonian KMD, box 6 beside box 7 on the British VAT Return. `box` is
+   * `boxes[0]`, and an empty list means the posting reports nowhere.
+   */
+  boxes: string[];
   box_factor: number;
   /** Declaration form the box belongs to. Defaults to the pack's periodic return. */
   report: string | null;
@@ -118,8 +317,23 @@ export interface PackTax {
   recoverable: boolean;
   /** The unit price already holds the tax. */
   price_include: boolean;
+  /**
+   * What this tax turns on that the ledger cannot see, from a closed
+   * vocabulary. What the question is, never how to answer it: no value, no
+   * operator, no expression — the article that sets a threshold or prescribes
+   * a certificate is the one in `legal_reference`.
+   */
+  conditions: string[];
   /** ISO 3166-2 with the country prefix, for a tax levied by a state. */
   jurisdiction: string | null;
+  /**
+   * Where the parties have to be for this tax to apply: `applies_when` of the
+   * pack, flattened. Each is a code of `territories`, or null where the tax
+   * says nothing about that party.
+   */
+  applies_seller_territory: string | null;
+  applies_buyer_territory: string | null;
+  applies_supply_territory: string | null;
   /** Due on collection. Compiled to a column the cash-basis engine reads. */
   cash_basis: boolean;
   /** Account the tax waits on until the invoice is paid. */
@@ -211,8 +425,27 @@ export interface PackReportBox {
   kind: 'base' | 'tax' | 'total';
   name: string;
   sequence: number;
+  /**
+   * Where the administration prints this box, when that is not where the pack
+   * declares it. Null means the same as `sequence`.
+   *
+   * The two were one field until a third pack paid for it: an eCDF subtotal
+   * prints above the boxes it adds up, and CDTFA-401-A prints line 11 on page
+   * one and computes it from the sections on page three. A pack had to spend
+   * its one ordering field on the evaluator, and the form's own order was
+   * lost. The evaluation order is the dependencies and is neither of these.
+   */
+  print_sequence: number | null;
   plus: string[];
   minus: string[];
+  /**
+   * Percentage of `rate_of` this box comes to. The other way a box is
+   * computed, for a form that states a line as a multiplication in words.
+   * Null on every box that is a list, which is most of them.
+   */
+  rate: number | null;
+  /** The box `rate` is applied to, bare or qualified with its kind. */
+  rate_of: string | null;
   floor_zero: boolean;
   hidden: boolean;
   xml_element: string | null;
@@ -237,6 +470,24 @@ export interface PackMention {
 }
 
 /**
+ * Where one rule of a country comes from.
+ *
+ * A tax and a box of a declaration form are rows, and each carries its own
+ * `legal_reference` and `source`. A document rule is a word — `gapless_per_year`,
+ * `30`, `invoice_date` — with nowhere to write either, so the citation lives
+ * beside it under `documents.references` and comes back here in the same shape.
+ */
+export interface PackRuleReference {
+  /** The article that imposes the rule. Null where the pack cites none. */
+  legal_reference: string | null;
+  /** Key of the register entry where that reference can be read. */
+  source: string | null;
+}
+
+/** A rule of a country that cites nothing: both halves null, never absent. */
+const NO_REFERENCE: PackRuleReference = { legal_reference: null, source: null };
+
+/**
  * The `documents`, `einvoicing` and `bank` sections of the manifest, read as
  * one thing because they compile to one row: what a country requires on a
  * document, how it is exchanged, and the formats its banks speak.
@@ -254,8 +505,23 @@ export interface PackDocumentRules {
   late_payment_reference: string | null;
   /** invoice_date | delivery_date | payment_date. */
   tax_point_rule: string | null;
+  /**
+   * Where the three rules above come from, one citation per rule.
+   *
+   * Three and not one, because they are three articles of two or three
+   * different texts in every country the packs cover: Belgium numbers an
+   * invoice under a royal decree and counts a payment term under a law of
+   * 2002, France numbers under an annex to the tax code and counts under the
+   * commercial code. A single reference on the section would have had to name
+   * them all in one string, and then no rule would have had one.
+   */
+  numbering_reference: PackRuleReference;
+  payment_terms_reference: PackRuleReference;
+  tax_point_reference: PackRuleReference;
   einvoice_profile: string | null;
   einvoice_mandatory_from: string | null;
+  /** The text that makes the profile obligatory, and where it is read. */
+  einvoice_reference: PackRuleReference;
   /** ISO 6523 ICD, four digits. */
   party_scheme: string | null;
   vat_scheme: string | null;
@@ -263,6 +529,25 @@ export interface PackDocumentRules {
   payment_formats: string[];
   fiscal_year_default: string | null;
   mentions: PackMention[];
+}
+
+/**
+ * When a form is due, as a rule rather than a date.
+ *
+ * Two shapes and nothing else. `day_of_month_after_period` is Belgium's
+ * twentieth and Estonia's; `last_day_of_month_after_period` is California's
+ * quarterly return and, with `plus_days`, the United Kingdom's month and seven
+ * days. What is deliberately unsayable is a schedule that depends on *who* is
+ * filing rather than on *what period* — France staggers its dates by the
+ * taxpayer's identification number, and a pack that cannot say that says
+ * nothing at all, which is better than a date that is wrong for most filers.
+ */
+export interface PackDeadline {
+  rule: 'day_of_month_after_period' | 'last_day_of_month_after_period';
+  day: number | null;
+  plus_days: number | null;
+  legal_reference: string;
+  source: string | null;
 }
 
 /** `tax_report.json`: one declaration form and its boxes. */
@@ -280,11 +565,32 @@ export interface PackReport {
    * `"period": "month_or_quarter"`, and that is read as the two it names.
    */
   periods: string[];
+  /**
+   * The cadence this form is filed on unless the company has asked for
+   * another, or null where the law gives no single answer.
+   *
+   * It sits on the form and not on the country because the proposal is about a
+   * declaration: a country proposing one cadence can only ever be speaking
+   * about one of the several declarations a company files, and the moment a
+   * company records a cadence per form the proposal has to be per form too. A
+   * pack written before the move says it in `defaults.vat_period`, which is
+   * still read and no longer written.
+   */
+  period_default: string | null;
   valid_from: string;
   valid_to: string | null;
   legal_reference: string | null;
   /** Key of the register entry where that reference can be read. */
   source: string | null;
+  /** When the form is due, or null where the pack says nothing about it. */
+  deadline: PackDeadline | null;
+  /**
+   * The file this form is deposited as, by the name of the brick that writes
+   * it — `vat-consignment` for the Belgian XML Intervat takes. Null where no
+   * brick writes it yet, which is most of them: a form nobody can write is
+   * still a form a company files by hand on a portal.
+   */
+  file_format: string | null;
   boxes: PackReportBox[];
 }
 
@@ -308,6 +614,11 @@ export interface PackGolden {
   name: string;
   /** Chart the scenario installs. Null takes the pack's default. */
   chart: string | null;
+  /**
+   * Territory the company of the scenario is established in, where its country
+   * is not precise enough. Null everywhere a country is the answer.
+   */
+  territory: string | null;
   language: string | null;
   fiscalYear: { name: string; start: string; end: string };
   /** The periods the declaration is filed for, in the order they are filed. */
@@ -324,6 +635,8 @@ export interface PackGoldenContact {
   name: string;
   type: 'customer' | 'supplier';
   country: string;
+  /** Territory of the party, where the country is not precise enough. */
+  territory: string | null;
   vat_number: string | null;
   auxiliary_code: string | null;
 }
@@ -334,6 +647,8 @@ export interface PackGoldenDocument {
   contact: string;
   date: string;
   due_date: string | null;
+  /** Territory the supply takes place in, where the buyer's is not the answer. */
+  supply_territory: string | null;
   /** What this document is in the scenario for. */
   why: string;
   lines: {
@@ -661,6 +976,10 @@ export async function readPack(slug: string, dir = packsDir()): Promise<Pack> {
     const raw = await readJson(join(root, 'tax_report.json'));
     issues.push(...validate(raw, defs['tax_report'] ?? {}, schema, 'tax_report.json'));
     report = normaliseReport(raw as Record<string, unknown>);
+    // A pack written before the proposal moved onto the form still carries it
+    // in `defaults.vat_period`. It is read from there and never written back:
+    // one fact, one place, and the older spelling keeps working.
+    report.period_default ??= (manifest.defaults['vat_period'] as string | undefined) ?? null;
   }
   const reportCode = report?.code ?? null;
 
@@ -808,7 +1127,7 @@ export async function readPack(slug: string, dir = packsDir()): Promise<Pack> {
   for (const tax of taxes) {
     for (const postings of Object.values(tax.postings)) {
       for (const posting of postings) {
-        if (posting.report === null && posting.box !== null) posting.report = reportCode;
+        if (posting.report === null && posting.boxes.length > 0) posting.report = reportCode;
       }
     }
   }
@@ -816,8 +1135,32 @@ export async function readPack(slug: string, dir = packsDir()): Promise<Pack> {
   issues.push(...crossReferences(manifest, charts, taxes));
   // The three code lists a tax tells the same fact in: its treatment, its
   // EN 16931 category and its VATEX reason. Nothing in the ledger reads the
-  // last two, so nothing else would ever notice them disagreeing.
-  issues.push(...taxCodes(taxes));
+  // last two, so nothing else would ever notice them disagreeing. Two of the
+  // three lists are the Union's, so which of them reach this pack at all is
+  // read from `territories` first — and, where a tax names the territory it
+  // applies in, from that territory rather than from the pack's country, which
+  // is what makes a territory of limited scope expressible at all.
+  const territories = await readTerritories(repoRootDir());
+  const packRegime = await vatRegime(manifest);
+  issues.push(...territoryReferences(taxes, territories));
+  issues.push(...sellerTerritory(manifest, taxes, territories));
+  const regimes = new Map<string, VatRegime>();
+  for (const tax of taxes) {
+    if (tax.applies_seller_territory === null) continue;
+    if (territoryOf(tax.applies_seller_territory, territories) === null) continue;
+    regimes.set(
+      tax.code,
+      regimeOfTerritory(
+        tax.applies_seller_territory,
+        tax.treatment,
+        packDay(manifest),
+        territories,
+        packRegime.reasonList,
+        packRegime.readsCategories,
+      ),
+    );
+  }
+  issues.push(...taxCodes(taxes, (tax: TaxCodes) => regimes.get(tax.code) ?? packRegime));
   issues.push(...reportReferences(report, taxes));
   issues.push(...proposedPeriod(manifest, report));
   issues.push(...statementReferences(statements, charts));
@@ -953,6 +1296,31 @@ function sourceRegister(
     sources.push(entry);
   }
 
+  // The list an exemption reason code of this country comes from, where the
+  // VATEX list of EN 16931 does not reach it. One entry says so of itself:
+  // reading the first `standard` instead made every pack that cites an
+  // accounting standard declare a list of reason codes without knowing it.
+  const reasonLists = sources.filter((source) => source.reason_codes === true);
+  if (reasonLists.length > 1) {
+    issues.push({
+      path: 'pack.json certification.sources',
+      message:
+        `${reasonLists.map((source) => source.key).join(' and ')} each claim to publish this ` +
+        "country's exemption reason codes; BT-121 comes from one list, and a pack that names two " +
+        'has not said which',
+    });
+  }
+  for (const entry of reasonLists) {
+    if (entry.kind !== 'standard') {
+      issues.push({
+        path: 'pack.json certification.sources',
+        message:
+          `${entry.key} carries reason_codes and its kind is ${entry.kind}; a published list of ` +
+          'codes is a standard, which is what that kind is for',
+      });
+    }
+  }
+
   if (status !== 'community' && sources.length === 0) {
     issues.push({
       path: 'pack.json certification.sources',
@@ -963,7 +1331,20 @@ function sourceRegister(
   }
 
   // Every place the format lets a legal reference name where it is read.
-  const references: { path: string; source: string | null; kind: 'tax' | 'box' | 'other' }[] = [
+  const references: { path: string; source: string | null; kind: 'tax' | 'box' | 'rule' | 'other' }[] = [
+    // Only a rule that is declared and cites an article: a country that says
+    // nothing owes no source, and a rule that cites nothing has nowhere for a
+    // source to point — the check below is the one that catches that.
+    ...documentRules(documents)
+      .filter((rule) => rule.declared && rule.reference.legal_reference !== null)
+      .map((rule) => ({
+        path: rule.path,
+        source: rule.reference.source,
+        // A rule of a country is held to what a tax and a box are held to: a
+        // reviewed pack says which text it read, a maintained one is told it
+        // did not. What an invoice must carry is as reviewable as a rate.
+        kind: 'rule' as const,
+      })),
     ...charts.map((chart) => ({ path: `pack.json charts.${chart.code}`, source: chart.source, kind: 'other' as const })),
     ...taxes.map((tax) => ({ path: `taxes.json ${tax.code}`, source: tax.source, kind: 'tax' as const })),
     ...(report === null ? [] : [{ path: `tax_report.json ${report.code}`, source: report.source, kind: 'other' as const }]),
@@ -1006,10 +1387,37 @@ function sourceRegister(
     });
   }
 
+  // A rule that cites no article at all. One step before the check above: that
+  // one asks where a reference is read, this one asks whether there is a
+  // reference. A word — `gapless_per_year`, `30`, `invoice_date` — looks the
+  // same whether somebody read a decree or guessed, which is exactly why the
+  // citation has to be written down.
+  const uncited = documentRules(documents).filter(
+    (rule) => rule.declared && rule.reference.legal_reference === null,
+  );
+  if (status === 'reviewed') {
+    for (const rule of uncited) {
+      issues.push({
+        path: rule.path,
+        message:
+          `${rule.what} and cites no article; a reviewed pack says which text imposes it: ` +
+          `add "legal_reference" under ${rule.under}`,
+      });
+    }
+  } else if (uncited.length > 0) {
+    warnings.push(
+      `${uncited.length} document rule(s) declare a country's law and cite no article: ` +
+        `${uncited.map((rule) => rule.path).join(', ')}. ` +
+        'A reviewed pack is refused for this; any other is told.',
+    );
+  }
+
   // A reviewer read something before they put their name on a rate or a grid.
   // Saying which text is the difference between a review and a signature.
   const unsourced = references.filter(
-    (reference) => reference.source === null && (reference.kind === 'tax' || reference.kind === 'box'),
+    (reference) =>
+      reference.source === null &&
+      (reference.kind === 'tax' || reference.kind === 'box' || reference.kind === 'rule'),
   );
   if (status === 'reviewed') {
     for (const reference of unsourced) {
@@ -1020,7 +1428,7 @@ function sourceRegister(
     }
   } else if (status === 'maintained' && unsourced.length > 0) {
     warnings.push(
-      `${unsourced.length} tax(es) and box(es) carry a legal reference and name no source: ` +
+      `${unsourced.length} tax(es), box(es) and document rule(s) carry a legal reference and name no source: ` +
         `${unsourced
           .slice(0, 3)
           .map((reference) => reference.path)
@@ -1030,6 +1438,53 @@ function sourceRegister(
   }
 
   return { sources, issues, warnings };
+}
+
+/**
+ * The four rules of a country that are a word rather than a row, each with the
+ * citation the pack wrote beside it and whether the pack declared the rule at
+ * all.
+ *
+ * `declared` is the whole difficulty. A country that says nothing about the
+ * numbering of its invoices owes nobody an article, and a pack that leaves the
+ * section out is not an incomplete pack — it is a pack about a country whose
+ * law has not been read yet, which `country_defaults` holds as null and a
+ * reader raises on by name. So the demand for a citation attaches to the rule
+ * being *declared*, never to the section existing.
+ */
+function documentRules(
+  documents: PackDocumentRules,
+): { path: string; what: string; under: string; declared: boolean; reference: PackRuleReference }[] {
+  return [
+    {
+      path: 'pack.json documents.numbering',
+      what: 'says how an invoice of this country is numbered',
+      under: 'documents.references.numbering',
+      declared: documents.numbering_gapless !== null || documents.number_format !== null,
+      reference: documents.numbering_reference,
+    },
+    {
+      path: 'pack.json documents.legal_payment_days',
+      what: 'sets the payment term the law imposes in the absence of an agreement',
+      under: 'documents.references.payment_terms',
+      declared: documents.legal_payment_days !== null,
+      reference: documents.payment_terms_reference,
+    },
+    {
+      path: 'pack.json documents.tax_point',
+      what: 'fixes when the tax becomes chargeable',
+      under: 'documents.references.tax_point',
+      declared: documents.tax_point_rule !== null,
+      reference: documents.tax_point_reference,
+    },
+    {
+      path: 'pack.json einvoicing.profile',
+      what: 'names the structured invoice this country expects',
+      under: 'einvoicing',
+      declared: documents.einvoice_profile !== null,
+      reference: documents.einvoice_reference,
+    },
+  ];
 }
 
 function normaliseAssets(raw: Record<string, unknown>): PackAssets {
@@ -1322,6 +1777,32 @@ async function filesUnder(dir: string, prefix = ''): Promise<string[]> {
   return out.sort();
 }
 
+/**
+ * The boxes a posting names, from either shape of the field: one string, a
+ * list of them, or nothing. The order is the pack's own, because the first is
+ * the box the posting is known by and a pack that reorders its list is saying
+ * something.
+ */
+function postingBoxes(raw: unknown): string[] {
+  if (Array.isArray(raw)) return raw.map((b) => String(b));
+  if (typeof raw === 'string') return [raw];
+  return [];
+}
+
+/**
+ * One key of a tax's `applies_when`, or null where the tax names none.
+ *
+ * The schema has already refused a key that is not one of the three and a
+ * value that is not a territory code; this only has to say which of the three
+ * is being asked for.
+ */
+function appliesWhen(raw: Record<string, unknown>, key: 'seller_in' | 'buyer_in' | 'supply_in'): string | null {
+  const when = raw['applies_when'];
+  if (typeof when !== 'object' || when === null) return null;
+  const value = (when as Record<string, unknown>)[key];
+  return typeof value === 'string' ? value : null;
+}
+
 function normaliseTax(raw: Record<string, unknown>, index: number): PackTax {
   const postings = (raw['postings'] ?? {}) as Record<string, Record<string, unknown>[] | undefined>;
   const kind = (name: 'invoice' | 'credit_note'): PackPosting[] =>
@@ -1329,7 +1810,8 @@ function normaliseTax(raw: Record<string, unknown>, index: number): PackTax {
       type: p['type'] as 'base' | 'tax' | 'tax_on_base',
       factor: typeof p['factor'] === 'number' ? p['factor'] : 100,
       account: (p['account'] as string | undefined) ?? null,
-      box: (p['box'] as string | undefined) ?? null,
+      box: postingBoxes(p['box'])[0] ?? null,
+      boxes: postingBoxes(p['box']),
       box_factor: typeof p['box_factor'] === 'number' ? p['box_factor'] : 100,
       report: (p['report'] as string | undefined) ?? null,
       sequence: typeof p['sequence'] === 'number' ? p['sequence'] : (position + 1) * 10,
@@ -1350,9 +1832,13 @@ function normaliseTax(raw: Record<string, unknown>, index: number): PackTax {
     source: (raw['source'] as string | undefined) ?? null,
     vat_category: (raw['vat_category'] as string | undefined) ?? null,
     exemption_code: (raw['exemption_code'] as string | undefined) ?? null,
+    conditions: Array.isArray(raw['conditions']) ? (raw['conditions'] as unknown[]).map(String) : [],
     recoverable: typeof raw['recoverable'] === 'boolean' ? raw['recoverable'] : true,
     price_include: typeof raw['price_include'] === 'boolean' ? raw['price_include'] : false,
     jurisdiction: (raw['jurisdiction'] as string | undefined) ?? null,
+    applies_seller_territory: appliesWhen(raw, 'seller_in'),
+    applies_buyer_territory: appliesWhen(raw, 'buyer_in'),
+    applies_supply_territory: appliesWhen(raw, 'supply_in'),
     cash_basis: typeof raw['cash_basis'] === 'boolean' ? raw['cash_basis'] : false,
     cash_basis_transition_account: (raw['cash_basis_transition_account'] as string | undefined) ?? null,
     sequence: typeof raw['sequence'] === 'number' ? raw['sequence'] : (index + 1) * 10,
@@ -1394,8 +1880,11 @@ function normaliseReport(raw: Record<string, unknown>): PackReport {
     kind: box['kind'] as 'base' | 'tax' | 'total',
     name: String(box['name']),
     sequence: typeof box['sequence'] === 'number' ? box['sequence'] : (index + 1) * 10,
+    print_sequence: typeof box['print_sequence'] === 'number' ? box['print_sequence'] : null,
     plus: (box['plus'] as string[] | undefined) ?? [],
     minus: (box['minus'] as string[] | undefined) ?? [],
+    rate: typeof box['rate'] === 'number' ? box['rate'] : null,
+    rate_of: (box['rate_of'] as string | undefined) ?? null,
     floor_zero: box['floor_zero'] === true,
     hidden: box['hidden'] === true,
     xml_element: (box['xml_element'] as string | undefined) ?? null,
@@ -1407,11 +1896,26 @@ function normaliseReport(raw: Record<string, unknown>): PackReport {
     code: String(raw['code']),
     name: String(raw['name'] ?? raw['code']),
     periods: normalisePeriods(raw['period']),
+    period_default: (raw['period_default'] as string | undefined) ?? null,
     valid_from: String(raw['valid_from'] ?? '1970-01-01'),
     valid_to: (raw['valid_to'] as string | undefined) ?? null,
     legal_reference: (raw['legal_reference'] as string | undefined) ?? null,
     source: (raw['source'] as string | undefined) ?? null,
+    deadline: normaliseDeadline(raw['deadline']),
+    file_format: (raw['file_format'] as string | undefined) ?? null,
     boxes,
+  };
+}
+
+function normaliseDeadline(raw: unknown): PackDeadline | null {
+  if (raw === null || typeof raw !== 'object') return null;
+  const d = raw as Record<string, unknown>;
+  return {
+    rule: d['rule'] as PackDeadline['rule'],
+    day: (d['day'] as number | undefined) ?? null,
+    plus_days: (d['plus_days'] as number | undefined) ?? null,
+    legal_reference: String(d['legal_reference'] ?? ''),
+    source: (d['source'] as string | undefined) ?? null,
   };
 }
 
@@ -1420,6 +1924,7 @@ function normaliseGolden(raw: Record<string, unknown>): PackGolden {
   return {
     name: String(raw['name'] ?? ''),
     chart: (raw['chart'] as string | undefined) ?? null,
+    territory: (raw['territory'] as string | undefined) ?? null,
     language: (raw['language'] as string | undefined) ?? null,
     fiscalYear: {
       name: String(year['name'] ?? ''),
@@ -1437,6 +1942,7 @@ function normaliseGolden(raw: Record<string, unknown>): PackGolden {
       name: String(c['name']),
       type: c['type'] as 'customer' | 'supplier',
       country: String(c['country']),
+      territory: (c['territory'] as string | undefined) ?? null,
       vat_number: (c['vat_number'] as string | undefined) ?? null,
       auxiliary_code: (c['auxiliary_code'] as string | undefined) ?? null,
     })),
@@ -1446,6 +1952,7 @@ function normaliseGolden(raw: Record<string, unknown>): PackGolden {
       contact: String(d['contact']),
       date: String(d['date']),
       due_date: (d['due_date'] as string | undefined) ?? null,
+      supply_territory: (d['supply_territory'] as string | undefined) ?? null,
       why: String(d['why'] ?? ''),
       lines: ((d['lines'] ?? []) as Record<string, unknown>[]).map((l) => ({
         name: String(l['name']),
@@ -1628,6 +2135,21 @@ const KNOWN_NUMBER_TOKEN = /^(CODE|YYYY|YY|MM|N+)$/;
 const GAPLESS_NUMBERING = new Set(['gapless_per_year', 'gapless']);
 
 /**
+ * One `{ legal_reference, source }` of the manifest, or the pair of nulls that
+ * stands for a rule citing nothing. The shape is the schema's business — a
+ * `legal_reference` that is present is a non-empty string there — so this only
+ * has to survive the section being absent altogether.
+ */
+function ruleReference(raw: unknown): PackRuleReference {
+  if (raw === null || typeof raw !== 'object') return { ...NO_REFERENCE };
+  const entry = raw as Record<string, unknown>;
+  return {
+    legal_reference: (entry['legal_reference'] as string | null | undefined) ?? null,
+    source: (entry['source'] as string | null | undefined) ?? null,
+  };
+}
+
+/**
  * `documents`, `einvoicing` and `bank`, normalised into the row they compile
  * to. A section left out is not an error and not a default: every field comes
  * out null, and `country_defaults` holds null, and a reader that needs the
@@ -1654,14 +2176,22 @@ function normaliseDocumentRules(manifest: Manifest): PackDocumentRules {
       }) satisfies PackMention,
   );
 
+  const references = (documents['references'] ?? {}) as Record<string, unknown>;
+
   return {
     numbering_gapless: numbering === undefined ? null : GAPLESS_NUMBERING.has(numbering),
     number_format: (documents['number_format'] as string | undefined) ?? null,
     legal_payment_days: (documents['legal_payment_days'] as number | null | undefined) ?? null,
     late_payment_reference: (documents['late_payment_reference'] as string | null | undefined) ?? null,
     tax_point_rule: (documents['tax_point'] as string | undefined) ?? null,
+    numbering_reference: ruleReference(references['numbering']),
+    payment_terms_reference: ruleReference(references['payment_terms']),
+    tax_point_reference: ruleReference(references['tax_point']),
     einvoice_profile: (einvoicing['profile'] as string | null | undefined) ?? null,
     einvoice_mandatory_from: (einvoicing['mandatory_from'] as string | null | undefined) ?? null,
+    // `einvoicing` carries its citation flat, beside the profile, because the
+    // section is one rule: there is nothing else in it to tell apart.
+    einvoice_reference: ruleReference(einvoicing),
     party_scheme: (einvoicing['party_scheme'] as string | null | undefined) ?? null,
     vat_scheme: (einvoicing['vat_scheme'] as string | null | undefined) ?? null,
     bank_statement_formats: (bank['statement_formats'] as string[] | undefined) ?? [],
@@ -2106,6 +2636,16 @@ export function resolveBoxRef(ref: string, boxes: PackReportBox[]): PackReportBo
 function proposedPeriod(manifest: Manifest, report: PackReport | null): Issue[] {
   const proposed = manifest.defaults['vat_period'] as string | undefined;
   if (proposed === undefined) return [];
+  if (report !== null && report.period_default !== null && report.period_default !== proposed) {
+    return [
+      {
+        path: 'defaults.vat_period',
+        message:
+          `${proposed}, where ${report.code} says it is filed every ${report.period_default}. ` +
+          'The form is where a proposal belongs now; say it once, in tax_report.json.',
+      },
+    ];
+  }
   if (report === null) {
     return [
       {
@@ -2153,6 +2693,19 @@ function reportReferences(report: PackReport | null, taxes: PackTax[]): Issue[] 
     }
   }
 
+  // What the form is filed on unless the company has asked for something else.
+  // Optional, and refused only when it is a cadence the form is not filed on:
+  // whether the law gives a default is a reading of the law, which a legal
+  // reference states and a list length cannot.
+  if (report.period_default !== null && !report.periods.includes(report.period_default)) {
+    issues.push({
+      path: `${where} period_default`,
+      message:
+        `${report.period_default} is not a cadence ${report.code} is filed on ` +
+        `(${report.periods.join(', ') || 'none declared'})`,
+    });
+  }
+
   const seen = new Set<string>();
   for (const box of report.boxes) {
     const key = `${box.box}|${box.kind}`;
@@ -2166,12 +2719,40 @@ function reportReferences(report: PackReport | null, taxes: PackTax[]): Issue[] 
         message: 'only a total is computed from other boxes; a base or a tax box is summed from the ledger',
       });
     }
+    // A rate is the other way a box is computed, so it is held to the same
+    // three things: only a computed box carries one, it carries one way of
+    // computing and not two, and the percentage and the box it applies to are
+    // declared together.
+    if (box.kind !== 'total' && box.rate !== null) {
+      issues.push({
+        path: `${where} ${box.box}`,
+        message: 'only a total is a rate of another box; a base or a tax box is summed from the ledger',
+      });
+    }
+    if (box.rate !== null && (box.plus.length > 0 || box.minus.length > 0)) {
+      issues.push({
+        path: `${where} ${box.box}`,
+        message:
+          'a box is a list of boxes or a rate of one box, never both: two ways of computing one ' +
+          'figure is the expression language this format does without',
+      });
+    }
+    if ((box.rate === null) !== (box.rate_of === null)) {
+      issues.push({
+        path: `${where} ${box.box}`,
+        message:
+          box.rate === null
+            ? 'rate_of names a box and no rate is applied to it; declare the two together'
+            : 'rate is a percentage of nothing; name the box it applies to with rate_of',
+      });
+    }
   }
 
   for (const box of report.boxes) {
     for (const [list, refs] of [
       ['plus', box.plus],
       ['minus', box.minus],
+      ['rate_of', box.rate_of === null ? [] : [box.rate_of]],
     ] as const) {
       for (const ref of refs) {
         const target = resolveBoxRef(ref, report.boxes);
@@ -2181,29 +2762,76 @@ function reportReferences(report: PackReport | null, taxes: PackTax[]): Issue[] 
         }
         if (target.box === box.box && target.kind === box.kind) {
           issues.push({ path: `${where} ${box.box}.${list}`, message: `${ref} is the box itself` });
-          continue;
-        }
-        if (target.kind === 'total' && target.sequence >= box.sequence) {
-          issues.push({
-            path: `${where} ${box.box}.${list}`,
-            message:
-              `${ref} is a total computed at sequence ${target.sequence}, ` +
-              `after this one at ${box.sequence}. A total may only name a total before it.`,
-          });
         }
       }
     }
   }
 
-  // A box a tax posts to has to exist on the form the posting names, or the
-  // amount lands nowhere and the return is short without saying so.
+  // A computed box is worked out when the boxes it names have been, not when
+  // the form prints it — `evaluate_totals()` has resolved by dependency since
+  // it became the one evaluator, and a form prints a subtotal above what it
+  // adds up. What that cannot survive is a cycle, and a cycle found here names
+  // the boxes while the person who can fix them is still reading the pack.
+  // At runtime it is `formula_cycle`, which is a message and never a loop.
+  const computed = report.boxes.filter(
+    (b) => b.kind === 'total' && (b.plus.length + b.minus.length > 0 || b.rate !== null),
+  );
+  const sources = (b: PackReportBox): string[] => [
+    ...b.plus,
+    ...b.minus,
+    ...(b.rate_of === null ? [] : [b.rate_of]),
+  ];
+  const resolved = new Set(
+    report.boxes.filter((b) => !computed.includes(b)).map((b) => `${b.box}|${b.kind}`),
+  );
+  /** Whether a reference names a box already worked out, whatever its kind. */
+  const ready = (ref: string): boolean => {
+    const target = resolveBoxRef(ref, report.boxes);
+    return typeof target === 'string' || resolved.has(`${target.box}|${target.kind}`);
+  };
+  let pending = [...computed];
+  for (;;) {
+    const settled = pending.filter((b) => sources(b).every(ready));
+    if (settled.length === 0) break;
+    for (const b of settled) resolved.add(`${b.box}|${b.kind}`);
+    pending = pending.filter((b) => !resolved.has(`${b.box}|${b.kind}`));
+  }
+  if (pending.length > 0) {
+    issues.push({
+      path: where,
+      message:
+        `the boxes ${pending.map((b) => b.box).join(', ')} depend on each other and on nothing else. ` +
+        'A computed box is worked out from boxes that can be worked out without it.',
+    });
+  }
+
+  // Every box a tax posts to has to exist on the form the posting names, or
+  // the amount lands nowhere and the return is short without saying so. A
+  // posting may name several — the form prints one figure in boxes that are
+  // not sums of one another — and each of them is held to the same three
+  // things: it is a box of this form, it is of the kind the posting writes,
+  // and it is named once.
   for (const tax of taxes) {
     for (const [kind, postings] of Object.entries(tax.postings)) {
       for (const posting of postings) {
-        if (posting.box === null || posting.report !== report.code) continue;
-        const target = resolveBoxRef(`${posting.box}:${declarationKind(posting.type)}`, report.boxes);
-        if (typeof target === 'string') {
-          issues.push({ path: `taxes.json ${tax.code}.${kind}`, message: `box ${target}` });
+        if (posting.report !== report.code) continue;
+        const seen = new Set<string>();
+        for (const box of posting.boxes) {
+          if (seen.has(box)) {
+            issues.push({
+              path: `taxes.json ${tax.code}.${kind}`,
+              message: `box ${box} is named twice by one posting; a posting reports an amount to a box once`,
+            });
+            continue;
+          }
+          seen.add(box);
+          // A total is added up from the boxes below it, so a posting that
+          // wrote into one would be counted twice: once by itself and once
+          // by the sum.
+          const target = resolveBoxRef(`${box}:${declarationKind(posting.type)}`, report.boxes);
+          if (typeof target === 'string') {
+            issues.push({ path: `taxes.json ${tax.code}.${kind}`, message: `box ${target}` });
+          }
         }
       }
     }
@@ -2213,6 +2841,69 @@ function reportReferences(report: PackReport | null, taxes: PackTax[]): Issue[] 
 }
 
 /** What no schema can check: a code has to name something this pack carries. */
+/**
+ * Every territory a tax names, held against the reference table.
+ *
+ * Three refusals, and the first is the reason the columns are foreign keys in
+ * the schema: a territory code nobody can look up is a string, and a string is
+ * what `jurisdiction` has been since the day it was added — four packs could
+ * have spelled California four ways and nothing would have said so.
+ *
+ * The second is `jurisdiction` itself, now that there is a table to check it
+ * against. It stays a different field from `applies_when`: it says who levies
+ * the tax, which is a term of the invoice and of a report, where `applies_when`
+ * says when the tax can be reached at all. `US-P-0` is the case that keeps them
+ * apart — a purchase not subject to the tax, levied by nobody, recorded against
+ * the state whose return it belongs to.
+ *
+ * The third is about the seller only. A pack is keyed on the country its
+ * companies file under, so a tax of that pack is a tax its seller owes: a
+ * `seller_in` outside the pack's country is a pack claiming another country's
+ * law. The buyer and the place of supply are deliberately unconstrained —
+ * a supply is taxed where it lands, and where it lands is the whole point.
+ */
+function territoryReferences(taxes: PackTax[], territories: Territory[]): Issue[] {
+  const issues: Issue[] = [];
+  for (const tax of taxes) {
+    const named: [string, string | null][] = [
+      ['applies_when.seller_in', tax.applies_seller_territory],
+      ['applies_when.buyer_in', tax.applies_buyer_territory],
+      ['applies_when.supply_in', tax.applies_supply_territory],
+      ['jurisdiction', tax.jurisdiction],
+    ];
+    for (const [field, code] of named) {
+      if (code === null) continue;
+      if (territoryOf(code, territories) !== null) continue;
+      issues.push({
+        path: `taxes.json ${tax.code}`,
+        message:
+          `${field} names ${code}, which territories carries no row for. A territory a tax names ` +
+          'is a row of supabase/seed/00_territories.sql, so that a reader can look it up and a ' +
+          'second pack cannot spell it differently',
+      });
+    }
+  }
+  return issues;
+}
+
+/** The same rule, where the pack's own country is what the seller is held to. */
+function sellerTerritory(manifest: Manifest, taxes: PackTax[], territories: Territory[]): Issue[] {
+  const issues: Issue[] = [];
+  for (const tax of taxes) {
+    const code = tax.applies_seller_territory;
+    if (code === null) continue;
+    if (territoryOf(code, territories) === null) continue; // already reported
+    if (territoryWithin(code, manifest.country, territories)) continue;
+    issues.push({
+      path: `taxes.json ${tax.code}`,
+      message:
+        `applies_when.seller_in names ${code}, which is not inside ${manifest.country}. A pack is ` +
+        "keyed on the country its companies file under, so its taxes are the ones their seller owes",
+    });
+  }
+  return issues;
+}
+
 function crossReferences(manifest: Manifest, charts: PackChart[], taxes: PackTax[]): Issue[] {
   const issues: Issue[] = [];
   const journals = new Set(manifest.journals.map((j) => j.code));
@@ -2305,6 +2996,17 @@ function crossReferences(manifest: Manifest, charts: PackChart[], taxes: PackTax
       issues.push({
         path: `taxes.json ${tax.code}`,
         message: 'a tax that falls due on collection has to name the account it waits on',
+      });
+    }
+    // A price that holds its tax is divided by one plus the rate, and a fixed
+    // amount has no rate to divide by: "the price includes 0.50" is a discount,
+    // not a tax. The schema refuses it too, and this is the reading that says
+    // so before a seed is written.
+    if (tax.price_include && tax.amount_type !== 'percent') {
+      issues.push({
+        path: `taxes.json ${tax.code}`,
+        message:
+          'a price that already holds its tax needs a rate to take it back out, and a fixed amount is not one',
       });
     }
     for (const [kind, postings] of Object.entries(tax.postings)) {

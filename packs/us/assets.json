@@ -1,0 +1,140 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "depreciation": {
+    "prorata_straight_line": "months",
+    "prorata_declining": "months",
+    "day_count": "actual",
+    "declining_cap_percent": null,
+    "declining_switch_to_linear": true,
+    "legal_reference": "FASB Accounting Standards Codification topic 360 — depreciation begins when an asset is ready for its intended use, so the charge runs from the month the asset is placed in service and not for the whole of the first year. The Codification prescribes no method and names the straight line, the units of production and the declining balance among those an entity may select, so nothing here caps a declining rate. What this section is **not** is the Modified Accelerated Cost Recovery System: the Internal Revenue Service's conventions — the half-year convention, the mid-quarter convention, the mid-month convention for real property — belong to a tax return and never to the books. A company that keeps both keeps two sets of figures for one asset, and the module carries one; the gap is written up in docs/international.md.",
+    "source": "fasb-asc"
+  },
+  "disposal": {
+    "style": "net_result",
+    "legal_reference": "FASB Accounting Standards Codification topic 360 — the gain or loss on the derecognition of an item of property, plant and equipment is the difference between the net proceeds of the disposal and its carrying amount, and is recognised in income when the item is derecognised. One figure, on one account, which is the net_result style; rule 5-03 of Regulation S-X has no caption for the proceeds and the carrying amount separately, and the gain or loss falls into non-operating income or non-operating expenses.",
+    "source": "fasb-asc"
+  },
+  "categories": [
+    {
+      "code": "goodwill",
+      "name": "Goodwill",
+      "method": "straight_line",
+      "duration_months": 120,
+      "account_type": "asset_fixed",
+      "sequence": 10,
+      "legal_reference": "A public business entity does not amortise goodwill at all under the Codification: it tests it for impairment. A private company that has elected the accounting alternative of topic 350 amortises it over ten years or less, and this category is that election.   There is no legal or fiscal table of useful lives in the United States. FASB Accounting Standards Codification topic 360, Property, Plant, and Equipment, requires the depreciable amount of a long-lived asset to be allocated over its useful life on a systematic and rational basis, and leaves that life to the entity to estimate and to review. What the Internal Revenue Service publishes — the Modified Accelerated Cost Recovery System of Publication 946, with its three, five, seven, ten, fifteen, twenty, twenty-seven-and-a-half and thirty-nine year recovery periods, its half-year and mid-quarter conventions and its two declining-balance rates — is a tax computation and is never the accounting charge. **This category is not MACRS.** The duration below is common American practice, and an asset that depreciates differently says so in its own columns.",
+      "source": "fasb-asc"
+    },
+    {
+      "code": "intangibles",
+      "name": "Other intangible assets, patents and licences",
+      "method": "straight_line",
+      "duration_months": 60,
+      "account_type": "asset_fixed",
+      "sequence": 20,
+      "legal_reference": "An intangible asset with a finite useful life is amortised over that life under topic 350; one with an indefinite life is not amortised and is tested for impairment instead, and no category of this section can express that.   There is no legal or fiscal table of useful lives in the United States. FASB Accounting Standards Codification topic 360, Property, Plant, and Equipment, requires the depreciable amount of a long-lived asset to be allocated over its useful life on a systematic and rational basis, and leaves that life to the entity to estimate and to review. What the Internal Revenue Service publishes — the Modified Accelerated Cost Recovery System of Publication 946, with its three, five, seven, ten, fifteen, twenty, twenty-seven-and-a-half and thirty-nine year recovery periods, its half-year and mid-quarter conventions and its two declining-balance rates — is a tax computation and is never the accounting charge. **This category is not MACRS.** The duration below is common American practice, and an asset that depreciates differently says so in its own columns.",
+      "source": "fasb-asc"
+    },
+    {
+      "code": "buildings",
+      "name": "Buildings",
+      "method": "straight_line",
+      "duration_months": 468,
+      "account_type": "asset_fixed",
+      "sequence": 30,
+      "legal_reference": "Land is not depreciated and the building on it is, so a property is split before this category reaches the part that has a life. Thirty-nine years is the figure American practice reaches for most commercial buildings, and it is worth saying out loud that it is also the recovery period MACRS gives to non-residential real property: the two agree by habit and not by rule, and nothing makes the accounting life follow the tax one.   There is no legal or fiscal table of useful lives in the United States. FASB Accounting Standards Codification topic 360, Property, Plant, and Equipment, requires the depreciable amount of a long-lived asset to be allocated over its useful life on a systematic and rational basis, and leaves that life to the entity to estimate and to review. What the Internal Revenue Service publishes — the Modified Accelerated Cost Recovery System of Publication 946, with its three, five, seven, ten, fifteen, twenty, twenty-seven-and-a-half and thirty-nine year recovery periods, its half-year and mid-quarter conventions and its two declining-balance rates — is a tax computation and is never the accounting charge. **This category is not MACRS.** The duration below is common American practice, and an asset that depreciates differently says so in its own columns.",
+      "source": "fasb-asc"
+    },
+    {
+      "code": "building-improvements",
+      "name": "Building improvements",
+      "method": "straight_line",
+      "duration_months": 180,
+      "account_type": "asset_fixed",
+      "sequence": 40,
+      "legal_reference": "There is no legal or fiscal table of useful lives in the United States. FASB Accounting Standards Codification topic 360, Property, Plant, and Equipment, requires the depreciable amount of a long-lived asset to be allocated over its useful life on a systematic and rational basis, and leaves that life to the entity to estimate and to review. What the Internal Revenue Service publishes — the Modified Accelerated Cost Recovery System of Publication 946, with its three, five, seven, ten, fifteen, twenty, twenty-seven-and-a-half and thirty-nine year recovery periods, its half-year and mid-quarter conventions and its two declining-balance rates — is a tax computation and is never the accounting charge. **This category is not MACRS.** The duration below is common American practice, and an asset that depreciates differently says so in its own columns.",
+      "source": "fasb-asc"
+    },
+    {
+      "code": "leasehold-improvements",
+      "name": "Leasehold improvements",
+      "method": "straight_line",
+      "duration_months": 120,
+      "account_type": "asset_fixed",
+      "sequence": 50,
+      "legal_reference": "Practice amortises a leasehold improvement over the shorter of its own life and the remaining term of the lease, which is a fact about the lease and not about the category.   There is no legal or fiscal table of useful lives in the United States. FASB Accounting Standards Codification topic 360, Property, Plant, and Equipment, requires the depreciable amount of a long-lived asset to be allocated over its useful life on a systematic and rational basis, and leaves that life to the entity to estimate and to review. What the Internal Revenue Service publishes — the Modified Accelerated Cost Recovery System of Publication 946, with its three, five, seven, ten, fifteen, twenty, twenty-seven-and-a-half and thirty-nine year recovery periods, its half-year and mid-quarter conventions and its two declining-balance rates — is a tax computation and is never the accounting charge. **This category is not MACRS.** The duration below is common American practice, and an asset that depreciates differently says so in its own columns.",
+      "source": "fasb-asc"
+    },
+    {
+      "code": "machinery-and-equipment",
+      "name": "Machinery and equipment",
+      "method": "straight_line",
+      "duration_months": 120,
+      "account_type": "asset_fixed",
+      "sequence": 60,
+      "legal_reference": "There is no legal or fiscal table of useful lives in the United States. FASB Accounting Standards Codification topic 360, Property, Plant, and Equipment, requires the depreciable amount of a long-lived asset to be allocated over its useful life on a systematic and rational basis, and leaves that life to the entity to estimate and to review. What the Internal Revenue Service publishes — the Modified Accelerated Cost Recovery System of Publication 946, with its three, five, seven, ten, fifteen, twenty, twenty-seven-and-a-half and thirty-nine year recovery periods, its half-year and mid-quarter conventions and its two declining-balance rates — is a tax computation and is never the accounting charge. **This category is not MACRS.** The duration below is common American practice, and an asset that depreciates differently says so in its own columns.",
+      "source": "fasb-asc"
+    },
+    {
+      "code": "furniture-and-fixtures",
+      "name": "Furniture and fixtures",
+      "method": "straight_line",
+      "duration_months": 84,
+      "account_type": "asset_fixed",
+      "sequence": 70,
+      "legal_reference": "There is no legal or fiscal table of useful lives in the United States. FASB Accounting Standards Codification topic 360, Property, Plant, and Equipment, requires the depreciable amount of a long-lived asset to be allocated over its useful life on a systematic and rational basis, and leaves that life to the entity to estimate and to review. What the Internal Revenue Service publishes — the Modified Accelerated Cost Recovery System of Publication 946, with its three, five, seven, ten, fifteen, twenty, twenty-seven-and-a-half and thirty-nine year recovery periods, its half-year and mid-quarter conventions and its two declining-balance rates — is a tax computation and is never the accounting charge. **This category is not MACRS.** The duration below is common American practice, and an asset that depreciates differently says so in its own columns.",
+      "source": "fasb-asc"
+    },
+    {
+      "code": "computer-equipment",
+      "name": "Computer equipment",
+      "method": "straight_line",
+      "duration_months": 36,
+      "account_type": "asset_fixed",
+      "sequence": 80,
+      "legal_reference": "There is no legal or fiscal table of useful lives in the United States. FASB Accounting Standards Codification topic 360, Property, Plant, and Equipment, requires the depreciable amount of a long-lived asset to be allocated over its useful life on a systematic and rational basis, and leaves that life to the entity to estimate and to review. What the Internal Revenue Service publishes — the Modified Accelerated Cost Recovery System of Publication 946, with its three, five, seven, ten, fifteen, twenty, twenty-seven-and-a-half and thirty-nine year recovery periods, its half-year and mid-quarter conventions and its two declining-balance rates — is a tax computation and is never the accounting charge. **This category is not MACRS.** The duration below is common American practice, and an asset that depreciates differently says so in its own columns.",
+      "source": "fasb-asc"
+    },
+    {
+      "code": "computer-software",
+      "name": "Computer software",
+      "method": "straight_line",
+      "duration_months": 36,
+      "account_type": "asset_fixed",
+      "sequence": 90,
+      "legal_reference": "There is no legal or fiscal table of useful lives in the United States. FASB Accounting Standards Codification topic 360, Property, Plant, and Equipment, requires the depreciable amount of a long-lived asset to be allocated over its useful life on a systematic and rational basis, and leaves that life to the entity to estimate and to review. What the Internal Revenue Service publishes — the Modified Accelerated Cost Recovery System of Publication 946, with its three, five, seven, ten, fifteen, twenty, twenty-seven-and-a-half and thirty-nine year recovery periods, its half-year and mid-quarter conventions and its two declining-balance rates — is a tax computation and is never the accounting charge. **This category is not MACRS.** The duration below is common American practice, and an asset that depreciates differently says so in its own columns.",
+      "source": "fasb-asc"
+    },
+    {
+      "code": "vehicles",
+      "name": "Vehicles, straight line",
+      "method": "straight_line",
+      "duration_months": 60,
+      "account_type": "asset_fixed",
+      "sequence": 100,
+      "legal_reference": "There is no legal or fiscal table of useful lives in the United States. FASB Accounting Standards Codification topic 360, Property, Plant, and Equipment, requires the depreciable amount of a long-lived asset to be allocated over its useful life on a systematic and rational basis, and leaves that life to the entity to estimate and to review. What the Internal Revenue Service publishes — the Modified Accelerated Cost Recovery System of Publication 946, with its three, five, seven, ten, fifteen, twenty, twenty-seven-and-a-half and thirty-nine year recovery periods, its half-year and mid-quarter conventions and its two declining-balance rates — is a tax computation and is never the accounting charge. **This category is not MACRS.** The duration below is common American practice, and an asset that depreciates differently says so in its own columns.",
+      "source": "fasb-asc"
+    },
+    {
+      "code": "vehicles-declining",
+      "name": "Vehicles, declining balance at 40 per cent",
+      "method": "declining_balance",
+      "duration_months": 60,
+      "account_type": "asset_fixed",
+      "sequence": 110,
+      "legal_reference": "Twice the straight-line rate of a five-year life is forty per cent a year, which is the double-declining balance American practice applies to a vehicle most often, with a switch to the straight line when that gives the larger charge.   There is no legal or fiscal table of useful lives in the United States. FASB Accounting Standards Codification topic 360, Property, Plant, and Equipment, requires the depreciable amount of a long-lived asset to be allocated over its useful life on a systematic and rational basis, and leaves that life to the entity to estimate and to review. What the Internal Revenue Service publishes — the Modified Accelerated Cost Recovery System of Publication 946, with its three, five, seven, ten, fifteen, twenty, twenty-seven-and-a-half and thirty-nine year recovery periods, its half-year and mid-quarter conventions and its two declining-balance rates — is a tax computation and is never the accounting charge. **This category is not MACRS.** The duration below is common American practice, and an asset that depreciates differently says so in its own columns.",
+      "source": "fasb-asc",
+      "coefficient": 2
+    },
+    {
+      "code": "right-of-use-assets",
+      "name": "Right-of-use assets",
+      "method": "straight_line",
+      "duration_months": 120,
+      "account_type": "asset_fixed",
+      "sequence": 120,
+      "legal_reference": "A right-of-use asset arising from a lease is amortised over the lease term under topic 842, and the term is a fact about the contract rather than about a class of asset.   There is no legal or fiscal table of useful lives in the United States. FASB Accounting Standards Codification topic 360, Property, Plant, and Equipment, requires the depreciable amount of a long-lived asset to be allocated over its useful life on a systematic and rational basis, and leaves that life to the entity to estimate and to review. What the Internal Revenue Service publishes — the Modified Accelerated Cost Recovery System of Publication 946, with its three, five, seven, ten, fifteen, twenty, twenty-seven-and-a-half and thirty-nine year recovery periods, its half-year and mid-quarter conventions and its two declining-balance rates — is a tax computation and is never the accounting charge. **This category is not MACRS.** The duration below is common American practice, and an asset that depreciates differently says so in its own columns.",
+      "source": "fasb-asc"
+    }
+  ]
+}

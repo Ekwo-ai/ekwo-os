@@ -63,6 +63,8 @@ const file = generateFec(lines, { decimalSeparator: ',', fieldSeparator: '|' });
 | `ACCOUNT_TYPES`, `internalGroup(type)` | The eighteen account types and their balance-sheet group. |
 | `isRegistered(instance)` | Whether the operator opted into registering with Ekwo. |
 | `isSale`, `isCreditNote`, `isAccountable` | Document type predicates. |
+| `createContact`, `createDocument`, `addDocumentLine`, `updateDocumentLines`, `postDocument`, `recordPayment`, `reconcile`, `settleFromStatement`, `listDocuments`, `getDocument`, … | Keeping the books, once for every surface: the functions the MCP server and the `ekwo` command line both call. Each takes a `Backend` — five operations, `select` `insert` `update` `remove` `rpc` — that the caller implements over whatever reaches the database as a user. No accounting rule is in them; the schema holds those. |
+| `BooksError`, `isRefusalState`, `socleCode`, `isServiceRoleKey` | What an error of that layer looks like, what counts as the database refusing, and the one key no surface accepts. |
 | Types | `Instance`, `InstanceAdmin`, `MemberRole`, `CompanyRole`, `Account`, `Journal`, `Entry`, `EntryLine`, `EkwoDocument`, `DocumentLine`, `Tax`, `TaxPosting`, `Contact`, `TrialBalanceRow`, `AgedBalanceRow`, `VatReturnRow`, … |
 
 Amounts come back from Postgres as strings, and the types say so: `numeric`

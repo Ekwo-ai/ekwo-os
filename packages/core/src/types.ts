@@ -16,10 +16,12 @@ export type Decimal = string;
 
 /**
  * One vocabulary for the whole installation. `instance_admin` is held by a
- * row in `instance_admins`; the other three are per company and live in
+ * row in `instance_admins`; the others are per company and live in
  * `company_members`, which refuses `instance_admin` by check constraint.
+ * `client` is the person whose company it is, in the installation of whoever
+ * keeps their books: every read, and handing a piece over.
  */
-export type MemberRole = 'instance_admin' | 'owner' | 'accountant' | 'viewer';
+export type MemberRole = 'instance_admin' | 'owner' | 'accountant' | 'viewer' | 'client';
 
 export type CompanyRole = Exclude<MemberRole, 'instance_admin'>;
 
@@ -140,12 +142,22 @@ export type TaxPostingType = 'base' | 'tax';
  * `intracom_acquisition_services` for a supplier the intra-Union rules do not
  * reach, and it says nothing about where that supplier is: the rule is about
  * establishment, not about membership of the Union.
+ *
+ * `self_assessed` is a tax a buyer owes **directly to an administration under
+ * that administration's own law**, and computes and declares themselves:
+ * American use tax, imposed on the buyer and not on a supplier the levying
+ * State can reach. It is not the reverse charge beside it, which moves the
+ * liability for a value added tax from a supplier who was relieved of it and
+ * which the buyer deducts again at the other end. Nothing is deducted here,
+ * and whether the tax is a cost is said by the postings.
  */
 export const TAX_TREATMENTS = [
   'domestic',
   'domestic_reverse_charge',
+  'self_assessed',
   'intracom_goods',
   'intracom_services',
+  'intracom_triangular',
   'intracom_acquisition_goods',
   'intracom_acquisition_services',
   'foreign_services_received',
@@ -156,6 +168,38 @@ export const TAX_TREATMENTS = [
 ] as const;
 
 export type TaxTreatment = (typeof TAX_TREATMENTS)[number];
+
+/**
+ * What a tax turns on that the ledger cannot see.
+ *
+ * A closed vocabulary, written in the same three places as the treatments
+ * above and compared by the same test. It records **what the question is**
+ * and never how to answer it: there is no value beside any of these words —
+ * no threshold amount, no certificate number, no operator and no expression —
+ * because a pack that could carry the test would be a pack that executes.
+ * The amount a threshold is set at and the contents a certificate must have
+ * are in the article the tax already cites.
+ *
+ * - `buyer_certificate`: the buyer hands the seller a document the seller has
+ *   to hold and be able to produce — the American resale certificate.
+ * - `buyer_status`: a quality of the buyer the statute names, such as a
+ *   government body the law exempts as such.
+ * - `transport_evidence`: proof that what was sold went where the exemption
+ *   requires it to have gone.
+ * - `seller_threshold`: a running total the seller crossed, or has not —
+ *   economic nexus, a distance-selling limit, a small-business franchise.
+ * - `supply_nature`: what is supplied, classified more finely than any ledger
+ *   holds it: food products, but not hot, carbonated or alcoholic ones.
+ */
+export const TAX_CONDITIONS = [
+  'buyer_certificate',
+  'buyer_status',
+  'transport_evidence',
+  'seller_threshold',
+  'supply_nature',
+] as const;
+
+export type TaxCondition = (typeof TAX_CONDITIONS)[number];
 
 export type PaymentDirection = 'inbound' | 'outbound';
 export type BankTransactionState = 'pending' | 'reconciled' | 'ignored';
@@ -187,6 +231,9 @@ export interface Company {
   postal_code: string | null;
   city: string | null;
   email: string | null;
+  /** BT-34, the electronic address the company sends and receives under: a scheme of the EAS list and a value, both or neither. */
+  peppol_scheme: string | null;
+  peppol_identifier: string | null;
   currency_code: string;
   lock_date: IsoDate | null;
   tax_lock_date: IsoDate | null;
@@ -244,6 +291,8 @@ export interface Journal {
 export interface Contact {
   id: Uuid;
   company_id: Uuid;
+  /** The creator's own reference: the idempotency key of the creation. */
+  client_ref: string | null;
   name: string;
   contact_type: ContactType;
   parent_id: Uuid | null;
@@ -284,7 +333,14 @@ export interface TaxPosting {
   posting_type: TaxPostingType;
   factor_percent: Decimal;
   account_id: Uuid | null;
+  /** The box this posting is known by: the first of `declaration_boxes`. */
   declaration_box: string | null;
+  /**
+   * Every box the form prints this one amount in. Almost always the single box
+   * above; longer where the form shows one figure in boxes that are not sums
+   * of one another.
+   */
+  declaration_boxes: string[] | null;
   box_factor_percent: Decimal;
   sequence: number;
 }
@@ -343,6 +399,8 @@ export interface EkwoDocument {
   buyer_reference: string | null;
   order_reference: string | null;
   payment_reference: string | null;
+  /** The creator's own reference: the idempotency key of the creation. */
+  client_ref: string | null;
   amount_untaxed: Decimal;
   amount_tax: Decimal;
   amount_total: Decimal;
@@ -446,6 +504,14 @@ export interface DocumentLine {
   vat_category: string | null;
   vat_rate: Decimal | null;
   amount_untaxed: Decimal;
+  /**
+   * The unit price was quoted with the tax in it. Snapshotted from the tax
+   * while the document is a draft and frozen when it is posted, so `unit_price`
+   * is the gross price and `amount_untaxed` the net one.
+   */
+  unit_price_includes_tax: boolean;
+  /** The gross the line was quoted at. Null where the price excludes the tax. */
+  amount_incl_tax: Decimal | null;
 }
 
 /** One row of the `document_line_items` view: a line with its EN 16931 item terms. */
@@ -472,6 +538,10 @@ export interface DocumentLineItem {
   vat_category: string | null;
   vat_rate: Decimal | null;
   account_id: Uuid | null;
+  /** The unit price above was quoted with the tax in it, so it is the gross one. */
+  unit_price_includes_tax: boolean;
+  /** The gross the line was quoted at. Null where the price excludes the tax. */
+  amount_incl_tax: Decimal | null;
 }
 
 /** One row of `trial_balance(company_id, from, to)`. */

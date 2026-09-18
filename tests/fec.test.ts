@@ -3,7 +3,7 @@ import { join } from 'node:path';
 import type { PGlite } from '@electric-sql/pglite';
 import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 import { checkFec, fromQueryRow, generateFec, type FecQueryRow } from '@ekwo-ai/fec';
-import { asUser, expectError, freshDatabase, one, repoRoot, rows } from './helpers/db.js';
+import { asUser, expectError, freshDatabase, one, repoRoot, rows, withoutTrigger } from './helpers/db.js';
 import {
   DEMO_OWNER,
   demoCompanyId,
@@ -27,7 +27,11 @@ describe('FEC export of the demo company', () => {
     db = await freshDatabase();
     companyId = await demoCompanyId(db);
     // `posted_at` is the wall clock; freeze it so the golden file is stable.
-    await db.query(`update entries set posted_at = timestamptz '2026-09-01 09:00:00+00'`);
+    // A posted entry keeps the instant it was posted at, so the guard that says
+    // so is stepped around, by name, for the one thing a golden file needs.
+    await withoutTrigger(db, 'entries', 'entries_guard_posted', () =>
+      db.query(`update entries set posted_at = timestamptz '2026-09-01 09:00:00+00'`),
+    );
     await db.query(`update reconciliations set matched_at = date '2026-08-05'`);
   });
 

@@ -15,20 +15,21 @@
 
 import { boolFlag, rejectUnknownFlags, stringFlag, type ParsedArgs } from '../args.js';
 import { seedDir } from '../bundle.js';
-import { CONNECTION_FLAGS, openDatabase } from '../context.js';
+import { CONNECTION_FLAGS, openDatabase, type CommandDeps } from '../context.js';
 import { confirm, isInteractive } from '../prompt.js';
 import { anyAdminId } from '../registry.js';
 import { applyDemoSeed } from '../seeds.js';
 import { asUser, scalar } from '../sql.js';
+import { setResult } from '../output.js';
 import { dim, heading, line, note, skipped, step, warn } from '../ui.js';
 
 export const DEMO_FLAGS = [...CONNECTION_FLAGS, 'admin-user-id', 'yes'] as const;
 
-export async function demoCommand(args: ParsedArgs): Promise<number> {
+export async function demoCommand(args: ParsedArgs, deps: CommandDeps = {}): Promise<number> {
   rejectUnknownFlags(args, DEMO_FLAGS);
   const yes = boolFlag(args, 'yes');
   const interactive = !yes && isInteractive();
-  const { db } = await openDatabase(args, { interactive });
+  const { db } = await openDatabase(args, { interactive, connect: deps.connect });
 
   try {
     heading('Demo company');
@@ -39,6 +40,7 @@ export async function demoCommand(args: ParsedArgs): Promise<number> {
     );
     if (already === true) {
       skipped('Exemple Conseil SRL is already here; the seed does nothing twice');
+      setResult({ applied: false, reason: 'already_there' });
       line();
       return 0;
     }
@@ -51,6 +53,7 @@ export async function demoCommand(args: ParsedArgs): Promise<number> {
         const go = interactive ? await confirm('Add the demo data anyway?', false) : false;
         if (!go) {
           skipped('not applied');
+          setResult({ applied: false, reason: 'not_confirmed' });
           note(dim('Pass --yes to apply it without being asked.'));
           line();
           return 0;
@@ -66,6 +69,7 @@ export async function demoCommand(args: ParsedArgs): Promise<number> {
       await asUser(db, adminUserId, () => applyDemoSeed(db, seedDir()));
     }
 
+    setResult({ applied: true });
     step('Exemple Conseil SRL: 6 contacts, 10 documents, a matched payment, a bank statement');
     note(dim('Everything in it is invented. Drop the company when you are done looking.'));
     line();

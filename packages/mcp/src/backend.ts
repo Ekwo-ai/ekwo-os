@@ -14,92 +14,29 @@
  * is whatever the policies let through.
  */
 
-export type Value = string | number | boolean | null;
+import {
+  BooksError,
+  columnName,
+  identifier,
+  qualified,
+  socleCode,
+  type Backend,
+  type Filter,
+  type Order,
+  type Row,
+  type SelectQuery,
+  type Value,
+} from '@ekwo-ai/core';
 
-export type Filter =
-  | { column: string; op: 'eq' | 'neq' | 'gt' | 'gte' | 'lt' | 'lte'; value: Value }
-  | { column: string; op: 'in'; value: Value[] }
-  | { column: string; op: 'ilike'; value: string }
-  | { column: string; op: 'is'; value: null };
+// Moved to the core, where the command line reads them too: what a refusal is
+// called, what a backend is and what an error of this layer looks like cannot
+// be decided twice. Still exported from here, under the names they always had.
+export { columnName, identifier, qualified, socleCode };
+export type { Backend, Filter, Order, Row, SelectQuery, Value };
 
-export interface Order {
-  column: string;
-  ascending?: boolean;
-}
-
-export interface SelectQuery {
-  table: string;
-  /**
-   * The Postgres schema the table lives in. Undefined is `public`, which is
-   * the socle; a module names its own — `assets`, `budgets` — and PostgREST
-   * serves it only once the project lists it under its exposed schemas.
-   */
-  schema?: string;
-  /**
-   * Columns to read. A `numeric` column is asked for as `amount::text`, so it
-   * arrives as the decimal string Postgres holds rather than as a float that
-   * JSON happened to survive. Both backends understand that spelling.
-   */
-  columns: string[];
-  where?: Filter[];
-  order?: Order[];
-  limit?: number;
-}
-
-export type Row = Record<string, unknown>;
-
-export interface Backend {
-  /** Which route this is, for `status` and for the error messages. */
-  readonly mode: 'postgrest' | 'sql';
-  /** Who we are acting as, when that is known. */
-  readonly actingAs: string | undefined;
-  /**
-   * Calls a function of the schema. Always an array of rows, whatever the
-   * function returns: PostgREST hands back an object for a function returning
-   * one composite row and an array for a set, and a tool should not have to
-   * care which route it came over.
-   */
-  rpc<T = Row>(fn: string, args?: Record<string, unknown>, schema?: string): Promise<T[]>;
-  /** The same, for a function that returns nothing. */
-  rpcVoid(fn: string, args?: Record<string, unknown>, schema?: string): Promise<void>;
-  select<T = Row>(query: SelectQuery): Promise<T[]>;
-  insert<T = Row>(table: string, rows: Row[], returning?: string[], schema?: string): Promise<T[]>;
-  update<T = Row>(
-    table: string,
-    patch: Row,
-    where: Filter[],
-    returning?: string[],
-    schema?: string,
-  ): Promise<T[]>;
-  remove(table: string, where: Filter[], schema?: string): Promise<void>;
-  close(): Promise<void>;
-}
-
-/**
- * An error that carries what the database said.
- *
- * The accounting rules live in the schema and they raise with a prefixed code
- * — `period_locked:`, `entry_unbalanced:`, `document_total_mismatch:`. Those
- * messages are the most useful thing we can hand a model, so they travel up
- * unchanged; `hint` adds the sentence a human would add, never a replacement.
- */
-export class EkwoMcpError extends Error {
-  override name = 'EkwoMcpError';
-  readonly code: string | undefined;
-  readonly hint: string | undefined;
-
-  constructor(message: string, options: { code?: string | undefined; hint?: string } = {}) {
-    super(message);
-    this.code = options.code;
-    this.hint = options.hint;
-  }
-}
-
-/** The identifier of a raise like `period_locked: 2026-03-31 is …`, or undefined. */
-export function socleCode(message: string): string | undefined {
-  const match = /^([a-z][a-z0-9_]{3,}):/.exec(message.trim());
-  return match?.[1];
-}
+/** The core's error, under the name this package has always exported. */
+export const EkwoMcpError = BooksError;
+export type EkwoMcpError = BooksError;
 
 /**
  * What each socle refusal means, in one sentence.
@@ -118,12 +55,28 @@ const HINTS: Record<string, string> = {
   document_already_posted: 'This document has already been booked. Read it back rather than posting it twice.',
   document_already_booked: 'This document already points at an entry. Read it back rather than posting it twice.',
   document_cancelled: 'A cancelled document cannot be booked.',
+  entry_posted: 'A posted entry is immutable, in an open period too: its lines, its date, its state, and it is not deleted. Undo it with a reversal entry that names it in reversed_entry_id.',
+  entry_posted_by_hand: 'An entry becomes posted through post_entry, which draws its number from the journal counter, dates the posting and checks the period. Setting the state by hand is refused unless the row is exactly what post_entry would have written.',
+  document_posted_by_hand: 'A document becomes posted through post_document, which builds its entry. Setting the state by hand on an entry that was not built for this document is refused.',
+  entry_born_posted: 'An entry is created as a draft and posted with post_entry. One that is already posted arrives only with a company loaded from an archive, by import_company.',
+  document_posted: 'This document was issued, and what produced an entry does not change afterwards: not its lines, not its figures, not its state, and it is not deleted. Correct it with a credit note that names it in reversed_document_id, and issue another.',
+  document_born_posted: 'A document is created as a draft and posted with post_document. One that is already posted arrives only with a company loaded from an archive, by import_company.',
+  document_posted_without_entry: 'A document becomes posted through post_document, which builds its entry. Setting the state by hand is refused.',
+  document_amount_paid_is_derived: 'What a document was settled by comes from the matching of its entry. Match a payment or a credit note against it instead of writing the figure.',
+  document_payment_state_is_derived: 'The settlement state follows from what was matched against the document. It is never written.',
   document_not_accountable: 'Quotes and purchase orders are not booked. Turn it into an invoice first.',
   document_total_mismatch: 'The header total disagrees with what the lines book. The lines are right by construction, so the header is what needs fixing.',
   tax_not_in_force: 'That tax is not applicable on the accounting date. Pick the tax in force for that period.',
   unsupported_tax_amount_type: 'Only percentage taxes can be posted; a fixed-amount tax has no basis to spread.',
   no_counterpart_account: 'No receivable or payable account is set, either on the contact or as a company default.',
   no_journal: 'No journal was given and the company has no default for this kind of document.',
+  unknown_bank_account: 'The statement is of an account this company does not have, and an import never creates one: an account nobody decided is mapped to no journal. create_bank_account adds it; then import the file again.',
+  unbalanced_statement: 'The opening balance plus the booked lines is not the closing balance the bank declared, so a line is missing or altered. Nothing was imported; get the file again from the bank.',
+  statement_without_balances: 'Without an opening and a closing balance nothing proves the lines are all there. Nothing was imported.',
+  unreadable_statement_line: 'A booked line cannot be held as it is — no amount, no date, another currency than the account, or more decimals than the ledger keeps. Nothing was imported.',
+  statement_conflict: 'A statement with this identifier and date was already imported with other balances. The bank may have reissued it; nothing was changed.',
+  statement_currency_mismatch: 'The statement is in another currency than the bank account it belongs to. Nothing is converted on import.',
+  bank_account_mismatch: 'The bank account named is not the account the statement is of.',
   no_bank_account: 'The payment names no bank account and its journal has no default account. create_bank_account adds one and wires it to the journal.',
   missing_account: 'The line names no account, and the company and its country model have no default for this kind of document. Give account_code on the line, or set the company default.',
   payment_already_booked: 'This payment already has an entry.',
@@ -171,35 +124,3 @@ export function explain(message: string): EkwoMcpError {
   return new EkwoMcpError(message, { ...(code !== undefined ? { code } : {}), ...(hint !== undefined ? { hint } : {}) });
 }
 
-const IDENTIFIER = /^[a-z_][a-z0-9_]*$/;
-
-/**
- * Refuses anything that is not a plain lowercase identifier.
- *
- * Table and column names in this package are written in this package — none
- * of them comes from a tool argument. This function is the proof of that
- * rather than a defence against it, and it costs nothing to keep true.
- */
-/**
- * `assets.assets`, or `assets` when there is no schema to name.
- *
- * Both halves go through `identifier()`, so a module code that came from the
- * registry rather than from this package still cannot be anything but a plain
- * lowercase name.
- */
-export function qualified(schema: string | undefined, name: string): string {
-  return schema === undefined ? identifier(name) : `${identifier(schema)}.${identifier(name)}`;
-}
-
-export function identifier(name: string): string {
-  if (!IDENTIFIER.test(name)) {
-    throw new EkwoMcpError(`bad_identifier: ${name} is not a plain column or table name`);
-  }
-  return name;
-}
-
-/** `amount::text` reads back as `amount`; every other column is itself. */
-export function columnName(column: string): string {
-  const cast = column.indexOf('::');
-  return identifier(cast === -1 ? column : column.slice(0, cast));
-}

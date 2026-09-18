@@ -1,0 +1,681 @@
+{
+  "$comment": "Written by scripts/play-schematron.mjs: what the published Schematron said of each file beside this one. Not edited by hand.",
+  "played_on": "2026-09-18",
+  "release": "Peppol BIS Billing 3.0, v3.0.20",
+  "sources": {
+    "CEN-EN16931-UBL.sch": "bdcbb7b702cce55c7f8c789bef0cb9bebf6d376140c1776e683bd6d9bc0ad331",
+    "PEPPOL-EN16931-UBL.sch": "5ddf3a2f6633147b20b7805df9902d825af1a984f10014fcee186d4170364b1d"
+  },
+  "compiler": {
+    "name": "schxslt-1.10.1.jar",
+    "sha256": "4f4f21edab7b37f96ad59ae12a344d3510f1092ac46b6d81a4efa0120b73cb58"
+  },
+  "processor": "2.7.0",
+  "lists": {
+    "eas_in_en16931_not_in_peppol": [
+      "0219",
+      "0220",
+      "AN",
+      "AQ",
+      "AS",
+      "AU",
+      "EM"
+    ],
+    "eas_in_peppol_not_in_en16931": [],
+    "currencies_in_en16931_not_in_peppol": [],
+    "currencies_in_peppol_not_in_en16931": []
+  },
+  "verdicts": {
+    "broken-address-scheme-not-on-peppol": {
+      "fatal": [
+        "PEPPOL-EN16931-CL008"
+      ],
+      "warning": []
+    },
+    "broken-ae-base": {
+      "fatal": [
+        "BR-AE-08"
+      ],
+      "warning": []
+    },
+    "broken-ae-no-group": {
+      "fatal": [
+        "BR-AE-01",
+        "BR-CO-18",
+        "PEPPOL-EN16931-R053",
+        "PEPPOL-EN16931-R054"
+      ],
+      "warning": []
+    },
+    "broken-ae-rate": {
+      "fatal": [
+        "BR-AE-05",
+        "BR-CO-17"
+      ],
+      "warning": []
+    },
+    "broken-ae-reason": {
+      "fatal": [
+        "BR-AE-10"
+      ],
+      "warning": []
+    },
+    "broken-ae-tax": {
+      "fatal": [
+        "BR-AE-09",
+        "BR-CO-17"
+      ],
+      "warning": []
+    },
+    "broken-ae-vat-numbers": {
+      "fatal": [
+        "BR-AE-02"
+      ],
+      "warning": []
+    },
+    "broken-codes": {
+      "fatal": [
+        "BR-CL-14",
+        "BR-CL-16",
+        "BR-CL-23",
+        "BR-CL-25",
+        "PEPPOL-EN16931-CL008"
+      ],
+      "warning": []
+    },
+    "broken-countries": {
+      "fatal": [
+        "BR-09",
+        "BR-11"
+      ],
+      "warning": []
+    },
+    "broken-currency": {
+      "fatal": [
+        "BR-CL-03",
+        "BR-CL-04",
+        "PEPPOL-EN16931-CL007"
+      ],
+      "warning": []
+    },
+    "broken-decimals-everywhere": {
+      "fatal": [
+        "BR-CO-10",
+        "BR-CO-14",
+        "BR-CO-15",
+        "BR-CO-16",
+        "BR-DEC-09",
+        "BR-DEC-12",
+        "BR-DEC-14",
+        "BR-DEC-16",
+        "BR-DEC-18",
+        "BR-DEC-19",
+        "BR-DEC-20",
+        "BR-DEC-23",
+        "UBL-DT-01"
+      ],
+      "warning": []
+    },
+    "broken-decimals": {
+      "fatal": [
+        "BR-CO-15",
+        "BR-DEC-14",
+        "BR-DEC-18",
+        "UBL-DT-01"
+      ],
+      "warning": []
+    },
+    "broken-delivery-country": {
+      "fatal": [
+        "BR-57"
+      ],
+      "warning": []
+    },
+    "broken-due": {
+      "fatal": [
+        "BR-CO-16"
+      ],
+      "warning": []
+    },
+    "broken-e-base": {
+      "fatal": [
+        "BR-E-08"
+      ],
+      "warning": []
+    },
+    "broken-e-no-group": {
+      "fatal": [
+        "BR-CO-18",
+        "BR-E-01",
+        "PEPPOL-EN16931-R053",
+        "PEPPOL-EN16931-R054"
+      ],
+      "warning": []
+    },
+    "broken-e-rate": {
+      "fatal": [
+        "BR-CO-17",
+        "BR-E-05"
+      ],
+      "warning": []
+    },
+    "broken-e-reason": {
+      "fatal": [
+        "BR-E-10"
+      ],
+      "warning": []
+    },
+    "broken-e-tax": {
+      "fatal": [
+        "BR-CO-17",
+        "BR-E-09"
+      ],
+      "warning": []
+    },
+    "broken-e-vat-numbers": {
+      "fatal": [
+        "BR-E-02"
+      ],
+      "warning": []
+    },
+    "broken-empty-line": {
+      "fatal": [
+        "BR-22",
+        "BR-23",
+        "BR-25",
+        "BR-CO-04",
+        "BR-S-08",
+        "PEPPOL-EN16931-R120",
+        "UBL-SR-48"
+      ],
+      "warning": []
+    },
+    "broken-endpoint-schemes": {
+      "fatal": [
+        "BR-62",
+        "BR-63"
+      ],
+      "warning": []
+    },
+    "broken-enterprise-number": {
+      "fatal": [
+        "PEPPOL-COMMON-R043"
+      ],
+      "warning": []
+    },
+    "broken-exemption-code": {
+      "fatal": [
+        "BR-CL-22"
+      ],
+      "warning": []
+    },
+    "broken-g-base": {
+      "fatal": [
+        "BR-G-08"
+      ],
+      "warning": []
+    },
+    "broken-g-no-group": {
+      "fatal": [
+        "BR-CO-18",
+        "BR-G-01",
+        "PEPPOL-EN16931-R053",
+        "PEPPOL-EN16931-R054"
+      ],
+      "warning": []
+    },
+    "broken-g-rate": {
+      "fatal": [
+        "BR-CO-17",
+        "BR-G-05"
+      ],
+      "warning": []
+    },
+    "broken-g-reason": {
+      "fatal": [
+        "BR-G-10"
+      ],
+      "warning": []
+    },
+    "broken-g-tax": {
+      "fatal": [
+        "BR-CO-17",
+        "BR-G-09"
+      ],
+      "warning": []
+    },
+    "broken-g-vat-numbers": {
+      "fatal": [
+        "BR-G-02"
+      ],
+      "warning": []
+    },
+    "broken-gross-price": {
+      "fatal": [
+        "BR-26",
+        "BR-27",
+        "PEPPOL-EN16931-R120"
+      ],
+      "warning": []
+    },
+    "broken-group-category": {
+      "fatal": [
+        "BR-47",
+        "BR-CL-17",
+        "BR-S-01"
+      ],
+      "warning": []
+    },
+    "broken-group-rate": {
+      "fatal": [
+        "BR-48",
+        "BR-CO-17",
+        "BR-S-05",
+        "BR-S-09"
+      ],
+      "warning": []
+    },
+    "broken-group-tax": {
+      "fatal": [
+        "BR-CO-17",
+        "BR-S-09"
+      ],
+      "warning": []
+    },
+    "broken-group-without-line": {
+      "fatal": [
+        "BR-S-08"
+      ],
+      "warning": []
+    },
+    "broken-identifier-scheme": {
+      "fatal": [
+        "BR-CL-11"
+      ],
+      "warning": []
+    },
+    "broken-intra-community-delivery": {
+      "fatal": [
+        "BR-IC-02",
+        "BR-IC-11",
+        "BR-IC-12"
+      ],
+      "warning": []
+    },
+    "broken-k-base": {
+      "fatal": [
+        "BR-IC-08"
+      ],
+      "warning": []
+    },
+    "broken-k-no-group": {
+      "fatal": [
+        "BR-CO-18",
+        "BR-IC-01",
+        "PEPPOL-EN16931-R053",
+        "PEPPOL-EN16931-R054"
+      ],
+      "warning": []
+    },
+    "broken-k-rate": {
+      "fatal": [
+        "BR-CO-17",
+        "BR-IC-05"
+      ],
+      "warning": []
+    },
+    "broken-k-reason": {
+      "fatal": [
+        "BR-IC-10"
+      ],
+      "warning": []
+    },
+    "broken-k-tax": {
+      "fatal": [
+        "BR-CO-17",
+        "BR-IC-09"
+      ],
+      "warning": []
+    },
+    "broken-k-vat-numbers": {
+      "fatal": [
+        "BR-IC-02"
+      ],
+      "warning": []
+    },
+    "broken-line-arithmetic": {
+      "fatal": [
+        "PEPPOL-EN16931-R120"
+      ],
+      "warning": []
+    },
+    "broken-line-category": {
+      "fatal": [
+        "BR-CL-18",
+        "BR-S-08"
+      ],
+      "warning": []
+    },
+    "broken-line-sum": {
+      "fatal": [
+        "BR-CO-10",
+        "BR-S-08"
+      ],
+      "warning": []
+    },
+    "broken-line-without-group": {
+      "fatal": [
+        "BR-E-01"
+      ],
+      "warning": []
+    },
+    "broken-mixed-outside-scope": {
+      "fatal": [
+        "BR-O-02",
+        "BR-O-11",
+        "BR-O-12"
+      ],
+      "warning": []
+    },
+    "broken-names": {
+      "fatal": [
+        "BR-06",
+        "BR-07"
+      ],
+      "warning": []
+    },
+    "broken-negative-gross-price": {
+      "fatal": [
+        "BR-27",
+        "BR-28"
+      ],
+      "warning": []
+    },
+    "broken-negative-price": {
+      "fatal": [
+        "BR-27"
+      ],
+      "warning": []
+    },
+    "broken-no-breakdown": {
+      "fatal": [
+        "BR-CO-18",
+        "BR-S-01",
+        "PEPPOL-EN16931-R053",
+        "PEPPOL-EN16931-R054"
+      ],
+      "warning": []
+    },
+    "broken-no-due-date": {
+      "fatal": [
+        "BR-CO-25"
+      ],
+      "warning": []
+    },
+    "broken-no-endpoints": {
+      "fatal": [
+        "PEPPOL-EN16931-R010",
+        "PEPPOL-EN16931-R020"
+      ],
+      "warning": []
+    },
+    "broken-no-exemption-reason": {
+      "fatal": [
+        "BR-IC-10"
+      ],
+      "warning": []
+    },
+    "broken-no-reference": {
+      "fatal": [
+        "PEPPOL-EN16931-R003"
+      ],
+      "warning": []
+    },
+    "broken-o-base": {
+      "fatal": [
+        "BR-O-08"
+      ],
+      "warning": []
+    },
+    "broken-o-no-group": {
+      "fatal": [
+        "BR-CO-18",
+        "BR-O-01",
+        "PEPPOL-EN16931-R053",
+        "PEPPOL-EN16931-R054"
+      ],
+      "warning": []
+    },
+    "broken-o-rate": {
+      "fatal": [
+        "BR-CO-17",
+        "BR-O-05"
+      ],
+      "warning": []
+    },
+    "broken-o-reason": {
+      "fatal": [
+        "BR-O-10"
+      ],
+      "warning": []
+    },
+    "broken-o-tax": {
+      "fatal": [
+        "BR-CO-17",
+        "BR-O-09"
+      ],
+      "warning": []
+    },
+    "broken-o-vat-numbers": {
+      "fatal": [
+        "BR-O-02"
+      ],
+      "warning": []
+    },
+    "broken-parties": {
+      "fatal": [
+        "BR-10",
+        "BR-CO-26",
+        "BR-S-02",
+        "PEPPOL-COMMON-R040"
+      ],
+      "warning": []
+    },
+    "broken-rate-on-exempt": {
+      "fatal": [
+        "BR-CO-17",
+        "BR-E-05"
+      ],
+      "warning": []
+    },
+    "broken-reason-on-standard": {
+      "fatal": [
+        "BR-S-10"
+      ],
+      "warning": []
+    },
+    "broken-reason-vatex-eu-ae-on-e": {
+      "fatal": [
+        "PEPPOL-EN16931-P0107"
+      ],
+      "warning": []
+    },
+    "broken-reason-vatex-eu-d-on-ae": {
+      "fatal": [
+        "PEPPOL-EN16931-P0108"
+      ],
+      "warning": []
+    },
+    "broken-reason-vatex-eu-f-on-ae": {
+      "fatal": [
+        "PEPPOL-EN16931-P0109"
+      ],
+      "warning": []
+    },
+    "broken-reason-vatex-eu-i-on-ae": {
+      "fatal": [
+        "PEPPOL-EN16931-P0110"
+      ],
+      "warning": []
+    },
+    "broken-reason-vatex-eu-ic-on-e": {
+      "fatal": [
+        "PEPPOL-EN16931-P0106"
+      ],
+      "warning": []
+    },
+    "broken-reason-vatex-eu-j-on-ae": {
+      "fatal": [
+        "PEPPOL-EN16931-P0111"
+      ],
+      "warning": []
+    },
+    "broken-reason-vatex-eu-o-on-e": {
+      "fatal": [
+        "PEPPOL-EN16931-P0105"
+      ],
+      "warning": []
+    },
+    "broken-seller-address": {
+      "fatal": [
+        "BR-08"
+      ],
+      "warning": []
+    },
+    "broken-total": {
+      "fatal": [
+        "BR-CO-15"
+      ],
+      "warning": []
+    },
+    "broken-transfer-without-account": {
+      "fatal": [
+        "BR-61"
+      ],
+      "warning": []
+    },
+    "broken-vat-prefix": {
+      "fatal": [
+        "BR-CO-09"
+      ],
+      "warning": []
+    },
+    "broken-vat-total": {
+      "fatal": [
+        "BR-CO-14"
+      ],
+      "warning": []
+    },
+    "broken-wrong-exemption-reason": {
+      "fatal": [
+        "PEPPOL-EN16931-P0104"
+      ],
+      "warning": []
+    },
+    "broken-z-base": {
+      "fatal": [
+        "BR-Z-08"
+      ],
+      "warning": []
+    },
+    "broken-z-no-group": {
+      "fatal": [
+        "BR-CO-18",
+        "BR-Z-01",
+        "PEPPOL-EN16931-R053",
+        "PEPPOL-EN16931-R054"
+      ],
+      "warning": []
+    },
+    "broken-z-rate": {
+      "fatal": [
+        "BR-CO-17",
+        "BR-Z-05"
+      ],
+      "warning": []
+    },
+    "broken-z-reason": {
+      "fatal": [
+        "BR-Z-10"
+      ],
+      "warning": []
+    },
+    "broken-z-tax": {
+      "fatal": [
+        "BR-CO-17",
+        "BR-Z-09"
+      ],
+      "warning": []
+    },
+    "broken-z-vat-numbers": {
+      "fatal": [
+        "BR-Z-02"
+      ],
+      "warning": []
+    },
+    "credit-note-minimal": {
+      "fatal": [],
+      "warning": []
+    },
+    "credit-note": {
+      "fatal": [],
+      "warning": []
+    },
+    "family-ae": {
+      "fatal": [],
+      "warning": []
+    },
+    "family-e": {
+      "fatal": [],
+      "warning": []
+    },
+    "family-g": {
+      "fatal": [],
+      "warning": []
+    },
+    "family-k": {
+      "fatal": [],
+      "warning": []
+    },
+    "family-o": {
+      "fatal": [],
+      "warning": []
+    },
+    "family-z": {
+      "fatal": [],
+      "warning": []
+    },
+    "invoice-exempt": {
+      "fatal": [],
+      "warning": []
+    },
+    "invoice-intra-community": {
+      "fatal": [],
+      "warning": []
+    },
+    "invoice-minimal": {
+      "fatal": [],
+      "warning": []
+    },
+    "invoice-outside-scope": {
+      "fatal": [],
+      "warning": []
+    },
+    "invoice-reverse-charge": {
+      "fatal": [],
+      "warning": []
+    },
+    "invoice-standard": {
+      "fatal": [],
+      "warning": []
+    },
+    "invoice-two-taxes-one-rate": {
+      "fatal": [],
+      "warning": []
+    },
+    "invoice-zero-rated": {
+      "fatal": [],
+      "warning": []
+    }
+  }
+}

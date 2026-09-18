@@ -1,0 +1,235 @@
+code,parent,type,reconcilable,name,sequence
+1000,,asset_cash,false,Cash — operating account,10
+1001,,asset_cash,false,Cash — payroll account,20
+1002,,asset_cash,false,Cash — savings account,30
+1003,,asset_cash,false,Cash — money market account,40
+1004,,asset_cash,false,Cash in transit,50
+1010,,asset_cash,false,Petty cash,60
+1011,,asset_cash,false,Undeposited funds,70
+1015,,asset_cash,false,Restricted cash,80
+1020,,asset_current,false,Marketable equity securities,90
+1021,,asset_current,false,Marketable debt securities,100
+1022,,asset_current,false,Certificates of deposit — short term,110
+1100,,asset_receivable,true,Accounts receivable — trade,120
+1110,,asset_receivable,true,Notes receivable — trade,130
+1120,,asset_receivable,true,Accounts receivable — related parties,140
+1130,,asset_receivable,true,Receivables from officers and employees,150
+1140,,asset_receivable,true,Credit card receivables,160
+1180,,asset_receivable,true,Other receivables,200
+1190,,asset_current,false,Allowance for doubtful accounts,210
+1191,,asset_current,false,Allowance for doubtful notes receivable,220
+1195,,asset_current,false,Unearned finance income on notes receivable,230
+1200,,asset_current,false,Inventory — finished goods,240
+1210,,asset_current,false,Inventory — work in process,250
+1220,,asset_current,false,Inventory — raw materials,260
+1230,,asset_current,false,Inventory — supplies,270
+1240,,asset_current,false,Inventory — goods in transit,280
+1245,,asset_current,false,Reserve for inventory obsolescence,290
+1300,,asset_prepayments,false,Prepaid insurance,300
+1305,,asset_prepayments,false,Prepaid rent,310
+1310,,asset_prepayments,false,Prepaid subscriptions and licences,320
+1315,,asset_prepayments,false,Prepaid advertising,330
+1320,,asset_prepayments,false,Prepaid income taxes,340
+1325,,asset_prepayments,false,Other prepaid expenses,350
+1400,,asset_current,false,Deposits — current,360
+1410,,asset_current,false,Advances to suppliers,370
+1420,,asset_current,false,Employee advances,380
+1430,,asset_current,false,Contract assets — current,390
+1440,,asset_current,false,Other current assets,400
+1450,,asset_current,false,Accrued revenue receivable,402
+1460,,asset_current,false,Income taxes receivable,404
+1470,,asset_current,false,Sales and use tax refunds receivable,406
+1500,,asset_non_current,false,Securities of related parties,410
+1510,,asset_non_current,false,Notes receivable from related parties — non-current,420
+1520,,asset_non_current,false,Investments in unconsolidated affiliates,430
+1530,,asset_non_current,false,Long-term investments — debt securities,440
+1540,,asset_non_current,false,Other long-term investments,450
+1600,,asset_fixed,false,Land,460
+1610,,asset_fixed,false,Buildings,470
+1620,,asset_fixed,false,Building improvements,480
+1630,,asset_fixed,false,Leasehold improvements,490
+1640,,asset_fixed,false,Machinery and equipment,500
+1650,,asset_fixed,false,Furniture and fixtures,510
+1660,,asset_fixed,false,Computer equipment,520
+1665,,asset_fixed,false,Computer software,530
+1670,,asset_fixed,false,Vehicles,540
+1680,,asset_fixed,false,Construction in progress,550
+1690,,asset_fixed,false,Right-of-use assets — finance leases,560
+1695,,asset_fixed,false,Right-of-use assets — operating leases,570
+1710,,asset_fixed,false,Accumulated depreciation — buildings,580
+1712,,asset_fixed,false,Accumulated depreciation — building improvements,590
+1714,,asset_fixed,false,Accumulated amortization — leasehold improvements,600
+1716,,asset_fixed,false,Accumulated depreciation — machinery and equipment,610
+1718,,asset_fixed,false,Accumulated depreciation — furniture and fixtures,620
+1720,,asset_fixed,false,Accumulated depreciation — computer equipment,630
+1722,,asset_fixed,false,Accumulated amortization — computer software,640
+1724,,asset_fixed,false,Accumulated depreciation — vehicles,650
+1726,,asset_fixed,false,"Accumulated amortization — right-of-use assets, finance leases",660
+1728,,asset_fixed,false,"Accumulated amortization — right-of-use assets, operating leases",670
+1750,,asset_fixed,false,Goodwill,680
+1760,,asset_fixed,false,Patents and trademarks,690
+1765,,asset_fixed,false,Customer lists,700
+1770,,asset_fixed,false,Licences and franchise rights,710
+1775,,asset_fixed,false,Other intangible assets,720
+1780,,asset_fixed,false,Accumulated amortization — goodwill,730
+1782,,asset_fixed,false,Accumulated amortization — patents and trademarks,740
+1784,,asset_fixed,false,Accumulated amortization — customer lists,750
+1786,,asset_fixed,false,Accumulated amortization — licences and franchise rights,760
+1788,,asset_fixed,false,Accumulated amortization — other intangible assets,770
+1800,,asset_non_current,false,Deposits — non-current,780
+1810,,asset_non_current,false,Deferred income tax assets — non-current,790
+1820,,asset_non_current,false,Debt issuance costs,800
+1830,,asset_non_current,false,Contract assets — non-current,810
+1840,,asset_non_current,false,Other assets,820
+2000,,liability_payable,true,Accounts payable — trade,830
+2010,,liability_payable,true,Notes payable — current,840
+2020,,liability_payable,true,Accounts payable — related parties,850
+2040,,liability_credit_card,true,Credit cards payable,870
+2100,,liability_current,false,Accrued payroll,880
+2105,,liability_current,false,Accrued payroll taxes,890
+2110,,liability_current,false,Employee withholdings — federal income tax,900
+2115,,liability_current,false,Employee withholdings — state income tax,910
+2120,,liability_current,false,Employee withholdings — social security and Medicare,920
+2125,,liability_current,false,Accrued vacation and paid time off,930
+2130,,liability_current,false,Accrued employee benefits,940
+2140,,liability_current,false,Accrued interest payable,950
+2150,,liability_current,false,Accrued professional fees,960
+2160,,liability_current,false,Accrued rent,970
+2170,,liability_current,false,Other accrued liabilities,980
+2180,,liability_current,false,Accrued accounts payable,985
+2200,,liability_current,false,"Sales and use tax payable — California, state share",990
+2202,,liability_current,false,"Sales and use tax payable — California, county share",1000
+2204,,liability_current,false,"Sales and use tax payable — California, local share",1010
+2206,,liability_current,false,"Sales and use tax payable — California, district share",1020
+2215,,liability_current,false,Sales tax payable — New York,1030
+2220,,liability_current,false,Sales tax payable — other jurisdictions,1040
+2230,,liability_current,false,Federal income taxes payable,1050
+2235,,liability_current,false,State income taxes payable,1060
+2240,,liability_current,false,Customer deposits,1070
+2250,,liability_current,false,Deferred revenue — current,1080
+2260,,liability_current,false,Current portion of long-term debt,1090
+2270,,liability_current,false,Current portion of finance lease liabilities,1100
+2280,,liability_current,false,Current portion of operating lease liabilities,1110
+2290,,liability_current,false,Dividends payable,1120
+2300,,liability_current,false,Line of credit,1130
+2310,,liability_current,false,Other current liabilities,1140
+2390,,liability_current,false,Suspense account,1150
+2400,,liability_non_current,false,Notes payable — long term,1160
+2410,,liability_non_current,false,Bonds payable,1170
+2420,,liability_non_current,false,Mortgage payable,1180
+2430,,liability_non_current,false,Finance lease liabilities — non-current,1190
+2440,,liability_non_current,false,Operating lease liabilities — non-current,1200
+2450,,liability_non_current,false,Unamortized debt discount,1210
+2500,,liability_non_current,false,Notes payable to related parties — non-current,1220
+2520,,liability_non_current,false,Deferred income tax liabilities — non-current,1230
+2530,,liability_non_current,false,Asset retirement obligations,1240
+2540,,liability_non_current,false,Pension and post-retirement obligations,1250
+2550,,liability_non_current,false,Other long-term liabilities,1260
+2600,,liability_non_current,false,Accrued loss contingencies,1270
+2700,,liability_non_current,false,Deferred revenue — non-current,1280
+2710,,liability_non_current,false,Deferred gain on sale and leaseback,1290
+2720,,liability_non_current,false,Other deferred credits,1300
+3000,,equity,false,Redeemable preferred stock,1310
+3100,,equity,false,"Preferred stock, par value",1320
+3110,,equity,false,Preferred stock — additional paid-in capital,1330
+3200,,equity,false,"Common stock, par value",1340
+3210,,equity,false,Common stock subscribed,1350
+3300,,equity,false,Additional paid-in capital — common stock,1360
+3310,,equity,false,Stock subscriptions receivable,1370
+3320,,equity,false,"Treasury stock, at cost",1380
+3400,,equity_retained,false,Retained earnings,1390
+3410,,equity_retained,false,Dividends declared,1400
+3420,,equity,false,Accumulated other comprehensive income,1410
+3430,,equity_retained,false,Prior period adjustments,1420
+3500,,equity,false,Noncontrolling interests in consolidated subsidiaries,1430
+4000,,income,false,Sales of goods,1440
+4010,,income,false,Sales of goods — taxed in California,1450
+4020,,income,false,Sales of goods — taxed in another state,1460
+4030,,income,false,Sales of food products,1470
+4040,,income,false,Sales for resale,1480
+4050,,income,false,Sales to the United States government,1490
+4060,,income,false,Sales shipped outside the state,1500
+4100,,income,false,Service revenue,1510
+4110,,income,false,Subscription and licence revenue,1520
+4120,,income,false,Shipping and handling charged to customers,1530
+4150,,income,false,Sales returns and allowances,1540
+4160,,income,false,Sales discounts,1550
+5000,,expense_direct_cost,false,Cost of goods sold,1560
+5010,,expense_direct_cost,false,Purchases of merchandise,1570
+5020,,expense_direct_cost,false,Freight in,1580
+5030,,expense_direct_cost,false,Purchase returns and allowances,1590
+5040,,expense_direct_cost,false,Purchase discounts,1600
+5050,,expense_direct_cost,false,Direct labor,1610
+5060,,expense_direct_cost,false,Manufacturing overhead,1620
+5070,,expense_direct_cost,false,Inventory shrinkage and write-downs,1630
+5080,,expense_direct_cost,false,Cost of services delivered,1640
+5500,,expense,false,Warehousing and fulfilment,1650
+5510,,expense,false,Warranty expense,1660
+5520,,expense,false,Research and development,1670
+5530,,expense,false,Other operating costs,1680
+6000,,expense,false,Salaries and wages — selling,1690
+6010,,expense,false,Salaries and wages — administrative,1700
+6020,,expense,false,Officers' compensation,1710
+6030,,expense,false,Payroll taxes,1720
+6040,,expense,false,Employee benefits,1730
+6050,,expense,false,Workers' compensation insurance,1740
+6060,,expense,false,Retirement plan contributions,1750
+6100,,expense,false,Commissions,1760
+6110,,expense,false,Advertising and promotion,1770
+6120,,expense,false,Travel,1780
+6130,,expense,false,Meals and entertainment,1790
+6140,,expense,false,Trade shows and conferences,1800
+6200,,expense,false,Rent — office,1810
+6210,,expense,false,Rent — warehouse,1820
+6220,,expense,false,Utilities,1830
+6230,,expense,false,Telephone and internet,1840
+6240,,expense,false,Repairs and maintenance,1850
+6250,,expense,false,Office supplies,1860
+6260,,expense,false,Postage and shipping,1870
+6270,,expense,false,Computer software and subscriptions,1880
+6280,,expense,false,Insurance — general,1890
+6300,,expense,false,Professional fees — legal,1900
+6310,,expense,false,Professional fees — accounting,1910
+6320,,expense,false,Consulting fees,1920
+6330,,expense,false,Bank charges,1930
+6340,,expense,false,Dues and subscriptions,1940
+6350,,expense,false,Licences and permits,1950
+6360,,expense,false,Training and education,1960
+6370,,expense,false,Vehicle expenses,1970
+6380,,expense,false,Charitable contributions,1980
+6400,,expense_depreciation,false,Depreciation expense — buildings,1990
+6410,,expense_depreciation,false,Depreciation expense — machinery and equipment,2000
+6420,,expense_depreciation,false,Depreciation expense — furniture and fixtures,2010
+6430,,expense_depreciation,false,Depreciation expense — computer equipment,2020
+6440,,expense_depreciation,false,Depreciation expense — vehicles,2030
+6450,,expense_depreciation,false,Amortization expense — leasehold improvements,2040
+6460,,expense_depreciation,false,Amortization expense — intangible assets,2050
+6470,,expense_depreciation,false,Amortization expense — right-of-use assets,2060
+6500,,expense,false,Sales and use tax expense,2070
+6510,,expense,false,Property taxes,2080
+6520,,expense,false,Franchise taxes and state fees,2090
+6530,,expense,false,Business licence taxes,2100
+6900,,expense,false,Provision for doubtful accounts,2110
+6905,,expense,false,Bad debt write-offs,2120
+6950,,expense,false,Other general expenses,2130
+6990,,expense,false,Rounding differences,2140
+7000,,income_other,false,Interest income,2150
+7010,,income_other,false,Foreign exchange gains,2160
+7020,,income_other,false,Gain on disposal of fixed assets,2170
+7030,,income_other,false,Rental income,2180
+7040,,income_other,false,Other non-operating income,2190
+7100,,expense,false,Interest expense,2200
+7110,,expense,false,Amortization of debt issuance costs,2210
+7120,,expense,false,Amortization of debt discount,2220
+7200,,expense,false,Loss on disposal of fixed assets,2230
+7210,,expense,false,Foreign exchange losses,2240
+7220,,expense,false,Impairment losses,2250
+7230,,expense,false,Other non-operating expenses,2260
+8000,,expense,false,Federal income tax expense — current,2270
+8010,,expense,false,Federal income tax expense — deferred,2280
+8020,,expense,false,State income tax expense — current,2290
+8030,,expense,false,State income tax expense — deferred,2300
+8100,,income_other,false,Equity in earnings of unconsolidated subsidiaries,2310
+8200,,income_other,false,"Income or loss from discontinued operations, net of tax",2320
+8400,,income_other,false,Foreign currency translation adjustments,2330
+8410,,income_other,false,Unrealized gains and losses on available-for-sale securities,2340

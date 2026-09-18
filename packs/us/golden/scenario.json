@@ -1,0 +1,152 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "A year of a California corporation registered for sales and use tax, filing quarterly on a 52-week year ending the last Saturday of June",
+  "chart": "default",
+  "territory": "US-CA",
+  "fiscal_year": {
+    "name": "Fiscal year ended June 26, 2027",
+    "start": "2026-06-28",
+    "end": "2027-06-26"
+  },
+  "periods": [
+    { "code": "2026-Q3", "from": "2026-07-01", "to": "2026-09-30" },
+    { "code": "2026-Q4", "from": "2026-10-01", "to": "2026-12-31" },
+    { "code": "2027-Q1", "from": "2027-01-01", "to": "2027-03-31" }
+  ],
+  "statements": ["US-SX-BS", "US-SX-IS"],
+  "contacts": [
+    { "ref": "cust-retail",   "name": "Sierra Vista Outfitters, Inc.",  "type": "customer", "country": "US", "territory": "US-CA" },
+    { "ref": "cust-reseller", "name": "Pacific Rim Distribution LLC",   "type": "customer", "country": "US", "territory": "US-CA" },
+    { "ref": "cust-ny",       "name": "Hudson Yards Provisioning Corp.","type": "customer", "country": "US", "territory": "US-NY" },
+    { "ref": "cust-or",       "name": "Willamette Valley Trading Co.",  "type": "customer", "country": "US", "territory": "US-OR" },
+    { "ref": "cust-federal",  "name": "Federal Agency Purchasing Office","type": "customer", "country": "US", "territory": "US-CA" },
+    { "ref": "supp-ca",       "name": "Cascadia Fittings Corp.",        "type": "supplier", "country": "US", "territory": "US-CA" },
+    { "ref": "supp-remote",   "name": "Northwind Instruments Ltd.",     "type": "supplier", "country": "US" },
+    { "ref": "supp-services", "name": "Harlow & Reese LLP",             "type": "supplier", "country": "US" }
+  ],
+  "documents": [
+    {
+      "ref": "S0", "type": "sale_invoice", "contact": "cust-retail", "date": "2026-06-29",
+      "why": "The first working day of a 52-week fiscal year that opened on a Sunday in June. It is in the books and in both statements, and it is in no return this scenario files: California's reporting period is the calendar quarter, so the two days of this year that fall in the April-to-June quarter belong to a return the previous fiscal year mostly paid for. An American fiscal year and an American sales tax period are two different calendars and nothing in the pack makes them agree.",
+      "lines": [
+        { "name": "Trail packs", "quantity": 1, "unit_price": 2000, "tax": "US-CA-S-725", "account": "4010" }
+      ]
+    },
+    {
+      "ref": "S1", "type": "sale_invoice", "contact": "cust-retail", "date": "2026-07-15",
+      "why": "A taxable sale in the seller's own state at the statewide 7.25 per cent. One tax, rounded once, then split over the three lines the form prints it on: 900.00 of state tax on line 13, 37.50 of county tax on line 14 and 150.00 of local tax on line 15, which add back to the 1,087.50 the customer paid.",
+      "lines": [
+        { "name": "Insulated flasks", "quantity": 12, "unit_price": 1250, "tax": "US-CA-S-725", "account": "4010" }
+      ]
+    },
+    {
+      "ref": "S2", "type": "sale_invoice", "contact": "cust-retail", "date": "2026-07-29",
+      "why": "The same sale in a city that levies a district tax: 10.75 per cent in Oakland, where the 3.50 per cent district rate is on top of the 7.25 per cent statewide one and reaches line 16, which the state share on line 13 does not move for. Two rates in one state, both legal, both on the same return, and the only thing that decides between them is where the goods were delivered — which is why a rate engine by address is a feed and not a pack.",
+      "lines": [
+        { "name": "Display fittings", "quantity": 1, "unit_price": 4000, "tax": "US-CA-S-1075", "account": "4010" }
+      ]
+    },
+    {
+      "ref": "P1", "type": "purchase_invoice", "contact": "supp-ca", "date": "2026-07-20",
+      "why": "A purchase on which the seller charged sales tax reimbursement. Nothing of it is recoverable, so the whole 580.00 lands on the account of the line it taxes and the stock costs 8,580.00; the supplier is owed 8,580.00 and the return is not moved by a cent, because CDTFA-401-A has no input side. This is the case `recoverable: false` and the `tax_on_base` posting were built for.",
+      "lines": [
+        { "name": "Steel fittings for resale", "quantity": 1, "unit_price": 8000, "tax": "US-CA-P-725", "account": "5010" }
+      ]
+    },
+    {
+      "ref": "S3", "type": "sale_invoice", "contact": "cust-reseller", "date": "2026-08-05",
+      "why": "A sale for resale, against a resale certificate the seller holds. It is in total sales on line 1 and deducted on line 4 of Section A, which is box 32 of the form: one base posting naming two boxes, neither of them a sum of the other. Whether the certificate is valid is a fact about a document in a drawer, which the core records nowhere.",
+      "lines": [
+        { "name": "Wholesale lot, resale certificate on file", "quantity": 1, "unit_price": 9000, "tax": "US-CA-S-RESALE", "account": "4040" }
+      ]
+    },
+    {
+      "ref": "S4", "type": "sale_invoice", "contact": "cust-ny", "date": "2026-08-19",
+      "why": "A sale delivered in New York City, where this company has economic nexus since Wayfair. It charges New York's combined 8.875 per cent and owes it to Albany: 532.50 sits on a liability account of its own and reaches no box of any return this pack can produce, because that return is form ST-100 and this pack carries California's. On the California return the sale is an interstate one: line 1 and line 8. A company subject to two states' returns is exactly what the core cannot yet say.",
+      "lines": [
+        { "name": "Provisioning order, delivered New York, NY", "quantity": 1, "unit_price": 6000, "tax": "US-NY-S-8875", "account": "4020" }
+      ]
+    },
+    {
+      "ref": "S5", "type": "sale_invoice", "contact": "cust-or", "date": "2026-09-09",
+      "why": "A sale delivered in Oregon, which levies no general sales tax at all. The rate is zero because nobody imposes one and not because an exemption was claimed, which is the difference between `not_subject` and `exempt` and the reason a pack can declare a territory with no tax.",
+      "lines": [
+        { "name": "Wholesale lot, delivered Portland, OR", "quantity": 1, "unit_price": 3500, "tax": "US-OR-S-0", "account": "4020" }
+      ]
+    },
+    {
+      "ref": "P2", "type": "purchase_invoice", "contact": "supp-remote", "date": "2026-09-15",
+      "why": "Equipment bought from an out-of-state seller who charged no California tax, so the buyer assesses the use tax themselves: 5,000.00 on line 2 of the return, 362.50 of tax credited to the State on lines 13 to 15, and the same 362.50 capitalised on the equipment, because a use tax is no more recoverable than a sales tax. The document nets to 5,000.00 owed to the supplier and 362.50 owed to CDTFA.",
+      "lines": [
+        { "name": "Bench instruments", "quantity": 1, "unit_price": 5000, "tax": "US-CA-P-USE-725", "account": "1660" }
+      ]
+    },
+    {
+      "ref": "S6", "type": "sale_invoice", "contact": "cust-federal", "date": "2026-10-14",
+      "why": "A sale to the federal government, exempt under section 6381: total sales on line 1, deducted on line 7 of Section A, which is box 35. A second exemption with a second deduction line, so the form's Section A is exercised by more than one code.",
+      "lines": [
+        { "name": "Field equipment under federal contract", "quantity": 1, "unit_price": 12000, "tax": "US-CA-S-GOV", "account": "4050" }
+      ]
+    },
+    {
+      "ref": "S7", "type": "sale_invoice", "contact": "cust-retail", "date": "2026-11-04",
+      "why": "Food products sold for human consumption, exempt under section 6359 and deducted on box 33. On the return it is indistinguishable from the sale for resale above; in the ledger the two are different codes, because what makes one untaxed is the nature of the goods and the other a certificate the buyer signed.",
+      "lines": [
+        { "name": "Packaged trail rations", "quantity": 1, "unit_price": 2750, "tax": "US-CA-S-FOOD", "account": "4030" }
+      ]
+    },
+    {
+      "ref": "P3", "type": "purchase_invoice", "contact": "supp-services", "date": "2026-11-18",
+      "why": "Professional fees. California taxes the retail sale of tangible personal property and not services, so there is no sales tax to pay, no use tax to assess and no box to fill: the ordinary American purchase, which the return never hears about.",
+      "lines": [
+        { "name": "Legal fees, third quarter", "quantity": 1, "unit_price": 4500, "tax": "US-P-0", "account": "6310" }
+      ]
+    },
+    {
+      "ref": "S8", "type": "sale_credit_note", "contact": "cust-retail", "date": "2026-12-02",
+      "why": "A credit note on the July sale, in a later quarter than the invoice. Every box the invoice filled, with the sign turned round, including each of the three tax lines the split writes to; no negative amount in the ledger. The form has a line for returned merchandise in Section B and this pack does not use it, because a credit note is the reversal of a document and not a deduction from a later period's sales.",
+      "lines": [
+        { "name": "Insulated flasks returned", "quantity": 2, "unit_price": 1250, "tax": "US-CA-S-725", "account": "4010" }
+      ]
+    },
+    {
+      "ref": "P4", "type": "purchase_invoice", "contact": "supp-ca", "date": "2027-01-20",
+      "why": "A small taxed purchase in the last full quarter of a year that does not run to 31 December. Its 87.00 of sales tax lands on the office supplies account, which is the second place in this year where a tax makes an expense bigger rather than making a claim on the State.",
+      "lines": [
+        { "name": "Office supplies", "quantity": 1, "unit_price": 1200, "tax": "US-CA-P-725", "account": "6250" }
+      ]
+    },
+    {
+      "ref": "S9", "type": "sale_invoice", "contact": "cust-retail", "date": "2027-02-10",
+      "why": "A taxable sale in the third filing quarter, so that the return of a period carrying both a sale and the credit note's quarter behind it is not the only one with a positive figure on line 26.",
+      "lines": [
+        { "name": "Season restock", "quantity": 4, "unit_price": 900, "tax": "US-CA-S-725", "account": "4010" }
+      ]
+    },
+    {
+      "ref": "S10", "type": "sale_invoice", "contact": "cust-reseller", "date": "2027-03-17",
+      "supply_territory": "US-AZ",
+      "why": "Goods the contract of sale required to be shipped out of state, exempt under section 6396 and deducted on box 36. It is the same deduction line the New York sale and the Oregon sale reach, which is the point: California asks only whether the goods left, and what the destination state then charges is the destination state's business.",
+      "lines": [
+        { "name": "Wholesale lot shipped to Phoenix, AZ", "quantity": 1, "unit_price": 7400, "tax": "US-CA-S-SHIPPED", "account": "4060" }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "R1", "direction": "outbound", "date": "2026-08-10", "amount": 8580,
+      "contact": "supp-ca", "journal": "BNK", "match": "P1",
+      "why": "A payment that settles the taxed purchase exactly, tax included — 8,580.00 for an 8,000.00 invoice, which is what a sales tax does to a payable."
+    },
+    {
+      "ref": "R2", "direction": "inbound", "date": "2026-08-14", "amount": 16087.5,
+      "contact": "cust-retail", "journal": "BNK", "match": "S1",
+      "why": "A receipt that settles its invoice exactly and closes it."
+    },
+    {
+      "ref": "R3", "direction": "inbound", "date": "2026-10-05", "amount": 5000,
+      "contact": "cust-ny", "journal": "BNK",
+      "why": "A payment on account against the New York invoice: it leaves an open item, which is what a real ledger holds and what a return computed from documents rather than from matchings has to survive."
+    }
+  ]
+}

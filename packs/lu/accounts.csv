@@ -233,7 +233,7 @@ code,parent,type,reconcilable,name,sequence
 4216,421,asset_current,false,"Administration de l’Enregistrement, des Domaines et de la TVA (AED)",2320
 42161,4216,asset_current,false,Taxe sur la valeur ajoutée (TVA),2330
 421611,42161,asset_current,false,TVA en amont,2340
-421612,42161,asset_current,false,TVA à recevoir,2350
+421612,42161,asset_current,true,TVA à recevoir,2350
 421613,42161,asset_current,false,TVA acomptes versés,2360
 421618,42161,asset_current,false,TVA – Autres créances,2370
 42162,4216,asset_current,false,Impôts indirects,2380
@@ -322,7 +322,7 @@ code,parent,type,reconcilable,name,sequence
 4614,461,liability_current,false,"Administration de l’Enregistrement, des Domaines et de la TVA (AED)",3210
 46141,4614,liability_current,false,Taxe sur la valeur ajoutée (TVA),3220
 461411,46141,liability_current,false,TVA en aval,3230
-461412,46141,liability_current,false,TVA à payer,3240
+461412,46141,liability_current,true,TVA à payer,3240
 461413,46141,liability_current,false,TVA acomptes reçus,3250
 461418,46141,liability_current,false,TVA – Autres dettes,3260
 46142,4614,liability_current,false,Impôts indirects,3270

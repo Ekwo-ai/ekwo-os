@@ -17,7 +17,7 @@
 
 import { boolFlag, rejectUnknownFlags, type ParsedArgs } from '../args.js';
 import { migrationsDir, seedDir } from '../bundle.js';
-import { CONNECTION_FLAGS, openDatabase } from '../context.js';
+import { CONNECTION_FLAGS, openDatabase, type CommandDeps } from '../context.js';
 import { applyMigrations, listMigrations, migrationGap } from '../migrations.js';
 import { applyModuleMigrations } from './module.js';
 import { allModuleMigrations, listModules } from '../module/read.js';
@@ -25,6 +25,7 @@ import { isInteractive } from '../prompt.js';
 import { applySeeds } from '../seeds.js';
 import { schemaIsInstalled } from '../bootstrap.js';
 import { syncSchemaVersion } from '../status.js';
+import { setResult } from '../output.js';
 import { bold, dim, heading, line, note, skipped, step, warn } from '../ui.js';
 
 export const MIGRATE_FLAGS = [...CONNECTION_FLAGS, 'skip-seeds', 'no-modules', 'yes'] as const;
@@ -48,10 +49,10 @@ export function snapshotRecommendation(): void {
   line();
 }
 
-export async function migrateCommand(args: ParsedArgs): Promise<number> {
+export async function migrateCommand(args: ParsedArgs, deps: CommandDeps = {}): Promise<number> {
   rejectUnknownFlags(args, MIGRATE_FLAGS);
   const interactive = !boolFlag(args, 'yes') && isInteractive();
-  const { db } = await openDatabase(args, { interactive });
+  const { db } = await openDatabase(args, { interactive, connect: deps.connect });
 
   try {
     const migrations = await listMigrations(migrationsDir());
@@ -69,8 +70,14 @@ export async function migrateCommand(args: ParsedArgs): Promise<number> {
           'it was installed by a newer version. Upgrade the CLI before migrating.',
       );
       for (const version of gap.unknown) note(dim(`  ${version}`));
+      setResult({ applied: [], pending: gap.pending.map((m) => m.file), unknown: gap.unknown });
       return 1;
     }
+
+    const applied: string[] = [];
+    const seeds: string[] = [];
+    let moduleMigrations = 0;
+    let schemaVersion: string | undefined;
 
     if (gap.pending.length === 0) {
       skipped('nothing to apply');
@@ -78,17 +85,19 @@ export async function migrateCommand(args: ParsedArgs): Promise<number> {
       for (const migration of gap.pending) note(dim(`pending  ${migration.file}`));
       snapshotRecommendation();
       await applyMigrations(db, migrations, (migration) => {
+        applied.push(migration.file);
         step(migration.file);
       });
     }
 
     if (modules.length > 0) {
-      await applyModuleMigrations(db, modules, { heading: true });
+      moduleMigrations = await applyModuleMigrations(db, modules, { heading: true });
     }
 
     if (!boolFlag(args, 'skip-seeds')) {
       heading('Reference data');
       await applySeeds(db, seedDir(), (seed) => {
+        seeds.push(seed.file);
         step(seed.file);
       });
       note(dim('Seeds are idempotent; re-applying them adds what a new release added.'));
@@ -96,12 +105,20 @@ export async function migrateCommand(args: ParsedArgs): Promise<number> {
 
     if (await schemaIsInstalled(db)) {
       const version = await syncSchemaVersion(db);
+      schemaVersion = version;
       if (version !== undefined) {
         heading('Version');
         step(`instance.schema_version is now ${version}`);
       }
     }
 
+    setResult({
+      alreadyApplied: gap.applied.length,
+      applied,
+      moduleMigrations,
+      seeds,
+      schemaVersion: schemaVersion ?? null,
+    });
     line();
     return 0;
   } finally {

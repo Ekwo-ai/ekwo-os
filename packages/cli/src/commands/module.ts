@@ -15,7 +15,7 @@
 
 import { rejectUnknownFlags, stringFlag, UsageError, type ParsedArgs } from '../args.js';
 import { seedDir } from '../bundle.js';
-import { CONNECTION_FLAGS, openDatabase } from '../context.js';
+import { CONNECTION_FLAGS, openDatabase, type CommandDeps } from '../context.js';
 import { applyMigrations, appliedVersions, ensureHistory } from '../migrations.js';
 import {
   allModuleMigrations,
@@ -28,17 +28,19 @@ import {
 import { isInteractive } from '../prompt.js';
 import { applySeed } from '../seeds.js';
 import { asUser, first, type SqlClient } from '../sql.js';
-import { bold, cyan, dim, heading, line, note, skipped, step, warn } from '../ui.js';
+import { setResult } from '../output.js';
+import { bold, cyan, dim, heading, line, note, skipped, step, table, warn } from '../ui.js';
 
 export const MODULE_FLAGS = [...CONNECTION_FLAGS, 'company', 'as-user', 'settings', 'yes'] as const;
 
-export async function moduleCommand(args: ParsedArgs): Promise<number> {
+export async function moduleCommand(args: ParsedArgs, deps: CommandDeps = {}): Promise<number> {
   rejectUnknownFlags(args, MODULE_FLAGS);
   const action = args.positional[0];
 
-  if (action === undefined || action === 'help') {
+  if (action === undefined) throw new UsageError(`name a subcommand\n${usage()}`);
+  if (action === 'help') {
     line(usage());
-    return action === undefined ? 2 : 0;
+    return 0;
   }
   if (!['list', 'migrate', 'enable', 'disable'].includes(action)) {
     throw new UsageError(`unknown subcommand: module ${action}\n${usage()}`);
@@ -46,7 +48,7 @@ export async function moduleCommand(args: ParsedArgs): Promise<number> {
 
   const modules = await listModules();
   const interactive = isInteractive();
-  const { db } = await openDatabase(args, { interactive });
+  const { db } = await openDatabase(args, { interactive, connect: deps.connect });
 
   try {
     switch (action) {
@@ -77,30 +79,71 @@ async function listCommand(db: SqlClient, modules: EkwoModule[]): Promise<number
   const installed = await registry(db);
   const byCode = new Map(installed.map((row) => [row.code, row]));
 
+  const strangers = installed.filter((row) => !modules.some((m) => m.manifest.code === row.code));
+  setResult({
+    modules: modules.map(({ manifest, migrations }) => {
+      const row = byCode.get(manifest.code);
+      return {
+        code: manifest.code,
+        name: manifest.name,
+        version: manifest.version,
+        schema: manifest.schema,
+        description: manifest.description ?? null,
+        migrations: migrations.length,
+        installed: row !== undefined,
+        installedVersion: row?.version ?? null,
+        status: row?.status ?? null,
+        companies: row?.companies ?? 0,
+      };
+    }),
+    notInThisRelease: strangers.map((row) => ({
+      code: row.code,
+      name: row.name,
+      version: row.version,
+      schema: row.schema_name,
+    })),
+  });
+
   heading(`Modules (${modules.length} in this release)`);
   if (modules.length === 0) {
     note(dim('none — the socle stands on its own'));
     return 0;
   }
 
-  for (const module of modules) {
-    const { manifest } = module;
+  table(
+    [
+      { title: 'code' },
+      { title: 'name' },
+      { title: 'version' },
+      { title: 'schema' },
+      { title: 'migrations', align: 'right' },
+      { title: 'state' },
+    ],
+    modules.map(({ manifest, migrations }) => {
+      const row = byCode.get(manifest.code);
+      return [
+        bold(manifest.code),
+        manifest.name,
+        manifest.version,
+        cyan(manifest.schema),
+        String(migrations.length),
+        row === undefined
+          ? dim('not installed — run `ekwo module migrate`')
+          : `${row.status}, ${row.companies} compan${row.companies === 1 ? 'y' : 'ies'}`,
+      ];
+    }),
+  );
+  line();
+  for (const { manifest } of modules) {
+    if (manifest.description !== undefined) note(dim(`${manifest.code} — ${manifest.description}`));
+  }
+  for (const { manifest } of modules) {
     const row = byCode.get(manifest.code);
-    const state =
-      row === undefined
-        ? dim('not installed — run `ekwo module migrate`')
-        : `${row.status}, ${row.companies} compan${row.companies === 1 ? 'y' : 'ies'}`;
-    note(
-      `${bold(manifest.code)}  ${manifest.name} ${manifest.version} · schema ${cyan(manifest.schema)} · ` +
-        `${module.migrations.length} migration(s) · ${state}`,
-    );
-    if (manifest.description !== undefined) note(dim(`        ${manifest.description}`));
     if (row !== undefined && row.version !== manifest.version) {
       warn(`${manifest.code}: the database holds ${row.version}, this release carries ${manifest.version}`);
     }
   }
 
-  const strangers = installed.filter((row) => !modules.some((m) => m.manifest.code === row.code));
   if (strangers.length > 0) {
     heading('Installed here, not in this release');
     for (const row of strangers) note(`${bold(row.code)}  ${row.name} ${row.version} · schema ${row.schema_name}`);
@@ -133,11 +176,13 @@ async function migrateCommand(
   if (wanted.length === 0) {
     heading('Modules');
     skipped('this release carries none');
+    setResult({ modules: [], applied: 0 });
     return 0;
   }
 
   const applied = await applyModuleMigrations(db, wanted, { heading: true });
   if (applied === 0) skipped('nothing to apply');
+  setResult({ modules: wanted.map((m) => m.manifest.code), applied });
 
   for (const module of wanted) {
     heading(`${module.manifest.name}`);
@@ -224,6 +269,7 @@ async function toggleCommand(
     heading(`${module.manifest.name} disabled`);
     step(`${code} is off for company ${companyId}. Nothing it wrote was deleted.`);
   }
+  setResult({ module: code, schema: module.manifest.schema, companyId, actingAs: actor, enabled: on });
   line();
   return 0;
 }

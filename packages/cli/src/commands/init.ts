@@ -18,7 +18,15 @@
  * project reports what was already there and creates nothing a second time.
  */
 
-import { boolFlag, numberFlag, rejectUnknownFlags, stringFlag, type ParsedArgs } from '../args.js';
+import {
+  boolFlag,
+  numberFlag,
+  rejectUnknownFlags,
+  stringFlag,
+  stringFlags,
+  UsageError,
+  type ParsedArgs,
+} from '../args.js';
 import { createAuthUser, type CreateAuthUser } from '../auth.js';
 import {
   bootstrap,
@@ -27,16 +35,16 @@ import {
   countryFiscalYearOpening,
   countryLanguage,
   countryLanguages,
+  countryFilingForms,
   countryPack,
-  countryVatPeriod,
-  countryVatPeriods,
   installedPacks,
 } from '../bootstrap.js';
 import { printOperatorChecklist } from '../checklist.js';
 import { describeCertification, needsWarning } from '../pack/certification.js';
 import { DEMO_SEED, migrationsDir, seedDir } from '../bundle.js';
 import { writeConfig } from '../config.js';
-import { CONNECTION_FLAGS, openDatabase } from '../context.js';
+import { CONNECTION_FLAGS, openDatabase, type CommandDeps } from '../context.js';
+import { setResult } from '../output.js';
 import { listMigrations } from '../migrations.js';
 import { applyMigrations } from '../migrations.js';
 import { ask as askText, askRequired, askSecret, choose, confirm, isInteractive, NotInteractiveError } from '../prompt.js';
@@ -60,6 +68,7 @@ export const INIT_FLAGS = [
   'currency',
   'language',
   'vat-period',
+  'filing-period',
   'iban',
   'bic',
   'bank-name',
@@ -70,9 +79,11 @@ export const INIT_FLAGS = [
   'yes',
 ] as const;
 
-export interface InitDeps {
+export interface InitDeps extends CommandDeps {
   createAuthUser?: CreateAuthUser;
   fetchImpl?: typeof globalThis.fetch;
+  /** Where `ekwo.json` is written. The working directory, unless a test says otherwise. */
+  cwd?: string;
 }
 
 export async function initCommand(args: ParsedArgs, deps: InitDeps = {}): Promise<number> {
@@ -82,7 +93,7 @@ export async function initCommand(args: ParsedArgs, deps: InitDeps = {}): Promis
   const interactive = !yes && isInteractive();
   const makeUser = deps.createAuthUser ?? createAuthUser;
 
-  const { db, connection } = await openDatabase(args, { interactive });
+  const { db, connection } = await openDatabase(args, { interactive, connect: deps.connect });
 
   try {
     heading('Schema');
@@ -145,7 +156,7 @@ export async function initCommand(args: ParsedArgs, deps: InitDeps = {}): Promis
     const packOpening = await countryFiscalYearOpening(db, country);
     const askedStart = stringFlag(args, 'fiscal-year-start');
     if (askedStart !== undefined && !/^\d{4}-\d{2}-\d{2}$/.test(askedStart)) {
-      throw new Error(`bad_date: --fiscal-year-start takes a day as YYYY-MM-DD, not "${askedStart}".`);
+      throw new UsageError(`bad_date: --fiscal-year-start takes a day as YYYY-MM-DD, not "${askedStart}".`);
     }
     const fiscalYearStart =
       askedStart ??
@@ -174,7 +185,7 @@ export async function initCommand(args: ParsedArgs, deps: InitDeps = {}): Promis
     const charts = await countryCharts(db, country);
     const askedChart = stringFlag(args, 'chart');
     if (askedChart !== undefined && !charts.some((c) => c.code === askedChart)) {
-      throw new Error(
+      throw new UsageError(
         `unknown_chart: ${country} has no chart ${askedChart}. ` +
           `It has: ${charts.map((c) => c.code).join(', ') || 'none'}.`,
       );
@@ -236,58 +247,86 @@ export async function initCommand(args: ParsedArgs, deps: InitDeps = {}): Promis
             : (packLanguage ?? required('--language', 'the language of the books')))
     ).toLowerCase();
 
-    // How often the company files its periodic return. The third question of
-    // the same family as the currency and the language, and the one with the
-    // sharpest consequence when it is wrong: a quarterly filer handed a
-    // monthly return misses a deadline.
+    // How often the company files each declaration it is subject to. The third
+    // question of the same family as the currency and the language, and the one
+    // with the sharpest consequence when it is wrong: a quarterly filer handed
+    // a monthly return misses a deadline.
     //
-    // Where the form offers one cadence there is nothing to ask. Where it
-    // offers several, the pack proposes one only if the law of that country
-    // gives one answer — and none of the packs shipped here does, because all
-    // three make the cadence follow turnover. So the question is asked, with
-    // nothing preselected, and "later" is one of the answers: the column is
-    // nullable and a company that has not decided is recorded as not having
-    // decided rather than as filing monthly.
-    const vatPeriods = await countryVatPeriods(db, country);
-    const packVatPeriod = await countryVatPeriod(db, country);
+    // It is asked **once per form**, because a company is subject to several
+    // declarations and the cadence of one says nothing about the cadence of
+    // another. Where a form offers one cadence there is nothing to ask. Where
+    // it offers several, the pack proposes one only if the law of that country
+    // gives one answer to everybody — `period_default` on the form — and where
+    // it does not, the question is asked with nothing preselected and "later"
+    // among the answers: a company that has not decided is recorded as not
+    // having decided rather than as filing monthly.
+    const forms = await countryFilingForms(db, country);
+    const periodicReturn = forms.find((form) => form.isPeriodicReturn);
+    const askedPeriods = new Map<string, string>();
+    for (const pair of stringFlags(args, 'filing-period')) {
+      const equals = pair.indexOf('=');
+      if (equals <= 0 || equals === pair.length - 1) {
+        throw new UsageError(
+          `--filing-period takes <report_code>=<cadence>, one per declaration (got "${pair}")`,
+        );
+      }
+      askedPeriods.set(pair.slice(0, equals), pair.slice(equals + 1).toLowerCase());
+    }
     const askedVatPeriod = stringFlag(args, 'vat-period')?.toLowerCase();
-    if (
-      askedVatPeriod !== undefined &&
-      vatPeriods.length > 0 &&
-      !vatPeriods.includes(askedVatPeriod)
-    ) {
-      throw new Error(
-        `unknown_vat_period: the ${country} periodic return is filed ${vatPeriods.join(' or ')}, ` +
-          `not ${askedVatPeriod}.`,
+    if (askedVatPeriod !== undefined) {
+      if (periodicReturn === undefined) {
+        throw new UsageError(
+          `no_periodic_return: this installation carries no periodic return for ${country}, ` +
+            'so there is no declaration --vat-period could be about.',
+        );
+      }
+      askedPeriods.set(periodicReturn.code, askedVatPeriod);
+    }
+    for (const code of askedPeriods.keys()) {
+      if (forms.some((form) => form.code === code)) continue;
+      throw new UsageError(
+        `unknown_tax_report: ${code} is not a declaration form of ${country} in this ` +
+          `installation (${forms.map((form) => form.code).join(', ') || 'it carries none'}).`,
       );
     }
-    const chosenVatPeriod =
-      askedVatPeriod ??
-      (vatPeriods.length === 1
-        ? vatPeriods[0]
-        : vatPeriods.length > 1 && interactive
-          ? await choose(
-              'How often does this company file its VAT return?',
-              [
-                ...vatPeriods.map((code) => ({
+
+    const filingPeriods: Record<string, string> = {};
+    for (const form of forms) {
+      const flagged = askedPeriods.get(form.code);
+      if (flagged !== undefined && form.periods.length > 0 && !form.periods.includes(flagged)) {
+        throw new UsageError(
+          `unknown_vat_period: ${form.code} is filed ${form.periods.join(' or ')}, not ${flagged}.`,
+        );
+      }
+      const chosen =
+        flagged ??
+        (form.periods.length === 1
+          ? form.periods[0]
+          : form.periods.length > 1 && interactive
+            ? await choose(`How often does this company file ${form.name}?`, [
+                ...form.periods.map((code) => ({
                   value: code,
                   label:
-                    code === packVatPeriod
-                      ? `every ${code} — what the law of this country provides for by default`
+                    code === form.periodDefault
+                      ? `every ${code} — what the law of this country gives everybody`
                       : `every ${code}`,
                 })),
                 { value: 'later', label: 'not decided yet; ekwo status will say so' },
-              ],
-            )
-          : packVatPeriod);
-    const vatPeriod = chosenVatPeriod === 'later' ? undefined : chosenVatPeriod;
-    if (vatPeriod === undefined && vatPeriods.length > 1) {
-      note(
-        dim(
-          `filing cadence not recorded — ${country} files ${vatPeriods.join(' or ')}; ` +
-            'pass --vat-period, or set companies.vat_period later.',
-        ),
-      );
+              ])
+            : form.periodDefault);
+      if (chosen === undefined && form.periods.length > 1) {
+        // Outside an interactive session there is nobody to ask and nothing
+        // lawful to assume: the cadence of this form is a fact about the
+        // company, and the pack said so by proposing none.
+        throw new UsageError(
+          `no_filing_period: ${form.code} is filed ${form.periods.join(' or ')} and the ` +
+            `${country} pack proposes none, because the law makes it depend on the company. ` +
+            `Pass --filing-period ${form.code}=<cadence>` +
+            (form.isPeriodicReturn ? ', or --vat-period <cadence>' : '') +
+            '.',
+        );
+      }
+      if (chosen !== undefined && chosen !== 'later') filingPeriods[form.code] = chosen;
     }
 
     // What the operator is about to install, and how much anyone has read it.
@@ -347,7 +386,7 @@ export async function initCommand(args: ParsedArgs, deps: InitDeps = {}): Promis
       currencyCode,
       language,
       ...(chartCode === undefined ? {} : { chartCode }),
-      ...(vatPeriod === undefined ? {} : { vatPeriod }),
+      filingPeriods,
       bankAccount,
     });
     for (const s of outcome.steps) {
@@ -367,10 +406,40 @@ export async function initCommand(args: ParsedArgs, deps: InitDeps = {}): Promis
     }
 
     // ---- ekwo.json ----------------------------------------------------------
-    const configFile = await writeConfig({
-      ...(connection.supabaseUrl !== undefined ? { project_url: connection.supabaseUrl } : {}),
-      country,
-      ...(schemaVersion !== undefined ? { schema_version: schemaVersion } : {}),
+    const configFile = await writeConfig(
+      {
+        ...(connection.supabaseUrl !== undefined ? { project_url: connection.supabaseUrl } : {}),
+        country,
+        ...(schemaVersion !== undefined ? { schema_version: schemaVersion } : {}),
+      },
+      deps.cwd,
+    );
+
+    setResult({
+      organization,
+      instanceId: outcome.instanceId,
+      adminUserId,
+      company: {
+        id: outcome.companyId,
+        name: company,
+        country,
+        currency: outcome.currencyCode,
+        language: outcome.language,
+        chart: outcome.chartCode ?? null,
+        packVersion: outcome.packVersion ?? null,
+      },
+      fiscalYear: {
+        name: outcome.fiscalYearName,
+        start: outcome.fiscalYearStart,
+        end: outcome.fiscalYearEnd,
+      },
+      filingPeriods: outcome.filingPeriods,
+      bankAccountId: outcome.bankAccountId ?? null,
+      migrations: { applied: result.applied.map((m) => m.file), alreadyApplied: result.alreadyApplied },
+      steps: outcome.steps,
+      schemaVersion: schemaVersion ?? null,
+      demo: boolFlag(args, 'demo'),
+      configFile,
     });
 
     // ---- Registration, offered, never required ------------------------------
@@ -388,10 +457,12 @@ export async function initCommand(args: ParsedArgs, deps: InitDeps = {}): Promis
             : ` — ${charts.find((c) => c.code === outcome.chartCode)?.name}`
         }`,
       ],
-      [
-        'files its VAT return',
-        outcome.vatPeriod === undefined ? 'not recorded' : `every ${outcome.vatPeriod}`,
-      ],
+      ...forms.map((form): [string, string] => [
+        `files ${form.name}`,
+        outcome.filingPeriods[form.code] === undefined
+          ? 'not recorded'
+          : `every ${outcome.filingPeriods[form.code] as string}`,
+      ]),
       [
         'country pack',
         pack === undefined
@@ -429,7 +500,7 @@ function required(flag: string, what: string): never {
  * it has no reason to prefer one.
  */
 function requiredCountry(packs: { country: string; name: string }[]): never {
-  throw new Error(
+  throw new UsageError(
     'missing_input: the country was not given and this is not a terminal. Pass --country, ' +
       `one of: ${packs.map((p) => `${p.country} (${p.name})`).join(', ')}.`,
   );
@@ -441,7 +512,7 @@ function requiredCountry(packs: { country: string; name: string }[]): never {
  * as well as the flag, because one of the two is the real fix.
  */
 function requiredFiscalYearStart(country: string): never {
-  throw new Error(
+  throw new UsageError(
     `missing_input: the ${country} pack declares no defaults.fiscal_year_default and this is not a ` +
       'terminal. Pass --fiscal-year-start YYYY-MM-DD, or add the field to the pack.',
   );
@@ -456,7 +527,7 @@ function requiredChart(
   country: string,
   charts: { code: string; name: string; isDefault: boolean }[],
 ): never {
-  throw new Error(
+  throw new UsageError(
     `missing_input: ${country} offers several charts of accounts and this is not a terminal. ` +
       `Pass --chart, one of: ${charts
         .map((c) => `${c.code} (${c.name}${c.isDefault ? ', the default' : ''})`)
@@ -494,7 +565,7 @@ async function resolveAdminUser(
       [given],
     );
     if (exists !== true) {
-      throw new Error(
+      throw new UsageError(
         `unknown_user: ${given} is not a user of this Supabase project. ` +
           'Create the account first, or drop --admin-user-id and let the CLI create one.',
       );
@@ -511,7 +582,7 @@ async function resolveAdminUser(
 
   const { supabaseUrl, serviceRoleKey } = options.connection;
   if (supabaseUrl === undefined) {
-    throw new Error(
+    throw new UsageError(
       'missing_supabase_url: creating the first user needs the project URL. ' +
         'Pass --supabase-url, or set SUPABASE_URL.',
     );

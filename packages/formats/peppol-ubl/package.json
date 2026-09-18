@@ -1,0 +1,61 @@
+{
+  "name": "@ekwo-ai/peppol-ubl",
+  "version": "0.4.0",
+  "description": "Peppol BIS Billing 3.0 invoices and credit notes (UBL 2.1, EN 16931) in TypeScript, from a posted document, with every published rule the file breaks named by its identifier. Zero dependencies.",
+  "keywords": [
+    "peppol",
+    "peppol-bis",
+    "bis-billing-3",
+    "ubl",
+    "ubl-2.1",
+    "en16931",
+    "e-invoicing",
+    "einvoice",
+    "invoice",
+    "credit-note",
+    "xml"
+  ],
+  "license": "MIT",
+  "author": "Ekwo AI",
+  "homepage": "https://github.com/Ekwo-ai/ekwo-os/tree/main/packages/formats/peppol-ubl#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ekwo-ai/ekwo-os.git",
+    "directory": "packages/formats/peppol-ubl"
+  },
+  "bugs": {
+    "url": "https://github.com/Ekwo-ai/ekwo-os/issues"
+  },
+  "type": "module",
+  "sideEffects": false,
+  "engines": {
+    "node": ">=18"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run",
+    "codelists": "node scripts/build-codelists.mjs",
+    "codelists:check": "node scripts/build-codelists.mjs --check"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "typescript": "^5.9.0",
+    "vitest": "^3.2.0",
+    "xmllint-wasm": "^5.3.0"
+  }
+}

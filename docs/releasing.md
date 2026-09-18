@@ -41,7 +41,9 @@ that is not cut.
    ```
 
    Check the dependency ranges between the workspaces afterwards —
-   `@ekwo-ai/core` on `@ekwo-ai/fec`, `@ekwo-ai/mcp` on both — and the
+   `@ekwo-ai/core` on `@ekwo-ai/fec`, `ekwo` on `@ekwo-ai/core`,
+   `@ekwo-ai/mcp` on both and on the three statement readers,
+   `@ekwo-ai/camt053`, `@ekwo-ai/coda` and `@ekwo-ai/cfonb120` — and the
    formatting of the manifests, which npm rewrites. The final `npm install`
    `npm version` runs on its own fails until those ranges name the new number,
    because a workspace at `0.3.0` no longer answers a range of `^0.2.0` and npm
@@ -196,17 +198,19 @@ after the tag, so a version on npm is always a version someone can read the
 source of:
 
 ```sh
-npm publish --workspace packages/formats/fec --access public
-npm publish --workspace packages/formats/factur-x --access public
-npm publish --workspace packages/formats/xbrl-cbso --access public
-npm publish --workspace packages/formats/intra-consignment --access public
-npm publish --workspace packages/formats/des --access public
-npm publish --workspace packages/formats/ecdf --access public
-npm publish --workspace packages/formats/vd --access public
-npm publish --workspace packages/core --access public
-npm publish --workspace packages/cli --access public
-npm publish --workspace packages/mcp --access public
+npm run build
+npm run release:publish                 # the plan, and a dry run of every pack
+npm login --auth-type=web               # a person, in a browser: no token lives here
+npm run release:publish -- --for-real   # on the tag
 ```
+
+`scripts/publish.mjs` **reads the list from the workspaces**: whatever is a
+workspace and is not `private` is published, after every package of this
+repository it depends on. The list used to be written here by hand, and a brick
+was once in the repository and not in it. For real, the script refuses a
+working tree that is not clean and a HEAD that no tag names, and it skips a
+version the registry already holds — so a run that stopped half way is simply
+run again.
 
 The order is the dependency order: a package is published after everything it
 depends on. The root workspace is `private` and is never published.

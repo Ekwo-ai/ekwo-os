@@ -295,7 +295,7 @@ describe('what the grants say, against what the policies say', () => {
     expect(callable).toEqual([]);
   });
 
-  it('reserves two functions to the connections that are not a client', () => {
+  it('reserves three functions to the connections that are not a client', () => {
     const socle = sections.find((s) => s.schema === 'public');
     const closed = (socle?.functions ?? [])
       .filter((f) => f.trigger !== true && f.authenticated.length === 0)
@@ -303,8 +303,10 @@ describe('what the grants say, against what the policies say', () => {
       .sort();
     // `audit_record` writes the trail and `purge_audit_log` empties it. A
     // client that could call either could write a history that never happened,
-    // or erase one that did.
-    expect(closed).toEqual(['audit_record', 'purge_audit_log']);
+    // or erase one that did. `touch_api_key` stamps a key as used, and is only
+    // ever called by `use_api_key()`, which is definer and needs no grant for
+    // it: a client that could call it could keep a forgotten key looking alive.
+    expect(closed).toEqual(['audit_record', 'purge_audit_log', 'touch_api_key']);
   });
 
   it('keeps every other callable function reachable by a signed-in user', () => {
@@ -312,7 +314,7 @@ describe('what the grants say, against what the policies say', () => {
     for (const section of sections) {
       for (const fn of section.functions) {
         if (fn.trigger === true) continue;
-        if (['audit_record', 'purge_audit_log'].includes(fn.name)) continue;
+        if (['audit_record', 'purge_audit_log', 'touch_api_key'].includes(fn.name)) continue;
         if (!fn.authenticated.includes('execute')) unreachable.push(`${section.schema}.${fn.name}`);
       }
     }

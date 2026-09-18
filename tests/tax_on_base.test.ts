@@ -3,7 +3,7 @@ import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { compilePack, packsDir, readPack } from '../packages/cli/src/index.js';
-import { asUser, expectError, freshDatabase, one, repoRoot, rows } from './helpers/db.js';
+import { asUser, expectError, freshDatabase, one, repoRoot, rows, withoutTrigger } from './helpers/db.js';
 import { accountId, ledgerOf, newCompany, newContact, newDocument, taxId, type Fixture } from './helpers/factory.js';
 import { allPacks, somePack } from './helpers/packs.js';
 
@@ -191,6 +191,59 @@ describe('post_document — a Belgian company car', () => {
       [doc],
     );
     expect(entry).toEqual({ total_debit: '1210.00', total_credit: '1210.00', is_balanced: true });
+  });
+
+  it('tells the base line from the non-deductible one, which tax_id and tax_line cannot', async () => {
+    // The two lines this proves apart are the first and the third of the entry
+    // above: same account, same tax, both with `tax_line = false`, both in the
+    // same box. Everything that identified a line before this column is equal
+    // on them, which is why anything reading the ledger by tax rather than by
+    // box had to know that one of the two could not occur.
+    const lines = await rows<{
+      sequence: number;
+      posting_type: string | null;
+      tax_line: boolean;
+      debit: string;
+    }>(
+      db,
+      `select l.sequence, l.posting_type::text as posting_type, l.tax_line, l.debit::text as debit
+         from entry_lines l
+         join entries e on e.id = l.entry_id
+         join documents d on d.id = e.document_id
+        where d.number = 'ACH-CAR'
+        order by l.sequence`,
+    );
+    expect(lines).toEqual([
+      { sequence: 10, posting_type: 'base', tax_line: false, debit: '1000.00' },
+      { sequence: 20, posting_type: 'tax', tax_line: true, debit: '105.00' },
+      { sequence: 30, posting_type: 'tax_on_base', tax_line: false, debit: '105.00' },
+      // The counterpart was written by no tax posting, and says so.
+      { sequence: 40, posting_type: null, tax_line: false, debit: '0.00' },
+    ]);
+  });
+
+  it('refuses a posting type on a line that carries no tax', async () => {
+    // Null carries two readings — not a tax posting, and not identified — and
+    // `tax_id` is what separates them. A posting type with no tax would make
+    // that impossible to read.
+    const entry = await one<{ id: string }>(
+      db,
+      `select e.id from entries e join documents d on d.id = e.document_id
+        where d.number = 'ACH-CAR'`,
+    );
+    const account = await accountId(db, be.companyId, '242000');
+    // The entry is posted and takes no line any more; the constraint is the
+    // floor under that guard, and is reached here with the guard switched off.
+    const message = await withoutTrigger(db, 'entry_lines', 'entry_lines_guard_posted', () =>
+      expectError(
+        db,
+        `insert into entry_lines (entry_id, company_id, account_id, sequence, name, debit, credit,
+                                  posting_type)
+         values ($1, $2, $3, 990, 'Sans taxe', 1, 0, 'base')`,
+        [entry.id, be.companyId, account],
+      ),
+    );
+    expect(message).toMatch(/entry_lines_posting_type_has_a_tax/);
   });
 
   it('reports grid 83 as the base plus the non-deductible VAT, and grid 59 as the deductible half', async () => {

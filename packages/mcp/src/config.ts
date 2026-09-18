@@ -19,6 +19,7 @@
  * put there overrides a perfectly good anon key sitting next to it.
  */
 
+import { IDENTITY_ENV, isServiceRoleKey, serviceRoleRefusal } from '@ekwo-ai/core';
 import { EkwoMcpError, type Backend } from './backend.js';
 import { postgrestBackend } from './postgrest.js';
 import { connect, sqlBackend } from './sql.js';
@@ -35,37 +36,20 @@ export interface Config {
 }
 
 export const ENV = {
-  supabaseUrl: 'SUPABASE_URL',
-  anonKey: 'SUPABASE_ANON_KEY',
-  email: 'EKWO_EMAIL',
-  password: 'EKWO_PASSWORD',
-  accessToken: 'EKWO_ACCESS_TOKEN',
+  ...IDENTITY_ENV,
   dbUrl: 'EKWO_DB_URL',
   actAsUserId: 'EKWO_ACT_AS_USER_ID',
 } as const;
 
+const SURFACE = 'this server';
+const SIGN_IN = `sign in, or set ${IDENTITY_ENV.email} and ${IDENTITY_ENV.password} and let this server sign in for you`;
+
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
-/**
- * True when a key is, or claims to be, a `service_role` key.
- *
- * Both shapes Supabase has issued: the signed JWT whose payload carries
- * `"role": "service_role"`, and the newer `sb_secret_…`. Neither is a mistake
- * we should let an operator make by pasting the wrong line of the dashboard.
- */
-export function isServiceRoleKey(key: string): boolean {
-  if (key.startsWith('sb_secret_')) return true;
-  const parts = key.split('.');
-  if (parts.length !== 3 || parts[1] === undefined) return false;
-  try {
-    const payload = JSON.parse(Buffer.from(parts[1], 'base64url').toString('utf8')) as {
-      role?: unknown;
-    };
-    return payload.role === 'service_role';
-  } catch {
-    return false;
-  }
-}
+// The test and the sentence moved to the core, where the command line reads
+// them too: which key is refused cannot be decided twice. Still exported from
+// here, as it always was.
+export { isServiceRoleKey };
 
 function trimmed(env: NodeJS.ProcessEnv, name: string): string | undefined {
   const value = env[name];
@@ -102,7 +86,7 @@ export function readConfig(env: NodeJS.ProcessEnv = process.env): Config {
   }
   if (isServiceRoleKey(anonKey)) {
     throw new EkwoMcpError(
-      `service_role_refused: ${ENV.anonKey} holds a service_role key. That key bypasses every row level security policy, so this server would answer for companies its user was never invited to. Use the anon (publishable) key and sign in as a user.`,
+      serviceRoleRefusal(ENV.anonKey, 'apikey', SURFACE, SIGN_IN),
     );
   }
 
@@ -114,7 +98,7 @@ export function readConfig(env: NodeJS.ProcessEnv = process.env): Config {
   // the configuration look right.
   if (accessToken !== undefined && isServiceRoleKey(accessToken)) {
     throw new EkwoMcpError(
-      `service_role_refused: ${ENV.accessToken} holds a service_role key. It travels in the Authorization header, which is where PostgREST reads the role from, so it would bypass every row level security policy and this server would answer for companies its user was never invited to. Use a session token for a real user — sign in, or set ${ENV.email} and ${ENV.password} and let this server sign in for you.`,
+      serviceRoleRefusal(ENV.accessToken, 'authorization', SURFACE, SIGN_IN),
     );
   }
 

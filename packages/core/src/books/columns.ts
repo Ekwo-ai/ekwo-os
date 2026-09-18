@@ -65,6 +65,8 @@ export const JOURNAL = ['id', 'code', 'name', 'journal_type', 'active'];
 
 export const CONTACT = [
   'id',
+  // The caller's own reference: the idempotency key of the creation.
+  'client_ref',
   'name',
   'contact_type',
   'vat_number',
@@ -103,6 +105,8 @@ export const TAX = [
 
 export const DOCUMENT = [
   'id',
+  // The caller's own reference: the idempotency key of the creation.
+  'client_ref',
   'company_id',
   'doc_type',
   'state',
@@ -115,6 +119,7 @@ export const DOCUMENT = [
   'accounting_date::text',
   'due_date::text',
   'currency_code',
+  'language',
   'amount_untaxed::text',
   'amount_tax::text',
   'amount_total::text',
@@ -126,12 +131,14 @@ export const DOCUMENT = [
 
 /**
  * The mentions the law of a country puts on one document, from the view that
- * decides which of them apply. `text_i18n` crosses as it is: a renderer picks
- * the language, and the server has no business choosing one.
+ * decides which of them apply. `text` is the sentence in the language the
+ * document was written in and `language` says which one that is; `text_i18n`
+ * crosses as it is, for a renderer printing a second language beside it.
  */
 export const DOCUMENT_LEGAL_MENTION = [
   'code',
   'applies_when',
+  'language',
   'text',
   'text_i18n',
   'sequence',
@@ -222,6 +229,7 @@ export const DOCUMENT_HEADER = [
   'buyer_city',
   'buyer_country',
   'buyer_email',
+  'language',
   'country',
   'number_format',
   'numbering_gapless',
@@ -269,6 +277,8 @@ export const DOCUMENT_LINE = [
   'vat_category',
   'vat_rate::text',
   'amount_untaxed::text',
+  'unit_price_includes_tax',
+  'amount_incl_tax::text',
 ];
 
 export const ENTRY = [
@@ -345,6 +355,8 @@ export const BANK_TRANSACTION = [
 
 export const PAYMENT = [
   'id',
+  // The caller's own reference: the idempotency key of the creation.
+  'client_ref',
   'company_id',
   'direction',
   'payment_date::text',

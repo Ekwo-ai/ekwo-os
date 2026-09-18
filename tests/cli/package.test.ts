@@ -118,9 +118,18 @@ describe('package.json', () => {
     expect(manifest.bin['ekwo']).toBe('./dist/bin.js');
     expect(manifest.files).toContain('dist');
     expect(manifest.type).toBe('module');
-    // One runtime dependency, and it is the Postgres driver. Everything this
-    // CLI is handed is a secret; every package added here could read it.
-    expect(Object.keys(manifest.dependencies)).toEqual(['postgres']);
+    // One runtime dependency from outside this repository, and it is the
+    // Postgres driver. Everything this CLI is handed is a secret; every
+    // package added here could read it. The core is this repository's own —
+    // it is where the CLI and the MCP server read a refusal the same way —
+    // and it brings nobody else in: what it depends on is ours as well.
+    expect(Object.keys(manifest.dependencies)).toEqual(['@ekwo-ai/core', 'postgres']);
+    expect(manifest.files).toContain('schema');
+
+    const core = JSON.parse(
+      await readFile(join(repoRoot, 'packages', 'core', 'package.json'), 'utf8'),
+    ) as { dependencies: Record<string, string> };
+    expect(Object.keys(core.dependencies).filter((name) => !name.startsWith('@ekwo-ai/'))).toEqual([]);
   });
 
   it('is a workspace of the repository', async () => {

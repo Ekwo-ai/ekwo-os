@@ -57,6 +57,13 @@
  *                               that works, and will be until the packages are
  *                               published
  *
+ *   EKWO_E2E_LOAD_DOCUMENTS     optional: a number of documents. Set, the run
+ *                               ends by multiplying the books it has just
+ *                               posted to that volume and timing the six hot
+ *                               paths of `scripts/load/hot-paths.mjs` — as the
+ *                               owner over SQL and as the signed-in member
+ *                               over PostgREST. See "The load steps" below
+ *
  *   npm run build && npm run e2e:supabase
  *
  * `--reset` empties the project first — see below. It is the only flag.
@@ -95,6 +102,43 @@
  * dropped, and it leaves Supabase's own schemas — `auth` included, so the
  * administrator this script created is still there and is found again rather
  * than duplicated.
+ *
+ * ---------------------------------------------------------------------------
+ * The load steps.
+ *
+ * `tests/load/` checks the *shape* of the plans on PGlite and breaks the build
+ * on it. It reports times too, and they are times on Postgres compiled to
+ * WebAssembly: good for seeing a trend, no good for a sentence in the README.
+ * The times that mean something are taken here, against a real Postgres,
+ * through a real pooler and a real PostgREST — from the same six definitions
+ * and the same generator, so the two runs measure one thing.
+ *
+ * With `EKWO_E2E_LOAD_DOCUMENTS=10000` (or `100000`) the run ends with:
+ *
+ *   - the sale and the purchase posted above — by the engine, through
+ *     PostgREST — copied to that many documents over five financial years,
+ *     five hundred contacts and a month of bank statement, then `analyze`.
+ *     `scripts/load/books.mjs` says what a copy is and why it is not a fake;
+ *   - each path three times over SQL as the owner of the database, median
+ *     kept;
+ *   - each path three times over PostgREST as the administrator this run
+ *     signed in — row level security, JSON and HTTP included, which is what a
+ *     person waits for.
+ *
+ * One thing to know before reading the second column: a hosted project caps a
+ * PostgREST response at 1 000 rows unless its API settings say otherwise, so
+ * the entries file of a year comes back truncated and its time is the time of
+ * the first thousand lines. Raise the cap on the throwaway project, or read
+ * that row as a lower bound.
+ *
+ * A path over its budget is **reported, not failed**: the row says `OVER`, and
+ * the run goes on. A budget is a line somebody drew before measuring, and the
+ * first real measure is what it is to be redrawn against.
+ *
+ * These steps have **never been run**: like the rest of this script they need
+ * a throwaway project, and none has been available since they were written.
+ * What they call — the generator, the six definitions — is what the CI runs
+ * on PGlite on every push; what is untested is the wiring in this file.
  */
 
 import { spawn } from 'node:child_process';
@@ -530,7 +574,7 @@ async function main() {
     const ids = taxes.map((t) => t.id).join(',');
     const all = await rest.select(
       `/tax_postings?tax_id=in.(${ids})&document_kind=eq.invoice` +
-        '&select=tax_id,posting_type,declaration_box,box_factor_percent,factor_percent',
+        '&select=tax_id,posting_type,declaration_box,declaration_boxes,box_factor_percent,factor_percent',
     );
     for (const tax of taxes) {
       if (tax.cash_basis === true) continue;
@@ -592,9 +636,13 @@ async function main() {
       if (posting.declaration_box === null) continue;
       const source = posting.posting_type === 'base' ? base : vat;
       const kind = posting.posting_type === 'base' ? 'base' : 'tax';
-      const key = `${posting.declaration_box}|${kind}`;
-      ledger[key] =
-        (ledger[key] ?? 0) + round((source * Number(posting.box_factor_percent)) / 100, decimals);
+      // Every box the posting prints in, which is what vat_return() sums the
+      // line into. Almost always the one box `declaration_box` names.
+      for (const box of posting.declaration_boxes ?? [posting.declaration_box]) {
+        const key = `${box}|${kind}`;
+        ledger[key] =
+          (ledger[key] ?? 0) + round((source * Number(posting.box_factor_percent)) / 100, decimals);
+      }
     }
     return { vat, documentId: document.id };
   }
@@ -697,7 +745,127 @@ async function main() {
     return `${written.length} rows`;
   });
 
+  // ---- The load steps -------------------------------------------------------
+  const volume = process.env['EKWO_E2E_LOAD_DOCUMENTS'];
+  if (volume === undefined || volume === '') {
+    skip('the six hot paths at volume', 'EKWO_E2E_LOAD_DOCUMENTS names no volume');
+  } else {
+    await loadSteps({ connect, dbUrl, rest, company, year, documents: Number(volume) });
+  }
+
   report();
+}
+
+/** Median of three, in milliseconds. The first run pays for a cold cache. */
+async function medianOfThree(fn) {
+  const times = [];
+  let answer;
+  for (let run = 0; run < 3; run += 1) {
+    const started = performance.now();
+    answer = await fn();
+    times.push(performance.now() - started);
+  }
+  times.sort((a, b) => a - b);
+  return { ms: Math.round(times[1]), answer };
+}
+
+async function loadSteps({ connect, dbUrl, rest, company, year, documents }) {
+  const { multiplyBooks, bankStatementMonth, checkCoherence } = await import('./load/books.mjs');
+  const { hotPaths } = await import('./load/hot-paths.mjs');
+  if (!Number.isInteger(documents) || documents < 1) {
+    throw new Error('EKWO_E2E_LOAD_DOCUMENTS is a number of documents');
+  }
+
+  const db = await connect(dbUrl);
+  try {
+    let scope;
+    const loaded = await step(`multiply the books to ${documents} documents`, async () => {
+      await multiplyBooks(db, { companyId: company.id, documents, years: 5, contacts: 500, seed: 41 });
+      const statement = await bankStatementMonth(db, {
+        companyId: company.id,
+        lines: Math.max(10, Math.round(documents / 5 / 12)),
+        seed: 41,
+      });
+      const wrong = await checkCoherence(db, company.id);
+      if (wrong.length > 0) throw new Error(wrong.join('; '));
+      // Without statistics every time below is the time of a guessed plan.
+      await db.exec('analyze;');
+
+      const busiest = await db.query(
+        `select l.account_id from entry_lines l join accounts a on a.id = l.account_id
+          where l.company_id = $1 group by l.account_id, a.code
+          order by count(*) desc, a.code limit 1`,
+        [company.id],
+      );
+      // A declaration period inside the year. `vat_return()` refuses a whole
+      // period of the wrong cadence, so the first of these it accepts is kept.
+      const periods = await db.query(
+        `select $1::date::text as start,
+                ($1::date + interval '3 months' - interval '1 day')::date::text as quarter,
+                ($1::date + interval '1 month' - interval '1 day')::date::text as month`,
+        [year.start_date],
+      );
+      let periodTo;
+      for (const candidate of [periods[0].quarter, periods[0].month, year.end_date]) {
+        try {
+          await db.query(`select count(*) from vat_return($1, $2::date, $3::date)`, [
+            company.id, year.start_date, candidate,
+          ]);
+          periodTo = candidate;
+          break;
+        } catch (error) {
+          if (!String(error.message).includes('wrong_declaration_period')) throw error;
+        }
+      }
+      scope = {
+        companyId: company.id,
+        yearFrom: year.start_date,
+        yearTo: year.end_date,
+        periodFrom: year.start_date,
+        periodTo,
+        accountId: busiest[0].account_id,
+        statementId: statement.statementId,
+      };
+      const lines = await db.query(`select count(*)::int as n from entry_lines where company_id = $1`, [
+        company.id,
+      ]);
+      return `${lines[0].n} ledger lines, declaration period ${year.start_date} to ${periodTo}`;
+    });
+    if (loaded === undefined) return;
+
+    const verdict = (ms, budget) => `${ms} ms of ${budget}${ms > budget ? ' — OVER' : ''}`;
+
+    for (const path of hotPaths(scope)) {
+      await step(`${path.key}, as the owner over SQL`, async () => {
+        const { ms, answer } = await medianOfThree(() => db.query(path.sql, path.params));
+        return `${verdict(ms, path.budgetMs)}, ${answer[0].rows} rows`;
+      });
+    }
+
+    for (const path of hotPaths(scope)) {
+      await step(`${path.key}, as a member over PostgREST`, async () => {
+        let call;
+        if (path.rpc.perTransactionOf === undefined) {
+          call = async () => (await rest.rpc(path.rpc.fn, path.rpc.args)).length;
+        } else {
+          const lines = await rest.select(
+            `/bank_transactions?statement_id=eq.${path.rpc.perTransactionOf}&select=id&order=sequence.asc`,
+          );
+          call = async () => {
+            let suggestions = 0;
+            for (const line of lines) {
+              suggestions += (await rest.rpc(path.rpc.fn, { p_transaction_id: line.id })).length;
+            }
+            return suggestions;
+          };
+        }
+        const { ms, answer } = await medianOfThree(call);
+        return `${verdict(ms, path.budgetMs)}, ${answer} rows`;
+      });
+    }
+  } finally {
+    await db.close();
+  }
 }
 
 function report() {

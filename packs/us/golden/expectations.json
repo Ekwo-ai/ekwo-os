@@ -1,0 +1,147 @@
+{
+  "note": "Claims about this pack that no other pack can make, and that the pack's own files cannot check themselves against. Read by the tests through tests/helpers/packs.ts. Like the rest of golden/ beside scenario.json, this file is outside the pack checksum: it is evidence about the pack, not part of it.",
+  "report_arithmetic": [
+    {
+      "box": "3",
+      "kind": "total",
+      "plus": [
+        "1",
+        "2"
+      ],
+      "minus": []
+    },
+    {
+      "box": "39",
+      "kind": "total",
+      "plus": [
+        "32",
+        "33",
+        "34",
+        "35",
+        "36",
+        "37",
+        "38"
+      ],
+      "minus": []
+    },
+    {
+      "box": "44",
+      "kind": "total",
+      "plus": [
+        "40",
+        "41",
+        "42",
+        "43"
+      ],
+      "minus": []
+    },
+    {
+      "box": "45",
+      "kind": "total",
+      "plus": [
+        "39",
+        "44"
+      ],
+      "minus": []
+    },
+    {
+      "box": "11",
+      "kind": "total",
+      "plus": [
+        "45"
+      ],
+      "minus": []
+    },
+    {
+      "box": "12",
+      "kind": "total",
+      "plus": [
+        "3"
+      ],
+      "minus": [
+        "11"
+      ]
+    },
+    {
+      "box": "13",
+      "kind": "total",
+      "rate": 6.0,
+      "rate_of": "12"
+    },
+    {
+      "box": "14",
+      "kind": "total",
+      "rate": 0.25,
+      "rate_of": "12"
+    },
+    {
+      "box": "15",
+      "kind": "total",
+      "rate": 1.0,
+      "rate_of": "12"
+    },
+    {
+      "box": "17",
+      "kind": "total",
+      "plus": [
+        "13",
+        "14",
+        "15",
+        "16"
+      ],
+      "minus": []
+    },
+    {
+      "box": "19",
+      "kind": "total",
+      "plus": [
+        "17",
+        "18"
+      ],
+      "minus": []
+    },
+    {
+      "box": "20e",
+      "kind": "total",
+      "plus": [
+        "20a",
+        "20b",
+        "20c",
+        "20d"
+      ],
+      "minus": []
+    },
+    {
+      "box": "21",
+      "kind": "total",
+      "plus": [
+        "19"
+      ],
+      "minus": [
+        "20e"
+      ]
+    },
+    {
+      "box": "23",
+      "kind": "total",
+      "plus": [
+        "21"
+      ],
+      "minus": [
+        "22"
+      ]
+    },
+    {
+      "box": "26",
+      "kind": "total",
+      "plus": [
+        "23",
+        "24",
+        "25"
+      ],
+      "minus": []
+    }
+  ],
+  "arithmetic_note": "Fifteen of the thirty-nine boxes of CDTFA-401-A are an arithmetic the instructions write out in words, and the pack carries all fifteen. Twelve are a list: add lines 1 and 2, add Section A, add Section B, add the two sections, carry that to line 11, subtract line 11 from line 3, add the four tax lines, add the excess tax, add the four credits, subtract the credits, subtract the prepayments, add the penalty and the interest. Three are a rate of one box: multiply line 12 by 0.06, by 0.0025 and by 0.01. Line 16 is not claimed and is not a rate — a district tax is owed on the sales made in that district and not on the period's whole taxable total, and the form itself carries the figure over from CDTFA-531-A2 rather than multiplying. Nor are Sections C and D, the partial exemptions at 0.05 and 0.039375: that shape is sayable now, and what is missing is the eight deduction lines those sections carry and the taxes that would reach them, which this pack does not transcribe. Until version 0.2.0 lines 13, 14 and 15 were summed from the ledger out of one posting per line whose share of the combined rate was that line's rate; the golden year shows the two answers agreeing to the cent in all three quarters, and not one figure moved when the form's own arithmetic replaced the apportionment.",
+  "facts_note": "No statement_facts. The United States has no national filing taxonomy an ordinary company reports on: a registrant files in Inline XBRL against the taxonomy the Financial Accounting Standards Board publishes and the Securities and Exchange Commission accepts, and nothing in this pack was verified against it, so both statements leave `xbrl` and `taxonomy` null. A wrong fact key is worse than none, and the line codes of statements.json are the caption numbers of rules 5-02 and 5-03 of Regulation S-X themselves, so a future filing brick has a stable thing to map from."
+}

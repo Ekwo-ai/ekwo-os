@@ -1,6 +1,6 @@
 import type { PGlite } from '@electric-sql/pglite';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
-import { roundCurrency } from '../packages/mcp/src/rounding.js';
+import { roundCurrency } from '../packages/core/src/books/rounding.js';
 import { asUser, expectError, freshDatabase, one, rows } from './helpers/db.js';
 import { installFixturePack } from './helpers/fixture-pack.js';
 import { accountId, ledgerOf, newContact, newDocument, newUser } from './helpers/factory.js';

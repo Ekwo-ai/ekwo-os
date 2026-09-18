@@ -1,7 +1,7 @@
 import { readFile, readdir, stat } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { PGlite } from '@electric-sql/pglite';
+import { PGlite, type Extensions } from '@electric-sql/pglite';
 
 const here = dirname(fileURLToPath(import.meta.url));
 export const repoRoot = join(here, '..', '..');
@@ -25,6 +25,12 @@ export interface Options {
    * that carries them is the ordinary one.
    */
   modules?: boolean;
+  /**
+   * PGlite extensions to make loadable. `tests/load/` asks for `auto_explain`,
+   * which is how the plan of a statement inside a function body is read; no
+   * other test needs one, and a contrib module nobody loads costs nothing.
+   */
+  extensions?: Extensions;
 }
 
 /** Files applied, in order, by `freshDatabase`. */
@@ -104,7 +110,7 @@ export async function moduleSeedFiles(): Promise<ModuleFile[]> {
  * tests is a `grant` somebody wrote.
  */
 export async function freshDatabase(options: Options = {}): Promise<PGlite> {
-  const db = new PGlite();
+  const db = new PGlite(options.extensions === undefined ? {} : { extensions: options.extensions });
   await db.waitReady;
 
   await db.exec(await readFile(shimPath, 'utf8'));
@@ -216,4 +222,21 @@ export async function expectError(db: PGlite, sql: string, params: unknown[] = [
     return (error as Error).message;
   }
   throw new Error(`expected an error from: ${sql}`);
+}
+
+/**
+ * Run a block with one trigger of one table switched off, then switch it back.
+ *
+ * For the tests that stand on a floor nothing reaches any more: a check
+ * constraint or a read-time test that a guard published later now keeps
+ * anybody from getting to. The guard is named, so the test says which rule it
+ * stepped around and why; nothing in the schema does this.
+ */
+export async function withoutTrigger<T>(db: PGlite, table: string, trigger: string, fn: () => Promise<T>): Promise<T> {
+  await db.exec(`alter table ${table} disable trigger ${trigger}`);
+  try {
+    return await fn();
+  } finally {
+    await db.exec(`alter table ${table} enable trigger ${trigger}`);
+  }
 }

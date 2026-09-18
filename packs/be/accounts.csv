@@ -134,6 +134,7 @@ code,parent,type,reconcilable,name,sequence
 411,41,asset_current,false,TVA à récupérer,1330
 411000,411,asset_current,false,TVA à récupérer,1340
 411100,411,asset_current,false,TVA déductible sur achats,1350
+411900,411,asset_current,true,TVA à récupérer — solde des déclarations périodiques,1355
 412,41,asset_current,false,Impôts et versements fiscaux à récupérer,1360
 412000,412,asset_current,false,Impôts et versements fiscaux à récupérer,1370
 414,41,asset_current,false,Produits à recevoir,1380
@@ -165,6 +166,7 @@ code,parent,type,reconcilable,name,sequence
 451000,451,liability_current,false,TVA à payer,1640
 451100,451,liability_current,false,TVA due sur ventes,1650
 451200,451,liability_current,false,TVA due — cocontractant et report de perception,1660
+451900,451,liability_current,true,TVA à payer — solde des déclarations périodiques,1665
 452,45,liability_current,false,Impôts et taxes à payer,1670
 452000,452,liability_current,false,Impôts et taxes à payer,1680
 453,45,liability_current,false,Précomptes retenus,1690

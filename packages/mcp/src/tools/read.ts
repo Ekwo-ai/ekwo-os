@@ -17,8 +17,11 @@ import {
 } from '@ekwo-ai/fec';
 import { z } from 'zod';
 import { EkwoMcpError, type Backend, type Filter, type Row } from '../backend.js';
-import * as columns from '../columns.js';
-import { money, moneyFields } from '../format.js';
+import { DOC_TYPES, columns, money, moneyFields, namesOf, onlyVisible as only } from '@ekwo-ai/core';
+
+// Moved to the core with the writing half they are read back by; exported
+// from here under the names they always had.
+export { getDocument, listDocuments, searchContacts } from '@ekwo-ai/core';
 
 export const uuid = z.string().uuid();
 export const isoDate = z
@@ -26,33 +29,6 @@ export const isoDate = z
   .regex(/^\d{4}-\d{2}-\d{2}$/, 'a calendar date, as YYYY-MM-DD');
 
 export const companyId = uuid.describe('The company to work in. Ask list_companies if unsure.');
-
-/** The row, or a refusal that says what was not visible rather than crashing. */
-function only<T>(rows: T[], what: string): T {
-  const row = rows[0];
-  if (row === undefined) {
-    throw new EkwoMcpError(
-      `not_found: ${what}. Either it does not exist or you are not a member of the company that holds it.`,
-    );
-  }
-  return row;
-}
-
-/** `{ id: name }` for a set of rows, to put names next to foreign keys. */
-async function namesOf(
-  backend: Backend,
-  table: string,
-  ids: (string | null | undefined)[],
-): Promise<Record<string, string>> {
-  const wanted = [...new Set(ids.filter((id): id is string => typeof id === 'string'))];
-  if (wanted.length === 0) return {};
-  const rows = await backend.select<{ id: string; name: string }>({
-    table,
-    columns: ['id', 'name'],
-    where: [{ column: 'id', op: 'in', value: wanted }],
-  });
-  return Object.fromEntries(rows.map((row) => [row.id, row.name]));
-}
 
 // ---------------------------------------------------------------------------
 // Companies and their settings
@@ -289,37 +265,9 @@ export const SearchContactsInput = z.object({
   limit: z.number().int().min(1).max(200).optional(),
 });
 
-export async function searchContacts(
-  backend: Backend,
-  args: z.infer<typeof SearchContactsInput>,
-): Promise<unknown> {
-  const where: Filter[] = [{ column: 'company_id', op: 'eq', value: args.company_id }];
-  if (args.query !== undefined) where.push({ column: 'name', op: 'ilike', value: `%${args.query}%` });
-  if (args.contact_type !== undefined) where.push({ column: 'contact_type', op: 'eq', value: args.contact_type });
-  if (args.vat_number !== undefined) where.push({ column: 'vat_number', op: 'eq', value: args.vat_number });
-
-  const contacts = await backend.select<Row>({
-    table: 'contacts',
-    columns: columns.CONTACT,
-    where,
-    order: [{ column: 'name' }],
-    limit: args.limit ?? 50,
-  });
-  return { contacts, count: contacts.length };
-}
-
 // ---------------------------------------------------------------------------
 // Documents
 // ---------------------------------------------------------------------------
-
-const DOC_TYPES = [
-  'sale_invoice',
-  'sale_credit_note',
-  'sale_quote',
-  'purchase_invoice',
-  'purchase_credit_note',
-  'purchase_order',
-] as const;
 
 export const ListDocumentsInput = z.object({
   company_id: companyId,
@@ -329,166 +277,11 @@ export const ListDocumentsInput = z.object({
   contact_id: uuid.optional(),
   from: isoDate.optional().describe('Earliest document date.'),
   to: isoDate.optional().describe('Latest document date.'),
+  unpaid: z.boolean().optional().describe('True: posted and still owed — not paid, or partially.'),
   limit: z.number().int().min(1).max(200).optional(),
 });
 
-export async function listDocuments(
-  backend: Backend,
-  args: z.infer<typeof ListDocumentsInput>,
-): Promise<unknown> {
-  const where: Filter[] = [{ column: 'company_id', op: 'eq', value: args.company_id }];
-  if (args.doc_type !== undefined) where.push({ column: 'doc_type', op: 'eq', value: args.doc_type });
-  if (args.state !== undefined) where.push({ column: 'state', op: 'eq', value: args.state });
-  if (args.payment_state !== undefined) where.push({ column: 'payment_state', op: 'eq', value: args.payment_state });
-  if (args.contact_id !== undefined) where.push({ column: 'contact_id', op: 'eq', value: args.contact_id });
-  if (args.from !== undefined) where.push({ column: 'document_date', op: 'gte', value: args.from });
-  if (args.to !== undefined) where.push({ column: 'document_date', op: 'lte', value: args.to });
-
-  const documents = await backend.select<Row>({
-    table: 'documents',
-    columns: columns.DOCUMENT,
-    where,
-    order: [{ column: 'document_date', ascending: false }],
-    limit: args.limit ?? 50,
-  });
-  const names = await namesOf(backend, 'contacts', documents.map((doc) => doc['contact_id'] as string));
-
-  return {
-    documents: documents.map((doc) => ({
-      ...doc,
-      contact_name: names[doc['contact_id'] as string] ?? null,
-    })),
-    count: documents.length,
-  };
-}
-
 export const GetDocumentInput = z.object({ document_id: uuid });
-
-export async function getDocument(
-  backend: Backend,
-  args: z.infer<typeof GetDocumentInput>,
-): Promise<unknown> {
-  const document = only(
-    await backend.select<Row>({
-      table: 'documents',
-      columns: columns.DOCUMENT,
-      where: [{ column: 'id', op: 'eq', value: args.document_id }],
-    }),
-    `document ${args.document_id}`,
-  );
-
-  const lines = await backend.select<Row>({
-    table: 'document_lines',
-    columns: columns.DOCUMENT_LINE,
-    where: [{ column: 'document_id', op: 'eq', value: args.document_id }],
-    order: [{ column: 'sequence' }],
-  });
-
-  const [contact, accounts, taxes] = await Promise.all([
-    namesOf(backend, 'contacts', [document['contact_id'] as string]),
-    backend.select<{ id: string; code: string; name: string }>({
-      table: 'accounts',
-      columns: ['id', 'code', 'name'],
-      where: [
-        {
-          column: 'id',
-          op: 'in',
-          value: lines.map((line) => line['account_id']).filter((id): id is string => typeof id === 'string'),
-        },
-      ],
-    }),
-    backend.select<{ id: string; code: string; amount: string }>({
-      table: 'taxes',
-      columns: ['id', 'code', 'amount::text'],
-      where: [
-        {
-          column: 'id',
-          op: 'in',
-          value: lines.map((line) => line['tax_id']).filter((id): id is string => typeof id === 'string'),
-        },
-      ],
-    }),
-  ]);
-  const accountById = new Map(accounts.map((account) => [account.id, account]));
-  const taxById = new Map(taxes.map((tax) => [tax.id, tax]));
-
-  const entryId = document['entry_id'];
-  let entry: Row | null = null;
-  let entryLines: Row[] = [];
-  if (typeof entryId === 'string') {
-    entry = (
-      await backend.select<Row>({
-        table: 'entries',
-        columns: columns.ENTRY,
-        where: [{ column: 'id', op: 'eq', value: entryId }],
-      })
-    )[0] as Row;
-    entryLines = await backend.select<Row>({
-      table: 'entry_lines',
-      columns: columns.ENTRY_LINE,
-      where: [{ column: 'entry_id', op: 'eq', value: entryId }],
-      order: [{ column: 'sequence' }],
-    });
-  }
-
-  const ledgerAccounts = await namesOf(
-    backend,
-    'accounts',
-    entryLines.map((line) => line['account_id'] as string),
-  );
-
-  // What the law of the document's country asks of it. The mentions come from
-  // the view, which already decided which of them apply from the treatments of
-  // the taxes on the lines; the rules come from the country model, reached
-  // through the company's fiscal country — the country whose VAT applies, not
-  // the address. Both are null-tolerant: a country that has said nothing
-  // returns nothing, and the caller is never handed another country's answer.
-  const [mentions, headers] = await Promise.all([
-    backend.select<Row>({
-      table: 'document_legal_mentions',
-      columns: columns.DOCUMENT_LEGAL_MENTION,
-      where: [{ column: 'document_id', op: 'eq', value: args.document_id }],
-      order: [{ column: 'sequence' }],
-    }),
-    backend.select<Row>({
-      table: 'document_header',
-      columns: columns.DOCUMENT_HEADER,
-      where: [{ column: 'document_id', op: 'eq', value: args.document_id }],
-    }),
-  ]);
-  const header = headers[0] ?? null;
-
-  // The country rules used to be fetched here, company then country_defaults,
-  // which is what `document_header` now does in one read. They keep their own
-  // key in the answer because that is what a caller asks for by name — but
-  // they are a slice of the header and not a second query.
-  const countryRules =
-    header === null
-      ? null
-      : Object.fromEntries(
-          columns.COUNTRY_DOCUMENT_RULES.map((column) => {
-            const name = column.split('::')[0] as string;
-            return [name, header[name] ?? null];
-          }),
-        );
-
-  return {
-    document: { ...document, contact_name: contact[document['contact_id'] as string] ?? null },
-    lines: lines.map((line) => ({
-      ...line,
-      account: accountById.get(line['account_id'] as string) ?? null,
-      tax: taxById.get(line['tax_id'] as string) ?? null,
-    })),
-    header,
-    legal_mentions: mentions,
-    country_rules: countryRules,
-    entry,
-    entry_lines: entryLines.map((line) => ({
-      ...line,
-      account_name: ledgerAccounts[line['account_id'] as string] ?? null,
-    })),
-  };
-}
 
 // ---------------------------------------------------------------------------
 // Bank
@@ -880,7 +673,7 @@ export async function vatReturn(
     report_code: form,
     boxes: moneyFields(rows, ['amount']),
     note:
-      'A box flagged computed is a total the form derives from the others, following the plus and minus lists of the country pack; hidden means the form does not print it. Everything else is summed from what the tax postings wrote on the ledger lines.',
+      'A box flagged computed is a total the form derives from the others, following the plus and minus lists of the country pack, or the rate of one other box where the form states a line as a multiplication; hidden means the form does not print it. Everything else is summed from what the tax postings wrote on the ledger lines. Order by print_sequence to print the form the way its administration does, which is not always the order the boxes are worked out in.',
   };
 }
 
@@ -888,6 +681,12 @@ export const EcSalesListInput = z.object({
   company_id: companyId,
   from: isoDate,
   to: isoDate,
+  report_code: z
+    .string()
+    .optional()
+    .describe(
+      'Which recapitulative statement form, when the installation carries one and you are filing it. Name it and the period is checked against the cadence this company files that statement on, which is not the cadence of its periodic return in most countries. Leave it out to read the figures without any period being refused.',
+    ),
 });
 
 export async function ecSalesList(
@@ -898,6 +697,7 @@ export async function ecSalesList(
     p_company_id: args.company_id,
     p_from: args.from,
     p_to: args.to,
+    p_report_code: args.report_code ?? null,
   });
   const undeclarable = rows.filter((row) => row['issue'] !== null);
   return {
@@ -906,6 +706,63 @@ export async function ecSalesList(
     undeclarable_lines: undeclarable.length,
     note:
       'One line per customer VAT number and per nature of supply — goods, services — summed from the posted ledger in the company currency, credit notes deducted. A line carrying an issue cannot be filed as it stands: no_vat_number means the customer has none recorded, vat_country_is_the_company_country means the number is not in another Member State. Report those separately instead of adding them into the total, and do not remove them from the figures. It prepares a statement; it files nothing.',
+  };
+}
+
+export const PortfolioUpcomingFilingsInput = z.object({
+  from: isoDate.describe('First day a return may fall due on. Go back a few days to catch what is already late.'),
+  to: isoDate.describe('Last day a return may fall due on.'),
+});
+
+export async function portfolioUpcomingFilings(
+  backend: Backend,
+  args: z.infer<typeof PortfolioUpcomingFilingsInput>,
+): Promise<unknown> {
+  const rows = await backend.rpc<Record<string, unknown>>('portfolio_upcoming_filings', {
+    p_from: args.from,
+    p_to: args.to,
+  });
+  const companies = new Set(rows.map((row) => row['company_id']));
+  return {
+    window: { from: args.from, to: args.to },
+    companies: companies.size,
+    filings: rows,
+    note:
+      rows.length === 0
+        ? 'You hold filings.read on no company of this installation, so there is no portfolio to read. It is not the same as nothing being due: a company you could read would be listed even with nothing to say.'
+        : 'One row per period falling due in the window, across every company you hold filings.read on, and at least one row per company. state and filing_id are the declaration already prepared or sent for that period; both empty means nothing has been started. A row without a due_date says why in reason: no_deadline_rule — the country pack names no day for this form, usually because the schedule depends on who is filing, so the period is listed and the date has to come from the administration; nothing_due — the company files, and nothing of it falls in this window; no_form — the installation carries no return for the fiscal country of the company. Never read a missing date as "not due". It reads a calendar; it prepares and files nothing.',
+  };
+}
+
+export const PortfolioFilingsTouchedSinceInput = z.object({
+  from: isoDate.optional().describe('Only declarations whose period ends on or after this day.'),
+  to: isoDate.optional().describe('Only declarations whose period starts on or before this day.'),
+});
+
+export async function portfolioFilingsTouchedSince(
+  backend: Backend,
+  args: z.infer<typeof PortfolioFilingsTouchedSinceInput>,
+): Promise<unknown> {
+  const rows = await backend.rpc<Record<string, unknown>>('portfolio_filings_touched_since', {
+    p_from: args.from ?? null,
+    p_to: args.to ?? null,
+  });
+  const touched = rows.filter((row) => row['filing_id'] !== null);
+  return {
+    companies: new Set(rows.map((row) => row['company_id'])).size,
+    touched: touched.length,
+    filings: touched,
+    untouched: rows
+      .filter((row) => row['filing_id'] === null)
+      .map((row) => ({
+        company_id: row['company_id'],
+        company_name: row['company_name'],
+        filed: row['filed'],
+      })),
+    note:
+      rows.length === 0
+        ? 'You hold filings.read on no company of this installation, so nothing was looked at.'
+        : 'filings lists every declaration that has gone and whose period received entries afterwards, latest first, with the company named: entries is how many posted entries carrying a declaration box landed in it, boxes_moved how many filed figures now disagree with the ledger. An entry that moves no figure is still listed. untouched names the companies that were looked at and had nothing to report, with how many filed declarations were examined — filed 0 means the company has sent none, which is different news. Whether a change calls for a corrective is a judgement for whoever keeps the books; this reads, and changes nothing.',
   };
 }
 

@@ -40,15 +40,20 @@ What we are building, in order:
    pull the VAT return or the FEC. Done; see [`packages/mcp`](packages/mcp/).
    A Community web application comes next.
 4. **Any country as a versioned pack of data**, with one golden test per
-   country — Belgium and France first, then the United Kingdom, Canada and
-   Québec, the Netherlands, Germany, Luxembourg. The plan is in
-   [`docs/international.md`](docs/international.md).
+   country — Belgium, France, Luxembourg, Estonia and the United Kingdom ship
+   today, and Ireland, Canada and Québec, the Netherlands and Germany come
+   next. The plan is in [`docs/international.md`](docs/international.md).
 5. **Format libraries** as independent MIT packages, in
    [`packages/formats/`](packages/formats/), organised by format and never by
    country: the [French FEC](packages/formats/fec/),
-   [Factur-X](packages/formats/factur-x/) and
-   [XBRL for the NBB](packages/formats/xbrl-cbso/) exist today; Peppol UBL,
-   camt.053 and CODA follow.
+   [Factur-X](packages/formats/factur-x/),
+   [XBRL for the NBB](packages/formats/xbrl-cbso/), the
+   [Belgian VAT return](packages/formats/vat-consignment/),
+   [Peppol BIS Billing 3.0](packages/formats/peppol-ubl/), four
+   recapitulative statements and three readers of bank statements —
+   [camt.053](packages/formats/camt053/), [CODA](packages/formats/coda/) and
+   [CFONB 120](packages/formats/cfonb120/) — exist today; MT940 waits for
+   somebody who needs it.
 
 Who it is for: a company that wants to keep its own books with an AI at the
 keyboard; an accounting firm that runs several companies inside one
@@ -59,9 +64,9 @@ system with the books intact.
 What we sell, so that this stays free: a managed edition at
 [ekwo.ai](https://ekwo.ai) where the same schema runs on your own Supabase
 project, and Ekwo operates the application, the AI agents, the bank
-connections, the Peppol access point and the filings. If Ekwo disappeared
-tomorrow, the Community edition would keep working. That is the test every
-feature has to pass before it lands here.
+connections, the Peppol access point and the filings. The Community edition
+stands on its own, with us or without us, for as long as its owner wants it to.
+That is the test every feature has to pass before it lands here.
 
 ## What is in this repository
 
@@ -85,8 +90,10 @@ OpenAPI description, and row level security decides who sees what.
   its declaration boxes and its annual accounts in French, Dutch, German and
   English, and a company keeping its books in Dutch reads Dutch throughout.
   [`docs/languages.md`](docs/languages.md) is the mechanism.
-- **Belgium and France out of the box.** PCMN (AR du 21 octobre 2018) and PCG
-  (règlement ANC 2022-06), with their VAT codes and declaration boxes.
+- **Five countries out of the box.** PCMN (AR du 21 octobre 2018), PCG
+  (règlement ANC 2022-06), the Luxembourg PCN, an Estonian chart and a British
+  one, each with its VAT codes, its declaration boxes and its annual accounts.
+  The United Kingdom is the first that is not a Member State of the Union.
 - **The French FEC.** Eighteen columns, the arrêté du 29 juillet 2013, with
   the reconciliation letter and the sub-ledger code the format requires.
 - **Modules, one Postgres schema each.** Fixed assets and budgets ship with
@@ -211,18 +218,21 @@ git clone https://github.com/Ekwo-ai/ekwo-os.git && cd ekwo-os
 supabase link --project-ref <your-project-ref>
 supabase db push                       # applies supabase/migrations in order
 psql "$DATABASE_URL" -f supabase/seed/00_currencies.sql
+psql "$DATABASE_URL" -f supabase/seed/00_territories.sql
 psql "$DATABASE_URL" -f supabase/seed/05_framework_generic.sql
-psql "$DATABASE_URL" -f supabase/seed/10_pack_be.sql    # or 11_pack_fr.sql, 12_pack_lu.sql, 13_pack_ee.sql
+psql "$DATABASE_URL" -f supabase/seed/10_pack_be.sql    # or 11_pack_fr.sql, 12_pack_lu.sql, 13_pack_ee.sql, 14_pack_gb.sql, 15_pack_us.sql
 ```
 
-Those five files are the ones `config.toml` lists under `[db.seed]`, which is
+Those six files are the ones `config.toml` lists under `[db.seed]`, which is
 what `supabase db reset` applies on a local project — and the same set
 `ekwo init` loads. Leave `05_framework_generic.sql` out and the installation
 has a chart of accounts but no financial statements for a chart that declares
-none of its own.
+none of its own; leave `00_territories.sql` out and the recapitulative
+statement refuses to run at all, by name, rather than reporting every customer
+as outside the Union.
 
 Skip `supabase/seed/90_demo_company.sql` unless you want the sample data, and
-then run the six statements above as a signed-in user. The two routes are
+then run the seven statements above as a signed-in user. The two routes are
 interchangeable: `ekwo migrate` and `supabase db push` read and write the same
 `supabase_migrations.schema_migrations`.
 
@@ -263,7 +273,10 @@ user_preferences                         one row per person, null everywhere
 One installation belongs to one customer, so there is no `tenant_id`
 anywhere: `instance` is that fact, in one row. Inside it, `instance_admins`
 says who may create companies and invite people, and `company_members` gives
-each person `owner`, `accountant` or `viewer` on each company. Your users live
+each person `owner`, `accountant`, `viewer` or `client` on each company — a
+firm keeps the books of forty companies in one installation, and the person who
+runs one of them is a `client` of that one and does not know the others exist
+([`docs/firms.md`](docs/firms.md)). Your users live
 in your own Supabase Auth; Ekwo never holds an account.
 
 **Registering with Ekwo is optional and empty by default.** `contact_email`
@@ -296,7 +309,7 @@ reaches a reader in their own language.
 ## Who may do what
 
 **A role is a preset. A capability is what a policy tests.** `owner`,
-`accountant` and `viewer` are three rows in `role_capabilities`, and what the
+`accountant`, `viewer` and `client` are rows in `role_capabilities`, and what the
 schema actually checks is a code from `capabilities` — `documents.post`,
 `payments.write`, `settings.write`, `members.manage`, `year_end.close` and
 fifteen more. Read `select * from capabilities order by area, code` on your own
@@ -305,6 +318,7 @@ installation: that list is the vocabulary, and a module adds its own to it.
 | Preset | Holds |
 |---|---|
 | `viewer` | every `.read` — the books, the documents, the chart, the catalogue |
+| `client` | what a viewer holds, plus `documents.deposit`: handing a file over to whoever keeps the books, and nothing else |
 | `accountant` | that, plus writing and posting, matching, the settings and the year-end close |
 | `owner` | that, plus `company.write` and `members.manage` |
 
@@ -381,8 +395,12 @@ functions, with no runtime dependency beyond an optional
 `@supabase/supabase-js`. The FEC moved out to `@ekwo-ai/fec`, because a file
 format is MIT; the re-exports `@ekwo-ai/core` kept for one version are gone
 since `v0.2.0`, so import the generator from the package that owns it.
-`packages/cli` is the `ekwo` command above; it has one runtime dependency, the
-Postgres driver, and never writes a secret to disk.
+`packages/cli` is the `ekwo` command above; outside this repository it has one
+runtime dependency, the Postgres driver, and it never writes a password or a
+key to disk — `ekwo login` keeps a session, in the user's own configuration
+directory and never inside a repository, and no command that keeps books takes
+a `service_role` key. It keeps books too — `ekwo invoice new`, `ekwo post`, `ekwo payment record` — through the functions the MCP server calls, which moved into `packages/core` for that, and computes no amount of its own. Every command takes `--json` and ends on an exit code that tells a wrong call
+(2) from the database refusing (3).
 
 ```ts
 import { EkwoClient } from '@ekwo-ai/core';
@@ -427,8 +445,26 @@ that can produce those columns can use them:
   comptables*: eighteen columns, the arrêté du 29 juillet 2013.
 - [`@ekwo-ai/factur-x`](packages/formats/factur-x/) — Factur-X and ZUGFeRD
   e-invoices: EN 16931 CII XML and PDF/A-3 embedding.
+- [`@ekwo-ai/peppol-ubl`](packages/formats/peppol-ubl/) — invoices and credit
+  notes as the Peppol network carries them: UBL 2.1, Peppol BIS Billing 3.0,
+  with every published rule the file breaks named by its identifier. Writing
+  the file is free; sending it takes an access point.
 - [`@ekwo-ai/xbrl-cbso`](packages/formats/xbrl-cbso/) — XBRL for the annual
   accounts filed with the National Bank of Belgium.
+- [`@ekwo-ai/vat-consignment`](packages/formats/vat-consignment/) — the Belgian
+  periodic VAT return, as Intervat takes it, written from the figures a
+  declaration was filed with rather than from a second computation.
+- [`@ekwo-ai/intra-consignment`](packages/formats/intra-consignment/),
+  [`@ekwo-ai/des`](packages/formats/des/),
+  [`@ekwo-ai/ecdf`](packages/formats/ecdf/) and
+  [`@ekwo-ai/vd`](packages/formats/vd/) — the recapitulative statements of
+  intra-Community supplies, for Belgium, France, Luxembourg and Estonia.
+
+- [`@ekwo-ai/camt053`](packages/formats/camt053/) — the one that reads: an
+  ISO 20022 bank statement (camt.053, versions 02 to 14) into statements and
+  lines, amounts as decimal strings, an account that is an IBAN or is not, and
+  a balance that is checked and never corrected. Its own strict XML reader,
+  because a statement is a file somebody else wrote.
 
 They are not dependencies of the core: the core produces rows, and a brick
 turns rows into a file. The one place they meet is a test.
@@ -444,10 +480,10 @@ is here and always will be.
 | Journals, entries, matching, charts of accounts | Backups, restores, version upgrades |
 | Invoicing, credit notes, VAT, reports, FEC | AI agents that book, match and check |
 | Manual import of bank files | Bank connections under contract |
-| Generating XBRL, Factur-X and UBL files | Peppol access point, certificate included |
+| Generating the files: XBRL, Factur-X, the VAT return, the EC sales lists | Peppol access point, certificate included |
 | Everything above, forever, for nothing | Filing to Intervat, Teledec, the NBB, with someone answerable |
 
-The test is simple: if Ekwo disappeared tomorrow, would it keep working? If
+The test is simple: does it keep working on its own, with us or without us? If
 yes, it belongs here. `ee/` holds the commercial layer and has its own
 licence.
 

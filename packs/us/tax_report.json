@@ -1,0 +1,439 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "US-CA-SUT-RETURN",
+  "name": "State, Local, and District Sales and Use Tax Return (CDTFA-401-A)",
+  "period": [
+    "month",
+    "quarter",
+    "year"
+  ],
+  "period_default": "quarter",
+  "valid_from": "2026-01-01",
+  "legal_reference": "There is no national sales tax return in the United States and no federal form this pack could carry: the tax is levied by the states, and a company that sells into several of them files one return per state, each on its own form, to its own administration and on its own cadence. This form is California's. Revenue and Taxation Code, section 6452(a) makes the return quarterly — on or before the last day of the month following each quarterly period of three months — and section 6455(a) lets the Department require designated periods other than quarterly ones, which is how a monthly or an annual filer arrives. So the form is filed on three cadences and the law still gives one of them to everybody, which is what period_default states: a company that has asked CDTFA for nothing files quarterly. It is regulation 25(1) of the British VAT Regulations in another language, and it is sayable since the proposal moved onto the form. The version carried here is revision 1-26, the form as it stands in January 2026.",
+  "source": "cdtfa-401-a",
+  "boxes": [
+    {
+      "box": "1",
+      "kind": "base",
+      "name": "Total sales",
+      "sequence": 10,
+      "legal_reference": "CDTFA-401-A, line 1, and CDTFA-401-INST, line 1 — enter your total taxable and nontaxable sales for the reporting period, including lease and rental receipts; report all sales related to doing business in California, and deduct the current period nontaxable transactions in Sections A through D on page 3. Every sale of this pack posts its base here, taxed or not, and a sale that is not taxed posts to its deduction line as well.",
+      "source": "cdtfa-401-inst"
+    },
+    {
+      "box": "2",
+      "kind": "base",
+      "name": "Purchases subject to use tax",
+      "sequence": 20,
+      "legal_reference": "CDTFA-401-A, line 2, and CDTFA-401-INST, line 2 — the total purchases subject to use tax: property bought from an out-of-state retailer who did not collect California use tax, or bought with a resale certificate and then used in California for a purpose other than resale. Revenue and Taxation Code, section 6201 imposes the tax and section 6202 makes the purchaser liable for it.",
+      "source": "cdtfa-401-inst"
+    },
+    {
+      "box": "3",
+      "kind": "total",
+      "name": "Total",
+      "sequence": 30,
+      "plus": [
+        "1",
+        "2"
+      ],
+      "legal_reference": "CDTFA-401-A, line 3, and CDTFA-401-INST, line 3 — add lines 1 and 2 to find your total sales and purchases subject to use tax.",
+      "source": "cdtfa-401-inst"
+    },
+    {
+      "box": "32",
+      "kind": "base",
+      "name": "Sales to other retailers for purposes of resale (Section A, line 4)",
+      "sequence": 40,
+      "print_sequence": 260,
+      "legal_reference": "CDTFA-401-A, Section A, line 4, box 32, and CDTFA-401-INST — total sales to other sellers who submitted resale certificates. Revenue and Taxation Code, section 6091 presumes every gross receipt taxable until the seller takes a resale certificate from the purchaser; Sales and Use Tax Regulation 1668 says what such a certificate has to contain.",
+      "source": "cdtfa-401-inst"
+    },
+    {
+      "box": "33",
+      "kind": "base",
+      "name": "Nontaxable sales of food products (Section A, line 5)",
+      "sequence": 50,
+      "print_sequence": 270,
+      "legal_reference": "CDTFA-401-A, Section A, line 5, box 33 — nontaxable sales of food products sold for human consumption, exempted by Revenue and Taxation Code, section 6359. CDTFA-401-INST lists what is taxable all the same: alcoholic and carbonated beverages, hot prepared food, and meals consumed at the seller's place of business.",
+      "source": "cdtfa-401-inst"
+    },
+    {
+      "box": "34",
+      "kind": "base",
+      "name": "Nontaxable labor — repair and installation (Section A, line 6)",
+      "sequence": 60,
+      "print_sequence": 280,
+      "legal_reference": "CDTFA-401-A, Section A, line 6, box 34 — repair and installation labor, which is not a sale of tangible personal property. No tax of this pack posts here.",
+      "source": "cdtfa-401-inst"
+    },
+    {
+      "box": "35",
+      "kind": "base",
+      "name": "Sales to the United States government (Section A, line 7)",
+      "sequence": 70,
+      "print_sequence": 290,
+      "legal_reference": "CDTFA-401-A, Section A, line 7, box 35 — Revenue and Taxation Code, section 6381 exempts the gross receipts from the sale of tangible personal property to the United States, its unincorporated agencies and instrumentalities, and to the American National Red Cross.",
+      "source": "cdtfa-401-inst"
+    },
+    {
+      "box": "36",
+      "kind": "base",
+      "name": "Sales in interstate or foreign commerce (Section A, line 8)",
+      "sequence": 80,
+      "print_sequence": 300,
+      "legal_reference": "CDTFA-401-A, Section A, line 8, box 36 — Revenue and Taxation Code, section 6396 exempts gross receipts from property that the contract of sale requires to be shipped, and that is shipped, to a point outside this state by the retailer or by a carrier. It is where a sale this company makes into another state lands on the California return, whatever that other state then charges.",
+      "source": "cdtfa-401-inst"
+    },
+    {
+      "box": "37",
+      "kind": "base",
+      "name": "Sales tax included on line 1 (Section A, line 9)",
+      "sequence": 90,
+      "print_sequence": 310,
+      "legal_reference": "CDTFA-401-A, Section A, line 9, box 37 — where the figure reported on line 1 was collected with the tax in it, the tax is deducted here so it is not taxed again. No tax of this pack posts here: the engine stores a net taxable amount on every line and the gross is never what reaches line 1.",
+      "source": "cdtfa-401-inst"
+    },
+    {
+      "box": "38",
+      "kind": "base",
+      "name": "Other deductions (Section A, line 10)",
+      "sequence": 100,
+      "print_sequence": 320,
+      "legal_reference": "CDTFA-401-A, Section A, line 10, box 38 — any other nontaxable transaction, which the form requires to be clearly explained. No tax of this pack posts here.",
+      "source": "cdtfa-401-inst"
+    },
+    {
+      "box": "39",
+      "kind": "total",
+      "name": "Total Section A (Section A, line 11)",
+      "sequence": 110,
+      "print_sequence": 330,
+      "plus": [
+        "32",
+        "33",
+        "34",
+        "35",
+        "36",
+        "37",
+        "38"
+      ],
+      "legal_reference": "CDTFA-401-A, Section A, line 11, box 39 — add lines 4 through 10 of Section A.",
+      "source": "cdtfa-401-inst"
+    },
+    {
+      "box": "40",
+      "kind": "base",
+      "name": "Bad debt losses on taxable sales (Section B, line 1)",
+      "sequence": 120,
+      "print_sequence": 340,
+      "legal_reference": "CDTFA-401-A, Section B, line 1, box 40 — a current period tax recovery on a taxable sale already reported on line 1. No tax of this pack posts here: a write-off is a ledger entry and not a tax.",
+      "source": "cdtfa-401-inst"
+    },
+    {
+      "box": "41",
+      "kind": "base",
+      "name": "Cost of tax-paid purchases resold prior to use (Section B, line 2)",
+      "sequence": 130,
+      "print_sequence": 350,
+      "legal_reference": "CDTFA-401-A, Section B, line 2, box 41 — the cost of property bought with the tax paid and resold before it was used. No tax of this pack posts here.",
+      "source": "cdtfa-401-inst"
+    },
+    {
+      "box": "42",
+      "kind": "base",
+      "name": "Returned taxable merchandise (Section B, line 3)",
+      "sequence": 140,
+      "print_sequence": 360,
+      "legal_reference": "CDTFA-401-A, Section B, line 3, box 42 — taxable merchandise returned in the current period, the original sale having been reported on line 1. This pack reports a credit note as a negative on the boxes the invoice filled rather than here, which is a decision the README states.",
+      "source": "cdtfa-401-inst"
+    },
+    {
+      "box": "43",
+      "kind": "base",
+      "name": "Cash discounts on taxable sales (Section B, line 4)",
+      "sequence": 150,
+      "print_sequence": 370,
+      "legal_reference": "CDTFA-401-A, Section B, line 4, box 43 — cash discounts on taxable sales. No tax of this pack posts here.",
+      "source": "cdtfa-401-inst"
+    },
+    {
+      "box": "44",
+      "kind": "total",
+      "name": "Total Section B (Section B, line 5)",
+      "sequence": 160,
+      "print_sequence": 380,
+      "plus": [
+        "40",
+        "41",
+        "42",
+        "43"
+      ],
+      "legal_reference": "CDTFA-401-A, Section B, line 5, box 44 — add lines 1 through 4 of Section B.",
+      "source": "cdtfa-401-inst"
+    },
+    {
+      "box": "45",
+      "kind": "total",
+      "name": "Total nontaxable transactions (Section B, line 6)",
+      "sequence": 170,
+      "print_sequence": 390,
+      "plus": [
+        "39",
+        "44"
+      ],
+      "legal_reference": "CDTFA-401-A, Section B, line 6, box 45 — add the total from Section A, line 11 and Section B, line 5, and enter the total here and on page 1, line 11.",
+      "source": "cdtfa-401-inst"
+    },
+    {
+      "box": "11",
+      "kind": "total",
+      "name": "Total nontaxable transactions reported",
+      "sequence": 180,
+      "print_sequence": 40,
+      "plus": [
+        "45"
+      ],
+      "legal_reference": "CDTFA-401-A, line 11, and CDTFA-401-INST — enter the total from Section B, line 6. The form prints this line on page 1, above the two sections it adds up on page 3: `print_sequence` says where the administration prints it, `sequence` where this pack declares it, and the order it is worked out in is neither — it is the boxes it names.",
+      "source": "cdtfa-401-inst"
+    },
+    {
+      "box": "12",
+      "kind": "total",
+      "name": "Transactions subject to tax",
+      "sequence": 190,
+      "print_sequence": 50,
+      "plus": [
+        "3"
+      ],
+      "minus": [
+        "11"
+      ],
+      "legal_reference": "CDTFA-401-A, line 12 — subtract line 11 from line 3.",
+      "source": "cdtfa-401-inst"
+    },
+    {
+      "box": "13",
+      "kind": "total",
+      "name": "State tax 6.00 percent",
+      "sequence": 200,
+      "print_sequence": 60,
+      "rate": 6.0,
+      "rate_of": "12",
+      "legal_reference": "CDTFA-401-A, line 13, and CDTFA-401-INST, line 13 — multiply line 12 by 0.06. The 6.00 per cent is the state share of the 7.25 per cent statewide rate, which CDTFA publishes as 3.6875 per cent under Revenue and Taxation Code sections 6051 and 6201, 0.25 per cent under sections 6051.3 and 6201.3, 0.50 per cent under section 35 of article XIII of the State Constitution, 0.50 per cent under sections 6051.2 and 6201.2 and 1.0625 per cent under sections 6051.15 and 6201.15. The box says what the instruction says: a rate, and the box it is applied to.",
+      "source": "cdtfa-rates"
+    },
+    {
+      "box": "14",
+      "kind": "total",
+      "name": "County tax 1/4 percent",
+      "sequence": 210,
+      "print_sequence": 70,
+      "rate": 0.25,
+      "rate_of": "12",
+      "legal_reference": "CDTFA-401-A, line 14, and CDTFA-401-INST, line 14 — multiply line 12 by 0.0025. The quarter of a per cent is the county transportation share of the 1.25 per cent local rate imposed under Revenue and Taxation Code sections 7202 and 7203. Stated as a rate of line 12, as the instruction states it.",
+      "source": "cdtfa-rates"
+    },
+    {
+      "box": "15",
+      "kind": "total",
+      "name": "Local tax 1.00 percent",
+      "sequence": 220,
+      "print_sequence": 80,
+      "rate": 1.0,
+      "rate_of": "12",
+      "legal_reference": "CDTFA-401-A, line 15, and CDTFA-401-INST, line 15 — multiply line 12 by 0.01. The one per cent goes to city or county operations under Revenue and Taxation Code sections 7202 and 7203. Stated as a rate of line 12, as the instruction states it.",
+      "source": "cdtfa-rates"
+    },
+    {
+      "box": "16",
+      "kind": "tax",
+      "name": "District tax",
+      "sequence": 230,
+      "print_sequence": 90,
+      "legal_reference": "CDTFA-401-A, line 16, and CDTFA-401-INST, line 16 — a retailer engaged in business in a transactions and use tax district completes CDTFA-531-A2 and carries its total here. Revenue and Taxation Code, section 7261 lets a district impose the tax at one eighth of one per cent or a multiple of it, and CDTFA publishes district rates ranging from 0.10 to 2.00 per cent. Alone of the four tax lines this box is **not** a rate of line 12: a district tax is owed on the sales made in that district and not on the period's whole taxable total, and the form itself does not multiply here — it carries a figure over from a schedule. So it stays summed from the ledger, out of the postings of the taxes whose combined rate includes a district share. This pack carries one district rate as a worked example and not the hundreds that exist; see the README.",
+      "source": "cdtfa-531-a2"
+    },
+    {
+      "box": "17",
+      "kind": "total",
+      "name": "Total state, county, local, and district tax",
+      "sequence": 240,
+      "print_sequence": 100,
+      "plus": [
+        "13",
+        "14",
+        "15",
+        "16"
+      ],
+      "legal_reference": "CDTFA-401-A, line 17, and CDTFA-401-INST, line 17 — add lines 13, 14, 15 and 16. Line 17 represents the total tax liability for the reporting period.",
+      "source": "cdtfa-401-inst"
+    },
+    {
+      "box": "18",
+      "kind": "tax",
+      "name": "Excess tax collected",
+      "sequence": 250,
+      "print_sequence": 110,
+      "legal_reference": "CDTFA-401-A, line 18, and CDTFA-401-INST, line 18 — where the retailer has overcharged their customers and collected more sales tax than the amount reported due. Nothing in this pack posts here: it is a figure a person establishes, not one a ledger produces.",
+      "source": "cdtfa-401-inst"
+    },
+    {
+      "box": "19",
+      "kind": "total",
+      "name": "Total tax amount",
+      "sequence": 260,
+      "print_sequence": 120,
+      "plus": [
+        "17",
+        "18"
+      ],
+      "legal_reference": "CDTFA-401-A, line 19 — add line 17 and line 18.",
+      "source": "cdtfa-401-inst"
+    },
+    {
+      "box": "20a",
+      "kind": "tax",
+      "name": "Credit for current period partial tax exemptions",
+      "sequence": 270,
+      "print_sequence": 130,
+      "legal_reference": "CDTFA-401-A, line 20a — the total from Section D, line 6, which is Sections C and D of page 3: the partial exemption rates of 0.05 and 0.039375 applied to teleproduction equipment, farm equipment, diesel used in farming, timber harvesting equipment, racehorse breeding stock, manufacturing and research equipment and zero-emission vehicles. A base multiplied by a rate is sayable in this format since a box may be a rate of another box, so what is missing is no longer the format: it is the eight deduction lines those sections carry and the taxes that would reach them, none of which this pack transcribes. The box is declared and stays empty, and the README says so.",
+      "source": "cdtfa-401-inst"
+    },
+    {
+      "box": "20b",
+      "kind": "tax",
+      "name": "Credit for prior period tax recovery",
+      "sequence": 280,
+      "print_sequence": 140,
+      "legal_reference": "CDTFA-401-A, line 20b — the total prior period tax recovery amount from CDTFA-531-Q, Schedule Q. That schedule is not carried here.",
+      "source": "cdtfa-401-inst"
+    },
+    {
+      "box": "20c",
+      "kind": "tax",
+      "name": "Credit for tax paid to other states",
+      "sequence": 290,
+      "print_sequence": 150,
+      "legal_reference": "CDTFA-401-A, line 20c — the credit calculated on CDTFA-531-P, where use tax is due in California on property on which another state's sales or use tax was paid. That schedule is not carried here, and the pack has no way to record which state a tax was paid to on a purchase.",
+      "source": "cdtfa-401-inst"
+    },
+    {
+      "box": "20d",
+      "kind": "tax",
+      "name": "Credit for aircraft common carrier partial exemption",
+      "sequence": 300,
+      "print_sequence": 160,
+      "legal_reference": "CDTFA-401-A, line 20d — claimed on CDTFA-531-X. That schedule is not carried here.",
+      "source": "cdtfa-401-inst"
+    },
+    {
+      "box": "20e",
+      "kind": "total",
+      "name": "Total credit",
+      "sequence": 310,
+      "print_sequence": 170,
+      "plus": [
+        "20a",
+        "20b",
+        "20c",
+        "20d"
+      ],
+      "legal_reference": "CDTFA-401-A, line 20e — add lines 20a, 20b, 20c and 20d.",
+      "source": "cdtfa-401-inst"
+    },
+    {
+      "box": "21",
+      "kind": "total",
+      "name": "Net tax",
+      "sequence": 320,
+      "print_sequence": 180,
+      "plus": [
+        "19"
+      ],
+      "minus": [
+        "20e"
+      ],
+      "legal_reference": "CDTFA-401-A, line 21, and CDTFA-401-INST, line 21 — subtract line 20e from line 19.",
+      "source": "cdtfa-401-inst"
+    },
+    {
+      "box": "22",
+      "kind": "tax",
+      "name": "Less tax prepayments",
+      "sequence": 330,
+      "print_sequence": 190,
+      "legal_reference": "CDTFA-401-A, line 22, and CDTFA-401-INST, line 22 — a business whose average monthly taxable transactions reach 17,000 dollars makes prepayments once CDTFA notifies it. A prepayment is a payment and not a posting of this pack, so nothing writes here.",
+      "source": "cdtfa-401-inst"
+    },
+    {
+      "box": "23",
+      "kind": "total",
+      "name": "Net tax less prepayments",
+      "sequence": 340,
+      "print_sequence": 200,
+      "plus": [
+        "21"
+      ],
+      "minus": [
+        "22"
+      ],
+      "legal_reference": "CDTFA-401-A, line 23 — subtract line 22 from line 21.",
+      "source": "cdtfa-401-inst"
+    },
+    {
+      "box": "24",
+      "kind": "tax",
+      "name": "Penalty",
+      "sequence": 350,
+      "print_sequence": 210,
+      "legal_reference": "CDTFA-401-A, line 24, and CDTFA-401-INST, line 24 — ten per cent of line 23 where the payment is made or the return filed after the due date. A penalty is not a ledger figure and nothing posts here.",
+      "source": "cdtfa-401-inst"
+    },
+    {
+      "box": "25",
+      "kind": "tax",
+      "name": "Interest",
+      "sequence": 360,
+      "print_sequence": 220,
+      "legal_reference": "CDTFA-401-A, line 25 — one month's interest is due on the tax for each month or fraction of a month that payment is delayed after the due date, at the adjusted monthly rate CDTFA publishes. Nothing posts here.",
+      "source": "cdtfa-401-inst"
+    },
+    {
+      "box": "26",
+      "kind": "total",
+      "name": "Total amount due and payable",
+      "sequence": 370,
+      "print_sequence": 230,
+      "plus": [
+        "23",
+        "24",
+        "25"
+      ],
+      "legal_reference": "CDTFA-401-A, line 26, and CDTFA-401-INST, line 26 — add lines 23, 24 and 25.",
+      "source": "cdtfa-401-inst"
+    },
+    {
+      "box": "27",
+      "kind": "base",
+      "name": "Sales at state-designated fairgrounds",
+      "sequence": 380,
+      "print_sequence": 240,
+      "legal_reference": "CDTFA-401-A, line 27, and CDTFA-401-INST, line 27 — since 1 July 2018 the portion of the sales reported on line 1 whose place of sale is on the real property of a state-designated fair. It is a memorandum of part of line 1 and not a deduction; no tax of this pack posts here, because the place of a sale inside a state is not something a document records.",
+      "source": "cdtfa-401-inst"
+    },
+    {
+      "box": "28",
+      "kind": "base",
+      "name": "Total taxable sales made at historic venues",
+      "sequence": 390,
+      "print_sequence": 250,
+      "legal_reference": "CDTFA-401-A, line 28 — the total from CDTFA-531-HV. That schedule is not carried here.",
+      "source": "cdtfa-401-inst"
+    }
+  ],
+  "deadline": {
+    "rule": "last_day_of_month_after_period",
+    "legal_reference": "California Revenue and Taxation Code, section 6452(a) — the return for each quarterly period is due, together with the remittance, on or before the last day of the month following each quarterly period. Section 6455(a) lets the Department require returns for other periods, in which case the same last-day rule applies to that period."
+  }
+}

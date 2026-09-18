@@ -495,3 +495,36 @@ describe('a key that may write but not post', () => {
     expect(message).toMatch(/not_allowed: closing or re-opening a financial year/);
   });
 });
+
+// ---------------------------------------------------------------------------
+// Since `20260918141627` a policy compares `company_id` against
+// `companies_with_capability()`, worked out once per statement. A key is the
+// caller that function could most easily forget: it has no `auth.uid()` and is
+// a member of nothing. `tests/capabilities.test.ts` compares the two functions
+// for people; this compares them for a machine.
+// ---------------------------------------------------------------------------
+
+describe('a key, asked once per statement', () => {
+  it('holds in its own company what has_capability() says it holds, and nothing next door', async () => {
+    const key = (await issue(ownerId, 'Une fois', ['documents.read', 'entries.read'])).secret;
+    const other = (await newCompany(db, { name: 'Autre SRL' })).companyId;
+    const codes = (await rows<{ code: string }>(db, `select code from capabilities order by code`)).map(
+      (r) => r.code,
+    );
+    const seen = await withKey(key, () =>
+      rows<{ company: string; capability: string; once: boolean; each: boolean }>(
+        db,
+        `select c.id::text as company, k.code as capability,
+                c.id = any (companies_with_capability(k.code)) as once,
+                has_capability(c.id, k.code) as each
+           from unnest($1::uuid[]) as c(id)
+           cross join unnest($2::text[]) as k(code)`,
+        [[companyId, other], codes],
+      ),
+    );
+    expect(seen.filter((row) => row.once !== row.each)).toEqual([]);
+    expect(
+      seen.filter((row) => row.once).map((row) => `${row.company === companyId ? 'own' : 'other'}:${row.capability}`).sort(),
+    ).toEqual(['own:documents.read', 'own:entries.read']);
+  });
+});

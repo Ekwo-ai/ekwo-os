@@ -116,7 +116,9 @@ export async function newContact(
   options: {
     name?: string;
     type?: 'customer' | 'supplier';
-    country?: string;
+    country?: string | null;
+    /** Territory of `territories`, where the country is not precise enough. */
+    territory?: string | null;
     vat?: string | null;
     auxiliaryCode?: string | null;
     paymentTermsDays?: number;
@@ -125,14 +127,15 @@ export async function newContact(
   const isCustomer = (options.type ?? 'customer') === 'customer';
   const row = await one<{ id: string }>(
     db,
-    `insert into contacts (company_id, name, contact_type, country, vat_number,
+    `insert into contacts (company_id, name, contact_type, country, territory_code, vat_number,
                            auxiliary_code, payment_terms_days)
-     values ($1, $2, $3, $4, $5, $6, $7) returning id`,
+     values ($1, $2, $3, $4, $5, $6, $7, $8) returning id`,
     [
       companyId,
       options.name ?? (isCustomer ? 'Test Customer' : 'Test Supplier'),
       options.type ?? 'customer',
-      options.country ?? 'BE',
+      options.country === undefined ? 'BE' : options.country,
+      options.territory ?? null,
       options.vat ?? null,
       options.auxiliaryCode ?? null,
       options.paymentTermsDays ?? 30,
@@ -165,13 +168,18 @@ export async function newDocument(
     contactId: string;
     date?: string;
     dueDate?: string | null;
+    /** Territory the supply takes place in. Null leaves the document silent. */
+    supplyTerritory?: string | null;
+    /** BG-15 of EN 16931, the country of the delivery address. */
+    deliveryCountry?: string | null;
     lines: LineInput[];
   },
 ): Promise<string> {
   const doc = await one<{ id: string }>(
     db,
-    `insert into documents (company_id, doc_type, number, contact_id, document_date, due_date)
-     values ($1, $2, $3, $4, $5, $6) returning id`,
+    `insert into documents (company_id, doc_type, number, contact_id, document_date, due_date,
+                            supply_territory_code, delivery_country)
+     values ($1, $2, $3, $4, $5, $6, $7, $8) returning id`,
     [
       companyId,
       input.docType,
@@ -179,6 +187,8 @@ export async function newDocument(
       input.contactId,
       input.date ?? '2026-06-15',
       input.dueDate ?? null,
+      input.supplyTerritory ?? null,
+      input.deliveryCountry ?? null,
     ],
   );
 

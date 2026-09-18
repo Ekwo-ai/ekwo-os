@@ -114,6 +114,8 @@ Every write names its company explicitly.
 | `aged_balance` | What is still owed, bucketed by age, read from the ledger |
 | `vat_return` | The boxes for a period, summed from the ledger |
 | `ec_sales_list` | The recapitulative statement of intra-Community supplies: one line per customer VAT number and per nature |
+| `portfolio_upcoming_filings` | *Portfolio* = the companies you may read: for an accounting firm, its clients ([`docs/firms.md`](../../docs/firms.md)). What falls due between two dates in every company you hold `filings.read` on. One row per company at least: a pack that names no deadline is listed without a date, and says so |
+| `portfolio_filings_touched_since` | Declarations that have gone and whose period received entries afterwards, across the same companies, with the company named |
 | `list_statements` / `financial_statement` | The schemes a company can be presented on, and one statement |
 | `generate_fec` | The French FEC as text, with its checks and its filename |
 | `read_audit_log` | Who changed what and when: the configuration of a company, and the acts that change a state. Append-only; nothing writes it |
@@ -126,13 +128,14 @@ Every write names its company explicitly.
 | `create_product` | A catalogue row: code, name, unit, price, account, tax |
 | `update_product` | Changes one, or retires it with `active: false` |
 | `pin_accounts` | Adds accounts to the working chart a company sees first, or takes one back out with `pinned: false` |
-| `create_document` | A draft invoice, credit note or quote, with its lines |
+| `create_document` | A draft invoice, credit note or quote, with its lines. With `client_ref`, calling twice creates once |
 | `update_document_lines` | Replaces the lines of a **draft** |
-| `post_document` | Books it. Cannot be undone. |
-| `record_payment` | Books money in or out and matches it against open invoices |
+| `post_document` | Books it. Cannot be undone. `dry_run: true` returns the entry the database would write, and writes nothing |
+| `record_payment` | Books money in or out and matches it against open invoices — or, with `document_id`, against that document alone, which then names the contact and the direction. With `client_ref`, recording twice records once |
 | `reconcile` / `unreconcile` | Matches two ledger lines, or undoes one matching |
 | `create_bank_account` | Registers an account from its IBAN and wires it to the bank journal. Running it twice with the same IBAN creates nothing |
 | `create_bank_transaction` | One statement line by hand, for an installation with no feed |
+| `import_bank_statement` | A statement file (`camt.053`, `coda`, `cfonb120`) into statements and pending lines. Books nothing; the same file twice creates nothing; an unknown account or a statement that does not add up is refused by name, a missing statement is signalled |
 | `lock_period` | Moves the accounting and VAT lock dates. Needs `company.write`. |
 | `opening_balance` | The trial balance of whatever kept the books before, as the opening entry |
 | `close_fiscal_year` / `reopen_fiscal_year` | Closes a year the way the country pack says, or reverses a close run too early |

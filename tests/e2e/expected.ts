@@ -19,7 +19,7 @@
  */
 
 import type { PGlite } from '@electric-sql/pglite';
-import { roundCurrency } from '../../packages/mcp/src/rounding.js';
+import { roundCurrency } from '../../packages/core/src/books/rounding.js';
 
 export type StatementKind = 'balance_sheet' | 'income_statement' | 'allocation' | 'cash_flow';
 

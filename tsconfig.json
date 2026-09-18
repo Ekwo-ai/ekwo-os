@@ -22,7 +22,12 @@
       "@ekwo-ai/intra-consignment": ["./packages/formats/intra-consignment/src/index.ts"],
       "@ekwo-ai/des": ["./packages/formats/des/src/index.ts"],
       "@ekwo-ai/ecdf": ["./packages/formats/ecdf/src/index.ts"],
-      "@ekwo-ai/vd": ["./packages/formats/vd/src/index.ts"]
+      "@ekwo-ai/vd": ["./packages/formats/vd/src/index.ts"],
+      "@ekwo-ai/vat-consignment": ["./packages/formats/vat-consignment/src/index.ts"],
+      "@ekwo-ai/peppol-ubl": ["./packages/formats/peppol-ubl/src/index.ts"],
+      "@ekwo-ai/camt053": ["./packages/formats/camt053/src/index.ts"],
+      "@ekwo-ai/coda": ["./packages/formats/coda/src/index.ts"],
+      "@ekwo-ai/cfonb120": ["./packages/formats/cfonb120/src/index.ts"]
     }
   },
   "include": [

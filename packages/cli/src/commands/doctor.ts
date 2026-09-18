@@ -8,15 +8,16 @@
 
 import { boolFlag, rejectUnknownFlags, type ParsedArgs } from '../args.js';
 import { migrationsDir } from '../bundle.js';
-import { CONNECTION_FLAGS, openDatabase } from '../context.js';
+import { CONNECTION_FLAGS, openDatabase, type CommandDeps } from '../context.js';
 import { doctor } from '../doctor.js';
 import { listMigrations, type Migration } from '../migrations.js';
 import { allModuleMigrations, listModules } from '../module/read.js';
 import { isInteractive } from '../prompt.js';
 import { schemaIsInstalled } from '../bootstrap.js';
+import { setResult } from '../output.js';
 import { dim, green, heading, line, red, warn, yellow } from '../ui.js';
 
-export const DOCTOR_FLAGS = [...CONNECTION_FLAGS, 'json', 'yes'] as const;
+export const DOCTOR_FLAGS = [...CONNECTION_FLAGS, 'yes'] as const;
 
 /**
  * The migrations this release carries, the socle's and the modules'.
@@ -38,10 +39,10 @@ async function everything(): Promise<Migration[]> {
   );
 }
 
-export async function doctorCommand(args: ParsedArgs): Promise<number> {
+export async function doctorCommand(args: ParsedArgs, deps: CommandDeps = {}): Promise<number> {
   rejectUnknownFlags(args, DOCTOR_FLAGS);
   const interactive = !boolFlag(args, 'yes') && isInteractive();
-  const { db } = await openDatabase(args, { interactive });
+  const { db } = await openDatabase(args, { interactive, connect: deps.connect });
 
   try {
     if (!(await schemaIsInstalled(db))) {
@@ -53,10 +54,7 @@ export async function doctorCommand(args: ParsedArgs): Promise<number> {
     const migrations = await everything();
     const report = await doctor(db, migrations);
 
-    if (boolFlag(args, 'json')) {
-      line(JSON.stringify(report, null, 2));
-      return report.problems > 0 ? 1 : 0;
-    }
+    setResult(report);
 
     heading('Doctor');
     for (const check of report.checks) {

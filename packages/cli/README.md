@@ -251,11 +251,245 @@ instead if the account already exists, and no key is needed.
 | `ekwo unregister` | Opt back out. Clears the address and the date on the instance row. |
 | `ekwo demo` | Loads the sample company. Fictional data, explicit request only. |
 | `ekwo module` | What is installed beside the socle, applies a module's migrations and its country seeds, and turns one on or off for a company. |
+| `ekwo company` | One company leaves an installation with its books — `export` writes an archive anybody can read, as a member under row level security — and arrives in another one alive: `import` takes it in whole or not at all. |
 | `ekwo pack` | Compiles a country pack into its seed, and refuses a seed that is no longer the output of its pack. Runs in a checkout of the repository only. |
+| `ekwo login` | Signs in to an instance as yourself and keeps the session, in your own configuration directory. See [acting as a person](#acting-as-a-person-login-use-whoami). |
+| `ekwo logout` | Ends that session, here and on the instance. |
+| `ekwo use <company>` | Picks the company the next commands run on. |
+| `ekwo whoami` | Who you are on which instance, the companies you can see, and what you may do on the one in use. |
+| `ekwo contact add` / `list` | A customer or a supplier, and finding one again. |
+| `ekwo invoice new` / `invoice line add` | A draft document — any kind, with `--type` — and one more line on it. A draft books nothing. |
+| `ekwo post <document>` | Books it, through `post_document()`. `--dry-run` shows the entry the database would write and writes nothing. |
+| `ekwo payment record` | Money in or out, booked and matched. With `--doc`, against that document. |
+| `ekwo match <transaction> <document>` | A bank statement line pays a document, through `settle_from_statement()`. |
+| `ekwo doc list` / `show` | What exists, and with `--unpaid` what is posted and still owed. See [keeping books](#keeping-books). |
 
 There is no `eject`, because there is nothing to eject from. The schema is in
 your database, the migrations are in the repository under AGPL-3.0, and
 `supabase db push` applies them without this CLI ever running again.
+
+## What a command answers: `--json` and the exit codes
+
+Every command prints for a person by default — aligned columns, colour only on
+a terminal and never when `NO_COLOR` is set, no spinner and no line redrawn in
+place, so the output reads the same in a file or a CI log — and takes `--json`
+for a program.
+
+Under `--json` the standard output is **one JSON document and nothing else**;
+the prose still goes by, on the standard error. The document has the same
+shape whatever happened:
+
+```json
+{
+  "ok": false,
+  "command": "module enable",
+  "exitCode": 3,
+  "warnings": [],
+  "error": {
+    "kind": "refusal",
+    "name": "not_allowed",
+    "message": "not_allowed: enabling a module on this company needs company.write",
+    "sqlstate": "42501"
+  }
+}
+```
+
+| Field | |
+|---|---|
+| `ok` | `exitCode` is 0. |
+| `command` | The words that named it: `status`, `pack upgrade`. |
+| `exitCode` | The code the process ends on. |
+| `data` | What the command has to say. Its shape is per command, under `$defs/data/<command>` of the schema. Absent when it failed before having anything to say. |
+| `warnings` | Every warning the command printed, without the colours. |
+| `error` | Only when something went wrong: `kind` (`refusal`, `usage` or `technical`), the `message` word for word, the `name` it starts with when it has one, and the `sqlstate`, `detail` and `hint` when the database gave them. |
+
+The shape is published as
+[`schema/output.1.json`](schema/output.1.json), ships in the package, and is
+what `tests/cli/output-contract.test.ts` validates every command against. An
+amount is a decimal string and never a JSON number; a date is ISO 8601.
+
+| Exit code | Means |
+|---|---|
+| `0` | Done. |
+| `1` | It failed for a reason that is not the books — the network, a database that does not answer, a bug — **or a check found something**: a `doctor` problem, a pending migration in `status`, a stale seed in `pack check`, a company behind its pack. In the second case `data` says what and there is no `error`. |
+| `2` | The command was called wrong: an unknown option, a missing argument, or a question that needed an answer with no terminal to ask it on. |
+| `3` | **The database refused.** A locked period, a capability you do not hold, a row level security policy, a constraint. The call was well formed and everything worked; the accounting said no. |
+
+A refusal is printed as the database wrote it — `period_locked: …`,
+`tax_territory_mismatch: …` — and never rephrased; the CLI does not move a
+date or retry differently to get past one. Its name is the part to match on,
+in a field of its own under `--json`.
+
+**No command waits on a question when there is nobody to answer.** Off a
+terminal, or under `--json`, or with `--yes`, a missing answer is exit code 2
+with the flag to pass. That holds underneath the commands too: a prompt that
+is reached with no terminal stops instead of waiting.
+
+## Acting as a person: `login`, `use`, `whoami`
+
+The commands above install and operate, and connect as the owner of the
+database — they say so when they connect. Anything that keeps books acts as
+**a person**, through the instance's API, under row level security: the same
+route, and the same functions of the schema, as the MCP server.
+
+```bash
+ekwo login --supabase-url https://<ref>.supabase.co --anon-key <publishable key> --email you@example.test
+ekwo whoami
+ekwo use "Example One"
+ekwo whoami --json
+```
+
+`login` asks the instance for a session and keeps it. In a directory that has
+an `ekwo.json`, the URL is read from it. The password is prompted, masked, when
+`--password` and `EKWO_PASSWORD` are absent; it is sent to the instance once
+and written nowhere. Signing in again after a session ended is `ekwo login`
+and a password: the profile remembers the rest.
+
+**Where the session is kept.** In `$EKWO_CONFIG_DIR`, else
+`$XDG_CONFIG_HOME/ekwo`, else `~/.config/ekwo`, in two files written `0600` in
+a `0700` directory: `profiles.json` says where each profile points and holds
+no token; `credentials.json` holds the access token and the refresh token.
+The CLI refuses — `config_dir_in_repository` — to write either inside a
+repository, where one `git add .` would publish them. The access token lasts
+about an hour and is renewed on its own, ahead of time and again if the
+instance answers 401 anyway; the rotated refresh token replaces the old one
+on disk before the call is retried. A session that cannot be renewed is
+`session_expired`, exit code 2, and the fix is `ekwo login`.
+
+**Profiles.** `--profile <name>`, or `EKWO_PROFILE`: a demo instance,
+production, one client of a firm. Each holds one instance, one person and one
+company in use. The profile last signed in to is the one used when none is
+named.
+
+**The environment comes first, and touches no file.** With `SUPABASE_URL`,
+`SUPABASE_ANON_KEY` and either `EKWO_ACCESS_TOKEN` or `EKWO_EMAIL` with
+`EKWO_PASSWORD` — the variables the MCP server reads — a command signs in for
+its own duration, reads no profile and writes nothing: a CI job. The
+environment is taken whole: a user there with no instance beside it is a wrong
+call, never a fallback on a profile's instance. It has nowhere to keep a
+company, so pass `--company`.
+
+**The company in use.** `ekwo use <name or id>` checks the company against the
+instance, as you, and records it; `--company` names another for one command.
+A company you cannot see is `unknown_company`, and is not named in the
+refusal. Under `--json` every answer of a command that acts as a person
+carries a `context` — the profile, the instance and **the company the answer
+was rendered for**, `null` when none is in use — on success and on a refusal
+alike. A caller that keeps two sets of books reads it before it believes the
+rest.
+
+```json
+{ "ok": true, "command": "whoami", "exitCode": 0,
+  "context": { "profile": "default", "instance": "https://<ref>.supabase.co",
+               "company": { "id": "…", "name": "Example One" } },
+  "data": { "user": { "id": "…", "email": "you@example.test" },
+            "instance": { "url": "…", "schemaVersion": "0.3.0" },
+            "capabilities": ["…"], "companies": [ … ] },
+  "warnings": [] }
+```
+
+`whoami` works nothing out. The companies are the rows the policies let you
+read, the capabilities are what `member_capabilities()` answers for the
+company in use — the function behind `your_capabilities` in the MCP server —
+and the schema version is `ekwo_schema_version()`.
+
+**Never a `service_role` key.** It is refused by name, `service_role_refused`,
+with exit code 2 and before anything is sent, at every door it can arrive by:
+`--anon-key` or `SUPABASE_ANON_KEY`, `EKWO_ACCESS_TOKEN`, a session file
+somebody edited, and `--service-role-key` typed out of habit. The test for it
+and the sentence are in `@ekwo-ai/core`, where the MCP server reads them too.
+`ekwo init` remains the one command that takes that key, to create the first
+user, and never keeps it.
+
+| Refusal of the CLI's own | Exit code | Means |
+|---|---|---|
+| `not_signed_in`, `unknown_profile`, `session_expired` | 2 | There is nobody to act as. `ekwo login`. |
+| `service_role_refused`, `config_dir_in_repository`, `missing_configuration` | 2 | The call has to change, not be retried. |
+| `unknown_company`, `ambiguous_company` | 2 | Name it differently, or by its id. |
+| `no_company` | 2 | A verb that keeps books ran with no company in use. `ekwo use`, or `--company`. |
+| `unknown_contact`, `ambiguous_contact`, `unknown_document`, `unknown_account_code`, `unknown_tax_code`, `document_not_draft`, `nothing_open`, `bad_line`, `unknown_field`, `bad_json` | 2 | Decided before the database was asked, by the CLI or by the functions it shares with the MCP server. The call has to change. |
+| `sign_in_failed`, `instance_unreachable` | 1 | The instance declined the address and the password, or did not answer. |
+
+A refusal of the database that arrives over this route is still exit code 3:
+PostgREST passes on the SQLSTATE, the detail and the hint, and the CLI reads
+them as it reads a driver's.
+
+## Keeping books
+
+```bash
+ekwo contact add "Client Example" --country <cc> --ref crm-42
+ekwo invoice new --contact client --date 2026-06-15 --ref job-7 \
+     --line "name=Audit,price=1500.00,account=<account code>,tax=<tax code>"
+ekwo invoice line add job-7 --name Travel --price 250.00 --account <account code>
+ekwo post job-7 --dry-run        # the entry the database would write; nothing is written
+ekwo post job-7                  # post_document()
+ekwo payment record --doc job-7 --amount 1750.00 --date 2026-06-30 --bank-account <id> --ref bank-1
+ekwo match <bank transaction id> job-9
+ekwo doc list --unpaid --since 2026-06-01 --json
+```
+
+They run as the person signed in, on the company in use ([above](#acting-as-a-person-login-use-whoami)),
+and none is ever picked for you: with no company in use a verb ends on
+`no_company`, exit code 2, and `context.company` is `null`.
+
+**Each verb is one function, and it is not ours.** The functions live in
+`@ekwo-ai/core` and the MCP server calls the same ones: `contact add` is
+`create_contact`, `invoice new` is `create_document`, `post` is
+`post_document`, `payment record` is `record_payment`, `doc list` and
+`doc show` are `list_documents` and `get_document`. Underneath them the rules
+are the schema's — the balance, the numbering, the locks, the taxes, the
+territory, the tax point. **This CLI computes no amount**: what you type goes
+in as text, what is printed is what came back, and
+`tests/cli/no-rules.test.ts` reads the commands to keep it that way. An amount
+is a decimal string in both directions, `1500.00`.
+
+**A refusal is the answer.** A locked period, a policy, a constraint: exit
+code 3, the database's sentence word for word, its name in `error.name`. The
+CLI does not move a date or try something else. What is refused *before* the
+database is asked — an account code that does not exist, a document that is
+not a draft, a document with nothing open — is exit code 2: the call has to
+change.
+
+**`--ref`, so that nothing is created twice.** On what creates (`contact add`,
+`invoice new`, `payment record`), `--ref <your reference>` is kept on the row,
+unique per company. The same reference a second time returns what the first
+call created, with `"replayed": true`, and writes nothing — and finishes what
+a dropped connection left half done: a draft whose lines never arrived, a
+payment inserted and never booked. Two callers racing each other are settled
+by the unique index, which refuses the slower one with exit code 3. A
+`<document>` is its id, its number, or the `--ref` it was created under, which
+is how a draft — it has no number yet — is named.
+
+**`--dry-run`, where the database can answer without writing.** Today that is
+`post`. `rehearse_post_document()` calls `post_document()` for real inside a
+block it then rolls back, so the entry shown is the one that would be written,
+under the number it would take, and a rehearsal is refused exactly as posting
+would be. No other verb has one, because for no other verb does the database
+know how.
+
+**`--stdin`, the form that is authoritative.** One JSON object on the standard
+input, with the fields of the MCP tool of the same meaning (`contact_type`,
+`document_date`, `lines: [{ name, unit_price, account_code, tax_code, … }]`,
+`client_ref`). A field nobody defined is refused rather than dropped. Flags
+given beside it win.
+
+```bash
+echo '{"contact":"client","document_date":"2026-06-15","client_ref":"job-8",
+       "lines":[{"name":"Review, \"urgent\"","unit_price":"200.00","account_code":"<code>"}]}' \
+  | ekwo invoice new --stdin --json
+```
+
+**`--line`, for a person.** Named fields, never positions: `name`, `price`,
+`qty`, `account`, `tax`, `product`, `unit`, `discount`, `description`; a comma
+inside a value is `\,`. A tax and an account are named by their **code** —
+never a rate, since several taxes share one. The free-text form
+(`"Audit 1 500 EUR@21"`) is not accepted: `1 500` is one number or two, `@21`
+is a rate where the books need a tax, and a currency belongs to the document
+(`--currency`), not to a line.
+
+Two values are supplied when nobody gives them, and said when they are:
+`--type` is `sale_invoice`, and `--date` is today on the machine running the
+command. Whether that date may be booked on is the database's decision.
 
 ## `ekwo module`
 
@@ -284,6 +518,40 @@ or `[api] schemas` in `supabase/config.toml`.
 **Before `supabase db push`**, run `ekwo migrate --no-modules`. The Supabase
 CLI knows the socle's migration files and not a module's, so it would report
 them as history it has no file for.
+
+## `ekwo company`
+
+A firm keeps several companies in one installation, and each of them belongs to
+somebody. These two commands are how one of them leaves, and arrives somewhere
+else.
+
+```sh
+ekwo company export "My Company" --out ./my-company   # manifest.json + data/<schema>.<table>.jsonl
+ekwo company import ./my-company --owner <user id>    # whole, or not at all
+```
+
+**`export` runs as a member, under row level security**, although the
+connection belongs to the owner of the database: inside one transaction the CLI
+steps down to `authenticated` with the claim of the member it acts for —
+`--as-user`, an owner of the company by default. That member needs
+`company.export`, which the `owner` and `client` presets hold. An archive is
+whole or it is not written: a member who may not read one of the tables is
+refused, by table, with exit code 3. The act is written on the audit trail of
+the company.
+
+**`import` is for the installer or an administrator of the installation**
+(`--as-user`), the two who may create a company. The files are checked against
+the manifest before the database is asked anything; then `import_company()`
+takes all of it or none of it. A company already there is refused — exit code
+3, `company_already_here` — which is also what running the command twice gets.
+Members do not travel: `--owner` names the first one.
+
+**The files the attachments point at are not carried.** They are in the storage
+bucket, not in the database; `manifest.json` lists them and both commands say
+how many are left to copy.
+
+The format, what travels and what does not, and every refusal are in
+[`docs/company-archive.md`](../../docs/company-archive.md).
 
 ## `ekwo doctor`
 
@@ -441,8 +709,8 @@ dashboard under Connect → Session pooler, is the form that is never derived.
 | `--register` | Register without being asked. `--register-email` sets the address. |
 | `--registry-url <url>` | Where the registration is announced. |
 
-`ekwo status` and `ekwo doctor` take `--json`. `ekwo migrate` takes
-`--skip-seeds`.
+Every command takes `--json`; see [what a command answers](#what-a-command-answers---json-and-the-exit-codes).
+`ekwo migrate` takes `--skip-seeds`.
 
 ## Environment variables
 
@@ -451,7 +719,12 @@ dashboard under Connect → Session pooler, is the form that is never derived.
 | `EKWO_DB_URL` | `--db-url`. `SUPABASE_DB_URL` also works. |
 | `EKWO_DB_PASSWORD` | `--db-password` |
 | `SUPABASE_URL` | `--supabase-url` |
-| `SUPABASE_SERVICE_ROLE_KEY` | `--service-role-key` |
+| `SUPABASE_SERVICE_ROLE_KEY` | `--service-role-key`. `ekwo init` only. |
+| `SUPABASE_ANON_KEY` | `--anon-key` |
+| `EKWO_EMAIL`, `EKWO_PASSWORD` | Sign in for one command, writing nothing. `ekwo login` reads them too. |
+| `EKWO_ACCESS_TOKEN` | The same, with a session token already in hand. It is not renewed. |
+| `EKWO_PROFILE` | `--profile` |
+| `EKWO_CONFIG_DIR` | Where profiles and sessions are kept. |
 | `EKWO_REGISTRY_URL` | `--registry-url`. Default `https://api.ekwo.ai/v1/registrations`. |
 | `NO_COLOR` | Plain output. |
 
@@ -459,16 +732,25 @@ See [`.env.example`](../../.env.example) at the root of the repository.
 
 ## Secrets
 
-The CLI never writes a secret to disk. The database password and the
-`service_role` key are read from a flag, an environment variable or a masked
-prompt, used, and forgotten. There is no credential cache, no dotfile in the
-home directory, and nothing in `ekwo.json` but the project URL, the country
-and the schema version.
+The CLI never writes a password or a key to disk. The database password and
+the `service_role` key are read from a flag, an environment variable or a
+masked prompt, used, and forgotten; nothing is in `ekwo.json` but the project
+URL, the country and the schema version.
 
-It has one runtime dependency, the Postgres driver. Argument parsing, prompts
-and the masked input are a few dozen lines each in this package rather than
-packages from the registry, because everything this CLI is handed is a secret
-and every dependency added is one more thing that could read it.
+One thing is kept, since `ekwo login`: the session of the person who signed
+in — an access token and the refresh token that renews it — in their own
+configuration directory, readable by them alone, and refused anywhere inside a
+repository. It is in a file and not in the keychain of the operating system;
+`ekwo logout` removes it and ends it on the instance, and a job that should
+keep nothing sets the environment variables instead.
+
+It has one runtime dependency from outside this repository, the Postgres
+driver. Argument parsing, prompts and the masked input are a few dozen lines
+each in this package rather than packages from the registry, because
+everything this CLI is handed is a secret and every dependency added is one
+more thing that could read it. The other dependency is `@ekwo-ai/core`, this
+repository's own, where the CLI and the MCP server read a refusal of the
+database the same way.
 
 ## Registering with Ekwo
 

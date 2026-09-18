@@ -108,9 +108,12 @@ test refuses any other arrangement.
 **The capability is the module's own**, declared in the module's own migration
 with `capabilities.area` set to the module code — `assets.read` /
 `assets.write` / `assets.post`, `budgets.read` / `budgets.write` — and added to
-the three presets there too, because the socle filled the owner preset with
+the presets there too, because the socle filled the owner preset with
 `select 'owner', code from capabilities` at its own migration time and a code
-that arrives later has to name itself. Borrowing the socle's
+that arrives later has to name itself. A `.read` goes to `viewer` **and to
+`client`**, which holds what a viewer holds; a module that may be applied on a
+socle older than 18 September 2026 reads the label from `pg_enum` rather than
+writing `'client'::member_role`, the way `assets` and `budgets` do. Borrowing the socle's
 `can_write_company()` is what these two did until 13 September 2026, and it
 meant whoever could draft a journal entry could also rewrite the fixed asset
 register. A test refuses a module policy that tests it.
@@ -209,6 +212,34 @@ A module that holds nothing a company would lose writes none at all, which is
 what `budgets` does — turning it off hides the rows and turning it back on
 gives them back. Nothing a module wrote is ever deleted by a disable.
 
+### `archive_tables`, and why it is not optional
+
+A company leaves an installation with its books
+([`company-archive.md`](company-archive.md)), and a module's rows are part of
+them. The socle finds every table that belongs to a company in the catalogue,
+and refuses to export anything while one of them is unclassified — so a module
+says what happens to each of its tables, in a function the socle looks up the
+way it looks up `can_disable`:
+
+```sql
+create or replace function assets.archive_tables()
+returns table (table_name text, disposition text, reason text,
+               via_column text, via_table text, load_order integer)
+language sql immutable as $$
+  values ('assets'::text,       'exported'::text, null::text, null::text, null::text, 1),
+         ('depreciation_lines', 'exported',       null,       null,       null,       2),
+         ('disposals',          'exported',       null,       null,       null,       3);
+$$;
+```
+
+`exported`, or `excluded` with a `reason` of a sentence. `load_order` is
+relative to the module — the socle loads every module after its own tables —
+and a parent comes before its children. Reference data of the installation,
+with no `company_id` and no foreign key to a company, is not listed at all. A
+function in the module's schema rather than rows in a table of the socle,
+because a module migration may be applied on a socle that does not have that
+table yet.
+
 ## PostgREST, and the one thing no migration can do
 
 A schema other than `public` is served only once the project lists it under its
@@ -235,8 +266,8 @@ registry takes in the database.
 1. `mkdir -p modules/<code>/{supabase/migrations,tests}` and write
    `module.json` and `README.md`.
 2. One migration: `create schema <code>`, the enums, the tables with their
-   foreign keys onto `public`, the functions, the policies, the grants, and the
-   `insert into public.modules` last.
+   foreign keys onto `public`, the functions — `archive_tables()` among them —
+   the policies, the grants, and the `insert into public.modules` last.
 3. If the module has a country rule, add `<code>` to `packs/schema/pack.1.json`
    as a `$defs` document, read it in `packages/cli/src/pack/read.ts`, compile it
    in `packages/cli/src/pack/compile.ts`, and run `ekwo pack build --all`.
@@ -249,3 +280,5 @@ The guards in `tests/modules.test.ts` are what will tell you if you got it
 wrong: row level security, `module_enabled()` in the policies, `company_id` on
 every table of a company, no country literal, no write to the ledger, the
 manifest against its schema, and the migration timestamps in order.
+`tests/company_archive.test.ts` adds one: a table of yours that belongs to a
+company and that `archive_tables()` does not classify.

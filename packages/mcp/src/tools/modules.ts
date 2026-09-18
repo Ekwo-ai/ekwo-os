@@ -22,7 +22,7 @@
 
 import { z } from 'zod';
 import { EkwoMcpError, type Backend, type Row } from '../backend.js';
-import { money } from '../format.js';
+import { money } from '@ekwo-ai/core';
 import { companyId, isoDate, uuid } from './read.js';
 
 /** One module's tools, as the loader sees them. */

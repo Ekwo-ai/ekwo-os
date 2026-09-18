@@ -19,7 +19,7 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { rejectUnknownFlags, boolFlag, stringFlag, UsageError, type ParsedArgs } from '../args.js';
-import { CONNECTION_FLAGS, openDatabase } from '../context.js';
+import { CONNECTION_FLAGS, openDatabase, type CommandDeps } from '../context.js';
 import { isInteractive } from '../prompt.js';
 import { packStatus, packUpgrade, resolveCompany, type PackChange } from '../pack/upgrade.js';
 import {
@@ -29,6 +29,7 @@ import {
   frameworkSeedFileName,
   seedFileName,
 } from '../pack/compile.js';
+import { describeFiling } from '../pack/filing.js';
 import {
   GENERIC_PACK,
   declaredSeedSequences,
@@ -38,20 +39,22 @@ import {
   readPack,
   seedOutputDir,
 } from '../pack/read.js';
+import { setResult } from '../output.js';
 import { bold, dim, fail, heading, line, note, pairs, skipped, step, warn, yellow } from '../ui.js';
 
-export const PACK_FLAGS = [...CONNECTION_FLAGS, 'all', 'yes', 'apply', 'country', 'json', 'links'] as const;
+export const PACK_FLAGS = [...CONNECTION_FLAGS, 'all', 'yes', 'apply', 'country', 'links'] as const;
 
-export async function packCommand(args: ParsedArgs): Promise<number> {
+export async function packCommand(args: ParsedArgs, deps: CommandDeps = {}): Promise<number> {
   rejectUnknownFlags(args, PACK_FLAGS);
   const action = args.positional[0];
 
-  if (action === undefined || action === 'help') {
+  if (action === undefined) throw new UsageError(`name a subcommand\n${usage()}`);
+  if (action === 'help') {
     line(usage());
-    return action === undefined ? 2 : 0;
+    return 0;
   }
-  if (action === 'status') return await statusSubcommand(args);
-  if (action === 'upgrade') return await upgradeSubcommand(args);
+  if (action === 'status') return await statusSubcommand(args, deps);
+  if (action === 'upgrade') return await upgradeSubcommand(args, deps);
 
   if (action !== 'build' && action !== 'check' && action !== 'list') {
     throw new UsageError(`unknown subcommand: pack ${action}\n${usage()}`);
@@ -63,6 +66,20 @@ export async function packCommand(args: ParsedArgs): Promise<number> {
   if (action === 'list') {
     heading(`Packs (${available.length + 1})`);
     const framework = await readFrameworkPack(GENERIC_PACK, dir);
+    const listed: Record<string, unknown>[] = [
+      {
+        pack: GENERIC_PACK,
+        name: framework.manifest.name,
+        version: framework.manifest.version,
+        charts: [],
+        taxes: 0,
+        statements: framework.statements.length,
+        languages: [],
+        certification: framework.manifest.certification?.status ?? null,
+        golden: false,
+        goldenExemption: framework.goldenExemption,
+      },
+    ];
     note(
       `${bold(GENERIC_PACK)}  ${framework.manifest.name} ${framework.manifest.version} · ` +
         `${framework.statements.length} statements · no country · ` +
@@ -73,6 +90,23 @@ export async function packCommand(args: ParsedArgs): Promise<number> {
     }
     for (const slug of available) {
       const pack = await readPack(slug, dir);
+      listed.push({
+        pack: slug,
+        name: pack.manifest.name,
+        version: pack.manifest.version,
+        charts: pack.charts.map((chart) => ({
+          code: chart.code,
+          name: chart.name,
+          isDefault: chart.is_default === true,
+          accounts: chart.accounts.length,
+        })),
+        taxes: pack.taxes.length,
+        statements: pack.statements.length,
+        languages: pack.languages,
+        certification: pack.manifest.certification?.status ?? null,
+        golden: pack.golden !== null,
+        goldenExemption: pack.goldenExemption,
+      });
       note(
         `${bold(slug)}  ${pack.manifest.name} ${pack.manifest.version} · ` +
           `${pack.charts.length} chart(s), ${pack.charts.reduce((n, c) => n + c.accounts.length, 0)} accounts · ` +
@@ -84,6 +118,10 @@ export async function packCommand(args: ParsedArgs): Promise<number> {
             : `golden: ${pack.golden.documents.length} documents, ` +
               `${pack.golden.payments.length} payments, ${pack.golden.periods.length} period(s)`),
       );
+      // What this pack can say about filing a declaration — every "no" printed
+      // rather than left out, because a listing that showed only what works
+      // would be a brochure.
+      note(dim(`        ${describeFiling(pack)}`));
       // An exemption is a claim somebody made, so it is printed rather than
       // inferred from the absence of a folder.
       if (pack.goldenExemption !== null) {
@@ -99,6 +137,7 @@ export async function packCommand(args: ParsedArgs): Promise<number> {
         );
       }
     }
+    setResult({ packs: listed });
     return 0;
   }
 
@@ -109,6 +148,9 @@ export async function packCommand(args: ParsedArgs): Promise<number> {
   const declared = await declaredSeedSequences(dir);
   const seedDir = seedOutputDir();
   let stale = 0;
+  // One line per seed file, for `--json`: what it is the output of, and what
+  // this run found or did about it.
+  const files: { file: string; pack: string; state: 'written' | 'unchanged' | 'stale' }[] = [];
 
   heading(action === 'build' ? 'Compiling' : 'Checking');
 
@@ -121,6 +163,7 @@ export async function packCommand(args: ParsedArgs): Promise<number> {
     const path = join(seedDir, file);
     const current = await readFile(path, 'utf8').catch(() => undefined);
     if (action === 'build') {
+      files.push({ file, pack: GENERIC_PACK, state: current === sql ? 'unchanged' : 'written' });
       if (current === sql) note(dim(`${file} — already the output of packs/${GENERIC_PACK}`));
       else {
         await writeFile(path, sql, 'utf8');
@@ -128,8 +171,10 @@ export async function packCommand(args: ParsedArgs): Promise<number> {
       }
     } else if (current !== sql) {
       stale += 1;
+      files.push({ file, pack: GENERIC_PACK, state: 'stale' });
       fail(`${file} is not the output of packs/${GENERIC_PACK}${current === undefined ? ' (it does not exist)' : ''}`);
     } else {
+      files.push({ file, pack: GENERIC_PACK, state: 'unchanged' });
       step(file);
     }
   }
@@ -142,6 +187,7 @@ export async function packCommand(args: ParsedArgs): Promise<number> {
     const current = await readFile(path, 'utf8').catch(() => undefined);
 
     if (action === 'build') {
+      files.push({ file, pack: slug, state: current === sql ? 'unchanged' : 'written' });
       if (current === sql) {
         note(dim(`${file} — already the output of packs/${slug}`));
       } else {
@@ -154,8 +200,10 @@ export async function packCommand(args: ParsedArgs): Promise<number> {
       }
     } else if (current !== sql) {
       stale += 1;
+      files.push({ file, pack: slug, state: 'stale' });
       fail(`${file} is not the output of packs/${slug}${current === undefined ? ' (it does not exist)' : ''}`);
     } else {
+      files.push({ file, pack: slug, state: 'unchanged' });
       step(`${file}`);
     }
 
@@ -181,7 +229,9 @@ export async function packCommand(args: ParsedArgs): Promise<number> {
     for (const [module, moduleSql] of compileModuleSeeds(pack)) {
       const modulePath = join(seedDir, 'modules', module, file);
       const moduleCurrent = await readFile(modulePath, 'utf8').catch(() => undefined);
+      const moduleFile = `modules/${module}/${file}`;
       if (action === 'build') {
+        files.push({ file: moduleFile, pack: slug, state: moduleCurrent === moduleSql ? 'unchanged' : 'written' });
         if (moduleCurrent === moduleSql) {
           note(dim(`modules/${module}/${file} — already the output of packs/${slug}/${module}.json`));
         } else {
@@ -191,11 +241,13 @@ export async function packCommand(args: ParsedArgs): Promise<number> {
         }
       } else if (moduleCurrent !== moduleSql) {
         stale += 1;
+        files.push({ file: moduleFile, pack: slug, state: 'stale' });
         fail(
           `modules/${module}/${file} is not the output of packs/${slug}/${module}.json` +
             (moduleCurrent === undefined ? ' (it does not exist)' : ''),
         );
       } else {
+        files.push({ file: moduleFile, pack: slug, state: 'unchanged' });
         step(`modules/${module}/${file}`);
       }
     }
@@ -216,6 +268,7 @@ export async function packCommand(args: ParsedArgs): Promise<number> {
     await followLinks(wanted.filter((s) => s !== GENERIC_PACK), dir);
   }
 
+  setResult({ action, files, stale });
   if (stale > 0) {
     line();
     note(dim('Run `ekwo pack build --all` and commit the result.'));
@@ -310,16 +363,13 @@ function selection(args: ParsedArgs, available: string[]): string[] {
  * an operator can ask it as often as they like and on a company they have no
  * intention of moving.
  */
-async function statusSubcommand(args: ParsedArgs): Promise<number> {
+async function statusSubcommand(args: ParsedArgs, deps: CommandDeps): Promise<number> {
   const interactive = !boolFlag(args, 'yes') && isInteractive();
-  const { db } = await openDatabase(args, { interactive });
+  const { db } = await openDatabase(args, { interactive, connect: deps.connect });
   try {
     const report = await packStatus(db);
 
-    if (boolFlag(args, 'json')) {
-      line(JSON.stringify(report, null, 2));
-      return report.companies.some((c) => c.behind) ? 1 : 0;
-    }
+    setResult(report);
 
     heading(`Packs loaded here (${report.packs.length})`);
     if (report.packs.length === 0) {
@@ -374,13 +424,13 @@ async function statusSubcommand(args: ParsedArgs): Promise<number> {
  * left exactly where it was. `--apply` is the operator saying they have read
  * that list.
  */
-async function upgradeSubcommand(args: ParsedArgs): Promise<number> {
+async function upgradeSubcommand(args: ParsedArgs, deps: CommandDeps): Promise<number> {
   const wanted = args.positional[1];
   if (wanted === undefined) {
     throw new UsageError('name the company to upgrade: `ekwo pack upgrade "<name>"`, or its id.');
   }
   const interactive = !boolFlag(args, 'yes') && isInteractive();
-  const { db } = await openDatabase(args, { interactive });
+  const { db } = await openDatabase(args, { interactive, connect: deps.connect });
   try {
     const company = await resolveCompany(db, wanted);
     const country = stringFlag(args, 'country');
@@ -405,10 +455,7 @@ async function upgradeSubcommand(args: ParsedArgs): Promise<number> {
       ...(country === undefined ? {} : { country }),
     });
 
-    if (boolFlag(args, 'json')) {
-      line(JSON.stringify(result, null, 2));
-      return result.listed.length > 0 ? 1 : 0;
-    }
+    setResult({ company: { id: company.id, name: company.name }, ...result });
 
     heading(`${company.name} — ${result.country} pack ${result.from_version} → ${result.to_version}`);
 

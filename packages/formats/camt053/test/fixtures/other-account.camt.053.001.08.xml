@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- An invented statement of an account that has no IBAN, written the way
+     some banks write XML: a prefix on every element, a CDATA section, a
+     character reference. No account, party or bank in this file exists. -->
+<ns2:Document xmlns:ns2="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <ns2:BkToCstmrStmt>
+    <ns2:GrpHdr>
+      <ns2:MsgId>MSG-OTHER-0001</ns2:MsgId>
+      <ns2:CreDtTm>2026-02-01T05:00:00Z</ns2:CreDtTm>
+    </ns2:GrpHdr>
+    <ns2:Stmt>
+      <ns2:Id>2026-01</ns2:Id>
+      <ns2:Acct>
+        <ns2:Id>
+          <ns2:Othr>
+            <ns2:Id>0000123456</ns2:Id>
+            <ns2:SchmeNm><ns2:Cd>BBAN</ns2:Cd></ns2:SchmeNm>
+            <ns2:Issr>Example Bank</ns2:Issr>
+          </ns2:Othr>
+        </ns2:Id>
+        <ns2:Ccy>USD</ns2:Ccy>
+      </ns2:Acct>
+      <ns2:Bal>
+        <ns2:Tp><ns2:CdOrPrtry><ns2:Cd>OPBD</ns2:Cd></ns2:CdOrPrtry></ns2:Tp>
+        <ns2:Amt Ccy="USD">250.00</ns2:Amt>
+        <ns2:CdtDbtInd>DBIT</ns2:CdtDbtInd>
+        <ns2:Dt><ns2:Dt>2026-01-01</ns2:Dt></ns2:Dt>
+      </ns2:Bal>
+      <ns2:Bal>
+        <ns2:Tp><ns2:CdOrPrtry><ns2:Cd>CLBD</ns2:Cd></ns2:CdOrPrtry></ns2:Tp>
+        <ns2:Amt Ccy="USD">749.5</ns2:Amt>
+        <ns2:CdtDbtInd>CRDT</ns2:CdtDbtInd>
+        <ns2:Dt><ns2:Dt>2026-01-31</ns2:Dt></ns2:Dt>
+      </ns2:Bal>
+      <ns2:Ntry>
+        <ns2:Amt Ccy="USD">1000</ns2:Amt>
+        <ns2:CdtDbtInd>CRDT</ns2:CdtDbtInd>
+        <ns2:Sts><ns2:Cd>BOOK</ns2:Cd></ns2:Sts>
+        <ns2:BookgDt><ns2:Dt>2026-01-15</ns2:Dt></ns2:BookgDt>
+        <ns2:BkTxCd><ns2:Prtry><ns2:Cd>WIRE-IN</ns2:Cd></ns2:Prtry></ns2:BkTxCd>
+        <ns2:NtryDtls>
+          <ns2:TxDtls>
+            <ns2:RltdPties>
+              <ns2:Dbtr><ns2:Pty><ns2:Nm><![CDATA[Smith & Sons <Example>]]></ns2:Nm></ns2:Pty></ns2:Dbtr>
+              <ns2:DbtrAcct>
+                <ns2:Id>
+                  <ns2:Othr>
+                    <ns2:Id>999999992 0000654321</ns2:Id>
+                    <ns2:SchmeNm><ns2:Prtry>ROUTING ACCOUNT</ns2:Prtry></ns2:SchmeNm>
+                  </ns2:Othr>
+                </ns2:Id>
+              </ns2:DbtrAcct>
+            </ns2:RltdPties>
+            <ns2:RmtInf><ns2:Ustrd>Invoice N&#176; 12 &#x2014; caf&#233;</ns2:Ustrd></ns2:RmtInf>
+          </ns2:TxDtls>
+        </ns2:NtryDtls>
+      </ns2:Ntry>
+      <ns2:Ntry>
+        <ns2:Amt Ccy="USD">0.50</ns2:Amt>
+        <ns2:CdtDbtInd>DBIT</ns2:CdtDbtInd>
+        <ns2:Sts><ns2:Prtry>BOOKED-LATE</ns2:Prtry></ns2:Sts>
+        <ns2:BookgDt><ns2:Dt>2026-01-31</ns2:Dt></ns2:BookgDt>
+        <ns2:BkTxCd/>
+      </ns2:Ntry>
+      <ns2:Ntry>
+        <ns2:Amt Ccy="USD">0.50</ns2:Amt>
+        <ns2:CdtDbtInd>DBIT</ns2:CdtDbtInd>
+        <ns2:Sts><ns2:Cd>BOOK</ns2:Cd></ns2:Sts>
+        <ns2:BookgDt><ns2:Dt>2026-01-31</ns2:Dt></ns2:BookgDt>
+        <ns2:BkTxCd/>
+      </ns2:Ntry>
+    </ns2:Stmt>
+  </ns2:BkToCstmrStmt>
+</ns2:Document>

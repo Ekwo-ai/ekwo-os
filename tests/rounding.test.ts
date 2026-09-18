@@ -3,7 +3,7 @@
  *
  * Before 13 September 2026 the three packages answered this differently:
  * `factur-x` added an epsilon and rounded, `xbrl-cbso` rounded without one,
- * and the MCP server used `toFixed(2)`. The three disagree on exactly the two
+ * and the MCP server (whose copy now lives in the core, where the command line reads it too) used `toFixed(2)`. The three disagree on exactly the two
  * cases a ledger meets — a negative half, where `Math.round` goes towards
  * positive infinity and turns -0.005 into -0.00, and a value a binary float
  * cannot hold, where 2.675 becomes 2.67 because `2.675 * 100` is really
@@ -22,8 +22,8 @@ import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { roundCurrency as facturx } from '../packages/formats/factur-x/src/rounding.js';
 import { roundCurrency as xbrl } from '../packages/formats/xbrl-cbso/src/rounding.js';
-import { roundCurrency as mcp } from '../packages/mcp/src/rounding.js';
-import { money } from '../packages/mcp/src/format.js';
+import { roundCurrency as core } from '../packages/core/src/books/rounding.js';
+import { money } from '../packages/core/src/books/format.js';
 import { round2 } from '../packages/formats/factur-x/src/totals.js';
 import { repoRoot } from './helpers/db.js';
 import { ROUNDING_VECTOR } from './helpers/rounding-vector.js';
@@ -31,14 +31,14 @@ import { ROUNDING_VECTOR } from './helpers/rounding-vector.js';
 const COPIES = [
   'packages/formats/factur-x/src/rounding.ts',
   'packages/formats/xbrl-cbso/src/rounding.ts',
-  'packages/mcp/src/rounding.ts',
+  'packages/core/src/books/rounding.ts',
 ];
 
 describe('the one rounding rule', () => {
   for (const [name, round] of [
     ['factur-x', facturx],
     ['xbrl-cbso', xbrl],
-    ['mcp', mcp],
+    ['the core, for the MCP server and the command line', core],
   ] as const) {
     it(`is the same in ${name}`, () => {
       for (const { value, decimals, expected, text } of ROUNDING_VECTOR) {

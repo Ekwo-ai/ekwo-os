@@ -12,7 +12,7 @@ import { McpServer, ResourceTemplate } from '@modelcontextprotocol/sdk/server/mc
 import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
 import { z } from 'zod';
 import { EkwoMcpError, type Backend, type Row } from './backend.js';
-import * as columns from './columns.js';
+import { columns } from '@ekwo-ai/core';
 import * as read from './tools/read.js';
 import * as write from './tools/write.js';
 import { toolsetsFor } from './tools/modules.js';
@@ -26,7 +26,7 @@ export const SERVER_NAME = '@ekwo-ai/mcp';
  * `tests/mcp/surface.test.ts` keeps the two equal, so a release that bumps one
  * and forgets the other fails the build.
  */
-export const SERVER_VERSION = '0.3.0';
+export const SERVER_VERSION = '0.4.0';
 
 /** Everything a tool returns: JSON, pretty-printed, as one text block. */
 function ok(payload: unknown): CallToolResult {
@@ -264,11 +264,35 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     {
       title: 'Recapitulative statement of intra-Community supplies',
       description:
-        'Who, in another Member State, was supplied without VAT over a period, and for how much: one line per customer VAT number and per nature — goods, services — read from the treatment of the tax on each sale line, with credit notes deducted. The totals tie back to the intra-Community boxes of vat_return for the same period. A line that carries an issue cannot be filed as it stands, most often because the customer has no VAT number recorded: say so rather than leaving it out of the answer. No country rule lives in this tool. It prepares a statement; it files nothing.',
+        'Who, in another Member State, was supplied without VAT over a period, and for how much: one line per customer VAT number and per nature — goods, services — read from the treatment of the tax on each sale line, with credit notes deducted. The totals tie back to the intra-Community boxes of vat_return for the same period. A line that carries an issue cannot be filed as it stands, most often because the customer has no VAT number recorded: say so rather than leaving it out of the answer. Name a report_code to have the period checked against the cadence this company files that statement on — it has one of its own, and it is rarely the cadence of the return. No country rule lives in this tool. It prepares a statement; it files nothing.',
       inputSchema: read.EcSalesListInput.shape,
       annotations: { readOnlyHint: true, openWorldHint: false },
     },
     async (args) => guard(() => read.ecSalesList(backend, args)),
+  );
+
+  server.registerTool(
+    'portfolio_upcoming_filings',
+    {
+      title: 'Returns falling due, across your companies',
+      description:
+        'What falls due between two dates in every company you may read the declarations of — the question a firm asks of all the books it keeps, and the one a person asks of the single company they run. "Portfolio" is meant as an accounting firm means it — its client portfolio — and is nothing but that: the companies you hold filings.read on, worked out at each call, never a list anybody maintains. Every one of them is in the answer, including a company whose country pack names no deadline, which is listed without a date and says so; a company left out would be indistinguishable from one that was never looked at. No country rule lives in this tool. It reads a calendar; it prepares and files nothing.',
+      inputSchema: read.PortfolioUpcomingFilingsInput.shape,
+      annotations: { readOnlyHint: true, openWorldHint: false },
+    },
+    async (args) => guard(() => read.portfolioUpcomingFilings(backend, args)),
+  );
+
+  server.registerTool(
+    'portfolio_filings_touched_since',
+    {
+      title: 'Declared periods that moved, across your companies',
+      description:
+        'Which declarations, across your portfolio — every company you may read the declarations of, which for an accounting firm is its clients — had entries posted into their period after they were filed — with the company named, how many entries, and how many of the filed figures now disagree. A period stays open after its return has gone, on purpose; this is what keeps a late entry from going unnoticed. Companies with nothing to report are named too, with how many filed declarations were examined. It reads; whether a corrective is owed is for whoever keeps the books.',
+      inputSchema: read.PortfolioFilingsTouchedSinceInput.shape,
+      annotations: { readOnlyHint: true, openWorldHint: false },
+    },
+    async (args) => guard(() => read.portfolioFilingsTouchedSince(backend, args)),
   );
 
   server.registerTool(
@@ -502,6 +526,18 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
   );
 
   server.registerTool(
+    'import_bank_statement',
+    {
+      title: 'Import a bank statement',
+      description:
+        'Reads a bank statement file and writes its statements and lines. `format` says what the file is — `camt.053` (the ISO 20022 XML statement), `coda` or `cfonb120`, which are the ones this server reads today — and `content` is the file as text. It is never guessed from the content. It books nothing: every line waits as pending, to be settled afterwards. Safe to repeat: the same file imported twice creates nothing the second time, and a statement overlapping an earlier one imports only the new lines. Refused by name, with nothing written: an account the company does not have (create it first with create_bank_account — an import never creates one), a statement whose opening balance plus lines is not its closing balance, a line in another currency. Signalled in `warnings`, not refused: an opening balance that is not the previous closing one, which means a statement is missing.',
+      inputSchema: write.ImportBankStatementInput.shape,
+      annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: true, openWorldHint: false },
+    },
+    async (args) => guard(() => write.importBankStatement(backend, args)),
+  );
+
+  server.registerTool(
     'create_company',
     {
       title: 'Create a company',
@@ -542,7 +578,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     {
       title: 'Invite somebody into a company',
       description:
-        'Invites an address into a company with a preset — viewer reads, accountant keeps the books, owner also administers — and any capability granted on top of it. It returns a token once and stores only its hash, so hand the token to the person you invited: they accept it themselves, signed in with that address. It does not send an e-mail, and it does not create an account. Inviting the same address again withdraws the invitation that was pending.',
+        'Invites an address into a company with a preset — viewer reads, client reads and hands pieces over, accountant keeps the books, owner also administers — and any capability granted on top of it. It returns a token once and stores only its hash, so hand the token to the person you invited: they accept it themselves, signed in with that address. It does not send an e-mail, and it does not create an account. Inviting the same address again withdraws the invitation that was pending.',
       inputSchema: write.InviteMemberInput.shape,
       annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: false, openWorldHint: false },
     },
@@ -726,6 +762,10 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
           'factor_percent::text',
           'account_id',
           'declaration_box',
+          // Every box this one amount is printed in, not only the one the
+          // posting is known by: a client reading the first alone would
+          // under-report a form that prints a figure in two boxes at once.
+          'declaration_boxes',
           'box_factor_percent::text',
           'report_code',
           'sequence',

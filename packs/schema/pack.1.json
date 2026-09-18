@@ -4,15 +4,29 @@
   "title": "Ekwo country pack, version 1",
   "description": "A country is data, not code. This file describes every document of packs/<cc>/: the manifest (the root of this schema), taxes.json, tax_report.json, statements.json, i18n/<lang>.json and the columns of accounts.csv. Nothing here is executable: there is no script field, and there will not be one. What a pack cannot express is a core issue, not a pack extension.",
   "type": "object",
-  "required": ["country", "name", "version", "schema_min", "seed_sequence", "defaults", "journals"],
+  "required": [
+    "country",
+    "name",
+    "version",
+    "schema_min",
+    "seed_sequence",
+    "defaults",
+    "journals"
+  ],
   "additionalProperties": false,
   "properties": {
-    "$schema": { "type": "string" },
+    "$schema": {
+      "type": "string"
+    },
     "country": {
       "$ref": "#/$defs/country",
       "description": "ISO 3166-1 alpha-2. Immutable once published."
     },
-    "name": { "type": "string", "minLength": 1, "description": "The country in English, as country_defaults.name holds it." },
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "description": "The country in English, as country_defaults.name holds it."
+    },
     "version": {
       "$ref": "#/$defs/semver",
       "description": "Patch: a label, a translation, a source. Minor: an addition, or a validity that closes. Major: a new declaration form or a new statement framework."
@@ -28,86 +42,192 @@
       "maximum": 89,
       "description": "The number this pack's compiled seed carries: `13` gives `supabase/seed/13_pack_ee.sql`. Immutable once published — the seeds are applied in file-name order and listed by name in supabase/config.toml, so a release that renamed one would rename a file an installation already holds. Take the first number no pack of the checkout has taken; `ekwo pack build` refuses two packs claiming one. It is declared rather than derived because the alphabetical rank it used to be moved every country after the one being added."
     },
-    "released_at": { "$ref": "#/$defs/date", "description": "When this version of the pack was published. Recorded in country_packs." },
-    "certification": { "$ref": "#/$defs/certification" },
-    "defaults": { "$ref": "#/$defs/defaults" },
+    "released_at": {
+      "$ref": "#/$defs/date",
+      "description": "When this version of the pack was published. Recorded in country_packs."
+    },
+    "certification": {
+      "$ref": "#/$defs/certification"
+    },
+    "defaults": {
+      "$ref": "#/$defs/defaults"
+    },
     "languages": {
       "type": "array",
       "uniqueItems": true,
-      "items": { "$ref": "#/$defs/language" },
+      "items": {
+        "$ref": "#/$defs/language"
+      },
       "description": "Languages this pack publishes its labels in, besides the one its own files are written in (defaults.language). Each of them must have an i18n/<lang>.json that covers every label of the pack: `ekwo pack check` names what is missing and fails. Declaring a language is a promise to a reader, which is why it is not inferred from the files present."
     },
     "journals": {
       "type": "array",
       "minItems": 1,
-      "items": { "$ref": "#/$defs/journal" }
+      "items": {
+        "$ref": "#/$defs/journal"
+      }
     },
     "charts": {
       "type": "array",
       "minItems": 1,
       "description": "The charts of accounts this country offers. Exactly one is the default. Left out entirely, the pack has one chart called `default` whose accounts are in accounts.csv — which is what a pack written before charts existed says.",
-      "items": { "$ref": "#/$defs/chart" }
+      "items": {
+        "$ref": "#/$defs/chart"
+      }
     },
-    "documents": { "$ref": "#/$defs/documents" },
-    "einvoicing": { "$ref": "#/$defs/einvoicing" },
-    "bank": { "$ref": "#/$defs/bank" },
-    "golden": { "$ref": "#/$defs/golden_exemption" }
+    "documents": {
+      "$ref": "#/$defs/documents"
+    },
+    "einvoicing": {
+      "$ref": "#/$defs/einvoicing"
+    },
+    "bank": {
+      "$ref": "#/$defs/bank"
+    },
+    "golden": {
+      "$ref": "#/$defs/golden_exemption"
+    }
   },
-
   "$defs": {
-    "country": { "type": "string", "pattern": "^[A-Z]{2}$" },
-    "language": { "type": "string", "pattern": "^[a-z]{2}$" },
-    "semver": { "type": "string", "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)$" },
-    "date": { "type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$" },
-    "code": { "type": "string", "minLength": 1, "maxLength": 40 },
+    "country": {
+      "type": "string",
+      "pattern": "^[A-Z]{2}$"
+    },
+    "territory": {
+      "type": "string",
+      "pattern": "^[A-Z]{2}(-[A-Z0-9]{1,12})?$",
+      "description": "A code of the `territories` reference table: a country, an ISO 3166-2 subdivision, XI for Northern Ireland, or a name the table gives a territory no register codes. `ekwo pack check` refuses a code the table does not carry, which is the whole point of naming one."
+    },
+    "language": {
+      "type": "string",
+      "pattern": "^[a-z]{2}$"
+    },
+    "semver": {
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)$"
+    },
+    "date": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+    },
+    "code": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 40
+    },
     "box": {
       "type": "string",
       "pattern": "^[0-9A-Za-z]{1,8}$",
       "description": "Identifier of a box on a declaration form. Immutable inside a form version."
+    },
+    "posting_boxes": {
+      "description": "Box or boxes of the periodic return this amount lands in. One string is one box, which is what almost every posting needs. A list is for a form that prints the same amount in boxes that cannot be worked out from one another: the Estonian KMD reports an intra-Community acquisition in box 6.1, in box 6 around it and in box 1 around that, and the British VAT Return prints a service received from a supplier established abroad in box 6, which is outputs, and in box 7, which is inputs. A box that is the sum of others stays a total and is never named here. The first of the list is the box the posting is known by — `ekwo pack check` refuses an empty list, a box named twice and a box the form declares a total.",
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "$ref": "#/$defs/box"
+        },
+        {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/box"
+          }
+        }
+      ]
     },
     "box_ref": {
       "type": "string",
       "pattern": "^[0-9A-Za-z]{1,8}(:(base|tax|total))?$",
       "description": "A box named in a plus/minus list. Bare, it sums every kind recorded in that box; qualified (\"08:tax\"), it sums that kind only — the French CA3 carries a base and a tax on the same line, the Belgian boxes do not."
     },
-
     "certification": {
       "type": "object",
       "description": "Who stands behind this pack. `ekwo init` prints the status, so an operator knows what they installed. A golden test proves internal coherence, never legal truth.",
-      "required": ["status"],
+      "required": [
+        "status"
+      ],
       "additionalProperties": false,
       "properties": {
         "status": {
-          "enum": ["community", "maintained", "reviewed"],
+          "enum": [
+            "community",
+            "maintained",
+            "reviewed"
+          ],
           "description": "community: contributed, not read by an accountant. maintained: maintained by Ekwo and not yet read by one either. reviewed: a named professional has read it, and is named in `by`. Writing the pack is not reviewing it, which is why there is no status that means \"certified by Ekwo\"."
         },
-        "by": { "type": ["string", "null"], "description": "The professional who read the pack. Only on a reviewed pack: maintaining is not reviewing, so it stays empty on a maintained one." },
-        "on": { "$ref": "#/$defs/date", "description": "When they read it. Only on a reviewed pack." },
+        "by": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The professional who read the pack. Only on a reviewed pack: maintaining is not reviewing, so it stays empty on a maintained one."
+        },
+        "on": {
+          "$ref": "#/$defs/date",
+          "description": "When they read it. Only on a reviewed pack."
+        },
         "sources": {
           "type": "array",
-          "items": { "$ref": "#/$defs/source" },
+          "items": {
+            "$ref": "#/$defs/source"
+          },
           "description": "The register of texts this pack was built from. An entry is a key, a title, the official publisher, an absolute https URL and the day somebody opened it; a `source` beside a legal_reference elsewhere in the pack names one of those keys, so an article is written where it is claimed and a link is written once. A bare string is what this field held before the register and is still read, so a pack written against the old form goes on compiling — `ekwo pack check` warns, and docs/packs.md calls it deprecated. The register never holds a copy of the text: it says where to read it."
         }
       }
     },
-
     "source_ref": {
-      "type": ["string", "null"],
+      "type": [
+        "string",
+        "null"
+      ],
       "pattern": "^[a-z0-9][a-z0-9-]{0,39}$",
       "description": "Key of an entry in certification.sources: where the legal reference written beside it can be read. The article stays on the item and the link stays in the register, so a text moved on its publisher's site is one line to change. `ekwo pack check` refuses a key the register does not carry; on a reviewed pack it also refuses a tax or a box that names none."
     },
-
+    "rule_reference": {
+      "type": "object",
+      "description": "Where one rule of a country comes from: the article that imposes it, and the key of the register entry where that article is read. The shape a tax and a box of a declaration form already have, given to the rules that carry no legal_reference of their own because they are a word rather than a row.",
+      "required": [
+        "legal_reference"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "legal_reference": {
+          "type": "string",
+          "minLength": 1,
+          "description": "The article that imposes the rule, cited as the country cites it. Not a paraphrase of what it says: a reader opens the text in the register and finds the sentence there."
+        },
+        "source": {
+          "$ref": "#/$defs/source_ref"
+        }
+      }
+    },
     "source": {
       "description": "One text of a pack's source register. An object is the form to write; a bare string is the deprecated form the field held before the register existed.",
       "oneOf": [
-        { "type": "string", "minLength": 1 },
-        { "$ref": "#/$defs/source_entry" }
+        {
+          "type": "string",
+          "minLength": 1
+        },
+        {
+          "$ref": "#/$defs/source_entry"
+        }
       ]
     },
-
     "source_entry": {
       "type": "object",
-      "required": ["key", "title", "publisher", "url", "consulted_on", "kind"],
+      "required": [
+        "key",
+        "title",
+        "publisher",
+        "url",
+        "consulted_on",
+        "kind"
+      ],
       "additionalProperties": false,
       "properties": {
         "key": {
@@ -115,132 +235,373 @@
           "pattern": "^[a-z0-9][a-z0-9-]{0,39}$",
           "description": "How the rest of the pack names this text. Unique inside the register, and stable once published: a `source` on a tax or a box is a reference to it."
         },
-        "title": { "type": "string", "minLength": 1, "description": "The text as it is cited, in the pack's own language. Not a summary of it, and never a copy of what it says." },
-        "publisher": { "type": "string", "minLength": 1, "description": "Who publishes it officially: SPF Finances, Légifrance, Legilux, Riigi Teataja, Maksu- ja Tolliamet, European Commission. A reviewer checks the publisher before the link." },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "description": "The text as it is cited, in the pack's own language. Not a summary of it, and never a copy of what it says."
+        },
+        "publisher": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Who publishes it officially: SPF Finances, Légifrance, Legilux, Riigi Teataja, Maksu- ja Tolliamet, European Commission. A reviewer checks the publisher before the link."
+        },
         "url": {
           "type": "string",
           "pattern": "^https://[^\\s]+$",
           "description": "Where that publisher serves it, absolute and https. A permanent identifier where one exists — an ELI on Legilux or on the Moniteur belge, a LEGITEXT on Légifrance, a short alias on Riigi Teataja — because a search result is not a source."
         },
-        "consulted_on": { "$ref": "#/$defs/date", "description": "The day somebody opened that URL and read what it served. A link rots, and this is what says how old the reading is." },
+        "consulted_on": {
+          "$ref": "#/$defs/date",
+          "description": "The day somebody opened that URL and read what it served. A link rots, and this is what says how old the reading is."
+        },
         "kind": {
-          "enum": ["law", "regulation", "form", "standard", "portal", "guidance"],
+          "enum": [
+            "law",
+            "regulation",
+            "form",
+            "standard",
+            "portal",
+            "guidance"
+          ],
           "description": "law: a consolidated legal text. regulation: the decree or order that applies it. form: a declaration form or its administrative notice. standard: a technical norm or code list, EN 16931 and VATEX among them. portal: where the declaration is filed. guidance: an official administrative comment or circular. A closed vocabulary, so a register can be read across countries."
+        },
+        "reason_codes": {
+          "type": "boolean",
+          "description": "True on the one entry that publishes the list an exemption reason code of this country comes from — BT-121, outside the common system of VAT, where the VATEX list of EN 16931 does not reach. At most one entry of a register may carry it and it has to be a `standard`, because a code list is one. Absent everywhere else: a register naming an accounting standard is naming an accounting standard, and `ekwo pack check` used to read the first `standard` it found as this."
         }
       }
     },
-
     "defaults": {
       "type": "object",
-      "required": ["currency", "roles"],
+      "required": [
+        "currency",
+        "roles"
+      ],
       "additionalProperties": false,
       "properties": {
-        "currency": { "type": "string", "pattern": "^[A-Z]{3}$" },
-        "language": { "$ref": "#/$defs/language", "description": "Language a company of this country is installed in unless it asks for another." },
-        "rounding_method": { "enum": ["half_up", "half_even", "down", "up"], "description": "How this country rounds an amount, at the decimals of its currency. half_up is half away from zero, applied to the absolute value. Read by rounding_of() and applied by round_amount(). Defaults to half_up." },
-        "cash_rounding_unit": { "type": ["number", "null"], "minimum": 0, "description": "Smallest coin when it is not the cent: 0.05 in Switzerland. Null, like 0, means the cent is the unit." },
+        "currency": {
+          "type": "string",
+          "pattern": "^[A-Z]{3}$"
+        },
+        "language": {
+          "$ref": "#/$defs/language",
+          "description": "Language a company of this country is installed in unless it asks for another."
+        },
+        "rounding_method": {
+          "enum": [
+            "half_up",
+            "half_even",
+            "down",
+            "up"
+          ],
+          "description": "How this country rounds an amount, at the decimals of its currency. half_up is half away from zero, applied to the absolute value. Read by rounding_of() and applied by round_amount(). Defaults to half_up."
+        },
+        "cash_rounding_unit": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0,
+          "description": "Smallest coin when it is not the cent: 0.05 in Switzerland. Null, like 0, means the cent is the unit."
+        },
         "opening_entry_label": {
-          "type": ["string", "null"],
+          "type": [
+            "string",
+            "null"
+          ],
           "description": "Wording the computed opening lines of an export carry — the EcritureLib of an a-nouveaux in a French FEC — in the language the administration of this country reads. Not an i18n key: the label is addressed to an administration and not to whoever is signed in. Null falls back to a neutral English label, because the formats fix no wording."
         },
         "closing_style": {
-          "enum": ["retained_earnings", "result_accounts", "appropriation_accounts"],
+          "enum": [
+            "retained_earnings",
+            "result_accounts",
+            "appropriation_accounts"
+          ],
           "description": "How the year-end close moves the result. retained_earnings: straight into retained earnings (UK, US). result_accounts: into a current-year result account that sits on the balance sheet and waits for the meeting that allocates it (FR 120/129). appropriation_accounts: through an appropriation account that is itself part of the income statement, and from there to retained earnings (BE 693/793 to 140/141). Named after the mechanism, never after a country."
         },
-        "fiscal_year_default": { "enum": ["calendar", "april", "july", "october"] },
+        "fiscal_year_default": {
+          "enum": [
+            "calendar",
+            "april",
+            "july",
+            "october"
+          ]
+        },
         "vat_period": {
-          "enum": ["month", "quarter", "year"],
-          "description": "Cadence a company of this country files its periodic return on unless it says otherwise. Declare it only where the law gives one answer that does not depend on a fact about the company; where the cadence follows turnover, leave it out and `ekwo init` asks. It must be one of the cadences tax_report.json declares."
+          "enum": [
+            "month",
+            "quarter",
+            "year"
+          ],
+          "description": "Deprecated by tax_report.json's period_default, which asks the same question of the form a cadence belongs to rather than of the country. Still read where a pack written before the move carries it; a pack that says both and says two different things is refused."
         },
         "region": {
-          "type": ["string", "null"],
+          "type": [
+            "string",
+            "null"
+          ],
           "description": "Province or state a company of this country sits in unless it says otherwise, ISO 3166-2 without the country prefix (QC, BC). Null where a country taxes uniformly, which is every country of phase 0. The declarative rules that turn a region into a suggested tax — tax_rule_templates and suggest_tax() — arrive in phase 1 with the Canadian pack; the column exists now so the migration happens once."
         },
-        "roles": { "$ref": "#/$defs/account_roles" },
-        "journal_roles": { "$ref": "#/$defs/journal_roles" }
+        "roles": {
+          "$ref": "#/$defs/account_roles"
+        },
+        "journal_roles": {
+          "$ref": "#/$defs/journal_roles"
+        }
       }
     },
-
     "account_roles": {
       "type": "object",
       "description": "Which account of accounts.csv plays which role. Every value is a code of this pack's chart; a test refuses one that is not.",
-      "required": ["receivable", "payable"],
+      "required": [
+        "receivable",
+        "payable"
+      ],
       "additionalProperties": false,
       "properties": {
-        "receivable": { "$ref": "#/$defs/code" },
-        "payable": { "$ref": "#/$defs/code" },
-        "suspense": { "type": ["string", "null"] },
-        "rounding": { "type": ["string", "null"] },
-        "retained_earnings": { "type": ["string", "null"] },
-        "sales": { "type": ["string", "null"] },
-        "purchase": { "type": ["string", "null"] },
-        "bank": { "type": ["string", "null"] },
-        "cash": { "type": ["string", "null"] },
-        "fx_gain": { "type": ["string", "null"] },
-        "fx_loss": { "type": ["string", "null"] },
-        "retained_earnings_loss": { "type": ["string", "null"], "description": "Where an accumulated loss sits, where the chart keeps one apart from the profit account (BE 141, FR 119). Null falls back to `retained_earnings`." },
-        "current_year_result_profit": { "type": ["string", "null"], "description": "Account the result of the year lands on when the year is profitable (BE 693, FR 120). Null under `retained_earnings` closing." },
-        "current_year_result_loss": { "type": ["string", "null"], "description": "The same for a loss (BE 793, FR 129). Belgium and France both keep the two apart, so this is a pair and not one account." },
-        "asset_disposal_gain": { "type": ["string", "null"], "description": "Net-result disposal of a fixed asset: where a gain lands (BE 763). Read by the `assets` module. Leave it out where the country files a gross disposal." },
-        "asset_disposal_loss": { "type": ["string", "null"], "description": "Net-result disposal: where a loss lands (BE 663). Null falls back to `asset_disposal_gain`, for a chart that keeps one account for both signs." },
-        "asset_disposal_proceeds": { "type": ["string", "null"], "description": "Gross disposal: the income account the proceeds of the sale are booked on in full (FR 775)." },
-        "asset_disposal_value": { "type": ["string", "null"], "description": "Gross disposal: the charge account the net book value of what was sold is booked on in full (FR 675)." }
+        "receivable": {
+          "$ref": "#/$defs/code"
+        },
+        "payable": {
+          "$ref": "#/$defs/code"
+        },
+        "suspense": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "rounding": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "retained_earnings": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "sales": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "purchase": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "bank": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "cash": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "fx_gain": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "fx_loss": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "retained_earnings_loss": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Where an accumulated loss sits, where the chart keeps one apart from the profit account (BE 141, FR 119). Null falls back to `retained_earnings`."
+        },
+        "current_year_result_profit": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Account the result of the year lands on when the year is profitable (BE 693, FR 120). Null under `retained_earnings` closing."
+        },
+        "current_year_result_loss": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The same for a loss (BE 793, FR 129). Belgium and France both keep the two apart, so this is a pair and not one account."
+        },
+        "asset_disposal_gain": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Net-result disposal of a fixed asset: where a gain lands (BE 763). Read by the `assets` module. Leave it out where the country files a gross disposal."
+        },
+        "asset_disposal_loss": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Net-result disposal: where a loss lands (BE 663). Null falls back to `asset_disposal_gain`, for a chart that keeps one account for both signs."
+        },
+        "asset_disposal_proceeds": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Gross disposal: the income account the proceeds of the sale are booked on in full (FR 775)."
+        },
+        "asset_disposal_value": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Gross disposal: the charge account the net book value of what was sold is booked on in full (FR 675)."
+        },
+        "tax_payable": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Where a filed declaration's net lands once the tax accounts of the period are cleared into it (FR 445510, LU 461412, GB 2210). An account apart from the ones the taxes post to, and reconcilable, because the payment to the administration is matched against it."
+        },
+        "tax_receivable": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The same for a period that ends in a credit, where the chart keeps the two apart (FR 445670). Null falls back to `tax_payable`, for a chart that keeps one control account for both signs."
+        }
       }
     },
-
     "journal_roles": {
       "type": "object",
       "description": "Which journal of the pack a document falls back to.",
       "additionalProperties": false,
       "properties": {
-        "sales": { "$ref": "#/$defs/code" },
-        "purchase": { "$ref": "#/$defs/code" },
-        "miscellaneous": { "$ref": "#/$defs/code" },
-        "opening": { "$ref": "#/$defs/code", "description": "Journal the opening entry and the year-end entries are booked on. Its type is `opening`." }
+        "sales": {
+          "$ref": "#/$defs/code"
+        },
+        "purchase": {
+          "$ref": "#/$defs/code"
+        },
+        "miscellaneous": {
+          "$ref": "#/$defs/code"
+        },
+        "opening": {
+          "$ref": "#/$defs/code",
+          "description": "Journal the opening entry and the year-end entries are booked on. Its type is `opening`."
+        }
       }
     },
-
     "journal": {
       "type": "object",
-      "required": ["code", "type", "name"],
+      "required": [
+        "code",
+        "type",
+        "name"
+      ],
       "additionalProperties": false,
       "properties": {
-        "code": { "$ref": "#/$defs/code" },
-        "type": { "enum": ["sales", "purchase", "bank", "cash", "general", "opening"] },
-        "name": { "type": "string", "minLength": 1 },
-        "sequence": { "type": "integer", "minimum": 0 }
+        "code": {
+          "$ref": "#/$defs/code"
+        },
+        "type": {
+          "enum": [
+            "sales",
+            "purchase",
+            "bank",
+            "cash",
+            "general",
+            "opening"
+          ]
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sequence": {
+          "type": "integer",
+          "minimum": 0
+        }
       }
     },
-
     "chart": {
       "type": "object",
       "description": "One chart of accounts of a country. A country has one or several; its taxes, its journals and its declaration form are common to them, and its financial statements are per chart when they differ — a Belgian ASBL and a French association keep different books from a company and file the same VAT return.",
-      "required": ["code", "name", "accounts"],
+      "required": [
+        "code",
+        "name",
+        "accounts"
+      ],
       "additionalProperties": false,
       "properties": {
-        "code": { "$ref": "#/$defs/code", "description": "Immutable once published. `default` on the chart a country shipped before this list existed." },
-        "name": { "type": "string", "minLength": 1, "description": "What the chart is called where such a name belongs: PCMN, PCG, SKR04." },
-        "accounts": { "type": "string", "minLength": 1, "description": "CSV file of this chart, relative to the pack directory. The default chart keeps accounts.csv." },
-        "default": { "type": "boolean", "description": "Exactly one chart of a pack has it. `ekwo init` installs it when nobody names another." },
-        "audience": { "type": "string", "description": "Who keeps books on it — companies, nonprofits, a profession. The core does nothing with it; an installer shows it." },
+        "code": {
+          "$ref": "#/$defs/code",
+          "description": "Immutable once published. `default` on the chart a country shipped before this list existed."
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "description": "What the chart is called where such a name belongs: PCMN, PCG, SKR04."
+        },
+        "accounts": {
+          "type": "string",
+          "minLength": 1,
+          "description": "CSV file of this chart, relative to the pack directory. The default chart keeps accounts.csv."
+        },
+        "default": {
+          "type": "boolean",
+          "description": "Exactly one chart of a pack has it. `ekwo init` installs it when nobody names another."
+        },
+        "audience": {
+          "type": "string",
+          "description": "Who keeps books on it — companies, nonprofits, a profession. The core does nothing with it; an installer shows it."
+        },
         "statements": {
           "type": "array",
-          "items": { "$ref": "#/$defs/code" },
+          "items": {
+            "$ref": "#/$defs/code"
+          },
           "description": "Financial statements this chart reports on, by their code in statements.json. A statement named by exactly one chart belongs to that chart; one named by several, or by none, fits every chart of the country."
         },
-        "certification": { "$ref": "#/$defs/certification", "description": "How much this chart in particular has been read, when it differs from the pack as a whole. Left out, the pack's own status stands." },
-        "legal_reference": { "type": ["string", "null"] },
-        "source": { "$ref": "#/$defs/source_ref" }
+        "certification": {
+          "$ref": "#/$defs/certification",
+          "description": "How much this chart in particular has been read, when it differs from the pack as a whole. Left out, the pack's own status stands."
+        },
+        "legal_reference": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "source": {
+          "$ref": "#/$defs/source_ref"
+        }
       }
     },
-
     "documents": {
       "type": "object",
       "description": "What the law of this country says about an invoice. Data only: the renderer prints the mentions, the pack says which and when.",
       "additionalProperties": false,
       "properties": {
         "numbering": {
-          "enum": ["gapless_per_year", "gapless", "sequential", "free"],
+          "enum": [
+            "gapless_per_year",
+            "gapless",
+            "sequential",
+            "free"
+          ],
           "description": "Whether the law forbids a hole in the sequence. The first two compile to numbering_gapless = true; whether the counter restarts each year is readable in number_format, which carries the year or does not."
         },
         "number_format": {
@@ -248,72 +609,162 @@
           "description": "Pattern of a document number: {CODE} the series, {YYYY} or {YY} the year, {MM} the month, {NNNN} the counter zero-padded to as many N as are written, with literal text between them. Nothing reads it yet — next_entry_number() produces CODE/YYYY/NNNN — and a pack declares what its numbers look like so a numbering engine that consumes a pattern changes no number when it arrives."
         },
         "legal_payment_days": {
-          "type": ["integer", "null"],
+          "type": [
+            "integer",
+            "null"
+          ],
           "minimum": 0,
           "description": "Payment term the law sets in the absence of an agreement. Not a seller's own terms."
         },
         "late_payment_reference": {
-          "type": ["string", "null"],
+          "type": [
+            "string",
+            "null"
+          ],
           "description": "Where the interest rate and the recovery indemnity come from, in one sentence."
         },
         "tax_point": {
-          "enum": ["invoice_date", "delivery_date", "payment_date"],
-          "description": "When the tax becomes chargeable under the country's general rule. A tax that departs from it says cash_basis itself, which is how France taxes goods on delivery and services on collection without a second country field."
+          "enum": [
+            "invoice_date",
+            "delivery_date",
+            "payment_date",
+            "invoice_if_issued",
+            "earliest_of_delivery_or_payment"
+          ],
+          "description": "When the tax becomes chargeable under the country's general rule, in a closed vocabulary. `invoice_date` where the invoice fixes it; `delivery_date` where the supply does; `payment_date` where collection does; `invoice_if_issued` where the supply is the principle and an invoice displaces it when the country requires one (Belgium art. 17 and 22bis over art. 16 and 22, Luxembourg art. 24 over art. 21); `earliest_of_delivery_or_payment` where the law keeps whichever came first (Estonia KMS § 11 lg 1). Say the principle and its derogation with one of the last two rather than declaring the derogation alone — a word that names only half a rule reads exactly like one that names all of it. A tax that departs from the country rule says cash_basis itself, which is how France taxes goods on delivery and services on collection without a second country field."
+        },
+        "references": {
+          "type": "object",
+          "description": "Where the rules above come from, one entry per rule and not one for the section: the numbering of an invoice, the payment term the law sets and the tax point are three articles of two or three different texts in every country the packs cover, and a single reference would have had to name them all in one string. A rule a pack declares and does not source is refused on a reviewed pack and warned about on any other.",
+          "additionalProperties": false,
+          "properties": {
+            "numbering": {
+              "$ref": "#/$defs/rule_reference",
+              "description": "The article that requires a sequential, uniquely identifying invoice number — and, where a country prescribes one, the shape that number takes. Covers `numbering` and `number_format` together, because both answer the same article."
+            },
+            "payment_terms": {
+              "$ref": "#/$defs/rule_reference",
+              "description": "The article that sets `legal_payment_days` in the absence of an agreement. The interest and the recovery indemnity are a different matter and stay in `late_payment_reference`, which is a sentence a renderer prints rather than a citation."
+            },
+            "tax_point": {
+              "$ref": "#/$defs/rule_reference",
+              "description": "The article that fixes when the tax becomes chargeable under the country's general rule. Where the value declared is a derogation rather than the principle, the reference says which, so a reader is not left believing the pack read the wrong article."
+            }
+          }
         },
         "mentions": {
           "type": "array",
           "description": "The sentences the law requires on an invoice, and when each applies.",
           "items": {
             "type": "object",
-            "required": ["code", "applies_when", "text"],
+            "required": [
+              "code",
+              "applies_when",
+              "text"
+            ],
             "additionalProperties": false,
             "properties": {
-              "code": { "$ref": "#/$defs/code", "description": "Immutable once published. A wording that changes is a valid_to and a new row, never an edit." },
+              "code": {
+                "$ref": "#/$defs/code",
+                "description": "Immutable once published. A wording that changes is a valid_to and a new row, never an edit."
+              },
               "applies_when": {
                 "enum": [
-                  "always", "reverse_charge", "intra_eu_goods", "intra_eu_services",
-                  "export", "exempt", "small_business", "late_payment", "cash_basis"
+                  "always",
+                  "reverse_charge",
+                  "intra_eu_goods",
+                  "intra_eu_services",
+                  "export",
+                  "exempt",
+                  "small_business",
+                  "late_payment",
+                  "cash_basis"
                 ],
                 "description": "A closed vocabulary, never an expression: a pack that could write a condition would be a pack that executes. Six of the nine are resolved from the treatment of the taxes a document's lines carry; late_payment is about the direction of the document; cash_basis about the tax; small_business about a regime the core does not record, so that one is data a renderer fetches and no view ever selects."
               },
-              "text": { "type": "string", "minLength": 1, "description": "In the pack's own language. The other languages are in i18n/<lang>.json, under legal_mentions." },
-              "sequence": { "type": "integer", "minimum": 0, "description": "Order the mentions are printed in. Defaults to the position in the array, times ten." },
-              "valid_from": { "$ref": "#/$defs/date" },
-              "valid_to": { "type": ["string", "null"], "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$" },
-              "legal_reference": { "type": ["string", "null"], "description": "The article that requires this sentence. A mention without a source cannot be reviewed." },
-              "source": { "$ref": "#/$defs/source_ref" }
+              "text": {
+                "type": "string",
+                "minLength": 1,
+                "description": "In the pack's own language. The other languages are in i18n/<lang>.json, under legal_mentions."
+              },
+              "sequence": {
+                "type": "integer",
+                "minimum": 0,
+                "description": "Order the mentions are printed in. Defaults to the position in the array, times ten."
+              },
+              "valid_from": {
+                "$ref": "#/$defs/date"
+              },
+              "valid_to": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+              },
+              "legal_reference": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "description": "The article that requires this sentence. A mention without a source cannot be reviewed."
+              },
+              "source": {
+                "$ref": "#/$defs/source_ref"
+              }
             }
           }
         }
       }
     },
-
     "einvoicing": {
       "type": "object",
       "description": "The structured invoice this country expects, and the identifiers a party is addressed by on the network.",
       "additionalProperties": false,
       "properties": {
-        "profile": { "type": ["string", "null"], "description": "peppol-bis-3, factur-x-en16931, xrechnung, pint-*. Null where electronic invoicing is not a thing." },
+        "profile": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "peppol-bis-3, factur-x-en16931, xrechnung, pint-*. Null where electronic invoicing is not a thing."
+        },
         "mandatory_from": {
-          "type": ["string", "null"],
+          "type": [
+            "string",
+            "null"
+          ],
           "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
           "description": "The day the obligation starts. Where reception and emission start on different days this is reception, which is what binds every company at once; the emission calendar, which usually depends on the size of the company, belongs in the legal reference until the core can hold a size."
         },
         "party_scheme": {
-          "type": ["string", "null"],
+          "type": [
+            "string",
+            "null"
+          ],
           "pattern": "^[0-9]{4}$",
           "description": "ISO 6523 ICD of the identifier a party is addressed by, four digits. One value: where a country has several registration identifiers, the pack declares the one its invoices carry and names the others in the legal reference."
         },
         "vat_scheme": {
-          "type": ["string", "null"],
+          "type": [
+            "string",
+            "null"
+          ],
           "pattern": "^[0-9]{4}$",
           "description": "ISO 6523 ICD of the VAT identifier, four digits. Distinct from party_scheme: a company is addressed by its registration number and taxed on its VAT number."
         },
-        "legal_reference": { "type": ["string", "null"] },
-        "source": { "$ref": "#/$defs/source_ref" }
+        "legal_reference": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The text that makes the profile above obligatory and fixes the day it starts. It is where the emission calendar is written out where reception and emission part company, and where a country with several registration identifiers names the ones party_scheme could not hold. Compiled beside the profile and the date, so an application answers \"who says so\" without going back to the pack file."
+        },
+        "source": {
+          "$ref": "#/$defs/source_ref"
+        }
       }
     },
-
     "bank": {
       "type": "object",
       "description": "The file formats a bank of this country delivers and accepts, most usual first. A known list rather than free text, because a parser is written against a format and not against a name somebody typed.",
@@ -321,193 +772,646 @@
       "properties": {
         "statement_formats": {
           "type": "array",
-          "items": { "enum": ["camt.052", "camt.053", "camt.054", "mt940", "mt942", "coda", "cfonb120", "ofx", "qif", "bai2", "csv"] }
+          "items": {
+            "enum": [
+              "camt.052",
+              "camt.053",
+              "camt.054",
+              "mt940",
+              "mt942",
+              "coda",
+              "cfonb120",
+              "ofx",
+              "qif",
+              "bai2",
+              "csv"
+            ]
+          }
         },
         "payment_formats": {
           "type": "array",
-          "items": { "enum": ["pain.001", "pain.008", "cfonb160", "mt101", "ach", "bacs", "eft", "csv"] }
+          "items": {
+            "enum": [
+              "pain.001",
+              "pain.008",
+              "cfonb160",
+              "mt101",
+              "ach",
+              "bacs",
+              "eft",
+              "csv"
+            ]
+          }
         }
       }
     },
-
     "accounts_csv": {
       "type": "object",
       "title": "One row of accounts.csv",
       "description": "accounts.csv is a strict CSV subset: a header line `code,parent,type,reconcilable,name,sequence`, one row per account, no newline inside a field, a field quoted only when it holds a comma or a quote, and a quote doubled inside a quoted field. A chart of accounts is flat and long, every tool on the market exchanges it as CSV, and a reviewer reads one line per account in a diff. An empty field is null. Values here are the parsed row.",
-      "required": ["code", "type", "name"],
+      "required": [
+        "code",
+        "type",
+        "name"
+      ],
       "additionalProperties": false,
       "properties": {
-        "code": { "$ref": "#/$defs/code", "description": "Immutable once published, and so is its type: reclassifying a code would reclassify history. Add a code and deprecate the other." },
-        "parent": { "type": ["string", "null"], "description": "Code of the parent account, empty at the top of the chart." },
+        "code": {
+          "$ref": "#/$defs/code",
+          "description": "Immutable once published, and so is its type: reclassifying a code would reclassify history. Add a code and deprecate the other."
+        },
+        "parent": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Code of the parent account, empty at the top of the chart."
+        },
         "type": {
           "enum": [
-            "asset_receivable", "asset_cash", "asset_current", "asset_prepayments",
-            "asset_fixed", "asset_non_current", "liability_payable",
-            "liability_credit_card", "liability_current", "liability_non_current",
-            "equity", "equity_retained", "income", "income_other", "expense",
-            "expense_direct_cost", "expense_depreciation", "off_balance"
+            "asset_receivable",
+            "asset_cash",
+            "asset_current",
+            "asset_prepayments",
+            "asset_fixed",
+            "asset_non_current",
+            "liability_payable",
+            "liability_credit_card",
+            "liability_current",
+            "liability_non_current",
+            "equity",
+            "equity_retained",
+            "income",
+            "income_other",
+            "expense",
+            "expense_direct_cost",
+            "expense_depreciation",
+            "off_balance"
           ]
         },
-        "reconcilable": { "type": "boolean" },
-        "name": { "type": "string", "minLength": 1, "description": "In the pack's own language. Other languages live in i18n/<lang>.json." },
-        "sequence": { "type": "integer", "minimum": 0 },
-        "statement_hint": { "type": ["string", "null"], "description": "Free note: the statement line this account is meant for. Read by nothing today — the rules of a statement decide — and kept so a chart can carry the intent." }
+        "reconcilable": {
+          "type": "boolean"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "description": "In the pack's own language. Other languages live in i18n/<lang>.json."
+        },
+        "sequence": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "statement_hint": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Free note: the statement line this account is meant for. Read by nothing today — the rules of a statement decide — and kept so a chart can carry the intent."
+        }
       }
     },
-
     "taxes": {
       "type": "array",
       "title": "taxes.json",
-      "items": { "$ref": "#/$defs/tax" }
-    },
-
-    "tax": {
-      "type": "object",
-      "required": ["code", "name", "rate", "scope", "treatment", "valid_from", "legal_reference"],
-      "additionalProperties": false,
-      "properties": {
-        "code": { "$ref": "#/$defs/code", "description": "Immutable once published, and so is its meaning. A new rate is a new code plus a valid_to on the old one, never an edit." },
-        "name": { "type": "string", "minLength": 1 },
-        "description": { "type": ["string", "null"] },
-        "kind": {
-          "enum": ["vat", "gst", "sales_tax", "withholding", "other"],
-          "description": "A label that drives the reports, never the calculation: a GST is computed exactly like a VAT. Defaults to vat."
-        },
-        "amount_type": { "enum": ["percent", "fixed"] },
-        "rate": { "type": "number", "description": "A percentage when amount_type is percent, an amount when it is fixed." },
-        "scope": { "enum": ["sale", "purchase", "both"] },
-        "treatment": {
-          "enum": [
-            "domestic", "domestic_reverse_charge", "intracom_goods", "intracom_services",
-            "intracom_acquisition_goods", "intracom_acquisition_services",
-            "foreign_services_received", "export", "import", "exempt", "not_subject"
-          ],
-          "description": "What the operation is. It drives nothing in the ledger — the postings do that — and it decides the legal mention the invoice carries and the EN 16931 category the two fields below have to agree with. foreign_services_received is a service bought from a supplier who is not established here and charges no tax on it, the buyer accounting for it themselves under the general business-to-business rule (articles 44 and 196 of Directive 2006/112/EC); import is goods declared to customs, which is a different mechanism behind a different document."
-        },
-        "valid_from": { "$ref": "#/$defs/date" },
-        "valid_to": { "type": ["string", "null"], "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$" },
-        "legal_reference": { "type": "string", "minLength": 1, "description": "The article this rate comes from. Required: a golden test proves a tax is booked consistently, never that its rate or its boxes are the law, so a tax nobody can trace to a source is a tax nobody can review." },
-        "source": { "$ref": "#/$defs/source_ref" },
-        "vat_category": { "type": ["string", "null"], "maxLength": 2, "description": "EN 16931 / UNCL5305 category code — BT-118 and BT-151. It is a term of the invoice, so on a purchase it is the category the supplier chose: an intra-Community acquisition is K, because the supplier made an intra-Community supply, and not AE, which is a reverse charge within one Member State. Required on anything that can reach a sale; optional on a purchase-only tax, where the pack may not record the seller's answer; and refused on import and foreign_services_received, where no invoice governed by the standard exists. `ekwo pack check` refuses a category that contradicts the treatment." },
-        "exemption_code": { "type": ["string", "null"], "description": "VATEX reason — BT-121 — required as soon as the category is not a taxed one. The VATEX list reserves a code per category: VATEX-EU-AE with AE, VATEX-EU-IC with K, VATEX-EU-G with G, VATEX-EU-O with O; E takes the article of the Directive the seller claims the exemption under. `ekwo pack check` refuses a borrowed code and a code on a taxed line." },
-        "price_include": { "type": "boolean", "description": "The unit price already holds the tax (UK and Australian retail). Compiled to a column; the gross-to-net computation arrives with the country that needs it." },
-        "recoverable": { "type": "boolean", "description": "False when the buyer never gets the tax back: American sales tax, Canadian PST. Where the money lands is said by a tax_on_base posting, not by this flag." },
-        "cash_basis": { "type": "boolean", "description": "The tax falls due when the invoice is paid. Compiled to a column by P0-5; the behaviour arrives with P0-6." },
-        "cash_basis_transition_account": { "type": ["string", "null"], "description": "Code of the account the tax waits on until the invoice is paid. Compiled to a column by P0-5, read by P0-6." },
-        "jurisdiction": { "type": ["string", "null"], "description": "ISO 3166-2 with the country prefix, US-CA, CA-QC, for a tax levied by a state. Null in Europe, and distinct from a party's region, which carries no prefix." },
-        "report_code": { "type": ["string", "null"], "description": "Deferred (P0-3): which declaration the boxes below belong to, when a country files several." },
-        "sequence": { "type": "integer", "minimum": 0 },
-        "group": {
-          "type": "array",
-          "items": { "$ref": "#/$defs/code" },
-          "description": "Reserved for phase 1 (Canada): several taxes on one line. The line keeps a single tax, \"QC GST+QST\", and posting expands it into its members. Refused by the compiler until the core carries it."
-        },
-        "postings": { "$ref": "#/$defs/postings" }
+      "items": {
+        "$ref": "#/$defs/tax"
       }
     },
-
+    "tax": {
+      "type": "object",
+      "required": [
+        "code",
+        "name",
+        "rate",
+        "scope",
+        "treatment",
+        "valid_from",
+        "legal_reference"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "code": {
+          "$ref": "#/$defs/code",
+          "description": "Immutable once published, and so is its meaning. A new rate is a new code plus a valid_to on the old one, never an edit."
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "description": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "kind": {
+          "enum": [
+            "vat",
+            "gst",
+            "sales_tax",
+            "withholding",
+            "other"
+          ],
+          "description": "A label that drives the reports, never the calculation: a GST is computed exactly like a VAT. Defaults to vat."
+        },
+        "amount_type": {
+          "enum": [
+            "percent",
+            "fixed"
+          ]
+        },
+        "rate": {
+          "type": "number",
+          "description": "A percentage when amount_type is percent, an amount when it is fixed."
+        },
+        "scope": {
+          "enum": [
+            "sale",
+            "purchase",
+            "both"
+          ]
+        },
+        "treatment": {
+          "enum": [
+            "domestic",
+            "domestic_reverse_charge",
+            "self_assessed",
+            "intracom_goods",
+            "intracom_services",
+            "intracom_triangular",
+            "intracom_acquisition_goods",
+            "intracom_acquisition_services",
+            "foreign_services_received",
+            "export",
+            "import",
+            "exempt",
+            "not_subject"
+          ],
+          "description": "What the operation is. It drives nothing in the ledger — the postings do that — and it decides the legal mention the invoice carries and the EN 16931 category the two fields below have to agree with. foreign_services_received is a service bought from a supplier who is not established here and charges no tax on it, the buyer accounting for it themselves under the general business-to-business rule (articles 44 and 196 of Directive 2006/112/EC); intracom_triangular is the middle supply of a triangular arrangement, the one the intermediate operator makes to the final customer, relieved by article 141 of Directive 2006/112/EC and reverse-charged to that customer by article 197; import is goods declared to customs, which is a different mechanism behind a different document; self_assessed is a tax a buyer owes directly to an administration under that administration's own law and computes and declares themselves (American use tax), which is not the reverse charge beside it — there is no supplier who was relieved of anything and nothing is deducted at the other end."
+        },
+        "valid_from": {
+          "$ref": "#/$defs/date"
+        },
+        "valid_to": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+        },
+        "legal_reference": {
+          "type": "string",
+          "minLength": 1,
+          "description": "The article this rate comes from. Required: a golden test proves a tax is booked consistently, never that its rate or its boxes are the law, so a tax nobody can trace to a source is a tax nobody can review."
+        },
+        "source": {
+          "$ref": "#/$defs/source_ref"
+        },
+        "vat_category": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "maxLength": 2,
+          "description": "EN 16931 / UNCL5305 category code — BT-118 and BT-151. It is a term of the invoice, so on a purchase it is the category the supplier chose: an intra-Community acquisition is K, because the supplier made an intra-Community supply, and not AE, which is a reverse charge within one Member State. Required on anything that can reach a sale; optional on a purchase-only tax, where the pack may not record the seller's answer; and refused on import and foreign_services_received, where no invoice governed by the standard exists. `ekwo pack check` refuses a category that contradicts the treatment."
+        },
+        "exemption_code": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "VATEX reason — BT-121 — required as soon as the category is not a taxed one. The VATEX list reserves a code per category: VATEX-EU-AE with AE, VATEX-EU-IC with K, VATEX-EU-G with G, VATEX-EU-O with O; E takes the article of the Directive the seller claims the exemption under. `ekwo pack check` refuses a borrowed code and a code on a taxed line."
+        },
+        "price_include": {
+          "type": "boolean",
+          "description": "The unit price of a line carrying this tax already holds it (British, Australian and most retail). The engine takes the tax out of the gross of each tax group, rounded once, and shares the base back over the lines. Only a percentage tax may declare it."
+        },
+        "recoverable": {
+          "type": "boolean",
+          "description": "False when the buyer never gets the tax back: American sales tax, Canadian PST. Where the money lands is said by a tax_on_base posting, not by this flag."
+        },
+        "cash_basis": {
+          "type": "boolean",
+          "description": "The tax falls due when the invoice is paid. Compiled to a column by P0-5; the behaviour arrives with P0-6."
+        },
+        "cash_basis_transition_account": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Code of the account the tax waits on until the invoice is paid. Compiled to a column by P0-5, read by P0-6."
+        },
+        "conditions": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "buyer_certificate",
+              "buyer_status",
+              "transport_evidence",
+              "seller_threshold",
+              "supply_nature"
+            ]
+          },
+          "description": "What this tax turns on that the ledger cannot see. It says what the question is and never how to answer it: there is no value beside a word here — no threshold amount, no certificate number, no operator and no expression — and the article that sets a threshold or prescribes a certificate is the one in legal_reference. buyer_certificate: the buyer hands the seller a document the seller has to hold and be able to produce (the American resale certificate). buyer_status: a quality of the buyer the statute names. transport_evidence: proof that what was sold went where the exemption requires. seller_threshold: a running total the seller crossed, or has not. supply_nature: what is supplied, classified more finely than any ledger holds it."
+        },
+        "jurisdiction": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "ISO 3166-2 with the country prefix, US-CA, CA-QC, for a tax levied by a state. Null in Europe, and distinct from a party's region, which carries no prefix."
+        },
+        "applies_when": {
+          "type": "object",
+          "additionalProperties": false,
+          "minProperties": 1,
+          "properties": {
+            "seller_in": {
+              "$ref": "#/$defs/territory",
+              "description": "The seller has to be in this territory."
+            },
+            "buyer_in": {
+              "$ref": "#/$defs/territory",
+              "description": "The buyer has to be in this territory."
+            },
+            "supply_in": {
+              "$ref": "#/$defs/territory",
+              "description": "The supply has to take place in this territory. A sale is taxed where the goods are delivered, which is why this is not the buyer's territory."
+            }
+          },
+          "description": "Where the parties have to be for this tax to apply. A closed vocabulary of three keys, each naming one territory of the `territories` reference table, and every key present has to hold: no operator, no negation, no nesting. A condition is satisfied by the territory named and by every territory inside it, so seller_in GB reaches a seller in XI and seller_in XI does not reach one in GB. post_document() refuses a document that contradicts it and chooses no tax for anybody."
+        },
+        "report_code": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Deferred (P0-3): which declaration the boxes below belong to, when a country files several."
+        },
+        "sequence": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "group": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/code"
+          },
+          "description": "Reserved for phase 1 (Canada): several taxes on one line. The line keeps a single tax, \"QC GST+QST\", and posting expands it into its members. Refused by the compiler until the core carries it."
+        },
+        "postings": {
+          "$ref": "#/$defs/postings"
+        }
+      }
+    },
     "postings": {
       "type": "object",
       "description": "What the tax writes on the entry and on the return, per kind of document. A credit note usually repeats the invoice with the side or the box factor flipped.",
       "additionalProperties": false,
       "properties": {
-        "invoice": { "type": "array", "items": { "$ref": "#/$defs/posting" } },
-        "credit_note": { "type": "array", "items": { "$ref": "#/$defs/posting" } }
+        "invoice": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/posting"
+          }
+        },
+        "credit_note": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/posting"
+          }
+        }
       }
     },
-
     "posting": {
       "type": "object",
-      "required": ["type"],
+      "required": [
+        "type"
+      ],
       "additionalProperties": false,
       "properties": {
         "type": {
-          "enum": ["base", "tax", "tax_on_base"],
-          "description": "base carries no account: it is the line itself. tax carries one. tax_on_base carries none either, and for the same reason \u2014 a share of the tax that is not recoverable is a cost, so it lands on the accounts of the lines it taxes (Belgian cars at 50 %, French fuel at 80 %)."
+          "enum": [
+            "base",
+            "tax",
+            "tax_on_base"
+          ],
+          "description": "base carries no account: it is the line itself. tax carries one. tax_on_base carries none either, and for the same reason — a share of the tax that is not recoverable is a cost, so it lands on the accounts of the lines it taxes (Belgian cars at 50 %, French fuel at 80 %)."
         },
-        "factor": { "type": "number", "description": "Percentage of the amount that goes to the ledger \u2014 of the base on a base posting, of the tax on the two others. Default 100; -100 flips the side, which is how a self-assessed tax nets to zero." },
-        "account": { "type": ["string", "null"], "description": "Code of the ledger account, from accounts.csv. Only on a tax posting: base and tax_on_base take the account of the document line." },
-        "box": { "type": ["string", "null"], "pattern": "^[0-9A-Za-z]{1,8}$", "description": "Box of the periodic return this amount lands in." },
-        "box_factor": { "type": "number", "description": "Percentage of the amount reported in the box. Default 100; -100 subtracts from the same line." },
-        "report": { "type": ["string", "null"], "description": "Declaration form this box belongs to. Defaults to the code of tax_report.json — a box number is only unique inside one form, which matters the day a country files two at once (Canada: the federal GST/HST return and the Québec one)." },
-        "sequence": { "type": "integer", "minimum": 0, "description": "Order inside the kind, and part of the natural key. Defaults to the position in the array, times ten." }
+        "factor": {
+          "type": "number",
+          "description": "Percentage of the amount that goes to the ledger — of the base on a base posting, of the tax on the two others. Default 100; -100 flips the side, which is how a self-assessed tax nets to zero."
+        },
+        "account": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Code of the ledger account, from accounts.csv. Only on a tax posting: base and tax_on_base take the account of the document line."
+        },
+        "box": {
+          "$ref": "#/$defs/posting_boxes"
+        },
+        "box_factor": {
+          "type": "number",
+          "description": "Percentage of the amount reported in the box. Default 100; -100 subtracts from the same line."
+        },
+        "report": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Declaration form this box belongs to. Defaults to the code of tax_report.json — a box number is only unique inside one form, which matters the day a country files two at once (Canada: the federal GST/HST return and the Québec one)."
+        },
+        "sequence": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Order inside the kind, and part of the natural key. Defaults to the position in the array, times ten."
+        }
       }
     },
-
     "tax_report": {
       "type": "object",
       "title": "tax_report.json",
-      "description": "Deferred (P0-3): accepted and validated here, compiled when tax_report_templates exists. The boxes of a periodic return and the totals derived from them. No expression language: a plus list, a minus list and a floor at zero cover the Belgian 71/72, the French 16/23/25/28 and the British box 5.",
-      "required": ["code", "boxes"],
+      "description": "Deferred (P0-3): accepted and validated here, compiled when tax_report_templates exists. The boxes of a periodic return and the totals derived from them. No expression language: a plus list, a minus list and a floor at zero cover the Belgian 71/72, the French 16/23/25/28 and the British box 5, and a rate applied to one other box covers the lines an American sales tax return states as a multiplication.",
+      "required": [
+        "code",
+        "boxes"
+      ],
       "additionalProperties": false,
       "properties": {
-        "$schema": { "type": "string" },
-        "code": { "$ref": "#/$defs/code" },
-        "name": { "type": "string" },
+        "$schema": {
+          "type": "string"
+        },
+        "code": {
+          "$ref": "#/$defs/code"
+        },
+        "name": {
+          "type": "string"
+        },
         "period": {
           "description": "Cadences this form is filed on. A list, because one set of boxes may be filed monthly, quarterly or annually depending on turnover. The single string is what this field was before the list and is still read: `month_or_quarter` means the two cadences it names.",
           "oneOf": [
-            { "enum": ["month", "quarter", "month_or_quarter", "year"] },
-            { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "enum": ["month", "quarter", "year"] } }
+            {
+              "enum": [
+                "month",
+                "quarter",
+                "month_or_quarter",
+                "year"
+              ]
+            },
+            {
+              "type": "array",
+              "minItems": 1,
+              "uniqueItems": true,
+              "items": {
+                "enum": [
+                  "month",
+                  "quarter",
+                  "year"
+                ]
+              }
+            }
           ]
         },
-        "valid_from": { "$ref": "#/$defs/date" },
-        "valid_to": { "type": ["string", "null"], "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$" },
-        "legal_reference": { "type": ["string", "null"] },
-        "source": { "$ref": "#/$defs/source_ref" },
-        "boxes": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/tax_report_box" } }
+        "file_format": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The file this form is deposited as, named after the brick that writes it (`vat-consignment` for the Belgian XML Intervat takes). Leave it out where no brick writes the form yet: a form nobody can write is still one a company files by hand on a portal."
+        },
+        "period_default": {
+          "enum": [
+            "month",
+            "quarter",
+            "year"
+          ],
+          "description": "Cadence this form is filed on unless the company has asked the administration for another. Declare it only where the law gives one answer to everybody, whatever else the form accepts, and say which text does in legal_reference; where the cadence depends on a fact about the company — turnover — leave it out and `ekwo init` asks. It must be one of the cadences `period` declares."
+        },
+        "valid_from": {
+          "$ref": "#/$defs/date"
+        },
+        "valid_to": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+        },
+        "legal_reference": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "source": {
+          "$ref": "#/$defs/source_ref"
+        },
+        "boxes": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/tax_report_box"
+          }
+        },
+        "deadline": {
+          "type": "object",
+          "description": "When this form is due, as a rule rather than a date. Two shapes, closed: `day_of_month_after_period` with a `day`, and `last_day_of_month_after_period`; either may add `plus_days`. A pack that says nothing gets no deadline, which is the honest answer for a country whose schedule depends on the taxpayer rather than on the period.",
+          "additionalProperties": false,
+          "required": [
+            "rule",
+            "legal_reference"
+          ],
+          "properties": {
+            "rule": {
+              "enum": [
+                "day_of_month_after_period",
+                "last_day_of_month_after_period"
+              ]
+            },
+            "day": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 31,
+              "description": "Day of the month following the period. Required by `day_of_month_after_period` and refused by the other rule."
+            },
+            "plus_days": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 60,
+              "description": "Days added to the date the rule produces, for an administration that grants an extension — the seven days the United Kingdom adds for a return filed online."
+            },
+            "legal_reference": {
+              "type": "string",
+              "minLength": 10,
+              "description": "The text that sets the date, and the conditions on it: an extension that does not apply to every filer is said here."
+            },
+            "source": {
+              "type": "string",
+              "description": "Key of the register entry the reference is in."
+            }
+          }
+        }
       }
     },
-
     "tax_report_box": {
       "type": "object",
-      "required": ["box", "kind", "name", "legal_reference"],
+      "required": [
+        "box",
+        "kind",
+        "name",
+        "legal_reference"
+      ],
       "additionalProperties": false,
+      "dependentRequired": {
+        "rate": [
+          "rate_of"
+        ],
+        "rate_of": [
+          "rate"
+        ]
+      },
       "properties": {
-        "box": { "$ref": "#/$defs/box" },
-        "kind": { "enum": ["base", "tax", "total"] },
-        "name": { "type": "string", "minLength": 1 },
-        "sequence": { "type": "integer", "minimum": 0 },
-        "plus": { "type": "array", "items": { "$ref": "#/$defs/box_ref" } },
-        "minus": { "type": "array", "items": { "$ref": "#/$defs/box_ref" } },
-        "floor_zero": { "type": "boolean", "description": "A negative total is reported as zero, the other side of the pair carrying it." },
-        "hidden": { "type": "boolean", "description": "An intermediate total the form does not print." },
-        "xml_element": { "type": ["string", "null"] },
-        "legal_reference": { "type": ["string", "null"], "minLength": 1, "description": "The text of the form, or the article, this box comes from. Required: a golden test proves a form is internally coherent, never that a box is the right one, so a box nobody can trace to a source is a box nobody can review." },
-        "source": { "$ref": "#/$defs/source_ref" }
+        "box": {
+          "$ref": "#/$defs/box"
+        },
+        "kind": {
+          "enum": [
+            "base",
+            "tax",
+            "total"
+          ]
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sequence": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "print_sequence": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Where the administration prints this box, when that is not where the pack declares it. Left out means the same as `sequence`. The order boxes are worked out in is their dependencies and never either of these: a form prints a subtotal above what it adds up."
+        },
+        "plus": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/box_ref"
+          }
+        },
+        "minus": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/box_ref"
+          }
+        },
+        "rate": {
+          "type": "number",
+          "description": "Percentage of the box named by `rate_of`, which is what this box comes to. The other way a total is computed, for the forms that state a line as a multiplication in words — a sales tax return works out the taxable total for the period and applies the rates to it. Declared with `rate_of` and never beside `plus` or `minus`: two named fields, no expression."
+        },
+        "rate_of": {
+          "$ref": "#/$defs/box_ref",
+          "description": "The box `rate` is applied to, bare or qualified with its kind, resolved the way a `plus` reference is."
+        },
+        "floor_zero": {
+          "type": "boolean",
+          "description": "A negative total is reported as zero, the other side of the pair carrying it."
+        },
+        "hidden": {
+          "type": "boolean",
+          "description": "An intermediate total the form does not print."
+        },
+        "xml_element": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "legal_reference": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1,
+          "description": "The text of the form, or the article, this box comes from. Required: a golden test proves a form is internally coherent, never that a box is the right one, so a box nobody can trace to a source is a box nobody can review."
+        },
+        "source": {
+          "$ref": "#/$defs/source_ref"
+        }
       }
     },
-
     "golden_exemption": {
       "type": "object",
       "title": "manifest: golden",
       "description": "Why this pack carries no golden scenario. A pack without one and without this section is refused: a country whose figures nobody replays is a country nobody can review. The exemption is therefore a sentence somebody wrote, printed by `ekwo pack check`, and never a silence.",
-      "required": ["exempt"],
+      "required": [
+        "exempt"
+      ],
       "additionalProperties": false,
       "properties": {
-        "exempt": { "type": "string", "minLength": 20, "description": "The reason, in one sentence a reader can weigh." }
+        "exempt": {
+          "type": "string",
+          "minLength": 20,
+          "description": "The reason, in one sentence a reader can weigh."
+        }
       }
     },
-
     "golden": {
       "type": "object",
       "title": "packs/<cc>/golden/scenario.json",
       "description": "One year of books, declared. The runner installs a company on this pack, replays these documents and payments through post_document, post_payment and reconcile, and compares the declaration, the statements and the trial balance against the expectation files beside this one. Nothing here is executable and nothing here is an amount that was computed: the scenario is what a business did, the expectations are what the engine made of it.",
-      "required": ["name", "fiscal_year", "periods", "contacts", "documents"],
+      "required": [
+        "name",
+        "fiscal_year",
+        "periods",
+        "contacts",
+        "documents"
+      ],
       "additionalProperties": false,
       "properties": {
-        "$schema": { "type": "string" },
-        "name": { "type": "string", "minLength": 1, "description": "What this scenario is, in the pack's own language." },
-        "chart": { "$ref": "#/$defs/code", "description": "Chart the company is installed on. The pack's default when left out." },
-        "language": { "$ref": "#/$defs/language", "description": "Language the company is installed in. The pack's own when left out." },
+        "$schema": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "description": "What this scenario is, in the pack's own language."
+        },
+        "chart": {
+          "$ref": "#/$defs/code",
+          "description": "Chart the company is installed on. The pack's default when left out."
+        },
+        "territory": {
+          "$ref": "#/$defs/territory",
+          "description": "Territory the company of this scenario is established in, where its country is not precise enough — US-CA for a Californian filer. Left out everywhere the country is the answer, which is every country of the common system of VAT."
+        },
+        "language": {
+          "$ref": "#/$defs/language",
+          "description": "Language the company is installed in. The pack's own when left out."
+        },
         "fiscal_year": {
           "type": "object",
-          "required": ["name", "start", "end"],
+          "required": [
+            "name",
+            "start",
+            "end"
+          ],
           "additionalProperties": false,
           "properties": {
-            "name": { "type": "string", "minLength": 1 },
-            "start": { "$ref": "#/$defs/date" },
-            "end": { "$ref": "#/$defs/date" }
+            "name": {
+              "type": "string",
+              "minLength": 1
+            },
+            "start": {
+              "$ref": "#/$defs/date"
+            },
+            "end": {
+              "$ref": "#/$defs/date"
+            }
           }
         },
         "periods": {
@@ -516,228 +1420,655 @@
           "description": "The periods the declaration is filed for. Several of them is the point: a tax due on collection falls in the period of the payment and not of the invoice, and one annual figure hides that.",
           "items": {
             "type": "object",
-            "required": ["code", "from", "to"],
+            "required": [
+              "code",
+              "from",
+              "to"
+            ],
             "additionalProperties": false,
             "properties": {
-              "code": { "$ref": "#/$defs/code" },
-              "from": { "$ref": "#/$defs/date" },
-              "to": { "$ref": "#/$defs/date" }
+              "code": {
+                "$ref": "#/$defs/code"
+              },
+              "from": {
+                "$ref": "#/$defs/date"
+              },
+              "to": {
+                "$ref": "#/$defs/date"
+              }
             }
           }
         },
         "statements": {
           "type": "array",
           "description": "Statement codes to evaluate over the year. The statements of the company's chart when left out.",
-          "items": { "$ref": "#/$defs/code" }
+          "items": {
+            "$ref": "#/$defs/code"
+          }
         },
-        "contacts": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/golden_contact" } },
+        "contacts": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/golden_contact"
+          }
+        },
         "documents": {
           "type": "array",
           "minItems": 10,
           "description": "At least ten, and they earn their place: sales and purchases, the standard rate and a reduced one, an intra-Union reverse charge, a credit note, and — where the country has one — a tax due on collection and a tax that is only partly recoverable. Fewer than ten and a return has boxes nobody ever filled.",
-          "items": { "$ref": "#/$defs/golden_document" }
+          "items": {
+            "$ref": "#/$defs/golden_document"
+          }
         },
-        "payments": { "type": "array", "items": { "$ref": "#/$defs/golden_payment" } }
+        "payments": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/golden_payment"
+          }
+        }
       }
     },
-
     "golden_contact": {
       "type": "object",
       "description": "A counterparty of the scenario. Fictional, always: this repository carries no real company and no real VAT number.",
-      "required": ["ref", "name", "type", "country"],
+      "required": [
+        "ref",
+        "name",
+        "type",
+        "country"
+      ],
       "additionalProperties": false,
       "properties": {
-        "ref": { "$ref": "#/$defs/code", "description": "How the documents below name it. Local to this file." },
-        "name": { "type": "string", "minLength": 1 },
-        "type": { "enum": ["customer", "supplier"] },
-        "country": { "$ref": "#/$defs/country" },
-        "vat_number": { "type": ["string", "null"] },
-        "auxiliary_code": { "type": ["string", "null"], "description": "Sub-ledger code, which a French FEC carries." }
+        "ref": {
+          "$ref": "#/$defs/code",
+          "description": "How the documents below name it. Local to this file."
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "type": {
+          "enum": [
+            "customer",
+            "supplier"
+          ]
+        },
+        "country": {
+          "$ref": "#/$defs/country"
+        },
+        "territory": {
+          "$ref": "#/$defs/territory",
+          "description": "Territory this party is in, where its country is not precise enough. Left out everywhere the country is the answer."
+        },
+        "vat_number": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "auxiliary_code": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Sub-ledger code, which a French FEC carries."
+        }
       }
     },
-
     "golden_document": {
       "type": "object",
-      "required": ["ref", "type", "contact", "date", "why", "lines"],
+      "required": [
+        "ref",
+        "type",
+        "contact",
+        "date",
+        "why",
+        "lines"
+      ],
       "additionalProperties": false,
       "properties": {
-        "ref": { "$ref": "#/$defs/code" },
-        "type": { "enum": ["sale_invoice", "sale_credit_note", "purchase_invoice", "purchase_credit_note"] },
-        "contact": { "$ref": "#/$defs/code", "description": "`ref` of a contact declared above." },
-        "date": { "$ref": "#/$defs/date" },
-        "due_date": { "type": ["string", "null"], "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$" },
-        "why": { "type": "string", "minLength": 1, "description": "What this document is in the scenario for. A golden with a document nobody can justify is a golden that grew by accident." },
+        "ref": {
+          "$ref": "#/$defs/code"
+        },
+        "type": {
+          "enum": [
+            "sale_invoice",
+            "sale_credit_note",
+            "purchase_invoice",
+            "purchase_credit_note"
+          ]
+        },
+        "contact": {
+          "$ref": "#/$defs/code",
+          "description": "`ref` of a contact declared above."
+        },
+        "date": {
+          "$ref": "#/$defs/date"
+        },
+        "due_date": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+        },
+        "supply_territory": {
+          "$ref": "#/$defs/territory",
+          "description": "Territory the supply takes place in. Left out where the buyer's own territory is the answer, which is the ordinary case: a supply nobody said anything else about is delivered to the person who bought it."
+        },
+        "why": {
+          "type": "string",
+          "minLength": 1,
+          "description": "What this document is in the scenario for. A golden with a document nobody can justify is a golden that grew by accident."
+        },
         "lines": {
           "type": "array",
           "minItems": 1,
           "items": {
             "type": "object",
-            "required": ["name", "unit_price", "account"],
+            "required": [
+              "name",
+              "unit_price",
+              "account"
+            ],
             "additionalProperties": false,
             "properties": {
-              "name": { "type": "string", "minLength": 1 },
-              "quantity": { "type": "number" },
-              "unit_price": { "type": "number" },
-              "discount_percent": { "type": "number", "minimum": 0, "maximum": 100 },
-              "tax": { "type": ["string", "null"], "description": "Code of a tax of this pack, or null for a line outside the scope of the tax." },
-              "account": { "$ref": "#/$defs/code", "description": "Code of an account of the chart this scenario installs." }
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "quantity": {
+                "type": "number"
+              },
+              "unit_price": {
+                "type": "number"
+              },
+              "discount_percent": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 100
+              },
+              "tax": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "description": "Code of a tax of this pack, or null for a line outside the scope of the tax."
+              },
+              "account": {
+                "$ref": "#/$defs/code",
+                "description": "Code of an account of the chart this scenario installs."
+              }
             }
           }
         }
       }
     },
-
     "golden_payment": {
       "type": "object",
-      "required": ["ref", "direction", "date", "amount", "contact", "journal", "why"],
+      "required": [
+        "ref",
+        "direction",
+        "date",
+        "amount",
+        "contact",
+        "journal",
+        "why"
+      ],
       "additionalProperties": false,
       "properties": {
-        "ref": { "$ref": "#/$defs/code" },
-        "direction": { "enum": ["inbound", "outbound"] },
-        "date": { "$ref": "#/$defs/date" },
-        "amount": { "type": "number", "minimum": 0 },
-        "contact": { "$ref": "#/$defs/code" },
-        "journal": { "$ref": "#/$defs/code", "description": "Code of a journal of this pack." },
-        "match": { "type": ["string", "null"], "description": "`ref` of the document this payment settles, matched through reconcile(). Null is a payment on account: it leaves an open item, which is what a real ledger holds and what a return computed from matchings has to survive." },
-        "why": { "type": "string", "minLength": 1 }
+        "ref": {
+          "$ref": "#/$defs/code"
+        },
+        "direction": {
+          "enum": [
+            "inbound",
+            "outbound"
+          ]
+        },
+        "date": {
+          "$ref": "#/$defs/date"
+        },
+        "amount": {
+          "type": "number",
+          "minimum": 0
+        },
+        "contact": {
+          "$ref": "#/$defs/code"
+        },
+        "journal": {
+          "$ref": "#/$defs/code",
+          "description": "Code of a journal of this pack."
+        },
+        "match": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "`ref` of the document this payment settles, matched through reconcile(). Null is a payment on account: it leaves an open item, which is what a real ledger holds and what a return computed from matchings has to survive."
+        },
+        "why": {
+          "type": "string",
+          "minLength": 1
+        }
       }
     },
-
     "framework": {
       "type": "object",
       "title": "packs/generic/pack.json",
       "description": "A pack with no country: a framework of financial statements that reports by account type and fits any chart of any country. It carries statements and nothing else — no chart, no tax, no journal — which is why it is not the manifest above.",
-      "required": ["code", "name", "version", "schema_min"],
+      "required": [
+        "code",
+        "name",
+        "version",
+        "schema_min"
+      ],
       "additionalProperties": false,
       "properties": {
-        "$schema": { "type": "string" },
-        "code": { "$ref": "#/$defs/code", "description": "IFRS-SME. Names the framework, not a country." },
-        "name": { "type": "string", "minLength": 1 },
-        "version": { "$ref": "#/$defs/semver" },
-        "schema_min": { "type": "string", "pattern": "^[0-9]{14}$" },
-        "released_at": { "$ref": "#/$defs/date" },
-        "language": { "$ref": "#/$defs/language", "description": "Language the labels below are written in. A translation goes in i18n/, like any pack." },
-        "certification": { "$ref": "#/$defs/certification" },
-        "golden": { "$ref": "#/$defs/golden_exemption" }
+        "$schema": {
+          "type": "string"
+        },
+        "code": {
+          "$ref": "#/$defs/code",
+          "description": "IFRS-SME. Names the framework, not a country."
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "version": {
+          "$ref": "#/$defs/semver"
+        },
+        "schema_min": {
+          "type": "string",
+          "pattern": "^[0-9]{14}$"
+        },
+        "released_at": {
+          "$ref": "#/$defs/date"
+        },
+        "language": {
+          "$ref": "#/$defs/language",
+          "description": "Language the labels below are written in. A translation goes in i18n/, like any pack."
+        },
+        "certification": {
+          "$ref": "#/$defs/certification"
+        },
+        "golden": {
+          "$ref": "#/$defs/golden_exemption"
+        }
       }
     },
-
     "statements": {
       "type": "object",
       "title": "statements.json",
       "description": "The financial statements of a pack. An empty list is a valid pack — a country without statements reports on the generic framework by account type, which is what the eighteen account types buy.",
-      "required": ["statements"],
+      "required": [
+        "statements"
+      ],
       "additionalProperties": false,
       "properties": {
-        "$schema": { "type": "string" },
-        "statements": { "type": "array", "items": { "$ref": "#/$defs/statement" } }
+        "$schema": {
+          "type": "string"
+        },
+        "statements": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/statement"
+          }
+        }
       }
     },
-
     "statement": {
       "type": "object",
-      "required": ["code", "kind", "lines"],
+      "required": [
+        "code",
+        "kind",
+        "lines"
+      ],
       "additionalProperties": false,
       "properties": {
-        "code": { "$ref": "#/$defs/code" },
-        "kind": { "enum": ["balance_sheet", "income_statement", "cash_flow", "allocation"] },
-        "framework": { "type": "string", "description": "BE-GAAP, FR-PCG, UK-FRS102, IFRS-SME." },
-        "taxonomy": { "type": ["string", "null"], "pattern": "^[a-z0-9-]+:[0-9]+(\\.[0-9]+)*$", "description": "Taxonomy the `xbrl` fact keys of this statement are written against, as `name:version` — `nbb-cbso:26.0`. The format library that reads those keys carries the table of that very version; a statement whose keys were written against another one resolves them onto the wrong lines, silently. Null where no filing format reads this statement." },
-        "name": { "type": "string" },
-        "valid_from": { "$ref": "#/$defs/date" },
-        "valid_to": { "type": ["string", "null"], "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$" },
-        "legal_reference": { "type": ["string", "null"] },
-        "source": { "$ref": "#/$defs/source_ref" },
-        "lines": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/statement_line" } }
+        "code": {
+          "$ref": "#/$defs/code"
+        },
+        "kind": {
+          "enum": [
+            "balance_sheet",
+            "income_statement",
+            "cash_flow",
+            "allocation"
+          ]
+        },
+        "framework": {
+          "type": "string",
+          "description": "BE-GAAP, FR-PCG, UK-FRS102, IFRS-SME."
+        },
+        "taxonomy": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[a-z0-9-]+:[0-9]+(\\.[0-9]+)*$",
+          "description": "Taxonomy the `xbrl` fact keys of this statement are written against, as `name:version` — `nbb-cbso:26.0`. The format library that reads those keys carries the table of that very version; a statement whose keys were written against another one resolves them onto the wrong lines, silently. Null where no filing format reads this statement."
+        },
+        "name": {
+          "type": "string"
+        },
+        "valid_from": {
+          "$ref": "#/$defs/date"
+        },
+        "valid_to": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+        },
+        "legal_reference": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "source": {
+          "$ref": "#/$defs/source_ref"
+        },
+        "lines": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/statement_line"
+          }
+        }
       }
     },
-
     "statement_line": {
       "type": "object",
-      "required": ["code", "name"],
+      "required": [
+        "code",
+        "name"
+      ],
       "additionalProperties": false,
       "properties": {
-        "code": { "$ref": "#/$defs/code" },
-        "parent": { "type": ["string", "null"] },
-        "name": { "type": "string", "minLength": 1 },
-        "sequence": { "type": "integer", "minimum": 0 },
-        "sign": { "enum": [1, -1], "description": "How the scheme reads this line: -1 prints a credit balance as a positive figure. A line computed from others takes none — every line its formula names already carries its own sign, so a sign here would be applied to them a second time. Use `minus` to subtract." },
-        "is_total": { "type": "boolean" },
-        "plus": { "type": "array", "items": { "$ref": "#/$defs/code" } },
-        "minus": { "type": "array", "items": { "$ref": "#/$defs/code" } },
-        "xbrl": { "type": ["string", "null"], "description": "What an XBRL filing writes for this line. The NBB CBSO taxonomy is dimensional, so the value is a fact key — a metric and its dimension members, `met:am1|bas:m2` — not an element name. Null where nothing is verified." },
-        "legal_reference": { "type": ["string", "null"] },
-        "source": { "$ref": "#/$defs/source_ref" },
-        "rules": { "type": "array", "items": { "$ref": "#/$defs/statement_rule" } }
+        "code": {
+          "$ref": "#/$defs/code"
+        },
+        "parent": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sequence": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "sign": {
+          "enum": [
+            1,
+            -1
+          ],
+          "description": "How the scheme reads this line: -1 prints a credit balance as a positive figure. A line computed from others takes none — every line its formula names already carries its own sign, so a sign here would be applied to them a second time. Use `minus` to subtract."
+        },
+        "is_total": {
+          "type": "boolean"
+        },
+        "plus": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/code"
+          }
+        },
+        "minus": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/code"
+          }
+        },
+        "xbrl": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "What an XBRL filing writes for this line. The NBB CBSO taxonomy is dimensional, so the value is a fact key — a metric and its dimension members, `met:am1|bas:m2` — not an element name. Null where nothing is verified."
+        },
+        "legal_reference": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "source": {
+          "$ref": "#/$defs/source_ref"
+        },
+        "rules": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/statement_rule"
+          }
+        }
       }
     },
-
     "statement_rule": {
       "type": "object",
       "description": "How accounts reach a line. Presentation may map by code range — the NBB schema, the liasse and every XBRL taxonomy do — where choosing an account to post to by prefix stays forbidden.",
-      "required": ["kind"],
+      "required": [
+        "kind"
+      ],
       "additionalProperties": false,
       "properties": {
-        "kind": { "enum": ["code_range", "code_prefix", "account_type", "account_code"] },
-        "code_from": { "type": ["string", "null"] },
-        "code_to": { "type": ["string", "null"] },
-        "account_type": { "type": ["string", "null"] },
-        "side": { "enum": ["debit", "credit", "any"] },
-        "sequence": { "type": "integer", "minimum": 0 }
+        "kind": {
+          "enum": [
+            "code_range",
+            "code_prefix",
+            "account_type",
+            "account_code"
+          ]
+        },
+        "code_from": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "code_to": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "account_type": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "side": {
+          "enum": [
+            "debit",
+            "credit",
+            "any"
+          ]
+        },
+        "sequence": {
+          "type": "integer",
+          "minimum": 0
+        }
       }
     },
-
     "i18n": {
       "type": "object",
       "title": "i18n/<lang>.json",
       "description": "Every label of the pack in one more language, by the code the label belongs to. One file per language, and the only place a translation lives: the rest of the pack is written in defaults.language and carries no second wording. A key is a translation of the same concept, never a different rule — codes, amounts, accounts and boxes are the same in every language. A language listed in the manifest must cover every key; `ekwo pack check` names what is missing. A language not listed may be partial, and a missing key falls back to the pack's own label.",
-      "required": ["language"],
+      "required": [
+        "language"
+      ],
       "additionalProperties": false,
       "properties": {
-        "$schema": { "type": "string" },
-        "language": { "$ref": "#/$defs/language" },
-        "source": { "type": "string", "description": "Where the official wording of this language comes from, in one sentence, when a statute or an administration publishes one. Repeated in i18n/README.md at length." },
-        "pack_name": { "type": "string", "minLength": 1, "description": "The country itself, in this language. Reaches country_defaults.name_i18n." },
-        "charts": { "type": "object", "additionalProperties": { "type": "string" }, "description": "By chart code, as the manifest names them." },
-        "accounts": { "type": "object", "additionalProperties": { "type": "string" }, "description": "By account code, across every chart of the pack." },
-        "journals": { "type": "object", "additionalProperties": { "type": "string" } },
-        "taxes": { "type": "object", "additionalProperties": { "type": "string" } },
-        "tax_report_boxes": { "type": "object", "additionalProperties": { "type": "string" }, "description": "By the reference the formulas use: `54`, or `08:tax` where one line of the form carries a base and a tax." },
-        "statement_lines": { "type": "object", "additionalProperties": { "type": "string" }, "description": "By `<statement>:<line>`, because two statements may both carry a line `20`." },
-        "legal_mentions": { "type": "object", "additionalProperties": { "type": "string" }, "description": "By mention code. Where a statute prescribes the wording in this language, it is that wording and not a translation of another one." },
-        "asset_categories": { "type": "object", "additionalProperties": { "type": "string" }, "description": "By category code of assets.json, the section of the fixed assets module." }
+        "$schema": {
+          "type": "string"
+        },
+        "language": {
+          "$ref": "#/$defs/language"
+        },
+        "source": {
+          "type": "string",
+          "description": "Where the official wording of this language comes from, in one sentence, when a statute or an administration publishes one. Repeated in i18n/README.md at length."
+        },
+        "pack_name": {
+          "type": "string",
+          "minLength": 1,
+          "description": "The country itself, in this language. Reaches country_defaults.name_i18n."
+        },
+        "charts": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "By chart code, as the manifest names them."
+        },
+        "accounts": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "By account code, across every chart of the pack."
+        },
+        "journals": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "taxes": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "tax_report_boxes": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "By the reference the formulas use: `54`, or `08:tax` where one line of the form carries a base and a tax."
+        },
+        "statement_lines": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "By `<statement>:<line>`, because two statements may both carry a line `20`."
+        },
+        "legal_mentions": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "By mention code. Where a statute prescribes the wording in this language, it is that wording and not a translation of another one."
+        },
+        "asset_categories": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "By category code of assets.json, the section of the fixed assets module."
+        }
       }
     },
-
     "module_assets": {
       "type": "object",
       "description": "packs/<cc>/assets.json — what this country says about depreciating and derecognising a fixed asset. Compiled by `ekwo pack build` into supabase/seed/modules/assets/, and applied only on an installation that carries the `assets` module. The accounts a disposal lands on are deliberately not here: an account that plays a part is a role of the chart, and defaults.roles is the one place a pack names one.",
-      "required": ["depreciation"],
+      "required": [
+        "depreciation"
+      ],
       "additionalProperties": false,
       "properties": {
-        "$schema": { "type": "string" },
+        "$schema": {
+          "type": "string"
+        },
         "depreciation": {
           "type": "object",
-          "required": ["prorata_straight_line", "prorata_declining"],
+          "required": [
+            "prorata_straight_line",
+            "prorata_declining"
+          ],
           "additionalProperties": false,
           "properties": {
-            "prorata_straight_line": { "enum": ["none", "days", "months"], "description": "How much of the first period a straight-line asset takes." },
-            "prorata_declining": { "enum": ["none", "days", "months"], "description": "The same under a declining balance, which several countries prorate differently — France counts whole months from the month of acquisition." },
-            "day_count": { "enum": ["actual", "thirty_360"], "description": "Which calendar a prorata in days counts on: the real one, or the commercial year of twelve thirty-day months. Defaults to actual." },
-            "declining_cap_percent": { "type": ["number", "null"], "minimum": 0, "maximum": 100, "description": "Largest annuity a declining balance may take in one period, as a percentage of the acquisition value. Null where the country caps nothing." },
-            "declining_switch_to_linear": { "type": "boolean", "description": "Whether the declining balance switches to the straight line over the remaining periods once that is the larger annuity. Defaults to true: without it the schedule never reaches zero." },
-            "legal_reference": { "type": ["string", "null"] },
-            "source": { "$ref": "#/$defs/source_ref" }
+            "prorata_straight_line": {
+              "enum": [
+                "none",
+                "days",
+                "months"
+              ],
+              "description": "How much of the first period a straight-line asset takes."
+            },
+            "prorata_declining": {
+              "enum": [
+                "none",
+                "days",
+                "months"
+              ],
+              "description": "The same under a declining balance, which several countries prorate differently — France counts whole months from the month of acquisition."
+            },
+            "day_count": {
+              "enum": [
+                "actual",
+                "thirty_360"
+              ],
+              "description": "Which calendar a prorata in days counts on: the real one, or the commercial year of twelve thirty-day months. Defaults to actual."
+            },
+            "declining_cap_percent": {
+              "type": [
+                "number",
+                "null"
+              ],
+              "minimum": 0,
+              "maximum": 100,
+              "description": "Largest annuity a declining balance may take in one period, as a percentage of the acquisition value. Null where the country caps nothing."
+            },
+            "declining_switch_to_linear": {
+              "type": "boolean",
+              "description": "Whether the declining balance switches to the straight line over the remaining periods once that is the larger annuity. Defaults to true: without it the schedule never reaches zero."
+            },
+            "legal_reference": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "source": {
+              "$ref": "#/$defs/source_ref"
+            }
           }
         },
         "disposal": {
           "type": "object",
-          "required": ["style"],
+          "required": [
+            "style"
+          ],
           "additionalProperties": false,
           "properties": {
-            "style": { "enum": ["net_result", "gross"], "description": "net_result: the difference between the proceeds and the net book value lands on one account, a gain or a loss (BE 763/663). gross: the net book value is a charge and the proceeds an income, both in full, and the income statement prints the two (FR 675/775). The roles each style needs are in defaults.roles, and `ekwo pack check` refuses a style whose roles are missing." },
-            "legal_reference": { "type": ["string", "null"] },
-            "source": { "$ref": "#/$defs/source_ref" }
+            "style": {
+              "enum": [
+                "net_result",
+                "gross"
+              ],
+              "description": "net_result: the difference between the proceeds and the net book value lands on one account, a gain or a loss (BE 763/663). gross: the net book value is a charge and the proceeds an income, both in full, and the income statement prints the two (FR 675/775). The roles each style needs are in defaults.roles, and `ekwo pack check` refuses a style whose roles are missing."
+            },
+            "legal_reference": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "source": {
+              "$ref": "#/$defs/source_ref"
+            }
           }
         },
         "categories": {
@@ -745,19 +2076,70 @@
           "description": "The usual duration and method of a kind of asset in this country. What `assets.create_asset` pre-fills from, never a rule: an asset that departs from one says so in its own columns.",
           "items": {
             "type": "object",
-            "required": ["code", "name", "method", "duration_months"],
+            "required": [
+              "code",
+              "name",
+              "method",
+              "duration_months"
+            ],
             "additionalProperties": false,
             "properties": {
-              "code": { "$ref": "#/$defs/code" },
-              "name": { "type": "string", "minLength": 1, "description": "In the pack's own language. The other languages are in i18n/<lang>.json, under asset_categories." },
-              "method": { "enum": ["straight_line", "declining_balance", "units_of_production"] },
-              "duration_months": { "type": "integer", "minimum": 1 },
-              "coefficient": { "type": ["number", "null"], "minimum": 0, "description": "Multiplier of the straight-line rate under a declining balance. Required for that method." },
-              "prorata": { "enum": ["none", "days", "months", null], "description": "Overrides the country rule for this category. Null is the ordinary case." },
-              "account_type": { "type": ["string", "null"], "description": "One of the eighteen account types, so a client can propose an account on a chart it has never seen. Advisory: nothing resolves an account from it." },
-              "sequence": { "type": "integer", "minimum": 0 },
-              "legal_reference": { "type": ["string", "null"] },
-              "source": { "$ref": "#/$defs/source_ref" }
+              "code": {
+                "$ref": "#/$defs/code"
+              },
+              "name": {
+                "type": "string",
+                "minLength": 1,
+                "description": "In the pack's own language. The other languages are in i18n/<lang>.json, under asset_categories."
+              },
+              "method": {
+                "enum": [
+                  "straight_line",
+                  "declining_balance",
+                  "units_of_production"
+                ]
+              },
+              "duration_months": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "coefficient": {
+                "type": [
+                  "number",
+                  "null"
+                ],
+                "minimum": 0,
+                "description": "Multiplier of the straight-line rate under a declining balance. Required for that method."
+              },
+              "prorata": {
+                "enum": [
+                  "none",
+                  "days",
+                  "months",
+                  null
+                ],
+                "description": "Overrides the country rule for this category. Null is the ordinary case."
+              },
+              "account_type": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "description": "One of the eighteen account types, so a client can propose an account on a chart it has never seen. Advisory: nothing resolves an account from it."
+              },
+              "sequence": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "legal_reference": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "source": {
+                "$ref": "#/$defs/source_ref"
+              }
             }
           }
         }

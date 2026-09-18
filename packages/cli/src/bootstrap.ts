@@ -59,6 +59,13 @@ export interface BootstrapOptions {
    * nothing here invents one.
    */
   vatPeriod?: string | undefined;
+  /**
+   * How often the company files each declaration it is subject to, keyed on
+   * the code of the form. `vatPeriod` above is the same fact for the country's
+   * periodic return and is folded into this; a form named here and nowhere
+   * recorded simply gets no row, because a cadence nobody chose is not one.
+   */
+  filingPeriods?: Record<string, string> | undefined;
   /** The main bank account, when the operator has one to give. */
   bankAccount?: BankAccountOptions | undefined;
 }
@@ -80,6 +87,8 @@ export interface BootstrapResult {
   chartCode?: string | undefined;
   /** The cadence recorded on the company, when one was settled. */
   vatPeriod?: string | undefined;
+  /** Every cadence recorded, by the code of the form it was recorded for. */
+  filingPeriods: Record<string, string>;
   /** The bank account, when one was asked for. */
   bankAccountId?: string | undefined;
   steps: Step[];
@@ -165,6 +174,52 @@ export async function countryVatPeriods(db: SqlClient, country: string): Promise
   return row?.periods ?? [];
 }
 
+/** A declaration form of a country, as an installation carries it. */
+export interface FilingForm {
+  code: string;
+  name: string;
+  /** The cadences the form is filed on. */
+  periods: string[];
+  /** The cadence the law of that country gives everybody, when it gives one. */
+  periodDefault?: string | undefined;
+  /** Whether this is the periodic return, which is what `--vat-period` names. */
+  isPeriodicReturn: boolean;
+}
+
+/**
+ * Every declaration form this country files, with what each one accepts and
+ * what it proposes.
+ *
+ * `ekwo init` asks once per form, because a company is subject to several
+ * declarations and each has a cadence of its own: the recapitulative statement
+ * of intra-Community supplies is not filed on the cadence of the return in any
+ * country read so far. An empty list means the installation carries no form for
+ * that country, and then there is nothing to ask.
+ */
+export async function countryFilingForms(db: SqlClient, country: string): Promise<FilingForm[]> {
+  const found = await db.query<{
+    code: string;
+    name: string;
+    periods: string[];
+    period_default: string | null;
+    is_periodic_return: boolean;
+  }>(
+    `select t.code, t.name, t.periods::text[] as periods,
+            t.period_default::text as period_default, t.is_periodic_return
+       from tax_report_templates t
+      where t.country = $1
+      order by t.is_periodic_return desc, t.code`,
+    [country.toUpperCase()],
+  );
+  return found.map((row) => ({
+    code: row.code,
+    name: row.name,
+    periods: row.periods ?? [],
+    ...(row.period_default === null ? {} : { periodDefault: row.period_default }),
+    isPeriodicReturn: row.is_periodic_return,
+  }));
+}
+
 /**
  * The cadence the pack proposes, or nothing.
  *
@@ -175,11 +230,16 @@ export async function countryVatPeriods(db: SqlClient, country: string): Promise
  * `country_defaults.vat_period_default`.
  */
 export async function countryVatPeriod(db: SqlClient, country: string): Promise<string | undefined> {
-  // `scalar` hands back the null the column holds, and a null here is a pack
-  // that has said nothing — the same thing as no row at all to every caller.
+  // Read from the form and no longer from `country_defaults.vat_period_default`,
+  // which asked what a country proposes when the answer belongs to a
+  // declaration. `scalar` hands back the null the column holds, and a null here
+  // is a pack that has said nothing — the same thing as no row to every caller.
   const proposed = await scalar<string>(
     db,
-    'select vat_period_default from country_defaults where country = $1',
+    `select t.period_default::text from tax_report_templates t
+      where t.country = $1 and t.is_periodic_return
+      order by t.valid_from desc
+      limit 1`,
     [country.toUpperCase()],
   );
   return proposed ?? undefined;
@@ -409,20 +469,42 @@ export async function bootstrap(
   }
   const language = packLanguage.toLowerCase();
 
-  // How often this company files. Unlike the currency and the language, the
-  // column is nullable and nothing downstream breaks when it is empty, so the
-  // absence of an answer is itself an answer and is recorded as one. What is
-  // refused is an answer the country's own form does not accept.
-  const vatPeriod = options.vatPeriod ?? (await countryVatPeriod(db, country));
-  if (vatPeriod !== undefined) {
-    const accepted = await countryVatPeriods(db, country);
-    if (accepted.length > 0 && !accepted.includes(vatPeriod)) {
+  // How often this company files each declaration it is subject to. Unlike the
+  // currency and the language, nothing downstream breaks when one is missing,
+  // so the absence of an answer is itself an answer and is recorded as one —
+  // no row. What is refused is an answer the form does not accept, and a form
+  // this installation does not carry.
+  const forms = await countryFilingForms(db, country);
+  const asked: Record<string, string> = { ...(options.filingPeriods ?? {}) };
+  const periodicReturn = forms.find((form) => form.isPeriodicReturn);
+  if (options.vatPeriod !== undefined) {
+    if (periodicReturn === undefined) {
       throw new Error(
-        `unknown_vat_period: the ${country} periodic return is filed ${accepted.join(' or ')}, ` +
-          `not ${vatPeriod}.`,
+        `no_periodic_return: this installation carries no periodic return for ${country}, ` +
+          'so there is no declaration a VAT filing cadence could be about.',
       );
     }
+    asked[periodicReturn.code] = options.vatPeriod;
   }
+  for (const code of Object.keys(asked)) {
+    if (forms.some((form) => form.code === code)) continue;
+    throw new Error(
+      `unknown_tax_report: ${code} is not a declaration form of ${country} in this installation.`,
+    );
+  }
+  const filingPeriods: Record<string, string> = {};
+  for (const form of forms) {
+    const chosen = asked[form.code] ?? form.periodDefault;
+    if (chosen === undefined) continue;
+    if (form.periods.length > 0 && !form.periods.includes(chosen)) {
+      throw new Error(
+        `unknown_vat_period: ${form.code} is filed ${form.periods.join(' or ')}, not ${chosen}.`,
+      );
+    }
+    filingPeriods[form.code] = chosen;
+  }
+  const vatPeriod =
+    periodicReturn === undefined ? undefined : filingPeriods[periodicReturn.code];
 
   const existingCompany = await first<{ id: string; currency_code: string }>(
     db,
@@ -433,10 +515,13 @@ export async function bootstrap(
   if (existingCompany === undefined) {
     const created = await first<{ id: string }>(
       db,
-      `insert into companies (name, country, fiscal_country, currency_code, language, vat_period)
-       values ($1, $2, $2, $3, $4, $5::declaration_period)
+      // `vat_period` is not written here. It is a mirror of the row
+      // `company_filing_periods` carries for the periodic return, and writing
+      // both would be the one fact decided in two places.
+      `insert into companies (name, country, fiscal_country, currency_code, language)
+       values ($1, $2, $2, $3, $4)
        returning id`,
-      [options.company, country, currencyCode, language, vatPeriod ?? null],
+      [options.company, country, currencyCode, language],
     );
     if (created === undefined) throw new Error('company_insert_failed: no row returned');
     companyId = created.id;
@@ -452,6 +537,19 @@ export async function bootstrap(
       outcome: 'already',
       detail: `${options.company} (${existingCompany.currency_code})`,
     });
+  }
+
+  // Every cadence that was settled, one row per declaration. `do nothing` on a
+  // conflict: running `init` again over a company that already records a
+  // cadence says what it already said, and does not overrule an answer
+  // somebody has since changed.
+  for (const [code, period] of Object.entries(filingPeriods)) {
+    await db.query(
+      `insert into company_filing_periods (company_id, report_code, period)
+       values ($1, $2, $3::declaration_period)
+       on conflict (company_id, report_code) do nothing`,
+      [companyId, code, period],
+    );
   }
 
   // 4. The administrator on the books of that company. Administering an
@@ -556,6 +654,7 @@ export async function bootstrap(
     currencyCode,
     language,
     vatPeriod,
+    filingPeriods,
     packVersion: copied?.version,
     chartCode: copied?.chart_code,
     bankAccountId,

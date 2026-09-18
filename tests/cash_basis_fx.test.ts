@@ -195,6 +195,27 @@ describe('a service invoiced in France', () => {
     ]);
   });
 
+  it('says which posting each leg of the transfer belongs to', async () => {
+    // A cash-basis tax makes both of its postings wait: the base, which the
+    // declaration reports beside the tax, and the tax itself. Each is
+    // transferred as the posting it is, and the leg that empties the account
+    // the tax waited on is part of that same posting falling due. So a ledger
+    // written by a settlement reads like a ledger written at posting, and
+    // nothing here is left without an answer.
+    const legs = await rows<{ posting_type: string | null; tax_line: boolean }>(
+      db,
+      `select l.posting_type::text as posting_type, l.tax_line
+         from entry_lines l
+         join entries e on e.id = l.entry_id
+        where e.document_id = $1
+          and e.id <> (select entry_id from documents where id = $1)
+        order by e.entry_date, l.sequence`,
+      [documentId],
+    );
+    expect(legs.length).toBeGreaterThan(0);
+    for (const leg of legs) expect(leg.posting_type).toBe(leg.tax_line ? 'tax' : 'base');
+  });
+
   it('shows the box in the month of the payment, and not before', async () => {
     expect(await vatBox('08', '2026-03-01', '2026-03-31')).toEqual({});
     expect(await vatBox('08', '2026-04-01', '2026-04-30')).toEqual({ base: '400.00', tax: '80.00' });

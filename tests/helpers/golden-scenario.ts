@@ -61,6 +61,17 @@ export async function replayScenario(
   const documents = new Map<string, string>();
   const payments = new Map<string, string>();
 
+  // Where the company of the scenario is established, when its country is not
+  // precise enough to say which taxes reach it. Null everywhere else, and set
+  // before the first document: a tax that names a territory is refused on a
+  // document whose parties are somewhere else.
+  if (golden.territory !== null) {
+    await db.query(`update companies set territory_code = $2 where id = $1`, [
+      companyId,
+      golden.territory,
+    ]);
+  }
+
   for (const contact of golden.contacts) {
     contacts.set(
       contact.ref,
@@ -68,6 +79,7 @@ export async function replayScenario(
         name: contact.name,
         type: contact.type,
         country: contact.country,
+        territory: contact.territory,
         vat: contact.vat_number,
         auxiliaryCode: contact.auxiliary_code,
       }),
@@ -83,6 +95,7 @@ export async function replayScenario(
       contactId: contacts.get(document.contact) as string,
       date: document.date,
       dueDate: document.due_date,
+      supplyTerritory: document.supply_territory,
       lines: document.lines.map((line) => ({
         name: line.name,
         quantity: line.quantity,

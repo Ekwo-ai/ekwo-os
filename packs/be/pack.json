@@ -2,10 +2,10 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "BE",
   "name": "Belgium",
-  "version": "1.8.1",
-  "schema_min": "20260914163943",
+  "version": "1.14.0",
+  "schema_min": "20260917170000",
   "seed_sequence": 10,
-  "released_at": "2026-09-15",
+  "released_at": "2026-09-16",
   "certification": {
     "status": "maintained",
     "sources": [
@@ -22,7 +22,7 @@
         "title": "Code de la taxe sur la valeur ajoutée, institué par la loi du 3 juillet 1969",
         "publisher": "SPF Justice — Moniteur belge (Justel)",
         "url": "https://www.ejustice.just.fgov.be/eli/loi/1969/07/03/1969070305/justel",
-        "consulted_on": "2026-09-15",
+        "consulted_on": "2026-09-16",
         "kind": "law"
       },
       {
@@ -152,7 +152,9 @@
       "fx_gain": "754000",
       "fx_loss": "654000",
       "asset_disposal_gain": "763000",
-      "asset_disposal_loss": "663000"
+      "asset_disposal_loss": "663000",
+      "tax_payable": "451900",
+      "tax_receivable": "411900"
     },
     "journal_roles": {
       "sales": "SAL",
@@ -162,7 +164,11 @@
     },
     "fiscal_year_default": "calendar"
   },
-  "languages": ["nl", "de", "en"],
+  "languages": [
+    "nl",
+    "de",
+    "en"
+  ],
   "journals": [
     {
       "code": "SAL",
@@ -244,7 +250,21 @@
     "number_format": "{CODE}/{YYYY}/{NNNN}",
     "legal_payment_days": 30,
     "late_payment_reference": "Loi du 2 août 2002, art. 5 — intérêt au taux directeur de la Banque centrale européenne majoré de huit points, publié semestriellement au Moniteur belge ; art. 6 — indemnité forfaitaire de 40 € pour frais de recouvrement",
-    "tax_point": "invoice_date",
+    "tax_point": "invoice_if_issued",
+    "references": {
+      "numbering": {
+        "legal_reference": "Arrêté royal n° 1 du 29 décembre 1992, art. 5, § 1er, 1° — la facture porte « la date à laquelle ils sont respectivement émis ou établi et un numéro séquentiel, basé sur une ou plusieurs séries qui identifie ces documents de façon unique ». Le texte impose la séquence, la série et l'unicité, jamais une forme : le motif déclaré en number_format est l'une des séries qu'il autorise, et non une forme qu'il prescrirait.",
+        "source": "ar-1"
+      },
+      "payment_terms": {
+        "legal_reference": "Loi du 2 août 2002, art. 4, § 1er — à défaut de date ou de délai de paiement fixé dans le contrat, le paiement d'une transaction commerciale entre entreprises est effectué dans un délai de trente jours civils à partir du jour qui suit celui de la réception de la facture, ou celui de la réception des marchandises ou de la prestation lorsque la date de réception de la facture est incertaine ; l'alinéa 2 plafonne à soixante jours civils le délai que les parties peuvent convenir.",
+        "source": "retard-de-paiement"
+      },
+      "tax_point": {
+        "legal_reference": "Code de la taxe sur la valeur ajoutée, art. 16, § 1er pour les livraisons de biens et art. 22, § 1er pour les prestations de services — « le fait générateur de la taxe intervient et la taxe devient exigible au moment où la livraison de biens est effectuée », respectivement « au moment où la prestation de services est effectuée » : c'est le principe. Art. 17, § 1er et art. 22bis, § 1er, tels que remplacés par la loi du 6 décembre 2015 et en vigueur depuis le 1er janvier 2016, y dérogent — « la taxe devient exigible […] au moment de l'émission de la facture, à concurrence du montant facturé, peu importe que l'émission de cette facture ait lieu avant ou après le moment où la livraison est effectuée », et « en tout état de cause […] le quinzième jour du mois qui suit celui au cours duquel est intervenu le fait générateur, lorsqu'aucune facture n'a été émise avant cette date ». Le troisième alinéa de chacun des deux avance l'exigibilité à la réception d'un paiement antérieur à la livraison, à concurrence du montant perçu ; c'est une règle d'acompte, que le mot ne porte pas. Les services intracommunautaires relèvent de l'art. 22bis, § 2 et restent exigibles au moment de la prestation. invoice_if_issued dit le principe et sa dérogation ; invoice_date, déclaré jusqu'ici, ne disait que la dérogation.",
+        "source": "code-tva"
+      }
+    },
     "mentions": [
       {
         "code": "reverse_charge",
