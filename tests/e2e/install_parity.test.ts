@@ -1,7 +1,7 @@
 /**
  * One release, two install paths, and the same books at the end.
  *
- * A user has two ways in. `npx ekwo init` runs the CLI's own migration runner
+ * A user has two ways in. `npx ekwo-os init` runs the CLI's own migration runner
  * and its own seed loader. `supabase db push` followed by `psql -f` runs
  * neither: the Supabase CLI reads the same folder of `.sql` files and writes
  * the same history table, and the operator applies the seeds by hand. The

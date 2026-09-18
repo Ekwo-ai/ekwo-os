@@ -6,8 +6,13 @@ books: the schema, the chart of accounts, the VAT codes, the first
 administrator, the first company and its first financial year.
 
 ```sh
-npx ekwo init
+npx ekwo-os init
 ```
+
+The package is `ekwo-os` and the command it installs is `ekwo`: `npx ekwo-os
+<command>` runs it without installing anything, and after
+`npm install -g ekwo-os` every example below that starts with `ekwo ` works as
+written.
 
 You need Node 20 or later. That is the whole list. The Supabase CLI is not
 required — this talks to Postgres directly — and Docker is not required
@@ -43,7 +48,7 @@ either.
 3. **Run the installer.**
 
    ```sh
-   npx ekwo init
+   npx ekwo-os init
    ```
 
    It asks for the connection string, the country, the chart of accounts and
@@ -66,7 +71,7 @@ either.
 Everything above in one non-interactive line:
 
 ```sh
-npx ekwo init \
+npx ekwo-os init \
   --db-url "postgresql://postgres.YOURREF:PASSWORD@aws-1-eu-west-3.pooler.supabase.com:5432/postgres" \
   --supabase-url "https://YOURREF.supabase.co" \
   --service-role-key "$SUPABASE_SERVICE_ROLE_KEY" \

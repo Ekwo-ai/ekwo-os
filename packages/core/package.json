@@ -1,6 +1,6 @@
 {
   "name": "@ekwo-ai/core",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "TypeScript row types and a typed Supabase client for the Ekwo OS accounting schema.",
   "keywords": ["accounting", "supabase", "postgres", "pcmn", "pcg", "bookkeeping", "ekwo"],
   "license": "AGPL-3.0-only",

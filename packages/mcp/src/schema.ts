@@ -43,12 +43,12 @@ export async function assertSchemaSupported(backend: Backend): Promise<string> {
   const installed = await installedSchemaVersion(backend);
   if (installed === undefined) {
     throw new EkwoMcpError(
-      `schema_not_found: this database does not answer ekwo_schema_version(), so it does not carry the Ekwo schema. Run \`npx ekwo init\` against it first.`,
+      `schema_not_found: this database does not answer ekwo_schema_version(), so it does not carry the Ekwo schema. Run \`npx ekwo-os init\` against it first.`,
     );
   }
   if (!schemaIsAtLeast(installed, SCHEMA_MIN)) {
     throw new EkwoMcpError(
-      `schema_too_old: this database is at ${installed} and @ekwo-ai/mcp needs ${SCHEMA_MIN} or newer. Run \`npx ekwo migrate\` against it, then start this server again.`,
+      `schema_too_old: this database is at ${installed} and @ekwo-ai/mcp needs ${SCHEMA_MIN} or newer. Run \`npx ekwo-os migrate\` against it, then start this server again.`,
       {
         hint: 'Upgrading the database is the fix, never pinning this server: the schema moves forward only, and an older client would be reading rows that no longer mean what it thinks.',
       },

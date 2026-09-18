@@ -1,6 +1,6 @@
 {
   "name": "@ekwo-ai/vat-consignment",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "The Belgian periodic VAT return for Intervat (VATConsignment XML, schema NewTVA-in v0.9) in TypeScript, from the figures a declaration was filed with. Zero dependencies.",
   "keywords": [
     "intervat",

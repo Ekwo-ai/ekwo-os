@@ -51,7 +51,7 @@
  *                                 (cd /tmp/prev && npm ci && npm run build)
  *                                 EKWO_E2E_PREVIOUS=/tmp/prev/packages/cli/dist/bin.js
  *
- *                               — or an npm spec such as `ekwo@0.2.0` once
+ *                               — or an npm spec such as `ekwo-os@0.2.0` once
  *                               they are. They are not today — `npm view ekwo`
  *                               answers 404 — so the path is the only form
  *                               that works, and will be until the packages are

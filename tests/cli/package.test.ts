@@ -1,7 +1,7 @@
 /**
  * What ships in the npm package.
  *
- * Somebody running `npx ekwo init` has no clone of this repository, so the
+ * Somebody running `npx ekwo-os init` has no clone of this repository, so the
  * migrations and the seeds travel inside the tarball. If that copy drifts
  * from `supabase/`, installations get a schema nobody in this repository has
  * ever tested. These tests pin it byte for byte.
@@ -114,7 +114,7 @@ describe('package.json', () => {
       dependencies: Record<string, string>;
     };
 
-    expect(manifest.name).toBe('ekwo');
+    expect(manifest.name).toBe('ekwo-os');
     expect(manifest.bin['ekwo']).toBe('./dist/bin.js');
     expect(manifest.files).toContain('dist');
     expect(manifest.type).toBe('module');

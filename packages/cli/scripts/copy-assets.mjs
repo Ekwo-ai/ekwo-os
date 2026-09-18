@@ -3,7 +3,7 @@
  * Copies `supabase/migrations`, `supabase/seed` and `modules/` into the
  * published package.
  *
- * A user running `npx ekwo init` has no clone of the repository, so the SQL
+ * A user running `npx ekwo-os init` has no clone of the repository, so the SQL
  * has to travel inside the tarball. This runs at build time and is the only
  * thing that puts files under `dist/assets`.
  *

@@ -9,6 +9,25 @@ somewhere has already run it.
 
 ## [Unreleased]
 
+## [0.4.1] — 2026-09-18
+
+### Changed
+
+- **The command line is published as `ekwo-os`, and the command it installs is
+  still `ekwo`.** `0.4.0` was the first release sent to npm, and the registry
+  took fourteen packages of fifteen: it refuses the unscoped name `ekwo` as too
+  close to two packages that already exist, a judgement it never passes on a
+  scoped name. The CLI takes the name of the repository instead. `npx ekwo-os
+  init` is what the README, the package READMEs, `SECURITY.md`, the help of the
+  CLI and the two messages of `@ekwo-ai/mcp` that tell somebody which command
+  to run now say; `bin` is unchanged, so `npm install -g ekwo-os` puts `ekwo`
+  on the path and every example that starts with `ekwo ` stands. Nothing of
+  the schema moves: `ekwo_schema_version()` answers `0.4.0`, the floor of the
+  three packages stays there, and an installation at `0.4.0` has nothing to
+  migrate. Every workspace moves to `0.4.1` together, because a release is one
+  number. [`docs/releasing.md`](docs/releasing.md) says what publishing asks of
+  an account with two-factor authentication, which the first run found out.
+
 ## [0.4.0] — 2026-09-18
 
 ### Added
@@ -2929,7 +2948,8 @@ against the latest tag, and a mistake is corrected by a new migration, always.
   period locks, reports, row level security, the instance singleton and its
   roles, and a golden FEC export.
 
-[Unreleased]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.4.0...HEAD
+[Unreleased]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.4.1...HEAD
+[0.4.1]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.4.0...v0.4.1
 [0.4.0]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/Ekwo-ai/ekwo-os/releases/tag/v0.2.0

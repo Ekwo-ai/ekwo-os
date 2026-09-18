@@ -54,7 +54,7 @@ export interface EkwoModule {
  * Where the modules live.
  *
  * Published package: `dist/assets/modules/`, put there at build time by
- * `scripts/copy-assets.mjs`, because `npx ekwo migrate` has no clone. Checkout:
+ * `scripts/copy-assets.mjs`, because `npx ekwo-os migrate` has no clone. Checkout:
  * `<repo>/modules/`. The two candidates mirror `resolveBundleDir()`.
  */
 export function resolveModulesDir(): string | undefined {

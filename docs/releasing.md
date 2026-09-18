@@ -41,7 +41,7 @@ that is not cut.
    ```
 
    Check the dependency ranges between the workspaces afterwards —
-   `@ekwo-ai/core` on `@ekwo-ai/fec`, `ekwo` on `@ekwo-ai/core`,
+   `@ekwo-ai/core` on `@ekwo-ai/fec`, `ekwo-os` on `@ekwo-ai/core`,
    `@ekwo-ai/mcp` on both and on the three statement readers,
    `@ekwo-ai/camt053`, `@ekwo-ai/coda` and `@ekwo-ai/cfonb120` — and the
    formatting of the manifests, which npm rewrites. The final `npm install`
@@ -53,7 +53,7 @@ that is not cut.
    the reason `SCHEMA_MIN` does: a bundle that ships no manifest still has to
    say what it is in the MCP handshake. A test keeps the two equal.
 
-3. **The schema floor.** `ekwo.schemaMin` in the manifests of `ekwo`,
+3. **The schema floor.** `ekwo.schemaMin` in the manifests of `ekwo-os`,
    `@ekwo-ai/core` and `@ekwo-ai/mcp`, and the `SCHEMA_MIN` constant in each
    package's `src/schema.ts`. A test keeps the manifest and the constant
    equal, and another refuses a floor newer than the schema the release
@@ -123,8 +123,8 @@ that is not cut.
    | `EKWO_E2E_PREVIOUS` | optional: install that release first, so the run upgrades an installation instead of creating one. Left out, those steps are skipped rather than passed |
 
    **Point `EKWO_E2E_PREVIOUS` at the last tag.** It is the only way the run
-   exercises what a user will actually do, and the packages are not on npm yet,
-   so it takes a path to a built binary of an older checkout:
+   exercises what a user will actually do. It takes a path to a built binary of
+   an older checkout:
 
    ```sh
    git worktree add /tmp/prev v0.2.0
@@ -132,9 +132,9 @@ that is not cut.
    EKWO_E2E_PREVIOUS=/tmp/prev/packages/cli/dist/bin.js npm run e2e:supabase
    ```
 
-   Once they are published, `ekwo@<x.y.z>` works in the same variable. They are
-   not today — `npm view ekwo` answers 404 — so the path is the only form that
-   works.
+   From `0.4.1` on the CLI is on npm, and `ekwo-os@<x.y.z>` works in the same
+   variable. A release older than that was never published under that name, so
+   for those the path is the only form that works.
 
    **Read the times, not only the marks.** Every step of the table carries how
    long it took and the run carries its total. What is worth noticing is which
@@ -192,10 +192,9 @@ that is not cut.
 
 ## npm
 
-The packages are not published yet: there is no npm account for the
-organisation. When there is one, publishing is part of the release and comes
-after the tag, so a version on npm is always a version someone can read the
-source of:
+The packages live on npm under the `ekwo-ai` organisation, and the command line
+as `ekwo-os`. Publishing is part of the release and comes after the tag, so a
+version on npm is always a version someone can read the source of:
 
 ```sh
 npm run build
@@ -215,8 +214,18 @@ run again.
 The order is the dependency order: a package is published after everything it
 depends on. The root workspace is `private` and is never published.
 
-Until then, `npx ekwo init` in the README is what the CLI will be called, not
-what it is reachable as today; an installation runs from a clone.
+**The command line is `ekwo-os` on npm and `ekwo` once installed.** The
+registry refuses the unscoped name `ekwo` as too close to two existing
+packages, which a scoped name is never judged for — so the fourteen libraries
+went out as `@ekwo-ai/*` at `0.4.0` and the CLI followed at `0.4.1` under the
+name of the repository. `npx ekwo-os init` runs it without installing anything;
+`npm install -g ekwo-os` puts a binary called `ekwo` on the path, and every
+example that starts with `ekwo ` assumes that.
+
+An account with two-factor authentication on writes is asked to approve each
+`npm publish` in a browser. The approval page offers to stop asking for five
+minutes, which is what lets one run publish every package; the script needs a
+real terminal for that, since npm only waits for the approval when it has one.
 
 ## After a release
 

@@ -41,7 +41,7 @@ jobs:
           diff packages/cli/assets/expected-objects.json \
                packages/cli/dist/assets/expected-objects.json
       # The modules travel with the CLI too: `ekwo migrate` applies them, and a
-      # user running `npx ekwo` has no clone to read them from.
+      # user running `npx ekwo-os` has no clone to read them from.
       - name: The CLI ships the modules
         run: |
           for module in modules/*/; do
@@ -73,7 +73,7 @@ jobs:
         run: |
           # The CLI reads a refusal through the core, and the core writes the
           # FEC through its brick: both are built before it, in that order.
-          npm run build --workspace @ekwo-ai/fec --workspace @ekwo-ai/core --workspace ekwo
+          npm run build --workspace @ekwo-ai/fec --workspace @ekwo-ai/core --workspace ekwo-os
           node packages/cli/dist/bin.js pack check --all
       - name: No private data in the repository
         run: node scripts/check-no-private-data.mjs

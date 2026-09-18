@@ -31,7 +31,7 @@ What we are building, in order:
 1. **This repository — the core.** Schema, posting rules, VAT, reports, the
    FEC, Belgian and French charts of accounts. Done, tested, installable
    today.
-2. **`npx ekwo init`** — point it at your own Supabase project and it applies
+2. **`npx ekwo-os init`** — point it at your own Supabase project and it applies
    the schema, seeds the country rules, creates the first administrator and
    the first company, in one command. Done; see
    [`packages/cli`](packages/cli/).
@@ -115,9 +115,9 @@ migrations, its own row level security and its own tests.
 | [`budgets`](modules/budgets/) | `budgets` | A budget per financial year and the variance against what the ledger holds. No country data, and nothing written to the ledger. |
 
 ```sh
-npx ekwo module list                          # what is here, and what the database holds
-npx ekwo module migrate                       # apply their migrations and country seeds
-npx ekwo module enable assets --company "…"   # turn one on for a company
+npx ekwo-os module list                          # what is here, and what the database holds
+npx ekwo-os module migrate                       # apply their migrations and country seeds
+npx ekwo-os module enable assets --company "…"   # turn one on for a company
 ```
 
 Then add the schema to the project's exposed schemas — Supabase dashboard →
@@ -141,7 +141,7 @@ enough to start — and point the installer at it. Node 20 or later is the only
 thing you need locally: no Supabase CLI, no Docker, no clone.
 
 ```sh
-npx ekwo init
+npx ekwo-os init
 ```
 
 It asks for the connection string, the country, the chart of accounts and the
@@ -239,10 +239,10 @@ interchangeable: `ekwo migrate` and `supabase db push` read and write the same
 ### Keeping it running
 
 ```sh
-npx ekwo status    # schema version installed against available, instance, companies
-npx ekwo migrate   # apply what a new release adds
-npx ekwo doctor    # every object this release defines, row level security, orphaned memberships, statements
-npx ekwo demo      # the sample company, on explicit request only
+npx ekwo-os status    # schema version installed against available, instance, companies
+npx ekwo-os migrate   # apply what a new release adds
+npx ekwo-os doctor    # every object this release defines, row level security, orphaned memberships, statements
+npx ekwo-os demo      # the sample company, on explicit request only
 ```
 
 ## The schema in twenty lines

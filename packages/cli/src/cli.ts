@@ -64,7 +64,7 @@ export function help(): string {
   return `${bold('ekwo')} — install and operate Ekwo OS on a Supabase project you own.
 
 ${bold('Usage')}
-  npx ekwo <command> [options]
+  npx ekwo-os <command> [options]
 
 ${bold('Commands')}
   ${cyan('init')}        Apply the schema, seed the reference data, create the first

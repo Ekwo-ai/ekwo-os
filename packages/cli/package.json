@@ -1,7 +1,7 @@
 {
-  "name": "ekwo",
-  "version": "0.4.0",
-  "description": "Install and operate Ekwo OS on your own Supabase project: npx ekwo init.",
+  "name": "ekwo-os",
+  "version": "0.4.1",
+  "description": "Install and operate Ekwo OS on your own Supabase project: npx ekwo-os init.",
   "keywords": ["accounting", "supabase", "postgres", "migrations", "cli", "bookkeeping", "ekwo"],
   "license": "AGPL-3.0-only",
   "author": "Ekwo AI",

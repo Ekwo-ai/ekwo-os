@@ -3,7 +3,7 @@
  *
  * The published npm package carries its own copy of `supabase/migrations`
  * and `supabase/seed` under `dist/assets`, copied at build time by
- * `scripts/copy-assets.mjs`. A user running `npx ekwo init` has no clone of
+ * `scripts/copy-assets.mjs`. A user running `npx ekwo-os init` has no clone of
  * the repository, so the schema has to travel with the CLI.
  *
  * When the CLI runs from a checkout instead (`node packages/cli/src/...` or
