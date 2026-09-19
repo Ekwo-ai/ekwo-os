@@ -1018,7 +1018,7 @@ describe('the pack format', () => {
     expect(
       validate({ legal_reference: 'An act, art. 1', note: 'what it says' }, reference, schema),
     ).toHaveLength(1);
-    // And the section takes those three rules and no fourth, so a pack cannot
+    // And the section takes those four rules and no fifth, so a pack cannot
     // quietly invent a rule the core has no column for.
     const documents = defs['documents']!;
     const properties = (documents['properties'] as Record<string, Record<string, unknown>>)['references']!;
@@ -1026,6 +1026,7 @@ describe('the pack format', () => {
       'numbering',
       'payment_terms',
       'tax_point',
+      'posted_edit_policy',
     ]);
     expect(validate({ references: { something_else: { legal_reference: 'x' } } }, documents, schema)).toHaveLength(1);
   });

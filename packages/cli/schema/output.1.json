@@ -427,6 +427,8 @@
         "required": ["contacts", "count"],
         "properties": { "contacts": { "type": "array", "items": { "$ref": "#/$defs/row" } }, "count": { "type": "integer" } }
       },
+      "doc new": { "$ref": "#/$defs/documentAnswer" },
+      "doc line add": { "$ref": "#/$defs/documentAnswer" },
       "invoice new": { "$ref": "#/$defs/documentAnswer" },
       "invoice line add": { "$ref": "#/$defs/documentAnswer" },
       "doc show": { "$ref": "#/$defs/documentAnswer" },
@@ -442,6 +444,35 @@
         "properties": {
           "document_id": { "type": "string" },
           "dry_run": { "const": true },
+          "entry": { "$ref": "#/$defs/row" },
+          "entry_lines": { "type": "array", "items": { "$ref": "#/$defs/row" } },
+          "note": { "type": "string" }
+        }
+      },
+      "cancel": {
+        "$comment": "How the invoice was undone, in undone_by. `draft`: its country lets a posted document go back to draft and nothing about it had left — `draft` is the document as it now stands, with its `lines`, and `unposting` the record of the act: the entry taken away and whether its number went back to the counter. `credit_note`: `why` says what ruled the draft out, and `credit_note`, `lines`, `entry` and `entry_lines` are the credit note cancel_document() posted, `cancelled` the invoice as it now stands. Amounts are decimal strings.",
+        "type": "object",
+        "required": ["document_id", "undone_by", "why", "lines", "note"],
+        "properties": {
+          "document_id": { "type": "string" },
+          "undone_by": { "enum": ["draft", "credit_note"] },
+          "why": { "oneOf": [{ "type": "string" }, { "type": "null" }] },
+          "draft": { "$ref": "#/$defs/row" },
+          "unposting": { "oneOf": [{ "$ref": "#/$defs/row" }, { "type": "null" }] },
+          "cancelled": { "$ref": "#/$defs/row" },
+          "credit_note": { "$ref": "#/$defs/row" },
+          "lines": { "type": "array", "items": { "$ref": "#/$defs/row" } },
+          "entry": { "$ref": "#/$defs/row" },
+          "entry_lines": { "type": "array", "items": { "$ref": "#/$defs/row" } },
+          "note": { "type": "string" }
+        }
+      },
+      "reverse": {
+        "$comment": "The reversal reverse_entry() posted, naming the entry it undoes, and its lines. Amounts are decimal strings.",
+        "type": "object",
+        "required": ["entry_id", "entry", "entry_lines", "note"],
+        "properties": {
+          "entry_id": { "type": "string" },
           "entry": { "$ref": "#/$defs/row" },
           "entry_lines": { "type": "array", "items": { "$ref": "#/$defs/row" } },
           "note": { "type": "string" }

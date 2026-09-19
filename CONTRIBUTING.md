@@ -35,6 +35,36 @@ You do not have to write TypeScript to matter here:
   optional: without it Ekwo cannot relicense its own code, and a project that
   cannot relicense is a project that cannot change its mind.
 
+## How a pull request gets in
+
+Nobody outside the maintainers can write to this repository, and nobody needs
+to. Fork it, push a branch to your fork, open a pull request against `main`.
+Four things happen, in this order.
+
+1. **The bot asks for the agreement**, once. It comments on your first pull
+   request with the sentence to post back; the signature is recorded on the
+   `cla-signatures` branch and covers everything you send afterwards. A pull
+   request with an unsigned author is not merged, whatever else is true of it.
+2. **The CI has to be green.** It runs the tests on three versions of Node and
+   the hygiene job: the generated files are regenerated and compared, the packs
+   are checked, no published migration was edited, no country is written into
+   code, no private data, no conflict marker. On a first contribution a
+   maintainer has to start it by hand — a workflow does not run on a stranger's
+   branch unasked.
+3. **A maintainer reads it, and a change to a pack is also read by the owner of
+   that pack** in [`.github/CODEOWNERS`](.github/CODEOWNERS). What is looked at
+   is this file: the rules above and below are the review. A pack is judged on
+   its sources — a rate without a text behind it is not reviewed, it is sent
+   back — and its status says `community` until a named professional has read
+   it. Expect questions rather than silence, and expect "not this way" on a
+   schema change that was not discussed in an issue first.
+4. **It is merged without a merge commit.** History on `main` is linear; your
+   commits land as you wrote them, so write the messages for somebody reading
+   `git log` in two years.
+
+A small pull request that does one thing is read the same week. A large one
+that does five is read when somebody has a day.
+
 ## Working on the schema
 
 1. **Migrations are additive and never edited.** Add

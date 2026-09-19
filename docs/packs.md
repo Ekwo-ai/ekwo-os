@@ -936,10 +936,12 @@ that gap under the United States, where it belongs.
 ## What a country puts on an invoice
 
 Three sections of the manifest — `documents`, `einvoicing` and `bank` —
-compile into twenty columns of `country_defaults` and into
+compile into twenty-three columns of `country_defaults` and into
 `legal_mention_templates`. None of them has a default: a pack that says
 nothing leaves null, and a reader that needs the value says which one is
-missing rather than borrowing another country's law.
+missing rather than borrowing another country's law. One null is read, and
+said to be: a pack silent on `posted_edit_policy` keeps a posted document as
+it was posted, which is the stricter answer rather than another country's.
 
 ```json
 "documents": {
@@ -948,6 +950,7 @@ missing rather than borrowing another country's law.
   "legal_payment_days": 30,
   "late_payment_reference": "…où le taux et l'indemnité sont fixés",
   "tax_point": "invoice_if_issued",
+  "posted_edit_policy": "reversal_only",
   "references": {
     "numbering": {
       "legal_reference": "Arrêté royal n° 1 du 29 décembre 1992, art. 5, § 1er, 1° — …",
@@ -960,6 +963,10 @@ missing rather than borrowing another country's law.
     "tax_point": {
       "legal_reference": "Code de la TVA, art. 16, § 1er et art. 22, § 1er pour le principe, art. 17, § 1er et art. 22bis, § 1er pour la dérogation — …",
       "source": "code-tva"
+    },
+    "posted_edit_policy": {
+      "legal_reference": "Code de droit économique, art. III.87, § 2 et art. III.88 — …",
+      "source": "pcmn"
     }
   },
   "mentions": [
@@ -1075,6 +1082,22 @@ excuse. The Luxembourg pack declares `invoice_if_issued` and its citation names
 art. 21 as the principle and art. 24, par. 1er as the derogation, with the two
 cases the derogation does not reach; a reader who opens the text is then not
 left wondering whether the pack read the wrong article.
+
+**Whether a posted document goes back to draft** is `posted_edit_policy`, and
+it is the one document rule that loosens rather than binds. `reversal_only`:
+a posted document is undone by a credit note that names it, `cancel_document()`,
+and in no other way. `unpost_if_untouched`: it may also go back to draft,
+through `unpost_document()`, while nothing about it has left — never sent nor
+on Peppol, not settled, not credited, no declaration gone over it, its period
+open and, where `numbering` is gapless, its number the last one its journal
+drew, which then goes back to the counter. Say nothing and the country reads
+as `reversal_only`. Declare `unpost_if_untouched` only with the article that
+allows it under `references.posted_edit_policy` — `ekwo pack check` refuses it
+without one, on every status — and say in it why the irreversibility your own
+accounting law gives a recorded entry does not reach a document nobody
+received. Belgium and France declare `reversal_only`, and cite why: both make
+a validated entry irreversible (Code de droit économique, art. III.87, § 2;
+PCG, art. 921-3), and France numbers its invoices continuously.
 
 **The bank formats** are a known list rather than free text — `camt.052`,
 `camt.053`, `camt.054`, `mt940`, `mt942`, `coda`, `cfonb120`, `ofx`, `qif`,
@@ -1541,7 +1564,9 @@ and nothing that says what becomes obligatory. A `source` under
 carry. And on a `reviewed` pack, a document rule that is declared and cites no
 article at all — that one is a warning on every other status, including
 `community`, because a country whose law nobody has written down yet is the
-normal state of a new pack and not a defect of it.
+normal state of a new pack and not a defect of it. The exception is
+`posted_edit_policy: unpost_if_untouched`, which lets a posted entry be taken
+away: it is refused without an article on every status.
 
 **The languages.** A label under a code the pack does not carry — an account,
 a journal, a tax, a chart, a mention, an asset category, a box, a statement

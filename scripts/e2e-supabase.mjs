@@ -37,25 +37,33 @@
  *   EKWO_E2E_LANGUAGE           optional, and required for the same reason
  *                               when the pack declares more than one language
  *                               for its labels
+ *   EKWO_E2E_FISCAL_YEAR_START  optional, and required for a pack that names
+ *                               no month to open the year on (GB): the first
+ *                               day of the 2026 year, as YYYY-MM-DD
+ *   EKWO_E2E_VAT_PERIOD         optional, and required for a pack whose
+ *                               periodic return is filed monthly or quarterly
+ *                               depending on the company (LU): `month` or
+ *                               `quarter`, passed as `--vat-period`
  *   EKWO_E2E_ADMIN_EMAIL        the administrator this run creates and signs
  *   EKWO_E2E_ADMIN_PASSWORD     in as, to exercise PostgREST as a person
  *   EKWO_E2E_PREVIOUS           optional: the release to install first, so
  *                               that the run upgrades an installation instead
  *                               of creating one. Left out, those steps are
  *                               reported as skipped rather than passed. Two
- *                               forms: a path to an already-built `bin.js` of
- *                               an older checkout, which is what to use while
- *                               the packages are not on npm —
+ *                               forms: an npm spec of the published CLI, such
+ *                               as `ekwo-os@0.4.1` — `npm view ekwo-os
+ *                               versions` lists them — or a path to an
+ *                               already-built `bin.js` of an older checkout,
+ *                               for a release that never reached npm —
  *
  *                                 git worktree add /tmp/prev v0.2.0
  *                                 (cd /tmp/prev && npm ci && npm run build)
  *                                 EKWO_E2E_PREVIOUS=/tmp/prev/packages/cli/dist/bin.js
  *
- *                               — or an npm spec such as `ekwo-os@0.2.0` once
- *                               they are. They are not today — `npm view ekwo`
- *                               answers 404 — so the path is the only form
- *                               that works, and will be until the packages are
- *                               published
+ *                               The spec is run by `npx` from an empty
+ *                               directory: from this repository, the
+ *                               workspace called `ekwo-os` answers for the
+ *                               name and `npx` finds no `ekwo` to run
  *
  *   EKWO_E2E_LOAD_DOCUMENTS     optional: a number of documents. Set, the run
  *                               ends by multiplying the books it has just
@@ -135,14 +143,16 @@
  * the run goes on. A budget is a line somebody drew before measuring, and the
  * first real measure is what it is to be redrawn against.
  *
- * These steps have **never been run**: like the rest of this script they need
- * a throwaway project, and none has been available since they were written.
- * What they call — the generator, the six definitions — is what the CI runs
- * on PGlite on every push; what is untested is the wiring in this file.
+ * They were first run on 19 September 2026, at 2 000 documents on BE and
+ * 10 000 on FR, on a project whose row cap had been raised to 100 000 — see
+ * `docs/releasing.md` for the figures. That run is also what fixed the
+ * declaration period they time, which was an empty January.
  */
 
 import { spawn } from 'node:child_process';
-import { existsSync } from 'node:fs';
+import { existsSync, mkdtempSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const repoRoot = fileURLToPath(new URL('..', import.meta.url));
@@ -151,9 +161,21 @@ const cliBin = `${repoRoot}packages/cli/dist/bin.js`;
 
 const SALE_BASE = 1000;
 const PURCHASE_BASE = 400;
-const SALE_DATE = '2026-03-15';
-const PURCHASE_DATE = '2026-04-20';
 const FISCAL_YEAR = 2026;
+
+/**
+ * A day inside the financial year, counted from its first day.
+ *
+ * Not a fixed date: a pack that opens its year in April — or a run told to
+ * with `EKWO_E2E_FISCAL_YEAR_START` — would otherwise post the sale of the
+ * test before the year it is booked in. On a calendar year these are the
+ * 15 March and the 20 April they always were.
+ */
+function dayOfYear(startDate, months, days) {
+  const [y, m, d] = startDate.split('-').map(Number);
+  const day = new Date(Date.UTC(y, m - 1 + months, d + days));
+  return day.toISOString().slice(0, 10);
+}
 
 /**
  * Half up on the absolute value, at the currency's decimals.
@@ -252,6 +274,7 @@ function api(supabaseUrl, anonKey, token) {
       const written = await call('POST', `/${table}`, row, { Prefer: 'return=representation' });
       return written[0];
     },
+    update: (path, patch) => call('PATCH', path, patch),
     rpc: (fn, args) => call('POST', `/rpc/${fn}`, args),
   };
 }
@@ -269,6 +292,15 @@ async function main() {
   const chartFlag = chart === undefined ? [] : ['--chart', chart];
   const language = process.env['EKWO_E2E_LANGUAGE'];
   const languageFlag = language === undefined ? [] : ['--language', language];
+  const yearStart = process.env['EKWO_E2E_FISCAL_YEAR_START'];
+  const vatPeriod = process.env['EKWO_E2E_VAT_PERIOD'];
+  // What `ekwo init` refuses to guess, passed only when the run names it.
+  const packFlags = [
+    ...chartFlag,
+    ...languageFlag,
+    ...(yearStart === undefined ? [] : ['--fiscal-year-start', yearStart]),
+    ...(vatPeriod === undefined ? [] : ['--vat-period', vatPeriod]),
+  ];
 
   if (!existsSync(cliBin)) {
     throw new Error(`${cliBin} is not built. Run \`npm run build\` first.`);
@@ -366,17 +398,21 @@ async function main() {
   } else {
     const built = previous.includes('/') && existsSync(previous);
     await step(`install at ${built ? 'the previous checkout' : previous}`, async () => {
+      // Out of this repository for the npm form: inside it, the workspace
+      // named `ekwo-os` shadows the published package and `npx` answers
+      // "ekwo: command not found" — the first attempt of 19 September 2026.
       const [command, head] = built
         ? [process.execPath, [previous]]
-        : ['npx', ['--yes', previous]];
+        : ['npx', ['--yes', '--package', previous, 'ekwo']];
+      const cwd = built ? repoRoot : mkdtempSync(join(tmpdir(), 'ekwo-previous-'));
       const out = await new Promise((resolve, reject) => {
         const child = spawn(
           command,
-          [...head, 'init', '--country', country, ...chartFlag, ...languageFlag,
+          [...head, 'init', '--country', country, ...packFlags,
             '--org', 'End To End', '--company', 'End To End',
             '--fiscal-year', String(FISCAL_YEAR), '--admin-email', adminEmail,
             '--admin-password', adminPassword, '--yes'],
-          { env: { ...process.env, ...installEnv, NO_COLOR: '1' }, stdio: ['ignore', 'pipe', 'pipe'] },
+          { cwd, env: { ...process.env, ...installEnv, NO_COLOR: '1' }, stdio: ['ignore', 'pipe', 'pipe'] },
         );
         let text = '';
         child.stdout.on('data', (chunk) => { text += chunk; });
@@ -420,17 +456,20 @@ async function main() {
 
   await step('ekwo init', async () => {
     const out = await run(
-      ['init', '--country', country, ...chartFlag, ...languageFlag, '--org', 'End To End',
+      ['init', '--country', country, ...packFlags, '--org', 'End To End',
         '--company', 'End To End', '--fiscal-year', String(FISCAL_YEAR),
         '--admin-email', adminEmail, '--admin-password', adminPassword, '--yes'],
       installEnv,
     );
-    const applied = /(\d+) applied/.exec(out);
-    return `installed${applied === null ? '' : `, ${applied[1]} migration(s) applied`}`;
+    // The socle's line, and not the modules' that follows it: after an
+    // upgrade the socle has nothing left to apply and the first "N applied"
+    // in the output would be the modules' count.
+    const applied = /(\d+) applied, \d+ were already there/.exec(out);
+    return `installed, ${applied === null ? 'no' : applied[1]} socle migration(s) applied`;
   });
 
   await step('ekwo init is idempotent', async () => {
-    await run(['init', '--country', country, ...chartFlag, ...languageFlag, '--org', 'End To End',
+    await run(['init', '--country', country, ...packFlags, '--org', 'End To End',
       '--company', 'End To End', '--fiscal-year', String(FISCAL_YEAR),
       '--admin-email', adminEmail, '--admin-password', adminPassword, '--yes'], installEnv);
     return 'a second run created nothing';
@@ -566,7 +605,8 @@ async function main() {
     const taxes = await rest.select(
       `/taxes?company_id=eq.${company.id}&applies_to=in.(${scope},both)&treatment=eq.domestic` +
         '&amount_type=eq.percent&amount=gt.0&order=amount.desc,code.asc' +
-        '&select=id,code,amount,cash_basis',
+        '&select=id,code,amount,cash_basis,' +
+        'applies_seller_territory,applies_buyer_territory,applies_supply_territory',
     );
     if (taxes.length === 0) {
       throw new Error(`${company.fiscal_country} offers no domestic ${scope} tax at all`);
@@ -576,12 +616,32 @@ async function main() {
       `/tax_postings?tax_id=in.(${ids})&document_kind=eq.invoice` +
         '&select=tax_id,posting_type,declaration_box,declaration_boxes,box_factor_percent,factor_percent',
     );
+    // A tax bound to no territory first: it is the plainer case, and a pack
+    // that has one is tested on it. A pack with none — the United States,
+    // where every sales tax is a state's — is tested on the first it has,
+    // with the invoice placed where that tax applies.
+    const bound = (t) =>
+      t.applies_seller_territory !== null || t.applies_buyer_territory !== null ||
+      t.applies_supply_territory !== null;
+    taxes.sort((a, b) => Number(bound(a)) - Number(bound(b)));
     for (const tax of taxes) {
       if (tax.cash_basis === true) continue;
       const postings = all.filter((p) => p.tax_id === tax.id);
       const taxPostings = postings.filter((p) => p.posting_type === 'tax');
       const onBase = postings.filter((p) => p.posting_type === 'tax_on_base');
-      if (taxPostings.length === 1 && onBase.length === 0) return { ...tax, postings };
+      if (taxPostings.length === 1 && onBase.length === 0) return { ...tax, postings, onBase: false };
+    }
+    // A purchase tax nobody recovers — the American sales tax a buyer pays,
+    // which is part of the cost and not a claim on the state — is what a pack
+    // offers when it offers no plain one. It is booked onto the base, so the
+    // year's result is lower by it, and the close below expects exactly that.
+    if (scope === 'purchase') {
+      for (const tax of taxes) {
+        if (tax.cash_basis === true) continue;
+        const postings = all.filter((p) => p.tax_id === tax.id);
+        const types = postings.map((p) => p.posting_type).sort().join(',');
+        if (types === 'base,tax_on_base') return { ...tax, postings, onBase: true };
+      }
     }
     throw new Error(`${company.fiscal_country} offers no plain ${scope} tax at the standard rate`);
   }
@@ -601,14 +661,29 @@ async function main() {
   });
 
   const ledger = {};
+  /** Tax booked onto the cost of a purchase rather than claimed back. */
+  let taxInCost = 0;
 
   async function invoice(docType, scope, base, date, accountCode) {
     const tax = await simpleTax(scope);
+    // Where the tax applies, the invoice is placed: the company is the seller
+    // on a sale and the buyer on a purchase, the contact the other party, and
+    // the supply is the document's. `post_document()` raises
+    // `tax_territory_mismatch` otherwise, and rightly — the run of 19
+    // September 2026 found this script posting a New York tax on a supply it
+    // had placed nowhere.
+    const sale = docType === 'sale_invoice';
+    const ours = sale ? tax.applies_seller_territory : tax.applies_buyer_territory;
+    const theirs = sale ? tax.applies_buyer_territory : tax.applies_seller_territory;
+    if (ours !== null) {
+      await rest.update(`/companies?id=eq.${company.id}`, { territory_code: ours });
+    }
     const contact = await rest.insert('contacts', {
       company_id: company.id,
-      name: docType === 'sale_invoice' ? 'A customer' : 'A supplier',
-      contact_type: docType === 'sale_invoice' ? 'customer' : 'supplier',
+      name: sale ? 'A customer' : 'A supplier',
+      contact_type: sale ? 'customer' : 'supplier',
       country: company.fiscal_country,
+      ...(theirs === null ? {} : { territory_code: theirs }),
     });
     const accounts = await rest.select(
       `/accounts?company_id=eq.${company.id}&code=eq.${accountCode}&select=id`,
@@ -618,6 +693,9 @@ async function main() {
       doc_type: docType,
       contact_id: contact.id,
       document_date: date,
+      ...(tax.applies_supply_territory === null
+        ? {}
+        : { supply_territory_code: tax.applies_supply_territory }),
     });
     await rest.insert('document_lines', {
       document_id: document.id,
@@ -644,27 +722,54 @@ async function main() {
           (ledger[key] ?? 0) + round((source * Number(posting.box_factor_percent)) / 100, decimals);
       }
     }
-    return { vat, documentId: document.id };
+    if (tax.onBase) taxInCost += vat;
+    return { vat, documentId: document.id, onBase: tax.onBase };
   }
 
   const sale = await step('post a sale invoice through PostgREST', async () => {
-    const booked = await invoice('sale_invoice', 'sale', SALE_BASE, SALE_DATE, defaults.sales_account_code);
+    const booked = await invoice(
+      'sale_invoice', 'sale', SALE_BASE, dayOfYear(year.start_date, 2, 14), defaults.sales_account_code,
+    );
     return `${SALE_BASE.toFixed(decimals)} + ${booked.vat.toFixed(decimals)} VAT`;
   });
   await step('post a purchase invoice through PostgREST', async () => {
     const booked = await invoice(
-      'purchase_invoice', 'purchase', PURCHASE_BASE, PURCHASE_DATE, defaults.purchase_account_code,
+      'purchase_invoice', 'purchase', PURCHASE_BASE, dayOfYear(year.start_date, 3, 19),
+      defaults.purchase_account_code,
     );
-    return `${PURCHASE_BASE.toFixed(decimals)} + ${booked.vat.toFixed(decimals)} VAT`;
+    return `${PURCHASE_BASE.toFixed(decimals)} + ${booked.vat.toFixed(decimals)} ${booked.onBase ? 'tax, not recoverable' : 'VAT'}`;
   });
   if (sale === undefined) return report();
 
   await step('the VAT return is the one the pack asks for', async () => {
-    const boxes = await rest.rpc('vat_return', {
-      p_company_id: company.id,
-      p_from: year.start_date,
-      p_to: year.end_date,
-    });
+    // The whole year where the return accepts it; otherwise the year cut into
+    // the periods the company files — `vat_return()` refuses a year from a
+    // company that files quarterly, as the Californian return does, and the
+    // sale and the purchase of this script fall in two different quarters.
+    // Summed box by box, which is what the lines of the ledger add up to.
+    let boxes;
+    for (const months of [12, 3, 1]) {
+      try {
+        const periods = [];
+        for (let m = 0; m < 12; m += months) {
+          periods.push([dayOfYear(year.start_date, m, 0), dayOfYear(year.start_date, m + months, -1)]);
+        }
+        const summed = new Map();
+        for (const [from, to] of periods) {
+          const part = await rest.rpc('vat_return', { p_company_id: company.id, p_from: from, p_to: to });
+          for (const b of part) {
+            const key = `${b.box}|${b.kind}`;
+            const held = summed.get(key);
+            summed.set(key, { ...b, amount: (held === undefined ? 0 : Number(held.amount)) + Number(b.amount) });
+          }
+        }
+        boxes = [...summed.values()];
+        break;
+      } catch (error) {
+        if (!String(error.message).includes('wrong_declaration_period')) throw error;
+      }
+    }
+    if (boxes === undefined) throw new Error('vat_return() accepted neither a year, a quarter nor a month');
     const produced = boxes
       .filter((b) => b.kind !== 'total')
       .map((b) => `${b.box}|${b.kind}=${Number(b.amount).toFixed(decimals)}`)
@@ -708,7 +813,7 @@ async function main() {
   });
   if (schemes === undefined) return report();
 
-  const expectedResult = SALE_BASE - PURCHASE_BASE;
+  const expectedResult = round(SALE_BASE - PURCHASE_BASE - taxInCost, decimals);
 
   await step('close the financial year', async () => {
     const closed = await rest.rpc('close_fiscal_year', { p_fiscal_year_id: year.id });
@@ -797,21 +902,23 @@ async function loadSteps({ connect, dbUrl, rest, company, year, documents }) {
           order by count(*) desc, a.code limit 1`,
         [company.id],
       );
-      // A declaration period inside the year. `vat_return()` refuses a whole
-      // period of the wrong cadence, so the first of these it accepts is kept.
-      const periods = await db.query(
-        `select $1::date::text as start,
-                ($1::date + interval '3 months' - interval '1 day')::date::text as quarter,
-                ($1::date + interval '1 month' - interval '1 day')::date::text as month`,
-        [year.start_date],
-      );
+      // A declaration period inside the year, and one the sales fall in: the
+      // copies keep the template's days, so every sale of the books is on the
+      // fifteenth day of the third month of some year. The first run at
+      // volume, on 19 September 2026, measured January of a monthly filer —
+      // a return of nothing, timed. `vat_return()` refuses a period of the
+      // wrong cadence, so the first of these it accepts is kept.
+      const candidates = [
+        [dayOfYear(year.start_date, 0, 0), dayOfYear(year.start_date, 3, -1)],
+        [dayOfYear(year.start_date, 2, 0), dayOfYear(year.start_date, 3, -1)],
+        [year.start_date, year.end_date],
+      ];
+      let periodFrom;
       let periodTo;
-      for (const candidate of [periods[0].quarter, periods[0].month, year.end_date]) {
+      for (const [from, to] of candidates) {
         try {
-          await db.query(`select count(*) from vat_return($1, $2::date, $3::date)`, [
-            company.id, year.start_date, candidate,
-          ]);
-          periodTo = candidate;
+          await db.query(`select count(*) from vat_return($1, $2::date, $3::date)`, [company.id, from, to]);
+          [periodFrom, periodTo] = [from, to];
           break;
         } catch (error) {
           if (!String(error.message).includes('wrong_declaration_period')) throw error;
@@ -821,7 +928,7 @@ async function loadSteps({ connect, dbUrl, rest, company, year, documents }) {
         companyId: company.id,
         yearFrom: year.start_date,
         yearTo: year.end_date,
-        periodFrom: year.start_date,
+        periodFrom,
         periodTo,
         accountId: busiest[0].account_id,
         statementId: statement.statementId,
@@ -829,7 +936,7 @@ async function loadSteps({ connect, dbUrl, rest, company, year, documents }) {
       const lines = await db.query(`select count(*)::int as n from entry_lines where company_id = $1`, [
         company.id,
       ]);
-      return `${lines[0].n} ledger lines, declaration period ${year.start_date} to ${periodTo}`;
+      return `${lines[0].n} ledger lines, declaration period ${periodFrom} to ${periodTo}`;
     });
     if (loaded === undefined) return;
 

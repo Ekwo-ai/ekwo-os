@@ -5,6 +5,7 @@
  *   ekwo pack check <cc>|--all   recompile in memory and refuse a stale seed
  *   ekwo pack check --links      … and open the source register's URLs
  *   ekwo pack list               what this checkout carries
+ *   ekwo pack describe [<cc>]    everything one country of this checkout says
  *   ekwo pack status             what an installation holds, company by company
  *   ekwo pack upgrade <company>  move a company to the version loaded here
  *
@@ -30,6 +31,7 @@ import {
   seedFileName,
 } from '../pack/compile.js';
 import { describeFiling } from '../pack/filing.js';
+import { describePack, type PackDescription } from '../pack/describe.js';
 import {
   GENERIC_PACK,
   declaredSeedSequences,
@@ -55,6 +57,7 @@ export async function packCommand(args: ParsedArgs, deps: CommandDeps = {}): Pro
   }
   if (action === 'status') return await statusSubcommand(args, deps);
   if (action === 'upgrade') return await upgradeSubcommand(args, deps);
+  if (action === 'describe') return await describeSubcommand(args);
 
   if (action !== 'build' && action !== 'check' && action !== 'list') {
     throw new UsageError(`unknown subcommand: pack ${action}\n${usage()}`);
@@ -357,6 +360,139 @@ function selection(args: ParsedArgs, available: string[]): string[] {
 }
 
 /**
+ * `ekwo pack describe [<cc>]` — everything one pack of this checkout says.
+ *
+ * `pack list` is a line per country and answers "what is here". This answers
+ * "what does this country actually carry" — the charts, the taxes, the
+ * declaration and when it is due, the e-invoicing obligation, the bank
+ * formats, who has read the pack and against which texts, and where the open
+ * core boundary falls for each of them. It reads `packs/`, so it runs in a
+ * checkout and needs no database and no network.
+ *
+ * It is a separate subcommand and not a flag of `pack status` because that name
+ * was taken, by the one subcommand of this file that asks an *installation*
+ * what each of its companies copied. Two questions that share no argument, no
+ * connection and no output should not share a word.
+ *
+ * Under `--json` the whole description of every pack asked for is the result,
+ * unabridged: it is the same object the public site builds a page from, and a
+ * summary here would be a second shape of the same thing.
+ */
+async function describeSubcommand(args: ParsedArgs): Promise<number> {
+  const dir = packsDir();
+  const available = await listPacks(dir);
+  const asked = args.positional[1];
+  if (asked !== undefined && !available.includes(asked)) {
+    throw new UsageError(
+      `unknown pack: ${asked}. This checkout carries ${available.join(', ')}.`,
+    );
+  }
+  const wanted = asked === undefined ? available : [asked];
+
+  const described: PackDescription[] = [];
+  heading(`Packs (${wanted.length})`);
+  for (const slug of wanted) {
+    const description = describePack(await readPack(slug, dir));
+    described.push(description);
+    describeToTerminal(description);
+  }
+  setResult({ packs: described });
+  return 0;
+}
+
+/**
+ * One description, printed for a person.
+ *
+ * Every "not yet" is printed rather than left out, for the reason
+ * `describeFiling()` prints its own: a country that declares no deadline rule
+ * and no file format is the ordinary state of most packs, and a listing that
+ * showed only what works would be a brochure.
+ */
+function describeToTerminal(description: PackDescription): void {
+  const c = description.certification;
+  line();
+  note(
+    `${bold(description.slug)}  ${description.name} ${description.version} · ` +
+      `${description.currency} · ${description.languages.join(', ')} · ` +
+      `certification ${c.status}` +
+      (c.reviewedBy === null ? '' : ` by ${c.reviewedBy}`),
+  );
+  const rows: [string, string][] = [
+    [
+      'charts',
+      description.charts
+        .map(
+          (chart) =>
+            `${chart.code}${chart.isDefault ? ' (default)' : ''} — ${chart.accounts} accounts` +
+            (chart.audience === null ? '' : `, for ${chart.audience}`),
+        )
+        .join('; '),
+    ],
+    [
+      'taxes',
+      `${description.taxes.count} · rates ${
+        description.taxes.rates.length === 0 ? 'none' : description.taxes.rates.join(', ')
+      } · ${description.taxes.treatments.join(', ')}`,
+    ],
+  ];
+  for (const declaration of description.declarations) {
+    rows.push([
+      'declaration',
+      `${declaration.code} (${declaration.boxes} boxes) · ${declaration.periods.join(' or ')} · ` +
+        (declaration.deadline === null
+          ? 'deadline: not declared'
+          : `deadline: ${declaration.deadline.rule}` +
+            (declaration.deadline.day === null ? '' : ` ${declaration.deadline.day}`) +
+            (declaration.deadline.plusDays === null
+              ? ''
+              : ` plus ${declaration.deadline.plusDays} days`)) +
+        ' · ' +
+        (declaration.file.byHand
+          ? 'filed by hand on the portal'
+          : `file: ${declaration.file.brick as string}`),
+    ]);
+  }
+  if (description.declarations.length === 0) rows.push(['declaration', 'none declared']);
+  rows.push([
+    'e-invoicing',
+    description.einvoicing === null
+      ? 'none declared'
+      : `${description.einvoicing.profile}` +
+        (description.einvoicing.mandatoryFrom === null
+          ? ''
+          : ` from ${description.einvoicing.mandatoryFrom}`),
+  ]);
+  rows.push([
+    'tax balance',
+    `payable ${description.vatBalance.payable ?? 'no account named'} · ` +
+      `receivable ${description.vatBalance.receivable ?? 'no account named'}`,
+  ]);
+  rows.push([
+    'bank statements',
+    description.bankStatementFormats.length === 0
+      ? 'none named'
+      : description.bankStatementFormats
+          .map((format) => `${format.format} — ${format.read ? 'read' : 'not yet'}`)
+          .join('; '),
+  ]);
+  rows.push([
+    'statements',
+    description.statements.length === 0
+      ? 'generic only'
+      : description.statements
+          .map((statement) => `${statement.code} (${statement.lines} lines)`)
+          .join('; '),
+  ]);
+  rows.push([
+    'last checked',
+    c.lastConsultedOn === null
+      ? 'no source carries a day'
+      : `${c.lastConsultedOn} · ${c.sources.length} source(s)`,
+  ]);
+  pairs(rows, '        ');
+}
+
+/**
  * `ekwo pack status` — what each company copied, against what is loaded here.
  *
  * Read-only. It is the question `ekwo pack upgrade` answers by acting on, so
@@ -523,8 +659,15 @@ function usage(): string {
                            run by the CI, and it never changes the exit code:
                            a publisher that refuses a robot is not a wrong pack.
   ekwo pack list           What this checkout carries, and its certification.
+  ekwo pack describe [<cc>]
+                           Everything one country says: the charts, the taxes,
+                           the declaration and when it is due, the e-invoicing
+                           obligation, the bank formats read and not yet read,
+                           the sources it was built from and the day each was
+                           last opened. Every pack when no country is named.
+                           Reads packs/; no database, no network.
 
-  ekwo pack status         What each company of an installation copied, against
+  ekwo pack status       What each company of an installation copied, against
                            what is loaded there. Read-only.
   ekwo pack upgrade <company>
                            Move it to the version loaded there. Additions and

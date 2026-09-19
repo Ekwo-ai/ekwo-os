@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+  <!--
+    The same mark as the header: a leaf, two arcs meeting at a point with the
+    midrib drawn short — held back from both tips, so the shape reads as a leaf
+    and not as a pod cut in two. Drawn at 24 and meant to be read at 16, which is the size it
+    is actually used at, and built from two strokes at a single weight for
+    exactly that reason.
+
+    A favicon cannot see which of the four palette-and-theme combinations the
+    page is in — it is fetched as a document of its own — so it carries the
+    default accent and follows the browser's own light or dark chrome through a
+    media query, which is the one signal it does get. That is why the colour is
+    written here rather than inherited, and it is the only place in `apps/site`
+    outside the stylesheet where one is.
+
+    Never green: see the note in `src/pages/Logo.tsx`.
+  -->
+  <style>
+    .mark { fill: none; stroke: #2f5fe0; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    @media (prefers-color-scheme: dark) { .mark { stroke: #7ea2ff; } }
+  </style>
+  <g class="mark">
+    <path d="M4.6 19.4C4.6 9.6 10.4 4 20 4c0 9.6-5.8 15.4-15.4 15.4Z"/>
+    <path d="M8.2 15.8 15.8 8.2"/>
+  </g>
+</svg>

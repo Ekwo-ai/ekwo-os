@@ -12,7 +12,8 @@
   "workspaces": [
     "packages/formats/*",
     "packages/core",
-    "packages/*"
+    "packages/*",
+    "apps/*"
   ],
   "scripts": {
     "typecheck": "tsc -p tsconfig.json --noEmit",

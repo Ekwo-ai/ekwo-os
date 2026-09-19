@@ -615,8 +615,10 @@ describe('no country lives in what this change added', () => {
     // answers both questions the number asks, `next_entry_number()` and
     // `post_entry()` call it. `tax_point_of()` answers when the tax falls due
     // and is the only place the vocabulary of `tax_point_rule` is written out;
-    // `post_document()` calls it and names no country. Nothing else goes near
-    // `country_defaults` for a document rule.
+    // `post_document()` calls it and names no country. `posted_edit_policy()`
+    // answers whether a posted document may go back to draft, and reads the
+    // silence as the stricter word; `unpost_refusal()` asks it rather than the
+    // table. Nothing else goes near `country_defaults` for a document rule.
     //
     // The query asks about functions that touch `country_defaults` at all,
     // because `number_format` is also the name of a user preference — how one
@@ -629,9 +631,10 @@ describe('no country lives in what this change added', () => {
         where n.nspname = 'public'
           and p.prosrc ilike '%country_defaults%'
           and (p.prosrc ilike '%legal_mention%' or p.prosrc ilike '%einvoice_profile%'
-               or p.prosrc ilike '%tax_point_rule%' or p.prosrc ilike '%number_format%')
+               or p.prosrc ilike '%tax_point_rule%' or p.prosrc ilike '%number_format%'
+               or p.prosrc ilike '%posted_edit_policy%')
         order by 1`,
     );
-    expect(added.map((f) => f.proname)).toEqual(['numbering_rules', 'tax_point_of']);
+    expect(added.map((f) => f.proname)).toEqual(['numbering_rules', 'posted_edit_policy', 'tax_point_of']);
   });
 });

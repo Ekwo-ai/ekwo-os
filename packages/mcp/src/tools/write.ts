@@ -22,6 +22,7 @@ import { z } from 'zod';
 import { EkwoMcpError, type Backend, type Filter, type Row } from '../backend.js';
 import {
   DOC_TYPES,
+  STATEMENT_FORMATS,
   amountIn,
   columns,
   companyCurrency,
@@ -36,11 +37,14 @@ import { companyId, isoDate, uuid } from './read.js';
 // model fills in stay here, beside their descriptions; the functions are
 // exported from here under the names they always had.
 export {
+  cancelDocument,
   createContact,
   createDocument,
   postDocument,
   reconcile,
   recordPayment,
+  reverseEntry,
+  undoDocument,
   unreconcile,
   updateDocumentLines,
 } from '@ekwo-ai/core';
@@ -337,6 +341,28 @@ export const PostDocumentInput = z.object({
     .describe('True: the database posts for real and takes it back, and the entry it would have written is returned. Nothing is written; a refusal is the one posting would give.'),
 });
 
+export const CancelDocumentInput = z.object({
+  document_id: uuid.describe('The posted sale or purchase invoice to undo.'),
+  date: isoDate
+    .optional()
+    .describe("The day a credit note is issued and booked on. Given, it asks for the credit note. Left out: the invoice's own booking day, and refused by name (reversal_date_needed) when that period is no longer open — then ask the user which open date to use; never pick one."),
+  credit_note: z
+    .boolean()
+    .optional()
+    .describe('True: undo it with a credit note even where it could go back to draft — the user wants the correction on the record.'),
+});
+
+// ---------------------------------------------------------------------------
+// Undoing an entry
+// ---------------------------------------------------------------------------
+
+export const ReverseEntryInput = z.object({
+  entry_id: uuid.describe("The posted entry to undo. An entry a document wrote is undone with the document, by cancel_document."),
+  date: isoDate
+    .optional()
+    .describe("The day the reversal is booked on. Left out: the original entry's day, and refused by name (reversal_date_needed) when that period is no longer open — then ask the user which open date to use; never pick one."),
+});
+
 // ---------------------------------------------------------------------------
 // Payments and matching
 // ---------------------------------------------------------------------------
@@ -552,8 +578,14 @@ export async function createBankTransaction(
  * The statement formats this server has a reader for. A pack names more than
  * these — MT940, OFX, BAI2 — and a format is offered here the day a brick
  * reads it, not the day a pack mentions it.
+ *
+ * The list moved to the core when a second caller needed it: `describePack()`
+ * of the command line answers, for every format a pack names, read or not yet,
+ * and it cannot reach this package — the command line depends on the core and
+ * on one driver, and a list of three strings is not a reason to make it depend
+ * on an MCP server. It is exported from here under the name it always had.
  */
-export const STATEMENT_FORMATS = ['camt.053', 'coda', 'cfonb120'] as const;
+export { STATEMENT_FORMATS } from '@ekwo-ai/core';
 
 /** What each format is delivered as, for the attachment the caller may have stored. */
 const STATEMENT_MIME_TYPES: Record<(typeof STATEMENT_FORMATS)[number], string> = {

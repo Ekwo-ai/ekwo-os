@@ -73,7 +73,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     { name: SERVER_NAME, version: SERVER_VERSION },
     {
       instructions:
-        'Ekwo OS keeps double-entry books in the user\'s own Postgres. You act as that user: everything you can see and change is what row level security lets them see and change. Amounts are decimal strings ("1210.00"), dates are ISO (2026-06-15), identifiers are uuids. Invoices are created as drafts and become ledger entries only when post_document is called; a posted entry is never deleted or edited, it is corrected with a credit note. When the database refuses — period_locked, entry_unbalanced, document_total_mismatch — report the refusal rather than working around it.',
+        'Ekwo OS keeps double-entry books in the user\'s own Postgres. You act as that user: everything you can see and change is what row level security lets them see and change. Amounts are decimal strings ("1210.00"), dates are ISO (2026-06-15), identifiers are uuids. Invoices are created as drafts and become ledger entries only when post_document is called; a posted entry is never deleted or edited: an invoice is undone by cancel_document — back to draft where its country allows it and nothing has left, by the credit note that names it otherwise, and it says which — and an entry keyed by hand by reverse_entry. When the database refuses — period_locked, entry_unbalanced, document_total_mismatch — report the refusal rather than working around it.',
     },
   );
 
@@ -434,7 +434,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     {
       title: 'Replace the lines of a draft',
       description:
-        'Replaces every line of a draft document with the set you give, and returns the document with its recomputed totals. Lines take product_code the same way create_document does. Drafts only: a posted document is corrected with a credit note, never edited.',
+        'Replaces every line of a draft document with the set you give, and returns the document with its recomputed totals. Lines take product_code the same way create_document does. Drafts only: a posted document is never edited; cancel_document undoes it with a credit note.',
       inputSchema: write.UpdateDocumentLinesInput.shape,
       annotations: { readOnlyHint: false, destructiveHint: true, idempotentHint: true, openWorldHint: false },
     },
@@ -446,11 +446,35 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     {
       title: 'Post a document to the ledger',
       description:
-        'Books a draft document: base lines, VAT lines from the tax configuration, and the customer or supplier counterpart, numbered and posted. This cannot be undone — there is no unpost, and a posted entry is never deleted; a mistake is corrected with a credit note. Ask the user before calling it. It refuses a locked period, a tax that is not in force, and a header total that disagrees with the lines.',
+        'Books a draft document: base lines, VAT lines from the tax configuration, and the customer or supplier counterpart, numbered and posted. A posted entry is never edited; a mistake is undone by cancel_document, which puts the document back to draft only where its country allows it and nothing has left, and issues a credit note otherwise. Ask the user before calling it. It refuses a locked period, a tax that is not in force, and a header total that disagrees with the lines.',
       inputSchema: write.PostDocumentInput.shape,
       annotations: { readOnlyHint: false, destructiveHint: true, idempotentHint: false, openWorldHint: false },
     },
     async (args) => guard(() => write.postDocument(backend, args)),
+  );
+
+  server.registerTool(
+    'cancel_document',
+    {
+      title: 'Undo a posted invoice',
+      description:
+        "Undoes a posted sale or purchase invoice in one call, the one way its country and its facts allow, and says which in undone_by. 'draft': the country's posted_edit_policy lets a posted document go back to draft and nothing about this one has left — never sent nor on Peppol, not paid, not declared, its period open and, where numbering is gapless, its number the last one drawn; its entry is taken away, its number given back, and it is a draft to correct and post again. 'credit_note' otherwise, with the reason in why: its credit note — the same lines, taxes, accounts, contact, currency and rate — is issued naming it, posted and matched against it, and the invoice is cancelled, payment state reversed; the invoice keeps its number and its entry. Tell the user which it was. A date, or credit_note: true, asks for the credit note outright. Dated on the invoice's booking day unless you give a date; refused by name when that period is locked or closed (reversal_date_needed), and then you ask the user for a date rather than choosing one. Refused for a draft, a credit note, an invoice already cancelled or credited, and one that is paid in part or in full — the payment is unmatched first with unreconcile, and only when the user says so. Ask the user before calling it.",
+      inputSchema: write.CancelDocumentInput.shape,
+      annotations: { readOnlyHint: false, destructiveHint: true, idempotentHint: false, openWorldHint: false },
+    },
+    async (args) => guard(() => write.undoDocument(backend, args)),
+  );
+
+  server.registerTool(
+    'reverse_entry',
+    {
+      title: 'Reverse a posted entry',
+      description:
+        "Undoes a posted entry in one call: writes its mirror in the same journal — every line on the other side — naming it, posts it under the next number, and matches the two. The original keeps its number and its lines. Dated on the original's day unless you give a date; refused by name when that period is locked or closed (reversal_date_needed), and then you ask the user for a date rather than choosing one. Refused for an entry a document wrote (use cancel_document), the entries of a close (reopen_fiscal_year), an opening, the entry of a payment, a bank transaction, a module or a matching, an entry already reversed or that is itself a reversal, and a matched entry — unmatch it first with unreconcile, and only when the user says so. Ask the user before calling it.",
+      inputSchema: write.ReverseEntryInput.shape,
+      annotations: { readOnlyHint: false, destructiveHint: true, idempotentHint: false, openWorldHint: false },
+    },
+    async (args) => guard(() => write.reverseEntry(backend, args)),
   );
 
   server.registerTool(
@@ -482,7 +506,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     {
       title: 'Undo a matching',
       description:
-        'Removes one matching, putting the residual back on both lines. The entries themselves are untouched. This is the only write in this server that undoes something.',
+        'Removes one matching, putting the residual back on both lines. The entries themselves are untouched. It is what cancel_document and reverse_entry ask for first when what they would undo is matched.',
       inputSchema: write.UnreconcileInput.shape,
       annotations: { readOnlyHint: false, destructiveHint: true, idempotentHint: true, openWorldHint: false },
     },

@@ -111,9 +111,10 @@ export function commandLabel(args: ParsedArgs): string {
   const takesAction = TWO_WORDS.has(command);
   const action = takesAction ? args.positional[0] : undefined;
   if (action === undefined) return command;
-  // `invoice line add`: the one verb of three words.
-  if (command === 'invoice' && action === 'line' && args.positional[1] !== undefined) {
-    return `invoice line ${args.positional[1]}`;
+  // `doc line add`: the one verb of three words. Under either of its names, the
+  // label repeats the words that were typed.
+  if ((command === 'doc' || command === 'invoice') && action === 'line' && args.positional[1] !== undefined) {
+    return `${command} line ${args.positional[1]}`;
   }
   return `${command} ${action}`;
 }

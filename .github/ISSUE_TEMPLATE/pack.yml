@@ -1,0 +1,45 @@
+name: A country pack — propose one, correct one, review one
+description: A rate, a box, a chart or a statement line is right or wrong against a law. Say which law.
+labels: [pack]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        `docs/packs.md` walks through a pack end to end. A pack is *reviewed* when a named professional has read it, and never before: there is no status that means "certified by Ekwo".
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What this is
+      options:
+        - A new country
+        - A correction to an existing pack
+        - A review of an existing pack, by somebody who applies that law
+        - A translation
+    validations:
+      required: true
+  - type: input
+    id: country
+    attributes:
+      label: Country
+      description: ISO 3166-1 alpha-2, and the region if the rule is regional.
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What is missing or wrong
+      description: The account, the tax, the box or the line, and what it should say.
+    validations:
+      required: true
+  - type: textarea
+    id: source
+    attributes:
+      label: The source
+      description: The article, the form or the official notice, with a link to the publisher. A pack cites a text for every rate and every box; a correction does too.
+    validations:
+      required: true
+  - type: textarea
+    id: standing
+    attributes:
+      label: Your standing, if this is a review
+      description: Your profession and the body you are registered with. It goes into the manifest with your name only if you ask for it.

@@ -248,7 +248,7 @@ instead if the account already exists, and no key is needed.
 
 | Command | What it does |
 |---|---|
-| `ekwo init` | The whole installation, interactive or not. |
+| `ekwo init` | The whole installation, interactive or not: the socle's migrations, the reference seeds, then the modules', as `ekwo migrate` applies them. |
 | `ekwo migrate` | Applies the migrations this release adds, after showing the gap — the socle's, then the modules'. Re-applies the reference seeds, which are idempotent. `--no-modules` leaves the modules alone. |
 | `ekwo status` | Schema version installed against available, pending migrations, the instance, its administrators, the country packs it holds and, per company, the pack version it copied. Exits 1 when something is pending. |
 | `ekwo doctor` | Every object this release defines and every privilege it grants, against what the database holds; row level security on every table, a policy on every protected table, no pending migration, no membership pointing at a deleted user, every company with a bank account, statements that tie to their lines, posted entries that balance. Exits 1 on a problem, 0 on warnings. |
@@ -263,8 +263,10 @@ instead if the account already exists, and no key is needed.
 | `ekwo use <company>` | Picks the company the next commands run on. |
 | `ekwo whoami` | Who you are on which instance, the companies you can see, and what you may do on the one in use. |
 | `ekwo contact add` / `list` | A customer or a supplier, and finding one again. |
-| `ekwo invoice new` / `invoice line add` | A draft document — any kind, with `--type` — and one more line on it. A draft books nothing. |
+| `ekwo doc new` / `doc line add` | A draft document — any kind, with `--type` — and one more line on it. A draft books nothing. `ekwo invoice` is the old name of `ekwo doc`, kept as an alias. |
 | `ekwo post <document>` | Books it, through `post_document()`. `--dry-run` shows the entry the database would write and writes nothing. |
+| `ekwo cancel <document>` | Undoes a posted invoice, and says how. Back to draft, through `unpost_document()`, where its country allows it and nothing about it has left; otherwise through `cancel_document()`: the credit note that names it, posted and matched against it, and the invoice cancelled. `--date` books the credit note on another day than the invoice's, which is how a locked period is stepped over; `--credit` asks for the note where a draft was possible. |
+| `ekwo reverse <entry>` | Undoes a posted entry keyed by hand, through `reverse_entry()`: its mirror, posted and matched against it. By id or by number; `--date` as for `cancel`. |
 | `ekwo payment record` | Money in or out, booked and matched. With `--doc`, against that document. |
 | `ekwo match <transaction> <document>` | A bank statement line pays a document, through `settle_from_statement()`. |
 | `ekwo doc list` / `show` | What exists, and with `--unpaid` what is posted and still owed. See [keeping books](#keeping-books). |
@@ -423,11 +425,12 @@ them as it reads a driver's.
 
 ```bash
 ekwo contact add "Client Example" --country <cc> --ref crm-42
-ekwo invoice new --contact client --date 2026-06-15 --ref job-7 \
+ekwo doc new --contact client --date 2026-06-15 --ref job-7 \
      --line "name=Audit,price=1500.00,account=<account code>,tax=<tax code>"
-ekwo invoice line add job-7 --name Travel --price 250.00 --account <account code>
+ekwo doc line add job-7 --name Travel --price 250.00 --account <account code>
 ekwo post job-7 --dry-run        # the entry the database would write; nothing is written
 ekwo post job-7                  # post_document()
+ekwo cancel job-7                # back to draft where the country allows it, else the credit note
 ekwo payment record --doc job-7 --amount 1750.00 --date 2026-06-30 --bank-account <id> --ref bank-1
 ekwo match <bank transaction id> job-9
 ekwo doc list --unpaid --since 2026-06-01 --json
@@ -440,7 +443,8 @@ and none is ever picked for you: with no company in use a verb ends on
 **Each verb is one function, and it is not ours.** The functions live in
 `@ekwo-ai/core` and the MCP server calls the same ones: `contact add` is
 `create_contact`, `invoice new` is `create_document`, `post` is
-`post_document`, `payment record` is `record_payment`, `doc list` and
+`post_document`, `cancel` is `unpost_document` or `cancel_document` — `unpost_refusal` chooses —, `reverse` is `reverse_entry`,
+`payment record` is `record_payment`, `doc list` and
 `doc show` are `list_documents` and `get_document`. Underneath them the rules
 are the schema's — the balance, the numbering, the locks, the taxes, the
 territory, the tax point. **This CLI computes no amount**: what you type goes
@@ -481,7 +485,7 @@ given beside it win.
 ```bash
 echo '{"contact":"client","document_date":"2026-06-15","client_ref":"job-8",
        "lines":[{"name":"Review, \"urgent\"","unit_price":"200.00","account_code":"<code>"}]}' \
-  | ekwo invoice new --stdin --json
+  | ekwo doc new --stdin --json
 ```
 
 **`--line`, for a person.** Named fields, never positions: `name`, `price`,
@@ -637,11 +641,30 @@ migration runner and by nothing else.
 
 ```sh
 ekwo pack list           # the packs this checkout carries, and their certification
+ekwo pack describe       # everything each of them says; one country with `describe <cc>`
 ekwo pack build be       # write supabase/seed/10_pack_be.sql from packs/be
 ekwo pack build --all
 ekwo pack check be       # validate one pack and compare its seed
 ekwo pack check --all    # exit 1 if a committed seed is not the output of its pack
 ```
+
+`list` is a line per country. `describe` is the whole of one: the charts and
+who each is published for, the taxes and their distinct rates, the periodic
+declaration with its cadences and its boxes, whether the country states a rule
+for when the return is due, the brick that writes the file it is deposited as
+or that it is filed by hand on a portal, the e-invoicing profile and the day it
+starts, the accounts the tax balance lands on, every bank statement format the
+country names and whether anything here reads it, the financial statements, and
+the texts the pack was built from with the day each was last opened. Every
+answer is read from the pack, and a "not yet" is printed rather than left out.
+
+```sh
+ekwo pack describe --json | jq '.data.packs[] | {country, version}'
+```
+
+Under `--json` the whole description of every pack is the result. It is the
+same object [`apps/site`](../../apps/site/) builds a page from, so the site and
+the command line cannot come to say different things about a country.
 
 `check` validates every file of the pack against
 [`packs/schema/pack.1.json`](../../packs/schema/pack.1.json) and against the
@@ -713,6 +736,7 @@ dashboard under Connect → Session pooler, is the form that is never derived.
 | `--demo` | Also load the sample company. |
 | `--register` | Register without being asked. `--register-email` sets the address. |
 | `--registry-url <url>` | Where the registration is announced. |
+| `--no-modules` | Leave the modules out. By default `init` installs them, as `ekwo migrate` does — empty schemas until a company enables one. |
 
 Every command takes `--json`; see [what a command answers](#what-a-command-answers---json-and-the-exit-codes).
 `ekwo migrate` takes `--skip-seeds`.

@@ -2,11 +2,12 @@
 
 Version 1.0, September 2026.
 
-Thank you for your interest in contributing to Ekwo OS, maintained by Ekwo AI
-("Ekwo"). This agreement clarifies the intellectual property licence granted
-with contributions from any person or entity. It gives Ekwo the rights it
-needs to distribute and maintain the project, and it gives you the certainty
-that your contribution stays yours.
+Thank you for your interest in contributing to Ekwo OS, maintained by Ekwo,
+the trade name of Karuna Co OÜ, a private limited company registered in Estonia
+under registry code 14510673 ("Ekwo"). This agreement clarifies the
+intellectual property licence granted with contributions from any person or
+entity. It gives Ekwo the rights it needs to distribute and maintain the
+project, and it gives you the certainty that your contribution stays yours.
 
 You accept this agreement by stating so on your first pull request, or by
 signing it separately. It applies to every contribution you have made or will

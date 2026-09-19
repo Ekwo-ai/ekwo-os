@@ -1,11 +1,17 @@
 /**
- * The verbs on a document: `invoice new`, `invoice line add`, `post`,
+ * The verbs on a document: `doc new`, `doc line add`, `post`, `cancel`,
  * `doc list` and `doc show`.
  *
+ * All five work on the same object, so they are named after it. A document is
+ * a sale invoice, a purchase invoice — a bill — a quote or a credit note,
+ * chosen with `--type`; `invoice` stayed the name of the verb that creates one
+ * long after it created any of them, so `ekwo invoice` is now an alias of
+ * `ekwo doc` and does exactly the same thing.
+ *
  * Each is one function of the core — `createDocument()`, `addDocumentLine()`,
- * `postDocument()`, `listDocuments()`, `getDocument()` — which the MCP server
- * calls for `create_document`, `post_document`, `list_documents` and
- * `get_document`. What is printed is what came back: the totals are the
+ * `postDocument()`, `undoDocument()`, `listDocuments()`, `getDocument()` —
+ * which the MCP server calls for `create_document`, `post_document`,
+ * `cancel_document`, `list_documents` and `get_document`. What is printed is what came back: the totals are the
  * database's, the entry is the one `post_document()` wrote, and a refusal is
  * left to `output.ts` to repeat word for word.
  */
@@ -14,6 +20,7 @@ import {
   DOCUMENT_STATES,
   DOC_TYPES,
   addDocumentLine,
+  undoDocument,
   createDocument,
   getDocument,
   listDocuments,
@@ -55,6 +62,7 @@ const LINE_ADD_FLAGS = [
   ...BOOKS_FLAGS, 'stdin', 'name', 'description', 'qty', 'unit', 'price', 'amount', 'discount', 'product', 'account', 'tax',
 ] as const;
 const POST_FLAGS = [...BOOKS_FLAGS, 'dry-run'] as const;
+const CANCEL_FLAGS = [...BOOKS_FLAGS, 'date', 'credit'] as const;
 const LIST_FLAGS = [...BOOKS_FLAGS, 'unpaid', 'since', 'until', 'type', 'state', 'contact', 'limit'] as const;
 
 function oneOf<T extends string>(value: unknown, allowed: readonly T[], what: string): T | undefined {
@@ -95,7 +103,7 @@ function printDocument(result: Row): void {
   }
 }
 
-function printEntry(result: Row): void {
+export function printEntry(result: Row): void {
   const entry = (result['entry'] ?? {}) as Row;
   pairs([
     ['entry', `${text(entry['number'])}  ${text(entry['entry_date'])}`],
@@ -115,14 +123,7 @@ function printEntry(result: Row): void {
   );
 }
 
-export async function invoiceCommand(args: ParsedArgs, deps: BooksDeps = {}): Promise<number> {
-  const [action, second] = args.positional;
-  if (action === 'new') return invoiceNew(args, deps);
-  if (action === 'line' && second === 'add') return lineAdd(args, deps);
-  throw new UsageError('usage: ekwo invoice new --contact <name|id> --line "name=…,price=…,tax=…" [--type --date --ref] | ekwo invoice line add <document> --price <amount> [--name --account --tax]');
-}
-
-async function invoiceNew(args: ParsedArgs, deps: BooksDeps): Promise<number> {
+async function docNew(args: ParsedArgs, deps: BooksDeps): Promise<number> {
   rejectUnknownFlags(args, NEW_FLAGS);
   const input = await stdinDocument(args, deps, NEW_FIELDS);
   const { backend, company } = await openBooks(args, deps);
@@ -210,11 +211,74 @@ export async function postCommand(args: ParsedArgs, deps: BooksDeps = {}): Promi
   return 0;
 }
 
+export async function cancelCommand(args: ParsedArgs, deps: BooksDeps = {}): Promise<number> {
+  rejectUnknownFlags(args, CANCEL_FLAGS);
+  const { backend, company } = await openBooks(args, deps);
+  const documentId = await resolveDocument(backend, company.id, required(args.positional[0], 'the document to cancel', '<document>'));
+  // No date given is not today: the database takes the invoice's own day while
+  // its period is open, and refuses by name when it is not.
+  const date = stringFlag(args, 'date');
+  // Which of the two ways is the database's answer, asked once in the core:
+  // back to draft where the country and the facts allow it, a credit note
+  // otherwise. A date or --credit asks for the credit note outright.
+  const result = (await undoDocument(backend, {
+    document_id: documentId,
+    date,
+    credit_note: boolFlag(args, 'credit'),
+  })) as Row;
+  setResult({ document_id: documentId, ...result });
+
+  if (result['undone_by'] === 'draft') {
+    const unposting = (result['unposting'] ?? {}) as Row;
+    heading(`Back to draft, in ${company.name}`);
+    pairs([
+      ['undone by', 'back to draft — this country allows it, and nothing about the document had left'],
+      ['entry', `${text(unposting['entry_number'])} taken away${unposting['number_returned'] === true ? ', its number given back' : ''}`],
+    ]);
+    line();
+    printDocument({ document: result['draft'], lines: result['lines'] });
+    line();
+    note(dim(text(result['note'])));
+    return 0;
+  }
+
+  const cancelled = (result['cancelled'] ?? {}) as Row;
+  heading(`Cancelled, in ${company.name}`);
+  pairs([
+    ['undone by', `a credit note — ${text(result['why'])}`],
+    ['cancelled', `${text(cancelled['doc_type'])} ${text(cancelled['number'])}  ${dim(text(cancelled['id']))}`],
+    ['state', `${text(cancelled['state'])}, ${text(cancelled['payment_state'])}`],
+  ]);
+  line();
+  step('by the credit note');
+  printDocument({ document: result['credit_note'], lines: result['lines'] });
+  line();
+  printEntry(result);
+  line();
+  note(dim(text(result['note'])));
+  return 0;
+}
+
 export async function docCommand(args: ParsedArgs, deps: BooksDeps = {}): Promise<number> {
-  const action = args.positional[0];
+  const [action, second] = args.positional;
+  if (action === 'new') return docNew(args, deps);
+  if (action === 'line' && second === 'add') return lineAdd(args, deps);
   if (action === 'list') return docList(args, deps);
   if (action === 'show') return docShow(args, deps);
-  throw new UsageError('usage: ekwo doc list [--unpaid --since <date> --until <date> --type --state --contact] | ekwo doc show <document>');
+  throw new UsageError(
+    'usage: ekwo doc new --contact <name|id> --line "name=…,price=…,tax=…" [--type --date --ref]' +
+      ' | ekwo doc line add <document> --price <amount> [--name --account --tax]' +
+      ' | ekwo doc list [--unpaid --since <date> --until <date> --type --state --contact]' +
+      ' | ekwo doc show <document>',
+  );
+}
+
+/**
+ * `ekwo invoice`, kept so that no example already published stops working. It
+ * is the same verbs on the same object, under the name they used to have.
+ */
+export async function invoiceCommand(args: ParsedArgs, deps: BooksDeps = {}): Promise<number> {
+  return docCommand(args, deps);
 }
 
 async function docList(args: ParsedArgs, deps: BooksDeps): Promise<number> {

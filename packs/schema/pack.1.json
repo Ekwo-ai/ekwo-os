@@ -633,9 +633,16 @@
           ],
           "description": "When the tax becomes chargeable under the country's general rule, in a closed vocabulary. `invoice_date` where the invoice fixes it; `delivery_date` where the supply does; `payment_date` where collection does; `invoice_if_issued` where the supply is the principle and an invoice displaces it when the country requires one (Belgium art. 17 and 22bis over art. 16 and 22, Luxembourg art. 24 over art. 21); `earliest_of_delivery_or_payment` where the law keeps whichever came first (Estonia KMS § 11 lg 1). Say the principle and its derogation with one of the last two rather than declaring the derogation alone — a word that names only half a rule reads exactly like one that names all of it. A tax that departs from the country rule says cash_basis itself, which is how France taxes goods on delivery and services on collection without a second country field."
         },
+        "posted_edit_policy": {
+          "enum": [
+            "reversal_only",
+            "unpost_if_untouched"
+          ],
+          "description": "Whether a posted document may go back to draft. `reversal_only`: it is undone by a credit note that names it, and in no other way — the answer of a country whose law makes a validated entry irreversible or its numbering continuous. `unpost_if_untouched`: it may also go back to draft while nothing about it has left — never sent nor on Peppol, not settled, not declared, its period open and, where numbering is gapless, its number the last one drawn. Left out, the country is read as `reversal_only`, the stricter answer and the one every law accepts. Declare `unpost_if_untouched` only with the article that allows it under `references.posted_edit_policy`."
+        },
         "references": {
           "type": "object",
-          "description": "Where the rules above come from, one entry per rule and not one for the section: the numbering of an invoice, the payment term the law sets and the tax point are three articles of two or three different texts in every country the packs cover, and a single reference would have had to name them all in one string. A rule a pack declares and does not source is refused on a reviewed pack and warned about on any other.",
+          "description": "Where the rules above come from, one entry per rule and not one for the section: the numbering of an invoice, the payment term the law sets, the tax point and whether a posted document goes back to draft are articles of two or three different texts in every country the packs cover, and a single reference would have had to name them all in one string. A rule a pack declares and does not source is refused on a reviewed pack and warned about on any other.",
           "additionalProperties": false,
           "properties": {
             "numbering": {
@@ -649,6 +656,10 @@
             "tax_point": {
               "$ref": "#/$defs/rule_reference",
               "description": "The article that fixes when the tax becomes chargeable under the country's general rule. Where the value declared is a derogation rather than the principle, the reference says which, so a reader is not left believing the pack read the wrong article."
+            },
+            "posted_edit_policy": {
+              "$ref": "#/$defs/rule_reference",
+              "description": "The article that decides `posted_edit_policy`: the one that makes a recorded entry irreversible, or the one under which a document that has not been issued is not yet an invoice. A pack that declares `reversal_only` cites the first; one that declares `unpost_if_untouched` has to cite the text that allows it, and say why the irreversibility of its own books does not reach a document nobody received."
             }
           }
         },

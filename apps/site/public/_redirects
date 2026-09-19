@@ -1,0 +1,9 @@
+# Netlify reads this file. A rule without "!" never shadows a file that exists,
+# so every page of this site is served as itself and only an address the site
+# does not have falls through to the last line.
+#
+# The domain of this site used to serve the hosted application, and people hold
+# links to it: a document somebody was sent, a client page, a timesheet. None of
+# them is a page here, so each is handed to the application, path and query
+# kept, rather than answered with a 404.
+/*    https://app.ekwo.ai/:splat    302

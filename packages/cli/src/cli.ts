@@ -9,7 +9,8 @@ import { UsageError, boolFlag, parseArgs, type ParsedArgs } from './args.js';
 import { companyCommand } from './commands/company.js';
 import { contactCommand } from './commands/contact.js';
 import { demoCommand } from './commands/demo.js';
-import { docCommand, invoiceCommand, postCommand } from './commands/document.js';
+import { cancelCommand, docCommand, postCommand } from './commands/document.js';
+import { reverseCommand } from './commands/entry.js';
 import { doctorCommand } from './commands/doctor.js';
 import { initCommand, type InitDeps } from './commands/init.js';
 import { loginCommand, logoutCommand, type LoginDeps } from './commands/login.js';
@@ -50,11 +51,14 @@ export const COMMANDS = [
   'use',
   'whoami',
   'contact',
-  'invoice',
+  'doc',
   'post',
+  'cancel',
+  'reverse',
   'payment',
   'match',
-  'doc',
+  // An alias, last: `invoice` is what `doc` used to be called.
+  'invoice',
 ] as const;
 
 /** What a test may hand a command instead of the network, the disk and the environment. */
@@ -103,13 +107,19 @@ ${bold('Connecting')} ${dim('(every command)')}
   --service-role-key <key>  Project Settings → API. Needed to create a user.
 
   ${cyan('contact')}     add <name> | list — the people and companies the books name.
-  ${cyan('invoice')}     new | line add <document> — a draft and its lines. Any kind of
-              document, with --type; a draft books nothing.
+  ${cyan('doc')}         new | line add <document> — a draft and its lines; list | show
+              <document> — what exists, and what is still owed. One object: a
+              sale invoice, a bill, a quote or a credit note, with --type. A
+              draft books nothing. ${dim('ekwo invoice is the old name of doc, kept.')}
   ${cyan('post')}        <document> — book it, through post_document(). --dry-run shows
               the entry the database would write, and writes nothing.
+  ${cyan('cancel')}      <document> — undo a posted invoice, and say how: back to draft
+              where its country allows it and nothing has left, the credit
+              note that names it otherwise. --credit asks for the note.
+  ${cyan('reverse')}     <entry> — undo a posted entry, through reverse_entry(): its
+              mirror, posted and matched against it. Its id or its number.
   ${cyan('payment')}     record — money in or out, booked and matched.
   ${cyan('match')}       <bank transaction> <document> — a statement line pays a document.
-  ${cyan('doc')}         list | show <document> — what exists, and what is still owed.
 
 ${bold('Acting as a person')} ${dim('(login … whoami, and every verb that keeps books — never a service_role key)')}
   --profile <name>          Which profile: a demo instance, production, one client
@@ -123,17 +133,23 @@ ${bold('Acting as a person')} ${dim('(login … whoami, and every verb that keep
                             instance once and never written to disk.
 
 ${bold('Keeping books')} ${dim('(each verb is one function the MCP server calls too; no rule lives here)')}
-  --ref <reference>         On what creates — contact add, invoice new, payment
+  --ref <reference>         On what creates — contact add, doc new, payment
                             record. Your own reference: the same one a second
                             time returns what the first created, and creates
                             nothing. Pass it whenever a call might be repeated.
   --stdin                   Read one JSON document on the standard input, with
                             the fields of the MCP tool of the same meaning.
                             The form that is authoritative; flags beside it win.
-  --line "k=v,k=v"          invoice new, repeatable. Keys: name, price, qty,
+  --line "k=v,k=v"          doc new, repeatable. Keys: name, price, qty,
                             account, tax, product, unit, discount, description.
                             Codes, never rates; a comma in a value is \\,.
   --dry-run                 post. Ask the database what it would write.
+  --date <YYYY-MM-DD>       cancel, reverse. The day the undoing is booked on,
+                            which asks cancel for a credit note. Left out: the
+                            day of what is undone, while its period is open —
+                            refused by name otherwise.
+  --credit                  cancel. A credit note, even where the document
+                            could go back to draft.
   <document>                Its id, its number, or the --ref it was created under.
   Amounts are decimal strings, in and out: 1500.00. Nothing is computed here.
 
@@ -308,15 +324,18 @@ export async function run(argv: string[], deps: RunDeps = {}): Promise<number> {
       case 'contact':
         return await contactCommand(args, deps);
       case 'invoice':
-        return await invoiceCommand(args, deps);
+      case 'doc':
+        return await docCommand(args, deps);
       case 'post':
         return await postCommand(args, deps);
+      case 'cancel':
+        return await cancelCommand(args, deps);
+      case 'reverse':
+        return await reverseCommand(args, deps);
       case 'payment':
         return await paymentCommand(args, deps);
       case 'match':
         return await matchCommand(args, deps);
-      case 'doc':
-        return await docCommand(args, deps);
       default:
         throw new UsageError(`unknown command: ${args.command}\nRun \`ekwo --help\` for the list.`);
     }

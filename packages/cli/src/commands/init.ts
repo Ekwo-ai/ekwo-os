@@ -47,6 +47,8 @@ import { CONNECTION_FLAGS, openDatabase, type CommandDeps } from '../context.js'
 import { setResult } from '../output.js';
 import { listMigrations } from '../migrations.js';
 import { applyMigrations } from '../migrations.js';
+import { listModules } from '../module/read.js';
+import { applyModuleMigrations } from './module.js';
 import { ask as askText, askRequired, askSecret, choose, confirm, isInteractive, NotInteractiveError } from '../prompt.js';
 import { register, registryUrl } from '../registry.js';
 import { applyDemoSeed, applySeeds } from '../seeds.js';
@@ -76,6 +78,7 @@ export const INIT_FLAGS = [
   'register',
   'register-email',
   'registry-url',
+  'no-modules',
   'yes',
 ] as const;
 
@@ -112,6 +115,17 @@ export async function initCommand(args: ParsedArgs, deps: InitDeps = {}): Promis
       step(seed.file);
     });
     skipped(`${DEMO_SEED} is sample data and is not applied here`);
+
+    // The modules, as `ekwo migrate` installs them and for the same reason: a
+    // module is a schema whose tables stay empty until a company enables it.
+    // Left out here, a fresh installation was one `ekwo status` reported as
+    // sixteen migrations behind, with exit code 1, on the very next command —
+    // which is what the first run against a real project, on 19 September
+    // 2026, found. After the reference seeds, because a module's own seeds
+    // are per country and name the packs those seeds load.
+    if (!boolFlag(args, 'no-modules')) {
+      await applyModuleMigrations(db, await listModules(), { heading: true });
+    }
 
     // ---- What this installation is -----------------------------------------
     //

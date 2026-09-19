@@ -6,9 +6,9 @@ something. For most small businesses, that knowledge lives in software they
 rent, behind a price list they do not control, in a format they cannot take
 with them. Leaving means starting again.
 
-We think that is backwards. **The ledger belongs to the business.** The rules
-that fill it — a chart of accounts, a VAT return, a year-end — belong to
-everyone who has to follow them.
+We think that is backwards. **The data belongs to the business.** The rules
+that turn it into books — a chart of accounts, a VAT return, a year-end —
+belong to everyone who has to follow them.
 
 And two things are changing at once. The work of keeping books, which used to
 need a person at a keyboard, is being done by machines — which is either the
@@ -22,7 +22,7 @@ currency, one kind of asset and one person typing is not going to survive that.
 
 So Ekwo is five commitments.
 
-## 1. Financial autonomy for every business
+## 1. Books a business owns, not rents.
 
 A company should be able to keep its own books, understand them, and act on
 them, with software it owns and an assistant it controls. Not a subscription
@@ -36,12 +36,12 @@ computed from the ledger rather than typed in, a year-end close that a small
 business can run itself: these are not features, they are the difference
 between a business that knows where it stands and one that hopes.
 
-## 2. An AI at the keyboard — and arithmetic that never depends on it
+## 2. AI does the bookkeeping. You stay in control.
 
 Ekwo is designed to be operated by a machine. The data sits in Postgres, the
 REST API and its OpenAPI description come with it, and an MCP server sits on
-top: any AI assistant can read the ledger, raise an invoice, post it, match a
-payment, pull the VAT return — as *you*, under your own row level security,
+top: an assistant built on the model you choose can read the ledger, raise an
+invoice, post it, match a payment, pull the VAT return — as *you*, under your own row level security,
 without the data leaving your account. The agent is a user of the books, with
 the same rights and the same limits as the human beside it, and it can be
 replaced by another one tomorrow.
@@ -57,7 +57,7 @@ drafting the answer to the administration — and the arithmetic stays in code
 anybody can read. The machine proposes; the rules decide; a human can always
 ask why, and get an article of law rather than a probability.
 
-## 3. A ledger for the finance that is coming
+## 3. Ready for the finance that is coming.
 
 The next ten years of finance are already written into other people's
 regulations: structured electronic invoicing becoming the norm and then the law
@@ -85,7 +85,7 @@ other end: a tonne of CO₂ posted against the transaction that caused it, in th
 same books, with the same audit trail. Nobody does that inside open source
 accounting today. It is where the name points.
 
-## 4. Accounting as a commons
+## 4. Free and independent accounting, in every country.
 
 Accounting is not a product. It is a set of rules that a society agreed on so
 that businesses could trust each other: the same chart of accounts, the same
@@ -97,15 +97,15 @@ contributor can propose, and a test can prove. Belgium, France, Luxembourg,
 Estonia, the United Kingdom and the United States ship today — the last of them
 a country with no value added tax at all, which is how you find out what a
 format quietly assumed. Ireland, Canada and Québec, the Netherlands and Germany
-come next. Then anyone's country, added by the people who know it best.
+come next. The rest of the world is open, and it is yours to write.
 
-The core is free software under the AGPL, so that what is built on it stays
+The core is free software under AGPL-3.0, so that what is built on it stays
 open. The format libraries are MIT, so that they can go anywhere, including
-into the tools of people who will never use Ekwo. What we sell — a managed
-edition, the connections a small business cannot obtain alone, the agents we
-operate — pays for the rest, and never gates it.
+into the tools of people who will never use Ekwo. What we sell — the hosted
+edition, operated for you, with the connections a small business cannot obtain
+alone and the agents we run — pays for the rest, and never gates it.
 
-## 5. A network, not a vendor
+## 5. A network, not a vendor.
 
 No company can know the accounting rules of the world. A network can. Ekwo is
 built by:
@@ -124,9 +124,9 @@ without asking us. The roadmap is public. The decisions are written down, with
 their reasons, in this repository — including the ones we got wrong and had to
 take back.
 
-If you keep books, if you write software, if you know your country's rules and
-are tired of seeing them re-implemented badly behind a paywall: this is the
-place to put that knowledge where it cannot be taken away. Start with
+Bring your expertise. If you keep books, if you write software, if you know
+your country's rules and are tired of seeing them re-implemented badly behind a
+paywall: this is the place to put that knowledge where it cannot be taken away. Start with
 [CONTRIBUTING.md](CONTRIBUTING.md), or open an issue and say where you are
 from.
 

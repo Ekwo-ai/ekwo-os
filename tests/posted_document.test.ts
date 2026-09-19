@@ -330,7 +330,9 @@ describe.each(SEAT_NAMES)('a posted document, from the seat of %s', (who) => {
     ]) {
       const refused = await refusalOf(statement, [documentId], seat(who));
       expect(refused?.code, statement).toBe('55006');
-      expect(refused?.message, statement).toMatch(/^document_posted\b.*credit note/);
+      // `cancelled` has one way in since `20260919090000`, cancel_document(),
+      // and a hand that takes it without the credit note is told so by name.
+      expect(refused?.message, statement).toMatch(/^document_(posted|cancelled_by_hand)\b.*credit note/);
     }
     expect(await whole(documentId)).toEqual(before);
   });

@@ -16,9 +16,9 @@ price list, and leaving means exporting a PDF. The open-source ERP gives you
 the code but keeps the parts that save time — bank feeds, automatic matching,
 invoice recognition — for the paid edition and a network of integrators.
 
-Ekwo is built on a different premise: **the ledger belongs to the business,
-and the work of keeping it can be done by software that the business also
-owns.** So the whole accounting core is open, the data sits in a Postgres
+Ekwo is built on a different premise: **the data belongs to the business,
+and the work of keeping the books can be done by software that the business
+also owns.** So the whole accounting core is open, the data sits in a Postgres
 database that you control, and the interface is designed for machines as
 much as for people. A REST API and an OpenAPI description come free with
 Supabase, and an MCP server sits on top of them, so an AI agent can book a
@@ -90,10 +90,12 @@ OpenAPI description, and row level security decides who sees what.
   its declaration boxes and its annual accounts in French, Dutch, German and
   English, and a company keeping its books in Dutch reads Dutch throughout.
   [`docs/languages.md`](docs/languages.md) is the mechanism.
-- **Five countries out of the box.** PCMN (AR du 21 octobre 2018), PCG
-  (règlement ANC 2022-06), the Luxembourg PCN, an Estonian chart and a British
-  one, each with its VAT codes, its declaration boxes and its annual accounts.
-  The United Kingdom is the first that is not a Member State of the Union.
+- **Six countries out of the box.** PCMN (AR du 21 octobre 2018), PCG
+  (règlement ANC 2022-06), the Luxembourg PCN, an Estonian chart, a British
+  one and an American one, each with its tax codes, its declaration boxes and
+  its annual accounts. The United Kingdom is the first that is not a Member
+  State of the European Union; the United States, with the sales and use
+  taxes of three states and no value added tax, the first without a VAT.
 - **The French FEC.** Eighteen columns, the arrêté du 29 juillet 2013, with
   the reconciliation letter and the sub-ledger code the format requires.
 - **Modules, one Postgres schema each.** Fixed assets and budgets ship with
@@ -399,7 +401,7 @@ since `v0.2.0`, so import the generator from the package that owns it.
 runtime dependency, the Postgres driver, and it never writes a password or a
 key to disk — `ekwo login` keeps a session, in the user's own configuration
 directory and never inside a repository, and no command that keeps books takes
-a `service_role` key. It keeps books too — `ekwo invoice new`, `ekwo post`, `ekwo payment record` — through the functions the MCP server calls, which moved into `packages/core` for that, and computes no amount of its own. Every command takes `--json` and ends on an exit code that tells a wrong call
+a `service_role` key. It keeps books too — `ekwo doc new`, `ekwo post`, `ekwo payment record` — through the functions the MCP server calls, which moved into `packages/core` for that, and computes no amount of its own. Every command takes `--json` and ends on an exit code that tells a wrong call
 (2) from the database refusing (3).
 
 ```ts
@@ -551,7 +553,8 @@ installed.
 
 ## Licence
 
-[AGPL-3.0-only](LICENSE) © Ekwo AI. Installing Ekwo OS and running it for your
+[AGPL-3.0-only](LICENSE) © Karuna Co OÜ (Estonian registry code 14510673),
+trading as Ekwo. Installing Ekwo OS and running it for your
 own organisation — modified or not — puts no obligation on you. The share-alike
 clause bites only if you modify it *and* offer that modified version to people
 outside your organisation over a network.

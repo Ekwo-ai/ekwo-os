@@ -125,6 +125,9 @@ export const DOCUMENT = [
   'amount_total::text',
   'amount_paid::text',
   'amount_residual::text',
+  // What a credit note credits: cancel_document() names it, and so does a
+  // credit note written by hand.
+  'reversed_document_id',
   'entry_id',
   'sent_at::text',
 ];

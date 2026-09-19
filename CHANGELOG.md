@@ -9,6 +9,272 @@ somewhere has already run it.
 
 ## [Unreleased]
 
+### Fixed
+
+- **The site froze on the time of day it was opened at.** The blocking script
+  stamped `day` or `night` from `prefers-color-scheme` before the first paint,
+  so a machine that turned dark at dusk left the page in daylight, and the sun
+  and the moon disagreed with it. It stamps `data-theme` only for a reader who
+  has chosen one now; otherwise the stylesheet answers the system on its own,
+  live, and with scripting off alike. `data-js` reveals the two buttons, which
+  repaint when the system turns and flip what the reader is actually looking
+  at. Cobalt stays the default palette, gold one button away.
+
+- **A cancelled invoice could be unmatched from its credit note, and then said
+  `cancelled` and `not_paid` at once.** The matching is what makes `cancelled`
+  true; `unreconcile()` and a delete by hand now refuse it, for everybody, as
+  `document_cancelled_stays_matched`.
+
+- **A fresh installation was called behind by the next command.** `ekwo init`
+  applied the socle's migrations and not the modules', while `ekwo status` and
+  `ekwo doctor` count both, as `ekwo migrate` installs both: straight after a
+  successful install, `status` listed sixteen pending migrations and exited 1.
+  `init` installs the modules now, after the reference seeds, and
+  `--no-modules` leaves them out. Found by the first end-to-end run against a
+  real Supabase project, on 19 September 2026, which also fixed the script
+  itself — see `docs/releasing.md`.
+
+- **The midrib ran tip to tip, and cut the leaf into a pod.** A stroke across
+  the full diagonal splits the shell into two equal halves, which is what a
+  coffee bean or a cocoa pod looks like — not a leaf. It stops well short of
+  both tips now and floats inside the shape, which also leaves it the one
+  stroke with room to spare when the ink spreads at small sizes. The lockup
+  closes up with it: the gap is 6 and not 10, because the leaf carries about
+  three pixels of its own margin and six is what nine looks like.
+
+- **`ekwo invoice` created any kind of document, which is what `ekwo doc` is
+  called.** The verb that drafts a document was named after one of the four
+  types it can draft — a sale invoice, a bill, a quote, a credit note, chosen
+  with `--type` — while `post`, `doc list` and `doc show` were already named
+  after the object. It is `ekwo doc new` and `ekwo doc line add` now, beside
+  `doc list` and `doc show`, so the whole family reads `doc new → doc line add
+  → post → doc show`. `ekwo invoice` still works, unchanged and unannounced, so
+  that no published example stops running; the answer repeats whichever of the
+  two names was typed, and a test drafts the same document under both and
+  compares them.
+
+- **The animated demonstration on the home page showed a command that does not
+  run.** It passed the contact as a bare word — `ekwo doc new "Client"` — where
+  the command has only ever read `--contact`.
+
+- **The mark read as an equals sign.** It was two bars of equal weight in a
+  rounded square — the two sides of an entry — and was written into the source
+  as a placeholder from the first commit. It is a leaf now, in the header, the
+  footer and the favicon: two arcs meeting at a point with the midrib drawn,
+  two strokes at one weight so that it survives the 16 pixels of a browser tab.
+  It is not the `leaf` of the icon set, whose stem and second curve are lost at
+  that size, but the two rhyme — and that is the point, since the icon of the
+  carbon tile and the mark of the product say the same thing. It takes the
+  cobalt accent through `currentColor` and is never green; a test reads both
+  rules.
+
+- **A reader who asked for less motion was shown a heading that said "set
+  free." and nothing else.** The first word of the home page heading turns;
+  under `prefers-reduced-motion` every turning word was taken out, the first
+  included. The first one stays now, still and fully drawn, and a test reads
+  the rule.
+
+- **`docs/releasing.md` said one approval publishes every package. It took
+  fifteen.** The five minutes the approval page offers did not carry from one
+  `npm publish` to the next on the `0.4.1` run; the page says so now, and says
+  what a run that was not approved in time looks like and that it is simply run
+  again.
+
+### Added
+
+- **A posted invoice goes back to draft where its country allows it and
+  nothing about it has left.** A pack says so in `documents.posted_edit_policy`
+  — `reversal_only` or `unpost_if_untouched` — with the article behind it, and
+  a pack that says nothing is read as `reversal_only`. Where the country allows
+  it, `unpost_document(document)` takes the entry away, gives the number back to
+  the counter and returns the draft, provided the document was never sent nor on
+  Peppol, is not settled or credited, no declaration has gone over it, its
+  period is open and — where numbering is gapless — its number is the last one
+  its journal drew. Every refusal is named and says what to do instead, and
+  `unpost_refusal(document)` gives the same sentence without raising. The act is
+  recorded in `document_unpostings`, which nobody but the function writes and
+  which travels with a company's archive, and audited as `document_unposted`.
+  No pack allows it yet: Belgium and France declare `reversal_only`, citing the
+  irreversibility of a recorded entry in their accounting law (Code de droit
+  économique, art. III.87; PCG, art. 921-3); the other packs say nothing.
+  `ekwo pack check` refuses `unpost_if_untouched` without a citation, whatever
+  the pack's status.
+
+- **A posted invoice is cancelled, and a posted entry reversed, in one call.**
+  Both guards said how a posted row is undone — "by a credit note that names
+  it", "by a reversal that names it" — and nothing did it: a reversal was eight
+  statements to get right and a credit note an invoice typed again by hand,
+  after which the invoice still said `posted`. `cancel_document(document,
+  date)` issues the credit note — the same lines, taxes, accounts, contact,
+  currency and rate — names the invoice, posts it through `post_document()`,
+  matches the two and marks the invoice `cancelled`; `reverse_entry(entry,
+  date)` writes the mirror of an entry in its journal, posts it through
+  `post_entry()` and matches the two. Nothing is posted a second way, so the
+  number, the locks, the capability and the audit trail are the ones posting
+  already has. The date is the original's while its period is open and is
+  otherwise refused by name, `reversal_date_needed`, rather than chosen for the
+  caller. Refused by name too: a draft, a reversal or a credit note, something
+  already undone, something matched — `unreconcile()` first, by whoever decides
+  about the money — and an entry another row owns, with what undoes it named:
+  `cancel_document()` for a document's, `reopen_fiscal_year()` for a close's,
+  and the payment, bank line, module, declaration or matching that wrote the
+  rest. The MCP server offers both as `cancel_document` and `reverse_entry`,
+  and the command line as `ekwo cancel <document>` and `ekwo reverse <entry>`,
+  each with `--date`. A country that lets a posted document go back to draft is
+  the entry above.
+
+- **The site can be published, and says where it lives only when it is told.**
+  `netlify.toml` builds `apps/site` from the root of the repository. `SITE_URL`
+  makes every page name its canonical address and its `og:url` and writes
+  `sitemap.xml`; without it no page claims an address, which is what a fork and
+  a preview want. `public/_redirects` hands any address the site does not have
+  to the hosted application, path and query kept — the domain used to serve it,
+  and people hold links — and is not forced, so it shadows no page.
+  `public/_headers` sets the security headers and lets fingerprinted assets be
+  cached for good.
+
+- **A way in for somebody who already has an account.** The header of every
+  page carries "Log in". It points at `/login`, which is not a page of the site:
+  the host hands it to the hosted application like any other address the site
+  does not have, so the application's address is written in `_redirects` and
+  nowhere else. A test checks that what is handed over is never a page here.
+
+- **The site has an icon.** `apps/site/public/favicon.svg` is the mark from the
+  header — two bars in a rounded square — at the one size it is actually read
+  at. A favicon is fetched as a document of its own and cannot see which
+  palette the page is in, so it carries the default accent and follows the
+  browser's own light or dark chrome; it is the only place in `apps/site`
+  outside the stylesheet that names a colour.
+
+
+- **The bot `CONTRIBUTING.md` promised, and what a pull request goes through.**
+  The guide has said since the first day that a bot asks for the Contributor
+  Licence Agreement on a first contribution, and there was no bot.
+  `.github/workflows/cla.yml` is it: it answers a pull request from a fork
+  without checking out a line of it, records a signature on the
+  `cla-signatures` branch, and lets through the commits that carry the
+  project's own identity. `CONTRIBUTING.md` gains "How a pull request gets in"
+  — the agreement, the CI, who reads what, and how it is merged — and the
+  repository gains a pull request template that is the checklist of that guide,
+  and two issue forms: something is wrong, and a country pack to propose,
+  correct or review, which asks for the source before anything else.
+- **`ekwo pack describe [<cc>]` — the whole of one country, in one object.** A
+  pack said what it carried in fifteen files and nothing read all of them at
+  once.
+  `describePack()` does: the charts and their audiences, the taxes and their
+  distinct rates, the periodic declaration with its cadences and its boxes,
+  whether the country states a deadline rule and what file the return is
+  deposited as, the e-invoicing profile and the day it starts, the accounts the
+  tax balance lands on, every bank format the country names and whether a brick
+  reads it, the financial statements, who has read the pack and against which
+  texts, and the day the newest of those texts was opened. Every field is read
+  from `packs/<cc>/` and every "not yet" is a value rather than a missing one.
+  `--json` prints the whole of it; the name is `describe` and not `status`
+  because `pack status` already asks an installation what its companies copied.
+- **Three planned modules written down: `carbon`, `crypto` and `sign`.**
+  `modules/README.md` gains a "Planned modules" section for the two that are
+  decided and neither written, because the public site names them and nothing
+  should be on that page that is not in this repository. `carbon` accounts for
+  a tonne of CO₂ on the same ledger as a euro, spend-based from the entries
+  already there and activity-based from physical quantities, with the emission
+  factors loaded as versioned, sourced data the way a country pack is. `crypto`
+  treats a digital asset as its own thing rather than one more bank account:
+  lots, fair value at the close, realised gains by the method the country
+  allows. `sign` carries a document, its signatories and the trail of proof
+  written as somebody signs, with the level a deed requires — simple, advanced
+  or qualified — as pack data, because it is a rule of a country. All three
+  follow the rules the other modules do: a schema of their own, and
+  `post_entry()` as the only way anything reaches the ledger. No date is
+  attached to any of them.
+- **What the packs do not say yet, listed in `docs/international.md`.**
+  Building a page per country made every silence visible at once: the packs
+  that name no account for a side of the tax balance, the ones that state no
+  deadline rule, the e-invoicing profiles with no date of obligation, the five
+  bank formats named and read by nothing, and that no pack is `reviewed`. None
+  is a wrong figure and none is filled in here — filling one in without reading
+  the law would be the only way to make the list worse.
+- **A home page for Ekwo, and a world map that is the argument.** `/` is now
+  the product: what it is for, before what it does. The countries with a pack
+  are filled in on a map of every country there is, and every other one links
+  to the guide for writing theirs — the target is the whole of it, and a grey
+  shape is an opening rather than an omission. The page states six things a
+  business should not have to rent, what runs without anybody typing it, the
+  models that can drive it and the standards it is built on, and closes on how
+  to get it. Every number on it is counted at build time and every capability
+  carries the path in this repository that proves it, checked by a test; the
+  size of the test suite is deliberately absent, because it cannot be counted
+  honestly at build time. The transcript in the automation section is a real
+  invoice from a pack's golden year, posted to the accounts that pack's own tax
+  postings name, with the declaration boxes the engine produced. The core's own
+  page moved to `/os/`, unchanged.
+- **`apps/site` — one page per country, prerendered, with no JavaScript.** A
+  private workspace that is never published: Vite compiles the stylesheet,
+  `renderToStaticMarkup` writes the pages, and the result is HTML that is
+  complete with scripting turned off — including `/compare/`, where every pair
+  of countries has its own address instead of a dropdown. The countries are
+  `listPacks()`, the tables are `describePack()`, the manifesto is rendered
+  from `MANIFESTO.md` and the home page's sentence is the first line of
+  `README.md`, so a pack added to `packs/` gets a page, a menu row and its
+  comparisons with nothing in `apps/site` edited. A test holds that, and holds
+  that the home page names no country outside the menu the data generated.
+
+### Changed
+
+- **`ekwo cancel` and the `cancel_document` tool choose, and say which.** Back to
+  draft where `unpost_refusal()` finds nothing against it, the credit note
+  otherwise; the answer carries `undone_by` — `draft` or `credit_note` — and
+  `why` the draft was ruled out. A date, or `--credit` / `credit_note:
+  true`, asks for the credit note outright. The `cancel` data of the CLI's
+  `--json` output no longer requires `cancelled`, `credit_note`, `entry` and
+  `entry_lines`, which only the credit note path has; the draft path answers
+  `draft` and `unposting` instead. `documents_guard_posted()` and
+  `entries_guard_posted()` let through the transition to draft and the delete
+  of its entry that `unpost_document()` records, in the transaction that
+  records it, and nothing else. Belgium 1.15.0 and France 1.13.0 carry the
+  rule.
+
+- **A posted document has one way out of `posted`, and `reversed` is written at
+  last.** `documents_guard_posted()` refused every change of state out of
+  `posted`; it now lets `posted` → `cancelled` through, judged on the facts
+  `cancel_document()` leaves — a posted credit note of the matching type names
+  the document, carries its total and settles it in full — for a caller holding
+  `documents.post`, and refuses anything else as `document_cancelled_by_hand`.
+  Nothing else is loosened. `payment_state` derives `reversed` for a document
+  cancelled that way, which the enum has carried since the first schema and
+  nothing wrote. `get_document` and `list_documents` return
+  `reversed_document_id`, so a credit note says what it credits.
+
+- **The site lets the reader choose its colours, and leaves room for its
+  languages.** Two palettes, cobalt and gold, crossed with day and night: four
+  complete sets of the same token roles, each drawn rather than derived, picked
+  from two buttons in the header and remembered. Every text token against every
+  ground it is used on passes AA in all four. Every word the site says in its
+  own voice moved into one module per language, so translating it is a file
+  rather than a refactor, and the country pages moved to `/countries/<cc>/` —
+  a two-letter segment at the root cannot be both a country and a language.
+- **The statement formats a reader exists for moved to `@ekwo-ai/core`.** The
+  list lived in `@ekwo-ai/mcp`, which is the one package that could not be
+  asked for it by the command line: the installer depends on the core and one
+  driver, and three strings are not a reason to make it depend on an MCP
+  server. `@ekwo-ai/mcp` imports the list and exports it under the name it
+  always had, so `writeTools.STATEMENT_FORMATS` and the test that keeps the
+  ledger of what a pack names and nothing reads are untouched.
+- **The site is set in two typefaces, self-hosted, on one set of tokens.** A
+  serif for headings and a sans for everything else, both variable, both under
+  the SIL Open Font Licence and both served from the site — a page about owning
+  your own data should not tell a font host who read it. `src/styles.css` gains
+  the full token set: ground, paper, three weights of ink, one line, an accent
+  with four relatives, a dark band, one shadow and five radii, with the dark
+  palette as the same tokens at other values. Every pair of a text token with a
+  ground it is used on passes AA in both schemes. The country page was one long
+  column of everything, which is how a page becomes documentation: its head is
+  a card, its rows have room, and its reading list is folded behind a
+  `<details>` that opens without scripting.
+- **The country-literal guard reads `apps/` too.** The site's test sits beside
+  the site, because it renders React and the root `tsconfig.json` has no reason
+  to know what JSX is. A test that escaped the guard by living in another
+  folder would be exactly the test that named three countries.
+
 ## [0.4.1] — 2026-09-18
 
 ### Changed

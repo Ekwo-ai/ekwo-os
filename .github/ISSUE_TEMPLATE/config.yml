@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: A question, or an idea that is not a bug yet
+    url: https://github.com/Ekwo-ai/ekwo-os/discussions
+    about: Discussions is where a design is talked through before anybody writes SQL.
+  - name: A vulnerability
+    url: https://github.com/Ekwo-ai/ekwo-os/security/advisories/new
+    about: Report it privately. SECURITY.md says what happens next.

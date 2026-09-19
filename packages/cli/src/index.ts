@@ -39,6 +39,22 @@ export {
 export { describeCertification, needsWarning, type Certification, type CertificationFacts } from './pack/certification.js';
 export { describeFiling, filingReadiness, type FilingReadiness } from './pack/filing.js';
 export {
+  describePack,
+  type DescribeOptions,
+  type DescribedBankFormat,
+  type DescribedBoundary,
+  type DescribedCertification,
+  type DescribedChart,
+  type DescribedDeadline,
+  type DescribedDeclaration,
+  type DescribedEinvoicing,
+  type DescribedFile,
+  type DescribedStatement,
+  type DescribedTaxes,
+  type DescribedVatBalance,
+  type PackDescription,
+} from './pack/describe.js';
+export {
   compileAssetsSeed,
   compileFrameworkPack,
   compileModuleSeeds,

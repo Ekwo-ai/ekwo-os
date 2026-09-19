@@ -5868,3 +5868,137 @@ cannot, and the year comes back null — which is why the guard accepts null and
 refuses only a year that is wrong. It belongs with the other defect of the same
 seat, `rounding_of()` reading `companies`.
 
+
+## What is posted is undone in one gesture (19 September 2026)
+
+The guards of 18 September said how a posted row is undone and nothing did it.
+The decision of 18 September left `reverse_entry()` as the open item; this is
+it, and its twin for a document (`20260919090000`).
+
+**Two functions, each the whole gesture.** `reverse_entry()` writes the mirror
+of a posted entry in its journal — every line on the other side, with its tax,
+its box at the opposite sign and its analytic split — names the original, posts
+it through `post_entry()` and matches the two. `cancel_document()` writes the
+credit note of a posted invoice from its lines, names the invoice, posts it
+through `post_document()`, matches the two entries and marks the invoice
+`cancelled`. Both insert a draft and call the one function that posts it, so
+there is no second reading of the numbering, the locks or the capability, and
+the audit trail records the acts through the triggers that already record them.
+
+**The date is not chosen for the caller.** The original's while its period is
+open; refused by name, `reversal_date_needed`, when it is not. Picking "today"
+or the first open day would decide which declaration the correction falls in,
+and that is somebody's decision about a filing.
+
+**A credit note is written from the invoice's lines, not mirrored from its
+entry.** It is a document of its own, printed and sent, and its entry is
+`post_document()`'s to write under the credit-note postings of each tax. So it
+mirrors the invoice only as long as the same lines give the same figures, which
+is checked before anything is posted (`credit_note_differs`). The rate is the
+invoice's, so the two ledgers match to the cent; no date is copied, so the tax
+point of the correction is its own day under the country's rule.
+
+**What something else wrote is undone there.** A document's entry, a close's,
+an opening, a payment's, a bank line's, a module's, a declaration's settlement,
+a matching's exchange difference or tax transfer: each is refused with the
+thing that undoes it named. A matched entry or a paid invoice is refused too:
+unmatching is a decision about money that moved, and it is left to whoever
+makes it.
+
+**The matching is part of the gesture**, so both functions ask for
+`reconcile.write` up front, and `match_reversal()` refuses a caller who cannot
+read the chart — which lines are reconcilable is written there, and a caller
+who cannot see it would otherwise find nothing to match and leave both open
+without a word. That was found by a test, from the seat of a key.
+
+**One way out of `posted` for a document**, judged on facts as the way in is:
+a posted credit note of the matching type names it, carries its total, and the
+document's third-party lines are matched in full against that credit note's
+entry and nothing else; the caller holds `documents.post`. Anything else is
+`document_cancelled_by_hand`. `payment_state` derives `reversed` for it.
+
+Still open: unmatching the pair after the cancellation is not refused, and
+leaves a cancelled invoice reading `not_paid`, which is what its matching then
+says. And a country whose law lets a posted document go back to draft — a
+`posted_edit_policy` of the pack — waits for a product decision.
+
+## What has not left goes back to draft, where the country allows it (19 September 2026)
+
+The two items the entry above left open, closed (`20260919190727`).
+
+**The country says it, as data.** `documents.posted_edit_policy` of the pack —
+`reversal_only` or `unpost_if_untouched` — compiles to `country_defaults`
+with the article behind it, like the other document rules. A pack that says
+nothing is read as `reversal_only`. That is the one place a null is read as a
+value rather than raised on, and the reason is the direction: the other nulls
+would borrow a country's law to *bind*; this one withholds a permission, and
+the answer it gives is the stricter one, which every law accepts. The rule
+that loosens is also the one `ekwo pack check` asks a citation of on every
+status, `community` included.
+
+**Belgium and France say `reversal_only`, and no pack says the other word
+yet.** The texts the Belgian pack already cites require it: the Code de droit
+économique, art. III.87, § 2, keeps books "de manière à garantir […]
+l'irréversibilité des écritures", art. III.88 keeps a rectified entry
+legible, and the royal decree of 21 October 2018 that the pack's chart comes
+from applies both to books kept by computer (art. 4). None of the pack's
+sources carves out a provisional stage during which a booked invoice could become a draft again — nor does the
+commission's opinion on computerised books (CNC 2016/22). France is the clear
+case: PCG art. 921-3 turns "no blank, no alteration" into a validation that
+forbids modifying or deleting an entry, and the tax code wants a continuous
+sequence. So both declare `reversal_only` with the citation, and the others
+stay silent. A pack moves to `unpost_if_untouched` when somebody cites the
+text that allows it; the mechanism is complete and tested on a pack the test
+database is told to treat that way.
+
+**What "nothing has left" is**, each refused by name with what to do instead:
+never sent (`sent_at`) nor on Peppol; not settled and not credited; named by no
+entry beyond its own; its period open for its booking day and for every tax
+point of its lines, asked the stricter question posting asks; no declaration
+gone over those days, whether or not the tax lock was moved after filing; and,
+where numbering is gapless, its number the last its journal drew.
+`unpost_refusal()` is that list, once. `unpost_document()` raises what it
+returns, and the command line and the MCP server ask it to choose.
+
+**The number goes back to the counter; the draft gives it up.** Keeping the
+number on the draft cannot be made right. Either the counter stays, and the
+journal shows a hole where the entry was — exactly what a gapless country
+forbids, and what the last-number rule is there to prevent — or the counter
+steps back, and the next document of the journal is issued under a number a
+draft still wears. So where the number was the last drawn, the counter steps
+back by one and the draft carries no number; posting again draws the same one.
+A number the draft had of its own before posting, one that was not its
+entry's, stays. Where the country allows a hole and the number was not the
+last, it is given back to nobody, and the record says so. The booking day and
+the tax point go back to null where posting had derived them, so that a draft
+corrected afterwards is booked on what it now says; a value that differs was
+keyed and stays.
+
+**The exception is a row, not a fact and not a flag.** The way to `cancelled`
+is judged on facts because the facts are there afterwards: a credit note, a
+matching. Here they are not — once the document is a draft and the entry gone,
+nothing says which happened first or by whose hand, and an entry keyed by hand
+that names a draft document would look exactly like the one that was taken
+away. A transaction-local setting was refused on 18 September for being
+writable by anybody. So `unpost_document()` writes `document_unpostings`, a
+table no role may insert into, and the guards let through exactly the
+transition and the delete that row names, in the transaction that wrote it.
+The function is `security definer` for that alone, and asks for
+`documents.post` itself before reading anything. The row is also the record of
+the act — the only trace of an entry that no longer exists — so it travels
+with a company's archive and its insert is audited as `document_unposted`,
+beside the `document_draft` of the document.
+
+**One entry point, two functions.** `cancel_document` in the MCP server and
+`ekwo cancel` ask `unpost_refusal()`: nothing against it, back to draft;
+anything, the credit note, with that sentence as the reason. Both say which
+they did, in `undone_by`. A date, or `credit_note` / `--credit`, asks for
+the credit note outright — a date is when a correction is booked, which only a
+credit note has. The choice is written once, in `undoDocument()` of the core.
+
+**A cancelled invoice stays matched to its credit note.** Unmatching the pair
+after `cancel_document()` left an invoice that said `cancelled` and `not_paid`
+at once. The matching is what makes `cancelled` true, and nothing takes it
+back: `reconciliations_guard_cancelled()` refuses it, for everybody, as
+`document_cancelled_stays_matched`. A document that was right after all is
+issued again.

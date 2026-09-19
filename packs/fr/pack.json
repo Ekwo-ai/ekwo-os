@@ -2,10 +2,10 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "FR",
   "name": "France",
-  "version": "1.12.0",
-  "schema_min": "20260916123000",
+  "version": "1.13.0",
+  "schema_min": "20260919190727",
   "seed_sequence": 11,
-  "released_at": "2026-09-16",
+  "released_at": "2026-09-19",
   "certification": {
     "status": "maintained",
     "sources": [
@@ -209,6 +209,7 @@
     "legal_payment_days": 30,
     "late_payment_reference": "Code de commerce, art. L441-10, II — taux appliqué par la Banque centrale européenne à son opération de refinancement la plus récente majoré de dix points, sans pouvoir être inférieur à trois fois le taux d'intérêt légal ; art. D441-5 — indemnité forfaitaire de 40 € pour frais de recouvrement",
     "tax_point": "delivery_date",
+    "posted_edit_policy": "reversal_only",
     "references": {
       "numbering": {
         "legal_reference": "Code général des impôts, annexe II, art. 242 nonies A, I, 7° — la facture porte « un numéro unique basé sur une séquence chronologique et continue ; la numérotation peut être établie dans ces conditions par séries distinctes lorsque les conditions d'exercice de l'activité de l'assujetti le justifient ; l'assujetti doit faire des séries distinctes un usage conforme à leur justification initiale ». Le texte impose la continuité de la séquence et l'unicité, jamais une forme.",
@@ -221,6 +222,10 @@
       "tax_point": {
         "legal_reference": "Code général des impôts, art. 269, 1, a — le fait générateur se produit au moment où la livraison, l'acquisition intracommunautaire du bien ou la prestation de services est effectuée ; art. 269, 2, a — pour les livraisons de biens, la taxe est exigible lors de la réalisation du fait générateur, l'encaissement d'un acompte l'avançant à concurrence du montant encaissé. Les prestations de services relèvent de l'art. 269, 2, c, qui les rend exigibles à l'encaissement des acomptes, du prix ou de la rémunération, sauf option du redevable pour les débits : c'est cette exception que les taxes de service de ce pack portent en cash_basis, et non un second fait générateur du pays.",
         "source": "cgi"
+      },
+      "posted_edit_policy": {
+        "legal_reference": "Règlement ANC n° 2014-03 relatif au plan comptable général, art. 921-3 — l'absence de blanc et d'altération qu'il impose aux livres prend, pour une comptabilité tenue au moyen de systèmes informatisés, la forme d'une procédure de validation qui interdit toute modification ou suppression de l'enregistrement ; et Code général des impôts, annexe II, art. 242 nonies A, I, 7°, qui exige une numérotation « chronologique et continue » des factures. Une facture comptabilisée est donc annulée par une facture d'avoir qui la cite, jamais remise en brouillon.",
+        "source": "pcg"
       }
     },
     "mentions": [

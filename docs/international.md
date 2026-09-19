@@ -1781,3 +1781,35 @@ that is right in one country and wrong in the next.
 Inventory, payroll, advanced fixed-asset regimes (MACRS), point of sale and
 its certifications. A products table exists so that inventory can come later
 as its own schema, as `decisions.md` describes.
+
+## What the packs do not say yet
+
+Building a page per country made every silence in a pack visible at once, which
+is the one thing a folder of JSON does not do on its own. None of these is a
+wrong figure: each is a field a pack could carry and does not, and each is
+recorded here rather than filled in, because filling one in without reading the
+law would be the only way to make this list worse.
+
+- **Two packs name no account for either side of the tax balance**, and a third
+  names `tax_payable` and not `tax_receivable`. `settle_filing()` carries the
+  net of a declared period to the account the pack names, so a period that ends
+  in a credit has nowhere to land in those countries.
+- **Two packs state no rule for when their periodic return is due.** One of
+  them cannot: its schedule depends on the taxpayer's identification number,
+  which the format deliberately cannot express, and saying nothing is better
+  than a date that is wrong for most filers. The other has simply not had the
+  text read.
+- **Two packs declare an e-invoicing profile with no date of obligation.** The
+  profile is what an invoice is written as; the date is when it stops being
+  optional, and a reader cannot infer one from the other.
+- **Five bank statement formats are named by a pack and read by nothing**:
+  `bai2`, `camt.052`, `csv`, `mt940` and `ofx`. That ledger is kept, with the
+  formats that *are* read, in `tests/bank_statement_formats.test.ts`.
+- **No pack is `reviewed`.** Four are `community` and two are `maintained`,
+  which means the maintainers keep them current and no named professional has
+  read them against the law. Every country page says so in those words.
+- **The currency seed carries eleven currencies**, "the handful a European
+  ledger meets", at zero and two decimals. The engine reads a currency's
+  decimals rather than assuming cents, so a third is a row and not a change —
+  but until somebody adds the rows, the claim is about the engine and not about
+  coverage.

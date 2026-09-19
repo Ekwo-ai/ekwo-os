@@ -161,6 +161,14 @@ describe('every command answers --json with one document of the published shape'
     expect(document.error).toBeUndefined();
     expect(document.exitCode).toBe(0);
     expect((document.data as { company: { country: string } }).company.country).toBe(HOME);
+
+    // Straight after `init`, and before `migrate` has had a chance to paper
+    // over it: an installer that leaves the modules out leaves an installation
+    // `ekwo status` calls behind, exit code 1 — what the first run against a
+    // real Supabase project found on 19 September 2026.
+    const after = await json(['status']);
+    expect((after.data as { pending: unknown[] }).pending).toEqual([]);
+    expect(after.exitCode).toBe(0);
   });
 
   it('migrate', async () => {
@@ -276,9 +284,13 @@ describe('every command answers --json with one document of the published shape'
     const contact = await asPerson(['contact', 'add', 'Client Example', '--ref', 'c-1']);
     expect(contact.exitCode).toBe(0);
     expect((await asPerson(['contact', 'list'])).exitCode).toBe(0);
-    const draft = await asPerson(['invoice', 'new', '--contact', 'Client Example', '--date', '2026-06-15', '--ref', 'd-1', '--line', `name=Work,price=100.00,account=${sales}`]);
+    const draft = await asPerson(['doc', 'new', '--contact', 'Client Example', '--date', '2026-06-15', '--ref', 'd-1', '--line', `name=Work,price=100.00,account=${sales}`]);
     expect(draft.exitCode).toBe(0);
-    expect((await asPerson(['invoice', 'line', 'add', 'd-1', '--name', 'More', '--price', '20.00', '--account', sales])).command).toBe('invoice line add');
+    expect((await asPerson(['doc', 'line', 'add', 'd-1', '--name', 'More', '--price', '20.00', '--account', sales])).command).toBe('doc line add');
+    // The old name of the same verb answers with the same shape, under the words that were typed.
+    const underAlias = await asPerson(['invoice', 'new', '--contact', 'Client Example', '--date', '2026-06-15', '--ref', 'd-alias', '--line', `name=Work,price=100.00,account=${sales}`]);
+    expect(underAlias.command).toBe('invoice new');
+    expect(underAlias.exitCode).toBe(0);
     expect((await asPerson(['post', 'd-1', '--dry-run'])).data).toMatchObject({ dry_run: true });
     expect((await asPerson(['post', 'd-1'])).exitCode).toBe(0);
     expect((await asPerson(['doc', 'list', '--unpaid'])).data).toMatchObject({ count: 1 });
@@ -307,6 +319,24 @@ describe('every command answers --json with one document of the published shape'
     for (const document of [contact, draft, shown, paid]) {
       expect(document.context).toEqual(used.context);
     }
+    // The two verbs that undo: a posted invoice, and an entry keyed by hand.
+    await asPerson(['doc', 'new', '--contact', 'Client Example', '--date', '2026-06-15', '--ref', 'd-2', '--line', `name=Mistake,price=30.00,account=${sales}`]);
+    await asPerson(['post', 'd-2']);
+    expect((await asPerson(['cancel', 'd-2'])).exitCode).toBe(0);
+    const keyed = await root.query<{ id: string; company_id: string }>(
+      `insert into entries (company_id, journal_id, entry_date, description)
+       select c.id, c.miscellaneous_journal_id, date '2026-06-15', 'By hand' from companies c where c.name = 'Example One'
+       returning id, company_id`,
+    );
+    const handId = keyed.rows[0]?.id as string;
+    await root.query(
+      `insert into entry_lines (entry_id, company_id, account_id, sequence, debit, credit)
+       values ($1, $2, (select account_id from bank_accounts where id = $3), 10, 5, 0),
+              ($1, $2, account_id_by_code($2, $4), 20, 0, 5)`,
+      [handId, keyed.rows[0]?.company_id, bankAccount, sales],
+    );
+    const numbered = await root.query<{ number: string }>(`select number from post_entry($1)`, [handId]);
+    expect((await asPerson(['reverse', numbered.rows[0]?.number as string])).exitCode).toBe(0);
 
     expect((await asPerson(['logout'])).data).toMatchObject({ signedOut: true });
     // The commands that install act as nobody, and carry no such field.

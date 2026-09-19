@@ -232,6 +232,17 @@ export async function furnish(db: PGlite, pack: Pack, name: string, tag: string)
      'sha256:0f343b0931126a20f133d67c2b018a3b', ownerId],
   );
 
+  // A document that went back to draft, as unpost_document() records it.
+  // Written by hand: which country allows it is not the subject, that the
+  // record of an entry that no longer exists travels is.
+  await db.query(
+    `insert into document_unpostings (company_id, document_id, doc_type, entry_id, entry_number,
+                                      journal_id, entry_date, number_returned, unposted_by)
+     select $1, d.id, d.doc_type, gen_random_uuid(), $3, e.journal_id, e.entry_date, true, $4
+       from documents d join entries e on e.id = d.entry_id where d.id = $2`,
+    [companyId, someDocument, `UNPOSTED-${tag}`, ownerId],
+  );
+
   // A declaration that went, with its proof, and the draft of the next one.
   const period = filedPeriod(pack);
   const filing = await one<{ id: string }>(db, `select id from prepare_filing($1, $2::date, $3::date)`, [

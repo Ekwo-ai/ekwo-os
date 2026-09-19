@@ -1,0 +1,39 @@
+name: Something is wrong
+description: The books, a declaration, the installer or the MCP server did something you did not expect.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        A precise report is a contribution. Please use invented data only: no real company, person, VAT number or bank account.
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened, and what you expected
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: How to reproduce it
+      description: The commands or the SQL, in order. A failing test is the best report there is.
+      render: sh
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: What `ekwo status` answers — the schema version installed and the version of the package.
+    validations:
+      required: true
+  - type: input
+    id: pack
+    attributes:
+      label: Country pack and version
+      description: For example `be 1.7.0`. Leave empty if no pack is involved.
+  - type: input
+    id: environment
+    attributes:
+      label: Where it runs
+      description: Node version, and whether the database is a Supabase project or a plain Postgres.

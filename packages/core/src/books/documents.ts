@@ -401,10 +401,20 @@ export async function postDocument(
     moneyFields(entries, ['total_debit', 'total_credit']),
     `document ${args.document_id} produced no entry`,
   );
+
+  return {
+    entry,
+    entry_lines: await entryLinesWithAccounts(backend, entry['id'] as string),
+    note: 'The document is posted and carries the entry number. A mistake is undone by cancel_document: back to draft where the country allows it and nothing about the document has left, and otherwise by the credit note that names it.',
+  };
+}
+
+/** The lines of an entry, each beside the account it is on. */
+export async function entryLinesWithAccounts(backend: Backend, entryId: string): Promise<Row[]> {
   const lines = await backend.select<Row>({
     table: 'entry_lines',
     columns: columns.ENTRY_LINE,
-    where: [{ column: 'entry_id', op: 'eq', value: entry['id'] as string }],
+    where: [{ column: 'entry_id', op: 'eq', value: entryId }],
     order: [{ column: 'sequence' }],
   });
   const accounts = await backend.select<{ id: string; code: string; name: string }>({
@@ -419,11 +429,129 @@ export async function postDocument(
     ],
   });
   const byId = new Map(accounts.map((account) => [account.id, account]));
+  return lines.map((line) => ({ ...line, account: byId.get(line['account_id'] as string) ?? null }));
+}
 
+export interface CancelDocumentArgs {
+  document_id: string;
+  /** The day the credit note is issued on. Left out: the invoice's, while its period is open. */
+  date?: string | undefined;
+}
+
+/**
+ * Undoes a posted invoice through `cancel_document()`: the credit note that
+ * names it is written, posted and matched against it, and the invoice is
+ * cancelled — all in the database, in one statement. What comes back is read
+ * afterwards: the credit note as `get_document` shows a document, and the
+ * invoice as it now stands.
+ */
+export async function cancelDocument(backend: Backend, args: CancelDocumentArgs): Promise<unknown> {
+  const credited = only(
+    await backend.rpc<Row>('cancel_document', {
+      p_document_id: args.document_id,
+      ...(args.date === undefined ? {} : { p_date: args.date }),
+    }),
+    `document ${args.document_id} produced no credit note`,
+  );
+  const creditNote = (await getDocument(backend, { document_id: credited['id'] as string })) as Row;
+  const cancelled = onlyVisible(
+    moneyFields(
+      await backend.select<Row>({
+        table: 'documents',
+        columns: ['id', 'doc_type', 'number', 'state', 'payment_state', 'amount_total::text', 'amount_residual::text'],
+        where: [{ column: 'id', op: 'eq', value: args.document_id }],
+      }),
+      ['amount_total', 'amount_residual'],
+    ),
+    `document ${args.document_id}`,
+  );
   return {
-    entry,
-    entry_lines: lines.map((line) => ({ ...line, account: byId.get(line['account_id'] as string) ?? null })),
-    note: 'The document is posted and carries the entry number. Nothing here can be unposted; a mistake is corrected with a credit note.',
+    cancelled,
+    credit_note: creditNote['document'],
+    lines: creditNote['lines'],
+    entry: creditNote['entry'],
+    entry_lines: creditNote['entry_lines'],
+    note: 'The credit note is posted and names the invoice, the two are matched, and the invoice is cancelled. Its own number and entry stay as they were: nothing issued is deleted.',
+  };
+}
+
+export interface UnpostDocumentArgs {
+  document_id: string;
+}
+
+/**
+ * Puts a posted document back to draft through `unpost_document()`, where its
+ * country allows it and nothing about it has left. The entry is gone, the
+ * number back with the counter where it was the last drawn, and the draft is
+ * read afterwards as `get_document` shows a document — beside the record of
+ * the act, which says which entry went and whether its number was given back.
+ */
+export async function unpostDocument(backend: Backend, args: UnpostDocumentArgs): Promise<unknown> {
+  only(
+    await backend.rpc<Row>('unpost_document', { p_document_id: args.document_id }),
+    `document ${args.document_id} did not come back as a draft`,
+  );
+  const draft = (await getDocument(backend, { document_id: args.document_id })) as Row;
+  const unpostings = await backend.select<Row>({
+    table: 'document_unpostings',
+    columns: ['entry_id', 'entry_number', 'entry_date::text', 'number_returned', 'unposted_at::text'],
+    where: [{ column: 'document_id', op: 'eq', value: args.document_id }],
+    order: [{ column: 'unposted_at', ascending: false }],
+    limit: 1,
+  });
+  const unposting = unpostings[0] ?? null;
+  return {
+    draft: draft['document'],
+    lines: draft['lines'],
+    unposting,
+    note:
+      unposting !== null && unposting['number_returned'] === false
+        ? `The document is a draft again and its entry ${String(unposting['entry_number'])} is gone. Its number was not the last one drawn and stays unused, which this country allows; posting again draws the next one.`
+        : 'The document is a draft again and its entry is gone. Its number went back to the counter, and posting again draws it once more.',
+  };
+}
+
+export interface UndoDocumentArgs {
+  document_id: string;
+  /** The day a credit note is issued on. Given, it asks for the credit note: a draft has no date to undo on. */
+  date?: string | undefined;
+  /** True: a credit note, even where the document could go back to draft. */
+  credit_note?: boolean | undefined;
+}
+
+/**
+ * Undoes a posted document the one way its country and its facts allow, and
+ * says which.
+ *
+ * Back to draft where `unpost_refusal()` finds nothing against it — the
+ * country's `posted_edit_policy` allows it, the document was never sent, is
+ * not settled or declared, its period is open and, where numbering is gapless,
+ * its number is the last one drawn. A credit note otherwise, through
+ * `cancel_document()`, with the sentence that ruled the draft out. The choice
+ * is the database's: this asks it, and never works the rules out again.
+ *
+ * A date, or `credit_note: true`, asks for the credit note outright. A date
+ * says when a correction is booked, which only a credit note has; asking to go
+ * back to draft on a given day would be asking for something else.
+ */
+export async function undoDocument(backend: Backend, args: UndoDocumentArgs): Promise<unknown> {
+  let why: string | null;
+  if (args.credit_note === true) {
+    why = 'A credit note was asked for.';
+  } else if (args.date !== undefined) {
+    why = `A date was given (${args.date}), and a date is when a credit note is booked.`;
+  } else {
+    const [refusal] = await backend.rpc<string | null>('unpost_refusal', { p_document_id: args.document_id });
+    why = refusal ?? null;
+  }
+
+  if (why === null) {
+    return { undone_by: 'draft', why: null, ...((await unpostDocument(backend, args)) as Row) };
+  }
+  return {
+    undone_by: 'credit_note',
+    why,
+    ...((await cancelDocument(backend, { document_id: args.document_id, date: args.date })) as Row),
   };
 }
 

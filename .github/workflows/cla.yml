@@ -1,0 +1,56 @@
+name: CLA
+
+# CONTRIBUTING.md says a bot asks for the Contributor Licence Agreement on a
+# first pull request. This is the bot.
+#
+# It runs on `pull_request_target`, which is the only event that lets a pull
+# request from a fork be answered with a comment and a status: the job runs the
+# workflow of `main`, with the permissions below, and **checks out nothing**. No
+# line of a contributor's branch is executed here, and that is the condition for
+# this event being safe. Do not add a checkout step to this file.
+#
+# The action is pinned to a commit, not a tag, for the same reason: it holds a
+# token that can write to the repository.
+#
+# Signatures are rows in `signatures/version1/cla.json` on the `cla-signatures`
+# branch — a branch of their own, because `main` is protected and because a
+# signature is not a change to the software. A new version of CLA.md is a new
+# path here, and everybody is asked again.
+
+on:
+  issue_comment:
+    types: [created]
+  pull_request_target:
+    types: [opened, closed, synchronize]
+
+permissions:
+  actions: write
+  contents: write
+  pull-requests: write
+  statuses: write
+
+jobs:
+  cla:
+    runs-on: ubuntu-latest
+    steps:
+      - name: CLA Assistant
+        if: (github.event.comment.body == 'recheck' || github.event.comment.body == 'I have read the CLA Document and I hereby sign the CLA') || github.event_name == 'pull_request_target'
+        uses: contributor-assistant/github-action@ca4a40a7d1004f18d9960b404b97e5f30a505a08 # v2.6.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          path-to-document: https://github.com/Ekwo-ai/ekwo-os/blob/main/CLA.md
+          path-to-signatures: signatures/version1/cla.json
+          branch: cla-signatures
+          # The maintainers' own commits carry the project's identity rather
+          # than a personal account, and a bot has nobody to sign for it.
+          allowlist: Ekwo AI,dependabot[bot],github-actions[bot],*[bot]
+          lock-pullrequest-aftermerge: false
+          custom-notsigned-prcomment: >-
+            Thank you for this. Before it can be merged, Ekwo needs your
+            agreement to the [Contributor Licence Agreement](https://github.com/Ekwo-ai/ekwo-os/blob/main/CLA.md):
+            your contribution stays yours, and the project keeps the right to
+            distribute it. It is asked once, and it covers everything you send
+            afterwards. To accept, post a comment with exactly this sentence:
+          custom-pr-sign-comment: I have read the CLA Document and I hereby sign the CLA
+          custom-allsigned-prcomment: Everybody who wrote a commit of this pull request has signed the Contributor Licence Agreement.

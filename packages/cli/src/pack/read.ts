@@ -518,6 +518,14 @@ export interface PackDocumentRules {
   numbering_reference: PackRuleReference;
   payment_terms_reference: PackRuleReference;
   tax_point_reference: PackRuleReference;
+  /**
+   * reversal_only | unpost_if_untouched: whether a posted document may go
+   * back to draft while nothing about it has left. Null if unsaid, which the
+   * database reads as reversal_only — the stricter answer, not a borrowed one.
+   */
+  posted_edit_policy: string | null;
+  /** The article that decides it, and where it is read. */
+  posted_edit_policy_reference: PackRuleReference;
   einvoice_profile: string | null;
   einvoice_mandatory_from: string | null;
   /** The text that makes the profile obligatory, and where it is read. */
@@ -1441,7 +1449,7 @@ function sourceRegister(
 }
 
 /**
- * The four rules of a country that are a word rather than a row, each with the
+ * The five rules of a country that are a word rather than a row, each with the
  * citation the pack wrote beside it and whether the pack declared the rule at
  * all.
  *
@@ -1476,6 +1484,13 @@ function documentRules(
       under: 'documents.references.tax_point',
       declared: documents.tax_point_rule !== null,
       reference: documents.tax_point_reference,
+    },
+    {
+      path: 'pack.json documents.posted_edit_policy',
+      what: 'says whether a posted document may go back to draft',
+      under: 'documents.references.posted_edit_policy',
+      declared: documents.posted_edit_policy !== null,
+      reference: documents.posted_edit_policy_reference,
     },
     {
       path: 'pack.json einvoicing.profile',
@@ -2187,6 +2202,8 @@ function normaliseDocumentRules(manifest: Manifest): PackDocumentRules {
     numbering_reference: ruleReference(references['numbering']),
     payment_terms_reference: ruleReference(references['payment_terms']),
     tax_point_reference: ruleReference(references['tax_point']),
+    posted_edit_policy: (documents['posted_edit_policy'] as string | undefined) ?? null,
+    posted_edit_policy_reference: ruleReference(references['posted_edit_policy']),
     einvoice_profile: (einvoicing['profile'] as string | null | undefined) ?? null,
     einvoice_mandatory_from: (einvoicing['mandatory_from'] as string | null | undefined) ?? null,
     // `einvoicing` carries its citation flat, beside the profile, because the
@@ -2265,6 +2282,19 @@ function documentReferences(rules: PackDocumentRules): Issue[] {
     issues.push({
       path: 'pack.json einvoicing',
       message: 'mandatory_from names a day an obligation starts, and no profile says what becomes obligatory',
+    });
+  }
+
+  // The one document rule that loosens rather than binds. A pack left silent
+  // is read as `reversal_only`, and a pack that says otherwise lets a posted
+  // entry be taken away — so it says which text allows that, on every status,
+  // and a community pack is not excused the way it is for a rule that binds.
+  if (rules.posted_edit_policy === 'unpost_if_untouched' && rules.posted_edit_policy_reference.legal_reference === null) {
+    issues.push({
+      path: `${where}.posted_edit_policy`,
+      message:
+        'lets a posted document go back to draft and cites no article that allows it; ' +
+        'add "legal_reference" under documents.references.posted_edit_policy, or leave the rule out',
     });
   }
 

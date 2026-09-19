@@ -56,6 +56,8 @@ const WRITE_TOOLS = [
   'create_document',
   'update_document_lines',
   'post_document',
+  'cancel_document',
+  'reverse_entry',
   'record_payment',
   'reconcile',
   'unreconcile',
@@ -147,6 +149,8 @@ describe('the tools a client is offered', () => {
     // The ones a model must ask about before calling.
     for (const name of [
       'post_document',
+      'cancel_document',
+      'reverse_entry',
       'lock_period',
       'opening_balance',
       'close_fiscal_year',

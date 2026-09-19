@@ -762,12 +762,13 @@ function defaults(pack: Pack, country: string): string[] {
 
 /**
  * What a country requires on a document, how the document is exchanged, and
- * the formats its banks speak: twenty columns of `country_defaults` and the
- * sentences of `legal_mention_templates`.
+ * the formats its banks speak: twenty-three columns of `country_defaults` and
+ * the sentences of `legal_mention_templates`.
  *
- * Eight of the twenty are citations — the article behind the numbering, the
- * payment term, the tax point and the e-invoicing profile, and the register
- * key each of them is read at. They ride in the same update as the rule they
+ * Ten of the twenty-three are citations — the article behind the numbering,
+ * the payment term, the tax point, whether a posted document goes back to
+ * draft and the e-invoicing profile, and the register key each of them is read
+ * at. They ride in the same update as the rule they
  * belong to, because a rule and the text that imposes it going into the
  * database by two different routes is how one of them gets left behind.
  *
@@ -798,6 +799,9 @@ function documentRules(pack: Pack, country: string): string[] {
     `  tax_point_rule                = ${text(rules.tax_point_rule)},`,
     `  tax_point_legal_reference     = ${text(rules.tax_point_reference.legal_reference)},`,
     `  tax_point_source_key          = ${text(rules.tax_point_reference.source)},`,
+    `  posted_edit_policy            = ${text(rules.posted_edit_policy)},`,
+    `  posted_edit_policy_legal_reference = ${text(rules.posted_edit_policy_reference.legal_reference)},`,
+    `  posted_edit_policy_source_key = ${text(rules.posted_edit_policy_reference.source)},`,
     `  einvoice_profile              = ${text(rules.einvoice_profile)},`,
     `  einvoice_mandatory_from       = ${date(rules.einvoice_mandatory_from)},`,
     `  einvoice_legal_reference      = ${text(rules.einvoice_reference.legal_reference)},`,

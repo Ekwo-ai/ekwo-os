@@ -35,8 +35,18 @@ import { fileURLToPath } from 'node:url';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 
-/** Where the suite lives. Everything under these, `.ts` only. */
-const ROOTS = ['tests', 'modules'];
+/**
+ * Where the suite lives. Everything under these, `.ts` only.
+ *
+ * `apps` is here because the site's test sits beside the site rather than
+ * under `tests/` — it renders React, and the root `tsconfig.json` has no
+ * reason to know what JSX is. A test that escaped this guard by living in
+ * another folder would be exactly the test that named three countries.
+ */
+const ROOTS = ['tests', 'modules', 'apps'];
+
+/** Never walked: not source, and large. */
+const SKIP = new Set(['node_modules', 'dist', '.prerender']);
 
 /**
  * ISO 3166-1 alpha-2 codes of the European Union, plus the ones the packs of
@@ -63,6 +73,7 @@ async function testFiles(dir) {
   const out = [];
   for (const entry of await readdir(join(root, dir), { withFileTypes: true })) {
     const path = join(dir, entry.name);
+    if (SKIP.has(entry.name)) continue;
     if (entry.isDirectory()) out.push(...(await testFiles(path)));
     else if (entry.name.endsWith('.ts') && path.includes('tests')) out.push(path);
   }

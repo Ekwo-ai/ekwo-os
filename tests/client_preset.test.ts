@@ -871,6 +871,17 @@ describe('a client writes nothing else — by the function', () => {
       // is refused where posting is — before there is anything to roll back.
       'public.rehearse_post_document': { sql: `select rehearse_post_document($1)`, params: [mine.draftDocumentId] },
       'public.post_entry': { sql: `select post_entry($1)`, params: [mine.draftEntryId] },
+      'public.cancel_document': { sql: `select cancel_document($1)`, params: [mine.postedDocumentId] },
+      // Definer: it asks documents.post itself, before it reads anything.
+      'public.unpost_document': { sql: `select unpost_document($1)`, params: [mine.postedDocumentId] },
+      'public.reverse_entry': {
+        sql: `select reverse_entry((select entry_id from entry_lines where id = $1))`,
+        params: [mine.receivableLineId],
+      },
+      'public.match_reversal': {
+        sql: `select match_reversal(l.entry_id, l.entry_id) from (select (select entry_id from entry_lines where id = $1) as entry_id) l`,
+        params: [mine.receivableLineId],
+      },
       'public.post_payment': { sql: `select post_payment($1)`, params: [mine.draftPaymentId] },
       'public.post_module_entry': {
         sql: `select post_module_entry($1, 'assets', 'client:1', $2::date, 'by the client', $3::jsonb, null)`,

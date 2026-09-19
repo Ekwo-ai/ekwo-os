@@ -119,8 +119,11 @@ that is not cut.
    | `SUPABASE_SERVICE_ROLE_KEY` | used once, by `ekwo init`, to create the administrator |
    | `EKWO_E2E_COUNTRY` | the pack to install. No default: a default country is a chart of accounts nobody chose |
    | `EKWO_E2E_CHART` / `EKWO_E2E_LANGUAGE` | required whenever the pack carries more than one of either — `ekwo init` refuses to pick for you when there is nobody to ask, which is the right answer and the first thing this script found |
+   | `EKWO_E2E_FISCAL_YEAR_START` | required for a pack that names no month to open the year on (GB): the first day of the 2026 year |
+   | `EKWO_E2E_VAT_PERIOD` | required for a pack whose periodic return is filed monthly or quarterly depending on the company (LU): `month` or `quarter` |
    | `EKWO_E2E_ADMIN_EMAIL` / `EKWO_E2E_ADMIN_PASSWORD` | the administrator it creates and signs in as |
    | `EKWO_E2E_PREVIOUS` | optional: install that release first, so the run upgrades an installation instead of creating one. Left out, those steps are skipped rather than passed |
+   | `EKWO_E2E_LOAD_DOCUMENTS` | optional: multiply the books to that many documents and time the six hot paths, over SQL and over PostgREST |
 
    **Point `EKWO_E2E_PREVIOUS` at the last tag.** It is the only way the run
    exercises what a user will actually do. It takes a path to a built binary of
@@ -133,8 +136,27 @@ that is not cut.
    ```
 
    From `0.4.1` on the CLI is on npm, and `ekwo-os@<x.y.z>` works in the same
-   variable. A release older than that was never published under that name, so
-   for those the path is the only form that works.
+   variable — the script runs it with `npx --package` from an empty directory,
+   because from inside this repository the workspace called `ekwo-os` answers
+   for the name and `npx` finds no `ekwo` to run. A release older than that was
+   never published under that name, so for those the path is the only form
+   that works.
+
+   **The last run: 19 September 2026**, on a throwaway project in `eu-west-3`
+   (Postgres 17.6, session pooler `aws-1`), deleted afterwards. Every pack,
+   each upgraded from `ekwo-os@0.4.1` on npm, `--reset` between runs: BE, EE,
+   FR, GB (year opening 1 April), LU (quarterly) and US all green, 21 steps
+   each. What it found and what was fixed: `ekwo init` left the modules out, so
+   `ekwo status` called a fresh installation sixteen migrations behind; the
+   script posted a New York sales tax on a supply it placed nowhere, found no
+   purchase tax in a pack whose purchase tax is not recoverable, and asked a
+   quarterly filer for a yearly return; `npx ekwo-os@…` ran from the
+   repository found no binary; the load steps timed the return of an empty
+   month. At 10 000 documents (FR, 90 000 ledger lines) every path is inside
+   its budget over SQL, the slowest being `suggest_contacts` at 1.1 s; over
+   PostgREST `suggest_contacts` is OVER, at 15 s — one HTTP call per bank line,
+   167 of them, from a client in Belgium. The project had self sign-up turned
+   off and PostgREST's row cap raised to 100 000 through the Management API.
 
    **Read the times, not only the marks.** Every step of the table carries how
    long it took and the run carries its total. What is worth noticing is which
@@ -223,9 +245,13 @@ name of the repository. `npx ekwo-os init` runs it without installing anything;
 example that starts with `ekwo ` assumes that.
 
 An account with two-factor authentication on writes is asked to approve each
-`npm publish` in a browser. The approval page offers to stop asking for five
-minutes, which is what lets one run publish every package; the script needs a
-real terminal for that, since npm only waits for the approval when it has one.
+`npm publish` in a browser, and the script needs a real terminal for that: npm
+only waits for the approval when it has one, and ends on `EOTP` when it does
+not. Count one approval per package. The approval page offers to stop asking
+for five minutes; on the `0.4.1` run that did not carry from one package to the
+next, and fifteen packages were fifteen approvals. An approval that is not
+given in time ends the run on a 404 from the registry's `done` address — run
+the script again, it skips what is already there.
 
 ## After a release
 

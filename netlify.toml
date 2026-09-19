@@ -1,0 +1,16 @@
+# The public site, apps/site, as Netlify builds it.
+#
+# It is built from the root of the repository because the pages are read from
+# the country packs and from MANIFESTO.md: the site has no data of its own.
+# SITE_URL is what makes every page name its canonical address; a deploy
+# preview is served from somewhere else and so says nothing.
+
+[build]
+  command = "npm run build --workspace @ekwo-ai/site"
+  publish = "apps/site/dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+[context.production.environment]
+  SITE_URL = "https://ekwo.ai"

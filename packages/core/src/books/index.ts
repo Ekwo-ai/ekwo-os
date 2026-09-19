@@ -15,4 +15,5 @@ export { roundCurrency } from './rounding.js';
 export * from './shared.js';
 export * from './contacts.js';
 export * from './documents.js';
+export * from './entries.js';
 export * from './payments.js';

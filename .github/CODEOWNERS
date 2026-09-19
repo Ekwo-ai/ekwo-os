@@ -11,10 +11,9 @@
 # their name in the manifest. A pack a contributor owns is listed below with
 # their handle, and its status is `community` until the same thing happens.
 
-# `@Ekwo-ai/maintainers` is a team of the organisation. Until it exists and has
-# write access, GitHub requests no review from these lines and reports them as
-# unknown owners; the file is valid either way, and the day the team is created
-# every line below starts working without an edit.
+# `@Ekwo-ai/maintainers` is a team of the organisation, with write access to
+# this repository. `main` requires the approval of a code owner, so a line below
+# is not a courtesy: it names who has to have read the change before it lands.
 
 # Everything, unless a line below is more specific.
 *                       @Ekwo-ai/maintainers

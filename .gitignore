@@ -15,3 +15,8 @@ supabase/.temp/
 # and not this repository's, and a `git add -A` after an install would publish
 # which project the person installed into.
 ekwo.json
+
+# The site's build. `dist/` above already covers its pages; this is the second
+# folder its build writes, holding the bundled prerender script that fills the
+# template. Both are output, and both are rebuilt by one command.
+apps/site/.prerender/

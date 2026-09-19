@@ -53,6 +53,81 @@ jobs:
           done
           diff modules/schema/module.1.json packages/cli/dist/assets/modules/schema/module.1.json
 
+  # The public site. One job and no matrix: it is a static build reading the
+  # packs, so a second version of Node proves nothing the `test` job has not
+  # already proved about the reader underneath it.
+  #
+  # Its test runs with `npm test` in that job, because `apps/*/tests` is in the
+  # vitest include. What is only checked here is the site's own typecheck —
+  # `tsconfig.json` at the root has no reason to know what JSX is — and that
+  # the pages are actually written to disk.
+  site:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run typecheck --workspace @ekwo-ai/site
+      - run: npm run build --workspace @ekwo-ai/site
+      # A page per pack, plus the home page, the manifesto, the comparisons
+      # and the Docs. The count is derived here for the same reason it is
+      # derived in the site: a pack added to packs/, a format added to
+      # packages/formats/ or an article added to the Docs must not need this
+      # file edited.
+      - name: The site has a page for every pack
+        run: |
+          set -euo pipefail
+          packs=$(find packs -mindepth 1 -maxdepth 1 -type d \
+                    -regex '.*/[a-z][a-z]$' | wc -l | tr -d ' ')
+          # The Docs: one page per article of apps/site/src/data/docs.ts
+          # published under /docs/ (an article with its own `url:`, the
+          # manifesto, is one of the five below), one per format library,
+          # and the index.
+          articles=$(grep -c "slug: '" apps/site/src/data/docs.ts)
+          elsewhere=$(grep -c "url: '" apps/site/src/data/docs.ts)
+          formats=$(find packages/formats -mindepth 1 -maxdepth 1 -type d | wc -l | tr -d ' ')
+          docs=$(( articles - elsewhere + formats + 1 ))
+          # Every pack, every pair of them, and the five pages of the site
+          # itself: the home page, the core, the index of countries, the
+          # manifesto and the index of comparisons. Times the languages.
+          langs=$(grep -c "^import { [a-z]\+ } from './[a-z]\+\.js';" \
+                    apps/site/src/strings/index.ts)
+          expected=$(( langs * (packs + packs * (packs - 1) / 2 + 5 + docs) ))
+          built=$(find apps/site/dist -name index.html | wc -l | tr -d ' ')
+          echo "$packs packs in $langs language(s): $expected expected, $built built."
+          [ "$built" = "$expected" ]
+          # A country page lives under /countries/, so the two-letter prefixes
+          # at the root stay free for languages.
+          for pack in packs/*/; do
+            slug=$(basename "$pack")
+            case "$slug" in
+              ??) test -f "apps/site/dist/countries/$slug/index.html" \
+                    || { echo "packs/$slug has no page."; exit 1; } ;;
+            esac
+          done
+      # The site fetches nothing from anywhere else. Two inline scripts exist
+      # — the few lines that stamp the stored theme before the first paint, and
+      # the one at the end of the body that works the two buttons and the copy
+      # button — and every page is complete without either. What is refused is
+      # a `src` or a stylesheet from another origin: a page about owning your
+      # own data must not tell a third party who read it. It would fail no
+      # test; it would simply be true and unnoticed.
+      - name: The built site fetches nothing from anywhere else
+        run: |
+          set -euo pipefail
+          if grep -rlE '<(script|link|img|iframe)[^>]+(src|href)="https?:' apps/site/dist; then
+            echo "The site loads something from another origin."
+            exit 1
+          fi
+          if grep -rl '<script src' apps/site/dist; then
+            echo "The site ships a JavaScript bundle."
+            exit 1
+          fi
+          echo "Nothing is fetched from another origin."
+
   hygiene:
     runs-on: ubuntu-latest
     steps:

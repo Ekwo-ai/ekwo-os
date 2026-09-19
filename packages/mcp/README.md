@@ -130,7 +130,9 @@ Every write names its company explicitly.
 | `pin_accounts` | Adds accounts to the working chart a company sees first, or takes one back out with `pinned: false` |
 | `create_document` | A draft invoice, credit note or quote, with its lines. With `client_ref`, calling twice creates once |
 | `update_document_lines` | Replaces the lines of a **draft** |
-| `post_document` | Books it. Cannot be undone. `dry_run: true` returns the entry the database would write, and writes nothing |
+| `post_document` | Books it. There is no unpost. `dry_run: true` returns the entry the database would write, and writes nothing |
+| `cancel_document` | Undoes a posted invoice, and says how in `undone_by`: back to `draft` where its country's `posted_edit_policy` allows it and nothing about it has left (`unpost_document()`), otherwise a `credit_note` that names it, posted and matched against it, and the invoice cancelled (`cancel_document()`), with `why` the draft was ruled out. A credit note is dated on the invoice's day while that period is open; otherwise the caller gives a date. A date, or `credit_note: true`, asks for the credit note |
+| `reverse_entry` | Undoes a posted entry keyed by hand: its mirror, posted under the next number and matched against it. Same rule for the date |
 | `record_payment` | Books money in or out and matches it against open invoices — or, with `document_id`, against that document alone, which then names the contact and the direction. With `client_ref`, recording twice records once |
 | `reconcile` / `unreconcile` | Matches two ledger lines, or undoes one matching |
 | `create_bank_account` | Registers an account from its IBAN and wires it to the bank journal. Running it twice with the same IBAN creates nothing |
@@ -158,10 +160,11 @@ resource that carries everything. None of this restricts anything: a document
 line may name any account of the chart that is not deprecated, and every write
 tool still accepts one.
 
-`post_document`, `record_payment`, `update_document_lines`, `unreconcile`,
-`lock_period`, `opening_balance`, `close_fiscal_year`, `reopen_fiscal_year`,
-`revoke_invitation` and `revoke_api_key` are annotated destructive in the
-protocol, so a client can ask before calling them.
+`post_document`, `cancel_document`, `reverse_entry`, `record_payment`,
+`update_document_lines`, `unreconcile`, `lock_period`, `opening_balance`,
+`close_fiscal_year`, `reopen_fiscal_year`, `revoke_invitation` and
+`revoke_api_key` are annotated destructive in the protocol, so a client can ask
+before calling them.
 
 **What a tool may do is the capability the user holds**, not the tool's own
 right: the server acts as the person it signed in as, so `post_document` works
