@@ -44,6 +44,13 @@ export interface Fixture {
  * dates — the golden runner installs a company per pack from what the pack's
  * own scenario declares, and cannot be the one place a country is assumed.
  */
+/**
+ * The country a fixture company is created in when the test names none. Read
+ * by `somePack` in packs.ts too, so a test that books with this default and
+ * reads with that pack reads the same country.
+ */
+export const FIXTURE_COUNTRY = 'BE';
+
 export async function newCompany(
   db: PGlite,
   options: {
@@ -57,7 +64,7 @@ export async function newCompany(
     fiscalYear?: { name: string; start: string; end: string };
   } = {},
 ): Promise<Fixture> {
-  const country = options.country ?? 'BE';
+  const country = options.country ?? FIXTURE_COUNTRY;
   const ownerId = options.ownerId ?? crypto.randomUUID();
   const company = await one<{ id: string }>(
     db,

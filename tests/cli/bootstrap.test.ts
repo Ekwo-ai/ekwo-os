@@ -350,8 +350,10 @@ describe('bootstrap', () => {
     // The country whose form offers a choice is the one this is about: where a
     // form is filed on one cadence there is nothing to record wrongly.
     const choice = packWhere(
-      'whose periodic return is filed on more than one cadence',
-      (pack) => (pack.report?.periods.length ?? 0) > 1,
+      'whose periodic return is filed on more than one cadence, and not on every one',
+      (pack) =>
+        (pack.report?.periods.length ?? 0) > 1 &&
+        CADENCES.some((cadence) => !pack.report!.periods.includes(cadence)),
     );
     const country = choice.manifest.country;
     const files = choice.report!.periods[1]!;

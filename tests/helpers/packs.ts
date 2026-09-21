@@ -27,6 +27,7 @@
 import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { listPacks, packsDir, readPack, readSchema, type Pack } from '../../packages/cli/src/index.js';
+import { FIXTURE_COUNTRY } from './factory.js';
 
 /** Directory the packs are read from. The one `ekwo pack` itself uses. */
 export const packsRoot = packsDir();
@@ -177,10 +178,13 @@ export function monthsOf(cadence: string | null | undefined): number {
  *
  * For a test whose subject is the reader and not the country: a manifest field
  * the schema refuses, a golden that is emptied on purpose, a copy of a pack
- * broken in a temporary directory. The first slug alphabetically, so two runs
- * of the suite break the same pack and a failure is reproducible.
+ * broken in a temporary directory. It is the pack of the country a fixture
+ * company is created in when a test names none, so two runs of the suite break
+ * the same pack and a test that books a fixture company with the default and
+ * reads this pack reads one country. It used to be the first slug
+ * alphabetically, which moved the day a pack sorted before that country.
  */
-export const somePack: Pack = allPacks[0]!;
+export const somePack: Pack = packOfCountry(FIXTURE_COUNTRY);
 
 /**
  * The packs that carry a property, named by what the property is.
