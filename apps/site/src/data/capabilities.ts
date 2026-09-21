@@ -55,12 +55,28 @@ export const CAPABILITIES: Capability[] = [
     proof: 'supabase/migrations/20260911120500_documents.sql',
   },
   {
+    icon: 'users',
+    title: 'Contacts',
+    family: 'accounting',
+    body: 'Customers and suppliers, with their VAT number, the electronic address the pack names, and how each appears on a bank statement.',
+    status: 'shipped',
+    proof: 'supabase/migrations/20260911120200_contacts.sql',
+  },
+  {
     icon: 'landmark',
     title: 'Bank and reconciliation',
     family: 'finance',
     body: 'Import a statement, match a payment against what it settles, and let the reference do it for you.',
     status: 'shipped',
     proof: 'supabase/migrations/20260918150931_a_statement_is_imported_once.sql',
+  },
+  {
+    icon: 'calendarClock',
+    title: 'Declarations',
+    family: 'finance',
+    body: 'When each return is due, from the pack’s rule and the company’s cadence, for every company you keep — and a corrective once one has gone.',
+    status: 'shipped',
+    proof: 'supabase/migrations/20260917150000_a_filing_is_a_row.sql',
   },
   {
     icon: 'fileText',

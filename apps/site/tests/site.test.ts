@@ -544,6 +544,15 @@ describe('what the site says is in the box', () => {
     }
   });
 
+  it('fills every row of the grid, three to a row on a wide screen', () => {
+    // A family with a short last row reads as something missing.
+    const families = new Set(CAPABILITIES.map((item) => item.family));
+    for (const family of families) {
+      const count = CAPABILITIES.filter((item) => item.family === family).length;
+      expect(count % 3, `${family} has ${count} tiles`).toBe(0);
+    }
+  });
+
   it('says shipped or planned, and nothing else', () => {
     for (const item of [...CAPABILITIES, ...AUTOMATION]) {
       expect(['shipped', 'planned']).toContain(item.status);
