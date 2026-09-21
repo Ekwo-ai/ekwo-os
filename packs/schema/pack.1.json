@@ -330,7 +330,10 @@
         "vat_period": {
           "enum": [
             "month",
+            "bimonth",
             "quarter",
+            "four_month",
+            "half_year",
             "year"
           ],
           "description": "Deprecated by tax_report.json's period_default, which asks the same question of the form a cadence belongs to rather than of the country. Still read where a pack written before the move carries it; a pack that says both and says two different things is refused."
@@ -1177,13 +1180,16 @@
           "type": "string"
         },
         "period": {
-          "description": "Cadences this form is filed on. A list, because one set of boxes may be filed monthly, quarterly or annually depending on turnover. The single string is what this field was before the list and is still read: `month_or_quarter` means the two cadences it names.",
+          "description": "Cadences this form is filed on. A list, because one set of boxes may be filed monthly, quarterly or annually depending on turnover. Each cadence is a whole number of months anchored on 1 January: a bimonth is January–February, March–April…, a four_month period starts in January, May or September, a half_year in January or July. The single string is what this field was before the list and is still read: `month_or_quarter` means the two cadences it names.",
           "oneOf": [
             {
               "enum": [
                 "month",
+                "bimonth",
                 "quarter",
                 "month_or_quarter",
+                "four_month",
+                "half_year",
                 "year"
               ]
             },
@@ -1194,7 +1200,10 @@
               "items": {
                 "enum": [
                   "month",
+                  "bimonth",
                   "quarter",
+                  "four_month",
+                  "half_year",
                   "year"
                 ]
               }
@@ -1211,7 +1220,10 @@
         "period_default": {
           "enum": [
             "month",
+            "bimonth",
             "quarter",
+            "four_month",
+            "half_year",
             "year"
           ],
           "description": "Cadence this form is filed on unless the company has asked the administration for another. Declare it only where the law gives one answer to everybody, whatever else the form accepts, and say which text does in legal_reference; where the cadence depends on a fact about the company — turnover — leave it out and `ekwo init` asks. It must be one of the cadences `period` declares."
@@ -1280,6 +1292,30 @@
               "description": "Key of the register entry the reference is in."
             }
           }
+        },
+        "rounding": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "unit",
+            "legal_reference"
+          ],
+          "properties": {
+            "unit": {
+              "type": "number",
+              "exclusiveMinimum": 0,
+              "description": "The unit the figures of this form are filed in: 1 for whole units of the currency, 1000 for thousands. A power of ten, coarser than the currency's own decimals — a finer one is the currency's anyway."
+            },
+            "legal_reference": {
+              "type": "string",
+              "minLength": 1,
+              "description": "The instruction printed on the form, or the rule, that sets the unit."
+            },
+            "source": {
+              "$ref": "#/$defs/source_ref"
+            }
+          },
+          "description": "The unit this form is filed in, where it is coarser than the currency — CDTFA-401 asks for whole dollars over a ledger kept in cents. Leave it out where the form is filed at the decimals of its currency, which is nearly every form. The ledger and `vat_return()` keep the exact figures; the unit applies to what `prepare_filing()` freezes, box by box."
         }
       }
     },

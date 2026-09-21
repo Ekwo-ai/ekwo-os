@@ -565,11 +565,30 @@ function taxReport(pack: Pack, country: string): string[] {
   const report = pack.report;
   if (report === null) return [];
 
+  // The unit of the form is written only when the pack names one. It arrived
+  // with `20260921145412`, and a form filed at the decimals of its currency
+  // keeps a seed that runs on a schema from before it — the three columns would
+  // only ever have received a null.
+  const rounding = report.rounding;
+  const roundingColumns = rounding === null ? '' : ',\n   rounding_unit, rounding_reference, rounding_source_key';
+  const roundingValues =
+    rounding === null
+      ? ''
+      : `, ${number(rounding.unit)}, ${text(rounding.legal_reference)}, ${text(rounding.source)}`;
+  const roundingUpdate =
+    rounding === null
+      ? []
+      : [
+          '  rounding_unit       = excluded.rounding_unit,',
+          '  rounding_reference  = excluded.rounding_reference,',
+          '  rounding_source_key = excluded.rounding_source_key,',
+        ];
+
   const out = [
     'insert into tax_report_templates',
     '  (country, code, name, periods, period_default, valid_from, valid_to, legal_reference,',
     '   is_periodic_return, deadline_rule, deadline_day, deadline_plus_days,',
-    '   deadline_reference, deadline_source_key, file_format)',
+    `   deadline_reference, deadline_source_key, file_format${roundingColumns})`,
     'values',
     `  (${text(country)}, ${text(report.code)}, ${text(report.name)}, ${periods(report.periods)}, ` +
       `${enumeration(report.period_default, 'declaration_period')}, ` +
@@ -577,7 +596,7 @@ function taxReport(pack: Pack, country: string): string[] {
       `${enumeration(report.deadline?.rule ?? null, 'filing_deadline_rule')}, ` +
       `${number(report.deadline?.day ?? null)}, ${number(report.deadline?.plus_days ?? null)}, ` +
       `${text(report.deadline?.legal_reference ?? null)}, ${text(report.deadline?.source ?? null)}, ` +
-      `${text(report.file_format)})`,
+      `${text(report.file_format)}${roundingValues})`,
     'on conflict (country, code) do update set',
     '  name                = excluded.name,',
     '  periods             = excluded.periods,',
@@ -591,6 +610,7 @@ function taxReport(pack: Pack, country: string): string[] {
     '  deadline_plus_days  = excluded.deadline_plus_days,',
     '  deadline_reference  = excluded.deadline_reference,',
     '  deadline_source_key = excluded.deadline_source_key,',
+    ...roundingUpdate,
     '  file_format         = excluded.file_format;',
     '',
   ];

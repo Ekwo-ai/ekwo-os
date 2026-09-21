@@ -2191,3 +2191,34 @@ refuses the key on a country with no territory inside it.
 is written by the compiler for every tax, null where a pack says nothing, so
 every `supabase/seed/*_pack_*.sql` changed by that column and by nothing else.
 A pack branch opened before this change runs `ekwo pack build <cc>` once.
+
+## Closed in the core: cadences and the unit of a frozen box (21 September 2026)
+
+Three gaps the packs wrote down are closed by migrations `20260921145411` and
+`20260921145412`. The paragraphs above that describe them stay as they were
+written, as the record of why; this is what the core says now.
+
+- ~~**A two-month taxable period.**~~ *(Ireland)* `declaration_period` gains
+  `bimonth`, `four_month` and `half_year`, each a whole number of months
+  anchored on 1 January, the anchoring section 2 of the 2010 Act states.
+  `declaration_period_of()`, the guard of `vat_return()`, `ec_sales_list()`,
+  `upcoming_filings()` and `company_filing_periods` read all six.
+  `packs/ie/` 0.2.0 declares `["month", "bimonth", "year"]` and proposes
+  `bimonth`; the four- and six-monthly periods stay undeclared until a text of
+  its register allows them.
+- ~~**A frozen box holds two decimals.**~~ *(Senegal, Côte d'Ivoire)*
+  `tax_filing_boxes.amount` is `numeric` with no scale, and a frozen figure is
+  `round_amount()` at the currency: a return in XOF freezes `1000000`. What was
+  frozen before keeps its value; lifting the precision rewrites nothing. Neither
+  pack changes.
+- ~~**A declaration form filed in whole units, over a ledger kept in cents,
+  cannot be said.**~~ *(United States)* `tax_report.json` takes `rounding`, a
+  power of ten with its text, compiled to `tax_report_templates.rounding_unit`.
+  `prepare_filing()` freezes each box at that unit and `filing_drift()` compares
+  at it; `vat_return()` still answers the cents. `packs/us/` 0.7.0 declares
+  `unit: 1` from the face of CDTFA-401-A.
+
+Still open, and deliberately outside this change: a ledger at three decimals
+(TND, KWD, BHD…), where every amount column of the ledger is `numeric(16, 2)`;
+and a box rounded as the sum of rounded lines, which no form read so far asks
+for — each box is rounded from its own exact figure.

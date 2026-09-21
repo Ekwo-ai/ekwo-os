@@ -6054,3 +6054,47 @@ sale taxes and drops the note that said it could not; `packs/us/` 0.7.0 says
 `supply_vs_seller: other` on `US-CA-S-SHIPPED`. Both raise `schema_min`. Every
 other pack's seed changes by one null column and by nothing else, and every
 golden is unchanged to the cent.
+
+## A cadence is a number of months, and a frozen box is at the unit of its form (21 September 2026)
+
+**Three new cadences, and no list of names in the functions.** `bimonth`,
+`four_month` and `half_year` join `month`, `quarter` and `year` in
+`declaration_period`, in their own migration because an enum value cannot be
+used in the transaction that adds it. Every function that turns a cadence into
+dates now reads `declaration_period_months()` — 1, 2, 3, 4, 6, 12 — and
+`declaration_period_start()`, anchored on 1 January. The alternative, a `case`
+per function, is what `upcoming_filings()` had, and it filed anything that was
+not a month or a quarter as a year without a word. The anchoring is the
+calendar year's for all six because it is the only one the three older
+cadences ever had and the one the Irish Act writes; a cadence anchored on a
+fiscal year would be a new value, not a new anchoring of an old one.
+
+**The guard of `vat_return()` is not replaced.** It calls
+`declaration_period_of()`, which now recognises the new shapes, and its four
+conditions are unchanged: a half-year asked of a form that is not filed
+half-yearly is still an analysis and goes through.
+
+**A frozen box has no scale.** `tax_filing_boxes.amount` goes from
+`numeric(16, 2)` to `numeric`. Lifting the precision of a numeric does not
+rewrite the table and changes no stored value, which is what immutability of a
+filed declaration asks. The ledger itself stays at two decimals: widening it is
+twenty columns, generated columns and views, and belongs to its own change.
+
+**The unit is the form's, applied at the freeze, not in the return.**
+`tax_report_templates.rounding_unit` (a power of ten, with its text) is read by
+`filing_rounding()` only, which coarsens the currency's `money_rounding`, and
+`prepare_filing()`, `supersede_filing()` and `filing_drift()` pass each figure
+through it. `vat_return()` keeps answering exact figures: it is also the
+analysis, the golden and the drift, and a return that answered whole dollars
+would hide the cents the ledger holds. Each box is rounded from its own exact
+figure, so a total is the exact total rounded; a form that asks for the sum of
+rounded lines would be a second word here, and none does so far. `vat_return()`
+gains no `filed_amount` column, which the design had proposed: changing its
+return type means dropping and recreating it, and `round_amount(amount,
+filing_rounding(company, report_code))` says the same thing to any reader who
+wants it.
+
+**Seeds that do not use it do not change.** The compiler writes the three
+columns only for a form that declares `rounding`, as it did for
+`einvoice_obligation`: every other seed is byte for byte what it was, and runs
+on a schema from before the column.
