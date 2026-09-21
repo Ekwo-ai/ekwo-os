@@ -1,0 +1,546 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "A year of a GST-registered Singapore trading company that also lets a flat, filing quarterly, for the financial year 2026",
+  "chart": "default",
+  "fiscal_year": {
+    "name": "Financial year ended 31 December 2026",
+    "start": "2026-01-01",
+    "end": "2026-12-31"
+  },
+  "periods": [
+    {
+      "code": "2026-Q1",
+      "from": "2026-01-01",
+      "to": "2026-03-31"
+    },
+    {
+      "code": "2026-Q2",
+      "from": "2026-04-01",
+      "to": "2026-06-30"
+    },
+    {
+      "code": "2026-Q3",
+      "from": "2026-07-01",
+      "to": "2026-09-30"
+    },
+    {
+      "code": "2026-Q4",
+      "from": "2026-10-01",
+      "to": "2026-12-31"
+    }
+  ],
+  "statements": [
+    "SG-SFRSSE-SFP",
+    "SG-SFRSSE-IS"
+  ],
+  "contacts": [
+    {
+      "ref": "cust-sg",
+      "name": "Merlion Home Living Pte. Ltd.",
+      "type": "customer",
+      "country": "SG"
+    },
+    {
+      "ref": "cust-counter",
+      "name": "Counter sales",
+      "type": "customer",
+      "country": "SG"
+    },
+    {
+      "ref": "cust-us",
+      "name": "Cascade Outfitters Inc.",
+      "type": "customer",
+      "country": "US"
+    },
+    {
+      "ref": "cust-gb",
+      "name": "Harrowgate Research Ltd",
+      "type": "customer",
+      "country": "GB"
+    },
+    {
+      "ref": "tenant",
+      "name": "Residential tenant — Tanjong Katong apartment",
+      "type": "customer",
+      "country": "SG"
+    },
+    {
+      "ref": "cust-reseller",
+      "name": "Kallang Mobile Distribution Pte. Ltd.",
+      "type": "customer",
+      "country": "SG"
+    },
+    {
+      "ref": "cust-au",
+      "name": "Wattle Street Retail Pty Ltd",
+      "type": "customer",
+      "country": "AU"
+    },
+    {
+      "ref": "supp-sg",
+      "name": "Jurong Wholesale Trading Pte. Ltd.",
+      "type": "supplier",
+      "country": "SG"
+    },
+    {
+      "ref": "supp-us",
+      "name": "Keystone Industrial Supply Inc.",
+      "type": "supplier",
+      "country": "US"
+    },
+    {
+      "ref": "supp-club",
+      "name": "Bukit Timah Country Club",
+      "type": "supplier",
+      "country": "SG"
+    },
+    {
+      "ref": "supp-gb",
+      "name": "Thames Advisory Ltd",
+      "type": "supplier",
+      "country": "GB"
+    },
+    {
+      "ref": "supp-gb2",
+      "name": "Fenwick Property Software Ltd",
+      "type": "supplier",
+      "country": "GB"
+    },
+    {
+      "ref": "supp-soft",
+      "name": "Marina Software Distribution Pte. Ltd.",
+      "type": "supplier",
+      "country": "SG"
+    },
+    {
+      "ref": "lender-gb",
+      "name": "Albion Holdings Ltd",
+      "type": "supplier",
+      "country": "GB"
+    },
+    {
+      "ref": "supp-bank",
+      "name": "Straits Commercial Bank Ltd",
+      "type": "supplier",
+      "country": "SG"
+    },
+    {
+      "ref": "supp-small",
+      "name": "Ah Seng Cleaning Services",
+      "type": "supplier",
+      "country": "SG"
+    },
+    {
+      "ref": "supp-freight",
+      "name": "Pasir Panjang Freight Pte. Ltd.",
+      "type": "supplier",
+      "country": "SG"
+    },
+    {
+      "ref": "supp-it",
+      "name": "Bugis Computer Centre Pte. Ltd.",
+      "type": "supplier",
+      "country": "SG"
+    }
+  ],
+  "documents": [
+    {
+      "ref": "S1",
+      "type": "sale_invoice",
+      "contact": "cust-sg",
+      "date": "2026-01-12",
+      "why": "A standard-rated sale: box 1 takes the value without GST and box 6 the 9 %, 1,080.00 on 12,000.00.",
+      "lines": [
+        {
+          "name": "Home furnishings",
+          "quantity": 10,
+          "unit_price": 1200,
+          "tax": "SG-S-SR-9",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "P1",
+      "type": "purchase_invoice",
+      "contact": "supp-sg",
+      "date": "2026-01-15",
+      "why": "A taxable purchase of trading stock: box 5 takes the value and box 7 the input tax.",
+      "lines": [
+        {
+          "name": "Goods for resale",
+          "quantity": 1,
+          "unit_price": 7500,
+          "tax": "SG-P-TX-9",
+          "account": "5000"
+        }
+      ]
+    },
+    {
+      "ref": "S2",
+      "type": "sale_invoice",
+      "contact": "cust-counter",
+      "date": "2026-01-28",
+      "why": "A retail sale on a price that includes the GST, as reg. 77 requires it to be displayed: 90.00 comes out of 1,090.00 and box 1 takes 1,000.00.",
+      "lines": [
+        {
+          "name": "Shop takings",
+          "quantity": 1,
+          "unit_price": 1090,
+          "tax": "SG-S-SR-INC-9",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "S3",
+      "type": "sale_invoice",
+      "contact": "cust-us",
+      "date": "2026-02-10",
+      "why": "An export of goods, zero-rated: box 2 alone, and the invoice carries the zero-rated sentence.",
+      "lines": [
+        {
+          "name": "Furnishings shipped to Portland",
+          "quantity": 1,
+          "unit_price": 8000,
+          "tax": "SG-S-ZR-EXP",
+          "account": "4020"
+        }
+      ]
+    },
+    {
+      "ref": "P2",
+      "type": "purchase_invoice",
+      "contact": "supp-us",
+      "date": "2026-02-20",
+      "why": "An import: box 5 takes the value and box 7 the 9 % paid to Singapore Customs, which waits on 2125 while the supplier is owed the value alone.",
+      "lines": [
+        {
+          "name": "Imported display fittings for resale",
+          "quantity": 1,
+          "unit_price": 20000,
+          "tax": "SG-P-IMP-9",
+          "account": "5000"
+        }
+      ]
+    },
+    {
+      "ref": "S4",
+      "type": "sale_invoice",
+      "contact": "cust-gb",
+      "date": "2026-03-05",
+      "why": "An international service under s. 21(3)(j), zero-rated: box 2 as well.",
+      "lines": [
+        {
+          "name": "Market research for a client in London",
+          "quantity": 1,
+          "unit_price": 5000,
+          "tax": "SG-S-ZR-INTL",
+          "account": "4030"
+        }
+      ]
+    },
+    {
+      "ref": "P3",
+      "type": "purchase_invoice",
+      "contact": "supp-club",
+      "date": "2026-03-18",
+      "why": "A club subscription, whose input tax reg. 26 disallows: the 180.00 of GST lands on 6400 and no box moves.",
+      "lines": [
+        {
+          "name": "Annual corporate membership",
+          "quantity": 1,
+          "unit_price": 2000,
+          "tax": "SG-P-BL-9",
+          "account": "6400"
+        }
+      ]
+    },
+    {
+      "ref": "S5",
+      "type": "sale_invoice",
+      "contact": "tenant",
+      "date": "2026-04-06",
+      "why": "Residential rent, exempt: box 3, and the invoice carries the exempt sentence. It is what makes the company a business not entitled to full input tax, and so liable to the reverse charge.",
+      "lines": [
+        {
+          "name": "Rent of the Tanjong Katong apartment, April to June",
+          "quantity": 1,
+          "unit_price": 3000,
+          "tax": "SG-S-ES-RES",
+          "account": "4520"
+        }
+      ]
+    },
+    {
+      "ref": "P4",
+      "type": "purchase_invoice",
+      "contact": "supp-gb",
+      "date": "2026-04-20",
+      "why": "A service bought from abroad, reverse charged because the company makes exempt supplies, and used for its taxable trading: 4,000.00 in boxes 1, 14 and 5, and 360.00 in box 6 and box 7.",
+      "lines": [
+        {
+          "name": "Pricing consultancy for the trading business",
+          "quantity": 1,
+          "unit_price": 4000,
+          "tax": "SG-P-RC-9",
+          "account": "6420"
+        }
+      ]
+    },
+    {
+      "ref": "P5",
+      "type": "purchase_invoice",
+      "contact": "supp-gb2",
+      "date": "2026-05-06",
+      "why": "A service bought from abroad for the exempt letting: the 108.00 is owed in box 6, claimed nowhere, and lands on 6350; the value still reaches boxes 1, 14 and 5.",
+      "lines": [
+        {
+          "name": "Tenancy management software, one year",
+          "quantity": 1,
+          "unit_price": 1200,
+          "tax": "SG-P-RC-NC-9",
+          "account": "6350"
+        }
+      ]
+    },
+    {
+      "ref": "S6",
+      "type": "sale_invoice",
+      "contact": "cust-reseller",
+      "date": "2026-05-12",
+      "why": "Mobile phones above $10,000 sold to a GST-registered reseller: customer accounting, so box 1 takes 24,000.00, box 6 nothing, and the invoice carries the customer accounting sentence.",
+      "lines": [
+        {
+          "name": "Mobile phones",
+          "quantity": 30,
+          "unit_price": 800,
+          "tax": "SG-S-CA",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "P6",
+      "type": "purchase_invoice",
+      "contact": "supp-soft",
+      "date": "2026-05-20",
+      "why": "Boxed software above $10,000 bought for resale under customer accounting: the company accounts for the supplier's 1,080.00 in box 6 and claims it in box 7, and the value reaches box 1 and box 5.",
+      "lines": [
+        {
+          "name": "Off-the-shelf accounting software, boxed",
+          "quantity": 40,
+          "unit_price": 300,
+          "tax": "SG-P-CA-9",
+          "account": "5000"
+        }
+      ]
+    },
+    {
+      "ref": "S7",
+      "type": "sale_credit_note",
+      "contact": "cust-sg",
+      "date": "2026-06-10",
+      "why": "A credit note on S1 for two returned units: box 1 and box 6 go down in the quarter it is issued.",
+      "lines": [
+        {
+          "name": "Returned home furnishings",
+          "quantity": 2,
+          "unit_price": 1200,
+          "tax": "SG-S-SR-9",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "P7",
+      "type": "purchase_invoice",
+      "contact": "lender-gb",
+      "date": "2026-07-08",
+      "why": "Interest to a non-resident lender: 15 % is withheld under s. 45 of the Income Tax Act 1947 and waits on 2140; the interest is an exempt financial service, so no box of the GST return moves.",
+      "lines": [
+        {
+          "name": "Interest on shareholder loan, first half",
+          "quantity": 1,
+          "unit_price": 5000,
+          "tax": "SG-P-WHT-INT-15",
+          "account": "7030"
+        }
+      ]
+    },
+    {
+      "ref": "P8",
+      "type": "purchase_invoice",
+      "contact": "supp-bank",
+      "date": "2026-08-12",
+      "why": "Bank charges, an exempt financial service: no box.",
+      "lines": [
+        {
+          "name": "Account and remittance charges",
+          "quantity": 1,
+          "unit_price": 150,
+          "tax": "SG-P-ES",
+          "account": "6450"
+        }
+      ]
+    },
+    {
+      "ref": "P9",
+      "type": "purchase_invoice",
+      "contact": "supp-small",
+      "date": "2026-09-03",
+      "why": "A supplier who is not GST-registered: no GST and no box.",
+      "lines": [
+        {
+          "name": "Office cleaning, July and August",
+          "quantity": 1,
+          "unit_price": 600,
+          "tax": "SG-P-NR",
+          "account": "6330"
+        }
+      ]
+    },
+    {
+      "ref": "P10",
+      "type": "purchase_credit_note",
+      "contact": "supp-sg",
+      "date": "2026-10-05",
+      "why": "A credit note received on P1: box 5 and box 7 go down.",
+      "lines": [
+        {
+          "name": "Returned stock",
+          "quantity": 1,
+          "unit_price": 500,
+          "tax": "SG-P-TX-9",
+          "account": "5000"
+        }
+      ]
+    },
+    {
+      "ref": "P11",
+      "type": "purchase_invoice",
+      "contact": "supp-freight",
+      "date": "2026-11-10",
+      "why": "International freight from a GST-registered forwarder, zero-rated: box 5 takes the value and there is no input tax.",
+      "lines": [
+        {
+          "name": "Sea freight Los Angeles to Singapore",
+          "quantity": 1,
+          "unit_price": 1500,
+          "tax": "SG-P-ZR",
+          "account": "5010"
+        }
+      ]
+    },
+    {
+      "ref": "S8",
+      "type": "sale_invoice",
+      "contact": "cust-au",
+      "date": "2026-11-20",
+      "why": "Goods shipped from a warehouse in Australia to a customer there: out of scope, no GST and no box.",
+      "lines": [
+        {
+          "name": "Furnishings shipped from the Sydney warehouse",
+          "quantity": 1,
+          "unit_price": 6000,
+          "tax": "SG-S-OS",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "S9",
+      "type": "sale_invoice",
+      "contact": "cust-sg",
+      "date": "2026-12-08",
+      "why": "A standard-rated service in the last quarter, so that it carries output tax.",
+      "lines": [
+        {
+          "name": "Interior styling services",
+          "quantity": 1,
+          "unit_price": 9000,
+          "tax": "SG-S-SR-9",
+          "account": "4010"
+        }
+      ]
+    },
+    {
+      "ref": "P12",
+      "type": "purchase_invoice",
+      "contact": "supp-it",
+      "date": "2026-12-15",
+      "why": "A capital purchase: form GST F5 has no box for capital goods, so box 5 and box 7 take it like any other purchase.",
+      "lines": [
+        {
+          "name": "Laptops for staff",
+          "quantity": 3,
+          "unit_price": 2000,
+          "tax": "SG-P-TX-9",
+          "account": "1640"
+        }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "R1",
+      "direction": "inbound",
+      "date": "2026-02-11",
+      "amount": 13080,
+      "contact": "cust-sg",
+      "journal": "BNK",
+      "match": "S1",
+      "why": "A receipt that settles S1 exactly."
+    },
+    {
+      "ref": "D1",
+      "direction": "outbound",
+      "date": "2026-02-14",
+      "amount": 8175,
+      "contact": "supp-sg",
+      "journal": "BNK",
+      "match": "P1",
+      "why": "A payment that settles P1 exactly."
+    },
+    {
+      "ref": "D2",
+      "direction": "outbound",
+      "date": "2026-03-10",
+      "amount": 20000,
+      "contact": "supp-us",
+      "journal": "BNK",
+      "match": "P2",
+      "why": "The supplier of P2 is paid the value alone: the import GST is owed to Singapore Customs and stays on 2125."
+    },
+    {
+      "ref": "R2",
+      "direction": "inbound",
+      "date": "2026-06-20",
+      "amount": 24000,
+      "contact": "cust-reseller",
+      "journal": "BNK",
+      "match": "S6",
+      "why": "The reseller pays S6 without any GST, which it accounts for itself."
+    },
+    {
+      "ref": "D3",
+      "direction": "outbound",
+      "date": "2026-07-20",
+      "amount": 4250,
+      "contact": "lender-gb",
+      "journal": "BNK",
+      "match": "P7",
+      "why": "The 85 % of P7 the lender is paid once 15 % has been withheld."
+    },
+    {
+      "ref": "R3",
+      "direction": "inbound",
+      "date": "2026-12-28",
+      "amount": 5000,
+      "contact": "cust-sg",
+      "journal": "BNK",
+      "match": null,
+      "why": "A payment on account that matches no invoice and stays open."
+    }
+  ]
+}

@@ -1,0 +1,654 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/statements",
+  "statements": [
+    {
+      "code": "SG-SFRSSE-SFP",
+      "kind": "balance_sheet",
+      "framework": "SG-SFRS-SE",
+      "taxonomy": null,
+      "name": "Statement of financial position — SFRS for Small Entities",
+      "legal_reference": "Companies Act 1967, s. 201(1) and (2) — the directors lay before the annual general meeting financial statements that comply with the Accounting Standards and give a true and fair view; the Accounting Standards Committee under ACRA issues SFRS for Small Entities, which is based on the IFRS for SMEs Accounting Standard (ACRA, Accounting standards). Section 4 of that standard lists the line items of the statement of financial position as a minimum and prescribes neither their order nor their format; the lines below are those items in the order a Singapore statement prints them, current and non-current apart. The text of the standard is served to Singapore addresses only and was not read for this pack: every paragraph number here is the IFRS for SMEs numbering and is the first thing a reviewer should check. Biological assets, non-controlling interests and assets held for sale are not lines, because the chart holds no account for them.",
+      "source": "companies-act",
+      "lines": [
+        {
+          "code": "CA",
+          "name": "Current assets",
+          "sequence": 10,
+          "is_total": true,
+          "plus": [
+            "CA.1",
+            "CA.2",
+            "CA.3",
+            "CA.4",
+            "CA.5",
+            "CA.6"
+          ],
+          "legal_reference": "SFRS for Small Entities, Section 4, paragraphs 4.4 to 4.6 — current and non-current assets are presented as separate classifications.",
+          "source": "acra-standards"
+        },
+        {
+          "code": "CA.1",
+          "parent": "CA",
+          "name": "Cash and cash equivalents",
+          "sequence": 20,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1000",
+              "code_to": "1040"
+            }
+          ],
+          "legal_reference": "SFRS for Small Entities, paragraph 4.2(a).",
+          "source": "acra-standards"
+        },
+        {
+          "code": "CA.2",
+          "parent": "CA",
+          "name": "Trade and other receivables",
+          "sequence": 30,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1100",
+              "code_to": "1160"
+            },
+            {
+              "kind": "account_code",
+              "code_from": "2990",
+              "side": "debit"
+            }
+          ],
+          "legal_reference": "SFRS for Small Entities, paragraph 4.2(b). The GST input tax and the refund due from IRAS are presented here rather than as current tax, which paragraph 4.2(n) keeps for income tax.",
+          "source": "acra-standards"
+        },
+        {
+          "code": "CA.3",
+          "parent": "CA",
+          "name": "Inventories",
+          "sequence": 40,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1200",
+              "code_to": "1230"
+            }
+          ],
+          "legal_reference": "SFRS for Small Entities, paragraph 4.2(d).",
+          "source": "acra-standards"
+        },
+        {
+          "code": "CA.4",
+          "parent": "CA",
+          "name": "Financial assets",
+          "sequence": 50,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1300"
+            }
+          ],
+          "legal_reference": "SFRS for Small Entities, paragraph 4.2(c), the part realised within twelve months.",
+          "source": "acra-standards"
+        },
+        {
+          "code": "CA.5",
+          "parent": "CA",
+          "name": "Current tax assets",
+          "sequence": 60,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1350"
+            }
+          ],
+          "legal_reference": "SFRS for Small Entities, paragraph 4.2(n) — assets for current tax, which is income tax.",
+          "source": "acra-standards"
+        },
+        {
+          "code": "CA.6",
+          "parent": "CA",
+          "name": "Prepayments and accrued income",
+          "sequence": 70,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1400",
+              "code_to": "1410"
+            }
+          ],
+          "legal_reference": "SFRS for Small Entities, paragraph 4.3 — an additional line item, relevant to an understanding of the financial position.",
+          "source": "acra-standards"
+        },
+        {
+          "code": "NCA",
+          "name": "Non-current assets",
+          "sequence": 80,
+          "is_total": true,
+          "plus": [
+            "NCA.1",
+            "NCA.2",
+            "NCA.3",
+            "NCA.4",
+            "NCA.5",
+            "NCA.6",
+            "NCA.7"
+          ],
+          "legal_reference": "SFRS for Small Entities, paragraphs 4.4 and 4.6 — every asset that is not current is non-current.",
+          "source": "acra-standards"
+        },
+        {
+          "code": "NCA.1",
+          "parent": "NCA",
+          "name": "Property, plant and equipment",
+          "sequence": 90,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1600",
+              "code_to": "1671"
+            }
+          ],
+          "legal_reference": "SFRS for Small Entities, paragraph 4.2(e). Right-of-use assets are presented within it.",
+          "source": "acra-standards"
+        },
+        {
+          "code": "NCA.2",
+          "parent": "NCA",
+          "name": "Investment property",
+          "sequence": 100,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1700"
+            }
+          ],
+          "legal_reference": "SFRS for Small Entities, paragraph 4.2(f).",
+          "source": "acra-standards"
+        },
+        {
+          "code": "NCA.3",
+          "parent": "NCA",
+          "name": "Intangible assets",
+          "sequence": 110,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1750",
+              "code_to": "1760"
+            }
+          ],
+          "legal_reference": "SFRS for Small Entities, paragraph 4.2(g), goodwill with them.",
+          "source": "acra-standards"
+        },
+        {
+          "code": "NCA.4",
+          "parent": "NCA",
+          "name": "Investments in associates",
+          "sequence": 120,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1800"
+            }
+          ],
+          "legal_reference": "SFRS for Small Entities, paragraph 4.2(j).",
+          "source": "acra-standards"
+        },
+        {
+          "code": "NCA.5",
+          "parent": "NCA",
+          "name": "Investments in joint ventures",
+          "sequence": 130,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1810"
+            }
+          ],
+          "legal_reference": "SFRS for Small Entities, paragraph 4.2(k).",
+          "source": "acra-standards"
+        },
+        {
+          "code": "NCA.6",
+          "parent": "NCA",
+          "name": "Financial assets",
+          "sequence": 140,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1830",
+              "code_to": "1840"
+            }
+          ],
+          "legal_reference": "SFRS for Small Entities, paragraph 4.2(c), the part not realised within twelve months.",
+          "source": "acra-standards"
+        },
+        {
+          "code": "NCA.7",
+          "parent": "NCA",
+          "name": "Deferred tax assets",
+          "sequence": 150,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1900"
+            }
+          ],
+          "legal_reference": "SFRS for Small Entities, paragraph 4.2(o) — deferred tax assets are always non-current.",
+          "source": "acra-standards"
+        },
+        {
+          "code": "TA",
+          "name": "Total assets",
+          "sequence": 160,
+          "is_total": true,
+          "plus": [
+            "CA",
+            "NCA"
+          ]
+        },
+        {
+          "code": "CL",
+          "name": "Current liabilities",
+          "sequence": 170,
+          "is_total": true,
+          "plus": [
+            "CL.1",
+            "CL.2",
+            "CL.3",
+            "CL.4"
+          ],
+          "legal_reference": "SFRS for Small Entities, paragraphs 4.4, 4.7 and 4.8 — current and non-current liabilities are presented as separate classifications.",
+          "source": "acra-standards"
+        },
+        {
+          "code": "CL.1",
+          "parent": "CL",
+          "name": "Trade and other payables",
+          "sequence": 180,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "2000",
+              "code_to": "2190"
+            },
+            {
+              "kind": "account_code",
+              "code_from": "2990",
+              "side": "credit"
+            }
+          ],
+          "legal_reference": "SFRS for Small Entities, paragraph 4.2(l). GST output tax, the GST payable to IRAS, import GST owed to Singapore Customs, withholding tax, CPF contributions and the levies are presented here.",
+          "source": "acra-standards"
+        },
+        {
+          "code": "CL.2",
+          "parent": "CL",
+          "name": "Borrowings and other financial liabilities",
+          "sequence": 190,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "2200",
+              "code_to": "2250"
+            }
+          ],
+          "legal_reference": "SFRS for Small Entities, paragraph 4.2(m), the part due within twelve months, the credit card and amounts due to directors among them.",
+          "source": "acra-standards"
+        },
+        {
+          "code": "CL.3",
+          "parent": "CL",
+          "name": "Current tax liabilities",
+          "sequence": 200,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "2300"
+            }
+          ],
+          "legal_reference": "SFRS for Small Entities, paragraph 4.2(n) — liabilities for current tax.",
+          "source": "acra-standards"
+        },
+        {
+          "code": "CL.4",
+          "parent": "CL",
+          "name": "Provisions",
+          "sequence": 210,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "2350",
+              "code_to": "2360"
+            }
+          ],
+          "legal_reference": "SFRS for Small Entities, paragraph 4.2(p), the part expected to be settled within twelve months.",
+          "source": "acra-standards"
+        },
+        {
+          "code": "NCL",
+          "name": "Non-current liabilities",
+          "sequence": 220,
+          "is_total": true,
+          "plus": [
+            "NCL.1",
+            "NCL.2",
+            "NCL.3"
+          ],
+          "legal_reference": "SFRS for Small Entities, paragraph 4.8 — every liability that is not current is non-current.",
+          "source": "acra-standards"
+        },
+        {
+          "code": "NCL.1",
+          "parent": "NCL",
+          "name": "Borrowings and other financial liabilities",
+          "sequence": 230,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "2400",
+              "code_to": "2430"
+            }
+          ],
+          "legal_reference": "SFRS for Small Entities, paragraph 4.2(m), the part not due within twelve months.",
+          "source": "acra-standards"
+        },
+        {
+          "code": "NCL.2",
+          "parent": "NCL",
+          "name": "Deferred tax liabilities",
+          "sequence": 240,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "2500"
+            }
+          ],
+          "legal_reference": "SFRS for Small Entities, paragraph 4.2(o).",
+          "source": "acra-standards"
+        },
+        {
+          "code": "NCL.3",
+          "parent": "NCL",
+          "name": "Provisions",
+          "sequence": 250,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "2550"
+            }
+          ],
+          "legal_reference": "SFRS for Small Entities, paragraph 4.2(p), the part not expected to be settled within twelve months.",
+          "source": "acra-standards"
+        },
+        {
+          "code": "TL",
+          "name": "Total liabilities",
+          "sequence": 260,
+          "is_total": true,
+          "plus": [
+            "CL",
+            "NCL"
+          ]
+        },
+        {
+          "code": "NA",
+          "name": "Net assets",
+          "sequence": 270,
+          "is_total": true,
+          "plus": [
+            "TA"
+          ],
+          "minus": [
+            "TL"
+          ],
+          "legal_reference": "SFRS for Small Entities, paragraph 4.3 — an additional subtotal. It equals total equity once the year is closed; before, it exceeds equity by the result of the open year.",
+          "source": "acra-standards"
+        },
+        {
+          "code": "EQ",
+          "name": "Equity",
+          "sequence": 280,
+          "is_total": true,
+          "plus": [
+            "EQ.1",
+            "EQ.2",
+            "EQ.3"
+          ],
+          "legal_reference": "SFRS for Small Entities, paragraph 4.2(r) — equity attributable to the owners of the parent, and paragraph 4.12(b) for its classes.",
+          "source": "acra-standards"
+        },
+        {
+          "code": "EQ.1",
+          "parent": "EQ",
+          "name": "Share capital",
+          "sequence": 290,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "3000",
+              "code_to": "3010"
+            }
+          ],
+          "legal_reference": "SFRS for Small Entities, paragraph 4.12(a). Shares of a Singapore company have no par value, so share capital is one line and treasury shares are deducted from it.",
+          "source": "acra-standards"
+        },
+        {
+          "code": "EQ.2",
+          "parent": "EQ",
+          "name": "Other reserves",
+          "sequence": 300,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "3100",
+              "code_to": "3110"
+            }
+          ],
+          "legal_reference": "SFRS for Small Entities, paragraph 4.12(b).",
+          "source": "acra-standards"
+        },
+        {
+          "code": "EQ.3",
+          "parent": "EQ",
+          "name": "Retained earnings",
+          "sequence": 310,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "3200",
+              "code_to": "3210"
+            }
+          ],
+          "legal_reference": "SFRS for Small Entities, paragraph 4.12(b) — retained earnings, after the dividends paid booked beside them.",
+          "source": "acra-standards"
+        }
+      ]
+    },
+    {
+      "code": "SG-SFRSSE-IS",
+      "kind": "income_statement",
+      "framework": "SG-SFRS-SE",
+      "taxonomy": null,
+      "name": "Income statement — SFRS for Small Entities, expenses by nature",
+      "legal_reference": "Companies Act 1967, s. 201(2); SFRS for Small Entities, Section 5 — the minimum line items of the income statement (revenue, finance costs, the share of associates and joint ventures, tax expense, discontinued operations and profit or loss) and an analysis of expenses by nature or by function; this one is by nature, which a small company's ledger holds without an allocation. Paragraph numbers are those of the IFRS for SMEs Accounting Standard the SFRS for Small Entities is based on, for the reason given on the statement of financial position.",
+      "source": "companies-act",
+      "lines": [
+        {
+          "code": "1",
+          "name": "Revenue",
+          "sequence": 10,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "4000",
+              "code_to": "4030"
+            }
+          ],
+          "legal_reference": "SFRS for Small Entities, Section 5, paragraph 5.5(a).",
+          "source": "acra-standards"
+        },
+        {
+          "code": "2",
+          "name": "Other income",
+          "sequence": 20,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "4500",
+              "code_to": "4790"
+            }
+          ],
+          "legal_reference": "SFRS for Small Entities, paragraph 5.9 — an additional line item: interest, dividends, rent, grants, exchange gains and gains on disposal.",
+          "source": "acra-standards"
+        },
+        {
+          "code": "3",
+          "name": "Purchases and changes in inventories",
+          "sequence": 30,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "5000",
+              "code_to": "5100"
+            }
+          ],
+          "legal_reference": "SFRS for Small Entities, paragraph 5.11(a) — expenses analysed by their nature.",
+          "source": "acra-standards"
+        },
+        {
+          "code": "4",
+          "name": "Employee benefits expense",
+          "sequence": 40,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "6000",
+              "code_to": "6080"
+            }
+          ],
+          "legal_reference": "SFRS for Small Entities, paragraph 5.11(a) — employee benefits, CPF contributions and the levies among them.",
+          "source": "acra-standards"
+        },
+        {
+          "code": "5",
+          "name": "Depreciation and amortisation",
+          "sequence": 50,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "6200",
+              "code_to": "6220"
+            }
+          ],
+          "legal_reference": "SFRS for Small Entities, paragraph 5.11(a).",
+          "source": "acra-standards"
+        },
+        {
+          "code": "6",
+          "name": "Other operating expenses",
+          "sequence": 60,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "6300",
+              "code_to": "6990"
+            }
+          ],
+          "legal_reference": "SFRS for Small Entities, paragraph 5.11(a) — the other expenses by nature, exchange losses and losses on disposal among them.",
+          "source": "acra-standards"
+        },
+        {
+          "code": "7",
+          "name": "Finance costs",
+          "sequence": 70,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "7000",
+              "code_to": "7030"
+            }
+          ],
+          "legal_reference": "SFRS for Small Entities, paragraph 5.5(b).",
+          "source": "acra-standards"
+        },
+        {
+          "code": "8",
+          "name": "Profit before income tax",
+          "sequence": 80,
+          "is_total": true,
+          "plus": [
+            "1",
+            "2"
+          ],
+          "minus": [
+            "3",
+            "4",
+            "5",
+            "6",
+            "7"
+          ]
+        },
+        {
+          "code": "9",
+          "name": "Income tax expense",
+          "sequence": 90,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "8000",
+              "code_to": "8020"
+            }
+          ],
+          "legal_reference": "SFRS for Small Entities, paragraph 5.5(d) — tax expense.",
+          "source": "acra-standards"
+        },
+        {
+          "code": "10",
+          "name": "Profit for the year",
+          "sequence": 100,
+          "is_total": true,
+          "plus": [
+            "8"
+          ],
+          "minus": [
+            "9"
+          ],
+          "legal_reference": "SFRS for Small Entities, paragraph 5.5(f) — profit or loss. The pack carries no item of other comprehensive income, so it is also the total comprehensive income.",
+          "source": "acra-standards"
+        }
+      ]
+    }
+  ]
+}

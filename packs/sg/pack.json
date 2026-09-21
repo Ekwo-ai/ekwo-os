@@ -1,0 +1,342 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "SG",
+  "name": "Singapore",
+  "version": "0.1.0",
+  "schema_min": "20260917170000",
+  "seed_sequence": 50,
+  "released_at": "2026-09-21",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "gst-act",
+        "title": "Goods and Services Tax Act 1993, current version as at 21 September 2026",
+        "publisher": "Attorney-General's Chambers — Singapore Statutes Online",
+        "url": "https://sso.agc.gov.sg/Act/GSTA1993",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "gst-general-regs",
+        "title": "Goods and Services Tax (General) Regulations, current version as at 21 September 2026",
+        "publisher": "Attorney-General's Chambers — Singapore Statutes Online",
+        "url": "https://sso.agc.gov.sg/SL/GSTA1993-RG1",
+        "consulted_on": "2026-09-21",
+        "kind": "regulation"
+      },
+      {
+        "key": "companies-act",
+        "title": "Companies Act 1967, ss. 199, 201 and 205C",
+        "publisher": "Attorney-General's Chambers — Singapore Statutes Online",
+        "url": "https://sso.agc.gov.sg/Act/CoA1967",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "ita-1947",
+        "title": "Income Tax Act 1947, s. 45 — withholding of tax on interest and other payments to non-residents",
+        "publisher": "Attorney-General's Chambers — Singapore Statutes Online",
+        "url": "https://sso.agc.gov.sg/Act/ITA1947",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "acra-standards",
+        "title": "Accounting standards — the financial reporting frameworks issued by the Accounting Standards Committee, SFRS for Small Entities among them",
+        "publisher": "Accounting and Corporate Regulatory Authority (ACRA)",
+        "url": "https://www.acra.gov.sg/regulations/accounting-standards-financial-reporting-surveillance/accounting-standards/",
+        "consulted_on": "2026-09-21",
+        "kind": "guidance"
+      },
+      {
+        "key": "iras-f5",
+        "title": "Completing GST returns — form GST F5, boxes 1 to 21",
+        "publisher": "Inland Revenue Authority of Singapore",
+        "url": "https://www.iras.gov.sg/taxes/goods-services-tax-(gst)/filing-gst/completing-gst-returns",
+        "consulted_on": "2026-09-21",
+        "kind": "form"
+      },
+      {
+        "key": "iras-due",
+        "title": "Due dates and requests for extension",
+        "publisher": "Inland Revenue Authority of Singapore",
+        "url": "https://www.iras.gov.sg/taxes/goods-services-tax-(gst)/filing-gst/due-dates-and-requests-for-extension",
+        "consulted_on": "2026-09-21",
+        "kind": "guidance"
+      },
+      {
+        "key": "iras-periods",
+        "title": "Changing GST accounting periods",
+        "publisher": "Inland Revenue Authority of Singapore",
+        "url": "https://www.iras.gov.sg/taxes/goods-services-tax-(gst)/other-services/changing-gst-accounting-periods",
+        "consulted_on": "2026-09-21",
+        "kind": "guidance"
+      },
+      {
+        "key": "iras-rates",
+        "title": "Current GST rates — prevailing rate and historical rates since 1 April 1994",
+        "publisher": "Inland Revenue Authority of Singapore",
+        "url": "https://www.iras.gov.sg/taxes/goods-services-tax-(gst)/basics-of-gst/current-gst-rates",
+        "consulted_on": "2026-09-21",
+        "kind": "guidance"
+      },
+      {
+        "key": "iras-imports",
+        "title": "Importing of goods — claiming GST paid on imports",
+        "publisher": "Inland Revenue Authority of Singapore",
+        "url": "https://www.iras.gov.sg/taxes/goods-services-tax-(gst)/claiming-gst-(input-tax)/importing-of-goods",
+        "consulted_on": "2026-09-21",
+        "kind": "guidance"
+      },
+      {
+        "key": "iras-reverse-charge",
+        "title": "Local businesses importing services and importing or supplying low-value goods",
+        "publisher": "Inland Revenue Authority of Singapore",
+        "url": "https://www.iras.gov.sg/taxes/goods-services-tax-(gst)/gst-and-digital-economy/local-businesses",
+        "consulted_on": "2026-09-21",
+        "kind": "guidance"
+      },
+      {
+        "key": "iras-customer-accounting",
+        "title": "Customer accounting for prescribed goods",
+        "publisher": "Inland Revenue Authority of Singapore",
+        "url": "https://www.iras.gov.sg/taxes/goods-services-tax-(gst)/charging-gst-(output-tax)/when-to-charge-goods-and-services-tax-(gst)/customer-accounting-for-prescribed-goods",
+        "consulted_on": "2026-09-21",
+        "kind": "guidance"
+      },
+      {
+        "key": "iras-exempt",
+        "title": "Supplies exempt from GST",
+        "publisher": "Inland Revenue Authority of Singapore",
+        "url": "https://www.iras.gov.sg/taxes/goods-services-tax-(gst)/charging-gst-(output-tax)/when-is-gst-not-charged/supplies-exempt-from-gst",
+        "consulted_on": "2026-09-21",
+        "kind": "guidance"
+      },
+      {
+        "key": "iras-out-of-scope",
+        "title": "Out-of-scope supplies",
+        "publisher": "Inland Revenue Authority of Singapore",
+        "url": "https://www.iras.gov.sg/taxes/goods-services-tax-(gst)/charging-gst-(output-tax)/when-is-gst-not-charged/out-of-scope-supplies",
+        "consulted_on": "2026-09-21",
+        "kind": "guidance"
+      },
+      {
+        "key": "iras-exports",
+        "title": "Exporting of goods — zero-rating and the documents to keep",
+        "publisher": "Inland Revenue Authority of Singapore",
+        "url": "https://www.iras.gov.sg/taxes/goods-services-tax-(gst)/charging-gst-(output-tax)/when-to-charge-0-gst-(zero-rate)/exporting-of-goods",
+        "consulted_on": "2026-09-21",
+        "kind": "guidance"
+      },
+      {
+        "key": "iras-international-services",
+        "title": "Providing international services",
+        "publisher": "Inland Revenue Authority of Singapore",
+        "url": "https://www.iras.gov.sg/taxes/goods-services-tax-(gst)/charging-gst-(output-tax)/when-to-charge-0-gst-(zero-rate)/providing-international-services",
+        "consulted_on": "2026-09-21",
+        "kind": "guidance"
+      },
+      {
+        "key": "iras-wht-rates",
+        "title": "Types of payment and withholding tax rates",
+        "publisher": "Inland Revenue Authority of Singapore",
+        "url": "https://www.iras.gov.sg/taxes/withholding-tax/basics-of-withholding-tax/types-of-payment-and-withholding-tax-rates",
+        "consulted_on": "2026-09-21",
+        "kind": "guidance"
+      },
+      {
+        "key": "iras-invoicenow",
+        "title": "GST InvoiceNow Requirement",
+        "publisher": "Inland Revenue Authority of Singapore",
+        "url": "https://www.iras.gov.sg/taxes/goods-services-tax-(gst)/gst-invoicenow-requirement",
+        "consulted_on": "2026-09-21",
+        "kind": "guidance"
+      },
+      {
+        "key": "iras-invoicenow-guide",
+        "title": "e-Tax Guide: Adopting GST InvoiceNow Requirement for GST-registered Businesses (Second Edition, 9 March 2026)",
+        "publisher": "Inland Revenue Authority of Singapore",
+        "url": "https://www.iras.gov.sg/docs/default-source/e-tax/etaxguide_gst_invoicenow_requirement.pdf",
+        "consulted_on": "2026-09-21",
+        "kind": "guidance"
+      },
+      {
+        "key": "imda-invoicenow",
+        "title": "InvoiceNow — Singapore's nationwide e-invoicing network",
+        "publisher": "Infocomm Media Development Authority — Singapore Peppol Authority",
+        "url": "https://www.imda.gov.sg/how-we-can-help/nationwide-e-invoicing-framework/invoicenow",
+        "consulted_on": "2026-09-21",
+        "kind": "guidance"
+      },
+      {
+        "key": "pint-sg",
+        "title": "PINT SG Billing v1.4.1 — Singapore billing specification, with its GST category code list",
+        "publisher": "OpenPeppol, with IMDA as the Singapore Peppol Authority",
+        "url": "https://docs.peppol.eu/poac/sg/pint-sg/bis/",
+        "consulted_on": "2026-09-21",
+        "kind": "standard"
+      },
+      {
+        "key": "peppol-eas",
+        "title": "Electronic Address Scheme (EAS) code list — 0195, Singapore Nationwide E-Invoice Framework",
+        "publisher": "OpenPEPPOL",
+        "url": "https://docs.peppol.eu/poacc/billing/3.0/codelist/eas/",
+        "consulted_on": "2026-09-21",
+        "kind": "standard"
+      },
+      {
+        "key": "mytax",
+        "title": "myTax Portal — where form GST F5 is filed",
+        "publisher": "Inland Revenue Authority of Singapore",
+        "url": "https://mytax.iras.gov.sg/",
+        "consulted_on": "2026-09-21",
+        "kind": "portal"
+      },
+      {
+        "key": "bizfile",
+        "title": "Bizfile — the UEN, the annual return and the financial statements lodged with ACRA",
+        "publisher": "Accounting and Corporate Regulatory Authority (ACRA)",
+        "url": "https://www.bizfile.gov.sg/",
+        "consulted_on": "2026-09-21",
+        "kind": "portal"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "SGD",
+    "language": "en",
+    "rounding_method": "half_up",
+    "closing_style": "retained_earnings",
+    "fiscal_year_default": "calendar",
+    "roles": {
+      "receivable": "1100",
+      "payable": "2000",
+      "suspense": "2990",
+      "rounding": "6990",
+      "retained_earnings": "3200",
+      "sales": "4000",
+      "purchase": "5000",
+      "bank": "1010",
+      "cash": "1000",
+      "fx_gain": "4700",
+      "fx_loss": "6950",
+      "asset_disposal_gain": "4750",
+      "asset_disposal_loss": "6960",
+      "tax_payable": "2110",
+      "tax_receivable": "1155"
+    },
+    "journal_roles": {
+      "sales": "SAL",
+      "purchase": "PUR",
+      "miscellaneous": "GEN",
+      "opening": "OPN"
+    }
+  },
+  "languages": [],
+  "journals": [
+    {
+      "code": "SAL",
+      "type": "sales",
+      "name": "Sales journal",
+      "sequence": 10
+    },
+    {
+      "code": "PUR",
+      "type": "purchase",
+      "name": "Purchases journal",
+      "sequence": 20
+    },
+    {
+      "code": "BNK",
+      "type": "bank",
+      "name": "Bank",
+      "sequence": 30
+    },
+    {
+      "code": "CSH",
+      "type": "cash",
+      "name": "Petty cash",
+      "sequence": 40
+    },
+    {
+      "code": "GEN",
+      "type": "general",
+      "name": "General journal",
+      "sequence": 50
+    },
+    {
+      "code": "OPN",
+      "type": "opening",
+      "name": "Opening balances",
+      "sequence": 60
+    }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Singapore reference chart of accounts",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": [
+        "SG-SFRSSE-SFP",
+        "SG-SFRSSE-IS"
+      ],
+      "legal_reference": "There is no legal chart of accounts in Singapore. Companies Act 1967, s. 199(1) requires a company to keep such accounting and other records as will sufficiently explain its transactions and financial position and enable true and fair financial statements to be prepared, for at least five years (s. 199(2)), and prescribes no ledger; s. 201(1) and (2) require the directors to lay before the annual general meeting financial statements that comply with the Accounting Standards, which the Accounting Standards Committee under ACRA issues — SFRS(I), FRS, and SFRS for Small Entities; s. 205C exempts a small company, as the Thirteenth Schedule defines it, from audit and not from preparing statements. This chart is original: four digits, blocked so that each range reaches one line item of the SFRS for Small Entities statements, with the accounts a Singapore company actually keeps — GST input and output tax, import GST owed to Singapore Customs, CPF contributions, the Skills Development Levy and the foreign worker levy, withholding tax, amounts due to directors.",
+      "source": "companies-act"
+    }
+  ],
+  "documents": {
+    "numbering": "sequential",
+    "number_format": "{CODE}-{YYYY}-{NNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "invoice_date",
+    "references": {
+      "numbering": {
+        "legal_reference": "GST (General) Regulations, reg. 11(1)(b) — a tax invoice states an identifying number, and reg. 13(1)(b) asks the same of a simplified invoice. The regulation asks that each invoice be identified and not that the series have no gap, which is why the style is `sequential` and not a gapless one; the pattern in number_format is one a business may choose.",
+        "source": "gst-general-regs"
+      },
+      "tax_point": {
+        "legal_reference": "Goods and Services Tax Act 1993, s. 11(2) — a supply other than a reverse charge supply is treated as taking place when the supplier issues an invoice or receives any consideration for it, whichever comes first, to the extent the invoice or the consideration covers it; s. 11(3) and (4) move a sale of land, and a supplier the Comptroller allows, to removal or performance unless an invoice or a payment comes first. Delivery plays no part in the general rule. `invoice_date` is right whenever the invoice comes first, which is the ordinary case between businesses, and wrong for a deposit received before any invoice, which Ekwo has no document for.",
+        "source": "gst-act"
+      }
+    },
+    "mentions": [
+      {
+        "code": "zero_rated",
+        "applies_when": "export",
+        "text": "Zero-rated supply under section 21 of the Goods and Services Tax Act 1993.",
+        "sequence": 10,
+        "legal_reference": "GST (General) Regulations, reg. 11(3) — an invoice that includes a zero-rated or exempt supply distinguishes it from the other supplies and states the gross total of each separately. The sentence says why no GST is charged on an export of goods or an international service.",
+        "source": "gst-general-regs"
+      },
+      {
+        "code": "exempt",
+        "applies_when": "exempt",
+        "text": "Exempt supply under section 22 and the Fourth Schedule of the Goods and Services Tax Act 1993.",
+        "sequence": 20,
+        "legal_reference": "GST (General) Regulations, reg. 11(3), as for the zero-rated mention; Goods and Services Tax Act 1993, s. 22(1) and the Fourth Schedule, Part 1, name the exempt supplies.",
+        "source": "gst-general-regs"
+      },
+      {
+        "code": "customer_accounting",
+        "applies_when": "reverse_charge",
+        "text": "Customer accounting — the customer must account for and pay the GST on this supply of prescribed goods under section 38A of the Goods and Services Tax Act 1993.",
+        "sequence": 30,
+        "legal_reference": "GST (General) Regulations, reg. 11(4) — where section 38A of the Act applies, the tax invoice also includes the customer's registration number and a statement sufficient to inform the customer that it must account for and pay the tax; IRAS, Customer accounting for prescribed goods, adds the GST amount to that statement, which a sentence cannot carry and a renderer prints beside it.",
+        "source": "gst-general-regs"
+      }
+    ]
+  },
+  "einvoicing": {
+    "profile": "pint-sg",
+    "mandatory_from": null,
+    "obligation": "none",
+    "party_scheme": "0195",
+    "vat_scheme": null,
+    "legal_reference": "No Singapore statute obliges a business to send an electronic invoice to another business or to accept one, so the obligation is `none` and mandatory_from is empty. What Singapore has instead is the GST InvoiceNow Requirement: a GST-registered business submits the data of its sales and purchase invoices to IRAS through InvoiceNow, the Peppol network IMDA runs as the Singapore Peppol Authority, by the earlier of the day it files the relevant GST return and that return's due date. IRAS, GST InvoiceNow Requirement, and its e-Tax Guide (second edition, 9 March 2026, paragraph 2.3): from 1 November 2025 for companies registering voluntarily within six months of incorporation, from 1 April 2026 for every new voluntary registrant, as a condition of voluntary registration; then, in phases on 1 April 2028 (new compulsory registrants, and existing ones with annual supplies up to $200,000), 1 April 2029 (up to $1 million), 1 April 2030 (up to $4 million) and 1 April 2031 (the rest), by legislative amendments the e-Tax Guide says will be enacted at a later date. It is a transmission to the tax administration, which a buyer's invoice may or may not travel with, and not an exchange between businesses; the vocabulary has no word for it, which docs/international.md records. The profile is PINT SG Billing (customization urn:peppol:pint:billing-1@sg-1), the data format of the requirement. A party is addressed by its UEN under ICD 0195, Singapore Nationwide E-Invoice Framework, the Peppol ID the e-Tax Guide asks every business to register in the SG Peppol Directory. The GST registration number — the UEN for most companies, an M-prefixed number for others — has no ISO 6523 scheme of its own, so vat_scheme is empty. PINT SG carries its own GST category codes (SR, ZR, ES33, ESN33, OS, NG, SRCA-S, SRCA-C, SRRC and others), which are not the UNCL5305 letters vat_category holds: each tax names its PINT SG code in its legal_reference.",
+    "source": "iras-invoicenow-guide"
+  }
+}

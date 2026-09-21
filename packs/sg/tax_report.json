@@ -1,0 +1,168 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "SG-GST-F5",
+  "name": "GST return (form GST F5)",
+  "period": [
+    "month",
+    "quarter",
+    "half_year"
+  ],
+  "period_default": "quarter",
+  "valid_from": "2007-07-01",
+  "legal_reference": "GST (General) Regulations, reg. 52(1) and (2) — a registered person furnishes a return for every period of a quarter; reg. 52(3)(a) — the Comptroller may allow or direct returns for a single calendar month, for three consecutive months that are not a quarter, or for six consecutive months; reg. 52(12) — in the form the Comptroller determines, which is form GST F5 (IRAS, Completing GST returns). A quarter is what the law gives everybody, which is what period_default says. IRAS, Changing GST accounting periods: the quarters follow the month the financial year ends in — January to March, February to April or March to May — and a quarter here is always January to March; see docs/international.md. The pack carries boxes 1 to 17 as the return prints them in 2026: box 14 dates from 1 January 2020 and boxes 15 to 17 from 1 January 2023, and the boxes 18 to 21 of the Import GST Deferment Scheme appear only on the return of an approved importer and are not carried.",
+  "source": "gst-general-regs",
+  "deadline": {
+    "rule": "last_day_of_month_after_period",
+    "legal_reference": "GST (General) Regulations, reg. 52(5) — the return for a standard or special period is furnished no later than the last day of the month immediately following the end of the period; reg. 59(1) — the tax is paid by the same day. IRAS, Due dates and requests for extension: returns and payment are due one month after the end of the accounting period, 30 April for January to March.",
+    "source": "gst-general-regs"
+  },
+  "boxes": [
+    {
+      "box": "1",
+      "kind": "base",
+      "name": "Total value of standard-rated supplies",
+      "sequence": 10,
+      "legal_reference": "Form GST F5, box 1, and IRAS, Completing GST returns — the value, without GST, of supplies subject to GST at the standard rate, net of credit notes issued. It also takes the value of relevant supplies made or received under customer accounting, and of imported services and low-value goods subject to reverse charge, which is why those codes post their base here as well.",
+      "source": "iras-f5"
+    },
+    {
+      "box": "2",
+      "kind": "base",
+      "name": "Total value of zero-rated supplies",
+      "sequence": 20,
+      "legal_reference": "Form GST F5, box 2 — exports of goods and international services under s. 21(3) of the Act, net of credit notes.",
+      "source": "iras-f5"
+    },
+    {
+      "box": "3",
+      "kind": "base",
+      "name": "Total value of exempt supplies",
+      "sequence": 30,
+      "legal_reference": "Form GST F5, box 3 — sales and leases of residential property and the financial services of the Fourth Schedule, and supplies of investment precious metals and digital payment tokens. IRAS asks for the absolute value of the net exchange gain or loss of each period here too; that figure is not a document and the pack does not post it.",
+      "source": "iras-f5"
+    },
+    {
+      "box": "4",
+      "kind": "total",
+      "name": "Total value of (1) + (2) + (3)",
+      "sequence": 40,
+      "plus": [
+        "1",
+        "2",
+        "3"
+      ],
+      "legal_reference": "Form GST F5, box 4 — the total supplies of the period, which the form computes from boxes 1, 2 and 3.",
+      "source": "iras-f5"
+    },
+    {
+      "box": "5",
+      "kind": "base",
+      "name": "Total value of taxable purchases",
+      "sequence": 50,
+      "legal_reference": "Form GST F5, box 5 — standard-rated purchases whose GST can be claimed, imports at the value of the import permit, zero-rated purchases from GST-registered suppliers, and imported services and low-value goods subject to reverse charge, without GST and net of credit notes. Purchases whose input tax is disallowed, exempt purchases and purchases from suppliers that are not GST-registered are not reported.",
+      "source": "iras-f5"
+    },
+    {
+      "box": "6",
+      "kind": "tax",
+      "name": "Output tax due",
+      "sequence": 60,
+      "legal_reference": "Form GST F5, box 6 — the GST charged on the supplies of box 1, the GST a customer accounts for under customer accounting and the GST on reverse charge supplies, net of credit notes. A supplier does not report the GST of a supply under customer accounting.",
+      "source": "iras-f5"
+    },
+    {
+      "box": "7",
+      "kind": "tax",
+      "name": "Input tax and refunds claimed",
+      "sequence": 70,
+      "legal_reference": "Form GST F5, box 7 — the input tax claimable on the purchases of box 5, the GST on the import permits, the claimable part of the GST on reverse charge supplies, and the refunds of boxes 10 to 12, net of credit notes.",
+      "source": "iras-f5"
+    },
+    {
+      "box": "8",
+      "kind": "total",
+      "name": "Net GST to be paid to or claimed from IRAS",
+      "sequence": 80,
+      "plus": [
+        "6"
+      ],
+      "minus": [
+        "7"
+      ],
+      "legal_reference": "Form GST F5, box 8 — box 6 less box 7, which the form computes. Goods and Services Tax Act 1993, s. 41(7): a net amount of less than $5 either way is zero, which the pack does not apply — it reports the difference.",
+      "source": "iras-f5"
+    },
+    {
+      "box": "9",
+      "kind": "base",
+      "name": "Total value of goods imported under MES / A3PL / other approved schemes",
+      "sequence": 90,
+      "legal_reference": "Form GST F5, box 9 — filled only by a business approved under the Major Exporter Scheme, the Approved Third Party Logistics Company Scheme or another approved scheme: the value of its imports under the scheme, which are also in box 5.",
+      "source": "iras-f5"
+    },
+    {
+      "box": "10",
+      "kind": "tax",
+      "name": "Tourist refund claimed",
+      "sequence": 100,
+      "legal_reference": "Form GST F5, box 10 — 'Did you claim for GST you had refunded to tourists?', and the amount included in box 7. Declared and empty: the Tourist Refund Scheme is not a document of the ledger.",
+      "source": "iras-f5"
+    },
+    {
+      "box": "11",
+      "kind": "tax",
+      "name": "Bad debt relief and reverse charge refund claims",
+      "sequence": 110,
+      "legal_reference": "Form GST F5, box 11 — bad debt relief claims and refund claims for reverse charge transactions not paid within 12 months, included in box 7. Declared and empty: neither is a document the pack posts.",
+      "source": "iras-f5"
+    },
+    {
+      "box": "12",
+      "kind": "tax",
+      "name": "Pre-registration claims",
+      "sequence": 120,
+      "legal_reference": "Form GST F5, box 12 — input tax claimed on purchases made before registration, in the first return only. Declared and empty.",
+      "source": "iras-f5"
+    },
+    {
+      "box": "13",
+      "kind": "base",
+      "name": "Revenue",
+      "sequence": 130,
+      "legal_reference": "Form GST F5, box 13 — the revenue of the period from the profit and loss account: sales of goods, services and other operating income, excluding disposals of fixed assets and grants. It is an accounting figure and not a tax base, and IRAS accepts a best estimate; no tax posts to it, so it is declared and empty. See docs/international.md.",
+      "source": "iras-f5"
+    },
+    {
+      "box": "14",
+      "kind": "base",
+      "name": "Value of imported services and low-value goods subject to reverse charge",
+      "sequence": 140,
+      "legal_reference": "Form GST F5, box 14 — filled by a business that must account for GST under the reverse charge: the value of those services and goods, which is also in box 1 and box 5.",
+      "source": "iras-f5"
+    },
+    {
+      "box": "15",
+      "kind": "base",
+      "name": "Remote services supplied as an electronic marketplace operator",
+      "sequence": 150,
+      "legal_reference": "Form GST F5, box 15 — the value of remote services an electronic marketplace operator supplies on behalf of third-party suppliers, also in box 1. Declared and empty: the pack carries no marketplace code.",
+      "source": "iras-f5"
+    },
+    {
+      "box": "16",
+      "kind": "base",
+      "name": "Low-value goods supplied as a redeliverer or electronic marketplace operator",
+      "sequence": 160,
+      "legal_reference": "Form GST F5, box 16 — the value of imported low-value goods a redeliverer or electronic marketplace operator supplies on behalf of third-party suppliers, also in box 1. Declared and empty.",
+      "source": "iras-f5"
+    },
+    {
+      "box": "17",
+      "kind": "base",
+      "name": "Own supplies of imported low-value goods",
+      "sequence": 170,
+      "legal_reference": "Form GST F5, box 17 — the value of the supplier's own supplies of imported low-value goods subject to GST, also in box 1. Declared and empty: such a supply is a standard-rated sale the pack posts to box 1 alone.",
+      "source": "iras-f5"
+    }
+  ]
+}

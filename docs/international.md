@@ -2468,3 +2468,83 @@ One more observation beside those. The tax point is the earlier of the invoice
 and the first payment (s. 29-5(1)), delivery playing no part; the vocabulary has
 `earliest_of_delivery_or_payment` and not its invoice counterpart, so the pack
 declares `invoice_date`, which is right whenever the invoice comes first.
+
+## Singapore
+
+The first pack of Asia, `packs/sg/`, `community`, seed 50. Written from
+published sources alone on 21 September 2026: an original chart of 142 accounts
+blocked onto the statements of SFRS for Small Entities, 36 taxes — the 7 %, 8 %
+and 9 % of s. 16 of the Goods and Services Tax Act 1993 as three codes each,
+zero-rated exports and international services, the exempt financial and
+residential supplies of the Fourth Schedule, out-of-scope supplies, disallowed
+input tax, import GST paid to Singapore Customs and suspended under MES, the
+reverse charge of s. 14 in its claimable and non-claimable halves, customer
+accounting of s. 38A on both sides, and withholding on interest and royalties
+paid to non-residents — form GST F5 with boxes 1 to 17, and a register of
+twenty-four texts. The pack's own [`README`](../packs/sg/README.md) says where
+each rule comes from, which text could not be read, and ends on the points a
+reviewer should read first. It is written to be the model of the next packs of
+the region.
+
+### From Singapore
+
+Five things the format could not say, none of them patched: each is contoured
+inside the pack and written down here.
+
+**A transmission to the tax administration is not an exchange between
+businesses.** The GST InvoiceNow Requirement obliges a GST-registered business
+to send the data of its sales and purchase invoices to IRAS through the Peppol
+network — for new voluntary registrants since 1 November 2025 and 1 April 2026,
+for everybody else in phases from 1 April 2028 to 1 April 2031 by amendments
+still to be enacted (IRAS e-Tax Guide, second edition, 9 March 2026). It binds
+the seller and the buyer alike, by registration status and turnover, and says
+nothing about what the customer receives. `einvoicing.obligation` has three
+words for whether businesses must exchange invoices between themselves, and none
+for a report to the administration that travels on the same network. The pack
+declares `none` and writes every date in the legal reference. *Fix*: a second
+field beside `obligation` — `clearance` or `reporting`, with its own phased
+dates per class of taxpayer; Malaysia's MyInvois and several other Asian
+regimes will want the same.
+
+**A Peppol profile with its own category codes.** PINT SG reports the GST
+category of a line as SR, ZR, ES33, ESN33, OS, NG, SRCA-S, SRCA-C, SRRC and a
+few more — not the UNCL5305 letters — and `vat_category` is a two-character
+UNCL5305 code. The pack declares the UNCL5305 letter its treatment requires and
+names the PINT SG code in each tax's legal reference, so an application cannot
+read it. *Fix*: a `profile_category` beside `vat_category`, free-text within the
+profile's own code list and checked for shape only, as `reason_codes` already is.
+
+**A box that is not a tax base.** Box 13 of the F5 is the period's revenue from
+the profit and loss account, which IRAS accepts as an estimate. No tax posts to
+it, and a box can only be summed from tax postings or computed from other boxes.
+The pack declares it and leaves it empty. *Fix*: a box summed from accounts —
+the statement rules `code_range` and `account_type` are already the vocabulary —
+read by `vat_return()` over the period.
+
+**Quarters that do not start in January.** Reg. 52(2) makes the quarter the
+standard period, and IRAS aligns the quarters on the month the financial year
+ends in: February to April, May to July and so on for a January year end, March
+to May for a February one. The six cadences of the core are anchored on
+1 January, so a company whose quarters start in February files on a cadence the
+core calls none of them, and `vat_return()` lets the period through without the
+guard. *Fix*: an anchor month on `company_filing_periods`, defaulting to January.
+
+**A rule that zeroes a small net amount.** Section 41(7) of the Act makes a net
+amount of tax, payable or repayable, zero when it is under $5. A total is a list
+of boxes with a floor at zero and nothing else, so box 8 reports the difference
+as it is. *Fix*: none needed in the return — the rule is IRAS's to apply when it
+assesses — but `settle_filing()` would book a sub-$5 balance that is never paid.
+
+One more observation beside those. The SFRS for Small Entities text is served
+to Singapore IP addresses only, so the statements carry the paragraph numbers of
+the IFRS for SMEs Accounting Standard it is based on; the README puts this first
+among the points to review.
+
+**One test the pack turns red without being at fault.** `tests/cli/bootstrap.test.ts`,
+"offers the packs it holds", expects `installedPacks()` in the order of
+JavaScript's `localeCompare`, and `installedPacks()` orders by `name` in SQL,
+whose collation compares bytes: `Sénégal` sorts before `Singapore` in the first
+and after it in the second, since `é` is two bytes above `i`. No pack before this
+one had a name between the two. The pack does not touch the socle or the test.
+*Fix*: order the same way on both sides — `order by name collate "C"` against a
+plain `<` comparison in the test, or `localeCompare` in `installedPacks()`.

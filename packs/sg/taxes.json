@@ -1,0 +1,1570 @@
+[
+  {
+    "code": "SG-S-SR-7",
+    "name": "Sale, standard-rated, GST 7 %",
+    "description": "A taxable supply made in Singapore",
+    "kind": "gst",
+    "rate": 7,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2007-07-01",
+    "valid_to": "2022-12-31",
+    "legal_reference": "Goods and Services Tax Act 1993, s. 16(c) — 7 % for the period from 1 July 2007 to 31 December 2022, as amended by Act 35 of 2022; IRAS, Current GST rates, gives the same three periods. A new rate is a new code and the old one closes the day before, so a return of a past period keeps giving the same answer. The value without GST is reported in box 1 of form GST F5 and the GST charged in box 6 (IRAS, Completing GST returns, boxes 1 and 6). PINT SG category SR.",
+    "source": "gst-act",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "1"
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "6"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "1",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "6",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 10
+  },
+  {
+    "code": "SG-S-SR-8",
+    "name": "Sale, standard-rated, GST 8 %",
+    "description": "A taxable supply made in Singapore",
+    "kind": "gst",
+    "rate": 8,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2023-01-01",
+    "valid_to": "2023-12-31",
+    "legal_reference": "Goods and Services Tax Act 1993, s. 16(ca) — 8 % for the period from 1 January 2023 to 31 December 2023, as amended by Act 35 of 2022; IRAS, Current GST rates, gives the same three periods. A new rate is a new code and the old one closes the day before, so a return of a past period keeps giving the same answer. The value without GST is reported in box 1 of form GST F5 and the GST charged in box 6 (IRAS, Completing GST returns, boxes 1 and 6). PINT SG category SR.",
+    "source": "gst-act",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "1"
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "6"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "1",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "6",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 20
+  },
+  {
+    "code": "SG-S-SR-9",
+    "name": "Sale, standard-rated, GST 9 %",
+    "description": "A taxable supply made in Singapore",
+    "kind": "gst",
+    "rate": 9,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2024-01-01",
+    "legal_reference": "Goods and Services Tax Act 1993, s. 16(cb) — 9 % from and including 1 January 2024, as amended by Act 35 of 2022; IRAS, Current GST rates, gives the same three periods. A new rate is a new code and the old one closes the day before, so a return of a past period keeps giving the same answer. The value without GST is reported in box 1 of form GST F5 and the GST charged in box 6 (IRAS, Completing GST returns, boxes 1 and 6). PINT SG category SR.",
+    "source": "gst-act",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "1"
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "6"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "1",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "6",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 30
+  },
+  {
+    "code": "SG-S-SR-INC-7",
+    "name": "Retail sale, standard-rated, GST 7 %, the price includes the GST",
+    "description": "For a price displayed with the GST in it, as a shop price is",
+    "kind": "gst",
+    "rate": 7,
+    "scope": "sale",
+    "treatment": "domestic",
+    "price_include": true,
+    "valid_from": "2007-07-01",
+    "valid_to": "2022-12-31",
+    "legal_reference": "Goods and Services Tax Act 1993, s. 16(c) — 7 % for the period from 1 July 2007 to 31 December 2022, as amended by Act 35 of 2022; IRAS, Current GST rates, gives the same three periods. A new rate is a new code and the old one closes the day before, so a return of a past period keeps giving the same answer. GST (General) Regulations, reg. 77(1) — a price a taxable person displays, advertises, publishes or quotes includes the tax chargeable, unless the Comptroller approves otherwise; reg. 77(3) — except a quotation made solely for a supply to a taxable person and not ordinarily available to the public. The engine takes the GST out of the gross, rounded once, and box 1 takes the value left, box 6 the GST. PINT SG category SR.",
+    "source": "gst-general-regs",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "1"
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "6"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "1",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "6",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 40
+  },
+  {
+    "code": "SG-S-SR-INC-8",
+    "name": "Retail sale, standard-rated, GST 8 %, the price includes the GST",
+    "description": "For a price displayed with the GST in it, as a shop price is",
+    "kind": "gst",
+    "rate": 8,
+    "scope": "sale",
+    "treatment": "domestic",
+    "price_include": true,
+    "valid_from": "2023-01-01",
+    "valid_to": "2023-12-31",
+    "legal_reference": "Goods and Services Tax Act 1993, s. 16(ca) — 8 % for the period from 1 January 2023 to 31 December 2023, as amended by Act 35 of 2022; IRAS, Current GST rates, gives the same three periods. A new rate is a new code and the old one closes the day before, so a return of a past period keeps giving the same answer. GST (General) Regulations, reg. 77(1) — a price a taxable person displays, advertises, publishes or quotes includes the tax chargeable, unless the Comptroller approves otherwise; reg. 77(3) — except a quotation made solely for a supply to a taxable person and not ordinarily available to the public. The engine takes the GST out of the gross, rounded once, and box 1 takes the value left, box 6 the GST. PINT SG category SR.",
+    "source": "gst-general-regs",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "1"
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "6"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "1",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "6",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 50
+  },
+  {
+    "code": "SG-S-SR-INC-9",
+    "name": "Retail sale, standard-rated, GST 9 %, the price includes the GST",
+    "description": "For a price displayed with the GST in it, as a shop price is",
+    "kind": "gst",
+    "rate": 9,
+    "scope": "sale",
+    "treatment": "domestic",
+    "price_include": true,
+    "valid_from": "2024-01-01",
+    "legal_reference": "Goods and Services Tax Act 1993, s. 16(cb) — 9 % from and including 1 January 2024, as amended by Act 35 of 2022; IRAS, Current GST rates, gives the same three periods. A new rate is a new code and the old one closes the day before, so a return of a past period keeps giving the same answer. GST (General) Regulations, reg. 77(1) — a price a taxable person displays, advertises, publishes or quotes includes the tax chargeable, unless the Comptroller approves otherwise; reg. 77(3) — except a quotation made solely for a supply to a taxable person and not ordinarily available to the public. The engine takes the GST out of the gross, rounded once, and box 1 takes the value left, box 6 the GST. PINT SG category SR.",
+    "source": "gst-general-regs",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "1"
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "6"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "1",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "6",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 60
+  },
+  {
+    "code": "SG-S-ZR-EXP",
+    "name": "Export of goods, zero-rated",
+    "description": "Goods exported out of Singapore",
+    "kind": "gst",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2007-07-01",
+    "conditions": [
+      "transport_evidence"
+    ],
+    "legal_reference": "Goods and Services Tax Act 1993, s. 21(1) — a supply of goods is zero-rated if the goods are exported; s. 21(2) — no tax is charged and the supply is in all other respects a taxable supply, at a rate of nil. The supplier must hold the export documents IRAS lists (Exporting of goods). Box 2 of form GST F5, and nothing in box 6. PINT SG category ZR.",
+    "source": "gst-act",
+    "vat_category": "G",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "2"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "2",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 70
+  },
+  {
+    "code": "SG-S-ZR-INTL",
+    "name": "International service, zero-rated",
+    "description": "A service of one of the descriptions of s. 21(3)",
+    "kind": "gst",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2007-07-01",
+    "conditions": [
+      "supply_nature",
+      "buyer_status"
+    ],
+    "legal_reference": "Goods and Services Tax Act 1993, s. 21(1) and s. 21(3) — a supply of services is zero-rated only if it is an international service, and s. 21(3) lists the descriptions, among them (j): services supplied under a contract with a person who belongs outside Singapore and which directly benefit a person who belongs outside Singapore and is outside Singapore when they are performed, or a GST-registered person in Singapore. Which paragraph applies depends on the service and on where the customer belongs, which the ledger does not hold. Box 2 of form GST F5. PINT SG category ZR.",
+    "source": "gst-act",
+    "vat_category": "G",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "2"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "2",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 80
+  },
+  {
+    "code": "SG-S-ES-FIN",
+    "name": "Financial service, exempt",
+    "description": "An exempt supply of financial services",
+    "kind": "gst",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2007-07-01",
+    "conditions": [
+      "supply_nature"
+    ],
+    "legal_reference": "Goods and Services Tax Act 1993, s. 22(1) and Fourth Schedule, Part 1, paragraph 1 — the financial services listed there, among them the operation of an account, the exchange of currency, the issue or transfer of a debt or equity security and the provision of any loan, advance or credit, are exempt supplies. Box 3 of form GST F5. PINT SG category ES33 or ESN33, as reg. 33 of the GST (General) Regulations classifies the supply.",
+    "source": "gst-act",
+    "vat_category": "E",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "3"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "3",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 90
+  },
+  {
+    "code": "SG-S-ES-RES",
+    "name": "Sale or lease of residential property, exempt",
+    "description": "An exempt supply of residential land or buildings",
+    "kind": "gst",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2007-07-01",
+    "conditions": [
+      "supply_nature"
+    ],
+    "legal_reference": "Goods and Services Tax Act 1993, s. 22(1) and Fourth Schedule, Part 1, paragraph 2 — the grant, assignment or surrender of an interest in or right over land used or to be used principally for residential purposes, or of a licence to occupy it, is an exempt supply, the letting of a flat included. Box 3 of form GST F5. PINT SG category ESN33.",
+    "source": "gst-act",
+    "vat_category": "E",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "3"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "3",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 100
+  },
+  {
+    "code": "SG-S-OS",
+    "name": "Out-of-scope supply",
+    "description": "Goods delivered from a place outside Singapore to another place outside Singapore, and other supplies outside the Act",
+    "kind": "gst",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "not_subject",
+    "valid_from": "2007-07-01",
+    "legal_reference": "IRAS, Completing GST returns, box 1 — 'out-of-scope supplies', such as goods shipped from a place outside Singapore to another place outside Singapore, are not reported in the return; IRAS, Out-of-scope supplies. No box of form GST F5. PINT SG category OS.",
+    "source": "iras-f5",
+    "vat_category": "O",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        }
+      ]
+    },
+    "sequence": 110
+  },
+  {
+    "code": "SG-S-CA",
+    "name": "Sale of prescribed goods subject to customer accounting",
+    "description": "Mobile phones, memory cards or off-the-shelf software above $10,000, sold to a GST-registered business customer",
+    "kind": "gst",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "domestic_reverse_charge",
+    "valid_from": "2019-01-01",
+    "conditions": [
+      "supply_nature",
+      "buyer_status"
+    ],
+    "legal_reference": "Goods and Services Tax Act 1993, s. 38A(1) and (2) — on a relevant supply to a GST-registered customer in connection with its business, the customer accounts for and pays the tax as if it were the supplier, and the supplier must not require payment of the tax; GST (General) Regulations, reg. 66A — the prescribed goods are mobile phones, memory cards and off-the-shelf software; reg. 66C(1) — the threshold is $10,000; reg. 11(4) — the tax invoice also carries the customer's registration number and a statement that the customer must account for the tax. IRAS, Customer accounting for prescribed goods: in force from 1 January 2019; the supplier reports the value without GST in box 1 and nothing in box 6. PINT SG category SRCA-S.",
+    "source": "gst-act",
+    "vat_category": "AE",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "1"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "1",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 120
+  },
+  {
+    "code": "SG-P-TX-7",
+    "name": "Purchase, standard-rated, GST 7 %",
+    "description": "A taxable purchase whose GST is claimed as input tax",
+    "kind": "gst",
+    "rate": 7,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2007-07-01",
+    "valid_to": "2022-12-31",
+    "legal_reference": "Goods and Services Tax Act 1993, s. 16(c) — 7 % for the period from 1 July 2007 to 31 December 2022, as amended by Act 35 of 2022; IRAS, Current GST rates, gives the same three periods. A new rate is a new code and the old one closes the day before, so a return of a past period keeps giving the same answer. Goods and Services Tax Act 1993, s. 19 and s. 20 — input tax on a supply used for making taxable supplies is credited against output tax, on a valid tax invoice (IRAS, Conditions for claiming input tax). Box 5 takes the value without GST and box 7 the input tax. A capital purchase is reported in the same boxes: form GST F5 has no box for it.",
+    "source": "gst-act",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "5"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "7"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "5",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "7",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 130
+  },
+  {
+    "code": "SG-P-TX-8",
+    "name": "Purchase, standard-rated, GST 8 %",
+    "description": "A taxable purchase whose GST is claimed as input tax",
+    "kind": "gst",
+    "rate": 8,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2023-01-01",
+    "valid_to": "2023-12-31",
+    "legal_reference": "Goods and Services Tax Act 1993, s. 16(ca) — 8 % for the period from 1 January 2023 to 31 December 2023, as amended by Act 35 of 2022; IRAS, Current GST rates, gives the same three periods. A new rate is a new code and the old one closes the day before, so a return of a past period keeps giving the same answer. Goods and Services Tax Act 1993, s. 19 and s. 20 — input tax on a supply used for making taxable supplies is credited against output tax, on a valid tax invoice (IRAS, Conditions for claiming input tax). Box 5 takes the value without GST and box 7 the input tax. A capital purchase is reported in the same boxes: form GST F5 has no box for it.",
+    "source": "gst-act",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "5"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "7"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "5",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "7",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 140
+  },
+  {
+    "code": "SG-P-TX-9",
+    "name": "Purchase, standard-rated, GST 9 %",
+    "description": "A taxable purchase whose GST is claimed as input tax",
+    "kind": "gst",
+    "rate": 9,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2024-01-01",
+    "legal_reference": "Goods and Services Tax Act 1993, s. 16(cb) — 9 % from and including 1 January 2024, as amended by Act 35 of 2022; IRAS, Current GST rates, gives the same three periods. A new rate is a new code and the old one closes the day before, so a return of a past period keeps giving the same answer. Goods and Services Tax Act 1993, s. 19 and s. 20 — input tax on a supply used for making taxable supplies is credited against output tax, on a valid tax invoice (IRAS, Conditions for claiming input tax). Box 5 takes the value without GST and box 7 the input tax. A capital purchase is reported in the same boxes: form GST F5 has no box for it.",
+    "source": "gst-act",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "5"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "7"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "5",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "7",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 150
+  },
+  {
+    "code": "SG-P-BL-7",
+    "name": "Purchase, GST 7 %, input tax disallowed",
+    "description": "Motor cars, club subscriptions, staff medical expenses and insurance, family benefits, betting",
+    "kind": "gst",
+    "rate": 7,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "recoverable": false,
+    "valid_from": "2007-07-01",
+    "valid_to": "2022-12-31",
+    "conditions": [
+      "supply_nature"
+    ],
+    "legal_reference": "Goods and Services Tax Act 1993, s. 16(c) — 7 % for the period from 1 July 2007 to 31 December 2022, as amended by Act 35 of 2022; IRAS, Current GST rates, gives the same three periods. A new rate is a new code and the old one closes the day before, so a return of a past period keeps giving the same answer. GST (General) Regulations, reg. 26 — input tax on club subscription fees, medical and accident insurance premiums, medical expenses, family benefits and betting is excluded from credit; reg. 27 — so is input tax on a motor car and on goods and services directly in connection with it, with the exceptions that regulation lists. The GST is part of the cost and lands on the account of the line. IRAS, Completing GST returns, box 5: expenses where input tax is disallowed are not reported, so this code reaches no box.",
+    "source": "gst-general-regs",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax_on_base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax_on_base"
+        }
+      ]
+    },
+    "sequence": 160
+  },
+  {
+    "code": "SG-P-BL-8",
+    "name": "Purchase, GST 8 %, input tax disallowed",
+    "description": "Motor cars, club subscriptions, staff medical expenses and insurance, family benefits, betting",
+    "kind": "gst",
+    "rate": 8,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "recoverable": false,
+    "valid_from": "2023-01-01",
+    "valid_to": "2023-12-31",
+    "conditions": [
+      "supply_nature"
+    ],
+    "legal_reference": "Goods and Services Tax Act 1993, s. 16(ca) — 8 % for the period from 1 January 2023 to 31 December 2023, as amended by Act 35 of 2022; IRAS, Current GST rates, gives the same three periods. A new rate is a new code and the old one closes the day before, so a return of a past period keeps giving the same answer. GST (General) Regulations, reg. 26 — input tax on club subscription fees, medical and accident insurance premiums, medical expenses, family benefits and betting is excluded from credit; reg. 27 — so is input tax on a motor car and on goods and services directly in connection with it, with the exceptions that regulation lists. The GST is part of the cost and lands on the account of the line. IRAS, Completing GST returns, box 5: expenses where input tax is disallowed are not reported, so this code reaches no box.",
+    "source": "gst-general-regs",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax_on_base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax_on_base"
+        }
+      ]
+    },
+    "sequence": 170
+  },
+  {
+    "code": "SG-P-BL-9",
+    "name": "Purchase, GST 9 %, input tax disallowed",
+    "description": "Motor cars, club subscriptions, staff medical expenses and insurance, family benefits, betting",
+    "kind": "gst",
+    "rate": 9,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "recoverable": false,
+    "valid_from": "2024-01-01",
+    "conditions": [
+      "supply_nature"
+    ],
+    "legal_reference": "Goods and Services Tax Act 1993, s. 16(cb) — 9 % from and including 1 January 2024, as amended by Act 35 of 2022; IRAS, Current GST rates, gives the same three periods. A new rate is a new code and the old one closes the day before, so a return of a past period keeps giving the same answer. GST (General) Regulations, reg. 26 — input tax on club subscription fees, medical and accident insurance premiums, medical expenses, family benefits and betting is excluded from credit; reg. 27 — so is input tax on a motor car and on goods and services directly in connection with it, with the exceptions that regulation lists. The GST is part of the cost and lands on the account of the line. IRAS, Completing GST returns, box 5: expenses where input tax is disallowed are not reported, so this code reaches no box.",
+    "source": "gst-general-regs",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax_on_base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax_on_base"
+        }
+      ]
+    },
+    "sequence": 180
+  },
+  {
+    "code": "SG-P-ZR",
+    "name": "Purchase, zero-rated",
+    "description": "A zero-rated purchase from a GST-registered supplier: international freight, air tickets",
+    "kind": "gst",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2007-07-01",
+    "legal_reference": "IRAS, Completing GST returns, box 5 — the value of zero-rated purchases from GST-registered suppliers, such as international freight and air tickets, is a taxable purchase and is reported in box 5; there is no input tax. Goods and Services Tax Act 1993, s. 21(2): a zero-rated supply is a taxable supply at a rate of nil.",
+    "source": "iras-f5",
+    "vat_category": "Z",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "5"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "5",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 190
+  },
+  {
+    "code": "SG-P-ES",
+    "name": "Purchase, exempt",
+    "description": "Bank charges, interest, residential rent",
+    "kind": "gst",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "exempt",
+    "valid_from": "2007-07-01",
+    "legal_reference": "Goods and Services Tax Act 1993, s. 22(1) and Fourth Schedule, Part 1 — the supply bought is exempt. IRAS, Completing GST returns, box 5: purchases exempted from GST, such as bank charges and the purchase or lease of residential property, are not reported.",
+    "source": "gst-act",
+    "vat_category": "E",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        }
+      ]
+    },
+    "sequence": 200
+  },
+  {
+    "code": "SG-P-NR",
+    "name": "Purchase with no GST — supplier not registered or supply out of scope",
+    "description": "A supplier who is not GST-registered, a government fee, a supply outside the Act",
+    "kind": "gst",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "not_subject",
+    "valid_from": "2007-07-01",
+    "legal_reference": "IRAS, Completing GST returns, box 5 — purchases from businesses that are not GST-registered are not reported; no tax is charged on them and none may be claimed. PINT SG category NG on the supplier's side where it issues one.",
+    "source": "iras-f5",
+    "vat_category": "O",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        }
+      ]
+    },
+    "sequence": 210
+  },
+  {
+    "code": "SG-P-IMP-7",
+    "name": "Import of goods, GST 7 % paid to Singapore Customs",
+    "description": "Import GST shown on the import permit and claimed as input tax",
+    "kind": "gst",
+    "rate": 7,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2007-07-01",
+    "valid_to": "2022-12-31",
+    "legal_reference": "Goods and Services Tax Act 1993, s. 16(c) — 7 % for the period from 1 July 2007 to 31 December 2022, as amended by Act 35 of 2022; IRAS, Current GST rates, gives the same three periods. A new rate is a new code and the old one closes the day before, so a return of a past period keeps giving the same answer. Goods and Services Tax Act 1993, s. 16(e) — tax is charged on the importation of goods by reference to their value under s. 18; IRAS, Importing of goods — import GST is collected by Singapore Customs on the value plus duties, and is claimed on the import permit: its value in box 5, its GST in box 7. The GST is owed to Singapore Customs and not to the supplier, so it waits on 2125 until the permit is paid; it reaches no output box. The pack computes it on the value of the line, which is the import permit value only when the two agree — IRAS asks for them to be reconciled when they do not.",
+    "source": "iras-imports",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "5"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "7"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2125"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "5",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "7",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2125"
+        }
+      ]
+    },
+    "sequence": 220
+  },
+  {
+    "code": "SG-P-IMP-8",
+    "name": "Import of goods, GST 8 % paid to Singapore Customs",
+    "description": "Import GST shown on the import permit and claimed as input tax",
+    "kind": "gst",
+    "rate": 8,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2023-01-01",
+    "valid_to": "2023-12-31",
+    "legal_reference": "Goods and Services Tax Act 1993, s. 16(ca) — 8 % for the period from 1 January 2023 to 31 December 2023, as amended by Act 35 of 2022; IRAS, Current GST rates, gives the same three periods. A new rate is a new code and the old one closes the day before, so a return of a past period keeps giving the same answer. Goods and Services Tax Act 1993, s. 16(e) — tax is charged on the importation of goods by reference to their value under s. 18; IRAS, Importing of goods — import GST is collected by Singapore Customs on the value plus duties, and is claimed on the import permit: its value in box 5, its GST in box 7. The GST is owed to Singapore Customs and not to the supplier, so it waits on 2125 until the permit is paid; it reaches no output box. The pack computes it on the value of the line, which is the import permit value only when the two agree — IRAS asks for them to be reconciled when they do not.",
+    "source": "iras-imports",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "5"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "7"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2125"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "5",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "7",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2125"
+        }
+      ]
+    },
+    "sequence": 230
+  },
+  {
+    "code": "SG-P-IMP-9",
+    "name": "Import of goods, GST 9 % paid to Singapore Customs",
+    "description": "Import GST shown on the import permit and claimed as input tax",
+    "kind": "gst",
+    "rate": 9,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2024-01-01",
+    "legal_reference": "Goods and Services Tax Act 1993, s. 16(cb) — 9 % from and including 1 January 2024, as amended by Act 35 of 2022; IRAS, Current GST rates, gives the same three periods. A new rate is a new code and the old one closes the day before, so a return of a past period keeps giving the same answer. Goods and Services Tax Act 1993, s. 16(e) — tax is charged on the importation of goods by reference to their value under s. 18; IRAS, Importing of goods — import GST is collected by Singapore Customs on the value plus duties, and is claimed on the import permit: its value in box 5, its GST in box 7. The GST is owed to Singapore Customs and not to the supplier, so it waits on 2125 until the permit is paid; it reaches no output box. The pack computes it on the value of the line, which is the import permit value only when the two agree — IRAS asks for them to be reconciled when they do not.",
+    "source": "iras-imports",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "5"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "7"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2125"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "5",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "7",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2125"
+        }
+      ]
+    },
+    "sequence": 240
+  },
+  {
+    "code": "SG-P-IMP-SUSP",
+    "name": "Import of goods, GST suspended under MES, A3PL or another approved scheme",
+    "description": "An import by a business approved under the Major Exporter Scheme or a similar scheme",
+    "kind": "gst",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2007-07-01",
+    "conditions": [
+      "buyer_status"
+    ],
+    "legal_reference": "IRAS, Completing GST returns, box 9 — a business approved under the Major Exporter Scheme, the Approved Third Party Logistics Company Scheme or another approved scheme reports the value of its imports under the scheme in box 9 and in box 5, since it is still a taxable import; the GST is suspended, so there is nothing in box 7. GST (General) Regulations, regs. 45 and 45A.",
+    "source": "iras-f5",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": [
+            "5",
+            "9"
+          ]
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": [
+            "5",
+            "9"
+          ],
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 250
+  },
+  {
+    "code": "SG-P-RC-7",
+    "name": "Imported service or low-value goods, reverse charge, GST 7 %, claimable",
+    "description": "For a business not entitled to full input tax: the share attributable to taxable supplies",
+    "kind": "gst",
+    "rate": 7,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2020-01-01",
+    "valid_to": "2022-12-31",
+    "conditions": [
+      "buyer_status"
+    ],
+    "legal_reference": "Goods and Services Tax Act 1993, s. 16(c) — 7 % for the period from 1 July 2007 to 31 December 2022, as amended by Act 35 of 2022; IRAS, Current GST rates, gives the same three periods. A new rate is a new code and the old one closes the day before, so a return of a past period keeps giving the same answer. Goods and Services Tax Act 1993, s. 14(1)(b) and (2) — a GST-registered recipient belonging in Singapore that is not entitled to credit for the full amount of its input tax accounts for tax on services supplied by a person belonging outside Singapore as if it had supplied them itself; s. 14(1)(a) extends this to distantly taxable goods, the low-value goods, from 1 January 2023. IRAS, Local businesses importing services: in force from 1 January 2020; IRAS, Completing GST returns: the value in box 1, box 14 and box 5, the GST in box 6, and in box 7 the part the input tax recovery rules allow. This code is for an acquisition wholly used for taxable supplies, whose GST is claimed in full. PINT SG category SRRC on the recipient's own record.",
+    "source": "gst-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": [
+            "5",
+            "1",
+            "14"
+          ]
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "7"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2100",
+          "box": "6"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": [
+            "5",
+            "1",
+            "14"
+          ],
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "7",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2100",
+          "box": "6",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 260
+  },
+  {
+    "code": "SG-P-RC-8",
+    "name": "Imported service or low-value goods, reverse charge, GST 8 %, claimable",
+    "description": "For a business not entitled to full input tax: the share attributable to taxable supplies",
+    "kind": "gst",
+    "rate": 8,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2023-01-01",
+    "valid_to": "2023-12-31",
+    "conditions": [
+      "buyer_status"
+    ],
+    "legal_reference": "Goods and Services Tax Act 1993, s. 16(ca) — 8 % for the period from 1 January 2023 to 31 December 2023, as amended by Act 35 of 2022; IRAS, Current GST rates, gives the same three periods. A new rate is a new code and the old one closes the day before, so a return of a past period keeps giving the same answer. Goods and Services Tax Act 1993, s. 14(1)(b) and (2) — a GST-registered recipient belonging in Singapore that is not entitled to credit for the full amount of its input tax accounts for tax on services supplied by a person belonging outside Singapore as if it had supplied them itself; s. 14(1)(a) extends this to distantly taxable goods, the low-value goods, from 1 January 2023. IRAS, Local businesses importing services: in force from 1 January 2020; IRAS, Completing GST returns: the value in box 1, box 14 and box 5, the GST in box 6, and in box 7 the part the input tax recovery rules allow. This code is for an acquisition wholly used for taxable supplies, whose GST is claimed in full. PINT SG category SRRC on the recipient's own record.",
+    "source": "gst-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": [
+            "5",
+            "1",
+            "14"
+          ]
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "7"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2100",
+          "box": "6"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": [
+            "5",
+            "1",
+            "14"
+          ],
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "7",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2100",
+          "box": "6",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 270
+  },
+  {
+    "code": "SG-P-RC-9",
+    "name": "Imported service or low-value goods, reverse charge, GST 9 %, claimable",
+    "description": "For a business not entitled to full input tax: the share attributable to taxable supplies",
+    "kind": "gst",
+    "rate": 9,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2024-01-01",
+    "conditions": [
+      "buyer_status"
+    ],
+    "legal_reference": "Goods and Services Tax Act 1993, s. 16(cb) — 9 % from and including 1 January 2024, as amended by Act 35 of 2022; IRAS, Current GST rates, gives the same three periods. A new rate is a new code and the old one closes the day before, so a return of a past period keeps giving the same answer. Goods and Services Tax Act 1993, s. 14(1)(b) and (2) — a GST-registered recipient belonging in Singapore that is not entitled to credit for the full amount of its input tax accounts for tax on services supplied by a person belonging outside Singapore as if it had supplied them itself; s. 14(1)(a) extends this to distantly taxable goods, the low-value goods, from 1 January 2023. IRAS, Local businesses importing services: in force from 1 January 2020; IRAS, Completing GST returns: the value in box 1, box 14 and box 5, the GST in box 6, and in box 7 the part the input tax recovery rules allow. This code is for an acquisition wholly used for taxable supplies, whose GST is claimed in full. PINT SG category SRRC on the recipient's own record.",
+    "source": "gst-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": [
+            "5",
+            "1",
+            "14"
+          ]
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "7"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2100",
+          "box": "6"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": [
+            "5",
+            "1",
+            "14"
+          ],
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "7",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2100",
+          "box": "6",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 280
+  },
+  {
+    "code": "SG-P-RC-NC-7",
+    "name": "Imported service or low-value goods, reverse charge, GST 7 %, not claimable",
+    "description": "For a business not entitled to full input tax: the share attributable to exempt supplies",
+    "kind": "gst",
+    "rate": 7,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "recoverable": false,
+    "valid_from": "2020-01-01",
+    "valid_to": "2022-12-31",
+    "conditions": [
+      "buyer_status"
+    ],
+    "legal_reference": "Goods and Services Tax Act 1993, s. 16(c) — 7 % for the period from 1 July 2007 to 31 December 2022, as amended by Act 35 of 2022; IRAS, Current GST rates, gives the same three periods. A new rate is a new code and the old one closes the day before, so a return of a past period keeps giving the same answer. Goods and Services Tax Act 1993, s. 14(1) and (2), as for SG-P-RC; s. 20 — input tax attributable to exempt supplies is not credited. The recipient owes the GST in box 6 and claims nothing in box 7, so the GST is part of the cost and lands on the account of the line; the value is still reported in box 1, box 14 and box 5 (IRAS, Completing GST returns). An acquisition used for both kinds of supply needs the apportionment of regs. 28 to 30 of the GST (General) Regulations, which no code can hold.",
+    "source": "gst-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": [
+            "5",
+            "1",
+            "14"
+          ]
+        },
+        {
+          "type": "tax_on_base"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2100",
+          "box": "6"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": [
+            "5",
+            "1",
+            "14"
+          ],
+          "box_factor": -100
+        },
+        {
+          "type": "tax_on_base"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2100",
+          "box": "6",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 290
+  },
+  {
+    "code": "SG-P-RC-NC-8",
+    "name": "Imported service or low-value goods, reverse charge, GST 8 %, not claimable",
+    "description": "For a business not entitled to full input tax: the share attributable to exempt supplies",
+    "kind": "gst",
+    "rate": 8,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "recoverable": false,
+    "valid_from": "2023-01-01",
+    "valid_to": "2023-12-31",
+    "conditions": [
+      "buyer_status"
+    ],
+    "legal_reference": "Goods and Services Tax Act 1993, s. 16(ca) — 8 % for the period from 1 January 2023 to 31 December 2023, as amended by Act 35 of 2022; IRAS, Current GST rates, gives the same three periods. A new rate is a new code and the old one closes the day before, so a return of a past period keeps giving the same answer. Goods and Services Tax Act 1993, s. 14(1) and (2), as for SG-P-RC; s. 20 — input tax attributable to exempt supplies is not credited. The recipient owes the GST in box 6 and claims nothing in box 7, so the GST is part of the cost and lands on the account of the line; the value is still reported in box 1, box 14 and box 5 (IRAS, Completing GST returns). An acquisition used for both kinds of supply needs the apportionment of regs. 28 to 30 of the GST (General) Regulations, which no code can hold.",
+    "source": "gst-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": [
+            "5",
+            "1",
+            "14"
+          ]
+        },
+        {
+          "type": "tax_on_base"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2100",
+          "box": "6"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": [
+            "5",
+            "1",
+            "14"
+          ],
+          "box_factor": -100
+        },
+        {
+          "type": "tax_on_base"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2100",
+          "box": "6",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 300
+  },
+  {
+    "code": "SG-P-RC-NC-9",
+    "name": "Imported service or low-value goods, reverse charge, GST 9 %, not claimable",
+    "description": "For a business not entitled to full input tax: the share attributable to exempt supplies",
+    "kind": "gst",
+    "rate": 9,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "recoverable": false,
+    "valid_from": "2024-01-01",
+    "conditions": [
+      "buyer_status"
+    ],
+    "legal_reference": "Goods and Services Tax Act 1993, s. 16(cb) — 9 % from and including 1 January 2024, as amended by Act 35 of 2022; IRAS, Current GST rates, gives the same three periods. A new rate is a new code and the old one closes the day before, so a return of a past period keeps giving the same answer. Goods and Services Tax Act 1993, s. 14(1) and (2), as for SG-P-RC; s. 20 — input tax attributable to exempt supplies is not credited. The recipient owes the GST in box 6 and claims nothing in box 7, so the GST is part of the cost and lands on the account of the line; the value is still reported in box 1, box 14 and box 5 (IRAS, Completing GST returns). An acquisition used for both kinds of supply needs the apportionment of regs. 28 to 30 of the GST (General) Regulations, which no code can hold.",
+    "source": "gst-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": [
+            "5",
+            "1",
+            "14"
+          ]
+        },
+        {
+          "type": "tax_on_base"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2100",
+          "box": "6"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": [
+            "5",
+            "1",
+            "14"
+          ],
+          "box_factor": -100
+        },
+        {
+          "type": "tax_on_base"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2100",
+          "box": "6",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 310
+  },
+  {
+    "code": "SG-P-CA-7",
+    "name": "Purchase of prescribed goods, customer accounting, GST 7 %",
+    "description": "Mobile phones, memory cards or off-the-shelf software above $10,000, bought for the business",
+    "kind": "gst",
+    "rate": 7,
+    "scope": "purchase",
+    "treatment": "domestic_reverse_charge",
+    "valid_from": "2019-01-01",
+    "valid_to": "2022-12-31",
+    "conditions": [
+      "supply_nature"
+    ],
+    "legal_reference": "Goods and Services Tax Act 1993, s. 16(c) — 7 % for the period from 1 July 2007 to 31 December 2022, as amended by Act 35 of 2022; IRAS, Current GST rates, gives the same three periods. A new rate is a new code and the old one closes the day before, so a return of a past period keeps giving the same answer. Goods and Services Tax Act 1993, s. 38A(2) — the GST-registered customer accounts for and pays the tax on a relevant supply as if it were the supplier; GST (General) Regulations, regs. 66A and 66C. IRAS, Customer accounting for prescribed goods: the customer reports the value without GST in box 1 and the GST in box 6, and, where it may claim the input tax, the value in box 5 and the GST in box 7. PINT SG category SRCA-C.",
+    "source": "gst-act",
+    "vat_category": "AE",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": [
+            "5",
+            "1"
+          ]
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "7"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2100",
+          "box": "6"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": [
+            "5",
+            "1"
+          ],
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "7",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2100",
+          "box": "6",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 320
+  },
+  {
+    "code": "SG-P-CA-8",
+    "name": "Purchase of prescribed goods, customer accounting, GST 8 %",
+    "description": "Mobile phones, memory cards or off-the-shelf software above $10,000, bought for the business",
+    "kind": "gst",
+    "rate": 8,
+    "scope": "purchase",
+    "treatment": "domestic_reverse_charge",
+    "valid_from": "2023-01-01",
+    "valid_to": "2023-12-31",
+    "conditions": [
+      "supply_nature"
+    ],
+    "legal_reference": "Goods and Services Tax Act 1993, s. 16(ca) — 8 % for the period from 1 January 2023 to 31 December 2023, as amended by Act 35 of 2022; IRAS, Current GST rates, gives the same three periods. A new rate is a new code and the old one closes the day before, so a return of a past period keeps giving the same answer. Goods and Services Tax Act 1993, s. 38A(2) — the GST-registered customer accounts for and pays the tax on a relevant supply as if it were the supplier; GST (General) Regulations, regs. 66A and 66C. IRAS, Customer accounting for prescribed goods: the customer reports the value without GST in box 1 and the GST in box 6, and, where it may claim the input tax, the value in box 5 and the GST in box 7. PINT SG category SRCA-C.",
+    "source": "gst-act",
+    "vat_category": "AE",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": [
+            "5",
+            "1"
+          ]
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "7"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2100",
+          "box": "6"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": [
+            "5",
+            "1"
+          ],
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "7",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2100",
+          "box": "6",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 330
+  },
+  {
+    "code": "SG-P-CA-9",
+    "name": "Purchase of prescribed goods, customer accounting, GST 9 %",
+    "description": "Mobile phones, memory cards or off-the-shelf software above $10,000, bought for the business",
+    "kind": "gst",
+    "rate": 9,
+    "scope": "purchase",
+    "treatment": "domestic_reverse_charge",
+    "valid_from": "2024-01-01",
+    "conditions": [
+      "supply_nature"
+    ],
+    "legal_reference": "Goods and Services Tax Act 1993, s. 16(cb) — 9 % from and including 1 January 2024, as amended by Act 35 of 2022; IRAS, Current GST rates, gives the same three periods. A new rate is a new code and the old one closes the day before, so a return of a past period keeps giving the same answer. Goods and Services Tax Act 1993, s. 38A(2) — the GST-registered customer accounts for and pays the tax on a relevant supply as if it were the supplier; GST (General) Regulations, regs. 66A and 66C. IRAS, Customer accounting for prescribed goods: the customer reports the value without GST in box 1 and the GST in box 6, and, where it may claim the input tax, the value in box 5 and the GST in box 7. PINT SG category SRCA-C.",
+    "source": "gst-act",
+    "vat_category": "AE",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": [
+            "5",
+            "1"
+          ]
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "7"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2100",
+          "box": "6"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": [
+            "5",
+            "1"
+          ],
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "7",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2100",
+          "box": "6",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 340
+  },
+  {
+    "code": "SG-P-WHT-INT-15",
+    "name": "Interest paid to a non-resident — 15 % withheld",
+    "description": "Interest on a loan from a person not known to be resident in Singapore",
+    "kind": "withholding",
+    "rate": 15,
+    "scope": "purchase",
+    "treatment": "not_subject",
+    "valid_from": "2026-01-01",
+    "conditions": [
+      "buyer_status"
+    ],
+    "legal_reference": "Income Tax Act 1947, s. 45(1) — a person liable to pay interest to a person not known to be resident in Singapore deducts tax from it, at the rate s. 43(3) specifies where it applies, and pays it to the Comptroller; s. 45(4) — by the 15th day of the second month following the month of payment. IRAS, Types of payment and withholding tax rates, gives 15 % for interest in connection with a loan, unless a tax treaty reduces it. The amount waits on 2140 and is filed on the withholding tax form, not on form GST F5, so it reaches no box. The interest itself is an exempt financial service (Fourth Schedule, Part 1, paragraph 1(g)) and reaches no box either. The rate is dated from the first year this pack was written for; the day it started is not carried.",
+    "source": "ita-1947",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2140"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2140"
+        }
+      ]
+    },
+    "sequence": 350
+  },
+  {
+    "code": "SG-P-WHT-ROY-10",
+    "name": "Royalty paid to a non-resident — 10 % withheld",
+    "description": "A royalty for the use of movable property or intellectual property",
+    "kind": "withholding",
+    "rate": 10,
+    "scope": "purchase",
+    "treatment": "not_subject",
+    "valid_from": "2026-01-01",
+    "conditions": [
+      "buyer_status"
+    ],
+    "legal_reference": "Income Tax Act 1947, s. 45(1), as for SG-P-WHT-INT-15; IRAS, Types of payment and withholding tax rates, gives 10 % for royalties or other lump sum payments for the use of movable properties, unless a tax treaty reduces it. A business that is not entitled to full input tax also reverse charges the royalty as an imported service, which is a second line, since a line carries one code. No box of form GST F5.",
+    "source": "ita-1947",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2140"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2140"
+        }
+      ]
+    },
+    "sequence": 360
+  }
+]

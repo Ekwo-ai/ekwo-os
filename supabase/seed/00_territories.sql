@@ -416,3 +416,28 @@ on conflict (code) do update set
   eu_vat_to       = excluded.eu_vat_to,
   vat_prefix      = excluded.vat_prefix,
   legal_reference = excluded.legal_reference;
+
+
+-- ---------------------------------------------------------------------------
+-- The rows — Singapore
+--
+-- The first territory of Asia. Singapore levies a goods and services tax,
+-- which is a value added tax under another name: charged by the supplier,
+-- credited to a registered buyer, declared on one form, GST F5. No Union
+-- instrument reaches it. `vat_prefix` is null because a Singapore GST
+-- registration number is the entity's UEN or an M-prefixed number, neither of
+-- which carries a country prefix.
+-- ---------------------------------------------------------------------------
+
+insert into territories (code, code_source, name, parent_code, eu_vat_scope, eu_vat_from, eu_vat_to, vat_prefix, legal_reference) values
+  ('SG', 'iso_3166_1', 'Singapore', null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. Singapore levies a goods and services tax of its own under the Goods and Services Tax Act 1993, whose section 16 sets the rate at 9 % from 1 January 2024.')
+on conflict (code) do update set
+  code_source     = excluded.code_source,
+  name            = excluded.name,
+  parent_code     = excluded.parent_code,
+  eu_vat_scope    = excluded.eu_vat_scope,
+  eu_vat_from     = excluded.eu_vat_from,
+  eu_vat_to       = excluded.eu_vat_to,
+  vat_prefix      = excluded.vat_prefix,
+  legal_reference = excluded.legal_reference;
