@@ -236,8 +236,11 @@ describe('the home page', () => {
 
   it('draws every country on earth, and links the uncovered ones to the guide', () => {
     const body = home().body;
-    // Far more shapes than packs: the map is the world, not the coverage.
-    expect(data.world.countries.length).toBeGreaterThan(slugs.length * 10);
+    // The map is the world, not the coverage: it draws the countries of
+    // the Natural Earth layer whether or not a pack exists, so it holds more
+    // shapes than there are packs, and never fewer than the world has.
+    expect(data.world.countries.length).toBeGreaterThan(slugs.length);
+    expect(data.world.countries.length).toBeGreaterThan(150);
     // Never more shapes coloured than packs; fewer where a country is too
     // small to be drawn at this scale, which the list under the map names.
     expect(data.world.covered).toBeLessThanOrEqual(slugs.length);
