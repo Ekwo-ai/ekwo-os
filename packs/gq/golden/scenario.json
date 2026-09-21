@@ -1,0 +1,332 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "Une année d'un commerce et prestataire équato-guinéen, déclarant chaque mois",
+  "chart": "default",
+  "fiscal_year": {
+    "name": "Exercice 2026",
+    "start": "2026-01-01",
+    "end": "2026-12-31"
+  },
+  "periods": [
+    {
+      "code": "2026-01",
+      "from": "2026-01-01",
+      "to": "2026-01-31"
+    },
+    {
+      "code": "2026-02",
+      "from": "2026-02-01",
+      "to": "2026-02-28"
+    },
+    {
+      "code": "2026-03",
+      "from": "2026-03-01",
+      "to": "2026-03-31"
+    },
+    {
+      "code": "2026-04",
+      "from": "2026-04-01",
+      "to": "2026-04-30"
+    }
+  ],
+  "statements": [
+    "GQ-SYSCOHADA-BS",
+    "GQ-SYSCOHADA-IS"
+  ],
+  "contacts": [
+    {
+      "ref": "client-gq",
+      "name": "Comercio de Malabo SA",
+      "type": "customer",
+      "country": "GQ"
+    },
+    {
+      "ref": "client-es",
+      "name": "Distribuciones Canarias SL",
+      "type": "customer",
+      "country": "ES"
+    },
+    {
+      "ref": "fourn-gq",
+      "name": "Mayorista de Bata SA",
+      "type": "supplier",
+      "country": "GQ"
+    },
+    {
+      "ref": "fourn-srv",
+      "name": "Servicios Técnicos de Malabo SL",
+      "type": "supplier",
+      "country": "GQ"
+    },
+    {
+      "ref": "fourn-immo",
+      "name": "Oficina y Mobiliario SA",
+      "type": "supplier",
+      "country": "GQ"
+    },
+    {
+      "ref": "fourn-nr",
+      "name": "Consultora Ibérica SL",
+      "type": "supplier",
+      "country": "ES"
+    }
+  ],
+  "documents": [
+    {
+      "ref": "V1",
+      "type": "sale_invoice",
+      "contact": "client-gq",
+      "date": "2026-01-10",
+      "why": "Une vente de marchandises au taux général de 15 % : la case CA15, la taxe au compte 4431, dans la case TVA15.",
+      "lines": [
+        {
+          "name": "Marchandises",
+          "quantity": 50,
+          "unit_price": 8000,
+          "tax": "GQ-S-15",
+          "account": "7011"
+        }
+      ]
+    },
+    {
+      "ref": "V2",
+      "type": "sale_invoice",
+      "contact": "client-gq",
+      "date": "2026-01-20",
+      "why": "Une prestation de services au taux général de 15 % : la taxe part sur le compte 4432, même case CA15/TVA15 que les biens.",
+      "lines": [
+        {
+          "name": "Prestation d'installation",
+          "quantity": 1,
+          "unit_price": 250000,
+          "tax": "GQ-S-15-SRV",
+          "account": "7061"
+        }
+      ]
+    },
+    {
+      "ref": "V3",
+      "type": "sale_invoice",
+      "contact": "client-gq",
+      "date": "2026-02-04",
+      "why": "Une vente de biens de la liste réduite de l'art. 155-3 au taux de 5 % : la case CA5, la taxe au compte 4431, dans la case TVA5.",
+      "lines": [
+        {
+          "name": "Riz et sucre",
+          "quantity": 1,
+          "unit_price": 100000,
+          "tax": "GQ-S-5",
+          "account": "7011"
+        }
+      ]
+    },
+    {
+      "ref": "V4",
+      "type": "sale_invoice",
+      "contact": "client-gq",
+      "date": "2026-02-12",
+      "why": "La fourniture d'électricité à usage domestique, seule prestation de service du taux réduit de l'art. 155-3 : la case CA5, la taxe au compte 4432.",
+      "lines": [
+        {
+          "name": "Fourniture d'électricité",
+          "quantity": 1,
+          "unit_price": 60000,
+          "tax": "GQ-S-5-SRV",
+          "account": "7061"
+        }
+      ]
+    },
+    {
+      "ref": "V5",
+      "type": "sale_invoice",
+      "contact": "client-es",
+      "date": "2026-02-20",
+      "why": "Une exportation au taux zéro (art. 155-4, 1°) : la case EXP, aucune taxe, un compte de ventes hors Région.",
+      "lines": [
+        {
+          "name": "Marchandises exportées",
+          "quantity": 1,
+          "unit_price": 300000,
+          "tax": "GQ-S-0-EXP",
+          "account": "7012"
+        }
+      ]
+    },
+    {
+      "ref": "V6",
+      "type": "sale_invoice",
+      "contact": "client-gq",
+      "date": "2026-03-05",
+      "why": "Une vente de livres scolaires au taux zéro domestique de l'art. 155-4, 2° à 6°, distinct de l'exportation : la case CA0, aucune taxe, mais un droit à déduction conservé.",
+      "lines": [
+        {
+          "name": "Livres scolaires",
+          "quantity": 1,
+          "unit_price": 40000,
+          "tax": "GQ-S-0",
+          "account": "7011"
+        }
+      ]
+    },
+    {
+      "ref": "V7",
+      "type": "sale_invoice",
+      "contact": "client-gq",
+      "date": "2026-03-13",
+      "why": "Des soins médicaux exonérés de l'art. 141 : la case EXO, aucune taxe.",
+      "lines": [
+        {
+          "name": "Consultations médicales",
+          "quantity": 1,
+          "unit_price": 50000,
+          "tax": "GQ-S-EXO",
+          "account": "7061"
+        }
+      ]
+    },
+    {
+      "ref": "AV1",
+      "type": "sale_credit_note",
+      "contact": "client-gq",
+      "date": "2026-03-18",
+      "why": "Un avoir partiel sur la vente V1 : la case CA15 et la taxe diminuent dans le mois de l'avoir.",
+      "lines": [
+        {
+          "name": "Retour de marchandises",
+          "quantity": 10,
+          "unit_price": 8000,
+          "tax": "GQ-S-15",
+          "account": "7011"
+        }
+      ]
+    },
+    {
+      "ref": "A1",
+      "type": "purchase_invoice",
+      "contact": "fourn-gq",
+      "date": "2026-01-08",
+      "why": "Un achat de marchandises au taux général, entièrement déductible : compte 4452, case DEDBS.",
+      "lines": [
+        {
+          "name": "Marchandises",
+          "quantity": 1,
+          "unit_price": 150000,
+          "tax": "GQ-P-15",
+          "account": "6011"
+        }
+      ]
+    },
+    {
+      "ref": "A2",
+      "type": "purchase_invoice",
+      "contact": "fourn-srv",
+      "date": "2026-02-10",
+      "why": "Un entretien facturé au taux général : la taxe récupérable sur services extérieurs, compte 4454, case DEDBS.",
+      "lines": [
+        {
+          "name": "Entretien des installations",
+          "quantity": 1,
+          "unit_price": 80000,
+          "tax": "GQ-P-15-SRV",
+          "account": "6248"
+        }
+      ]
+    },
+    {
+      "ref": "A3",
+      "type": "purchase_invoice",
+      "contact": "fourn-immo",
+      "date": "2026-02-24",
+      "why": "Du matériel de bureau immobilisé au taux général : la taxe au compte 4451, case DEDIMMO.",
+      "lines": [
+        {
+          "name": "Mobilier de bureau",
+          "quantity": 1,
+          "unit_price": 900000,
+          "tax": "GQ-P-15-IMMO",
+          "account": "2441"
+        }
+      ]
+    },
+    {
+      "ref": "A4",
+      "type": "purchase_invoice",
+      "contact": "fourn-gq",
+      "date": "2026-03-06",
+      "why": "Un achat de biens de la liste réduite à 5 %, déductible : compte 4452, case DEDBS.",
+      "lines": [
+        {
+          "name": "Riz",
+          "quantity": 1,
+          "unit_price": 60000,
+          "tax": "GQ-P-5",
+          "account": "6011"
+        }
+      ]
+    },
+    {
+      "ref": "A5",
+      "type": "purchase_invoice",
+      "contact": "fourn-srv",
+      "date": "2026-03-15",
+      "why": "De l'électricité consommée par l'entreprise, au taux réduit de 5 % : compte 4454, case DEDBS.",
+      "lines": [
+        {
+          "name": "Consommation d'électricité",
+          "quantity": 1,
+          "unit_price": 40000,
+          "tax": "GQ-P-5-SRV",
+          "account": "6052"
+        }
+      ]
+    },
+    {
+      "ref": "A6",
+      "type": "purchase_invoice",
+      "contact": "fourn-nr",
+      "date": "2026-04-02",
+      "why": "Une prestation d'un fournisseur non-résident qui ne facture pas la taxe (art. 146, 167-7) : la taxe due (case NRDUE, compte 4478) et sa déduction (case DEDBS, compte 4452) se neutralisent en écriture.",
+      "lines": [
+        {
+          "name": "Assistance technique",
+          "quantity": 1,
+          "unit_price": 200000,
+          "tax": "GQ-P-NR-15",
+          "account": "6248"
+        }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "E1",
+      "direction": "inbound",
+      "date": "2026-02-15",
+      "amount": 460000,
+      "contact": "client-gq",
+      "journal": "BQ",
+      "match": "V1",
+      "why": "Un encaissement qui solde exactement la facture de marchandises V1."
+    },
+    {
+      "ref": "E2",
+      "direction": "inbound",
+      "date": "2026-03-25",
+      "amount": 100000,
+      "contact": "client-gq",
+      "journal": "BQ",
+      "match": null,
+      "why": "Un acompte non affecté : il reste une ligne ouverte au compte client."
+    },
+    {
+      "ref": "P1",
+      "direction": "outbound",
+      "date": "2026-02-05",
+      "amount": 172500,
+      "contact": "fourn-gq",
+      "journal": "BQ",
+      "match": "A1",
+      "why": "Un paiement qui solde exactement la facture d'achat A1."
+    }
+  ]
+}

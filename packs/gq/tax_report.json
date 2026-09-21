@@ -1,0 +1,190 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "GQ-TVA",
+  "name": "Autoliquidación del Impuesto sobre el Valor Añadido, Régimen Real (I.V.A., cod. impuesto 1220)",
+  "period": [
+    "month"
+  ],
+  "period_default": "month",
+  "valid_from": "2024-11-19",
+  "legal_reference": "Ley n° 1/2024, General Tributaria, art. 167-1 — la déclaration et le paiement de la TVA due sont autoliquidés « a más tardar el quince (15) del mes siguiente a la de facturación » ; art. 167-2 — une déclaration « nula y/o negativa » est obligatoire même sans opération dans le mois. Art. 25 — les déclarations se déposent sur papier ou en ligne « según los modelos definidos o diseñados por la Administración Tributaria ». Le formulaire imprimé lui-même — « AUTOLIQUIDACIÓN, IMPUESTO SOBRE EL VALOR AÑADIDO, I.V.A., Régimen Real », code impôt 1220, Ministerio de Hacienda, Planificación y Desarrollo Económico, Dirección General de Impuestos y Recaudaciones — a été trouvé et lu : les cases 01 à 030 de ce fichier reprennent sa propre numérotation, pas une numérotation inventée par ce pack. Une partie de ses cases n'est pas modélisée ici, voir chaque case ci-dessous.",
+  "source": "ley-1-2024",
+  "deadline": {
+    "rule": "day_of_month_after_period",
+    "day": 15,
+    "legal_reference": "Ley n° 1/2024, General Tributaria, art. 167-1 — « a más tardar el quince (15) del mes siguiente a la de facturación », sans extension trouvée.",
+    "source": "ley-1-2024"
+  },
+  "boxes": [
+    {
+      "box": "01",
+      "kind": "base",
+      "name": "Base imponible, tipo general 15 %",
+      "sequence": 10,
+      "legal_reference": "Ley n° 1/2024, General Tributaria, art. 155-2. Case 01 de l'imprimé « I.V.A. Régimen Real ».",
+      "source": "ley-1-2024"
+    },
+    {
+      "box": "04",
+      "kind": "base",
+      "name": "Base imponible, tipo reducido 5 %",
+      "sequence": 20,
+      "legal_reference": "Ley n° 1/2024, General Tributaria, art. 155-3. Case 04 de l'imprimé « I.V.A. Régimen Real ».",
+      "source": "ley-1-2024"
+    },
+    {
+      "box": "EXP",
+      "kind": "base",
+      "name": "Exportations et transport international, taux zéro (art. 155-4, 1°)",
+      "sequence": 28,
+      "legal_reference": "Ley n° 1/2024, General Tributaria, art. 155-4, 1°. Case interne à ce pack, additionnée dans la case 07 de l'imprimé — voir la note de GQ-S-0-EXP dans taxes.json.",
+      "source": "ley-1-2024"
+    },
+    {
+      "box": "CA0",
+      "kind": "base",
+      "name": "Autres opérations au taux zéro (art. 155-4, 2° à 6°)",
+      "sequence": 29,
+      "legal_reference": "Ley n° 1/2024, General Tributaria, art. 155-4, 2° à 6°. Case interne à ce pack, additionnée dans la case 07 de l'imprimé.",
+      "source": "ley-1-2024"
+    },
+    {
+      "box": "EXO",
+      "kind": "base",
+      "name": "Opérations exonérées (art. 141)",
+      "sequence": 30,
+      "legal_reference": "Ley n° 1/2024, General Tributaria, art. 141. Case interne à ce pack, additionnée dans la case 07 de l'imprimé.",
+      "source": "ley-1-2024"
+    },
+    {
+      "box": "07",
+      "kind": "total",
+      "name": "Base Exonerada — total des opérations à taux zéro et exonérées",
+      "sequence": 35,
+      "plus": [
+        "EXP",
+        "CA0",
+        "EXO"
+      ],
+      "legal_reference": "Case 07 de l'imprimé « I.V.A. Régimen Real », intitulée « Base Exonerada ». L'imprimé ne porte qu'une ligne pour le taux zéro et l'exonération réunis (case 08 « Tipo » y affiche 0 %, case 09 « Cuota » y est structurellement nulle) ; la loi distingue pourtant le taux zéro (art. 155-4, qui ouvre un droit à déduction) de l'exonération (art. 140-142, qui n'en ouvre pas dans les mêmes termes). Ce pack garde les trois cases internes EXP/CA0/EXO pour cette distinction légale et les additionne ici pour suivre l'imprimé.",
+      "source": "ley-1-2024"
+    },
+    {
+      "box": "CAT",
+      "kind": "total",
+      "name": "Montant total des opérations (case interne, absente de l'imprimé)",
+      "sequence": 40,
+      "plus": [
+        "01",
+        "04",
+        "07"
+      ],
+      "legal_reference": "L'imprimé « I.V.A. Régimen Real » n'a pas de case de total des opérations ; ce total est un repère interne de ce pack, sur le modèle de packs/td/ et packs/sn/.",
+      "source": "ley-1-2024"
+    },
+    {
+      "box": "03",
+      "kind": "tax",
+      "name": "Cuota, tipo general 15 %",
+      "sequence": 50,
+      "legal_reference": "Ley n° 1/2024, General Tributaria, art. 155-2. Case 03 de l'imprimé « I.V.A. Régimen Real ».",
+      "source": "ley-1-2024"
+    },
+    {
+      "box": "06",
+      "kind": "tax",
+      "name": "Cuota, tipo reducido 5 %",
+      "sequence": 60,
+      "legal_reference": "Ley n° 1/2024, General Tributaria, art. 155-3. Case 06 de l'imprimé « I.V.A. Régimen Real ».",
+      "source": "ley-1-2024"
+    },
+    {
+      "box": "NRDUE",
+      "kind": "tax",
+      "name": "Taxe due en autoliquidation sur achat à un non-résident (art. 146, 167-7)",
+      "sequence": 65,
+      "legal_reference": "Ley n° 1/2024, General Tributaria, art. 146 et art. 167-7. Case interne à ce pack : l'imprimé « I.V.A. Régimen Real » n'a pas de case identifiée pour ce cas — voir la note de GQ-P-NR-15 dans taxes.json sur les cases 19/020 « Adquisiciones Intracomunitarias », non retenues faute de lien établi.",
+      "source": "ley-1-2024"
+    },
+    {
+      "box": "021",
+      "kind": "total",
+      "name": "Total I.V.A. Devengado",
+      "sequence": 70,
+      "plus": [
+        "03",
+        "06",
+        "NRDUE"
+      ],
+      "legal_reference": "Case 021 de l'imprimé « I.V.A. Régimen Real », dont la formule imprimée additionne aussi l'intérêt de retard (case 012, art. 412), le recargo (case 015, art. 410) et les « Adquisiciones Intracomunitarias » (case 020) : aucun des trois n'est modélisé par ce pack (voir README, « What it does not say »), et NRDUE, que ce pack additionne ici, n'a pas de place confirmée dans la formule imprimée. La valeur de cette case n'est donc qu'une partie de ce que l'imprimé additionnerait dans le cas général.",
+      "source": "ley-1-2024"
+    },
+    {
+      "box": "022",
+      "kind": "tax",
+      "name": "I.V.A. Deducible por cuotas soportadas en operaciones interiores",
+      "sequence": 90,
+      "legal_reference": "Case 022 de l'imprimé « I.V.A. Régimen Real ».",
+      "source": "ley-1-2024"
+    },
+    {
+      "box": "025",
+      "kind": "tax",
+      "name": "I.V.A. Deducible en adquisiciones de bienes de inversión",
+      "sequence": 95,
+      "legal_reference": "Case 025 de l'imprimé « I.V.A. Régimen Real ».",
+      "source": "ley-1-2024"
+    },
+    {
+      "box": "DEDNR",
+      "kind": "tax",
+      "name": "TVA déductible sur achat à un non-résident (art. 146, 167-7)",
+      "sequence": 97,
+      "legal_reference": "Case interne à ce pack, non rattachée à une case numérotée de l'imprimé — voir la note de GQ-P-NR-15 dans taxes.json.",
+      "source": "ley-1-2024"
+    },
+    {
+      "box": "028",
+      "kind": "total",
+      "name": "Total a deducir",
+      "sequence": 100,
+      "plus": [
+        "022",
+        "025",
+        "DEDNR"
+      ],
+      "legal_reference": "Case 028 de l'imprimé « I.V.A. Régimen Real », dont la formule imprimée additionne aussi la TVA sur importations (case 023), les « Adquisiciones Intracomunitarias » (case 024), la régularisation pour investissements (case 026) et le crédit des périodes antérieures (case 027) : aucun des quatre n'est modélisé par ce pack, et DEDNR, que ce pack additionne ici, n'a pas de place confirmée dans la formule imprimée. La valeur de cette case n'est donc qu'une partie de ce que l'imprimé additionnerait dans le cas général — en particulier, le crédit reporté d'une période à l'autre (case 027) n'est pas réinjecté ici : voir la case 030.",
+      "source": "ley-1-2024"
+    },
+    {
+      "box": "029",
+      "kind": "total",
+      "name": "Total I.V.A. a Ingresar",
+      "sequence": 110,
+      "plus": [
+        "021"
+      ],
+      "minus": [
+        "028"
+      ],
+      "floor_zero": true,
+      "legal_reference": "Case 029 de l'imprimé « I.V.A. Régimen Real » — « 021 - 028 si (+) » ; art. 167-1, le paiement accompagne la déclaration.",
+      "source": "ley-1-2024"
+    },
+    {
+      "box": "030",
+      "kind": "total",
+      "name": "Crédito de I.V.A. a Devolver o a Compensar",
+      "sequence": 120,
+      "plus": [
+        "028"
+      ],
+      "minus": [
+        "021"
+      ],
+      "floor_zero": true,
+      "legal_reference": "Case 030 de l'imprimé « I.V.A. Régimen Real » — « 021 - 028 si (-) ». Art. 170 — crédit reportable sans limite ; remboursement sous 3 mois pour les exportateurs, les crédits structurels dus au taux réduit, les missions diplomatiques et les investissements supérieurs à 100 millions de FCFA (mécanisme de remboursement non modélisé ici). L'imprimé prévoit lui-même de reporter ce crédit dans la case 027 de la période suivante (« Créditos de I.V.A., de periodos anteriores, a compensar ») ; ce report d'une période à l'autre n'est pas automatisé par ce pack.",
+      "source": "ley-1-2024"
+    }
+  ]
+}

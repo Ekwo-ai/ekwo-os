@@ -3272,3 +3272,48 @@ box of the VAT return — because none of it is VAT. Two withholdings a few
 articles apart in the same chapter of the same Code, one a buyer can book
 because it is the buyer's own act, the other nobody can book because it
 happens to somebody else's tax.
+
+## From Equatorial Guinea
+
+`packs/gq/`, `community`, seed 31, the fourth CEMAC member after Cameroon,
+Chad and Gabon. Its chart, journals, roles and two statements are the common
+part of [`packs/ohada/`](../packs/ohada/README.md); what it adds is the value
+added tax of the Ley n° 1/2024, General Tributaria, read from a scanned,
+OCR'd facsimile of the Boletín Oficial del Estado — no site of the
+administration itself, `boe.gob.gq` excepted for an unrelated 2012 text,
+could be reached. Two things the format could not say, neither patched:
+
+**A zero rate that keeps the deduction, an exemption that does not.** Article
+155 gives three *tipos* — general (15 %), reduced (5 %) and zero — as three
+rates of one tax, while articles 140 to 142 exempt a separate list outright.
+Nothing in the read text says the zero rate carries the input-tax deduction
+an exemption forfeits, but that is what "a rate of the tax" means everywhere
+else this format has met it (Spain's own `ES-S-00-ALIM`, at the same zero
+rate, is `vat_category: Z`, never `E`). `GQ-S-0-EXP` (the export, category
+`G`, matching every other OHADA export code already written) and `GQ-S-0`
+(six other zero-rated operations — antimalarials, medical masks and
+reagents, school books, chemotherapy, dialysis, agropastoral inputs, and a
+producer's own sale of subsoil products outside hydrocarbons and mining,
+category `Z`) sit apart from `GQ-S-EXO` (category `E`) on exactly that
+reading. No core change was needed — the three-way split between a taxed
+rate, a zero rate and an exemption was already how `vat_category` works —
+the pattern is written here because a reader moving from `packs/ga/` or
+`packs/td/`, whose zero rate is only the export, could otherwise expect
+`Z` to be a synonym for `E`, which it never is.
+
+**A retention this pack could name and not model, at the third rate this
+format has met.** Article 167-4 has the State, public bodies and designated
+private companies withhold VAT from a supplier they pay: 100 % from a
+supplier classed "at risk" (an individual, a non-resident, someone not
+registered), 0 % from a large-taxpayer-unit company, 40 % from anyone else —
+a rate that turns on a classification of the *seller* the document does not
+carry, and that no official list this pack's research could find fixes.
+This is the same three-party shape `docs/international.md` already names for
+Senegal's *précompte* (one rate, a closed list of buyer types) and Côte
+d'Ivoire's *TVA pour compte de tiers*, and the same gap Gabon's own CSS
+retention and *précompte de l'État* left unmodeled a member earlier: the core
+has no "retenue au paiement", the ledger effect of a tax a third party
+withholds and remits on the taxpayer's behalf. Equatorial Guinea adds a
+third rate tier to a mechanism the core already could not express at one —
+not a reason to guess at the missing list, so `packs/gq/` says what article
+167-4 does and books none of it.

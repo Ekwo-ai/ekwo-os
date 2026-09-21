@@ -1,0 +1,1923 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/statements",
+  "statements": [
+    {
+      "code": "GQ-SYSCOHADA-BS",
+      "kind": "balance_sheet",
+      "framework": "SYSCOHADA",
+      "name": "Bilan — Système normal",
+      "valid_from": "2018-01-01",
+      "legal_reference": "Acte uniforme relatif au droit comptable et à l'information financière (AUDCIF) du 26 janvier 2017, art. 25, 26 et 29 ; Système comptable OHADA, Titre IX, chapitre 3 (modèle de bilan) et chapitre 7 (tableau de correspondance postes/comptes). En vigueur pour les comptes personnels des entités au 1er janvier 2018 (AUDCIF, art. 113).",
+      "source": "syscohada",
+      "lines": [
+        {
+          "code": "AD",
+          "parent": "AZ",
+          "name": "IMMOBILISATIONS INCORPORELLES",
+          "sequence": 10,
+          "is_total": true,
+          "plus": [
+            "AE",
+            "AF",
+            "AG",
+            "AH"
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 7 — tableau de correspondance postes/comptes du Système normal (JO OHADA n° spécial du 15 février 2017, p. 1068)",
+          "source": "syscohada"
+        },
+        {
+          "code": "AE",
+          "parent": "AD",
+          "name": "Frais de développement et de prospection",
+          "sequence": 20,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "211",
+              "code_to": "211"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "2181",
+              "code_to": "2181"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "2191",
+              "code_to": "2191"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "2811",
+              "code_to": "2811"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "2911",
+              "code_to": "2911"
+            }
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 7 — tableau de correspondance postes/comptes du Système normal (JO OHADA n° spécial du 15 février 2017, p. 1068)",
+          "source": "syscohada"
+        },
+        {
+          "code": "AF",
+          "parent": "AD",
+          "name": "Brevets, licences, logiciels, et droits similaires",
+          "sequence": 30,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "212",
+              "code_to": "214"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "2193",
+              "code_to": "2193"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "2812",
+              "code_to": "2814"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "2912",
+              "code_to": "2914"
+            }
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 7 — tableau de correspondance postes/comptes du Système normal (JO OHADA n° spécial du 15 février 2017, p. 1068)",
+          "source": "syscohada"
+        },
+        {
+          "code": "AG",
+          "parent": "AD",
+          "name": "Fonds commercial et droit au bail",
+          "sequence": 40,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "215",
+              "code_to": "216"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "2815",
+              "code_to": "2816"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "2915",
+              "code_to": "2916"
+            }
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 7 — tableau de correspondance postes/comptes du Système normal (JO OHADA n° spécial du 15 février 2017, p. 1068)",
+          "source": "syscohada"
+        },
+        {
+          "code": "AH",
+          "parent": "AD",
+          "name": "Autres immobilisations incorporelles",
+          "sequence": 50,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "217",
+              "code_to": "217"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "2182",
+              "code_to": "2189"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "2198",
+              "code_to": "2198"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "2817",
+              "code_to": "2817"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "2818",
+              "code_to": "2818"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "2917",
+              "code_to": "2919"
+            }
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 7 — tableau de correspondance postes/comptes du Système normal (JO OHADA n° spécial du 15 février 2017, p. 1068). « p » dans le tableau de correspondance : le compte est partagé entre plusieurs postes selon ce qu'il porte ; le pack ne partage pas un compte au sein d'un même côté et le rattache en entier au poste indiqué ici : 2818, 2918 et 2919 (« p » en AE, AF et AH) sont rattachés ici en entier",
+          "source": "syscohada"
+        },
+        {
+          "code": "AI",
+          "parent": "AZ",
+          "name": "IMMOBILISATIONS CORPORELLES",
+          "sequence": 60,
+          "is_total": true,
+          "plus": [
+            "AJ",
+            "AK",
+            "AL",
+            "AM",
+            "AN"
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 7 — tableau de correspondance postes/comptes du Système normal (JO OHADA n° spécial du 15 février 2017, p. 1068)",
+          "source": "syscohada"
+        },
+        {
+          "code": "AJ",
+          "parent": "AI",
+          "name": "Terrains",
+          "sequence": 70,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "22",
+              "code_to": "22"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "282",
+              "code_to": "282"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "292",
+              "code_to": "292"
+            }
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 7 — tableau de correspondance postes/comptes du Système normal (JO OHADA n° spécial du 15 février 2017, p. 1068)",
+          "source": "syscohada"
+        },
+        {
+          "code": "AK",
+          "parent": "AI",
+          "name": "Bâtiments",
+          "sequence": 80,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "231",
+              "code_to": "233"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "237",
+              "code_to": "237"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "2391",
+              "code_to": "2391"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "2831",
+              "code_to": "2833"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "2837",
+              "code_to": "2837"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "2931",
+              "code_to": "2933"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "2937",
+              "code_to": "2937"
+            }
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 7 — tableau de correspondance postes/comptes du Système normal (JO OHADA n° spécial du 15 février 2017, p. 1068)",
+          "source": "syscohada"
+        },
+        {
+          "code": "AL",
+          "parent": "AI",
+          "name": "Aménagements, agencements et installations",
+          "sequence": 90,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "234",
+              "code_to": "236"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "238",
+              "code_to": "238"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "2392",
+              "code_to": "2398"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "2834",
+              "code_to": "2836"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "2838",
+              "code_to": "2838"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "2934",
+              "code_to": "2936"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "2938",
+              "code_to": "2939"
+            }
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 7 — tableau de correspondance postes/comptes du Système normal (JO OHADA n° spécial du 15 février 2017, p. 1068). Les comptes 2394, 2395 et 2398, que le tableau ne cite pas, sont des aménagements et installations en cours et sont rattachés ici avec 2392 et 2393. « p » dans le tableau de correspondance : le compte est partagé entre plusieurs postes selon ce qu'il porte ; le pack ne partage pas un compte au sein d'un même côté et le rattache en entier au poste indiqué ici : 2939 (« p » en AK et AL) est rattaché ici en entier",
+          "source": "syscohada"
+        },
+        {
+          "code": "AM",
+          "parent": "AI",
+          "name": "Matériel, mobilier et actifs biologiques",
+          "sequence": 100,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "240",
+              "code_to": "244"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "246",
+              "code_to": "248"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "2491",
+              "code_to": "2494"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "2496",
+              "code_to": "2498"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "2841",
+              "code_to": "2844"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "2846",
+              "code_to": "2849"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "2941",
+              "code_to": "2944"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "2946",
+              "code_to": "2949"
+            }
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 7 — tableau de correspondance postes/comptes du Système normal (JO OHADA n° spécial du 15 février 2017, p. 1068). « p » dans le tableau de correspondance : le compte est partagé entre plusieurs postes selon ce qu'il porte ; le pack ne partage pas un compte au sein d'un même côté et le rattache en entier au poste indiqué ici : 2949 (« p » en AM et AN) est rattaché ici en entier",
+          "source": "syscohada"
+        },
+        {
+          "code": "AN",
+          "parent": "AI",
+          "name": "Matériel de transport",
+          "sequence": 110,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "245",
+              "code_to": "245"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "2495",
+              "code_to": "2495"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "2845",
+              "code_to": "2845"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "2945",
+              "code_to": "2945"
+            }
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 7 — tableau de correspondance postes/comptes du Système normal (JO OHADA n° spécial du 15 février 2017, p. 1068)",
+          "source": "syscohada"
+        },
+        {
+          "code": "AP",
+          "parent": "AZ",
+          "name": "Avances et acomptes versés sur immobilisations",
+          "sequence": 120,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "25",
+              "code_to": "25"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "295",
+              "code_to": "295"
+            }
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 7 — tableau de correspondance postes/comptes du Système normal (JO OHADA n° spécial du 15 février 2017, p. 1068)",
+          "source": "syscohada"
+        },
+        {
+          "code": "AQ",
+          "parent": "AZ",
+          "name": "IMMOBILISATIONS FINANCIERES",
+          "sequence": 130,
+          "is_total": true,
+          "plus": [
+            "AR",
+            "AS"
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 7 — tableau de correspondance postes/comptes du Système normal (JO OHADA n° spécial du 15 février 2017, p. 1068)",
+          "source": "syscohada"
+        },
+        {
+          "code": "AR",
+          "parent": "AQ",
+          "name": "Titres de participation",
+          "sequence": 140,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "26",
+              "code_to": "26"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "296",
+              "code_to": "296"
+            }
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 7 — tableau de correspondance postes/comptes du Système normal (JO OHADA n° spécial du 15 février 2017, p. 1068)",
+          "source": "syscohada"
+        },
+        {
+          "code": "AS",
+          "parent": "AQ",
+          "name": "Autres immobilisations financières",
+          "sequence": 150,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "27",
+              "code_to": "27"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "297",
+              "code_to": "297"
+            }
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 7 — tableau de correspondance postes/comptes du Système normal (JO OHADA n° spécial du 15 février 2017, p. 1068)",
+          "source": "syscohada"
+        },
+        {
+          "code": "AZ",
+          "parent": "BZ",
+          "name": "TOTAL ACTIF IMMOBILISE",
+          "sequence": 160,
+          "is_total": true,
+          "plus": [
+            "AD",
+            "AI",
+            "AP",
+            "AQ"
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 7 — tableau de correspondance postes/comptes du Système normal (JO OHADA n° spécial du 15 février 2017, p. 1068)",
+          "source": "syscohada"
+        },
+        {
+          "code": "BA",
+          "parent": "BK",
+          "name": "Actif circulant HAO",
+          "sequence": 170,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "485",
+              "code_to": "485"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "488",
+              "code_to": "488"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "498",
+              "code_to": "498"
+            }
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 7 — tableau de correspondance postes/comptes du Système normal (JO OHADA n° spécial du 15 février 2017, p. 1068)",
+          "source": "syscohada"
+        },
+        {
+          "code": "BB",
+          "parent": "BK",
+          "name": "Stocks et encours",
+          "sequence": 180,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "31",
+              "code_to": "39"
+            }
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 7 — tableau de correspondance postes/comptes du Système normal (JO OHADA n° spécial du 15 février 2017, p. 1068)",
+          "source": "syscohada"
+        },
+        {
+          "code": "BG",
+          "parent": "BK",
+          "name": "CREANCES ET EMPLOIS ASSIMILES",
+          "sequence": 190,
+          "is_total": true,
+          "plus": [
+            "BH",
+            "BI",
+            "BJ"
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 7 — tableau de correspondance postes/comptes du Système normal (JO OHADA n° spécial du 15 février 2017, p. 1068)",
+          "source": "syscohada"
+        },
+        {
+          "code": "BH",
+          "parent": "BG",
+          "name": "Fournisseurs avances versées",
+          "sequence": 200,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "409",
+              "code_to": "409"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "490",
+              "code_to": "490"
+            }
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 7 — tableau de correspondance postes/comptes du Système normal (JO OHADA n° spécial du 15 février 2017, p. 1068)",
+          "source": "syscohada"
+        },
+        {
+          "code": "BI",
+          "parent": "BG",
+          "name": "Clients",
+          "sequence": 210,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "410",
+              "code_to": "418"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "491",
+              "code_to": "491"
+            }
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 7 — tableau de correspondance postes/comptes du Système normal (JO OHADA n° spécial du 15 février 2017, p. 1068)",
+          "source": "syscohada"
+        },
+        {
+          "code": "BJ",
+          "parent": "BG",
+          "name": "Autres créances",
+          "sequence": 220,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "185",
+              "code_to": "185",
+              "side": "debit"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "42",
+              "code_to": "44",
+              "side": "debit"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "45",
+              "code_to": "46",
+              "side": "debit"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "470",
+              "code_to": "477",
+              "side": "debit"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "492",
+              "code_to": "497"
+            }
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 7 — tableau de correspondance postes/comptes du Système normal (JO OHADA n° spécial du 15 février 2017, p. 1068) — soldes débiteurs de 185, 42, 43, 44, 45, 46 et 47 (sauf 478)",
+          "source": "syscohada"
+        },
+        {
+          "code": "BK",
+          "parent": "BZ",
+          "name": "TOTAL ACTIF CIRCULANT",
+          "sequence": 230,
+          "is_total": true,
+          "plus": [
+            "BA",
+            "BB",
+            "BG"
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 7 — tableau de correspondance postes/comptes du Système normal (JO OHADA n° spécial du 15 février 2017, p. 1068)",
+          "source": "syscohada"
+        },
+        {
+          "code": "BQ",
+          "parent": "BT",
+          "name": "Titres de placement",
+          "sequence": 240,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "50",
+              "code_to": "50"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "590",
+              "code_to": "590"
+            }
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 7 — tableau de correspondance postes/comptes du Système normal (JO OHADA n° spécial du 15 février 2017, p. 1068)",
+          "source": "syscohada"
+        },
+        {
+          "code": "BR",
+          "parent": "BT",
+          "name": "Valeurs à encaisser",
+          "sequence": 250,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "51",
+              "code_to": "51"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "591",
+              "code_to": "591"
+            }
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 7 — tableau de correspondance postes/comptes du Système normal (JO OHADA n° spécial du 15 février 2017, p. 1068)",
+          "source": "syscohada"
+        },
+        {
+          "code": "BS",
+          "parent": "BT",
+          "name": "Banques, chèques postaux, caisse et assimilés",
+          "sequence": 260,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "52",
+              "code_to": "55",
+              "side": "debit"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "57",
+              "code_to": "57",
+              "side": "debit"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "581",
+              "code_to": "588",
+              "side": "debit"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "592",
+              "code_to": "594"
+            }
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 7 — tableau de correspondance postes/comptes du Système normal (JO OHADA n° spécial du 15 février 2017, p. 1068) — soldes débiteurs de 52, 53, 54, 55, 57, 581 et 582. Les virements internes 585 et 588, que le tableau ne cite pas et qui sont soldés en fin d'exercice, suivent ici les régies et accréditifs du compte 58",
+          "source": "syscohada"
+        },
+        {
+          "code": "BT",
+          "parent": "BZ",
+          "name": "TOTAL TRESORERIE-ACTIF",
+          "sequence": 270,
+          "is_total": true,
+          "plus": [
+            "BQ",
+            "BR",
+            "BS"
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 7 — tableau de correspondance postes/comptes du Système normal (JO OHADA n° spécial du 15 février 2017, p. 1068)",
+          "source": "syscohada"
+        },
+        {
+          "code": "BU",
+          "parent": "BZ",
+          "name": "Ecart de conversion-Actif",
+          "sequence": 280,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "478",
+              "code_to": "478"
+            }
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 7 — tableau de correspondance postes/comptes du Système normal (JO OHADA n° spécial du 15 février 2017, p. 1068)",
+          "source": "syscohada"
+        },
+        {
+          "code": "BZ",
+          "name": "TOTAL GENERAL",
+          "sequence": 290,
+          "is_total": true,
+          "plus": [
+            "AZ",
+            "BK",
+            "BT",
+            "BU"
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 7 — tableau de correspondance postes/comptes du Système normal (JO OHADA n° spécial du 15 février 2017, p. 1068)",
+          "source": "syscohada"
+        },
+        {
+          "code": "CA",
+          "parent": "CP",
+          "name": "Capital",
+          "sequence": 300,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "101",
+              "code_to": "104"
+            }
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 3 — modèle de bilan, passif (p. 1000). Le tableau de correspondance (p. 1068) ne donne aucun compte pour le passif : les comptes de cette ligne sont lus dans l'intitulé du poste et dans la liste des comptes du Titre VII, chapitre 2, section 3",
+          "source": "syscohada"
+        },
+        {
+          "code": "CB",
+          "parent": "CP",
+          "name": "Apporteurs capital non appelé",
+          "sequence": 310,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "109",
+              "code_to": "109"
+            }
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 3 — modèle de bilan, passif (p. 1000). Le tableau de correspondance (p. 1068) ne donne aucun compte pour le passif : les comptes de cette ligne sont lus dans l'intitulé du poste et dans la liste des comptes du Titre VII, chapitre 2, section 3",
+          "source": "syscohada"
+        },
+        {
+          "code": "CD",
+          "parent": "CP",
+          "name": "Primes liées au capital social",
+          "sequence": 320,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "105",
+              "code_to": "105"
+            }
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 3 — modèle de bilan, passif (p. 1000). Le tableau de correspondance (p. 1068) ne donne aucun compte pour le passif : les comptes de cette ligne sont lus dans l'intitulé du poste et dans la liste des comptes du Titre VII, chapitre 2, section 3",
+          "source": "syscohada"
+        },
+        {
+          "code": "CE",
+          "parent": "CP",
+          "name": "Ecarts de réévaluation",
+          "sequence": 330,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "106",
+              "code_to": "106"
+            }
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 3 — modèle de bilan, passif (p. 1000). Le tableau de correspondance (p. 1068) ne donne aucun compte pour le passif : les comptes de cette ligne sont lus dans l'intitulé du poste et dans la liste des comptes du Titre VII, chapitre 2, section 3",
+          "source": "syscohada"
+        },
+        {
+          "code": "CF",
+          "parent": "CP",
+          "name": "Réserves indisponibles",
+          "sequence": 340,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "111",
+              "code_to": "113"
+            }
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 3 — modèle de bilan, passif (p. 1000). Le tableau de correspondance (p. 1068) ne donne aucun compte pour le passif : les comptes de cette ligne sont lus dans l'intitulé du poste et dans la liste des comptes du Titre VII, chapitre 2, section 3 : réserve légale (111), réserves statutaires ou contractuelles (112) et réserves réglementées (113), les réserves libres étant le compte 118",
+          "source": "syscohada"
+        },
+        {
+          "code": "CG",
+          "parent": "CP",
+          "name": "Réserves libres",
+          "sequence": 350,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "118",
+              "code_to": "118"
+            }
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 3 — modèle de bilan, passif (p. 1000). Le tableau de correspondance (p. 1068) ne donne aucun compte pour le passif : les comptes de cette ligne sont lus dans l'intitulé du poste et dans la liste des comptes du Titre VII, chapitre 2, section 3",
+          "source": "syscohada"
+        },
+        {
+          "code": "CH",
+          "parent": "CP",
+          "name": "Report à nouveau",
+          "sequence": 360,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "12",
+              "code_to": "12"
+            }
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 3 — modèle de bilan, passif (p. 1000). Le tableau de correspondance (p. 1068) ne donne aucun compte pour le passif : les comptes de cette ligne sont lus dans l'intitulé du poste et dans la liste des comptes du Titre VII, chapitre 2, section 3",
+          "source": "syscohada"
+        },
+        {
+          "code": "CJ",
+          "parent": "CP",
+          "name": "Résultat net de l'exercice",
+          "sequence": 370,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "13",
+              "code_to": "13"
+            }
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 3 — modèle de bilan, passif (p. 1000). Le tableau de correspondance (p. 1068) ne donne aucun compte pour le passif : les comptes de cette ligne sont lus dans l'intitulé du poste et dans la liste des comptes du Titre VII, chapitre 2, section 3 : le compte 13 en entier, soldes de gestion 132 à 138 compris",
+          "source": "syscohada"
+        },
+        {
+          "code": "CL",
+          "parent": "CP",
+          "name": "Subventions d'investissement",
+          "sequence": 380,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "14",
+              "code_to": "14"
+            }
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 3 — modèle de bilan, passif (p. 1000). Le tableau de correspondance (p. 1068) ne donne aucun compte pour le passif : les comptes de cette ligne sont lus dans l'intitulé du poste et dans la liste des comptes du Titre VII, chapitre 2, section 3",
+          "source": "syscohada"
+        },
+        {
+          "code": "CM",
+          "parent": "CP",
+          "name": "Provisions réglementées",
+          "sequence": 390,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "15",
+              "code_to": "15"
+            }
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 3 — modèle de bilan, passif (p. 1000). Le tableau de correspondance (p. 1068) ne donne aucun compte pour le passif : les comptes de cette ligne sont lus dans l'intitulé du poste et dans la liste des comptes du Titre VII, chapitre 2, section 3",
+          "source": "syscohada"
+        },
+        {
+          "code": "CP",
+          "parent": "DF",
+          "name": "TOTAL CAPITAUX PROPRES ET RESSOURCES ASSIMILEES",
+          "sequence": 400,
+          "is_total": true,
+          "plus": [
+            "CA",
+            "CB",
+            "CD",
+            "CE",
+            "CF",
+            "CG",
+            "CH",
+            "CJ",
+            "CL",
+            "CM"
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 3 — modèle de bilan, passif (p. 1000). Le tableau de correspondance (p. 1068) ne donne aucun compte pour le passif : les comptes de cette ligne sont lus dans l'intitulé du poste et dans la liste des comptes du Titre VII, chapitre 2, section 3",
+          "source": "syscohada"
+        },
+        {
+          "code": "DA",
+          "parent": "DD",
+          "name": "Emprunts et dettes financières diverses",
+          "sequence": 410,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "16",
+              "code_to": "16"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "181",
+              "code_to": "184"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "185",
+              "code_to": "185",
+              "side": "credit"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "186",
+              "code_to": "188"
+            }
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 3 — modèle de bilan, passif (p. 1000). Le tableau de correspondance (p. 1068) ne donne aucun compte pour le passif : les comptes de cette ligne sont lus dans l'intitulé du poste et dans la liste des comptes du Titre VII, chapitre 2, section 3 ; le solde débiteur du compte 185 est à l'actif, en BJ",
+          "source": "syscohada"
+        },
+        {
+          "code": "DB",
+          "parent": "DD",
+          "name": "Dettes de location acquisition",
+          "sequence": 420,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "17",
+              "code_to": "17"
+            }
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 3 — modèle de bilan, passif (p. 1000). Le tableau de correspondance (p. 1068) ne donne aucun compte pour le passif : les comptes de cette ligne sont lus dans l'intitulé du poste et dans la liste des comptes du Titre VII, chapitre 2, section 3",
+          "source": "syscohada"
+        },
+        {
+          "code": "DC",
+          "parent": "DD",
+          "name": "Provisions pour risques et charges",
+          "sequence": 430,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "19",
+              "code_to": "19"
+            }
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 3 — modèle de bilan, passif (p. 1000). Le tableau de correspondance (p. 1068) ne donne aucun compte pour le passif : les comptes de cette ligne sont lus dans l'intitulé du poste et dans la liste des comptes du Titre VII, chapitre 2, section 3",
+          "source": "syscohada"
+        },
+        {
+          "code": "DD",
+          "parent": "DF",
+          "name": "TOTAL DETTES FINANCIERES ET RESSOURCES ASSIMILEES",
+          "sequence": 440,
+          "is_total": true,
+          "plus": [
+            "DA",
+            "DB",
+            "DC"
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 3 — modèle de bilan, passif (p. 1000). Le tableau de correspondance (p. 1068) ne donne aucun compte pour le passif : les comptes de cette ligne sont lus dans l'intitulé du poste et dans la liste des comptes du Titre VII, chapitre 2, section 3",
+          "source": "syscohada"
+        },
+        {
+          "code": "DF",
+          "parent": "DZ",
+          "name": "TOTAL RESSOURCES STABLES",
+          "sequence": 450,
+          "is_total": true,
+          "plus": [
+            "CP",
+            "DD"
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 3 — modèle de bilan, passif (p. 1000). Le tableau de correspondance (p. 1068) ne donne aucun compte pour le passif : les comptes de cette ligne sont lus dans l'intitulé du poste et dans la liste des comptes du Titre VII, chapitre 2, section 3",
+          "source": "syscohada"
+        },
+        {
+          "code": "DH",
+          "parent": "DP",
+          "name": "Dettes circulantes HAO",
+          "sequence": 460,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "481",
+              "code_to": "484"
+            }
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 3 — modèle de bilan, passif (p. 1000). Le tableau de correspondance (p. 1068) ne donne aucun compte pour le passif : les comptes de cette ligne sont lus dans l'intitulé du poste et dans la liste des comptes du Titre VII, chapitre 2, section 3",
+          "source": "syscohada"
+        },
+        {
+          "code": "DI",
+          "parent": "DP",
+          "name": "Clients, avances reçues",
+          "sequence": 470,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "419",
+              "code_to": "419"
+            }
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 3 — modèle de bilan, passif (p. 1000). Le tableau de correspondance (p. 1068) ne donne aucun compte pour le passif : les comptes de cette ligne sont lus dans l'intitulé du poste et dans la liste des comptes du Titre VII, chapitre 2, section 3",
+          "source": "syscohada"
+        },
+        {
+          "code": "DJ",
+          "parent": "DP",
+          "name": "Fournisseurs d'exploitation",
+          "sequence": 480,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "400",
+              "code_to": "408"
+            }
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 3 — modèle de bilan, passif (p. 1000). Le tableau de correspondance (p. 1068) ne donne aucun compte pour le passif : les comptes de cette ligne sont lus dans l'intitulé du poste et dans la liste des comptes du Titre VII, chapitre 2, section 3",
+          "source": "syscohada"
+        },
+        {
+          "code": "DK",
+          "parent": "DP",
+          "name": "Dettes fiscales et sociales",
+          "sequence": 490,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "42",
+              "code_to": "44",
+              "side": "credit"
+            }
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 3 — modèle de bilan, passif (p. 1000). Le tableau de correspondance (p. 1068) ne donne aucun compte pour le passif : les comptes de cette ligne sont lus dans l'intitulé du poste et dans la liste des comptes du Titre VII, chapitre 2, section 3 ; soldes créditeurs de 42, 43 et 44, les soldes débiteurs étant en BJ",
+          "source": "syscohada"
+        },
+        {
+          "code": "DM",
+          "parent": "DP",
+          "name": "Autres dettes",
+          "sequence": 500,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "45",
+              "code_to": "46",
+              "side": "credit"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "470",
+              "code_to": "477",
+              "side": "credit"
+            }
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 3 — modèle de bilan, passif (p. 1000). Le tableau de correspondance (p. 1068) ne donne aucun compte pour le passif : les comptes de cette ligne sont lus dans l'intitulé du poste et dans la liste des comptes du Titre VII, chapitre 2, section 3 ; soldes créditeurs de 45, 46 et 47 (sauf 479), les soldes débiteurs étant en BJ",
+          "source": "syscohada"
+        },
+        {
+          "code": "DN",
+          "parent": "DP",
+          "name": "Provisions pour risques à court terme",
+          "sequence": 510,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "499",
+              "code_to": "499"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "599",
+              "code_to": "599"
+            }
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 3 — modèle de bilan, passif (p. 1000). Le tableau de correspondance (p. 1068) ne donne aucun compte pour le passif : les comptes de cette ligne sont lus dans l'intitulé du poste et dans la liste des comptes du Titre VII, chapitre 2, section 3",
+          "source": "syscohada"
+        },
+        {
+          "code": "DP",
+          "parent": "DZ",
+          "name": "TOTAL PASSIF CIRCULANT",
+          "sequence": 520,
+          "is_total": true,
+          "plus": [
+            "DH",
+            "DI",
+            "DJ",
+            "DK",
+            "DM",
+            "DN"
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 3 — modèle de bilan, passif (p. 1000). Le tableau de correspondance (p. 1068) ne donne aucun compte pour le passif : les comptes de cette ligne sont lus dans l'intitulé du poste et dans la liste des comptes du Titre VII, chapitre 2, section 3",
+          "source": "syscohada"
+        },
+        {
+          "code": "DQ",
+          "parent": "DT",
+          "name": "Banques, crédits d'escompte",
+          "sequence": 530,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "564",
+              "code_to": "565"
+            }
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 3 — modèle de bilan, passif (p. 1000). Le tableau de correspondance (p. 1068) ne donne aucun compte pour le passif : les comptes de cette ligne sont lus dans l'intitulé du poste et dans la liste des comptes du Titre VII, chapitre 2, section 3",
+          "source": "syscohada"
+        },
+        {
+          "code": "DR",
+          "parent": "DT",
+          "name": "Banques, établissements financiers et crédits de trésorerie",
+          "sequence": 540,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "561",
+              "code_to": "561"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "566",
+              "code_to": "566"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "52",
+              "code_to": "55",
+              "side": "credit"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "57",
+              "code_to": "57",
+              "side": "credit"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "581",
+              "code_to": "588",
+              "side": "credit"
+            }
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 3 — modèle de bilan, passif (p. 1000). Le tableau de correspondance (p. 1068) ne donne aucun compte pour le passif : les comptes de cette ligne sont lus dans l'intitulé du poste et dans la liste des comptes du Titre VII, chapitre 2, section 3 ; crédits de trésorerie (561, 566) et soldes créditeurs des comptes de trésorerie dont le solde débiteur est en BS",
+          "source": "syscohada"
+        },
+        {
+          "code": "DT",
+          "parent": "DZ",
+          "name": "TOTAL TRESORERIE-PASSIF",
+          "sequence": 550,
+          "is_total": true,
+          "plus": [
+            "DQ",
+            "DR"
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 3 — modèle de bilan, passif (p. 1000). Le tableau de correspondance (p. 1068) ne donne aucun compte pour le passif : les comptes de cette ligne sont lus dans l'intitulé du poste et dans la liste des comptes du Titre VII, chapitre 2, section 3",
+          "source": "syscohada"
+        },
+        {
+          "code": "DV",
+          "parent": "DZ",
+          "name": "Ecart de conversion-Passif",
+          "sequence": 560,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "479",
+              "code_to": "479"
+            }
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 3 — modèle de bilan, passif (p. 1000). Le tableau de correspondance (p. 1068) ne donne aucun compte pour le passif : les comptes de cette ligne sont lus dans l'intitulé du poste et dans la liste des comptes du Titre VII, chapitre 2, section 3",
+          "source": "syscohada"
+        },
+        {
+          "code": "DZ",
+          "name": "TOTAL GENERAL",
+          "sequence": 570,
+          "is_total": true,
+          "plus": [
+            "DF",
+            "DP",
+            "DT",
+            "DV"
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 3 — modèle de bilan, passif (p. 1000). Le tableau de correspondance (p. 1068) ne donne aucun compte pour le passif : les comptes de cette ligne sont lus dans l'intitulé du poste et dans la liste des comptes du Titre VII, chapitre 2, section 3",
+          "source": "syscohada"
+        }
+      ]
+    },
+    {
+      "code": "GQ-SYSCOHADA-IS",
+      "kind": "income_statement",
+      "framework": "SYSCOHADA",
+      "name": "Compte de résultat — Système normal",
+      "valid_from": "2018-01-01",
+      "legal_reference": "Acte uniforme relatif au droit comptable et à l'information financière (AUDCIF) du 26 janvier 2017, art. 25, 26 et 29 ; Système comptable OHADA, Titre IX, chapitre 4 (modèle de compte de résultat) et chapitre 7 (tableau de correspondance postes/comptes). Les charges y sont lues en positif et retranchées par les soldes intermédiaires, là où le modèle les imprime affectées du signe « - ».",
+      "source": "syscohada",
+      "lines": [
+        {
+          "code": "TA",
+          "name": "Ventes de marchandises",
+          "sequence": 10,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "701",
+              "code_to": "701"
+            }
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 4 — modèle de compte de résultat (p. 1004) et chapitre 7 — tableau de correspondance postes/comptes (p. 1069), JO OHADA n° spécial du 15 février 2017",
+          "source": "syscohada"
+        },
+        {
+          "code": "RA",
+          "name": "Achats de marchandises",
+          "sequence": 20,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "601",
+              "code_to": "601"
+            }
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 4 — modèle de compte de résultat (p. 1004) et chapitre 7 — tableau de correspondance postes/comptes (p. 1069), JO OHADA n° spécial du 15 février 2017",
+          "source": "syscohada"
+        },
+        {
+          "code": "RB",
+          "name": "Variation de stocks de marchandises",
+          "sequence": 30,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "6031",
+              "code_to": "6031"
+            }
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 4 — modèle de compte de résultat (p. 1004) et chapitre 7 — tableau de correspondance postes/comptes (p. 1069), JO OHADA n° spécial du 15 février 2017",
+          "source": "syscohada"
+        },
+        {
+          "code": "XA",
+          "name": "MARGE COMMERCIALE",
+          "sequence": 40,
+          "is_total": true,
+          "plus": [
+            "TA"
+          ],
+          "minus": [
+            "RA",
+            "RB"
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 4 — modèle de compte de résultat (p. 1004) et chapitre 7 — tableau de correspondance postes/comptes (p. 1069), JO OHADA n° spécial du 15 février 2017",
+          "source": "syscohada"
+        },
+        {
+          "code": "TB",
+          "name": "Ventes de produits fabriqués",
+          "sequence": 50,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "702",
+              "code_to": "704"
+            }
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 4 — modèle de compte de résultat (p. 1004) et chapitre 7 — tableau de correspondance postes/comptes (p. 1069), JO OHADA n° spécial du 15 février 2017",
+          "source": "syscohada"
+        },
+        {
+          "code": "TC",
+          "name": "Travaux, services vendus",
+          "sequence": 60,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "705",
+              "code_to": "706"
+            }
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 4 — modèle de compte de résultat (p. 1004) et chapitre 7 — tableau de correspondance postes/comptes (p. 1069), JO OHADA n° spécial du 15 février 2017",
+          "source": "syscohada"
+        },
+        {
+          "code": "TD",
+          "name": "Produits accessoires",
+          "sequence": 70,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "707",
+              "code_to": "707"
+            }
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 4 — modèle de compte de résultat (p. 1004) et chapitre 7 — tableau de correspondance postes/comptes (p. 1069), JO OHADA n° spécial du 15 février 2017",
+          "source": "syscohada"
+        },
+        {
+          "code": "XB",
+          "name": "CHIFFRE D'AFFAIRES",
+          "sequence": 80,
+          "is_total": true,
+          "plus": [
+            "TA",
+            "TB",
+            "TC",
+            "TD"
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 4 — modèle de compte de résultat (p. 1004) et chapitre 7 — tableau de correspondance postes/comptes (p. 1069), JO OHADA n° spécial du 15 février 2017",
+          "source": "syscohada"
+        },
+        {
+          "code": "TE",
+          "name": "Production stockée (ou déstockage)",
+          "sequence": 90,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "73",
+              "code_to": "73"
+            }
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 4 — modèle de compte de résultat (p. 1004) et chapitre 7 — tableau de correspondance postes/comptes (p. 1069), JO OHADA n° spécial du 15 février 2017",
+          "source": "syscohada"
+        },
+        {
+          "code": "TF",
+          "name": "Production immobilisée",
+          "sequence": 100,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "72",
+              "code_to": "72"
+            }
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 4 — modèle de compte de résultat (p. 1004) et chapitre 7 — tableau de correspondance postes/comptes (p. 1069), JO OHADA n° spécial du 15 février 2017",
+          "source": "syscohada"
+        },
+        {
+          "code": "TG",
+          "name": "Subventions d'exploitation",
+          "sequence": 110,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "71",
+              "code_to": "71"
+            }
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 4 — modèle de compte de résultat (p. 1004) et chapitre 7 — tableau de correspondance postes/comptes (p. 1069), JO OHADA n° spécial du 15 février 2017",
+          "source": "syscohada"
+        },
+        {
+          "code": "TH",
+          "name": "Autres produits",
+          "sequence": 120,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "75",
+              "code_to": "75"
+            }
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 4 — modèle de compte de résultat (p. 1004) et chapitre 7 — tableau de correspondance postes/comptes (p. 1069), JO OHADA n° spécial du 15 février 2017",
+          "source": "syscohada"
+        },
+        {
+          "code": "TI",
+          "name": "Transferts de charges d'exploitation",
+          "sequence": 130,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "781",
+              "code_to": "781"
+            }
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 4 — modèle de compte de résultat (p. 1004) et chapitre 7 — tableau de correspondance postes/comptes (p. 1069), JO OHADA n° spécial du 15 février 2017",
+          "source": "syscohada"
+        },
+        {
+          "code": "RC",
+          "name": "Achats de matières premières et fournitures liées",
+          "sequence": 140,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "602",
+              "code_to": "602"
+            }
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 4 — modèle de compte de résultat (p. 1004) et chapitre 7 — tableau de correspondance postes/comptes (p. 1069), JO OHADA n° spécial du 15 février 2017",
+          "source": "syscohada"
+        },
+        {
+          "code": "RD",
+          "name": "Variation de stocks de matières premières et fournitures liées",
+          "sequence": 150,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "6032",
+              "code_to": "6032"
+            }
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 4 — modèle de compte de résultat (p. 1004) et chapitre 7 — tableau de correspondance postes/comptes (p. 1069), JO OHADA n° spécial du 15 février 2017",
+          "source": "syscohada"
+        },
+        {
+          "code": "RE",
+          "name": "Autres achats",
+          "sequence": 160,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "604",
+              "code_to": "605"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "608",
+              "code_to": "608"
+            }
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 4 — modèle de compte de résultat (p. 1004) et chapitre 7 — tableau de correspondance postes/comptes (p. 1069), JO OHADA n° spécial du 15 février 2017",
+          "source": "syscohada"
+        },
+        {
+          "code": "RF",
+          "name": "Variation de stocks d'autres approvisionnements",
+          "sequence": 170,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "6033",
+              "code_to": "6033"
+            }
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 4 — modèle de compte de résultat (p. 1004) et chapitre 7 — tableau de correspondance postes/comptes (p. 1069), JO OHADA n° spécial du 15 février 2017",
+          "source": "syscohada"
+        },
+        {
+          "code": "RG",
+          "name": "Transports",
+          "sequence": 180,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "61",
+              "code_to": "61"
+            }
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 4 — modèle de compte de résultat (p. 1004) et chapitre 7 — tableau de correspondance postes/comptes (p. 1069), JO OHADA n° spécial du 15 février 2017",
+          "source": "syscohada"
+        },
+        {
+          "code": "RH",
+          "name": "Services extérieurs",
+          "sequence": 190,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "62",
+              "code_to": "63"
+            }
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 4 — modèle de compte de résultat (p. 1004) et chapitre 7 — tableau de correspondance postes/comptes (p. 1069), JO OHADA n° spécial du 15 février 2017",
+          "source": "syscohada"
+        },
+        {
+          "code": "RI",
+          "name": "Impôts et taxes",
+          "sequence": 200,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "64",
+              "code_to": "64"
+            }
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 4 — modèle de compte de résultat (p. 1004) et chapitre 7 — tableau de correspondance postes/comptes (p. 1069), JO OHADA n° spécial du 15 février 2017",
+          "source": "syscohada"
+        },
+        {
+          "code": "RJ",
+          "name": "Autres charges",
+          "sequence": 210,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "65",
+              "code_to": "65"
+            }
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 4 — modèle de compte de résultat (p. 1004) et chapitre 7 — tableau de correspondance postes/comptes (p. 1069), JO OHADA n° spécial du 15 février 2017",
+          "source": "syscohada"
+        },
+        {
+          "code": "XC",
+          "name": "VALEUR AJOUTEE",
+          "sequence": 220,
+          "is_total": true,
+          "plus": [
+            "XB",
+            "TE",
+            "TF",
+            "TG",
+            "TH",
+            "TI"
+          ],
+          "minus": [
+            "RA",
+            "RB",
+            "RC",
+            "RD",
+            "RE",
+            "RF",
+            "RG",
+            "RH",
+            "RI",
+            "RJ"
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 4 — modèle de compte de résultat (p. 1004) et chapitre 7 — tableau de correspondance postes/comptes (p. 1069), JO OHADA n° spécial du 15 février 2017",
+          "source": "syscohada"
+        },
+        {
+          "code": "RK",
+          "name": "Charges de personnel",
+          "sequence": 230,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "66",
+              "code_to": "66"
+            }
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 4 — modèle de compte de résultat (p. 1004) et chapitre 7 — tableau de correspondance postes/comptes (p. 1069), JO OHADA n° spécial du 15 février 2017",
+          "source": "syscohada"
+        },
+        {
+          "code": "XD",
+          "name": "EXCEDENT BRUT D'EXPLOITATION",
+          "sequence": 240,
+          "is_total": true,
+          "plus": [
+            "XC"
+          ],
+          "minus": [
+            "RK"
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 4 — modèle de compte de résultat (p. 1004) et chapitre 7 — tableau de correspondance postes/comptes (p. 1069), JO OHADA n° spécial du 15 février 2017",
+          "source": "syscohada"
+        },
+        {
+          "code": "TJ",
+          "name": "Reprises d'amortissements, provisions et dépréciations",
+          "sequence": 250,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "791",
+              "code_to": "791"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "798",
+              "code_to": "799"
+            }
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 4 — modèle de compte de résultat (p. 1004) et chapitre 7 — tableau de correspondance postes/comptes (p. 1069), JO OHADA n° spécial du 15 février 2017",
+          "source": "syscohada"
+        },
+        {
+          "code": "RL",
+          "name": "Dotations aux amortissements, aux provisions et dépréciations",
+          "sequence": 260,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "681",
+              "code_to": "681"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "691",
+              "code_to": "691"
+            }
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 4 — modèle de compte de résultat (p. 1004) et chapitre 7 — tableau de correspondance postes/comptes (p. 1069), JO OHADA n° spécial du 15 février 2017",
+          "source": "syscohada"
+        },
+        {
+          "code": "XE",
+          "name": "RESULTAT D'EXPLOITATION",
+          "sequence": 270,
+          "is_total": true,
+          "plus": [
+            "XD",
+            "TJ"
+          ],
+          "minus": [
+            "RL"
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 4 — modèle de compte de résultat (p. 1004) et chapitre 7 — tableau de correspondance postes/comptes (p. 1069), JO OHADA n° spécial du 15 février 2017",
+          "source": "syscohada"
+        },
+        {
+          "code": "TK",
+          "name": "Revenus financiers et assimilés",
+          "sequence": 280,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "77",
+              "code_to": "77"
+            }
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 4 — modèle de compte de résultat (p. 1004) et chapitre 7 — tableau de correspondance postes/comptes (p. 1069), JO OHADA n° spécial du 15 février 2017",
+          "source": "syscohada"
+        },
+        {
+          "code": "TL",
+          "name": "Reprises de provisions et dépréciations financières",
+          "sequence": 290,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "797",
+              "code_to": "797"
+            }
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 4 — modèle de compte de résultat (p. 1004) et chapitre 7 — tableau de correspondance postes/comptes (p. 1069), JO OHADA n° spécial du 15 février 2017",
+          "source": "syscohada"
+        },
+        {
+          "code": "TM",
+          "name": "Transferts de charges financières",
+          "sequence": 300,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "787",
+              "code_to": "787"
+            }
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 4 — modèle de compte de résultat (p. 1004) et chapitre 7 — tableau de correspondance postes/comptes (p. 1069), JO OHADA n° spécial du 15 février 2017",
+          "source": "syscohada"
+        },
+        {
+          "code": "RM",
+          "name": "Frais financiers et charges assimilées",
+          "sequence": 310,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "67",
+              "code_to": "67"
+            }
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 4 — modèle de compte de résultat (p. 1004) et chapitre 7 — tableau de correspondance postes/comptes (p. 1069), JO OHADA n° spécial du 15 février 2017",
+          "source": "syscohada"
+        },
+        {
+          "code": "RN",
+          "name": "Dotations aux provisions et aux dépréciations financières",
+          "sequence": 320,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "697",
+              "code_to": "697"
+            }
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 4 — modèle de compte de résultat (p. 1004) et chapitre 7 — tableau de correspondance postes/comptes (p. 1069), JO OHADA n° spécial du 15 février 2017",
+          "source": "syscohada"
+        },
+        {
+          "code": "XF",
+          "name": "RESULTAT FINANCIER",
+          "sequence": 330,
+          "is_total": true,
+          "plus": [
+            "TK",
+            "TL",
+            "TM"
+          ],
+          "minus": [
+            "RM",
+            "RN"
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 4 — modèle de compte de résultat (p. 1004) et chapitre 7 — tableau de correspondance postes/comptes (p. 1069), JO OHADA n° spécial du 15 février 2017",
+          "source": "syscohada"
+        },
+        {
+          "code": "XG",
+          "name": "RESULTAT DES ACTIVITES ORDINAIRES",
+          "sequence": 340,
+          "is_total": true,
+          "plus": [
+            "XE",
+            "XF"
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 4 — modèle de compte de résultat (p. 1004) et chapitre 7 — tableau de correspondance postes/comptes (p. 1069), JO OHADA n° spécial du 15 février 2017",
+          "source": "syscohada"
+        },
+        {
+          "code": "TN",
+          "name": "Produits des cessions d'immobilisations",
+          "sequence": 350,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "82",
+              "code_to": "82"
+            }
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 4 — modèle de compte de résultat (p. 1004) et chapitre 7 — tableau de correspondance postes/comptes (p. 1069), JO OHADA n° spécial du 15 février 2017",
+          "source": "syscohada"
+        },
+        {
+          "code": "TO",
+          "name": "Autres Produits HAO",
+          "sequence": 360,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "84",
+              "code_to": "84"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "86",
+              "code_to": "86"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "88",
+              "code_to": "88"
+            }
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 4 — modèle de compte de résultat (p. 1004) et chapitre 7 — tableau de correspondance postes/comptes (p. 1069), JO OHADA n° spécial du 15 février 2017",
+          "source": "syscohada"
+        },
+        {
+          "code": "RO",
+          "name": "Valeurs comptables des cessions d'immobilisations",
+          "sequence": 370,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "81",
+              "code_to": "81"
+            }
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 4 — modèle de compte de résultat (p. 1004) et chapitre 7 — tableau de correspondance postes/comptes (p. 1069), JO OHADA n° spécial du 15 février 2017",
+          "source": "syscohada"
+        },
+        {
+          "code": "RP",
+          "name": "Autres Charges HAO",
+          "sequence": 380,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "83",
+              "code_to": "83"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "85",
+              "code_to": "85"
+            }
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 4 — modèle de compte de résultat (p. 1004) et chapitre 7 — tableau de correspondance postes/comptes (p. 1069), JO OHADA n° spécial du 15 février 2017",
+          "source": "syscohada"
+        },
+        {
+          "code": "XH",
+          "name": "RESULTAT HORS ACTIVITES ORDINAIRES",
+          "sequence": 390,
+          "is_total": true,
+          "plus": [
+            "TN",
+            "TO"
+          ],
+          "minus": [
+            "RO",
+            "RP"
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 4 — modèle de compte de résultat (p. 1004) et chapitre 7 — tableau de correspondance postes/comptes (p. 1069), JO OHADA n° spécial du 15 février 2017",
+          "source": "syscohada"
+        },
+        {
+          "code": "RQ",
+          "name": "Participation des travailleurs",
+          "sequence": 400,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "87",
+              "code_to": "87"
+            }
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 4 — modèle de compte de résultat (p. 1004) et chapitre 7 — tableau de correspondance postes/comptes (p. 1069), JO OHADA n° spécial du 15 février 2017",
+          "source": "syscohada"
+        },
+        {
+          "code": "RS",
+          "name": "Impôts sur le résultat",
+          "sequence": 410,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "89",
+              "code_to": "89"
+            }
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 4 — modèle de compte de résultat (p. 1004) et chapitre 7 — tableau de correspondance postes/comptes (p. 1069), JO OHADA n° spécial du 15 février 2017",
+          "source": "syscohada"
+        },
+        {
+          "code": "XI",
+          "name": "RESULTAT NET",
+          "sequence": 420,
+          "is_total": true,
+          "plus": [
+            "XG",
+            "XH"
+          ],
+          "minus": [
+            "RQ",
+            "RS"
+          ],
+          "legal_reference": "Système comptable OHADA, Titre IX, chapitre 4 — modèle de compte de résultat (p. 1004) et chapitre 7 — tableau de correspondance postes/comptes (p. 1069), JO OHADA n° spécial du 15 février 2017",
+          "source": "syscohada"
+        }
+      ]
+    }
+  ]
+}

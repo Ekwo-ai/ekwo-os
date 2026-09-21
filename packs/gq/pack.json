@@ -1,0 +1,201 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "GQ",
+  "name": "Guinée équatoriale",
+  "version": "0.1.0",
+  "schema_min": "20260917170000",
+  "seed_sequence": 31,
+  "released_at": "2026-09-21",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "audcif",
+        "title": "Acte uniforme relatif au droit comptable et à l'information financière (AUDCIF), adopté à Brazzaville le 26 janvier 2017",
+        "publisher": "OHADA — Bibliothèque numérique de l'OHADA",
+        "url": "https://biblio.ohada.org/doc_num.php?explnum_id=2061",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "syscohada",
+        "title": "Journal officiel de l'OHADA, numéro spécial du 15 février 2017 — Acte uniforme relatif au droit comptable et à l'information financière et Système comptable OHADA (SYSCOHADA révisé), version complète signée",
+        "publisher": "OHADA — Bibliothèque numérique de l'OHADA",
+        "url": "https://biblio.ohada.org/doc_num.php?explnum_id=2063",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "ley-1-2024",
+        "title": "Ley número 1/2024, de fecha 19 de noviembre, General Tributaria en la República de Guinea Ecuatorial",
+        "publisher": "Boletín Oficial del Estado de Guinea Ecuatorial — fac-similé hébergé par Hay Derecho en Guinea",
+        "url": "https://drive.google.com/file/d/1dMJ3u_F2TuFmla41l_WD2QweAw2CIxZz/view",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "orden-04-2025",
+        "title": "Orden Ministerial n° 04/2025, de fecha 5 de septiembre de 2025, relativa al IVA — obligation de faire figurer la TVA sur toute facture de vente",
+        "publisher": "Ministerio de Hacienda, Economía y Planificación — reprise par Guinea Ecuatorial Press",
+        "url": "https://www.guineaecuatorialpress.com/noticias/orden_ministerial_relativa_al_iva",
+        "consulted_on": "2026-09-21",
+        "kind": "regulation"
+      },
+      {
+        "key": "directive-cemac-tva",
+        "title": "Directive n° 11/22-CEMAC-UEAC-010A-CM-38 du 10 novembre 2022 portant harmonisation des législations des États membres de la CEMAC en matière de taxe sur la valeur ajoutée et du droit d'accises",
+        "publisher": "Secrétariat général de la CEMAC",
+        "url": "https://www.sgg.cg/txts-droit-reg/CEMAC-Directive-2022-11-TVA.pdf",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "portal-hacienda",
+        "title": "Ministerio de Hacienda, Planificación y Desarrollo Económico — site officiel, section « Formularios de Declaraciones Fiscales »",
+        "publisher": "Ministerio de Hacienda, Planificación y Desarrollo Económico de Guinea Ecuatorial",
+        "url": "https://minhacienda-gob.com/formularios-de-declaraciones-fiscales",
+        "consulted_on": "2026-09-22",
+        "kind": "portal"
+      },
+      {
+        "key": "form-iva-real",
+        "title": "Autoliquidación, Impuesto sobre el Valor Añadido, I.V.A., Régimen Real (cod. impuesto 1220)",
+        "publisher": "Ministerio de Hacienda, Planificación y Desarrollo Económico — Dirección General de Impuestos y Recaudaciones",
+        "url": "https://minhacienda-gob.com/uploads/2025/10/I.V.A.-REAL.pdf",
+        "consulted_on": "2026-09-22",
+        "kind": "form"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "XAF",
+    "language": "fr",
+    "rounding_method": "half_up",
+    "closing_style": "result_accounts",
+    "roles": {
+      "receivable": "4111",
+      "payable": "4011",
+      "suspense": "4711",
+      "rounding": "6588",
+      "retained_earnings": "121",
+      "retained_earnings_loss": "1291",
+      "current_year_result_profit": "131",
+      "current_year_result_loss": "139",
+      "sales": "7011",
+      "purchase": "6011",
+      "bank": "5211",
+      "cash": "5711",
+      "fx_gain": "756",
+      "fx_loss": "656",
+      "tax_payable": "4441",
+      "tax_receivable": "4449"
+    },
+    "journal_roles": {
+      "sales": "VT",
+      "purchase": "AC",
+      "miscellaneous": "OD",
+      "opening": "AN"
+    },
+    "fiscal_year_default": "calendar"
+  },
+  "languages": [],
+  "journals": [
+    {
+      "code": "VT",
+      "type": "sales",
+      "name": "Journal des ventes",
+      "sequence": 10
+    },
+    {
+      "code": "AC",
+      "type": "purchase",
+      "name": "Journal des achats",
+      "sequence": 20
+    },
+    {
+      "code": "BQ",
+      "type": "bank",
+      "name": "Journal de banque",
+      "sequence": 30
+    },
+    {
+      "code": "CA",
+      "type": "cash",
+      "name": "Journal de caisse",
+      "sequence": 40
+    },
+    {
+      "code": "OD",
+      "type": "general",
+      "name": "Opérations diverses",
+      "sequence": 50
+    },
+    {
+      "code": "AN",
+      "type": "opening",
+      "name": "Journal des à-nouveaux",
+      "sequence": 60
+    }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "SYSCOHADA révisé — plan comptable général OHADA, Système normal",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": [
+        "GQ-SYSCOHADA-BS",
+        "GQ-SYSCOHADA-IS"
+      ],
+      "legal_reference": "Acte uniforme relatif au droit comptable et à l'information financière du 26 janvier 2017, art. 17, 7° — recours à un plan de comptes normalisé dont la liste figure dans le Système comptable OHADA ; Système comptable OHADA, Titre VII, chapitre 2, section 3 — liste des comptes, classes 1 à 8. La classe 9, engagements hors bilan et comptabilité analytique de gestion, est d'application facultative et n'est pas reprise. Commun aux dix-sept États parties : un seul fichier, packs/ohada/accounts.csv, recopié dans chaque pack par scripts/ohada-packs.mjs.",
+      "source": "syscohada"
+    }
+  ],
+  "documents": {
+    "numbering": "sequential",
+    "number_format": "{CODE}/{YYYY}/{NNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "references": {
+      "numbering": {
+        "legal_reference": "Ley n° 1/2024, General Tributaria, art. 24-2 — la facture porte, sous peine de nullité, « número secuencial y fecha » : un numéro séquentiel et une date. Le texte impose la séquence, jamais explicitement l'absence de trou dans la numérotation ; le format proposé ici le permet sans l'exiger.",
+        "source": "ley-1-2024"
+      }
+    },
+    "mentions": [
+      {
+        "code": "reverse_charge",
+        "applies_when": "reverse_charge",
+        "text": "TVA due par le client — autoliquidation, articles 146 et 167-7 de la Ley n° 1/2024, General Tributaria.",
+        "sequence": 5,
+        "legal_reference": "Ley n° 1/2024, General Tributaria, art. 146 et art. 167-7 — l'acheteur assujetti autoliquide la taxe due par un fournisseur non-résident. L'article 24-2 impose par ailleurs le taux et le montant de la taxe sur toute facture ; aucune formule de mention n'est fixée par le texte pour ce cas, la formule ci-dessus suit celle des autres packs OHADA pour la même opération.",
+        "source": "ley-1-2024"
+      },
+      {
+        "code": "exempt",
+        "applies_when": "exempt",
+        "text": "Opération exonérée de la taxe sur la valeur ajoutée — article 141 de la Ley n° 1/2024, General Tributaria.",
+        "sequence": 10,
+        "legal_reference": "Ley n° 1/2024, General Tributaria, art. 24-2 — mentions obligatoires de la facture ; art. 141 — liste des exonérations. Aucune disposition trouvée n'impose elle-même de citer l'article sur la facture ; la mention suit la même convention que les autres packs OHADA.",
+        "source": "ley-1-2024"
+      },
+      {
+        "code": "export",
+        "applies_when": "export",
+        "text": "Exportation taxée au taux zéro — article 155-4 de la Ley n° 1/2024, General Tributaria.",
+        "sequence": 20,
+        "legal_reference": "Ley n° 1/2024, General Tributaria, art. 155-4 — taux zéro applicable aux exportations et aux transports internationaux.",
+        "source": "ley-1-2024"
+      }
+    ]
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "Ley n° 1/2024, General Tributaria, art. 24-1 — la facture peut être « manual o electrónica » ; art. 24-4 — une facture n'est électronique que si elle est produite par un « Sistema de Facturación Electrónico » agréé et certifié par l'administration fiscale, qui en garantit l'inaltérabilité, la sécurité, la conservation et l'archivage ; art. 1-40 définit l'« Emisor Electrónico » agréé. Aucune obligation générale de facture électronique, de facture normalisée ni de dispositif certifié n'a été trouvée : le dispositif décrit par la loi est facultatif et encadré, pas imposé à une date donnée — d'où les trois champs nuls. L'art. 164 dit seulement que la publication en ligne de la liste des NIF assujettis « contribuirá a la certificación de las facturas », sans fixer de système.",
+    "source": "ley-1-2024"
+  }
+}

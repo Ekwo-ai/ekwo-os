@@ -1,0 +1,458 @@
+[
+  {
+    "code": "GQ-S-15",
+    "name": "Ventes de biens, taux général 15 %",
+    "description": "Livraisons de biens au taux général, taxe au compte 4431.",
+    "rate": 15,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2024-11-19",
+    "legal_reference": "Ley n° 1/2024, General Tributaria, art. 155-2 — « tipo general del 15 % », applicable à toutes les opérations imposables hors celles des articles 155-3 (taux réduit) et 155-4 (taux zéro). Le taux de 15 % était déjà celui de la Ley 4/2004 qu'elle remplace ; l'exposé des motifs de la Ley 1/2024 dit « mantener el tipo general del 15 % ». Cases 01 (base) et 03 (cuota, tipo 15 %) de l'imprimé « I.V.A. Régimen Real » (cod. impuesto 1220) publié sur le portail du Ministerio de Hacienda, Planificación y Desarrollo Económico.",
+    "source": "ley-1-2024",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "01"
+        },
+        {
+          "type": "tax",
+          "account": "4431",
+          "box": "03"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "01",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "4431",
+          "box": "03",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 10
+  },
+  {
+    "code": "GQ-S-15-SRV",
+    "name": "Prestations de services, taux général 15 %",
+    "description": "Prestations de services au taux général, même taux que les biens, taxe au compte 4432.",
+    "rate": 15,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2024-11-19",
+    "legal_reference": "Ley n° 1/2024, General Tributaria, art. 155-2 — le taux général de 15 % couvre toutes les opérations imposables, prestations de services comprises ; aucune disposition trouvée ne distingue le fait générateur des biens de celui des services (art. 152 à 154 lus, sans règle d'exigibilité différenciée par nature d'opération).",
+    "source": "ley-1-2024",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "01"
+        },
+        {
+          "type": "tax",
+          "account": "4432",
+          "box": "03"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "01",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "4432",
+          "box": "03",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 20
+  },
+  {
+    "code": "GQ-S-5",
+    "name": "Ventes de biens, taux réduit 5 %",
+    "description": "Liste fermée de l'art. 155-3 : alimentation infantile ; hygiène personnelle et infantile ; laits concentrés ; boulangerie, pâtisserie, biscuiterie ; riz, pâtes, levures, aliments pour animaux, sucres, sardines en conserve, tronçonneuses, matelas, viande, poisson, lampes à pétrole, machettes, limes, houes, pioches, pelles, allumettes, tôles de zinc ; farine de blé et céréales ; engrais et pesticides agricoles ; ciment ordinaire et colle ; eaux minérales produites en Guinée équatoriale ; huile de table et arachide importées ; produits de nettoyage de base ; fer à béton ; matériel de pêche artisanale ; carreaux ; clous ; concentré de tomate ; conserves de légumes et de fruits.",
+    "rate": 5,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2024-11-19",
+    "conditions": [
+      "supply_nature"
+    ],
+    "legal_reference": "Ley n° 1/2024, General Tributaria, art. 155-3 — taux réduit, passé de 6 % (Ley 4/2004) à 5 % ; l'exposé des motifs dit « actualizar el tipo reducido del 6 % al 5 % ». La directive CEMAC n° 11/22 du 10 novembre 2022, art. 22, 2°, c), réserve un taux réduit de 5 à 10 % à une liste fermée bien plus courte (laits, boulangerie-pâtisserie, riz, farine, engrais, pesticides) : la liste équato-guinéenne va largement au-delà de la liste communautaire, un écart que ce pack enregistre sans le corriger. Cases 04 (base) et 06 (cuota, tipo 5 %) de l'imprimé « I.V.A. Régimen Real ».",
+    "source": "ley-1-2024",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "04"
+        },
+        {
+          "type": "tax",
+          "account": "4431",
+          "box": "06"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "04",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "4431",
+          "box": "06",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 30
+  },
+  {
+    "code": "GQ-S-5-SRV",
+    "name": "Fourniture d'eau, de gaz et d'électricité à usage domestique, taux réduit 5 %",
+    "description": "Seule prestation de service de la liste de l'art. 155-3 : la fourniture d'eau, de gaz et d'électricité à usage domestique, taxe au compte 4432.",
+    "rate": 5,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2024-11-19",
+    "conditions": [
+      "supply_nature"
+    ],
+    "legal_reference": "Ley n° 1/2024, General Tributaria, art. 155-3 — « suministro de agua, gas y electricidad de uso doméstico » figure dans la même liste que GQ-S-5, distinguée ici parce que c'est une prestation de service et non une livraison de bien.",
+    "source": "ley-1-2024",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "04"
+        },
+        {
+          "type": "tax",
+          "account": "4432",
+          "box": "06"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "04",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "4432",
+          "box": "06",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 40
+  },
+  {
+    "code": "GQ-S-0-EXP",
+    "name": "Exportation et transport international, taux zéro",
+    "description": "Exportations et transports internationaux, art. 155-4, 1°.",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2024-11-19",
+    "conditions": [
+      "transport_evidence"
+    ],
+    "legal_reference": "Ley n° 1/2024, General Tributaria, art. 155-4, 1° — taux zéro sur les exportations et le transport international. Une opération au taux zéro reste une opération imposable qui ouvre droit à déduction (art. 155, chapeau : trois « tipos », général, réduit et zéro, tous les trois des taux de la taxe), à la différence des exonérations de l'art. 140-142 qui n'ouvrent pas ce droit à déduction dans les mêmes termes. L'imprimé « I.V.A. Régimen Real » ne porte qu'une seule ligne à 0 % (case 07, intitulée « Base Exonerada », case 09 pour la cuota, toujours nulle à ce taux) : il ne distingue pas, sur cette ligne, le taux zéro de GQ-S-0-EXP et GQ-S-0 de l'exonération de GQ-S-EXO. `GQ-TVA` box 07 additionne les trois pour suivre l'imprimé tout en gardant, dans ce fichier, la distinction que fait la loi.",
+    "source": "ley-1-2024",
+    "vat_category": "G",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "EXP"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "EXP",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 50
+  },
+  {
+    "code": "GQ-S-0",
+    "name": "Autres opérations au taux zéro",
+    "description": "Art. 155-4, 2° à 6° : produits du sous-sol vendus par le producteur au consommateur final (hors hydrocarbures et mines) ; antipaludiques ; masques médicaux et réactifs de laboratoire ; livres scolaires (vente et importation) ; chimiothérapie ; dialyse ; intrants agropastoraux.",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2024-11-19",
+    "conditions": [
+      "supply_nature"
+    ],
+    "legal_reference": "Ley n° 1/2024, General Tributaria, art. 155-4, 2° à 6° — liste fermée d'opérations au taux zéro, distinctes de l'exportation (155-4, 1°) : produits du sous-sol vendus par leur producteur au consommateur final, à l'exclusion des hydrocarbures et des produits miniers ; antipaludiques ; masques médicaux et réactifs de laboratoire ; livres scolaires ; chimiothérapie ; dialyse ; intrants agropastoraux. Une opération au taux zéro ouvre droit à déduction (voir GQ-S-0-EXP), à la différence d'une exonération de l'art. 140-142. Même case 07 de l'imprimé « I.V.A. Régimen Real » que GQ-S-0-EXP et GQ-S-EXO — voir la note de GQ-S-0-EXP.",
+    "source": "ley-1-2024",
+    "vat_category": "Z",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "CA0"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "CA0",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 60
+  },
+  {
+    "code": "GQ-S-EXO",
+    "name": "Opération exonérée (art. 141)",
+    "description": "Opérations financières et d'assurance soumises à l'impôt sur les activités financières ; ventes d'immeubles jusqu'à la 3e transmission et locations d'habitation de particuliers ; importations en franchise (Acte 2/92-UDEAC) ; journaux et revues hors publicité ; soins médicaux ; médicaments et appareils médicaux vendus par un centre médical public ; frais de scolarité agréés ; avitaillement des navires et aéronefs internationaux ; organismes sans but lucratif hors secteur concurrentiel.",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2024-11-19",
+    "conditions": [
+      "supply_nature"
+    ],
+    "legal_reference": "Ley n° 1/2024, General Tributaria, art. 141 — liste des exonérations ; art. 140 — aucune exonération de TVA en dehors de celles de la loi, y compris au titre des incitations à l'investissement ou des conventions particulières. L'art. 142 exonère en outre les missions diplomatiques sous réciprocité, par voie de remboursement plutôt que de non-facturation : ce mécanisme distinct n'est pas repris par ce code. Même case 07 de l'imprimé « I.V.A. Régimen Real » que GQ-S-0-EXP et GQ-S-0 — voir la note de GQ-S-0-EXP.",
+    "source": "ley-1-2024",
+    "vat_category": "E",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "EXO"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "EXO",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 70
+  },
+  {
+    "code": "GQ-P-15",
+    "name": "Achats de biens, taux général 15 %",
+    "description": "Taxe récupérable sur achats de marchandises.",
+    "rate": 15,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2024-11-19",
+    "legal_reference": "Ley n° 1/2024, General Tributaria, art. 155-2 pour le taux facturé par le fournisseur. Aucune restriction de déduction propre aux achats de marchandises n'a été trouvée dans les articles lus (94-95, 134-170) ; la déduction suit la règle générale. Case 022 (« I.V.A. Deducible por cuotas soportadas en operaciones interiores ») de l'imprimé « I.V.A. Régimen Real ».",
+    "source": "ley-1-2024",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "4452",
+          "box": "022"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "4452",
+          "box": "022",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 110
+  },
+  {
+    "code": "GQ-P-15-SRV",
+    "name": "Services extérieurs, taux général 15 %",
+    "rate": 15,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2024-11-19",
+    "legal_reference": "Ley n° 1/2024, General Tributaria, art. 155-2. Aucune restriction de déduction propre aux services extérieurs n'a été trouvée dans les articles lus. Même case 022 de l'imprimé « I.V.A. Régimen Real » que GQ-P-15.",
+    "source": "ley-1-2024",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "4454",
+          "box": "022"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "4454",
+          "box": "022",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 120
+  },
+  {
+    "code": "GQ-P-15-IMMO",
+    "name": "Immobilisations, taux général 15 %",
+    "rate": 15,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2024-11-19",
+    "legal_reference": "Ley n° 1/2024, General Tributaria, art. 155-2 et art. 169 — l'autoliquidation de la TVA à l'importation, réservée aux biens d'équipement de plus de 100 millions de FCFA, n'est pas modélisée ici faute de code d'importation dans ce pack ; ce code couvre l'achat local d'immobilisations, sous le seuil ou sans franchissement de seuil documenté. Case 025 (« I.V.A. Deducible en adquisiciones de bienes de inversión ») de l'imprimé « I.V.A. Régimen Real ».",
+    "source": "ley-1-2024",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "4451",
+          "box": "025"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "4451",
+          "box": "025",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 130
+  },
+  {
+    "code": "GQ-P-5",
+    "name": "Achats de biens de la liste réduite, 5 %",
+    "rate": 5,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2024-11-19",
+    "legal_reference": "Ley n° 1/2024, General Tributaria, art. 155-3. Même case 022 de l'imprimé « I.V.A. Régimen Real » que GQ-P-15.",
+    "source": "ley-1-2024",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "4452",
+          "box": "022"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "4452",
+          "box": "022",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 140
+  },
+  {
+    "code": "GQ-P-5-SRV",
+    "name": "Fourniture d'eau, de gaz et d'électricité à usage domestique, achat, 5 %",
+    "rate": 5,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2024-11-19",
+    "legal_reference": "Ley n° 1/2024, General Tributaria, art. 155-3. Même case 022 de l'imprimé « I.V.A. Régimen Real » que GQ-P-15.",
+    "source": "ley-1-2024",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "4454",
+          "box": "022"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "4454",
+          "box": "022",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 150
+  },
+  {
+    "code": "GQ-P-NR-15",
+    "name": "Achat de service auprès d'un fournisseur non-résident, autoliquidation, 15 %",
+    "description": "Le fournisseur non-résident ne facture pas la taxe ; l'acheteur assujetti l'autoliquide. La dette (compte 4478) et la créance de déduction (compte 4452) se neutralisent en écriture, chacune atteignant sa propre case de la déclaration.",
+    "rate": 15,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2024-11-19",
+    "legal_reference": "Ley n° 1/2024, General Tributaria, art. 146 et art. 167-7 — l'acheteur assujetti autoliquide la taxe due par un fournisseur non-résident. Ces deux articles ont été lus dans leur intégralité (art. 134 à 170 relus), mais sans citation littérale conservée dans la fiche de recherche de ce pack ; aucune restriction de déduction propre à ce cas n'y a été trouvée, la déduction suit donc la règle générale — à vérifier par un lecteur qui isolerait le texte exact de ces deux articles. L'imprimé « I.V.A. Régimen Real » porte des cases 19/020 « Adquisiciones Intracomunitarias », un vocabulaire calqué sur un modèle de l'Union européenne dont le rapport avec l'autoliquidation des art. 146/167-7 d'un pays hors Union n'est pas établi : ce pack ne les utilise pas et porte l'opération sur des cases propres (DEDNR, NRDUE), non rattachées à l'imprimé.",
+    "source": "ley-1-2024",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "4452",
+          "box": "DEDNR"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "4478",
+          "box": "NRDUE"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "4452",
+          "box": "DEDNR",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "4478",
+          "box": "NRDUE",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 160
+  }
+]
