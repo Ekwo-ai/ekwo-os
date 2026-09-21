@@ -1,0 +1,521 @@
+[
+  {
+    "code": "KM-S-10",
+    "name": "Ventes de biens, taux normal 10 %",
+    "description": "Vente ou production de biens au taux normal de la taxe sur la consommation, TC au compte 4431",
+    "rate": 10,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2020-01-01",
+    "legal_reference": "Code général des impôts, art. 152 — taux normal de 10 %, dans la rédaction résultant des lois de finances 2018, 2019, 2020 et de la loi de finances rectificative 2020, la dernière modification isolée dans le texte consulté ; la date exacte d'entrée en vigueur du taux de 10 % n'a pas été trouvée, seule la liste des lois modificatives l'est. Art. 139 — la taxe s'applique aux activités d'achats-reventes et de productions de biens.",
+    "source": "cgi",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "B10"
+        },
+        {
+          "type": "tax",
+          "account": "4431",
+          "box": "T10"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "B10",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "4431",
+          "box": "T10",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "sales_tax",
+    "sequence": 10
+  },
+  {
+    "code": "KM-S-10-SRV",
+    "name": "Prestations de services, taux normal 10 %",
+    "description": "Prestation de services au taux normal de la taxe sur la consommation, TC au compte 4432",
+    "rate": 10,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2020-01-01",
+    "legal_reference": "Code général des impôts, art. 152 — taux normal de 10 %, dans la rédaction résultant des lois de finances 2018, 2019, 2020 et de la loi de finances rectificative 2020 ; art. 139 — la taxe s'applique également aux services.",
+    "source": "cgi",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "B10"
+        },
+        {
+          "type": "tax",
+          "account": "4432",
+          "box": "T10"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "B10",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "4432",
+          "box": "T10",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "sales_tax",
+    "sequence": 20
+  },
+  {
+    "code": "KM-S-00",
+    "name": "Produits de première nécessité, taux 0 %",
+    "description": "Viandes, volailles, poissons frais ou congelés, riz ordinaire, farine, sucre, médicaments, lait infantile — taxés à 0 %, ce qui n'est pas une exonération de l'article 141 : le formulaire officiel ne porte pourtant pas de colonne à 0 % et range ces opérations dans la même colonne « Exonérés » que les opérations de l'article 141 (voir KM-S-EXO). Le pack suit le formulaire sur ce point et l'écrit dans le README plutôt que d'inventer une case.",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2020-01-01",
+    "conditions": [
+      "supply_nature"
+    ],
+    "legal_reference": "Code général des impôts, art. 152 — taux de 0 % pour les produits de première nécessité, renvoyant à une liste fixée par arrêté ; arrêté n° 17-065/MFB/CAB du 19 septembre 2017 — liste : viandes, volailles, poissons frais ou congelés, riz ordinaire, farine, sucre, médicaments, lait infantile, applicable à l'importation comme à l'intérieur.",
+    "source": "cgi",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "EXO"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "EXO",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "sales_tax",
+    "sequence": 30
+  },
+  {
+    "code": "KM-S-03-UTIL",
+    "name": "Fourniture d'eau et d'électricité, taux 3 %",
+    "rate": 3,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2020-01-01",
+    "conditions": [
+      "supply_nature"
+    ],
+    "legal_reference": "Code général des impôts, art. 152 — taux de 3 % pour la fourniture d'eau et d'électricité.",
+    "source": "cgi",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "B03"
+        },
+        {
+          "type": "tax",
+          "account": "4431",
+          "box": "T03"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "B03",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "4431",
+          "box": "T03",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "sales_tax",
+    "sequence": 40
+  },
+  {
+    "code": "KM-S-03-TRANSPORT",
+    "name": "Titres de transport inter-îles, taux 3 %",
+    "rate": 3,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2020-01-01",
+    "conditions": [
+      "supply_nature"
+    ],
+    "legal_reference": "Code général des impôts, art. 152 — taux de 3 % pour les titres de transport inter-îles, distincts de la fourniture d'eau et d'électricité au même taux (voir KM-S-03-UTIL) et des titres de transport international, taxés à 5 % (voir KM-S-05-TRANSPORT-INTL).",
+    "source": "cgi",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "B03"
+        },
+        {
+          "type": "tax",
+          "account": "4432",
+          "box": "T03"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "B03",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "4432",
+          "box": "T03",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "sales_tax",
+    "sequence": 50
+  },
+  {
+    "code": "KM-S-05-SRV",
+    "name": "Restauration, activités bancaires, téléphone fixe, taux 5 %",
+    "rate": 5,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2020-01-01",
+    "conditions": [
+      "supply_nature"
+    ],
+    "legal_reference": "Code général des impôts, art. 152 — taux de 5 % pour la restauration, les activités bancaires et le téléphone fixe. Ces trois activités et les titres de transport international (voir KM-S-05-TRANSPORT-INTL) sont au même taux de 5 % mais de nature différente : deux codes, pour que chacun garde son propre article.",
+    "source": "cgi",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "B05"
+        },
+        {
+          "type": "tax",
+          "account": "4432",
+          "box": "T05"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "B05",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "4432",
+          "box": "T05",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "sales_tax",
+    "sequence": 60
+  },
+  {
+    "code": "KM-S-05-TRANSPORT-INTL",
+    "name": "Titres de transport international, taux 5 %",
+    "rate": 5,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2020-01-01",
+    "conditions": [
+      "supply_nature"
+    ],
+    "legal_reference": "Code général des impôts, art. 152 — taux de 5 % pour les titres de transport international, à distinguer des titres de transport inter-îles, taxés à 3 % (voir KM-S-03-TRANSPORT).",
+    "source": "cgi",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "B05"
+        },
+        {
+          "type": "tax",
+          "account": "4432",
+          "box": "T05"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "B05",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "4432",
+          "box": "T05",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "sales_tax",
+    "sequence": 70
+  },
+  {
+    "code": "KM-S-075-MOBILE",
+    "name": "Recharges mobiles, voix et données, taux 7,5 %",
+    "rate": 7.5,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2020-01-01",
+    "conditions": [
+      "supply_nature"
+    ],
+    "legal_reference": "Code général des impôts, art. 152 — taux de 7,5 % pour les recharges mobiles, voix et données. Une taxe annexe de 50 KMF par minute sur les terminaisons d'appels entrants existe au même article (in fine) et n'est pas modélisée ici : elle ne se rattache à aucune ligne de facture de vente, voir README.",
+    "source": "cgi",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "B075"
+        },
+        {
+          "type": "tax",
+          "account": "4432",
+          "box": "T075"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "B075",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "4432",
+          "box": "T075",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "sales_tax",
+    "sequence": 80
+  },
+  {
+    "code": "KM-S-25-CASINO",
+    "name": "Activités des casinos, taux 25 %",
+    "rate": 25,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2020-01-01",
+    "conditions": [
+      "supply_nature"
+    ],
+    "legal_reference": "Code général des impôts, art. 152 — taux de 25 % pour les activités des casinos.",
+    "source": "cgi",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "B25"
+        },
+        {
+          "type": "tax",
+          "account": "4432",
+          "box": "T25"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "B25",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "4432",
+          "box": "T25",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "sales_tax",
+    "sequence": 90
+  },
+  {
+    "code": "KM-S-EXO",
+    "name": "Opération exonérée (art. 141)",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2020-01-01",
+    "conditions": [
+      "supply_nature"
+    ],
+    "legal_reference": "Code général des impôts, art. 141 (dans la rédaction de la loi de finances rectificative 2022 et de la loi de finances 2023) — quinze catégories d'opérations exonérées : notamment les organismes sans but lucratif, la presse hors publicité, les ventes des agriculteurs, éleveurs, pêcheurs et maraîchers, les marchés financés par des aides extérieures, les écolages privés, les professions médicales, l'immobilier soumis à l'enregistrement, les assurances et le crédit-bail. Le seuil de chiffre d'affaires (art. 141-1°) est une qualité du redevable et non une opération ; il n'a pas de code ici.",
+    "source": "cgi",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "EXO"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "EXO",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "sales_tax",
+    "sequence": 100
+  },
+  {
+    "code": "KM-S-EXPORT",
+    "name": "Exportation exonérée",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2020-01-01",
+    "conditions": [
+      "transport_evidence"
+    ],
+    "legal_reference": "Code général des impôts, art. 141, 2° — exonération des exportations et des services directement liés ; art. 148 — la facture porte la référence à la disposition d'exonération. Le formulaire de déclaration ne porte qu'une colonne « Exonérés », sans case distincte pour l'export : ce code partage la case EXO avec KM-S-EXO et KM-S-00, et se distingue par le traitement `export`, qui gouverne la mention de facture et non la case déclarative.",
+    "source": "cgi",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "EXO"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "EXO",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "sales_tax",
+    "sequence": 110
+  },
+  {
+    "code": "KM-P-10",
+    "name": "Achat local, taux 10 %, non déductible",
+    "description": "La taxe facturée par un fournisseur local est un coût : aucune déduction de la TC payée sur les achats locaux n'a été trouvée dans le texte, hors le cas particulier du crédit-bail (art. 141-16), non modélisé (voir README)",
+    "rate": 10,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2020-01-01",
+    "recoverable": false,
+    "legal_reference": "Code général des impôts, art. 150 — la régularisation de la taxe payée en douane à l'importation ne porte que sur celle-ci et ne peut aboutir à un remboursement ; aucun article n'organise de déduction générale de la taxe supportée sur un achat local, à la différence d'une TVA. La taxe supportée est donc une part du coût de ce qui a été acheté.",
+    "source": "cgi",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax_on_base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax_on_base"
+        }
+      ]
+    },
+    "kind": "sales_tax",
+    "sequence": 200
+  },
+  {
+    "code": "KM-P-IMP-10",
+    "name": "Importation, taux 10 %, TC payée en douane, acompte imputable",
+    "description": "La taxe payée en douane à l'importation est un acompte imputable sur la taxe due lors de la revente, jamais remboursable",
+    "rate": 10,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2020-01-01",
+    "legal_reference": "Code général des impôts, art. 150 — la taxe payée en douane à l'importation est imputable sur la taxe due au titre des ventes ultérieures ; « en aucun cas la régularisation ne peut aboutir à un remboursement de la taxe perçue à l'importation ». Le formulaire officiel porte cette imputation à la ligne « Acomptes payés » (L3), reportée ici sur la case ACPT.",
+    "source": "formulaire-tc-ts",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "4452",
+          "box": "ACPT"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "4452",
+          "box": "ACPT",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "sales_tax",
+    "sequence": 210
+  },
+  {
+    "code": "KM-P-NR-10",
+    "name": "Services d'un prestataire non domicilié, taux 10 %, autoliquidation",
+    "description": "Le preneur autoliquide la taxe qu'un prestataire non domicilié aux Comores n'a pas facturée ; comme pour un achat local, rien ne montre qu'elle soit déductible",
+    "rate": 10,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2020-01-01",
+    "recoverable": false,
+    "legal_reference": "Code général des impôts, art. 149 (dans la rédaction de la loi de finances rectificative 2020 et de la loi de finances rectificative 2022) — autoliquidation par le preneur de la taxe due sur les services rendus par un prestataire non domicilié aux Comores. Aucun article ne prévoit sa déduction, ni la case du formulaire où elle serait reportée : le formulaire consulté ne porte qu'une ligne « Acomptes payés » réservée à l'article 150 (importations). La taxe autoliquidée est donc portée en coût et en dette envers l'État, sans case déclarative — voir README.",
+    "source": "cgi",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax_on_base"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "4478"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax_on_base"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "4478"
+        }
+      ]
+    },
+    "kind": "sales_tax",
+    "sequence": 220
+  }
+]

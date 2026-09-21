@@ -1,0 +1,299 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "Un mois d'un comptoir de Moroni, vendant à tous les taux de la taxe sur la consommation et important une partie de ses marchandises",
+  "chart": "default",
+  "fiscal_year": {
+    "name": "Exercice 2026",
+    "start": "2026-01-01",
+    "end": "2026-12-31"
+  },
+  "periods": [
+    {
+      "code": "2026-01",
+      "from": "2026-01-01",
+      "to": "2026-01-31"
+    }
+  ],
+  "statements": [
+    "KM-SYSCOHADA-BS",
+    "KM-SYSCOHADA-IS"
+  ],
+  "contacts": [
+    {
+      "ref": "client-epicerie",
+      "name": "Épicerie de Volo Volo SARL",
+      "type": "customer",
+      "country": "KM"
+    },
+    {
+      "ref": "client-corp",
+      "name": "Compagnie Comorienne d'Assurances SA",
+      "type": "customer",
+      "country": "KM"
+    },
+    {
+      "ref": "client-telecom",
+      "name": "Kiosque Itsandra Distribution SARL",
+      "type": "customer",
+      "country": "KM"
+    },
+    {
+      "ref": "client-agence",
+      "name": "Agence Maritime des Trois Îles SARL",
+      "type": "customer",
+      "country": "KM"
+    },
+    {
+      "ref": "client-grossiste",
+      "name": "Grossiste Mutsamudu SARL",
+      "type": "customer",
+      "country": "KM"
+    },
+    {
+      "ref": "client-ong",
+      "name": "Association Ulanga sans but lucratif",
+      "type": "customer",
+      "country": "KM"
+    },
+    {
+      "ref": "client-mg",
+      "name": "Import Export Toamasina SARL",
+      "type": "customer",
+      "country": "MG"
+    },
+    {
+      "ref": "fourn-km",
+      "name": "Grossiste de Moroni SARL",
+      "type": "supplier",
+      "country": "KM"
+    },
+    {
+      "ref": "fourn-fr-import",
+      "name": "Comptoir Marseillais d'Import SAS",
+      "type": "supplier",
+      "country": "FR"
+    },
+    {
+      "ref": "fourn-fr-service",
+      "name": "Cabinet Méditerranée Conseil SAS",
+      "type": "supplier",
+      "country": "FR"
+    }
+  ],
+  "documents": [
+    {
+      "ref": "V1",
+      "type": "sale_invoice",
+      "contact": "client-epicerie",
+      "date": "2026-01-05",
+      "why": "Une vente de marchandises au taux normal de 10 % : la case B10, la taxe au compte 4431 et dans la case T10.",
+      "lines": [
+        {
+          "name": "Marchandises diverses",
+          "quantity": 100,
+          "unit_price": 5000,
+          "tax": "KM-S-10",
+          "account": "7011"
+        }
+      ]
+    },
+    {
+      "ref": "V2",
+      "type": "sale_invoice",
+      "contact": "client-corp",
+      "date": "2026-01-08",
+      "why": "Une prestation de restauration à 5 % : le taux de l'article 152 réservé à la restauration, aux activités bancaires et au téléphone fixe, au compte 4432, distinct du même taux appliqué aux titres de transport international (KM-S-05-TRANSPORT-INTL, non utilisé ici).",
+      "lines": [
+        {
+          "name": "Repas d'affaires, service traiteur",
+          "quantity": 1,
+          "unit_price": 300000,
+          "tax": "KM-S-05-SRV",
+          "account": "7061"
+        }
+      ]
+    },
+    {
+      "ref": "V3",
+      "type": "sale_invoice",
+      "contact": "client-telecom",
+      "date": "2026-01-10",
+      "why": "Une revente de recharges mobiles à 7,5 %, le taux propre à cette seule activité (art. 152).",
+      "lines": [
+        {
+          "name": "Recharges mobiles voix et données, lot du mois",
+          "quantity": 1,
+          "unit_price": 400000,
+          "tax": "KM-S-075-MOBILE",
+          "account": "7061"
+        }
+      ]
+    },
+    {
+      "ref": "V4",
+      "type": "sale_invoice",
+      "contact": "client-agence",
+      "date": "2026-01-12",
+      "why": "Une vente de titres de transport inter-îles à 3 %, à distinguer du même taux appliqué à la fourniture d'eau et d'électricité (KM-S-03-UTIL, non utilisé ici) et des titres de transport international, taxés à 5 %.",
+      "lines": [
+        {
+          "name": "Billets de transport maritime inter-îles, lot du mois",
+          "quantity": 1,
+          "unit_price": 250000,
+          "tax": "KM-S-03-TRANSPORT",
+          "account": "7061"
+        }
+      ]
+    },
+    {
+      "ref": "V5",
+      "type": "sale_invoice",
+      "contact": "client-grossiste",
+      "date": "2026-01-14",
+      "why": "Une vente de riz ordinaire, produit de première nécessité taxé à 0 % (arrêté n° 17-065/MFB/CAB) : une case B0 qui n'existe pas sur le formulaire, reportée dans la case EXO comme le fait le formulaire officiel (voir README).",
+      "lines": [
+        {
+          "name": "Riz ordinaire, sac de 50 kg, lot du mois",
+          "quantity": 1,
+          "unit_price": 600000,
+          "tax": "KM-S-00",
+          "account": "7011"
+        }
+      ]
+    },
+    {
+      "ref": "V6",
+      "type": "sale_invoice",
+      "contact": "client-ong",
+      "date": "2026-01-15",
+      "why": "Une vente à un organisme sans but lucratif, exonérée par l'article 141, 5° : la case EXO, sans droit à déduction particulier documenté.",
+      "lines": [
+        {
+          "name": "Fournitures pour une distribution humanitaire",
+          "quantity": 1,
+          "unit_price": 350000,
+          "tax": "KM-S-EXO",
+          "account": "7011"
+        }
+      ]
+    },
+    {
+      "ref": "V7",
+      "type": "sale_invoice",
+      "contact": "client-mg",
+      "date": "2026-01-18",
+      "why": "Une exportation vers Madagascar, exonérée par l'article 141, 2° : la case EXO, le compte 7012 hors Région, et le traitement export qui gouverne la mention de facture.",
+      "lines": [
+        {
+          "name": "Marchandises exportées vers Toamasina",
+          "quantity": 1,
+          "unit_price": 800000,
+          "tax": "KM-S-EXPORT",
+          "account": "7012"
+        }
+      ]
+    },
+    {
+      "ref": "V8",
+      "type": "sale_credit_note",
+      "contact": "client-epicerie",
+      "date": "2026-01-27",
+      "why": "Un avoir partiel sur V1 pour des marchandises reprises : la case B10 et la taxe au compte 4431 diminuent dans le mois de l'avoir.",
+      "lines": [
+        {
+          "name": "Retour de marchandises",
+          "quantity": 20,
+          "unit_price": 5000,
+          "tax": "KM-S-10",
+          "account": "7011"
+        }
+      ]
+    },
+    {
+      "ref": "A1",
+      "type": "purchase_invoice",
+      "contact": "fourn-km",
+      "date": "2026-01-06",
+      "why": "Un achat local au taux normal : la taxe facturée par le fournisseur comorien est un coût, faute de déduction générale sur les achats locaux (art. 150 a contrario) — aucune case, aucun compte de TVA récupérable.",
+      "lines": [
+        {
+          "name": "Marchandises achetées à Moroni",
+          "quantity": 1,
+          "unit_price": 200000,
+          "tax": "KM-P-10",
+          "account": "6011"
+        }
+      ]
+    },
+    {
+      "ref": "A2",
+      "type": "purchase_invoice",
+      "contact": "fourn-fr-import",
+      "date": "2026-01-20",
+      "why": "Une importation de marchandises depuis la France : la TC payée en douane est un acompte imputable (art. 150), porté au compte 4452 et à la case ACPT, sans jamais pouvoir être remboursé — l'excédent du mois se retrouve dans la case CRED.",
+      "lines": [
+        {
+          "name": "Matériel importé, dédouané à Moroni",
+          "quantity": 1,
+          "unit_price": 1200000,
+          "tax": "KM-P-IMP-10",
+          "account": "6012"
+        }
+      ]
+    },
+    {
+      "ref": "A3",
+      "type": "purchase_invoice",
+      "contact": "fourn-fr-service",
+      "date": "2026-01-22",
+      "why": "Une prestation de conseil facturée par un cabinet français sans établissement aux Comores : le preneur autoliquide la taxe (art. 149), en coût comme un achat local puisque rien ne montre qu'elle soit déductible, et en dette au compte 4478 — sans case déclarative, faute de l'avoir trouvée (voir README).",
+      "lines": [
+        {
+          "name": "Étude de marché, cabinet non domicilié",
+          "quantity": 1,
+          "unit_price": 150000,
+          "tax": "KM-P-NR-10",
+          "account": "6261"
+        }
+      ]
+    },
+    {
+      "ref": "A4",
+      "type": "purchase_credit_note",
+      "contact": "fourn-km",
+      "date": "2026-01-29",
+      "why": "Un avoir partiel sur A1 pour des marchandises retournées au fournisseur local : le coût diminue d'autant, toujours sans case ni compte de TVA récupérable.",
+      "lines": [
+        {
+          "name": "Retour de marchandises au fournisseur",
+          "quantity": 1,
+          "unit_price": 50000,
+          "tax": "KM-P-10",
+          "account": "6011"
+        }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "E1",
+      "direction": "inbound",
+      "date": "2026-01-20",
+      "amount": 315000,
+      "contact": "client-corp",
+      "journal": "BQ",
+      "match": "V2",
+      "why": "Un encaissement qui solde exactement la facture de restauration."
+    },
+    {
+      "ref": "E2",
+      "direction": "inbound",
+      "date": "2026-01-25",
+      "amount": 200000,
+      "contact": "client-grossiste",
+      "journal": "BQ",
+      "match": null,
+      "why": "Un acompte non affecté sur la vente de riz : il reste une ligne ouverte au compte client."
+    }
+  ]
+}

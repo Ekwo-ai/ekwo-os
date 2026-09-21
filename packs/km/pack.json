@@ -1,0 +1,198 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "KM",
+  "name": "Comores",
+  "version": "0.1.0",
+  "schema_min": "20260917170000",
+  "seed_sequence": 26,
+  "released_at": "2026-09-21",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "audcif",
+        "title": "Acte uniforme relatif au droit comptable et à l'information financière (AUDCIF), adopté à Brazzaville le 26 janvier 2017",
+        "publisher": "OHADA — Bibliothèque numérique de l'OHADA",
+        "url": "https://biblio.ohada.org/doc_num.php?explnum_id=2061",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "syscohada",
+        "title": "Journal officiel de l'OHADA, numéro spécial du 15 février 2017 — Acte uniforme relatif au droit comptable et à l'information financière et Système comptable OHADA (SYSCOHADA révisé), version complète signée",
+        "publisher": "OHADA — Bibliothèque numérique de l'OHADA",
+        "url": "https://biblio.ohada.org/doc_num.php?explnum_id=2063",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "cgi",
+        "title": "Code général des impôts de l'Union des Comores, édition 2023 à jour de la loi de finances rectificative 2022 et de la loi de finances 2023",
+        "publisher": "Administration Générale des Impôts et des Domaines (AGID), édition droit-afrique",
+        "url": "https://web.archive.org/web/20250709020914id_/https://dgi.gouv.km/file/rapport/Comores-CGI-2023(integral).pdf",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "formulaire-tc-ts",
+        "title": "Déclaration mensuelle et unifiée de la Taxe sur la Consommation (TC) et de la Taxe sur les Salaires (TS)",
+        "publisher": "Administration Générale des Impôts et des Domaines (AGID)",
+        "url": "https://web.archive.org/web/20250709021404id_/http://dgi.gouv.km/file/IMPRIME%20FISCAUX/D%C3%A9claration%20unique%20de%20la%20TC,%20TS%20%20officielle.pdf",
+        "consulted_on": "2026-09-21",
+        "kind": "form"
+      },
+      {
+        "key": "lf-2024",
+        "title": "Loi de finances de l'année 2024 de l'Union des Comores (adoptée en séance plénière du 27 novembre 2023)",
+        "publisher": "Dépôt à l'OMC dans le dossier d'accession de l'Union des Comores",
+        "url": "https://www.wto.org/english/thewto_e/acc_e/com_e/WT_ACC_COM_50_LEG1.pdf",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "agid",
+        "title": "Administration Générale des Impôts et des Domaines — page du Code général des impôts",
+        "publisher": "Administration Générale des Impôts et des Domaines (AGID)",
+        "url": "https://web.archive.org/web/20260315200936/https://www.dgi.gouv.km/fr/code_general_des_impots.php",
+        "consulted_on": "2026-09-22",
+        "kind": "portal"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "KMF",
+    "language": "fr",
+    "rounding_method": "half_up",
+    "closing_style": "result_accounts",
+    "roles": {
+      "receivable": "4111",
+      "payable": "4011",
+      "suspense": "4711",
+      "rounding": "6588",
+      "retained_earnings": "121",
+      "retained_earnings_loss": "1291",
+      "current_year_result_profit": "131",
+      "current_year_result_loss": "139",
+      "sales": "7011",
+      "purchase": "6011",
+      "bank": "5211",
+      "cash": "5711",
+      "fx_gain": "756",
+      "fx_loss": "656",
+      "tax_payable": "4441",
+      "tax_receivable": "4449"
+    },
+    "journal_roles": {
+      "sales": "VT",
+      "purchase": "AC",
+      "miscellaneous": "OD",
+      "opening": "AN"
+    },
+    "fiscal_year_default": "calendar"
+  },
+  "languages": [],
+  "journals": [
+    {
+      "code": "VT",
+      "type": "sales",
+      "name": "Journal des ventes",
+      "sequence": 10
+    },
+    {
+      "code": "AC",
+      "type": "purchase",
+      "name": "Journal des achats",
+      "sequence": 20
+    },
+    {
+      "code": "BQ",
+      "type": "bank",
+      "name": "Journal de banque",
+      "sequence": 30
+    },
+    {
+      "code": "CA",
+      "type": "cash",
+      "name": "Journal de caisse",
+      "sequence": 40
+    },
+    {
+      "code": "OD",
+      "type": "general",
+      "name": "Opérations diverses",
+      "sequence": 50
+    },
+    {
+      "code": "AN",
+      "type": "opening",
+      "name": "Journal des à-nouveaux",
+      "sequence": 60
+    }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "SYSCOHADA révisé — plan comptable général OHADA, Système normal",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": [
+        "KM-SYSCOHADA-BS",
+        "KM-SYSCOHADA-IS"
+      ],
+      "legal_reference": "Acte uniforme relatif au droit comptable et à l'information financière du 26 janvier 2017, art. 17, 7° — recours à un plan de comptes normalisé dont la liste figure dans le Système comptable OHADA ; Système comptable OHADA, Titre VII, chapitre 2, section 3 — liste des comptes, classes 1 à 8. La classe 9, engagements hors bilan et comptabilité analytique de gestion, est d'application facultative et n'est pas reprise. Commun aux dix-sept États parties : un seul fichier, packs/ohada/accounts.csv, recopié dans chaque pack par scripts/ohada-packs.mjs.",
+      "source": "syscohada"
+    }
+  ],
+  "documents": {
+    "numbering": "sequential",
+    "number_format": "{CODE}/{YYYY}/{NNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "invoice_if_issued",
+    "references": {
+      "numbering": {
+        "legal_reference": "Code général des impôts, art. 148 — tout redevable de la taxe sur la consommation doit délivrer une facture ou un document en tenant lieu portant, entre autres mentions, « la date et le numéro de série de la facture ». Le texte impose un numéro de série mais ne prescrit ni une forme ni l'interdiction d'un trou dans la séquence, à la différence du Sénégal (art. 447-I-5, « séquence chronologique et continue ») : `sequential` dit ce que l'article impose, pas plus.",
+        "source": "cgi"
+      },
+      "tax_point": {
+        "legal_reference": "Code général des impôts, art. 148 — tout redevable de la taxe sur la consommation « doit délivrer une facture ou un document en tenant lieu » qui porte le taux et le montant de la taxe appliquée, et art. 139 — la taxe s'applique aux activités d'achats-reventes, de productions et de services. Aucun article fixant expressément le fait générateur (livraison, encaissement ou émission de la facture) n'a été trouvé dans le texte consulté : `invoice_if_issued` retient la facture, seul document que l'article 148 rend obligatoire à chaque opération, faute d'un texte trouvé sur le fait générateur lui-même. À vérifier auprès d'un fiscaliste comorien.",
+        "source": "cgi"
+      }
+    },
+    "mentions": [
+      {
+        "code": "exempt",
+        "applies_when": "exempt",
+        "text": "Opération exonérée de la taxe sur la consommation — article 141 du Code général des impôts.",
+        "sequence": 10,
+        "legal_reference": "Code général des impôts, art. 148 — la facture porte les mentions que l'article prescrit, dont le taux de taxe appliqué ; art. 141 — liste des opérations exonérées",
+        "source": "cgi"
+      },
+      {
+        "code": "export",
+        "applies_when": "export",
+        "text": "Exportation exonérée de la taxe sur la consommation — article 141, 2° du Code général des impôts.",
+        "sequence": 20,
+        "legal_reference": "Code général des impôts, art. 148 et art. 141, 2° — exportations et services directement liés",
+        "source": "cgi"
+      },
+      {
+        "code": "no_tax_mentioned",
+        "applies_when": "always",
+        "text": "Toute facture ne mentionnant pas la taxe sur la consommation est considérée comme taxe incluse — article 148 du Code général des impôts.",
+        "sequence": 90,
+        "legal_reference": "Code général des impôts, art. 148, dernier alinéa — « Toute facture ne mentionnant pas la taxe sera considérée comme taxe incluse. » La condition porte sur ce que la facture omet et non sur la nature de l'opération : `always` est la seule valeur du vocabulaire fermé qui l'atteint, faute d'une valeur voisine de « la taxe manque sur ce document ». Le rendu conditionnel réel — n'imprimer la phrase que si la taxe est absente — n'est pas exprimable ici et reste à faire ailleurs.",
+        "source": "cgi"
+      }
+    ]
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "Code général des impôts, art. 41-2 — caisse enregistreuse obligatoire pour un contribuable exerçant une activité commerciale avec un chiffre d'affaires supérieur ou égal à 20 000 000 KMF, dans les conditions d'un arrêté du ministre chargé des finances qui n'a pas été trouvé ; aucun dispositif de facture normalisée, d'e-facturation ou de machine fiscale certifiée n'a été trouvé à la date de ce pack. La télédéclaration des impôts, dont la TC (art. 149), devient obligatoire à compter du 1er janvier 2026 pour les moyennes et grandes entreprises (loi de finances pour 2024, art. L.4 du livre de procédures fiscales modifié), mais aucune plateforme opérationnelle ni URL de télédéclaration n'a été trouvée : le FMI cite encore ce chantier comme un objectif au 31 décembre 2026.",
+    "source": "cgi"
+  }
+}

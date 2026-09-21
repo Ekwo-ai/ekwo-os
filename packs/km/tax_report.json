@@ -1,0 +1,177 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "KM-TC",
+  "name": "Déclaration mensuelle et unifiée de la taxe sur la consommation",
+  "period": [
+    "month"
+  ],
+  "period_default": "month",
+  "valid_from": "2020-01-01",
+  "legal_reference": "Code général des impôts, art. 149 — la déclaration de la taxe sur la consommation est mensuelle, déposée avant le 15 de chaque mois pour les opérations du mois précédent, en double exemplaire, au centre des impôts (DGE ou DPME) dont dépend le redevable. Le formulaire officiel de l'AGID, « Déclaration mensuelle et unifiée de la Taxe sur la Consommation (TC), Taxe sur les Salaires (TS) », porte les colonnes Exonérés / Taxables à 3 %, 5 %, 7,5 %, 10 %, 15 % et 25 % et les lignes L1 à L6 de la TC (la partie « Taxe sur les Salaires » de l'imprimé, L7-L8, est un impôt distinct sur les rémunérations et n'appartient pas à ce pack). La colonne à 15 % du formulaire ne correspond à aucun taux de l'article 152 du CGI 2023 lu pour ce pack et n'est pas reprise ici, faute de base légale trouvée — voir README. La télédéclaration devient obligatoire à compter du 1er janvier 2026 pour les moyennes et grandes entreprises (loi de finances 2024, art. L.4 du livre de procédures fiscales modifié), mais aucune plateforme opérationnelle n'a été trouvée à la date de ce pack.",
+  "source": "cgi",
+  "deadline": {
+    "rule": "day_of_month_after_period",
+    "day": 15,
+    "legal_reference": "Code général des impôts, art. 149 — la déclaration est déposée avant le 15 de chaque mois, pour les opérations du mois précédent.",
+    "source": "cgi"
+  },
+  "boxes": [
+    {
+      "box": "EXO",
+      "kind": "base",
+      "name": "Opérations exonérées (colonne « Exonérés » du formulaire)",
+      "sequence": 10,
+      "legal_reference": "Code général des impôts, art. 141 — opérations exonérées ; art. 152 — produits de première nécessité taxés à 0 %. Le formulaire officiel ne porte qu'une colonne « Exonérés », sans case distincte pour un taux à 0 % ni pour l'export : les trois s'y reportent (KM-S-EXO, KM-S-00, KM-S-EXPORT).",
+      "source": "formulaire-tc-ts"
+    },
+    {
+      "box": "B03",
+      "kind": "base",
+      "name": "Opérations taxables à 3 %",
+      "sequence": 20,
+      "legal_reference": "Code général des impôts, art. 152 — taux de 3 % ; formulaire officiel, colonne « Taxables à 3 % »",
+      "source": "formulaire-tc-ts"
+    },
+    {
+      "box": "B05",
+      "kind": "base",
+      "name": "Opérations taxables à 5 %",
+      "sequence": 30,
+      "legal_reference": "Code général des impôts, art. 152 — taux de 5 % ; formulaire officiel, colonne « Taxables à 5 % »",
+      "source": "formulaire-tc-ts"
+    },
+    {
+      "box": "B075",
+      "kind": "base",
+      "name": "Opérations taxables à 7,5 %",
+      "sequence": 40,
+      "legal_reference": "Code général des impôts, art. 152 — taux de 7,5 % ; formulaire officiel, colonne « Taxables à 7,5 % »",
+      "source": "formulaire-tc-ts"
+    },
+    {
+      "box": "B10",
+      "kind": "base",
+      "name": "Opérations taxables à 10 %",
+      "sequence": 50,
+      "legal_reference": "Code général des impôts, art. 152 — taux normal de 10 % ; formulaire officiel, colonne « Taxables à 10 % »",
+      "source": "formulaire-tc-ts"
+    },
+    {
+      "box": "B25",
+      "kind": "base",
+      "name": "Opérations taxables à 25 %",
+      "sequence": 60,
+      "legal_reference": "Code général des impôts, art. 152 — taux de 25 % ; formulaire officiel, colonne « Taxables à 25 % »",
+      "source": "formulaire-tc-ts"
+    },
+    {
+      "box": "CAT",
+      "kind": "total",
+      "name": "L1 — Montant du chiffre d'affaires hors taxe",
+      "sequence": 70,
+      "plus": [
+        "EXO",
+        "B03",
+        "B05",
+        "B075",
+        "B10",
+        "B25"
+      ],
+      "legal_reference": "Formulaire officiel, ligne L1 « Montant chiffre d'affaires HT »",
+      "source": "formulaire-tc-ts"
+    },
+    {
+      "box": "T03",
+      "kind": "tax",
+      "name": "Taxe exigible à 3 %",
+      "sequence": 80,
+      "legal_reference": "Code général des impôts, art. 152",
+      "source": "cgi"
+    },
+    {
+      "box": "T05",
+      "kind": "tax",
+      "name": "Taxe exigible à 5 %",
+      "sequence": 90,
+      "legal_reference": "Code général des impôts, art. 152",
+      "source": "cgi"
+    },
+    {
+      "box": "T075",
+      "kind": "tax",
+      "name": "Taxe exigible à 7,5 %",
+      "sequence": 100,
+      "legal_reference": "Code général des impôts, art. 152",
+      "source": "cgi"
+    },
+    {
+      "box": "T10",
+      "kind": "tax",
+      "name": "Taxe exigible à 10 %",
+      "sequence": 110,
+      "legal_reference": "Code général des impôts, art. 152",
+      "source": "cgi"
+    },
+    {
+      "box": "T25",
+      "kind": "tax",
+      "name": "Taxe exigible à 25 %",
+      "sequence": 120,
+      "legal_reference": "Code général des impôts, art. 152",
+      "source": "cgi"
+    },
+    {
+      "box": "TAXT",
+      "kind": "total",
+      "name": "L2 — Montant de la taxe",
+      "sequence": 130,
+      "plus": [
+        "T03",
+        "T05",
+        "T075",
+        "T10",
+        "T25"
+      ],
+      "legal_reference": "Formulaire officiel, ligne L2 « Montant de la taxe »",
+      "source": "formulaire-tc-ts"
+    },
+    {
+      "box": "ACPT",
+      "kind": "tax",
+      "name": "L3 — Acomptes payés (TC payée en douane à l'importation)",
+      "sequence": 140,
+      "legal_reference": "Code général des impôts, art. 150 — la taxe payée en douane à l'importation est un acompte imputable sur la taxe due au titre des ventes ultérieures ; formulaire officiel, ligne L3 « Acomptes payés »",
+      "source": "formulaire-tc-ts"
+    },
+    {
+      "box": "NET",
+      "kind": "total",
+      "name": "L5 — Taxe due au titre du mois",
+      "sequence": 150,
+      "plus": [
+        "TAXT"
+      ],
+      "minus": [
+        "ACPT"
+      ],
+      "floor_zero": true,
+      "legal_reference": "Formulaire officiel, ligne L5 « Taxe due au titre du mois (L2-L3-L4) ». Ce pack ne reporte pas de case pour L4, le solde créditeur de la déclaration précédente : elle n'est pas un fait de la période mais le report du calcul du mois antérieur, que la case CRED porte déjà d'un mois sur l'autre.",
+      "source": "formulaire-tc-ts"
+    },
+    {
+      "box": "CRED",
+      "kind": "total",
+      "name": "L6 — Solde créditeur à reporter",
+      "sequence": 160,
+      "plus": [
+        "ACPT"
+      ],
+      "minus": [
+        "TAXT"
+      ],
+      "floor_zero": true,
+      "legal_reference": "Code général des impôts, art. 150 — « en aucun cas la régularisation ne peut aboutir à un remboursement de la taxe perçue à l'importation » : l'excédent d'acomptes ne se reporte que sur les mois suivants, jamais en remboursement. Formulaire officiel, ligne L6 « Solde créditeur à reporter ».",
+      "source": "cgi"
+    }
+  ]
+}
