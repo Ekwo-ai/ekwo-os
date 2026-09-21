@@ -1,0 +1,550 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "JP-CT-KAKUTEI",
+  "name": "消費税及び地方消費税の確定申告書（一般用）",
+  "period": [
+    "year",
+    "quarter",
+    "month"
+  ],
+  "period_default": "year",
+  "valid_from": "2023-10-01",
+  "legal_reference": "消費税法 art. 45(1) — a business files a return for each taxable period within two months of its end, stating the 課税標準額 by rate, the tax on it, the deductions (the tax on purchases, on returns and on bad debts), the net and, where interim returns were filed, what remains. Art. 19(1) — the taxable period is the calendar year for an individual and the business year for a company; a business may shorten it to three months or one month by notification (art. 19(1)(iii) to (iv-2)). The law gives the annual period to everybody, which is what period_default says; but a cadence here is anchored on 1 January and a company's business year is not, so a company whose year runs from April files its return on an annual period the list cannot name, and records it as undecided (see docs/international.md). This is the return for the general method (一般用) with its 付表1-3 and 2-3, the layout since 1 October 2023; the simplified method (簡易課税, art. 37) and the 20 % special measure for businesses that became taxable by registering (2割特例, now the 30 % one for individuals) are other forms or other lines and are not carried. Interim returns (art. 42: eleven monthly ones above 48 million yen of prior-year tax, three quarterly ones above 4 million, one half-yearly above 480,000) are a different form filed on a figure of the previous year and are not declared; what they paid enters ⑩ and ㉑, which stay empty.",
+  "source": "ctax-act",
+  "deadline": {
+    "rule": "last_day_of_month_after_period",
+    "plus_days": 28,
+    "legal_reference": "消費税法 art. 45(1) — the return is filed within two months of the day after the end of the taxable period: for a year ending on 31 March, by 31 May. The vocabulary has no 'two months', so the pack declares the last day of the following month plus 28 days, which is the 28th of the second month: never later than the law, and one to three days early. Art. 45-2 extends it by one month for a company that has the extension of its corporation tax return and notifies it; an individual files by 31 March of the following year (Ministry of Finance, 消費税に関する基本的な資料, 申告・納付). Neither is expressible, and both are recorded in docs/international.md.",
+    "source": "ctax-act"
+  },
+  "boxes": [
+    {
+      "box": "F11A",
+      "kind": "base",
+      "name": "課税資産の譲渡等の対価の額（6.24%適用分）",
+      "sequence": 10,
+      "legal_reference": "消費税及び地方消費税の申告書（一般用）の書き方 (NTA, November 2025), II ■1 — 付表1-3 ①-1 column A: the value of reduced-rate taxable sales without tax. The guide works it out as the tax-inclusive sales × 100/108; the ledger holds the value without tax, which is what the accumulation method starts from. Transferred to 第二表 ⑤.",
+      "source": "form-guide"
+    },
+    {
+      "box": "F11B",
+      "kind": "base",
+      "name": "課税資産の譲渡等の対価の額（7.8%適用分）",
+      "sequence": 20,
+      "legal_reference": "消費税及び地方消費税の申告書（一般用）の書き方 (NTA, November 2025), II ■1 — 付表1-3 ①-1 column B, the same at the standard rate. Transferred to 第二表 ⑥.",
+      "source": "form-guide"
+    },
+    {
+      "box": "F11X",
+      "kind": "base",
+      "name": "課税資産の譲渡等の対価の額（旧税率分）",
+      "sequence": 30,
+      "legal_reference": "付表1-1 (税率別消費税額計算表 〔経過措置対象課税資産の譲渡等を含む課税期間用〕), the columns of the former rates of 3 %, 4 % and 6.3 %: a period that still contains a supply taxed at a former rate files 付表1-1 and 2-1 instead of 1-3 and 2-3. One box for all former rates, which the form prints in separate columns.",
+      "source": "form-guide"
+    },
+    {
+      "box": "F12",
+      "kind": "base",
+      "name": "特定課税仕入れに係る支払対価の額",
+      "sequence": 40,
+      "legal_reference": "消費税及び地方消費税の申告書（一般用）の書き方 (NTA, November 2025), and 付表1-3 記載要領 2(2) — 付表1-3 ①-2, filled only by a business whose taxable sales ratio is below 95 % and that received a 特定課税仕入れ; it is part of the 課税標準額 (消費税法 art. 45(1)(i)).",
+      "source": "form-guide"
+    },
+    {
+      "box": "F2A",
+      "kind": "tax",
+      "name": "消費税額（6.24%適用分）",
+      "sequence": 50,
+      "legal_reference": "消費税及び地方消費税の申告書（一般用）の書き方 (NTA, November 2025), II ■3 — 付表1-3 ② column A. The guide multiplies the 課税標準額 by 6.24 %; under 消費税法 art. 45(5) and 消費税法施行令 art. 62 a business that keeps copies of the qualified invoices it issued may instead take the total of the tax on them × 78/100, which is what the postings write. Transferred to 第二表 ⑮.",
+      "source": "ctax-act"
+    },
+    {
+      "box": "F2B",
+      "kind": "tax",
+      "name": "消費税額（7.8%適用分）",
+      "sequence": 60,
+      "legal_reference": "消費税及び地方消費税の申告書（一般用）の書き方 (NTA, November 2025), II ■3 — 付表1-3 ② column B, at 7.8 %, including the tax on a 特定課税仕入れ; the same accumulation method. Transferred to 第二表 ⑯.",
+      "source": "ctax-act"
+    },
+    {
+      "box": "F2X",
+      "kind": "tax",
+      "name": "消費税額（旧税率分）",
+      "sequence": 70,
+      "legal_reference": "付表1-1, the tax of the former-rate columns; see F11X.",
+      "source": "form-guide"
+    },
+    {
+      "box": "F51",
+      "kind": "tax",
+      "name": "売上げの返還等対価に係る税額",
+      "sequence": 80,
+      "legal_reference": "消費税及び地方消費税の申告書（一般用）の書き方 (NTA, November 2025), IV ■3 — 付表1-3 ⑤-1: the tax contained in a return, discount or rebate on a taxable sale (消費税法 art. 38), deducted rather than netted against ①-1. A sale credit note posts its national tax here; the guide's alternative of reducing the sales directly is not taken.",
+      "source": "form-guide"
+    },
+    {
+      "box": "G1",
+      "kind": "base",
+      "name": "課税売上額（税抜き）",
+      "sequence": 90,
+      "legal_reference": "消費税及び地方消費税の申告書（一般用）の書き方 (NTA, November 2025), III ■1 — 付表2-3 ①: taxable sales without tax, net of returns. Every domestic sale posts here beside 付表1-3 ①-1, and a sale credit note subtracts its base here only.",
+      "source": "form-guide"
+    },
+    {
+      "box": "G2",
+      "kind": "base",
+      "name": "免税売上額",
+      "sequence": 100,
+      "legal_reference": "消費税及び地方消費税の申告書（一般用）の書き方 (NTA, November 2025), III ■2 — 付表2-3 ②: sales exempt under 消費税法 art. 7 and art. 8.",
+      "source": "form-guide"
+    },
+    {
+      "box": "G4",
+      "kind": "total",
+      "name": "課税資産の譲渡等の対価の額",
+      "sequence": 110,
+      "plus": [
+        "G1",
+        "G2"
+      ],
+      "legal_reference": "消費税及び地方消費税の申告書（一般用）の書き方 (NTA, November 2025), III ■3 — 付表2-3 ④ = ① + ② + ③; ③ (non-taxable exports and transfers to a branch abroad) is not carried. Transferred to 第一表 ⑮.",
+      "source": "form-guide"
+    },
+    {
+      "box": "G6",
+      "kind": "base",
+      "name": "非課税売上額",
+      "sequence": 120,
+      "legal_reference": "消費税及び地方消費税の申告書（一般用）の書き方 (NTA, November 2025), III ■5 — 付表2-3 ⑥: non-taxable sales that enter the denominator of the taxable sales ratio.",
+      "source": "form-guide"
+    },
+    {
+      "box": "G7",
+      "kind": "total",
+      "name": "資産の譲渡等の対価の額",
+      "sequence": 130,
+      "plus": [
+        "G4",
+        "G6"
+      ],
+      "legal_reference": "消費税及び地方消費税の申告書（一般用）の書き方 (NTA, November 2025), III ■6 — 付表2-3 ⑦ = ⑤ + ⑥, ⑤ being ④. Transferred to 第一表 ⑯.",
+      "source": "form-guide"
+    },
+    {
+      "box": "G10A",
+      "kind": "tax",
+      "name": "課税仕入れに係る消費税額（6.24%適用分）",
+      "sequence": 140,
+      "legal_reference": "消費税及び地方消費税の申告書（一般用）の書き方 (NTA, November 2025), III ■9 — 付表2-3 ⑩ column A, net of purchase returns. The guide computes it from tax-inclusive purchases × 6.24/108; 消費税法施行令 art. 46(1) makes the accumulation of the invoices' tax × 78/100 the rule, which is what the postings write.",
+      "source": "ctax-order"
+    },
+    {
+      "box": "G10B",
+      "kind": "tax",
+      "name": "課税仕入れに係る消費税額（7.8%適用分）",
+      "sequence": 150,
+      "legal_reference": "消費税及び地方消費税の申告書（一般用）の書き方 (NTA, November 2025), III ■9 — 付表2-3 ⑩ column B; the same.",
+      "source": "ctax-order"
+    },
+    {
+      "box": "G10X",
+      "kind": "tax",
+      "name": "課税仕入れに係る消費税額（旧税率分）",
+      "sequence": 160,
+      "legal_reference": "付表2-1, the former-rate columns; see F11X.",
+      "source": "form-guide"
+    },
+    {
+      "box": "G12A",
+      "kind": "tax",
+      "name": "経過措置により課税仕入れに係る消費税額とみなされる額（6.24%適用分）",
+      "sequence": 170,
+      "legal_reference": "消費税及び地方消費税の申告書（一般用）の書き方 (NTA, November 2025), III ■11 — 付表2-3 ⑫ column A: the share of the tax on purchases from businesses that are not qualified invoice issuers deducted under the transitional measure (80 % until 30 September 2026, then 70 %, 50 % and 30 %).",
+      "source": "form-guide"
+    },
+    {
+      "box": "G12B",
+      "kind": "tax",
+      "name": "経過措置により課税仕入れに係る消費税額とみなされる額（7.8%適用分）",
+      "sequence": 180,
+      "legal_reference": "消費税及び地方消費税の申告書（一般用）の書き方 (NTA, November 2025), III ■11 — 付表2-3 ⑫ column B.",
+      "source": "form-guide"
+    },
+    {
+      "box": "G13",
+      "kind": "base",
+      "name": "特定課税仕入れに係る支払対価の額",
+      "sequence": 190,
+      "legal_reference": "付表2-3 記載要領 2(4) — 付表2-3 ⑬, filled only below a taxable sales ratio of 95 %.",
+      "source": "form-2-3-notes"
+    },
+    {
+      "box": "G14",
+      "kind": "tax",
+      "name": "特定課税仕入れに係る消費税額",
+      "sequence": 200,
+      "legal_reference": "付表2-3 記載要領 2(4) — 付表2-3 ⑭: 7.8 % of ⑬ (消費税法 art. 30(1)).",
+      "source": "form-2-3-notes"
+    },
+    {
+      "box": "G15A",
+      "kind": "tax",
+      "name": "課税貨物に係る消費税額（6.24%適用分）",
+      "sequence": 210,
+      "legal_reference": "消費税及び地方消費税の申告書（一般用）の書き方 (NTA, November 2025), III ■9 (注1) — 付表2-3 ⑮: the tax charged on goods taken out of a bonded area.",
+      "source": "form-guide"
+    },
+    {
+      "box": "G15B",
+      "kind": "tax",
+      "name": "課税貨物に係る消費税額（7.8%適用分）",
+      "sequence": 220,
+      "legal_reference": "消費税及び地方消費税の申告書（一般用）の書き方 (NTA, November 2025), III ■9 (注1) — 付表2-3 ⑮ column B.",
+      "source": "form-guide"
+    },
+    {
+      "box": "G17A",
+      "kind": "total",
+      "name": "課税仕入れ等の税額の合計額（6.24%適用分）",
+      "sequence": 230,
+      "plus": [
+        "G10A",
+        "G12A",
+        "G15A"
+      ],
+      "legal_reference": "消費税及び地方消費税の申告書（一般用）の書き方 (NTA, November 2025), III ■12 — 付表2-3 ⑰ = ⑩ + ⑫ + ⑭ + ⑮ ± ⑯, column A; ⑯ (the inventory adjustment on entering or leaving the exemption) is not carried.",
+      "source": "form-guide"
+    },
+    {
+      "box": "G17B",
+      "kind": "total",
+      "name": "課税仕入れ等の税額の合計額（7.8%適用分）",
+      "sequence": 240,
+      "plus": [
+        "G10B",
+        "G12B",
+        "G14",
+        "G15B"
+      ],
+      "legal_reference": "消費税及び地方消費税の申告書（一般用）の書き方 (NTA, November 2025), III ■12 — 付表2-3 ⑰, column B.",
+      "source": "form-guide"
+    },
+    {
+      "box": "G17X",
+      "kind": "total",
+      "name": "課税仕入れ等の税額の合計額（旧税率分）",
+      "sequence": 250,
+      "plus": [
+        "G10X"
+      ],
+      "legal_reference": "付表2-1, the former-rate columns.",
+      "source": "form-guide"
+    },
+    {
+      "box": "K1",
+      "kind": "total",
+      "name": "課税標準額",
+      "sequence": 260,
+      "plus": [
+        "F11A",
+        "F11B",
+        "F11X",
+        "F12"
+      ],
+      "legal_reference": "消費税及び地方消費税の申告書（一般用）の書き方 (NTA, November 2025), II ■2 and VI ■1 — 第一表 ①, from 第二表 ①: 付表1-3 ①-1 plus ①-2 (消費税法 art. 45(1)(i)). The form truncates each rate's amount to the thousand yen (国税通則法 art. 118(1)); a total cannot express that and the pack reports the yen.",
+      "source": "form-guide"
+    },
+    {
+      "box": "K2",
+      "kind": "total",
+      "name": "消費税額",
+      "sequence": 270,
+      "plus": [
+        "F2A",
+        "F2B",
+        "F2X"
+      ],
+      "legal_reference": "消費税及び地方消費税の申告書（一般用）の書き方 (NTA, November 2025), VI ■1 — 第一表 ②, from 第二表 ⑪ = 付表1-3 ② column C.",
+      "source": "form-guide"
+    },
+    {
+      "box": "K3",
+      "kind": "tax",
+      "name": "控除過大調整税額",
+      "sequence": 280,
+      "legal_reference": "消費税及び地方消費税の申告書（一般用）の書き方 (NTA, November 2025), IV ■1 — 第一表 ③: excess deductions to be added back (付表2-3 ㉗ and ㉘). Declared and empty.",
+      "source": "form-guide"
+    },
+    {
+      "box": "K4",
+      "kind": "total",
+      "name": "控除対象仕入税額",
+      "sequence": 290,
+      "plus": [
+        "G17A",
+        "G17B",
+        "G17X"
+      ],
+      "legal_reference": "消費税及び地方消費税の申告書（一般用）の書き方 (NTA, November 2025), IV ■2 — 第一表 ④ = 付表2-3 ㉖. Where taxable sales are 500 million yen or less and the taxable sales ratio is 95 % or more, ㉖ is ⑰ (III ■13; 消費税法 art. 30(2)); below that it is apportioned (個別対応方式 or 一括比例配分方式), which the pack does not compute.",
+      "source": "form-guide"
+    },
+    {
+      "box": "K5",
+      "kind": "total",
+      "name": "返還等対価に係る税額",
+      "sequence": 300,
+      "plus": [
+        "F51"
+      ],
+      "legal_reference": "消費税及び地方消費税の申告書（一般用）の書き方 (NTA, November 2025), VI ■1 — 第一表 ⑤, from 第二表 ⑰ = 付表1-3 ⑤; ⑤-2 (returns on a 特定課税仕入れ) is not carried.",
+      "source": "form-guide"
+    },
+    {
+      "box": "K6",
+      "kind": "tax",
+      "name": "貸倒れに係る税額",
+      "sequence": 310,
+      "legal_reference": "消費税及び地方消費税の申告書（一般用）の書き方 (NTA, November 2025), IV ■5 — 第一表 ⑥: the tax in a bad debt written off (消費税法 art. 39). Declared and empty: a write-off is not a document the pack taxes.",
+      "source": "form-guide"
+    },
+    {
+      "box": "K7",
+      "kind": "total",
+      "name": "控除税額小計",
+      "sequence": 320,
+      "plus": [
+        "K4",
+        "K5",
+        "K6"
+      ],
+      "legal_reference": "消費税及び地方消費税の申告書（一般用）の書き方 (NTA, November 2025), IV ■6 — 第一表 ⑦ = ④ + ⑤ + ⑥.",
+      "source": "form-guide"
+    },
+    {
+      "box": "K8",
+      "kind": "total",
+      "name": "控除不足還付税額",
+      "sequence": 330,
+      "plus": [
+        "K7"
+      ],
+      "minus": [
+        "K2",
+        "K3"
+      ],
+      "floor_zero": true,
+      "legal_reference": "消費税法 art. 45(1)(v) and 第一表 ⑧: the shortfall when the deductions exceed the tax, ⑦ − ② − ③.",
+      "source": "ctax-act"
+    },
+    {
+      "box": "K9",
+      "kind": "total",
+      "name": "差引税額",
+      "sequence": 340,
+      "plus": [
+        "K2",
+        "K3"
+      ],
+      "minus": [
+        "K7"
+      ],
+      "floor_zero": true,
+      "legal_reference": "消費税及び地方消費税の申告書（一般用）の書き方 (NTA, November 2025), IV ■7 — 第一表 ⑨ = ② + ③ − ⑦, truncated to the hundred yen (国税通則法 art. 119(1)); the truncation is not expressible and the pack reports the yen.",
+      "source": "form-guide"
+    },
+    {
+      "box": "K10",
+      "kind": "tax",
+      "name": "中間納付税額",
+      "sequence": 350,
+      "legal_reference": "消費税及び地方消費税の申告書（一般用）の書き方 (NTA, November 2025), VI ■1 ⑴ — 第一表 ⑩: the national tax declared on the interim returns of the period (消費税法 art. 42). Declared and empty: an interim return is filed on a figure from the previous year, not on this period's documents.",
+      "source": "form-guide"
+    },
+    {
+      "box": "K11",
+      "kind": "total",
+      "name": "納付税額",
+      "sequence": 360,
+      "plus": [
+        "K9"
+      ],
+      "minus": [
+        "K10"
+      ],
+      "floor_zero": true,
+      "legal_reference": "消費税法 art. 45(1)(vi) and 第一表 ⑪ = ⑨ − ⑩.",
+      "source": "ctax-act"
+    },
+    {
+      "box": "K12",
+      "kind": "total",
+      "name": "中間納付還付税額",
+      "sequence": 370,
+      "plus": [
+        "K10"
+      ],
+      "minus": [
+        "K9"
+      ],
+      "floor_zero": true,
+      "legal_reference": "消費税法 art. 45(1)(vii) and 第一表 ⑫ = ⑩ − ⑨.",
+      "source": "ctax-act"
+    },
+    {
+      "box": "K15",
+      "kind": "total",
+      "name": "課税資産の譲渡等の対価の額",
+      "sequence": 380,
+      "plus": [
+        "G4"
+      ],
+      "legal_reference": "消費税及び地方消費税の申告書（一般用）の書き方 (NTA, November 2025), VI ■1 — 第一表 ⑮, from 付表2-3 ④ (the numerator of the taxable sales ratio).",
+      "source": "form-guide"
+    },
+    {
+      "box": "K16",
+      "kind": "total",
+      "name": "資産の譲渡等の対価の額",
+      "sequence": 390,
+      "plus": [
+        "G7"
+      ],
+      "legal_reference": "消費税及び地方消費税の申告書（一般用）の書き方 (NTA, November 2025), VI ■1 — 第一表 ⑯, from 付表2-3 ⑦ (its denominator).",
+      "source": "form-guide"
+    },
+    {
+      "box": "K17",
+      "kind": "total",
+      "name": "地方消費税の課税標準となる消費税額（控除不足還付税額）",
+      "sequence": 400,
+      "plus": [
+        "K8"
+      ],
+      "legal_reference": "消費税及び地方消費税の申告書（一般用）の書き方 (NTA, November 2025), VI ■2 — 第一表 ⑰ = 付表1-3 ⑩, which is ⑧.",
+      "source": "form-guide"
+    },
+    {
+      "box": "K18",
+      "kind": "total",
+      "name": "地方消費税の課税標準となる消費税額（差引税額）",
+      "sequence": 410,
+      "plus": [
+        "K9"
+      ],
+      "legal_reference": "消費税及び地方消費税の申告書（一般用）の書き方 (NTA, November 2025), VI ■2 — 第一表 ⑱ = 付表1-3 ⑪, which is ⑨.",
+      "source": "form-guide"
+    },
+    {
+      "box": "LS",
+      "kind": "tax",
+      "name": "（計算用）地方消費税相当額（売上げ）",
+      "sequence": 420,
+      "legal_reference": "Not a box of the form: the 22/78 share of the tax on sales that the postings split off, so that the 譲渡割額 can be summed. 地方税法 art. 72-83 sets the local tax at 22/78 of the national tax; the form works it out as ⑱ × 22/78 truncated to the hundred yen, which a total cannot multiply. Summing the shares gives the same figure to within the roundings of each invoice. It is not hidden, because a box a posting writes into may not be: vat_return() prints it as a working line marked （計算用）.",
+      "source": "local-tax-act"
+    },
+    {
+      "box": "LP",
+      "kind": "tax",
+      "name": "（計算用）地方消費税相当額（仕入れ）",
+      "sequence": 430,
+      "legal_reference": "Not a box of the form: the 22/78 share of the deductible tax; see LS.",
+      "source": "local-tax-act"
+    },
+    {
+      "box": "LR",
+      "kind": "tax",
+      "name": "（計算用）地方消費税相当額（売上げの返還等）",
+      "sequence": 440,
+      "legal_reference": "Not a box of the form: the 22/78 share of the tax on sale returns; see LS.",
+      "source": "local-tax-act"
+    },
+    {
+      "box": "K19",
+      "kind": "total",
+      "name": "還付額（譲渡割額）",
+      "sequence": 450,
+      "plus": [
+        "LP",
+        "LR"
+      ],
+      "minus": [
+        "LS"
+      ],
+      "floor_zero": true,
+      "legal_reference": "消費税及び地方消費税の申告書（一般用）の書き方 (NTA, November 2025), VI ■2 — 第一表 ⑲ = 付表1-3 ⑫: the local tax refunded, ⑰ × 22/78; here the local shares summed.",
+      "source": "form-guide"
+    },
+    {
+      "box": "K20",
+      "kind": "total",
+      "name": "納税額（譲渡割額）",
+      "sequence": 460,
+      "plus": [
+        "LS"
+      ],
+      "minus": [
+        "LP",
+        "LR"
+      ],
+      "floor_zero": true,
+      "legal_reference": "消費税及び地方消費税の申告書（一般用）の書き方 (NTA, November 2025), IV ■9 and VI ■2 — 第一表 ⑳ = 付表1-3 ⑬: ⑪ × 22/78 truncated to the hundred yen; here the local shares summed.",
+      "source": "form-guide"
+    },
+    {
+      "box": "K21",
+      "kind": "tax",
+      "name": "中間納付譲渡割額",
+      "sequence": 470,
+      "legal_reference": "消費税及び地方消費税の申告書（一般用）の書き方 (NTA, November 2025), VI ■2 ⑴ — 第一表 ㉑: the local tax declared on the interim returns. Declared and empty, as ⑩.",
+      "source": "form-guide"
+    },
+    {
+      "box": "K22",
+      "kind": "total",
+      "name": "納付譲渡割額",
+      "sequence": 480,
+      "plus": [
+        "K20"
+      ],
+      "minus": [
+        "K21"
+      ],
+      "floor_zero": true,
+      "legal_reference": "第一表 ㉒ = ⑳ − ㉑.",
+      "source": "form-guide"
+    },
+    {
+      "box": "K23",
+      "kind": "total",
+      "name": "中間納付還付譲渡割額",
+      "sequence": 490,
+      "plus": [
+        "K21"
+      ],
+      "minus": [
+        "K20"
+      ],
+      "floor_zero": true,
+      "legal_reference": "第一表 ㉓ = ㉑ − ⑳.",
+      "source": "form-guide"
+    },
+    {
+      "box": "K26",
+      "kind": "total",
+      "name": "消費税及び地方消費税の合計（納付又は還付）税額",
+      "sequence": 500,
+      "plus": [
+        "K11",
+        "K22"
+      ],
+      "minus": [
+        "K8",
+        "K12",
+        "K19",
+        "K23"
+      ],
+      "legal_reference": "消費税及び地方消費税の申告書（一般用）の書き方 (NTA, November 2025), VI ■3 — 第一表 ㉖ = (⑪ + ㉒) − (⑧ + ⑫ + ⑲ + ㉓), with a minus sign when it is a refund.",
+      "source": "form-guide"
+    }
+  ]
+}

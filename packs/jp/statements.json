@@ -1,0 +1,1239 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/statements",
+  "statements": [
+    {
+      "code": "JP-KSK-BS",
+      "kind": "balance_sheet",
+      "framework": "JP-KAISHA-KEISAN",
+      "taxonomy": null,
+      "name": "貸借対照表（会社計算規則）",
+      "legal_reference": "会社計算規則 (Ordinance on Company Accounting, Ministry of Justice Ordinance No. 13 of 2006), arts. 72 to 86 — the balance sheet of a 株式会社 is divided into assets, liabilities and net assets (art. 73), assets into current, fixed and deferred (art. 74), liabilities into current and fixed (art. 75), net assets into shareholders' equity, valuation and translation adjustments, share acquisition rights and 株式引受権 (art. 76). The Ordinance prescribes the sections and some items and leaves the rest to 'appropriate items', so the lines below are its items and the subdivisions Japanese practice prints. 会社法 art. 435(2) is what requires the statements; the Ordinance is what gives their form.",
+      "source": "company-accounting",
+      "lines": [
+        {
+          "code": "A",
+          "name": "資産の部",
+          "sequence": 10,
+          "is_total": true,
+          "plus": [
+            "A1",
+            "A2",
+            "A3"
+          ],
+          "legal_reference": "会社計算規則 (Ordinance on Company Accounting, Ministry of Justice Ordinance No. 13 of 2006), art. 73(1)(i) and art. 74(1) — the assets are divided into current assets, fixed assets and deferred assets.",
+          "source": "company-accounting"
+        },
+        {
+          "code": "A1",
+          "parent": "A",
+          "name": "流動資産",
+          "sequence": 20,
+          "is_total": true,
+          "plus": [
+            "A1.1",
+            "A1.2",
+            "A1.3",
+            "A1.4",
+            "A1.5",
+            "A1.6",
+            "A1.7",
+            "A1.8",
+            "A1.9"
+          ],
+          "legal_reference": "会社計算規則 (Ordinance on Company Accounting, Ministry of Justice Ordinance No. 13 of 2006), art. 74(1)(i) and (3)(i).",
+          "source": "company-accounting"
+        },
+        {
+          "code": "A1.1",
+          "parent": "A1",
+          "name": "現金及び預金",
+          "sequence": 30,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1110",
+              "code_to": "1150"
+            }
+          ],
+          "legal_reference": "会社計算規則 (Ordinance on Company Accounting, Ministry of Justice Ordinance No. 13 of 2006), art. 74(3)(i)(a) — cash and deposits, other than deposits not due within one year.",
+          "source": "company-accounting"
+        },
+        {
+          "code": "A1.2",
+          "parent": "A1",
+          "name": "受取手形",
+          "sequence": 40,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1210"
+            }
+          ],
+          "legal_reference": "会社計算規則 (Ordinance on Company Accounting, Ministry of Justice Ordinance No. 13 of 2006), art. 74(3)(i)(b).",
+          "source": "company-accounting"
+        },
+        {
+          "code": "A1.3",
+          "parent": "A1",
+          "name": "売掛金",
+          "sequence": 50,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1220"
+            }
+          ],
+          "legal_reference": "会社計算規則 (Ordinance on Company Accounting, Ministry of Justice Ordinance No. 13 of 2006), art. 74(3)(i)(c).",
+          "source": "company-accounting"
+        },
+        {
+          "code": "A1.4",
+          "parent": "A1",
+          "name": "電子記録債権",
+          "sequence": 60,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1225"
+            }
+          ],
+          "legal_reference": "会社計算規則 (Ordinance on Company Accounting, Ministry of Justice Ordinance No. 13 of 2006), art. 74(1) second sentence — each item is subdivided into items with an appropriate name; an electronically recorded claim is shown on a line of its own in practice.",
+          "source": "company-accounting"
+        },
+        {
+          "code": "A1.5",
+          "parent": "A1",
+          "name": "有価証券",
+          "sequence": 70,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1490"
+            }
+          ],
+          "legal_reference": "会社計算規則 (Ordinance on Company Accounting, Ministry of Justice Ordinance No. 13 of 2006), art. 74(3)(i) — securities held for trading and those due within one year.",
+          "source": "company-accounting"
+        },
+        {
+          "code": "A1.6",
+          "parent": "A1",
+          "name": "棚卸資産",
+          "sequence": 80,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1310",
+              "code_to": "1340"
+            }
+          ],
+          "legal_reference": "会社計算規則 (Ordinance on Company Accounting, Ministry of Justice Ordinance No. 13 of 2006), art. 74(3)(i) — merchandise and finished goods, work in progress, raw materials and supplies.",
+          "source": "company-accounting"
+        },
+        {
+          "code": "A1.7",
+          "parent": "A1",
+          "name": "前払費用",
+          "sequence": 90,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1420"
+            }
+          ],
+          "legal_reference": "会社計算規則 (Ordinance on Company Accounting, Ministry of Justice Ordinance No. 13 of 2006), art. 74(3)(i) — prepaid expenses to be expensed within one year.",
+          "source": "company-accounting"
+        },
+        {
+          "code": "A1.8",
+          "parent": "A1",
+          "name": "その他",
+          "sequence": 100,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1410"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "1430",
+              "code_to": "1460"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "1475",
+              "code_to": "1480"
+            },
+            {
+              "kind": "account_code",
+              "code_from": "2195",
+              "side": "debit"
+            }
+          ],
+          "legal_reference": "会社計算規則 (Ordinance on Company Accounting, Ministry of Justice Ordinance No. 13 of 2006), art. 74(3)(i) — advances, other receivables, short-term loans and the consumption tax refundable after a return (未収消費税等); the suspense account while it is in debit.",
+          "source": "company-accounting"
+        },
+        {
+          "code": "A1.9",
+          "parent": "A1",
+          "name": "貸倒引当金",
+          "sequence": 110,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1229"
+            }
+          ],
+          "legal_reference": "会社計算規則 (Ordinance on Company Accounting, Ministry of Justice Ordinance No. 13 of 2006), art. 78 — an allowance is deducted from the assets it relates to; shown as a negative line of current assets.",
+          "source": "company-accounting"
+        },
+        {
+          "code": "A2",
+          "parent": "A",
+          "name": "固定資産",
+          "sequence": 120,
+          "is_total": true,
+          "plus": [
+            "A2.1",
+            "A2.2",
+            "A2.3"
+          ],
+          "legal_reference": "会社計算規則 (Ordinance on Company Accounting, Ministry of Justice Ordinance No. 13 of 2006), art. 74(1)(ii) and (2).",
+          "source": "company-accounting"
+        },
+        {
+          "code": "A2.1",
+          "parent": "A2",
+          "name": "有形固定資産",
+          "sequence": 130,
+          "is_total": true,
+          "plus": [
+            "A2.1.1",
+            "A2.1.2",
+            "A2.1.3",
+            "A2.1.4",
+            "A2.1.5",
+            "A2.1.6",
+            "A2.1.7"
+          ],
+          "legal_reference": "会社計算規則 (Ordinance on Company Accounting, Ministry of Justice Ordinance No. 13 of 2006), art. 74(2)(i) and (3)(ii); art. 79(2) — accumulated depreciation may be deducted directly from each asset and the net shown, which is what these lines do.",
+          "source": "company-accounting"
+        },
+        {
+          "code": "A2.1.1",
+          "parent": "A2.1",
+          "name": "建物",
+          "sequence": 140,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1510",
+              "code_to": "1511"
+            }
+          ],
+          "legal_reference": "会社計算規則 (Ordinance on Company Accounting, Ministry of Justice Ordinance No. 13 of 2006), art. 74(3)(ii)(a) — buildings and their fixtures.",
+          "source": "company-accounting"
+        },
+        {
+          "code": "A2.1.2",
+          "parent": "A2.1",
+          "name": "構築物",
+          "sequence": 150,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1520",
+              "code_to": "1521"
+            }
+          ],
+          "legal_reference": "会社計算規則 (Ordinance on Company Accounting, Ministry of Justice Ordinance No. 13 of 2006), art. 74(3)(ii)(b) — structures.",
+          "source": "company-accounting"
+        },
+        {
+          "code": "A2.1.3",
+          "parent": "A2.1",
+          "name": "機械及び装置",
+          "sequence": 160,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1530",
+              "code_to": "1531"
+            }
+          ],
+          "legal_reference": "会社計算規則 (Ordinance on Company Accounting, Ministry of Justice Ordinance No. 13 of 2006), art. 74(3)(ii)(c) — machinery and equipment.",
+          "source": "company-accounting"
+        },
+        {
+          "code": "A2.1.4",
+          "parent": "A2.1",
+          "name": "車両運搬具",
+          "sequence": 170,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1540",
+              "code_to": "1541"
+            }
+          ],
+          "legal_reference": "会社計算規則 (Ordinance on Company Accounting, Ministry of Justice Ordinance No. 13 of 2006), art. 74(3)(ii)(d) and (e) — vessels and land vehicles.",
+          "source": "company-accounting"
+        },
+        {
+          "code": "A2.1.5",
+          "parent": "A2.1",
+          "name": "工具、器具及び備品",
+          "sequence": 180,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1550",
+              "code_to": "1551"
+            }
+          ],
+          "legal_reference": "会社計算規則 (Ordinance on Company Accounting, Ministry of Justice Ordinance No. 13 of 2006), art. 74(3)(ii)(f).",
+          "source": "company-accounting"
+        },
+        {
+          "code": "A2.1.6",
+          "parent": "A2.1",
+          "name": "土地",
+          "sequence": 190,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1560"
+            }
+          ],
+          "legal_reference": "会社計算規則 (Ordinance on Company Accounting, Ministry of Justice Ordinance No. 13 of 2006), art. 74(3)(ii)(g).",
+          "source": "company-accounting"
+        },
+        {
+          "code": "A2.1.7",
+          "parent": "A2.1",
+          "name": "建設仮勘定",
+          "sequence": 200,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1570"
+            }
+          ],
+          "legal_reference": "会社計算規則 (Ordinance on Company Accounting, Ministry of Justice Ordinance No. 13 of 2006), art. 74(3)(ii)(i).",
+          "source": "company-accounting"
+        },
+        {
+          "code": "A2.2",
+          "parent": "A2",
+          "name": "無形固定資産",
+          "sequence": 210,
+          "is_total": true,
+          "plus": [
+            "A2.2.1",
+            "A2.2.2",
+            "A2.2.3"
+          ],
+          "legal_reference": "会社計算規則 (Ordinance on Company Accounting, Ministry of Justice Ordinance No. 13 of 2006), art. 74(2)(ii) and (3)(iii).",
+          "source": "company-accounting"
+        },
+        {
+          "code": "A2.2.1",
+          "parent": "A2.2",
+          "name": "ソフトウエア",
+          "sequence": 220,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1610"
+            }
+          ],
+          "legal_reference": "会社計算規則 (Ordinance on Company Accounting, Ministry of Justice Ordinance No. 13 of 2006), art. 74(3)(iii)(h).",
+          "source": "company-accounting"
+        },
+        {
+          "code": "A2.2.2",
+          "parent": "A2.2",
+          "name": "のれん",
+          "sequence": 230,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1620"
+            }
+          ],
+          "legal_reference": "会社計算規則 (Ordinance on Company Accounting, Ministry of Justice Ordinance No. 13 of 2006), art. 74(3)(iii)(i).",
+          "source": "company-accounting"
+        },
+        {
+          "code": "A2.2.3",
+          "parent": "A2.2",
+          "name": "その他",
+          "sequence": 240,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1630"
+            }
+          ],
+          "legal_reference": "会社計算規則 (Ordinance on Company Accounting, Ministry of Justice Ordinance No. 13 of 2006), art. 74(3)(iii) — patent rights, trademark rights and the other intangible assets.",
+          "source": "company-accounting"
+        },
+        {
+          "code": "A2.3",
+          "parent": "A2",
+          "name": "投資その他の資産",
+          "sequence": 250,
+          "is_total": true,
+          "plus": [
+            "A2.3.1",
+            "A2.3.2",
+            "A2.3.3",
+            "A2.3.4",
+            "A2.3.5",
+            "A2.3.6"
+          ],
+          "legal_reference": "会社計算規則 (Ordinance on Company Accounting, Ministry of Justice Ordinance No. 13 of 2006), art. 74(2)(iii) and (3)(iv).",
+          "source": "company-accounting"
+        },
+        {
+          "code": "A2.3.1",
+          "parent": "A2.3",
+          "name": "投資有価証券",
+          "sequence": 260,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1710"
+            }
+          ],
+          "legal_reference": "会社計算規則 (Ordinance on Company Accounting, Ministry of Justice Ordinance No. 13 of 2006), art. 74(3)(iv).",
+          "source": "company-accounting"
+        },
+        {
+          "code": "A2.3.2",
+          "parent": "A2.3",
+          "name": "関係会社株式",
+          "sequence": 270,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1720"
+            }
+          ],
+          "legal_reference": "会社計算規則 (Ordinance on Company Accounting, Ministry of Justice Ordinance No. 13 of 2006), art. 82(1) — shares of affiliated companies are shown apart.",
+          "source": "company-accounting"
+        },
+        {
+          "code": "A2.3.3",
+          "parent": "A2.3",
+          "name": "長期貸付金",
+          "sequence": 280,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1730"
+            }
+          ],
+          "legal_reference": "会社計算規則 (Ordinance on Company Accounting, Ministry of Justice Ordinance No. 13 of 2006), art. 74(3)(iv).",
+          "source": "company-accounting"
+        },
+        {
+          "code": "A2.3.4",
+          "parent": "A2.3",
+          "name": "繰延税金資産",
+          "sequence": 290,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1760"
+            }
+          ],
+          "legal_reference": "会社計算規則 (Ordinance on Company Accounting, Ministry of Justice Ordinance No. 13 of 2006), art. 74(3)(iv).",
+          "source": "company-accounting"
+        },
+        {
+          "code": "A2.3.5",
+          "parent": "A2.3",
+          "name": "その他",
+          "sequence": 300,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1740",
+              "code_to": "1750"
+            },
+            {
+              "kind": "account_code",
+              "code_from": "1770"
+            }
+          ],
+          "legal_reference": "会社計算規則 (Ordinance on Company Accounting, Ministry of Justice Ordinance No. 13 of 2006), art. 74(3)(iv) — guarantee deposits, long-term prepaid expenses and claims in bankruptcy.",
+          "source": "company-accounting"
+        },
+        {
+          "code": "A2.3.6",
+          "parent": "A2.3",
+          "name": "貸倒引当金",
+          "sequence": 310,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1779"
+            }
+          ],
+          "legal_reference": "会社計算規則 (Ordinance on Company Accounting, Ministry of Justice Ordinance No. 13 of 2006), art. 78.",
+          "source": "company-accounting"
+        },
+        {
+          "code": "A3",
+          "parent": "A",
+          "name": "繰延資産",
+          "sequence": 320,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1810",
+              "code_to": "1820"
+            }
+          ],
+          "legal_reference": "会社計算規則 (Ordinance on Company Accounting, Ministry of Justice Ordinance No. 13 of 2006), art. 74(1)(iii) and (3)(v).",
+          "source": "company-accounting"
+        },
+        {
+          "code": "L",
+          "name": "負債の部",
+          "sequence": 330,
+          "is_total": true,
+          "plus": [
+            "L1",
+            "L2"
+          ],
+          "legal_reference": "会社計算規則 (Ordinance on Company Accounting, Ministry of Justice Ordinance No. 13 of 2006), art. 73(1)(ii) and art. 75(1).",
+          "source": "company-accounting"
+        },
+        {
+          "code": "L1",
+          "parent": "L",
+          "name": "流動負債",
+          "sequence": 340,
+          "is_total": true,
+          "plus": [
+            "L1.1",
+            "L1.2",
+            "L1.3",
+            "L1.4",
+            "L1.5",
+            "L1.6",
+            "L1.7",
+            "L1.8",
+            "L1.9",
+            "L1.10",
+            "L1.11",
+            "L1.12",
+            "L1.13"
+          ],
+          "legal_reference": "会社計算規則 (Ordinance on Company Accounting, Ministry of Justice Ordinance No. 13 of 2006), art. 75(1)(i) and (2)(i).",
+          "source": "company-accounting"
+        },
+        {
+          "code": "L1.1",
+          "parent": "L1",
+          "name": "支払手形",
+          "sequence": 350,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "2110"
+            }
+          ],
+          "legal_reference": "会社計算規則 (Ordinance on Company Accounting, Ministry of Justice Ordinance No. 13 of 2006), art. 75(2)(i)(a).",
+          "source": "company-accounting"
+        },
+        {
+          "code": "L1.2",
+          "parent": "L1",
+          "name": "買掛金",
+          "sequence": 360,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "2120"
+            }
+          ],
+          "legal_reference": "会社計算規則 (Ordinance on Company Accounting, Ministry of Justice Ordinance No. 13 of 2006), art. 75(2)(i)(b).",
+          "source": "company-accounting"
+        },
+        {
+          "code": "L1.3",
+          "parent": "L1",
+          "name": "電子記録債務",
+          "sequence": 370,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "2125"
+            }
+          ],
+          "legal_reference": "会社計算規則 (Ordinance on Company Accounting, Ministry of Justice Ordinance No. 13 of 2006), art. 75(1) second sentence — an appropriate subdivision.",
+          "source": "company-accounting"
+        },
+        {
+          "code": "L1.4",
+          "parent": "L1",
+          "name": "短期借入金",
+          "sequence": 380,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "2130"
+            }
+          ],
+          "legal_reference": "会社計算規則 (Ordinance on Company Accounting, Ministry of Justice Ordinance No. 13 of 2006), art. 75(2)(i)(j).",
+          "source": "company-accounting"
+        },
+        {
+          "code": "L1.5",
+          "parent": "L1",
+          "name": "未払金",
+          "sequence": 390,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "2140"
+            }
+          ],
+          "legal_reference": "会社計算規則 (Ordinance on Company Accounting, Ministry of Justice Ordinance No. 13 of 2006), art. 75(2)(i)(e).",
+          "source": "company-accounting"
+        },
+        {
+          "code": "L1.6",
+          "parent": "L1",
+          "name": "未払費用",
+          "sequence": 400,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "2145"
+            }
+          ],
+          "legal_reference": "会社計算規則 (Ordinance on Company Accounting, Ministry of Justice Ordinance No. 13 of 2006), art. 75(2)(i)(f).",
+          "source": "company-accounting"
+        },
+        {
+          "code": "L1.7",
+          "parent": "L1",
+          "name": "未払法人税等",
+          "sequence": 410,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "2150"
+            }
+          ],
+          "legal_reference": "会社計算規則 (Ordinance on Company Accounting, Ministry of Justice Ordinance No. 13 of 2006), art. 75(2)(i)(j).",
+          "source": "company-accounting"
+        },
+        {
+          "code": "L1.8",
+          "parent": "L1",
+          "name": "未払消費税等",
+          "sequence": 420,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1470"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "2160",
+              "code_to": "2175"
+            }
+          ],
+          "legal_reference": "会社計算規則 (Ordinance on Company Accounting, Ministry of Justice Ordinance No. 13 of 2006), art. 75(2)(i)(j). The consumption tax collected (仮受消費税等) and paid (仮払消費税等) are netted on this line, as the net that a return will settle; once a return has been settled the balance is on 2160, or on 1475 when it is a refund, which is a current asset.",
+          "source": "company-accounting"
+        },
+        {
+          "code": "L1.9",
+          "parent": "L1",
+          "name": "前受金",
+          "sequence": 430,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "2180"
+            }
+          ],
+          "legal_reference": "会社計算規則 (Ordinance on Company Accounting, Ministry of Justice Ordinance No. 13 of 2006), art. 75(2)(i)(c).",
+          "source": "company-accounting"
+        },
+        {
+          "code": "L1.10",
+          "parent": "L1",
+          "name": "預り金",
+          "sequence": 440,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "2185"
+            }
+          ],
+          "legal_reference": "会社計算規則 (Ordinance on Company Accounting, Ministry of Justice Ordinance No. 13 of 2006), art. 75(2)(i)(e).",
+          "source": "company-accounting"
+        },
+        {
+          "code": "L1.11",
+          "parent": "L1",
+          "name": "前受収益",
+          "sequence": 450,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "2187"
+            }
+          ],
+          "legal_reference": "会社計算規則 (Ordinance on Company Accounting, Ministry of Justice Ordinance No. 13 of 2006), art. 75(2)(i)(g).",
+          "source": "company-accounting"
+        },
+        {
+          "code": "L1.12",
+          "parent": "L1",
+          "name": "賞与引当金",
+          "sequence": 460,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "2190"
+            }
+          ],
+          "legal_reference": "会社計算規則 (Ordinance on Company Accounting, Ministry of Justice Ordinance No. 13 of 2006), art. 75(2)(i)(d).",
+          "source": "company-accounting"
+        },
+        {
+          "code": "L1.13",
+          "parent": "L1",
+          "name": "その他",
+          "sequence": 470,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "2195",
+              "side": "credit"
+            }
+          ],
+          "legal_reference": "会社計算規則 (Ordinance on Company Accounting, Ministry of Justice Ordinance No. 13 of 2006), art. 75(2)(i)(j) — the suspense account while it is in credit.",
+          "source": "company-accounting"
+        },
+        {
+          "code": "L2",
+          "parent": "L",
+          "name": "固定負債",
+          "sequence": 480,
+          "is_total": true,
+          "plus": [
+            "L2.1",
+            "L2.2",
+            "L2.3",
+            "L2.4",
+            "L2.5",
+            "L2.6"
+          ],
+          "legal_reference": "会社計算規則 (Ordinance on Company Accounting, Ministry of Justice Ordinance No. 13 of 2006), art. 75(1)(ii) and (2)(ii).",
+          "source": "company-accounting"
+        },
+        {
+          "code": "L2.1",
+          "parent": "L2",
+          "name": "社債",
+          "sequence": 490,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "2210"
+            }
+          ],
+          "legal_reference": "会社計算規則 (Ordinance on Company Accounting, Ministry of Justice Ordinance No. 13 of 2006), art. 75(2)(ii)(a).",
+          "source": "company-accounting"
+        },
+        {
+          "code": "L2.2",
+          "parent": "L2",
+          "name": "長期借入金",
+          "sequence": 500,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "2220"
+            }
+          ],
+          "legal_reference": "会社計算規則 (Ordinance on Company Accounting, Ministry of Justice Ordinance No. 13 of 2006), art. 75(2)(ii)(b).",
+          "source": "company-accounting"
+        },
+        {
+          "code": "L2.3",
+          "parent": "L2",
+          "name": "退職給付引当金",
+          "sequence": 510,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "2230"
+            }
+          ],
+          "legal_reference": "会社計算規則 (Ordinance on Company Accounting, Ministry of Justice Ordinance No. 13 of 2006), art. 75(2)(ii)(d).",
+          "source": "company-accounting"
+        },
+        {
+          "code": "L2.4",
+          "parent": "L2",
+          "name": "繰延税金負債",
+          "sequence": 520,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "2240"
+            }
+          ],
+          "legal_reference": "会社計算規則 (Ordinance on Company Accounting, Ministry of Justice Ordinance No. 13 of 2006), art. 75(2)(ii)(e).",
+          "source": "company-accounting"
+        },
+        {
+          "code": "L2.5",
+          "parent": "L2",
+          "name": "資産除去債務",
+          "sequence": 530,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "2250"
+            }
+          ],
+          "legal_reference": "会社計算規則 (Ordinance on Company Accounting, Ministry of Justice Ordinance No. 13 of 2006), art. 75(2)(ii)(h).",
+          "source": "company-accounting"
+        },
+        {
+          "code": "L2.6",
+          "parent": "L2",
+          "name": "その他",
+          "sequence": 540,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "2260"
+            }
+          ],
+          "legal_reference": "会社計算規則 (Ordinance on Company Accounting, Ministry of Justice Ordinance No. 13 of 2006), art. 75(2)(ii)(i).",
+          "source": "company-accounting"
+        },
+        {
+          "code": "E",
+          "name": "純資産の部",
+          "sequence": 550,
+          "is_total": true,
+          "plus": [
+            "E1",
+            "E2",
+            "E3"
+          ],
+          "legal_reference": "会社計算規則 (Ordinance on Company Accounting, Ministry of Justice Ordinance No. 13 of 2006), art. 73(1)(iii) and art. 76(1)(i) — shareholders' equity, valuation and translation adjustments, share acquisition rights; 株式引受権 has no account in this chart.",
+          "source": "company-accounting"
+        },
+        {
+          "code": "E1",
+          "parent": "E",
+          "name": "株主資本",
+          "sequence": 560,
+          "is_total": true,
+          "plus": [
+            "E1.1",
+            "E1.2",
+            "E1.3",
+            "E1.4",
+            "E1.5"
+          ],
+          "legal_reference": "会社計算規則 (Ordinance on Company Accounting, Ministry of Justice Ordinance No. 13 of 2006), art. 76(2).",
+          "source": "company-accounting"
+        },
+        {
+          "code": "E1.1",
+          "parent": "E1",
+          "name": "資本金",
+          "sequence": 570,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "3110"
+            }
+          ],
+          "legal_reference": "会社計算規則 (Ordinance on Company Accounting, Ministry of Justice Ordinance No. 13 of 2006), art. 76(2)(i).",
+          "source": "company-accounting"
+        },
+        {
+          "code": "E1.2",
+          "parent": "E1",
+          "name": "新株式申込証拠金",
+          "sequence": 580,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "3120"
+            }
+          ],
+          "legal_reference": "会社計算規則 (Ordinance on Company Accounting, Ministry of Justice Ordinance No. 13 of 2006), art. 76(2)(ii).",
+          "source": "company-accounting"
+        },
+        {
+          "code": "E1.3",
+          "parent": "E1",
+          "name": "資本剰余金",
+          "sequence": 590,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "3210",
+              "code_to": "3220"
+            }
+          ],
+          "legal_reference": "会社計算規則 (Ordinance on Company Accounting, Ministry of Justice Ordinance No. 13 of 2006), art. 76(2)(iii) and (4) — capital reserve and other capital surplus.",
+          "source": "company-accounting"
+        },
+        {
+          "code": "E1.4",
+          "parent": "E1",
+          "name": "利益剰余金",
+          "sequence": 600,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "3310",
+              "code_to": "3330"
+            }
+          ],
+          "legal_reference": "会社計算規則 (Ordinance on Company Accounting, Ministry of Justice Ordinance No. 13 of 2006), art. 76(2)(iv), (5) and (6) — legal retained earnings and other retained earnings, the latter subdivided into reserves and 繰越利益剰余金.",
+          "source": "company-accounting"
+        },
+        {
+          "code": "E1.5",
+          "parent": "E1",
+          "name": "自己株式",
+          "sequence": 610,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "3410"
+            }
+          ],
+          "legal_reference": "会社計算規則 (Ordinance on Company Accounting, Ministry of Justice Ordinance No. 13 of 2006), art. 76(2)(v) — a deduction item; its debit balance prints as a negative figure.",
+          "source": "company-accounting"
+        },
+        {
+          "code": "E2",
+          "parent": "E",
+          "name": "評価・換算差額等",
+          "sequence": 620,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "3510"
+            }
+          ],
+          "legal_reference": "会社計算規則 (Ordinance on Company Accounting, Ministry of Justice Ordinance No. 13 of 2006), art. 76(1)(i)(b) and (7).",
+          "source": "company-accounting"
+        },
+        {
+          "code": "E3",
+          "parent": "E",
+          "name": "新株予約権",
+          "sequence": 630,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "3610"
+            }
+          ],
+          "legal_reference": "会社計算規則 (Ordinance on Company Accounting, Ministry of Justice Ordinance No. 13 of 2006), art. 76(1)(i)(d).",
+          "source": "company-accounting"
+        },
+        {
+          "code": "LE",
+          "name": "負債及び純資産合計",
+          "sequence": 640,
+          "is_total": true,
+          "plus": [
+            "L",
+            "E"
+          ],
+          "legal_reference": "会社計算規則 (Ordinance on Company Accounting, Ministry of Justice Ordinance No. 13 of 2006), art. 73(1) — the liabilities and the net assets together, which equal the assets once the year is closed.",
+          "source": "company-accounting"
+        }
+      ]
+    },
+    {
+      "code": "JP-KSK-PL",
+      "kind": "income_statement",
+      "framework": "JP-KAISHA-KEISAN",
+      "taxonomy": null,
+      "name": "損益計算書（会社計算規則）",
+      "legal_reference": "会社計算規則 (Ordinance on Company Accounting, Ministry of Justice Ordinance No. 13 of 2006), arts. 87 to 94 — sales, cost of sales, selling and administrative expenses, non-operating income and expenses, extraordinary gains and losses (art. 88), and the five results the Ordinance names: gross profit (art. 89), operating profit (art. 90), ordinary profit (art. 91), profit before tax (art. 92) and net profit (art. 94), income taxes being shown after profit before tax (art. 93).",
+      "source": "company-accounting",
+      "lines": [
+        {
+          "code": "1",
+          "name": "売上高",
+          "sequence": 10,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "4110",
+              "code_to": "4130"
+            }
+          ],
+          "legal_reference": "会社計算規則 (Ordinance on Company Accounting, Ministry of Justice Ordinance No. 13 of 2006), art. 88(1)(i).",
+          "source": "company-accounting"
+        },
+        {
+          "code": "2",
+          "name": "売上原価",
+          "sequence": 20,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "5110",
+              "code_to": "5140"
+            }
+          ],
+          "legal_reference": "会社計算規則 (Ordinance on Company Accounting, Ministry of Justice Ordinance No. 13 of 2006), art. 88(1)(ii).",
+          "source": "company-accounting"
+        },
+        {
+          "code": "3",
+          "name": "売上総利益",
+          "sequence": 30,
+          "is_total": true,
+          "plus": [
+            "1"
+          ],
+          "minus": [
+            "2"
+          ],
+          "legal_reference": "会社計算規則 (Ordinance on Company Accounting, Ministry of Justice Ordinance No. 13 of 2006), art. 89 — sales less cost of sales; a negative figure is a 売上総損失.",
+          "source": "company-accounting"
+        },
+        {
+          "code": "4",
+          "name": "販売費及び一般管理費",
+          "sequence": 40,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "6110",
+              "code_to": "6399"
+            }
+          ],
+          "legal_reference": "会社計算規則 (Ordinance on Company Accounting, Ministry of Justice Ordinance No. 13 of 2006), art. 88(1)(iii).",
+          "source": "company-accounting"
+        },
+        {
+          "code": "5",
+          "name": "営業利益",
+          "sequence": 50,
+          "is_total": true,
+          "plus": [
+            "3"
+          ],
+          "minus": [
+            "4"
+          ],
+          "legal_reference": "会社計算規則 (Ordinance on Company Accounting, Ministry of Justice Ordinance No. 13 of 2006), art. 90.",
+          "source": "company-accounting"
+        },
+        {
+          "code": "6",
+          "name": "営業外収益",
+          "sequence": 60,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "4210",
+              "code_to": "4240"
+            }
+          ],
+          "legal_reference": "会社計算規則 (Ordinance on Company Accounting, Ministry of Justice Ordinance No. 13 of 2006), art. 88(1)(iv).",
+          "source": "company-accounting"
+        },
+        {
+          "code": "7",
+          "name": "営業外費用",
+          "sequence": 70,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "7110",
+              "code_to": "7140"
+            }
+          ],
+          "legal_reference": "会社計算規則 (Ordinance on Company Accounting, Ministry of Justice Ordinance No. 13 of 2006), art. 88(1)(v).",
+          "source": "company-accounting"
+        },
+        {
+          "code": "8",
+          "name": "経常利益",
+          "sequence": 80,
+          "is_total": true,
+          "plus": [
+            "5",
+            "6"
+          ],
+          "minus": [
+            "7"
+          ],
+          "legal_reference": "会社計算規則 (Ordinance on Company Accounting, Ministry of Justice Ordinance No. 13 of 2006), art. 91.",
+          "source": "company-accounting"
+        },
+        {
+          "code": "9",
+          "name": "特別利益",
+          "sequence": 90,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "4310",
+              "code_to": "4320"
+            }
+          ],
+          "legal_reference": "会社計算規則 (Ordinance on Company Accounting, Ministry of Justice Ordinance No. 13 of 2006), art. 88(1)(vi) and (2).",
+          "source": "company-accounting"
+        },
+        {
+          "code": "10",
+          "name": "特別損失",
+          "sequence": 100,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "7210",
+              "code_to": "7240"
+            }
+          ],
+          "legal_reference": "会社計算規則 (Ordinance on Company Accounting, Ministry of Justice Ordinance No. 13 of 2006), art. 88(1)(vii) and (3).",
+          "source": "company-accounting"
+        },
+        {
+          "code": "11",
+          "name": "税引前当期純利益",
+          "sequence": 110,
+          "is_total": true,
+          "plus": [
+            "8",
+            "9"
+          ],
+          "minus": [
+            "10"
+          ],
+          "legal_reference": "会社計算規則 (Ordinance on Company Accounting, Ministry of Justice Ordinance No. 13 of 2006), art. 92.",
+          "source": "company-accounting"
+        },
+        {
+          "code": "12",
+          "name": "法人税、住民税及び事業税",
+          "sequence": 120,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "8110"
+            }
+          ],
+          "legal_reference": "会社計算規則 (Ordinance on Company Accounting, Ministry of Justice Ordinance No. 13 of 2006), art. 93(1)(i).",
+          "source": "company-accounting"
+        },
+        {
+          "code": "13",
+          "name": "法人税等調整額",
+          "sequence": 130,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "8120"
+            }
+          ],
+          "legal_reference": "会社計算規則 (Ordinance on Company Accounting, Ministry of Justice Ordinance No. 13 of 2006), art. 93(1)(ii).",
+          "source": "company-accounting"
+        },
+        {
+          "code": "14",
+          "name": "当期純利益",
+          "sequence": 140,
+          "is_total": true,
+          "plus": [
+            "11"
+          ],
+          "minus": [
+            "12",
+            "13"
+          ],
+          "legal_reference": "会社計算規則 (Ordinance on Company Accounting, Ministry of Justice Ordinance No. 13 of 2006), art. 94(1) — a negative figure is a 当期純損失 (art. 94(2)).",
+          "source": "company-accounting"
+        }
+      ]
+    }
+  ]
+}

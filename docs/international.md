@@ -2818,3 +2818,96 @@ rule that changes by the amount of the document itself. *Fix*: a structured
 field for a tiered particulars requirement would let `ekwo pack check` verify
 the tiers the way it verifies everything else about a document rule, rather
 than trusting the sentence.
+
+## Japan
+
+The first pack of Asia, `packs/jp/`, `community`, seed 51. Written from
+published sources alone on 21 September 2026, in Japanese with a complete
+English file: an original chart of 125 accounts cut onto the items of the
+会社計算規則, 33 taxes — the combined national and local consumption tax at
+10 % and 8 % since 1 October 2019 and at 8 %, 5 % and 3 % before, exports and
+non-taxable supplies kept apart, the reverse charge on specified taxable
+purchases, imports, and the deduction for purchases from businesses that are not
+qualified invoice issuers on the schedule of the 2026 reform (80 %, 70 %, 50 %,
+30 %) — the general-method return with the lines of 付表1-3 and 2-3 it is built
+from, the balance sheet and income statement of the Ordinance, and a register of
+twenty-four texts. The pack's own [`README`](../packs/jp/README.md) says where
+each rule comes from and ends on the six points a 税理士 should read first.
+
+### From Japan
+
+Eight things the format could not say, none of them patched: each is contoured
+inside the pack and written down here.
+
+**A rounding rule that is part of the law, and which the engine meets by
+coincidence.** 消費税法施行令 art. 70-10 requires the tax on a qualified invoice
+to be rounded once per invoice and per rate, the direction being the issuer's
+choice. The engine rounds once per tax group, which is once per code: the rule
+holds as long as one rate is carried by one code on a document, and breaks for a
+document that mixes a tax-exclusive and a tax-inclusive code at the same rate,
+or a former-rate transaction and a current one. *Fix*: a tax group keyed on the
+rate (or on a `rounding_group` a pack declares), not on the code. Truncation is
+the pack's choice of `rounding_method`, the first `down` in the repository; the
+golden year runs on it without incident.
+
+**A box filled with a share of the tax is rounded on its own.** The pack splits
+each invoice's tax 78/22 between the national tax and the local share. The
+ledger postings share the tax with the remainder on the last, but each posting's
+`box_factor` is applied to the whole tax and truncated separately, so an
+invoice's boxes can add up to a yen less than its tax (the golden year's local
+share is 26,927 in the box and 26,931 on the ledger). *Fix*: let the boxes of one
+side share out the tax the way the postings do, remainder on the last.
+
+**A category the core refuses.** JP PINT gives the reduced rate the category
+`AA` ("lower rate") and has no `Z`; the check holds a taxed domestic supply to
+`S`. The reduced codes carry `S`, which a JP PINT validator would read as the
+standard rate. *Fix*: accept `AA` for a domestic supply above zero where the
+declared profile uses it; UNCL5305 defines it as a lower rate.
+
+**A return worked out from its own totals.** The form multiplies: the
+課税標準額 (truncated to the thousand yen) by 7.8 %, the local tax as ⑱ × 22/78
+(truncated to the hundred). `rate` is a percentage with no truncation, 22/78 is
+not a finite decimal, and a unit on the form (`rounding.unit`) is one unit for
+every box when this form has three. The pack uses the accumulation method the
+law allows (sum of the invoices' tax × 78/100), which a ledger produces, and sums
+the local shares on three working boxes the form does not print (a hidden box may
+not be written into, so they are visible and marked （計算用）). *Fix*: a `rate` given as a fraction, and a unit
+per box with a direction (`down`), which the Australian pack also asks for.
+
+**An annual period that does not start in January.** The taxable period of a
+company is its business year (art. 19(1)(ii)), which its articles fix — April
+to March in the golden year — and a cadence here is anchored on 1 January. `year` is declared and proposed, and a
+company on an April year files on a period the list cannot name. *Fix*: anchor
+`year`, `half_year` and `quarter` on the company's fiscal year for a form that
+says so.
+
+**A deadline of two months.** The return is due within two months of the end of
+the period (art. 45(1)), three for a company that extends its corporation tax
+return and notifies it (art. 45-2), and on 31 March for an individual. The
+vocabulary has a day of the next month and the last day of the next month; the
+pack declares the last day of the next month plus 28 days, the 28th of the
+second month, never later than the law. *Fix*: `months_after_period` with a
+day or `last`, and the same per-cadence exception Australia asks for.
+
+**A deduction that depends on a ratio of the period.** Where taxable sales
+exceed 500 million yen or the taxable sales ratio is below 95 %, the tax on
+purchases is apportioned (art. 30(2)); and the reverse charge applies only below
+95 %. The ratio is computed on the return from boxes the pack fills (⑮ / ⑯),
+but a box cannot divide and a posting cannot depend on a period figure. The pack
+deducts in full and says so; the golden company, below 95 %, shows the error.
+*Fix*: a declared apportionment — a box that is a ratio of two boxes, and a
+deduction line that is a rate of another at that ratio — which Belgium, France
+and Spain (prorata) need as much as Japan.
+
+**Two regimes of the business, and a mark on a line.** The simplified method
+(簡易課税) and the 20 % and 30 % special measures for businesses that became
+taxable by registering are properties of the business, not of a tax — the
+`small_business` gap again. And a qualified invoice must mark the reduced-rate
+items (art. 57-4(1)(iii)); `applies_when` has no condition on a rate, so the
+mark is left to the renderer, as is the issuer's registration number, which is
+the company's tax identifier.
+
+**JPY** was already in `00_currencies.sql` at no decimals. `JP` is added to
+`00_territories.sql`, outside the common system of VAT. The food rate of 1 %
+the Cabinet proposed on 15 September 2026 for April 2027 to March 2029 is not in
+the pack: it is not law.

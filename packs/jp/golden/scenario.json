@@ -1,0 +1,448 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "3月決算の株式会社の一年（令和8年4月1日～令和9年3月31日）、一般課税・積上げ計算・年一回の確定申告",
+  "chart": "default",
+  "fiscal_year": {
+    "name": "令和9年3月期",
+    "start": "2026-04-01",
+    "end": "2027-03-31"
+  },
+  "periods": [
+    {
+      "code": "R9-03",
+      "from": "2026-04-01",
+      "to": "2027-03-31"
+    }
+  ],
+  "statements": [
+    "JP-KSK-BS",
+    "JP-KSK-PL"
+  ],
+  "contacts": [
+    {
+      "ref": "cust-jp",
+      "name": "株式会社みなと厨房",
+      "type": "customer",
+      "country": "JP"
+    },
+    {
+      "ref": "cust-grocer",
+      "name": "さくら食品株式会社",
+      "type": "customer",
+      "country": "JP"
+    },
+    {
+      "ref": "cust-counter",
+      "name": "店頭売上",
+      "type": "customer",
+      "country": "JP"
+    },
+    {
+      "ref": "cust-us",
+      "name": "Redwood Kitchen Supply Inc.",
+      "type": "customer",
+      "country": "US"
+    },
+    {
+      "ref": "cust-gb",
+      "name": "Thistle Design Ltd",
+      "type": "customer",
+      "country": "GB"
+    },
+    {
+      "ref": "tenant",
+      "name": "社宅入居者",
+      "type": "customer",
+      "country": "JP"
+    },
+    {
+      "ref": "supp-jp",
+      "name": "株式会社あおば部品",
+      "type": "supplier",
+      "country": "JP"
+    },
+    {
+      "ref": "supp-food",
+      "name": "ひばり農産合同会社",
+      "type": "supplier",
+      "country": "JP"
+    },
+    {
+      "ref": "supp-free",
+      "name": "フリーランスデザイナー（免税事業者）",
+      "type": "supplier",
+      "country": "JP"
+    },
+    {
+      "ref": "supp-us",
+      "name": "Mesa Cloud Software Inc.",
+      "type": "supplier",
+      "country": "US"
+    },
+    {
+      "ref": "supp-de",
+      "name": "Nordhafen Verpackungsmaschinen GmbH",
+      "type": "supplier",
+      "country": "DE"
+    },
+    {
+      "ref": "supp-landlord",
+      "name": "株式会社つばめ不動産",
+      "type": "supplier",
+      "country": "JP"
+    },
+    {
+      "ref": "supp-insurer",
+      "name": "かもめ損害保険株式会社",
+      "type": "supplier",
+      "country": "JP"
+    }
+  ],
+  "documents": [
+    {
+      "ref": "S1",
+      "type": "sale_invoice",
+      "contact": "cust-jp",
+      "date": "2026-04-15",
+      "why": "標準税率の課税売上げ。税抜価額が付表1-3 ①-1 B欄と付表2-3 ①に、消費税額等36,000円の78 %（28,080円）が②B欄に、22 %が地方消費税相当額に入る。",
+      "lines": [
+        {
+          "name": "業務用厨房機器",
+          "quantity": 3,
+          "unit_price": 120000,
+          "tax": "JP-S-10",
+          "account": "4110"
+        }
+      ]
+    },
+    {
+      "ref": "S2",
+      "type": "sale_invoice",
+      "contact": "cust-grocer",
+      "date": "2026-05-20",
+      "why": "一枚の適格請求書に軽減税率と標準税率が並ぶ。税率ごとに一回だけ端数処理（切捨て）する：8 %は48,063円×8 %＝3,845.04円→3,845円、10 %は28,140円×10 %＝2,814円。",
+      "lines": [
+        {
+          "name": "精米（食品）",
+          "quantity": 37,
+          "unit_price": 1299,
+          "tax": "JP-S-8R",
+          "account": "4110"
+        },
+        {
+          "name": "包装資材",
+          "quantity": 12,
+          "unit_price": 2345,
+          "tax": "JP-S-10",
+          "account": "4110"
+        }
+      ]
+    },
+    {
+      "ref": "S3",
+      "type": "sale_invoice",
+      "contact": "cust-counter",
+      "date": "2026-06-30",
+      "why": "税込価格の小売。三行の税込合計4,861円に8/108を一度だけ掛ける：360.07円→360円、税抜4,501円（令70条の10第2号）。",
+      "lines": [
+        {
+          "name": "弁当",
+          "quantity": 1,
+          "unit_price": 1080,
+          "tax": "JP-S-8R-INC",
+          "account": "4110"
+        },
+        {
+          "name": "惣菜",
+          "quantity": 1,
+          "unit_price": 540,
+          "tax": "JP-S-8R-INC",
+          "account": "4110"
+        },
+        {
+          "name": "菓子詰合せ",
+          "quantity": 1,
+          "unit_price": 3241,
+          "tax": "JP-S-8R-INC",
+          "account": "4110"
+        }
+      ]
+    },
+    {
+      "ref": "S4",
+      "type": "sale_invoice",
+      "contact": "cust-us",
+      "date": "2026-07-10",
+      "why": "物品の輸出免税（法7条1項1号）。付表2-3 ②（免税売上額）に入り、課税売上割合の分子と分母の両方を押し上げる。",
+      "lines": [
+        {
+          "name": "業務用厨房機器（輸出）",
+          "quantity": 1,
+          "unit_price": 850000,
+          "tax": "JP-S-EXP-G",
+          "account": "4110"
+        }
+      ]
+    },
+    {
+      "ref": "S5",
+      "type": "sale_invoice",
+      "contact": "cust-gb",
+      "date": "2026-08-05",
+      "why": "非居住者に対する役務の提供（令17条2項）。これも付表2-3 ②。",
+      "lines": [
+        {
+          "name": "設計コンサルティング",
+          "quantity": 1,
+          "unit_price": 400000,
+          "tax": "JP-S-EXP-S",
+          "account": "4130"
+        }
+      ]
+    },
+    {
+      "ref": "S6",
+      "type": "sale_invoice",
+      "contact": "tenant",
+      "date": "2026-09-01",
+      "why": "住宅の貸付け（別表第二第13号）は非課税。付表2-3 ⑥に入り、課税売上割合を95 %未満に下げる。",
+      "lines": [
+        {
+          "name": "社宅家賃（半年分）",
+          "quantity": 1,
+          "unit_price": 150000,
+          "tax": "JP-S-NT-RES",
+          "account": "4240"
+        }
+      ]
+    },
+    {
+      "ref": "S7",
+      "type": "sale_credit_note",
+      "contact": "cust-jp",
+      "date": "2026-10-15",
+      "why": "S1の一台分の返品（適格返還請求書）。税抜120,000円は付表2-3 ①から引かれ、消費税額等12,000円の78 %（9,360円）は⑤-1（売上げの返還等対価に係る税額）に控除として入る。",
+      "lines": [
+        {
+          "name": "返品 業務用厨房機器",
+          "quantity": 1,
+          "unit_price": 120000,
+          "tax": "JP-S-10",
+          "account": "4110"
+        }
+      ]
+    },
+    {
+      "ref": "S8",
+      "type": "sale_invoice",
+      "contact": "cust-jp",
+      "date": "2027-02-10",
+      "why": "切捨ての確認：493,825円×10 %＝49,382.5円→49,382円。",
+      "lines": [
+        {
+          "name": "業務用冷蔵庫",
+          "quantity": 5,
+          "unit_price": 98765,
+          "tax": "JP-S-10",
+          "account": "4110"
+        }
+      ]
+    },
+    {
+      "ref": "P1",
+      "type": "purchase_invoice",
+      "contact": "supp-jp",
+      "date": "2026-04-20",
+      "why": "適格請求書による標準税率の課税仕入れ：消費税額等23,000円の78 %（17,940円）が付表2-3 ⑩B欄。",
+      "lines": [
+        {
+          "name": "部品",
+          "quantity": 200,
+          "unit_price": 1150,
+          "tax": "JP-P-10",
+          "account": "5120"
+        }
+      ]
+    },
+    {
+      "ref": "P2",
+      "type": "purchase_invoice",
+      "contact": "supp-food",
+      "date": "2026-05-10",
+      "why": "軽減税率の課税仕入れ：17,280円の78 %（13,478円）が⑩A欄。",
+      "lines": [
+        {
+          "name": "精米（仕入）",
+          "quantity": 400,
+          "unit_price": 540,
+          "tax": "JP-P-8R",
+          "account": "5120"
+        }
+      ]
+    },
+    {
+      "ref": "P3",
+      "type": "purchase_invoice",
+      "contact": "supp-free",
+      "date": "2026-06-10",
+      "why": "免税事業者からの仕入れ、経過措置80 %（令和8年9月30日まで）：支払55,000円のうち税5,000円、62.4 %（3,120円）が⑫B欄、17.6 %（880円）が地方分、20 %（1,000円）は費用。",
+      "lines": [
+        {
+          "name": "デザイン業務委託",
+          "quantity": 1,
+          "unit_price": 55000,
+          "tax": "JP-P-10-NQ80",
+          "account": "6370"
+        }
+      ]
+    },
+    {
+      "ref": "P4",
+      "type": "purchase_invoice",
+      "contact": "supp-free",
+      "date": "2026-11-05",
+      "why": "同じ仕入先、令和8年10月1日以後は70 %：税3,000円のうち54.6 %（1,638円）が⑫B欄、15.4 %（462円）が地方分、30 %（900円）は費用。",
+      "lines": [
+        {
+          "name": "デザイン業務委託",
+          "quantity": 1,
+          "unit_price": 33000,
+          "tax": "JP-P-10-NQ70",
+          "account": "6370"
+        }
+      ]
+    },
+    {
+      "ref": "P5",
+      "type": "purchase_invoice",
+      "contact": "supp-us",
+      "date": "2026-07-01",
+      "why": "国外事業者からの事業者向け電気通信利用役務の提供（特定課税仕入れ）。課税売上割合が95 %未満なのでリバースチャージが適用される：対価300,000円が①-2と⑬に、23,400円が②B欄と⑭に。",
+      "lines": [
+        {
+          "name": "クラウド会計サービス年額",
+          "quantity": 1,
+          "unit_price": 300000,
+          "tax": "JP-P-RC-10",
+          "account": "6220"
+        }
+      ]
+    },
+    {
+      "ref": "P6",
+      "type": "purchase_invoice",
+      "contact": "supp-de",
+      "date": "2026-09-15",
+      "why": "輸入した機械。輸入消費税100,000円は税関に納付（2175）、78 %（78,000円）が⑮B欄。",
+      "lines": [
+        {
+          "name": "包装機械（輸入）",
+          "quantity": 1,
+          "unit_price": 1000000,
+          "tax": "JP-P-IMP-10",
+          "account": "1530"
+        }
+      ]
+    },
+    {
+      "ref": "P7",
+      "type": "purchase_credit_note",
+      "contact": "supp-jp",
+      "date": "2026-05-25",
+      "why": "P1の一部返品：税1,150円の78 %（897円）が⑩B欄から減る。",
+      "lines": [
+        {
+          "name": "返品 部品",
+          "quantity": 10,
+          "unit_price": 1150,
+          "tax": "JP-P-10",
+          "account": "5120"
+        }
+      ]
+    },
+    {
+      "ref": "P8",
+      "type": "purchase_invoice",
+      "contact": "supp-landlord",
+      "date": "2026-12-01",
+      "why": "事務所家賃（事業用建物の貸付けは課税）。",
+      "lines": [
+        {
+          "name": "事務所家賃",
+          "quantity": 1,
+          "unit_price": 180000,
+          "tax": "JP-P-10",
+          "account": "6310"
+        }
+      ]
+    },
+    {
+      "ref": "P9",
+      "type": "purchase_invoice",
+      "contact": "supp-insurer",
+      "date": "2027-01-15",
+      "why": "保険料は非課税（別表第二第3号）：申告書のどこにも入らない。",
+      "lines": [
+        {
+          "name": "損害保険料",
+          "quantity": 1,
+          "unit_price": 48000,
+          "tax": "JP-P-NT",
+          "account": "6330"
+        }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "R1",
+      "direction": "inbound",
+      "date": "2026-05-15",
+      "amount": 396000,
+      "contact": "cust-jp",
+      "journal": "BNK",
+      "match": "S1",
+      "why": "S1をちょうど決済する入金。"
+    },
+    {
+      "ref": "R2",
+      "direction": "inbound",
+      "date": "2026-06-20",
+      "amount": 82862,
+      "contact": "cust-grocer",
+      "journal": "BNK",
+      "match": "S2",
+      "why": "S2をちょうど決済する入金（48,063＋3,845＋28,140＋2,814）。"
+    },
+    {
+      "ref": "D1",
+      "direction": "outbound",
+      "date": "2026-05-31",
+      "amount": 253000,
+      "contact": "supp-jp",
+      "journal": "BNK",
+      "match": "P1",
+      "why": "P1をちょうど決済する支払。"
+    },
+    {
+      "ref": "D2",
+      "direction": "outbound",
+      "date": "2026-06-30",
+      "amount": 55000,
+      "contact": "supp-free",
+      "journal": "BNK",
+      "match": "P3",
+      "why": "P3をちょうど決済する支払。"
+    },
+    {
+      "ref": "R3",
+      "direction": "inbound",
+      "date": "2027-03-10",
+      "amount": 100000,
+      "contact": "cust-jp",
+      "journal": "BNK",
+      "match": null,
+      "why": "前受けの入金、どの請求書にも消し込まない：消費税の申告には影響しない。"
+    }
+  ]
+}

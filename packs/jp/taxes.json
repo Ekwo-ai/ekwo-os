@@ -1,0 +1,1725 @@
+[
+  {
+    "code": "JP-S-10",
+    "name": "課税売上げ 10%（標準税率）",
+    "description": "国内の課税資産の譲渡等、標準税率",
+    "kind": "vat",
+    "rate": 10,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2019-10-01",
+    "legal_reference": "消費税法 (Consumption Tax Act, Act No. 108 of 1988), art. 29 — the consumption tax is 7.8 % of the taxable amount, 6.24 % for a supply listed in 別表第一 (Appended Table 1: food and drink other than alcoholic beverages and eating out, and newspapers published at least twice a week under a subscription); 地方税法 (Local Tax Act), art. 72-83 — the local consumption tax is 22/78 of the national tax, so the two together are 10 % and 8 %. One code carries both, because a qualified invoice states them as one amount (消費税額等, art. 57-4(1)(v)). In force since 1 October 2019 (平成24年法律第68号, supplementary provisions art. 1(ii)). The value without tax is reported in 付表1-3 ①-1 column B (7.8 %) and in 付表2-3 ① (taxable sales net of returns); The tax is rounded once per invoice and per rate (消費税法施行令 art. 70-10) and then shared out 78/22: the 78 % is the national tax a qualified invoice contributes to the return under the accumulation method (積上げ計算, Act art. 45(5) and Order art. 62 for sales, Order art. 46(1) for purchases, each 'the total of the consumption tax amounts on the invoices multiplied by 78/100'), and the 22 % is the local share, which the return does not print and which the pack keeps on a working box (LS, LP, LR, marked （計算用）) to work out the 譲渡割額.",
+    "source": "ctax-act",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": [
+            "F11B",
+            "G1"
+          ]
+        },
+        {
+          "type": "tax",
+          "factor": 78,
+          "account": "2170",
+          "box": "F2B",
+          "box_factor": 78
+        },
+        {
+          "type": "tax",
+          "factor": 22,
+          "account": "2170",
+          "box": "LS",
+          "box_factor": 22
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "G1",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": 78,
+          "account": "2170",
+          "box": "F51",
+          "box_factor": 78
+        },
+        {
+          "type": "tax",
+          "factor": 22,
+          "account": "2170",
+          "box": "LR",
+          "box_factor": 22
+        }
+      ]
+    },
+    "sequence": 10
+  },
+  {
+    "code": "JP-S-8R",
+    "name": "課税売上げ 8%（軽減税率）",
+    "description": "飲食料品（酒類・外食を除く）と週2回以上発行される新聞の定期購読",
+    "kind": "vat",
+    "rate": 8,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2019-10-01",
+    "conditions": [
+      "supply_nature"
+    ],
+    "legal_reference": "消費税法 (Consumption Tax Act, Act No. 108 of 1988), art. 29 — the consumption tax is 7.8 % of the taxable amount, 6.24 % for a supply listed in 別表第一 (Appended Table 1: food and drink other than alcoholic beverages and eating out, and newspapers published at least twice a week under a subscription); 地方税法 (Local Tax Act), art. 72-83 — the local consumption tax is 22/78 of the national tax, so the two together are 10 % and 8 %. One code carries both, because a qualified invoice states them as one amount (消費税額等, art. 57-4(1)(v)). The reduced rate applies to a 軽減対象課税資産の譲渡等 (art. 2(1)(ix-2) and 別表第一), and art. 57-4(1)(iii) requires the qualified invoice to say that the item is one. JP PINT gives the reduced rate category AA ('lower rate'); the core accepts only S for a taxed domestic supply, so the pack writes S and the gap is in docs/international.md. Reported in 付表1-3 ①-1 column A (6.24 %) and in 付表2-3 ①; The tax is rounded once per invoice and per rate (消費税法施行令 art. 70-10) and then shared out 78/22: the 78 % is the national tax a qualified invoice contributes to the return under the accumulation method (積上げ計算, Act art. 45(5) and Order art. 62 for sales, Order art. 46(1) for purchases, each 'the total of the consumption tax amounts on the invoices multiplied by 78/100'), and the 22 % is the local share, which the return does not print and which the pack keeps on a working box (LS, LP, LR, marked （計算用）) to work out the 譲渡割額.",
+    "source": "ctax-act",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": [
+            "F11A",
+            "G1"
+          ]
+        },
+        {
+          "type": "tax",
+          "factor": 78,
+          "account": "2170",
+          "box": "F2A",
+          "box_factor": 78
+        },
+        {
+          "type": "tax",
+          "factor": 22,
+          "account": "2170",
+          "box": "LS",
+          "box_factor": 22
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "G1",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": 78,
+          "account": "2170",
+          "box": "F51",
+          "box_factor": 78
+        },
+        {
+          "type": "tax",
+          "factor": 22,
+          "account": "2170",
+          "box": "LR",
+          "box_factor": 22
+        }
+      ]
+    },
+    "sequence": 20
+  },
+  {
+    "code": "JP-S-10-INC",
+    "name": "課税売上げ 10%（税込価格）",
+    "description": "税込価格で表示した小売価格",
+    "kind": "vat",
+    "rate": 10,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2019-10-01",
+    "price_include": true,
+    "legal_reference": "The same tax as JP-S-10 on a price that includes it. 消費税法施行令 art. 70-10(ii) lets the tax on a qualified invoice be computed from the tax-inclusive total of each rate, multiplied by 10/110, and rounded once per invoice and per rate; the engine takes the tax out of the gross of the group once, which is that computation. A document should not mix this code with JP-S-10: the engine rounds each code as its own group, so the rate would be rounded twice. The tax is rounded once per invoice and per rate (消費税法施行令 art. 70-10) and then shared out 78/22: the 78 % is the national tax a qualified invoice contributes to the return under the accumulation method (積上げ計算, Act art. 45(5) and Order art. 62 for sales, Order art. 46(1) for purchases, each 'the total of the consumption tax amounts on the invoices multiplied by 78/100'), and the 22 % is the local share, which the return does not print and which the pack keeps on a working box (LS, LP, LR, marked （計算用）) to work out the 譲渡割額.",
+    "source": "ctax-order",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": [
+            "F11B",
+            "G1"
+          ]
+        },
+        {
+          "type": "tax",
+          "factor": 78,
+          "account": "2170",
+          "box": "F2B",
+          "box_factor": 78
+        },
+        {
+          "type": "tax",
+          "factor": 22,
+          "account": "2170",
+          "box": "LS",
+          "box_factor": 22
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "G1",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": 78,
+          "account": "2170",
+          "box": "F51",
+          "box_factor": 78
+        },
+        {
+          "type": "tax",
+          "factor": 22,
+          "account": "2170",
+          "box": "LR",
+          "box_factor": 22
+        }
+      ]
+    },
+    "sequence": 30
+  },
+  {
+    "code": "JP-S-8R-INC",
+    "name": "課税売上げ 8%（軽減税率・税込価格）",
+    "description": "税込価格で表示した飲食料品の小売価格",
+    "kind": "vat",
+    "rate": 8,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2019-10-01",
+    "price_include": true,
+    "conditions": [
+      "supply_nature"
+    ],
+    "legal_reference": "The same tax as JP-S-8R on a price that includes it: 消費税法施行令 art. 70-10(ii), the tax-inclusive total of the reduced-rate items multiplied by 8/108 and rounded once per invoice. Not to be mixed with JP-S-8R on one document. The tax is rounded once per invoice and per rate (消費税法施行令 art. 70-10) and then shared out 78/22: the 78 % is the national tax a qualified invoice contributes to the return under the accumulation method (積上げ計算, Act art. 45(5) and Order art. 62 for sales, Order art. 46(1) for purchases, each 'the total of the consumption tax amounts on the invoices multiplied by 78/100'), and the 22 % is the local share, which the return does not print and which the pack keeps on a working box (LS, LP, LR, marked （計算用）) to work out the 譲渡割額.",
+    "source": "ctax-order",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": [
+            "F11A",
+            "G1"
+          ]
+        },
+        {
+          "type": "tax",
+          "factor": 78,
+          "account": "2170",
+          "box": "F2A",
+          "box_factor": 78
+        },
+        {
+          "type": "tax",
+          "factor": 22,
+          "account": "2170",
+          "box": "LS",
+          "box_factor": 22
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "G1",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": 78,
+          "account": "2170",
+          "box": "F51",
+          "box_factor": 78
+        },
+        {
+          "type": "tax",
+          "factor": 22,
+          "account": "2170",
+          "box": "LR",
+          "box_factor": 22
+        }
+      ]
+    },
+    "sequence": 40
+  },
+  {
+    "code": "JP-S-8",
+    "name": "課税売上げ 8%（旧税率）",
+    "description": "平成26年4月1日から令和元年9月30日までの標準税率",
+    "kind": "vat",
+    "rate": 8,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2014-04-01",
+    "valid_to": "2019-09-30",
+    "legal_reference": "平成24年法律第68号 (the 2012 act raising the rate), supplementary provisions art. 1 — in force on 1 April 2014, its art. 3 in force on 1 October 2019. NTA, Consumption Tax basic knowledge No. 10: until 30 September 2019 the national rate was 6.3 % and the local rate 17/63 of it, 1.7 %, 8 % together; the transitional provisions of the 2012 act read the tax-inclusive fraction as 6.3/108. The national 6.3/8 of the tax (78.75 %) goes to the former-rate column of 付表1-1, the local 1.7/8 (21.25 %) to the local share. A transaction after 30 September 2019 still taxed at this rate under the transitional measures is booked with this code and its date is outside its validity, which the pack cannot express (see the README).",
+    "source": "nta-english",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": [
+            "F11X",
+            "G1"
+          ]
+        },
+        {
+          "type": "tax",
+          "factor": 78.75,
+          "account": "2170",
+          "box": "F2X",
+          "box_factor": 78.75
+        },
+        {
+          "type": "tax",
+          "factor": 21.25,
+          "account": "2170",
+          "box": "LS",
+          "box_factor": 21.25
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "G1",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": 78.75,
+          "account": "2170",
+          "box": "F51",
+          "box_factor": 78.75
+        },
+        {
+          "type": "tax",
+          "factor": 21.25,
+          "account": "2170",
+          "box": "LR",
+          "box_factor": 21.25
+        }
+      ]
+    },
+    "sequence": 50
+  },
+  {
+    "code": "JP-S-5",
+    "name": "課税売上げ 5%（旧税率）",
+    "description": "平成9年4月1日から平成26年3月31日までの税率",
+    "kind": "vat",
+    "rate": 5,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "1997-04-01",
+    "valid_to": "2014-03-31",
+    "legal_reference": "平成6年法律第109号 (the 1994 tax reform act), supplementary provisions art. 1 and art. 7 — its art. 3 amending the Consumption Tax Act applies to supplies made from 1 April 1997. Its transitional provisions read the new tax-inclusive fraction as 4/105, a national rate of 4 % inside a total of 5 %, the local tax being the remaining 1 %; the 2012 act later replaced 4/105 by 6.3/108. National 80 % of the tax to the former-rate column of 付表1-1, local 20 %.",
+    "source": "ctax-act",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": [
+            "F11X",
+            "G1"
+          ]
+        },
+        {
+          "type": "tax",
+          "factor": 80,
+          "account": "2170",
+          "box": "F2X",
+          "box_factor": 80
+        },
+        {
+          "type": "tax",
+          "factor": 20,
+          "account": "2170",
+          "box": "LS",
+          "box_factor": 20
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "G1",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": 80,
+          "account": "2170",
+          "box": "F51",
+          "box_factor": 80
+        },
+        {
+          "type": "tax",
+          "factor": 20,
+          "account": "2170",
+          "box": "LR",
+          "box_factor": 20
+        }
+      ]
+    },
+    "sequence": 60
+  },
+  {
+    "code": "JP-S-3",
+    "name": "課税売上げ 3%（旧税率）",
+    "description": "平成元年4月1日から平成9年3月31日までの税率",
+    "kind": "vat",
+    "rate": 3,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "1989-04-01",
+    "valid_to": "1997-03-31",
+    "legal_reference": "消費税法 (Act No. 108 of 1988), original supplementary provisions art. 1 — the Act applies to supplies made from 1 April 1989; the 1994 act's transitional provisions read the former tax-inclusive fraction as 3/103, a rate of 3 % that is the consumption tax itself, where the new fraction 4/105 is the national part of a 5 % total: the whole of the former tax is national and nothing reaches the local share.",
+    "source": "ctax-act",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": [
+            "F11X",
+            "G1"
+          ]
+        },
+        {
+          "type": "tax",
+          "factor": 100,
+          "account": "2170",
+          "box": "F2X",
+          "box_factor": 100
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "G1",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": 100,
+          "account": "2170",
+          "box": "F51",
+          "box_factor": 100
+        }
+      ]
+    },
+    "sequence": 70
+  },
+  {
+    "code": "JP-S-EXP-G",
+    "name": "輸出免税売上げ（物品）",
+    "description": "本邦からの輸出として行われる資産の譲渡又は貸付け",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2019-10-01",
+    "conditions": [
+      "transport_evidence"
+    ],
+    "legal_reference": "消費税法 art. 7(1)(i) — a supply by way of export from Japan is exempt from the consumption tax; art. 7(2) — only where it is proven in the manner the Ministry of Finance ordinance prescribes. An exempt export keeps the right to deduct the tax on what went into it. Reported in 付表2-3 ② (免税売上額), which enters the numerator and the denominator of the taxable sales ratio. JP PINT category G.",
+    "source": "ctax-act",
+    "vat_category": "G",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "G2"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "G2",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 80
+  },
+  {
+    "code": "JP-S-EXP-S",
+    "name": "輸出免税売上げ（役務・非居住者）",
+    "description": "非居住者に対する役務の提供等",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2019-10-01",
+    "conditions": [
+      "buyer_status"
+    ],
+    "legal_reference": "消費税法 art. 7(1)(v) — the supplies the Cabinet Order treats like an export are exempt as well; 消費税法施行令 art. 17(2) lists them, among them services provided to a non-resident other than those enjoyed in Japan. Reported in 付表2-3 ②.",
+    "source": "ctax-act",
+    "vat_category": "G",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "G2"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "G2",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 90
+  },
+  {
+    "code": "JP-S-NT-LAND",
+    "name": "非課税売上げ（土地）",
+    "description": "土地の譲渡及び貸付け",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2019-10-01",
+    "conditions": [
+      "supply_nature"
+    ],
+    "legal_reference": "消費税法 art. 6(1) — no consumption tax is imposed on the supplies listed in 別表第二; 別表第二 item 1: the transfer and the lease of land, other than a temporary use. A non-taxable supply gives no right to deduct the tax on what went into it once the taxable sales ratio falls below 95 % (art. 30(2)). Reported in 付表2-3 ⑥ (非課税売上額), the denominator of the ratio; the transfer of securities and of monetary claims enters it at 5 % of its value (消費税法施行令 art. 48(5)), which this code does not do. No exemption reason code: VATEX names articles of a Directive that does not bind a Japanese supplier, and JP PINT publishes none.",
+    "source": "ctax-act",
+    "vat_category": "E",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "G6"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "G6",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 100
+  },
+  {
+    "code": "JP-S-NT-FIN",
+    "name": "非課税売上げ（利子・保険料等）",
+    "description": "利子を対価とする貸付金、保険料を対価とする役務の提供等",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2019-10-01",
+    "conditions": [
+      "supply_nature"
+    ],
+    "legal_reference": "消費税法 art. 6(1) — no consumption tax is imposed on the supplies listed in 別表第二; 別表第二 items 2 and 3: the transfer of securities and means of payment, loans for interest, credit guarantees and insurance. A non-taxable supply gives no right to deduct the tax on what went into it once the taxable sales ratio falls below 95 % (art. 30(2)). Reported in 付表2-3 ⑥ (非課税売上額), the denominator of the ratio; the transfer of securities and of monetary claims enters it at 5 % of its value (消費税法施行令 art. 48(5)), which this code does not do. No exemption reason code: VATEX names articles of a Directive that does not bind a Japanese supplier, and JP PINT publishes none.",
+    "source": "ctax-act",
+    "vat_category": "E",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "G6"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "G6",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 110
+  },
+  {
+    "code": "JP-S-NT-RES",
+    "name": "非課税売上げ（住宅の貸付け）",
+    "description": "人の居住の用に供する家屋の貸付け",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2019-10-01",
+    "conditions": [
+      "supply_nature"
+    ],
+    "legal_reference": "消費税法 art. 6(1) — no consumption tax is imposed on the supplies listed in 別表第二; 別表第二 item 13: the lease of a dwelling where the contract makes clear it is let for people to live in, other than a temporary use. A non-taxable supply gives no right to deduct the tax on what went into it once the taxable sales ratio falls below 95 % (art. 30(2)). Reported in 付表2-3 ⑥ (非課税売上額), the denominator of the ratio; the transfer of securities and of monetary claims enters it at 5 % of its value (消費税法施行令 art. 48(5)), which this code does not do. No exemption reason code: VATEX names articles of a Directive that does not bind a Japanese supplier, and JP PINT publishes none.",
+    "source": "ctax-act",
+    "vat_category": "E",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "G6"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "G6",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 120
+  },
+  {
+    "code": "JP-S-NT",
+    "name": "非課税売上げ（その他）",
+    "description": "別表第二に掲げるその他の資産の譲渡等",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2019-10-01",
+    "conditions": [
+      "supply_nature"
+    ],
+    "legal_reference": "消費税法 art. 6(1) — no consumption tax is imposed on the supplies listed in 別表第二; the other items of 別表第二: postage stamps, public fees, medical care under the public insurance, social welfare, education, school textbooks and the rest. A non-taxable supply gives no right to deduct the tax on what went into it once the taxable sales ratio falls below 95 % (art. 30(2)). Reported in 付表2-3 ⑥ (非課税売上額), the denominator of the ratio; the transfer of securities and of monetary claims enters it at 5 % of its value (消費税法施行令 art. 48(5)), which this code does not do. No exemption reason code: VATEX names articles of a Directive that does not bind a Japanese supplier, and JP PINT publishes none.",
+    "source": "ctax-act",
+    "vat_category": "E",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "G6"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "G6",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 130
+  },
+  {
+    "code": "JP-S-OUT",
+    "name": "不課税（課税対象外）",
+    "description": "資産の譲渡等に該当しない取引、国外取引",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "not_subject",
+    "valid_from": "2019-10-01",
+    "legal_reference": "消費税法 art. 4(1) — the tax reaches only supplies made in Japan by a business for consideration, and art. 4(3) places the supply; what falls outside (a supply made abroad, a grant, a dividend, compensation that is not consideration) is reported nowhere on the return, so the base names no box.",
+    "source": "ctax-act",
+    "vat_category": "O",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        }
+      ]
+    },
+    "sequence": 140
+  },
+  {
+    "code": "JP-P-10",
+    "name": "課税仕入れ 10%（適格請求書）",
+    "description": "適格請求書発行事業者からの課税仕入れ",
+    "kind": "vat",
+    "rate": 10,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2019-10-01",
+    "legal_reference": "消費税法 art. 30(1) — the tax on taxable purchases is deducted from the tax on sales; art. 30(7) and (9) — only where the books and a qualified invoice (since 1 October 2023) are kept. 消費税法施行令 art. 46(1)(i): the deductible tax is the total of the 消費税額等 on the qualified invoices received, multiplied by 78/100. The 78 % is reported in 付表2-3 ⑩ column B, the 22 % joins the local share. Full deduction assumes taxable sales of 500 million yen or less and a taxable sales ratio of 95 % or more (art. 30(2)); below that the deduction is apportioned, which the pack does not compute.",
+    "source": "ctax-act",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "factor": 78,
+          "account": "1470",
+          "box": "G10B",
+          "box_factor": 78
+        },
+        {
+          "type": "tax",
+          "factor": 22,
+          "account": "1470",
+          "box": "LP",
+          "box_factor": 22
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "factor": 78,
+          "account": "1470",
+          "box": "G10B",
+          "box_factor": -78
+        },
+        {
+          "type": "tax",
+          "factor": 22,
+          "account": "1470",
+          "box": "LP",
+          "box_factor": -22
+        }
+      ]
+    },
+    "sequence": 150
+  },
+  {
+    "code": "JP-P-8R",
+    "name": "課税仕入れ 8%（軽減税率・適格請求書）",
+    "description": "飲食料品等の課税仕入れ",
+    "kind": "vat",
+    "rate": 8,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2019-10-01",
+    "legal_reference": "消費税法 art. 30(1), (7) and (9), and 消費税法施行令 art. 46(1)(i), as for JP-P-10, on a qualified invoice at the reduced rate of art. 29(ii). The 78 % is reported in 付表2-3 ⑩ column A.",
+    "source": "ctax-act",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "factor": 78,
+          "account": "1470",
+          "box": "G10A",
+          "box_factor": 78
+        },
+        {
+          "type": "tax",
+          "factor": 22,
+          "account": "1470",
+          "box": "LP",
+          "box_factor": 22
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "factor": 78,
+          "account": "1470",
+          "box": "G10A",
+          "box_factor": -78
+        },
+        {
+          "type": "tax",
+          "factor": 22,
+          "account": "1470",
+          "box": "LP",
+          "box_factor": -22
+        }
+      ]
+    },
+    "sequence": 160
+  },
+  {
+    "code": "JP-P-8",
+    "name": "課税仕入れ 8%（旧税率）",
+    "description": "平成26年4月1日から令和元年9月30日までの課税仕入れ",
+    "kind": "vat",
+    "rate": 8,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2014-04-01",
+    "valid_to": "2019-09-30",
+    "legal_reference": "The purchase counterpart of JP-S-8: national 6.3 % (78.75 % of the tax) to the former-rate column of 付表2-1, local 1.7 %.",
+    "source": "nta-english",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "factor": 78.75,
+          "account": "1470",
+          "box": "G10X",
+          "box_factor": 78.75
+        },
+        {
+          "type": "tax",
+          "factor": 21.25,
+          "account": "1470",
+          "box": "LP",
+          "box_factor": 21.25
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "factor": 78.75,
+          "account": "1470",
+          "box": "G10X",
+          "box_factor": -78.75
+        },
+        {
+          "type": "tax",
+          "factor": 21.25,
+          "account": "1470",
+          "box": "LP",
+          "box_factor": -21.25
+        }
+      ]
+    },
+    "sequence": 170
+  },
+  {
+    "code": "JP-P-5",
+    "name": "課税仕入れ 5%（旧税率）",
+    "description": "平成9年4月1日から平成26年3月31日までの課税仕入れ",
+    "kind": "vat",
+    "rate": 5,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "1997-04-01",
+    "valid_to": "2014-03-31",
+    "legal_reference": "The purchase counterpart of JP-S-5 (平成6年法律第109号): national 4 % (80 % of the tax), local 1 %.",
+    "source": "ctax-act",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "factor": 80,
+          "account": "1470",
+          "box": "G10X",
+          "box_factor": 80
+        },
+        {
+          "type": "tax",
+          "factor": 20,
+          "account": "1470",
+          "box": "LP",
+          "box_factor": 20
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "factor": 80,
+          "account": "1470",
+          "box": "G10X",
+          "box_factor": -80
+        },
+        {
+          "type": "tax",
+          "factor": 20,
+          "account": "1470",
+          "box": "LP",
+          "box_factor": -20
+        }
+      ]
+    },
+    "sequence": 180
+  },
+  {
+    "code": "JP-P-3",
+    "name": "課税仕入れ 3%（旧税率）",
+    "description": "平成元年4月1日から平成9年3月31日までの課税仕入れ",
+    "kind": "vat",
+    "rate": 3,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "1989-04-01",
+    "valid_to": "1997-03-31",
+    "legal_reference": "The purchase counterpart of JP-S-3: the whole tax is national.",
+    "source": "ctax-act",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "factor": 100,
+          "account": "1470",
+          "box": "G10X",
+          "box_factor": 100
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "factor": 100,
+          "account": "1470",
+          "box": "G10X",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 190
+  },
+  {
+    "code": "JP-P-10-NQ80",
+    "name": "免税事業者等からの課税仕入れ 10%（80%控除）",
+    "description": "適格請求書発行事業者以外の者からの課税仕入れ、標準税率、経過措置",
+    "kind": "vat",
+    "rate": 10,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2023-10-01",
+    "valid_to": "2026-09-30",
+    "price_include": true,
+    "conditions": [
+      "seller_threshold"
+    ],
+    "legal_reference": "平成28年法律第15号 (the 2016 act that introduced the qualified invoice system), supplementary provisions art. 52(1): for three years from 1 October 2023, the tax deemed paid on a purchase from a business that is not a qualified invoice issuer is the consideration multiplied by 7.8/110 (6.24/108 at the reduced rate) and by 80/100, provided the books say the measure is applied; purchases from one supplier above 1 billion yen in a year or business year are excluded. The line carries what was paid, tax included, because such a supplier states no tax: the engine takes 10/110 out once per document, 80 % of it is deducted — 62.4 % of the tax as national tax in 付表2-3 ⑫ column B, 17.6 % as the local share — and the other 20 % is a cost that lands on the line's own account (tax_on_base). The condition is the supplier's registration, which the ledger does not hold.",
+    "source": "h28-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "factor": 62.4,
+          "account": "1470",
+          "box": "G12B",
+          "box_factor": 62.4
+        },
+        {
+          "type": "tax",
+          "factor": 17.6,
+          "account": "1470",
+          "box": "LP",
+          "box_factor": 17.6
+        },
+        {
+          "type": "tax_on_base",
+          "factor": 20
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "factor": 62.4,
+          "account": "1470",
+          "box": "G12B",
+          "box_factor": -62.4
+        },
+        {
+          "type": "tax",
+          "factor": 17.6,
+          "account": "1470",
+          "box": "LP",
+          "box_factor": -17.6
+        },
+        {
+          "type": "tax_on_base",
+          "factor": 20
+        }
+      ]
+    },
+    "sequence": 200
+  },
+  {
+    "code": "JP-P-8R-NQ80",
+    "name": "免税事業者等からの課税仕入れ 8%（80%控除）",
+    "description": "適格請求書発行事業者以外の者からの課税仕入れ、軽減税率、経過措置",
+    "kind": "vat",
+    "rate": 8,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2023-10-01",
+    "valid_to": "2026-09-30",
+    "price_include": true,
+    "conditions": [
+      "seller_threshold"
+    ],
+    "legal_reference": "平成28年法律第15号 (the 2016 act that introduced the qualified invoice system), supplementary provisions art. 52(1): for three years from 1 October 2023, the tax deemed paid on a purchase from a business that is not a qualified invoice issuer is the consideration multiplied by 7.8/110 (6.24/108 at the reduced rate) and by 80/100, provided the books say the measure is applied; purchases from one supplier above 1 billion yen in a year or business year are excluded. The line carries what was paid, tax included, because such a supplier states no tax: the engine takes 8/108 out once per document, 80 % of it is deducted — 62.4 % of the tax as national tax in 付表2-3 ⑫ column A, 17.6 % as the local share — and the other 20 % is a cost that lands on the line's own account (tax_on_base). The condition is the supplier's registration, which the ledger does not hold.",
+    "source": "h28-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "factor": 62.4,
+          "account": "1470",
+          "box": "G12A",
+          "box_factor": 62.4
+        },
+        {
+          "type": "tax",
+          "factor": 17.6,
+          "account": "1470",
+          "box": "LP",
+          "box_factor": 17.6
+        },
+        {
+          "type": "tax_on_base",
+          "factor": 20
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "factor": 62.4,
+          "account": "1470",
+          "box": "G12A",
+          "box_factor": -62.4
+        },
+        {
+          "type": "tax",
+          "factor": 17.6,
+          "account": "1470",
+          "box": "LP",
+          "box_factor": -17.6
+        },
+        {
+          "type": "tax_on_base",
+          "factor": 20
+        }
+      ]
+    },
+    "sequence": 210
+  },
+  {
+    "code": "JP-P-10-NQ70",
+    "name": "免税事業者等からの課税仕入れ 10%（70%控除）",
+    "description": "適格請求書発行事業者以外の者からの課税仕入れ、標準税率、経過措置",
+    "kind": "vat",
+    "rate": 10,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2026-10-01",
+    "valid_to": "2028-09-30",
+    "price_include": true,
+    "conditions": [
+      "seller_threshold"
+    ],
+    "legal_reference": "令和8年度税制改正 (the 2026 reform, 所得税法等の一部を改正する法律 of 31 March 2026, Act No. 12, whose art. 14 amends the 2016 act from 1 October 2026): the measure is extended by two years and the share becomes 70 % from 1 October 2026 to 30 September 2028; the cap per supplier falls from 1 billion to 100 million yen for taxable periods beginning on or after 1 October 2026 (NTA, 令和8年度税制改正について). The amending act was not read in its own text, which e-Gov does not consolidate into the 2016 act; the NTA's leaflet is the source. The line carries what was paid, tax included, because such a supplier states no tax: the engine takes 10/110 out once per document, 70 % of it is deducted — 54.6 % of the tax as national tax in 付表2-3 ⑫ column B, 15.4 % as the local share — and the other 30 % is a cost that lands on the line's own account (tax_on_base). The condition is the supplier's registration, which the ledger does not hold.",
+    "source": "nta-r8-reform",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "factor": 54.6,
+          "account": "1470",
+          "box": "G12B",
+          "box_factor": 54.6
+        },
+        {
+          "type": "tax",
+          "factor": 15.4,
+          "account": "1470",
+          "box": "LP",
+          "box_factor": 15.4
+        },
+        {
+          "type": "tax_on_base",
+          "factor": 30
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "factor": 54.6,
+          "account": "1470",
+          "box": "G12B",
+          "box_factor": -54.6
+        },
+        {
+          "type": "tax",
+          "factor": 15.4,
+          "account": "1470",
+          "box": "LP",
+          "box_factor": -15.4
+        },
+        {
+          "type": "tax_on_base",
+          "factor": 30
+        }
+      ]
+    },
+    "sequence": 220
+  },
+  {
+    "code": "JP-P-8R-NQ70",
+    "name": "免税事業者等からの課税仕入れ 8%（70%控除）",
+    "description": "適格請求書発行事業者以外の者からの課税仕入れ、軽減税率、経過措置",
+    "kind": "vat",
+    "rate": 8,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2026-10-01",
+    "valid_to": "2028-09-30",
+    "price_include": true,
+    "conditions": [
+      "seller_threshold"
+    ],
+    "legal_reference": "令和8年度税制改正 (the 2026 reform, 所得税法等の一部を改正する法律 of 31 March 2026, Act No. 12, whose art. 14 amends the 2016 act from 1 October 2026): the measure is extended by two years and the share becomes 70 % from 1 October 2026 to 30 September 2028; the cap per supplier falls from 1 billion to 100 million yen for taxable periods beginning on or after 1 October 2026 (NTA, 令和8年度税制改正について). The amending act was not read in its own text, which e-Gov does not consolidate into the 2016 act; the NTA's leaflet is the source. The line carries what was paid, tax included, because such a supplier states no tax: the engine takes 8/108 out once per document, 70 % of it is deducted — 54.6 % of the tax as national tax in 付表2-3 ⑫ column A, 15.4 % as the local share — and the other 30 % is a cost that lands on the line's own account (tax_on_base). The condition is the supplier's registration, which the ledger does not hold.",
+    "source": "nta-r8-reform",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "factor": 54.6,
+          "account": "1470",
+          "box": "G12A",
+          "box_factor": 54.6
+        },
+        {
+          "type": "tax",
+          "factor": 15.4,
+          "account": "1470",
+          "box": "LP",
+          "box_factor": 15.4
+        },
+        {
+          "type": "tax_on_base",
+          "factor": 30
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "factor": 54.6,
+          "account": "1470",
+          "box": "G12A",
+          "box_factor": -54.6
+        },
+        {
+          "type": "tax",
+          "factor": 15.4,
+          "account": "1470",
+          "box": "LP",
+          "box_factor": -15.4
+        },
+        {
+          "type": "tax_on_base",
+          "factor": 30
+        }
+      ]
+    },
+    "sequence": 230
+  },
+  {
+    "code": "JP-P-10-NQ50",
+    "name": "免税事業者等からの課税仕入れ 10%（50%控除）",
+    "description": "適格請求書発行事業者以外の者からの課税仕入れ、標準税率、経過措置",
+    "kind": "vat",
+    "rate": 10,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2028-10-01",
+    "valid_to": "2030-09-30",
+    "price_include": true,
+    "conditions": [
+      "seller_threshold"
+    ],
+    "legal_reference": "令和8年度税制改正, as for the 70 % code: 50 % from 1 October 2028 to 30 September 2030 (NTA, 令和8年度税制改正について). The line carries what was paid, tax included, because such a supplier states no tax: the engine takes 10/110 out once per document, 50 % of it is deducted — 39 % of the tax as national tax in 付表2-3 ⑫ column B, 11 % as the local share — and the other 50 % is a cost that lands on the line's own account (tax_on_base). The condition is the supplier's registration, which the ledger does not hold.",
+    "source": "nta-r8-reform",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "factor": 39,
+          "account": "1470",
+          "box": "G12B",
+          "box_factor": 39
+        },
+        {
+          "type": "tax",
+          "factor": 11,
+          "account": "1470",
+          "box": "LP",
+          "box_factor": 11
+        },
+        {
+          "type": "tax_on_base",
+          "factor": 50
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "factor": 39,
+          "account": "1470",
+          "box": "G12B",
+          "box_factor": -39
+        },
+        {
+          "type": "tax",
+          "factor": 11,
+          "account": "1470",
+          "box": "LP",
+          "box_factor": -11
+        },
+        {
+          "type": "tax_on_base",
+          "factor": 50
+        }
+      ]
+    },
+    "sequence": 240
+  },
+  {
+    "code": "JP-P-8R-NQ50",
+    "name": "免税事業者等からの課税仕入れ 8%（50%控除）",
+    "description": "適格請求書発行事業者以外の者からの課税仕入れ、軽減税率、経過措置",
+    "kind": "vat",
+    "rate": 8,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2028-10-01",
+    "valid_to": "2030-09-30",
+    "price_include": true,
+    "conditions": [
+      "seller_threshold"
+    ],
+    "legal_reference": "令和8年度税制改正, as for the 70 % code: 50 % from 1 October 2028 to 30 September 2030 (NTA, 令和8年度税制改正について). The line carries what was paid, tax included, because such a supplier states no tax: the engine takes 8/108 out once per document, 50 % of it is deducted — 39 % of the tax as national tax in 付表2-3 ⑫ column A, 11 % as the local share — and the other 50 % is a cost that lands on the line's own account (tax_on_base). The condition is the supplier's registration, which the ledger does not hold.",
+    "source": "nta-r8-reform",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "factor": 39,
+          "account": "1470",
+          "box": "G12A",
+          "box_factor": 39
+        },
+        {
+          "type": "tax",
+          "factor": 11,
+          "account": "1470",
+          "box": "LP",
+          "box_factor": 11
+        },
+        {
+          "type": "tax_on_base",
+          "factor": 50
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "factor": 39,
+          "account": "1470",
+          "box": "G12A",
+          "box_factor": -39
+        },
+        {
+          "type": "tax",
+          "factor": 11,
+          "account": "1470",
+          "box": "LP",
+          "box_factor": -11
+        },
+        {
+          "type": "tax_on_base",
+          "factor": 50
+        }
+      ]
+    },
+    "sequence": 250
+  },
+  {
+    "code": "JP-P-10-NQ30",
+    "name": "免税事業者等からの課税仕入れ 10%（30%控除）",
+    "description": "適格請求書発行事業者以外の者からの課税仕入れ、標準税率、経過措置",
+    "kind": "vat",
+    "rate": 10,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2030-10-01",
+    "valid_to": "2031-09-30",
+    "price_include": true,
+    "conditions": [
+      "seller_threshold"
+    ],
+    "legal_reference": "令和8年度税制改正, as for the 70 % code: 30 % from 1 October 2030 to 30 September 2031, and nothing after (NTA, 令和8年度税制改正について). The line carries what was paid, tax included, because such a supplier states no tax: the engine takes 10/110 out once per document, 30 % of it is deducted — 23.4 % of the tax as national tax in 付表2-3 ⑫ column B, 6.6 % as the local share — and the other 70 % is a cost that lands on the line's own account (tax_on_base). The condition is the supplier's registration, which the ledger does not hold.",
+    "source": "nta-r8-reform",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "factor": 23.4,
+          "account": "1470",
+          "box": "G12B",
+          "box_factor": 23.4
+        },
+        {
+          "type": "tax",
+          "factor": 6.6,
+          "account": "1470",
+          "box": "LP",
+          "box_factor": 6.6
+        },
+        {
+          "type": "tax_on_base",
+          "factor": 70
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "factor": 23.4,
+          "account": "1470",
+          "box": "G12B",
+          "box_factor": -23.4
+        },
+        {
+          "type": "tax",
+          "factor": 6.6,
+          "account": "1470",
+          "box": "LP",
+          "box_factor": -6.6
+        },
+        {
+          "type": "tax_on_base",
+          "factor": 70
+        }
+      ]
+    },
+    "sequence": 260
+  },
+  {
+    "code": "JP-P-8R-NQ30",
+    "name": "免税事業者等からの課税仕入れ 8%（30%控除）",
+    "description": "適格請求書発行事業者以外の者からの課税仕入れ、軽減税率、経過措置",
+    "kind": "vat",
+    "rate": 8,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2030-10-01",
+    "valid_to": "2031-09-30",
+    "price_include": true,
+    "conditions": [
+      "seller_threshold"
+    ],
+    "legal_reference": "令和8年度税制改正, as for the 70 % code: 30 % from 1 October 2030 to 30 September 2031, and nothing after (NTA, 令和8年度税制改正について). The line carries what was paid, tax included, because such a supplier states no tax: the engine takes 8/108 out once per document, 30 % of it is deducted — 23.4 % of the tax as national tax in 付表2-3 ⑫ column A, 6.6 % as the local share — and the other 70 % is a cost that lands on the line's own account (tax_on_base). The condition is the supplier's registration, which the ledger does not hold.",
+    "source": "nta-r8-reform",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "factor": 23.4,
+          "account": "1470",
+          "box": "G12A",
+          "box_factor": 23.4
+        },
+        {
+          "type": "tax",
+          "factor": 6.6,
+          "account": "1470",
+          "box": "LP",
+          "box_factor": 6.6
+        },
+        {
+          "type": "tax_on_base",
+          "factor": 70
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "factor": 23.4,
+          "account": "1470",
+          "box": "G12A",
+          "box_factor": -23.4
+        },
+        {
+          "type": "tax",
+          "factor": 6.6,
+          "account": "1470",
+          "box": "LP",
+          "box_factor": -6.6
+        },
+        {
+          "type": "tax_on_base",
+          "factor": 70
+        }
+      ]
+    },
+    "sequence": 270
+  },
+  {
+    "code": "JP-P-10-NC",
+    "name": "課税仕入れ 10%（控除対象外）",
+    "description": "仕入税額控除の対象とならない課税仕入れ",
+    "kind": "vat",
+    "rate": 10,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2019-10-01",
+    "recoverable": false,
+    "legal_reference": "消費税法 art. 30(7) — no deduction where the books and the invoice the article requires are not kept, and art. 30(10) — none on the purchase of a residential rental building; the tax is part of the cost and lands on the line's own account. Reported nowhere.",
+    "source": "ctax-act",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax_on_base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax_on_base"
+        }
+      ]
+    },
+    "sequence": 280
+  },
+  {
+    "code": "JP-P-RC-10",
+    "name": "特定課税仕入れ 10%（リバースチャージ）",
+    "description": "国外事業者からの事業者向け電気通信利用役務の提供",
+    "kind": "vat",
+    "rate": 10,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2019-10-01",
+    "legal_reference": "消費税法 art. 4(1) and art. 5(1) — a business that receives a 特定課税仕入れ (a business-to-business electronic service supplied by a foreign business, art. 2(1)(viii-4), or a performance by a foreign entertainer, art. 2(1)(viii-5)) owes the tax on it itself; art. 28(2) — the taxable amount is the consideration paid; art. 30(1) — the tax is deductible, 7.8 % of the consideration. 所得税法等の一部を改正する法律 (平成27年法律第9号), supplementary provisions art. 42: for as long as the measure lasts, a business whose taxable sales ratio is 95 % or more treats its 特定課税仕入れ as not having happened, so this code is for the business below 95 %, which is also the one that deducts only part of it — an apportionment the pack does not compute. The base is reported in 付表1-3 ①-2 (so in the 課税標準額) and 付表2-3 ⑬, the tax owed in ② column B and the tax deducted in 付表2-3 ⑭; both sides net to nothing on the ledger.",
+    "source": "ctax-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": [
+            "F12",
+            "G13"
+          ]
+        },
+        {
+          "type": "tax",
+          "factor": 78,
+          "account": "1470",
+          "box": "G14",
+          "box_factor": 78
+        },
+        {
+          "type": "tax",
+          "factor": 22,
+          "account": "1470",
+          "box": "LP",
+          "box_factor": 22
+        },
+        {
+          "type": "tax",
+          "factor": -78,
+          "account": "2170",
+          "box": "F2B",
+          "box_factor": 78
+        },
+        {
+          "type": "tax",
+          "factor": -22,
+          "account": "2170",
+          "box": "LS",
+          "box_factor": 22
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": [
+            "F12",
+            "G13"
+          ],
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": 78,
+          "account": "1470",
+          "box": "G14",
+          "box_factor": -78
+        },
+        {
+          "type": "tax",
+          "factor": 22,
+          "account": "1470",
+          "box": "LP",
+          "box_factor": -22
+        },
+        {
+          "type": "tax",
+          "factor": -78,
+          "account": "2170",
+          "box": "F2B",
+          "box_factor": -78
+        },
+        {
+          "type": "tax",
+          "factor": -22,
+          "account": "2170",
+          "box": "LS",
+          "box_factor": -22
+        }
+      ]
+    },
+    "sequence": 290
+  },
+  {
+    "code": "JP-P-IMP-10",
+    "name": "輸入 課税貨物 10%",
+    "description": "保税地域から引き取る課税貨物に係る消費税（税関に納付）",
+    "kind": "vat",
+    "rate": 10,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2019-10-01",
+    "legal_reference": "消費税法 art. 4(2) and art. 5(2) — the person who takes foreign goods out of a bonded area owes the tax on them, at the rate of art. 29(i); art. 30(1)(iii) — it is deductible in the period the goods are taken out. The customs authority assesses the tax on the customs value plus duties (art. 28(4)); the pack computes it on the value of the supplier's invoice, which is where a difference arises and is a line of its own. The tax is owed to customs, not to the supplier: the counter-posting goes to 2175 until it is paid. 78 % in 付表2-3 ⑮ (課税貨物に係る消費税額) column B, 22 % (地方消費税 貨物割) to the local share.",
+    "source": "ctax-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "factor": 78,
+          "account": "1470",
+          "box": "G15B",
+          "box_factor": 78
+        },
+        {
+          "type": "tax",
+          "factor": 22,
+          "account": "1470",
+          "box": "LP",
+          "box_factor": 22
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2175"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "factor": 78,
+          "account": "1470",
+          "box": "G15B",
+          "box_factor": -78
+        },
+        {
+          "type": "tax",
+          "factor": 22,
+          "account": "1470",
+          "box": "LP",
+          "box_factor": -22
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2175"
+        }
+      ]
+    },
+    "sequence": 300
+  },
+  {
+    "code": "JP-P-IMP-8R",
+    "name": "輸入 課税貨物 8%",
+    "description": "保税地域から引き取る課税貨物に係る消費税（税関に納付）",
+    "kind": "vat",
+    "rate": 8,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2019-10-01",
+    "legal_reference": "消費税法 art. 4(2) and art. 5(2) — the person who takes foreign goods out of a bonded area owes the tax on them, at the rate of art. 29(ii) and 別表第一の二 (food and drink); art. 30(1)(iii) — it is deductible in the period the goods are taken out. The customs authority assesses the tax on the customs value plus duties (art. 28(4)); the pack computes it on the value of the supplier's invoice, which is where a difference arises and is a line of its own. The tax is owed to customs, not to the supplier: the counter-posting goes to 2175 until it is paid. 78 % in 付表2-3 ⑮ (課税貨物に係る消費税額) column A, 22 % (地方消費税 貨物割) to the local share.",
+    "source": "ctax-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "factor": 78,
+          "account": "1470",
+          "box": "G15A",
+          "box_factor": 78
+        },
+        {
+          "type": "tax",
+          "factor": 22,
+          "account": "1470",
+          "box": "LP",
+          "box_factor": 22
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2175"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "factor": 78,
+          "account": "1470",
+          "box": "G15A",
+          "box_factor": -78
+        },
+        {
+          "type": "tax",
+          "factor": 22,
+          "account": "1470",
+          "box": "LP",
+          "box_factor": -22
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2175"
+        }
+      ]
+    },
+    "sequence": 310
+  },
+  {
+    "code": "JP-P-NT",
+    "name": "非課税仕入れ",
+    "description": "保険料、利子、土地の購入・賃借、住宅の賃借等",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "exempt",
+    "valid_from": "2019-10-01",
+    "legal_reference": "消費税法 art. 6(1) and 別表第二 — the supplier charged no tax, so there is nothing to deduct and the return reports nothing.",
+    "source": "ctax-act",
+    "vat_category": "E",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        }
+      ]
+    },
+    "sequence": 320
+  },
+  {
+    "code": "JP-P-OUT",
+    "name": "不課税仕入れ",
+    "description": "給与、租税公課、国外で受けた役務等",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "not_subject",
+    "valid_from": "2019-10-01",
+    "legal_reference": "消費税法 art. 2(1)(xii) — salaries are not a taxable purchase, and what is not a supply made in Japan for consideration (art. 4) carries no tax; reported nowhere.",
+    "source": "ctax-act",
+    "vat_category": "O",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        }
+      ]
+    },
+    "sequence": 330
+  }
+]

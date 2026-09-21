@@ -1,0 +1,14 @@
+{
+  "note": "Claims about this pack that no other pack can make, and that the pack's own files cannot check themselves against. Read by the tests through tests/helpers/packs.ts. Like the rest of golden/ beside scenario.json, this file is outside the pack checksum: it is evidence about the pack, not part of it.",
+  "report_arithmetic": [
+    { "box": "G4", "kind": "total", "plus": ["G1", "G2"], "minus": [] },
+    { "box": "G7", "kind": "total", "plus": ["G4", "G6"], "minus": [] },
+    { "box": "K7", "kind": "total", "plus": ["K4", "K5", "K6"], "minus": [] },
+    { "box": "K9", "kind": "total", "plus": ["K2", "K3"], "minus": ["K7"] },
+    { "box": "K11", "kind": "total", "plus": ["K9"], "minus": ["K10"] },
+    { "box": "K22", "kind": "total", "plus": ["K20"], "minus": ["K21"] },
+    { "box": "K26", "kind": "total", "plus": ["K11", "K22"], "minus": ["K8", "K12", "K19", "K23"] }
+  ],
+  "arithmetic_note": "Seven lines of the return are an arithmetic the NTA's guide to the general-method return (法人用 消費税及び地方消費税の申告書（一般用）の書き方, November 2025) prints in words: 付表2-3 ④ as ① + ② + ③ and ⑦ as ⑤ + ⑥ (III ■3 and ■6; ③ is not carried), 第一表 ⑦ as ④ + ⑤ + ⑥ (IV ■6), ⑨ as ② + ③ − ⑦ (IV ■7), ⑪ as ⑨ − ⑩, ㉒ as ⑳ − ㉑, and ㉖ as (⑪ + ㉒) − (⑧ + ⑫ + ⑲ + ㉓) (VI ■3). The truncations the form applies on the way — the 課税標準額 to the thousand yen, ⑨ and ⑳ to the hundred — are not claimed, because the pack cannot state them.",
+  "facts_note": "No statement_facts. Statements filed with the corporation tax return through e-Tax follow the NTA's own taxonomy, which nothing in this pack was verified against, so both statements leave `xbrl` and `taxonomy` null."
+}
