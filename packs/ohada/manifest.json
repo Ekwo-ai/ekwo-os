@@ -1,8 +1,23 @@
 {
   "note": "What every pack keeping its books on the SYSCOHADA chart shares, and what scripts/ohada-packs.mjs writes into each of them. Edit it here, never in a member pack: the CI refuses a member whose copy has drifted. The statement codes below take the member's country in front of them in each copy (SN-SYSCOHADA-BS), because a statement code is unique across countries.",
   "members": [
+    "bf",
+    "bj",
+    "cd",
+    "cf",
+    "cg",
     "ci",
-    "sn"
+    "cm",
+    "ga",
+    "gn",
+    "gq",
+    "gw",
+    "km",
+    "ml",
+    "ne",
+    "sn",
+    "td",
+    "tg"
   ],
   "files": [
     "accounts.csv",

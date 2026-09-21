@@ -21,7 +21,14 @@
  *   the charts, the journals, the roles, the closing style;
  * - the files themselves. `accounts.csv` is copied as it is; the statement
  *   codes of `statements.json` take the member's country in front of them, for
- *   the reason `localised()` gives.
+ *   the reason `localised()` gives;
+ * - `i18n/<lang>.json`, when an official version of the chart in that language
+ *   has been transcribed: the sections that belong to the chart — `charts`,
+ *   `accounts`, `journals`, `statement_lines` — are laid into the member's own
+ *   `i18n/<lang>.json`, whose other sections (its taxes, its boxes, its
+ *   mentions, its own name) stay the member's. The file is written into every
+ *   member, and stays a partial, undeclared translation until the member
+ *   covers the rest and lists the language in `languages`.
  *
  * Everything else in a member's `pack.json` — the country, the currency, the
  * language, the seed number, the invoice rules, the register entries of its
@@ -33,13 +40,17 @@
  * A member written here still has to be compiled: `ekwo pack build <cc>`
  * afterwards, because the seed carries a checksum of the pack.
  *
+ * `members` lists the seventeen States ahead of their packs. A member with no
+ * folder yet is awaited and reported, not refused; a member with a folder and
+ * no `pack.json` is refused.
+ *
  * The check also refuses a pack that cites the SYSCOHADA register entry and
  * is not a member — a country copied by hand from another member rather than
  * added to the list, which would drift the first time the chart is corrected.
  */
 
 import { existsSync } from 'node:fs';
-import { readFile, readdir, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -65,6 +76,28 @@ function localised(statements, prefix) {
   };
 }
 
+/** The sections of an i18n file that belong to the chart, and not to the member. */
+const CHART_SECTIONS = ['charts', 'accounts', 'journals', 'statement_lines'];
+
+/**
+ * The member's translation with the chart's sections laid over it. A
+ * statement line is keyed `<statement>:<line>`, and its statement takes the
+ * member's country in front of it like the statement itself.
+ */
+function translated(own, common, prefix) {
+  const out = { $schema: common.$schema, ...own, language: common.language };
+  if (out.$schema === undefined) delete out.$schema;
+  if (common.source && !out.source) out.source = common.source;
+  for (const section of CHART_SECTIONS) {
+    if (!common[section]) continue;
+    out[section] =
+      section === 'statement_lines'
+        ? Object.fromEntries(Object.entries(common[section]).map(([key, label]) => [`${prefix}${key}`, label]))
+        : structuredClone(common[section]);
+  }
+  return out;
+}
+
 /** The member's manifest with the common part laid over it, key by key. */
 function merged(manifest, prefix) {
   const out = structuredClone(manifest);
@@ -82,9 +115,23 @@ function merged(manifest, prefix) {
 
 const json = (value) => `${JSON.stringify(value, null, 2)}\n`;
 
+const i18nDir = join(source, 'i18n');
+const translations = existsSync(i18nDir)
+  ? (await readdir(i18nDir)).filter((f) => f.endsWith('.json')).sort()
+  : [];
+
 const problems = [];
+const awaited = [];
 for (const cc of shared.members) {
   const dir = join(packs, cc);
+  // A member listed ahead of its pack: the list is written once for the
+  // seventeen, so that adding a country never edits a file another country's
+  // pull request edits too. No folder at all is a pack still to come; a folder
+  // without a manifest is a pack begun and broken.
+  if (!existsSync(dir)) {
+    awaited.push(cc);
+    continue;
+  }
   if (!existsSync(join(dir, 'pack.json'))) {
     problems.push(`packs/${cc}: named a member in packs/ohada/manifest.json and has no pack.json`);
     continue;
@@ -97,19 +144,28 @@ for (const cc of shared.members) {
     wanted.set(file, file === 'statements.json' ? json(localised(JSON.parse(content), prefix)) : content);
   }
   wanted.set('pack.json', json(merged(manifest, prefix)));
+  for (const file of translations) {
+    const common = JSON.parse(await readFile(join(i18nDir, file), 'utf8'));
+    const path = join(dir, 'i18n', file);
+    const own = existsSync(path) ? JSON.parse(await readFile(path, 'utf8')) : null;
+    wanted.set(join('i18n', file), json(translated(own, common, prefix)));
+  }
 
   for (const [file, content] of wanted) {
     const path = join(dir, file);
     const current = existsSync(path) ? await readFile(path, 'utf8') : null;
     if (current === content) continue;
     if (write) {
+      await mkdir(dirname(path), { recursive: true });
       await writeFile(path, content);
       console.log(`  wrote packs/${cc}/${file}`);
     } else {
       problems.push(
         file === 'pack.json'
           ? `packs/${cc}/pack.json: its charts, journals, roles or SYSCOHADA register entries differ from packs/ohada/manifest.json`
-          : `packs/${cc}/${file} is not the copy of packs/ohada/${file} this script writes`,
+          : file.startsWith('i18n')
+            ? `packs/${cc}/${file}: its ${CHART_SECTIONS.join(', ')} differ from packs/ohada/${file}`
+            : `packs/${cc}/${file} is not the copy of packs/ohada/${file} this script writes`,
       );
     }
   }
@@ -132,4 +188,6 @@ if (problems.length > 0) {
   console.error('\n  Edit packs/ohada/, then `node scripts/ohada-packs.mjs --write` and `ekwo pack build --all`.');
   process.exit(1);
 }
-if (!write) console.log(`The ${shared.members.length} OHADA packs carry the chart of packs/ohada/.`);
+const present = shared.members.length - awaited.length;
+if (!write) console.log(`The ${present} OHADA packs carry the chart of packs/ohada/.`);
+if (awaited.length > 0) console.log(`  awaited, listed and not yet written: ${awaited.join(', ')}`);

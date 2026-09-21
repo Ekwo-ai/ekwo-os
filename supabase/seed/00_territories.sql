@@ -309,19 +309,56 @@ on conflict (code) do update set
 -- The rows — the member States of OHADA
 --
 -- Seventeen States keep their books on one chart of accounts, the SYSCOHADA
--- révisé, and each levies a value added tax of its own under its own code —
--- harmonised, for eight of them, by a directive of the West African Economic
--- and Monetary Union, which is a different common system from the Union's and
--- one this table has no column for. What this table says of them is only what
--- it says of the United States: the common system of VAT of Directive
--- 2006/112/EC does not reach them. A row per State, added with its pack.
+-- révisé, and each levies a tax of its own under its own code — harmonised,
+-- for eight of them, by a directive of the West African Economic and Monetary
+-- Union (UEMOA) and, for six, by one of the Central African Economic and
+-- Monetary Community (CEMAC), two common systems different from the Union's
+-- and ones this table has no column for. Guinea, the Comoros and the
+-- Democratic Republic of the Congo belong to neither. What this table says of
+-- them is only what it says of the United States: the common system of VAT of
+-- Directive 2006/112/EC does not reach them.
+--
+-- All seventeen are here, ahead of their packs, so that a member pack is its
+-- own folder and nothing else. The article each row cites is the one that sets
+-- the country's rates; the pack itself, and not this row, is where the rates
+-- are.
 -- ---------------------------------------------------------------------------
 
 insert into territories (code, code_source, name, parent_code, eu_vat_scope, eu_vat_from, eu_vat_to, vat_prefix, legal_reference) values
   ('CI', 'iso_3166_1', 'Côte d''Ivoire', null, 'none', null, null, null,
    'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. Côte d''Ivoire levies a value added tax of its own under its Code général des impôts, whose article 359 sets its rates, harmonised within the West African Economic and Monetary Union by Directive n° 02/98/CM/UEMOA as amended by Directive n° 02/2009/CM/UEMOA.'),
   ('SN', 'iso_3166_1', 'Senegal',       null, 'none', null, null, null,
-   'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. Senegal levies a value added tax of its own under its Code général des impôts (loi n° 2012-31 du 31 décembre 2012), whose article 369 sets its rates, harmonised within the West African Economic and Monetary Union by Directive n° 02/98/CM/UEMOA as amended by Directive n° 02/2009/CM/UEMOA.')
+   'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. Senegal levies a value added tax of its own under its Code général des impôts (loi n° 2012-31 du 31 décembre 2012), whose article 369 sets its rates, harmonised within the West African Economic and Monetary Union by Directive n° 02/98/CM/UEMOA as amended by Directive n° 02/2009/CM/UEMOA.'),
+  ('BJ', 'iso_3166_1', 'Benin',         null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. Benin levies a value added tax of its own under its Code général des impôts (loi n° 2021-15 du 23 décembre 2021), whose article 241 sets its rate, harmonised within the West African Economic and Monetary Union by Directive n° 02/98/CM/UEMOA as amended by Directive n° 02/2009/CM/UEMOA.'),
+  ('BF', 'iso_3166_1', 'Burkina Faso',  null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. Burkina Faso levies a value added tax of its own under its Code général des impôts (loi n° 058-2017/AN du 20 décembre 2017), whose article 317 sets its rates, harmonised within the West African Economic and Monetary Union by Directive n° 02/98/CM/UEMOA as amended by Directive n° 02/2009/CM/UEMOA.'),
+  ('CM', 'iso_3166_1', 'Cameroon',      null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. Cameroon levies a value added tax of its own under its Code général des impôts, whose article 142 sets its rates (the communal additional centimes of articles C 82 and C 83 of its book on local taxation are levied on top of them), harmonised within the Central African Economic and Monetary Community by Directive n° 11/22-CEMAC-UEAC-010A-CM-38 of 10 November 2022.'),
+  ('CF', 'iso_3166_1', 'Central African Republic', null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. The Central African Republic levies a value added tax of its own under its Code général des impôts, whose article 257 sets its rates, harmonised within the Central African Economic and Monetary Community by Directive n° 11/22-CEMAC-UEAC-010A-CM-38 of 10 November 2022.'),
+  ('KM', 'iso_3166_1', 'Comoros',       null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. The Comoros levy no value added tax: their Code général des impôts levies a taxe sur la consommation, defined at article 139, whose article 152 sets its rates. They belong to neither West African nor Central African monetary union.'),
+  ('CG', 'iso_3166_1', 'Congo',         null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. The Congo levies a value added tax of its own under loi n° 12-97 du 12 mai 1997, outside its Code général des impôts, whose article 17 sets its rate (article 37 keeps additional centimes on top of it), harmonised within the Central African Economic and Monetary Community by Directive n° 11/22-CEMAC-UEAC-010A-CM-38 of 10 November 2022.'),
+  ('CD', 'iso_3166_1', 'Democratic Republic of the Congo', null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. The Democratic Republic of the Congo levies a value added tax of its own under ordonnance-loi n° 10/001 du 20 août 2010, whose article 35 sets its rates. It belongs to neither West African nor Central African monetary union.'),
+  ('GQ', 'iso_3166_1', 'Equatorial Guinea', null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. Equatorial Guinea levies a value added tax of its own (impuesto sobre el valor añadido) under Ley 1/2024 General Tributaria, whose article 155 sets its rates, harmonised within the Central African Economic and Monetary Community by Directive n° 11/22-CEMAC-UEAC-010A-CM-38 of 10 November 2022.'),
+  ('GA', 'iso_3166_1', 'Gabon',         null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. Gabon levies a value added tax of its own under its Code général des impôts, whose article 221 sets its rates, harmonised within the Central African Economic and Monetary Community by Directive n° 11/22-CEMAC-UEAC-010A-CM-38 of 10 November 2022.'),
+  ('GN', 'iso_3166_1', 'Guinea',        null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. Guinea levies a value added tax of its own under its Code général des impôts (loi L/2021/032/AN du 4 juillet 2021), whose article 373 sets its rates. It belongs to neither West African nor Central African monetary union.'),
+  ('GW', 'iso_3166_1', 'Guinea-Bissau', null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. Guinea-Bissau levies a value added tax of its own (imposto sobre o valor acrescentado) under its Código do IVA (Lei n.º 4/2022), whose article 18 sets its rates, harmonised within the West African Economic and Monetary Union by Directive n° 02/98/CM/UEMOA as amended by Directive n° 02/2009/CM/UEMOA.'),
+  ('ML', 'iso_3166_1', 'Mali',          null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. Mali levies a value added tax of its own under its Code général des impôts (loi n° 11-078), whose article 229 sets its rates, harmonised within the West African Economic and Monetary Union by Directive n° 02/98/CM/UEMOA as amended by Directive n° 02/2009/CM/UEMOA.'),
+  ('NE', 'iso_3166_1', 'Niger',         null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. Niger levies a value added tax of its own under its Code général des impôts (ordonnance n° 2025-22 du 14 juillet 2025, in force since 1 January 2026, succeeding the code of 2012 whose article 226 set the rates), harmonised within the West African Economic and Monetary Union by Directive n° 02/98/CM/UEMOA as amended by Directive n° 02/2009/CM/UEMOA.'),
+  ('TD', 'iso_3166_1', 'Chad',          null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. Chad levies a value added tax of its own under its Code général des impôts, whose article 238 sets its rates (provincial and communal additional centimes are levied on top of them), harmonised within the Central African Economic and Monetary Community by Directive n° 11/22-CEMAC-UEAC-010A-CM-38 of 10 November 2022.'),
+  ('TG', 'iso_3166_1', 'Togo',          null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. Togo levies a value added tax of its own under its Code général des impôts (loi n° 2018-024 du 20 novembre 2018), whose article 195 sets its rate, harmonised within the West African Economic and Monetary Union by Directive n° 02/98/CM/UEMOA as amended by Directive n° 02/2009/CM/UEMOA.')
 on conflict (code) do update set
   code_source     = excluded.code_source,
   name            = excluded.name,

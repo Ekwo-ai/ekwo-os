@@ -1,4 +1,11 @@
--- Ekwo OS — currencies. ISO 4217, the handful a European ledger meets.
+-- Ekwo OS — currencies. ISO 4217, the handful a European ledger meets, and the
+-- five the seventeen member States of OHADA keep their books in.
+--
+-- The code and the decimals are those of ISO 4217 list one, as SIX
+-- Financial Information publishes it on behalf of the maintenance agency
+-- (https://www.six-group.com/dam/download/financial-information/data-center/iso-currrency/lists/list-one.xml,
+-- edition of 17 September 2026). Both CFA francs, the Comorian franc and the
+-- Guinean franc have no minor unit there; the Congolese franc has two.
 
 insert into currencies (code, name, symbol, decimal_places) values
   ('EUR', 'Euro',                 E'€', 2),
@@ -13,5 +20,9 @@ insert into currencies (code, name, symbol, decimal_places) values
   ('CAD', 'Canadian dollar',      '$',       2),
   ('JPY', 'Japanese yen',         E'¥', 0),
   ('XOF', 'CFA franc BCEAO',      'F CFA',   0),
-  ('MXN', 'Mexican peso',         '$',       2)
+  ('MXN', 'Mexican peso',         '$',       2),
+  ('XAF', 'CFA franc BEAC',       'F CFA',   0),
+  ('KMF', 'Comorian franc',       'CF',      0),
+  ('GNF', 'Guinean franc',        'FG',      0),
+  ('CDF', 'Congolese franc',      'FC',      2)
 on conflict (code) do nothing;

@@ -2267,9 +2267,11 @@ contributor runs the command and commits its output, exactly as for the seed.
 
 A pack whose currency no pack used before adds its row — the ISO 4217 code,
 its name, its symbol and its decimals — to `supabase/seed/00_currencies.sql`.
-A member State of OHADA also adds its code to `members` in
-`packs/ohada/manifest.json`, which is how it receives the chart the members
-share — [`packs/ohada/README.md`](../packs/ohada/README.md) is that path.
+A member State of OHADA finds all three already written: its code in `members`
+in `packs/ohada/manifest.json`, which is how it receives the chart the members
+share, its currency and its territory — so it touches its own folder and
+nothing else. [`packs/ohada/README.md`](../packs/ohada/README.md) is that
+path.
 
 A country **outside the common system of VAT** adds a third, and exactly one
 row of it: `supabase/seed/00_territories.sql`, for the reason step 0 gives. It
