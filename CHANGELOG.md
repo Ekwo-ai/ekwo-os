@@ -9,6 +9,17 @@ somewhere has already run it.
 
 ## [Unreleased]
 
+### Changed
+
+- **The site compares any two countries on one page.** `/compare/` was a
+  matrix of links to a page per pair — 1,225 pages at fifty countries, 19,900
+  at two hundred. It is one page now, whose two pickers are native selects
+  read by CSS `:has()`, still with scripting off; the old pair addresses are
+  sent there by one rule of `_redirects`, the pair kept. Every list of
+  countries — the index, `/os/`, the home page, the map in words — is grouped
+  by UN M49 region, with a count and a jump per region, and the index has a
+  field that narrows it.
+
 ### Fixed
 
 - **The site froze on the time of day it was opened at.** The blocking script
