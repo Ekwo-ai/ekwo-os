@@ -206,6 +206,7 @@ says what they say. `ekwo pack describe <cc>` is everything one of them says.
 | [`be`](../packs/be/) | Belgium | `10_pack_be.sql` | fr, nl, de, en | `maintained` |
 | [`bf`](../packs/bf/) | Burkina Faso | `23_pack_bf.sql` | fr | `community` |
 | [`bj`](../packs/bj/) | Bénin | `22_pack_bj.sql` | fr | `community` |
+| [`cd`](../packs/cd/) | République démocratique du Congo | `34_pack_cd.sql` | fr | `community` |
 | [`cf`](../packs/cf/) | Centrafrique | `25_pack_cf.sql` | fr | `community` |
 | [`ci`](../packs/ci/) | Côte d’Ivoire | `21_pack_ci.sql` | fr | `community` |
 | [`cm`](../packs/cm/) | Cameroun | `24_pack_cm.sql` | fr | `community` |
