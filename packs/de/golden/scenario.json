@@ -1,0 +1,357 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "Ein Jahr einer deutschen GmbH mit Handel und Dienstleistungen, monatliche Voranmeldung",
+  "chart": "default",
+  "fiscal_year": {
+    "name": "Geschäftsjahr 2026",
+    "start": "2026-01-01",
+    "end": "2026-12-31"
+  },
+  "periods": [
+    {
+      "code": "2026-01",
+      "from": "2026-01-01",
+      "to": "2026-01-31"
+    },
+    {
+      "code": "2026-02",
+      "from": "2026-02-01",
+      "to": "2026-02-28"
+    },
+    {
+      "code": "2026-03",
+      "from": "2026-03-01",
+      "to": "2026-03-31"
+    },
+    {
+      "code": "2026-04",
+      "from": "2026-04-01",
+      "to": "2026-04-30"
+    }
+  ],
+  "statements": [
+    "DE-HGB-266-BS",
+    "DE-HGB-275-GKV"
+  ],
+  "contacts": [
+    {
+      "ref": "kunde-de",
+      "name": "Holzwerkstatt Lindenau GmbH",
+      "type": "customer",
+      "country": "DE"
+    },
+    {
+      "ref": "kunde-fr",
+      "name": "Atelier du Vieux Port SARL",
+      "type": "customer",
+      "country": "FR",
+      "vat_number": "FR00999999999"
+    },
+    {
+      "ref": "kunde-ch",
+      "name": "Bergsicht Instrumente AG",
+      "type": "customer",
+      "country": "CH"
+    },
+    {
+      "ref": "mieter-de",
+      "name": "Praxis am Steinweg",
+      "type": "customer",
+      "country": "DE"
+    },
+    {
+      "ref": "lieferant-de",
+      "name": "Bürobedarf Hansen KG",
+      "type": "supplier",
+      "country": "DE"
+    },
+    {
+      "ref": "lieferant-at",
+      "name": "Alpenholz Handels GmbH",
+      "type": "supplier",
+      "country": "AT",
+      "vat_number": "ATU99999999"
+    },
+    {
+      "ref": "lieferant-nl",
+      "name": "Studio Grachtenlicht B.V.",
+      "type": "supplier",
+      "country": "NL",
+      "vat_number": "NL999999999B01"
+    },
+    {
+      "ref": "lieferant-us",
+      "name": "Northwind Cloud Services Inc.",
+      "type": "supplier",
+      "country": "US"
+    }
+  ],
+  "documents": [
+    {
+      "ref": "R1",
+      "type": "sale_invoice",
+      "contact": "kunde-de",
+      "date": "2026-01-14",
+      "why": "Inländischer Umsatz zum allgemeinen Steuersatz: Kennzahl 81 und die Steuer in Zeile 13.",
+      "lines": [
+        {
+          "name": "Waren",
+          "quantity": 10,
+          "unit_price": 1000,
+          "tax": "DE-S-19",
+          "account": "8110"
+        }
+      ]
+    },
+    {
+      "ref": "E1",
+      "type": "purchase_invoice",
+      "contact": "lieferant-de",
+      "date": "2026-01-12",
+      "why": "Inländischer Wareneinkauf: die Vorsteuer geht in Kennzahl 66, der Vordruck hat für den Einkauf keine Bemessungsgrundlage.",
+      "lines": [
+        {
+          "name": "Handelsware",
+          "quantity": 1,
+          "unit_price": 3000,
+          "tax": "DE-P-19",
+          "account": "8511"
+        }
+      ]
+    },
+    {
+      "ref": "R2",
+      "type": "sale_invoice",
+      "contact": "kunde-de",
+      "date": "2026-01-21",
+      "why": "Ermäßigter Satz 7 %: ein zweiter positiver Satz, der Kennzahl 86 von Kennzahl 81 trennt.",
+      "lines": [
+        {
+          "name": "Fachbücher",
+          "quantity": 200,
+          "unit_price": 12.5,
+          "tax": "DE-S-07",
+          "account": "8111"
+        }
+      ]
+    },
+    {
+      "ref": "E2",
+      "type": "purchase_invoice",
+      "contact": "lieferant-at",
+      "date": "2026-01-26",
+      "why": "Innergemeinschaftlicher Erwerb: der Erwerber berechnet die Steuer selbst, eine Rechnung füllt Kennzahl 89, Zeile 37 und Kennzahl 61 und gleicht sich im Hauptbuch aus.",
+      "lines": [
+        {
+          "name": "Rohholz",
+          "quantity": 1,
+          "unit_price": 2500,
+          "tax": "DE-P-IGE-19",
+          "account": "8510"
+        }
+      ]
+    },
+    {
+      "ref": "R3",
+      "type": "sale_invoice",
+      "contact": "kunde-fr",
+      "date": "2026-02-09",
+      "why": "Steuerfreie innergemeinschaftliche Lieferung: Kennzahl 41 und Zusammenfassende Meldung.",
+      "lines": [
+        {
+          "name": "Möbelbausätze",
+          "quantity": 1,
+          "unit_price": 4200,
+          "tax": "DE-S-IGL",
+          "account": "8113"
+        }
+      ]
+    },
+    {
+      "ref": "E3",
+      "type": "purchase_invoice",
+      "contact": "lieferant-nl",
+      "date": "2026-02-12",
+      "why": "Sonstige Leistung eines niederländischen Unternehmers: Steuerschuldnerschaft des Leistungsempfängers, Kennzahlen 46, 47 und 67.",
+      "lines": [
+        {
+          "name": "Gestaltung des Katalogs",
+          "quantity": 1,
+          "unit_price": 900,
+          "tax": "DE-P-EUDL-19",
+          "account": "8520"
+        }
+      ]
+    },
+    {
+      "ref": "R4",
+      "type": "sale_invoice",
+      "contact": "kunde-fr",
+      "date": "2026-02-18",
+      "why": "Sonstige Leistung an einen französischen Unternehmer: im Inland nicht steuerbar, Kennzahl 21 und Zusammenfassende Meldung.",
+      "lines": [
+        {
+          "name": "Beratung zur Werkstattplanung",
+          "quantity": 1,
+          "unit_price": 1800,
+          "tax": "DE-S-EUDL",
+          "account": "8114"
+        }
+      ]
+    },
+    {
+      "ref": "E4",
+      "type": "purchase_invoice",
+      "contact": "lieferant-us",
+      "date": "2026-02-27",
+      "why": "Cloud-Dienst eines Unternehmers aus dem Drittland: § 13b Abs. 2 Nr. 1, Kennzahlen 84, 85 und 67.",
+      "lines": [
+        {
+          "name": "Cloud-Abonnement",
+          "quantity": 1,
+          "unit_price": 600,
+          "tax": "DE-P-DRITT-19",
+          "account": "8873"
+        }
+      ]
+    },
+    {
+      "ref": "R5",
+      "type": "sale_invoice",
+      "contact": "kunde-ch",
+      "date": "2026-03-03",
+      "why": "Ausfuhrlieferung in die Schweiz: Kennzahl 43, steuerfrei mit Vorsteuerabzug.",
+      "lines": [
+        {
+          "name": "Messwerkzeuge",
+          "quantity": 1,
+          "unit_price": 6500,
+          "tax": "DE-S-AUSF",
+          "account": "8115"
+        }
+      ]
+    },
+    {
+      "ref": "E5",
+      "type": "purchase_invoice",
+      "contact": "lieferant-de",
+      "date": "2026-03-10",
+      "why": "Anschaffung von Anlagevermögen: die Vorsteuer geht in Kennzahl 66, die Zeile selbst in die Bilanz.",
+      "lines": [
+        {
+          "name": "Server",
+          "quantity": 1,
+          "unit_price": 8000,
+          "tax": "DE-P-19",
+          "account": "1233"
+        }
+      ]
+    },
+    {
+      "ref": "R6",
+      "type": "sale_credit_note",
+      "contact": "kunde-de",
+      "date": "2026-03-20",
+      "why": "Gutschrift zum allgemeinen Satz: sie mindert Kennzahl 81 und deren Steuer, der Vordruck hat keine eigene Zeile für Entgeltminderungen.",
+      "lines": [
+        {
+          "name": "Rücksendung",
+          "quantity": 1,
+          "unit_price": 750,
+          "tax": "DE-S-19",
+          "account": "8110"
+        }
+      ]
+    },
+    {
+      "ref": "E6",
+      "type": "purchase_invoice",
+      "contact": "lieferant-de",
+      "date": "2026-03-25",
+      "why": "Beratung, die zum Jahresende unbezahlt bleibt: eine offene Verbindlichkeit, die die Voranmeldung nicht berührt.",
+      "lines": [
+        {
+          "name": "Rechtsberatung",
+          "quantity": 1,
+          "unit_price": 1200,
+          "tax": "DE-P-19",
+          "account": "8860"
+        }
+      ]
+    },
+    {
+      "ref": "E7",
+      "type": "purchase_invoice",
+      "contact": "lieferant-de",
+      "date": "2026-04-08",
+      "why": "Geschenk über 50 Euro: nach § 15 Abs. 1a UStG nicht abziehbar, die gesamte Steuer folgt dem Aufwandskonto und nichts erreicht Kennzahl 66.",
+      "lines": [
+        {
+          "name": "Geschenkkorb für einen Kunden",
+          "quantity": 1,
+          "unit_price": 250,
+          "tax": "DE-P-19-NA",
+          "account": "8842"
+        }
+      ]
+    },
+    {
+      "ref": "R7",
+      "type": "sale_invoice",
+      "contact": "mieter-de",
+      "date": "2026-04-15",
+      "why": "Steuerfreie Vermietung eines Praxisraums: Kennzahl 48, ohne Vorsteuerabzug.",
+      "lines": [
+        {
+          "name": "Miete April",
+          "quantity": 1,
+          "unit_price": 1100,
+          "tax": "DE-S-FREI-12",
+          "account": "8117"
+        }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "Z1",
+      "direction": "inbound",
+      "date": "2026-02-20",
+      "amount": 11900,
+      "contact": "kunde-de",
+      "journal": "BK",
+      "match": "R1",
+      "why": "Zahlungseingang, der die Rechnung auf den Cent ausgleicht."
+    },
+    {
+      "ref": "Z2",
+      "direction": "outbound",
+      "date": "2026-02-24",
+      "amount": 3570,
+      "contact": "lieferant-de",
+      "journal": "BK",
+      "match": "E1",
+      "why": "Zahlung, die die Eingangsrechnung schließt."
+    },
+    {
+      "ref": "Z3",
+      "direction": "outbound",
+      "date": "2026-04-20",
+      "amount": 297.5,
+      "contact": "lieferant-de",
+      "journal": "BK",
+      "match": "E7",
+      "why": "Das Geschenk wird brutto bezahlt: das Abzugsverbot betrifft die Vorsteuer, nicht den Betrag, der dem Lieferanten geschuldet wird."
+    },
+    {
+      "ref": "Z4",
+      "direction": "inbound",
+      "date": "2026-03-30",
+      "amount": 2000,
+      "contact": "kunde-de",
+      "journal": "BK",
+      "match": null,
+      "why": "Anzahlung ohne Rechnung: sie bleibt offen, was das Hauptbuch und die daraus berechnete Voranmeldung aushalten müssen."
+    }
+  ]
+}

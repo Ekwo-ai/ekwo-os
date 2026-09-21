@@ -29,6 +29,7 @@
 # generated:packs
 /packs/be/              @Ekwo-ai/maintainers
 /packs/ci/              @Ekwo-ai/maintainers
+/packs/de/              @Ekwo-ai/maintainers
 /packs/ee/              @Ekwo-ai/maintainers
 /packs/es/              @Ekwo-ai/maintainers
 /packs/fr/              @Ekwo-ai/maintainers
@@ -41,6 +42,7 @@
 # /generated
 
 # What is not a country, and so not in the list above.
+/packs/de/              @Ekwo-ai/maintainers
 /packs/generic/         @Ekwo-ai/maintainers
 /packs/ohada/           @Ekwo-ai/maintainers
 

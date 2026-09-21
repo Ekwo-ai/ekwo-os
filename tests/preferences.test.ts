@@ -37,6 +37,7 @@ afterAll(async () => {
 
 describe('label_for', () => {
   it('takes the first language of the list that has a label', async () => {
+    // country-literal: 'de' and 'nl' are language codes here, not packs
     const answer = await one<{ label: string }>(
       db,
       `select label_for('Fournisseurs', $1::jsonb, array['de', 'nl', 'en']) as label`,

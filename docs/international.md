@@ -2222,3 +2222,79 @@ Still open, and deliberately outside this change: a ledger at three decimals
 (TND, KWD, BHD…), where every amount column of the ledger is `numeric(16, 2)`;
 and a box rounded as the sum of rounded lines, which no form read so far asks
 for — each box is rounded from its own exact figure.
+
+## Germany
+
+Written on 21 September 2026. `packs/de/` is `community`: nobody who files a
+German return has read it, and [its README](../packs/de/README.md) ends on the
+points a reviewer should look at first. It carries a reference chart of 169
+accounts, 22 taxes with the 2020 rates beside the current ones, the 51 boxes of
+form USt 1 A 2026, the balance sheet of § 266 HGB and the income statement of
+§ 275 Abs. 2 HGB, and a register of seventeen texts, each opened on that day.
+
+**The chart is not SKR 03 or SKR 04, on purpose.** Those are the standard
+charts of DATEV eG, published under DATEV's copyright and no open licence.
+Whether a chart of accounts can be protected at all is disputed, and a public
+repository under an open licence is not where to find out. So the pack copies
+neither their numbers nor their labels: it writes its own chart, four digits,
+flat, in which the first digit is the section of § 266 or § 275 and the next
+two are the numerals of the item, and every label is the statutory wording of
+the item it reaches. The consequence is that a German bookkeeper will not find
+the account numbers their software uses; a mapping from SKR 03 or SKR 04 to
+this chart would be a document of its own, written by somebody entitled to
+quote both.
+
+What the pack could not say, each worked around inside the pack and none of it
+a change to the core:
+
+- **`ekwo pack check` does not hold a chart to the constraint the seed is held
+  to.** An allowance account typed `asset_receivable` and not reconcilable
+  passed the check and failed at `psql` on
+  `account_templates_third_party_reconcilable`. *Fix*: the check reads the same
+  rule — a receivable or payable account is reconcilable — before the seed is
+  written. *Until then*: the allowance account `2219` is `asset_current`.
+- **A bank account must not be reconcilable, and nothing says so.**
+  `settle_from_statement()` takes the third-party side of the payment it books
+  as the first reconcilable line of the entry, with no order; a bank account
+  marked reconcilable can be that line, and the settlement is then refused with
+  `reconcile_account_mismatch`. No bank account of the six packs before this one is
+  reconcilable, which is why nobody met it. *Fix*: the function picks the line
+  on the counterpart account it resolved, or `ekwo pack check` refuses a
+  reconcilable `asset_cash`. *Until then*: `2420`, `2421` and `2440` are not
+  reconcilable.
+- **Import VAT has no document to live on.** German import VAT is assessed by
+  customs on a notice whose amount is the tax alone, and it is deducted in
+  Kennzahl 62; nothing is declared on the Voranmeldung beside it. A tax posts on
+  a line whose amount is its base, so a code for it would either owe the goods'
+  value to customs or clear the customs debt in the VAT settlement, where it
+  does not belong. *Until then*: Kennzahl 62 is declared and nothing posts to
+  it.
+- **The recapitulative statement has an engine and no German file.**
+  `ec_sales_list()` already lists every line whose treatment is intra-Community,
+  so a German company gets its Zusammenfassende Meldung figures for free; what
+  is missing is a brick writing the format the Bundeszentralamt für Steuern
+  takes, and a second form in the pack to record its cadence — the gap written
+  under "From the recapitulative statement".
+- **A box the form asks for "in every case" is omitted when it is nil.**
+  Kennzahl 83 must be filled even at zero; `vat_return()` returns the boxes that
+  came to something, so a nil month shows no line 50.
+- **Two "of which" boxes the ledger cannot fill.** Kennzahlen 50 and 37 report
+  the part of a reduction that comes from an irrecoverable debt (§ 17 Abs. 2
+  Nr. 1 UStG). A credit note does not say why it was issued, so no posting can
+  tell that part apart.
+- **The deadline extension belongs to the company.** The Dauerfristverlängerung
+  of §§ 46 to 48 UStDV adds a month to every return of a company that asked for
+  it, and the special advance payment it costs is deducted by hand in
+  Kennzahl 39. It is the same shape as the United Kingdom's scheme-dependent
+  extension, one field over.
+- **Two elections are properties of the company, not of a tax.** The small
+  business scheme of § 19 UStG makes a company's supplies exempt and relieves it
+  of the Voranmeldung, and there is no VATEX code for it, so it is a legal
+  mention and not a tax. Cash accounting under § 20 UStG is granted on
+  application to the whole company; `cash_basis` is per tax, so offering it
+  would mean a second code for every sale rate.
+- **E-invoicing has three dates and the manifest holds one.** Reception is
+  compulsory since 1 January 2025 and is `mandatory_from`; issuing becomes
+  compulsory on 1 January 2027 above 800 000 euros of turnover and on
+  1 January 2028 for everybody (§ 27 Abs. 38 UStG), which is written in the
+  legal reference until the core can hold a size.

@@ -180,6 +180,7 @@ describe('installing a company', () => {
 
     // The other languages travel with the row, so a reader who prefers German
     // is answered without going back to the template.
+    // country-literal: 'de' is a language code here, not the German pack
     expect(account.name_i18n['de']).toBe('Kunden');
 
     // A label the pack does not translate keeps the pack's own. Every account
@@ -219,6 +220,7 @@ describe('installing a company', () => {
       [company.id],
     );
     expect(journal.name).toBe('Verkoopdagboek');
+    // country-literal: 'de' is a language code here, not the German pack
     expect(journal.name_i18n['de']).toBe('Verkaufsjournal');
 
     const tax = await one<{ name: string; name_i18n: Record<string, string> }>(

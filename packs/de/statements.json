@@ -1,0 +1,1458 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/statements",
+  "statements": [
+    {
+      "code": "DE-HGB-266-BS",
+      "kind": "balance_sheet",
+      "framework": "DE-HGB",
+      "name": "Bilanz nach § 266 HGB",
+      "valid_from": "2016-01-01",
+      "legal_reference": "Handelsgesetzbuch § 266 Abs. 1 bis 3 in der Fassung des Bilanzrichtlinie-Umsetzungsgesetzes (BilRUG) — Gliederung der Bilanz in Kontoform, Aktivseite Abs. 2 und Passivseite Abs. 3. Die Zeilen sind die gesetzlichen Posten mit Buchstaben, römischen und arabischen Zahlen, wie mittelgroße und große Kapitalgesellschaften sie ausweisen; kleine Kapitalgesellschaften (§ 267 Abs. 1) dürfen nach § 266 Abs. 1 Satz 3 nur die mit Buchstaben und römischen Zahlen bezeichneten Posten ausweisen, die hier als Summenzeilen vorhanden sind, Kleinstkapitalgesellschaften (§ 267a) nach Satz 4 nur die Buchstaben. Ein Jahresüberschuss des laufenden, noch nicht abgeschlossenen Geschäftsjahres erscheint erst nach dem Abschluss in Posten A.V.",
+      "source": "hgb",
+      "lines": [
+        {
+          "code": "AKT",
+          "name": "Summe Aktiva",
+          "sequence": 10,
+          "is_total": true,
+          "plus": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E"
+          ],
+          "legal_reference": "Handelsgesetzbuch § 266 Abs. 2",
+          "source": "hgb"
+        },
+        {
+          "code": "A",
+          "parent": "AKT",
+          "name": "A. Anlagevermögen",
+          "sequence": 20,
+          "is_total": true,
+          "plus": [
+            "A.I",
+            "A.II",
+            "A.III"
+          ],
+          "legal_reference": "Handelsgesetzbuch § 266 Abs. 2 A",
+          "source": "hgb"
+        },
+        {
+          "code": "A.I",
+          "parent": "A",
+          "name": "I. Immaterielle Vermögensgegenstände",
+          "sequence": 30,
+          "is_total": true,
+          "plus": [
+            "A.I.1",
+            "A.I.2",
+            "A.I.3",
+            "A.I.4"
+          ],
+          "legal_reference": "Handelsgesetzbuch § 266 Abs. 2 A.I",
+          "source": "hgb"
+        },
+        {
+          "code": "A.I.1",
+          "parent": "A.I",
+          "name": "1. Selbst geschaffene gewerbliche Schutzrechte und ähnliche Rechte und Werte",
+          "sequence": 40,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "111",
+              "code_to": "111"
+            }
+          ],
+          "legal_reference": "Handelsgesetzbuch § 266 Abs. 2 A.I.1",
+          "source": "hgb"
+        },
+        {
+          "code": "A.I.2",
+          "parent": "A.I",
+          "name": "2. entgeltlich erworbene Konzessionen, gewerbliche Schutzrechte und ähnliche Rechte und Werte sowie Lizenzen an solchen Rechten und Werten",
+          "sequence": 50,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "112",
+              "code_to": "112"
+            }
+          ],
+          "legal_reference": "Handelsgesetzbuch § 266 Abs. 2 A.I.2",
+          "source": "hgb"
+        },
+        {
+          "code": "A.I.3",
+          "parent": "A.I",
+          "name": "3. Geschäfts- oder Firmenwert",
+          "sequence": 60,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "113",
+              "code_to": "113"
+            }
+          ],
+          "legal_reference": "Handelsgesetzbuch § 266 Abs. 2 A.I.3",
+          "source": "hgb"
+        },
+        {
+          "code": "A.I.4",
+          "parent": "A.I",
+          "name": "4. geleistete Anzahlungen",
+          "sequence": 70,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "114",
+              "code_to": "114"
+            }
+          ],
+          "legal_reference": "Handelsgesetzbuch § 266 Abs. 2 A.I.4",
+          "source": "hgb"
+        },
+        {
+          "code": "A.II",
+          "parent": "A",
+          "name": "II. Sachanlagen",
+          "sequence": 80,
+          "is_total": true,
+          "plus": [
+            "A.II.1",
+            "A.II.2",
+            "A.II.3",
+            "A.II.4"
+          ],
+          "legal_reference": "Handelsgesetzbuch § 266 Abs. 2 A.II",
+          "source": "hgb"
+        },
+        {
+          "code": "A.II.1",
+          "parent": "A.II",
+          "name": "1. Grundstücke, grundstücksgleiche Rechte und Bauten einschließlich der Bauten auf fremden Grundstücken",
+          "sequence": 90,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "121",
+              "code_to": "121"
+            }
+          ],
+          "legal_reference": "Handelsgesetzbuch § 266 Abs. 2 A.II.1",
+          "source": "hgb"
+        },
+        {
+          "code": "A.II.2",
+          "parent": "A.II",
+          "name": "2. technische Anlagen und Maschinen",
+          "sequence": 100,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "122",
+              "code_to": "122"
+            }
+          ],
+          "legal_reference": "Handelsgesetzbuch § 266 Abs. 2 A.II.2",
+          "source": "hgb"
+        },
+        {
+          "code": "A.II.3",
+          "parent": "A.II",
+          "name": "3. andere Anlagen, Betriebs- und Geschäftsausstattung",
+          "sequence": 110,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "123",
+              "code_to": "123"
+            }
+          ],
+          "legal_reference": "Handelsgesetzbuch § 266 Abs. 2 A.II.3",
+          "source": "hgb"
+        },
+        {
+          "code": "A.II.4",
+          "parent": "A.II",
+          "name": "4. geleistete Anzahlungen und Anlagen im Bau",
+          "sequence": 120,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "124",
+              "code_to": "124"
+            }
+          ],
+          "legal_reference": "Handelsgesetzbuch § 266 Abs. 2 A.II.4",
+          "source": "hgb"
+        },
+        {
+          "code": "A.III",
+          "parent": "A",
+          "name": "III. Finanzanlagen",
+          "sequence": 130,
+          "is_total": true,
+          "plus": [
+            "A.III.1",
+            "A.III.2",
+            "A.III.3",
+            "A.III.4",
+            "A.III.5",
+            "A.III.6"
+          ],
+          "legal_reference": "Handelsgesetzbuch § 266 Abs. 2 A.III",
+          "source": "hgb"
+        },
+        {
+          "code": "A.III.1",
+          "parent": "A.III",
+          "name": "1. Anteile an verbundenen Unternehmen",
+          "sequence": 140,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "131",
+              "code_to": "131"
+            }
+          ],
+          "legal_reference": "Handelsgesetzbuch § 266 Abs. 2 A.III.1",
+          "source": "hgb"
+        },
+        {
+          "code": "A.III.2",
+          "parent": "A.III",
+          "name": "2. Ausleihungen an verbundene Unternehmen",
+          "sequence": 150,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "132",
+              "code_to": "132"
+            }
+          ],
+          "legal_reference": "Handelsgesetzbuch § 266 Abs. 2 A.III.2",
+          "source": "hgb"
+        },
+        {
+          "code": "A.III.3",
+          "parent": "A.III",
+          "name": "3. Beteiligungen",
+          "sequence": 160,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "133",
+              "code_to": "133"
+            }
+          ],
+          "legal_reference": "Handelsgesetzbuch § 266 Abs. 2 A.III.3",
+          "source": "hgb"
+        },
+        {
+          "code": "A.III.4",
+          "parent": "A.III",
+          "name": "4. Ausleihungen an Unternehmen, mit denen ein Beteiligungsverhältnis besteht",
+          "sequence": 170,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "134",
+              "code_to": "134"
+            }
+          ],
+          "legal_reference": "Handelsgesetzbuch § 266 Abs. 2 A.III.4",
+          "source": "hgb"
+        },
+        {
+          "code": "A.III.5",
+          "parent": "A.III",
+          "name": "5. Wertpapiere des Anlagevermögens",
+          "sequence": 180,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "135",
+              "code_to": "135"
+            }
+          ],
+          "legal_reference": "Handelsgesetzbuch § 266 Abs. 2 A.III.5",
+          "source": "hgb"
+        },
+        {
+          "code": "A.III.6",
+          "parent": "A.III",
+          "name": "6. sonstige Ausleihungen",
+          "sequence": 190,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "136",
+              "code_to": "136"
+            }
+          ],
+          "legal_reference": "Handelsgesetzbuch § 266 Abs. 2 A.III.6",
+          "source": "hgb"
+        },
+        {
+          "code": "B",
+          "parent": "AKT",
+          "name": "B. Umlaufvermögen",
+          "sequence": 200,
+          "is_total": true,
+          "plus": [
+            "B.I",
+            "B.II",
+            "B.III",
+            "B.IV"
+          ],
+          "legal_reference": "Handelsgesetzbuch § 266 Abs. 2 B",
+          "source": "hgb"
+        },
+        {
+          "code": "B.I",
+          "parent": "B",
+          "name": "I. Vorräte",
+          "sequence": 210,
+          "is_total": true,
+          "plus": [
+            "B.I.1",
+            "B.I.2",
+            "B.I.3",
+            "B.I.4"
+          ],
+          "legal_reference": "Handelsgesetzbuch § 266 Abs. 2 B.I",
+          "source": "hgb"
+        },
+        {
+          "code": "B.I.1",
+          "parent": "B.I",
+          "name": "1. Roh-, Hilfs- und Betriebsstoffe",
+          "sequence": 220,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "211",
+              "code_to": "211"
+            }
+          ],
+          "legal_reference": "Handelsgesetzbuch § 266 Abs. 2 B.I.1",
+          "source": "hgb"
+        },
+        {
+          "code": "B.I.2",
+          "parent": "B.I",
+          "name": "2. unfertige Erzeugnisse, unfertige Leistungen",
+          "sequence": 230,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "212",
+              "code_to": "212"
+            }
+          ],
+          "legal_reference": "Handelsgesetzbuch § 266 Abs. 2 B.I.2",
+          "source": "hgb"
+        },
+        {
+          "code": "B.I.3",
+          "parent": "B.I",
+          "name": "3. fertige Erzeugnisse und Waren",
+          "sequence": 240,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "213",
+              "code_to": "213"
+            }
+          ],
+          "legal_reference": "Handelsgesetzbuch § 266 Abs. 2 B.I.3",
+          "source": "hgb"
+        },
+        {
+          "code": "B.I.4",
+          "parent": "B.I",
+          "name": "4. geleistete Anzahlungen",
+          "sequence": 250,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "214",
+              "code_to": "214"
+            }
+          ],
+          "legal_reference": "Handelsgesetzbuch § 266 Abs. 2 B.I.4",
+          "source": "hgb"
+        },
+        {
+          "code": "B.II",
+          "parent": "B",
+          "name": "II. Forderungen und sonstige Vermögensgegenstände",
+          "sequence": 260,
+          "is_total": true,
+          "plus": [
+            "B.II.1",
+            "B.II.2",
+            "B.II.3",
+            "B.II.4"
+          ],
+          "legal_reference": "Handelsgesetzbuch § 266 Abs. 2 B.II",
+          "source": "hgb"
+        },
+        {
+          "code": "B.II.1",
+          "parent": "B.II",
+          "name": "1. Forderungen aus Lieferungen und Leistungen",
+          "sequence": 270,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "221",
+              "code_to": "221"
+            }
+          ],
+          "legal_reference": "Handelsgesetzbuch § 266 Abs. 2 B.II.1",
+          "source": "hgb"
+        },
+        {
+          "code": "B.II.2",
+          "parent": "B.II",
+          "name": "2. Forderungen gegen verbundene Unternehmen",
+          "sequence": 280,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "222",
+              "code_to": "222"
+            }
+          ],
+          "legal_reference": "Handelsgesetzbuch § 266 Abs. 2 B.II.2",
+          "source": "hgb"
+        },
+        {
+          "code": "B.II.3",
+          "parent": "B.II",
+          "name": "3. Forderungen gegen Unternehmen, mit denen ein Beteiligungsverhältnis besteht",
+          "sequence": 290,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "223",
+              "code_to": "223"
+            }
+          ],
+          "legal_reference": "Handelsgesetzbuch § 266 Abs. 2 B.II.3",
+          "source": "hgb"
+        },
+        {
+          "code": "B.II.4",
+          "parent": "B.II",
+          "name": "4. sonstige Vermögensgegenstände",
+          "sequence": 300,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "2240",
+              "code_to": "2248",
+              "sequence": 10
+            },
+            {
+              "kind": "account_code",
+              "code_from": "2249",
+              "side": "debit",
+              "sequence": 20
+            },
+            {
+              "kind": "account_code",
+              "code_from": "6820",
+              "side": "debit",
+              "sequence": 30
+            },
+            {
+              "kind": "account_code",
+              "code_from": "6860",
+              "side": "debit",
+              "sequence": 40
+            }
+          ],
+          "legal_reference": "Handelsgesetzbuch § 266 Abs. 2 B.II.4",
+          "source": "hgb"
+        },
+        {
+          "code": "B.III",
+          "parent": "B",
+          "name": "III. Wertpapiere",
+          "sequence": 310,
+          "is_total": true,
+          "plus": [
+            "B.III.1",
+            "B.III.2"
+          ],
+          "legal_reference": "Handelsgesetzbuch § 266 Abs. 2 B.III",
+          "source": "hgb"
+        },
+        {
+          "code": "B.III.1",
+          "parent": "B.III",
+          "name": "1. Anteile an verbundenen Unternehmen",
+          "sequence": 320,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "231",
+              "code_to": "231"
+            }
+          ],
+          "legal_reference": "Handelsgesetzbuch § 266 Abs. 2 B.III.1",
+          "source": "hgb"
+        },
+        {
+          "code": "B.III.2",
+          "parent": "B.III",
+          "name": "2. sonstige Wertpapiere",
+          "sequence": 330,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "232",
+              "code_to": "232"
+            }
+          ],
+          "legal_reference": "Handelsgesetzbuch § 266 Abs. 2 B.III.2",
+          "source": "hgb"
+        },
+        {
+          "code": "B.IV",
+          "parent": "B",
+          "name": "IV. Kassenbestand, Bundesbankguthaben, Guthaben bei Kreditinstituten und Schecks",
+          "sequence": 340,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "2410",
+              "code_to": "2410",
+              "sequence": 10
+            },
+            {
+              "kind": "account_code",
+              "code_from": "2420",
+              "side": "debit",
+              "sequence": 20
+            },
+            {
+              "kind": "account_code",
+              "code_from": "2421",
+              "side": "debit",
+              "sequence": 30
+            },
+            {
+              "kind": "code_range",
+              "code_from": "2430",
+              "code_to": "2440",
+              "sequence": 40
+            }
+          ],
+          "legal_reference": "Handelsgesetzbuch § 266 Abs. 2 B.IV",
+          "source": "hgb"
+        },
+        {
+          "code": "C",
+          "parent": "AKT",
+          "name": "C. Rechnungsabgrenzungsposten",
+          "sequence": 350,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "31",
+              "code_to": "31"
+            }
+          ],
+          "legal_reference": "Handelsgesetzbuch § 266 Abs. 2 C",
+          "source": "hgb"
+        },
+        {
+          "code": "D",
+          "parent": "AKT",
+          "name": "D. Aktive latente Steuern",
+          "sequence": 360,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "32",
+              "code_to": "32"
+            }
+          ],
+          "legal_reference": "Handelsgesetzbuch § 266 Abs. 2 D",
+          "source": "hgb"
+        },
+        {
+          "code": "E",
+          "parent": "AKT",
+          "name": "E. Aktiver Unterschiedsbetrag aus der Vermögensverrechnung",
+          "sequence": 370,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "33",
+              "code_to": "33"
+            }
+          ],
+          "legal_reference": "Handelsgesetzbuch § 266 Abs. 2 E",
+          "source": "hgb"
+        },
+        {
+          "code": "PAS",
+          "name": "Summe Passiva",
+          "sequence": 380,
+          "is_total": true,
+          "plus": [
+            "P.A",
+            "P.B",
+            "P.C",
+            "P.D",
+            "P.E"
+          ],
+          "legal_reference": "Handelsgesetzbuch § 266 Abs. 3",
+          "source": "hgb"
+        },
+        {
+          "code": "P.A",
+          "parent": "PAS",
+          "name": "A. Eigenkapital",
+          "sequence": 390,
+          "is_total": true,
+          "plus": [
+            "P.A.I",
+            "P.A.II",
+            "P.A.III",
+            "P.A.IV",
+            "P.A.V"
+          ],
+          "legal_reference": "Handelsgesetzbuch § 266 Abs. 3 A",
+          "source": "hgb"
+        },
+        {
+          "code": "P.A.I",
+          "parent": "P.A",
+          "name": "I. Gezeichnetes Kapital",
+          "sequence": 400,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "41",
+              "code_to": "41"
+            }
+          ],
+          "legal_reference": "Handelsgesetzbuch § 266 Abs. 3 A.I; § 272 Abs. 1 Satz 2 — die nicht eingeforderten ausstehenden Einlagen werden vom Posten offen abgesetzt, deshalb gehört Konto 4110 zur selben Zeile",
+          "source": "hgb"
+        },
+        {
+          "code": "P.A.II",
+          "parent": "P.A",
+          "name": "II. Kapitalrücklage",
+          "sequence": 410,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "42",
+              "code_to": "42"
+            }
+          ],
+          "legal_reference": "Handelsgesetzbuch § 266 Abs. 3 A.II",
+          "source": "hgb"
+        },
+        {
+          "code": "P.A.III",
+          "parent": "P.A",
+          "name": "III. Gewinnrücklagen",
+          "sequence": 420,
+          "is_total": true,
+          "plus": [
+            "P.A.III.1",
+            "P.A.III.2",
+            "P.A.III.3",
+            "P.A.III.4"
+          ],
+          "legal_reference": "Handelsgesetzbuch § 266 Abs. 3 A.III",
+          "source": "hgb"
+        },
+        {
+          "code": "P.A.III.1",
+          "parent": "P.A.III",
+          "name": "1. gesetzliche Rücklage",
+          "sequence": 430,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "431",
+              "code_to": "431"
+            }
+          ],
+          "legal_reference": "Handelsgesetzbuch § 266 Abs. 3 A.III.1",
+          "source": "hgb"
+        },
+        {
+          "code": "P.A.III.2",
+          "parent": "P.A.III",
+          "name": "2. Rücklage für Anteile an einem herrschenden oder mehrheitlich beteiligten Unternehmen",
+          "sequence": 440,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "432",
+              "code_to": "432"
+            }
+          ],
+          "legal_reference": "Handelsgesetzbuch § 266 Abs. 3 A.III.2",
+          "source": "hgb"
+        },
+        {
+          "code": "P.A.III.3",
+          "parent": "P.A.III",
+          "name": "3. satzungsmäßige Rücklagen",
+          "sequence": 450,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "433",
+              "code_to": "433"
+            }
+          ],
+          "legal_reference": "Handelsgesetzbuch § 266 Abs. 3 A.III.3",
+          "source": "hgb"
+        },
+        {
+          "code": "P.A.III.4",
+          "parent": "P.A.III",
+          "name": "4. andere Gewinnrücklagen",
+          "sequence": 460,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "434",
+              "code_to": "434"
+            }
+          ],
+          "legal_reference": "Handelsgesetzbuch § 266 Abs. 3 A.III.4",
+          "source": "hgb"
+        },
+        {
+          "code": "P.A.IV",
+          "parent": "P.A",
+          "name": "IV. Gewinnvortrag/Verlustvortrag",
+          "sequence": 470,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "44",
+              "code_to": "44"
+            }
+          ],
+          "legal_reference": "Handelsgesetzbuch § 266 Abs. 3 A.IV",
+          "source": "hgb"
+        },
+        {
+          "code": "P.A.V",
+          "parent": "P.A",
+          "name": "V. Jahresüberschuss/Jahresfehlbetrag",
+          "sequence": 480,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "45",
+              "code_to": "45"
+            }
+          ],
+          "legal_reference": "Handelsgesetzbuch § 266 Abs. 3 A.V",
+          "source": "hgb"
+        },
+        {
+          "code": "P.B",
+          "parent": "PAS",
+          "name": "B. Rückstellungen",
+          "sequence": 490,
+          "is_total": true,
+          "plus": [
+            "P.B.1",
+            "P.B.2",
+            "P.B.3"
+          ],
+          "legal_reference": "Handelsgesetzbuch § 266 Abs. 3 B",
+          "source": "hgb"
+        },
+        {
+          "code": "P.B.1",
+          "parent": "P.B",
+          "name": "1. Rückstellungen für Pensionen und ähnliche Verpflichtungen",
+          "sequence": 500,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "51",
+              "code_to": "51"
+            }
+          ],
+          "legal_reference": "Handelsgesetzbuch § 266 Abs. 3 B.1",
+          "source": "hgb"
+        },
+        {
+          "code": "P.B.2",
+          "parent": "P.B",
+          "name": "2. Steuerrückstellungen",
+          "sequence": 510,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "52",
+              "code_to": "52"
+            }
+          ],
+          "legal_reference": "Handelsgesetzbuch § 266 Abs. 3 B.2",
+          "source": "hgb"
+        },
+        {
+          "code": "P.B.3",
+          "parent": "P.B",
+          "name": "3. sonstige Rückstellungen",
+          "sequence": 520,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "53",
+              "code_to": "53"
+            }
+          ],
+          "legal_reference": "Handelsgesetzbuch § 266 Abs. 3 B.3",
+          "source": "hgb"
+        },
+        {
+          "code": "P.C",
+          "parent": "PAS",
+          "name": "C. Verbindlichkeiten",
+          "sequence": 530,
+          "is_total": true,
+          "plus": [
+            "P.C.1",
+            "P.C.2",
+            "P.C.3",
+            "P.C.4",
+            "P.C.5",
+            "P.C.6",
+            "P.C.7",
+            "P.C.8"
+          ],
+          "legal_reference": "Handelsgesetzbuch § 266 Abs. 3 C",
+          "source": "hgb"
+        },
+        {
+          "code": "P.C.1",
+          "parent": "P.C",
+          "name": "1. Anleihen, davon konvertibel",
+          "sequence": 540,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "61",
+              "code_to": "61"
+            }
+          ],
+          "legal_reference": "Handelsgesetzbuch § 266 Abs. 3 C.1",
+          "source": "hgb"
+        },
+        {
+          "code": "P.C.2",
+          "parent": "P.C",
+          "name": "2. Verbindlichkeiten gegenüber Kreditinstituten",
+          "sequence": 550,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "6210",
+              "code_to": "6229",
+              "sequence": 10
+            },
+            {
+              "kind": "account_code",
+              "code_from": "2420",
+              "side": "credit",
+              "sequence": 20
+            },
+            {
+              "kind": "account_code",
+              "code_from": "2421",
+              "side": "credit",
+              "sequence": 30
+            }
+          ],
+          "legal_reference": "Handelsgesetzbuch § 266 Abs. 3 C.2 — ein Bankkonto im Soll ist Guthaben (Aktiva B.IV), im Haben Verbindlichkeit gegenüber dem Kreditinstitut",
+          "source": "hgb"
+        },
+        {
+          "code": "P.C.3",
+          "parent": "P.C",
+          "name": "3. erhaltene Anzahlungen auf Bestellungen",
+          "sequence": 560,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "63",
+              "code_to": "63"
+            }
+          ],
+          "legal_reference": "Handelsgesetzbuch § 266 Abs. 3 C.3",
+          "source": "hgb"
+        },
+        {
+          "code": "P.C.4",
+          "parent": "P.C",
+          "name": "4. Verbindlichkeiten aus Lieferungen und Leistungen",
+          "sequence": 570,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "64",
+              "code_to": "64"
+            }
+          ],
+          "legal_reference": "Handelsgesetzbuch § 266 Abs. 3 C.4",
+          "source": "hgb"
+        },
+        {
+          "code": "P.C.5",
+          "parent": "P.C",
+          "name": "5. Verbindlichkeiten aus der Annahme gezogener Wechsel und der Ausstellung eigener Wechsel",
+          "sequence": 580,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "65",
+              "code_to": "65"
+            }
+          ],
+          "legal_reference": "Handelsgesetzbuch § 266 Abs. 3 C.5",
+          "source": "hgb"
+        },
+        {
+          "code": "P.C.6",
+          "parent": "P.C",
+          "name": "6. Verbindlichkeiten gegenüber verbundenen Unternehmen",
+          "sequence": 590,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "66",
+              "code_to": "66"
+            }
+          ],
+          "legal_reference": "Handelsgesetzbuch § 266 Abs. 3 C.6",
+          "source": "hgb"
+        },
+        {
+          "code": "P.C.7",
+          "parent": "P.C",
+          "name": "7. Verbindlichkeiten gegenüber Unternehmen, mit denen ein Beteiligungsverhältnis besteht",
+          "sequence": 600,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "67",
+              "code_to": "67"
+            }
+          ],
+          "legal_reference": "Handelsgesetzbuch § 266 Abs. 3 C.7",
+          "source": "hgb"
+        },
+        {
+          "code": "P.C.8",
+          "parent": "P.C",
+          "name": "8. sonstige Verbindlichkeiten, davon aus Steuern, davon im Rahmen der sozialen Sicherheit",
+          "sequence": 610,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "6810",
+              "code_to": "6814",
+              "sequence": 10
+            },
+            {
+              "kind": "account_code",
+              "code_from": "6820",
+              "side": "credit",
+              "sequence": 20
+            },
+            {
+              "kind": "code_range",
+              "code_from": "6830",
+              "code_to": "6850",
+              "sequence": 30
+            },
+            {
+              "kind": "account_code",
+              "code_from": "6860",
+              "side": "credit",
+              "sequence": 40
+            },
+            {
+              "kind": "code_range",
+              "code_from": "6870",
+              "code_to": "6890",
+              "sequence": 50
+            },
+            {
+              "kind": "account_code",
+              "code_from": "2249",
+              "side": "credit",
+              "sequence": 60
+            }
+          ],
+          "legal_reference": "Handelsgesetzbuch § 266 Abs. 3 C.8",
+          "source": "hgb"
+        },
+        {
+          "code": "P.D",
+          "parent": "PAS",
+          "name": "D. Rechnungsabgrenzungsposten",
+          "sequence": 620,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "71",
+              "code_to": "71"
+            }
+          ],
+          "legal_reference": "Handelsgesetzbuch § 266 Abs. 3 D",
+          "source": "hgb"
+        },
+        {
+          "code": "P.E",
+          "parent": "PAS",
+          "name": "E. Passive latente Steuern",
+          "sequence": 630,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "72",
+              "code_to": "72"
+            }
+          ],
+          "legal_reference": "Handelsgesetzbuch § 266 Abs. 3 E",
+          "source": "hgb"
+        }
+      ]
+    },
+    {
+      "code": "DE-HGB-275-GKV",
+      "kind": "income_statement",
+      "framework": "DE-HGB",
+      "name": "Gewinn- und Verlustrechnung nach § 275 Abs. 2 HGB (Gesamtkostenverfahren)",
+      "valid_from": "2016-01-01",
+      "legal_reference": "Handelsgesetzbuch § 275 Abs. 1 und 2 in der Fassung des BilRUG — Staffelform nach dem Gesamtkostenverfahren, Posten 1 bis 17 in der gesetzlichen Reihenfolge. Das Umsatzkostenverfahren (Abs. 3) setzt eine Kostenstellenrechnung voraus, die der Kontenplan nicht abbildet, und wird von diesem Pack nicht geführt; die verkürzte Darstellung der Kleinstkapitalgesellschaften (Abs. 5) ebenfalls nicht. Kleine und mittelgroße Kapitalgesellschaften dürfen die Posten 1 bis 5 nach § 276 Satz 1 zum Rohergebnis zusammenfassen; die Einzelposten bleiben hier sichtbar.",
+      "source": "hgb",
+      "lines": [
+        {
+          "code": "1",
+          "name": "1. Umsatzerlöse",
+          "sequence": 10,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "81",
+              "code_to": "81"
+            }
+          ],
+          "legal_reference": "Handelsgesetzbuch § 275 Abs. 2 Nr. 1; § 277 Abs. 1",
+          "source": "hgb"
+        },
+        {
+          "code": "2",
+          "name": "2. Erhöhung oder Verminderung des Bestands an fertigen und unfertigen Erzeugnissen",
+          "sequence": 20,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "82",
+              "code_to": "82"
+            }
+          ],
+          "legal_reference": "Handelsgesetzbuch § 275 Abs. 2 Nr. 2; § 277 Abs. 2",
+          "source": "hgb"
+        },
+        {
+          "code": "3",
+          "name": "3. andere aktivierte Eigenleistungen",
+          "sequence": 30,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "83",
+              "code_to": "83"
+            }
+          ],
+          "legal_reference": "Handelsgesetzbuch § 275 Abs. 2 Nr. 3",
+          "source": "hgb"
+        },
+        {
+          "code": "4",
+          "name": "4. sonstige betriebliche Erträge",
+          "sequence": 40,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "84",
+              "code_to": "84"
+            }
+          ],
+          "legal_reference": "Handelsgesetzbuch § 275 Abs. 2 Nr. 4; § 277 Abs. 5 Satz 2 — Erträge aus der Währungsumrechnung sind gesondert als „davon“ auszuweisen, deshalb eigenes Konto 8450",
+          "source": "hgb"
+        },
+        {
+          "code": "5",
+          "name": "5. Materialaufwand",
+          "sequence": 50,
+          "is_total": true,
+          "plus": [
+            "5a",
+            "5b"
+          ],
+          "legal_reference": "Handelsgesetzbuch § 275 Abs. 2 Nr. 5",
+          "source": "hgb"
+        },
+        {
+          "code": "5a",
+          "parent": "5",
+          "name": "a) Aufwendungen für Roh-, Hilfs- und Betriebsstoffe und für bezogene Waren",
+          "sequence": 60,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "851",
+              "code_to": "851"
+            }
+          ],
+          "legal_reference": "Handelsgesetzbuch § 275 Abs. 2 Nr. 5 Buchst. a",
+          "source": "hgb"
+        },
+        {
+          "code": "5b",
+          "parent": "5",
+          "name": "b) Aufwendungen für bezogene Leistungen",
+          "sequence": 70,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "852",
+              "code_to": "852"
+            }
+          ],
+          "legal_reference": "Handelsgesetzbuch § 275 Abs. 2 Nr. 5 Buchst. b",
+          "source": "hgb"
+        },
+        {
+          "code": "6",
+          "name": "6. Personalaufwand",
+          "sequence": 80,
+          "is_total": true,
+          "plus": [
+            "6a",
+            "6b"
+          ],
+          "legal_reference": "Handelsgesetzbuch § 275 Abs. 2 Nr. 6",
+          "source": "hgb"
+        },
+        {
+          "code": "6a",
+          "parent": "6",
+          "name": "a) Löhne und Gehälter",
+          "sequence": 90,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "861",
+              "code_to": "861"
+            }
+          ],
+          "legal_reference": "Handelsgesetzbuch § 275 Abs. 2 Nr. 6 Buchst. a",
+          "source": "hgb"
+        },
+        {
+          "code": "6b",
+          "parent": "6",
+          "name": "b) soziale Abgaben und Aufwendungen für Altersversorgung und für Unterstützung, davon für Altersversorgung",
+          "sequence": 100,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "862",
+              "code_to": "862"
+            }
+          ],
+          "legal_reference": "Handelsgesetzbuch § 275 Abs. 2 Nr. 6 Buchst. b",
+          "source": "hgb"
+        },
+        {
+          "code": "7",
+          "name": "7. Abschreibungen",
+          "sequence": 110,
+          "is_total": true,
+          "plus": [
+            "7a",
+            "7b"
+          ],
+          "legal_reference": "Handelsgesetzbuch § 275 Abs. 2 Nr. 7",
+          "source": "hgb"
+        },
+        {
+          "code": "7a",
+          "parent": "7",
+          "name": "a) auf immaterielle Vermögensgegenstände des Anlagevermögens und Sachanlagen",
+          "sequence": 120,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "871",
+              "code_to": "871"
+            }
+          ],
+          "legal_reference": "Handelsgesetzbuch § 275 Abs. 2 Nr. 7 Buchst. a",
+          "source": "hgb"
+        },
+        {
+          "code": "7b",
+          "parent": "7",
+          "name": "b) auf Vermögensgegenstände des Umlaufvermögens, soweit diese die in der Kapitalgesellschaft üblichen Abschreibungen überschreiten",
+          "sequence": 130,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "872",
+              "code_to": "872"
+            }
+          ],
+          "legal_reference": "Handelsgesetzbuch § 275 Abs. 2 Nr. 7 Buchst. b",
+          "source": "hgb"
+        },
+        {
+          "code": "8",
+          "name": "8. sonstige betriebliche Aufwendungen",
+          "sequence": 140,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "88",
+              "code_to": "88"
+            }
+          ],
+          "legal_reference": "Handelsgesetzbuch § 275 Abs. 2 Nr. 8; § 277 Abs. 5 Satz 2 — Aufwendungen aus der Währungsumrechnung gesondert als „davon“, deshalb eigenes Konto 8850",
+          "source": "hgb"
+        },
+        {
+          "code": "9",
+          "name": "9. Erträge aus Beteiligungen, davon aus verbundenen Unternehmen",
+          "sequence": 150,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "91",
+              "code_to": "91"
+            }
+          ],
+          "legal_reference": "Handelsgesetzbuch § 275 Abs. 2 Nr. 9",
+          "source": "hgb"
+        },
+        {
+          "code": "10",
+          "name": "10. Erträge aus anderen Wertpapieren und Ausleihungen des Finanzanlagevermögens, davon aus verbundenen Unternehmen",
+          "sequence": 160,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "92",
+              "code_to": "92"
+            }
+          ],
+          "legal_reference": "Handelsgesetzbuch § 275 Abs. 2 Nr. 10",
+          "source": "hgb"
+        },
+        {
+          "code": "11",
+          "name": "11. sonstige Zinsen und ähnliche Erträge, davon aus verbundenen Unternehmen",
+          "sequence": 170,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "93",
+              "code_to": "93"
+            }
+          ],
+          "legal_reference": "Handelsgesetzbuch § 275 Abs. 2 Nr. 11",
+          "source": "hgb"
+        },
+        {
+          "code": "12",
+          "name": "12. Abschreibungen auf Finanzanlagen und auf Wertpapiere des Umlaufvermögens",
+          "sequence": 180,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "94",
+              "code_to": "94"
+            }
+          ],
+          "legal_reference": "Handelsgesetzbuch § 275 Abs. 2 Nr. 12",
+          "source": "hgb"
+        },
+        {
+          "code": "13",
+          "name": "13. Zinsen und ähnliche Aufwendungen, davon an verbundene Unternehmen",
+          "sequence": 190,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "95",
+              "code_to": "95"
+            }
+          ],
+          "legal_reference": "Handelsgesetzbuch § 275 Abs. 2 Nr. 13; § 277 Abs. 5 Satz 1 — Aufwendungen aus der Abzinsung gesondert, deshalb eigenes Konto 9530",
+          "source": "hgb"
+        },
+        {
+          "code": "14",
+          "name": "14. Steuern vom Einkommen und vom Ertrag",
+          "sequence": 200,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "96",
+              "code_to": "96"
+            }
+          ],
+          "legal_reference": "Handelsgesetzbuch § 275 Abs. 2 Nr. 14; § 274 Abs. 2 Satz 3 — latente Steuern gesondert unter diesem Posten, deshalb eigenes Konto 9630",
+          "source": "hgb"
+        },
+        {
+          "code": "15",
+          "name": "15. Ergebnis nach Steuern",
+          "sequence": 210,
+          "is_total": true,
+          "plus": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "9",
+            "10",
+            "11"
+          ],
+          "minus": [
+            "5",
+            "6",
+            "7",
+            "8",
+            "12",
+            "13",
+            "14"
+          ],
+          "legal_reference": "Handelsgesetzbuch § 275 Abs. 2 Nr. 15",
+          "source": "hgb"
+        },
+        {
+          "code": "16",
+          "name": "16. sonstige Steuern",
+          "sequence": 220,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "98",
+              "code_to": "98"
+            }
+          ],
+          "legal_reference": "Handelsgesetzbuch § 275 Abs. 2 Nr. 16",
+          "source": "hgb"
+        },
+        {
+          "code": "17",
+          "name": "17. Jahresüberschuss/Jahresfehlbetrag",
+          "sequence": 230,
+          "is_total": true,
+          "plus": [
+            "15"
+          ],
+          "minus": [
+            "16"
+          ],
+          "legal_reference": "Handelsgesetzbuch § 275 Abs. 2 Nr. 17",
+          "source": "hgb"
+        }
+      ]
+    }
+  ]
+}

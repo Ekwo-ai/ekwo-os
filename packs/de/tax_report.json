@@ -1,0 +1,464 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "DE-USTVA-2026",
+  "name": "Umsatzsteuer-Voranmeldung 2026 (Vordruck USt 1 A)",
+  "period": [
+    "month",
+    "quarter"
+  ],
+  "valid_from": "2026-01-01",
+  "legal_reference": "UStG § 18 Abs. 1 und 2 — Voranmeldung nach amtlich vorgeschriebenem Datensatz über die amtlich bestimmte Schnittstelle bis zum zehnten Tag nach Ablauf jedes Voranmeldungszeitraums. Voranmeldungszeitraum ist das Kalendervierteljahr; der Kalendermonat, wenn die Steuer des Vorjahres mehr als 9 000 Euro betrug, und im Jahr der Aufnahme der Tätigkeit und im folgenden Jahr; bei nicht mehr als 2 000 Euro kann das Finanzamt von der Abgabe befreien; nach Abs. 2a kann der Unternehmer bei einem Überschuss von mehr als 9 000 Euro im Vorjahr den Monat wählen. Weil der Zeitraum von einer Größe des Unternehmens abhängt, schlägt das Pack keinen vor. Die Boxen sind die Kennzahlen des Vordruckmusters USt 1 A 2026 (BMF-Schreiben vom 29. Dezember 2025); die drei Summenzeilen ohne Kennzahl (Zeilen 37, 45 und 48) tragen die Codes Z37, Z45 und Z48. Ein Vordruck eines anderen Jahres ist ein neuer Code mit eigenem valid_from.",
+  "source": "ustg",
+  "deadline": {
+    "rule": "day_of_month_after_period",
+    "day": 10,
+    "legal_reference": "UStG § 18 Abs. 1 Satz 1 und Satz 4 — die Voranmeldung ist bis zum zehnten Tag nach Ablauf des Voranmeldungszeitraums zu übermitteln und die Vorauszahlung an diesem Tag fällig. Die Dauerfristverlängerung nach §§ 46 bis 48 UStDV verschiebt beide Fristen um einen Monat, bei monatlicher Abgabe gegen eine Sondervorauszahlung von einem Elftel der Vorjahresvorauszahlungen (§ 47 Abs. 1); sie gilt nur für Unternehmer, denen sie auf Antrag gewährt wurde, und wird deshalb nicht als plus_days angegeben. Fällt das Fristende auf einen Sonnabend, Sonntag oder gesetzlichen Feiertag, endet die Frist nach § 108 Abs. 3 AO mit dem nächstfolgenden Werktag, was der Kern ohne Feiertagskalender nicht abbildet.",
+    "source": "ustg"
+  },
+  "boxes": [
+    {
+      "box": "81",
+      "kind": "base",
+      "name": "Steuerpflichtige Umsätze zum Steuersatz von 19 % — Bemessungsgrundlage",
+      "sequence": 10,
+      "legal_reference": "Vordruck USt 1 A 2026, Zeile 13, Kennzahl 81 — Bemessungsgrundlage ohne Umsatzsteuer in vollen Euro, einschließlich unentgeltlicher Wertabgaben und erhaltener Anzahlungen (Anleitung USt 1 E, Zeilen 13 bis 16); UStG § 12 Abs. 1",
+      "source": "ustva-2026"
+    },
+    {
+      "box": "81",
+      "kind": "tax",
+      "name": "Steuerpflichtige Umsätze zum Steuersatz von 19 % — Steuer",
+      "sequence": 20,
+      "legal_reference": "Vordruck USt 1 A 2026, Zeile 13, Spalte Steuer — der Vordruck führt für diesen Betrag keine eigene Kennzahl; ELSTER berechnet ihn aus Kz. 81",
+      "source": "ustva-2026"
+    },
+    {
+      "box": "86",
+      "kind": "base",
+      "name": "Steuerpflichtige Umsätze zum Steuersatz von 7 % — Bemessungsgrundlage",
+      "sequence": 30,
+      "legal_reference": "Vordruck USt 1 A 2026, Zeile 14, Kennzahl 86; UStG § 12 Abs. 2",
+      "source": "ustva-2026"
+    },
+    {
+      "box": "86",
+      "kind": "tax",
+      "name": "Steuerpflichtige Umsätze zum Steuersatz von 7 % — Steuer",
+      "sequence": 40,
+      "legal_reference": "Vordruck USt 1 A 2026, Zeile 14, Spalte Steuer ohne eigene Kennzahl",
+      "source": "ustva-2026"
+    },
+    {
+      "box": "87",
+      "kind": "base",
+      "name": "Steuerpflichtige Umsätze zum Steuersatz von 0 %",
+      "sequence": 50,
+      "legal_reference": "Vordruck USt 1 A 2026, Zeile 15, Kennzahl 87 — Lieferungen und Installation von Photovoltaikanlagen nach § 12 Abs. 3 UStG (Anleitung USt 1 E, Zeilen 13 bis 16)",
+      "source": "ustva-2026"
+    },
+    {
+      "box": "35",
+      "kind": "base",
+      "name": "Steuerpflichtige Umsätze zu anderen Steuersätzen — Bemessungsgrundlage",
+      "sequence": 60,
+      "legal_reference": "Vordruck USt 1 A 2026, Zeile 16, Kennzahl 35 — nach der Anleitung auch Änderungen von Bemessungsgrundlagen für Umsätze, die vom 1. Juli bis 31. Dezember 2020 den Steuersätzen von 16 % bzw. 5 % unterlagen",
+      "source": "ustva-2026"
+    },
+    {
+      "box": "36",
+      "kind": "tax",
+      "name": "Steuerpflichtige Umsätze zu anderen Steuersätzen — Steuer",
+      "sequence": 70,
+      "legal_reference": "Vordruck USt 1 A 2026, Zeile 16, Kennzahl 36 — selbst berechneter Steuerbetrag zu Kz. 35",
+      "source": "ustva-2026"
+    },
+    {
+      "box": "77",
+      "kind": "base",
+      "name": "Lieferungen land- und forstwirtschaftlicher Betriebe nach § 24 UStG an Abnehmer mit USt-IdNr.",
+      "sequence": 80,
+      "legal_reference": "Vordruck USt 1 A 2026, Zeile 17, Kennzahl 77 — das Pack führt keine Steuer der Durchschnittssatzbesteuerung, die Zeile bleibt leer",
+      "source": "ustva-2026"
+    },
+    {
+      "box": "76",
+      "kind": "base",
+      "name": "Umsätze, für die eine Steuer nach § 24 UStG zu entrichten ist — Bemessungsgrundlage",
+      "sequence": 90,
+      "legal_reference": "Vordruck USt 1 A 2026, Zeile 18, Kennzahl 76 — Sägewerkserzeugnisse, Getränke und alkoholische Flüssigkeiten; im Kalenderjahr 2026 Durchschnittssatz 19 % abzüglich des pauschalierten Vorsteuersatzes (BMF-Schreiben vom 29. Dezember 2025, Rz. 3)",
+      "source": "ustva-2026"
+    },
+    {
+      "box": "80",
+      "kind": "tax",
+      "name": "Umsätze, für die eine Steuer nach § 24 UStG zu entrichten ist — Steuer",
+      "sequence": 100,
+      "legal_reference": "Vordruck USt 1 A 2026, Zeile 18, Kennzahl 80",
+      "source": "ustva-2026"
+    },
+    {
+      "box": "41",
+      "kind": "base",
+      "name": "Innergemeinschaftliche Lieferungen an Abnehmer mit USt-IdNr.",
+      "sequence": 110,
+      "legal_reference": "Vordruck USt 1 A 2026, Zeile 19, Kennzahl 41 — steuerfreie Lieferungen nach § 4 Nr. 1 Buchst. b in Verbindung mit § 6a Abs. 1 und 2 UStG, zu erklären in dem Voranmeldungszeitraum, in dem die Rechnung ausgestellt wird, spätestens in dem, in dem der Monat endet, der auf die Lieferung folgt (§ 18b UStG)",
+      "source": "ustva-2026"
+    },
+    {
+      "box": "44",
+      "kind": "base",
+      "name": "Innergemeinschaftliche Lieferungen neuer Fahrzeuge an Abnehmer ohne USt-IdNr.",
+      "sequence": 120,
+      "legal_reference": "Vordruck USt 1 A 2026, Zeile 20, Kennzahl 44",
+      "source": "ustva-2026"
+    },
+    {
+      "box": "49",
+      "kind": "base",
+      "name": "Innergemeinschaftliche Lieferungen neuer Fahrzeuge außerhalb eines Unternehmens (§ 2a UStG)",
+      "sequence": 130,
+      "legal_reference": "Vordruck USt 1 A 2026, Zeile 21, Kennzahl 49",
+      "source": "ustva-2026"
+    },
+    {
+      "box": "43",
+      "kind": "base",
+      "name": "Weitere steuerfreie Umsätze mit Vorsteuerabzug",
+      "sequence": 140,
+      "legal_reference": "Vordruck USt 1 A 2026, Zeile 22, Kennzahl 43 — zum Beispiel Ausfuhrlieferungen (§ 4 Nr. 1 Buchst. a, § 6 UStG), Umsätze nach § 4 Nr. 2 bis 7 UStG und nach Verordnungen der EU",
+      "source": "ustva-2026"
+    },
+    {
+      "box": "48",
+      "kind": "base",
+      "name": "Steuerfreie Umsätze ohne Vorsteuerabzug",
+      "sequence": 150,
+      "legal_reference": "Vordruck USt 1 A 2026, Zeile 23, Kennzahl 48 — zum Beispiel Umsätze nach § 4 Nr. 8 bis 29 UStG und die nach § 19 Abs. 1 UStG steuerfreien Umsätze der Kleinunternehmer",
+      "source": "ustva-2026"
+    },
+    {
+      "box": "91",
+      "kind": "base",
+      "name": "Steuerfreie innergemeinschaftliche Erwerbe",
+      "sequence": 160,
+      "legal_reference": "Vordruck USt 1 A 2026, Zeile 24, Kennzahl 91 — Erwerbe nach §§ 4b und 25c UStG",
+      "source": "ustva-2026"
+    },
+    {
+      "box": "89",
+      "kind": "base",
+      "name": "Innergemeinschaftliche Erwerbe zum Steuersatz von 19 % — Bemessungsgrundlage",
+      "sequence": 170,
+      "legal_reference": "Vordruck USt 1 A 2026, Zeile 25, Kennzahl 89 — zu erklären im Voranmeldungszeitraum der Rechnungsausstellung, spätestens in dem, in dem der dem Erwerb folgende Monat endet (§ 13 Abs. 1 Nr. 6 UStG)",
+      "source": "ustva-2026"
+    },
+    {
+      "box": "89",
+      "kind": "tax",
+      "name": "Innergemeinschaftliche Erwerbe zum Steuersatz von 19 % — Steuer",
+      "sequence": 180,
+      "legal_reference": "Vordruck USt 1 A 2026, Zeile 25, Spalte Steuer ohne eigene Kennzahl",
+      "source": "ustva-2026"
+    },
+    {
+      "box": "93",
+      "kind": "base",
+      "name": "Innergemeinschaftliche Erwerbe zum Steuersatz von 7 % — Bemessungsgrundlage",
+      "sequence": 190,
+      "legal_reference": "Vordruck USt 1 A 2026, Zeile 26, Kennzahl 93",
+      "source": "ustva-2026"
+    },
+    {
+      "box": "93",
+      "kind": "tax",
+      "name": "Innergemeinschaftliche Erwerbe zum Steuersatz von 7 % — Steuer",
+      "sequence": 200,
+      "legal_reference": "Vordruck USt 1 A 2026, Zeile 26, Spalte Steuer ohne eigene Kennzahl",
+      "source": "ustva-2026"
+    },
+    {
+      "box": "90",
+      "kind": "base",
+      "name": "Innergemeinschaftliche Erwerbe zum Steuersatz von 0 %",
+      "sequence": 210,
+      "legal_reference": "Vordruck USt 1 A 2026, Zeile 27, Kennzahl 90 — Erwerbe von Solarmodulen, wesentlichen Komponenten und Speichern nach § 12 Abs. 3 UStG",
+      "source": "ustva-2026"
+    },
+    {
+      "box": "95",
+      "kind": "base",
+      "name": "Innergemeinschaftliche Erwerbe zu anderen Steuersätzen — Bemessungsgrundlage",
+      "sequence": 220,
+      "legal_reference": "Vordruck USt 1 A 2026, Zeile 28, Kennzahl 95",
+      "source": "ustva-2026"
+    },
+    {
+      "box": "98",
+      "kind": "tax",
+      "name": "Innergemeinschaftliche Erwerbe zu anderen Steuersätzen — Steuer",
+      "sequence": 230,
+      "legal_reference": "Vordruck USt 1 A 2026, Zeile 28, Kennzahl 98",
+      "source": "ustva-2026"
+    },
+    {
+      "box": "94",
+      "kind": "base",
+      "name": "Innergemeinschaftliche Erwerbe neuer Fahrzeuge von Lieferern ohne USt-IdNr. — Bemessungsgrundlage",
+      "sequence": 240,
+      "legal_reference": "Vordruck USt 1 A 2026, Zeile 29, Kennzahl 94 — § 1b Abs. 2 und 3 UStG",
+      "source": "ustva-2026"
+    },
+    {
+      "box": "96",
+      "kind": "tax",
+      "name": "Innergemeinschaftliche Erwerbe neuer Fahrzeuge von Lieferern ohne USt-IdNr. — Steuer",
+      "sequence": 250,
+      "legal_reference": "Vordruck USt 1 A 2026, Zeile 29, Kennzahl 96",
+      "source": "ustva-2026"
+    },
+    {
+      "box": "46",
+      "kind": "base",
+      "name": "Sonstige Leistungen eines im übrigen Gemeinschaftsgebiet ansässigen Unternehmers (§ 13b Abs. 1 UStG) — Bemessungsgrundlage",
+      "sequence": 260,
+      "legal_reference": "Vordruck USt 1 A 2026, Zeile 30, Kennzahl 46 — sonstige Leistungen nach § 3a Abs. 2 UStG, für die der Leistungsempfänger die Steuer schuldet",
+      "source": "ustva-2026"
+    },
+    {
+      "box": "47",
+      "kind": "tax",
+      "name": "Sonstige Leistungen eines im übrigen Gemeinschaftsgebiet ansässigen Unternehmers (§ 13b Abs. 1 UStG) — Steuer",
+      "sequence": 270,
+      "legal_reference": "Vordruck USt 1 A 2026, Zeile 30, Kennzahl 47",
+      "source": "ustva-2026"
+    },
+    {
+      "box": "73",
+      "kind": "base",
+      "name": "Umsätze, die unter das GrEStG fallen (§ 13b Abs. 2 Nr. 3 UStG) — Bemessungsgrundlage",
+      "sequence": 280,
+      "legal_reference": "Vordruck USt 1 A 2026, Zeile 31, Kennzahl 73",
+      "source": "ustva-2026"
+    },
+    {
+      "box": "74",
+      "kind": "tax",
+      "name": "Umsätze, die unter das GrEStG fallen (§ 13b Abs. 2 Nr. 3 UStG) — Steuer",
+      "sequence": 290,
+      "legal_reference": "Vordruck USt 1 A 2026, Zeile 31, Kennzahl 74",
+      "source": "ustva-2026"
+    },
+    {
+      "box": "84",
+      "kind": "base",
+      "name": "Andere Leistungen (§ 13b Abs. 2 Nr. 1, 2, 4 bis 12 UStG) — Bemessungsgrundlage",
+      "sequence": 300,
+      "legal_reference": "Vordruck USt 1 A 2026, Zeile 32, Kennzahl 84 — unter anderem Werklieferungen und sonstige Leistungen im Ausland ansässiger Unternehmer, Bauleistungen, Gebäudereinigung, Metalle, Mobilfunkgeräte (Anleitung USt 1 E, Zeilen 30 bis 32)",
+      "source": "ustva-2026"
+    },
+    {
+      "box": "85",
+      "kind": "tax",
+      "name": "Andere Leistungen (§ 13b Abs. 2 Nr. 1, 2, 4 bis 12 UStG) — Steuer",
+      "sequence": 310,
+      "legal_reference": "Vordruck USt 1 A 2026, Zeile 32, Kennzahl 85",
+      "source": "ustva-2026"
+    },
+    {
+      "box": "42",
+      "kind": "base",
+      "name": "Lieferungen des ersten Abnehmers bei innergemeinschaftlichen Dreiecksgeschäften (§ 25b UStG)",
+      "sequence": 320,
+      "legal_reference": "Vordruck USt 1 A 2026, Zeile 33, Kennzahl 42 — das Pack führt kein Dreiecksgeschäft, die Zeile bleibt leer",
+      "source": "ustva-2026"
+    },
+    {
+      "box": "60",
+      "kind": "base",
+      "name": "Steuerpflichtige Umsätze, für die der Leistungsempfänger die Steuer nach § 13b Abs. 5 UStG schuldet",
+      "sequence": 330,
+      "legal_reference": "Vordruck USt 1 A 2026, Zeile 34, Kennzahl 60 — Angabe des leistenden Unternehmers",
+      "source": "ustva-2026"
+    },
+    {
+      "box": "21",
+      "kind": "base",
+      "name": "Nicht steuerbare sonstige Leistungen gemäß § 18b Satz 1 Nr. 2 UStG",
+      "sequence": 340,
+      "legal_reference": "Vordruck USt 1 A 2026, Zeile 35, Kennzahl 21 — sonstige Leistungen nach § 3a Abs. 2 UStG im übrigen Gemeinschaftsgebiet, für die der dort ansässige Leistungsempfänger die Steuer schuldet; zugleich in der Zusammenfassenden Meldung",
+      "source": "ustva-2026"
+    },
+    {
+      "box": "45",
+      "kind": "base",
+      "name": "Übrige nicht steuerbare Umsätze (Leistungsort nicht im Inland)",
+      "sequence": 350,
+      "legal_reference": "Vordruck USt 1 A 2026, Zeile 36, Kennzahl 45",
+      "source": "ustva-2026"
+    },
+    {
+      "box": "Z37",
+      "kind": "total",
+      "name": "Umsatzsteuer (Summe der Zeilen 13 bis 18 und 25 bis 32)",
+      "sequence": 360,
+      "plus": [
+        "81:tax",
+        "86:tax",
+        "36",
+        "80",
+        "89:tax",
+        "93:tax",
+        "98",
+        "96",
+        "47",
+        "74",
+        "85"
+      ],
+      "legal_reference": "Vordruck USt 1 A 2026, Zeile 37 — die Zeile trägt keine Kennzahl; der Code Z37 ist die Zeilennummer des Vordrucks. Summe der Steuerbeträge der Zeilen 13 bis 18 (81, 86, 36, 80) und 25 bis 32 (89, 93, 98, 96, 47, 74, 85); die Zeilen 15, 17, 24 und 27 tragen keinen Steuerbetrag",
+      "source": "ustva-2026"
+    },
+    {
+      "box": "66",
+      "kind": "tax",
+      "name": "Vorsteuerbeträge aus Rechnungen von anderen Unternehmern",
+      "sequence": 370,
+      "legal_reference": "Vordruck USt 1 A 2026, Zeile 38, Kennzahl 66 — § 15 Abs. 1 Satz 1 Nr. 1 UStG, aus Leistungen im Sinne des § 27 Abs. 40a und aus Dreiecksgeschäften (§ 25b Abs. 5)",
+      "source": "ustva-2026"
+    },
+    {
+      "box": "61",
+      "kind": "tax",
+      "name": "Vorsteuerbeträge aus dem innergemeinschaftlichen Erwerb von Gegenständen",
+      "sequence": 380,
+      "legal_reference": "Vordruck USt 1 A 2026, Zeile 39, Kennzahl 61 — § 15 Abs. 1 Satz 1 Nr. 3 UStG",
+      "source": "ustva-2026"
+    },
+    {
+      "box": "62",
+      "kind": "tax",
+      "name": "Entstandene Einfuhrumsatzsteuer",
+      "sequence": 390,
+      "legal_reference": "Vordruck USt 1 A 2026, Zeile 40, Kennzahl 62 — § 15 Abs. 1 Satz 1 Nr. 2 UStG. Keine Steuer des Packs schreibt in diese Zeile: die Einfuhrumsatzsteuer wird von der Zollverwaltung auf einem Einfuhrabgabenbescheid festgesetzt, nicht auf einer Rechnung, und der Kern kennt kein Dokument, dessen Betrag allein die Steuer ist (docs/international.md)",
+      "source": "ustva-2026"
+    },
+    {
+      "box": "67",
+      "kind": "tax",
+      "name": "Vorsteuerbeträge aus Leistungen im Sinne des § 13b UStG",
+      "sequence": 400,
+      "legal_reference": "Vordruck USt 1 A 2026, Zeile 41, Kennzahl 67 — § 15 Abs. 1 Satz 1 Nr. 4 UStG",
+      "source": "ustva-2026"
+    },
+    {
+      "box": "63",
+      "kind": "tax",
+      "name": "Vorsteuerbeträge, die nach allgemeinen Durchschnittssätzen berechnet sind (§ 23a UStG)",
+      "sequence": 410,
+      "legal_reference": "Vordruck USt 1 A 2026, Zeile 42, Kennzahl 63",
+      "source": "ustva-2026"
+    },
+    {
+      "box": "59",
+      "kind": "tax",
+      "name": "Vorsteuerabzug für innergemeinschaftliche Lieferungen neuer Fahrzeuge außerhalb eines Unternehmens sowie von Kleinunternehmern (§ 15 Abs. 4a UStG)",
+      "sequence": 420,
+      "legal_reference": "Vordruck USt 1 A 2026, Zeile 43, Kennzahl 59",
+      "source": "ustva-2026"
+    },
+    {
+      "box": "64",
+      "kind": "tax",
+      "name": "Berichtigung des Vorsteuerabzugs (§ 15a UStG)",
+      "sequence": 430,
+      "legal_reference": "Vordruck USt 1 A 2026, Zeile 44, Kennzahl 64 — zurückzuzahlende Vorsteuerbeträge mit Minuszeichen (Anleitung USt 1 E, Zeile 44)",
+      "source": "ustva-2026"
+    },
+    {
+      "box": "Z45",
+      "kind": "total",
+      "name": "Verbleibender Betrag (Zeile 37 abzüglich der Zeilen 38 bis 44)",
+      "sequence": 440,
+      "plus": [
+        "Z37"
+      ],
+      "minus": [
+        "66",
+        "61",
+        "62",
+        "67",
+        "63",
+        "59",
+        "64"
+      ],
+      "legal_reference": "Vordruck USt 1 A 2026, Zeile 45 — ohne Kennzahl, Code Z45 nach der Zeilennummer",
+      "source": "ustva-2026"
+    },
+    {
+      "box": "65",
+      "kind": "tax",
+      "name": "Steuer infolge des Wechsels der Besteuerungsform sowie Nachsteuer auf versteuerte Anzahlungen wegen Steuersatzänderung",
+      "sequence": 450,
+      "legal_reference": "Vordruck USt 1 A 2026, Zeile 46, Kennzahl 65",
+      "source": "ustva-2026"
+    },
+    {
+      "box": "69",
+      "kind": "tax",
+      "name": "In Rechnungen unrichtig oder unberechtigt ausgewiesene Steuerbeträge (§ 14c UStG) und weitere geschuldete Steuerbeträge",
+      "sequence": 460,
+      "legal_reference": "Vordruck USt 1 A 2026, Zeile 47, Kennzahl 69 — auch Steuerbeträge nach § 6a Abs. 4 Satz 2, § 17 Abs. 1 Satz 7, § 25b Abs. 2 UStG und nach § 27 Abs. 40a UStG",
+      "source": "ustva-2026"
+    },
+    {
+      "box": "Z48",
+      "kind": "total",
+      "name": "Umsatzsteuer-Vorauszahlung/Überschuss (Summe der Zeilen 45 bis 47)",
+      "sequence": 470,
+      "plus": [
+        "Z45",
+        "65",
+        "69"
+      ],
+      "legal_reference": "Vordruck USt 1 A 2026, Zeile 48 — ohne Kennzahl, Code Z48 nach der Zeilennummer",
+      "source": "ustva-2026"
+    },
+    {
+      "box": "39",
+      "kind": "tax",
+      "name": "Abzug der festgesetzten Sondervorauszahlung für Dauerfristverlängerung",
+      "sequence": 480,
+      "legal_reference": "Vordruck USt 1 A 2026, Zeile 49, Kennzahl 39 — in der Regel nur in der letzten Voranmeldung des Besteuerungszeitraums (§ 48 Abs. 4 UStDV); die Sondervorauszahlung beträgt nach § 47 Abs. 1 UStDV ein Elftel der Vorauszahlungen des Vorjahres. Keine Steuer des Packs schreibt in diese Zeile, sie wird von Hand erfasst",
+      "source": "ustva-2026"
+    },
+    {
+      "box": "83",
+      "kind": "total",
+      "name": "Verbleibende Umsatzsteuer-Vorauszahlung bzw. verbleibender Überschuss",
+      "sequence": 490,
+      "plus": [
+        "Z48"
+      ],
+      "minus": [
+        "39"
+      ],
+      "legal_reference": "Vordruck USt 1 A 2026, Zeile 50, Kennzahl 83 — in jedem Fall auszufüllen; ein Überschuss wird mit Minuszeichen angegeben, deshalb ohne Untergrenze bei null. Fällig am 10. Tag nach Ablauf des Voranmeldungszeitraums (UStG § 18 Abs. 1 Satz 4)",
+      "source": "ustva-2026"
+    },
+    {
+      "box": "50",
+      "kind": "base",
+      "name": "Minderung der Bemessungsgrundlage nach § 17 Abs. 1 Sätze 1 und 2 in Verbindung mit Abs. 2 Nr. 1 Satz 1 UStG (in den Zeilen 13 bis 18 enthalten)",
+      "sequence": 500,
+      "legal_reference": "Vordruck USt 1 A 2026, Zeile 51, Kennzahl 50 — Davon-Angabe bei Uneinbringlichkeit; kein Posting schreibt in diese Zeile, weil der Kern eine Gutschrift wegen Uneinbringlichkeit nicht von einer anderen unterscheidet",
+      "source": "ustva-2026"
+    },
+    {
+      "box": "37",
+      "kind": "tax",
+      "name": "Minderung der abziehbaren Vorsteuerbeträge (in den Zeilen 38, 42 und 43 enthalten)",
+      "sequence": 510,
+      "legal_reference": "Vordruck USt 1 A 2026, Zeile 52, Kennzahl 37 — Davon-Angabe bei Uneinbringlichkeit, wie Kennzahl 50 ohne Posting",
+      "source": "ustva-2026"
+    }
+  ]
+}

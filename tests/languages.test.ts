@@ -288,6 +288,7 @@ describe('what the seeds carry', () => {
 
 describe('how one label is picked', () => {
   it('takes the first language of the list that has one', async () => {
+    // country-literal: 'de' and 'nl' are language codes here, not packs
     const row = await one<{ nl: string; de: string; fallback: string }>(
       db,
       `select label_for('Clients', '{"nl": "Handelsdebiteuren", "de": "Kunden"}'::jsonb, array['nl']) as nl,

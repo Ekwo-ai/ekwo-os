@@ -1,0 +1,337 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "DE",
+  "name": "Germany",
+  "version": "0.1.0",
+  "schema_min": "20260921084143",
+  "seed_sequence": 18,
+  "released_at": "2026-09-21",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "ustg",
+        "title": "Umsatzsteuergesetz (UStG) in der Fassung der Bekanntmachung vom 21. Februar 2005",
+        "publisher": "Bundesministerium der Justiz — gesetze-im-internet.de",
+        "url": "https://www.gesetze-im-internet.de/ustg_1980/",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "ustdv",
+        "title": "Umsatzsteuer-Durchführungsverordnung (UStDV)",
+        "publisher": "Bundesministerium der Justiz — gesetze-im-internet.de",
+        "url": "https://www.gesetze-im-internet.de/ustdv_1980/",
+        "consulted_on": "2026-09-21",
+        "kind": "regulation"
+      },
+      {
+        "key": "hgb",
+        "title": "Handelsgesetzbuch (HGB), Drittes Buch — Handelsbücher, §§ 238 bis 289",
+        "publisher": "Bundesministerium der Justiz — gesetze-im-internet.de",
+        "url": "https://www.gesetze-im-internet.de/hgb/",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "ao",
+        "title": "Abgabenordnung (AO), § 146 — Ordnungsvorschriften für die Buchführung und für Aufzeichnungen",
+        "publisher": "Bundesministerium der Justiz — gesetze-im-internet.de",
+        "url": "https://www.gesetze-im-internet.de/ao_1977/",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "bgb",
+        "title": "Bürgerliches Gesetzbuch (BGB), § 286 Verzug des Schuldners und § 288 Verzugszinsen und sonstiger Verzugsschaden",
+        "publisher": "Bundesministerium der Justiz — gesetze-im-internet.de",
+        "url": "https://www.gesetze-im-internet.de/bgb/",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "ustva-2026",
+        "title": "BMF-Schreiben vom 29. Dezember 2025, III C 3 - S 7344/00039/007/036 — Muster der Vordrucke im Umsatzsteuer-Voranmeldungs- und -Vorauszahlungsverfahren für das Kalenderjahr 2026 (USt 1 A, USt 1 H, Anleitungen USt 1 E und USt 5 E)",
+        "publisher": "Bundesministerium der Finanzen",
+        "url": "https://www.bundesfinanzministerium.de/Content/DE/Downloads/BMF_Schreiben/Steuerarten/Umsatzsteuer/2025-12-29-vordruckmuster-USt-voranmeldung-2026.html",
+        "consulted_on": "2026-09-21",
+        "kind": "form"
+      },
+      {
+        "key": "elster",
+        "title": "Mein ELSTER — Übermittlung der Umsatzsteuer-Voranmeldung und des Antrags auf Dauerfristverlängerung",
+        "publisher": "Bayerisches Landesamt für Steuern im Auftrag der Steuerverwaltungen von Bund und Ländern",
+        "url": "https://www.elster.de/eportal/start",
+        "consulted_on": "2026-09-21",
+        "kind": "portal"
+      },
+      {
+        "key": "bzst-zm",
+        "title": "Zusammenfassende Meldung nach § 18a UStG — Abgabe, Meldezeiträume und Fristen",
+        "publisher": "Bundeszentralamt für Steuern",
+        "url": "https://www.bzst.de/DE/Unternehmen/Umsatzsteuer/ZusammenfassendeMeldung/zusammenfassendemeldung_node.html",
+        "consulted_on": "2026-09-21",
+        "kind": "portal"
+      },
+      {
+        "key": "bmf-e-rechnung",
+        "title": "BMF-Schreiben vom 15. Oktober 2025 — Einführung der obligatorischen elektronischen Rechnung bei Umsätzen zwischen inländischen Unternehmern ab dem 1. Januar 2025",
+        "publisher": "Bundesministerium der Finanzen",
+        "url": "https://www.bundesfinanzministerium.de/Content/DE/Downloads/BMF_Schreiben/Steuerarten/Umsatzsteuer/Umsatzsteuer-Anwendungserlass/2025-10-15-einfuehrung-obligatorische-e-rechnung.html",
+        "consulted_on": "2026-09-21",
+        "kind": "guidance"
+      },
+      {
+        "key": "bmf-e-rechnung-faq",
+        "title": "Fragen und Antworten zur Einführung der obligatorischen (verpflichtenden) E-Rechnung zum 1. Januar 2025",
+        "publisher": "Bundesministerium der Finanzen",
+        "url": "https://www.bundesfinanzministerium.de/Content/DE/FAQ/e-rechnung.html",
+        "consulted_on": "2026-09-21",
+        "kind": "guidance"
+      },
+      {
+        "key": "xrechnung",
+        "title": "XRechnung — Standard für die elektronische Rechnung, Version 3.0 und aktuelle Bundles",
+        "publisher": "Koordinierungsstelle für IT-Standards (KoSIT)",
+        "url": "https://xeinkauf.de/xrechnung/versionen-und-bundles/",
+        "consulted_on": "2026-09-21",
+        "kind": "standard"
+      },
+      {
+        "key": "zugferd",
+        "title": "ZUGFeRD — hybrides Rechnungsformat, Profil EN 16931 (identisch mit Factur-X)",
+        "publisher": "Forum elektronische Rechnung Deutschland (FeRD)",
+        "url": "https://www.ferd-net.de/standards/zugferd",
+        "consulted_on": "2026-09-21",
+        "kind": "standard"
+      },
+      {
+        "key": "en-16931",
+        "title": "EN 16931-1 — semantisches Datenmodell der elektronischen Rechnung und Konformität nach Richtlinie 2014/55/EU",
+        "publisher": "Europäische Kommission",
+        "url": "https://ec.europa.eu/digital-building-blocks/sites/spaces/DIGITAL/pages/467108950/EN+16931+compliance",
+        "consulted_on": "2026-09-21",
+        "kind": "standard"
+      },
+      {
+        "key": "uncl5305",
+        "title": "UNCL5305 — Codeliste der Steuerkategorien (BT-118 und BT-151), für EN 16931 veröffentlichte Teilmenge",
+        "publisher": "OpenPEPPOL — Liste herausgegeben von der Europäischen Kommission",
+        "url": "https://docs.peppol.eu/poacc/billing/3.0/codelist/UNCL5305/",
+        "consulted_on": "2026-09-21",
+        "kind": "standard"
+      },
+      {
+        "key": "vatex",
+        "title": "VATEX — Codeliste der Befreiungsgründe (BT-121)",
+        "publisher": "OpenPEPPOL — Liste herausgegeben von der Europäischen Kommission",
+        "url": "https://docs.peppol.eu/poacc/billing/3.0/codelist/vatex/",
+        "consulted_on": "2026-09-21",
+        "kind": "standard"
+      },
+      {
+        "key": "peppol-eas",
+        "title": "Electronic Address Scheme (EAS) — Codeliste der Kennungsschemata nach ISO 6523, darunter 9930 (deutsche USt-IdNr.) und 0204 (Leitweg-ID)",
+        "publisher": "OpenPEPPOL",
+        "url": "https://docs.peppol.eu/poacc/billing/3.0/codelist/eas/",
+        "consulted_on": "2026-09-21",
+        "kind": "standard"
+      },
+      {
+        "key": "basiszinssatz",
+        "title": "Basiszinssatz nach § 247 BGB",
+        "publisher": "Deutsche Bundesbank",
+        "url": "https://www.bundesbank.de/de/bundesbank/organisation/agb-und-regelungen/basiszinssatz-607820",
+        "consulted_on": "2026-09-21",
+        "kind": "guidance"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "EUR",
+    "language": "de",
+    "rounding_method": "half_up",
+    "closing_style": "result_accounts",
+    "roles": {
+      "receivable": "2210",
+      "payable": "6400",
+      "suspense": "2249",
+      "rounding": "8889",
+      "retained_earnings": "4400",
+      "current_year_result_profit": "4500",
+      "current_year_result_loss": "4500",
+      "sales": "8110",
+      "purchase": "8511",
+      "bank": "2420",
+      "cash": "2410",
+      "fx_gain": "8450",
+      "fx_loss": "8850",
+      "tax_payable": "6820"
+    },
+    "journal_roles": {
+      "sales": "VK",
+      "purchase": "EK",
+      "miscellaneous": "SO",
+      "opening": "EB"
+    },
+    "fiscal_year_default": "calendar"
+  },
+  "languages": [
+    "en"
+  ],
+  "journals": [
+    {
+      "code": "VK",
+      "type": "sales",
+      "name": "Ausgangsrechnungen",
+      "sequence": 10
+    },
+    {
+      "code": "EK",
+      "type": "purchase",
+      "name": "Eingangsrechnungen",
+      "sequence": 20
+    },
+    {
+      "code": "BK",
+      "type": "bank",
+      "name": "Bank",
+      "sequence": 30
+    },
+    {
+      "code": "KA",
+      "type": "cash",
+      "name": "Kasse",
+      "sequence": 40
+    },
+    {
+      "code": "SO",
+      "type": "general",
+      "name": "Sonstige Buchungen",
+      "sequence": 50
+    },
+    {
+      "code": "EB",
+      "type": "opening",
+      "name": "Eröffnungsbuchungen",
+      "sequence": 60
+    }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Referenzkontenplan nach der Gliederung der §§ 266 und 275 HGB",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": [
+        "DE-HGB-266-BS",
+        "DE-HGB-275-GKV"
+      ],
+      "legal_reference": "HGB § 238 Abs. 1 verpflichtet jeden Kaufmann, Bücher zu führen, schreibt aber keinen Kontenplan vor. Die verbreiteten Standardkontenrahmen SKR 03 und SKR 04 sind Werke der DATEV eG, die ohne offene Lizenz veröffentlicht werden; dieser Plan übernimmt weder ihre Nummern noch ihre Bezeichnungen. Er ist eigenständig: vierstellige Nummern, deren erste Ziffer den Abschnitt der Bilanz nach § 266 (1 Anlagevermögen, 2 Umlaufvermögen, 3 Aktiva C bis E, 4 Eigenkapital, 5 Rückstellungen, 6 Verbindlichkeiten, 7 Passiva D und E) oder der Gewinn- und Verlustrechnung nach § 275 Abs. 2 (8 Posten 1 bis 8, 9 Posten 9 bis 16) bezeichnet und deren zweite und dritte Ziffer die römische und arabische Nummer des Postens wiedergeben; die Bezeichnungen der Konten folgen dem Wortlaut der gesetzlichen Posten.",
+      "source": "hgb"
+    }
+  ],
+  "documents": {
+    "numbering": "sequential",
+    "number_format": "{CODE}-{YYYY}-{NNNN}",
+    "legal_payment_days": 30,
+    "late_payment_reference": "BGB § 288 Abs. 2 — Verzugszinsen bei Entgeltforderungen zwischen Unternehmern neun Prozentpunkte über dem Basiszinssatz nach § 247 BGB, den die Deutsche Bundesbank halbjährlich bekannt gibt; Abs. 5 — Pauschale von 40 Euro",
+    "tax_point": "earliest_of_delivery_or_payment",
+    "posted_edit_policy": "reversal_only",
+    "references": {
+      "numbering": {
+        "legal_reference": "UStG § 14 Abs. 4 Satz 1 Nr. 4 — eine fortlaufende Nummer mit einer oder mehreren Zahlenreihen, die zur Identifizierung der Rechnung vom Rechnungsaussteller einmalig vergeben wird. Das Gesetz verlangt Einmaligkeit, keine lückenlose Folge, daher sequential und nicht gapless; mehrere Nummernkreise, etwa je Jahr, sind zulässig.",
+        "source": "ustg"
+      },
+      "payment_terms": {
+        "legal_reference": "BGB § 286 Abs. 3 Satz 1 — der Schuldner einer Entgeltforderung kommt spätestens in Verzug, wenn er nicht innerhalb von 30 Tagen nach Fälligkeit und Zugang einer Rechnung leistet; gegenüber einem Verbraucher nur, wenn die Rechnung auf diese Folge besonders hinweist. § 271a begrenzt vereinbarte Zahlungsfristen zwischen Unternehmern grundsätzlich auf 60 Tage.",
+        "source": "bgb"
+      },
+      "tax_point": {
+        "legal_reference": "UStG § 13 Abs. 1 Nr. 1 Buchst. a Satz 1 — bei der Besteuerung nach vereinbarten Entgelten entsteht die Steuer mit Ablauf des Voranmeldungszeitraums, in dem die Leistung ausgeführt worden ist (Grundsatz); Satz 4 — wird das Entgelt vor Ausführung der Leistung vereinnahmt, entsteht die Steuer insoweit mit Ablauf des Voranmeldungszeitraums der Vereinnahmung (Mindest-Istversteuerung). Beide Zweige zusammen sind earliest_of_delivery_or_payment. Nicht abgebildet: die Istversteuerung nach § 20 auf Antrag, die innergemeinschaftliche Lieferung und die Leistung nach § 3a Abs. 2 im übrigen Gemeinschaftsgebiet, die § 18b nach dem Rechnungsdatum, spätestens dem Ablauf des Folgemonats erklären lässt, und der innergemeinschaftliche Erwerb (§ 13 Abs. 1 Nr. 6) mit derselben Regel.",
+        "source": "ustg"
+      },
+      "posted_edit_policy": {
+        "legal_reference": "HGB § 239 Abs. 3 — eine Eintragung darf nicht in einer Weise verändert werden, dass der ursprüngliche Inhalt nicht mehr feststellbar ist; gleichlautend AO § 146 Abs. 4. Eine gebuchte Rechnung wird daher nur durch eine Stornorechnung oder Gutschrift berichtigt, die auf sie verweist.",
+        "source": "hgb"
+      }
+    },
+    "mentions": [
+      {
+        "code": "reverse_charge",
+        "applies_when": "reverse_charge",
+        "text": "Steuerschuldnerschaft des Leistungsempfängers",
+        "sequence": 10,
+        "legal_reference": "UStG § 14a Abs. 5 Satz 1 — bei Leistungen im Sinne des § 13b Abs. 2, für die der Leistungsempfänger nach § 13b Abs. 5 die Steuer schuldet, ist die Rechnung mit der Angabe „Steuerschuldnerschaft des Leistungsempfängers“ auszustellen; Satz 2 schließt den gesonderten Steuerausweis aus. Der Wortlaut ist gesetzlich vorgegeben.",
+        "source": "ustg"
+      },
+      {
+        "code": "intracom_goods",
+        "applies_when": "intra_eu_goods",
+        "text": "Steuerfreie innergemeinschaftliche Lieferung",
+        "sequence": 20,
+        "legal_reference": "UStG § 14 Abs. 4 Satz 1 Nr. 8 — im Fall einer Steuerbefreiung ein Hinweis darauf, dass für die Lieferung eine Steuerbefreiung gilt; § 14a Abs. 3 Satz 2 verlangt zusätzlich die Umsatzsteuer-Identifikationsnummern des Unternehmers und des Leistungsempfängers, die als Datenfelder der Rechnung und nicht als Satz ausgegeben werden.",
+        "source": "ustg"
+      },
+      {
+        "code": "intracom_services",
+        "applies_when": "intra_eu_services",
+        "text": "Steuerschuldnerschaft des Leistungsempfängers",
+        "sequence": 30,
+        "legal_reference": "UStG § 14a Abs. 1 Satz 1 — führt der im Inland ansässige Unternehmer einen Umsatz in einem anderen Mitgliedstaat aus, für den der Leistungsempfänger dort die Steuer schuldet, ist er zur Ausstellung einer Rechnung mit der Angabe „Steuerschuldnerschaft des Leistungsempfängers“ verpflichtet; Satz 2 und 3 verlangen die Rechnung bis zum 15. Tag des Folgemonats mit beiden Identifikationsnummern.",
+        "source": "ustg"
+      },
+      {
+        "code": "export",
+        "applies_when": "export",
+        "text": "Steuerfreie Ausfuhrlieferung",
+        "sequence": 40,
+        "legal_reference": "UStG § 14 Abs. 4 Satz 1 Nr. 8 — Hinweis auf die Steuerbefreiung nach § 4 Nr. 1 Buchst. a in Verbindung mit § 6.",
+        "source": "ustg"
+      },
+      {
+        "code": "exempt",
+        "applies_when": "exempt",
+        "text": "Steuerfreier Umsatz nach § 4 UStG",
+        "sequence": 50,
+        "legal_reference": "UStG § 14 Abs. 4 Satz 1 Nr. 8 — im Fall einer Steuerbefreiung ein Hinweis darauf, dass für die Lieferung oder sonstige Leistung eine Steuerbefreiung gilt. Das Gesetz schreibt für diesen Hinweis keinen Wortlaut vor.",
+        "source": "ustg"
+      },
+      {
+        "code": "small_business",
+        "applies_when": "small_business",
+        "text": "Steuerfreier Umsatz nach § 19 UStG (Kleinunternehmerregelung)",
+        "sequence": 60,
+        "legal_reference": "UStDV § 34a Satz 1 Nr. 5 — die Rechnung eines Kleinunternehmers enthält das Entgelt in einer Summe mit einem Hinweis darauf, dass für die Lieferung oder sonstige Leistung die Steuerbefreiung für Kleinunternehmer gilt (§ 19 UStG). Seit dem 1. Januar 2025 sind die Umsätze nach § 19 Abs. 1 UStG steuerfrei, wenn der Gesamtumsatz im Vorjahr 25 000 Euro nicht überschritten hat und im laufenden Jahr 100 000 Euro nicht überschreitet.",
+        "source": "ustdv"
+      },
+      {
+        "code": "late_payment",
+        "applies_when": "late_payment",
+        "text": "Bei Zahlungsverzug schuldet ein Schuldner, der nicht Verbraucher ist, Verzugszinsen in Höhe von neun Prozentpunkten über dem Basiszinssatz sowie eine Pauschale von 40 Euro (§ 288 Abs. 2 und 5 BGB).",
+        "sequence": 70,
+        "legal_reference": "BGB § 288 Abs. 2 — bei Rechtsgeschäften, an denen ein Verbraucher nicht beteiligt ist, beträgt der Zinssatz für Entgeltforderungen neun Prozentpunkte über dem Basiszinssatz; Abs. 5 — Pauschale von 40 Euro. Der Hinweis ist nicht vorgeschrieben; gegenüber einem Verbraucher tritt Verzug nach § 286 Abs. 3 Satz 1 ohne Mahnung nur ein, wenn die Rechnung auf diese Folge besonders hinweist.",
+        "source": "bgb"
+      }
+    ]
+  },
+  "einvoicing": {
+    "profile": "xrechnung",
+    "obligation": "mandatory",
+    "mandatory_from": "2025-01-01",
+    "party_scheme": null,
+    "vat_scheme": "9930",
+    "legal_reference": "UStG § 14 Abs. 1 Satz 3 und 6 und Abs. 2 Satz 2 Nr. 1 in der Fassung des Wachstumschancengesetzes — für eine Leistung zwischen im Inland ansässigen Unternehmern ist die Rechnung als elektronische Rechnung in einem strukturierten Format nach EN 16931 auszustellen; seit dem 1. Januar 2025 muss jeder inländische Unternehmer eine E-Rechnung empfangen können, wofür ein E-Mail-Postfach genügt (BMF-Schreiben vom 15. Oktober 2025). Die Pflicht zur Ausstellung folgt dem Übergangskalender des § 27 Abs. 38: bis 31. Dezember 2026 darf jeder Unternehmer noch Papier- oder andere elektronische Rechnungen ausstellen; bis 31. Dezember 2027 nur, wer im Vorjahr einen Gesamtumsatz nach § 19 Abs. 2 von nicht mehr als 800 000 Euro hatte, oder mit Zustimmung des Empfängers per EDI. Die Ausstellung ist damit ab 1. Januar 2027 für Unternehmer über 800 000 Euro und ab 1. Januar 2028 für alle Pflicht; mandatory_from trägt das Datum des Empfangs. Kleinbetragsrechnungen bis 250 Euro (UStDV § 33) und Rechnungen von Kleinunternehmern (§ 34a) dürfen immer als sonstige Rechnung übermittelt werden. Zulässig sind XRechnung (KoSIT) und das Profil EN 16931 von ZUGFeRD, das mit Factur-X übereinstimmt; das Profil xrechnung ist hier genannt, weil es die nationale Ausprägung ist. vat_scheme 9930 ist die deutsche USt-IdNr. in der EAS-Liste. party_scheme bleibt leer: zwischen Unternehmern gibt es kein vorgeschriebenes Netz und keine Adresskennung, und die Leitweg-ID (EAS 0204) adressiert nur öffentliche Auftraggeber.",
+    "source": "ustg"
+  },
+  "bank": {
+    "statement_formats": [
+      "camt.053"
+    ],
+    "payment_formats": [
+      "pain.001",
+      "pain.008"
+    ]
+  }
+}

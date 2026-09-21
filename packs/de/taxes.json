@@ -1,0 +1,854 @@
+[
+  {
+    "code": "DE-S-19",
+    "name": "Umsatzsteuer 19 %",
+    "description": "Allgemeiner Steuersatz; Zeile 13 der Voranmeldung",
+    "rate": 19,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2007-01-01",
+    "legal_reference": "UStG § 12 Abs. 1 — die Steuer beträgt für jeden steuerpflichtigen Umsatz 19 Prozent der Bemessungsgrundlage, seit dem 1. Januar 2007 (Haushaltsbegleitgesetz 2006). Vom 1. Juli bis 31. Dezember 2020 galten nach § 28 Abs. 1 16 Prozent; maßgeblich ist nach § 27 Abs. 1 der Zeitpunkt der Leistung, nicht das Rechnungsdatum, so dass dieser Code auch in jenem Halbjahr für eine vorher ausgeführte Leistung gültig bleibt.",
+    "source": "ustg",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "81"
+        },
+        {
+          "type": "tax",
+          "account": "6810",
+          "box": "81"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "81",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "6810",
+          "box": "81",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 10
+  },
+  {
+    "code": "DE-S-07",
+    "name": "Umsatzsteuer 7 %",
+    "description": "Ermäßigter Steuersatz nach Anlage 2 und § 12 Abs. 2, nach Nr. 15 auch Restaurant- und Verpflegungsdienstleistungen ohne Getränke; Zeile 14",
+    "rate": 7,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "1983-07-01",
+    "legal_reference": "UStG § 12 Abs. 2 — die Steuer ermäßigt sich auf sieben Prozent für die dort genannten Umsätze, insbesondere Nr. 1 die Lieferung der in Anlage 2 bezeichneten Gegenstände und Nr. 15 die Restaurant- und Verpflegungsdienstleistungen mit Ausnahme der Abgabe von Getränken. Vom 1. Juli bis 31. Dezember 2020 galten nach § 28 Abs. 2 5 Prozent.",
+    "source": "ustg",
+    "vat_category": "S",
+    "conditions": [
+      "supply_nature"
+    ],
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "86"
+        },
+        {
+          "type": "tax",
+          "account": "6811",
+          "box": "86"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "86",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "6811",
+          "box": "86",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 20
+  },
+  {
+    "code": "DE-S-16",
+    "name": "Umsatzsteuer 16 %",
+    "description": "Befristeter allgemeiner Steuersatz 1. Juli bis 31. Dezember 2020; Zeile 16 (Kz. 35/36)",
+    "rate": 16,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2020-07-01",
+    "valid_to": "2020-12-31",
+    "legal_reference": "UStG § 28 Abs. 1 — § 12 Abs. 1 ist vom 1. Juli 2020 bis 31. Dezember 2020 mit der Maßgabe anzuwenden, dass die Steuer 16 Prozent beträgt. Die Anleitung zur Voranmeldung 2026 (USt 1 E, Zeilen 13 bis 16) ordnet Änderungen von Bemessungsgrundlagen dieser Umsätze der Zeile 16 zu, den Umsätzen zu anderen Steuersätzen, mit selbst berechnetem Steuerbetrag.",
+    "source": "ustg",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "35"
+        },
+        {
+          "type": "tax",
+          "account": "6814",
+          "box": "36"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "35",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "6814",
+          "box": "36",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 30
+  },
+  {
+    "code": "DE-S-05",
+    "name": "Umsatzsteuer 5 %",
+    "description": "Befristeter ermäßigter Steuersatz 1. Juli bis 31. Dezember 2020; Zeile 16 (Kz. 35/36)",
+    "rate": 5,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2020-07-01",
+    "valid_to": "2020-12-31",
+    "legal_reference": "UStG § 28 Abs. 2 — § 12 Abs. 2 ist vom 1. Juli 2020 bis 31. Dezember 2020 mit der Maßgabe anzuwenden, dass sich die Steuer für die in den Nummern 1 bis 15 genannten Umsätze auf 5 Prozent ermäßigt. Zeile 16 der Voranmeldung 2026 wie beim Satz von 16 Prozent.",
+    "source": "ustg",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "35"
+        },
+        {
+          "type": "tax",
+          "account": "6814",
+          "box": "36"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "35",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "6814",
+          "box": "36",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 40
+  },
+  {
+    "code": "DE-S-00-PV",
+    "name": "Umsatzsteuer 0 % Photovoltaik",
+    "description": "Nullsatz für Solarmodule, wesentliche Komponenten und Speicher; Zeile 15 (Kz. 87)",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2023-01-01",
+    "legal_reference": "UStG § 12 Abs. 3 — die Steuer ermäßigt sich auf 0 Prozent für die Lieferung und Installation von Solarmodulen an den Betreiber einer Photovoltaikanlage einschließlich der wesentlichen Komponenten und der Speicher, wenn die Anlage auf oder in der Nähe von Privatwohnungen, Wohnungen oder dem Gemeinwohl dienenden Gebäuden installiert wird; die Voraussetzung gilt als erfüllt bei einer Bruttoleistung laut Marktstammdatenregister von nicht mehr als 30 kW (peak). In Kraft seit dem 1. Januar 2023 (Jahressteuergesetz 2022). Es ist ein ermäßigter Steuersatz und keine Steuerbefreiung, daher die Kategorie Z.",
+    "source": "ustg",
+    "vat_category": "Z",
+    "conditions": [
+      "supply_nature"
+    ],
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "87"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "87",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 50
+  },
+  {
+    "code": "DE-S-IGL",
+    "name": "Steuerfreie innergemeinschaftliche Lieferung",
+    "description": "An Abnehmer mit Umsatzsteuer-Identifikationsnummer; Zeile 19 (Kz. 41) und Zusammenfassende Meldung",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "intracom_goods",
+    "valid_from": "1993-01-01",
+    "legal_reference": "UStG § 4 Nr. 1 Buchst. b in Verbindung mit § 6a Abs. 1 — steuerfrei ist die innergemeinschaftliche Lieferung an einen Abnehmer, der eine ihm von einem anderen Mitgliedstaat erteilte gültige Umsatzsteuer-Identifikationsnummer verwendet, wenn die Lieferung in der Zusammenfassenden Meldung nach § 18a zutreffend angegeben ist (§ 4 Nr. 1 Buchst. b letzter Halbsatz); § 14a Abs. 3 verlangt die Rechnung bis zum 15. Tag des Folgemonats mit beiden Identifikationsnummern.",
+    "source": "ustg",
+    "vat_category": "K",
+    "exemption_code": "VATEX-EU-IC",
+    "conditions": [
+      "buyer_status",
+      "transport_evidence"
+    ],
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "41"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "41",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 60
+  },
+  {
+    "code": "DE-S-EUDL",
+    "name": "Sonstige Leistung im übrigen Gemeinschaftsgebiet",
+    "description": "Nicht steuerbar im Inland, Steuerschuldner ist der Leistungsempfänger; Zeile 35 (Kz. 21) und Zusammenfassende Meldung",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "intracom_services",
+    "valid_from": "2010-01-01",
+    "legal_reference": "UStG § 3a Abs. 2 — eine sonstige Leistung an einen Unternehmer für dessen Unternehmen wird an dem Ort ausgeführt, von dem aus der Empfänger sein Unternehmen betreibt; § 18b Satz 1 Nr. 2 verlangt ihre Angabe in der Voranmeldung, § 18a Abs. 2 in der Zusammenfassenden Meldung, § 14a Abs. 1 die Rechnung mit der Angabe „Steuerschuldnerschaft des Leistungsempfängers“ und beiden Identifikationsnummern.",
+    "source": "ustg",
+    "vat_category": "K",
+    "exemption_code": "VATEX-EU-IC",
+    "conditions": [
+      "buyer_status"
+    ],
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "21"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "21",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 70
+  },
+  {
+    "code": "DE-S-AUSF",
+    "name": "Steuerfreie Ausfuhrlieferung",
+    "description": "Lieferung in das Drittlandsgebiet; Zeile 22 (Kz. 43)",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "1980-01-01",
+    "legal_reference": "UStG § 4 Nr. 1 Buchst. a in Verbindung mit § 6 — steuerfrei sind die Ausfuhrlieferungen; die Voraussetzungen sind nach § 6 Abs. 4 buch- und belegmäßig nachzuweisen (UStDV §§ 8 ff.). Die Anleitung zur Voranmeldung 2026 ordnet sie der Zeile 22 zu, den weiteren steuerfreien Umsätzen mit Vorsteuerabzug.",
+    "source": "ustg",
+    "vat_category": "G",
+    "exemption_code": "VATEX-EU-G",
+    "conditions": [
+      "transport_evidence"
+    ],
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "43"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "43",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 80
+  },
+  {
+    "code": "DE-S-13B",
+    "name": "Steuerpflichtiger Umsatz, Steuerschuldner Leistungsempfänger",
+    "description": "Leistender Unternehmer bei § 13b Abs. 2 (z. B. Bauleistungen, Gebäudereinigung); Zeile 34 (Kz. 60)",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "domestic_reverse_charge",
+    "valid_from": "2002-01-01",
+    "legal_reference": "UStG § 13b Abs. 2 und 5 — für die dort genannten Umsätze schuldet der Leistungsempfänger die Steuer; § 14a Abs. 5 verlangt die Angabe „Steuerschuldnerschaft des Leistungsempfängers“ und schließt den gesonderten Steuerausweis aus. Der leistende Unternehmer erklärt die Bemessungsgrundlage in Zeile 34 (Kz. 60).",
+    "source": "ustg",
+    "vat_category": "AE",
+    "exemption_code": "VATEX-EU-AE",
+    "conditions": [
+      "buyer_status",
+      "supply_nature"
+    ],
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "60"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "60",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 90
+  },
+  {
+    "code": "DE-S-FREI-12",
+    "name": "Steuerfreie Vermietung und Verpachtung von Grundstücken",
+    "description": "Ohne Vorsteuerabzug; Zeile 23 (Kz. 48)",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "1980-01-01",
+    "legal_reference": "UStG § 4 Nr. 12 Buchst. a — steuerfrei ist die Vermietung und die Verpachtung von Grundstücken; der Vorsteuerabzug ist nach § 15 Abs. 2 Satz 1 Nr. 1 ausgeschlossen, sofern nicht nach § 9 verzichtet wird. Richtlinie 2006/112/EG Art. 135 Abs. 1 Buchst. l, daher VATEX-EU-135-1.",
+    "source": "ustg",
+    "vat_category": "E",
+    "exemption_code": "VATEX-EU-135-1",
+    "conditions": [
+      "supply_nature"
+    ],
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "48"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "48",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 100
+  },
+  {
+    "code": "DE-S-FREI-14",
+    "name": "Steuerfreie Heilbehandlung",
+    "description": "Heilbehandlungen im Bereich der Humanmedizin; ohne Vorsteuerabzug; Zeile 23 (Kz. 48)",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "1980-01-01",
+    "legal_reference": "UStG § 4 Nr. 14 Buchst. a — steuerfrei sind Heilbehandlungen im Bereich der Humanmedizin, die im Rahmen der Ausübung der Tätigkeit als Arzt, Zahnarzt, Heilpraktiker, Physiotherapeut, Hebamme oder einer ähnlichen heilberuflichen Tätigkeit durchgeführt werden. Richtlinie 2006/112/EG Art. 132 Abs. 1 Buchst. c, daher VATEX-EU-132-1C.",
+    "source": "ustg",
+    "vat_category": "E",
+    "exemption_code": "VATEX-EU-132-1C",
+    "conditions": [
+      "supply_nature"
+    ],
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "48"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "48",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 110
+  },
+  {
+    "code": "DE-S-NSTB",
+    "name": "Nicht steuerbarer Umsatz, Leistungsort im Drittland",
+    "description": "Zum Beispiel sonstige Leistung an einen Unternehmer im Drittland; Zeile 36 (Kz. 45)",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "not_subject",
+    "valid_from": "2010-01-01",
+    "legal_reference": "UStG § 1 Abs. 1 Nr. 1 in Verbindung mit § 3a Abs. 2 — eine sonstige Leistung an einen Unternehmer mit Sitz im Drittlandsgebiet ist im Inland nicht steuerbar. Die Anleitung zur Voranmeldung 2026 (Zeile 36) verlangt die übrigen nicht steuerbaren Umsätze, deren Leistungsort nicht im Inland liegt, in Kz. 45.",
+    "source": "ustg",
+    "vat_category": "O",
+    "exemption_code": "VATEX-EU-O",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "45"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "45",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 120
+  },
+  {
+    "code": "DE-P-19",
+    "name": "Vorsteuer 19 %",
+    "description": "Vorsteuer aus Rechnungen anderer Unternehmer; Zeile 38 (Kz. 66)",
+    "rate": 19,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2007-01-01",
+    "legal_reference": "UStG § 15 Abs. 1 Satz 1 Nr. 1 — abziehbar ist die gesetzlich geschuldete Steuer für Lieferungen und sonstige Leistungen, die von einem anderen Unternehmer für das Unternehmen ausgeführt worden sind, sofern eine Rechnung nach §§ 14, 14a vorliegt. Satz nach § 12 Abs. 1.",
+    "source": "ustg",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "2241",
+          "box": "66"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "2241",
+          "box": "66",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 130
+  },
+  {
+    "code": "DE-P-07",
+    "name": "Vorsteuer 7 %",
+    "description": "Vorsteuer aus Rechnungen anderer Unternehmer; Zeile 38 (Kz. 66)",
+    "rate": 7,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "1983-07-01",
+    "legal_reference": "UStG § 15 Abs. 1 Satz 1 Nr. 1; Satz nach § 12 Abs. 2.",
+    "source": "ustg",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "2242",
+          "box": "66"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "2242",
+          "box": "66",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 140
+  },
+  {
+    "code": "DE-P-16",
+    "name": "Vorsteuer 16 %",
+    "description": "Befristeter allgemeiner Steuersatz 2020; Zeile 38 (Kz. 66)",
+    "rate": 16,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2020-07-01",
+    "valid_to": "2020-12-31",
+    "legal_reference": "UStG § 15 Abs. 1 Satz 1 Nr. 1; Satz nach § 28 Abs. 1 vom 1. Juli bis 31. Dezember 2020.",
+    "source": "ustg",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "2246",
+          "box": "66"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "2246",
+          "box": "66",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 150
+  },
+  {
+    "code": "DE-P-05",
+    "name": "Vorsteuer 5 %",
+    "description": "Befristeter ermäßigter Steuersatz 2020; Zeile 38 (Kz. 66)",
+    "rate": 5,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2020-07-01",
+    "valid_to": "2020-12-31",
+    "legal_reference": "UStG § 15 Abs. 1 Satz 1 Nr. 1; Satz nach § 28 Abs. 2 vom 1. Juli bis 31. Dezember 2020.",
+    "source": "ustg",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "2246",
+          "box": "66"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "2246",
+          "box": "66",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 160
+  },
+  {
+    "code": "DE-P-19-NA",
+    "name": "Nicht abziehbare Vorsteuer 19 %",
+    "description": "Aufwendungen nach § 4 Abs. 5 EStG, zum Beispiel Geschenke über 50 Euro: die Steuer folgt dem Aufwandskonto",
+    "rate": 19,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2007-01-01",
+    "recoverable": false,
+    "legal_reference": "UStG § 15 Abs. 1a — nicht abziehbar sind Vorsteuerbeträge, die auf Aufwendungen entfallen, für die das Abzugsverbot des § 4 Abs. 5 Satz 1 Nr. 1 bis 4, 7 oder des § 12 Nr. 1 des Einkommensteuergesetzes gilt; ausgenommen sind Bewirtungsaufwendungen, soweit § 4 Abs. 5 Satz 1 Nr. 2 EStG einen Abzug angemessener und nachgewiesener Aufwendungen ausschließt. Die Steuer wird daher Teil der Anschaffungskosten und erscheint in keiner Zeile der Voranmeldung.",
+    "source": "ustg",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax_on_base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax_on_base"
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 170
+  },
+  {
+    "code": "DE-P-IGE-19",
+    "name": "Innergemeinschaftlicher Erwerb 19 %",
+    "description": "Steuer und Vorsteuer aus dem Erwerb; Zeile 25 (Kz. 89) und Zeile 39 (Kz. 61)",
+    "rate": 19,
+    "scope": "purchase",
+    "treatment": "intracom_acquisition_goods",
+    "valid_from": "2007-01-01",
+    "legal_reference": "UStG § 1 Abs. 1 Nr. 5 und § 1a — der innergemeinschaftliche Erwerb im Inland gegen Entgelt ist steuerbar; die Steuer entsteht nach § 13 Abs. 1 Nr. 6 mit Ausstellung der Rechnung, spätestens mit Ablauf des dem Erwerb folgenden Kalendermonats; Steuerschuldner ist nach § 13a Abs. 1 Nr. 2 der Erwerber, der sie nach § 15 Abs. 1 Satz 1 Nr. 3 als Vorsteuer abzieht.",
+    "source": "ustg",
+    "vat_category": "K",
+    "exemption_code": "VATEX-EU-IC",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "89"
+        },
+        {
+          "type": "tax",
+          "account": "2243",
+          "box": "61"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "6812",
+          "box": "89"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "89",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2243",
+          "box": "61",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "6812",
+          "box": "89",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 180
+  },
+  {
+    "code": "DE-P-IGE-07",
+    "name": "Innergemeinschaftlicher Erwerb 7 %",
+    "description": "Steuer und Vorsteuer aus dem Erwerb; Zeile 26 (Kz. 93) und Zeile 39 (Kz. 61)",
+    "rate": 7,
+    "scope": "purchase",
+    "treatment": "intracom_acquisition_goods",
+    "valid_from": "1993-01-01",
+    "legal_reference": "UStG § 1a in Verbindung mit § 12 Abs. 2 Nr. 1 — Erwerb der in Anlage 2 bezeichneten Gegenstände; Steuerentstehung § 13 Abs. 1 Nr. 6, Vorsteuerabzug § 15 Abs. 1 Satz 1 Nr. 3.",
+    "source": "ustg",
+    "vat_category": "K",
+    "exemption_code": "VATEX-EU-IC",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "93"
+        },
+        {
+          "type": "tax",
+          "account": "2243",
+          "box": "61"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "6812",
+          "box": "93"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "93",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2243",
+          "box": "61",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "6812",
+          "box": "93",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 190
+  },
+  {
+    "code": "DE-P-EUDL-19",
+    "name": "Sonstige Leistung eines im übrigen Gemeinschaftsgebiet ansässigen Unternehmers 19 %",
+    "description": "Leistungsempfänger als Steuerschuldner; Zeile 30 (Kz. 46/47) und Zeile 41 (Kz. 67)",
+    "rate": 19,
+    "scope": "purchase",
+    "treatment": "intracom_acquisition_services",
+    "valid_from": "2010-01-01",
+    "legal_reference": "UStG § 13b Abs. 1 in Verbindung mit Abs. 5 Satz 1 — für nach § 3a Abs. 2 im Inland steuerpflichtige sonstige Leistungen eines im übrigen Gemeinschaftsgebiet ansässigen Unternehmers schuldet der Leistungsempfänger die Steuer; sie entsteht mit Ablauf des Voranmeldungszeitraums, in dem die Leistung ausgeführt worden ist, und ist nach § 15 Abs. 1 Satz 1 Nr. 4 als Vorsteuer abziehbar.",
+    "source": "ustg",
+    "vat_category": "K",
+    "exemption_code": "VATEX-EU-IC",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "46"
+        },
+        {
+          "type": "tax",
+          "account": "2244",
+          "box": "67"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "6813",
+          "box": "47"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "46",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2244",
+          "box": "67",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "6813",
+          "box": "47",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 200
+  },
+  {
+    "code": "DE-P-DRITT-19",
+    "name": "Leistung eines im Drittland ansässigen Unternehmers 19 %",
+    "description": "Leistungsempfänger als Steuerschuldner; Zeile 32 (Kz. 84/85) und Zeile 41 (Kz. 67)",
+    "rate": 19,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2002-01-01",
+    "legal_reference": "UStG § 13b Abs. 2 Nr. 1 in Verbindung mit Abs. 5 Satz 1 — für Werklieferungen und nicht unter Abs. 1 fallende sonstige Leistungen eines im Ausland ansässigen Unternehmers schuldet der Leistungsempfänger die Steuer; Steuerentstehung nach § 13b Abs. 2 mit Ausstellung der Rechnung, spätestens mit Ablauf des der Ausführung folgenden Kalendermonats; Vorsteuerabzug nach § 15 Abs. 1 Satz 1 Nr. 4. Die Rechnung des ausländischen Lieferers fällt nicht unter EN 16931, daher keine Kategorie.",
+    "source": "ustg",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "84"
+        },
+        {
+          "type": "tax",
+          "account": "2244",
+          "box": "67"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "6813",
+          "box": "85"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "84",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2244",
+          "box": "67",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "6813",
+          "box": "85",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 210
+  },
+  {
+    "code": "DE-P-13B-19",
+    "name": "Inländische Leistung nach § 13b Abs. 2 Nr. 4 bis 11 UStG 19 %",
+    "description": "Zum Beispiel Bauleistungen an einen bauleistenden Unternehmer; Zeile 32 (Kz. 84/85) und Zeile 41 (Kz. 67)",
+    "rate": 19,
+    "scope": "purchase",
+    "treatment": "domestic_reverse_charge",
+    "valid_from": "2002-01-01",
+    "legal_reference": "UStG § 13b Abs. 2 Nr. 4 bis 11 in Verbindung mit Abs. 5 — für Bauleistungen an einen Unternehmer, der selbst nachhaltig Bauleistungen erbringt, für Gebäudereinigung, Lieferungen von Gold, Mobilfunkgeräten, Metallen und die übrigen dort genannten Umsätze schuldet der Leistungsempfänger die Steuer; Vorsteuerabzug nach § 15 Abs. 1 Satz 1 Nr. 4.",
+    "source": "ustg",
+    "vat_category": "AE",
+    "exemption_code": "VATEX-EU-AE",
+    "conditions": [
+      "buyer_status",
+      "supply_nature"
+    ],
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "84"
+        },
+        {
+          "type": "tax",
+          "account": "2244",
+          "box": "67"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "6813",
+          "box": "85"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "84",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2244",
+          "box": "67",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "6813",
+          "box": "85",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 220
+  }
+]

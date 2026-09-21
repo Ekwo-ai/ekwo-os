@@ -1,0 +1,170 @@
+code,parent,type,reconcilable,name,sequence
+1110,,asset_fixed,false,Selbst geschaffene gewerbliche Schutzrechte und ähnliche Rechte und Werte,10
+1120,,asset_fixed,false,"Entgeltlich erworbene Konzessionen, gewerbliche Schutzrechte und ähnliche Rechte und Werte sowie Lizenzen an solchen Rechten und Werten",20
+1121,,asset_fixed,false,Entgeltlich erworbene Software,30
+1130,,asset_fixed,false,Geschäfts- oder Firmenwert,40
+1140,,asset_fixed,false,Geleistete Anzahlungen auf immaterielle Vermögensgegenstände,50
+1210,,asset_fixed,false,Grundstücke und grundstücksgleiche Rechte ohne Bauten,60
+1211,,asset_fixed,false,Bauten auf eigenen Grundstücken,70
+1212,,asset_fixed,false,Bauten auf fremden Grundstücken,80
+1220,,asset_fixed,false,Technische Anlagen und Maschinen,90
+1230,,asset_fixed,false,"Andere Anlagen, Betriebs- und Geschäftsausstattung",100
+1231,,asset_fixed,false,Fahrzeuge,110
+1232,,asset_fixed,false,Büroeinrichtung,120
+1233,,asset_fixed,false,EDV-Ausstattung,130
+1234,,asset_fixed,false,Geringwertige Vermögensgegenstände,140
+1240,,asset_fixed,false,Geleistete Anzahlungen auf Sachanlagen,150
+1241,,asset_fixed,false,Anlagen im Bau,160
+1310,,asset_non_current,false,Anteile an verbundenen Unternehmen (Anlagevermögen),170
+1320,,asset_non_current,false,Ausleihungen an verbundene Unternehmen,180
+1330,,asset_non_current,false,Beteiligungen,190
+1340,,asset_non_current,false,"Ausleihungen an Unternehmen, mit denen ein Beteiligungsverhältnis besteht",200
+1350,,asset_non_current,false,Wertpapiere des Anlagevermögens,210
+1360,,asset_non_current,false,Sonstige Ausleihungen,220
+1361,,asset_non_current,false,Langfristige Mietkautionen,230
+2110,,asset_current,false,Rohstoffe,240
+2111,,asset_current,false,Hilfsstoffe,250
+2112,,asset_current,false,Betriebsstoffe,260
+2120,,asset_current,false,Unfertige Erzeugnisse,270
+2121,,asset_current,false,Unfertige Leistungen,280
+2130,,asset_current,false,Fertige Erzeugnisse,290
+2131,,asset_current,false,Waren,300
+2140,,asset_current,false,Geleistete Anzahlungen auf Vorräte,310
+2210,,asset_receivable,true,Forderungen aus Lieferungen und Leistungen,320
+2218,,asset_receivable,true,Zweifelhafte Forderungen,330
+2219,,asset_current,false,Einzelwertberichtigungen zu Forderungen,340
+2220,,asset_receivable,true,Forderungen gegen verbundene Unternehmen,350
+2230,,asset_receivable,true,"Forderungen gegen Unternehmen, mit denen ein Beteiligungsverhältnis besteht",360
+2240,,asset_current,true,Sonstige Vermögensgegenstände,370
+2241,,asset_current,false,Abziehbare Vorsteuer 19 %,380
+2242,,asset_current,false,Abziehbare Vorsteuer 7 %,390
+2243,,asset_current,false,Abziehbare Vorsteuer aus innergemeinschaftlichem Erwerb,400
+2244,,asset_current,false,Abziehbare Vorsteuer nach § 13b UStG,410
+2245,,asset_current,false,Entstandene Einfuhrumsatzsteuer,420
+2246,,asset_current,false,Abziehbare Vorsteuer zu anderen Steuersätzen,430
+2247,,asset_current,true,Erstattungsansprüche aus Steuern vom Einkommen und vom Ertrag,440
+2248,,asset_current,true,Forderungen gegen Gesellschafter,450
+2249,,asset_current,true,Durchlaufende Posten und Verrechnungskonto,460
+2310,,asset_current,false,Anteile an verbundenen Unternehmen (Umlaufvermögen),470
+2320,,asset_current,false,Sonstige Wertpapiere,480
+2410,,asset_cash,false,Kasse,490
+2420,,asset_cash,false,Guthaben bei Kreditinstituten,500
+2421,,asset_cash,false,Guthaben bei Kreditinstituten — zweites Konto,510
+2430,,asset_cash,false,Schecks,520
+2440,,asset_cash,false,Geldtransit,530
+3100,,asset_prepayments,false,Aktive Rechnungsabgrenzungsposten,540
+3110,,asset_prepayments,false,Disagio,550
+3200,,asset_non_current,false,Aktive latente Steuern,560
+3300,,asset_non_current,false,Aktiver Unterschiedsbetrag aus der Vermögensverrechnung,570
+4100,,equity,false,Gezeichnetes Kapital,580
+4110,,equity,false,Nicht eingeforderte ausstehende Einlagen,590
+4200,,equity,false,Kapitalrücklage,600
+4310,,equity,false,Gesetzliche Rücklage,610
+4320,,equity,false,Rücklage für Anteile an einem herrschenden oder mehrheitlich beteiligten Unternehmen,620
+4330,,equity,false,Satzungsmäßige Rücklagen,630
+4340,,equity,false,Andere Gewinnrücklagen,640
+4400,,equity_retained,false,Gewinnvortrag/Verlustvortrag,650
+4500,,equity_retained,false,Jahresüberschuss/Jahresfehlbetrag,660
+5100,,liability_non_current,false,Rückstellungen für Pensionen und ähnliche Verpflichtungen,670
+5210,,liability_current,false,Gewerbesteuerrückstellung,680
+5220,,liability_current,false,Körperschaftsteuerrückstellung,690
+5230,,liability_current,false,Sonstige Steuerrückstellungen,700
+5310,,liability_current,false,Rückstellungen für Urlaub,710
+5320,,liability_current,false,Rückstellungen für Abschluss- und Prüfungskosten,720
+5330,,liability_current,false,Rückstellungen für Aufbewahrungspflichten,730
+5390,,liability_current,false,Übrige sonstige Rückstellungen,740
+6100,,liability_non_current,false,Anleihen,750
+6210,,liability_current,true,Verbindlichkeiten gegenüber Kreditinstituten — kurzfristig,760
+6220,,liability_non_current,false,Verbindlichkeiten gegenüber Kreditinstituten — Darlehen,770
+6300,,liability_current,true,Erhaltene Anzahlungen auf Bestellungen,780
+6400,,liability_payable,true,Verbindlichkeiten aus Lieferungen und Leistungen,790
+6500,,liability_current,true,Verbindlichkeiten aus der Annahme gezogener Wechsel und der Ausstellung eigener Wechsel,800
+6600,,liability_payable,true,Verbindlichkeiten gegenüber verbundenen Unternehmen,810
+6700,,liability_payable,true,"Verbindlichkeiten gegenüber Unternehmen, mit denen ein Beteiligungsverhältnis besteht",820
+6810,,liability_current,false,Umsatzsteuer 19 %,830
+6811,,liability_current,false,Umsatzsteuer 7 %,840
+6812,,liability_current,false,Umsatzsteuer aus innergemeinschaftlichem Erwerb,850
+6813,,liability_current,false,Umsatzsteuer nach § 13b UStG,860
+6814,,liability_current,false,Umsatzsteuer zu anderen Steuersätzen,870
+6820,,liability_current,true,Umsatzsteuer-Vorauszahlung und Überschuss gegenüber dem Finanzamt,880
+6830,,liability_current,true,Verbindlichkeiten aus Lohn- und Kirchensteuer,890
+6840,,liability_current,true,Verbindlichkeiten im Rahmen der sozialen Sicherheit,900
+6850,,liability_current,true,Verbindlichkeiten aus Lohn und Gehalt,910
+6860,,liability_current,true,Verbindlichkeiten gegenüber Gesellschaftern,920
+6870,,liability_credit_card,true,Kreditkartenabrechnung,930
+6880,,liability_current,true,Verbindlichkeiten aus sonstigen Steuern,940
+6890,,liability_current,true,Übrige sonstige Verbindlichkeiten,950
+7100,,liability_current,false,Passive Rechnungsabgrenzungsposten,960
+7200,,liability_non_current,false,Passive latente Steuern,970
+8110,,income,false,Umsatzerlöse 19 % USt,980
+8111,,income,false,Umsatzerlöse 7 % USt,990
+8112,,income,false,Umsatzerlöse zu 0 % nach § 12 Abs. 3 UStG,1000
+8113,,income,false,Steuerfreie innergemeinschaftliche Lieferungen,1010
+8114,,income,false,Erlöse aus im übrigen Gemeinschaftsgebiet steuerpflichtigen sonstigen Leistungen,1020
+8115,,income,false,Steuerfreie Ausfuhrlieferungen,1030
+8116,,income,false,"Erlöse, für die der Leistungsempfänger die Steuer nach § 13b UStG schuldet",1040
+8117,,income,false,Steuerfreie Umsätze ohne Vorsteuerabzug,1050
+8118,,income,false,Nicht steuerbare Umsätze (Leistungsort nicht im Inland),1060
+8119,,income,false,Steuerfreie Umsätze der Kleinunternehmer nach § 19 UStG,1070
+8120,,income,false,Umsatzerlöse zu anderen Steuersätzen,1080
+8130,,income,false,Erlösschmälerungen,1090
+8200,,income,false,Erhöhung oder Verminderung des Bestands an fertigen und unfertigen Erzeugnissen,1100
+8300,,income,false,Andere aktivierte Eigenleistungen,1110
+8410,,income_other,false,Erträge aus dem Abgang von Gegenständen des Anlagevermögens,1120
+8420,,income_other,false,Erträge aus der Auflösung von Rückstellungen,1130
+8430,,income_other,false,Erträge aus der Herabsetzung von Wertberichtigungen auf Forderungen,1140
+8440,,income_other,false,Versicherungsentschädigungen,1150
+8450,,income_other,false,Erträge aus der Währungsumrechnung,1160
+8490,,income_other,false,Übrige sonstige betriebliche Erträge,1170
+8510,,expense_direct_cost,false,"Aufwendungen für Roh-, Hilfs- und Betriebsstoffe",1180
+8511,,expense_direct_cost,false,Aufwendungen für bezogene Waren,1190
+8512,,expense_direct_cost,false,"Bestandsveränderungen Roh-, Hilfs- und Betriebsstoffe sowie Waren",1200
+8520,,expense_direct_cost,false,Aufwendungen für bezogene Leistungen,1210
+8521,,expense_direct_cost,false,Bauleistungen und andere Leistungen nach § 13b UStG,1220
+8610,,expense,false,Löhne,1230
+8611,,expense,false,Gehälter,1240
+8620,,expense,false,Gesetzliche soziale Aufwendungen,1250
+8621,,expense,false,Aufwendungen für Altersversorgung,1260
+8622,,expense,false,Beiträge zur Berufsgenossenschaft,1270
+8710,,expense_depreciation,false,Abschreibungen auf immaterielle Vermögensgegenstände,1280
+8711,,expense_depreciation,false,Abschreibungen auf Sachanlagen,1290
+8712,,expense_depreciation,false,Sofortabschreibung geringwertiger Vermögensgegenstände,1300
+8720,,expense_depreciation,false,"Abschreibungen auf Vermögensgegenstände des Umlaufvermögens, soweit diese die üblichen Abschreibungen überschreiten",1310
+8810,,expense,false,Miete und Pacht,1320
+8811,,expense,false,Raumnebenkosten und Energie,1330
+8812,,expense,false,Reparaturen und Instandhaltung,1340
+8820,,expense,false,Versicherungen und Beiträge,1350
+8830,,expense,false,Fahrzeugkosten,1360
+8840,,expense,false,Werbekosten,1370
+8841,,expense,false,Bewirtungskosten,1380
+8842,,expense,false,Geschenke,1390
+8843,,expense,false,Reisekosten,1400
+8850,,expense,false,Aufwendungen aus der Währungsumrechnung,1410
+8860,,expense,false,Rechts- und Beratungskosten,1420
+8861,,expense,false,Abschluss- und Prüfungskosten,1430
+8862,,expense,false,Buchführungskosten,1440
+8870,,expense,false,Bürobedarf,1450
+8871,,expense,false,Porto,1460
+8872,,expense,false,Telekommunikation,1470
+8873,,expense,false,Software und IT-Dienstleistungen,1480
+8874,,expense,false,Fortbildungskosten,1490
+8875,,expense,false,Nebenkosten des Geldverkehrs,1500
+8880,,expense,false,Verluste aus dem Abgang von Gegenständen des Anlagevermögens,1510
+8881,,expense,false,Forderungsverluste und Einstellung in Wertberichtigungen,1520
+8889,,expense,false,Rundungsdifferenzen,1530
+8890,,expense,false,Übrige sonstige betriebliche Aufwendungen,1540
+9100,,income_other,false,Erträge aus Beteiligungen,1550
+9200,,income_other,false,Erträge aus anderen Wertpapieren und Ausleihungen des Finanzanlagevermögens,1560
+9310,,income_other,false,Sonstige Zinsen und ähnliche Erträge,1570
+9320,,income_other,false,Zinserträge von verbundenen Unternehmen,1580
+9400,,expense,false,Abschreibungen auf Finanzanlagen und auf Wertpapiere des Umlaufvermögens,1590
+9510,,expense,false,Zinsen und ähnliche Aufwendungen,1600
+9520,,expense,false,Zinsaufwendungen an verbundene Unternehmen,1610
+9530,,expense,false,Aufwendungen aus der Abzinsung von Rückstellungen,1620
+9610,,expense,false,Körperschaftsteuer,1630
+9611,,expense,false,Solidaritätszuschlag,1640
+9620,,expense,false,Gewerbesteuer,1650
+9630,,expense,false,Latente Steuern,1660
+9810,,expense,false,Kraftfahrzeugsteuer,1670
+9820,,expense,false,Grundsteuer,1680
+9890,,expense,false,Übrige sonstige Steuern,1690
