@@ -3039,3 +3039,56 @@ which quote sections 14 and 51C of Cap. 112 directly, and Part 9 of Cap. 622
 by name and subject rather than by subsection. `packs/hk/README.md` says so
 under "Sources" and lists the exact subsections a reviewer should confirm
 before the pack moves past `community`.
+
+## From Chad
+
+`packs/td/`, `community`, seed 35, the third OHADA member after Senegal and
+Côte d'Ivoire. Its chart, journals, roles and two statements are the common
+part of [`packs/ohada/`](../packs/ohada/README.md); what it adds is the value
+added tax of the Code général des impôts, read from the loi de finances pour
+2024 (a native text PDF) and the loi de finances pour 2026 (an unlayered scan,
+read back by OCR and checked page by page against the images). Two things the
+format could not say, neither patched:
+
+**A rate the invoice shows once, a tax the return books in two places.** Chad
+facturé at 19,25 % is 17,5 % (CGI art. 238-I-1°) plus 10 % of that same amount
+in *centimes communaux et provinciaux* (CGI art. 1017, loi de finances pour
+2024, art. 16) — a surtax the CEMAC directive only allows because it is
+deductible exactly as the tax itself (directive n° 11/22, art. 22-1). Computing
+17,5 % and then 10 % of the result as two independent taxes would round each on
+its own and could disagree with the 19,25 % the facture prints by a unit of the
+currency. The format already had what this needed: one tax at 19,25 %, two `tax`
+postings of `factor` 90,909 and 9,091 — summing to exactly 100,000 — to the
+account of the State's share and to 4422 « Impôts et taxes pour les
+collectivités publiques », and `post_document()`'s rule that the last posting
+of a side takes what the first one's rounding left over. No core change was
+needed to book it correctly; the pattern is written here because Cameroon,
+Centrafrique and Congo carry the same surtax and will want the same two
+postings rather than two taxes.
+
+**A third party's withholding, joined to a buyer's self-assessment.** CGI
+art. 229-V (loi de finances pour 2026, art. 30) makes an assujetti who buys
+from a seller outside the *Impôt Général Libératoire* — or who has crossed its
+50-million-FCFA threshold mid-operation — self-assess the tax the seller never
+charged, and *"la verse... dans les conditions de droit commun relatives à la
+TVA retenue à la source"*: by the same remittance rule as CGI art. 245, where a
+buyer named on a DGI list withholds the tax owed by a supplier who is not on it
+and pays it to the Treasury in the supplier's place. The first is a two-party
+reverse charge, which `treatment: domestic_reverse_charge` and a due-and-
+deductible pair of postings already say (`TD-P-AUTOLIQ`, netting to zero as
+Senegal's `SN-P-NR-18` already does for a foreign service). The second is a
+three-party withholding — the buyer remits a debt that stays the seller's —
+which is the exact gap `docs/international.md` already names for Senegal's
+*précompte* and Côte d'Ivoire's *TVA pour compte de tiers*: a third time, in a
+CEMAC country whose own law cross-references it from the mechanism the core
+can express. `packs/td/` books the self-assessment and says nothing about the
+withholding.
+
+One condition, contoured rather than patched: art. 229-V turns on the seller's
+regime and a threshold crossed *during the operation*, a fact about the seller
+that the document does not carry on its own. `conditions` already has
+`seller_threshold` for exactly this shape of fact — a running total the seller
+crossed, or has not — so `TD-S-AUTOLIQ` and `TD-P-AUTOLIQ` declare it and the
+pack says no more than that a human has to answer the question, as
+`packs/sn/` already does with `supply_nature` for its own approved-status
+condition.

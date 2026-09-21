@@ -1,0 +1,217 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "TD",
+  "name": "Tchad",
+  "version": "0.1.0",
+  "schema_min": "20260917170000",
+  "seed_sequence": 35,
+  "released_at": "2026-09-21",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "audcif",
+        "title": "Acte uniforme relatif au droit comptable et à l'information financière (AUDCIF), adopté à Brazzaville le 26 janvier 2017",
+        "publisher": "OHADA — Bibliothèque numérique de l'OHADA",
+        "url": "https://biblio.ohada.org/doc_num.php?explnum_id=2061",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "syscohada",
+        "title": "Journal officiel de l'OHADA, numéro spécial du 15 février 2017 — Acte uniforme relatif au droit comptable et à l'information financière et Système comptable OHADA (SYSCOHADA révisé), version complète signée",
+        "publisher": "OHADA — Bibliothèque numérique de l'OHADA",
+        "url": "https://biblio.ohada.org/doc_num.php?explnum_id=2063",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "cgi",
+        "title": "Code général des impôts du Tchad, tel que modifié par la loi de finances pour 2026",
+        "publisher": "Direction générale des Impôts (DGI) du Tchad",
+        "url": "https://mesrsfp.gouv.td/wp-content/uploads/2026/04/LOI-N%C2%B0008-AN-SENAT2025-Portant-Loi-Finances-pour-lexercice-2026.pdf",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "lf-2024",
+        "title": "Loi de finances pour l'exercice 2024, loi n° 031/PT/2023 du 30 décembre 2023",
+        "publisher": "Ministère des Finances et du Budget du Tchad",
+        "url": "https://www.cabri-sbo.org/uploads/bia/Chad_2024_Approval_External_EnactedBudget_MinistryOfFinanceAndBudget_ECCASCEN-SAD_French_833643.pdf",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "lf-2026",
+        "title": "Loi de finances pour l'exercice 2026, loi n° 008/AN/SENAT/2025 du 31 décembre 2025",
+        "publisher": "Ministère des Finances et du Budget du Tchad",
+        "url": "https://mesrsfp.gouv.td/wp-content/uploads/2026/04/LOI-N%C2%B0008-AN-SENAT2025-Portant-Loi-Finances-pour-lexercice-2026.pdf",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "directive-cemac-tva",
+        "title": "Directive n° 11/22-CEMAC-UEAC-010A-CM-38 du 10 novembre 2022 portant harmonisation des législations des États membres de la CEMAC en matière de taxe sur la valeur ajoutée et du droit d'accises",
+        "publisher": "Secrétariat général de la CEMAC",
+        "url": "https://www.sgg.cg/txts-droit-reg/CEMAC-Directive-2022-11-TVA.pdf",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "fen",
+        "title": "Facture électronique normalisée (FEN) — obligations générales",
+        "publisher": "Direction générale des Impôts (DGI) du Tchad",
+        "url": "https://fen.finances.gouv.td/assets/landing/documents/Obligations%20g%C3%A9n%C3%A9rales%20de%20FEN.pdf",
+        "consulted_on": "2026-09-21",
+        "kind": "guidance"
+      },
+      {
+        "key": "fen-portail",
+        "title": "FEN — portail de la facture électronique normalisée",
+        "publisher": "Direction générale des Impôts (DGI) du Tchad",
+        "url": "https://fen.finances.gouv.td/",
+        "consulted_on": "2026-09-21",
+        "kind": "portal"
+      },
+      {
+        "key": "etax",
+        "title": "e-Tax — portail de télédéclaration et de télépaiement des impôts et taxes",
+        "publisher": "Direction générale des Impôts (DGI) du Tchad",
+        "url": "https://sigi.finances.gouv.td/",
+        "consulted_on": "2026-09-21",
+        "kind": "portal"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "XAF",
+    "language": "fr",
+    "rounding_method": "half_up",
+    "closing_style": "result_accounts",
+    "roles": {
+      "receivable": "4111",
+      "payable": "4011",
+      "suspense": "4711",
+      "rounding": "6588",
+      "retained_earnings": "121",
+      "retained_earnings_loss": "1291",
+      "current_year_result_profit": "131",
+      "current_year_result_loss": "139",
+      "sales": "7011",
+      "purchase": "6011",
+      "bank": "5211",
+      "cash": "5711",
+      "fx_gain": "756",
+      "fx_loss": "656",
+      "tax_payable": "4441",
+      "tax_receivable": "4449"
+    },
+    "journal_roles": {
+      "sales": "VT",
+      "purchase": "AC",
+      "miscellaneous": "OD",
+      "opening": "AN"
+    },
+    "fiscal_year_default": "calendar"
+  },
+  "languages": [],
+  "journals": [
+    {
+      "code": "VT",
+      "type": "sales",
+      "name": "Journal des ventes",
+      "sequence": 10
+    },
+    {
+      "code": "AC",
+      "type": "purchase",
+      "name": "Journal des achats",
+      "sequence": 20
+    },
+    {
+      "code": "BQ",
+      "type": "bank",
+      "name": "Journal de banque",
+      "sequence": 30
+    },
+    {
+      "code": "CA",
+      "type": "cash",
+      "name": "Journal de caisse",
+      "sequence": 40
+    },
+    {
+      "code": "OD",
+      "type": "general",
+      "name": "Opérations diverses",
+      "sequence": 50
+    },
+    {
+      "code": "AN",
+      "type": "opening",
+      "name": "Journal des à-nouveaux",
+      "sequence": 60
+    }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "SYSCOHADA révisé — plan comptable général OHADA, Système normal",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": [
+        "TD-SYSCOHADA-BS",
+        "TD-SYSCOHADA-IS"
+      ],
+      "legal_reference": "Acte uniforme relatif au droit comptable et à l'information financière du 26 janvier 2017, art. 17, 7° — recours à un plan de comptes normalisé dont la liste figure dans le Système comptable OHADA ; Système comptable OHADA, Titre VII, chapitre 2, section 3 — liste des comptes, classes 1 à 8. La classe 9, engagements hors bilan et comptabilité analytique de gestion, est d'application facultative et n'est pas reprise. Commun aux dix-sept États parties : un seul fichier, packs/ohada/accounts.csv, recopié dans chaque pack par scripts/ohada-packs.mjs.",
+      "source": "syscohada"
+    }
+  ],
+  "documents": {
+    "numbering": "sequential",
+    "number_format": "{CODE}/{YYYY}/{NNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "references": {
+      "numbering": {
+        "legal_reference": "Code général des impôts, art. 246 (mentions de la facture, dans la rédaction de la loi de finances pour 2023, art. 17-II) — la facture porte un numéro et une date. Le texte impose un numéro, jamais explicitement une continuité ni une absence de trou ; le format proposé ici le permet sans l'exiger.",
+        "source": "cgi"
+      }
+    },
+    "mentions": [
+      {
+        "code": "reverse_charge",
+        "applies_when": "reverse_charge",
+        "text": "TVA due par le client — autoliquidation, article 229-V du Code général des impôts.",
+        "sequence": 5,
+        "legal_reference": "Code général des impôts, art. 229-V (nouveau), issu de la loi de finances pour 2026, art. 30 — lorsqu'un vendeur qui ne relève pas de l'Impôt Général Libératoire (IGL), ou qui en relève mais a dépassé au cours de l'opération le seuil de 50 millions de FCFA, vend à une personne assujettie, la taxe non facturée est auto-liquidée par l'acheteur.",
+        "source": "cgi"
+      },
+      {
+        "code": "exempt",
+        "applies_when": "exempt",
+        "text": "Opération exonérée de la taxe sur la valeur ajoutée — article 230 du Code général des impôts.",
+        "sequence": 10,
+        "legal_reference": "Code général des impôts, art. 246 — la facture porte les mentions que le texte impose ; art. 230, dans la rédaction de la loi de finances pour 2026, art. 31, pour la liste des exonérations.",
+        "source": "cgi"
+      },
+      {
+        "code": "export",
+        "applies_when": "export",
+        "text": "Exportation taxée au taux zéro — article 238-I-3° du Code général des impôts.",
+        "sequence": 20,
+        "legal_reference": "Code général des impôts, art. 238-I-3°, dans la rédaction de la loi de finances pour 2026, art. 32 — taux zéro applicable aux exportations, aux transports aériens internationaux, à l'avitaillement en carburant Jet A1 des aéronefs à destination de l'étranger et à l'entretien et à la réparation des aéronefs.",
+        "source": "cgi"
+      }
+    ]
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "Loi de finances pour 2023, art. 17 ; loi de finances pour 2024, art. 43 ; loi de finances pour 2026, art. 33, modifiant l'art. 246-II du Code général des impôts — « Sont également non déductibles de la TVA... les factures non électroniques normalisées, à exception des factures des fournisseurs étrangers » : depuis le 1er janvier 2026, une facture qui n'est pas une facture électronique normalisée (FEN), délivrée par une machine certifiée reliée au système de la Direction générale des Impôts, n'ouvre plus droit à déduction, sauf lorsqu'elle émane d'un fournisseur étranger. Loi de finances pour 2026, art. 46 — liste des contribuables tenus d'émettre une FEN ; art. 71 — aucune dépense publique ne peut être engagée ni payée sur la base d'une facture qui n'est pas une FEN. C'est une condition de déduction (et, pour la dépense publique, de paiement), non une obligation générale d'échange dématérialisé entre entreprises au sens de ce champ : aucun profil technique normalisé (UBL, schéma d'échange), aucun schéma d'identifiant des parties et aucune obligation d'émission au sens strict n'ont été trouvés publiés par la DGI à la date de ce pack. Le portail fen.finances.gouv.td n'a pas été lu comme une spécification technique.",
+    "source": "fen"
+  }
+}

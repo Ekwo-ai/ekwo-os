@@ -1,0 +1,494 @@
+[
+  {
+    "code": "TD-S-1925",
+    "name": "Ventes de biens, taux normal 19,25 %",
+    "description": "Livraisons de biens au taux normal de 17,5 %, majoré des centimes communaux et provinciaux : le compte 4431 reçoit la part de l'État (90,909 % de la taxe facturée) et le compte 4422 la part des collectivités publiques (9,091 %). Un seul taux de 19,25 % appliqué une fois, jamais 17,5 % puis 10 % du résultat : deux arrondis successifs peuvent s'écarter d'une unité monétaire de l'arrondi unique que porte la facture.",
+    "rate": 19.25,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2024-01-01",
+    "legal_reference": "Code général des impôts, art. 238-I-1°, dans la rédaction de la loi de finances pour 2024 (loi n° 031/PT/2023), art. 26, reconduit par la loi de finances pour 2026, art. 32 — taux de 17,5 % ; loi de finances pour 2024, art. 16, et Code général des impôts, art. 1017 — le taux facturé est porté à 19,25 % pour tenir compte des Centimes Communaux et Provinciaux ; directive CEMAC n° 11/22 du 10 novembre 2022, art. 22-1 — une surtaxe additionnelle à la taxe sur la valeur ajoutée n'est admise que si elle est déductible dans les mêmes conditions que la taxe elle-même.",
+    "source": "lf-2024",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "CA1925"
+        },
+        {
+          "type": "tax",
+          "account": "4431",
+          "factor": 90.909,
+          "box": "TVA1925",
+          "box_factor": 90.909
+        },
+        {
+          "type": "tax",
+          "account": "4422",
+          "factor": 9.091,
+          "box": "CAC1925",
+          "box_factor": 9.091
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "CA1925",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "4431",
+          "factor": 90.909,
+          "box": "TVA1925",
+          "box_factor": -90.909
+        },
+        {
+          "type": "tax",
+          "account": "4422",
+          "factor": 9.091,
+          "box": "CAC1925",
+          "box_factor": -9.091
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 10
+  },
+  {
+    "code": "TD-S-1925-SRV",
+    "name": "Prestations de services, taux normal 19,25 %",
+    "description": "Prestations de services au taux normal, même répartition que TD-S-1925, sur le compte 4432.",
+    "rate": 19.25,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2024-01-01",
+    "legal_reference": "Code général des impôts, art. 238-I-1°, dans la rédaction de la loi de finances pour 2024, art. 26, reconduit par la loi de finances pour 2026, art. 32 ; loi de finances pour 2024, art. 16, et CGI art. 1017 pour les 19,25 % facturés ; directive CEMAC n° 11/22, art. 22-1.",
+    "source": "lf-2024",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "CA1925"
+        },
+        {
+          "type": "tax",
+          "account": "4432",
+          "factor": 90.909,
+          "box": "TVA1925",
+          "box_factor": 90.909
+        },
+        {
+          "type": "tax",
+          "account": "4422",
+          "factor": 9.091,
+          "box": "CAC1925",
+          "box_factor": 9.091
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "CA1925",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "4432",
+          "factor": 90.909,
+          "box": "TVA1925",
+          "box_factor": -90.909
+        },
+        {
+          "type": "tax",
+          "account": "4422",
+          "factor": 9.091,
+          "box": "CAC1925",
+          "box_factor": -9.091
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 20
+  },
+  {
+    "code": "TD-S-9",
+    "name": "Biens de la liste réduite, 9 %",
+    "description": "Sucre, huile, lait, yaourt, beurre, fromage, viande, savon, textile, fer à béton, produits agroalimentaires de fabrication locale hors alcool, matériel d'artisanat et de pêche.",
+    "rate": 9,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "conditions": [
+      "supply_nature"
+    ],
+    "legal_reference": "Code général des impôts, art. 238-I-2°, dans la rédaction de la loi de finances pour 2026 (loi n° 008/AN/SENAT/2025), art. 32 — taux réduit de 9 % sur la liste qu'il énumère. Le texte ne dit rien d'une majoration par centimes additionnels sur ce taux : aucune n'est portée ici, faute de disposition trouvée qui l'établirait ou l'exclurait.",
+    "source": "lf-2026",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "CA9"
+        },
+        {
+          "type": "tax",
+          "account": "4431",
+          "box": "TVA9"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "CA9",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "4431",
+          "box": "TVA9",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 30
+  },
+  {
+    "code": "TD-S-9-SRV",
+    "name": "Hébergement et restauration, 9 %",
+    "rate": 9,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "conditions": [
+      "supply_nature"
+    ],
+    "legal_reference": "Code général des impôts, art. 238-I-2°, dans la rédaction de la loi de finances pour 2026, art. 32 — taux réduit de 9 % sur l'hébergement et la restauration.",
+    "source": "lf-2026",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "CA9"
+        },
+        {
+          "type": "tax",
+          "account": "4432",
+          "box": "TVA9"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "CA9",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "4432",
+          "box": "TVA9",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 40
+  },
+  {
+    "code": "TD-S-EXP",
+    "name": "Exportation et opérations assimilées, taux zéro",
+    "description": "Exportations, transports aériens internationaux, avitaillement en carburant Jet A1 des aéronefs à destination de l'étranger, entretien et réparation d'aéronefs.",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2026-01-01",
+    "conditions": [
+      "transport_evidence"
+    ],
+    "legal_reference": "Code général des impôts, art. 238-I-3°, dans la rédaction de la loi de finances pour 2026, art. 32 — taux zéro sur les exportations et les opérations qu'il énumère. La loi remplace l'article 238 en bloc (« Article 238 (nouveau) ») ; son 3° n'a pas été relu mot à mot au-delà des 1° et 2° dont le contenu a été vérifié.",
+    "source": "lf-2026",
+    "vat_category": "G",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "EXP"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "EXP",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 50
+  },
+  {
+    "code": "TD-S-EXO",
+    "name": "Opération exonérée (art. 230)",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2026-01-01",
+    "conditions": [
+      "supply_nature"
+    ],
+    "legal_reference": "Code général des impôts, art. 230, dans la rédaction de la loi de finances pour 2026, art. 31, dont le 15° exonère par position tarifaire les médicaments, les viandes (n° 02), les laits (n° 0401-0402), le pain, la farine, les livres scolaires, les semences, les engrais, le matériel agricole et le matériel photovoltaïque (n° 8541.42) — table vérifiée directement sur le fac-similé de la loi.",
+    "source": "lf-2026",
+    "vat_category": "E",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "EXO"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "EXO",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 60
+  },
+  {
+    "code": "TD-S-AUTOLIQ",
+    "name": "Vente en autoliquidation",
+    "description": "Vente à une personne assujettie par un vendeur qui ne relève pas de l'Impôt Général Libératoire (IGL), ou qui en relève mais a dépassé au cours de l'opération le seuil de 50 millions de FCFA : la taxe n'est pas facturée, l'acheteur assujetti l'auto-liquide.",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "domestic_reverse_charge",
+    "valid_from": "2026-01-01",
+    "conditions": [
+      "seller_threshold"
+    ],
+    "legal_reference": "Code général des impôts, art. 229-V (nouveau), issu de la loi de finances pour 2026, art. 30 — « Lorsqu'une personne physique ou morale ne relevant pas de l'IGL, ou relevant de l'IGL mais ayant dépassé au cours d'une opération le seuil de 50 millions de FCFA, fournit une prestation de service ou vend un bien à une personne assujettie à la TVA, la TVA bien que ne figurant pas sur la facture est auto liquidée, collectée par l'assujetti et versée au Trésor Public dans les conditions de droit commun relatives à la TVA retenue à la source. »",
+    "source": "lf-2026",
+    "vat_category": "AE",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "AUTOL"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "AUTOL",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 70
+  },
+  {
+    "code": "TD-P-1925",
+    "name": "Achats de biens, taux normal 19,25 %",
+    "description": "Taxe récupérable sur achats de marchandises, déductible dans les mêmes conditions que la taxe elle-même (directive CEMAC art. 22-1) : un seul montant, sans distinguer la part communale de la part étatique, faute de compte récupérable séparé au plan SYSCOHADA pour cette distinction.",
+    "rate": 19.25,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2024-01-01",
+    "legal_reference": "Code général des impôts, art. 238-I-1°, art. 1017 et loi de finances pour 2024, art. 16, pour le taux facturé de 19,25 % ; directive CEMAC n° 11/22, art. 22-1 — la surtaxe additionnelle n'est admise que si elle est déductible comme la taxe elle-même ; art. 246-II (nouveau), issu de la loi de finances pour 2026, art. 33 — « Sont également non déductibles de la TVA... les factures non électroniques normalisées, à exception des factures des fournisseurs étrangers ».",
+    "source": "lf-2024",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "4452",
+          "box": "DEDBS"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "4452",
+          "box": "DEDBS",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 110
+  },
+  {
+    "code": "TD-P-1925-SRV",
+    "name": "Services extérieurs, taux normal 19,25 %",
+    "rate": 19.25,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2024-01-01",
+    "legal_reference": "Code général des impôts, art. 238-I-1°, art. 1017 et loi de finances pour 2024, art. 16 ; directive CEMAC n° 11/22, art. 22-1.",
+    "source": "lf-2024",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "4454",
+          "box": "DEDBS"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "4454",
+          "box": "DEDBS",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 120
+  },
+  {
+    "code": "TD-P-1925-IMMO",
+    "name": "Immobilisations, taux normal 19,25 %",
+    "rate": 19.25,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2024-01-01",
+    "legal_reference": "Code général des impôts, art. 238-I-1°, art. 1017 et loi de finances pour 2024, art. 16 ; directive CEMAC n° 11/22, art. 22-1.",
+    "source": "lf-2024",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "4451",
+          "box": "DEDIMMO"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "4451",
+          "box": "DEDIMMO",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 130
+  },
+  {
+    "code": "TD-P-9",
+    "name": "Achats de biens de la liste réduite, 9 %",
+    "rate": 9,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "legal_reference": "Code général des impôts, art. 238-I-2°, dans la rédaction de la loi de finances pour 2026, art. 32.",
+    "source": "lf-2026",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "4452",
+          "box": "DEDBS"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "4452",
+          "box": "DEDBS",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 140
+  },
+  {
+    "code": "TD-P-9-SRV",
+    "name": "Hébergement et restauration, 9 %",
+    "rate": 9,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "legal_reference": "Code général des impôts, art. 238-I-2°, dans la rédaction de la loi de finances pour 2026, art. 32.",
+    "source": "lf-2026",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "4454",
+          "box": "DEDBS"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "4454",
+          "box": "DEDBS",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 150
+  },
+  {
+    "code": "TD-P-AUTOLIQ",
+    "name": "Achat en autoliquidation, 19,25 %",
+    "description": "TVA due par l'entreprise auprès d'un fournisseur qui ne relève pas de l'IGL, ou qui en relève mais a dépassé au cours de l'opération le seuil de 50 millions de FCFA, et qui ne la facture donc pas : la dette (compte 4478) et la créance de déduction (compte 4452) se neutralisent en écriture, chacune atteignant sa propre case de la déclaration.",
+    "rate": 19.25,
+    "scope": "purchase",
+    "treatment": "domestic_reverse_charge",
+    "valid_from": "2026-01-01",
+    "conditions": [
+      "seller_threshold"
+    ],
+    "legal_reference": "Code général des impôts, art. 229-V (nouveau), issu de la loi de finances pour 2026, art. 30 — la taxe non facturée est « auto liquidée, collectée par l'assujetti [l'acheteur] et versée au Trésor Public dans les conditions de droit commun relatives à la TVA retenue à la source » ; « Cette TVA auto-liquidée est déductible chez l'assujetti dans les conditions de droit commun. »",
+    "source": "lf-2026",
+    "vat_category": "AE",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "4452",
+          "box": "DEDBS"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "4478",
+          "box": "TVADUE"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "4452",
+          "box": "DEDBS",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "4478",
+          "box": "TVADUE",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 160
+  }
+]

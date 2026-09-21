@@ -1,0 +1,173 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "TD-TVA",
+  "name": "Déclaration de taxe sur la valeur ajoutée",
+  "period": [
+    "month"
+  ],
+  "period_default": "month",
+  "valid_from": "2026-01-01",
+  "legal_reference": "Code général des impôts, art. 229-III — « Seuls, les contribuables soumis au Régime du réel normal d'imposition et ceux soumis au RSI sont autorisés à facturer la TVA de manière apparente et à la déduire. Elles sont tenues à déposer leur déclaration mensuellement sans distinction de régime. » Disposition inchangée par la loi de finances pour 2026, dont l'article 30 n'a ajouté à l'article 229 que le paragraphe V (autoliquidation) ; art. 886-IV — une déclaration néant est obligatoire en l'absence d'opération ; art. 886-III — la déclaration est accompagnée du paiement de la taxe ; art. 996 — la déclaration est télétransmise par le portail e-Tax (sigi.finances.gouv.td). Le modèle imprimé du formulaire et la numérotation de ses cases ne sont publiés dans aucune source officielle trouvée : les cases de ce fichier sont nommées d'après ce que l'article 229 fait déclarer, et non d'après un formulaire.",
+  "source": "cgi",
+  "boxes": [
+    {
+      "box": "CA1925",
+      "kind": "base",
+      "name": "Opérations taxables au taux normal (19,25 % facturés)",
+      "sequence": 10,
+      "legal_reference": "Code général des impôts, art. 229-III et art. 238-I-1°",
+      "source": "cgi"
+    },
+    {
+      "box": "CA9",
+      "kind": "base",
+      "name": "Opérations taxables au taux réduit de 9 %",
+      "sequence": 20,
+      "legal_reference": "Code général des impôts, art. 229-III et art. 238-I-2°, dans la rédaction de la loi de finances pour 2026, art. 32",
+      "source": "cgi"
+    },
+    {
+      "box": "EXP",
+      "kind": "base",
+      "name": "Exportations et opérations assimilées, taux zéro",
+      "sequence": 30,
+      "legal_reference": "Code général des impôts, art. 229-III et art. 238-I-3°, dans la rédaction de la loi de finances pour 2026, art. 32 — la loi remplace l'article 238 en bloc (« Article 238 (nouveau) »), son 3° n'a pas été relu mot à mot au-delà des 1° et 2° cités par le pack",
+      "source": "cgi"
+    },
+    {
+      "box": "EXO",
+      "kind": "base",
+      "name": "Opérations exonérées (art. 230)",
+      "sequence": 40,
+      "legal_reference": "Code général des impôts, art. 229-III et art. 230, dans la rédaction de la loi de finances pour 2026, art. 31",
+      "source": "cgi"
+    },
+    {
+      "box": "AUTOL",
+      "kind": "base",
+      "name": "Ventes en autoliquidation, taxe due par le client",
+      "sequence": 45,
+      "legal_reference": "Code général des impôts, art. 229-V (nouveau), issu de la loi de finances pour 2026, art. 30 — « Lorsqu'une personne physique ou morale ne relevant pas de l'IGL, ou relevant de l'IGL mais ayant dépassé au cours d'une opération le seuil de 50 millions de FCFA, fournit une prestation de service ou vend un bien à une personne assujettie à la TVA, la TVA bien que ne figurant pas sur la facture est auto liquidée, collectée par l'assujetti et versée au Trésor Public dans les conditions de droit commun relatives à la TVA retenue à la source. » Le fait générateur tient au régime du vendeur (non affilié à l'Impôt Général Libératoire, ou l'ayant dépassé), et non à un choix libre de ne pas facturer la taxe.",
+      "source": "cgi"
+    },
+    {
+      "box": "CAT",
+      "kind": "total",
+      "name": "Montant total des opérations",
+      "sequence": 50,
+      "plus": [
+        "CA1925",
+        "CA9",
+        "EXP",
+        "EXO",
+        "AUTOL"
+      ],
+      "legal_reference": "Code général des impôts, art. 229-III",
+      "source": "cgi"
+    },
+    {
+      "box": "TVA1925",
+      "kind": "tax",
+      "name": "Taxe exigible, part principale du taux de 19,25 %",
+      "sequence": 60,
+      "legal_reference": "Code général des impôts, art. 229-III, art. 238-I-1° et art. 1017 — part de la taxe facturée qui revient à l'État, 90,909 % du montant facturé à 19,25 %",
+      "source": "cgi"
+    },
+    {
+      "box": "CAC1925",
+      "kind": "tax",
+      "name": "Centimes communaux et provinciaux sur le taux de 19,25 %",
+      "sequence": 65,
+      "legal_reference": "Loi de finances pour 2024, art. 16, et Code général des impôts, art. 1017 — part de la taxe facturée qui revient aux collectivités publiques, 9,091 % du montant facturé à 19,25 %. Déclarée avec la taxe sur une case distincte parce que la loi la garde à part des collectivités, sans qu'un formulaire officiel trouvé en fixe le numéro.",
+      "source": "lf-2024"
+    },
+    {
+      "box": "TVA9",
+      "kind": "tax",
+      "name": "Taxe exigible au taux réduit de 9 %",
+      "sequence": 70,
+      "legal_reference": "Code général des impôts, art. 229-III et art. 238-I-2°",
+      "source": "cgi"
+    },
+    {
+      "box": "TVADUE",
+      "kind": "tax",
+      "name": "Taxe due en autoliquidation (achats)",
+      "sequence": 75,
+      "legal_reference": "Code général des impôts, art. 229-V (nouveau), issu de la loi de finances pour 2026, art. 30 — la taxe est « collectée par l'assujetti [acheteur] et versée au Trésor Public dans les conditions de droit commun relatives à la TVA retenue à la source », soit, par renvoi, celles de l'art. 245 et de son échéance du 15 du mois suivant (loi de finances pour 2024, art. 35) ; « Cette TVA auto-liquidée est déductible chez l'assujetti dans les conditions de droit commun. »",
+      "source": "cgi"
+    },
+    {
+      "box": "TVAB",
+      "kind": "total",
+      "name": "Total de la taxe exigible",
+      "sequence": 80,
+      "plus": [
+        "TVA1925",
+        "CAC1925",
+        "TVA9",
+        "TVADUE"
+      ],
+      "legal_reference": "Code général des impôts, art. 229-III",
+      "source": "cgi"
+    },
+    {
+      "box": "DEDIMMO",
+      "kind": "tax",
+      "name": "TVA déductible sur immobilisations",
+      "sequence": 90,
+      "legal_reference": "Code général des impôts, art. 229-III, et directive CEMAC n° 11/22, art. 22-1 pour la déductibilité de la part communale et provinciale",
+      "source": "cgi"
+    },
+    {
+      "box": "DEDBS",
+      "kind": "tax",
+      "name": "TVA déductible sur biens et services",
+      "sequence": 100,
+      "legal_reference": "Code général des impôts, art. 229-III, et directive CEMAC n° 11/22, art. 22-1",
+      "source": "cgi"
+    },
+    {
+      "box": "DEDT",
+      "kind": "total",
+      "name": "Total des déductions",
+      "sequence": 110,
+      "plus": [
+        "DEDIMMO",
+        "DEDBS"
+      ],
+      "legal_reference": "Code général des impôts, art. 229-III",
+      "source": "cgi"
+    },
+    {
+      "box": "NET",
+      "kind": "total",
+      "name": "TVA nette à payer",
+      "sequence": 120,
+      "plus": [
+        "TVAB"
+      ],
+      "minus": [
+        "DEDT"
+      ],
+      "floor_zero": true,
+      "legal_reference": "Code général des impôts, art. 229-III et art. 886-III — la déclaration est accompagnée du paiement",
+      "source": "cgi"
+    },
+    {
+      "box": "CRED",
+      "kind": "total",
+      "name": "Crédit de TVA à reporter",
+      "sequence": 130,
+      "plus": [
+        "DEDT"
+      ],
+      "minus": [
+        "TVAB"
+      ],
+      "floor_zero": true,
+      "legal_reference": "Code général des impôts, art. 229-III — aucun texte trouvé ne plafonne la durée du report",
+      "source": "cgi"
+    }
+  ]
+}

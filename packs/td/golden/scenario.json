@@ -1,0 +1,338 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "Une année d'un commerce et prestataire tchadien, déclarant chaque mois",
+  "chart": "default",
+  "fiscal_year": {
+    "name": "Exercice 2026",
+    "start": "2026-01-01",
+    "end": "2026-12-31"
+  },
+  "periods": [
+    {
+      "code": "2026-01",
+      "from": "2026-01-01",
+      "to": "2026-01-31"
+    },
+    {
+      "code": "2026-02",
+      "from": "2026-02-01",
+      "to": "2026-02-28"
+    },
+    {
+      "code": "2026-03",
+      "from": "2026-03-01",
+      "to": "2026-03-31"
+    },
+    {
+      "code": "2026-04",
+      "from": "2026-04-01",
+      "to": "2026-04-30"
+    }
+  ],
+  "statements": [
+    "TD-SYSCOHADA-BS",
+    "TD-SYSCOHADA-IS"
+  ],
+  "contacts": [
+    {
+      "ref": "client-td",
+      "name": "Comptoir du Chari SARL",
+      "type": "customer",
+      "country": "TD"
+    },
+    {
+      "ref": "client-hotel",
+      "name": "Hôtel Ndjari SA",
+      "type": "customer",
+      "country": "TD"
+    },
+    {
+      "ref": "client-fr",
+      "name": "Négoce Sahélien SAS",
+      "type": "customer",
+      "country": "FR"
+    },
+    {
+      "ref": "fourn-td",
+      "name": "Grossiste de Farcha SARL",
+      "type": "supplier",
+      "country": "TD"
+    },
+    {
+      "ref": "fourn-srv",
+      "name": "Froid Service Ndjamena SARL",
+      "type": "supplier",
+      "country": "TD"
+    },
+    {
+      "ref": "fourn-immo",
+      "name": "Bureautique du Logone SA",
+      "type": "supplier",
+      "country": "TD"
+    },
+    {
+      "ref": "fourn-autoliq",
+      "name": "Artisan du Ba-Illi",
+      "type": "supplier",
+      "country": "TD"
+    }
+  ],
+  "documents": [
+    {
+      "ref": "V1",
+      "type": "sale_invoice",
+      "contact": "client-td",
+      "date": "2026-01-10",
+      "why": "Une vente de marchandises au taux normal : la case CA1925, la taxe scindée en deux comptes — 4431 pour la part principale (90,909 % de la taxe facturée) et 4422 pour les centimes communaux et provinciaux (9,091 %), dans les cases TVA1925 et CAC1925. Les deux parts s'additionnent exactement à la taxe facturée à 19,25 %, calculée une seule fois.",
+      "lines": [
+        {
+          "name": "Marchandises",
+          "quantity": 40,
+          "unit_price": 10000,
+          "tax": "TD-S-1925",
+          "account": "7011"
+        }
+      ]
+    },
+    {
+      "ref": "V2",
+      "type": "sale_invoice",
+      "contact": "client-td",
+      "date": "2026-01-18",
+      "why": "Une prestation de services au taux normal de 19,25 % : la taxe part sur le compte 4432 pour sa part principale, 4422 pour les centimes.",
+      "lines": [
+        {
+          "name": "Prestation d'installation",
+          "quantity": 1,
+          "unit_price": 200000,
+          "tax": "TD-S-1925-SRV",
+          "account": "7061"
+        }
+      ]
+    },
+    {
+      "ref": "V3",
+      "type": "sale_invoice",
+      "contact": "client-hotel",
+      "date": "2026-02-05",
+      "why": "Des prestations d'hébergement et de restauration au taux réduit de 9 %, sans centimes additionnels sur ce taux faute de disposition trouvée qui les y ajoute : la case CA9, la taxe au compte 4432 et dans la case TVA9.",
+      "lines": [
+        {
+          "name": "Nuitées et restauration",
+          "quantity": 1,
+          "unit_price": 150000,
+          "tax": "TD-S-9-SRV",
+          "account": "7061"
+        }
+      ]
+    },
+    {
+      "ref": "V4",
+      "type": "sale_invoice",
+      "contact": "client-td",
+      "date": "2026-02-12",
+      "why": "Une vente de biens de la liste réduite (art. 238-I-2°) au taux de 9 % : la case CA9, la taxe au compte 4431.",
+      "lines": [
+        {
+          "name": "Sucre et huile",
+          "quantity": 1,
+          "unit_price": 80000,
+          "tax": "TD-S-9",
+          "account": "7011"
+        }
+      ]
+    },
+    {
+      "ref": "V5",
+      "type": "sale_invoice",
+      "contact": "client-fr",
+      "date": "2026-02-20",
+      "why": "Une exportation au taux zéro (art. 238-I-3°) : la case EXP, aucune taxe, un compte de ventes hors Région.",
+      "lines": [
+        {
+          "name": "Marchandises exportées",
+          "quantity": 1,
+          "unit_price": 500000,
+          "tax": "TD-S-EXP",
+          "account": "7012"
+        }
+      ]
+    },
+    {
+      "ref": "V6",
+      "type": "sale_invoice",
+      "contact": "client-td",
+      "date": "2026-03-03",
+      "why": "Une opération exonérée de l'article 230 : la case EXO, aucune taxe.",
+      "lines": [
+        {
+          "name": "Médicaments",
+          "quantity": 1,
+          "unit_price": 60000,
+          "tax": "TD-S-EXO",
+          "account": "7011"
+        }
+      ]
+    },
+    {
+      "ref": "V7",
+      "type": "sale_invoice",
+      "contact": "client-td",
+      "date": "2026-03-11",
+      "why": "Une vente en autoliquidation (art. 229-V) : le fournisseur ne facture pas la taxe, la case AUTOL enregistre l'opération et le client la déclare de son côté.",
+      "lines": [
+        {
+          "name": "Marchandises en autoliquidation",
+          "quantity": 1,
+          "unit_price": 90000,
+          "tax": "TD-S-AUTOLIQ",
+          "account": "7011"
+        }
+      ]
+    },
+    {
+      "ref": "AV1",
+      "type": "sale_credit_note",
+      "contact": "client-td",
+      "date": "2026-03-16",
+      "why": "Un avoir partiel sur la vente V1 : la case CA1925 et la taxe, sur ses deux comptes, diminuent dans le mois de l'avoir.",
+      "lines": [
+        {
+          "name": "Retour de marchandises",
+          "quantity": 8,
+          "unit_price": 10000,
+          "tax": "TD-S-1925",
+          "account": "7011"
+        }
+      ]
+    },
+    {
+      "ref": "A1",
+      "type": "purchase_invoice",
+      "contact": "fourn-td",
+      "date": "2026-01-08",
+      "why": "Un achat de marchandises au taux normal, entièrement déductible (directive CEMAC art. 22-1) : un seul compte récupérable, 4452, dans la case DEDBS.",
+      "lines": [
+        {
+          "name": "Marchandises",
+          "quantity": 50,
+          "unit_price": 5000,
+          "tax": "TD-P-1925",
+          "account": "6011"
+        }
+      ]
+    },
+    {
+      "ref": "A2",
+      "type": "purchase_invoice",
+      "contact": "fourn-srv",
+      "date": "2026-02-10",
+      "why": "Un entretien facturé au taux normal : la taxe récupérable sur services extérieurs, compte 4454, case DEDBS.",
+      "lines": [
+        {
+          "name": "Entretien des installations",
+          "quantity": 1,
+          "unit_price": 120000,
+          "tax": "TD-P-1925-SRV",
+          "account": "6248"
+        }
+      ]
+    },
+    {
+      "ref": "A4",
+      "type": "purchase_invoice",
+      "contact": "fourn-td",
+      "date": "2026-03-06",
+      "why": "Un achat de biens de la liste réduite à 9 %, déductible : compte 4452, case DEDBS.",
+      "lines": [
+        {
+          "name": "Sucre",
+          "quantity": 1,
+          "unit_price": 50000,
+          "tax": "TD-P-9",
+          "account": "6011"
+        }
+      ]
+    },
+    {
+      "ref": "A3",
+      "type": "purchase_invoice",
+      "contact": "fourn-immo",
+      "date": "2026-04-02",
+      "why": "Du matériel de bureau immobilisé au taux normal : la taxe au compte 4451, case DEDIMMO.",
+      "lines": [
+        {
+          "name": "Ordinateurs et mobilier de bureau",
+          "quantity": 1,
+          "unit_price": 1400000,
+          "tax": "TD-P-1925-IMMO",
+          "account": "2441"
+        }
+      ]
+    },
+    {
+      "ref": "A5",
+      "type": "purchase_invoice",
+      "contact": "fourn-autoliq",
+      "date": "2026-04-14",
+      "why": "Un achat auprès d'un fournisseur qui ne facture pas la taxe (art. 229-V) : la taxe due (case TVADUE, compte 4478) et sa déduction (case DEDBS, compte 4452) se neutralisent en écriture, chacune atteignant sa propre case.",
+      "lines": [
+        {
+          "name": "Marchandises en autoliquidation",
+          "quantity": 1,
+          "unit_price": 60000,
+          "tax": "TD-P-AUTOLIQ",
+          "account": "6011"
+        }
+      ]
+    },
+    {
+      "ref": "A6",
+      "type": "purchase_invoice",
+      "contact": "fourn-srv",
+      "date": "2026-04-20",
+      "why": "Une prestation de la liste réduite à 9 %, déductible : compte 4454, case DEDBS.",
+      "lines": [
+        {
+          "name": "Entretien d'équipement de restauration",
+          "quantity": 1,
+          "unit_price": 30000,
+          "tax": "TD-P-9-SRV",
+          "account": "6248"
+        }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "E1",
+      "direction": "inbound",
+      "date": "2026-02-15",
+      "amount": 477000,
+      "contact": "client-td",
+      "journal": "BQ",
+      "match": "V1",
+      "why": "Un encaissement qui solde exactement la facture de marchandises V1."
+    },
+    {
+      "ref": "E2",
+      "direction": "inbound",
+      "date": "2026-03-20",
+      "amount": 100000,
+      "contact": "client-hotel",
+      "journal": "BQ",
+      "match": null,
+      "why": "Un acompte non affecté : il reste une ligne ouverte au compte client."
+    },
+    {
+      "ref": "P1",
+      "direction": "outbound",
+      "date": "2026-02-08",
+      "amount": 298125,
+      "contact": "fourn-td",
+      "journal": "BQ",
+      "match": "A1",
+      "why": "Un paiement qui solde exactement la facture d'achat A1."
+    }
+  ]
+}
