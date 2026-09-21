@@ -1,0 +1,207 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "AU-BAS",
+  "name": "Business activity statement",
+  "period": [
+    "month",
+    "quarter",
+    "year"
+  ],
+  "period_default": "quarter",
+  "valid_from": "2000-07-01",
+  "legal_reference": "A New Tax System (Goods and Services Tax) Act 1999, s. 27-5 — the tax periods that apply to a registered entity are each period of 3 months ending on 31 March, 30 June, 30 September or 31 December, except where it elects monthly periods under s. 27-10 or the Commissioner determines otherwise; s. 27-15 obliges the Commissioner to determine monthly periods where GST turnover meets the tax period turnover threshold of $20 million; Division 151 provides annual tax periods, which ATO, When and how to report and pay GST, offers to a business that is registered voluntarily with a GST turnover under $75,000. Three cadences, and the law gives one of them to everybody, which is what period_default says. The return itself is the GST return of s. 31-5, which s. 31-15 requires in the approved form, and the approved form is the business activity statement: this is form NAT 4189 as printed in September 2025, completed under the accounts method with amounts that exclude GST (see G1). The worksheet labels G4 to G9 and G12 to G20 belong to the calculation worksheet method, which requires GST-inclusive amounts and is kept in the business's records rather than reported, and G21 to G24 to the instalment option; none of them is carried. The ATO asks for whole dollars, cents rounded down, and no negative figure; the pack reports the cents the ledger holds.",
+  "source": "gst-act",
+  "deadline": {
+    "rule": "day_of_month_after_period",
+    "day": 21,
+    "legal_reference": "A New Tax System (Goods and Services Tax) Act 1999, s. 31-10(1) — a GST return for a tax period other than a quarterly one is given on or before the 21st day of the month following the end of that period. A quarterly return is due later, under the table of s. 31-8(1): on 28 October, 28 February, 28 April and 28 July for the quarters ending in September, December, March and June, and ATO, Due dates for lodging and paying your BAS, adds up to two weeks for a quarterly statement lodged online, except for the December quarter, and 31 October for an annual return. A form carries one rule, so the pack declares the monthly day, which is never later than the law for any cadence: for a quarterly filer it is seven days early, and for the December quarter five weeks early. The gap is recorded in docs/international.md.",
+    "source": "gst-act"
+  },
+  "boxes": [
+    {
+      "box": "G1",
+      "kind": "base",
+      "name": "Total sales",
+      "sequence": 10,
+      "legal_reference": "Business activity statement, form NAT 4189, label G1, and ATO, Instructions for completing your BAS, step 1 — total sales: taxable, GST-free and input-taxed sales together. Under the accounts method the business may report G1 without the GST and marks 'No' against 'Does the amount shown at G1 include GST?'; ATO, Choose a method to complete your full BAS, says that choice then governs every other GST label, and this pack makes it: every base it writes is the value without GST, which is what the ledger holds. The ATO asks that an offshore purchase reverse charged under Division 84 of the GST Act also be reported here, and the two reverse-charge codes of this pack post to it.",
+      "source": "bas-step1"
+    },
+    {
+      "box": "G2",
+      "kind": "base",
+      "name": "Export sales",
+      "sequence": 20,
+      "legal_reference": "Business activity statement, form NAT 4189, label G2, and ATO, Instructions for completing your BAS, step 1 — the free-on-board value of GST-free exports of goods under s. 38-185 of the GST Act; every amount reported at G2 is also reported at G1, which is why the export code posts its base to both boxes rather than G1 being a total of G2.",
+      "source": "bas-step1"
+    },
+    {
+      "box": "G3",
+      "kind": "base",
+      "name": "Other GST-free sales",
+      "sequence": 30,
+      "legal_reference": "Business activity statement, form NAT 4189, label G3, and ATO, Instructions for completing your BAS, step 1 — GST-free sales other than exports of goods: basic food, most health and education services, and supplies of services for consumption outside Australia under s. 38-190. Every amount reported at G3 is also reported at G1.",
+      "source": "bas-step1"
+    },
+    {
+      "box": "G10",
+      "kind": "base",
+      "name": "Capital purchases",
+      "sequence": 40,
+      "legal_reference": "Business activity statement, form NAT 4189, label G10, and ATO, Instructions for completing your BAS, step 3 — business assets such as machinery, computers and vehicles, without GST under the choice made at G1. A ledger does not know which purchase is capital, so the pack carries a capital code, AU-P-GST-CAP, that posts here instead of G11.",
+      "source": "bas-step3"
+    },
+    {
+      "box": "G11",
+      "kind": "base",
+      "name": "Non-capital purchases",
+      "sequence": 50,
+      "legal_reference": "Business activity statement, form NAT 4189, label G11, and ATO, Instructions for completing your BAS, step 3 — every business purchase not reported at G10, including GST-free and input-taxed purchases, purchases from suppliers who are not registered, importations and offshore supplies subject to the reverse charge.",
+      "source": "bas-step3"
+    },
+    {
+      "box": "W1",
+      "kind": "base",
+      "name": "Total salary, wages and other payments",
+      "sequence": 60,
+      "legal_reference": "Business activity statement, form NAT 4189, label W1, and ATO, Pay as you go (PAYG) withholding — gross payments from which an amount is usually withheld under Division 12 of Schedule 1 to the Taxation Administration Act 1953. Declared and empty: a payroll is not a tax a pack carries, and Ekwo has no payroll module.",
+      "source": "payg-bas"
+    },
+    {
+      "box": "W2",
+      "kind": "tax",
+      "name": "Amount withheld from payments shown at W1",
+      "sequence": 70,
+      "legal_reference": "Business activity statement, form NAT 4189, label W2 — the amounts withheld from the payments at W1. Declared and empty, for the reason given at W1.",
+      "source": "payg-bas"
+    },
+    {
+      "box": "W4",
+      "kind": "tax",
+      "name": "Amount withheld where no ABN is quoted",
+      "sequence": 80,
+      "legal_reference": "Business activity statement, form NAT 4189, label W4, and ATO, Pay as you go (PAYG) withholding — 47 % of the invoice amount, from 1 July 2017, withheld from a supplier who does not quote an ABN under s. 12-190 of Schedule 1 to the Taxation Administration Act 1953. The one PAYG label a purchase in the ledger fills: AU-P-NOABN-47 posts to it.",
+      "source": "payg-bas"
+    },
+    {
+      "box": "W3",
+      "kind": "tax",
+      "name": "Other amounts withheld",
+      "sequence": 90,
+      "legal_reference": "Business activity statement, form NAT 4189, label W3 — withholding from investment income where no tax file number is quoted, from payments to foreign residents and the other cases the ATO lists. Declared and empty.",
+      "source": "payg-bas"
+    },
+    {
+      "box": "W5",
+      "kind": "total",
+      "name": "Total amounts withheld",
+      "sequence": 100,
+      "plus": [
+        "W2",
+        "W4",
+        "W3"
+      ],
+      "legal_reference": "Business activity statement, form NAT 4189, label W5 — 'Total amounts withheld (W2 + W4 + W3)', written on the form as that sum.",
+      "source": "payg-bas"
+    },
+    {
+      "box": "1A",
+      "kind": "tax",
+      "name": "GST on sales",
+      "sequence": 110,
+      "legal_reference": "Business activity statement, form NAT 4189, label 1A, and ATO, Instructions for completing your BAS, step 5 — the GST the business is liable to pay for the period, taken from its records under the accounts method. It includes the GST a registered recipient owes on an offshore supply reverse charged under Division 84 or by agreement under s. 83-5 of the GST Act, which ATO, Reverse charge GST on offshore goods and services purchases, asks to be reported here.",
+      "source": "bas-step5"
+    },
+    {
+      "box": "1B",
+      "kind": "tax",
+      "name": "GST on purchases",
+      "sequence": 120,
+      "legal_reference": "Business activity statement, form NAT 4189, label 1B, and ATO, Instructions for completing your BAS, step 5 — the GST credits the business is entitled to claim, taken from its records; the credit on deferred GST on imports is claimed here too.",
+      "source": "bas-step5"
+    },
+    {
+      "box": "4",
+      "kind": "total",
+      "name": "PAYG tax withheld",
+      "sequence": 130,
+      "plus": [
+        "W5"
+      ],
+      "legal_reference": "Business activity statement, form NAT 4189, Summary, label 4 — 'Write the W5 amount at 4 in the Summary section'.",
+      "source": "bas-form"
+    },
+    {
+      "box": "5A",
+      "kind": "tax",
+      "name": "PAYG income tax instalment",
+      "sequence": 140,
+      "legal_reference": "Business activity statement, form NAT 4189, Summary, label 5A — the instalment of income tax worked out at T7, T9 or T11. Declared and empty: it is a fraction of an income tax the ledger does not compute.",
+      "source": "bas-form"
+    },
+    {
+      "box": "7",
+      "kind": "tax",
+      "name": "Deferred company or fund instalment",
+      "sequence": 150,
+      "legal_reference": "Business activity statement, form NAT 4189, Summary, label 7. Declared and empty.",
+      "source": "bas-form"
+    },
+    {
+      "box": "7A",
+      "kind": "tax",
+      "name": "Deferred GST",
+      "sequence": 160,
+      "legal_reference": "ATO, Deferred GST scheme — an importer approved under s. 33-15(1)(b) of the GST Act and Division 33 of the GST Regulations 2019 pays the GST on its taxable importations with its monthly activity statement, where the ATO prefills it at label 7A, and claims the credit at 1B in the same month. Label 7A is printed on the monthly statement of an approved importer and not on the quarterly form NAT 4189; the ATO's worked example adds it into 8A.",
+      "source": "ato-deferred-gst"
+    },
+    {
+      "box": "5B",
+      "kind": "tax",
+      "name": "Credit from PAYG income tax instalment variation",
+      "sequence": 170,
+      "legal_reference": "Business activity statement, form NAT 4189, Summary, label 5B — a credit arising from a varied PAYG income tax instalment. Declared and empty, for the reason given at 5A.",
+      "source": "bas-form"
+    },
+    {
+      "box": "8A",
+      "kind": "total",
+      "name": "Amounts you owe the ATO",
+      "sequence": 180,
+      "plus": [
+        "1A",
+        "4",
+        "5A",
+        "7",
+        "7A"
+      ],
+      "legal_reference": "Business activity statement, form NAT 4189, Summary, label 8A — '1A + 4 + 5A + 7'; ATO, Deferred GST scheme, adds 7A to it on the statement of an approved importer, whose worked example reports 8A as 1A plus 7A.",
+      "source": "bas-form"
+    },
+    {
+      "box": "8B",
+      "kind": "total",
+      "name": "Amounts the ATO owes you",
+      "sequence": 190,
+      "plus": [
+        "1B",
+        "5B"
+      ],
+      "legal_reference": "Business activity statement, form NAT 4189, Summary, label 8B — '1B + 5B'.",
+      "source": "bas-form"
+    },
+    {
+      "box": "9",
+      "kind": "total",
+      "name": "Payment or refund amount",
+      "sequence": 200,
+      "plus": [
+        "8A"
+      ],
+      "minus": [
+        "8B"
+      ],
+      "legal_reference": "Business activity statement, form NAT 4189, label 9 — if 8A is more than 8B the result of 8A minus 8B is payable to the ATO, otherwise 8B minus 8A is refundable. The form prints a positive figure and a Yes or No; the pack writes the subtraction, so a refund reads as a negative 9.",
+      "source": "bas-form"
+    }
+  ]
+}

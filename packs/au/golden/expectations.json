@@ -1,0 +1,37 @@
+{
+  "note": "Claims about this pack that no other pack can make, and that the pack's own files cannot check themselves against. Read by the tests through tests/helpers/packs.ts. Like the rest of golden/ beside scenario.json, this file is outside the pack checksum: it is evidence about the pack, not part of it.",
+  "report_arithmetic": [
+    {
+      "box": "W5",
+      "kind": "total",
+      "plus": ["W2", "W4", "W3"],
+      "minus": []
+    },
+    {
+      "box": "4",
+      "kind": "total",
+      "plus": ["W5"],
+      "minus": []
+    },
+    {
+      "box": "8A",
+      "kind": "total",
+      "plus": ["1A", "4", "5A", "7", "7A"],
+      "minus": []
+    },
+    {
+      "box": "8B",
+      "kind": "total",
+      "plus": ["1B", "5B"],
+      "minus": []
+    },
+    {
+      "box": "9",
+      "kind": "total",
+      "plus": ["8A"],
+      "minus": ["8B"]
+    }
+  ],
+  "arithmetic_note": "Five labels of the business activity statement are an arithmetic the form prints rather than an amount anybody books. Form NAT 4189 writes W5 as 'W2 + W4 + W3', tells the filer to write the W5 amount at 4, prints 8A as '1A + 4 + 5A + 7' and 8B as '1B + 5B', and makes 9 the difference of 8A and 8B in whichever direction it falls. The one addition that is not on that form is 7A in 8A: label 7A is printed on the monthly statement of an importer approved for the deferred GST scheme, and the ATO's worked example on its Deferred GST scheme page reports 8A as 1A plus 7A. The worksheet labels G5, G6, G8, G9, G12, G16, G17, G19 and G20 are arithmetic too, and are deliberately not claimed: the pack does not carry the worksheet, for the reason its tax_report.json gives.",
+  "facts_note": "No statement_facts. ASIC takes digital financial reports, and nothing in this pack was verified against a taxonomy one would be written in, so both statements leave `xbrl` and `taxonomy` null. A wrong fact key is worse than none."
+}

@@ -89,7 +89,7 @@ OpenAPI description, and row level security decides who sees what.
   its declaration boxes and its annual accounts in French, Dutch, German and
   English, and a company keeping its books in Dutch reads Dutch throughout.
   [`docs/languages.md`](docs/languages.md) is the mechanism.
-- **Every country a pack, out of the box.** <!-- generated:countries -->Belgium (`be`), Côte d’Ivoire (`ci`), Germany (`de`), Estonia (`ee`), España (`es`), France (`fr`), United Kingdom (`gb`), Ireland (`ie`), Luxembourg (`lu`), Nederland (`nl`), Sénégal (`sn`) and United States (`us`)<!-- /generated --> — each with its chart of accounts, its tax codes, its
+- **Every country a pack, out of the box.** <!-- generated:countries -->Australia (`au`), Belgium (`be`), Côte d’Ivoire (`ci`), Germany (`de`), Estonia (`ee`), España (`es`), France (`fr`), United Kingdom (`gb`), Ireland (`ie`), Luxembourg (`lu`), Nederland (`nl`), Sénégal (`sn`) and United States (`us`)<!-- /generated --> — each with its chart of accounts, its tax codes, its
   declaration boxes and its annual accounts, and each installed by `ekwo init`.
   The United Kingdom was the first that is not a Member State of the European
   Union; the United States, with the sales and use taxes of three states and
@@ -241,6 +241,7 @@ psql "$DATABASE_URL" -f supabase/seed/18_pack_de.sql
 psql "$DATABASE_URL" -f supabase/seed/19_pack_es.sql
 psql "$DATABASE_URL" -f supabase/seed/20_pack_sn.sql
 psql "$DATABASE_URL" -f supabase/seed/21_pack_ci.sql
+psql "$DATABASE_URL" -f supabase/seed/40_pack_au.sql
 ```
 <!-- /generated -->
 
