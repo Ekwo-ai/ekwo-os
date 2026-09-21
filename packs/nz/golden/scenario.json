@@ -31,8 +31,7 @@
     { "ref": "supp-advice", "name": "Manuka Advisory Ltd", "type": "supplier", "country": "NZ" },
     { "ref": "supp-produce", "name": "Waikato Growers Co-operative", "type": "supplier", "country": "NZ" },
     { "ref": "supp-bank", "name": "Tui Bank Ltd", "type": "supplier", "country": "NZ" },
-    { "ref": "supp-council", "name": "Kestrel Bay District Council", "type": "supplier", "country": "NZ" },
-    { "ref": "supp-contractor", "name": "T. Ngata, builder — no IRD number provided", "type": "supplier", "country": "NZ" }
+    { "ref": "supp-council", "name": "Kestrel Bay District Council", "type": "supplier", "country": "NZ" }
   ],
   "documents": [
     {
@@ -236,16 +235,6 @@
       ]
     },
     {
-      "ref": "P9",
-      "type": "purchase_invoice",
-      "contact": "supp-contractor",
-      "date": "2027-11-05",
-      "why": "A schedular payment to a building contractor who has not provided an IRD number: 45 % is withheld under the no-notification rate of the Income Tax Act 2007, waiting on 2085, and the contractor is paid the other 55 %. Not a GST mechanism, and not reported on the GST101A; it exercises the second, non-15-percent, positive rate this pack carries.",
-      "lines": [
-        { "name": "Shopfront repairs", "quantity": 1, "unit_price": 1000, "tax": "NZ-P-WT-NONOTIFY", "account": "6320" }
-      ]
-    },
-    {
       "ref": "S12",
       "type": "sale_invoice",
       "contact": "cust-nz",
@@ -296,16 +285,6 @@
       "journal": "BNK",
       "match": "P4",
       "why": "The payment that moves the credit of P4 (payments basis) into November–December 2027."
-    },
-    {
-      "ref": "D3",
-      "direction": "outbound",
-      "date": "2027-11-10",
-      "amount": 550,
-      "contact": "supp-contractor",
-      "journal": "BNK",
-      "match": "P9",
-      "why": "The 55 % of P9 the contractor is paid once 45 % has been withheld."
     },
     {
       "ref": "R3",

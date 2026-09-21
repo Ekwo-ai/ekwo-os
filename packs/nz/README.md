@@ -159,20 +159,22 @@ accounting codes do. Nothing stops a company from mixing them; the golden year
 uses both once each to show where their figures land, one period later than
 the invoice basis would have put them.
 
-**No entertainment adjustment, no partial credit — but one withholding tax
-that is a genuine New Zealand equivalent of Australia's.** This pack does not
-carry the GST output-tax adjustment New Zealand ties to the 50 % of
-entertainment expenditure that is not deductible for income tax; without an
-independently verified section number for it this session, it is left out
-rather than guessed at, and a purchase of entertainment should use `NZ-P-GST`
-until a reviewer supplies the citation. It does carry `NZ-P-WT-NONOTIFY`: a
-schedular payment to a contractor who has not provided an IRD number is
-withheld at the Income Tax Act 2007's no-notification rate, 45 %, under
-Schedule 4 — the direct New Zealand counterpart of `AU-P-NOABN-47`, declared
-for the same reason and with the same caveat on its exact subsection. It is
-not a GST mechanism and posts to no box of GST101A at all; it exists in this
-pack mainly so the golden scenario exercises a second positive rate beside
-15 %, the way Australia's withholding code does for its BAS.
+**No entertainment adjustment, no partial credit, no schedular-payment
+withholding.** This pack does not carry the GST output-tax adjustment New
+Zealand ties to the 50 % of entertainment expenditure that is not deductible
+for income tax; without an independently verified section number for it this
+session, it is left out rather than guessed at, and a purchase of
+entertainment should use `NZ-P-GST` until a reviewer supplies the citation.
+Nor does it carry New Zealand's schedular-payment withholding tax — the direct
+counterpart of `AU-P-NOABN-47`, withheld at the Income Tax Act 2007's
+no-notification rate when a contractor has not provided their IRD number: an
+earlier draft of this pack declared it as `NZ-P-WT-NONOTIFY` for no reason
+this pack's own sourcing rule accepts — its only real purpose was to give the
+golden scenario a second positive rate beside 15 %, which is not a reason to
+declare a tax. It is not a GST mechanism, is not reported on GST101A, and
+belongs in a pack of its own once its rate and section are read from the
+operative text rather than from general knowledge; see "What this pack does
+not carry".
 
 ## The statement
 
@@ -334,6 +336,12 @@ invented fact this pack's sourcing rule forbids.
 - **GST103 and the provisional tax instalment** folded into it.
 - **The entertainment expenditure GST adjustment** tied to the 50 %
   non-deductible portion of the income tax entertainment rules — see "Taxes".
+- **Schedular-payment withholding tax** on a contract payment (Income Tax
+  Act 2007, sch. 4), including the no-notification rate charged when a
+  contractor has not provided an IRD number — Australia's `AU-P-NOABN-47`
+  counterpart. Not a GST mechanism, and not carried here until its rate and
+  section are read from the operative text rather than from general
+  knowledge — see "Taxes".
 - **A partly creditable case of the imported-services reverse charge**,
   between wholly non-creditable (below 95 % taxable use) and no charge at all
   (95 % or more) — see "Taxes".
@@ -361,11 +369,10 @@ not, is in [`docs/packs.md`](../../docs/packs.md) under "Certification, and
 who may say what". Points a chartered accountant or a tax agent should read
 first, roughly in the order the author is least sure of them:
 
-1. **Every subsection letter this pack cites against the GST Act and the
-   Income Tax Act 2007** — ss. 19E–19N, s. 8(4B), s. 11(1)(mb), s. 11(1)(m),
-   s. 20(3), and Schedule 4's no-notification rate for `NZ-P-WT-NONOTIFY` —
-   was written from established knowledge of the Acts rather than read fresh
-   against `legislation.govt.nz`, which refused every request made of it this
+1. **Every subsection letter this pack cites against the GST Act** —
+   ss. 19E–19N, s. 8(4B), s. 11(1)(mb), s. 11(1)(m), s. 20(3) — was written
+   from established knowledge of the Act rather than read fresh against
+   `legislation.govt.nz`, which refused every request made of it this
    session, scripted and browser-driven alike. See "Sources".
 2. **The ISO 6523 ICD code for the NZBN** on Peppol, left null — see
    "Electronic invoicing".

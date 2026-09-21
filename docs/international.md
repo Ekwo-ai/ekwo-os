@@ -2750,13 +2750,12 @@ The second pack of Oceania, `packs/nz/`, `community`, seed 41, read beside
 `packs/au/`. Written mostly from Inland Revenue's own guide, IR375, after
 `legislation.govt.nz` refused every attempt to read the Goods and Services Tax
 Act 1985 directly this session, scripted and browser-driven alike: an original
-chart of 163 accounts, eighteen taxes at the one GST rate of 15 % since
+chart of 163 accounts, seventeen taxes at the one GST rate of 15 % since
 1 October 2010 — zero-rating in four separate shapes, exempt supplies that
 leave the return altogether, the imported-services reverse charge of s. 8(4B),
-the payments basis on both sides, and a schedular-payment withholding tax at
-the no-notification rate — form GST101A, the statement of financial position
-and profit or loss of a Tier 2 for-profit entity, and a register of nineteen
-texts. See [`packs/nz/README.md`](../packs/nz/README.md).
+and the payments basis on both sides — form GST101A, the statement of
+financial position and profit or loss of a Tier 2 for-profit entity, and a
+register of nineteen texts. See [`packs/nz/README.md`](../packs/nz/README.md).
 
 ### From New Zealand
 

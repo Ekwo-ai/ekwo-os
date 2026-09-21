@@ -386,27 +386,5 @@
       ]
     },
     "sequence": 170
-  },
-  {
-    "code": "NZ-P-WT-NONOTIFY",
-    "name": "Schedular payment to a contractor with no IRD number provided — 45 % withheld",
-    "kind": "withholding",
-    "rate": 45,
-    "scope": "purchase",
-    "treatment": "not_subject",
-    "valid_from": "2010-04-01",
-    "legal_reference": "Income Tax Act 2007, sch. 4 — a schedular payment (a contract payment for an activity the schedule lists: building and construction, cleaning, forestry, agricultural contracting and others) carries withholding tax at the rate the schedule sets for that activity, deducted by the payer under the PAYE rules and paid to the Commissioner; where the contractor has not provided their IRD number, the no-notification rate applies instead of the activity's own rate, currently 45 %. A community pack: the exact section (the no-notification provision is generally cited as s. RD 10) and the activity-specific rates of Schedule 4 were not confirmed against the operative text of the Income Tax Act 2007 in this session — legislation.govt.nz refused every automated read attempted, scripted and browser-driven alike — only against general knowledge of the schedular payment withholding regime; a reviewer should read Schedule 4 and the no-notification provision before relying on the 45 % figure or the section number. This tax is not a GST mechanism and is not reported on the GST101A; it is declared beside the GST codes only because it is a genuine New Zealand withholding tax a purchase invoice can carry, the way AU-P-NOABN-47 sits beside the Australian GST codes for the same reason.",
-    "source": "income-tax-act",
-    "postings": {
-      "invoice": [
-        { "type": "base" },
-        { "type": "tax", "factor": -100, "account": "2085" }
-      ],
-      "credit_note": [
-        { "type": "base" },
-        { "type": "tax", "factor": -100, "account": "2085" }
-      ]
-    },
-    "sequence": 180
   }
 ]
