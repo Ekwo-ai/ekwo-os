@@ -648,6 +648,38 @@
     "sequence": 180
   },
   {
+    "code": "EE-P-05-AJA",
+    "name": "Ajakirjandusväljaande soetamine 5%",
+    "description": "Ajakirjandusväljaande maksumäär 01.08.2022–31.12.2024",
+    "rate": 5,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2022-08-01",
+    "valid_to": "2024-12-31",
+    "legal_reference": "KMS § 15 lg 2¹, redaktsioon RT I, 04.06.2022, 4, kehtetu alates 01.01.2025, ja § 29 lg 1 — ajakirjandusväljaande soetamisel arvele märgitud 5-protsendiline käibemaks on sisendkäibemaksuna mahaarvatav; vormil KMD lahter 5",
+    "source": "kms",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "2311",
+          "box": "5"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "2311",
+          "box": "5",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 185
+  },
+  {
     "code": "EE-P-13-MAJ",
     "name": "Majutuse soetamine 13%",
     "description": "Lähetusega seotud majutus on mahaarvatav",

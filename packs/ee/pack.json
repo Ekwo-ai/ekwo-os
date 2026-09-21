@@ -2,7 +2,7 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "EE",
   "name": "Estonia",
-  "version": "1.9.0",
+  "version": "1.10.0",
   "schema_min": "20260921084143",
   "seed_sequence": 13,
   "released_at": "2026-09-21",

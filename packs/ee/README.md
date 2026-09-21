@@ -86,9 +86,13 @@ models a 2029 rate change models something that no longer exists.
 
 The accommodation rate moved the other way: 9 % until 31.12.2024, 13 % from
 01.01.2025, and the pack carries both. The press rate moved twice — 9 %, then
-5 % from 01.08.2022, then 9 % again from 01.01.2025 — and the 5 % code is here
-because a cash-accounting taxable person may still reach it through the
-transitional rule of KMS § 46 (2⁷) until the end of 2026.
+5 % from 01.08.2022, then 9 % again from 01.01.2025 — and the 5 % codes are
+here because a cash-accounting taxable person may still reach them through the
+transitional rule of KMS § 46 (2⁷) until the end of 2026. There are two since
+pack version 1.10.0: `EE-S-05-AJA` for the seller and `EE-P-05-AJA` for the
+buyer, whose input VAT at 5 % is deductible under § 29 (1) and goes to box 5
+like every other domestic rate. Until then a purchase of a press publication
+between 01.08.2022 and 31.12.2024 had no code at its rate.
 
 **The 50 % car restriction** is KMS § 30 (3), not § 30 (4): subsection 4 is the
 list of exceptions, and subsection 7 is the two-year rule. It is 50 % of the
