@@ -158,6 +158,30 @@ Every pack has an owner in [`.github/CODEOWNERS`](.github/CODEOWNERS), who is
 asked to look at a pull request that moves it. Ownership is not certification:
 it is who knows the law, not who has signed anything.
 
+### Adding a country
+
+A new country is a folder and one command:
+
+1. **Create `packs/<cc>/`**, your ISO 3166-1 code in lower case, by copying the
+   pack that resembles your country most and following
+   [Adding a country in a day](docs/packs.md#adding-a-country-in-a-day).
+2. **Run `ekwo pack build <cc>`** (`node packages/cli/dist/bin.js pack build <cc>`
+   after `npm run build`). It writes the seed, and every list outside `packs/`
+   that names the packs: `[db.seed] sql_paths` in `supabase/config.toml`, the
+   `psql -f` lines and the list of countries in `README.md`, the `/packs/<cc>/`
+   line of `.github/CODEOWNERS` and the table of packs in `docs/packs.md`.
+3. **Commit what it wrote**, with the pack. Edit none of those lists by hand:
+   `ekwo pack check --all`, which the CI runs, refuses one that is not what
+   `packs/` says, exactly as it refuses a stale seed. Two branches that each
+   add a country conflict on those lines; resolve by running the build again.
+
+The only edits a pack may still need outside its folder are rows of reference
+data the pack cannot carry — a country outside the common system of VAT adds
+itself to `supabase/seed/00_territories.sql`, a new currency goes into
+`supabase/seed/00_currencies.sql`, an OHADA member State adds its code to
+`packs/ohada/manifest.json` — and, if you are going to own the pack, your
+handle on its CODEOWNERS line, which the next build keeps.
+
 If a régime cannot be expressed as rows, that is a design discussion worth
 having in an issue before any SQL is written. It is a gap in the core, not a
 reason to add a field that executes something.

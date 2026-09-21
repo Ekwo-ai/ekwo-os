@@ -29,8 +29,7 @@ leaving your account.
 What we are building, in order:
 
 1. **This repository — the core.** Schema, posting rules, VAT, reports, the
-   FEC, Belgian and French charts of accounts. Done, tested, installable
-   today.
+   FEC, and the country packs. Done, tested, installable today.
 2. **`npx ekwo-os init`** — point it at your own Supabase project and it applies
    the schema, seeds the country rules, creates the first administrator and
    the first company, in one command. Done; see
@@ -40,9 +39,9 @@ What we are building, in order:
    pull the VAT return or the FEC. Done; see [`packages/mcp`](packages/mcp/).
    A Community web application comes next.
 4. **Any country as a versioned pack of data**, with one golden test per
-   country — Belgium, France, Luxembourg, Estonia and the United Kingdom ship
-   today, and Ireland, Canada and Québec, the Netherlands and Germany come
-   next. The plan is in [`docs/international.md`](docs/international.md).
+   country. Every folder of [`packs/`](packs/) ships today — the list is under
+   [What is in this repository](#what-is-in-this-repository) — and more arrive
+   every week. The plan is in [`docs/international.md`](docs/international.md).
 5. **Format libraries** as independent MIT packages, in
    [`packages/formats/`](packages/formats/), organised by format and never by
    country: the [French FEC](packages/formats/fec/),
@@ -90,12 +89,14 @@ OpenAPI description, and row level security decides who sees what.
   its declaration boxes and its annual accounts in French, Dutch, German and
   English, and a company keeping its books in Dutch reads Dutch throughout.
   [`docs/languages.md`](docs/languages.md) is the mechanism.
-- **Six countries out of the box.** PCMN (AR du 21 octobre 2018), PCG
-  (règlement ANC 2022-06), the Luxembourg PCN, an Estonian chart, a British
-  one and an American one, each with its tax codes, its declaration boxes and
-  its annual accounts. The United Kingdom is the first that is not a Member
-  State of the European Union; the United States, with the sales and use
-  taxes of three states and no value added tax, the first without a VAT.
+- **Every country a pack, out of the box.** <!-- generated:countries -->Belgium (`be`), Côte d’Ivoire (`ci`), Estonia (`ee`), España (`es`), France (`fr`), United Kingdom (`gb`), Ireland (`ie`), Luxembourg (`lu`), Nederland (`nl`), Sénégal (`sn`) and United States (`us`)<!-- /generated --> — each with its chart of accounts, its tax codes, its
+  declaration boxes and its annual accounts, and each installed by `ekwo init`.
+  The United Kingdom was the first that is not a Member State of the European
+  Union; the United States, with the sales and use taxes of three states and
+  no value added tax, the first without a VAT; Senegal and Côte d'Ivoire the
+  first on the SYSCOHADA chart the OHADA member States share, written once in
+  [`packs/ohada/`](packs/ohada/). The version and the certification of each
+  are in [`docs/packs.md`](docs/packs.md#the-packs-of-this-checkout).
 - **The French FEC.** Eighteen columns, the arrêté du 29 juillet 2013, with
   the reconciliation letter and the sub-ledger code the format requires.
 - **Modules, one Postgres schema each.** Fixed assets and budgets ship with
@@ -219,22 +220,41 @@ By hand instead, with the Supabase CLI:
 git clone https://github.com/Ekwo-ai/ekwo-os.git && cd ekwo-os
 supabase link --project-ref <your-project-ref>
 supabase db push                       # applies supabase/migrations in order
+```
+
+Then the reference seeds, every one of them and in this order:
+
+<!-- generated:seeds -->
+```sh
 psql "$DATABASE_URL" -f supabase/seed/00_currencies.sql
 psql "$DATABASE_URL" -f supabase/seed/00_territories.sql
 psql "$DATABASE_URL" -f supabase/seed/05_framework_generic.sql
-psql "$DATABASE_URL" -f supabase/seed/10_pack_be.sql    # or 11_pack_fr.sql, 12_pack_lu.sql, 13_pack_ee.sql, 14_pack_gb.sql, 15_pack_us.sql, 16_pack_ie.sql, 17_pack_nl.sql, 19_pack_es.sql, 20_pack_sn.sql, 21_pack_ci.sql
+psql "$DATABASE_URL" -f supabase/seed/10_pack_be.sql
+psql "$DATABASE_URL" -f supabase/seed/11_pack_fr.sql
+psql "$DATABASE_URL" -f supabase/seed/12_pack_lu.sql
+psql "$DATABASE_URL" -f supabase/seed/13_pack_ee.sql
+psql "$DATABASE_URL" -f supabase/seed/14_pack_gb.sql
+psql "$DATABASE_URL" -f supabase/seed/15_pack_us.sql
+psql "$DATABASE_URL" -f supabase/seed/16_pack_ie.sql
+psql "$DATABASE_URL" -f supabase/seed/17_pack_nl.sql
+psql "$DATABASE_URL" -f supabase/seed/19_pack_es.sql
+psql "$DATABASE_URL" -f supabase/seed/20_pack_sn.sql
+psql "$DATABASE_URL" -f supabase/seed/21_pack_ci.sql
 ```
+<!-- /generated -->
 
-Those six files are the ones `config.toml` lists under `[db.seed]`, which is
-what `supabase db reset` applies on a local project — and the same set
-`ekwo init` loads. Leave `05_framework_generic.sql` out and the installation
+These are the files `config.toml` lists under `[db.seed]`, which is what
+`supabase db reset` applies on a local project — and the same set `ekwo init`
+loads. Both lists are written from `packs/` by `ekwo pack build`, so a country
+added there is in them without anybody editing this page. Leave `05_framework_generic.sql` out and the installation
 has a chart of accounts but no financial statements for a chart that declares
 none of its own; leave `00_territories.sql` out and the recapitulative
 statement refuses to run at all, by name, rather than reporting every customer
 as outside the Union.
 
 Skip `supabase/seed/90_demo_company.sql` unless you want the sample data, and
-then run the seven statements above as a signed-in user. The two routes are
+then run the six steps of [What it does underneath](#what-it-does-underneath)
+as a signed-in user. The two routes are
 interchangeable: `ekwo migrate` and `supabase db push` read and write the same
 `supabase_migrations.schema_migrations`.
 
@@ -291,7 +311,7 @@ and `edition` gates no feature.
 `post_document(id)` turns a document into an entry. `trial_balance`,
 `general_ledger`, `aged_balance`, `vat_return`, `ec_sales_list`,
 `financial_statement` and `fec_lines` read it back — `financial_statement` on the schemes of the country
-pack, the Belgian abbreviated model or the French liasse, or on a generic
+pack, such as the Belgian abbreviated model or the French liasse, or on a generic
 framework by account type that fits any chart of accounts. The FEC of a
 financial year opens on its *à-nouveaux*, computed from the ledger and never
 posted, and carries the result of a year nobody has closed yet, so the file
@@ -537,7 +557,7 @@ reference is in `docs/`.
 npm install
 npm run typecheck
 npm test          # applies every migration and seed to an in-memory Postgres
-npm run build     # builds both packages; the CLI copies supabase/ into its dist
+npm run build     # builds every workspace; the CLI copies supabase/ into its dist
 ```
 
 Tests use [PGlite](https://pglite.dev), so no Docker and no local Postgres.

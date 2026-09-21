@@ -173,9 +173,10 @@ filing — BE-VAT-PERIODIC (31 boxes) · cadence: month · deadline: in the pack
          file: vat-consignment · settles to: 451900
 ```
 
-Every "no" is printed rather than left out. A pack with no deadline rule and no
-file is the ordinary state of most of them, and a listing that showed only what
-works would be a brochure.
+Every "no" is printed rather than left out. A return filed by hand on the
+administration's portal, with no file written for it, is the ordinary state of
+most of them; a deadline a pack has not declared is printed `not declared`. A
+listing that showed only what works would be a brochure.
 
 The same five answers are asserted end to end, pack by pack, in
 `tests/filing_golden.test.ts`: the golden year is replayed, the return is

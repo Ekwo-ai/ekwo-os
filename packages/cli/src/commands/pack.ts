@@ -1,8 +1,8 @@
 /**
  * `ekwo pack` — the country packs, in this repository and in an installation.
  *
- *   ekwo pack build <cc>|--all   compile packs/<cc> into supabase/seed/
- *   ekwo pack check <cc>|--all   recompile in memory and refuse a stale seed
+ *   ekwo pack build <cc>|--all   compile packs/<cc> into supabase/seed/, and the lists of packs
+ *   ekwo pack check <cc>|--all   recompile in memory and refuse a stale seed or list
  *   ekwo pack check --links      … and open the source register's URLs
  *   ekwo pack list               what this checkout carries
  *   ekwo pack describe [<cc>]    everything one country of this checkout says
@@ -32,6 +32,7 @@ import {
 } from '../pack/compile.js';
 import { describeFiling } from '../pack/filing.js';
 import { describePack, type PackDescription } from '../pack/describe.js';
+import { packLists } from '../pack/lists.js';
 import {
   GENERIC_PACK,
   declaredSeedSequences,
@@ -278,13 +279,35 @@ export async function packCommand(args: ParsedArgs, deps: CommandDeps = {}): Pro
     }
   }
 
+  // The lists that name every pack outside `packs/` — the seeds of
+  // `supabase/config.toml` and of the README, the owners of CODEOWNERS, the
+  // table of `docs/packs.md` — are a build artefact of the whole set, so they
+  // are written and checked whichever pack was asked for. See `pack/lists.ts`.
+  const lists = await packLists(action === 'build');
+  for (const list of lists) {
+    const where = `${list.file} (generated:${list.block})`;
+    if (list.state === 'missing') {
+      stale += 1;
+      fail(`${where} — the block's markers are gone, so nothing keeps this list in step with packs/`);
+    } else if (list.state === 'stale') {
+      stale += 1;
+      fail(`${where} is not what packs/ says`);
+    } else if (list.state === 'written') {
+      step(where);
+    } else if (action === 'build') {
+      note(dim(`${where} — already what packs/ says`));
+    } else {
+      step(where);
+    }
+  }
+
   // `--links` opens what the register points at. It is asked for by hand and it
   // never decides the exit code — see `followLinks`.
   if (action === 'check' && boolFlag(args, 'links')) {
     await followLinks(wanted.filter((s) => s !== GENERIC_PACK), dir);
   }
 
-  setResult({ action, files, stale });
+  setResult({ action, files, lists, stale });
   if (stale > 0) {
     line();
     note(dim('Run `ekwo pack build --all` and commit the result.'));
@@ -670,9 +693,13 @@ function describe(change: PackChange): string {
 function usage(): string {
   return `${bold('ekwo pack')} — compile a country pack into a seed, and move a company onto it.
 
-  ekwo pack build <cc>     Write supabase/seed/<n>_pack_<cc>.sql from packs/<cc>.
+  ekwo pack build <cc>     Write supabase/seed/<n>_pack_<cc>.sql from packs/<cc>,
+                           and the lists of packs outside packs/ — the seeds of
+                           supabase/config.toml and of the README, CODEOWNERS,
+                           the table of docs/packs.md.
   ekwo pack build --all    Every pack of this checkout.
-  ekwo pack check --all    Refuse a seed that is not the output of its pack.
+  ekwo pack check --all    Refuse a seed that is not the output of its pack, and
+                           a list that is not what packs/ says.
       --links              Also open every URL of every pack's source register
                            and say which ones went quiet. Off by default, never
                            run by the CI, and it never changes the exit code:

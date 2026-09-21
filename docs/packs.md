@@ -152,14 +152,15 @@ inside a quoted field. The parser is forty lines and refuses anything else.
 
 ```sh
 ekwo pack list           # the packs this checkout carries, and their certification
-ekwo pack build be       # writes supabase/seed/10_pack_be.sql
+ekwo pack describe be    # everything one pack says; every pack with no country named
+ekwo pack build be       # writes supabase/seed/10_pack_be.sql, and the lists of packs
 ekwo pack build --all
-ekwo pack check be       # validate one pack and compare its seed
-ekwo pack check --all    # exit 1 if a committed seed is not the output of its pack
+ekwo pack check be       # validate one pack, compare its seed and the lists of packs
+ekwo pack check --all    # exit 1 if a committed seed or list is not the output of the packs
 ekwo pack check --all --links   # … and open every URL of every source register
 ```
 
-All four run in a checkout of the repository and touch no database: they walk
+All of them run in a checkout of the repository and touch no database: they walk
 up from the command's own file looking for a directory holding both `packs/`
 and `supabase/seed/`, and say so plainly when there is none — a published
 installation carries the compiled seeds and no `packs/` folder, and there is
@@ -176,26 +177,43 @@ deadline. A gate on any of that would fail a contributor's pull request for
 something nobody in it did, and the cheapest way to make it green would be to
 delete the link. So it reports a reading, and a maintainer decides.
 
-`ekwo pack list` on this repository:
+`ekwo pack list` prints every pack of the checkout — the framework first,
+then each country with its version, its charts and their accounts, its taxes,
+its statements, its languages, its certification and its golden scenario. An
+excerpt, as it read on the day this was written:
 
 ```
-Packs (7)
+Packs (…)
   generic  Generic framework 1.1.1 · 2 statements · no country · certification maintained
           no golden — A framework is not a country: this pack carries statements and nothing else …
-  be  Belgium 1.8.2 · 2 chart(s), 702 accounts · 22 taxes · 3 statements · fr, nl, de, en · certification maintained · golden: 12 documents, 4 payments, 4 period(s)
-          default (default) — PCMN — plan comptable minimum normalisé, 353 accounts, BE-BNB-ABBR-BS, BE-BNB-ABBR-IS, BE-BNB-ABBR-AF
-          asbl — PCMN — associations et fondations, 349 accounts, generic statements only
-  ee  Estonia 1.4.0 · 1 chart(s), 120 accounts · 29 taxes · 2 statements · et, en · certification community · golden: 14 documents, 4 payments, 4 period(s)
-          default (default) — Eesti väikeettevõtja kontoplaan, 120 accounts, EE-RPS-BS, EE-RPS-IS1
-  fr  France 1.9.2 · 1 chart(s), 394 accounts · 24 taxes · 2 statements · fr, en · certification maintained · golden: 11 documents, 4 payments, 4 period(s)
-          default (default) — PCG — plan comptable général, 394 accounts, FR-2050, FR-2052
-  gb  United Kingdom 0.3.0 · 1 chart(s), 190 accounts · 25 taxes · 2 statements · en · certification community · golden: 14 documents, 3 payments, 4 period(s)
-          default (default) — United Kingdom reference chart of accounts, 190 accounts, GB-CA-SMALL-BS, GB-CA-SMALL-IS
-  lu  Luxembourg 1.3.2 · 1 chart(s), 1026 accounts · 35 taxes · 2 statements · fr, de, en · certification community · golden: 11 documents, 3 payments, 4 period(s)
-          default (default) — PCN — plan comptable normalisé, 1026 accounts, LU-ECDF-BS-ABR, LU-ECDF-PL-ABR
-  us  United States 0.1.0 · 1 chart(s), 234 accounts · 11 taxes · 2 statements · en · certification community · golden: 15 documents, 3 payments, 3 period(s)
-          default (default) — United States reference chart of accounts, 234 accounts, US-SX-BS, US-SX-IS
+  be  Belgium 1.15.0 · 2 chart(s), 706 accounts · 22 taxes · 3 statements · fr, nl, de, en · certification maintained · golden: 12 documents, 4 payments, 4 period(s)
+          filing — BE-VAT-PERIODIC (31 boxes) · cadence: month · deadline: in the pack · file: vat-consignment · settles to: 451900
+          default (default) — PCMN — plan comptable minimum normalisé, 355 accounts, BE-BNB-ABBR-BS, BE-BNB-ABBR-IS, BE-BNB-ABBR-AF
+          asbl — PCMN — associations et fondations, 351 accounts, generic statements only
+  …
 ```
+
+### The packs of this checkout
+
+The table below is **generated**: `ekwo pack build` writes it from the
+manifests under `packs/`, and `ekwo pack check` refuses it when it no longer
+says what they say. `ekwo pack describe <cc>` is everything one of them says.
+
+<!-- generated:packs -->
+| Pack | Country | Seed | Languages | Certification |
+|---|---|---|---|---|
+| [`be`](../packs/be/) | Belgium | `10_pack_be.sql` | fr, nl, de, en | `maintained` |
+| [`ci`](../packs/ci/) | Côte d’Ivoire | `21_pack_ci.sql` | fr | `community` |
+| [`ee`](../packs/ee/) | Estonia | `13_pack_ee.sql` | et, en | `community` |
+| [`es`](../packs/es/) | España | `19_pack_es.sql` | es, en | `community` |
+| [`fr`](../packs/fr/) | France | `11_pack_fr.sql` | fr, en | `maintained` |
+| [`gb`](../packs/gb/) | United Kingdom | `14_pack_gb.sql` | en | `community` |
+| [`ie`](../packs/ie/) | Ireland | `16_pack_ie.sql` | en | `community` |
+| [`lu`](../packs/lu/) | Luxembourg | `12_pack_lu.sql` | fr, de, en | `community` |
+| [`nl`](../packs/nl/) | Nederland | `17_pack_nl.sql` | nl, en | `community` |
+| [`sn`](../packs/sn/) | Sénégal | `20_pack_sn.sql` | fr | `community` |
+| [`us`](../packs/us/) | United States | `15_pack_us.sql` | en | `community` |
+<!-- /generated -->
 
 The SQL is a **build artefact**, like `docs/schema.md`. The source is the
 pack; the output is committed so that `supabase db push` and `psql -f` install
@@ -217,13 +235,14 @@ between `be` and `fr` moved France and Luxembourg one place each. Nothing sorts
 anything now. `ekwo pack check` refuses a pack that declares no number, and
 `ekwo pack build` refuses two packs claiming the same one.
 
-**Three kinds of file are generated, and `check` compares all three.**
+**Four kinds of file are generated, and `check` compares all four.**
 
 | Source | Output |
 |---|---|
 | `packs/generic/` | `supabase/seed/05_framework_generic.sql` |
-| `packs/<cc>/` | `supabase/seed/<n>_pack_<cc>.sql`, where `<n>` is the number the manifest declares in `seed_index` — `10` for `be`, `11` for `fr`, `12` for `lu`, `13` for `ee`, `14` for `gb`, `15` for `us`. **A number that has shipped never moves**, whatever is added beside it |
+| `packs/<cc>/` | `supabase/seed/<n>_pack_<cc>.sql`, where `<n>` is the number the manifest declares in `seed_sequence` — the table [above](#the-packs-of-this-checkout) gives each pack's. **A number that has shipped never moves**, whatever is added beside it |
 | `packs/<cc>/assets.json`, where the pack has one | `supabase/seed/modules/assets/<n>_pack_<cc>.sql`, applied by the module migration runner and by nothing else |
+| every pack, together | the lists that name them outside `packs/`: `[db.seed] sql_paths` in `supabase/config.toml`, the `psql -f` lines of the README, the `/packs/<cc>/` lines of `.github/CODEOWNERS` and the table above. Only the block between `generated:<name>` and `/generated` is written; the prose around it is not. A handle written on a pack's CODEOWNERS line is kept, and a new pack gets the owner of `*` |
 
 The compiler writes `chart_templates`, `account_templates`,
 `journal_templates`, `tax_templates`, `tax_posting_templates`,
@@ -266,13 +285,16 @@ that Belgium had changed.
 Checking
   · 05_framework_generic.sql
 ✗ 10_pack_be.sql is not the output of packs/be
-          golden: 10 documents, 4 payments, 4 period(s) of Exercice 2026
+          golden: 12 documents, 4 payments, 4 period(s) of Exercice 2026
   · modules/assets/10_pack_be.sql
-  · 11_pack_ee.sql
-          golden: 14 documents, 4 payments, 4 period(s) of Majandusaasta 2026
-  · 12_pack_fr.sql
-          golden: 10 documents, 4 payments, 4 period(s) of Exercice 2026
-  · modules/assets/12_pack_fr.sql
+  · 21_pack_ci.sql
+          golden: 12 documents, 4 payments, 4 period(s) of Exercice 2026
+  …
+✗ supabase/config.toml (generated:seeds) is not what packs/ says
+  · README.md (generated:seeds)
+  · README.md (generated:countries)
+  · docs/packs.md (generated:packs)
+  · .github/CODEOWNERS (generated:packs)
 
   Run `ekwo pack build --all` and commit the result.
 ```
@@ -1203,9 +1225,10 @@ ekwo pack status --db-url "$EKWO_DB_URL"
 ```
 
 ```
-Packs loaded here (2)
+Packs loaded here (…)
   BE Belgique  1.5.0
   FR France    1.4.0
+  …
 
 Companies (2)
   · Example One  BE/default  copied 1.0.0, loaded 1.5.0
@@ -1803,8 +1826,9 @@ pack and testing that it holds together is not reviewing it. *Certified*
 describes a professional reading a pack against the law, and nothing else. The
 value `ekwo` that used to exist is deprecated, refused by the schema, and moved
 to `maintained` by migration `20260912081015`. **Belgium and France are
-`maintained`; Estonia, Luxembourg, the United Kingdom and the United States are
-`community`.**
+`maintained`; every other pack is `community`** — the
+[table of packs](#the-packs-of-this-checkout) is generated from the manifests
+and says it pack by pack.
 
 ### What a reviewer signs
 
@@ -1845,13 +1869,19 @@ A rate, a box or a chart is right or wrong against a law, and the person who
 knows is the person who applies it.
 
 ```
-/packs/be/              @Ekwo-ai/maintainers
-/packs/ee/              @Ekwo-ai/maintainers
-/packs/fr/              @Ekwo-ai/maintainers
-/packs/gb/              @Ekwo-ai/maintainers
-/packs/us/              @Ekwo-ai/maintainers
 /packs/schema/          @Ekwo-ai/maintainers
+
+# generated:packs
+/packs/be/              @Ekwo-ai/maintainers
+/packs/ci/              @Ekwo-ai/maintainers
+…
+# /generated
 ```
+
+The lines between the two markers are written by `ekwo pack build`: a pack
+added to `packs/` gets its line with the owner of the `*` line, and a pack
+removed loses it. **The owner a line names is kept** — to own the pack you
+contributed, put your handle on its line, once; the next build leaves it there.
 
 The schema is deliberately not owned by any one pack's owner: a change there
 changes what every country is allowed to say. A pack a contributor owns is
@@ -1866,7 +1896,8 @@ tells you whether you are still on it. Copy Belgium or France — whichever
 resembles your country's accounting more — and change what differs.
 
 Nothing here needs a database. Every command runs in a checkout, and the pull
-request you open at the end contains the pack and the seed compiled from it.
+request you open at the end contains the pack, and the seed and the lists
+`ekwo pack build` writes from it.
 
 ### 0. Open the four things you are going to transcribe
 
@@ -2129,7 +2160,7 @@ form owes an arithmetic to a text, write them into `golden/expectations.json`
 only two places you write: no test of this repository has to change for your
 pack to be checked.
 
-### 10. Compile, register the seed, open the pull request
+### 10. Compile, open the pull request
 
 ```sh
 node packages/cli/dist/bin.js pack build xx
@@ -2138,11 +2169,16 @@ node packages/cli/dist/bin.js pack check --all
 
 `build` writes `supabase/seed/<n>_pack_xx.sql` — and
 `supabase/seed/modules/assets/<n>_pack_xx.sql` if your pack carries an `assets`
-section. Add the first to `supabase/config.toml` under `[db.seed].sql_paths`;
-the module seed stays out of that list deliberately, because it is applied by
-the module migration runner, on installations that carry the module.
+section — and then **every list that names the packs outside `packs/`**: the
+seed goes into `[db.seed] sql_paths` of `supabase/config.toml` and into the
+`psql -f` lines of the README, your country into the README's list and into
+the [table of packs](#the-packs-of-this-checkout), and `packs/xx/` gets its line
+in `.github/CODEOWNERS`. You edit none of them; `check` refuses them the day
+they stop saying what `packs/` says. The module seed stays out of
+`sql_paths` deliberately, because it is applied by the module migration
+runner, on installations that carry the module.
 
-Commit the generated SQL with the pack. It is a build artefact that is
+Commit what it wrote with the pack. It is a build artefact that is
 committed on purpose, so that `supabase db push` and `psql -f` install your
 country without the CLI ever running.
 
@@ -2157,8 +2193,9 @@ names the ones that did not answer. It fails nothing and the CI never runs it �
 a publisher that turns away anything without a browser is not a wrong pack — so
 open the ones it names yourself before deciding anything.
 
-Then add a line for `packs/xx/` to `.github/CODEOWNERS` pointing at yourself,
-add a line to `CHANGELOG.md` under `[Unreleased]`, and open the pull request.
+If you are going to own the pack, put your handle on the line `build` wrote
+for `packs/xx/` in `.github/CODEOWNERS` — the next build keeps it. Add a line
+to `CHANGELOG.md` under `[Unreleased]`, and open the pull request.
 Set `certification.status` honestly: `community` is the right answer until an
 accountant has read it, and an issue titled "Review: <country>" is how one is
 asked to.
@@ -2172,6 +2209,17 @@ Adding a country touches **two** places, and nothing else:
    compiled from them.
 2. **`packs/<cc>/golden/`** — the scenario, the three generated expectation
    files, and `expectations.json` where the pack states what only it can state.
+
+Everything else the pull request changes is written by `ekwo pack build`: the
+seed under `supabase/seed/`, and the generated blocks of
+`supabase/config.toml`, `README.md`, `.github/CODEOWNERS` and this page. A
+contributor runs the command and commits its output, exactly as for the seed.
+
+A pack whose currency no pack used before adds its row — the ISO 4217 code,
+its name, its symbol and its decimals — to `supabase/seed/00_currencies.sql`.
+A member State of OHADA also adds its code to `members` in
+`packs/ohada/manifest.json`, which is how it receives the chart the members
+share — [`packs/ohada/README.md`](../packs/ohada/README.md) is that path.
 
 A country **outside the common system of VAT** adds a third, and exactly one
 row of it: `supabase/seed/00_territories.sql`, for the reason step 0 gives. It
@@ -2218,5 +2266,6 @@ The engine: posting, matching, the returns, the installer. Also deliberately
 out — the rates of American sales tax (thousands of jurisdictions, monthly
 changes; the form belongs here, a maintained rate feed does not), the XML of
 the filing formats, analytics, fixed assets, payroll, and the translation of
-the application itself. Canadian rates *are* in the pack: fifteen stable
-combinations published by the CRA is data, not a feed.
+the application itself. A handful of stable rates published by the
+administration *is* data and belongs in the pack — Canada's fifteen GST/HST
+combinations would be — and a feed that moves every month is not.
