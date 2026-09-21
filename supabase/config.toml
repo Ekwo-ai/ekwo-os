@@ -26,6 +26,7 @@ sql_paths = [
   "./seed/13_pack_ee.sql",
   "./seed/14_pack_gb.sql",
   "./seed/15_pack_us.sql",
+  "./seed/16_pack_ie.sql",
 ]
 
 # PostgREST serves only the schemas listed here. The socle is `public`; a

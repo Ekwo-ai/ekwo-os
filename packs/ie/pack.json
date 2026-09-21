@@ -1,0 +1,473 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "IE",
+  "name": "Ireland",
+  "version": "0.1.0",
+  "schema_min": "20260917170000",
+  "seed_sequence": 16,
+  "released_at": "2026-09-21",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "vatca-2010",
+        "title": "Value-Added Tax Consolidation Act 2010 (No. 31 of 2010), as revised",
+        "publisher": "Law Reform Commission — Revised Acts",
+        "url": "https://revisedacts.lawreform.ie/eli/2010/act/31/revised/en/html",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "vatca-2010-s46-enacted",
+        "title": "Value-Added Tax Consolidation Act 2010, section 46 — Rates of tax, as enacted",
+        "publisher": "Office of the Attorney General — electronic Irish Statute Book",
+        "url": "https://www.irishstatutebook.ie/eli/2010/act/31/section/46/enacted/en/html",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "vatca-2010-s125",
+        "title": "Value-Added Tax Consolidation Act 2010, section 125 — Commencement",
+        "publisher": "Office of the Attorney General — electronic Irish Statute Book",
+        "url": "https://www.irishstatutebook.ie/eli/2010/act/31/section/125/enacted/en/html",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "vat-regs-2010",
+        "title": "Value-Added Tax Regulations 2010 (S.I. No. 639 of 2010)",
+        "publisher": "Office of the Attorney General — electronic Irish Statute Book",
+        "url": "https://www.irishstatutebook.ie/eli/2010/si/639/made/en/print",
+        "consulted_on": "2026-09-21",
+        "kind": "regulation"
+      },
+      {
+        "key": "f2a-2011-s3",
+        "title": "Finance (No. 2) Act 2011, section 3 — the second reduced rate of 9 per cent",
+        "publisher": "Office of the Attorney General — electronic Irish Statute Book",
+        "url": "https://www.irishstatutebook.ie/eli/2011/act/8/section/3/enacted/en/html",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "fa-2012-s87",
+        "title": "Finance Act 2012, section 87 — the standard rate of 23 per cent",
+        "publisher": "Office of the Attorney General — electronic Irish Statute Book",
+        "url": "https://www.irishstatutebook.ie/eli/2012/act/9/section/87/enacted/en/html",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "fp-covid-2-2020-s12",
+        "title": "Financial Provisions (Covid-19) (No. 2) Act 2020, section 12 — the temporary standard rate of 21 per cent",
+        "publisher": "Office of the Attorney General — electronic Irish Statute Book",
+        "url": "https://www.irishstatutebook.ie/eli/2020/act/8/section/12/enacted/en/html",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "fa-2020-s39",
+        "title": "Finance Act 2020, section 39 — the temporary 9 per cent rate for hospitality and tourism",
+        "publisher": "Office of the Attorney General — electronic Irish Statute Book",
+        "url": "https://www.irishstatutebook.ie/eli/2020/act/26/section/39/enacted/en/html",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "fa-2023-s5",
+        "title": "Finance Act 2023, section 5 — extension of the temporary 9 per cent rate to 31 August 2023",
+        "publisher": "Office of the Attorney General — electronic Irish Statute Book",
+        "url": "https://www.irishstatutebook.ie/eli/2023/act/11/section/5/enacted/en/html",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "fcmp-2022-s7",
+        "title": "Finance (Covid-19 and Miscellaneous Provisions) Act 2022, section 7 — the 9 per cent rate for gas and electricity",
+        "publisher": "Office of the Attorney General — electronic Irish Statute Book",
+        "url": "https://www.irishstatutebook.ie/eli/2022/act/9/section/7/enacted/en/html",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "fa-2025-s71",
+        "title": "Finance Act 2025, section 71 — the 9 per cent rate for food and drink for human consumption and hairdressing services from 1 July 2026",
+        "publisher": "Office of the Attorney General — electronic Irish Statute Book",
+        "url": "https://www.irishstatutebook.ie/eli/2025/act/18/section/71/enacted/en/html",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "fa-2025-s73",
+        "title": "Finance Act 2025, section 73 — the flat-rate addition of 4.5 per cent from 1 January 2026",
+        "publisher": "Office of the Attorney General — electronic Irish Statute Book",
+        "url": "https://www.irishstatutebook.ie/eli/2025/act/18/section/73/enacted/en/html",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "late-payment-regs-2012",
+        "title": "European Communities (Late Payment in Commercial Transactions) Regulations 2012 (S.I. No. 580 of 2012)",
+        "publisher": "Office of the Attorney General — electronic Irish Statute Book",
+        "url": "https://www.irishstatutebook.ie/eli/2012/si/580/made/en/print",
+        "consulted_on": "2026-09-21",
+        "kind": "regulation"
+      },
+      {
+        "key": "einvoicing-regs-2019",
+        "title": "European Union (Electronic Invoicing in Public Procurement) Regulations 2019 (S.I. No. 258 of 2019)",
+        "publisher": "Office of the Attorney General — electronic Irish Statute Book",
+        "url": "https://www.irishstatutebook.ie/eli/2019/si/258/made/en/print",
+        "consulted_on": "2026-09-21",
+        "kind": "regulation"
+      },
+      {
+        "key": "ca-2014",
+        "title": "Companies Act 2014 (No. 38 of 2014), as revised — Part 6 and Schedule 3A",
+        "publisher": "Law Reform Commission — Revised Acts",
+        "url": "https://revisedacts.lawreform.ie/eli/2014/act/38/revised/en/html",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "ca-accounting-2017",
+        "title": "Companies (Accounting) Act 2017 (No. 9 of 2017), which inserted Schedule 3A into the Companies Act 2014",
+        "publisher": "Office of the Attorney General — electronic Irish Statute Book",
+        "url": "https://www.irishstatutebook.ie/eli/2017/act/9/enacted/en/html",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "frs-102",
+        "title": "FRS 102 The Financial Reporting Standard applicable in the UK and Republic of Ireland, September 2024 edition",
+        "publisher": "Financial Reporting Council",
+        "url": "https://www.frc.org.uk/library/standards-codes-policy/accounting-and-reporting/uk-accounting-standards/frs-102/",
+        "consulted_on": "2026-09-21",
+        "kind": "standard"
+      },
+      {
+        "key": "frs-105",
+        "title": "FRS 105 The Financial Reporting Standard applicable to the Micro-entities Regime, September 2024 edition",
+        "publisher": "Financial Reporting Council",
+        "url": "https://www.frc.org.uk/library/standards-codes-policy/accounting-and-reporting/uk-accounting-standards/frs-105/",
+        "consulted_on": "2026-09-21",
+        "kind": "standard"
+      },
+      {
+        "key": "revenue-vat3",
+        "title": "How do you complete a VAT 3 return?",
+        "publisher": "Revenue Commissioners",
+        "url": "https://www.revenue.ie/en/vat/accounting-for-vat/how-to-account-for-value-added-tax/completing-vat3-return.aspx",
+        "consulted_on": "2026-09-21",
+        "kind": "form"
+      },
+      {
+        "key": "revenue-vat-due",
+        "title": "When VAT becomes payable — filing dates and taxable periods",
+        "publisher": "Revenue Commissioners",
+        "url": "https://www.revenue.ie/en/vat/accounting-for-vat/how-to-account-for-value-added-tax/when-vat-becomes-payable.aspx",
+        "consulted_on": "2026-09-21",
+        "kind": "guidance"
+      },
+      {
+        "key": "revenue-rtd",
+        "title": "Tax and Duty Manual — VAT Return of Trading Details (Part 9, Chapter 3), last updated February 2026",
+        "publisher": "Revenue Commissioners",
+        "url": "https://www.revenue.ie/en/tax-professionals/tdm/value-added-tax/part09-obligations-accountable-persons/return/VAT-RTD-S76.pdf",
+        "consulted_on": "2026-09-21",
+        "kind": "guidance"
+      },
+      {
+        "key": "revenue-postponed-accounting",
+        "title": "Tax and Duty Manual — VAT Postponed Accounting",
+        "publisher": "Revenue Commissioners",
+        "url": "https://www.revenue.ie/en/tax-professionals/tdm/value-added-tax/part07-provisions-relating-to-imports-exports/postponed-accounting.pdf",
+        "consulted_on": "2026-09-21",
+        "kind": "guidance"
+      },
+      {
+        "key": "revenue-construction",
+        "title": "Tax and Duty Manual — VAT Treatment of construction services",
+        "publisher": "Revenue Commissioners",
+        "url": "https://www.revenue.ie/en/tax-professionals/tdm/value-added-tax/part11-immovable-goods/construction-services/construction-servcies.pdf",
+        "consulted_on": "2026-09-21",
+        "kind": "guidance"
+      },
+      {
+        "key": "revenue-reverse-charge",
+        "title": "What is reverse charge (self-accounting)?",
+        "publisher": "Revenue Commissioners",
+        "url": "https://www.revenue.ie/en/vat/what-is-vat/reverse-charge-self-accounting.aspx",
+        "consulted_on": "2026-09-21",
+        "kind": "guidance"
+      },
+      {
+        "key": "revenue-current-rates",
+        "title": "Current VAT rates",
+        "publisher": "Revenue Commissioners",
+        "url": "https://www.revenue.ie/en/vat/vat-rates/search-vat-rates/current-vat-rates.aspx",
+        "consulted_on": "2026-09-21",
+        "kind": "guidance"
+      },
+      {
+        "key": "revenue-historical-rates",
+        "title": "Historical VAT rates",
+        "publisher": "Revenue Commissioners",
+        "url": "https://www.revenue.ie/en/vat/vat-rates/historical-vat-rates/index.aspx",
+        "consulted_on": "2026-09-21",
+        "kind": "guidance"
+      },
+      {
+        "key": "revenue-moneys-received",
+        "title": "Accounting for VAT on moneys received",
+        "publisher": "Revenue Commissioners",
+        "url": "https://www.revenue.ie/en/vat/accounting-for-vat/accounting-for-vat-on-moneys-received/index.aspx",
+        "consulted_on": "2026-09-21",
+        "kind": "guidance"
+      },
+      {
+        "key": "revenue-cars",
+        "title": "Tax and Duty Manual — Partial recovery of VAT on qualifying passenger motor vehicles",
+        "publisher": "Revenue Commissioners",
+        "url": "https://www.revenue.ie/en/tax-professionals/tdm/value-added-tax/part03-taxable-transactions-goods-ica-services/Goods/partial-recovery-of-VAT-on-qualifying-passenger-motor-vehicles.pdf",
+        "consulted_on": "2026-09-21",
+        "kind": "guidance"
+      },
+      {
+        "key": "revenue-vat-modernisation",
+        "title": "VAT Modernisation Timeline",
+        "publisher": "Revenue Commissioners",
+        "url": "https://www.revenue.ie/en/vat/vida-vat-modernisation/vat-modernisation-timeline.aspx",
+        "consulted_on": "2026-09-21",
+        "kind": "guidance"
+      },
+      {
+        "key": "revenue-einvoicing-implementation",
+        "title": "VAT Modernisation — Implementation of eInvoicing in Ireland",
+        "publisher": "Revenue Commissioners",
+        "url": "https://www.revenue.ie/en/vat/documents/implementation-einvoicing.pdf",
+        "consulted_on": "2026-09-21",
+        "kind": "guidance"
+      },
+      {
+        "key": "revenue-large-corporates",
+        "title": "Large corporates for Phase One of VAT modernisation",
+        "publisher": "Revenue Commissioners",
+        "url": "https://www.revenue.ie/en/vat/vida-vat-modernisation/large-corporates-vat-modernisation.aspx",
+        "consulted_on": "2026-09-21",
+        "kind": "guidance"
+      },
+      {
+        "key": "ros",
+        "title": "Revenue Online Service (ROS) — where the VAT3 and the Return of Trading Details are filed",
+        "publisher": "Revenue Commissioners",
+        "url": "https://www.ros.ie/",
+        "consulted_on": "2026-09-21",
+        "kind": "portal"
+      },
+      {
+        "key": "en-16931",
+        "title": "EN 16931 compliance — the European standard on electronic invoicing under Directive 2014/55/EU",
+        "publisher": "European Commission — Digital Building Blocks",
+        "url": "https://ec.europa.eu/digital-building-blocks/sites/spaces/DIGITAL/pages/467108950/EN+16931+compliance",
+        "consulted_on": "2026-09-21",
+        "kind": "standard"
+      },
+      {
+        "key": "uncl5305",
+        "title": "UNCL5305 — the VAT category code list of EN 16931 (BT-118 and BT-151), as the OpenPEPPOL subset publishes it",
+        "publisher": "OpenPEPPOL — the list itself is published by the European Commission",
+        "url": "https://docs.peppol.eu/poacc/billing/3.0/codelist/UNCL5305/",
+        "consulted_on": "2026-09-21",
+        "kind": "standard"
+      },
+      {
+        "key": "vatex",
+        "title": "VATEX — the VAT exemption reason code list of EN 16931 (BT-121)",
+        "publisher": "OpenPEPPOL — the list itself is published by the European Commission",
+        "url": "https://docs.peppol.eu/poacc/billing/3.0/codelist/vatex/",
+        "consulted_on": "2026-09-21",
+        "kind": "standard"
+      },
+      {
+        "key": "peppol-eas",
+        "title": "Peppol code list of electronic address schemes (ISO 6523 ICD): 0088 Global Location Number, 9935 Ireland VAT number",
+        "publisher": "OpenPEPPOL",
+        "url": "https://docs.peppol.eu/poacc/billing/3.0/codelist/eas/",
+        "consulted_on": "2026-09-21",
+        "kind": "standard"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "EUR",
+    "language": "en",
+    "rounding_method": "half_up",
+    "closing_style": "result_accounts",
+    "fiscal_year_default": "calendar",
+    "roles": {
+      "receivable": "1100",
+      "payable": "2100",
+      "suspense": "2400",
+      "rounding": "7710",
+      "retained_earnings": "3400",
+      "current_year_result_profit": "3450",
+      "current_year_result_loss": "3450",
+      "sales": "4000",
+      "purchase": "5000",
+      "bank": "1500",
+      "cash": "1530",
+      "fx_gain": "4240",
+      "fx_loss": "7700",
+      "asset_disposal_gain": "4230",
+      "asset_disposal_loss": "7690",
+      "tax_payable": "2210",
+      "tax_receivable": "1150"
+    },
+    "journal_roles": {
+      "sales": "SAL",
+      "purchase": "PUR",
+      "miscellaneous": "GEN",
+      "opening": "OPN"
+    }
+  },
+  "languages": [],
+  "journals": [
+    {
+      "code": "SAL",
+      "type": "sales",
+      "name": "Sales day book",
+      "sequence": 10
+    },
+    {
+      "code": "PUR",
+      "type": "purchase",
+      "name": "Purchases day book",
+      "sequence": 20
+    },
+    {
+      "code": "BNK",
+      "type": "bank",
+      "name": "Bank",
+      "sequence": 30
+    },
+    {
+      "code": "CSH",
+      "type": "cash",
+      "name": "Cash book",
+      "sequence": 40
+    },
+    {
+      "code": "GEN",
+      "type": "general",
+      "name": "General journal",
+      "sequence": 50
+    },
+    {
+      "code": "OPN",
+      "type": "opening",
+      "name": "Opening balances",
+      "sequence": 60
+    }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Ireland reference chart of accounts",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": [
+        "IE-CA-SMALL-BS",
+        "IE-CA-SMALL-IS"
+      ],
+      "legal_reference": "There is no legal chart of accounts in Ireland. Companies Act 2014, s. 282 requires a company to keep adequate accounting records and prescribes none; s. 291(1) and (3) require the entity financial statements to comprise a balance sheet and a profit and loss account that comply, for a company in the small companies regime (s. 280A), with Schedule 3A, and otherwise with Schedule 3; s. 291(2) requires them to give a true and fair view, and applicable accounting standards — FRS 102, and FRS 105 for a micro company under Schedule 3B — govern recognition and measurement. This chart is original: it follows the four-digit convention Irish practice shares with British practice, and every block of codes maps onto one item of Balance Sheet Format 1 or of Profit and Loss Account Format 1 of Schedule 3A, so that the statements of this pack read straight off the chart.",
+      "source": "ca-2014"
+    }
+  ],
+  "documents": {
+    "numbering": "sequential",
+    "number_format": "{CODE}-{YYYY}-{NNNN}",
+    "legal_payment_days": 30,
+    "late_payment_reference": "European Communities (Late Payment in Commercial Transactions) Regulations 2012, reg. 5(1) — statutory late payment interest at the European Central Bank's main refinancing rate before 1 January or 1 July plus 8 percentage points; reg. 9 and the Schedule — compensation of €40 up to €1,000, €70 up to €10,000 and €100 above, with reasonable recovery costs beyond it",
+    "tax_point": "invoice_if_issued",
+    "references": {
+      "numbering": {
+        "legal_reference": "Value-Added Tax Regulations 2010, reg. 20(2)(b) — every invoice carries “a sequential number, based on one or more series, which uniquely identifies the invoice”. The text requires a sequence, series and uniqueness and prescribes no shape and no rule against a hole, which is why `numbering` is `sequential` and not gapless, and the pattern declared in number_format is one series the regulation allows rather than a form it prescribes. Reg. 20(5)(b) asks of a credit note only a number that uniquely identifies it.",
+        "source": "vat-regs-2010"
+      },
+      "payment_terms": {
+        "legal_reference": "European Communities (Late Payment in Commercial Transactions) Regulations 2012, reg. 2(1), definition of “relevant payment date” — where the contract specifies no date or period for payment, the date falling 30 calendar days after the purchaser receives the invoice, or after delivery where the date of receipt is uncertain or the invoice came first; where the contract specifies a date more than 60 calendar days after delivery, it has to be expressly agreed and not grossly unfair to the supplier. Thirty days is therefore the term the law sets in the absence of an agreement.",
+        "source": "late-payment-regs-2012"
+      },
+      "tax_point": {
+        "legal_reference": "Value-Added Tax Consolidation Act 2010, s. 74(1) — tax on a supply is due, where an invoice is required under Chapter 2 of Part 9 (a supply to another accountable person, a public body, a person carrying on an exempted activity or a person in another Member State, s. 66(1)), at the time the invoice is issued or, if it is not issued in due time, when the period for issuing it expires (paragraph (a)), and in any other case at the time the goods or services are supplied (paragraph (d)); s. 74(2) brings it forward to a payment received before the supply. The supply is the principle and a required invoice displaces it, which is what `invoice_if_issued` says; the prepayment rule of s. 74(2) is not carried by the word, and the moneys received basis of s. 80 is carried by the taxes that declare cash_basis.",
+        "source": "vatca-2010"
+      }
+    },
+    "mentions": [
+      {
+        "code": "reverse_charge",
+        "applies_when": "reverse_charge",
+        "text": "VAT on this supply to be accounted for by the principal contractor.",
+        "sequence": 10,
+        "legal_reference": "Value-Added Tax Consolidation Act 2010, s. 66(4)(a) — a subcontractor supplying a service to which s. 16(3) applies issues a document indicating that the principal is liable to account for the tax chargeable on the supply. The sentence is the one Revenue's manual on construction services asks the invoice to carry. The only sale-side reverse charge this pack carries is that one, so the sentence names the principal contractor; the other domestic reverse charges of s. 16 — emission allowances, scrap metal, construction work between connected persons, gas and electricity to a dealer — would each want the recipient named instead, and are recorded as out of scope in the README.",
+        "source": "revenue-construction"
+      },
+      {
+        "code": "intracom_goods",
+        "applies_when": "intra_eu_goods",
+        "text": "Intra-Community supply of goods — zero-rated under Schedule 2, paragraph 1(1) of the Value-Added Tax Consolidation Act 2010 (Article 138 of Directive 2006/112/EC).",
+        "sequence": 20,
+        "legal_reference": "Value-Added Tax Regulations 2010, reg. 20(2)(f) — on a supply of goods to a person registered for VAT in another Member State, the invoice carries that person's VAT number and an indication that it relates to an intra-Community supply of goods.",
+        "source": "vat-regs-2010"
+      },
+      {
+        "code": "intracom_services",
+        "applies_when": "intra_eu_services",
+        "text": "Reverse charge — the customer is liable to account for the VAT (Articles 44 and 196 of Directive 2006/112/EC).",
+        "sequence": 30,
+        "legal_reference": "Value-Added Tax Regulations 2010, reg. 20(1) and 20(2)(e) — on a supply to a person in another Member State who is liable to pay the VAT on it, the invoice carries that person's VAT number and an indication that a reverse charge applies.",
+        "source": "vat-regs-2010"
+      },
+      {
+        "code": "export",
+        "applies_when": "export",
+        "text": "Export of goods outside the European Union — zero-rated under Schedule 2, paragraph 3 of the Value-Added Tax Consolidation Act 2010.",
+        "sequence": 40,
+        "legal_reference": "Value-Added Tax Regulations 2010, reg. 20(2)(j) — the invoice states the consideration per rate of tax and the rate chargeable, which on an export is the zero rate of Schedule 2, paragraph 3.",
+        "source": "vat-regs-2010"
+      },
+      {
+        "code": "exempt",
+        "applies_when": "exempt",
+        "text": "Exempt from VAT under Schedule 1 of the Value-Added Tax Consolidation Act 2010.",
+        "sequence": 50,
+        "legal_reference": "Value-Added Tax Regulations 2010, reg. 20(2)(j) — an invoice states the consideration per rate of tax and the rate chargeable; an exempted activity is charged at none, and the sentence says under which Schedule of the Act it is exempt.",
+        "source": "vat-regs-2010"
+      },
+      {
+        "code": "late_payment",
+        "applies_when": "late_payment",
+        "text": "If this invoice is not paid by the relevant payment date, the supplier is entitled to statutory late payment interest at the European Central Bank reference rate plus 8 percentage points and to compensation for recovery costs, under the European Communities (Late Payment in Commercial Transactions) Regulations 2012.",
+        "sequence": 60,
+        "legal_reference": "European Communities (Late Payment in Commercial Transactions) Regulations 2012, reg. 4(1) and reg. 5(1) — statutory late payment interest is an implied term of every commercial transaction, at the reference rate plus 8 percentage points; reg. 9 and the Schedule — compensation for recovery costs of €40, €70 or €100 according to the amount.",
+        "source": "late-payment-regs-2012"
+      }
+    ]
+  },
+  "einvoicing": {
+    "profile": "peppol-bis-3",
+    "mandatory_from": null,
+    "party_scheme": "0088",
+    "vat_scheme": "9935",
+    "legal_reference": "No Irish enactment obliges a business to issue an electronic invoice to another business today, so mandatory_from is empty. Value-Added Tax Consolidation Act 2010, s. 66(2) — an electronic invoice counts as issued only where issuer and recipient have agreed to it beforehand. The European Union (Electronic Invoicing in Public Procurement) Regulations 2019, reg. 4, oblige a contracting authority — a sub-central one from 18 April 2020 (reg. 3(6)) — to receive and process an electronic invoice that complies with EN 16931, which is an obligation of the public buyer and not of the supplier. Revenue has announced a phased mandate — VAT-registered large corporates to issue e-invoices and report domestic B2B transactions from November 2028, businesses trading cross-border in the Union from November 2029, the ViDA requirements from July 2030, and every business able to receive structured e-invoices from the first phase — but none of it is enacted yet, so no date is written here. The profile declared is what Irish Peppol participants exchange and is not a legal requirement. The two identifiers are ISO 6523 codes of the Peppol electronic address scheme list: 0088 is the Global Location Number, because that list carries no code for a CRO company number; 9935 is the Ireland VAT number.",
+    "source": "revenue-vat-modernisation"
+  },
+  "bank": {
+    "statement_formats": [
+      "camt.053"
+    ],
+    "payment_formats": []
+  }
+}

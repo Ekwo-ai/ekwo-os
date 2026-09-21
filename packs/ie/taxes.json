@@ -1,0 +1,1452 @@
+[
+  {
+    "code": "IE-S-21-2010",
+    "name": "Sale, standard rate 21 %",
+    "description": "Standard rate from the commencement of the 2010 Act to 31 December 2011",
+    "rate": 21,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2010-11-01",
+    "valid_to": "2011-12-31",
+    "legal_reference": "Value-Added Tax Consolidation Act 2010, s. 46(1)(a) as enacted — 21 per cent. The Act applies to taxable periods beginning on or after 1 November 2010 (s. 125), so this code starts on that day; the standard rate before it was charged under the Value-Added Tax Act 1972, which this pack does not carry. The VAT3 return carries no box for the value of a domestic supply: that value is reported once a year on the Return of Trading Details, which this pack cannot carry beside the VAT3 (see docs/international.md), so the base posting names no box.",
+    "source": "vatca-2010-s46-enacted",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "2200",
+          "box": "T1"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "2200",
+          "box": "T1",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 10
+  },
+  {
+    "code": "IE-S-23-2012",
+    "name": "Sale, standard rate 23 %, first period",
+    "description": "Standard rate from 1 January 2012 to 31 August 2020",
+    "rate": 23,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2012-01-01",
+    "valid_to": "2020-08-31",
+    "legal_reference": "Finance Act 2012, s. 87 — section 46(1)(a) of the 2010 Act is amended with effect from 1 January 2012 by substituting “23 per cent” for “21 per cent”. The code closes on 31 August 2020, the day before the temporary 21 per cent of s. 46(1A) took effect.",
+    "source": "fa-2012-s87",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "2200",
+          "box": "T1"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "2200",
+          "box": "T1",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 20
+  },
+  {
+    "code": "IE-S-21-2020",
+    "name": "Sale, standard rate 21 %, temporary",
+    "description": "The temporary standard rate of 1 September 2020 to 28 February 2021",
+    "rate": 21,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2020-09-01",
+    "valid_to": "2021-02-28",
+    "legal_reference": "Value-Added Tax Consolidation Act 2010, s. 46(1A), inserted by the Financial Provisions (Covid-19) (No. 2) Act 2020, s. 12(b) — during the period from 1 September 2020 to 28 February 2021, s. 46(1)(a) has effect as if “21 per cent” were substituted for “23 per cent”.",
+    "source": "fp-covid-2-2020-s12",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "2200",
+          "box": "T1"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "2200",
+          "box": "T1",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 30
+  },
+  {
+    "code": "IE-S-23",
+    "name": "Sale, standard rate 23 %",
+    "description": "The standard rate since 1 March 2021",
+    "rate": 23,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2021-03-01",
+    "legal_reference": "Value-Added Tax Consolidation Act 2010, s. 46(1)(a) — 23 per cent of the amount on which tax is chargeable, other than goods or services chargeable at another rate of s. 46(1); in force again from 1 March 2021, when the temporary rate of s. 46(1A) ended. The VAT3 return carries no box for the value of a domestic supply: that value is reported once a year on the Return of Trading Details, which this pack cannot carry beside the VAT3 (see docs/international.md), so the base posting names no box.",
+    "source": "vatca-2010",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "2200",
+          "box": "T1"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "2200",
+          "box": "T1",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 40
+  },
+  {
+    "code": "IE-S-23-CASH",
+    "name": "Sale, standard rate 23 %, moneys received basis",
+    "description": "For a company authorised by Revenue to account on the moneys received basis",
+    "rate": 23,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2021-03-01",
+    "legal_reference": "Value-Added Tax Consolidation Act 2010, s. 80(1) — a person whose annual turnover has not exceeded and is not likely to exceed €2,000,000, or at least 90 per cent of whose turnover is from supplies to persons who are not registered, may be authorised to account for the tax by reference to the moneys received in the taxable period; s. 80(2)(a) keeps the rate in force when the goods or services are supplied. The tax is held on the transition account until the customer pays, and reaches box T1 of the period in which the money is received.",
+    "source": "vatca-2010",
+    "vat_category": "S",
+    "cash_basis": true,
+    "cash_basis_transition_account": "2205",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "2200",
+          "box": "T1"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "2200",
+          "box": "T1",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "conditions": [
+      "seller_threshold"
+    ],
+    "sequence": 50
+  },
+  {
+    "code": "IE-S-135",
+    "name": "Sale, reduced rate 13.5 %",
+    "description": "Schedule 3 goods and services",
+    "rate": 13.5,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2010-11-01",
+    "legal_reference": "Value-Added Tax Consolidation Act 2010, s. 46(1)(c) — 13.5 per cent in relation to goods or services of a kind specified in Schedule 3, among them the development of immovable goods and work on them (Schedule 3, paragraphs 9(1) and 15(2)) and the routine cleaning of immovable goods (paragraph 15(3)). The rate is the one the Act carried when it came into force and has not moved since. The VAT3 return carries no box for the value of a domestic supply: that value is reported once a year on the Return of Trading Details, which this pack cannot carry beside the VAT3 (see docs/international.md), so the base posting names no box.",
+    "source": "vatca-2010",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "2200",
+          "box": "T1"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "2200",
+          "box": "T1",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 60
+  },
+  {
+    "code": "IE-S-135-CASH",
+    "name": "Sale, reduced rate 13.5 %, moneys received basis",
+    "description": "For a company authorised by Revenue to account on the moneys received basis",
+    "rate": 13.5,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2010-11-01",
+    "legal_reference": "Value-Added Tax Consolidation Act 2010, s. 46(1)(c) for the rate and s. 80 for the moneys received basis, on the same conditions as IE-S-23-CASH.",
+    "source": "vatca-2010",
+    "vat_category": "S",
+    "cash_basis": true,
+    "cash_basis_transition_account": "2205",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "2200",
+          "box": "T1"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "2200",
+          "box": "T1",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "conditions": [
+      "seller_threshold"
+    ],
+    "sequence": 70
+  },
+  {
+    "code": "IE-S-09",
+    "name": "Sale, second reduced rate 9 %",
+    "description": "The second reduced rate of s. 46(1)(ca)",
+    "rate": 9,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2011-07-01",
+    "legal_reference": "Value-Added Tax Consolidation Act 2010, s. 46(1)(ca) — 9 per cent in relation to goods or services of a kind specified in paragraphs 7(a), 7A, 12 and 12A of Schedule 3: printed periodicals, the electronic supply of periodicals and similar matter, the provision of sporting facilities and the supply and installation of low emissions heat pump heating systems. The paragraph was inserted from 1 July 2011 by the Finance (No. 2) Act 2011, s. 3, then for a list of tourism supplies and a limited period; its time limit was deleted from 1 January 2014 by the Finance (No. 2) Act 2013, s. 58, and its list has been amended since, most recently from 1 January 2025 by the Finance Act 2024, s. 79(a). The rate itself has been 9 per cent throughout, so one code carries it; which goods and services it reaches is the Schedule, read on the date of the supply. The VAT3 return carries no box for the value of a domestic supply: that value is reported once a year on the Return of Trading Details, which this pack cannot carry beside the VAT3 (see docs/international.md), so the base posting names no box.",
+    "source": "f2a-2011-s3",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "2200",
+          "box": "T1"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "2200",
+          "box": "T1",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 80
+  },
+  {
+    "code": "IE-S-09-HOSP-2020",
+    "name": "Sale, 9 % — temporary hospitality rate",
+    "description": "The temporary 9 % for hospitality and tourism, 1 November 2020 to 31 August 2023",
+    "rate": 9,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2020-11-01",
+    "valid_to": "2023-08-31",
+    "legal_reference": "Value-Added Tax Consolidation Act 2010, s. 46(1)(cb), inserted from 1 November 2020 by the Finance Act 2020, s. 39 — 9 per cent during the period from 1 November 2020 to 31 August 2023 in relation to goods or services of a kind specified in paragraphs 3(1), 3(3), 7(b) to (e), 8, 11 and 13(3) of Schedule 3 that would otherwise be chargeable at 13.5 per cent: restaurant and catering services, hot food, printed matter, admissions to cinemas and live performances, holiday and guest accommodation and hairdressing. The end date was 31 December 2021 as enacted and was extended to 31 August 2023 by the Finance Act 2023, s. 5(a)(ii). A code of its own, although the rate is the same as IE-S-09, so that a sale can say which relief it was taxed under and the code closes with the relief.",
+    "source": "fa-2020-s39",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "2200",
+          "box": "T1"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "2200",
+          "box": "T1",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 90
+  },
+  {
+    "code": "IE-S-09-ENERGY",
+    "name": "Sale, 9 % — gas and electricity",
+    "description": "Gas and electricity, 1 May 2022 to 31 December 2030",
+    "rate": 9,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2022-05-01",
+    "valid_to": "2030-12-31",
+    "legal_reference": "Value-Added Tax Consolidation Act 2010, s. 46(1)(caa), inserted by the Finance (Covid-19 and Miscellaneous Provisions) Act 2022, s. 7(c) — 9 per cent during the period from 1 May 2022 to the date the paragraph names, in relation to gas and electricity of a kind specified in paragraph 17(2) and (3) of Schedule 3 that would otherwise be chargeable at 13.5 per cent. The period has been extended several times; the date in force is 31 December 2030, substituted by the Finance Act 2025, s. 69, and it is the valid_to of this code.",
+    "source": "fcmp-2022-s7",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "2200",
+          "box": "T1"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "2200",
+          "box": "T1",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 100
+  },
+  {
+    "code": "IE-S-09-FOOD",
+    "name": "Sale, 9 % — food, catering and hairdressing",
+    "description": "Restaurant and catering services, hot food and hairdressing since 1 July 2026",
+    "rate": 9,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2026-07-01",
+    "legal_reference": "Value-Added Tax Consolidation Act 2010, s. 46(1)(cb) as substituted with effect from 1 July 2026 by the Finance Act 2025, s. 71 — 9 per cent in relation to goods or services of a kind specified in paragraphs 3(1), 3(3) and 13(3) of Schedule 3 that would otherwise be chargeable at 13.5 per cent: restaurant and catering services, hot food and hairdressing services. Unlike the paragraph it replaces, it carries no end date.",
+    "source": "fa-2025-s71",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "2200",
+          "box": "T1"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "2200",
+          "box": "T1",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 110
+  },
+  {
+    "code": "IE-S-048",
+    "name": "Sale of livestock, 4.8 %",
+    "description": "The livestock rate",
+    "rate": 4.8,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2010-11-01",
+    "legal_reference": "Value-Added Tax Consolidation Act 2010, s. 46(1)(d) — 4.8 per cent of the amount on which tax is chargeable in relation to the supply of livestock. As enacted the paragraph also reached live greyhounds and the hire of horses; those words were deleted from 1 January 2015 by the Finance (No. 2) Act 2013, s. 66(1)(b)(ii), which leaves the rate and the code unchanged for livestock.",
+    "source": "vatca-2010",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "2200",
+          "box": "T1"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "2200",
+          "box": "T1",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 120
+  },
+  {
+    "code": "IE-S-00",
+    "name": "Sale, zero rate",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2010-11-01",
+    "legal_reference": "Value-Added Tax Consolidation Act 2010, s. 46(1)(b) and Schedule 2 — zero per cent on the goods and services Schedule 2 lists, among them most food and drink for human consumption, printed books and children's clothing and footwear. A zero-rated supply is a taxable supply and keeps the right to deduct. The VAT3 return carries no box for the value of a domestic supply: that value is reported once a year on the Return of Trading Details, which this pack cannot carry beside the VAT3 (see docs/international.md), so the base posting names no box.",
+    "source": "vatca-2010",
+    "vat_category": "Z",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 130
+  },
+  {
+    "code": "IE-S-EXEMPT",
+    "name": "Sale, exempt activity",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2010-11-01",
+    "legal_reference": "Value-Added Tax Consolidation Act 2010, s. 2 (“exempted activity”) and Schedule 1 — the activities Schedule 1 lists, among them medical care, education, financial and insurance services and the lettings of immovable goods of paragraph 11, are exempt and give no right to deduct (s. 59(2) reaches taxable supplies and qualifying activities only). The reason code is the general one for the activities in the public interest of Article 132 of Directive 2006/112/EC, which is where most of Schedule 1 comes from; a supply exempt under another article of the Directive should name that article's code on the document.",
+    "source": "vatca-2010",
+    "vat_category": "E",
+    "exemption_code": "VATEX-EU-132",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 140
+  },
+  {
+    "code": "IE-S-EXPORT",
+    "name": "Export of goods outside the European Union",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2010-11-01",
+    "legal_reference": "Value-Added Tax Consolidation Act 2010, s. 46(1)(b) and Schedule 2, paragraph 3(1) — a supply of goods that are to be transported directly by or on behalf of the person making the supply outside the Community is zero-rated. The VAT3 return has no box for exports; the value is reported on the Return of Trading Details.",
+    "source": "vatca-2010",
+    "vat_category": "G",
+    "exemption_code": "VATEX-EU-G",
+    "conditions": [
+      "transport_evidence"
+    ],
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 150
+  },
+  {
+    "code": "IE-S-ICG",
+    "name": "Intra-Community supply of goods",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "intracom_goods",
+    "valid_from": "2010-11-01",
+    "legal_reference": "Value-Added Tax Consolidation Act 2010, Schedule 2, paragraph 1(1) — the supply of goods dispatched or transported from the State to a person registered for VAT in another Member State is zero-rated, provided the supplier has complied with s. 82 (the statement of intra-Community supplies, VIES). Value-Added Tax Regulations 2010, reg. 20(2)(f) — the invoice carries the customer's VAT number and states that it relates to an intra-Community supply of goods. The value goes in box E1 of the VAT3.",
+    "source": "vatca-2010",
+    "vat_category": "K",
+    "exemption_code": "VATEX-EU-IC",
+    "conditions": [
+      "buyer_status",
+      "transport_evidence"
+    ],
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "E1"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "E1",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 160
+  },
+  {
+    "code": "IE-S-ICS",
+    "name": "Services supplied to a business customer in another Member State",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "intracom_services",
+    "valid_from": "2010-11-01",
+    "legal_reference": "Value-Added Tax Consolidation Act 2010, s. 34(a) — the place of supply of a service to a taxable person acting as such is where that person's business is established, so a service supplied to a business in another Member State is not taxed in the State and the customer accounts for the tax there (Directive 2006/112/EC, Articles 44 and 196). Value-Added Tax Regulations 2010, reg. 20(2)(e) — the invoice carries the customer's VAT number and an indication that a reverse charge applies. The value goes in box ES1 of the VAT3.",
+    "source": "vatca-2010",
+    "vat_category": "K",
+    "exemption_code": "VATEX-EU-IC",
+    "conditions": [
+      "buyer_status"
+    ],
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "ES1"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "ES1",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 170
+  },
+  {
+    "code": "IE-S-RCT",
+    "name": "Construction services to a principal contractor, reverse charge",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "domestic_reverse_charge",
+    "valid_from": "2010-11-01",
+    "legal_reference": "Value-Added Tax Consolidation Act 2010, s. 16(3)(b) — where a principal to whom s. 530A of the Taxes Consolidation Act 1997 applies receives construction operations from a subcontractor, the principal is the accountable person and the subcontractor is not liable for the tax; s. 66(4)(a) — the subcontractor issues a document indicating that the principal is liable to account for the tax. The subcontractor's VAT3 carries nothing for the supply. The VAT3 return carries no box for the value of a domestic supply: that value is reported once a year on the Return of Trading Details, which this pack cannot carry beside the VAT3 (see docs/international.md), so the base posting names no box.",
+    "source": "vatca-2010",
+    "vat_category": "AE",
+    "exemption_code": "VATEX-EU-AE",
+    "conditions": [
+      "buyer_status"
+    ],
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 180
+  },
+  {
+    "code": "IE-S-OUTSIDE",
+    "name": "Supply outside the scope of Irish VAT",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "not_subject",
+    "valid_from": "2010-11-01",
+    "legal_reference": "Value-Added Tax Consolidation Act 2010, s. 3 — tax is charged only on supplies made in the State, and ss. 29 to 35 place a supply elsewhere; a supply whose place is not the State, and which is none of the intra-Community supplies above, is outside the scope of Irish VAT. It is reported neither on the VAT3 nor, for a supply that is not a service to another Member State, in any of its boxes.",
+    "source": "vatca-2010",
+    "vat_category": "O",
+    "exemption_code": "VATEX-EU-O",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 190
+  },
+  {
+    "code": "IE-P-21-2010",
+    "name": "Purchase, standard rate 21 %",
+    "rate": 21,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2010-11-01",
+    "valid_to": "2011-12-31",
+    "legal_reference": "Value-Added Tax Consolidation Act 2010, s. 46(1)(a) as enacted, and s. 59(2)(a) — the tax charged by other accountable persons by invoice is deducted in the taxable period, and the VAT3 carries it in box T2.",
+    "source": "vatca-2010-s46-enacted",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1140",
+          "box": "T2"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1140",
+          "box": "T2",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 200
+  },
+  {
+    "code": "IE-P-23-2012",
+    "name": "Purchase, standard rate 23 %, first period",
+    "rate": 23,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2012-01-01",
+    "valid_to": "2020-08-31",
+    "legal_reference": "Finance Act 2012, s. 87 for the rate; Value-Added Tax Consolidation Act 2010, s. 59(2)(a) for the deduction, in box T2.",
+    "source": "fa-2012-s87",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1140",
+          "box": "T2"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1140",
+          "box": "T2",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 210
+  },
+  {
+    "code": "IE-P-21-2020",
+    "name": "Purchase, standard rate 21 %, temporary",
+    "rate": 21,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2020-09-01",
+    "valid_to": "2021-02-28",
+    "legal_reference": "Value-Added Tax Consolidation Act 2010, s. 46(1A), inserted by the Financial Provisions (Covid-19) (No. 2) Act 2020, s. 12(b); s. 59(2)(a) for the deduction, in box T2.",
+    "source": "fp-covid-2-2020-s12",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1140",
+          "box": "T2"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1140",
+          "box": "T2",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 220
+  },
+  {
+    "code": "IE-P-23",
+    "name": "Purchase, standard rate 23 %",
+    "rate": 23,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2021-03-01",
+    "legal_reference": "Value-Added Tax Consolidation Act 2010, s. 46(1)(a) and s. 59(2)(a) — the tax charged by invoice on goods and services used for taxable supplies or qualifying activities is deducted; the VAT3 carries it in box T2 and has no box for the value of a domestic purchase.",
+    "source": "vatca-2010",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1140",
+          "box": "T2"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1140",
+          "box": "T2",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 230
+  },
+  {
+    "code": "IE-P-135",
+    "name": "Purchase, reduced rate 13.5 %",
+    "rate": 13.5,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2010-11-01",
+    "legal_reference": "Value-Added Tax Consolidation Act 2010, s. 46(1)(c) and s. 59(2)(a); box T2.",
+    "source": "vatca-2010",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1140",
+          "box": "T2"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1140",
+          "box": "T2",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 240
+  },
+  {
+    "code": "IE-P-09",
+    "name": "Purchase, second reduced rate 9 %",
+    "rate": 9,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2011-07-01",
+    "legal_reference": "Value-Added Tax Consolidation Act 2010, s. 46(1)(ca), (caa), (cb) and (cac) — every 9 per cent paragraph of the Act — and s. 59(2)(a); box T2. On the purchasing side the relief the supplier applied changes nothing, so one code carries them all.",
+    "source": "vatca-2010",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1140",
+          "box": "T2"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1140",
+          "box": "T2",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 250
+  },
+  {
+    "code": "IE-P-048",
+    "name": "Purchase of livestock, 4.8 %",
+    "rate": 4.8,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2010-11-01",
+    "legal_reference": "Value-Added Tax Consolidation Act 2010, s. 46(1)(d) and s. 59(2)(a); box T2.",
+    "source": "vatca-2010",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1140",
+          "box": "T2"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1140",
+          "box": "T2",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 260
+  },
+  {
+    "code": "IE-P-23-ND",
+    "name": "Purchase, standard rate 23 %, not deductible",
+    "rate": 23,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2021-03-01",
+    "legal_reference": "Value-Added Tax Consolidation Act 2010, s. 60(2)(a) — no deduction is made for tax on food, drink, accommodation (other than qualifying conference accommodation) or other personal services for the accountable person, their agents or employees, on entertainment expenses, on the purchase, hiring or importation of motor vehicles other than as stock-in-trade (except the 20 per cent of s. 59(2)(d)), or on petrol other than as stock-in-trade. The whole of the tax stays on the account of the line it taxes and box T2 does not see it.",
+    "source": "vatca-2010",
+    "vat_category": "S",
+    "recoverable": false,
+    "conditions": [
+      "supply_nature"
+    ],
+    "description": "Food, drink, accommodation, entertainment, petrol and cars outside s. 59(2)(d)",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax_on_base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax_on_base"
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 270
+  },
+  {
+    "code": "IE-P-135-ND",
+    "name": "Purchase, reduced rate 13.5 %, not deductible",
+    "rate": 13.5,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2010-11-01",
+    "legal_reference": "Value-Added Tax Consolidation Act 2010, s. 60(2)(a)(i) and (iii) — the same exclusion at the reduced rate, which is the one hotel accommodation and fuel are charged at.",
+    "source": "vatca-2010",
+    "vat_category": "S",
+    "recoverable": false,
+    "conditions": [
+      "supply_nature"
+    ],
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax_on_base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax_on_base"
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 280
+  },
+  {
+    "code": "IE-P-23-CAR",
+    "name": "Qualifying business car, 23 % — 20 % deductible",
+    "rate": 23,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2021-03-01",
+    "legal_reference": "Value-Added Tax Consolidation Act 2010, s. 59(2)(d) — 20 per cent of the tax charged on the purchase, hiring, intra-Community acquisition or importation of a qualifying vehicle is deductible where it is used primarily for business purposes, being at least 60 per cent of its use; s. 59(1) defines a qualifying vehicle by its CO2 emissions at first registration (below 156 g/km from 2009 to 2020, below 140 g/km since 1 January 2021). The other 80 per cent stays on the account of the line.",
+    "source": "vatca-2010",
+    "vat_category": "S",
+    "conditions": [
+      "supply_nature"
+    ],
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "factor": 20,
+          "account": "1140",
+          "box": "T2",
+          "box_factor": 20
+        },
+        {
+          "type": "tax_on_base",
+          "factor": 80
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "factor": 20,
+          "account": "1140",
+          "box": "T2",
+          "box_factor": -20
+        },
+        {
+          "type": "tax_on_base",
+          "factor": 80
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 290
+  },
+  {
+    "code": "IE-P-00",
+    "name": "Purchase, zero rate",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2010-11-01",
+    "legal_reference": "Value-Added Tax Consolidation Act 2010, s. 46(1)(b) and Schedule 2 — the supplier charged no tax, so there is nothing to deduct and the VAT3 carries nothing.",
+    "source": "vatca-2010",
+    "vat_category": "Z",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 300
+  },
+  {
+    "code": "IE-P-EXEMPT",
+    "name": "Purchase of an exempt supply",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "exempt",
+    "valid_from": "2010-11-01",
+    "legal_reference": "Value-Added Tax Consolidation Act 2010, Schedule 1 — the supplier carries on an exempted activity and charges no tax.",
+    "source": "vatca-2010",
+    "vat_category": "E",
+    "exemption_code": "VATEX-EU-132",
+    "postings": {},
+    "kind": "vat",
+    "sequence": 310
+  },
+  {
+    "code": "IE-P-ICG-23",
+    "name": "Intra-Community acquisition of goods, 23 %",
+    "rate": 23,
+    "scope": "purchase",
+    "treatment": "intracom_acquisition_goods",
+    "valid_from": "2021-03-01",
+    "legal_reference": "Value-Added Tax Consolidation Act 2010, s. 3(c) — tax is charged on the intra-Community acquisition of goods in the State, and the acquirer accounts for it; s. 59(2)(c) — the tax is deductible in the same period. The value goes in box E2, the tax in T1 and, being deductible, in T2, so the entry nets to nothing in the ledger.",
+    "source": "vatca-2010",
+    "vat_category": "K",
+    "exemption_code": "VATEX-EU-IC",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "E2"
+        },
+        {
+          "type": "tax",
+          "account": "1140",
+          "box": "T2"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2200",
+          "box": "T1"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "E2",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1140",
+          "box": "T2",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2200",
+          "box": "T1",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 320
+  },
+  {
+    "code": "IE-P-ICG-135",
+    "name": "Intra-Community acquisition of goods, 13.5 %",
+    "rate": 13.5,
+    "scope": "purchase",
+    "treatment": "intracom_acquisition_goods",
+    "valid_from": "2010-11-01",
+    "legal_reference": "Value-Added Tax Consolidation Act 2010, s. 3(c), s. 46(1)(c) and s. 59(2)(c) — the same mechanism at the reduced rate; boxes E2, T1 and T2.",
+    "source": "vatca-2010",
+    "vat_category": "K",
+    "exemption_code": "VATEX-EU-IC",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "E2"
+        },
+        {
+          "type": "tax",
+          "account": "1140",
+          "box": "T2"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2200",
+          "box": "T1"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "E2",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1140",
+          "box": "T2",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2200",
+          "box": "T1",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 330
+  },
+  {
+    "code": "IE-P-ICS-23",
+    "name": "Service received from a supplier in another Member State, 23 %",
+    "rate": 23,
+    "scope": "purchase",
+    "treatment": "intracom_acquisition_services",
+    "valid_from": "2021-03-01",
+    "legal_reference": "Value-Added Tax Consolidation Act 2010, s. 12(1) — a taxable person carrying on business in the State who receives a service from a supplier established outside the State, whose place of supply is the State under s. 34(a), accounts for the tax as if they had supplied it; s. 59(2) — the tax is deductible. The value goes in box ES2, the tax in T1 and T2.",
+    "source": "vatca-2010",
+    "vat_category": "K",
+    "exemption_code": "VATEX-EU-IC",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "ES2"
+        },
+        {
+          "type": "tax",
+          "account": "1140",
+          "box": "T2"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2200",
+          "box": "T1"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "ES2",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1140",
+          "box": "T2",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2200",
+          "box": "T1",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 340
+  },
+  {
+    "code": "IE-P-FSR-23",
+    "name": "Service received from a supplier outside the European Union, 23 %",
+    "rate": 23,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2021-03-01",
+    "legal_reference": "Value-Added Tax Consolidation Act 2010, s. 12(1) and s. 34(a) — the same self-accounting where the supplier is established outside the Union. Revenue's guidance for the VAT3 puts the tax on received services in T1 and T2; box ES2 is for services received from other EU countries only, so the value of this one is reported on no box of the VAT3.",
+    "source": "vatca-2010",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1140",
+          "box": "T2"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2200",
+          "box": "T1"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1140",
+          "box": "T2",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2200",
+          "box": "T1",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 350
+  },
+  {
+    "code": "IE-P-PA-23",
+    "name": "Import of goods under postponed accounting, 23 %",
+    "rate": 23,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2021-01-01",
+    "legal_reference": "Value-Added Tax Consolidation Act 2010, s. 53A, inserted from 31 December 2020 by the Withdrawal of the United Kingdom from the European Union (Consequential Provisions) Act 2020 — an accountable person may account for the tax on imported goods in the return for the period in which it became chargeable instead of paying it at importation. Revenue's manual on postponed accounting puts the value in box PA1 and the tax in T1 and, subject to the usual rules of deductibility, T2. PA1 asks for the customs value plus customs duty as per the customs declaration; the value posted here is the one on the supplier's invoice, and the two differ where freight, insurance or duty are not on it.",
+    "source": "revenue-postponed-accounting",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "PA1"
+        },
+        {
+          "type": "tax",
+          "account": "1140",
+          "box": "T2"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2200",
+          "box": "T1"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "PA1",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1140",
+          "box": "T2",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2200",
+          "box": "T1",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 360
+  },
+  {
+    "code": "IE-P-RCT-135",
+    "name": "Construction services from a subcontractor, reverse charge 13.5 %",
+    "rate": 13.5,
+    "scope": "purchase",
+    "treatment": "domestic_reverse_charge",
+    "valid_from": "2010-11-01",
+    "legal_reference": "Value-Added Tax Consolidation Act 2010, s. 16(3)(b) — the principal contractor accounts for the tax on construction operations received from a subcontractor as if the principal had supplied them; construction services are reduced-rated under Schedule 3, paragraphs 9(1) and 15(2). Revenue's manual on the VAT treatment of construction services has the principal include the tax in box T1 and, where entitled, claim it at the same time in T2. The value of the service is reported on the Return of Trading Details and on no box of the VAT3.",
+    "source": "revenue-construction",
+    "vat_category": "AE",
+    "exemption_code": "VATEX-EU-AE",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1140",
+          "box": "T2"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2200",
+          "box": "T1"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1140",
+          "box": "T2",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2200",
+          "box": "T1",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 370
+  },
+  {
+    "code": "IE-P-RCT-23",
+    "name": "Construction operations from a subcontractor, reverse charge 23 %",
+    "rate": 23,
+    "scope": "purchase",
+    "treatment": "domestic_reverse_charge",
+    "valid_from": "2021-03-01",
+    "legal_reference": "Value-Added Tax Consolidation Act 2010, s. 16(3)(b) — the same charge, for a construction operation that is not reduced-rated under Schedule 3 and is taxed at the standard rate of s. 46(1)(a); boxes T1 and T2.",
+    "source": "revenue-construction",
+    "vat_category": "AE",
+    "exemption_code": "VATEX-EU-AE",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1140",
+          "box": "T2"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2200",
+          "box": "T1"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1140",
+          "box": "T2",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2200",
+          "box": "T1",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 380
+  },
+  {
+    "code": "IE-P-FRA-45",
+    "name": "Purchase from a flat-rate farmer, flat-rate addition 4.5 %",
+    "rate": 4.5,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "legal_reference": "Value-Added Tax Consolidation Act 2010, s. 86(1) — a flat-rate farmer who supplies agricultural produce or an agricultural service issues an invoice showing the consideration and a flat-rate addition, which the Finance Act 2025, s. 73 set at 4.5 per cent with effect from 1 January 2026; Revenue's guidance for the VAT3 lists the flat-rate addition among what T2 includes. The farmer is not registered and the invoice is not a VAT invoice, so no category is recorded.",
+    "source": "fa-2025-s73",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1140",
+          "box": "T2"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1140",
+          "box": "T2",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 390
+  }
+]

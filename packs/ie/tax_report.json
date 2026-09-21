@@ -1,0 +1,106 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "IE-VAT3",
+  "name": "VAT 3 return",
+  "period": [
+    "month",
+    "year"
+  ],
+  "valid_from": "2021-01-01",
+  "legal_reference": "Value-Added Tax Consolidation Act 2010, s. 76(1) — an accountable person furnishes a return for each taxable period, and s. 2 defines a taxable period as a period of two months beginning on 1 January, 1 March, 1 May, 1 July, 1 September or 1 November. That two-month period is the cadence the Act gives everybody, and this format cannot say it: `period` takes a month, a quarter or a year and nothing else, so the bimonthly return is recorded as a gap in docs/international.md and no period_default is proposed rather than a wrong one. What the list does carry is the two other cadences Revenue allows: a monthly return, which Revenue authorises on request, generally for a person in a constant repayment position, and an annual return under s. 77, whose accounting period may run up to twelve months, with or without monthly direct debit. The four-monthly and six-monthly periods Revenue authorises for small liabilities are not expressible either. The version carried is the form with box PA1, added for goods imported from 1 January 2021 under s. 53A, and T1 to T4, E1, E2, ES1 and ES2 as the guidance names them. The annual Return of Trading Details (s. 76 and reg. 24(1) of the Value-Added Tax Regulations 2010), which breaks sales and purchases down by rate, is a second declaration and is not in this form.",
+  "source": "vatca-2010",
+  "boxes": [
+    {
+      "box": "T1",
+      "kind": "tax",
+      "name": "VAT on sales",
+      "sequence": 10,
+      "legal_reference": "Revenue, How do you complete a VAT 3 return?, T1 — the total VAT due on supplies of goods and services, on intra-Community acquisitions of goods, on goods imported under postponed accounting and on services received. Value-Added Tax Consolidation Act 2010, s. 76(1)(a)(i): the return states the tax which became due in the taxable period. A credit note issued reduces it.",
+      "source": "revenue-vat3"
+    },
+    {
+      "box": "T2",
+      "kind": "tax",
+      "name": "VAT on purchases",
+      "sequence": 20,
+      "legal_reference": "Revenue, How do you complete a VAT 3 return?, T2 — the total VAT the person is entitled to deduct on goods and services used for taxable supplies and qualifying activities, on intra-Community acquisitions, on goods imported under postponed accounting, on services received, and the flat-rate addition. Value-Added Tax Consolidation Act 2010, s. 76(1)(a)(ii) and Part 8, Chapter 1 (ss. 59 to 62). A credit note received reduces it.",
+      "source": "revenue-vat3"
+    },
+    {
+      "box": "T3",
+      "kind": "total",
+      "name": "VAT payable",
+      "sequence": 30,
+      "plus": [
+        "T1"
+      ],
+      "minus": [
+        "T2"
+      ],
+      "floor_zero": true,
+      "legal_reference": "Revenue, How do you complete a VAT 3 return?, T3 — VAT is payable where the T1 figure is greater than the T2 figure, and the amount payable is the difference; s. 76(1)(b) has it remitted with the return. The floor at zero is the form's own rule: in a repayment period T3 is 0 and the difference is in T4.",
+      "source": "revenue-vat3"
+    },
+    {
+      "box": "T4",
+      "kind": "total",
+      "name": "VAT repayable",
+      "sequence": 40,
+      "plus": [
+        "T2"
+      ],
+      "minus": [
+        "T1"
+      ],
+      "floor_zero": true,
+      "legal_reference": "Revenue, How do you complete a VAT 3 return?, T4 — VAT is repayable where the T2 figure is greater than the T1 figure, and the amount repayable is the difference. Value-Added Tax Consolidation Act 2010, s. 99 governs the refund.",
+      "source": "revenue-vat3"
+    },
+    {
+      "box": "E1",
+      "kind": "base",
+      "name": "Intra-EU supplies of goods",
+      "sequence": 50,
+      "legal_reference": "Revenue, How do you complete a VAT 3 return?, E1 — the total value of goods sent to customers in other EU countries: the zero-rated supplies of Schedule 2, paragraph 1(1) of the 2010 Act, which are also listed on the VIES statement of s. 82.",
+      "source": "revenue-vat3"
+    },
+    {
+      "box": "E2",
+      "kind": "base",
+      "name": "Intra-EU acquisitions of goods",
+      "sequence": 60,
+      "legal_reference": "Revenue, How do you complete a VAT 3 return?, E2 — the total value of goods received from suppliers in other EU countries, on which the tax is self-accounted in T1 and T2.",
+      "source": "revenue-vat3"
+    },
+    {
+      "box": "ES1",
+      "kind": "base",
+      "name": "Intra-EU supplies of services",
+      "sequence": 70,
+      "legal_reference": "Revenue, How do you complete a VAT 3 return?, ES1 — the total value of services supplied to customers in other EU countries, which are also listed on the statement of intra-Community supplies of taxable services of s. 83.",
+      "source": "revenue-vat3"
+    },
+    {
+      "box": "ES2",
+      "kind": "base",
+      "name": "Intra-EU acquisitions of services",
+      "sequence": 80,
+      "legal_reference": "Revenue, How do you complete a VAT 3 return?, ES2 — the total value of services received from suppliers in other EU countries. A service received from a supplier outside the Union is self-accounted in T1 and T2 and reported in no box of its own.",
+      "source": "revenue-vat3"
+    },
+    {
+      "box": "PA1",
+      "kind": "base",
+      "name": "Postponed accounting",
+      "sequence": 90,
+      "legal_reference": "Revenue, How do you complete a VAT 3 return?, PA1 — the total of the customs value of goods imported under postponed accounting, as per the customs declarations, plus customs duty. Value-Added Tax Consolidation Act 2010, s. 53A. The field is mandatory, and Revenue's manual on postponed accounting says so in as many words; a period with no such import reports zero, which is what a box that comes to nothing reads as here.",
+      "source": "revenue-vat3"
+    }
+  ],
+  "deadline": {
+    "rule": "day_of_month_after_period",
+    "day": 19,
+    "legal_reference": "Value-Added Tax Consolidation Act 2010, s. 76(1) — the return is furnished and the tax remitted within 9 days immediately after the 10th day of the month immediately following the taxable period, which is the 19th; s. 77(2)(b) keeps the same day after an accounting period. Revenue extends the time limit to the 23rd for a return filed and paid through the Revenue Online Service, where every filer not exempted from mandatory electronic filing files. That extension is not added here: `plus_days` on a `day_of_month_after_period` rule is not yet exercised by the repository's filing-calendar test, which models it on the last day of the following month, and a deadline four days early is never a late return. The gap is recorded in docs/international.md.",
+    "source": "revenue-vat-due"
+  }
+}

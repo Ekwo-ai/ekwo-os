@@ -1,0 +1,1309 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/statements",
+  "statements": [
+    {
+      "code": "IE-CA-SMALL-BS",
+      "kind": "balance_sheet",
+      "framework": "IE-FRS102",
+      "name": "Balance sheet — Companies Act 2014, Schedule 3A, Format 1 (small companies regime)",
+      "legal_reference": "Companies Act 2014, Schedule 3A, Part II, Section B — Balance Sheet Formats, Format 1, as inserted by the Companies (Accounting) Act 2017. Section 291(3)(a)(ii) of the Act has a company that qualifies for the small companies regime (s. 280A) comply with Schedule 3A, or with Schedule 3 if it so elects; paragraph 2(1) of Schedule 3A requires the items of the format adopted, in its order and under its headings. Every letter and numeral below is an item of Format 1 and the name is the format's own wording.",
+      "source": "ca-2014",
+      "lines": [
+        {
+          "code": "A",
+          "name": "Fixed Assets",
+          "sequence": 10,
+          "is_total": true,
+          "plus": [
+            "A.I",
+            "A.II",
+            "A.III"
+          ]
+        },
+        {
+          "code": "A.I",
+          "name": "Intangible assets",
+          "sequence": 20,
+          "parent": "A",
+          "is_total": true,
+          "plus": [
+            "A.I.1",
+            "A.I.2",
+            "A.I.3",
+            "A.I.4"
+          ]
+        },
+        {
+          "code": "A.I.1",
+          "name": "Development costs",
+          "sequence": 30,
+          "parent": "A.I",
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "0010",
+              "code_to": "0011"
+            }
+          ]
+        },
+        {
+          "code": "A.I.2",
+          "name": "Concessions, patents, licences, trade marks and similar rights and assets",
+          "sequence": 40,
+          "parent": "A.I",
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "0020",
+              "code_to": "0021"
+            }
+          ]
+        },
+        {
+          "code": "A.I.3",
+          "name": "Goodwill",
+          "sequence": 50,
+          "parent": "A.I",
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "0030",
+              "code_to": "0031"
+            }
+          ],
+          "legal_reference": "Note (2) on the balance sheet formats: goodwill is included only to the extent it was acquired for valuable consideration."
+        },
+        {
+          "code": "A.I.4",
+          "name": "Payments on account",
+          "sequence": 60,
+          "parent": "A.I",
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "0040"
+            }
+          ]
+        },
+        {
+          "code": "A.II",
+          "name": "Tangible assets",
+          "sequence": 70,
+          "parent": "A",
+          "is_total": true,
+          "plus": [
+            "A.II.1",
+            "A.II.2",
+            "A.II.3",
+            "A.II.4",
+            "A.II.5"
+          ]
+        },
+        {
+          "code": "A.II.1",
+          "name": "Investment property",
+          "sequence": 80,
+          "parent": "A.II",
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "0100"
+            }
+          ]
+        },
+        {
+          "code": "A.II.2",
+          "name": "Land and buildings",
+          "sequence": 90,
+          "parent": "A.II",
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "0110",
+              "code_to": "0111"
+            }
+          ]
+        },
+        {
+          "code": "A.II.3",
+          "name": "Plant and machinery",
+          "sequence": 100,
+          "parent": "A.II",
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "0120",
+              "code_to": "0121"
+            }
+          ]
+        },
+        {
+          "code": "A.II.4",
+          "name": "Fixtures, fittings, tools and equipment",
+          "sequence": 110,
+          "parent": "A.II",
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "0130",
+              "code_to": "0151"
+            }
+          ],
+          "legal_reference": "Format 1 has no item of its own for office and computer equipment or for motor vehicles, so the chart's three blocks of them report here, which is where Irish practice under FRS 102 section 1A places them."
+        },
+        {
+          "code": "A.II.5",
+          "name": "Payments on account and assets in course of construction",
+          "sequence": 120,
+          "parent": "A.II",
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "0160"
+            }
+          ]
+        },
+        {
+          "code": "A.III",
+          "name": "Financial assets",
+          "sequence": 130,
+          "parent": "A",
+          "is_total": true,
+          "plus": [
+            "A.III.1",
+            "A.III.2",
+            "A.III.3",
+            "A.III.4",
+            "A.III.5",
+            "A.III.6"
+          ]
+        },
+        {
+          "code": "A.III.1",
+          "name": "Shares in group undertakings",
+          "sequence": 140,
+          "parent": "A.III",
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "0200"
+            }
+          ]
+        },
+        {
+          "code": "A.III.2",
+          "name": "Loans to group undertakings",
+          "sequence": 150,
+          "parent": "A.III",
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "0210"
+            }
+          ]
+        },
+        {
+          "code": "A.III.3",
+          "name": "Participating interests",
+          "sequence": 160,
+          "parent": "A.III",
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "0220"
+            }
+          ]
+        },
+        {
+          "code": "A.III.4",
+          "name": "Loans to undertakings with which the company is linked by virtue of participating interests",
+          "sequence": 170,
+          "parent": "A.III",
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "0230"
+            }
+          ]
+        },
+        {
+          "code": "A.III.5",
+          "name": "Other investments other than loans",
+          "sequence": 180,
+          "parent": "A.III",
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "0240"
+            }
+          ]
+        },
+        {
+          "code": "A.III.6",
+          "name": "Other loans",
+          "sequence": 190,
+          "parent": "A.III",
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "0250"
+            }
+          ]
+        },
+        {
+          "code": "B",
+          "name": "Current Assets",
+          "sequence": 200,
+          "is_total": true,
+          "plus": [
+            "B.I",
+            "B.II",
+            "B.III",
+            "B.IV"
+          ]
+        },
+        {
+          "code": "B.I",
+          "name": "Stocks",
+          "sequence": 210,
+          "parent": "B",
+          "is_total": true,
+          "plus": [
+            "B.I.1",
+            "B.I.2",
+            "B.I.3",
+            "B.I.4"
+          ]
+        },
+        {
+          "code": "B.I.1",
+          "name": "Raw materials and consumables",
+          "sequence": 220,
+          "parent": "B.I",
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1000"
+            }
+          ]
+        },
+        {
+          "code": "B.I.2",
+          "name": "Work in progress",
+          "sequence": 230,
+          "parent": "B.I",
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1010"
+            }
+          ]
+        },
+        {
+          "code": "B.I.3",
+          "name": "Finished goods and goods for resale",
+          "sequence": 240,
+          "parent": "B.I",
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1020"
+            }
+          ]
+        },
+        {
+          "code": "B.I.4",
+          "name": "Payments on account",
+          "sequence": 250,
+          "parent": "B.I",
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1030"
+            }
+          ]
+        },
+        {
+          "code": "B.II",
+          "name": "Debtors",
+          "sequence": 260,
+          "parent": "B",
+          "is_total": true,
+          "plus": [
+            "B.II.1",
+            "B.II.2",
+            "B.II.3",
+            "B.II.4",
+            "B.II.5",
+            "B.II.6",
+            "B.II.7"
+          ]
+        },
+        {
+          "code": "B.II.1",
+          "name": "Trade debtors",
+          "sequence": 270,
+          "parent": "B.II",
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1100",
+              "code_to": "1105"
+            }
+          ]
+        },
+        {
+          "code": "B.II.2",
+          "name": "Amounts owed by group undertakings",
+          "sequence": 280,
+          "parent": "B.II",
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1110"
+            }
+          ]
+        },
+        {
+          "code": "B.II.3",
+          "name": "Amounts owed by undertakings with which the company is linked by virtue of participating interests",
+          "sequence": 290,
+          "parent": "B.II",
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1120"
+            }
+          ]
+        },
+        {
+          "code": "B.II.4",
+          "name": "Other debtors",
+          "sequence": 300,
+          "parent": "B.II",
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1130",
+              "code_to": "1190",
+              "sequence": 10
+            },
+            {
+              "kind": "account_code",
+              "code_from": "2400",
+              "side": "debit",
+              "sequence": 20
+            }
+          ],
+          "legal_reference": "The VAT on purchases, the VAT repayable by the Collector-General and the Relevant Contracts Tax credit are other debtors. The suspense account reaches this line while it is in debit and item C.9 while it is in credit, which is the one way the format lets two lines share an account."
+        },
+        {
+          "code": "B.II.5",
+          "name": "Called-up share capital not paid",
+          "sequence": 310,
+          "parent": "B.II",
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1200"
+            }
+          ],
+          "legal_reference": "Schedule 3A places called-up share capital not paid inside debtors, as item B.II.5; the United Kingdom format prints it as item A at the head of the balance sheet, and this is one of the places where the two formats differ."
+        },
+        {
+          "code": "B.II.6",
+          "name": "Prepayments",
+          "sequence": 320,
+          "parent": "B.II",
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1300"
+            }
+          ],
+          "legal_reference": "Schedule 3A places prepayments and accrued income inside debtors, as items B.II.6 and B.II.7, where the United Kingdom format has a separate item D."
+        },
+        {
+          "code": "B.II.7",
+          "name": "Accrued income",
+          "sequence": 330,
+          "parent": "B.II",
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1310"
+            }
+          ]
+        },
+        {
+          "code": "B.III",
+          "name": "Investments",
+          "sequence": 340,
+          "parent": "B",
+          "is_total": true,
+          "plus": [
+            "B.III.1",
+            "B.III.2"
+          ]
+        },
+        {
+          "code": "B.III.1",
+          "name": "Shares in group undertakings",
+          "sequence": 350,
+          "parent": "B.III",
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1400"
+            }
+          ]
+        },
+        {
+          "code": "B.III.2",
+          "name": "Other investments",
+          "sequence": 360,
+          "parent": "B.III",
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1410"
+            }
+          ]
+        },
+        {
+          "code": "B.IV",
+          "name": "Cash at bank and in hand",
+          "sequence": 370,
+          "parent": "B",
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1500",
+              "code_to": "1550"
+            }
+          ]
+        },
+        {
+          "code": "C",
+          "name": "Creditors: Amounts falling due within one year",
+          "sequence": 380,
+          "is_total": true,
+          "plus": [
+            "C.1",
+            "C.2",
+            "C.3",
+            "C.4",
+            "C.5",
+            "C.6",
+            "C.7",
+            "C.8",
+            "C.9",
+            "C.10",
+            "C.11"
+          ]
+        },
+        {
+          "code": "C.1",
+          "name": "Debenture loans",
+          "sequence": 390,
+          "parent": "C",
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "2000"
+            }
+          ]
+        },
+        {
+          "code": "C.2",
+          "name": "Amounts owed to credit institutions",
+          "sequence": 400,
+          "parent": "C",
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "2010",
+              "code_to": "2030"
+            }
+          ],
+          "legal_reference": "Bank loans, the overdraft and the credit card account are all amounts owed to credit institutions."
+        },
+        {
+          "code": "C.3",
+          "name": "Called-up share capital presented as a liability",
+          "sequence": 410,
+          "parent": "C",
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "2040"
+            }
+          ]
+        },
+        {
+          "code": "C.4",
+          "name": "Payments received on account",
+          "sequence": 420,
+          "parent": "C",
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "2050"
+            }
+          ]
+        },
+        {
+          "code": "C.5",
+          "name": "Trade creditors",
+          "sequence": 430,
+          "parent": "C",
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "2100"
+            }
+          ]
+        },
+        {
+          "code": "C.6",
+          "name": "Bills of exchange payable",
+          "sequence": 440,
+          "parent": "C",
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "2110"
+            }
+          ]
+        },
+        {
+          "code": "C.7",
+          "name": "Amounts owed to group undertakings",
+          "sequence": 450,
+          "parent": "C",
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "2120"
+            }
+          ]
+        },
+        {
+          "code": "C.8",
+          "name": "Amounts owed to undertakings with which the company is linked by virtue of participating interests",
+          "sequence": 460,
+          "parent": "C",
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "2130"
+            }
+          ]
+        },
+        {
+          "code": "C.9",
+          "name": "Other creditors including tax and social insurance",
+          "sequence": 470,
+          "parent": "C",
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "2200",
+              "code_to": "2300",
+              "sequence": 10
+            },
+            {
+              "kind": "account_code",
+              "code_from": "2400",
+              "side": "credit",
+              "sequence": 20
+            }
+          ],
+          "legal_reference": "The VAT on sales, the VAT on sales not yet received under the moneys received basis, the VAT payable to the Collector-General, PAYE, PRSI and USC, Relevant Contracts Tax, corporation tax and the rest of what the company owes within a year that the format names nowhere else. The suspense account reaches this line while it is in credit."
+        },
+        {
+          "code": "C.10",
+          "name": "Accruals",
+          "sequence": 480,
+          "parent": "C",
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "2500"
+            }
+          ]
+        },
+        {
+          "code": "C.11",
+          "name": "Deferred income",
+          "sequence": 490,
+          "parent": "C",
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "2510"
+            }
+          ]
+        },
+        {
+          "code": "D",
+          "name": "Net current assets (liabilities)",
+          "sequence": 500,
+          "is_total": true,
+          "plus": [
+            "B"
+          ],
+          "minus": [
+            "C"
+          ],
+          "legal_reference": "Schedule 3A keeps prepayments and accrued income inside current assets (B.II.6 and B.II.7) and accruals and deferred income inside creditors (C.10 and C.11), so this item is current assets less creditors falling due within one year, and nothing else."
+        },
+        {
+          "code": "E",
+          "name": "Total assets less current liabilities",
+          "sequence": 510,
+          "is_total": true,
+          "plus": [
+            "A",
+            "D"
+          ]
+        },
+        {
+          "code": "F",
+          "name": "Creditors: Amounts falling due after more than one year",
+          "sequence": 520,
+          "is_total": true,
+          "plus": [
+            "F.1",
+            "F.2",
+            "F.3",
+            "F.4",
+            "F.5",
+            "F.6",
+            "F.7",
+            "F.8",
+            "F.9",
+            "F.10",
+            "F.11"
+          ]
+        },
+        {
+          "code": "F.1",
+          "name": "Debenture loans",
+          "sequence": 530,
+          "parent": "F",
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "3000"
+            }
+          ]
+        },
+        {
+          "code": "F.2",
+          "name": "Amounts owed to credit institutions",
+          "sequence": 540,
+          "parent": "F",
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "3010"
+            }
+          ]
+        },
+        {
+          "code": "F.3",
+          "name": "Called-up share capital presented as a liability",
+          "sequence": 550,
+          "parent": "F",
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "3020"
+            }
+          ]
+        },
+        {
+          "code": "F.4",
+          "name": "Payments received on account",
+          "sequence": 560,
+          "parent": "F",
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "3030"
+            }
+          ]
+        },
+        {
+          "code": "F.5",
+          "name": "Trade creditors",
+          "sequence": 570,
+          "parent": "F",
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "3040"
+            }
+          ]
+        },
+        {
+          "code": "F.6",
+          "name": "Bills of exchange payable",
+          "sequence": 580,
+          "parent": "F",
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "3050"
+            }
+          ]
+        },
+        {
+          "code": "F.7",
+          "name": "Amounts owed to group undertakings",
+          "sequence": 590,
+          "parent": "F",
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "3060"
+            }
+          ]
+        },
+        {
+          "code": "F.8",
+          "name": "Amounts owed to undertakings with which the company is linked by virtue of participating interests",
+          "sequence": 600,
+          "parent": "F",
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "3070"
+            }
+          ]
+        },
+        {
+          "code": "F.9",
+          "name": "Other creditors including tax and social insurance",
+          "sequence": 610,
+          "parent": "F",
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "3080"
+            }
+          ]
+        },
+        {
+          "code": "F.10",
+          "name": "Accruals",
+          "sequence": 620,
+          "parent": "F",
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "3090"
+            }
+          ]
+        },
+        {
+          "code": "F.11",
+          "name": "Deferred income",
+          "sequence": 630,
+          "parent": "F",
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "3095"
+            }
+          ]
+        },
+        {
+          "code": "G",
+          "name": "Provisions for liabilities",
+          "sequence": 640,
+          "is_total": true,
+          "plus": [
+            "G.1",
+            "G.2",
+            "G.3"
+          ]
+        },
+        {
+          "code": "G.1",
+          "name": "Retirement benefit and similar obligations",
+          "sequence": 650,
+          "parent": "G",
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "3100"
+            }
+          ]
+        },
+        {
+          "code": "G.2",
+          "name": "Taxation, including deferred taxation",
+          "sequence": 660,
+          "parent": "G",
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "3110"
+            }
+          ]
+        },
+        {
+          "code": "G.3",
+          "name": "Other provisions for liabilities",
+          "sequence": 670,
+          "parent": "G",
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "3120"
+            }
+          ]
+        },
+        {
+          "code": "NET",
+          "name": "Net assets (liabilities)",
+          "sequence": 680,
+          "is_total": true,
+          "plus": [
+            "E"
+          ],
+          "minus": [
+            "F",
+            "G"
+          ],
+          "legal_reference": "Not an item of Format 1, which goes from item G to the capital and reserves of item H. It is the figure items A to G produce, printed so that a reader can see it agree with item H. It agrees only once the year is closed: until close_fiscal_year() carries the result onto item H.VI, net assets exceed capital and reserves by exactly the profit of the profit and loss account."
+        },
+        {
+          "code": "H",
+          "name": "Capital and reserves",
+          "sequence": 690,
+          "is_total": true,
+          "plus": [
+            "H.I",
+            "H.II",
+            "H.III",
+            "H.IV",
+            "H.V",
+            "H.VI"
+          ]
+        },
+        {
+          "code": "H.I",
+          "name": "Called-up share capital presented as equity",
+          "sequence": 700,
+          "parent": "H",
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "3300"
+            }
+          ]
+        },
+        {
+          "code": "H.II",
+          "name": "Share premium account",
+          "sequence": 710,
+          "parent": "H",
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "3310"
+            }
+          ]
+        },
+        {
+          "code": "H.III",
+          "name": "Revaluation reserve",
+          "sequence": 720,
+          "parent": "H",
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "3320"
+            }
+          ]
+        },
+        {
+          "code": "H.IV",
+          "name": "Other reserves",
+          "sequence": 730,
+          "parent": "H",
+          "is_total": true,
+          "plus": [
+            "H.IV.1",
+            "H.IV.2",
+            "H.IV.3",
+            "H.IV.4"
+          ]
+        },
+        {
+          "code": "H.IV.1",
+          "name": "Other undenominated capital",
+          "sequence": 740,
+          "parent": "H.IV",
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "3330"
+            }
+          ]
+        },
+        {
+          "code": "H.IV.2",
+          "name": "Reserve for own shares held",
+          "sequence": 750,
+          "parent": "H.IV",
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "3340"
+            }
+          ]
+        },
+        {
+          "code": "H.IV.3",
+          "name": "Reserves provided for by the constitution",
+          "sequence": 760,
+          "parent": "H.IV",
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "3350"
+            }
+          ]
+        },
+        {
+          "code": "H.IV.4",
+          "name": "Other reserves including the fair value reserve",
+          "sequence": 770,
+          "parent": "H.IV",
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "3360"
+            }
+          ]
+        },
+        {
+          "code": "H.V",
+          "name": "Profit or loss brought forward",
+          "sequence": 780,
+          "parent": "H",
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "3400",
+              "code_to": "3410"
+            }
+          ],
+          "legal_reference": "Note (8) on the balance sheet formats allows items H.V and H.VI to be combined where the appropriation of profit is given at the foot of the profit and loss account or in a note. This pack keeps them apart, and a dividend, which is not part of a close, is booked here by hand."
+        },
+        {
+          "code": "H.VI",
+          "name": "Profit or loss for the financial year",
+          "sequence": 790,
+          "parent": "H",
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "3450"
+            }
+          ],
+          "legal_reference": "The format prints the result of the year on a line of its own, which is why the manifest declares the result_accounts closing style: close_fiscal_year() carries the result onto account 3450, and the members' decision on it is a later entry."
+        }
+      ]
+    },
+    {
+      "code": "IE-CA-SMALL-IS",
+      "kind": "income_statement",
+      "framework": "IE-FRS102",
+      "name": "Profit and loss account — Companies Act 2014, Schedule 3A, Format 1 (small companies regime)",
+      "legal_reference": "Companies Act 2014, Schedule 3A, Part II, Section B — Profit and Loss Account Formats, Format 1, which classifies expenses by function. Items 1 to 16 are the format's own numbering.",
+      "source": "ca-2014",
+      "lines": [
+        {
+          "code": "1",
+          "name": "Turnover",
+          "sequence": 10,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "4000",
+              "code_to": "4110"
+            }
+          ],
+          "legal_reference": "Sales returns and discounts allowed are inside turnover and reduce it."
+        },
+        {
+          "code": "2",
+          "name": "Cost of sales",
+          "sequence": 20,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "5000",
+              "code_to": "5240"
+            }
+          ],
+          "legal_reference": "Note (9): stated after the value adjustments for depreciation of the assets the item uses."
+        },
+        {
+          "code": "3",
+          "name": "Gross profit or loss",
+          "sequence": 30,
+          "is_total": true,
+          "plus": [
+            "1"
+          ],
+          "minus": [
+            "2"
+          ]
+        },
+        {
+          "code": "4",
+          "name": "Distribution costs",
+          "sequence": 40,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "6000",
+              "code_to": "6500"
+            }
+          ]
+        },
+        {
+          "code": "5",
+          "name": "Administrative expenses",
+          "sequence": 50,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "7000",
+              "code_to": "7710"
+            }
+          ],
+          "legal_reference": "Format 1 classifies expenses by function, so depreciation, the loss on disposal of fixed assets, foreign exchange losses and rounding differences are administrative expenses. Note (13) asks for the depreciation of tangible and intangible fixed assets to be disclosed separately, which is a note and not a line."
+        },
+        {
+          "code": "6",
+          "name": "Other operating income",
+          "sequence": 60,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "4200",
+              "code_to": "4240"
+            }
+          ]
+        },
+        {
+          "code": "7",
+          "name": "Income from shares in group undertakings",
+          "sequence": 70,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "4300"
+            }
+          ]
+        },
+        {
+          "code": "8",
+          "name": "Income from participating interests",
+          "sequence": 80,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "4310"
+            }
+          ]
+        },
+        {
+          "code": "9",
+          "name": "Income from other financial assets",
+          "sequence": 90,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "4320"
+            }
+          ]
+        },
+        {
+          "code": "10",
+          "name": "Other interest receivable and similar income",
+          "sequence": 100,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "4330"
+            }
+          ]
+        },
+        {
+          "code": "11",
+          "name": "Value adjustments in respect of financial assets and investments held as current assets",
+          "sequence": 110,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "8100"
+            }
+          ]
+        },
+        {
+          "code": "12",
+          "name": "Interest payable and similar expenses",
+          "sequence": 120,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "8000",
+              "code_to": "8040"
+            }
+          ],
+          "legal_reference": "Late payment interest and the fixed compensation for recovery costs paid to a supplier are interest payable and similar expenses."
+        },
+        {
+          "code": "13",
+          "name": "Tax on profit or loss",
+          "sequence": 130,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "8200",
+              "code_to": "8220"
+            }
+          ]
+        },
+        {
+          "code": "14",
+          "name": "Profit or loss after taxation",
+          "sequence": 140,
+          "is_total": true,
+          "plus": [
+            "3",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10"
+          ],
+          "minus": [
+            "4",
+            "5",
+            "11",
+            "12",
+            "13"
+          ]
+        },
+        {
+          "code": "15",
+          "name": "Other taxes not shown under the above items",
+          "sequence": 150,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "8300"
+            }
+          ]
+        },
+        {
+          "code": "16",
+          "name": "Profit or loss for the financial year",
+          "sequence": 160,
+          "is_total": true,
+          "plus": [
+            "14"
+          ],
+          "minus": [
+            "15"
+          ]
+        }
+      ]
+    }
+  ]
+}

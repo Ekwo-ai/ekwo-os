@@ -1839,3 +1839,82 @@ carries eleven currencies**, "the handful a European ledger meets", at zero and
 two decimals. The engine reads a currency's decimals rather than assuming
 cents, so a third is a row and not a change — but until somebody adds the rows,
 the claim is about the engine and not about coverage.
+
+## Ireland
+
+The seventh pack, `packs/ie/`, `community`, seed 16. It carries an original
+chart of 209 accounts mapped onto Schedule 3A of the Companies Act 2014, 39
+taxes with the rate history since the Value-Added Tax Consolidation Act 2010
+came into force on 1 November 2010 — the temporary 21 % of 2020–2021 and the
+three 9 % reliefs among them — the nine boxes of the VAT3 (T1 to T4, E1, E2,
+ES1, ES2, PA1), the balance sheet and the profit and loss account of Schedule
+3A Format 1, and a register of thirty-six texts, all opened on 21 September
+2026. The pack's own [`README`](../packs/ie/README.md) says where each rule
+comes from and ends on what a reviewer should read first.
+
+### From Ireland
+
+Five things the format could not say, none of them patched: each is contoured
+inside the pack and written down here.
+
+**A two-month taxable period.** Section 2 of the 2010 Act defines the taxable
+period as two months beginning on 1 January, 1 March, 1 May, 1 July, 1
+September or 1 November, and that is the cadence of every Irish VAT3 unless
+Revenue authorises another. `tax_report.period` knows `month`, `quarter` and
+`year`, so the pack declares the monthly and annual returns Revenue allows and
+proposes no `period_default` rather than a wrong one; the four-monthly and
+six-monthly periods Revenue authorises for small liabilities are not
+expressible either. `vat_return()` still computes a two-month period — the
+golden files on them — because a period that is not a whole cadence is never
+refused. *Fix*: a `bimonth` cadence (and `four_month`, `half_year`) in the
+schema, in `company_filing_periods` and in the guard of `vat_return()`.
+
+**A second declaration with a period of its own.** The Return of Trading
+Details is annual, due with the last VAT3 of the company's accounting year,
+and breaks sales and purchases down by rate; it is where the values of
+domestic supplies, exports and reverse-charge construction services are
+reported, since the VAT3 has no box for them. A pack carries one
+`tax_report.json`, so the RTD is absent and the domestic base postings name no
+box. *Fix*: several forms per pack, which `report_code` on a posting already
+anticipates.
+
+**A deadline that depends on how the company files, and an extension on a
+day of the month.** The return is due on the 19th (s. 76(1)) and on the 23rd
+for a return filed and paid through ROS. The pack declares `day: 19` and no
+`plus_days`: `tests/filing_calendar.test.ts` checks an extension against the
+last day of the following month, which is the British rule and not this one,
+so the four days would fail it. The deadline is therefore four days early for
+a ROS filer and right for a filer exempted from electronic filing. *Fix*: the
+test reading the rule it checks, and a condition on the filer for the
+extension, which is the British gap again.
+
+**A financial year the law leaves to the company.** Companies Act 2014, s. 288
+lets the directors fix the year end. The pack still declares
+`fiscal_year_default: calendar`, because `bootstrap` refuses a pack with none
+unless the first day is named, and the bootstrap test installs the first pack
+whose form proposes no cadence — alphabetically, Ireland — without naming one.
+It is a proposal an operator overrides, not a reading of the Act.
+
+**One sentence for every reverse charge a seller issues.** The subcontractor's
+invoice under the construction reverse charge carries "VAT on this supply to be
+accounted for by the principal contractor", and the other domestic reverse
+charges of s. 16 — emission allowances, scrap metal, construction work between
+connected persons, gas and electricity to a dealer — would name the recipient
+instead. `applies_when: reverse_charge` is one condition, so the pack carries
+only the construction case on the sale side. *Fix*: a mention that can be
+tied to a tax rather than to a treatment.
+
+**The moneys received basis is a regime of the company.** Section 80 authorises
+a company, not a tax, to account on receipts, and only for its sales. The pack
+carries it as two sale codes with `cash_basis` and `conditions:
+["seller_threshold"]`, as France carries services on collection; nothing stops
+an authorised company from picking the invoice-basis code, or an unauthorised
+one from picking this. The core records no such regime, which is the
+`small_business` gap in another form.
+
+One practical note beside those: `cro.ie` answers every request without a
+browser with a Cloudflare challenge, so the Companies Registration Office is not
+in the register even though it is where Irish financial statements are filed;
+the Companies Act is cited instead. And `camt.053` is the only statement format
+declared, because it is the only one Ekwo reads that an Irish bank sends; no
+payment format is declared because Ekwo writes none.

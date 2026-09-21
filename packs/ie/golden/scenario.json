@@ -1,0 +1,497 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "A year of a VAT-registered Irish trading company, filing on the taxable periods of the Act",
+  "chart": "default",
+  "fiscal_year": {
+    "name": "Year ended 31 December 2026",
+    "start": "2026-01-01",
+    "end": "2026-12-31"
+  },
+  "periods": [
+    {
+      "code": "2026-P1",
+      "from": "2026-01-01",
+      "to": "2026-02-28"
+    },
+    {
+      "code": "2026-P2",
+      "from": "2026-03-01",
+      "to": "2026-04-30"
+    },
+    {
+      "code": "2026-P3",
+      "from": "2026-05-01",
+      "to": "2026-06-30"
+    },
+    {
+      "code": "2026-P4",
+      "from": "2026-07-01",
+      "to": "2026-08-31"
+    }
+  ],
+  "statements": [
+    "IE-CA-SMALL-BS",
+    "IE-CA-SMALL-IS"
+  ],
+  "contacts": [
+    {
+      "ref": "cust-ie",
+      "name": "Liffeyside Retail Ltd",
+      "type": "customer",
+      "country": "IE"
+    },
+    {
+      "ref": "cust-pc",
+      "name": "Corrib Build Ltd",
+      "type": "customer",
+      "country": "IE"
+    },
+    {
+      "ref": "cust-farm",
+      "name": "Slaney Meats Ltd",
+      "type": "customer",
+      "country": "IE"
+    },
+    {
+      "ref": "cust-de",
+      "name": "Rheinfeld Handel GmbH",
+      "type": "customer",
+      "country": "DE",
+      "vat_number": "DE999999999"
+    },
+    {
+      "ref": "cust-fr",
+      "name": "Atelier Garonne SARL",
+      "type": "customer",
+      "country": "FR",
+      "vat_number": "FR99999999999"
+    },
+    {
+      "ref": "cust-us",
+      "name": "Cascade Instruments Inc.",
+      "type": "customer",
+      "country": "US"
+    },
+    {
+      "ref": "supp-ie",
+      "name": "Shannon Supplies Ltd",
+      "type": "supplier",
+      "country": "IE"
+    },
+    {
+      "ref": "supp-sub",
+      "name": "Barrow Groundworks Ltd",
+      "type": "supplier",
+      "country": "IE"
+    },
+    {
+      "ref": "supp-farm",
+      "name": "Suir Valley Farm",
+      "type": "supplier",
+      "country": "IE"
+    },
+    {
+      "ref": "supp-de",
+      "name": "Ostwind Komponenten GmbH",
+      "type": "supplier",
+      "country": "DE"
+    },
+    {
+      "ref": "supp-nl",
+      "name": "Grachtwerk Software B.V.",
+      "type": "supplier",
+      "country": "NL"
+    },
+    {
+      "ref": "supp-gb",
+      "name": "Thorneside Supplies Ltd",
+      "type": "supplier",
+      "country": "GB"
+    },
+    {
+      "ref": "supp-us",
+      "name": "Northwind Cloud Inc.",
+      "type": "supplier",
+      "country": "US"
+    }
+  ],
+  "documents": [
+    {
+      "ref": "S1",
+      "type": "sale_invoice",
+      "contact": "cust-ie",
+      "date": "2026-01-14",
+      "why": "A domestic sale at the standard rate: the tax goes to T1, and the value to no box at all, because the VAT3 carries none for a domestic sale.",
+      "lines": [
+        {
+          "name": "Goods",
+          "quantity": 10,
+          "unit_price": 1000,
+          "tax": "IE-S-23",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "P1",
+      "type": "purchase_invoice",
+      "contact": "supp-ie",
+      "date": "2026-01-20",
+      "why": "A domestic purchase at the standard rate: the input tax goes to T2, and T3 is what is left of T1 after it.",
+      "lines": [
+        {
+          "name": "Goods for resale",
+          "quantity": 1,
+          "unit_price": 3000,
+          "tax": "IE-P-23",
+          "account": "5000"
+        }
+      ]
+    },
+    {
+      "ref": "S2",
+      "type": "sale_invoice",
+      "contact": "cust-ie",
+      "date": "2026-01-28",
+      "why": "The reduced rate of 13.5 %: a second positive rate, which the VAT3 adds to the standard one in T1 because the return has no breakdown by rate.",
+      "lines": [
+        {
+          "name": "Repair work on a commercial building",
+          "quantity": 1,
+          "unit_price": 4000,
+          "tax": "IE-S-135",
+          "account": "4020"
+        }
+      ]
+    },
+    {
+      "ref": "P2",
+      "type": "purchase_invoice",
+      "contact": "supp-de",
+      "date": "2026-01-30",
+      "why": "An intra-Community acquisition of goods: E2 takes the value, T1 and T2 the same self-accounted tax, and the ledger nets to nothing.",
+      "lines": [
+        {
+          "name": "Components",
+          "quantity": 1,
+          "unit_price": 2500,
+          "tax": "IE-P-ICG-23",
+          "account": "5010"
+        }
+      ]
+    },
+    {
+      "ref": "S3",
+      "type": "sale_invoice",
+      "contact": "cust-de",
+      "date": "2026-02-12",
+      "why": "An intra-Community supply of goods to a registered customer in Germany: E1 takes the value and T1 nothing.",
+      "lines": [
+        {
+          "name": "Goods dispatched to Germany",
+          "quantity": 1,
+          "unit_price": 6000,
+          "tax": "IE-S-ICG",
+          "account": "4055"
+        }
+      ]
+    },
+    {
+      "ref": "S4",
+      "type": "sale_invoice",
+      "contact": "cust-fr",
+      "date": "2026-02-20",
+      "why": "A service to a business customer in France, taxed where the customer is: ES1 takes the value and T1 nothing.",
+      "lines": [
+        {
+          "name": "Consultancy",
+          "quantity": 1,
+          "unit_price": 2000,
+          "tax": "IE-S-ICS",
+          "account": "4057"
+        }
+      ]
+    },
+    {
+      "ref": "S5",
+      "type": "sale_invoice",
+      "contact": "cust-ie",
+      "date": "2026-03-04",
+      "why": "A service invoiced on the moneys received basis: the tax waits on the transition account and reaches T1 in the May–June period, when the customer pays, not in March–April when the invoice was issued.",
+      "lines": [
+        {
+          "name": "Maintenance contract",
+          "quantity": 1,
+          "unit_price": 1500,
+          "tax": "IE-S-23-CASH",
+          "account": "4010"
+        }
+      ]
+    },
+    {
+      "ref": "P3",
+      "type": "purchase_invoice",
+      "contact": "supp-ie",
+      "date": "2026-03-10",
+      "why": "A qualifying business car: 20 % of the VAT reaches T2 and the other 80 % stays on the cost of the car, which is the one partly recoverable tax of the pack.",
+      "lines": [
+        {
+          "name": "Passenger car, 120 g/km",
+          "quantity": 1,
+          "unit_price": 30000,
+          "tax": "IE-P-23-CAR",
+          "account": "0150"
+        }
+      ]
+    },
+    {
+      "ref": "P4",
+      "type": "purchase_invoice",
+      "contact": "supp-nl",
+      "date": "2026-03-18",
+      "why": "A service received from a supplier in the Netherlands: ES2 takes the value, T1 and T2 the tax.",
+      "lines": [
+        {
+          "name": "Software consultancy",
+          "quantity": 1,
+          "unit_price": 1200,
+          "tax": "IE-P-ICS-23",
+          "account": "7420"
+        }
+      ]
+    },
+    {
+      "ref": "P5",
+      "type": "purchase_invoice",
+      "contact": "supp-gb",
+      "date": "2026-03-25",
+      "why": "An import from Great Britain under postponed accounting: PA1 takes the value and T1 and T2 the tax, which replaced the intra-Community acquisition for goods from there in 2021.",
+      "lines": [
+        {
+          "name": "Goods imported",
+          "quantity": 1,
+          "unit_price": 4000,
+          "tax": "IE-P-PA-23",
+          "account": "5000"
+        }
+      ]
+    },
+    {
+      "ref": "P6",
+      "type": "purchase_invoice",
+      "contact": "supp-sub",
+      "date": "2026-04-08",
+      "why": "The principal contractor's side of the construction reverse charge: the tax goes to T1 and T2 and the value to no box of the VAT3.",
+      "lines": [
+        {
+          "name": "Groundworks by a subcontractor",
+          "quantity": 1,
+          "unit_price": 8000,
+          "tax": "IE-P-RCT-135",
+          "account": "5200"
+        }
+      ]
+    },
+    {
+      "ref": "S6",
+      "type": "sale_invoice",
+      "contact": "cust-pc",
+      "date": "2026-04-15",
+      "why": "The subcontractor's side of the same charge: the invoice carries no VAT and the principal-contractor sentence, and the VAT3 carries nothing.",
+      "lines": [
+        {
+          "name": "Plastering, reverse charge applies",
+          "quantity": 1,
+          "unit_price": 5000,
+          "tax": "IE-S-RCT",
+          "account": "4060"
+        }
+      ]
+    },
+    {
+      "ref": "P7",
+      "type": "purchase_invoice",
+      "contact": "supp-ie",
+      "date": "2026-04-22",
+      "why": "Entertainment: s. 60(2)(a)(iii) excludes the whole of the VAT from deduction, so it lands on the expense account and T2 stays as it was.",
+      "lines": [
+        {
+          "name": "Client entertainment",
+          "quantity": 1,
+          "unit_price": 400,
+          "tax": "IE-P-23-ND",
+          "account": "7330"
+        }
+      ]
+    },
+    {
+      "ref": "S7",
+      "type": "sale_invoice",
+      "contact": "cust-us",
+      "date": "2026-05-06",
+      "why": "An export of goods to the United States: zero-rated, and on no box of the VAT3.",
+      "lines": [
+        {
+          "name": "Goods for export",
+          "quantity": 1,
+          "unit_price": 7000,
+          "tax": "IE-S-EXPORT",
+          "account": "4050"
+        }
+      ]
+    },
+    {
+      "ref": "SC1",
+      "type": "sale_credit_note",
+      "contact": "cust-ie",
+      "date": "2026-05-20",
+      "why": "A credit note on the standard-rated sale of January, in a later period: T1 of May–June goes down by the tax it credits.",
+      "lines": [
+        {
+          "name": "Goods returned",
+          "quantity": 2,
+          "unit_price": 1000,
+          "tax": "IE-S-23",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "P8",
+      "type": "purchase_invoice",
+      "contact": "supp-farm",
+      "date": "2026-06-03",
+      "why": "Produce bought from a flat-rate farmer: the 4.5 % flat-rate addition is deductible and goes to T2.",
+      "lines": [
+        {
+          "name": "Barley",
+          "quantity": 1,
+          "unit_price": 2000,
+          "tax": "IE-P-FRA-45",
+          "account": "5020"
+        }
+      ]
+    },
+    {
+      "ref": "P9",
+      "type": "purchase_invoice",
+      "contact": "supp-us",
+      "date": "2026-06-10",
+      "why": "A service received from a supplier outside the Union: T1 and T2 take the tax, and no box takes the value, because ES2 is for the Union alone.",
+      "lines": [
+        {
+          "name": "Cloud software subscription",
+          "quantity": 1,
+          "unit_price": 900,
+          "tax": "IE-P-FSR-23",
+          "account": "7230"
+        }
+      ]
+    },
+    {
+      "ref": "S8",
+      "type": "sale_invoice",
+      "contact": "cust-ie",
+      "date": "2026-07-08",
+      "why": "Catering at 9 %, the rate the Finance Act 2025 gives restaurant and catering services from 1 July 2026: a third positive rate in T1.",
+      "lines": [
+        {
+          "name": "Event catering",
+          "quantity": 1,
+          "unit_price": 3000,
+          "tax": "IE-S-09-FOOD",
+          "account": "4025"
+        }
+      ]
+    },
+    {
+      "ref": "S9",
+      "type": "sale_invoice",
+      "contact": "cust-ie",
+      "date": "2026-07-15",
+      "why": "A zero-rated sale: a taxable supply that keeps the right to deduct, and nothing on the VAT3.",
+      "lines": [
+        {
+          "name": "Printed books",
+          "quantity": 1,
+          "unit_price": 1000,
+          "tax": "IE-S-00",
+          "account": "4030"
+        }
+      ]
+    },
+    {
+      "ref": "S10",
+      "type": "sale_invoice",
+      "contact": "cust-ie",
+      "date": "2026-08-05",
+      "why": "An exempt activity: nothing on the VAT3, and a different code from the zero rate because it carries no right to deduct.",
+      "lines": [
+        {
+          "name": "Insurance intermediation",
+          "quantity": 1,
+          "unit_price": 1500,
+          "tax": "IE-S-EXEMPT",
+          "account": "4040"
+        }
+      ]
+    },
+    {
+      "ref": "S11",
+      "type": "sale_invoice",
+      "contact": "cust-farm",
+      "date": "2026-08-12",
+      "why": "Livestock at 4.8 %, the fourth positive rate of the Act, in T1 with the others.",
+      "lines": [
+        {
+          "name": "Store cattle",
+          "quantity": 1,
+          "unit_price": 5000,
+          "tax": "IE-S-048",
+          "account": "4027"
+        }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "R1",
+      "direction": "outbound",
+      "date": "2026-02-19",
+      "amount": 3690,
+      "contact": "supp-ie",
+      "journal": "BNK",
+      "match": "P1",
+      "why": "A payment that settles the standard-rated purchase exactly, VAT included."
+    },
+    {
+      "ref": "R2",
+      "direction": "inbound",
+      "date": "2026-03-02",
+      "amount": 4540,
+      "contact": "cust-ie",
+      "journal": "BNK",
+      "match": "S2",
+      "why": "A receipt that settles its invoice exactly and closes it."
+    },
+    {
+      "ref": "R3",
+      "direction": "inbound",
+      "date": "2026-05-10",
+      "amount": 1845,
+      "contact": "cust-ie",
+      "journal": "BNK",
+      "match": "S5",
+      "why": "The receipt of the invoice on the moneys received basis: the matching moves its 345 of VAT from the transition account to the output tax account and into T1 of May–June."
+    },
+    {
+      "ref": "R4",
+      "direction": "inbound",
+      "date": "2026-08-20",
+      "amount": 1000,
+      "contact": "cust-ie",
+      "journal": "BNK",
+      "why": "A payment on account matched to nothing: it leaves an open item, which is what a real ledger holds."
+    }
+  ]
+}
