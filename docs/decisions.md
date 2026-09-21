@@ -6002,3 +6002,55 @@ at once. The matching is what makes `cancelled` true, and nothing takes it
 back: `reconciliations_guard_cancelled()` refuses it, for everybody, as
 `document_cancelled_stays_matched`. A document that was right after all is
 issued again.
+
+## A supply measured against its seller (21 September 2026)
+
+`A tax follows the territory of the parties` gave a tax three keys, each an
+equality, and refused an operator on purpose. Three cases stayed out of reach
+and none of them turned out to need one.
+
+**"Shipped out of the State" is a relation, not a negation.** California's
+section 6396 exempts a sale the contract requires to be shipped to a point
+outside the State; a country with state taxes levies one pair on a supply that
+stays in the seller's state and another on one that leaves it. Written as
+`supply_not_in`, the first is a negation and the second is fifty of them.
+Written as what it is — the place of supply compared with the seller's own
+territory — it is one fact with two values. So `applies_when` gains a fourth
+key, `supply_vs_seller`, `same` or `other`, compiled to
+`taxes.applies_supply_vs_seller` (an enum, `territory_relation`). It is read at
+the level of the seller: a seller whose territory is a whole country has no
+level to compare at, and `post_document()` refuses the document with
+`no_party_territory` rather than answer `same` for every domestic supply of
+every state at once. `ekwo pack check` refuses the key on a pack whose country
+has no territory inside it, because no document could ever meet it.
+
+**A country minus some of its territories is reference data.** Spanish VAT does
+not apply in the Canary Islands, Ceuta and Melilla; German VAT stops at
+Büsingen and Heligoland; Italian VAT at Livigno and Campione d'Italia. The tree
+of `territories` is geography and is right to hang `ES-CN` off `ES`. What it
+could not say is that the parent's tax does not follow, so a column says it:
+`territories.outside_parent_tax`, set by the seed with the national text in
+the row's `legal_reference`, never by a pack. `territory_within_for_tax()`
+walks the tree and stops at such a row, and `post_document()` judges every
+territory condition with it. `territory_within()` is unchanged, because it
+answers a question about geography that other readers ask, and
+`eu_vat_scope` stays a different column: Åland is outside the Union's common
+system and inside Finnish VAT. Two shapes were refused: `supply_not_in`, a
+negation; and a synthetic territory "Spain without the Canaries" that every
+Spanish company would have to declare itself in.
+
+**What the engine believed is kept.** `post_document()` now resolves the three
+parties on every document, not only where a tax asks, and writes them on the
+document: `seller_territory_code`, `buyer_territory_code`,
+`supply_territory_resolved`. The guard of a posted document freezes them
+without a word — its list of what may move is closed — and
+`unpost_document()` gives them back to null with the rest of what posting
+derived. They are text and not foreign keys: the last rung of the ladder is a
+contact's country, which is not a key of `territories`, and a foreign key would
+refuse an invoice to a customer in a country no pack books in.
+
+**Two packs adopt it.** `packs/es/` 0.2.0 puts `supply_in: ES` on its domestic
+sale taxes and drops the note that said it could not; `packs/us/` 0.7.0 says
+`supply_vs_seller: other` on `US-CA-S-SHIPPED`. Both raise `schema_min`. Every
+other pack's seed changes by one null column and by nothing else, and every
+golden is unchanged to the cent.

@@ -118,6 +118,7 @@ export {
   readTerritories,
   territoryOf,
   territoryWithin,
+  territoryWithinForTax,
   TerritoryError,
   type EuVatScope,
   type Territory,

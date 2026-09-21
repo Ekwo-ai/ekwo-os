@@ -8,6 +8,7 @@ import {
   readPack,
   readTerritories,
   territoryWithin,
+  territoryWithinForTax,
   type Pack,
   type PackTax,
   type Territory,
@@ -48,9 +49,17 @@ import { allPacks, packWhere, packsRoot } from './helpers/packs.js';
  * that makes it the case at all.
  */
 
-/** The pack that conditions a tax on where the supply lands. */
-const territorial: Pack = packWhere('a tax conditioned on the territory of the parties', (pack) =>
-  pack.taxes.some((tax) => tax.applies_supply_territory !== null),
+/**
+ * The pack that conditions its sales on two different places of supply — one
+ * territory's tax and another's. A pack whose sales all name the same place
+ * proves the refusal and not the acceptance beside it.
+ */
+const territorial: Pack = packWhere('sales conditioned on two territories of supply', (pack) =>
+  new Set(
+    pack.taxes
+      .filter((tax) => tax.scope === 'sale' && tax.applies_supply_territory !== null)
+      .map((tax) => tax.applies_supply_territory),
+  ).size >= 2,
 );
 
 /** A taxed sale that has to be delivered in one territory. */
@@ -105,6 +114,50 @@ describe('a territory lies inside another', () => {
       }
     }
     expect(pairs.map((pair) => `${pair.inside} ${pair.outside}`)).toEqual(transcribed.sort());
+  });
+
+  // The same comparison for the reading a tax uses, which stops where the
+  // parent's tax does.
+  it('answers the same in SQL and in the reader that has no database, for a tax', async () => {
+    const pairs = await rows<{ inside: string; outside: string }>(
+      db,
+      `select a.code as inside, b.code as outside
+         from territories a cross join territories b
+        where territory_within_for_tax(a.code, b.code)
+        order by 1, 2`,
+    );
+    const transcribed: string[] = [];
+    for (const a of territories) {
+      for (const b of territories) {
+        if (territoryWithinForTax(a.code, b.code, territories)) transcribed.push(`${a.code} ${b.code}`);
+      }
+    }
+    expect(pairs.map((pair) => `${pair.inside} ${pair.outside}`)).toEqual(transcribed.sort());
+  });
+
+  it('holds a territory outside its parent for the tax, and inside it for everything else', async () => {
+    const outside = territories.filter((territory) => territory.outside_parent_tax);
+    expect(outside.length).toBeGreaterThan(0);
+    for (const territory of outside) {
+      const row = await one<{ geography: boolean; tax: boolean; itself: boolean }>(
+        db,
+        `select territory_within($1, $2)         as geography,
+                territory_within_for_tax($1, $2) as tax,
+                territory_within_for_tax($1, $1) as itself`,
+        [territory.code, territory.parent_code],
+      );
+      expect(row).toEqual({ geography: true, tax: false, itself: true });
+    }
+  });
+
+  it('refuses a territory outside its parent that has no parent', async () => {
+    const orphan = territories.find((territory) => territory.parent_code === null) as Territory;
+    const message = await expectError(
+      db,
+      `update territories set outside_parent_tax = true where code = $1`,
+      [orphan.code],
+    );
+    expect(message).toContain('territories_outside_parent_tax_has_parent');
   });
 
   it('holds every territory inside itself and inside its parent, and never the other way round', async () => {
@@ -460,6 +513,312 @@ describe('a tax of a territory the common system reaches for goods alone', () =>
     await expect(
       withTax({ ...supply, applies_when: { seller_in: elsewhere.code } }),
     ).rejects.toThrow(/pack_invalid/);
+  });
+});
+
+/**
+ * A country's tax stops at a territory its own law takes out.
+ *
+ * The pack is the one whose country is the parent of a territory the reference
+ * table marks `outside_parent_tax`, and that conditions a taxed sale on a supply
+ * in that country; the territory and both taxes come out of the data. Before
+ * `outside_parent_tax`, the country's rate booked on a delivery there, because
+ * the tree of `territories` is geography and the territory is inside the
+ * country — and the only way out was a negation the format refuses.
+ */
+describe('a supply to a territory outside its parent country\'s tax', () => {
+  let db: PGlite;
+  let companyId: string;
+  let buyer: string;
+  let pack: Pack;
+  let excluded: Territory;
+  let rated: PackTax;
+  let exported: PackTax;
+
+  beforeAll(async () => {
+    const territories = await readTerritories(repoRootOfPacks());
+    pack = packWhere('a country whose rates stop at a territory of its own', (candidate) =>
+      territories.some(
+        (territory) =>
+          territory.outside_parent_tax &&
+          territory.parent_code === candidate.manifest.country &&
+          candidate.taxes.some(
+            (tax) =>
+              tax.scope === 'sale' &&
+              tax.rate > 0 &&
+              tax.applies_supply_territory === candidate.manifest.country,
+          ),
+      ),
+    );
+    excluded = territories.find(
+      (territory) => territory.outside_parent_tax && territory.parent_code === pack.manifest.country,
+    ) as Territory;
+    rated = pack.taxes.find(
+      (tax) =>
+        tax.scope === 'sale' && tax.rate > 0 && tax.applies_supply_territory === pack.manifest.country,
+    ) as PackTax;
+    exported = pack.taxes.find(
+      (tax) =>
+        tax.scope === 'sale' &&
+        tax.treatment === 'export' &&
+        tax.applies_seller_territory === null &&
+        tax.applies_supply_territory === null,
+    ) as PackTax;
+
+    db = await freshDatabase({ modules: false });
+    const fixture = await newCompany(db, {
+      country: pack.manifest.country,
+      fiscalYear: pack.golden?.fiscalYear as { name: string; start: string; end: string },
+    });
+    companyId = fixture.companyId;
+    buyer = await newContact(db, companyId, {
+      type: 'customer',
+      country: pack.manifest.country,
+      territory: excluded.code,
+    });
+  }, 300_000);
+
+  afterAll(async () => {
+    await db.close();
+  });
+
+  async function sale(contactId: string, taxCode: string): Promise<string> {
+    return newDocument(db, companyId, {
+      docType: 'sale_invoice',
+      contactId,
+      date: pack.golden?.documents[0]?.date as string,
+      lines: [{ unitPrice: 1000, taxCode, accountCode: pack.golden?.documents[0]?.lines[0]?.account as string }],
+    });
+  }
+
+  it("refuses the country's rate on a supply delivered there", async () => {
+    const id = await sale(buyer, rated.code);
+    const message = await expectError(db, `select post_document($1)`, [id]);
+    expect(message).toContain('tax_territory_mismatch');
+    expect(message).toContain(rated.code);
+    expect(message).toContain(excluded.code);
+  });
+
+  it('books the same sale as an export, and keeps where it went', async () => {
+    const id = await sale(buyer, exported.code);
+    await db.query(`select post_document($1)`, [id]);
+    const row = await one<{ state: string; seller: string; buyer: string; supply: string }>(
+      db,
+      `select state, seller_territory_code as seller, buyer_territory_code as buyer,
+              supply_territory_resolved as supply
+         from documents where id = $1`,
+      [id],
+    );
+    expect(row).toEqual({
+      state: 'posted',
+      seller: pack.manifest.country,
+      buyer: excluded.code,
+      supply: excluded.code,
+    });
+  });
+
+  it("still books the country's rate on a supply inside the country", async () => {
+    const home = await newContact(db, companyId, { type: 'customer', country: pack.manifest.country });
+    const id = await sale(home, rated.code);
+    await db.query(`select post_document($1)`, [id]);
+    const row = await one<{ supply: string }>(
+      db,
+      `select supply_territory_resolved as supply from documents where id = $1`,
+      [id],
+    );
+    expect(row.supply).toBe(pack.manifest.country);
+  });
+
+  // What was believed stays believed. The contact moves; the posted document
+  // does not, and nobody writes the frozen answer by hand.
+  it('keeps the territories it was judged against once posted', async () => {
+    const id = await sale(buyer, exported.code);
+    await db.query(`select post_document($1)`, [id]);
+    await db.query(`update contacts set territory_code = null where id = $1`, [buyer]);
+    try {
+      const row = await one<{ supply: string }>(
+        db,
+        `select supply_territory_resolved as supply from documents where id = $1`,
+        [id],
+      );
+      expect(row.supply).toBe(excluded.code);
+      const message = await expectError(
+        db,
+        `update documents set supply_territory_resolved = $2 where id = $1`,
+        [id, pack.manifest.country],
+      );
+      expect(message).toContain('document_posted');
+    } finally {
+      await db.query(`update contacts set territory_code = $2 where id = $1`, [buyer, excluded.code]);
+    }
+  });
+});
+
+/**
+ * The place of supply measured against the seller.
+ *
+ * The pack is the one that declares the relation; the relation's tax, the
+ * seller's territory and a second territory inside the same country come out
+ * of the pack and the reference table. The opposite value is proved on the
+ * company's copy of the same tax, which is a fixture: no tax is invented in
+ * `packs/`.
+ */
+describe('a supply measured against the territory of its seller', () => {
+  let db: PGlite;
+  let companyId: string;
+  let pack: Pack;
+  let relational: PackTax;
+  let sellerTerritory: string;
+  let elsewhere: string;
+
+  beforeAll(async () => {
+    const territories = await readTerritories(repoRootOfPacks());
+    pack = packWhere('a tax measured against the seller', (candidate) =>
+      candidate.taxes.some(
+        (tax) => tax.scope === 'sale' && tax.applies_supply_vs_seller !== null && tax.applies_seller_territory !== null,
+      ),
+    );
+    relational = pack.taxes.find(
+      (tax) => tax.scope === 'sale' && tax.applies_supply_vs_seller !== null && tax.applies_seller_territory !== null,
+    ) as PackTax;
+    sellerTerritory = relational.applies_seller_territory as string;
+    elsewhere = (
+      territories.find(
+        (territory) =>
+          territory.code !== sellerTerritory &&
+          !territory.outside_parent_tax &&
+          territory.parent_code === pack.manifest.country,
+      ) as Territory
+    ).code;
+
+    db = await freshDatabase({ modules: false });
+    const fixture = await newCompany(db, {
+      country: pack.manifest.country,
+      fiscalYear: pack.golden?.fiscalYear as { name: string; start: string; end: string },
+    });
+    companyId = fixture.companyId;
+    await db.query(`update companies set territory_code = $2 where id = $1`, [companyId, sellerTerritory]);
+  }, 300_000);
+
+  afterAll(async () => {
+    await db.close();
+  });
+
+  async function sale(territory: string): Promise<string> {
+    const contact = await newContact(db, companyId, {
+      type: 'customer',
+      country: pack.manifest.country,
+      territory,
+    });
+    return newDocument(db, companyId, {
+      docType: 'sale_invoice',
+      contactId: contact,
+      date: pack.golden?.documents[0]?.date as string,
+      lines: [
+        {
+          unitPrice: 1000,
+          taxCode: relational.code,
+          accountCode: pack.golden?.documents[0]?.lines[0]?.account as string,
+        },
+      ],
+    });
+  }
+
+  /** Post a sale delivered in one territory, and say how it ended. */
+  async function outcome(territory: string): Promise<string> {
+    const id = await sale(territory);
+    try {
+      await db.query(`select post_document($1)`, [id]);
+      return 'posted';
+    } catch (error) {
+      return (error as Error).message.split(':')[0] as string;
+    }
+  }
+
+  it('accepts and refuses according to where the supply lies against the seller', async () => {
+    const inside = relational.applies_supply_vs_seller === 'same';
+    expect(await outcome(sellerTerritory)).toBe(inside ? 'posted' : 'tax_territory_mismatch');
+    expect(await outcome(elsewhere)).toBe(inside ? 'tax_territory_mismatch' : 'posted');
+  });
+
+  it('reads the opposite relation the opposite way', async () => {
+    const opposite = relational.applies_supply_vs_seller === 'same' ? 'other' : 'same';
+    await db.query(
+      `update taxes set applies_supply_vs_seller = $3 where company_id = $1 and code = $2`,
+      [companyId, relational.code, opposite],
+    );
+    try {
+      const inside = opposite === 'same';
+      expect(await outcome(sellerTerritory)).toBe(inside ? 'posted' : 'tax_territory_mismatch');
+      expect(await outcome(elsewhere)).toBe(inside ? 'tax_territory_mismatch' : 'posted');
+    } finally {
+      await db.query(
+        `update taxes set applies_supply_vs_seller = $3 where company_id = $1 and code = $2`,
+        [companyId, relational.code, relational.applies_supply_vs_seller],
+      );
+    }
+  });
+
+  // A seller known only by its country has no level to be compared at. The
+  // seller condition of the pack's own tax is lifted on the company's copy, so
+  // that what is refused is the relation and not the territory.
+  it('refuses a seller known only by the country, by name', async () => {
+    await db.query(`update companies set territory_code = null where id = $1`, [companyId]);
+    await db.query(
+      `update taxes set applies_seller_territory = null where company_id = $1 and code = $2`,
+      [companyId, relational.code],
+    );
+    try {
+      const id = await sale(elsewhere);
+      const message = await expectError(db, `select post_document($1)`, [id]);
+      expect(message).toContain('no_party_territory');
+      expect(message).toContain(relational.code);
+    } finally {
+      await db.query(`update companies set territory_code = $2 where id = $1`, [companyId, sellerTerritory]);
+      await db.query(
+        `update taxes set applies_seller_territory = $3 where company_id = $1 and code = $2`,
+        [companyId, relational.code, sellerTerritory],
+      );
+    }
+  });
+});
+
+describe('ekwo pack check on a relation to the seller', () => {
+  let dir: string;
+  let pack: Pack;
+
+  beforeAll(async () => {
+    const territories = await readTerritories(repoRootOfPacks());
+    // A pack whose country has nothing inside it in the reference table.
+    pack = packWhere('a country with no territory inside it', (candidate) =>
+      !territories.some((territory) => territory.parent_code === candidate.manifest.country),
+    );
+    dir = await mkdtemp(join(tmpdir(), 'ekwo-relation-'));
+    await cp(join(packsRoot, 'schema'), join(dir, 'schema'), { recursive: true });
+    await cp(join(packsRoot, pack.slug), join(dir, pack.slug), { recursive: true });
+  }, 300_000);
+
+  async function withRelation(value: string): Promise<Pack> {
+    const path = join(dir, pack.slug, 'taxes.json');
+    const taxes = JSON.parse(await readFile(path, 'utf8')) as Record<string, unknown>[];
+    const first = taxes.findIndex((tax) => tax['scope'] === 'sale');
+    const changed = taxes.map((tax, index) =>
+      index === first ? { ...tax, applies_when: { supply_vs_seller: value } } : tax,
+    );
+    await writeFile(path, JSON.stringify(changed), 'utf8');
+    try {
+      return await readPack(pack.slug, dir);
+    } finally {
+      await writeFile(path, JSON.stringify(taxes), 'utf8');
+    }
+  }
+
+  it('is refused where the country has no territory to read the seller at', async () => {
+    await expect(withRelation('same')).rejects.toThrow(/supply_vs_seller/);
+  });
+
+  it('is refused by the schema for a value that is not a relation', async () => {
+    await expect(withRelation('elsewhere')).rejects.toThrow(/pack_invalid/);
   });
 });
 

@@ -466,7 +466,7 @@ function taxes(pack: Pack, country: string): string[] {
       `${text(t.jurisdiction)}, ` +
       `${bool(t.price_include)}, ${bool(t.cash_basis)}, ${text(t.cash_basis_transition_account)}, ` +
       `${text(t.source)}, ${text(t.applies_seller_territory)}, ${text(t.applies_buyer_territory)}, ` +
-      `${text(t.applies_supply_territory)})`,
+      `${text(t.applies_supply_territory)}, ${text(t.applies_supply_vs_seller)})`,
   );
   return [
     'insert into tax_templates',
@@ -474,7 +474,8 @@ function taxes(pack: Pack, country: string): string[] {
     '   valid_from, valid_to, legal_reference, vat_category, exemption_code, sequence,',
     '   tax_kind, recoverable, conditions, jurisdiction, price_include, cash_basis,',
     '   cash_basis_transition_account_code, source_key,',
-    '   applies_seller_territory, applies_buyer_territory, applies_supply_territory)',
+    '   applies_seller_territory, applies_buyer_territory, applies_supply_territory,',
+    '   applies_supply_vs_seller)',
     'values',
     values.join(',\n'),
     'on conflict (country, code) do update set',
@@ -501,7 +502,8 @@ function taxes(pack: Pack, country: string): string[] {
     '  source_key      = excluded.source_key,',
     '  applies_seller_territory = excluded.applies_seller_territory,',
     '  applies_buyer_territory  = excluded.applies_buyer_territory,',
-    '  applies_supply_territory = excluded.applies_supply_territory;',
+    '  applies_supply_territory = excluded.applies_supply_territory,',
+    '  applies_supply_vs_seller = excluded.applies_supply_vs_seller;',
     '',
   ];
 }

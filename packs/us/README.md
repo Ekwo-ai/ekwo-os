@@ -130,13 +130,16 @@ an error and not a quiet 7.25 per cent on the wrong return. Where each party is
 comes from `companies.territory_code`, `contacts.territory_code` and
 `documents.supply_territory_code`, and the golden year sets all three.
 
-Two codes deliberately say less than they could. `US-CA-S-SHIPPED` names the
-seller and says nothing about where the goods went, because `applies_when` can
-say that a party is in a place and not that a party is **not** in one — the
-exemption is for a sale shipped *out of* California and the negation has no
-word. `US-P-0` names nothing at all: it is the code for a purchase no state
-taxes, and constraining it would refuse the out-of-state service it exists for.
-Both are in [`docs/international.md`](../../docs/international.md).
+`US-CA-S-SHIPPED` names the seller and, since version 0.7.0, where the goods
+went against it: `"supply_vs_seller": "other"` says the sale is shipped *out of*
+the seller's state, which is what section 6396 exempts — so the code is refused
+on a delivery inside California, where it used to book. It is a relation
+between the place of supply and the seller, not a negation of a territory, and
+it needs the company's `territory_code`: a seller known only as `US` is refused
+by name. One code deliberately says less than it could: `US-P-0` names nothing
+at all, because it is the code for a purchase no state taxes, and constraining
+it would refuse the out-of-state service it exists for. Both are in
+[`docs/international.md`](../../docs/international.md).
 | `US-P-0` | 0 % | the ordinary untaxed purchase, which no return hears about |
 
 **`recoverable: false` on every one of them, and it is not decoration.** A

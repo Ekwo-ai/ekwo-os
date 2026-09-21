@@ -1057,9 +1057,16 @@
             "supply_in": {
               "$ref": "#/$defs/territory",
               "description": "The supply has to take place in this territory. A sale is taxed where the goods are delivered, which is why this is not the buyer's territory."
+            },
+            "supply_vs_seller": {
+              "enum": [
+                "same",
+                "other"
+              ],
+              "description": "Where the supply has to lie against the seller's own territory: same (inside it) or other (outside it). A relation between two facts the document carries, not a negation. Read at the level of the seller — a state, a province — so post_document() refuses a document whose seller is known only by a country, and ekwo pack check refuses it on a pack whose country has no territory inside it in the reference table."
             }
           },
-          "description": "Where the parties have to be for this tax to apply. A closed vocabulary of three keys, each naming one territory of the `territories` reference table, and every key present has to hold: no operator, no negation, no nesting. A condition is satisfied by the territory named and by every territory inside it, so seller_in GB reaches a seller in XI and seller_in XI does not reach one in GB. post_document() refuses a document that contradicts it and chooses no tax for anybody."
+          "description": "Where the parties have to be for this tax to apply. A closed vocabulary of four keys — three naming one territory of the `territories` reference table each, and supply_vs_seller naming a relation — and every key present has to hold: no operator, no negation, no nesting. A condition is satisfied by the territory named and by every territory inside it, so seller_in GB reaches a seller in XI and seller_in XI does not reach one in GB — except a territory the reference table marks outside_parent_tax, where the parent's tax stops: supply_in ES does not reach a supply in ES-CN. post_document() refuses a document that contradicts it and chooses no tax for anybody."
         },
         "report_code": {
           "type": [

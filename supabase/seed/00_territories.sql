@@ -146,27 +146,38 @@ on conflict (code) do update set
 -- None of them issues a VAT identification number, so `vat_prefix` is null on
 -- every one: a business established in the Canary Islands that has to identify
 -- for Union VAT does so in Spain, with a Spanish number.
+--
+-- `outside_parent_tax` is a second question about the same rows, and the
+-- answer is not the same for all of them. Being outside the Union's common
+-- system says nothing about the parent's own tax: French VAT still applies in
+-- Guadeloupe, Martinique and Réunion, and Finnish VAT in Åland. It is true only
+-- where the parent's own statute takes the territory out of its tax, and the
+-- row then cites that statute beside the Directive — the Canary Islands, Ceuta
+-- and Melilla for Spain, Büsingen and Heligoland for Germany, Livigno, Campione
+-- d'Italia and the Italian waters of Lake Lugano for Italy. Mount Athos, French
+-- Guiana, Mayotte and the Channel Islands stay false until somebody writes the
+-- national text down here: a flag nobody sourced is a rule nobody can review.
 -- ---------------------------------------------------------------------------
 
-insert into territories (code, code_source, name, parent_code, eu_vat_scope, eu_vat_from, eu_vat_to, vat_prefix, legal_reference) values
-  ('GR-69',         'iso_3166_2', 'Mount Athos',                    'GR', 'none', null, null, null, 'Directive 2006/112/EC, article 6(1)(a)'),
-  ('ES-CN',         'iso_3166_2', 'Canary Islands',                 'ES', 'none', null, null, null, 'Directive 2006/112/EC, article 6(1)(b)'),
-  ('GP',            'iso_3166_1', 'Guadeloupe',                     'FR', 'none', null, null, null, 'Directive 2006/112/EC, article 6(1)(c), which names the French territories referred to in articles 349 and 355(1) of the Treaty on the Functioning of the European Union'),
-  ('GF',            'iso_3166_1', 'French Guiana',                  'FR', 'none', null, null, null, 'Directive 2006/112/EC, article 6(1)(c)'),
-  ('MQ',            'iso_3166_1', 'Martinique',                     'FR', 'none', null, null, null, 'Directive 2006/112/EC, article 6(1)(c)'),
-  ('RE',            'iso_3166_1', 'Réunion',                        'FR', 'none', null, null, null, 'Directive 2006/112/EC, article 6(1)(c)'),
-  ('YT',            'iso_3166_1', 'Mayotte',                        'FR', 'none', null, null, null, 'Directive 2006/112/EC, article 6(1)(c)'),
-  ('MF',            'iso_3166_1', 'Saint-Martin (French part)',     'FR', 'none', null, null, null, 'Directive 2006/112/EC, article 6(1)(c)'),
-  ('AX',            'iso_3166_1', 'Åland Islands',                  'FI', 'none', null, null, null, 'Directive 2006/112/EC, article 6(1)(d); Act of Accession 1994, protocol no 2 on the Åland Islands'),
-  ('GG',            'iso_3166_1', 'Guernsey',                       'GB', 'none', null, null, null, 'Directive 2006/112/EC, article 6(1)(e), which names the Channel Islands'),
-  ('JE',            'iso_3166_1', 'Jersey',                         'GB', 'none', null, null, null, 'Directive 2006/112/EC, article 6(1)(e), which names the Channel Islands'),
-  ('IT-CAMPIONE',   'named',      'Campione d''Italia',             'IT', 'none', null, null, null, 'Directive 2006/112/EC, article 6(1)(f) since 1 January 2020 and article 6(2)(f) before it, the municipality having entered the customs territory of the Union under Directive (EU) 2019/475 without entering its VAT territory'),
-  ('IT-LUGANO',     'named',      'Italian waters of Lake Lugano',  'IT', 'none', null, null, null, 'Directive 2006/112/EC, article 6(1)(g) since 1 January 2020 and article 6(2)(g) before it, under Directive (EU) 2019/475'),
-  ('DE-HELIGOLAND', 'named',      'Island of Heligoland',           'DE', 'none', null, null, null, 'Directive 2006/112/EC, article 6(2)(a)'),
-  ('DE-BUSINGEN',   'named',      'Territory of Büsingen',          'DE', 'none', null, null, null, 'Directive 2006/112/EC, article 6(2)(b)'),
-  ('ES-CE',         'iso_3166_2', 'Ceuta',                          'ES', 'none', null, null, null, 'Directive 2006/112/EC, article 6(2)(c)'),
-  ('ES-ML',         'iso_3166_2', 'Melilla',                        'ES', 'none', null, null, null, 'Directive 2006/112/EC, article 6(2)(d)'),
-  ('IT-LIVIGNO',    'named',      'Livigno',                        'IT', 'none', null, null, null, 'Directive 2006/112/EC, article 6(2)(e)')
+insert into territories (code, code_source, name, parent_code, eu_vat_scope, eu_vat_from, eu_vat_to, vat_prefix, outside_parent_tax, legal_reference) values
+  ('GR-69',         'iso_3166_2', 'Mount Athos',                    'GR', 'none', null, null, null, false, 'Directive 2006/112/EC, article 6(1)(a)'),
+  ('ES-CN',         'iso_3166_2', 'Canary Islands',                 'ES', 'none', null, null, null, true, 'Directive 2006/112/EC, article 6(1)(b); for the national tax, Ley 37/1992, del Impuesto sobre el Valor Añadido, artículo 3, apartados Uno y Dos: Canarias is excluded from the territory where Spanish VAT applies, and levies IGIC instead'),
+  ('GP',            'iso_3166_1', 'Guadeloupe',                     'FR', 'none', null, null, null, false, 'Directive 2006/112/EC, article 6(1)(c), which names the French territories referred to in articles 349 and 355(1) of the Treaty on the Functioning of the European Union'),
+  ('GF',            'iso_3166_1', 'French Guiana',                  'FR', 'none', null, null, null, false, 'Directive 2006/112/EC, article 6(1)(c)'),
+  ('MQ',            'iso_3166_1', 'Martinique',                     'FR', 'none', null, null, null, false, 'Directive 2006/112/EC, article 6(1)(c)'),
+  ('RE',            'iso_3166_1', 'Réunion',                        'FR', 'none', null, null, null, false, 'Directive 2006/112/EC, article 6(1)(c)'),
+  ('YT',            'iso_3166_1', 'Mayotte',                        'FR', 'none', null, null, null, false, 'Directive 2006/112/EC, article 6(1)(c)'),
+  ('MF',            'iso_3166_1', 'Saint-Martin (French part)',     'FR', 'none', null, null, null, false, 'Directive 2006/112/EC, article 6(1)(c)'),
+  ('AX',            'iso_3166_1', 'Åland Islands',                  'FI', 'none', null, null, null, false, 'Directive 2006/112/EC, article 6(1)(d); Act of Accession 1994, protocol no 2 on the Åland Islands'),
+  ('GG',            'iso_3166_1', 'Guernsey',                       'GB', 'none', null, null, null, false, 'Directive 2006/112/EC, article 6(1)(e), which names the Channel Islands'),
+  ('JE',            'iso_3166_1', 'Jersey',                         'GB', 'none', null, null, null, false, 'Directive 2006/112/EC, article 6(1)(e), which names the Channel Islands'),
+  ('IT-CAMPIONE',   'named',      'Campione d''Italia',             'IT', 'none', null, null, null, true, 'Directive 2006/112/EC, article 6(1)(f) since 1 January 2020 and article 6(2)(f) before it, the municipality having entered the customs territory of the Union under Directive (EU) 2019/475 without entering its VAT territory; for the national tax, Decreto del Presidente della Repubblica 26 ottobre 1972, n. 633, articolo 7, comma 1, lettera a): the territory of the State for Italian VAT excludes the municipality of Campione d''Italia'),
+  ('IT-LUGANO',     'named',      'Italian waters of Lake Lugano',  'IT', 'none', null, null, null, true, 'Directive 2006/112/EC, article 6(1)(g) since 1 January 2020 and article 6(2)(g) before it, under Directive (EU) 2019/475; for the national tax, Decreto del Presidente della Repubblica 26 ottobre 1972, n. 633, articolo 7, comma 1, lettera a): the territory of the State for Italian VAT excludes the national waters of Lake Lugano'),
+  ('DE-HELIGOLAND', 'named',      'Island of Heligoland',           'DE', 'none', null, null, null, true, 'Directive 2006/112/EC, article 6(2)(a); for the national tax, Umsatzsteuergesetz, § 1 Absatz 2 Satz 1: the Inland of German VAT is the territory of the Federal Republic except the island of Heligoland'),
+  ('DE-BUSINGEN',   'named',      'Territory of Büsingen',          'DE', 'none', null, null, null, true, 'Directive 2006/112/EC, article 6(2)(b); for the national tax, Umsatzsteuergesetz, § 1 Absatz 2 Satz 1: the Inland of German VAT is the territory of the Federal Republic except the territory of Büsingen'),
+  ('ES-CE',         'iso_3166_2', 'Ceuta',                          'ES', 'none', null, null, null, true, 'Directive 2006/112/EC, article 6(2)(c); for the national tax, Ley 37/1992, del Impuesto sobre el Valor Añadido, artículo 3, apartados Uno y Dos: Ceuta is excluded from the territory where Spanish VAT applies, and levies IPSI instead'),
+  ('ES-ML',         'iso_3166_2', 'Melilla',                        'ES', 'none', null, null, null, true, 'Directive 2006/112/EC, article 6(2)(d); for the national tax, Ley 37/1992, del Impuesto sobre el Valor Añadido, artículo 3, apartados Uno y Dos: Melilla is excluded from the territory where Spanish VAT applies, and levies IPSI instead'),
+  ('IT-LIVIGNO',    'named',      'Livigno',                        'IT', 'none', null, null, null, true, 'Directive 2006/112/EC, article 6(2)(e); for the national tax, Decreto del Presidente della Repubblica 26 ottobre 1972, n. 633, articolo 7, comma 1, lettera a): the territory of the State for Italian VAT excludes the municipality of Livigno')
 on conflict (code) do update set
   code_source     = excluded.code_source,
   name            = excluded.name,
@@ -175,6 +186,7 @@ on conflict (code) do update set
   eu_vat_from     = excluded.eu_vat_from,
   eu_vat_to       = excluded.eu_vat_to,
   vat_prefix      = excluded.vat_prefix,
+  outside_parent_tax = excluded.outside_parent_tax,
   legal_reference = excluded.legal_reference;
 
 -- ---------------------------------------------------------------------------

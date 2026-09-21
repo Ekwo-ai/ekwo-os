@@ -334,6 +334,12 @@ export interface PackTax {
   applies_seller_territory: string | null;
   applies_buyer_territory: string | null;
   applies_supply_territory: string | null;
+  /**
+   * Where the supply has to lie against the seller's territory:
+   * `applies_when.supply_vs_seller`, `same` or `other`, or null where the tax
+   * says nothing about it.
+   */
+  applies_supply_vs_seller: 'same' | 'other' | null;
   /** Due on collection. Compiled to a column the cash-basis engine reads. */
   cash_basis: boolean;
   /** Account the tax waits on until the invoice is paid. */
@@ -1164,6 +1170,7 @@ export async function readPack(slug: string, dir = packsDir()): Promise<Pack> {
   const packRegime = await vatRegime(manifest);
   issues.push(...territoryReferences(taxes, territories));
   issues.push(...sellerTerritory(manifest, taxes, territories));
+  issues.push(...supplyVsSeller(manifest, taxes, territories));
   const regimes = new Map<string, VatRegime>();
   for (const tax of taxes) {
     if (tax.applies_seller_territory === null) continue;
@@ -1819,11 +1826,14 @@ function postingBoxes(raw: unknown): string[] {
 /**
  * One key of a tax's `applies_when`, or null where the tax names none.
  *
- * The schema has already refused a key that is not one of the three and a
- * value that is not a territory code; this only has to say which of the three
- * is being asked for.
+ * The schema has already refused a key that is not one of the four, a
+ * territory that is not a territory code and a relation that is not `same` or
+ * `other`; this only has to say which of the four is being asked for.
  */
-function appliesWhen(raw: Record<string, unknown>, key: 'seller_in' | 'buyer_in' | 'supply_in'): string | null {
+function appliesWhen(
+  raw: Record<string, unknown>,
+  key: 'seller_in' | 'buyer_in' | 'supply_in' | 'supply_vs_seller',
+): string | null {
   const when = raw['applies_when'];
   if (typeof when !== 'object' || when === null) return null;
   const value = (when as Record<string, unknown>)[key];
@@ -1866,6 +1876,7 @@ function normaliseTax(raw: Record<string, unknown>, index: number): PackTax {
     applies_seller_territory: appliesWhen(raw, 'seller_in'),
     applies_buyer_territory: appliesWhen(raw, 'buyer_in'),
     applies_supply_territory: appliesWhen(raw, 'supply_in'),
+    applies_supply_vs_seller: appliesWhen(raw, 'supply_vs_seller') as 'same' | 'other' | null,
     cash_basis: typeof raw['cash_basis'] === 'boolean' ? raw['cash_basis'] : false,
     cash_basis_transition_account: (raw['cash_basis_transition_account'] as string | undefined) ?? null,
     sequence: typeof raw['sequence'] === 'number' ? raw['sequence'] : (index + 1) * 10,
@@ -2983,6 +2994,35 @@ function sellerTerritory(manifest: Manifest, taxes: PackTax[], territories: Terr
       message:
         `applies_when.seller_in names ${code}, which is not inside ${manifest.country}. A pack is ` +
         "keyed on the country its companies file under, so its taxes are the ones their seller owes",
+    });
+  }
+  return issues;
+}
+
+/**
+ * A relation to the seller's territory, where the pack's country has one.
+ *
+ * `supply_vs_seller` is read at the level of the seller — a state, a province,
+ * a territory inside the country — and `post_document()` refuses a document
+ * whose seller is known only by the country. A pack whose country has no
+ * territory inside it in the reference table is therefore declaring a
+ * condition no document of its companies can ever meet, and that is a pack
+ * error to report here rather than an invoice refused a year from now.
+ */
+function supplyVsSeller(manifest: Manifest, taxes: PackTax[], territories: Territory[]): Issue[] {
+  const country = manifest.country;
+  const hasInside = territories.some(
+    (territory) => territory.code !== country && territoryWithin(territory.code, country, territories),
+  );
+  const issues: Issue[] = [];
+  for (const tax of taxes) {
+    if (tax.applies_supply_vs_seller === null || hasInside) continue;
+    issues.push({
+      path: `taxes.json ${tax.code}`,
+      message:
+        `applies_when.supply_vs_seller is read at the level of the seller's territory inside ` +
+        `${country}, and territories carries no territory inside ${country}. Add the rows the ` +
+        'tax is levied in to supabase/seed/00_territories.sql first',
     });
   }
   return issues;
