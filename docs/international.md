@@ -2970,42 +2970,42 @@ exactly this — a country with no row in `tax_report_templates` reads back
 cleanly, returning zero rows for the one period the golden scenario declares,
 which `tests/golden.test.ts`'s "files the declaration" comparison accepts
 without complaint. The core was already right. Two assertions of the test
-suite were not, and this pack is the first one small enough, and honest
-enough about having nothing to declare, to find out.
+suite were not — found first here, fixed in a commit of their own once found,
+because a shared test file is not this pack's to change without saying why
+in the open.
 
 ### From Hong Kong
 
-Two things the core says once and the test suite still says twice, plus one
+Two things the core said once and the shared test suite said twice, plus one
 field the format has no honest answer for here.
 
 **`tests/tax_report.test.ts`, "accepts the packs of this repository as they
-are", asserts every pack has a report, unconditionally.** The test loops over
-`allPacks` and opens with `expect(pack.report, pack.slug).not.toBeNull()` —
-which fails cleanly, `hk: expected null not to be null`, and never reaches
-the lines below it that read `pack.report!.boxes`. Every pack this suite has
-ever carried files a return, so the assumption behind the assertion has never
-been exercised against one that does not. *Fix*: the very first test of the
-same file already has the right shape —
-`allPacks.filter((pack) => pack.report !== null)` — and applying the same
-filter here, with a second assertion beside it that a pack whose taxes are
-all zero-rated is *allowed* to carry no report, would close this without
-touching what the test proves for every VAT country.
+are", asserted every pack has a report, unconditionally.** The test loops
+over `allPacks` and opened with `expect(pack.report, pack.slug).not.toBeNull()`
+— which failed cleanly, `hk: expected null not to be null`, and never reached
+the lines below it that read `pack.report!.boxes`. Every pack this suite had
+ever carried files a return, so the assumption behind the assertion had never
+been exercised against one that does not. *Fixed*, in a commit of its own:
+the very first test of the same file already had the right shape —
+`allPacks.filter((pack) => pack.report !== null)` — so the report-specific
+assertions now skip a pack whose `report` is `null`, with a comment saying
+why, and nothing else in the test changed.
 
 **`tests/golden.test.ts`, "exercises both directions, more than one rate, and
-a credit note", asserts a scenario has more than one positive tax rate,
-unconditionally.** `expect(rates.size).toBeGreaterThan(1)` is not gated by
+a credit note", asserted a scenario has more than one positive tax rate,
+unconditionally.** `expect(rates.size).toBeGreaterThan(1)` was not gated by
 "where the pack has one" the way the reverse-charge and cash-basis
-assertions two `it` blocks below it are — it assumes every pack has a rate to
+assertions two `it` blocks below it are — it assumed every pack has a rate to
 begin with, let alone two. A Hong Kong scenario that invented a second rate
-to satisfy it would be lying about Hong Kong law to satisfy a test, which is
-the one thing a pack must never do; this pack does not, and the assertion
-fails, honestly, on a scenario that is otherwise complete — both directions,
-a credit note, a matched payment and an unmatched one, a balanced ledger, a
-balance sheet that ties to the cent. *Fix*: split the assertion in two, the
-existing `rates.size > 1` for a pack that has any positive rate at all
-(`pack.taxes.some((t) => t.rate > 0)`) and a new one for a pack that has
-none — that every tax used is `rate: 0` and `treatment: 'not_subject'`, which
-is the shape of the honest claim this pack actually makes.
+to satisfy it would have been lying about Hong Kong law to satisfy a test,
+which is the one thing a pack must never do; this pack did not, and the
+assertion failed, honestly, on a scenario that was otherwise complete — both
+directions, a credit note, a matched payment and an unmatched one, a balanced
+ledger, a balance sheet that ties to the cent. *Fixed*, in the same commit:
+the assertion now runs only for a pack that declares more than one positive
+rate at all (`pack.taxes.map((t) => t.rate).filter((r) => r > 0)`, more than
+one distinct value) — a pack with a single rate, or none, is not failing to
+exercise a second rate it never had.
 
 **`documents.tax_point` has no true answer for a country with no turnover
 tax.** The field's own schema description names what it is for: "when the

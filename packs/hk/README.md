@@ -129,14 +129,16 @@ return, name `tax_payable`" — a conditional, not a requirement), and the core
 function `vat_return()` already has a documented branch for a country with no
 row in `tax_report_templates` at all: it returns the ledger's own boxes and no
 total, gracefully, because none of this pack's postings name a box for it to
-find. What has not caught up is two assertions of the shared test suite that
-assume every pack in this repository has always had a real return to file:
-`tests/tax_report.test.ts`'s "accepts the packs of this repository as they
-are" reads `pack.report!.boxes` on a pack whose `report` is `null`, and
-`tests/golden.test.ts`'s "exercises both directions, more than one rate, and a
-credit note" asserts `rates.size` is greater than one, which no scenario of an
-honestly-priced Hong Kong pack can ever satisfy. Both are documented, neither
-was patched, and this pack does not invent a tax rate to make them green.
+find. What had not caught up, until this pack found it, was two assertions of
+the shared test suite that assumed every pack in this repository has always
+had a real return to file: `tests/tax_report.test.ts`'s "accepts the packs of
+this repository as they are" read `pack.report!.boxes` on a pack whose
+`report` is `null`, and `tests/golden.test.ts`'s "exercises both directions,
+more than one rate, and a credit note" asserted `rates.size` is greater than
+one, which no scenario of an honestly-priced Hong Kong pack can ever satisfy.
+Both are documented in full, with the fix each got, in
+`docs/international.md`; this pack does not invent a tax rate to make either
+one green.
 
 `tax_payable` and `tax_receivable` are correspondingly left out of
 `defaults.roles`: there is no filed declaration for either to carry the net
