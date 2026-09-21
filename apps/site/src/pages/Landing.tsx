@@ -54,7 +54,7 @@ function reach(data: SiteData): string[] {
     'Exchange differences booked to the accounts the pack names.',
     `Charts and labels in ${data.languages.length} languages, translated in the packs themselves.`,
     'EN 16931 and Peppol where they apply, and nothing where they do not.',
-    'No country, currency or language anywhere in the code — a check in the CI refuses one.',
+    'No country, currency or language anywhere in the code — a check in continuous integration refuses one.',
   ];
 }
 

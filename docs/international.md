@@ -1973,3 +1973,82 @@ And one thing about the register rather than the format: the BOE answers
 `200` for a page that does not exist and says so only in its title. `pack check
 --links` reads status codes, so it will call a mistyped ELI of the BOE good.
 Every link of this register was checked by its title instead.
+
+## From the OHADA packs
+
+Senegal and Côte d'Ivoire are the first two of the seventeen States that keep
+their books on the SYSCOHADA révisé. The chart, the journals, the roles and the
+two statements are the same for all of them and live once, in
+[`packs/ohada/`](../packs/ohada/README.md); `scripts/ohada-packs.mjs` copies
+them into each member and the CI's *hygiene* job refuses a copy that has
+drifted. Every pack stays autonomous and nothing in the schema moved. What the
+two packs could not say, each a change to the core rather than to a pack:
+
+**A statement code is unique across every country.** `statement_templates` is
+keyed on `code` alone, where an account, a tax and a journal are keyed on their
+country too, so seventeen packs carrying `SYSCOHADA-BS` would be one row, the
+last seed applied winning. The copy puts the country in front
+(`SN-SYSCOHADA-BS`); the same scheme is then seventeen rows. *Fix*: key a
+statement on `(country, code)` like the rest.
+
+**A frozen box holds two decimals.** `tax_filing_boxes.amount` is
+`numeric(16, 2)`: a return in XOF, which has none, freezes `1000000.00` where
+`vat_return()` answers `1000000`, and a return in a currency with three would
+be cut. `tests/filing_golden.test.ts` now compares the two as values
+(`trim_scale`), which is what "figure for figure" meant. *Fix*: the column at
+the scale of the currency, like every other amount.
+
+**A pack carries one form, and a Senegalese company files three.** The
+monthly return, the declaration of *précompte* (art. 372-2 b) and, by the
+DGID's calendar, the *TVA pour compte*; in Côte d'Ivoire the *TVA pour compte
+de tiers* of art. 442 is a declaration of its own on e-impots. The withheld tax
+waits on 4478 with no box; the *TVA pour compte* of Senegal has a box on the
+return, said in its reference to be a transcription. This is the gap the
+Canadian note above already names.
+
+**The seller's side of a withholding by the buyer.** Under the Senegalese
+*précompte* the buyer pays the price before tax and the tax to the State, and
+the supplier's tax falls due when it is paid (art. 362-5 b) — by somebody else.
+A cash-basis tax would wait on its transition account for ever. No text says
+how the supplier's books clear it, and the pack says nothing.
+
+**A tax on a tax.** The Ivorian AIRSI is 5 % of the invoice *including the
+VAT*, added to it for a buyer outside the *régimes réels*. That is a `group`,
+which the format reserves and the core does not carry.
+
+**A withholding on a payment.** The Senegalese BRS (5 % of a service invoice,
+art. 200) and the Ivorian 2 % on the services of a micro-enterprise (art. 84
+bis) are withheld when the invoice is paid, not charged on it. There is no
+posting of that kind.
+
+**A credit carried into the next return.** Line 5.2 of the Ivorian form is
+the credit of the month before. `settle_filing()` carries a credit to 4449 and
+the next `vat_return()` does not read it back, so the pack stops at the credit
+of the period (6.2) and says so.
+
+**An electronic invoice that is not EN 16931.** The Ivorian FNE is a national
+API — codes TVA, TVAB, TVAC and TVAD, a QR code, a number the DGI's platform
+issues — compulsory since 1 December 2025 for every *régime réel*; Senegal's
+Code requires an electronic invoice since 2025 and no order has said what it
+is. `einvoicing.profile` names profiles of EN 16931, so both packs leave it
+empty, and neither the NCC nor the NINEA has an ISO 6523 code for
+`party_scheme`.
+
+**A condition on the seller.** Senegal's 10 % is for *approved* tourist
+accommodation: a status of the seller, which the five words of `conditions` do
+not have. The pack says `supply_nature`, the nearest.
+
+**A deadline that depends on the taxpayer's office.** The Ivorian return is
+due on the 10th, the 15th or the 20th depending on whether a company belongs to
+the large or medium taxpayers' office and on its sector — the gap the note on
+deadlines already carries.
+
+**A cash book.** The *Système minimal de trésorerie* of AUDCIF art. 13, open
+to the smallest entities, is a book of receipts and payments per bank and per
+cash box with a year-end inventory taken outside it, and its statements name
+no account. A double-entry chart could only imitate it by inventing accounts,
+so the packs carry the *Système normal* and nothing else.
+
+**The currencies.** XOF is added to the seed, at no decimal. XAF, KMF, GNF and
+CDF come with the first pack that needs each; the note above about the seed's
+eleven currencies is now twelve.

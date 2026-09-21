@@ -297,8 +297,11 @@ describe('the mentions that apply to one document', () => {
     // is the reverse-charge sentence that comes out and not the one about a
     // supply between two Member States. The pack is found by the property,
     // not named: a second country declaring such a tax changes nothing here.
+    // It has to print a reverse-charge sentence as well: a country whose law
+    // makes the buyer liable without requiring a mention declares none.
     const pack = packWhere('taxing a service received from a supplier established elsewhere', (p) =>
-      p.taxes.some((t) => t.treatment === 'foreign_services_received'),
+      p.taxes.some((t) => t.treatment === 'foreign_services_received') &&
+      p.documents.mentions.some((m) => m.applies_when === 'reverse_charge'),
     );
     const tax = pack.taxes.find((t) => t.treatment === 'foreign_services_received')!;
     const country = pack.manifest.country;

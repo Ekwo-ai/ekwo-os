@@ -133,12 +133,12 @@ describe.each(filers.map((pack) => [pack.slug, pack] as const))(
       filingId = filing.id;
       boxes = await rows<Box>(
         db,
-        `select box, kind, amount::text from tax_filing_boxes where filing_id = $1 order by box, kind`,
+        `select box, kind, trim_scale(amount)::text as amount from tax_filing_boxes where filing_id = $1 order by box, kind`,
         [filingId],
       );
       const live = await rows<Box>(
         db,
-        `select box, kind, amount::text from vat_return($1, $2::date, $3::date)
+        `select box, kind, trim_scale(amount)::text as amount from vat_return($1, $2::date, $3::date)
           where not hidden order by box, kind`,
         [companyId, period.from, period.to],
       );
