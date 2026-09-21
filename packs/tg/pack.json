@@ -1,0 +1,198 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "TG",
+  "name": "Togo",
+  "version": "0.1.0",
+  "schema_min": "20260917170000",
+  "seed_sequence": 36,
+  "released_at": "2026-09-21",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "audcif",
+        "title": "Acte uniforme relatif au droit comptable et à l'information financière (AUDCIF), adopté à Brazzaville le 26 janvier 2017",
+        "publisher": "OHADA — Bibliothèque numérique de l'OHADA",
+        "url": "https://biblio.ohada.org/doc_num.php?explnum_id=2061",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "syscohada",
+        "title": "Journal officiel de l'OHADA, numéro spécial du 15 février 2017 — Acte uniforme relatif au droit comptable et à l'information financière et Système comptable OHADA (SYSCOHADA révisé), version complète signée",
+        "publisher": "OHADA — Bibliothèque numérique de l'OHADA",
+        "url": "https://biblio.ohada.org/doc_num.php?explnum_id=2063",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "cgi",
+        "title": "Code Général des Impôts et Livre des Procédures Fiscales, mis à jour 2025",
+        "publisher": "Office Togolais des Recettes (OTR), Commissariat des Impôts",
+        "url": "https://www.otr.tg/index.php/fr/impots/reglementations-fiscales/code-general-des-impots/600-code-general-des-impots-livre-des-procedures-fiscales-mis-a-jour-2025/file.html",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "bordereau",
+        "title": "Déclaration de TVA (Taxe sur la Valeur Ajoutée), Mod TVA 2016, réf. OTR/PrF-Dpl/Bdr/001",
+        "publisher": "Office Togolais des Recettes (OTR), Commissariat des Impôts",
+        "url": "https://www.otr.tg/index.php/en/documentation/sur-les-impots/50-bordereau-de-declaration-de-tva-taxe-sur-la-valeur-ajoutee/file.html",
+        "consulted_on": "2026-09-21",
+        "kind": "form"
+      },
+      {
+        "key": "directive-uemoa-tva",
+        "title": "Directive n° 02/2009/CM/UEMOA du 27 mars 2009 portant modification de la directive n° 02/98/CM/UEMOA du 22 décembre 1998 portant harmonisation des législations des États membres en matière de taxe sur la valeur ajoutée",
+        "publisher": "Conseil des ministres de l'UEMOA — texte publié par l'AIFO-UEMOA",
+        "url": "https://www.aifo-uemoa.bj/assets/documents/directives-uemoa/directive_02_2009_CM_UEMOA.pdf",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "eservices",
+        "title": "e-SERVICES — Déclaration en ligne",
+        "publisher": "Office Togolais des Recettes (OTR)",
+        "url": "https://e-services.otr.tg/",
+        "consulted_on": "2026-09-21",
+        "kind": "portal"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "XOF",
+    "language": "fr",
+    "rounding_method": "half_up",
+    "closing_style": "result_accounts",
+    "roles": {
+      "receivable": "4111",
+      "payable": "4011",
+      "suspense": "4711",
+      "rounding": "6588",
+      "retained_earnings": "121",
+      "retained_earnings_loss": "1291",
+      "current_year_result_profit": "131",
+      "current_year_result_loss": "139",
+      "sales": "7011",
+      "purchase": "6011",
+      "bank": "5211",
+      "cash": "5711",
+      "fx_gain": "756",
+      "fx_loss": "656",
+      "tax_payable": "4441",
+      "tax_receivable": "4449"
+    },
+    "journal_roles": {
+      "sales": "VT",
+      "purchase": "AC",
+      "miscellaneous": "OD",
+      "opening": "AN"
+    },
+    "fiscal_year_default": "calendar"
+  },
+  "languages": [],
+  "journals": [
+    {
+      "code": "VT",
+      "type": "sales",
+      "name": "Journal des ventes",
+      "sequence": 10
+    },
+    {
+      "code": "AC",
+      "type": "purchase",
+      "name": "Journal des achats",
+      "sequence": 20
+    },
+    {
+      "code": "BQ",
+      "type": "bank",
+      "name": "Journal de banque",
+      "sequence": 30
+    },
+    {
+      "code": "CA",
+      "type": "cash",
+      "name": "Journal de caisse",
+      "sequence": 40
+    },
+    {
+      "code": "OD",
+      "type": "general",
+      "name": "Opérations diverses",
+      "sequence": 50
+    },
+    {
+      "code": "AN",
+      "type": "opening",
+      "name": "Journal des à-nouveaux",
+      "sequence": 60
+    }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "SYSCOHADA révisé — plan comptable général OHADA, Système normal",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": [
+        "TG-SYSCOHADA-BS",
+        "TG-SYSCOHADA-IS"
+      ],
+      "legal_reference": "Acte uniforme relatif au droit comptable et à l'information financière du 26 janvier 2017, art. 17, 7° — recours à un plan de comptes normalisé dont la liste figure dans le Système comptable OHADA ; Système comptable OHADA, Titre VII, chapitre 2, section 3 — liste des comptes, classes 1 à 8. La classe 9, engagements hors bilan et comptabilité analytique de gestion, est d'application facultative et n'est pas reprise. Commun aux dix-sept États parties : un seul fichier, packs/ohada/accounts.csv, recopié dans chaque pack par scripts/ohada-packs.mjs.",
+      "source": "syscohada"
+    }
+  ],
+  "documents": {
+    "numbering": "gapless_per_year",
+    "number_format": "{CODE}/{YYYY}/{NNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "delivery_date",
+    "references": {
+      "numbering": {
+        "legal_reference": "Livre des procédures fiscales, art. 64 — la facture normalisée porte « le numéro de facture dans une série ininterrompue ». Le texte impose l'unicité et la continuité, jamais une forme ni une remise à zéro annuelle, que le format proposé ici permet sans l'exiger.",
+        "source": "cgi"
+      },
+      "tax_point": {
+        "legal_reference": "Code général des impôts, art. 190 — le fait générateur est, pour un bien meuble, la délivrance du bien, pour une importation, la mise à la consommation, pour une prestation de service ou des travaux immobiliers, l'exécution du service ou des travaux, et pour une livraison à soi-même, la première utilisation ; art. 191 — l'exigibilité intervient, pour les biens et les importations, lors du fait générateur lui-même (delivery_date dit cette règle), mais pour les prestations de services et les travaux immobiliers, lors de l'encaissement des acomptes, du prix ou de la rémunération, sauf option pour les débits autorisée par le Commissaire des impôts (art. 191-2). Cette seconde règle est portée par les taxes de service de ce pack, en cash_basis, et non par un second fait générateur du pays.",
+        "source": "cgi"
+      }
+    },
+    "mentions": [
+      {
+        "code": "exempt",
+        "applies_when": "exempt",
+        "text": "Opération exonérée de la taxe sur la valeur ajoutée — article 180 du Code général des impôts.",
+        "sequence": 10,
+        "legal_reference": "Livre des procédures fiscales, art. 64 — la facture porte, le cas échéant, la mention « exonéré ».",
+        "source": "cgi"
+      },
+      {
+        "code": "export",
+        "applies_when": "export",
+        "text": "Exportation exonérée de la taxe sur la valeur ajoutée — article 181 du Code général des impôts.",
+        "sequence": 20,
+        "legal_reference": "Livre des procédures fiscales, art. 64 — la facture porte, le cas échéant, la mention « exonéré » ; Code général des impôts, art. 181-1 — les exportations de biens et les services assimilés sont exonérés, avec droit à déduction (art. 181, dernier alinéa du I).",
+        "source": "cgi"
+      },
+      {
+        "code": "small_business",
+        "applies_when": "small_business",
+        "text": "NE FACTURE PAS LA TVA",
+        "sequence": 30,
+        "legal_reference": "Livre des procédures fiscales, art. 64, dernier alinéa — la facture normalisée d'un établissement dont le chiffre d'affaires est inférieur au seuil d'assujettissement porte en outre la mention « NE FACTURE PAS LA TVA ».",
+        "source": "cgi"
+      }
+    ]
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "La loi de finances 2026 aurait introduit une facture électronique certifiée (FEC) pour les opérations entre assujettis, par un nouvel article 62 du Livre des procédures fiscales et un arrêté n° 029/MFB/CAB/UPF du 19/02/2026, connus uniquement par des sources secondaires (patronat, presse économique) : ni le texte de la loi de finances 2026, ni celui de l'arrêté, ni la nouvelle rédaction de l'art. 62 du LPF n'ont été lus. Le Code général des impôts mis à jour 2025 cité dans ce registre (source « cgi ») ne porte que la facture normalisée à vignette de l'art. 64 du LPF, obligatoire (arrêté du ministre chargé des finances pour ses conditions d'édition et de gestion, liste annuelle des entreprises autorisées à s'auto-éditer) et sans profil structuré : le profil, la date d'obligation et les identifiants restent vides tant que le texte de la FEC n'a pas été lu.",
+    "source": "cgi"
+  }
+}

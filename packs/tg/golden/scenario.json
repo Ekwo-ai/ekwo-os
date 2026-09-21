@@ -1,0 +1,356 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "Un trimestre d'un comptoir togolais au régime du réel, déclarant chaque mois",
+  "chart": "default",
+  "fiscal_year": {
+    "name": "Exercice 2026",
+    "start": "2026-01-01",
+    "end": "2026-12-31"
+  },
+  "periods": [
+    {
+      "code": "2026-01",
+      "from": "2026-01-01",
+      "to": "2026-01-31"
+    },
+    {
+      "code": "2026-02",
+      "from": "2026-02-01",
+      "to": "2026-02-28"
+    },
+    {
+      "code": "2026-03",
+      "from": "2026-03-01",
+      "to": "2026-03-31"
+    },
+    {
+      "code": "2026-04",
+      "from": "2026-04-01",
+      "to": "2026-04-30"
+    }
+  ],
+  "statements": [
+    "TG-SYSCOHADA-BS",
+    "TG-SYSCOHADA-IS"
+  ],
+  "contacts": [
+    {
+      "ref": "client-tg",
+      "name": "Comptoir du Golfe SARL",
+      "type": "customer",
+      "country": "TG"
+    },
+    {
+      "ref": "client-srv",
+      "name": "Hôtel Bè Plage SA",
+      "type": "customer",
+      "country": "TG"
+    },
+    {
+      "ref": "client-etat",
+      "name": "Ministère de l'Équipement Rural, marché n° 014/2026",
+      "type": "customer",
+      "country": "TG"
+    },
+    {
+      "ref": "client-fr",
+      "name": "Négoce Atlantique SAS",
+      "type": "customer",
+      "country": "FR"
+    },
+    {
+      "ref": "client-presse",
+      "name": "Kiosque du Grand Marché SARL",
+      "type": "customer",
+      "country": "TG"
+    },
+    {
+      "ref": "fourn-tg",
+      "name": "Grossiste de Lomé SARL",
+      "type": "supplier",
+      "country": "TG"
+    },
+    {
+      "ref": "fourn-maint",
+      "name": "Froid Climat Togo SARL",
+      "type": "supplier",
+      "country": "TG"
+    },
+    {
+      "ref": "fourn-equip",
+      "name": "Automobiles du Golfe SA",
+      "type": "supplier",
+      "country": "TG"
+    },
+    {
+      "ref": "fourn-resto",
+      "name": "Restaurant Le Lac SARL",
+      "type": "supplier",
+      "country": "TG"
+    },
+    {
+      "ref": "fourn-import",
+      "name": "Guangzhou Trading Co. Ltd",
+      "type": "supplier",
+      "country": "CN"
+    },
+    {
+      "ref": "fourn-fr",
+      "name": "Cabinet Juridique Rive Gauche SAS",
+      "type": "supplier",
+      "country": "FR"
+    }
+  ],
+  "documents": [
+    {
+      "ref": "V1",
+      "type": "sale_invoice",
+      "contact": "client-tg",
+      "date": "2026-01-12",
+      "why": "Une vente de marchandises au taux normal : la case 7, la taxe au compte 4431 et dans la case 13, exigible dès la livraison (art. 190 et 191-1).",
+      "lines": [
+        {
+          "name": "Marchandises diverses",
+          "quantity": 25,
+          "unit_price": 20000,
+          "tax": "TG-S-18",
+          "account": "7011"
+        }
+      ]
+    },
+    {
+      "ref": "V2",
+      "type": "sale_invoice",
+      "contact": "client-srv",
+      "date": "2026-01-20",
+      "why": "Une prestation de services facturée en janvier : la taxe attend l'encaissement au compte 4432 (art. 191-2), payée en entier en février (E1) et alors seulement exigible dans la case 7/13 de février.",
+      "lines": [
+        {
+          "name": "Prestation de conseil en organisation",
+          "quantity": 1,
+          "unit_price": 400000,
+          "tax": "TG-S-18-SRV",
+          "account": "7061"
+        }
+      ]
+    },
+    {
+      "ref": "V3",
+      "type": "sale_invoice",
+      "contact": "client-srv",
+      "date": "2026-03-05",
+      "why": "Une seconde prestation de services, encaissée pour moitié seulement en avril (E2) : seule la moitié de sa taxe devient exigible en avril, le solde reste en instance au compte 4432.",
+      "lines": [
+        {
+          "name": "Travaux d'installation d'équipements",
+          "quantity": 1,
+          "unit_price": 300000,
+          "tax": "TG-S-18-SRV",
+          "account": "7061"
+        }
+      ]
+    },
+    {
+      "ref": "V4",
+      "type": "sale_invoice",
+      "contact": "client-etat",
+      "date": "2026-02-08",
+      "why": "Une vente sur un marché public payé par chèque du Trésor : la case 8 et la taxe dans la case 14, au lieu de la case 7/13, sans autre différence de calcul (bordereau Mod TVA 2016).",
+      "lines": [
+        {
+          "name": "Fournitures de bureau, marché n° 014/2026",
+          "quantity": 1,
+          "unit_price": 1000000,
+          "tax": "TG-S-MP-18",
+          "account": "7011"
+        }
+      ]
+    },
+    {
+      "ref": "V5",
+      "type": "sale_invoice",
+      "contact": "client-fr",
+      "date": "2026-02-20",
+      "why": "Une exportation exonérée avec droit à déduction (art. 181-1) : la case 10, taxée à 0 %, comptée dans le chiffre d'affaires taxable et non dans les opérations non taxables.",
+      "lines": [
+        {
+          "name": "Marchandises exportées",
+          "quantity": 40,
+          "unit_price": 15000,
+          "tax": "TG-S-EXP",
+          "account": "7012"
+        }
+      ]
+    },
+    {
+      "ref": "V6",
+      "type": "sale_invoice",
+      "contact": "client-presse",
+      "date": "2026-03-15",
+      "why": "Une vente exonérée de l'article 180-III-3° (journaux et publications périodiques d'information) : la case 3, hors du chiffre d'affaires taxable.",
+      "lines": [
+        {
+          "name": "Journaux et publications périodiques",
+          "quantity": 500,
+          "unit_price": 1000,
+          "tax": "TG-S-EXO",
+          "account": "7011"
+        }
+      ]
+    },
+    {
+      "ref": "AV1",
+      "type": "sale_credit_note",
+      "contact": "client-tg",
+      "date": "2026-03-20",
+      "why": "Un avoir sur la vente V1 pour des marchandises retournées : la case 7 et la taxe de la case 13 diminuent dans le mois de l'avoir.",
+      "lines": [
+        {
+          "name": "Retour de marchandises",
+          "quantity": 5,
+          "unit_price": 20000,
+          "tax": "TG-S-18",
+          "account": "7011"
+        }
+      ]
+    },
+    {
+      "ref": "A1",
+      "type": "purchase_invoice",
+      "contact": "fourn-tg",
+      "date": "2026-01-08",
+      "why": "Un achat de marchandises au taux normal : la taxe déductible au compte 4452 et dans la case 18, dans le mois de comptabilisation de la facture (art. 199).",
+      "lines": [
+        {
+          "name": "Marchandises diverses",
+          "quantity": 60,
+          "unit_price": 10000,
+          "tax": "TG-P-18",
+          "account": "6011"
+        }
+      ]
+    },
+    {
+      "ref": "A2",
+      "type": "purchase_invoice",
+      "contact": "fourn-maint",
+      "date": "2026-01-25",
+      "why": "Un entretien facturé au taux normal : la taxe déductible sur services extérieurs, au compte 4454, dans la même case 18 que les biens (le formulaire ne les distingue pas).",
+      "lines": [
+        {
+          "name": "Maintenance des groupes froids",
+          "quantity": 1,
+          "unit_price": 200000,
+          "tax": "TG-P-18-SRV",
+          "account": "6243"
+        }
+      ]
+    },
+    {
+      "ref": "A3",
+      "type": "purchase_invoice",
+      "contact": "fourn-equip",
+      "date": "2026-02-12",
+      "why": "L'achat d'un véhicule utilitaire de livraison : une immobilisation, exception nommée par l'art. 197-1° qui exclut les voitures de tourisme mais pas les véhicules utilitaires. La taxe déductible au compte 4451 et dans la case 19.",
+      "lines": [
+        {
+          "name": "Véhicule utilitaire de livraison",
+          "quantity": 1,
+          "unit_price": 5000000,
+          "tax": "TG-P-18-IMMO",
+          "account": "2451"
+        }
+      ]
+    },
+    {
+      "ref": "A4",
+      "type": "purchase_invoice",
+      "contact": "fourn-resto",
+      "date": "2026-02-18",
+      "why": "Des frais de réception de clients : exclus du droit à déduction par l'art. 197-2°, quel que soit leur usage professionnel. La taxe reste dans le coût de la charge, aucun compte de TVA récupérable.",
+      "lines": [
+        {
+          "name": "Frais de réception de clients",
+          "quantity": 1,
+          "unit_price": 150000,
+          "tax": "TG-P-18-ND",
+          "account": "6383"
+        }
+      ]
+    },
+    {
+      "ref": "A5",
+      "type": "purchase_invoice",
+      "contact": "fourn-import",
+      "date": "2026-03-02",
+      "why": "Une importation de marchandises, taxée au cordon douanier lors de la mise à la consommation (art. 182-2, 194) et déduite sur la base de la déclaration douanière (art. 201), dans la même case 18 que les achats intérieurs, faute de case séparée pour les importations sur le bordereau.",
+      "lines": [
+        {
+          "name": "Marchandises importées, déclaration douanière n° 2026-TG-00412",
+          "quantity": 1,
+          "unit_price": 2000000,
+          "tax": "TG-P-IMP-18",
+          "account": "6012"
+        }
+      ]
+    },
+    {
+      "ref": "A6",
+      "type": "purchase_invoice",
+      "contact": "fourn-fr",
+      "date": "2026-03-22",
+      "why": "Une prestation d'un cabinet non établi au Togo, sans représentant fiscal accrédité : la taxe due par le preneur (art. 185) attend son reversement au compte 4478, sa déduction suit le régime général dans la case 18.",
+      "lines": [
+        {
+          "name": "Consultation juridique, cabinet non établi au Togo",
+          "quantity": 1,
+          "unit_price": 800000,
+          "tax": "TG-P-NR-18",
+          "account": "6324"
+        }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "E1",
+      "direction": "inbound",
+      "date": "2026-02-10",
+      "amount": 472000,
+      "contact": "client-srv",
+      "journal": "BQ",
+      "match": "V2",
+      "why": "L'encaissement intégral de la prestation de janvier : il rend sa taxe exigible en février, dans la case 7/13 de février."
+    },
+    {
+      "ref": "E2",
+      "direction": "inbound",
+      "date": "2026-04-18",
+      "amount": 177000,
+      "contact": "client-srv",
+      "journal": "BQ",
+      "match": "V3",
+      "why": "Un encaissement de la moitié de la prestation de mars : la moitié de sa taxe devient exigible en avril, l'autre moitié reste en instance au compte 4432."
+    },
+    {
+      "ref": "P1",
+      "direction": "outbound",
+      "date": "2026-01-28",
+      "amount": 708000,
+      "contact": "fourn-tg",
+      "journal": "BQ",
+      "match": "A1",
+      "why": "Un paiement qui solde l'achat de marchandises de janvier."
+    },
+    {
+      "ref": "E3",
+      "direction": "inbound",
+      "date": "2026-03-27",
+      "amount": 150000,
+      "contact": "client-tg",
+      "journal": "BQ",
+      "match": null,
+      "why": "Un acompte reçu d'avance, non encore affecté à une facture : il reste une ligne ouverte au compte client."
+    }
+  ]
+}

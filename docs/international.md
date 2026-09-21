@@ -2672,3 +2672,40 @@ the Ivorian FNE, which conditions deduction on holding a normalised invoice
 but not on a fact about the counterparty's compliance the core has no column
 for. No arrêté fixing a format or a rollout date is published, so
 `einvoicing` stays empty here too.
+
+## From Togo
+
+Togo is the third OHADA member, after Senegal and Côte d'Ivoire, and the
+first with a single positive VAT rate: art. 195 of the CGI, read in the
+361-page consolidated text and not just the research fiche, prints
+`Abrogé` where a reduced rate used to sit, and no other percentage appears
+in the whole VAT chapter. What Togo adds to the two gaps already named above:
+
+**A self-supply with no document type.** The Togolese return has a line for
+the *livraison à soi-même* (CGI art. 190, 191-4°) — a delivery a business
+makes to itself, taxed at first use — with its own box on the form. A
+golden's four document types (`sale_invoice`, `sale_credit_note`,
+`purchase_invoice`, `purchase_credit_note`) all carry a `contact`, which a
+self-supply has none of: `packs/tg/` declares the box and cites the article,
+and no tax posts to it.
+
+**A purchase-side cash basis.** Togolese art. 199, last paragraph, opens the
+buyer's right to deduct a service or a works contract in the month it is
+*paid*, not the month the invoice is booked — the mirror of the seller's own
+`cash_basis`, which a sale tax can carry with a transition account
+(`cash_basis_transition_account`). A purchase tax has no such field: there is
+no way to defer a deduction to a payment, so the pack books it at the
+invoice and says so in `legal_reference`. Côte d'Ivoire's `CI-P-18-SRV`
+already takes the same shortcut for the same article (its own art. 361-2°),
+undocumented at the shared level until now.
+
+**A test that assumes every country has two rates.** `tests/golden.test.ts`
+asks every pack's golden to exercise more than one positive rate, the one
+assertion of that file with no `if (pack.taxes.some(...))` guard — every
+other line in it is conditional on what the pack itself declares. Senegal
+and Côte d'Ivoire, the two packs the assertion was written against, each have
+two; Togo has one, by law, in 2026. `packs/tg/` leaves this one test red
+rather than dating its golden year before the reduced rate was abrogated, or
+inventing a rate the CGI no longer has. *Fix*: the assertion itself needs the
+same guard as its neighbours — skip it for a pack whose own `taxes.json`
+never declares a second positive rate.

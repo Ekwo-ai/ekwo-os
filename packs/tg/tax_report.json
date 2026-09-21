@@ -1,0 +1,285 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "TG-TVA",
+  "name": "Déclaration de TVA (Taxe sur la Valeur Ajoutée)",
+  "period": [
+    "month"
+  ],
+  "valid_from": "2016-01-01",
+  "legal_reference": "Livre des procédures fiscales, art. 60 — tout redevable de la TVA souscrit au plus tard le 15 de chaque mois, au titre du mois précédent, une déclaration conforme au modèle prescrit, obligatoire même sans opération imposable. Le modèle prescrit est le bordereau Mod TVA 2016, réf. OTR/PrF-Dpl/Bdr/001 (source « bordereau »), dont les cases numérotées 1 à 27 sont reprises ici ; les cadres VII, VIII et IX (cases 28, 29 et le détail de la case 4) sont des annexes justificatives qui ne portent pas de montant propre à la déclaration et ne sont pas reprises.",
+  "source": "cgi",
+  "deadline": {
+    "rule": "day_of_month_after_period",
+    "day": 15,
+    "legal_reference": "Livre des procédures fiscales, art. 60 — déclaration au plus tard le 15 de chaque mois au titre du mois précédent ; le bordereau Mod TVA 2016 porte la même mention « à souscrire au plus tard le 15 du mois ».",
+    "source": "cgi"
+  },
+  "boxes": [
+    {
+      "box": "1",
+      "kind": "total",
+      "name": "Total chiffre d'affaires hors TVA",
+      "sequence": 10,
+      "plus": [
+        "2",
+        "6"
+      ],
+      "legal_reference": "Bordereau Mod TVA 2016, cadre II « TOTAL CHIFFRE D'AFFAIRES HORS TVA [lignes 2 + 6] », case 1.",
+      "source": "bordereau"
+    },
+    {
+      "box": "2",
+      "kind": "total",
+      "name": "Opérations non taxables",
+      "sequence": 20,
+      "plus": [
+        "3",
+        "4",
+        "5"
+      ],
+      "legal_reference": "Bordereau Mod TVA 2016, case 2 « Opérations non taxables », qui regroupe visuellement les cases 3, 4 et 5 sous son intitulé, de la même façon que la case 6 regroupe les cases 7 à 10 et porte, elle, une formule imprimée. Le formulaire n'imprime aucune formule pour la case 2 : cette lecture en est la somme, non un chiffre que le formulaire calcule lui-même.",
+      "source": "bordereau"
+    },
+    {
+      "box": "3",
+      "kind": "base",
+      "name": "Exonérées",
+      "sequence": 30,
+      "legal_reference": "Bordereau Mod TVA 2016, case 3 « Exonérées » ; Code général des impôts, art. 180.",
+      "source": "cgi"
+    },
+    {
+      "box": "4",
+      "kind": "base",
+      "name": "Non imposées (sur la base d'attestations d'exonération)",
+      "sequence": 40,
+      "legal_reference": "Bordereau Mod TVA 2016, case 4 « Non imposées (sur la base d'attestations d'exonération), voir IX », détaillée au cadre IX par attestation. Aucune taxe de ce pack n'alimente cette case : voir le README.",
+      "source": "bordereau"
+    },
+    {
+      "box": "5",
+      "kind": "base",
+      "name": "Exportations de produits non taxables",
+      "sequence": 50,
+      "legal_reference": "Bordereau Mod TVA 2016, case 5 « Exportations de produits non taxables », comptée hors du chiffre d'affaires taxable (case 6), à la différence de la case 10 « exportations et produits assimilés » qui, elle, en fait partie. Aucun article trouvé ne distingue les deux ; aucune taxe de ce pack n'alimente cette case : voir le README.",
+      "source": "bordereau"
+    },
+    {
+      "box": "6",
+      "kind": "total",
+      "name": "Opérations taxables",
+      "sequence": 60,
+      "plus": [
+        "7",
+        "8",
+        "9",
+        "10"
+      ],
+      "legal_reference": "Bordereau Mod TVA 2016, case 6 « Opérations taxables [lignes 7 + 8 + 9 + 10] ».",
+      "source": "bordereau"
+    },
+    {
+      "box": "7",
+      "kind": "base",
+      "name": "Au taux de 18 % (excepté livraison à soi-même)",
+      "sequence": 70,
+      "legal_reference": "Bordereau Mod TVA 2016, case 7 ; Code général des impôts, art. 195.",
+      "source": "cgi"
+    },
+    {
+      "box": "8",
+      "kind": "base",
+      "name": "Afférente aux marchés publics avec Chèque Trésor",
+      "sequence": 80,
+      "legal_reference": "Bordereau Mod TVA 2016, case 8.",
+      "source": "bordereau"
+    },
+    {
+      "box": "9",
+      "kind": "base",
+      "name": "Livraison à soi-même (L.A.S.M)",
+      "sequence": 90,
+      "legal_reference": "Bordereau Mod TVA 2016, case 9 ; Code général des impôts, art. 175-2, art. 190 et art. 191-4. Aucune taxe de ce pack n'alimente cette case, faute d'un document du socle pour une opération sans contrepartie externe : voir le README.",
+      "source": "bordereau"
+    },
+    {
+      "box": "10",
+      "kind": "base",
+      "name": "Exportations et produits assimilés",
+      "sequence": 100,
+      "legal_reference": "Bordereau Mod TVA 2016, case 10, au taux de 0 % ; Code général des impôts, art. 181-1.",
+      "source": "cgi"
+    },
+    {
+      "box": "11",
+      "kind": "total",
+      "name": "TVA brute",
+      "sequence": 110,
+      "plus": [
+        "12"
+      ],
+      "legal_reference": "Bordereau Mod TVA 2016, cadre III « TVA BRUTE [ligne 12] », case 11 : un doublon d'affichage de la case 12, placé en haut du formulaire à côté du chiffre d'affaires de la case 1.",
+      "source": "bordereau"
+    },
+    {
+      "box": "12",
+      "kind": "total",
+      "name": "Total de la taxe collectée",
+      "sequence": 120,
+      "plus": [
+        "13",
+        "14",
+        "15"
+      ],
+      "legal_reference": "Bordereau Mod TVA 2016, case 12 « lignes 13 + 14 + 15 ». La case 10 (exportations à 0 %) n'y entre pas : le formulaire l'annote « [ligne 10*0%] » sans lui donner de case de taxe.",
+      "source": "bordereau"
+    },
+    {
+      "box": "13",
+      "kind": "tax",
+      "name": "Taxe exigible au taux de 18 %",
+      "sequence": 130,
+      "legal_reference": "Bordereau Mod TVA 2016, case 13 « au taux de 18 % [ligne 7*18%] ». Les écritures somment la taxe facturée document par document, calculée au même taux, plutôt que de recalculer 18 % de la case 7 en une fois : l'arrondi à la dizaine de francs de l'art. 194 du Code général des impôts se fait facture par facture et non sur le total.",
+      "source": "bordereau"
+    },
+    {
+      "box": "14",
+      "kind": "tax",
+      "name": "Taxe sur les marchés publics avec Chèque Trésor",
+      "sequence": 140,
+      "legal_reference": "Bordereau Mod TVA 2016, case 14 « au taux de 18 % [ligne 8*18%] ».",
+      "source": "bordereau"
+    },
+    {
+      "box": "15",
+      "kind": "tax",
+      "name": "Taxe sur les livraisons à soi-même",
+      "sequence": 150,
+      "legal_reference": "Bordereau Mod TVA 2016, case 15 « livraison à soi-même [ligne 9*18%] ». Aucune taxe de ce pack n'alimente cette case : voir le README.",
+      "source": "bordereau"
+    },
+    {
+      "box": "16",
+      "kind": "total",
+      "name": "Total TVA déductible",
+      "sequence": 160,
+      "plus": [
+        "17",
+        "18",
+        "19",
+        "21"
+      ],
+      "minus": [
+        "20"
+      ],
+      "legal_reference": "Bordereau Mod TVA 2016, cadre IV « TOTAL TVA DEDUCTIBLE [lignes 17+18+19-20+21] », case 16, reprise telle qu'imprimée.",
+      "source": "bordereau"
+    },
+    {
+      "box": "17",
+      "kind": "tax",
+      "name": "Crédit de TVA reporté du mois précédent",
+      "sequence": 170,
+      "legal_reference": "Bordereau Mod TVA 2016, case 17. Le cœur ne reporte pas automatiquement d'une déclaration à l'autre le crédit de la case 27 de la période précédente : voir le README.",
+      "source": "bordereau"
+    },
+    {
+      "box": "18",
+      "kind": "tax",
+      "name": "Déductions sur les biens et services excepté les immobilisations",
+      "sequence": 180,
+      "legal_reference": "Bordereau Mod TVA 2016, case 18, alimentée par le cadre VII (case 28).",
+      "source": "bordereau"
+    },
+    {
+      "box": "19",
+      "kind": "tax",
+      "name": "Déductions sur les immobilisations",
+      "sequence": 190,
+      "legal_reference": "Bordereau Mod TVA 2016, case 19, alimentée par le cadre VIII (case 29).",
+      "source": "bordereau"
+    },
+    {
+      "box": "20",
+      "kind": "tax",
+      "name": "Complément de déduction demandé",
+      "sequence": 200,
+      "legal_reference": "Bordereau Mod TVA 2016, case 20, sur pièces justificatives. Une régularisation manuelle que le cœur ne calcule pas : voir le README.",
+      "source": "bordereau"
+    },
+    {
+      "box": "21",
+      "kind": "tax",
+      "name": "Reversement à effectuer",
+      "sequence": 210,
+      "legal_reference": "Bordereau Mod TVA 2016, case 21, sur pièces justificatives ; Code général des impôts, art. 202 — régularisations de la taxe déduite. Une régularisation manuelle que le cœur ne calcule pas : voir le README.",
+      "source": "bordereau"
+    },
+    {
+      "box": "23",
+      "kind": "total",
+      "name": "TVA nette",
+      "sequence": 220,
+      "plus": [
+        "24"
+      ],
+      "minus": [
+        "25"
+      ],
+      "legal_reference": "Bordereau Mod TVA 2016, cadre V « TVA NETTE [lignes 24 - 25] », case 23.",
+      "source": "bordereau"
+    },
+    {
+      "box": "24",
+      "kind": "total",
+      "name": "TVA brute (report)",
+      "sequence": 230,
+      "plus": [
+        "12"
+      ],
+      "legal_reference": "Bordereau Mod TVA 2016, case 24, imprimée « TVA brute (ligne 15) ». La ligne 15 n'est que la taxe sur les livraisons à soi-même, une des trois composantes de la TVA brute (case 12 = 13+14+15) : elle ne peut pas, seule, être la TVA brute totale que le cadre V reporte. Ce pack lit la case 24 comme un report de la case 12, cohérent avec le cadre III, et note l'incohérence d'impression plutôt que de la reproduire.",
+      "source": "bordereau"
+    },
+    {
+      "box": "25",
+      "kind": "total",
+      "name": "TVA déductible (report)",
+      "sequence": 240,
+      "plus": [
+        "16"
+      ],
+      "legal_reference": "Bordereau Mod TVA 2016, case 25, imprimée « TVA déductible (ligne 16) ».",
+      "source": "bordereau"
+    },
+    {
+      "box": "26",
+      "kind": "total",
+      "name": "TVA nette à payer",
+      "sequence": 250,
+      "plus": [
+        "24"
+      ],
+      "minus": [
+        "25"
+      ],
+      "floor_zero": true,
+      "legal_reference": "Bordereau Mod TVA 2016, cadre V, case 26 « TVA nette à payer (lignes 24 - 25) ».",
+      "source": "bordereau"
+    },
+    {
+      "box": "27",
+      "kind": "total",
+      "name": "Crédit à reporter",
+      "sequence": 260,
+      "plus": [
+        "25"
+      ],
+      "minus": [
+        "24"
+      ],
+      "floor_zero": true,
+      "legal_reference": "Bordereau Mod TVA 2016, cadre V, case 27 « Crédit à reporter (lignes 25 - 24) ».",
+      "source": "bordereau"
+    }
+  ]
+}

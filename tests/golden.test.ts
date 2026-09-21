@@ -178,8 +178,14 @@ function runGolden(pack: Pack, golden: PackGolden): void {
       expect(golden.documents.filter((d) => d.type.startsWith('purchase')).length).toBeGreaterThan(0);
       expect(golden.documents.filter((d) => d.type.endsWith('credit_note')).length).toBeGreaterThan(0);
       // A standard rate and at least one reduced one: a return whose rate
-      // boxes are all the same box proves nothing about the others.
-      expect(rates.size).toBeGreaterThan(1);
+      // boxes are all the same box proves nothing about the others. Asked
+      // only of a pack that has a second positive rate to exercise — a
+      // country whose law keeps a single one (Togo's, since its reduced rate
+      // was abrogated) is not asked to invent a second.
+      const packRates = new Set(pack.taxes.map((t) => t.rate).filter((r) => r > 0));
+      if (packRates.size > 1) {
+        expect(rates.size).toBeGreaterThan(1);
+      }
     });
 
     it('exercises an intra-Union reverse charge, in both directions where the pack has both', () => {

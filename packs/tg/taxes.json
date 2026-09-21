@@ -1,0 +1,375 @@
+[
+  {
+    "code": "TG-S-18",
+    "name": "Ventes de biens 18 %",
+    "description": "Livraisons de biens meubles au taux normal, TVA au compte 4431",
+    "rate": 18,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2019-01-01",
+    "legal_reference": "Code général des impôts, art. 195 — taux unique de 18 % applicable à toutes les activités et à tous les produits, sauf exonération de l'art. 180 ; directive n° 02/2009/CM/UEMOA, art. 29 nouveau — taux normal unique compris entre 15 % et 20 %. Art. 190 — le fait générateur d'une livraison de bien meuble est la délivrance du bien ; art. 191-1 — l'exigibilité intervient au même moment. Bordereau Mod TVA 2016, case 7 « au taux de 18 % (excepté livraison à soi-même) » et case 13 « au taux de 18 % [ligne 7*18%] ».",
+    "source": "cgi",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "7"
+        },
+        {
+          "type": "tax",
+          "account": "4431",
+          "box": "13"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "7",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "4431",
+          "box": "13",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 10
+  },
+  {
+    "code": "TG-S-18-SRV",
+    "name": "Prestations de services 18 %, exigibles à l'encaissement",
+    "description": "Prestations de services et travaux immobiliers au taux normal, taxe exigible à l'encaissement",
+    "rate": 18,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2019-01-01",
+    "cash_basis": true,
+    "cash_basis_transition_account": "4432",
+    "legal_reference": "Code général des impôts, art. 195 pour le taux ; art. 190 — le fait générateur d'une prestation de service ou de travaux immobiliers est l'exécution du service ou des travaux ; art. 191-2 — l'exigibilité intervient lors de l'encaissement des acomptes, du prix ou de la rémunération, sauf option pour les débits accordée par le Commissaire des impôts, option qui ne peut avoir pour effet de payer la taxe après l'encaissement ; art. 199, dernier alinéa — le droit à déduction du client s'exerce, pour les services, dans le mois du paiement et non dans celui de la facture. Facturée, la taxe attend l'encaissement au compte 4432 « T.V.A. facturée sur prestations de services » ; encaissée, elle est exigible et passe au compte 4431 « sur ventes », dont l'intitulé couvre aussi les ventes de services : le plan n'a pas de compte de taxe en attente distinct. Bordereau Mod TVA 2016 : même case 7/13 que les biens, le formulaire ne distingue pas biens et services.",
+    "source": "cgi",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "7"
+        },
+        {
+          "type": "tax",
+          "account": "4431",
+          "box": "13"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "7",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "4431",
+          "box": "13",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 20
+  },
+  {
+    "code": "TG-S-MP-18",
+    "name": "Marchés publics payés par chèque du Trésor 18 %",
+    "description": "Opérations afférentes aux marchés publics réglées par chèque du Trésor",
+    "rate": 18,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2019-01-01",
+    "conditions": [
+      "buyer_status"
+    ],
+    "legal_reference": "Bordereau Mod TVA 2016, case 8 « afférente aux marchés publics avec Chèque Trésor » et case 14 « au taux de 18 % [ligne 8*18%] » — une case séparée de la case 7, au même taux de 18 % de l'art. 195. Aucun article du Code général des impôts ou du Livre des procédures fiscales consulté ne fonde un régime de TVA distinct pour ces opérations (ni retenue, ni assiette différente) : cette taxe reproduit le taux normal, seule la case déclarative change, parce que le formulaire officiel l'exige.",
+    "source": "bordereau",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "8"
+        },
+        {
+          "type": "tax",
+          "account": "4431",
+          "box": "14"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "8",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "4431",
+          "box": "14",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 30
+  },
+  {
+    "code": "TG-S-EXP",
+    "name": "Exportations et produits assimilés 0 %",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2019-01-01",
+    "conditions": [
+      "transport_evidence"
+    ],
+    "legal_reference": "Code général des impôts, art. 181-1 — exonération des exportations de biens et des services assimilés à des exportations, avec droit à déduction de la taxe acquittée auprès des fournisseurs (art. 181, dernier alinéa du I, et art. 196) ; bordereau Mod TVA 2016, case 10 « exportations et produits assimilés » au taux de 0 %, comptée dans les opérations taxables (case 6 = 7+8+9+10) et non dans les opérations non taxables — à la différence de la case 5 « exportations de produits non taxables », qui reste hors du champ de ce pack faute d'article trouvé qui distingue les deux cases (voir README).",
+    "source": "cgi",
+    "vat_category": "G",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "10"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "10",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 40
+  },
+  {
+    "code": "TG-S-EXO",
+    "name": "Opération exonérée (art. 180)",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2019-01-01",
+    "conditions": [
+      "supply_nature"
+    ],
+    "legal_reference": "Code général des impôts, art. 180 — opérations exonérées de la TVA parce que soumises à un autre impôt (I), agricoles (II), de profession libérale (III, dont les soins médicaux et hospitaliers, l'enseignement, les journaux hors publicité, les œuvres d'art vendues par leur auteur), d'organismes d'utilité générale (IV) ou listées à l'annexe TVA (V) ; bordereau Mod TVA 2016, case 3 « Exonérées », comptée dans les opérations non taxables (case 2) et non dans le chiffre d'affaires taxable.",
+    "source": "cgi",
+    "vat_category": "E",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "3"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "3",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 50
+  },
+  {
+    "code": "TG-P-18",
+    "name": "Achats de biens 18 %",
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2019-01-01",
+    "legal_reference": "Code général des impôts, art. 196 — droit à déduction de la taxe qui grève les éléments du prix d'une opération imposable ; art. 199 — le droit à déduction s'exerce dans le mois de comptabilisation de la facture ; art. 201 — facture conforme à l'art. 64 du Livre des procédures fiscales. Bordereau Mod TVA 2016, case 18 « Déductions sur les biens et services excepté les immobilisations », alimentée par le cadre VII.",
+    "source": "cgi",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "4452",
+          "box": "18"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "4452",
+          "box": "18",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 110
+  },
+  {
+    "code": "TG-P-18-SRV",
+    "name": "Services extérieurs 18 %",
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2019-01-01",
+    "legal_reference": "Code général des impôts, art. 196 pour le droit à déduction ; art. 199, dernier alinéa — pour les prestations de services et les travaux immobiliers, ce droit s'exerce dans le mois du paiement et non dans celui de la facture, à la différence des achats de biens (ligne au-dessus). Le pack ne porte pas cette nuance dans les écritures — il n'y a pas, côté achat, de compte de taxe en instance de paiement comme il y en a un côté vente (4432) — et se contente de la dire ici : voir le README. Bordereau Mod TVA 2016, même case 18 que les achats de biens.",
+    "source": "cgi",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "4454",
+          "box": "18"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "4454",
+          "box": "18",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 120
+  },
+  {
+    "code": "TG-P-18-IMMO",
+    "name": "Immobilisations 18 %",
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2019-01-01",
+    "legal_reference": "Code général des impôts, art. 196-2 — déduction de la taxe figurant sur les factures d'achat de biens meubles ou immeubles inscrits à l'actif du bilan et affectés à des opérations taxables ; art. 199 — déduction dans le mois de comptabilisation de la facture, comme pour un bien qui n'est pas une immobilisation ; art. 202 — régularisations en cas de cession ou de changement d'affectation. Bordereau Mod TVA 2016, case 19 « Déductions sur les immobilisations », alimentée par le cadre VIII.",
+    "source": "cgi",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "4451",
+          "box": "19"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "4451",
+          "box": "19",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 130
+  },
+  {
+    "code": "TG-P-18-ND",
+    "name": "Achat 18 % non déductible (art. 197)",
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2019-01-01",
+    "recoverable": false,
+    "legal_reference": "Code général des impôts, art. 197 — sont exclus du droit à déduction, même affectés à une opération qui ouvre droit à déduction : 1° les voitures de tourisme et leurs pièces (sauf véhicules utilitaires, crédit-bail chez le crédit-bailleur, auto-école, transport de la clientèle hôtelière, transport public de personnes) ; 2° les dépenses de logement des dirigeants et du personnel, de réception, de restaurant, de spectacles et de déplacement (sauf transport sous contrat permanent et besoins collectifs du personnel sur le lieu de travail) ; 3° le mobilier et le matériel de logement ; 4° les objets non strictement indispensables à l'activité ; 5° les biens cédés et services rendus gratuitement ou à prix très inférieur au prix de revient, sauf objets publicitaires de moins de 5 000 F CFA HT ; 6° les services se rapportant à des biens exclus ; 7° les frais de carburant pour véhicules. La taxe est une part du coût de ce qui a été acheté.",
+    "source": "cgi",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax_on_base",
+          "factor": 100
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax_on_base",
+          "factor": 100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 150
+  },
+  {
+    "code": "TG-P-IMP-18",
+    "name": "Importation 18 % (TVA acquittée en douane)",
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2019-01-01",
+    "legal_reference": "Code général des impôts, art. 175-1 — les importations sont soumises à la TVA, l'importation s'entendant du franchissement du cordon douanier ; art. 182-2 — le fait générateur est la mise à la consommation au Togo au sens douanier ; art. 194 — la taxe est liquidée au cordon douanier lors du fait générateur ; art. 201 — la taxe déductible à l'importation est celle qui a été perçue à l'importation, justifiée par la déclaration douanière désignant l'assujetti comme destinataire réel. Bordereau Mod TVA 2016, cadre VII — une ligne par document douanier, déduction reportée sur la case 18.",
+    "source": "cgi",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "4452",
+          "box": "18"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "4452",
+          "box": "18",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 170
+  },
+  {
+    "code": "TG-P-NR-18",
+    "name": "Services d'un prestataire non établi au Togo, TVA due par le preneur",
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2019-01-01",
+    "legal_reference": "Code général des impôts, art. 185 — une entreprise établie ou domiciliée hors du Togo qui y effectue une prestation de service dont le lieu d'imposition se situe au Togo (art. 182 à 184) supporte la même imposition qu'une entreprise togolaise ; à défaut de représentant fiscal accrédité, la taxe et les pénalités sont liquidées et acquittées par le destinataire de l'opération. Art. 183 — le lieu d'imposition d'une prestation de service est celui de son exécution ou, si elle est utilisée ailleurs, celui de son utilisation. La taxe due pour le compte du prestataire étranger attend son reversement au compte 4478 ; sa déduction chez le preneur suit le régime général de l'art. 196, reportée sur la case 18 comme un autre service.",
+    "source": "cgi",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "4454",
+          "box": "18"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "4478"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "4454",
+          "box": "18",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "4478"
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 180
+  }
+]
