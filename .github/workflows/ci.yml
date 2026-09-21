@@ -30,6 +30,10 @@ jobs:
       # entry point shows up as "server failed to start" and nothing else.
       - run: node packages/mcp/dist/bin.js --help
       - run: node packages/mcp/dist/bin.js --version
+      # Started with no environment, as a client or a directory starts it: the
+      # handshake completes, the tools are listed, and a call answers
+      # not_configured instead of the process exiting.
+      - run: node packages/mcp/scripts/introspect.mjs
       # And the copy of the schema inside the package has to be the real one.
       - name: The CLI ships the repository's migrations
         run: |
@@ -61,6 +65,20 @@ jobs:
   # vitest include. What is only checked here is the site's own typecheck —
   # `tsconfig.json` at the root has no reason to know what JSX is — and that
   # the pages are actually written to disk.
+  # The image the root Dockerfile builds is what Glama runs to list the
+  # tools; the same check as above, against the container.
+  mcp-image:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: docker build -t ekwo-mcp .
+      - run: node packages/mcp/scripts/introspect.mjs docker run -i --rm ekwo-mcp
+
   site:
     runs-on: ubuntu-latest
     steps:

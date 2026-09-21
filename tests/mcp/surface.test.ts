@@ -14,7 +14,7 @@ import { Client } from '@modelcontextprotocol/sdk/client/index.js';
 import { InMemoryTransport } from '@modelcontextprotocol/sdk/inMemory.js';
 import type { PGlite } from '@electric-sql/pglite';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
-import { SERVER_NAME, SERVER_VERSION, buildServer, type Backend } from '../../packages/mcp/src/index.js';
+import { ENV, SERVER_NAME, SERVER_VERSION, buildServer, type Backend } from '../../packages/mcp/src/index.js';
 import { freshDatabase, repoRoot } from '../helpers/db.js';
 import { newCompany, type Fixture } from '../helpers/factory.js';
 import { backendFor } from './helpers.js';
@@ -113,6 +113,34 @@ describe('what the server says it is', () => {
     ) as { name: string; version: string };
     expect(manifest.name).toBe(SERVER_NAME);
     expect(manifest.version).toBe(SERVER_VERSION);
+  });
+
+  it('is described to the MCP registry under the name and the version the package carries', async () => {
+    // The registry proves ownership by reading `mcpName` out of the package on
+    // npm, and lists the version `server.json` names. A release that bumps the
+    // manifest and forgets this file publishes metadata for a package that
+    // does not exist yet.
+    const manifest = JSON.parse(
+      await readFile(join(repoRoot, 'packages', 'mcp', 'package.json'), 'utf8'),
+    ) as { name: string; version: string; mcpName: string };
+    const described = JSON.parse(
+      await readFile(join(repoRoot, 'packages', 'mcp', 'server.json'), 'utf8'),
+    ) as {
+      name: string;
+      description: string;
+      version: string;
+      packages: { registryType: string; identifier: string; version: string; environmentVariables: { name: string }[] }[];
+    };
+    expect(described.name).toBe(manifest.mcpName);
+    expect(described.version).toBe(manifest.version);
+    expect(described.description.length).toBeLessThanOrEqual(100);
+    expect(described.packages).toHaveLength(1);
+    const [npm] = described.packages;
+    expect(npm?.registryType).toBe('npm');
+    expect(npm?.identifier).toBe(manifest.name);
+    expect(npm?.version).toBe(manifest.version);
+    // Every variable the server reads is declared, and none that it does not.
+    expect(npm?.environmentVariables.map((variable) => variable.name).sort()).toEqual(Object.values(ENV).sort());
   });
 });
 

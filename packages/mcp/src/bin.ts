@@ -13,10 +13,8 @@
  */
 
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
-import { openBackend, readConfig } from './config.js';
-import { assertSchemaSupported } from './schema.js';
-import { SERVER_VERSION, buildServer } from './server.js';
-import { installedModules } from './tools/modules.js';
+import { SERVER_VERSION } from './server.js';
+import { serverFromEnvironment } from './start.js';
 
 async function main(): Promise<void> {
   const argument = process.argv[2];
@@ -29,16 +27,10 @@ async function main(): Promise<void> {
     return;
   }
 
-  const config = readConfig(process.env);
-  const backend = await openBackend(config);
-  // Before anything else: a database older than this server is refused by
-  // name rather than answered from wrong assumptions.
-  const schemaVersion = await assertSchemaSupported(backend);
-  // What this installation carries, from the registry table. A database that
-  // predates the module framework answers with nothing, and the socle's own
-  // tools are all a client then sees.
-  const modules = await installedModules(backend);
-  const server = buildServer(backend, { modules });
+  // With nothing configured it still starts, so a client can list the tools;
+  // each call then says what to set. A key that is there and wrong — a
+  // service_role key above all — is still refused here, before any transport.
+  const { server, backend, summary } = await serverFromEnvironment(process.env);
 
   const shutdown = async (): Promise<void> => {
     await server.close().catch(() => {});
@@ -49,11 +41,7 @@ async function main(): Promise<void> {
   process.on('SIGTERM', () => void shutdown());
 
   await server.connect(new StdioServerTransport());
-  process.stderr.write(
-    `ekwo-mcp: connected over ${config.mode === 'sql' ? 'a direct Postgres connection' : 'PostgREST as the signed-in user'}` +
-      `, schema ${schemaVersion}` +
-      `${modules.length > 0 ? `, modules: ${modules.join(', ')}` : ''}\n`,
-  );
+  process.stderr.write(`${summary}\n`);
 }
 
 const HELP = `ekwo-mcp — the Model Context Protocol server for Ekwo OS.
@@ -75,6 +63,9 @@ For a self-hosted database, without PostgREST in front of it:
 
 Row level security applies either way. This server has no privileges of its
 own and refuses a service_role key.
+
+Started with none of these, it still answers the client's list of tools, and
+every tool call replies with what to set — nothing is connected until then.
 `;
 
 main().catch((error: unknown) => {

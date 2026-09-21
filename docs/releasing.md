@@ -53,6 +53,11 @@ that is not cut.
    the reason `SCHEMA_MIN` does: a bundle that ships no manifest still has to
    say what it is in the MCP handshake. A test keeps the two equal.
 
+   `packages/mcp/server.json` follows it too — its `version` and the
+   `version` of its npm package — because it is what the MCP registry lists.
+   `tests/mcp/surface.test.ts` keeps it equal to the manifest, and its `name`
+   equal to `mcpName`.
+
 3. **The schema floor.** `ekwo.schemaMin` in the manifests of `ekwo-os`,
    `@ekwo-ai/core` and `@ekwo-ai/mcp`, and the `SCHEMA_MIN` constant in each
    package's `src/schema.ts`. A test keeps the manifest and the constant
@@ -252,6 +257,39 @@ for five minutes; on the `0.4.1` run that did not carry from one package to the
 next, and fifteen packages were fifteen approvals. An approval that is not
 given in time ends the run on a 404 from the registry's `done` address — run
 the script again, it skips what is already there.
+
+## The MCP registry
+
+`@ekwo-ai/mcp` is described to the official registry
+(registry.modelcontextprotocol.io) by `packages/mcp/server.json`, under the
+name `ai.ekwo/mcp`. The registry holds metadata only; the package stays on npm,
+and the registry proves the two belong together by reading `mcpName` out of the
+**published** manifest — so this step comes after `npm`, never before, and a
+version published without `mcpName` (0.4.1 and older) cannot be listed.
+
+The `ai.ekwo` namespace is proved by a TXT record on the apex of `ekwo.ai` —
+not on a sub-label, where the registry does not look — set once. It needs
+OpenSSL 3: the `openssl` of macOS is LibreSSL and has no Ed25519, so there use
+`$(brew --prefix openssl@3)/bin/openssl`.
+
+```sh
+openssl genpkey -algorithm Ed25519 -out ekwo-mcp-registry.pem   # kept out of this repository
+echo "ekwo.ai. IN TXT \"v=MCPv1; k=ed25519; p=$(openssl pkey -in ekwo-mcp-registry.pem -pubout -outform DER | tail -c 32 | base64)\""
+```
+
+Then, on every release, from `packages/mcp`:
+
+```sh
+brew install mcp-publisher        # or the binary from the registry's GitHub releases
+mcp-publisher validate
+mcp-publisher login dns --domain ekwo.ai \
+  --private-key "$(openssl pkey -in ekwo-mcp-registry.pem -noout -text | grep -A3 'priv:' | tail -n +2 | tr -d ' :\n')"
+mcp-publisher publish
+```
+
+The registry is in preview: its own documentation warns that data may be
+reset before general availability. Check the listing after a publish with
+`curl 'https://registry.modelcontextprotocol.io/v0/servers?search=ai.ekwo'`.
 
 ## After a release
 

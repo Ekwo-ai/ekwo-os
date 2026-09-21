@@ -22,6 +22,19 @@ somewhere has already run it.
 
 ### Added
 
+- **The MCP server starts with nothing configured.** With none of its
+  variables set — or half of them — `@ekwo-ai/mcp` still completes the
+  handshake and lists its tools, and every tool call answers `not_configured`
+  with the variables to set and where. That is what a client does the moment a
+  server is added, and what the directories that index MCP servers check. A
+  `service_role` key or a malformed `EKWO_ACT_AS_USER_ID` is still refused at
+  start. `packages/mcp/scripts/introspect.mjs` runs the check, and the CI runs
+  it on the built binary and on the image the new root `Dockerfile` builds.
+- **Ready for the official MCP registry.** `mcpName: ai.ekwo/mcp` in the
+  manifest of `@ekwo-ai/mcp` and `packages/mcp/server.json`, kept equal to the
+  manifest by a test; `glama.json` names the maintainer for Glama.
+  `docs/releasing.md` has the steps that remain, after the next npm release.
+
 - **No competing product is named.** The documentation, the pack READMEs and
   the site describe Ekwo by what it does and by the standards it follows;
   `docs/mapping.md` lines each table up against EN 16931 and the FEC.

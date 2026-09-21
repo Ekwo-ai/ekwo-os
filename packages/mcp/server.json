@@ -1,0 +1,65 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "ai.ekwo/mcp",
+  "title": "Ekwo OS",
+  "description": "Open source accounting data infrastructure on your own Postgres, acting as the user under RLS.",
+  "version": "0.4.1",
+  "repository": {
+    "url": "https://github.com/Ekwo-ai/ekwo-os",
+    "source": "github",
+    "subfolder": "packages/mcp"
+  },
+  "websiteUrl": "https://ekwo.ai",
+  "packages": [
+    {
+      "registryType": "npm",
+      "registryBaseUrl": "https://registry.npmjs.org",
+      "identifier": "@ekwo-ai/mcp",
+      "version": "0.4.1",
+      "transport": {
+        "type": "stdio"
+      },
+      "environmentVariables": [
+        {
+          "name": "SUPABASE_URL",
+          "description": "https://<ref>.supabase.co of your own project",
+          "isRequired": false
+        },
+        {
+          "name": "SUPABASE_ANON_KEY",
+          "description": "The anon (publishable) key. Never the service_role key: the server refuses it.",
+          "isRequired": false,
+          "isSecret": true
+        },
+        {
+          "name": "EKWO_EMAIL",
+          "description": "The user the assistant acts as",
+          "isRequired": false
+        },
+        {
+          "name": "EKWO_PASSWORD",
+          "description": "That user's password",
+          "isRequired": false,
+          "isSecret": true
+        },
+        {
+          "name": "EKWO_ACCESS_TOKEN",
+          "description": "An access token, instead of email and password",
+          "isRequired": false,
+          "isSecret": true
+        },
+        {
+          "name": "EKWO_DB_URL",
+          "description": "Direct Postgres connection, for a self-hosted database without PostgREST",
+          "isRequired": false,
+          "isSecret": true
+        },
+        {
+          "name": "EKWO_ACT_AS_USER_ID",
+          "description": "Required with EKWO_DB_URL: the auth.users id the server acts for",
+          "isRequired": false
+        }
+      ]
+    }
+  ]
+}

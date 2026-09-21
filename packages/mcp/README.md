@@ -94,6 +94,29 @@ alongside the server; the recommended route needs no driver at all.
 | `EKWO_DB_URL` | A direct Postgres connection, for a self-hosted installation |
 | `EKWO_ACT_AS_USER_ID` | Required with `EKWO_DB_URL`: the `auth.users` id to act for |
 
+### Started with nothing set
+
+A client lists a server's tools as soon as it is added, and so do the
+directories that index MCP servers. So with **none** of the variables above —
+or with half of them — the server still starts, still answers the list of
+tools, and every tool call returns a `not_configured` error that names the
+variables to set and where. It connects nowhere until then, and it offers the
+tools of the socle only: which modules an installation carries is read from
+its database.
+
+Only absence is forgiven. A `service_role` key, in either slot, and an
+`EKWO_ACT_AS_USER_ID` that is not a uuid are values somebody wrote, and the
+server still refuses to start with them.
+
+```sh
+npm run build -w @ekwo-ai/mcp
+node packages/mcp/scripts/introspect.mjs     # starts it with no environment and lists the tools
+```
+
+The `Dockerfile` at the root of the repository builds the same server from the
+checkout; `docker run -i --rm <image>` speaks MCP over stdio, with the variables
+passed as `-e`.
+
 ## The tools
 
 Every write names its company explicitly.

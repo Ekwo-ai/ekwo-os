@@ -2,6 +2,7 @@
   "name": "@ekwo-ai/mcp",
   "version": "0.4.1",
   "description": "MCP server for Ekwo OS: let an AI assistant work on the books, under the user's own row level security.",
+  "mcpName": "ai.ekwo/mcp",
   "keywords": [
     "mcp",
     "model-context-protocol",
