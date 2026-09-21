@@ -1,0 +1,340 @@
+[
+  {
+    "code": "GN-S-18",
+    "name": "Ventes de biens 18 %",
+    "description": "Livraisons de biens au taux normal, TVA facturée au compte 4431",
+    "rate": 18,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2022-01-01",
+    "legal_reference": "Code général des impôts, art. 373-I — taux de droit commun de 18 %, en vigueur depuis l'entrée en application du Code le 1er janvier 2022 ; aucun changement de ce taux n'a été trouvé dans les lois de finances 2025 et 2026 (projet) lues.",
+    "source": "cgi",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "CA18"
+        },
+        {
+          "type": "tax",
+          "account": "4431",
+          "box": "TVA18"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "CA18",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "4431",
+          "box": "TVA18",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 10
+  },
+  {
+    "code": "GN-S-18-SRV",
+    "name": "Prestations de services 18 %",
+    "description": "Prestations de services au taux normal, TVA facturée au compte 4432",
+    "rate": 18,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2022-01-01",
+    "legal_reference": "Code général des impôts, art. 373-I pour le taux ; les articles consultés de ce Code ne portent pas d'article général isolé sur le fait générateur des prestations de services, faute d'avoir été trouvé dans la fiche de départ : documents.tax_point reste donc absent de ce pack.",
+    "source": "cgi",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "CA18"
+        },
+        {
+          "type": "tax",
+          "account": "4432",
+          "box": "TVA18"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "CA18",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "4432",
+          "box": "TVA18",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 20
+  },
+  {
+    "code": "GN-S-EXP",
+    "name": "Exportation au taux zéro",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2022-01-01",
+    "conditions": [
+      "transport_evidence"
+    ],
+    "legal_reference": "Code général des impôts, art. 373-II — taux zéro sur les exportations directes de biens et les prestations de services qui leur sont directement liées, le transport international de biens et de voyageurs, et les opérations sur les bateaux de commerce maritime, de pêche ou de sauvetage ; art. 383-VI-10° — la facture cite la disposition applicable à défaut d'indiquer un taux.",
+    "source": "cgi",
+    "vat_category": "G",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "EXP"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "EXP",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 30
+  },
+  {
+    "code": "GN-S-EXO",
+    "name": "Opération exonérée (art. 362-I)",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2022-01-01",
+    "conditions": [
+      "supply_nature"
+    ],
+    "legal_reference": "Code général des impôts, art. 362-I — liste des opérations exonérées : notamment les produits de première nécessité (riz, blé, farine, pain, huiles alimentaires, poisson non surgelé, gaz domestique), les produits pharmaceutiques, les livres et fournitures scolaires, les soins médicaux et paramédicaux, l'enseignement agréé, les locations d'immeubles d'habitation hors hôtellerie et les opérations relevant de la Taxe sur les Activités Financières ou de la Taxe sur les Assurances ; art. 383-VI-10° — la facture cite la disposition applicable.",
+    "source": "cgi",
+    "vat_category": "E",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "EXO"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "EXO",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 40
+  },
+  {
+    "code": "GN-P-18",
+    "name": "Achats de biens 18 %",
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2022-01-01",
+    "legal_reference": "Code général des impôts, art. 373-I pour le taux. La fiche de départ n'a pas isolé l'article du droit à déduction dans le texte lu (autour de la ligne 7090 du Code) : la déduction est admise ici comme la règle générale d'une taxe sur la valeur ajoutée, faute d'article précis à citer pour l'exclure.",
+    "source": "cgi",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "4452",
+          "box": "DEDBS"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "4452",
+          "box": "DEDBS",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 110
+  },
+  {
+    "code": "GN-P-18-SRV",
+    "name": "Services extérieurs 18 %",
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2022-01-01",
+    "legal_reference": "Code général des impôts, art. 373-I pour le taux ; voir GN-P-18 sur le droit à déduction.",
+    "source": "cgi",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "4454",
+          "box": "DEDBS"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "4454",
+          "box": "DEDBS",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 120
+  },
+  {
+    "code": "GN-P-18-IMMO",
+    "name": "Immobilisations 18 %",
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2022-01-01",
+    "legal_reference": "Code général des impôts, art. 373-I pour le taux ; voir GN-P-18 sur le droit à déduction.",
+    "source": "cgi",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "4451",
+          "box": "DEDIMMO"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "4451",
+          "box": "DEDIMMO",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 130
+  },
+  {
+    "code": "GN-P-IMP-18",
+    "name": "Importation 18 % (TVA acquittée en douane)",
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2022-01-01",
+    "legal_reference": "Code général des impôts — la TVA à l'importation est due au taux de 18 % dès la mise à la consommation (art. 365 et 366) et déductible sur présentation du bulletin de liquidation douanier, que le tableau des déductions de l'art. 373 Sexies-V, dans la rédaction de la loi de finances pour 2025 (art. 25), fait figurer nommément.",
+    "source": "cgi",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "4452",
+          "box": "DEDBS"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "4452",
+          "box": "DEDBS",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 170
+  },
+  {
+    "code": "GN-P-WHT-10",
+    "name": "Prélèvement forfaitaire 10 % — fournisseur non immatriculé à la TVA",
+    "description": "Retenue à la source sur un achat de biens ou de services auprès d'un fournisseur non immatriculé à la TVA, par un client désigné par l'article 251",
+    "kind": "withholding",
+    "rate": 10,
+    "scope": "purchase",
+    "treatment": "not_subject",
+    "valid_from": "2022-01-01",
+    "conditions": [
+      "buyer_status"
+    ],
+    "legal_reference": "Code général des impôts, art. 251 à 255 — l'État, les collectivités locales, les établissements publics, les entreprises publiques, les sociétés d'économie mixte, les sociétés de télécommunication et les sociétés d'importation, d'entreposage ou de distribution de produits pétroliers ou minières retiennent 10 % du montant de leurs achats de biens et de services auprès d'un fournisseur non immatriculé à la TVA, et le reversent au Trésor. Le fournisseur n'étant pas immatriculé à la TVA, l'opération n'est pas soumise à la taxe elle-même (treatment not_subject) : ce prélèvement est un acompte d'impôt sur les bénéfices ou sur le revenu du fournisseur, sans case sur la déclaration de TVA de ce pack (GN-TVA). Le fournisseur est payé net du prélèvement ; celui-ci attend son reversement au compte 4478.",
+    "source": "cgi",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "4478"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "4478"
+        }
+      ]
+    },
+    "sequence": 310
+  },
+  {
+    "code": "GN-P-WHT-COM-5",
+    "name": "Prélèvement forfaitaire 5 % — commissions",
+    "description": "Retenue à la source sur certaines commissions (distributeurs, cartes SIM, mobile money) versées par un client désigné par l'article 251",
+    "kind": "withholding",
+    "rate": 5,
+    "scope": "purchase",
+    "treatment": "not_subject",
+    "valid_from": "2022-01-01",
+    "conditions": [
+      "buyer_status",
+      "supply_nature"
+    ],
+    "legal_reference": "Code général des impôts, art. 251 à 255 — le même client désigné retient 5 % sur certaines commissions, notamment celles des distributeurs, des cartes SIM et des opérations de mobile money, et le reverse au Trésor. Comme GN-P-WHT-10, sans case sur la déclaration de TVA de ce pack ; le montant attend son reversement au compte 4478.",
+    "source": "cgi",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "4478"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "4478"
+        }
+      ]
+    },
+    "sequence": 320
+  }
+]

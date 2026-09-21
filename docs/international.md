@@ -3237,3 +3237,38 @@ Congolese surtax is "non-deductible, a definitive cost". No consolidated text
 of the loi n° 12-97 could be read to settle which is right;
 `packs/cg/README.md` carries the contradiction in full and flags it for a
 local accountant to resolve before the pack leaves `community`.
+
+## From Guinea
+
+`packs/gn/`, `community`, seed 29, another of the seventeen OHADA States,
+outside both the UEMOA and the CEMAC: its VAT is entirely national, read from
+the Code général des impôts of 2022 and the loi de finances pour 2025 (a
+text-layerless scan, read back page by page against the images). One thing
+the format could not say, not patched, and one contrast worth keeping beside
+it.
+
+**A fourth instance of the seller's side of a withholding by the buyer.**
+Article 373 Ter names a client — the State, a local authority, a public or
+mixed-economy body, a telecom company, an importer, distributor or miner —
+who withholds 50 % of the VAT a registered seller invoices and pays it to the
+Treasury directly; the seller still declares the tax in full and deducts the
+withheld half back under a box the Code itself names, "Déduction de la
+retenue 50% TVA". This is the exact shape `docs/international.md` already
+names for Senegal's *précompte*, Côte d'Ivoire's *TVA pour compte de tiers*
+and Chad's art. 245 and 229-V: a debt that stays the seller's while a buyer
+remits it, which no posting expresses on the side of the party who never
+touches the remittance. `packs/gn/` carries no tax code for art. 373 Ter and
+says so in its README.
+
+**The same Code's other withholding is the opposite shape, and the format
+already has it.** Articles 251 to 255 make certain of the same buyers withhold
+10 % (or 5 % on some commissions) from a payment to a supplier who is *not*
+registered for VAT, and remit it as an advance of that supplier's own income
+tax. Nothing here is three-party: the entity whose books this pack keeps is
+the one doing the withholding, on its own purchase, exactly as Singapore's
+`SG-P-WHT-INT-15` withholds tax on an interest payment it makes itself.
+`GN-P-WHT-10` and `GN-P-WHT-COM-5` post it, `treatment: not_subject`, to no
+box of the VAT return — because none of it is VAT. Two withholdings a few
+articles apart in the same chapter of the same Code, one a buyer can book
+because it is the buyer's own act, the other nobody can book because it
+happens to somebody else's tax.

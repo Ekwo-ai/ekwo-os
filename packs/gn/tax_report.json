@@ -1,0 +1,133 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "GN-TVA",
+  "name": "Déclaration de taxe sur la valeur ajoutée",
+  "period": [
+    "month"
+  ],
+  "valid_from": "2022-01-01",
+  "legal_reference": "Code général des impôts, art. 366-II et art. 373 Sexies-I — déclaration mensuelle ; art. 373 Sexies-IV — déclaration « néant » obligatoire en l'absence d'opération ; art. 373 Sexies-III — la déclaration porte les opérations taxables ou exonérées du mois, les régularisations, la TVA collectée et la TVA déductible sur les importations, les livraisons de biens et les prestations de services ; art. 373 Sexies-II, dans la rédaction de la loi de finances pour 2025 (art. 25) — formulaires en ligne sur la plateforme e-Tax/SAFIG. Le modèle officiel de l'imprimé et la numérotation de ses cases n'ont pas été trouvés publiés ; les cases de ce formulaire suivent le contenu que l'article 373 Sexies-III impose, comme au Sénégal et au Tchad.",
+  "source": "cgi",
+  "deadline": {
+    "rule": "day_of_month_after_period",
+    "day": 10,
+    "legal_reference": "Code général des impôts, art. 373 Sexies-I, dans la rédaction de la loi de finances pour 2025 (art. 13, modifiant lui-même l'art. 21 de la loi de finances pour 2024) — déclaration et paiement au plus tard le 10 de chaque mois pour le mois précédent. Le Code de 2022 prévoyait le 15 ; le 10 est la règle en vigueur depuis la loi de finances pour 2025.",
+    "source": "lf-2025"
+  },
+  "boxes": [
+    {
+      "box": "CA18",
+      "kind": "base",
+      "name": "Opérations taxables au taux de 18 %",
+      "sequence": 10,
+      "legal_reference": "Code général des impôts, art. 373 Sexies-III — montant des opérations taxables ; art. 373-I pour le taux",
+      "source": "cgi"
+    },
+    {
+      "box": "EXP",
+      "kind": "base",
+      "name": "Exportations et opérations assimilées au taux zéro",
+      "sequence": 20,
+      "legal_reference": "Code général des impôts, art. 373 Sexies-III — montant des opérations taxables et exonérées ; art. 373-II pour la liste des opérations au taux zéro",
+      "source": "cgi"
+    },
+    {
+      "box": "EXO",
+      "kind": "base",
+      "name": "Autres opérations exonérées",
+      "sequence": 30,
+      "legal_reference": "Code général des impôts, art. 373 Sexies-III — montant des opérations exonérées ; art. 362-I pour la liste",
+      "source": "cgi"
+    },
+    {
+      "box": "CAT",
+      "kind": "total",
+      "name": "Montant total des opérations du mois",
+      "sequence": 40,
+      "plus": [
+        "CA18",
+        "EXP",
+        "EXO"
+      ],
+      "legal_reference": "Code général des impôts, art. 373 Sexies-III — opérations taxables ou exonérées du mois",
+      "source": "cgi"
+    },
+    {
+      "box": "TVA18",
+      "kind": "tax",
+      "name": "Taxe exigible au taux de 18 %",
+      "sequence": 50,
+      "legal_reference": "Code général des impôts, art. 373 Sexies-III — TVA collectée",
+      "source": "cgi"
+    },
+    {
+      "box": "TVAB",
+      "kind": "total",
+      "name": "Total de la taxe exigible",
+      "sequence": 60,
+      "plus": [
+        "TVA18"
+      ],
+      "legal_reference": "Code général des impôts, art. 373 Sexies-III — TVA collectée",
+      "source": "cgi"
+    },
+    {
+      "box": "DEDIMMO",
+      "kind": "tax",
+      "name": "TVA déductible sur immobilisations",
+      "sequence": 70,
+      "legal_reference": "Code général des impôts, art. 373 Sexies-III et art. 373 Sexies-V, dans la rédaction de la loi de finances pour 2025 (art. 25) — tableau des déductions en annexe, par facture",
+      "source": "cgi"
+    },
+    {
+      "box": "DEDBS",
+      "kind": "tax",
+      "name": "TVA déductible sur biens, services et importations",
+      "sequence": 80,
+      "legal_reference": "Code général des impôts, art. 373 Sexies-III — TVA déductible sur les importations, les livraisons de biens et les prestations de services ; art. 373 Sexies-V pour le tableau des déductions par facture",
+      "source": "cgi"
+    },
+    {
+      "box": "DEDT",
+      "kind": "total",
+      "name": "Total des déductions",
+      "sequence": 90,
+      "plus": [
+        "DEDIMMO",
+        "DEDBS"
+      ],
+      "legal_reference": "Code général des impôts, art. 373 Sexies-III — TVA déductible",
+      "source": "cgi"
+    },
+    {
+      "box": "NET",
+      "kind": "total",
+      "name": "TVA nette à payer",
+      "sequence": 100,
+      "plus": [
+        "TVAB"
+      ],
+      "minus": [
+        "DEDT"
+      ],
+      "floor_zero": true,
+      "legal_reference": "Code général des impôts, art. 373 Sexies-I — la déclaration vaut titre de paiement de la taxe exigible diminuée des déductions",
+      "source": "cgi"
+    },
+    {
+      "box": "CRED",
+      "kind": "total",
+      "name": "Crédit de TVA à reporter",
+      "sequence": 110,
+      "plus": [
+        "DEDT"
+      ],
+      "minus": [
+        "TVAB"
+      ],
+      "floor_zero": true,
+      "legal_reference": "Code général des impôts — l'excédent de taxe déductible se reporte ; art. 388-I, dans la rédaction de la loi de finances pour 2025 (art. 28) — le remboursement du crédit se demande exclusivement sur e-Tax/SAFIG après trois mois consécutifs de crédit.",
+      "source": "lf-2025"
+    }
+  ]
+}

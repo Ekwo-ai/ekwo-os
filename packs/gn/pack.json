@@ -1,0 +1,177 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "GN",
+  "name": "Guinée",
+  "version": "0.1.0",
+  "schema_min": "20260917170000",
+  "seed_sequence": 29,
+  "released_at": "2026-09-21",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "audcif",
+        "title": "Acte uniforme relatif au droit comptable et à l'information financière (AUDCIF), adopté à Brazzaville le 26 janvier 2017",
+        "publisher": "OHADA — Bibliothèque numérique de l'OHADA",
+        "url": "https://biblio.ohada.org/doc_num.php?explnum_id=2061",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "syscohada",
+        "title": "Journal officiel de l'OHADA, numéro spécial du 15 février 2017 — Acte uniforme relatif au droit comptable et à l'information financière et Système comptable OHADA (SYSCOHADA révisé), version complète signée",
+        "publisher": "OHADA — Bibliothèque numérique de l'OHADA",
+        "url": "https://biblio.ohada.org/doc_num.php?explnum_id=2063",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "cgi",
+        "title": "Code général des impôts, issu de la loi ordinaire L/2021/032/AN du 4 juillet 2021, promulguée par décret D/2021/236/PRG/SGG du 21 juillet 2021, applicable à compter du 1er janvier 2022",
+        "publisher": "Ministère du Budget — Direction générale des Impôts (copie hébergée par ITIE Guinée)",
+        "url": "https://www.itie-guinee.org/wp-content/uploads/2022/01/NOUVEAU-CODE-GENERAL-DES-IMPOTS.pdf",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "lf-2025",
+        "title": "Loi ordinaire L/2024/023/CNT portant loi de finances pour l'année 2025",
+        "publisher": "Ministère du Budget — Direction générale des Impôts",
+        "url": "https://dgi.gov.gn/wp-content/uploads/2025/01/LOI-DE-FINANCES-INITIALE-2025_compressed.pdf",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "etax",
+        "title": "eTax Guinée — Télédéclarez et payez vos impôts en ligne",
+        "publisher": "Direction générale des Impôts",
+        "url": "https://etax.gov.gn/login-etax",
+        "consulted_on": "2026-09-21",
+        "kind": "portal"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "GNF",
+    "language": "fr",
+    "rounding_method": "half_up",
+    "closing_style": "result_accounts",
+    "roles": {
+      "receivable": "4111",
+      "payable": "4011",
+      "suspense": "4711",
+      "rounding": "6588",
+      "retained_earnings": "121",
+      "retained_earnings_loss": "1291",
+      "current_year_result_profit": "131",
+      "current_year_result_loss": "139",
+      "sales": "7011",
+      "purchase": "6011",
+      "bank": "5211",
+      "cash": "5711",
+      "fx_gain": "756",
+      "fx_loss": "656",
+      "tax_payable": "4441",
+      "tax_receivable": "4449"
+    },
+    "journal_roles": {
+      "sales": "VT",
+      "purchase": "AC",
+      "miscellaneous": "OD",
+      "opening": "AN"
+    },
+    "fiscal_year_default": "calendar"
+  },
+  "languages": [],
+  "journals": [
+    {
+      "code": "VT",
+      "type": "sales",
+      "name": "Journal des ventes",
+      "sequence": 10
+    },
+    {
+      "code": "AC",
+      "type": "purchase",
+      "name": "Journal des achats",
+      "sequence": 20
+    },
+    {
+      "code": "BQ",
+      "type": "bank",
+      "name": "Journal de banque",
+      "sequence": 30
+    },
+    {
+      "code": "CA",
+      "type": "cash",
+      "name": "Journal de caisse",
+      "sequence": 40
+    },
+    {
+      "code": "OD",
+      "type": "general",
+      "name": "Opérations diverses",
+      "sequence": 50
+    },
+    {
+      "code": "AN",
+      "type": "opening",
+      "name": "Journal des à-nouveaux",
+      "sequence": 60
+    }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "SYSCOHADA révisé — plan comptable général OHADA, Système normal",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": [
+        "GN-SYSCOHADA-BS",
+        "GN-SYSCOHADA-IS"
+      ],
+      "legal_reference": "Acte uniforme relatif au droit comptable et à l'information financière du 26 janvier 2017, art. 17, 7° — recours à un plan de comptes normalisé dont la liste figure dans le Système comptable OHADA ; Système comptable OHADA, Titre VII, chapitre 2, section 3 — liste des comptes, classes 1 à 8. La classe 9, engagements hors bilan et comptabilité analytique de gestion, est d'application facultative et n'est pas reprise. Commun aux dix-sept États parties : un seul fichier, packs/ohada/accounts.csv, recopié dans chaque pack par scripts/ohada-packs.mjs.",
+      "source": "syscohada"
+    }
+  ],
+  "documents": {
+    "numbering": "gapless_per_year",
+    "number_format": "{CODE}/{YYYY}/{NNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "references": {
+      "numbering": {
+        "legal_reference": "Code général des impôts, art. 383-VI-7° — la facture porte « un numéro unique, dans une séquence chronologique et continue ». Le texte impose l'unicité et la continuité, jamais une forme ni une remise à zéro annuelle, que le format proposé ici permet sans l'exiger.",
+        "source": "cgi"
+      }
+    },
+    "mentions": [
+      {
+        "code": "exempt",
+        "applies_when": "exempt",
+        "text": "Opération exonérée de la taxe sur la valeur ajoutée — article 362 du Code général des impôts.",
+        "sequence": 10,
+        "legal_reference": "Code général des impôts, art. 383-VI-10° — à défaut de taux de TVA, la facture porte la référence à l'article d'exonération ; art. 362-I pour la liste des opérations exonérées",
+        "source": "cgi"
+      },
+      {
+        "code": "export",
+        "applies_when": "export",
+        "text": "Exportation taxée au taux zéro — article 373-II du Code général des impôts.",
+        "sequence": 20,
+        "legal_reference": "Code général des impôts, art. 383-VI-10° et art. 373-II — exonération, avec droit à déduction, des exportations directes de biens et des prestations qui leur sont directement liées",
+        "source": "cgi"
+      }
+    ]
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "Code général des impôts, art. 383-V, dans la rédaction de la loi de finances pour 2025 (art. 27) — « La facture est saisie manuellement sur le portail e-Tax, soit transmise automatiquement via l'API e-TVA de la plateforme SAFIG. » Aucun arrêté d'application, aucune spécification technique de l'API e-TVA et aucun calendrier de déploiement par catégorie d'entreprises n'ont été publiés à la date de ce pack : le profil, le schéma des parties et la date d'obligation restent vides faute de texte à citer.",
+    "source": "lf-2025"
+  }
+}
