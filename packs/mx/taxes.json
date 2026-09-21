@@ -1,0 +1,557 @@
+[
+  {
+    "code": "MX-S-16",
+    "name": "Ventas y servicios al 16 %",
+    "description": "Enajenación de bienes, prestación de servicios y uso o goce temporal de bienes a la tasa general",
+    "kind": "vat",
+    "rate": 16,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2010-01-01",
+    "cash_basis": true,
+    "cash_basis_transition_account": "209.01",
+    "legal_reference": "Ley del IVA, art. 1o., segundo párrafo — tasa del 16 %, en la redacción publicada en el DOF el 7 de diciembre de 2009 (la tasa general era del 15 % hasta el 31 de diciembre de 2009). Causación en el cobro: Ley del IVA, arts. 1o.-B, 11 y 17 — el impuesto se causa cuando se cobran efectivamente las contraprestaciones; facturado, espera en la subcuenta 209.01 «IVA trasladado no cobrado» y, cobrado, pasa a la 208.01 «IVA trasladado cobrado», las dos subcuentas que el código agrupador del SAT prevé para ello (Anexo 24 de la RMF 2026). Declaración «IVA personas morales»: «Valor de los actos o actividades gravados a la tasa del 16%» e «IVA a cargo a la tasa del 16%»; un comprobante de egreso (nota de crédito) disminuye los mismos campos (art. 7o.)",
+    "source": "liva",
+    "vat_category": "S",
+    "sequence": 10,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "G16"
+        },
+        {
+          "type": "tax",
+          "account": "208.01",
+          "box": "C16"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "G16",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "208.01",
+          "box": "C16",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "MX-S-8-RF",
+    "name": "Ventas y servicios en la región fronteriza, 8 %",
+    "description": "Tasa del 16 % con el crédito del 50 % de los decretos de la región fronteriza norte y sur",
+    "kind": "vat",
+    "rate": 8,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2019-01-01",
+    "valid_to": "2026-12-31",
+    "cash_basis": true,
+    "cash_basis_transition_account": "209.01",
+    "legal_reference": "Decreto de estímulos fiscales región fronteriza norte (DOF 31-12-2018), artículo Décimo Primero, y Decreto de estímulos fiscales región fronteriza sur (DOF 30-12-2020), artículo Décimo — crédito fiscal equivalente al 50 % de la tasa del art. 1o. de la Ley del IVA, aplicado «en forma directa sobre la tasa», para quien enajena bienes, presta servicios independientes u otorga el uso o goce temporal de bienes en locales o establecimientos ubicados en la región, con entrega material de los bienes o prestación de los servicios en ella, inscrito en el padrón de beneficiarios mediante el aviso que exige cada decreto. En vigor desde el 1 de enero de 2019 en la región norte y desde el 1 de enero de 2021 en la región sur; vigencia de los dos decretos prorrogada hasta el 31 de diciembre de 2026 por el decreto publicado en el DOF el 31 de diciembre de 2025, de ahí valid_to. Las regiones son listas de municipios (artículo Primero de cada decreto) que la tabla territories no tiene: el paquete no puede condicionar el código a la región, véase el README. Causación en el cobro: Ley del IVA, arts. 1o.-B, 11 y 17 — el impuesto se causa cuando se cobran efectivamente las contraprestaciones; facturado, espera en la subcuenta 209.01 «IVA trasladado no cobrado» y, cobrado, pasa a la 208.01 «IVA trasladado cobrado», las dos subcuentas que el código agrupador del SAT prevé para ello (Anexo 24 de la RMF 2026). Declaración: «Valor de los actos o actividades gravados sujetos al estímulo de la región fronteriza» e «IVA a cargo sujeto al estímulo de la región fronteriza»",
+    "source": "decreto-rfn",
+    "vat_category": "S",
+    "sequence": 20,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "GRF"
+        },
+        {
+          "type": "tax",
+          "account": "208.01",
+          "box": "CRF"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "GRF",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "208.01",
+          "box": "CRF",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "MX-S-16-RET4",
+    "name": "Autotransporte terrestre de bienes al 16 %, con retención del 4 %",
+    "description": "Flete facturado a una persona moral, que retiene el 4 % del valor de la contraprestación",
+    "kind": "vat",
+    "rate": 16,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2010-01-01",
+    "conditions": [
+      "buyer_status"
+    ],
+    "legal_reference": "Ley del IVA, art. 1o.-A, fracción II, inciso c) — la persona moral que recibe servicios de autotransporte terrestre de bienes retiene el impuesto; Reglamento de la Ley del IVA, art. 3o., fracción II — la retención es del 4 % del valor de la contraprestación, es decir la cuarta parte del 16 %. El transportista traslada el 16 % (C16) y disminuye de su pago mensual el impuesto que le retuvieron (Ley del IVA, art. 5o.-D, tercer párrafo; declaración: campo «IVA retenido»). La retención se efectúa en el pago (art. 1o.-A, penúltimo párrafo); este código la registra en la factura, porque un código de flujo de efectivo sólo lleva una partida de impuesto: véase el README",
+    "source": "liva",
+    "vat_category": "S",
+    "sequence": 30,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "G16"
+        },
+        {
+          "type": "tax",
+          "account": "208.01",
+          "factor": -25,
+          "box": "RET",
+          "box_factor": 25
+        },
+        {
+          "type": "tax",
+          "account": "208.01",
+          "box": "C16"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "G16",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "208.01",
+          "factor": -25,
+          "box": "RET",
+          "box_factor": -25
+        },
+        {
+          "type": "tax",
+          "account": "208.01",
+          "box": "C16",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "MX-S-0",
+    "name": "Ventas a la tasa del 0 %",
+    "description": "Actos o actividades del art. 2o.-A de la Ley del IVA",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2010-01-01",
+    "conditions": [
+      "supply_nature"
+    ],
+    "legal_reference": "Ley del IVA, art. 2o.-A — tasa del 0 % (animales y vegetales no industrializados, alimentos, medicinas de patente y los demás actos que enumera). Declaración: «Valor de los actos o actividades gravados a la tasa del 0% otros». El valor se declara al cobro (arts. 11 y 17); una tasa sin impuesto no puede ser de flujo de efectivo en este formato, y el código lo declara en la fecha de la factura: véase el README",
+    "source": "liva",
+    "vat_category": "Z",
+    "sequence": 40,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "G0O"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "G0O",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "MX-S-EXP",
+    "name": "Exportación, tasa del 0 %",
+    "description": "Exportación de bienes o servicios",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2010-01-01",
+    "conditions": [
+      "transport_evidence"
+    ],
+    "legal_reference": "Ley del IVA, art. 29 — las empresas residentes en el país calculan el impuesto aplicando la tasa del 0 % al valor de la enajenación de bienes o prestación de servicios cuando se exporten; fracción I — la exportación definitiva en los términos de la Ley Aduanera, y las demás fracciones. Declaración: «Valor de los actos o actividades gravados a la tasa del 0% exportación»",
+    "source": "liva",
+    "vat_category": "G",
+    "sequence": 50,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "G0E"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "G0E",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "MX-S-EXE",
+    "name": "Actos exentos",
+    "description": "Enajenaciones, servicios o uso o goce temporal exentos",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2010-01-01",
+    "conditions": [
+      "supply_nature"
+    ],
+    "legal_reference": "Ley del IVA, art. 9o. (enajenación: suelo, casa habitación, libros, periódicos y revistas, bienes muebles usados salvo los enajenados por empresas, entre otros), art. 15 (servicios: comisiones de créditos hipotecarios para vivienda, enseñanza con autorización, transporte público terrestre de personas, entre otros) y art. 20 (uso o goce temporal de casa habitación, entre otros) — no se paga el impuesto. Declaración: «Valor de los actos o actividades por los que no se deba pagar el impuesto (exentos)»",
+    "source": "liva",
+    "vat_category": "E",
+    "sequence": 60,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "EXE"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "EXE",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "MX-S-NOBJ",
+    "name": "Actos no objeto del impuesto",
+    "description": "Actos que no son objeto del IVA",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "not_subject",
+    "valid_from": "2010-01-01",
+    "legal_reference": "Ley del IVA, art. 4o.-A — actos o actividades no objeto del impuesto: los que el contribuyente no realiza en territorio nacional conforme a los arts. 10, 16 y 21, y los distintos de los del art. 1o. realizados en territorio nacional, cuando por ellos obtiene ingresos y soportó IVA en los gastos e inversiones para obtenerlos. Declaración: «Valor de los actos o actividades no objeto del impuesto»",
+    "source": "liva",
+    "vat_category": "O",
+    "sequence": 70,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "NOB"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "NOB",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "MX-P-16",
+    "name": "Compras y gastos al 16 %",
+    "description": "IVA trasladado al contribuyente a la tasa general, acreditable al pagarse",
+    "kind": "vat",
+    "rate": 16,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2010-01-01",
+    "cash_basis": true,
+    "cash_basis_transition_account": "119.01",
+    "legal_reference": "Ley del IVA, art. 1o., segundo párrafo — tasa del 16 %; art. 4o. — acreditamiento; art. 5o., fracciones I y II — erogación estrictamente indispensable y deducible para el ISR, impuesto trasladado en forma expresa y por separado en el CFDI. Acreditamiento en el pago: Ley del IVA, art. 5o., fracción III — el IVA trasladado sólo es acreditable cuando ha sido efectivamente pagado; recibido, espera en la subcuenta 119.01 «IVA pendiente de pago» y, pagado, pasa a la 118.01 «IVA acreditable pagado» (Anexo 24 de la RMF 2026). Declaración: «Total de los actos o actividades pagados a la tasa del 16% de IVA» e «IVA de actos o actividades pagados a la tasa del 16%». Un gasto parcialmente deducible para el ISR sólo acredita en esa proporción (art. 5o., fracción I): el código lo acredita todo",
+    "source": "liva",
+    "vat_category": "S",
+    "sequence": 110,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "P16"
+        },
+        {
+          "type": "tax",
+          "account": "118.01",
+          "box": "A16"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "P16",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "118.01",
+          "box": "A16",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "MX-P-8-RF",
+    "name": "Compras en la región fronteriza, 8 %",
+    "description": "IVA trasladado con el estímulo de la región fronteriza, acreditable al pagarse",
+    "kind": "vat",
+    "rate": 8,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2019-01-01",
+    "valid_to": "2026-12-31",
+    "cash_basis": true,
+    "cash_basis_transition_account": "119.01",
+    "legal_reference": "Decreto de estímulos fiscales región fronteriza norte (DOF 31-12-2018), artículo Décimo Primero, y Decreto de estímulos fiscales región fronteriza sur (DOF 30-12-2020), artículo Décimo — el proveedor aplica la tasa disminuida en el 50 %; vigencia hasta el 31 de diciembre de 2026 (decreto publicado en el DOF el 31 de diciembre de 2025). Acreditamiento en el pago: Ley del IVA, art. 5o., fracción III — el IVA trasladado sólo es acreditable cuando ha sido efectivamente pagado; recibido, espera en la subcuenta 119.01 «IVA pendiente de pago» y, pagado, pasa a la 118.01 «IVA acreditable pagado» (Anexo 24 de la RMF 2026). Declaración: «Total de los actos o actividades pagados sujetos al estímulo de la región fronteriza» e «IVA pagado sujeto al estímulo de la región fronteriza»",
+    "source": "decreto-rfn",
+    "vat_category": "S",
+    "sequence": 120,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "PRF"
+        },
+        {
+          "type": "tax",
+          "account": "118.01",
+          "box": "ARF"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "PRF",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "118.01",
+          "box": "ARF",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "MX-P-16-RET23",
+    "name": "Honorarios, arrendamiento o comisiones de personas físicas al 16 %, con retención de dos terceras partes",
+    "description": "La persona moral retiene dos terceras partes del IVA que le traslada una persona física",
+    "kind": "vat",
+    "rate": 16,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2010-01-01",
+    "conditions": [
+      "buyer_status"
+    ],
+    "legal_reference": "Ley del IVA, art. 1o.-A, fracción II, incisos a) y d) — la persona moral que recibe servicios personales independientes o comisiones, o usa o goza temporalmente bienes, de personas físicas, retiene el impuesto; Reglamento de la Ley del IVA, art. 3o., fracción I — la retención es de las dos terceras partes del impuesto trasladado. El 16 % se acredita en la subcuenta 118.01 y las dos terceras partes retenidas esperan su entero en la 216.10 «Impuestos retenidos de IVA», que se paga en la declaración «IVA retenciones» y no en la de «IVA personas morales» (art. 1o.-A, penúltimo párrafo); el IVA retenido es acreditable una vez enterado (art. 5o., fracción IV). La retención se efectúa en el pago; este código la registra en la factura, y el ISR retenido sobre los mismos pagos (Ley del ISR, arts. 106 y 116, 10 %) no cabe en la misma línea. El factor es -66,667 %, la precisión que admite el formato: dos terceras partes exactas no se pueden escribir, y la retención se desvía un centavo a partir de 1 500 pesos de impuesto: véase el README",
+    "source": "liva",
+    "vat_category": "S",
+    "sequence": 130,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "P16"
+        },
+        {
+          "type": "tax",
+          "account": "118.01",
+          "box": "A16"
+        },
+        {
+          "type": "tax",
+          "account": "216.10",
+          "factor": -66.667
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "P16",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "118.01",
+          "box": "A16",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "216.10",
+          "factor": -66.667
+        }
+      ]
+    }
+  },
+  {
+    "code": "MX-P-16-RET4",
+    "name": "Autotransporte terrestre de bienes al 16 %, con retención del 4 %",
+    "description": "La persona moral retiene el 4 % del valor del flete",
+    "kind": "vat",
+    "rate": 16,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2010-01-01",
+    "conditions": [
+      "buyer_status"
+    ],
+    "legal_reference": "Ley del IVA, art. 1o.-A, fracción II, inciso c) — la persona moral que recibe servicios de autotransporte terrestre de bienes retiene el impuesto; Reglamento de la Ley del IVA, art. 3o., fracción II — la retención es del 4 % del valor de la contraprestación, la cuarta parte del 16 %. El 16 % se acredita en la 118.01 y el 4 % retenido espera su entero en la 216.10, que se paga en la declaración «IVA retenciones»",
+    "source": "rliva",
+    "vat_category": "S",
+    "sequence": 140,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "P16"
+        },
+        {
+          "type": "tax",
+          "account": "118.01",
+          "box": "A16"
+        },
+        {
+          "type": "tax",
+          "account": "216.10",
+          "factor": -25
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "P16",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "118.01",
+          "box": "A16",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "216.10",
+          "factor": -25
+        }
+      ]
+    }
+  },
+  {
+    "code": "MX-P-IMP-16",
+    "name": "Importación de bienes al 16 %",
+    "description": "IVA pagado en la aduana con el pedimento",
+    "kind": "vat",
+    "rate": 16,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2010-01-01",
+    "legal_reference": "Ley del IVA, art. 24, fracción I — introducción de bienes al país; art. 27 — la base es el valor que se utilice para los fines del impuesto general de importación, adicionado con ese impuesto y los demás que se paguen con motivo de la importación; art. 28 — el impuesto se paga con el de importación, en la aduana, y el pago tiene carácter provisional; art. 5o., fracción III — acreditable al pagarse. Espera en la subcuenta 118.02 «IVA acreditable de importación pagado». Declaración: «Total de los actos o actividades pagados en la importación de bienes y servicios a la tasa del 16% de IVA» y el IVA correspondiente",
+    "source": "liva",
+    "sequence": 150,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "PIM"
+        },
+        {
+          "type": "tax",
+          "account": "118.02",
+          "box": "AIM"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "PIM",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "118.02",
+          "box": "AIM",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "MX-P-0",
+    "name": "Compras a la tasa del 0 %",
+    "description": "Actos o actividades pagados a la tasa del 0 %",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2010-01-01",
+    "legal_reference": "Ley del IVA, art. 2o.-A — tasa del 0 %. Declaración: «Total de los demás actos o actividades pagados a la tasa del 0% de IVA»",
+    "source": "liva",
+    "vat_category": "Z",
+    "sequence": 160,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "P0"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "P0",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "MX-P-EXE",
+    "name": "Compras exentas",
+    "description": "Actos o actividades pagados por los que no se paga el IVA",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "exempt",
+    "valid_from": "2010-01-01",
+    "legal_reference": "Ley del IVA, arts. 9o., 15 y 20 — actos exentos; sin impuesto trasladado. Declaración: «Total de los actos o actividades pagados por los que no se pagará el IVA (exentos)»",
+    "source": "liva",
+    "vat_category": "E",
+    "sequence": 170,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "PEX"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "PEX",
+          "box_factor": -100
+        }
+      ]
+    }
+  }
+]
