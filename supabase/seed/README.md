@@ -10,19 +10,17 @@ exists.
 
 | File | Content | Applied by default |
 |---|---|---|
-| `00_currencies.sql` | 11 ISO 4217 currencies — CAD, CHF, CZK, DKK, EUR, GBP, JPY, NOK, PLN, SEK, USD — with the number of decimals each is rounded at | yes |
-| `00_territories.sql` | The territories of the common system of VAT: the 27 Member States with the day each became bound, the United Kingdom with the day it stopped being, Northern Ireland, the territories articles 6 and 7 of Directive 2006/112/EC take out of the system or put into it, and the VAT prefixes that are not ISO codes. Read by `ec_sales_list()`, which refuses to write a statement when the file has not been applied | yes |
+| `00_currencies.sql` | The ISO 4217 currencies the packs name, each with the number of decimals it is rounded at. A pack whose currency is not here adds its row | yes |
+| `00_territories.sql` | The territories of the common system of VAT: the 27 Member States with the day each became bound, the United Kingdom with the day it stopped being, Northern Ireland, the territories articles 6 and 7 of Directive 2006/112/EC take out of the system or put into it, and the VAT prefixes that are not ISO codes — plus a row, outside the system, for each country a pack outside it names. Read by `ec_sales_list()`, which refuses to write a statement when the file has not been applied | yes |
 | `05_framework_generic.sql` | **Generated from `packs/generic`.** Two country-less financial statements, `IFRS-SME-BS` and `IFRS-SME-IS`, whose rules are all account types: they fit any chart of any country, and they are the fallback for a chart that names no statement of its own | yes |
-| `10_pack_be.sql` | **Generated from `packs/be`.** Two charts — the PCMN, 353 accounts, and an association chart of 349 — 6 journals, 22 taxes with their postings, the 31 boxes of `BE-VAT-PERIODIC`, the three abbreviated NBB schemes, the legal mentions, the account roles, and labels in Dutch, German and English | yes |
-| `11_pack_fr.sql` | **Generated from `packs/fr`.** The PCG, 394 accounts, 6 journals, 24 taxes with their postings, the 22 lines of `FR-CA3`, the 2050 and 2052 statements, the legal mentions, the account roles, and labels in English | yes |
-| `12_pack_lu.sql` | **Generated from `packs/lu`.** The plan comptable normalisé, 1 026 accounts, 6 journals, 35 taxes with their postings, the 156 fields of `LU-VAT-PERIODIC`, the two abridged eCDF schemes, the legal mentions, the account roles, and labels in German and English | yes |
-| `13_pack_ee.sql` | **Generated from `packs/ee`.** An Estonian small-business chart of 120 accounts, 6 journals, 29 taxes with their postings, the 34 boxes of `EE-KMD`, the balance sheet and income statement scheme 1 of the annual report, the legal mentions, the account roles, and labels in English. **Its number is declared in the pack**, as `seed_index`, so that adding a country in the middle of the alphabet renames nobody | yes |
-| `modules/assets/10_pack_be.sql`<br>`modules/assets/11_pack_fr.sql` | **Generated from `packs/<cc>/assets.json`.** The fixed-asset rules of one country: how it prorates a first period, whether its declining balance is capped, how it derecognises an asset, and the usual duration of each kind of asset | **no** — applied by the module migration runner |
+| `<n>_pack_<cc>.sql`, one per pack | **Generated from `packs/<cc>`.** Its charts of accounts, its journals, its taxes with their postings, the boxes of its periodic declaration, its financial statements, the legal mentions, the account roles and the labels in every language it publishes. `<n>` is the number the pack declares in `seed_sequence`, so that adding a country renames nobody. The [table of packs](../../docs/packs.md#the-packs-of-this-checkout) — generated too — gives each pack's file | yes |
+| `modules/assets/<n>_pack_<cc>.sql`, where the pack has an `assets.json` | **Generated from `packs/<cc>/assets.json`.** The fixed-asset rules of one country: how it prorates a first period, whether its declining balance is capped, how it derecognises an asset, and the usual duration of each kind of asset | **no** — applied by the module migration runner |
 | `90_demo_company.sql` | A fictional company, « Exemple Conseil SRL », with contacts, four catalogue products, posted documents, a matched payment and a bank statement | **no** — sample data only |
 
 ## The order they are applied in, and by whom
 
-The seven files applied by default are applied **in file-name order**, and the
+The files applied by default — every `.sql` of this folder but the demo — are
+applied **in file-name order**, and the
 order matters twice: the currencies exist before a pack names one, and the
 generic framework exists before a chart falls back to it. The territories
 answer to nobody in this folder and are read only at run time, so where they
@@ -30,9 +28,9 @@ sit is a matter of reading order and not of dependency.
 
 | Who | What it applies |
 |---|---|
-| `ekwo init` and `ekwo migrate` | the seven default files, in order. `90_demo_company.sql` never, unless `--demo` or `ekwo demo` asks for it |
-| `supabase db push` / `supabase start` | the same seven: `config.toml` lists exactly them under `[db.seed].sql_paths` |
-| by hand | `psql "$DATABASE_URL" -f supabase/seed/<file>` for each of the seven, in order |
+| `ekwo init` and `ekwo migrate` | every default file, in order. `90_demo_company.sql` never, unless `--demo` or `ekwo demo` asks for it |
+| `supabase db push` / `supabase start` | the same files: `config.toml` lists exactly them under `[db.seed].sql_paths`, a list `ekwo pack build` writes |
+| by hand | `psql "$DATABASE_URL" -f supabase/seed/<file>` for each of them, in order — the root README carries the lines, written by the same command |
 | `ekwo migrate` and `ekwo module migrate` | the files under `modules/`, and only for the modules that installation carries |
 
 `modules/` is deliberately out of `config.toml`, and out of the flat read this
@@ -45,11 +43,10 @@ A test installs the release both ways — through the CLI's runner, and the way
 these files write. The two paths agree byte for byte, which is what lets the
 documentation say they are interchangeable.
 
-## Seven of these files are generated
+## Most of these files are generated
 
-`05_framework_generic.sql`, `10_pack_be.sql`, `11_pack_fr.sql`,
-`12_pack_lu.sql`, `13_pack_ee.sql` and the two under `modules/assets/` are
-build artefacts, like `docs/schema.md`.
+`05_framework_generic.sql`, every `<n>_pack_<cc>.sql` and everything under
+`modules/` are build artefacts, like `docs/schema.md`.
 
 **Do not edit them.** Change `packs/<cc>/` and run `ekwo pack build --all`.
 `ekwo pack check --all` refuses a seed that is not the exact output of its
@@ -97,10 +94,11 @@ file. See [DISCLAIMER.md](../../DISCLAIMER.md).
 
 The boxes and the lines are a **working starting point, not a legal opinion**.
 Every tax and every box names the text it comes from (`legal_reference`, a
-required field), and each manifest carries a certification status — both packs
-here are `maintained`, which means kept up to date by the maintainers and not
-yet read by an accountant. Four mappings are known to want a professional's
-eye:
+required field), and each manifest carries a certification status — the
+[table of packs](../../docs/packs.md#the-packs-of-this-checkout) gives each
+one's. `maintained` means kept up to date by the maintainers and not yet read
+by an accountant; `community` means not read by an accountant either. In the
+two `maintained` packs, four mappings are known to want a professional's eye:
 
 - Belgium: credit notes on intra-community purchases (box 84 with 62 and 63).
 - France: line 13 of the CA3 (the 2.1 % rate as a special rate).
@@ -129,7 +127,7 @@ code) do nothing`, like everything else here.
 
 ## Adding a country
 
-Not here: in `packs/<cc>/`, then `ekwo pack build <cc>`, then add the generated
-file to `config.toml`. [`docs/packs.md`](../../docs/packs.md) walks through the
+Not here: in `packs/<cc>/`, then `ekwo pack build <cc>`, which writes the seed
+here and adds it to `config.toml` and to the README. [`docs/packs.md`](../../docs/packs.md) walks through the
 whole day, and `ekwo pack check` is what tells you whether you are still on the
 path.

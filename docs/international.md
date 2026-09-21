@@ -19,18 +19,20 @@ Xero, QuickBooks and Odoo; taxes, their postings and the boxes of a declaration
 as rows a pack fills; financial statements as rows too, with a country-less
 framework behind any chart that prescribes none; EN 16931 fields as columns;
 the French FEC; XBRL for the Belgian NBB; Factur-X; a REST API and an MCP
-server; row level security everywhere. The seven file formats — the French FEC,
-the Belgian CBSO taxonomy, Factur-X, and the four recapitulative statements
-added with `ec_sales_list()` — are MIT packages under
-[`packages/formats/`](../packages/formats/), organised by format and never by
-country.
+server; row level security everywhere. The file formats — the French FEC,
+the Belgian CBSO taxonomy, Factur-X, Peppol UBL, the recapitulative statements
+added with `ec_sales_list()` and the readers of bank statements — are MIT
+packages under [`packages/formats/`](../packages/formats/), organised by format
+and never by country.
 
 **No function of the core holds a country code, and a test enforces it.**
-Belgium, Estonia, France, Luxembourg, the United Kingdom and the United States
-are six directories under [`packs/`](../packs/) and six compiled seeds, each
-carrying a year of books and the figures it produces. The fifth is the first
-that is not a Member State of the Union, and the sixth is the first that levies
-no value added tax at all; both were written for that reason.
+Every country is a directory under [`packs/`](../packs/) and a compiled seed,
+each carrying a year of books and the figures it produces; the
+[table of packs](packs.md#the-packs-of-this-checkout) is generated from them.
+The United Kingdom was the first that is not a Member State of the Union, the
+United States the first that levies no value added tax at all, and Senegal and
+Côte d'Ivoire the first two of seventeen States sharing one chart; each was
+written for that reason.
 
 ## What an international core needs and does not have
 
@@ -202,8 +204,8 @@ The original six-item list, for the record:
   listed under "From the United Kingdom" are what it returned — the first two
   of them closed the same week. Northern Ireland,
   Making Tax Digital submission and the VAT schemes are out of its scope.
-- **Ireland** — a chart of accounts and form VAT 3; the pack format has
-  everything it needs since the United Kingdom landed.
+- **Ireland** — **done, 21 September 2026**: a chart of accounts and form
+  VAT3, described under "Ireland" below.
 - **Canada and Québec** — GST, HST and QST stacked per line, PST as a
   non-recoverable tax in British Columbia, Saskatchewan and Manitoba, two
   administrations (CRA and Revenu Québec), bilingual labels, a QuickBooks or
@@ -215,7 +217,8 @@ The original six-item list, for the record:
   `report_code` on the postings and `region` on companies and contacts were
   built in phase 0 so that this pack migrates nothing twice.
 - **Netherlands, Germany, Luxembourg** — RGS, SKR03/04 with XRechnung, PCN.
-  **Luxembourg is done**, as `packs/lu/`, and is described below.
+  **Luxembourg is done**, as `packs/lu/`, and **the Netherlands**, as
+  `packs/nl/` on 21 September 2026; both are described below.
 - **United States** — **done, 16 September 2026**, and out of order for the
   same reason Estonia was: it is the country that tests what the format assumes
   about a *tax*. Every pack before it, the British one included, described a
@@ -238,7 +241,8 @@ The original six-item list, for the record:
 
 Australia and New Zealand (BAS), Singapore; Spain, Italy and Portugal
 (withholding, FatturaPA, SII); consolidation across companies; iXBRL accounts
-for Companies House.
+for Companies House. **Spain is done**, as `packs/es/` on 21 September 2026,
+ahead of the phase — see "From Spain" below.
 
 ### Phase 3 — the community makes the countries
 
@@ -249,20 +253,27 @@ data, contributable without touching the core.
 Part of this arrived early, as a by-product of phase 0: the golden runner takes
 any pack, `ekwo pack check` tells a contributor what is wrong in their own
 terms, the three certification statuses exist and `ekwo init` prints the one it
-is installing, and [`packs.md`](packs.md) walks through adding a country. What
-is missing is the outside of it — a page that shows the state of every pack,
-and enough contributed packs for the question to be interesting.
+is installing, and [`packs.md`](packs.md) walks through adding a country. The
+outside of it has started too: [ekwo.ai](https://ekwo.ai) publishes a page per
+pack, generated from the pack, with its status and every source it cites. What
+is missing is enough contributed packs for the question to be interesting.
 
 ## The packs, country by country
 
-| Country | Pack | Status | Out of scope, and why |
-|---|---|---|---|
-| Belgium | `packs/be/` | `maintained` | — |
-| Estonia | `packs/ee/` | `community` | KMD INF, the § 44 cash-accounting scheme, the fixed-asset rules, the XBRL fact keys of the annual report, and versions of form KMD before 1 July 2025 |
-| France | `packs/fr/` | `maintained` | — |
-| Luxembourg | `packs/lu/` | `community` | the eCDF XML of the periodic return, the FAIA audit file, the annual VAT return, the special regimes, and corporate income tax |
-| United Kingdom | `packs/gb/` | `community` | Northern Ireland and the `XI` prefix, Making Tax Digital submission, the flat rate, cash accounting, annual accounting, margin and retail schemes, partial exemption, the Construction Industry Scheme return, corporation tax and capital allowances, the medium and large formats of S.I. 2008/410, and iXBRL for Companies House |
-| United States | `packs/us/` | `community` | forty-five other states with a sales tax and every return but California's, district rates by address, the local taxes Alaska, Colorado and Louisiana administer themselves, the Streamlined Sales and Use Tax Agreement, sales tax on services, marketplace facilitator rules, federal and state income tax, MACRS, and Inline XBRL for the Securities and Exchange Commission |
+Which packs this checkout carries, and the status of each, is the
+[table of packs](packs.md#the-packs-of-this-checkout): it is generated from
+`packs/`, and so it is never a country behind. What each pack leaves out is
+written by whoever wrote it — below for the first six, in the table they landed
+with, and in its own section further down for every pack after them.
+
+| Country | Pack | Out of scope, and why |
+|---|---|---|
+| Belgium | `packs/be/` | — |
+| Estonia | `packs/ee/` | KMD INF, the § 44 cash-accounting scheme, the fixed-asset rules, the XBRL fact keys of the annual report, and versions of form KMD before 1 July 2025 |
+| France | `packs/fr/` | — |
+| Luxembourg | `packs/lu/` | the eCDF XML of the periodic return, the FAIA audit file, the annual VAT return, the special regimes, and corporate income tax |
+| United Kingdom | `packs/gb/` | Northern Ireland and the `XI` prefix, Making Tax Digital submission, the flat rate, cash accounting, annual accounting, margin and retail schemes, partial exemption, the Construction Industry Scheme return, corporation tax and capital allowances, the medium and large formats of S.I. 2008/410, and iXBRL for Companies House |
+| United States | `packs/us/` | forty-five other states with a sales tax and every return but California's, district rates by address, the local taxes Alaska, Colorado and Louisiana administer themselves, the Streamlined Sales and Use Tax Agreement, sales tax on services, marketplace facilitator rules, federal and state income tax, MACRS, and Inline XBRL for the Securities and Exchange Commission |
 
 ### Estonia
 

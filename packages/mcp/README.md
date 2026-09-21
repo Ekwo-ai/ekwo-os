@@ -148,8 +148,8 @@ Every write names its company explicitly.
 | `create_api_key` / `revoke_api_key` | A key for a machine, scoped to one company and a list of capabilities |
 
 **`list_accounts` answers with the working chart, not the whole one.** A
-country pack transcribes the regulation — 353 accounts in Belgium, 1 026 in
-Luxembourg — and a company works with a few dozen of them, so the default is
+country pack transcribes the regulation — hundreds of accounts, and more than
+a thousand in the Luxembourg PCN or the SYSCOHADA — and a company works with a few dozen of them, so the default is
 what `accounts_in_use()` returns: the accounts carrying posted entries, those
 the company's own settings or an enabled module point at, and those somebody
 pinned, minus the deprecated ones. Every answer carries a `scope` field saying

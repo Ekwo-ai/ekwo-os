@@ -93,11 +93,12 @@ declaration, the same year-end, for everyone in a country. Those rules should
 not be locked inside proprietary software, one vendor per market.
 
 In Ekwo a country is **data**: a pack of files an accountant can read, a
-contributor can propose, and a test can prove. Belgium, France, Luxembourg,
-Estonia, the United Kingdom and the United States ship today — the last of them
-a country with no value added tax at all, which is how you find out what a
-format quietly assumed. Ireland, Canada and Québec, the Netherlands and Germany
-come next. The rest of the world is open, and it is yours to write.
+contributor can propose, and a test can prove. Countries on three continents
+ship today — among them the United States, a country with no value added tax
+at all, which is how you find out what a format quietly assumed, and Senegal
+and Côte d'Ivoire, on the one chart of accounts seventeen OHADA States share —
+and more land every week. The rest of the world is open, and it is yours to
+write.
 
 The core is free software under AGPL-3.0, so that what is built on it stays
 open. The format libraries are MIT, so that they can go anywhere, including
