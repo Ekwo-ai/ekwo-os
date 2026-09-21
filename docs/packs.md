@@ -220,6 +220,7 @@ says what they say. `ekwo pack describe <cc>` is everything one of them says.
 | [`mx`](../packs/mx/) | México | `42_pack_mx.sql` | es, en | `community` |
 | [`ne`](../packs/ne/) | Niger | `33_pack_ne.sql` | fr | `community` |
 | [`nl`](../packs/nl/) | Nederland | `17_pack_nl.sql` | nl, en | `community` |
+| [`nz`](../packs/nz/) | New Zealand | `41_pack_nz.sql` | en | `community` |
 | [`sg`](../packs/sg/) | Singapore | `50_pack_sg.sql` | en | `community` |
 | [`sn`](../packs/sn/) | Sénégal | `20_pack_sn.sql` | fr | `community` |
 | [`tg`](../packs/tg/) | Togo | `36_pack_tg.sql` | fr | `community` |
