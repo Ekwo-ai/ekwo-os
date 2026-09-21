@@ -1,0 +1,197 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "NE",
+  "name": "Niger",
+  "version": "0.1.0",
+  "schema_min": "20260917170000",
+  "seed_sequence": 33,
+  "released_at": "2026-09-21",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "audcif",
+        "title": "Acte uniforme relatif au droit comptable et à l'information financière (AUDCIF), adopté à Brazzaville le 26 janvier 2017",
+        "publisher": "OHADA — Bibliothèque numérique de l'OHADA",
+        "url": "https://biblio.ohada.org/doc_num.php?explnum_id=2061",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "syscohada",
+        "title": "Journal officiel de l'OHADA, numéro spécial du 15 février 2017 — Acte uniforme relatif au droit comptable et à l'information financière et Système comptable OHADA (SYSCOHADA révisé), version complète signée",
+        "publisher": "OHADA — Bibliothèque numérique de l'OHADA",
+        "url": "https://biblio.ohada.org/doc_num.php?explnum_id=2063",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "cgi",
+        "title": "Code général des impôts, édition 2012 (PDF daté du 27 août 2012) — abrogé au 1er janvier 2026 par l'ordonnance n° 2025-22/PRN du 14 juillet 2025 portant nouveau Code général des impôts, dont le texte consolidé n'a pas pu être chargé (impots.gouv.ne en maintenance, certificat expiré) ; les articles cités ici (fait générateur, exigibilité, taux de 19 %, obligations déclaratives, mentions de facture) n'ont pas été revus dans la nouvelle numérotation",
+        "publisher": "République du Niger — texte hébergé par eRegulations Niger",
+        "url": "https://niger.eregulations.org/media/code%20g%C3%A9n%C3%A9rale%20des%20imp%C3%B4ts.pdf",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "lf2024",
+        "title": "Ordonnance n° 2024-001 du 4 janvier 2024 portant loi de finances pour l'année budgétaire 2024",
+        "publisher": "Journal officiel de la République du Niger — Ministère des Finances",
+        "url": "https://finances.gouv.ne/index.php/lois-de-finances/file/1117-ordonnance-n-2024-001-du-04-janvier-2024-portant-loi-de-finances-2024-1er-cahier",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "lf2025",
+        "title": "Ordonnance n° 2024-59 du 31 décembre 2024 portant loi de finances pour l'année budgétaire 2025",
+        "publisher": "Journal officiel de la République du Niger — Ministère des Finances",
+        "url": "https://finances.gouv.ne/index.php/lois-de-finances/file/1226-josp-lf-2025-1-cahier",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "lf2026",
+        "title": "Ordonnance n° 2025-44 du 31 décembre 2025 portant loi de finances pour l'année budgétaire 2026, édition spéciale n° 25 du Journal officiel",
+        "publisher": "Journal officiel de la République du Niger — Ministère des Finances",
+        "url": "https://finances.gouv.ne/index.php/lois-de-finances/file/1314-2025-josp-25-lfi-2026-1er-cahier",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "secef",
+        "title": "Réforme de la facture certifiée : le Directeur général des Impôts éclaire les contribuables — arrêté n° 473/MF/DGI/DL/CFI/DIV.L du 20 novembre 2020 portant commercialisation du Système électronique certifié de facturation (SECeF), obligation au 31 août 2021",
+        "publisher": "Ministère des Finances du Niger",
+        "url": "https://finances.gouv.ne/index.php/une/798-reforme-de-la-facture-certifiee-le-directeur-general-des-impots-eclaire-les-contribuables-sur-les-tenants-et-les-aboutissants-la-reforme-de-la-facture-certifiee-est-un-outil-de-bonne-gouvernance-pour-les-entreprises-et-un-levier-important-pour-la-croissance-du-niger-et-non-un-nouvel-impot",
+        "consulted_on": "2026-09-21",
+        "kind": "guidance"
+      },
+      {
+        "key": "esecef",
+        "title": "e-SECeF — plateforme dématérialisée de la facture certifiée",
+        "publisher": "Direction générale des Impôts du Niger",
+        "url": "https://esecef.impots.gouv.ne/",
+        "consulted_on": "2026-09-21",
+        "kind": "portal"
+      },
+      {
+        "key": "directive-uemoa-tva",
+        "title": "Directive n° 02/2009/CM/UEMOA du 27 mars 2009 portant modification de la directive n° 02/98/CM/UEMOA du 22 décembre 1998 portant harmonisation des législations des États membres en matière de taxe sur la valeur ajoutée",
+        "publisher": "Conseil des ministres de l'UEMOA — texte publié par l'AIFO-UEMOA",
+        "url": "https://www.aifo-uemoa.bj/assets/documents/directives-uemoa/directive_02_2009_CM_UEMOA.pdf",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "XOF",
+    "language": "fr",
+    "rounding_method": "half_up",
+    "closing_style": "result_accounts",
+    "roles": {
+      "receivable": "4111",
+      "payable": "4011",
+      "suspense": "4711",
+      "rounding": "6588",
+      "retained_earnings": "121",
+      "retained_earnings_loss": "1291",
+      "current_year_result_profit": "131",
+      "current_year_result_loss": "139",
+      "sales": "7011",
+      "purchase": "6011",
+      "bank": "5211",
+      "cash": "5711",
+      "fx_gain": "756",
+      "fx_loss": "656",
+      "tax_payable": "4441",
+      "tax_receivable": "4449"
+    },
+    "journal_roles": {
+      "sales": "VT",
+      "purchase": "AC",
+      "miscellaneous": "OD",
+      "opening": "AN"
+    },
+    "fiscal_year_default": "calendar"
+  },
+  "languages": [],
+  "journals": [
+    {
+      "code": "VT",
+      "type": "sales",
+      "name": "Journal des ventes",
+      "sequence": 10
+    },
+    {
+      "code": "AC",
+      "type": "purchase",
+      "name": "Journal des achats",
+      "sequence": 20
+    },
+    {
+      "code": "BQ",
+      "type": "bank",
+      "name": "Journal de banque",
+      "sequence": 30
+    },
+    {
+      "code": "CA",
+      "type": "cash",
+      "name": "Journal de caisse",
+      "sequence": 40
+    },
+    {
+      "code": "OD",
+      "type": "general",
+      "name": "Opérations diverses",
+      "sequence": 50
+    },
+    {
+      "code": "AN",
+      "type": "opening",
+      "name": "Journal des à-nouveaux",
+      "sequence": 60
+    }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "SYSCOHADA révisé — plan comptable général OHADA, Système normal",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": [
+        "NE-SYSCOHADA-BS",
+        "NE-SYSCOHADA-IS"
+      ],
+      "legal_reference": "Acte uniforme relatif au droit comptable et à l'information financière du 26 janvier 2017, art. 17, 7° — recours à un plan de comptes normalisé dont la liste figure dans le Système comptable OHADA ; Système comptable OHADA, Titre VII, chapitre 2, section 3 — liste des comptes, classes 1 à 8. La classe 9, engagements hors bilan et comptabilité analytique de gestion, est d'application facultative et n'est pas reprise. Commun aux dix-sept États parties : un seul fichier, packs/ohada/accounts.csv, recopié dans chaque pack par scripts/ohada-packs.mjs.",
+      "source": "syscohada"
+    }
+  ],
+  "documents": {
+    "numbering": "gapless_per_year",
+    "number_format": "{CODE}/{YYYY}/{NNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "invoice_if_issued",
+    "references": {
+      "numbering": {
+        "legal_reference": "Arrêté n° 473/MF/DGI/DL/CFI/DIV.L du 20 novembre 2020, obligatoire depuis le 31 août 2021 pour les régimes réel normal et réel simplifié — chaque facture émise par un Système électronique certifié de facturation (SECeF) porte le numéro d'identification de la machine (NIM) et un code SECeF/DGI attribués par le système, qui l'identifie et le distingue de toute autre facture émise par le même redevable. Aucun article trouvé ne dit, en toutes lettres, une série chronologique et ininterrompue comme le fait le Sénégal (art. 447-I-5) ou la Côte d'Ivoire (Livre de procédures fiscales, art. 145) : le format déclaré ici est celui de la pièce comptable d'un redevable au SECeF, et vaut pour la période où la facture certifiée est obligatoire, non pour toute facture nigérienne en toute période.",
+        "source": "secef"
+      },
+      "tax_point": {
+        "legal_reference": "Code général des impôts (2012), art. 223 — le fait générateur est, pour une vente, la livraison, et pour une prestation de services, l'accomplissement du service ; art. 224 — l'exigibilité suit le fait générateur, mais « la constatation du fait générateur ne peut être postérieure à la facturation totale ou partielle » et l'établissement d'un acompte, d'un décompte provisoire ou d'une facture partielle rend la taxe exigible par avance. invoice_if_issued dit la livraison ou l'accomplissement du service comme principe, devancé par une facture émise plus tôt. Le numéro de ces articles dans le nouveau Code général des impôts 2026 n'a pas été vu.",
+        "source": "cgi"
+      }
+    },
+    "mentions": []
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "Arrêté n° 473/MF/DGI/DL/CFI/DIV.L du 20 novembre 2020 portant commercialisation des Systèmes électroniques certifiés de facturation (SECeF) — dispositif institué par la loi de finances 2020 et renforcé par celle de 2021, phase pilote au 1er octobre 2020, obligatoire depuis le 31 août 2021 pour les assujettis au régime réel normal et au régime réel simplifié ; une facture porte le numéro d'identification de la machine (NIM), le code SECeF/DGI et un code QR. L'obligation elle-même est datée (31 août 2021), mais aucun profil de norme n'est publié et la SECeF n'est pas un format d'échange de la famille EN 16931 : mandatory_from reste vide, une date n'ayant de sens qu'à côté du profil qu'elle rend obligatoire. L'identifiant fiscal est le numéro d'identification fiscale (NIF), sans code ISO 6523 connu.",
+    "source": "secef"
+  }
+}

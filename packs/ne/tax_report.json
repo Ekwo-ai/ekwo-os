@@ -1,0 +1,146 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "NE-TVA",
+  "name": "Déclaration de taxe sur la valeur ajoutée",
+  "period": ["month", "quarter"],
+  "valid_from": "2012-08-27",
+  "legal_reference": "Code général des impôts (2012), art. 254 — déclaration mensuelle auprès de l'administration fiscale, conforme à un modèle prescrit ; art. 255 — les contribuables du régime réel simplifié d'imposition déposent une déclaration trimestrielle ; art. 256 — la déclaration indique le montant total des opérations réalisées, le détail des opérations taxables, la taxe ouvrant droit à déduction et le décompte de la taxe nette due ; une déclaration « néant » est souscrite en l'absence d'affaire. La cadence dépend du régime de l'entreprise : le pack n'en propose aucune. Le modèle officiel de l'imprimé et la numérotation de ses cases n'ont pas été retrouvés (le site impots.gouv.ne était en maintenance à la date de la recherche) ; les cases de ce formulaire suivent le contenu que l'article 256 impose, non la numérotation de l'imprimé. Le numéro de ces articles dans le nouveau Code général des impôts 2026 n'a pas été vu, mais la loi de finances pour 2026 (ordonnance n° 2025-44 du 31 décembre 2025) aligne l'exigibilité de sa nouvelle taxe sur les paiements en numéraire sur celle de la TVA, « le 15 », ce qui corrobore l'échéance retenue ici.",
+  "source": "cgi",
+  "deadline": {
+    "rule": "day_of_month_after_period",
+    "day": 15,
+    "legal_reference": "Code général des impôts (2012), art. 257 — la déclaration d'un mois donné est produite au plus tard le 15 du mois suivant ; pour le régime réel simplifié, au plus tard les 15 avril, 15 juillet, 15 octobre et 15 janvier.",
+    "source": "cgi"
+  },
+  "boxes": [
+    {
+      "box": "CA19",
+      "kind": "base",
+      "name": "Opérations taxables au taux normal de 19 %",
+      "sequence": 10,
+      "legal_reference": "Code général des impôts (2012), art. 256 — détail des opérations taxables ; art. 226, alinéa 1, pour le taux",
+      "source": "cgi"
+    },
+    {
+      "box": "CA10",
+      "kind": "base",
+      "name": "Opérations taxables au taux réduit de 10 %",
+      "sequence": 20,
+      "legal_reference": "Code général des impôts (2012), art. 256 ; loi de finances pour 2024, art. 226 nouveau — transport terrestre, hébergement et restauration",
+      "source": "lf2024"
+    },
+    {
+      "box": "CA5",
+      "kind": "base",
+      "name": "Opérations taxables au taux réduit de 5 %",
+      "sequence": 30,
+      "legal_reference": "Code général des impôts (2012), art. 256 ; art. 226, alinéa 2, et loi de finances pour 2024, art. 226 nouveau",
+      "source": "lf2024"
+    },
+    {
+      "box": "EXP",
+      "kind": "base",
+      "name": "Exportations exonérées ouvrant droit à déduction",
+      "sequence": 40,
+      "legal_reference": "Code général des impôts (2012), art. 256 ; loi de finances pour 2026, art. 322-7° nouveau et art. 228",
+      "source": "lf2026"
+    },
+    {
+      "box": "EXO",
+      "kind": "base",
+      "name": "Autres opérations exonérées (art. 322 nouveau)",
+      "sequence": 50,
+      "legal_reference": "Code général des impôts (2012), art. 256 ; loi de finances pour 2026, art. 322 nouveau, pour la liste",
+      "source": "lf2026"
+    },
+    {
+      "box": "CAT",
+      "kind": "total",
+      "name": "Montant total des opérations réalisées",
+      "sequence": 60,
+      "plus": ["CA19", "CA10", "CA5", "EXP", "EXO"],
+      "legal_reference": "Code général des impôts (2012), art. 256 — montant total des opérations réalisées",
+      "source": "cgi"
+    },
+    {
+      "box": "TVA19",
+      "kind": "tax",
+      "name": "Taxe exigible au taux de 19 %",
+      "sequence": 70,
+      "legal_reference": "Code général des impôts (2012), art. 256, et art. 224 pour l'exigibilité",
+      "source": "cgi"
+    },
+    {
+      "box": "TVA10",
+      "kind": "tax",
+      "name": "Taxe exigible au taux de 10 %",
+      "sequence": 80,
+      "legal_reference": "Code général des impôts (2012), art. 256 ; loi de finances pour 2024, art. 226 nouveau",
+      "source": "lf2024"
+    },
+    {
+      "box": "TVA5",
+      "kind": "tax",
+      "name": "Taxe exigible au taux de 5 %",
+      "sequence": 90,
+      "legal_reference": "Code général des impôts (2012), art. 256 ; art. 226, alinéa 2, et loi de finances pour 2024, art. 226 nouveau",
+      "source": "lf2024"
+    },
+    {
+      "box": "TVAB",
+      "kind": "total",
+      "name": "Total de la taxe exigible",
+      "sequence": 100,
+      "plus": ["TVA19", "TVA10", "TVA5"],
+      "legal_reference": "Code général des impôts (2012), art. 256 — décompte de la taxe due",
+      "source": "cgi"
+    },
+    {
+      "box": "DEDIMMO",
+      "kind": "tax",
+      "name": "TVA déductible sur immobilisations",
+      "sequence": 110,
+      "legal_reference": "Code général des impôts (2012), art. 256, et art. 227, 236 à 239 pour le droit à déduction sur immobilisations",
+      "source": "cgi"
+    },
+    {
+      "box": "DEDBS",
+      "kind": "tax",
+      "name": "TVA déductible sur biens et services",
+      "sequence": 120,
+      "legal_reference": "Code général des impôts (2012), art. 256, et art. 227 et 242 pour le droit à déduction et le mois de son exercice",
+      "source": "cgi"
+    },
+    {
+      "box": "DEDT",
+      "kind": "total",
+      "name": "Total des déductions",
+      "sequence": 130,
+      "plus": ["DEDIMMO", "DEDBS"],
+      "legal_reference": "Code général des impôts (2012), art. 256 — taxe ouvrant droit à déduction",
+      "source": "cgi"
+    },
+    {
+      "box": "NET",
+      "kind": "total",
+      "name": "TVA nette à payer",
+      "sequence": 140,
+      "plus": ["TVAB"],
+      "minus": ["DEDT"],
+      "floor_zero": true,
+      "legal_reference": "Code général des impôts (2012), art. 256 — décompte de la taxe nette due ; la déclaration vaut liquidation et perception de la taxe (art. 256, alinéa 2)",
+      "source": "cgi"
+    },
+    {
+      "box": "CRED",
+      "kind": "total",
+      "name": "Crédit de TVA à reporter",
+      "sequence": 150,
+      "plus": ["DEDT"],
+      "minus": ["TVAB"],
+      "floor_zero": true,
+      "legal_reference": "Code général des impôts (2012), art. 244 — l'excédent de déduction sur la taxe exigible d'une déclaration s'impute sur la taxe exigible des déclarations suivantes",
+      "source": "cgi"
+    }
+  ]
+}

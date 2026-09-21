@@ -1,0 +1,316 @@
+[
+  {
+    "code": "NE-S-19",
+    "name": "Ventes de biens 19 %",
+    "description": "Livraisons de biens au taux normal, TVA au compte 4431",
+    "rate": 19,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2012-08-27",
+    "legal_reference": "Code général des impôts (2012), art. 226, alinéa 1 — taux normal de 19 %. L'exposé des motifs de la loi de finances pour 2025 et de celle pour 2026 rappelle ce taux comme en vigueur ; la loi de finances pour 2026 ne réécrit que les articles des exonérations (322 nouveau) et des exclusions du droit à déduction (339 nouveau), pas celui des taux. Le numéro de l'article dans le nouveau Code général des impôts 2026 (ordonnance n° 2025-22 du 14 juillet 2025) n'a pas été vu.",
+    "source": "cgi",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "CA19" },
+        { "type": "tax", "account": "4431", "box": "TVA19" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "CA19", "box_factor": -100 },
+        { "type": "tax", "account": "4431", "box": "TVA19", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 10
+  },
+  {
+    "code": "NE-S-19-SRV",
+    "name": "Prestations de services 19 %",
+    "description": "Prestations de services et travaux au taux normal, TVA au compte 4432",
+    "rate": 19,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2012-08-27",
+    "legal_reference": "Code général des impôts (2012), art. 226, alinéa 1, pour le taux ; art. 223-3° — le fait générateur d'une prestation de services est son accomplissement.",
+    "source": "cgi",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "CA19" },
+        { "type": "tax", "account": "4432", "box": "TVA19" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "CA19", "box_factor": -100 },
+        { "type": "tax", "account": "4432", "box": "TVA19", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 20
+  },
+  {
+    "code": "NE-S-10-TRANSPORT",
+    "name": "Transport terrestre de personnes et de marchandises 10 %",
+    "rate": 10,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2024-01-01",
+    "conditions": ["supply_nature"],
+    "legal_reference": "Loi de finances pour 2024 (ordonnance n° 2024-001 du 4 janvier 2024), art. 226 nouveau — taux réduit de 10 % pour le transport terrestre de personnes et de marchandises, en vigueur depuis le 1er janvier 2024. La loi de finances pour 2026 ne réécrit pas cet article.",
+    "source": "lf2024",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "CA10" },
+        { "type": "tax", "account": "4432", "box": "TVA10" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "CA10", "box_factor": -100 },
+        { "type": "tax", "account": "4432", "box": "TVA10", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 30
+  },
+  {
+    "code": "NE-S-10-HEB",
+    "name": "Hébergement et restauration 10 %",
+    "rate": 10,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2024-01-01",
+    "conditions": ["supply_nature"],
+    "legal_reference": "Loi de finances pour 2024 (ordonnance n° 2024-001 du 4 janvier 2024), art. 226 nouveau — taux réduit de 10 % étendu à l'ensemble de la restauration à compter du 1er janvier 2024 et repris pour l'hébergement, déjà à ce taux avant la loi (date exacte d'introduction non retrouvée). La loi de finances pour 2026 ne réécrit pas cet article.",
+    "source": "lf2024",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "CA10" },
+        { "type": "tax", "account": "4432", "box": "TVA10" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "CA10", "box_factor": -100 },
+        { "type": "tax", "account": "4432", "box": "TVA10", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 40
+  },
+  {
+    "code": "NE-S-5",
+    "name": "Produits de première nécessité et matériel informatique 5 %",
+    "description": "Sucre, huile alimentaire, aliments pour bétail, lait manufacturé, farines de maïs, mil, millet, sorgho, riz et blé, matériel informatique pour l'enseignement technique et professionnel (hors consommables)",
+    "rate": 5,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2024-01-01",
+    "conditions": ["supply_nature"],
+    "legal_reference": "Code général des impôts (2012), art. 226, alinéa 2 — taux réduit de 5 % pour le sucre et l'huile alimentaire depuis 2012 ; loi de finances pour 2024 (ordonnance n° 2024-001 du 4 janvier 2024), art. 226 nouveau — liste élargie aux aliments pour bétail, au lait manufacturé, aux farines énumérées et au matériel informatique pour l'enseignement technique et professionnel hors consommables. La liste lue dans la loi de finances pour 2024 peut être incomplète (coupure de page dans le texte consulté) ; la date d'entrée de chaque produit dans la liste, entre 2012 et 2024, n'a pas été reconstituée.",
+    "source": "lf2024",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "CA5" },
+        { "type": "tax", "account": "4431", "box": "TVA5" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "CA5", "box_factor": -100 },
+        { "type": "tax", "account": "4431", "box": "TVA5", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 50
+  },
+  {
+    "code": "NE-S-EXP",
+    "name": "Exportation exonérée",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2026-01-01",
+    "conditions": ["transport_evidence"],
+    "legal_reference": "Loi de finances pour 2026 (ordonnance n° 2025-44 du 31 décembre 2025), art. 322-7° nouveau du Code général des impôts — exonération des exportations directes de biens et de services, avec droit à déduction pour les produits taxables à l'intérieur ; loi de finances pour 2025 (ordonnance n° 2024-59 du 31 décembre 2024), art. 228, à la même teneur pour 2025. L'exonération des exportations existait déjà dans l'ancien Code général des impôts (2012) ; seule la date du dernier texte qui la reprend, le 1er janvier 2026, est retenue ici faute d'avoir lu le texte intermédiaire de 2013 à 2023.",
+    "source": "lf2026",
+    "vat_category": "G",
+    "postings": {
+      "invoice": [{ "type": "base", "box": "EXP" }],
+      "credit_note": [{ "type": "base", "box": "EXP", "box_factor": -100 }]
+    },
+    "kind": "vat",
+    "sequence": 60
+  },
+  {
+    "code": "NE-S-EXO",
+    "name": "Opération exonérée (art. 322 nouveau)",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2026-01-01",
+    "conditions": ["supply_nature"],
+    "legal_reference": "Loi de finances pour 2026 (ordonnance n° 2025-44 du 31 décembre 2025), art. 322 nouveau du Code général des impôts — liste des opérations exonérées : agriculteurs, éleveurs et pêcheurs ; une liste de produits (lait, semences, matériel médical…) ; viandes, fruits et légumes ; professions médicales ; enseignement ; location d'immeubles nus ; avitaillement des aéronefs, transport aérien et aéronefs ; journaux hors publicité ; associations sans but lucratif ; timbres ; opérations non commerciales de l'État ; assurances ; banque et finance (taxe unique) ; mutations soumises aux droits d'enregistrement ; eau (50 m3/mois) et électricité (150 kWh/mois) des ménages ; matériel militaire ; jeux ; musées ; charbon ; lotissements sociaux ; uranium ; or vendu à la SOPAMIN. Une seule case regroupe cette liste, faute de connaître le contenu de l'article 802 nouveau sur les mentions de facture qui permettrait de distinguer chaque motif sur le document.",
+    "source": "lf2026",
+    "vat_category": "E",
+    "postings": {
+      "invoice": [{ "type": "base", "box": "EXO" }],
+      "credit_note": [{ "type": "base", "box": "EXO", "box_factor": -100 }]
+    },
+    "kind": "vat",
+    "sequence": 70
+  },
+  {
+    "code": "NE-P-19",
+    "name": "Achats de biens 19 %",
+    "rate": 19,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2012-08-27",
+    "legal_reference": "Code général des impôts (2012), art. 227 — déduction de la taxe qui a grevé les biens destinés à être revendus ou les matières premières entrant dans un produit taxable ; art. 226, alinéa 1, pour le taux.",
+    "source": "cgi",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [{ "type": "tax", "account": "4452", "box": "DEDBS" }],
+      "credit_note": [{ "type": "tax", "account": "4452", "box": "DEDBS", "box_factor": -100 }]
+    },
+    "kind": "vat",
+    "sequence": 110
+  },
+  {
+    "code": "NE-P-19-SRV",
+    "name": "Services extérieurs 19 %",
+    "rate": 19,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2012-08-27",
+    "legal_reference": "Code général des impôts (2012), art. 227 — déduction de la taxe qui a grevé les services entrant dans la réalisation d'opérations taxables, les fournitures et les biens meubles ou immeubles acquis pour les besoins de l'exploitation ; art. 226, alinéa 1, pour le taux.",
+    "source": "cgi",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [{ "type": "tax", "account": "4454", "box": "DEDBS" }],
+      "credit_note": [{ "type": "tax", "account": "4454", "box": "DEDBS", "box_factor": -100 }]
+    },
+    "kind": "vat",
+    "sequence": 120
+  },
+  {
+    "code": "NE-P-19-IMMO",
+    "name": "Immobilisations 19 %",
+    "rate": 19,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2012-08-27",
+    "legal_reference": "Code général des impôts (2012), art. 227 — déduction de la taxe qui a grevé les biens meubles ou immeubles acquis pour les besoins de l'exploitation ; art. 236 à 239 — prorata et régularisations sur les immobilisations.",
+    "source": "cgi",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [{ "type": "tax", "account": "4451", "box": "DEDIMMO" }],
+      "credit_note": [{ "type": "tax", "account": "4451", "box": "DEDIMMO", "box_factor": -100 }]
+    },
+    "kind": "vat",
+    "sequence": 130
+  },
+  {
+    "code": "NE-P-10-TRANSPORT",
+    "name": "Transport terrestre de personnes et de marchandises 10 %",
+    "rate": 10,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2024-01-01",
+    "conditions": ["supply_nature"],
+    "legal_reference": "Loi de finances pour 2024 (ordonnance n° 2024-001 du 4 janvier 2024), art. 226 nouveau, pour le taux ; Code général des impôts (2012), art. 227, pour la déduction. L'achat d'une prestation de transport de marchandises pour les besoins de l'exploitation n'est pas au nombre des exclusions de l'article 339 nouveau (loi de finances pour 2026), qui ne vise que l'hébergement, la réception, la restauration, les spectacles et les véhicules de transport de personnes.",
+    "source": "lf2024",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [{ "type": "tax", "account": "4454", "box": "DEDBS" }],
+      "credit_note": [{ "type": "tax", "account": "4454", "box": "DEDBS", "box_factor": -100 }]
+    },
+    "kind": "vat",
+    "sequence": 140
+  },
+  {
+    "code": "NE-P-10-HEB-ND",
+    "name": "Hébergement, réception et restauration 10 % non déductible (art. 339 nouveau)",
+    "rate": 10,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "recoverable": false,
+    "legal_reference": "Loi de finances pour 2026 (ordonnance n° 2025-44 du 31 décembre 2025), art. 339 nouveau du Code général des impôts — exclusion du droit à déduction de la taxe sur l'hébergement, la réception, la restauration et les spectacles. Corroboré par le principe déjà posé à l'art. 229 de l'ancien Code général des impôts (2012), sur le logement, l'hébergement, les frais de réception, de restaurant et de spectacles, avec la seule exception du logement gratuit du personnel de surveillance, non retenue ici. La taxe devient une part du coût de la dépense.",
+    "source": "lf2026",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [{ "type": "tax_on_base", "factor": 100 }],
+      "credit_note": [{ "type": "tax_on_base", "factor": 100 }]
+    },
+    "kind": "vat",
+    "sequence": 150
+  },
+  {
+    "code": "NE-P-5",
+    "name": "Achats de produits de première nécessité et matériel informatique 5 %",
+    "rate": 5,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2024-01-01",
+    "conditions": ["supply_nature"],
+    "legal_reference": "Code général des impôts (2012), art. 226, alinéa 2, et loi de finances pour 2024 (ordonnance n° 2024-001 du 4 janvier 2024), art. 226 nouveau, pour le taux ; Code général des impôts (2012), art. 227, pour la déduction.",
+    "source": "lf2024",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [{ "type": "tax", "account": "4452", "box": "DEDBS" }],
+      "credit_note": [{ "type": "tax", "account": "4452", "box": "DEDBS", "box_factor": -100 }]
+    },
+    "kind": "vat",
+    "sequence": 160
+  },
+  {
+    "code": "NE-P-19-VEH-ND",
+    "name": "Véhicules de transport de personnes 19 % non déductible",
+    "rate": 19,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "recoverable": false,
+    "legal_reference": "Loi de finances pour 2026 (ordonnance n° 2025-44 du 31 décembre 2025), art. 339 nouveau du Code général des impôts — exclusion du droit à déduction pour les véhicules de transport de personnes. Corroboré par l'art. 230 de l'ancien Code général des impôts (2012) — véhicules ou engins conçus ou aménagés pour transporter des personnes ou à usage mixte, constituant une immobilisation ou non destinés à la revente à l'état neuf, ainsi que leurs pièces détachées et accessoires.",
+    "source": "lf2026",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [{ "type": "tax_on_base", "factor": 100 }],
+      "credit_note": [{ "type": "tax_on_base", "factor": 100 }]
+    },
+    "kind": "vat",
+    "sequence": 170
+  },
+  {
+    "code": "NE-P-19-CADEAU-ND",
+    "name": "Cadeaux de plus de 20 000 francs CFA hors taxe 19 % non déductible",
+    "rate": 19,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "recoverable": false,
+    "legal_reference": "Loi de finances pour 2026 (ordonnance n° 2025-44 du 31 décembre 2025), art. 339 nouveau du Code général des impôts — exclusion du droit à déduction pour les cadeaux au-delà de 20 000 francs CFA hors taxe. Corroboré par le principe de l'art. 231 de l'ancien Code général des impôts (2012) — biens cédés et services rendus à titre de cadeaux, sans le seuil chiffré, alors non publié.",
+    "source": "lf2026",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [{ "type": "tax_on_base", "factor": 100 }],
+      "credit_note": [{ "type": "tax_on_base", "factor": 100 }]
+    },
+    "kind": "vat",
+    "sequence": 180
+  },
+  {
+    "code": "NE-P-IMP-19",
+    "name": "Importation 19 % (TVA acquittée en douane)",
+    "rate": 19,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2012-08-27",
+    "legal_reference": "Code général des impôts (2012), art. 223-1° — le fait générateur, pour les importations, est l'introduction pour la mise à la consommation des biens sur le territoire nigérien ; art. 224 d) — l'exigibilité intervient à la mise à la consommation ; art. 226, alinéa 3 — la base taxable à l'importation est la valeur en douane majorée du droit de douane, de la redevance statistique et, le cas échéant, du droit d'accises et des surtaxes analogues ; art. 227 — déduction de la taxe acquittée lors de l'importation.",
+    "source": "cgi",
+    "postings": {
+      "invoice": [{ "type": "tax", "account": "4452", "box": "DEDBS" }],
+      "credit_note": [{ "type": "tax", "account": "4452", "box": "DEDBS", "box_factor": -100 }]
+    },
+    "kind": "vat",
+    "sequence": 190
+  }
+]

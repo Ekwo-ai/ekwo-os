@@ -2087,6 +2087,25 @@ so the packs carry the *Système normal* and nothing else.
 CDF come with the first pack that needs each; the note above about the seed's
 eleven currencies is now twelve.
 
+**Niger, a third withholding on a payment, and a condition on how one was
+made.** The *taxe sur les paiements en numéraire* (1 % of a cash payment over
+100,000 F CFA, loi de finances 2026) and the *retenue de conformité fiscale*
+(10 % of the price, withheld by a public payer from a supplier not in order,
+loi de finances 2025) are collected or withheld when an amount is paid, not
+when it is invoiced — the same gap the Senegalese BRS and the Ivorian
+withholdings already name, and for the same reason neither is written into
+`packs/ne/taxes.json`. A further rule of the 2026 law denies deduction on a
+transaction over 2,000,000 F CFA settled other than through a banking
+channel: a condition of how the invoice was later paid, which no tax code —
+fixed at the moment a document is issued — can carry either. And a repealed
+law can still be the best available source: Niger's new Code général des
+impôts (in force since 1 January 2026) was not reachable during the research
+(the tax administration's site was down, its certificate expired), so the
+pack cites the 2012 Code for what the finance laws of 2024 to 2026 do not
+rewrite — the fait générateur, the filing calendar, the mentions of an
+invoice — and says, article by article, that the new Code's numbering was
+never confirmed.
+
 ## The Netherlands
 
 Written from published sources alone, on 21 September 2026, and `community`

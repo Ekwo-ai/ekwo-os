@@ -1,0 +1,239 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "Une année d'un comptoir nigérien au régime du réel normal, déclarant chaque mois",
+  "chart": "default",
+  "fiscal_year": {
+    "name": "Exercice 2026",
+    "start": "2026-01-01",
+    "end": "2026-12-31"
+  },
+  "periods": [
+    { "code": "2026-01", "from": "2026-01-01", "to": "2026-01-31" },
+    { "code": "2026-02", "from": "2026-02-01", "to": "2026-02-28" },
+    { "code": "2026-03", "from": "2026-03-01", "to": "2026-03-31" },
+    { "code": "2026-04", "from": "2026-04-01", "to": "2026-04-30" }
+  ],
+  "statements": ["NE-SYSCOHADA-BS", "NE-SYSCOHADA-IS"],
+  "contacts": [
+    { "ref": "client-niamey", "name": "Grossiste Doutchi SARL", "type": "customer", "country": "NE" },
+    { "ref": "client-hotel", "name": "Voyages Ténéré SA", "type": "customer", "country": "NE" },
+    { "ref": "client-transport", "name": "Négoce du Sahel SARL", "type": "customer", "country": "NE" },
+    { "ref": "client-conseil", "name": "Coopérative Agropastorale de Say", "type": "customer", "country": "NE" },
+    { "ref": "client-epicier", "name": "Épicerie Centrale de Zinder SARL", "type": "customer", "country": "NE" },
+    { "ref": "client-assur", "name": "Assurances du Sahel SA", "type": "customer", "country": "NE" },
+    { "ref": "client-fr", "name": "Manufacture Rhénane SAS", "type": "customer", "country": "FR" },
+    { "ref": "fourn-niamey", "name": "Grossiste Niamey Commerce SARL", "type": "supplier", "country": "NE" },
+    { "ref": "fourn-maint", "name": "Froid Sahel Services SARL", "type": "supplier", "country": "NE" },
+    { "ref": "fourn-bureau", "name": "Bureautique du Fleuve SARL", "type": "supplier", "country": "NE" },
+    { "ref": "fourn-transport", "name": "Transports Sahéliens SARL", "type": "supplier", "country": "NE" },
+    { "ref": "fourn-hotel", "name": "Hôtel Terminus SARL", "type": "supplier", "country": "NE" },
+    { "ref": "fourn-auto", "name": "Automobiles du Sahel SA", "type": "supplier", "country": "NE" },
+    { "ref": "fourn-cadeau", "name": "Bijouterie de la Corniche SARL", "type": "supplier", "country": "NE" },
+    { "ref": "fourn-epicier", "name": "Minoterie du Niger SA", "type": "supplier", "country": "NE" },
+    { "ref": "fourn-import", "name": "Manufacture Textile de Lomé SARL", "type": "supplier", "country": "TG" }
+  ],
+  "documents": [
+    {
+      "ref": "V1",
+      "type": "sale_invoice",
+      "contact": "client-niamey",
+      "date": "2026-01-10",
+      "why": "Une vente de marchandises au taux normal : la case CA19, la taxe au compte 4431 et dans la case TVA19.",
+      "lines": [
+        { "name": "Marchandises", "quantity": 30, "unit_price": 40000, "tax": "NE-S-19", "account": "7011" }
+      ]
+    },
+    {
+      "ref": "V2",
+      "type": "sale_invoice",
+      "contact": "client-hotel",
+      "date": "2026-01-18",
+      "why": "Des nuitées au taux réduit de 10 % (loi de finances 2024) : la case CA10, la taxe au compte 4432 et dans la case TVA10.",
+      "lines": [
+        { "name": "Nuitées en chambre double", "quantity": 15, "unit_price": 35000, "tax": "NE-S-10-HEB", "account": "7061" }
+      ]
+    },
+    {
+      "ref": "V3",
+      "type": "sale_invoice",
+      "contact": "client-transport",
+      "date": "2026-01-25",
+      "why": "Un transport terrestre de marchandises au taux réduit de 10 % (loi de finances 2024) : même case CA10/TVA10 que l'hébergement, comptes distincts au bilan par le compte 4432.",
+      "lines": [
+        { "name": "Transport de marchandises Niamey-Zinder", "quantity": 1, "unit_price": 600000, "tax": "NE-S-10-TRANSPORT", "account": "7061" }
+      ]
+    },
+    {
+      "ref": "V4",
+      "type": "sale_invoice",
+      "contact": "client-conseil",
+      "date": "2026-02-06",
+      "why": "Une prestation de services au taux normal, exigible à l'accomplissement du service (art. 223-3°) : la taxe au compte 4432, dans le mois de la facture.",
+      "lines": [
+        { "name": "Assistance à la structuration d'une coopérative", "quantity": 1, "unit_price": 900000, "tax": "NE-S-19-SRV", "account": "7061" }
+      ]
+    },
+    {
+      "ref": "V5",
+      "type": "sale_invoice",
+      "contact": "client-epicier",
+      "date": "2026-02-14",
+      "why": "Une vente de sucre au taux réduit de 5 % (art. 226, alinéa 2, du Code général des impôts et loi de finances 2024) : la case CA5, la taxe au compte 4431 et dans la case TVA5.",
+      "lines": [
+        { "name": "Sucre en sac de 50 kg", "quantity": 200, "unit_price": 3500, "tax": "NE-S-5", "account": "7011" }
+      ]
+    },
+    {
+      "ref": "V6",
+      "type": "sale_invoice",
+      "contact": "client-assur",
+      "date": "2026-02-20",
+      "why": "La location d'un entrepôt nu, exonérée par l'article 322 nouveau : la case EXO, aucune taxe.",
+      "lines": [
+        { "name": "Location d'un entrepôt nu — février 2026", "quantity": 1, "unit_price": 450000, "tax": "NE-S-EXO", "account": "7073" }
+      ]
+    },
+    {
+      "ref": "V7",
+      "type": "sale_invoice",
+      "contact": "client-fr",
+      "date": "2026-03-03",
+      "why": "Une exportation exonérée ouvrant droit à déduction (art. 322-7° nouveau) : la case EXP, aucune taxe, un compte de ventes hors Région.",
+      "lines": [
+        { "name": "Marchandises exportées", "quantity": 40, "unit_price": 35000, "tax": "NE-S-EXP", "account": "7012" }
+      ]
+    },
+    {
+      "ref": "AV1",
+      "type": "sale_credit_note",
+      "contact": "client-niamey",
+      "date": "2026-03-12",
+      "why": "Un avoir sur la vente V1 : la case CA19 et la taxe diminuent dans le mois de l'avoir.",
+      "lines": [
+        { "name": "Retour de marchandises", "quantity": 5, "unit_price": 40000, "tax": "NE-S-19", "account": "7011" }
+      ]
+    },
+    {
+      "ref": "A1",
+      "type": "purchase_invoice",
+      "contact": "fourn-niamey",
+      "date": "2026-01-08",
+      "why": "Un achat de marchandises au taux normal : la taxe récupérable au compte 4452 et dans la case DEDBS.",
+      "lines": [
+        { "name": "Marchandises", "quantity": 50, "unit_price": 25000, "tax": "NE-P-19", "account": "6011" }
+      ]
+    },
+    {
+      "ref": "A2",
+      "type": "purchase_invoice",
+      "contact": "fourn-maint",
+      "date": "2026-01-22",
+      "why": "Un entretien facturé au taux normal : la taxe récupérable sur services extérieurs au compte 4454.",
+      "lines": [
+        { "name": "Entretien des chambres froides", "quantity": 1, "unit_price": 180000, "tax": "NE-P-19-SRV", "account": "6248" }
+      ]
+    },
+    {
+      "ref": "A3",
+      "type": "purchase_invoice",
+      "contact": "fourn-bureau",
+      "date": "2026-02-04",
+      "why": "Du matériel de bureau immobilisé : la taxe au compte 4451 et dans la case DEDIMMO.",
+      "lines": [
+        { "name": "Bureaux et armoires", "quantity": 3, "unit_price": 400000, "tax": "NE-P-19-IMMO", "account": "2441" }
+      ]
+    },
+    {
+      "ref": "A4",
+      "type": "purchase_invoice",
+      "contact": "fourn-transport",
+      "date": "2026-02-11",
+      "why": "Un transport de marchandises acheté au taux réduit de 10 %, déductible : il n'est pas au nombre des exclusions de l'article 339 nouveau, contrairement à l'hébergement et à la restauration.",
+      "lines": [
+        { "name": "Transport de marchandises entre entrepôts", "quantity": 1, "unit_price": 250000, "tax": "NE-P-10-TRANSPORT", "account": "6183" }
+      ]
+    },
+    {
+      "ref": "A5",
+      "type": "purchase_invoice",
+      "contact": "fourn-hotel",
+      "date": "2026-02-19",
+      "why": "Une réception de clients au taux réduit de 10 %, exclue du droit à déduction par l'article 339 nouveau : la taxe s'ajoute au coût de la dépense et n'atteint aucune case de déduction.",
+      "lines": [
+        { "name": "Réception de la clientèle", "quantity": 1, "unit_price": 320000, "tax": "NE-P-10-HEB-ND", "account": "6383" }
+      ]
+    },
+    {
+      "ref": "A6",
+      "type": "purchase_invoice",
+      "contact": "fourn-auto",
+      "date": "2026-03-07",
+      "why": "Une voiture de tourisme, exclue du droit à déduction par l'article 339 nouveau (et déjà par l'article 230 de l'ancien Code) : la taxe s'ajoute au coût de l'immobilisation.",
+      "lines": [
+        { "name": "Voiture de tourisme", "quantity": 1, "unit_price": 8500000, "tax": "NE-P-19-VEH-ND", "account": "2451" }
+      ]
+    },
+    {
+      "ref": "A7",
+      "type": "purchase_invoice",
+      "contact": "fourn-cadeau",
+      "date": "2026-03-15",
+      "why": "Des cadeaux à la clientèle de plus de 20 000 francs CFA hors taxe l'unité, exclus du droit à déduction par l'article 339 nouveau : la taxe s'ajoute au coût de l'achat.",
+      "lines": [
+        { "name": "Coffrets cadeaux clientèle", "quantity": 10, "unit_price": 25000, "tax": "NE-P-19-CADEAU-ND", "account": "6276" }
+      ]
+    },
+    {
+      "ref": "A8",
+      "type": "purchase_invoice",
+      "contact": "fourn-epicier",
+      "date": "2026-03-21",
+      "why": "Un achat de farine au taux réduit de 5 %, déductible : la case DEDBS au compte 4452.",
+      "lines": [
+        { "name": "Farine de blé", "quantity": 150, "unit_price": 3000, "tax": "NE-P-5", "account": "6011" }
+      ]
+    },
+    {
+      "ref": "A9",
+      "type": "purchase_invoice",
+      "contact": "fourn-import",
+      "date": "2026-04-09",
+      "why": "Une importation dont la TVA est acquittée en douane au taux normal : la taxe récupérable au compte 4452 et dans la case DEDBS.",
+      "lines": [
+        { "name": "Tissus importés", "quantity": 1, "unit_price": 2000000, "tax": "NE-P-IMP-19", "account": "6011" }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "E1",
+      "direction": "inbound",
+      "date": "2026-02-15",
+      "amount": 577500,
+      "contact": "client-hotel",
+      "journal": "BQ",
+      "match": "V2",
+      "why": "Un encaissement qui solde exactement la facture de nuitées."
+    },
+    {
+      "ref": "P1",
+      "direction": "outbound",
+      "date": "2026-02-05",
+      "amount": 1487500,
+      "contact": "fourn-niamey",
+      "journal": "BQ",
+      "match": "A1",
+      "why": "Un paiement qui solde la facture d'achat de marchandises."
+    },
+    {
+      "ref": "E2",
+      "direction": "inbound",
+      "date": "2026-03-25",
+      "amount": 300000,
+      "contact": "client-niamey",
+      "journal": "BQ",
+      "match": null,
+      "why": "Un acompte non affecté : il reste une ligne ouverte au compte client."
+    }
+  ]
+}
