@@ -23,6 +23,7 @@ import type { PackDescription } from '../../../../packages/cli/src/index.js';
 import type { Repository, SiteData } from '../data.js';
 import { fill, type Strings } from '../strings/index.js';
 import { statusRows } from './rows.js';
+import { SetUpButton } from './SetUp.js';
 import { Card, Eyebrow, Field, Footer, Masthead, Mono, NotYet, Out, StatusPill } from './ui.js';
 
 export function Country({
@@ -75,9 +76,14 @@ export function Country({
           </dl>
         </Card>
 
+        <div className="mt-8">
+          <SetUpButton country={country} strings={strings} />
+        </div>
+
         <StatusTable country={country} repository={repository} strings={strings} />
         <Boundary country={country} strings={strings} />
         <Sources country={country} strings={strings} />
+        <SetUpButton country={country} strings={strings} band />
 
         <nav className="mt-14 flex flex-wrap gap-x-6 gap-y-2 text-sm">
           <Out href={repository.dir(`packs/${country.slug}`)}>{s.packFiles}</Out>

@@ -23,6 +23,7 @@ export const en: Strings = {
     login: 'Log in',
     github: 'Ekwo OS on GitHub',
     supabase: 'Install Ekwo on Supabase',
+    start: 'Get started',
   },
 
   controls: {
@@ -196,7 +197,7 @@ export const en: Strings = {
         'operating — bank connections, sending and receiving over Peppol, filing to the ' +
         'administrations, the agents — and somebody answerable when a return is late. It ' +
         'never gates the core, and what comes back from a filing is yours.',
-      hostedAction: 'Talk to us',
+      hostedAction: 'Get started with us',
     },
     network: {
       eyebrow: 'A network, not a vendor',
@@ -630,5 +631,71 @@ export const en: Strings = {
 
   status: {
     planned: 'planned',
+  },
+
+  setup: {
+    action: 'Set up Ekwo for {country}',
+    actionHeading: 'Your books in {country}, on Ekwo.',
+    actionLead: 'Run it on your own project in one command, or leave us an address and we set it up with you.',
+    title: 'Set up Ekwo for {country} — Ekwo',
+    description:
+      'Two ways to keep your books in {country} with Ekwo: one command on your own project, ' +
+      'or a word to us and we set it up with you.',
+    eyebrow: 'Get started',
+    heading: 'Set up Ekwo for {country}',
+    lead: 'Two ways in, and both end the same way: the rules of {country} installed in a database you own.',
+    anyTitle: 'Get started with Ekwo',
+    anyDescription:
+      'Two ways to keep your books with Ekwo: one command on your own project, or a word to us ' +
+      'and we set it up with you.',
+    anyHeading: 'Get started with Ekwo',
+    anyLead: 'Two ways in, and both end the same way: the rules of your country installed in a database you own.',
+    ownTitle: 'Run it yourself',
+    ownBody:
+      'Free, for ever. One command on your own Supabase project applies the schema, installs ' +
+      'the {country} pack and creates your first company. Nothing is gated.',
+    ownBodyAny:
+      'Free, for ever. One command on your own Supabase project applies the schema, installs ' +
+      'the pack of your country and creates your first company. Nothing is gated.',
+    ownAsks:
+      'It asks for the rest as it goes: the connection to your project, the chart of accounts ' +
+      'where there is a choice, your organisation and your first administrator.',
+    ownGuide: 'Read the installation guide',
+    withUsTitle: 'Get started with us',
+    withUsBody:
+      'Leave an address and we get back to you to set it up together — on your own project, ' +
+      'or on the hosted edition, operated for you.',
+    form: {
+      email: 'Work email',
+      company: 'Company',
+      optional: 'optional',
+      country: 'Country',
+      countryChoose: 'Choose a country',
+      countryOther: 'Another country',
+      countryChange: 'Another country?',
+      profile: 'You are',
+      profiles: {
+        company: 'A company',
+        firm: 'An accounting firm',
+        partner: 'A partner or a developer',
+      },
+      message: 'Anything we should know',
+      consent: 'I agree that Ekwo keeps these details to get back to me about setting up Ekwo.',
+      submit: 'Send',
+      honeypot: 'Leave this field empty',
+    },
+    privacy:
+      'This form collects your address and what else you choose to fill in: your company, ' +
+      'your country, who you are and your message. It is used for one thing, to get back to ' +
+      'you about setting up Ekwo. It is kept by the host of this site, and it is never sold ' +
+      'or shared. To have it erased, write to contact@ekwo.ai.',
+    thanksTitle: 'Thank you — Ekwo',
+    thanksDescription: 'Your message was sent.',
+    thanksHeading: 'Thank you. We will be in touch.',
+    thanksBody:
+      'Your message reached us. In the meantime, everything Ekwo does is documented, and the ' +
+      'installation guide is where setting it up starts.',
+    thanksDocs: 'Read the installation guide',
+    thanksHome: 'Back to the home page',
   },
 };

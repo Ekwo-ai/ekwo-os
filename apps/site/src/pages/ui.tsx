@@ -222,6 +222,9 @@ export function Masthead({
       {tab('docs', '/docs/', nav.docs)}
       {mark(data.repository.url, 'github', nav.github, !wide)}
       {mark(SUPABASE_HREF, 'supabase', nav.supabase, !wide)}
+      <a href="/signup/" className="text-ink-soft no-underline hover:text-brand-deep">
+        {nav.start}
+      </a>
       {/*
         The way in for somebody who already keeps their books on the hosted
         edition. `/login` is not a page of this site: `public/_redirects` hands

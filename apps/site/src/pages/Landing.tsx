@@ -322,7 +322,7 @@ export function Landing({ data, strings }: { data: SiteData; strings: Strings })
               <h3 className="text-2xl text-band-ink">{s.ways.hostedTitle}</h3>
               <p className="mt-3 text-band-muted">{s.ways.hostedBody}</p>
               <a
-                href="mailto:contact@ekwo.ai"
+                href="/signup/"
                 className="mt-6 inline-flex items-center gap-2 rounded-pill border border-band-line px-5 py-2.5 font-medium text-band-ink no-underline transition-colors duration-150 hover:border-brand"
               >
                 {s.ways.hostedAction}

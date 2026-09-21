@@ -17,8 +17,8 @@ import m49 from '../src/data/regions.json' with { type: 'json' };
  * pack yet, taken from the UN list the site groups by. Nothing is written to
  * `packs/`, and no country is named in this file.
  *
- * What is held: the number of pages grows by one per country and never by one
- * per pair; the comparison is one page whose weight grows by one column per
+ * What is held: the number of pages grows by two per country — its page and
+ * the page that sets it up — and never by one per pair; the comparison is one page whose weight grows by one column per
  * country; every list of countries stays grouped by region and links to every
  * pack.
  */
@@ -58,7 +58,7 @@ describe('the site at fifty and at two hundred countries', () => {
   it('has one page per country, and never one per pair', () => {
     for (const { count, site, pages } of sizes) {
       expect(site.countries).toHaveLength(count);
-      expect(pages).toHaveLength(LANGUAGES.length * (count + data.docs.length + 6));
+      expect(pages).toHaveLength(LANGUAGES.length * (2 * count + data.docs.length + 8));
       expect(pages.filter((page) => page.url.startsWith('/compare/'))).toHaveLength(1);
     }
   });

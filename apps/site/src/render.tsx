@@ -8,7 +8,9 @@
  * The list of pages is derived, never enumerated: for each language, one page
  * per pack of `listPacks()`, one per article of the documentation, plus the
  * home page, the core, the index of the documentation, the index of countries,
- * the page for a business in several countries and the comparison. Adding a country adds one page and a column of the
+ * the page for a business in several countries, the comparison, the page that
+ * sets Ekwo up where no country is known and the one a sent form lands on.
+ * Adding a country adds its page, the page that sets it up and a column of the
  * comparison — never a page per pair — and adding a language adds the whole
  * tree again under its prefix, with nothing here edited.
  *
@@ -31,6 +33,7 @@ import { DocsArticle, DocsIndex, descriptionOf, titleOf } from './pages/Docs.js'
 import { Country } from './pages/Country.js';
 import { Compare, PICKERS } from './pages/Compare.js';
 import { MultiCountry } from './pages/MultiCountry.js';
+import { SetUp, Thanks } from './pages/SetUp.js';
 
 export interface RenderedPage {
   /** Where the file goes, relative to the output directory. */
@@ -43,6 +46,8 @@ export interface RenderedPage {
   description: string;
   /** The contents of `<body>`, complete and final. */
   body: string;
+  /** Kept out of search engines and of the sitemap: a page only a sent form leads to. */
+  noindex?: boolean;
 }
 
 /** One page, rendered. `url` is derived from `file` so the two cannot disagree. */
@@ -52,6 +57,7 @@ function page(
   title: string,
   description: string,
   element: ReactNode,
+  noindex = false,
 ): RenderedPage {
   return {
     file: path === '' ? 'index.html' : `${path}index.html`,
@@ -60,6 +66,7 @@ function page(
     title,
     description,
     body: renderToStaticMarkup(element),
+    ...(noindex ? { noindex } : {}),
   };
 }
 
@@ -114,6 +121,13 @@ function pagesOf(data: SiteData, strings: Strings): RenderedPage[] {
         fill(s.country.description, { country: country.name }),
         <Country country={country} data={data} strings={s} />,
       ),
+      page(
+        `${at}countries/${country.slug}/set-up/`,
+        lang,
+        fill(s.setup.title, { country: country.name }),
+        fill(s.setup.description, { country: country.name }),
+        <SetUp country={country} data={data} strings={s} />,
+      ),
     );
   }
 
@@ -125,6 +139,8 @@ function pagesOf(data: SiteData, strings: Strings): RenderedPage[] {
       s.compare.description,
       <Compare data={data} strings={s} />,
     ),
+    page(`${at}signup/`, lang, s.setup.anyTitle, s.setup.anyDescription, <SetUp country={null} data={data} strings={s} />),
+    page(`${at}thanks/`, lang, s.setup.thanksTitle, s.setup.thanksDescription, <Thanks data={data} strings={s} />, true),
   );
 
   return pages;
@@ -290,6 +306,7 @@ export function document(template: string, rendered: RenderedPage, origin?: stri
   const head = [
     `<title>${escapeHtml(rendered.title)}</title>`,
     `<meta name="description" content="${escapeHtml(rendered.description)}" />`,
+    ...(rendered.noindex === true ? ['<meta name="robots" content="noindex" />'] : []),
     ...address,
     `<meta property="og:type" content="website" />`,
     `<meta property="og:site_name" content="Ekwo" />`,
@@ -337,9 +354,10 @@ export function siteOrigin(value: string | undefined): string | undefined {
   return trimmed;
 }
 
-/** Every page there is, for a crawler. Only written when the site has an address. */
+/** Every page there is for a crawler, the unindexed left out. Only written when the site has an address. */
 export function sitemap(pages: readonly RenderedPage[], origin: string): string {
   const urls = pages
+    .filter((page) => page.noindex !== true)
     .map((page) => `  <url><loc>${escapeHtml(origin + page.url)}</loc></url>`)
     .join('\n');
   return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`;

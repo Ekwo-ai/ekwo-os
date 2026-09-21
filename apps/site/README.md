@@ -132,6 +132,11 @@ made-up packs are copies and compress better than real ones would, so the
 gzipped figure at two hundred is an estimate of 100–200 KB, not a measure.
 Pages and weight both grow by one column per country.
 
+The table was measured before every country got a second page, the one that
+sets it up (`/countries/<cc>/set-up/`, see below). That adds one page of about
+the same size per country — 50 more at fifty, 200 more at two hundred — and
+nothing per pair.
+
 ## Two hundred countries in a list
 
 Every list of countries is grouped by the region the United Nations places
@@ -165,6 +170,50 @@ servers, and the page that says so is kept in the entry rather than in a commit
 message, so the next person can recheck it. Two candidates were asked for and
 left out for failing that test; what they document instead is written down in
 the same file. Nobody is featured: alphabetical order, one size, one weight.
+
+## Setting Ekwo up: the button and the form
+
+Every country page carries one strong button, **Set up Ekwo for <country>**,
+under the card at its head and on a band at its foot, the name read from the
+pack. It leads to `/countries/<cc>/set-up/`, where two ways in sit side by side
+(`src/pages/SetUp.tsx`):
+
+- **Run it yourself** — the installer's command with the country already on
+  it, `npx ekwo-os init --country <CC>`. `--country` is the installer's own flag
+  (`INIT_FLAGS` in `packages/cli/src/commands/init.ts`, which a test reads) and
+  takes the code the pack declares; the installer asks for the rest. It links
+  to `/docs/install/`, the installation guide rendered from the command line's
+  README.
+- **Get started with us** — a form. `/signup/` is the same page where no
+  country is known yet — linked from the header of every page and from the
+  home page — and there the country is a `<select>` of the packs, by region,
+  with an option for a country no pack covers.
+
+The form needs no script and no server of ours. It is a plain HTML form that
+**Netlify Forms** reads when the site is deployed: `data-netlify="true"`, the
+name `signup`, a trap for robots named in `data-netlify-honeypot`, and a
+`POST` to `/thanks/`, a page like any other. Because the pages are prerendered,
+the host finds the form in the files it publishes; nothing is declared
+elsewhere. Every variant carries the same fields under the same names, because
+the host keeps one list of fields per form name:
+
+| Field | |
+|---|---|
+| `email` | required |
+| `company` | optional |
+| `country` | the code of the page's pack, hidden; chosen on `/signup/` (`other` for a country no pack covers) |
+| `profile` | `company`, `firm` or `partner` |
+| `message` | optional |
+| `consent` | required, `yes` |
+| `page` | the page it was sent from |
+
+What it collects and why is said under it, in `strings.setup.privacy`.
+`/thanks/` carries `noindex` and is left out of the sitemap.
+
+Two things are the host's and not this repository's, and are set once in the
+Netlify dashboard: **form detection** has to be on for the site (Forms), and
+the **notification** that sends each submission to an address is configured
+there too. Until detection is on, nothing sent is recorded.
 
 ## Third-party material
 
@@ -263,12 +312,13 @@ machine and is read aloud by a screen reader as whatever its name happens to be.
 
 Deliberately absent, and each of these is work of its own:
 
-- **The waiting list form, and any backend.** The site is files on a disk.
+- **Any backend.** The site is files on a disk; the one form is read by the
+  host (see [Setting Ekwo up](#setting-ekwo-up-the-button-and-the-form)).
 - **Instance registration against `api.ekwo.ai`.** Nothing here calls anything.
-- **Pricing, a sign-up, and anything the hosted edition charges.** The open
+- **Pricing, an account, and anything the hosted edition charges.** The open
   core boundary is stated per country, from `ee/README.md`, and the home page
-  says the hosted edition exists and offers an address to write to. No price,
-  no form, no account.
+  says the hosted edition exists and leads to `/signup/`. No price, no
+  account.
 - **A blog.** The documentation is rendered, at `/docs/`, from the repository's own
   Markdown; a link it carries to anything that is not an article goes to GitHub.
 - **French and Dutch translations of the site's own text.** A country's *name*

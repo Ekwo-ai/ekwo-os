@@ -47,6 +47,8 @@ export interface Strings {
     /** The accessible names of the two marks beside it. */
     github: string;
     supabase: string;
+    /** The way to set Ekwo up, from any page: `/signup/`. */
+    start: string;
   };
 
   controls: {
@@ -287,6 +289,65 @@ export interface Strings {
     /** Where the page is linked from. */
     homeLink: string;
     countriesLink: string;
+  };
+
+  /**
+   * Setting Ekwo up: the button on every country page, the page it leads to,
+   * `/signup/` where no country is known yet, the form both carry and the page
+   * a sent form lands on. `{country}` is the pack's own name for itself.
+   */
+  setup: {
+    /** The strong button of a country page, at its head and at its foot. */
+    action: string;
+    /** The heading and the line above it at the foot of the page. */
+    actionHeading: string;
+    actionLead: string;
+    /** `/countries/<cc>/set-up/`. */
+    title: string;
+    description: string;
+    eyebrow: string;
+    heading: string;
+    lead: string;
+    /** `/signup/`, where the country is chosen in the form. */
+    anyTitle: string;
+    anyDescription: string;
+    anyHeading: string;
+    anyLead: string;
+    ownTitle: string;
+    /** With a country: `{country}` is named. */
+    ownBody: string;
+    ownBodyAny: string;
+    /** Under the command: what it will still ask. */
+    ownAsks: string;
+    ownGuide: string;
+    withUsTitle: string;
+    withUsBody: string;
+    form: {
+      email: string;
+      company: string;
+      optional: string;
+      country: string;
+      countryChoose: string;
+      /** The option for a country no pack covers yet. */
+      countryOther: string;
+      /** Beside the fixed country: the way to pick another one. */
+      countryChange: string;
+      profile: string;
+      profiles: { company: string; firm: string; partner: string };
+      message: string;
+      consent: string;
+      submit: string;
+      /** The field only a robot fills, to a screen reader that finds it anyway. */
+      honeypot: string;
+    };
+    /** What the form collects, why, and how to have it erased. */
+    privacy: string;
+    thanksTitle: string;
+    thanksDescription: string;
+    thanksHeading: string;
+    thanksBody: string;
+    thanksDocs: string;
+    thanksHome: string;
   };
 
   /** The grouping of every list of countries. */

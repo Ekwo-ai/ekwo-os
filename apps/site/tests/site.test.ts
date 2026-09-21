@@ -15,6 +15,7 @@ import { AUDIENCES, LATER, SHIPPED } from '../src/data/multicountry.js';
 import { FOUNDATIONS, MODELS, NOT_LISTED } from '../src/data/ecosystem.js';
 import { LANGUAGES, SOURCE, fill, prefixOf } from '../src/strings/index.js';
 import { ICON_NAMES } from '../src/pages/icons.js';
+import { HONEYPOT, SIGNUP, SIGNUP_FORM, THANKS, setUpCommand, setUpUrl } from '../src/pages/SetUp.js';
 
 /**
  * The site is generated, and this is what says so.
@@ -48,8 +49,9 @@ const DOCS_INDEX = '/docs/';
 const ROWS = statusRows(SOURCE);
 
 describe('the pages that exist', () => {
-  it('is one per pack and one per article, plus the six pages of the site, for every language', () => {
-    expect(pages.length).toBe(LANGUAGES.length * (slugs.length + data.docs.length + 6));
+  it('is two per pack and one per article, plus the eight pages of the site, for every language', () => {
+    // Per pack: its page and the page that sets it up.
+    expect(pages.length).toBe(LANGUAGES.length * (2 * slugs.length + data.docs.length + 8));
   });
 
   it('publishes the source language at the root, and every other under its prefix', () => {
@@ -603,6 +605,105 @@ describe('a country page', () => {
   });
 });
 
+/**
+ * Setting Ekwo up: a button on every country page, two ways in, one form.
+ *
+ * The form is read by the host when the site is deployed, so what is checked
+ * is what the host needs to find in the prerendered page — its name, the
+ * attribute that declares it, the trap for robots — and that it works without
+ * a script: a plain POST to a page that exists.
+ */
+describe('setting Ekwo up', () => {
+  const forms = pages.filter((page) => page.body.includes('<form'));
+  /** Whether one `<tag …>` carries every attribute given, in whatever order React wrote them. */
+  const hasTag = (body: string, tag: string, attributes: string[]): boolean =>
+    [...body.matchAll(new RegExp(`<${tag}\\b[^>]*>`, 'g'))].some((match) =>
+      attributes.every((attribute) => match[0].includes(attribute)),
+    );
+
+  it('puts the button at the head and at the foot of every country page, named after the country', () => {
+    for (const country of data.countries) {
+      const body = byUrl.get(`${COUNTRIES}${country.slug}/`)!.body;
+      const label = fill(SOURCE.setup.action, { country: country.name });
+      expect(body.split(`href="${setUpUrl(country)}"`).length - 1, country.slug).toBe(2);
+      expect(body.split(label).length - 1, country.slug).toBeGreaterThanOrEqual(2);
+    }
+  });
+
+  it('gives every country the command with its own code, on a flag the installer has', async () => {
+    const init = await readFile(join(root, 'packages', 'cli', 'src', 'commands', 'init.ts'), 'utf8');
+    expect(init).toMatch(/INIT_FLAGS = \[[\s\S]*'country'/);
+    for (const country of data.countries) {
+      const body = byUrl.get(setUpUrl(country))!.body;
+      expect(body).toContain(`data-copy="${setUpCommand(data.repository.installCommand, country)}"`);
+      expect(setUpCommand(data.repository.installCommand, country)).toMatch(/ --country [A-Z]{2}$/);
+      expect(body).toContain('href="/docs/install/"');
+    }
+  });
+
+  it('carries the form on every country\'s page and on the page for any country, and nowhere else', () => {
+    const expected = [...data.countries.map(setUpUrl), SIGNUP].sort();
+    expect(forms.map((page) => page.url).sort()).toEqual(expected);
+  });
+
+  it('declares the form to the host, with its trap for robots, and posts it without a script', () => {
+    for (const page of forms) {
+      const body = page.body;
+      expect(body.match(/<form /g), page.url).toHaveLength(1);
+      expect(body).toContain(`name="${SIGNUP_FORM}"`);
+      expect(body).toContain('data-netlify="true"');
+      expect(body).toContain(`data-netlify-honeypot="${HONEYPOT}"`);
+      expect(hasTag(body, 'input', [`name="${HONEYPOT}"`])).toBe(true);
+      expect(hasTag(body, 'input', ['type="hidden"', 'name="form-name"', `value="${SIGNUP_FORM}"`])).toBe(true);
+      expect(body).toContain('method="POST"');
+      expect(body).toContain(`action="${THANKS}"`);
+      expect(byUrl.has(THANKS)).toBe(true);
+    }
+  });
+
+  it('asks for an address and consent, and makes the rest optional', () => {
+    for (const page of forms) {
+      const body = page.body;
+      expect(hasTag(body, 'input', ['type="email"', 'name="email"', 'required'])).toBe(true);
+      expect(hasTag(body, 'input', ['type="checkbox"', 'name="consent"', 'required'])).toBe(true);
+      expect(hasTag(body, 'input', ['name="company"', 'required'])).toBe(false);
+      expect(hasTag(body, 'textarea', ['name="message"', 'required'])).toBe(false);
+      for (const field of ['email', 'company', 'country', 'profile', 'message', 'consent', 'page']) {
+        expect(body, `${page.url} lacks ${field}`).toContain(`name="${field}"`);
+      }
+      expect(body).toContain(SOURCE.setup.privacy);
+      expect(body).not.toMatch(/€|\$\d|per month/i);
+    }
+  });
+
+  it('sends the country of the page without asking, and asks for it where there is none', () => {
+    for (const country of data.countries) {
+      const body = byUrl.get(setUpUrl(country))!.body;
+      expect(hasTag(body, 'input', ['type="hidden"', 'name="country"', `value="${country.country}"`])).toBe(true);
+      expect(hasTag(body, 'select', ['name="country"'])).toBe(false);
+    }
+    const any = byUrl.get(SIGNUP)!.body;
+    expect(hasTag(any, 'select', ['name="country"', 'required'])).toBe(true);
+    for (const country of data.countries) expect(any).toContain(`value="${country.country}"`);
+  });
+
+  it('keeps the page a sent form lands on out of search engines and of the sitemap', () => {
+    const thanks = byUrl.get(THANKS)!;
+    expect(thanks.noindex).toBe(true);
+    const template = '<html lang="en"><head><!--head--></head><body><!--body--></body></html>';
+    expect(document(template, thanks)).toContain('<meta name="robots" content="noindex" />');
+    for (const page of pages) {
+      if (page.url === THANKS) continue;
+      expect(document(template, page), page.url).not.toContain('noindex');
+    }
+    expect(sitemap(pages, 'https://site.example')).not.toContain(THANKS);
+  });
+
+  it('is reached from the header of every page and from the home page', () => {
+    for (const page of pages) expect(page.body, page.url).toContain(`href="${SIGNUP}"`);
+  });
+});
+
 describe('the links between pages', () => {
   // Linked to, deliberately not built: the host hands them to the application.
   const handedOver = new Set<string>(Object.values(HANDED_TO_THE_APPLICATION));
@@ -710,7 +811,11 @@ describe('where the site is served from', () => {
       expect(html.match(/rel="canonical"/g)).toHaveLength(1);
     }
     const map = sitemap(pages, origin as string);
-    expect(map.match(/<loc>/g)).toHaveLength(pages.length);
+    const indexed = pages.filter((page) => page.noindex !== true);
+    expect(map.match(/<loc>/g)).toHaveLength(indexed.length);
+    for (const page of pages) {
+      expect(map.includes(`<loc>https://site.example${page.url}</loc>`), page.url).toBe(page.noindex !== true);
+    }
     expect(robots(origin)).toContain('Sitemap: https://site.example/sitemap.xml');
   });
 
