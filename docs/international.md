@@ -2709,3 +2709,37 @@ rather than dating its golden year before the reduced rate was abrogated, or
 inventing a rate the CGI no longer has. *Fix*: the assertion itself needs the
 same guard as its neighbours — skip it for a pack whose own `taxes.json`
 never declares a second positive rate.
+
+### From Gabon
+
+`packs/ga/` is the third OHADA member, after Senegal and Côte d'Ivoire. It
+adds nothing to the shared chart, journals or statements — see *From the
+OHADA packs* above — but its own tax, the contribution spéciale de
+solidarité (CSS), reopens two of that section's gaps and adds a third the
+other two packs did not show.
+
+**A tax withheld by any client, not a named one.** Under the Senegalese
+*précompte* or the Ivorian *TVA pour compte*, a buyer of a listed status —
+the State, a large distributor, a public body — withholds the tax. Gabon's
+CSS (textes fiscaux non codifiés, art. 26, alinéa 3) is withheld by **any**
+VAT-registered client from **any** supplier's invoice and paid over for the
+supplier's account: the ordinary case of a sale between two companies, not
+an exception reserved to a few buyers. `packs/ga/` posts `GA-CSS-S` and
+`GA-CSS-P` as though the CSS were paid and borne in cash on both sides
+instead, on the model of the *précompte*'s unsolved seller's side, and says
+so in its own README.
+
+**A tax on a tax the golden year cannot show at all.** The CSS sits beside
+the VAT on the very same invoice line, both read off the same base — the
+shape of the Ivorian AIRSI. AIRSI at least has no document to post against
+in a golden year; Gabon's CSS and VAT are two taxes a real invoice line
+carries together, and `golden/scenario.json`'s `lines[].tax` is a single
+string. `packs/ga/` defines `GA-CSS-S` and compiles it, but cannot exercise
+it beside a VAT code on one line of its own golden year.
+
+**A reduced rate under the directive's own floor.** The CEMAC directive that
+frames Gabon's VAT allows a reduced rate between 5 % and 10 % (art. 22, 2°,
+c)); the 3 % Gabon created on 17 July 2026 for fer à béton made in Gabon is
+under that floor. Nothing in the schema checks a rate against the directive
+of the zone a pack names — `packs/ga/` records the gap in prose, the way
+`packs/ci/` records the AIRSI added on top of the VAT-inclusive price.

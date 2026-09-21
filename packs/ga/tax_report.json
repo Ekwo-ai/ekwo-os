@@ -1,0 +1,188 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "GA-TVA",
+  "name": "Déclaration de taxe sur la valeur ajoutée",
+  "period": [
+    "month"
+  ],
+  "period_default": "month",
+  "valid_from": "2026-07-17",
+  "legal_reference": "Code général des impôts, art. 237 — la taxe exigible afférente à un mois donné est reversée spontanément au plus tard le 20 du mois suivant, sur une déclaration mensuelle déposée sur un imprimé fourni par l'administration, même en l'absence d'opération (mention « NEANT »), les exportateurs y annexant leurs références douanières. Aucune disposition trouvée ne fixe un régime déclaratif trimestriel pour les entreprises gabonaises de droit commun (à la différence des fournisseurs et opérateurs de plateformes numériques non-résidents en régime simplifié, déclarés à part, art. 248 octies). Le contenu détaillé de l'imprimé n'est publié dans aucun texte trouvé : les cases suivantes suivent la substance de ce qu'une déclaration de TVA a normalement à porter — opérations taxables par taux, opérations exonérées, taxe exigible, déductions, crédit — et non la numérotation de l'imprimé officiel, inconnue de ce pack.",
+  "source": "cgi-2019",
+  "deadline": {
+    "rule": "day_of_month_after_period",
+    "day": 20,
+    "legal_reference": "Code général des impôts, art. 237 — la taxe exigible afférente à un mois donné est reversée spontanément au plus tard le 20 du mois suivant.",
+    "source": "cgi-2019"
+  },
+  "boxes": [
+    {
+      "box": "CA18",
+      "kind": "base",
+      "name": "Opérations taxables au taux normal de 18 %",
+      "sequence": 10,
+      "legal_reference": "Code général des impôts, art. 221 nouveau, 1) et 6) — taux normal de 18 % sur une base hors TVA",
+      "source": "lfr-2026"
+    },
+    {
+      "box": "CA10",
+      "kind": "base",
+      "name": "Opérations taxables au taux réduit de 10 %",
+      "sequence": 20,
+      "legal_reference": "Code général des impôts, art. 221 nouveau, 2) — pièces détachées automobiles, essieux automobiles, carreaux de construction, pointes",
+      "source": "lfr-2026"
+    },
+    {
+      "box": "CA5",
+      "kind": "base",
+      "name": "Opérations taxables au taux réduit de 5 %",
+      "sequence": 30,
+      "legal_reference": "Code général des impôts, art. 221 nouveau, 3) — journaux et magazines importés, eau minérale importée",
+      "source": "lfr-2026"
+    },
+    {
+      "box": "CA3",
+      "kind": "base",
+      "name": "Opérations taxables au taux réduit de 3 %",
+      "sequence": 40,
+      "legal_reference": "Code général des impôts, art. 221 nouveau, 4) — fer à béton fabriqué au Gabon",
+      "source": "lfr-2026"
+    },
+    {
+      "box": "EXP",
+      "kind": "base",
+      "name": "Exportations et opérations assimilées, taux zéro, ouvrant droit à déduction",
+      "sequence": 50,
+      "legal_reference": "Code général des impôts, art. 221 nouveau, 5) — exportations, transports internationaux, avitaillement en carburant, entretien et réparation des aéronefs et navires du trafic international, et prestations dont le lieu d'imposition est hors du Gabon",
+      "source": "lfr-2026"
+    },
+    {
+      "box": "EXO",
+      "kind": "base",
+      "name": "Autres opérations exonérées",
+      "sequence": 60,
+      "legal_reference": "Code général des impôts, art. 210 nouveau — liste des opérations et biens exonérés",
+      "source": "lfr-2026"
+    },
+    {
+      "box": "CAT",
+      "kind": "total",
+      "name": "Montant total des opérations réalisées",
+      "sequence": 70,
+      "plus": [
+        "CA18",
+        "CA10",
+        "CA5",
+        "CA3",
+        "EXP",
+        "EXO"
+      ],
+      "legal_reference": "Construction de ce pack, faute de modèle officiel de l'imprimé : somme des opérations taxables et exonérées de la période",
+      "source": "cgi-2019"
+    },
+    {
+      "box": "TVA18",
+      "kind": "tax",
+      "name": "Taxe exigible au taux de 18 %",
+      "sequence": 80,
+      "legal_reference": "Code général des impôts, art. 213 nouveau — taxe exigible lors de la réalisation du fait générateur pour les biens, lors de l'encaissement pour les prestations de services",
+      "source": "cgi-2019"
+    },
+    {
+      "box": "TVA10",
+      "kind": "tax",
+      "name": "Taxe exigible au taux de 10 %",
+      "sequence": 90,
+      "legal_reference": "Code général des impôts, art. 213 nouveau et art. 221 nouveau, 2)",
+      "source": "cgi-2019"
+    },
+    {
+      "box": "TVA5",
+      "kind": "tax",
+      "name": "Taxe exigible au taux de 5 %",
+      "sequence": 100,
+      "legal_reference": "Code général des impôts, art. 213 nouveau et art. 221 nouveau, 3)",
+      "source": "cgi-2019"
+    },
+    {
+      "box": "TVA3",
+      "kind": "tax",
+      "name": "Taxe exigible au taux de 3 %",
+      "sequence": 110,
+      "legal_reference": "Code général des impôts, art. 213 nouveau et art. 221 nouveau, 4)",
+      "source": "cgi-2019"
+    },
+    {
+      "box": "TVAB",
+      "kind": "total",
+      "name": "Total de la taxe exigible",
+      "sequence": 120,
+      "plus": [
+        "TVA18",
+        "TVA10",
+        "TVA5",
+        "TVA3"
+      ],
+      "legal_reference": "Code général des impôts, art. 237 — la taxe exigible afférente à un mois donné",
+      "source": "cgi-2019"
+    },
+    {
+      "box": "DEDIMMO",
+      "kind": "tax",
+      "name": "TVA déductible sur immobilisations",
+      "sequence": 130,
+      "legal_reference": "Code général des impôts, art. 222 alinéa 2 nouveau et art. 223 nouveau — droit à déduction né lors de l'exigibilité chez le fournisseur, de la TVA figurant sur une facture électronique normalisée",
+      "source": "lfr-2026"
+    },
+    {
+      "box": "DEDBS",
+      "kind": "tax",
+      "name": "TVA déductible sur biens et services",
+      "sequence": 140,
+      "legal_reference": "Code général des impôts, art. 222 alinéa 2 nouveau et art. 223 nouveau",
+      "source": "lfr-2026"
+    },
+    {
+      "box": "DEDT",
+      "kind": "total",
+      "name": "Total des déductions",
+      "sequence": 150,
+      "plus": [
+        "DEDIMMO",
+        "DEDBS"
+      ],
+      "legal_reference": "Construction de ce pack, faute de modèle officiel de l'imprimé : somme des déductions de la période",
+      "source": "cgi-2019"
+    },
+    {
+      "box": "NET",
+      "kind": "total",
+      "name": "TVA nette à payer",
+      "sequence": 160,
+      "plus": [
+        "TVAB"
+      ],
+      "minus": [
+        "DEDT"
+      ],
+      "floor_zero": true,
+      "legal_reference": "Code général des impôts, art. 237 — la taxe exigible, afférente à un mois donné, est reversée spontanément",
+      "source": "cgi-2019"
+    },
+    {
+      "box": "CRED",
+      "kind": "total",
+      "name": "Crédit de TVA à reporter",
+      "sequence": 170,
+      "plus": [
+        "DEDT"
+      ],
+      "minus": [
+        "TVAB"
+      ],
+      "floor_zero": true,
+      "legal_reference": "Code général des impôts, art. 243 nouveau (LF 2016) — lorsque la taxe déductible d'un mois excède la taxe exigible, l'excédent constitue un crédit d'impôt imputable sur la taxe exigible de la période suivante",
+      "source": "cgi-2019"
+    }
+  ]
+}

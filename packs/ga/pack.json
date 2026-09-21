@@ -1,0 +1,174 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "GA",
+  "name": "Gabon",
+  "version": "0.1.0",
+  "schema_min": "20260917170000",
+  "seed_sequence": 28,
+  "released_at": "2026-09-21",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "audcif",
+        "title": "Acte uniforme relatif au droit comptable et à l'information financière (AUDCIF), adopté à Brazzaville le 26 janvier 2017",
+        "publisher": "OHADA — Bibliothèque numérique de l'OHADA",
+        "url": "https://biblio.ohada.org/doc_num.php?explnum_id=2061",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "syscohada",
+        "title": "Journal officiel de l'OHADA, numéro spécial du 15 février 2017 — Acte uniforme relatif au droit comptable et à l'information financière et Système comptable OHADA (SYSCOHADA révisé), version complète signée",
+        "publisher": "OHADA — Bibliothèque numérique de l'OHADA",
+        "url": "https://biblio.ohada.org/doc_num.php?explnum_id=2063",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "lfr-2026",
+        "title": "Journal officiel n° 123 bis du 17 juillet 2026 — Loi n° 002/2026 du 17 juillet 2026 portant loi de finances rectificative de l'année 2026",
+        "publisher": "République gabonaise — Journal officiel (fac-similé hébergé par un média, directinfosgabon.com)",
+        "url": "https://directinfosgabon.com/wp-content/uploads/2026/07/LFR2026.pdf",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "cgi-2019",
+        "title": "Code Général des Impôts (Gabon), édition 2019, y compris les textes fiscaux non codifiés annexés (contribution spéciale de solidarité, art. 13 à 34)",
+        "publisher": "Reproduction hébergée par africa-laws.org — aucune édition consolidée plus récente n'a pu être chargée depuis ce poste (dgi.ga et gouvernement.ga injoignables) ; les articles cités d'après ce texte ont été recoupés un à un contre la loi de finances rectificative 2026 (source lfr-2026, seul texte plus récent obtenu) pour vérifier qu'aucun ne l'a remplacé",
+        "url": "https://www.africa-laws.org/Gabon/Tax%20Law/Code%20G%C3%A9n%C3%A9ral%20des%20Impots%202019.pdf",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "e-tax",
+        "title": "e-Tax Gabon — télédéclaration, paiement, gestion fiscale (application SIGIGA e-contribuable, DGI)",
+        "publisher": "Direction Générale des Impôts (DGI)",
+        "url": "https://e-tax.dgi.ga/",
+        "consulted_on": "2026-09-21",
+        "kind": "portal"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "XAF",
+    "language": "fr",
+    "rounding_method": "half_up",
+    "closing_style": "result_accounts",
+    "roles": {
+      "receivable": "4111",
+      "payable": "4011",
+      "suspense": "4711",
+      "rounding": "6588",
+      "retained_earnings": "121",
+      "retained_earnings_loss": "1291",
+      "current_year_result_profit": "131",
+      "current_year_result_loss": "139",
+      "sales": "7011",
+      "purchase": "6011",
+      "bank": "5211",
+      "cash": "5711",
+      "fx_gain": "756",
+      "fx_loss": "656",
+      "tax_payable": "4441",
+      "tax_receivable": "4449"
+    },
+    "journal_roles": {
+      "sales": "VT",
+      "purchase": "AC",
+      "miscellaneous": "OD",
+      "opening": "AN"
+    },
+    "fiscal_year_default": "calendar"
+  },
+  "languages": [],
+  "journals": [
+    {
+      "code": "VT",
+      "type": "sales",
+      "name": "Journal des ventes",
+      "sequence": 10
+    },
+    {
+      "code": "AC",
+      "type": "purchase",
+      "name": "Journal des achats",
+      "sequence": 20
+    },
+    {
+      "code": "BQ",
+      "type": "bank",
+      "name": "Journal de banque",
+      "sequence": 30
+    },
+    {
+      "code": "CA",
+      "type": "cash",
+      "name": "Journal de caisse",
+      "sequence": 40
+    },
+    {
+      "code": "OD",
+      "type": "general",
+      "name": "Opérations diverses",
+      "sequence": 50
+    },
+    {
+      "code": "AN",
+      "type": "opening",
+      "name": "Journal des à-nouveaux",
+      "sequence": 60
+    }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "SYSCOHADA révisé — plan comptable général OHADA, Système normal",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": [
+        "GA-SYSCOHADA-BS",
+        "GA-SYSCOHADA-IS"
+      ],
+      "legal_reference": "Acte uniforme relatif au droit comptable et à l'information financière du 26 janvier 2017, art. 17, 7° — recours à un plan de comptes normalisé dont la liste figure dans le Système comptable OHADA ; Système comptable OHADA, Titre VII, chapitre 2, section 3 — liste des comptes, classes 1 à 8. La classe 9, engagements hors bilan et comptabilité analytique de gestion, est d'application facultative et n'est pas reprise. Commun aux dix-sept États parties : un seul fichier, packs/ohada/accounts.csv, recopié dans chaque pack par scripts/ohada-packs.mjs.",
+      "source": "syscohada"
+    }
+  ],
+  "documents": {
+    "numbering": "gapless_per_year",
+    "number_format": "{CODE}/{YYYY}/{NNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "delivery_date",
+    "references": {
+      "numbering": {
+        "legal_reference": "Code général des impôts, art. P-832 ter, dans la rédaction de la loi de finances rectificative 2026 (art. 1) — toute opération d'un assujetti à la TVA fait l'objet d'une facture électronique normalisée délivrée par un dispositif électronique de facturation homologué par l'administration fiscale, porteur d'un numéro et d'un QR code qu'attribue le dispositif ; aucun texte trouvé ne fixe le format de ce numéro ni sa remise à zéro annuelle. Le format déclaré ici est celui de la pièce comptable interne, pas celui que le dispositif homologué attribuera.",
+        "source": "lfr-2026"
+      },
+      "tax_point": {
+        "legal_reference": "Code général des impôts, art. 212 — le fait générateur se produit à la livraison pour les ventes, à l'exécution pour les prestations de services et travaux, à l'encaissement du prix pour les autres opérations ; art. 213 nouveau (LF 2015) — la taxe est exigible, pour les ventes et livraisons, lors de la réalisation du fait générateur, et pour les prestations de services et les opérations avec l'État ou les collectivités locales, à l'encaissement du prix ou des acomptes, sauf autorisation d'acquitter la taxe d'après les débits. delivery_date dit la règle des biens ; celle des prestations de services, à l'encaissement, est portée par les taxes de service de ce pack, en cash_basis, et non par un second fait générateur du pays.",
+        "source": "cgi-2019"
+      }
+    },
+    "mentions": [
+      {
+        "code": "exempt",
+        "applies_when": "exempt",
+        "text": "Mention « exonérée » ou « prise en charge Etat », le cas échéant, par produit.",
+        "sequence": 10,
+        "legal_reference": "Textes fiscaux non codifiés annexés au Code général des impôts (contribution spéciale de solidarité), art. 28, 3° — la facture porte, par produit, la mention « exonérée » ou « prise en charge Etat » le cas échéant. L'article 248 nonies, créé par la loi de finances rectificative 2026, confirme que ce régime reste en vigueur en y soumettant aussi les plateformes numériques non-résidentes. Aucune disposition trouvée du chapitre de la TVA (art. 234 à 236) n'impose elle-même une mention de l'article d'exonération.",
+        "source": "cgi-2019"
+      }
+    ]
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "Code général des impôts, art. P-832 ter, créé par la loi de finances pour 2026 et réécrit par la loi de finances rectificative 2026 (art. 1) — toute opération d'une personne soumise à l'impôt sur les sociétés, à l'impôt sur les bénéfices professionnels, à l'impôt synthétique libératoire ou assujettie à la TVA fait l'objet d'une facture électronique normalisée, délivrée au moyen d'un dispositif électronique de facturation homologué par l'administration fiscale, ou d'un document en tenant lieu admis par voie réglementaire ; un crédit d'impôt de 25 %, 25 % puis 50 % sur trois ans est accordé pour l'achat d'un dispositif physique. Art. 223 nouveau — seule la TVA figurant sur une facture électronique normalisée, ou un document en tenant lieu, est déductible. Le dispositif est nommé « E-Fact » par la DGI (page dgi.ga/e-fact/, injoignable depuis ce poste, connue seulement par un résumé de moteur de recherche, donc non retenue comme source). Aucun texte officiel lu ne fixe une date d'entrée en vigueur ni un calendrier de généralisation par catégorie de contribuable : une source secondaire (Deloitte, avril 2026) avance le 1er janvier 2026, non vérifiable ici. L'identifiant fiscal est le numéro d'identification fiscale (NIF, art. 232), sans code ISO 6523.",
+    "source": "lfr-2026"
+  }
+}

@@ -1,0 +1,640 @@
+[
+  {
+    "code": "GA-S-18",
+    "name": "Ventes de biens 18 %",
+    "description": "Livraisons de biens au taux normal, TVA au compte 4431",
+    "rate": 18,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2016-01-01",
+    "legal_reference": "Code général des impôts, art. 221 nouveau (LF 2016) — taux normal de 18 % applicable à toutes les opérations taxables à l'exclusion des opérations soumises au taux réduit ou au taux zéro ; toujours 18 % dans la rédaction de l'art. 221 nouveau, 1) de la loi de finances rectificative 2026, qui reformule seulement l'article pour viser les nouveaux taux réduits de 5 % et 3 %. Art. 212 et 213 — fait générateur et exigibilité à la livraison",
+    "source": "cgi-2019",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "CA18"
+        },
+        {
+          "type": "tax",
+          "account": "4431",
+          "box": "TVA18"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "CA18",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "4431",
+          "box": "TVA18",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 10
+  },
+  {
+    "code": "GA-S-18-SRV",
+    "name": "Prestations de services 18 %, exigibles à l'encaissement",
+    "description": "Prestations de services au taux normal, taxe due à l'encaissement du prix ou des acomptes",
+    "rate": 18,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2016-01-01",
+    "cash_basis": true,
+    "cash_basis_transition_account": "4432",
+    "legal_reference": "Code général des impôts, art. 221 nouveau (LF 2016) — le taux normal de 18 % couvre toutes les opérations taxables, prestations de services comprises ; art. 213 nouveau (LF 2015) — pour les prestations de services et les opérations réalisées avec l'État ou les collectivités locales, la taxe est exigible à l'encaissement du prix ou des acomptes, sauf autorisation d'acquitter la taxe d'après les débits, que ce pack ne retient pas par défaut. Facturée, la taxe attend l'encaissement au compte 4432 « T.V.A. facturée sur prestations de services » ; encaissée, elle est exigible et passe au compte 4431, dont l'intitulé « sur ventes » couvre aussi les ventes de services : le plan n'a pas de compte de taxe en attente propre aux services",
+    "source": "cgi-2019",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "CA18"
+        },
+        {
+          "type": "tax",
+          "account": "4431",
+          "box": "TVA18"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "CA18",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "4431",
+          "box": "TVA18",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 20
+  },
+  {
+    "code": "GA-S-10",
+    "name": "Taux réduit 10 %",
+    "description": "Pièces détachées automobiles, essieux automobiles, carreaux de construction, pointes",
+    "rate": 10,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2016-01-01",
+    "conditions": [
+      "supply_nature"
+    ],
+    "legal_reference": "Code général des impôts, art. 221 nouveau (LF 2016) — taux réduit de 10 % sur une liste de production et vente qui comprenait déjà les pièces détachées automobiles, essieux automobiles, carreaux de construction et pointes, aux côtés d'autres biens (eaux minérales locales, viandes et volailles importées, huile de table importée, sucre, arachide importée, lessive, fer à béton, ordinateurs, matériel de pêche, moteurs hors-bord, imperméables, conserves) ; art. 221 nouveau, 2) (loi de finances rectificative 2026) — la liste en vigueur depuis le 17 juillet 2026 ne retient plus, pour ce taux, que les quatre produits ci-dessus, les autres ayant été reclassés ailleurs",
+    "source": "cgi-2019",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "CA10"
+        },
+        {
+          "type": "tax",
+          "account": "4431",
+          "box": "TVA10"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "CA10",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "4431",
+          "box": "TVA10",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 30
+  },
+  {
+    "code": "GA-S-5",
+    "name": "Taux réduit 5 %",
+    "description": "Journaux et magazines importés, eau minérale importée",
+    "rate": 5,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2026-07-17",
+    "conditions": [
+      "supply_nature"
+    ],
+    "legal_reference": "Code général des impôts, art. 221 nouveau, 3) (loi de finances rectificative 2026) — taux réduit de 5 % applicable aux opérations de production, d'importation et de vente de journaux et magazines importés et d'eau minérale importée. La loi de finances qui a introduit ce taux de 5 % (entre 2019 et 2025) n'a pas été retrouvée ; seule la rédaction du 17 juillet 2026 est citée ici",
+    "source": "lfr-2026",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "CA5"
+        },
+        {
+          "type": "tax",
+          "account": "4431",
+          "box": "TVA5"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "CA5",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "4431",
+          "box": "TVA5",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 40
+  },
+  {
+    "code": "GA-S-3",
+    "name": "Taux réduit 3 %",
+    "description": "Fer à béton fabriqué au Gabon — sous le plancher de 5 % de la directive TVA CEMAC",
+    "rate": 3,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2026-07-17",
+    "conditions": [
+      "supply_nature"
+    ],
+    "legal_reference": "Code général des impôts, art. 221 nouveau, 4) (loi de finances rectificative 2026) — taux réduit de 3 % applicable aux opérations de production et de vente de fer à béton fabriqué au Gabon (l'importation n'est pas citée pour ce taux, à la différence des taux de 10 % et 5 %). Ce taux est sous le plancher de 5 % que fixe la directive CEMAC portant harmonisation des législations en matière de TVA du 10 novembre 2022, art. 22, 2°, c) pour les taux réduits (fourchette 5 % à 10 %) : un écart au cadre communautaire que ce pack se borne à consigner",
+    "source": "lfr-2026",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "CA3"
+        },
+        {
+          "type": "tax",
+          "account": "4431",
+          "box": "TVA3"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "CA3",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "4431",
+          "box": "TVA3",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 50
+  },
+  {
+    "code": "GA-S-0-EXP",
+    "name": "Exportations et opérations assimilées, taux zéro",
+    "description": "Exportations, transports internationaux, avitaillement en carburant, entretien et réparation des aéronefs et navires du trafic international",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2016-01-01",
+    "conditions": [
+      "transport_evidence"
+    ],
+    "legal_reference": "Code général des impôts, art. 221 nouveau (LF 2016) — taux zéro déjà applicable aux exportations, aux transports internationaux, aux opérations d'avitaillement en carburant et aux opérations d'entretien et réparation effectuées sur les aéronefs et navires affectés au trafic international, dans les mêmes termes ; art. 221 nouveau, 5), alinéa 1 et 6) (loi de finances rectificative 2026) — la rédaction en vigueur depuis le 17 juillet 2026, inchangée sur ce point, précise que ce taux comme les autres s'applique à une base hors TVA",
+    "source": "cgi-2019",
+    "vat_category": "G",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "EXP"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "EXP",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 60
+  },
+  {
+    "code": "GA-S-0-SRV",
+    "name": "Prestations dont le lieu d'imposition est hors du Gabon, taux zéro",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2026-07-17",
+    "conditions": [
+      "supply_nature"
+    ],
+    "legal_reference": "Code général des impôts, art. 221 nouveau, 5), alinéa 2 (loi de finances rectificative 2026) — le taux zéro est également applicable aux prestations de services dont le lieu d'imposition est situé hors du Gabon, et qui ouvriraient droit à déduction si leur lieu d'imposition était au Gabon",
+    "source": "lfr-2026",
+    "vat_category": "G",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "EXP"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "EXP",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 70
+  },
+  {
+    "code": "GA-S-EXO",
+    "name": "Opération exonérée (art. 210)",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2026-07-17",
+    "conditions": [
+      "supply_nature"
+    ],
+    "legal_reference": "Code général des impôts, art. 210 nouveau (loi de finances rectificative 2026) — sont exonérés de la TVA, notamment, les opérations soumises à des taxations spécifiques exclusives (assurances et réassurances, intérêts d'emprunts extérieurs, jeux de hasard, mutations d'immeubles et de meubles incorporels, locations civiles de terrains non aménagés et locaux nus), les manuels scolaires, journaux et périodiques hors publicité, une liste de biens de première nécessité (laits, margarine, beurre, yaourts, sel, viandes et volailles importées, poissons, huiles de table locales, sucre, riz, conserves, pâtes, papier journal, cahiers et manuels scolaires, médicaments, produits pharmaceutiques, ciment, gravier, tôles, sable, eau minérale produite au Gabon), les véhicules électriques et, sous conditions, le gasoil de la pêche industrielle",
+    "source": "lfr-2026",
+    "vat_category": "E",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "EXO"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "EXO",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 80
+  },
+  {
+    "code": "GA-CSS-S",
+    "name": "Contribution spéciale de solidarité sur ventes, 1 %",
+    "description": "CSS collectée sur les opérations imposables, hors TVA et hors CSS elle-même",
+    "rate": 1,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2017-01-01",
+    "conditions": [
+      "seller_threshold"
+    ],
+    "legal_reference": "Textes fiscaux non codifiés annexés au Code général des impôts, art. 13 — CSS instituée à compter du 1er janvier 2017 ; art. 14 — redevables les personnes physiques et morales dont le chiffre d'affaires annuel hors taxes atteint au moins 30 000 000 FCFA ; art. 15 et 16 — opérations imposables, notamment les livraisons de biens et les prestations de services ; art. 24 nouveau (LFR 2017) — base imposée hors TVA et hors CSS ; art. 25 — taux de 1 %, arrondi au millier de francs inférieur. L'article 248 nonies, créé par la loi de finances rectificative 2026, y soumet aussi les plateformes numériques non-résidentes, ce qui confirme que ce régime de 2017 reste en vigueur. Ce pack ne modèle pas la retenue à la source de l'article 26 (voir le README du pack) : le compte 446 encaisse la CSS comme si elle était payée normalement par le client",
+    "source": "cgi-2019",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "446"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "446",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "other",
+    "sequence": 90
+  },
+  {
+    "code": "GA-P-18",
+    "name": "Achats de biens 18 %",
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2016-01-01",
+    "legal_reference": "Code général des impôts, art. 221 nouveau (LF 2016) pour le taux ; art. 222 alinéa 2 nouveau (loi de finances rectificative 2026) — le droit à déduction prend naissance lorsque la taxe devient exigible chez le fournisseur, une règle déjà posée par l'art. 222 nouveau (LF 2014) ; art. 223 nouveau — depuis la loi rectificative 2026, seule la TVA figurant distinctement sur une facture électronique normalisée, ou un document en tenant lieu, est déductible",
+    "source": "cgi-2019",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "4452",
+          "box": "DEDBS"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "4452",
+          "box": "DEDBS",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 110
+  },
+  {
+    "code": "GA-P-18-SRV",
+    "name": "Services extérieurs 18 %",
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2016-01-01",
+    "legal_reference": "Code général des impôts, art. 221 nouveau (LF 2016) pour le taux ; art. 222 alinéa 2 nouveau — déduction après exigibilité chez le fournisseur, soit, pour un service, après son encaissement par le prestataire ; art. 223 nouveau",
+    "source": "cgi-2019",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "4454",
+          "box": "DEDBS"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "4454",
+          "box": "DEDBS",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 120
+  },
+  {
+    "code": "GA-P-18-IMMO",
+    "name": "Immobilisations 18 %",
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2016-01-01",
+    "legal_reference": "Code général des impôts, art. 221 nouveau (LF 2016) pour le taux ; art. 222 nouveau (LF 2014) — la TVA ayant grevé en amont les éléments du prix d'une opération imposable, immobilisations comprises, est déductible ; art. 222 alinéa 6 nouveau (loi de finances rectificative 2026) — exception : la taxe ayant grevé des immobilisations déjà détenues par une entreprise qui devient redevable de la TVA n'ouvre pas droit à déduction ; art. 230 alinéa 1 nouveau — régularisation d'un cinquième par année ou fraction d'année si le bien sort de l'actif ou change d'affectation avant la fin de la quatrième année suivant l'acquisition",
+    "source": "cgi-2019",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "4451",
+          "box": "DEDIMMO"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "4451",
+          "box": "DEDIMMO",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 130
+  },
+  {
+    "code": "GA-P-10",
+    "name": "Achats taux réduit 10 %",
+    "rate": 10,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2016-01-01",
+    "legal_reference": "Code général des impôts, art. 221 nouveau (LF 2016) pour le taux, déjà applicable aux pièces détachées automobiles, essieux automobiles, carreaux de construction et pointes ; art. 222 et 223 pour la déduction",
+    "source": "cgi-2019",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "4452",
+          "box": "DEDBS"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "4452",
+          "box": "DEDBS",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 140
+  },
+  {
+    "code": "GA-P-5",
+    "name": "Achats taux réduit 5 %",
+    "rate": 5,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2026-07-17",
+    "legal_reference": "Code général des impôts, art. 221 nouveau, 3) pour le taux ; art. 222 et 223 pour la déduction",
+    "source": "lfr-2026",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "4452",
+          "box": "DEDBS"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "4452",
+          "box": "DEDBS",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 150
+  },
+  {
+    "code": "GA-P-3",
+    "name": "Achats taux réduit 3 %",
+    "rate": 3,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2026-07-17",
+    "legal_reference": "Code général des impôts, art. 221 nouveau, 4) pour le taux (fer à béton fabriqué au Gabon) ; art. 222 et 223 pour la déduction",
+    "source": "lfr-2026",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "4452",
+          "box": "DEDBS"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "4452",
+          "box": "DEDBS",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 160
+  },
+  {
+    "code": "GA-P-18-ND",
+    "name": "Achat 18 % non déductible (art. 224, 225)",
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2016-01-01",
+    "recoverable": false,
+    "legal_reference": "Code général des impôts, art. 224 nouveau (LF 2016) — n'ouvre pas droit à déduction la taxe ayant grevé notamment les dépenses de logement, hébergement, restauration, réception, spectacle et transport de personnes (sauf pour les professionnels de ces activités), les produits pétroliers hors combustible fixe d'usine, les biens cédés sans rémunération suffisante et les services afférents à des biens exclus du droit à déduction ; art. 225 — n'ouvre pas non plus droit à déduction la TVA sur les véhicules et engins conçus pour le transport de personnes ou à usage mixte constituant des immobilisations, ni sur leur location, leurs pièces détachées ou les services afférents, sauf les exceptions qu'il énumère (véhicules mixtes marchandises/personnes, cars de plus de dix places pour le personnel, parc des loueurs et transporteurs publics). La taxe est une part du coût de ce qui a été acheté",
+    "source": "cgi-2019",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax_on_base",
+          "factor": 100
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax_on_base",
+          "factor": 100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 170
+  },
+  {
+    "code": "GA-P-IMP-18",
+    "name": "Importation 18 % (TVA acquittée en douane)",
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2019-01-01",
+    "legal_reference": "Code général des impôts, art. 221 nouveau (LF 2016) pour le taux, applicable aux biens importés comme aux biens produits localement ; art. 212 et 213 — fait générateur et exigibilité de la TVA à l'importation lors de la mise à la consommation ; art. 238 nouveau (LF 2019) — la TVA à l'importation est liquidée par l'administration des douanes et doit être déclarée et versée avant l'enlèvement de la marchandise ; les documents douaniers justifient la déduction",
+    "source": "cgi-2019",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "4452",
+          "box": "DEDBS"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "4452",
+          "box": "DEDBS",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 180
+  },
+  {
+    "code": "GA-P-NR-18-ND",
+    "name": "Services d'un prestataire étranger 18 %, TVA retenue à la source, non déductible",
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2016-01-01",
+    "recoverable": false,
+    "legal_reference": "Code général des impôts, art. 240 — pour les redevables non-résidents, la TVA retenue à la source est payée par le client pour le compte de la personne n'ayant pas au Gabon d'établissement stable ni d'installation professionnelle permanente ; art. 224 nouveau, dernier alinéa — n'ouvre pas droit à déduction la TVA sur les services disponibles sur le territoire national rendus par un prestataire étranger. La taxe retenue et versée par le client devient une part du coût du service",
+    "source": "cgi-2019",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax_on_base",
+          "factor": 100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "4478"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax_on_base",
+          "factor": 100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "4478"
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 190
+  },
+  {
+    "code": "GA-CSS-P",
+    "name": "Contribution spéciale de solidarité sur achats, 1 %, non récupérable",
+    "description": "CSS facturée par un fournisseur gabonais, part du coût de l'achat",
+    "rate": 1,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2017-01-01",
+    "recoverable": false,
+    "legal_reference": "Textes fiscaux non codifiés annexés au Code général des impôts, art. 25 — taux de 1 % ; art. 32 nouveau (LFR 2017) — le montant acquitté au titre de la CSS est déductible pour la détermination du bénéfice imposable à l'impôt sur les sociétés ou à l'IRPP, ce qui est une déductibilité de charge et non un mécanisme de crédit de CSS sur CSS comme en matière de TVA : aucun texte lu n'ouvre de droit à récupération de la CSS supportée sur un achat. Ce pack ne modèle pas la retenue à la source de l'article 26, alinéa 3 (la CSS facturée à un client assujetti à la TVA est retenue à la source par ce dernier) : voir le README du pack",
+    "source": "cgi-2019",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax_on_base",
+          "factor": 100
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax_on_base",
+          "factor": 100
+        }
+      ]
+    },
+    "kind": "other",
+    "sequence": 200
+  }
+]

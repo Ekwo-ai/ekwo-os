@@ -1,0 +1,396 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "Une année d'un négoce gabonais au régime du réel normal, déclarant chaque mois",
+  "chart": "default",
+  "fiscal_year": {
+    "name": "Exercice 2026",
+    "start": "2026-08-01",
+    "end": "2026-12-31"
+  },
+  "periods": [
+    {
+      "code": "2026-08",
+      "from": "2026-08-01",
+      "to": "2026-08-31"
+    },
+    {
+      "code": "2026-09",
+      "from": "2026-09-01",
+      "to": "2026-09-28"
+    },
+    {
+      "code": "2026-10",
+      "from": "2026-10-01",
+      "to": "2026-10-31"
+    },
+    {
+      "code": "2026-11",
+      "from": "2026-11-01",
+      "to": "2026-11-30"
+    }
+  ],
+  "statements": [
+    "GA-SYSCOHADA-BS",
+    "GA-SYSCOHADA-IS"
+  ],
+  "contacts": [
+    {
+      "ref": "client-negoce",
+      "name": "Comptoir de l'Estuaire SARL",
+      "type": "customer",
+      "country": "GA"
+    },
+    {
+      "ref": "client-auto",
+      "name": "Garage du Rio SARL",
+      "type": "customer",
+      "country": "GA"
+    },
+    {
+      "ref": "client-presse",
+      "name": "Kiosque Libreville Distribution SARL",
+      "type": "customer",
+      "country": "GA"
+    },
+    {
+      "ref": "client-btp",
+      "name": "Bâtiment Akanda SARL",
+      "type": "customer",
+      "country": "GA"
+    },
+    {
+      "ref": "client-conseil",
+      "name": "Cabinet Ogooué Conseil SA",
+      "type": "customer",
+      "country": "GA"
+    },
+    {
+      "ref": "client-fr",
+      "name": "Maison Bordeaux Négoce SAS",
+      "type": "customer",
+      "country": "FR"
+    },
+    {
+      "ref": "client-cg",
+      "name": "Brazza Ingénierie Sarlu",
+      "type": "customer",
+      "country": "CG"
+    },
+    {
+      "ref": "client-pharma",
+      "name": "Pharmacie de la Sablière SARL",
+      "type": "customer",
+      "country": "GA"
+    },
+    {
+      "ref": "fourn-negoce",
+      "name": "Grossiste de Nkembo SARL",
+      "type": "supplier",
+      "country": "GA"
+    },
+    {
+      "ref": "fourn-info",
+      "name": "Maintenance Informatique Gabon SARL",
+      "type": "supplier",
+      "country": "GA"
+    },
+    {
+      "ref": "fourn-bureau",
+      "name": "Bureau Équipement Owendo SARL",
+      "type": "supplier",
+      "country": "GA"
+    },
+    {
+      "ref": "fourn-auto",
+      "name": "Automobiles du Gabon SA",
+      "type": "supplier",
+      "country": "GA"
+    },
+    {
+      "ref": "fourn-cn",
+      "name": "Guangzhou Trading Co. Ltd",
+      "type": "supplier",
+      "country": "CN"
+    },
+    {
+      "ref": "fourn-fr-conseil",
+      "name": "Cabinet Paris Fiscal Conseil SAS",
+      "type": "supplier",
+      "country": "FR"
+    }
+  ],
+  "documents": [
+    {
+      "ref": "V1",
+      "type": "sale_invoice",
+      "contact": "client-negoce",
+      "date": "2026-08-08",
+      "why": "Une vente de marchandises au taux normal : la case CA18, la taxe au compte 4431 et dans la case TVA18.",
+      "lines": [
+        {
+          "name": "Marchandises diverses",
+          "quantity": 30,
+          "unit_price": 200000,
+          "tax": "GA-S-18",
+          "account": "7011"
+        }
+      ]
+    },
+    {
+      "ref": "V2",
+      "type": "sale_invoice",
+      "contact": "client-auto",
+      "date": "2026-08-15",
+      "why": "Une vente de pièces détachées automobiles au taux réduit de 10 % : la case CA10, la taxe dans la case TVA10.",
+      "lines": [
+        {
+          "name": "Pièces détachées automobiles",
+          "quantity": 50,
+          "unit_price": 40000,
+          "tax": "GA-S-10",
+          "account": "7011"
+        }
+      ]
+    },
+    {
+      "ref": "V3",
+      "type": "sale_invoice",
+      "contact": "client-presse",
+      "date": "2026-08-22",
+      "why": "Une vente d'eau minérale importée au taux réduit de 5 % : la case CA5, la taxe dans la case TVA5, le troisième taux positif du pack.",
+      "lines": [
+        {
+          "name": "Eau minérale importée",
+          "quantity": 100,
+          "unit_price": 15000,
+          "tax": "GA-S-5",
+          "account": "7011"
+        }
+      ]
+    },
+    {
+      "ref": "V4",
+      "type": "sale_invoice",
+      "contact": "client-btp",
+      "date": "2026-09-03",
+      "why": "Une vente de fer à béton fabriqué au Gabon au taux réduit de 3 %, sous le plancher de 5 % de la directive TVA CEMAC : la case CA3, la taxe dans la case TVA3.",
+      "lines": [
+        {
+          "name": "Fer à béton, fabrication gabonaise",
+          "quantity": 20,
+          "unit_price": 250000,
+          "tax": "GA-S-3",
+          "account": "7011"
+        }
+      ]
+    },
+    {
+      "ref": "V5",
+      "type": "sale_invoice",
+      "contact": "client-conseil",
+      "date": "2026-08-28",
+      "why": "Une prestation de services facturée en août et encaissée en septembre : la taxe attend l'encaissement au compte 4432 et n'entre dans la déclaration qu'en septembre (art. 213).",
+      "lines": [
+        {
+          "name": "Mission d'audit comptable",
+          "quantity": 1,
+          "unit_price": 1200000,
+          "tax": "GA-S-18-SRV",
+          "account": "7061"
+        }
+      ]
+    },
+    {
+      "ref": "V6",
+      "type": "sale_invoice",
+      "contact": "client-fr",
+      "date": "2026-09-11",
+      "why": "Une exportation au taux zéro, ouvrant droit à déduction : la case EXP, aucune taxe, un compte de ventes hors Région.",
+      "lines": [
+        {
+          "name": "Bois transformé exporté",
+          "quantity": 10,
+          "unit_price": 300000,
+          "tax": "GA-S-0-EXP",
+          "account": "7012"
+        }
+      ]
+    },
+    {
+      "ref": "V7",
+      "type": "sale_invoice",
+      "contact": "client-cg",
+      "date": "2026-09-20",
+      "why": "Une prestation de services dont le lieu d'imposition est hors du Gabon, au taux zéro avec droit à déduction préservé (art. 221-5, alinéa 2) : la case EXP, un compte de services hors Région.",
+      "lines": [
+        {
+          "name": "Étude d'ingénierie pour un chantier hors du Gabon",
+          "quantity": 1,
+          "unit_price": 900000,
+          "tax": "GA-S-0-SRV",
+          "account": "7062"
+        }
+      ]
+    },
+    {
+      "ref": "V8",
+      "type": "sale_invoice",
+      "contact": "client-pharma",
+      "date": "2026-10-05",
+      "why": "Une vente de médicaments, exonérée par l'article 210, 10) : la case EXO, aucune taxe.",
+      "lines": [
+        {
+          "name": "Médicaments",
+          "quantity": 200,
+          "unit_price": 3000,
+          "tax": "GA-S-EXO",
+          "account": "7011"
+        }
+      ]
+    },
+    {
+      "ref": "AV1",
+      "type": "sale_credit_note",
+      "contact": "client-negoce",
+      "date": "2026-10-12",
+      "why": "Un avoir sur la vente V1 pour des marchandises retournées : la case CA18 et la taxe diminuent dans le mois de l'avoir.",
+      "lines": [
+        {
+          "name": "Retour de marchandises",
+          "quantity": 5,
+          "unit_price": 200000,
+          "tax": "GA-S-18",
+          "account": "7011"
+        }
+      ]
+    },
+    {
+      "ref": "A1",
+      "type": "purchase_invoice",
+      "contact": "fourn-negoce",
+      "date": "2026-08-10",
+      "why": "Un achat de marchandises au taux normal : la taxe récupérable au compte 4452 et dans la case DEDBS.",
+      "lines": [
+        {
+          "name": "Marchandises diverses",
+          "quantity": 40,
+          "unit_price": 100000,
+          "tax": "GA-P-18",
+          "account": "6011"
+        }
+      ]
+    },
+    {
+      "ref": "A2",
+      "type": "purchase_invoice",
+      "contact": "fourn-info",
+      "date": "2026-09-14",
+      "why": "Une maintenance informatique facturée au taux normal : la taxe récupérable sur services extérieurs au compte 4454.",
+      "lines": [
+        {
+          "name": "Maintenance du parc informatique",
+          "quantity": 1,
+          "unit_price": 500000,
+          "tax": "GA-P-18-SRV",
+          "account": "6248"
+        }
+      ]
+    },
+    {
+      "ref": "A3",
+      "type": "purchase_invoice",
+      "contact": "fourn-bureau",
+      "date": "2026-10-02",
+      "why": "Du matériel de bureau immobilisé : la taxe au compte 4451 et dans la case DEDIMMO.",
+      "lines": [
+        {
+          "name": "Mobilier et matériel de bureau",
+          "quantity": 2,
+          "unit_price": 1500000,
+          "tax": "GA-P-18-IMMO",
+          "account": "2441"
+        }
+      ]
+    },
+    {
+      "ref": "A4",
+      "type": "purchase_invoice",
+      "contact": "fourn-auto",
+      "date": "2026-10-19",
+      "why": "Une voiture de tourisme, exclue du droit à déduction par l'article 225 : la taxe s'ajoute au coût de l'immobilisation et n'atteint aucune case.",
+      "lines": [
+        {
+          "name": "Véhicule de tourisme",
+          "quantity": 1,
+          "unit_price": 12000000,
+          "tax": "GA-P-18-ND",
+          "account": "2451"
+        }
+      ]
+    },
+    {
+      "ref": "A5",
+      "type": "purchase_invoice",
+      "contact": "fourn-cn",
+      "date": "2026-11-06",
+      "why": "Une importation de marchandises, TVA acquittée en douane à la mise à la consommation (art. 212, 213, 238) : la taxe récupérable au compte 4452 et dans la case DEDBS.",
+      "lines": [
+        {
+          "name": "Marchandises importées de Chine",
+          "quantity": 1,
+          "unit_price": 8000000,
+          "tax": "GA-P-IMP-18",
+          "account": "6012"
+        }
+      ]
+    },
+    {
+      "ref": "A6",
+      "type": "purchase_invoice",
+      "contact": "fourn-fr-conseil",
+      "date": "2026-11-20",
+      "why": "Un conseil fiscal rendu par un prestataire non établi au Gabon : la TVA retenue à la source par l'entreprise (art. 240, compte 4478) et non déductible (art. 224, dernier alinéa), donc portée au coût du service.",
+      "lines": [
+        {
+          "name": "Mission de conseil fiscal",
+          "quantity": 1,
+          "unit_price": 2000000,
+          "tax": "GA-P-NR-18-ND",
+          "account": "6324"
+        }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "E1",
+      "direction": "inbound",
+      "date": "2026-09-09",
+      "amount": 1416000,
+      "contact": "client-conseil",
+      "journal": "BQ",
+      "match": "V5",
+      "why": "L'encaissement de la mission d'audit d'août : il rend sa taxe exigible en septembre."
+    },
+    {
+      "ref": "E2",
+      "direction": "inbound",
+      "date": "2026-10-25",
+      "amount": 500000,
+      "contact": "client-negoce",
+      "journal": "BQ",
+      "match": null,
+      "why": "Un acompte non affecté : il reste une ligne ouverte au compte client."
+    },
+    {
+      "ref": "P1",
+      "direction": "outbound",
+      "date": "2026-09-05",
+      "amount": 4720000,
+      "contact": "fourn-negoce",
+      "journal": "BQ",
+      "match": "A1",
+      "why": "Un paiement qui solde l'achat de marchandises."
+    }
+  ]
+}
