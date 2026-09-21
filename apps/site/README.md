@@ -2,20 +2,31 @@
 
 ## Status of this branch
 
-`site-compare-scale` — the site made to hold fifty countries, then two hundred.
+`site-multi-country` — built on `site-compare-scale` (the comparison on one
+page, countries by region), and adds `/multi-country/`: several countries, one
+set of books.
 
-- **Done.** The comparison is one page, `/compare/`, instead of a page per
-  pair; the old pair addresses are sent there by one rule of `_redirects`.
-  Every list of countries — `/countries/`, `/os/`, the home page and the map in
-  words — is grouped by region, with a count, a jump link per region and, on
-  `/countries/`, a field that narrows the list. `tests/scale.test.ts` renders
-  the site with fifty and two hundred made-up packs and holds the page count
-  and the weight of the comparison to one column per country.
-- **Checked by hand.** The pickers switch the columns in Chromium, Firefox and
-  WebKit, and the default pair shows with scripting off. Under `netlify dev`,
-  `/compare/be-fr/` answers 301 to `/compare/?pair=be-fr`, `/compare/` is
-  served as itself, and any other unknown address still goes to the
-  application with a 302.
+- **Done.** The page speaks to three readers — a group with a company per
+  country, an accounting firm with clients abroad, a company opening a new
+  country — then lists what works today, each line linked to the file that
+  makes it true, and what does not yet. Its claims are
+  `src/data/multicountry.ts`, its words `strings.multi`; the three numbers
+  under the lead are counted from the packs. It is linked from the home page,
+  from `/countries/` and from the foot of every page; in the header it sits
+  under Countries.
+- **Claimed as working**, with its proof: companies of several countries in
+  one installation (`docs/firms.md`), a company created on its country's pack
+  (`packages/mcp/src/tools/write.ts`), a currency per company with rates and
+  realised differences (`20260912112132_cash_basis_vat_and_fx.sql`), a role per
+  person per company (`20260911120000_core_companies.sql`), the deadlines of
+  every company one keeps (`20260918130000_every_company_somebody_keeps.sql`),
+  the command line and the MCP server across companies
+  (`packages/mcp/src/server.ts`), `ekwo company export | import`
+  (`docs/company-archive.md`) and `ekwo pack describe`
+  (`packages/cli/src/commands/pack.ts`).
+- **Said as not there yet.** Consolidation is `planned` (`docs/international.md`,
+  phase 2). Intercompany matching, revaluation of open foreign-currency items
+  and teams of collaborators are `not yet`, with no date.
 
 One page per country, built from the packs of this repository. It is a private
 workspace: it is never published to npm, and nothing else in the repository
@@ -137,7 +148,10 @@ counted and named.
 
 ## What is shown, and what is claimed
 
-Two files carry the claims the home page makes, and both are checked.
+Two files carry the claims the home page makes, and both are checked; a third,
+`src/data/multicountry.ts`, carries those of `/multi-country/` under the same
+rule — every `shipped` line has a path that must exist, and a gap is said as
+`planned` only where the repository says it is coming, `not yet` otherwise.
 
 `src/data/capabilities.ts` is the grid and the automation tiles. Every entry
 carries `proof`: a path in this repository that is the reason the tile says

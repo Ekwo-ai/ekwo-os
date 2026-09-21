@@ -37,8 +37,9 @@ export function Countries({ data, strings }: { data: SiteData; strings: Strings 
           <Out href={repository.file('docs/packs.md')}>{strings.home.network.guide}</Out>
         </p>
 
-        <p className="mt-8 text-sm">
+        <p className="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-sm">
           <a href="/compare/">{strings.os.compare}</a>
+          <a href="/multi-country/">{strings.multi.countriesLink}</a>
         </p>
       </main>
       <Footer repository={repository} measure="page" strings={strings} />

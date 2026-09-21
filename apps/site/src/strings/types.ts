@@ -62,6 +62,8 @@ export interface Strings {
     security: string;
     source: string;
     npm: string;
+    /** The page for a business in several countries. */
+    multi: string;
   };
 
   home: {
@@ -252,6 +254,39 @@ export interface Strings {
     carries: string;
     /** Said only where the browser cannot hide the countries not picked. */
     everyColumn: string;
+  };
+
+  /**
+   * `/multi-country/` — several countries, one set of books. The keys of
+   * `audiences`, `shipped` and `later` are the keys of `data/multicountry.ts`,
+   * which carries the icon and the file each claim rests on.
+   */
+  multi: {
+    title: string;
+    description: string;
+    eyebrow: string;
+    heading: string;
+    lead: string;
+    /** Under the counters: `{countries}`, `{currencies}` and `{languages}` are counted. */
+    today: string;
+    audiencesTitle: string;
+    audiences: Record<string, { title: string; body: string }>;
+    shippedTitle: string;
+    shippedLead: string;
+    shipped: Record<string, { title: string; body: string }>;
+    laterTitle: string;
+    laterLead: string;
+    later: Record<string, { title: string; body: string }>;
+    /** The two words a claim of the lower list is marked with. */
+    planned: string;
+    notYet: string;
+    proof: string;
+    contactTitle: string;
+    contactBody: string;
+    contactAction: string;
+    /** Where the page is linked from. */
+    homeLink: string;
+    countriesLink: string;
   };
 
   /** The grouping of every list of countries. */

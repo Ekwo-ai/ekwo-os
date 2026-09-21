@@ -7,8 +7,8 @@
  *
  * The list of pages is derived, never enumerated: for each language, one page
  * per pack of `listPacks()`, one per article of the documentation, plus the
- * home page, the core, the index of the documentation, the index of countries
- * and the comparison. Adding a country adds one page and a column of the
+ * home page, the core, the index of the documentation, the index of countries,
+ * the page for a business in several countries and the comparison. Adding a country adds one page and a column of the
  * comparison — never a page per pair — and adding a language adds the whole
  * tree again under its prefix, with nothing here edited.
  *
@@ -30,6 +30,7 @@ import { Countries } from './pages/Countries.js';
 import { DocsArticle, DocsIndex, descriptionOf, titleOf } from './pages/Docs.js';
 import { Country } from './pages/Country.js';
 import { Compare, PICKERS } from './pages/Compare.js';
+import { MultiCountry } from './pages/MultiCountry.js';
 
 export interface RenderedPage {
   /** Where the file goes, relative to the output directory. */
@@ -94,6 +95,13 @@ function pagesOf(data: SiteData, strings: Strings): RenderedPage[] {
       s.countries.indexTitle,
       s.countries.indexDescription,
       <Countries data={data} strings={s} />,
+    ),
+    page(
+      `${at}multi-country/`,
+      lang,
+      s.multi.title,
+      s.multi.description,
+      <MultiCountry data={data} strings={s} />,
     ),
   ];
 

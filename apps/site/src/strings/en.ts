@@ -38,6 +38,7 @@ export const en: Strings = {
     security: 'Security',
     source: 'Source',
     npm: 'npm',
+    multi: 'Several countries',
   },
 
   home: {
@@ -401,6 +402,129 @@ export const en: Strings = {
     everyColumn:
       'This browser cannot hide the countries you did not pick, so every country is listed ' +
       'below, each under its name.',
+  },
+
+  multi: {
+    title: 'Several countries, one set of books — Ekwo',
+    description:
+      'A company in every country you work in, each on its own country pack, all in one ' +
+      'installation you own. For groups, accounting firms, and companies opening a new country.',
+    eyebrow: 'Several countries',
+    heading: 'Every country you work in. One set of books.',
+    lead:
+      'One installation holds a company per country, each with the chart of accounts, the ' +
+      'taxes and the returns of its own country. Opening a new country means creating a company ' +
+      'on that country’s pack. The same people, the same command line and the same assistant ' +
+      'work across all of them.',
+    today: 'Today: {countries} country packs, {currencies} currencies, {languages} languages.',
+    audiencesTitle: 'Written for three kinds of business.',
+    audiences: {
+      group: {
+        title: 'A group with a company in each country',
+        body:
+          'Each subsidiary is a company with its own books, its own currency and its own ' +
+          'returns. They all live in one database, under one login.',
+      },
+      firm: {
+        title: 'An accounting firm with clients abroad',
+        body:
+          'Every client is a company. Your team gets a role on each client it keeps, and a ' +
+          'client sees their own books and nothing else. You can see the deadlines of every client ' +
+          'in one list.',
+      },
+      expand: {
+        title: 'A company opening a new country',
+        body:
+          'The new country is a new company on that country’s pack. It comes with its chart of ' +
+          'accounts, its taxes and its return form already set up.',
+      },
+    },
+    shippedTitle: 'What works today.',
+    shippedLead: 'Every line below links to the file in the repository that makes it true.',
+    shipped: {
+      companies: {
+        title: 'Many companies, many countries, one installation',
+        body:
+          'A company is one row, with its own country pack, chart, journals and locks. Forty ' +
+          'clients in six countries is forty rows and six packs.',
+      },
+      create: {
+        title: 'A company starts from its country’s pack',
+        body:
+          'Creating a company copies in its chart of accounts, its journals and its taxes, and ' +
+          'opens its first financial year in the month that country starts one.',
+      },
+      currency: {
+        title: 'Every company in its own currency',
+        body:
+          'Each company keeps books in its own currency. An invoice or a payment in another ' +
+          'currency carries its rate, and the exchange difference is booked when the two are ' +
+          'matched.',
+      },
+      roles: {
+        title: 'A role per person, per company',
+        body:
+          'One person can keep twenty companies; a client sees only their own. Row level ' +
+          'security in the database enforces it, not the screen.',
+      },
+      portfolio: {
+        title: 'Every deadline, across every company you keep',
+        body:
+          'One question returns the returns falling due for all your companies, and which ones ' +
+          'nobody has started.',
+      },
+      tools: {
+        title: 'One command line and one assistant for all of them',
+        body:
+          'Pick a company with ekwo use, or name it with --company for a single command. Over ' +
+          'MCP, an assistant lists your companies first and names one in every call.',
+      },
+      archive: {
+        title: 'A company moves whole',
+        body:
+          'ekwo company export writes one company — books, returns and the proof they were ' +
+          'filed. ekwo company import takes it into another installation.',
+      },
+      describe: {
+        title: 'Every country described the same way',
+        body:
+          'ekwo pack describe prints what a country pack carries, and what it does not yet, in ' +
+          'the same shape for every country.',
+      },
+    },
+    laterTitle: 'What is not there yet.',
+    laterLead: 'Said plainly, so you can plan around it.',
+    later: {
+      consolidation: {
+        title: 'Consolidation across companies',
+        body: 'On the international roadmap, in its second phase. Nothing is built yet.',
+      },
+      intercompany: {
+        title: 'Transactions between companies of the same group',
+        body:
+          'Each company books its side, like any other invoice. Nothing yet matches the two ' +
+          'sides or eliminates them.',
+      },
+      revaluation: {
+        title: 'Revaluing open foreign-currency balances',
+        body:
+          'Exchange differences are booked when an item is settled. Revaluing what is still ' +
+          'open at a closing date is not built yet.',
+      },
+      teams: {
+        title: 'Teams of collaborators',
+        body: 'Giving somebody forty companies is forty memberships today. Groups are not built yet.',
+      },
+    },
+    planned: 'planned',
+    notYet: 'not yet',
+    proof: 'The file',
+    contactTitle: 'Several countries, and a question?',
+    contactBody:
+      'Tell us which countries you keep books in, and how you work today.',
+    contactAction: 'Write to us',
+    homeLink: 'A company in several countries? One installation keeps them all.',
+    countriesLink: 'Several countries, one set of books',
   },
 
   regions: {

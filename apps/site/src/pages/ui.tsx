@@ -346,6 +346,7 @@ export function Footer({
           className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-ink-faint"
         >
           <span>{repository.license}</span>
+          <a href="/multi-country/">{f.multi}</a>
           <Out href={repository.file('LICENSE')}>{f.licence}</Out>
           <Out href={repository.file('DISCLAIMER.md')}>{f.disclaimer}</Out>
           <Out href={repository.file('SECURITY.md')}>{f.security}</Out>

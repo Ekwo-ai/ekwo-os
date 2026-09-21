@@ -20,6 +20,15 @@ somewhere has already run it.
   by UN M49 region, with a count and a jump per region, and the index has a
   field that narrows it.
 
+### Added
+
+- **`/multi-country/` on the site: several countries, one set of books.** For
+  a group with a company per country, an accounting firm with clients abroad
+  and a company opening its next country. What works today is listed with the
+  file that makes each line true; consolidation is said as planned, and
+  intercompany matching, revaluation of open foreign-currency items and teams
+  of collaborators as not there yet.
+
 ### Fixed
 
 - **The site froze on the time of day it was opened at.** The blocking script

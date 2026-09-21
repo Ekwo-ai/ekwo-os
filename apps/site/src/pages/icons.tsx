@@ -20,6 +20,8 @@ import {
   Activity,
   Coins,
   BookCheck,
+  Briefcase,
+  CalendarClock,
   Boxes,
   Building2,
   ChartColumn,
@@ -48,6 +50,8 @@ import {
   Terminal,
   Unlock,
   Unplug,
+  Users,
+  Rocket,
 } from 'lucide-react';
 
 type Icon = ComponentType<{ className?: string; strokeWidth?: number; 'aria-hidden'?: boolean }>;
@@ -55,6 +59,8 @@ type Icon = ComponentType<{ className?: string; strokeWidth?: number; 'aria-hidd
 const ICONS: Record<string, Icon> = {
   activity: Activity,
   bookCheck: BookCheck,
+  briefcase: Briefcase,
+  calendarClock: CalendarClock,
   boxes: Boxes,
   building: Building2,
   chartColumn: ChartColumn,
@@ -84,6 +90,8 @@ const ICONS: Record<string, Icon> = {
   terminal: Terminal,
   unlock: Unlock,
   unplug: Unplug,
+  users: Users,
+  rocket: Rocket,
 };
 
 /** Draws the named icon, or nothing where the name is not one. */

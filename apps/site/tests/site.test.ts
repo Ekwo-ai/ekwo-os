@@ -11,8 +11,9 @@ import { PICKERS } from '../src/pages/Compare.js';
 import { DOCS, FORMATS_DIR } from '../src/data/docs.js';
 import { CLAUDE_CODE_TOOLS, MCP_PREFIX } from '../src/demo.js';
 import { AUTOMATION, CAPABILITIES, PLANNED_MODULES } from '../src/data/capabilities.js';
+import { AUDIENCES, LATER, SHIPPED } from '../src/data/multicountry.js';
 import { FOUNDATIONS, MODELS, NOT_LISTED } from '../src/data/ecosystem.js';
-import { LANGUAGES, SOURCE, prefixOf } from '../src/strings/index.js';
+import { LANGUAGES, SOURCE, fill, prefixOf } from '../src/strings/index.js';
 import { ICON_NAMES } from '../src/pages/icons.js';
 
 /**
@@ -42,12 +43,13 @@ const OS = '/os/';
 const MANIFESTO = '/manifesto/';
 const COMPARE = '/compare/';
 const COUNTRIES = '/countries/';
+const MULTI = '/multi-country/';
 const DOCS_INDEX = '/docs/';
 const ROWS = statusRows(SOURCE);
 
 describe('the pages that exist', () => {
-  it('is one per pack and one per article, plus the five pages of the site, for every language', () => {
-    expect(pages.length).toBe(LANGUAGES.length * (slugs.length + data.docs.length + 5));
+  it('is one per pack and one per article, plus the six pages of the site, for every language', () => {
+    expect(pages.length).toBe(LANGUAGES.length * (slugs.length + data.docs.length + 6));
   });
 
   it('publishes the source language at the root, and every other under its prefix', () => {
@@ -86,7 +88,7 @@ describe('the pages that exist', () => {
   });
 
   it('builds the home page, the core page, the manifesto, the docs and the index of comparisons', () => {
-    for (const url of [HOME, OS, MANIFESTO, DOCS_INDEX, COMPARE, COUNTRIES]) {
+    for (const url of [HOME, OS, MANIFESTO, DOCS_INDEX, COMPARE, COUNTRIES, MULTI]) {
       expect(byUrl.get(url), `${url} was not built`).toBeDefined();
     }
   });
@@ -505,6 +507,52 @@ describe('what the site says is in the box', () => {
     const all = [...CAPABILITIES, ...AUTOMATION, ...PLANNED_MODULES];
     expect(all.some((item) => item.status === 'shipped')).toBe(true);
     expect(all.some((item) => item.status === 'planned')).toBe(true);
+  });
+});
+
+describe('the page for several countries', () => {
+  const body = () => byUrl.get(MULTI)!.body;
+
+  it('rests every claim of what works today on a file that exists', () => {
+    for (const claim of SHIPPED) {
+      expect(existsSync(join(root, claim.proof)), `${claim.key}: ${claim.proof} does not exist`).toBe(true);
+      expect(body()).toContain(data.repository.file(claim.proof));
+    }
+    for (const claim of LATER) {
+      if (claim.proof === null) continue;
+      expect(existsSync(join(root, claim.proof)), `${claim.key}: ${claim.proof} does not exist`).toBe(true);
+    }
+  });
+
+  it('has words for every claim and every reader, and no words for a claim that is not made', () => {
+    for (const strings of LANGUAGES) {
+      const m = strings.multi;
+      expect(Object.keys(m.audiences).sort()).toEqual(AUDIENCES.map((a) => a.key).sort());
+      expect(Object.keys(m.shipped).sort()).toEqual(SHIPPED.map((c) => c.key).sort());
+      expect(Object.keys(m.later).sort()).toEqual(LATER.map((c) => c.key).sort());
+    }
+    for (const icon of [...AUDIENCES, ...SHIPPED].map((item) => item.icon)) {
+      expect(ICON_NAMES, `${icon} is not in the registry`).toContain(icon);
+    }
+  });
+
+  it('counts what it says it has, from the packs', () => {
+    expect(body()).toContain(
+      fill(SOURCE.multi.today, {
+        countries: data.countries.length,
+        currencies: new Set(data.countries.map((country) => country.currency)).size,
+        languages: data.languages.length,
+      }),
+    );
+  });
+
+  it('offers an address to write to, and no price, form or sign-up', () => {
+    expect(body()).toContain('href="mailto:');
+    expect(body()).not.toMatch(/<form|<input|€|\$\d|sign up|per month/i);
+  });
+
+  it('is linked from the home page and from the foot of every page', () => {
+    for (const page of pages) expect(page.body, `${page.url} does not link it`).toContain(`href="${MULTI}"`);
   });
 });
 

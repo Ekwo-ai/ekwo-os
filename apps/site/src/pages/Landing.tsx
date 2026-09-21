@@ -128,6 +128,9 @@ export function Landing({ data, strings }: { data: SiteData; strings: Strings })
               </p>
             ))}
           </div>
+          <div className="mt-10">
+            <Secondary href="/multi-country/">{strings.multi.homeLink}</Secondary>
+          </div>
         </div>
       </section>
 

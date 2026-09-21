@@ -90,13 +90,13 @@ jobs:
           elsewhere=$(grep -c "url: '" apps/site/src/data/docs.ts)
           formats=$(find packages/formats -mindepth 1 -maxdepth 1 -type d | wc -l | tr -d ' ')
           docs=$(( articles - elsewhere + formats + 1 ))
-          # Every pack, and the five pages of the site itself: the home page,
-          # the core, the index of countries, the manifesto and the one page
-          # that compares any two of them — never a page per pair. Times the
-          # languages.
+          # Every pack, and the six pages of the site itself: the home page,
+          # the core, the index of countries, the manifesto, the page for a
+          # business in several countries and the one page that compares any
+          # two of them — never a page per pair. Times the languages.
           langs=$(grep -c "^import { [a-z]\+ } from './[a-z]\+\.js';" \
                     apps/site/src/strings/index.ts)
-          expected=$(( langs * (packs + 5 + docs) ))
+          expected=$(( langs * (packs + 6 + docs) ))
           built=$(find apps/site/dist -name index.html | wc -l | tr -d ' ')
           echo "$packs packs in $langs language(s): $expected expected, $built built."
           [ "$built" = "$expected" ]
