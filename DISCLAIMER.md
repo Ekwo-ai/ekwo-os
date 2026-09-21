@@ -213,5 +213,5 @@ every earlier one.
 
 ## Legal and contact
 
-Ekwo is a trade name of Karuna Co OÜ, Estonia, registry code 14510673.
-Write to contact@ekwo.ai.
+Ekwo is a trade name of Karuna Co OÜ, Estonia, registry code 14510673 ·
+contact@ekwo.ai

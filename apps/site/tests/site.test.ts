@@ -1081,7 +1081,10 @@ describe('what Ekwo says it is', () => {
       const footer = /<footer[\s\S]*<\/footer>/.exec(page.body)?.[0] ?? '';
       expect(footer, `${page.url} has no link to the disclaimer`).toContain(`href="${DISCLAIMER}"`);
       expect(footer).not.toContain('DISCLAIMER.md');
+      expect(footer, `${page.url} does not say who stands behind the name`).toContain(data.repository.legal);
     }
+    // One address, the one the disclaimer gives.
+    expect(data.repository.legal).toMatch(/contact@ekwo\.ai$/);
   });
 
   it('says what the project is not, and what the user stays responsible for', async () => {

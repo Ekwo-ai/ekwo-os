@@ -53,6 +53,12 @@ export interface Repository {
   dir: (path: string) => string;
   /** Where somebody proposing a country pack opens an issue. */
   newPackIssue: string;
+  /**
+   * Who stands behind the trade name, and the one address to write to: the
+   * paragraph under "Legal and contact" in DISCLAIMER.md, so the foot of every
+   * page says what the disclaimer says and the entity is written once.
+   */
+  legal: string;
 }
 
 /** One number the page prints, and the short word under it. */
@@ -192,7 +198,7 @@ export async function readSiteData(): Promise<SiteData> {
     repository?: { url?: string };
     license?: string;
   };
-  const repository = repositoryOf(cli);
+  const repository = repositoryOf(cli, legalOf(await readFile(join(root, 'DISCLAIMER.md'), 'utf8')));
 
   const languages = [...new Set(countries.flatMap((country) => country.languages))].sort();
 
@@ -574,12 +580,25 @@ export function positioningLine(readme: string): string {
   throw new Error('README.md says nothing under its title; the page has no sentence to show');
 }
 
+/** The paragraph under the "Legal and contact" heading of DISCLAIMER.md, on one line. */
+function legalOf(disclaimer: string): string {
+  const section = disclaimer.split(/^## Legal and contact$/m)[1];
+  const paragraph = section?.trim().split(/\n\s*\n/)[0];
+  if (paragraph === undefined || paragraph === '') {
+    throw new Error('DISCLAIMER.md has no "Legal and contact" section; the foot of every page reads it');
+  }
+  return paragraph.replace(/\s+/g, ' ');
+}
+
 /** The links of the site, from the manifest of the package a reader installs. */
-function repositoryOf(cli: {
-  name: string;
-  repository?: { url?: string };
-  license?: string;
-}): Repository {
+function repositoryOf(
+  cli: {
+    name: string;
+    repository?: { url?: string };
+    license?: string;
+  },
+  legal: string,
+): Repository {
   const declared = cli.repository?.url ?? '';
   const url = declared.replace(/^git\+/, '').replace(/\.git$/, '');
   if (!url.startsWith('https://')) {
@@ -601,5 +620,6 @@ function repositoryOf(cli: {
     file: (path) => `${url}/blob/${BRANCH}/${path}`,
     dir: (path) => `${url}/tree/${BRANCH}/${path}`,
     newPackIssue: `${url}/issues/new/choose`,
+    legal,
   };
 }

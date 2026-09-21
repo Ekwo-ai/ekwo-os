@@ -43,11 +43,10 @@ export const en: Strings = {
     npm: 'npm',
     multi: 'Several countries',
     changes: 'Latest changes',
-    legal: 'Ekwo is a trade name of Karuna Co OÜ, Estonia, registry code 14510673 · contact@ekwo.ai',
   },
 
   home: {
-    title: 'Ekwo — open source accounting software and data infrastructure for every country',
+    title: 'Ekwo — open source accounting data infrastructure for every country',
     description:
       'Free, open source accounting data infrastructure you self-host on PostgreSQL and ' +
       'Supabase: {countries} country packs, VAT returns, e-invoicing and an MCP server for AI ' +
@@ -207,8 +206,8 @@ export const en: Strings = {
       hostedBody:
         'The hosted edition: your own instance, run and watched for you. What is sold is the ' +
         'operating — bank connections, sending and receiving over Peppol, the channels to the ' +
-        'administrations, the agents you set up. It is infrastructure, not an accounting service: your ' +
-        'books and your filings stay yours and your accountant’s. It never gates the core, ' +
+        'administrations, the agents you set up. It is infrastructure, and it keeps no one’s ' +
+        'books: yours and your filings stay yours and your accountant’s. It never gates the core, ' +
         'and what comes back from a filing is yours.',
       hostedAction: 'Get started with us',
     },

@@ -64,7 +64,7 @@ What we sell, so that this stays free: a managed edition at
 [ekwo.ai](https://ekwo.ai) where the same schema runs on your own Supabase
 project, and Ekwo operates the application, the AI agents you set up, the bank
 connections, the Peppol access point and the channels to the administrations.
-It is infrastructure, not an accounting service: the books and the filings stay
+It is infrastructure, not a service that keeps the books: the books and the filings stay
 the business's and its accountant's. The Community edition
 stands on its own, with us or without us, for as long as its owner wants it to.
 That is the test every feature has to pass before it lands here.
