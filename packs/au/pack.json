@@ -1,0 +1,426 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "AU",
+  "name": "Australia",
+  "version": "0.1.0",
+  "schema_min": "20260917170000",
+  "seed_sequence": 40,
+  "released_at": "2026-09-21",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "gst-act",
+        "title": "A New Tax System (Goods and Services Tax) Act 1999 (No. 55, 1999), as compiled",
+        "publisher": "Office of Parliamentary Counsel — Federal Register of Legislation",
+        "url": "https://www.legislation.gov.au/C2004A00446/latest/text",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "gst-regs",
+        "title": "A New Tax System (Goods and Services Tax) Regulations 2019 (F2019L00417), as compiled",
+        "publisher": "Office of Parliamentary Counsel — Federal Register of Legislation",
+        "url": "https://www.legislation.gov.au/F2019L00417/latest/text",
+        "consulted_on": "2026-09-21",
+        "kind": "regulation"
+      },
+      {
+        "key": "taa-1953",
+        "title": "Taxation Administration Act 1953, Schedule 1 — pay as you go withholding",
+        "publisher": "Office of Parliamentary Counsel — Federal Register of Legislation",
+        "url": "https://www.legislation.gov.au/C1953A00001/latest/text",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "abn-act",
+        "title": "A New Tax System (Australian Business Number) Act 1999",
+        "publisher": "Office of Parliamentary Counsel — Federal Register of Legislation",
+        "url": "https://www.legislation.gov.au/C2004A00467/latest/text",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "corporations-act",
+        "title": "Corporations Act 2001 (No. 50, 2001), as compiled — Chapter 2M, financial reports and audit",
+        "publisher": "Office of Parliamentary Counsel — Federal Register of Legislation",
+        "url": "https://www.legislation.gov.au/C2004A00818/latest/text",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "aia-1901",
+        "title": "Acts Interpretation Act 1901, s. 2B — definition of financial year",
+        "publisher": "Office of Parliamentary Counsel — Federal Register of Legislation",
+        "url": "https://www.legislation.gov.au/C1901A00002/latest/text",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "itaa-1997",
+        "title": "Income Tax Assessment Act 1997",
+        "publisher": "Office of Parliamentary Counsel — Federal Register of Legislation",
+        "url": "https://www.legislation.gov.au/C2004A05138/latest/text",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "ptra-2020",
+        "title": "Payment Times Reporting Act 2020",
+        "publisher": "Office of Parliamentary Counsel — Federal Register of Legislation",
+        "url": "https://www.legislation.gov.au/C2020A00091/latest/text",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "aasb-1060",
+        "title": "AASB 1060 General Purpose Financial Statements – Simplified Disclosures for For-Profit and Not-for-Profit Tier 2 Entities (F2020L00288), as compiled",
+        "publisher": "Australian Accounting Standards Board, made under s. 334 of the Corporations Act 2001 — Federal Register of Legislation",
+        "url": "https://www.legislation.gov.au/F2020L00288/latest/text",
+        "consulted_on": "2026-09-21",
+        "kind": "standard"
+      },
+      {
+        "key": "asic-proprietary",
+        "title": "Are you a large or small proprietary company",
+        "publisher": "Australian Securities and Investments Commission",
+        "url": "https://asic.gov.au/regulatory-resources/financial-reporting-and-audit/preparers-of-financial-reports/are-you-a-large-or-small-proprietary-company/",
+        "consulted_on": "2026-09-21",
+        "kind": "guidance"
+      },
+      {
+        "key": "bas-form",
+        "title": "Business activity statement, form NAT 4189 (September 2025)",
+        "publisher": "Australian Taxation Office",
+        "url": "https://www.ato.gov.au/api/public/content/f7b9a42b-8fec-4250-8c45-4c72fa7f9b8d_BUS25199Nat4189s_pdf",
+        "consulted_on": "2026-09-21",
+        "kind": "form"
+      },
+      {
+        "key": "bas-instructions",
+        "title": "Instructions for completing your BAS",
+        "publisher": "Australian Taxation Office",
+        "url": "https://www.ato.gov.au/businesses-and-organisations/gst-excise-and-indirect-taxes/gst/completing-your-bas-for-gst/complete-your-bas",
+        "consulted_on": "2026-09-21",
+        "kind": "form"
+      },
+      {
+        "key": "bas-step1",
+        "title": "Instructions for completing your BAS — Step 1: Sales (G1 to G3)",
+        "publisher": "Australian Taxation Office",
+        "url": "https://www.ato.gov.au/businesses-and-organisations/gst-excise-and-indirect-taxes/gst/completing-your-bas-for-gst/complete-your-bas/step-1-sales",
+        "consulted_on": "2026-09-21",
+        "kind": "form"
+      },
+      {
+        "key": "bas-step3",
+        "title": "Instructions for completing your BAS — Step 3: Purchases (G10 and G11)",
+        "publisher": "Australian Taxation Office",
+        "url": "https://www.ato.gov.au/businesses-and-organisations/gst-excise-and-indirect-taxes/gst/completing-your-bas-for-gst/complete-your-bas/step-3-purchases",
+        "consulted_on": "2026-09-21",
+        "kind": "form"
+      },
+      {
+        "key": "bas-step5",
+        "title": "Instructions for completing your BAS — Step 5: Summary (1A and 1B)",
+        "publisher": "Australian Taxation Office",
+        "url": "https://www.ato.gov.au/businesses-and-organisations/gst-excise-and-indirect-taxes/gst/completing-your-bas-for-gst/complete-your-bas/step-5-summary",
+        "consulted_on": "2026-09-21",
+        "kind": "form"
+      },
+      {
+        "key": "bas-worksheet",
+        "title": "Instructions for completing your BAS — Step 2 and Step 4: the calculation worksheet (G4 to G9, G12 to G20)",
+        "publisher": "Australian Taxation Office",
+        "url": "https://www.ato.gov.au/businesses-and-organisations/gst-excise-and-indirect-taxes/gst/completing-your-bas-for-gst/complete-your-bas/step-2-calculating-sales-using-the-calculation-worksheet",
+        "consulted_on": "2026-09-21",
+        "kind": "form"
+      },
+      {
+        "key": "bas-method",
+        "title": "Choose a method to complete your full BAS",
+        "publisher": "Australian Taxation Office",
+        "url": "https://www.ato.gov.au/businesses-and-organisations/gst-excise-and-indirect-taxes/gst/completing-your-bas-for-gst/choose-a-method-to-complete-your-bas",
+        "consulted_on": "2026-09-21",
+        "kind": "guidance"
+      },
+      {
+        "key": "bas-basis",
+        "title": "Identify your accounting basis",
+        "publisher": "Australian Taxation Office",
+        "url": "https://www.ato.gov.au/businesses-and-organisations/gst-excise-and-indirect-taxes/gst/completing-your-bas-for-gst/identify-your-accounting-basis",
+        "consulted_on": "2026-09-21",
+        "kind": "guidance"
+      },
+      {
+        "key": "bas-due",
+        "title": "Due dates for lodging and paying your BAS",
+        "publisher": "Australian Taxation Office",
+        "url": "https://www.ato.gov.au/businesses-and-organisations/preparing-lodging-and-paying/business-activity-statements-bas/due-dates-for-lodging-and-paying-your-bas",
+        "consulted_on": "2026-09-21",
+        "kind": "guidance"
+      },
+      {
+        "key": "gst-periods",
+        "title": "When and how to report and pay GST",
+        "publisher": "Australian Taxation Office",
+        "url": "https://www.ato.gov.au/businesses-and-organisations/gst-excise-and-indirect-taxes/gst/when-and-how-to-report-and-pay-gst",
+        "consulted_on": "2026-09-21",
+        "kind": "guidance"
+      },
+      {
+        "key": "gst-cash",
+        "title": "Choosing an accounting method for GST",
+        "publisher": "Australian Taxation Office",
+        "url": "https://www.ato.gov.au/businesses-and-organisations/gst-excise-and-indirect-taxes/gst/accounting-for-gst-in-your-business/choosing-an-accounting-method",
+        "consulted_on": "2026-09-21",
+        "kind": "guidance"
+      },
+      {
+        "key": "gst-free",
+        "title": "GST-free sales",
+        "publisher": "Australian Taxation Office",
+        "url": "https://www.ato.gov.au/businesses-and-organisations/gst-excise-and-indirect-taxes/gst/when-to-charge-gst-and-when-not-to/gst-free-sales",
+        "consulted_on": "2026-09-21",
+        "kind": "guidance"
+      },
+      {
+        "key": "input-taxed",
+        "title": "Input-taxed sales",
+        "publisher": "Australian Taxation Office",
+        "url": "https://www.ato.gov.au/businesses-and-organisations/gst-excise-and-indirect-taxes/gst/when-to-charge-gst-and-when-not-to/input-taxed-sales",
+        "consulted_on": "2026-09-21",
+        "kind": "guidance"
+      },
+      {
+        "key": "tax-invoices",
+        "title": "Tax invoices",
+        "publisher": "Australian Taxation Office",
+        "url": "https://www.ato.gov.au/businesses-and-organisations/gst-excise-and-indirect-taxes/gst/tax-invoices",
+        "consulted_on": "2026-09-21",
+        "kind": "guidance"
+      },
+      {
+        "key": "gst-registration",
+        "title": "Registering for GST",
+        "publisher": "Australian Taxation Office",
+        "url": "https://www.ato.gov.au/businesses-and-organisations/gst-excise-and-indirect-taxes/gst/registering-for-gst",
+        "consulted_on": "2026-09-21",
+        "kind": "guidance"
+      },
+      {
+        "key": "ato-reverse-charge",
+        "title": "Reverse charge GST on offshore goods and services purchases",
+        "publisher": "Australian Taxation Office",
+        "url": "https://www.ato.gov.au/businesses-and-organisations/gst-excise-and-indirect-taxes/gst/in-detail/rules-for-specific-transactions/international-transactions/reverse-charge-gst-on-offshore-goods-and-services-purchases",
+        "consulted_on": "2026-09-21",
+        "kind": "guidance"
+      },
+      {
+        "key": "ato-deferred-gst",
+        "title": "Deferred GST scheme",
+        "publisher": "Australian Taxation Office",
+        "url": "https://www.ato.gov.au/businesses-and-organisations/gst-excise-and-indirect-taxes/gst/in-detail/rules-for-specific-transactions/international-transactions/deferred-gst",
+        "consulted_on": "2026-09-21",
+        "kind": "guidance"
+      },
+      {
+        "key": "payg-bas",
+        "title": "Pay as you go (PAYG) withholding — how to complete your activity statement labels",
+        "publisher": "Australian Taxation Office",
+        "url": "https://www.ato.gov.au/businesses-and-organisations/preparing-lodging-and-paying/business-activity-statements-bas/pay-as-you-go-payg-withholding",
+        "consulted_on": "2026-09-21",
+        "kind": "guidance"
+      },
+      {
+        "key": "no-abn-withholding",
+        "title": "Withholding if ABN is not provided",
+        "publisher": "Australian Taxation Office",
+        "url": "https://www.ato.gov.au/businesses-and-organisations/hiring-and-paying-your-workers/payg-withholding/payments-you-need-to-withhold-from/withholding-from-suppliers/withholding-if-abn-not-provided",
+        "consulted_on": "2026-09-21",
+        "kind": "guidance"
+      },
+      {
+        "key": "einvoicing-government",
+        "title": "eInvoicing for government",
+        "publisher": "Australian Taxation Office — Australian Peppol Authority",
+        "url": "https://www.ato.gov.au/businesses-and-organisations/einvoicing/einvoicing-for-government",
+        "consulted_on": "2026-09-21",
+        "kind": "guidance"
+      },
+      {
+        "key": "pint-aunz",
+        "title": "PINT A-NZ Billing BIS — Peppol International specification for Australia and New Zealand",
+        "publisher": "OpenPeppol, with the ATO and the New Zealand Peppol Authority",
+        "url": "https://docs.peppol.eu/poac/aunz/pint-aunz/bis/",
+        "consulted_on": "2026-09-21",
+        "kind": "standard"
+      },
+      {
+        "key": "peppol-eas",
+        "title": "Electronic Address Scheme (EAS) code list — 0151, Australian Business Number",
+        "publisher": "OpenPEPPOL",
+        "url": "https://docs.peppol.eu/poacc/billing/3.0/codelist/eas/",
+        "consulted_on": "2026-09-21",
+        "kind": "standard"
+      },
+      {
+        "key": "uncl5305",
+        "title": "UNCL5305 — duty or tax or fee category code",
+        "publisher": "OpenPEPPOL — the list itself is published by UN/CEFACT",
+        "url": "https://docs.peppol.eu/poacc/billing/3.0/codelist/UNCL5305/",
+        "consulted_on": "2026-09-21",
+        "kind": "standard"
+      },
+      {
+        "key": "ato-online-services",
+        "title": "Online services for business",
+        "publisher": "Australian Taxation Office",
+        "url": "https://www.ato.gov.au/online-services/businesses-and-organisations-online-services",
+        "consulted_on": "2026-09-21",
+        "kind": "portal"
+      },
+      {
+        "key": "abn-lookup",
+        "title": "ABN Lookup",
+        "publisher": "Australian Business Register",
+        "url": "https://abr.business.gov.au/",
+        "consulted_on": "2026-09-21",
+        "kind": "portal"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "AUD",
+    "language": "en",
+    "rounding_method": "half_up",
+    "closing_style": "retained_earnings",
+    "fiscal_year_default": "july",
+    "roles": {
+      "receivable": "1100",
+      "payable": "2000",
+      "suspense": "2990",
+      "rounding": "6990",
+      "retained_earnings": "3200",
+      "sales": "4000",
+      "purchase": "5000",
+      "bank": "1010",
+      "cash": "1000",
+      "fx_gain": "4700",
+      "fx_loss": "6950",
+      "asset_disposal_gain": "4750",
+      "asset_disposal_loss": "6960",
+      "tax_payable": "2110",
+      "tax_receivable": "1155"
+    },
+    "journal_roles": {
+      "sales": "SAL",
+      "purchase": "PUR",
+      "miscellaneous": "GEN",
+      "opening": "OPN"
+    }
+  },
+  "languages": [],
+  "journals": [
+    {
+      "code": "SAL",
+      "type": "sales",
+      "name": "Sales journal",
+      "sequence": 10
+    },
+    {
+      "code": "PUR",
+      "type": "purchase",
+      "name": "Purchases journal",
+      "sequence": 20
+    },
+    {
+      "code": "BNK",
+      "type": "bank",
+      "name": "Bank",
+      "sequence": 30
+    },
+    {
+      "code": "CSH",
+      "type": "cash",
+      "name": "Petty cash",
+      "sequence": 40
+    },
+    {
+      "code": "GEN",
+      "type": "general",
+      "name": "General journal",
+      "sequence": 50
+    },
+    {
+      "code": "OPN",
+      "type": "opening",
+      "name": "Opening balances",
+      "sequence": 60
+    }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Australia reference chart of accounts",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": [
+        "AU-AASB1060-SFP",
+        "AU-AASB1060-PL"
+      ],
+      "legal_reference": "There is no legal chart of accounts in Australia. Corporations Act 2001, s. 286 requires a company to keep written financial records that correctly record and explain its transactions and would enable true and fair financial statements to be prepared, and prescribes none; s. 292 requires a financial report of every public company and large proprietary company, and of a small proprietary company only when its shareholders (s. 293) or ASIC (s. 294) direct it; s. 295 and s. 296 make that report comply with the accounting standards the AASB makes under s. 334. A proprietary company is large when it meets two of the thresholds of s. 45A(3) as prescribed — $50 million of consolidated revenue, $25 million of consolidated gross assets, 100 employees, for years from 1 July 2019 (ASIC). This chart is original: four digits, blocked so that each range reaches one line item of paragraph 35 of AASB 1060, whose Tier 2 simplified disclosures are what a company that has to lodge accounts but is not publicly accountable reports under; a small proprietary company that lodges nothing keeps the same books and uses the same statements as management accounts.",
+      "source": "corporations-act"
+    }
+  ],
+  "documents": {
+    "numbering": "free",
+    "number_format": "{CODE}-{YYYY}-{NNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "invoice_date",
+    "references": {
+      "numbering": {
+        "legal_reference": "A New Tax System (Goods and Services Tax) Act 1999, s. 29-70(1) — a tax invoice contains enough information to ascertain the supplier's identity and ABN, the recipient's identity or ABN where the total price is at least $1,000, what is supplied with its quantity and price, the extent to which each supply is taxable, the date of issue and the GST payable, and it has to be clear that the document is intended to be a tax invoice. No invoice number is among those particulars, which is why numbering is `free`; the pattern in number_format is one a business may choose, not one the law asks for.",
+        "source": "gst-act"
+      },
+      "payment_terms": {
+        "legal_reference": "No Commonwealth statute sets a payment term between businesses in the absence of an agreement, and none sets statutory interest on a late payment, so legal_payment_days and late_payment_reference are empty. The Payment Times Reporting Act 2020, s. 3, promotes timely payment by large businesses and makes them report their payment terms and times towards small business suppliers; it reports a term and does not impose one.",
+        "source": "ptra-2020"
+      },
+      "tax_point": {
+        "legal_reference": "A New Tax System (Goods and Services Tax) Act 1999, s. 29-5(1) — the GST on a taxable supply is attributable to the tax period in which any of the consideration is received or, if an invoice is issued before any consideration is received, the period in which the invoice is issued; s. 29-10(1) says the same of an input tax credit. The rule is the earlier of the invoice and the first payment, and delivery plays no part in it. `invoice_date` is right whenever the invoice comes first, which is the ordinary case between businesses, and wrong for a deposit received before any invoice, which Ekwo has no document for; s. 29-5(2) moves the whole of it to payment for an entity that accounts on a cash basis, which the taxes that declare cash_basis carry.",
+        "source": "gst-act"
+      }
+    },
+    "mentions": [
+      {
+        "code": "export",
+        "applies_when": "export",
+        "text": "GST-free export under section 38-185 or 38-190 of the A New Tax System (Goods and Services Tax) Act 1999.",
+        "sequence": 10,
+        "legal_reference": "A New Tax System (Goods and Services Tax) Act 1999, s. 29-70(1)(c)(iv) — a tax invoice shows the extent to which each supply it covers is a taxable supply; ATO, Tax invoices, asks an invoice that mixes taxable and non-taxable items to show clearly which are taxable. The sentence says why an export carries no GST.",
+        "source": "gst-act"
+      },
+      {
+        "code": "input_taxed",
+        "applies_when": "exempt",
+        "text": "Input-taxed supply — no GST is payable (Division 40 of the A New Tax System (Goods and Services Tax) Act 1999).",
+        "sequence": 20,
+        "legal_reference": "A New Tax System (Goods and Services Tax) Act 1999, s. 29-70(1)(c)(iv) — the extent to which each supply is taxable; an input-taxed supply is not a taxable supply (s. 9-5) and the sentence names the Division that makes it so.",
+        "source": "gst-act"
+      }
+    ]
+  },
+  "einvoicing": {
+    "profile": "pint-aunz",
+    "mandatory_from": null,
+    "obligation": "none",
+    "party_scheme": "0151",
+    "vat_scheme": "0151",
+    "legal_reference": "No Australian statute obliges a business to issue or to accept an electronic invoice from another business, so the obligation is `none` and mandatory_from is empty. Australia exchanges electronic invoices on the Peppol network, of which the ATO is the Australian Peppol Authority, under the PINT A-NZ Billing specification that Australia shares with New Zealand (customization urn:peppol:pint:billing-1@aunz-1). Towards the public sector the obligation is the buyer's: ATO, eInvoicing for government, records the 2022 mandate for non-corporate Commonwealth entities to be able to receive eInvoices and the policy, announced in the Budget 2024–25 and not yet enacted, making eInvoicing their default method with 30 % of invoices received by 1 July 2026; nothing in it binds a supplier. ATO, Tax invoices, accepts an eInvoice issued under the A-NZ specification with its mandatory data as a document intended to be a tax invoice. Both identifiers are the Australian Business Number, ISO 6523 ICD 0151 of the Peppol electronic address scheme list: an Australian business is addressed by its ABN, and the ABN is also the identifier under which it is registered for GST, a branch appending its three-digit branch number.",
+    "source": "pint-aunz"
+  }
+}

@@ -1,0 +1,578 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "A year of a GST-registered Australian trading company, lodging quarterly on the accounts method, for the financial year to 30 June 2027",
+  "chart": "default",
+  "fiscal_year": {
+    "name": "Financial year ended 30 June 2027",
+    "start": "2026-07-01",
+    "end": "2027-06-30"
+  },
+  "periods": [
+    {
+      "code": "2026-Q1",
+      "from": "2026-07-01",
+      "to": "2026-09-30"
+    },
+    {
+      "code": "2026-Q2",
+      "from": "2026-10-01",
+      "to": "2026-12-31"
+    },
+    {
+      "code": "2027-Q3",
+      "from": "2027-01-01",
+      "to": "2027-03-31"
+    },
+    {
+      "code": "2027-Q4",
+      "from": "2027-04-01",
+      "to": "2027-06-30"
+    }
+  ],
+  "statements": [
+    "AU-AASB1060-SFP",
+    "AU-AASB1060-PL"
+  ],
+  "contacts": [
+    {
+      "ref": "cust-au",
+      "name": "Banksia Home Wares Pty Ltd",
+      "type": "customer",
+      "country": "AU"
+    },
+    {
+      "ref": "cust-counter",
+      "name": "Counter sales",
+      "type": "customer",
+      "country": "AU"
+    },
+    {
+      "ref": "cust-grocer",
+      "name": "Harbour Grocers Pty Ltd",
+      "type": "customer",
+      "country": "AU"
+    },
+    {
+      "ref": "cust-us",
+      "name": "Redwood Outfitters Inc.",
+      "type": "customer",
+      "country": "US"
+    },
+    {
+      "ref": "cust-gb",
+      "name": "Thistle and Oak Ltd",
+      "type": "customer",
+      "country": "GB"
+    },
+    {
+      "ref": "tenant",
+      "name": "Residential tenant — Unit 4",
+      "type": "customer",
+      "country": "AU"
+    },
+    {
+      "ref": "cust-edu",
+      "name": "Coastal Skills Institute Pty Ltd",
+      "type": "customer",
+      "country": "AU"
+    },
+    {
+      "ref": "supp-au",
+      "name": "Ironbark Wholesale Pty Ltd",
+      "type": "supplier",
+      "country": "AU"
+    },
+    {
+      "ref": "supp-it",
+      "name": "Southern Cross Computers Pty Ltd",
+      "type": "supplier",
+      "country": "AU"
+    },
+    {
+      "ref": "supp-dining",
+      "name": "Laneway Dining Pty Ltd",
+      "type": "supplier",
+      "country": "AU"
+    },
+    {
+      "ref": "supp-gb",
+      "name": "Fenwick Cloud Software Ltd",
+      "type": "supplier",
+      "country": "GB"
+    },
+    {
+      "ref": "supp-us",
+      "name": "Mesa Industrial Supply Inc.",
+      "type": "supplier",
+      "country": "US"
+    },
+    {
+      "ref": "supp-noabn",
+      "name": "Sparkle Window Cleaning",
+      "type": "supplier",
+      "country": "AU"
+    },
+    {
+      "ref": "supp-produce",
+      "name": "Riverina Produce Co-operative",
+      "type": "supplier",
+      "country": "AU"
+    },
+    {
+      "ref": "supp-bank",
+      "name": "Tallowwood Bank Ltd",
+      "type": "supplier",
+      "country": "AU"
+    },
+    {
+      "ref": "supp-advice",
+      "name": "Gum Tree Advisory Pty Ltd",
+      "type": "supplier",
+      "country": "AU"
+    },
+    {
+      "ref": "supp-gb2",
+      "name": "Moorland Analytics Ltd",
+      "type": "supplier",
+      "country": "GB"
+    },
+    {
+      "ref": "supp-council",
+      "name": "Shire of Kestrel Bay",
+      "type": "supplier",
+      "country": "AU"
+    }
+  ],
+  "documents": [
+    {
+      "ref": "S1",
+      "type": "sale_invoice",
+      "contact": "cust-au",
+      "date": "2026-07-08",
+      "why": "A taxable sale: the value at G1 without GST, as the accounts-method choice this pack makes requires, and the GST at 1A.",
+      "lines": [
+        {
+          "name": "Homewares",
+          "quantity": 12,
+          "unit_price": 850,
+          "tax": "AU-S-GST",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "P1",
+      "type": "purchase_invoice",
+      "contact": "supp-au",
+      "date": "2026-07-10",
+      "why": "A creditable purchase of trading stock: G11 takes the value and 1B the credit.",
+      "lines": [
+        {
+          "name": "Goods for resale",
+          "quantity": 1,
+          "unit_price": 6400,
+          "tax": "AU-P-GST",
+          "account": "5000"
+        }
+      ]
+    },
+    {
+      "ref": "S2",
+      "type": "sale_invoice",
+      "contact": "cust-counter",
+      "date": "2026-07-20",
+      "why": "A retail sale on a GST-inclusive price: the engine takes one eleventh out, 150.00 on 1,650.00, and G1 takes the 1,500.00 left.",
+      "lines": [
+        {
+          "name": "Shop takings",
+          "quantity": 1,
+          "unit_price": 1650,
+          "tax": "AU-S-GST-INC",
+          "account": "4050"
+        }
+      ]
+    },
+    {
+      "ref": "S3",
+      "type": "sale_invoice",
+      "contact": "cust-grocer",
+      "date": "2026-08-05",
+      "why": "A GST-free sale of basic food: G1 and G3 both take it and 1A takes nothing.",
+      "lines": [
+        {
+          "name": "Packaged fresh produce",
+          "quantity": 1,
+          "unit_price": 3200,
+          "tax": "AU-S-FRE-FOOD",
+          "account": "4020"
+        }
+      ]
+    },
+    {
+      "ref": "P2",
+      "type": "purchase_invoice",
+      "contact": "supp-it",
+      "date": "2026-08-12",
+      "why": "A capital purchase: the value goes to G10 and not to G11, which is why the pack carries a capital code at all, and the credit to 1B.",
+      "lines": [
+        {
+          "name": "Laptops for staff",
+          "quantity": 4,
+          "unit_price": 1200,
+          "tax": "AU-P-GST-CAP",
+          "account": "1650"
+        }
+      ]
+    },
+    {
+      "ref": "S4",
+      "type": "sale_invoice",
+      "contact": "cust-us",
+      "date": "2026-08-25",
+      "why": "A GST-free export of goods: G1 and G2 take the value, 1A nothing, and the invoice carries the export sentence.",
+      "lines": [
+        {
+          "name": "Homewares shipped to Seattle",
+          "quantity": 1,
+          "unit_price": 9000,
+          "tax": "AU-S-EXPORT",
+          "account": "4030"
+        }
+      ]
+    },
+    {
+      "ref": "P3",
+      "type": "purchase_invoice",
+      "contact": "supp-dining",
+      "date": "2026-09-03",
+      "why": "Entertainment, a non-deductible expense under s. 69-5: the GST is not a credit, so it lands on 6390, which ends up holding 660.00 for a 600.00 bill, and 1B stays empty while G11 still takes the value.",
+      "lines": [
+        {
+          "name": "Client dinner",
+          "quantity": 1,
+          "unit_price": 600,
+          "tax": "AU-P-GST-NCI",
+          "account": "6390"
+        }
+      ]
+    },
+    {
+      "ref": "S5",
+      "type": "sale_invoice",
+      "contact": "tenant",
+      "date": "2026-09-15",
+      "why": "Residential rent, input taxed: G1 takes it and nothing else does, and the invoice carries the input-taxed sentence.",
+      "lines": [
+        {
+          "name": "Rent of Unit 4, September quarter",
+          "quantity": 1,
+          "unit_price": 2400,
+          "tax": "AU-S-ITS-RES",
+          "account": "4040"
+        }
+      ]
+    },
+    {
+      "ref": "S6",
+      "type": "sale_invoice",
+      "contact": "cust-gb",
+      "date": "2026-10-06",
+      "why": "A GST-free supply of services to a non-resident outside Australia: G1 and G3, and not G2, which the ATO keeps for goods.",
+      "lines": [
+        {
+          "name": "Market research report",
+          "quantity": 1,
+          "unit_price": 5000,
+          "tax": "AU-S-EXPORT-SERV",
+          "account": "4030"
+        }
+      ]
+    },
+    {
+      "ref": "P4",
+      "type": "purchase_invoice",
+      "contact": "supp-gb",
+      "date": "2026-10-14",
+      "why": "An offshore service reverse charged under Division 84 because it serves the input-taxed letting: 1A takes the GST the company owes, 1B nothing, the GST lands on 6350, and G1 and G11 take the value.",
+      "lines": [
+        {
+          "name": "Tenancy management software subscription",
+          "quantity": 1,
+          "unit_price": 1200,
+          "tax": "AU-P-RC-ITS",
+          "account": "6350"
+        }
+      ]
+    },
+    {
+      "ref": "S7",
+      "type": "sale_invoice",
+      "contact": "cust-au",
+      "date": "2026-11-02",
+      "why": "A sale accounted for on a cash basis: nothing in the October quarter, and all of it in the January quarter when the customer pays.",
+      "lines": [
+        {
+          "name": "Merchandising services",
+          "quantity": 1,
+          "unit_price": 4000,
+          "tax": "AU-S-GST-CASH",
+          "account": "4010"
+        }
+      ]
+    },
+    {
+      "ref": "P5",
+      "type": "purchase_invoice",
+      "contact": "supp-us",
+      "date": "2026-11-18",
+      "why": "An importation under the deferred GST scheme: 7A takes the GST owed and 1B the credit, which cancel in 8A and 8B, and G11 takes the value.",
+      "lines": [
+        {
+          "name": "Imported display shelving for resale",
+          "quantity": 1,
+          "unit_price": 15000,
+          "tax": "AU-P-DGST",
+          "account": "5000"
+        }
+      ]
+    },
+    {
+      "ref": "S8",
+      "type": "sale_credit_note",
+      "contact": "cust-au",
+      "date": "2026-12-01",
+      "why": "A credit note on S1 for two returned units: G1 and 1A go down in the quarter it is issued.",
+      "lines": [
+        {
+          "name": "Returned homewares",
+          "quantity": 2,
+          "unit_price": 850,
+          "tax": "AU-S-GST",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "P6",
+      "type": "purchase_invoice",
+      "contact": "supp-noabn",
+      "date": "2027-01-12",
+      "why": "A supplier who quoted no ABN: 47 % of the invoice is withheld, waits on 2120, and reaches W4, W5, 4 and 8A; the supplier is paid the other 53 %.",
+      "lines": [
+        {
+          "name": "Window cleaning",
+          "quantity": 1,
+          "unit_price": 800,
+          "tax": "AU-P-NOABN-47",
+          "account": "6320"
+        }
+      ]
+    },
+    {
+      "ref": "P7",
+      "type": "purchase_invoice",
+      "contact": "supp-produce",
+      "date": "2027-02-03",
+      "why": "A GST-free purchase: G11 takes the value and there is no credit to claim.",
+      "lines": [
+        {
+          "name": "Fresh produce for resale",
+          "quantity": 1,
+          "unit_price": 1200,
+          "tax": "AU-P-FRE",
+          "account": "5000"
+        }
+      ]
+    },
+    {
+      "ref": "P8",
+      "type": "purchase_invoice",
+      "contact": "supp-bank",
+      "date": "2027-02-10",
+      "why": "An input-taxed purchase, bank fees: G11 and nothing else.",
+      "lines": [
+        {
+          "name": "Account keeping fees",
+          "quantity": 1,
+          "unit_price": 90,
+          "tax": "AU-P-ITS",
+          "account": "6430"
+        }
+      ]
+    },
+    {
+      "ref": "P9",
+      "type": "purchase_invoice",
+      "contact": "supp-advice",
+      "date": "2027-02-20",
+      "why": "A purchase accounted for on a cash basis: the credit waits on 1152 and reaches 1B in the April quarter, when the invoice is paid.",
+      "lines": [
+        {
+          "name": "Advisory services",
+          "quantity": 1,
+          "unit_price": 2000,
+          "tax": "AU-P-GST-CASH",
+          "account": "6420"
+        }
+      ]
+    },
+    {
+      "ref": "P10",
+      "type": "purchase_credit_note",
+      "contact": "supp-au",
+      "date": "2027-03-05",
+      "why": "A credit note received on P1: G11 and 1B go down.",
+      "lines": [
+        {
+          "name": "Returned stock",
+          "quantity": 1,
+          "unit_price": 400,
+          "tax": "AU-P-GST",
+          "account": "5000"
+        }
+      ]
+    },
+    {
+      "ref": "S9",
+      "type": "sale_invoice",
+      "contact": "cust-us",
+      "date": "2027-04-10",
+      "why": "Goods delivered from a warehouse in the United States to a customer there: not connected with Australia, so no GST and no box at all.",
+      "lines": [
+        {
+          "name": "Homewares shipped from the Reno warehouse",
+          "quantity": 1,
+          "unit_price": 3000,
+          "tax": "AU-S-NCA",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "S10",
+      "type": "sale_invoice",
+      "contact": "cust-edu",
+      "date": "2027-05-05",
+      "why": "A GST-free education course: G1 and G3.",
+      "lines": [
+        {
+          "name": "Retail merchandising short course",
+          "quantity": 1,
+          "unit_price": 1800,
+          "tax": "AU-S-FRE-EDU",
+          "account": "4020"
+        }
+      ]
+    },
+    {
+      "ref": "P11",
+      "type": "purchase_invoice",
+      "contact": "supp-gb2",
+      "date": "2027-05-20",
+      "why": "A service from a non-resident whose GST the company agreed to pay under s. 83-5: 1A and 1B take the same 250.00, and G1 and G11 the value.",
+      "lines": [
+        {
+          "name": "Pricing analysis",
+          "quantity": 1,
+          "unit_price": 2500,
+          "tax": "AU-P-RC-AGREED",
+          "account": "6420"
+        }
+      ]
+    },
+    {
+      "ref": "P12",
+      "type": "purchase_invoice",
+      "contact": "supp-council",
+      "date": "2027-06-02",
+      "why": "A fee with no GST in the price: G11 only.",
+      "lines": [
+        {
+          "name": "Footpath trading permit",
+          "quantity": 1,
+          "unit_price": 300,
+          "tax": "AU-P-NOGST",
+          "account": "6480"
+        }
+      ]
+    },
+    {
+      "ref": "S11",
+      "type": "sale_invoice",
+      "contact": "cust-au",
+      "date": "2027-06-15",
+      "why": "A second taxable sale, in the June quarter, so that the last period carries output tax and a positive 9.",
+      "lines": [
+        {
+          "name": "Merchandising services",
+          "quantity": 1,
+          "unit_price": 7000,
+          "tax": "AU-S-GST",
+          "account": "4010"
+        }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "R1",
+      "direction": "inbound",
+      "date": "2026-08-07",
+      "amount": 11220,
+      "contact": "cust-au",
+      "journal": "BNK",
+      "match": "S1",
+      "why": "A receipt that settles S1 exactly."
+    },
+    {
+      "ref": "D1",
+      "direction": "outbound",
+      "date": "2026-08-09",
+      "amount": 7040,
+      "contact": "supp-au",
+      "journal": "BNK",
+      "match": "P1",
+      "why": "A payment that settles P1 exactly."
+    },
+    {
+      "ref": "R2",
+      "direction": "inbound",
+      "date": "2027-01-20",
+      "amount": 4400,
+      "contact": "cust-au",
+      "journal": "BNK",
+      "match": "S7",
+      "why": "The receipt that moves the GST of S7 from the waiting account to 1A, in the January quarter."
+    },
+    {
+      "ref": "D2",
+      "direction": "outbound",
+      "date": "2027-01-26",
+      "amount": 424,
+      "contact": "supp-noabn",
+      "journal": "BNK",
+      "match": "P6",
+      "why": "The 53 % of P6 the supplier is paid once 47 % has been withheld."
+    },
+    {
+      "ref": "D3",
+      "direction": "outbound",
+      "date": "2027-04-15",
+      "amount": 2200,
+      "contact": "supp-advice",
+      "journal": "BNK",
+      "match": "P9",
+      "why": "The payment that moves the credit of P9 to 1B, in the April quarter."
+    },
+    {
+      "ref": "R3",
+      "direction": "inbound",
+      "date": "2027-06-28",
+      "amount": 3000,
+      "contact": "cust-au",
+      "journal": "BNK",
+      "match": null,
+      "why": "A payment on account that matches no invoice and stays open."
+    }
+  ]
+}

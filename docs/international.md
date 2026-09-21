@@ -2386,3 +2386,85 @@ knew the RFC and the working-day calendar (CFF art. 12) could compute it.
 
 **MXN** is added to `00_currencies.sql` at two decimals, and `MX` to
 `00_territories.sql`, outside the common system of VAT.
+
+## Australia
+
+The first pack of Oceania, `packs/au/`, `community`, seed 40. Written from
+published sources alone on 21 September 2026: an original chart of 156 accounts
+blocked onto paragraph 35 of AASB 1060, 24 taxes — the one GST rate of s. 9-70
+since 1 July 2000, GST-free and input-taxed supplies kept apart, the offshore
+reverse charge of Division 84 and the agreed one of s. 83-5, deferred GST on
+imports, cash accounting on both sides, and the 47 % withheld from a supplier
+who quotes no ABN — the business activity statement NAT 4189 with label 7A, the
+statement of financial position and the statement of profit or loss of AASB
+1060, and a register of thirty-five texts. The pack's own
+[`README`](../packs/au/README.md) says where each rule comes from, ends on the
+nine points a reviewer should read first, and is written to be the model of the
+New Zealand pack.
+
+### From Australia
+
+Seven things the format could not say, none of them patched: each is contoured
+inside the pack and written down here.
+
+**A deadline that depends on the cadence, and one period that has its own.**
+A monthly statement is due on the 21st of the following month (GST Act,
+s. 31-10), a quarterly one on the 28th (s. 31-8), and the December quarter on
+28 February, two months later. A form carries one deadline rule, so a form
+filed on three cadences cannot give each its day, and no rule names an
+exception for one period of the year. The pack declares the 21st, which is
+never later than the law and is seven days early for most quarterly filers.
+*Fix*: a deadline per cadence, and a period-specific exception — Spain's
+form 303 wants the second too.
+
+**A return reported on a method the filer chooses.** The activity statement is
+completed either on the calculation worksheet, where every label includes GST
+and 1A and 1B are derived by dividing by eleven, or from the accounts, where G1
+may exclude GST and 1A and 1B come from the records. The two fill the same
+labels with different figures, and a pack has one set of postings. The pack
+takes the accounts method with GST-exclusive amounts, which is the one a ledger
+produces, and leaves the worksheet labels out. *Fix*: none needed while a
+ledger is the source; the day a GST-inclusive G1 is wanted, a box that is the
+sum of a base and a tax of the same posting would do it — `box_ref` already
+qualifies a kind, and a total of `G1:base` and a hidden tax box would be the
+shape.
+
+**A statement that is more than one tax.** The business activity statement
+reports GST, PAYG withholding, PAYG instalments, fringe benefits tax
+instalments, wine equalisation tax, luxury car tax and fuel tax credits on one
+form with one payable amount, label 9. The pack declares the whole form and
+leaves empty the labels no document fills, so 8A and 9 are right for a business
+whose only obligations are GST and no-ABN withholding and short for any other.
+*Fix*: a box fed from outside the ledger's taxes — a payroll figure, an
+instalment notice — which is an input to `vat_return()` rather than a posting.
+
+**A cash basis that is a regime of the business.** Section 29-40 lets a small
+business account for all its GST on payment. The pack carries it as codes with
+`cash_basis`, as the Irish pack does for the moneys received basis, and a
+company can mix them with accruals codes. This is the `small_business` gap
+again, and Australia adds that the regime covers purchases as well as sales.
+
+**A reverse charge the ATO reports at 110 %.** The ATO asks for the price of a
+reverse-charged offshore purchase multiplied by 1.1 at G1 and at G11, whatever
+method the filer uses. A base posting reports what the line carries, so the
+pack reports the price without GST, consistent with its choice at G1, and names
+the point first among those for a reviewer. *Fix*: a `box_factor` above 100 is
+already expressible and was deliberately not used, because it would contradict
+the GST-exclusive choice; the question is the ATO's, not the core's.
+
+**A mention that depends on the kind of document.** A tax invoice must be
+clearly intended as one (s. 29-70(1)(d)) and an adjustment note is a different
+document; `applies_when` has no condition on the document type, so "Tax invoice"
+is left to the renderer's title rather than written as a mention.
+
+**A unit filed by truncation.** Since `rounding.unit` a form may be filed in
+whole dollars, and the frozen box is `round_amount()` at the country's method,
+half up here. The activity statement says to round cents down — a label is
+truncated, not rounded — so declaring `unit: 1` would freeze 1,170.60 as 1,171
+where the ATO wants 1,170. The pack leaves `rounding` out and reports cents.
+*Fix*: a direction beside the unit (`down`), read by `prepare_filing()`.
+
+One more observation beside those. The tax point is the earlier of the invoice
+and the first payment (s. 29-5(1)), delivery playing no part; the vocabulary has
+`earliest_of_delivery_or_payment` and not its invoice counterpart, so the pack
+declares `invoice_date`, which is right whenever the invoice comes first.

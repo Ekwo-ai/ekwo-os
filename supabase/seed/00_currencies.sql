@@ -24,5 +24,6 @@ insert into currencies (code, name, symbol, decimal_places) values
   ('XAF', 'CFA franc BEAC',       'F CFA',   0),
   ('KMF', 'Comorian franc',       'CF',      0),
   ('GNF', 'Guinean franc',        'FG',      0),
-  ('CDF', 'Congolese franc',      'FC',      2)
+  ('CDF', 'Congolese franc',      'FC',      2),
+  ('AUD', 'Australian dollar',    '$',       2)
 on conflict (code) do nothing;

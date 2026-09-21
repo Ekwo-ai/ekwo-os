@@ -202,6 +202,7 @@ says what they say. `ekwo pack describe <cc>` is everything one of them says.
 <!-- generated:packs -->
 | Pack | Country | Seed | Languages | Certification |
 |---|---|---|---|---|
+| [`au`](../packs/au/) | Australia | `40_pack_au.sql` | en | `community` |
 | [`be`](../packs/be/) | Belgium | `10_pack_be.sql` | fr, nl, de, en | `maintained` |
 | [`ci`](../packs/ci/) | Côte d’Ivoire | `21_pack_ci.sql` | fr | `community` |
 | [`de`](../packs/de/) | Germany | `18_pack_de.sql` | de, en | `community` |

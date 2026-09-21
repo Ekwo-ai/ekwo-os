@@ -1,0 +1,910 @@
+[
+  {
+    "code": "AU-S-GST",
+    "name": "Sale, GST 10 %",
+    "description": "A taxable supply made in Australia",
+    "kind": "gst",
+    "rate": 10,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2000-07-01",
+    "legal_reference": "A New Tax System (Goods and Services Tax) Act 1999, s. 9-70 — the amount of GST on a taxable supply is 10 % of its value; s. 9-75 — the value is the price less the GST, one eleventh of a GST-inclusive price; s. 1-2 — the Act commences on 1 July 2000, and the rate has not moved since. The base is reported at G1 without GST under the accounts method and the GST at 1A.",
+    "source": "gst-act",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "G1"
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "1A"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "G1",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "1A",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 10
+  },
+  {
+    "code": "AU-S-GST-INC",
+    "name": "Retail sale, GST 10 %, the price includes the GST",
+    "description": "For a price set with the GST already in it, as a shelf price is",
+    "kind": "gst",
+    "rate": 10,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2000-07-01",
+    "price_include": true,
+    "legal_reference": "A New Tax System (Goods and Services Tax) Act 1999, s. 9-70 — the amount of GST on a taxable supply is 10 % of its value; s. 9-75 — the value is the price less the GST, one eleventh of a GST-inclusive price; s. 1-2 — the Act commences on 1 July 2000, and the rate has not moved since. A retail price in Australia is quoted with the GST in it; price_include records that the unit price of a line is the GST-inclusive price, from which the engine takes one eleventh out, rounded under s. 9-90 — to the nearest cent, half a cent upwards.",
+    "source": "gst-act",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "G1"
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "1A"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "G1",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "1A",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 20
+  },
+  {
+    "code": "AU-S-GST-CASH",
+    "name": "Sale, GST 10 %, accounted for on a cash basis",
+    "kind": "gst",
+    "rate": 10,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2000-07-01",
+    "cash_basis": true,
+    "cash_basis_transition_account": "2105",
+    "conditions": [
+      "seller_threshold"
+    ],
+    "legal_reference": "A New Tax System (Goods and Services Tax) Act 1999, s. 29-5(2) — an entity that accounts on a cash basis attributes the GST on a taxable supply to the tax period in which the consideration is received, and only to the extent it is received; s. 29-40(1) — the choice is open to a small business entity, to an entity that does not carry on a business and has a GST turnover of $2 million or less, and to an entity that accounts for income tax on receipts, and s. 29-45 lets the Commissioner permit any other. ATO, Choosing an accounting method for GST, puts the small business entity at an aggregated turnover below $10 million. The choice is the entity's and covers all its supplies and acquisitions; the pack carries it as a code, and nothing stops a company on the accruals basis from choosing it.",
+    "source": "gst-act",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "G1"
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "1A"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "G1",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "1A",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 30
+  },
+  {
+    "code": "AU-S-FRE-FOOD",
+    "name": "Sale of food, GST-free",
+    "kind": "gst",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2000-07-01",
+    "conditions": [
+      "supply_nature"
+    ],
+    "legal_reference": "A New Tax System (Goods and Services Tax) Act 1999, s. 38-2 — a supply of food is GST-free; s. 38-3 excludes food for consumption on the premises, hot food, the prepared foods, confectionery, snacks, bakery products, ice-cream foods and biscuits of Schedule 1, and beverages other than those of Schedule 2. ATO, Instructions for completing your BAS, step 1, reports the sale at G1 and G3. A GST-free supply is a taxable supply at a nil charge, not an exempt one: the credits on what went into it stay claimable.",
+    "source": "gst-act",
+    "vat_category": "Z",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": [
+            "G1",
+            "G3"
+          ]
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": [
+            "G1",
+            "G3"
+          ],
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 40
+  },
+  {
+    "code": "AU-S-FRE-HEALTH",
+    "name": "Sale of health services, GST-free",
+    "kind": "gst",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2000-07-01",
+    "conditions": [
+      "supply_nature"
+    ],
+    "legal_reference": "A New Tax System (Goods and Services Tax) Act 1999, Subdivision 38-B — s. 38-7, a medical service is GST-free except where it is rendered for cosmetic reasons with no Medicare benefit payable, and ss. 38-10 to 38-60 for other health services, hospital treatment, residential and home care, medical aids and appliances and drugs. Reported at G1 and G3.",
+    "source": "gst-act",
+    "vat_category": "Z",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": [
+            "G1",
+            "G3"
+          ]
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": [
+            "G1",
+            "G3"
+          ],
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 50
+  },
+  {
+    "code": "AU-S-FRE-EDU",
+    "name": "Sale of an education course, GST-free",
+    "kind": "gst",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2000-07-01",
+    "conditions": [
+      "supply_nature"
+    ],
+    "legal_reference": "A New Tax System (Goods and Services Tax) Act 1999, Subdivision 38-C — s. 38-85, a supply of an education course, and of administrative services directly related to it by the supplier of the course, is GST-free; ss. 38-90 to 38-110 for excursions, course materials and what is not GST-free. Reported at G1 and G3.",
+    "source": "gst-act",
+    "vat_category": "Z",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": [
+            "G1",
+            "G3"
+          ]
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": [
+            "G1",
+            "G3"
+          ],
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 60
+  },
+  {
+    "code": "AU-S-FRE",
+    "name": "Sale, GST-free, other",
+    "kind": "gst",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2000-07-01",
+    "conditions": [
+      "supply_nature"
+    ],
+    "legal_reference": "A New Tax System (Goods and Services Tax) Act 1999, Division 38 — the other GST-free supplies: child care, religious services, water, sewerage and drainage, the supply of a going concern (s. 38-325), international transport (s. 38-355), precious metals, farm land and the rest the Division lists. Reported at G1 and G3. A code for the supplies the three above do not name; which provision applies is a fact about the supply that the ledger does not hold.",
+    "source": "gst-act",
+    "vat_category": "Z",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": [
+            "G1",
+            "G3"
+          ]
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": [
+            "G1",
+            "G3"
+          ],
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 70
+  },
+  {
+    "code": "AU-S-EXPORT",
+    "name": "Export of goods, GST-free",
+    "kind": "gst",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2000-07-01",
+    "conditions": [
+      "transport_evidence"
+    ],
+    "legal_reference": "A New Tax System (Goods and Services Tax) Act 1999, s. 38-185(1), item 1 — a supply of goods is GST-free if the supplier exports them from Australia before, or within 60 days after, the earlier of the day it receives any of the consideration and the day it issues an invoice. ATO, Instructions for completing your BAS, step 1, reports the free-on-board value at G2 and at G1, and the freight and insurance for the export at G3; the pack posts the whole line to G1 and G2 and cannot split it, so a line of freight on an export invoice should carry AU-S-FRE.",
+    "source": "gst-act",
+    "vat_category": "G",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": [
+            "G1",
+            "G2"
+          ]
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": [
+            "G1",
+            "G2"
+          ],
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 80
+  },
+  {
+    "code": "AU-S-EXPORT-SERV",
+    "name": "Supply for consumption outside Australia, GST-free",
+    "kind": "gst",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2000-07-01",
+    "conditions": [
+      "buyer_status"
+    ],
+    "legal_reference": "A New Tax System (Goods and Services Tax) Act 1999, s. 38-190 — a supply of a thing other than goods or real property is GST-free where the table of s. 38-190(1) covers it, typically a supply to a non-resident who is not in Australia when it is supplied. ATO, Instructions for completing your BAS, step 1, keeps services out of G2, so the value is reported at G1 and G3. The EN 16931 category is G, the one PINT A-NZ gives an export.",
+    "source": "gst-act",
+    "vat_category": "G",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": [
+            "G1",
+            "G3"
+          ]
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": [
+            "G1",
+            "G3"
+          ],
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 90
+  },
+  {
+    "code": "AU-S-ITS-FIN",
+    "name": "Financial supply, input taxed",
+    "kind": "gst",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2000-07-01",
+    "conditions": [
+      "supply_nature"
+    ],
+    "legal_reference": "A New Tax System (Goods and Services Tax) Act 1999, s. 40-5 — a financial supply is input taxed, and the GST Regulations 2019, s. 40-5.09, say what a financial supply is: lending, credit for a fee, interests in securities and the like. An input-taxed supply carries no GST and gives no credit for what went into it (s. 11-15(2)(a)). It is reported at G1; the worksheet label G4 where it would also sit is not reported under the accounts method. No exemption reason code: VATEX names articles of a Directive that does not bind an Australian supplier.",
+    "source": "gst-act",
+    "vat_category": "E",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "G1"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "G1",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 100
+  },
+  {
+    "code": "AU-S-ITS-RES",
+    "name": "Residential rent, input taxed",
+    "kind": "gst",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2000-07-01",
+    "conditions": [
+      "supply_nature"
+    ],
+    "legal_reference": "A New Tax System (Goods and Services Tax) Act 1999, s. 40-35 — a supply of residential premises by way of lease, hire or licence is input taxed, other than commercial residential premises and accommodation in them. Reported at G1.",
+    "source": "gst-act",
+    "vat_category": "E",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "G1"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "G1",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 110
+  },
+  {
+    "code": "AU-S-NCA",
+    "name": "Supply not connected with Australia",
+    "kind": "gst",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "not_subject",
+    "valid_from": "2000-07-01",
+    "legal_reference": "A New Tax System (Goods and Services Tax) Act 1999, s. 9-5 — a supply is taxable only if it is connected with the indirect tax zone, which s. 9-25 defines. ATO, Instructions for completing your BAS, step 1, lists amounts received for sales not connected with Australia among what is not reported at G1, so the base names no box.",
+    "source": "gst-act",
+    "vat_category": "O",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        }
+      ]
+    },
+    "sequence": 120
+  },
+  {
+    "code": "AU-P-GST",
+    "name": "Purchase, GST 10 %",
+    "kind": "gst",
+    "rate": 10,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2000-07-01",
+    "legal_reference": "A New Tax System (Goods and Services Tax) Act 1999, s. 11-20 and s. 11-25 — the input tax credit on a creditable acquisition is the GST payable on the supply; s. 29-10 attributes it to the period in which an invoice is issued or any consideration provided, and s. 29-10(3) requires a tax invoice before it is claimed, except for a supply whose value does not exceed $75 under s. 29-80 and the GST Regulations 2019, s. 29-80.01 — $82.50 with the GST in it. Reported at G11 and 1B.",
+    "source": "gst-act",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "G11"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "1B"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "G11",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "1B",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 130
+  },
+  {
+    "code": "AU-P-GST-CAP",
+    "name": "Capital purchase, GST 10 %",
+    "kind": "gst",
+    "rate": 10,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2000-07-01",
+    "legal_reference": "The same credit as AU-P-GST, on a capital acquisition — machinery, computers, vehicles, land and buildings — which the business activity statement reports at G10 instead of G11 (ATO, Instructions for completing your BAS, step 3). A business whose GST turnover is expected to be under $1 million and that does not record the two apart may report capital items of $1,000 or less at G11.",
+    "source": "bas-step3",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "G10"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "1B"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "G10",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "1B",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 140
+  },
+  {
+    "code": "AU-P-GST-CASH",
+    "name": "Purchase, GST 10 %, accounted for on a cash basis",
+    "kind": "gst",
+    "rate": 10,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2000-07-01",
+    "cash_basis": true,
+    "cash_basis_transition_account": "1152",
+    "legal_reference": "A New Tax System (Goods and Services Tax) Act 1999, s. 29-10(2) — an entity that accounts on a cash basis attributes an input tax credit to the tax period in which it provides the consideration, and only to the extent it provides it; s. 29-40 for who may choose it, as on the sale side. The condition is the purchasing company's own turnover, which no word of `conditions` names for a purchase, so the reference carries it.",
+    "source": "gst-act",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "G11"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "1B"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "G11",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "1B",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 150
+  },
+  {
+    "code": "AU-P-GST-NCI",
+    "name": "Purchase, GST 10 %, not creditable — non-deductible expense",
+    "kind": "gst",
+    "rate": 10,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2000-07-01",
+    "recoverable": false,
+    "legal_reference": "A New Tax System (Goods and Services Tax) Act 1999, s. 69-5 — an acquisition is not a creditable acquisition to the extent it is a non-deductible expense, which s. 69-5(3)(f) extends to the entertainment expenses Division 32 of the Income Tax Assessment Act 1997 makes non-deductible, beside penalties, recreational club expenses and the other items of s. 69-5(3). The GST is part of what the thing cost, so it lands on the account of the line and 1B stays empty; the value is still reported at G11.",
+    "source": "gst-act",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "G11"
+        },
+        {
+          "type": "tax_on_base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "G11",
+          "box_factor": -100
+        },
+        {
+          "type": "tax_on_base"
+        }
+      ]
+    },
+    "sequence": 160
+  },
+  {
+    "code": "AU-P-GST-ITS",
+    "name": "Purchase, GST 10 %, not creditable — relates to input-taxed supplies",
+    "kind": "gst",
+    "rate": 10,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2000-07-01",
+    "recoverable": false,
+    "legal_reference": "A New Tax System (Goods and Services Tax) Act 1999, s. 11-15(2)(a) — a thing is not acquired for a creditable purpose to the extent the acquisition relates to making supplies that would be input taxed, residential rent and financial supplies among them; s. 11-15(4) lifts the restriction for financial supplies where the financial acquisitions threshold is not exceeded. A purchase used partly for each needs an apportionment the pack does not carry. The GST follows the account of the line; the value is reported at G11.",
+    "source": "gst-act",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "G11"
+        },
+        {
+          "type": "tax_on_base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "G11",
+          "box_factor": -100
+        },
+        {
+          "type": "tax_on_base"
+        }
+      ]
+    },
+    "sequence": 170
+  },
+  {
+    "code": "AU-P-FRE",
+    "name": "Purchase, GST-free",
+    "kind": "gst",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2000-07-01",
+    "legal_reference": "A New Tax System (Goods and Services Tax) Act 1999, Division 38 — the supplier charged no GST, so there is none to claim; ATO, Instructions for completing your BAS, step 3, reports the value at G11 all the same.",
+    "source": "gst-act",
+    "vat_category": "Z",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "G11"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "G11",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 180
+  },
+  {
+    "code": "AU-P-ITS",
+    "name": "Purchase, input taxed",
+    "kind": "gst",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "exempt",
+    "valid_from": "2000-07-01",
+    "legal_reference": "A New Tax System (Goods and Services Tax) Act 1999, Division 40 — an input-taxed supply carries no GST, bank fees and residential rent among them; the value is reported at G11.",
+    "source": "gst-act",
+    "vat_category": "E",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "G11"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "G11",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 190
+  },
+  {
+    "code": "AU-P-NOGST",
+    "name": "Purchase with no GST in the price",
+    "kind": "gst",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "not_subject",
+    "valid_from": "2000-07-01",
+    "legal_reference": "A New Tax System (Goods and Services Tax) Act 1999, s. 9-5 — a supply by an entity that is not registered or required to be registered, or one not connected with Australia, is not a taxable supply, and neither are most Australian taxes, fees and charges (Division 81). ATO, Instructions for completing your BAS, step 3, reports the value at G11.",
+    "source": "gst-act",
+    "vat_category": "O",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "G11"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "G11",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 200
+  },
+  {
+    "code": "AU-P-RC-ITS",
+    "name": "Offshore supply reverse charged, GST 10 %, not creditable",
+    "kind": "gst",
+    "rate": 10,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2000-07-01",
+    "recoverable": false,
+    "legal_reference": "A New Tax System (Goods and Services Tax) Act 1999, s. 84-5 — a supply of anything other than goods or real property that is not connected with Australia is taxable if the registered recipient acquires it for an enterprise it carries on in Australia and not solely for a creditable purpose (s. 84-5(1A)); s. 84-10 makes the recipient liable for the GST, and s. 84-12 sets it at 10 % of the price. The reverse charge therefore reaches the business that cannot claim the whole credit: this code is the one that can claim none, because the acquisition relates to its input-taxed supplies (s. 11-15(2)(a)). ATO, Reverse charge GST on offshore goods and services purchases, reports the GST at 1A and the purchase at G1 and at G11; the ATO asks for the price multiplied by 1.1 at those two labels, and this pack reports the price without GST there, as its choice at G1 requires. The GST follows the account of the line.",
+    "source": "ato-reverse-charge",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": [
+            "G11",
+            "G1"
+          ]
+        },
+        {
+          "type": "tax_on_base"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2100",
+          "box": "1A"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": [
+            "G11",
+            "G1"
+          ],
+          "box_factor": -100
+        },
+        {
+          "type": "tax_on_base"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2100",
+          "box": "1A",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 210
+  },
+  {
+    "code": "AU-P-RC-AGREED",
+    "name": "Supply by a non-resident reverse charged by agreement, GST 10 %",
+    "kind": "gst",
+    "rate": 10,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2000-07-01",
+    "legal_reference": "A New Tax System (Goods and Services Tax) Act 1999, s. 83-5 — the GST on a taxable supply by a non-resident who does not make it through an enterprise carried on in Australia is payable by the registered recipient where the two agree; the recipient claims the credit it is entitled to without holding a tax invoice (ATO, Reverse charge GST on offshore goods and services purchases). Reported at 1A and 1B, and the purchase at G1 and G11.",
+    "source": "gst-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": [
+            "G11",
+            "G1"
+          ]
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "1B"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2100",
+          "box": "1A"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": [
+            "G11",
+            "G1"
+          ],
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "1B",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2100",
+          "box": "1A",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 220
+  },
+  {
+    "code": "AU-P-DGST",
+    "name": "Importation of goods, deferred GST 10 %",
+    "kind": "gst",
+    "rate": 10,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2000-07-01",
+    "legal_reference": "A New Tax System (Goods and Services Tax) Act 1999, s. 13-20 — GST on a taxable importation is 10 % of its value, the customs value plus international transport, insurance and duty; s. 33-15(1)(b) and the GST Regulations 2019, ss. 33-15.01A and 33-15.01B, let an approved importer that lodges monthly pay it with its activity statement instead of at the border. ATO, Deferred GST scheme, has the ATO prefill label 7A and the importer claim the credit at 1B in the same month, and reports the importation at G11. The base here is the value on the supplier's invoice; the value of the importation on which the ABF computed the GST is on the import declaration, and a difference between the two is a line of its own.",
+    "source": "ato-deferred-gst",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "G11"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "1B"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2115",
+          "box": "7A"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "G11",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "1B",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2115",
+          "box": "7A",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 230
+  },
+  {
+    "code": "AU-P-NOABN-47",
+    "name": "Purchase from a supplier who does not quote an ABN — 47 % withheld",
+    "kind": "withholding",
+    "rate": 47,
+    "scope": "purchase",
+    "treatment": "not_subject",
+    "valid_from": "2017-07-01",
+    "legal_reference": "Taxation Administration Act 1953, Schedule 1, s. 12-190 — a payer withholds an amount from a payment for a supply made in the course of an enterprise carried on in Australia when the supplier does not quote its ABN, unless an exception of the section applies — among them, under s. 12-190(4)(b), a payment of no more than $50 without GST or the higher amount the regulations specify, which ATO, Withholding if ABN is not provided, gives as $75; s. 16-70 — the amount withheld is paid to the Commissioner. ATO, Pay as you go (PAYG) withholding, sets the amount at 47 % of the invoice amount from 1 July 2017 and reports it at W4; the rates before that day are not carried. The supplier is paid the rest, the withheld amount waits on 2120, and the purchase itself, on which a supplier with no ABN charged no GST, is reported at G11.",
+    "source": "taa-1953",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "G11"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2120",
+          "box": "W4"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "G11",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2120",
+          "box": "W4",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 240
+  }
+]
