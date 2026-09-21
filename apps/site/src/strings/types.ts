@@ -66,6 +66,8 @@ export interface Strings {
     npm: string;
     /** The page for a business in several countries. */
     multi: string;
+    /** The timeline. */
+    changes: string;
   };
 
   home: {
@@ -348,6 +350,37 @@ export interface Strings {
     thanksBody: string;
     thanksDocs: string;
     thanksHome: string;
+  };
+
+  /**
+   * `/changes/` and the section of the home page that shows its head. Every
+   * item is read from the repository (`src/changes.ts`); these are only the
+   * words around them.
+   */
+  changes: {
+    title: string;
+    description: string;
+    eyebrow: string;
+    heading: string;
+    lead: string;
+    /** Where the items come from, under the list. */
+    source: string;
+    /** The section on the home page, and its link to the whole list. */
+    homeTitle: string;
+    homeLead: string;
+    all: string;
+    kinds: { country: string; feature: string; fix: string; release: string };
+    /** `{country}` is the pack's own name. */
+    newCountry: string;
+    /** `{country}` and `{version}`. */
+    countryVersion: string;
+    /** `{version}`. */
+    release: string;
+    unreleased: string;
+    undated: string;
+    /** The link of an item. */
+    readMore: string;
+    countryPage: string;
   };
 
   /** The grouping of every list of countries. */

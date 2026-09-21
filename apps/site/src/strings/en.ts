@@ -40,6 +40,7 @@ export const en: Strings = {
     source: 'Source',
     npm: 'npm',
     multi: 'Several countries',
+    changes: 'Latest changes',
   },
 
   home: {
@@ -631,6 +632,31 @@ export const en: Strings = {
 
   status: {
     planned: 'planned',
+  },
+
+  changes: {
+    title: 'Latest changes — Ekwo',
+    description: 'What changed in Ekwo, newest first: new countries, new versions of their packs, releases, features and fixes.',
+    eyebrow: 'Latest changes',
+    heading: 'What changed, day by day.',
+    lead:
+      'New countries, new versions of their rules, releases, features and fixes — newest first, ' +
+      'as the repository records them.',
+    source:
+      'Nothing here is written by hand. Releases, features and fixes are read from the ' +
+      'changelog, and countries from the packs themselves, so a country that lands in the ' +
+      'repository is on this page the next time the site is built.',
+    homeTitle: 'Latest changes',
+    homeLead: 'Read from the repository at every build: the countries, the releases, what was added and what was fixed.',
+    all: 'Every change',
+    kinds: { country: 'country', feature: 'feature', fix: 'fix', release: 'release' },
+    newCountry: 'New country: {country}',
+    countryVersion: '{country} pack {version}',
+    release: 'Ekwo OS {version} is released',
+    unreleased: 'not released yet',
+    undated: 'Not released yet',
+    readMore: 'In the changelog',
+    countryPage: 'The country page',
   },
 
   setup: {

@@ -350,6 +350,7 @@ export function Footer({
         >
           <span>{repository.license}</span>
           <a href="/multi-country/">{f.multi}</a>
+          <a href="/changes/">{f.changes}</a>
           <Out href={repository.file('LICENSE')}>{f.licence}</Out>
           <Out href={repository.file('DISCLAIMER.md')}>{f.disclaimer}</Out>
           <Out href={repository.file('SECURITY.md')}>{f.security}</Out>

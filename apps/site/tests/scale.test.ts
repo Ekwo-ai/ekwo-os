@@ -58,7 +58,7 @@ describe('the site at fifty and at two hundred countries', () => {
   it('has one page per country, and never one per pair', () => {
     for (const { count, site, pages } of sizes) {
       expect(site.countries).toHaveLength(count);
-      expect(pages).toHaveLength(LANGUAGES.length * (2 * count + data.docs.length + 8));
+      expect(pages).toHaveLength(LANGUAGES.length * (2 * count + data.docs.length + 9));
       expect(pages.filter((page) => page.url.startsWith('/compare/'))).toHaveLength(1);
     }
   });

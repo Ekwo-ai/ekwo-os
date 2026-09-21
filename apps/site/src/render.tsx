@@ -8,7 +8,8 @@
  * The list of pages is derived, never enumerated: for each language, one page
  * per pack of `listPacks()`, one per article of the documentation, plus the
  * home page, the core, the index of the documentation, the index of countries,
- * the page for a business in several countries, the comparison, the page that
+ * the page for a business in several countries, the comparison, the timeline of
+ * what changed, the page that
  * sets Ekwo up where no country is known and the one a sent form lands on.
  * Adding a country adds its page, the page that sets it up and a column of the
  * comparison — never a page per pair — and adding a language adds the whole
@@ -34,6 +35,7 @@ import { Country } from './pages/Country.js';
 import { Compare, PICKERS } from './pages/Compare.js';
 import { MultiCountry } from './pages/MultiCountry.js';
 import { SetUp, Thanks } from './pages/SetUp.js';
+import { Changes } from './pages/Changes.js';
 
 export interface RenderedPage {
   /** Where the file goes, relative to the output directory. */
@@ -139,6 +141,7 @@ function pagesOf(data: SiteData, strings: Strings): RenderedPage[] {
       s.compare.description,
       <Compare data={data} strings={s} />,
     ),
+    page(`${at}changes/`, lang, s.changes.title, s.changes.description, <Changes data={data} strings={s} />),
     page(`${at}signup/`, lang, s.setup.anyTitle, s.setup.anyDescription, <SetUp country={null} data={data} strings={s} />),
     page(`${at}thanks/`, lang, s.setup.thanksTitle, s.setup.thanksDescription, <Thanks data={data} strings={s} />, true),
   );

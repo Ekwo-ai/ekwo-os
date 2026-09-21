@@ -18,6 +18,7 @@
 
 import { readFile, readdir } from 'node:fs/promises';
 import { existsSync, statSync } from 'node:fs';
+import { execFileSync } from 'node:child_process';
 import { join, posix } from 'node:path';
 import { marked } from 'marked';
 import {
@@ -29,6 +30,7 @@ import {
   type PackDescription,
 } from '../../../packages/cli/src/index.js';
 import { buildDemo, type Demo } from './demo.js';
+import { changesOfChangelog, changesOfPacks, datesOfLines, timeline, type Change } from './changes.js';
 import { renderMarkdown, type Heading, type Slice } from './markdown.js';
 import { DOCS, FORMATS_DIR, FORMATS_TOPIC, type DocSource, type Topic } from './data/docs.js';
 import { SOURCE } from './strings/index.js';
@@ -129,6 +131,8 @@ export interface SiteData {
   icons: Record<string, string>;
   /** Distinct languages the packs publish, and the charts they carry. */
   languages: string[];
+  /** What changed, newest first: the changelog and the packs (`changes.ts`). */
+  changes: Change[];
 }
 
 export async function readSiteData(): Promise<SiteData> {
@@ -159,7 +163,73 @@ export async function readSiteData(): Promise<SiteData> {
     demo: await buildDemo(packs, dir),
     icons: await readIcons(root),
     languages,
+    changes: timeline(
+      changesOfPacks(countries, arrivalsOf(root, countries)),
+      changesOfChangelog(
+        await readFile(join(root, 'CHANGELOG.md'), 'utf8'),
+        repository.file('CHANGELOG.md'),
+        lineDatesOf(root, 'CHANGELOG.md'),
+      ),
+    ),
   };
+}
+
+/**
+ * Git, where the history is whole, or nothing.
+ *
+ * A shallow clone — or a copy with no `.git` — would date everything by the
+ * one commit it has, which is a wrong date rather than none. So it answers
+ * null, and what only git could date is left undated or left out.
+ */
+function historyOf(root: string): ((...args: string[]) => string) | null {
+  const git = (...args: string[]): string =>
+    execFileSync('git', ['-C', root, ...args], {
+      encoding: 'utf8',
+      stdio: ['ignore', 'pipe', 'ignore'],
+      maxBuffer: 64 * 1024 * 1024,
+    });
+  try {
+    return git('rev-parse', '--is-shallow-repository').trim() === 'false' ? git : null;
+  } catch {
+    return null;
+  }
+}
+
+/** The day each pack's manifest first entered the repository, where git can say it. */
+function arrivalsOf(root: string, countries: readonly PackDescription[]): Map<string, string> {
+  const git = historyOf(root);
+  const arrivals = new Map<string, string>();
+  if (git === null) return arrivals;
+  for (const country of countries) {
+    try {
+      const days = git('log', '--diff-filter=A', '--format=%cs', '--', `packs/${country.slug}/pack.json`)
+        .trim()
+        .split('\n')
+        .filter(Boolean);
+      const first = days[days.length - 1];
+      if (first !== undefined) arrivals.set(country.slug, first);
+    } catch {
+      // No answer for this pack: its arrival is not shown.
+    }
+  }
+  return arrivals;
+}
+
+/**
+ * The day each line of a file was last committed, where git can say it.
+ *
+ * Only the unreleased entries of the changelog are dated this way; everything
+ * else carries its own date. Without the history they are shown as not
+ * released yet, and undated.
+ */
+function lineDatesOf(root: string, file: string): Map<number, string> {
+  const git = historyOf(root);
+  if (git === null) return new Map();
+  try {
+    return datesOfLines(git('blame', '--porcelain', '--', file));
+  } catch {
+    return new Map();
+  }
 }
 
 /**

@@ -27,6 +27,7 @@ import { Demos } from './Terminal.js';
 import { WorldMap } from './WorldMap.js';
 import { regionAnchor, regionName } from './Regions.js';
 import { Glyph } from './icons.js';
+import { LatestChanges } from './Changes.js';
 import {
   Action,
   Card,
@@ -375,6 +376,11 @@ export function Landing({ data, strings }: { data: SiteData; strings: Strings })
           </Card>
         </div>
       </section>
+
+      {/* ---------------------------------------------------------------- */}
+      {/* What changed lately: read from the changelog and the packs.       */}
+      {/* ---------------------------------------------------------------- */}
+      <LatestChanges data={data} strings={strings} />
 
       {/* ---------------------------------------------------------------- */}
       {/* The closing statement, and the manifesto's own sentence: both     */}

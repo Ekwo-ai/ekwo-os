@@ -75,6 +75,7 @@ reads the disk, and it is the whole answer:
 | Everything on a country page | `describePack()`, the same object `ekwo pack describe --json` prints |
 | The country's name in other languages | `packs/<cc>/i18n/` |
 | The documentation, the manifesto among it | the Markdown files `src/data/docs.ts` lists, and one README per directory of `packages/formats/` |
+| The timeline, `/changes/` and its head on the home page | `CHANGELOG.md` and `describePack()`, dated by git where the history is whole — see [Latest changes](#latest-changes-the-timeline) |
 | The sentence on the home page | the first line of `README.md`, under its title |
 | The command to install | the `name` of `packages/cli/package.json` |
 | Every link to GitHub or npm | the `repository` of that same manifest |
@@ -214,6 +215,33 @@ Two things are the host's and not this repository's, and are set once in the
 Netlify dashboard: **form detection** has to be on for the site (Forms), and
 the **notification** that sends each submission to an address is configured
 there too. Until detection is on, nothing sent is recorded.
+
+## Latest changes: the timeline
+
+`/changes/` lists everything that changed, newest first and grouped by day;
+the home page shows the latest eight, and every page links to it from its
+foot. Nothing in it is written by hand (`src/changes.ts`):
+
+| Item | Read from | Dated by | Links to |
+|---|---|---|---|
+| **release** — "Ekwo OS 0.4.1 is released" | each `## [x.y.z] — <date>` of `CHANGELOG.md` | the heading | that heading of the changelog on GitHub |
+| **feature** / **fix** | each entry of a release — a bullet opening on a sentence in bold, the sentence being what is shown; `Fixed` and `Security` are fixes | the release | the release's heading |
+| the same, under `[Unreleased]` | the same | the day git says the entry's first line was last committed (`git blame`), and marked *not released yet* | `#unreleased` |
+| **country** — "New country: …" or "… pack 1.2.0" | `describePack()`: a pack at `0.1.0` or `1.0.0` is a new country, any other version is that country's pack at it | the pack's `released_at` | the country page |
+| **country** — "New country: …", for a pack past its first version | the first commit that added `packs/<cc>/pack.json` | that commit | the country page |
+
+So a pack merged into `packs/` is on the timeline, the map and the counters of
+the next build with nothing here edited.
+
+**Git is used only where the history is whole.** `git rev-parse
+--is-shallow-repository` is asked first: a shallow clone would date every line
+by the one commit it has, which is a wrong date rather than none. Without the
+history — a shallow clone, a tarball, no `git` — the build still passes and
+the timeline is still correct, only thinner: unreleased entries are shown
+first, as *not released yet* with no day, and the arrival of a country already
+past its first version is not shown. How deep the host clones is the host's
+to decide, and the build does not depend on it: a shallow clone is what
+degrades, and nothing fails.
 
 ## Third-party material
 

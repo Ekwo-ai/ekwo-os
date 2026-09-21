@@ -49,9 +49,9 @@ const DOCS_INDEX = '/docs/';
 const ROWS = statusRows(SOURCE);
 
 describe('the pages that exist', () => {
-  it('is two per pack and one per article, plus the eight pages of the site, for every language', () => {
+  it('is two per pack and one per article, plus the nine pages of the site, for every language', () => {
     // Per pack: its page and the page that sets it up.
-    expect(pages.length).toBe(LANGUAGES.length * (2 * slugs.length + data.docs.length + 8));
+    expect(pages.length).toBe(LANGUAGES.length * (2 * slugs.length + data.docs.length + 9));
   });
 
   it('publishes the source language at the root, and every other under its prefix', () => {
