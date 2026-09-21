@@ -14,7 +14,8 @@
     { "ref": "client-fr", "name": "Atelier Lumen SAS", "type": "customer", "country": "FR", "vat_number": null, "auxiliary_code": "C0001" },
     { "ref": "client-be", "name": "Studio Cobalt SRL", "type": "customer", "country": "BE", "vat_number": "BE0999999999", "auxiliary_code": "C0002" },
     { "ref": "fourn-fr", "name": "Fournitures Alcyon SARL", "type": "supplier", "country": "FR", "vat_number": null, "auxiliary_code": "F0001" },
-    { "ref": "fourn-de", "name": "Papeterie Nordwind GmbH", "type": "supplier", "country": "DE", "vat_number": "DE999999999", "auxiliary_code": "F0002" }
+    { "ref": "fourn-de", "name": "Papeterie Nordwind GmbH", "type": "supplier", "country": "DE", "vat_number": "DE999999999", "auxiliary_code": "F0002" },
+    { "ref": "client-re", "name": "Comptoir Bourbon SARL", "type": "customer", "country": "FR", "territory": "RE", "vat_number": null, "auxiliary_code": "C0003" }
   ],
   "documents": [
     {
@@ -51,6 +52,14 @@
       "ref": "V7", "type": "sale_invoice", "contact": "client-be", "date": "2026-08-20", "due_date": "2026-09-19",
       "why": "Une prestation de services intracommunautaire : la ligne 05, que la livraison de biens de V6 ne remplit pas. C'est aussi la seule ligne de la CA3 que deux traitements se partagent — l'autoliquidation interne y va également — et l'état récapitulatif des services ne peut donc pas s'en déduire.",
       "lines": [{ "name": "Prestation d'ingénierie pour un preneur belge", "quantity": 1, "unit_price": 3500, "tax": "FR-S-ICS", "account": "706000" }]
+    },
+    {
+      "ref": "V8", "type": "sale_invoice", "contact": "client-re", "date": "2026-09-10", "due_date": "2026-10-10", "supply_territory": "RE",
+      "why": "Une vente située à La Réunion, de marchandises stockées dans un entrepôt de l'île et livrées à un client réunionnais : les taux des DOM de l'article 296 du CGI, 8,5 % en ligne 10 et 2,1 % en ligne 11, sur la même déclaration que les opérations de métropole. Les deux codes nomment RE dans applies_when.supply_in, et le moteur les refuserait pour une livraison en métropole.",
+      "lines": [
+        { "name": "Matériel de bureau", "quantity": 4, "unit_price": 1000, "tax": "FR-S-085-RE", "account": "707000" },
+        { "name": "Produits alimentaires", "quantity": 1, "unit_price": 1500, "tax": "FR-S-021-RE", "account": "707000" }
+      ]
     },
     {
       "ref": "A1", "type": "purchase_invoice", "contact": "fourn-fr", "date": "2026-01-30", "due_date": "2026-03-01",

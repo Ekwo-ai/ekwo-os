@@ -239,16 +239,40 @@ describe('the compiled packs against the seeds they replace', () => {
     ]);
     // Belgian cars and receptions, French fuel: the partially and the wholly
     // non-deductible VAT the engine could not express before. Then the six
-    // French services taxes that fall due when they are paid.
+    // French services taxes that fall due when they are paid, the purchase at
+    // 2,1 % the French sale side already had, and the rates of article 296 of
+    // the CGI, one code per overseas department that levies them.
     expect(added('tax_templates').map((r) => `${r['country']}/${r['code']}`)).toEqual([
       'BE/BE-P-21-50-I',
       'BE/BE-P-21-50-S',
       'BE/BE-P-21-ND',
+      'FR/FR-P-021',
+      'FR/FR-P-021-GP',
+      'FR/FR-P-021-MQ',
+      'FR/FR-P-021-RE',
       'FR/FR-P-055-ENC',
+      'FR/FR-P-085-ENC-GP',
+      'FR/FR-P-085-ENC-MQ',
+      'FR/FR-P-085-ENC-RE',
+      'FR/FR-P-085-GP',
+      'FR/FR-P-085-I-GP',
+      'FR/FR-P-085-I-MQ',
+      'FR/FR-P-085-I-RE',
+      'FR/FR-P-085-MQ',
+      'FR/FR-P-085-RE',
       'FR/FR-P-10-ENC',
       'FR/FR-P-20-CARB',
       'FR/FR-P-20-ENC',
+      'FR/FR-S-021-GP',
+      'FR/FR-S-021-MQ',
+      'FR/FR-S-021-RE',
       'FR/FR-S-055-ENC',
+      'FR/FR-S-085-ENC-GP',
+      'FR/FR-S-085-ENC-MQ',
+      'FR/FR-S-085-ENC-RE',
+      'FR/FR-S-085-GP',
+      'FR/FR-S-085-MQ',
+      'FR/FR-S-085-RE',
       'FR/FR-S-10-ENC',
       'FR/FR-S-20-ENC',
     ]);

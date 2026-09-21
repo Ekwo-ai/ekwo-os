@@ -284,7 +284,7 @@ interesting: a standard rate that moved twice in eighteen months, a reduced
 rate that went 9 %, 5 % and 9 % again, a return whose boxes nest three deep,
 and **no legal chart of accounts at all**.
 
-It carries an original chart of 120 accounts, 29 taxes with the rate history
+It carries an original chart of 120 accounts, 30 taxes with the rate history
 back to 2009, form KMD as it stands since 1 July 2025, and the balance sheet
 and income statement scheme 1 of the annual report. Three things are worth
 knowing beyond the pack's own [`README`](../packs/ee/README.md):
@@ -307,7 +307,7 @@ The third pack, and the first written from published sources alone rather than
 from a running installation. It carries the **plan comptable normalisé** of the
 *règlement grand-ducal du 12 septembre 2019* whole — 1 026 accounts, 747 of them
 postable — the four VAT rates of article 39 with the temporary 2023 rates beside
-them, the 156 numbered fields of the eCDF periodic return, and the two abridged
+them, the 162 numbered fields of the eCDF periodic return, and the two abridged
 schemes of annual accounts keyed by their own eCDF field identifiers.
 
 Three things about it are worth knowing beyond the pack's own
@@ -328,6 +328,36 @@ Three things about it are worth knowing beyond the pack's own
   written by [`@ekwo-ai/ecdf`](../packages/formats/ecdf/) since the
   recapitulative statement arrived, which is what the distinction looks like in
   practice: an envelope is a format, the boxes of a return are a pack.
+
+### France
+
+The first pack, and the one the others were measured against — which is how it
+came to lag behind the form it transcribes. Compared line by line with the
+official form on 21 September 2026, it had no rate for the overseas
+departments and was missing some thirty lines of form 3310-CA3; the pack's own
+[`README`](../packs/fr/README.md) lists every line of the form in force and
+says, for each one it does not carry, why.
+
+- **The overseas departments are carried through the territories.** Article
+  296 of the CGI taxes Guadeloupe, Martinique and La Réunion at 8,5 % and
+  2,1 %, and each code names its department in `applies_when.supply_in`. Since
+  `applies_when` has no disjunction, it is one code per department and per
+  rate: `GP`, `MQ` and `RE` are rows of `territories` already.
+- **French Guiana and Mayotte are the case the format cannot yet state.**
+  Article 294, 1, puts them outside French VAT altogether. The pack offers no
+  code for them, which is right, but nothing *refuses* a metropolitan code for
+  an operation located there either: `FR-S-20` names no territory, and a
+  condition cannot say "not in GF". That is a property of the territory — its
+  parent's tax does not reach it — and not of a French tax, so it belongs in
+  the core, beside `territories`, and not in `applies_when`. *Until then*: the
+  README of the pack says it, and the declarant does not pick a French code for
+  an operation the law places in Guiana or Mayotte.
+- **The frame A numbering predates the redesigned form.** The lines the pack
+  names `01`, `03`, `2A`, `3A`, `3C`, `04`, `05` and `06` are printed A1, B2,
+  A3, A4, B4, E1, E2 and F2 today, and the continental 2,1 % sits on line `13`
+  where the form now prints it on T6 — which the label of box 13 now says.
+  A box identifier is immutable once published, so the correction is a new
+  version of the form beside this one, once a pack can hold several.
 
 ### United Kingdom
 

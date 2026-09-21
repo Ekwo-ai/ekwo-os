@@ -667,7 +667,10 @@
           "type": "tax",
           "factor": -100,
           "account": "445200",
-          "box": "08"
+          "box": [
+            "08",
+            "17"
+          ]
         }
       ],
       "credit_note": [
@@ -686,7 +689,10 @@
           "type": "tax",
           "factor": -100,
           "account": "445200",
-          "box": "08",
+          "box": [
+            "08",
+            "17"
+          ],
           "box_factor": -100
         }
       ]
@@ -818,7 +824,10 @@
         {
           "type": "tax",
           "account": "445660",
-          "box": "20"
+          "box": [
+            "20",
+            "24"
+          ]
         },
         {
           "type": "tax",
@@ -836,7 +845,10 @@
         {
           "type": "tax",
           "account": "445660",
-          "box": "20",
+          "box": [
+            "20",
+            "24"
+          ],
           "box_factor": -100
         },
         {
@@ -890,6 +902,870 @@
           "type": "tax_on_base",
           "factor": 20,
           "sequence": 30
+        }
+      ]
+    }
+  },
+  {
+    "code": "FR-S-085-GP",
+    "name": "Vente 8,5 % en Guadeloupe",
+    "description": "Taux normal des DOM",
+    "kind": "vat",
+    "rate": 8.5,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2014-01-01",
+    "applies_when": {
+      "supply_in": "GP"
+    },
+    "legal_reference": "CGI, art. 296, 1°, b — taux normal de 8,5 % en Guadeloupe, en Martinique et à La Réunion. La taxe s'applique là où l'opération est située : applies_when.supply_in nomme le département, et le moteur refuse ce code pour une opération située ailleurs — en France continentale, ou en Guyane et à Mayotte, où la TVA n'est provisoirement pas applicable (art. 294, 1).",
+    "source": "cgi",
+    "vat_category": "S",
+    "sequence": 300,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "10"
+        },
+        {
+          "type": "tax",
+          "account": "445710",
+          "box": "10"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "10",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "445710",
+          "box": "10",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "FR-S-085-MQ",
+    "name": "Vente 8,5 % en Martinique",
+    "description": "Taux normal des DOM",
+    "kind": "vat",
+    "rate": 8.5,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2014-01-01",
+    "applies_when": {
+      "supply_in": "MQ"
+    },
+    "legal_reference": "CGI, art. 296, 1°, b — taux normal de 8,5 % en Guadeloupe, en Martinique et à La Réunion. La taxe s'applique là où l'opération est située : applies_when.supply_in nomme le département, et le moteur refuse ce code pour une opération située ailleurs — en France continentale, ou en Guyane et à Mayotte, où la TVA n'est provisoirement pas applicable (art. 294, 1).",
+    "source": "cgi",
+    "vat_category": "S",
+    "sequence": 301,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "10"
+        },
+        {
+          "type": "tax",
+          "account": "445710",
+          "box": "10"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "10",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "445710",
+          "box": "10",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "FR-S-085-RE",
+    "name": "Vente 8,5 % à La Réunion",
+    "description": "Taux normal des DOM",
+    "kind": "vat",
+    "rate": 8.5,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2014-01-01",
+    "applies_when": {
+      "supply_in": "RE"
+    },
+    "legal_reference": "CGI, art. 296, 1°, b — taux normal de 8,5 % en Guadeloupe, en Martinique et à La Réunion. La taxe s'applique là où l'opération est située : applies_when.supply_in nomme le département, et le moteur refuse ce code pour une opération située ailleurs — en France continentale, ou en Guyane et à Mayotte, où la TVA n'est provisoirement pas applicable (art. 294, 1).",
+    "source": "cgi",
+    "vat_category": "S",
+    "sequence": 302,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "10"
+        },
+        {
+          "type": "tax",
+          "account": "445710",
+          "box": "10"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "10",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "445710",
+          "box": "10",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "FR-S-085-ENC-GP",
+    "name": "Prestation de services 8,5 % en Guadeloupe — TVA sur les encaissements",
+    "description": "Régime de droit commun des prestations de services : la TVA est exigible à l'encaissement du prix.",
+    "kind": "vat",
+    "rate": 8.5,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2014-01-01",
+    "applies_when": {
+      "supply_in": "GP"
+    },
+    "legal_reference": "CGI, art. 269-2-c ; CGI, art. 296, 1°, b — taux normal de 8,5 % en Guadeloupe, en Martinique et à La Réunion. La taxe s'applique là où l'opération est située : applies_when.supply_in nomme le département, et le moteur refuse ce code pour une opération située ailleurs — en France continentale, ou en Guyane et à Mayotte, où la TVA n'est provisoirement pas applicable (art. 294, 1).",
+    "source": "cgi",
+    "vat_category": "S",
+    "cash_basis": true,
+    "cash_basis_transition_account": "445870",
+    "sequence": 310,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "10"
+        },
+        {
+          "type": "tax",
+          "account": "445710",
+          "box": "10"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "10",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "445710",
+          "box": "10",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "FR-S-085-ENC-MQ",
+    "name": "Prestation de services 8,5 % en Martinique — TVA sur les encaissements",
+    "description": "Régime de droit commun des prestations de services : la TVA est exigible à l'encaissement du prix.",
+    "kind": "vat",
+    "rate": 8.5,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2014-01-01",
+    "applies_when": {
+      "supply_in": "MQ"
+    },
+    "legal_reference": "CGI, art. 269-2-c ; CGI, art. 296, 1°, b — taux normal de 8,5 % en Guadeloupe, en Martinique et à La Réunion. La taxe s'applique là où l'opération est située : applies_when.supply_in nomme le département, et le moteur refuse ce code pour une opération située ailleurs — en France continentale, ou en Guyane et à Mayotte, où la TVA n'est provisoirement pas applicable (art. 294, 1).",
+    "source": "cgi",
+    "vat_category": "S",
+    "cash_basis": true,
+    "cash_basis_transition_account": "445870",
+    "sequence": 311,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "10"
+        },
+        {
+          "type": "tax",
+          "account": "445710",
+          "box": "10"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "10",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "445710",
+          "box": "10",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "FR-S-085-ENC-RE",
+    "name": "Prestation de services 8,5 % à La Réunion — TVA sur les encaissements",
+    "description": "Régime de droit commun des prestations de services : la TVA est exigible à l'encaissement du prix.",
+    "kind": "vat",
+    "rate": 8.5,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2014-01-01",
+    "applies_when": {
+      "supply_in": "RE"
+    },
+    "legal_reference": "CGI, art. 269-2-c ; CGI, art. 296, 1°, b — taux normal de 8,5 % en Guadeloupe, en Martinique et à La Réunion. La taxe s'applique là où l'opération est située : applies_when.supply_in nomme le département, et le moteur refuse ce code pour une opération située ailleurs — en France continentale, ou en Guyane et à Mayotte, où la TVA n'est provisoirement pas applicable (art. 294, 1).",
+    "source": "cgi",
+    "vat_category": "S",
+    "cash_basis": true,
+    "cash_basis_transition_account": "445870",
+    "sequence": 312,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "10"
+        },
+        {
+          "type": "tax",
+          "account": "445710",
+          "box": "10"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "10",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "445710",
+          "box": "10",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "FR-S-021-GP",
+    "name": "Vente 2,1 % en Guadeloupe",
+    "description": "Taux réduit des DOM",
+    "kind": "vat",
+    "rate": 2.1,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2014-01-01",
+    "applies_when": {
+      "supply_in": "GP"
+    },
+    "legal_reference": "CGI, art. 296, 1°, a — taux réduit de 2,1 % en Guadeloupe, en Martinique et à La Réunion, pour les opérations des art. 278-0 bis à 279-0 bis A et 298 octies. La taxe s'applique là où l'opération est située : applies_when.supply_in nomme le département, et le moteur refuse ce code pour une opération située ailleurs — en France continentale, ou en Guyane et à Mayotte, où la TVA n'est provisoirement pas applicable (art. 294, 1).",
+    "source": "cgi",
+    "vat_category": "S",
+    "sequence": 320,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "11"
+        },
+        {
+          "type": "tax",
+          "account": "445710",
+          "box": "11"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "11",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "445710",
+          "box": "11",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "FR-S-021-MQ",
+    "name": "Vente 2,1 % en Martinique",
+    "description": "Taux réduit des DOM",
+    "kind": "vat",
+    "rate": 2.1,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2014-01-01",
+    "applies_when": {
+      "supply_in": "MQ"
+    },
+    "legal_reference": "CGI, art. 296, 1°, a — taux réduit de 2,1 % en Guadeloupe, en Martinique et à La Réunion, pour les opérations des art. 278-0 bis à 279-0 bis A et 298 octies. La taxe s'applique là où l'opération est située : applies_when.supply_in nomme le département, et le moteur refuse ce code pour une opération située ailleurs — en France continentale, ou en Guyane et à Mayotte, où la TVA n'est provisoirement pas applicable (art. 294, 1).",
+    "source": "cgi",
+    "vat_category": "S",
+    "sequence": 321,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "11"
+        },
+        {
+          "type": "tax",
+          "account": "445710",
+          "box": "11"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "11",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "445710",
+          "box": "11",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "FR-S-021-RE",
+    "name": "Vente 2,1 % à La Réunion",
+    "description": "Taux réduit des DOM",
+    "kind": "vat",
+    "rate": 2.1,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2014-01-01",
+    "applies_when": {
+      "supply_in": "RE"
+    },
+    "legal_reference": "CGI, art. 296, 1°, a — taux réduit de 2,1 % en Guadeloupe, en Martinique et à La Réunion, pour les opérations des art. 278-0 bis à 279-0 bis A et 298 octies. La taxe s'applique là où l'opération est située : applies_when.supply_in nomme le département, et le moteur refuse ce code pour une opération située ailleurs — en France continentale, ou en Guyane et à Mayotte, où la TVA n'est provisoirement pas applicable (art. 294, 1).",
+    "source": "cgi",
+    "vat_category": "S",
+    "sequence": 322,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "11"
+        },
+        {
+          "type": "tax",
+          "account": "445710",
+          "box": "11"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "11",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "445710",
+          "box": "11",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "FR-P-085-GP",
+    "name": "Achat 8,5 % en Guadeloupe",
+    "description": "Autres biens et services",
+    "kind": "vat",
+    "rate": 8.5,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2014-01-01",
+    "applies_when": {
+      "supply_in": "GP"
+    },
+    "legal_reference": "CGI, art. 296, 1°, b — taux normal de 8,5 % en Guadeloupe, en Martinique et à La Réunion. La taxe s'applique là où l'opération est située : applies_when.supply_in nomme le département, et le moteur refuse ce code pour une opération située ailleurs — en France continentale, ou en Guyane et à Mayotte, où la TVA n'est provisoirement pas applicable (art. 294, 1).",
+    "source": "cgi",
+    "vat_category": "S",
+    "sequence": 330,
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "445660",
+          "box": "20",
+          "sequence": 20
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "445660",
+          "box": "20",
+          "box_factor": -100,
+          "sequence": 20
+        }
+      ]
+    }
+  },
+  {
+    "code": "FR-P-085-MQ",
+    "name": "Achat 8,5 % en Martinique",
+    "description": "Autres biens et services",
+    "kind": "vat",
+    "rate": 8.5,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2014-01-01",
+    "applies_when": {
+      "supply_in": "MQ"
+    },
+    "legal_reference": "CGI, art. 296, 1°, b — taux normal de 8,5 % en Guadeloupe, en Martinique et à La Réunion. La taxe s'applique là où l'opération est située : applies_when.supply_in nomme le département, et le moteur refuse ce code pour une opération située ailleurs — en France continentale, ou en Guyane et à Mayotte, où la TVA n'est provisoirement pas applicable (art. 294, 1).",
+    "source": "cgi",
+    "vat_category": "S",
+    "sequence": 331,
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "445660",
+          "box": "20",
+          "sequence": 20
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "445660",
+          "box": "20",
+          "box_factor": -100,
+          "sequence": 20
+        }
+      ]
+    }
+  },
+  {
+    "code": "FR-P-085-RE",
+    "name": "Achat 8,5 % à La Réunion",
+    "description": "Autres biens et services",
+    "kind": "vat",
+    "rate": 8.5,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2014-01-01",
+    "applies_when": {
+      "supply_in": "RE"
+    },
+    "legal_reference": "CGI, art. 296, 1°, b — taux normal de 8,5 % en Guadeloupe, en Martinique et à La Réunion. La taxe s'applique là où l'opération est située : applies_when.supply_in nomme le département, et le moteur refuse ce code pour une opération située ailleurs — en France continentale, ou en Guyane et à Mayotte, où la TVA n'est provisoirement pas applicable (art. 294, 1).",
+    "source": "cgi",
+    "vat_category": "S",
+    "sequence": 332,
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "445660",
+          "box": "20",
+          "sequence": 20
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "445660",
+          "box": "20",
+          "box_factor": -100,
+          "sequence": 20
+        }
+      ]
+    }
+  },
+  {
+    "code": "FR-P-085-ENC-GP",
+    "name": "Achat de services 8,5 % en Guadeloupe — TVA déductible au décaissement",
+    "description": "Le droit à déduction prend naissance quand la taxe devient exigible chez le prestataire, soit au paiement.",
+    "kind": "vat",
+    "rate": 8.5,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2014-01-01",
+    "applies_when": {
+      "supply_in": "GP"
+    },
+    "legal_reference": "CGI, art. 271-I-2 ; CGI, art. 269-2-c ; CGI, art. 296, 1°, b — taux normal de 8,5 % en Guadeloupe, en Martinique et à La Réunion. La taxe s'applique là où l'opération est située : applies_when.supply_in nomme le département, et le moteur refuse ce code pour une opération située ailleurs — en France continentale, ou en Guyane et à Mayotte, où la TVA n'est provisoirement pas applicable (art. 294, 1).",
+    "source": "cgi",
+    "vat_category": "S",
+    "cash_basis": true,
+    "cash_basis_transition_account": "445860",
+    "sequence": 340,
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "445660",
+          "box": "20",
+          "sequence": 20
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "445660",
+          "box": "20",
+          "box_factor": -100,
+          "sequence": 20
+        }
+      ]
+    }
+  },
+  {
+    "code": "FR-P-085-ENC-MQ",
+    "name": "Achat de services 8,5 % en Martinique — TVA déductible au décaissement",
+    "description": "Le droit à déduction prend naissance quand la taxe devient exigible chez le prestataire, soit au paiement.",
+    "kind": "vat",
+    "rate": 8.5,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2014-01-01",
+    "applies_when": {
+      "supply_in": "MQ"
+    },
+    "legal_reference": "CGI, art. 271-I-2 ; CGI, art. 269-2-c ; CGI, art. 296, 1°, b — taux normal de 8,5 % en Guadeloupe, en Martinique et à La Réunion. La taxe s'applique là où l'opération est située : applies_when.supply_in nomme le département, et le moteur refuse ce code pour une opération située ailleurs — en France continentale, ou en Guyane et à Mayotte, où la TVA n'est provisoirement pas applicable (art. 294, 1).",
+    "source": "cgi",
+    "vat_category": "S",
+    "cash_basis": true,
+    "cash_basis_transition_account": "445860",
+    "sequence": 341,
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "445660",
+          "box": "20",
+          "sequence": 20
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "445660",
+          "box": "20",
+          "box_factor": -100,
+          "sequence": 20
+        }
+      ]
+    }
+  },
+  {
+    "code": "FR-P-085-ENC-RE",
+    "name": "Achat de services 8,5 % à La Réunion — TVA déductible au décaissement",
+    "description": "Le droit à déduction prend naissance quand la taxe devient exigible chez le prestataire, soit au paiement.",
+    "kind": "vat",
+    "rate": 8.5,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2014-01-01",
+    "applies_when": {
+      "supply_in": "RE"
+    },
+    "legal_reference": "CGI, art. 271-I-2 ; CGI, art. 269-2-c ; CGI, art. 296, 1°, b — taux normal de 8,5 % en Guadeloupe, en Martinique et à La Réunion. La taxe s'applique là où l'opération est située : applies_when.supply_in nomme le département, et le moteur refuse ce code pour une opération située ailleurs — en France continentale, ou en Guyane et à Mayotte, où la TVA n'est provisoirement pas applicable (art. 294, 1).",
+    "source": "cgi",
+    "vat_category": "S",
+    "cash_basis": true,
+    "cash_basis_transition_account": "445860",
+    "sequence": 342,
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "445660",
+          "box": "20",
+          "sequence": 20
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "445660",
+          "box": "20",
+          "box_factor": -100,
+          "sequence": 20
+        }
+      ]
+    }
+  },
+  {
+    "code": "FR-P-085-I-GP",
+    "name": "Achat immobilisation 8,5 % en Guadeloupe",
+    "description": "Immobilisations",
+    "kind": "vat",
+    "rate": 8.5,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2014-01-01",
+    "applies_when": {
+      "supply_in": "GP"
+    },
+    "legal_reference": "CGI, art. 296, 1°, b — taux normal de 8,5 % en Guadeloupe, en Martinique et à La Réunion. La taxe s'applique là où l'opération est située : applies_when.supply_in nomme le département, et le moteur refuse ce code pour une opération située ailleurs — en France continentale, ou en Guyane et à Mayotte, où la TVA n'est provisoirement pas applicable (art. 294, 1).",
+    "source": "cgi",
+    "vat_category": "S",
+    "sequence": 350,
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "445662",
+          "box": "19",
+          "sequence": 20
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "445662",
+          "box": "19",
+          "box_factor": -100,
+          "sequence": 20
+        }
+      ]
+    }
+  },
+  {
+    "code": "FR-P-085-I-MQ",
+    "name": "Achat immobilisation 8,5 % en Martinique",
+    "description": "Immobilisations",
+    "kind": "vat",
+    "rate": 8.5,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2014-01-01",
+    "applies_when": {
+      "supply_in": "MQ"
+    },
+    "legal_reference": "CGI, art. 296, 1°, b — taux normal de 8,5 % en Guadeloupe, en Martinique et à La Réunion. La taxe s'applique là où l'opération est située : applies_when.supply_in nomme le département, et le moteur refuse ce code pour une opération située ailleurs — en France continentale, ou en Guyane et à Mayotte, où la TVA n'est provisoirement pas applicable (art. 294, 1).",
+    "source": "cgi",
+    "vat_category": "S",
+    "sequence": 351,
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "445662",
+          "box": "19",
+          "sequence": 20
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "445662",
+          "box": "19",
+          "box_factor": -100,
+          "sequence": 20
+        }
+      ]
+    }
+  },
+  {
+    "code": "FR-P-085-I-RE",
+    "name": "Achat immobilisation 8,5 % à La Réunion",
+    "description": "Immobilisations",
+    "kind": "vat",
+    "rate": 8.5,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2014-01-01",
+    "applies_when": {
+      "supply_in": "RE"
+    },
+    "legal_reference": "CGI, art. 296, 1°, b — taux normal de 8,5 % en Guadeloupe, en Martinique et à La Réunion. La taxe s'applique là où l'opération est située : applies_when.supply_in nomme le département, et le moteur refuse ce code pour une opération située ailleurs — en France continentale, ou en Guyane et à Mayotte, où la TVA n'est provisoirement pas applicable (art. 294, 1).",
+    "source": "cgi",
+    "vat_category": "S",
+    "sequence": 352,
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "445662",
+          "box": "19",
+          "sequence": 20
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "445662",
+          "box": "19",
+          "box_factor": -100,
+          "sequence": 20
+        }
+      ]
+    }
+  },
+  {
+    "code": "FR-P-021-GP",
+    "name": "Achat 2,1 % en Guadeloupe",
+    "description": "Autres biens et services",
+    "kind": "vat",
+    "rate": 2.1,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2014-01-01",
+    "applies_when": {
+      "supply_in": "GP"
+    },
+    "legal_reference": "CGI, art. 296, 1°, a — taux réduit de 2,1 % en Guadeloupe, en Martinique et à La Réunion, pour les opérations des art. 278-0 bis à 279-0 bis A et 298 octies. La taxe s'applique là où l'opération est située : applies_when.supply_in nomme le département, et le moteur refuse ce code pour une opération située ailleurs — en France continentale, ou en Guyane et à Mayotte, où la TVA n'est provisoirement pas applicable (art. 294, 1).",
+    "source": "cgi",
+    "vat_category": "S",
+    "sequence": 360,
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "445660",
+          "box": "20",
+          "sequence": 20
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "445660",
+          "box": "20",
+          "box_factor": -100,
+          "sequence": 20
+        }
+      ]
+    }
+  },
+  {
+    "code": "FR-P-021-MQ",
+    "name": "Achat 2,1 % en Martinique",
+    "description": "Autres biens et services",
+    "kind": "vat",
+    "rate": 2.1,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2014-01-01",
+    "applies_when": {
+      "supply_in": "MQ"
+    },
+    "legal_reference": "CGI, art. 296, 1°, a — taux réduit de 2,1 % en Guadeloupe, en Martinique et à La Réunion, pour les opérations des art. 278-0 bis à 279-0 bis A et 298 octies. La taxe s'applique là où l'opération est située : applies_when.supply_in nomme le département, et le moteur refuse ce code pour une opération située ailleurs — en France continentale, ou en Guyane et à Mayotte, où la TVA n'est provisoirement pas applicable (art. 294, 1).",
+    "source": "cgi",
+    "vat_category": "S",
+    "sequence": 361,
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "445660",
+          "box": "20",
+          "sequence": 20
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "445660",
+          "box": "20",
+          "box_factor": -100,
+          "sequence": 20
+        }
+      ]
+    }
+  },
+  {
+    "code": "FR-P-021-RE",
+    "name": "Achat 2,1 % à La Réunion",
+    "description": "Autres biens et services",
+    "kind": "vat",
+    "rate": 2.1,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2014-01-01",
+    "applies_when": {
+      "supply_in": "RE"
+    },
+    "legal_reference": "CGI, art. 296, 1°, a — taux réduit de 2,1 % en Guadeloupe, en Martinique et à La Réunion, pour les opérations des art. 278-0 bis à 279-0 bis A et 298 octies. La taxe s'applique là où l'opération est située : applies_when.supply_in nomme le département, et le moteur refuse ce code pour une opération située ailleurs — en France continentale, ou en Guyane et à Mayotte, où la TVA n'est provisoirement pas applicable (art. 294, 1).",
+    "source": "cgi",
+    "vat_category": "S",
+    "sequence": 362,
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "445660",
+          "box": "20",
+          "sequence": 20
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "445660",
+          "box": "20",
+          "box_factor": -100,
+          "sequence": 20
+        }
+      ]
+    }
+  },
+  {
+    "code": "FR-P-021",
+    "name": "Achat 2,1 %",
+    "description": "Taux particulier",
+    "kind": "vat",
+    "rate": 2.1,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2014-01-01",
+    "legal_reference": "CGI, art. 281 quater ; CGI, art. 271 — la taxe facturée au taux particulier de 2,1 % est déductible dans les conditions de droit commun",
+    "source": "cgi",
+    "vat_category": "S",
+    "sequence": 145,
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "445660",
+          "box": "20",
+          "sequence": 20
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "445660",
+          "box": "20",
+          "box_factor": -100,
+          "sequence": 20
         }
       ]
     }
