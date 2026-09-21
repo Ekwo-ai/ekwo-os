@@ -92,7 +92,6 @@ export function Landing({ data, strings }: { data: SiteData; strings: Strings })
           <div className="mt-9 flex flex-wrap gap-3">
             <Action href="/signup/">{s.hero.start}</Action>
             <Secondary href="/os/">{s.hero.install}</Secondary>
-            <Secondary href="/manifesto/">{s.hero.manifesto}</Secondary>
           </div>
           <ModelRow models={s.hero.models} icons={data.icons} />
         </div>

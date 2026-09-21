@@ -88,7 +88,6 @@ export interface Strings {
       /** The main button: the form, `/signup/`. */
       start: string;
       install: string;
-      manifesto: string;
       /** The row of models under the buttons, and its small print. */
       models: {
         label: string;

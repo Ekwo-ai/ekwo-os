@@ -312,7 +312,9 @@ describe('the home page', () => {
     const below = body.slice(heroEnd);
     const models = SOURCE.home.hero.models;
 
-    // One button leads, to the form; the two others sit beside it.
+    // One button leads, to the form; the installation sits beside it. The
+    // manifesto is not a third: it is reached from the docs and the foot of
+    // the home page.
     const buttons = [...hero.matchAll(/<a href="([^"]+)" class="([^"]+)">([^<]+)<\/a>/g)]
       .map(([, href = '', classes = '', text = '']) => ({ href, classes, text }))
       .filter((button) => button.classes.includes('rounded-pill'))
@@ -320,8 +322,9 @@ describe('the home page', () => {
     expect(buttons).toEqual([
       { href: SIGNUP, solid: true, text: SOURCE.home.hero.start },
       { href: '/os/', solid: false, text: SOURCE.home.hero.install },
-      { href: '/manifesto/', solid: false, text: SOURCE.home.hero.manifesto },
     ]);
+    expect(hero).not.toContain('href="/manifesto/"');
+    expect(body).toContain('href="/manifesto/"');
 
     // The row: after the buttons, a list named by its label, every model in
     // it by name, and the small print under it.

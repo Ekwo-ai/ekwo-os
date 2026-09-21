@@ -67,7 +67,6 @@ export const en: Strings = {
       ai: 'AI at the keyboard. You and your accountant stay in control.',
       start: 'Get started',
       install: 'Install Ekwo OS',
-      manifesto: 'Read the manifesto',
       models: {
         label: 'Works with the model you choose',
         any: 'any MCP client',
