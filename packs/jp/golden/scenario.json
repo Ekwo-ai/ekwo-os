@@ -74,12 +74,6 @@
       "country": "JP"
     },
     {
-      "ref": "supp-us",
-      "name": "Mesa Cloud Software Inc.",
-      "type": "supplier",
-      "country": "US"
-    },
-    {
       "ref": "supp-de",
       "name": "Nordhafen Verpackungsmaschinen GmbH",
       "type": "supplier",
@@ -205,12 +199,12 @@
       "type": "sale_invoice",
       "contact": "tenant",
       "date": "2026-09-01",
-      "why": "住宅の貸付け（別表第二第13号）は非課税。付表2-3 ⑥に入り、課税売上割合を95 %未満に下げる。",
+      "why": "住宅の貸付け（別表第二第13号）は非課税。付表2-3 ⑥に入り、課税売上割合を2,064,529／2,154,529＝95.8 %に下げるが、95 %以上に留まるので仕入税額は全額控除（法30条2項）、特定課税仕入れもなかったものとされる。",
       "lines": [
         {
-          "name": "社宅家賃（半年分）",
+          "name": "社宅家賃（3か月分）",
           "quantity": 1,
-          "unit_price": 150000,
+          "unit_price": 90000,
           "tax": "JP-S-NT-RES",
           "account": "4240"
         }
@@ -309,22 +303,6 @@
           "unit_price": 33000,
           "tax": "JP-P-10-NQ70",
           "account": "6370"
-        }
-      ]
-    },
-    {
-      "ref": "P5",
-      "type": "purchase_invoice",
-      "contact": "supp-us",
-      "date": "2026-07-01",
-      "why": "国外事業者からの事業者向け電気通信利用役務の提供（特定課税仕入れ）。課税売上割合が95 %未満なのでリバースチャージが適用される：対価300,000円が①-2と⑬に、23,400円が②B欄と⑭に。",
-      "lines": [
-        {
-          "name": "クラウド会計サービス年額",
-          "quantity": 1,
-          "unit_price": 300000,
-          "tax": "JP-P-RC-10",
-          "account": "6220"
         }
       ]
     },

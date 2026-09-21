@@ -164,9 +164,12 @@ performance by a foreign entertainer, are 特定課税仕入れ: the buyer owes 
 tax (arts. 4 and 5) and deducts it. But for as long as the 2015 act's
 transitional measure lasts, a business whose taxable sales ratio is 95 % or
 more treats them as not having happened. `JP-P-RC-10` is therefore for the
-business below 95 % — the golden company, whose residential rent brings it to
-93 % — and it posts both sides: the base to 付表1-3 ①-2 and 付表2-3 ⑬, the tax owed
-to ②, the tax deducted to ⑭.
+business below 95 %, and it posts both sides: the base to 付表1-3 ①-2 and
+付表2-3 ⑬, the tax owed to ②, the tax deducted to ⑭. That business is also the
+one whose deduction is apportioned, which the pack does not compute (see "The
+95 % rule is assumed" below), so the code is right on the tax owed and
+overstates the tax deducted. The golden year does not use it: its company is
+above 95 %, where the purchase is simply not taxed.
 
 **Imports** carry the tax customs assesses: `JP-P-IMP-10` and `-8R` post it
 to 仮払消費税等 and to `2175`, owed to customs, rather than to the supplier.
@@ -190,9 +193,11 @@ which line of the NTA's guide it transcribes.
 - **The 95 % rule is assumed.** Line ④ is the whole of the tax on purchases
   where taxable sales are 500 million yen or less and the taxable sales ratio
   is 95 % or more (art. 30(2)). Below that it is apportioned, by the individual
-  or the proportional method, which the pack does not compute. The golden
-  company is below 95 %, which is what makes its reverse charge apply; its line
-  ④ is therefore the full deduction, and too high.
+  or the proportional method (個別対応方式, 一括比例配分方式), which the pack does
+  not compute: for a company below 95 %, line ④ would be the full deduction,
+  and too high. This is a gap of the core, written down in
+  docs/international.md. The golden company is kept above 95 % (95.8 %), where
+  the full deduction is the law.
 - **The truncations of the form are not applied.** The 課税標準額 is truncated
   to the thousand yen, ⑨ and ⑳ to the hundred. The pack reports the yen.
 - **The local tax is summed, not multiplied.** The form computes ⑳ as ⑱ ×
@@ -242,7 +247,7 @@ down.
 
 ## The golden year
 
-A 株式会社 with a year to 31 March, April 2026 to March 2027, filing once: 17
+A 株式会社 with a year to 31 March, April 2026 to March 2027, filing once: 16
 documents and 5 payments, in whole yen. Every figure of `golden/vat_return.json`
 was checked by hand against the postings; the ones worth reading first:
 
@@ -251,8 +256,10 @@ was checked by hand against the postings; the ones worth reading first:
 - S3 takes 8/108 once out of 4,861 yen of tax-inclusive food: 360.07 → 360.
 - P3 and P4 are the same freelancer either side of 1 October 2026: 80 %, then
   70 %, of the tax deducted.
-- P5, the foreign cloud service, is reverse charged because S6's residential
-  rent brings the taxable sales ratio to 2,064,529 / 2,214,529 = 93.2 %.
+- S6, a residential rent, is non-taxable and lowers the taxable sales ratio to
+  2,064,529 / 2,154,529 = 95.8 %: still 95 % or more, so every deductible tax
+  is deducted in full and a foreign electronic service would not be reverse
+  charged.
 - The year ends on a refund of 82,832 yen at ㉖: 64,609 of national tax (⑧) and
   18,223 of local tax (⑲).
 
@@ -266,7 +273,8 @@ an invoice can come to a yen less than its tax; the ledger keeps the whole tax.
 3. The seven codes of the 2026 transitional schedule, read against the amending
    act itself, which this pack read only through the NTA's leaflet.
 4. The reverse charge limited to the business below 95 %, and the full deduction
-   assumed at ④ in the same breath.
+   assumed at ④: correct for the golden company (95.8 %), too high for any
+   company below 95 %, which is exactly the one the reverse charge reaches.
 5. The deadline of the 28th of the second month.
 6. The proposal of an April year (`fiscal_year_default`): the law chooses nothing
    (法人税法 art. 13 leaves the business year to the articles); the pack proposes

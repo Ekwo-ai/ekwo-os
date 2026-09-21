@@ -2894,7 +2894,10 @@ exceed 500 million yen or the taxable sales ratio is below 95 %, the tax on
 purchases is apportioned (art. 30(2)); and the reverse charge applies only below
 95 %. The ratio is computed on the return from boxes the pack fills (⑮ / ⑯),
 but a box cannot divide and a posting cannot depend on a period figure. The pack
-deducts in full and says so; the golden company, below 95 %, shows the error.
+deducts in full and says so, and its golden company is kept above 95 % so that
+no figure is frozen that the law would not give; a company below 95 % is
+deducted too much, and the reverse-charge code, which only such a company
+uses, is left out of the golden year for that reason.
 *Fix*: a declared apportionment — a box that is a ratio of two boxes, and a
 deduction line that is a rate of another at that ratio — which Belgium, France
 and Spain (prorata) need as much as Japan.
