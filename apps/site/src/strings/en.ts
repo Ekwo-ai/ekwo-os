@@ -62,8 +62,14 @@ export const en: Strings = {
         'Every business on earth keeps books. Ekwo is building the open source system that ' +
         'keeps them — in a database you own, under rules anyone can read.',
       ai: 'AI does the bookkeeping. You stay in control.',
+      start: 'Get started',
       install: 'Install Ekwo OS',
       manifesto: 'Read the manifesto',
+      models: {
+        label: 'Works with the model you choose',
+        any: 'any MCP client',
+        ownership: 'Names and logos belong to their owners; Ekwo is not affiliated with them.',
+      },
     },
     world: {
       eyebrow: 'Everywhere',
@@ -149,14 +155,12 @@ export const en: Strings = {
         'invoice is from the {country} pack’s golden year.',
     },
     models: {
-      title: 'Works with the model you choose',
+      title: 'Your model, your rights',
       body:
         'Ekwo embeds no model and imposes none. It exposes its tools over the open Model ' +
         'Context Protocol and a command line a program can read, so an assistant keeps the ' +
         'books with the rights of the person it acts for — never with a key of its own — and ' +
         'you can change your mind about which one.',
-      openWeight: 'open-weight and local models, through any MCP client',
-      any: 'any MCP client',
       foundationsTitle: 'Built on open foundations',
       foundationsBody:
         'Ekwo installs on your own Supabase project: your database, your keys, your bill. The ' +

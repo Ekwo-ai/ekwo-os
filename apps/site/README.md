@@ -165,7 +165,9 @@ what it says, and `tests/site.test.ts` fails if the path does not exist. A tile
 is `shipped` only where a function, a module, a brick or a command exists
 today; everything else is `planned`, and anything that is neither is absent.
 
-`src/data/ecosystem.ts` is the two rows of names. A model is listed only where
+`src/data/ecosystem.ts` is the two rows of names: the models under the
+buttons of the hero, in the faint ink and nowhere else on the page, and what
+Ekwo is built on further down. A model is listed only where
 its vendor documents that the product can connect to Model Context Protocol
 servers, and the page that says so is kept in the entry rather than in a commit
 message, so the next person can recheck it. Two candidates were asked for and

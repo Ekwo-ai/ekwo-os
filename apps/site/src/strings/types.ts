@@ -85,8 +85,16 @@ export interface Strings {
       titleAccessible: string;
       lead: string;
       ai: string;
+      /** The main button: the form, `/signup/`. */
+      start: string;
       install: string;
       manifesto: string;
+      /** The row of models under the buttons, and its small print. */
+      models: {
+        label: string;
+        any: string;
+        ownership: string;
+      };
     };
     world: Section & {
       /** `{countries}` is replaced by the number of packs. */
@@ -113,8 +121,6 @@ export interface Strings {
     models: {
       title: string;
       body: string;
-      openWeight: string;
-      any: string;
       foundationsTitle: string;
       foundationsBody: string;
       ownership: string;

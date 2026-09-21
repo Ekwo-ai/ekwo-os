@@ -80,7 +80,7 @@ export function Landing({ data, strings }: { data: SiteData; strings: Strings })
       <section className="relative overflow-hidden">
         <div className="hero-ground pointer-events-none absolute inset-0" aria-hidden />
         <div className="hero-grid pointer-events-none absolute inset-0" aria-hidden />
-        <div className="relative mx-auto max-w-page px-5 pt-20 pb-16 sm:pt-28">
+        <div className="relative mx-auto max-w-page px-5 pt-16 pb-14 sm:pt-28 sm:pb-16">
           <p className="text-[0.6875rem] uppercase tracking-[0.16em] text-brand-deep">
             {s.hero.eyebrow}
           </p>
@@ -90,9 +90,11 @@ export function Landing({ data, strings }: { data: SiteData; strings: Strings })
           </p>
           <p className="mt-4 max-w-[54ch] text-lg text-ink-faint">{s.hero.ai}</p>
           <div className="mt-9 flex flex-wrap gap-3">
-            <Action href="/os/">{s.hero.install}</Action>
+            <Action href="/signup/">{s.hero.start}</Action>
+            <Secondary href="/os/">{s.hero.install}</Secondary>
             <Secondary href="/manifesto/">{s.hero.manifesto}</Secondary>
           </div>
+          <ModelRow models={s.hero.models} icons={data.icons} />
         </div>
       </section>
 
@@ -191,21 +193,14 @@ export function Landing({ data, strings }: { data: SiteData; strings: Strings })
           </div>
         )}
 
-        {/* The models. A row that shows several, equally, is the claim. */}
+        {/*
+          The models are named in the hero, once; here is what the row means.
+          Repeating the logos would make the second row look like a different
+          list.
+        */}
         <div className="mt-20">
           <h3 className="text-xl">{s.models.title}</h3>
           <p className="mt-2.5 max-w-reading text-ink-soft">{s.models.body}</p>
-          <ul className="mt-6 flex flex-wrap gap-2.5">
-            {MODELS.map((mark) => (
-              <Mark key={mark.name} name={mark.name} icon={mark.icon} icons={data.icons} />
-            ))}
-            <li className="inline-flex items-center rounded-pill border border-dashed border-line px-4 py-2 text-sm text-ink-faint">
-              {s.models.openWeight}
-            </li>
-            <li className="inline-flex items-center rounded-pill border border-dashed border-line px-4 py-2 text-sm text-ink-faint">
-              {s.models.any}
-            </li>
-          </ul>
 
           <h3 className="mt-14 text-xl">{s.models.foundationsTitle}</h3>
           <p className="mt-2.5 max-w-reading text-ink-soft">{s.models.foundationsBody}</p>
@@ -508,6 +503,60 @@ function widest(words: string[]): string {
 
 /** The icon beside each promise, in the order the language lists them. */
 const PROMISE_ICONS = ['unlock', 'unplug', 'database', 'scale', 'shieldCheck', 'eyeOff'];
+
+/**
+ * The models, under the buttons of the hero.
+ *
+ * Every model at one size and in one colour, the faint ink, in the order of
+ * `MODELS`, which is alphabetical: nobody is featured. The marks stay
+ * monochrome on hover too — the vendors' own colours include black and deep
+ * blues that vanish on the night ground, and a row where some light up and
+ * others cannot would rank them. On a phone the names are read to a screen
+ * reader but not printed, so the row holds on two lines; a model with no mark
+ * is its word at every width.
+ */
+function ModelRow({
+  models,
+  icons,
+}: {
+  models: Strings['home']['hero']['models'];
+  icons: Record<string, string>;
+}): ReactNode {
+  return (
+    <div className="mt-8 sm:mt-10" data-hero-models>
+      <p id="hero-models" className="text-[0.6875rem] uppercase tracking-[0.16em] text-ink-faint">
+        {models.label}
+      </p>
+      <ul
+        aria-labelledby="hero-models"
+        className="mt-3.5 flex flex-wrap items-center gap-x-5 gap-y-3 sm:gap-x-7"
+      >
+        {MODELS.map((mark) => {
+          const path = mark.icon === null ? undefined : icons[mark.icon];
+          return (
+            <li
+              key={mark.name}
+              className="inline-flex items-center gap-2 text-sm text-ink-faint transition-colors duration-150 hover:text-ink"
+            >
+              {path === undefined ? null : (
+                <svg viewBox="0 0 24 24" className="h-[1.125rem] w-[1.125rem] fill-current sm:h-5 sm:w-5" aria-hidden>
+                  <path d={path} />
+                </svg>
+              )}
+              <span className={path === undefined ? undefined : 'sr-only sm:not-sr-only'}>
+                {mark.name}
+              </span>
+            </li>
+          );
+        })}
+        <li className="inline-flex items-center rounded-pill border border-dashed border-line px-3 py-1 text-xs text-ink-faint">
+          {models.any}
+        </li>
+      </ul>
+      <p className="mt-3 text-xs text-ink-faint">{models.ownership}</p>
+    </div>
+  );
+}
 
 /** One name in a row: its mark where `simple-icons` has one, its word otherwise. */
 function Mark({

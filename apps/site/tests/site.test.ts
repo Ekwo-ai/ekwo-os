@@ -295,6 +295,40 @@ describe('the home page', () => {
     for (const entry of NOT_LISTED) expect(home().body).not.toContain(entry.name);
   });
 
+  it('names the models under the buttons of the hero, once', () => {
+    const body = home().body;
+    const heroEnd = body.indexOf('</section>', body.indexOf('<h1'));
+    const hero = body.slice(0, heroEnd);
+    const below = body.slice(heroEnd);
+    const models = SOURCE.home.hero.models;
+
+    // One button leads, to the form; the two others sit beside it.
+    const buttons = [...hero.matchAll(/<a href="([^"]+)" class="([^"]+)">([^<]+)<\/a>/g)]
+      .map(([, href = '', classes = '', text = '']) => ({ href, classes, text }))
+      .filter((button) => button.classes.includes('rounded-pill'))
+      .map(({ href, classes, text }) => ({ href, solid: classes.includes('bg-brand-solid'), text }));
+    expect(buttons).toEqual([
+      { href: SIGNUP, solid: true, text: SOURCE.home.hero.start },
+      { href: '/os/', solid: false, text: SOURCE.home.hero.install },
+      { href: '/manifesto/', solid: false, text: SOURCE.home.hero.manifesto },
+    ]);
+
+    // The row: after the buttons, a list named by its label, every model in
+    // it by name, and the small print under it.
+    const row = hero.slice(hero.indexOf('data-hero-models'));
+    expect(row.length).toBeLessThan(hero.length);
+    expect(row).toContain(models.label);
+    expect(row).toMatch(/<ul aria-labelledby="hero-models"/);
+    for (const mark of MODELS) expect(row).toContain(`>${mark.name}<`);
+    expect(row).toContain(models.any);
+    expect(row).toContain(models.ownership);
+
+    // Further down the page explains it and does not list the models again.
+    expect(below).toContain(SOURCE.home.models.title);
+    expect(below).not.toContain(models.label);
+    for (const mark of MODELS) expect(below).not.toContain(`>${mark.name}<`);
+  });
+
   it('carries the marks it claims to, and no icon it has no file for', () => {
     for (const mark of [...MODELS, ...FOUNDATIONS]) {
       if (mark.icon === null) continue;
