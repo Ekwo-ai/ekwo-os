@@ -570,12 +570,27 @@ export interface PackDeadline {
   source: string | null;
 }
 
+/**
+ * The unit a form is filed in, where it is coarser than the currency.
+ *
+ * California's CDTFA-401 prints "please round cents to the nearest whole
+ * dollar" over a ledger kept in cents: `unit` 1. A power of ten, always with
+ * the text that sets it. The ledger and `vat_return()` keep the cents; the unit
+ * applies to the figures frozen by `prepare_filing()`.
+ */
+export interface PackRounding {
+  unit: number;
+  legal_reference: string;
+  source: string | null;
+}
+
 /** `tax_report.json`: one declaration form and its boxes. */
 export interface PackReport {
   code: string;
   name: string;
   /**
-   * The cadences this form is filed on, in the order month, quarter, year.
+   * The cadences this form is filed on, from the shortest to the longest:
+   * month, bimonth, quarter, four_month, half_year, year.
    *
    * A list because a country may file one set of boxes on more than one
    * cadence, and because the single value it replaced had no honest answer
@@ -604,6 +619,8 @@ export interface PackReport {
   source: string | null;
   /** When the form is due, or null where the pack says nothing about it. */
   deadline: PackDeadline | null;
+  /** The unit its figures are filed in, or null for the currency's own decimals. */
+  rounding: PackRounding | null;
   /**
    * The file this form is deposited as, by the name of the brick that writes
    * it — `vat-consignment` for the Belgian XML Intervat takes. Null where no
@@ -1368,6 +1385,7 @@ function sourceRegister(
     ...charts.map((chart) => ({ path: `pack.json charts.${chart.code}`, source: chart.source, kind: 'other' as const })),
     ...taxes.map((tax) => ({ path: `taxes.json ${tax.code}`, source: tax.source, kind: 'tax' as const })),
     ...(report === null ? [] : [{ path: `tax_report.json ${report.code}`, source: report.source, kind: 'other' as const }]),
+    ...(report?.rounding ? [{ path: `tax_report.json ${report.code} rounding`, source: report.rounding.source, kind: 'other' as const }] : []),
     ...(report?.boxes ?? []).map((box) => ({
       path: `tax_report.json ${box.box}:${box.kind}`,
       source: box.source,
@@ -1882,7 +1900,7 @@ function normaliseTax(raw: Record<string, unknown>, index: number): PackTax {
  * that had not spoken filed Belgium's and France's return without anybody
  * deciding that. `ekwo pack check` names the omission instead.
  */
-const PERIOD_ORDER = ['month', 'quarter', 'year'];
+const PERIOD_ORDER = ['month', 'bimonth', 'quarter', 'four_month', 'half_year', 'year'];
 
 function normalisePeriods(raw: unknown): string[] {
   const listed =
@@ -1929,8 +1947,19 @@ function normaliseReport(raw: Record<string, unknown>): PackReport {
     legal_reference: (raw['legal_reference'] as string | undefined) ?? null,
     source: (raw['source'] as string | undefined) ?? null,
     deadline: normaliseDeadline(raw['deadline']),
+    rounding: normaliseRounding(raw['rounding']),
     file_format: (raw['file_format'] as string | undefined) ?? null,
     boxes,
+  };
+}
+
+function normaliseRounding(raw: unknown): PackRounding | null {
+  if (raw === null || typeof raw !== 'object') return null;
+  const r = raw as Record<string, unknown>;
+  return {
+    unit: Number(r['unit']),
+    legal_reference: String(r['legal_reference'] ?? ''),
+    source: (r['source'] as string | undefined) ?? null,
   };
 }
 
@@ -2752,6 +2781,26 @@ function reportReferences(report: PackReport | null, taxes: PackTax[]): Issue[] 
       issues.push({
         path: `${where} deadline`,
         message: 'depends_on_taxpayer produces no date, so there is nothing to add days to',
+      });
+    }
+  }
+
+  // The unit the form is filed in: a power of ten, which the database also
+  // refuses otherwise, and a text that says so. A unit of 0.05 is a coin, not a
+  // unit a figure is written in, and belongs to `cash_rounding_unit`.
+  const rounding = report.rounding;
+  if (rounding !== null) {
+    const exponent = Math.log10(rounding.unit);
+    if (!(rounding.unit > 0) || !Number.isInteger(Math.round(exponent * 1e9) / 1e9)) {
+      issues.push({
+        path: `${where} rounding.unit`,
+        message: `${rounding.unit} is not a power of ten; a form is filed in units of 1, 10, 0.1…`,
+      });
+    }
+    if (rounding.legal_reference.trim() === '') {
+      issues.push({
+        path: `${where} rounding`,
+        message: 'the unit names no text; say where the form or the law sets it',
       });
     }
   }

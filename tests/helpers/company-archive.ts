@@ -15,7 +15,7 @@ import type { Pack, PackGolden } from '../../packages/cli/src/index.js';
 import { asUser, one, rows } from './db.js';
 import { newCompany, newUser } from './factory.js';
 import { replayScenario, type Replayed } from './golden-scenario.js';
-import { allPacks } from './packs.js';
+import { allPacks, monthsOf } from './packs.js';
 
 /** Lets the runner's timers and messages through between two long stretches of database work. */
 export const breathe = (): Promise<void> => new Promise((resolve) => setImmediate(resolve));
@@ -67,7 +67,7 @@ export const day = (text: string): Date => new Date(`${text}T00:00:00Z`);
 export function filedPeriod(pack: Pack): { from: string; to: string } {
   const golden = pack.golden as PackGolden;
   const cadence = pack.report?.period_default ?? 'month';
-  const span = cadence === 'month' ? 1 : cadence === 'quarter' ? 3 : 12;
+  const span = monthsOf(cadence);
   const start = day(golden.fiscalYear.start);
   const counts = new Map<number, number>();
   for (const document of golden.documents) {

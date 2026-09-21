@@ -23,10 +23,13 @@ import { allPacks, declarationPeriods, packWhere } from './helpers/packs.js';
 
 let db: PGlite;
 
-/** A whole month, quarter or year, for a form filed on each. */
+/** A whole period of each cadence, for a form filed on each. */
 const RANGE: Record<string, [string, string]> = {
   month: ['2026-07-01', '2026-07-31'],
+  bimonth: ['2026-07-01', '2026-08-31'],
   quarter: ['2026-07-01', '2026-09-30'],
+  four_month: ['2026-09-01', '2026-12-31'],
+  half_year: ['2026-07-01', '2026-12-31'],
   year: ['2026-01-01', '2026-12-31'],
 };
 

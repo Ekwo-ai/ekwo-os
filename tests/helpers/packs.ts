@@ -147,6 +147,32 @@ export const declarationPeriods: string[] = (() => {
 })();
 
 /**
+ * How many months each cadence lasts, anchored on 1 January.
+ *
+ * The one thing about a cadence the schema cannot say, so it is written here
+ * once, for every test that has to turn a pack's cadence into dates. It is the
+ * same table as `declaration_period_months()` in the database, and
+ * `tests/filing_cadences.test.ts` holds the two in step: a cadence the schema
+ * gains without a length here fails there, not in some test that silently
+ * filed a year instead.
+ */
+export const cadenceMonths: Record<string, number> = {
+  month: 1,
+  bimonth: 2,
+  quarter: 3,
+  four_month: 4,
+  half_year: 6,
+  year: 12,
+};
+
+/** Months of a pack's cadence, or of a month where it proposes none. */
+export function monthsOf(cadence: string | null | undefined): number {
+  const months = cadenceMonths[cadence ?? 'month'];
+  if (months === undefined) throw new Error(`no length is known for the cadence ${cadence}`);
+  return months;
+}
+
+/**
  * A pack, any pack.
  *
  * For a test whose subject is the reader and not the country: a manifest field

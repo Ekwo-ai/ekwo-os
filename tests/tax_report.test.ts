@@ -944,17 +944,21 @@ describe('a row that names no currency', () => {
 // all, so a quarterly filer could be handed a July return and nothing said so.
 
 describe('the cadence a pair of dates is', () => {
-  it('names a whole month, quarter or year, and nothing else', async () => {
+  it('names a whole period of a cadence, and nothing else', async () => {
     const cases: [string, string, string | null][] = [
       ['2026-07-01', '2026-07-31', 'month'],
       ['2026-02-01', '2026-02-28', 'month'],
       ['2026-07-01', '2026-09-30', 'quarter'],
       ['2026-01-01', '2026-03-31', 'quarter'],
       ['2026-01-01', '2026-12-31', 'year'],
-      // A fortnight, a half-year and a month that stops a day early are not
-      // filing periods, and null is what says so.
+      // Since 20260921145412: two, four and six months, anchored on January.
+      ['2026-03-01', '2026-04-30', 'bimonth'],
+      ['2026-05-01', '2026-08-31', 'four_month'],
+      ['2026-01-01', '2026-06-30', 'half_year'],
+      // A fortnight, two months off their anchor and a month that stops a day
+      // early are not filing periods, and null is what says so.
       ['2026-07-01', '2026-07-15', null],
-      ['2026-01-01', '2026-06-30', null],
+      ['2026-02-01', '2026-03-31', null],
       ['2026-07-02', '2026-07-31', null],
       ['2026-07-01', '2026-07-30', null],
     ];
@@ -982,10 +986,13 @@ describe('a return asked for a period the company does not file', () => {
     (cadence) => !choice.report!.periods.includes(cadence),
   )!;
 
-  /** A whole month, quarter or year of the year the fixtures book in. */
+  /** A whole period of each cadence, in the year the fixtures book in. */
   const RANGE: Record<string, [string, string]> = {
     month: ['2026-07-01', '2026-07-31'],
+    bimonth: ['2026-07-01', '2026-08-31'],
     quarter: ['2026-07-01', '2026-09-30'],
+    four_month: ['2026-09-01', '2026-12-31'],
+    half_year: ['2026-07-01', '2026-12-31'],
     year: ['2026-01-01', '2026-12-31'],
   };
 

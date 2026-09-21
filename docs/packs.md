@@ -751,8 +751,11 @@ print — `vat_return()` returns it with the flag rather than dropping it.
 
 **How often the form is filed is part of the form.** `period` is the list of
 cadences it accepts — `["month", "quarter"]` in Belgium, France and Luxembourg,
-`["month"]` in Estonia
-— and there is no default for it: a pack that names none is refused, because
+`["month"]` in Estonia, `["month", "bimonth", "year"]` in Ireland — and there is
+no default for it. Six cadences exist, each a whole number of months anchored on
+1 January: `month`, `bimonth` (January–February, March–April…), `quarter`,
+`four_month` (from January, May, September), `half_year` (from January, July)
+and `year`. A form lists only the ones a text of its register allows: a pack that names none is refused, because
 the column this compiles to used to default to "monthly or quarterly" and a
 country that had never thought about its cadence filed on Belgium's without
 anybody deciding that. A single string is still read, `month_or_quarter`
@@ -793,6 +796,26 @@ is the one meaning a missing deadline has, and the country page prints it as a
 gap. `filing_deadline()` answers null for both — the core cannot know which
 slice of a per-taxpayer schedule a company falls in.
 
+**The unit the form is filed in** is `rounding`, and almost every form leaves
+it out: its figures are filed at the decimals of its currency. A form filed in
+coarser units says so, with the text that sets it —
+
+```json
+"rounding": {
+  "unit": 1,
+  "legal_reference": "CDTFA-401-A — \"please round cents to the nearest whole dollar\"",
+  "source": "cdtfa-401-a"
+}
+```
+
+`unit` is a power of ten (1, 10, 1000); `ekwo pack check` and the database both
+refuse anything else, because a unit of 0.05 is a coin and belongs to
+`defaults.cash_rounding_unit`. The ledger keeps its cents and `vat_return()`
+answers the exact figures; `prepare_filing()` freezes each box at the unit, from
+its own exact figure, and `filing_drift()` compares at the same unit, so the
+cents a ledger holds are not a drift. A frozen box has no scale of its own: a
+return in a currency without decimals freezes `1000000`, not `1000000.00`.
+
 `defaults.vat_period` is where this used to be said, on the country rather than
 on the form. It is still read, so a pack written before the move keeps working,
 and a pack that says both and says two different things is refused: one fact,
@@ -810,8 +833,9 @@ published and is the mirror of the row for the country's periodic return.
 `vat_return()` then refuses a period the company does not file **that form** on
 — and only when the refusal is certain: a cadence is recorded for this
 declaration, the form is filed on it, the dates are themselves a whole cadence
-of that form, and the two differ. A fortnight, a half-year and a form the
-company has recorded nothing about all go through. `ec_sales_list()` applies the
+of that form, and the two differ. A fortnight, a half-year asked of a form not
+filed half-yearly, and a form the company has recorded nothing about all go
+through. `ec_sales_list()` applies the
 same guard to the form it is told it is preparing, and refuses nothing when it
 is told none.
 

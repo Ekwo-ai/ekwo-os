@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.4.0",
-  "migration": "20260921084143",
+  "migration": "20260921145412",
   "socle": {
     "schema": "public",
     "tables": [
@@ -2895,7 +2895,7 @@
         "columns": [
           {
             "name": "amount",
-            "type": "numeric(16,2)"
+            "type": "numeric"
           },
           {
             "name": "box",
@@ -3294,6 +3294,18 @@
           {
             "name": "periods",
             "type": "declaration_period[]"
+          },
+          {
+            "name": "rounding_reference",
+            "type": "text"
+          },
+          {
+            "name": "rounding_source_key",
+            "type": "text"
+          },
+          {
+            "name": "rounding_unit",
+            "type": "numeric"
           },
           {
             "name": "valid_from",
@@ -3831,8 +3843,16 @@
         "arguments": ""
       },
       {
+        "name": "declaration_period_months",
+        "arguments": "p_period declaration_period"
+      },
+      {
         "name": "declaration_period_of",
         "arguments": "p_from date, p_to date"
+      },
+      {
+        "name": "declaration_period_start",
+        "arguments": "p_period declaration_period, p_day date"
       },
       {
         "name": "disable_module",
@@ -3980,6 +4000,10 @@
       },
       {
         "name": "filing_period",
+        "arguments": "p_company_id uuid, p_report_code text"
+      },
+      {
+        "name": "filing_rounding",
         "arguments": "p_company_id uuid, p_report_code text"
       },
       {
@@ -5418,7 +5442,10 @@
         "kind": "enum",
         "labels": [
           "month",
+          "bimonth",
           "quarter",
+          "four_month",
+          "half_year",
           "year"
         ]
       },
@@ -7103,8 +7130,30 @@
           ]
         },
         {
+          "name": "declaration_period_months",
+          "arguments": "p_period declaration_period",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
           "name": "declaration_period_of",
           "arguments": "p_from date, p_to date",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "declaration_period_start",
+          "arguments": "p_period declaration_period, p_day date",
           "anon": [],
           "authenticated": [
             "execute"
@@ -7463,6 +7512,17 @@
         },
         {
           "name": "filing_period",
+          "arguments": "p_company_id uuid, p_report_code text",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "filing_rounding",
           "arguments": "p_company_id uuid, p_report_code text",
           "anon": [],
           "authenticated": [
