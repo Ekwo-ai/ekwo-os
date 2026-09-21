@@ -1,0 +1,155 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "CG-TVA",
+  "name": "Déclaration de taxe sur la valeur ajoutée",
+  "period": [
+    "month"
+  ],
+  "period_default": "month",
+  "valid_from": "2026-01-01",
+  "legal_reference": "Loi n° 12-97 du 12 mai 1997, art. 32 (texte d'origine) — la déclaration est mensuelle, conforme au modèle prescrit par l'administration ; confirmé par PwC (secondaire, revu le 07/08/2026) et Almathe & Associés (secondaire). Le texte en vigueur (numérotation actuelle) n'a pas été trouvé : le nom du formulaire et la numérotation de ses cases ne sont publiés dans aucune source officielle trouvée. Les cases de ce fichier sont nommées d'après ce que l'art. 17, l'art. 37 et l'annexe 3/5 de la loi TVA font déclarer, non d'après un formulaire, comme au Tchad et au Sénégal. L'échéance elle-même n'est pas portée ici (pas de `deadline`) : le texte d'origine de 1997 dit « dans les quinze jours du mois suivant » (art. 31), PwC dit « before the 20th day of every month » — deux sources en désaccord, aucun texte consolidé lu pour trancher.",
+  "source": "loi-tva-1997",
+  "boxes": [
+    {
+      "box": "CA189",
+      "kind": "base",
+      "name": "Opérations taxables au taux normal (18,9 % facturés)",
+      "sequence": 10,
+      "legal_reference": "Loi n° 12-97 du 12 mai 1997, art. 17 et art. 37",
+      "source": "loi-tva-1997"
+    },
+    {
+      "box": "CA5",
+      "kind": "base",
+      "name": "Opérations taxables au taux réduit de 5 % (annexe 5)",
+      "sequence": 20,
+      "legal_reference": "Loi n° 12-97 du 12 mai 1997, annexe 5, dans la rédaction de la loi de finances pour 2026, § 18.3",
+      "source": "lf-2026"
+    },
+    {
+      "box": "EXP",
+      "kind": "base",
+      "name": "Exportations et transports internationaux, taux zéro",
+      "sequence": 30,
+      "legal_reference": "Loi n° 12-97 du 12 mai 1997, art. 17",
+      "source": "loi-tva-1997"
+    },
+    {
+      "box": "EXO",
+      "kind": "base",
+      "name": "Opérations exonérées (annexe 3)",
+      "sequence": 40,
+      "legal_reference": "Loi n° 12-97 du 12 mai 1997, annexe 3, dans la rédaction de la loi de finances pour 2026, § 18.3",
+      "source": "lf-2026"
+    },
+    {
+      "box": "CAT",
+      "kind": "total",
+      "name": "Montant total des opérations",
+      "sequence": 50,
+      "plus": [
+        "CA189",
+        "CA5",
+        "EXP",
+        "EXO"
+      ],
+      "legal_reference": "Loi n° 12-97 du 12 mai 1997, art. 32",
+      "source": "loi-tva-1997"
+    },
+    {
+      "box": "TVA189",
+      "kind": "tax",
+      "name": "Taxe exigible, part principale du taux de 18,9 %",
+      "sequence": 60,
+      "legal_reference": "Loi n° 12-97 du 12 mai 1997, art. 17 — part de la taxe facturée qui revient au taux principal de 18 %, 95,238 % du montant facturé à 18,9 %",
+      "source": "loi-tva-1997"
+    },
+    {
+      "box": "CAC189",
+      "kind": "tax",
+      "name": "Centimes additionnels sur le taux de 18,9 %",
+      "sequence": 65,
+      "legal_reference": "Loi n° 12-97 du 12 mai 1997, art. 37, confirmé par la loi de finances pour 2026, § 4.a et § 4.d — part de la taxe facturée qui correspond aux centimes additionnels, 4,762 % du montant facturé à 18,9 %. Déclarée avec la taxe sur une case distincte parce que la loi de finances 2026 les garde nommément à part (« centimes additionnels à la TVA »), sans qu'un formulaire officiel trouvé en fixe le numéro.",
+      "source": "lf-2026"
+    },
+    {
+      "box": "TVA5",
+      "kind": "tax",
+      "name": "Taxe exigible au taux réduit de 5 %",
+      "sequence": 70,
+      "legal_reference": "Loi n° 12-97 du 12 mai 1997, annexe 5, dans la rédaction de la loi de finances pour 2026, § 18.3",
+      "source": "lf-2026"
+    },
+    {
+      "box": "TVAB",
+      "kind": "total",
+      "name": "Total de la taxe exigible",
+      "sequence": 80,
+      "plus": [
+        "TVA189",
+        "CAC189",
+        "TVA5"
+      ],
+      "legal_reference": "Loi n° 12-97 du 12 mai 1997, art. 32",
+      "source": "loi-tva-1997"
+    },
+    {
+      "box": "DEDIMMO",
+      "kind": "tax",
+      "name": "TVA déductible sur immobilisations",
+      "sequence": 90,
+      "legal_reference": "Loi n° 12-97 du 12 mai 1997, art. 32, et directive CEMAC n° 11/22, art. 22-1, pour la déductibilité de la part des centimes additionnels",
+      "source": "loi-tva-1997"
+    },
+    {
+      "box": "DEDBS",
+      "kind": "tax",
+      "name": "TVA déductible sur biens et services",
+      "sequence": 100,
+      "legal_reference": "Loi n° 12-97 du 12 mai 1997, art. 32, et directive CEMAC n° 11/22, art. 22-1",
+      "source": "loi-tva-1997"
+    },
+    {
+      "box": "DEDT",
+      "kind": "total",
+      "name": "Total des déductions",
+      "sequence": 110,
+      "plus": [
+        "DEDIMMO",
+        "DEDBS"
+      ],
+      "legal_reference": "Loi n° 12-97 du 12 mai 1997, art. 32",
+      "source": "loi-tva-1997"
+    },
+    {
+      "box": "NET",
+      "kind": "total",
+      "name": "TVA nette à payer",
+      "sequence": 120,
+      "plus": [
+        "TVAB"
+      ],
+      "minus": [
+        "DEDT"
+      ],
+      "floor_zero": true,
+      "legal_reference": "Loi n° 12-97 du 12 mai 1997, art. 32",
+      "source": "loi-tva-1997"
+    },
+    {
+      "box": "CRED",
+      "kind": "total",
+      "name": "Crédit de TVA à reporter",
+      "sequence": 130,
+      "plus": [
+        "DEDT"
+      ],
+      "minus": [
+        "TVAB"
+      ],
+      "floor_zero": true,
+      "legal_reference": "Loi n° 12-97 du 12 mai 1997, art. 32 — aucun texte trouvé ne plafonne la durée du report",
+      "source": "loi-tva-1997"
+    }
+  ]
+}

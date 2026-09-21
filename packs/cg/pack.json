@@ -1,0 +1,225 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "CG",
+  "name": "Congo",
+  "version": "0.1.0",
+  "schema_min": "20260921145425",
+  "seed_sequence": 27,
+  "released_at": "2026-09-21",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "audcif",
+        "title": "Acte uniforme relatif au droit comptable et à l'information financière (AUDCIF), adopté à Brazzaville le 26 janvier 2017",
+        "publisher": "OHADA — Bibliothèque numérique de l'OHADA",
+        "url": "https://biblio.ohada.org/doc_num.php?explnum_id=2061",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "syscohada",
+        "title": "Journal officiel de l'OHADA, numéro spécial du 15 février 2017 — Acte uniforme relatif au droit comptable et à l'information financière et Système comptable OHADA (SYSCOHADA révisé), version complète signée",
+        "publisher": "OHADA — Bibliothèque numérique de l'OHADA",
+        "url": "https://biblio.ohada.org/doc_num.php?explnum_id=2063",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "lf-2026",
+        "title": "Journal officiel de la République du Congo, édition spéciale n° 3-2026 du 5 janvier 2026 — Loi n° 42-2025 du 31 décembre 2025 portant loi de finances pour l'année 2026",
+        "publisher": "Secrétariat général du Gouvernement de la République du Congo",
+        "url": "https://sgg.cg/JO/2026/congo-jo-2026-3-2.pdf",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "loi-tva-1997",
+        "title": "Loi n° 12-97 du 12 mai 1997 portant institution de la Taxe sur la Valeur Ajoutée (TVA), texte d'origine",
+        "publisher": "Journal officiel de la République du Congo (hébergé par UNICONGO)",
+        "url": "https://www.unicongo.cg/wp-content/uploads/2023/03/Loi-n%C2%B0-12-97_1997_Finance-publique-Impots-et-Douanes_Instution-TVA.pdf",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "lf-2012",
+        "title": "Journal officiel de la République du Congo, édition spéciale n° 1 du 14 mai 2012 — Loi n° 8-2012 du 11 mai 2012 portant loi de finances rectificative pour l'année 2012",
+        "publisher": "Secrétariat général du Gouvernement de la République du Congo",
+        "url": "https://www.sgg.cg/JO/2012/congo-jo-2012-01-sp.pdf",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "directive-cemac-tva",
+        "title": "Directive n° 11/22-CEMAC-UEAC-010A-CM-38 du 10 novembre 2022 portant harmonisation des législations des États membres de la CEMAC en matière de taxe sur la valeur ajoutée et du droit d'accises",
+        "publisher": "Secrétariat général de la CEMAC (texte publié par le Secrétariat général du Gouvernement du Congo)",
+        "url": "https://www.sgg.cg/txts-droit-reg/CEMAC-Directive-2022-11-TVA.pdf",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "fouta",
+        "title": "Lettre circulaire n° 1091/MFBPP-CAB relative à la date ultime de paiement des impôts et taxes sur la plateforme FOUTA (24 août 2026)",
+        "publisher": "Ministère des Finances, du Budget et du Portefeuille public de la République du Congo",
+        "url": "https://www.finances.gouv.cg/sites/default/files/documents/D2026-1091_Lettre%20circulaire_Date%20ultime%20paiement%20FOUTA.pdf",
+        "consulted_on": "2026-09-21",
+        "kind": "guidance"
+      },
+      {
+        "key": "sfec",
+        "title": "Système de Facturation Électronique Certifié (SFEC)",
+        "publisher": "Ministère des Finances, du Budget et du Portefeuille public de la République du Congo",
+        "url": "https://www.finances.gouv.cg/fr/syst%C3%A8me-de-facturation-%C3%A9lectronique-certifi%C3%A9-sfec",
+        "consulted_on": "2026-09-21",
+        "kind": "guidance"
+      },
+      {
+        "key": "sfec-communique",
+        "title": "Communiqué relatif au déploiement du système de facturation électronique certifié (SFEC)",
+        "publisher": "Direction générale des Impôts et des Domaines (DGID) de la République du Congo",
+        "url": "https://www.finances.gouv.cg/sites/default/files/documents/Communiqu%C3%A9%20DGID%20SFEC.pdf",
+        "consulted_on": "2026-09-21",
+        "kind": "guidance"
+      },
+      {
+        "key": "sfec-portail",
+        "title": "SFEC — portail officiel du système de facturation électronique certifié",
+        "publisher": "Direction générale des Impôts et des Domaines (DGID) de la République du Congo",
+        "url": "https://sfec.gouv.cg/",
+        "consulted_on": "2026-09-21",
+        "kind": "portal"
+      },
+      {
+        "key": "etax",
+        "title": "Système de gestion des impôts et taxes (E-TAX)",
+        "publisher": "Ministère des Finances, du Budget et du Portefeuille public de la République du Congo",
+        "url": "https://www.finances.gouv.cg/fr/articles/syst%C3%A8me-de-gestion-des-imp%C3%B4ts-et-taxes-e-tax",
+        "consulted_on": "2026-09-21",
+        "kind": "guidance"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "XAF",
+    "language": "fr",
+    "rounding_method": "half_up",
+    "closing_style": "result_accounts",
+    "roles": {
+      "receivable": "4111",
+      "payable": "4011",
+      "suspense": "4711",
+      "rounding": "6588",
+      "retained_earnings": "121",
+      "retained_earnings_loss": "1291",
+      "current_year_result_profit": "131",
+      "current_year_result_loss": "139",
+      "sales": "7011",
+      "purchase": "6011",
+      "bank": "5211",
+      "cash": "5711",
+      "fx_gain": "756",
+      "fx_loss": "656",
+      "tax_payable": "4441",
+      "tax_receivable": "4449"
+    },
+    "journal_roles": {
+      "sales": "VT",
+      "purchase": "AC",
+      "miscellaneous": "OD",
+      "opening": "AN"
+    },
+    "fiscal_year_default": "calendar"
+  },
+  "languages": [],
+  "journals": [
+    {
+      "code": "VT",
+      "type": "sales",
+      "name": "Journal des ventes",
+      "sequence": 10
+    },
+    {
+      "code": "AC",
+      "type": "purchase",
+      "name": "Journal des achats",
+      "sequence": 20
+    },
+    {
+      "code": "BQ",
+      "type": "bank",
+      "name": "Journal de banque",
+      "sequence": 30
+    },
+    {
+      "code": "CA",
+      "type": "cash",
+      "name": "Journal de caisse",
+      "sequence": 40
+    },
+    {
+      "code": "OD",
+      "type": "general",
+      "name": "Opérations diverses",
+      "sequence": 50
+    },
+    {
+      "code": "AN",
+      "type": "opening",
+      "name": "Journal des à-nouveaux",
+      "sequence": 60
+    }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "SYSCOHADA révisé — plan comptable général OHADA, Système normal",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": [
+        "CG-SYSCOHADA-BS",
+        "CG-SYSCOHADA-IS"
+      ],
+      "legal_reference": "Acte uniforme relatif au droit comptable et à l'information financière du 26 janvier 2017, art. 17, 7° — recours à un plan de comptes normalisé dont la liste figure dans le Système comptable OHADA ; Système comptable OHADA, Titre VII, chapitre 2, section 3 — liste des comptes, classes 1 à 8. La classe 9, engagements hors bilan et comptabilité analytique de gestion, est d'application facultative et n'est pas reprise. Commun aux dix-sept États parties : un seul fichier, packs/ohada/accounts.csv, recopié dans chaque pack par scripts/ohada-packs.mjs.",
+      "source": "syscohada"
+    }
+  ],
+  "documents": {
+    "numbering": "gapless_per_year",
+    "number_format": "{CODE}/{YYYY}/{NNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "references": {
+      "numbering": {
+        "legal_reference": "Loi n° 12-97 du 12 mai 1997, art. 29 (texte d'origine) — la facture porte une date et un numéro de série ; loi n° 8-2012 du 11 mai 2012 (texte d'application, JO 2012), qui ajoute au marquage de sécurité de la facture une « numérotation annuelle ininterrompue » et le NIU. Le texte en vigueur de la loi TVA (numérotation actuelle des articles) n'a pas été trouvé : ce champ suit le texte de 2012, le plus récent lu qui prescrit explicitement l'absence de trou.",
+        "source": "lf-2012"
+      }
+    },
+    "mentions": [
+      {
+        "code": "exempt",
+        "applies_when": "exempt",
+        "text": "Opération exonérée de la taxe sur la valeur ajoutée — loi n° 12-97 du 12 mai 1997, annexe 3 (liste remplacée par la loi de finances pour 2026, § 18.3).",
+        "sequence": 10,
+        "legal_reference": "Loi n° 12-97 du 12 mai 1997, annexe 3, dans la rédaction de la loi de finances pour 2026 (loi n° 42-2025), § 18.3.",
+        "source": "lf-2026"
+      },
+      {
+        "code": "export",
+        "applies_when": "export",
+        "text": "Exportation taxée au taux zéro — loi n° 12-97 du 12 mai 1997, art. 17.",
+        "sequence": 20,
+        "legal_reference": "Loi n° 12-97 du 12 mai 1997, art. 17 (texte d'origine) — taux zéro applicable aux exportations visées par la douane et aux transports internationaux. Le texte en vigueur (numérotation actuelle) n'a pas été trouvé.",
+        "source": "loi-tva-1997"
+      }
+    ]
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "Système de Facturation Électronique Certifié (SFEC), institué par la loi n° 77-2022 du 27 décembre 2022 (LF 2023), modifié par la loi n° 47-2024 du 30 décembre 2024 (LF 2025), réglementé par le décret n° 2026-101 du 31 mars 2026 (homologation des terminaux et logiciels, distributeurs agréés, obligation d'interconnexion, délai transitoire de 3 mois). D'après le communiqué DGID et le site officiel SFEC, le déploiement est étagé par catégorie de contribuable — 1er août 2026 pour les entreprises des unités de gestion des entreprises (UGE), des moyennes entreprises (UME) et des petites et très petites entreprises du secteur pétrolier (USTPG) et, sans distinction de taille ni de résidence fiscale, leurs fournisseurs et prestataires ; 1er décembre 2026 pour les très petites entreprises — avec repli temporaire possible sur le portail e-Facture. Loi de finances pour 2026, § 4.d et art. 25 d) : une facture qui n'émane pas du SFEC (sans NIU) rend la charge non déductible à l'IS ; § 11 (Deloitte, secondaire) : la TVA n'est pas davantage déductible sur une facture non certifiée. C'est une condition de déduction et non une obligation générale d'émission dématérialisée valable le même jour pour tous : `mandatory_from` reste vide faute d'une date unique que le pack puisse défendre.",
+    "source": "sfec"
+  }
+}

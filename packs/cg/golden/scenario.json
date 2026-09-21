@@ -1,0 +1,268 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "Une année d'un commerce et prestataire congolais, déclarant chaque mois",
+  "chart": "default",
+  "fiscal_year": {
+    "name": "Exercice 2026",
+    "start": "2026-01-01",
+    "end": "2026-12-31"
+  },
+  "periods": [
+    {
+      "code": "2026-01",
+      "from": "2026-01-01",
+      "to": "2026-01-31"
+    },
+    {
+      "code": "2026-02",
+      "from": "2026-02-01",
+      "to": "2026-02-28"
+    },
+    {
+      "code": "2026-03",
+      "from": "2026-03-01",
+      "to": "2026-03-31"
+    },
+    {
+      "code": "2026-04",
+      "from": "2026-04-01",
+      "to": "2026-04-30"
+    }
+  ],
+  "statements": [
+    "CG-SYSCOHADA-BS",
+    "CG-SYSCOHADA-IS"
+  ],
+  "contacts": [
+    {
+      "ref": "client-cg",
+      "name": "Comptoir de Poto-Poto SARL",
+      "type": "customer",
+      "country": "CG"
+    },
+    {
+      "ref": "client-cg-2",
+      "name": "Négoce du Plateau SA",
+      "type": "customer",
+      "country": "CG"
+    },
+    {
+      "ref": "client-fr",
+      "name": "Négoce du Fleuve SAS",
+      "type": "customer",
+      "country": "FR"
+    },
+    {
+      "ref": "fourn-cg",
+      "name": "Grossiste de Talangaï SARL",
+      "type": "supplier",
+      "country": "CG"
+    },
+    {
+      "ref": "fourn-srv",
+      "name": "Maintenance Bacongo SARL",
+      "type": "supplier",
+      "country": "CG"
+    },
+    {
+      "ref": "fourn-immo",
+      "name": "Bureautique de Mpila SA",
+      "type": "supplier",
+      "country": "CG"
+    }
+  ],
+  "documents": [
+    {
+      "ref": "V1",
+      "type": "sale_invoice",
+      "contact": "client-cg",
+      "date": "2026-01-12",
+      "why": "Une vente de marchandises au taux normal : la case CA189, la taxe scindée en deux comptes — 4431 pour la part principale (95,238 % de la taxe facturée) et 446 pour les centimes additionnels (4,762 %), dans les cases TVA189 et CAC189. Les deux parts s'additionnent exactement à la taxe facturée à 18,9 %, calculée une seule fois.",
+      "lines": [
+        {
+          "name": "Marchandises",
+          "quantity": 25,
+          "unit_price": 12000,
+          "tax": "CG-S-189",
+          "account": "7011"
+        }
+      ]
+    },
+    {
+      "ref": "V2",
+      "type": "sale_invoice",
+      "contact": "client-cg-2",
+      "date": "2026-01-22",
+      "why": "Une prestation de services au taux normal de 18,9 % : la taxe part sur le compte 4432 pour sa part principale, 446 pour les centimes additionnels.",
+      "lines": [
+        {
+          "name": "Prestation d'entretien industriel",
+          "quantity": 1,
+          "unit_price": 220000,
+          "tax": "CG-S-189-SRV",
+          "account": "7061"
+        }
+      ]
+    },
+    {
+      "ref": "V3",
+      "type": "sale_invoice",
+      "contact": "client-cg",
+      "date": "2026-02-06",
+      "why": "Une vente de biens de l'annexe 5 (riz, sucre) au taux réduit de 5 %, sans centimes additionnels sur ce taux faute de disposition trouvée qui les y ajoute : la case CA5, la taxe au compte 4431 et dans la case TVA5.",
+      "lines": [
+        {
+          "name": "Riz et sucre",
+          "quantity": 1,
+          "unit_price": 85000,
+          "tax": "CG-S-5",
+          "account": "7011"
+        }
+      ]
+    },
+    {
+      "ref": "V4",
+      "type": "sale_invoice",
+      "contact": "client-fr",
+      "date": "2026-02-18",
+      "why": "Une exportation au taux zéro (art. 17) : la case EXP, aucune taxe, un compte de ventes hors Région.",
+      "lines": [
+        {
+          "name": "Marchandises exportées",
+          "quantity": 1,
+          "unit_price": 480000,
+          "tax": "CG-S-EXP",
+          "account": "7012"
+        }
+      ]
+    },
+    {
+      "ref": "V5",
+      "type": "sale_invoice",
+      "contact": "client-cg-2",
+      "date": "2026-03-02",
+      "why": "Une opération exonérée de l'annexe 3 : la case EXO, aucune taxe.",
+      "lines": [
+        {
+          "name": "Médicaments",
+          "quantity": 1,
+          "unit_price": 52000,
+          "tax": "CG-S-EXO",
+          "account": "7011"
+        }
+      ]
+    },
+    {
+      "ref": "AV1",
+      "type": "sale_credit_note",
+      "contact": "client-cg",
+      "date": "2026-03-10",
+      "why": "Un avoir partiel sur la vente V1 : la case CA189 et la taxe, sur ses deux comptes, diminuent dans le mois de l'avoir.",
+      "lines": [
+        {
+          "name": "Retour de marchandises",
+          "quantity": 5,
+          "unit_price": 12000,
+          "tax": "CG-S-189",
+          "account": "7011"
+        }
+      ]
+    },
+    {
+      "ref": "A1",
+      "type": "purchase_invoice",
+      "contact": "fourn-cg",
+      "date": "2026-01-09",
+      "why": "Un achat de marchandises au taux normal, déductible en un seul montant (directive CEMAC art. 22-1) : compte récupérable 4452, case DEDBS.",
+      "lines": [
+        {
+          "name": "Marchandises",
+          "quantity": 1,
+          "unit_price": 150000,
+          "tax": "CG-P-189",
+          "account": "6011"
+        }
+      ]
+    },
+    {
+      "ref": "A2",
+      "type": "purchase_invoice",
+      "contact": "fourn-srv",
+      "date": "2026-02-14",
+      "why": "Un entretien facturé au taux normal : la taxe récupérable sur services extérieurs, compte 4454, case DEDBS.",
+      "lines": [
+        {
+          "name": "Entretien des installations",
+          "quantity": 1,
+          "unit_price": 90000,
+          "tax": "CG-P-189-SRV",
+          "account": "6248"
+        }
+      ]
+    },
+    {
+      "ref": "A3",
+      "type": "purchase_invoice",
+      "contact": "fourn-immo",
+      "date": "2026-03-20",
+      "why": "Du matériel informatique immobilisé au taux normal : la taxe au compte 4451, case DEDIMMO.",
+      "lines": [
+        {
+          "name": "Matériel informatique et mobilier de bureau",
+          "quantity": 1,
+          "unit_price": 900000,
+          "tax": "CG-P-189-IMMO",
+          "account": "2441"
+        }
+      ]
+    },
+    {
+      "ref": "A4",
+      "type": "purchase_invoice",
+      "contact": "fourn-cg",
+      "date": "2026-04-07",
+      "why": "Un achat de biens de l'annexe 5 à 5 %, déductible : compte 4452, case DEDBS.",
+      "lines": [
+        {
+          "name": "Sucre",
+          "quantity": 1,
+          "unit_price": 40000,
+          "tax": "CG-P-5",
+          "account": "6011"
+        }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "E1",
+      "direction": "inbound",
+      "date": "2026-02-10",
+      "amount": 356700,
+      "contact": "client-cg",
+      "journal": "BQ",
+      "match": "V1",
+      "why": "Un encaissement qui solde exactement la facture de marchandises V1 (300 000 + 56 700 de taxe)."
+    },
+    {
+      "ref": "E2",
+      "direction": "inbound",
+      "date": "2026-03-05",
+      "amount": 100000,
+      "contact": "client-cg-2",
+      "journal": "BQ",
+      "match": null,
+      "why": "Un acompte non affecté : il reste une ligne ouverte au compte client."
+    },
+    {
+      "ref": "P1",
+      "direction": "outbound",
+      "date": "2026-02-01",
+      "amount": 178350,
+      "contact": "fourn-cg",
+      "journal": "BQ",
+      "match": "A1",
+      "why": "Un paiement qui solde exactement la facture d'achat A1 (150 000 + 28 350 de taxe)."
+    }
+  ]
+}

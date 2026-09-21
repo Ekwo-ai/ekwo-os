@@ -3195,3 +3195,45 @@ passer un test" rule applies exactly as hard to a rate an administration
 itself has not switched on as to a rate a test invents. `packs/cd/` carries
 neither rate, and names both in its own README against the day a primary
 text, or the DGI's own systems, catch up to the law.
+
+## From the Congo
+
+`packs/cg/`, `community`, seed 27, the fourth OHADA member to carry the CEMAC
+surtax after Cameroon, Centrafrique and Chad. Its chart, journals, roles and
+two statements are the common part of
+[`packs/ohada/`](../packs/ohada/README.md); what it adds is the value added
+tax of the loi n° 12-97 du 12 mai 1997, an uncodified law amended each year by
+a loi de finances, read from two unlayered scans (the 1997 law and the loi de
+finances rectificative pour 2012) checked page by page against the images, and
+from the loi de finances pour 2026 (a native text PDF). One thing the format
+already had, applied differently from its CEMAC neighbours; one thing it could
+not say, not patched.
+
+**The same surtax, a different account, because a different fact.**
+Congo facturé at 18,9 % is 18 % (loi n° 12-97, art. 17) plus 5 % of that same
+amount in *centimes additionnels* (art. 37, confirmed by the loi de finances
+pour 2026 at a cumulated rate of 18,9 %) — the shape `packs/td/` already
+predicted for Cameroon and Congo: one tax at 18,9 %, two `tax` postings of
+`factor` 95,238 and 4,762, the second absorbing the first's rounding so the
+two always sum to exactly what the invoice prints. Where Chad and Cameroon
+name their own surtax communal — *centimes communaux et provinciaux*, a
+*Livre de fiscalité locale* — and post it to 4422 « Impôts et taxes pour les
+collectivités publiques », no text read for the Congo names a beneficiary at
+all: the loi de finances pour 2026 folds the *centimes additionnels* into a
+*précompte* paid to the Trésor Public, never to a named collectivité.
+`packs/cg/` posts them to 446 « État, autres taxes sur le chiffre d'affaires »
+instead — the same posting shape as its neighbours, a different account
+because the fact the account names is not established here. A text found
+later that calls the Congo's centimes communal would move this pack to 4422,
+as documented in `packs/cg/README.md`.
+
+**A directive that requires what a summary denies, and neither read
+consolidated.** The CEMAC directive (art. 22-1) allows a surtax on VAT only if
+it is deductible exactly as the tax itself; `packs/cg/` follows that principle
+and posts its purchase-side surtax fully deductible, in one amount, as
+`packs/td/` and `packs/cm/` already do. PwC's Worldwide Tax Summaries (a
+secondary source, last reviewed 07 August 2026) says the opposite — the
+Congolese surtax is "non-deductible, a definitive cost". No consolidated text
+of the loi n° 12-97 could be read to settle which is right;
+`packs/cg/README.md` carries the contradiction in full and flags it for a
+local accountant to resolve before the pack leaves `community`.

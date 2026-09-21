@@ -1,0 +1,344 @@
+[
+  {
+    "code": "CG-S-189",
+    "name": "Ventes de biens, taux normal 18 % + centimes additionnels 5 % (18,9 % cumulé)",
+    "description": "Livraisons de biens au taux normal de 18 %, majoré des centimes additionnels de 5 % de la TVA (0,9 point de base) : le compte 4431 reçoit la part principale de la taxe (20/21e, soit 95,238 % de la taxe facturée) et le compte 446 la part des centimes additionnels (1/21e, soit 4,762 %). Un seul taux de 18,9 % appliqué une fois, jamais 18 % puis 5 % du résultat pris séparément : deux arrondis successifs peuvent s'écarter d'une unité monétaire de l'arrondi unique que porte la facture.",
+    "rate": 18.9,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "1997-01-01",
+    "legal_reference": "Loi n° 12-97 du 12 mai 1997, art. 17 (texte d'origine) — taux normal de 18 % ; art. 37 — centimes additionnels maintenus au taux de 5 % de la TVA, issus de la taxe complémentaire sur le chiffre d'affaires (TCA) de 1994 ; loi de finances pour 2026 (loi n° 42-2025), § 4.a et § 4.d — confirme les « centimes additionnels à la TVA, fixés à 5 % du montant de la TVA » et un « précompte... au taux cumulé de 18,9 % ». Le texte en vigueur (numérotation actuelle des articles) n'a pas été trouvé : le taux et les centimes sont ceux que la loi de finances pour 2026 confirme en vigueur. Compte 446 « État, autres taxes sur le chiffre d'affaires » retenu plutôt que 4422 « Impôts et taxes pour les collectivités publiques » (choisi par packs/td/ et packs/cm/ pour leur propre surtaxe) parce qu'aucune source lue n'établit que les centimes additionnels congolais reviennent aux collectivités locales — la loi de finances pour 2026 les rattache au budget de l'État (précompte versé au Trésor Public), sans texte trouvé qui les dise communaux ; c'est un choix documenté, pas le seul défendable. Déductibilité à l'achat : directive CEMAC n° 11/22, art. 22-1 — une surtaxe additionnelle à la TVA n'est admise que si elle est déductible dans les mêmes conditions que la taxe elle-même ; PwC (source secondaire, revue le 07/08/2026) la dit pourtant non déductible, ce que ce pack ne peut ni confirmer ni exclure faute de texte consolidé lu — voir packs/cg/README.md.",
+    "source": "loi-tva-1997",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "CA189"
+        },
+        {
+          "type": "tax",
+          "account": "4431",
+          "factor": 95.238,
+          "box": "TVA189",
+          "box_factor": 95.238
+        },
+        {
+          "type": "tax",
+          "account": "446",
+          "factor": 4.762,
+          "box": "CAC189",
+          "box_factor": 4.762
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "CA189",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "4431",
+          "factor": 95.238,
+          "box": "TVA189",
+          "box_factor": -95.238
+        },
+        {
+          "type": "tax",
+          "account": "446",
+          "factor": 4.762,
+          "box": "CAC189",
+          "box_factor": -4.762
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 10
+  },
+  {
+    "code": "CG-S-189-SRV",
+    "name": "Prestations de services, taux normal 18 % + centimes additionnels 5 % (18,9 % cumulé)",
+    "description": "Prestations de services, même taux affiché et même répartition que CG-S-189, taxe portée au compte 4432 pour sa part principale.",
+    "rate": 18.9,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "1997-01-01",
+    "legal_reference": "Loi n° 12-97 du 12 mai 1997, art. 17 et art. 37 ; loi de finances pour 2026, § 4.a et § 4.d, comme CG-S-189.",
+    "source": "loi-tva-1997",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "CA189"
+        },
+        {
+          "type": "tax",
+          "account": "4432",
+          "factor": 95.238,
+          "box": "TVA189",
+          "box_factor": 95.238
+        },
+        {
+          "type": "tax",
+          "account": "446",
+          "factor": 4.762,
+          "box": "CAC189",
+          "box_factor": 4.762
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "CA189",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "4432",
+          "factor": 95.238,
+          "box": "TVA189",
+          "box_factor": -95.238
+        },
+        {
+          "type": "tax",
+          "account": "446",
+          "factor": 4.762,
+          "box": "CAC189",
+          "box_factor": -4.762
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 20
+  },
+  {
+    "code": "CG-S-5",
+    "name": "Biens de l'annexe 5, taux réduit 5 %",
+    "description": "Biens de consommation courante de l'annexe 5 de la loi TVA : laits, tomate, riz, farine de froment, sucre, boulangerie et biscuiterie, sel. Aucun centime additionnel n'est porté sur ce taux : la loi de finances pour 2026 ne dit ni ne l'exclut, et ce pack ne tranche pas ce qu'aucune disposition trouvée ne tranche.",
+    "rate": 5,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "conditions": [
+      "supply_nature"
+    ],
+    "legal_reference": "Loi n° 12-97 du 12 mai 1997, annexe 5, liste remplacée par la loi de finances pour 2026 (loi n° 42-2025), § 18.3. Le taux réduit existait déjà en 2012 (loi n° 8-2012) ; la liste actuellement en vigueur est celle de la loi de finances pour 2026, au 1er janvier 2026.",
+    "source": "lf-2026",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "CA5"
+        },
+        {
+          "type": "tax",
+          "account": "4431",
+          "box": "TVA5"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "CA5",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "4431",
+          "box": "TVA5",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 30
+  },
+  {
+    "code": "CG-S-EXP",
+    "name": "Exportation, taux zéro",
+    "description": "Exportations visées par la douane et transports internationaux.",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "1997-01-01",
+    "conditions": [
+      "transport_evidence"
+    ],
+    "legal_reference": "Loi n° 12-97 du 12 mai 1997, art. 17 (texte d'origine) — taux zéro sur les exportations et le transport international. Le texte en vigueur (numérotation actuelle) n'a pas été trouvé.",
+    "source": "loi-tva-1997",
+    "vat_category": "G",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "EXP"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "EXP",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 40
+  },
+  {
+    "code": "CG-S-EXO",
+    "name": "Opération exonérée (annexe 3)",
+    "description": "Viandes et volailles ; poissons de mer (hors luxe) et poisson salé ; blé et maïs non de semence ; huile végétale ; aliments pour enfants ; levure ; aliments du bétail ; sel ; quinine, insuline, antibiotiques, produits pharmaceutiques ; engrais ; insecticides ; articles d'hygiène médicale ; cahiers, livres scolaires et autres livres ; lunettes ; fauteuils roulants ; appareils et mobilier médicaux.",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2026-01-01",
+    "conditions": [
+      "supply_nature"
+    ],
+    "legal_reference": "Loi n° 12-97 du 12 mai 1997, annexe 3, liste remplacée par la loi de finances pour 2026 (loi n° 42-2025), § 18.3, vérifiée sur le fac-similé du Journal officiel.",
+    "source": "lf-2026",
+    "vat_category": "E",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "EXO"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "EXO",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 50
+  },
+  {
+    "code": "CG-P-189",
+    "name": "Achats de biens, taux normal 18,9 %",
+    "description": "Taxe récupérable sur achats de marchandises, un seul montant à 18,9 %, sans distinguer la part principale de la part des centimes additionnels : le plan SYSCOHADA n'a pas de compte récupérable séparé pour cette distinction, et la directive CEMAC (art. 22-1) n'exige que la déductibilité, pas la traçabilité de la provenance.",
+    "rate": 18.9,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "1997-01-01",
+    "legal_reference": "Loi n° 12-97 du 12 mai 1997, art. 17 et art. 37 ; loi de finances pour 2026, § 4.a et § 4.d, pour le taux facturé de 18,9 % ; directive CEMAC n° 11/22, art. 22-1 — la surtaxe additionnelle n'est admise que si elle est déductible comme la taxe elle-même. PwC (secondaire) la dit non déductible : contradiction non tranchée faute de texte consolidé lu, voir packs/cg/README.md.",
+    "source": "loi-tva-1997",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "4452",
+          "box": "DEDBS"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "4452",
+          "box": "DEDBS",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 110
+  },
+  {
+    "code": "CG-P-189-SRV",
+    "name": "Services extérieurs, taux normal 18,9 %",
+    "rate": 18.9,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "1997-01-01",
+    "legal_reference": "Loi n° 12-97 du 12 mai 1997, art. 17 et art. 37 ; loi de finances pour 2026, § 4.a et § 4.d ; directive CEMAC n° 11/22, art. 22-1, comme CG-P-189.",
+    "source": "loi-tva-1997",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "4454",
+          "box": "DEDBS"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "4454",
+          "box": "DEDBS",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 120
+  },
+  {
+    "code": "CG-P-189-IMMO",
+    "name": "Immobilisations, taux normal 18,9 %",
+    "rate": 18.9,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "1997-01-01",
+    "legal_reference": "Loi n° 12-97 du 12 mai 1997, art. 17 et art. 37 ; loi de finances pour 2026, § 4.a et § 4.d ; directive CEMAC n° 11/22, art. 22-1, comme CG-P-189.",
+    "source": "loi-tva-1997",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "4451",
+          "box": "DEDIMMO"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "4451",
+          "box": "DEDIMMO",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 130
+  },
+  {
+    "code": "CG-P-5",
+    "name": "Achats de biens de l'annexe 5, taux réduit 5 %",
+    "rate": 5,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "legal_reference": "Loi n° 12-97 du 12 mai 1997, annexe 5, liste remplacée par la loi de finances pour 2026, § 18.3.",
+    "source": "lf-2026",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "4452",
+          "box": "DEDBS"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "4452",
+          "box": "DEDBS",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 140
+  }
+]
