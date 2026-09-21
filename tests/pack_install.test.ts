@@ -258,12 +258,12 @@ describe('installing a company', () => {
 describe('a seed applied again', () => {
   it('corrects a template and leaves the company that copied it alone', async () => {
     await db.exec('begin');
-    const { companyId } = await newCompany(db, { name: 'Upsert SRL' });
+    const pack = somePack;
+    const { companyId } = await newCompany(db, { name: 'Upsert SRL', country: pack.manifest.country });
 
     // The pack changes: one label, recompiled and re-applied. This is what
     // `on conflict do nothing` used to swallow entirely — an instance
     // installed yesterday received no correction, ever.
-    const pack = somePack;
     const sales = roleOf(pack, 'sales');
     const edited = {
       ...pack,

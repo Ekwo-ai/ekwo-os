@@ -27,6 +27,7 @@ import { emptyDatabase, makeAuthUser, migrationsPath, seedPath } from './helpers
 import {
   allPacks,
   declarationPeriods as CADENCES,
+  defaultChartOf,
   packCountries,
   packWhere,
   roleOf,
@@ -142,7 +143,8 @@ describe('bootstrap', () => {
       'select count(*)::text from accounts where company_id = $1',
       [result.companyId],
     );
-    expect(Number(accounts[0]?.count)).toBeGreaterThan(300);
+    // The whole default chart of the pack, however long the country's is.
+    expect(Number(accounts[0]?.count)).toBe(defaultChartOf(home).accounts.length);
 
     const journals = await db.query<{ count: string }>(
       'select count(*)::text from journals where company_id = $1',
@@ -173,11 +175,12 @@ describe('bootstrap', () => {
       'select name, start_date::text, end_date::text from fiscal_years where company_id = $1',
       [result.companyId],
     );
-    expect(year[0]).toEqual({
-      name: 'FY2026',
-      start_date: '2026-01-01',
-      end_date: '2026-12-31',
-    });
+    // The year the country's pack opens on, whichever month that is.
+    const bounds = await db.query<{ start_date: string; end_date: string }>(
+      'select start_date::text, end_date::text from fiscal_year_bounds($1, 2026)',
+      [HOME],
+    );
+    expect(year[0]).toEqual({ name: 'FY2026', ...bounds[0] });
   });
 
   it('creates nothing a second time', async () => {
@@ -283,7 +286,7 @@ describe('bootstrap', () => {
     expect(bank[0]?.iban).toBe('BE71096123456769');
     expect(bank[0]?.bic).toBe('GKCCBEBB');
     expect(bank[0]?.name).toBe('Banque Exemple');
-    expect(bank[0]?.currency_code).toBe('EUR');
+    expect(bank[0]?.currency_code).toBe(home.manifest.defaults.currency);
     // The account the country model points the bank journal at, in its manifest.
     expect(bank[0]?.code).toBe(roleOf(home, 'bank'));
     expect(bank[0]?.journal_code).toBe('BNK');
@@ -327,7 +330,7 @@ describe('bootstrap', () => {
       fiscalYear: 2026,
       adminUserId: userId,
     });
-    expect(belgian.currencyCode).toBe('EUR');
+    expect(belgian.currencyCode).toBe(home.manifest.defaults.currency);
 
     const chosen = await bootstrap(db, {
       organization: 'Example Group',
@@ -350,8 +353,10 @@ describe('bootstrap', () => {
     // The country whose form offers a choice is the one this is about: where a
     // form is filed on one cadence there is nothing to record wrongly.
     const choice = packWhere(
-      'whose periodic return is filed on more than one cadence',
-      (pack) => (pack.report?.periods.length ?? 0) > 1,
+      'whose periodic return is filed on more than one cadence, and not on every one',
+      (pack) =>
+        (pack.report?.periods.length ?? 0) > 1 &&
+        CADENCES.some((cadence) => !pack.report!.periods.includes(cadence)),
     );
     const country = choice.manifest.country;
     const files = choice.report!.periods[1]!;

@@ -6,7 +6,7 @@ import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { readPack } from '../packages/cli/src/index.js';
 import { asUser, freshDatabase, one, repoRoot, rows, seedFiles } from './helpers/db.js';
 import { newUser } from './helpers/factory.js';
-import { allPacks, packWhere, packsRoot, somePack } from './helpers/packs.js';
+import { allPacks, packWhere, packsRoot } from './helpers/packs.js';
 
 // A label a user reads is data, in every language the pack publishes.
 //
@@ -81,12 +81,16 @@ describe('what a pack promises when it declares a language', () => {
   });
 
   // The refusals below are about the reader, not about a country: they break a
-  // pack on purpose and read the message back. `somePack` is whichever pack
-  // comes first, so the failure is reproducible and no country is named.
-  const broken = somePack;
+  // pack on purpose and read the message back. The first pack that declares a
+  // language is the one broken, so the failure is reproducible, no country is
+  // named, and a pack written in one language is not asked for a second.
+  const broken = packWhere(
+    'that declares a language besides its own',
+    (pack) => (pack.manifest.languages ?? []).length > 0,
+  );
   const brokenLanguages = broken.manifest.languages ?? [];
 
-  /** A copy of `packs/`, with one language file of `somePack` patched. */
+  /** A copy of `packs/`, with one language file of `broken` patched. */
   async function packWithout(
     language: string,
     patch: (file: Record<string, unknown>) => Record<string, unknown> | undefined,

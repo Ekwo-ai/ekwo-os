@@ -244,7 +244,8 @@ describe('creating a company through the server', () => {
     expect(years).toHaveLength(1);
     const expected = await one<{ start_date: string; end_date: string }>(
       db,
-      `select start_date::text, end_date::text from fiscal_year_bounds('BE', 2026)`,
+      `select start_date::text, end_date::text from fiscal_year_bounds($1, 2026)`,
+      [HOME],
     );
     expect(years[0]?.['start_date']).toBe(expected.start_date);
     expect(years[0]?.['end_date']).toBe(expected.end_date);

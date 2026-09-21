@@ -977,8 +977,10 @@ describe('a return asked for a period the company does not file', () => {
   // The country whose form offers a choice is the one this is about: where a
   // form is filed on a single cadence there is no wrong period to ask for.
   const choice = packWhere(
-    'whose periodic return is filed on more than one cadence',
-    (pack) => (pack.report?.periods.length ?? 0) > 1,
+    'whose periodic return is filed on more than one cadence, and not on every one',
+    (pack) =>
+      (pack.report?.periods.length ?? 0) > 1 &&
+      declarationPeriods.some((cadence) => !pack.report!.periods.includes(cadence)),
   );
   const files = choice.report!.periods[1]!;
   const asked = choice.report!.periods[0]!;
@@ -1116,9 +1118,14 @@ describe('what `ekwo pack check` refuses about a cadence', () => {
   });
 
   it('still reads the single word a pack written before the list uses', async () => {
+    // The word means the two cadences it names, so the pack it is tried on is
+    // one whose form is filed on exactly those two.
     const two = packWhere(
-      'whose periodic return is filed on more than one cadence',
-      (p) => (p.report?.periods.length ?? 0) > 1,
+      'whose periodic return is filed monthly or quarterly, and on nothing else',
+      (p) =>
+        p.report?.periods.length === 2 &&
+        p.report.periods.includes('month') &&
+        p.report.periods.includes('quarter'),
     );
     const legacy = await packWith(two, 'tax_report.json', (r) => {
       r['period'] = 'month_or_quarter';
@@ -1128,8 +1135,10 @@ describe('what `ekwo pack check` refuses about a cadence', () => {
 
   it('refuses a proposed cadence the form is not filed on', async () => {
     const two = packWhere(
-      'whose periodic return is filed on more than one cadence',
-      (p) => (p.report?.periods.length ?? 0) > 1,
+      'whose periodic return is filed on more than one cadence, and not on every one',
+      (p) =>
+        (p.report?.periods.length ?? 0) > 1 &&
+        declarationPeriods.some((cadence) => !p.report!.periods.includes(cadence)),
     );
     const absent = declarationPeriods.find((c) => !two.report!.periods.includes(c))!;
     await expect(

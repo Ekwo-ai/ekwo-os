@@ -24,10 +24,14 @@ import {
   type SqlClient,
 } from '../../packages/cli/src/index.js';
 import { emptyDatabase, makeAuthUser, migrationsPath, seedPath } from './helpers.js';
-import { somePack } from '../helpers/packs.js';
+import { roleOf, somePack } from '../helpers/packs.js';
 
-// The installation these tests bootstrap is in some country, named once.
+// The installation these tests bootstrap is in some country, named once, and
+// what they touch in it is read from its pack: a tax still in force, which the
+// company copied and a release can add back or close, and the sales account.
 const HOME = somePack.manifest.country;
+const TAX = somePack.taxes.find((tax) => (tax.valid_to ?? null) === null)!.code;
+const ACCOUNT = roleOf(somePack, 'sales');
 
 let db: SqlClient;
 let migrations: Migration[];
@@ -72,7 +76,7 @@ describe('pack status', () => {
     // is newer than what the company copied. Only the recorded version is
     // moved back, which is exactly the state `ekwo status` warns about.
     await db.query(`update company_packs set version = '1.0.0' where company_id = $1`, [companyId]);
-    await db.query(`delete from taxes where company_id = $1 and code = 'BE-S-06'`, [companyId]);
+    await db.query(`delete from taxes where company_id = $1 and code = $2`, [companyId, TAX]);
 
     const report = await packStatus(db);
     const company = report.companies.find((c) => c.name === 'Example One');
@@ -97,8 +101,9 @@ describe('resolving the company an operator names', () => {
   it('refuses two companies of the same name rather than picking one', async () => {
     await db.query(
       `insert into companies (name, country, fiscal_country, currency_code, language)
-       select 'Example One', 'BE', 'BE', d.currency_code, d.language_default
-         from country_defaults d where d.country = 'BE'`,
+       select 'Example One', $1, $1, d.currency_code, d.language_default
+         from country_defaults d where d.country = $1`,
+      [HOME],
     );
     await expect(resolveCompany(db, 'Example One')).rejects.toThrow(/ambiguous_company/);
   });
@@ -110,11 +115,11 @@ describe('pack upgrade', () => {
   });
 
   it('applies an addition without being asked, and records the version', async () => {
-    await db.query(`delete from taxes where company_id = $1 and code = 'BE-S-06'`, [companyId]);
+    await db.query(`delete from taxes where company_id = $1 and code = $2`, [companyId, TAX]);
 
     const result = await packUpgrade(db, companyId);
     expect(result.from_version).toBe('1.0.0');
-    expect(result.applied.map((c) => c.key)).toContain('BE-S-06');
+    expect(result.applied.map((c) => c.key)).toContain(TAX);
     expect(result.applied.every((c) => c.rule === 'addition' || c.rule === 'closure')).toBe(true);
     expect(result.listed).toHaveLength(0);
     expect(result.version_moved).toBe(true);
@@ -153,46 +158,47 @@ describe('pack upgrade', () => {
 
   it('lists what differs and changes nothing, until it is asked', async () => {
     await db.query(
-      `update accounts set name = 'Renommé par l''opérateur' where company_id = $1 and code = '700000'`,
-      [companyId],
+      `update accounts set name = 'Renommé par l''opérateur' where company_id = $1 and code = $2`,
+      [companyId, ACCOUNT],
     );
 
     const listedRun = await packUpgrade(db, companyId);
-    expect(listedRun.listed.map((c) => c.key)).toContain('700000');
-    expect(listedRun.applied.map((c) => c.key)).not.toContain('700000');
+    expect(listedRun.listed.map((c) => c.key)).toContain(ACCOUNT);
+    expect(listedRun.applied.map((c) => c.key)).not.toContain(ACCOUNT);
     expect(listedRun.version_moved).toBe(false);
 
     const untouched = await db.query<{ name: string }>(
-      `select name from accounts where company_id = $1 and code = '700000'`,
-      [companyId],
+      `select name from accounts where company_id = $1 and code = $2`,
+      [companyId, ACCOUNT],
     );
     expect(untouched[0]?.name).toBe('Renommé par l\'opérateur');
 
     const appliedRun = await packUpgrade(db, companyId, { apply: true });
-    expect(appliedRun.applied.map((c) => c.key)).toContain('700000');
+    expect(appliedRun.applied.map((c) => c.key)).toContain(ACCOUNT);
     expect(appliedRun.version_moved).toBe(true);
 
     const rewritten = await db.query<{ name: string }>(
-      `select name from accounts where company_id = $1 and code = '700000'`,
-      [companyId],
+      `select name from accounts where company_id = $1 and code = $2`,
+      [companyId, ACCOUNT],
     );
     expect(rewritten[0]?.name).not.toBe('Renommé par l\'opérateur');
   });
 
   it('closes a validity the pack has closed', async () => {
     await db.query(
-      `update tax_templates set valid_to = date '2026-12-31' where country = 'BE' and code = 'BE-S-21'`,
+      `update tax_templates set valid_to = date '2026-12-31' where country = $1 and code = $2`,
+      [HOME, TAX],
     );
 
     const diff = await packDiff(db, companyId);
-    const closure = diff.find((d) => d.key === 'BE-S-21' && d.change === 'valid_to');
+    const closure = diff.find((d) => d.key === TAX && d.change === 'valid_to');
     expect(closure?.rule).toBe('closure');
 
     const result = await packUpgrade(db, companyId);
     expect(result.applied.map((c) => c.change)).toContain('valid_to');
     const held = await db.query<{ valid_to: string }>(
-      `select valid_to::text as valid_to from taxes where company_id = $1 and code = 'BE-S-21'`,
-      [companyId],
+      `select valid_to::text as valid_to from taxes where company_id = $1 and code = $2`,
+      [companyId, TAX],
     );
     expect(held[0]?.valid_to).toBe('2026-12-31');
   });
@@ -214,7 +220,7 @@ describe('pack upgrade', () => {
   });
 
   it('writes what it did into the audit trail', async () => {
-    await db.query(`delete from taxes where company_id = $1 and code = 'BE-S-06'`, [companyId]);
+    await db.query(`delete from taxes where company_id = $1 and code = $2`, [companyId, TAX]);
     await packUpgrade(db, companyId);
 
     const written = await db.query<{ action: string; new_values: Record<string, unknown> }>(

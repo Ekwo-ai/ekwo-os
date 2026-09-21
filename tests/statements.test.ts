@@ -7,7 +7,7 @@ import { CBSO_26_M01F, FRAMEWORK, resolveFactKey } from '@ekwo-ai/xbrl-cbso';
 import { DEFAULT_CHART, readFrameworkPack, readPack } from '../packages/cli/src/index.js';
 import { asUser, expectError, freshDatabase, one, repoRoot, rows, seedFiles } from './helpers/db.js';
 import { demoCompanyId, newCompany, newContact, newDocument, newUser } from './helpers/factory.js';
-import { allPacks, expectationsOf, packWhere, packsRoot, roleOf, somePack } from './helpers/packs.js';
+import { allPacks, expectationsOf, packWhere, packsRoot, roleOf } from './helpers/packs.js';
 
 // A financial statement is data. The schema could produce a
 // trial balance and nothing an accountant files; a balance sheet was a query
@@ -814,9 +814,13 @@ describe('what `ekwo pack check` refuses in a statement', () => {
   const packs = packsRoot;
 
   // The refusals below are about the reader. They break a pack on purpose and
-  // read the message back, so the pack is whichever one comes first and every
+  // read the message back, so the pack is the first one whose balance sheet
+  // files fact keys — the last two refusals are about those keys — and every
   // line they reach for is found in it rather than typed here.
-  const broken = somePack;
+  const broken = packWhere(
+    'whose balance sheet is written against a filing taxonomy',
+    (pack) => pack.statements.some((s) => s.kind === 'balance_sheet' && s.taxonomy !== null),
+  );
   const sheet = broken.statements.find((s) => s.kind === 'balance_sheet')!;
   /** A total of that sheet that adds at least two lines, one of them a total. */
   const grandTotal = sheet.lines.find(

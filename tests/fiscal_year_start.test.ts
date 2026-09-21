@@ -12,6 +12,7 @@ import type { PGlite } from '@electric-sql/pglite';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { asUser, expectError, freshDatabase, one, rows } from './helpers/db.js';
 import { newInstanceAdmin, newUser } from './helpers/factory.js';
+import { defaultChartOf, packOfCountry } from './helpers/packs.js';
 
 let db: PGlite;
 let adminId: string;
@@ -127,7 +128,14 @@ describe('create_company', () => {
       `select count(*)::text from accounts where company_id = $1`,
       [company.id],
     );
-    expect(Number(accounts.count)).toBeGreaterThan(300);
+    // The whole default chart of the country's pack, however long it is.
+    const chart = await one<{ count: string }>(
+      db,
+      `select count(*)::text from account_templates where country = $1 and chart_code = $2`,
+      [country, defaultChartOf(packOfCountry(country)).code],
+    );
+    expect(Number(chart.count)).toBeGreaterThan(0);
+    expect(Number(accounts.count)).toBe(Number(chart.count));
 
     const year = await one<{ start_date: string; end_date: string }>(
       db,

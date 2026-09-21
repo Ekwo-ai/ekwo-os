@@ -71,7 +71,7 @@ const home = somePack;
 const HOME = home.manifest.country;
 /** The standard domestic sale tax of that pack, at the rate it charges most. */
 const saleTax = home.taxes
-  .filter((tax) => tax.scope === 'sale' && tax.treatment === 'domestic' && !tax.cash_basis)
+  .filter((tax) => tax.scope === 'sale' && tax.treatment === 'domestic' && !tax.cash_basis && !tax.price_include)
   .sort((a, b) => b.rate - a.rate)[0]!;
 
 describe('the full non-interactive install', () => {
@@ -161,8 +161,8 @@ describe('the full non-interactive install', () => {
     );
     const document = await db.query<{ id: string }>(
       `insert into documents (company_id, contact_id, doc_type, document_date, currency_code)
-       values ($1, $2, 'sale_invoice', date '2026-03-15', 'EUR') returning id`,
-      [result.companyId, contact[0]?.id],
+       values ($1, $2, 'sale_invoice', date '2026-03-15', $3) returning id`,
+      [result.companyId, contact[0]?.id, home.manifest.defaults.currency],
     );
     await db.query(
       `insert into document_lines (document_id, company_id, name, quantity, unit_price, account_id, tax_id)
@@ -176,8 +176,9 @@ describe('the full non-interactive install', () => {
       [document[0]?.id],
     );
     expect(entry[0]?.is_balanced).toBe(true);
-    expect(entry[0]?.total_debit).toBe('1210.00');
-    expect(entry[0]?.number).toMatch(/^[A-Z]+\/2026\/0001$/);
+    // 1 000 plus the tax at the pack's own rate.
+    expect(entry[0]?.total_debit).toBe((1000 * (1 + saleTax.rate / 100)).toFixed(2));
+    expect(entry[0]?.number).toMatch(/^[A-Z]+\W2026\W0001$/);
   });
 
   it('records a registration when it is asked for, and survives a dead endpoint', async () => {

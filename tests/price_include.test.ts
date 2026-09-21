@@ -31,11 +31,26 @@ import { packWhere } from './helpers/packs.js';
  * country.
  */
 
+/**
+ * The three grosses of the group booked below — 100 × 49.99, 4 × 59.99, and
+ * 5 × 59.99 with 15 % off — and whether, at a given rate, their three bases
+ * shared out on their own round to a penny more or less than the group's base.
+ * That remainder is what the last line is for, and whether it appears depends
+ * on the rate, so the rate is chosen for it rather than assumed.
+ */
+const GROUP_GROSS = [4999.0, 239.96, 254.96];
+function leavesRemainder(rate: number): boolean {
+  const gross = roundCurrency(GROUP_GROSS[0]! + GROUP_GROSS[1]! + GROUP_GROSS[2]!, 2);
+  const base = roundCurrency(gross - roundCurrency(gross - gross / (1 + rate / 100), 2), 2);
+  const shares = GROUP_GROSS.map((g) => roundCurrency((base * g) / gross, 2));
+  return roundCurrency(shares[0]! + shares[1]! + shares[2]!, 2) !== base;
+}
+
 /** The pack that carries a tax whose price holds it, and that tax. */
-const pack = packWhere('prices with the tax already in the price', (p) =>
-  p.taxes.some((tax) => tax.price_include),
+const pack = packWhere('prices with the tax already in the price, at a rate the group below leaves a remainder at', (p) =>
+  p.taxes.some((tax) => tax.price_include && leavesRemainder(Number(tax.rate))),
 );
-const inclusiveTax = pack.taxes.find((tax) => tax.price_include)!;
+const inclusiveTax = pack.taxes.find((tax) => tax.price_include && leavesRemainder(Number(tax.rate)))!;
 const RATE = Number(inclusiveTax.rate);
 
 /**
@@ -198,9 +213,10 @@ describe('a group of three, a discount and a remainder', () => {
   /**
    * 100 × 49.99, 4 × 59.99, and 5 × 59.99 with 15 % off: three grosses of
    * 4 999.00, 239.96 and 254.96. Shared out on their own, the three bases round
-   * to a penny more than the group's base, which is what the last line is for.
+   * to a penny off the group's base at the rate chosen above, which is what the
+   * last line is for.
    */
-  const GROSS = [4999.0, 239.96, 254.96];
+  const GROSS = GROUP_GROSS;
   let document: string;
 
   beforeAll(async () => {
