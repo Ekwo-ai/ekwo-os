@@ -1,6 +1,6 @@
 -- Ekwo OS — United States: how this country depreciates and derecognises a fixed asset.
 --
--- Generated from packs/us/assets.json at version 0.6.0, do not edit.
+-- Generated from packs/us/assets.json at version 0.7.0, do not edit.
 -- Change the pack and run `ekwo pack build us`; `ekwo pack check --all`
 -- refuses a seed that is not the exact output of its pack, and the CI runs it.
 --

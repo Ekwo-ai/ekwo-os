@@ -1157,6 +1157,15 @@ that comment.
 Five things found while closing the two notes above, on 16 September 2026. None
 of them blocked the work and none was patched for its sake.
 
+~~**A tax can name a place a party is in and not a place a party is not in.**~~
+**Closed for the case that asked, 21 September 2026**, without a negation:
+`applies_when.supply_vs_seller` is a relation, `same` or `other`, between the
+place of supply and the seller's own territory, and `US-CA-S-SHIPPED` now says
+`other` — refused on a delivery inside California. What stays open is the
+second half of the paragraph: the *treatment* has no word for a supply outside
+the taxing territory but inside the country, and the code still says `exempt`.
+The note as it was written follows.
+
 **A tax can name a place a party is in and not a place a party is not in.**
 `applies_when` is three keys, each an equality, and that is deliberate: the
 moment it grows an operator it is an expression language and the format stops
@@ -1198,6 +1207,13 @@ than the question. It is the correct refusal and it is the wrong sentence.
 *Fix*: a trigger, or a check in whatever writes a document, that says "this
 release carries no territory X; here is where territories come from". *Until
 then*: the constraint's own message, which a reader can at least act on.
+
+~~**A document does not record the territory it was judged against.**~~
+**Closed, 21 September 2026**, by the fix proposed: `seller_territory_code`,
+`buyer_territory_code` and `supply_territory_resolved` on `documents`, written
+by `post_document()` on every document it posts and frozen by the guard of a
+posted document. Null on what was posted before. The note as it was written
+follows.
 
 **A document does not record the territory it was judged against.**
 `document_territory()` resolves the supply to the delivery address and then to
@@ -1938,7 +1954,14 @@ patched in the core:
   reserved for, and the core refuses it. The boxes of the surcharge are
   declared and empty so that box 27 keeps the form's formula. *Fix*: the same
   one the Canadian GST and QST need.
-- **A country minus one of its territories.** Spanish VAT applies in Spain
+- ~~**A country minus one of its territories.**~~ **Closed, 21 September
+  2026**, by `territories.outside_parent_tax`: `ES-CN`, `ES-CE` and `ES-ML`
+  carry it with art. 3 in their reference, the Spanish rates say
+  `supply_in: ES` from version 0.2.0 of the pack, and `post_document()` refuses
+  them on a supply that lands in any of the three — no negation written
+  anywhere. See *From measuring a supply against its seller* at the end of this
+  file. The note as it was written follows.
+  **A country minus one of its territories.** Spanish VAT applies in Spain
   except in the Canary Islands, Ceuta and Melilla (art. 3). The territories
   exist, the export to `ES-CN` is in the golden, but `applies_when` has no
   negation, so the Spanish rates cannot refuse a supply that lands in `ES-CN`.
@@ -2119,3 +2142,41 @@ the latest, when the consideration is received — so an advance payment moves
 the tax point forward. The pack declares `invoice_if_issued` for paragraph 1;
 paragraph 2 waits for the prepayment document the core does not have, the gap
 already written under the tax point in [`packs.md`](packs.md).
+
+## From measuring a supply against its seller
+
+Written on 21 September 2026 with `20260921145425_a_supply_measured_against_its_seller.sql`,
+which closes three notes above — the Canary Islands, California's section 6396
+as a condition, and the territories a document was judged against. What the
+work found and left open:
+
+**A Spanish rate on a supply that the law places in Spain but that is delivered
+abroad now needs the place written down.** Version 0.2.0 of `packs/es/` puts
+`supply_in: ES` on its domestic sale taxes. The place of supply resolves to
+`supply_territory_code`, then `delivery_country`, then the buyer — so a
+service to a consumer in another Member State taxed in Spain under the general
+rule of art. 69, or a distance sale under the threshold of art. 68, is refused
+until the document says `supply_territory_code: ES`. That is the honest
+reading: the place of supply *is* Spain and the document did not say so. A
+customer with no country at all is refused with `no_party_territory` for the
+same reason. *Fix*: none proposed; a bookkeeper states the place, and the
+refusal names the column.
+
+**The flag is sourced for eight rows, not for all that might carry it.** Mount
+Athos, French Guiana and Mayotte (French VAT is provisionally not applied
+there), and the Channel Islands stay `false` until somebody writes the national
+text into their row. No pack of this repository conditions a tax on Greece,
+France or the United Kingdom in a way that reaches them today.
+
+**No country with state taxes on both sides of a supply is seeded.** The
+relation was designed for a pair of taxes levied inside a state and a third
+levied across states; the reference table carries no such country's
+subdivisions, so the proof runs on the one pack that already has states, with
+`same` shown on the company's copy of the tax. A pack that needs it adds its
+territories to `supabase/seed/00_territories.sql` first — `ekwo pack check`
+refuses the key on a country with no territory inside it.
+
+**Every pack seed gained one column.** `tax_templates.applies_supply_vs_seller`
+is written by the compiler for every tax, null where a pack says nothing, so
+every `supabase/seed/*_pack_*.sql` changed by that column and by nothing else.
+A pack branch opened before this change runs `ekwo pack build <cc>` once.

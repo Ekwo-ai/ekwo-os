@@ -887,23 +887,44 @@ a territory is a column of its own and a key of `territories`.
   "postings": { "invoice": [ … ] } }
 ```
 
-Three keys, and every one present has to hold:
+Four keys, and every one present has to hold:
 
 | `applies_when` | The tax applies only where |
 |---|---|
 | `seller_in` | the seller is in this territory |
 | `buyer_in` | the buyer is in this territory |
 | `supply_in` | the supply takes place in this territory |
+| `supply_vs_seller` | `same`: the supply lies inside the seller's territory; `other`: it lies outside it |
 
 There is no operator, no negation, no disjunction and no nesting — the same
 closed vocabulary the mentions' own `applies_when` is. What a pack can say is
-that a party is in a place.
+that a party is in a place, and that the supply is or is not where the seller
+is. The fourth key is a relation between two facts the document carries, not a
+negation of a territory: California's section 6396 exempts a sale shipped to a
+point outside the State, and `US-CA-S-SHIPPED` says so with
+`"supply_vs_seller": "other"`.
+
+**`supply_vs_seller` is read at the level of the seller.** A seller in `US-CA`
+shipping to `US-AZ` is `other`; one whose territory is a whole country has no
+level to be compared at, and `post_document()` refuses the document with
+`no_party_territory`, asking for the seller's `territory_code`. `ekwo pack
+check` refuses the key outright on a pack whose country has no territory inside
+it in `territories`, because no document of its companies could ever meet it.
 
 **A condition is satisfied by the territory named and by every territory inside
 it.** `territories.parent_code` draws the tree, so `seller_in: "GB"` reaches a
 seller in Northern Ireland and `seller_in: "XI"` does not reach one in Great
 Britain. That is what lets one country's pack carry two sets of taxes and offer
 each where it applies.
+
+**Except where the parent's own tax stops.** The tree is geography, and the
+Canary Islands are in Spain; Spanish VAT does not apply there (Ley 37/1992,
+art. 3). `territories.outside_parent_tax` records that, row by row and with the
+national text in the row's `legal_reference`, and the engine judges a tax's
+conditions with `territory_within_for_tax()`, which stops at such a row. So
+`supply_in: "ES"` refuses a supply in `ES-CN`, `ES-CE` or `ES-ML` without the
+pack writing a word about them. The flag is reference data of the release; a
+pack never sets it.
 
 **Where each party is** is resolved by the core and never guessed at by a pack:
 
@@ -917,7 +938,10 @@ each where it applies.
   territory, because a supply nobody said anything else about is delivered to
   the person who bought it.
 
-**The engine refuses; it does not choose.** `post_document()` compares the
+**The engine refuses; it does not choose, and it keeps what it saw.**
+`post_document()` writes the three answers on the document —
+`seller_territory_code`, `buyer_territory_code`, `supply_territory_resolved` —
+where they are frozen with the rest of a posted document. It compares the
 conditions of every tax on the document with the three answers above and raises
 `tax_territory_mismatch` where they disagree, naming the tax, the party, the
 territory asked for and the territory found. Where a tax asks about a party the
