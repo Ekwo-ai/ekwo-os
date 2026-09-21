@@ -137,7 +137,11 @@ describe.each(filers.map((pack) => [pack.slug, pack] as const))(
       );
       const live = await rows<Box>(
         db,
-        `select box, kind, trim_scale(amount)::text as amount from vat_return($1, $2::date, $3::date)
+        // At the unit the form is filed in: the return answers the exact
+        // figure, and a form filed in whole units freezes it rounded.
+        `select box, kind,
+                trim_scale(round_amount(amount, filing_rounding($1, report_code)))::text as amount
+           from vat_return($1, $2::date, $3::date)
           where not hidden order by box, kind`,
         [companyId, period.from, period.to],
       );
@@ -182,7 +186,18 @@ describe.each(filers.map((pack) => [pack.slug, pack] as const))(
       );
       expect(moved.length, `${slug} moved a tax account in the period it filed`).toBeGreaterThan(0);
 
-      await db.query(`select settle_filing($1)`, [filingId]);
+      // A period that ends in a credit asks the company what to do with it,
+      // and either answer settles: this test carries it forward.
+      const net = await one<{ net: string }>(
+        db,
+        `select coalesce(sum(balance), 0)::text as net from filing_tax_movements($1)`,
+        [filingId],
+      );
+      if (Number(net.net) > 0) {
+        await db.query(`select settle_filing($1, 'carry_forward')`, [filingId]);
+      } else {
+        await db.query(`select settle_filing($1)`, [filingId]);
+      }
 
       for (const account of moved) {
         const left = await one<{ balance: string }>(

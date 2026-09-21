@@ -494,7 +494,9 @@ the order the author is least sure of them:
    tax is not owed on the period's whole taxable total. A reviewer who files
    CDTFA-401-A will know whether line 17 then still ties to the sales tax payable
    account of the ledger, which apportions the same tax document by document —
-   the form is filed in whole dollars, which may be the whole answer.
+   the form is filed in whole dollars, which may be the whole answer. Since
+   0.7.0 the form says so (`rounding.unit: 1`): each line is frozen rounded to
+   the dollar from its own exact figure, and the ledger keeps the cents.
 2. **Whether `quarter` is the right proposal.** Section 6452(a) reads as a
    default given to everybody and section 6455(a) as the Department's power to
    direct otherwise, which is what `period_default` states. A reviewer who reads

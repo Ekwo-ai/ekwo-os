@@ -146,13 +146,12 @@ the base postings of the domestic taxes name no box at all. The RTD is a
 second declaration with its own period — the company's accounting year — and a
 pack carries one form, so it is not here; see below.
 
-**The cadence the Act gives everybody cannot be declared.** A taxable period
-is two months (s. 2), and the format knows a month, a quarter and a year. The
-form declares `month` and `year` — the monthly return Revenue authorises on
-request and the annual accounting period of s. 77 — and proposes nothing. The
-golden scenario files on the two-month periods of the Act, which
-`vat_return()` accepts because a period that is not a whole cadence of the form
-is never refused.
+**The cadence the Act gives everybody is the one proposed.** A taxable period
+is two months beginning on 1 January, 1 March, 1 May… (s. 2), which is the
+format's `bimonth`, and the form proposes it. Beside it the form declares
+`month` and `year` — the monthly return Revenue authorises on request and the
+annual accounting period of s. 77. The golden scenario files on the two-month
+periods of the Act.
 
 **The deadline** is the 19th of the month after the period (s. 76(1): "within
 9 days immediately after the 10th day"). Revenue grants four more days, to the
@@ -190,7 +189,8 @@ banks send. No payment format is declared, because Ekwo writes none.
 
 - The **Return of Trading Details**, the VIES statements of ss. 82 and 83, the
   intra-Community consignment stock and call-off rules, and the One-Stop Shop.
-- The **four-monthly and six-monthly** periods, and the bimonthly default.
+- The **four-monthly and six-monthly** periods. The format can say them since
+  0.2.0; no text of the register sets them yet.
 - The **other domestic reverse charges** of s. 16 (emission allowances, scrap
   metal, construction between connected persons, gas and electricity to a
   dealer, NAMA): one sentence on the invoice names the principal contractor,
