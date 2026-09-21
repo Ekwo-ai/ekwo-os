@@ -1,0 +1,290 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "Une année d'un hôtel-commerce sénégalais au régime du réel normal, déclarant chaque mois",
+  "chart": "default",
+  "fiscal_year": {
+    "name": "Exercice 2026",
+    "start": "2026-01-01",
+    "end": "2026-12-31"
+  },
+  "periods": [
+    {
+      "code": "2026-01",
+      "from": "2026-01-01",
+      "to": "2026-01-31"
+    },
+    {
+      "code": "2026-02",
+      "from": "2026-02-01",
+      "to": "2026-02-28"
+    },
+    {
+      "code": "2026-03",
+      "from": "2026-03-01",
+      "to": "2026-03-31"
+    },
+    {
+      "code": "2026-04",
+      "from": "2026-04-01",
+      "to": "2026-04-30"
+    }
+  ],
+  "statements": [
+    "SN-SYSCOHADA-BS",
+    "SN-SYSCOHADA-IS"
+  ],
+  "contacts": [
+    {
+      "ref": "client-sn",
+      "name": "Comptoir Baobab SARL",
+      "type": "customer",
+      "country": "SN"
+    },
+    {
+      "ref": "client-hotel",
+      "name": "Agence Teranga Voyages SA",
+      "type": "customer",
+      "country": "SN"
+    },
+    {
+      "ref": "client-fr",
+      "name": "Maison Atlantique SAS",
+      "type": "customer",
+      "country": "FR"
+    },
+    {
+      "ref": "fourn-sn",
+      "name": "Grossiste du Cap-Vert SARL",
+      "type": "supplier",
+      "country": "SN"
+    },
+    {
+      "ref": "fourn-maint",
+      "name": "Froid Service Dakar SARL",
+      "type": "supplier",
+      "country": "SN"
+    },
+    {
+      "ref": "fourn-auto",
+      "name": "Automobiles de la Corniche SA",
+      "type": "supplier",
+      "country": "SN"
+    },
+    {
+      "ref": "fourn-fr",
+      "name": "Cabinet Rive Gauche Conseil SAS",
+      "type": "supplier",
+      "country": "FR"
+    }
+  ],
+  "documents": [
+    {
+      "ref": "V1",
+      "type": "sale_invoice",
+      "contact": "client-sn",
+      "date": "2026-01-12",
+      "why": "Une vente de marchandises au taux normal : la case CA18, la taxe au compte 4431 et dans la case TVA18.",
+      "lines": [
+        {
+          "name": "Marchandises",
+          "quantity": 20,
+          "unit_price": 50000,
+          "tax": "SN-S-18",
+          "account": "7011"
+        }
+      ]
+    },
+    {
+      "ref": "V2",
+      "type": "sale_invoice",
+      "contact": "client-hotel",
+      "date": "2026-01-20",
+      "why": "Des nuitées d'un établissement d'hébergement touristique agréé au taux réduit de 10 % : la case CA10, la taxe au compte 4432 et dans la case TVA10, le second taux positif du pack.",
+      "lines": [
+        {
+          "name": "Nuitées en chambre double",
+          "quantity": 12,
+          "unit_price": 45000,
+          "tax": "SN-S-10",
+          "account": "7061"
+        }
+      ]
+    },
+    {
+      "ref": "V3",
+      "type": "sale_invoice",
+      "contact": "client-sn",
+      "date": "2026-02-05",
+      "why": "Une prestation de services au taux normal, sans exigibilité à l'encaissement au Sénégal : la taxe au compte 4432, dans le mois de la facture.",
+      "lines": [
+        {
+          "name": "Organisation d'un séminaire",
+          "quantity": 1,
+          "unit_price": 750000,
+          "tax": "SN-S-18-SRV",
+          "account": "7061"
+        }
+      ]
+    },
+    {
+      "ref": "V4",
+      "type": "sale_invoice",
+      "contact": "client-fr",
+      "date": "2026-02-18",
+      "why": "Une exportation exonérée ouvrant droit à déduction : la case EXP, aucune taxe, un compte de ventes hors Région.",
+      "lines": [
+        {
+          "name": "Marchandises exportées",
+          "quantity": 50,
+          "unit_price": 30000,
+          "tax": "SN-S-EXP",
+          "account": "7012"
+        }
+      ]
+    },
+    {
+      "ref": "V5",
+      "type": "sale_invoice",
+      "contact": "client-sn",
+      "date": "2026-03-10",
+      "why": "Une opération exonérée de l'article 361 : la case EXO, aucune taxe.",
+      "lines": [
+        {
+          "name": "Livres scolaires",
+          "quantity": 100,
+          "unit_price": 2500,
+          "tax": "SN-S-EXO",
+          "account": "7011"
+        }
+      ]
+    },
+    {
+      "ref": "AV1",
+      "type": "sale_credit_note",
+      "contact": "client-sn",
+      "date": "2026-03-16",
+      "why": "Un avoir sur la vente V1 : la case CA18 et la taxe diminuent dans le mois de l'avoir.",
+      "lines": [
+        {
+          "name": "Retour de marchandises",
+          "quantity": 4,
+          "unit_price": 50000,
+          "tax": "SN-S-18",
+          "account": "7011"
+        }
+      ]
+    },
+    {
+      "ref": "A1",
+      "type": "purchase_invoice",
+      "contact": "fourn-sn",
+      "date": "2026-01-08",
+      "why": "Un achat de marchandises au taux normal : la taxe récupérable au compte 4452 et dans la case DEDBS.",
+      "lines": [
+        {
+          "name": "Marchandises",
+          "quantity": 40,
+          "unit_price": 30000,
+          "tax": "SN-P-18",
+          "account": "6011"
+        }
+      ]
+    },
+    {
+      "ref": "A2",
+      "type": "purchase_invoice",
+      "contact": "fourn-maint",
+      "date": "2026-02-10",
+      "why": "Un entretien facturé au taux normal : la taxe récupérable sur services extérieurs au compte 4454.",
+      "lines": [
+        {
+          "name": "Entretien des chambres froides",
+          "quantity": 1,
+          "unit_price": 200000,
+          "tax": "SN-P-18-SRV",
+          "account": "6248"
+        }
+      ]
+    },
+    {
+      "ref": "A3",
+      "type": "purchase_invoice",
+      "contact": "fourn-sn",
+      "date": "2026-04-02",
+      "why": "Du matériel de bureau immobilisé : la taxe au compte 4451 et dans la case DEDIMMO.",
+      "lines": [
+        {
+          "name": "Ordinateurs",
+          "quantity": 4,
+          "unit_price": 350000,
+          "tax": "SN-P-18-IMMO",
+          "account": "2441"
+        }
+      ]
+    },
+    {
+      "ref": "A4",
+      "type": "purchase_invoice",
+      "contact": "fourn-auto",
+      "date": "2026-03-05",
+      "why": "Une voiture de tourisme, exclue du droit à déduction par l'article 383 c) : la taxe s'ajoute au coût de l'immobilisation et n'atteint aucune case.",
+      "lines": [
+        {
+          "name": "Voiture de tourisme",
+          "quantity": 1,
+          "unit_price": 9000000,
+          "tax": "SN-P-18-ND",
+          "account": "2451"
+        }
+      ]
+    },
+    {
+      "ref": "A5",
+      "type": "purchase_invoice",
+      "contact": "fourn-fr",
+      "date": "2026-04-14",
+      "why": "Un conseil d'un cabinet non établi au Sénégal : la TVA pour compte due par l'entreprise (case TVAPC, compte 4478) et non déductible (article 383 f), donc portée au coût du service.",
+      "lines": [
+        {
+          "name": "Mission de conseil en organisation",
+          "quantity": 1,
+          "unit_price": 1500000,
+          "tax": "SN-P-NR-18-ND",
+          "account": "6324"
+        }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "E1",
+      "direction": "inbound",
+      "date": "2026-02-15",
+      "amount": 594000,
+      "contact": "client-hotel",
+      "journal": "BQ",
+      "match": "V2",
+      "why": "Un encaissement qui solde exactement la facture de nuitées."
+    },
+    {
+      "ref": "E2",
+      "direction": "inbound",
+      "date": "2026-03-20",
+      "amount": 400000,
+      "contact": "client-sn",
+      "journal": "BQ",
+      "match": null,
+      "why": "Un acompte non affecté : il reste une ligne ouverte au compte client."
+    },
+    {
+      "ref": "P1",
+      "direction": "outbound",
+      "date": "2026-02-08",
+      "amount": 1416000,
+      "contact": "fourn-sn",
+      "journal": "BQ",
+      "match": "A1",
+      "why": "Un paiement qui solde la facture d'achat de marchandises."
+    }
+  ]
+}

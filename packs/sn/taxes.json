@@ -1,0 +1,493 @@
+[
+  {
+    "code": "SN-S-18",
+    "name": "Ventes de biens 18 %",
+    "description": "Livraisons de biens au taux normal, TVA au compte 4431",
+    "rate": 18,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2013-01-01",
+    "legal_reference": "Code général des impôts, art. 369, alinéa 1 — taux de 18 %, taux unique de la taxe depuis l'entrée en vigueur du Code le 1er janvier 2013 ; directive n° 02/2009/CM/UEMOA, art. 29 nouveau — taux normal unique compris entre 15 % et 20 %",
+    "source": "cgi",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "CA18"
+        },
+        {
+          "type": "tax",
+          "account": "4431",
+          "box": "TVA18"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "CA18",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "4431",
+          "box": "TVA18",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 10
+  },
+  {
+    "code": "SN-S-18-SRV",
+    "name": "Prestations de services 18 %",
+    "description": "Prestations de services au taux normal, TVA au compte 4432",
+    "rate": 18,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2013-01-01",
+    "legal_reference": "Code général des impôts, art. 369, alinéa 1 — taux de 18 %, taux unique de la taxe depuis l'entrée en vigueur du Code le 1er janvier 2013 ; directive n° 02/2009/CM/UEMOA, art. 29 nouveau — taux normal unique compris entre 15 % et 20 % ; art. 362-3 — le fait générateur d'une prestation est son accomplissement, et le Code ne connaît ni régime général de l'encaissement ni option pour les débits : la taxe n'est donc pas portée ici en cash_basis",
+    "source": "cgi",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "CA18"
+        },
+        {
+          "type": "tax",
+          "account": "4432",
+          "box": "TVA18"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "CA18",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "4432",
+          "box": "TVA18",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 20
+  },
+  {
+    "code": "SN-S-10",
+    "name": "Hébergement touristique agréé 10 %",
+    "description": "Prestations des établissements d'hébergement touristique agréés",
+    "rate": 10,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2013-01-01",
+    "conditions": [
+      "supply_nature"
+    ],
+    "legal_reference": "Code général des impôts, art. 369, alinéa 2, dans la rédaction de la loi n° 2015-06 du 23 mars 2015, art. 34 — « Ce taux est réduit à 10 % pour les prestations fournies par les établissements d'hébergement touristique agréés ». De 2013 à 2015, le taux réduit ne visait que leurs prestations d'hébergement et de restauration. Un restaurant qui n'est pas un établissement d'hébergement agréé facture 18 %.",
+    "source": "loi-2015-06",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "CA10"
+        },
+        {
+          "type": "tax",
+          "account": "4432",
+          "box": "TVA10"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "CA10",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "4432",
+          "box": "TVA10",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 30
+  },
+  {
+    "code": "SN-S-EXP",
+    "name": "Exportation exonérée",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2013-01-01",
+    "conditions": [
+      "transport_evidence"
+    ],
+    "legal_reference": "Code général des impôts, art. 361, 14) — exonération des exportations directes de biens et opérations assimilées ainsi que des services directement liés ; art. 380 a) — opération exonérée ouvrant droit à déduction ; art. 447-I-5 — la facture cite la disposition d'exonération",
+    "source": "cgi",
+    "vat_category": "G",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "EXP"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "EXP",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 40
+  },
+  {
+    "code": "SN-S-EXO",
+    "name": "Opération exonérée (art. 361)",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2013-01-01",
+    "conditions": [
+      "supply_nature"
+    ],
+    "legal_reference": "Code général des impôts, art. 361 — opérations exonérées, dans la numérotation 1) à 28) de la loi n° 2018-10 ; sans droit à déduction sauf les cas de l'art. 380 ; art. 449-2 — état des exonérations joint à la déclaration ; art. 447-I-5 — la facture cite la disposition d'exonération",
+    "source": "cgi",
+    "vat_category": "E",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "EXO"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "EXO",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 50
+  },
+  {
+    "code": "SN-P-18",
+    "name": "Achats de biens 18 %",
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2013-01-01",
+    "legal_reference": "Code général des impôts, art. 374 — déduction de la taxe supportée sur les biens et services acquis pour les besoins de l'exploitation ; art. 376 — facture portant les mentions de l'art. 447 ; art. 369 pour le taux",
+    "source": "cgi",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "4452",
+          "box": "DEDBS"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "4452",
+          "box": "DEDBS",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 110
+  },
+  {
+    "code": "SN-P-18-SRV",
+    "name": "Services extérieurs 18 %",
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2013-01-01",
+    "legal_reference": "Code général des impôts, art. 374 et 376 — déduction de la taxe supportée sur les services acquis pour les besoins de l'exploitation ; art. 369",
+    "source": "cgi",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "4454",
+          "box": "DEDBS"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "4454",
+          "box": "DEDBS",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 120
+  },
+  {
+    "code": "SN-P-18-IMMO",
+    "name": "Immobilisations 18 %",
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2013-01-01",
+    "legal_reference": "Code général des impôts, art. 374 et 376 — déduction de la taxe ayant grevé les biens constituant des immobilisations ; art. 386 à 388 — régularisations",
+    "source": "cgi",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "4451",
+          "box": "DEDIMMO"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "4451",
+          "box": "DEDIMMO",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 130
+  },
+  {
+    "code": "SN-P-10",
+    "name": "Hébergement touristique 10 %",
+    "rate": 10,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2013-01-01",
+    "legal_reference": "Code général des impôts, art. 369, alinéa 2 ; art. 383 b) — la taxe sur le logement, la restauration et les réceptions n'est déductible que dans les cas qu'il énumère, dont le logement du personnel de gardiennage sur chantier",
+    "source": "loi-2015-06",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "4454",
+          "box": "DEDBS"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "4454",
+          "box": "DEDBS",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 140
+  },
+  {
+    "code": "SN-P-18-ND",
+    "name": "Achat 18 % non déductible (art. 383)",
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2013-01-01",
+    "recoverable": false,
+    "legal_reference": "Code général des impôts, art. 383 — exclusions du droit à déduction, notamment c) les véhicules et engins conçus pour transporter des personnes ou à usage mixte, sauf revente à l'état neuf ou location professionnelle, a) les cadeaux de plus de 20 000 F hors taxes et g) les meubles meublants autres que le mobilier de bureau. La taxe est une part du coût de ce qui a été acheté",
+    "source": "cgi",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax_on_base",
+          "factor": 100
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax_on_base",
+          "factor": 100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 150
+  },
+  {
+    "code": "SN-P-18-PC",
+    "name": "Achat 18 % soumis au précompte (art. 372)",
+    "description": "Taxe retenue par un acquéreur précompteur",
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2013-01-01",
+    "conditions": [
+      "buyer_status"
+    ],
+    "legal_reference": "Code général des impôts, art. 372-1 et 372-2 — l'acquéreur désigné par l'article (État, collectivités publiques, établissements publics, concessionnaires d'eau, d'électricité et de téléphone, entreprises de BTP relevant du service des grandes entreprises, producteurs et importateurs de ciment et distributeurs de produits pétroliers pour le transport) retient l'intégralité de la taxe facturée, la reverse sur une déclaration de précompte distincte de la déclaration de TVA et la déduit dès lors qu'elle a été déclarée (372-2 e) ; art. 372-3 pour les exceptions, dont les fournisseurs relevant de la DGE. Le fournisseur est payé hors taxe ; la taxe retenue attend son reversement au compte 4478",
+    "source": "cgi",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "4452",
+          "box": "DEDBS"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "4478"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "4452",
+          "box": "DEDBS",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "4478"
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 160
+  },
+  {
+    "code": "SN-P-IMP-18",
+    "name": "Importation 18 % (TVA acquittée en douane)",
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2013-01-01",
+    "legal_reference": "Code général des impôts, art. 362-4 et 363-2 — à l'importation, le fait générateur est la mise à la consommation et la taxe est exigible dès ce moment ; art. 376 — les documents douaniers justifient la déduction. La taxe est payée au service des douanes et déduite ici",
+    "source": "cgi",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "4452",
+          "box": "DEDBS"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "4452",
+          "box": "DEDBS",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 170
+  },
+  {
+    "code": "SN-P-NR-18",
+    "name": "Services de prestataires non établis 18 %, transfert de savoir-faire",
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2021-01-01",
+    "conditions": [
+      "supply_nature"
+    ],
+    "legal_reference": "Code général des impôts, art. 355-3 — la taxe due par un assujetti non établi au Sénégal sans représentant fiscal est due par le destinataire (TVA pour compte) ; art. 383 f), dans la rédaction de la loi de finances pour 2021, et arrêté n° 039532 du 2 décembre 2021 — elle n'est déductible que pour les prestations qui emportent un transfert de savoir-faire",
+    "source": "cgi",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "4454",
+          "box": "DEDBS"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "4478",
+          "box": "TVAPC"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "4454",
+          "box": "DEDBS",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "4478",
+          "box": "TVAPC",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 180
+  },
+  {
+    "code": "SN-P-NR-18-ND",
+    "name": "Services de prestataires non établis 18 %, non déductible",
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2021-01-01",
+    "recoverable": false,
+    "legal_reference": "Code général des impôts, art. 355-3 — TVA pour compte due par le destinataire ; art. 383 f), dans la rédaction de la loi de finances pour 2021 — la taxe sur les services rendus par des prestataires non établis au Sénégal n'est pas déductible, sauf transfert de savoir-faire ; elle devient une part du coût du service",
+    "source": "cgi",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax_on_base",
+          "factor": 100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "4478",
+          "box": "TVAPC"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax_on_base",
+          "factor": 100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "4478",
+          "box": "TVAPC",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 190
+  }
+]

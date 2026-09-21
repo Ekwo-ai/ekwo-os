@@ -1,0 +1,213 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "CI",
+  "name": "Côte d’Ivoire",
+  "version": "0.1.0",
+  "schema_min": "20260917170000",
+  "seed_sequence": 21,
+  "released_at": "2026-09-21",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "audcif",
+        "title": "Acte uniforme relatif au droit comptable et à l'information financière (AUDCIF), adopté à Brazzaville le 26 janvier 2017",
+        "publisher": "OHADA — Bibliothèque numérique de l'OHADA",
+        "url": "https://biblio.ohada.org/doc_num.php?explnum_id=2061",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "syscohada",
+        "title": "Journal officiel de l'OHADA, numéro spécial du 15 février 2017 — Acte uniforme relatif au droit comptable et à l'information financière et Système comptable OHADA (SYSCOHADA révisé), version complète signée",
+        "publisher": "OHADA — Bibliothèque numérique de l'OHADA",
+        "url": "https://biblio.ohada.org/doc_num.php?explnum_id=2063",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "cgi",
+        "title": "Code général des impôts de la Côte d'Ivoire, édition 2025 à jour des dispositions légales et réglementaires au 3 janvier 2026, avec le Livre de procédures fiscales",
+        "publisher": "Direction générale des Impôts — édition en ligne liée depuis dgi.gouv.ci",
+        "url": "https://cgici.com/",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "annexe-fiscale-2026",
+        "title": "Annexe fiscale à la loi de finances n° 2025-987 du 19 décembre 2025 portant budget de l'État pour l'année 2026",
+        "publisher": "Direction générale des Impôts",
+        "url": "https://www.dgi.gouv.ci/assets/documents/ANNEXE_FISCALE_2026/",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "annexe-fiscale-2025",
+        "title": "Annexe fiscale à la loi de finances n° 2024-1109 du 18 décembre 2024 portant budget de l'État pour l'année 2025",
+        "publisher": "Direction générale des Impôts",
+        "url": "https://www.dgi.gouv.ci/assets/documents/EBOOK/ANNEXE_FISCALE_2025/",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "arrete-fne",
+        "title": "Arrêté n° 0337/MFB/DGI/DLCD/SDL/bke du 9 mai 2025 portant modalités de mise en œuvre du système de facturation normalisée électronique",
+        "publisher": "Ministère des Finances et du Budget — Direction générale des Impôts",
+        "url": "https://www.fne.dgi.gouv.ci/documents/arrete_0337_modalites_fne_2025.pdf",
+        "consulted_on": "2026-09-21",
+        "kind": "regulation"
+      },
+      {
+        "key": "fne-api",
+        "title": "Procédure d'interfaçage des entreprises par API — facture normalisée électronique (mai 2025)",
+        "publisher": "Direction générale des Impôts",
+        "url": "https://www.fne.dgi.gouv.ci/documents/FNE-procedureapi.pdf",
+        "consulted_on": "2026-09-21",
+        "kind": "standard"
+      },
+      {
+        "key": "fne",
+        "title": "Facture normalisée électronique — portail de la DGI",
+        "publisher": "Direction générale des Impôts",
+        "url": "https://www.fne.dgi.gouv.ci/",
+        "consulted_on": "2026-09-21",
+        "kind": "portal"
+      },
+      {
+        "key": "e-impots-guide",
+        "title": "Guide utilisateur e-impots.gouv.ci — déclaration de la taxe sur la valeur ajoutée (juin 2019)",
+        "publisher": "Direction générale des Impôts",
+        "url": "https://e-impots.gouv.ci/guide/guide-utilisateur-connecte.pdf",
+        "consulted_on": "2026-09-21",
+        "kind": "form"
+      },
+      {
+        "key": "e-impots",
+        "title": "e-Impôts — télédéclaration et télépaiement des impôts",
+        "publisher": "Direction générale des Impôts",
+        "url": "https://e-impots.gouv.ci/",
+        "consulted_on": "2026-09-21",
+        "kind": "portal"
+      },
+      {
+        "key": "directive-uemoa-tva",
+        "title": "Directive n° 02/2009/CM/UEMOA du 27 mars 2009 portant modification de la directive n° 02/98/CM/UEMOA du 22 décembre 1998 portant harmonisation des législations des États membres en matière de taxe sur la valeur ajoutée",
+        "publisher": "Conseil des ministres de l'UEMOA — texte publié par l'AIFO-UEMOA",
+        "url": "https://www.aifo-uemoa.bj/assets/documents/directives-uemoa/directive_02_2009_CM_UEMOA.pdf",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "XOF",
+    "language": "fr",
+    "rounding_method": "half_up",
+    "closing_style": "result_accounts",
+    "roles": {
+      "receivable": "4111",
+      "payable": "4011",
+      "suspense": "4711",
+      "rounding": "6588",
+      "retained_earnings": "121",
+      "retained_earnings_loss": "1291",
+      "current_year_result_profit": "131",
+      "current_year_result_loss": "139",
+      "sales": "7011",
+      "purchase": "6011",
+      "bank": "5211",
+      "cash": "5711",
+      "fx_gain": "756",
+      "fx_loss": "656",
+      "tax_payable": "4441",
+      "tax_receivable": "4449"
+    },
+    "journal_roles": {
+      "sales": "VT",
+      "purchase": "AC",
+      "miscellaneous": "OD",
+      "opening": "AN"
+    },
+    "fiscal_year_default": "calendar"
+  },
+  "languages": [],
+  "journals": [
+    {
+      "code": "VT",
+      "type": "sales",
+      "name": "Journal des ventes",
+      "sequence": 10
+    },
+    {
+      "code": "AC",
+      "type": "purchase",
+      "name": "Journal des achats",
+      "sequence": 20
+    },
+    {
+      "code": "BQ",
+      "type": "bank",
+      "name": "Journal de banque",
+      "sequence": 30
+    },
+    {
+      "code": "CA",
+      "type": "cash",
+      "name": "Journal de caisse",
+      "sequence": 40
+    },
+    {
+      "code": "OD",
+      "type": "general",
+      "name": "Opérations diverses",
+      "sequence": 50
+    },
+    {
+      "code": "AN",
+      "type": "opening",
+      "name": "Journal des à-nouveaux",
+      "sequence": 60
+    }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "SYSCOHADA révisé — plan comptable général OHADA, Système normal",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": [
+        "CI-SYSCOHADA-BS",
+        "CI-SYSCOHADA-IS"
+      ],
+      "legal_reference": "Acte uniforme relatif au droit comptable et à l'information financière du 26 janvier 2017, art. 17, 7° — recours à un plan de comptes normalisé dont la liste figure dans le Système comptable OHADA ; Système comptable OHADA, Titre VII, chapitre 2, section 3 — liste des comptes, classes 1 à 8. La classe 9, engagements hors bilan et comptabilité analytique de gestion, est d'application facultative et n'est pas reprise. Commun aux dix-sept États parties : un seul fichier, packs/ohada/accounts.csv, recopié dans chaque pack par scripts/ohada-packs.mjs.",
+      "source": "syscohada"
+    }
+  ],
+  "documents": {
+    "numbering": "gapless_per_year",
+    "number_format": "{CODE}/{YYYY}/{NNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "delivery_date",
+    "references": {
+      "numbering": {
+        "legal_reference": "Livre de procédures fiscales, art. 145, dans la rédaction de la loi de finances pour 2025, art. 6-8 — numérotation dans une série ininterrompue ; arrêté n° 0337 du 9 mai 2025, art. 5 — le numéro de la facture normalisée électronique est composé du numéro de compte contribuable, de l'année d'édition et d'une séquence annuelle ininterrompue, et c'est la plateforme de la DGI qui l'attribue. Le format déclaré ici est celui de la pièce comptable ; le numéro de la FNE est une donnée de la plateforme.",
+        "source": "arrete-fne"
+      },
+      "tax_point": {
+        "legal_reference": "Code général des impôts, art. 361-1° et 2° — pour une livraison de biens, le fait générateur et l'exigibilité sont la livraison ; pour une prestation de services ou des travaux immobiliers, la taxe est exigible à l'encaissement, sauf option pour les débits. delivery_date dit la règle des biens ; celle des services est portée par les taxes de service de ce pack, en cash_basis, et non par un second fait générateur du pays.",
+        "source": "cgi"
+      }
+    },
+    "mentions": []
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "Code général des impôts, art. 384, et Livre de procédures fiscales, art. 13 bis à 13 sexies, 144 et 145, dans la rédaction de la loi de finances pour 2025 (loi n° 2024-1109 du 18 décembre 2024, art. 6) — facture normalisée électronique (FNE) obligatoire pour toute livraison et toute prestation ; arrêté n° 0337 du 9 mai 2025, art. 3, 4 et 8 — émission sur la plateforme de la DGI ou par interfaçage API, sticker électronique composé du visuel FNE, d'un QR code et du numéro, obligation au plus tard le 1er juin 2025 pour le réel normal, le 1er juillet 2025 pour le réel simplifié, le 1er août 2025 pour les microentreprises et le 1er septembre 2025 pour les entreprenants ; fin de la facture normalisée papier le 1er décembre 2025 pour les régimes réels. La FNE n'est pas un profil de la norme EN 16931 et son API (codes TVA, TVAB, TVAC, TVAD) n'est lue par aucune brique : le profil reste vide et la date avec lui, faute de profil à rendre obligatoire. L'identifiant fiscal est le numéro de compte contribuable (NCC), sept chiffres et une lettre, sans code ISO 6523.",
+    "source": "arrete-fne"
+  }
+}

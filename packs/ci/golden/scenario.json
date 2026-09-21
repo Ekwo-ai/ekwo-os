@@ -1,0 +1,322 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "Une année d'un négoce ivoirien au régime du réel normal, déclarant chaque mois",
+  "chart": "default",
+  "fiscal_year": {
+    "name": "Exercice 2026",
+    "start": "2026-01-01",
+    "end": "2026-12-31"
+  },
+  "periods": [
+    {
+      "code": "2026-01",
+      "from": "2026-01-01",
+      "to": "2026-01-31"
+    },
+    {
+      "code": "2026-02",
+      "from": "2026-02-01",
+      "to": "2026-02-28"
+    },
+    {
+      "code": "2026-03",
+      "from": "2026-03-01",
+      "to": "2026-03-31"
+    },
+    {
+      "code": "2026-04",
+      "from": "2026-04-01",
+      "to": "2026-04-30"
+    }
+  ],
+  "statements": [
+    "CI-SYSCOHADA-BS",
+    "CI-SYSCOHADA-IS"
+  ],
+  "contacts": [
+    {
+      "ref": "client-ci",
+      "name": "Supermarché Lagune SARL",
+      "type": "customer",
+      "country": "CI"
+    },
+    {
+      "ref": "client-service",
+      "name": "Industries du Plateau SA",
+      "type": "customer",
+      "country": "CI"
+    },
+    {
+      "ref": "client-conv",
+      "name": "Minière de Bondoukou SA",
+      "type": "customer",
+      "country": "CI"
+    },
+    {
+      "ref": "client-fr",
+      "name": "Chocolaterie de la Garonne SAS",
+      "type": "customer",
+      "country": "FR"
+    },
+    {
+      "ref": "fourn-ci",
+      "name": "Laiterie de Yamoussoukro SA",
+      "type": "supplier",
+      "country": "CI"
+    },
+    {
+      "ref": "fourn-carbu",
+      "name": "Carburants de San-Pedro SARL",
+      "type": "supplier",
+      "country": "CI"
+    },
+    {
+      "ref": "fourn-hotel",
+      "name": "Hôtel des Cocotiers SA",
+      "type": "supplier",
+      "country": "CI"
+    },
+    {
+      "ref": "fourn-info",
+      "name": "Informatique Treichville SARL",
+      "type": "supplier",
+      "country": "CI"
+    }
+  ],
+  "documents": [
+    {
+      "ref": "V1",
+      "type": "sale_invoice",
+      "contact": "client-ci",
+      "date": "2026-01-09",
+      "why": "Une vente de marchandises au taux normal, exigible à la livraison : la ligne 2.1 et la taxe de la ligne 2.4.",
+      "lines": [
+        {
+          "name": "Conserves",
+          "quantity": 100,
+          "unit_price": 5000,
+          "tax": "CI-S-18",
+          "account": "7011"
+        }
+      ]
+    },
+    {
+      "ref": "V2",
+      "type": "sale_invoice",
+      "contact": "client-ci",
+      "date": "2026-01-21",
+      "why": "Une vente de lait au taux réduit de 9 % : la ligne 2.2 et la ligne 2.5, le second taux positif du pack.",
+      "lines": [
+        {
+          "name": "Lait en poudre",
+          "quantity": 200,
+          "unit_price": 3000,
+          "tax": "CI-S-9",
+          "account": "7011"
+        }
+      ]
+    },
+    {
+      "ref": "V3",
+      "type": "sale_invoice",
+      "contact": "client-service",
+      "date": "2026-01-28",
+      "why": "Une prestation de services facturée en janvier et encaissée en février : la taxe attend l'encaissement au compte 4432 et n'entre dans la déclaration qu'en février.",
+      "lines": [
+        {
+          "name": "Maintenance informatique",
+          "quantity": 1,
+          "unit_price": 800000,
+          "tax": "CI-S-18-SRV",
+          "account": "7061"
+        }
+      ]
+    },
+    {
+      "ref": "V4",
+      "type": "sale_invoice",
+      "contact": "client-service",
+      "date": "2026-03-03",
+      "why": "Une prestation encaissée pour moitié en avril : seule la moitié encaissée de la taxe est déclarée en avril, le reste attend.",
+      "lines": [
+        {
+          "name": "Formation du personnel",
+          "quantity": 1,
+          "unit_price": 1000000,
+          "tax": "CI-S-18-SRV",
+          "account": "7061"
+        }
+      ]
+    },
+    {
+      "ref": "V5",
+      "type": "sale_invoice",
+      "contact": "client-fr",
+      "date": "2026-02-12",
+      "why": "Une exportation exemptée : la ligne 1.2, sans taxe, un compte de ventes hors Région.",
+      "lines": [
+        {
+          "name": "Cacao transformé",
+          "quantity": 10,
+          "unit_price": 250000,
+          "tax": "CI-S-EXP",
+          "account": "7012"
+        }
+      ]
+    },
+    {
+      "ref": "V6",
+      "type": "sale_invoice",
+      "contact": "client-ci",
+      "date": "2026-02-19",
+      "why": "Une vente exonérée par l'article 355 : la ligne 1.3.",
+      "lines": [
+        {
+          "name": "Livres",
+          "quantity": 50,
+          "unit_price": 4000,
+          "tax": "CI-S-EXO-L",
+          "account": "7011"
+        }
+      ]
+    },
+    {
+      "ref": "V7",
+      "type": "sale_invoice",
+      "contact": "client-conv",
+      "date": "2026-03-24",
+      "why": "Une vente à une entreprise titulaire d'une exonération conventionnelle, sur attestation : la ligne 1.4.",
+      "lines": [
+        {
+          "name": "Pièces de rechange",
+          "quantity": 10,
+          "unit_price": 60000,
+          "tax": "CI-S-EXO-C",
+          "account": "7011"
+        }
+      ]
+    },
+    {
+      "ref": "AV1",
+      "type": "sale_credit_note",
+      "contact": "client-ci",
+      "date": "2026-02-02",
+      "why": "Un avoir sur la vente V1 : la ligne 2.1 et la taxe diminuent dans le mois de l'avoir.",
+      "lines": [
+        {
+          "name": "Remise sur conserves",
+          "quantity": 1,
+          "unit_price": 50000,
+          "tax": "CI-S-18",
+          "account": "7011"
+        }
+      ]
+    },
+    {
+      "ref": "A1",
+      "type": "purchase_invoice",
+      "contact": "fourn-ci",
+      "date": "2026-01-06",
+      "why": "Un achat de lait au taux réduit : la taxe récupérable au compte 4452 et dans la ligne 5.1.",
+      "lines": [
+        {
+          "name": "Lait en poudre",
+          "quantity": 200,
+          "unit_price": 2000,
+          "tax": "CI-P-9",
+          "account": "6011"
+        }
+      ]
+    },
+    {
+      "ref": "A2",
+      "type": "purchase_invoice",
+      "contact": "fourn-carbu",
+      "date": "2026-02-16",
+      "why": "Du gazole d'engins déductible à 95 % : 95 % de la taxe dans la ligne 5.1, le reste au coût du carburant.",
+      "lines": [
+        {
+          "name": "Gazole",
+          "quantity": 1000,
+          "unit_price": 700,
+          "tax": "CI-P-18-95",
+          "account": "6042"
+        }
+      ]
+    },
+    {
+      "ref": "A3",
+      "type": "purchase_invoice",
+      "contact": "fourn-hotel",
+      "date": "2026-03-11",
+      "why": "Une réception, exclue du droit à déduction par l'article 372 : la taxe s'ajoute à la charge et n'atteint aucune ligne.",
+      "lines": [
+        {
+          "name": "Réception de fin de trimestre",
+          "quantity": 1,
+          "unit_price": 300000,
+          "tax": "CI-P-18-ND",
+          "account": "6383"
+        }
+      ]
+    },
+    {
+      "ref": "A4",
+      "type": "purchase_invoice",
+      "contact": "fourn-info",
+      "date": "2026-04-07",
+      "why": "Du matériel de bureau immobilisé : la taxe au compte 4451 et dans la ligne 5.1.",
+      "lines": [
+        {
+          "name": "Serveur",
+          "quantity": 1,
+          "unit_price": 2500000,
+          "tax": "CI-P-18-IMMO",
+          "account": "2441"
+        }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "E1",
+      "direction": "inbound",
+      "date": "2026-02-10",
+      "amount": 944000,
+      "contact": "client-service",
+      "journal": "BQ",
+      "match": "V3",
+      "why": "L'encaissement de la prestation de janvier : il rend sa taxe exigible en février."
+    },
+    {
+      "ref": "E2",
+      "direction": "inbound",
+      "date": "2026-04-15",
+      "amount": 590000,
+      "contact": "client-service",
+      "journal": "BQ",
+      "match": "V4",
+      "why": "Un encaissement de la moitié de la prestation de mars : la moitié de sa taxe devient exigible."
+    },
+    {
+      "ref": "E3",
+      "direction": "inbound",
+      "date": "2026-03-30",
+      "amount": 300000,
+      "contact": "client-ci",
+      "journal": "BQ",
+      "match": null,
+      "why": "Un acompte non affecté : il reste une ligne ouverte au compte client."
+    },
+    {
+      "ref": "P1",
+      "direction": "outbound",
+      "date": "2026-01-30",
+      "amount": 436000,
+      "contact": "fourn-ci",
+      "journal": "BQ",
+      "match": "A1",
+      "why": "Un paiement qui solde l'achat de lait."
+    }
+  ]
+}

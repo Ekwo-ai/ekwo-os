@@ -1,0 +1,230 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "SN",
+  "name": "Sénégal",
+  "version": "0.1.0",
+  "schema_min": "20260917170000",
+  "seed_sequence": 20,
+  "released_at": "2026-09-21",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "audcif",
+        "title": "Acte uniforme relatif au droit comptable et à l'information financière (AUDCIF), adopté à Brazzaville le 26 janvier 2017",
+        "publisher": "OHADA — Bibliothèque numérique de l'OHADA",
+        "url": "https://biblio.ohada.org/doc_num.php?explnum_id=2061",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "syscohada",
+        "title": "Journal officiel de l'OHADA, numéro spécial du 15 février 2017 — Acte uniforme relatif au droit comptable et à l'information financière et Système comptable OHADA (SYSCOHADA révisé), version complète signée",
+        "publisher": "OHADA — Bibliothèque numérique de l'OHADA",
+        "url": "https://biblio.ohada.org/doc_num.php?explnum_id=2063",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "cgi",
+        "title": "Loi n° 2012-31 du 31 décembre 2012 portant Code général des impôts",
+        "publisher": "Ministère des Finances et du Budget du Sénégal",
+        "url": "https://apimfb.finances.gouv.sn/documentation/695ab6286ca6985833b574b2/download",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "loi-2015-06",
+        "title": "Loi n° 2015-06 du 23 mars 2015 modifiant certaines dispositions du Code général des impôts (dossier législatif)",
+        "publisher": "Direction des relations avec les institutions — Vie-Publique.sn",
+        "url": "https://www.vie-publique.sn/docs/c6583e77-52d4-4781-b916-27f5b3be6837/loi-n-2015-06-modifiant-certaines-dispositions-du-code-general-des-impots-7024.pdf",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "lfi-2025",
+        "title": "Loi de finances pour l'année 2025 (loi n° 2025-02 du 6 janvier 2025), projet de loi et exposé des motifs",
+        "publisher": "Ministère des Finances et du Budget du Sénégal",
+        "url": "https://apimfb.finances.gouv.sn/documentation/695aaf796ca6985833b5734d/download",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "calendrier-dgid",
+        "title": "Calendrier des déclarations à échéance mensuelle ou trimestrielle",
+        "publisher": "Direction générale des Impôts et des Domaines (DGID)",
+        "url": "https://www.dgid.sn/wp-content/uploads/2024/02/CALENDRIER-DECLARATION-MENSUELLE.pdf",
+        "consulted_on": "2026-09-21",
+        "kind": "guidance"
+      },
+      {
+        "key": "sentax-communique",
+        "title": "Communiqué — lancement de « SENTAX », la nouvelle plateforme de gestion des impôts et taxes",
+        "publisher": "Direction générale des Impôts et des Domaines (DGID)",
+        "url": "https://www.dgid.sn/wp-content/uploads/2026/08/communique-sentax.pdf",
+        "consulted_on": "2026-09-21",
+        "kind": "guidance"
+      },
+      {
+        "key": "sentax",
+        "title": "SENTAX — plateforme de télédéclaration et de télépaiement des impôts et taxes",
+        "publisher": "Direction générale des Impôts et des Domaines (DGID)",
+        "url": "https://sentax.dgid.sn",
+        "consulted_on": "2026-09-21",
+        "kind": "portal"
+      },
+      {
+        "key": "directive-uemoa-tva",
+        "title": "Directive n° 02/2009/CM/UEMOA du 27 mars 2009 portant modification de la directive n° 02/98/CM/UEMOA du 22 décembre 1998 portant harmonisation des législations des États membres en matière de taxe sur la valeur ajoutée",
+        "publisher": "Conseil des ministres de l'UEMOA — texte publié par l'AIFO-UEMOA",
+        "url": "https://www.aifo-uemoa.bj/assets/documents/directives-uemoa/directive_02_2009_CM_UEMOA.pdf",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "XOF",
+    "language": "fr",
+    "rounding_method": "half_up",
+    "closing_style": "result_accounts",
+    "roles": {
+      "receivable": "4111",
+      "payable": "4011",
+      "suspense": "4711",
+      "rounding": "6588",
+      "retained_earnings": "121",
+      "retained_earnings_loss": "1291",
+      "current_year_result_profit": "131",
+      "current_year_result_loss": "139",
+      "sales": "7011",
+      "purchase": "6011",
+      "bank": "5211",
+      "cash": "5711",
+      "fx_gain": "756",
+      "fx_loss": "656",
+      "tax_payable": "4441",
+      "tax_receivable": "4449"
+    },
+    "journal_roles": {
+      "sales": "VT",
+      "purchase": "AC",
+      "miscellaneous": "OD",
+      "opening": "AN"
+    },
+    "fiscal_year_default": "calendar"
+  },
+  "languages": [],
+  "journals": [
+    {
+      "code": "VT",
+      "type": "sales",
+      "name": "Journal des ventes",
+      "sequence": 10
+    },
+    {
+      "code": "AC",
+      "type": "purchase",
+      "name": "Journal des achats",
+      "sequence": 20
+    },
+    {
+      "code": "BQ",
+      "type": "bank",
+      "name": "Journal de banque",
+      "sequence": 30
+    },
+    {
+      "code": "CA",
+      "type": "cash",
+      "name": "Journal de caisse",
+      "sequence": 40
+    },
+    {
+      "code": "OD",
+      "type": "general",
+      "name": "Opérations diverses",
+      "sequence": 50
+    },
+    {
+      "code": "AN",
+      "type": "opening",
+      "name": "Journal des à-nouveaux",
+      "sequence": 60
+    }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "SYSCOHADA révisé — plan comptable général OHADA, Système normal",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": [
+        "SN-SYSCOHADA-BS",
+        "SN-SYSCOHADA-IS"
+      ],
+      "legal_reference": "Acte uniforme relatif au droit comptable et à l'information financière du 26 janvier 2017, art. 17, 7° — recours à un plan de comptes normalisé dont la liste figure dans le Système comptable OHADA ; Système comptable OHADA, Titre VII, chapitre 2, section 3 — liste des comptes, classes 1 à 8. La classe 9, engagements hors bilan et comptabilité analytique de gestion, est d'application facultative et n'est pas reprise. Commun aux dix-sept États parties : un seul fichier, packs/ohada/accounts.csv, recopié dans chaque pack par scripts/ohada-packs.mjs.",
+      "source": "syscohada"
+    }
+  ],
+  "documents": {
+    "numbering": "gapless_per_year",
+    "number_format": "{CODE}/{YYYY}/{NNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "invoice_if_issued",
+    "references": {
+      "numbering": {
+        "legal_reference": "Code général des impôts, art. 447-I-5 — la facture porte « un numéro unique basé sur une séquence chronologique et continue ». Le texte impose l'unicité et la continuité, jamais une forme ni une remise à zéro annuelle, que le format proposé ici permet sans l'exiger.",
+        "source": "cgi"
+      },
+      "tax_point": {
+        "legal_reference": "Code général des impôts, art. 362-1 et 362-3 — le fait générateur est la livraison du bien ou l'accomplissement du service ; une facture émise avant la livraison ou la prestation le fait naître à son émission, et un acompte encaissé avant l'une et l'autre à son encaissement, à hauteur du montant encaissé ; art. 362-5 — l'encaissement pour le crédit-bail, les opérations payées sur fonds publics ou soumises au précompte et les adhérents des centres de gestion agréés. invoice_if_issued dit le principe et la facture qui le devance ; la branche de l'acompte n'est pas exprimable sans document d'acompte.",
+        "source": "cgi"
+      }
+    },
+    "mentions": [
+      {
+        "code": "reverse_charge",
+        "applies_when": "reverse_charge",
+        "text": "TVA due par le client — régime de la TVA pour compte, article 355 du Code général des impôts.",
+        "sequence": 5,
+        "legal_reference": "Code général des impôts, art. 447-I-5 — lorsque le client est redevable de la taxe, la facture porte la référence au régime de la TVA pour compte ; art. 355-3 — à défaut de représentant fiscal, la taxe due par un assujetti non établi au Sénégal est due par le destinataire",
+        "source": "cgi"
+      },
+      {
+        "code": "exempt",
+        "applies_when": "exempt",
+        "text": "Opération exonérée de la taxe sur la valeur ajoutée — article 361 du Code général des impôts.",
+        "sequence": 10,
+        "legal_reference": "Code général des impôts, art. 447-I-5 — pour une opération exonérée, la facture porte la référence à la disposition du Code qui s'applique",
+        "source": "cgi"
+      },
+      {
+        "code": "export",
+        "applies_when": "export",
+        "text": "Exportation exonérée de la taxe sur la valeur ajoutée — article 361, 14) du Code général des impôts.",
+        "sequence": 20,
+        "legal_reference": "Code général des impôts, art. 447-I-5 et art. 361, 14)",
+        "source": "cgi"
+      },
+      {
+        "code": "small_business",
+        "applies_when": "small_business",
+        "text": "Contribuable soumis à la contribution globale unique — la taxe sur la valeur ajoutée ne peut être mentionnée sur cette facture (article 448 du Code général des impôts).",
+        "sequence": 30,
+        "legal_reference": "Code général des impôts, art. 448-2 — le contribuable à la contribution globale unique ne fait pas apparaître la taxe sur ses factures",
+        "source": "cgi"
+      }
+    ]
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "Code général des impôts, art. 447-II, créé par la loi de finances pour 2025 (loi n° 2025-02 du 6 janvier 2025) — les assujettis délivrent une facture électronique émise, transmise et reçue sous forme dématérialisée, par un portail public de facturation ou une plateforme mise en place par l'administration, les modalités étant fixées par arrêté du ministre des Finances ; art. 667-IV — amende de 25 % de la taxe, plafonnée à 5 millions de francs par facture. Aucun arrêté d'application, aucun format et aucune date d'obligation n'ont été publiés à la date de ce pack : le profil et la date restent vides. L'identifiant fiscal est le NINEA (art. 446), qui n'a pas de code ISO 6523.",
+    "source": "lfi-2025"
+  }
+}

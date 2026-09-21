@@ -278,3 +278,31 @@ on conflict (code) do update set
   eu_vat_to       = excluded.eu_vat_to,
   vat_prefix      = excluded.vat_prefix,
   legal_reference = excluded.legal_reference;
+
+
+-- ---------------------------------------------------------------------------
+-- The rows — the member States of OHADA
+--
+-- Seventeen States keep their books on one chart of accounts, the SYSCOHADA
+-- révisé, and each levies a value added tax of its own under its own code —
+-- harmonised, for eight of them, by a directive of the West African Economic
+-- and Monetary Union, which is a different common system from the Union's and
+-- one this table has no column for. What this table says of them is only what
+-- it says of the United States: the common system of VAT of Directive
+-- 2006/112/EC does not reach them. A row per State, added with its pack.
+-- ---------------------------------------------------------------------------
+
+insert into territories (code, code_source, name, parent_code, eu_vat_scope, eu_vat_from, eu_vat_to, vat_prefix, legal_reference) values
+  ('CI', 'iso_3166_1', 'Côte d''Ivoire', null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. Côte d''Ivoire levies a value added tax of its own under its Code général des impôts, whose article 359 sets its rates, harmonised within the West African Economic and Monetary Union by Directive n° 02/98/CM/UEMOA as amended by Directive n° 02/2009/CM/UEMOA.'),
+  ('SN', 'iso_3166_1', 'Senegal',       null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. Senegal levies a value added tax of its own under its Code général des impôts (loi n° 2012-31 du 31 décembre 2012), whose article 369 sets its rates, harmonised within the West African Economic and Monetary Union by Directive n° 02/98/CM/UEMOA as amended by Directive n° 02/2009/CM/UEMOA.')
+on conflict (code) do update set
+  code_source     = excluded.code_source,
+  name            = excluded.name,
+  parent_code     = excluded.parent_code,
+  eu_vat_scope    = excluded.eu_vat_scope,
+  eu_vat_from     = excluded.eu_vat_from,
+  eu_vat_to       = excluded.eu_vat_to,
+  vat_prefix      = excluded.vat_prefix,
+  legal_reference = excluded.legal_reference;

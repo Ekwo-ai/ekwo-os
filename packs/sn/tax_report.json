@@ -1,0 +1,161 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "SN-TVA",
+  "name": "Déclaration de taxe sur la valeur ajoutée",
+  "period": [
+    "month",
+    "quarter"
+  ],
+  "valid_from": "2013-01-01",
+  "legal_reference": "Code général des impôts, art. 449-1 — déclaration mensuelle au régime du réel normal, due même sans opération ; art. 449-3 — déclaration trimestrielle au régime du réel simplifié ; art. 449-1 — pas de déclaration de TVA pour les contribuables à la contribution globale unique ; art. 449-4 — la déclaration porte le montant des opérations taxables et exonérées, la taxe exigible, les déductions et les régularisations, sur des imprimés dont le modèle est fixé par note du Directeur général des Impôts et des Domaines ; art. 449-5 — télédéclaration. La cadence dépend du régime de l'entreprise, donc de son chiffre d'affaires : le pack n'en propose aucune. Le modèle de l'imprimé n'est pas publié et la numérotation de ses cases n'est pas reprise ici ; SENTAX (sentax.dgid.sn) est obligatoire pour les entreprises de la DGE depuis le 1er septembre 2026.",
+  "source": "cgi",
+  "deadline": {
+    "rule": "day_of_month_after_period",
+    "day": 15,
+    "legal_reference": "Code général des impôts, art. 363-1 — la taxe est exigible le mois suivant celui du fait générateur, au plus tard le 15 ; art. 449-1 et 449-3 — la déclaration mensuelle et la déclaration trimestrielle du réel simplifié sont déposées au plus tard le 15 du mois qui suit la période. Le calendrier de la DGID reprend le 15.",
+    "source": "cgi"
+  },
+  "boxes": [
+    {
+      "box": "CA18",
+      "kind": "base",
+      "name": "Opérations taxables au taux normal de 18 %",
+      "sequence": 10,
+      "legal_reference": "Code général des impôts, art. 449-4 — la déclaration porte le montant des opérations taxables ; art. 369, alinéa 1 pour le taux. Le modèle officiel de l'imprimé est fixé par note du Directeur général des Impôts et des Domaines (art. 449-4) et n'est pas publié : les cases de ce formulaire suivent le contenu que l'article 449-4 impose, et non la numérotation de l'imprimé",
+      "source": "cgi"
+    },
+    {
+      "box": "CA10",
+      "kind": "base",
+      "name": "Opérations taxables au taux réduit de 10 %",
+      "sequence": 20,
+      "legal_reference": "Code général des impôts, art. 449-4 et art. 369, alinéa 2 — prestations des établissements d'hébergement touristique agréés",
+      "source": "cgi"
+    },
+    {
+      "box": "EXP",
+      "kind": "base",
+      "name": "Exportations et opérations assimilées exonérées ouvrant droit à déduction",
+      "sequence": 30,
+      "legal_reference": "Code général des impôts, art. 449-4 — montant des opérations exonérées ; art. 361, 14) et art. 380 a) — exportations exonérées ouvrant droit à déduction",
+      "source": "cgi"
+    },
+    {
+      "box": "EXO",
+      "kind": "base",
+      "name": "Autres opérations exonérées",
+      "sequence": 40,
+      "legal_reference": "Code général des impôts, art. 449-4 — montant des opérations exonérées, et art. 449-2 — état détaillé des exonérations joint à la déclaration ; art. 361 pour la liste",
+      "source": "cgi"
+    },
+    {
+      "box": "CAT",
+      "kind": "total",
+      "name": "Montant total des opérations réalisées",
+      "sequence": 50,
+      "plus": [
+        "CA18",
+        "CA10",
+        "EXP",
+        "EXO"
+      ],
+      "legal_reference": "Code général des impôts, art. 449-4 — montant des opérations taxables et exonérées",
+      "source": "cgi"
+    },
+    {
+      "box": "TVA18",
+      "kind": "tax",
+      "name": "Taxe exigible au taux de 18 %",
+      "sequence": 60,
+      "legal_reference": "Code général des impôts, art. 449-4 — taxe exigible ; art. 363-1 — exigible le mois suivant celui du fait générateur",
+      "source": "cgi"
+    },
+    {
+      "box": "TVA10",
+      "kind": "tax",
+      "name": "Taxe exigible au taux de 10 %",
+      "sequence": 70,
+      "legal_reference": "Code général des impôts, art. 449-4 — taxe exigible ; art. 369, alinéa 2",
+      "source": "cgi"
+    },
+    {
+      "box": "TVAPC",
+      "kind": "tax",
+      "name": "TVA due pour le compte de prestataires non établis au Sénégal",
+      "sequence": 80,
+      "legal_reference": "Code général des impôts, art. 355-3 — à défaut de représentant fiscal, la taxe due par un assujetti non établi au Sénégal est due par le destinataire de l'opération. Le calendrier de la DGID fixe au 15 du mois suivant l'échéance de la « TVA pour compte » sur une ligne distincte de celle de la TVA : si l'administration la reçoit sur un imprimé séparé, cette case en est la transcription et non une case de la déclaration mensuelle",
+      "source": "cgi"
+    },
+    {
+      "box": "TVAB",
+      "kind": "total",
+      "name": "Total de la taxe exigible",
+      "sequence": 90,
+      "plus": [
+        "TVA18",
+        "TVA10",
+        "TVAPC"
+      ],
+      "legal_reference": "Code général des impôts, art. 449-4 — taxe exigible",
+      "source": "cgi"
+    },
+    {
+      "box": "DEDIMMO",
+      "kind": "tax",
+      "name": "TVA déductible sur immobilisations",
+      "sequence": 100,
+      "legal_reference": "Code général des impôts, art. 449-4 — déductions ; art. 374 et 376 — droit à déduction et justificatifs, l'annexe de l'art. 376-2 a) détaillant les déductions par fournisseur",
+      "source": "cgi"
+    },
+    {
+      "box": "DEDBS",
+      "kind": "tax",
+      "name": "TVA déductible sur biens et services",
+      "sequence": 110,
+      "legal_reference": "Code général des impôts, art. 449-4 — déductions ; art. 374, 376 et 379 — déduction au titre du mois de réception de la facture ; art. 372-2 e) — la taxe précomptée et déclarée est déductible chez celui qui l'a retenue",
+      "source": "cgi"
+    },
+    {
+      "box": "DEDT",
+      "kind": "total",
+      "name": "Total des déductions",
+      "sequence": 120,
+      "plus": [
+        "DEDIMMO",
+        "DEDBS"
+      ],
+      "legal_reference": "Code général des impôts, art. 449-4 — déductions",
+      "source": "cgi"
+    },
+    {
+      "box": "NET",
+      "kind": "total",
+      "name": "TVA nette à payer",
+      "sequence": 130,
+      "plus": [
+        "TVAB"
+      ],
+      "minus": [
+        "DEDT"
+      ],
+      "floor_zero": true,
+      "legal_reference": "Code général des impôts, art. 449-4 et 363-1 — la déclaration vaut titre de perception de la taxe exigible diminuée des déductions",
+      "source": "cgi"
+    },
+    {
+      "box": "CRED",
+      "kind": "total",
+      "name": "Crédit de TVA à reporter",
+      "sequence": 140,
+      "plus": [
+        "DEDT"
+      ],
+      "minus": [
+        "TVAB"
+      ],
+      "floor_zero": true,
+      "legal_reference": "Code général des impôts, art. 375 et 379-2 — l'excédent de taxe déductible s'impute sur les mois suivants, sans pouvoir dépasser deux ans ; art. 390 à 393 pour la restitution",
+      "source": "cgi"
+    }
+  ]
+}

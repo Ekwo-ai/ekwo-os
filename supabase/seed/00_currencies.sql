@@ -11,5 +11,6 @@ insert into currencies (code, name, symbol, decimal_places) values
   ('PLN', 'Polish zloty',         E'z\u0142', 2),
   ('CZK', 'Czech koruna',         E'Kč', 2),
   ('CAD', 'Canadian dollar',      '$',       2),
-  ('JPY', 'Japanese yen',         E'¥', 0)
+  ('JPY', 'Japanese yen',         E'¥', 0),
+  ('XOF', 'CFA franc BCEAO',      'F CFA',   0)
 on conflict (code) do nothing;

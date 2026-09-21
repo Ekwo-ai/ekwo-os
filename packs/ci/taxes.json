@@ -1,0 +1,480 @@
+[
+  {
+    "code": "CI-S-18",
+    "name": "Ventes de biens 18 %",
+    "description": "Livraisons de biens au taux normal ; code TVA de la FNE",
+    "rate": 18,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2018-01-01",
+    "legal_reference": "Code général des impôts, art. 359, alinéa 1 — taux de 18 % sur la base hors taxe, fixé par la loi de finances pour 2003 (loi n° 2003-206 du 7 juillet 2003, art. 3-1) ; directive n° 02/2009/CM/UEMOA, art. 29 nouveau. La date de début retenue est celle à partir de laquelle ce pack décrit des livres, le SYSCOHADA révisé, et non celle du taux ; art. 361-1° et 2° — pour une livraison de biens, fait générateur et exigibilité à la livraison",
+    "source": "cgi",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "21"
+        },
+        {
+          "type": "tax",
+          "account": "4431",
+          "box": "24"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "21",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "4431",
+          "box": "24",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 10
+  },
+  {
+    "code": "CI-S-18-SRV",
+    "name": "Prestations de services 18 %, exigibles à l'encaissement",
+    "description": "Prestations de services au taux normal, taxe due à l'encaissement",
+    "rate": 18,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2018-01-01",
+    "cash_basis": true,
+    "cash_basis_transition_account": "4432",
+    "legal_reference": "Code général des impôts, art. 359, alinéa 1 — taux de 18 % sur la base hors taxe, fixé par la loi de finances pour 2003 (loi n° 2003-206 du 7 juillet 2003, art. 3-1) ; directive n° 02/2009/CM/UEMOA, art. 29 nouveau. La date de début retenue est celle à partir de laquelle ce pack décrit des livres, le SYSCOHADA révisé, et non celle du taux ; art. 361-2° — pour les prestations de services et les travaux immobiliers, la taxe est exigible à l'encaissement des avances, acomptes et du prix, sauf option pour les débits autorisée par le Directeur général des Impôts (art. 361-2° c). Facturée, la taxe attend l'encaissement au compte 4432 « T.V.A. facturée sur prestations de services » ; encaissée, elle est exigible et passe au compte 4431, dont l'intitulé « sur ventes » couvre les ventes de services du compte 706 : le plan n'a pas de compte de taxe en attente",
+    "source": "cgi",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "21"
+        },
+        {
+          "type": "tax",
+          "account": "4431",
+          "box": "24"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "21",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "4431",
+          "box": "24",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 20
+  },
+  {
+    "code": "CI-S-9",
+    "name": "Taux réduit 9 %",
+    "description": "Biens de la liste de l'art. 359, alinéa 2 ; code TVAB de la FNE",
+    "rate": 9,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2018-01-01",
+    "conditions": [
+      "supply_nature"
+    ],
+    "legal_reference": "Code général des impôts, art. 359, alinéa 2 — taux réduit de 9 % : lait et laits infantiles, pâtes alimentaires de blé dur, produits pétroliers, riz de luxe, viande de luxe (loi de finances pour 2025, art. 1er-4) et, depuis le 17 janvier 2026 (ordonnance n° 2026-03 du 7 janvier 2026), fibres de jute et de sisal, aliments pour bétail et leurs intrants, intrants des engrais ; la taxe sur ces derniers est suspendue du 1er juillet au 31 décembre 2026. Directive n° 02/2009/CM/UEMOA, art. 29 nouveau — taux réduit de 5 % à 10 % sur une liste communautaire",
+    "source": "cgi",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "22"
+        },
+        {
+          "type": "tax",
+          "account": "4431",
+          "box": "25"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "22",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "4431",
+          "box": "25",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 30
+  },
+  {
+    "code": "CI-S-EXP",
+    "name": "Exportation exemptée",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2018-01-01",
+    "conditions": [
+      "transport_evidence"
+    ],
+    "legal_reference": "Code général des impôts, art. 356 — sont exemptés de la taxe les exportations de biens et les services assimilés à des exportations, dont l'art. 357 dresse la liste ; art. 366 et 369 — droit à déduction, art. 382-1 — remboursement du crédit",
+    "source": "cgi",
+    "vat_category": "G",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "12"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "12",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 40
+  },
+  {
+    "code": "CI-S-EXO-L",
+    "name": "Exonération légale (art. 355)",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2018-01-01",
+    "conditions": [
+      "supply_nature"
+    ],
+    "legal_reference": "Code général des impôts, art. 355 — opérations exonérées ; art. 354 — pas de taxe facturée, la taxe d'amont n'étant ni déductible ni remboursable. Code TVAD de la facture normalisée électronique",
+    "source": "cgi",
+    "vat_category": "E",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "13"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "13",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 50
+  },
+  {
+    "code": "CI-S-EXO-C",
+    "name": "Exonération conventionnelle",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2018-01-01",
+    "conditions": [
+      "buyer_certificate"
+    ],
+    "legal_reference": "Code général des impôts, art. 383 bis — exonérations conventionnelles et du Code des investissements, accordées sur attestation dont un sticker sécurisé accompagne chaque copie remise au fournisseur, qui joint à sa déclaration la liste nominative des clients exonérés. Code TVAC de la facture normalisée électronique",
+    "source": "cgi",
+    "vat_category": "E",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "14"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "14",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 60
+  },
+  {
+    "code": "CI-P-18",
+    "name": "Achats de biens 18 %",
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2018-01-01",
+    "legal_reference": "Code général des impôts, art. 362-1° et 364 — déduction mensuelle, après exigibilité chez le fournisseur, de la taxe sur les achats affectés à des opérations taxées ou exportées ; art. 385 — facture portant les mentions de l'art. 384, et depuis le 1er décembre 2025 seule la facture normalisée électronique justifie la déduction",
+    "source": "cgi",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "4452",
+          "box": "51"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "4452",
+          "box": "51",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 110
+  },
+  {
+    "code": "CI-P-18-SRV",
+    "name": "Services extérieurs 18 %",
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2018-01-01",
+    "legal_reference": "Code général des impôts, art. 362-1° et 364 — déduction après exigibilité chez le fournisseur, soit, pour un service, après son encaissement par le prestataire",
+    "source": "cgi",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "4454",
+          "box": "51"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "4454",
+          "box": "51",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 120
+  },
+  {
+    "code": "CI-P-18-IMMO",
+    "name": "Immobilisations 18 %",
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2018-01-01",
+    "legal_reference": "Code général des impôts, art. 365, 366 et 376 — déduction de la taxe sur les biens amortissables, dont la valeur nette est indiquée à part ; art. 375 — régularisation en cas de cession ou de changement d'affectation",
+    "source": "cgi",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "4451",
+          "box": "51"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "4451",
+          "box": "51",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 130
+  },
+  {
+    "code": "CI-P-9",
+    "name": "Achats 9 %",
+    "rate": 9,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2018-01-01",
+    "legal_reference": "Code général des impôts, art. 359, alinéa 2 pour le taux ; art. 364 pour la déduction ; art. 382 — les opérations au taux réduit ouvrent droit au remboursement du crédit",
+    "source": "cgi",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "4452",
+          "box": "51"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "4452",
+          "box": "51",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 140
+  },
+  {
+    "code": "CI-P-18-95",
+    "name": "Gazole des engins du BTP et exploitants agricoles 18 %, déductible à 95 %",
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2018-01-01",
+    "conditions": [
+      "supply_nature"
+    ],
+    "legal_reference": "Code général des impôts, art. 365, dans la rédaction de la loi de finances pour 2026, art. 38-2 — pour le gazole, les huiles et les graisses des engins des entreprises du bâtiment et des travaux publics et des exploitants agricoles ayant opté, la déduction est limitée à 95 % ; le reste est une part du coût",
+    "source": "annexe-fiscale-2026",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "factor": 95,
+          "account": "4452",
+          "box": "51",
+          "box_factor": 95
+        },
+        {
+          "type": "tax_on_base",
+          "factor": 5
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "factor": 95,
+          "account": "4452",
+          "box": "51",
+          "box_factor": -95
+        },
+        {
+          "type": "tax_on_base",
+          "factor": 5
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 150
+  },
+  {
+    "code": "CI-P-18-ND",
+    "name": "Achat 18 % non déductible (art. 372)",
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2018-01-01",
+    "recoverable": false,
+    "legal_reference": "Code général des impôts, art. 372 — exclusions du droit à déduction, notamment l'hôtellerie et la restauration, les frais de représentation, le mobilier, les véhicules de tourisme de plus de 12 CV et le carburant hors transport public ; art. 373 — pas de déduction pour un achat de plus de 250 000 F réglé en espèces. La taxe est une part du coût",
+    "source": "cgi",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax_on_base",
+          "factor": 100
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax_on_base",
+          "factor": 100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 160
+  },
+  {
+    "code": "CI-P-IMP-18",
+    "name": "Importation 18 % (TVA acquittée en douane)",
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2018-01-01",
+    "legal_reference": "Code général des impôts, art. 388 — à l'importation, le fait générateur est la mise à la consommation et le redevable le déclarant en douane ; la taxe payée en douane est déduite comme une autre, justifiée par la déclaration et la quittance (art. 386)",
+    "source": "cgi",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "4452",
+          "box": "51"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "4452",
+          "box": "51",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 170
+  },
+  {
+    "code": "CI-P-NR-18",
+    "name": "Services d'un non-résident 18 %, TVA pour compte de tiers",
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2018-01-01",
+    "legal_reference": "Code général des impôts, art. 442 — la taxe due par une personne sans établissement stable en Côte d'Ivoire est acquittée par son représentant ou, à défaut, par le preneur, solidairement responsable. Elle se déclare sur la déclaration « TVA pour compte de Tiers » d'e-impots, distincte de la déclaration de TVA : la taxe retenue attend son reversement au compte 4478, sans case de ce formulaire, et sa déduction passe par la ligne 5.1",
+    "source": "cgi",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "4454",
+          "box": "51"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "4478"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "4454",
+          "box": "51",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "4478"
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 180
+  }
+]
