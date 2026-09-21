@@ -2540,11 +2540,12 @@ to Singapore IP addresses only, so the statements carry the paragraph numbers of
 the IFRS for SMEs Accounting Standard it is based on; the README puts this first
 among the points to review.
 
-**One test the pack turns red without being at fault.** `tests/cli/bootstrap.test.ts`,
-"offers the packs it holds", expects `installedPacks()` in the order of
-JavaScript's `localeCompare`, and `installedPacks()` orders by `name` in SQL,
-whose collation compares bytes: `Sénégal` sorts before `Singapore` in the first
-and after it in the second, since `é` is two bytes above `i`. No pack before this
-one had a name between the two. The pack does not touch the socle or the test.
-*Fix*: order the same way on both sides — `order by name collate "C"` against a
-plain `<` comparison in the test, or `localeCompare` in `installedPacks()`.
+**An order the user sees by code point.** `installedPacks()`, which builds the
+country question of `ekwo init`, orders the packs by `name` in SQL, and the
+collation compares code points: `Singapore` comes before `Sénégal`, since `é`
+sorts above every unaccented letter. `tests/cli/bootstrap.test.ts` expected
+JavaScript's `localeCompare` and turned red with this pack, the first whose name
+falls between the two; the test now compares by code point, which is what the
+engine does. The socle is unchanged. *Fix*: order the list a person reads
+alphabetically in their language — `localeCompare` with the language of the
+installation, in `installedPacks()` — and the test with it.

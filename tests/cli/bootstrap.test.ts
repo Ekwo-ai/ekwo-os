@@ -69,11 +69,14 @@ describe('before anything is installed', () => {
     // is built from this, so adding a pack is what adds a choice.
     // In the order the question is asked in, which is by name: `allPacks` is
     // ordered by directory, and the two stopped agreeing with the first pack
-    // whose name does not sort where its slug does.
+    // whose name does not sort where its slug does. By code point, as the
+    // `order by` of `installedPacks()` compares them: a locale would put an
+    // accented name somewhere the engine does not.
+    const byCodePoint = (a: string, b: string): number => (a < b ? -1 : a > b ? 1 : 0);
     expect(await installedPacks(db)).toEqual(
       allPacks
         .map((pack) => ({ country: pack.manifest.country, name: pack.manifest.name }))
-        .sort((a, b) => (a.name === b.name ? a.country.localeCompare(b.country) : a.name.localeCompare(b.name))),
+        .sort((a, b) => byCodePoint(a.name, b.name) || byCodePoint(a.country, b.country)),
     );
   });
 
