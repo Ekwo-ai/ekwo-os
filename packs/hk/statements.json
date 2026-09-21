@@ -1,0 +1,240 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/statements",
+  "statements": [
+    {
+      "code": "HK-SME-FRS-SFP",
+      "kind": "balance_sheet",
+      "framework": "SME-FRS",
+      "name": "Statement of financial position",
+      "legal_reference": "Companies Ordinance (Cap. 622), Part 9 requires the directors of every company to prepare, for each financial year, financial statements that give a true and fair view of the state of affairs of the company, and prescribes no format to reach it. SME-FRS, the standard a company reporting under the SME-FRF & SME-FRS (Hong Kong Institute of Certified Public Accountants) applies in place of full Hong Kong Financial Reporting Standards, presents financial position by current and non-current assets and liabilities and offers no revaluation model for property, plant and equipment — every item is carried at cost less accumulated depreciation and impairment, which is why this chart carries no revaluation reserve line. The numbering below and the ranges each line reads are original to this pack: there is no legal chart of accounts to number against, so the blocks are this pack's own, the same way the British and Australian packs number theirs.",
+      "lines": [
+        {
+          "code": "A-NC-FIX",
+          "parent": "A-NC",
+          "name": "Property, plant and equipment",
+          "sequence": 10,
+          "rules": [{ "kind": "code_range", "code_from": "1600", "code_to": "1799" }]
+        },
+        {
+          "code": "A-NC-INT",
+          "parent": "A-NC",
+          "name": "Goodwill and other intangible assets",
+          "sequence": 20,
+          "rules": [{ "kind": "code_range", "code_from": "1800", "code_to": "1899" }]
+        },
+        {
+          "code": "A-NC-OTH",
+          "parent": "A-NC",
+          "name": "Other non-current assets",
+          "sequence": 30,
+          "rules": [{ "kind": "code_range", "code_from": "1900", "code_to": "1999" }]
+        },
+        {
+          "code": "A-NC",
+          "name": "Non-current assets",
+          "sequence": 40,
+          "is_total": true,
+          "plus": ["A-NC-FIX", "A-NC-INT", "A-NC-OTH"]
+        },
+        {
+          "code": "A-C-REC",
+          "parent": "A-C",
+          "name": "Trade and other receivables",
+          "sequence": 50,
+          "rules": [{ "kind": "code_range", "code_from": "1100", "code_to": "1199" }]
+        },
+        {
+          "code": "A-C-INV",
+          "parent": "A-C",
+          "name": "Inventories",
+          "sequence": 60,
+          "rules": [{ "kind": "code_range", "code_from": "1200", "code_to": "1299" }]
+        },
+        {
+          "code": "A-C-OTH",
+          "parent": "A-C",
+          "name": "Other current assets",
+          "sequence": 70,
+          "rules": [{ "kind": "code_range", "code_from": "1300", "code_to": "1399" }]
+        },
+        {
+          "code": "A-C-PRE",
+          "parent": "A-C",
+          "name": "Prepayments and deposits paid",
+          "sequence": 80,
+          "rules": [{ "kind": "code_range", "code_from": "1400", "code_to": "1499" }]
+        },
+        {
+          "code": "A-C-CASH",
+          "parent": "A-C",
+          "name": "Cash and cash equivalents",
+          "sequence": 90,
+          "rules": [{ "kind": "code_range", "code_from": "1000", "code_to": "1099" }]
+        },
+        {
+          "code": "A-C",
+          "name": "Current assets",
+          "sequence": 100,
+          "is_total": true,
+          "plus": ["A-C-REC", "A-C-INV", "A-C-OTH", "A-C-PRE", "A-C-CASH"]
+        },
+        {
+          "code": "A-TOT",
+          "name": "Total assets",
+          "sequence": 110,
+          "is_total": true,
+          "plus": ["A-NC", "A-C"]
+        },
+        {
+          "code": "E-CAP",
+          "parent": "E-TOT",
+          "name": "Share capital and reserves",
+          "sequence": 120,
+          "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "3000", "code_to": "3199" }]
+        },
+        {
+          "code": "E-RET",
+          "parent": "E-TOT",
+          "name": "Retained profits",
+          "sequence": 130,
+          "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "3200", "code_to": "3299" }]
+        },
+        {
+          "code": "E-RESULT",
+          "parent": "E-TOT",
+          "name": "Profit or loss for the year, not yet allocated",
+          "sequence": 140,
+          "sign": -1,
+          "rules": [
+            { "kind": "code_range", "code_from": "4000", "code_to": "4699", "sequence": 10 },
+            { "kind": "code_range", "code_from": "4700", "code_to": "4799", "sequence": 20 },
+            { "kind": "code_range", "code_from": "5000", "code_to": "5099", "sequence": 30 },
+            { "kind": "code_range", "code_from": "6000", "code_to": "6899", "sequence": 40 }
+          ]
+        },
+        {
+          "code": "E-TOT",
+          "name": "Total equity",
+          "sequence": 150,
+          "is_total": true,
+          "plus": ["E-CAP", "E-RET", "E-RESULT"]
+        },
+        {
+          "code": "L-NC",
+          "parent": "L-TOT",
+          "name": "Non-current liabilities",
+          "sequence": 160,
+          "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "2300", "code_to": "2399" }]
+        },
+        {
+          "code": "L-C-PAY",
+          "parent": "L-C",
+          "name": "Trade and other payables",
+          "sequence": 170,
+          "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "2000", "code_to": "2059" }]
+        },
+        {
+          "code": "L-C-TAX",
+          "parent": "L-C",
+          "name": "Current tax liabilities",
+          "sequence": 180,
+          "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "2060", "code_to": "2069" }]
+        },
+        {
+          "code": "L-C-OTH",
+          "parent": "L-C",
+          "name": "Other current liabilities",
+          "sequence": 190,
+          "sign": -1,
+          "rules": [
+            { "kind": "code_range", "code_from": "2070", "code_to": "2099", "sequence": 10 },
+            { "kind": "code_range", "code_from": "2200", "code_to": "2299", "sequence": 20 }
+          ]
+        },
+        {
+          "code": "L-C",
+          "name": "Current liabilities",
+          "sequence": 200,
+          "is_total": true,
+          "plus": ["L-C-PAY", "L-C-TAX", "L-C-OTH"]
+        },
+        {
+          "code": "L-TOT",
+          "name": "Total liabilities",
+          "sequence": 210,
+          "is_total": true,
+          "plus": ["L-NC", "L-C"]
+        },
+        {
+          "code": "EL-TOT",
+          "name": "Total equity and liabilities",
+          "sequence": 220,
+          "is_total": true,
+          "plus": ["E-TOT", "L-TOT"]
+        }
+      ]
+    },
+    {
+      "code": "HK-SME-FRS-IS",
+      "kind": "income_statement",
+      "framework": "SME-FRS",
+      "name": "Income statement",
+      "legal_reference": "SME-FRS requires an income statement and not a statement of comprehensive income: an entity that qualifies to report under the SME-FRF & SME-FRS (Hong Kong Institute of Certified Public Accountants) carries no item of other comprehensive income under the standard's own measurement rules — no revaluation of property, plant and equipment, no fair-value movement on an available-for-sale investment — so nothing would ever appear below the profit for the year, and the standard does not ask for the second statement. The numbering below is this pack's own.",
+      "lines": [
+        {
+          "code": "REV",
+          "name": "Revenue",
+          "sequence": 10,
+          "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "4000", "code_to": "4699" }]
+        },
+        {
+          "code": "COST",
+          "name": "Cost of sales",
+          "sequence": 20,
+          "rules": [{ "kind": "code_range", "code_from": "5000", "code_to": "5099" }]
+        },
+        {
+          "code": "GROSS",
+          "name": "Gross profit",
+          "sequence": 30,
+          "is_total": true,
+          "plus": ["REV"],
+          "minus": ["COST"]
+        },
+        {
+          "code": "OTH-INC",
+          "name": "Other income",
+          "sequence": 40,
+          "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "4700", "code_to": "4799" }]
+        },
+        {
+          "code": "OPEX",
+          "name": "Administrative and other operating expenses",
+          "sequence": 50,
+          "rules": [{ "kind": "code_range", "code_from": "6000", "code_to": "6799" }]
+        },
+        {
+          "code": "DEPR",
+          "name": "Depreciation and amortisation",
+          "sequence": 60,
+          "rules": [{ "kind": "code_range", "code_from": "6800", "code_to": "6899" }]
+        },
+        {
+          "code": "PROFIT",
+          "name": "Profit (loss) for the year",
+          "sequence": 70,
+          "is_total": true,
+          "plus": ["GROSS", "OTH-INC"],
+          "minus": ["OPEX", "DEPR"]
+        }
+      ]
+    }
+  ]
+}

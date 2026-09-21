@@ -1,0 +1,196 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "A year of books of a Hong Kong trading and consulting company that files no periodic return",
+  "chart": "default",
+  "fiscal_year": {
+    "name": "Year ended 31 March 2027",
+    "start": "2026-04-01",
+    "end": "2027-03-31"
+  },
+  "periods": [
+    { "code": "FY2026-27", "from": "2026-04-01", "to": "2027-03-31" }
+  ],
+  "statements": ["HK-SME-FRS-SFP", "HK-SME-FRS-IS"],
+  "contacts": [
+    { "ref": "cust-a", "name": "Kowloon Trading Company Limited", "type": "customer", "country": "HK" },
+    { "ref": "cust-b", "name": "Central Consulting Limited", "type": "customer", "country": "HK" },
+    { "ref": "cust-c", "name": "Pacific Rim Imports LLC", "type": "customer", "country": "US" },
+    { "ref": "supp-a", "name": "Harbour Office Supplies Limited", "type": "supplier", "country": "HK" },
+    { "ref": "supp-b", "name": "Victoria Professional Services Limited", "type": "supplier", "country": "HK" },
+    { "ref": "supp-c", "name": "Shenzhen Components Co., Ltd.", "type": "supplier", "country": "CN" }
+  ],
+  "documents": [
+    {
+      "ref": "V1",
+      "type": "sale_invoice",
+      "contact": "cust-b",
+      "date": "2026-04-15",
+      "why": "A domestic sale of services, HK-S-NA: the not-subject code posts the line's base and nothing else — no tax line, no declaration box.",
+      "lines": [
+        { "name": "Advisory services, April 2026", "unit_price": 50000, "tax": "HK-S-NA", "account": "4010" }
+      ]
+    },
+    {
+      "ref": "V2",
+      "type": "sale_invoice",
+      "contact": "cust-a",
+      "date": "2026-04-20",
+      "why": "A domestic sale of goods, HK-S-NA on the goods side too: the code draws no distinction the way a real turnover tax would between what is sold.",
+      "lines": [
+        { "name": "Trading stock, assorted goods", "quantity": 20, "unit_price": 500, "tax": "HK-S-NA", "account": "4000" }
+      ]
+    },
+    {
+      "ref": "V3",
+      "type": "sale_invoice",
+      "contact": "cust-c",
+      "date": "2026-05-05",
+      "why": "An export of goods to a customer outside Hong Kong: HK-S-NA applies exactly as it does to V2's domestic sale, because a territorial system with no turnover tax at all draws no export/domestic line to begin with.",
+      "lines": [
+        { "name": "Export of assorted goods", "quantity": 100, "unit_price": 80, "tax": "HK-S-NA", "account": "4000" }
+      ]
+    },
+    {
+      "ref": "CN1",
+      "type": "sale_credit_note",
+      "contact": "cust-a",
+      "date": "2026-05-10",
+      "why": "A credit note against V2, a partial return of goods — the golden's sale-side credit note.",
+      "lines": [
+        { "name": "Return of assorted goods", "quantity": 5, "unit_price": 500, "tax": "HK-S-NA", "account": "4000" }
+      ]
+    },
+    {
+      "ref": "V4",
+      "type": "sale_invoice",
+      "contact": "cust-b",
+      "date": "2026-06-01",
+      "why": "A second domestic service sale, to spread the scenario across more than one month and leave an invoice a part-payment settles only partly.",
+      "lines": [
+        { "name": "Advisory services, May 2026", "unit_price": 30000, "tax": "HK-S-NA", "account": "4010" }
+      ]
+    },
+    {
+      "ref": "V5",
+      "type": "sale_invoice",
+      "contact": "cust-a",
+      "date": "2026-07-15",
+      "why": "A third domestic goods sale, settled by nothing in this scenario — an open receivable the trial balance has to carry at the year end.",
+      "lines": [
+        { "name": "Trading stock, assorted goods", "quantity": 15, "unit_price": 500, "tax": "HK-S-NA", "account": "4000" }
+      ]
+    },
+    {
+      "ref": "P1",
+      "type": "purchase_invoice",
+      "contact": "supp-a",
+      "date": "2026-04-18",
+      "why": "A domestic purchase of trading inventory, HK-P-NA: the purchase side of the not-subject code, posting the base and nothing to recover.",
+      "lines": [
+        { "name": "Trading stock, assorted goods", "quantity": 100, "unit_price": 60, "tax": "HK-P-NA", "account": "5010" }
+      ]
+    },
+    {
+      "ref": "P2",
+      "type": "purchase_invoice",
+      "contact": "supp-b",
+      "date": "2026-04-25",
+      "why": "A recurring domestic expense, office rent, paid in full by E3 — the golden's matched payment on the purchase side.",
+      "lines": [
+        { "name": "Office rent, April 2026", "unit_price": 20000, "tax": "HK-P-NA", "account": "6100" }
+      ]
+    },
+    {
+      "ref": "P3",
+      "type": "purchase_invoice",
+      "contact": "supp-c",
+      "date": "2026-05-12",
+      "why": "An import of raw materials from a supplier outside Hong Kong: no import tax posts, because Hong Kong is a free port that charges no general tax on goods crossing its border, and HK-P-NA reads the same on an import as on a domestic purchase.",
+      "lines": [
+        { "name": "Import of components", "quantity": 200, "unit_price": 25, "tax": "HK-P-NA", "account": "5010" }
+      ]
+    },
+    {
+      "ref": "PCN1",
+      "type": "purchase_credit_note",
+      "contact": "supp-a",
+      "date": "2026-05-15",
+      "why": "A credit note against P1, a partial return of defective stock — the golden's purchase-side credit note, beside CN1 on the sale side.",
+      "lines": [
+        { "name": "Return of defective stock", "quantity": 10, "unit_price": 60, "tax": "HK-P-NA", "account": "5010" }
+      ]
+    },
+    {
+      "ref": "P4",
+      "type": "purchase_invoice",
+      "contact": "supp-a",
+      "date": "2026-06-10",
+      "why": "A purchase of a fixed asset, computer equipment, booked straight to the balance sheet rather than to an expense account — proof HK-P-NA posts its base wherever the document line's own account sends it, and nowhere of its own choosing.",
+      "lines": [
+        { "name": "Computer equipment", "unit_price": 12000, "tax": "HK-P-NA", "account": "1640" }
+      ]
+    },
+    {
+      "ref": "P5",
+      "type": "purchase_invoice",
+      "contact": "supp-b",
+      "date": "2026-06-20",
+      "why": "A recurring administrative purchase, the fee for running the Mandatory Provident Fund scheme every Hong Kong employer has to operate for its staff.",
+      "lines": [
+        { "name": "MPF scheme administration fee", "unit_price": 1500, "tax": "HK-P-NA", "account": "6020" }
+      ]
+    },
+    {
+      "ref": "P6",
+      "type": "purchase_invoice",
+      "contact": "supp-b",
+      "date": "2026-07-01",
+      "why": "A recurring administrative purchase, accounting and company secretarial fees — the annual return every Hong Kong private company delivers to the Companies Registry within 42 days of its incorporation anniversary depends on one.",
+      "lines": [
+        { "name": "Accounting and company secretarial fees", "unit_price": 8000, "tax": "HK-P-NA", "account": "6220" }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "E1",
+      "direction": "inbound",
+      "date": "2026-05-10",
+      "amount": 50000,
+      "contact": "cust-b",
+      "journal": "BNK",
+      "match": "V1",
+      "why": "An inbound payment that exactly settles V1 — the golden's matched payment on the sale side."
+    },
+    {
+      "ref": "E2",
+      "direction": "inbound",
+      "date": "2026-06-15",
+      "amount": 5000,
+      "contact": "cust-b",
+      "journal": "BNK",
+      "match": null,
+      "why": "An inbound part-payment on account, matched to nothing — the golden's unmatched payment and the open item a return computed from matchings has to survive."
+    },
+    {
+      "ref": "E3",
+      "direction": "outbound",
+      "date": "2026-05-28",
+      "amount": 20000,
+      "contact": "supp-b",
+      "journal": "BNK",
+      "match": "P2",
+      "why": "An outbound payment that exactly settles P2 — the matched payment on the purchase side."
+    },
+    {
+      "ref": "E4",
+      "direction": "outbound",
+      "date": "2026-06-05",
+      "amount": 3000,
+      "contact": "supp-c",
+      "journal": "BNK",
+      "match": null,
+      "why": "An outbound part-payment on account to a supplier, matched to nothing — the unmatched payment on the purchase side."
+    }
+  ]
+}

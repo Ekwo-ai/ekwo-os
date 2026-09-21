@@ -1,0 +1,105 @@
+code,parent,type,reconcilable,name,sequence
+1000,,asset_cash,false,Cash on hand,10
+1010,,asset_cash,false,Bank current account,20
+1020,,asset_cash,false,Bank savings account,30
+1030,,asset_cash,false,Foreign currency bank account,40
+1040,,asset_cash,false,Payment gateway and card clearing account,50
+1050,,asset_cash,false,Fixed deposits of three months or less,60
+1060,,asset_cash,false,Cash in transit,70
+1100,,asset_receivable,true,Trade debtors,80
+1105,,asset_current,false,Allowance for expected credit losses,90
+1110,,asset_current,false,Amounts due from related companies,100
+1120,,asset_current,false,Other debtors,110
+1130,,asset_current,false,Accrued income,120
+1140,,asset_current,false,Staff advances and loans to employees,130
+1150,,asset_current,false,Provisional profits tax paid,140
+1160,,asset_current,false,Profits tax recoverable,150
+1200,,asset_current,false,Inventory — raw materials and consumables,160
+1210,,asset_current,false,Inventory — work in progress,170
+1220,,asset_current,false,Inventory — finished goods and goods for resale,180
+1230,,asset_current,false,Goods in transit,190
+1300,,asset_current,false,Fixed deposits of more than three months,200
+1310,,asset_current,false,Listed investments held for trading,210
+1320,,asset_current,false,Amounts due from related companies — non-trade,220
+1400,,asset_prepayments,false,Prepaid expenses,230
+1410,,asset_prepayments,false,Rental and utility deposits paid,240
+1420,,asset_prepayments,false,Deposits paid to suppliers,250
+1600,,asset_fixed,false,Leasehold land and buildings,260
+1610,,asset_fixed,false,Leasehold improvements,270
+1620,,asset_fixed,false,Furniture and fixtures,280
+1630,,asset_fixed,false,Office equipment,290
+1640,,asset_fixed,false,Computer equipment and software,300
+1650,,asset_fixed,false,Motor vehicles,310
+1660,,asset_fixed,false,Plant and machinery,320
+1670,,asset_fixed,false,Right-of-use assets,330
+1690,,asset_fixed,false,Accumulated depreciation — property plant and equipment,340
+1695,,asset_fixed,false,Accumulated depreciation — right-of-use assets,350
+1800,,asset_non_current,false,Goodwill,360
+1810,,asset_non_current,false,Other intangible assets,370
+1820,,asset_non_current,false,Accumulated amortisation — intangible assets,380
+1900,,asset_non_current,false,Investments in subsidiaries,390
+1910,,asset_non_current,false,Investments in associates,400
+1920,,asset_non_current,false,Other long-term investments,410
+1930,,asset_non_current,false,Rental and utility deposits — non-current,420
+1990,,asset_non_current,false,Deferred tax assets,430
+2000,,liability_payable,true,Trade creditors,440
+2010,,liability_current,false,Amounts due to related companies,450
+2020,,liability_current,false,Accruals,460
+2030,,liability_current,false,Customer deposits and advances received,470
+2040,,liability_current,false,Salaries and wages payable,480
+2050,,liability_current,false,Mandatory Provident Fund contributions payable,490
+2060,,liability_current,false,Provision for Hong Kong profits tax,500
+2070,,liability_current,false,Other tax and government charges payable,510
+2080,,liability_current,false,Lease liabilities — current portion,520
+2090,,liability_current,false,Suspense account,530
+2200,,liability_credit_card,false,Corporate credit card payable,540
+2300,,liability_non_current,false,Bank borrowings — non-current,550
+2310,,liability_non_current,false,Lease liabilities — non-current,560
+2320,,liability_non_current,false,Amounts due to shareholders — non-current,570
+2390,,liability_non_current,false,Deferred tax liabilities,580
+3000,,equity,false,Issued and paid-up share capital,590
+3100,,equity,false,Share premium,600
+3110,,equity,false,Capital reserve,610
+3200,,equity_retained,false,Retained profits,620
+4000,,income,false,Sale of goods,630
+4010,,income,false,Rendering of services,640
+4700,,income_other,false,Realised exchange gains,650
+4710,,income_other,false,Unrealised exchange gains,660
+4720,,income_other,false,Interest income,670
+4730,,income_other,false,Sundry income,680
+4750,,income_other,false,Gain on disposal of fixed assets,690
+5000,,expense_direct_cost,false,Cost of goods sold,700
+5010,,expense_direct_cost,false,Purchases,710
+5020,,expense_direct_cost,false,Freight inwards,720
+5030,,expense_direct_cost,false,Direct labour,730
+6000,,expense,false,Directors' remuneration,740
+6010,,expense,false,Staff salaries and wages,750
+6020,,expense,false,Mandatory Provident Fund contributions,760
+6030,,expense,false,Staff welfare and benefits,770
+6100,,expense,false,Rent and rates,780
+6110,,expense,false,Management fees and building outgoings,790
+6120,,expense,false,Utilities,800
+6200,,expense,false,Business registration and licence fees,810
+6210,,expense,false,Auditor's remuneration,820
+6220,,expense,false,Accounting and company secretarial fees,830
+6230,,expense,false,Legal and professional fees,840
+6300,,expense,false,Repairs and maintenance,850
+6310,,expense,false,Insurance,860
+6320,,expense,false,Motor vehicle expenses,870
+6330,,expense,false,Travelling expenses,880
+6340,,expense,false,Entertainment expenses,890
+6350,,expense,false,Advertising and promotion,900
+6360,,expense,false,"Printing, stationery and postage",910
+6370,,expense,false,Telecommunications,920
+6380,,expense,false,Bank charges,930
+6390,,expense,false,Sundry office expenses,940
+6400,,expense,false,Allowance for expected credit losses charged,950
+6410,,expense,false,Interest expense on bank borrowings,960
+6420,,expense,false,Interest expense on lease liabilities,970
+6450,,expense,false,Realised exchange losses,980
+6455,,expense,false,Unrealised exchange losses,990
+6460,,expense,false,Loss on disposal of fixed assets,1000
+6470,,expense,false,Hong Kong profits tax charge,1010
+6480,,expense,false,Deferred tax charge,1020
+6490,,expense,false,Rounding differences,1030
+6800,,expense_depreciation,false,Depreciation and amortisation,1040

@@ -1,0 +1,183 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "HK",
+  "name": "Hong Kong",
+  "version": "0.1.0",
+  "schema_min": "20260917170000",
+  "seed_sequence": 52,
+  "released_at": "2026-09-21",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "co-cap622",
+        "title": "Companies Ordinance (Cap. 622)",
+        "publisher": "Department of Justice — Hong Kong e-Legislation",
+        "url": "https://www.elegislation.gov.hk/hk/cap622",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "iro-cap112",
+        "title": "Inland Revenue Ordinance (Cap. 112)",
+        "publisher": "Department of Justice — Hong Kong e-Legislation",
+        "url": "https://www.elegislation.gov.hk/hk/cap112",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "bro-cap310",
+        "title": "Business Registration Ordinance (Cap. 310)",
+        "publisher": "Department of Justice — Hong Kong e-Legislation",
+        "url": "https://www.elegislation.gov.hk/hk/cap310",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "ird-profits-tax",
+        "title": "Profits Tax",
+        "publisher": "Inland Revenue Department",
+        "url": "https://www.ird.gov.hk/eng/tax/bus_pft.htm",
+        "consulted_on": "2026-09-21",
+        "kind": "guidance"
+      },
+      {
+        "key": "ird-two-tiered",
+        "title": "Two-tiered Profits Tax Rates Regime",
+        "publisher": "Inland Revenue Department",
+        "url": "https://www.ird.gov.hk/eng/faq/index.htm",
+        "consulted_on": "2026-09-21",
+        "kind": "guidance"
+      },
+      {
+        "key": "ird-record-keeping",
+        "title": "Keeping Business Records",
+        "publisher": "Inland Revenue Department",
+        "url": "https://www.ird.gov.hk/eng/tax/bus_rke.htm",
+        "consulted_on": "2026-09-21",
+        "kind": "guidance"
+      },
+      {
+        "key": "ird-business-registration",
+        "title": "Business Registration",
+        "publisher": "Inland Revenue Department",
+        "url": "https://www.ird.gov.hk/eng/tax/bre.htm",
+        "consulted_on": "2026-09-21",
+        "kind": "guidance"
+      },
+      {
+        "key": "cr-annual-return",
+        "title": "Annual Returns of Local Private Companies",
+        "publisher": "Companies Registry",
+        "url": "https://www.cr.gov.hk/en/compliance/annual-return/private-company.htm",
+        "consulted_on": "2026-09-21",
+        "kind": "guidance"
+      },
+      {
+        "key": "hkicpa-sme-frf",
+        "title": "SME-FRF & SME-FRS — Members' Handbook, Volume II",
+        "publisher": "Hong Kong Institute of Certified Public Accountants",
+        "url": "https://www.hkicpa.org.hk/en/Standards-setting/Standards/Members-Handbook-and-Due-Process/Due-Process/Financial-reporting",
+        "consulted_on": "2026-09-21",
+        "kind": "standard"
+      },
+      {
+        "key": "ird-etax",
+        "title": "Electronic Services — eTAX Business Tax Portal",
+        "publisher": "Inland Revenue Department",
+        "url": "https://www.ird.gov.hk/eng/ese/index.htm",
+        "consulted_on": "2026-09-21",
+        "kind": "portal"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "HKD",
+    "language": "en",
+    "rounding_method": "half_up",
+    "closing_style": "retained_earnings",
+    "fiscal_year_default": "april",
+    "roles": {
+      "receivable": "1100",
+      "payable": "2000",
+      "suspense": "2090",
+      "rounding": "6490",
+      "retained_earnings": "3200",
+      "sales": "4000",
+      "purchase": "5010",
+      "bank": "1010",
+      "cash": "1000",
+      "fx_gain": "4700",
+      "fx_loss": "6450",
+      "asset_disposal_gain": "4750",
+      "asset_disposal_loss": "6460"
+    },
+    "journal_roles": {
+      "sales": "SAL",
+      "purchase": "PUR",
+      "miscellaneous": "GEN",
+      "opening": "OPN"
+    }
+  },
+  "languages": [],
+  "journals": [
+    { "code": "SAL", "type": "sales", "name": "Sales journal", "sequence": 10 },
+    { "code": "PUR", "type": "purchase", "name": "Purchases journal", "sequence": 20 },
+    { "code": "BNK", "type": "bank", "name": "Bank", "sequence": 30 },
+    { "code": "CSH", "type": "cash", "name": "Petty cash", "sequence": 40 },
+    { "code": "GEN", "type": "general", "name": "General journal", "sequence": 50 },
+    { "code": "OPN", "type": "opening", "name": "Opening balances", "sequence": 60 }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Hong Kong reference chart of accounts",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": ["HK-SME-FRS-SFP", "HK-SME-FRS-IS"],
+      "legal_reference": "There is no legal chart of accounts in Hong Kong. Companies Ordinance (Cap. 622), Part 9 (Accounts and Audit) requires every company to keep proper accounting records sufficient to give a true and fair view of its state of affairs and to explain its transactions, and requires its directors to prepare financial statements that give a true and fair view for each financial year, prescribing no chart to get there. This chart is original: four digits, blocked so that each range reaches one line item of the statement of financial position and the income statement a company reporting under the SME-FRF & SME-FRS (Hong Kong Institute of Certified Public Accountants) presents — the simplified framework a private company that is not a specified body, stays under its size test and has the unanimous written agreement of its shareholders may report under, in place of full Hong Kong Financial Reporting Standards. Neither framework prescribes a chart of accounts, only the two statements; a company outside the SME-FRF reports the same transactions under full HKFRS and this chart ties into the same statement of financial position and statement of profit or loss either way. It carries no tax-clearing account of any kind, because there is no tax to clear — see 'From Hong Kong' in docs/international.md.",
+      "source": "co-cap622"
+    }
+  ],
+  "documents": {
+    "numbering": "free",
+    "number_format": "{CODE}-{YYYY}-{NNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "invoice_date",
+    "references": {
+      "numbering": {
+        "legal_reference": "Hong Kong has never levied a value added tax, a goods and services tax or a general tax on the sale of goods or services (Inland Revenue Department; a proposal for a goods and services tax was put to public consultation in 2006 and withdrawn), so no statute conditions the deductibility of a tax, or anything else, on an invoice carrying a sequential number. What every person carrying on a trade, profession or business has to do is keep sufficient records, in English or Chinese, to enable assessable profits to be readily ascertained (Inland Revenue Ordinance (Cap. 112), section 51C(1)), for a period of not less than seven years (section 51C(2)), or face a fine of up to $100,000 (section 51C(5)) — a duty about what is kept and not about how a document already issued is shaped. `numbering` is therefore `free`, not a gap this pack leaves for somebody else to fill: `number_format` is a convention it proposes, the same one a business free to choose its own numbering would reach for.",
+        "source": "iro-cap112"
+      },
+      "payment_terms": {
+        "legal_reference": "No Hong Kong statute sets a payment term between two businesses in the absence of an agreement, or a rate of interest on a commercial debt paid late: the Late Payment of Commercial Debts (Interest) Act 1998 is a United Kingdom statute and was never extended to Hong Kong, and no local equivalent has replaced it. `legal_payment_days` and `late_payment_reference` are therefore empty, and a seller's own terms are a matter of contract, stated on the document and not derived from a rule this pack could cite.",
+        "source": "co-cap622"
+      },
+      "tax_point": {
+        "legal_reference": "This field has nothing to describe in Hong Kong: it names the day a country's general rule makes its own turnover tax chargeable, and Hong Kong charges none. `invoice_date` is declared as the closest general commercial convention — revenue is ordinarily invoiced at or shortly after the point HKFRS 15 / SME-FRF & SME-FRS recognise it, on satisfying the performance obligation — and not as a rule read from a text; see 'From Hong Kong' in docs/international.md, which sets this out as a gap in what the field can honestly say of a territory with no transaction tax at all.",
+        "source": "hkicpa-sme-frf"
+      }
+    },
+    "mentions": [
+      {
+        "code": "business-registration-number",
+        "applies_when": "always",
+        "text": "Business Registration Number: {business_registration_number}",
+        "sequence": 10,
+        "legal_reference": "Business Registration Ordinance (Cap. 310) requires a person carrying on a business in Hong Kong to apply for business registration within one month of commencement and to display the business registration certificate at the place of business; the ordinance does not itself require the number on an invoice. The mention is usual commercial practice, not a numbering or invoicing rule of the kind `documents.mentions` records for a VAT country, and this pack states it as such rather than dressing a custom as a statute — see 'From Hong Kong' in docs/international.md.",
+        "source": "bro-cap310"
+      }
+    ]
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "obligation": "none",
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "No Hong Kong statute obliges a business to issue or to accept an electronic invoice, and no Peppol Authority is listed for Hong Kong (OpenPeppol, list of Peppol Authorities, consulted 2026-09-21): unlike Singapore's InvoiceNow or Australia and New Zealand's PINT A-NZ, Hong Kong has not joined the network. `profile`, `party_scheme` and `vat_scheme` are therefore null and not merely unresearched: there is no domestic profile to name and no VAT identifier for a scheme to carry, since Hong Kong levies no value added tax and a party is addressed, where it is addressed at all, by its Business Registration Number under the Business Registration Ordinance (Cap. 310) — a number this pack's chart carries as an invoice mention and not as an e-invoicing party scheme, which is a different claim from the one a Peppol pack makes.",
+    "source": "bro-cap310"
+  }
+}

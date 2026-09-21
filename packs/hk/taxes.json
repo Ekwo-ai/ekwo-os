@@ -1,0 +1,38 @@
+[
+  {
+    "code": "HK-S-NA",
+    "name": "Sale, not subject to any tax on turnover",
+    "description": "Every sale a Hong Kong business makes — domestic, exported, or delivered from outside Hong Kong to a place outside Hong Kong",
+    "kind": "other",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "not_subject",
+    "valid_from": "1997-07-01",
+    "legal_reference": "Hong Kong has never imposed a value added tax, a goods and services tax or a general tax on the sale of goods or the supply of services. A proposal for a broad-based goods and services tax was put to a five-month public consultation in 2006 and withdrawn in the face of public opposition; no such tax has been proposed again since. What a Hong Kong business pays on its trading is profits tax, charged under the Inland Revenue Ordinance (Cap. 112), section 14, on the assessable profits of a trade, profession or business carried on in Hong Kong and arising in or derived from Hong Kong — a tax on the year's net profit, computed once for the whole business at the year end, and not a tax any single invoice carries, collects on the seller's behalf, or is credited against on the buyer's. There is accordingly no rate for this code to state and no box for its base to be reported in: the code exists so that every sale line still carries a tax code the engine can post, the way a ledger for a country with a real turnover tax does, and states plainly that this jurisdiction has none. 1 July 1997 is the day the Basic Law took effect and the Inland Revenue Ordinance continued in force under it (Basic Law, article 8); Hong Kong's territorial, no-turnover-tax system dates from long before that, and is unrelated to it — the date is a convenience the pack needed for `valid_from` and not a claim about when the absence of a turnover tax began. See 'From Hong Kong' in docs/international.md.",
+    "source": "iro-cap112",
+    "vat_category": "O",
+    "postings": {
+      "invoice": [{ "type": "base" }],
+      "credit_note": [{ "type": "base" }]
+    },
+    "sequence": 10
+  },
+  {
+    "code": "HK-P-NA",
+    "name": "Purchase, not subject to any tax on turnover",
+    "description": "Every purchase a Hong Kong business books — domestic, imported, or delivered from outside Hong Kong to a place outside Hong Kong",
+    "kind": "other",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "not_subject",
+    "valid_from": "1997-07-01",
+    "legal_reference": "The purchase side of HK-S-NA: nothing a Hong Kong business buys carries a value added tax, a goods and services tax or a general sales tax to recover, because none is charged on the sale that supplies it, whether the seller is in Hong Kong or abroad. Hong Kong is a free port — the Basic Law, article 114, commits the Region to remaining one, levying no customs tariff — so an import carries no tax at the border either, other than the excise duty the Dutiable Commodities Ordinance (Cap. 109) charges on four commodities (liquor, tobacco, hydrocarbon oil and methyl alcohol), which this pack does not model: it is a duty on those specific goods and not a general tax any invoice line can carry a code for. See 'From Hong Kong' in docs/international.md.",
+    "source": "iro-cap112",
+    "vat_category": "O",
+    "postings": {
+      "invoice": [{ "type": "base" }],
+      "credit_note": [{ "type": "base" }]
+    },
+    "sequence": 20
+  }
+]

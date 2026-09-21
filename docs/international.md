@@ -2945,3 +2945,97 @@ the company's tax identifier.
 `00_territories.sql`, outside the common system of VAT. The food rate of 1 %
 the Cabinet proposed on 15 September 2026 for April 2027 to March 2029 is not in
 the pack: it is not law.
+
+## Hong Kong
+
+`packs/hk/`, `community`, seed 52, HKD. Chosen on purpose, and not for its
+market: every pack this repository carried before it lives inside a country
+that charges a value added tax, a goods and services tax or a sales tax on
+what it sells, and Hong Kong Special Administrative Region charges none of
+the three — no turnover tax at all, at any level of government, and never
+has. It is the first pack that finds out whether "a country files a periodic
+return" was ever actually optional, the way `docs/packs.md` step 3 already
+said it was ("If the pack declares a periodic return, name `tax_payable`"),
+or whether it only looked optional because every pack so far had one.
+
+The pack itself is unremarkable by the standard of the others: an original
+104-account chart blocked to the statement of financial position and the
+income statement a company reporting under the SME-FRF & SME-FRS (HKICPA)
+presents, two tax codes (`HK-S-NA`, `HK-P-NA`) at 0 %, `not_subject`, posting
+their base and nothing else, a golden year of thirteen documents across two
+directions and a credit note on each side, and nine sources. What is
+unremarkable about it is the finding: `vat_return()` already has a clause for
+exactly this — a country with no row in `tax_report_templates` reads back
+"no pack for this country: the ledger boxes, and no total" — and it does,
+cleanly, returning zero rows for the one period the golden scenario declares,
+which `tests/golden.test.ts`'s "files the declaration" comparison accepts
+without complaint. The core was already right. Two assertions of the test
+suite were not, and this pack is the first one small enough, and honest
+enough about having nothing to declare, to find out.
+
+### From Hong Kong
+
+Two things the core says once and the test suite still says twice, plus one
+field the format has no honest answer for here.
+
+**`tests/tax_report.test.ts`, "accepts the packs of this repository as they
+are", asserts every pack has a report, unconditionally.** The test loops over
+`allPacks` and opens with `expect(pack.report, pack.slug).not.toBeNull()` —
+which fails cleanly, `hk: expected null not to be null`, and never reaches
+the lines below it that read `pack.report!.boxes`. Every pack this suite has
+ever carried files a return, so the assumption behind the assertion has never
+been exercised against one that does not. *Fix*: the very first test of the
+same file already has the right shape —
+`allPacks.filter((pack) => pack.report !== null)` — and applying the same
+filter here, with a second assertion beside it that a pack whose taxes are
+all zero-rated is *allowed* to carry no report, would close this without
+touching what the test proves for every VAT country.
+
+**`tests/golden.test.ts`, "exercises both directions, more than one rate, and
+a credit note", asserts a scenario has more than one positive tax rate,
+unconditionally.** `expect(rates.size).toBeGreaterThan(1)` is not gated by
+"where the pack has one" the way the reverse-charge and cash-basis
+assertions two `it` blocks below it are — it assumes every pack has a rate to
+begin with, let alone two. A Hong Kong scenario that invented a second rate
+to satisfy it would be lying about Hong Kong law to satisfy a test, which is
+the one thing a pack must never do; this pack does not, and the assertion
+fails, honestly, on a scenario that is otherwise complete — both directions,
+a credit note, a matched payment and an unmatched one, a balanced ledger, a
+balance sheet that ties to the cent. *Fix*: split the assertion in two, the
+existing `rates.size > 1` for a pack that has any positive rate at all
+(`pack.taxes.some((t) => t.rate > 0)`) and a new one for a pack that has
+none — that every tax used is `rate: 0` and `treatment: 'not_subject'`, which
+is the shape of the honest claim this pack actually makes.
+
+**`documents.tax_point` has no true answer for a country with no turnover
+tax.** The field's own schema description names what it is for: "when the
+tax becomes chargeable under the country's general rule." Hong Kong has no
+turnover tax and so no such rule for a value to be read from — not a gap in
+research, an absence in the law. This pack declares `invoice_date` as the
+closest general commercial convention and says so in `pack.json` and in its
+README; a reviewer should read it as a placeholder for a question the format
+cannot ask of this country, not as a citation. *Fix*: none obvious that does
+not either special-case a no-tax country in the schema (which the same rule
+that refused patching the core for this pack refuses here too) or add a
+sixth enum value meaning "not applicable", which is a change to every pack's
+reader and not this one's to make.
+
+Two further notes, neither a socle gap:
+
+**No revaluation reserve, and no statement of comprehensive income.** SME-FRS
+keeps property, plant and equipment at cost, so this chart carries no
+revaluation account, and an entity reporting under it never has an item of
+other comprehensive income to put on a second statement — which is why
+`statements.json` carries an income statement and not a statement of
+comprehensive income, unlike every European pack in this repository.
+
+**`elegislation.gov.hk` could not be read in this environment.** Three
+attempts — a plain script fetch, a JavaScript-rendering proxy, and the
+account's own browser automation — each returned the site's home page or a
+loading screen and never a section's text, for both Cap. 622 and Cap. 112.
+The two ordinances are cited at the level this pack could actually confirm
+against a source that did render: the Inland Revenue Department's own pages,
+which quote sections 14 and 51C of Cap. 112 directly, and Part 9 of Cap. 622
+by name and subject rather than by subsection. `packs/hk/README.md` says so
+under "Sources" and lists the exact subsections a reviewer should confirm
+before the pack moves past `community`.

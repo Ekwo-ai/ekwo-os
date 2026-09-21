@@ -490,3 +490,31 @@ on conflict (code) do update set
   eu_vat_to       = excluded.eu_vat_to,
   vat_prefix      = excluded.vat_prefix,
   legal_reference = excluded.legal_reference;
+
+
+-- ---------------------------------------------------------------------------
+-- The rows — Hong Kong
+--
+-- Not a State outside the common system of VAT the way Australia or the
+-- United States are: Hong Kong Special Administrative Region of the People's
+-- Republic of China levies no value added tax, no goods and services tax and
+-- no general sales tax of its own either, at any level of government, and
+-- never has. `vat_prefix` is null for the reason it is null on the United
+-- States row: there is no VAT identification number to prefix. A business is
+-- addressed, where it is addressed at all, by its Business Registration
+-- Number under the Business Registration Ordinance (Cap. 310), which is not a
+-- VAT number and carries no country prefix of this table's kind.
+-- ---------------------------------------------------------------------------
+
+insert into territories (code, code_source, name, parent_code, eu_vat_scope, eu_vat_from, eu_vat_to, vat_prefix, legal_reference) values
+  ('HK', 'iso_3166_1', 'Hong Kong', null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. Hong Kong Special Administrative Region has never levied a value added tax, a goods and services tax or a general sales tax: Inland Revenue Department guidance on Hong Kong''s tax system and the 2006 public consultation on a proposed goods and services tax, which was withdrawn, both record the absence rather than a rate. What Hong Kong charges instead is profits tax on the territorial basis of the Inland Revenue Ordinance (Cap. 112), section 14 — a tax on a year''s net profit, and not on a transaction.')
+on conflict (code) do update set
+  code_source     = excluded.code_source,
+  name            = excluded.name,
+  parent_code     = excluded.parent_code,
+  eu_vat_scope    = excluded.eu_vat_scope,
+  eu_vat_from     = excluded.eu_vat_from,
+  eu_vat_to       = excluded.eu_vat_to,
+  vat_prefix      = excluded.vat_prefix,
+  legal_reference = excluded.legal_reference;
