@@ -339,6 +339,54 @@
       "source": "loi-tva"
     },
     {
+      "box": "033",
+      "kind": "base",
+      "name": "Ventilation du chiffre d’affaires imposable — taux libre (champ 403) — base",
+      "sequence": 341,
+      "legal_reference": "Loi TVA modifiée du 12 février 1979, art. 64 — formulaire eCDF de déclaration périodique de TVA (TVA_DECM mensuelle, TVA_DECT trimestrielle), II.A. Ventilation du chiffre d’affaires imposable, ligne à taux libre dont le déclarant inscrit le taux au champ 403, colonne « base ». Le format de pack ne porte pas le champ 403, qui est un taux et non un montant : aucune taxe du pack n'écrit dans cette case, qui reste déclarée pour que le total 037 soit celui du formulaire",
+      "source": "loi-tva"
+    },
+    {
+      "box": "042",
+      "kind": "tax",
+      "name": "Ventilation du chiffre d’affaires imposable — taux libre (champ 403) — TVA",
+      "sequence": 342,
+      "legal_reference": "Loi TVA modifiée du 12 février 1979, art. 64 — formulaire eCDF de déclaration périodique de TVA (TVA_DECM mensuelle, TVA_DECT trimestrielle), II.A. Ventilation du chiffre d’affaires imposable, ligne à taux libre dont le déclarant inscrit le taux au champ 403, colonne « TVA ». Le format de pack ne porte pas le champ 403, qui est un taux et non un montant : aucune taxe du pack n'écrit dans cette case, qui reste déclarée pour que le total 046 soit celui du formulaire",
+      "source": "loi-tva"
+    },
+    {
+      "box": "416",
+      "kind": "base",
+      "name": "Ventilation du chiffre d’affaires imposable — taux libre (champ 418) — base",
+      "sequence": 343,
+      "legal_reference": "Loi TVA modifiée du 12 février 1979, art. 64 — formulaire eCDF de déclaration périodique de TVA (TVA_DECM mensuelle, TVA_DECT trimestrielle), II.A. Ventilation du chiffre d’affaires imposable, ligne à taux libre dont le déclarant inscrit le taux au champ 418, colonne « base ». Le format de pack ne porte pas le champ 418, qui est un taux et non un montant : aucune taxe du pack n'écrit dans cette case, qui reste déclarée pour que le total 037 soit celui du formulaire",
+      "source": "loi-tva"
+    },
+    {
+      "box": "417",
+      "kind": "tax",
+      "name": "Ventilation du chiffre d’affaires imposable — taux libre (champ 418) — TVA",
+      "sequence": 344,
+      "legal_reference": "Loi TVA modifiée du 12 février 1979, art. 64 — formulaire eCDF de déclaration périodique de TVA (TVA_DECM mensuelle, TVA_DECT trimestrielle), II.A. Ventilation du chiffre d’affaires imposable, ligne à taux libre dont le déclarant inscrit le taux au champ 418, colonne « TVA ». Le format de pack ne porte pas le champ 418, qui est un taux et non un montant : aucune taxe du pack n'écrit dans cette case, qui reste déclarée pour que le total 046 soit celui du formulaire",
+      "source": "loi-tva"
+    },
+    {
+      "box": "451",
+      "kind": "base",
+      "name": "Ventilation du chiffre d’affaires imposable — taux libre (champ 453) — base",
+      "sequence": 345,
+      "legal_reference": "Loi TVA modifiée du 12 février 1979, art. 64 — formulaire eCDF de déclaration périodique de TVA (TVA_DECM mensuelle, TVA_DECT trimestrielle), II.A. Ventilation du chiffre d’affaires imposable, ligne à taux libre dont le déclarant inscrit le taux au champ 453, colonne « base ». Le format de pack ne porte pas le champ 453, qui est un taux et non un montant : aucune taxe du pack n'écrit dans cette case, qui reste déclarée pour que le total 037 soit celui du formulaire",
+      "source": "loi-tva"
+    },
+    {
+      "box": "452",
+      "kind": "tax",
+      "name": "Ventilation du chiffre d’affaires imposable — taux libre (champ 453) — TVA",
+      "sequence": 346,
+      "legal_reference": "Loi TVA modifiée du 12 février 1979, art. 64 — formulaire eCDF de déclaration périodique de TVA (TVA_DECM mensuelle, TVA_DECT trimestrielle), II.A. Ventilation du chiffre d’affaires imposable, ligne à taux libre dont le déclarant inscrit le taux au champ 453, colonne « TVA ». Le format de pack ne porte pas le champ 453, qui est un taux et non un montant : aucune taxe du pack n'écrit dans cette case, qui reste déclarée pour que le total 046 soit celui du formulaire",
+      "source": "loi-tva"
+    },
+    {
       "box": "037",
       "kind": "total",
       "name": "Ventilation du chiffre d’affaires imposable — base",
@@ -350,7 +398,10 @@
         "903",
         "705",
         "905",
-        "031"
+        "031",
+        "033",
+        "416",
+        "451"
       ],
       "legal_reference": "Loi TVA modifiée du 12 février 1979, art. 64 — formulaire eCDF de déclaration périodique de TVA (TVA_DECM mensuelle, TVA_DECT trimestrielle), II.A. Ventilation du chiffre d’affaires imposable, colonne « base »",
       "source": "loi-tva"
@@ -367,7 +418,10 @@
         "904",
         "706",
         "906",
-        "040"
+        "040",
+        "042",
+        "417",
+        "452"
       ],
       "legal_reference": "Loi TVA modifiée du 12 février 1979, art. 64 — formulaire eCDF de déclaration périodique de TVA (TVA_DECM mensuelle, TVA_DECT trimestrielle), II.A. Ventilation du chiffre d’affaires imposable, colonne « TVA »",
       "source": "loi-tva"

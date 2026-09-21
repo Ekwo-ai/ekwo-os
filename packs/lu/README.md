@@ -79,7 +79,7 @@ French pack carries the ordinary rule for services.
 ## The declaration
 
 `tax_report.json` is the **eCDF periodic VAT return**, code `LU-VAT-PERIODIC`,
-with the 156 numbered fields of its four sections and the totals its own
+with the 162 numbered fields of its four sections and the totals its own
 validation rules define. The monthly form (`TVA_DECM`) and the quarterly form
 (`TVA_DECT`) carry **the same field numbers**, which is why one definition
 covers both, and the manifest declares the period as `month_or_quarter`.
@@ -90,6 +90,13 @@ no company-level parameter for that** — `vat_return()` is given two dates — 
 the pack says what the form allows and the caller says which period it is
 filing. The **annual return** (`TVA_DECA`, and the simplified `TVA_DECAS`) is a
 different form with fields of its own and is not in this pack.
+
+**Two numbers worth checking against the form.** Compared with the official
+form on 21 September 2026: 033 is the base of the first free-rate row of
+section II.A, and is now declared (point 8 of the review list below). **096 is
+not a field of this form**: no version of `TVA_DECM` published on eCDF from
+2015 to 2026 prints it — section III.B stops at 094 and 095, and 097 is their
+sum. The pack follows the form, and declares nothing under 096.
 
 One field is computed rather than summed, and it is worth knowing why. The
 Luxembourg form reports the taxable amount of a sale **twice** — once as
@@ -219,8 +226,11 @@ found.
    that year. The pack routes its reverse-charge purchase through section E.3,
    which has both rates.
 8. **The free-rate rows of section II.A** — fields 033/042, 416/417 and
-   451/452, where a declarant types a rate of its own — are not declared, and
-   the totals 037 and 046 therefore cover the seven statutory rates only.
+   451/452 — are declared since pack version 1.9.0, and 037 and 046 add them,
+   so the two totals are the form's. The rate of each row is what the
+   declarant types in field 403, 418 or 453, and a rate is not an amount the
+   format can hold: no tax of the pack posts to these rows, and a declarant
+   who needs one fills it in by hand, as the form expects.
 9. **Article 25**, the taxation on collection, and **article 50**, the
    *prorata*, are both out of v1. Both are options or company parameters rather
    than country rules; both are expressible if a reviewer says they belong.

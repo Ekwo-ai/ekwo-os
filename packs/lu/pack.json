@@ -2,7 +2,7 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "LU",
   "name": "Luxembourg",
-  "version": "1.8.0",
+  "version": "1.9.0",
   "schema_min": "20260919190727",
   "seed_sequence": 12,
   "released_at": "2026-09-21",
@@ -85,8 +85,8 @@
         "key": "declaration-tva",
         "title": "Formulaire eCDF de déclaration périodique de TVA, TVA_DECM (mensuelle), avec la liste de ses champs",
         "publisher": "Centre des technologies de l'information de l'État — plateforme eCDF",
-        "url": "https://ecdf.b2g.etat.lu/ecdf/formdocs/2025/TVA_DECM/2025M1V002/TVA_DECM_FORMSTATIC_FR_2025M01_2025M1V002.pdf",
-        "consulted_on": "2026-09-15",
+        "url": "https://ecdf.b2g.etat.lu/ecdf/formdocs/2026/TVA_DECM/2026M1V002/TVA_DECM_FORMSTATIC_FR_2026M01_2026M1V002.pdf",
+        "consulted_on": "2026-09-21",
         "kind": "form"
       },
       {
