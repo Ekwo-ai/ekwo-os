@@ -2010,13 +2010,14 @@ Every link of this register was checked by its title instead.
 
 ## From the OHADA packs
 
-Senegal and Côte d'Ivoire are the first two of the seventeen States that keep
-their books on the SYSCOHADA révisé. The chart, the journals, the roles and the
-two statements are the same for all of them and live once, in
-[`packs/ohada/`](../packs/ohada/README.md); `scripts/ohada-packs.mjs` copies
-them into each member and the CI's *hygiene* job refuses a copy that has
-drifted. Every pack stays autonomous and nothing in the schema moved. What the
-two packs could not say, each a change to the core rather than to a pack:
+Senegal, Côte d'Ivoire and Burkina Faso are the first three of the seventeen
+States that keep their books on the SYSCOHADA révisé. The chart, the
+journals, the roles and the two statements are the same for all of them and
+live once, in [`packs/ohada/`](../packs/ohada/README.md);
+`scripts/ohada-packs.mjs` copies them into each member and the CI's *hygiene*
+job refuses a copy that has drifted. Every pack stays autonomous and nothing
+in the schema moved. What the three packs could not say, each a change to the
+core rather than to a pack:
 
 **A statement code is unique across every country.** `statement_templates` is
 keyed on `code` alone, where an account, a tax and a journal are keyed on their
@@ -2053,7 +2054,21 @@ which the format reserves and the core does not carry.
 **A withholding on a payment.** The Senegalese BRS (5 % of a service invoice,
 art. 200) and the Ivorian 2 % on the services of a micro-enterprise (art. 84
 bis) are withheld when the invoice is paid, not charged on it. There is no
-posting of that kind.
+posting of that kind. Burkina Faso's third pack adds a third shape of the same
+gap: art. 221 of its Code withholds 2 %, 5 % or 10 % of a payment depending on
+who is paid and for what — vacations d'enseignement and occasional manual
+work at 2 %, sums paid to public and quasi-public bodies at 5 %, occasional
+intellectual work at 10 % — always at payment, never at invoicing.
+
+**A tax the engine refuses to post.** Burkina Faso's *taxe de développement
+touristique* (art. 336 to 341) is not a percentage: 200 to 1 000 F per person
+per night by a hotel's star rating, 2 000 or 3 000 F per air ticket by
+destination — `amount_type: fixed`, a value the schema has carried since
+phase 0. `post_document()` refuses it outright: `unsupported_tax_amount_type:
+only percentage taxes can be posted` (`supabase/migrations/20260911120900_post_document.sql`).
+A `fixed` tax is accepted by the schema and by nothing that turns a document
+into an entry, so the pack carries no code for it, however precisely the six
+tariffs are written into the law.
 
 **A credit carried into the next return.** Line 5.2 of the Ivorian form is
 the credit of the month before. `settle_filing()` carries a credit to 4449 and

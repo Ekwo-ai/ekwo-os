@@ -1,0 +1,161 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "BF-TVA",
+  "name": "Déclaration de taxe sur la valeur ajoutée",
+  "period": [
+    "month"
+  ],
+  "period_default": "month",
+  "valid_from": "2017-12-20",
+  "legal_reference": "Code général des impôts, art. 334-1) — tout redevable de la TVA dépose au plus tard le 20 de chaque mois une déclaration, sur un formulaire conforme au modèle de l'administration fiscale, au titre des opérations du mois précédent, y compris une déclaration « néant » ; art. 334-3) — la TVA due sur les importations de biens immatériels ou les prestations de services rendues par des non-résidents est autoliquidée sur cette même déclaration mensuelle. Le modèle officiel de l'imprimé n'est publié dans aucune source chargée ici : les cases suivent le contenu que les articles 315 à 334 imposent de déclarer et de déduire, et non la numérotation propre de l'imprimé. Seuls les redevables réels déposent cette déclaration ; les contribuables du régime simplifié d'imposition et de la contribution des micro-entreprises sont exonérés de TVA sauf option (art. 307-1-a), et n'en déposent aucune.",
+  "source": "cgi",
+  "deadline": {
+    "rule": "day_of_month_after_period",
+    "day": 20,
+    "legal_reference": "Code général des impôts, art. 334-1) — déclaration déposée « au plus tard le 20 de chaque mois », au titre des opérations du mois précédent, y compris en l'absence d'opération imposable.",
+    "source": "cgi"
+  },
+  "boxes": [
+    {
+      "box": "CA18",
+      "kind": "base",
+      "name": "Opérations taxables au taux normal de 18 %",
+      "sequence": 10,
+      "legal_reference": "Code général des impôts, art. 334-1) — déclaration des opérations imposables du mois ; art. 317 pour le taux de 18 %",
+      "source": "cgi"
+    },
+    {
+      "box": "CA10",
+      "kind": "base",
+      "name": "Opérations taxables au taux réduit de 10 %",
+      "sequence": 20,
+      "legal_reference": "Code général des impôts, art. 334-1) ; art. 317, alinéa 2, dans la rédaction de la loi de finances pour 2025 — hébergement et restauration agréés, transports aériens nationaux",
+      "source": "lf-2025"
+    },
+    {
+      "box": "EXP",
+      "kind": "base",
+      "name": "Exportations et opérations assimilées, exonérées ouvrant droit à déduction",
+      "sequence": 30,
+      "legal_reference": "Code général des impôts, art. 334-1) ; art. 307, 2° et art. 318-1) — exportations exonérées ouvrant droit à déduction",
+      "source": "cgi"
+    },
+    {
+      "box": "EXO",
+      "kind": "base",
+      "name": "Autres opérations exonérées",
+      "sequence": 40,
+      "legal_reference": "Code général des impôts, art. 334-1) ; art. 307 et 308 pour la liste des exonérations, sans droit à déduction",
+      "source": "cgi"
+    },
+    {
+      "box": "CAT",
+      "kind": "total",
+      "name": "Montant total des opérations du mois",
+      "sequence": 50,
+      "plus": [
+        "CA18",
+        "CA10",
+        "EXP",
+        "EXO"
+      ],
+      "legal_reference": "Code général des impôts, art. 334-1) — la déclaration porte sur les opérations intervenues pendant le mois précédent",
+      "source": "cgi"
+    },
+    {
+      "box": "TVA18",
+      "kind": "tax",
+      "name": "Taxe exigible au taux de 18 %",
+      "sequence": 60,
+      "legal_reference": "Code général des impôts, art. 316 — exigibilité de la taxe ; art. 317 pour le taux",
+      "source": "cgi"
+    },
+    {
+      "box": "TVA10",
+      "kind": "tax",
+      "name": "Taxe exigible au taux de 10 %",
+      "sequence": 70,
+      "legal_reference": "Code général des impôts, art. 316 ; art. 317, alinéa 2, dans la rédaction de la loi de finances pour 2025",
+      "source": "lf-2025"
+    },
+    {
+      "box": "TVANR",
+      "kind": "tax",
+      "name": "TVA autoliquidée sur les prestations de non-résidents",
+      "sequence": 80,
+      "legal_reference": "Code général des impôts, art. 334-3) — la TVA due au titre des importations de biens immatériels ou des prestations de services rendues par des non-résidents est autoliquidée sur la déclaration mensuelle. Aucune ligne de formulaire officiel n'a été lue dans une source chargée ici : cette case transcrit le montant que l'article impose d'autoliquider",
+      "source": "cgi"
+    },
+    {
+      "box": "TVAB",
+      "kind": "total",
+      "name": "Total de la taxe exigible",
+      "sequence": 90,
+      "plus": [
+        "TVA18",
+        "TVA10",
+        "TVANR"
+      ],
+      "legal_reference": "Code général des impôts, art. 316 et 334 — taxe exigible du mois",
+      "source": "cgi"
+    },
+    {
+      "box": "DEDIMMO",
+      "kind": "tax",
+      "name": "TVA déductible sur immobilisations",
+      "sequence": 100,
+      "legal_reference": "Code général des impôts, art. 318-3) — déduction d'une fraction de la taxe ayant grevé le coût des immobilisations ; art. 326 pour la naissance du droit à déduction",
+      "source": "cgi"
+    },
+    {
+      "box": "DEDBS",
+      "kind": "tax",
+      "name": "TVA déductible sur biens et services",
+      "sequence": 110,
+      "legal_reference": "Code général des impôts, art. 318-1) et 321 — déduction de la taxe ayant grevé les biens et services concourant à des opérations taxables ; art. 326 et 327 — naissance et imputation du droit à déduction au titre du mois où il a pris naissance",
+      "source": "cgi"
+    },
+    {
+      "box": "DEDT",
+      "kind": "total",
+      "name": "Total des déductions",
+      "sequence": 120,
+      "plus": [
+        "DEDIMMO",
+        "DEDBS"
+      ],
+      "legal_reference": "Code général des impôts, art. 318 — total des déductions du mois",
+      "source": "cgi"
+    },
+    {
+      "box": "NET",
+      "kind": "total",
+      "name": "TVA nette à payer",
+      "sequence": 130,
+      "plus": [
+        "TVAB"
+      ],
+      "minus": [
+        "DEDT"
+      ],
+      "floor_zero": true,
+      "legal_reference": "Code général des impôts, art. 334-2) — les redevables acquittent la taxe auprès du service des impôts au vu de la déclaration, taxe exigible diminuée des déductions",
+      "source": "cgi"
+    },
+    {
+      "box": "CRED",
+      "kind": "total",
+      "name": "Crédit de TVA à reporter",
+      "sequence": 140,
+      "plus": [
+        "DEDT"
+      ],
+      "minus": [
+        "TVAB"
+      ],
+      "floor_zero": true,
+      "legal_reference": "Code général des impôts, art. 327 — l'excédent de déduction constitue un crédit de TVA imputable sur les déclarations ultérieures ; art. 329-2), dans la rédaction de la loi de finances pour 2025 — la demande de remboursement du crédit, quand il est remboursable (art. 328), doit intervenir dans un délai maximum de deux ans, à peine d'annulation de plein droit",
+      "source": "lf-2025"
+    }
+  ]
+}

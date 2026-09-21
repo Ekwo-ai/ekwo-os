@@ -1,0 +1,490 @@
+[
+  {
+    "code": "BF-S-18",
+    "name": "Ventes de biens 18 %",
+    "description": "Livraisons de biens, travaux immobiliers et travaux à façon au taux normal, TVA au compte 4431",
+    "rate": 18,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2017-12-20",
+    "legal_reference": "Code général des impôts, art. 317 — taux de la TVA fixé à 18 %, inchangé par la loi de finances pour 2025 (loi n° 042-2024/ALT, art. 31) ; directive n° 02/2009/CM/UEMOA, art. 29 nouveau — taux normal unique compris entre 15 % et 20 % ; art. 315, 1° et art. 316-1) — fait générateur et exigibilité à la livraison du bien ou du travail",
+    "source": "cgi",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "CA18"
+        },
+        {
+          "type": "tax",
+          "account": "4431",
+          "box": "TVA18"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "CA18",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "4431",
+          "box": "TVA18",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 10
+  },
+  {
+    "code": "BF-S-18-SRV",
+    "name": "Prestations de services 18 %",
+    "description": "Prestations de services au taux normal, exigibles à l'exécution du service, TVA au compte 4432",
+    "rate": 18,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2017-12-20",
+    "legal_reference": "Code général des impôts, art. 317 pour le taux ; art. 315, 2° — le fait générateur d'une prestation de services est l'accomplissement du service ; art. 316-2), première phrase — l'exigibilité est constituée par l'accomplissement du service, sauf pour les redevables soumis à l'impôt sur les bénéfices non commerciaux (voir BF-S-18-SRV-BNC)",
+    "source": "cgi",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "CA18"
+        },
+        {
+          "type": "tax",
+          "account": "4432",
+          "box": "TVA18"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "CA18",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "4432",
+          "box": "TVA18",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 20
+  },
+  {
+    "code": "BF-S-18-SRV-BNC",
+    "name": "Prestations de services 18 %, redevable soumis à l'impôt sur les bénéfices non commerciaux",
+    "description": "Prestations de services au taux normal par un redevable relevant du régime des bénéfices non commerciaux (professions libérales notamment) : la taxe n'est exigible qu'à l'encaissement du prix",
+    "rate": 18,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2017-12-20",
+    "cash_basis": true,
+    "cash_basis_transition_account": "4432",
+    "legal_reference": "Code général des impôts, art. 317 pour le taux ; art. 316-2), seconde phrase — « en ce qui concerne les redevables soumis à l'impôt sur les bénéfices non commerciaux, l'exigibilité intervient à l'encaissement du prix des services ». Facturée, la taxe attend l'encaissement au compte 4432 « T.V.A. facturée sur prestations de services » ; encaissée, elle rejoint le compte 4431 « sur ventes » et la case TVA18, faute de compte distinct pour une taxe de service en instance de collecte dans la liste des comptes",
+    "source": "cgi",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "CA18"
+        },
+        {
+          "type": "tax",
+          "account": "4431",
+          "box": "TVA18"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "CA18",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "4431",
+          "box": "TVA18",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 30
+  },
+  {
+    "code": "BF-S-10-HEB",
+    "name": "Hébergement et restauration agréés 10 %",
+    "description": "Prestations d'hébergement et de restauration fournies par les hôtels, les restaurants et organismes assimilés agréés",
+    "rate": 10,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2025-01-01",
+    "conditions": [
+      "supply_nature"
+    ],
+    "legal_reference": "Code général des impôts, art. 317, alinéa 2, dans la rédaction de la loi de finances pour 2025 (loi n° 042-2024/ALT du 26 décembre 2024, art. 31) — « Ce taux est réduit à 10 % pour les prestations d'hébergement et de restauration fournies par les hôtels, les restaurants et organismes assimilés agréés », en vigueur au 1er janvier 2025. Un restaurant ou un hôtel non agréé facture 18 %. Une loi antérieure (n° 31-2020/AN du 9 juillet 2020) avait déjà réduit ce taux à 10 % à compter du 1er avril 2020 pour le même champ",
+    "source": "lf-2025",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "CA10"
+        },
+        {
+          "type": "tax",
+          "account": "4432",
+          "box": "TVA10"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "CA10",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "4432",
+          "box": "TVA10",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 40
+  },
+  {
+    "code": "BF-S-10-AIR",
+    "name": "Transport aérien national 10 %",
+    "rate": 10,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2025-01-01",
+    "conditions": [
+      "supply_nature"
+    ],
+    "legal_reference": "Code général des impôts, art. 317, alinéa 2, dans la rédaction de la loi de finances pour 2025 (loi n° 042-2024/ALT du 26 décembre 2024, art. 31) — taux réduit à 10 % pour les transports aériens nationaux, en vigueur au 1er janvier 2025. Ce service ne figure pas dans la liste communautaire de l'art. 29 nouveau de la directive n° 02/2009/CM/UEMOA, qui autorise un taux réduit sur au plus dix biens ou services d'une liste fermée : écart apparent entre le choix national et le texte communautaire chargé ici, à signaler",
+    "source": "lf-2025",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "CA10"
+        },
+        {
+          "type": "tax",
+          "account": "4432",
+          "box": "TVA10"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "CA10",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "4432",
+          "box": "TVA10",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 50
+  },
+  {
+    "code": "BF-S-EXP",
+    "name": "Exportation exonérée",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2017-12-20",
+    "conditions": [
+      "transport_evidence"
+    ],
+    "legal_reference": "Code général des impôts, art. 307, 2° — exonération des exportations directes de biens matériels et immatériels, des réexportations en suite de régime douanier suspensif et des exportations de services, ainsi que des transports terrestres pour la partie réalisée à l'étranger ; art. 318-1) — ces opérations ouvrent droit à déduction dans les mêmes conditions que si elles étaient soumises à la TVA ; art. 562, 4° — la facture porte la mention « exonéré »",
+    "source": "cgi",
+    "vat_category": "G",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "EXP"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "EXP",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 60
+  },
+  {
+    "code": "BF-S-EXO",
+    "name": "Opération exonérée (art. 307)",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2017-12-20",
+    "conditions": [
+      "supply_nature"
+    ],
+    "legal_reference": "Code général des impôts, art. 307 — opérations exonérées de la TVA, numérotées 1) à 24), et art. 308 — importations et ventes de médicaments et produits pharmaceutiques d'une liste par code tarifaire ; sans droit à déduction, sauf les cas assimilés à l'exportation de l'art. 318-1) ; art. 562, 4° — la facture porte la mention « exonéré »",
+    "source": "cgi",
+    "vat_category": "E",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "EXO"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "EXO",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 70
+  },
+  {
+    "code": "BF-P-18",
+    "name": "Achats de biens 18 %",
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2017-12-20",
+    "legal_reference": "Code général des impôts, art. 318-1) — la TVA ayant grevé les éléments du prix d'une opération imposable est déductible ; art. 321 — déduction totale lorsque le bien concourt à des affaires taxables ; art. 326 — la TVA doit être mentionnée distinctement sur la facture ; art. 317 pour le taux",
+    "source": "cgi",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "4452",
+          "box": "DEDBS"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "4452",
+          "box": "DEDBS",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 110
+  },
+  {
+    "code": "BF-P-18-SRV",
+    "name": "Services extérieurs 18 %",
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2017-12-20",
+    "legal_reference": "Code général des impôts, art. 318-1) et 321 — déduction de la taxe supportée sur les services acquis pour la réalisation d'affaires taxables ; art. 326 — la taxe doit être mentionnée distinctement sur la facture ; art. 317 pour le taux",
+    "source": "cgi",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "4454",
+          "box": "DEDBS"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "4454",
+          "box": "DEDBS",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 120
+  },
+  {
+    "code": "BF-P-18-IMMO",
+    "name": "Immobilisations 18 %",
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2017-12-20",
+    "legal_reference": "Code général des impôts, art. 318-3) — déduction d'une fraction de la taxe ayant grevé le coût des immobilisations ; art. 325 — régularisation lorsque le pourcentage de déduction varie de plus de 10 points ; art. 326 pour le droit à déduction",
+    "source": "cgi",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "4451",
+          "box": "DEDIMMO"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "4451",
+          "box": "DEDIMMO",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 130
+  },
+  {
+    "code": "BF-P-10-ND",
+    "name": "Logement et hébergement 10 %, non déductible (art. 319)",
+    "description": "Dépenses de logement ou d'hébergement facturées par un établissement hôtelier agréé, exclues du droit à déduction",
+    "rate": 10,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2025-01-01",
+    "recoverable": false,
+    "legal_reference": "Code général des impôts, art. 319, 2) — exclusion du droit à déduction des dépenses de logement ou d'hébergement, à l'exception de celles profitant au personnel chargé de la surveillance ou de la sécurité des unités industrielles ou des chantiers. La taxe est une part du coût de ce qui a été acheté",
+    "source": "cgi",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax_on_base",
+          "factor": 100
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax_on_base",
+          "factor": 100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 140
+  },
+  {
+    "code": "BF-P-18-ND",
+    "name": "Achat 18 % non déductible (art. 319)",
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2017-12-20",
+    "recoverable": false,
+    "legal_reference": "Code général des impôts, art. 319 — exclusions du droit à déduction, notamment 1) les véhicules de tourisme ou à usage mixte de 3 à 9 places assises hors exceptions (revente, location professionnelle, transport public, auto-école), 3) les dépenses de réception, de restaurant, de spectacles et de déplacement, hors dépenses de transport du personnel sous contrat permanent, 4) les objets mobiliers de décoration hors mobilier commercial, industriel ou de bureau, 5) les biens cédés et services rendus à titre gratuit ou à prix très inférieur (cadeaux de plus de 10 000 F hors taxe), 6) le super carburant, le gas-oil et le biocarburant, dans la rédaction de la loi de finances pour 2025 (art. 32). La taxe est une part du coût de ce qui a été acheté",
+    "source": "cgi",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax_on_base",
+          "factor": 100
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax_on_base",
+          "factor": 100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 150
+  },
+  {
+    "code": "BF-P-IMP-18",
+    "name": "Importation 18 % (TVA acquittée en douane)",
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2017-12-20",
+    "legal_reference": "Code général des impôts, art. 315, 3° et art. 316-4) — le fait générateur et l'exigibilité d'une importation sont constitués par la mise à la consommation de la marchandise au sens douanier ; art. 326 — pour être déductible, la taxe doit avoir été acquittée et figurer sur la déclaration de mise à la consommation",
+    "source": "cgi",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "4452",
+          "box": "DEDBS"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "4452",
+          "box": "DEDBS",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 160
+  },
+  {
+    "code": "BF-P-NR-18",
+    "name": "Prestations de services rendues par un non-résident 18 %, TVA autoliquidée",
+    "description": "Importations de biens immatériels ou prestations de services rendues par un prestataire non établi au Burkina Faso : la taxe est autoliquidée sur la déclaration mensuelle de l'acquéreur, sans déclaration séparée",
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2017-12-20",
+    "legal_reference": "Code général des impôts, art. 315, 4° — le fait générateur d'une importation de bien immatériel ou d'une prestation de services rendue par un non-résident est l'émission de la facture ou la comptabilisation de l'opération ; art. 316-4), second alinéa — l'exigibilité intervient à l'émission de la facture ; art. 334-3) — « la TVA est autoliquidée sur la déclaration mensuelle », sans formulaire distinct ; art. 318-1) et 321 pour le droit à déduction, dont aucune exclusion de l'art. 319 ne restreint cette opération. La taxe collectée pour compte propre attend son solde au compte 4478, immédiatement récupérable dans la même déclaration",
+    "source": "cgi",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "4454",
+          "box": "DEDBS"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "4478",
+          "box": "TVANR"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "4454",
+          "box": "DEDBS",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "4478",
+          "box": "TVANR",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 170
+  }
+]

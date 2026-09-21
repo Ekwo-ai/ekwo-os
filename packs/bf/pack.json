@@ -1,0 +1,198 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "BF",
+  "name": "Burkina Faso",
+  "version": "0.1.0",
+  "schema_min": "20260917170000",
+  "seed_sequence": 23,
+  "released_at": "2026-09-21",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "audcif",
+        "title": "Acte uniforme relatif au droit comptable et à l'information financière (AUDCIF), adopté à Brazzaville le 26 janvier 2017",
+        "publisher": "OHADA — Bibliothèque numérique de l'OHADA",
+        "url": "https://biblio.ohada.org/doc_num.php?explnum_id=2061",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "syscohada",
+        "title": "Journal officiel de l'OHADA, numéro spécial du 15 février 2017 — Acte uniforme relatif au droit comptable et à l'information financière et Système comptable OHADA (SYSCOHADA révisé), version complète signée",
+        "publisher": "OHADA — Bibliothèque numérique de l'OHADA",
+        "url": "https://biblio.ohada.org/doc_num.php?explnum_id=2063",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "cgi",
+        "title": "Loi n° 058-2017/AN du 20 décembre 2017 portant Code général des impôts du Burkina Faso",
+        "publisher": "Direction générale des Impôts (DGI) du Burkina Faso",
+        "url": "https://dgi.bf/wp-content/uploads/2023/10/LOI-PORTANT-CODE-GENERAL-DES-IMPOTS-FINAL.pdf",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "lf-2025",
+        "title": "Loi n° 042-2024/ALT du 26 décembre 2024 portant loi de finances pour l'exécution du budget de l'État, exercice 2025",
+        "publisher": "Assemblée législative de transition du Burkina Faso",
+        "url": "https://www.assembleenationale.bf/storage/Loi/FU4cnAqfHyREj0BsvgaPYtIa7qTRtT8piMrO4EIN.pdf",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "instruction-facture-normalisee",
+        "title": "Instruction administrative n° 2020-.../MINEFID/SG/DGI/DLC du 7 octobre 2020 relative à la facture normalisée",
+        "publisher": "Direction générale des Impôts (DGI) du Burkina Faso",
+        "url": "https://dgi.bf/wp-content/uploads/2023/10/INSTRUCTION-ADMINISTRATIVE-PORTANT-SUR-LA-FACTURE-NORMALISEE.pdf",
+        "consulted_on": "2026-09-21",
+        "kind": "regulation"
+      },
+      {
+        "key": "directive-uemoa-tva",
+        "title": "Directive n° 02/2009/CM/UEMOA du 27 mars 2009 portant modification de la directive n° 02/98/CM/UEMOA du 22 décembre 1998 portant harmonisation des législations des États membres en matière de taxe sur la valeur ajoutée",
+        "publisher": "Conseil des ministres de l'UEMOA — texte publié par l'AIFO-UEMOA",
+        "url": "https://www.aifo-uemoa.bj/assets/documents/directives-uemoa/directive_02_2009_CM_UEMOA.pdf",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "esintax",
+        "title": "eSINTAX — Portail officiel de télédéclaration et de télépaiement des impôts et taxes",
+        "publisher": "Direction générale des Impôts (DGI) du Burkina Faso",
+        "url": "https://esintax.bf/",
+        "consulted_on": "2026-09-21",
+        "kind": "portal"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "XOF",
+    "language": "fr",
+    "rounding_method": "half_up",
+    "closing_style": "result_accounts",
+    "roles": {
+      "receivable": "4111",
+      "payable": "4011",
+      "suspense": "4711",
+      "rounding": "6588",
+      "retained_earnings": "121",
+      "retained_earnings_loss": "1291",
+      "current_year_result_profit": "131",
+      "current_year_result_loss": "139",
+      "sales": "7011",
+      "purchase": "6011",
+      "bank": "5211",
+      "cash": "5711",
+      "fx_gain": "756",
+      "fx_loss": "656",
+      "tax_payable": "4441",
+      "tax_receivable": "4449"
+    },
+    "journal_roles": {
+      "sales": "VT",
+      "purchase": "AC",
+      "miscellaneous": "OD",
+      "opening": "AN"
+    },
+    "fiscal_year_default": "calendar"
+  },
+  "languages": [],
+  "journals": [
+    {
+      "code": "VT",
+      "type": "sales",
+      "name": "Journal des ventes",
+      "sequence": 10
+    },
+    {
+      "code": "AC",
+      "type": "purchase",
+      "name": "Journal des achats",
+      "sequence": 20
+    },
+    {
+      "code": "BQ",
+      "type": "bank",
+      "name": "Journal de banque",
+      "sequence": 30
+    },
+    {
+      "code": "CA",
+      "type": "cash",
+      "name": "Journal de caisse",
+      "sequence": 40
+    },
+    {
+      "code": "OD",
+      "type": "general",
+      "name": "Opérations diverses",
+      "sequence": 50
+    },
+    {
+      "code": "AN",
+      "type": "opening",
+      "name": "Journal des à-nouveaux",
+      "sequence": 60
+    }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "SYSCOHADA révisé — plan comptable général OHADA, Système normal",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": [
+        "BF-SYSCOHADA-BS",
+        "BF-SYSCOHADA-IS"
+      ],
+      "legal_reference": "Acte uniforme relatif au droit comptable et à l'information financière du 26 janvier 2017, art. 17, 7° — recours à un plan de comptes normalisé dont la liste figure dans le Système comptable OHADA ; Système comptable OHADA, Titre VII, chapitre 2, section 3 — liste des comptes, classes 1 à 8. La classe 9, engagements hors bilan et comptabilité analytique de gestion, est d'application facultative et n'est pas reprise. Commun aux dix-sept États parties : un seul fichier, packs/ohada/accounts.csv, recopié dans chaque pack par scripts/ohada-packs.mjs.",
+      "source": "syscohada"
+    }
+  ],
+  "documents": {
+    "numbering": "gapless_per_year",
+    "number_format": "{CODE}/{YYYY}/{NNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "invoice_if_issued",
+    "references": {
+      "numbering": {
+        "legal_reference": "Code général des impôts, art. 562, 1° — la facture porte « le numéro de facture d'une série ininterrompue ». Le texte impose l'unicité et la continuité de la série, jamais une forme ni une remise à zéro annuelle, que le format proposé ici permet sans l'exiger.",
+        "source": "cgi"
+      },
+      "tax_point": {
+        "legal_reference": "Code général des impôts, art. 315, 1° — le fait générateur d'une livraison de biens, de travaux immobiliers ou à façon est la livraison du bien ou du travail ; art. 316-1) — l'exigibilité est constituée au moment de la livraison, sauf émission d'une facture avant la livraison, qui rend la taxe exigible dès son émission. invoice_if_issued dit ce principe et sa dérogation. Pour une prestation de services, le fait générateur et l'exigibilité sont l'accomplissement du service (art. 315-2°, art. 316-2, première phrase) et non la livraison : ce n'est pas ce que le mot du pack désigne, mais aucune taxe de ce pack n'est en cash_basis pour ce cas général, ce qui revient au même résultat qu'une exigibilité à l'exécution. L'exception des redevables imposés à l'impôt sur les bénéfices non commerciaux (BNC), exigible à l'encaissement (art. 316-2, seconde phrase), est portée par une taxe de service distincte marquée cash_basis.",
+        "source": "cgi"
+      }
+    },
+    "mentions": [
+      {
+        "code": "exempt",
+        "applies_when": "exempt",
+        "text": "Opération exonérée de la taxe sur la valeur ajoutée — article 307 du Code général des impôts.",
+        "sequence": 10,
+        "legal_reference": "Code général des impôts, art. 562, 4° — pour un assujetti, la facture porte le taux et le montant de la taxe due ou, le cas échéant, la mention « exonéré » ; art. 307 pour la liste des opérations exonérées",
+        "source": "cgi"
+      },
+      {
+        "code": "export",
+        "applies_when": "export",
+        "text": "Exportation exonérée de la taxe sur la valeur ajoutée — article 307, 2° du Code général des impôts.",
+        "sequence": 20,
+        "legal_reference": "Code général des impôts, art. 562, 4° et art. 307, 2° — exportations directes de biens matériels et immatériels, réexportations et exportations de services",
+        "source": "cgi"
+      }
+    ]
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "Code général des impôts, art. 564, tel que modifié par la loi de finances pour 2025 (loi n° 042-2024/ALT, art. 44) — pour compter du 1er janvier 2025, les contribuables de la Direction des grandes entreprises et des directions des moyennes entreprises délivrent exclusivement une facture électronique certifiée (FEC), éditée par un système électronique certifié de facturation (SECeF) homologué par l'administration fiscale, avec numéro d'identification du SECeF, code d'authentification de la transaction et code QR ; les conditions d'émission et de commercialisation des SECeF sont fixées par arrêté du ministre chargé des finances. Aucun arrêté d'application, aucun format technique et aucune spécification d'API n'ont été lus dans une source officielle chargée ici : le profil et la date d'obligation restent vides. L'identifiant fiscal est l'IFU (identifiant financier unique), qui n'a pas de code ISO 6523.",
+    "source": "lf-2025"
+  }
+}

@@ -1,0 +1,366 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "Une année d'un négoce-hôtelier-voyagiste burkinabè au régime réel, déclarant chaque mois",
+  "chart": "default",
+  "fiscal_year": {
+    "name": "Exercice 2026",
+    "start": "2026-01-01",
+    "end": "2026-12-31"
+  },
+  "periods": [
+    {
+      "code": "2026-01",
+      "from": "2026-01-01",
+      "to": "2026-01-31"
+    },
+    {
+      "code": "2026-02",
+      "from": "2026-02-01",
+      "to": "2026-02-28"
+    },
+    {
+      "code": "2026-03",
+      "from": "2026-03-01",
+      "to": "2026-03-31"
+    },
+    {
+      "code": "2026-04",
+      "from": "2026-04-01",
+      "to": "2026-04-30"
+    }
+  ],
+  "statements": [
+    "BF-SYSCOHADA-BS",
+    "BF-SYSCOHADA-IS"
+  ],
+  "contacts": [
+    {
+      "ref": "client-negoce",
+      "name": "Comptoir du Faso SARL",
+      "type": "customer",
+      "country": "BF"
+    },
+    {
+      "ref": "client-voyage",
+      "name": "Sahel Voyages SA",
+      "type": "customer",
+      "country": "BF"
+    },
+    {
+      "ref": "client-conseil",
+      "name": "Industries de Bobo SA",
+      "type": "customer",
+      "country": "BF"
+    },
+    {
+      "ref": "client-minoterie",
+      "name": "Minoterie du Sahel SA",
+      "type": "customer",
+      "country": "BF"
+    },
+    {
+      "ref": "client-fr",
+      "name": "Maison Atlantique SAS",
+      "type": "customer",
+      "country": "FR"
+    },
+    {
+      "ref": "fourn-bf",
+      "name": "Grossiste de Bobo-Dioulasso SARL",
+      "type": "supplier",
+      "country": "BF"
+    },
+    {
+      "ref": "fourn-maint",
+      "name": "Froid Service Ouaga SARL",
+      "type": "supplier",
+      "country": "BF"
+    },
+    {
+      "ref": "fourn-auto",
+      "name": "Automobiles du Kadiogo SA",
+      "type": "supplier",
+      "country": "BF"
+    },
+    {
+      "ref": "fourn-hotel",
+      "name": "Hôtel Silmandé SA",
+      "type": "supplier",
+      "country": "BF"
+    },
+    {
+      "ref": "fourn-fr",
+      "name": "Cabinet Rive Gauche Conseil SAS",
+      "type": "supplier",
+      "country": "FR"
+    }
+  ],
+  "documents": [
+    {
+      "ref": "V1",
+      "type": "sale_invoice",
+      "contact": "client-negoce",
+      "date": "2026-01-12",
+      "why": "Une vente de marchandises au taux normal : la case CA18, la taxe au compte 4431 et dans la case TVA18.",
+      "lines": [
+        {
+          "name": "Marchandises",
+          "quantity": 20,
+          "unit_price": 50000,
+          "tax": "BF-S-18",
+          "account": "7011"
+        }
+      ]
+    },
+    {
+      "ref": "V2",
+      "type": "sale_invoice",
+      "contact": "client-voyage",
+      "date": "2026-01-20",
+      "why": "Des nuitées d'un établissement hôtelier agréé au taux réduit de 10 % : la case CA10, la taxe au compte 4432 et dans la case TVA10.",
+      "lines": [
+        {
+          "name": "Nuitées en chambre double",
+          "quantity": 15,
+          "unit_price": 40000,
+          "tax": "BF-S-10-HEB",
+          "account": "7061"
+        }
+      ]
+    },
+    {
+      "ref": "V3",
+      "type": "sale_invoice",
+      "contact": "client-voyage",
+      "date": "2026-01-25",
+      "why": "Des billets de transport aérien national au taux réduit de 10 %, le second cas du taux de 10 % introduit par la loi de finances pour 2025.",
+      "lines": [
+        {
+          "name": "Billets d'avion, vols intérieurs",
+          "quantity": 3,
+          "unit_price": 150000,
+          "tax": "BF-S-10-AIR",
+          "account": "7061"
+        }
+      ]
+    },
+    {
+      "ref": "V4",
+      "type": "sale_invoice",
+      "contact": "client-negoce",
+      "date": "2026-02-05",
+      "why": "Une prestation de services au taux normal, exigible dès l'exécution du service (cas général de l'article 316-2, première phrase) : la taxe au compte 4432, dans le mois de la facture.",
+      "lines": [
+        {
+          "name": "Installation d'équipements de froid",
+          "quantity": 1,
+          "unit_price": 350000,
+          "tax": "BF-S-18-SRV",
+          "account": "7061"
+        }
+      ]
+    },
+    {
+      "ref": "V5",
+      "type": "sale_invoice",
+      "contact": "client-conseil",
+      "date": "2026-02-10",
+      "why": "Une prestation facturée par un redevable soumis à l'impôt sur les bénéfices non commerciaux : la taxe n'est exigible qu'à l'encaissement (article 316-2, seconde phrase), encaissé en mars — la déclaration de février ne porte rien de cette facture, celle de mars la porte en entier.",
+      "lines": [
+        {
+          "name": "Mission de conseil en organisation",
+          "quantity": 1,
+          "unit_price": 1200000,
+          "tax": "BF-S-18-SRV-BNC",
+          "account": "7061"
+        }
+      ]
+    },
+    {
+      "ref": "V6",
+      "type": "sale_invoice",
+      "contact": "client-fr",
+      "date": "2026-02-18",
+      "why": "Une exportation exonérée ouvrant droit à déduction : la case EXP, aucune taxe, un compte de ventes hors Région.",
+      "lines": [
+        {
+          "name": "Marchandises exportées",
+          "quantity": 25,
+          "unit_price": 60000,
+          "tax": "BF-S-EXP",
+          "account": "7012"
+        }
+      ]
+    },
+    {
+      "ref": "V7",
+      "type": "sale_invoice",
+      "contact": "client-minoterie",
+      "date": "2026-03-10",
+      "why": "Une vente de produits agricoles non transformés par le producteur, exonérée par l'article 307, 1) b) : la case EXO, aucune taxe.",
+      "lines": [
+        {
+          "name": "Céréales non transformées",
+          "quantity": 200,
+          "unit_price": 3000,
+          "tax": "BF-S-EXO",
+          "account": "7011"
+        }
+      ]
+    },
+    {
+      "ref": "AV1",
+      "type": "sale_credit_note",
+      "contact": "client-negoce",
+      "date": "2026-03-16",
+      "why": "Un avoir sur la vente V1 : la case CA18 et la taxe diminuent dans le mois de l'avoir.",
+      "lines": [
+        {
+          "name": "Retour de marchandises",
+          "quantity": 5,
+          "unit_price": 50000,
+          "tax": "BF-S-18",
+          "account": "7011"
+        }
+      ]
+    },
+    {
+      "ref": "A1",
+      "type": "purchase_invoice",
+      "contact": "fourn-bf",
+      "date": "2026-01-08",
+      "why": "Un achat de marchandises au taux normal : la taxe récupérable au compte 4452 et dans la case DEDBS.",
+      "lines": [
+        {
+          "name": "Marchandises",
+          "quantity": 30,
+          "unit_price": 25000,
+          "tax": "BF-P-18",
+          "account": "6011"
+        }
+      ]
+    },
+    {
+      "ref": "A2",
+      "type": "purchase_invoice",
+      "contact": "fourn-maint",
+      "date": "2026-02-10",
+      "why": "Un entretien facturé au taux normal : la taxe récupérable sur services extérieurs au compte 4454.",
+      "lines": [
+        {
+          "name": "Entretien des chambres froides",
+          "quantity": 1,
+          "unit_price": 180000,
+          "tax": "BF-P-18-SRV",
+          "account": "6248"
+        }
+      ]
+    },
+    {
+      "ref": "A3",
+      "type": "purchase_invoice",
+      "contact": "fourn-bf",
+      "date": "2026-04-02",
+      "why": "Du matériel de bureau immobilisé : la taxe au compte 4451 et dans la case DEDIMMO.",
+      "lines": [
+        {
+          "name": "Ordinateurs",
+          "quantity": 3,
+          "unit_price": 400000,
+          "tax": "BF-P-18-IMMO",
+          "account": "2441"
+        }
+      ]
+    },
+    {
+      "ref": "A4",
+      "type": "purchase_invoice",
+      "contact": "fourn-auto",
+      "date": "2026-03-05",
+      "why": "Une voiture de tourisme de moins de dix places, exclue du droit à déduction par l'article 319, 1) : la taxe s'ajoute au coût de l'immobilisation et n'atteint aucune case.",
+      "lines": [
+        {
+          "name": "Voiture de tourisme",
+          "quantity": 1,
+          "unit_price": 8500000,
+          "tax": "BF-P-18-ND",
+          "account": "2451"
+        }
+      ]
+    },
+    {
+      "ref": "A5",
+      "type": "purchase_invoice",
+      "contact": "fourn-hotel",
+      "date": "2026-02-20",
+      "why": "Des nuitées d'hôtel pour un déplacement professionnel, exclues du droit à déduction par l'article 319, 2) hors exception du personnel de surveillance : la taxe au taux réduit s'ajoute au coût du voyage et n'atteint aucune case.",
+      "lines": [
+        {
+          "name": "Nuitées, déplacement professionnel",
+          "quantity": 4,
+          "unit_price": 45000,
+          "tax": "BF-P-10-ND",
+          "account": "6181"
+        }
+      ]
+    },
+    {
+      "ref": "A6",
+      "type": "purchase_invoice",
+      "contact": "fourn-fr",
+      "date": "2026-04-14",
+      "why": "Un conseil d'un cabinet non établi au Burkina Faso : la TVA autoliquidée sur la déclaration mensuelle (article 334-3), déductible en totalité faute d'exclusion de l'article 319 pour ce cas — la case TVANR et la case DEDBS portent le même montant.",
+      "lines": [
+        {
+          "name": "Mission de conseil en organisation",
+          "quantity": 1,
+          "unit_price": 2000000,
+          "tax": "BF-P-NR-18",
+          "account": "6324"
+        }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "E1",
+      "direction": "inbound",
+      "date": "2026-02-15",
+      "amount": 660000,
+      "contact": "client-voyage",
+      "journal": "BQ",
+      "match": "V2",
+      "why": "Un encaissement qui solde exactement la facture de nuitées."
+    },
+    {
+      "ref": "E2",
+      "direction": "inbound",
+      "date": "2026-03-05",
+      "amount": 1416000,
+      "contact": "client-conseil",
+      "journal": "BQ",
+      "match": "V5",
+      "why": "L'encaissement qui rend la TVA de la mission de conseil BNC exigible, en mars et non en février."
+    },
+    {
+      "ref": "E3",
+      "direction": "outbound",
+      "date": "2026-02-08",
+      "amount": 885000,
+      "contact": "fourn-bf",
+      "journal": "BQ",
+      "match": "A1",
+      "why": "Un paiement qui solde la facture d'achat de marchandises."
+    },
+    {
+      "ref": "E4",
+      "direction": "inbound",
+      "date": "2026-03-20",
+      "amount": 300000,
+      "contact": "client-negoce",
+      "journal": "BQ",
+      "match": null,
+      "why": "Un acompte non affecté : il reste une ligne ouverte au compte client."
+    }
+  ]
+}
