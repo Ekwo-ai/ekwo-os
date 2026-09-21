@@ -99,6 +99,7 @@ describe('preferred_languages', () => {
     const withPreference = await asUser(db, ownerId, () =>
       one<{ chain: string[] }>(db, `select preferred_languages($1) as chain`, [companyId]),
     );
+    // country-literal: 'nl' is a language code here, the preference under test, and not the Dutch pack
     expect(withPreference.chain[0]).toBe('nl');
     expect(withPreference.chain).toContain(company.language);
   });
@@ -107,6 +108,7 @@ describe('preferred_languages', () => {
     const chain = await asUser(db, ownerId, () =>
       one<{ chain: string[] }>(db, `select preferred_languages() as chain`),
     );
+    // country-literal: 'nl' is a language code here, the preference under test, and not the Dutch pack
     expect(chain.chain).toEqual(['nl']);
   });
 });
@@ -122,6 +124,7 @@ describe('a preference', () => {
         `select language, timezone, theme from set_preferences($1::jsonb)`,
         [JSON.stringify({ theme: 'light' })],
       );
+      // country-literal: 'nl' is a language code here, the preference under test, and not the Dutch pack
       expect(after).toEqual({ language: 'nl', timezone: 'Europe/Brussels', theme: 'light' });
     });
   });

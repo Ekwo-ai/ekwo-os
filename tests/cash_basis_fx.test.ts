@@ -825,8 +825,10 @@ describe('what `ekwo pack check` refuses about a tax that waits', () => {
     // `readPack` runs the rules and throws on the first issue, so reading every
     // pack is the assertion. What is read back is what cash-basis VAT added.
     for (const pack of allPacks) {
-      expect(roleOf(pack, 'fx_gain'), pack.slug).toMatch(/^\d+$/);
-      expect(roleOf(pack, 'fx_loss'), pack.slug).toMatch(/^\d+$/);
+      // An account code, and not always a number: a chart keyed on reference
+      // codes names its accounts with letters.
+      expect(roleOf(pack, 'fx_gain'), pack.slug).toMatch(/^\S+$/);
+      expect(roleOf(pack, 'fx_loss'), pack.slug).toMatch(/^\S+$/);
       // A tax that waits names the account it waits on; one that does not, does not.
       for (const tax of pack.taxes) {
         expect(tax.cash_basis_transition_account !== null, `${pack.slug} ${tax.code}`).toBe(

@@ -124,16 +124,19 @@ describe('invitations through the server', () => {
 describe('preferences through the server', () => {
   it('saves what the caller named, and resolves the language chain', async () => {
     const saved = record(await writeTools.setPreferences(asOwner, { language: 'nl' }));
+    // country-literal: 'nl' is a language code here, the preference under test, and not the Dutch pack
     expect(record(saved['preferences'])['language']).toBe('nl');
 
     const read = record(await readTools.getPreferences(asOwner, { company_id: fx.companyId }));
     const languages = read['languages'] as string[];
+    // country-literal: 'nl' is a language code here, the preference under test, and not the Dutch pack
     expect(languages[0]).toBe('nl');
     expect(languages.length).toBeGreaterThan(1);
 
     // Clearing puts the question back to the company and to the pack.
     await writeTools.setPreferences(asOwner, { language: null });
     const after = record(await readTools.getPreferences(asOwner, { company_id: fx.companyId }));
+    // country-literal: 'nl' is a language code here, the preference under test, and not the Dutch pack
     expect((after['languages'] as string[])[0]).not.toBe('nl');
   });
 

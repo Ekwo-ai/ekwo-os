@@ -1,0 +1,409 @@
+code,parent,type,reconcilable,name,sequence
+BIva,,asset_fixed,false,Immateriële vaste activa,10
+BIvaKou,BIva,asset_fixed,false,Kosten van oprichting en van uitgifte van aandelen,20
+BIvaKouVvp,BIvaKou,asset_fixed,false,Verkrijgings- of vervaardigingsprijs kosten van oprichting en van uitgifte van aandelen,30
+BIvaKouCae,BIvaKou,asset_fixed,false,Cumulatieve afschrijvingen en waardeverminderingen kosten van oprichting en van uitgifte van aandelen,40
+BIvaKoo,BIva,asset_fixed,false,Kosten van ontwikkeling,50
+BIvaKooVvp,BIvaKoo,asset_fixed,false,Verkrijgings- of vervaardigingsprijs kosten van ontwikkeling,60
+BIvaKooCae,BIvaKoo,asset_fixed,false,Cumulatieve afschrijvingen en waardeverminderingen kosten van ontwikkeling,70
+BIvaCev,BIva,asset_fixed,false,"Concessies, vergunningen en intellectuele eigendom",80
+BIvaCevVvp,BIvaCev,asset_fixed,false,"Verkrijgings- of vervaardigingsprijs concessies, vergunningen en intellectuele eigendom",90
+BIvaCevCae,BIvaCev,asset_fixed,false,"Cumulatieve afschrijvingen en waardeverminderingen concessies, vergunningen en intellectuele eigendom",100
+BIvaGoo,BIva,asset_fixed,false,Goodwill,110
+BIvaGooVvp,BIvaGoo,asset_fixed,false,Verkrijgings- of vervaardigingsprijs goodwill,120
+BIvaGooCae,BIvaGoo,asset_fixed,false,Cumulatieve afschrijvingen en waardeverminderingen goodwill,130
+BMva,,asset_fixed,false,Materiële vaste activa,140
+BMvaTer,BMva,asset_fixed,false,Terreinen,150
+BMvaTerVvp,BMvaTer,asset_fixed,false,Verkrijgings- of vervaardigingsprijs terreinen,160
+BMvaBeg,BMva,asset_fixed,false,Bedrijfsgebouwen,170
+BMvaBegVvp,BMvaBeg,asset_fixed,false,Verkrijgings- of vervaardigingsprijs bedrijfsgebouwen,180
+BMvaBegCae,BMvaBeg,asset_fixed,false,Cumulatieve afschrijvingen en waardeverminderingen bedrijfsgebouwen,190
+BMvaVer,BMva,asset_fixed,false,Verbouwingen,200
+BMvaVerVvp,BMvaVer,asset_fixed,false,Verkrijgings- of vervaardigingsprijs verbouwingen,210
+BMvaVerCae,BMvaVer,asset_fixed,false,Cumulatieve afschrijvingen en waardeverminderingen verbouwingen,220
+BMvaMei,BMva,asset_fixed,false,Machines en installaties,230
+BMvaMeiVvp,BMvaMei,asset_fixed,false,Verkrijgings- of vervaardigingsprijs machines en installaties,240
+BMvaMeiCae,BMvaMei,asset_fixed,false,Cumulatieve afschrijvingen en waardeverminderingen machines en installaties,250
+BMvaObe,BMva,asset_fixed,false,Andere vaste bedrijfsmiddelen,260
+BMvaObeVvp,BMvaObe,asset_fixed,false,Verkrijgings- of vervaardigingsprijs andere vaste bedrijfsmiddelen,270
+BMvaObeCae,BMvaObe,asset_fixed,false,Cumulatieve afschrijvingen en waardeverminderingen andere vaste bedrijfsmiddelen,280
+BMvaBei,BMva,asset_fixed,false,Inventaris,290
+BMvaBeiVvp,BMvaBei,asset_fixed,false,Verkrijgings- of vervaardigingsprijs inventaris,300
+BMvaBeiCae,BMvaBei,asset_fixed,false,Cumulatieve afschrijvingen en waardeverminderingen inventaris,310
+BMvaTev,BMva,asset_fixed,false,Automobielen en overige transportmiddelen,320
+BMvaTevVvp,BMvaTev,asset_fixed,false,Verkrijgings- of vervaardigingsprijs automobielen en overige transportmiddelen,330
+BMvaTevCae,BMvaTev,asset_fixed,false,Cumulatieve afschrijvingen en waardeverminderingen automobielen en overige transportmiddelen,340
+BMvaVbi,BMva,asset_fixed,false,Vaste bedrijfsmiddelen in uitvoering,350
+BMvaVbiVvp,BMvaVbi,asset_fixed,false,Verkrijgings- of vervaardigingsprijs vaste bedrijfsmiddelen in uitvoering,360
+BFva,,asset_non_current,false,Financiële vaste activa,370
+BFvaDig,BFva,asset_non_current,false,Deelnemingen in groepsmaatschappijen,380
+BFvaDigNev,BFvaDig,asset_non_current,false,Verkrijgingsprijs deelnemingen in groepsmaatschappijen,390
+BFvaVog,BFva,asset_non_current,false,Vorderingen op groepsmaatschappijen,400
+BFvaVogVgl,BFvaVog,asset_non_current,false,Verkrijgingsprijs vorderingen op groepsmaatschappijen,410
+BFvaAnd,BFva,asset_non_current,false,Overige deelnemingen,420
+BFvaAndKpr,BFvaAnd,asset_non_current,false,Verkrijgingsprijs overige deelnemingen,430
+BFvaOvr,BFva,asset_non_current,false,Overige vorderingen,440
+BFvaOvrWaa,BFvaOvr,asset_non_current,false,Hoofdsom waarborgsommen (langlopend),450
+BFvaOvrOvl,BFvaOvr,asset_non_current,false,Hoofdsom overige financiële vaste activa (langlopend),460
+BFvaLbv,BFva,asset_non_current,false,Latente belastingvorderingen,470
+BFvaLbvBll,BFvaLbv,asset_non_current,false,Compensabele verliezen,480
+BFvaLen,BFva,asset_non_current,false,Leningen u/g (langlopend),490
+BFvaLenLen,BFvaLen,asset_non_current,false,Leningen u/g (langlopend),500
+BVrd,,asset_current,false,Voorraden,510
+BVrdGeh,BVrd,asset_current,false,Voorraad grond- en hulpstoffen,520
+BVrdGehVoo,BVrdGeh,asset_current,false,"Voorraad grond- en hulpstoffen, bruto",530
+BVrdOwe,BVrd,asset_current,false,Onderhanden werk,540
+BVrdOweVoo,BVrdOwe,asset_current,false,"Onderhanden werk, bruto",550
+BVrdGep,BVrd,asset_current,false,Gereed product,560
+BVrdGepVoo,BVrdGep,asset_current,false,"Gereed product, bruto",570
+BVrdHan,BVrd,asset_current,false,Handelsgoederen,580
+BVrdHanVoo,BVrdHan,asset_current,false,"Handelsgoederen, bruto",590
+BVrdHanVic,BVrdHan,asset_current,false,"Handelsgoederen, voorziening incourante handelsgoederen",600
+BVrdVrv,BVrd,asset_current,false,Vooruitbetalingen op voorraden,610
+BVrdVrvVoo,BVrdVrv,asset_current,false,"Voorraad vooruitbetaald op voorraden, bruto",620
+BVor,,asset_current,false,Vorderingen,630
+BVorDeb,BVor,asset_current,false,Vorderingen op handelsdebiteuren,640
+BVorDebHad,BVorDeb,asset_receivable,true,Handelsdebiteuren nominaal,650
+BVorDebVdd,BVorDeb,asset_current,false,Voorziening voor oninbaarheid op vorderingen op handelsdebiteuren,660
+BVorVog,BVor,asset_current,false,Vorderingen op groepsmaatschappijen (kortlopend),670
+BVorVogVr1,BVorVog,asset_current,false,Rekening-courant groepsmaatschappij 1,680
+BVorVbk,BVor,asset_current,false,Vorderingen uit hoofde van belastingen,690
+BVorVbkTvo,BVorVbk,asset_current,true,Terug te vorderen Omzetbelasting,700
+BVorVbkTvv,BVorVbk,asset_current,false,Terug te vorderen Vennootschapsbelasting,710
+BVorVbkTtb,BVorVbk,asset_current,false,Terug te vorderen overige belastingen,720
+BVorOvr,BVor,asset_current,false,Overige vorderingen,730
+BVorOvrRcb,BVorOvr,asset_current,false,Rekening-courant bestuurders,740
+BVorOvrRca,BVorOvr,asset_current,false,Rekening-courant aandeelhouders,750
+BVorOvrWbs,BVorOvr,asset_current,false,Waarborgsommen,760
+BVorOvrVrb,BVorOvr,asset_current,false,Vooruitbetalingen,770
+BVorOvrOvk,BVorOvr,asset_current,false,Overige vorderingen,780
+BVorOva,BVor,asset_prepayments,false,Overlopende activa,790
+BVorOvaVof,BVorOva,asset_prepayments,false,Vooruitbetaalde facturen,800
+BVorOvaNtf,BVorOva,asset_prepayments,false,Nog te factureren of nog te verzenden facturen,810
+BVorOvaTor,BVorOva,asset_prepayments,false,Te ontvangen rente,820
+BVorOvaOoa,BVorOva,asset_prepayments,false,Overige overlopende activa,830
+BVorTus,BVor,asset_current,false,Tussenrekeningen,840
+BVorTusTbt,BVorTus,asset_current,false,Tussenrekeningen betalingen,850
+BVorTusTov,BVorTus,asset_current,false,Tussenrekeningen overig,860
+BEff,,asset_current,false,Effecten,870
+BEffAan,BEff,asset_current,false,Aandelen,880
+BEffAanAbe,BEffAan,asset_current,false,Aandelen beursgenoteerd,890
+BLim,,asset_cash,false,Liquide middelen,900
+BLimKas,BLim,asset_cash,false,Kasmiddelen,910
+BLimKasKas,BLimKas,asset_cash,false,Kas,920
+BLimBan,BLim,asset_cash,false,Tegoeden bij banken,930
+BLimBanRba,BLimBan,asset_cash,false,Rekening-courant bank,940
+BLimBanRbb,BLimBan,asset_cash,false,Rekening-courant bank- Naam A,950
+BLimBanDep,BLimBan,asset_cash,false,Depositorekening,960
+BLimBanSpa,BLimBan,asset_cash,false,(Bedrijfs)spaarrekening,970
+BLimKru,BLim,asset_current,false,Kruisposten,980
+BLimKruSto,BLimKru,asset_current,false,Stortingen onderweg,990
+BLimKruPib,BLimKru,asset_current,false,PIN betalingen,1000
+BLimKruCra,BLimKru,asset_current,false,Creditcard afrekening,1010
+BEiv,,equity,false,Groepsvermogen - Eigen vermogen - Kapitaal,1020
+BEivGok,BEiv,equity,false,Aandelenkapitaal,1030
+BEivGokGea,BEivGok,equity,false,Normale aandelen,1040
+BEivAgi,BEiv,equity,false,Agio,1050
+BEivAgiAgi,BEivAgi,equity,false,Agioreserve,1060
+BEivHer,BEiv,equity,false,Herwaarderingsreserves,1070
+BEivHerHew,BEivHer,equity,false,Herwaarderingsreserve,1080
+BEivWer,BEiv,equity,false,Wettelijke reserves,1090
+BEivWerRed,BEivWer,equity,false,Wettelijke reserve deelnemingen,1100
+BEivStr,BEiv,equity,false,Statutaire reserves,1110
+BEivStrStr,BEivStr,equity,false,Statutaire reserve,1120
+BEivOvr,BEiv,equity,false,Overige reserves,1130
+BEivOvrAlr,BEivOvr,equity_retained,false,Algemene reserve,1140
+BEivOre,BEiv,equity,false,Onverdeelde winst,1150
+BEivOreOvw,BEivOre,equity_retained,false,Niet verdeelde winst,1160
+BEivOreRvh,BEivOre,equity,false,Resultaat van het boekjaar,1170
+BVrz,,liability_non_current,false,Voorzieningen,1180
+BVrzVvb,BVrz,liability_non_current,false,Voorziening voor belastingen,1190
+BVrzVvbVlb,BVrzVvb,liability_non_current,false,Voorziening voor latente belastingverplichtingen,1200
+BVrzOvz,BVrz,liability_non_current,false,Overige voorzieningen,1210
+BVrzOvzGar,BVrzOvz,liability_non_current,false,Garantievoorziening,1220
+BVrzOvzJub,BVrzOvz,liability_non_current,false,Jubileumvoorziening,1230
+BVrzOvzOvz,BVrzOvz,liability_non_current,false,Overige voorzieningen,1240
+BLas,,liability_non_current,false,Langlopende schulden,1250
+BLasAcl,BLas,liability_non_current,false,Achtergestelde schulden,1260
+BLasAclAll,BLasAcl,liability_non_current,false,Hoofdsom achtergestelde schulden,1270
+BLasFlv,BLas,liability_non_current,false,Financiële lease verplichtingen,1280
+BLasFlvFlv,BLasFlv,liability_non_current,false,Hoofdsom financiële lease verplichtingen,1290
+BLasSak,BLas,liability_non_current,false,Schulden aan banken,1300
+BLasSakHvl,BLasSak,liability_non_current,false,Hoofdsom hypotheken,1310
+BLasSakLvl,BLasSak,liability_non_current,false,Hoofdsom leningen,1320
+BLasSag,BLas,liability_non_current,false,Schulden aan groepsmaatschappijen,1330
+BLasSagHoo,BLasSag,liability_non_current,false,Hoofdsom schulden aan groepsmaatschappijen,1340
+BLasOls,BLas,liability_non_current,false,Overige schulden,1350
+BLasOlsOsl,BLasOls,liability_non_current,false,Hoofdsom overige schulden,1360
+BSch,,liability_current,false,Kortlopende schulden,1370
+BSchSak,BSch,liability_current,false,Schulden aan banken,1380
+BSchSakRba,BSchSak,liability_current,false,Rekening-courant bij kredietinstellingen,1390
+BSchVob,BSch,liability_current,false,Ontvangen vooruitbetalingen op bestellingen,1400
+BSchVobVob,BSchVob,liability_current,false,Ontvangen vooruitbetalingen op bestellingen,1410
+BSchCre,BSch,liability_current,false,Schulden aan leveranciers en handelskredieten,1420
+BSchCreHac,BSchCre,liability_payable,true,Handelscrediteuren nominaal,1430
+BSchCreKcr,BSchCre,liability_current,false,Kostencrediteuren,1440
+BSchCreTus,BSchCre,liability_current,false,Tussenrekening betalingen crediteuren (betalingen onderweg),1450
+BSchSag,BSch,liability_current,false,Schulden aan groepsmaatschappijen,1460
+BSchSagSg1,BSchSag,liability_current,false,Schuld aan groepsmaatschappij 1,1470
+BSchShb,BSch,liability_current,false,Schulden uit hoofde van belasting naar de winst,1480
+BSchShbShb,BSchShb,liability_current,false,Schulden uit hoofde van belasting naar de winst,1490
+BSchBep,BSch,liability_current,false,Belastingen en premies sociale verzekeringen,1500
+BSchBepBtw,BSchBep,liability_current,true,Te betalen Omzetbelasting,1510
+BSchBepBla,BSchBep,liability_current,false,1a Omzetbelasting leveringen/diensten algemeen tarief,1520
+BSchBepBlv,BSchBep,liability_current,false,1b Omzetbelasting leveringen/diensten verlaagd tarief,1530
+BSchBepBlo,BSchBep,liability_current,false,1c Omzetbelasting leveringen/diensten overige tarieven,1540
+BSchBepBop,BSchBep,liability_current,false,1d Omzetbelasting over privegebruik,1550
+BSchBepBlw,BSchBep,liability_current,false,2a Omzetbelasting leveringen/diensten waarbij heffing is verlegd,1560
+BSchBepBlb,BSchBep,liability_current,false,4a Omzetbelasting leveringen/diensten uit landen buiten de EU,1570
+BSchBepBlu,BSchBep,liability_current,false,4b Omzetbelasting leveringen/diensten uit landen binnen EU,1580
+BSchBepBoo,BSchBep,liability_current,false,5b Voorbelasting,1590
+BSchBepLhe,BSchBep,liability_current,false,Te betalen Loonheffing,1600
+BSchBepVpb,BSchBep,liability_current,false,Te betalen vennootschapsbelasting,1610
+BSchBepOvb,BSchBep,liability_current,false,Overige belastingen,1620
+BSchAos,BSch,liability_current,false,Aflossingsverplichtingen van langlopende leningen,1630
+BSchAosLvk,BSchAos,liability_current,false,Leningen van kredietinstellingen (kortlopend),1640
+BSchSal,BSch,liability_current,false,Salarisverwerking,1650
+BSchSalNet,BSchSal,liability_current,false,Netto lonen,1660
+BSchSalTvg,BSchSal,liability_current,false,Te betalen vakantiegeld,1670
+BSchSalTbv,BSchSal,liability_current,false,Reservering vakantiedagen,1680
+BSchSalPsv,BSchSal,liability_current,false,Premies sociale verzekeringen,1690
+BSchOvs,BSch,liability_current,false,Overige schulden,1700
+BSchOvsRcb,BSchOvs,liability_current,false,Rekening-courant bestuurders (Kortlopend),1710
+BSchOvsSaa,BSchOvs,liability_current,false,Schulden aan aandeelhouders,1720
+BSchOvsTbd,BSchOvs,liability_current,false,Te betalen dividenduitkeringen,1730
+BSchOvsStp,BSchOvs,liability_current,false,Te betalen pensioenpremies,1740
+BSchOvsOvs,BSchOvs,liability_current,false,Overige schulden,1750
+BSchOpa,BSch,liability_current,false,Overlopende passiva,1760
+BSchOpaNto,BSchOpa,liability_current,false,Nog te ontvangen facturen,1770
+BSchOpaNtb,BSchOpa,liability_current,false,Nog te betalen andere kosten,1780
+BSchOpaTbr,BSchOpa,liability_current,false,Te betalen rente,1790
+BSchOpaOop,BSchOpa,liability_current,false,Overige overlopende passiva,1800
+BSchOpaVgo,BSchOpa,liability_current,false,Vooruitgefactureerde omzet,1810
+BSchDha,BSch,liability_current,false,Uit te keren dividend aan houders van aandelen,1820
+BSchDhaDha,BSchDha,liability_current,false,Uit te keren dividend aan houders van aandelen,1830
+WOmz,,income,false,Netto-omzet,1840
+WOmzNop,WOmz,income,false,Netto-omzet uit leveringen geproduceerde goederen,1850
+WOmzNopOlh,WOmzNop,income,false,1a. Netto-omzet uit leveringen geproduceerde goederen belast met hoog tarief,1860
+WOmzNopOlv,WOmzNop,income,false,1b. Netto-omzet uit leveringen geproduceerde goederen belast met laag tarief,1870
+WOmzNopOlg,WOmzNop,income,false,1e. Netto-omzet uit geproduceerde goederen belast met 0% of niet bij u belast,1880
+WOmzNopOln,WOmzNop,income,false,3a. Netto-omzet uit leveringen geproduceerde goederen naar landen buiten EU (uitvoer),1890
+WOmzNopOli,WOmzNop,income,false,3b. Netto-omzet uit leveringen geproduceerde goederen naar landen binnen EU,1900
+WOmzNoh,WOmz,income,false,Netto-omzet uit verkoop van handelsgoederen,1910
+WOmzNohOlh,WOmzNoh,income,false,1a. Netto-omzet uit verkoop van handelsgoederen belast met hoog tarief,1920
+WOmzNohOlv,WOmzNoh,income,false,1b. Netto-omzet uit verkoop van handelsgoederen belast met laag tarief,1930
+WOmzNohOlg,WOmzNoh,income,false,1e. Netto-omzet uit leveringen handelsgoederen belast met 0% of niet bij u belast,1940
+WOmzNohOln,WOmzNoh,income,false,3a. Netto-omzet uit leveringen handelsgoederen naar landen buiten de EU (uitvoer),1950
+WOmzNohOli,WOmzNoh,income,false,3b. Netto-omzet uit leveringen handelsgoederen naar landen binnen de EU,1960
+WOmzNohNod,WOmzNoh,income,false,Netto-omzet van onbelaste verkoop van handelsgoederen,1970
+WOmzNod,WOmz,income,false,Opbrengsten uit het verlenen van diensten,1980
+WOmzNodOdh,WOmzNod,income,false,1a. Netto-omzet uit verleende diensten belast met hoog tarief,1990
+WOmzNodOdl,WOmzNod,income,false,1b. Netto-omzet uit verleende diensten belast met laag tarief,2000
+WOmzNodOdg,WOmzNod,income,false,1e. Netto-omzet uit verleende diensten belast met 0% of niet bij u belast,2010
+WOmzNodOdb,WOmzNod,income,false,3a. Netto-omzet uit verleende diensten naar landen buiten de EU (uitvoer),2020
+WOmzNodOdi,WOmzNod,income,false,3b. Netto-omzet uit verleende diensten naar landen binnen de EU,2030
+WOmzNodNod,WOmzNod,income,false,Netto-omzet van onbelaste diensten,2040
+WOmzNoo,WOmz,income,false,Overige netto-omzet,2050
+WOmzNooNdl,WOmzNoo,income,false,Overige netto-omzet waarvan licenties,2060
+WOmzNooOnw,WOmzNoo,income,false,Overige netto-omzet waarvan niet elders genoemd,2070
+WOmzKeb,WOmz,income,false,"Kortingen, bonussen en provisies",2080
+WOmzKebVek,WOmzKeb,income,false,Verleende kortingen,2090
+WOmzKebOmz,WOmzKeb,income,false,Omzetbonificaties,2100
+WWiv,,income_other,false,Wijziging voorraden,2110
+WWivWgp,WWiv,income_other,false,"Wijziging in voorraden grond- en hulpstoffen, gereed product en handelsgoederen",2120
+WWivWgpWgp,WWivWgp,income_other,false,Wijziging in voorraden gereed product,2130
+WWivWgpWhg,WWivWgp,income_other,false,Wijziging in voorraden handelsgoederen,2140
+WWivGpv,WWiv,income_other,false,Geactiveerde productie voor het eigen bedrijf,2150
+WWivGpvGpe,WWivGpv,income_other,false,Geactiveerde productie voor het eigen bedrijf,2160
+WKpr,,expense_direct_cost,false,Kostprijs van de omzet,2170
+WKprKvg,WKpr,expense_direct_cost,false,Kosten van grond- en hulpstoffen / halffabrikaten,2180
+WKprKvgKvg,WKprKvg,expense_direct_cost,false,"Kosten van grond- en hulpstoffen, ingekocht in Nederland",2190
+WKprKvgKgi,WKprKvg,expense_direct_cost,false,"Kosten van grond- en hulpstoffen, ingekocht in het buitenland",2200
+WKprKuw,WKpr,expense_direct_cost,false,Kosten uitbesteed werk en andere externe kosten,2210
+WKprKuwKuw,WKprKuw,expense_direct_cost,false,Kosten van uitbesteed werk,2220
+WKprKuwAek,WKprKuw,expense_direct_cost,false,Andere externe kosten,2230
+WKprInh,WKpr,expense_direct_cost,false,Inkoopwaarde handelsgoederen,2240
+WKprInhInh,WKprInh,expense_direct_cost,false,Inkoopwaarde handelsgoederen,2250
+WKprInhVrv,WKprInh,expense_direct_cost,false,Voorraadverschillen handelsgoederen,2260
+WKprInp,WKpr,expense_direct_cost,false,Inkoopwaarde productiegoederen,2270
+WKprInpInp,WKprInp,expense_direct_cost,false,Kostprijswaarde productiegoederen,2280
+WKprLeb,WKpr,expense_direct_cost,false,Inkoopkortingen en bonussen,2290
+WKprLebLeb,WKprLeb,expense_direct_cost,false,Inkoopkortingen en bonussen,2300
+WKprBtk,WKpr,expense_direct_cost,false,Betalingskortingen,2310
+WKprBtkBed,WKprBtk,expense_direct_cost,false,Betalingskorting debiteuren,2320
+WKprBtkBec,WKprBtk,expense_direct_cost,false,Betalingskortingen op inkopen,2330
+WKprVom,WKpr,expense_direct_cost,false,Voorraadmutatie,2340
+WKprVomVom,WKprVom,expense_direct_cost,false,Voorraadmutatie,2350
+WOvb,,income_other,false,Overige bedrijfsopbrengsten,2360
+WOvbOvo,WOvb,income_other,false,Overige opbrengsten,2370
+WOvbOvoOvo,WOvbOvo,income_other,false,Overige opbrengsten niet elders genoemd,2380
+WOvbVez,WOvb,income_other,false,Verzekeringsuitkeringen,2390
+WOvbVezOvu,WOvbVez,income_other,false,Overige verzekeringsuitkeringen,2400
+WPer,,expense,false,Lasten uit hoofde van personeelsbeloningen,2410
+WPerLes,WPer,expense,false,Lonen en salarissen,2420
+WPerLesSld,WPerLes,expense,false,Bezoldiging van bestuurders en gewezen bestuurders,2430
+WPerLesLon,WPerLes,expense,false,Lonen,2440
+WPerLesOwe,WPerLes,expense,false,Overwerk,2450
+WPerLesVag,WPerLes,expense,false,Vakantiebijslag,2460
+WPerLesGra,WPerLes,expense,false,Gratificaties,2470
+WPerLesOnu,WPerLes,expense,false,Ontslagvergoedingen,2480
+WPerLesLks,WPerLes,expense,false,Loonkostensubsidie (LIV),2490
+WPerLesEuk,WPerLes,expense,false,Eindejaarsuitkering,2500
+WPerSol,WPer,expense,false,Sociale lasten,2510
+WPerSolPsv,WPerSol,expense,false,Premies sociale verzekeringen,2520
+WPerSolBiz,WPerSol,expense,false,Bijdrage ziektekostenverzekering,2530
+WPerSolOss,WPerSol,expense,false,Overige sociale lasten,2540
+WPerPen,WPer,expense,false,Pensioenlasten,2550
+WPerPenPen,WPerPen,expense,false,Pensioenpremies,2560
+WPerPenOpe,WPerPen,expense,false,Overige pensioenlasten,2570
+WPerOlu,WPer,expense,false,Overige lasten uit hoofde van personeelsbeloningen,2580
+WPerOluOlp,WPerOlu,expense,false,Overige lasten met betrekking tot personeelsbeloningen,2590
+WAfs,,expense_depreciation,false,Afschrijvingen op immateriële en materiële vaste activa,2600
+WAfsAiv,WAfs,expense_depreciation,false,Afschrijvingen op immateriële vaste activa,2610
+WAfsAivKoe,WAfsAiv,expense_depreciation,false,Afschrijvingen kosten van ontwikkeling,2620
+WAfsAivCev,WAfsAiv,expense_depreciation,false,"Afschrijvingen concessies, vergunningen en intellectuele eigendom",2630
+WAfsAivGoo,WAfsAiv,expense_depreciation,false,Afschrijvingen goodwill - fiscaal aftrekbaar,2640
+WAfsAmv,WAfs,expense_depreciation,false,Afschrijvingen op materiële vaste activa,2650
+WAfsAmvBeg,WAfsAmv,expense_depreciation,false,Afschrijvingen Bedrijfsgebouwen,2660
+WAfsAmvVeb,WAfsAmv,expense_depreciation,false,Afschrijvingen Verbouwingen,2670
+WAfsAmvMei,WAfsAmv,expense_depreciation,false,Afschrijvingen Machines en installaties,2680
+WAfsAmvObe,WAfsAmv,expense_depreciation,false,Afschrijvingen Andere vaste bedrijfsmiddelen,2690
+WAfsAmvTev,WAfsAmv,expense_depreciation,false,Afschrijvingen Automobielen en overige transportmiddelen,2700
+WAfsAmvBei,WAfsAmv,expense_depreciation,false,Afschrijvingen Inventaris,2710
+WAfsRvm,WAfs,expense_depreciation,false,Boekresultaat op materiële vaste activa,2720
+WAfsRvmTev,WAfsRvm,expense_depreciation,false,Boekresultaat Automobielen en overige transportmiddelen,2730
+WAfsRvmBei,WAfsRvm,expense_depreciation,false,Boekresultaat Inventaris,2740
+WBwv,,expense,false,Overige waardeveranderingen,2750
+WBwvObw,WBwv,expense,false,Bijzondere waardeverminderingen van vlottende activa,2760
+WBwvObwBwv,WBwvObw,expense,false,Bijzondere waardeverminderingen van vlottende activa,2770
+WBed,,expense,false,Overige bedrijfskosten,2780
+WBedOvp,WBed,expense,false,Overige personeelsgerelateerde kosten,2790
+WBedOvpUik,WBedOvp,expense,false,Uitzendkrachten,2800
+WBedOvpZzp,WBedOvp,expense,false,Ingehuurde ZZP-ers,2810
+WBedOvpWer,WBedOvp,expense,false,Wervingskosten,2820
+WBedOvpWkv,WBedOvp,expense,false,Werkkleding,2830
+WBedOvpMlv,WBedOvp,expense,false,Maaltijden en consumpties personeel,2840
+WBedOvpPug,WBedOvp,expense,false,Personeeluitjes en -geschenken,2850
+WBedOvpRkv,WBedOvp,expense,false,Reiskostenvergoeding,2860
+WBedOvpAbd,WBedOvp,expense,false,Arbodienst,2870
+WBedOvpOvp,WBedOvp,expense,false,Overige personeelskosten niet elders genoemd,2880
+WBedOvpOpk,WBedOvp,expense,false,Opleidingskosten,2890
+WBedHui,WBed,expense,false,Huisvestingskosten,2900
+WBedHuiBeh,WBedHui,expense,false,Betaalde huur,2910
+WBedHuiOng,WBedHui,expense,false,Onderhoud gebouwen,2920
+WBedHuiSch,WBedHui,expense,false,Schoonmaakkosten,2930
+WBedHuiSer,WBedHui,expense,false,Servicekosten,2940
+WBedHuiGwe,WBedHui,expense,false,"Gas,water en elektra (algemeen)",2950
+WBedHuiAoz,WBedHui,expense,false,Assurantiepremies onroerende zaak,2960
+WBedHuiOnz,WBedHui,expense,false,Onroerende zaakbelasting,2970
+WBedHuiOhv,WBedHui,expense,false,Overige huisvestingskosten,2980
+WBedEem,WBed,expense,false,Exploitatie- en machinekosten,2990
+WBedEemRoi,WBedEem,expense,false,Reparatie en onderhoud inventaris,3000
+WBedEemOls,WBedEem,expense,false,Operational leasing inventaris,3010
+WBedEemHui,WBedEem,expense,false,Huur inventaris,3020
+WBedEemKai,WBedEem,expense,false,Kleine aanschaffingen inventaris,3030
+WBedEemRom,WBedEem,expense,false,Reparatie en onderhoud machines,3040
+WBedEemBrm,WBedEem,expense,false,Brandstof / energiekosten machines,3050
+WBedEemWdd,WBedEem,expense,false,"Werk door derden, overig",3060
+WBedEemVpm,WBedEem,expense,false,Verpakkingsmaterialen,3070
+WBedEemOee,WBedEem,expense,false,Overige exploitatie- en machinekosten,3080
+WBedVkk,WBed,expense,false,Verkoop gerelateerde kosten,3090
+WBedVkkRea,WBedVkk,expense,false,Reclame- en advertentiekosten,3100
+WBedVkkBeu,WBedVkk,expense,false,Beurskosten,3110
+WBedVkkRel,WBedVkk,expense,false,Relatiegeschenken,3120
+WBedVkkRep,WBedVkk,expense,false,Representatiekosten,3130
+WBedVkkRev,WBedVkk,expense,false,Reis- en verblijfkosten,3140
+WBedVkkVrk,WBedVkk,expense,false,Vrachtkosten,3150
+WBedVkkKmz,WBedVkk,expense,false,Kilometervergoeding zakelijke reizen,3160
+WBedVkkVkp,WBedVkk,expense,false,Verkoopprovisie,3170
+WBedVkkDvd,WBedVkk,expense,false,Dotatie voorziening dubieuze debiteuren,3180
+WBedVkkAdd,WBedVkk,expense,false,Afboeking dubieuze debiteuren,3190
+WBedVkkWeb,WBedVkk,expense,false,Websitekosten,3200
+WBedVkkOvr,WBedVkk,expense,false,Overige verkoopkosten,3210
+WBedAut,WBed,expense,false,Autokosten en andere vervoermiddelen,3220
+WBedAutBra,WBedAut,expense,false,Brandstofkosten auto's en andere vervoermiddelen,3230
+WBedAutRoa,WBedAut,expense,false,Reparatie en onderhoud auto's en andere vervoermiddelen,3240
+WBedAutAsa,WBedAut,expense,false,Assurantiepremie auto's en andere vervoermiddelen,3250
+WBedAutMot,WBedAut,expense,false,Motorrijtuigenbelasting auto's en andere vervoermiddelen,3260
+WBedAutOpa,WBedAut,expense,false,Operational leasing auto's en andere vervoermiddelen,3270
+WBedAutPga,WBedAut,expense,false,Privé-gebruik auto's en andere vervoermiddelen,3280
+WBedAutBop,WBedAut,expense,false,BTW op privé-gebruik auto's en andere vervoermiddelen,3290
+WBedAutPar,WBedAut,expense,false,Parkeerkosten auto's en andere vervoermiddelen,3300
+WBedAutOak,WBedAut,expense,false,Overige autokosten en andere vervoermiddelen,3310
+WBedTra,WBed,expense,false,Transportkosten,3320
+WBedTraBrr,WBedTra,expense,false,Brandstofkosten transportmiddelen,3330
+WBedTraAki,WBedTra,expense,false,Afhandelingskosten import,3340
+WBedTraOpk,WBedTra,expense,false,Opslagkosten,3350
+WBedTraOtr,WBedTra,expense,false,Overige transportkosten,3360
+WBedKan,WBed,expense,false,Kantoorkosten,3370
+WBedKanKan,WBedKan,expense,false,Kantoorbenodigdheden,3380
+WBedKanPor,WBedKan,expense,false,Porti,3390
+WBedKanTef,WBedKan,expense,false,Telefoonkosten,3400
+WBedKanDru,WBedKan,expense,false,Drukwerk,3410
+WBedKanCea,WBedKan,expense,false,Contributies en abonnementen,3420
+WBedKanVak,WBedKan,expense,false,Vakliteratuur,3430
+WBedKanKoa,WBedKan,expense,false,Kosten automatisering,3440
+WBedKanSof,WBedKan,expense,false,Kosten software abonnementen,3450
+WBedKanOka,WBedKan,expense,false,Overige kantoorkosten,3460
+WBedOrg,WBed,expense,false,Organisatiekosten,3470
+WBedOrgOeo,WBedOrg,expense,false,Onderzoek en ontwikkeling,3480
+WBedOrgLgv,WBedOrg,expense,false,Leges / vergunningen,3490
+WBedOrgOct,WBedOrg,expense,false,Octrooi en licentiekosten,3500
+WBedOrgOok,WBedOrg,expense,false,Overige organisatiekosten,3510
+WBedOrgKgd,WBedOrg,expense,false,Kosten van giften en donaties,3520
+WBedAss,WBed,expense,false,Assurantiekosten,3530
+WBedAssBea,WBedAss,expense,false,Bedrijfsaansprakelijkheidsverzekering,3540
+WBedAssOva,WBedAss,expense,false,Overige assurantiepremies,3550
+WBedAea,WBed,expense,false,Accountants- en advieskosten,3560
+WBedAeaAea,WBedAea,expense,false,Accountants- en advieskosten,3570
+WBedAeaNot,WBedAea,expense,false,Notariskosten,3580
+WBedAeaAej,WBedAea,expense,false,Advocaat en juridisch advies,3590
+WBedAeaAdv,WBedAea,expense,false,Overige advieskosten,3600
+WBedAdl,WBed,expense,false,Administratieve lasten,3610
+WBedAdlHef,WBedAdl,expense,false,Heffingen,3620
+WBedAdlKav,WBedAdl,expense,false,Kasverschillen,3630
+WBedAdlBan,WBedAdl,expense,false,Bankkosten,3640
+WBedAdlVal,WBedAdl,expense,false,Valutaomrekeningsverschillen,3650
+WBedAdlBov,WBedAdl,expense,false,Boekingsverschillen,3660
+WBedAdlBet,WBedAdl,expense,false,Betalingsverschillen,3670
+WBedAdlBev,WBedAdl,expense,false,Boetes en verhogingen belastingen en premies sociale verzekeringen,3680
+WBedAdlNbo,WBedAdl,expense,false,Niet-verrekenbare BTW op kosten,3690
+WBedAdlOad,WBedAdl,expense,false,Overige administratieve lasten,3700
+WBedDvv,WBed,expense,false,Dotaties en vrijval voorzieningen,3710
+WBedDvvDov,WBedDvv,expense,false,Dotatie overige voorzieningen,3720
+WBedDvvVov,WBedDvv,expense,false,Vrijval overige voorzieningen,3730
+WBedAlk,WBed,expense,false,Andere kosten,3740
+WBedAlkOal,WBedAlk,expense,false,Algemene kosten,3750
+WOvt,,income_other,false,Opbrengst van vorderingen die tot de vaste activa behoren en van effecten,3760
+WOvtRof,WOvt,income_other,false,Opbrengst van vorderingen die tot de vaste activa behoren en van effecten,3770
+WOvtRofRig,WOvtRof,income_other,false,Rentebaten vorderingen groepsmaatschappijen binnenland,3780
+WOvtRofDiv,WOvtRof,income_other,false,Dividend effecten,3790
+WOvtRofLen,WOvtRof,income_other,false,Rentebaten leningen u/g,3800
+WFbe,,expense,false,Financiële baten en lasten,3810
+WFbeRlm,WFbe,income_other,false,Rentebaten en soortgelijke opbrengsten,3820
+WFbeRlmRgi,WFbeRlm,income_other,false,Rentebaten vorderingen groepsmaatschappijen binnenland,3830
+WFbeRlmObr,WFbeRlm,income_other,false,Rentebaten bankrekeningen,3840
+WFbeRlmRbb,WFbeRlm,income_other,false,Rentebaten belastingen,3850
+WFbeRlmAre,WFbeRlm,income_other,false,Overige rentebaten,3860
+WFbeRls,WFbe,expense,false,Rentelasten en soortgelijke kosten,3870
+WFbeRlsRol,WFbeRls,expense,false,Rentelasten onderhandse leningen,3880
+WFbeRlsRhl,WFbeRls,expense,false,Rentelasten hypothecaire leningen,3890
+WFbeRlsRlk,WFbeRls,expense,false,Rentelasten kredietinstellingen,3900
+WFbeRlsRlv,WFbeRls,expense,false,Rentelasten leaseverplichtingen,3910
+WFbeRlsRgi,WFbeRls,expense,false,Rentelasten schulden groepsmaatschappijen binnenland,3920
+WFbeRlsRsa,WFbeRls,expense,false,Rentelasten schulden aan aandeelhouders,3930
+WFbeOrl,WFbe,expense,false,Overige rentelasten,3940
+WFbeOrlRlb,WFbeOrl,expense,false,Rentelasten belastingen,3950
+WFbeOrlRkb,WFbeOrl,expense,false,Rente en kosten bank,3960
+WFbeOrlOrl,WFbeOrl,expense,false,Overige rentelasten,3970
+WFbeWis,WFbe,expense,false,Wisselkoersverschillen,3980
+WFbeWisWis,WFbeWis,expense,false,Valutakoersverschillen,3990
+WBel,,expense,false,Belastingen,4000
+WBelBgr,WBel,expense,false,Belastingen over de winst of het verlies,4010
+WBelBgrLab,WBelBgr,expense,false,Latente belastingen,4020
+WBelBgrBgr,WBelBgr,expense,false,Belastingen uit huidig boekjaar,4030
+WBelBgrBuv,WBelBgr,expense,false,Belastingen uit voorgaande boekjaren,4040
+WRed,,income_other,false,Aandeel in resultaat van ondernemingen waarin wordt deelgenomen,4050
+WRedAir,WRed,income_other,false,Aandeel in resultaat van ondernemingen waarin wordt deelgenomen,4060
+WRedAirGrp,WRedAir,income_other,false,Aandeel in winst (verlies) van deelnemingen in groepsmaatschappijen,4070
+WRedAirOvd,WRedAir,income_other,false,Aandeel in winst (verlies) van overige deelnemingen,4080

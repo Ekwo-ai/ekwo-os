@@ -1,0 +1,703 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/statements",
+  "statements": [
+    {
+      "code": "NL-BMJ-C",
+      "kind": "balance_sheet",
+      "framework": "NL-GAAP",
+      "name": "Balans — model C (kleine rechtspersoon, verticaal)",
+      "valid_from": "2016-01-01",
+      "legal_reference": "Besluit modellen jaarrekening, art. 1, lid 2 — een vennootschap waarop art. 2:396 BW van toepassing is (klein) mag voor de balans model C kiezen; Burgerlijk Wetboek Boek 2, art. 364 tot en met 376 en art. 396, lid 3 — de indeling van de balans en de beperking voor een kleine rechtspersoon. De regels volgen de koppeling die de dataset «RGS NL en EN labels» van elke RGS-code naar de begrippen jenv-bw2 van de Nederlandse Taxonomie legt. Regel I staat niet in het model: het is de controletelling die tegenover E hoort te staan",
+      "source": "bmj",
+      "lines": [
+        {
+          "code": "A",
+          "name": "Vaste activa",
+          "sequence": 10,
+          "is_total": true,
+          "plus": [
+            "A.I",
+            "A.II",
+            "A.III"
+          ]
+        },
+        {
+          "code": "A.I",
+          "parent": "A",
+          "name": "Immateriële vaste activa",
+          "sequence": 20,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "BIva"
+            }
+          ]
+        },
+        {
+          "code": "A.II",
+          "parent": "A",
+          "name": "Materiële vaste activa",
+          "sequence": 30,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "BMva"
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "BVas"
+            }
+          ]
+        },
+        {
+          "code": "A.III",
+          "parent": "A",
+          "name": "Financiële vaste activa",
+          "sequence": 40,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "BFva"
+            }
+          ]
+        },
+        {
+          "code": "B",
+          "name": "Vlottende activa",
+          "sequence": 50,
+          "is_total": true,
+          "plus": [
+            "B.I",
+            "B.II",
+            "B.III",
+            "B.IV"
+          ]
+        },
+        {
+          "code": "B.I",
+          "parent": "B",
+          "name": "Voorraden",
+          "sequence": 60,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "BVrd"
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "BPro"
+            }
+          ]
+        },
+        {
+          "code": "B.II",
+          "parent": "B",
+          "name": "Vorderingen en overlopende activa",
+          "sequence": 70,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "BVorDeb"
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "BVorOva"
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "BVorOvr"
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "BVorVbk"
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "BVorVog"
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "BVorTus",
+              "side": "debit"
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "BSchBep",
+              "side": "debit"
+            }
+          ]
+        },
+        {
+          "code": "B.III",
+          "parent": "B",
+          "name": "Effecten",
+          "sequence": 80,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "BEff"
+            }
+          ]
+        },
+        {
+          "code": "B.IV",
+          "parent": "B",
+          "name": "Liquide middelen",
+          "sequence": 90,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "BLim"
+            }
+          ]
+        },
+        {
+          "code": "C",
+          "name": "Kortlopende schulden (ten hoogste 1 jaar) en overlopende passiva",
+          "sequence": 100,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "BSchAos"
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "BSchCre"
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "BSchDha"
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "BSchOpa"
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "BSchOvs"
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "BSchSag"
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "BSchSak"
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "BSchSal"
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "BSchShb"
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "BSchVob"
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "BVorTus",
+              "side": "credit"
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "BSchBep",
+              "side": "credit"
+            }
+          ]
+        },
+        {
+          "code": "D",
+          "name": "Uitkomst vlottende activa min kortlopende schulden",
+          "sequence": 110,
+          "is_total": true,
+          "plus": [
+            "B"
+          ],
+          "minus": [
+            "C"
+          ]
+        },
+        {
+          "code": "E",
+          "name": "Uitkomst activa min kortlopende schulden",
+          "sequence": 120,
+          "is_total": true,
+          "plus": [
+            "A",
+            "D"
+          ]
+        },
+        {
+          "code": "F",
+          "name": "Langlopende schulden (nog voor meer dan een jaar)",
+          "sequence": 130,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "BLas"
+            }
+          ]
+        },
+        {
+          "code": "G",
+          "name": "Voorzieningen",
+          "sequence": 140,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "BVrz"
+            }
+          ]
+        },
+        {
+          "code": "H",
+          "name": "Eigen vermogen",
+          "sequence": 150,
+          "is_total": true,
+          "plus": [
+            "H.I",
+            "H.II",
+            "H.III",
+            "H.IV",
+            "H.V",
+            "H.VI"
+          ]
+        },
+        {
+          "code": "H.I",
+          "parent": "H",
+          "name": "Gestort en opgevraagd kapitaal",
+          "sequence": 160,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "BEivGok"
+            }
+          ]
+        },
+        {
+          "code": "H.II",
+          "parent": "H",
+          "name": "Agio",
+          "sequence": 170,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "BEivAgi"
+            }
+          ]
+        },
+        {
+          "code": "H.III",
+          "parent": "H",
+          "name": "Herwaarderingsreserve",
+          "sequence": 180,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "BEivHer"
+            }
+          ]
+        },
+        {
+          "code": "H.IV",
+          "parent": "H",
+          "name": "Wettelijke en statutaire reserves",
+          "sequence": 190,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "BEivWer"
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "BEivStr"
+            }
+          ]
+        },
+        {
+          "code": "H.V",
+          "parent": "H",
+          "name": "Overige reserves",
+          "sequence": 200,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "BEivOvr"
+            }
+          ]
+        },
+        {
+          "code": "H.VI",
+          "parent": "H",
+          "name": "Onverdeelde winst",
+          "sequence": 210,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "BEivOre"
+            }
+          ]
+        },
+        {
+          "code": "I",
+          "name": "Som van langlopende schulden, voorzieningen en eigen vermogen",
+          "sequence": 220,
+          "is_total": true,
+          "plus": [
+            "F",
+            "G",
+            "H"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "NL-BMJ-E",
+      "kind": "income_statement",
+      "framework": "NL-GAAP",
+      "name": "Winst- en verliesrekening — model E (categoriale indeling, verticaal)",
+      "valid_from": "2016-01-01",
+      "legal_reference": "Besluit modellen jaarrekening, art. 1, lid 1 — de winst- en verliesrekening van een naamloze of besloten vennootschap wordt ingericht volgens model E of model F; Burgerlijk Wetboek Boek 2, art. 377, lid 3 — de categoriale indeling. Pensioenlasten en overige personeelsbeloningen staan onder sociale lasten, zoals het model ze samenneemt; art. 2:382 vraagt ze afzonderlijk in de toelichting. Model I, dat een kleine rechtspersoon mag kiezen en dat met de bruto-marge begint, is hetzelfde schema met de eerste regels samengenomen",
+      "source": "bmj",
+      "lines": [
+        {
+          "code": "E01",
+          "name": "Netto-omzet",
+          "sequence": 10,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "WOmz"
+            }
+          ]
+        },
+        {
+          "code": "E02",
+          "name": "Wijziging in voorraden gereed product en onderhanden werk",
+          "sequence": 20,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "WWivWgp"
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "WWivWow"
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "WWivWop"
+            }
+          ]
+        },
+        {
+          "code": "E03",
+          "name": "Geactiveerde productie voor het eigen bedrijf",
+          "sequence": 30,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "WWivGpv"
+            }
+          ]
+        },
+        {
+          "code": "E04",
+          "name": "Overige bedrijfsopbrengsten",
+          "sequence": 40,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "WOvb"
+            }
+          ]
+        },
+        {
+          "code": "E05",
+          "name": "Som der bedrijfsopbrengsten",
+          "sequence": 50,
+          "is_total": true,
+          "plus": [
+            "E01",
+            "E02",
+            "E03",
+            "E04"
+          ]
+        },
+        {
+          "code": "E06",
+          "name": "Kosten van grond- en hulpstoffen",
+          "sequence": 60,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "WKprKvg"
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "WKprInh"
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "WKprInp"
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "WKprVom"
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "WKprLeb"
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "WKprBtk"
+            }
+          ]
+        },
+        {
+          "code": "E07",
+          "name": "Kosten uitbesteed werk en andere externe kosten",
+          "sequence": 70,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "WKprKuw"
+            }
+          ]
+        },
+        {
+          "code": "E08",
+          "name": "Lonen en salarissen",
+          "sequence": 80,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "WPerLes"
+            }
+          ]
+        },
+        {
+          "code": "E09",
+          "name": "Sociale lasten",
+          "sequence": 90,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "WPerSol"
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "WPerPen"
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "WPerOlu"
+            }
+          ]
+        },
+        {
+          "code": "E10",
+          "name": "Afschrijvingen op immateriële en materiële vaste activa",
+          "sequence": 100,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "WAfs"
+            }
+          ]
+        },
+        {
+          "code": "E11",
+          "name": "Overige waardeveranderingen van immateriële en materiële vaste activa",
+          "sequence": 110,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "WWvi"
+            }
+          ]
+        },
+        {
+          "code": "E12",
+          "name": "Bijzondere waardevermindering van vlottende activa",
+          "sequence": 120,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "WBwvObw"
+            }
+          ]
+        },
+        {
+          "code": "E13",
+          "name": "Overige bedrijfskosten",
+          "sequence": 130,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "WBed"
+            }
+          ]
+        },
+        {
+          "code": "E14",
+          "name": "Som der bedrijfslasten",
+          "sequence": 140,
+          "is_total": true,
+          "plus": [
+            "E06",
+            "E07",
+            "E08",
+            "E09",
+            "E10",
+            "E11",
+            "E12",
+            "E13"
+          ]
+        },
+        {
+          "code": "E15",
+          "name": "Opbrengst van vorderingen die tot de vaste activa behoren en van effecten",
+          "sequence": 150,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "WOvt"
+            }
+          ]
+        },
+        {
+          "code": "E16",
+          "name": "Andere rentebaten en soortgelijke opbrengsten",
+          "sequence": 160,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "WFbeRlm"
+            }
+          ]
+        },
+        {
+          "code": "E17",
+          "name": "Waardeveranderingen van vorderingen die tot de vaste activa behoren en van effecten",
+          "sequence": 170,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "WWfa"
+            }
+          ]
+        },
+        {
+          "code": "E18",
+          "name": "Rentelasten en soortgelijke kosten",
+          "sequence": 180,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "WFbeRls"
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "WFbeOrl"
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "WFbeWis"
+            }
+          ]
+        },
+        {
+          "code": "E19",
+          "name": "Resultaat voor belastingen",
+          "sequence": 190,
+          "is_total": true,
+          "plus": [
+            "E05",
+            "E15",
+            "E16"
+          ],
+          "minus": [
+            "E14",
+            "E17",
+            "E18"
+          ]
+        },
+        {
+          "code": "E20",
+          "name": "Belastingen",
+          "sequence": 200,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "WBel"
+            }
+          ]
+        },
+        {
+          "code": "E21",
+          "name": "Aandeel in winst/verlies van ondernemingen waarin wordt deelgenomen",
+          "sequence": 210,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "WRed"
+            }
+          ]
+        },
+        {
+          "code": "E22",
+          "name": "Resultaat na belastingen",
+          "sequence": 220,
+          "is_total": true,
+          "plus": [
+            "E19",
+            "E21"
+          ],
+          "minus": [
+            "E20"
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,396 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "Een jaar van een Nederlandse handels- en dienstverlenende B.V. die per kwartaal btw-aangifte doet",
+  "chart": "default",
+  "fiscal_year": {
+    "name": "Boekjaar 2026",
+    "start": "2026-01-01",
+    "end": "2026-12-31"
+  },
+  "periods": [
+    {
+      "code": "2026-K1",
+      "from": "2026-01-01",
+      "to": "2026-03-31"
+    },
+    {
+      "code": "2026-K2",
+      "from": "2026-04-01",
+      "to": "2026-06-30"
+    },
+    {
+      "code": "2026-K3",
+      "from": "2026-07-01",
+      "to": "2026-09-30"
+    },
+    {
+      "code": "2026-K4",
+      "from": "2026-10-01",
+      "to": "2026-12-31"
+    }
+  ],
+  "statements": [
+    "NL-BMJ-C",
+    "NL-BMJ-E"
+  ],
+  "contacts": [
+    {
+      "ref": "klant-nl",
+      "name": "Molenwerf Handel B.V.",
+      "type": "customer",
+      "country": "NL"
+    },
+    {
+      "ref": "klant-de",
+      "name": "Rheinblick Handel GmbH",
+      "type": "customer",
+      "country": "DE",
+      "vat_number": "DE999999999"
+    },
+    {
+      "ref": "klant-be",
+      "name": "Scheldezicht BV",
+      "type": "customer",
+      "country": "BE",
+      "vat_number": "BE0999999999"
+    },
+    {
+      "ref": "klant-us",
+      "name": "Harborview Supply Inc.",
+      "type": "customer",
+      "country": "US"
+    },
+    {
+      "ref": "lev-nl",
+      "name": "Polderstaal B.V.",
+      "type": "supplier",
+      "country": "NL"
+    },
+    {
+      "ref": "lev-de",
+      "name": "Nordsee Maschinen GmbH",
+      "type": "supplier",
+      "country": "DE",
+      "vat_number": "DE999999998"
+    },
+    {
+      "ref": "lev-be",
+      "name": "Kempen Advies BV",
+      "type": "supplier",
+      "country": "BE",
+      "vat_number": "BE0999999998"
+    },
+    {
+      "ref": "lev-us",
+      "name": "Cascade Software Inc.",
+      "type": "supplier",
+      "country": "US"
+    }
+  ],
+  "documents": [
+    {
+      "ref": "V1",
+      "type": "sale_invoice",
+      "contact": "klant-nl",
+      "date": "2026-01-15",
+      "why": "Een binnenlandse verkoop tegen het algemene tarief: omzet en btw in rubriek 1a.",
+      "lines": [
+        {
+          "name": "Handelsgoederen",
+          "quantity": 10,
+          "unit_price": 1000,
+          "tax": "NL-S-21",
+          "account": "WOmzNohOlh"
+        }
+      ]
+    },
+    {
+      "ref": "I1",
+      "type": "purchase_invoice",
+      "contact": "lev-nl",
+      "date": "2026-01-10",
+      "why": "Een binnenlandse inkoop tegen 21 %: de btw is voorbelasting in rubriek 5b, en de aangifte kent geen rubriek voor de inkoopwaarde.",
+      "lines": [
+        {
+          "name": "Handelsgoederen voor de verkoop",
+          "quantity": 1,
+          "unit_price": 4000,
+          "tax": "NL-P-21",
+          "account": "WKprInhInh"
+        }
+      ]
+    },
+    {
+      "ref": "V2",
+      "type": "sale_invoice",
+      "contact": "klant-nl",
+      "date": "2026-01-28",
+      "why": "Het verlaagde tarief van 9 %: een tweede positief tarief, in rubriek 1b in plaats van 1a.",
+      "lines": [
+        {
+          "name": "Boeken",
+          "quantity": 200,
+          "unit_price": 25,
+          "tax": "NL-S-09",
+          "account": "WOmzNohOlv"
+        }
+      ]
+    },
+    {
+      "ref": "I2",
+      "type": "purchase_invoice",
+      "contact": "lev-de",
+      "date": "2026-02-05",
+      "why": "Een intracommunautaire verwerving: de btw staat in rubriek 4b als verschuldigd en in 5b als voorbelasting, en de twee heffen elkaar in de boeken op.",
+      "lines": [
+        {
+          "name": "Onderdelen uit Duitsland",
+          "quantity": 1,
+          "unit_price": 5000,
+          "tax": "NL-P-ICV-21",
+          "account": "WKprInhInh"
+        }
+      ]
+    },
+    {
+      "ref": "V3",
+      "type": "sale_invoice",
+      "contact": "klant-de",
+      "date": "2026-02-18",
+      "why": "Een intracommunautaire levering tegen 0 %: rubriek 3b en de opgaaf ICP, met de vermelding van tabel II, post 6, op de factuur.",
+      "lines": [
+        {
+          "name": "Handelsgoederen naar Duitsland",
+          "quantity": 1,
+          "unit_price": 8000,
+          "tax": "NL-S-ICL",
+          "account": "WOmzNohOli"
+        }
+      ]
+    },
+    {
+      "ref": "V4",
+      "type": "sale_invoice",
+      "contact": "klant-be",
+      "date": "2026-03-10",
+      "why": "Een dienst aan een ondernemer in België: ook rubriek 3b, met «btw verlegd» op de factuur.",
+      "lines": [
+        {
+          "name": "Advieswerk voor een Belgische klant",
+          "quantity": 1,
+          "unit_price": 3000,
+          "tax": "NL-S-ICD",
+          "account": "WOmzNodOdi"
+        }
+      ]
+    },
+    {
+      "ref": "V5",
+      "type": "sale_credit_note",
+      "contact": "klant-nl",
+      "date": "2026-03-25",
+      "why": "Een creditnota op V1: zij verlaagt rubriek 1a zelf, want de Nederlandse aangifte heeft geen rubriek voor creditnota's.",
+      "lines": [
+        {
+          "name": "Retour handelsgoederen",
+          "quantity": 1,
+          "unit_price": 750,
+          "tax": "NL-S-21",
+          "account": "WOmzNohOlh"
+        }
+      ]
+    },
+    {
+      "ref": "I3",
+      "type": "purchase_invoice",
+      "contact": "lev-be",
+      "date": "2026-04-08",
+      "why": "Een dienst van een Belgische ondernemer: de btw wordt naar ons verlegd, rubriek 4b en 5b.",
+      "lines": [
+        {
+          "name": "Juridisch advies uit België",
+          "quantity": 1,
+          "unit_price": 1500,
+          "tax": "NL-P-ICD-21",
+          "account": "WBedAeaAdv"
+        }
+      ]
+    },
+    {
+      "ref": "V6",
+      "type": "sale_invoice",
+      "contact": "klant-us",
+      "date": "2026-04-20",
+      "why": "Uitvoer naar de Verenigde Staten tegen 0 %: rubriek 3a.",
+      "lines": [
+        {
+          "name": "Handelsgoederen naar de Verenigde Staten",
+          "quantity": 1,
+          "unit_price": 6000,
+          "tax": "NL-S-UIT",
+          "account": "WOmzNohOln"
+        }
+      ]
+    },
+    {
+      "ref": "I4",
+      "type": "purchase_invoice",
+      "contact": "lev-us",
+      "date": "2026-05-12",
+      "why": "Een softwareabonnement van een Amerikaanse leverancier: de btw wordt naar ons verlegd, rubriek 4a en 5b, zonder factuur die onder EN 16931 valt.",
+      "lines": [
+        {
+          "name": "Softwareabonnement",
+          "quantity": 12,
+          "unit_price": 50,
+          "tax": "NL-P-BEU-21",
+          "account": "WBedKanSof"
+        }
+      ]
+    },
+    {
+      "ref": "V7",
+      "type": "sale_invoice",
+      "contact": "klant-nl",
+      "date": "2026-05-20",
+      "why": "Onderaanneming in de bouw: de btw wordt naar de afnemer verlegd en de omzet komt in rubriek 1e.",
+      "lines": [
+        {
+          "name": "Onderaanneming — montagewerk",
+          "quantity": 1,
+          "unit_price": 4000,
+          "tax": "NL-S-VERL",
+          "account": "WOmzNodOdg"
+        }
+      ]
+    },
+    {
+      "ref": "I5",
+      "type": "purchase_invoice",
+      "contact": "lev-nl",
+      "date": "2026-06-03",
+      "why": "De andere kant van een binnenlandse verlegging: rubriek 2a als verschuldigde btw en 5b als voorbelasting.",
+      "lines": [
+        {
+          "name": "Uitbesteed montagewerk",
+          "quantity": 1,
+          "unit_price": 2500,
+          "tax": "NL-P-VERL-21",
+          "account": "WKprKuwKuw"
+        }
+      ]
+    },
+    {
+      "ref": "I6",
+      "type": "purchase_invoice",
+      "contact": "lev-nl",
+      "date": "2026-07-14",
+      "why": "Relatiegeschenken waarvan de aftrek door het BUA is uitgesloten: de btw komt op de kostenrekening en niet in rubriek 5b.",
+      "lines": [
+        {
+          "name": "Relatiegeschenken",
+          "quantity": 20,
+          "unit_price": 25,
+          "tax": "NL-P-21-BUA",
+          "account": "WBedVkkRel"
+        }
+      ]
+    },
+    {
+      "ref": "I7",
+      "type": "purchase_invoice",
+      "contact": "lev-nl",
+      "date": "2026-08-19",
+      "why": "Een investering in inventaris: de btw is voorbelasting in 5b en de regel staat op de balans.",
+      "lines": [
+        {
+          "name": "Kantoorinventaris",
+          "quantity": 1,
+          "unit_price": 3000,
+          "tax": "NL-P-21",
+          "account": "BMvaBeiVvp"
+        }
+      ]
+    },
+    {
+      "ref": "V8",
+      "type": "sale_invoice",
+      "contact": "klant-nl",
+      "date": "2026-09-01",
+      "why": "Vrijgestelde verhuur van bedrijfsruimte: de omzet staat in de boeken en op geen enkele rubriek van de aangifte.",
+      "lines": [
+        {
+          "name": "Huur bedrijfsruimte september",
+          "quantity": 1,
+          "unit_price": 1200,
+          "tax": "NL-S-VRIJ-OZ",
+          "account": "WOmzNodNod"
+        }
+      ]
+    },
+    {
+      "ref": "I8",
+      "type": "purchase_invoice",
+      "contact": "lev-nl",
+      "date": "2026-10-06",
+      "why": "Een inkoop tegen 9 %: de voorbelasting van het verlaagde tarief komt in dezelfde rubriek 5b.",
+      "lines": [
+        {
+          "name": "Vakliteratuur",
+          "quantity": 1,
+          "unit_price": 200,
+          "tax": "NL-P-09",
+          "account": "WBedKanVak"
+        }
+      ]
+    },
+    {
+      "ref": "V9",
+      "type": "sale_invoice",
+      "contact": "klant-nl",
+      "date": "2026-11-16",
+      "why": "Diensten tegen 21 %: dezelfde rubriek 1a als goederen, op een andere omzetrekening van het RGS.",
+      "lines": [
+        {
+          "name": "Adviesuren",
+          "quantity": 20,
+          "unit_price": 95,
+          "tax": "NL-S-21",
+          "account": "WOmzNodOdh"
+        }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "B1",
+      "direction": "inbound",
+      "date": "2026-02-16",
+      "amount": 12100,
+      "contact": "klant-nl",
+      "journal": "BNK",
+      "match": "V1",
+      "why": "Een ontvangst die haar factuur precies voldoet, btw inbegrepen."
+    },
+    {
+      "ref": "B2",
+      "direction": "outbound",
+      "date": "2026-02-09",
+      "amount": 4840,
+      "contact": "lev-nl",
+      "journal": "BNK",
+      "match": "I1",
+      "why": "De leverancierskant van het afletteren, zodat het niet aan één kant van de balans alleen bewezen is."
+    },
+    {
+      "ref": "B3",
+      "direction": "inbound",
+      "date": "2026-12-01",
+      "amount": 500,
+      "contact": "klant-nl",
+      "journal": "BNK",
+      "match": null,
+      "why": "Een betaling zonder factuur ertegenover: zij blijft onafgeletterd op de debiteurenrekening, zoals in een echt grootboek."
+    }
+  ]
+}

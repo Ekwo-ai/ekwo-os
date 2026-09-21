@@ -1,0 +1,225 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "NL-OB-AANGIFTE",
+  "name": "Aangifte omzetbelasting (btw-aangifte)",
+  "period": [
+    "month",
+    "quarter",
+    "year"
+  ],
+  "period_default": "quarter",
+  "valid_from": "2026-01-01",
+  "legal_reference": "Wet op de omzetbelasting 1968, art. 14, lid 1 — de in een tijdvak verschuldigd geworden belasting wordt op aangifte voldaan. Tijdvak: Uitvoeringsregeling Algemene wet inzake rijksbelastingen 1994, art. 25, lid 1 — het kalenderkwartaal, of de kalendermaand als de inspecteur dat vordert of de belastingplichtige over een kalendermaand aangifte doet; lid 3 — in bijzondere gevallen een ander tijdvak, zoals het jaar. Het kwartaal geldt dus voor iedereen die niets anders heeft gevraagd of opgelegd gekregen, en is daarom voorgesteld. De rubrieken zijn die van de aangifte 2026, zoals de Belastingdienst ze toelicht en in de Nederlandse Taxonomie publiceert",
+  "source": "ur-awr",
+  "boxes": [
+    {
+      "box": "1a",
+      "kind": "base",
+      "name": "Leveringen/diensten belast met hoog tarief — omzet",
+      "sequence": 10,
+      "xml_element": "bd-i:TaxedTurnoverSuppliesServicesGeneralTariff",
+      "legal_reference": "Toelichting bij de btw-aangifte (omzetbelasting) 2026, vraag 1a; Wet op de omzetbelasting 1968, art. 9, lid 1",
+      "source": "toelichting-ob-2026"
+    },
+    {
+      "box": "1a",
+      "kind": "tax",
+      "name": "Leveringen/diensten belast met hoog tarief — btw",
+      "sequence": 20,
+      "xml_element": "bd-i:ValueAddedTaxSuppliesServicesGeneralTariff",
+      "legal_reference": "Toelichting bij de btw-aangifte (omzetbelasting) 2026, vraag 1a; Wet op de omzetbelasting 1968, art. 9, lid 1",
+      "source": "toelichting-ob-2026"
+    },
+    {
+      "box": "1b",
+      "kind": "base",
+      "name": "Leveringen/diensten belast met laag tarief — omzet",
+      "sequence": 30,
+      "xml_element": "bd-i:TaxedTurnoverSuppliesServicesReducedTariff",
+      "legal_reference": "Toelichting bij de btw-aangifte (omzetbelasting) 2026, vraag 1b; Wet op de omzetbelasting 1968, art. 9, lid 2, onderdeel a",
+      "source": "toelichting-ob-2026"
+    },
+    {
+      "box": "1b",
+      "kind": "tax",
+      "name": "Leveringen/diensten belast met laag tarief — btw",
+      "sequence": 40,
+      "xml_element": "bd-i:ValueAddedTaxSuppliesServicesReducedTariff",
+      "legal_reference": "Toelichting bij de btw-aangifte (omzetbelasting) 2026, vraag 1b; Wet op de omzetbelasting 1968, art. 9, lid 2, onderdeel a",
+      "source": "toelichting-ob-2026"
+    },
+    {
+      "box": "1c",
+      "kind": "base",
+      "name": "Leveringen/diensten belast met overige tarieven, behalve 0% — omzet",
+      "sequence": 50,
+      "xml_element": "bd-i:TaxedTurnoverSuppliesServicesOtherRates",
+      "legal_reference": "Toelichting bij de btw-aangifte (omzetbelasting) 2026, vraag 1c — het forfaitaire tarief voor sportkantines; geen btw-code van dit pakket boekt hierop",
+      "source": "toelichting-ob-2026"
+    },
+    {
+      "box": "1c",
+      "kind": "tax",
+      "name": "Leveringen/diensten belast met overige tarieven, behalve 0% — btw",
+      "sequence": 60,
+      "xml_element": "bd-i:ValueAddedTaxSuppliesServicesOtherRates",
+      "legal_reference": "Toelichting bij de btw-aangifte (omzetbelasting) 2026, vraag 1c",
+      "source": "toelichting-ob-2026"
+    },
+    {
+      "box": "1d",
+      "kind": "base",
+      "name": "Privégebruik — omzet",
+      "sequence": 70,
+      "xml_element": "bd-i:TaxedTurnoverPrivateUse",
+      "legal_reference": "Toelichting bij de btw-aangifte (omzetbelasting) 2026, vraag 1d — alleen in de laatste aangifte van het jaar; Wet op de omzetbelasting 1968, art. 3, lid 3, en art. 4, lid 2. Geen btw-code van dit pakket boekt hierop: het privégebruik is een correctie op de afgetrokken voorbelasting die een boeker aan het einde van het jaar maakt",
+      "source": "toelichting-ob-2026"
+    },
+    {
+      "box": "1d",
+      "kind": "tax",
+      "name": "Privégebruik — btw",
+      "sequence": 80,
+      "xml_element": "bd-i:ValueAddedTaxPrivateUse",
+      "legal_reference": "Toelichting bij de btw-aangifte (omzetbelasting) 2026, vraag 1d",
+      "source": "toelichting-ob-2026"
+    },
+    {
+      "box": "1e",
+      "kind": "base",
+      "name": "Leveringen/diensten belast met 0% of niet bij u belast",
+      "sequence": 90,
+      "xml_element": "bd-i:SuppliesServicesNotTaxed",
+      "legal_reference": "Toelichting bij de btw-aangifte (omzetbelasting) 2026, vraag 1e — het nultarief van tabel II in Nederland, en de leveringen en diensten waarbij de btw naar de afnemer is verlegd; Wet op de omzetbelasting 1968, art. 9, lid 2, onderdeel b",
+      "source": "toelichting-ob-2026"
+    },
+    {
+      "box": "2a",
+      "kind": "base",
+      "name": "Leveringen/diensten waarbij de btw naar u is verlegd — omzet",
+      "sequence": 100,
+      "xml_element": "bd-i:TurnoverSuppliesServicesByWhichVATTaxationIsTransferred",
+      "legal_reference": "Toelichting bij de btw-aangifte (omzetbelasting) 2026, vraag 2a; Wet op de omzetbelasting 1968, art. 12, lid 5",
+      "source": "toelichting-ob-2026"
+    },
+    {
+      "box": "2a",
+      "kind": "tax",
+      "name": "Leveringen/diensten waarbij de btw naar u is verlegd — btw",
+      "sequence": 110,
+      "xml_element": "bd-i:ValueAddedTaxSuppliesServicesByWhichVATTaxationIsTransferred",
+      "legal_reference": "Toelichting bij de btw-aangifte (omzetbelasting) 2026, vraag 2a; Wet op de omzetbelasting 1968, art. 12, lid 5",
+      "source": "toelichting-ob-2026"
+    },
+    {
+      "box": "3a",
+      "kind": "base",
+      "name": "Leveringen naar landen buiten de EU (uitvoer)",
+      "sequence": 120,
+      "xml_element": "bd-i:SuppliesToCountriesOutsideTheEC",
+      "legal_reference": "Toelichting bij de btw-aangifte (omzetbelasting) 2026, vraag 3a; Wet op de omzetbelasting 1968, tabel II, onderdeel a, post 2",
+      "source": "toelichting-ob-2026"
+    },
+    {
+      "box": "3b",
+      "kind": "base",
+      "name": "Leveringen naar of diensten in landen binnen de EU",
+      "sequence": 130,
+      "xml_element": "bd-i:SuppliesToCountriesWithinTheEC",
+      "legal_reference": "Toelichting bij de btw-aangifte (omzetbelasting) 2026, vraag 3b — te specificeren in de opgaaf ICP; Wet op de omzetbelasting 1968, tabel II, onderdeel a, post 6, art. 6, lid 1, en art. 37a",
+      "source": "toelichting-ob-2026"
+    },
+    {
+      "box": "3c",
+      "kind": "base",
+      "name": "Installatie/afstandsverkopen binnen de EU",
+      "sequence": 140,
+      "xml_element": "bd-i:InstallationDistanceSalesWithinTheEC",
+      "legal_reference": "Toelichting bij de btw-aangifte (omzetbelasting) 2026, vraag 3c; Wet op de omzetbelasting 1968, art. 5a. Geen btw-code van dit pakket boekt hierop: het eenloketsysteem (OSS) valt buiten de aangifte en buiten dit pakket",
+      "source": "toelichting-ob-2026"
+    },
+    {
+      "box": "4a",
+      "kind": "base",
+      "name": "Leveringen/diensten uit landen buiten de EU — omzet",
+      "sequence": 150,
+      "xml_element": "bd-i:TurnoverFromTaxedSuppliesFromCountriesOutsideTheEC",
+      "legal_reference": "Toelichting bij de btw-aangifte (omzetbelasting) 2026, vraag 4a — invoer met vergunning artikel 23 en diensten van buiten de EU waarbij de btw naar u is verlegd; Wet op de omzetbelasting 1968, art. 12, lid 2, en art. 23",
+      "source": "toelichting-ob-2026"
+    },
+    {
+      "box": "4a",
+      "kind": "tax",
+      "name": "Leveringen/diensten uit landen buiten de EU — btw",
+      "sequence": 160,
+      "xml_element": "bd-i:ValueAddedTaxOnSuppliesFromCountriesOutsideTheEC",
+      "legal_reference": "Toelichting bij de btw-aangifte (omzetbelasting) 2026, vraag 4a",
+      "source": "toelichting-ob-2026"
+    },
+    {
+      "box": "4b",
+      "kind": "base",
+      "name": "Leveringen/diensten uit landen binnen de EU — omzet",
+      "sequence": 170,
+      "xml_element": "bd-i:TurnoverFromTaxedSuppliesFromCountriesWithinTheEC",
+      "legal_reference": "Toelichting bij de btw-aangifte (omzetbelasting) 2026, vraag 4b — intracommunautaire verwervingen en diensten van ondernemers uit andere lidstaten; Wet op de omzetbelasting 1968, art. 17a en art. 12, lid 2",
+      "source": "toelichting-ob-2026"
+    },
+    {
+      "box": "4b",
+      "kind": "tax",
+      "name": "Leveringen/diensten uit landen binnen de EU — btw",
+      "sequence": 180,
+      "xml_element": "bd-i:ValueAddedTaxOnSuppliesFromCountriesWithinTheEC",
+      "legal_reference": "Toelichting bij de btw-aangifte (omzetbelasting) 2026, vraag 4b",
+      "source": "toelichting-ob-2026"
+    },
+    {
+      "box": "5a",
+      "kind": "total",
+      "name": "Verschuldigde btw (rubrieken 1a tot en met 4b)",
+      "sequence": 190,
+      "plus": [
+        "1a:tax",
+        "1b:tax",
+        "1c:tax",
+        "1d:tax",
+        "2a:tax",
+        "4a:tax",
+        "4b:tax"
+      ],
+      "xml_element": "bd-i:ValueAddedTaxOwed",
+      "legal_reference": "Toelichting bij de btw-aangifte (omzetbelasting) 2026, vraag 5a — de som van de btw van de rubrieken 1 tot en met 4, die de aangifte zelf invult (Belastingdienst, «Ik moet btw-aangifte doen — hoe vul ik die in?»); Nederlandse Taxonomie NT20, bd-rpt-ob-aangifte-2026, element bd-i:ValueAddedTaxOwed",
+      "source": "nt-ob-2026"
+    },
+    {
+      "box": "5b",
+      "kind": "tax",
+      "name": "Voorbelasting",
+      "sequence": 200,
+      "xml_element": "bd-i:ValueAddedTaxOnInput",
+      "legal_reference": "Toelichting bij de btw-aangifte (omzetbelasting) 2026, vraag 5b; Wet op de omzetbelasting 1968, art. 15",
+      "source": "toelichting-ob-2026"
+    },
+    {
+      "box": "5g",
+      "kind": "total",
+      "name": "Totaal te betalen / terug te vragen",
+      "sequence": 210,
+      "plus": [
+        "5a"
+      ],
+      "minus": [
+        "5b"
+      ],
+      "xml_element": "bd-i:ValueAddedTaxOwedToBePaidBack",
+      "legal_reference": "Nederlandse Taxonomie NT20, bd-rpt-ob-aangifte-2026, element bd-i:ValueAddedTaxOwedToBePaidBack — «Het totaal van de terug te vragen respectievelijk de te betalen omzetbelasting». Het bedrag is 5a min 5b; een negatief bedrag is een teruggaaf en wordt niet op nul gezet. De tussenregels 5c tot en met 5f van de vroegere aangifte (subtotaal, vermindering volgens de kleineondernemersregeling, schattingen) komen in de gegevensset van de aangifte 2026 niet voor en staan daarom niet in dit formulier",
+      "source": "nt-ob-2026"
+    }
+  ],
+  "deadline": {
+    "rule": "last_day_of_month_after_period",
+    "legal_reference": "Algemene wet inzake rijksbelastingen, art. 19, lid 1 — de belasting wordt binnen één maand na het einde van het tijdvak betaald; art. 10, lid 2 — de aangifte wordt gedaan binnen een door de inspecteur gestelde termijn van ten minste een maand na het einde van het tijdvak. De uiterste datums staan in de aangiftebrief en in Mijn Belastingdienst Zakelijk; art. 19, lid 5, sluit de Algemene termijnenwet uit, zodat een datum die op een zaterdag, zondag of feestdag valt niet verschuift",
+    "source": "awr"
+  }
+}

@@ -1,0 +1,498 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "NL",
+  "name": "Nederland",
+  "version": "0.1.0",
+  "schema_min": "20260919190727",
+  "seed_sequence": 17,
+  "released_at": "2026-09-21",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "wet-ob",
+        "title": "Wet op de omzetbelasting 1968",
+        "publisher": "Overheid.nl — Wettenbank (wetten.overheid.nl)",
+        "url": "https://wetten.overheid.nl/BWBR0002629",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "wet-ob-2012",
+        "title": "Wet op de omzetbelasting 1968, tekst geldend van 1 oktober 2012 tot en met 31 december 2012 — algemeen tarief 21 percent, verlaagd tarief 6 percent",
+        "publisher": "Overheid.nl — Wettenbank (wetten.overheid.nl)",
+        "url": "https://wetten.overheid.nl/BWBR0002629/2012-10-01",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "wet-ob-2018",
+        "title": "Wet op de omzetbelasting 1968, tekst geldend van 1 januari 2018 tot en met 30 september 2018 — verlaagd tarief 6 percent",
+        "publisher": "Overheid.nl — Wettenbank (wetten.overheid.nl)",
+        "url": "https://wetten.overheid.nl/BWBR0002629/2018-01-01",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "wet-ob-2019",
+        "title": "Wet op de omzetbelasting 1968, tekst geldend van 1 januari 2019 tot en met 31 december 2019 — verlaagd tarief 9 percent",
+        "publisher": "Overheid.nl — Wettenbank (wetten.overheid.nl)",
+        "url": "https://wetten.overheid.nl/BWBR0002629/2019-01-01",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "stb-2012-321",
+        "title": "Wet van 12 juli 2012 tot wijziging van enkele belastingwetten en enige andere wetten (Wet uitwerking fiscale maatregelen Begrotingsakkoord 2013), Stb. 2012, 321 — artikel 9, eerste lid, Wet OB: «19 percent» wordt 21 percent",
+        "publisher": "Overheid.nl — Officiële bekendmakingen (Staatsblad)",
+        "url": "https://zoek.officielebekendmakingen.nl/stb-2012-321.html",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "stb-2018-504",
+        "title": "Wet van 19 december 2018 tot wijziging van enkele belastingwetten en enige andere wetten (Belastingplan 2019), Stb. 2018, 504 — artikel 9, tweede lid, onderdeel a, Wet OB: «6 percent» wordt «9 percent»",
+        "publisher": "Overheid.nl — Officiële bekendmakingen (Staatsblad)",
+        "url": "https://zoek.officielebekendmakingen.nl/stb-2018-504.html",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "uitvoeringsbesluit-ob",
+        "title": "Uitvoeringsbesluit omzetbelasting 1968",
+        "publisher": "Overheid.nl — Wettenbank (wetten.overheid.nl)",
+        "url": "https://wetten.overheid.nl/BWBR0002633",
+        "consulted_on": "2026-09-21",
+        "kind": "regulation"
+      },
+      {
+        "key": "bua",
+        "title": "Besluit uitsluiting aftrek omzetbelasting 1968",
+        "publisher": "Overheid.nl — Wettenbank (wetten.overheid.nl)",
+        "url": "https://wetten.overheid.nl/BWBR0002636",
+        "consulted_on": "2026-09-21",
+        "kind": "regulation"
+      },
+      {
+        "key": "awr",
+        "title": "Algemene wet inzake rijksbelastingen",
+        "publisher": "Overheid.nl — Wettenbank (wetten.overheid.nl)",
+        "url": "https://wetten.overheid.nl/BWBR0002320",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "ur-awr",
+        "title": "Uitvoeringsregeling Algemene wet inzake rijksbelastingen 1994",
+        "publisher": "Overheid.nl — Wettenbank (wetten.overheid.nl)",
+        "url": "https://wetten.overheid.nl/BWBR0006736",
+        "consulted_on": "2026-09-21",
+        "kind": "regulation"
+      },
+      {
+        "key": "bw2",
+        "title": "Burgerlijk Wetboek Boek 2 — titel 9, De jaarrekening en het jaarverslag",
+        "publisher": "Overheid.nl — Wettenbank (wetten.overheid.nl)",
+        "url": "https://wetten.overheid.nl/BWBR0003045",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "bw6",
+        "title": "Burgerlijk Wetboek Boek 6",
+        "publisher": "Overheid.nl — Wettenbank (wetten.overheid.nl)",
+        "url": "https://wetten.overheid.nl/BWBR0005289",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "bmj",
+        "title": "Besluit modellen jaarrekening",
+        "publisher": "Overheid.nl — Wettenbank (wetten.overheid.nl)",
+        "url": "https://wetten.overheid.nl/BWBR0003648",
+        "consulted_on": "2026-09-21",
+        "kind": "regulation"
+      },
+      {
+        "key": "aanbestedingswet",
+        "title": "Aanbestedingswet 2012",
+        "publisher": "Overheid.nl — Wettenbank (wetten.overheid.nl)",
+        "url": "https://wetten.overheid.nl/BWBR0032203",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "aanbestedingsbesluit",
+        "title": "Aanbestedingsbesluit",
+        "publisher": "Overheid.nl — Wettenbank (wetten.overheid.nl)",
+        "url": "https://wetten.overheid.nl/BWBR0032919",
+        "consulted_on": "2026-09-21",
+        "kind": "regulation"
+      },
+      {
+        "key": "stb-2018-321",
+        "title": "Besluit van 6 september 2018 tot wijziging van het Aanbestedingsbesluit en het Aanbestedingsbesluit op defensie- en veiligheidsgebied (elektronische facturering), Stb. 2018, 321 — in werking op 18 april 2019",
+        "publisher": "Overheid.nl — Officiële bekendmakingen (Staatsblad)",
+        "url": "https://zoek.officielebekendmakingen.nl/stb-2018-321.html",
+        "consulted_on": "2026-09-21",
+        "kind": "regulation"
+      },
+      {
+        "key": "toelichting-ob-2026",
+        "title": "Toelichting bij de btw-aangifte (omzetbelasting) 2026, voor ondernemers in Nederland, met de Engelse Explanatory notes to the VAT return",
+        "publisher": "Belastingdienst",
+        "url": "https://download.belastingdienst.nl/belastingdienst/docs/toelichting_bij_btw_aangifte_ob0731t62fd.pdf",
+        "consulted_on": "2026-09-21",
+        "kind": "form"
+      },
+      {
+        "key": "nt-ob-2026",
+        "title": "Nederlandse Taxonomie NT20, Belastingdienst — entrypoint bd-rpt-ob-aangifte-2026: de rubrieken van de digitale btw-aangifte 2026 en hun gegevenselementen",
+        "publisher": "Logius — Nederlandse Taxonomie (Standard Business Reporting)",
+        "url": "https://www.nltaxonomie.nl/nt20/bd/20251210/entrypoints/bd-rpt-ob-aangifte-2026.xsd",
+        "consulted_on": "2026-09-21",
+        "kind": "standard"
+      },
+      {
+        "key": "nt-icp-2026",
+        "title": "Nederlandse Taxonomie NT20, Belastingdienst — entrypoint bd-rpt-icp-opgaaf-2026: de opgaaf intracommunautaire prestaties",
+        "publisher": "Logius — Nederlandse Taxonomie (Standard Business Reporting)",
+        "url": "https://www.nltaxonomie.nl/nt20/bd/20251210/entrypoints/bd-rpt-icp-opgaaf-2026.xsd",
+        "consulted_on": "2026-09-21",
+        "kind": "standard"
+      },
+      {
+        "key": "aangifte-invullen",
+        "title": "Ik moet btw-aangifte doen — hoe vul ik die in?",
+        "publisher": "Belastingdienst",
+        "url": "https://www.belastingdienst.nl/wps/wcm/connect/nl/btw/content/ik-moet-btw-aangifte-doen-hoe-vul-ik-die-in",
+        "consulted_on": "2026-09-21",
+        "kind": "guidance"
+      },
+      {
+        "key": "opgaaf-icp",
+        "title": "Opgaaf ICP bij zakendoen met andere EU-landen",
+        "publisher": "Belastingdienst",
+        "url": "https://www.belastingdienst.nl/wps/wcm/connect/bldcontentnl/belastingdienst/zakelijk/btw/zakendoen_met_het_buitenland/goederen_en_diensten_naar_andere_eu_landen/opgaaf_icp/",
+        "consulted_on": "2026-09-21",
+        "kind": "guidance"
+      },
+      {
+        "key": "btw-verleggen",
+        "title": "Hoe werkt btw verleggen?",
+        "publisher": "Belastingdienst",
+        "url": "https://www.belastingdienst.nl/wps/wcm/connect/bldcontentnl/belastingdienst/zakelijk/btw/btw_berekenen_aan_uw_klanten/waarover_btw_berekenen/verleggingsregeling/hoe_werkt_btw_verleggen",
+        "consulted_on": "2026-09-21",
+        "kind": "guidance"
+      },
+      {
+        "key": "btw-tarieven",
+        "title": "Btw-tarieven: welke tarieven zijn er, en wanneer moet u ze toepassen?",
+        "publisher": "Belastingdienst",
+        "url": "https://www.belastingdienst.nl/wps/wcm/connect/bldcontentnl/belastingdienst/zakelijk/btw/btw_berekenen_aan_uw_klanten/btw_berekenen/btw_tarief/btw_tarief",
+        "consulted_on": "2026-09-21",
+        "kind": "guidance"
+      },
+      {
+        "key": "factuureisen",
+        "title": "Aan welke eisen moeten facturen voldoen voor uw btw-administratie?",
+        "publisher": "Belastingdienst",
+        "url": "https://www.belastingdienst.nl/wps/wcm/connect/bldcontentnl/belastingdienst/zakelijk/btw/administratie_bijhouden/facturen_maken/factuureisen/factuureisen",
+        "consulted_on": "2026-09-21",
+        "kind": "guidance"
+      },
+      {
+        "key": "mijn-belastingdienst",
+        "title": "Mijn Belastingdienst Zakelijk — waar de btw-aangifte en de opgaaf ICP worden ingediend",
+        "publisher": "Belastingdienst",
+        "url": "https://mijn.belastingdienst.nl/",
+        "consulted_on": "2026-09-21",
+        "kind": "portal"
+      },
+      {
+        "key": "rgs",
+        "title": "Referentie GrootboekSchema (RGS), definitieve versie 3.8 — het Excel-bestand met de referentiecodes, referentienummers, omschrijvingen en filters, werkblad MKB-RGS3.8-def",
+        "publisher": "Taakgroep RGS — publiek-private samenwerking binnen het SBR-programma (referentiegrootboekschema.nl)",
+        "url": "https://www.referentiegrootboekschema.nl/sites/default/files/kennisbank/RGS%203.8-def.xlsx",
+        "consulted_on": "2026-09-21",
+        "kind": "standard"
+      },
+      {
+        "key": "rgs-release",
+        "title": "Definitieve versie RGS 3.8 — de publicatie in de kennisbank",
+        "publisher": "Taakgroep RGS — publiek-private samenwerking binnen het SBR-programma (referentiegrootboekschema.nl)",
+        "url": "https://www.referentiegrootboekschema.nl/definitieve-versie-rgs-38",
+        "consulted_on": "2026-09-21",
+        "kind": "standard"
+      },
+      {
+        "key": "rgs-taxonomie",
+        "title": "Dataset RGS NL en EN labels — de koppeling van iedere RGS-code aan de begrippen van de Nederlandse Taxonomie, waaronder jenv-bw2 (Burgerlijk Wetboek 2, titel 9)",
+        "publisher": "Taakgroep RGS — publiek-private samenwerking binnen het SBR-programma (referentiegrootboekschema.nl)",
+        "url": "https://www.referentiegrootboekschema.nl/dataset-engelse-labels",
+        "consulted_on": "2026-09-21",
+        "kind": "standard"
+      },
+      {
+        "key": "kvk-deponeren",
+        "title": "Jaarrekeningen deponeren",
+        "publisher": "Kamer van Koophandel (KVK)",
+        "url": "https://www.kvk.nl/deponeren/jaarrekening-deponeren/",
+        "consulted_on": "2026-09-21",
+        "kind": "portal"
+      },
+      {
+        "key": "kvk-termijn",
+        "title": "Uiterste termijn deponeren jaarrekening",
+        "publisher": "Kamer van Koophandel (KVK)",
+        "url": "https://www.kvk.nl/deponeren/uiterste-termijn-deponeren-jaarrekening/",
+        "consulted_on": "2026-09-21",
+        "kind": "guidance"
+      },
+      {
+        "key": "kvk-nummer",
+        "title": "KVK-nummer: goed om te weten",
+        "publisher": "Kamer van Koophandel (KVK)",
+        "url": "https://www.kvk.nl/over-het-handelsregister/kvk-nummer-alles-wat-je-moet-weten/",
+        "consulted_on": "2026-09-21",
+        "kind": "guidance"
+      },
+      {
+        "key": "btw-richtlijn",
+        "title": "Richtlijn 2006/112/EG van de Raad van 28 november 2006 betreffende het gemeenschappelijke stelsel van belasting over de toegevoegde waarde",
+        "publisher": "Publicatiebureau van de Europese Unie — EUR-Lex",
+        "url": "https://eur-lex.europa.eu/eli/dir/2006/112/oj",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "richtlijn-efacturering",
+        "title": "Richtlijn 2014/55/EU van het Europees Parlement en de Raad van 16 april 2014 inzake elektronische facturering bij overheidsopdrachten",
+        "publisher": "Publicatiebureau van de Europese Unie — EUR-Lex",
+        "url": "https://eur-lex.europa.eu/eli/dir/2014/55/oj",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "en-16931",
+        "title": "EN 16931-1 — semantisch datamodel van de Europese elektronische factuur, en de conformiteit die richtlijn 2014/55/EU vraagt",
+        "publisher": "Europese Commissie",
+        "url": "https://ec.europa.eu/digital-building-blocks/sites/spaces/DIGITAL/pages/467108950/EN+16931+compliance",
+        "consulted_on": "2026-09-21",
+        "kind": "standard"
+      },
+      {
+        "key": "peppol-bis",
+        "title": "Peppol BIS Billing 3.0 — met de Nederlandse regels (NL-R) voor een verkoper in Nederland",
+        "publisher": "OpenPEPPOL",
+        "url": "https://docs.peppol.eu/poacc/billing/3.0/",
+        "consulted_on": "2026-09-21",
+        "kind": "standard"
+      },
+      {
+        "key": "eas",
+        "title": "Electronic Address Scheme (EAS) — lijst van identificatieschema's: 0106 KVK-nummer, 0190 OIN, 9944 Nederlands btw-nummer",
+        "publisher": "OpenPEPPOL",
+        "url": "https://docs.peppol.eu/poacc/billing/3.0/codelist/eas/",
+        "consulted_on": "2026-09-21",
+        "kind": "standard"
+      },
+      {
+        "key": "uncl5305",
+        "title": "UNCL5305 — codes voor de btw-categorie (BT-118 en BT-151), deelverzameling voor EN 16931",
+        "publisher": "OpenPEPPOL — lijst gepubliceerd door de Europese Commissie",
+        "url": "https://docs.peppol.eu/poacc/billing/3.0/codelist/UNCL5305/",
+        "consulted_on": "2026-09-21",
+        "kind": "standard"
+      },
+      {
+        "key": "vatex",
+        "title": "VATEX — codes voor de reden van btw-vrijstelling (BT-121)",
+        "publisher": "OpenPEPPOL — lijst gepubliceerd door de Europese Commissie",
+        "url": "https://docs.peppol.eu/poacc/billing/3.0/codelist/vatex/",
+        "consulted_on": "2026-09-21",
+        "kind": "standard"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "EUR",
+    "language": "nl",
+    "rounding_method": "half_up",
+    "opening_entry_label": "Beginbalans",
+    "closing_style": "result_accounts",
+    "roles": {
+      "receivable": "BVorDebHad",
+      "payable": "BSchCreHac",
+      "suspense": "BVorTusTov",
+      "rounding": "WBedAdlBov",
+      "retained_earnings": "BEivOvrAlr",
+      "current_year_result_profit": "BEivOreRvh",
+      "current_year_result_loss": "BEivOreRvh",
+      "sales": "WOmzNohOlh",
+      "purchase": "WKprInhInh",
+      "bank": "BLimBanRba",
+      "cash": "BLimKasKas",
+      "fx_gain": "WFbeWisWis",
+      "fx_loss": "WFbeWisWis",
+      "tax_payable": "BSchBepBtw",
+      "tax_receivable": "BVorVbkTvo"
+    },
+    "journal_roles": {
+      "sales": "VRK",
+      "purchase": "INK",
+      "miscellaneous": "MEM",
+      "opening": "OPN"
+    },
+    "fiscal_year_default": "calendar"
+  },
+  "languages": [
+    "en"
+  ],
+  "journals": [
+    {
+      "code": "VRK",
+      "type": "sales",
+      "name": "Verkoopboek",
+      "sequence": 10
+    },
+    {
+      "code": "INK",
+      "type": "purchase",
+      "name": "Inkoopboek",
+      "sequence": 20
+    },
+    {
+      "code": "BNK",
+      "type": "bank",
+      "name": "Bankboek",
+      "sequence": 30
+    },
+    {
+      "code": "KAS",
+      "type": "cash",
+      "name": "Kasboek",
+      "sequence": 40
+    },
+    {
+      "code": "MEM",
+      "type": "general",
+      "name": "Memoriaal",
+      "sequence": 50
+    },
+    {
+      "code": "OPN",
+      "type": "opening",
+      "name": "Openingsbalans",
+      "sequence": 60
+    }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "RGS — Referentie GrootboekSchema 3.8, MKB-selectie",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": [
+        "NL-BMJ-C",
+        "NL-BMJ-E"
+      ],
+      "legal_reference": "Nederland schrijft geen rekeningschema voor: Burgerlijk Wetboek Boek 2, art. 10, en Algemene wet inzake rijksbelastingen, art. 52, eisen een administratie waaruit rechten en verplichtingen te allen tijde blijken, zonder vorm. Dit schema neemt de codes en omschrijvingen van het Referentie GrootboekSchema 3.8 over — de standaard van Belastingdienst, KVK, CBS en banken — voor een selectie van 283 rekeningen uit de filter «Basis» van het werkblad MKB-RGS3.8-def, met hun rubrieken op niveau 2 en 3",
+      "source": "rgs"
+    }
+  ],
+  "documents": {
+    "numbering": "gapless_per_year",
+    "number_format": "{CODE}/{YYYY}/{NNNN}",
+    "legal_payment_days": 30,
+    "late_payment_reference": "Burgerlijk Wetboek Boek 6, art. 119a — wettelijke handelsrente vanaf de dertigste dag na ontvangst van de factuur, gelijk aan de herfinancieringsrente van de Europese Centrale Bank vermeerderd met acht procentpunten (art. 6:120, lid 2); art. 6:96, lid 4 — een vergoeding voor buitengerechtelijke incassokosten van ten minste 40 euro, zonder aanmaning verschuldigd",
+    "tax_point": "invoice_if_issued",
+    "posted_edit_policy": "reversal_only",
+    "references": {
+      "numbering": {
+        "legal_reference": "Wet op de omzetbelasting 1968, art. 35a, lid 1, onderdeel b — de factuur vermeldt «een opeenvolgend nummer, met één of meer reeksen, waardoor de factuur eenduidig wordt geïdentificeerd». De wet eist een opeenvolgende en eenduidige nummering, geen vorm; gapless_per_year is de gebruikelijke lezing, sequential zou ook te verdedigen zijn",
+        "source": "wet-ob"
+      },
+      "payment_terms": {
+        "legal_reference": "Burgerlijk Wetboek Boek 6, art. 119a, lid 2, onderdeel a — is geen uiterste dag van betaling overeengekomen, dan is de wettelijke handelsrente van rechtswege verschuldigd vanaf 30 dagen na de dag volgende op die waarop de schuldenaar de factuur heeft ontvangen; lid 5 — een overeengekomen termijn van ten hoogste 60 dagen",
+        "source": "bw6"
+      },
+      "tax_point": {
+        "legal_reference": "Wet op de omzetbelasting 1968, art. 13, lid 1 — de belasting wordt verschuldigd: onderdeel a, waar een factuur moet worden uitgereikt (art. 34c), op het tijdstip van de uitreiking of, indien die niet tijdig plaatsvindt, op het tijdstip waarop zij uiterlijk had moeten geschieden — de vijftiende dag van de maand na de levering (art. 34g); onderdeel b, in andere gevallen op het tijdstip van de levering of de dienst. invoice_if_issued zegt die twee samen. Lid 2 — de belasting wordt uiterlijk verschuldigd bij ontvangst van de vergoeding: die vooruitbetaling kan het pakket niet uitdrukken, omdat de kern geen document voor een vooruitbetaling kent",
+        "source": "wet-ob"
+      },
+      "posted_edit_policy": {
+        "legal_reference": "Wet op de omzetbelasting 1968, art. 34f — een document dat wijzigingen aanbrengt in de oorspronkelijke factuur en er specifiek en ondubbelzinnig naar verwijst, geldt als factuur: een uitgereikte factuur wordt gecorrigeerd door een nieuw document, niet door haar te veranderen. Algemene wet inzake rijksbelastingen, art. 52, lid 1 en 4 — de administratie moet de rechten en verplichtingen te allen tijde doen blijken en zeven jaar worden bewaard",
+        "source": "wet-ob"
+      }
+    },
+    "mentions": [
+      {
+        "code": "reverse_charge",
+        "applies_when": "reverse_charge",
+        "text": "Btw verlegd.",
+        "sequence": 10,
+        "legal_reference": "Wet op de omzetbelasting 1968, art. 35a, lid 1, onderdeel m — wanneer de afnemer tot voldoening van de belasting is gehouden, de vermelding «btw verlegd»; onderdeel d — met het btw-identificatienummer van de afnemer",
+        "source": "wet-ob"
+      },
+      {
+        "code": "intracom_goods",
+        "applies_when": "intra_eu_goods",
+        "text": "Intracommunautaire levering — 0%, tabel II, onderdeel a, post 6, Wet op de omzetbelasting 1968.",
+        "sequence": 20,
+        "legal_reference": "Wet op de omzetbelasting 1968, art. 35a, lid 1, onderdeel l — bij leveringen met toepassing van tabel II, onderdeel a, post 6, «enige aanduiding daarvan»; onderdeel d — het btw-identificatienummer van de afnemer",
+        "source": "wet-ob"
+      },
+      {
+        "code": "intracom_services",
+        "applies_when": "intra_eu_services",
+        "text": "Btw verlegd.",
+        "sequence": 30,
+        "legal_reference": "Wet op de omzetbelasting 1968, art. 35a, lid 1, onderdeel m — de afnemer in de andere lidstaat is tot voldoening van de belasting gehouden (art. 196 van richtlijn 2006/112/EG)",
+        "source": "wet-ob"
+      },
+      {
+        "code": "export",
+        "applies_when": "export",
+        "text": "Uitvoer — 0%, tabel II, onderdeel a, post 2, Wet op de omzetbelasting 1968.",
+        "sequence": 40,
+        "legal_reference": "Wet op de omzetbelasting 1968, art. 35a, lid 1, onderdelen h en i — de vergoeding per tarief en het toegepaste tarief; tabel II, onderdeel a, post 2",
+        "source": "wet-ob"
+      },
+      {
+        "code": "exempt",
+        "applies_when": "exempt",
+        "text": "Vrijgesteld van omzetbelasting op grond van artikel 11 van de Wet op de omzetbelasting 1968.",
+        "sequence": 50,
+        "legal_reference": "Wet op de omzetbelasting 1968, art. 35a, lid 1, onderdeel l — in geval van een vrijstelling «enige aanduiding daarvan»; art. 11",
+        "source": "wet-ob"
+      },
+      {
+        "code": "late_payment",
+        "applies_when": "late_payment",
+        "text": "Bij betaling na de vervaldag is de wettelijke handelsrente verschuldigd, en een vergoeding voor incassokosten van ten minste 40 euro.",
+        "sequence": 60,
+        "legal_reference": "Burgerlijk Wetboek Boek 6, art. 119a en art. 96, lid 4 — de rente en de vergoeding zijn van rechtswege verschuldigd; de vermelding op de factuur is een gebruik, geen wettelijke eis",
+        "source": "bw6"
+      }
+    ]
+  },
+  "einvoicing": {
+    "profile": "peppol-bis-3",
+    "party_scheme": "0106",
+    "vat_scheme": "9944",
+    "legal_reference": "Aanbestedingsbesluit, art. 6, lid 1, ingevoegd bij Stb. 2018, 321 en in werking op 18 april 2019 — aanbestedende diensten en speciale-sectorbedrijven ontvangen en verwerken elektronische facturen die voldoen aan de Europese norm EN 16931 (richtlijn 2014/55/EU). Dat is een plicht om te ONTVANGEN; Nederland legt geen plicht op om elektronisch te factureren, noch aan de overheid (B2G) noch tussen ondernemingen (B2B): Wet op de omzetbelasting 1968, art. 35b, lid 1 — elektronische facturering wordt toegepast behoudens aanvaarding door de afnemer. Er is daarom geen mandatory_from. Het profiel is Peppol BIS Billing 3.0, dat de Nederlandse regels bevat; het partijschema is het KVK-nummer (EAS 0106), het btw-schema het Nederlandse btw-nummer (EAS 9944). Een overheidsorganisatie wordt op Peppol ook vaak met haar OIN (EAS 0190) geadresseerd",
+    "source": "aanbestedingsbesluit"
+  },
+  "bank": {
+    "statement_formats": [
+      "camt.053",
+      "mt940"
+    ],
+    "payment_formats": [
+      "pain.001",
+      "pain.008"
+    ]
+  }
+}

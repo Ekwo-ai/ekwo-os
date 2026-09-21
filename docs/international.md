@@ -2052,3 +2052,70 @@ so the packs carry the *Système normal* and nothing else.
 **The currencies.** XOF is added to the seed, at no decimal. XAF, KMF, GNF and
 CDF come with the first pack that needs each; the note above about the seed's
 eleven currencies is now twelve.
+
+## The Netherlands
+
+Written from published sources alone, on 21 September 2026, and `community`
+like every pack nobody who files the return has read. It carries a selection of
+**283 postable accounts of the Referentie GrootboekSchema 3.8** under their RGS
+reference codes, the rates of article 9 of the *Wet op de omzetbelasting 1968*
+with the reduced rate's move from 6 % to 9 % on 1 January 2019, the rubrics of
+the **2026 aangifte omzetbelasting** keyed to their elements in the Dutch
+Taxonomy, and **models C and E** of the *Besluit modellen jaarrekening*. The
+pack's own [`README`](../packs/nl/README.md) ends on the ten points a reviewer
+should look at first; four things are worth knowing here.
+
+- **A reference chart is not a legal chart, and the pack says which it is.**
+  The Netherlands prescribes no chart; the RGS is a standard of the Standard
+  Business Reporting programme that Dutch software maps its ledgers onto. The
+  pack uses the RGS reference *codes* as account codes, because they are the
+  only identifiers in the published file that nest by prefix — the reference
+  *numbers* lose their leading zero on some rows — and the statements read
+  them by prefix.
+- **The mapping to the statements is published, not inferred.** The RGS
+  publishes with the chart a dataset linking every code to the taxonomy
+  concepts it reports in, the `jenv-bw2` concepts of Book 2, title 9 of the
+  Civil Code among them. The lines of models C and E follow it.
+- **E-invoicing is an obligation to receive, and only for the State.** The
+  pack declares Peppol BIS 3.0, the KVK number (EAS 0106) and the Dutch VAT
+  number (EAS 9944), and no `mandatory_from`, because no Dutch text obliges a
+  business to send an electronic invoice to anybody.
+- **Out of scope, on purpose.** The ICP statement as a form of its own, the
+  file of either declaration, the OSS return, the small-business scheme, cash
+  accounting under article 26, the margin schemes, the *suppletie*, corporate
+  income tax, and the XBRL fact keys of the annual accounts.
+
+### From the Netherlands
+
+Four things the pack could not say, each a change to the core rather than to a
+pack, and none taken here.
+
+**The recapitulative statement is still not a form a pack can declare.** The
+*opgaaf intracommunautaire prestaties* of article 37a is filed on its own
+cadence — monthly for goods, quarterly on option below a threshold, quarterly
+on option for services — and the Belastingdienst publishes it as an entrypoint
+of its own (`bd-rpt-icp-opgaaf-2026`). `ec_sales_list()` computes its lines from
+box 3b, which is enough to fill it by hand; what is missing is the form, the
+gap *From the recapitulative statement* already names. The Dutch statement
+adds one more voice to it and asks nothing new, except that the cadence of
+goods and the cadence of services differ, as in Luxembourg.
+
+**A statement cannot carry a fact key that is a plain element.** The Dutch
+Taxonomy names `jenv-bw2-i:TradeReceivables`, an element with no dimension, and
+the format refuses a key that is not a metric plus a member — the gap Estonia
+raised. The lines carry `xbrl: null` and name the concept only in the pack's
+README. *Fix*: the one proposed under Estonia.
+
+**A heading of the RGS is postable in the RGS and a heading here.** RGS levels
+2 and 3 are aggregation codes and level 4 is where a ledger posts, which is how
+the pack reads them. But a Dutch ledger keyed on RGS may post at level 5
+(*mutaties*) under a level-4 code, and the format has no way to say that a
+level-4 account is postable **and** has children. The pack stops at level 4.
+*Fix*: none needed until a user wants level 5; the day one does, a chart would
+need either a postable-heading flag or level 5 as its leaves.
+
+**The payment branch of the tax point.** Article 13(2) makes the tax due, at
+the latest, when the consideration is received — so an advance payment moves
+the tax point forward. The pack declares `invoice_if_issued` for paragraph 1;
+paragraph 2 waits for the prepayment document the core does not have, the gap
+already written under the tax point in [`packs.md`](packs.md).

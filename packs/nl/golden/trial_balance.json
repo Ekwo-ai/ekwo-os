@@ -1,0 +1,126 @@
+{
+  "from": "2026-01-01",
+  "to": "2026-12-31",
+  "accounts": {
+    "BLimBanRba": {
+      "debit": "12600.00",
+      "credit": "4840.00",
+      "closing": "7760.00"
+    },
+    "BMvaBeiVvp": {
+      "debit": "3000.00",
+      "credit": "0.00",
+      "closing": "3000.00"
+    },
+    "BSchBepBla": {
+      "debit": "157.50",
+      "credit": "2499.00",
+      "closing": "-2341.50"
+    },
+    "BSchBepBlb": {
+      "debit": "0.00",
+      "credit": "126.00",
+      "closing": "-126.00"
+    },
+    "BSchBepBlu": {
+      "debit": "0.00",
+      "credit": "1365.00",
+      "closing": "-1365.00"
+    },
+    "BSchBepBlv": {
+      "debit": "0.00",
+      "credit": "450.00",
+      "closing": "-450.00"
+    },
+    "BSchBepBlw": {
+      "debit": "0.00",
+      "credit": "525.00",
+      "closing": "-525.00"
+    },
+    "BSchBepBoo": {
+      "debit": "3504.00",
+      "credit": "0.00",
+      "closing": "3504.00"
+    },
+    "BSchCreHac": {
+      "debit": "4840.00",
+      "credit": "18893.00",
+      "closing": "-14053.00"
+    },
+    "BVorDebHad": {
+      "debit": "42049.00",
+      "credit": "13507.50",
+      "closing": "28541.50"
+    },
+    "WBedAeaAdv": {
+      "debit": "1500.00",
+      "credit": "0.00",
+      "closing": "1500.00"
+    },
+    "WBedKanSof": {
+      "debit": "600.00",
+      "credit": "0.00",
+      "closing": "600.00"
+    },
+    "WBedKanVak": {
+      "debit": "200.00",
+      "credit": "0.00",
+      "closing": "200.00"
+    },
+    "WBedVkkRel": {
+      "debit": "605.00",
+      "credit": "0.00",
+      "closing": "605.00"
+    },
+    "WKprInhInh": {
+      "debit": "9000.00",
+      "credit": "0.00",
+      "closing": "9000.00"
+    },
+    "WKprKuwKuw": {
+      "debit": "2500.00",
+      "credit": "0.00",
+      "closing": "2500.00"
+    },
+    "WOmzNodNod": {
+      "debit": "0.00",
+      "credit": "1200.00",
+      "closing": "-1200.00"
+    },
+    "WOmzNodOdg": {
+      "debit": "0.00",
+      "credit": "4000.00",
+      "closing": "-4000.00"
+    },
+    "WOmzNodOdh": {
+      "debit": "0.00",
+      "credit": "1900.00",
+      "closing": "-1900.00"
+    },
+    "WOmzNodOdi": {
+      "debit": "0.00",
+      "credit": "3000.00",
+      "closing": "-3000.00"
+    },
+    "WOmzNohOlh": {
+      "debit": "750.00",
+      "credit": "10000.00",
+      "closing": "-9250.00"
+    },
+    "WOmzNohOli": {
+      "debit": "0.00",
+      "credit": "8000.00",
+      "closing": "-8000.00"
+    },
+    "WOmzNohOln": {
+      "debit": "0.00",
+      "credit": "6000.00",
+      "closing": "-6000.00"
+    },
+    "WOmzNohOlv": {
+      "debit": "0.00",
+      "credit": "5000.00",
+      "closing": "-5000.00"
+    }
+  }
+}
