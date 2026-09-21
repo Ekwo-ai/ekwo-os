@@ -1,0 +1,64 @@
+{
+  "periods": [
+    {
+      "code": "2026-01",
+      "from": "2026-01-01",
+      "to": "2026-01-31",
+      "boxes": {
+        "CA:base": "1001003",
+        "CATOTAL:total": "1001003",
+        "TVA:tax": "175175",
+        "CAC:tax": "17518",
+        "TVAB:total": "192693",
+        "DEDBS:tax": "231000",
+        "DEDT:total": "231000",
+        "CRED:total": "38307"
+      }
+    },
+    {
+      "code": "2026-02",
+      "from": "2026-02-01",
+      "to": "2026-02-28",
+      "boxes": {
+        "CA:base": "400000",
+        "CATOTAL:total": "400000",
+        "TVA:tax": "70000",
+        "CAC:tax": "7000",
+        "TVAB:total": "77000",
+        "DEDBS:tax": "154000",
+        "DEDT:total": "154000",
+        "CRED:total": "77000"
+      }
+    },
+    {
+      "code": "2026-03",
+      "from": "2026-03-01",
+      "to": "2026-03-31",
+      "boxes": {
+        "CA:base": "-100000",
+        "CA10:base": "18000000",
+        "CATOTAL:total": "17900000",
+        "TVA:tax": "-17500",
+        "CAC:tax": "-1750",
+        "TVA10:tax": "1800000",
+        "TVAB:total": "1780750",
+        "DEDIMMO:tax": "385000",
+        "DEDT:total": "385000",
+        "NET:total": "1395750"
+      }
+    },
+    {
+      "code": "2026-04",
+      "from": "2026-04-01",
+      "to": "2026-04-30",
+      "boxes": {
+        "EXP:base": "1500000",
+        "EXO:base": "500000",
+        "CATOTAL:total": "2000000",
+        "DEDBS:tax": "192500",
+        "DEDT:total": "192500",
+        "CRED:total": "192500"
+      }
+    }
+  ]
+}

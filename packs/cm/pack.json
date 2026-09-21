@@ -1,0 +1,198 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "CM",
+  "name": "Cameroun",
+  "version": "0.1.0",
+  "schema_min": "20260917170000",
+  "seed_sequence": 24,
+  "released_at": "2026-09-21",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "audcif",
+        "title": "Acte uniforme relatif au droit comptable et à l'information financière (AUDCIF), adopté à Brazzaville le 26 janvier 2017",
+        "publisher": "OHADA — Bibliothèque numérique de l'OHADA",
+        "url": "https://biblio.ohada.org/doc_num.php?explnum_id=2061",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "syscohada",
+        "title": "Journal officiel de l'OHADA, numéro spécial du 15 février 2017 — Acte uniforme relatif au droit comptable et à l'information financière et Système comptable OHADA (SYSCOHADA révisé), version complète signée",
+        "publisher": "OHADA — Bibliothèque numérique de l'OHADA",
+        "url": "https://biblio.ohada.org/doc_num.php?explnum_id=2063",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "cgi",
+        "title": "Code Général des Impôts, édition 2026 version française",
+        "publisher": "Direction Générale des Impôts du Cameroun (DGI)",
+        "url": "https://www.impots.cm/sites/default/files/documents/CODE%20GENERAL%20DES%20IMPOTS%202026%20%20VERSION%20FRANCAISE.pdf",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "fiche-tva",
+        "title": "La Taxe sur la Valeur Ajoutée (TVA) : Ce que vous devez savoir",
+        "publisher": "Direction Générale des Impôts du Cameroun (DGI)",
+        "url": "https://www.impots.cm/sites/default/files/documents/FICHE%20TVA.pdf",
+        "consulted_on": "2026-09-21",
+        "kind": "guidance"
+      },
+      {
+        "key": "circulaire-lf-2026",
+        "title": "Circulaire n° 008/MINFI/DGI/LRI/L du 2 mars 2026 précisant les modalités d'application des dispositions fiscales de la loi de finances de la République du Cameroun pour l'exercice 2026",
+        "publisher": "Ministère des Finances — Direction Générale des Impôts du Cameroun (DGI)",
+        "url": "https://impots.cm/sites/default/files/publications/circulaire%20lf%202026%20VF%20%281%29-compress%C3%A9.pdf",
+        "consulted_on": "2026-09-21",
+        "kind": "guidance"
+      },
+      {
+        "key": "directive-cemac-tva",
+        "title": "Directive CEMAC portant harmonisation des législations des États membres en matière de TVA, adoptée le 28 octobre 2022, signée à Yaoundé le 10 novembre 2022",
+        "publisher": "CEMAC — texte publié par le Secrétariat général du Gouvernement du Congo",
+        "url": "https://www.sgg.cg/txts-droit-reg/CEMAC-Directive-2022-11-TVA.pdf",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "harmony",
+        "title": "Harmony — portail de télédéclaration et de télépaiement des impôts et taxes",
+        "publisher": "Direction Générale des Impôts du Cameroun (DGI)",
+        "url": "https://teledeclaration-dgi.cm/default.aspx/",
+        "consulted_on": "2026-09-21",
+        "kind": "portal"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "XAF",
+    "language": "fr",
+    "rounding_method": "half_up",
+    "closing_style": "result_accounts",
+    "roles": {
+      "receivable": "4111",
+      "payable": "4011",
+      "suspense": "4711",
+      "rounding": "6588",
+      "retained_earnings": "121",
+      "retained_earnings_loss": "1291",
+      "current_year_result_profit": "131",
+      "current_year_result_loss": "139",
+      "sales": "7011",
+      "purchase": "6011",
+      "bank": "5211",
+      "cash": "5711",
+      "fx_gain": "756",
+      "fx_loss": "656",
+      "tax_payable": "4441",
+      "tax_receivable": "4449"
+    },
+    "journal_roles": {
+      "sales": "VT",
+      "purchase": "AC",
+      "miscellaneous": "OD",
+      "opening": "AN"
+    },
+    "fiscal_year_default": "calendar"
+  },
+  "languages": [],
+  "journals": [
+    {
+      "code": "VT",
+      "type": "sales",
+      "name": "Journal des ventes",
+      "sequence": 10
+    },
+    {
+      "code": "AC",
+      "type": "purchase",
+      "name": "Journal des achats",
+      "sequence": 20
+    },
+    {
+      "code": "BQ",
+      "type": "bank",
+      "name": "Journal de banque",
+      "sequence": 30
+    },
+    {
+      "code": "CA",
+      "type": "cash",
+      "name": "Journal de caisse",
+      "sequence": 40
+    },
+    {
+      "code": "OD",
+      "type": "general",
+      "name": "Opérations diverses",
+      "sequence": 50
+    },
+    {
+      "code": "AN",
+      "type": "opening",
+      "name": "Journal des à-nouveaux",
+      "sequence": 60
+    }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "SYSCOHADA révisé — plan comptable général OHADA, Système normal",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": [
+        "CM-SYSCOHADA-BS",
+        "CM-SYSCOHADA-IS"
+      ],
+      "legal_reference": "Acte uniforme relatif au droit comptable et à l'information financière du 26 janvier 2017, art. 17, 7° — recours à un plan de comptes normalisé dont la liste figure dans le Système comptable OHADA ; Système comptable OHADA, Titre VII, chapitre 2, section 3 — liste des comptes, classes 1 à 8. La classe 9, engagements hors bilan et comptabilité analytique de gestion, est d'application facultative et n'est pas reprise. Commun aux dix-sept États parties : un seul fichier, packs/ohada/accounts.csv, recopié dans chaque pack par scripts/ohada-packs.mjs.",
+      "source": "syscohada"
+    }
+  ],
+  "documents": {
+    "numbering": "gapless_per_year",
+    "number_format": "{CODE}/{YYYY}/{NNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "invoice_if_issued",
+    "references": {
+      "numbering": {
+        "legal_reference": "Code général des impôts, art. 150 (5) — la facture porte « un numéro unique de facture en séquence chronologique et continue ». Le texte impose l'unicité et la continuité de la séquence, jamais une forme précise ni une remise à zéro annuelle, que le format proposé ici permet sans l'exiger.",
+        "source": "cgi"
+      },
+      "tax_point": {
+        "legal_reference": "Aucun article fixant le fait générateur et l'exigibilité de la TVA (l'équivalent des art. 141-142 d'autres codes de la zone) n'a été identifié dans le CGI 2026 chargé pour cette fiche : le texte lu couvre le taux (art. 142), la déduction (art. 143) et les mentions de facture (art. 150), jamais la date d'exigibilité elle-même. invoice_if_issued est retenu par défaut, par cohérence avec les autres packs OHADA (packs/sn, packs/ci) et parce qu'aucune taxe de ce pack n'est déclarée cash_basis faute de texte l'imposant — valeur à confirmer par un comptable local ou par lecture de l'article manquant.",
+        "source": "cgi"
+      }
+    },
+    "mentions": [
+      {
+        "code": "exempt",
+        "applies_when": "exempt",
+        "text": "Opération exonérée de la taxe sur la valeur ajoutée — article 128 du Code général des impôts.",
+        "sequence": 10,
+        "legal_reference": "Code général des impôts, art. 150 (5) — pour une opération exonérée, la facture porte une mention « Exonérée » ; art. 128 pour la liste des opérations exonérées",
+        "source": "cgi"
+      },
+      {
+        "code": "export",
+        "applies_when": "export",
+        "text": "Exportation exonérée de la taxe sur la valeur ajoutée au taux zéro — article 142 (4) du Code général des impôts.",
+        "sequence": 20,
+        "legal_reference": "Code général des impôts, art. 150 (5) et art. 142 (4)",
+        "source": "cgi"
+      }
+    ]
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "Code général des impôts, Livre des procédures fiscales, art. L 8 bis (1)-(2) — suivi électronique de la facturation par la DGI, dans les conditions fixées par arrêté du ministre en charge des finances, pour les secteurs et entreprises désignés (TIC, commerce en ligne, électricité, jeux, assurances, boissons, oléagineux, bouquets numériques, et toute entreprise de la Direction des grandes entreprises) ; art. 143 (1) b) — la TVA n'est déductible que si elle figure sur une facture délivrée à travers ce système par un fournisseur immatriculé, actif et au réel ; art. 8 bis (2), modifié par la loi n° 2024/13 du 23 décembre 2024 (loi de finances 2025) — une charge n'est déductible à l'IS que si sa facture est passée par ce système. Loi de finances 2026, Livre des procédures fiscales art. L 8 sexies nouveau — taxation en temps réel pour certaines opérations, équipements ou logiciels agréés, factures électroniques, transmission continue, modalités renvoyées à un arrêté (circulaire n° 008/MINFI/DGI/LRI/L du 2 mars 2026, § 507-511). Aucun arrêté d'application n'est publié à la date de ce pack ; aucun profil, aucune date de généralisation et aucun schéma de facture électronique n'ont été identifiés dans un texte officiel : profile et mandatory_from restent vides. Ekwo ne génère, ne transmet et ne certifie aucune facture par ce système.",
+    "source": "cgi"
+  }
+}

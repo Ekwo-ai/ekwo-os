@@ -2575,3 +2575,66 @@ payment*, next to Senegal's BRS; and the MECeF/e-MECeF certified billing
 machine that alone makes a Beninese invoice valid (art. 481 to 483) is
 *Clearance is not an obligation to exchange*, next to Mexico's CFDI and Côte
 d'Ivoire's FNE.
+
+## Cameroon
+
+Written from published sources alone, on 21 September 2026, and `community`
+like every pack nobody who files the return has read. The third of the
+seventeen OHADA members, after [Senegal and Côte d'Ivoire](#from-the-ohada-packs):
+17,5 % principal plus 10 % of it as *centimes additionnels communaux* (CAC),
+a displayed rate of 19,25 %, a reduced rate of 10 % created by the loi de
+finances 2026, and a golden year of twelve documents. The pack's own
+[`README`](../packs/cm/README.md) says where each figure comes from; what it
+could not say either stays there (import VAT, non-VAT withholdings, the
+formulaire's own boxes) or is a change to the core, below.
+
+### From Cameroon
+
+**Not every "surtax on the tax" is the Ivorian gap above.** The CAC (Livre de
+fiscalité locale art. C 82/C 83, 10 % of the principal VAT) is a fixed share
+of one tax's own amount, not a second tax computed on a base that already
+includes the first — unlike the AIRSI, which needs `group`. `packs/cm/taxes.json`
+posts it with a second `factor`/`box_factor` pair on the same tax entry
+(`CM-S-1925`, `CM-S-1925-SRV`), the mechanism `CI-P-18-95` already uses to
+split one tax's amount between a recoverable account and a cost. Chad, the
+Congo and the Central African Republic have the same CAC and can reuse it.
+
+**Splitting a tax's postings by `factor` still has to sum to 100.** The first
+draft declared `rate: 17,5` (the principal alone) and gave the CAC a second
+posting at `factor: 10` — 10 % of the principal, exactly what the law says.
+It rounds twice even so: `document_tax_summary.tax_charged`
+(`supabase/migrations/20260918141605…`) rounds the whole computation once,
+`round(base × 19,25 %)`, and `post_document()`'s postings round `tax_amount`
+once and then share it out by `factor`, the last posting of a side taking the
+remainder (`20260921145425…`) — here `round(round(base × 17,5 %) × 1,10)`,
+a different rounding path that can land a franc away from what the invoice
+charges. Declaring `rate: 19,25` (the displayed rate) and splitting it
+90,909 % / 9,091 % (the three decimals `factor_percent` allows) makes the two
+paths the same computation, because a side whose factors sum to exactly 100
+rounds once either way. Caught on a golden document of base 1 003, an amount
+that does not round evenly, before it shipped; a pack that gives a compound
+rate to one posting and the remainder of the law to a second one, anywhere in
+the OHADA packs still to come, is worth the same check.
+
+**A withholding on a payment, two more shapes.** Cameroon's VAT is withheld
+in full by a designated buyer (the State, a public or semi-public company,
+some non-profits and listed private companies) **at settlement**, against a
+DGI-issued attestation (art. 149 (2), 143) — the invoice itself is raised for
+the full amount, only the cash collected changes, which is the same gap the
+Senegalese BRS and the Ivorian micro-enterprise withholding already name.
+Cameroon adds income-tax withholdings printed on the same invoice without
+being VAT at all — a 2 %–10 % advance of IS/IRPP (art. 21), a *précompte sur
+achats* a seller collects from its own customers (art. 21 (3)), and 5 % on
+fees paid to a person domiciled in Cameroon (art. 92 bis) — none of which has
+a VAT return box to feed, so no core mechanism is missing for them so much as
+not aimed at them.
+
+**An electronic invoice condition on deduction, not just on the invoice.**
+Cameroon's *suivi électronique de la facturation* (Livre des procédures
+fiscales art. L 8 bis, art. L 8 sexies since the loi de finances 2026) makes
+a VAT or IS deduction depend on the supplier's own invoice having passed
+through the DGI's system (art. 143 (1) b), 8 bis (2)) — a step further than
+the Ivorian FNE, which conditions deduction on holding a normalised invoice
+but not on a fact about the counterparty's compliance the core has no column
+for. No arrêté fixing a format or a rollout date is published, so
+`einvoicing` stays empty here too.

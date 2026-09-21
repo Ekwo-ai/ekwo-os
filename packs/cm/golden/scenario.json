@@ -1,0 +1,306 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "Une année d'une société commerciale et immobilière camerounaise au régime du réel, déclarant chaque mois",
+  "chart": "default",
+  "fiscal_year": {
+    "name": "Exercice 2026",
+    "start": "2026-01-01",
+    "end": "2026-12-31"
+  },
+  "periods": [
+    {
+      "code": "2026-01",
+      "from": "2026-01-01",
+      "to": "2026-01-31"
+    },
+    {
+      "code": "2026-02",
+      "from": "2026-02-01",
+      "to": "2026-02-28"
+    },
+    {
+      "code": "2026-03",
+      "from": "2026-03-01",
+      "to": "2026-03-31"
+    },
+    {
+      "code": "2026-04",
+      "from": "2026-04-01",
+      "to": "2026-04-30"
+    }
+  ],
+  "statements": [
+    "CM-SYSCOHADA-BS",
+    "CM-SYSCOHADA-IS"
+  ],
+  "contacts": [
+    {
+      "ref": "client-cm",
+      "name": "Comptoir du Wouri SARL",
+      "type": "customer",
+      "country": "CM"
+    },
+    {
+      "ref": "client-immo",
+      "name": "M. Étienne Mbarga",
+      "type": "customer",
+      "country": "CM"
+    },
+    {
+      "ref": "client-fr",
+      "name": "Établissements Loire Négoce SAS",
+      "type": "customer",
+      "country": "FR"
+    },
+    {
+      "ref": "fourn-cm",
+      "name": "Grossiste de la Sanaga SARL",
+      "type": "supplier",
+      "country": "CM"
+    },
+    {
+      "ref": "fourn-maint",
+      "name": "Froid Climatisation Douala SARL",
+      "type": "supplier",
+      "country": "CM"
+    },
+    {
+      "ref": "fourn-info",
+      "name": "Bureautique du Cameroun SARL",
+      "type": "supplier",
+      "country": "CM"
+    },
+    {
+      "ref": "fourn-avocat",
+      "name": "Cabinet Ngassa et Associés",
+      "type": "supplier",
+      "country": "CM"
+    }
+  ],
+  "documents": [
+    {
+      "ref": "V1",
+      "type": "sale_invoice",
+      "contact": "client-cm",
+      "date": "2026-01-12",
+      "why": "Une vente de marchandises au taux principal : la case CA, la TVA au compte 4431 dans la case TVA et le CAC (10 % du principal) au compte 4422 dans la case CAC.",
+      "lines": [
+        {
+          "name": "Marchandises",
+          "quantity": 40,
+          "unit_price": 25000,
+          "tax": "CM-S-1925",
+          "account": "7011"
+        }
+      ]
+    },
+    {
+      "ref": "V6",
+      "type": "sale_invoice",
+      "contact": "client-cm",
+      "date": "2026-01-20",
+      "why": "Une base qui n'arrondit pas juste (1 003), pour vérifier que le CAC — posté en dernier et absorbant le reste — garde le compte 4422 en accord au franc près avec ce que la facture porte, sans l'écart d'un franc qu'un taux principal de 17,5 % majoré d'un second posting factor 10 aurait pu introduire (base × 19,25 % = 193,0775, arrondi à 193 ; 193 × 90,909 % = 175,45, arrondi à 175 pour la TVA ; le CAC prend le reste, 18).",
+      "lines": [
+        {
+          "name": "Article isolé",
+          "quantity": 1,
+          "unit_price": 1003,
+          "tax": "CM-S-1925",
+          "account": "7011"
+        }
+      ]
+    },
+    {
+      "ref": "V2",
+      "type": "sale_invoice",
+      "contact": "client-cm",
+      "date": "2026-02-05",
+      "why": "Une prestation de services au taux principal : la TVA au compte 4432 (et non 4431), le CAC au compte 4422, sans exigibilité à l'encaissement faute de texte l'imposant.",
+      "lines": [
+        {
+          "name": "Prestation d'installation",
+          "quantity": 20,
+          "unit_price": 20000,
+          "tax": "CM-S-1925-SRV",
+          "account": "7061"
+        }
+      ]
+    },
+    {
+      "ref": "V3",
+      "type": "sale_invoice",
+      "contact": "client-immo",
+      "date": "2026-03-10",
+      "why": "La vente d'un logement social à une personne physique pour sa première maison d'habitation, au taux réduit de 10 % créé par la loi de finances 2026 : la case CA10 et la taxe au compte 4431 dans la case TVA10, sans CAC (non établi par un texte chargé).",
+      "lines": [
+        {
+          "name": "Logement social — Villa T3",
+          "quantity": 1,
+          "unit_price": 18000000,
+          "tax": "CM-S-10",
+          "account": "7021"
+        }
+      ]
+    },
+    {
+      "ref": "V4",
+      "type": "sale_invoice",
+      "contact": "client-fr",
+      "date": "2026-04-14",
+      "why": "Une exportation au taux zéro : la case EXP, aucune taxe, un compte de ventes hors Région.",
+      "lines": [
+        {
+          "name": "Marchandises exportées",
+          "quantity": 100,
+          "unit_price": 15000,
+          "tax": "CM-S-EXP",
+          "account": "7012"
+        }
+      ]
+    },
+    {
+      "ref": "V5",
+      "type": "sale_invoice",
+      "contact": "client-cm",
+      "date": "2026-04-02",
+      "why": "Une vente de biens de première nécessité de l'annexe I, exonérée par l'article 128 : la case EXO, aucune taxe.",
+      "lines": [
+        {
+          "name": "Riz et sucre",
+          "quantity": 200,
+          "unit_price": 2500,
+          "tax": "CM-S-EXO",
+          "account": "7011"
+        }
+      ]
+    },
+    {
+      "ref": "AV1",
+      "type": "sale_credit_note",
+      "contact": "client-cm",
+      "date": "2026-03-16",
+      "why": "Un avoir sur la vente V1 : la case CA, la TVA et le CAC diminuent dans le mois de l'avoir.",
+      "lines": [
+        {
+          "name": "Retour de marchandises",
+          "quantity": 4,
+          "unit_price": 25000,
+          "tax": "CM-S-1925",
+          "account": "7011"
+        }
+      ]
+    },
+    {
+      "ref": "A1",
+      "type": "purchase_invoice",
+      "contact": "fourn-cm",
+      "date": "2026-01-08",
+      "why": "Un achat de marchandises au taux principal : TVA et CAC, tous deux déductibles, portés ensemble au compte 4452 et dans la case DEDBS (factor 110, le pack ne distingue pas le CAC récupérable faute de compte dédié).",
+      "lines": [
+        {
+          "name": "Marchandises",
+          "quantity": 60,
+          "unit_price": 20000,
+          "tax": "CM-P-1925",
+          "account": "6011"
+        }
+      ]
+    },
+    {
+      "ref": "A2",
+      "type": "purchase_invoice",
+      "contact": "fourn-maint",
+      "date": "2026-02-10",
+      "why": "Un entretien facturé au taux principal : la taxe récupérable sur services extérieurs au compte 4454.",
+      "lines": [
+        {
+          "name": "Entretien des installations frigorifiques",
+          "quantity": 1,
+          "unit_price": 800000,
+          "tax": "CM-P-1925-SRV",
+          "account": "6248"
+        }
+      ]
+    },
+    {
+      "ref": "A3",
+      "type": "purchase_invoice",
+      "contact": "fourn-info",
+      "date": "2026-03-05",
+      "why": "Du matériel informatique immobilisé : la taxe au compte 4451 et dans la case DEDIMMO.",
+      "lines": [
+        {
+          "name": "Ordinateurs",
+          "quantity": 5,
+          "unit_price": 400000,
+          "tax": "CM-P-1925-IMMO",
+          "account": "2442"
+        }
+      ]
+    },
+    {
+      "ref": "A4",
+      "type": "purchase_invoice",
+      "contact": "fourn-avocat",
+      "date": "2026-04-09",
+      "why": "Des honoraires d'avocat au taux principal : la taxe récupérable sur services extérieurs, même case que A2.",
+      "lines": [
+        {
+          "name": "Honoraires — contentieux commercial",
+          "quantity": 1,
+          "unit_price": 1200000,
+          "tax": "CM-P-1925-SRV",
+          "account": "6324"
+        }
+      ]
+    },
+    {
+      "ref": "AA1",
+      "type": "purchase_credit_note",
+      "contact": "fourn-cm",
+      "date": "2026-04-20",
+      "why": "Un avoir sur l'achat A1 : la taxe déductible diminue dans le mois de l'avoir.",
+      "lines": [
+        {
+          "name": "Retour de marchandises",
+          "quantity": 10,
+          "unit_price": 20000,
+          "tax": "CM-P-1925",
+          "account": "6011"
+        }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "E1",
+      "direction": "inbound",
+      "date": "2026-02-15",
+      "amount": 1192500,
+      "contact": "client-cm",
+      "journal": "BQ",
+      "match": "V1",
+      "why": "Un encaissement qui solde exactement la facture de marchandises."
+    },
+    {
+      "ref": "E2",
+      "direction": "inbound",
+      "date": "2026-03-20",
+      "amount": 5000000,
+      "contact": "client-immo",
+      "journal": "BQ",
+      "match": null,
+      "why": "Un acompte non affecté sur la vente du logement social : il reste une ligne ouverte au compte client."
+    },
+    {
+      "ref": "P1",
+      "direction": "outbound",
+      "date": "2026-02-08",
+      "amount": 1431000,
+      "contact": "fourn-cm",
+      "journal": "BQ",
+      "match": "A1",
+      "why": "Un paiement qui solde la facture d'achat de marchandises."
+    }
+  ]
+}

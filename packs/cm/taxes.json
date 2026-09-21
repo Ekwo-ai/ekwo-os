@@ -1,0 +1,312 @@
+[
+  {
+    "code": "CM-S-1925",
+    "name": "Ventes de biens 17,5 % + CAC 10 % (19,25 %)",
+    "description": "Livraisons de biens au taux principal, majorées des centimes additionnels communaux ; TVA au compte 4431, CAC au compte 4422",
+    "rate": 19.25,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2018-01-01",
+    "legal_reference": "Code général des impôts, art. 142 (1) a) — taux principal de 17,5 % sur la base hors taxe ; Livre de fiscalité locale, art. C 82 et C 83 (1) — centimes additionnels communaux (CAC) égaux à 10 % du principal de la TVA, soit un taux affiché de 19,25 % (art. 142 (2) et (3)). rate porte le taux affiché, celui que le client paie réellement (17,5 % × 1,10) ; les deux postings le répartissent en 90,909 % (= 17,5 / 19,25, soit 10/11) vers 4431 et 9,091 % (= 1,75 / 19,25, soit 1/11) vers 4422 — les trois décimales autorisées par factor_percent n'atteignent pas l'exactitude de 10/11, mais le posting du CAC, placé en dernier, absorbe l'écart de sorte que la somme des deux postings égale toujours exactement round(base × 19,25 %), donc ce que la facture porte. Un taux déclaré à 17,5 avec un second posting factor 10 (10 % du principal) revenait au même calcul légal mais doublait l'arrondi (round(round(base × 17,5 %) × 1,10) au lieu de round(base × 19,25 %)) et pouvait décaler l'écriture d'une unité — voir docs/international.md § From the OHADA packs. La date de début retenue est celle à partir de laquelle ce pack décrit des livres tenus selon le SYSCOHADA révisé, et non celle du taux, resté inchangé depuis au moins 2018 (PwC Worldwide Tax Summaries, 14/08/2026).",
+    "source": "cgi",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "CA"
+        },
+        {
+          "type": "tax",
+          "factor": 90.909,
+          "account": "4431",
+          "box": "TVA",
+          "box_factor": 90.909
+        },
+        {
+          "type": "tax",
+          "factor": 9.091,
+          "account": "4422",
+          "box": "CAC",
+          "box_factor": 9.091
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "CA",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": 90.909,
+          "account": "4431",
+          "box": "TVA",
+          "box_factor": -90.909
+        },
+        {
+          "type": "tax",
+          "factor": 9.091,
+          "account": "4422",
+          "box": "CAC",
+          "box_factor": -9.091
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 10
+  },
+  {
+    "code": "CM-S-1925-SRV",
+    "name": "Prestations de services 17,5 % + CAC 10 % (19,25 %)",
+    "description": "Prestations de services au taux principal, majorées des centimes additionnels communaux ; TVA au compte 4432, CAC au compte 4422",
+    "rate": 19.25,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2018-01-01",
+    "legal_reference": "Code général des impôts, art. 142 (1) a) et Livre de fiscalité locale art. C 82/C 83 (1), comme CM-S-1925, même répartition 90,909 % / 9,091 % et même raison d'arrondi. Aucun article fixant un fait générateur propre aux prestations de services (encaissement, option pour les débits) n'a été identifié dans le CGI 2026 chargé pour cette fiche : cette taxe n'est donc pas déclarée cash_basis, faute de texte l'imposant.",
+    "source": "cgi",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "CA"
+        },
+        {
+          "type": "tax",
+          "factor": 90.909,
+          "account": "4432",
+          "box": "TVA",
+          "box_factor": 90.909
+        },
+        {
+          "type": "tax",
+          "factor": 9.091,
+          "account": "4422",
+          "box": "CAC",
+          "box_factor": 9.091
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "CA",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": 90.909,
+          "account": "4432",
+          "box": "TVA",
+          "box_factor": -90.909
+        },
+        {
+          "type": "tax",
+          "factor": 9.091,
+          "account": "4422",
+          "box": "CAC",
+          "box_factor": -9.091
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 20
+  },
+  {
+    "code": "CM-S-10",
+    "name": "Vente de logement social 10 % (taux réduit, LF 2026)",
+    "description": "Vente d'un logement social à une personne physique pour sa première maison d'habitation, quitus fiscal — taux réduit sans CAC identifié",
+    "rate": 10,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "conditions": [
+      "supply_nature"
+    ],
+    "legal_reference": "Code général des impôts, art. 142 (1) a) et (3), dans la rédaction de la loi de finances pour 2026 — taux réduit de 10 % sur la vente de logements sociaux aux personnes physiques pour l'acquisition de leur première maison d'habitation, sous quitus fiscal (remplace l'exonération antérieure de l'art. 128 (18)-(19)) ; circulaire n° 008/MINFI/DGI/LRI/L du 2 mars 2026, § 388-403 — applicable aux faits générateurs à compter du 1er janvier 2026, mention obligatoire « TVA au taux réduit de 10% - Article 142(3) du CGI » avec la nature de l'opération. Le taux réduit s'applique aussi aux intérêts des prêts immobiliers des personnes physiques et aux locations de logements sociaux par les promoteurs publics ou parapublics, deux opérations qu'aucun document de ce golden n'illustre.",
+    "source": "cgi",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "CA10"
+        },
+        {
+          "type": "tax",
+          "account": "4431",
+          "box": "TVA10"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "CA10",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "4431",
+          "box": "TVA10",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 30
+  },
+  {
+    "code": "CM-S-EXP",
+    "name": "Exportation taux zéro",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2018-01-01",
+    "conditions": [
+      "transport_evidence"
+    ],
+    "legal_reference": "Code général des impôts, art. 142 (4) — taux zéro sur les exportations de produits taxables",
+    "source": "cgi",
+    "vat_category": "G",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "EXP"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "EXP",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 40
+  },
+  {
+    "code": "CM-S-EXO",
+    "name": "Opération exonérée (art. 128)",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2018-01-01",
+    "conditions": [
+      "supply_nature"
+    ],
+    "legal_reference": "Code général des impôts, art. 128 — liste des opérations exonérées, dont les biens de première nécessité de l'annexe I du titre II (art. 128, 6) ; art. 150 (5) — la facture porte la mention « Exonérée » par produit",
+    "source": "fiche-tva",
+    "vat_category": "E",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "EXO"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "EXO",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 50
+  },
+  {
+    "code": "CM-P-1925",
+    "name": "Achats de biens 17,5 % + CAC (19,25 % déductible)",
+    "description": "Le CAC communal est inclus dans le taux affiché et déductible comme la TVA elle-même — le pack ne le distingue pas sur les achats, faute de compte de TVA récupérable propre au CAC dans le plan SYSCOHADA (voir README). rate porte le taux affiché de 19,25 % en un seul posting (factor 100 par défaut), pour éviter le même double arrondi qu'un principal à 17,5 % majoré d'un factor 110 aurait introduit.",
+    "rate": 19.25,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2018-01-01",
+    "legal_reference": "Code général des impôts, art. 143 — la TVA est déductible dès lors qu'elle figure sur une facture délivrée à travers le système de suivi de facturation électronique de l'administration fiscale, par un fournisseur immatriculé, actif et au réel (art. 143 (1) b)) ; art. 142 pour le taux ; Livre de fiscalité locale art. C 82/C 83 — les centimes additionnels communaux, inclus au taux affiché de 19,25 %, sont déductibles comme la taxe elle-même (choix national confirmé par la fiche TVA de la DGI)",
+    "source": "cgi",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "4452",
+          "box": "DEDBS"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "4452",
+          "box": "DEDBS",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 110
+  },
+  {
+    "code": "CM-P-1925-SRV",
+    "name": "Services extérieurs 17,5 % + CAC (19,25 % déductible)",
+    "rate": 19.25,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2018-01-01",
+    "legal_reference": "Code général des impôts, art. 143, comme CM-P-1925",
+    "source": "cgi",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "4454",
+          "box": "DEDBS"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "4454",
+          "box": "DEDBS",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 120
+  },
+  {
+    "code": "CM-P-1925-IMMO",
+    "name": "Immobilisations 17,5 % + CAC (19,25 % déductible)",
+    "rate": 19.25,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2018-01-01",
+    "legal_reference": "Code général des impôts, art. 143, comme CM-P-1925",
+    "source": "cgi",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "4451",
+          "box": "DEDIMMO"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "4451",
+          "box": "DEDIMMO",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 130
+  }
+]

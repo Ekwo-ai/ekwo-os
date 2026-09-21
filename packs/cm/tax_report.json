@@ -1,0 +1,161 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "CM-TVA",
+  "name": "Déclaration de taxe sur la valeur ajoutée",
+  "period": [
+    "month"
+  ],
+  "period_default": "month",
+  "valid_from": "2018-01-01",
+  "legal_reference": "Code général des impôts, art. 152 (2) — déclaration mensuelle des opérations imposables au régime du réel ; art. 152 — le modèle de la déclaration est fourni par l'administration fiscale, dont le nom officiel et la numérotation des cases n'ont été trouvés dans aucune source officielle chargée pour cette fiche. Les cases ci-dessous suivent le contenu que les art. 142, 143 et 152 imposent de déclarer (base par taux, taxe exigible, déductions, solde), et non la numérotation de l'imprimé ; Harmony (teledeclaration-dgi.cm) est le portail de télédéclaration.",
+  "source": "cgi",
+  "deadline": {
+    "rule": "day_of_month_after_period",
+    "day": 15,
+    "legal_reference": "Code général des impôts, art. 152 — déclaration due dans les 15 jours du mois suivant celui au titre duquel les opérations ont été réalisées (fiche TVA de la DGI : « avant le 15 du mois qui suit »).",
+    "source": "fiche-tva"
+  },
+  "boxes": [
+    {
+      "box": "CA",
+      "kind": "base",
+      "name": "Opérations taxables au taux principal de 17,5 % (19,25 % avec CAC)",
+      "sequence": 10,
+      "legal_reference": "Code général des impôts, art. 152 et art. 142 (1) a) pour le taux",
+      "source": "cgi"
+    },
+    {
+      "box": "CA10",
+      "kind": "base",
+      "name": "Opérations taxables au taux réduit de 10 %",
+      "sequence": 20,
+      "legal_reference": "Code général des impôts, art. 152 et art. 142 (1) a) et (3), dans la rédaction de la loi de finances pour 2026",
+      "source": "cgi"
+    },
+    {
+      "box": "EXP",
+      "kind": "base",
+      "name": "Exportations taxées au taux zéro",
+      "sequence": 30,
+      "legal_reference": "Code général des impôts, art. 152 et art. 142 (4)",
+      "source": "cgi"
+    },
+    {
+      "box": "EXO",
+      "kind": "base",
+      "name": "Opérations exonérées (art. 128)",
+      "sequence": 40,
+      "legal_reference": "Code général des impôts, art. 152 et art. 128",
+      "source": "cgi"
+    },
+    {
+      "box": "CATOTAL",
+      "kind": "total",
+      "name": "Total des opérations réalisées",
+      "sequence": 50,
+      "plus": [
+        "CA",
+        "CA10",
+        "EXP",
+        "EXO"
+      ],
+      "legal_reference": "Code général des impôts, art. 152 — total des opérations imposables et exonérées de la période",
+      "source": "cgi"
+    },
+    {
+      "box": "TVA",
+      "kind": "tax",
+      "name": "TVA exigible au taux principal de 17,5 %",
+      "sequence": 60,
+      "legal_reference": "Code général des impôts, art. 152 et art. 142 (1) a)",
+      "source": "cgi"
+    },
+    {
+      "box": "CAC",
+      "kind": "tax",
+      "name": "Centimes additionnels communaux (10 % du principal)",
+      "sequence": 70,
+      "legal_reference": "Livre de fiscalité locale, art. C 82 et C 83 (1) — centimes additionnels communaux égaux à 10 % du principal de la TVA, affectés aux communes et déclarés à part du principal.",
+      "source": "cgi"
+    },
+    {
+      "box": "TVA10",
+      "kind": "tax",
+      "name": "TVA exigible au taux réduit de 10 %",
+      "sequence": 80,
+      "legal_reference": "Code général des impôts, art. 152 et art. 142 (1) a) et (3), dans la rédaction de la loi de finances pour 2026",
+      "source": "cgi"
+    },
+    {
+      "box": "TVAB",
+      "kind": "total",
+      "name": "Total de la taxe exigible",
+      "sequence": 90,
+      "plus": [
+        "TVA",
+        "CAC",
+        "TVA10"
+      ],
+      "legal_reference": "Code général des impôts, art. 152 — taxe exigible de la période",
+      "source": "cgi"
+    },
+    {
+      "box": "DEDIMMO",
+      "kind": "tax",
+      "name": "TVA et CAC déductibles sur immobilisations",
+      "sequence": 100,
+      "legal_reference": "Code général des impôts, art. 143 — déduction de la taxe grevant les biens constituant des immobilisations, sous réserve de la facture délivrée par le système de suivi de facturation électronique",
+      "source": "cgi"
+    },
+    {
+      "box": "DEDBS",
+      "kind": "tax",
+      "name": "TVA et CAC déductibles sur biens et services",
+      "sequence": 110,
+      "legal_reference": "Code général des impôts, art. 143 — déduction de la taxe grevant les biens et services acquis pour les besoins de l'exploitation, sous la même réserve",
+      "source": "cgi"
+    },
+    {
+      "box": "DEDT",
+      "kind": "total",
+      "name": "Total des déductions",
+      "sequence": 120,
+      "plus": [
+        "DEDIMMO",
+        "DEDBS"
+      ],
+      "legal_reference": "Code général des impôts, art. 143",
+      "source": "cgi"
+    },
+    {
+      "box": "NET",
+      "kind": "total",
+      "name": "TVA nette à payer",
+      "sequence": 130,
+      "plus": [
+        "TVAB"
+      ],
+      "minus": [
+        "DEDT"
+      ],
+      "floor_zero": true,
+      "legal_reference": "Code général des impôts, art. 152 — la déclaration porte la taxe exigible diminuée des déductions",
+      "source": "cgi"
+    },
+    {
+      "box": "CRED",
+      "kind": "total",
+      "name": "Crédit de TVA à reporter",
+      "sequence": 140,
+      "plus": [
+        "DEDT"
+      ],
+      "minus": [
+        "TVAB"
+      ],
+      "floor_zero": true,
+      "legal_reference": "Fiche TVA de la DGI — crédit de TVA reportable sans limite, remboursable sous conditions ; aucun remboursement sur les factures payées en espèces",
+      "source": "fiche-tva"
+    }
+  ]
+}
