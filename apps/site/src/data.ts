@@ -32,7 +32,7 @@ import {
 import { buildDemo, type Demo } from './demo.js';
 import { changesOfChangelog, changesOfPacks, datesOfLines, timeline, type Change } from './changes.js';
 import { renderMarkdown, type Heading, type Slice } from './markdown.js';
-import { DOCS, FORMATS_DIR, FORMATS_TOPIC, type DocSource, type Topic } from './data/docs.js';
+import { DECISIONS_DIR, DOCS, FORMATS_DIR, FORMATS_TOPIC, type DocSource, type Topic } from './data/docs.js';
 import { SOURCE } from './strings/index.js';
 import world from './data/world.json' with { type: 'json' };
 import m49 from './data/regions.json' with { type: 'json' };
@@ -461,7 +461,8 @@ async function readIcons(root: string): Promise<Record<string, string>> {
 
 /**
  * The documentation: the files `data/docs.ts` lists, plus one article per
- * format library, each rendered from the repository as it stands.
+ * format library and one per decision record, each rendered from the
+ * repository as it stands.
  *
  * Two passes, because a link can point at a heading of another article: the
  * first finds which article carries which heading, the second renders with
@@ -474,6 +475,9 @@ async function readDocs(root: string, repository: Repository): Promise<DocArticl
     .filter((entry) => entry.isDirectory() && existsSync(join(root, FORMATS_DIR, entry.name, 'README.md')))
     .map((entry) => entry.name)
     .sort();
+  const decisions = (await readdir(join(root, DECISIONS_DIR)))
+    .filter((name) => /^\d{4}-.+\.md$/.test(name))
+    .sort();
 
   const listed: (DocSource & { parent: string | null })[] = [];
   for (const doc of DOCS) {
@@ -484,6 +488,16 @@ async function readDocs(root: string, repository: Repository): Promise<DocArticl
           slug: `formats/${name}`,
           topic: FORMATS_TOPIC,
           source: `${FORMATS_DIR}/${name}/README.md`,
+          parent: doc.slug,
+        });
+      }
+    }
+    if (doc.source === `${DECISIONS_DIR}/README.md`) {
+      for (const name of decisions) {
+        listed.push({
+          slug: `decisions/${name.replace(/\.md$/, '')}`,
+          topic: doc.topic,
+          source: `${DECISIONS_DIR}/${name}`,
           parent: doc.slug,
         });
       }

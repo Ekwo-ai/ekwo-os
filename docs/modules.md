@@ -5,7 +5,7 @@ their depreciation; `budgets` holds a plan and compares it to the ledger. The
 socle stays in `public` and knows nothing about either of them.
 
 The decision behind this, with what it rules out, is in
-[`decisions.md`](decisions.md). This document is how to write one.
+[decision 0051](decisions/0051-a-module-has-its-own-schema.md). This document is how to write one.
 
 ## The shape
 

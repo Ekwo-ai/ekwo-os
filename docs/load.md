@@ -168,7 +168,7 @@ meaning gets `/2`.
 ## What it found
 
 Measured on PGlite, a laptop, five companies of 10 000 documents unless said
-otherwise. `docs/decisions.md` has the reasoning under 18 September 2026.
+otherwise. [Decision 0060](decisions/0060-the-plan-is-the-assertion-the-clock-is-a-report.md) has the reasoning.
 
 **No hot path walks a large table.** All six, as the owner and as a member,
 reach `entry_lines`, `entries`, `documents` and `reconciliations` through an

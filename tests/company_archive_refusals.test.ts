@@ -4,7 +4,7 @@
  * `tests/company_archive.test.ts` is the journey of an honest archive. This
  * file is everything that must not get through: an archive that lies, offered
  * to an installation that already keeps somebody else's books; the backend
- * role on a session nobody prepared; and what `docs/decisions.md` writes down
+ * role on a session nobody prepared; and what `docs/decisions/0043-a-company-leaves-with-its-books.md` writes down
  * as missing, tested as it stands. Nothing here names a country.
  */
 
@@ -318,7 +318,7 @@ describe('the backend role, on a connection where nothing was ever set', () => {
 });
 
 // ---------------------------------------------------------------------------
-// Written down in docs/decisions.md as missing, and tested as it stands
+// Written down in docs/decisions/0043 as missing, and tested as it stands
 // ---------------------------------------------------------------------------
 
 describe('what is written down as missing', () => {

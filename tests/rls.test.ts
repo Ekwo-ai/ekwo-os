@@ -64,8 +64,9 @@ describe('row level security', () => {
     // added tomorrow with the old shape would be slow as a member and fast as
     // the owner, which is how the first fifty-two went unnoticed. The policies
     // that mix the test with another condition, or reach the company through a
-    // parent row, are the exceptions `docs/decisions.md` lists; none of them
-    // guards a table a report walks.
+    // parent row, are the exceptions decision 0060 lists
+    // (`docs/decisions/0060-the-plan-is-the-assertion-the-clock-is-a-report.md`);
+    // none of them guards a table a report walks.
     const perRow = await rows<{ policy: string }>(
       db,
       `select tablename || '.' || policyname as policy

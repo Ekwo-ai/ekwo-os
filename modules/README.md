@@ -35,7 +35,7 @@ them.
 
 The full version, and how to write a module in a day, is
 [`docs/modules.md`](../docs/modules.md). Why it is shaped this way is in
-[`docs/decisions.md`](../docs/decisions.md).
+[decision 0051](../docs/decisions/0051-a-module-has-its-own-schema.md).
 
 ## Planned modules
 

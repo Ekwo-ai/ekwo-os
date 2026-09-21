@@ -399,7 +399,7 @@ somewhere has already run it.
   company anywhere in the archive. `tests/company_archive_refusals.test.ts`
   offers the archives that lie, and each is refused whole.
   Not carried, and written: the bytes of the attachments, which the manifest
-  lists. `docs/decisions.md` has the rest of what is missing.
+  lists. [`docs/decisions/0043`](docs/decisions/0043-a-company-leaves-with-its-books.md) has the rest of what is missing.
 
 - **`@ekwo-ai/coda` and `@ekwo-ai/cfonb120` — the two formats of fixed
   positions the packs already named.** The Belgian pack says its banks send
@@ -523,7 +523,7 @@ somewhere has already run it.
   BR-G-10 and BR-AE-10 ask for a code or a text; the VATEX list names articles
   of the EU directive and "export outside the EU", neither of which is British
   law, so the pack rightly codes none — and the text it always had now reaches
-  the file. `docs/decisions.md` has the argument and what is still open.
+  the file. [`docs/decisions/0050`](docs/decisions/0050-an-invoice-is-written-from-the-books.md) has the argument and what is still open.
 
   `@ekwo-ai/peppol-ubl` reads the electronic addresses from the header and no
   longer joins a silent line to its tax. Its 100 fixtures and the recorded
@@ -646,7 +646,7 @@ somewhere has already run it.
   free; sending it takes an access point, and stays in `ee/`.
 
   Playing the published rules refuted the first draft nine times, and the
-  end-to-end test refuted it twice more. `docs/decisions.md` has the list, with
+  end-to-end test refuted it twice more. [`docs/decisions/0050`](docs/decisions/0050-an-invoice-is-written-from-the-books.md) has the list, with
   what the same test found the core and the packs do not say yet.
 
 - **Books at volume: the plans are read, and the build breaks on their shape.**
@@ -1285,7 +1285,7 @@ somewhere has already run it.
   whose shares only add up because the last line takes the remainder. The four other packs do not move
   and their golden files are unchanged to the byte. The note in
   [`docs/international.md`](docs/international.md) is closed, the arithmetic is
-  in [`docs/decisions.md`](docs/decisions.md), and two narrower gaps opened
+  in [`docs/decisions/0022`](docs/decisions/0022-a-price-that-holds-its-tax.md), and two narrower gaps opened
   beside it: the choice HMRC gives a retailer between two rounding units, and
   BT-146, the net unit price, which nothing publishes where the price was quoted
   with the tax in it.
@@ -1714,7 +1714,7 @@ somewhere has already run it.
   be refused**, and a migration that must restate posted rows has to disable
   the guard by name in its own file. `document_line_tax_frozen` is folded into
   `document_posted`. Found on the way and not closed here: a machine key cannot
-  write a document line at all. `docs/decisions.md` has what went through, the
+  write a document line at all. [`docs/decisions/0015`](docs/decisions/0015-a-posted-document-is-frozen.md) has what went through, the
   closed list with its reasons, and the exemption that was written and then
   withdrawn.
 
@@ -1818,7 +1818,7 @@ somewhere has already run it.
   `url` is built on; `share_document`, `revoke_share` and `list_shares` as MCP
   tools, and `shared_document` deliberately not one; and the count of live
   links per company in `ekwo status`. [`docs/sharing.md`](docs/sharing.md) is
-  the reference and `docs/decisions.md` carries the reasoning.
+  the reference and [`docs/decisions/0042`](docs/decisions/0042-a-document-is-shared-by-a-link.md) carries the reasoning.
 
 - **The recapitulative statement of intra-Community supplies, as one function
   of the core and four format bricks.**
@@ -2043,7 +2043,7 @@ somewhere has already run it.
   patched away: line 01 of the CA3 can come out negative when a quarter's
   credit notes exceed its sales, and line 08 does not tie to itself on an
   intra-Union acquisition, whose base goes to line 03 and whose tax goes to
-  line 08. Both are in [`docs/decisions.md`](docs/decisions.md).
+  line 08. Both are in [`docs/decisions/0029`](docs/decisions/0029-a-golden-year-is-the-contract-of-a-pack.md).
   Belgium moves to 1.5.1, France to 1.6.1 and the generic framework to 1.1.1:
   a legal source is a patch.
 
@@ -2375,7 +2375,7 @@ against the latest tag, and a mistake is corrected by a new migration, always.
   **CI refuses a new one.** `npm run check:rounding` reads every migration
   written since, and a test asks the catalogue whether any live function, view
   or generated column still rounds to a number written down.
-  What is not done, and is named in `docs/decisions.md`: the monetary columns
+  What is not done, and is named in [`docs/decisions/0011`](docs/decisions/0011-an-amount-is-rounded-at-its-currency.md): the monetary columns
   are still `numeric(16, 2)`, so a currency with more than two decimals is
   rounded right and stored short.
 
@@ -2435,7 +2435,7 @@ against the latest tag, and a mistake is corrected by a new migration, always.
   year still open, and the result reaches the balance sheet in the opening
   lines of the year that follows. `financial_statement()` keeps the
   appropriation entry, which is part of a statutory income statement, and
-  `docs/decisions.md` says why the two readers differ.
+  [`docs/decisions/0032`](docs/decisions/0032-the-fec-carries-its-opening-balances.md) says why the two readers differ.
   The wording of those lines is `defaults.opening_entry_label` in the pack —
   France says *À-nouveaux* — with a neutral English fallback, because the
   format fixes eighteen columns and no wording. An extract that is not a whole
@@ -2788,7 +2788,7 @@ against the latest tag, and a mistake is corrected by a new migration, always.
   of this change holds a country code or an account code. The close writes no
   *à-nouveaux*: every report here reads the ledger from the beginning, so an
   opening entry on top of it would count each balance twice —
-  `docs/decisions.md` carries the reasoning and what reversing it would cost.
+  [`docs/decisions/0031`](docs/decisions/0031-opening-and-closing-are-parameters.md) carries the reasoning and what reversing it would cost.
   `fiscal_years.is_closed` is no longer an ordinary column: a trigger refuses
   the transition to anyone but those two functions, and `entries.kind`
   (`normal | opening | closing`) says what an entry is for so a statement of a
@@ -2998,7 +2998,7 @@ against the latest tag, and a mistake is corrected by a new migration, always.
 ### Changed
 
 - `docs/schema.md` gains a section per module schema, generated the same way
-  the socle's is. `docs/modules.md` is how to write one; `docs/decisions.md`
+  the socle's is. `docs/modules.md` is how to write one; [`docs/decisions/0051`](docs/decisions/0051-a-module-has-its-own-schema.md)
   carries the reasoning. `supabase/config.toml` says in a comment which line
   exposes a module schema, and leaves it out by default. `ekwo migrate` applies
   the modules this release carries unless `--no-modules` is passed.

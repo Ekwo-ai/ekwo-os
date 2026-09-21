@@ -33,7 +33,9 @@ fast fix and a public thank-you.
 
 ## What counts
 
-The threat model is short, and it is in [`docs/decisions.md`](docs/decisions.md):
+The threat model is short, and its reasons are in the decision records
+[0001](docs/decisions/0001-one-installation-is-one-customer.md) to
+[0006](docs/decisions/0006-a-machine-key-is-a-narrow-caller.md):
 
 - **Every table has row level security, and a user only ever sees the
   companies they are a member of.** Reading, writing or listing a row of a

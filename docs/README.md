@@ -15,7 +15,7 @@
 | [`load.md`](load.md) | Books at volume: the generated instance and why a copy of what the engine posted is not a fake, the six hot paths and their budgets, why the build breaks on the shape of a plan and never on a time, the format of the report, what the first run found, and what only a real Postgres can still say | By hand, when a path, a budget or the report format changes |
 | [`company-archive.md`](company-archive.md) | How one company leaves an installation and arrives in another: the directory and its JSON Lines, the manifest, what travels and what stays behind with the reason, the conditions of an export, every refusal of an import, and how a new table says which it is | By hand, when the format or the checks change; a test refuses a table the page does not name |
 | [`releasing.md`](releasing.md) | How a release is cut: the schema-version migration, the package versions and the schema floor, the changelog, the tag and the GitHub Release | By hand, when the procedure changes |
-| [`decisions.md`](decisions.md) | One paragraph per design decision and the reason behind it | By hand, **append**; a decision that is reversed gets a dated note, not a deletion |
+| [`decisions/`](decisions/README.md) | One record per design decision — context, decision, consequences — with an index by subject; `decisions.md` points to it | By hand: a new decision takes the next number, a changed one is rewritten to say what holds now; `tests/decision_records.test.ts` refuses dates in headings and incident narratives |
 
 The short version of each folder lives in that folder's own README. Start
 there; come here when you need every column. Two of those folder READMEs are

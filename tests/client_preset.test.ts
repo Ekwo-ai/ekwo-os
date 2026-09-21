@@ -1037,7 +1037,7 @@ describe('a client writes nothing else — by the function', () => {
   /**
    * Functions that answer a client without raising, because the statement
    * inside them met row level security and changed no row. They are not
-   * refusals a person can read, and `docs/decisions.md` says so; what is
+   * refusals a person can read, and `docs/decisions/0004-a-permission-is-a-capability.md` says so; what is
    * asserted of them is the only thing that matters here, which is that the
    * books did not move.
    */

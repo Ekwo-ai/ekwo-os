@@ -7,7 +7,7 @@ one SQL seed that is committed. There is no module per country, no Python
 hook, and no field in the format through which a pack could run anything.
 
 The decision behind this, with the alternatives that were weighed, is in
-[`decisions.md`](decisions.md).
+[decision 0025](decisions/0025-a-country-is-a-pack-of-data.md).
 
 ## What a pack is
 

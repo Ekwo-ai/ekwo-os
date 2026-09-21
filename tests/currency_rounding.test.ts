@@ -377,7 +377,7 @@ describe('a currency with three decimals', () => {
     // by `round_amount`. The engine is right and the storage is not yet, and
     // this test is here so that the gap is visible rather than discovered.
     // Widening the columns rewrites the text of every amount the schema
-    // returns, which is a migration of its own; `docs/decisions.md` names it.
+    // returns, which is a migration of its own; `docs/decisions/0011-an-amount-is-rounded-at-its-currency.md` names it.
     await db.exec('begin');
     await db.query(
       `create temporary table rounding_scale_probe (amount numeric(16, 2)) on commit drop`,

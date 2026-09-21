@@ -17,7 +17,9 @@
  *
  * The format libraries are not listed: `data.ts` gives each directory of
  * `packages/formats/` an article of its own, so a format added there is
- * documented here with nothing edited.
+ * documented here with nothing edited. The decision records are not listed
+ * either, for the same reason: each numbered file of `docs/decisions/` is an
+ * article under the index of that directory.
  *
  * Titles and the sentences that group the articles are the language's, in
  * `src/strings/`. What is listed, in which order and from which file, is here.
@@ -45,6 +47,9 @@ export interface DocSource {
 /** The format libraries' topic, and the directory each of their articles is read from. */
 export const FORMATS_TOPIC: Topic = 'use';
 export const FORMATS_DIR = 'packages/formats';
+
+/** The directory of the decision records: one numbered file each, under its index. */
+export const DECISIONS_DIR = 'docs/decisions';
 
 export const DOCS: DocSource[] = [
   { slug: 'overview', topic: 'start', source: 'README.md' },
@@ -77,7 +82,7 @@ export const DOCS: DocSource[] = [
 
   { slug: 'schema', topic: 'reference', source: 'docs/schema.md' },
   { slug: 'mapping', topic: 'reference', source: 'docs/mapping.md' },
-  { slug: 'decisions', topic: 'reference', source: 'docs/decisions.md' },
+  { slug: 'decisions', topic: 'reference', source: 'docs/decisions/README.md' },
 
   { slug: 'contributing', topic: 'contribute', source: 'CONTRIBUTING.md' },
   { slug: 'writing-a-module', topic: 'contribute', source: 'docs/modules.md' },

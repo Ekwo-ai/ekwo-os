@@ -19,7 +19,8 @@
  * The file is deliberately identical in every package that holds a copy. A
  * format brick may not import the core or another brick, so the rule is
  * duplicated rather than shared — and `tests/rounding.test.ts` reads the
- * copies and refuses one that has drifted. See `docs/decisions.md`.
+ * copies and refuses one that has drifted. See
+ * `docs/decisions/0011-an-amount-is-rounded-at-its-currency.md`.
  */
 export function roundCurrency(value: number, decimals = 2): number {
   const factor = 10 ** decimals;

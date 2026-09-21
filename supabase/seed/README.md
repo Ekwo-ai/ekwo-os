@@ -108,7 +108,7 @@ two `maintained` packs, four mappings are known to want a professional's eye:
   base goes to line 03 and whose tax goes to line 08.
 
 The last two were found by the golden scenario on the day it shipped and are
-written up in [`docs/decisions.md`](../../docs/decisions.md); they are reported
+written up in [decision 0029](../../docs/decisions/0029-a-golden-year-is-the-contract-of-a-pack.md); they are reported
 rather than patched away, because adjusting a golden until it passes is how a
 bug gets recorded as a fact.
 

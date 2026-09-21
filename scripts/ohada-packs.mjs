@@ -7,7 +7,7 @@
  * financière of 26 January 2017, and present them in the same balance sheet
  * and the same income statement. What differs from one to the next is the
  * tax: the rates, the declaration, the invoice. A pack is autonomous — the
- * compiler reads `packs/<cc>/` and nothing else, and `decisions.md` rules out
+ * compiler reads `packs/<cc>/` and nothing else, and `docs/decisions/0025-a-country-is-a-pack-of-data.md` rules out
  * a shared fragment the compiler would have to resolve — so the common part is
  * copied into every member, and this file is what does the copying and what
  * refuses a copy that has drifted.

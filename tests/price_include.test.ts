@@ -534,7 +534,7 @@ describe('a currency with no decimals, and one with three', () => {
     // And the base comes back at two, because `document_lines.amount_untaxed`
     // is `numeric(16, 2)` and rounds the third decimal away on the way in — by
     // the column and not by the rule. That gap is not this migration's: it is
-    // named in `currency_rounding.test.ts` and in `docs/decisions.md`, and it
+    // named in `currency_rounding.test.ts` and in `docs/decisions/0011-an-amount-is-rounded-at-its-currency.md`, and it
     // is why a three-decimal currency is asserted here on the figure the view
     // computes rather than on the one the column stores.
     expect(summary.base).toBe(roundCurrency(100 - Number(summary.tax), 2).toFixed(2));

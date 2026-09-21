@@ -160,7 +160,7 @@ migrations put the privileges back themselves, and they take away the blanket
 table access the project's defaults had handed `anon`. Dropping `public` is
 still not something to do on a project you intend to keep — it takes your books
 with it. The decision and what it changed are in
-[`docs/decisions.md`](../../docs/decisions.md).
+[decision 0003](../../docs/decisions/0003-the-schema-grants-its-own-rights.md).
 
 ## Before you go live: four things on your project
 

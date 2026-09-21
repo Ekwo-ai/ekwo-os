@@ -7,7 +7,7 @@ another installation, where it is a living company again — same identifiers,
 same numbers, same locks, same trail.
 
 This page is the format, and what the two ends check. The reasons are in
-[`decisions.md`](decisions.md), under 18 September 2026.
+[decision 0043](decisions/0043-a-company-leaves-with-its-books.md).
 
 ## The shape
 

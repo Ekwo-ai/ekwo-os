@@ -3,7 +3,7 @@
 > The plan for making the core usable in any country. The format of a country
 > pack — the one taxonomy in this plan that will not get to be redone — was
 > settled first, before any code was written, and is recorded in
-> [`decisions.md`](decisions.md). This document is the map; that decision is
+> [decision 0025](decisions/0025-a-country-is-a-pack-of-data.md). This document is the map; that decision is
 > the first step on it.
 
 ## The premise
@@ -55,7 +55,7 @@ The list this plan started from, with what phase 0 closed and what it did not.
 
 The phase that decides everything. Nothing country-specific was added until it
 was done. The format of the pack was decided on 12 September 2026 and is
-written up in `decisions.md`; the twelve steps below were its execution order,
+written up in [decision 0025](decisions/0025-a-country-is-a-pack-of-data.md); the twelve steps below were its execution order,
 and they recut the first list in three places: opening balances came first
 because they blocked adoption in Belgium and France; cash-basis VAT came
 before any new country because the French pack was wrong for services; the
@@ -607,7 +607,7 @@ base back over the lines in proportion to their gross, the last line taking the
 remainder. The line keeps the gross it was quoted at and a snapshot of the flag,
 frozen when the document is posted. `GB-S-20-INC` is now booked in the golden
 scenario for what it is, a day of counter sales of 5 493,92 gross, and
-`docs/decisions.md` is where the arithmetic and the three refusals are written
+[decision 0022](decisions/0022-a-price-that-holds-its-tax.md) is where the arithmetic and the three refusals are written
 down. The shared invoice carries the two fields too, so a link says which price
 it is showing. Two narrower gaps came out of it and are below: the choice HMRC
 gives a retailer between two rounding units, and BT-146, the net unit price,
@@ -683,7 +683,7 @@ invented tax. **`packs/gb/` still carries no Northern Ireland tax**: the case is
 expressible and writing the codes is a transcription of the Protocol that a
 British accountant should sign, not a thing to do in the pull request that made
 it possible. Boxes 2, 8 and 9 stay declared and empty until somebody does. The
-decision, and the three shapes weighed against it, are in `decisions.md`. What
+decision, and the three shapes weighed against it, are in [decision 0024](decisions/0024-a-tax-follows-the-territory-of-the-parties.md). What
 follows is the note as it was written.
 
 **A tax cannot depend on the territory the parties are in, and one
@@ -1845,7 +1845,7 @@ that is right in one country and wrong in the next.
 
 Inventory, payroll, advanced fixed-asset regimes (MACRS), point of sale and
 its certifications. A products table exists so that inventory can come later
-as its own schema, as `decisions.md` describes.
+as its own schema, as [decision 0044](decisions/0044-a-product-is-a-catalogue-entry-in-the-core.md) describes.
 
 ## What the packs do not say yet
 

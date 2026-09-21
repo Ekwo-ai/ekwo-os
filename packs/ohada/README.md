@@ -12,7 +12,7 @@ and one income statement. What differs from one to the next is the tax.
 This folder is that common part, written once. **It is not a pack**:
 `listPacks()` reads two-letter folders only, the compiler never opens this one,
 and every member pack stays autonomous — it carries its own copy and compiles
-on its own, as [`decisions.md`](../../docs/decisions.md) wants of a pack.
+on its own, as [decision 0025](../../docs/decisions/0025-a-country-is-a-pack-of-data.md) wants of a pack.
 `scripts/ohada-packs.mjs` writes the copies, and the CI refuses a member whose
 copy has drifted.
 

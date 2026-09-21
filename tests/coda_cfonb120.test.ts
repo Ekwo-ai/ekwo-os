@@ -24,7 +24,7 @@ import { newCompany, type Fixture } from './helpers/factory.js';
  * replaying a format against itself creates nothing; across formats, the lines
  * are recognised **only when the bank writes the same reference in both** —
  * which CODA's own standard says it does not promise — and a CFONB 120 has no
- * bank reference at all, so its month is imported twice. docs/decisions.md
+ * bank reference at all, so its month is imported twice. docs/decisions/0047-a-statement-is-imported-once.md
  * says what would close that, and it is not in this change.
  */
 
