@@ -222,7 +222,7 @@ supabase db push                       # applies supabase/migrations in order
 psql "$DATABASE_URL" -f supabase/seed/00_currencies.sql
 psql "$DATABASE_URL" -f supabase/seed/00_territories.sql
 psql "$DATABASE_URL" -f supabase/seed/05_framework_generic.sql
-psql "$DATABASE_URL" -f supabase/seed/10_pack_be.sql    # or 11_pack_fr.sql, 12_pack_lu.sql, 13_pack_ee.sql, 14_pack_gb.sql, 15_pack_us.sql, 16_pack_ie.sql
+psql "$DATABASE_URL" -f supabase/seed/10_pack_be.sql    # or 11_pack_fr.sql, 12_pack_lu.sql, 13_pack_ee.sql, 14_pack_gb.sql, 15_pack_us.sql, 16_pack_ie.sql, 19_pack_es.sql
 ```
 
 Those six files are the ones `config.toml` lists under `[db.seed]`, which is

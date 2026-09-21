@@ -1,0 +1,221 @@
+code,parent,type,reconcilable,name,sequence
+10,,equity,false,Capital,10
+100,10,equity,false,Capital social,20
+103,10,equity,false,Socios por desembolsos no exigidos,30
+1030,103,equity,false,"Socios por desembolsos no exigidos, capital social",40
+11,,equity,false,Reservas y otros instrumentos de patrimonio,50
+110,11,equity,false,Prima de emisión o asunción,60
+112,11,equity,false,Reserva legal,70
+113,11,equity,false,Reservas voluntarias,80
+118,11,equity,false,Aportaciones de socios o propietarios,90
+12,,equity_retained,false,Resultados pendientes de aplicación,100
+120,12,equity_retained,false,Remanente,110
+121,12,equity_retained,false,Resultados negativos de ejercicios anteriores,120
+129,12,equity,false,Resultado del ejercicio,130
+13,,equity,false,"Subvenciones, donaciones y ajustes por cambios de valor",140
+130,13,equity,false,Subvenciones oficiales de capital,150
+131,13,equity,false,Donaciones y legados de capital,160
+132,13,equity,false,"Otras subvenciones, donaciones y legados",170
+14,,liability_non_current,false,Provisiones,180
+141,14,liability_non_current,false,Provisión para impuestos,190
+142,14,liability_non_current,false,Provisión para otras responsabilidades,200
+143,14,liability_non_current,false,"Provisión por desmantelamiento, retiro o rehabilitación del inmovilizado",210
+17,,liability_non_current,false,"Deudas a largo plazo por préstamos recibidos, empréstitos y otros conceptos",220
+170,17,liability_non_current,false,Deudas a largo plazo con entidades de crédito,230
+171,17,liability_non_current,false,Deudas a largo plazo,240
+173,17,liability_non_current,false,Proveedores de inmovilizado a largo plazo,250
+174,17,liability_non_current,false,Acreedores por arrendamiento financiero a largo plazo,260
+175,17,liability_non_current,false,Efectos a pagar a largo plazo,270
+18,,liability_non_current,false,"Pasivos por fianzas, garantías y otros conceptos a largo plazo",280
+180,18,liability_non_current,false,Fianzas recibidas a largo plazo,290
+185,18,liability_non_current,false,Depósitos recibidos a largo plazo,300
+20,,asset_fixed,false,Inmovilizaciones intangibles,310
+200,20,asset_fixed,false,Investigación,320
+201,20,asset_fixed,false,Desarrollo,330
+203,20,asset_fixed,false,Propiedad industrial,340
+204,20,asset_fixed,false,Fondo de comercio,350
+206,20,asset_fixed,false,Aplicaciones informáticas,360
+209,20,asset_fixed,false,Anticipos para inmovilizaciones intangibles,370
+21,,asset_fixed,false,Inmovilizaciones materiales,380
+210,21,asset_fixed,false,Terrenos y bienes naturales,390
+211,21,asset_fixed,false,Construcciones,400
+212,21,asset_fixed,false,Instalaciones técnicas,410
+213,21,asset_fixed,false,Maquinaria,420
+214,21,asset_fixed,false,Utillaje,430
+215,21,asset_fixed,false,Otras instalaciones,440
+216,21,asset_fixed,false,Mobiliario,450
+217,21,asset_fixed,false,Equipos para procesos de información,460
+218,21,asset_fixed,false,Elementos de transporte,470
+219,21,asset_fixed,false,Otro inmovilizado material,480
+22,,asset_fixed,false,Inversiones inmobiliarias,490
+220,22,asset_fixed,false,Inversiones en terrenos y bienes naturales,500
+221,22,asset_fixed,false,Inversiones en construcciones,510
+23,,asset_fixed,false,Inmovilizaciones materiales en curso,520
+231,23,asset_fixed,false,Construcciones en curso,530
+239,23,asset_fixed,false,Anticipos para inmovilizaciones materiales,540
+25,,asset_non_current,false,Otras inversiones financieras a largo plazo,550
+250,25,asset_non_current,false,Inversiones financieras a largo plazo en instrumentos de patrimonio,560
+252,25,asset_non_current,false,Créditos a largo plazo,570
+254,25,asset_non_current,false,Créditos a largo plazo al personal,580
+26,,asset_non_current,false,Fianzas y depósitos constituidos a largo plazo,590
+260,26,asset_non_current,false,Fianzas constituidas a largo plazo,600
+265,26,asset_non_current,false,Depósitos constituidos a largo plazo,610
+28,,asset_fixed,false,Amortización acumulada del inmovilizado,620
+280,28,asset_fixed,false,Amortización acumulada del inmovilizado intangible,630
+2800,280,asset_fixed,false,Amortización acumulada de investigación,640
+2801,280,asset_fixed,false,Amortización acumulada de desarrollo,650
+2803,280,asset_fixed,false,Amortización acumulada de propiedad industrial,660
+2804,280,asset_fixed,false,Amortización acumulada de fondo de comercio,670
+2806,280,asset_fixed,false,Amortización acumulada de aplicaciones informáticas,680
+281,28,asset_fixed,false,Amortización acumulada del inmovilizado material,690
+2811,281,asset_fixed,false,Amortización acumulada de construcciones,700
+2812,281,asset_fixed,false,Amortización acumulada de instalaciones técnicas,710
+2813,281,asset_fixed,false,Amortización acumulada de maquinaria,720
+2814,281,asset_fixed,false,Amortización acumulada de utillaje,730
+2815,281,asset_fixed,false,Amortización acumulada de otras instalaciones,740
+2816,281,asset_fixed,false,Amortización acumulada de mobiliario,750
+2817,281,asset_fixed,false,Amortización acumulada de equipos para procesos de información,760
+2818,281,asset_fixed,false,Amortización acumulada de elementos de transporte,770
+2819,281,asset_fixed,false,Amortización acumulada de otro inmovilizado material,780
+282,28,asset_fixed,false,Amortización acumulada de las inversiones inmobiliarias,790
+30,,asset_current,false,Comerciales,800
+300,30,asset_current,false,Mercaderías A,810
+31,,asset_current,false,Materias primas,820
+310,31,asset_current,false,Materias primas A,830
+32,,asset_current,false,Otros aprovisionamientos,840
+328,32,asset_current,false,Material de oficina,850
+35,,asset_current,false,Productos terminados,860
+350,35,asset_current,false,Productos terminados A,870
+39,,asset_current,false,Deterioro de valor de las existencias,880
+390,39,asset_current,false,Deterioro de valor de las mercaderías,890
+40,,liability_payable,true,Proveedores,900
+400,40,liability_payable,true,Proveedores,910
+4000,400,liability_payable,true,Proveedores (euros),920
+4004,400,liability_payable,true,Proveedores (moneda extranjera),930
+4009,400,liability_payable,true,"Proveedores, facturas pendientes de recibir o de formalizar",940
+401,40,liability_payable,true,"Proveedores, efectos comerciales a pagar",950
+407,40,asset_prepayments,false,Anticipos a proveedores,960
+41,,liability_payable,true,Acreedores varios,970
+410,41,liability_payable,true,Acreedores por prestaciones de servicios,980
+4100,410,liability_payable,true,Acreedores por prestaciones de servicios (euros),990
+4109,410,liability_payable,true,"Acreedores por prestaciones de servicios, facturas pendientes de recibir o de formalizar",1000
+411,41,liability_payable,true,"Acreedores, efectos comerciales a pagar",1010
+419,41,liability_current,false,Acreedores por operaciones en común,1020
+43,,asset_receivable,true,Clientes,1030
+430,43,asset_receivable,true,Clientes,1040
+4300,430,asset_receivable,true,Clientes (euros),1050
+4304,430,asset_receivable,true,Clientes (moneda extranjera),1060
+4309,430,asset_receivable,true,"Clientes, facturas pendientes de formalizar",1070
+431,43,asset_receivable,true,"Clientes, efectos comerciales a cobrar",1080
+436,43,asset_receivable,true,Clientes de dudoso cobro,1090
+438,43,liability_current,true,Anticipos de clientes,1100
+44,,asset_current,true,Deudores varios,1110
+440,44,asset_current,true,Deudores,1120
+46,,asset_current,false,Personal,1130
+460,46,asset_current,true,Anticipos de remuneraciones,1140
+465,46,liability_current,true,Remuneraciones pendientes de pago,1150
+47,,asset_current,false,Administraciones públicas,1160
+470,47,asset_current,false,"Hacienda Pública, deudora por diversos conceptos",1170
+4700,470,asset_current,true,"Hacienda Pública, deudora por IVA",1180
+4708,470,asset_current,false,"Hacienda Pública, deudora por subvenciones concedidas",1190
+4709,470,asset_current,false,"Hacienda Pública, deudora por devolución de impuestos",1200
+471,47,asset_current,false,"Organismos de la Seguridad Social, deudores",1210
+472,47,asset_current,false,"Hacienda Pública, IVA soportado",1220
+474,47,asset_non_current,false,Activos por impuesto diferido,1230
+4740,474,asset_non_current,false,Activos por diferencias temporarias deducibles,1240
+475,47,liability_current,false,"Hacienda Pública, acreedora por conceptos fiscales",1250
+4750,475,liability_current,true,"Hacienda Pública, acreedora por IVA",1260
+4751,475,liability_current,false,"Hacienda Pública, acreedora por retenciones practicadas",1270
+4752,475,liability_current,false,"Hacienda Pública, acreedora por impuesto sobre sociedades",1280
+476,47,liability_current,false,"Organismos de la Seguridad Social, acreedores",1290
+477,47,liability_current,false,"Hacienda Pública, IVA repercutido",1300
+479,47,liability_non_current,false,Pasivos por diferencias temporarias imponibles,1310
+48,,asset_prepayments,false,Ajustes por periodificación,1320
+480,48,asset_prepayments,false,Gastos anticipados,1330
+485,48,liability_current,false,Ingresos anticipados,1340
+49,,asset_current,false,Deterioro de valor de créditos comerciales y provisiones a corto plazo,1350
+490,49,asset_current,false,Deterioro de valor de créditos por operaciones comerciales,1360
+52,,liability_current,false,Deudas a corto plazo por préstamos recibidos y otros conceptos,1370
+520,52,liability_current,false,Deudas a corto plazo con entidades de crédito,1380
+5200,520,liability_current,false,Préstamos a corto plazo de entidades de crédito,1390
+5201,520,liability_current,false,Deudas a corto plazo por crédito dispuesto,1400
+521,52,liability_current,false,Deudas a corto plazo,1410
+523,52,liability_current,true,Proveedores de inmovilizado a corto plazo,1420
+526,52,liability_current,false,Dividendo activo a pagar,1430
+55,,asset_current,false,Otras cuentas no bancarias,1440
+551,55,asset_current,true,Cuenta corriente con socios y administradores,1450
+555,55,liability_current,true,Partidas pendientes de aplicación,1460
+557,55,equity,false,Dividendo activo a cuenta,1470
+56,,liability_current,false,Fianzas y depósitos recibidos y constituidos a corto plazo y ajustes por periodificación,1480
+560,56,liability_current,false,Fianzas recibidas a corto plazo,1490
+565,56,asset_current,false,Fianzas constituidas a corto plazo,1500
+57,,asset_cash,false,Tesorería,1510
+570,57,asset_cash,false,"Caja, euros",1520
+572,57,asset_cash,false,"Bancos e instituciones de crédito c/c vista, euros",1530
+576,57,asset_cash,false,Inversiones a corto plazo de gran liquidez,1540
+60,,expense_direct_cost,false,Compras,1550
+600,60,expense_direct_cost,false,Compras de mercaderías,1560
+601,60,expense_direct_cost,false,Compras de materias primas,1570
+602,60,expense_direct_cost,false,Compras de otros aprovisionamientos,1580
+606,60,expense_direct_cost,false,Descuentos sobre compras por pronto pago,1590
+607,60,expense_direct_cost,false,Trabajos realizados por otras empresas,1600
+608,60,expense_direct_cost,false,Devoluciones de compras y operaciones similares,1610
+609,60,expense_direct_cost,false,«Rappels» por compras,1620
+61,,expense_direct_cost,false,Variación de existencias,1630
+610,61,expense_direct_cost,false,Variación de existencias de mercaderías,1640
+62,,expense,false,Servicios exteriores,1650
+621,62,expense,false,Arrendamientos y cánones,1660
+622,62,expense,false,Reparaciones y conservación,1670
+623,62,expense,false,Servicios de profesionales independientes,1680
+624,62,expense,false,Transportes,1690
+625,62,expense,false,Primas de seguros,1700
+626,62,expense,false,Servicios bancarios y similares,1710
+627,62,expense,false,"Publicidad, propaganda y relaciones públicas",1720
+628,62,expense,false,Suministros,1730
+629,62,expense,false,Otros servicios,1740
+63,,expense,false,Tributos,1750
+630,63,expense,false,Impuesto sobre beneficios,1760
+6300,630,expense,false,Impuesto corriente,1770
+6301,630,expense,false,Impuesto diferido,1780
+631,63,expense,false,Otros tributos,1790
+64,,expense,false,Gastos de personal,1800
+640,64,expense,false,Sueldos y salarios,1810
+641,64,expense,false,Indemnizaciones,1820
+642,64,expense,false,Seguridad Social a cargo de la empresa,1830
+649,64,expense,false,Otros gastos sociales,1840
+65,,expense,false,Otros gastos de gestión,1850
+650,65,expense,false,Pérdidas de créditos comerciales incobrables,1860
+659,65,expense,false,Otras pérdidas en gestión corriente,1870
+66,,expense,false,Gastos financieros,1880
+662,66,expense,false,Intereses de deudas,1890
+6623,662,expense,false,Intereses de deudas con entidades de crédito,1900
+6624,662,expense,false,"Intereses de deudas, otras empresas",1910
+665,66,expense,false,Intereses por descuento de efectos y operaciones de «factoring»,1920
+668,66,expense,false,Diferencias negativas de cambio,1930
+669,66,expense,false,Otros gastos financieros,1940
+67,,expense,false,Pérdidas procedentes de activos no corrientes y gastos excepcionales,1950
+671,67,expense,false,Pérdidas procedentes del inmovilizado material,1960
+68,,expense_depreciation,false,Dotaciones para amortizaciones,1970
+680,68,expense_depreciation,false,Amortización del inmovilizado intangible,1980
+681,68,expense_depreciation,false,Amortización del inmovilizado material,1990
+682,68,expense_depreciation,false,Amortización de las inversiones inmobiliarias,2000
+70,,income,false,"Ventas de mercaderías, de producción propia, de servicios, etc",2010
+700,70,income,false,Ventas de mercaderías,2020
+701,70,income,false,Ventas de productos terminados,2030
+705,70,income,false,Prestaciones de servicios,2040
+706,70,income,false,Descuentos sobre ventas por pronto pago,2050
+708,70,income,false,Devoluciones de ventas y operaciones similares,2060
+709,70,income,false,«Rappels» sobre ventas,2070
+71,,income,false,Variación de existencias,2080
+712,71,income,false,Variación de existencias de productos terminados,2090
+74,,income_other,false,"Subvenciones, donaciones y legados",2100
+740,74,income_other,false,"Subvenciones, donaciones y legados a la explotación",2110
+75,,income_other,false,Otros ingresos de gestión,2120
+752,75,income_other,false,Ingresos por arrendamientos,2130
+759,75,income_other,false,Ingresos por servicios diversos,2140
+76,,income_other,false,Ingresos financieros,2150
+762,76,income_other,false,Ingresos de créditos,2160
+768,76,income_other,false,Diferencias positivas de cambio,2170
+769,76,income_other,false,Otros ingresos financieros,2180
+77,,income_other,false,Beneficios procedentes de activos no corrientes e ingresos excepcionales,2190
+771,77,income_other,false,Beneficios procedentes del inmovilizado material,2200

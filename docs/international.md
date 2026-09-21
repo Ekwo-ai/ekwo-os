@@ -1918,3 +1918,58 @@ in the register even though it is where Irish financial statements are filed;
 the Companies Act is cited instead. And `camt.053` is the only statement format
 declared, because it is the only one Ekwo reads that an Irish bank sends; no
 payment format is declared because Ekwo writes none.
+
+### From Spain
+
+Written on 21 September 2026 with `packs/es/`, the first pack of southern
+Europe. Status `community`; the pack's own
+[`README`](../packs/es/README.md) says what it carries and ends on the points
+a reviewer should read first. It carries a selection of 220 accounts of the
+Plan General de Contabilidad with the official codes, 26 taxes with the rate
+history back to 2010 and the temporary food rates of 2023–2024, the 63 boxes
+of form 303 that a company in the general regime fills, and the abridged
+balance sheet and profit and loss account transcribed from the account column
+the PGC itself prints. Seven things the format could not say, none of which was
+patched in the core:
+
+- **A surcharge on the same line as the tax.** The *recargo de equivalencia*
+  (Ley 37/1992, arts. 154 to 163) is charged by a supplier to a retailer in the
+  scheme on top of the VAT of the same line. That is the stacked tax `group` is
+  reserved for, and the core refuses it. The boxes of the surcharge are
+  declared and empty so that box 27 keeps the form's formula. *Fix*: the same
+  one the Canadian GST and QST need.
+- **A country minus one of its territories.** Spanish VAT applies in Spain
+  except in the Canary Islands, Ceuta and Melilla (art. 3). The territories
+  exist, the export to `ES-CN` is in the golden, but `applies_when` has no
+  negation, so the Spanish rates cannot refuse a supply that lands in `ES-CN`.
+  The United States gap under *What it cannot say* is the same one.
+- **A deadline with an exception for one period and another for one kind of
+  filer.** Form 303 is due on the 20th, except the last period of the year
+  (30 January) and returns of SII filers (thirty days, end of February for
+  January), all in Reglamento del IVA, art. 71.4. The pack declares the rule
+  and writes the exceptions in its reference.
+- **Invoice reporting that is not an invoice format.** SII (records sent
+  within four days, Reglamento del IVA, arts. 62.6 and 69 bis) and VERI*FACTU
+  (Real Decreto 1007/2023) are obligations about *transmitting* invoice
+  records, with their own dates and populations. `einvoicing` has room for a
+  profile and a date only, so both are written in the README and in the
+  e-invoicing reference.
+- **An e-invoicing date that depends on a text not yet published.** Real
+  Decreto 238/2026 counts twelve or twenty-four months from a ministerial
+  order that was not found in the BOE on the day of writing. `mandatory_from`
+  is null, and the profile too: no brick writes a Spanish invoice, and
+  declaring UBL or Facturae would make `describe_pack` say one does.
+- **Norma 43.** Spanish banks deliver statements in the AEB/CSB Norma 43
+  format, which is not in the list of statement formats; the pack names
+  `camt.053` and `mt940`.
+- **A receivable that is not reconcilable passes `ekwo pack check` and fails
+  the seed.** The first build of this pack had three *facturas pendientes*
+  accounts (4009, 4109, 4309) typed payable or receivable and not
+  reconcilable. The check accepted them; the seed then failed on the check
+  constraint `account_templates_third_party_reconcilable`. The check should
+  refuse what the table refuses.
+
+And one thing about the register rather than the format: the BOE answers
+`200` for a page that does not exist and says so only in its title. `pack check
+--links` reads status codes, so it will call a mistyped ELI of the BOE good.
+Every link of this register was checked by its title instead.

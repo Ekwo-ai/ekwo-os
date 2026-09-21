@@ -1,0 +1,2348 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/statements",
+  "statements": [
+    {
+      "code": "ES-PGC-BA",
+      "kind": "balance_sheet",
+      "framework": "ES-PGC",
+      "name": "Balance abreviado",
+      "legal_reference": "Real Decreto 1514/2007, Plan General de Contabilidad, tercera parte — modelo de balance abreviado; la columna «N.º cuentas» del modelo publica la cuenta que alimenta cada partida, y esta línea la transcribe",
+      "source": "pgc",
+      "lines": [
+        {
+          "code": "A",
+          "parent": "ACT",
+          "name": "A) ACTIVO NO CORRIENTE",
+          "sequence": 10,
+          "is_total": true,
+          "plus": [
+            "A.I",
+            "A.II",
+            "A.III",
+            "A.IV",
+            "A.V",
+            "A.VI"
+          ]
+        },
+        {
+          "code": "A.I",
+          "parent": "A",
+          "name": "I. Inmovilizado intangible",
+          "sequence": 20,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "20",
+              "code_to": "20",
+              "sequence": 10
+            },
+            {
+              "kind": "code_range",
+              "code_from": "280",
+              "code_to": "280",
+              "sequence": 20
+            },
+            {
+              "kind": "code_range",
+              "code_from": "290",
+              "code_to": "290",
+              "sequence": 30
+            }
+          ]
+        },
+        {
+          "code": "A.II",
+          "parent": "A",
+          "name": "II. Inmovilizado material",
+          "sequence": 30,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "21",
+              "code_to": "21",
+              "sequence": 10
+            },
+            {
+              "kind": "code_range",
+              "code_from": "281",
+              "code_to": "281",
+              "sequence": 20
+            },
+            {
+              "kind": "code_range",
+              "code_from": "291",
+              "code_to": "291",
+              "sequence": 30
+            },
+            {
+              "kind": "code_range",
+              "code_from": "23",
+              "code_to": "23",
+              "sequence": 40
+            }
+          ]
+        },
+        {
+          "code": "A.III",
+          "parent": "A",
+          "name": "III. Inversiones inmobiliarias",
+          "sequence": 40,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "22",
+              "code_to": "22",
+              "sequence": 10
+            },
+            {
+              "kind": "code_range",
+              "code_from": "282",
+              "code_to": "282",
+              "sequence": 20
+            },
+            {
+              "kind": "code_range",
+              "code_from": "292",
+              "code_to": "292",
+              "sequence": 30
+            }
+          ]
+        },
+        {
+          "code": "A.IV",
+          "parent": "A",
+          "name": "IV. Inversiones en empresas del grupo y asociadas a largo plazo",
+          "sequence": 50,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "2403",
+              "code_to": "2403",
+              "sequence": 10
+            },
+            {
+              "kind": "code_range",
+              "code_from": "2404",
+              "code_to": "2404",
+              "sequence": 20
+            },
+            {
+              "kind": "code_range",
+              "code_from": "2413",
+              "code_to": "2413",
+              "sequence": 30
+            },
+            {
+              "kind": "code_range",
+              "code_from": "2414",
+              "code_to": "2414",
+              "sequence": 40
+            },
+            {
+              "kind": "code_range",
+              "code_from": "2423",
+              "code_to": "2423",
+              "sequence": 50
+            },
+            {
+              "kind": "code_range",
+              "code_from": "2424",
+              "code_to": "2424",
+              "sequence": 60
+            },
+            {
+              "kind": "code_range",
+              "code_from": "2493",
+              "code_to": "2493",
+              "sequence": 70
+            },
+            {
+              "kind": "code_range",
+              "code_from": "2494",
+              "code_to": "2494",
+              "sequence": 80
+            },
+            {
+              "kind": "code_range",
+              "code_from": "293",
+              "code_to": "293",
+              "sequence": 90
+            },
+            {
+              "kind": "code_range",
+              "code_from": "2943",
+              "code_to": "2943",
+              "sequence": 100
+            },
+            {
+              "kind": "code_range",
+              "code_from": "2944",
+              "code_to": "2944",
+              "sequence": 110
+            },
+            {
+              "kind": "code_range",
+              "code_from": "2953",
+              "code_to": "2953",
+              "sequence": 120
+            },
+            {
+              "kind": "code_range",
+              "code_from": "2954",
+              "code_to": "2954",
+              "sequence": 130
+            }
+          ]
+        },
+        {
+          "code": "A.V",
+          "parent": "A",
+          "name": "V. Inversiones financieras a largo plazo",
+          "sequence": 60,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "2405",
+              "code_to": "2405",
+              "sequence": 10
+            },
+            {
+              "kind": "code_range",
+              "code_from": "2415",
+              "code_to": "2415",
+              "sequence": 20
+            },
+            {
+              "kind": "code_range",
+              "code_from": "2425",
+              "code_to": "2425",
+              "sequence": 30
+            },
+            {
+              "kind": "code_range",
+              "code_from": "2495",
+              "code_to": "2495",
+              "sequence": 40
+            },
+            {
+              "kind": "code_range",
+              "code_from": "250",
+              "code_to": "255",
+              "sequence": 50
+            },
+            {
+              "kind": "code_range",
+              "code_from": "257",
+              "code_to": "257",
+              "sequence": 60
+            },
+            {
+              "kind": "code_range",
+              "code_from": "258",
+              "code_to": "258",
+              "sequence": 70
+            },
+            {
+              "kind": "code_range",
+              "code_from": "259",
+              "code_to": "259",
+              "sequence": 80
+            },
+            {
+              "kind": "code_range",
+              "code_from": "26",
+              "code_to": "26",
+              "sequence": 90
+            },
+            {
+              "kind": "code_range",
+              "code_from": "2945",
+              "code_to": "2945",
+              "sequence": 100
+            },
+            {
+              "kind": "code_range",
+              "code_from": "2955",
+              "code_to": "2955",
+              "sequence": 110
+            },
+            {
+              "kind": "code_range",
+              "code_from": "297",
+              "code_to": "297",
+              "sequence": 120
+            },
+            {
+              "kind": "code_range",
+              "code_from": "298",
+              "code_to": "298",
+              "sequence": 130
+            }
+          ]
+        },
+        {
+          "code": "A.VI",
+          "parent": "A",
+          "name": "VI. Activos por impuesto diferido",
+          "sequence": 70,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "474",
+              "code_to": "474",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "B",
+          "parent": "ACT",
+          "name": "B) ACTIVO CORRIENTE",
+          "sequence": 80,
+          "is_total": true,
+          "plus": [
+            "B.I",
+            "B.II",
+            "B.III",
+            "B.IV",
+            "B.V",
+            "B.VI",
+            "B.VII"
+          ]
+        },
+        {
+          "code": "B.I",
+          "parent": "B",
+          "name": "I. Activos no corrientes mantenidos para la venta",
+          "sequence": 90,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "580",
+              "code_to": "584",
+              "sequence": 10
+            },
+            {
+              "kind": "code_range",
+              "code_from": "599",
+              "code_to": "599",
+              "sequence": 20
+            }
+          ]
+        },
+        {
+          "code": "B.II",
+          "parent": "B",
+          "name": "II. Existencias",
+          "sequence": 100,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "30",
+              "code_to": "36",
+              "sequence": 10
+            },
+            {
+              "kind": "code_range",
+              "code_from": "39",
+              "code_to": "39",
+              "sequence": 20
+            },
+            {
+              "kind": "code_range",
+              "code_from": "407",
+              "code_to": "407",
+              "sequence": 30
+            }
+          ]
+        },
+        {
+          "code": "B.III",
+          "parent": "B",
+          "name": "III. Deudores comerciales y otras cuentas a cobrar",
+          "sequence": 110,
+          "is_total": true,
+          "plus": [
+            "B.III.1",
+            "B.III.2",
+            "B.III.3"
+          ]
+        },
+        {
+          "code": "B.III.1",
+          "parent": "B.III",
+          "name": "1. Clientes por ventas y prestaciones de servicios",
+          "sequence": 120,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "430",
+              "code_to": "436",
+              "sequence": 10
+            },
+            {
+              "kind": "code_range",
+              "code_from": "437",
+              "code_to": "437",
+              "sequence": 20
+            },
+            {
+              "kind": "code_range",
+              "code_from": "490",
+              "code_to": "490",
+              "sequence": 30
+            },
+            {
+              "kind": "code_range",
+              "code_from": "493",
+              "code_to": "493",
+              "sequence": 40
+            }
+          ]
+        },
+        {
+          "code": "B.III.2",
+          "parent": "B.III",
+          "name": "2. Accionistas (socios) por desembolsos exigidos",
+          "sequence": 130,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "5580",
+              "code_to": "5580",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "B.III.3",
+          "parent": "B.III",
+          "name": "3. Otros deudores",
+          "sequence": 140,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "44",
+              "code_to": "44",
+              "sequence": 10
+            },
+            {
+              "kind": "code_range",
+              "code_from": "460",
+              "code_to": "460",
+              "sequence": 20
+            },
+            {
+              "kind": "code_range",
+              "code_from": "470",
+              "code_to": "470",
+              "sequence": 30
+            },
+            {
+              "kind": "code_range",
+              "code_from": "471",
+              "code_to": "471",
+              "sequence": 40
+            },
+            {
+              "kind": "code_range",
+              "code_from": "472",
+              "code_to": "472",
+              "sequence": 50
+            },
+            {
+              "kind": "code_range",
+              "code_from": "544",
+              "code_to": "544",
+              "sequence": 60
+            }
+          ]
+        },
+        {
+          "code": "B.IV",
+          "parent": "B",
+          "name": "IV. Inversiones en empresas del grupo y asociadas a corto plazo",
+          "sequence": 150,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "5303",
+              "code_to": "5303",
+              "sequence": 10
+            },
+            {
+              "kind": "code_range",
+              "code_from": "5304",
+              "code_to": "5304",
+              "sequence": 20
+            },
+            {
+              "kind": "code_range",
+              "code_from": "5313",
+              "code_to": "5313",
+              "sequence": 30
+            },
+            {
+              "kind": "code_range",
+              "code_from": "5314",
+              "code_to": "5314",
+              "sequence": 40
+            },
+            {
+              "kind": "code_range",
+              "code_from": "5323",
+              "code_to": "5323",
+              "sequence": 50
+            },
+            {
+              "kind": "code_range",
+              "code_from": "5324",
+              "code_to": "5324",
+              "sequence": 60
+            },
+            {
+              "kind": "code_range",
+              "code_from": "5333",
+              "code_to": "5333",
+              "sequence": 70
+            },
+            {
+              "kind": "code_range",
+              "code_from": "5334",
+              "code_to": "5334",
+              "sequence": 80
+            },
+            {
+              "kind": "code_range",
+              "code_from": "5343",
+              "code_to": "5343",
+              "sequence": 90
+            },
+            {
+              "kind": "code_range",
+              "code_from": "5344",
+              "code_to": "5344",
+              "sequence": 100
+            },
+            {
+              "kind": "code_range",
+              "code_from": "5353",
+              "code_to": "5353",
+              "sequence": 110
+            },
+            {
+              "kind": "code_range",
+              "code_from": "5354",
+              "code_to": "5354",
+              "sequence": 120
+            },
+            {
+              "kind": "code_range",
+              "code_from": "5393",
+              "code_to": "5393",
+              "sequence": 130
+            },
+            {
+              "kind": "code_range",
+              "code_from": "5394",
+              "code_to": "5394",
+              "sequence": 140
+            },
+            {
+              "kind": "code_range",
+              "code_from": "5523",
+              "code_to": "5523",
+              "side": "debit",
+              "sequence": 150
+            },
+            {
+              "kind": "code_range",
+              "code_from": "5524",
+              "code_to": "5524",
+              "side": "debit",
+              "sequence": 160
+            },
+            {
+              "kind": "code_range",
+              "code_from": "593",
+              "code_to": "593",
+              "sequence": 170
+            },
+            {
+              "kind": "code_range",
+              "code_from": "5943",
+              "code_to": "5943",
+              "sequence": 180
+            },
+            {
+              "kind": "code_range",
+              "code_from": "5944",
+              "code_to": "5944",
+              "sequence": 190
+            },
+            {
+              "kind": "code_range",
+              "code_from": "5953",
+              "code_to": "5953",
+              "sequence": 200
+            },
+            {
+              "kind": "code_range",
+              "code_from": "5954",
+              "code_to": "5954",
+              "sequence": 210
+            }
+          ]
+        },
+        {
+          "code": "B.V",
+          "parent": "B",
+          "name": "V. Inversiones financieras a corto plazo",
+          "sequence": 160,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "5305",
+              "code_to": "5305",
+              "sequence": 10
+            },
+            {
+              "kind": "code_range",
+              "code_from": "5315",
+              "code_to": "5315",
+              "sequence": 20
+            },
+            {
+              "kind": "code_range",
+              "code_from": "5325",
+              "code_to": "5325",
+              "sequence": 30
+            },
+            {
+              "kind": "code_range",
+              "code_from": "5335",
+              "code_to": "5335",
+              "sequence": 40
+            },
+            {
+              "kind": "code_range",
+              "code_from": "5345",
+              "code_to": "5345",
+              "sequence": 50
+            },
+            {
+              "kind": "code_range",
+              "code_from": "5355",
+              "code_to": "5355",
+              "sequence": 60
+            },
+            {
+              "kind": "code_range",
+              "code_from": "5395",
+              "code_to": "5395",
+              "sequence": 70
+            },
+            {
+              "kind": "code_range",
+              "code_from": "540",
+              "code_to": "543",
+              "sequence": 80
+            },
+            {
+              "kind": "code_range",
+              "code_from": "545",
+              "code_to": "548",
+              "sequence": 90
+            },
+            {
+              "kind": "code_range",
+              "code_from": "549",
+              "code_to": "549",
+              "sequence": 100
+            },
+            {
+              "kind": "code_range",
+              "code_from": "551",
+              "code_to": "551",
+              "side": "debit",
+              "sequence": 110
+            },
+            {
+              "kind": "code_range",
+              "code_from": "5525",
+              "code_to": "5525",
+              "side": "debit",
+              "sequence": 120
+            },
+            {
+              "kind": "code_range",
+              "code_from": "5590",
+              "code_to": "5590",
+              "sequence": 130
+            },
+            {
+              "kind": "code_range",
+              "code_from": "5593",
+              "code_to": "5593",
+              "sequence": 140
+            },
+            {
+              "kind": "code_range",
+              "code_from": "565",
+              "code_to": "565",
+              "sequence": 150
+            },
+            {
+              "kind": "code_range",
+              "code_from": "566",
+              "code_to": "566",
+              "sequence": 160
+            },
+            {
+              "kind": "code_range",
+              "code_from": "5945",
+              "code_to": "5945",
+              "sequence": 170
+            },
+            {
+              "kind": "code_range",
+              "code_from": "5955",
+              "code_to": "5955",
+              "sequence": 180
+            },
+            {
+              "kind": "code_range",
+              "code_from": "597",
+              "code_to": "597",
+              "sequence": 190
+            },
+            {
+              "kind": "code_range",
+              "code_from": "598",
+              "code_to": "598",
+              "sequence": 200
+            }
+          ]
+        },
+        {
+          "code": "B.VI",
+          "parent": "B",
+          "name": "VI. Periodificaciones a corto plazo",
+          "sequence": 170,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "480",
+              "code_to": "480",
+              "sequence": 10
+            },
+            {
+              "kind": "code_range",
+              "code_from": "567",
+              "code_to": "567",
+              "sequence": 20
+            }
+          ]
+        },
+        {
+          "code": "B.VII",
+          "parent": "B",
+          "name": "VII. Efectivo y otros activos líquidos equivalentes",
+          "sequence": 180,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "57",
+              "code_to": "57",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "ACT",
+          "parent": null,
+          "name": "TOTAL ACTIVO (A + B)",
+          "sequence": 190,
+          "is_total": true,
+          "plus": [
+            "A",
+            "B"
+          ]
+        },
+        {
+          "code": "PN",
+          "parent": "PNP",
+          "name": "A) PATRIMONIO NETO",
+          "sequence": 200,
+          "is_total": true,
+          "plus": [
+            "PN.1",
+            "PN.2",
+            "PN.3"
+          ]
+        },
+        {
+          "code": "PN.1",
+          "parent": "PN",
+          "name": "A-1) Fondos propios",
+          "sequence": 210,
+          "is_total": true,
+          "plus": [
+            "PN.1.I",
+            "PN.1.II",
+            "PN.1.III",
+            "PN.1.IV",
+            "PN.1.V",
+            "PN.1.VI",
+            "PN.1.VII",
+            "PN.1.VIII",
+            "PN.1.IX"
+          ]
+        },
+        {
+          "code": "PN.1.I",
+          "parent": "PN.1",
+          "name": "I. Capital",
+          "sequence": 220,
+          "is_total": true,
+          "plus": [
+            "PN.1.I.1",
+            "PN.1.I.2"
+          ]
+        },
+        {
+          "code": "PN.1.I.1",
+          "parent": "PN.1.I",
+          "name": "1. Capital escriturado",
+          "sequence": 230,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "100",
+              "code_to": "102",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "PN.1.I.2",
+          "parent": "PN.1.I",
+          "name": "2. (Capital no exigido)",
+          "sequence": 240,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1030",
+              "code_to": "1030",
+              "sequence": 10
+            },
+            {
+              "kind": "code_range",
+              "code_from": "1040",
+              "code_to": "1040",
+              "sequence": 20
+            }
+          ]
+        },
+        {
+          "code": "PN.1.II",
+          "parent": "PN.1",
+          "name": "II. Prima de emisión",
+          "sequence": 250,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "110",
+              "code_to": "110",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "PN.1.III",
+          "parent": "PN.1",
+          "name": "III. Reservas",
+          "sequence": 260,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "112",
+              "code_to": "115",
+              "sequence": 10
+            },
+            {
+              "kind": "code_range",
+              "code_from": "119",
+              "code_to": "119",
+              "sequence": 20
+            }
+          ]
+        },
+        {
+          "code": "PN.1.IV",
+          "parent": "PN.1",
+          "name": "IV. (Acciones y participaciones en patrimonio propias)",
+          "sequence": 270,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "108",
+              "code_to": "108",
+              "sequence": 10
+            },
+            {
+              "kind": "code_range",
+              "code_from": "109",
+              "code_to": "109",
+              "sequence": 20
+            }
+          ]
+        },
+        {
+          "code": "PN.1.V",
+          "parent": "PN.1",
+          "name": "V. Resultados de ejercicios anteriores",
+          "sequence": 280,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "120",
+              "code_to": "120",
+              "sequence": 10
+            },
+            {
+              "kind": "code_range",
+              "code_from": "121",
+              "code_to": "121",
+              "sequence": 20
+            }
+          ]
+        },
+        {
+          "code": "PN.1.VI",
+          "parent": "PN.1",
+          "name": "VI. Otras aportaciones de socios",
+          "sequence": 290,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "118",
+              "code_to": "118",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "PN.1.VII",
+          "parent": "PN.1",
+          "name": "VII. Resultado del ejercicio",
+          "sequence": 300,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "129",
+              "code_to": "129",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "PN.1.VIII",
+          "parent": "PN.1",
+          "name": "VIII. (Dividendo a cuenta)",
+          "sequence": 310,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "557",
+              "code_to": "557",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "PN.1.IX",
+          "parent": "PN.1",
+          "name": "IX. Otros instrumentos de patrimonio neto",
+          "sequence": 320,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "111",
+              "code_to": "111",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "PN.2",
+          "parent": "PN",
+          "name": "A-2) Ajustes por cambios de valor",
+          "sequence": 330,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "133",
+              "code_to": "133",
+              "sequence": 10
+            },
+            {
+              "kind": "code_range",
+              "code_from": "1340",
+              "code_to": "1340",
+              "sequence": 20
+            },
+            {
+              "kind": "code_range",
+              "code_from": "137",
+              "code_to": "137",
+              "sequence": 30
+            }
+          ]
+        },
+        {
+          "code": "PN.3",
+          "parent": "PN",
+          "name": "A-3) Subvenciones, donaciones y legados recibidos",
+          "sequence": 340,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "130",
+              "code_to": "132",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "PNC",
+          "parent": "PNP",
+          "name": "B) PASIVO NO CORRIENTE",
+          "sequence": 350,
+          "is_total": true,
+          "plus": [
+            "PNC.I",
+            "PNC.II",
+            "PNC.III",
+            "PNC.IV",
+            "PNC.V"
+          ]
+        },
+        {
+          "code": "PNC.I",
+          "parent": "PNC",
+          "name": "I. Provisiones a largo plazo",
+          "sequence": 360,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "14",
+              "code_to": "14",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "PNC.II",
+          "parent": "PNC",
+          "name": "II. Deudas a largo plazo",
+          "sequence": 370,
+          "is_total": true,
+          "plus": [
+            "PNC.II.1",
+            "PNC.II.2",
+            "PNC.II.3"
+          ]
+        },
+        {
+          "code": "PNC.II.1",
+          "parent": "PNC.II",
+          "name": "1. Deudas con entidades de crédito",
+          "sequence": 380,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1605",
+              "code_to": "1605",
+              "sequence": 10
+            },
+            {
+              "kind": "code_range",
+              "code_from": "170",
+              "code_to": "170",
+              "sequence": 20
+            }
+          ]
+        },
+        {
+          "code": "PNC.II.2",
+          "parent": "PNC.II",
+          "name": "2. Acreedores por arrendamiento financiero",
+          "sequence": 390,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1625",
+              "code_to": "1625",
+              "sequence": 10
+            },
+            {
+              "kind": "code_range",
+              "code_from": "174",
+              "code_to": "174",
+              "sequence": 20
+            }
+          ]
+        },
+        {
+          "code": "PNC.II.3",
+          "parent": "PNC.II",
+          "name": "3. Otras deudas a largo plazo",
+          "sequence": 400,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1615",
+              "code_to": "1615",
+              "sequence": 10
+            },
+            {
+              "kind": "code_range",
+              "code_from": "1635",
+              "code_to": "1635",
+              "sequence": 20
+            },
+            {
+              "kind": "code_range",
+              "code_from": "171",
+              "code_to": "173",
+              "sequence": 30
+            },
+            {
+              "kind": "code_range",
+              "code_from": "175",
+              "code_to": "179",
+              "sequence": 40
+            },
+            {
+              "kind": "code_range",
+              "code_from": "180",
+              "code_to": "180",
+              "sequence": 50
+            },
+            {
+              "kind": "code_range",
+              "code_from": "185",
+              "code_to": "185",
+              "sequence": 60
+            },
+            {
+              "kind": "code_range",
+              "code_from": "189",
+              "code_to": "189",
+              "sequence": 70
+            }
+          ]
+        },
+        {
+          "code": "PNC.III",
+          "parent": "PNC",
+          "name": "III. Deudas con empresas del grupo y asociadas a largo plazo",
+          "sequence": 410,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1603",
+              "code_to": "1603",
+              "sequence": 10
+            },
+            {
+              "kind": "code_range",
+              "code_from": "1604",
+              "code_to": "1604",
+              "sequence": 20
+            },
+            {
+              "kind": "code_range",
+              "code_from": "1613",
+              "code_to": "1613",
+              "sequence": 30
+            },
+            {
+              "kind": "code_range",
+              "code_from": "1614",
+              "code_to": "1614",
+              "sequence": 40
+            },
+            {
+              "kind": "code_range",
+              "code_from": "1623",
+              "code_to": "1623",
+              "sequence": 50
+            },
+            {
+              "kind": "code_range",
+              "code_from": "1624",
+              "code_to": "1624",
+              "sequence": 60
+            },
+            {
+              "kind": "code_range",
+              "code_from": "1633",
+              "code_to": "1633",
+              "sequence": 70
+            },
+            {
+              "kind": "code_range",
+              "code_from": "1634",
+              "code_to": "1634",
+              "sequence": 80
+            }
+          ]
+        },
+        {
+          "code": "PNC.IV",
+          "parent": "PNC",
+          "name": "IV. Pasivos por impuesto diferido",
+          "sequence": 420,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "479",
+              "code_to": "479",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "PNC.V",
+          "parent": "PNC",
+          "name": "V. Periodificaciones a largo plazo",
+          "sequence": 430,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "181",
+              "code_to": "181",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "PC",
+          "parent": "PNP",
+          "name": "C) PASIVO CORRIENTE",
+          "sequence": 440,
+          "is_total": true,
+          "plus": [
+            "PC.I",
+            "PC.II",
+            "PC.III",
+            "PC.IV",
+            "PC.V",
+            "PC.VI"
+          ]
+        },
+        {
+          "code": "PC.I",
+          "parent": "PC",
+          "name": "I. Pasivos vinculados con activos no corrientes mantenidos para la venta",
+          "sequence": 450,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "585",
+              "code_to": "589",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "PC.II",
+          "parent": "PC",
+          "name": "II. Provisiones a corto plazo",
+          "sequence": 460,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "499",
+              "code_to": "499",
+              "sequence": 10
+            },
+            {
+              "kind": "code_range",
+              "code_from": "529",
+              "code_to": "529",
+              "sequence": 20
+            }
+          ]
+        },
+        {
+          "code": "PC.III",
+          "parent": "PC",
+          "name": "III. Deudas a corto plazo",
+          "sequence": 470,
+          "is_total": true,
+          "plus": [
+            "PC.III.1",
+            "PC.III.2",
+            "PC.III.3"
+          ]
+        },
+        {
+          "code": "PC.III.1",
+          "parent": "PC.III",
+          "name": "1. Deudas con entidades de crédito",
+          "sequence": 480,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "5105",
+              "code_to": "5105",
+              "sequence": 10
+            },
+            {
+              "kind": "code_range",
+              "code_from": "520",
+              "code_to": "520",
+              "sequence": 20
+            },
+            {
+              "kind": "code_range",
+              "code_from": "527",
+              "code_to": "527",
+              "sequence": 30
+            }
+          ]
+        },
+        {
+          "code": "PC.III.2",
+          "parent": "PC.III",
+          "name": "2. Acreedores por arrendamiento financiero",
+          "sequence": 490,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "5125",
+              "code_to": "5125",
+              "sequence": 10
+            },
+            {
+              "kind": "code_range",
+              "code_from": "524",
+              "code_to": "524",
+              "sequence": 20
+            }
+          ]
+        },
+        {
+          "code": "PC.III.3",
+          "parent": "PC.III",
+          "name": "3. Otras deudas a corto plazo",
+          "sequence": 500,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1034",
+              "code_to": "1034",
+              "sequence": 10
+            },
+            {
+              "kind": "code_range",
+              "code_from": "1044",
+              "code_to": "1044",
+              "sequence": 20
+            },
+            {
+              "kind": "code_range",
+              "code_from": "190",
+              "code_to": "190",
+              "sequence": 30
+            },
+            {
+              "kind": "code_range",
+              "code_from": "192",
+              "code_to": "192",
+              "sequence": 40
+            },
+            {
+              "kind": "code_range",
+              "code_from": "194",
+              "code_to": "194",
+              "sequence": 50
+            },
+            {
+              "kind": "code_range",
+              "code_from": "500",
+              "code_to": "500",
+              "sequence": 60
+            },
+            {
+              "kind": "code_range",
+              "code_from": "501",
+              "code_to": "501",
+              "sequence": 70
+            },
+            {
+              "kind": "code_range",
+              "code_from": "505",
+              "code_to": "505",
+              "sequence": 80
+            },
+            {
+              "kind": "code_range",
+              "code_from": "506",
+              "code_to": "506",
+              "sequence": 90
+            },
+            {
+              "kind": "code_range",
+              "code_from": "509",
+              "code_to": "509",
+              "sequence": 100
+            },
+            {
+              "kind": "code_range",
+              "code_from": "5115",
+              "code_to": "5115",
+              "sequence": 110
+            },
+            {
+              "kind": "code_range",
+              "code_from": "5135",
+              "code_to": "5135",
+              "sequence": 120
+            },
+            {
+              "kind": "code_range",
+              "code_from": "5145",
+              "code_to": "5145",
+              "sequence": 130
+            },
+            {
+              "kind": "code_range",
+              "code_from": "521",
+              "code_to": "523",
+              "sequence": 140
+            },
+            {
+              "kind": "code_range",
+              "code_from": "525",
+              "code_to": "525",
+              "sequence": 150
+            },
+            {
+              "kind": "code_range",
+              "code_from": "526",
+              "code_to": "526",
+              "sequence": 160
+            },
+            {
+              "kind": "code_range",
+              "code_from": "528",
+              "code_to": "528",
+              "sequence": 170
+            },
+            {
+              "kind": "code_range",
+              "code_from": "551",
+              "code_to": "551",
+              "side": "credit",
+              "sequence": 180
+            },
+            {
+              "kind": "code_range",
+              "code_from": "5525",
+              "code_to": "5525",
+              "side": "credit",
+              "sequence": 190
+            },
+            {
+              "kind": "code_range",
+              "code_from": "555",
+              "code_to": "555",
+              "sequence": 200
+            },
+            {
+              "kind": "code_range",
+              "code_from": "5565",
+              "code_to": "5565",
+              "sequence": 210
+            },
+            {
+              "kind": "code_range",
+              "code_from": "5566",
+              "code_to": "5566",
+              "sequence": 220
+            },
+            {
+              "kind": "code_range",
+              "code_from": "5595",
+              "code_to": "5595",
+              "sequence": 230
+            },
+            {
+              "kind": "code_range",
+              "code_from": "5598",
+              "code_to": "5598",
+              "sequence": 240
+            },
+            {
+              "kind": "code_range",
+              "code_from": "560",
+              "code_to": "560",
+              "sequence": 250
+            },
+            {
+              "kind": "code_range",
+              "code_from": "561",
+              "code_to": "561",
+              "sequence": 260
+            },
+            {
+              "kind": "code_range",
+              "code_from": "569",
+              "code_to": "569",
+              "sequence": 270
+            }
+          ]
+        },
+        {
+          "code": "PC.IV",
+          "parent": "PC",
+          "name": "IV. Deudas con empresas del grupo y asociadas a corto plazo",
+          "sequence": 510,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "5103",
+              "code_to": "5103",
+              "sequence": 10
+            },
+            {
+              "kind": "code_range",
+              "code_from": "5104",
+              "code_to": "5104",
+              "sequence": 20
+            },
+            {
+              "kind": "code_range",
+              "code_from": "5113",
+              "code_to": "5113",
+              "sequence": 30
+            },
+            {
+              "kind": "code_range",
+              "code_from": "5114",
+              "code_to": "5114",
+              "sequence": 40
+            },
+            {
+              "kind": "code_range",
+              "code_from": "5123",
+              "code_to": "5123",
+              "sequence": 50
+            },
+            {
+              "kind": "code_range",
+              "code_from": "5124",
+              "code_to": "5124",
+              "sequence": 60
+            },
+            {
+              "kind": "code_range",
+              "code_from": "5133",
+              "code_to": "5133",
+              "sequence": 70
+            },
+            {
+              "kind": "code_range",
+              "code_from": "5134",
+              "code_to": "5134",
+              "sequence": 80
+            },
+            {
+              "kind": "code_range",
+              "code_from": "5143",
+              "code_to": "5143",
+              "sequence": 90
+            },
+            {
+              "kind": "code_range",
+              "code_from": "5144",
+              "code_to": "5144",
+              "sequence": 100
+            },
+            {
+              "kind": "code_range",
+              "code_from": "5523",
+              "code_to": "5523",
+              "side": "credit",
+              "sequence": 110
+            },
+            {
+              "kind": "code_range",
+              "code_from": "5524",
+              "code_to": "5524",
+              "side": "credit",
+              "sequence": 120
+            },
+            {
+              "kind": "code_range",
+              "code_from": "5563",
+              "code_to": "5563",
+              "sequence": 130
+            },
+            {
+              "kind": "code_range",
+              "code_from": "5564",
+              "code_to": "5564",
+              "sequence": 140
+            }
+          ]
+        },
+        {
+          "code": "PC.V",
+          "parent": "PC",
+          "name": "V. Acreedores comerciales y otras cuentas a pagar",
+          "sequence": 520,
+          "is_total": true,
+          "plus": [
+            "PC.V.1",
+            "PC.V.2"
+          ]
+        },
+        {
+          "code": "PC.V.1",
+          "parent": "PC.V",
+          "name": "1. Proveedores",
+          "sequence": 530,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "400",
+              "code_to": "400",
+              "sequence": 10
+            },
+            {
+              "kind": "code_range",
+              "code_from": "401",
+              "code_to": "401",
+              "sequence": 20
+            },
+            {
+              "kind": "code_range",
+              "code_from": "403",
+              "code_to": "406",
+              "sequence": 30
+            }
+          ]
+        },
+        {
+          "code": "PC.V.2",
+          "parent": "PC.V",
+          "name": "2. Otros acreedores",
+          "sequence": 540,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "41",
+              "code_to": "41",
+              "sequence": 10
+            },
+            {
+              "kind": "code_range",
+              "code_from": "438",
+              "code_to": "438",
+              "sequence": 20
+            },
+            {
+              "kind": "code_range",
+              "code_from": "465",
+              "code_to": "465",
+              "sequence": 30
+            },
+            {
+              "kind": "code_range",
+              "code_from": "466",
+              "code_to": "466",
+              "sequence": 40
+            },
+            {
+              "kind": "code_range",
+              "code_from": "475",
+              "code_to": "477",
+              "sequence": 50
+            }
+          ]
+        },
+        {
+          "code": "PC.VI",
+          "parent": "PC",
+          "name": "VI. Periodificaciones a corto plazo",
+          "sequence": 550,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "485",
+              "code_to": "485",
+              "sequence": 10
+            },
+            {
+              "kind": "code_range",
+              "code_from": "568",
+              "code_to": "568",
+              "sequence": 20
+            }
+          ]
+        },
+        {
+          "code": "PNP",
+          "parent": null,
+          "name": "TOTAL PATRIMONIO NETO Y PASIVO (A + B + C)",
+          "sequence": 560,
+          "is_total": true,
+          "plus": [
+            "PN",
+            "PNC",
+            "PC"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "ES-PGC-PGA",
+      "kind": "income_statement",
+      "framework": "ES-PGC",
+      "name": "Cuenta de pérdidas y ganancias abreviada",
+      "legal_reference": "Real Decreto 1514/2007, Plan General de Contabilidad, tercera parte — modelo de cuenta de pérdidas y ganancias abreviada; la columna «N.º cuentas» del modelo publica la cuenta que alimenta cada partida, y esta línea la transcribe",
+      "source": "pgc",
+      "lines": [
+        {
+          "code": "1",
+          "parent": "A",
+          "name": "1. Importe neto de la cifra de negocios",
+          "sequence": 10,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "700",
+              "code_to": "705",
+              "sequence": 10
+            },
+            {
+              "kind": "code_range",
+              "code_from": "706",
+              "code_to": "706",
+              "sequence": 20
+            },
+            {
+              "kind": "code_range",
+              "code_from": "708",
+              "code_to": "708",
+              "sequence": 30
+            },
+            {
+              "kind": "code_range",
+              "code_from": "709",
+              "code_to": "709",
+              "sequence": 40
+            }
+          ]
+        },
+        {
+          "code": "2",
+          "parent": "A",
+          "name": "2. Variación de existencias de productos terminados y en curso de fabricación",
+          "sequence": 20,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "6930",
+              "code_to": "6930",
+              "sequence": 10
+            },
+            {
+              "kind": "code_range",
+              "code_from": "71",
+              "code_to": "71",
+              "sequence": 20
+            },
+            {
+              "kind": "code_range",
+              "code_from": "7930",
+              "code_to": "7930",
+              "sequence": 30
+            }
+          ]
+        },
+        {
+          "code": "3",
+          "parent": "A",
+          "name": "3. Trabajos realizados por la empresa para su activo",
+          "sequence": 30,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "73",
+              "code_to": "73",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "4",
+          "parent": "A",
+          "name": "4. Aprovisionamientos",
+          "sequence": 40,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "600",
+              "code_to": "602",
+              "sequence": 10
+            },
+            {
+              "kind": "code_range",
+              "code_from": "606",
+              "code_to": "609",
+              "sequence": 20
+            },
+            {
+              "kind": "code_range",
+              "code_from": "61",
+              "code_to": "61",
+              "sequence": 30
+            },
+            {
+              "kind": "code_range",
+              "code_from": "6931",
+              "code_to": "6933",
+              "sequence": 40
+            },
+            {
+              "kind": "code_range",
+              "code_from": "7931",
+              "code_to": "7933",
+              "sequence": 50
+            }
+          ]
+        },
+        {
+          "code": "5",
+          "parent": "A",
+          "name": "5. Otros ingresos de explotación",
+          "sequence": 50,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "740",
+              "code_to": "740",
+              "sequence": 10
+            },
+            {
+              "kind": "code_range",
+              "code_from": "747",
+              "code_to": "747",
+              "sequence": 20
+            },
+            {
+              "kind": "code_range",
+              "code_from": "75",
+              "code_to": "75",
+              "sequence": 30
+            }
+          ]
+        },
+        {
+          "code": "6",
+          "parent": "A",
+          "name": "6. Gastos de personal",
+          "sequence": 60,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "64",
+              "code_to": "64",
+              "sequence": 10
+            },
+            {
+              "kind": "code_range",
+              "code_from": "7950",
+              "code_to": "7950",
+              "sequence": 20
+            },
+            {
+              "kind": "code_range",
+              "code_from": "7957",
+              "code_to": "7957",
+              "sequence": 30
+            }
+          ]
+        },
+        {
+          "code": "7",
+          "parent": "A",
+          "name": "7. Otros gastos de explotación",
+          "sequence": 70,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "62",
+              "code_to": "62",
+              "sequence": 10
+            },
+            {
+              "kind": "code_range",
+              "code_from": "631",
+              "code_to": "631",
+              "sequence": 20
+            },
+            {
+              "kind": "code_range",
+              "code_from": "634",
+              "code_to": "634",
+              "sequence": 30
+            },
+            {
+              "kind": "code_range",
+              "code_from": "636",
+              "code_to": "636",
+              "sequence": 40
+            },
+            {
+              "kind": "code_range",
+              "code_from": "639",
+              "code_to": "639",
+              "sequence": 50
+            },
+            {
+              "kind": "code_range",
+              "code_from": "65",
+              "code_to": "65",
+              "sequence": 60
+            },
+            {
+              "kind": "code_range",
+              "code_from": "694",
+              "code_to": "694",
+              "sequence": 70
+            },
+            {
+              "kind": "code_range",
+              "code_from": "695",
+              "code_to": "695",
+              "sequence": 80
+            },
+            {
+              "kind": "code_range",
+              "code_from": "794",
+              "code_to": "794",
+              "sequence": 90
+            },
+            {
+              "kind": "code_range",
+              "code_from": "7954",
+              "code_to": "7954",
+              "sequence": 100
+            }
+          ]
+        },
+        {
+          "code": "8",
+          "parent": "A",
+          "name": "8. Amortización del inmovilizado",
+          "sequence": 80,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "68",
+              "code_to": "68",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "9",
+          "parent": "A",
+          "name": "9. Imputación de subvenciones de inmovilizado no financiero y otras",
+          "sequence": 90,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "746",
+              "code_to": "746",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "10",
+          "parent": "A",
+          "name": "10. Excesos de provisiones",
+          "sequence": 100,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "7951",
+              "code_to": "7951",
+              "sequence": 10
+            },
+            {
+              "kind": "code_range",
+              "code_from": "7952",
+              "code_to": "7952",
+              "sequence": 20
+            },
+            {
+              "kind": "code_range",
+              "code_from": "7955",
+              "code_to": "7955",
+              "sequence": 30
+            },
+            {
+              "kind": "code_range",
+              "code_from": "7956",
+              "code_to": "7956",
+              "sequence": 40
+            }
+          ]
+        },
+        {
+          "code": "11",
+          "parent": "A",
+          "name": "11. Deterioro y resultado por enajenaciones del inmovilizado",
+          "sequence": 110,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "670",
+              "code_to": "672",
+              "sequence": 10
+            },
+            {
+              "kind": "code_range",
+              "code_from": "690",
+              "code_to": "692",
+              "sequence": 20
+            },
+            {
+              "kind": "code_range",
+              "code_from": "770",
+              "code_to": "772",
+              "sequence": 30
+            },
+            {
+              "kind": "code_range",
+              "code_from": "790",
+              "code_to": "792",
+              "sequence": 40
+            }
+          ]
+        },
+        {
+          "code": "A",
+          "parent": "C",
+          "name": "A) RESULTADO DE EXPLOTACIÓN (1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9 + 10 + 11)",
+          "sequence": 120,
+          "is_total": true,
+          "plus": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11"
+          ]
+        },
+        {
+          "code": "12",
+          "parent": "B",
+          "name": "12. Ingresos financieros",
+          "sequence": 130,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "760",
+              "code_to": "762",
+              "sequence": 10
+            },
+            {
+              "kind": "code_range",
+              "code_from": "767",
+              "code_to": "767",
+              "sequence": 20
+            },
+            {
+              "kind": "code_range",
+              "code_from": "769",
+              "code_to": "769",
+              "sequence": 30
+            }
+          ]
+        },
+        {
+          "code": "13",
+          "parent": "B",
+          "name": "13. Gastos financieros",
+          "sequence": 140,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "660",
+              "code_to": "662",
+              "sequence": 10
+            },
+            {
+              "kind": "code_range",
+              "code_from": "664",
+              "code_to": "664",
+              "sequence": 20
+            },
+            {
+              "kind": "code_range",
+              "code_from": "665",
+              "code_to": "665",
+              "sequence": 30
+            },
+            {
+              "kind": "code_range",
+              "code_from": "669",
+              "code_to": "669",
+              "sequence": 40
+            }
+          ]
+        },
+        {
+          "code": "14",
+          "parent": "B",
+          "name": "14. Variación de valor razonable en instrumentos financieros",
+          "sequence": 150,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "663",
+              "code_to": "663",
+              "sequence": 10
+            },
+            {
+              "kind": "code_range",
+              "code_from": "763",
+              "code_to": "763",
+              "sequence": 20
+            }
+          ]
+        },
+        {
+          "code": "15",
+          "parent": "B",
+          "name": "15. Diferencias de cambio",
+          "sequence": 160,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "668",
+              "code_to": "668",
+              "sequence": 10
+            },
+            {
+              "kind": "code_range",
+              "code_from": "768",
+              "code_to": "768",
+              "sequence": 20
+            }
+          ]
+        },
+        {
+          "code": "16",
+          "parent": "B",
+          "name": "16. Deterioro y resultado por enajenaciones de instrumentos financieros",
+          "sequence": 170,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "666",
+              "code_to": "666",
+              "sequence": 10
+            },
+            {
+              "kind": "code_range",
+              "code_from": "667",
+              "code_to": "667",
+              "sequence": 20
+            },
+            {
+              "kind": "code_range",
+              "code_from": "673",
+              "code_to": "673",
+              "sequence": 30
+            },
+            {
+              "kind": "code_range",
+              "code_from": "675",
+              "code_to": "675",
+              "sequence": 40
+            },
+            {
+              "kind": "code_range",
+              "code_from": "696",
+              "code_to": "699",
+              "sequence": 50
+            },
+            {
+              "kind": "code_range",
+              "code_from": "766",
+              "code_to": "766",
+              "sequence": 60
+            },
+            {
+              "kind": "code_range",
+              "code_from": "773",
+              "code_to": "773",
+              "sequence": 70
+            },
+            {
+              "kind": "code_range",
+              "code_from": "775",
+              "code_to": "775",
+              "sequence": 80
+            },
+            {
+              "kind": "code_range",
+              "code_from": "796",
+              "code_to": "799",
+              "sequence": 90
+            }
+          ]
+        },
+        {
+          "code": "B",
+          "parent": "C",
+          "name": "B) RESULTADO FINANCIERO (12 + 13 + 14 + 15 + 16)",
+          "sequence": 180,
+          "is_total": true,
+          "plus": [
+            "12",
+            "13",
+            "14",
+            "15",
+            "16"
+          ]
+        },
+        {
+          "code": "C",
+          "parent": "D",
+          "name": "C) RESULTADO ANTES DE IMPUESTOS (A + B)",
+          "sequence": 190,
+          "is_total": true,
+          "plus": [
+            "A",
+            "B"
+          ]
+        },
+        {
+          "code": "17",
+          "parent": "D",
+          "name": "17. Impuestos sobre beneficios",
+          "sequence": 200,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "630",
+              "code_to": "630",
+              "sequence": 10
+            },
+            {
+              "kind": "code_range",
+              "code_from": "633",
+              "code_to": "633",
+              "sequence": 20
+            },
+            {
+              "kind": "code_range",
+              "code_from": "638",
+              "code_to": "638",
+              "sequence": 30
+            }
+          ]
+        },
+        {
+          "code": "D",
+          "parent": null,
+          "name": "D) RESULTADO DEL EJERCICIO (C + 17)",
+          "sequence": 210,
+          "is_total": true,
+          "plus": [
+            "C",
+            "17"
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,577 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "ES-303",
+  "name": "Modelo 303 — IVA. Autoliquidación",
+  "period": [
+    "month",
+    "quarter"
+  ],
+  "period_default": "quarter",
+  "valid_from": "2024-07-01",
+  "legal_reference": "Orden EHA/3786/2008 — modelo 303; anexo I en la redacción de la Orden HAC/819/2024 (casillas 153 a 155 y 165 a 170, aplicable desde septiembre y el tercer trimestre de 2024, de ahí valid_from) y después de la Orden HAC/27/2026, anexo III, aplicable desde febrero y el segundo trimestre de 2026, que no cambia ninguna casilla transcrita aquí. Cadencia: Reglamento del IVA, art. 71.3 — el periodo de liquidación coincide con el trimestre natural, y con el mes natural para quien superó 6.010.121,04 € de volumen de operaciones el año anterior, está inscrito en el registro de devolución mensual (art. 30), aplica el régimen del grupo de entidades o es titular de un depósito fiscal de carburantes. El trimestre es la regla que la ley da a todos, y la que se propone",
+  "source": "riva",
+  "deadline": {
+    "rule": "day_of_month_after_period",
+    "day": 20,
+    "legal_reference": "Reglamento del IVA, art. 71.4 — durante los veinte primeros días naturales del mes siguiente al periodo. Dos excepciones que la regla no puede decir y que el declarante debe aplicar: la autoliquidación del último periodo del año se presenta durante los treinta primeros días naturales de enero, y quien lleva los libros registro por el SII (art. 62.6, primer párrafo) presenta en los treinta primeros días naturales del mes siguiente, o hasta el último día de febrero para enero",
+    "source": "riva"
+  },
+  "boxes": [
+    {
+      "box": "150",
+      "kind": "base",
+      "name": "Régimen general — base imponible al 0 %",
+      "sequence": 10,
+      "legal_reference": "Orden HAC/27/2026, anexo III — modelo 303, IVA devengado, casilla 150 — tipo cero; en 2026 no hay entregas a este tipo, la fila queda para los periodos del tipo temporal",
+      "source": "orden-hac-27-2026"
+    },
+    {
+      "box": "152",
+      "kind": "tax",
+      "name": "Régimen general — cuota al 0 %",
+      "sequence": 20,
+      "legal_reference": "Orden HAC/27/2026, anexo III — modelo 303, IVA devengado, casilla 152",
+      "source": "orden-hac-27-2026"
+    },
+    {
+      "box": "165",
+      "kind": "base",
+      "name": "Régimen general — base imponible al 2 %",
+      "sequence": 30,
+      "legal_reference": "Orden HAC/27/2026, anexo III — modelo 303, IVA devengado, casilla 165 — fila añadida por la Orden HAC/819/2024 para el tipo temporal del 2 %",
+      "source": "orden-hac-27-2026"
+    },
+    {
+      "box": "167",
+      "kind": "tax",
+      "name": "Régimen general — cuota al 2 %",
+      "sequence": 40,
+      "legal_reference": "Orden HAC/27/2026, anexo III — modelo 303, IVA devengado, casilla 167",
+      "source": "orden-hac-27-2026"
+    },
+    {
+      "box": "01",
+      "kind": "base",
+      "name": "Régimen general — base imponible al 4 %",
+      "sequence": 50,
+      "legal_reference": "Orden HAC/27/2026, anexo III — modelo 303, IVA devengado, casilla 01 — tipo superreducido",
+      "source": "orden-hac-27-2026"
+    },
+    {
+      "box": "03",
+      "kind": "tax",
+      "name": "Régimen general — cuota al 4 %",
+      "sequence": 60,
+      "legal_reference": "Orden HAC/27/2026, anexo III — modelo 303, IVA devengado, casilla 03",
+      "source": "orden-hac-27-2026"
+    },
+    {
+      "box": "153",
+      "kind": "base",
+      "name": "Régimen general — base imponible al 5 % o al 7,5 %",
+      "sequence": 70,
+      "legal_reference": "Orden HAC/27/2026, anexo III — modelo 303, IVA devengado, casilla 153 — fila de los tipos temporales del 5 % y del 7,5 %",
+      "source": "orden-hac-27-2026"
+    },
+    {
+      "box": "155",
+      "kind": "tax",
+      "name": "Régimen general — cuota al 5 % o al 7,5 %",
+      "sequence": 80,
+      "legal_reference": "Orden HAC/27/2026, anexo III — modelo 303, IVA devengado, casilla 155",
+      "source": "orden-hac-27-2026"
+    },
+    {
+      "box": "04",
+      "kind": "base",
+      "name": "Régimen general — base imponible al 10 %",
+      "sequence": 90,
+      "legal_reference": "Orden HAC/27/2026, anexo III — modelo 303, IVA devengado, casilla 04 — tipo reducido",
+      "source": "orden-hac-27-2026"
+    },
+    {
+      "box": "06",
+      "kind": "tax",
+      "name": "Régimen general — cuota al 10 %",
+      "sequence": 100,
+      "legal_reference": "Orden HAC/27/2026, anexo III — modelo 303, IVA devengado, casilla 06",
+      "source": "orden-hac-27-2026"
+    },
+    {
+      "box": "07",
+      "kind": "base",
+      "name": "Régimen general — base imponible al 21 %",
+      "sequence": 110,
+      "legal_reference": "Orden HAC/27/2026, anexo III — modelo 303, IVA devengado, casilla 07 — tipo general",
+      "source": "orden-hac-27-2026"
+    },
+    {
+      "box": "09",
+      "kind": "tax",
+      "name": "Régimen general — cuota al 21 %",
+      "sequence": 120,
+      "legal_reference": "Orden HAC/27/2026, anexo III — modelo 303, IVA devengado, casilla 09",
+      "source": "orden-hac-27-2026"
+    },
+    {
+      "box": "10",
+      "kind": "base",
+      "name": "Adquisiciones intracomunitarias de bienes y servicios — base imponible",
+      "sequence": 130,
+      "legal_reference": "Orden HAC/27/2026, anexo III — modelo 303, casilla 10 — Ley 37/1992, arts. 13, 85 y 84.Uno.2.º",
+      "source": "orden-hac-27-2026"
+    },
+    {
+      "box": "11",
+      "kind": "tax",
+      "name": "Adquisiciones intracomunitarias de bienes y servicios — cuota",
+      "sequence": 140,
+      "legal_reference": "Orden HAC/27/2026, anexo III — modelo 303, casilla 11",
+      "source": "orden-hac-27-2026"
+    },
+    {
+      "box": "12",
+      "kind": "base",
+      "name": "Otras operaciones con inversión del sujeto pasivo (excepto adq. intracom.) — base imponible",
+      "sequence": 150,
+      "legal_reference": "Orden HAC/27/2026, anexo III — modelo 303, casilla 12 — Ley 37/1992, art. 84.Uno.2.º y 4.º",
+      "source": "orden-hac-27-2026"
+    },
+    {
+      "box": "13",
+      "kind": "tax",
+      "name": "Otras operaciones con inversión del sujeto pasivo (excepto adq. intracom.) — cuota",
+      "sequence": 160,
+      "legal_reference": "Orden HAC/27/2026, anexo III — modelo 303, casilla 13",
+      "source": "orden-hac-27-2026"
+    },
+    {
+      "box": "14",
+      "kind": "base",
+      "name": "Modificación bases y cuotas — base imponible",
+      "sequence": 170,
+      "legal_reference": "Orden HAC/27/2026, anexo III — modelo 303, casilla 14 — Ley 37/1992, art. 80; Reglamento del IVA, art. 24 — sin desglose por tipos y con el signo que corresponda",
+      "source": "orden-hac-27-2026"
+    },
+    {
+      "box": "15",
+      "kind": "tax",
+      "name": "Modificación bases y cuotas — cuota",
+      "sequence": 180,
+      "legal_reference": "Orden HAC/27/2026, anexo III — modelo 303, casilla 15",
+      "source": "orden-hac-27-2026"
+    },
+    {
+      "box": "156",
+      "kind": "base",
+      "name": "Recargo de equivalencia 1,75 % — base imponible",
+      "sequence": 190,
+      "legal_reference": "Orden HAC/27/2026, anexo III — modelo 303, recargo de equivalencia, casilla 156. Ley 37/1992, art. 161. Ningún impuesto de este paquete escribe aquí: el recargo se repercute en la misma línea que el IVA y el núcleo no lleva dos impuestos por línea (véase docs/international.md)",
+      "source": "orden-hac-27-2026"
+    },
+    {
+      "box": "158",
+      "kind": "tax",
+      "name": "Recargo de equivalencia 1,75 % — cuota",
+      "sequence": 200,
+      "legal_reference": "Orden HAC/27/2026, anexo III — modelo 303, recargo de equivalencia, casilla 158. Ley 37/1992, art. 161",
+      "source": "orden-hac-27-2026"
+    },
+    {
+      "box": "168",
+      "kind": "base",
+      "name": "Recargo de equivalencia 0,5 % — base imponible",
+      "sequence": 210,
+      "legal_reference": "Orden HAC/27/2026, anexo III — modelo 303, recargo de equivalencia, casilla 168. Ley 37/1992, art. 161. Ningún impuesto de este paquete escribe aquí: el recargo se repercute en la misma línea que el IVA y el núcleo no lleva dos impuestos por línea (véase docs/international.md)",
+      "source": "orden-hac-27-2026"
+    },
+    {
+      "box": "170",
+      "kind": "tax",
+      "name": "Recargo de equivalencia 0,5 % — cuota",
+      "sequence": 220,
+      "legal_reference": "Orden HAC/27/2026, anexo III — modelo 303, recargo de equivalencia, casilla 170. Ley 37/1992, art. 161",
+      "source": "orden-hac-27-2026"
+    },
+    {
+      "box": "16",
+      "kind": "base",
+      "name": "Recargo de equivalencia fila 16 — base imponible",
+      "sequence": 230,
+      "legal_reference": "Orden HAC/27/2026, anexo III — modelo 303, recargo de equivalencia, casilla 16. Ley 37/1992, art. 161. Ningún impuesto de este paquete escribe aquí: el recargo se repercute en la misma línea que el IVA y el núcleo no lleva dos impuestos por línea (véase docs/international.md)",
+      "source": "orden-hac-27-2026"
+    },
+    {
+      "box": "18",
+      "kind": "tax",
+      "name": "Recargo de equivalencia fila 16 — cuota",
+      "sequence": 240,
+      "legal_reference": "Orden HAC/27/2026, anexo III — modelo 303, recargo de equivalencia, casilla 18. Ley 37/1992, art. 161",
+      "source": "orden-hac-27-2026"
+    },
+    {
+      "box": "19",
+      "kind": "base",
+      "name": "Recargo de equivalencia 1,4 % — base imponible",
+      "sequence": 250,
+      "legal_reference": "Orden HAC/27/2026, anexo III — modelo 303, recargo de equivalencia, casilla 19. Ley 37/1992, art. 161. Ningún impuesto de este paquete escribe aquí: el recargo se repercute en la misma línea que el IVA y el núcleo no lleva dos impuestos por línea (véase docs/international.md)",
+      "source": "orden-hac-27-2026"
+    },
+    {
+      "box": "21",
+      "kind": "tax",
+      "name": "Recargo de equivalencia 1,4 % — cuota",
+      "sequence": 260,
+      "legal_reference": "Orden HAC/27/2026, anexo III — modelo 303, recargo de equivalencia, casilla 21. Ley 37/1992, art. 161",
+      "source": "orden-hac-27-2026"
+    },
+    {
+      "box": "22",
+      "kind": "base",
+      "name": "Recargo de equivalencia 5,2 % — base imponible",
+      "sequence": 270,
+      "legal_reference": "Orden HAC/27/2026, anexo III — modelo 303, recargo de equivalencia, casilla 22. Ley 37/1992, art. 161. Ningún impuesto de este paquete escribe aquí: el recargo se repercute en la misma línea que el IVA y el núcleo no lleva dos impuestos por línea (véase docs/international.md)",
+      "source": "orden-hac-27-2026"
+    },
+    {
+      "box": "24",
+      "kind": "tax",
+      "name": "Recargo de equivalencia 5,2 % — cuota",
+      "sequence": 280,
+      "legal_reference": "Orden HAC/27/2026, anexo III — modelo 303, recargo de equivalencia, casilla 24. Ley 37/1992, art. 161",
+      "source": "orden-hac-27-2026"
+    },
+    {
+      "box": "25",
+      "kind": "base",
+      "name": "Modificaciones bases y cuotas del recargo de equivalencia — base",
+      "sequence": 290,
+      "legal_reference": "Orden HAC/27/2026, anexo III — modelo 303, casilla 25",
+      "source": "orden-hac-27-2026"
+    },
+    {
+      "box": "26",
+      "kind": "tax",
+      "name": "Modificaciones bases y cuotas del recargo de equivalencia — cuota",
+      "sequence": 300,
+      "legal_reference": "Orden HAC/27/2026, anexo III — modelo 303, casilla 26",
+      "source": "orden-hac-27-2026"
+    },
+    {
+      "box": "27",
+      "kind": "total",
+      "name": "Total cuota devengada",
+      "sequence": 310,
+      "plus": [
+        "152",
+        "167",
+        "03",
+        "155",
+        "06",
+        "09",
+        "11",
+        "13",
+        "15",
+        "158",
+        "170",
+        "18",
+        "21",
+        "24",
+        "26"
+      ],
+      "legal_reference": "Orden HAC/27/2026, anexo III — modelo 303, casilla 27 = 152 + 167 + 03 + 155 + 06 + 09 + 11 + 13 + 15 + 158 + 170 + 18 + 21 + 24 + 26, fórmula impresa en el propio modelo",
+      "source": "orden-hac-27-2026"
+    },
+    {
+      "box": "28",
+      "kind": "base",
+      "name": "IVA deducible — Por cuotas soportadas en operaciones interiores corrientes — base",
+      "sequence": 320,
+      "legal_reference": "Orden HAC/27/2026, anexo III — modelo 303, IVA deducible, casilla 28. Ley 37/1992, arts. 92 a 114; las bases figuran sin prorratear (instrucciones del modelo 303)",
+      "source": "orden-hac-27-2026"
+    },
+    {
+      "box": "29",
+      "kind": "tax",
+      "name": "IVA deducible — Por cuotas soportadas en operaciones interiores corrientes — cuota",
+      "sequence": 330,
+      "legal_reference": "Orden HAC/27/2026, anexo III — modelo 303, IVA deducible, casilla 29",
+      "source": "orden-hac-27-2026"
+    },
+    {
+      "box": "30",
+      "kind": "base",
+      "name": "IVA deducible — Por cuotas soportadas en operaciones interiores con bienes de inversión — base",
+      "sequence": 340,
+      "legal_reference": "Orden HAC/27/2026, anexo III — modelo 303, IVA deducible, casilla 30. Ley 37/1992, arts. 92 a 114; las bases figuran sin prorratear (instrucciones del modelo 303)",
+      "source": "orden-hac-27-2026"
+    },
+    {
+      "box": "31",
+      "kind": "tax",
+      "name": "IVA deducible — Por cuotas soportadas en operaciones interiores con bienes de inversión — cuota",
+      "sequence": 350,
+      "legal_reference": "Orden HAC/27/2026, anexo III — modelo 303, IVA deducible, casilla 31",
+      "source": "orden-hac-27-2026"
+    },
+    {
+      "box": "32",
+      "kind": "base",
+      "name": "IVA deducible — Por cuotas soportadas en las importaciones de bienes corrientes — base",
+      "sequence": 360,
+      "legal_reference": "Orden HAC/27/2026, anexo III — modelo 303, IVA deducible, casilla 32. Ley 37/1992, arts. 92 a 114; las bases figuran sin prorratear (instrucciones del modelo 303)",
+      "source": "orden-hac-27-2026"
+    },
+    {
+      "box": "33",
+      "kind": "tax",
+      "name": "IVA deducible — Por cuotas soportadas en las importaciones de bienes corrientes — cuota",
+      "sequence": 370,
+      "legal_reference": "Orden HAC/27/2026, anexo III — modelo 303, IVA deducible, casilla 33",
+      "source": "orden-hac-27-2026"
+    },
+    {
+      "box": "34",
+      "kind": "base",
+      "name": "IVA deducible — Por cuotas soportadas en las importaciones de bienes de inversión — base",
+      "sequence": 380,
+      "legal_reference": "Orden HAC/27/2026, anexo III — modelo 303, IVA deducible, casilla 34. Ley 37/1992, arts. 92 a 114; las bases figuran sin prorratear (instrucciones del modelo 303)",
+      "source": "orden-hac-27-2026"
+    },
+    {
+      "box": "35",
+      "kind": "tax",
+      "name": "IVA deducible — Por cuotas soportadas en las importaciones de bienes de inversión — cuota",
+      "sequence": 390,
+      "legal_reference": "Orden HAC/27/2026, anexo III — modelo 303, IVA deducible, casilla 35",
+      "source": "orden-hac-27-2026"
+    },
+    {
+      "box": "36",
+      "kind": "base",
+      "name": "IVA deducible — En adquisiciones intracomunitarias de bienes y servicios corrientes — base",
+      "sequence": 400,
+      "legal_reference": "Orden HAC/27/2026, anexo III — modelo 303, IVA deducible, casilla 36. Ley 37/1992, arts. 92 a 114; las bases figuran sin prorratear (instrucciones del modelo 303)",
+      "source": "orden-hac-27-2026"
+    },
+    {
+      "box": "37",
+      "kind": "tax",
+      "name": "IVA deducible — En adquisiciones intracomunitarias de bienes y servicios corrientes — cuota",
+      "sequence": 410,
+      "legal_reference": "Orden HAC/27/2026, anexo III — modelo 303, IVA deducible, casilla 37",
+      "source": "orden-hac-27-2026"
+    },
+    {
+      "box": "38",
+      "kind": "base",
+      "name": "IVA deducible — En adquisiciones intracomunitarias de bienes de inversión — base",
+      "sequence": 420,
+      "legal_reference": "Orden HAC/27/2026, anexo III — modelo 303, IVA deducible, casilla 38. Ley 37/1992, arts. 92 a 114; las bases figuran sin prorratear (instrucciones del modelo 303)",
+      "source": "orden-hac-27-2026"
+    },
+    {
+      "box": "39",
+      "kind": "tax",
+      "name": "IVA deducible — En adquisiciones intracomunitarias de bienes de inversión — cuota",
+      "sequence": 430,
+      "legal_reference": "Orden HAC/27/2026, anexo III — modelo 303, IVA deducible, casilla 39",
+      "source": "orden-hac-27-2026"
+    },
+    {
+      "box": "40",
+      "kind": "base",
+      "name": "IVA deducible — Rectificación de deducciones — base",
+      "sequence": 440,
+      "legal_reference": "Orden HAC/27/2026, anexo III — modelo 303, IVA deducible, casilla 40. Ley 37/1992, arts. 92 a 114; las bases figuran sin prorratear (instrucciones del modelo 303)",
+      "source": "orden-hac-27-2026"
+    },
+    {
+      "box": "41",
+      "kind": "tax",
+      "name": "IVA deducible — Rectificación de deducciones — cuota",
+      "sequence": 450,
+      "legal_reference": "Orden HAC/27/2026, anexo III — modelo 303, IVA deducible, casilla 41",
+      "source": "orden-hac-27-2026"
+    },
+    {
+      "box": "42",
+      "kind": "tax",
+      "name": "Compensaciones Régimen Especial A.G. y P.",
+      "sequence": 460,
+      "legal_reference": "Orden HAC/27/2026, anexo III — modelo 303, casilla 42 — Ley 37/1992, art. 130. Ningún impuesto de este paquete escribe aquí",
+      "source": "orden-hac-27-2026"
+    },
+    {
+      "box": "43",
+      "kind": "tax",
+      "name": "Regularización bienes de inversión",
+      "sequence": 470,
+      "legal_reference": "Orden HAC/27/2026, anexo III — modelo 303, casilla 43 — Ley 37/1992, arts. 107 a 110. Ningún impuesto de este paquete escribe aquí",
+      "source": "orden-hac-27-2026"
+    },
+    {
+      "box": "44",
+      "kind": "tax",
+      "name": "Regularización por aplicación del porcentaje definitivo de prorrata",
+      "sequence": 480,
+      "legal_reference": "Orden HAC/27/2026, anexo III — modelo 303, casilla 44 — Ley 37/1992, art. 105; sólo en el 4T o el mes 12. Ningún impuesto de este paquete escribe aquí",
+      "source": "orden-hac-27-2026"
+    },
+    {
+      "box": "45",
+      "kind": "total",
+      "name": "Total a deducir",
+      "sequence": 490,
+      "plus": [
+        "29",
+        "31",
+        "33",
+        "35",
+        "37",
+        "39",
+        "41",
+        "42",
+        "43",
+        "44"
+      ],
+      "legal_reference": "Orden HAC/27/2026, anexo III — modelo 303, casilla 45 = 29 + 31 + 33 + 35 + 37 + 39 + 41 + 42 + 43 + 44",
+      "source": "orden-hac-27-2026"
+    },
+    {
+      "box": "46",
+      "kind": "total",
+      "name": "Resultado régimen general",
+      "sequence": 500,
+      "plus": [
+        "27"
+      ],
+      "minus": [
+        "45"
+      ],
+      "legal_reference": "Orden HAC/27/2026, anexo III — modelo 303, casilla 46 = 27 − 45. Puede ser negativa: el signo es el resultado",
+      "source": "orden-hac-27-2026"
+    },
+    {
+      "box": "59",
+      "kind": "base",
+      "name": "Entregas intracomunitarias de bienes y servicios",
+      "sequence": 510,
+      "legal_reference": "Orden HAC/27/2026, anexo III — modelo 303, información adicional, casilla 59 — Ley 37/1992, art. 25 y prestaciones de servicios intracomunitarias",
+      "source": "orden-hac-27-2026"
+    },
+    {
+      "box": "60",
+      "kind": "base",
+      "name": "Exportaciones y operaciones asimiladas",
+      "sequence": 520,
+      "legal_reference": "Orden HAC/27/2026, anexo III — modelo 303, información adicional, casilla 60 — Ley 37/1992, arts. 21 a 24 — incluye los envíos definitivos a Canarias, Ceuta y Melilla",
+      "source": "orden-hac-27-2026"
+    },
+    {
+      "box": "120",
+      "kind": "base",
+      "name": "Operaciones no sujetas por reglas de localización (excepto las incluidas en la casilla 123)",
+      "sequence": 530,
+      "legal_reference": "Orden HAC/27/2026, anexo III — modelo 303, información adicional, casilla 120 — Ley 37/1992, arts. 68 a 70",
+      "source": "orden-hac-27-2026"
+    },
+    {
+      "box": "122",
+      "kind": "base",
+      "name": "Operaciones sujetas con inversión del sujeto pasivo",
+      "sequence": 540,
+      "legal_reference": "Orden HAC/27/2026, anexo III — modelo 303, información adicional, casilla 122 — Ley 37/1992, art. 84.Uno.2.º a), b), c), d), e), f) y g) y art. 140",
+      "source": "orden-hac-27-2026"
+    },
+    {
+      "box": "123",
+      "kind": "base",
+      "name": "Operaciones no sujetas por reglas de localización acogidas a los regímenes especiales de ventanilla única",
+      "sequence": 550,
+      "legal_reference": "Orden HAC/27/2026, anexo III — modelo 303, información adicional, casilla 123 — Ley 37/1992, título IX, capítulo XI",
+      "source": "orden-hac-27-2026"
+    },
+    {
+      "box": "124",
+      "kind": "base",
+      "name": "Operaciones sujetas y acogidas a los regímenes especiales de ventanilla única",
+      "sequence": 560,
+      "legal_reference": "Orden HAC/27/2026, anexo III — modelo 303, información adicional, casilla 124 — Ley 37/1992, título IX, capítulo XI, sección 4.ª",
+      "source": "orden-hac-27-2026"
+    },
+    {
+      "box": "76",
+      "kind": "tax",
+      "name": "Regularización cuotas art. 80.Cinco.5ª LIVA",
+      "sequence": 570,
+      "legal_reference": "Orden HAC/27/2026, anexo III — modelo 303, casilla 76 — Ley 37/1992, art. 80.Cinco.5.ª. Ningún impuesto de este paquete escribe aquí",
+      "source": "orden-hac-27-2026"
+    },
+    {
+      "box": "64",
+      "kind": "total",
+      "name": "Suma de resultados",
+      "sequence": 580,
+      "plus": [
+        "46",
+        "76"
+      ],
+      "legal_reference": "Orden HAC/27/2026, anexo III — modelo 303, casilla 64 = 46 + 58 + 76. La casilla 58 es el resultado del régimen simplificado, que este paquete no transcribe; para una sociedad en régimen general es cero",
+      "source": "orden-hac-27-2026"
+    },
+    {
+      "box": "66",
+      "kind": "total",
+      "name": "Atribuible a la Administración del Estado",
+      "sequence": 590,
+      "plus": [
+        "64"
+      ],
+      "legal_reference": "Orden HAC/27/2026, anexo III — modelo 303, casilla 66 = 64 × casilla 65. Casilla 65 es el 100 % para quien tributa sólo en territorio común; la tributación conjunta con las Diputaciones Forales o Navarra (Ley 12/2002 y Ley 28/1990) no se transcribe",
+      "source": "orden-hac-27-2026"
+    },
+    {
+      "box": "77",
+      "kind": "tax",
+      "name": "IVA a la importación liquidado por la Aduana pendiente de ingreso",
+      "sequence": 600,
+      "legal_reference": "Orden HAC/27/2026, anexo III — modelo 303, casilla 77 — Reglamento del IVA, art. 74.1. Ningún impuesto de este paquete escribe aquí",
+      "source": "orden-hac-27-2026"
+    },
+    {
+      "box": "78",
+      "kind": "tax",
+      "name": "Cuotas a compensar de periodos anteriores aplicadas en este periodo",
+      "sequence": 610,
+      "legal_reference": "Orden HAC/27/2026, anexo III — modelo 303, casilla 78 — Ley 37/1992, art. 99.Cinco. Es una decisión del declarante sobre el saldo a compensar (casilla 110), no una cifra del libro mayor, y ningún impuesto escribe aquí",
+      "source": "orden-hac-27-2026"
+    },
+    {
+      "box": "69",
+      "kind": "total",
+      "name": "Resultado de la autoliquidación",
+      "sequence": 620,
+      "plus": [
+        "66",
+        "77"
+      ],
+      "minus": [
+        "78"
+      ],
+      "legal_reference": "Orden HAC/27/2026, anexo III — modelo 303, casilla 69 = 66 + 77 − 78 + 68 + 108. Las casillas 68 (regularización anual foral) y 108 (autoliquidación rectificativa por discrepancia de criterio) no se transcriben",
+      "source": "orden-hac-27-2026"
+    },
+    {
+      "box": "71",
+      "kind": "total",
+      "name": "Resultado de la liquidación",
+      "sequence": 630,
+      "plus": [
+        "69"
+      ],
+      "legal_reference": "Orden HAC/27/2026, anexo III — modelo 303, casilla 71 = 69 − 70 + 109 − 112. Las casillas 70 y 109 sólo se rellenan en una autoliquidación rectificativa y la 112 sólo por quien extrae carburantes de un depósito fiscal; ninguna se transcribe. Positiva, a ingresar; negativa, a compensar o a devolver",
+      "source": "orden-hac-27-2026"
+    }
+  ]
+}

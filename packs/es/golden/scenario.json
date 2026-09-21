@@ -1,0 +1,118 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "Un año de una sociedad española en régimen general, con liquidación trimestral",
+  "chart": "default",
+  "fiscal_year": { "name": "Ejercicio 2026", "start": "2026-01-01", "end": "2026-12-31" },
+  "periods": [
+    { "code": "2026-1T", "from": "2026-01-01", "to": "2026-03-31" },
+    { "code": "2026-2T", "from": "2026-04-01", "to": "2026-06-30" },
+    { "code": "2026-3T", "from": "2026-07-01", "to": "2026-09-30" },
+    { "code": "2026-4T", "from": "2026-10-01", "to": "2026-12-31" }
+  ],
+  "statements": ["ES-PGC-BA", "ES-PGC-PGA"],
+  "contacts": [
+    { "ref": "cliente-es", "name": "Talleres Albaicín S.L.", "type": "customer", "country": "ES", "vat_number": null, "auxiliary_code": "C0001" },
+    { "ref": "cliente-obra", "name": "Promociones Guadiana S.L.", "type": "customer", "country": "ES", "vat_number": null, "auxiliary_code": "C0002" },
+    { "ref": "cliente-fr", "name": "Atelier Lumen SAS", "type": "customer", "country": "FR", "vat_number": "FR00999999999", "auxiliary_code": "C0003" },
+    { "ref": "cliente-de", "name": "Studio Nordlicht GmbH", "type": "customer", "country": "DE", "vat_number": "DE999999999", "auxiliary_code": "C0004" },
+    { "ref": "cliente-canarias", "name": "Distribuciones Teide S.L.", "type": "customer", "country": "ES", "territory": "ES-CN", "vat_number": null, "auxiliary_code": "C0005" },
+    { "ref": "prov-es", "name": "Suministros Levante S.A.", "type": "supplier", "country": "ES", "vat_number": null, "auxiliary_code": "P0001" },
+    { "ref": "prov-renting", "name": "Renting Meseta S.A.", "type": "supplier", "country": "ES", "vat_number": null, "auxiliary_code": "P0002" },
+    { "ref": "prov-de", "name": "Nordwind Maschinen GmbH", "type": "supplier", "country": "DE", "vat_number": "DE999999999", "auxiliary_code": "P0003" },
+    { "ref": "prov-us", "name": "Cloudworks Inc.", "type": "supplier", "country": "US", "vat_number": null, "auxiliary_code": "P0004" }
+  ],
+  "documents": [
+    {
+      "ref": "V1", "type": "sale_invoice", "contact": "cliente-es", "date": "2026-01-20", "due_date": "2026-02-19",
+      "why": "Una venta al tipo general: base en la casilla 07 y cuota en la 09, dos casillas distintas y no una línea con dos columnas como en la CA3 francesa.",
+      "lines": [{ "name": "Mercaderías", "quantity": 10, "unit_price": 1000, "tax": "ES-S-21", "account": "700" }]
+    },
+    {
+      "ref": "V2", "type": "sale_invoice", "contact": "cliente-es", "date": "2026-02-12", "due_date": "2026-03-14",
+      "why": "El tipo reducido del 10 %, casillas 04 y 06: un segundo tipo positivo que suma en la casilla 27.",
+      "lines": [{ "name": "Servicio de hostelería", "quantity": 1, "unit_price": 3000, "tax": "ES-S-10", "account": "705" }]
+    },
+    {
+      "ref": "V3", "type": "sale_invoice", "contact": "cliente-es", "date": "2026-03-18", "due_date": "2026-04-17",
+      "why": "El tipo superreducido del 4 %, casillas 01 y 03: la fila que el modelo imprime antes que la del 10 %, cuyo número de casilla es menor que el del tipo general.",
+      "lines": [{ "name": "Libros", "quantity": 25, "unit_price": 40, "tax": "ES-S-04", "account": "700" }]
+    },
+    {
+      "ref": "V4", "type": "sale_invoice", "contact": "cliente-fr", "date": "2026-04-09", "due_date": "2026-05-09",
+      "why": "Una entrega intracomunitaria exenta: la base va a la casilla 59 de información adicional, no suma en la 27, y es la línea que ec_sales_list() devuelve para el modelo 349 con la clave E.",
+      "lines": [{ "name": "Mercaderías enviadas a Francia", "quantity": 4, "unit_price": 1500, "tax": "ES-S-ICG", "account": "700" }]
+    },
+    {
+      "ref": "V5", "type": "sale_credit_note", "contact": "cliente-es", "date": "2026-05-21", "due_date": null,
+      "why": "Una factura rectificativa sobre una venta al 21 %: el modelo 303 no la resta de las casillas 07 y 09 sino que la declara con signo menos en las casillas 14 y 15, sin desglose por tipos.",
+      "lines": [{ "name": "Devolución de mercaderías", "quantity": 1, "unit_price": 1000, "tax": "ES-S-21", "account": "708" }]
+    },
+    {
+      "ref": "V6", "type": "sale_invoice", "contact": "cliente-obra", "date": "2026-06-16", "due_date": "2026-07-16",
+      "why": "Una ejecución de obra para un promotor, con inversión del sujeto pasivo del art. 84.Uno.2.º f): sin cuota repercutida, la base va a la casilla 122 y la factura lleva la mención «inversión del sujeto pasivo».",
+      "lines": [{ "name": "Ejecución de obra de rehabilitación", "quantity": 1, "unit_price": 8000, "tax": "ES-S-ISP", "account": "705" }]
+    },
+    {
+      "ref": "V7", "type": "sale_invoice", "contact": "cliente-canarias", "date": "2026-07-14", "due_date": "2026-08-13",
+      "why": "Un envío definitivo a Canarias: el cliente es español pero está en ES-CN, territorio fuera del IVA, y la operación es una exportación exenta en la casilla 60, no una venta interior.",
+      "lines": [{ "name": "Mercaderías enviadas a Tenerife", "quantity": 5, "unit_price": 900, "tax": "ES-S-EXP", "account": "700" }]
+    },
+    {
+      "ref": "V8", "type": "sale_invoice", "contact": "cliente-de", "date": "2026-08-25", "due_date": "2026-09-24",
+      "why": "Una prestación intracomunitaria de servicios: la misma casilla 59 que la entrega de V4, y el modelo 349 la separa por la clave S que ec_sales_list() saca del tratamiento.",
+      "lines": [{ "name": "Consultoría para un cliente alemán", "quantity": 1, "unit_price": 2500, "tax": "ES-S-ICS", "account": "705" }]
+    },
+    {
+      "ref": "C1", "type": "purchase_invoice", "contact": "prov-es", "date": "2026-01-28", "due_date": "2026-02-27",
+      "why": "Una compra interior corriente: base en la casilla 28 y cuota deducible en la 29.",
+      "lines": [{ "name": "Compra de mercaderías", "quantity": 1, "unit_price": 4000, "tax": "ES-P-21", "account": "600" }]
+    },
+    {
+      "ref": "C2", "type": "purchase_invoice", "contact": "prov-es", "date": "2026-02-24", "due_date": "2026-03-26",
+      "why": "Un bien de inversión: las casillas 30 y 31 y no las 28 y 29, y un activo en el balance.",
+      "lines": [{ "name": "Equipos informáticos", "quantity": 1, "unit_price": 6000, "tax": "ES-P-21-BI", "account": "217" }]
+    },
+    {
+      "ref": "C3", "type": "purchase_invoice", "contact": "prov-de", "date": "2026-04-22", "due_date": "2026-05-22",
+      "why": "Una adquisición intracomunitaria de bienes: la cuota se devenga en las casillas 10 y 11 y se deduce en las 36 y 37, y el libro mayor la anula en el mismo asiento.",
+      "lines": [{ "name": "Mercaderías compradas en Alemania", "quantity": 1, "unit_price": 3000, "tax": "ES-P-ICG-21", "account": "600" }]
+    },
+    {
+      "ref": "C4", "type": "purchase_invoice", "contact": "prov-renting", "date": "2026-07-03", "due_date": "2026-08-02",
+      "why": "El renting de un turismo, deducible al 50 % por la presunción del art. 95.Tres.2.ª: la mitad de la cuota en la casilla 29 y la otra mitad como mayor gasto de la cuenta 621.",
+      "lines": [{ "name": "Renting de vehículo de turismo", "quantity": 1, "unit_price": 600, "tax": "ES-P-21-VEH", "account": "621" }]
+    },
+    {
+      "ref": "C5", "type": "purchase_invoice", "contact": "prov-us", "date": "2026-09-10", "due_date": "2026-10-10",
+      "why": "Un servicio de un proveedor no establecido en la Unión: inversión del sujeto pasivo en las casillas 12 y 13, deducción en las 28 y 29, y ningún modelo 349 porque no es una operación intracomunitaria.",
+      "lines": [{ "name": "Suscripción de software", "quantity": 1, "unit_price": 1200, "tax": "ES-P-EXT-21", "account": "629" }]
+    },
+    {
+      "ref": "C6", "type": "purchase_credit_note", "contact": "prov-es", "date": "2026-10-15", "due_date": null,
+      "why": "Una rectificación de deducciones: una factura rectificativa recibida resta en las casillas 40 y 41 y no en las 28 y 29.",
+      "lines": [{ "name": "Rappel sobre compras", "quantity": 1, "unit_price": 500, "tax": "ES-P-21", "account": "609" }]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "B1", "direction": "inbound", "date": "2026-02-18", "amount": 12100, "contact": "cliente-es",
+      "journal": "BAN", "match": "V1",
+      "why": "Un cobro que salda exactamente su factura."
+    },
+    {
+      "ref": "B2", "direction": "inbound", "date": "2026-05-08", "amount": 6000, "contact": "cliente-fr",
+      "journal": "BAN", "match": "V4",
+      "why": "El cobro de la entrega intracomunitaria, sin IVA: la factura y el cobro coinciden en la base."
+    },
+    {
+      "ref": "B3", "direction": "inbound", "date": "2026-06-30", "amount": 2000, "contact": "cliente-es",
+      "journal": "BAN", "match": null,
+      "why": "Un cobro sin factura enfrente: queda en el haber del cliente, sin conciliar."
+    },
+    {
+      "ref": "B4", "direction": "outbound", "date": "2026-02-20", "amount": 4840, "contact": "prov-es",
+      "journal": "BAN", "match": "C1",
+      "why": "El lado del proveedor de la conciliación, para que no se pruebe por un solo lado del balance."
+    }
+  ]
+}
