@@ -27,9 +27,9 @@
 /packs/ee/              @Ekwo-ai/maintainers
 /packs/fr/              @Ekwo-ai/maintainers
 /packs/gb/              @Ekwo-ai/maintainers
-/packs/ie/              @Ekwo-ai/maintainers
 /packs/lu/              @Ekwo-ai/maintainers
 /packs/us/              @Ekwo-ai/maintainers
+/packs/ie/              @Ekwo-ai/maintainers
 /packs/generic/         @Ekwo-ai/maintainers
 
 # The compiled seeds are a build artefact of the packs above; they move with

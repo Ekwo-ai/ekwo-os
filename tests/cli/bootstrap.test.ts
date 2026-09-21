@@ -211,7 +211,7 @@ describe('bootstrap', () => {
         fiscalYear: 2026,
         adminUserId: userId,
       }),
-    ).rejects.toThrow(/unknown_country.*BE, EE, FR/s);
+    ).rejects.toThrow(/unknown_country: no chart of accounts seeded for ZZ\. This release ships /);
   });
 
   it('will not hand the administrator seat to a second person', async () => {
