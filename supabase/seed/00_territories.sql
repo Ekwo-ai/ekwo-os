@@ -157,6 +157,19 @@ on conflict (code) do update set
 -- d'Italia and the Italian waters of Lake Lugano for Italy. Mount Athos, French
 -- Guiana, Mayotte and the Channel Islands stay false until somebody writes the
 -- national text down here: a flag nobody sourced is a rule nobody can review.
+--
+-- The national texts, each read on the official publication on 21 September
+-- 2026:
+--
+--   Ley 37/1992, del Impuesto sobre el Valor Añadido, texto consolidado —
+--     Agencia Estatal Boletín Oficial del Estado,
+--     https://www.boe.es/buscar/act.php?id=BOE-A-1992-28740 (artículo 3)
+--   Umsatzsteuergesetz — Bundesministerium der Justiz, Gesetze im Internet,
+--     https://www.gesetze-im-internet.de/ustg_1980/__1.html (§ 1 Absatz 2)
+--   Decreto legislativo 19 gennaio 2026, n. 10, Testo unico IVA — Normattiva,
+--     https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:decreto.legislativo:2026-01-19;10
+--     (allegato, articolo 2, comma 1, lettera a)). Article 7 of DPR 633/1972,
+--     which said the same, is shown as repealed by this decree.
 -- ---------------------------------------------------------------------------
 
 insert into territories (code, code_source, name, parent_code, eu_vat_scope, eu_vat_from, eu_vat_to, vat_prefix, outside_parent_tax, legal_reference) values
@@ -171,13 +184,13 @@ insert into territories (code, code_source, name, parent_code, eu_vat_scope, eu_
   ('AX',            'iso_3166_1', 'Åland Islands',                  'FI', 'none', null, null, null, false, 'Directive 2006/112/EC, article 6(1)(d); Act of Accession 1994, protocol no 2 on the Åland Islands'),
   ('GG',            'iso_3166_1', 'Guernsey',                       'GB', 'none', null, null, null, false, 'Directive 2006/112/EC, article 6(1)(e), which names the Channel Islands'),
   ('JE',            'iso_3166_1', 'Jersey',                         'GB', 'none', null, null, null, false, 'Directive 2006/112/EC, article 6(1)(e), which names the Channel Islands'),
-  ('IT-CAMPIONE',   'named',      'Campione d''Italia',             'IT', 'none', null, null, null, true, 'Directive 2006/112/EC, article 6(1)(f) since 1 January 2020 and article 6(2)(f) before it, the municipality having entered the customs territory of the Union under Directive (EU) 2019/475 without entering its VAT territory; for the national tax, Decreto del Presidente della Repubblica 26 ottobre 1972, n. 633, articolo 7, comma 1, lettera a): the territory of the State for Italian VAT excludes the municipality of Campione d''Italia'),
-  ('IT-LUGANO',     'named',      'Italian waters of Lake Lugano',  'IT', 'none', null, null, null, true, 'Directive 2006/112/EC, article 6(1)(g) since 1 January 2020 and article 6(2)(g) before it, under Directive (EU) 2019/475; for the national tax, Decreto del Presidente della Repubblica 26 ottobre 1972, n. 633, articolo 7, comma 1, lettera a): the territory of the State for Italian VAT excludes the national waters of Lake Lugano'),
+  ('IT-CAMPIONE',   'named',      'Campione d''Italia',             'IT', 'none', null, null, null, true, 'Directive 2006/112/EC, article 6(1)(f) since 1 January 2020 and article 6(2)(f) before it, the municipality having entered the customs territory of the Union under Directive (EU) 2019/475 without entering its VAT territory; for the national tax, Testo unico delle disposizioni legislative in materia di imposta sul valore aggiunto (decreto legislativo 19 gennaio 2026, n. 10), allegato, articolo 2, comma 1, lettera a), in force since 31 January 2026 and carrying over article 7, comma 1, lettera a) of DPR 26 ottobre 1972, n. 633, which it repealed: the territory of the State for Italian VAT excludes the municipality of Campione d''Italia'),
+  ('IT-LUGANO',     'named',      'Italian waters of Lake Lugano',  'IT', 'none', null, null, null, true, 'Directive 2006/112/EC, article 6(1)(g) since 1 January 2020 and article 6(2)(g) before it, under Directive (EU) 2019/475; for the national tax, Testo unico delle disposizioni legislative in materia di imposta sul valore aggiunto (decreto legislativo 19 gennaio 2026, n. 10), allegato, articolo 2, comma 1, lettera a), in force since 31 January 2026 and carrying over article 7, comma 1, lettera a) of DPR 26 ottobre 1972, n. 633, which it repealed: the territory of the State for Italian VAT excludes the national waters of Lake Lugano'),
   ('DE-HELIGOLAND', 'named',      'Island of Heligoland',           'DE', 'none', null, null, null, true, 'Directive 2006/112/EC, article 6(2)(a); for the national tax, Umsatzsteuergesetz, § 1 Absatz 2 Satz 1: the Inland of German VAT is the territory of the Federal Republic except the island of Heligoland'),
   ('DE-BUSINGEN',   'named',      'Territory of Büsingen',          'DE', 'none', null, null, null, true, 'Directive 2006/112/EC, article 6(2)(b); for the national tax, Umsatzsteuergesetz, § 1 Absatz 2 Satz 1: the Inland of German VAT is the territory of the Federal Republic except the territory of Büsingen'),
   ('ES-CE',         'iso_3166_2', 'Ceuta',                          'ES', 'none', null, null, null, true, 'Directive 2006/112/EC, article 6(2)(c); for the national tax, Ley 37/1992, del Impuesto sobre el Valor Añadido, artículo 3, apartados Uno y Dos: Ceuta is excluded from the territory where Spanish VAT applies, and levies IPSI instead'),
   ('ES-ML',         'iso_3166_2', 'Melilla',                        'ES', 'none', null, null, null, true, 'Directive 2006/112/EC, article 6(2)(d); for the national tax, Ley 37/1992, del Impuesto sobre el Valor Añadido, artículo 3, apartados Uno y Dos: Melilla is excluded from the territory where Spanish VAT applies, and levies IPSI instead'),
-  ('IT-LIVIGNO',    'named',      'Livigno',                        'IT', 'none', null, null, null, true, 'Directive 2006/112/EC, article 6(2)(e); for the national tax, Decreto del Presidente della Repubblica 26 ottobre 1972, n. 633, articolo 7, comma 1, lettera a): the territory of the State for Italian VAT excludes the municipality of Livigno')
+  ('IT-LIVIGNO',    'named',      'Livigno',                        'IT', 'none', null, null, null, true, 'Directive 2006/112/EC, article 6(2)(e); for the national tax, Testo unico delle disposizioni legislative in materia di imposta sul valore aggiunto (decreto legislativo 19 gennaio 2026, n. 10), allegato, articolo 2, comma 1, lettera a), in force since 31 January 2026 and carrying over article 7, comma 1, lettera a) of DPR 26 ottobre 1972, n. 633, which it repealed: the territory of the State for Italian VAT excludes the municipality of Livigno')
 on conflict (code) do update set
   code_source     = excluded.code_source,
   name            = excluded.name,

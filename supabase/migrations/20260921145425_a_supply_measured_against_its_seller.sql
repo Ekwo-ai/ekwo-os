@@ -16,8 +16,9 @@
 --   2. **A country minus some of its territories.** Spanish VAT applies in
 --      Spain except in the Canary Islands, Ceuta and Melilla (Ley 37/1992,
 --      article 3); German VAT stops at Büsingen and Heligoland (UStG, § 1(2));
---      Italian VAT at Livigno and Campione d'Italia (DPR 633/1972, article
---      7). `territories.parent_code` is geography and is right to hang `ES-CN`
+--      Italian VAT at Livigno and Campione d'Italia (Testo unico IVA,
+--      decreto legislativo 10/2026, allegato, article 2(1)(a), which took over
+--      article 7 of DPR 633/1972). `territories.parent_code` is geography and is right to hang `ES-CN`
 --      off `ES`; what it cannot say is that the parent's tax does not follow.
 --   3. **What the engine believed.** `post_document()` resolved the three
 --      parties, compared them with the tax, and kept nothing.
