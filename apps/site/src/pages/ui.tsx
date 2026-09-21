@@ -357,6 +357,7 @@ export function Footer({
           <Out href={repository.url}>{f.source}</Out>
           <Out href={repository.packageUrl}>{f.npm}</Out>
         </nav>
+        <p className="mt-4 text-xs text-ink-faint">{f.legal}</p>
       </div>
     </footer>
   );

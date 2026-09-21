@@ -57,7 +57,8 @@ responsible for:
 - checking what the software computes before you rely on it.
 
 Ekwo does not keep your books, does not file anything with any authority on
-its own initiative, and does not monitor your deadlines on your behalf. A
+its own initiative, and does not monitor your deadlines on your behalf. Ekwo
+transmits no return to any tax administration. A
 figure the software computes — a VAT box, a balance sheet line, a tax
 estimate, a due date — is only as right as the entries behind it and the
 rules it was given. A deadline the software shows is an aid, not a notice; it
@@ -74,8 +75,8 @@ not that it is consistent with the law.
 
 - **community**: contributed by someone; nobody has reviewed it. It has not
   been read by an accounting or tax professional.
-- **maintained**: written and kept up to date by Ekwo; not reviewed by an
-  accounting or tax professional.
+- **maintained**: written by Ekwo, which updates it when it can; no update is
+  promised; not reviewed by an accounting or tax professional.
 - **reviewed**: read by a named professional, on the date shown, against the
   rules they apply in practice.
 
@@ -131,6 +132,9 @@ published on this site. Where the law of your country does not allow a
 limitation or exclusion of liability — for example for fraud, for gross
 negligence or towards a consumer — that limitation or exclusion applies to
 the fullest extent that law permits, and the rest of this page still applies.
+Nothing here limits liability for death or personal injury caused by
+negligence, for fraud, or any liability that cannot lawfully be limited, nor
+your statutory rights as a consumer.
 
 ## 8. Consult a professional in your country
 
@@ -206,3 +210,8 @@ If a pack is wrong for your country, open an issue and cite the rule. That is
 how a pack gets better. This page may be updated; the version and the date at
 the top say which one you are reading, and the history of the repository keeps
 every earlier one.
+
+## Legal and contact
+
+Ekwo is a trade name of Karuna Co OÜ, Estonia, registry code 14510673.
+Write to contact@ekwo.ai.

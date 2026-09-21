@@ -43,6 +43,7 @@ export const en: Strings = {
     npm: 'npm',
     multi: 'Several countries',
     changes: 'Latest changes',
+    legal: 'Ekwo is a trade name of Karuna Co OÜ, Estonia, registry code 14510673 · contact@ekwo.ai',
   },
 
   home: {
@@ -206,7 +207,7 @@ export const en: Strings = {
       hostedBody:
         'The hosted edition: your own instance, run and watched for you. What is sold is the ' +
         'operating — bank connections, sending and receiving over Peppol, the channels to the ' +
-        'administrations, the agents. It is infrastructure, not an accounting service: your ' +
+        'administrations, the agents you set up. It is infrastructure, not an accounting service: your ' +
         'books and your filings stay yours and your accountant’s. It never gates the core, ' +
         'and what comes back from a filing is yours.',
       hostedAction: 'Get started with us',
@@ -771,9 +772,10 @@ export const en: Strings = {
     },
     privacy:
       'This form collects your address and what else you choose to fill in: your company, ' +
-      'your country, who you are and your message. It is used for one thing, to get back to ' +
-      'you about setting up Ekwo. It is kept by the host of this site, and it is never sold ' +
-      'or shared. To have it erased, write to contact@ekwo.ai.',
+      'your country, who you are and your message. Controller: Ekwo (Karuna Co OÜ). Used ' +
+      'only to reply to you (Art. 6(1)(b) GDPR), through our site host acting as processor, ' +
+      'kept 24 months at most, never sold. To access, correct or erase: contact@ekwo.ai. ' +
+      'You may complain to your data protection authority.',
     thanksTitle: 'Thank you — Ekwo',
     thanksDescription: 'Your message was sent.',
     thanksHeading: 'Thank you. We will be in touch.',

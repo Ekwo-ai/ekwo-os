@@ -108,7 +108,7 @@ The core is free software under AGPL-3.0, so that what is built on it stays
 open. The format libraries are MIT, so that they can go anywhere, including
 into the tools of people who will never use Ekwo. What we sell — the hosted
 edition, operated for you, with the connections a small business cannot obtain
-alone and the agents we run — pays for the rest, and never gates it.
+alone and the agents you configure, acting on your instructions — pays for the rest, and never gates it.
 
 ## 5. A network, not a vendor.
 
@@ -137,7 +137,7 @@ from.
 
 ---
 
-*Ekwo is maintained by Ekwo, a company founded in Belgium in 2026. The name is
-the promise: an accounting core that is open, that the business owns, that a
-machine can keep and a human can still check — and that leaves a lighter
+*Ekwo is maintained by Ekwo (Karuna Co OÜ). The name is the promise: an
+accounting core that is open, that the business owns, that a machine can
+operate and a human still checks — and that leaves a lighter
 footprint, on the books and, in time, on the world.*

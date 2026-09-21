@@ -1,7 +1,7 @@
 # Ekwo OS
 
 **Ekwo OS** is free and open source data infrastructure for accounting, finance and tax, under AGPL-3.0: a schema, the rules of each country as data, and tools, for businesses and their accountants. Install it on your own Supabase project and own your accounting data, forever. It is software — not an accounting firm, and not accounting, tax or financial advice ([DISCLAIMER.md](DISCLAIMER.md)).
-Built and maintained by **Ekwo**. A fully managed edition — your own instance, operated and supervised by our AI agents — is available at **[ekwo.ai](https://ekwo.ai)**.
+Built and maintained by **Ekwo**. A fully managed edition — your own instance, operated for you, with the AI agents you configure acting on your instructions — is available at **[ekwo.ai](https://ekwo.ai)**.
 
 ---
 
@@ -62,7 +62,7 @@ system with the books intact.
 
 What we sell, so that this stays free: a managed edition at
 [ekwo.ai](https://ekwo.ai) where the same schema runs on your own Supabase
-project, and Ekwo operates the application, the AI agents, the bank
+project, and Ekwo operates the application, the AI agents you set up, the bank
 connections, the Peppol access point and the channels to the administrations.
 It is infrastructure, not an accounting service: the books and the filings stay
 the business's and its accountant's. The Community edition
@@ -524,7 +524,7 @@ is here and always will be.
 |---|---|
 | The whole schema, migrations, row level security | Provisioning and running the instance |
 | Journals, entries, matching, charts of accounts | Backups, restores, version upgrades |
-| Invoicing, credit notes, VAT, reports, FEC | AI agents that book, match and check |
+| Invoicing, credit notes, VAT, reports, FEC | AI agents you set up, acting on your instructions |
 | Manual import of bank files | Bank connections under contract |
 | Generating the files: XBRL, Factur-X, the VAT return, the EC sales lists | Peppol access point, certificate included |
 | Everything above, forever, for nothing | Transmission to Intervat, Teledec, the NBB, on the business's instruction |

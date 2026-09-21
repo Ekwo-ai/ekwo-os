@@ -68,6 +68,8 @@ export interface Strings {
     multi: string;
     /** The timeline. */
     changes: string;
+    /** Who stands behind the trade name, and the one address to write to. */
+    legal: string;
   };
 
   home: {
