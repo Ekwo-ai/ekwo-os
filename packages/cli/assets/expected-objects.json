@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.4.0",
-  "migration": "20260919190727",
+  "migration": "20260921084143",
   "socle": {
     "schema": "public",
     "tables": [
@@ -1316,6 +1316,10 @@
           {
             "name": "einvoice_mandatory_from",
             "type": "date"
+          },
+          {
+            "name": "einvoice_obligation",
+            "type": "text"
           },
           {
             "name": "einvoice_profile",
@@ -5489,7 +5493,8 @@
         "kind": "enum",
         "labels": [
           "day_of_month_after_period",
-          "last_day_of_month_after_period"
+          "last_day_of_month_after_period",
+          "depends_on_taxpayer"
         ]
       },
       {

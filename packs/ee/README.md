@@ -23,7 +23,8 @@ These are the texts the pack as a whole was built from.
 | Form KMD and its completion instructions | Rahandusministri 10.06.2014 määrus nr 17 „Käibedeklaratsiooni vorm“, annex 1, in the wording of määrus nr 20 of 14.05.2025, in force 01.07.2025 | `riigiteataja.ee/aktilisa/1300/5202/5008/RAM_m17_lisa1.pdf`; the Tax and Customs Board publishes the same form, and an English edition, at `emta.ee` |
 | Chart of accounts, internal rules, the statement schemes | Raamatupidamise seadus (RPS) § 8, § 11 and annexes 1 and 2 | `riigiteataja.ee`, act 110072025003; annex 1 in the wording of the Act of 18.09.2024, in force 01.07.2025 |
 | How the schemes are presented | Raamatupidamise Toimkonna juhend RTJ 2, „Nõuded informatsiooni esitusviisile raamatupidamise aastaaruandes“ | `fin.ee`, and annex 2 to rahandusministri 22.12.2017 määrus nr 105 |
-| E-invoicing | RPS § 7¹ (7), in force 01.07.2025 | `riigiteataja.ee`, same act |
+| E-invoicing | RPS § 7¹ (7), in force 01.07.2025, and the Ministry of Finance's page on source documents and e-invoices | `riigiteataja.ee`, same act; `fin.ee` |
+| Where a declared period's balance lands | KMS § 27 (1), § 29 (1) and § 34 (1), with the Ministry of Finance's commentary of January 2026 | `riigiteataja.ee`, same act; `fin.ee` |
 | Payment term, late-payment interest, recovery costs | Võlaõigusseadus § 82¹, § 113 and § 113¹ | `riigiteataja.ee`, act 120062026018 |
 | The ISO 6523 identifiers on an e-invoice | Peppol code list of participant identifier schemes: `0191` Company code, `9931` Estonia VAT number | `docs.peppol.eu/poacc/billing/3.0/codelist/eas/` |
 
@@ -146,6 +147,27 @@ and **not** in box 1.
 year-end recalculations of KMS § 32 and § 30 (7), which are a bookkeeper's
 entry and not a consequence of a document.
 
+**Where a filed return's balance lands.** Since pack version 1.9.0,
+`defaults.roles` names `2370` for `tax_payable` and `1211` for
+`tax_receivable`, two reconcilable accounts nothing but `settle_filing()` posts
+to. KMS § 29 (1) makes the amount to pay the period's output VAT less its
+deductible input VAT, § 27 (1) makes it payable by the twentieth of the
+following month, and § 34 (1) has an excess of input VAT refunded under the
+Taxation Act (the Ministry's commentary: MKS §§ 105 to 107, within sixty days).
+The first reports under *Maksuvõlad* through the 2320–2399 range, the second
+under *Maksude ettemaksed ja tagasinõuded* through 1210–1219 — the line the
+statutory scheme gives a tax refund claim. In practice both are settled through
+the Tax and Customs Board's prepayment account; the core matches the payment
+or the refund against the account, whatever route the money took.
+
+**Electronic invoicing is owed on request, not by default.** `einvoicing`
+declares `obligation: on_request`. Since 1 July 2025, RPS § 7¹ (7) lets a buyer
+registered in the business register as an e-invoice recipient require the
+seller to issue one, and the Ministry of Finance says in as many words that no
+general B2B obligation exists and no date is planned; so `mandatory_from` stays
+empty. The public sector's own obligation, in force since 2019, is not a rule
+between companies and does not change the word.
+
 ## Closing the year
 
 `closing_style` is `result_accounts`: the result of the year lands on
@@ -212,4 +234,6 @@ say what". The points a reviewer is most likely to disagree with, and which the
 author is least sure of, are the informational boxes, the box a service
 received from outside the Union is declared in, the invoice mention chosen for
 an intra-Community supply of services, and the treatment this pack gives such a
-service in the tax model.
+service in the tax model — and the two settlement accounts, `2370` and `1211`,
+where a reviewer who books the return straight against the prepayment account
+would name one account for both.

@@ -1,6 +1,6 @@
 -- Ekwo OS — Estonia: chart of accounts, journals, taxes and defaults.
 --
--- Generated from packs/ee at version 1.8.0, do not edit.
+-- Generated from packs/ee at version 1.9.0, do not edit.
 -- Change the pack and run `ekwo pack build ee`; `ekwo pack check --all`
 -- refuses a seed that is not the exact output of its pack, and the CI runs it.
 --
@@ -8,8 +8,12 @@
 -- Written from:
 --   Käibemaksuseadus (Riigi Teataja)
 --     https://www.riigiteataja.ee/akt/kms
+--   Käibemaksuseadus Rahandusministeeriumi kommentaaridega, seisuga jaanuar 2026 — § 27, § 29 ja § 34 (Rahandusministeerium)
+--     https://fin.ee/sites/default/files/documents/2026-01/K%C3%A4ibemaksuseaduse%20kommentaarid%20jaanuar%202026.pdf
 --   Raamatupidamise seadus (Riigi Teataja)
 --     https://www.riigiteataja.ee/akt/rps
+--   Nõuded raamatupidamise korraldamiseks ja majandustehingute dokumenteerimiseks — algdokumendid, arved ja e-arved (Rahandusministeerium)
+--     https://fin.ee/finantspoliitika-valissuhted/arvestusvaldkond/raamatupidamise-algdokumendid-arved-e-arved
 --   Võlaõigusseadus (Riigi Teataja)
 --     https://www.riigiteataja.ee/akt/120062026018
 --   Rahandusministri 10.06.2014 määrus nr 17 „Käibedeklaratsiooni vorm“, lisa 1 (vorm KMD) ja lisa 2 (vorm KMD INF) (Riigi Teataja)
@@ -34,7 +38,7 @@ insert into country_packs
   (country, name, version, released_at, schema_min, certification_status,
    certified_by, certified_at, checksum, sources)
 values
-  ('EE', 'Estonia', '1.8.0', date '2026-09-16', '20260917170000', 'community', null, null, 'dc27b0877cbfad3c8f582b780e81e53ed4d8dd63f9d92fcce044191489b502d2', '[{"key":"kms","title":"Käibemaksuseadus","publisher":"Riigi Teataja","url":"https://www.riigiteataja.ee/akt/kms","consulted_on":"2026-09-16","kind":"law"},{"key":"rps","title":"Raamatupidamise seadus","publisher":"Riigi Teataja","url":"https://www.riigiteataja.ee/akt/rps","consulted_on":"2026-09-15","kind":"law"},{"key":"vos","title":"Võlaõigusseadus","publisher":"Riigi Teataja","url":"https://www.riigiteataja.ee/akt/120062026018","consulted_on":"2026-09-15","kind":"law"},{"key":"kmd-vorm","title":"Rahandusministri 10.06.2014 määrus nr 17 „Käibedeklaratsiooni vorm“, lisa 1 (vorm KMD) ja lisa 2 (vorm KMD INF)","publisher":"Riigi Teataja","url":"https://www.riigiteataja.ee/akt/130052025008","consulted_on":"2026-09-15","kind":"regulation"},{"key":"rtj-2","title":"Raamatupidamise Toimkonna juhend RTJ 2 „Nõuded informatsiooni esitusviisile raamatupidamise aastaaruandes“, rahandusministri 22.12.2017 määruse nr 105 lisa 2","publisher":"Riigi Teataja","url":"https://www.riigiteataja.ee/akt/119022025012","consulted_on":"2026-09-15","kind":"guidance"},{"key":"kmd-esitamine","title":"Käibedeklaratsiooni ja aruannete esitamine — vormi KMD ja selle lisa täitmine","publisher":"Maksu- ja Tolliamet","url":"https://www.emta.ee/ariklient/maksud-ja-tasumine/kaibemaks/kaibedeklaratsiooni-ja-aruannete-esitamine","consulted_on":"2026-09-15","kind":"form"},{"key":"e-mta","title":"e-MTA — keskkond, kus käibedeklaratsioon esitatakse","publisher":"Maksu- ja Tolliamet","url":"https://maasikas.emta.ee/","consulted_on":"2026-09-15","kind":"portal"},{"key":"en-16931","title":"EN 16931-1 — Euroopa e-arve semantiline andmemudel ja direktiivist 2014/55/EL tulenev vastavus","publisher":"Euroopa Komisjon","url":"https://ec.europa.eu/digital-building-blocks/sites/spaces/DIGITAL/pages/467108950/EN+16931+compliance","consulted_on":"2026-09-15","kind":"standard"},{"key":"uncl5305","title":"UNCL5305 — käibemaksu kategooria koodide loend (BT-118 ja BT-151), EN 16931 jaoks avaldatud alamhulk","publisher":"OpenPEPPOL — nimekirja avaldab Euroopa Komisjon","url":"https://docs.peppol.eu/poacc/billing/3.0/codelist/UNCL5305/","consulted_on":"2026-09-15","kind":"standard"},{"key":"vatex","title":"VATEX — käibemaksuvabastuse põhjuse koodide loend (BT-121)","publisher":"OpenPEPPOL — nimekirja avaldab Euroopa Komisjon","url":"https://docs.peppol.eu/poacc/billing/3.0/codelist/vatex/","consulted_on":"2026-09-15","kind":"standard"}]'::jsonb)
+  ('EE', 'Estonia', '1.9.0', date '2026-09-21', '20260921084143', 'community', null, null, 'a2d09aa1305430e523cc416edfd4a8e25f5a44087a6c69ca1f80ec1d22bdb990', '[{"key":"kms","title":"Käibemaksuseadus","publisher":"Riigi Teataja","url":"https://www.riigiteataja.ee/akt/kms","consulted_on":"2026-09-16","kind":"law"},{"key":"kms-kommentaarid","title":"Käibemaksuseadus Rahandusministeeriumi kommentaaridega, seisuga jaanuar 2026 — § 27, § 29 ja § 34","publisher":"Rahandusministeerium","url":"https://fin.ee/sites/default/files/documents/2026-01/K%C3%A4ibemaksuseaduse%20kommentaarid%20jaanuar%202026.pdf","consulted_on":"2026-09-21","kind":"guidance"},{"key":"rps","title":"Raamatupidamise seadus","publisher":"Riigi Teataja","url":"https://www.riigiteataja.ee/akt/rps","consulted_on":"2026-09-15","kind":"law"},{"key":"e-arved","title":"Nõuded raamatupidamise korraldamiseks ja majandustehingute dokumenteerimiseks — algdokumendid, arved ja e-arved","publisher":"Rahandusministeerium","url":"https://fin.ee/finantspoliitika-valissuhted/arvestusvaldkond/raamatupidamise-algdokumendid-arved-e-arved","consulted_on":"2026-09-21","kind":"guidance"},{"key":"vos","title":"Võlaõigusseadus","publisher":"Riigi Teataja","url":"https://www.riigiteataja.ee/akt/120062026018","consulted_on":"2026-09-15","kind":"law"},{"key":"kmd-vorm","title":"Rahandusministri 10.06.2014 määrus nr 17 „Käibedeklaratsiooni vorm“, lisa 1 (vorm KMD) ja lisa 2 (vorm KMD INF)","publisher":"Riigi Teataja","url":"https://www.riigiteataja.ee/akt/130052025008","consulted_on":"2026-09-15","kind":"regulation"},{"key":"rtj-2","title":"Raamatupidamise Toimkonna juhend RTJ 2 „Nõuded informatsiooni esitusviisile raamatupidamise aastaaruandes“, rahandusministri 22.12.2017 määruse nr 105 lisa 2","publisher":"Riigi Teataja","url":"https://www.riigiteataja.ee/akt/119022025012","consulted_on":"2026-09-15","kind":"guidance"},{"key":"kmd-esitamine","title":"Käibedeklaratsiooni ja aruannete esitamine — vormi KMD ja selle lisa täitmine","publisher":"Maksu- ja Tolliamet","url":"https://www.emta.ee/ariklient/maksud-ja-tasumine/kaibemaks/kaibedeklaratsiooni-ja-aruannete-esitamine","consulted_on":"2026-09-15","kind":"form"},{"key":"e-mta","title":"e-MTA — keskkond, kus käibedeklaratsioon esitatakse","publisher":"Maksu- ja Tolliamet","url":"https://maasikas.emta.ee/","consulted_on":"2026-09-15","kind":"portal"},{"key":"en-16931","title":"EN 16931-1 — Euroopa e-arve semantiline andmemudel ja direktiivist 2014/55/EL tulenev vastavus","publisher":"Euroopa Komisjon","url":"https://ec.europa.eu/digital-building-blocks/sites/spaces/DIGITAL/pages/467108950/EN+16931+compliance","consulted_on":"2026-09-15","kind":"standard"},{"key":"uncl5305","title":"UNCL5305 — käibemaksu kategooria koodide loend (BT-118 ja BT-151), EN 16931 jaoks avaldatud alamhulk","publisher":"OpenPEPPOL — nimekirja avaldab Euroopa Komisjon","url":"https://docs.peppol.eu/poacc/billing/3.0/codelist/UNCL5305/","consulted_on":"2026-09-15","kind":"standard"},{"key":"vatex","title":"VATEX — käibemaksuvabastuse põhjuse koodide loend (BT-121)","publisher":"OpenPEPPOL — nimekirja avaldab Euroopa Komisjon","url":"https://docs.peppol.eu/poacc/billing/3.0/codelist/vatex/","consulted_on":"2026-09-15","kind":"standard"}]'::jsonb)
 on conflict (country) do update set
   name                 = excluded.name,
   version              = excluded.version,
@@ -73,6 +77,7 @@ values
   ('EE', 'default', '1200', 'Nõuded ostjate vastu', '{"en":"Trade receivables"}'::jsonb, 'asset_receivable', true, null, 60),
   ('EE', 'default', '1208', 'Ebatõenäoliselt laekuvad nõuded', '{"en":"Allowance for doubtful receivables"}'::jsonb, 'asset_current', false, null, 70),
   ('EE', 'default', '1210', 'Maksude ettemaksed ja tagasinõuded', '{"en":"Prepaid and refundable taxes"}'::jsonb, 'asset_current', false, null, 80),
+  ('EE', 'default', '1211', 'Käibemaksu tagasinõue — esitatud deklaratsiooni saldo', '{"en":"VAT refund claim — balance of a filed return"}'::jsonb, 'asset_current', true, null, 85),
   ('EE', 'default', '1220', 'Nõuded seotud osapoolte vastu', '{"en":"Receivables from related parties"}'::jsonb, 'asset_current', false, null, 90),
   ('EE', 'default', '1230', 'Lühiajalised laenunõuded', '{"en":"Short-term loan receivables"}'::jsonb, 'asset_current', false, null, 100),
   ('EE', 'default', '1240', 'Muud lühiajalised nõuded', '{"en":"Other short-term receivables"}'::jsonb, 'asset_current', false, null, 110),
@@ -115,6 +120,7 @@ values
   ('EE', 'default', '2340', 'Töötuskindlustusmakse kohustis', '{"en":"Unemployment insurance premium payable"}'::jsonb, 'liability_current', false, null, 480),
   ('EE', 'default', '2350', 'Kogumispensioni makse kohustis', '{"en":"Funded pension payment payable"}'::jsonb, 'liability_current', false, null, 490),
   ('EE', 'default', '2360', 'Tulumaksukohustis', '{"en":"Income tax payable"}'::jsonb, 'liability_current', false, null, 500),
+  ('EE', 'default', '2370', 'Käibemaksukohustis — esitatud deklaratsiooni saldo', '{"en":"VAT payable — balance of a filed return"}'::jsonb, 'liability_current', true, null, 505),
   ('EE', 'default', '2400', 'Muud lühiajalised võlad', '{"en":"Other current payables"}'::jsonb, 'liability_current', false, null, 510),
   ('EE', 'default', '2410', 'Võlad seotud osapooltele', '{"en":"Payables to related parties"}'::jsonb, 'liability_current', false, null, 520),
   ('EE', 'default', '2490', 'Selgitamata maksed', '{"en":"Unidentified payments"}'::jsonb, 'liability_current', false, null, 530),
@@ -654,7 +660,7 @@ insert into country_defaults
    tax_payable_code, tax_receivable_code, opening_entry_label,
    vat_period_default)
 values
-  ('EE', 'Estonia', '{"en":"Estonia"}'::jsonb, array['et', 'en']::text[], 'EUR', '1200', '2100', '2490', '4920', '2970', '3000', '4000', '1010', '1000', 'MUU', 'OST', 'MIS', 'et', 'result_accounts', '2980', '2980', null, 'ALG', 'half_up', default, '3850', '4970', null, null, null, null, null, null, null, 'month'::declaration_period)
+  ('EE', 'Estonia', '{"en":"Estonia"}'::jsonb, array['et', 'en']::text[], 'EUR', '1200', '2100', '2490', '4920', '2970', '3000', '4000', '1010', '1000', 'MUU', 'OST', 'MIS', 'et', 'result_accounts', '2980', '2980', null, 'ALG', 'half_up', default, '3850', '4970', null, null, null, null, '2370', '1211', null, 'month'::declaration_period)
 on conflict (country) do update set
   name                   = excluded.name,
   name_i18n              = excluded.name_i18n,
@@ -708,6 +714,7 @@ update country_defaults set
   posted_edit_policy_source_key = null,
   einvoice_profile              = 'peppol-bis-3',
   einvoice_mandatory_from       = null,
+  einvoice_obligation           = 'on_request',
   einvoice_legal_reference      = 'Raamatupidamise seadus § 7¹ lõige 7, kehtiv alates 01.07.2025 — äriregistris e-arve vastuvõtjaks märgitud raamatupidamiskohustuslane võib nõuda müüjalt e-arve esitamist, ja e-arve eeldatakse nõuetekohaseks, kui see vastab Euroopa standardile EN 16931-1; pooled võivad kokku leppida muu standardi kasutamises. Seadus ei kehtesta üldist e-arve kohustust ega ühtki tähtpäeva, mistõttu mandatory_from on tühi. Deklareeritud profiil peppol-bis-3 on EN 16931-1 kitsendus, mida Eesti operaatorid tegelikkuses vahetavad; see ei ole seadusest tulenev nõue. Riigisisene standard EVS 923 kaotas õigusliku aluse 01.07.2025, kui rahandusministri määrus „Masintöödeldava algdokumendi juhendi kehtestamine“ kehtetuks tunnistati.',
   einvoice_source_key           = 'rps',
   party_scheme                  = '0191',

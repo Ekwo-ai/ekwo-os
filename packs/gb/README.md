@@ -79,8 +79,10 @@ three items and creditors four and neither has a line of its own for tax. A
 British balance sheet usually nets the two into one figure in the notes; this
 pack keeps them apart in the ledger, which is what a VAT account under
 VAT Notice 700/21 needs, and leaves the netting to whoever presents the
-accounts. The `2210` VAT control account is there for that entry and nothing
-posts to it automatically.
+accounts. The `2210` VAT control account is where `settle_filing()` carries
+the net of a filed return that owes HMRC money; a return that ends in a credit
+goes to `1145`, see "Where a filed return's balance lands" below. No tax posts
+to either.
 
 ## Taxes
 
@@ -206,6 +208,15 @@ default, which is a question the rule does not ask. A pack does not change a
 test, so this one proposes nothing, `ekwo init` asks, and the gap is written up
 in [`docs/international.md`](../../docs/international.md). A British company
 that has asked HMRC for nothing files quarterly.
+
+**Where a filed return's balance lands.** `defaults.roles` names `2210` for
+`tax_payable` and, since pack version 0.8.0, `1145` for `tax_receivable`. VATA
+1994 s. 25(2) nets the period's input tax against its output tax, and s. 25(3)
+makes an excess of credit a *VAT credit* the Commissioners pay to the trader:
+a claim on HMRC, which is an asset. Carrying it on the debit side of `2210`
+would print a negative creditor under Format 1, so the repayment has an account
+of its own that reports under *other debtors* (C.II.3), like input VAT. Both are
+reconcilable, because the payment or the repayment is matched against them.
 
 **Making Tax Digital is out of scope and is not a gap.** Every VAT-registered
 business must keep its records digitally and file through functional compatible
@@ -387,7 +398,7 @@ UNCL5305, which is a UN/CEFACT list, and `G` there is *free export item, VAT not
 charged* — goods leaving the territory of whoever levies the tax, which is
 exactly what s. 30(6) zero-rates.
 
-Seven points a reviewer holding an ICAEW or ACCA practising certificate should
+Eight points a reviewer holding an ICAEW or ACCA practising certificate should
 look at first, roughly in the order the author is least sure of them:
 
 1. **Which boxes each self-charge fills.** The four-row table above is read off
@@ -416,3 +427,7 @@ look at first, roughly in the order the author is least sure of them:
 6. **The fixed asset durations**, every one of which is practice and says so.
 7. **The historical rates**, which matter only for a credit note on an old
    supply and which nobody has replayed.
+8. **The two settlement accounts.** `2210` for what a return owes and `1145`
+   for a VAT credit, under "The return". A reviewer who keeps one VAT control
+   account for both signs and nets it in the notes would remove
+   `tax_receivable`, and the settlement then carries a credit to `2210` too.

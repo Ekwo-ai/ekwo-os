@@ -134,6 +134,30 @@ describe('what each pack declares, compiled and read back', () => {
     }
   });
 
+  it('holds the obligation a pack states, and nothing where it states none', async () => {
+    for (const slug of await listPacks(packs)) {
+      const pack = await readPack(slug, packs);
+      const stored = await one<{ einvoice_obligation: string | null }>(
+        db,
+        'select einvoice_obligation from country_defaults where country = $1',
+        [pack.manifest.country],
+      );
+      expect(stored.einvoice_obligation, slug).toBe(pack.documents.einvoice_obligation);
+    }
+    // The database refuses the word and the date disagreeing, whatever wrote them.
+    const country = (await one<{ country: string }>(db, 'select country from country_defaults limit 1')).country;
+    expect(
+      await expectError(
+        db,
+        `update country_defaults set einvoice_obligation = 'none', einvoice_mandatory_from = '2026-01-01'
+          where country = '${country}'`,
+      ),
+    ).toMatch(/einvoice_obligation_dated/);
+    expect(
+      await expectError(db, `update country_defaults set einvoice_obligation = 'soon' where country = '${country}'`),
+    ).toMatch(/einvoice_obligation_known/);
+  });
+
   it('holds the article behind each rule, and the register key it is read at', async () => {
     // The gap this closes is narrow and was easy to miss: the pack format has
     // carried `einvoicing.legal_reference` since the section existed, all four
@@ -569,6 +593,38 @@ describe('what `ekwo pack check` refuses', () => {
       'utf8',
     );
     await expect(readPack(slug, scratch)).rejects.toThrow(/no profile says what becomes obligatory/);
+  });
+
+  it('refuses an obligation that disagrees with its date', async () => {
+    const slug = (await listPacks(packs))[0] as string;
+    const manifest = JSON.parse(await readFile(join(packs, slug, 'pack.json'), 'utf8')) as Record<string, unknown>;
+    const { mkdtemp, writeFile, cp } = await import('node:fs/promises');
+    const { tmpdir } = await import('node:os');
+    const scratch = await mkdtemp(join(tmpdir(), 'ekwo-pack-'));
+    await cp(join(packs, 'schema'), join(scratch, 'schema'), { recursive: true });
+    await cp(join(packs, slug), join(scratch, slug), { recursive: true });
+    const write = async (einvoicing: Record<string, unknown>): Promise<void> => {
+      await writeFile(
+        join(scratch, slug, 'pack.json'),
+        JSON.stringify(
+          { ...manifest, einvoicing: { profile: 'peppol-bis-3', legal_reference: 'A fixture text.', ...einvoicing } },
+          null,
+          2,
+        ),
+        'utf8',
+      );
+    };
+
+    await write({ obligation: 'mandatory', mandatory_from: null });
+    await expect(readPack(slug, scratch)).rejects.toThrow(/names no day it starts/);
+    for (const obligation of ['none', 'on_request']) {
+      await write({ obligation, mandatory_from: '2026-01-01' });
+      await expect(readPack(slug, scratch)).rejects.toThrow(/write that day in the legal reference/);
+    }
+    await write({ obligation: 'none', mandatory_from: null, legal_reference: null });
+    await expect(readPack(slug, scratch)).rejects.toThrow(/no legal_reference says which text decides it/);
+    await write({ obligation: 'sometimes' });
+    await expect(readPack(slug, scratch)).rejects.toThrow();
   });
 
   it('no longer lists documents, e-invoicing and bank as sections it skipped', async () => {

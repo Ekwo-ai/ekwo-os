@@ -43,7 +43,9 @@ function list(values: readonly string[], empty: string): ReactNode {
 /** When a declaration is due, as the country's rule reads in words. */
 function deadlineWords(
   deadline: NonNullable<PackDescription['declarations'][number]['deadline']>,
+  n: Strings['notYet'],
 ): string {
+  if (deadline.rule === 'depends_on_taxpayer') return n['dependsOnTaxpayer'] as string;
   const after =
     deadline.rule === 'day_of_month_after_period'
       ? `day ${deadline.day ?? '?'} of the month after the period`
@@ -121,7 +123,7 @@ export function statusRows(s: Strings): StatusRow[] {
               {declaration.deadline === null ? (
                 <NotYet>{n['deadlineUndeclared']}</NotYet>
               ) : (
-                <span>{deadlineWords(declaration.deadline)}</span>
+                <span>{deadlineWords(declaration.deadline, n)}</span>
               )}
             </li>
           ))}
@@ -154,11 +156,21 @@ export function statusRows(s: Strings): StatusRow[] {
       ) : (
         <div className="space-y-1">
           <div>
-            <Mono>{country.einvoicing.profile}</Mono>
+            {country.einvoicing.profile === null ? (
+              <span>{n['noProfileNamed']}</span>
+            ) : (
+              <Mono>{country.einvoicing.profile}</Mono>
+            )}
             {country.einvoicing.mandatoryFrom === null ? (
               <span className="text-ink-faint">
                 {' '}
-                <NotYet>{n['noObligationDate']}</NotYet>
+                {country.einvoicing.obligation === 'none' ? (
+                  <>— {n['noObligation']}</>
+                ) : country.einvoicing.obligation === 'on_request' ? (
+                  <>— {n['onRequest']}</>
+                ) : (
+                  <NotYet>{n['noObligationDate']}</NotYet>
+                )}
               </span>
             ) : (
               <span className="text-ink-faint">

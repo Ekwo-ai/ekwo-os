@@ -25,13 +25,17 @@ import { allPacks, packWhere } from './helpers/packs.js';
  *      named, and only to whoever may read that company.
  */
 
+/** A rule that produces a date: not absent, and not one that depends on the filer. */
+const producesDay = (p: (typeof allPacks)[number]): boolean =>
+  p.report?.deadline != null && p.report.deadline.rule !== 'depends_on_taxpayer';
+
 const dated = packWhere(
   'names the day its periodic return is due',
-  (p) => p.report !== null && p.report.deadline !== null && p.golden !== null,
+  (p) => p.report !== null && producesDay(p) && p.golden !== null,
 );
 const undated = packWhere(
   'files a periodic return and names no day for it',
-  (p) => p.report !== null && p.report.deadline === null,
+  (p) => p.report !== null && !producesDay(p),
 );
 const third = packWhere(
   'files a periodic return, and is neither of the two above',

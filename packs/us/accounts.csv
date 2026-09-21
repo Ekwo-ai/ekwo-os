@@ -16,6 +16,7 @@ code,parent,type,reconcilable,name,sequence
 1130,,asset_receivable,true,Receivables from officers and employees,150
 1140,,asset_receivable,true,Credit card receivables,160
 1180,,asset_receivable,true,Other receivables,200
+1185,,asset_current,true,Sales and use tax overpaid — credit or refund due on a filed return,205
 1190,,asset_current,false,Allowance for doubtful accounts,210
 1191,,asset_current,false,Allowance for doubtful notes receivable,220
 1195,,asset_current,false,Unearned finance income on notes receivable,230
@@ -101,6 +102,7 @@ code,parent,type,reconcilable,name,sequence
 2202,,liability_current,false,"Sales and use tax payable — California, county share",1000
 2204,,liability_current,false,"Sales and use tax payable — California, local share",1010
 2206,,liability_current,false,"Sales and use tax payable — California, district share",1020
+2208,,liability_current,true,Sales and use tax due on filed returns — the net each return carries to the administration,1025
 2215,,liability_current,false,Sales tax payable — New York,1030
 2220,,liability_current,false,Sales tax payable — other jurisdictions,1040
 2230,,liability_current,false,Federal income taxes payable,1050

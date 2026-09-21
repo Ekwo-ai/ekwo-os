@@ -511,7 +511,7 @@ describe('a country page', () => {
       const silences = [
         country.declarations.some((declaration) => declaration.deadline === null),
         country.declarations.some((declaration) => declaration.file.byHand),
-        country.einvoicing === null,
+        country.einvoicing === null || country.einvoicing.obligation === null,
         country.vatBalance.payable === null,
         country.vatBalance.receivable === null,
         country.bankStatementFormats.some((format) => !format.read),

@@ -52,5 +52,10 @@
       "legal_reference": "Code général des impôts, art. 271, IV, et ann. II, art. 242-0 A — crédit de TVA — formulaire 3310-CA3 (cerfa 10963), cadre B, ligne 25",
       "source": "cgi"
     }
-  ]
+  ],
+  "deadline": {
+    "rule": "depends_on_taxpayer",
+    "legal_reference": "Code des impositions sur les biens et services, art. A. 161-28 et A. 161-29, dans leur rédaction issue du décret n° 2025-255 du 19 mars 2025, auxquels renvoie le CGI, ann. IV, art. 39 depuis le 1er janvier 2025 — pour un redevable au régime mensuel ou trimestriel, l'échéance tombe entre le 15 et le 24 du mois qui suit la période, au jour que fixe l'article A. 161-29 d'après le lieu de dépôt des déclarations (Paris, Hauts-de-Seine, Seine-Saint-Denis et Val-de-Marne, ou les autres départements), la forme juridique (entreprise individuelle, société anonyme, autre société) et, selon le cas, la première lettre du nom de l'exploitant ou les deux premiers chiffres du numéro SIREN : le 15, 16, 17, 19, 20, 21, 23 ou 24. L'article A. 161-30 porte l'échéance au 24 pour un redevable qui a déclaré de la TVA à l'importation sur la période, et les articles A. 161-31 et A. 161-32 admettent des reports d'un mois. Aucun jour unique n'est vrai pour tous les redevables : ce pack déclare que le jour dépend du redevable plutôt qu'un jour faux pour la plupart d'entre eux.",
+    "source": "cibs"
+  }
 }

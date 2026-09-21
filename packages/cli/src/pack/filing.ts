@@ -31,8 +31,13 @@ export interface FilingReadiness {
   boxes: number;
   /** The cadence the country proposes, or null where it depends on the company. */
   cadence: string | null;
-  /** True when the pack says on which day the return is due. */
+  /**
+   * True when the pack says when the return is due — as a rule that produces a
+   * date, or as the statement that the day depends on the taxpayer.
+   */
   deadline: boolean;
+  /** The rule the pack states, or null where it states none. */
+  deadlineRule: string | null;
   /** The format the return is deposited as, by the name of the brick. */
   fileFormat: string | null;
   /** The account role what a filed return owes lands on, where the pack names one. */
@@ -49,6 +54,7 @@ export function filingReadiness(pack: Pack): FilingReadiness {
     boxes: report?.boxes.length ?? 0,
     cadence: report?.period_default ?? null,
     deadline: report?.deadline != null,
+    deadlineRule: report?.deadline?.rule ?? null,
     fileFormat: report?.file_format ?? null,
     taxPayable: typeof payable === 'string' ? payable : null,
   };
@@ -67,7 +73,11 @@ export function describeFiling(pack: Pack): string {
   const parts = [
     `${f.code} (${f.boxes} boxes)`,
     f.cadence === null ? 'cadence: the company decides' : `cadence: ${f.cadence}`,
-    f.deadline ? 'deadline: in the pack' : 'deadline: not declared',
+    !f.deadline
+      ? 'deadline: not declared'
+      : f.deadlineRule === 'depends_on_taxpayer'
+        ? 'deadline: depends on the taxpayer'
+        : 'deadline: in the pack',
     f.fileFormat === null ? 'file: none, filed on the portal' : `file: ${f.fileFormat}`,
     f.taxPayable === null ? 'settles to: no account named' : `settles to: ${f.taxPayable}`,
   ];

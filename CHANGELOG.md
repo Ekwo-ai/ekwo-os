@@ -82,6 +82,29 @@ somewhere has already run it.
 
 ### Added
 
+- **A silence a pack states is no longer printed as a gap.** Every country page
+  lists what its pack does not say, and two of those were answers the format
+  had no word for. `tax_report.json` takes a third deadline rule,
+  `depends_on_taxpayer`, which carries the text that assigns the day and no day
+  (`packs/fr` 1.14.0, from the CIBS, art. A. 161-28 and A. 161-29); and
+  `einvoicing.obligation` says `mandatory`, `on_request` or `none` beside the
+  profile, so a null `mandatory_from` no longer means both "no obligation" and
+  "not looked up" (`packs/gb` 0.8.0 and `packs/us` 0.6.0: `none`, the latter
+  with no profile at all; `packs/ee` 1.9.0: `on_request`, RPS § 7¹ (7)). Migrations `20260921084142` and `20260921084143`: the enum
+  value, the shape constraint, and `country_defaults.einvoice_obligation`,
+  written by a seed only where a pack declares it.
+
+- **A filed return settles outside Belgium and France.** `packs/gb` names
+  `1145` for a VAT credit (VATA 1994 s. 25(3)), `packs/ee` names `2370` and
+  `1211` (KMS § 29 (1) and § 34 (1)), and `packs/us` names `2208` and `1185`
+  for the sales and use tax a California return carries (R&TC § 6452(a) and
+  § 6901) — reconcilable accounts nothing but `settle_filing()` posts to.
+  `packs/lu` 1.8.0 declares its deadline: day 14, from "avant le quinzième
+  jour" of art. 64, par. 6 of the VAT law.
+
+- **`ekwo pack check` names a bank statement format nothing reads**, once per
+  format and as a warning, through the reader the country page uses.
+
 - **A posted invoice goes back to draft where its country allows it and
   nothing about it has left.** A pack says so in `documents.posted_edit_policy`
   — `reversal_only` or `unpost_if_untouched` — with the article behind it, and

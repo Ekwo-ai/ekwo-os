@@ -36,6 +36,7 @@ code,parent,type,reconcilable,name,sequence
 1120,,asset_current,false,Other debtors,350
 1130,,asset_current,false,Directors' loan account — debit,360
 1140,,asset_current,false,VAT recoverable — input tax,370
+1145,,asset_current,true,VAT repayment due from HMRC — VAT credit of a filed return,375
 1150,,asset_current,false,Corporation tax recoverable,380
 1160,,asset_current,false,Employee advances and expense claims,390
 1200,,asset_current,false,Shares in group undertakings — held as a current asset,400

@@ -2,10 +2,10 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "EE",
   "name": "Estonia",
-  "version": "1.8.0",
-  "schema_min": "20260917170000",
+  "version": "1.9.0",
+  "schema_min": "20260921084143",
   "seed_sequence": 13,
-  "released_at": "2026-09-16",
+  "released_at": "2026-09-21",
   "certification": {
     "status": "community",
     "sources": [
@@ -18,12 +18,28 @@
         "kind": "law"
       },
       {
+        "key": "kms-kommentaarid",
+        "title": "Käibemaksuseadus Rahandusministeeriumi kommentaaridega, seisuga jaanuar 2026 — § 27, § 29 ja § 34",
+        "publisher": "Rahandusministeerium",
+        "url": "https://fin.ee/sites/default/files/documents/2026-01/K%C3%A4ibemaksuseaduse%20kommentaarid%20jaanuar%202026.pdf",
+        "consulted_on": "2026-09-21",
+        "kind": "guidance"
+      },
+      {
         "key": "rps",
         "title": "Raamatupidamise seadus",
         "publisher": "Riigi Teataja",
         "url": "https://www.riigiteataja.ee/akt/rps",
         "consulted_on": "2026-09-15",
         "kind": "law"
+      },
+      {
+        "key": "e-arved",
+        "title": "Nõuded raamatupidamise korraldamiseks ja majandustehingute dokumenteerimiseks — algdokumendid, arved ja e-arved",
+        "publisher": "Rahandusministeerium",
+        "url": "https://fin.ee/finantspoliitika-valissuhted/arvestusvaldkond/raamatupidamise-algdokumendid-arved-e-arved",
+        "consulted_on": "2026-09-21",
+        "kind": "guidance"
       },
       {
         "key": "vos",
@@ -109,7 +125,9 @@
       "bank": "1010",
       "cash": "1000",
       "fx_gain": "3850",
-      "fx_loss": "4970"
+      "fx_loss": "4970",
+      "tax_payable": "2370",
+      "tax_receivable": "1211"
     },
     "journal_roles": {
       "sales": "MUU",
@@ -252,7 +270,8 @@
     "vat_scheme": "9931",
     "legal_reference": "Raamatupidamise seadus § 7¹ lõige 7, kehtiv alates 01.07.2025 — äriregistris e-arve vastuvõtjaks märgitud raamatupidamiskohustuslane võib nõuda müüjalt e-arve esitamist, ja e-arve eeldatakse nõuetekohaseks, kui see vastab Euroopa standardile EN 16931-1; pooled võivad kokku leppida muu standardi kasutamises. Seadus ei kehtesta üldist e-arve kohustust ega ühtki tähtpäeva, mistõttu mandatory_from on tühi. Deklareeritud profiil peppol-bis-3 on EN 16931-1 kitsendus, mida Eesti operaatorid tegelikkuses vahetavad; see ei ole seadusest tulenev nõue. Riigisisene standard EVS 923 kaotas õigusliku aluse 01.07.2025, kui rahandusministri määrus „Masintöödeldava algdokumendi juhendi kehtestamine“ kehtetuks tunnistati.",
     "source": "rps",
-    "mandatory_from": null
+    "mandatory_from": null,
+    "obligation": "on_request"
   },
   "bank": {
     "statement_formats": [

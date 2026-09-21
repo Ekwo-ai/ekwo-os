@@ -100,6 +100,19 @@ boxes rather than a box the postings fill. The figures come out the same and
 there is one definition instead of two; the cost is that the boxes of section I
 are ordered by what they depend on rather than by where they print.
 
+**When it is due.** Since pack version 1.8.0 the form declares a deadline:
+`day_of_month_after_period`, day **14**. Article 64, paragraph 6, of the law
+says the monthly return "doit être déposée **avant** le quinzième jour du mois
+qui suit la période imposable", the tax being paid before the same date, and
+the AED gives the quarterly return the same wording for the month after the
+quarter. The pack reads *avant* as *before*: the same law writes "au plus tard
+le quinzième jour" where it means to include the fifteenth (article 63,
+paragraph 5, for issuing an invoice), and the annual return is due "avant le
+premier mai", which nobody reads as the first of May. A return filed on the
+fourteenth is on time under either reading. The text was read in the AED's
+coordinated version of 1 January 2026, which is not opposable; Legilux serves
+the official one.
+
 ## The financial statements
 
 `statements.json` carries the two abridged schemes a small undertaking deposits:
@@ -174,7 +187,7 @@ exactly the result of the profit and loss account — 16 300 euros here.
 
 ## What a Luxembourg reviewer should look at first
 
-Ten points where the reading could go another way. None is a known error; each
+Eleven points where the reading could go another way. None is a known error; each
 is a place where the text allows more than one answer, or where no text was
 found.
 
@@ -215,3 +228,7 @@ found.
     publishes, on the eCDF forms. They are not a translation made here, and
     where the French and the German of a form differ, the French is the
     reference — `i18n/README.md` says so at length.
+11. **The deadline's day.** Fourteen, from "avant le quinzième jour", under
+    "The declaration". Practitioners commonly write "by the 15th"; a reviewer
+    who knows how the AED treats a return filed on the fifteenth will know
+    whether the day should move by one.

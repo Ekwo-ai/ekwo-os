@@ -2,10 +2,10 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "US",
   "name": "United States",
-  "version": "0.5.0",
-  "schema_min": "20260917170000",
+  "version": "0.6.0",
+  "schema_min": "20260921084143",
   "seed_sequence": 15,
-  "released_at": "2026-09-16",
+  "released_at": "2026-09-21",
   "certification": {
     "status": "community",
     "sources": [
@@ -55,6 +55,14 @@
         "publisher": "California Legislative Information — Office of Legislative Counsel",
         "url": "https://leginfo.legislature.ca.gov/faces/codesTOCSelected.xhtml?tocCode=RTC",
         "consulted_on": "2026-09-16",
+        "kind": "law"
+      },
+      {
+        "key": "ca-rtc-6901",
+        "title": "Revenue and Taxation Code, section 6901, Credits and refunds — the Sales and Use Tax Law as the Business Taxes Law Guide, revision 2026, prints it",
+        "publisher": "California Department of Tax and Fee Administration — Business Taxes Law Guide",
+        "url": "https://www.cdtfa.ca.gov/lawguides/vol1/sutl/6901.html",
+        "consulted_on": "2026-09-21",
         "kind": "law"
       },
       {
@@ -190,7 +198,9 @@
       "fx_gain": "7010",
       "fx_loss": "7210",
       "asset_disposal_gain": "7020",
-      "asset_disposal_loss": "7200"
+      "asset_disposal_loss": "7200",
+      "tax_payable": "2208",
+      "tax_receivable": "1185"
     },
     "journal_roles": {
       "sales": "SAL",
@@ -268,7 +278,8 @@
     }
   },
   "einvoicing": {
-    "legal_reference": "No statute of the United States, federal or of any state, obliges anybody to issue or to receive an electronic invoice, and no date has been set for one. There is therefore no national profile to declare: the Digital Business Networks Alliance runs an open exchange network for business documents that its members join voluntarily, and a pack that named it as this country's profile would be reporting an industry initiative as a legal requirement. Both `profile` and `mandatory_from` are empty for that reason, and a reader who needs a value is told it is missing rather than given another country's answer. `party_scheme` and `vat_scheme` are empty too: the United States levies no value added tax, so no party here carries a VAT identifier, and nothing prescribes which of the several registration identifiers an American party is addressed by.",
+    "obligation": "none",
+    "legal_reference": "No statute of the United States, federal or of any state, obliges anybody to issue or to receive an electronic invoice, and no date has been set for one. There is therefore no national profile to declare: the Digital Business Networks Alliance runs an open exchange network for business documents that its members join voluntarily, and a pack that named it as this country's profile would be reporting an industry initiative as a legal requirement. Both `profile` and `mandatory_from` are empty for that reason, and `obligation` says `none`: the absence is the answer, not a value nobody looked up, and no other country's profile stands in for it. `party_scheme` and `vat_scheme` are empty too: the United States levies no value added tax, so no party here carries a VAT identifier, and nothing prescribes which of the several registration identifiers an American party is addressed by.",
     "source": "dbn-alliance"
   },
   "bank": {

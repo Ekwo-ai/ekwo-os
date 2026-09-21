@@ -762,10 +762,10 @@ function defaults(pack: Pack, country: string): string[] {
 
 /**
  * What a country requires on a document, how the document is exchanged, and
- * the formats its banks speak: twenty-three columns of `country_defaults` and
+ * the formats its banks speak: twenty-four columns of `country_defaults` and
  * the sentences of `legal_mention_templates`.
  *
- * Ten of the twenty-three are citations — the article behind the numbering,
+ * Ten of the twenty-four are citations — the article behind the numbering,
  * the payment term, the tax point, whether a posted document goes back to
  * draft and the e-invoicing profile, and the register key each of them is read
  * at. They ride in the same update as the rule they
@@ -782,9 +782,18 @@ function defaults(pack: Pack, country: string): string[] {
  * None of these columns has a default, so `null` is written literally rather
  * than the `default` keyword the rounding columns use: there is nothing for
  * the schema to decide.
+ *
+ * `einvoice_obligation` is the one column written only when the pack says it.
+ * It arrived with `20260921084143`, and a pack that declares no obligation
+ * keeps a seed that runs on a schema from before it — the column would only
+ * ever have received a null.
  */
 function documentRules(pack: Pack, country: string): string[] {
   const rules = pack.documents;
+  const obligation =
+    rules.einvoice_obligation === null
+      ? []
+      : [`  einvoice_obligation           = ${text(rules.einvoice_obligation)},`];
   const out = [
     '',
     'update country_defaults set',
@@ -804,6 +813,7 @@ function documentRules(pack: Pack, country: string): string[] {
     `  posted_edit_policy_source_key = ${text(rules.posted_edit_policy_reference.source)},`,
     `  einvoice_profile              = ${text(rules.einvoice_profile)},`,
     `  einvoice_mandatory_from       = ${date(rules.einvoice_mandatory_from)},`,
+    ...obligation,
     `  einvoice_legal_reference      = ${text(rules.einvoice_reference.legal_reference)},`,
     `  einvoice_source_key           = ${text(rules.einvoice_reference.source)},`,
     `  party_scheme                  = ${text(rules.party_scheme)},`,

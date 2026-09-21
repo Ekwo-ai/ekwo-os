@@ -2,10 +2,10 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "FR",
   "name": "France",
-  "version": "1.13.0",
-  "schema_min": "20260919190727",
+  "version": "1.14.0",
+  "schema_min": "20260921084143",
   "seed_sequence": 11,
-  "released_at": "2026-09-19",
+  "released_at": "2026-09-21",
   "certification": {
     "status": "maintained",
     "sources": [
@@ -40,6 +40,14 @@
         "url": "https://www.legifrance.gouv.fr/codes/texte_lc/LEGITEXT000006069569",
         "consulted_on": "2026-09-15",
         "kind": "law"
+      },
+      {
+        "key": "cibs",
+        "title": "Code des impositions sur les biens et services, art. A. 161-28 et A. 161-29 — échéances déclaratives de la déclaration commune des impositions sur les biens et services",
+        "publisher": "Légifrance — Direction de l'information légale et administrative",
+        "url": "https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000051359495",
+        "consulted_on": "2026-09-21",
+        "kind": "regulation"
       },
       {
         "key": "code-de-commerce",

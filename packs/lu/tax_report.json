@@ -1484,5 +1484,11 @@
       "legal_reference": "Loi TVA modifiée du 12 février 1979, art. 64 — formulaire eCDF de déclaration périodique de TVA (TVA_DECM mensuelle, TVA_DECT trimestrielle), IV. Calcul de l’excédent, « C. Excédent (un éventuel excédent de taxe en amont est à marquer d'un signe négatif) (103-104) » ; Loi TVA, art. 61bis",
       "source": "loi-tva"
     }
-  ]
+  ],
+  "deadline": {
+    "rule": "day_of_month_after_period",
+    "day": 14,
+    "legal_reference": "Loi TVA modifiée du 12 février 1979, art. 64, paragraphe 6 — la déclaration « doit être déposée avant le quinzième jour du mois qui suit la période imposable », et la taxe est versée avant la même date (formulaire TVA_DECM, rubrique « Délai légal ») ; pour la déclaration trimestrielle autorisée en vertu de l'art. 64, paragraphe 9, l'AED fixe le dépôt « avant le 15ème jour de chaque trimestre civil qui suit le trimestre », soit le même jour du mois qui suit la période. Le jour déclaré ici est le quatorzième, parce que le texte dit « avant » le quinzième et que la même loi écrit « au plus tard le quinzième jour » là où elle veut inclure ce jour (art. 63, paragraphe 5, pour l'émission d'une facture) : une déclaration déposée le quatorze est à temps dans les deux lectures. La déclaration annuelle, due avant le 1er mai de l'année qui suit (art. 64, paragraphe 7), est un formulaire distinct que ce pack ne porte pas.",
+    "source": "loi-tva-coordonnee"
+  }
 }

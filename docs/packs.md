@@ -754,6 +754,23 @@ authorisation granted on turnover — and Luxembourg proposes nothing, because
 there the cadence follows turnover with no answer the law gives everybody.
 Estonia's form is filed on one cadence and proposes it.
 
+**When the form is due** is `deadline`, a rule rather than a date, in a closed
+vocabulary of three words, each with the text that sets it in
+`legal_reference`:
+
+| `rule` | The date it produces |
+|---|---|
+| `day_of_month_after_period` | the `day` of the month that follows the period (Belgium's and Estonia's twentieth, Luxembourg's fourteenth) |
+| `last_day_of_month_after_period` | the last day of that month (California; the United Kingdom with `plus_days: 7`) |
+| `depends_on_taxpayer` | none: the administration assigns the day per filer, and the pack says so and cites the text that assigns it (France, where it falls between the fifteenth and the twenty-fourth by place of filing, legal form and registration number) |
+
+`plus_days` adds an extension to the first two and is refused on the third,
+which has no date to add it to; `day` is required by the first and refused by
+the others. Leave `deadline` out only when nobody has read the text yet: that
+is the one meaning a missing deadline has, and the country page prints it as a
+gap. `filing_deadline()` answers null for both — the core cannot know which
+slice of a per-taxpayer schedule a company falls in.
+
 `defaults.vat_period` is where this used to be said, on the country rather than
 on the form. It is still read, so a pack written before the move keeps working,
 and a pack that says both and says two different things is refused: one fact,
@@ -982,6 +999,7 @@ it was posted, which is the stricter answer rather than another country's.
 "einvoicing": {
   "profile": "peppol-bis-3",
   "mandatory_from": "2026-01-01",
+  "obligation": "mandatory",
   "party_scheme": "0208",
   "vat_scheme": "9925",
   "legal_reference": "Loi du 6 février 2024 modifiant le Code de la TVA, art. 53, § 2 — …",
@@ -1010,6 +1028,25 @@ Nothing reads the pattern yet — `next_entry_number()` builds `CODE/YYYY/NNNN`
 engine consumes a format it produces the same numbers it always did.
 `ekwo pack check` refuses a token nobody defined and a pattern with no
 counter, or with two.
+
+**Whether the profile is obligatory** is `einvoicing.obligation`, in a closed
+vocabulary of three words, because a null `mandatory_from` used to say two
+different things — "there is no obligation" and "nobody looked up the date":
+
+| Value | Says | `mandatory_from` |
+|---|---|---|
+| `mandatory` | a statute obliges companies to exchange the profile between themselves | required: the day it starts |
+| `on_request` | no statute obliges every company, but a seller has to issue one when a buyer the law entitles to ask does — Estonia since 1 July 2025 | refused: the day the right began goes in the legal reference |
+| `none` | at `released_at`, no statute obliges companies to exchange electronic invoices between themselves — the United Kingdom, where an obligation is announced for 2029 and not legislated | refused |
+
+An obligation towards the public sector alone, or one announced and not
+legislated, is written in `legal_reference` and does not change the word.
+`none` may stand without a `profile`, for a country with no profile to name —
+the United States — and the country page then prints that answer instead of a
+missing profile. A
+pack that leaves `obligation` out is described as `mandatory` where it names a
+date, and as saying nothing where it does not; only a declared word reaches
+`country_defaults.einvoice_obligation`.
 
 **The tax point** is the country's general rule, in a closed vocabulary of
 five words:
@@ -1559,7 +1596,9 @@ code. A `valid_to` before its `valid_from`. A mention with no
 `legal_reference` — a sentence the law requires cites the article that requires
 it. A `number_format` carrying a token nobody defined, or no counter, or two.
 An `einvoicing.mandatory_from` with no `profile`: a day an obligation starts
-and nothing that says what becomes obligatory. A `source` under
+and nothing that says what becomes obligatory. An `obligation` of `mandatory`
+with no `mandatory_from`, one of `on_request` or `none` with one, and any
+`obligation` with no `legal_reference`. A `source` under
 `documents.references` or in `einvoicing` naming a key the register does not
 carry. And on a `reviewed` pack, a document rule that is declared and cites no
 article at all — that one is a warning on every other status, including
@@ -1567,6 +1606,12 @@ article at all — that one is a warning on every other status, including
 normal state of a new pack and not a defect of it. The exception is
 `posted_edit_policy: unpost_if_untouched`, which lets a posted entry be taken
 away: it is refused without an article on every status.
+
+**The bank formats, as a warning.** A `bank.statement_formats` entry that no
+brick of `packages/formats/` reads is printed once per format, and never
+fails the check: the name is true — the banks of the country send that file —
+and the debt is kept by name in `tests/bank_statement_formats.test.ts`, which
+is what fails when a new one appears unaccounted for.
 
 **The languages.** A label under a code the pack does not carry — an account,
 a journal, a tax, a chart, a mention, an asset category, a box, a statement
@@ -1908,7 +1953,13 @@ that present them.
 In `defaults.roles`, name the accounts the installer wires: `receivable` and
 `payable` are required, and `suspense`, `rounding`, `retained_earnings`,
 `sales`, `purchase`, `bank` and `cash` are what a company needs to be installed
-and to book. Add `fx_gain` and `fx_loss` if any company of your country will
+and to book. If the pack declares a periodic return, name `tax_payable` — the
+account `settle_filing()` carries a declared period's net to — and
+`tax_receivable` for a period that ends in a credit, both reconcilable and
+apart from the accounts the taxes post to. Leave `tax_receivable` out only
+where the chart keeps one control account for both signs; say which article
+makes the credit a claim on the administration in the pack's README, since a
+role carries no citation of its own. Add `fx_gain` and `fx_loss` if any company of your country will
 ever invoice in another currency: a matching that realises a difference is
 refused by name when they are missing, and only then.
 

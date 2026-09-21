@@ -1730,20 +1730,27 @@ its own, with the question of what a fortnight and its month look like to it.
 ### From asking when a declaration is due
 
 Written on 17 September 2026, with the deadline rule. Two of the six packs
-declare no date at all, and that is the finding rather than the omission.
+declared no date at all, and that was the finding rather than the omission.
+Both are answered since 21 September 2026 — see the next paragraph and "What
+the packs do not say yet".
 
 **A deadline can depend on the taxpayer rather than on the period, and the
 format cannot say that.** `packs/fr/` declares none: the French periodic return
 is due on a day the administration assigns from the taxpayer's identification
 number and legal form, staggered across the second half of the month, and no
 rule of the shape *day N of the month that follows* is true for more than a
-slice of filers. `packs/lu/` declares none either, for a different reason — the
-date was not read, and a pack does not guess. *Fix*, when somebody writes it: a
-rule whose day comes from a value on the company, which is a fourth shape and a
-bigger change than it looks, because the value itself (a fragment of a
-registration number) is country data on a table the core owns. *Until then*:
-`filing_deadline()` answers null and `upcoming_filings()` lists the period with
-no date, which is honest and visibly incomplete.
+slice of filers. `packs/lu/` declared none either, for a different reason — the
+date was not read, and a pack does not guess. It has been read since: art. 64,
+par. 6 of the VAT law, and the pack declares day 14. France now *says* what it
+could not compute: the rule `depends_on_taxpayer` carries the text that
+assigns the day — the CIBS, art. A. 161-28 and A. 161-29 since 2025 — and no
+day, so the country page prints an answer and not a gap. *Fix* for the date
+itself, when somebody writes it: a rule whose day comes from a value on the
+company, which is a fourth shape and a bigger change than it looks, because the
+values (place of filing, legal form, the first digits of the SIREN) are country
+data on a table the core owns. *Until then*: `filing_deadline()` answers null
+and `upcoming_filings()` lists the period with no date, which is honest and
+visibly incomplete.
 
 **An extension can depend on the scheme a company is in.** The United Kingdom
 adds seven days to a return filed online and paid electronically, and takes
@@ -1785,31 +1792,50 @@ as its own schema, as `decisions.md` describes.
 ## What the packs do not say yet
 
 Building a page per country made every silence in a pack visible at once, which
-is the one thing a folder of JSON does not do on its own. None of these is a
-wrong figure: each is a field a pack could carry and does not, and each is
-recorded here rather than filled in, because filling one in without reading the
-law would be the only way to make this list worse.
+is the one thing a folder of JSON does not do on its own. The list below is the
+one the pages printed on 19 September 2026, and what became of each item on 21
+September. The rule for every line was the same: fill it from an official text
+in the pack's register, or make the pack *say* that the silence is the answer
+— and where neither was possible, leave it and say so here.
 
-- **Two packs name no account for either side of the tax balance**, and a third
-  names `tax_payable` and not `tax_receivable`. `settle_filing()` carries the
-  net of a declared period to the account the pack names, so a period that ends
-  in a credit has nowhere to land in those countries.
-- **Two packs state no rule for when their periodic return is due.** One of
-  them cannot: its schedule depends on the taxpayer's identification number,
-  which the format deliberately cannot express, and saying nothing is better
-  than a date that is wrong for most filers. The other has simply not had the
-  text read.
-- **Two packs declare an e-invoicing profile with no date of obligation.** The
-  profile is what an invoice is written as; the date is when it stops being
-  optional, and a reader cannot infer one from the other.
-- **Five bank statement formats are named by a pack and read by nothing**:
-  `bai2`, `camt.052`, `csv`, `mt940` and `ofx`. That ledger is kept, with the
-  formats that *are* read, in `tests/bank_statement_formats.test.ts`.
+| Pack | What the page printed | Now | On what |
+|---|---|---|---|
+| `ee` | tax balance: no account, either side | **filled** — `2370` payable, `1211` receivable | KMS § 27 (1), § 29 (1), § 34 (1); the Ministry of Finance's commentary of January 2026 |
+| `gb` | tax balance: no receivable account | **filled** — `1145`, beside `2210` | VATA 1994 s. 25(2)–(3) |
+| `us` | tax balance: no account, either side | **filled** — `2208` payable, `1185` receivable, for the sales and use tax a return carries | California R&TC § 6452(a) and § 6901 |
+| `fr` | deadline: not declared | **stated** — `depends_on_taxpayer`: the fifteenth to the twenty-fourth, by place of filing, legal form and SIREN | CIBS, art. A. 161-28 and A. 161-29, to which CGI ann. IV art. 39 refers since 2025 |
+| `lu` | deadline: not declared | **filled** — day 14 of the month after the period | VAT law art. 64, par. 6 ("avant le quinzième jour"), in the AED's coordinated text; the AED portal for the quarterly return |
+| `gb` | e-invoicing: no date of obligation | **stated** — `obligation: none` | the consultation response of 26 November 2025: mandatory e-invoicing is announced for 2029 and not legislated |
+| `us` | e-invoicing: no profile declared | **stated** — `obligation: none`, with no profile to sit beside | the pack's own legal reference: no statute, federal or of any state, obliges anybody; the network it names is voluntary |
+| `ee` | e-invoicing: no date of obligation | **stated** — `obligation: on_request`, not `none` | RPS § 7¹ (7): since 1 July 2025 a buyer registered as an e-invoice recipient may require one; the Ministry of Finance confirms no general B2B obligation and no date |
+| `ee`, `gb`, `lu`, `us` | bank statements: `bai2`, `camt.052`, `csv`, `mt940`, `ofx` read by nothing | **remains** — no reader was written | `ekwo pack check` now warns once per format; the ledger of the debt is `tests/bank_statement_formats.test.ts` |
+| every pack | certification: no named reviewer | **remains** — a person's act, and nothing here can stand in for it | — |
+
+Three findings came out of it, and each is worth more than the line it closed.
+
+- **The premise was wrong once, and the vocabulary grew a word for it.** The
+  Estonian line was expected to close as "no e-invoicing obligation between
+  companies". There is no general one — but since 1 July 2025 a seller
+  must issue one when a registered buyer asks, which is an obligation and not a
+  preference. Writing `none` would have been false; `on_request` is the word.
+- **"Avant le quinzième jour" is the fourteenth.** Luxembourg's law writes "au
+  plus tard le quinzième jour" where it includes the day (art. 63, par. 5) and
+  "avant" where it does not, and most secondary sources round it to the
+  fifteenth. The pack follows the text, which is also the reading under which a
+  return is never late; the pack's README asks a reviewer to confirm it.
+- **A role has no citation of its own.** `defaults.roles` names an account and
+  cannot say which article makes a credit a claim on the administration, so the
+  justification of every settlement account is in the pack's README and the
+  texts are in its register. A reviewer reads both.
+
+One silence is still the packs' and not the format's:
+
 - **No pack is `reviewed`.** Four are `community` and two are `maintained`,
   which means the maintainers keep them current and no named professional has
   read them against the law. Every country page says so in those words.
-- **The currency seed carries eleven currencies**, "the handful a European
-  ledger meets", at zero and two decimals. The engine reads a currency's
-  decimals rather than assuming cents, so a third is a row and not a change —
-  but until somebody adds the rows, the claim is about the engine and not about
-  coverage.
+
+And one claim about coverage is still about the engine: **the currency seed
+carries eleven currencies**, "the handful a European ledger meets", at zero and
+two decimals. The engine reads a currency's decimals rather than assuming
+cents, so a third is a row and not a change — but until somebody adds the rows,
+the claim is about the engine and not about coverage.

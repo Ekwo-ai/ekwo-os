@@ -54,6 +54,31 @@ describe('the date a pack declares', () => {
     }
   });
 
+  it('says why there is no date, where the day depends on the taxpayer', async () => {
+    // The third rule carries a text and nothing else: no day and no extension,
+    // because it produces no date for either to shape.
+    const stated = await rows<{ deadline_day: number | null; deadline_plus_days: number | null }>(
+      db,
+      `select deadline_day, deadline_plus_days from tax_report_templates
+        where deadline_rule = 'depends_on_taxpayer'`,
+    );
+    for (const form of stated) {
+      expect(form.deadline_day).toBeNull();
+      expect(form.deadline_plus_days).toBeNull();
+    }
+    const refused = await db
+      .query(
+        `update tax_report_templates set deadline_rule = 'depends_on_taxpayer', deadline_day = 15,
+                deadline_reference = 'a fixture, to prove the shape is refused'
+          where code = (select min(code) from tax_report_templates)`,
+      )
+      .then(
+        () => null,
+        (error: unknown) => (error instanceof Error ? error.message : String(error)),
+      );
+    expect(refused).toContain('tax_report_templates_deadline_shape');
+  });
+
   it('is at least declared by one pack, and read by the function', async () => {
     const declaring = await rows<{ country: string; code: string }>(
       db,
@@ -84,9 +109,10 @@ describe('working the date out', () => {
         [fx.companyId, form[0]!.code],
       );
 
-      if (form[0]!.deadline_rule === null) {
-        // A country whose schedule depends on who is filing says nothing, and
-        // the function says nothing back rather than inventing a day.
+      if (form[0]!.deadline_rule === null || form[0]!.deadline_rule === 'depends_on_taxpayer') {
+        // A pack that says nothing, and a country whose schedule depends on
+        // who is filing: the function says nothing back rather than inventing
+        // a day.
         expect(due.filing_deadline).toBeNull();
       } else {
         expect(due.filing_deadline).not.toBeNull();

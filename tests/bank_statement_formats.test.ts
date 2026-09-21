@@ -13,9 +13,8 @@ import { allPacks } from './helpers/packs.js';
  * names a new one fails here until somebody writes the reader or writes the
  * debt down; a reader that ships fails here until its line is struck off.
  *
- * What it is not: the `pack check` guard that would tell a pack author the
- * same thing at the keyboard. That belongs to the command line and is not
- * written yet.
+ * `ekwo pack check` tells a pack author the same thing at the keyboard, as a
+ * warning per format, through `describePack()`. This file is what fails.
  */
 
 const READ: readonly string[] = writeTools.STATEMENT_FORMATS;

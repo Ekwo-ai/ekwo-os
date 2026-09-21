@@ -748,6 +748,14 @@
           "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
           "description": "The day the obligation starts. Where reception and emission start on different days this is reception, which is what binds every company at once; the emission calendar, which usually depends on the size of the company, belongs in the legal reference until the core can hold a size."
         },
+        "obligation": {
+          "enum": [
+            "mandatory",
+            "on_request",
+            "none"
+          ],
+          "description": "Whether a statute obliges companies to exchange electronic invoices between themselves. `mandatory` requires `mandatory_from`. `on_request` refuses it: no statute obliges every company, but a seller has to issue one when a buyer the law entitles to ask does, and the day that right began is written in the legal reference. `none` refuses it too, and says that at `released_at` no such statute exists. An obligation towards the public sector alone, or one announced and not legislated, is written in the legal reference and does not change the word. Left out, the pack says nothing, and a null `mandatory_from` is then read as a date nobody looked up."
+        },
         "party_scheme": {
           "type": [
             "string",
@@ -1229,7 +1237,7 @@
         },
         "deadline": {
           "type": "object",
-          "description": "When this form is due, as a rule rather than a date. Two shapes, closed: `day_of_month_after_period` with a `day`, and `last_day_of_month_after_period`; either may add `plus_days`. A pack that says nothing gets no deadline, which is the honest answer for a country whose schedule depends on the taxpayer rather than on the period.",
+          "description": "When this form is due, as a rule rather than a date. Three shapes, closed: `day_of_month_after_period` with a `day`, and `last_day_of_month_after_period`, either of which may add `plus_days`; and `depends_on_taxpayer`, which carries no day and no extension, for a country that assigns the day per filer — its legal_reference is the text that assigns it. A pack that says nothing gets no deadline, which now means only that nobody has read the text.",
           "additionalProperties": false,
           "required": [
             "rule",
@@ -1239,14 +1247,15 @@
             "rule": {
               "enum": [
                 "day_of_month_after_period",
-                "last_day_of_month_after_period"
+                "last_day_of_month_after_period",
+                "depends_on_taxpayer"
               ]
             },
             "day": {
               "type": "integer",
               "minimum": 1,
               "maximum": 31,
-              "description": "Day of the month following the period. Required by `day_of_month_after_period` and refused by the other rule."
+              "description": "Day of the month following the period. Required by `day_of_month_after_period` and refused by the other two rules."
             },
             "plus_days": {
               "type": "integer",

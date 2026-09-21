@@ -2,10 +2,10 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "LU",
   "name": "Luxembourg",
-  "version": "1.7.0",
-  "schema_min": "20260916126000",
+  "version": "1.8.0",
+  "schema_min": "20260919190727",
   "seed_sequence": 12,
-  "released_at": "2026-09-16",
+  "released_at": "2026-09-21",
   "certification": {
     "status": "community",
     "sources": [
@@ -24,6 +24,22 @@
         "url": "https://legilux.public.lu/eli/etat/leg/loi/1979/02/12/n1/jo",
         "consulted_on": "2026-09-16",
         "kind": "law"
+      },
+      {
+        "key": "loi-tva-coordonnee",
+        "title": "Loi modifiée du 12 février 1979 concernant la taxe sur la valeur ajoutée — texte coordonné au 1er janvier 2026",
+        "publisher": "Administration de l'enregistrement, des domaines et de la TVA — Portail de la fiscalité indirecte",
+        "url": "https://pfi.public.lu/dam-assets/pdf/legislation/tva/loi/loi-tva-2026-01-01.pdf",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "pfi-declarations-tva",
+        "title": "Déclarations de TVA — périodicité et délais légaux de dépôt",
+        "publisher": "Administration de l'enregistrement, des domaines et de la TVA — Portail de la fiscalité indirecte",
+        "url": "https://pfi.public.lu/fr/professionnel/tva/en-cours-activite-economique/declarations-tva.html",
+        "consulted_on": "2026-09-21",
+        "kind": "guidance"
       },
       {
         "key": "taux-2023",

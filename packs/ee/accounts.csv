@@ -7,6 +7,7 @@ code,parent,type,reconcilable,name,sequence
 1200,,asset_receivable,true,Nõuded ostjate vastu,60
 1208,,asset_current,false,Ebatõenäoliselt laekuvad nõuded,70
 1210,,asset_current,false,Maksude ettemaksed ja tagasinõuded,80
+1211,,asset_current,true,Käibemaksu tagasinõue — esitatud deklaratsiooni saldo,85
 1220,,asset_current,false,Nõuded seotud osapoolte vastu,90
 1230,,asset_current,false,Lühiajalised laenunõuded,100
 1240,,asset_current,false,Muud lühiajalised nõuded,110
@@ -49,6 +50,7 @@ code,parent,type,reconcilable,name,sequence
 2340,,liability_current,false,Töötuskindlustusmakse kohustis,480
 2350,,liability_current,false,Kogumispensioni makse kohustis,490
 2360,,liability_current,false,Tulumaksukohustis,500
+2370,,liability_current,true,Käibemaksukohustis — esitatud deklaratsiooni saldo,505
 2400,,liability_current,false,Muud lühiajalised võlad,510
 2410,,liability_current,false,Võlad seotud osapooltele,520
 2490,,liability_current,false,Selgitamata maksed,530

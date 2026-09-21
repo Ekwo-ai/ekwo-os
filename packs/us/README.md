@@ -286,6 +286,21 @@ field a proposal belongs on now that a company records a cadence per
 declaration rather than one named after the return. A company that has asked
 CDTFA for nothing files quarterly, and `ekwo init` proposes that.
 
+**Where a filed return's balance lands.** Since pack version 0.6.0,
+`defaults.roles` names `2208` for `tax_payable` and `1185` for
+`tax_receivable`. There is no value added tax here and no input tax to net, but
+a sales and use tax return is settled the same way: section 6452(a) makes the
+tax due together with the return, so `settle_filing()` clears the state,
+county, local and district accounts the period posted to (`2200` to `2206`)
+into one reconcilable account, against which the payment to CDTFA is matched.
+A return rarely ends in the company's favour, and when it does — a credit
+note that outweighs the quarter's sales, a prepayment larger than the tax —
+section 6901 has the overpayment credited against amounts due and the balance
+refunded, which is a claim on the administration and an asset: `1185`, on
+caption 3 of rule 5-02 with the other receivables. Both accounts carry every
+state the company files in; a company that files in New York too tells the two
+debts apart by the administration the payment goes to, not by the account.
+
 ## The accounts
 
 `statements.json` carries the balance sheet of rule 5-02 and the income
@@ -408,8 +423,9 @@ Nothing in American law compels anybody to issue or receive one, and no date has
 been set. The Digital Business Networks Alliance runs an open exchange network
 for business documents that its members join voluntarily, and naming it as this
 country's profile would report an industry initiative as a legal requirement. So
-`profile` and `mandatory_from` are both empty, and the reason is in the legal
-reference. `party_scheme` and `vat_scheme` are empty too: there is no VAT
+`profile` and `mandatory_from` are both empty, `obligation` says `none` since
+pack version 0.6.0 — so the country page prints an answer and not a gap — and
+the reason is in the legal reference. `party_scheme` and `vat_scheme` are empty too: there is no VAT
 identifier in a country with no VAT, and nothing prescribes which registration
 identifier an American party is addressed by.
 
@@ -469,7 +485,7 @@ Open an issue titled "Review: United States". What a review is, and what it is
 not, is in [`docs/packs.md`](../../docs/packs.md) under "Certification, and who
 may say what".
 
-Eight points a reviewer holding a CPA licence should look at first, roughly in
+Nine points a reviewer holding a CPA licence should look at first, roughly in
 the order the author is least sure of them:
 
 1. **Lines 13 to 16, and what they are each a rate of.** The pack states lines
@@ -519,3 +535,7 @@ the order the author is least sure of them:
    they demonstrate: a form that splits the rate, a form that combines it, and
    no form at all. A reviewer who files in Texas or in Washington will know
    whether a fourth shape exists that none of the three shows.
+9. **The two settlement accounts.** `2208` for what a return owes and `1185`
+   for an overpayment, under "The return". A practice that keeps one account
+   per state would want the role per declaration rather than per country,
+   which is a core question and not this pack's.

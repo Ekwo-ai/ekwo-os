@@ -110,15 +110,21 @@ describe('describePack', () => {
     }
   });
 
-  it('describes e-invoicing only where the country imposes a profile', () => {
+  it('describes e-invoicing where the pack names a profile or states an obligation', () => {
     for (const { pack, description } of described) {
       const profile = pack.documents.einvoice_profile;
-      if (profile === null) {
+      const obligation = pack.documents.einvoice_obligation;
+      if (profile === null && obligation === null) {
         expect(description.einvoicing).toBeNull();
         continue;
       }
       expect(description.einvoicing!.profile).toBe(profile);
       expect(description.einvoicing!.mandatoryFrom).toBe(pack.documents.einvoice_mandatory_from);
+      // A stated obligation is repeated as stated; an unstated one is read off
+      // the date, and a null beside a null date stays the silence it is.
+      expect(description.einvoicing!.obligation).toBe(
+        obligation ?? (pack.documents.einvoice_mandatory_from === null ? null : 'mandatory'),
+      );
     }
   });
 
@@ -183,7 +189,7 @@ describe('describePack', () => {
         description.declarations.length,
       );
       expect(kinds.filter((kind) => kind === 'einvoicing').length).toBe(
-        description.einvoicing === null ? 0 : 1,
+        description.einvoicing?.profile == null ? 0 : 1,
       );
       expect(kinds.filter((kind) => kind === 'bank_statement').length).toBe(
         description.bankStatementFormats.length,

@@ -839,10 +839,19 @@ Which template account plays which role, per country.
 | `posted_edit_policy` | `text` | Whether this country lets a posted document go back to draft: reversal_only (a credit note, cancel_document(), and nothing else) or unpost_if_untouched (also unpost_document(), while the document was not sent, not settled, not declared, its period open and, where numbering is gapless, its number the last drawn). Null where the pack says nothing, read as reversal_only. posted_edit_policy() is the only function that reads it. |
 | `posted_edit_policy_legal_reference` | `text` | The article behind posted_edit_policy, as the pack cites it. |
 | `posted_edit_policy_source_key` | `text` | Key of the entry in the pack's source register where that article is read. |
+| `einvoice_obligation` | `text` | Whether a statute obliges companies of this country to exchange electronic invoices between themselves: mandatory (from einvoice_mandatory_from), on_request (a seller has to issue one when a buyer the law entitles to ask does; no date binds everybody) or none (no such statute at the day the pack was released). An obligation towards the public sector alone is said in einvoice_legal_reference. Null where the pack says nothing. |
 
 Constraints:
 
 - `CHECK ((cash_rounding_unit >= (0)::numeric))`
+- `CHECK (
+CASE einvoice_obligation
+    WHEN 'mandatory'::text THEN (einvoice_mandatory_from IS NOT NULL)
+    WHEN 'on_request'::text THEN (einvoice_mandatory_from IS NULL)
+    WHEN 'none'::text THEN (einvoice_mandatory_from IS NULL)
+    ELSE true
+END)`
+- `CHECK (((einvoice_obligation IS NULL) OR (einvoice_obligation = ANY (ARRAY['mandatory'::text, 'on_request'::text, 'none'::text]))))`
 - `CHECK (((fiscal_year_default IS NULL) OR (fiscal_year_default = ANY (ARRAY['calendar'::text, 'april'::text, 'july'::text, 'october'::text]))))`
 - `CHECK (((legal_payment_days IS NULL) OR (legal_payment_days >= 0)))`
 - `CHECK (((party_scheme IS NULL) OR (party_scheme ~ '^[0-9]{4}$'::text)))`
@@ -1726,7 +1735,7 @@ Declaration forms per country, from packs/<cc>/tax_report.json. Reference data: 
 | `legal_reference` | `text` |  |
 | `is_periodic_return` | `boolean` | not null — True for the return a company files every month or quarter. vat_return() falls back to the one of the company's fiscal country. |
 | `period_default` | `declaration_period` | Cadence this form is filed on unless the company has asked the administration for another, from packs/<cc>/tax_report.json. Null where the law makes the cadence depend on a fact about the company — turnover — because proposing one of several lawful answers there would be choosing a filing deadline for somebody the pack knows nothing about. Set where the law gives one answer to everybody, whatever else the form accepts. Read at install; never read by the return. |
-| `deadline_rule` | `filing_deadline_rule` | How the filing date follows the end of the period. Null where the pack says nothing, which is the honest answer for a country whose schedule depends on the taxpayer. |
+| `deadline_rule` | `filing_deadline_rule` | How the filing date follows the end of the period. depends_on_taxpayer where the law assigns the day per filer and the pack cites the text; null where the pack says nothing. |
 | `deadline_day` | `smallint` | Day of the month that follows the period. Filled exactly when the rule is day_of_month_after_period. |
 | `deadline_plus_days` | `smallint` | Days added to the date the rule produces — the seven the United Kingdom grants for filing online, while the regulation still says the last day of the month. |
 | `deadline_reference` | `text` | The text that sets the date, and the conditions on it: an extension that does not reach every filer is said here. |
@@ -1740,6 +1749,7 @@ Constraints:
 CASE deadline_rule
     WHEN 'day_of_month_after_period'::filing_deadline_rule THEN ((deadline_day >= 1) AND (deadline_day <= 31))
     WHEN 'last_day_of_month_after_period'::filing_deadline_rule THEN (deadline_day IS NULL)
+    WHEN 'depends_on_taxpayer'::filing_deadline_rule THEN ((deadline_day IS NULL) AND (deadline_plus_days IS NULL) AND (deadline_reference IS NOT NULL))
     ELSE ((deadline_day IS NULL) AND (deadline_plus_days IS NULL) AND (deadline_reference IS NULL) AND (deadline_source_key IS NULL))
 END)`
 - `CHECK (((period_default IS NULL) OR (period_default = ANY (periods))))`
@@ -1955,7 +1965,7 @@ Constraints:
 | `export_company_tables(p_company_id uuid)` | Every exported table of one company as one object, keyed by table name. The `tables` half of export_company(). |
 | `fec_lines(p_company_id uuid, p_from date, p_to date)` | The eighteen columns of the French FEC for a period: the opening balances of the financial year first, computed and never posted, then its movements in chronological order. The entries the close wrote are left out — the file carries the income statement in its ordinary lines, and the result reaches the balance sheet in the opening lines of the year that follows. |
 | `file_filing(p_filing_id uuid, p_reference text, p_filed_at timestamp with time zone, p_channel filing_channel, p_service text)` | Records that a declaration has gone, with the reference the administration gave back, and keeps the send as a row of tax_filing_deposits. It asks that the figures were computed, not that there are any: a period where nothing happened is filed nil. A rejected declaration may be sent again — it was never received — and the second send is a second deposit, not a corrective. |
-| `filing_deadline(p_company_id uuid, p_report_code text, p_period_end date)` | When a period closed on this date has to be declared, under the rule the pack carries. Null where the pack declares none — which is a country whose schedule depends on the filer, not a country without deadlines. |
+| `filing_deadline(p_company_id uuid, p_report_code text, p_period_end date)` | When a period closed on this date has to be declared, under the rule the pack carries. Null where the pack declares none, and null where it declares depends_on_taxpayer — a country whose schedule depends on the filer, not a country without deadlines. |
 | `filing_drift(p_filing_id uuid)` | Box by box and kind by kind, what the ledger says now against what was filed, for the figures where the two disagree. Empty is the answer everybody wants; anything else is either a corrective to file or an entry in the wrong period. |
 | `filing_period(p_company_id uuid, p_report_code text)` | How often this company files that declaration, or null when it has not been recorded. Null is not a cadence and not an error: the books are kept the same either way, and a guard that reads it refuses nothing. |
 | `filing_tax_movements(p_filing_id uuid)` | The tax accounts a declared period moved and by how much, on the same window and the same tax-point rule the return read, net of what an earlier settlement of the same period already carried. What settle_filing() clears — the whole period the first time, the difference on a corrective — and what anybody can read before it does. |

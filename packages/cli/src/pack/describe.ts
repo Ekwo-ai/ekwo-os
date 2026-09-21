@@ -21,9 +21,12 @@
  *
  * **A "no" is an answer and is printed.** A pack that declares no deadline rule
  * carries `deadline: null`, and the reader shows that rather than leaving the
- * row out. Most packs have more nulls than values, and a description that
- * silently dropped them would be a brochure — the word is `describeFiling()`'s
- * and the rule is the same one.
+ * row out. A pack that *states* a no — a deadline that depends on the
+ * taxpayer, an e-invoicing profile no statute makes obligatory — carries it as
+ * a value, and the reader prints it as the answer it is rather than as a gap.
+ * Most packs have more nulls than values, and a description that silently
+ * dropped them would be a brochure — the word is `describeFiling()`'s and the
+ * rule is the same one.
  *
  * **What a pack cannot know is passed in.** Whether a bank statement format has
  * a reader is a fact about `packages/formats/`, not about a country, so
@@ -33,7 +36,7 @@
 
 import { STATEMENT_FORMATS } from '@ekwo-ai/core';
 import { filingReadiness } from './filing.js';
-import { sourcesOf, type Pack, type PackDeadline, type PackSource } from './read.js';
+import { sourcesOf, type EinvoiceObligation, type Pack, type PackDeadline, type PackSource } from './read.js';
 
 /** One chart of accounts of a country, as a reader needs it. */
 export interface DescribedChart {
@@ -91,17 +94,33 @@ export interface DescribedDeclaration {
   /** The cadence proposed unless the company asks for another. Null where the law gives none. */
   periodDefault: string | null;
   boxes: number;
-  /** Null where the country's rule is not of a shape the format can carry. */
+  /**
+   * Null where the pack says nothing. A rule of `depends_on_taxpayer` is the
+   * pack saying the day is assigned per filer, and carries the text that does.
+   */
   deadline: DescribedDeadline | null;
   file: DescribedFile;
   legalReference: string | null;
 }
 
-/** The electronic invoicing a country imposes, where it imposes one. */
+/**
+ * The electronic invoicing of a country: the profile its operators exchange,
+ * and whether a statute makes it obligatory. Present where the pack names a
+ * profile or states an obligation — a country with no profile at all and
+ * `obligation: none` has said something, and a reader prints it.
+ */
 export interface DescribedEinvoicing {
-  profile: string;
+  /** Null where the country has no profile to name, which the obligation then explains. */
+  profile: string | null;
   /** The day the obligation starts, as the pack writes it. Null where the pack says none. */
   mandatoryFrom: string | null;
+  /**
+   * `mandatory`, `on_request`, `none`, or null where the pack says nothing.
+   * `on_request` and `none` are answers — a seller issues the profile when a
+   * buyer entitled to ask does, or no statute obliges anybody — and a reader
+   * prints them as answers; a null beside a null date is the silence.
+   */
+  obligation: EinvoiceObligation | null;
   legalReference: string | null;
 }
 
@@ -259,11 +278,14 @@ export function describePack(pack: Pack, options: DescribeOptions = {}): PackDes
   }
 
   const einvoicing: DescribedEinvoicing | null =
-    pack.documents.einvoice_profile === null
+    pack.documents.einvoice_profile === null && pack.documents.einvoice_obligation === null
       ? null
       : {
           profile: pack.documents.einvoice_profile,
           mandatoryFrom: pack.documents.einvoice_mandatory_from,
+          obligation:
+            pack.documents.einvoice_obligation ??
+            (pack.documents.einvoice_mandatory_from === null ? null : 'mandatory'),
           legalReference: pack.documents.einvoice_reference.legal_reference,
         };
 
@@ -364,7 +386,7 @@ function boundaryOf(
     });
   }
 
-  if (einvoicing !== null) {
+  if (einvoicing !== null && einvoicing.profile !== null) {
     rows.push({
       kind: 'einvoicing',
       subject: einvoicing.profile,

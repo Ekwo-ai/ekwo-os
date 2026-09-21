@@ -528,6 +528,13 @@ export interface PackDocumentRules {
   posted_edit_policy_reference: PackRuleReference;
   einvoice_profile: string | null;
   einvoice_mandatory_from: string | null;
+  /**
+   * mandatory | on_request | none: whether a statute obliges companies to
+   * exchange electronic invoices between themselves — from a day, when a buyer
+   * entitled to ask does, or not at all. Null where the pack says nothing,
+   * which is not the same as `none`: a null date then means nobody looked.
+   */
+  einvoice_obligation: EinvoiceObligation | null;
   /** The text that makes the profile obligatory, and where it is read. */
   einvoice_reference: PackRuleReference;
   /** ISO 6523 ICD, four digits. */
@@ -539,19 +546,24 @@ export interface PackDocumentRules {
   mentions: PackMention[];
 }
 
+/** Whether a statute makes a country's e-invoicing profile obligatory between companies. */
+export type EinvoiceObligation = 'mandatory' | 'on_request' | 'none';
+
 /**
  * When a form is due, as a rule rather than a date.
  *
- * Two shapes and nothing else. `day_of_month_after_period` is Belgium's
- * twentieth and Estonia's; `last_day_of_month_after_period` is California's
- * quarterly return and, with `plus_days`, the United Kingdom's month and seven
- * days. What is deliberately unsayable is a schedule that depends on *who* is
- * filing rather than on *what period* — France staggers its dates by the
- * taxpayer's identification number, and a pack that cannot say that says
- * nothing at all, which is better than a date that is wrong for most filers.
+ * Two shapes that produce a date, and one that says why there is none.
+ * `day_of_month_after_period` is Belgium's twentieth and Estonia's;
+ * `last_day_of_month_after_period` is California's quarterly return and, with
+ * `plus_days`, the United Kingdom's month and seven days. `depends_on_taxpayer`
+ * is a schedule that depends on *who* is filing rather than on *what period* —
+ * France assigns the day from the taxpayer's place of filing, legal form and
+ * registration number — and it carries the text that assigns the day and no
+ * day at all, which is better than a date that is wrong for most filers and
+ * better than a silence that reads like a text nobody opened.
  */
 export interface PackDeadline {
-  rule: 'day_of_month_after_period' | 'last_day_of_month_after_period';
+  rule: 'day_of_month_after_period' | 'last_day_of_month_after_period' | 'depends_on_taxpayer';
   day: number | null;
   plus_days: number | null;
   legal_reference: string;
@@ -2206,6 +2218,7 @@ function normaliseDocumentRules(manifest: Manifest): PackDocumentRules {
     posted_edit_policy_reference: ruleReference(references['posted_edit_policy']),
     einvoice_profile: (einvoicing['profile'] as string | null | undefined) ?? null,
     einvoice_mandatory_from: (einvoicing['mandatory_from'] as string | null | undefined) ?? null,
+    einvoice_obligation: (einvoicing['obligation'] as EinvoiceObligation | undefined) ?? null,
     // `einvoicing` carries its citation flat, beside the profile, because the
     // section is one rule: there is nothing else in it to tell apart.
     einvoice_reference: ruleReference(einvoicing),
@@ -2282,6 +2295,29 @@ function documentReferences(rules: PackDocumentRules): Issue[] {
     issues.push({
       path: 'pack.json einvoicing',
       message: 'mandatory_from names a day an obligation starts, and no profile says what becomes obligatory',
+    });
+  }
+  // The word and the date say the same thing twice, so they have to agree: an
+  // obligation starts on a day, and the absence of one starts on none.
+  if (rules.einvoice_obligation === 'mandatory' && rules.einvoice_mandatory_from === null) {
+    issues.push({
+      path: 'pack.json einvoicing',
+      message: 'obligation is mandatory and mandatory_from names no day it starts',
+    });
+  }
+  const dated = rules.einvoice_mandatory_from !== null;
+  if (rules.einvoice_obligation !== null && rules.einvoice_obligation !== 'mandatory' && dated) {
+    issues.push({
+      path: 'pack.json einvoicing',
+      message:
+        `obligation is ${rules.einvoice_obligation} and mandatory_from names ${rules.einvoice_mandatory_from}, ` +
+        'a day from which it binds everybody; write that day in the legal reference instead',
+    });
+  }
+  if (rules.einvoice_obligation !== null && rules.einvoice_reference.legal_reference === null) {
+    issues.push({
+      path: 'pack.json einvoicing',
+      message: `obligation is ${rules.einvoice_obligation} and no legal_reference says which text decides it`,
     });
   }
 
@@ -2701,6 +2737,24 @@ function reportReferences(report: PackReport | null, taxes: PackTax[]): Issue[] 
   if (report === null) return [];
   const issues: Issue[] = [];
   const where = 'tax_report.json';
+
+  // The shape of a deadline, which the database also refuses — said here
+  // first, by field, because a seed that fails its constraint names neither.
+  const deadline = report.deadline;
+  if (deadline !== null) {
+    if (deadline.rule === 'day_of_month_after_period' && deadline.day === null) {
+      issues.push({ path: `${where} deadline`, message: 'day_of_month_after_period names no day' });
+    }
+    if (deadline.rule !== 'day_of_month_after_period' && deadline.day !== null) {
+      issues.push({ path: `${where} deadline`, message: `${deadline.rule} takes no day` });
+    }
+    if (deadline.rule === 'depends_on_taxpayer' && deadline.plus_days !== null) {
+      issues.push({
+        path: `${where} deadline`,
+        message: 'depends_on_taxpayer produces no date, so there is nothing to add days to',
+      });
+    }
+  }
 
   // How often the form is filed. There is no default for this and there must
   // not be one: `tax_report_templates.period` carried `month_or_quarter` as a

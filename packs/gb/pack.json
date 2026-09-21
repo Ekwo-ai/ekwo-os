@@ -2,10 +2,10 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "GB",
   "name": "United Kingdom",
-  "version": "0.7.0",
-  "schema_min": "20260917170000",
+  "version": "0.8.0",
+  "schema_min": "20260921084143",
   "seed_sequence": 14,
-  "released_at": "2026-09-16",
+  "released_at": "2026-09-21",
   "certification": {
     "status": "community",
     "sources": [
@@ -15,6 +15,14 @@
         "publisher": "The National Archives — legislation.gov.uk",
         "url": "https://www.legislation.gov.uk/ukpga/1994/23/contents",
         "consulted_on": "2026-09-16",
+        "kind": "law"
+      },
+      {
+        "key": "vata-1994-s25",
+        "title": "Value Added Tax Act 1994, section 25 — Payment by reference to accounting periods and credit for input tax against output tax",
+        "publisher": "The National Archives — legislation.gov.uk",
+        "url": "https://www.legislation.gov.uk/ukpga/1994/23/section/25",
+        "consulted_on": "2026-09-21",
         "kind": "law"
       },
       {
@@ -286,7 +294,8 @@
       "fx_loss": "7700",
       "asset_disposal_gain": "4230",
       "asset_disposal_loss": "7690",
-      "tax_payable": "2210"
+      "tax_payable": "2210",
+      "tax_receivable": "1145"
     },
     "journal_roles": {
       "sales": "SAL",
@@ -406,6 +415,7 @@
   "einvoicing": {
     "profile": "peppol-bis-3",
     "mandatory_from": null,
+    "obligation": "none",
     "party_scheme": "0088",
     "vat_scheme": "9932",
     "legal_reference": "No United Kingdom statute obliges anybody to issue or receive an electronic invoice, and no date has been set in law. The consultation response of 26 November 2025 records the decision announced at Budget 2025 to make e-invoicing mandatory for all VAT invoices from 2029, on a decentralised four-corner model aligned with Peppol and with EN 16931 as the standard, and says an implementation roadmap will be published at Budget 2026; nothing has been legislated, so mandatory_from is empty rather than a date this pack invented. The profile declared here is what United Kingdom Peppol participants actually exchange and is not a legal requirement. The two identifiers are ISO 6523 codes of the Peppol electronic address scheme list: 0088 is the Global Location Number, under which British parties are commonly addressed, because that list carries no code for a Companies House registration number; 9932 is the United Kingdom VAT number.",

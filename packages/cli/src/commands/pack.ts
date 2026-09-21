@@ -263,6 +263,19 @@ export async function packCommand(args: ParsedArgs, deps: CommandDeps = {}): Pro
     for (const warning of pack.warnings) {
       warn(`packs/${slug}: ${warning}`);
     }
+    // A bank format the pack names and nothing reads. Not a refusal: the
+    // name is true — the banks of the country send that file — and the debt
+    // is kept by name in tests/bank_statement_formats.test.ts. It is said here
+    // so a pack author learns it at the keyboard, through the same reader the
+    // country page uses, rather than from a test they did not run.
+    for (const format of describePack(pack).bankStatementFormats) {
+      if (!format.read) {
+        warn(
+          `packs/${slug}: names the bank statement format ${format.format}, ` +
+            'and no brick of packages/formats/ reads it yet',
+        );
+      }
+    }
   }
 
   // `--links` opens what the register points at. It is asked for by hand and it
@@ -441,11 +454,13 @@ function describeToTerminal(description: PackDescription): void {
       `${declaration.code} (${declaration.boxes} boxes) · ${declaration.periods.join(' or ')} · ` +
         (declaration.deadline === null
           ? 'deadline: not declared'
-          : `deadline: ${declaration.deadline.rule}` +
-            (declaration.deadline.day === null ? '' : ` ${declaration.deadline.day}`) +
-            (declaration.deadline.plusDays === null
-              ? ''
-              : ` plus ${declaration.deadline.plusDays} days`)) +
+          : declaration.deadline.rule === 'depends_on_taxpayer'
+            ? 'deadline: depends on the taxpayer'
+            : `deadline: ${declaration.deadline.rule}` +
+              (declaration.deadline.day === null ? '' : ` ${declaration.deadline.day}`) +
+              (declaration.deadline.plusDays === null
+                ? ''
+                : ` plus ${declaration.deadline.plusDays} days`)) +
         ' · ' +
         (declaration.file.byHand
           ? 'filed by hand on the portal'
@@ -457,10 +472,14 @@ function describeToTerminal(description: PackDescription): void {
     'e-invoicing',
     description.einvoicing === null
       ? 'none declared'
-      : `${description.einvoicing.profile}` +
-        (description.einvoicing.mandatoryFrom === null
-          ? ''
-          : ` from ${description.einvoicing.mandatoryFrom}`),
+      : `${description.einvoicing.profile ?? 'no profile'}` +
+        (description.einvoicing.mandatoryFrom !== null
+          ? ` from ${description.einvoicing.mandatoryFrom}`
+          : description.einvoicing.obligation === 'none'
+            ? ' · no obligation in law'
+            : description.einvoicing.obligation === 'on_request'
+              ? ' · issued when the buyer asks, no general obligation'
+              : ' · date of obligation not declared'),
   ]);
   rows.push([
     'tax balance',
