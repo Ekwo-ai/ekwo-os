@@ -89,7 +89,7 @@ OpenAPI description, and row level security decides who sees what.
   its declaration boxes and its annual accounts in French, Dutch, German and
   English, and a company keeping its books in Dutch reads Dutch throughout.
   [`docs/languages.md`](docs/languages.md) is the mechanism.
-- **Every country a pack, out of the box.** <!-- generated:countries -->Australia (`au`), Belgium (`be`), Burkina Faso (`bf`), Bénin (`bj`), Côte d’Ivoire (`ci`), Cameroun (`cm`), Germany (`de`), Estonia (`ee`), España (`es`), France (`fr`), Gabon (`ga`), United Kingdom (`gb`), Guinée-Bissau (`gw`), Hong Kong (`hk`), Ireland (`ie`), 日本 (`jp`), Luxembourg (`lu`), Mali (`ml`), México (`mx`), Niger (`ne`), Nederland (`nl`), New Zealand (`nz`), Singapore (`sg`), Sénégal (`sn`), Togo (`tg`) and United States (`us`)<!-- /generated --> — each with its chart of accounts, its tax codes, its
+- **Every country a pack, out of the box.** <!-- generated:countries -->Australia (`au`), Belgium (`be`), Burkina Faso (`bf`), Bénin (`bj`), Côte d’Ivoire (`ci`), Cameroun (`cm`), Germany (`de`), Estonia (`ee`), España (`es`), France (`fr`), Gabon (`ga`), United Kingdom (`gb`), Guinée-Bissau (`gw`), Hong Kong (`hk`), Ireland (`ie`), 日本 (`jp`), Luxembourg (`lu`), Mali (`ml`), México (`mx`), Niger (`ne`), Nederland (`nl`), New Zealand (`nz`), Singapore (`sg`), Sénégal (`sn`), Tchad (`td`), Togo (`tg`) and United States (`us`)<!-- /generated --> — each with its chart of accounts, its tax codes, its
   declaration boxes and its annual accounts, and each installed by `ekwo init`.
   The United Kingdom was the first that is not a Member State of the European
   Union; the United States, with the sales and use taxes of three states and
@@ -248,6 +248,7 @@ psql "$DATABASE_URL" -f supabase/seed/28_pack_ga.sql
 psql "$DATABASE_URL" -f supabase/seed/30_pack_gw.sql
 psql "$DATABASE_URL" -f supabase/seed/32_pack_ml.sql
 psql "$DATABASE_URL" -f supabase/seed/33_pack_ne.sql
+psql "$DATABASE_URL" -f supabase/seed/35_pack_td.sql
 psql "$DATABASE_URL" -f supabase/seed/36_pack_tg.sql
 psql "$DATABASE_URL" -f supabase/seed/40_pack_au.sql
 psql "$DATABASE_URL" -f supabase/seed/41_pack_nz.sql
