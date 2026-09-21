@@ -323,8 +323,8 @@ async function countersOf(
 export function worldOf(countries: PackDescription[], lang: string): WorldMap {
   const byCode = new Map(countries.map((country) => [country.country, country]));
   // The geometry ships abbreviated and sometimes outdated labels — a country
-  // renamed in 2019 still under its old name, "Bosnia and Herz.", "Dem. Rep.
-  // Congo". On a public page a country's name being wrong or truncated is a
+  // renamed in 2019 still under its old name, "Bosnia and Herz.", "Solomon
+  // Is.". On a public page a country's name being wrong or truncated is a
   // visible fault, and the list of territories is not a subject to be casual
   // about. So the geometry supplies the shape and the ISO code, and the NAME
   // comes from the platform's own region names, in the language being rendered

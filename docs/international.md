@@ -3114,8 +3114,8 @@ poultry, and medico-surgical or dental furniture. A directive binds the member
 state to transpose it, not a taxpayer directly; what a Central African invoice
 owes is the CGI's own rate, transcribed here as written (`CF-S-5`), with the
 mismatch named rather than corrected to fit the directive's list or silenced.
-The same file, [`_zones.md`](../../../ekwo-tools/ohada-research/_zones.md) of
-the pack's own research, already flags Gabon's third rate under the directive's
+The same comparison, across the zone,
+already flags Gabon's third rate under the directive's
 5 % floor and the Congo's disputed centimes for the same reason: a community
 text sets bounds a national law is free to miss on either side, and this pack
 records where, rather than silently aligning the two.

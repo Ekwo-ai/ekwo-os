@@ -85,7 +85,7 @@ the chart is here, its sections in `i18n/<lang>.json` (below).
 2. **`node scripts/ohada-packs.mjs --write`** — the common part lands in your
    folder.
 3. **`taxes.json` and `tax_report.json`**, from your country's code and the
-   fiche of `ohada-research/<cc>.md`. Every tax account is one of the chart:
+   official texts of your country (listed in `certification.sources`). Every tax account is one of the chart:
    4431 to 4435 for the tax invoiced, 4451 to 4456 for the tax recoverable,
    4441 and 4449 for the balance (the `tax_payable` and `tax_receivable` roles),
    447x for what the buyer withholds. A surtax on the tax — the additional
