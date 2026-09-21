@@ -8,14 +8,14 @@
 
 ## The premise
 
-A country is data, not code. Odoo ships one Python module per localisation;
-Xero and QuickBooks ship one product per market. Ekwo ships **one core and
-one versioned pack per country**, and a pack is something an accountant can
+A country is data, not code. A module of code per country breaks at every
+major version, and one product per market splits the users. Ekwo ships **one
+core and one versioned pack per country**, and a pack is something an accountant can
 read, a contributor can propose in a pull request, and a test can prove.
 Everything below follows from that.
 
 Where the core stands today, phase 0 being done: 18 account types shared with
-Xero, QuickBooks and Odoo; taxes, their postings and the boxes of a declaration
+Xero and QuickBooks; taxes, their postings and the boxes of a declaration
 as rows a pack fills; financial statements as rows too, with a country-less
 framework behind any chart that prescribes none; EN 16931 fields as columns;
 the French FEC; XBRL for the Belgian NBB; Factur-X; a REST API and an MCP
@@ -247,8 +247,8 @@ ahead of the phase — see "From Spain" below.
 ### Phase 3 — the community makes the countries
 
 A contribution kit for a pack with its golden test, a status page per
-country, a reviewed-pack label. Odoo's localisations are code; Ekwo's are
-data, contributable without touching the core.
+country, a reviewed-pack label. A localisation is data, contributable without touching
+the core.
 
 Part of this arrived early, as a by-product of phase 0: the golden runner takes
 any pack, `ekwo pack check` tells a contributor what is wrong in their own

@@ -337,7 +337,7 @@ a close run too early. An invoice is printed from three views —
 renderer reads the seller, the buyer, the amounts, the lines and the sentences
 the law requires without being configured with any of them.
 `docs/schema.md` describes every table and column; `docs/mapping.md` lines each
-one up against Odoo, EN 16931 and the FEC; `docs/languages.md` says how a label
+one up against EN 16931 and the FEC; `docs/languages.md` says how a label
 reaches a reader in their own language.
 
 ## Who may do what

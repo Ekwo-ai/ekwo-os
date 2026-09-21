@@ -294,6 +294,18 @@ breaks the build on the first push; in prose it costs nothing at runtime, and
 prose is exactly where a conflict is most likely — a changelog and a design
 note are what every branch appends to.
 
+## No competing product named
+
+```sh
+npm run check:no-competitor-names
+```
+
+reads every file git tracks and refuses the name of a competing product the
+project has decided never to name. Ekwo is described by what it does and by
+the standards it follows, not against another product. It runs in the CI's
+*hygiene* job. Published migrations that carried a mention before the rule are
+listed in the script and frozen; nothing is added to that list.
+
 Only tracked files are read: a marker in your working copy is a merge you are
 in the middle of, which is not a fault. The separator is matched whole, a line
 of seven `=` and nothing else, so a Markdown heading underlined with `=` is not

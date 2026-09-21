@@ -22,6 +22,11 @@ somewhere has already run it.
 
 ### Added
 
+- **No competing product is named.** The documentation, the pack READMEs and
+  the site describe Ekwo by what it does and by the standards it follows;
+  `docs/mapping.md` lines each table up against EN 16931 and the FEC.
+  `npm run check:no-competitor-names` keeps it that way in the CI's *hygiene*
+  job.
 - **`/multi-country/` on the site: several countries, one set of books.** For
   a group with a company per country, an accounting firm with clients abroad
   and a company opening its next country. What works today is listed with the

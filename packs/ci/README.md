@@ -68,15 +68,3 @@ right. Currency XOF, the CFA franc of the BCEAO, at no decimal.
   it to 4449, and the next return does not read it back.
 - **Late-payment terms between businesses**: the competition ordinance of
   2013 requires terms to be stated and fair, and fixes none.
-
-## Where Odoo differs from the texts
-
-Odoo's `l10n_ci` (LGPL-3) was read to cross-check, never copied. It posts all
-the output tax to 4431, services included, and taxes a service on its invoice
-rather than on its collection; it posts all the input tax to 4452,
-immobilisations included; it self-assesses the import VAT, which art. 388 has
-paid at customs, and so inflates the taxable turnover of lines 2.1 and 2.2; it
-has no TVA pour compte, no AIRSI, no stamp duty on receipts, no 95 % limit and
-no exclusion of art. 372; it sends the credit to be refunded and the credit
-carried forward to the same account, 4445, where the chart has 4449; and it
-numbers the lines of its return 02 to 06 rather than 1.1 to 6.4.

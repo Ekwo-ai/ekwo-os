@@ -50,10 +50,6 @@ amending act.
 | Electronic invoicing | JP PINT 1.1.3 (OpenPeppol, Japan Peppol Authority); the EAS list; the Digital Agency's JP PINT page | `docs.peppol.eu`, `digital.go.jp` |
 | The registration number | 適格請求書発行事業者公表サイト — T followed by thirteen digits | `invoice-kohyo.nta.go.jp` |
 
-The Odoo `l10n_jp` module was compared afterwards, as a cross-check and never as
-a source: it carries the same current rates, nothing that this pack lacks, and a
-separate module for JP PINT.
-
 ## The chart of accounts, and why this one
 
 **Japan prescribes no chart of accounts.** The 会社計算規則 prescribes the

@@ -140,8 +140,8 @@ and nothing is posted to it.
 Every file is validated against [`packs/schema/pack.1.json`](../packs/schema/pack.1.json),
 a JSON Schema draft 2020-12 that describes all of them: the manifest is the
 root, the others are `$defs`. Two formats and no third: JSON for anything with
-a shape, CSV for the chart, which is flat, long, and what Odoo, Xero and
-QuickBooks all exchange — a reviewer reads one line per account in a diff, and
+a shape, CSV for the chart, which is flat, long, and what Xero and
+QuickBooks both exchange — a reviewer reads one line per account in a diff, and
 an accountant opens it in a spreadsheet.
 
 `accounts.csv` is a **strict subset** of CSV: a header line, no newline inside

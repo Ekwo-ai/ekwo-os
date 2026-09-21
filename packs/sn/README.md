@@ -80,14 +80,3 @@ October 2025 served only to date each paragraph, and is not in the register.
   is not on the real regime, is an income tax, withheld on the payment rather
   than charged on the invoice; the core has no withholding on a payment.
 - **Late-payment terms between businesses**: no Senegalese or UEMOA text found.
-
-## Where Odoo differs from the texts
-
-Odoo's `l10n_sn` (LGPL-3) was read to cross-check, never copied. It has 18 %
-and 10 %, but its 10 % is not restricted; it names exports « 0 % » where the
-Code exempts them; it books a self-supply at 0 %, where art. 364-1 c) taxes it;
-it has no précompte, no TVA pour compte and no non-deductibility of art. 383 f;
-every deductible tax goes to 4452, immobilisations included; its credit is
-carried forward with no limit, where art. 375 and 379 limit it to two years;
-and five lines of its return (withholding, prepayment, « DDI », suspension,
-imports) are fed by tags no tax carries.

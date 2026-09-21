@@ -312,7 +312,7 @@ export const en: Strings = {
       'company-archive': { label: 'Moving a company', title: 'The archive of one company' },
       modules: { label: 'Modules', title: 'Modules' },
       schema: { label: 'Schema', title: 'Schema' },
-      mapping: { label: 'Mapping to the standards', title: 'Mapping: Ekwo, Odoo, EN 16931 and the FEC' },
+      mapping: { label: 'Mapping to the standards', title: 'Mapping: Ekwo, EN 16931 and the FEC' },
       decisions: { label: 'Decisions', title: 'Decisions, and the reason for each' },
       contributing: { label: 'How to contribute', title: 'Contributing to Ekwo OS' },
       'writing-a-module': { label: 'Writing a module', title: 'Writing a module' },

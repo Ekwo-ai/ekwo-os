@@ -519,12 +519,11 @@ never sold: it is an attribution, not a toll.
 
 ## Scope of this release
 
-**No Odoo-compatible RPC adapter.** Nobody consumes an Odoo-compatible
-*server*; every verified integration is a client reading a real Odoo. The route
-to the French filing tools is the FEC, which is an order of the
-administration rather than an API, and Odoo has dated the removal of
-`/xmlrpc` and `/jsonrpc`. A published mapping table costs five per cent of an
-adapter and is more useful — see [mapping.md](mapping.md).
+**No RPC adapter imitating another product.** Nobody consumes an imitation
+*server*; every verified integration is a client reading the real product. The
+route to the French filing tools is the FEC, which is an order of the
+administration rather than an API. A published mapping table costs five per
+cent of an adapter and is more useful — see [mapping.md](mapping.md).
 
 **Only percentage taxes can be posted.** `amount_type = 'fixed'` exists in the
 schema and `post_document` refuses it rather than guessing how to spread a

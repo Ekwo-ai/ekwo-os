@@ -84,9 +84,7 @@ transcribed:
   payable to IRAS, import GST owed to Singapore Customs, amounts due to
   directors, share capital as one line since shares have no par value.
 
-142 accounts, all postable. None was copied from a published chart; Odoo's
-`l10n_sg` was used afterwards to check that no account a Singapore tax posts to
-is missing, never as a model.
+142 accounts, all postable. None was copied from a published chart.
 
 **Five GST accounts, and why five.** `2100` holds the output tax and `1150` the
 input tax: the two the taxes post to. `2125` holds the import GST shown on an
