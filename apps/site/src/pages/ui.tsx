@@ -352,7 +352,7 @@ export function Footer({
           <a href="/multi-country/">{f.multi}</a>
           <a href="/changes/">{f.changes}</a>
           <Out href={repository.file('LICENSE')}>{f.licence}</Out>
-          <Out href={repository.file('DISCLAIMER.md')}>{f.disclaimer}</Out>
+          <a href="/disclaimer/">{f.disclaimer}</a>
           <Out href={repository.file('SECURITY.md')}>{f.security}</Out>
           <Out href={repository.url}>{f.source}</Out>
           <Out href={repository.packageUrl}>{f.npm}</Out>

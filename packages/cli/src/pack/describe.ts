@@ -184,8 +184,8 @@ export interface DescribedCertification {
  * keeps working on its own, with Ekwo or without it
  * ([`ee/README.md`](../../../ee/README.md)). Writing a file and validating it
  * needs nobody; handing it to an administration, a Peppol access point or a
- * bank needs credentials, often a certificate, and somebody answerable when a
- * return is late — which is the only step of the eight in
+ * bank needs credentials, often a certificate, and a channel somebody keeps
+ * running — which is the only step of the eight in
  * [`docs/filing.md`](../../../docs/filing.md) that is operated.
  *
  * Every row here is derived from something the pack declares. A country that
@@ -382,7 +382,7 @@ function boundaryOf(
       kind: 'declaration',
       subject: declaration.code,
       free: `Computed from the ledger, frozen box by box, ${written}, ${settled}. The deposit number and the administration’s own words come back into your own database.`,
-      operated: 'Transmission: the credentials, and somebody answerable when a return is late.',
+      operated: 'Transmission: the credentials, the certificate and a channel somebody keeps running. The return stays yours.',
     });
   }
 

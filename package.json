@@ -2,7 +2,7 @@
   "name": "ekwo",
   "version": "0.4.1",
   "private": true,
-  "description": "Ekwo OS — an open accounting core for Postgres and Supabase.",
+  "description": "Ekwo OS — open source accounting data infrastructure for Postgres and Supabase.",
   "license": "AGPL-3.0-only",
   "author": "Ekwo AI",
   "type": "module",

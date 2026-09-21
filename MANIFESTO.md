@@ -36,7 +36,7 @@ computed from the ledger rather than typed in, a year-end close that a small
 business can run itself: these are not features, they are the difference
 between a business that knows where it stands and one that hopes.
 
-## 2. AI does the bookkeeping. You stay in control.
+## 2. AI at the keyboard. You stay in control.
 
 Ekwo is designed to be operated by a machine. The data sits in Postgres, the
 REST API and its OpenAPI description come with it, and an MCP server sits on
@@ -85,12 +85,16 @@ other end: a tonne of CO₂ posted against the transaction that caused it, in th
 same books, with the same audit trail. Nobody does that inside open source
 accounting today. It is where the name points.
 
-## 4. Free and independent accounting, in every country.
+## 4. Free and independent data infrastructure, in every country.
 
 Accounting is not a product. It is a set of rules that a society agreed on so
 that businesses could trust each other: the same chart of accounts, the same
 declaration, the same year-end, for everyone in a country. Those rules should
 not be locked inside proprietary software, one vendor per market.
+
+Ekwo does not replace the accountant. It gives businesses and the accountants
+who work with them the same open ground: schemas, the rules of each country as
+data, and the tools to work on them.
 
 In Ekwo a country is **data**: a pack of files an accountant can read, a
 contributor can propose, and a test can prove. Countries on three continents

@@ -1,6 +1,6 @@
 # Ekwo OS
 
-**Ekwo OS** is free and open source, under AGPL-3.0. Install it on your own Supabase project and own your accounting data, forever.
+**Ekwo OS** is free and open source data infrastructure for accounting, finance and tax, under AGPL-3.0: a schema, the rules of each country as data, and tools, for businesses and their accountants. Install it on your own Supabase project and own your accounting data, forever. It is software — not an accounting firm, and not accounting, tax or financial advice ([DISCLAIMER.md](DISCLAIMER.md)).
 Built and maintained by **Ekwo**. A fully managed edition — your own instance, operated and supervised by our AI agents — is available at **[ekwo.ai](https://ekwo.ai)**.
 
 ---
@@ -63,7 +63,9 @@ system with the books intact.
 What we sell, so that this stays free: a managed edition at
 [ekwo.ai](https://ekwo.ai) where the same schema runs on your own Supabase
 project, and Ekwo operates the application, the AI agents, the bank
-connections, the Peppol access point and the filings. The Community edition
+connections, the Peppol access point and the channels to the administrations.
+It is infrastructure, not an accounting service: the books and the filings stay
+the business's and its accountant's. The Community edition
 stands on its own, with us or without us, for as long as its owner wants it to.
 That is the test every feature has to pass before it lands here.
 
@@ -525,7 +527,7 @@ is here and always will be.
 | Invoicing, credit notes, VAT, reports, FEC | AI agents that book, match and check |
 | Manual import of bank files | Bank connections under contract |
 | Generating the files: XBRL, Factur-X, the VAT return, the EC sales lists | Peppol access point, certificate included |
-| Everything above, forever, for nothing | Filing to Intervat, Teledec, the NBB, with someone answerable |
+| Everything above, forever, for nothing | Transmission to Intervat, Teledec, the NBB, on the business's instruction |
 
 The test is simple: does it keep working on its own, with us or without us? If
 yes, it belongs here. `ee/` holds the commercial layer and has its own
@@ -559,10 +561,16 @@ Three things the schema cannot do for you:
 
 ## What this is not
 
-Ekwo is software, not advice. Your books, returns and filings are yours; a
-country pack is our reading of the rules at a date, and a review is a
-professional's good-faith reading, not a guarantee. [DISCLAIMER.md](DISCLAIMER.md)
-says this in full. Read it before you file anything.
+Ekwo is open source data infrastructure. It is not an accounting firm and
+gives no accounting, tax, financial, legal or investment advice. Your books,
+returns and filings are yours, and the software is yours to change; a country
+pack is our reading of the rules at a date, and a review is a professional's
+good-faith reading, not a guarantee. Where accounting and tax are regulated
+professions — in the European Union, the United Kingdom, the United States,
+the OHADA States and elsewhere — consult a professional authorised in your
+country. [DISCLAIMER.md](DISCLAIMER.md) says this in full, and it is published
+at [ekwo.ai/disclaimer](https://ekwo.ai/disclaimer/). Read it before you file
+anything.
 
 ## Finding your way
 

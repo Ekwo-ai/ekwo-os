@@ -39,7 +39,8 @@ export interface DocSource {
   section?: { from: string; until?: string };
   /**
    * Where it is published, when that is not `/docs/<slug>/`. The manifesto
-   * keeps the address it has had since the first day of the site.
+   * keeps the address it has had since the first day of the site, and the
+   * disclaimer has one of its own, one click from the foot of every page.
    */
   url?: string;
 }
@@ -90,6 +91,6 @@ export const DOCS: DocSource[] = [
   { slug: 'releasing', topic: 'contribute', source: 'docs/releasing.md' },
 
   { slug: 'manifesto', topic: 'about', source: 'MANIFESTO.md', url: '/manifesto/' },
-  { slug: 'disclaimer', topic: 'about', source: 'DISCLAIMER.md' },
+  { slug: 'disclaimer', topic: 'about', source: 'DISCLAIMER.md', url: '/disclaimer/' },
   { slug: 'security', topic: 'about', source: 'SECURITY.md' },
 ];

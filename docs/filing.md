@@ -67,7 +67,9 @@ writes one.
 
 This is the only operated step, and it is operated for a reason that has
 nothing to do with features: sending needs credentials, often a certificate,
-usually a session on a portal, and somebody answerable when a return is late.
+usually a session on a portal, and a channel somebody keeps running. Operating
+the channel is not filing on anyone's behalf: the content of the return, its
+date and the decision to send it stay with the business and its accountant.
 
 A company that files by itself downloads the file and uploads it — that path is
 complete, and the two steps around it record what happened either way.

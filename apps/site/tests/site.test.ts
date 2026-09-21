@@ -1057,3 +1057,69 @@ describe('a reader who has chosen nothing', () => {
     expect(css).not.toContain(':root[data-theme] [data-controls]');
   });
 });
+
+/**
+ * What Ekwo says it is.
+ *
+ * Open source data infrastructure — schemas, rules as data, tools — for
+ * businesses and their accountants, and never an accounting service. In some
+ * countries keeping the books of others or giving tax advice is a regulated
+ * profession, so the site that presents the software must not read as an offer
+ * of either, and the page that says so is one click from every page.
+ */
+describe('what Ekwo says it is', () => {
+  const DISCLAIMER = '/disclaimer/';
+
+  it('publishes the disclaimer as a page of its own, from DISCLAIMER.md', () => {
+    const article = data.docs.find((entry) => entry.source === 'DISCLAIMER.md');
+    expect(article?.url).toBe(DISCLAIMER);
+    expect(byUrl.get(DISCLAIMER), `${DISCLAIMER} was not built`).toBeDefined();
+  });
+
+  it('links to it from the foot of every page, on this site rather than on GitHub', () => {
+    for (const page of pages) {
+      const footer = /<footer[\s\S]*<\/footer>/.exec(page.body)?.[0] ?? '';
+      expect(footer, `${page.url} has no link to the disclaimer`).toContain(`href="${DISCLAIMER}"`);
+      expect(footer).not.toContain('DISCLAIMER.md');
+    }
+  });
+
+  it('says what the project is not, and what the user stays responsible for', async () => {
+    const text = await readFile(join(root, 'DISCLAIMER.md'), 'utf8');
+    expect(text).toMatch(/open source data infrastructure/);
+    expect(text).toMatch(/not an accounting firm/);
+    for (const heading of [
+      'What Ekwo does not provide',
+      'Your books, your filings, your deadlines',
+      'Software you can change',
+      'No warranty, no liability',
+      'European Union',
+      'United Kingdom',
+      'United States',
+      'OHADA member States',
+      'Names and trademarks',
+    ]) {
+      expect(text, `DISCLAIMER.md has no section "${heading}"`).toContain(heading);
+    }
+    // The dated version is what tells a reader which text applied when.
+    expect(text).toMatch(/Version \d+\.\d+ — \d{1,2} [A-Z][a-z]+ \d{4}/);
+  });
+
+  it('never presents itself as an accounting service', () => {
+    // The pages the site writes itself. The decisions and the changelog are
+    // records of what was said at the time, and are not rewritten.
+    const own = pages.filter((page) => !page.url.includes(DOCS_INDEX) && !page.url.endsWith('/changes/'));
+    expect(own.length).toBeGreaterThan(slugs.length);
+    for (const phrase of [
+      /independent accounting, in every country/i,
+      /answerable when a return is late/i,
+      /AI does the bookkeeping/i,
+      /\bcompliance, in the open\b/i,
+    ]) {
+      for (const page of own) {
+        expect(page.body, `${page.url} says ${phrase}`).not.toMatch(phrase);
+      }
+    }
+    expect(byUrl.get(HOME)!.body).toContain('data infrastructure');
+  });
+});

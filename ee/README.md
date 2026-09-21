@@ -23,7 +23,7 @@ If no, it belongs in `ee/`, and you are entitled to know that before you buy:
 |---|---|
 | Bank connections | A PSD2 aggregator contract, held by Ekwo |
 | Peppol sending and receiving | A certified access point and a certificate |
-| Filing to Intervat, Teledec, the NBB | Transmission credentials, and someone answerable when a return is late |
+| Transmission to Intervat, Teledec, the NBB | Transmission credentials and a channel kept running — the return itself stays the business's |
 | The AI agents that book, match and check | Models Ekwo trains, runs and supervises |
 | The multi-instance control plane | Monitoring, upgrades, backups across a fleet |
 

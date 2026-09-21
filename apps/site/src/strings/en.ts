@@ -33,7 +33,9 @@ export const en: Strings = {
 
   footer: {
     label: 'About this project',
-    tagline: 'Open source accounting, finance and sustainability',
+    tagline:
+      'Open source data infrastructure for accounting, finance and sustainability. Software, ' +
+      'not an accounting firm: no accounting, tax or financial advice.',
     licence: 'Licence',
     disclaimer: 'Disclaimer',
     security: 'Security',
@@ -44,12 +46,13 @@ export const en: Strings = {
   },
 
   home: {
-    title: 'Ekwo — open source accounting software for every country',
+    title: 'Ekwo — open source accounting software and data infrastructure for every country',
     description:
-      'Free, open source accounting software you self-host on PostgreSQL and Supabase: ' +
-      '{countries} country packs, VAT returns, e-invoicing and an MCP server for AI agents.',
+      'Free, open source accounting data infrastructure you self-host on PostgreSQL and ' +
+      'Supabase: {countries} country packs, VAT returns, e-invoicing and an MCP server for AI ' +
+      'agents — for businesses and their accountants.',
     hero: {
-      eyebrow: 'Open source accounting, finance and sustainability',
+      eyebrow: 'Open source data infrastructure for accounting, finance and sustainability',
       title: 'Accounting, set free.',
       // The first word turns. The first of these is the stable one: it is what
       // the heading says to a screen reader, to a search engine and to anybody
@@ -58,9 +61,10 @@ export const en: Strings = {
       titleTail: 'set free.',
       titleAccessible: 'Accounting, finance, tax, sustainability and your ERP, set free.',
       lead:
-        'Every business on earth keeps books. Ekwo is building the open source system that ' +
-        'keeps them — in a database you own, under rules anyone can read.',
-      ai: 'AI does the bookkeeping. You stay in control.',
+        'Every business on earth keeps books. Ekwo is building the open source infrastructure ' +
+        'they are kept on — in a database you own, under rules anyone can read, with tools ' +
+        'for you and for your accountant.',
+      ai: 'AI at the keyboard. You and your accountant stay in control.',
       start: 'Get started',
       install: 'Install Ekwo OS',
       manifesto: 'Read the manifesto',
@@ -72,13 +76,15 @@ export const en: Strings = {
     },
     world: {
       eyebrow: 'Everywhere',
-      title: 'Free and independent accounting, in every country of the world.',
+      title: 'Free and independent data infrastructure, in every country of the world.',
       lead: '',
       body:
-        'No business, anywhere, should have to rent the right to keep its own books. Ekwo is ' +
-        'written country by country, by the people who know the rules of each one — ' +
-        'accountants, tax advisers, developers — and given back to everyone. {countries} ' +
-        'countries today. The rest of the world is open, and it is yours to write.',
+        'No business, anywhere, should have to rent the right to keep its own books. Ekwo does ' +
+        'not replace the accountant: it gives businesses and their accountants open schemas, ' +
+        'the rules of each country as data, and the tools to work on them. It is written ' +
+        'country by country, by the people who know the rules of each one — accountants, tax ' +
+        'advisers, developers — and given back to everyone. {countries} countries today. The ' +
+        'rest of the world is open, and it is yours to write.',
       written: 'countries written',
       open: 'open — yours to write',
       signature: 'A business is data, in every country.',
@@ -115,11 +121,12 @@ export const en: Strings = {
             'the keys, and you decide who reads them.',
         },
         {
-          title: 'Compliance, in the open',
+          title: 'The rules, in the open',
           body:
-            'The rules of each country are published, sourced to the law and dated — charts ' +
-            'of accounts, taxes, the boxes of the return, statutory statements and electronic ' +
-            'invoicing. Every country page says when it was last checked.',
+            'The rules each country pack encodes are published, sourced to the law and dated — ' +
+            'charts of accounts, taxes, the boxes of the return, statutory statements and ' +
+            'electronic invoicing — so that you and your accountant can check them. Every ' +
+            'country page says when it was last checked.',
         },
         {
           title: 'Security',
@@ -157,7 +164,7 @@ export const en: Strings = {
       title: 'Your model, your rights',
       body:
         'Ekwo embeds no model and imposes none. It exposes its tools over the open Model ' +
-        'Context Protocol and a command line a program can read, so an assistant keeps the ' +
+        'Context Protocol and a command line a program can read, so an assistant works on the ' +
         'books with the rights of the person it acts for — never with a key of its own — and ' +
         'you can change your mind about which one.',
       foundationsTitle: 'Built on open foundations',
@@ -198,9 +205,10 @@ export const en: Strings = {
       hostedTitle: 'Operated for you',
       hostedBody:
         'The hosted edition: your own instance, run and watched for you. What is sold is the ' +
-        'operating — bank connections, sending and receiving over Peppol, filing to the ' +
-        'administrations, the agents — and somebody answerable when a return is late. It ' +
-        'never gates the core, and what comes back from a filing is yours.',
+        'operating — bank connections, sending and receiving over Peppol, the channels to the ' +
+        'administrations, the agents. It is infrastructure, not an accounting service: your ' +
+        'books and your filings stay yours and your accountant’s. It never gates the core, ' +
+        'and what comes back from a filing is yours.',
       hostedAction: 'Get started with us',
     },
     network: {
@@ -229,8 +237,8 @@ export const en: Strings = {
   os: {
     title: 'Ekwo OS — self-hosted open source accounting core',
     description:
-      'Install the open source accounting core on your own Supabase project in one command: ' +
-      'the PostgreSQL schema, the country rules and the first company. AGPL-3.0.',
+      'Install the open source core on your own Supabase project in one command: the ' +
+      'PostgreSQL schema, the country rules and the first company. AGPL-3.0.',
     eyebrow: 'The open source core',
     countries: 'Countries',
     missing: 'Your country is missing?',
@@ -378,8 +386,8 @@ export const en: Strings = {
     boundaryTitle: 'Where the open core stops.',
     boundaryLead:
       'The line is operational, not functional. Everything that keeps working on its own is ' +
-      'open core; what needs credentials, a certificate or somebody answerable is the hosted ' +
-      'edition.',
+      'open core; what needs credentials, a certificate or a channel somebody keeps running ' +
+      'is the hosted edition.',
     free: 'Free, for ever',
     operated: 'Operated',
     nothingOperated: 'nothing to operate',
@@ -782,10 +790,10 @@ export const en: Strings = {
       'Ekwo publishes Ekwo OS, open source accounting software and bookkeeping data ' +
       'infrastructure that businesses install on a database they own.',
     software:
-      'Ekwo OS is free, open source (AGPL-3.0) accounting software. It installs on your own ' +
+      'Ekwo OS is free, open source (AGPL-3.0) accounting data infrastructure. It installs on your own ' +
       'PostgreSQL database on Supabase, carries the rules of {countries} countries as country ' +
       'packs — chart of accounts, tax rates, the periodic return, e-invoicing — and lets an ' +
-      'AI assistant keep the books through its MCP server and command line.',
+      'AI assistant work on the books through its MCP server and command line.',
     category: 'Accounting software',
     operatingSystem: 'Any system with Node.js 20 or later, on PostgreSQL (Supabase)',
     features: [
