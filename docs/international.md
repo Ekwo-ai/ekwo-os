@@ -3092,3 +3092,46 @@ crossed, or has not — so `TD-S-AUTOLIQ` and `TD-P-AUTOLIQ` declare it and the
 pack says no more than that a human has to answer the question, as
 `packs/sn/` already does with `supply_nature` for its own approved-status
 condition.
+
+## From the Central African Republic
+
+`packs/cf/`, `community`, seed 25. Its chart, journals, roles and two
+statements are the common part of [`packs/ohada/`](../packs/ohada/README.md);
+what it adds is the value added tax of the Code général des impôts, read from
+the DGID's own 2023 update of the 2017 edition — no loi de finances for 2025
+or 2026 was found promulgated. Unlike the CEMAC neighbours already in this
+file, its 19 % is not a rate the invoice shows once and the return books in
+two places: no centimes additionnels or similar surtax on the VAT was found
+for the Central African Republic, so `CF-S-19` and `CF-S-19-SRV` post the
+whole rate to one account, as any UEMOA pack does.
+
+**A closed list the CEMAC directive draws, a national list that ignores its
+edges.** Directive n° 11/22 (art. 22-2 c) reserves an optional reduced rate to
+six tariff numbers. The Central African CGI's own 5 % list (art. 257) keeps
+two of them — milk 04.01, pesticides 38.08 — and adds four the directive does
+not cover: vegetables and tubers (07.01-07.14), non-school books, meat and
+poultry, and medico-surgical or dental furniture. A directive binds the member
+state to transpose it, not a taxpayer directly; what a Central African invoice
+owes is the CGI's own rate, transcribed here as written (`CF-S-5`), with the
+mismatch named rather than corrected to fit the directive's list or silenced.
+The same file, [`_zones.md`](../../../ekwo-tools/ohada-research/_zones.md) of
+the pack's own research, already flags Gabon's third rate under the directive's
+5 % floor and the Congo's disputed centimes for the same reason: a community
+text sets bounds a national law is free to miss on either side, and this pack
+records where, rather than silently aligning the two.
+
+**A withholding an article names, a base a summary alone cannot confirm.** CGI
+art. 273 bis (loi de finances 2008) has client companies a ministerial order
+designates withhold **10 % of the price excluding tax** — not 10 % of the tax
+itself, the shape every other VAT withholding in this file takes (Senegal's
+précompte, Chad's art. 245, Cameroon's art. 149 (2)). Whether that is a
+loosely worded VAT withholding or, despite its place in the VAT title, closer
+in effect to an income-tax advance was not settled by the research read for
+this pack, because neither the arrêté naming the companies nor the article's
+own text — only a secondary description of it — was found. Rather than guess
+which mechanism a base described only in summary actually is, `packs/cf/`
+carries none of it, alongside the précompte of art. 166 bis (a three-party,
+retenue-au-paiement gap this file already names for Senegal and Chad) and the
+15 % final withholding of art. 166 bis 1 on fees paid abroad, an income tax
+rather than a tax on an invoice line. All three wait on a local accountant or
+a fuller reading of the arrêté, not on a change to the core.

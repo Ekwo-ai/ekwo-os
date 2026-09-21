@@ -1,0 +1,158 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "Une année d'un commerce et prestataire centrafricain, déclarant chaque mois",
+  "chart": "default",
+  "fiscal_year": {
+    "name": "Exercice 2026",
+    "start": "2026-01-01",
+    "end": "2026-12-31"
+  },
+  "periods": [
+    { "code": "2026-01", "from": "2026-01-01", "to": "2026-01-31" },
+    { "code": "2026-02", "from": "2026-02-01", "to": "2026-02-28" },
+    { "code": "2026-03", "from": "2026-03-01", "to": "2026-03-31" },
+    { "code": "2026-04", "from": "2026-04-01", "to": "2026-04-30" }
+  ],
+  "statements": ["CF-SYSCOHADA-BS", "CF-SYSCOHADA-IS"],
+  "contacts": [
+    { "ref": "client-cf", "name": "Comptoir du Bangui SARL", "type": "customer", "country": "CF" },
+    { "ref": "client-fr", "name": "Négoce Oubangui SAS", "type": "customer", "country": "FR" },
+    { "ref": "fourn-cf", "name": "Grossiste du Km5 SARL", "type": "supplier", "country": "CF" },
+    { "ref": "fourn-srv", "name": "Froid Service Bangui SARL", "type": "supplier", "country": "CF" },
+    { "ref": "fourn-immo", "name": "Bureautique de la Ouaka SA", "type": "supplier", "country": "CF" }
+  ],
+  "documents": [
+    {
+      "ref": "V1",
+      "type": "sale_invoice",
+      "contact": "client-cf",
+      "date": "2026-01-10",
+      "why": "Une vente de marchandises au taux normal (art. 257) : la case CA19, la taxe au compte 4431, dans la case TVA19.",
+      "lines": [
+        { "name": "Marchandises", "quantity": 40, "unit_price": 10000, "tax": "CF-S-19", "account": "7011" }
+      ]
+    },
+    {
+      "ref": "V2",
+      "type": "sale_invoice",
+      "contact": "client-cf",
+      "date": "2026-01-18",
+      "why": "Une prestation de services au taux normal : la taxe part sur le compte 4432, case TVA19.",
+      "lines": [
+        { "name": "Prestation d'installation", "quantity": 1, "unit_price": 250000, "tax": "CF-S-19-SRV", "account": "7061" }
+      ]
+    },
+    {
+      "ref": "V3",
+      "type": "sale_invoice",
+      "contact": "client-cf",
+      "date": "2026-02-05",
+      "why": "Une vente de viande, au taux réduit de 5 % (art. 257, liste fermée par numéro tarifaire — position 02) : la case CA5, la taxe au compte 4431, case TVA5.",
+      "lines": [
+        { "name": "Viande", "quantity": 1, "unit_price": 100000, "tax": "CF-S-5", "account": "7011" }
+      ]
+    },
+    {
+      "ref": "V4",
+      "type": "sale_invoice",
+      "contact": "client-fr",
+      "date": "2026-02-20",
+      "why": "Une exportation au taux zéro (art. 257) : la case EXP, aucune taxe, un compte de ventes hors Région.",
+      "lines": [
+        { "name": "Marchandises exportées", "quantity": 1, "unit_price": 500000, "tax": "CF-S-EXP", "account": "7012" }
+      ]
+    },
+    {
+      "ref": "V5",
+      "type": "sale_invoice",
+      "contact": "client-cf",
+      "date": "2026-03-03",
+      "why": "Une prestation médicale exonérée (art. 249) : la case EXO, aucune taxe.",
+      "lines": [
+        { "name": "Prestation médicale", "quantity": 1, "unit_price": 80000, "tax": "CF-S-EXO", "account": "7061" }
+      ]
+    },
+    {
+      "ref": "AV1",
+      "type": "sale_credit_note",
+      "contact": "client-cf",
+      "date": "2026-03-16",
+      "why": "Un avoir partiel sur la vente V1 : la case CA19 et la taxe au compte 4431 diminuent dans le mois de l'avoir.",
+      "lines": [
+        { "name": "Retour de marchandises", "quantity": 8, "unit_price": 10000, "tax": "CF-S-19", "account": "7011" }
+      ]
+    },
+    {
+      "ref": "A1",
+      "type": "purchase_invoice",
+      "contact": "fourn-cf",
+      "date": "2026-01-08",
+      "why": "Un achat de marchandises au taux normal, déductible (art. 276) : compte récupérable 4452, case DEDBS.",
+      "lines": [
+        { "name": "Marchandises", "quantity": 50, "unit_price": 5000, "tax": "CF-P-19", "account": "6011" }
+      ]
+    },
+    {
+      "ref": "A2",
+      "type": "purchase_invoice",
+      "contact": "fourn-srv",
+      "date": "2026-02-10",
+      "why": "Un entretien facturé au taux normal : la taxe récupérable sur services extérieurs, compte 4454, case DEDBS.",
+      "lines": [
+        { "name": "Entretien des installations", "quantity": 1, "unit_price": 120000, "tax": "CF-P-19-SRV", "account": "6248" }
+      ]
+    },
+    {
+      "ref": "A3",
+      "type": "purchase_invoice",
+      "contact": "fourn-immo",
+      "date": "2026-04-02",
+      "why": "Du matériel de bureau immobilisé au taux normal : la taxe au compte 4451, case DEDIMMO.",
+      "lines": [
+        { "name": "Ordinateurs et mobilier de bureau", "quantity": 1, "unit_price": 1400000, "tax": "CF-P-19-IMMO", "account": "2441" }
+      ]
+    },
+    {
+      "ref": "A4",
+      "type": "purchase_invoice",
+      "contact": "fourn-cf",
+      "date": "2026-03-06",
+      "why": "Un achat de viande, taux réduit de 5 %, déductible : compte 4452, case DEDBS.",
+      "lines": [
+        { "name": "Viande", "quantity": 1, "unit_price": 50000, "tax": "CF-P-5", "account": "6011" }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "E1",
+      "direction": "inbound",
+      "date": "2026-02-15",
+      "amount": 476000,
+      "contact": "client-cf",
+      "journal": "BQ",
+      "match": "V1",
+      "why": "Un encaissement qui solde exactement la facture de marchandises V1."
+    },
+    {
+      "ref": "E2",
+      "direction": "inbound",
+      "date": "2026-03-20",
+      "amount": 100000,
+      "contact": "client-cf",
+      "journal": "BQ",
+      "match": null,
+      "why": "Un acompte non affecté : il reste une ligne ouverte au compte client."
+    },
+    {
+      "ref": "P1",
+      "direction": "outbound",
+      "date": "2026-02-08",
+      "amount": 297500,
+      "contact": "fourn-cf",
+      "journal": "BQ",
+      "match": "A1",
+      "why": "Un paiement qui solde exactement la facture d'achat A1."
+    }
+  ]
+}

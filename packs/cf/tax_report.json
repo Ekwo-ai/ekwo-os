@@ -1,0 +1,131 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "CF-TVA",
+  "name": "Déclaration de taxe sur la valeur ajoutée",
+  "period": ["month"],
+  "period_default": "month",
+  "valid_from": "2019-01-01",
+  "legal_reference": "Code général des impôts, art. 275 bis — déclaration mensuelle des redevables du réel, déposée et payée au plus tard le 15 du mois suivant ; art. 275 bis 2 — une déclaration « NÉANT » est obligatoire en l'absence d'opération. L'édition 2023 du CGI porte aussi un art. 275 bis 1 (déclaration trimestrielle, le 15 du mois suivant le trimestre) visant lui aussi « le régime du réel » : contradiction interne du texte lu, non résolue par une source trouvée. Ce pack retient la lecture mensuelle de l'art. 275 bis, cohérente avec la section 5 de la fiche de départ, et signale la contradiction ici et dans le README plutôt que de la taire. Le nom et la numérotation des cases du formulaire imprimé ne sont publiés dans aucune source officielle trouvée : les cases ci-dessous suivent ce que l'art. 275 bis fait déclarer (opérations taxables par taux, exonérées, exportées, taxe exigible, déductions, solde), comme packs/sn, packs/ci, packs/td et packs/cm pour le même gap.",
+  "source": "cgi",
+  "deadline": {
+    "rule": "day_of_month_after_period",
+    "day": 15,
+    "legal_reference": "Code général des impôts, art. 275 bis — dépôt et paiement au plus tard le 15 du mois suivant.",
+    "source": "cgi"
+  },
+  "boxes": [
+    {
+      "box": "CA19",
+      "kind": "base",
+      "name": "Opérations taxables au taux normal (19 %)",
+      "sequence": 10,
+      "legal_reference": "Code général des impôts, art. 275 bis et art. 257",
+      "source": "cgi"
+    },
+    {
+      "box": "CA5",
+      "kind": "base",
+      "name": "Opérations taxables au taux réduit (5 %)",
+      "sequence": 20,
+      "legal_reference": "Code général des impôts, art. 275 bis et art. 257",
+      "source": "cgi"
+    },
+    {
+      "box": "EXP",
+      "kind": "base",
+      "name": "Exportations et opérations assimilées, taux zéro",
+      "sequence": 30,
+      "legal_reference": "Code général des impôts, art. 275 bis et art. 257",
+      "source": "cgi"
+    },
+    {
+      "box": "EXO",
+      "kind": "base",
+      "name": "Opérations exonérées (art. 249)",
+      "sequence": 40,
+      "legal_reference": "Code général des impôts, art. 275 bis et art. 249",
+      "source": "cgi"
+    },
+    {
+      "box": "CAT",
+      "kind": "total",
+      "name": "Montant total des opérations",
+      "sequence": 50,
+      "plus": ["CA19", "CA5", "EXP", "EXO"],
+      "legal_reference": "Code général des impôts, art. 275 bis",
+      "source": "cgi"
+    },
+    {
+      "box": "TVA19",
+      "kind": "tax",
+      "name": "Taxe exigible au taux normal (19 %)",
+      "sequence": 60,
+      "legal_reference": "Code général des impôts, art. 275 bis et art. 257",
+      "source": "cgi"
+    },
+    {
+      "box": "TVA5",
+      "kind": "tax",
+      "name": "Taxe exigible au taux réduit (5 %)",
+      "sequence": 70,
+      "legal_reference": "Code général des impôts, art. 275 bis et art. 257",
+      "source": "cgi"
+    },
+    {
+      "box": "TVAB",
+      "kind": "total",
+      "name": "Total de la taxe exigible",
+      "sequence": 80,
+      "plus": ["TVA19", "TVA5"],
+      "legal_reference": "Code général des impôts, art. 275 bis",
+      "source": "cgi"
+    },
+    {
+      "box": "DEDIMMO",
+      "kind": "tax",
+      "name": "TVA déductible sur immobilisations",
+      "sequence": 90,
+      "legal_reference": "Code général des impôts, art. 276",
+      "source": "cgi"
+    },
+    {
+      "box": "DEDBS",
+      "kind": "tax",
+      "name": "TVA déductible sur biens et services",
+      "sequence": 100,
+      "legal_reference": "Code général des impôts, art. 276",
+      "source": "cgi"
+    },
+    {
+      "box": "DEDT",
+      "kind": "total",
+      "name": "Total des déductions",
+      "sequence": 110,
+      "plus": ["DEDIMMO", "DEDBS"],
+      "legal_reference": "Code général des impôts, art. 276",
+      "source": "cgi"
+    },
+    {
+      "box": "NET",
+      "kind": "total",
+      "name": "TVA nette à payer",
+      "sequence": 120,
+      "plus": ["TVAB"],
+      "minus": ["DEDT"],
+      "floor_zero": true,
+      "legal_reference": "Code général des impôts, art. 275 bis — la déclaration est accompagnée du paiement",
+      "source": "cgi"
+    },
+    {
+      "box": "CRED",
+      "kind": "total",
+      "name": "Crédit de TVA à reporter",
+      "sequence": 130,
+      "plus": ["DEDT"],
+      "minus": ["TVAB"],
+      "floor_zero": true,
+      "legal_reference": "Code général des impôts, art. 276 — crédit reportable 12 mois, sans limite pour les exportateurs et les investisseurs de plus de 100 millions de FCFA, remboursable après trois mois consécutifs de crédit",
+      "source": "cgi"
+    }
+  ]
+}

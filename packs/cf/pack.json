@@ -1,0 +1,182 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "CF",
+  "name": "Centrafrique",
+  "version": "0.1.0",
+  "schema_min": "20260917170000",
+  "seed_sequence": 25,
+  "released_at": "2026-09-21",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "audcif",
+        "title": "Acte uniforme relatif au droit comptable et à l'information financière (AUDCIF), adopté à Brazzaville le 26 janvier 2017",
+        "publisher": "OHADA — Bibliothèque numérique de l'OHADA",
+        "url": "https://biblio.ohada.org/doc_num.php?explnum_id=2061",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "syscohada",
+        "title": "Journal officiel de l'OHADA, numéro spécial du 15 février 2017 — Acte uniforme relatif au droit comptable et à l'information financière et Système comptable OHADA (SYSCOHADA révisé), version complète signée",
+        "publisher": "OHADA — Bibliothèque numérique de l'OHADA",
+        "url": "https://biblio.ohada.org/doc_num.php?explnum_id=2063",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "cgi",
+        "title": "Code Général des Impôts 2017, mise à jour 2023 — édition officielle de la Direction Générale des Impôts et des Domaines (442 p.)",
+        "publisher": "Ministère des Finances, du Budget et de la Coopération Publique-Privée de la République Centrafricaine",
+        "url": "https://www.finances.gouv.cf/sites/default/files/2023-05/CGI%20RCA%202017%20mise%20%C3%A0%20jour%202023.pdf",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "directive-cemac-tva",
+        "title": "Directive n° 11/22-CEMAC-UEAC-010A-CM-38 du 10 novembre 2022 portant harmonisation des législations des États membres de la CEMAC en matière de taxe sur la valeur ajoutée et du droit d'accises",
+        "publisher": "Secrétariat général de la CEMAC",
+        "url": "https://www.sgg.cg/txts-droit-reg/CEMAC-Directive-2022-11-TVA.pdf",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "portail",
+        "title": "Portail du Ministère des Finances, du Budget et de la Coopération Publique-Privée",
+        "publisher": "Ministère des Finances, du Budget et de la Coopération Publique-Privée de la République Centrafricaine",
+        "url": "https://www.finances.gouv.cf/",
+        "consulted_on": "2026-09-21",
+        "kind": "portal"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "XAF",
+    "language": "fr",
+    "rounding_method": "half_up",
+    "closing_style": "result_accounts",
+    "roles": {
+      "receivable": "4111",
+      "payable": "4011",
+      "suspense": "4711",
+      "rounding": "6588",
+      "retained_earnings": "121",
+      "retained_earnings_loss": "1291",
+      "current_year_result_profit": "131",
+      "current_year_result_loss": "139",
+      "sales": "7011",
+      "purchase": "6011",
+      "bank": "5211",
+      "cash": "5711",
+      "fx_gain": "756",
+      "fx_loss": "656",
+      "tax_payable": "4441",
+      "tax_receivable": "4449"
+    },
+    "journal_roles": {
+      "sales": "VT",
+      "purchase": "AC",
+      "miscellaneous": "OD",
+      "opening": "AN"
+    },
+    "fiscal_year_default": "calendar"
+  },
+  "languages": [],
+  "journals": [
+    {
+      "code": "VT",
+      "type": "sales",
+      "name": "Journal des ventes",
+      "sequence": 10
+    },
+    {
+      "code": "AC",
+      "type": "purchase",
+      "name": "Journal des achats",
+      "sequence": 20
+    },
+    {
+      "code": "BQ",
+      "type": "bank",
+      "name": "Journal de banque",
+      "sequence": 30
+    },
+    {
+      "code": "CA",
+      "type": "cash",
+      "name": "Journal de caisse",
+      "sequence": 40
+    },
+    {
+      "code": "OD",
+      "type": "general",
+      "name": "Opérations diverses",
+      "sequence": 50
+    },
+    {
+      "code": "AN",
+      "type": "opening",
+      "name": "Journal des à-nouveaux",
+      "sequence": 60
+    }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "SYSCOHADA révisé — plan comptable général OHADA, Système normal",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": [
+        "CF-SYSCOHADA-BS",
+        "CF-SYSCOHADA-IS"
+      ],
+      "legal_reference": "Acte uniforme relatif au droit comptable et à l'information financière du 26 janvier 2017, art. 17, 7° — recours à un plan de comptes normalisé dont la liste figure dans le Système comptable OHADA ; Système comptable OHADA, Titre VII, chapitre 2, section 3 — liste des comptes, classes 1 à 8. La classe 9, engagements hors bilan et comptabilité analytique de gestion, est d'application facultative et n'est pas reprise. Commun aux dix-sept États parties : un seul fichier, packs/ohada/accounts.csv, recopié dans chaque pack par scripts/ohada-packs.mjs.",
+      "source": "syscohada"
+    }
+  ],
+  "documents": {
+    "numbering": "gapless_per_year",
+    "number_format": "{CODE}/{YYYY}/{NNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "invoice_if_issued",
+    "references": {
+      "numbering": {
+        "legal_reference": "Code général des impôts, art. 268 — la facture porte « un numéro pris dans une série continue » ; le texte impose la continuité de la série, jamais une forme précise ni une remise à zéro annuelle, que le format proposé ici permet sans l'exiger.",
+        "source": "cgi"
+      },
+      "tax_point": {
+        "legal_reference": "Aucun article fixant le fait générateur et l'exigibilité de la TVA (l'équivalent des art. 141-142 d'autres codes de la zone) n'a été identifié dans l'édition 2023 du CGI chargée pour cette fiche : le texte lu couvre le taux (art. 257), les exonérations (art. 249), la déduction (art. 276) et les mentions de facture (art. 268), jamais la date d'exigibilité elle-même. invoice_if_issued est retenu par défaut, par cohérence avec les autres packs OHADA (packs/sn, packs/ci, packs/td, packs/cm) et parce qu'aucune taxe de ce pack n'est déclarée cash_basis faute de texte l'imposant — valeur à confirmer par un comptable local ou par lecture de l'article manquant.",
+        "source": "cgi"
+      }
+    },
+    "mentions": [
+      {
+        "code": "exempt",
+        "applies_when": "exempt",
+        "text": "Opération exonérée de la taxe sur la valeur ajoutée — article 249 du Code général des impôts.",
+        "sequence": 10,
+        "legal_reference": "Code général des impôts, art. 268 — la facture porte, par opération, le taux, le prix hors taxe et la TVA correspondante ; pour une opération exonérée au sens de l'art. 249, ce triplet est nul. Aucune formule de mention obligatoire (à la différence, par exemple, du Cameroun, art. 150 (5), qui impose le mot « Exonérée ») n'a été trouvée dans l'édition 2023 du CGI centrafricain : le texte de cette mention est descriptif, pas une citation littérale.",
+        "source": "cgi"
+      },
+      {
+        "code": "export",
+        "applies_when": "export",
+        "text": "Exportation taxée au taux zéro — article 257 du Code général des impôts.",
+        "sequence": 20,
+        "legal_reference": "Code général des impôts, art. 268 pour l'obligation de porter le taux sur la facture ; art. 257 pour le taux zéro applicable aux exportations dont la déclaration est visée par la douane. Comme pour la mention « exempt », aucune formule imposée n'a été trouvée.",
+        "source": "cgi"
+      }
+    ]
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "Code général des impôts, art. 271 (loi de finances pour 2007) — chaque vente d'un assujetti donne lieu à un ticket de caisse émis par une « machine à bande enregistreuse » portant le nom, le NIF et le montant TTC et de la TVA du vendeur ; c'est une obligation de caisse enregistreuse au détail, pas une facture électronique ni un système de clearance B2B. Aucune facture normalisée, aucune machine certifiante fiscale (MCF) ni obligation d'e-facturation entre entreprises n'ont été trouvées dans le CGI 2023 lu. Le portail e-Tax de la DGID, lancé le 24 mars 2025 selon des sources de presse (non chargées comme source officielle : l'une renvoie HTTP 403), sert à la télédéclaration et au télépaiement — aucune URL officielle du portail ni aucune spécification technique d'échange n'a été trouvée. profile et mandatory_from restent vides.",
+    "source": "cgi"
+  }
+}

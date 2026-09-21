@@ -1,0 +1,182 @@
+[
+  {
+    "code": "CF-S-19",
+    "name": "Ventes de biens, taux normal 19 %",
+    "description": "Livraisons de biens taxables au taux normal. La base d'imposition est arrondie au millier de francs CFA inférieur avant application du taux.",
+    "rate": 19,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2019-01-01",
+    "legal_reference": "Code général des impôts, art. 257 (rédaction issue de la loi de finances pour 2019) — taux général de 19 %, applicable à toutes les opérations taxables ; art. 256 — la base d'imposition est arrondie au millier de francs CFA inférieur. Aucune source lue ne date l'introduction du taux de 19 % au-delà de la mention « (LF 2019) » portée par l'article lui-même, et aucun changement de taux n'a été trouvé depuis. La loi de finances centrafricaine n'est publiée qu'en un seul texte consolidé pour l'ensemble de l'année (le CGI) : aucune distinction biens/services n'est faite par l'art. 257 lui-même — ce pack sépare les deux (comptes 4431 et 4432) parce que le plan SYSCOHADA a les comptes, comme packs/td et packs/cm pour la même zone.",
+    "source": "cgi",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "CA19" },
+        { "type": "tax", "account": "4431", "box": "TVA19" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "CA19", "box_factor": -100 },
+        { "type": "tax", "account": "4431", "box": "TVA19", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 10
+  },
+  {
+    "code": "CF-S-19-SRV",
+    "name": "Prestations de services, taux normal 19 %",
+    "description": "Prestations de services taxables au taux normal, même répartition que CF-S-19, sur le compte 4432.",
+    "rate": 19,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2019-01-01",
+    "legal_reference": "Code général des impôts, art. 257 (rédaction LF 2019) et art. 256. Aucun article fixant un fait générateur propre aux prestations de services (encaissement, option pour les débits) n'a été identifié dans l'édition 2023 du CGI chargée pour cette fiche : cette taxe n'est donc pas déclarée cash_basis, faute de texte l'imposant.",
+    "source": "cgi",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "CA19" },
+        { "type": "tax", "account": "4432", "box": "TVA19" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "CA19", "box_factor": -100 },
+        { "type": "tax", "account": "4432", "box": "TVA19", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 20
+  },
+  {
+    "code": "CF-S-5",
+    "name": "Ventes de biens de la liste réduite, taux 5 %",
+    "description": "Taux réduit, liste fermée par numéro tarifaire : 04.01 laits et crèmes de lait non concentrés sucrés ; 07.01 à 07.14 légumes, plantes, racines et tubercules ; 38.08 insecticides et pesticides (hors intrants agricoles homologués) ; 94.02.10.19 autres mobiliers médico-chirurgicaux ; 49.01.91.00 livres autres que scolaires ; 02 viandes et volailles ; 94.02.10.11 fauteuils de dentistes.",
+    "rate": 5,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2019-01-01",
+    "conditions": ["supply_nature"],
+    "legal_reference": "Code général des impôts, art. 257 (rédaction LF 2019) — liste fermée par numéro tarifaire. La directive CEMAC n° 11/22 du 10 novembre 2022 (art. 22-2 c) réserve le taux réduit à une liste fermée de six numéros tarifaires (laits 04.01/04.02, boulangerie 19.05.90, riz 10.06, farine 11.01.00.10, engrais, pesticides 38.08) : les légumes (07.01-07.14), les livres, les viandes et les mobiliers médicaux et dentaires que porte la liste centrafricaine en sont absents. Ce pack transcrit la liste du CGI telle quelle — c'est le texte national qui fixe le taux facturé, la directive n'étant pas d'effet direct sur les tiers — et signale l'écart dans le README, sans le corriger ni le taire.",
+    "source": "cgi",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "CA5" },
+        { "type": "tax", "account": "4431", "box": "TVA5" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "CA5", "box_factor": -100 },
+        { "type": "tax", "account": "4431", "box": "TVA5", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 30
+  },
+  {
+    "code": "CF-S-EXP",
+    "name": "Exportation, taux zéro",
+    "description": "Exportations dont la déclaration est visée par la douane, leurs accessoires et les transports internationaux y afférents.",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2019-01-01",
+    "conditions": ["transport_evidence"],
+    "legal_reference": "Code général des impôts, art. 257 — taux zéro sur les exportations visées par la douane, leurs accessoires et les transports internationaux y afférents.",
+    "source": "cgi",
+    "vat_category": "G",
+    "postings": {
+      "invoice": [{ "type": "base", "box": "EXP" }],
+      "credit_note": [{ "type": "base", "box": "EXP", "box_factor": -100 }]
+    },
+    "kind": "vat",
+    "sequence": 40
+  },
+  {
+    "code": "CF-S-EXO",
+    "name": "Opération exonérée (art. 249)",
+    "description": "Biens de première nécessité (liste en annexe), première tranche d'eau et d'électricité des ménages, eau vendue en kiosques publics, intrants et matériels agricoles/vétérinaires/halieutiques importés, prestations médicales/paramédicales/vétérinaires/d'enseignement (hors hébergement et restauration), or et diamant, intérêts des dépôts de non-professionnels, assurance et réassurance, mutations immobilières soumises aux droits d'enregistrement, locations de terrains nus et de locaux nus d'habitation, timbres postaux et fiscaux, ONG agréées sous convention, services administratifs des personnes publiques, trafic international, missions diplomatiques (importations uniquement).",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2019-01-01",
+    "conditions": ["supply_nature"],
+    "legal_reference": "Code général des impôts, art. 249, dans l'édition 2023 (DGID) chargée pour cette fiche. Le projet de loi de finances pour 2025 (document non promulgué, numéro et date de la loi laissés en blanc) cite un art. 249 antérieur différent — opérations bancaires et financières, ventes d'immeubles par des non-assujettis, journaux, frais de scolarité, une liste de produits pharmaceutiques et médicaux par numéro tarifaire — et le remplace par une rédaction en douze points. Aucune loi de finances 2025 ni 2026 promulguée n'a été trouvée en ligne : ce pack retient la liste de l'édition 2023, le seul texte dont l'entrée en vigueur est établie, et signale l'incertitude dans le README plutôt que d'anticiper un texte non confirmé adopté.",
+    "source": "cgi",
+    "vat_category": "E",
+    "postings": {
+      "invoice": [{ "type": "base", "box": "EXO" }],
+      "credit_note": [{ "type": "base", "box": "EXO", "box_factor": -100 }]
+    },
+    "kind": "vat",
+    "sequence": 50
+  },
+  {
+    "code": "CF-P-19",
+    "name": "Achats de biens, taux normal 19 %",
+    "description": "Taxe récupérable sur achats de marchandises.",
+    "rate": 19,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2019-01-01",
+    "legal_reference": "Code général des impôts, art. 257 pour le taux ; art. 276 — le crédit de TVA est reportable 12 mois (sans limite pour les exportateurs et les investisseurs de plus de 100 millions de FCFA), remboursable après trois mois consécutifs de crédit. Aucune restriction de déduction propre aux biens n'a été trouvée.",
+    "source": "cgi",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [{ "type": "tax", "account": "4452", "box": "DEDBS" }],
+      "credit_note": [{ "type": "tax", "account": "4452", "box": "DEDBS", "box_factor": -100 }]
+    },
+    "kind": "vat",
+    "sequence": 110
+  },
+  {
+    "code": "CF-P-19-SRV",
+    "name": "Services extérieurs, taux normal 19 %",
+    "rate": 19,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2019-01-01",
+    "legal_reference": "Code général des impôts, art. 257 et art. 276.",
+    "source": "cgi",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [{ "type": "tax", "account": "4454", "box": "DEDBS" }],
+      "credit_note": [{ "type": "tax", "account": "4454", "box": "DEDBS", "box_factor": -100 }]
+    },
+    "kind": "vat",
+    "sequence": 120
+  },
+  {
+    "code": "CF-P-19-IMMO",
+    "name": "Immobilisations, taux normal 19 %",
+    "rate": 19,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2019-01-01",
+    "legal_reference": "Code général des impôts, art. 257 et art. 276.",
+    "source": "cgi",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [{ "type": "tax", "account": "4451", "box": "DEDIMMO" }],
+      "credit_note": [{ "type": "tax", "account": "4451", "box": "DEDIMMO", "box_factor": -100 }]
+    },
+    "kind": "vat",
+    "sequence": 130
+  },
+  {
+    "code": "CF-P-5",
+    "name": "Achats de biens de la liste réduite, 5 %",
+    "rate": 5,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2019-01-01",
+    "legal_reference": "Code général des impôts, art. 257, même liste tarifaire qu'à la vente (CF-S-5).",
+    "source": "cgi",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [{ "type": "tax", "account": "4452", "box": "DEDBS" }],
+      "credit_note": [{ "type": "tax", "account": "4452", "box": "DEDBS", "box_factor": -100 }]
+    },
+    "kind": "vat",
+    "sequence": 140
+  }
+]
