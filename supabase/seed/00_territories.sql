@@ -419,7 +419,6 @@ on conflict (code) do update set
 
 
 -- ---------------------------------------------------------------------------
-<<<<<<< HEAD
 -- The rows — Singapore
 --
 -- The first territory of Asia. Singapore levies a goods and services tax,
@@ -433,8 +432,9 @@ on conflict (code) do update set
 insert into territories (code, code_source, name, parent_code, eu_vat_scope, eu_vat_from, eu_vat_to, vat_prefix, legal_reference) values
   ('SG', 'iso_3166_1', 'Singapore', null, 'none', null, null, null,
    'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. Singapore levies a goods and services tax of its own under the Goods and Services Tax Act 1993, whose section 16 sets the rate at 9 % from 1 January 2024.')
-||||||| parent of 9662d46 (feat(packs): add the Japan pack (community))
-=======
+
+
+-- ---------------------------------------------------------------------------
 -- The rows — Japan
 --
 -- Japan levies a consumption tax, which is a value added tax under another
@@ -448,7 +448,6 @@ insert into territories (code, code_source, name, parent_code, eu_vat_scope, eu_
 insert into territories (code, code_source, name, parent_code, eu_vat_scope, eu_vat_from, eu_vat_to, vat_prefix, legal_reference) values
   ('JP', 'iso_3166_1', 'Japan', null, 'none', null, null, null,
    'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. Japan levies a consumption tax of its own under the 消費税法 (Act No. 108 of 1988), whose article 29 sets the national rate, and a local consumption tax under article 72-83 of the 地方税法.')
->>>>>>> 9662d46 (feat(packs): add the Japan pack (community))
 on conflict (code) do update set
   code_source     = excluded.code_source,
   name            = excluded.name,
