@@ -2,8 +2,8 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "US",
   "name": "United States",
-  "version": "0.6.0",
-  "schema_min": "20260921084143",
+  "version": "0.7.0",
+  "schema_min": "20260921145412",
   "seed_sequence": 15,
   "released_at": "2026-09-21",
   "certification": {

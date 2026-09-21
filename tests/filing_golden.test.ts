@@ -5,7 +5,7 @@ import { filingReadiness, type Pack } from '../packages/cli/src/index.js';
 import { freshDatabase, one, rows } from './helpers/db.js';
 import { newCompany } from './helpers/factory.js';
 import { replayScenario } from './helpers/golden-scenario.js';
-import { allPacks } from './helpers/packs.js';
+import { allPacks, monthsOf } from './helpers/packs.js';
 
 /**
  * The proof, pack by pack: a year of books becomes a declaration, the
@@ -62,10 +62,11 @@ function busiestPeriod(pack: Pack): { from: string; to: string; year: number; qu
   const cadence = pack.report?.period_default ?? 'month';
   const start = new Date(`${golden.fiscalYear.start}T00:00:00Z`);
 
+  const span = monthsOf(cadence);
   const key = (date: Date): number => {
     const months = (date.getUTCFullYear() - start.getUTCFullYear()) * 12 +
       (date.getUTCMonth() - start.getUTCMonth());
-    return cadence === 'month' ? months : cadence === 'quarter' ? Math.floor(months / 3) : 0;
+    return Math.floor(months / span);
   };
   const counts = new Map<number, number>();
   for (const document of golden.documents) {
@@ -75,9 +76,7 @@ function busiestPeriod(pack: Pack): { from: string; to: string; year: number; qu
   }
   const busiest = [...counts.entries()].sort((a, b) => b[1] - a[1] || a[0] - b[0])[0]?.[0] ?? 0;
 
-  const months = cadence === 'month' ? busiest : cadence === 'quarter' ? busiest * 3 : 0;
-  const from = new Date(Date.UTC(start.getUTCFullYear(), start.getUTCMonth() + months, 1));
-  const span = cadence === 'month' ? 1 : cadence === 'quarter' ? 3 : 12;
+  const from = new Date(Date.UTC(start.getUTCFullYear(), start.getUTCMonth() + busiest * span, 1));
   const to = new Date(Date.UTC(from.getUTCFullYear(), from.getUTCMonth() + span, 0));
   const iso = (date: Date): string => date.toISOString().slice(0, 10);
   return {
@@ -138,7 +137,11 @@ describe.each(filers.map((pack) => [pack.slug, pack] as const))(
       );
       const live = await rows<Box>(
         db,
-        `select box, kind, trim_scale(amount)::text as amount from vat_return($1, $2::date, $3::date)
+        // At the unit the form is filed in: the return answers the exact
+        // figure, and a form filed in whole units freezes it rounded.
+        `select box, kind,
+                trim_scale(round_amount(amount, filing_rounding($1, report_code)))::text as amount
+           from vat_return($1, $2::date, $3::date)
           where not hidden order by box, kind`,
         [companyId, period.from, period.to],
       );
@@ -183,7 +186,18 @@ describe.each(filers.map((pack) => [pack.slug, pack] as const))(
       );
       expect(moved.length, `${slug} moved a tax account in the period it filed`).toBeGreaterThan(0);
 
-      await db.query(`select settle_filing($1)`, [filingId]);
+      // A period that ends in a credit asks the company what to do with it,
+      // and either answer settles: this test carries it forward.
+      const net = await one<{ net: string }>(
+        db,
+        `select coalesce(sum(balance), 0)::text as net from filing_tax_movements($1)`,
+        [filingId],
+      );
+      if (Number(net.net) > 0) {
+        await db.query(`select settle_filing($1, 'carry_forward')`, [filingId]);
+      } else {
+        await db.query(`select settle_filing($1)`, [filingId]);
+      }
 
       for (const account of moved) {
         const left = await one<{ balance: string }>(

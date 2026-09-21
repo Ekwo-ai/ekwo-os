@@ -179,8 +179,9 @@ ${bold('ekwo init')}
                             when the pack names none.
   --language <xx>           Language of the books. Defaults to the country pack's.
   --vat-period <cadence>    How often the company files its VAT return: month,
-                            quarter or year. Asked when the country's form
-                            offers several and the law proposes none.
+                            bimonth, quarter, four_month, half_year or year.
+                            Asked when the country's form offers several and
+                            the law proposes none.
   --filing-period <c>=<p>   The same, for any declaration the country files, by
                             the code of its form. Repeatable, one per
                             declaration: a company files its return and its

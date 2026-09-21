@@ -89,7 +89,7 @@ export interface DescribedFile {
 export interface DescribedDeclaration {
   code: string;
   name: string;
-  /** The cadences the form is filed on, in the order month, quarter, year. */
+  /** The cadences the form is filed on, from the shortest to the longest. */
   periods: string[];
   /** The cadence proposed unless the company asks for another. Null where the law gives none. */
   periodDefault: string | null;

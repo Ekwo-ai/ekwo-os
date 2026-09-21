@@ -435,5 +435,10 @@
   "deadline": {
     "rule": "last_day_of_month_after_period",
     "legal_reference": "California Revenue and Taxation Code, section 6452(a) — the return for each quarterly period is due, together with the remittance, on or before the last day of the month following each quarterly period. Section 6455(a) lets the Department require returns for other periods, in which case the same last-day rule applies to that period."
+  },
+  "rounding": {
+    "unit": 1,
+    "legal_reference": "CDTFA-401-A, State, Local, and District Sales and Use Tax Return, revision 1-26 — the form asks the filer to \"please round cents to the nearest whole dollar\". Each line is rounded from its exact figure; the ledger keeps the cents.",
+    "source": "cdtfa-401-a"
   }
 }
