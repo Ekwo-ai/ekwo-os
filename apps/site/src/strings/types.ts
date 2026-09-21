@@ -245,13 +245,25 @@ export interface Strings {
     description: string;
     heading: string;
     lead: string;
-    caption: string;
-    everyPair: string;
+    /** The two pickers. */
+    first: string;
+    second: string;
     onlyOne: string;
     carries: string;
-    /** `{a}` and `{b}` are replaced by the two countries. */
-    pairTitle: string;
-    pairDescription: string;
+    /** Said only where the browser cannot hide the countries not picked. */
+    everyColumn: string;
+  };
+
+  /** The grouping of every list of countries. */
+  regions: {
+    /** The jump links, to a screen reader. */
+    label: string;
+    search: string;
+    noMatch: string;
+    /** The group of a country the United Nations list does not place. */
+    unplaced: string;
+    /** On a page that summarises, the link to the whole list. */
+    all: string;
   };
 
   /** The rows of the status table, by the key `rows.tsx` gives each one. */

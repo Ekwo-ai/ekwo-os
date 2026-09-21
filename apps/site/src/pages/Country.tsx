@@ -82,7 +82,7 @@ export function Country({
         <nav className="mt-14 flex flex-wrap gap-x-6 gap-y-2 text-sm">
           <Out href={repository.dir(`packs/${country.slug}`)}>{s.packFiles}</Out>
           <Out href={repository.file('docs/packs.md')}>{s.writeYours}</Out>
-          <a href="/compare/">{s.compare}</a>
+          <a href={`/compare/?a=${country.slug}`}>{s.compare}</a>
         </nav>
       </main>
       <Footer repository={repository} measure="page" strings={strings} />

@@ -801,3 +801,74 @@
     opacity: 1;
   }
 }
+
+/*
+ * The comparison of two countries, without scripting.
+ *
+ * `/compare/` carries every country's column; the rules that show the two
+ * picked are generated per pack in `pages/Compare.tsx`, beside the table, and
+ * sit inside `@supports selector(:has(*))` like everything here that hides.
+ *
+ * What is here is what does not depend on the packs. By default — which is
+ * what a browser without `:has()` keeps — every cell is shown, one under the
+ * other, each under its country's name, and the header row is not drawn:
+ * with every column visible it would be a row two hundred names wide. Where
+ * `:has()` works, the cells are hidden until picked, the sentence explaining
+ * the long version goes, and from `sm` up each row is three columns — the
+ * question and the two answers — with the names in the header rather than in
+ * every cell.
+ */
+.compare-row {
+  display: block;
+}
+
+/*
+ * A cell and the name above it, written here rather than as utilities: the
+ * page carries one per row per country, and at two hundred countries the same
+ * class list repeated two thousand times is weight a reader downloads for
+ * nothing.
+ */
+.compare td {
+  padding: 0.5rem 0 1rem;
+}
+
+.compare-label {
+  display: block;
+  margin-bottom: 0.125rem;
+  font-size: var(--text-xs);
+  line-height: var(--text-xs--line-height);
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+  color: var(--color-ink-faint);
+}
+
+.compare-head {
+  display: none;
+}
+
+@supports selector(:has(*)) {
+  .compare [data-c],
+  .compare-fallback {
+    display: none;
+  }
+
+  @media (min-width: 40rem) {
+    .compare-head {
+      display: block;
+    }
+
+    .compare-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr) minmax(0, 1.5fr);
+      column-gap: 1.5rem;
+    }
+
+    .compare td {
+      padding: 1rem 0;
+    }
+
+    .compare-label {
+      display: none;
+    }
+  }
+}

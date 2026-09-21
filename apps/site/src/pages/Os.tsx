@@ -13,10 +13,11 @@
 import type { ReactNode } from 'react';
 import type { SiteData } from '../data.js';
 import type { Strings } from '../strings/index.js';
-import { Command, Eyebrow, Footer, Masthead, Out, StatusPill } from './ui.js';
+import { RegionSummary } from './Regions.js';
+import { Command, Eyebrow, Footer, Masthead, Out } from './ui.js';
 
 export function Os({ data, strings }: { data: SiteData; strings: Strings }): ReactNode {
-  const { countries, repository } = data;
+  const { repository } = data;
   const s = strings.os;
   return (
     <>
@@ -45,21 +46,9 @@ export function Os({ data, strings }: { data: SiteData; strings: Strings }): Rea
           <h2 id="countries-heading" className="text-[0.6875rem] uppercase tracking-[0.16em] text-ink-faint">
             {s.countries}
           </h2>
-          <ul className="mt-3 divide-y divide-line border-y border-line">
-            {countries.map((country) => (
-              <li key={country.slug}>
-                <a
-                  href={`/countries/${country.slug}/`}
-                  className="flex items-center gap-3 py-3 no-underline transition-colors duration-150 hover:text-brand-deep"
-                >
-                  <span className="font-mono text-sm text-ink-faint">{country.slug}</span>
-                  <span className="text-ink">{country.name}</span>
-                  <span className="flex-1" />
-                  <StatusPill status={country.certification.status} />
-                </a>
-              </li>
-            ))}
-          </ul>
+          <div className="mt-3 border-y border-line">
+            <RegionSummary regions={data.regions} strings={strings} />
+          </div>
           <p className="mt-4 text-sm text-ink-faint">
             {s.missing}{' '}
             <Out href={repository.file('docs/packs.md')}>{s.guide}</Out>

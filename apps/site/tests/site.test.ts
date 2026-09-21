@@ -7,6 +7,7 @@ import { readSiteData } from '../src/data.js';
 import { document, renderPages, robots, siteOrigin, sitemap } from '../src/render.js';
 import { statusRows } from '../src/pages/rows.js';
 import { HANDED_TO_THE_APPLICATION, SUPABASE_HREF } from '../src/pages/ui.js';
+import { PICKERS } from '../src/pages/Compare.js';
 import { DOCS, FORMATS_DIR } from '../src/data/docs.js';
 import { CLAUDE_CODE_TOOLS, MCP_PREFIX } from '../src/demo.js';
 import { AUTOMATION, CAPABILITIES, PLANNED_MODULES } from '../src/data/capabilities.js';
@@ -46,8 +47,7 @@ const ROWS = statusRows(SOURCE);
 
 describe('the pages that exist', () => {
   it('is one per pack and one per article, plus the five pages of the site, for every language', () => {
-    const pairs = (slugs.length * (slugs.length - 1)) / 2;
-    expect(pages.length).toBe(LANGUAGES.length * (slugs.length + pairs + data.docs.length + 5));
+    expect(pages.length).toBe(LANGUAGES.length * (slugs.length + data.docs.length + 5));
   });
 
   it('publishes the source language at the root, and every other under its prefix', () => {
@@ -91,21 +91,34 @@ describe('the pages that exist', () => {
     }
   });
 
-  it('compares every pair of packs once, and never a pack with itself', () => {
-    const comparisons = pages.filter(
-      (page) => page.url.startsWith(COMPARE) && page.url !== COMPARE,
-    );
-    expect(comparisons.length).toBe((slugs.length * (slugs.length - 1)) / 2);
-    const seen = new Set<string>();
-    for (const page of comparisons) {
-      const pair = page.url.slice(COMPARE.length, -1).split('-');
-      expect(pair.length).toBe(2);
-      expect(pair[0]).not.toBe(pair[1]);
-      for (const slug of pair) expect(slugs).toContain(slug);
-      const key = [...pair].sort().join('-');
-      expect(seen.has(key), `${key} is compared twice`).toBe(false);
-      seen.add(key);
+  it('compares any two packs on one page, never on a page per pair', () => {
+    expect(pages.filter((page) => page.url.startsWith(COMPARE)).map((page) => page.url)).toEqual([COMPARE]);
+    const body = byUrl.get(COMPARE)!.body;
+    for (const picker of PICKERS) {
+      const select = new RegExp(`<select id="${picker}"[^>]*>([\\s\\S]*?)</select>`).exec(body);
+      expect(select, `${picker} is not drawn`).not.toBeNull();
+      const options = [...select![1]!.matchAll(/<option value="([a-z]{2})"/g)].map((m) => m[1]);
+      expect([...options].sort()).toEqual([...slugs].sort());
     }
+    // Every row carries one cell per pack, and every pack has the two rules
+    // that show its cells when it is picked.
+    for (const slug of slugs) {
+      expect(body.split(`<td role="cell" data-c="${slug}"`).length - 1).toBe(ROWS.length);
+      for (const picker of PICKERS) {
+        expect(body).toContain(`#${picker} option[value="${slug}"]:checked`);
+      }
+    }
+  });
+
+  it('shows two different packs before anybody picks', () => {
+    const body = byUrl.get(COMPARE)!.body;
+    const chosen = PICKERS.map(
+      (picker) =>
+        new RegExp(`<select id="${picker}"[\\s\\S]*?<option value="([a-z]{2})" selected`).exec(body)?.[1],
+    );
+    expect(chosen[0]).toBeDefined();
+    expect(chosen[1]).toBeDefined();
+    expect(chosen[0]).not.toBe(chosen[1]);
   });
 
   it('gives every page a title and a description of its own', () => {
@@ -128,7 +141,7 @@ describe('the pages that exist', () => {
  * as a quoted string or the name of a country a pack describes.
  */
 describe('no country is written into the site', () => {
-  const skip = new Set(['world.json', 'icons', 'fonts']);
+  const skip = new Set(['world.json', 'regions.json', 'icons', 'fonts']);
 
   async function sources(dir: string): Promise<string[]> {
     const out: string[] = [];
@@ -214,7 +227,9 @@ describe('the home page', () => {
     const body = home().body;
     // Far more shapes than packs: the map is the world, not the coverage.
     expect(data.world.countries.length).toBeGreaterThan(slugs.length * 10);
-    expect(data.world.covered).toBe(slugs.length);
+    // Never more shapes coloured than packs; fewer where a country is too
+    // small to be drawn at this scale, which the list under the map names.
+    expect(data.world.covered).toBeLessThanOrEqual(slugs.length);
     expect(body).toContain(data.repository.file('docs/packs.md'));
   });
 
@@ -554,7 +569,8 @@ describe('the links between pages', () => {
   it('point at pages that were built', () => {
     const built = new Set(pages.map((page) => page.url));
     for (const page of pages) {
-      for (const match of page.body.matchAll(/href="(\/[^"#]*)"/g)) {
+      // The query is read by the page, not served: `/compare/?a=…` is `/compare/`.
+      for (const match of page.body.matchAll(/href="(\/[^"#?]*)"/g)) {
         const href = match[1] as string;
         if (handedOver.has(href)) continue;
         expect(built.has(href), `${page.url} links to ${href}, which is not built`).toBe(true);
@@ -674,12 +690,25 @@ describe('an address this site does not have', () => {
     const rules = (await readFile(join(repoRootDir(), 'apps/site/public/_redirects'), 'utf8'))
       .split('\n')
       .filter((line) => line.trim() !== '' && !line.startsWith('#'));
-    expect(rules).toHaveLength(1);
-    const [from, to, status] = (rules[0] as string).trim().split(/\s+/);
+    expect(rules).toHaveLength(2);
+    const [from, to, status] = (rules[rules.length - 1] as string).trim().split(/\s+/);
     expect(from).toBe('/*');
     expect(to).toMatch(/^https:\/\/[^/]+\/:splat$/);
     // No "!": a forced rule would replace the pages of the site themselves.
     expect(status).toBe('302');
+  });
+
+  it('sends the old page of a pair to the comparison, with one rule, before the last', async () => {
+    const rules = (await readFile(join(repoRootDir(), 'apps/site/public/_redirects'), 'utf8'))
+      .split('\n')
+      .filter((line) => line.trim() !== '' && !line.startsWith('#'));
+    const [from, to, status] = (rules[0] as string).trim().split(/\s+/);
+    // A placeholder, so it holds for every pair there ever was or will be.
+    expect(from).toBe(`${COMPARE}:pair`);
+    expect(to).toBe(`${COMPARE}?pair=:pair`);
+    expect(status).toBe('301');
+    // It shadows nothing: no page is built under the comparison.
+    expect(pages.filter((page) => page.url.startsWith(COMPARE) && page.url !== COMPARE)).toEqual([]);
   });
 });
 

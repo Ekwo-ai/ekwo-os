@@ -1,106 +1,117 @@
 /**
- * Two countries, side by side, without a line of JavaScript.
+ * Two countries, side by side, on one page, without a line of JavaScript.
  *
- * The choice is made by following a link, because a `<select>` that filters a
- * table needs scripting and this site has none. So every unordered pair of
- * packs gets its own page — `/compare/<a>-<b>/` — and `/compare/` is the
- * matrix of links to them. The pages are generated from `listPacks()`, so a
- * new pack adds a row, a column and its pairs with nothing edited here.
+ * The first version gave every unordered pair its own page, `/compare/<a>-<b>/`.
+ * That is n(n-1)/2 pages and an n×n matrix of links to them: fifteen at six
+ * countries, 1,225 at fifty, 19,900 at two hundred — for a project whose whole
+ * argument is that the rest of the world is coming. So there is one page now.
+ *
+ * It carries every country's column once, and two native `<select>`s choose
+ * which two are shown. The choosing is CSS: a `<select>` marks its chosen
+ * `<option>` as `:checked`, and `:has()` lets the table ask the picker which
+ * one that is. The rules are one pair per pack, generated below from the same
+ * list as the columns, so a pack added to `packs/` adds a column, an option and
+ * its two rules with nothing edited here. The page and the stylesheet grow by
+ * one column per country, never by one per pair.
+ *
+ * A `<select>` rather than a radio per country because at two hundred a radio
+ * group is a wall; the select groups the countries by region (`<optgroup>`),
+ * answers to typing the first letters of a name, and is the control every
+ * phone already knows how to draw.
+ *
+ * Where `:has()` is not understood, nothing is hidden: every column is shown,
+ * one under the other, each under its country's name, and a sentence says so.
+ * That is long, and it is correct. The inline script adds only what a static
+ * page cannot do: it reads `?a=` and `?b=` — and `?pair=`, which is where
+ * `public/_redirects` sends the addresses of the old pair pages — to set the
+ * two pickers, and writes the choice back into the address so it can be sent.
  *
  * The rows are `STATUS_ROWS`, the same list the country page prints in one
- * column. That is the point of the comparison: the two pages cannot answer the
- * same question differently, because it is asked once.
+ * column: the two pages cannot answer the same question differently, because
+ * it is asked once.
  */
 
 import type { ReactNode } from 'react';
 import type { PackDescription } from '../../../../packages/cli/src/index.js';
-import type { Repository, SiteData } from '../data.js';
-import { fill, type Strings } from '../strings/index.js';
+import type { Region, Repository, SiteData } from '../data.js';
+import type { Strings } from '../strings/index.js';
 import { statusRows, type StatusRow } from './rows.js';
-import { Footer, Masthead, Out } from './ui.js';
+import { regionName } from './Regions.js';
+import { Footer, Masthead } from './ui.js';
 
-/** The unordered pairs of a list, in the order the list gives them. */
-export function pairsOf<T>(items: readonly T[]): [T, T][] {
-  const pairs: [T, T][] = [];
-  for (let i = 0; i < items.length; i += 1) {
-    for (let j = i + 1; j < items.length; j += 1) {
-      pairs.push([items[i] as T, items[j] as T]);
-    }
-  }
-  return pairs;
+/** The two pickers, by the id the rules and the script find them by. */
+export const PICKERS = ['compare-a', 'compare-b'] as const;
+
+/**
+ * The rules that show the two columns picked, and nothing else.
+ *
+ * Two per pack: shown first when the first picker holds it, second when the
+ * second does. `order` places the cell in its row, so the table reads in the
+ * order the reader picked rather than the order of the packs. A slug is two
+ * lowercase letters, which is what makes it safe to write into a selector.
+ */
+export function compareRules(countries: readonly PackDescription[]): string {
+  const rules = countries.flatMap((country) =>
+    PICKERS.map(
+      (picker, index) =>
+        `.compare:has(#${picker} option[value="${country.slug}"]:checked) [data-c="${country.slug}"]{display:block;order:${index + 1}}`,
+    ),
+  );
+  return `@supports selector(:has(*)){${rules.join('')}}`;
 }
 
-/** The path of one comparison, from the two slugs. */
-export function comparePath(left: PackDescription, right: PackDescription): string {
-  return `compare/${left.slug}-${right.slug}/`;
-}
-
-/** `/compare/` — every pair there is, as a matrix of links. */
-export function CompareIndex({ data, strings }: { data: SiteData; strings: Strings }): ReactNode {
-  const { countries, repository } = data;
+/** `/compare/` — any two countries, picked on the page. */
+export function Compare({ data, strings }: { data: SiteData; strings: Strings }): ReactNode {
+  const { countries, regions, repository } = data;
   const s = strings.compare;
+  const [first, second] = countries;
   return (
     <>
       <Masthead measure="page" strings={strings} data={data} current="countries" />
       <main className="mx-auto max-w-page px-5 py-12">
         <h1 className="text-3xl font-semibold tracking-tight">{s.heading}</h1>
-        <p className="mt-3 max-w-reading text-ink-faint">
-          {s.lead}
-        </p>
+        <p className="mt-3 max-w-reading text-ink-faint">{s.lead}</p>
 
-        {countries.length < 2 ? (
-          <p className="mt-8 text-ink-faint">
-            {s.onlyOne}
-          </p>
+        {first === undefined || second === undefined ? (
+          <p className="mt-8 text-ink-faint">{s.onlyOne}</p>
         ) : (
-          <div className="mt-8 overflow-x-auto">
-            <table className="border-collapse text-sm">
-              <caption className="sr-only">
-                {s.caption}
-              </caption>
-              <thead>
-                <tr>
-                  <td />
+          <div className="compare mt-8" data-compare>
+            <style dangerouslySetInnerHTML={{ __html: compareRules(countries) }} />
+            <div className="grid gap-4 sm:grid-cols-2">
+              <Picker id={PICKERS[0]} label={s.first} regions={regions} chosen={first} strings={strings} />
+              <Picker id={PICKERS[1]} label={s.second} regions={regions} chosen={second} strings={strings} />
+            </div>
+            <p className="compare-fallback mt-6 text-sm text-ink-faint">{s.everyColumn}</p>
+
+            {/*
+              A comparison is genuinely tabular, so it stays a `<table>`; each
+              row is laid out as a grid so the two cells picked can be placed
+              by `order`, and the roles are written out because a browser that
+              sees a row drawn as a grid may otherwise stop calling it one.
+              Below the width of three columns the cells stack, each carrying
+              its country's name, since a value with its column header
+              off-screen says nothing.
+            */}
+            <table role="table" className="compare-table mt-10 w-full border-collapse text-sm">
+              <thead role="rowgroup" className="compare-head">
+                <tr role="row" className="compare-row border-b border-line text-left">
+                  <th role="columnheader" scope="col" className="pb-3 text-xs uppercase tracking-wide font-normal text-ink-faint">
+                    {s.carries}
+                  </th>
                   {countries.map((country) => (
-                    <th
-                      key={country.slug}
-                      scope="col"
-                      className="px-2 pb-2 text-center font-mono text-xs font-normal text-ink-faint"
-                    >
-                      {country.slug}
-                    </th>
+                    <Head key={country.slug} country={country} />
                   ))}
                 </tr>
               </thead>
-              <tbody>
-                {countries.map((row) => (
-                  <tr key={row.slug} className="border-t border-line">
-                    <th
-                      scope="row"
-                      className="py-1.5 pr-4 text-left font-normal whitespace-nowrap"
-                    >
-                      <span className="font-mono text-xs text-ink-faint">{row.slug}</span>{' '}
-                      <span className="text-ink">{row.name}</span>
+              <tbody role="rowgroup" className="block">
+                {statusRows(strings).map((row) => (
+                  <tr key={row.key} role="row" id={row.key} className="compare-row border-t border-line align-top">
+                    <th role="rowheader" scope="row" className="pt-4 pb-1 text-left font-normal sm:py-4">
+                      <span className="font-medium text-ink">{row.label}</span>
+                      <span className="mt-0.5 block text-xs leading-snug text-ink-faint">{row.hint}</span>
                     </th>
-                    {countries.map((column) => (
-                      <td key={column.slug} className="px-2 py-1.5 text-center">
-                        {row.slug === column.slug ? (
-                          <span className="text-ink-faint" aria-hidden="true">
-                            ·
-                          </span>
-                        ) : (
-                          <a
-                            href={`/${
-                              row.slug < column.slug
-                                ? comparePath(row, column)
-                                : comparePath(column, row)
-                            }`}
-                            aria-label={`Compare ${row.name} with ${column.name}`}
-                          >
-                            compare
-                          </a>
-                        )}
-                      </td>
+                    {countries.map((country) => (
+                      <Cell key={country.slug} country={country} row={row} repository={repository} />
                     ))}
                   </tr>
                 ))}
@@ -114,91 +125,46 @@ export function CompareIndex({ data, strings }: { data: SiteData; strings: Strin
   );
 }
 
-/** `/compare/<a>-<b>/` — the status table in two columns. */
-export function ComparePair({
-  left,
-  right,
-  data,
+/** One picker: every pack, grouped by region, one of them chosen. */
+function Picker({
+  id,
+  label,
+  regions,
+  chosen,
   strings,
 }: {
-  left: PackDescription;
-  right: PackDescription;
-  data: SiteData;
+  id: string;
+  label: string;
+  regions: Region[];
+  chosen: PackDescription;
   strings: Strings;
 }): ReactNode {
-  const { repository } = data;
-  const s = strings.compare;
   return (
-    <>
-      <Masthead measure="page" strings={strings} data={data} current="countries" />
-      <main className="mx-auto max-w-page px-5 py-12">
-        <p className="font-mono text-sm text-ink-faint">
-          {left.slug} · {right.slug}
-        </p>
-        <h1 className="mt-1 text-3xl font-semibold tracking-tight">
-          {left.name} and {right.name}
-        </h1>
-        <p className="mt-3 text-sm">
-          <a href="/compare/">{s.everyPair}</a>
-        </p>
-
-        {/*
-          Three columns on a screen with room, and three stacked blocks on a
-          phone. A comparison is genuinely tabular, so it stays a `<table>` and
-          keeps its semantics wherever the columns fit; below that the cells go
-          to `display: block` and each carries the country's name, because a
-          value with its column header off-screen says nothing.
-
-          Scrolling it sideways instead was the first version, and it was worse
-          than cramped: the height of a row is set by its tallest cell, so a
-          long legal reference in the column you could not see left a blank
-          band in the column you could, and the page looked broken.
-        */}
-        <div className="mt-10 sm:overflow-x-auto">
-          <table className="w-full border-collapse text-sm sm:min-w-3xl">
-            <thead className="hidden sm:table-header-group">
-              <tr className="border-b border-line text-left">
-                <th scope="col" className="w-1/4 pb-3 pr-6 text-xs uppercase tracking-wide font-normal text-ink-faint">
-                  {s.carries}
-                </th>
-                <Head country={left} />
-                <Head country={right} />
-              </tr>
-            </thead>
-            <tbody className="block sm:table-row-group">
-              {statusRows(strings).map((row) => (
-                <tr
-                  key={row.key}
-                  id={row.key}
-                  className="block border-t border-line align-top sm:table-row"
-                >
-                  <th
-                    scope="row"
-                    className="block pt-4 pr-6 text-left font-normal sm:table-cell sm:py-4"
-                  >
-                    <span className="font-medium text-ink">{row.label}</span>
-                    <span className="mt-0.5 block text-xs leading-snug text-ink-faint">{row.hint}</span>
-                  </th>
-                  <Cell country={left} row={row} repository={repository} />
-                  <Cell country={right} row={row} repository={repository} />
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-
-        <nav className="mt-12 flex flex-wrap gap-x-6 gap-y-2 text-sm">
-  
-        </nav>
-      </main>
-      <Footer repository={repository} measure="page" strings={strings} />
-    </>
+    <label className="block">
+      <span className="text-[0.6875rem] uppercase tracking-[0.12em] text-ink-faint">{label}</span>
+      <select
+        id={id}
+        name={id}
+        defaultValue={chosen.slug}
+        className="mt-1.5 block w-full rounded-sm border border-line bg-paper px-3 py-2.5 text-base text-ink focus:border-brand-soft focus:outline-none"
+      >
+        {regions.map((region) => (
+          <optgroup key={region.code} label={regionName(region, strings)}>
+            {region.countries.map((country) => (
+              <option key={country.slug} value={country.slug}>
+                {country.name}
+              </option>
+            ))}
+          </optgroup>
+        ))}
+      </select>
+    </label>
   );
 }
 
 function Head({ country }: { country: PackDescription }): ReactNode {
   return (
-    <th scope="col" className="w-[37.5%] pb-3 pr-6 text-left font-normal">
+    <th role="columnheader" scope="col" data-c={country.slug} className="pb-3 text-left font-normal">
       <a href={`/countries/${country.slug}/`} className="font-medium text-ink">
         {country.name}
       </a>
@@ -217,9 +183,9 @@ function Cell({
   repository: Repository;
 }): ReactNode {
   return (
-    <td className="block pt-2 pb-1 pr-6 last:pb-4 sm:table-cell sm:py-4 sm:pb-4">
+    <td role="cell" data-c={country.slug}>
       {/* The column header, repeated where the header row is not shown. */}
-      <span className="mb-0.5 block text-xs uppercase tracking-wide text-ink-faint sm:hidden">
+      <span className="compare-label">
         {country.name}
       </span>
       {row.cell(country, repository)}

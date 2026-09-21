@@ -392,16 +392,23 @@ export const en: Strings = {
     description: 'The same table in two columns, for any two of the country packs that ship here.',
     heading: 'Compare two countries',
     lead:
-      'The same table, in two columns. Every pair has its own page, so the comparison works ' +
-      'with scripting turned off and can be linked to.',
-    caption:
-      'Each cell links to the comparison of the country of its row with the country of its ' +
-      'column.',
-    everyPair: 'Every pair',
+      'Pick two countries. The table asks both packs the same questions, and it works with ' +
+      'scripting turned off.',
+    first: 'First country',
+    second: 'Second country',
     onlyOne: 'There is one country here so far, so there is nothing to compare it with.',
     carries: 'What the pack carries',
-    pairTitle: '{a} and {b} — Ekwo',
-    pairDescription: 'What the {a} and {b} packs carry, side by side.',
+    everyColumn:
+      'This browser cannot hide the countries you did not pick, so every country is listed ' +
+      'below, each under its name.',
+  },
+
+  regions: {
+    label: 'Regions',
+    search: 'Find a country',
+    noMatch: 'No country carries every word typed.',
+    unplaced: 'Not placed by the UN list',
+    all: 'Every country, by region',
   },
 
   rows: {

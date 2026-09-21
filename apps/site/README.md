@@ -1,5 +1,22 @@
 # `apps/site` — the public site
 
+## Status of this branch
+
+`site-compare-scale` — the site made to hold fifty countries, then two hundred.
+
+- **Done.** The comparison is one page, `/compare/`, instead of a page per
+  pair; the old pair addresses are sent there by one rule of `_redirects`.
+  Every list of countries — `/countries/`, `/os/`, the home page and the map in
+  words — is grouped by region, with a count, a jump link per region and, on
+  `/countries/`, a field that narrows the list. `tests/scale.test.ts` renders
+  the site with fifty and two hundred made-up packs and holds the page count
+  and the weight of the comparison to one column per country.
+- **Checked by hand.** The pickers switch the columns in Chromium, Firefox and
+  WebKit, and the default pair shows with scripting off. Under `netlify dev`,
+  `/compare/be-fr/` answers 301 to `/compare/?pair=be-fr`, `/compare/` is
+  served as itself, and any other unknown address still goes to the
+  application with a 302.
+
 One page per country, built from the packs of this repository. It is a private
 workspace: it is never published to npm, and nothing else in the repository
 depends on it.
@@ -12,8 +29,8 @@ npm run preview --workspace @ekwo-ai/site   # serves it at http://localhost:4173
 
 The output is static HTML, one stylesheet, two typefaces and nothing else.
 Every page is complete with scripting turned off — including the comparison of
-two countries, which is why each pair has its own address rather than a
-dropdown. One inline script exists, a few hundred bytes at the end of the body:
+two countries, whose two pickers are native `<select>`s read by CSS (see
+[Comparing two countries](#comparing-two-countries)). One inline script exists, a few hundred bytes at the end of the body:
 it reveals the button that copies a command, and the button ships `hidden` so
 nobody ever sees a control that does nothing. The site fetches nothing from
 another origin — not a font, not a script, not an image.
@@ -39,6 +56,7 @@ reads the disk, and it is the whole answer:
 | On the page | Read from |
 |---|---|
 | The countries, and their order | `listPacks()` — the directories of `packs/` |
+| The region each country is listed under | `src/data/regions.json`, the UN M49 list; the region's name from `Intl.DisplayNames` |
 | The name of every other country | `Intl.DisplayNames`, from the ISO code — never the geometry's own label, which ships abbreviated and sometimes outdated |
 | The colouring of the world map | the packs, matched on the country code |
 | Every counter on the home page | counted at build: packs, `packages/formats/`, `registerTool` in the MCP server, `expected-objects.json`, `*.test.ts` |
@@ -59,6 +77,63 @@ country code outside the menu the data generated.
 Adding a row to a country page means adding it to `STATUS_ROWS` in
 `src/pages/rows.tsx`, once. The country page prints those rows in one column
 and `/compare/` prints them in two, so they cannot come to disagree.
+
+## Comparing two countries
+
+The first version gave every unordered pair its own page, `/compare/<a>-<b>/`,
+under a matrix of links. That is n(n-1)/2 pages: 15 at six countries, 1,225 at
+fifty, 19,900 at two hundred, and a matrix of n² cells to reach them.
+
+It is **one page** now. `/compare/` carries every country's column once, and
+two native `<select>`s choose the two shown. A `<select>` marks its chosen
+`<option>` as `:checked`, and `:has()` lets the table ask which: two CSS rules
+per pack, generated with the columns (`compareRules()` in
+`src/pages/Compare.tsx`), show a cell when its country is picked and place it
+first or second with `order`. No script is involved in choosing.
+
+Why this and not the alternatives:
+
+- **A radio per country** does the same with `:has()`, and at two hundred is a
+  wall of four hundred buttons. A select groups the countries by region
+  (`<optgroup>`), answers to typing the first letters of a name, and is drawn
+  natively on a phone.
+- **A page per country**, `/compare/<cc>/`, listing the others would still
+  need every other column on each page to compare without scripting: n pages
+  of n columns, which is the quadratic cost again, in bytes instead of files.
+
+Without `:has()` (browsers older than 2023) nothing is hidden: every column is
+listed one under the other, each under its country's name, with a sentence
+saying why. The inline script only adds what a static page cannot: it sets
+the pickers from `?a=` / `?b=` (the link of a country page passes `?a=`) and
+from `?pair=`, and writes the choice back to the address so it can be sent.
+
+The weight, measured by `tests/scale.test.ts` on made-up packs (the body of
+the page, before the shared template):
+
+| Countries | Pages built | `/compare/` | `/countries/` |
+|---|---|---|---|
+| 6 (today) | 47 (62 before) | 49 KB, 7 KB gzipped | 14 KB |
+| 50 | 91 (1,316 before) | 296 KB | 38 KB |
+| 200 | 241 (20,141 before) | 1.1 MB | 113 KB |
+
+About 5.6 KB per country before compression, and roughly one after: the
+made-up packs are copies and compress better than real ones would, so the
+gzipped figure at two hundred is an estimate of 100–200 KB, not a measure.
+Pages and weight both grow by one column per country.
+
+## Two hundred countries in a list
+
+Every list of countries is grouped by the region the United Nations places
+the country in (`regionsOf()` in `src/data.ts`, drawing on
+`src/data/regions.json`), in two shapes from `src/pages/Regions.tsx`:
+`RegionList` — the menu of `/countries/`, with a jump link per region and a
+field that narrows it — and `RegionSummary`, one line of linked names per
+region, under the map and on `/os/`. The field is the same one the
+documentation uses (`Filter` in `src/pages/ui.tsx`): hidden until the inline
+script can make it work, with the browser's own find doing the job without it.
+The map colours the packs it has a shape for; the count beside it and the list
+under it are the packs', so a country too small to draw at 1:110m is still
+counted and named.
 
 ## What is shown, and what is claimed
 
@@ -89,6 +164,11 @@ Everything here is redistributable, and its licence ships with it.
   simple-icons carries no mark for a brand, the name is set as a word rather
   than redrawn or taken from a vendor's site. Names and logos belong to their
   owners; Ekwo is not affiliated with any of them.
+- **The regions**, in `src/data/regions.json`, from the M49 list of the
+  [UN Statistics Division](https://unstats.un.org/unsd/methodology/m49/overview/)
+  (Standard country or area codes for statistical use), copied once. Only the
+  code of each country's region is kept; its name comes from the platform. A
+  country the list does not place is grouped apart rather than guessed.
 - **The world map**, in `src/data/world.json`, derived from
   [Natural Earth](https://www.naturalearthdata.com), which is in the public
   domain. It was projected and simplified once, at 1:110m, with the far south
@@ -197,8 +277,10 @@ site sets it in `netlify.toml`, for the production context only.
 
 Two files in `public/` are read by the host and copied as they are:
 
-- **`_redirects`** has one rule. The domain of this site used to serve the
-  hosted application, and people hold links to it — a document they were sent,
+- **`_redirects`** has two rules. The first sends the old address of a pair,
+  `/compare/<a>-<b>/`, to `/compare/?pair=<a>-<b>` for good (301): one rule with
+  a placeholder, not a line per pair. The second is the last one. The domain
+  of this site used to serve the hosted application, and people hold links to it — a document they were sent,
   a client page, a timesheet. None of those is a page here, so an address the
   site does not have is handed to the application with its path and query
   kept, instead of being answered with a 404. The rule is not forced, so it

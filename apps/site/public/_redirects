@@ -6,4 +6,11 @@
 # links to it: a document somebody was sent, a client page, a timesheet. None of
 # them is a page here, so each is handed to the application, path and query
 # kept, rather than answered with a 404.
+#
+# The comparison of two countries used to be a page per pair, /compare/<a>-<b>/,
+# and those addresses were linked to. It is one page now: every old address is
+# sent there for good, the pair kept in the query, where the page reads it to
+# set its two pickers. One rule with a placeholder, not a line per pair, and
+# above the last line, which would otherwise take them first.
+/compare/:pair    /compare/?pair=:pair    301
 /*    https://app.ekwo.ai/:splat    302

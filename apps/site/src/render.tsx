@@ -6,11 +6,11 @@
  * ships rather than of a second rendering written to be testable.
  *
  * The list of pages is derived, never enumerated: for each language, one page
- * per pack of `listPacks()`, one per unordered pair of them, one per article
- * of the documentation, plus the home page, the core, the index of the
- * documentation, the index of countries and the index of pairs. Adding a country adds its page and its comparisons, and adding a
- * language adds the whole tree again under its prefix, with nothing here
- * edited.
+ * per pack of `listPacks()`, one per article of the documentation, plus the
+ * home page, the core, the index of the documentation, the index of countries
+ * and the comparison. Adding a country adds one page and a column of the
+ * comparison — never a page per pair — and adding a language adds the whole
+ * tree again under its prefix, with nothing here edited.
  *
  * **Country pages live under `/countries/<cc>/`.** A two-letter segment at the
  * root cannot be both a country and a language, and a site with this ambition
@@ -29,7 +29,7 @@ import { Os } from './pages/Os.js';
 import { Countries } from './pages/Countries.js';
 import { DocsArticle, DocsIndex, descriptionOf, titleOf } from './pages/Docs.js';
 import { Country } from './pages/Country.js';
-import { CompareIndex, ComparePair, comparePath, pairsOf } from './pages/Compare.js';
+import { Compare, PICKERS } from './pages/Compare.js';
 
 export interface RenderedPage {
   /** Where the file goes, relative to the output directory. */
@@ -115,21 +115,9 @@ function pagesOf(data: SiteData, strings: Strings): RenderedPage[] {
       lang,
       s.compare.title,
       s.compare.description,
-      <CompareIndex data={data} strings={s} />,
+      <Compare data={data} strings={s} />,
     ),
   );
-
-  for (const [left, right] of pairsOf(data.countries)) {
-    pages.push(
-      page(
-        `${at}${comparePath(left, right)}`,
-        lang,
-        fill(s.compare.pairTitle, { a: left.name, b: right.name }),
-        fill(s.compare.pairDescription, { a: left.name, b: right.name }),
-        <ComparePair left={left} right={right} data={data} strings={s} />,
-      ),
-    );
-  }
 
   return pages;
 }
@@ -167,9 +155,11 @@ const THEME_SCRIPT = `
 
 /**
  * The deferred half: what the two buttons do, the buttons that copy a
- * command or a block of code, and the search box of the documentation, which hides the entries
- * of the list that do not carry every word typed. None of it is needed to read
- * anything, so all of it waits until the end of the body.
+ * command or a block of code, the search field of a list — the documentation,
+ * the countries — which hides the entries that do not carry every word typed,
+ * and the two pickers of the comparison, which it sets from the address and
+ * writes back into it. None of it is needed to read anything, so all of it
+ * waits until the end of the body.
  */
 const ENHANCEMENT = `
 (function () {
@@ -220,29 +210,44 @@ const ENHANCEMENT = `
       setTimeout(function () { idle.hidden = false; done.hidden = true; }, 1400);
     });
   }
-  for (const scope of document.querySelectorAll('[data-docs-scope]')) {
-    var box = scope.querySelector('[data-docs-search]');
+  for (const scope of document.querySelectorAll('[data-filter-scope]')) {
+    var box = scope.querySelector('[data-filter]');
     if (!box) continue;
     box.hidden = false;
-    let input = box.querySelector('input'), empty = scope.querySelector('[data-docs-empty]');
+    let input = box.querySelector('input'), empty = scope.querySelector('[data-filter-empty]');
     input.addEventListener('input', function () {
       var words = input.value.toLowerCase().split(/\\s+/).filter(Boolean);
-      var items = scope.querySelectorAll('[data-doc-item]');
+      var items = scope.querySelectorAll('[data-filter-item]');
       for (const item of items) {
         var text = item.getAttribute('data-search') || '';
         item.hidden = !words.every(function (w) { return text.indexOf(w) !== -1; });
       }
       for (const item of items) {
         if (item.hidden) continue;
-        for (var up = item.parentElement.closest('[data-doc-item]'); up; up = up.parentElement.closest('[data-doc-item]')) up.hidden = false;
+        for (var up = item.parentElement.closest('[data-filter-item]'); up; up = up.parentElement.closest('[data-filter-item]')) up.hidden = false;
       }
       var any = false;
-      for (const group of scope.querySelectorAll('[data-doc-group]')) {
-        group.hidden = !group.querySelector('[data-doc-item]:not([hidden])');
+      for (const group of scope.querySelectorAll('[data-filter-group]')) {
+        group.hidden = !group.querySelector('[data-filter-item]:not([hidden])');
         any = any || !group.hidden;
       }
       if (empty) empty.hidden = any;
     });
+  }
+  /* The comparison: ?a=&b=, or ?pair=a-b from an old pair address. */
+  var a = document.getElementById('${PICKERS[0]}'), b = document.getElementById('${PICKERS[1]}');
+  if (a && b) {
+    var q = new URLSearchParams(location.search), pair = (q.get('pair') || '').split('-');
+    var set = function (select, value) {
+      for (const option of select.options) if (option.value === value) { select.value = value; return; }
+    };
+    set(a, q.get('a') || pair[0]); set(b, q.get('b') || pair[1]);
+    if (a.value === b.value)
+      for (const option of b.options) if (option.value !== a.value) { b.value = option.value; break; }
+    var keep = function () {
+      history.replaceState(null, '', location.pathname + '?a=' + a.value + '&b=' + b.value + location.hash);
+    };
+    a.addEventListener('change', keep); b.addEventListener('change', keep);
   }
 })();
 `.trim();

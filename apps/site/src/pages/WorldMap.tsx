@@ -14,27 +14,33 @@
  *
  * Accessibility, and the same thing as working without scripting: the shapes
  * are links with accessible names, and the list underneath is the map in words
- * — the covered countries by name and status, and the count of the rest. A
+ * — the covered countries by name, by region, and the count of the rest. A
  * reader who cannot use the picture loses nothing but the picture.
  */
 
 import type { ReactNode } from 'react';
-import type { Repository, WorldMap as WorldMapData } from '../data.js';
+import type { Region, Repository, WorldMap as WorldMapData } from '../data.js';
 import type { Strings } from '../strings/index.js';
-import { StatusPill } from './ui.js';
+import { RegionSummary } from './Regions.js';
 
 export function WorldMap({
   world,
+  regions,
   repository,
   strings,
 }: {
   world: WorldMapData;
+  /** Every pack by region: the map in words, which also names the ones too small to draw. */
+  regions: Region[];
   repository: Repository;
   strings: Strings;
 }): ReactNode {
   const s = strings.home.world;
   const covered = world.countries.filter((country) => country.pack !== null);
   const open = world.countries.length - covered.length;
+  // Counted from the packs, not the shapes: a country too small to draw at
+  // this scale is still written.
+  const written = regions.reduce((sum, region) => sum + region.countries.length, 0);
   const write = repository.file('docs/packs.md');
 
   return (
@@ -91,7 +97,7 @@ export function WorldMap({
         <span className="inline-flex items-center gap-2">
           <span className="h-3 w-3 rounded-sm bg-brand" aria-hidden />
           <span className="text-ink-soft">
-            {covered.length} {s.written}
+            {written} {s.written}
           </span>
         </span>
         <span className="inline-flex items-center gap-2">
@@ -102,20 +108,15 @@ export function WorldMap({
         </span>
       </div>
 
-      {/* The map in words. It is not a fallback: it is the same thing, listed. */}
-      <ul className="mt-6 flex flex-wrap gap-2">
-        {covered.map((country) => (
-          <li key={country.code}>
-            <a
-              href={`/countries/${country.pack!.slug}/`}
-              className="inline-flex items-center gap-2 rounded-pill border border-line bg-paper px-3 py-1.5 text-sm no-underline transition-colors duration-150 hover:border-brand"
-            >
-              <span className="text-ink">{country.name}</span>
-              <StatusPill status={country.pack!.status} />
-            </a>
-          </li>
-        ))}
-      </ul>
+      {/*
+        The map in words. It is not a fallback: it is the same thing, listed —
+        by region, because it is written to hold two hundred names, and from
+        the packs rather than the shapes, because a country too small to be
+        drawn at this scale still has its pack.
+      */}
+      <div className="mt-6 border-y border-line">
+        <RegionSummary regions={regions} strings={strings} />
+      </div>
     </div>
   );
 }

@@ -28,7 +28,7 @@ import { COPY_SLOT } from '../markdown.js';
 import { TOPICS, type Topic } from '../data/docs.js';
 import { fill, type Strings } from '../strings/index.js';
 import { Glyph } from './icons.js';
-import { Card, Eyebrow, Footer, Masthead, Out } from './ui.js';
+import { Card, Eyebrow, Filter, Footer, Masthead, Out } from './ui.js';
 
 /** What the list and the heading call an article. A format library is named by its README. */
 export function labelOf(article: DocArticle, strings: Strings): string {
@@ -105,24 +105,6 @@ function childrenOf(docs: DocArticle[], parent: DocArticle): DocArticle[] {
   return docs.filter((article) => article.parent === parent.slug);
 }
 
-/** The field, hidden until the inline script can make it work. */
-function Search({ strings }: { strings: Strings }): ReactNode {
-  return (
-    <label data-docs-search hidden className="relative block">
-      <span className="sr-only">{strings.docs.search}</span>
-      <span className="pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 text-ink-faint">
-        <Glyph name="search" className="h-4 w-4" />
-      </span>
-      <input
-        type="search"
-        placeholder={strings.docs.search}
-        autoComplete="off"
-        className="w-full rounded-sm border border-line bg-paper py-2 pr-3 pl-9 text-sm text-ink placeholder:text-ink-faint focus:border-brand-soft focus:outline-none"
-      />
-    </label>
-  );
-}
-
 /** Every article, by topic: the sidebar of an article and the disclosure that replaces it. */
 function ArticleList({
   docs,
@@ -148,14 +130,14 @@ function ArticleList({
     );
   };
   return (
-    <div data-docs-scope className="flex flex-col gap-6">
-      <Search strings={strings} />
+    <div data-filter-scope className="flex flex-col gap-6">
+      <Filter label={strings.docs.search} />
       <nav aria-label={strings.docs.label} className="flex flex-col gap-6 text-sm">
         {TOPICS.map((topic) => {
           const articles = byTopic(docs, topic);
           if (articles.length === 0) return null;
           return (
-            <div key={topic} data-doc-group>
+            <div key={topic} data-filter-group>
               <p className="px-2.5 text-[0.6875rem] uppercase tracking-[0.14em] text-ink-faint">
                 {strings.docs.topics[topic].title}
               </p>
@@ -163,12 +145,12 @@ function ArticleList({
                 {articles.map((article) => {
                   const children = childrenOf(docs, article);
                   return (
-                    <li key={article.slug} data-doc-item data-search={searchText(article, strings)}>
+                    <li key={article.slug} data-filter-item data-search={searchText(article, strings)}>
                       {link(article, false)}
                       {children.length === 0 ? null : (
                         <ul className="mt-0.5 ml-2.5 flex flex-col gap-0.5 border-l border-line pl-1.5">
                           {children.map((child) => (
-                            <li key={child.slug} data-doc-item data-search={searchText(child, strings)}>
+                            <li key={child.slug} data-filter-item data-search={searchText(child, strings)}>
                               {link(child, true)}
                             </li>
                           ))}
@@ -181,7 +163,7 @@ function ArticleList({
             </div>
           );
         })}
-        <p data-docs-empty hidden className="px-2.5 text-ink-faint">
+        <p data-filter-empty hidden className="px-2.5 text-ink-faint">
           {strings.docs.noMatch}
         </p>
       </nav>
@@ -199,15 +181,15 @@ export function DocsIndex({ data, strings }: { data: SiteData; strings: Strings 
         <h1 className="mt-4 text-[clamp(2.5rem,1.8rem+3vw,3.75rem)]">{d.heading}</h1>
         <p className="mt-5 max-w-reading text-lg text-ink-soft">{d.lead}</p>
 
-        <div data-docs-scope className="mt-10">
+        <div data-filter-scope className="mt-10">
           <div className="max-w-md">
-            <Search strings={strings} />
+            <Filter label={strings.docs.search} />
           </div>
           {TOPICS.map((topic) => {
             const articles = byTopic(data.docs, topic);
             if (articles.length === 0) return null;
             return (
-              <section key={topic} data-doc-group className="mt-14" aria-labelledby={`topic-${topic}`}>
+              <section key={topic} data-filter-group className="mt-14" aria-labelledby={`topic-${topic}`}>
                 <h2 id={`topic-${topic}`} className="text-2xl">
                   {d.topics[topic].title}
                 </h2>
@@ -218,7 +200,7 @@ export function DocsIndex({ data, strings }: { data: SiteData; strings: Strings 
                     return (
                       <li
                         key={article.slug}
-                        data-doc-item
+                        data-filter-item
                         data-search={[article, ...children].map((a) => searchText(a, strings)).join(' ')}
                         className="min-w-0"
                       >
@@ -250,7 +232,7 @@ export function DocsIndex({ data, strings }: { data: SiteData; strings: Strings 
               </section>
             );
           })}
-          <p data-docs-empty hidden className="mt-10 text-ink-faint">
+          <p data-filter-empty hidden className="mt-10 text-ink-faint">
             {d.noMatch}
           </p>
         </div>

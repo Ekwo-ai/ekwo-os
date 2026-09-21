@@ -57,6 +57,34 @@ export function StatusPill({ status }: { status: string }): ReactNode {
   );
 }
 
+/**
+ * A field that narrows the list around it, hidden until the inline script can
+ * make it work.
+ *
+ * It sits inside a `data-filter-scope`; every entry of the list is a
+ * `data-filter-item` carrying its words in `data-search`, lowercase, and the
+ * script hides the entries that do not carry every word typed and the
+ * `data-filter-group` left with none. It costs no request, and without
+ * scripting there is no field that does nothing: the whole list is there to
+ * read, and the browser's own find searches it.
+ */
+export function Filter({ label }: { label: string }): ReactNode {
+  return (
+    <label data-filter hidden className="relative block">
+      <span className="sr-only">{label}</span>
+      <span className="pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 text-ink-faint">
+        <Glyph name="search" className="h-4 w-4" />
+      </span>
+      <input
+        type="search"
+        placeholder={label}
+        autoComplete="off"
+        className="w-full rounded-sm border border-line bg-paper py-2 pr-3 pl-9 text-sm text-ink placeholder:text-ink-faint focus:border-brand-soft focus:outline-none"
+      />
+    </label>
+  );
+}
+
 /** A label above a value. */
 export function Field({ label, children }: { label: string; children: ReactNode }): ReactNode {
   return (

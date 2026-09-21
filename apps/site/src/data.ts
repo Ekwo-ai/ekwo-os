@@ -33,6 +33,7 @@ import { renderMarkdown, type Heading, type Slice } from './markdown.js';
 import { DOCS, FORMATS_DIR, FORMATS_TOPIC, type DocSource, type Topic } from './data/docs.js';
 import { SOURCE } from './strings/index.js';
 import world from './data/world.json' with { type: 'json' };
+import m49 from './data/regions.json' with { type: 'json' };
 
 /** The branch a link into the repository points at. */
 const BRANCH = 'main';
@@ -76,6 +77,23 @@ export interface WorldMap {
   covered: number;
 }
 
+/**
+ * A part of the world, and the packs written for it.
+ *
+ * The grouping is what keeps a list of two hundred countries readable: the
+ * menu, the index and the map all print countries under their region rather
+ * than in one column. `code` is the United Nations M49 code of the region,
+ * which is also what the platform's region names answer to, so the name is
+ * translated with nothing written here.
+ */
+export interface Region {
+  /** M49, such as `150`; the empty string for a country the list does not place. */
+  code: string;
+  /** In the language rendered; empty for the unplaced, which the strings name. */
+  name: string;
+  countries: PackDescription[];
+}
+
 /** One page of the documentation: a Markdown file of the repository, rendered. */
 export interface DocArticle {
   /** The key the strings title it by; `formats/<dir>` for a format library. */
@@ -98,6 +116,8 @@ export interface DocArticle {
 /** Everything one build of the site needs. */
 export interface SiteData {
   countries: PackDescription[];
+  /** The same packs, by region: every pack in exactly one, no region empty. */
+  regions: Region[];
   /** Every page of the documentation, the manifesto among them, in the order they are listed. */
   docs: DocArticle[];
   positioningHtml: string;
@@ -130,6 +150,7 @@ export async function readSiteData(): Promise<SiteData> {
 
   return {
     countries,
+    regions: regionsOf(countries, SOURCE.lang),
     docs: await readDocs(root, repository),
     positioningHtml: await marked.parseInline(positioningLine(readme)),
     repository,
@@ -184,7 +205,7 @@ async function countersOf(
  * packs. A country nothing here covers is drawn all the same and links to the
  * guide for writing a pack, which is the message rather than an omission.
  */
-function worldOf(countries: PackDescription[], lang: string): WorldMap {
+export function worldOf(countries: PackDescription[], lang: string): WorldMap {
   const byCode = new Map(countries.map((country) => [country.country, country]));
   // The geometry ships abbreviated and sometimes outdated labels — a country
   // renamed in 2019 still under its old name, "Bosnia and Herz.", "Dem. Rep.
@@ -213,6 +234,38 @@ function worldOf(countries: PackDescription[], lang: string): WorldMap {
     other: world.other,
     covered: shapes.filter((shape) => shape.pack !== null).length,
   };
+}
+
+/**
+ * The packs, grouped by the region the United Nations places their country in.
+ *
+ * The table is `data/regions.json`, copied once from the M49 list of the UN
+ * Statistics Division, the same way the map is copied once from Natural Earth:
+ * it is data about the world, not about this repository, and it names every
+ * country whether or not a pack exists. A country the list does not place goes
+ * to one group at the end rather than being guessed into a region.
+ *
+ * Regions are in alphabetical order of their name, and so are the countries
+ * within each — the order a reader scans a list in, and the order a
+ * `<select>` answers typing in. Exported because the test groups made-up packs with
+ * it to see the site hold at two hundred countries.
+ */
+export function regionsOf(countries: readonly PackDescription[], lang: string): Region[] {
+  const names = new Intl.DisplayNames([lang], { type: 'region' });
+  const table = m49.regions as Record<string, string>;
+  const byCode = new Map<string, PackDescription[]>();
+  for (const country of countries) {
+    const code = table[country.country] ?? '';
+    byCode.set(code, [...(byCode.get(code) ?? []), country]);
+  }
+  const regions = [...byCode].map(([code, members]) => ({
+    code,
+    name: code === '' ? '' : (names.of(code) ?? code),
+    countries: members.sort((a, b) => a.name.localeCompare(b.name, lang)),
+  }));
+  return regions.sort((a, b) =>
+    a.code === '' ? 1 : b.code === '' ? -1 : a.name.localeCompare(b.name, lang),
+  );
 }
 
 /**

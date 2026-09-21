@@ -25,6 +25,7 @@ import { AUTOMATION, CAPABILITIES, PLANNED_MODULES, type Family } from '../data/
 import { FOUNDATIONS, MODELS } from '../data/ecosystem.js';
 import { Demos } from './Terminal.js';
 import { WorldMap } from './WorldMap.js';
+import { regionAnchor, regionName } from './Regions.js';
 import { Glyph } from './icons.js';
 import {
   Action,
@@ -109,7 +110,7 @@ export function Landing({ data, strings }: { data: SiteData; strings: Strings })
         </p>
 
         <div className="mt-10">
-          <WorldMap world={data.world} repository={repository} strings={strings} />
+          <WorldMap world={data.world} regions={data.regions} repository={repository} strings={strings} />
         </div>
 
         {/* The mechanism, second and smaller: the ideal is the argument. */}
@@ -346,21 +347,24 @@ export function Landing({ data, strings }: { data: SiteData; strings: Strings })
           </div>
           <Card className="p-8">
             <h3 className="text-lg">{s.network.countriesToday}</h3>
+            {/* By region and counted: the names are under the map above. */}
             <ul className="mt-4 divide-y divide-line">
-              {data.countries.map((country) => (
-                <li key={country.slug}>
+              {data.regions.map((region) => (
+                <li key={region.code}>
                   <a
-                    href={`/countries/${country.slug}/`}
+                    href={`/countries/#${regionAnchor(region)}`}
                     className="flex items-center gap-3 py-2.5 no-underline"
                   >
-                    <span className="font-mono text-xs text-ink-faint">{country.slug}</span>
-                    <span className="text-ink">{country.name}</span>
+                    <span className="text-ink">{regionName(region, strings)}</span>
                     <span className="flex-1" />
-                    <StatusPill status={country.certification.status} />
+                    <span className="font-mono text-sm text-ink-faint">{region.countries.length}</span>
                   </a>
                 </li>
               ))}
             </ul>
+            <p className="mt-4 text-sm">
+              <a href="/countries/">{strings.regions.all}</a>
+            </p>
             <p className="mt-5 text-sm text-ink-faint">
               {s.network.openInvite}{' '}
               <Out href={repository.file('docs/packs.md')}>{s.network.guide}</Out>
