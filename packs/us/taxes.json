@@ -284,10 +284,11 @@
       "transport_evidence"
     ],
     "applies_when": {
-      "seller_in": "US-CA"
+      "seller_in": "US-CA",
+      "supply_vs_seller": "other"
     },
     "recoverable": false,
-    "legal_reference": "Revenue and Taxation Code, section 6396 — gross receipts are exempted from the computation of the sales tax where the contract of sale requires the property to be shipped, and it is shipped, to a point outside this state by the retailer's own facilities or by delivery to a carrier, customs broker or forwarding agent. This is the code for a sale into another state on which the seller charges no California tax and no other state's tax either, because they have no obligation to collect there. The treatment is `exempt` and not `export`, which in this vocabulary means goods leaving the country: the Ekwo treatments have no word for a supply outside the taxing territory but inside the country, and docs/international.md records that. No exemption reason code, for the reason given on US-CA-S-RESALE.",
+    "legal_reference": "Revenue and Taxation Code, section 6396 — gross receipts are exempted from the computation of the sales tax where the contract of sale requires the property to be shipped, and it is shipped, to a point outside this state by the retailer's own facilities or by delivery to a carrier, customs broker or forwarding agent. This is the code for a sale into another state on which the seller charges no California tax and no other state's tax either, because they have no obligation to collect there. `applies_when.supply_vs_seller: other` says the shipment leaves the seller's state, so the code is refused on a delivery inside California. The treatment is `exempt` and not `export`, which in this vocabulary means goods leaving the country: the Ekwo treatments have no word for a supply outside the taxing territory but inside the country, and docs/international.md records that. No exemption reason code, for the reason given on US-CA-S-RESALE.",
     "source": "ca-rtc",
     "vat_category": "E",
     "postings": {

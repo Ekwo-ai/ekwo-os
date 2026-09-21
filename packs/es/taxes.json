@@ -7,6 +7,9 @@
     "scope": "sale",
     "treatment": "domestic",
     "valid_from": "2012-09-01",
+    "applies_when": {
+      "supply_in": "ES"
+    },
     "legal_reference": "Ley 37/1992, art. 90.Uno — tipo general del 21 %, en la redacción del Real Decreto-ley 20/2012, art. 23.2, con efectos desde el 1 de septiembre de 2012. Modelo 303, casillas 07 (base) y 09 (cuota); una factura rectificativa va a las casillas 14 y 15, con signo menos, sin desglose por tipos",
     "source": "liva",
     "vat_category": "S",
@@ -46,6 +49,9 @@
     "scope": "sale",
     "treatment": "domestic",
     "valid_from": "2012-09-01",
+    "applies_when": {
+      "supply_in": "ES"
+    },
     "legal_reference": "Ley 37/1992, art. 91.Uno — tipo reducido del 10 %, en la redacción del Real Decreto-ley 20/2012, art. 23.3. Modelo 303, casillas 04 y 06",
     "source": "liva",
     "vat_category": "S",
@@ -85,6 +91,9 @@
     "scope": "sale",
     "treatment": "domestic",
     "valid_from": "1995-01-01",
+    "applies_when": {
+      "supply_in": "ES"
+    },
     "legal_reference": "Ley 37/1992, art. 91.Dos — tipo superreducido del 4 %, en la redacción de la Ley 41/1994 con efectos desde el 1 de enero de 1995. Modelo 303, casillas 01 y 03",
     "source": "liva",
     "vat_category": "S",
@@ -125,6 +134,9 @@
     "treatment": "domestic",
     "valid_from": "2010-07-01",
     "valid_to": "2012-08-31",
+    "applies_when": {
+      "supply_in": "ES"
+    },
     "legal_reference": "Ley 37/1992, art. 90.Uno, en la redacción de la Ley 26/2009, art. 79.1, del 1 de julio de 2010 al 31 de agosto de 2012. Se declara en la fila del tipo general, casillas 07 y 09",
     "source": "ley-26-2009",
     "vat_category": "S",
@@ -165,6 +177,9 @@
     "treatment": "domestic",
     "valid_from": "2010-07-01",
     "valid_to": "2012-08-31",
+    "applies_when": {
+      "supply_in": "ES"
+    },
     "legal_reference": "Ley 37/1992, art. 91.Uno, en la redacción de la Ley 26/2009, art. 79.2, del 1 de julio de 2010 al 31 de agosto de 2012. Se declara en la fila del tipo reducido, casillas 04 y 06",
     "source": "ley-26-2009",
     "vat_category": "S",
@@ -205,6 +220,9 @@
     "treatment": "domestic",
     "valid_from": "2023-01-01",
     "valid_to": "2024-09-30",
+    "applies_when": {
+      "supply_in": "ES"
+    },
     "legal_reference": "Real Decreto-ley 20/2022, art. 72.2, en la redacción del Real Decreto-ley 8/2023, art. 20 — pan común, harinas panificables, leche, quesos, huevos, frutas, verduras, hortalizas, legumbres, tubérculos y cereales, del 1 de enero de 2023 al 30 de junio de 2024; prorrogado hasta el 30 de septiembre de 2024 por el Real Decreto-ley 4/2024, art. 1.Uno.2, que añade los aceites de oliva desde el 1 de julio de 2024. Modelo 303, casillas 150 y 152",
     "source": "rdl-20-2022",
     "vat_category": "Z",
@@ -237,6 +255,9 @@
     "treatment": "domestic",
     "valid_from": "2023-01-01",
     "valid_to": "2024-09-30",
+    "applies_when": {
+      "supply_in": "ES"
+    },
     "legal_reference": "Real Decreto-ley 20/2022, art. 72.1, en la redacción del Real Decreto-ley 8/2023, art. 20 — aceites de oliva y de semillas y pastas alimenticias, del 1 de enero de 2023 al 30 de junio de 2024; Real Decreto-ley 4/2024, art. 1.Uno.1 — aceites de semillas y pastas alimenticias, del 1 de julio al 30 de septiembre de 2024. Modelo 303, casillas 153 y 155 (instrucciones 2024)",
     "source": "rdl-20-2022",
     "vat_category": "S",
@@ -280,6 +301,9 @@
     "treatment": "domestic",
     "valid_from": "2024-10-01",
     "valid_to": "2024-12-31",
+    "applies_when": {
+      "supply_in": "ES"
+    },
     "legal_reference": "Real Decreto-ley 4/2024, art. 1.Dos.2 — pan común, harinas panificables, leche, quesos, huevos, frutas, verduras, hortalizas, legumbres, tubérculos, cereales y aceites de oliva, del 1 de octubre al 31 de diciembre de 2024. Modelo 303, casillas 165 y 167, añadidas por la Orden HAC/819/2024",
     "source": "rdl-4-2024",
     "vat_category": "S",
@@ -323,6 +347,9 @@
     "treatment": "domestic",
     "valid_from": "2024-10-01",
     "valid_to": "2024-12-31",
+    "applies_when": {
+      "supply_in": "ES"
+    },
     "legal_reference": "Real Decreto-ley 4/2024, art. 1.Dos.1 — aceites de semillas y pastas alimenticias, del 1 de octubre al 31 de diciembre de 2024. Modelo 303, casillas 153 y 155 (instrucciones 2024 del modelo 303, periodos 09 a 12 y 3T a 4T)",
     "source": "rdl-4-2024",
     "vat_category": "S",
@@ -462,6 +489,9 @@
     "scope": "sale",
     "treatment": "domestic_reverse_charge",
     "valid_from": "2012-10-31",
+    "applies_when": {
+      "supply_in": "ES"
+    },
     "legal_reference": "Ley 37/1992, art. 84.Uno.2.º, letras b), c), e), f) y g) — el destinatario empresario es el sujeto pasivo: oro, desechos, inmuebles en ejecución de garantía o con renuncia a la exención, ejecuciones de obra de urbanización, construcción o rehabilitación y determinados productos electrónicos. Modelo 303, casilla 122. Validez desde el 31 de octubre de 2012, entrada en vigor de la letra f), añadida por la Ley 7/2012, de 29 de octubre, art. 5.4",
     "source": "liva",
     "vat_category": "AE",
@@ -495,6 +525,9 @@
     "scope": "sale",
     "treatment": "exempt",
     "valid_from": "1993-01-01",
+    "applies_when": {
+      "supply_in": "ES"
+    },
     "legal_reference": "Ley 37/1992, art. 20 — exenciones en operaciones interiores. El modelo 303 no declara estas operaciones en el periodo; figuran en el modelo 390 o, para quien está exonerado de él, en la casilla 83 del último periodo del año, que este paquete no transcribe",
     "source": "liva",
     "vat_category": "E",

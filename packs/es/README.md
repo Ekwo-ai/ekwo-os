@@ -88,6 +88,19 @@ acquisitions (10/11 and 36/37), services from suppliers outside the Union
 (12/13 and 28/29), imports assessed by customs (32/33), capital goods (30/31)
 and the 50 % presumption for passenger cars of art. 95.Tres.2.ª.
 
+**Spanish VAT stops at the Canary Islands, Ceuta and Melilla** (Ley 37/1992,
+art. 3). Since version 0.2.0 the domestic sale taxes — the rates, the
+temporary food rates, the domestic reverse charge and the exemptions of art.
+20 — say `applies_when: { "supply_in": "ES" }`, and the reference table marks
+`ES-CN`, `ES-CE` and `ES-ML` as outside the parent's tax. So `post_document()`
+refuses `ES-S-21` on a supply delivered in Las Palmas, and the same sale posts
+as `ES-S-EXP`, which is what the golden scenario does with its Canarian
+customer. Where the place of supply is Spain and the goods or the customer are
+abroad — a service to a consumer under art. 69, a distance sale under the
+threshold of art. 68 — the document says so in `supply_territory_code`, and
+the refusal names that column. The purchase taxes carry no condition: a
+foreign supplier may lawfully charge Spanish VAT.
+
 **Credit notes go where the form puts them.** A *factura rectificativa* issued
 is declared with a minus sign in boxes 14 and 15, not netted into the rate
 row; one received goes to boxes 40 and 41.
@@ -99,13 +112,10 @@ row; one received goes to boxes 40 and 41.
   same line. The core carries one tax per line and refuses `group`, so the
   surcharge cannot be posted. Its boxes (156–158, 168–170, 16–26) are declared
   and empty so that box 27 is the form's own formula.
-- **Canary Islands, Ceuta and Melilla.** They are outside the territory of
-  Spanish VAT (Ley 37/1992, art. 3) and levy IGIC and IPSI instead. The
-  territories `ES-CN`, `ES-CE` and `ES-ML` already exist in
-  `supabase/seed/00_territories.sql` with `eu_vat_scope` `none`, and the golden
-  scenario sells to a customer in `ES-CN` as an export. What the pack cannot
-  say is that the Spanish rates apply *everywhere in Spain except there*:
-  `applies_when` has no negation. No IGIC tax is carried.
+- **IGIC and IPSI.** The Canary Islands, Ceuta and Melilla are outside the
+  territory of Spanish VAT (Ley 37/1992, art. 3) and levy IGIC and IPSI
+  instead, which no tax here carries.
+
 - **Régimen especial del criterio de caja.** Optional, and the PGC names no
   transition account for the deferred VAT. Not modelled; its mention is.
 - **The simplified regime (módulos)**, agriculture, travel agencies, second-hand

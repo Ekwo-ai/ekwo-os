@@ -1058,6 +1058,9 @@ Sales and purchase invoices, credit notes, quotes and orders. `state` is the doc
 | `supply_territory_code` | `text` | Territory of `territories` the supply takes place in, where `delivery_country` is not precise enough — a delivery to US-CA and one to US-NY are both US. Null resolves to delivery_country, and then to the buyer's territory: a supply nobody said anything else about is delivered to the person who bought it. |
 | `tax_point_date` | `date` | EN 16931 BT-7: the day the tax on this document falls due, which is not the day the entry is booked on. Given on the document it is kept — an e-invoice states its own tax point and a stated fact outranks a rule — and left null it is worked out by post_document() from the country rule and written back here. |
 | `client_ref` | `text` | A reference chosen by whoever created the document, unique per company where given: the idempotency key of a creation. Not the document number, not the supplier's reference, and never printed. |
+| `seller_territory_code` | `text` | The territory of the seller as post_document() resolved it when the document was posted — the company on a sale, the contact on a purchase, its territory_code or failing that its country. Written by posting, frozen with the document, given back to null when unpost_document() returns it to draft. Null on a draft and on a document posted before it was recorded. |
+| `buyer_territory_code` | `text` | The territory of the buyer as post_document() resolved it when the document was posted. Frozen with the document; null on a draft. |
+| `supply_territory_resolved` | `text` | The place of supply as post_document() resolved it when the document was posted: supply_territory_code, failing that delivery_country, failing that the buyer's territory. What the tax's territory conditions were judged against. Frozen with the document; null on a draft. |
 
 Constraints:
 
@@ -1790,6 +1793,7 @@ Reference taxes per country, with their period of validity.
 | `applies_seller_territory` | `text` | Territory the seller has to be in for this tax to apply, from `applies_when.seller_in` of the pack. Null means the tax says nothing about the seller. |
 | `applies_buyer_territory` | `text` | Territory the buyer has to be in, from `applies_when.buyer_in`. Null means the tax says nothing about the buyer. |
 | `applies_supply_territory` | `text` | Territory the supply has to take place in, from `applies_when.supply_in`. A sale is taxed where the goods are delivered, which is why this is not the same column as the buyer's. |
+| `applies_supply_vs_seller` | `territory_relation` | Whether the supply has to lie inside the seller's territory (same) or outside it (other), from `applies_when.supply_vs_seller` of the pack. Null means the tax says nothing about it. |
 
 Constraints:
 
@@ -1833,6 +1837,7 @@ VAT and similar taxes, with temporal validity and a legal reference.
 | `applies_seller_territory` | `text` | Territory the seller has to be in for this tax to apply. post_document() refuses a document that contradicts it; it never chooses a tax for anybody. |
 | `applies_buyer_territory` | `text` | Territory the buyer has to be in for this tax to apply. |
 | `applies_supply_territory` | `text` | Territory the supply has to take place in for this tax to apply. |
+| `applies_supply_vs_seller` | `territory_relation` | Whether the supply has to lie inside the seller's territory (same) or outside it (other). Read at the level of the seller: post_document() refuses a document whose seller is known only by a country, and one that contradicts the relation. |
 
 Constraints:
 
@@ -1858,11 +1863,13 @@ The territories of the common system of value added tax: the Member States with 
 | `eu_vat_to` | `date` | Last day it did. Null while it still does. A VAT date, not a membership one: the United Kingdom left the Union on 31 January 2020 and left the common system on 31 December 2020. |
 | `vat_prefix` | `character(2)` | The prefix this territory's VAT identification numbers carry, when it differs from the code: EL for Greece, FR for Monaco, GB for the Isle of Man. Null when the two are the same. |
 | `legal_reference` | `text` | not null — The text that puts this territory where it is — an accession treaty, an article of Directive 2006/112/EC, the Withdrawal Agreement. |
+| `outside_parent_tax` | `boolean` | not null — True where the tax of the parent territory does not apply here, although the territory is part of it: the Canary Islands, Ceuta and Melilla for Spanish VAT, Büsingen and Heligoland for German VAT, Livigno and Campione d'Italia for Italian VAT. Read by territory_within_for_tax(), so a tax conditioned on the parent does not reach a party or a supply here. Independent from eu_vat_scope, which says how far the Union's common system reaches and is read by ec_sales_list(): Åland is outside the second and inside Finnish VAT. Set by the seed of territories with the text that excludes the territory in legal_reference, never by a pack. |
 
 Constraints:
 
 - `CHECK ((code ~ '^[A-Z]{2}(-[A-Z0-9]{1,12})?$'::text))`
 - `CHECK (((parent_code IS NULL) OR (parent_code <> code)))`
+- `CHECK (((NOT outside_parent_tax) OR (parent_code IS NOT NULL)))`
 - `CHECK (((vat_prefix IS NULL) OR (vat_prefix ~ '^[A-Z]{2}$'::text)))`
 - `CHECK (((eu_vat_scope = 'none'::eu_vat_scope) = (eu_vat_from IS NULL)))`
 - `CHECK (((eu_vat_to IS NULL) OR ((eu_vat_from IS NOT NULL) AND (eu_vat_from <= eu_vat_to))))`
@@ -2013,7 +2020,7 @@ Constraints:
 | `pin_referenced_accounts(p_company_id uuid)` | Pins every account this company points at by a role, a journal, a tax posting or a cash-basis transition, and returns how many accounts are pinned afterwards. Called by install_country_template(); callable again after an upgrade added a tax. |
 | `portfolio_filings_touched_since(p_from date, p_to date)` | Declarations that have gone and whose period the ledger moved afterwards, in every company the caller holds filings.read on, and in no other — filings_touched_since() with the company named, the latest disturbance first. Every company of the portfolio is in the answer at least once: one that was not disturbed is a row with no filing, and `filed` says how many of its declarations were looked at. Invoker: it reads what the caller could have read company by company. |
 | `portfolio_upcoming_filings(p_from date, p_to date)` | What falls due between two dates in every company the caller holds filings.read on, and in no other: the periods upcoming_filings() produces, kept when the day they are due is in the window. Every company of the portfolio is in the answer at least once, and a row without a date says why in `reason` — no_deadline_rule where the pack names no day for the form, nothing_due where nothing of the company falls in the window, no_form where the installation carries no return for it. Invoker: it reads what the caller could have read company by company. |
-| `post_document(p_document_id uuid)` | Books a document: one entry, the bases on the accounts of the lines, the tax of each group rounded once and shared over the postings of the tax, each ledger line naming the posting type that wrote it. Refuses a tax whose applies_*_territory the document contradicts, by name, before anything reaches the ledger — and chooses no tax for anybody. |
+| `post_document(p_document_id uuid)` | Books a document: one entry, the bases on the accounts of the lines, the tax of each group rounded once and shared over the postings of the tax, each ledger line naming the posting type that wrote it. Refuses a tax whose applies_*_territory the document contradicts — read with territory_within_for_tax(), so a territory outside its parent's tax does not satisfy a condition naming the parent — or whose applies_supply_vs_seller it contradicts, by name, before anything reaches the ledger; chooses no tax for anybody. Writes the three territories it resolved on the document (seller_territory_code, buyer_territory_code, supply_territory_resolved). |
 | `post_entry(p_entry_id uuid)` | Validates, numbers and posts an entry. Raises rather than warning: a swallowed error is a missing entry. Where the country forbids a hole in the sequence it refuses a number chosen by hand, unless the caller holds entries.import — and then the counter catches up to it. |
 | `post_module_entry(p_company_id uuid, p_module_code text, p_ref text, p_date date, p_description text, p_lines jsonb, p_journal_id uuid)` | The only way a module reaches the ledger: it hands over lines as data and this builds the draft and calls post_entry(). The tag (module_code, ref) is unique per company, so posting the same thing twice is refused by the database. |
 | `post_payment(p_payment_id uuid)` | Books a payment: the bank side from the payment's bank account or its journal, the third-party side by role, both in the company currency at the payment's rate. Matches nothing. |
@@ -2057,6 +2064,7 @@ Constraints:
 | `taxes_reach_draft_lines()` | A tax whose category, rate or kind of amount changes rewrites the snapshot of the draft lines that carry it, and nothing else: a posted line keeps what it was posted with. |
 | `territory_of(p_code text)` | The territory a code or a VAT prefix names, or null when this table carries none. A code wins over a prefix, so FR is France and not the Monaco row that identifies under it. |
 | `territory_within(p_code text, p_of text)` | True when the first territory is the second one or lies inside it, following territories.parent_code: US-CA is within US, XI is within GB, and neither is within the other. False for a code this table does not carry. |
+| `territory_within_for_tax(p_code text, p_of text)` | territory_within(), cut at every territory whose outside_parent_tax is true: the walk up territories.parent_code stops there. So ES-CN is within ES-CN and not within ES, and US-CA is within US as before. What post_document() reads to judge a tax's territory conditions. False for a code this table does not carry. |
 | `touch_api_key(p_api_key_id uuid)` | Records that a key was used just now. A key that has never been used, and one that has not been used for a year, are both things an operator should be able to see. |
 | `trial_balance(p_company_id uuid, p_from date, p_to date)` | Opening balance, movements of the period and closing balance per account, posted entries only. |
 | `unmapped_accounts(p_company_id uuid, p_statement_code text, p_from date, p_to date)` | Accounts this statement is answerable for that carry a balance and that no rule of it catches. Empty is what makes the statement tie out; a row is an account somebody opened outside the pack. |
