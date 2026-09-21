@@ -1,0 +1,1362 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/statements",
+  "statements": [
+    {
+      "code": "MX-SAT-ESF",
+      "kind": "balance_sheet",
+      "framework": "MX-NIF",
+      "name": "Estado de situación financiera",
+      "legal_reference": "Ley General de Sociedades Mercantiles, art. 172, inciso C) — «un estado que muestre la situación financiera de la sociedad a la fecha de cierre del ejercicio». Estructura mínima: los rubros de activo, pasivo y capital contable y sus cuentas de mayor, tal como los agrupa el código agrupador del SAT (Anexo 24 de la RMF 2026, apartado A, inciso a)). La NIF B-6 «Estado de situación financiera» del CINIF fija la presentación normativa; su texto está protegido por derechos del CINIF y no se transcribe",
+      "source": "lgsm",
+      "lines": [
+        {
+          "code": "ACT",
+          "parent": null,
+          "name": "Activo",
+          "sequence": 10,
+          "is_total": true,
+          "plus": [
+            "AC",
+            "ANC"
+          ]
+        },
+        {
+          "code": "AC",
+          "parent": "ACT",
+          "name": "Activo a corto plazo",
+          "sequence": 20,
+          "is_total": true,
+          "plus": [
+            "101",
+            "102",
+            "103",
+            "105",
+            "106",
+            "107",
+            "108",
+            "109",
+            "113",
+            "114",
+            "115",
+            "118",
+            "119",
+            "120",
+            "121"
+          ]
+        },
+        {
+          "code": "101",
+          "parent": "AC",
+          "name": "Caja",
+          "sequence": 30,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "101"
+            }
+          ],
+          "legal_reference": "Anexo 24 de la RMF 2026, apartado A, inciso a) — cuenta de mayor 101 «Caja» del código agrupador del SAT",
+          "source": "anexo-24-rmf-2026"
+        },
+        {
+          "code": "102",
+          "parent": "AC",
+          "name": "Bancos",
+          "sequence": 40,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "102"
+            }
+          ],
+          "legal_reference": "Anexo 24 de la RMF 2026, apartado A, inciso a) — cuenta de mayor 102 «Bancos» del código agrupador del SAT",
+          "source": "anexo-24-rmf-2026"
+        },
+        {
+          "code": "103",
+          "parent": "AC",
+          "name": "Inversiones",
+          "sequence": 50,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "103"
+            }
+          ],
+          "legal_reference": "Anexo 24 de la RMF 2026, apartado A, inciso a) — cuenta de mayor 103 «Inversiones» del código agrupador del SAT",
+          "source": "anexo-24-rmf-2026"
+        },
+        {
+          "code": "105",
+          "parent": "AC",
+          "name": "Clientes",
+          "sequence": 60,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "105"
+            }
+          ],
+          "legal_reference": "Anexo 24 de la RMF 2026, apartado A, inciso a) — cuenta de mayor 105 «Clientes» del código agrupador del SAT",
+          "source": "anexo-24-rmf-2026"
+        },
+        {
+          "code": "106",
+          "parent": "AC",
+          "name": "Cuentas y documentos por cobrar a corto plazo",
+          "sequence": 70,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "106"
+            }
+          ],
+          "legal_reference": "Anexo 24 de la RMF 2026, apartado A, inciso a) — cuenta de mayor 106 «Cuentas y documentos por cobrar a corto plazo» del código agrupador del SAT",
+          "source": "anexo-24-rmf-2026"
+        },
+        {
+          "code": "107",
+          "parent": "AC",
+          "name": "Deudores diversos",
+          "sequence": 80,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "107"
+            }
+          ],
+          "legal_reference": "Anexo 24 de la RMF 2026, apartado A, inciso a) — cuenta de mayor 107 «Deudores diversos» del código agrupador del SAT",
+          "source": "anexo-24-rmf-2026"
+        },
+        {
+          "code": "108",
+          "parent": "AC",
+          "name": "Estimación de cuentas incobrables",
+          "sequence": 90,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "108"
+            }
+          ],
+          "legal_reference": "Anexo 24 de la RMF 2026, apartado A, inciso a) — cuenta de mayor 108 «Estimación de cuentas incobrables» del código agrupador del SAT",
+          "source": "anexo-24-rmf-2026"
+        },
+        {
+          "code": "109",
+          "parent": "AC",
+          "name": "Pagos anticipados",
+          "sequence": 100,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "109"
+            }
+          ],
+          "legal_reference": "Anexo 24 de la RMF 2026, apartado A, inciso a) — cuenta de mayor 109 «Pagos anticipados» del código agrupador del SAT",
+          "source": "anexo-24-rmf-2026"
+        },
+        {
+          "code": "113",
+          "parent": "AC",
+          "name": "Impuestos a favor",
+          "sequence": 110,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "113"
+            }
+          ],
+          "legal_reference": "Anexo 24 de la RMF 2026, apartado A, inciso a) — cuenta de mayor 113 «Impuestos a favor» del código agrupador del SAT",
+          "source": "anexo-24-rmf-2026"
+        },
+        {
+          "code": "114",
+          "parent": "AC",
+          "name": "Pagos provisionales",
+          "sequence": 120,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "114"
+            }
+          ],
+          "legal_reference": "Anexo 24 de la RMF 2026, apartado A, inciso a) — cuenta de mayor 114 «Pagos provisionales» del código agrupador del SAT",
+          "source": "anexo-24-rmf-2026"
+        },
+        {
+          "code": "115",
+          "parent": "AC",
+          "name": "Inventario",
+          "sequence": 130,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "115"
+            }
+          ],
+          "legal_reference": "Anexo 24 de la RMF 2026, apartado A, inciso a) — cuenta de mayor 115 «Inventario» del código agrupador del SAT",
+          "source": "anexo-24-rmf-2026"
+        },
+        {
+          "code": "118",
+          "parent": "AC",
+          "name": "Impuestos acreditables pagados",
+          "sequence": 140,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "118"
+            }
+          ],
+          "legal_reference": "Anexo 24 de la RMF 2026, apartado A, inciso a) — cuenta de mayor 118 «Impuestos acreditables pagados» del código agrupador del SAT",
+          "source": "anexo-24-rmf-2026"
+        },
+        {
+          "code": "119",
+          "parent": "AC",
+          "name": "Impuestos acreditables por pagar",
+          "sequence": 150,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "119"
+            }
+          ],
+          "legal_reference": "Anexo 24 de la RMF 2026, apartado A, inciso a) — cuenta de mayor 119 «Impuestos acreditables por pagar» del código agrupador del SAT",
+          "source": "anexo-24-rmf-2026"
+        },
+        {
+          "code": "120",
+          "parent": "AC",
+          "name": "Anticipo a proveedores",
+          "sequence": 160,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "120"
+            }
+          ],
+          "legal_reference": "Anexo 24 de la RMF 2026, apartado A, inciso a) — cuenta de mayor 120 «Anticipo a proveedores» del código agrupador del SAT",
+          "source": "anexo-24-rmf-2026"
+        },
+        {
+          "code": "121",
+          "parent": "AC",
+          "name": "Otros activos a corto plazo",
+          "sequence": 170,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "121.01",
+              "side": "debit"
+            }
+          ],
+          "legal_reference": "Anexo 24 de la RMF 2026, apartado A, inciso a) — cuenta de mayor 121 «Otros activos a corto plazo» del código agrupador del SAT — en saldo deudor; el saldo acreedor va a la línea 218",
+          "source": "anexo-24-rmf-2026"
+        },
+        {
+          "code": "ANC",
+          "parent": "ACT",
+          "name": "Activo a largo plazo",
+          "sequence": 180,
+          "is_total": true,
+          "plus": [
+            "151",
+            "152",
+            "153",
+            "154",
+            "155",
+            "156",
+            "157",
+            "160",
+            "170",
+            "171",
+            "173",
+            "176",
+            "177",
+            "181",
+            "183",
+            "184",
+            "185"
+          ]
+        },
+        {
+          "code": "151",
+          "parent": "ANC",
+          "name": "Terrenos",
+          "sequence": 190,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "151"
+            }
+          ],
+          "legal_reference": "Anexo 24 de la RMF 2026, apartado A, inciso a) — cuenta de mayor 151 «Terrenos» del código agrupador del SAT",
+          "source": "anexo-24-rmf-2026"
+        },
+        {
+          "code": "152",
+          "parent": "ANC",
+          "name": "Edificios",
+          "sequence": 200,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "152"
+            }
+          ],
+          "legal_reference": "Anexo 24 de la RMF 2026, apartado A, inciso a) — cuenta de mayor 152 «Edificios» del código agrupador del SAT",
+          "source": "anexo-24-rmf-2026"
+        },
+        {
+          "code": "153",
+          "parent": "ANC",
+          "name": "Maquinaria y equipo",
+          "sequence": 210,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "153"
+            }
+          ],
+          "legal_reference": "Anexo 24 de la RMF 2026, apartado A, inciso a) — cuenta de mayor 153 «Maquinaria y equipo» del código agrupador del SAT",
+          "source": "anexo-24-rmf-2026"
+        },
+        {
+          "code": "154",
+          "parent": "ANC",
+          "name": "Automóviles, autobuses, camiones de carga, tractocamiones, montacargas y remolques",
+          "sequence": 220,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "154"
+            }
+          ],
+          "legal_reference": "Anexo 24 de la RMF 2026, apartado A, inciso a) — cuenta de mayor 154 «Automóviles, autobuses, camiones de carga, tractocamiones, montacargas y remolques» del código agrupador del SAT",
+          "source": "anexo-24-rmf-2026"
+        },
+        {
+          "code": "155",
+          "parent": "ANC",
+          "name": "Mobiliario y equipo de oficina",
+          "sequence": 230,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "155"
+            }
+          ],
+          "legal_reference": "Anexo 24 de la RMF 2026, apartado A, inciso a) — cuenta de mayor 155 «Mobiliario y equipo de oficina» del código agrupador del SAT",
+          "source": "anexo-24-rmf-2026"
+        },
+        {
+          "code": "156",
+          "parent": "ANC",
+          "name": "Equipo de cómputo",
+          "sequence": 240,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "156"
+            }
+          ],
+          "legal_reference": "Anexo 24 de la RMF 2026, apartado A, inciso a) — cuenta de mayor 156 «Equipo de cómputo» del código agrupador del SAT",
+          "source": "anexo-24-rmf-2026"
+        },
+        {
+          "code": "157",
+          "parent": "ANC",
+          "name": "Equipo de comunicación",
+          "sequence": 250,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "157"
+            }
+          ],
+          "legal_reference": "Anexo 24 de la RMF 2026, apartado A, inciso a) — cuenta de mayor 157 «Equipo de comunicación» del código agrupador del SAT",
+          "source": "anexo-24-rmf-2026"
+        },
+        {
+          "code": "160",
+          "parent": "ANC",
+          "name": "Otros activos fijos",
+          "sequence": 260,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "160"
+            }
+          ],
+          "legal_reference": "Anexo 24 de la RMF 2026, apartado A, inciso a) — cuenta de mayor 160 «Otros activos fijos» del código agrupador del SAT",
+          "source": "anexo-24-rmf-2026"
+        },
+        {
+          "code": "170",
+          "parent": "ANC",
+          "name": "Adaptaciones y mejoras",
+          "sequence": 270,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "170"
+            }
+          ],
+          "legal_reference": "Anexo 24 de la RMF 2026, apartado A, inciso a) — cuenta de mayor 170 «Adaptaciones y mejoras» del código agrupador del SAT",
+          "source": "anexo-24-rmf-2026"
+        },
+        {
+          "code": "171",
+          "parent": "ANC",
+          "name": "Depreciación acumulada de activos fijos",
+          "sequence": 280,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "171"
+            }
+          ],
+          "legal_reference": "Anexo 24 de la RMF 2026, apartado A, inciso a) — cuenta de mayor 171 «Depreciación acumulada de activos fijos» del código agrupador del SAT",
+          "source": "anexo-24-rmf-2026"
+        },
+        {
+          "code": "173",
+          "parent": "ANC",
+          "name": "Gastos diferidos",
+          "sequence": 290,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "173"
+            }
+          ],
+          "legal_reference": "Anexo 24 de la RMF 2026, apartado A, inciso a) — cuenta de mayor 173 «Gastos diferidos» del código agrupador del SAT",
+          "source": "anexo-24-rmf-2026"
+        },
+        {
+          "code": "176",
+          "parent": "ANC",
+          "name": "Activos intangibles",
+          "sequence": 300,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "176"
+            }
+          ],
+          "legal_reference": "Anexo 24 de la RMF 2026, apartado A, inciso a) — cuenta de mayor 176 «Activos intangibles» del código agrupador del SAT",
+          "source": "anexo-24-rmf-2026"
+        },
+        {
+          "code": "177",
+          "parent": "ANC",
+          "name": "Gastos de organización",
+          "sequence": 310,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "177"
+            }
+          ],
+          "legal_reference": "Anexo 24 de la RMF 2026, apartado A, inciso a) — cuenta de mayor 177 «Gastos de organización» del código agrupador del SAT",
+          "source": "anexo-24-rmf-2026"
+        },
+        {
+          "code": "181",
+          "parent": "ANC",
+          "name": "Gastos de instalación",
+          "sequence": 320,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "181"
+            }
+          ],
+          "legal_reference": "Anexo 24 de la RMF 2026, apartado A, inciso a) — cuenta de mayor 181 «Gastos de instalación» del código agrupador del SAT",
+          "source": "anexo-24-rmf-2026"
+        },
+        {
+          "code": "183",
+          "parent": "ANC",
+          "name": "Amortización acumulada de activos diferidos",
+          "sequence": 330,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "183"
+            }
+          ],
+          "legal_reference": "Anexo 24 de la RMF 2026, apartado A, inciso a) — cuenta de mayor 183 «Amortización acumulada de activos diferidos» del código agrupador del SAT",
+          "source": "anexo-24-rmf-2026"
+        },
+        {
+          "code": "184",
+          "parent": "ANC",
+          "name": "Depósitos en garantía",
+          "sequence": 340,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "184"
+            }
+          ],
+          "legal_reference": "Anexo 24 de la RMF 2026, apartado A, inciso a) — cuenta de mayor 184 «Depósitos en garantía» del código agrupador del SAT",
+          "source": "anexo-24-rmf-2026"
+        },
+        {
+          "code": "185",
+          "parent": "ANC",
+          "name": "Impuestos diferidos",
+          "sequence": 350,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "185"
+            }
+          ],
+          "legal_reference": "Anexo 24 de la RMF 2026, apartado A, inciso a) — cuenta de mayor 185 «Impuestos diferidos» del código agrupador del SAT",
+          "source": "anexo-24-rmf-2026"
+        },
+        {
+          "code": "PCC",
+          "parent": null,
+          "name": "Pasivo y capital contable",
+          "sequence": 360,
+          "is_total": true,
+          "plus": [
+            "PAS",
+            "CC"
+          ]
+        },
+        {
+          "code": "PAS",
+          "parent": "PCC",
+          "name": "Pasivo",
+          "sequence": 370,
+          "is_total": true,
+          "plus": [
+            "PC",
+            "PNC"
+          ]
+        },
+        {
+          "code": "PC",
+          "parent": "PAS",
+          "name": "Pasivo a corto plazo",
+          "sequence": 380,
+          "is_total": true,
+          "plus": [
+            "201",
+            "202",
+            "205",
+            "206",
+            "208",
+            "209",
+            "210",
+            "211",
+            "212",
+            "213",
+            "214",
+            "215",
+            "216",
+            "218"
+          ]
+        },
+        {
+          "code": "201",
+          "parent": "PC",
+          "name": "Proveedores",
+          "sequence": 390,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "201"
+            }
+          ],
+          "legal_reference": "Anexo 24 de la RMF 2026, apartado A, inciso a) — cuenta de mayor 201 «Proveedores» del código agrupador del SAT",
+          "source": "anexo-24-rmf-2026"
+        },
+        {
+          "code": "202",
+          "parent": "PC",
+          "name": "Cuentas por pagar a corto plazo",
+          "sequence": 400,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "202"
+            }
+          ],
+          "legal_reference": "Anexo 24 de la RMF 2026, apartado A, inciso a) — cuenta de mayor 202 «Cuentas por pagar a corto plazo» del código agrupador del SAT",
+          "source": "anexo-24-rmf-2026"
+        },
+        {
+          "code": "205",
+          "parent": "PC",
+          "name": "Acreedores diversos a corto plazo",
+          "sequence": 410,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "205"
+            }
+          ],
+          "legal_reference": "Anexo 24 de la RMF 2026, apartado A, inciso a) — cuenta de mayor 205 «Acreedores diversos a corto plazo» del código agrupador del SAT",
+          "source": "anexo-24-rmf-2026"
+        },
+        {
+          "code": "206",
+          "parent": "PC",
+          "name": "Anticipo de cliente",
+          "sequence": 420,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "206"
+            }
+          ],
+          "legal_reference": "Anexo 24 de la RMF 2026, apartado A, inciso a) — cuenta de mayor 206 «Anticipo de cliente» del código agrupador del SAT",
+          "source": "anexo-24-rmf-2026"
+        },
+        {
+          "code": "208",
+          "parent": "PC",
+          "name": "Impuestos trasladados cobrados",
+          "sequence": 430,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "208"
+            }
+          ],
+          "legal_reference": "Anexo 24 de la RMF 2026, apartado A, inciso a) — cuenta de mayor 208 «Impuestos trasladados cobrados» del código agrupador del SAT",
+          "source": "anexo-24-rmf-2026"
+        },
+        {
+          "code": "209",
+          "parent": "PC",
+          "name": "Impuestos trasladados no cobrados",
+          "sequence": 440,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "209"
+            }
+          ],
+          "legal_reference": "Anexo 24 de la RMF 2026, apartado A, inciso a) — cuenta de mayor 209 «Impuestos trasladados no cobrados» del código agrupador del SAT",
+          "source": "anexo-24-rmf-2026"
+        },
+        {
+          "code": "210",
+          "parent": "PC",
+          "name": "Provisión de sueldos y salarios por pagar",
+          "sequence": 450,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "210"
+            }
+          ],
+          "legal_reference": "Anexo 24 de la RMF 2026, apartado A, inciso a) — cuenta de mayor 210 «Provisión de sueldos y salarios por pagar» del código agrupador del SAT",
+          "source": "anexo-24-rmf-2026"
+        },
+        {
+          "code": "211",
+          "parent": "PC",
+          "name": "Provisión de contribuciones de seguridad social por pagar",
+          "sequence": 460,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "211"
+            }
+          ],
+          "legal_reference": "Anexo 24 de la RMF 2026, apartado A, inciso a) — cuenta de mayor 211 «Provisión de contribuciones de seguridad social por pagar» del código agrupador del SAT",
+          "source": "anexo-24-rmf-2026"
+        },
+        {
+          "code": "212",
+          "parent": "PC",
+          "name": "Provisión de impuesto estatal sobre nómina por pagar",
+          "sequence": 470,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "212"
+            }
+          ],
+          "legal_reference": "Anexo 24 de la RMF 2026, apartado A, inciso a) — cuenta de mayor 212 «Provisión de impuesto estatal sobre nómina por pagar» del código agrupador del SAT",
+          "source": "anexo-24-rmf-2026"
+        },
+        {
+          "code": "213",
+          "parent": "PC",
+          "name": "Impuestos y derechos por pagar",
+          "sequence": 480,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "213"
+            }
+          ],
+          "legal_reference": "Anexo 24 de la RMF 2026, apartado A, inciso a) — cuenta de mayor 213 «Impuestos y derechos por pagar» del código agrupador del SAT",
+          "source": "anexo-24-rmf-2026"
+        },
+        {
+          "code": "214",
+          "parent": "PC",
+          "name": "Dividendos por pagar",
+          "sequence": 490,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "214"
+            }
+          ],
+          "legal_reference": "Anexo 24 de la RMF 2026, apartado A, inciso a) — cuenta de mayor 214 «Dividendos por pagar» del código agrupador del SAT",
+          "source": "anexo-24-rmf-2026"
+        },
+        {
+          "code": "215",
+          "parent": "PC",
+          "name": "PTU por pagar",
+          "sequence": 500,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "215"
+            }
+          ],
+          "legal_reference": "Anexo 24 de la RMF 2026, apartado A, inciso a) — cuenta de mayor 215 «PTU por pagar» del código agrupador del SAT",
+          "source": "anexo-24-rmf-2026"
+        },
+        {
+          "code": "216",
+          "parent": "PC",
+          "name": "Impuestos retenidos",
+          "sequence": 510,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "216"
+            }
+          ],
+          "legal_reference": "Anexo 24 de la RMF 2026, apartado A, inciso a) — cuenta de mayor 216 «Impuestos retenidos» del código agrupador del SAT",
+          "source": "anexo-24-rmf-2026"
+        },
+        {
+          "code": "218",
+          "parent": "PC",
+          "name": "Otros pasivos a corto plazo",
+          "sequence": 520,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "218",
+              "sequence": 10
+            },
+            {
+              "kind": "account_code",
+              "code_from": "121.01",
+              "side": "credit",
+              "sequence": 20
+            }
+          ],
+          "legal_reference": "Anexo 24 de la RMF 2026, apartado A, inciso a) — cuenta de mayor 218 «Otros pasivos a corto plazo» del código agrupador del SAT — y, en saldo acreedor, la subcuenta 121.01 «Otros activos a corto plazo», que este paquete usa como cuenta de partidas pendientes de aplicación: un saldo deudor es un activo y uno acreedor un pasivo",
+          "source": "anexo-24-rmf-2026"
+        },
+        {
+          "code": "PNC",
+          "parent": "PAS",
+          "name": "Pasivo a largo plazo",
+          "sequence": 530,
+          "is_total": true,
+          "plus": [
+            "251",
+            "252",
+            "255",
+            "259"
+          ]
+        },
+        {
+          "code": "251",
+          "parent": "PNC",
+          "name": "Acreedores diversos a largo plazo",
+          "sequence": 540,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "251"
+            }
+          ],
+          "legal_reference": "Anexo 24 de la RMF 2026, apartado A, inciso a) — cuenta de mayor 251 «Acreedores diversos a largo plazo» del código agrupador del SAT",
+          "source": "anexo-24-rmf-2026"
+        },
+        {
+          "code": "252",
+          "parent": "PNC",
+          "name": "Cuentas por pagar a largo plazo",
+          "sequence": 550,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "252"
+            }
+          ],
+          "legal_reference": "Anexo 24 de la RMF 2026, apartado A, inciso a) — cuenta de mayor 252 «Cuentas por pagar a largo plazo» del código agrupador del SAT",
+          "source": "anexo-24-rmf-2026"
+        },
+        {
+          "code": "255",
+          "parent": "PNC",
+          "name": "Pasivos por beneficios a los empleados a largo plazo",
+          "sequence": 560,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "255"
+            }
+          ],
+          "legal_reference": "Anexo 24 de la RMF 2026, apartado A, inciso a) — cuenta de mayor 255 «Pasivos por beneficios a los empleados a largo plazo» del código agrupador del SAT",
+          "source": "anexo-24-rmf-2026"
+        },
+        {
+          "code": "259",
+          "parent": "PNC",
+          "name": "Impuestos diferidos",
+          "sequence": 570,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "259"
+            }
+          ],
+          "legal_reference": "Anexo 24 de la RMF 2026, apartado A, inciso a) — cuenta de mayor 259 «Impuestos diferidos» del código agrupador del SAT",
+          "source": "anexo-24-rmf-2026"
+        },
+        {
+          "code": "CC",
+          "parent": "PCC",
+          "name": "Capital contable",
+          "sequence": 580,
+          "is_total": true,
+          "plus": [
+            "301",
+            "303",
+            "304",
+            "305",
+            "306"
+          ]
+        },
+        {
+          "code": "301",
+          "parent": "CC",
+          "name": "Capital social",
+          "sequence": 590,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "301"
+            }
+          ],
+          "legal_reference": "Anexo 24 de la RMF 2026, apartado A, inciso a) — cuenta de mayor 301 «Capital social» del código agrupador del SAT",
+          "source": "anexo-24-rmf-2026"
+        },
+        {
+          "code": "303",
+          "parent": "CC",
+          "name": "Reserva legal",
+          "sequence": 600,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "303"
+            }
+          ],
+          "legal_reference": "Anexo 24 de la RMF 2026, apartado A, inciso a) — cuenta de mayor 303 «Reserva legal» del código agrupador del SAT",
+          "source": "anexo-24-rmf-2026"
+        },
+        {
+          "code": "304",
+          "parent": "CC",
+          "name": "Resultado de ejercicios anteriores",
+          "sequence": 610,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "304"
+            }
+          ],
+          "legal_reference": "Anexo 24 de la RMF 2026, apartado A, inciso a) — cuenta de mayor 304 «Resultado de ejercicios anteriores» del código agrupador del SAT",
+          "source": "anexo-24-rmf-2026"
+        },
+        {
+          "code": "305",
+          "parent": "CC",
+          "name": "Resultado del ejercicio",
+          "sequence": 620,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "305"
+            }
+          ],
+          "legal_reference": "Anexo 24 de la RMF 2026, apartado A, inciso a) — cuenta de mayor 305 «Resultado del ejercicio» del código agrupador del SAT",
+          "source": "anexo-24-rmf-2026"
+        },
+        {
+          "code": "306",
+          "parent": "CC",
+          "name": "Otras cuentas de capital",
+          "sequence": 630,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "306"
+            }
+          ],
+          "legal_reference": "Anexo 24 de la RMF 2026, apartado A, inciso a) — cuenta de mayor 306 «Otras cuentas de capital» del código agrupador del SAT",
+          "source": "anexo-24-rmf-2026"
+        }
+      ]
+    },
+    {
+      "code": "MX-SAT-ER",
+      "kind": "income_statement",
+      "framework": "MX-NIF",
+      "name": "Estado de resultados",
+      "legal_reference": "Ley General de Sociedades Mercantiles, art. 172, inciso D) — «un estado que muestre, debidamente explicados y clasificados, los resultados de la sociedad durante el ejercicio». Estructura mínima: los rubros de ingresos, costos, gastos y resultado integral de financiamiento del código agrupador del SAT (Anexo 24 de la RMF 2026, apartado A, inciso a)), con los subtotales de utilidad bruta, de operación, antes de impuestos y neta. La NIF B-3 «Estado de resultado integral» del CINIF fija la presentación normativa; su texto está protegido por derechos del CINIF y no se transcribe",
+      "source": "lgsm",
+      "lines": [
+        {
+          "code": "IN",
+          "parent": null,
+          "name": "Ingresos netos",
+          "sequence": 10,
+          "is_total": true,
+          "plus": [
+            "401",
+            "402"
+          ]
+        },
+        {
+          "code": "401",
+          "parent": "IN",
+          "name": "Ingresos",
+          "sequence": 20,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "401"
+            }
+          ],
+          "legal_reference": "Anexo 24 de la RMF 2026, apartado A, inciso a) — cuenta de mayor 401 «Ingresos» del código agrupador del SAT",
+          "source": "anexo-24-rmf-2026"
+        },
+        {
+          "code": "402",
+          "parent": "IN",
+          "name": "Devoluciones, descuentos o bonificaciones sobre ingresos",
+          "sequence": 30,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "402"
+            }
+          ],
+          "legal_reference": "Anexo 24 de la RMF 2026, apartado A, inciso a) — cuenta de mayor 402 «Devoluciones, descuentos o bonificaciones sobre ingresos» del código agrupador del SAT",
+          "source": "anexo-24-rmf-2026"
+        },
+        {
+          "code": "CV",
+          "parent": null,
+          "name": "Costo de ventas y/o servicios",
+          "sequence": 40,
+          "is_total": true,
+          "plus": [
+            "501",
+            "502",
+            "503",
+            "504",
+            "505"
+          ]
+        },
+        {
+          "code": "501",
+          "parent": "CV",
+          "name": "Costo de venta y/o servicio",
+          "sequence": 50,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "501"
+            }
+          ],
+          "legal_reference": "Anexo 24 de la RMF 2026, apartado A, inciso a) — cuenta de mayor 501 «Costo de venta y/o servicio» del código agrupador del SAT",
+          "source": "anexo-24-rmf-2026"
+        },
+        {
+          "code": "502",
+          "parent": "CV",
+          "name": "Compras",
+          "sequence": 60,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "502"
+            }
+          ],
+          "legal_reference": "Anexo 24 de la RMF 2026, apartado A, inciso a) — cuenta de mayor 502 «Compras» del código agrupador del SAT",
+          "source": "anexo-24-rmf-2026"
+        },
+        {
+          "code": "503",
+          "parent": "CV",
+          "name": "Devoluciones, descuentos o bonificaciones sobre compras",
+          "sequence": 70,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "503"
+            }
+          ],
+          "legal_reference": "Anexo 24 de la RMF 2026, apartado A, inciso a) — cuenta de mayor 503 «Devoluciones, descuentos o bonificaciones sobre compras» del código agrupador del SAT",
+          "source": "anexo-24-rmf-2026"
+        },
+        {
+          "code": "504",
+          "parent": "CV",
+          "name": "Otras cuentas de costos",
+          "sequence": 80,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "504"
+            }
+          ],
+          "legal_reference": "Anexo 24 de la RMF 2026, apartado A, inciso a) — cuenta de mayor 504 «Otras cuentas de costos» del código agrupador del SAT",
+          "source": "anexo-24-rmf-2026"
+        },
+        {
+          "code": "505",
+          "parent": "CV",
+          "name": "Costo de activo fijo",
+          "sequence": 90,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "505"
+            }
+          ],
+          "legal_reference": "Anexo 24 de la RMF 2026, apartado A, inciso a) — cuenta de mayor 505 «Costo de activo fijo» del código agrupador del SAT",
+          "source": "anexo-24-rmf-2026"
+        },
+        {
+          "code": "UB",
+          "parent": null,
+          "name": "Utilidad (pérdida) bruta",
+          "sequence": 100,
+          "is_total": true,
+          "plus": [
+            "IN"
+          ],
+          "minus": [
+            "CV"
+          ]
+        },
+        {
+          "code": "GO",
+          "parent": null,
+          "name": "Gastos",
+          "sequence": 110,
+          "is_total": true,
+          "plus": [
+            "601",
+            "607",
+            "613",
+            "614"
+          ]
+        },
+        {
+          "code": "601",
+          "parent": "GO",
+          "name": "Gastos generales",
+          "sequence": 120,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "601"
+            }
+          ],
+          "legal_reference": "Anexo 24 de la RMF 2026, apartado A, inciso a) — cuenta de mayor 601 «Gastos generales» del código agrupador del SAT",
+          "source": "anexo-24-rmf-2026"
+        },
+        {
+          "code": "607",
+          "parent": "GO",
+          "name": "Participación de los trabajadores en las utilidades",
+          "sequence": 130,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "607"
+            }
+          ],
+          "legal_reference": "Anexo 24 de la RMF 2026, apartado A, inciso a) — cuenta de mayor 607 «Participación de los trabajadores en las utilidades» del código agrupador del SAT",
+          "source": "anexo-24-rmf-2026"
+        },
+        {
+          "code": "613",
+          "parent": "GO",
+          "name": "Depreciación contable",
+          "sequence": 140,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "613"
+            }
+          ],
+          "legal_reference": "Anexo 24 de la RMF 2026, apartado A, inciso a) — cuenta de mayor 613 «Depreciación contable» del código agrupador del SAT",
+          "source": "anexo-24-rmf-2026"
+        },
+        {
+          "code": "614",
+          "parent": "GO",
+          "name": "Amortización contable",
+          "sequence": 150,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "614"
+            }
+          ],
+          "legal_reference": "Anexo 24 de la RMF 2026, apartado A, inciso a) — cuenta de mayor 614 «Amortización contable» del código agrupador del SAT",
+          "source": "anexo-24-rmf-2026"
+        },
+        {
+          "code": "UO",
+          "parent": null,
+          "name": "Utilidad (pérdida) de operación",
+          "sequence": 160,
+          "is_total": true,
+          "plus": [
+            "UB"
+          ],
+          "minus": [
+            "GO"
+          ]
+        },
+        {
+          "code": "OIG",
+          "parent": null,
+          "name": "Otros ingresos y gastos",
+          "sequence": 170,
+          "is_total": true,
+          "plus": [
+            "403",
+            "704"
+          ],
+          "minus": [
+            "703"
+          ]
+        },
+        {
+          "code": "403",
+          "parent": "OIG",
+          "name": "Otros ingresos",
+          "sequence": 180,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "403"
+            }
+          ],
+          "legal_reference": "Anexo 24 de la RMF 2026, apartado A, inciso a) — cuenta de mayor 403 «Otros ingresos» del código agrupador del SAT",
+          "source": "anexo-24-rmf-2026"
+        },
+        {
+          "code": "704",
+          "parent": "OIG",
+          "name": "Otros productos",
+          "sequence": 190,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "704"
+            }
+          ],
+          "legal_reference": "Anexo 24 de la RMF 2026, apartado A, inciso a) — cuenta de mayor 704 «Otros productos» del código agrupador del SAT",
+          "source": "anexo-24-rmf-2026"
+        },
+        {
+          "code": "703",
+          "parent": "OIG",
+          "name": "Otros gastos",
+          "sequence": 200,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "703"
+            }
+          ],
+          "legal_reference": "Anexo 24 de la RMF 2026, apartado A, inciso a) — cuenta de mayor 703 «Otros gastos» del código agrupador del SAT",
+          "source": "anexo-24-rmf-2026"
+        },
+        {
+          "code": "RIF",
+          "parent": null,
+          "name": "Resultado integral de financiamiento",
+          "sequence": 210,
+          "is_total": true,
+          "plus": [
+            "702"
+          ],
+          "minus": [
+            "701"
+          ]
+        },
+        {
+          "code": "702",
+          "parent": "RIF",
+          "name": "Productos financieros",
+          "sequence": 220,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "702"
+            }
+          ],
+          "legal_reference": "Anexo 24 de la RMF 2026, apartado A, inciso a) — cuenta de mayor 702 «Productos financieros» del código agrupador del SAT",
+          "source": "anexo-24-rmf-2026"
+        },
+        {
+          "code": "701",
+          "parent": "RIF",
+          "name": "Gastos financieros",
+          "sequence": 230,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "701"
+            }
+          ],
+          "legal_reference": "Anexo 24 de la RMF 2026, apartado A, inciso a) — cuenta de mayor 701 «Gastos financieros» del código agrupador del SAT",
+          "source": "anexo-24-rmf-2026"
+        },
+        {
+          "code": "UAI",
+          "parent": null,
+          "name": "Utilidad (pérdida) antes de impuestos a la utilidad",
+          "sequence": 240,
+          "is_total": true,
+          "plus": [
+            "UO",
+            "OIG",
+            "RIF"
+          ]
+        },
+        {
+          "code": "611",
+          "parent": null,
+          "name": "Impuesto Sobre la renta",
+          "sequence": 250,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "611"
+            }
+          ],
+          "legal_reference": "Anexo 24 de la RMF 2026, apartado A, inciso a) — cuenta de mayor 611 «Impuesto Sobre la renta» del código agrupador del SAT",
+          "source": "anexo-24-rmf-2026"
+        },
+        {
+          "code": "UN",
+          "parent": null,
+          "name": "Utilidad (pérdida) neta",
+          "sequence": 260,
+          "is_total": true,
+          "plus": [
+            "UAI"
+          ],
+          "minus": [
+            "611"
+          ]
+        }
+      ]
+    }
+  ]
+}

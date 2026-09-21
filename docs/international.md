@@ -2298,3 +2298,91 @@ a change to the core:
   compulsory on 1 January 2027 above 800 000 euros of turnover and on
   1 January 2028 for everybody (§ 27 Abs. 38 UStG), which is written in the
   legal reference until the core can hold a size.
+
+## Mexico
+
+Written from published sources alone, on 21 September 2026, and `community`
+like every pack nobody who files the return has read. The first pack of Latin
+America: a chart of **280 codes of the SAT's grouping code** (Anexo 24 of the
+RMF 2026) used as the catalogue itself, the **value added tax on a cash basis**
+with the 8 % of the border-region decrees until 31 December 2026, the two
+withholdings a *persona moral* applies, the fields of the monthly **IVA
+personas morales** declaration, a minimal balance sheet and income statement
+on the grouping code's rubros, and a golden year of 16 documents. The pack's
+own [`README`](../packs/mx/README.md) says where each piece comes from; seven
+things it could not say are changes to the core, none taken here. The epic on
+compound taxes, withholding and the territory of the parties is where most of
+them belong.
+
+### From Mexico
+
+**Clearance is not an obligation to exchange.** A CFDI is valid only once an
+authorised certification provider has validated it, given it the SAT's folio
+and sealed it (CFF art. 29, fr. IV–V), and every taxpayer who issues vouchers
+is bound by it. `einvoicing` cannot say so: `obligation: mandatory` requires
+a `mandatory_from`, which requires a `profile`, and a profile is an EN 16931
+profile a brick of `packages/formats/` writes. Declaring `cfdi-4.0` anyway
+was tried and dropped: `describePack()` (`boundaryOf`,
+`packages/cli/src/pack/describe.ts`) then adds to the country page, for any
+declared profile, that "an invoice is written and validated as <profile> by a
+brick of packages/formats" and that sending needs "a certified access point"
+on Peppol — neither true of Mexico, and exactly the impression that a
+document out of Ekwo is a valid invoice. So the pack leaves `profile`,
+`mandatory_from` and `obligation` empty, like Spain and Côte d'Ivoire, says
+the obligation and that Ekwo neither generates, stamps nor transmits a CFDI in
+the legal reference, and prints on every document that it is not a CFDI.
+*Fix*: a clearance model the format can state (`obligation: mandatory` with a
+`model: clearance` and a certifying party, no EN 16931 profile required), and
+a boundary row drawn only from a profile a brick actually writes. Italy's SdI,
+India's IRN and most of Latin America are the same shape.
+
+**A withholding is due on payment, and a cash-basis tax takes one tax
+posting.** A *persona moral* withholds two thirds of the VAT an individual
+charges for fees, rent or commissions, and 4 % of road freight (LIVA
+art. 1o.-A; RLIVA art. 3o.), at the moment it pays. The pack carries each as a
+purchase tax with a third posting to 216.10, booked on the invoice date,
+because `ekwo pack check` rightly refuses a second tax posting on a
+cash-basis tax. *Fix*: a posting that follows the payment — the gap the
+Senegalese BRS already names — so one tax can defer its creditable share and
+its withheld share together.
+
+**Two thirds cannot be written.** `factor_percent` is `numeric(7, 3)`: the
+pack writes `-66.667`, and the withholding drifts by a cent once the tax
+reaches 1 500 pesos. *Fix*: a factor as a fraction (numerator, denominator),
+or a scale wide enough that no real fraction rounds at the cent.
+
+**VAT and income tax withheld on one line.** The same rent pays 16 % VAT,
+two thirds of it withheld, and 10 % ISR withheld (LISR arts. 106 and 116). A
+line carries one tax and `group` is reserved — the stacked-tax gap of Quebec
+and of the Spanish *recargo*, now with a withholding in the stack.
+
+**Zero-rated and exempt values fall due on collection too.** LIVA declares
+the value of 0 % and exempt acts when collected, like the taxed ones. A
+cash-basis tax must carry a tax posting, and a 0 % line has no tax to post,
+so those codes declare their base on the invoice date. *Fix*: let a
+cash-basis tax defer a base with no tax, or let the transition carry the base
+alone.
+
+**A region that is a list of municipalities, and a condition on the seller.**
+The 8 % applies in establishments of the northern and southern border regions
+— municipalities listed in each decree — held by a business registered in the
+SAT's list of beneficiaries. `territories` goes down to the state, and the five
+words of `conditions` have nothing for a status of the seller (the Senegalese
+approved hotel is the same gap). The bookkeeper picks the code.
+
+**Two more forms, and a party's CFDI data.** The *IVA retenciones* declaration
+(filed with the same monthly payment) and the DIOT (a statement per supplier,
+LIVA art. 32, fr. VIII; RMF rule 4.5.1) are forms a pack cannot declare beside
+its periodic return — the Canadian and Senegalese gap. And a CFDI needs, for
+each party, the tax regime and the postal code of the tax domicile, and for the
+receiver the use of the CFDI (`c_RegimenFiscal`, `c_UsoCFDI`): the core has no
+column for any of them.
+
+**A deadline in working days, by a digit of the RFC.** The 17th of LIVA
+art. 5o.-D moves by one to five working days by the sixth digit of the RFC
+(decree of 26 December 2013, art. 5.1), except for listed taxpayers. The pack
+says `depends_on_taxpayer`; the rule is fully written in law and a core that
+knew the RFC and the working-day calendar (CFF art. 12) could compute it.
+
+**MXN** is added to `00_currencies.sql` at two decimals, and `MX` to
+`00_territories.sql`, outside the common system of VAT.

@@ -1,0 +1,281 @@
+code,parent,type,reconcilable,name,sequence
+100,,asset_cash,false,Activo,10
+100.01,100,asset_cash,false,Activo a corto plazo,20
+100.02,100,asset_fixed,false,Activo a largo plazo,30
+101,100.01,asset_cash,false,Caja,40
+101.01,101,asset_cash,false,Caja y efectivo,50
+102,100.01,asset_cash,false,Bancos,60
+102.01,102,asset_cash,false,Bancos nacionales,70
+102.02,102,asset_cash,false,Bancos extranjeros,80
+103,100.01,asset_current,false,Inversiones,90
+103.01,103,asset_current,false,Inversiones temporales,100
+103.03,103,asset_current,false,Otras inversiones,110
+105,100.01,asset_receivable,true,Clientes,120
+105.01,105,asset_receivable,true,Clientes nacionales,130
+105.02,105,asset_receivable,true,Clientes extranjeros,140
+105.03,105,asset_receivable,true,Clientes nacionales parte relacionada,150
+106,100.01,asset_current,false,Cuentas y documentos por cobrar a corto plazo,160
+106.01,106,asset_current,false,Cuentas y documentos por cobrar a corto plazo nacional,170
+106.09,106,asset_current,false,Otras cuentas y documentos por cobrar a corto plazo,180
+107,100.01,asset_current,false,Deudores diversos,190
+107.01,107,asset_current,true,Funcionarios y empleados,200
+107.02,107,asset_current,true,Socios y accionistas,210
+107.05,107,asset_current,true,Otros deudores diversos,220
+108,100.01,asset_current,false,Estimación de cuentas incobrables,230
+108.01,108,asset_current,false,Estimación de cuentas incobrables nacional,240
+109,100.01,asset_prepayments,false,Pagos anticipados,250
+109.01,109,asset_prepayments,false,Seguros y fianzas pagados por anticipado nacional,260
+109.05,109,asset_prepayments,false,Rentas pagados por anticipado nacional,270
+109.23,109,asset_prepayments,false,Otros pagos anticipados,280
+113,100.01,asset_current,false,Impuestos a favor,290
+113.01,113,asset_current,true,IVA a favor,300
+113.02,113,asset_current,true,ISR a favor,310
+113.08,113,asset_current,true,Otros impuestos a favor,320
+114,100.01,asset_current,false,Pagos provisionales,330
+114.01,114,asset_current,false,Pagos provisionales de ISR,340
+115,100.01,asset_current,false,Inventario,350
+115.01,115,asset_current,false,Inventario,360
+115.02,115,asset_current,false,Materia prima y materiales,370
+115.04,115,asset_current,false,Productos terminados,380
+115.05,115,asset_current,false,Mercancías en tránsito,390
+118,100.01,asset_current,false,Impuestos acreditables pagados,400
+118.01,118,asset_current,false,IVA acreditable pagado,410
+118.02,118,asset_current,false,IVA acreditable de importación pagado,420
+119,100.01,asset_current,false,Impuestos acreditables por pagar,430
+119.01,119,asset_current,false,IVA pendiente de pago,440
+119.02,119,asset_current,false,IVA de importación pendiente de pago,450
+120,100.01,asset_prepayments,false,Anticipo a proveedores,460
+120.01,120,asset_prepayments,true,Anticipo a proveedores nacional,470
+120.02,120,asset_prepayments,true,Anticipo a proveedores extranjero,480
+121,100.01,asset_current,false,Otros activos a corto plazo,490
+121.01,121,asset_current,true,Otros activos a corto plazo,500
+151,100.02,asset_fixed,false,Terrenos,510
+151.01,151,asset_fixed,false,Terrenos,520
+152,100.02,asset_fixed,false,Edificios,530
+152.01,152,asset_fixed,false,Edificios,540
+153,100.02,asset_fixed,false,Maquinaria y equipo,550
+153.01,153,asset_fixed,false,Maquinaria y equipo,560
+154,100.02,asset_fixed,false,"Automóviles, autobuses, camiones de carga, tractocamiones, montacargas y remolques",570
+154.01,154,asset_fixed,false,"Automóviles, autobuses, camiones de carga, tractocamiones, montacargas y remolques",580
+155,100.02,asset_fixed,false,Mobiliario y equipo de oficina,590
+155.01,155,asset_fixed,false,Mobiliario y equipo de oficina,600
+156,100.02,asset_fixed,false,Equipo de cómputo,610
+156.01,156,asset_fixed,false,Equipo de cómputo,620
+157,100.02,asset_fixed,false,Equipo de comunicación,630
+157.01,157,asset_fixed,false,Equipo de comunicación,640
+160,100.02,asset_fixed,false,Otros activos fijos,650
+160.01,160,asset_fixed,false,Otros activos fijos,660
+170,100.02,asset_fixed,false,Adaptaciones y mejoras,670
+170.01,170,asset_fixed,false,Adaptaciones y mejoras,680
+171,100.02,asset_fixed,false,Depreciación acumulada de activos fijos,690
+171.01,171,asset_fixed,false,Depreciación acumulada de edificios,700
+171.02,171,asset_fixed,false,Depreciación acumulada de maquinaria y equipo,710
+171.03,171,asset_fixed,false,"Depreciación acumulada de automóviles, autobuses, camiones de carga, tractocamiones, montacargas y remolques",720
+171.04,171,asset_fixed,false,Depreciación acumulada de mobiliario y equipo de oficina,730
+171.05,171,asset_fixed,false,Depreciación acumulada de equipo de cómputo,740
+171.06,171,asset_fixed,false,Depreciación acumulada de equipo de comunicación,750
+171.08,171,asset_fixed,false,Depreciación acumulada de otros activos fijos,760
+171.17,171,asset_fixed,false,Depreciación acumulada de adaptaciones y mejoras,770
+173,100.02,asset_non_current,false,Gastos diferidos,780
+173.01,173,asset_non_current,false,Gastos diferidos,790
+176,100.02,asset_non_current,false,Activos intangibles,800
+176.01,176,asset_non_current,false,Activos intangibles,810
+177,100.02,asset_non_current,false,Gastos de organización,820
+177.01,177,asset_non_current,false,Gastos de organización,830
+181,100.02,asset_non_current,false,Gastos de instalación,840
+181.01,181,asset_non_current,false,Gastos de instalación,850
+183,100.02,asset_non_current,false,Amortización acumulada de activos diferidos,860
+183.01,183,asset_non_current,false,Amortización acumulada de gastos diferidos,870
+183.04,183,asset_non_current,false,Amortización acumulada de activos intangibles,880
+183.05,183,asset_non_current,false,Amortización acumulada de gastos de organización,890
+183.09,183,asset_non_current,false,Amortización acumulada de gastos de instalación,900
+184,100.02,asset_non_current,false,Depósitos en garantía,910
+184.01,184,asset_non_current,false,Depósitos de fianzas,920
+184.02,184,asset_non_current,false,Depósitos de arrendamiento de bienes inmuebles,930
+184.03,184,asset_non_current,false,Otros depósitos en garantía,940
+185,100.02,asset_non_current,false,Impuestos diferidos,950
+185.01,185,asset_non_current,false,Impuestos diferidos ISR,960
+200,,liability_payable,true,Pasivo,970
+200.01,200,liability_payable,true,Pasivo a corto plazo,980
+200.02,200,liability_non_current,false,Pasivo a largo plazo,990
+201,200.01,liability_payable,true,Proveedores,1000
+201.01,201,liability_payable,true,Proveedores nacionales,1010
+201.02,201,liability_payable,true,Proveedores extranjeros,1020
+201.03,201,liability_payable,true,Proveedores nacionales parte relacionada,1030
+202,200.01,liability_current,false,Cuentas por pagar a corto plazo,1040
+202.01,202,liability_current,false,Documentos por pagar bancario y financiero nacional,1050
+202.03,202,liability_current,false,Documentos y cuentas por pagar a corto plazo nacional,1060
+202.07,202,liability_current,false,Intereses por pagar a corto plazo nacional,1070
+205,200.01,liability_current,false,Acreedores diversos a corto plazo,1080
+205.01,205,liability_current,true,"Socios, accionistas o representante legal",1090
+205.02,205,liability_current,true,Acreedores diversos a corto plazo nacional,1100
+205.06,205,liability_current,true,Otros acreedores diversos a corto plazo,1110
+206,200.01,liability_current,false,Anticipo de cliente,1120
+206.01,206,liability_current,true,Anticipo de cliente nacional,1130
+206.02,206,liability_current,true,Anticipo de cliente extranjero,1140
+208,200.01,liability_current,false,Impuestos trasladados cobrados,1150
+208.01,208,liability_current,false,IVA trasladado cobrado,1160
+209,200.01,liability_current,false,Impuestos trasladados no cobrados,1170
+209.01,209,liability_current,false,IVA trasladado no cobrado,1180
+210,200.01,liability_current,false,Provisión de sueldos y salarios por pagar,1190
+210.01,210,liability_current,false,Provisión de sueldos y salarios por pagar,1200
+210.02,210,liability_current,false,Provisión de vacaciones por pagar,1210
+210.03,210,liability_current,false,Provisión de aguinaldo por pagar,1220
+211,200.01,liability_current,false,Provisión de contribuciones de seguridad social por pagar,1230
+211.01,211,liability_current,false,Provisión de IMSS patronal por pagar,1240
+211.02,211,liability_current,false,Provisión de SAR por pagar,1250
+211.03,211,liability_current,false,Provisión de INFONAVIT por pagar,1260
+212,200.01,liability_current,false,Provisión de impuesto estatal sobre nómina por pagar,1270
+212.01,212,liability_current,false,Provisión de impuesto estatal sobre nómina por pagar,1280
+213,200.01,liability_current,false,Impuestos y derechos por pagar,1290
+213.01,213,liability_current,true,IVA por pagar,1300
+213.03,213,liability_current,true,ISR por pagar,1310
+213.04,213,liability_current,true,Impuesto estatal sobre nómina por pagar,1320
+213.07,213,liability_current,true,Otros impuestos por pagar,1330
+214,200.01,liability_current,false,Dividendos por pagar,1340
+214.01,214,liability_current,false,Dividendos por pagar,1350
+215,200.01,liability_current,false,PTU por pagar,1360
+215.01,215,liability_current,false,PTU por pagar,1370
+216,200.01,liability_current,false,Impuestos retenidos,1380
+216.01,216,liability_current,false,Impuestos retenidos de ISR por sueldos y salarios,1390
+216.03,216,liability_current,false,Impuestos retenidos de ISR por arrendamiento,1400
+216.04,216,liability_current,false,Impuestos retenidos de ISR por servicios profesionales,1410
+216.10,216,liability_current,false,Impuestos retenidos de IVA,1420
+216.11,216,liability_current,false,Retenciones de IMSS a los trabajadores,1430
+216.12,216,liability_current,false,Otras impuestos retenidos,1440
+218,200.01,liability_current,false,Otros pasivos a corto plazo,1450
+218.01,218,liability_current,true,Otros pasivos a corto plazo,1460
+251,200.02,liability_non_current,false,Acreedores diversos a largo plazo,1470
+251.01,251,liability_non_current,false,"Socios, accionistas o representante legal",1480
+251.02,251,liability_non_current,false,Acreedores diversos a largo plazo nacional,1490
+252,200.02,liability_non_current,false,Cuentas por pagar a largo plazo,1500
+252.01,252,liability_non_current,false,Documentos bancarios y financieros por pagar a largo plazo nacional,1510
+252.03,252,liability_non_current,false,Documentos y cuentas por pagar a largo plazo nacional,1520
+252.07,252,liability_non_current,false,Hipotecas por pagar a largo plazo nacional,1530
+255,200.02,liability_non_current,false,Pasivos por beneficios a los empleados a largo plazo,1540
+255.01,255,liability_non_current,false,Pasivos por beneficios a los empleados a largo plazo,1550
+259,200.02,liability_non_current,false,Impuestos diferidos,1560
+259.01,259,liability_non_current,false,ISR diferido,1570
+300,,equity,false,Capital contable,1580
+301,300,equity,false,Capital social,1590
+301.01,301,equity,false,Capital fijo,1600
+301.02,301,equity,false,Capital variable,1610
+301.03,301,equity,false,Aportaciones para futuros aumentos de capital,1620
+303,300,equity,false,Reserva legal,1630
+303.01,303,equity,false,Reserva legal,1640
+304,300,equity_retained,false,Resultado de ejercicios anteriores,1650
+304.01,304,equity_retained,false,Utilidad de ejercicios anteriores,1660
+304.02,304,equity_retained,false,Pérdida de ejercicios anteriores,1670
+305,300,equity,false,Resultado del ejercicio,1680
+305.01,305,equity,false,Utilidad del ejercicio,1690
+305.02,305,equity,false,Pérdida del ejercicio,1700
+306,300,equity,false,Otras cuentas de capital,1710
+306.01,306,equity,false,Otras cuentas de capital,1720
+400,,income,false,Ingresos,1730
+401,400,income,false,Ingresos,1740
+401.01,401,income,false,Ventas y/o servicios gravados a la tasa general,1750
+401.04,401,income,false,Ventas y/o servicios gravados al 0%,1760
+401.07,401,income,false,Ventas y/o servicios exentos,1770
+401.16,401,income,false,Ingresos por servicios administrativos,1780
+401.19,401,income,false,Ingresos por servicios profesionales,1790
+401.22,401,income,false,Ingresos por arrendamiento,1800
+401.25,401,income,false,Ingresos por exportación,1810
+401.26,401,income,false,Ingresos por comisiones,1820
+401.38,401,income,false,Otros ingresos propios,1830
+401.39,401,income,false,Ventas y/o servicios gravados realizados en zona fronteriza norte,1840
+402,400,income,false,"Devoluciones, descuentos o bonificaciones sobre ingresos",1850
+402.01,402,income,false,"Devoluciones, descuentos o bonificaciones sobre ventas y/o servicios a la tasa general",1860
+402.02,402,income,false,"Devoluciones, descuentos o bonificaciones sobre ventas y/o servicios al 0%",1870
+402.03,402,income,false,"Devoluciones, descuentos o bonificaciones sobre ventas y/o servicios exentos",1880
+402.05,402,income,false,"Devoluciones, descuentos o bonificaciones sobre ventas y/o servicios en zona fronteriza norte",1890
+403,400,income_other,false,Otros ingresos,1900
+403.01,403,income_other,false,Otros Ingresos,1910
+500,,expense_direct_cost,false,Costos,1920
+501,500,expense_direct_cost,false,Costo de venta y/o servicio,1930
+501.01,501,expense_direct_cost,false,Costo de venta,1940
+501.02,501,expense_direct_cost,false,Costo de servicios (Mano de obra),1950
+501.08,501,expense_direct_cost,false,Otros conceptos de costo,1960
+502,500,expense_direct_cost,false,Compras,1970
+502.01,502,expense_direct_cost,false,Compras nacionales,1980
+502.03,502,expense_direct_cost,false,Compras de Importación,1990
+503,500,expense_direct_cost,false,"Devoluciones, descuentos o bonificaciones sobre compras",2000
+503.01,503,expense_direct_cost,false,"Devoluciones, descuentos o bonificaciones sobre compras",2010
+504,500,expense_direct_cost,false,Otras cuentas de costos,2020
+504.01,504,expense_direct_cost,false,Gastos indirectos de fabricación,2030
+504.04,504,expense_direct_cost,false,Otras cuentas de costos incurridos,2040
+504.25,504,expense_direct_cost,false,Otras cuentas de costos,2050
+505,500,expense_direct_cost,false,Costo de activo fijo,2060
+505.01,505,expense_direct_cost,false,Costo por venta de activo fijo,2070
+600,,expense,false,Gastos,2080
+601,600,expense,false,Gastos generales,2090
+601.01,601,expense,false,Sueldos y salarios,2100
+601.06,601,expense,false,Vacaciones,2110
+601.07,601,expense,false,Prima vacacional,2120
+601.10,601,expense,false,Gratificaciones,2130
+601.12,601,expense,false,Aguinaldo,2140
+601.13,601,expense,false,Indemnizaciones,2150
+601.26,601,expense,false,Cuotas al IMSS,2160
+601.27,601,expense,false,Aportaciones al INFONAVIT,2170
+601.28,601,expense,false,Aportaciones al SAR,2180
+601.29,601,expense,false,Impuesto estatal sobre nóminas,2190
+601.32,601,expense,false,Servicios administrativos,2200
+601.34,601,expense,false,Honorarios a personas físicas residentes nacionales,2210
+601.38,601,expense,false,Honorarios a personas morales residentes nacionales,2220
+601.40,601,expense,false,Honorarios a personas morales residentes del extranjero,2230
+601.45,601,expense,false,Arrendamiento a personas físicas residentes nacionales,2240
+601.46,601,expense,false,Arrendamiento a personas morales residentes nacionales,2250
+601.47,601,expense,false,Arrendamiento a residentes del extranjero,2260
+601.48,601,expense,false,Combustibles y lubricantes,2270
+601.49,601,expense,false,Viáticos y gastos de viaje,2280
+601.50,601,expense,false,"Teléfono, internet",2290
+601.51,601,expense,false,Agua,2300
+601.52,601,expense,false,Energía eléctrica,2310
+601.53,601,expense,false,Vigilancia y seguridad,2320
+601.54,601,expense,false,Limpieza,2330
+601.55,601,expense,false,Papelería y artículos de oficina,2340
+601.56,601,expense,false,Mantenimiento y conservación,2350
+601.57,601,expense,false,Seguros y fianzas,2360
+601.58,601,expense,false,Otros impuestos y derechos,2370
+601.59,601,expense,false,Recargos fiscales,2380
+601.60,601,expense,false,Cuotas y suscripciones,2390
+601.61,601,expense,false,Propaganda y publicidad,2400
+601.62,601,expense,false,Capacitación al personal,2410
+601.63,601,expense,false,Donativos y ayudas,2420
+601.64,601,expense,false,Asistencia técnica,2430
+601.72,601,expense,false,Fletes y acarreos,2440
+601.73,601,expense,false,Gastos de importación,2450
+601.74,601,expense,false,Comisiones sobre ventas,2460
+601.75,601,expense,false,Comisiones por tarjetas de crédito,2470
+601.83,601,expense,false,Gastos no deducibles (sin requisitos fiscales),2480
+601.84,601,expense,false,Otros gastos generales,2490
+607,600,expense,false,Participación de los trabajadores en las utilidades,2500
+607.01,607,expense,false,Participación de los trabajadores en las utilidades,2510
+611,600,expense,false,Impuesto Sobre la renta,2520
+611.01,611,expense,false,Impuesto Sobre la renta,2530
+613,600,expense_depreciation,false,Depreciación contable,2540
+613.02,613,expense_depreciation,false,Depreciación de maquinaria y equipo,2550
+613.03,613,expense_depreciation,false,"Depreciación de automóviles, autobuses, camiones de carga, tractocamiones, montacargas y remolques",2560
+613.04,613,expense_depreciation,false,Depreciación de mobiliario y equipo de oficina,2570
+613.05,613,expense_depreciation,false,Depreciación de equipo de cómputo,2580
+614,600,expense_depreciation,false,Amortización contable,2590
+614.04,614,expense_depreciation,false,Amortización de activos intangibles,2600
+614.05,614,expense_depreciation,false,Amortización de gastos de organización,2610
+700,,expense,false,Resultado integral de financiamiento,2620
+701,700,expense,false,Gastos financieros,2630
+701.01,701,expense,false,Pérdida cambiaria,2640
+701.04,701,expense,false,Intereses a cargo bancario nacional,2650
+701.10,701,expense,false,Comisiones bancarias,2660
+701.11,701,expense,false,Otros gastos financieros,2670
+702,700,income_other,false,Productos financieros,2680
+702.01,702,income_other,false,Utilidad cambiaria,2690
+702.04,702,income_other,false,Intereses a favor bancarios nacional,2700
+702.10,702,income_other,false,Otros productos financieros,2710
+703,700,expense,false,Otros gastos,2720
+703.05,703,expense,false,Pérdida en venta y/o baja de mobiliario y equipo de oficina,2730
+703.06,703,expense,false,Pérdida en venta y/o baja de equipo de cómputo,2740
+703.21,703,expense,false,Otros gastos,2750
+704,700,income_other,false,Otros productos,2760
+704.05,704,income_other,false,Ganancia en venta y/o baja de mobiliario y equipo de oficina,2770
+704.06,704,income_other,false,Ganancia en venta y/o baja de equipo de cómputo,2780
+704.21,704,income_other,false,Ingresos por estímulos fiscales,2790
+704.23,704,income_other,false,Otros productos,2800
