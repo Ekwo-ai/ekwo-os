@@ -112,8 +112,10 @@ the packs the database holds. A preselected country is a chart of accounts
 nobody chose.
 
 The same is true of the financial year: a pack that declares no usual opening
-month makes `--fiscal-year-start` required. Both packs shipped here open on the
-calendar year, so it rarely comes up.
+month makes `--fiscal-year-start` required. Most packs name the calendar year
+in `defaults.fiscal_year_default`; one that names none — the United Kingdom's,
+where a company's year ends on the accounting reference date it chose — asks
+for the day.
 
 ## Where table access comes from
 
@@ -217,7 +219,7 @@ and read by a person.
 | Step | What happens | Why it is done this way |
 |---|---|---|
 | 1 | Applies `supabase/migrations/*.sql` in order | Recorded in `supabase_migrations.schema_migrations`, the Supabase CLI's own history table, so `supabase db push` and `ekwo migrate` stay interchangeable |
-| 2 | Applies the six reference seeds, in file-name order: `00_currencies.sql`, `05_framework_generic.sql`, `10_pack_be.sql`, `11_pack_fr.sql`, `12_pack_lu.sql`, `13_pack_ee.sql` | The currencies, the country-less financial statements every chart falls back on, and the four country packs. They are exactly the six `supabase/config.toml` lists, so `supabase db push` installs the same set; a test compares both paths row by row. `90_demo_company.sql` is sample data and is never applied here |
+| 2 | Applies every reference seed of `supabase/seed/`, in file-name order: `00_currencies.sql`, `00_territories.sql`, `05_framework_generic.sql`, then one `<n>_pack_<cc>.sql` per country pack, in the order of the number each pack declares | The currencies, the territories the tax rules name, the country-less financial statements every chart falls back on, and every country pack of the release — so a company in any of them can be created later without installing anything. They are exactly the seeds `supabase/config.toml` lists (a list `ekwo pack build` writes from `packs/`), so `supabase db push` installs the same set; a test compares both paths row by row. `90_demo_company.sql` is sample data and is never applied here |
 | 3 | Creates the first administrator through the Supabase Auth admin API | See below: a database connection cannot be a signed-in user |
 | 4 | `init_instance()`, `claim_instance_admin()`, the company, `company_members` as owner, `install_country_template()`, the first financial year, and the bank account when an IBAN was given | The six steps of the root README, in the same order, plus the one thing nobody can derive |
 | 5 | Writes `ekwo.json` | Project URL, country, schema version. Nothing else, ever |
@@ -642,11 +644,17 @@ migration runner and by nothing else.
 ```sh
 ekwo pack list           # the packs this checkout carries, and their certification
 ekwo pack describe       # everything each of them says; one country with `describe <cc>`
-ekwo pack build be       # write supabase/seed/10_pack_be.sql from packs/be
+ekwo pack build be       # write supabase/seed/10_pack_be.sql from packs/be, and the lists of packs
 ekwo pack build --all
-ekwo pack check be       # validate one pack and compare its seed
-ekwo pack check --all    # exit 1 if a committed seed is not the output of its pack
+ekwo pack check be       # validate one pack, compare its seed and the lists of packs
+ekwo pack check --all    # exit 1 if a committed seed or list is not the output of the packs
 ```
+
+The lists are the blocks of other files that name every pack — the seeds of
+`supabase/config.toml` and of the root README, the `/packs/<cc>/` lines of
+`.github/CODEOWNERS`, the table of `docs/packs.md` — each between a
+`generated:<name>` marker and `/generated`. They are written from `packs/` the
+way a seed is, so a country is added in `packs/<cc>/` and nowhere else.
 
 `list` is a line per country. `describe` is the whole of one: the charts and
 who each is published for, the taxes and their distinct rates, the periodic
@@ -727,8 +735,8 @@ dashboard under Connect → Session pooler, is the form that is never derived.
 | `--admin-password <pw>` | Their password. Omitted, an invite link is generated and printed. |
 | `--admin-user-id <uuid>` | Use an account that already exists, instead of creating one. |
 | `--fiscal-year <year>` | Calendar year of the first financial year. Defaults to this year. |
-| `--fiscal-year-start <date>` | The day that year opens, as `YYYY-MM-DD`. Needed only where the pack names no usual opening month; the two packs shipped both open on the calendar year. |
-| `--currency <code>` | Currency of the company. Defaults to what the country model says: `EUR` for both countries shipped. |
+| `--fiscal-year-start <date>` | The day that year opens, as `YYYY-MM-DD`. Needed only where the pack names no usual opening month (`defaults.fiscal_year_default`). |
+| `--currency <code>` | Currency of the company. Defaults to the pack's `defaults.currency`. |
 | `--language <xx>` | Language of the books, two letters. Defaults to `country_defaults.language_default`, which the pack fills. It decides which label of the pack lands on each account; the others are kept in `name_i18n`. |
 | `--iban <iban>` | Creates the main bank account, wired to the bank journal and its ledger account. Omitted, no bank account is created and `ekwo doctor` says so. |
 | `--bic <bic>` | Optional, on that account. |
