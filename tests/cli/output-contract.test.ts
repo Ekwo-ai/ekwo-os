@@ -211,6 +211,8 @@ describe('every command answers --json with one document of the published shape'
     expect(check.data).toMatchObject({ action: 'check', stale: 0 });
     const build = await json(['pack', 'build', '--all']);
     expect((build.data as { files: { state: string }[] }).files.every((f) => f.state === 'unchanged')).toBe(true);
+    // And so are the lists of packs outside packs/: nothing to write either.
+    expect((build.data as { lists: { state: string }[] }).lists.every((l) => l.state === 'unchanged')).toBe(true);
     expect((await json(['pack', 'status'])).command).toBe('pack status');
     const upgrade = await json(['pack', 'upgrade', 'Example One']);
     expect(upgrade.data).toMatchObject({ company: { name: 'Example One' } });
