@@ -259,6 +259,8 @@ ${bold('What this CLI does not do')}
   again — the migration history is the one the Supabase CLI writes.
 
 ${bold('Docs')}  https://github.com/Ekwo-ai/ekwo-os
+  An AI assistant setting Ekwo up for somebody starts at AGENTS.md there, or
+  at https://ekwo.ai/llms.txt.
 `;
 }
 
@@ -288,8 +290,12 @@ export async function run(argv: string[], deps: RunDeps = {}): Promise<number> {
       if (args.command !== undefined && args.command !== 'help' && !isKnown(args.command)) {
         throw new UsageError(`unknown command: ${args.command}`);
       }
-      setResult({ version: version(), commands: [...COMMANDS] });
-      line(help().trimEnd());
+      // `usage` is the same text, without colour: an assistant that asked for
+      // JSON reads every flag from one document rather than from the prose on
+      // the standard error.
+      const text = help().trimEnd();
+      setResult({ version: version(), commands: [...COMMANDS], usage: stripColour(text) });
+      line(text);
       return 0;
     }
 
@@ -341,6 +347,10 @@ export async function run(argv: string[], deps: RunDeps = {}): Promise<number> {
         throw new UsageError(`unknown command: ${args.command}\nRun \`ekwo --help\` for the list.`);
     }
   });
+}
+
+function stripColour(text: string): string {
+  return text.replace(/\u001b\[[0-9;]*m/g, '');
 }
 
 function isKnown(command: string): boolean {

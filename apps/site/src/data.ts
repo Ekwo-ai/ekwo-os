@@ -161,6 +161,8 @@ export interface DocArticle {
   summary: string;
   html: string;
   headings: Heading[];
+  /** The same text as Markdown, its links left as the file writes them. */
+  markdown: string;
 }
 
 /** Everything one build of the site needs. */
@@ -171,6 +173,8 @@ export interface SiteData {
   /** Every page of the documentation, the manifesto among them, in the order they are listed. */
   docs: DocArticle[];
   positioningHtml: string;
+  /** The same line as the README writes it, for the files a model reads. */
+  positioningMarkdown: string;
   repository: Repository;
   counters: Counter[];
   world: WorldMap;
@@ -207,6 +211,7 @@ export async function readSiteData(): Promise<SiteData> {
     regions: regionsOf(countries, SOURCE.lang),
     docs: await readDocs(root, repository),
     positioningHtml: await marked.parseInline(positioningLine(readme)),
+    positioningMarkdown: positioningLine(readme),
     repository,
     counters: await countersOf(root, countries, languages),
     world: worldOf(countries, SOURCE.lang),
@@ -561,6 +566,7 @@ async function readDocs(root: string, repository: Repository): Promise<DocArticl
       summary: rendered.summary,
       html: rendered.html,
       headings: rendered.headings,
+      markdown: rendered.markdown,
     };
   });
 }

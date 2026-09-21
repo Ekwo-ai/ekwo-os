@@ -46,6 +46,11 @@ export interface RenderedMarkdown {
   headings: Heading[];
   /** The first paragraph, as plain text: what a search result or a card shows. */
   summary: string;
+  /**
+   * The part rendered, as the file writes it, its `#` title left out: what
+   * `llms-full.txt` gives a model, which reads Markdown better than HTML.
+   */
+  markdown: string;
 }
 
 export interface Slice {
@@ -174,6 +179,11 @@ export function renderMarkdown(
     html,
     headings,
     summary: paragraph === undefined ? '' : squash(plainText(paragraph.tokens)),
+    markdown: tokens
+      .filter((token) => token !== firstTitle)
+      .map((token) => token.raw)
+      .join('')
+      .trim(),
   };
 }
 

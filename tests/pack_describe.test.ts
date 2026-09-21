@@ -218,4 +218,27 @@ describe('describePack', () => {
       expect(none.charts).toEqual(description.charts);
     }
   });
+
+  it('gives the codes a first invoice is written with, and chooses none of them', () => {
+    for (const { pack, description } of described) {
+      const chart = pack.charts.find((c) => c.is_default) ?? pack.charts[0];
+      const codes = new Set(chart?.accounts.map((account) => account.code));
+      const { salesAccount, purchaseAccount, saleTaxes } = description.invoicing;
+      // The roles of the manifest, read and not guessed, and accounts of the default chart.
+      expect(salesAccount).toBe(pack.manifest.defaults.roles['sales'] ?? null);
+      expect(purchaseAccount).toBe(pack.manifest.defaults.roles['purchase'] ?? null);
+      if (salesAccount !== null) expect(codes.has(salesAccount), `${pack.slug}: ${salesAccount}`).toBe(true);
+      // Every domestic sale tax open today, in the pack's order, and nothing else.
+      const open = pack.taxes.filter(
+        (tax) => (tax.scope === 'sale' || tax.scope === 'both') && tax.treatment === 'domestic' && tax.valid_to === null,
+      );
+      expect(saleTaxes.map((tax) => tax.code)).toEqual(open.map((tax) => tax.code));
+    }
+  });
+
+  it('says when a financial year opens, or that the pack names no day', () => {
+    for (const { pack, description } of described) {
+      expect(description.fiscalYearDefault).toBe(pack.documents.fiscal_year_default);
+    }
+  });
 });

@@ -54,6 +54,7 @@ export const DECISIONS_DIR = 'docs/decisions';
 
 export const DOCS: DocSource[] = [
   { slug: 'overview', topic: 'start', source: 'README.md' },
+  { slug: 'agents', topic: 'start', source: 'AGENTS.md' },
   {
     slug: 'install',
     topic: 'start',
@@ -94,3 +95,22 @@ export const DOCS: DocSource[] = [
   { slug: 'disclaimer', topic: 'about', source: 'DISCLAIMER.md', url: '/disclaimer/' },
   { slug: 'security', topic: 'about', source: 'SECURITY.md' },
 ];
+
+/**
+ * The articles `llms-full.txt` carries whole, in this order, before the guide
+ * of every country: what an assistant needs to set Ekwo up for somebody and
+ * keep their books. The reference — the schema, the decisions — stays in
+ * `llms.txt` as links, where a model that needs it can fetch it; in full it
+ * would bury the rest. A test checks that every slug is an article.
+ */
+export const LLMS_FULL: readonly string[] = ['agents', 'overview', 'install', 'cli', 'mcp', 'filing', 'firms', 'disclaimer'];
+
+/**
+ * Articles `llms.txt` does not list: the mapping lines the schema up against
+ * other software by name, which is for an integrator reading the repository
+ * and not for an assistant setting Ekwo up.
+ */
+export const LLMS_LEFT_OUT: readonly string[] = ['mapping'];
+
+/** The topics `llms.txt` files under "Optional": what a model may skip. */
+export const LLMS_OPTIONAL: readonly Topic[] = ['reference', 'contribute'];

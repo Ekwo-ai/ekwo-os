@@ -49,6 +49,8 @@ export {
   type DescribedDeclaration,
   type DescribedEinvoicing,
   type DescribedFile,
+  type DescribedInvoicing,
+  type DescribedSaleTax,
   type DescribedStatement,
   type DescribedTaxes,
   type DescribedVatBalance,

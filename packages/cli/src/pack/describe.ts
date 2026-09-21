@@ -203,6 +203,35 @@ export interface DescribedBoundary {
   operated: string | null;
 }
 
+/** One tax a sale can carry today, by the code a line names it with. */
+export interface DescribedSaleTax {
+  code: string;
+  name: string;
+  rate: number;
+  treatment: string;
+  /** ISO 3166-2, for a tax a state levies. Null for the country's own. */
+  jurisdiction: string | null;
+}
+
+/**
+ * What a first invoice needs from the pack: the codes a line is written with.
+ *
+ * A line names an account and a tax by their **code**, never a rate, and
+ * somebody at a terminal — or an assistant writing the command for them — has
+ * no way to guess `4000` or a tax code. These are read from the default
+ * chart's roles and from the taxes open today, and nothing is chosen: which
+ * tax a given sale carries is the seller's question, and the list is every
+ * domestic one the pack offers, in the pack's own order.
+ */
+export interface DescribedInvoicing {
+  /** The account the `sales` role of the default chart names. Null where the pack names none. */
+  salesAccount: string | null;
+  /** The same, for the `purchase` role. */
+  purchaseAccount: string | null;
+  /** Every domestic tax of scope `sale` or `both` with no end of validity. */
+  saleTaxes: DescribedSaleTax[];
+}
+
 /** Everything one country pack says about itself. */
 export interface PackDescription {
   /** Directory name under `packs/`. */
@@ -220,8 +249,15 @@ export interface PackDescription {
   languages: string[];
   /** The currency a company installing this country gets unless it says otherwise. */
   currency: string;
+  /**
+   * When a financial year opens unless a company says otherwise — `calendar` —
+   * or null where the pack names none, and `ekwo init` then needs
+   * `--fiscal-year-start`.
+   */
+  fiscalYearDefault: string | null;
   charts: DescribedChart[];
   taxes: DescribedTaxes;
+  invoicing: DescribedInvoicing;
   /** Zero or one today; a list because a country that files two is not a new shape. */
   declarations: DescribedDeclaration[];
   einvoicing: DescribedEinvoicing | null;
@@ -308,6 +344,7 @@ export function describePack(pack: Pack, options: DescribeOptions = {}): PackDes
     releasedAt: pack.manifest.released_at ?? null,
     languages: pack.languages,
     currency: pack.manifest.defaults.currency,
+    fiscalYearDefault: pack.documents.fiscal_year_default,
     charts: pack.charts.map((chart) => ({
       code: chart.code,
       name: chart.name,
@@ -323,6 +360,7 @@ export function describePack(pack: Pack, options: DescribeOptions = {}): PackDes
       treatments: [...new Set(pack.taxes.map((tax) => tax.treatment))].sort(),
       kinds: [...new Set(pack.taxes.map((tax) => tax.kind))].sort(),
     },
+    invoicing: invoicingOf(pack),
     declarations,
     einvoicing,
     vatBalance: {
@@ -348,6 +386,30 @@ export function describePack(pack: Pack, options: DescribeOptions = {}): PackDes
     },
     boundary: boundaryOf(declarations, einvoicing, bankStatementFormats, filing.taxPayable),
     checksum: pack.checksum,
+  };
+}
+
+/** The codes a first invoice is written with, as the pack declares them. */
+function invoicingOf(pack: Pack): DescribedInvoicing {
+  const role = (name: string): string | null => {
+    const code = pack.manifest.defaults.roles[name];
+    return typeof code === 'string' && code !== '' ? code : null;
+  };
+  return {
+    salesAccount: role('sales'),
+    purchaseAccount: role('purchase'),
+    saleTaxes: pack.taxes
+      .filter(
+        (tax) =>
+          (tax.scope === 'sale' || tax.scope === 'both') && tax.treatment === 'domestic' && tax.valid_to === null,
+      )
+      .map((tax) => ({
+        code: tax.code,
+        name: tax.name,
+        rate: tax.rate,
+        treatment: tax.treatment,
+        jurisdiction: tax.jurisdiction,
+      })),
   };
 }
 

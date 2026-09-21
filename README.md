@@ -149,6 +149,12 @@ thing you need locally: no Supabase CLI, no Docker, no clone.
 npx ekwo-os init
 ```
 
+Asking an AI assistant to do it with you? Point it at
+[`AGENTS.md`](AGENTS.md): what it needs, the commands, and what it must never
+do. Each country also has its own step-by-step page on the site, generated
+from its pack, and the whole documentation is served to a model as
+`https://ekwo.ai/llms.txt`.
+
 It asks for the connection string, the country, the chart of accounts and the
 language where the pack offers a choice, your organisation, the first company
 and the address of the first administrator, then applies the

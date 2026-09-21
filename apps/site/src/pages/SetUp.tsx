@@ -28,6 +28,9 @@ import type { ReactNode } from 'react';
 import type { PackDescription } from '../../../../packages/cli/src/index.js';
 import type { SiteData } from '../data.js';
 import { fill, type Strings } from '../strings/index.js';
+import { countryGuide, guideMarkdownUrl } from '../guide.js';
+import { COPY_SLOT, renderMarkdown } from '../markdown.js';
+import { copyButton } from './Docs.js';
 import { Glyph } from './icons.js';
 import { regionName } from './Regions.js';
 import { Action, Card, Command, Eyebrow, Footer, Masthead } from './ui.js';
@@ -153,9 +156,47 @@ export function SetUp({
             />
           </Card>
         </div>
+
+        {country === null ? null : <Guide country={country} data={data} strings={strings} />}
       </main>
       <Footer repository={repository} measure="page" strings={strings} />
     </>
+  );
+}
+
+/**
+ * The steps, as text: the Markdown `guide.ts` writes, rendered the way an
+ * article of the documentation is. The same text is served beside the page as
+ * `set-up.md`, which the lead points an assistant at.
+ */
+function Guide({
+  country,
+  data,
+  strings,
+}: {
+  country: PackDescription;
+  data: SiteData;
+  strings: Strings;
+}): ReactNode {
+  const g = strings.setup.guide;
+  const { html } = renderMarkdown(countryGuide(country, data.repository, strings, { withTitle: false }), {
+    resolveLink: (href) => href,
+    source: guideMarkdownUrl(country),
+  });
+  const markdown = guideMarkdownUrl(country);
+  return (
+    <section className="mt-20" aria-labelledby="guide">
+      <h2 id="guide" className="text-[clamp(1.5rem,1.1rem+1.8vw,2.25rem)]">
+        {g.heading}
+      </h2>
+      <p className="mt-3 max-w-reading text-ink-soft">
+        {fill(g.lead, { country: country.name })} <a href={markdown}>{markdown}</a>.
+      </p>
+      <div
+        className="prose mt-8 max-w-[46rem]"
+        dangerouslySetInnerHTML={{ __html: html.split(COPY_SLOT).join(copyButton(strings)) }}
+      />
+    </section>
   );
 }
 

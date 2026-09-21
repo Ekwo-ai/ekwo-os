@@ -15,7 +15,9 @@ import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { readSiteData } from './data.js';
+import { llmsFiles } from './llms.js';
 import { document, renderPages, robots, siteOrigin, sitemap } from './render.js';
+import { LANGUAGES } from './strings/index.js';
 
 const siteRoot = join(dirname(fileURLToPath(import.meta.url)), '..');
 const outDir = join(siteRoot, 'dist');
@@ -27,6 +29,17 @@ const pages = renderPages(data);
 // Where the site is served from is the build's to say: a fork, a preview and
 // the published site are three addresses. Unset, no page claims one.
 const origin = siteOrigin(process.env['SITE_URL']);
+
+// What a model reads: llms.txt, llms-full.txt and each country's guide as
+// Markdown, beside the pages they are made from (`llms.ts`).
+// Written before the pages, so a page may ask whether they exist.
+for (const strings of LANGUAGES) {
+  for (const { file, text } of llmsFiles(data, strings, origin)) {
+    const path = join(outDir, file);
+    await mkdir(dirname(path), { recursive: true });
+    await writeFile(path, text, 'utf8');
+  }
+}
 
 // The summary for models is named in every head only once it is really there:
 // Vite has copied `public/` into the output by now.

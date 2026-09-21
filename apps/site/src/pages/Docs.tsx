@@ -77,7 +77,7 @@ function searchText(article: DocArticle, strings: Strings): string {
  * moment. It is always visible on a screen with no hover and on a phone, and
  * elsewhere when the block is hovered or the button has the focus.
  */
-function copyButton(strings: Strings): string {
+export function copyButton(strings: Strings): string {
   return renderToStaticMarkup(
     <button
       type="button"

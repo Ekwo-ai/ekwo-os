@@ -16,6 +16,7 @@ import { FOUNDATIONS, MODELS, NOT_LISTED } from '../src/data/ecosystem.js';
 import { LANGUAGES, SOURCE, fill, prefixOf } from '../src/strings/index.js';
 import { ICON_NAMES } from '../src/pages/icons.js';
 import m49 from '../src/data/regions.json' with { type: 'json' };
+import { llmsFiles } from '../src/llms.js';
 import { HONEYPOT, SIGNUP, SIGNUP_FORM, THANKS, setUpCommand, setUpUrl } from '../src/pages/SetUp.js';
 
 /**
@@ -858,7 +859,11 @@ describe('the links between pages', () => {
   });
 
   it('point at pages that were built', () => {
-    const built = new Set(pages.map((page) => page.url));
+    // A page may also link to a file the build writes beside it for a model.
+    const built = new Set([
+      ...pages.map((page) => page.url),
+      ...LANGUAGES.flatMap((strings) => llmsFiles(data, strings).map((file) => `/${file.file}`)),
+    ]);
     for (const page of pages) {
       // The query is read by the page, not served: `/compare/?a=…` is `/compare/`.
       for (const match of page.body.matchAll(/href="(\/[^"#?]*)"/g)) {

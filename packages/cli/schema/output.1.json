@@ -106,11 +106,12 @@
     "data": {
       "help": {
         "type": "object",
-        "required": ["version", "commands"],
+        "required": ["version", "commands", "usage"],
         "additionalProperties": false,
         "properties": {
           "version": { "type": "string" },
-          "commands": { "type": "array", "items": { "type": "string" } }
+          "commands": { "type": "array", "items": { "type": "string" } },
+          "usage": { "type": "string", "description": "The text of --help, without colour: every command, flag and environment variable." }
         }
       },
       "version": {

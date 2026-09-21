@@ -358,6 +358,59 @@ export interface Strings {
     thanksBody: string;
     thanksDocs: string;
     thanksHome: string;
+    /**
+     * The step-by-step guide of one country, under the two ways in: written as
+     * Markdown by `guide.ts`, shown on the page and served as
+     * `/countries/<cc>/set-up.md` and in `llms-full.txt`. Every value is read
+     * from the pack; these are the sentences around them. `{…}` is filled.
+     */
+    guide: {
+      heading: string;
+      lead: string;
+      title: string;
+      intro: string;
+      statuses: Record<'community' | 'maintained' | 'reviewed', string>;
+      professional: string;
+      needHeading: string;
+      needProject: string;
+      needValues: string;
+      needNode: string;
+      installHeading: string;
+      installLead: string;
+      oneChart: string;
+      severalCharts: string;
+      oneLanguage: string;
+      severalLanguages: string;
+      periodChoice: string;
+      fiscalYearCalendar: string;
+      fiscalYearAsk: string;
+      scripted: string;
+      liveHeading: string;
+      live: string;
+      invoiceHeading: string;
+      invoiceLead: string;
+      invoiceCodes: string;
+      invoiceProfile: string;
+      invoiceNoAccount: string;
+      taxTableHeader: [string, string, string];
+      taxChoice: string;
+      noTaxes: string;
+      assistantHeading: string;
+      assistant: string;
+      carriesHeading: string;
+      carriesCharts: string;
+      carriesTaxes: string;
+      carriesDeclaration: string;
+      carriesEinvoicing: string;
+      carriesStatements: string;
+      notYetHeading: string;
+      notYetByHand: string;
+      notYetBank: string;
+      notYetSend: string;
+      notYetReadme: string;
+      /** Placeholders the reader replaces, in the commands. */
+      placeholders: { customer: string; line: string; price: string; company: string; org: string; email: string };
+    };
   };
 
   /**
@@ -475,5 +528,24 @@ export interface Strings {
     declarationBoxes: string;
     einvoicing: string;
     checked: string;
+  };
+
+  /**
+   * `llms.txt` and `llms-full.txt`, the site as a model reads it
+   * (llmstxt.org). Everything listed is read from the build; these are the
+   * sentences around the lists. `{…}` is filled.
+   */
+  llms: {
+    /** Under the blockquote: what Ekwo is and is not, and where an assistant starts. */
+    about: string;
+    countriesHeading: string;
+    /** One country: `{country}`, `{version}`, `{status}`. */
+    country: string;
+    docsHeading: string;
+    optionalHeading: string;
+    /** At the head of `llms-full.txt`: where relative links point. */
+    fullNote: string;
+    /** Under each section of `llms-full.txt`. */
+    source: string;
   };
 }

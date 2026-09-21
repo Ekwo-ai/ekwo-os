@@ -305,6 +305,7 @@ export const en: Strings = {
     },
     articles: {
       overview: { label: 'Ekwo OS, in one page', title: 'Ekwo OS, in one page' },
+      agents: { label: 'For AI assistants', title: 'For an AI assistant helping somebody use Ekwo OS' },
       install: { label: 'Install', title: 'Install Ekwo OS on your own Supabase project' },
       cli: { label: 'The command line', title: 'The command line: ekwo' },
       mcp: { label: 'The MCP server', title: 'The MCP server: an assistant at the books' },
@@ -349,6 +350,9 @@ export const en: Strings = {
         'decided and not written.',
     },
     summaries: {
+      agents:
+        'What an AI assistant needs to set Ekwo OS up for somebody and keep their books: where ' +
+        'to read, the commands and the tools, and what it must never do.',
       install:
         'From a free Supabase account to a first invoice: one command applies the schema, ' +
         'seeds the country rules and creates the first company — then the four settings no ' +
@@ -692,6 +696,28 @@ export const en: Strings = {
       'No pack yet. Each has a page that says where it stands, and how to ask for it or write it.',
   },
 
+  llms: {
+    about:
+      'Ekwo OS is open source software (AGPL-3.0) for keeping double-entry books in a Postgres ' +
+      'database the user owns, on their own Supabase project, with one country pack of rules ' +
+      'written as data per country. It is not an accountant and not tax advice: an ' +
+      'assistant helping somebody with it never presents itself as their accountant, never ' +
+      'invents a tax rule, never posts without their confirmation, and recommends that a ' +
+      'qualified professional checks the set-up. Start with [the page for AI assistants]({agents}), ' +
+      'then the set-up guide of the user’s country. Everything below is generated from the ' +
+      'repository at {repository} at every build of this site; [llms-full.txt]({full}) is the ' +
+      'same, in full.',
+    countriesHeading: 'Set up a company, by country',
+    country: '{country}: pack {version}, status {status}',
+    docsHeading: 'Documentation',
+    optionalHeading: 'Optional',
+    fullNote:
+      'The documentation of Ekwo OS in one file, generated from the repository at {repository}. ' +
+      'Each section names the file it comes from; a relative link inside a section is relative ' +
+      'to that file.',
+    source: 'Source: {file} — on the site: {page}',
+  },
+
   changes: {
     title: 'Ekwo changelog — new country packs, releases and fixes',
     description: 'What changed in Ekwo, newest first: new countries, new versions of their packs, releases, features and fixes.',
@@ -782,6 +808,112 @@ export const en: Strings = {
       'installation guide is where setting it up starts.',
     thanksDocs: 'Read the installation guide',
     thanksHome: 'Back to the home page',
+    guide: {
+      heading: 'Step by step',
+      lead:
+        'The same path as text: every command with {country} already on it, and the codes a ' +
+        'first invoice is written with. An AI assistant helping you reads the same text as ' +
+        'Markdown, at',
+      title: 'Set up a company in {country} with Ekwo OS',
+      intro:
+        'Ekwo OS is open source software for keeping double-entry books in a database you own. ' +
+        'This page is generated from the {country} pack, version {version}; every code on it is ' +
+        'read from the pack.',
+      statuses: {
+        community: 'The {country} pack is **community**: contributed, and reviewed by nobody.',
+        maintained:
+          'The {country} pack is **maintained**: written and kept up to date by Ekwo, and not ' +
+          'reviewed by an accounting professional.',
+        reviewed: 'The {country} pack is **reviewed**: read by {by} on {on}.',
+      },
+      professional:
+        'Ekwo is software, not an accountant and not tax advice: a pack is a reading of the ' +
+        'rules at the date of its version, and it can be wrong for your situation. Have a ' +
+        'qualified professional in {country} check your set-up and your first declarations. ' +
+        'See [what Ekwo is, and what it is not]({disclaimer}).',
+      needHeading: '1. What you need',
+      needProject:
+        'A [Supabase](https://supabase.com) project of your own. The free plan is enough to ' +
+        'start; Ekwo does not create it, pay for it or have access to it.',
+      needValues:
+        'From its dashboard: the connection string (Connect → **Session pooler**), the ' +
+        'Project URL and the `service_role` key (Project Settings → API). The key is used ' +
+        'once, to create your first administrator, and is written nowhere. The anon ' +
+        '(publishable) key, on the same page, is what you sign in with afterwards.',
+      needNode: 'Node 20 or later on your machine. Nothing else: no Supabase CLI, no Docker, no clone.',
+      installHeading: '2. Install',
+      installLead: 'One command. It asks for the rest as it goes.',
+      oneChart: 'One chart of accounts: {chart}, {accounts} accounts.',
+      severalCharts:
+        'The pack publishes several charts of accounts, and the installer asks which: {charts}. ' +
+        'Without a terminal, pass `--chart <code>`.',
+      oneLanguage: 'The books are kept in `{language}`.',
+      severalLanguages:
+        'The books can be kept in {languages}; the installer asks. Without a terminal, pass ' +
+        '`--language <code>`.',
+      periodChoice:
+        'The {declaration} is filed on one of these cadences: {periods}. {default}Pass ' +
+        '`--vat-period <cadence>` to set yours.',
+      fiscalYearCalendar: 'A financial year follows the calendar unless you pass `--fiscal-year-start YYYY-MM-DD`.',
+      fiscalYearAsk:
+        'The pack names no usual first day of the financial year: pass ' +
+        '`--fiscal-year-start YYYY-MM-DD`, the first day of yours.',
+      scripted: 'The same, with no question asked — every value your own:',
+      liveHeading: '3. Before you go live',
+      live:
+        'Four settings of your project no installer can reach: turn off self sign-up, keep two ' +
+        'administrators, keep the `service_role` key off every other machine, and read the ' +
+        'disclaimer. `init` prints them; [the installation guide]({install}) explains each.',
+      invoiceHeading: '4. A first invoice',
+      invoiceLead:
+        'Sign in as the administrator you just created, pick the company, and write a draft. ' +
+        '`--dry-run` shows the entry the database would write, and writes nothing; `post` ' +
+        'books it.',
+      invoiceCodes:
+        'A line names its account and its tax by code, never by rate. `{account}` is the ' +
+        'account the pack names for sales; the chart may carry a closer one for what you ' +
+        'sell — services, a reduced rate — and `list_accounts` lists them.',
+      invoiceProfile:
+        'What the invoice says about your company — its address, its VAT number — comes from ' +
+        'the company’s profile, which the MCP tool `update_company_profile` fills; `ekwo init` ' +
+        'sets only the name.',
+      invoiceNoAccount:
+        'The pack names no sales account: `<account>` is a code of your chart, which ' +
+        '`list_accounts` or the chart itself gives.',
+      taxTableHeader: ['Tax code', 'Name', 'Rate'],
+      taxChoice:
+        'The domestic sale taxes the pack carries today. Which one a sale carries is a question ' +
+        'about that sale, for you or your accountant: the list is the pack’s, not advice.',
+      noTaxes: 'The pack carries no domestic sale tax, so a line names no tax.',
+      assistantHeading: '5. With an AI assistant',
+      assistant:
+        'The MCP server lets an assistant keep the books as you, under your own row level ' +
+        'security, and never with the `service_role` key. [Configuring it]({mcp}), and ' +
+        '[what an assistant must and must not do]({agents}).',
+      carriesHeading: 'What the {country} pack carries',
+      carriesCharts: 'Charts of accounts: {charts}.',
+      carriesTaxes: '{count} taxes, at {rates}.',
+      carriesDeclaration: 'The {name} (`{code}`), {boxes} boxes, filed {periods}.',
+      carriesEinvoicing: 'Electronic invoices as `{profile}`.',
+      carriesStatements: 'Financial statements: {statements}.',
+      notYetHeading: 'What it does not do',
+      notYetByHand:
+        'No library of this repository writes the file of the {code} yet: the return is ' +
+        'computed and frozen here, and typed on the administration’s portal.',
+      notYetBank: 'No library of this repository reads a `{format}` bank statement yet.',
+      notYetSend:
+        'Nothing is sent to an administration, a Peppol network or a bank by the open source ' +
+        'software: transmission is yours, or an operator’s you appoint.',
+      notYetReadme: 'What the pack leaves out on purpose is in [its README]({readme}).',
+      placeholders: {
+        customer: 'First Customer',
+        line: 'Consulting',
+        price: '1000.00',
+        company: 'Your Company',
+        org: 'Your Organisation',
+        email: 'you@example.com',
+      },
+    },
   },
 
   seo: {

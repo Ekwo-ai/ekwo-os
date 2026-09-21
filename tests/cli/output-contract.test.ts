@@ -349,6 +349,10 @@ describe('every command answers --json with one document of the published shape'
     const help = documentOf(await capture(() => run(['--help', '--json'])));
     expectData(help);
     expect((help.data as { commands: string[] }).commands).toEqual([...COMMANDS]);
+    // The whole text, readable by a program: no escape code, every flag there.
+    const usage = (help.data as { usage: string }).usage;
+    expect(usage).not.toMatch(/\u001b/);
+    expect(usage).toContain('--country <cc>');
     const version = documentOf(await capture(() => run(['--version', '--json'])));
     expect(version.command).toBe('version');
     expectData(version);

@@ -284,6 +284,10 @@ a terminal and never when `NO_COLOR` is set, no spinner and no line redrawn in
 place, so the output reads the same in a file or a CI log — and takes `--json`
 for a program.
 
+`ekwo help --json` answers the list of commands and, in `usage`, the whole
+text of `--help` without colour: every flag and variable, for an assistant
+that reads one document rather than a terminal.
+
 Under `--json` the standard output is **one JSON document and nothing else**;
 the prose still goes by, on the standard error. The document has the same
 shape whatever happened:
@@ -444,7 +448,7 @@ and none is ever picked for you: with no company in use a verb ends on
 
 **Each verb is one function, and it is not ours.** The functions live in
 `@ekwo-ai/core` and the MCP server calls the same ones: `contact add` is
-`create_contact`, `invoice new` is `create_document`, `post` is
+`create_contact`, `doc new` is `create_document`, `post` is
 `post_document`, `cancel` is `unpost_document` or `cancel_document` — `unpost_refusal` chooses —, `reverse` is `reverse_entry`,
 `payment record` is `record_payment`, `doc list` and
 `doc show` are `list_documents` and `get_document`. Underneath them the rules
@@ -462,7 +466,7 @@ not a draft, a document with nothing open — is exit code 2: the call has to
 change.
 
 **`--ref`, so that nothing is created twice.** On what creates (`contact add`,
-`invoice new`, `payment record`), `--ref <your reference>` is kept on the row,
+`doc new`, `payment record`), `--ref <your reference>` is kept on the row,
 unique per company. The same reference a second time returns what the first
 call created, with `"replayed": true`, and writes nothing — and finishes what
 a dropped connection left half done: a draft whose lines never arrived, a
