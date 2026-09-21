@@ -1,0 +1,320 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "MX-IVA-PM",
+  "name": "Declaración del pago definitivo mensual — IVA personas morales",
+  "period": [
+    "month"
+  ],
+  "period_default": "month",
+  "valid_from": "2024-01-01",
+  "legal_reference": "Ley del IVA, art. 5o.-D — el impuesto se calcula por cada mes de calendario y se paga mediante declaración; el trimestre del art. 5o.-F sólo existe para ciertas personas físicas arrendadoras, fuera del alcance de una declaración de personas morales. Los campos son los de la plataforma «Presenta tu declaración de pagos definitivos de IVA del ejercicio 2024 en adelante», descritos en la guía de llenado del SAT de marzo de 2024, de ahí valid_from; la declaración se presenta en el portal del SAT, prellenada con los CFDI, y no tiene números de renglón: los identificadores de este paquete son siglas propias",
+  "source": "liva",
+  "deadline": {
+    "rule": "depends_on_taxpayer",
+    "legal_reference": "Ley del IVA, art. 5o.-D, segundo párrafo — a más tardar el día 17 del mes siguiente; Decreto que compila diversos beneficios fiscales (DOF 26-12-2013), art. 5.1 — quien deba presentar una declaración provisional o definitiva de impuestos federales el día 17 puede hacerlo, según el sexto dígito numérico de su RFC, el día 17 más uno (1 y 2), dos (3 y 4), tres (5 y 6), cuatro (7 y 8) o cinco (9 y 0) días hábiles, salvo los contribuyentes que el mismo artículo excluye (quienes dictaminan sus estados financieros, los grandes contribuyentes del art. 20, apartado B, del Reglamento Interior del SAT, la Federación y las entidades federativas, entre otros); Código Fiscal de la Federación, art. 12 — días hábiles. El día depende del RFC de cada contribuyente",
+    "source": "decreto-compila-2013"
+  },
+  "boxes": [
+    {
+      "box": "G16",
+      "kind": "base",
+      "name": "Valor de los actos o actividades gravados a la tasa del 16%",
+      "sequence": 10,
+      "legal_reference": "Guía de llenado de la declaración del pago definitivo «IVA personas morales» (SAT, marzo de 2024), sección «IVA a cargo»; prellenado por el SAT con los CFDI de ingreso con método de pago «Pago en una sola exhibición» y los complementos de pago del periodo",
+      "source": "guia-iva-pm"
+    },
+    {
+      "box": "GRF",
+      "kind": "base",
+      "name": "Valor de los actos o actividades gravados sujetos al estímulo de la región fronteriza",
+      "sequence": 20,
+      "legal_reference": "Guía de llenado de la declaración del pago definitivo «IVA personas morales» (SAT, marzo de 2024), sección «IVA a cargo»; el detalle separa la región fronteriza norte (RFN) y sur (RFS)",
+      "source": "guia-iva-pm"
+    },
+    {
+      "box": "G0E",
+      "kind": "base",
+      "name": "Valor de los actos o actividades gravados a la tasa del 0% exportación",
+      "sequence": 30,
+      "legal_reference": "Guía de llenado de la declaración del pago definitivo «IVA personas morales» (SAT, marzo de 2024), sección «IVA a cargo» — capturado por el contribuyente según sus papeles de trabajo",
+      "source": "guia-iva-pm"
+    },
+    {
+      "box": "G0O",
+      "kind": "base",
+      "name": "Valor de los actos o actividades gravados a la tasa del 0% otros",
+      "sequence": 40,
+      "legal_reference": "Guía de llenado de la declaración del pago definitivo «IVA personas morales» (SAT, marzo de 2024), sección «IVA a cargo»; prellenado por el SAT con los CFDI de ingreso con método de pago «Pago en una sola exhibición» y los complementos de pago del periodo",
+      "source": "guia-iva-pm"
+    },
+    {
+      "box": "GSUM",
+      "kind": "total",
+      "name": "Suma de los actos o actividades gravados",
+      "sequence": 50,
+      "plus": [
+        "G16",
+        "GRF",
+        "G0E",
+        "G0O"
+      ],
+      "legal_reference": "Guía de llenado de la declaración del pago definitivo «IVA personas morales» (SAT, marzo de 2024), «es el resultado de sumar» los cuatro campos anteriores",
+      "source": "guia-iva-pm"
+    },
+    {
+      "box": "EXE",
+      "kind": "base",
+      "name": "Valor de los actos o actividades por los que no se deba pagar el impuesto (exentos)",
+      "sequence": 60,
+      "legal_reference": "Guía de llenado de la declaración del pago definitivo «IVA personas morales» (SAT, marzo de 2024), sección «IVA a cargo»; prellenado por el SAT con los CFDI de ingreso con método de pago «Pago en una sola exhibición» y los complementos de pago del periodo",
+      "source": "guia-iva-pm"
+    },
+    {
+      "box": "NOB",
+      "kind": "base",
+      "name": "Valor de los actos o actividades no objeto del impuesto",
+      "sequence": 70,
+      "legal_reference": "Guía de llenado de la declaración del pago definitivo «IVA personas morales» (SAT, marzo de 2024), sección «IVA a cargo»; prellenado por el SAT con los CFDI de ingreso con método de pago «Pago en una sola exhibición» y los complementos de pago del periodo",
+      "source": "guia-iva-pm"
+    },
+    {
+      "box": "C16",
+      "kind": "tax",
+      "name": "IVA a cargo a la tasa del 16%",
+      "sequence": 80,
+      "legal_reference": "Guía de llenado de la declaración del pago definitivo «IVA personas morales» (SAT, marzo de 2024), el formulario lo calcula multiplicando el valor gravado a la tasa del 16 % por la tasa; aquí es el impuesto que el libro registró al cobro, igual salvo redondeo por comprobante",
+      "source": "guia-iva-pm"
+    },
+    {
+      "box": "CRF",
+      "kind": "tax",
+      "name": "IVA a cargo sujeto al estímulo de la región fronteriza",
+      "sequence": 90,
+      "legal_reference": "Guía de llenado de la declaración del pago definitivo «IVA personas morales» (SAT, marzo de 2024), el formulario multiplica el valor sujeto al estímulo por la tasa del 8 %; aquí es el impuesto registrado al cobro",
+      "source": "guia-iva-pm"
+    },
+    {
+      "box": "CRFNC",
+      "kind": "total",
+      "name": "IVA a cargo no cobrado por la aplicación del estímulo de la región fronteriza",
+      "sequence": 100,
+      "rate": 8,
+      "rate_of": "GRF",
+      "legal_reference": "Guía de llenado de la declaración del pago definitivo «IVA personas morales» (SAT, marzo de 2024), «resultado de multiplicar» el valor sujeto al estímulo «por la tasa del 8%» — campo informativo, no entra en el IVA a cargo",
+      "source": "guia-iva-pm"
+    },
+    {
+      "box": "CAR",
+      "kind": "total",
+      "name": "IVA a cargo",
+      "sequence": 110,
+      "plus": [
+        "C16",
+        "CRF"
+      ],
+      "legal_reference": "Guía de llenado de la declaración del pago definitivo «IVA personas morales» (SAT, marzo de 2024), «es la suma de los campos IVA a cargo a la tasa del 16% e IVA a cargo sujeto al estímulo de la región fronteriza»",
+      "source": "guia-iva-pm"
+    },
+    {
+      "box": "AJU",
+      "kind": "tax",
+      "name": "Cantidad actualizada a reintegrarse derivada del ajuste",
+      "sequence": 120,
+      "legal_reference": "Guía de llenado de la declaración del pago definitivo «IVA personas morales» (SAT, marzo de 2024), ajuste del acreditamiento (Ley del IVA, arts. 5o.-A y 5o.-B); no es un importe del libro y ninguna partida lo alimenta",
+      "source": "guia-iva-pm"
+    },
+    {
+      "box": "TCA",
+      "kind": "total",
+      "name": "Total de IVA a cargo",
+      "sequence": 130,
+      "plus": [
+        "CAR",
+        "AJU"
+      ],
+      "legal_reference": "Guía de llenado de la declaración del pago definitivo «IVA personas morales» (SAT, marzo de 2024), «resultado de sumar el IVA a cargo más el campo Cantidad actualizada a reintegrarse derivada del ajuste»",
+      "source": "guia-iva-pm"
+    },
+    {
+      "box": "P16",
+      "kind": "base",
+      "name": "Total de los actos o actividades pagados a la tasa del 16% de IVA",
+      "sequence": 140,
+      "legal_reference": "Guía de llenado de la declaración del pago definitivo «IVA personas morales» (SAT, marzo de 2024), sección «IVA acreditable»; prellenado con los CFDI recibidos pagados en el periodo con forma de pago bancarizada",
+      "source": "guia-iva-pm"
+    },
+    {
+      "box": "PRF",
+      "kind": "base",
+      "name": "Total de los actos o actividades pagados sujetos al estímulo de la región fronteriza",
+      "sequence": 150,
+      "legal_reference": "Guía de llenado de la declaración del pago definitivo «IVA personas morales» (SAT, marzo de 2024), sección «IVA acreditable»",
+      "source": "guia-iva-pm"
+    },
+    {
+      "box": "PIM",
+      "kind": "base",
+      "name": "Total de los actos o actividades pagados en la importación de bienes y servicios a la tasa del 16% de IVA",
+      "sequence": 160,
+      "legal_reference": "Guía de llenado de la declaración del pago definitivo «IVA personas morales» (SAT, marzo de 2024), sección «IVA acreditable» — capturado por el contribuyente según sus papeles de trabajo",
+      "source": "guia-iva-pm"
+    },
+    {
+      "box": "P0",
+      "kind": "base",
+      "name": "Total de los demás actos o actividades pagados a la tasa del 0% de IVA",
+      "sequence": 170,
+      "legal_reference": "Guía de llenado de la declaración del pago definitivo «IVA personas morales» (SAT, marzo de 2024), sección «IVA acreditable»; prellenado con los CFDI recibidos pagados en el periodo con forma de pago bancarizada",
+      "source": "guia-iva-pm"
+    },
+    {
+      "box": "PEX",
+      "kind": "base",
+      "name": "Total de los actos o actividades pagados por los que no se pagará el IVA (exentos)",
+      "sequence": 180,
+      "legal_reference": "Guía de llenado de la declaración del pago definitivo «IVA personas morales» (SAT, marzo de 2024), sección «IVA acreditable»; prellenado con los CFDI recibidos pagados en el periodo con forma de pago bancarizada",
+      "source": "guia-iva-pm"
+    },
+    {
+      "box": "A16",
+      "kind": "tax",
+      "name": "IVA de actos o actividades pagados a la tasa del 16%",
+      "sequence": 190,
+      "legal_reference": "Guía de llenado de la declaración del pago definitivo «IVA personas morales» (SAT, marzo de 2024), el formulario multiplica el total pagado a la tasa del 16 % por la tasa; aquí es el impuesto que el libro pasó a la subcuenta 118.01 en el pago",
+      "source": "guia-iva-pm"
+    },
+    {
+      "box": "ARF",
+      "kind": "tax",
+      "name": "IVA pagado sujeto al estímulo de la región fronteriza",
+      "sequence": 200,
+      "legal_reference": "Guía de llenado de la declaración del pago definitivo «IVA personas morales» (SAT, marzo de 2024), el formulario multiplica el total pagado sujeto al estímulo por la tasa del 8 %",
+      "source": "guia-iva-pm"
+    },
+    {
+      "box": "ARFNP",
+      "kind": "total",
+      "name": "IVA no pagado por la aplicación del estímulo de la región fronteriza",
+      "sequence": 210,
+      "rate": 8,
+      "rate_of": "PRF",
+      "legal_reference": "Guía de llenado de la declaración del pago definitivo «IVA personas morales» (SAT, marzo de 2024), «resultado de multiplicar» el total pagado sujeto al estímulo «por la tasa del 8%» — campo informativo",
+      "source": "guia-iva-pm"
+    },
+    {
+      "box": "AIM",
+      "kind": "tax",
+      "name": "IVA de actos o actividades pagados en la importación de bienes y servicios a la tasa del 16%",
+      "sequence": 220,
+      "legal_reference": "Guía de llenado de la declaración del pago definitivo «IVA personas morales» (SAT, marzo de 2024), el formulario multiplica el total pagado en la importación por la tasa del 16 %; aquí es el IVA pagado con el pedimento (Ley del IVA, art. 28)",
+      "source": "guia-iva-pm"
+    },
+    {
+      "box": "TTR",
+      "kind": "total",
+      "name": "Total de IVA trasladado al contribuyente (efectivamente pagado)",
+      "sequence": 230,
+      "plus": [
+        "A16",
+        "ARF",
+        "AIM"
+      ],
+      "legal_reference": "Guía de llenado de la declaración del pago definitivo «IVA personas morales» (SAT, marzo de 2024), «resultado de sumar» el IVA pagado a la tasa del 16 %, el sujeto al estímulo y el de importación",
+      "source": "guia-iva-pm"
+    },
+    {
+      "box": "ACR",
+      "kind": "total",
+      "name": "IVA acreditable",
+      "sequence": 240,
+      "plus": [
+        "TTR"
+      ],
+      "legal_reference": "Guía de llenado de la declaración del pago definitivo «IVA personas morales» (SAT, marzo de 2024), suma del IVA correspondiente a actos gravados y del IVA acreditable de bienes utilizados indistintamente, este último multiplicado por la proporción de la Ley del IVA, arts. 5o., fracción V, y 5o.-B. El paquete no calcula la proporción: supone que todo el IVA pagado corresponde a actos gravados, y quien realiza también actos exentos debe corregir este campo",
+      "source": "guia-iva-pm"
+    },
+    {
+      "box": "RET",
+      "kind": "tax",
+      "name": "IVA retenido",
+      "sequence": 250,
+      "legal_reference": "Guía de llenado de la declaración del pago definitivo «IVA personas morales» (SAT, marzo de 2024), sección «Determinación» — el impuesto que retuvieron al contribuyente sus clientes (Ley del IVA, art. 5o.-D, tercer párrafo); prellenado con los CFDI emitidos",
+      "source": "guia-iva-pm"
+    },
+    {
+      "box": "OCC",
+      "kind": "tax",
+      "name": "Otras cantidades a cargo del contribuyente",
+      "sequence": 260,
+      "legal_reference": "Guía de llenado de la declaración del pago definitivo «IVA personas morales» (SAT, marzo de 2024), sección «Determinación» — capturadas según papeles de trabajo; ninguna partida del libro las alimenta",
+      "source": "guia-iva-pm"
+    },
+    {
+      "box": "OCF",
+      "kind": "tax",
+      "name": "Otras cantidades a favor del contribuyente",
+      "sequence": 270,
+      "legal_reference": "Guía de llenado de la declaración del pago definitivo «IVA personas morales» (SAT, marzo de 2024), sección «Determinación» — capturadas según papeles de trabajo; ninguna partida del libro las alimenta",
+      "source": "guia-iva-pm"
+    },
+    {
+      "box": "CAC",
+      "kind": "total",
+      "name": "Cantidad a cargo",
+      "sequence": 280,
+      "plus": [
+        "TCA",
+        "OCC"
+      ],
+      "minus": [
+        "RET",
+        "ACR",
+        "OCF"
+      ],
+      "floor_zero": true,
+      "legal_reference": "Guía de llenado de la declaración del pago definitivo «IVA personas morales» (SAT, marzo de 2024), Total de IVA a cargo menos IVA retenido, menos Total de IVA acreditable, menos otras cantidades a favor, más otras cantidades a cargo. La guía omite el IVA acreditable en la frase que describe el campo; el art. 5o.-D, tercer párrafo, de la Ley del IVA lo resta, y la sección muestra el campo «Total de IVA acreditable» justo antes",
+      "source": "guia-iva-pm"
+    },
+    {
+      "box": "SAF",
+      "kind": "total",
+      "name": "Saldo a favor",
+      "sequence": 290,
+      "plus": [
+        "RET",
+        "ACR",
+        "OCF"
+      ],
+      "minus": [
+        "TCA",
+        "OCC"
+      ],
+      "floor_zero": true,
+      "legal_reference": "Guía de llenado de la declaración del pago definitivo «IVA personas morales» (SAT, marzo de 2024), el mismo cálculo cuando el resultado es negativo; Ley del IVA, art. 6o. — el saldo a favor se acredita en los meses siguientes o se solicita en devolución",
+      "source": "guia-iva-pm"
+    },
+    {
+      "box": "ASF",
+      "kind": "tax",
+      "name": "Acreditamiento del saldo a favor de periodos anteriores (sin exceder de la cantidad a cargo)",
+      "sequence": 300,
+      "legal_reference": "Guía de llenado de la declaración del pago definitivo «IVA personas morales» (SAT, marzo de 2024), sección «Determinación» — el saldo a favor de un periodo anterior, que el libro no vuelve a leer: ninguna partida alimenta el campo",
+      "source": "guia-iva-pm"
+    },
+    {
+      "box": "ICA",
+      "kind": "total",
+      "name": "Impuesto a cargo",
+      "sequence": 310,
+      "plus": [
+        "CAC"
+      ],
+      "minus": [
+        "ASF"
+      ],
+      "floor_zero": true,
+      "legal_reference": "Guía de llenado de la declaración del pago definitivo «IVA personas morales» (SAT, marzo de 2024), «resultado de disminuir la cantidad a cargo menos el importe manifestado en el campo Acreditamiento del saldo a favor de periodos anteriores»",
+      "source": "guia-iva-pm"
+    }
+  ]
+}

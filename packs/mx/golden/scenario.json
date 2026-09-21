@@ -1,0 +1,462 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "Un año de una comercializadora mexicana, persona moral del régimen general, que declara el IVA cada mes",
+  "chart": "default",
+  "fiscal_year": {
+    "name": "Ejercicio 2026",
+    "start": "2026-01-01",
+    "end": "2026-12-31"
+  },
+  "periods": [
+    {
+      "code": "2026-01",
+      "from": "2026-01-01",
+      "to": "2026-01-31"
+    },
+    {
+      "code": "2026-02",
+      "from": "2026-02-01",
+      "to": "2026-02-28"
+    },
+    {
+      "code": "2026-03",
+      "from": "2026-03-01",
+      "to": "2026-03-31"
+    },
+    {
+      "code": "2026-04",
+      "from": "2026-04-01",
+      "to": "2026-04-30"
+    }
+  ],
+  "statements": [
+    "MX-SAT-ESF",
+    "MX-SAT-ER"
+  ],
+  "contacts": [
+    {
+      "ref": "cliente-mx",
+      "name": "Distribuidora del Norte, S.A. de C.V.",
+      "type": "customer",
+      "country": "MX"
+    },
+    {
+      "ref": "cliente-frontera",
+      "name": "Abarrotes Mesa de Otay, S.A. de C.V.",
+      "type": "customer",
+      "country": "MX"
+    },
+    {
+      "ref": "cliente-us",
+      "name": "Southwest Imports LLC",
+      "type": "customer",
+      "country": "US"
+    },
+    {
+      "ref": "cliente-flete",
+      "name": "Industrias Metálicas del Bajío, S.A. de C.V.",
+      "type": "customer",
+      "country": "MX"
+    },
+    {
+      "ref": "proveedor-mx",
+      "name": "Mayoreo Central, S.A. de C.V.",
+      "type": "supplier",
+      "country": "MX"
+    },
+    {
+      "ref": "arrendador-pf",
+      "name": "Arrendador persona física",
+      "type": "supplier",
+      "country": "MX"
+    },
+    {
+      "ref": "agente-aduanal",
+      "name": "Agencia Aduanal Nuevo Laredo, S.C.",
+      "type": "supplier",
+      "country": "MX"
+    },
+    {
+      "ref": "proveedor-frontera",
+      "name": "Servicios Técnicos Tijuana, S.A. de C.V.",
+      "type": "supplier",
+      "country": "MX"
+    },
+    {
+      "ref": "transportista",
+      "name": "Fletes Rápidos del Centro, S.A. de C.V.",
+      "type": "supplier",
+      "country": "MX"
+    }
+  ],
+  "documents": [
+    {
+      "ref": "V1",
+      "type": "sale_invoice",
+      "contact": "cliente-mx",
+      "date": "2026-01-12",
+      "why": "Una venta de mercancías al 16 %, cobrada en el mismo mes: el IVA pasa de la 209.01 a la 208.01 al cobro y llega a los campos del 16 % de enero.",
+      "lines": [
+        {
+          "name": "Mercancías",
+          "quantity": 10,
+          "unit_price": 5000,
+          "tax": "MX-S-16",
+          "account": "401.01"
+        }
+      ]
+    },
+    {
+      "ref": "V2",
+      "type": "sale_invoice",
+      "contact": "cliente-mx",
+      "date": "2026-01-20",
+      "why": "Un servicio al 16 % cobrado a medias en febrero: sólo la mitad del valor y del IVA se declara, y en febrero, no en enero — la causación en el cobro del art. 17.",
+      "lines": [
+        {
+          "name": "Servicio de instalación",
+          "quantity": 1,
+          "unit_price": 30000,
+          "tax": "MX-S-16",
+          "account": "401.19"
+        }
+      ]
+    },
+    {
+      "ref": "V3",
+      "type": "sale_invoice",
+      "contact": "cliente-frontera",
+      "date": "2026-02-05",
+      "why": "Una venta desde el establecimiento de Tijuana con el estímulo de la región fronteriza norte: el segundo tipo positivo, en los campos del 8 %, y la subcuenta 401.39 del agrupador.",
+      "lines": [
+        {
+          "name": "Mercancías",
+          "quantity": 4,
+          "unit_price": 5000,
+          "tax": "MX-S-8-RF",
+          "account": "401.39"
+        }
+      ]
+    },
+    {
+      "ref": "V4",
+      "type": "sale_invoice",
+      "contact": "cliente-us",
+      "date": "2026-02-10",
+      "why": "Una exportación definitiva a la tasa del 0 %: el campo de exportación, sin impuesto.",
+      "lines": [
+        {
+          "name": "Mercancías de exportación",
+          "quantity": 8,
+          "unit_price": 5000,
+          "tax": "MX-S-EXP",
+          "account": "401.25"
+        }
+      ]
+    },
+    {
+      "ref": "V5",
+      "type": "sale_invoice",
+      "contact": "cliente-mx",
+      "date": "2026-03-03",
+      "why": "Una venta de productos agrícolas no industrializados a la tasa del 0 % del art. 2o.-A: el campo «0% otros».",
+      "lines": [
+        {
+          "name": "Hortalizas",
+          "quantity": 100,
+          "unit_price": 120,
+          "tax": "MX-S-0",
+          "account": "401.04"
+        }
+      ]
+    },
+    {
+      "ref": "V6",
+      "type": "sale_credit_note",
+      "contact": "cliente-mx",
+      "date": "2026-03-20",
+      "why": "Una devolución parcial de V5, a la tasa del 0 %: el comprobante de egreso disminuye el campo «0% otros» del mismo mes (art. 7o.) y queda como saldo a favor del cliente.",
+      "lines": [
+        {
+          "name": "Devolución de hortalizas",
+          "quantity": 10,
+          "unit_price": 120,
+          "tax": "MX-S-0",
+          "account": "402.02"
+        }
+      ]
+    },
+    {
+      "ref": "V7",
+      "type": "sale_invoice",
+      "contact": "cliente-flete",
+      "date": "2026-03-18",
+      "why": "Un flete facturado a una persona moral que retiene el 4 %: el IVA retenido baja la cantidad a cargo de marzo.",
+      "lines": [
+        {
+          "name": "Servicio de flete",
+          "quantity": 1,
+          "unit_price": 10000,
+          "tax": "MX-S-16-RET4",
+          "account": "401.38"
+        }
+      ]
+    },
+    {
+      "ref": "V8",
+      "type": "sale_invoice",
+      "contact": "cliente-mx",
+      "date": "2026-04-08",
+      "why": "Una venta al 16 % que no se cobra en el año: el IVA se queda en la 209.01 «IVA trasladado no cobrado» y no se declara.",
+      "lines": [
+        {
+          "name": "Mercancías",
+          "quantity": 5,
+          "unit_price": 5000,
+          "tax": "MX-S-16",
+          "account": "401.01"
+        }
+      ]
+    },
+    {
+      "ref": "C1",
+      "type": "purchase_invoice",
+      "contact": "proveedor-mx",
+      "date": "2026-01-08",
+      "why": "Una compra de mercancías al 16 %, pagada en enero: el IVA pasa de la 119.01 a la 118.01 al pago y es acreditable en enero.",
+      "lines": [
+        {
+          "name": "Mercancías",
+          "quantity": 20,
+          "unit_price": 1500,
+          "tax": "MX-P-16",
+          "account": "502.01"
+        }
+      ]
+    },
+    {
+      "ref": "C2",
+      "type": "purchase_invoice",
+      "contact": "arrendador-pf",
+      "date": "2026-01-31",
+      "why": "El arrendamiento del local a una persona física: la persona moral acredita el 16 % y retiene dos terceras partes, que esperan su entero en la 216.10.",
+      "lines": [
+        {
+          "name": "Renta de local",
+          "quantity": 1,
+          "unit_price": 9000,
+          "tax": "MX-P-16-RET23",
+          "account": "601.45"
+        }
+      ]
+    },
+    {
+      "ref": "C3",
+      "type": "purchase_invoice",
+      "contact": "agente-aduanal",
+      "date": "2026-02-12",
+      "why": "Una importación con su pedimento: el IVA pagado en la aduana, en la 118.02 y en los campos de importación.",
+      "lines": [
+        {
+          "name": "Mercancías importadas — valor en aduana más impuesto general de importación",
+          "quantity": 1,
+          "unit_price": 50000,
+          "tax": "MX-P-IMP-16",
+          "account": "502.03"
+        }
+      ]
+    },
+    {
+      "ref": "C4",
+      "type": "purchase_invoice",
+      "contact": "proveedor-frontera",
+      "date": "2026-02-20",
+      "why": "Un mantenimiento facturado al 8 % por un proveedor de la región fronteriza, pagado en abril: acreditable en abril y no en febrero.",
+      "lines": [
+        {
+          "name": "Mantenimiento",
+          "quantity": 1,
+          "unit_price": 10000,
+          "tax": "MX-P-8-RF",
+          "account": "601.56"
+        }
+      ]
+    },
+    {
+      "ref": "C5",
+      "type": "purchase_invoice",
+      "contact": "transportista",
+      "date": "2026-03-05",
+      "why": "Un flete recibido de un transportista: la persona moral retiene el 4 % del valor.",
+      "lines": [
+        {
+          "name": "Flete",
+          "quantity": 1,
+          "unit_price": 5000,
+          "tax": "MX-P-16-RET4",
+          "account": "601.72"
+        }
+      ]
+    },
+    {
+      "ref": "C6",
+      "type": "purchase_invoice",
+      "contact": "proveedor-mx",
+      "date": "2026-03-10",
+      "why": "Libros técnicos, exentos por el art. 9o.: el campo de actos pagados exentos, sin IVA.",
+      "lines": [
+        {
+          "name": "Libros técnicos",
+          "quantity": 4,
+          "unit_price": 500,
+          "tax": "MX-P-EXE",
+          "account": "601.84"
+        }
+      ]
+    },
+    {
+      "ref": "C7",
+      "type": "purchase_credit_note",
+      "contact": "transportista",
+      "date": "2026-04-05",
+      "why": "Una bonificación del transportista sobre C5: disminuye el IVA acreditable y la retención del 4 % en abril, y queda como saldo a favor frente al transportista.",
+      "lines": [
+        {
+          "name": "Bonificación sobre flete",
+          "quantity": 1,
+          "unit_price": 1000,
+          "tax": "MX-P-16-RET4",
+          "account": "601.72"
+        }
+      ]
+    },
+    {
+      "ref": "C8",
+      "type": "purchase_invoice",
+      "contact": "proveedor-mx",
+      "date": "2026-04-12",
+      "why": "Una compra de productos agrícolas a la tasa del 0 %: el campo de actos pagados al 0 %.",
+      "lines": [
+        {
+          "name": "Hortalizas",
+          "quantity": 50,
+          "unit_price": 60,
+          "tax": "MX-P-0",
+          "account": "502.01"
+        }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "E1",
+      "direction": "inbound",
+      "date": "2026-01-28",
+      "amount": 58000,
+      "contact": "cliente-mx",
+      "journal": "BAN",
+      "match": "V1",
+      "why": "El cobro de V1, completo: su IVA se causa en enero."
+    },
+    {
+      "ref": "E2",
+      "direction": "inbound",
+      "date": "2026-02-15",
+      "amount": 17400,
+      "contact": "cliente-mx",
+      "journal": "BAN",
+      "match": "V2",
+      "why": "El cobro de la mitad de V2: la mitad de su IVA se causa en febrero."
+    },
+    {
+      "ref": "E3",
+      "direction": "inbound",
+      "date": "2026-02-25",
+      "amount": 21600,
+      "contact": "cliente-frontera",
+      "journal": "BAN",
+      "match": "V3",
+      "why": "El cobro de V3: su IVA al 8 % se causa en febrero."
+    },
+    {
+      "ref": "E4",
+      "direction": "inbound",
+      "date": "2026-02-28",
+      "amount": 40000,
+      "contact": "cliente-us",
+      "journal": "BAN",
+      "match": "V4",
+      "why": "El cobro de la exportación."
+    },
+    {
+      "ref": "E5",
+      "direction": "inbound",
+      "date": "2026-03-25",
+      "amount": 11200,
+      "contact": "cliente-flete",
+      "journal": "BAN",
+      "match": "V7",
+      "why": "El cobro del flete, neto del 4 % retenido por el cliente."
+    },
+    {
+      "ref": "P1",
+      "direction": "outbound",
+      "date": "2026-01-25",
+      "amount": 34800,
+      "contact": "proveedor-mx",
+      "journal": "BAN",
+      "match": "C1",
+      "why": "El pago de C1: su IVA es acreditable en enero."
+    },
+    {
+      "ref": "P2",
+      "direction": "outbound",
+      "date": "2026-01-31",
+      "amount": 9480,
+      "contact": "arrendador-pf",
+      "journal": "BAN",
+      "match": "C2",
+      "why": "El pago de la renta, neto de las dos terceras partes del IVA retenidas."
+    },
+    {
+      "ref": "P3",
+      "direction": "outbound",
+      "date": "2026-02-12",
+      "amount": 58000,
+      "contact": "agente-aduanal",
+      "journal": "BAN",
+      "match": "C3",
+      "why": "El pago del pedimento."
+    },
+    {
+      "ref": "P4",
+      "direction": "outbound",
+      "date": "2026-04-10",
+      "amount": 10800,
+      "contact": "proveedor-frontera",
+      "journal": "BAN",
+      "match": "C4",
+      "why": "El pago de C4, dos meses después: su IVA al 8 % se acredita en abril."
+    },
+    {
+      "ref": "P5",
+      "direction": "outbound",
+      "date": "2026-03-12",
+      "amount": 5600,
+      "contact": "transportista",
+      "journal": "BAN",
+      "match": "C5",
+      "why": "El pago del flete, neto del 4 % retenido."
+    },
+    {
+      "ref": "P6",
+      "direction": "outbound",
+      "date": "2026-04-22",
+      "amount": 3000,
+      "contact": "proveedor-mx",
+      "journal": "BAN",
+      "match": null,
+      "why": "Un anticipo a un proveedor sin factura: una partida abierta que la declaración tiene que ignorar."
+    }
+  ]
+}
