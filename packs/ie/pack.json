@@ -2,8 +2,8 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "IE",
   "name": "Ireland",
-  "version": "0.1.0",
-  "schema_min": "20260917170000",
+  "version": "0.2.0",
+  "schema_min": "20260921145412",
   "seed_sequence": 16,
   "released_at": "2026-09-21",
   "certification": {

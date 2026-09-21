@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.4.0",
-  "migration": "20260921145412",
+  "migration": "20260921145425",
   "socle": {
     "schema": "public",
     "tables": [
@@ -1821,6 +1821,10 @@
             "type": "text"
           },
           {
+            "name": "buyer_territory_code",
+            "type": "text"
+          },
+          {
             "name": "client_ref",
             "type": "text"
           },
@@ -1949,6 +1953,10 @@
             "type": "uuid"
           },
           {
+            "name": "seller_territory_code",
+            "type": "text"
+          },
+          {
             "name": "sent_at",
             "type": "timestamp with time zone"
           },
@@ -1962,6 +1970,10 @@
           },
           {
             "name": "supply_territory_code",
+            "type": "text"
+          },
+          {
+            "name": "supply_territory_resolved",
             "type": "text"
           },
           {
@@ -3341,6 +3353,10 @@
             "type": "text"
           },
           {
+            "name": "applies_supply_vs_seller",
+            "type": "territory_relation"
+          },
+          {
             "name": "applies_to",
             "type": "tax_scope"
           },
@@ -3456,6 +3472,10 @@
           {
             "name": "applies_supply_territory",
             "type": "text"
+          },
+          {
+            "name": "applies_supply_vs_seller",
+            "type": "territory_relation"
           },
           {
             "name": "applies_to",
@@ -3581,6 +3601,10 @@
           {
             "name": "name",
             "type": "text"
+          },
+          {
+            "name": "outside_parent_tax",
+            "type": "boolean"
           },
           {
             "name": "parent_code",
@@ -4384,6 +4408,10 @@
       },
       {
         "name": "territory_within",
+        "arguments": "p_code text, p_of text"
+      },
+      {
+        "name": "territory_within_for_tax",
         "arguments": "p_code text, p_of text"
       },
       {
@@ -5748,6 +5776,14 @@
           "iso_3166_2",
           "eu",
           "named"
+        ]
+      },
+      {
+        "name": "territory_relation",
+        "kind": "enum",
+        "labels": [
+          "same",
+          "other"
         ]
       }
     ],
@@ -8552,6 +8588,17 @@
         },
         {
           "name": "territory_within",
+          "arguments": "p_code text, p_of text",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "territory_within_for_tax",
           "arguments": "p_code text, p_of text",
           "anon": [],
           "authenticated": [
