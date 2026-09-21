@@ -22,8 +22,9 @@ const run = promisify(execFile);
 
 const GUARD = join('scripts', 'check-no-competitor-names.mjs');
 
-/** The refused name, and the published migration that keeps it. */
+/** The refused names, and the published migration that keeps the first. */
 const NAME = ['O', 'd', 'o', 'o'].join('');
+const OTHERS = [['X', 'e', 'r', 'o'].join(''), ['Q', 'u', 'i', 'c', 'k', 'B', 'o', 'o', 'k', 's'].join('')];
 const FROZEN = 'supabase/migrations/20260912074712_country_packs.sql';
 
 /** Directories to remove when the suite is done. */
@@ -88,6 +89,17 @@ describe('what the guard refuses', () => {
     expect(result.stderr).toContain('docs/mapping.md:1');
     expect(result.stderr).toContain('src/strings.ts:1');
     expect(result.stderr).toContain('3 line(s)');
+  });
+
+  it('refuses every name on its list, not only the first', async () => {
+    const result = await guardOver({
+      'docs/international.md': OTHERS.map((name) => `As ${name} does.`).join('\n') + '\n',
+    });
+
+    expect(result.code).toBe(1);
+    expect(result.stderr).toContain('docs/international.md:1');
+    expect(result.stderr).toContain('docs/international.md:2');
+    expect(result.stderr).toContain('2 line(s)');
   });
 
   it('refuses a migration that is not on the frozen list', async () => {

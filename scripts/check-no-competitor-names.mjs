@@ -39,8 +39,15 @@ import { promisify } from 'node:util';
 const run = promisify(execFile);
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 
-/** The names refused, matched without regard to case. */
-const NAMES = [['o', 'd', 'o', 'o'].join('')];
+/**
+ * The names refused, matched without regard to case. A name that is also a
+ * common word stays off this list: the guard would refuse ordinary prose.
+ */
+const NAMES = [
+  ['o', 'd', 'o', 'o'],
+  ['x', 'e', 'r', 'o'],
+  ['q', 'u', 'i', 'c', 'k', 'b', 'o', 'o', 'k', 's'],
+].map((letters) => letters.join(''));
 
 /** Published migrations that carried a mention before the rule; frozen. */
 const PUBLISHED_BEFORE_THE_RULE = new Set(['supabase/migrations/20260912074712_country_packs.sql']);

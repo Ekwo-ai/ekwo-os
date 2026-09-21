@@ -14,8 +14,8 @@ core and one versioned pack per country**, and a pack is something an accountant
 read, a contributor can propose in a pull request, and a test can prove.
 Everything below follows from that.
 
-Where the core stands today, phase 0 being done: 18 account types shared with
-Xero and QuickBooks; taxes, their postings and the boxes of a declaration
+Where the core stands today, phase 0 being done: 18 account types, the
+set most ledgers share; taxes, their postings and the boxes of a declaration
 as rows a pack fills; financial statements as rows too, with a country-less
 framework behind any chart that prescribes none; EN 16931 fields as columns;
 the French FEC; XBRL for the Belgian NBB; Factur-X; a REST API and an MCP
@@ -208,10 +208,11 @@ The original six-item list, for the record:
   VAT3, described under "Ireland" below.
 - **Canada and Québec** — GST, HST and QST stacked per line, PST as a
   non-recoverable tax in British Columbia, Saskatchewan and Manitoba, two
-  administrations (CRA and Revenu Québec), bilingual labels, a QuickBooks or
-  Sage 50 style chart, shifted years. **Rates live in the pack**: fifteen or so
-  stable combinations published by the CRA are data, not the thousands of
-  monthly-changing American jurisdictions that belong to a feed. It comes
+  administrations (CRA and Revenu Québec), bilingual labels, a chart in the
+  style Canadian bookkeepers use, shifted years. **Rates live in the pack**:
+  fifteen or so stable combinations published by the CRA are data, not the
+  thousands of monthly-changing American jurisdictions that belong to a
+  feed. It comes
   **before the United States**: closer to the accounting model this core was
   built on, and a test of the tax model that the US does not offer.
   `report_code` on the postings and `region` on companies and contacts were
@@ -1798,7 +1799,7 @@ that is right in one country and wrong in the next.
 
 - **US sales tax is not in the core.** Tens of thousands of jurisdictions
   and their updates; the core models the shape, a provider supplies the
-  rates, in the commercial layer. Xero and QuickBooks do the same. `packs/us/`
+  rates, in the commercial layer, as is usual for American sales tax. `packs/us/`
   holds to it: one statewide rate per state and one worked district combination,
   documented as a worked example, and no rate that depends on a delivery
   address.
