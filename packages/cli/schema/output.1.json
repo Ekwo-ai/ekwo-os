@@ -637,6 +637,20 @@
             }
           }
         },
+        "lists": {
+          "$comment": "The blocks of other files that name every pack, written from packs/ by `pack build` and refused stale by `pack check`. `missing` is a block whose markers are gone.",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["file", "block", "state"],
+            "additionalProperties": false,
+            "properties": {
+              "file": { "type": "string" },
+              "block": { "type": "string" },
+              "state": { "enum": ["written", "unchanged", "stale", "missing"] }
+            }
+          }
+        },
         "stale": { "type": "integer", "minimum": 0 }
       }
     }

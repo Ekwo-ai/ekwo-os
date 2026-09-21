@@ -11,12 +11,18 @@ major_version = 15
 [db.migrations]
 schema_paths = []
 
-# `supabase db reset` applies these after the migrations. The demo company
+# `supabase db reset` applies these after the migrations: every reference seed,
+# in the order `ekwo init` applies them. The demo company
 # (supabase/seed/90_demo_company.sql) is deliberately left out: apply it by
 # hand when you want the sample data.
+#
+# The list between the two `generated` markers is written by `ekwo pack build`
+# from supabase/seed/ and packs/, and `ekwo pack check` refuses it when it is
+# not: a country is added in packs/<cc>/, never here.
 [db.seed]
 enabled = true
 sql_paths = [
+# generated:seeds
   "./seed/00_currencies.sql",
   "./seed/00_territories.sql",
   "./seed/05_framework_generic.sql",
@@ -31,6 +37,7 @@ sql_paths = [
   "./seed/19_pack_es.sql",
   "./seed/20_pack_sn.sql",
   "./seed/21_pack_ci.sql",
+# /generated
 ]
 
 # PostgREST serves only the schemas listed here. The socle is `public`; a

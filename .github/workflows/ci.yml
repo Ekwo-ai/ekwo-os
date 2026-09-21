@@ -144,8 +144,10 @@ jobs:
       - run: npm ci
       # The country seeds are compiled from packs/. A seed that is no longer
       # the exact output of its pack means the two have drifted, and the pack
-      # is the source.
-      - name: The country seeds are the output of their packs
+      # is the source. The same command checks the lists that name every pack
+      # outside packs/ — config.toml, the README, CODEOWNERS, docs/packs.md —
+      # so a country is added in its folder and nowhere else.
+      - name: The country seeds and the lists of packs are the output of packs/
         run: |
           # The CLI reads a refusal through the core, and the core writes the
           # FEC through its brick: both are built before it, in that order.
