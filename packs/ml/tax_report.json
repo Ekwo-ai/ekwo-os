@@ -1,0 +1,130 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "ML-TVA",
+  "name": "Déclaration de taxe sur la valeur ajoutée",
+  "period": ["month"],
+  "valid_from": "2018-01-01",
+  "legal_reference": "Code général des impôts, Livre de procédures fiscales, art. 110-2 — déclaration mensuelle des redevables au régime du réel normal, due même sans opération, dans les quinze premiers jours de chaque mois pour les opérations du mois précédent. L'art. 110-3 prévoit, pour le régime du réel simplifié, une déclaration annuelle unique au plus tard le 15 mai de l'année suivante : ce pack ne la porte pas, faute de forme de déclaration exprimable par ce schéma pour une échéance à cadence annuelle mais décalée de plusieurs mois (voir le README du pack). Le modèle exact de l'imprimé (« modèle prescrit par l'Administration fiscale ») n'a pas été trouvé ; les cases ci-dessous sont nommées d'après le contenu que la loi impose, non d'après le formulaire.",
+  "source": "cgi",
+  "deadline": {
+    "rule": "day_of_month_after_period",
+    "day": 15,
+    "legal_reference": "Code général des impôts, Livre de procédures fiscales, art. 110-2 — la déclaration mensuelle du réel normal est déposée dans les quinze premiers jours du mois qui suit celui des opérations.",
+    "source": "cgi"
+  },
+  "boxes": [
+    {
+      "box": "CA18",
+      "kind": "base",
+      "name": "Opérations taxables au taux normal de 18 %",
+      "sequence": 10,
+      "legal_reference": "Code général des impôts, art. 229 pour le taux. Le modèle officiel de l'imprimé n'a pas été trouvé : cette case suit le contenu que la loi impose et non la numérotation d'un formulaire.",
+      "source": "cgi"
+    },
+    {
+      "box": "CA5",
+      "kind": "base",
+      "name": "Opérations taxables au taux réduit de 5 %",
+      "sequence": 20,
+      "legal_reference": "Code général des impôts, art. 195 IV D et art. 195 E (nouveau) — matériel informatique et solaire, matériel agricole, hébergement, restauration et circuits touristiques agréés, réunis dans une case unique faute de cases distinctes trouvées dans un formulaire officiel.",
+      "source": "cgi"
+    },
+    {
+      "box": "EXP",
+      "kind": "base",
+      "name": "Exportations exonérées",
+      "sequence": 30,
+      "legal_reference": "Code général des impôts, art. 195",
+      "source": "cgi"
+    },
+    {
+      "box": "EXO",
+      "kind": "base",
+      "name": "Autres opérations exonérées",
+      "sequence": 40,
+      "legal_reference": "Code général des impôts, art. 195",
+      "source": "cgi"
+    },
+    {
+      "box": "CAT",
+      "kind": "total",
+      "name": "Montant total des opérations réalisées",
+      "sequence": 50,
+      "plus": ["CA18", "CA5", "EXP", "EXO"],
+      "legal_reference": "Code général des impôts, Livre de procédures fiscales, art. 110-2",
+      "source": "cgi"
+    },
+    {
+      "box": "TVA18",
+      "kind": "tax",
+      "name": "Taxe exigible au taux de 18 %",
+      "sequence": 60,
+      "legal_reference": "Code général des impôts, art. 229",
+      "source": "cgi"
+    },
+    {
+      "box": "TVA5",
+      "kind": "tax",
+      "name": "Taxe exigible au taux de 5 %",
+      "sequence": 70,
+      "legal_reference": "Code général des impôts, art. 195 IV D et art. 195 E (nouveau)",
+      "source": "cgi"
+    },
+    {
+      "box": "TVAB",
+      "kind": "total",
+      "name": "Total de la taxe exigible",
+      "sequence": 80,
+      "plus": ["TVA18", "TVA5"],
+      "legal_reference": "Code général des impôts, Livre de procédures fiscales, art. 110-2",
+      "source": "cgi"
+    },
+    {
+      "box": "DEDIMMO",
+      "kind": "tax",
+      "name": "TVA déductible sur immobilisations",
+      "sequence": 90,
+      "legal_reference": "Code général des impôts, art. 229. Aucun article du droit à déduction n'a été identifié dans le texte consulté (voir taxes.json) ; cette case suit la convention des comptes 4451/4452/4454 du plan comptable commun aux dix-sept pays OHADA.",
+      "source": "cgi"
+    },
+    {
+      "box": "DEDBS",
+      "kind": "tax",
+      "name": "TVA déductible sur biens et services",
+      "sequence": 100,
+      "legal_reference": "Code général des impôts, art. 229",
+      "source": "cgi"
+    },
+    {
+      "box": "DEDT",
+      "kind": "total",
+      "name": "Total des déductions",
+      "sequence": 110,
+      "plus": ["DEDIMMO", "DEDBS"],
+      "legal_reference": "Code général des impôts, Livre de procédures fiscales, art. 110-2",
+      "source": "cgi"
+    },
+    {
+      "box": "NET",
+      "kind": "total",
+      "name": "TVA nette à payer",
+      "sequence": 120,
+      "plus": ["TVAB"],
+      "minus": ["DEDT"],
+      "floor_zero": true,
+      "legal_reference": "Code général des impôts, Livre de procédures fiscales, art. 110-2 — la déclaration porte la taxe exigible diminuée des déductions.",
+      "source": "cgi"
+    },
+    {
+      "box": "CRED",
+      "kind": "total",
+      "name": "Crédit de TVA à reporter",
+      "sequence": 130,
+      "plus": ["DEDT"],
+      "minus": ["TVAB"],
+      "floor_zero": true,
+      "legal_reference": "Aucun article limitant dans le temps le report du crédit de TVA (comme les art. 375 et 379 du Sénégal) n'a été identifié pour le Mali dans le texte consulté ; le report est porté ici sans limite, à vérifier avant tout usage en production.",
+      "source": "cgi"
+    }
+  ]
+}

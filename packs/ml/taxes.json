@@ -1,0 +1,298 @@
+[
+  {
+    "code": "ML-S-18",
+    "name": "Ventes de biens 18 %",
+    "description": "Livraisons de biens au taux normal, TVA au compte 4431",
+    "rate": 18,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2018-01-01",
+    "legal_reference": "Code général des impôts, art. 229 — taux de 18 %, confirmé par l'annexe fiscale à la loi de finances 2022 (« le taux retenu par le Mali est 18 % ») ; directive n° 02/2009/CM/UEMOA, art. 29 nouveau — taux normal unique compris entre 15 % et 20 %. Le texte consulté (CGI mis à jour au 02/08/2017) ne date pas l'entrée en vigueur du taux de 18 % lui-même ; 2018-01-01 est la date à partir de laquelle ce pack décrit des livres, le SYSCOHADA révisé, et non celle du taux (voir packs/ci pour la même convention).",
+    "source": "cgi",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "CA18" },
+        { "type": "tax", "account": "4431", "box": "TVA18" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "CA18", "box_factor": -100 },
+        { "type": "tax", "account": "4431", "box": "TVA18", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 10
+  },
+  {
+    "code": "ML-S-18-SRV",
+    "name": "Prestations de services 18 %",
+    "description": "Prestations de services au taux normal, TVA au compte 4432",
+    "rate": 18,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2018-01-01",
+    "legal_reference": "Code général des impôts, art. 229 — taux de 18 %. Aucun article fixant le fait générateur propre aux prestations de services (livraison, encaissement, option) n'a été identifié dans le texte de 2017 consulté : ce pack ne porte donc cette taxe en cash_basis nulle part, faute de texte trouvé qui le prescrive ou l'exclue — à vérifier avant tout usage en production.",
+    "source": "cgi",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "CA18" },
+        { "type": "tax", "account": "4432", "box": "TVA18" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "CA18", "box_factor": -100 },
+        { "type": "tax", "account": "4432", "box": "TVA18", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 20
+  },
+  {
+    "code": "ML-S-5-INFO",
+    "name": "Matériel informatique et de production d'énergie solaire 5 %",
+    "description": "Biens de l'art. 195 IV D : matériel informatique (position 84.71…) et matériels de production d'énergie solaire",
+    "rate": 5,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2018-01-01",
+    "conditions": ["supply_nature"],
+    "legal_reference": "Code général des impôts, art. 195 IV D et art. 229 — liste de positions tarifaires taxées à 5 % ; directive n° 02/2009/CM/UEMOA, art. 29 nouveau — taux réduit de 5 % à 10 % sur une liste communautaire de dix biens ou services au maximum. La date exacte d'entrée en vigueur de ce taux réduit n'a pas été trouvée dans le texte consulté ; 2018-01-01 est la date à partir de laquelle ce pack décrit des livres et non celle du taux (même convention que ML-S-18).",
+    "source": "cgi",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "CA5" },
+        { "type": "tax", "account": "4431", "box": "TVA5" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "CA5", "box_factor": -100 },
+        { "type": "tax", "account": "4431", "box": "TVA5", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 30
+  },
+  {
+    "code": "ML-S-5-AGRI",
+    "name": "Matériel agricole 5 %",
+    "description": "Positions 82.01, 84.24.81.10/90, 84.32.10 à 84.32.80, auparavant exonérées",
+    "rate": 5,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2022-01-01",
+    "conditions": ["supply_nature"],
+    "legal_reference": "Code général des impôts, art. 195 IV D, complété par l'art. 2 de l'annexe fiscale à la loi n° 2021-071 du 23 décembre 2021 (loi de finances pour l'exercice 2022) — extension du taux de 5 % au matériel agricole, applicable à compter de l'exercice 2022.",
+    "source": "lf-2022",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "CA5" },
+        { "type": "tax", "account": "4431", "box": "TVA5" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "CA5", "box_factor": -100 },
+        { "type": "tax", "account": "4431", "box": "TVA5", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 40
+  },
+  {
+    "code": "ML-S-5-HOTEL",
+    "name": "Hébergement, restauration et circuits touristiques agréés 5 %",
+    "description": "Prestations des établissements d'hébergement et de restauration et des organisateurs de circuits touristiques agréés",
+    "rate": 5,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2022-01-01",
+    "conditions": ["supply_nature"],
+    "legal_reference": "Code général des impôts, art. 195 E (nouveau), créé par la même annexe fiscale à la loi de finances pour l'exercice 2022 — taux de 5 % sur les prestations d'hébergement et de restauration des hôtels, restaurants et organismes assimilés agréés, et les prestations des organisateurs de circuits touristiques agréés. L'agrément conditionne le taux : un établissement non agréé facture 18 %.",
+    "source": "lf-2022",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "CA5" },
+        { "type": "tax", "account": "4432", "box": "TVA5" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "CA5", "box_factor": -100 },
+        { "type": "tax", "account": "4432", "box": "TVA5", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 50
+  },
+  {
+    "code": "ML-S-EXP",
+    "name": "Exportation exonérée",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2018-01-01",
+    "conditions": ["transport_evidence"],
+    "legal_reference": "Code général des impôts, art. 195 — exonération des exportations. Le texte consulté ne détaille pas, exportation par exportation, la liste que l'article couvre au-delà de cette mention générale ; à vérifier avant tout usage en production.",
+    "source": "cgi",
+    "vat_category": "G",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "EXP" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "EXP", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 60
+  },
+  {
+    "code": "ML-S-EXO",
+    "name": "Opération exonérée (art. 195)",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2018-01-01",
+    "conditions": ["supply_nature"],
+    "legal_reference": "Code général des impôts, art. 195 — liste des opérations exonérées (exportations et opérations assimilées, biens d'occasion vendus par des particuliers, produits de la pêche, de l'agriculture et de l'élevage non transformés vendus par les producteurs, ventes de l'État et des collectivités hors activité industrielle et commerciale, groupements sans but lucratif, œuvres d'art originales vendues par l'artiste, et une liste de biens par position tarifaire).",
+    "source": "cgi",
+    "vat_category": "E",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "EXO" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "EXO", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 70
+  },
+  {
+    "code": "ML-P-18",
+    "name": "Achats de biens 18 %",
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2018-01-01",
+    "legal_reference": "Code général des impôts, art. 229 pour le taux. Le texte consulté ne cite pas explicitement l'article du droit à déduction sur les biens acquis pour les besoins de l'exploitation ; à vérifier avant tout usage en production.",
+    "source": "cgi",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "tax", "account": "4452", "box": "DEDBS" }
+      ],
+      "credit_note": [
+        { "type": "tax", "account": "4452", "box": "DEDBS", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 110
+  },
+  {
+    "code": "ML-P-18-SRV",
+    "name": "Services extérieurs 18 %",
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2018-01-01",
+    "legal_reference": "Code général des impôts, art. 229 pour le taux. Comme ML-P-18, aucun article du droit à déduction n'a été identifié dans le texte consulté.",
+    "source": "cgi",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "tax", "account": "4454", "box": "DEDBS" }
+      ],
+      "credit_note": [
+        { "type": "tax", "account": "4454", "box": "DEDBS", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 120
+  },
+  {
+    "code": "ML-P-18-IMMO",
+    "name": "Immobilisations 18 %",
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2018-01-01",
+    "legal_reference": "Code général des impôts, art. 229 pour le taux ; aucun article sur les régularisations de la taxe déduite sur immobilisation n'a été identifié dans le texte consulté.",
+    "source": "cgi",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "tax", "account": "4451", "box": "DEDIMMO" }
+      ],
+      "credit_note": [
+        { "type": "tax", "account": "4451", "box": "DEDIMMO", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 130
+  },
+  {
+    "code": "ML-P-5-INFO",
+    "name": "Achat de matériel informatique et solaire 5 %",
+    "rate": 5,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2018-01-01",
+    "conditions": ["supply_nature"],
+    "legal_reference": "Code général des impôts, art. 195 IV D et art. 229 — même liste de positions tarifaires que ML-S-5-INFO.",
+    "source": "cgi",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "tax", "account": "4452", "box": "DEDBS" }
+      ],
+      "credit_note": [
+        { "type": "tax", "account": "4452", "box": "DEDBS", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 140
+  },
+  {
+    "code": "ML-P-5-AGRI",
+    "name": "Achat de matériel agricole 5 %",
+    "rate": 5,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2022-01-01",
+    "conditions": ["supply_nature"],
+    "legal_reference": "Code général des impôts, art. 195 IV D, complété par l'art. 2 de l'annexe fiscale à la loi de finances pour l'exercice 2022 — même extension que ML-S-5-AGRI.",
+    "source": "lf-2022",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "tax", "account": "4452", "box": "DEDBS" }
+      ],
+      "credit_note": [
+        { "type": "tax", "account": "4452", "box": "DEDBS", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 150
+  },
+  {
+    "code": "ML-P-5-HOTEL",
+    "name": "Hébergement et restauration agréés 5 %",
+    "rate": 5,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2022-01-01",
+    "conditions": ["supply_nature"],
+    "legal_reference": "Code général des impôts, art. 195 E (nouveau), même annexe fiscale à la loi de finances 2022. Aucun article restreignant la déduction de la taxe sur l'hébergement et la restauration (comme l'art. 383 b du Sénégal) n'a été identifié pour le Mali dans le texte consulté ; cette taxe est donc portée déductible sans restriction, à vérifier avant tout usage en production.",
+    "source": "lf-2022",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "tax", "account": "4454", "box": "DEDBS" }
+      ],
+      "credit_note": [
+        { "type": "tax", "account": "4454", "box": "DEDBS", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 160
+  }
+]

@@ -1,0 +1,180 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "Une année d'un négoce malien de matériel informatique et solaire, déclarant chaque mois",
+  "chart": "default",
+  "fiscal_year": {
+    "name": "Exercice 2026",
+    "start": "2026-01-01",
+    "end": "2026-12-31"
+  },
+  "periods": [
+    { "code": "2026-01", "from": "2026-01-01", "to": "2026-01-31" },
+    { "code": "2026-02", "from": "2026-02-01", "to": "2026-02-28" },
+    { "code": "2026-03", "from": "2026-03-01", "to": "2026-03-31" },
+    { "code": "2026-04", "from": "2026-04-01", "to": "2026-04-30" }
+  ],
+  "statements": ["ML-SYSCOHADA-BS", "ML-SYSCOHADA-IS"],
+  "contacts": [
+    { "ref": "client-ml", "name": "Comptoir du Djoliba SARL", "type": "customer", "country": "ML" },
+    { "ref": "client-hotel", "name": "Hôtel Amitié Bamako SA", "type": "customer", "country": "ML" },
+    { "ref": "client-coop", "name": "Coopérative agricole de Ségou", "type": "customer", "country": "ML" },
+    { "ref": "client-sn", "name": "Négoce du Fleuve SA", "type": "customer", "country": "SN" },
+    { "ref": "fourn-ml", "name": "Grossiste Bamako Informatique SARL", "type": "supplier", "country": "ML" },
+    { "ref": "fourn-maint", "name": "Climatisation Services Bamako SARL", "type": "supplier", "country": "ML" },
+    { "ref": "fourn-livres", "name": "Librairie Scolaire du Mali SARL", "type": "supplier", "country": "ML" }
+  ],
+  "documents": [
+    {
+      "ref": "V1",
+      "type": "sale_invoice",
+      "contact": "client-ml",
+      "date": "2026-01-10",
+      "why": "Une vente de marchandises au taux normal : la case CA18, la taxe au compte 4431 et dans la case TVA18.",
+      "lines": [
+        { "name": "Fournitures de bureau", "quantity": 30, "unit_price": 40000, "tax": "ML-S-18", "account": "7011" }
+      ]
+    },
+    {
+      "ref": "V2",
+      "type": "sale_invoice",
+      "contact": "client-ml",
+      "date": "2026-01-22",
+      "why": "Une vente de matériel informatique de l'art. 195 IV D au taux réduit de 5 % : la case CA5, la taxe au compte 4431 et dans la case TVA5, le second taux positif du pack.",
+      "lines": [
+        { "name": "Ordinateurs portables", "quantity": 10, "unit_price": 350000, "tax": "ML-S-5-INFO", "account": "7011" }
+      ]
+    },
+    {
+      "ref": "V3",
+      "type": "sale_invoice",
+      "contact": "client-coop",
+      "date": "2026-02-04",
+      "why": "Une vente de matériel agricole de l'art. 195 IV D, extension de l'annexe fiscale 2022, au taux réduit de 5 % : même case CA5/TVA5 que V2, sous une base légale distincte.",
+      "lines": [
+        { "name": "Motoculteurs", "quantity": 4, "unit_price": 900000, "tax": "ML-S-5-AGRI", "account": "7011" }
+      ]
+    },
+    {
+      "ref": "V4",
+      "type": "sale_invoice",
+      "contact": "client-hotel",
+      "date": "2026-02-14",
+      "why": "Une prestation d'hébergement d'un établissement agréé au taux réduit de 5 % de l'art. 195 E (nouveau) : compte 4432, services.",
+      "lines": [
+        { "name": "Nuitées en chambre double", "quantity": 20, "unit_price": 45000, "tax": "ML-S-5-HOTEL", "account": "7061" }
+      ]
+    },
+    {
+      "ref": "V5",
+      "type": "sale_invoice",
+      "contact": "client-sn",
+      "date": "2026-02-25",
+      "why": "Une exportation exonérée vers le Sénégal : la case EXP, aucune taxe, un compte de ventes hors Mali.",
+      "lines": [
+        { "name": "Matériel informatique exporté", "quantity": 15, "unit_price": 320000, "tax": "ML-S-EXP", "account": "7012" }
+      ]
+    },
+    {
+      "ref": "V6",
+      "type": "sale_invoice",
+      "contact": "client-ml",
+      "date": "2026-03-06",
+      "why": "Une vente de produits agricoles non transformés vendus par le producteur, exonérée par l'art. 195 : la case EXO, aucune taxe.",
+      "lines": [
+        { "name": "Mil et sorgho non transformés", "quantity": 200, "unit_price": 1500, "tax": "ML-S-EXO", "account": "7011" }
+      ]
+    },
+    {
+      "ref": "AV1",
+      "type": "sale_credit_note",
+      "contact": "client-ml",
+      "date": "2026-03-18",
+      "why": "Un avoir sur la vente V1 : la case CA18 et la taxe diminuent dans le mois de l'avoir.",
+      "lines": [
+        { "name": "Retour de fournitures de bureau", "quantity": 5, "unit_price": 40000, "tax": "ML-S-18", "account": "7011" }
+      ]
+    },
+    {
+      "ref": "A1",
+      "type": "purchase_invoice",
+      "contact": "fourn-ml",
+      "date": "2026-01-08",
+      "why": "Un achat de marchandises au taux normal : la taxe déductible au compte 4452 et dans la case DEDBS.",
+      "lines": [
+        { "name": "Fournitures de bureau en gros", "quantity": 60, "unit_price": 25000, "tax": "ML-P-18", "account": "6011" }
+      ]
+    },
+    {
+      "ref": "A2",
+      "type": "purchase_invoice",
+      "contact": "fourn-ml",
+      "date": "2026-01-20",
+      "why": "Un achat de matériel informatique au taux réduit de 5 %, revendu en V2 : la taxe déductible au compte 4452 et dans la case DEDBS.",
+      "lines": [
+        { "name": "Ordinateurs portables en gros", "quantity": 10, "unit_price": 260000, "tax": "ML-P-5-INFO", "account": "6011" }
+      ]
+    },
+    {
+      "ref": "A3",
+      "type": "purchase_invoice",
+      "contact": "fourn-maint",
+      "date": "2026-02-11",
+      "why": "Un entretien de climatisation facturé au taux normal : la taxe déductible sur services extérieurs au compte 4454.",
+      "lines": [
+        { "name": "Entretien des climatiseurs du magasin", "quantity": 1, "unit_price": 180000, "tax": "ML-P-18-SRV", "account": "6248" }
+      ]
+    },
+    {
+      "ref": "A4",
+      "type": "purchase_invoice",
+      "contact": "fourn-ml",
+      "date": "2026-04-03",
+      "why": "Du matériel informatique immobilisé pour le magasin lui-même : la taxe au compte 4451 et dans la case DEDIMMO.",
+      "lines": [
+        { "name": "Serveur et postes de gestion", "quantity": 3, "unit_price": 420000, "tax": "ML-P-18-IMMO", "account": "2441" }
+      ]
+    },
+    {
+      "ref": "A5",
+      "type": "purchase_invoice",
+      "contact": "fourn-livres",
+      "date": "2026-03-12",
+      "why": "Un achat de produits agricoles non transformés hors du champ de la taxe (art. 195) : aucune taxe, aucune case atteinte — ce pack ne porte pas de code de taxe d'achat exonéré, la ligne est hors champ.",
+      "lines": [
+        { "name": "Mil et sorgho non transformés en gros", "quantity": 200, "unit_price": 1100, "tax": null, "account": "6011" }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "E1",
+      "direction": "inbound",
+      "date": "2026-02-20",
+      "amount": 945000,
+      "contact": "client-hotel",
+      "journal": "BQ",
+      "match": "V4",
+      "why": "Un encaissement qui solde exactement la facture d'hébergement V4."
+    },
+    {
+      "ref": "E2",
+      "direction": "inbound",
+      "date": "2026-03-25",
+      "amount": 500000,
+      "contact": "client-ml",
+      "journal": "BQ",
+      "match": null,
+      "why": "Un acompte non affecté : il reste une ligne ouverte au compte client."
+    },
+    {
+      "ref": "P1",
+      "direction": "outbound",
+      "date": "2026-02-05",
+      "amount": 1770000,
+      "contact": "fourn-ml",
+      "journal": "BQ",
+      "match": "A1",
+      "why": "Un paiement qui solde la facture d'achat de marchandises A1."
+    }
+  ]
+}

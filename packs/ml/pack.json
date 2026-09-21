@@ -1,0 +1,214 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "ML",
+  "name": "Mali",
+  "version": "0.1.0",
+  "schema_min": "20260921084143",
+  "seed_sequence": 32,
+  "released_at": "2026-09-21",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "audcif",
+        "title": "Acte uniforme relatif au droit comptable et à l'information financière (AUDCIF), adopté à Brazzaville le 26 janvier 2017",
+        "publisher": "OHADA — Bibliothèque numérique de l'OHADA",
+        "url": "https://biblio.ohada.org/doc_num.php?explnum_id=2061",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "syscohada",
+        "title": "Journal officiel de l'OHADA, numéro spécial du 15 février 2017 — Acte uniforme relatif au droit comptable et à l'information financière et Système comptable OHADA (SYSCOHADA révisé), version complète signée",
+        "publisher": "OHADA — Bibliothèque numérique de l'OHADA",
+        "url": "https://biblio.ohada.org/doc_num.php?explnum_id=2063",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "cgi",
+        "title": "Code général des impôts, mis à jour au 02/08/2017 (inclut le Livre de procédures fiscales)",
+        "publisher": "Direction générale des Impôts du Mali (DGI)",
+        "url": "https://www.dgi.gouv.ml/CGI/",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "lf-2022",
+        "title": "État U : annexe fiscale à la loi n° 2021-071 du 23 décembre 2021 portant loi de finances pour l'exercice 2022",
+        "publisher": "Direction générale des Impôts du Mali (DGI)",
+        "url": "https://www.dgi.gouv.ml/wp-content/uploads/2022/01/ANNEXE-FISCALE-2022.pdf",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "certificat-retenue",
+        "title": "Modèle de certificat de retenue de la taxe sur la valeur ajoutée",
+        "publisher": "Direction générale des Impôts du Mali (DGI)",
+        "url": "https://www.dgi.gouv.ml/wp-content/uploads/2023/06/Modele-de-Certificat-de-Retenue-TVA.pdf",
+        "consulted_on": "2026-09-21",
+        "kind": "form"
+      },
+      {
+        "key": "lf-2024",
+        "title": "Loi de finances pour l'année 2024 — note de présentation et état des dépenses fiscales",
+        "publisher": "Ministère de l'Économie et des Finances du Mali",
+        "url": "https://finances.ml/sites/default/files/2024-01/Loi%20de%20Finances%202024_v_31-12-2023pdf.pdf",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "decret-facture-normalisee",
+        "title": "Décret n° 2022-0733/PT-RM du 25 novembre 2022 fixant les modalités d'institution d'un système sécurisé de facture normalisée",
+        "publisher": "Présidence de la Transition — annoncé par la DGI",
+        "url": "https://www.dgi.gouv.ml/institution-du-systeme-securise-de-factures-normalisee-le-president-de-la-transition-signe-le-decret/",
+        "consulted_on": "2026-09-21",
+        "kind": "regulation"
+      },
+      {
+        "key": "e-impot",
+        "title": "e-Impôt — portail de télédéclaration et de télépaiement",
+        "publisher": "Direction générale des Impôts du Mali (DGI)",
+        "url": "https://www.dgi.gouv.ml/e-impot-services-en-ligne/",
+        "consulted_on": "2026-09-21",
+        "kind": "portal"
+      },
+      {
+        "key": "directive-uemoa-tva",
+        "title": "Directive n° 02/2009/CM/UEMOA du 27 mars 2009 portant modification de la directive n° 02/98/CM/UEMOA du 22 décembre 1998 portant harmonisation des législations des États membres en matière de taxe sur la valeur ajoutée",
+        "publisher": "Conseil des ministres de l'UEMOA — texte publié par l'AIFO-UEMOA",
+        "url": "https://www.aifo-uemoa.bj/assets/documents/directives-uemoa/directive_02_2009_CM_UEMOA.pdf",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "XOF",
+    "language": "fr",
+    "rounding_method": "half_up",
+    "closing_style": "result_accounts",
+    "roles": {
+      "receivable": "4111",
+      "payable": "4011",
+      "suspense": "4711",
+      "rounding": "6588",
+      "retained_earnings": "121",
+      "retained_earnings_loss": "1291",
+      "current_year_result_profit": "131",
+      "current_year_result_loss": "139",
+      "sales": "7011",
+      "purchase": "6011",
+      "bank": "5211",
+      "cash": "5711",
+      "fx_gain": "756",
+      "fx_loss": "656",
+      "tax_payable": "4441",
+      "tax_receivable": "4449"
+    },
+    "journal_roles": {
+      "sales": "VT",
+      "purchase": "AC",
+      "miscellaneous": "OD",
+      "opening": "AN"
+    },
+    "fiscal_year_default": "calendar"
+  },
+  "languages": [],
+  "journals": [
+    {
+      "code": "VT",
+      "type": "sales",
+      "name": "Journal des ventes",
+      "sequence": 10
+    },
+    {
+      "code": "AC",
+      "type": "purchase",
+      "name": "Journal des achats",
+      "sequence": 20
+    },
+    {
+      "code": "BQ",
+      "type": "bank",
+      "name": "Journal de banque",
+      "sequence": 30
+    },
+    {
+      "code": "CA",
+      "type": "cash",
+      "name": "Journal de caisse",
+      "sequence": 40
+    },
+    {
+      "code": "OD",
+      "type": "general",
+      "name": "Opérations diverses",
+      "sequence": 50
+    },
+    {
+      "code": "AN",
+      "type": "opening",
+      "name": "Journal des à-nouveaux",
+      "sequence": 60
+    }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "SYSCOHADA révisé — plan comptable général OHADA, Système normal",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": [
+        "ML-SYSCOHADA-BS",
+        "ML-SYSCOHADA-IS"
+      ],
+      "legal_reference": "Acte uniforme relatif au droit comptable et à l'information financière du 26 janvier 2017, art. 17, 7° — recours à un plan de comptes normalisé dont la liste figure dans le Système comptable OHADA ; Système comptable OHADA, Titre VII, chapitre 2, section 3 — liste des comptes, classes 1 à 8. La classe 9, engagements hors bilan et comptabilité analytique de gestion, est d'application facultative et n'est pas reprise. Commun aux dix-sept États parties : un seul fichier, packs/ohada/accounts.csv, recopié dans chaque pack par scripts/ohada-packs.mjs.",
+      "source": "syscohada"
+    }
+  ],
+  "documents": {
+    "numbering": "gapless_per_year",
+    "number_format": "{CODE}/{YYYY}/{NNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "invoice_if_issued",
+    "references": {
+      "numbering": {
+        "legal_reference": "Livre de procédures fiscales, art. 115 — tout redevable qui livre des biens ou rend des services à un autre redevable doit lui délivrer une facture faisant foi des mentions qu'elle porte. Aucun article imposant une séquence numérique particulière n'a été identifié dans le texte de 2017 consulté (à la différence de l'art. 447-I-5 du Sénégal) : `gapless_per_year` et le format `{CODE}/{YYYY}/{NNNN}` sont un choix opérationnel de ce pack, nécessaire pour émettre un document, et non une règle malienne confirmée — à vérifier avant tout usage en production.",
+        "source": "cgi"
+      },
+      "tax_point": {
+        "legal_reference": "Code général des impôts, art. 447-N — la facture doit mentionner distinctement le montant du précompte exigible et fait foi des mentions qu'elle porte ; aucun article fixant le fait générateur général de la TVA (livraison, encaissement des services) n'a été lu dans le texte de 2017 consulté pour cette fiche. invoice_if_issued reprend le principe le plus répandu dans la zone UEMOA (voir packs/sn et packs/ci) faute d'article malien identifié : à vérifier avant tout usage en production.",
+        "source": "cgi"
+      }
+    },
+    "mentions": [
+      {
+        "code": "exempt",
+        "applies_when": "exempt",
+        "text": "Opération exonérée de la taxe sur la valeur ajoutée — article 195 du Code général des impôts.",
+        "sequence": 10,
+        "legal_reference": "Code général des impôts, art. 115 du Livre de procédures fiscales — la facture fait apparaître distinctement le régime d'imposition du fournisseur ; art. 195 pour la liste des opérations exonérées",
+        "source": "cgi"
+      },
+      {
+        "code": "export",
+        "applies_when": "export",
+        "text": "Exportation exonérée de la taxe sur la valeur ajoutée — article 195 du Code général des impôts.",
+        "sequence": 20,
+        "legal_reference": "Code général des impôts, art. 115 du Livre de procédures fiscales et art. 195",
+        "source": "cgi"
+      }
+    ]
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "Décret n° 2022-0733/PT-RM du 25 novembre 2022 institue un système sécurisé de facture normalisée (facture sécurisée par un sticker, seul document faisant foi dans les opérations commerciales) ; la loi de finances 2024 annonce « l'introduction » de la facture normalisée et la soumission à la TVA des plateformes de commerce électronique, ce qui indique que le dispositif n'était pas encore en service fin 2023. Aucun arrêté d'application, aucun format technique et aucune date d'obligation effective n'ont été trouvés à la date de ce pack : le profil et la date restent vides.",
+    "source": "decret-facture-normalisee"
+  }
+}
