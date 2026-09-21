@@ -392,8 +392,10 @@ export const en: Strings = {
   },
 
   compare: {
-    title: 'Compare two countries — Ekwo',
-    description: 'The same table in two columns, for any two of the country packs that ship here.',
+    title: 'Compare accounting rules between two countries — Ekwo',
+    description:
+      'Two country packs side by side: chart of accounts, tax rates, the periodic return, ' +
+      'e-invoicing and bank formats, each sourced to the law. Open source accounting software.',
     heading: 'Compare two countries',
     lead:
       'Pick two countries. The table asks both packs the same questions, and it works with ' +
