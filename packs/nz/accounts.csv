@@ -1,0 +1,164 @@
+code,parent,type,reconcilable,name,sequence
+1000,,asset_cash,false,Petty cash,10
+1010,,asset_cash,false,Business cheque account,20
+1020,,asset_cash,false,Business savings account,30
+1030,,asset_cash,false,Foreign currency account,40
+1040,,asset_cash,false,Merchant card clearing account,50
+1050,,asset_cash,false,Term deposits of three months or less,60
+1060,,asset_cash,false,Cash in transit,70
+1100,,asset_receivable,true,Trade debtors,80
+1105,,asset_current,false,Provision for doubtful debts,90
+1110,,asset_current,false,Amounts receivable from related parties,100
+1120,,asset_current,false,Other debtors,110
+1130,,asset_current,false,Accrued income,120
+1140,,asset_current,false,Employee advances,130
+1150,,asset_current,false,GST paid on purchases — Box 11,140
+1152,,asset_current,false,GST on purchases accounted for on a payments basis — awaiting payment,150
+1155,,asset_current,true,GST refund due from Inland Revenue — net of a filed return,160
+1160,,asset_current,false,Provisional tax paid,170
+1170,,asset_current,false,RWT deducted at source — imputation credits carried forward,180
+1200,,asset_current,false,Inventory — raw materials and consumables,190
+1210,,asset_current,false,Inventory — work in progress,200
+1220,,asset_current,false,Inventory — finished goods and goods for resale,210
+1230,,asset_current,false,Goods in transit,220
+1300,,asset_current,false,Term deposits of more than three months,230
+1310,,asset_current,false,Listed securities held for trading,240
+1320,,asset_current,false,Loans to related parties — current,250
+1350,,asset_current,false,Income tax refundable,260
+1400,,asset_prepayments,false,Prepayments,270
+1410,,asset_prepayments,false,Deposits paid,280
+1420,,asset_prepayments,false,Payments on account to suppliers,290
+1600,,asset_fixed,false,Freehold land,300
+1610,,asset_fixed,false,Buildings,310
+1611,,asset_fixed,false,Buildings — accumulated depreciation,320
+1620,,asset_fixed,false,Leasehold improvements,330
+1621,,asset_fixed,false,Leasehold improvements — accumulated depreciation,340
+1630,,asset_fixed,false,Plant and equipment,350
+1631,,asset_fixed,false,Plant and equipment — accumulated depreciation,360
+1640,,asset_fixed,false,Office furniture and equipment,370
+1641,,asset_fixed,false,Office furniture and equipment — accumulated depreciation,380
+1650,,asset_fixed,false,Computer equipment,390
+1651,,asset_fixed,false,Computer equipment — accumulated depreciation,400
+1660,,asset_fixed,false,Motor vehicles,410
+1661,,asset_fixed,false,Motor vehicles — accumulated depreciation,420
+1670,,asset_fixed,false,Right-of-use assets,430
+1671,,asset_fixed,false,Right-of-use assets — accumulated depreciation,440
+1680,,asset_fixed,false,Capital works in progress,450
+1700,,asset_non_current,false,Investment property,460
+1750,,asset_fixed,false,Goodwill,470
+1751,,asset_fixed,false,Goodwill — accumulated impairment,480
+1760,,asset_fixed,false,Software and development costs,490
+1761,,asset_fixed,false,Software and development costs — accumulated amortisation,500
+1770,,asset_fixed,false,"Patents, trade marks and licences",510
+1771,,asset_fixed,false,"Patents, trade marks and licences — accumulated amortisation",520
+1800,,asset_non_current,false,Investments in associates,530
+1810,,asset_non_current,false,Investments in joint ventures,540
+1820,,asset_non_current,false,Shares in unlisted entities,550
+1830,,asset_non_current,false,Loans to related parties — non-current,560
+1840,,asset_non_current,false,Security deposits — non-current,570
+1900,,asset_non_current,false,Deferred tax assets,580
+2000,,liability_payable,true,Trade creditors,590
+2010,,liability_current,false,Accrued expenses,600
+2020,,liability_current,false,Amounts payable to related parties,610
+2030,,liability_current,false,Other creditors,620
+2040,,liability_current,false,Customer deposits and contract liabilities,630
+2050,,liability_current,false,Wages and salaries payable,640
+2060,,liability_current,false,KiwiSaver employer contributions payable,650
+2065,,liability_current,false,ACC levies payable,660
+2070,,liability_current,false,PAYE deducted from employees — payable,670
+2075,,liability_current,false,Employer superannuation contribution tax (ESCT) payable,680
+2080,,liability_current,false,Dividends payable,690
+2085,,liability_current,false,Resident withholding tax (RWT) deducted — payable,700
+2090,,liability_current,false,Non-resident withholding tax (NRWT) deducted — payable,710
+2100,,liability_current,false,GST collected on sales — Box 5,720
+2105,,liability_current,false,GST on sales accounted for on a payments basis — awaiting payment,730
+2110,,liability_current,true,GST payable to Inland Revenue — net of a filed return,740
+2130,,liability_current,false,Fringe benefit tax (FBT) payable,750
+2200,,liability_current,false,Bank overdraft,760
+2210,,liability_credit_card,false,Business credit card,770
+2220,,liability_current,false,Bank loans — current,780
+2230,,liability_current,false,Lease liabilities — current,790
+2240,,liability_current,false,Hire purchase liabilities — current,800
+2300,,liability_current,false,Income tax payable,810
+2310,,liability_current,false,Provisional tax payable,820
+2350,,liability_current,false,Provision for annual leave,830
+2360,,liability_current,false,Provision for long service and sick leave,840
+2370,,liability_current,false,Provision for warranties and other provisions — current,850
+2400,,liability_non_current,false,Bank loans — non-current,860
+2410,,liability_non_current,false,Lease liabilities — non-current,870
+2420,,liability_non_current,false,Hire purchase liabilities — non-current,880
+2430,,liability_non_current,false,Loans from shareholders and related parties — non-current,890
+2500,,liability_non_current,false,Deferred tax liabilities,900
+2550,,liability_non_current,false,Provision for long service leave — non-current,910
+2560,,liability_non_current,false,Provision for make good and restoration,920
+2990,,liability_current,false,Suspense account,930
+3000,,equity,false,Issued share capital — ordinary shares,940
+3010,,equity,false,Issued share capital — preference shares,950
+3100,,equity,false,Asset revaluation reserve,960
+3110,,equity,false,Other reserves,970
+3200,,equity_retained,false,Retained earnings,980
+3210,,equity_retained,false,Dividends paid,990
+4000,,income,false,Sales — goods,1010
+4010,,income,false,Sales — services,1020
+4020,,income,false,Sales — zero-rated goods and services,1030
+4025,,income,false,Sales — land and buildings held as trading stock,1035
+4030,,income,false,Sales — exports,1040
+4035,,income,false,Sale of a taxable activity as a going concern,1045
+4040,,income,false,Residential rental income,1050
+4050,,income,false,Retail takings,1060
+4080,,income,false,Sales returns and allowances,1070
+4090,,income,false,Discounts allowed,1080
+4500,,income_other,false,Interest income,1090
+4510,,income_other,false,Commercial rental income,1100
+4520,,income_other,false,Government grants and subsidies,1110
+4530,,income_other,false,Sundry income,1120
+4700,,income_other,false,Foreign exchange gains,1130
+4750,,income_other,false,Gain on disposal of non-current assets,1140
+5000,,expense_direct_cost,false,Purchases — goods for resale,1150
+5010,,expense_direct_cost,false,Purchases — raw materials and consumables,1160
+5020,,expense_direct_cost,false,Freight and cartage inwards,1170
+5030,,expense_direct_cost,false,Customs duty and import charges,1180
+5040,,expense_direct_cost,false,Changes in inventories,1190
+5100,,expense_direct_cost,false,Subcontractors,1200
+6000,,expense,false,Wages and salaries,1210
+6010,,expense,false,Directors' fees,1220
+6020,,expense,false,KiwiSaver employer contributions,1230
+6030,,expense,false,ACC levies,1240
+6040,,expense,false,Employer superannuation contribution tax (ESCT),1250
+6050,,expense,false,Annual and long service leave expense,1260
+6060,,expense,false,Fringe benefit tax (FBT),1270
+6070,,expense,false,Staff training and amenities,1280
+6200,,expense_depreciation,false,Depreciation — buildings and leasehold improvements,1290
+6210,,expense_depreciation,false,"Depreciation — plant, equipment and motor vehicles",1300
+6220,,expense_depreciation,false,Depreciation — right-of-use assets,1310
+6230,,expense_depreciation,false,Amortisation of intangible assets,1320
+6300,,expense,false,Rent and outgoings,1330
+6310,,expense,false,"Electricity, gas and water",1340
+6320,,expense,false,Repairs and maintenance,1350
+6330,,expense,false,Insurance,1360
+6340,,expense,false,Telephone and internet,1370
+6350,,expense,false,Software subscriptions,1380
+6360,,expense,false,Advertising and marketing,1390
+6370,,expense,false,Motor vehicle expenses,1400
+6380,,expense,false,Travel and accommodation,1410
+6390,,expense,false,Entertainment,1420
+6400,,expense,false,Accounting and audit fees,1430
+6410,,expense,false,Legal and professional fees,1440
+6420,,expense,false,Consulting fees,1450
+6430,,expense,false,Bank fees and merchant charges,1460
+6440,,expense,false,"Printing, postage and stationery",1470
+6450,,expense,false,Subscriptions and memberships,1480
+6460,,expense,false,Bad debts written off,1490
+6470,,expense,false,Donations,1500
+6480,,expense,false,Rates,1510
+6490,,expense,false,Sundry expenses,1520
+6950,,expense,false,Foreign exchange losses,1530
+6960,,expense,false,Loss on disposal of non-current assets,1540
+6990,,expense,false,Rounding differences,1550
+7000,,expense,false,Interest on bank loans and overdraft,1560
+7010,,expense,false,Interest on lease liabilities,1570
+7020,,expense,false,Hire purchase interest,1580
+7030,,expense,false,Use-of-money interest to Inland Revenue,1590
+8000,,expense,false,Income tax expense — current,1600
+8010,,expense,false,Income tax expense — deferred,1610
+8020,,expense,false,Income tax — under or over provision of prior years,1620

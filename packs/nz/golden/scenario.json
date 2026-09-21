@@ -1,0 +1,321 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "A year of a GST-registered New Zealand trading company, filing two-monthly on the invoice and payments bases, for the year ended 31 December 2027",
+  "chart": "default",
+  "fiscal_year": {
+    "name": "Year ended 31 December 2027",
+    "start": "2027-01-01",
+    "end": "2027-12-31"
+  },
+  "periods": [
+    { "code": "2027-P1", "from": "2027-01-01", "to": "2027-02-28" },
+    { "code": "2027-P2", "from": "2027-03-01", "to": "2027-04-30" },
+    { "code": "2027-P3", "from": "2027-05-01", "to": "2027-06-30" },
+    { "code": "2027-P4", "from": "2027-07-01", "to": "2027-08-31" },
+    { "code": "2027-P5", "from": "2027-09-01", "to": "2027-10-31" },
+    { "code": "2027-P6", "from": "2027-11-01", "to": "2027-12-31" }
+  ],
+  "statements": ["NZ-XRB-SFP", "NZ-XRB-PL"],
+  "contacts": [
+    { "ref": "cust-nz", "name": "Kauri Trading Co Ltd", "type": "customer", "country": "NZ" },
+    { "ref": "cust-counter", "name": "Counter sales", "type": "customer", "country": "NZ" },
+    { "ref": "cust-us", "name": "Cascade Outdoor Supply Inc.", "type": "customer", "country": "US" },
+    { "ref": "cust-gb", "name": "Fenwick Analytics Ltd", "type": "customer", "country": "GB" },
+    { "ref": "tenant", "name": "Residential tenant — Flat 3, Ponsonby", "type": "customer", "country": "NZ" },
+    { "ref": "cust-goingconcern", "name": "Totara Retail Group Ltd", "type": "customer", "country": "NZ" },
+    { "ref": "cust-land", "name": "Rimu Property Investments Ltd", "type": "customer", "country": "NZ" },
+    { "ref": "cust-private", "name": "Private buyer — not a taxable activity", "type": "customer", "country": "NZ" },
+    { "ref": "supp-nz", "name": "Pohutukawa Wholesale Ltd", "type": "supplier", "country": "NZ" },
+    { "ref": "supp-property", "name": "Harbour Property Services Ltd", "type": "supplier", "country": "NZ" },
+    { "ref": "supp-au", "name": "Ironbark Cloud Software Pty Ltd", "type": "supplier", "country": "AU" },
+    { "ref": "supp-advice", "name": "Manuka Advisory Ltd", "type": "supplier", "country": "NZ" },
+    { "ref": "supp-produce", "name": "Waikato Growers Co-operative", "type": "supplier", "country": "NZ" },
+    { "ref": "supp-bank", "name": "Tui Bank Ltd", "type": "supplier", "country": "NZ" },
+    { "ref": "supp-council", "name": "Kestrel Bay District Council", "type": "supplier", "country": "NZ" },
+    { "ref": "supp-contractor", "name": "T. Ngata, builder — no IRD number provided", "type": "supplier", "country": "NZ" }
+  ],
+  "documents": [
+    {
+      "ref": "S1",
+      "type": "sale_invoice",
+      "contact": "cust-nz",
+      "date": "2027-01-15",
+      "why": "A standard taxable sale on the invoice basis: the GST-exclusive value posts to the hidden box 5B and the GST to the hidden box 5T, which sum to Box 5 of the GST101A.",
+      "lines": [
+        { "name": "Homewares", "quantity": 10, "unit_price": 500, "tax": "NZ-S-GST", "account": "4000" }
+      ]
+    },
+    {
+      "ref": "P1",
+      "type": "purchase_invoice",
+      "contact": "supp-nz",
+      "date": "2027-01-18",
+      "why": "A creditable purchase of trading stock: box 11B takes the value and 11T the credit, which sum to Box 11 and are worked into Box 12.",
+      "lines": [
+        { "name": "Goods for resale", "quantity": 1, "unit_price": 3000, "tax": "NZ-P-GST", "account": "5000" }
+      ]
+    },
+    {
+      "ref": "S2",
+      "type": "sale_invoice",
+      "contact": "cust-counter",
+      "date": "2027-01-25",
+      "why": "A retail sale on a GST-inclusive price: the engine takes 3/23 out of 1,150.00, exactly 150.00 of GST on a 1,000.00 base.",
+      "lines": [
+        { "name": "Shop takings", "quantity": 1, "unit_price": 1150, "tax": "NZ-S-GST-INC", "account": "4050" }
+      ]
+    },
+    {
+      "ref": "S3",
+      "type": "sale_invoice",
+      "contact": "cust-us",
+      "date": "2027-03-10",
+      "why": "A zero-rated export of goods under s. 11(1)(a): Box 5 and Box 6 both take the value, and the invoice carries the zero-rating sentence.",
+      "lines": [
+        { "name": "Homewares shipped to Portland", "quantity": 1, "unit_price": 8000, "tax": "NZ-S-ZERO-EXPORT", "account": "4030" }
+      ]
+    },
+    {
+      "ref": "S4",
+      "type": "sale_invoice",
+      "contact": "cust-gb",
+      "date": "2027-03-15",
+      "why": "A zero-rated supply of services to a non-resident outside New Zealand under s. 11A(1): Box 5 and Box 6, and the EN 16931 category is G, the one PINT A-NZ gives an export.",
+      "lines": [
+        { "name": "Market research report", "quantity": 1, "unit_price": 4500, "tax": "NZ-S-ZERO-SERVICES", "account": "4030" }
+      ]
+    },
+    {
+      "ref": "P2",
+      "type": "purchase_invoice",
+      "contact": "supp-property",
+      "date": "2027-03-20",
+      "why": "A purchase relating to the exempt residential letting (s. 20(3) and s. 21): no credit, so the 15 % GST becomes part of the cost through tax_on_base, and the value is kept out of Box 11 because no credit is claimed on it.",
+      "lines": [
+        { "name": "Property management fee — residential unit", "quantity": 1, "unit_price": 800, "tax": "NZ-P-GST-ITS", "account": "6320" }
+      ]
+    },
+    {
+      "ref": "P2b",
+      "type": "purchase_invoice",
+      "contact": "supp-nz",
+      "date": "2027-03-28",
+      "why": "An ordinary taxable purchase in the same period as the zero-rated and exempt documents above, so the busiest period by document count is also one where a real GST account moves — printing for the shop.",
+      "lines": [
+        { "name": "Printed packaging", "quantity": 1, "unit_price": 200, "tax": "NZ-P-GST", "account": "6440" }
+      ]
+    },
+    {
+      "ref": "S5",
+      "type": "sale_invoice",
+      "contact": "tenant",
+      "date": "2027-03-25",
+      "why": "Residential rent, exempt under s. 14(1)(c): not included in the GST return at all, and the invoice carries the exempt sentence.",
+      "lines": [
+        { "name": "Rent of Flat 3, Ponsonby — March quarter", "quantity": 1, "unit_price": 2200, "tax": "NZ-S-EXEMPT-RES", "account": "4040" }
+      ]
+    },
+    {
+      "ref": "S6",
+      "type": "sale_invoice",
+      "contact": "cust-goingconcern",
+      "date": "2027-05-05",
+      "why": "The sale of the taxable activity as a going concern, zero-rated under s. 11(1)(m): Box 5 and Box 6 take the whole price.",
+      "lines": [
+        { "name": "Sale of the retail taxable activity as a going concern", "quantity": 1, "unit_price": 150000, "tax": "NZ-S-ZERO-GOINGCONCERN", "account": "4035" }
+      ]
+    },
+    {
+      "ref": "S7",
+      "type": "sale_invoice",
+      "contact": "cust-land",
+      "date": "2027-05-12",
+      "why": "The sale of land to another GST-registered person acquiring it for taxable supplies, compulsorily zero-rated under s. 11(1)(mb): Box 5 and Box 6.",
+      "lines": [
+        { "name": "Sale of the Kestrel Bay warehouse site", "quantity": 1, "unit_price": 450000, "tax": "NZ-S-ZERO-LAND", "account": "4025" }
+      ]
+    },
+    {
+      "ref": "P3",
+      "type": "purchase_invoice",
+      "contact": "supp-au",
+      "date": "2027-05-20",
+      "why": "An offshore software subscription reverse charged under s. 8(4B) because it serves the exempt residential letting (taxable use assumed below 95 %): the self-assessed GST lands on 2100 through box 5B and 5T exactly as an ordinary sale's output tax would, and the whole of it is also a cost of the acquisition through tax_on_base — no credit at all.",
+      "lines": [
+        { "name": "Property management software subscription", "quantity": 1, "unit_price": 1000, "tax": "NZ-P-RC-IMPORTED", "account": "6350" }
+      ]
+    },
+    {
+      "ref": "S8",
+      "type": "sale_invoice",
+      "contact": "cust-nz",
+      "date": "2027-05-25",
+      "why": "A sale accounted for on the payments basis (s. 20(3), below the $2,000,000 threshold): nothing in period P3, and all of it in period P5 when the customer pays.",
+      "lines": [
+        { "name": "Merchandising services", "quantity": 1, "unit_price": 6000, "tax": "NZ-S-GST-PAY", "account": "4010" }
+      ]
+    },
+    {
+      "ref": "S9",
+      "type": "sale_credit_note",
+      "contact": "cust-nz",
+      "date": "2027-07-10",
+      "why": "A credit note on S1 for two returned units: box 5B and 5T, and Box 5 with them, go down in the period it is issued.",
+      "lines": [
+        { "name": "Returned homewares", "quantity": 2, "unit_price": 500, "tax": "NZ-S-GST", "account": "4000" }
+      ]
+    },
+    {
+      "ref": "P4",
+      "type": "purchase_invoice",
+      "contact": "supp-advice",
+      "date": "2027-07-15",
+      "why": "A purchase accounted for on the payments basis: the credit waits on 1152 and reaches box 11T in period P6, when the invoice is paid.",
+      "lines": [
+        { "name": "Advisory services", "quantity": 1, "unit_price": 2500, "tax": "NZ-P-GST-PAY", "account": "6420" }
+      ]
+    },
+    {
+      "ref": "P5",
+      "type": "purchase_invoice",
+      "contact": "supp-produce",
+      "date": "2027-07-20",
+      "why": "A zero-rated purchase: the supplier charged no GST, so there is none to claim, and the value is kept out of Box 11.",
+      "lines": [
+        { "name": "Produce for resale", "quantity": 1, "unit_price": 900, "tax": "NZ-P-ZERO", "account": "5000" }
+      ]
+    },
+    {
+      "ref": "P6",
+      "type": "purchase_invoice",
+      "contact": "supp-bank",
+      "date": "2027-07-25",
+      "why": "An exempt purchase — bank account fees under s. 14: Box 11 takes nothing.",
+      "lines": [
+        { "name": "Account keeping fees", "quantity": 1, "unit_price": 60, "tax": "NZ-P-EXEMPT", "account": "6430" }
+      ]
+    },
+    {
+      "ref": "P7",
+      "type": "purchase_credit_note",
+      "contact": "supp-nz",
+      "date": "2027-09-05",
+      "why": "A credit note received on P1: box 11B and 11T, and Box 11 and Box 12 with them, go down.",
+      "lines": [
+        { "name": "Returned stock", "quantity": 1, "unit_price": 300, "tax": "NZ-P-GST", "account": "5000" }
+      ]
+    },
+    {
+      "ref": "P8",
+      "type": "purchase_invoice",
+      "contact": "supp-council",
+      "date": "2027-09-10",
+      "why": "Council rates: a statutory charge with no GST in the price, kept out of Box 11.",
+      "lines": [
+        { "name": "District council rates", "quantity": 1, "unit_price": 250, "tax": "NZ-P-NOGST", "account": "6480" }
+      ]
+    },
+    {
+      "ref": "S10",
+      "type": "sale_invoice",
+      "contact": "cust-goingconcern",
+      "date": "2027-09-18",
+      "why": "Interest on a related-party loan, an exempt financial service under s. 14(1)(a): not included in the GST return.",
+      "lines": [
+        { "name": "Interest on advance to Totara Retail Group", "quantity": 1, "unit_price": 900, "tax": "NZ-S-EXEMPT-FIN", "account": "4500" }
+      ]
+    },
+    {
+      "ref": "S11",
+      "type": "sale_invoice",
+      "contact": "cust-private",
+      "date": "2027-09-22",
+      "why": "A sale outside the course or furtherance of any taxable activity: no GST and no box at all.",
+      "lines": [
+        { "name": "Sale of a private motor vehicle", "quantity": 1, "unit_price": 1200, "tax": "NZ-S-NOGST", "account": "4530" }
+      ]
+    },
+    {
+      "ref": "P9",
+      "type": "purchase_invoice",
+      "contact": "supp-contractor",
+      "date": "2027-11-05",
+      "why": "A schedular payment to a building contractor who has not provided an IRD number: 45 % is withheld under the no-notification rate of the Income Tax Act 2007, waiting on 2085, and the contractor is paid the other 55 %. Not a GST mechanism, and not reported on the GST101A; it exercises the second, non-15-percent, positive rate this pack carries.",
+      "lines": [
+        { "name": "Shopfront repairs", "quantity": 1, "unit_price": 1000, "tax": "NZ-P-WT-NONOTIFY", "account": "6320" }
+      ]
+    },
+    {
+      "ref": "S12",
+      "type": "sale_invoice",
+      "contact": "cust-nz",
+      "date": "2027-11-15",
+      "why": "A second taxable sale, in the final period, so period P6 carries output tax and a positive Box 15.",
+      "lines": [
+        { "name": "Merchandising services", "quantity": 1, "unit_price": 4000, "tax": "NZ-S-GST", "account": "4010" }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "R1",
+      "direction": "inbound",
+      "date": "2027-03-05",
+      "amount": 5750,
+      "contact": "cust-nz",
+      "journal": "BNK",
+      "match": "S1",
+      "why": "A receipt that settles S1 exactly."
+    },
+    {
+      "ref": "D1",
+      "direction": "outbound",
+      "date": "2027-03-08",
+      "amount": 3450,
+      "contact": "supp-nz",
+      "journal": "BNK",
+      "match": "P1",
+      "why": "A payment that settles P1 exactly."
+    },
+    {
+      "ref": "R2",
+      "direction": "inbound",
+      "date": "2027-09-15",
+      "amount": 6900,
+      "contact": "cust-nz",
+      "journal": "BNK",
+      "match": "S8",
+      "why": "The receipt that moves the GST of S8 (payments basis) into the period it is actually recognised, September–October 2027."
+    },
+    {
+      "ref": "D2",
+      "direction": "outbound",
+      "date": "2027-11-20",
+      "amount": 2875,
+      "contact": "supp-advice",
+      "journal": "BNK",
+      "match": "P4",
+      "why": "The payment that moves the credit of P4 (payments basis) into November–December 2027."
+    },
+    {
+      "ref": "D3",
+      "direction": "outbound",
+      "date": "2027-11-10",
+      "amount": 550,
+      "contact": "supp-contractor",
+      "journal": "BNK",
+      "match": "P9",
+      "why": "The 55 % of P9 the contractor is paid once 45 % has been withheld."
+    },
+    {
+      "ref": "R3",
+      "direction": "inbound",
+      "date": "2027-11-25",
+      "amount": 2000,
+      "contact": "cust-nz",
+      "journal": "BNK",
+      "match": null,
+      "why": "A payment on account that matches no invoice and stays open."
+    }
+  ]
+}

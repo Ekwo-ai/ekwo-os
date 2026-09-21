@@ -1,0 +1,112 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "NZ-GST101A",
+  "name": "Goods and services tax return",
+  "period": ["month", "bimonth", "half_year"],
+  "period_default": "bimonth",
+  "valid_from": "2010-10-01",
+  "legal_reference": "Goods and Services Tax Act 1985, s. 15 — the taxable period of a registered person is two months ending on the dates the Commissioner sets, unless s. 15A lets the person elect a one-month period, or s. 15B lets a person whose taxable supplies do not exceed, and are not likely to exceed, $500,000 in a twelve-month period elect a six-month period; s. 15C requires a monthly period once taxable supplies exceed $24 million in a twelve-month period (IR375, GST guide: 'You must file monthly returns if your sales are over $24 million in any 12-month period'; 'Anyone with sales under $500,000 in any 12-month period' may choose six-monthly). This pack declares the two-monthly cadence, `bimonth`, as the one the Act gives everybody who elects nothing else, and the monthly and six-monthly cadences it authorises above and below that. This is form GST101A, filed by a registered person not liable for provisional tax; a registered person who is liable for provisional tax files a form of the GST103 series instead, which folds in the provisional tax instalment and is not carried by this pack.",
+  "source": "gst-act",
+  "deadline": {
+    "rule": "day_of_month_after_period",
+    "day": 28,
+    "legal_reference": "IR375, GST guide, 'When to file your returns' — 'The due date is usually the 28th of the month following the end of your taxable period, except for return periods ending: 30 November – the due date is 15 January of the following year; 31 March – the due date is 7 May of the same year. If the due date for your GST return falls on a weekend or public holiday, it will be due the next working day.' A form carries one deadline rule, so the pack declares the 28th, which holds for ten of the six two-monthly periods and every monthly and six-monthly period; the two calendar exceptions and the weekend roll-forward are recorded in docs/international.md and are not expressible here.",
+    "source": "ir375"
+  },
+  "boxes": [
+    {
+      "box": "5",
+      "kind": "base",
+      "name": "Total sales and income",
+      "sequence": 10,
+      "legal_reference": "Form GST101A, Box 5 — 'Total sales and income for the period (including GST and any zero-rated supplies)'. IR375, GST guide, page 12: 'Add up all sales and income for your taxable activity including any zero-rated supplies. This includes the GST amount of the sales and income.' Unlike the Australian Business Activity Statement, which lets a filer choose to report GST-exclusive, GST101A prints one GST-inclusive figure and offers no choice: a standard-rated sale therefore posts its GST-exclusive value here grossed to 115 % — the value plus the 15 % GST — and a zero-rated sale posts its value at 100 %, since it carries no GST to add. An exempt supply and a supply not connected with New Zealand are not included at all, because they are not taxable supplies and IR375 says 'GST is not charged on exempt supplies, and they're not included in your GST return.'",
+      "source": "ir375"
+    },
+    {
+      "box": "6",
+      "kind": "base",
+      "name": "Zero-rated supplies included in Box 5",
+      "sequence": 20,
+      "legal_reference": "Form GST101A, Box 6 — 'Zero-rated supplies included in Box 5'. IR375, GST guide, page 12: 'Separate out the amount of zero-rated supplies. (You're most likely to have zero-rated supplies if you're an exporter.)' A zero-rated supply carries no GST, so its GST-exclusive and GST-inclusive values are the same figure, and every zero-rated sale code posts its base here as well as to Box 5, at 100 % in both places.",
+      "source": "ir375"
+    },
+    {
+      "box": "7",
+      "kind": "total",
+      "name": "Sales and income subject to GST",
+      "sequence": 30,
+      "plus": ["5"],
+      "minus": ["6"],
+      "legal_reference": "Form GST101A, Box 7 — 'Subtract Box 6 from Box 5 and enter the difference here'.",
+      "source": "ir375"
+    },
+    {
+      "box": "8",
+      "kind": "tax",
+      "name": "GST collected on taxable sales and income",
+      "sequence": 40,
+      "legal_reference": "Form GST101A, Box 8 — 'Multiply the amount in Box 7 by three (3) and then divide by twenty-three (23)', which recovers the GST inside a GST-inclusive figure taxed wholly at 15 %. This pack's ledger already holds the GST of every sale as its own posting, so Box 8 is that amount summed directly rather than reconstructed by the form's own worksheet arithmetic; the two agree to the cent whenever every rate charged is 0 % or 15 %, which is every rate this pack carries, because 3/23 of 115 % of a value is exactly 15 % of it. `golden/expectations.json` states the substitution explicitly.",
+      "source": "ir375"
+    },
+    {
+      "box": "9",
+      "kind": "tax",
+      "name": "Sales adjustments from the calculation sheet",
+      "sequence": 50,
+      "legal_reference": "Form GST101A, Box 9 — 'Adjustments from your calculation sheet' (private use, a change in use, a bad debt recovered, a wash-up under s. 21FB). Declared and left empty: none of it is a posting of a document or a payment this pack's taxes carry.",
+      "source": "ir375"
+    },
+    {
+      "box": "10",
+      "kind": "total",
+      "name": "Total GST collected on sales and income",
+      "sequence": 60,
+      "plus": ["8", "9"],
+      "legal_reference": "Form GST101A, Box 10 — 'Add Box 8 and Box 9. This is your total GST collected on sales and income.'",
+      "source": "ir375"
+    },
+    {
+      "box": "11",
+      "kind": "base",
+      "name": "Total purchases and expenses",
+      "sequence": 70,
+      "legal_reference": "Form GST101A, Box 11 — 'Total purchases and expenses (including GST) – excluding any imported goods. Keep the records required to support your claims.' A creditable standard-rated purchase posts its GST-exclusive value here grossed to 115 %, the same way a sale posts to Box 5; a purchase that carries no deduction at all — zero-rated, exempt, no GST in the price, or not creditable under s. 20(3) and s. 21 — is kept out of this box entirely, because Box 12 is the credit the return actually claims, and an amount with no GST or no entitlement to deduct it has no place feeding it. A purchase of goods imported from outside New Zealand and cleared through Customs is not carried by this pack — see README.md.",
+      "source": "ir375"
+    },
+    {
+      "box": "12",
+      "kind": "tax",
+      "name": "GST credit on purchases and expenses",
+      "sequence": 80,
+      "legal_reference": "Form GST101A, Box 12 — 'Multiply the amount in Box 11 by three (3) and then divide by twenty-three (23)', held to the ledger's own figure for the reason given at Box 8.",
+      "source": "ir375"
+    },
+    {
+      "box": "13",
+      "kind": "tax",
+      "name": "Purchase adjustments from the calculation sheet",
+      "sequence": 90,
+      "legal_reference": "Form GST101A, Box 13 — 'Credit adjustments from your calculation sheet'. Declared and left empty, for the reason given at Box 9.",
+      "source": "ir375"
+    },
+    {
+      "box": "14",
+      "kind": "total",
+      "name": "Total GST credit for purchases and expenses",
+      "sequence": 100,
+      "plus": ["12", "13"],
+      "legal_reference": "Form GST101A, Box 14 — 'Add Box 12 and Box 13. This is your total GST credit for purchases and expenses.'",
+      "source": "ir375"
+    },
+    {
+      "box": "15",
+      "kind": "total",
+      "name": "GST to pay or GST refund",
+      "sequence": 110,
+      "plus": ["10"],
+      "minus": ["14"],
+      "legal_reference": "Form GST101A, Box 15 — 'Print the difference between Box 10 and Box 14 here.' The form prints a positive figure and a tick box: 'If Box 14 is larger than Box 10 the difference is your GST refund. If Box 10 is larger than Box 14 the difference is GST to pay.' The pack writes the signed subtraction, Box 10 minus Box 14, so a refund reads as a negative Box 15.",
+      "source": "ir375"
+    }
+  ]
+}

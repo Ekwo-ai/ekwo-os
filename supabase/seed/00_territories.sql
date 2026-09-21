@@ -441,3 +441,27 @@ on conflict (code) do update set
   eu_vat_to       = excluded.eu_vat_to,
   vat_prefix      = excluded.vat_prefix,
   legal_reference = excluded.legal_reference;
+
+
+-- ---------------------------------------------------------------------------
+-- The rows — New Zealand
+--
+-- The second territory of Oceania, read beside Australia's row above: a goods
+-- and services tax of its own, charged by the supplier, credited to a
+-- registered buyer, declared on one form, under no Union instrument. NZBN, the
+-- registration a New Zealand business is addressed by, carries no country
+-- prefix, so `vat_prefix` is null here too.
+-- ---------------------------------------------------------------------------
+
+insert into territories (code, code_source, name, parent_code, eu_vat_scope, eu_vat_from, eu_vat_to, vat_prefix, legal_reference) values
+  ('NZ', 'iso_3166_1', 'New Zealand', null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. New Zealand levies a goods and services tax of its own under the Goods and Services Tax Act 1985, whose section 8(1) charges it, currently at 15 % of the value of a taxable supply since 1 October 2010 (Inland Revenue, GST guide IR375). The exact subsection that fixes the rate figure itself was not read against the operative text of the Act in this session — legislation.govt.nz refused every automated request made of it — so packs/nz/README.md carries the fuller caveat; this row states only what packs/nz/pack.json also states with that caveat attached.')
+on conflict (code) do update set
+  code_source     = excluded.code_source,
+  name            = excluded.name,
+  parent_code     = excluded.parent_code,
+  eu_vat_scope    = excluded.eu_vat_scope,
+  eu_vat_from     = excluded.eu_vat_from,
+  eu_vat_to       = excluded.eu_vat_to,
+  vat_prefix      = excluded.vat_prefix,
+  legal_reference = excluded.legal_reference;

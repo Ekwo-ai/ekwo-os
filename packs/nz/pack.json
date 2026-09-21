@@ -1,0 +1,265 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "NZ",
+  "name": "New Zealand",
+  "version": "0.1.0",
+  "schema_min": "20260921145425",
+  "seed_sequence": 41,
+  "released_at": "2026-09-21",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "gst-act",
+        "title": "Goods and Services Tax Act 1985 (No 141), as compiled",
+        "publisher": "Parliamentary Counsel Office — New Zealand Legislation",
+        "url": "https://www.legislation.govt.nz/act/public/1985/0141/latest/whole.html",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "income-tax-act",
+        "title": "Income Tax Act 2007 (No 97) — the income year and its standard balance date",
+        "publisher": "Parliamentary Counsel Office — New Zealand Legislation",
+        "url": "https://www.legislation.govt.nz/act/public/2007/0097/latest/whole.html",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "tax-admin-act",
+        "title": "Tax Administration Act 1994 (No 166)",
+        "publisher": "Parliamentary Counsel Office — New Zealand Legislation",
+        "url": "https://www.legislation.govt.nz/act/public/1994/0166/latest/whole.html",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "companies-act",
+        "title": "Companies Act 1993 (No 105), Part 11 — financial statements and annual reports",
+        "publisher": "Parliamentary Counsel Office — New Zealand Legislation",
+        "url": "https://www.legislation.govt.nz/act/public/1993/0105/latest/whole.html",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "financial-reporting-act",
+        "title": "Financial Reporting Act 2013 (No 101) — reporting entities and the External Reporting Board",
+        "publisher": "Parliamentary Counsel Office — New Zealand Legislation",
+        "url": "https://www.legislation.govt.nz/act/public/2013/0101/latest/whole.html",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "xrb-framework",
+        "title": "XRB A1 Application of the Accounting Standards Framework (For-profit Entities Update)",
+        "publisher": "External Reporting Board (XRB)",
+        "url": "https://www.xrb.govt.nz/standards/accounting-standards/for-profit-standards/a1/",
+        "consulted_on": "2026-09-21",
+        "kind": "standard"
+      },
+      {
+        "key": "ir375",
+        "title": "IR375 — GST guide: Working with GST (March 2026)",
+        "publisher": "Inland Revenue Te Tari Taake",
+        "url": "https://www.ird.govt.nz/-/media/project/ir/home/documents/forms-and-guides/ir300---ir399/ir375/ir375.pdf",
+        "consulted_on": "2026-09-21",
+        "kind": "guidance"
+      },
+      {
+        "key": "gst-taxable-supply-information",
+        "title": "Taxable supply information for GST",
+        "publisher": "Inland Revenue Te Tari Taake",
+        "url": "https://www.ird.govt.nz/gst/tax-invoices-for-gst",
+        "consulted_on": "2026-09-21",
+        "kind": "guidance"
+      },
+      {
+        "key": "gst-filing-frequency",
+        "title": "Changing your GST filing frequency",
+        "publisher": "Inland Revenue Te Tari Taake",
+        "url": "https://www.ird.govt.nz/gst/changing-your-filing-frequency-or-accounting-basis/changing-your-gst-filing-frequency",
+        "consulted_on": "2026-09-21",
+        "kind": "guidance"
+      },
+      {
+        "key": "ird-gst-portal",
+        "title": "myIR — file and manage GST",
+        "publisher": "Inland Revenue Te Tari Taake",
+        "url": "https://www.ird.govt.nz/gst",
+        "consulted_on": "2026-09-21",
+        "kind": "portal"
+      },
+      {
+        "key": "gst-overseas-businesses",
+        "title": "GST for overseas businesses",
+        "publisher": "Inland Revenue Te Tari Taake",
+        "url": "https://www.ird.govt.nz/gst/gst-for-overseas-businesses",
+        "consulted_on": "2026-09-21",
+        "kind": "guidance"
+      },
+      {
+        "key": "gst-exempt-supplies",
+        "title": "Exempt supplies",
+        "publisher": "Inland Revenue Te Tari Taake",
+        "url": "https://www.ird.govt.nz/gst/charging-gst/exempt-supplies",
+        "consulted_on": "2026-09-21",
+        "kind": "guidance"
+      },
+      {
+        "key": "gst-zero-rated-supplies",
+        "title": "Zero-rated supplies",
+        "publisher": "Inland Revenue Te Tari Taake",
+        "url": "https://www.ird.govt.nz/gst/charging-gst/zero-rated-supplies",
+        "consulted_on": "2026-09-21",
+        "kind": "guidance"
+      },
+      {
+        "key": "gst-return-filing",
+        "title": "Filing a GST return",
+        "publisher": "Inland Revenue Te Tari Taake",
+        "url": "https://www.ird.govt.nz/gst/filing-a-gst-return",
+        "consulted_on": "2026-09-21",
+        "kind": "guidance"
+      },
+      {
+        "key": "xrb-a1",
+        "title": "XRB A1 Application of the Accounting Standards Framework (For-profit Entities Update), effective 1 January 2026",
+        "publisher": "External Reporting Board (XRB)",
+        "url": "https://www.xrb.govt.nz/dmsdocument/5470/",
+        "consulted_on": "2026-09-21",
+        "kind": "standard"
+      },
+      {
+        "key": "pint-aunz",
+        "title": "PINT A-NZ Billing BIS — Peppol International specification for Australia and New Zealand",
+        "publisher": "OpenPeppol, with the ATO and the New Zealand Peppol Authority",
+        "url": "https://docs.peppol.eu/poac/aunz/pint-aunz/bis/",
+        "consulted_on": "2026-09-21",
+        "kind": "standard"
+      },
+      {
+        "key": "peppol-eas",
+        "title": "Electronic Address Scheme (EAS) code list",
+        "publisher": "OpenPEPPOL",
+        "url": "https://docs.peppol.eu/poacc/billing/3.0/codelist/eas/",
+        "consulted_on": "2026-09-21",
+        "kind": "standard"
+      },
+      {
+        "key": "uncl5305",
+        "title": "UNCL5305 — duty or tax or fee category code",
+        "publisher": "OpenPEPPOL — the list itself is published by UN/CEFACT",
+        "url": "https://docs.peppol.eu/poacc/billing/3.0/codelist/UNCL5305/",
+        "consulted_on": "2026-09-21",
+        "kind": "standard"
+      },
+      {
+        "key": "nzbn-register",
+        "title": "New Zealand Business Number (NZBN) register",
+        "publisher": "Ministry of Business, Innovation and Employment (MBIE)",
+        "url": "https://www.nzbn.govt.nz/",
+        "consulted_on": "2026-09-21",
+        "kind": "portal"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "NZD",
+    "language": "en",
+    "rounding_method": "half_up",
+    "closing_style": "retained_earnings",
+    "fiscal_year_default": "april",
+    "roles": {
+      "receivable": "1100",
+      "payable": "2000",
+      "suspense": "2990",
+      "rounding": "6990",
+      "retained_earnings": "3200",
+      "sales": "4000",
+      "purchase": "5000",
+      "bank": "1010",
+      "cash": "1000",
+      "fx_gain": "4700",
+      "fx_loss": "6950",
+      "asset_disposal_gain": "4750",
+      "asset_disposal_loss": "6960",
+      "tax_payable": "2110",
+      "tax_receivable": "1155"
+    },
+    "journal_roles": {
+      "sales": "SAL",
+      "purchase": "PUR",
+      "miscellaneous": "GEN",
+      "opening": "OPN"
+    }
+  },
+  "languages": [],
+  "journals": [
+    { "code": "SAL", "type": "sales", "name": "Sales journal", "sequence": 10 },
+    { "code": "PUR", "type": "purchase", "name": "Purchases journal", "sequence": 20 },
+    { "code": "BNK", "type": "bank", "name": "Bank", "sequence": 30 },
+    { "code": "CSH", "type": "cash", "name": "Petty cash", "sequence": 40 },
+    { "code": "GEN", "type": "general", "name": "General journal", "sequence": 50 },
+    { "code": "OPN", "type": "opening", "name": "Opening balances", "sequence": 60 }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "New Zealand reference chart of accounts",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": ["NZ-XRB-SFP", "NZ-XRB-PL"],
+      "legal_reference": "There is no legal chart of accounts in New Zealand. Companies Act 1993, s. 194 requires a company to keep accounting records that correctly record and explain its transactions and would enable financial statements to be readily and properly audited, and prescribes none; s. 201 requires the board of every company that is a 'large' company (Financial Reporting Act 2013, s. 45 — a company, together with its subsidiaries, whose total assets or total revenue exceed the amounts the Act and its regulations set, or that is an FMC reporting entity), or that is not large but whose shareholders have not unanimously resolved against it under s. 207I of the Companies Act, to ensure that financial statements are prepared that comply with generally accepted accounting practice within the meaning of the Financial Reporting Act 2013. A small company with no such shareholders and no such size prepares no statutory financial statements at all; its books still feed the income tax return and the GST return, which is what this pack is mostly for. This chart is original: four digits, blocked so that each range reaches one line item of the minimum line items a Tier 2 for-profit entity presents under NZ IFRS (Reduced Disclosure Regime), which XRB A1 assigns to a reporting entity that has no public accountability and elects the reduced disclosure regime.",
+      "source": "companies-act"
+    }
+  ],
+  "documents": {
+    "numbering": "free",
+    "number_format": "{CODE}-{YYYY}-{NNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "invoice_if_issued",
+    "references": {
+      "numbering": {
+        "legal_reference": "Goods and Services Tax Act 1985, ss. 19E to 19N — the taxable supply information a supplier and a buyer must provide and keep, in force from 1 April 2023 (Taxation (Annual Rates for 2022–23, Platform Economy, and Remedial Matters) Act 2022). Below $200 the seller's name or trade name, the date, a description and the consideration are enough; above $200 the GST number is added, and above $1,000 the GST-registered buyer's name and one further identifying particular. None of the three tiers asks for a document number, so numbering is `free`; the pattern in number_format is one a business may choose, not one the law asks for.",
+        "source": "gst-taxable-supply-information"
+      },
+      "payment_terms": {
+        "legal_reference": "No New Zealand statute sets a payment term between businesses in the absence of an agreement, and none sets statutory interest on a late business-to-business payment, so legal_payment_days and late_payment_reference are empty.",
+        "source": "gst-act"
+      },
+      "tax_point": {
+        "legal_reference": "Goods and Services Tax Act 1985, s. 9(1) — a supply of goods and services is deemed to take place at the earlier of the time an invoice is issued and the time any payment is received; s. 20(3) applies the same time to the deduction of input tax on the invoice basis. The rule is the earlier of the invoice and the first payment, which `invoice_if_issued` states as the supply displaced by an invoice where one is issued; a taxpayer who files on the payments basis, which s. 20(3)(a)(ii) and s. 20(4) allow below a turnover threshold, attributes GST to the period of actual payment instead, which the taxes that declare cash_basis carry.",
+        "source": "gst-act"
+      }
+    },
+    "mentions": [
+      {
+        "code": "export",
+        "applies_when": "export",
+        "text": "Zero-rated export under section 11 or section 11A of the Goods and Services Tax Act 1985.",
+        "sequence": 10,
+        "legal_reference": "Goods and Services Tax Act 1985, ss. 19E to 19N — the taxable supply information for a supply above $200 states the extent to which each supply is a taxable supply; where GST is charged at 0 % the sentence states why none is included in the price.",
+        "source": "gst-act"
+      },
+      {
+        "code": "exempt",
+        "applies_when": "exempt",
+        "text": "Exempt supply — no GST charged (section 14, Goods and Services Tax Act 1985).",
+        "sequence": 20,
+        "legal_reference": "Goods and Services Tax Act 1985, s. 14 — an exempt supply is not a taxable supply and is not included in a GST return at all; the sentence records on the document why no GST was charged, for a reader who was not expecting the exemption.",
+        "source": "gst-act"
+      }
+    ]
+  },
+  "einvoicing": {
+    "profile": "pint-aunz",
+    "mandatory_from": null,
+    "obligation": "none",
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "No New Zealand statute obliges a business to issue or to accept an electronic invoice from another business, so the obligation is `none` and mandatory_from is empty. New Zealand exchanges electronic invoices on the Peppol network under the PINT A-NZ Billing specification it shares with Australia (customization urn:peppol:pint:billing-1@aunz-1); the New Zealand Peppol Authority function sits with MBIE. Government agencies have been encouraged onto eInvoicing since 2019 by policy rather than by statute, and central government suppliers are increasingly asked to send them, which binds no supplier by itself. A New Zealand party is addressed on the network by its NZBN and taxed on its IRD/GST number; this pack leaves party_scheme and vat_scheme null because the ISO 6523 ICD code the New Zealand Business Number carries on the Peppol network could not be confirmed against an open official register in this session — see the note in README.md, and treat the value as unverified until a reviewer supplies it.",
+    "source": "pint-aunz"
+  }
+}

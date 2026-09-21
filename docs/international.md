@@ -2743,3 +2743,79 @@ c)); the 3 % Gabon created on 17 July 2026 for fer à béton made in Gabon is
 under that floor. Nothing in the schema checks a rate against the directive
 of the zone a pack names — `packs/ga/` records the gap in prose, the way
 `packs/ci/` records the AIRSI added on top of the VAT-inclusive price.
+
+## New Zealand
+
+The second pack of Oceania, `packs/nz/`, `community`, seed 41, read beside
+`packs/au/`. Written mostly from Inland Revenue's own guide, IR375, after
+`legislation.govt.nz` refused every attempt to read the Goods and Services Tax
+Act 1985 directly this session, scripted and browser-driven alike: an original
+chart of 163 accounts, eighteen taxes at the one GST rate of 15 % since
+1 October 2010 — zero-rating in four separate shapes, exempt supplies that
+leave the return altogether, the imported-services reverse charge of s. 8(4B),
+the payments basis on both sides, and a schedular-payment withholding tax at
+the no-notification rate — form GST101A, the statement of financial position
+and profit or loss of a Tier 2 for-profit entity, and a register of nineteen
+texts. See [`packs/nz/README.md`](../packs/nz/README.md).
+
+### From New Zealand
+
+**A combined GST-inclusive box turned out not to need a format change.**
+The Australian section above speculated that a GST-inclusive box like
+GST101A's Box 5 would need "a total of `G1:base` and a hidden tax box" —
+a new kind of box the core did not yet have. It does not: grossing the value
+of a standard-rated supply to 115 % on the `base` posting itself, with
+`box_factor`, writes the GST-inclusive figure straight into Box 5, and the
+GST itself posts as an ordinary `tax` posting straight into Box 8 — a real,
+printed box of the form, not an invented one. Box 8's own instruction on the
+form ("multiply Box 7 by three and divide by twenty-three") and the pack's
+direct posting agree to the cent whenever every rate is 0 % or 15 %, which is
+every rate a flat-rate GST carries. Nothing here needed a hidden box, and the
+first attempt at this pack used one — `5B`/`5T`, `11B`/`11T` — before
+`tests/tax_report.test.ts`, "the hidden boxes the packs still carry", refused
+it: a hidden box may only be an intermediate total the form itself works out
+and does not print, never a leaf a posting writes into, which is exactly the
+shape `docs/packs.md` retired when it said "a posting names every box it
+prints in". The Australian hint should be read as superseded by this pack's
+correction rather than as a second country confirming it.
+
+**A two-monthly period anchored to 1 January, not to the taxpayer's own
+balance date.** Section 15 gives a two-monthly taxable period by default, and
+IR375 gives a March balance date's periods as "April-May, June-July,
+August-September, October-November, December-January, February-March" — six
+periods that start on the company's own balance month, not on January. The
+core's `bimonth` is a fixed calendar cadence, January-February,
+March-April and onward, anchored to 1 January for every company and every
+country. A New Zealand company whose balance date is not itself a bimonth
+boundary — the ordinary 31 March one included, since March is the third
+month of a Jan-anchored pair — cannot be filed on this pack's `bimonth`
+without a one- or two-month misalignment. This pack's own golden year sidesteps
+the gap by giving its company a 31 December balance date, which happens to
+fall exactly on a Jan-anchored boundary; a reviewer replaying a company with
+the ordinary March balance date would see it. *Fix*: an anchor month per
+company, read from the fiscal year rather than assumed to be January — the
+same gap Australia's own `packs/au/README.md` does not have to name only
+because its golden company's July balance date and its quarterly GST cadence
+both already start in a month the calendar quarter also starts in.
+
+**A deadline with two calendar exceptions and a weekend roll-forward, on one
+declared rule.** IR375: the due date is the 28th of the month after the
+period, except a period ending 30 November is due 15 January and one ending
+31 March is due 7 May, and any due date on a weekend or public holiday moves
+to the next working day. `deadline` carries one rule for the whole form, so
+this pack declares the 28th — correct for ten of the twelve months a period
+could end in, and early rather than late for the other two. *Fix*: the same
+one Australia's own deadline section asks for — a deadline rule that can name
+a dated exception for a specific period end, beside the general rule.
+
+**Taxable supply information graded by three value tiers, with no place in
+`documents` to say so structurely.** Sections 19E to 19N ask for almost
+nothing below $200, the supplier's GST number above $200, and the buyer's own
+identity above $1,000 — a genuine three-tier regime, not the two-tier
+threshold `documents` already has a word for (a tax invoice required above a
+value, none below it). This pack states the tiers in `documents.numbering`'s
+own `legal_reference` prose, because the schema has no field for a document
+rule that changes by the amount of the document itself. *Fix*: a structured
+field for a tiered particulars requirement would let `ekwo pack check` verify
+the tiers the way it verifies everything else about a document rule, rather
+than trusting the sentence.

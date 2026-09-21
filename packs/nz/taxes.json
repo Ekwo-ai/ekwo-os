@@ -1,0 +1,412 @@
+[
+  {
+    "code": "NZ-S-GST",
+    "name": "Sale, GST 15 %",
+    "description": "A taxable supply made in New Zealand, standard-rated",
+    "kind": "gst",
+    "rate": 15,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2010-10-01",
+    "legal_reference": "Goods and Services Tax Act 1985, s. 8(1) — GST is charged on the supply of goods and services in New Zealand by a registered person in the course or furtherance of a taxable activity, currently at 15 % of the value of the supply. Inland Revenue, GST guide (IR375), confirms the current rate. GST101A's Box 5 prints one GST-inclusive figure, so the GST-exclusive value of the supply is grossed to 115 % on the posting itself and written into Box 5; the GST itself is the real ledger amount, posted straight to Box 8, which is the box the return's own '3/23 of Box 7' instruction would otherwise reconstruct — see tax_report.json. A community pack: the exact dates the rate moved from 10 % (1 October 1986) to 12.5 % (1 July 1989) to 15 % (1 October 2010) were not confirmed against the operative text of s. 8(1) itself in this session — legislation.govt.nz refused every automated read attempted, scripted and browser-driven alike — only against Inland Revenue's current-rate statement and general knowledge of the Act's amendment history; a reviewer should read s. 8(1) and its amendment schedules before relying on the two earlier dates.",
+    "source": "gst-act",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "5", "box_factor": 115 },
+        { "type": "tax", "account": "2100", "box": "8" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "5", "box_factor": -115 },
+        { "type": "tax", "account": "2100", "box": "8", "box_factor": -100 }
+      ]
+    },
+    "sequence": 10
+  },
+  {
+    "code": "NZ-S-GST-INC",
+    "name": "Retail sale, GST 15 %, the price includes the GST",
+    "description": "For a price set with the GST already in it, as a shelf price is",
+    "kind": "gst",
+    "rate": 15,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2010-10-01",
+    "price_include": true,
+    "legal_reference": "Goods and Services Tax Act 1985, s. 78(1) — a price is presumed GST-inclusive unless the parties agree otherwise, which a retail shelf price ordinarily is. Inland Revenue, GST guide (IR375): to find the GST component of a GST-inclusive price, multiply by 3 and divide by 23. price_include records that the unit price of a line is the GST-inclusive price; the engine takes the fraction out to find the value of the supply, which this posting then grosses straight back to 115 % for Box 5 — recovering the GST-inclusive figure the till rang up — exactly as NZ-S-GST does, with the GST itself posted to Box 8.",
+    "source": "ir375",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "5", "box_factor": 115 },
+        { "type": "tax", "account": "2100", "box": "8" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "5", "box_factor": -115 },
+        { "type": "tax", "account": "2100", "box": "8", "box_factor": -100 }
+      ]
+    },
+    "sequence": 20
+  },
+  {
+    "code": "NZ-S-GST-PAY",
+    "name": "Sale, GST 15 %, accounted for on the payments basis",
+    "kind": "gst",
+    "rate": 15,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2010-10-01",
+    "cash_basis": true,
+    "cash_basis_transition_account": "2105",
+    "conditions": ["seller_threshold"],
+    "legal_reference": "Goods and Services Tax Act 1985, ss. 19 and 20 — a registered person accounts for GST on one of three bases: payments, invoice or hybrid. Inland Revenue, GST guide (IR375): the payments basis is open to a person whose total taxable supplies are $2,000,000 or less in the last 12 months, or are likely to be $2,000,000 or less in the next 12 months; under it, a sale is returned only to the extent it has been paid for. The choice is the registered person's own and covers the whole of their taxable activity; the pack carries it as a code beside the invoice-basis one, as the payments-basis condition below the threshold cannot be read off a single document. The tax posting names Box 8, which is where the settled amount is declared once collection moves it off the transition account.",
+    "source": "ir375",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "5", "box_factor": 115 },
+        { "type": "tax", "account": "2100", "box": "8" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "5", "box_factor": -115 },
+        { "type": "tax", "account": "2100", "box": "8", "box_factor": -100 }
+      ]
+    },
+    "sequence": 30
+  },
+  {
+    "code": "NZ-S-ZERO-EXPORT",
+    "name": "Export of goods, zero-rated",
+    "kind": "gst",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2010-10-01",
+    "conditions": ["transport_evidence"],
+    "legal_reference": "Goods and Services Tax Act 1985, s. 11(1)(a) — the supply of goods is zero-rated where the supplier has entered them for export, or supplies them by way of a lease or bailment and the goods are exported, within the time limits and conditions of the section. Inland Revenue, GST guide (IR375) and Zero-rated supplies (ird.govt.nz/gst/charging-gst/zero-rated-supplies): exported goods are the standard example of a zero-rated supply, reported at Box 5 and Box 6 of the GST101A, both at the value's own figure, since a zero-rated supply carries no GST to gross up. A zero-rated supply is a taxable supply at a nil rate and not an exempt one: the credit on what went into it stays claimable.",
+    "source": "gst-act",
+    "vat_category": "G",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": ["5", "6"] }
+      ],
+      "credit_note": [
+        { "type": "base", "box": ["5", "6"], "box_factor": -100 }
+      ]
+    },
+    "sequence": 40
+  },
+  {
+    "code": "NZ-S-ZERO-SERVICES",
+    "name": "Supply of services to a non-resident outside New Zealand, zero-rated",
+    "kind": "gst",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2010-10-01",
+    "conditions": ["buyer_status"],
+    "legal_reference": "Goods and Services Tax Act 1985, s. 11A(1) — zero-rating of services, which reaches a supply of services to a person who is not resident in New Zealand and is outside New Zealand when the services are performed, subject to the exclusions of the section — services supplied directly in connection with land or movable property situated in New Zealand among them. Reported at Box 5 and Box 6, the way the exported-goods code is; the EN 16931 category is G, the one PINT A-NZ gives an export.",
+    "source": "gst-act",
+    "vat_category": "G",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": ["5", "6"] }
+      ],
+      "credit_note": [
+        { "type": "base", "box": ["5", "6"], "box_factor": -100 }
+      ]
+    },
+    "sequence": 50
+  },
+  {
+    "code": "NZ-S-ZERO-GOINGCONCERN",
+    "name": "Sale of a taxable activity as a going concern, zero-rated",
+    "kind": "gst",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2010-10-01",
+    "conditions": ["supply_nature"],
+    "legal_reference": "Goods and Services Tax Act 1985, s. 11(1)(m) — the supply of a taxable activity, or of a part of a taxable activity capable of separate operation, is zero-rated where it is supplied to a registered person as a going concern, both parties agree in writing that it is so supplied, and the other conditions of the paragraph are met. Inland Revenue, GST guide (IR375), sets out the conditions in practice. Whether a given sale meets them is a fact about the transaction the ledger does not hold, which is what `conditions` records. Reported at Box 5 and Box 6.",
+    "source": "ir375",
+    "vat_category": "Z",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": ["5", "6"] }
+      ],
+      "credit_note": [
+        { "type": "base", "box": ["5", "6"], "box_factor": -100 }
+      ]
+    },
+    "sequence": 60
+  },
+  {
+    "code": "NZ-S-ZERO-LAND",
+    "name": "Sale of land between GST-registered persons, zero-rated",
+    "kind": "gst",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2011-04-01",
+    "conditions": ["buyer_status"],
+    "legal_reference": "Goods and Services Tax Act 1985, s. 11(1)(mb) — the compulsory zero-rating of land rules, in force from 1 April 2011, zero-rate the supply of land where the recipient is, or is required to be, registered and acquires the land with the intention of using it for making taxable supplies, and the supply is not intended to be used as a principal place of residence of the recipient or an associate. A community pack: the full cross-reference to s. 5(24), s. 11(1)(mc), s. 60B and s. 78F, which together make up the compulsory zero-rating of land regime, was not independently confirmed against the operative text of the Act in this session; a reviewer should read s. 11(1)(mb) and its neighbouring provisions before relying on the paragraph letter. Reported at Box 5 and Box 6.",
+    "source": "gst-act",
+    "vat_category": "Z",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": ["5", "6"] }
+      ],
+      "credit_note": [
+        { "type": "base", "box": ["5", "6"], "box_factor": -100 }
+      ]
+    },
+    "sequence": 70
+  },
+  {
+    "code": "NZ-S-EXEMPT-FIN",
+    "name": "Financial services, exempt",
+    "kind": "gst",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2010-10-01",
+    "conditions": ["supply_nature"],
+    "legal_reference": "Goods and Services Tax Act 1985, s. 14(1)(a) — the supply of financial services is an exempt supply. Inland Revenue, Exempt supplies (ird.govt.nz/gst/charging-gst/exempt-supplies): paying or collecting interest, arranging a mortgage or loan, dealing in securities and in currency, and financial options are financial services. An exempt supply is not a taxable supply at all and IR375 says it is 'not included in your GST return'; it carries no GST and gives no credit for what went into it. No exemption reason code: VATEX names articles of a Directive that does not bind a New Zealand supplier, and territories carries no row that would let one be borrowed.",
+    "source": "gst-exempt-supplies",
+    "vat_category": "E",
+    "postings": {
+      "invoice": [
+        { "type": "base" }
+      ],
+      "credit_note": [
+        { "type": "base" }
+      ]
+    },
+    "sequence": 80
+  },
+  {
+    "code": "NZ-S-EXEMPT-RES",
+    "name": "Residential rent, exempt",
+    "kind": "gst",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2010-10-01",
+    "conditions": ["supply_nature"],
+    "legal_reference": "Goods and Services Tax Act 1985, s. 14(1)(c) — the supply of accommodation in a dwelling under a residential tenancy is an exempt supply. Inland Revenue, Exempt supplies: 'GST cannot be charged on the rent for a residential dwelling. A landlord cannot claim any GST on dwelling expenses.' Not included in the GST return at all.",
+    "source": "gst-exempt-supplies",
+    "vat_category": "E",
+    "postings": {
+      "invoice": [
+        { "type": "base" }
+      ],
+      "credit_note": [
+        { "type": "base" }
+      ]
+    },
+    "sequence": 90
+  },
+  {
+    "code": "NZ-S-NOGST",
+    "name": "Sale not in the course of a taxable activity, or made by an unregistered supplier",
+    "kind": "gst",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "not_subject",
+    "valid_from": "2010-10-01",
+    "legal_reference": "Goods and Services Tax Act 1985, s. 8(1) — GST is charged only on a supply made by a registered person in the course or furtherance of a taxable activity. Inland Revenue, GST guide (IR375): sales by an unregistered person, and sales of private property outside any taxable activity, are not charged GST and are not shown in the GST return, so the base names no box.",
+    "source": "ir375",
+    "vat_category": "O",
+    "postings": {
+      "invoice": [
+        { "type": "base" }
+      ],
+      "credit_note": [
+        { "type": "base" }
+      ]
+    },
+    "sequence": 100
+  },
+  {
+    "code": "NZ-P-GST",
+    "name": "Purchase, GST 15 %",
+    "kind": "gst",
+    "rate": 15,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2010-10-01",
+    "legal_reference": "Goods and Services Tax Act 1985, s. 20(3) — a registered person may deduct input tax on a good or service acquired for the principal purpose of making taxable supplies, subject to holding taxable supply information. Inland Revenue, GST guide (IR375): Box 11 is the total of purchases and expenses for which a GST deduction is claimed, GST-inclusive, excluding imported goods, so the GST-exclusive value of the purchase is grossed to 115 % and written into Box 11; the credit itself is the real ledger amount, posted straight to Box 12, the box the return's own '3/23 of Box 11' instruction would otherwise reconstruct.",
+    "source": "ir375",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "11", "box_factor": 115 },
+        { "type": "tax", "account": "1150", "box": "12" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "11", "box_factor": -115 },
+        { "type": "tax", "account": "1150", "box": "12", "box_factor": -100 }
+      ]
+    },
+    "sequence": 110
+  },
+  {
+    "code": "NZ-P-GST-PAY",
+    "name": "Purchase, GST 15 %, accounted for on the payments basis",
+    "kind": "gst",
+    "rate": 15,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2010-10-01",
+    "cash_basis": true,
+    "cash_basis_transition_account": "1152",
+    "legal_reference": "Goods and Services Tax Act 1985, s. 20(3) — under the payments basis, an input tax deduction is claimed only to the extent the consideration has been paid, and only where the registered person holds taxable supply information. The condition is the purchasing entity's own choice of basis, which no word of `conditions` names for a purchase, so the reference carries it, the way the equivalent Australian and Irish codes do. The tax posting names Box 12, where the settled credit is declared once payment moves it off the transition account.",
+    "source": "ir375",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "11", "box_factor": 115 },
+        { "type": "tax", "account": "1150", "box": "12" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "11", "box_factor": -115 },
+        { "type": "tax", "account": "1150", "box": "12", "box_factor": -100 }
+      ]
+    },
+    "sequence": 120
+  },
+  {
+    "code": "NZ-P-GST-ITS",
+    "name": "Purchase, GST 15 %, not deductible — relates to exempt supplies",
+    "kind": "gst",
+    "rate": 15,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2010-10-01",
+    "recoverable": false,
+    "legal_reference": "Goods and Services Tax Act 1985, s. 20(3) and s. 21 — input tax is deductible only to the extent the good or service is used for, or is available for use in, making taxable supplies; a good or service acquired to make an exempt supply — residential renting among them — carries no deduction, subject to the apportionment rules of s. 21, which this pack does not carry. Box 11 is itself the total of purchases for which a credit is claimed, so an amount with no credit to claim is kept out of it entirely, the way a zero-rated or exempt purchase is; the GST is part of what the thing cost and lands on the account of the line through tax_on_base.",
+    "source": "gst-act",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "base" },
+        { "type": "tax_on_base" }
+      ],
+      "credit_note": [
+        { "type": "base" },
+        { "type": "tax_on_base" }
+      ]
+    },
+    "sequence": 130
+  },
+  {
+    "code": "NZ-P-ZERO",
+    "name": "Purchase, zero-rated",
+    "kind": "gst",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2010-10-01",
+    "legal_reference": "Goods and Services Tax Act 1985, ss. 11, 11A — the supplier charged no GST because the supply was zero-rated, so there is none to claim. Kept out of Box 11, which the return works into a credit at Box 12 through a fixed 3/23 fraction of a GST-inclusive figure: an amount that carried no GST would manufacture a credit out of nothing if it were included, and the form gives no Box 11 equivalent of Box 6 to net it back out.",
+    "source": "gst-act",
+    "vat_category": "Z",
+    "postings": {
+      "invoice": [
+        { "type": "base" }
+      ],
+      "credit_note": [
+        { "type": "base" }
+      ]
+    },
+    "sequence": 140
+  },
+  {
+    "code": "NZ-P-EXEMPT",
+    "name": "Purchase, exempt",
+    "kind": "gst",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "exempt",
+    "valid_from": "2010-10-01",
+    "legal_reference": "Goods and Services Tax Act 1985, s. 14 — an exempt supply carries no GST: bank fees and residential rent paid by the business among them. Kept out of Box 11 for the same reason as a zero-rated purchase.",
+    "source": "gst-act",
+    "vat_category": "E",
+    "postings": {
+      "invoice": [
+        { "type": "base" }
+      ],
+      "credit_note": [
+        { "type": "base" }
+      ]
+    },
+    "sequence": 150
+  },
+  {
+    "code": "NZ-P-NOGST",
+    "name": "Purchase with no GST in the price",
+    "kind": "gst",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "not_subject",
+    "valid_from": "2010-10-01",
+    "legal_reference": "Goods and Services Tax Act 1985, s. 8(1) — a supply by a person who is not registered carries no GST, and neither does a payment that is not consideration for a supply at all: most statutory rates, fines and penalty interest. Kept out of Box 11.",
+    "source": "gst-act",
+    "vat_category": "O",
+    "postings": {
+      "invoice": [
+        { "type": "base" }
+      ],
+      "credit_note": [
+        { "type": "base" }
+      ]
+    },
+    "sequence": 160
+  },
+  {
+    "code": "NZ-P-RC-IMPORTED",
+    "name": "Imported service reverse charged under section 8(4B), not deductible",
+    "kind": "gst",
+    "rate": 15,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2016-10-01",
+    "recoverable": false,
+    "legal_reference": "Goods and Services Tax Act 1985, s. 8(4B) — a recipient of imported services is treated as having supplied the services to themselves, and GST is charged accordingly, where the recipient's intended or actual percentage of taxable use of the services is less than 95 %, inserted with effect from 1 October 2016. Because the section reaches precisely the recipient who cannot deduct the whole of the GST back, this code models the simplest case — taxable use assumed at nil, a financial institution or a residential landlord being the ordinary case — and carries no matching credit at all: the self-assessed value is grossed into Box 5 and the self-assessed GST posted to Box 8 exactly as an ordinary sale's would be, because s. 8(4B) deems the recipient the supplier of the services to itself, while the whole of it is also a cost of the acquisition through tax_on_base, on the account of the line. It is kept out of Box 11 entirely, the way any non-creditable purchase is: no credit is ever claimed on it. A recipient whose actual taxable use is between 0 % and 95 % needs the apportionment of s. 20(3), which this pack does not carry.",
+    "source": "gst-act",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "5", "box_factor": 115 },
+        { "type": "tax_on_base" },
+        { "type": "tax", "factor": -100, "account": "2100", "box": "8" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "5", "box_factor": -115 },
+        { "type": "tax_on_base" },
+        { "type": "tax", "factor": -100, "account": "2100", "box": "8", "box_factor": -100 }
+      ]
+    },
+    "sequence": 170
+  },
+  {
+    "code": "NZ-P-WT-NONOTIFY",
+    "name": "Schedular payment to a contractor with no IRD number provided — 45 % withheld",
+    "kind": "withholding",
+    "rate": 45,
+    "scope": "purchase",
+    "treatment": "not_subject",
+    "valid_from": "2010-04-01",
+    "legal_reference": "Income Tax Act 2007, sch. 4 — a schedular payment (a contract payment for an activity the schedule lists: building and construction, cleaning, forestry, agricultural contracting and others) carries withholding tax at the rate the schedule sets for that activity, deducted by the payer under the PAYE rules and paid to the Commissioner; where the contractor has not provided their IRD number, the no-notification rate applies instead of the activity's own rate, currently 45 %. A community pack: the exact section (the no-notification provision is generally cited as s. RD 10) and the activity-specific rates of Schedule 4 were not confirmed against the operative text of the Income Tax Act 2007 in this session — legislation.govt.nz refused every automated read attempted, scripted and browser-driven alike — only against general knowledge of the schedular payment withholding regime; a reviewer should read Schedule 4 and the no-notification provision before relying on the 45 % figure or the section number. This tax is not a GST mechanism and is not reported on the GST101A; it is declared beside the GST codes only because it is a genuine New Zealand withholding tax a purchase invoice can carry, the way AU-P-NOABN-47 sits beside the Australian GST codes for the same reason.",
+    "source": "income-tax-act",
+    "postings": {
+      "invoice": [
+        { "type": "base" },
+        { "type": "tax", "factor": -100, "account": "2085" }
+      ],
+      "credit_note": [
+        { "type": "base" },
+        { "type": "tax", "factor": -100, "account": "2085" }
+      ]
+    },
+    "sequence": 180
+  }
+]

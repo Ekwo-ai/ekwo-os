@@ -26,5 +26,6 @@ insert into currencies (code, name, symbol, decimal_places) values
   ('GNF', 'Guinean franc',        'FG',      0),
   ('CDF', 'Congolese franc',      'FC',      2),
   ('AUD', 'Australian dollar',    '$',       2),
-  ('SGD', 'Singapore dollar',     '$',       2)
+  ('SGD', 'Singapore dollar',     '$',       2),
+  ('NZD', 'New Zealand dollar',   '$',       2)
 on conflict (code) do nothing;
