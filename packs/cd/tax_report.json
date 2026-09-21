@@ -1,0 +1,152 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "CD-TVA",
+  "name": "Déclaration de taxe sur la valeur ajoutée",
+  "period": [
+    "month"
+  ],
+  "period_default": "month",
+  "valid_from": "2010-08-20",
+  "legal_reference": "Ordonnance-loi n° 10/001 du 20 août 2010, art. 60 — la déclaration est mensuelle, déposée au plus tard le 15 du mois suivant, en double exemplaire, accompagnée du paiement ; la mention « Néant » est obligatoire en l'absence d'opérations. Aucun autre régime ni cadence trimestrielle n'a été trouvé dans les textes lus. Le modèle imprimé de la déclaration et la numérotation de ses cases ne sont publiés dans aucune source officielle trouvée : les cases de ce fichier sont nommées d'après le contenu que l'art. 60 fait déclarer et d'après les taux de l'art. 35, non d'après un formulaire. Le projet de loi de finances pour 2026 (art. 38) reprend ce texte et ajoute une obligation de déclarer les livraisons à soi-même, non adoptée à la date de ce pack et non reprise ici.",
+  "source": "ol10001",
+  "deadline": {
+    "rule": "day_of_month_after_period",
+    "day": 15,
+    "legal_reference": "Ordonnance-loi n° 10/001, art. 60 — déclaration au plus tard le 15 du mois qui suit.",
+    "source": "ol10001"
+  },
+  "boxes": [
+    {
+      "box": "CA16",
+      "kind": "base",
+      "name": "Opérations taxables au taux normal de 16 %",
+      "sequence": 10,
+      "legal_reference": "Ordonnance-loi n° 10/001, art. 60, pour la déclaration des opérations taxables ; art. 35 pour le taux",
+      "source": "ol10001"
+    },
+    {
+      "box": "CA8",
+      "kind": "base",
+      "name": "Opérations taxables au taux réduit de 8 %",
+      "sequence": 20,
+      "legal_reference": "Ordonnance-loi n° 10/001, art. 60 ; art. 35, dans la rédaction de la loi de finances n° 22/071, art. 30",
+      "source": "lf2023"
+    },
+    {
+      "box": "EXP",
+      "kind": "base",
+      "name": "Exportations et opérations assimilées, taux zéro",
+      "sequence": 30,
+      "legal_reference": "Ordonnance-loi n° 10/001, art. 60 ; art. 35 pour le taux zéro des exportations",
+      "source": "ol10001"
+    },
+    {
+      "box": "EXO",
+      "kind": "base",
+      "name": "Opérations exonérées (art. 15)",
+      "sequence": 40,
+      "legal_reference": "Ordonnance-loi n° 10/001, art. 60 ; art. 15 et suivants pour les exonérations",
+      "source": "ol10001"
+    },
+    {
+      "box": "CAT",
+      "kind": "total",
+      "name": "Montant total des opérations",
+      "sequence": 50,
+      "plus": [
+        "CA16",
+        "CA8",
+        "EXP",
+        "EXO"
+      ],
+      "legal_reference": "Ordonnance-loi n° 10/001, art. 60",
+      "source": "ol10001"
+    },
+    {
+      "box": "TVA16",
+      "kind": "tax",
+      "name": "Taxe exigible au taux de 16 %",
+      "sequence": 60,
+      "legal_reference": "Ordonnance-loi n° 10/001, art. 60 pour la déclaration de la taxe exigible ; art. 35 pour le taux",
+      "source": "ol10001"
+    },
+    {
+      "box": "TVA8",
+      "kind": "tax",
+      "name": "Taxe exigible au taux de 8 %",
+      "sequence": 70,
+      "legal_reference": "Ordonnance-loi n° 10/001, art. 60 ; art. 35, dans la rédaction de la loi de finances n° 22/071, art. 30",
+      "source": "lf2023"
+    },
+    {
+      "box": "TVAB",
+      "kind": "total",
+      "name": "Total de la taxe exigible",
+      "sequence": 80,
+      "plus": [
+        "TVA16",
+        "TVA8"
+      ],
+      "legal_reference": "Ordonnance-loi n° 10/001, art. 60",
+      "source": "ol10001"
+    },
+    {
+      "box": "DEDIMMO",
+      "kind": "tax",
+      "name": "TVA déductible sur immobilisations",
+      "sequence": 90,
+      "legal_reference": "Ordonnance-loi n° 10/001, art. 60 pour la déclaration des déductions ; art. 58, modifié par la loi de finances n° 22/071, art. 33 — la déduction suppose une facture normalisée",
+      "source": "ol10001"
+    },
+    {
+      "box": "DEDBS",
+      "kind": "tax",
+      "name": "TVA déductible sur biens et services",
+      "sequence": 100,
+      "legal_reference": "Ordonnance-loi n° 10/001, art. 60 ; art. 58, modifié par la loi de finances n° 22/071, art. 33",
+      "source": "ol10001"
+    },
+    {
+      "box": "DEDT",
+      "kind": "total",
+      "name": "Total des déductions",
+      "sequence": 110,
+      "plus": [
+        "DEDIMMO",
+        "DEDBS"
+      ],
+      "legal_reference": "Ordonnance-loi n° 10/001, art. 60",
+      "source": "ol10001"
+    },
+    {
+      "box": "NET",
+      "kind": "total",
+      "name": "TVA nette à payer",
+      "sequence": 120,
+      "plus": [
+        "TVAB"
+      ],
+      "minus": [
+        "DEDT"
+      ],
+      "floor_zero": true,
+      "legal_reference": "Ordonnance-loi n° 10/001, art. 60 — la déclaration est accompagnée du paiement",
+      "source": "ol10001"
+    },
+    {
+      "box": "CRED",
+      "kind": "total",
+      "name": "Crédit de TVA à reporter",
+      "sequence": 130,
+      "plus": [
+        "DEDT"
+      ],
+      "minus": [
+        "TVAB"
+      ],
+      "floor_zero": true,
+      "legal_reference": "Ordonnance-loi n° 10/001, art. 60 — aucun texte lu ne plafonne la durée du report ni n'organise la restitution",
+      "source": "ol10001"
+    }
+  ]
+}

@@ -1,0 +1,381 @@
+[
+  {
+    "code": "CD-S-16",
+    "name": "Ventes de biens 16 %",
+    "description": "Livraisons de biens au taux normal, TVA facturée au compte 4431",
+    "rate": 16,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2010-08-20",
+    "legal_reference": "Ordonnance-loi n° 10/001 du 20 août 2010, art. 35 — taux normal de 16 % applicable à toutes les opérations imposables hors taux réduit et taux zéro. Art. 78 — la loi entre en vigueur endéans dix-huit mois à dater de sa signature (soit au plus tard le 20 février 2012) ; la date exacte de son application effective n'a pas été confirmée dans une source primaire lue, voir le README du pack.",
+    "source": "ol10001",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "CA16"
+        },
+        {
+          "type": "tax",
+          "account": "4431",
+          "box": "TVA16"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "CA16",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "4431",
+          "box": "TVA16",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 10
+  },
+  {
+    "code": "CD-S-16-SRV",
+    "name": "Prestations de services 16 %",
+    "description": "Prestations de services au taux normal, TVA facturée au compte 4432",
+    "rate": 16,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2010-08-20",
+    "legal_reference": "Ordonnance-loi n° 10/001, art. 35 — taux normal de 16 %, comme pour les biens. Même réserve sur la date d'application effective qu'au code CD-S-16.",
+    "source": "ol10001",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "CA16"
+        },
+        {
+          "type": "tax",
+          "account": "4432",
+          "box": "TVA16"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "CA16",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "4432",
+          "box": "TVA16",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 20
+  },
+  {
+    "code": "CD-S-8",
+    "name": "Biens de première nécessité 8 %",
+    "description": "Liste tarifaire de 24 positions : viandes bovines, porcines et de volaille, abats, poissons congelés, séchés et salés, riz, sucres, laits infantiles et préparations de lait, eaux de table, sel iodé, savons de ménage, allumettes",
+    "rate": 8,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2023-01-01",
+    "conditions": [
+      "supply_nature"
+    ],
+    "legal_reference": "Ordonnance-loi n° 10/001, art. 35, dans la rédaction de la loi de finances n° 22/071 du 28 décembre 2022, art. 30 — taux réduit de 8 % sur la liste tarifaire de 24 positions ; en vigueur depuis le 1er janvier 2023. La liste exacte des 24 positions tarifaires n'a pas été retranscrite ligne à ligne depuis le texte de la loi : un vendeur applique le taux réduit seulement si le bien figure sur cette liste, ce que le document ne porte pas lui-même.",
+    "source": "lf2023",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "CA8"
+        },
+        {
+          "type": "tax",
+          "account": "4431",
+          "box": "TVA8"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "CA8",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "4431",
+          "box": "TVA8",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 30
+  },
+  {
+    "code": "CD-S-8-SRV",
+    "name": "Billets d'avion du trafic aérien national 8 %",
+    "rate": 8,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2023-01-01",
+    "conditions": [
+      "supply_nature"
+    ],
+    "legal_reference": "Ordonnance-loi n° 10/001, art. 35, dans la rédaction de la loi de finances n° 22/071 du 28 décembre 2022, art. 30 — taux réduit de 8 % étendu aux billets d'avion du trafic aérien national, en vigueur depuis le 1er janvier 2023. Un vol international reste au taux normal ou au taux zéro selon l'art. 35 ; ce que ce code ne distingue pas lui-même.",
+    "source": "lf2023",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "CA8"
+        },
+        {
+          "type": "tax",
+          "account": "4432",
+          "box": "TVA8"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "CA8",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "4432",
+          "box": "TVA8",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 40
+  },
+  {
+    "code": "CD-S-EXP",
+    "name": "Exportation taxée au taux zéro",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2010-08-20",
+    "conditions": [
+      "transport_evidence"
+    ],
+    "legal_reference": "Ordonnance-loi n° 10/001, art. 35 — taux zéro pour les exportations et opérations assimilées. Même réserve sur la date d'application effective qu'au code CD-S-16.",
+    "source": "ol10001",
+    "vat_category": "G",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "EXP"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "EXP",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 50
+  },
+  {
+    "code": "CD-S-EXO",
+    "name": "Opération exonérée (art. 15)",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2010-08-20",
+    "conditions": [
+      "supply_nature"
+    ],
+    "legal_reference": "Ordonnance-loi n° 10/001, art. 15 et suivants, section 3 « Des exonérations », dont l'art. 15-5 a été modifié par la loi de finances n° 22/071, art. 29 (importations de billets et d'intrants monétaires par l'Institut d'émission, devises par les banques). La liste complète et à jour des exonérations, article par article, n'a pas été reconstituée à partir des textes lus : ce code porte le principe de l'exonération, pas une position précise de la liste. Voir le README du pack.",
+    "source": "ol10001",
+    "vat_category": "E",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "EXO"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "EXO",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 60
+  },
+  {
+    "code": "CD-P-16",
+    "name": "Achats de biens 16 %",
+    "rate": 16,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2010-08-20",
+    "legal_reference": "Ordonnance-loi n° 10/001, art. 35 pour le taux ; art. 60-4° du décret n° 11/42 du 22 novembre 2011, cité par les extraits légaux de la DGI, pour la déduction sur facture normalisée portant le numéro d'impôt du fournisseur. Même réserve sur la date d'application effective qu'au code CD-S-16.",
+    "source": "ol10001",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "4452",
+          "box": "DEDBS"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "4452",
+          "box": "DEDBS",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 110
+  },
+  {
+    "code": "CD-P-16-SRV",
+    "name": "Services extérieurs 16 %",
+    "rate": 16,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2010-08-20",
+    "legal_reference": "Ordonnance-loi n° 10/001, art. 35 pour le taux ; art. 58, modifié par la loi de finances n° 22/071, art. 33 — la déduction suppose une facture normalisée. Même réserve sur la date d'application effective qu'au code CD-S-16.",
+    "source": "ol10001",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "4454",
+          "box": "DEDBS"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "4454",
+          "box": "DEDBS",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 120
+  },
+  {
+    "code": "CD-P-16-IMMO",
+    "name": "Immobilisations 16 %",
+    "rate": 16,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2010-08-20",
+    "legal_reference": "Ordonnance-loi n° 10/001, art. 35 pour le taux, sur les biens constituant des immobilisations. Même réserve sur la date d'application effective qu'au code CD-S-16.",
+    "source": "ol10001",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "4451",
+          "box": "DEDIMMO"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "4451",
+          "box": "DEDIMMO",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 130
+  },
+  {
+    "code": "CD-P-8",
+    "name": "Achats de biens de première nécessité 8 %",
+    "rate": 8,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2023-01-01",
+    "conditions": [
+      "supply_nature"
+    ],
+    "legal_reference": "Ordonnance-loi n° 10/001, art. 35, dans la rédaction de la loi de finances n° 22/071, art. 30, sur la même liste de 24 positions tarifaires que le code CD-S-8.",
+    "source": "lf2023",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "4452",
+          "box": "DEDBS"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "4452",
+          "box": "DEDBS",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 140
+  },
+  {
+    "code": "CD-P-IMP-16",
+    "name": "Importation 16 % (TVA liquidée par la DGDA)",
+    "rate": 16,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2010-08-20",
+    "legal_reference": "Ordonnance-loi n° 10/001, art. 35 pour le taux ; la TVA à l'importation est liquidée par la Direction Générale des Douanes et Accises (DGDA) et déduite sur la déclaration de mise à la consommation, d'après la fiche de recherche (§1 et §5) ; l'article précis fixant l'exigibilité et le mode de déduction à l'importation n'a pas été identifié dans un texte lu séparément de l'art. 35.",
+    "source": "ol10001",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "4452",
+          "box": "DEDBS"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "4452",
+          "box": "DEDBS",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 150
+  }
+]

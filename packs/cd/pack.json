@@ -1,0 +1,209 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "CD",
+  "name": "République démocratique du Congo",
+  "version": "0.1.0",
+  "schema_min": "20260917170000",
+  "seed_sequence": 34,
+  "released_at": "2026-09-21",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "audcif",
+        "title": "Acte uniforme relatif au droit comptable et à l'information financière (AUDCIF), adopté à Brazzaville le 26 janvier 2017",
+        "publisher": "OHADA — Bibliothèque numérique de l'OHADA",
+        "url": "https://biblio.ohada.org/doc_num.php?explnum_id=2061",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "syscohada",
+        "title": "Journal officiel de l'OHADA, numéro spécial du 15 février 2017 — Acte uniforme relatif au droit comptable et à l'information financière et Système comptable OHADA (SYSCOHADA révisé), version complète signée",
+        "publisher": "OHADA — Bibliothèque numérique de l'OHADA",
+        "url": "https://biblio.ohada.org/doc_num.php?explnum_id=2063",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "ol10001",
+        "title": "Ordonnance-loi n° 10/001 du 20 août 2010 portant institution de la taxe sur la valeur ajoutée",
+        "publisher": "Leganet.cd — base de législation congolaise",
+        "url": "https://www.leganet.cd/Legislation/Dfiscal/TVA/OL.10.001.20.2010.htm",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "lf2023",
+        "title": "Loi de finances n° 22/071 du 28 décembre 2022 pour l'exercice 2023",
+        "publisher": "République démocratique du Congo — texte de la loi, copie ABC50",
+        "url": "https://admin.abc50.org/images/Loi%20de%20finances%20n%C2%B0%2022_071%20du%2028%20d%C3%A9cembre%202022%20pour%20l%E2%80%99exercice%202023.pdf",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "dgi-facture",
+        "title": "Réforme de la Facture Normalisée",
+        "publisher": "Direction Générale des Impôts (DGI)",
+        "url": "https://dgi.gouv.cd/reforme-de-la-facture-normalisee/",
+        "consulted_on": "2026-09-21",
+        "kind": "guidance"
+      },
+      {
+        "key": "dgi-extraits",
+        "title": "Extraits des dispositions légales relatives à la facture normalisée",
+        "publisher": "Direction Générale des Impôts (DGI)",
+        "url": "https://dgi.gouv.cd/wp-content/uploads/2025/10/Extraits-des-dispositions-legales.pdf",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "decret-facture",
+        "title": "Décret n° 23/10 du 03 mars 2023 portant réglementation de la facture normalisée et fixation des modalités de mise en œuvre des dispositifs électroniques fiscaux",
+        "publisher": "Présidence de la République, publié par la Direction Générale des Impôts (DGI)",
+        "url": "https://dgi.gouv.cd/wp-content/uploads/2025/10/Decret-N°23-010-du-03-mars-2023-reglementation-de-la-facture-normalisee.pdf",
+        "consulted_on": "2026-09-21",
+        "kind": "regulation"
+      },
+      {
+        "key": "circulaire-005",
+        "title": "Circulaire ministérielle n° 005/CAB/MIN/FINANCES/2024 du 30 décembre 2024 relative à l'obligation de délivrance et d'exigence de la facture normalisée ou d'un document en tenant lieu ainsi qu'aux mesures dérogatoires",
+        "publisher": "Ministère des Finances, publiée par la Direction Générale des Impôts (DGI)",
+        "url": "https://dgi.gouv.cd/wp-content/uploads/2025/10/CIRCULAIRE-MINISTERIELLE-N°005-CAB-MIN-FINANCES-2024-DU-30-DEC-2024-RELATIVE-A-LOBLIGATI.pdf",
+        "consulted_on": "2026-09-21",
+        "kind": "guidance"
+      },
+      {
+        "key": "i-impots",
+        "title": "I-IMPOTS — télédéclaration et télépaiement des impôts",
+        "publisher": "Direction Générale des Impôts (DGI)",
+        "url": "https://i-impots.dgirdc.cd/",
+        "consulted_on": "2026-09-21",
+        "kind": "portal"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "CDF",
+    "language": "fr",
+    "rounding_method": "half_up",
+    "closing_style": "result_accounts",
+    "roles": {
+      "receivable": "4111",
+      "payable": "4011",
+      "suspense": "4711",
+      "rounding": "6588",
+      "retained_earnings": "121",
+      "retained_earnings_loss": "1291",
+      "current_year_result_profit": "131",
+      "current_year_result_loss": "139",
+      "sales": "7011",
+      "purchase": "6011",
+      "bank": "5211",
+      "cash": "5711",
+      "fx_gain": "756",
+      "fx_loss": "656",
+      "tax_payable": "4441",
+      "tax_receivable": "4449"
+    },
+    "journal_roles": {
+      "sales": "VT",
+      "purchase": "AC",
+      "miscellaneous": "OD",
+      "opening": "AN"
+    },
+    "fiscal_year_default": "calendar"
+  },
+  "languages": [],
+  "journals": [
+    {
+      "code": "VT",
+      "type": "sales",
+      "name": "Journal des ventes",
+      "sequence": 10
+    },
+    {
+      "code": "AC",
+      "type": "purchase",
+      "name": "Journal des achats",
+      "sequence": 20
+    },
+    {
+      "code": "BQ",
+      "type": "bank",
+      "name": "Journal de banque",
+      "sequence": 30
+    },
+    {
+      "code": "CA",
+      "type": "cash",
+      "name": "Journal de caisse",
+      "sequence": 40
+    },
+    {
+      "code": "OD",
+      "type": "general",
+      "name": "Opérations diverses",
+      "sequence": 50
+    },
+    {
+      "code": "AN",
+      "type": "opening",
+      "name": "Journal des à-nouveaux",
+      "sequence": 60
+    }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "SYSCOHADA révisé — plan comptable général OHADA, Système normal",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": [
+        "CD-SYSCOHADA-BS",
+        "CD-SYSCOHADA-IS"
+      ],
+      "legal_reference": "Acte uniforme relatif au droit comptable et à l'information financière du 26 janvier 2017, art. 17, 7° — recours à un plan de comptes normalisé dont la liste figure dans le Système comptable OHADA ; Système comptable OHADA, Titre VII, chapitre 2, section 3 — liste des comptes, classes 1 à 8. La classe 9, engagements hors bilan et comptabilité analytique de gestion, est d'application facultative et n'est pas reprise. Commun aux dix-sept États parties : un seul fichier, packs/ohada/accounts.csv, recopié dans chaque pack par scripts/ohada-packs.mjs.",
+      "source": "syscohada"
+    }
+  ],
+  "documents": {
+    "numbering": "sequential",
+    "number_format": "{CODE}/{YYYY}/{NNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "references": {
+      "numbering": {
+        "legal_reference": "Décret n° 23/10 du 03 mars 2023, art. 4 à 10, et circulaire ministérielle n° 005/CAB/MIN/FINANCES/2024 — la facture normalisée porte un numéro de série et un code d'authentification délivrés par le dispositif électronique fiscal (DEF) au moment de son émission ; extraits des dispositions légales de la DGI, renvoyant à l'art. 100 du Décret n° 11/42 du 22 novembre 2011 — date et numéro de série de la facture. Aucun texte lu n'impose explicitement une séquence continue ni sans trou pour la numérotation interne de l'entreprise, à la différence du Sénégal ; le format proposé ici le permet sans l'exiger.",
+        "source": "decret-facture"
+      }
+    },
+    "mentions": [
+      {
+        "code": "exempt",
+        "applies_when": "exempt",
+        "text": "Opération exonérée de la taxe sur la valeur ajoutée — article 15 de l'Ordonnance-loi n° 10/001 du 20 août 2010.",
+        "sequence": 10,
+        "legal_reference": "Extraits des dispositions légales de la DGI, mentions obligatoires de la facture normalisée — montant non taxable de l'opération ; Ordonnance-loi n° 10/001, art. 15 et suivants, section 3 « Des exonérations ». La liste actualisée des exonérations n'a pas été entièrement reconstituée à partir des textes lus : voir le README du pack.",
+        "source": "ol10001"
+      },
+      {
+        "code": "export",
+        "applies_when": "export",
+        "text": "Exportation taxée au taux zéro — article 35 de l'Ordonnance-loi n° 10/001 du 20 août 2010.",
+        "sequence": 20,
+        "legal_reference": "Ordonnance-loi n° 10/001, art. 35 — taux zéro pour les exportations et opérations assimilées.",
+        "source": "ol10001"
+      }
+    ]
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "Ordonnance-loi n° 10/001, art. 58, 59 ter et 59 quater, modifiés par la loi de finances n° 22/071 du 28 décembre 2022, art. 33 à 35 — tout redevable délivre une facture normalisée produite par un dispositif électronique fiscal (DEF, physique — Unité de Facturation et Module de Contrôle de Facturation — ou dématérialisé — e-UF et e-MCF), enregistré et connecté au système de la DGI, ou un document en tenant lieu. Décret n° 23/10 du 03 mars 2023 pour les modalités techniques ; circulaire ministérielle n° 005/CAB/MIN/FINANCES/2024 pour l'obligation faite aux clients de n'accepter que des factures normalisées et les mesures dérogatoires ; obligation effective au 1er décembre 2025 pour tous les assujettis à la TVA selon un communiqué de la DGI rapporté par la presse (source secondaire, non retenue dans le registre). Ce n'est un profil ni un schéma d'échange au sens de la norme EN 16931 : c'est une clearance nationale par DEF/SFE homologué, avec code d'authentification et code QR délivrés par le dispositif, à l'entrée déjà connectée au système de la DGI — un mécanisme que ce socle ne sait pas exprimer (voir le README du pack et docs/international.md, section « From RD Congo »). `profile`, `mandatory_from`, `party_scheme` et `vat_scheme` restent vides faute d'un mécanisme de clearance à déclarer ici.",
+    "source": "decret-facture"
+  }
+}

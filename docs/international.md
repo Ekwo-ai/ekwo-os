@@ -3135,3 +3135,63 @@ retenue-au-paiement gap this file already names for Senegal and Chad) and the
 15 % final withholding of art. 166 bis 1 on fees paid abroad, an income tax
 rather than a tax on an invoice line. All three wait on a local accountant or
 a fuller reading of the arrêté, not on a change to the core.
+
+## From DR Congo
+
+`packs/cd/`, `community`, seed 34, CDF at two decimals — neither UEMOA nor
+CEMAC, the fourth OHADA member and the first outside either monetary union.
+Its chart, journals, roles and two statements are the common part of
+[`packs/ohada/`](../packs/ohada/README.md); what it adds is the value added
+tax of the Ordonnance-loi n° 10/001 du 20 août 2010, at 16 % and, since 1
+January 2023, at a reduced 8 % on a closed tariff list. Two things the
+format could not say, both already named for other members of the same
+family, and a third worth recording because it is a country's own
+administration saying so.
+
+**A third party's withholding, again — this time on the seller's own tax,
+not a buyer's self-assessment.** OL 10/001, art. 53, al. 2 (modified by the
+loi de finances n° 22/071 du 28 décembre 2022, art. 32), has mining companies
+withhold the VAT due to a state-owned supplier **when they pay that
+supplier's invoice**, on the supplier's behalf, and has the Treasury do the
+same for suppliers of the State. There is no self-assessment here, unlike
+Chad's art. 229-V: the seller charged the tax, declares it, and a payer
+named by the law remits it in their place at the moment of payment — the
+exact three-party shape `docs/international.md` already names for Senegal's
+*précompte* (a buyer withholds a supplier's tax before paying the price) and
+for Chad's art. 245 (a buyer on a DGI list withholds a supplier's tax and
+pays it over). DR Congo's version withholds **at payment** rather than at
+purchase, which Senegal's does not, so even the buyer-side purchase posting
+`packs/sn/` already found for its own précompte (`SN-P-18-PC`, on the
+invoice) does not reach it: nothing here happens when a document is issued,
+everything happens later, when it is paid. `packs/cd/` books neither side of
+it.
+
+**The facture normalisée is a live clearance system, read the closest yet
+to one.** A dispositif électronique fiscal — a physical Unité de
+Facturation and Module de Contrôle de Facturation, or their dematerialised
+equivalents e-UF and e-MCF — produces the invoice's own authentication code
+and QR code as it is issued, connected to the DGI's system at the moment of
+issuance, with a public verification site and a mobile app of its own. Côte
+d'Ivoire's FNE and Chad's FEN already showed this shape (a clearance
+platform, not an EN 16931 profile); DR Congo's decree of 3 March 2023 adds
+that even the *device* is administratively distinguished from the
+*document* — a company too small to run its own système de facturation
+d'entreprise (SFE) is handed the DGI's own e-UF application instead of a
+profile to implement. `einvoicing.profile` stays empty in the same spirit
+as the other two, for the same reason: naming EN 16931 or UBL here would
+misdescribe what the law actually requires.
+
+**An administration that says, itself, that its own reform is not ready.**
+A federation of employers (FEC) reported on 17 September 2026 that the DGI
+and the DGDA, presenting the loi de finances rectificative n° 26/032 du 07
+août 2026 at a briefing, said the two new rates it adds — 5 % on cement, 1 %
+on locally refined oil — were **not yet configured** in the DGI's own
+systems (e-DEF, e-MCF, i-impôts), over a month after the law's own effective
+date. No primary text of that law was found at any official URL tried. A
+pack that added the two rates from the FEC's account would be citing a
+federation of employers for a tax its own tax administration was not yet
+collecting through its own systems — the "jamais une taxe ajoutée pour faire
+passer un test" rule applies exactly as hard to a rate an administration
+itself has not switched on as to a rate a test invents. `packs/cd/` carries
+neither rate, and names both in its own README against the day a primary
+text, or the DGI's own systems, catch up to the law.
