@@ -1,0 +1,517 @@
+[
+  {
+    "code": "GW-S-19",
+    "name": "Vendas de bens 19%",
+    "description": "Livraisons de biens au taux normal, TVA au compte 4431",
+    "rate": 19,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2025-01-01",
+    "legal_reference": "Código do IVA, art. 18.º, n.º 1, alínea b) — taux de 19 % pour les importations, livraisons de biens et prestations de services hors Anexo I ; mise en application au 1er janvier 2025 (Despacho n.º 130/GMF/2024) ; directive n° 02/2009/CM/UEMOA, art. 29 nouveau — taux normal unique compris entre 15 % et 20 %.",
+    "source": "civa",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "CA19"
+        },
+        {
+          "type": "tax",
+          "account": "4431",
+          "box": "TVA19"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "CA19",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "4431",
+          "box": "TVA19",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 10
+  },
+  {
+    "code": "GW-S-19-SRV",
+    "name": "Prestações de serviços 19%",
+    "description": "Prestations de services au taux normal, TVA au compte 4432",
+    "rate": 19,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2025-01-01",
+    "legal_reference": "Código do IVA, art. 18.º, n.º 1, alínea b) ; art. 11.º, n.º 1, alínea b) — le fait générateur d'une prestation de services est son exécution ; art. 12.º — la facture émise dans le délai devance ce fait générateur.",
+    "source": "civa",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "CA19"
+        },
+        {
+          "type": "tax",
+          "account": "4432",
+          "box": "TVA19"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "CA19",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "4432",
+          "box": "TVA19",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 20
+  },
+  {
+    "code": "GW-S-10",
+    "name": "Vendas de bens do Anexo I 10%",
+    "description": "Arroz, farinha e pão ; intrants et matériel agricoles ; matériel solaire et informatique ; presse et activités culturelles",
+    "rate": 10,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2025-01-01",
+    "conditions": [
+      "supply_nature"
+    ],
+    "legal_reference": "Código do IVA, art. 18.º, n.º 1, alínea a) et Anexo I — taux de 10 % pour les biens et services énumérés à l'Anexo I : (1) riz, farine et pain, (2) intrants et matériel agricoles (engrais, animaux vivants, produits phytopharmaceutiques, semences, tracteurs et machines agricoles), (3) matériel de production d'énergie solaire, (4) matériel informatique ; directive n° 02/2009/CM/UEMOA, art. 29 nouveau — taux réduit unique compris entre 5 % et 10 %, la liste UEMOA visant les farines et non le riz ni le pain.",
+    "source": "civa",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "CA10"
+        },
+        {
+          "type": "tax",
+          "account": "4431",
+          "box": "TVA10"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "CA10",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "4431",
+          "box": "TVA10",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 30
+  },
+  {
+    "code": "GW-S-10-SRV",
+    "name": "Prestações de serviços do Anexo I 10%",
+    "description": "Services funéraires ; transport de passagers ; presse et activités culturelles, éducatives et récréatives ; équipements de lutte contre l'incendie ; jurisconsulte ou solicitador ; restauration, hôtellerie et tourisme",
+    "rate": 10,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2025-01-01",
+    "conditions": [
+      "supply_nature"
+    ],
+    "legal_reference": "Código do IVA, art. 18.º, n.º 1, alínea a) et Anexo I, points 5 à 10 — services funéraires, transport de passagers, journaux/revues/activités culturelles, éducatives et récréatives, équipements de lutte contre l'incendie, services de jurisconsulte ou de solicitador, restauration/hôtellerie/tourisme.",
+    "source": "civa",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "CA10"
+        },
+        {
+          "type": "tax",
+          "account": "4432",
+          "box": "TVA10"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "CA10",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "4432",
+          "box": "TVA10",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 40
+  },
+  {
+    "code": "GW-S-EXP",
+    "name": "Exportação isenta",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2025-01-01",
+    "conditions": [
+      "transport_evidence"
+    ],
+    "legal_reference": "Código do IVA, art. 15.º, n.º 1, alínea a) — sont exonérées la transmission de biens destinés à l'exportation et les prestations de services que la législation douanière assimile à des exportations ; art. 18.º, n.º 1, alínea c) — taux de 0 % ; art. 20.º, n.º 2, alínea a) — droit à déduction de la taxe d'amont ; Despacho MF n.º 1/2023, art. 7.º, n.º 1, alínea b) — série B des factures d'exportation.",
+    "source": "civa",
+    "vat_category": "G",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "EXP"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "EXP",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 50
+  },
+  {
+    "code": "GW-S-EXO",
+    "name": "Operação interna isenta (art. 13.º e 14.º)",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2025-01-01",
+    "conditions": [
+      "supply_nature"
+    ],
+    "legal_reference": "Código do IVA, art. 13.º — opérations internes exonérées : médicaments et produits pharmaceutiques de l'Anexo II, soins médicaux et paramédicaux à finalité exclusivement thérapeutique et transport de blessés/malades, enseignement scolaire et universitaire reconnu, gaz à usage domestique, opérations financières et d'assurance non rémunérées par une commission explicite, opérations immobilières sur des immeubles d'habitation (hors hébergement hôtelier) ; art. 14.º — importations exonérées symétriques ; art. 13.º, n.º 2 — aucune exonération administrative en dehors du Code. Sans droit à déduction, sauf le cas particulier de l'art. 20.º, n.º 2, alínea d), non repris ici faute de golden le justifiant.",
+    "source": "civa",
+    "vat_category": "E",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "EXO"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "EXO",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 60
+  },
+  {
+    "code": "GW-P-19",
+    "name": "Compras de bens 19%",
+    "rate": 19,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2025-01-01",
+    "legal_reference": "Código do IVA, art. 19.º — droit à déduction de la taxe due ou payée sur les biens acquis à d'autres assujettis du régime normal ; art. 20.º, n.º 1 — déductible pour les opérations taxées ; art. 22.º — exercice au titre de la période où la taxe devient exigible.",
+    "source": "civa",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "4452",
+          "box": "DEDBS"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "4452",
+          "box": "DEDBS",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 110
+  },
+  {
+    "code": "GW-P-19-SRV",
+    "name": "Serviços exteriores 19%",
+    "rate": 19,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2025-01-01",
+    "legal_reference": "Código do IVA, art. 19.º e 20.º, n.º 1 — droit à déduction de la taxe supportée sur les services acquis pour les besoins de l'exploitation.",
+    "source": "civa",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "4454",
+          "box": "DEDBS"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "4454",
+          "box": "DEDBS",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 120
+  },
+  {
+    "code": "GW-P-19-IMMO",
+    "name": "Imobilizações 19%",
+    "rate": 19,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2025-01-01",
+    "legal_reference": "Código do IVA, art. 19.º e 20.º, n.º 1 — droit à déduction de la taxe ayant grevé les biens amortissables acquis pour l'activité.",
+    "source": "civa",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "4451",
+          "box": "DEDIMMO"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "4451",
+          "box": "DEDIMMO",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 130
+  },
+  {
+    "code": "GW-P-10",
+    "name": "Compras de bens do Anexo I 10%",
+    "rate": 10,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2025-01-01",
+    "legal_reference": "Código do IVA, art. 18.º, n.º 1, alínea a) et Anexo I pour le taux ; art. 19.º e 20.º, n.º 1 pour la déduction.",
+    "source": "civa",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "4452",
+          "box": "DEDBS"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "4452",
+          "box": "DEDBS",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 140
+  },
+  {
+    "code": "GW-P-10-SRV",
+    "name": "Serviços do Anexo I 10%",
+    "rate": 10,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2025-01-01",
+    "legal_reference": "Código do IVA, art. 18.º, n.º 1, alínea a) et Anexo I, points 5 à 10 pour le taux ; art. 19.º e 20.º, n.º 1 pour la déduction.",
+    "source": "civa",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "4454",
+          "box": "DEDBS"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "4454",
+          "box": "DEDBS",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 150
+  },
+  {
+    "code": "GW-P-IMP-19",
+    "name": "Importação 19% (IVA pago na alfândega)",
+    "rate": 19,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2025-01-01",
+    "legal_reference": "Código do IVA, art. 17.º — le fait générateur à l'importation est la mise à la consommation, la base étant la valeur en douane ; art. 19.º, n.º 1, alínea c) — l'impôt dû à l'importation est déductible ; art. 26.º, n.º 2 — payé aux services douaniers au dédouanement.",
+    "source": "civa",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "4452",
+          "box": "DEDBS"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "4452",
+          "box": "DEDBS",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 160
+  },
+  {
+    "code": "GW-P-19-ND",
+    "name": "Compra 19% não dedutível (art. 21.º)",
+    "rate": 19,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2025-01-01",
+    "recoverable": false,
+    "legal_reference": "Código do IVA, art. 21.º — exclusion du droit à déduction : dépenses de voyage, réception, hébergement, restauration ou loisirs du sujet passif et de son personnel ; véhicules de tourisme, bateaux de plaisance, hélicoptères, avions, motos et leur carburant ; dépenses de luxe ; biens hors commerce. La taxe est une part du coût.",
+    "source": "civa",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax_on_base",
+          "factor": 100
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax_on_base",
+          "factor": 100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 170
+  },
+  {
+    "code": "GW-P-NR-19",
+    "name": "Serviços de não residentes 19%, inversão do sujeito passivo",
+    "rate": 19,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2025-01-01",
+    "legal_reference": "Código do IVA, art. 7.º, n.º 1 — l'acquéreur de prestations de services réalisées en Guinée-Bissau par un prestataire qui n'y a ni siège, ni établissement stable, ni domicile, ni représentant fiscal (art. 33.º), en devient lui-même l'assujetti ; art. 19.º, n.º 1, alínea b) — la taxe autoliquidée à ce titre est déductible dans les conditions générales. La taxe attend son reversement au compte 4478, sans case propre de ce formulaire.",
+    "source": "civa",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "4454",
+          "box": "DEDBS"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "4478"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "4454",
+          "box": "DEDBS",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "4478"
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 180
+  },
+  {
+    "code": "GW-P-5-RETIDO",
+    "name": "Compra a fornecedor do regime simplificado 5%, retida a 100%",
+    "description": "Achat facturé « IVA Simplificado » par un fournisseur du régime simplifié, retenu en totalité par le client du régime normal",
+    "rate": 5,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2025-01-01",
+    "recoverable": false,
+    "legal_reference": "Código do IVA, art. 7.º, n.º 3, alínea a) — l'acquéreur du régime normal retient la totalité de l'impôt facturé par un fournisseur du régime simplifié (taxe forfaitaire de 5 % de l'art. 38.º) ; art. 39.º — cette facture ne donne de toute façon aucun droit à déduction au client, taxe qui devient donc une part du coût ; art. 7.º, n.º 4 — le montant retenu figure dans un champ propre de la déclaration périodique du client et est reversé au même délai que sa propre TVA (art. 7.º du présent pack) ; art. 7.º, n.º 5 — le fournisseur porte la mention « IVA – Retido ». Le fournisseur est payé hors la part retenue ; celle-ci attend son reversement au compte 4478.",
+    "source": "civa",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax_on_base",
+          "factor": 100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "4478",
+          "box": "IVARET"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax_on_base",
+          "factor": 100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "4478",
+          "box": "IVARET",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 190
+  }
+]

@@ -1,0 +1,161 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "GW-IVA",
+  "name": "Declaração periódica de Imposto sobre o Valor Acrescentado (regime normal)",
+  "period": [
+    "month"
+  ],
+  "period_default": "month",
+  "valid_from": "2025-01-01",
+  "legal_reference": "Código do IVA, art. 31.º — les assujettis du régime normal (art. 6.º, n.º 1, alínea a) déposent, au plus tard le 15 du mois suivant, une déclaration périodique des opérations imposables du mois précédent, obligatoire même sans opération ; art. 31.º, n.º 2 — le modèle de la déclaration est approuvé par le directeur général de la DGCI et n'a pas été publié : les cases de ce formulaire suivent le contenu que l'article impose (impôt dû ou crédit, éléments de calcul) et non la numérotation de l'imprimé. Le régime simplifié (art. 38.º à 42.º) dépose une déclaration trimestrielle distincte, propre à sa taxe forfaitaire de 5 %, que ce pack ne construit pas (voir README) ; les opérations isolées (art. 6.º, n.º 1, alíneas b) et d) suivent une déclaration avulsa distincte (art. 32.º), également hors de ce formulaire.",
+  "source": "civa",
+  "deadline": {
+    "rule": "day_of_month_after_period",
+    "day": 15,
+    "legal_reference": "Código do IVA, art. 31.º, n.º 1 — dépôt au plus tard le 15 du mois suivant celui auquel se rapportent les opérations ; art. 25.º, n.º 1 — le paiement suit le même délai que le dépôt de la déclaration.",
+    "source": "civa"
+  },
+  "boxes": [
+    {
+      "box": "CA19",
+      "kind": "base",
+      "name": "Operações tributáveis à taxa normal de 19%",
+      "sequence": 10,
+      "legal_reference": "Código do IVA, art. 31.º, n.º 2 — la déclaration porte les éléments qui ont servi de base au calcul de l'impôt ; art. 18.º, n.º 1, alínea b) pour le taux. Le modèle officiel de l'imprimé, approuvé par le directeur général de la DGCI (art. 31.º, n.º 2), n'est pas publié : les cases de ce formulaire suivent le contenu que l'article impose et non la numérotation de l'imprimé.",
+      "source": "civa"
+    },
+    {
+      "box": "CA10",
+      "kind": "base",
+      "name": "Operações tributáveis à taxa reduzida de 10%",
+      "sequence": 20,
+      "legal_reference": "Código do IVA, art. 31.º, n.º 2 et art. 18.º, n.º 1, alínea a) et Anexo I.",
+      "source": "civa"
+    },
+    {
+      "box": "EXP",
+      "kind": "base",
+      "name": "Exportações isentas com direito à dedução",
+      "sequence": 30,
+      "legal_reference": "Código do IVA, art. 31.º, n.º 2 ; art. 15.º et art. 20.º, n.º 2, alínea a) — exonération des exportations ouvrant droit à déduction.",
+      "source": "civa"
+    },
+    {
+      "box": "EXO",
+      "kind": "base",
+      "name": "Outras operações internas isentas",
+      "sequence": 40,
+      "legal_reference": "Código do IVA, art. 31.º, n.º 2 ; art. 13.º et art. 14.º pour la liste des opérations exonérées sans droit à déduction.",
+      "source": "civa"
+    },
+    {
+      "box": "CAT",
+      "kind": "total",
+      "name": "Montante total das operações realizadas",
+      "sequence": 50,
+      "plus": [
+        "CA19",
+        "CA10",
+        "EXP",
+        "EXO"
+      ],
+      "legal_reference": "Código do IVA, art. 31.º, n.º 2 — indication des éléments de calcul de l'impôt et du crédit.",
+      "source": "civa"
+    },
+    {
+      "box": "TVA19",
+      "kind": "tax",
+      "name": "Imposto exigível à taxa de 19%",
+      "sequence": 60,
+      "legal_reference": "Código do IVA, art. 31.º, n.º 2 ; art. 11.º et 12.º pour l'exigibilité.",
+      "source": "civa"
+    },
+    {
+      "box": "TVA10",
+      "kind": "tax",
+      "name": "Imposto exigível à taxa de 10%",
+      "sequence": 70,
+      "legal_reference": "Código do IVA, art. 31.º, n.º 2 ; art. 18.º, n.º 1, alínea a).",
+      "source": "civa"
+    },
+    {
+      "box": "IVARET",
+      "kind": "tax",
+      "name": "IVA retido nas aquisições ao abrigo do artigo 7.º, n.º 3",
+      "sequence": 80,
+      "legal_reference": "Código do IVA, art. 7.º, n.º 4 — l'impôt retenu par l'acquéreur du régime normal sur les factures d'un fournisseur du régime simplifié, ou d'un fournisseur du régime normal classé « à risque », figure dans un champ propre de la déclaration périodique et est reversé au même délai que le reste de l'IVA du régime normal.",
+      "source": "civa"
+    },
+    {
+      "box": "TVAB",
+      "kind": "total",
+      "name": "Total do imposto exigível",
+      "sequence": 90,
+      "plus": [
+        "TVA19",
+        "TVA10",
+        "IVARET"
+      ],
+      "legal_reference": "Código do IVA, art. 31.º, n.º 2.",
+      "source": "civa"
+    },
+    {
+      "box": "DEDIMMO",
+      "kind": "tax",
+      "name": "IVA dedutível sobre imobilizações",
+      "sequence": 100,
+      "legal_reference": "Código do IVA, art. 31.º, n.º 2 ; art. 19.º e 20.º para o direito à dedução.",
+      "source": "civa"
+    },
+    {
+      "box": "DEDBS",
+      "kind": "tax",
+      "name": "IVA dedutível sobre bens, serviços e importações",
+      "sequence": 110,
+      "legal_reference": "Código do IVA, art. 31.º, n.º 2 ; art. 19.º e 20.º ; art. 22.º — exercice au titre de la période où l'impôt déductible devient exigible ou de la période suivante.",
+      "source": "civa"
+    },
+    {
+      "box": "DEDT",
+      "kind": "total",
+      "name": "Total das deduções",
+      "sequence": 120,
+      "plus": [
+        "DEDIMMO",
+        "DEDBS"
+      ],
+      "legal_reference": "Código do IVA, art. 31.º, n.º 2.",
+      "source": "civa"
+    },
+    {
+      "box": "NET",
+      "kind": "total",
+      "name": "Imposto líquido a pagar",
+      "sequence": 130,
+      "plus": [
+        "TVAB"
+      ],
+      "minus": [
+        "DEDT"
+      ],
+      "floor_zero": true,
+      "legal_reference": "Código do IVA, art. 22.º, n.º 1 — l'impôt dû résulte de la soustraction, sur la période, du montant déductible exigible au montant global de l'impôt dû sur les opérations imposables ; art. 25.º, n.º 1 pour le paiement.",
+      "source": "civa"
+    },
+    {
+      "box": "CRED",
+      "kind": "total",
+      "name": "Crédito de IVA a reportar",
+      "sequence": 140,
+      "plus": [
+        "DEDT"
+      ],
+      "minus": [
+        "TVAB"
+      ],
+      "floor_zero": true,
+      "legal_reference": "Código do IVA, art. 24.º, n.º 1 — l'excédent de taxe déductible sur la taxe due au titre d'une période est reporté sur les périodes suivantes ; art. 24.º, n.º 2 — au-delà de douze mois et d'un crédit supérieur à 1 000 000 FCFA, une note de crédit fiscal peut être demandée pour compensation.",
+      "source": "civa"
+    }
+  ]
+}

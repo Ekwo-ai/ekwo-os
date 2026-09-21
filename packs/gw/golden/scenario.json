@@ -1,0 +1,360 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "Une année d'un négociant-importateur bissau-guinéen au régime normal, déclarant chaque mois",
+  "chart": "default",
+  "fiscal_year": {
+    "name": "Exercício 2026",
+    "start": "2026-01-01",
+    "end": "2026-12-31"
+  },
+  "periods": [
+    {
+      "code": "2026-01",
+      "from": "2026-01-01",
+      "to": "2026-01-31"
+    },
+    {
+      "code": "2026-02",
+      "from": "2026-02-01",
+      "to": "2026-02-28"
+    },
+    {
+      "code": "2026-03",
+      "from": "2026-03-01",
+      "to": "2026-03-31"
+    },
+    {
+      "code": "2026-04",
+      "from": "2026-04-01",
+      "to": "2026-04-30"
+    }
+  ],
+  "statements": [
+    "GW-SYSCOHADA-BS",
+    "GW-SYSCOHADA-IS"
+  ],
+  "contacts": [
+    {
+      "ref": "client-bissau",
+      "name": "Armazém Bandim Comércio Lda",
+      "type": "customer",
+      "country": "GW"
+    },
+    {
+      "ref": "client-hotel",
+      "name": "Hotel Ceú e Terra Lda",
+      "type": "customer",
+      "country": "GW"
+    },
+    {
+      "ref": "client-farmacia",
+      "name": "Farmácia Central de Bissau Lda",
+      "type": "customer",
+      "country": "GW"
+    },
+    {
+      "ref": "client-sn",
+      "name": "Comptoir de Ziguinchor SARL",
+      "type": "customer",
+      "country": "SN"
+    },
+    {
+      "ref": "fourn-bissau",
+      "name": "Fornecedor Bandim Lda",
+      "type": "supplier",
+      "country": "GW"
+    },
+    {
+      "ref": "fourn-import",
+      "name": "Guangzhou Trading Import-Export Ltd",
+      "type": "supplier",
+      "country": "CN"
+    },
+    {
+      "ref": "fourn-consult",
+      "name": "Consultoria de Gestão Lisboa Lda",
+      "type": "supplier",
+      "country": "PT"
+    },
+    {
+      "ref": "fourn-simpl",
+      "name": "Ateliê de Costura Bandim",
+      "type": "supplier",
+      "country": "GW"
+    }
+  ],
+  "documents": [
+    {
+      "ref": "V1",
+      "type": "sale_invoice",
+      "contact": "client-bissau",
+      "date": "2026-01-10",
+      "why": "Une vente de marchandises au taux normal : la case CA19, la taxe au compte 4431 et dans la case TVA19.",
+      "lines": [
+        {
+          "name": "Sacos de cimento",
+          "quantity": 50,
+          "unit_price": 60000,
+          "tax": "GW-S-19",
+          "account": "7011"
+        }
+      ]
+    },
+    {
+      "ref": "V2",
+      "type": "sale_invoice",
+      "contact": "client-bissau",
+      "date": "2026-01-22",
+      "why": "Une prestation de services au taux normal, exigible à l'émission de la facture (art. 12.º) : la taxe au compte 4432, dans le mois de la facture.",
+      "lines": [
+        {
+          "name": "Instalação elétrica",
+          "quantity": 1,
+          "unit_price": 1200000,
+          "tax": "GW-S-19-SRV",
+          "account": "7061"
+        }
+      ]
+    },
+    {
+      "ref": "V3",
+      "type": "sale_invoice",
+      "contact": "client-bissau",
+      "date": "2026-02-05",
+      "why": "Une vente de riz, bien de l'Anexo I au taux réduit de 10% : la case CA10, la taxe au compte 4431 et dans la case TVA10.",
+      "lines": [
+        {
+          "name": "Arroz",
+          "quantity": 200,
+          "unit_price": 15000,
+          "tax": "GW-S-10",
+          "account": "7011"
+        }
+      ]
+    },
+    {
+      "ref": "V4",
+      "type": "sale_invoice",
+      "contact": "client-hotel",
+      "date": "2026-02-18",
+      "why": "Des nuitées et la restauration d'un établissement hôtelier, service de l'Anexo I au taux réduit de 10% : le compte 4432 et la case TVA10, le second taux positif du pack.",
+      "lines": [
+        {
+          "name": "Estadia e restauração",
+          "quantity": 10,
+          "unit_price": 45000,
+          "tax": "GW-S-10-SRV",
+          "account": "7061"
+        }
+      ]
+    },
+    {
+      "ref": "V5",
+      "type": "sale_invoice",
+      "contact": "client-sn",
+      "date": "2026-03-02",
+      "why": "Une exportation de castanha de caju exonérée avec droit à déduction (art. 15.º et 20.º, n.º 2, a)) : la case EXP, aucune taxe, un compte de ventes hors Région.",
+      "lines": [
+        {
+          "name": "Castanha de caju exportada",
+          "quantity": 2000,
+          "unit_price": 1500,
+          "tax": "GW-S-EXP",
+          "account": "7012"
+        }
+      ]
+    },
+    {
+      "ref": "V6",
+      "type": "sale_invoice",
+      "contact": "client-farmacia",
+      "date": "2026-03-14",
+      "why": "Une vente de médicaments de l'Anexo II, opération interne isenta de l'article 13.º : la case EXO, aucune taxe.",
+      "lines": [
+        {
+          "name": "Medicamentos do Anexo II",
+          "quantity": 500,
+          "unit_price": 4000,
+          "tax": "GW-S-EXO",
+          "account": "7011"
+        }
+      ]
+    },
+    {
+      "ref": "AV1",
+      "type": "sale_credit_note",
+      "contact": "client-bissau",
+      "date": "2026-03-20",
+      "why": "Un avoir sur la vente V1 : la case CA19 et la taxe diminuent dans le mois de l'avoir.",
+      "lines": [
+        {
+          "name": "Devolução de sacos de cimento",
+          "quantity": 5,
+          "unit_price": 60000,
+          "tax": "GW-S-19",
+          "account": "7011"
+        }
+      ]
+    },
+    {
+      "ref": "A1",
+      "type": "purchase_invoice",
+      "contact": "fourn-bissau",
+      "date": "2026-01-08",
+      "why": "Un achat de marchandises au taux normal : la taxe déductible au compte 4452 et dans la case DEDBS.",
+      "lines": [
+        {
+          "name": "Mercadorias diversas",
+          "quantity": 100,
+          "unit_price": 20000,
+          "tax": "GW-P-19",
+          "account": "6011"
+        }
+      ]
+    },
+    {
+      "ref": "A2",
+      "type": "purchase_invoice",
+      "contact": "fourn-bissau",
+      "date": "2026-01-15",
+      "why": "Une prestation de services extérieurs au taux normal : la taxe déductible au compte 4454.",
+      "lines": [
+        {
+          "name": "Manutenção de equipamentos",
+          "quantity": 1,
+          "unit_price": 500000,
+          "tax": "GW-P-19-SRV",
+          "account": "6248"
+        }
+      ]
+    },
+    {
+      "ref": "A3",
+      "type": "purchase_invoice",
+      "contact": "fourn-bissau",
+      "date": "2026-02-01",
+      "why": "Du mobilier de bureau immobilisé : la taxe déductible au compte 4451 et dans la case DEDIMMO.",
+      "lines": [
+        {
+          "name": "Computadores e mobiliário de escritório",
+          "quantity": 3,
+          "unit_price": 400000,
+          "tax": "GW-P-19-IMMO",
+          "account": "2441"
+        }
+      ]
+    },
+    {
+      "ref": "A4",
+      "type": "purchase_invoice",
+      "contact": "fourn-bissau",
+      "date": "2026-02-12",
+      "why": "Un achat de riz destiné à la revente, bien de l'Anexo I au taux réduit de 10%, déductible.",
+      "lines": [
+        {
+          "name": "Arroz para revenda",
+          "quantity": 200,
+          "unit_price": 12000,
+          "tax": "GW-P-10",
+          "account": "6011"
+        }
+      ]
+    },
+    {
+      "ref": "A5",
+      "type": "purchase_invoice",
+      "contact": "fourn-bissau",
+      "date": "2026-02-25",
+      "why": "Une viatura ligeira de passageiros, exclue du droit à déduction par l'article 21.º : la taxe s'ajoute au coût de l'immobilisation et n'atteint aucune case.",
+      "lines": [
+        {
+          "name": "Viatura ligeira de passageiros",
+          "quantity": 1,
+          "unit_price": 8000000,
+          "tax": "GW-P-19-ND",
+          "account": "2451"
+        }
+      ]
+    },
+    {
+      "ref": "A6",
+      "type": "purchase_invoice",
+      "contact": "fourn-import",
+      "date": "2026-03-05",
+      "why": "Une importation de matériel informatique, taxe acquittée en douane et déductible (art. 17.º et 19.º, n.º 1, c)) : compte de charges hors Région.",
+      "lines": [
+        {
+          "name": "Material informático importado",
+          "quantity": 1,
+          "unit_price": 5000000,
+          "tax": "GW-P-IMP-19",
+          "account": "6012"
+        }
+      ]
+    },
+    {
+      "ref": "A7",
+      "type": "purchase_invoice",
+      "contact": "fourn-consult",
+      "date": "2026-03-18",
+      "why": "Une consultoria d'un cabinet sans siège ni établissement stable en Guinée-Bissau, inversion du sujet passif (art. 7.º, n.º 1) : l'IVA autoliquidée est ici déductible (art. 19.º, n.º 1, b)), donc au compte 4454 et dans la case DEDBS, avec le reversement au compte 4478.",
+      "lines": [
+        {
+          "name": "Consultoria de gestão prestada a partir de Lisboa",
+          "quantity": 1,
+          "unit_price": 900000,
+          "tax": "GW-P-NR-19",
+          "account": "6324"
+        }
+      ]
+    },
+    {
+      "ref": "A8",
+      "type": "purchase_invoice",
+      "contact": "fourn-simpl",
+      "date": "2026-04-02",
+      "why": "Un achat à un fournisseur du regime simplificado (« IVA Simplificado » à 5%, art. 38.º e 39.º) : la retenue de 100% de l'article 7.º, n.º 3, a) — le fournisseur est payé hors taxe, la taxe attend son reversement au compte 4478 dans la case IVARET, sans droit à déduction pour l'acquéreur, donc portée au coût du service.",
+      "lines": [
+        {
+          "name": "Serviços de costura e confeção",
+          "quantity": 1,
+          "unit_price": 300000,
+          "tax": "GW-P-5-RETIDO",
+          "account": "6248"
+        }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "E1",
+      "direction": "inbound",
+      "date": "2026-02-28",
+      "amount": 495000,
+      "contact": "client-hotel",
+      "journal": "BQ",
+      "match": "V4",
+      "why": "Un encaissement qui solde exactement la facture d'hébergement et de restauration."
+    },
+    {
+      "ref": "E2",
+      "direction": "inbound",
+      "date": "2026-03-25",
+      "amount": 500000,
+      "contact": "client-bissau",
+      "journal": "BQ",
+      "match": null,
+      "why": "Un acompte non affecté : il reste une ligne ouverte au compte client."
+    },
+    {
+      "ref": "P1",
+      "direction": "outbound",
+      "date": "2026-01-20",
+      "amount": 2380000,
+      "contact": "fourn-bissau",
+      "journal": "BQ",
+      "match": "A1",
+      "why": "Un paiement qui solde la facture d'achat de marchandises."
+    }
+  ]
+}

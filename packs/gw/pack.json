@@ -1,0 +1,222 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "GW",
+  "name": "Guinée-Bissau",
+  "version": "0.1.0",
+  "schema_min": "20260917170000",
+  "seed_sequence": 30,
+  "released_at": "2026-09-21",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "audcif",
+        "title": "Acte uniforme relatif au droit comptable et à l'information financière (AUDCIF), adopté à Brazzaville le 26 janvier 2017",
+        "publisher": "OHADA — Bibliothèque numérique de l'OHADA",
+        "url": "https://biblio.ohada.org/doc_num.php?explnum_id=2061",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "syscohada",
+        "title": "Journal officiel de l'OHADA, numéro spécial du 15 février 2017 — Acte uniforme relatif au droit comptable et à l'information financière et Système comptable OHADA (SYSCOHADA révisé), version complète signée",
+        "publisher": "OHADA — Bibliothèque numérique de l'OHADA",
+        "url": "https://biblio.ohada.org/doc_num.php?explnum_id=2063",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "civa",
+        "title": "Lei n.º 4/2022 — Código do Imposto sobre o Valor Acrescentado (IVA), publicada no 4.º suplemento do Boletim Oficial n.º 8 de 25 de fevereiro de 2022, texto integral",
+        "publisher": "Direção-Geral das Contribuições e Impostos (DGCI) — plataforma Kontaktu",
+        "url": "https://kontaktu.mef.gw/legislation",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "despacho-130",
+        "title": "Despacho n.º 130/GMF/2024, de 31 de outubro de 2024 — informação importante sobre a entrada em vigor do IVA em 1 de janeiro de 2025",
+        "publisher": "Ministério das Finanças",
+        "url": "https://mef.gw/noticias/informacao-importante-iva",
+        "consulted_on": "2026-09-21",
+        "kind": "regulation"
+      },
+      {
+        "key": "regulamento-faturas",
+        "title": "Despacho MF n.º 1/2023 — Regulamento das Faturas, Documentos Equivalentes, Retificativos e de Transporte, tomado nos termos do n.º 3 do artigo 29.º do Código do IVA",
+        "publisher": "Ministério das Finanças — plataforma Kontaktu",
+        "url": "https://kontaktu.mef.gw/legislation",
+        "consulted_on": "2026-09-21",
+        "kind": "regulation"
+      },
+      {
+        "key": "kontaktu",
+        "title": "Kontaktu — portal da legislação, das declarações e do pagamento de impostos",
+        "publisher": "Direção-Geral das Contribuições e Impostos (DGCI)",
+        "url": "https://kontaktu.mef.gw",
+        "consulted_on": "2026-09-21",
+        "kind": "portal"
+      },
+      {
+        "key": "aci",
+        "title": "Lei n.º 6-A/95, de 5 de julho — Adiantamento por Conta da Contribuição Industrial (ACI), atualizada até janeiro de 2021",
+        "publisher": "Direção-Geral das Contribuições e Impostos (DGCI) — plataforma Kontaktu",
+        "url": "https://kontaktu.mef.gw/legislation",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      },
+      {
+        "key": "directive-uemoa-tva",
+        "title": "Directive n° 02/2009/CM/UEMOA du 27 mars 2009 portant modification de la directive n° 02/98/CM/UEMOA du 22 décembre 1998 portant harmonisation des législations des États membres en matière de taxe sur la valeur ajoutée",
+        "publisher": "Conseil des ministres de l'UEMOA — texte publié par l'AIFO-UEMOA",
+        "url": "https://www.aifo-uemoa.bj/assets/documents/directives-uemoa/directive_02_2009_CM_UEMOA.pdf",
+        "consulted_on": "2026-09-21",
+        "kind": "law"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "XOF",
+    "language": "fr",
+    "rounding_method": "half_up",
+    "closing_style": "result_accounts",
+    "roles": {
+      "receivable": "4111",
+      "payable": "4011",
+      "suspense": "4711",
+      "rounding": "6588",
+      "retained_earnings": "121",
+      "retained_earnings_loss": "1291",
+      "current_year_result_profit": "131",
+      "current_year_result_loss": "139",
+      "sales": "7011",
+      "purchase": "6011",
+      "bank": "5211",
+      "cash": "5711",
+      "fx_gain": "756",
+      "fx_loss": "656",
+      "tax_payable": "4441",
+      "tax_receivable": "4449"
+    },
+    "journal_roles": {
+      "sales": "VT",
+      "purchase": "AC",
+      "miscellaneous": "OD",
+      "opening": "AN"
+    },
+    "fiscal_year_default": "calendar"
+  },
+  "languages": [],
+  "journals": [
+    {
+      "code": "VT",
+      "type": "sales",
+      "name": "Journal des ventes",
+      "sequence": 10
+    },
+    {
+      "code": "AC",
+      "type": "purchase",
+      "name": "Journal des achats",
+      "sequence": 20
+    },
+    {
+      "code": "BQ",
+      "type": "bank",
+      "name": "Journal de banque",
+      "sequence": 30
+    },
+    {
+      "code": "CA",
+      "type": "cash",
+      "name": "Journal de caisse",
+      "sequence": 40
+    },
+    {
+      "code": "OD",
+      "type": "general",
+      "name": "Opérations diverses",
+      "sequence": 50
+    },
+    {
+      "code": "AN",
+      "type": "opening",
+      "name": "Journal des à-nouveaux",
+      "sequence": 60
+    }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "SYSCOHADA révisé — plan comptable général OHADA, Système normal",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": [
+        "GW-SYSCOHADA-BS",
+        "GW-SYSCOHADA-IS"
+      ],
+      "legal_reference": "Acte uniforme relatif au droit comptable et à l'information financière du 26 janvier 2017, art. 17, 7° — recours à un plan de comptes normalisé dont la liste figure dans le Système comptable OHADA ; Système comptable OHADA, Titre VII, chapitre 2, section 3 — liste des comptes, classes 1 à 8. La classe 9, engagements hors bilan et comptabilité analytique de gestion, est d'application facultative et n'est pas reprise. Commun aux dix-sept États parties : un seul fichier, packs/ohada/accounts.csv, recopié dans chaque pack par scripts/ohada-packs.mjs.",
+      "source": "syscohada"
+    }
+  ],
+  "documents": {
+    "numbering": "gapless",
+    "number_format": "{CODE}-{NNNNNNNNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "invoice_if_issued",
+    "references": {
+      "numbering": {
+        "legal_reference": "Despacho MF n.º 1/2023 (Regulamento das Faturas), art. 11.º, n.º 1 — a numeração das faturas é atribuída pela DGCI dans l'ordre croissant, de 1 à 9 999 999 999, « sans interruptions ni répétitions » ; art. 11.º, n.º 2 — le numéro est précédé d'une lettre selon le mode d'émission (K- Kontaktu, I- logiciel, T- imprimerie, C- contingence) et, par l'art. 7.º, n.º 1, d'une série selon la nature de l'opération (A ventes internes, B exportations, C importations, D notes de crédit, E contingence, F guides de transport). {CODE} tient la lettre et la série ; le format ne peut pas exprimer la lettre du mode d'émission, qui n'est connue qu'au moment de l'autorisation DGCI.",
+        "source": "regulamento-faturas"
+      },
+      "tax_point": {
+        "legal_reference": "Código do IVA, art. 11.º — l'impôt devient exigible à la livraison du bien, à l'exécution du service ou à l'importation ; art. 12.º — lorsque l'opération oblige à émettre une facture (art. 29.º, ce qui est la règle générale), l'impôt devient exigible à l'émission de la facture si le délai est respecté, au terme du délai s'il ne l'est pas, ou à l'encaissement s'il précède la facture. invoice_if_issued dit le principe de l'art. 11.º et la facture qui le devance selon l'art. 12.º.",
+        "source": "civa"
+      }
+    },
+    "mentions": [
+      {
+        "code": "exempt",
+        "applies_when": "exempt",
+        "text": "Operação isenta de imposto sobre o valor acrescentado — artigo 13.º ou 14.º do Código do IVA.",
+        "sequence": 10,
+        "legal_reference": "Despacho MF n.º 1/2023, art. 7.º, n.º 3, alínea h) — en cas d'exonération, la facture indique la disposition légale applicable ; Código do IVA, art. 13.º (opérations internes exonérées) et art. 14.º (importations exonérées).",
+        "source": "regulamento-faturas"
+      },
+      {
+        "code": "export",
+        "applies_when": "export",
+        "text": "Exportação isenta de imposto sobre o valor acrescentado, com direito à dedução — artigo 15.º do Código do IVA.",
+        "sequence": 20,
+        "legal_reference": "Código do IVA, art. 15.º — exonération des exportations et opérations assimilées ; art. 20.º, n.º 2, alínea a) — droit à déduction sur ces opérations ; Despacho MF n.º 1/2023, art. 7.º, n.º 1, alínea b) — série B pour les factures d'exportation.",
+        "source": "civa"
+      },
+      {
+        "code": "small_business",
+        "applies_when": "small_business",
+        "text": "IVA Simplificado – Não confere direito à dedução.",
+        "sequence": 30,
+        "legal_reference": "Código do IVA, art. 39.º — les factures des contribuables du régime simplifié (art. 38.º) ne donnent au client aucun droit à déduction et portent expressément cette mention ; Despacho MF n.º 1/2023, art. 8.º, n.º 1, alínea f).",
+        "source": "civa"
+      },
+      {
+        "code": "reverse_charge",
+        "applies_when": "reverse_charge",
+        "text": "IVA – Retido.",
+        "sequence": 40,
+        "legal_reference": "Código do IVA, art. 7.º, n.º 3 à 5 — l'acquéreur du régime normal retient la totalité de l'impôt facturé par un fournisseur du régime simplifié ou du régime normal classé « à risque » par le directeur général de la DGCI ; le fournisseur porte la mention « IVA – Retido » ; Despacho MF n.º 1/2023, art. 7.º, n.º 3, alínea i).",
+        "source": "civa"
+      }
+    ]
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "Código do IVA, art. 29.º, n.º 3 — le contenu des factures et les conditions de leur émission sont fixés par arrêté du ministre des Finances, délégation exercée par le Despacho MF n.º 1/2023 (Regulamento das Faturas), obligatoire pour tout assujetti depuis la mise en application de l'IVA le 1er janvier 2025 (Despacho n.º 130/GMF/2024) : toute facture est autorisée au préalable par la DGCI (numérotation, série, code QR et URL de vérification, art. 7.º et 11.º du règlement) et émise en ligne sur Kontaktu, par un logiciel autorisé ou par une imprimerie agréée — un mécanisme d'autorisation préalable et non un profil structuré au sens d'EN 16931, ce qui laisse `profile` vide. L'identifiant fiscal porté sur la facture est le NIF (art. 7.º, n.º 3, alínea a) du règlement), qui n'a pas de code ISO 6523.",
+    "source": "regulamento-faturas"
+  }
+}
