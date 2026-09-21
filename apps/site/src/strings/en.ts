@@ -44,11 +44,10 @@ export const en: Strings = {
   },
 
   home: {
-    title: 'Ekwo — open source accounting, finance and sustainability',
+    title: 'Ekwo — open source accounting software for every country',
     description:
-      'Open source accounting, finance and sustainability, for every country. The data ' +
-      'belongs to the business: it lives in a database you own, under rules anyone can read, ' +
-      'and an AI keeps the books without ever becoming the only one who understands them.',
+      'Free, open source accounting software you self-host on PostgreSQL and Supabase: ' +
+      '{countries} country packs, VAT returns, e-invoicing and an MCP server for AI agents.',
     hero: {
       eyebrow: 'Open source accounting, finance and sustainability',
       title: 'Accounting, set free.',
@@ -228,10 +227,10 @@ export const en: Strings = {
   },
 
   os: {
-    title: 'Ekwo OS — the open source core',
+    title: 'Ekwo OS — self-hosted open source accounting core',
     description:
-      'Install the accounting core on your own Supabase project: the schema, the country ' +
-      'rules and the first company, in one command.',
+      'Install the open source accounting core on your own Supabase project in one command: ' +
+      'the PostgreSQL schema, the country rules and the first company. AGPL-3.0.',
     eyebrow: 'The open source core',
     countries: 'Countries',
     missing: 'Your country is missing?',
@@ -246,7 +245,7 @@ export const en: Strings = {
   },
 
   docs: {
-    title: 'Docs — Ekwo',
+    title: 'Ekwo docs — install, command line, MCP server, country packs',
     description:
       'How to install Ekwo OS on your own Supabase project, keep books with the command line ' +
       'or an assistant, write a country pack, and why any of it exists — read from the ' +
@@ -354,10 +353,10 @@ export const en: Strings = {
   },
 
   countries: {
-    indexTitle: 'Countries — Ekwo',
+    indexTitle: 'Open source accounting in {countries} countries — Ekwo',
     indexDescription:
-      'Every country Ekwo has a pack for: what it carries, what it does not yet, and when it ' +
-      'was last checked against the law.',
+      'The {countries} country packs of Ekwo: charts of accounts, tax rates, the periodic ' +
+      'return and e-invoicing, each sourced to the law and dated. Free and open source.',
     eyebrow: 'Every country',
     title: 'The countries written so far.',
     lead:
@@ -366,10 +365,8 @@ export const en: Strings = {
   },
 
   country: {
-    title: '{country} — Ekwo',
-    description:
-      'What the {country} pack carries: its charts of accounts, its taxes, its periodic ' +
-      'declaration, and what is not written yet.',
+    title: '{country}: open source accounting software — Ekwo',
+    description: 'Ekwo for {country}, open source accounting software: {facts}. Free, self-hosted on PostgreSQL.',
     eyebrow: 'Country pack',
     code: 'Country code',
     currency: 'Currency',
@@ -411,7 +408,7 @@ export const en: Strings = {
   },
 
   multi: {
-    title: 'Several countries, one set of books — Ekwo',
+    title: 'Multi-country accounting in one installation — Ekwo',
     description:
       'A company in every country you work in, each on its own country pack, all in one ' +
       'installation you own. For groups, accounting firms, and companies opening a new country.',
@@ -687,7 +684,7 @@ export const en: Strings = {
   },
 
   changes: {
-    title: 'Latest changes — Ekwo',
+    title: 'Ekwo changelog — new country packs, releases and fixes',
     description: 'What changed in Ekwo, newest first: new countries, new versions of their packs, releases, features and fixes.',
     eyebrow: 'Latest changes',
     heading: 'What changed, day by day.',
@@ -715,14 +712,14 @@ export const en: Strings = {
     action: 'Set up Ekwo for {country}',
     actionHeading: 'Your books in {country}, on Ekwo.',
     actionLead: 'Run it on your own project in one command, or leave us an address and we set it up with you.',
-    title: 'Set up Ekwo for {country} — Ekwo',
+    title: '{country}: set up open source accounting — Ekwo',
     description:
       'Two ways to keep your books in {country} with Ekwo: one command on your own project, ' +
       'or a word to us and we set it up with you.',
     eyebrow: 'Get started',
     heading: 'Set up Ekwo for {country}',
     lead: 'Two ways in, and both end the same way: the rules of {country} installed in a database you own.',
-    anyTitle: 'Get started with Ekwo',
+    anyTitle: 'Get started with Ekwo, open source accounting',
     anyDescription:
       'Two ways to keep your books with Ekwo: one command on your own project, or a word to us ' +
       'and we set it up with you.',
@@ -775,5 +772,50 @@ export const en: Strings = {
       'installation guide is where setting it up starts.',
     thanksDocs: 'Read the installation guide',
     thanksHome: 'Back to the home page',
+  },
+
+  seo: {
+    softwareName: 'Ekwo OS',
+    organization:
+      'Ekwo publishes Ekwo OS, open source accounting software and bookkeeping data ' +
+      'infrastructure that businesses install on a database they own.',
+    software:
+      'Ekwo OS is free, open source (AGPL-3.0) accounting software. It installs on your own ' +
+      'PostgreSQL database on Supabase, carries the rules of {countries} countries as country ' +
+      'packs — chart of accounts, tax rates, the periodic return, e-invoicing — and lets an ' +
+      'AI assistant keep the books through its MCP server and command line.',
+    category: 'Accounting software',
+    operatingSystem: 'Any system with Node.js 20 or later, on PostgreSQL (Supabase)',
+    features: [
+      'Double-entry bookkeeping on your own PostgreSQL database',
+      'Country packs for {countries} countries: chart of accounts, tax rates, periodic return',
+      'Periodic VAT and sales tax returns prepared from the books',
+      'Electronic invoices in published formats: Peppol BIS 3 (UBL) and Factur-X',
+      'MCP server for AI assistants, and a command line',
+      'Row level security, locked periods and an audit trail in the database',
+      'Several companies and countries in one installation',
+    ],
+    keywords: [
+      'open source accounting software',
+      'self-hosted accounting',
+      'bookkeeping',
+      'Supabase',
+      'PostgreSQL',
+      'MCP',
+      'country packs',
+      'VAT return',
+      'e-invoicing',
+      'AGPL',
+    ],
+    home: 'Home',
+    packName: 'Ekwo country pack for {country}',
+    countrySummary:
+      'Ekwo is free, open source accounting software. Its {country} pack carries {facts}.',
+    chart: 'the chart of accounts ({chart}, {accounts} accounts)',
+    rates: '{count} tax rates in {currency}',
+    declaration: 'the periodic return ({declaration})',
+    declarationBoxes: 'the periodic return ({declaration}, {boxes} boxes)',
+    einvoicing: 'the {profile} e-invoicing profile',
+    checked: 'Last checked on {date} against {sources} texts of law and official sources.',
   },
 };

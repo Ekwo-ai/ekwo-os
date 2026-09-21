@@ -10,6 +10,7 @@
  * this walks the list, makes the directories and writes the files.
  */
 
+import { existsSync } from 'node:fs';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -27,10 +28,14 @@ const pages = renderPages(data);
 // the published site are three addresses. Unset, no page claims one.
 const origin = siteOrigin(process.env['SITE_URL']);
 
+// The summary for models is named in every head only once it is really there:
+// Vite has copied `public/` into the output by now.
+const llmsTxt = existsSync(join(outDir, 'llms.txt'));
+
 for (const page of pages) {
   const path = join(outDir, page.file);
   await mkdir(dirname(path), { recursive: true });
-  await writeFile(path, document(template, page, origin), 'utf8');
+  await writeFile(path, document(template, page, origin, { llmsTxt }), 'utf8');
 }
 
 await writeFile(join(outDir, 'robots.txt'), robots(origin), 'utf8');

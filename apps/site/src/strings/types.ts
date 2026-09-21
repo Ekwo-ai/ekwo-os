@@ -227,7 +227,10 @@ export interface Strings {
   };
 
   country: {
-    /** `{country}` is replaced by the pack's own name for itself. */
+    /**
+     * `{country}` is the country's name in this language (`countryName()`), and
+     * `{facts}` in the description is what the pack carries, put in words.
+     */
     title: string;
     description: string;
     eyebrow: string;
@@ -444,5 +447,34 @@ export interface Strings {
     /** On `/countries/`, the list of every other country. */
     listTitle: string;
     listLead: string;
+  };
+
+  /**
+   * What a page says about itself to a search engine or a model: the structured
+   * data and the sentences built from a pack's facts (`src/seo.ts`). Every
+   * `{…}` is filled from the data, never written per country.
+   */
+  seo: {
+    softwareName: string;
+    /** Who publishes Ekwo, in one sentence. */
+    organization: string;
+    /** What Ekwo OS is, in one sentence a model can quote; `{countries}` is counted. */
+    software: string;
+    category: string;
+    operatingSystem: string;
+    features: string[];
+    keywords: string[];
+    /** The first step of every breadcrumb. */
+    home: string;
+    /** `{country}` is the country's name in this language. */
+    packName: string;
+    /** The sentence a country page opens with; `{facts}` is what its pack carries. */
+    countrySummary: string;
+    chart: string;
+    rates: string;
+    declaration: string;
+    declarationBoxes: string;
+    einvoicing: string;
+    checked: string;
   };
 }

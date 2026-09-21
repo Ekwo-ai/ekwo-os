@@ -25,7 +25,7 @@
 
 import { renderToStaticMarkup } from 'react-dom/server';
 import type { ReactNode } from 'react';
-import type { SiteData } from './data.js';
+import type { DocArticle, SiteData } from './data.js';
 import { LANGUAGES, fill, prefixOf, type Strings } from './strings/index.js';
 import { Landing } from './pages/Landing.js';
 import { Os } from './pages/Os.js';
@@ -37,12 +37,18 @@ import { MultiCountry } from './pages/MultiCountry.js';
 import { SetUp, Thanks } from './pages/SetUp.js';
 import { Changes } from './pages/Changes.js';
 import { Waiting } from './pages/Waiting.js';
+import { countryDescription, countryName, graphOf, jsonLd, type About, type Crumb, type Graph } from './seo.js';
 
 export interface RenderedPage {
   /** Where the file goes, relative to the output directory. */
   file: string;
   /** The path a link points at — what `file` is served as. */
   url: string;
+  /**
+   * The same path without the language's prefix: what the page is in every
+   * language, so the translations of a page find each other (`hreflang`).
+   */
+  route: string;
   /** BCP 47 of the language this page is written in. */
   lang: string;
   title: string;
@@ -51,26 +57,15 @@ export interface RenderedPage {
   body: string;
   /** Kept out of search engines and of the sitemap: a page only a sent form leads to, and the country with no pack. */
   noindex?: boolean;
+  /** Its schema.org graph, once the build says where the site is served from. */
+  graph: Graph;
 }
 
-/** One page, rendered. `url` is derived from `file` so the two cannot disagree. */
-function page(
-  path: string,
-  lang: string,
-  title: string,
-  description: string,
-  element: ReactNode,
-  noindex = false,
-): RenderedPage {
-  return {
-    file: path === '' ? 'index.html' : `${path}index.html`,
-    url: `/${path}`,
-    lang,
-    title,
-    description,
-    body: renderToStaticMarkup(element),
-    ...(noindex ? { noindex } : {}),
-  };
+/** What a page is about, and where it sits, for its structured data. */
+interface Placing {
+  about?: About;
+  crumbs?: Crumb[];
+  noindex?: boolean;
 }
 
 /** Every page of the site, in the order a reader would meet them. */
@@ -83,53 +78,100 @@ function pagesOf(data: SiteData, strings: Strings): RenderedPage[] {
   const at = prefixOf(strings);
   const lang = strings.lang;
   const s = strings;
+  const counted = { countries: data.countries.length };
+
+  /** One page, rendered. `url` is derived from `route` so the two cannot disagree. */
+  const page = (
+    route: string,
+    title: string,
+    description: string,
+    element: ReactNode,
+    { about = { kind: 'page' }, crumbs = [], noindex = false }: Placing = {},
+  ): RenderedPage => {
+    const path = `${at}${route}`;
+    const url = `/${path}`;
+    return {
+      file: path === '' ? 'index.html' : `${path}index.html`,
+      url,
+      route: `/${route}`,
+      lang,
+      title,
+      description,
+      body: renderToStaticMarkup(element),
+      ...(noindex ? { noindex } : {}),
+      graph: graphOf({ url, title, description, lang }, about, crumbs, data, s),
+    };
+  };
+
+  const docsCrumb: Crumb = { name: s.nav.docs, path: `/${at}docs/` };
+  const countriesCrumb: Crumb = { name: s.nav.countries, path: `/${at}countries/` };
+  const articleCrumbs = (article: DocArticle): Crumb[] => {
+    const parent = data.docs.find((doc) => doc.slug === article.parent);
+    return [
+      docsCrumb,
+      ...(parent === undefined ? [] : [{ name: titleOf(parent, s), path: `/${at}${parent.url.slice(1)}` }]),
+      { name: titleOf(article, s), path: `/${at}${article.url.slice(1)}` },
+    ];
+  };
 
   const pages: RenderedPage[] = [
-    page(at, lang, s.home.title, s.home.description, <Landing data={data} strings={s} />),
-    page(`${at}os/`, lang, s.os.title, s.os.description, <Os data={data} strings={s} />),
-    page(`${at}docs/`, lang, s.docs.title, s.docs.description, <DocsIndex data={data} strings={s} />),
+    page('', s.home.title, fill(s.home.description, counted), <Landing data={data} strings={s} />, {
+      about: { kind: 'home' },
+    }),
+    page('os/', s.os.title, s.os.description, <Os data={data} strings={s} />, {
+      about: { kind: 'software' },
+      crumbs: [{ name: s.nav.os, path: `/${at}os/` }],
+    }),
+    page('docs/', s.docs.title, s.docs.description, <DocsIndex data={data} strings={s} />, {
+      crumbs: [docsCrumb],
+    }),
     // Every article, the manifesto among them: it is published where it always
     // was, and the address comes with the article rather than being made here.
     ...data.docs.map((article) =>
       page(
-        `${at}${article.url.slice(1)}`,
-        lang,
+        article.url.slice(1),
         fill(s.docs.articleTitle, { article: titleOf(article, s) }),
         descriptionOf(article, s),
         <DocsArticle article={article} data={data} strings={s} />,
+        { about: { kind: 'article', article }, crumbs: articleCrumbs(article) },
       ),
     ),
     page(
-      `${at}countries/`,
-      lang,
-      s.countries.indexTitle,
-      s.countries.indexDescription,
+      'countries/',
+      fill(s.countries.indexTitle, counted),
+      fill(s.countries.indexDescription, counted),
       <Countries data={data} strings={s} />,
+      { crumbs: [countriesCrumb] },
     ),
-    page(
-      `${at}multi-country/`,
-      lang,
-      s.multi.title,
-      s.multi.description,
-      <MultiCountry data={data} strings={s} />,
-    ),
+    page('multi-country/', s.multi.title, s.multi.description, <MultiCountry data={data} strings={s} />, {
+      crumbs: [{ name: s.multi.title, path: `/${at}multi-country/` }],
+    }),
   ];
 
   for (const country of data.countries) {
+    const name = countryName(country, lang);
+    const countryCrumb: Crumb = { name, path: `/${at}countries/${country.slug}/` };
+    const setUpTitle = fill(s.setup.title, { country: name });
     pages.push(
       page(
-        `${at}countries/${country.slug}/`,
-        lang,
-        fill(s.country.title, { country: country.name }),
-        fill(s.country.description, { country: country.name }),
+        `countries/${country.slug}/`,
+        fill(s.country.title, { country: name }),
+        countryDescription(country, s),
         <Country country={country} data={data} strings={s} />,
+        { about: { kind: 'country', country }, crumbs: [countriesCrumb, countryCrumb] },
       ),
       page(
-        `${at}countries/${country.slug}/set-up/`,
-        lang,
-        fill(s.setup.title, { country: country.name }),
-        fill(s.setup.description, { country: country.name }),
+        `countries/${country.slug}/set-up/`,
+        setUpTitle,
+        fill(s.setup.description, { country: name }),
         <SetUp country={country} data={data} strings={s} />,
+        {
+          crumbs: [
+            countriesCrumb,
+            countryCrumb,
+            { name: setUpTitle, path: `/${at}countries/${country.slug}/set-up/` },
+          ],
+        },
       ),
     );
   }
@@ -139,27 +181,26 @@ function pagesOf(data: SiteData, strings: Strings): RenderedPage[] {
   for (const country of data.waiting) {
     pages.push(
       page(
-        `${at}countries/${country.slug}/`,
-        lang,
+        `countries/${country.slug}/`,
         fill(s.waiting.title, { country: country.name }),
         fill(s.waiting.description, { country: country.name }),
         <Waiting country={country} data={data} strings={s} />,
-        true,
+        { noindex: true },
       ),
     );
   }
 
   pages.push(
-    page(
-      `${at}compare/`,
-      lang,
-      s.compare.title,
-      s.compare.description,
-      <Compare data={data} strings={s} />,
-    ),
-    page(`${at}changes/`, lang, s.changes.title, s.changes.description, <Changes data={data} strings={s} />),
-    page(`${at}signup/`, lang, s.setup.anyTitle, s.setup.anyDescription, <SetUp country={null} data={data} strings={s} />),
-    page(`${at}thanks/`, lang, s.setup.thanksTitle, s.setup.thanksDescription, <Thanks data={data} strings={s} />, true),
+    page('compare/', s.compare.title, s.compare.description, <Compare data={data} strings={s} />, {
+      crumbs: [{ name: s.compare.title, path: `/${at}compare/` }],
+    }),
+    page('changes/', s.changes.title, s.changes.description, <Changes data={data} strings={s} />, {
+      crumbs: [{ name: s.changes.title, path: `/${at}changes/` }],
+    }),
+    page('signup/', s.setup.anyTitle, s.setup.anyDescription, <SetUp country={null} data={data} strings={s} />),
+    page('thanks/', s.setup.thanksTitle, s.setup.thanksDescription, <Thanks data={data} strings={s} />, {
+      noindex: true,
+    }),
   );
 
   return pages;
@@ -304,23 +345,41 @@ function escapeHtml(text: string): string {
     .replace(/"/g, '&quot;');
 }
 
+/** What the build found beside the pages, for the head to point at. */
+export interface DocumentOptions {
+  /** `/llms.txt` exists: the head names it, for a model looking for the site's summary. */
+  llmsTxt?: boolean;
+}
+
 /**
  * One page, put into the template Vite wrote.
  *
  * The template carries the fingerprinted stylesheet, so the head written here
- * is the title, the description, the sober Open Graph pair and the script that
- * stamps the theme.
+ * is the title, the description, the sober Open Graph and Twitter cards and the
+ * script that stamps the theme.
  *
  * `origin` is where the site is served from — `https://example.org`, no
  * trailing slash — and it is the build that says so (`SITE_URL`), never this
  * file: a fork, a preview and the published site are three addresses. With one,
- * every page names its canonical address and its `og:url`. Without one it names
- * neither, because a made-up address is worse than none.
+ * every page names its canonical address, its `og:url`, the same page in every
+ * language (`hreflang`, the source language as the default) and its structured
+ * data, whose every node is an address. Without one it names none of them,
+ * because a made-up address is worse than none.
  */
-export function document(template: string, rendered: RenderedPage, origin?: string): string {
+export function document(
+  template: string,
+  rendered: RenderedPage,
+  origin?: string,
+  options: DocumentOptions = {},
+): string {
   const address = origin === undefined ? [] : [
     `<link rel="canonical" href="${escapeHtml(origin + rendered.url)}" />`,
     `<meta property="og:url" content="${escapeHtml(origin + rendered.url)}" />`,
+    ...LANGUAGES.map(
+      (strings) =>
+        `<link rel="alternate" hreflang="${strings.lang}" href="${escapeHtml(`${origin}/${prefixOf(strings)}${rendered.route.slice(1)}`)}" />`,
+    ),
+    `<link rel="alternate" hreflang="x-default" href="${escapeHtml(origin + rendered.route)}" />`,
   ];
   const head = [
     `<title>${escapeHtml(rendered.title)}</title>`,
@@ -331,6 +390,13 @@ export function document(template: string, rendered: RenderedPage, origin?: stri
     `<meta property="og:site_name" content="Ekwo" />`,
     `<meta property="og:title" content="${escapeHtml(rendered.title)}" />`,
     `<meta property="og:description" content="${escapeHtml(rendered.description)}" />`,
+    `<meta name="twitter:card" content="summary" />`,
+    `<meta name="twitter:title" content="${escapeHtml(rendered.title)}" />`,
+    `<meta name="twitter:description" content="${escapeHtml(rendered.description)}" />`,
+    ...(options.llmsTxt === true
+      ? ['<link rel="alternate" type="text/markdown" href="/llms.txt" title="llms.txt" />']
+      : []),
+    ...(origin === undefined || rendered.noindex === true ? [] : [jsonLd(rendered.graph(origin))]),
     `<script>${THEME_SCRIPT}</script>`,
   ].join('\n    ');
 
@@ -382,9 +448,37 @@ export function sitemap(pages: readonly RenderedPage[], origin: string): string 
   return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`;
 }
 
-/** Everything may be read; the sitemap is named when there is one. */
+/**
+ * The crawlers of the AI assistants, named so that letting them in is a
+ * decision written down rather than a default nobody looked at.
+ *
+ * `User-agent: *` already lets them all read; naming them is what keeps a later
+ * rule for everyone — a `Disallow` for some path — from shutting out the
+ * assistants a reader asks which accounting software to use. Training crawlers
+ * (GPTBot, ClaudeBot, Google-Extended, Applebot-Extended, CCBot) and answering
+ * ones (OAI-SearchBot, ChatGPT-User, Claude-SearchBot, Claude-User,
+ * PerplexityBot, Perplexity-User) alike: what is on this site is published to
+ * be read, and quoted.
+ */
+export const AI_CRAWLERS = [
+  'GPTBot',
+  'OAI-SearchBot',
+  'ChatGPT-User',
+  'ClaudeBot',
+  'Claude-SearchBot',
+  'Claude-User',
+  'PerplexityBot',
+  'Perplexity-User',
+  'Google-Extended',
+  'Applebot-Extended',
+  'CCBot',
+  'meta-externalagent',
+  'MistralAI-User',
+] as const;
+
+/** Everything may be read, by everyone and by name; the sitemap is named when there is one. */
 export function robots(origin: string | undefined): string {
-  const lines = ['User-agent: *', 'Allow: /'];
+  const lines = ['User-agent: *', 'Allow: /', '', ...AI_CRAWLERS.map((agent) => `User-agent: ${agent}`), 'Allow: /'];
   if (origin !== undefined) lines.push('', `Sitemap: ${origin}/sitemap.xml`);
   return `${lines.join('\n')}\n`;
 }

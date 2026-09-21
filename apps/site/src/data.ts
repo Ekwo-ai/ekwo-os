@@ -47,6 +47,8 @@ export interface Repository {
   installCommand: string;
   packageUrl: string;
   license: string;
+  /** The licence as the manifest declares it, an SPDX identifier, for what machines read. */
+  spdx: string;
   file: (path: string) => string;
   dir: (path: string) => string;
   /** Where somebody proposing a country pack opens an issue. */
@@ -581,6 +583,7 @@ function repositoryOf(cli: {
     // and no later one". A reader knows the licence by its name, so the page
     // prints the name; the identifier stays where tools read it.
     license: (cli.license ?? 'AGPL-3.0-only').replace(/-only$/, ''),
+    spdx: cli.license ?? 'AGPL-3.0-only',
     file: (path) => `${url}/blob/${BRANCH}/${path}`,
     dir: (path) => `${url}/tree/${BRANCH}/${path}`,
     newPackIssue: `${url}/issues/new/choose`,

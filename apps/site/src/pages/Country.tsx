@@ -16,12 +16,17 @@
  * The country's name is shown in the languages the pack publishes it in. That
  * is the one translated thing here, because it is the one thing the pack
  * translates.
+ *
+ * Under the name, one sentence says what Ekwo is and what the pack carries —
+ * the pack's facts in words (`countrySummary()`), so that quoted alone, by a
+ * search engine or a model, it still answers the question.
  */
 
 import type { ReactNode } from 'react';
 import type { PackDescription } from '../../../../packages/cli/src/index.js';
 import type { Repository, SiteData } from '../data.js';
 import { fill, type Strings } from '../strings/index.js';
+import { countrySummary } from '../seo.js';
 import { statusRows } from './rows.js';
 import { SetUpButton } from './SetUp.js';
 import { Card, Eyebrow, Field, Footer, Masthead, Mono, NotYet, Out, StatusPill } from './ui.js';
@@ -58,6 +63,8 @@ export function Country({
             ))}
           </p>
         )}
+        {/* One sentence that stands alone: what Ekwo is and what this pack carries, from the pack. */}
+        <p className="mt-5 max-w-reading text-lg text-ink-soft">{countrySummary(country, strings)}</p>
 
         <Card className="mt-8 p-6">
           <dl className="grid grid-cols-2 gap-x-6 gap-y-5 text-sm sm:grid-cols-4">
