@@ -1,0 +1,378 @@
+[
+  {
+    "code": "BJ-S-18",
+    "name": "Ventes de biens 18 %",
+    "description": "Livraisons de biens, échanges et travaux à façon au taux unique, TVA au compte 4431",
+    "rate": 18,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2022-01-01",
+    "legal_reference": "Code général des impôts, art. 241 — « le taux de la taxe sur la valeur ajoutée est fixé à 18 % », taux unique, inchangé des éditions 2025 et 2026 du Code ; la loi n° 2021-15 du 23 décembre 2021 portant Code général des impôts entre en vigueur le 1er janvier 2022 (art. 659), date retenue ici faute d'avoir vérifié l'origine exacte, antérieure, du taux ; art. 235-1-d — fait générateur à la livraison des biens, des échanges et des travaux à façon ; directive n° 02/2009/CM/UEMOA, art. 29 nouveau — taux normal unique compris entre 15 % et 20 %",
+    "source": "cgi",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "CA18"
+        },
+        {
+          "type": "tax",
+          "account": "4431",
+          "box": "TVA18"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "CA18",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "4431",
+          "box": "TVA18",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 10
+  },
+  {
+    "code": "BJ-S-18-SRV",
+    "name": "Prestations de services 18 %, exigibles à l'encaissement",
+    "description": "Prestations de services et travaux immobiliers au taux unique, taxe exigible à l'encaissement",
+    "rate": 18,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2022-01-01",
+    "cash_basis": true,
+    "cash_basis_transition_account": "4432",
+    "legal_reference": "Code général des impôts, art. 241 pour le taux ; art. 235-1-b et c — fait générateur à l'accomplissement du service ou à l'exécution des travaux immobiliers ; art. 236-1-b — « pour les prestations de service, les travaux immobiliers et les marchés publics de l'État, des collectivités locales et des sociétés, établissements et offices de l'État, [l'exigibilité intervient] à l'encaissement du prix, des acomptes ou avances » ; art. 236-2 — un acompte rend la taxe exigible sur son montant, que l'opération soit matériellement réalisée ou non. Facturée, la taxe attend l'encaissement au compte 4432 « T.V.A. facturée sur prestations de services » ; encaissée, elle est exigible et passe au compte 4431, dont l'intitulé « sur ventes » couvre aussi les ventes de services : le plan n'a pas de compte de taxe en attente propre",
+    "source": "cgi",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "CA18"
+        },
+        {
+          "type": "tax",
+          "account": "4431",
+          "box": "TVA18"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "CA18",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "4431",
+          "box": "TVA18",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 20
+  },
+  {
+    "code": "BJ-S-EXP",
+    "name": "Exportation, taux zéro",
+    "description": "Exportations et opérations assimilées, exonérées avec droit à déduction",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2022-01-01",
+    "conditions": [
+      "transport_evidence"
+    ],
+    "legal_reference": "Code général des impôts, art. 230 — sont exonérées de la taxe sur la valeur ajoutée par application d'un taux zéro les exportations et opérations assimilées (navires et aéronefs, avitaillement, entrepôts, transit) ; le taux zéro ouvre droit à déduction, à la différence de l'exonération de l'art. 229 ; art. 481-2-h — la facture porte le taux ou la mention « exonéré »",
+    "source": "cgi",
+    "vat_category": "G",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "EXP"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "EXP",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 30
+  },
+  {
+    "code": "BJ-S-EXO",
+    "name": "Opération exonérée (art. 229)",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2022-01-01",
+    "conditions": [
+      "supply_nature"
+    ],
+    "legal_reference": "Code général des impôts, art. 229, dans la rédaction des lois de finances pour 2023 et pour 2025 — liste des opérations exonérées sans droit à déduction : ventes et prestations sous le seuil d'assujettissement de l'art. 228 (sauf avec l'État et ses démembrements), produits médicaux et alimentaires de première nécessité, enseignement, soins médicaux, presse, livres, timbres, transport public de voyageurs, banque et assurance (soumises à la TAFA), mutations d'immeubles, location d'immeuble nu à usage d'habitation, œuvres d'art vendues par leur auteur, activités agricoles, gaz domestique, dispositifs photosensibles et cellules photovoltaïques, services du marché financier ; art. 481-2-h — la facture porte la mention « exonéré »",
+    "source": "cgi",
+    "vat_category": "E",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "EXO"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "EXO",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 40
+  },
+  {
+    "code": "BJ-S-TAFA-10",
+    "name": "Intérêts d'une avance à un tiers, TAFA 10 %",
+    "description": "Taxe sur les activités financières et assurances, cas général de l'art. 269 — remplace la TVA sur les rémunérations d'opérations financières, y compris hors des banques et établissements financiers",
+    "rate": 10,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2022-01-01",
+    "conditions": [
+      "supply_nature"
+    ],
+    "legal_reference": "Code général des impôts, art. 229-12 — les opérations de banque et d'assurance, soumises à la taxe sur les activités financières et assurances, sont exonérées de la taxe sur la valeur ajoutée ; art. 264-2 — la TAFA est assise sur « les rémunérations perçues sur les opérations financières réalisées en République du Bénin, notamment les commissions et les intérêts perçus sur les crédits, prêts, avances », sans réserver le prêteur aux seules banques et établissements financiers ; art. 267-1 — fait générateur à l'inscription des intérêts au crédit du bénéficiaire ; art. 268-1 — base sur le montant brut hors taxe des intérêts, commissions et autres rémunérations, ou, entre entreprises, par le prêteur ; art. 269 — taux de 10 % « dans tous les autres cas », distinct des 20 % de l'assurance incendie et des 5 % de l'assurance transport, qu'un négoce ordinaire ne rencontre pas ; art. 270-1 — déclarée et recouvrée selon les règles de la TVA, mais sur un imprimé qui lui est propre : elle ne figure sur aucune case de BJ-TVA, seule sa base exonérée y reste, au même titre que les autres exonérations de l'art. 229",
+    "source": "cgi",
+    "kind": "other",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "EXO"
+        },
+        {
+          "type": "tax",
+          "account": "446"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "EXO",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "446",
+          "factor": -100
+        }
+      ]
+    },
+    "sequence": 50
+  },
+  {
+    "code": "BJ-P-18",
+    "name": "Achats de biens 18 %",
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2022-01-01",
+    "legal_reference": "Code général des impôts, art. 243 — la taxe ayant grevé en amont les éléments du prix d'une opération imposable est déductible ; art. 244-1-d — pour être déductible, la taxe doit figurer sur une facture normalisée ; art. 245-1 — le droit à déduction naît lorsque la taxe devient exigible chez le fournisseur ; art. 241 pour le taux",
+    "source": "cgi",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "4452",
+          "box": "DEDBS"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "4452",
+          "box": "DEDBS",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 110
+  },
+  {
+    "code": "BJ-P-18-SRV",
+    "name": "Services extérieurs 18 %",
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2022-01-01",
+    "legal_reference": "Code général des impôts, art. 243 à 245 — déduction de la taxe sur les services acquis pour les besoins de l'exploitation, dès qu'elle est exigible chez le prestataire ; art. 241 pour le taux",
+    "source": "cgi",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "4454",
+          "box": "DEDBS"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "4454",
+          "box": "DEDBS",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 120
+  },
+  {
+    "code": "BJ-P-18-IMMO",
+    "name": "Immobilisations 18 %",
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2022-01-01",
+    "legal_reference": "Code général des impôts, art. 243 à 245 — déduction de la taxe ayant grevé une immobilisation ; art. 250 — régularisation en cas de cession ou de modification d'activité",
+    "source": "cgi",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "4451",
+          "box": "DEDIMMO"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "4451",
+          "box": "DEDIMMO",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 130
+  },
+  {
+    "code": "BJ-P-18-BTP90",
+    "name": "Gazole, huiles et graisses des engins du BTP et de l'industrie 18 %, déductible à 90 %",
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "conditions": [
+      "supply_nature"
+    ],
+    "legal_reference": "Code général des impôts, art. 247-2, dans la rédaction de la loi de finances pour 2026 — le gazole, les huiles et les graisses utilisés par les entreprises industrielles et du bâtiment et des travaux publics pour le fonctionnement de leurs engins ne sont pas exclus du droit à déduction, mais « en ce qui concerne les entreprises des BTP, cette déduction est limitée à 90 % de la TVA supportée figurant sur la facture d'achat » ; le reste est une part du coût",
+    "source": "cgi",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "factor": 90,
+          "account": "4452",
+          "box": "DEDBS",
+          "box_factor": 90
+        },
+        {
+          "type": "tax_on_base",
+          "factor": 10
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "factor": 90,
+          "account": "4452",
+          "box": "DEDBS",
+          "box_factor": -90
+        },
+        {
+          "type": "tax_on_base",
+          "factor": 10
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 140
+  },
+  {
+    "code": "BJ-P-18-ND",
+    "name": "Achat 18 % non déductible (art. 247)",
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2022-01-01",
+    "recoverable": false,
+    "legal_reference": "Code général des impôts, art. 247 — exclusions du droit à déduction : véhicules de tourisme ou à usage mixte et leurs pièces (hors loueurs professionnels, crédits-bailleurs, concessionnaires en stock et auto-écoles), leur carburant, le logement et l'hébergement des dirigeants et du personnel non affecté à la sécurité, la réception, la restauration, les spectacles, le mobilier et le matériel de logement, les dons de plus de 10 000 F hors taxe, et les services se rapportant à ces biens exclus. La taxe est une part du coût de ce qui a été acheté",
+    "source": "cgi",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax_on_base",
+          "factor": 100
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax_on_base",
+          "factor": 100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 150
+  },
+  {
+    "code": "BJ-P-IMP-18",
+    "name": "Importation 18 % (TVA acquittée en douane)",
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2022-01-01",
+    "legal_reference": "Code général des impôts, art. 235-1-a — le fait générateur d'une importation est la mise à la consommation au sens douanier ; art. 236-1-a — la taxe est exigible à l'enregistrement de la déclaration de mise à la consommation ; art. 244-1-a — la déduction se justifie par cette déclaration assortie d'un justificatif de paiement ; art. 245-1 — le droit à déduction naît à la mise à la consommation",
+    "source": "cgi",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "4452",
+          "box": "DEDBS"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "4452",
+          "box": "DEDBS",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 160
+  }
+]

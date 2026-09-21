@@ -2549,3 +2549,29 @@ falls between the two; the test now compares by code point, which is what the
 engine does. The socle is unchanged. *Fix*: order the list a person reads
 alphabetically in their language — `localeCompare` with the language of the
 installation, in `installedPacks()` — and the test with it.
+
+## Benin
+
+The third OHADA member, written on 21 September 2026 alongside Senegal and
+Côte d'Ivoire above. `packs/bj/` adds one thing to the family's list, and asks
+for nothing new beside it — the rest of what it could not say is the gaps
+already written under *From the OHADA packs* and Mexico, one country wider
+each:
+
+**A withholding that shares its base with the VAT on the very same line.**
+The Beninese AIB (acompte sur impôt assis sur les bénéfices, CGI art. 130 to
+134) is assessed on the identical net price as the VAT of the same purchase —
+"le prix toutes taxes comprises, à l'exception de la taxe sur la valeur
+ajoutée" (art. 132-1-b) — so a document line that already carries `BJ-P-18`
+has nowhere to carry the AIB too: one line, one `tax` field. This is not a
+new shape of the gap Mexico named *VAT and income tax withheld on one line* —
+it is the same shape, a country earlier than the one that follows it. The
+pack carries no AIB at all, rather than a code nothing can invoice.
+
+Two things Benin adds no code for either are gaps this file already carries
+a name for: the AIB withheld by the State, a local authority or a corporate
+taxpayer *when they pay* a supplier (art. 130-3) is *A withholding on a
+payment*, next to Senegal's BRS; and the MECeF/e-MECeF certified billing
+machine that alone makes a Beninese invoice valid (art. 481 to 483) is
+*Clearance is not an obligation to exchange*, next to Mexico's CFDI and Côte
+d'Ivoire's FNE.

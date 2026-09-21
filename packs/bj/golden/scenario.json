@@ -1,0 +1,341 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "Un trimestre d'un négoce béninois au régime réel, déclarant chaque mois",
+  "chart": "default",
+  "fiscal_year": {
+    "name": "Exercice 2026",
+    "start": "2026-01-01",
+    "end": "2026-12-31"
+  },
+  "periods": [
+    {
+      "code": "2026-01",
+      "from": "2026-01-01",
+      "to": "2026-01-31"
+    },
+    {
+      "code": "2026-02",
+      "from": "2026-02-01",
+      "to": "2026-02-28"
+    },
+    {
+      "code": "2026-03",
+      "from": "2026-03-01",
+      "to": "2026-03-31"
+    }
+  ],
+  "statements": [
+    "BJ-SYSCOHADA-BS",
+    "BJ-SYSCOHADA-IS"
+  ],
+  "contacts": [
+    {
+      "ref": "client-bj",
+      "name": "Quincaillerie du Dantokpa SARL",
+      "type": "customer",
+      "country": "BJ"
+    },
+    {
+      "ref": "client-service",
+      "name": "Coton Industries du Bénin SA",
+      "type": "customer",
+      "country": "BJ"
+    },
+    {
+      "ref": "client-fr",
+      "name": "Négoce Atlantique SAS",
+      "type": "customer",
+      "country": "FR"
+    },
+    {
+      "ref": "client-exo",
+      "name": "Collège Sainte-Rita",
+      "type": "customer",
+      "country": "BJ"
+    },
+    {
+      "ref": "client-avance",
+      "name": "Négoce Sahel SARL",
+      "type": "customer",
+      "country": "BJ"
+    },
+    {
+      "ref": "fourn-bj",
+      "name": "Cimenterie du Littoral SA",
+      "type": "supplier",
+      "country": "BJ"
+    },
+    {
+      "ref": "fourn-service",
+      "name": "Cabinet Comptable de Cotonou SARL",
+      "type": "supplier",
+      "country": "BJ"
+    },
+    {
+      "ref": "fourn-immo",
+      "name": "Bureautique du Port SARL",
+      "type": "supplier",
+      "country": "BJ"
+    },
+    {
+      "ref": "fourn-auto",
+      "name": "Automobiles de la Marina SA",
+      "type": "supplier",
+      "country": "BJ"
+    },
+    {
+      "ref": "fourn-btp",
+      "name": "Énergies du Bénin SARL",
+      "type": "supplier",
+      "country": "BJ"
+    },
+    {
+      "ref": "fourn-import",
+      "name": "Guangzhou Machinery Trading Co.",
+      "type": "supplier",
+      "country": "CN"
+    }
+  ],
+  "documents": [
+    {
+      "ref": "V1",
+      "type": "sale_invoice",
+      "contact": "client-bj",
+      "date": "2026-01-09",
+      "why": "Une vente de marchandises au taux normal : la case CA18, la taxe au compte 4431 et dans la case TVA18, exigible dès la livraison (art. 235-1-d et 236-1-c).",
+      "lines": [
+        {
+          "name": "Sacs de ciment",
+          "quantity": 200,
+          "unit_price": 3500,
+          "tax": "BJ-S-18",
+          "account": "7011"
+        }
+      ]
+    },
+    {
+      "ref": "V2",
+      "type": "sale_invoice",
+      "contact": "client-service",
+      "date": "2026-01-16",
+      "why": "Une prestation de services facturée en janvier : la taxe attend l'encaissement au compte 4432 (art. 236-1-b) et devient exigible avec le paiement E1, en février.",
+      "lines": [
+        {
+          "name": "Étude de faisabilité d'un projet industriel",
+          "quantity": 1,
+          "unit_price": 900000,
+          "tax": "BJ-S-18-SRV",
+          "account": "7061"
+        }
+      ]
+    },
+    {
+      "ref": "V3",
+      "type": "sale_invoice",
+      "contact": "client-service",
+      "date": "2026-03-02",
+      "why": "Une deuxième prestation de services, payée pour moitié par E2 : seule la moitié de sa taxe devient exigible, sur le montant effectivement encaissé (art. 236-2).",
+      "lines": [
+        {
+          "name": "Maintenance industrielle trimestrielle",
+          "quantity": 1,
+          "unit_price": 500000,
+          "tax": "BJ-S-18-SRV",
+          "account": "7061"
+        }
+      ]
+    },
+    {
+      "ref": "V4",
+      "type": "sale_invoice",
+      "contact": "client-fr",
+      "date": "2026-02-03",
+      "why": "Une exportation exonérée au taux zéro, avec droit à déduction : la case EXP, aucune taxe, un compte de ventes hors Région.",
+      "lines": [
+        {
+          "name": "Anacardes conditionnées pour exportation",
+          "quantity": 2000,
+          "unit_price": 900,
+          "tax": "BJ-S-EXP",
+          "account": "7012"
+        }
+      ]
+    },
+    {
+      "ref": "V5",
+      "type": "sale_invoice",
+      "contact": "client-exo",
+      "date": "2026-02-10",
+      "why": "Une vente de livres, exonérée sans droit à déduction (art. 229-2-6) : la case EXO, aucune taxe.",
+      "lines": [
+        {
+          "name": "Manuels scolaires",
+          "quantity": 400,
+          "unit_price": 3000,
+          "tax": "BJ-S-EXO",
+          "account": "7011"
+        }
+      ]
+    },
+    {
+      "ref": "V6",
+      "type": "sale_invoice",
+      "contact": "client-avance",
+      "date": "2026-03-05",
+      "why": "Des intérêts sur une avance de trésorerie consentie à un tiers : hors du champ de la TVA (art. 229-12), soumis à la TAFA à 10 % (art. 269), le second taux positif du pack.",
+      "lines": [
+        {
+          "name": "Intérêts du trimestre sur avance de trésorerie",
+          "quantity": 1,
+          "unit_price": 150000,
+          "tax": "BJ-S-TAFA-10",
+          "account": "7712"
+        }
+      ]
+    },
+    {
+      "ref": "AV1",
+      "type": "sale_credit_note",
+      "contact": "client-bj",
+      "date": "2026-02-12",
+      "why": "Un avoir sur le sac de ciment livré non conforme de V1 : la case CA18 et la taxe diminuent dans le mois de l'avoir.",
+      "lines": [
+        {
+          "name": "Retour de sacs de ciment non conformes",
+          "quantity": 20,
+          "unit_price": 3500,
+          "tax": "BJ-S-18",
+          "account": "7011"
+        }
+      ]
+    },
+    {
+      "ref": "A1",
+      "type": "purchase_invoice",
+      "contact": "fourn-bj",
+      "date": "2026-01-08",
+      "why": "Un achat de marchandises au taux normal, déductible au compte 4452 dans la case DEDBS.",
+      "lines": [
+        {
+          "name": "Ciment en sacs",
+          "quantity": 300,
+          "unit_price": 3200,
+          "tax": "BJ-P-18",
+          "account": "6011"
+        }
+      ]
+    },
+    {
+      "ref": "A2",
+      "type": "purchase_invoice",
+      "contact": "fourn-service",
+      "date": "2026-01-22",
+      "why": "Un service extérieur, déductible au compte 4454 dans la case DEDBS, dès que la taxe est exigible chez le prestataire (art. 245-1).",
+      "lines": [
+        {
+          "name": "Prestation de conseil comptable",
+          "quantity": 1,
+          "unit_price": 400000,
+          "tax": "BJ-P-18-SRV",
+          "account": "6248"
+        }
+      ]
+    },
+    {
+      "ref": "A3",
+      "type": "purchase_invoice",
+      "contact": "fourn-immo",
+      "date": "2026-02-18",
+      "why": "Une immobilisation, déductible au compte 4451 dans la case DEDIMMO.",
+      "lines": [
+        {
+          "name": "Ordinateurs de bureau",
+          "quantity": 2,
+          "unit_price": 450000,
+          "tax": "BJ-P-18-IMMO",
+          "account": "2442"
+        }
+      ]
+    },
+    {
+      "ref": "A4",
+      "type": "purchase_invoice",
+      "contact": "fourn-auto",
+      "date": "2026-02-24",
+      "why": "Une voiture de tourisme, exclue du droit à déduction (art. 247-1) : la taxe entière est une part du coût, aucune case de déduction.",
+      "lines": [
+        {
+          "name": "Véhicule de tourisme de direction",
+          "quantity": 1,
+          "unit_price": 8000000,
+          "tax": "BJ-P-18-ND",
+          "account": "2451"
+        }
+      ]
+    },
+    {
+      "ref": "A5",
+      "type": "purchase_invoice",
+      "contact": "fourn-btp",
+      "date": "2026-03-11",
+      "why": "Du gazole pour les engins d'un chantier BTP : 90 % de la taxe est déductible (art. 247-2, loi de finances pour 2026), les 10 % restants entrent dans le coût.",
+      "lines": [
+        {
+          "name": "Gazole pour engins de chantier",
+          "quantity": 1,
+          "unit_price": 2000000,
+          "tax": "BJ-P-18-BTP90",
+          "account": "6053"
+        }
+      ]
+    },
+    {
+      "ref": "A6",
+      "type": "purchase_invoice",
+      "contact": "fourn-import",
+      "date": "2026-01-28",
+      "why": "Une importation de pièces détachées, taxe acquittée en douane à la mise à la consommation (art. 235-1-a et 236-1-a) et déduite au compte 4452 dans la case DEDBS.",
+      "lines": [
+        {
+          "name": "Pièces détachées importées",
+          "quantity": 1,
+          "unit_price": 5000000,
+          "tax": "BJ-P-IMP-18",
+          "account": "6012"
+        }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "E1",
+      "direction": "inbound",
+      "date": "2026-02-09",
+      "amount": 1062000,
+      "contact": "client-service",
+      "journal": "BQ",
+      "match": "V2",
+      "why": "L'encaissement intégral de l'étude de janvier : sa taxe devient exigible en février, au compte 4431."
+    },
+    {
+      "ref": "E2",
+      "direction": "inbound",
+      "date": "2026-03-20",
+      "amount": 295000,
+      "contact": "client-service",
+      "journal": "BQ",
+      "match": "V3",
+      "why": "Un encaissement de la moitié de la maintenance de mars : la moitié de sa taxe devient exigible en mars, sur le montant effectivement perçu (art. 236-2)."
+    },
+    {
+      "ref": "E3",
+      "direction": "inbound",
+      "date": "2026-03-25",
+      "amount": 300000,
+      "contact": "client-bj",
+      "journal": "BQ",
+      "match": null,
+      "why": "Un acompte non affecté à une facture précise : il reste une ligne ouverte au compte client."
+    }
+  ]
+}
