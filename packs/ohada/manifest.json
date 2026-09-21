@@ -1,0 +1,113 @@
+{
+  "note": "What every pack keeping its books on the SYSCOHADA chart shares, and what scripts/ohada-packs.mjs writes into each of them. Edit it here, never in a member pack: the CI refuses a member whose copy has drifted. The statement codes below take the member's country in front of them in each copy (SN-SYSCOHADA-BS), because a statement code is unique across countries.",
+  "members": [
+    "ci",
+    "sn"
+  ],
+  "files": [
+    "accounts.csv",
+    "statements.json"
+  ],
+  "sources": [
+    {
+      "key": "audcif",
+      "title": "Acte uniforme relatif au droit comptable et à l'information financière (AUDCIF), adopté à Brazzaville le 26 janvier 2017",
+      "publisher": "OHADA — Bibliothèque numérique de l'OHADA",
+      "url": "https://biblio.ohada.org/doc_num.php?explnum_id=2061",
+      "consulted_on": "2026-09-21",
+      "kind": "law"
+    },
+    {
+      "key": "syscohada",
+      "title": "Journal officiel de l'OHADA, numéro spécial du 15 février 2017 — Acte uniforme relatif au droit comptable et à l'information financière et Système comptable OHADA (SYSCOHADA révisé), version complète signée",
+      "publisher": "OHADA — Bibliothèque numérique de l'OHADA",
+      "url": "https://biblio.ohada.org/doc_num.php?explnum_id=2063",
+      "consulted_on": "2026-09-21",
+      "kind": "law"
+    }
+  ],
+  "manifest": {
+    "defaults": {
+      "rounding_method": "half_up",
+      "closing_style": "result_accounts",
+      "roles": {
+        "receivable": "4111",
+        "payable": "4011",
+        "suspense": "4711",
+        "rounding": "6588",
+        "retained_earnings": "121",
+        "retained_earnings_loss": "1291",
+        "current_year_result_profit": "131",
+        "current_year_result_loss": "139",
+        "sales": "7011",
+        "purchase": "6011",
+        "bank": "5211",
+        "cash": "5711",
+        "fx_gain": "756",
+        "fx_loss": "656",
+        "tax_payable": "4441",
+        "tax_receivable": "4449"
+      },
+      "journal_roles": {
+        "sales": "VT",
+        "purchase": "AC",
+        "miscellaneous": "OD",
+        "opening": "AN"
+      },
+      "fiscal_year_default": "calendar"
+    },
+    "journals": [
+      {
+        "code": "VT",
+        "type": "sales",
+        "name": "Journal des ventes",
+        "sequence": 10
+      },
+      {
+        "code": "AC",
+        "type": "purchase",
+        "name": "Journal des achats",
+        "sequence": 20
+      },
+      {
+        "code": "BQ",
+        "type": "bank",
+        "name": "Journal de banque",
+        "sequence": 30
+      },
+      {
+        "code": "CA",
+        "type": "cash",
+        "name": "Journal de caisse",
+        "sequence": 40
+      },
+      {
+        "code": "OD",
+        "type": "general",
+        "name": "Opérations diverses",
+        "sequence": 50
+      },
+      {
+        "code": "AN",
+        "type": "opening",
+        "name": "Journal des à-nouveaux",
+        "sequence": 60
+      }
+    ],
+    "charts": [
+      {
+        "code": "default",
+        "name": "SYSCOHADA révisé — plan comptable général OHADA, Système normal",
+        "accounts": "accounts.csv",
+        "default": true,
+        "audience": "companies",
+        "statements": [
+          "SYSCOHADA-BS",
+          "SYSCOHADA-IS"
+        ],
+        "legal_reference": "Acte uniforme relatif au droit comptable et à l'information financière du 26 janvier 2017, art. 17, 7° — recours à un plan de comptes normalisé dont la liste figure dans le Système comptable OHADA ; Système comptable OHADA, Titre VII, chapitre 2, section 3 — liste des comptes, classes 1 à 8. La classe 9, engagements hors bilan et comptabilité analytique de gestion, est d'application facultative et n'est pas reprise. Commun aux dix-sept États parties : un seul fichier, packs/ohada/accounts.csv, recopié dans chaque pack par scripts/ohada-packs.mjs.",
+        "source": "syscohada"
+      }
+    ]
+  }
+}

@@ -151,6 +151,11 @@ jobs:
           # FEC through its brick: both are built before it, in that order.
           npm run build --workspace @ekwo-ai/fec --workspace @ekwo-ai/core --workspace ekwo-os
           node packages/cli/dist/bin.js pack check --all
+      # Seventeen countries keep their books on one chart, written once in
+      # packs/ohada/ and copied into each of them. A member whose copy differs
+      # from the source has drifted, and the source is where it is corrected.
+      - name: The OHADA packs carry the chart of packs/ohada/
+        run: node scripts/ohada-packs.mjs
       - name: No private data in the repository
         run: node scripts/check-no-private-data.mjs
       # A resolved conflict leaves no marker behind. Two `|||||||` lines sat in
