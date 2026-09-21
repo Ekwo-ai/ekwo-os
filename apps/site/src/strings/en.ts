@@ -638,6 +638,54 @@ export const en: Strings = {
     planned: 'planned',
   },
 
+  waiting: {
+    title: 'Ekwo in {country} — not yet',
+    description:
+      'Ekwo has no country pack for {country} yet. Ask for one, write it, or help ' +
+      'businesses there use it.',
+    eyebrow: 'Countries',
+    heading: 'Ekwo in {country} — not yet.',
+    lead:
+      'Ekwo is open source accounting software. What a country requires — its chart of ' +
+      'accounts, its taxes, its declarations — is a pack of files in its repository, and ' +
+      'there is no pack for {country} yet. No date is promised.',
+    statusLabel: 'Where it stands',
+    inProgress: 'in progress',
+    notStarted: 'not started',
+    inProgressBody:
+      '{country} is listed as a member in {file}, which already carries what its members ' +
+      'share. The pack of {country} itself, with its taxes and declarations, is not written yet.',
+    notStartedBody: 'Nothing for {country} is in the repository yet: nobody has started its pack.',
+    notifyTitle: 'I need it',
+    notifyBody:
+      'Tell us you want Ekwo in {country}. Every request is counted for its country, and ' +
+      'we write back when that changes.',
+    contributeTitle: 'Contribute the pack',
+    contributeBody: 'A country is a folder of files an accountant can read, not code. In short:',
+    steps: [
+      { text: 'Copy the pack that resembles {country} most into', code: 'packs/{cc}/' },
+      { text: 'Fill it in from the law, citing each source, then build it:', code: 'ekwo pack build {cc}' },
+      { text: 'Open a pull request with the pack and what the build wrote.', code: '' },
+    ],
+    guide: 'Adding a country in a day',
+    contributing: 'How a pull request gets in',
+    issue: 'Or propose it in an issue first',
+    community:
+      'A new pack is published as community: contributed, and not yet read by an ' +
+      'accountant. A professional can review it later, under their own name.',
+    partnerTitle: 'Become a partner',
+    partnerBody:
+      'An accounting firm, an integrator or a developer who would set Ekwo up for ' +
+      'businesses in {country}, or keep its pack current: write to us.',
+    partnerAction: 'Write to contact@ekwo.ai',
+    partnerSubject: 'Partner for Ekwo in {country}',
+    back: 'The countries Ekwo covers',
+    mapTitle: '{country} — not yet, see where it stands',
+    listTitle: 'Every other country',
+    listLead:
+      'No pack yet. Each has a page that says where it stands, and how to ask for it or write it.',
+  },
+
   changes: {
     title: 'Latest changes — Ekwo',
     description: 'What changed in Ekwo, newest first: new countries, new versions of their packs, releases, features and fixes.',

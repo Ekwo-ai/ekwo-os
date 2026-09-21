@@ -410,4 +410,39 @@ export interface Strings {
   status: {
     planned: string;
   };
+
+  /** The page of a country with no pack yet: where it stands, and three ways forward. */
+  waiting: {
+    title: string;
+    description: string;
+    eyebrow: string;
+    heading: string;
+    lead: string;
+    statusLabel: string;
+    inProgress: string;
+    notStarted: string;
+    /** `{file}` is the manifest that lists the country as a member. */
+    inProgressBody: string;
+    notStartedBody: string;
+    notifyTitle: string;
+    notifyBody: string;
+    contributeTitle: string;
+    contributeBody: string;
+    /** `{cc}` is the country's code in lower case. */
+    steps: { text: string; code: string }[];
+    guide: string;
+    contributing: string;
+    issue: string;
+    community: string;
+    partnerTitle: string;
+    partnerBody: string;
+    partnerAction: string;
+    partnerSubject: string;
+    back: string;
+    /** The tooltip of a grey shape of the map. */
+    mapTitle: string;
+    /** On `/countries/`, the list of every other country. */
+    listTitle: string;
+    listLead: string;
+  };
 }

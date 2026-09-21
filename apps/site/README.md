@@ -218,6 +218,31 @@ Netlify dashboard: **form detection** has to be on for the site (Forms), and
 the **notification** that sends each submission to an address is configured
 there too. Until detection is on, nothing sent is recorded.
 
+## A country with no pack
+
+Every country of the UN list that no pack claims has a page at
+`/countries/<cc>/` too (`src/pages/Waiting.tsx`): "Ekwo in <country> — not
+yet.", its name from `Intl.DisplayNames`. Each grey shape of the map leads
+there, and so does the folded list under the menu of `/countries/`. One light
+page per country, so the world is a fixed number of pages; a pack landing in
+`packs/` takes its code's place with nothing here edited.
+
+- **Where it stands is read.** `in progress` where a manifest shared by several
+  packs — any `packs/<dir>/manifest.json` with `members` (`familiesOf()` in
+  `src/data.ts`) — lists the country and it has no folder yet; `not started`
+  otherwise. No date, in either case.
+- **I need it** is the `signup` form of every other page, the country's code in
+  its hidden `country` field and the page's address in `page`: no new form and
+  no new field, so the list the host already detected is unchanged, and a
+  request for a country nobody has written is counted like any other.
+- **Contribute the pack** is the three steps of `CONTRIBUTING.md`, linked to
+  *Adding a country in a day* and to what the `community` status means.
+- **Become a partner** writes to contact@ekwo.ai until partners have a
+  directory of their own.
+
+The pages carry `noindex` and are left out of the sitemap: two hundred pages
+that differ by a name would read to a search engine as exactly that.
+
 ## Latest changes: the timeline
 
 `/changes/` lists everything that changed, newest first and grouped by day;

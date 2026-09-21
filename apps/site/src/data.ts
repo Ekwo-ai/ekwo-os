@@ -68,6 +68,46 @@ export interface MapCountry {
   path: string;
   /** The pack, where one exists. Null is most of the world, and is the point. */
   pack: { slug: string; status: string } | null;
+  /** Where a country with no pack leads: its page saying where it stands, where it has one. */
+  waiting: string | null;
+}
+
+/**
+ * A manifest shared by several packs, with the countries it expects.
+ *
+ * Found rather than named: any `packs/<dir>/manifest.json` carrying a
+ * `members` list. A member that has no folder of its own yet is a country
+ * whose pack is under way — the shared part is written, its own is not.
+ */
+export interface PackFamily {
+  /** The manifest, from the root of the repository. */
+  file: string;
+  /** ISO 3166-1 codes, upper case. */
+  members: string[];
+}
+
+/**
+ * A country with no pack, and what the repository says about it.
+ *
+ * Every code of the UN list that no pack claims has one, so each grey shape on
+ * the map and each name a reader might look for leads to a page that says
+ * where it stands, instead of a guide written for somebody else.
+ */
+export interface WaitingCountry {
+  /** ISO 3166-1, upper case. */
+  code: string;
+  /** The lower-case code, which is the segment of its address. */
+  slug: string;
+  name: string;
+  /** M49 region code, as `Region.code`. */
+  region: string;
+  /** The manifest that expects it, or null: `in progress` or `not started`. */
+  family: PackFamily | null;
+}
+
+/** The address of a country's page, pack or no pack. */
+export function countryUrl(slug: string): string {
+  return `/countries/${slug}/`;
 }
 
 export interface WorldMap {
@@ -133,6 +173,8 @@ export interface SiteData {
   languages: string[];
   /** What changed, newest first: the changelog and the packs (`changes.ts`). */
   changes: Change[];
+  /** Every country of the UN list with no pack, by name (`waitingOf`). */
+  waiting: WaitingCountry[];
 }
 
 export async function readSiteData(): Promise<SiteData> {
@@ -160,6 +202,7 @@ export async function readSiteData(): Promise<SiteData> {
     repository,
     counters: await countersOf(root, countries, languages),
     world: worldOf(countries, SOURCE.lang),
+    waiting: waitingOf(countries, await familiesOf(dir), SOURCE.lang),
     demo: await buildDemo(packs, dir),
     icons: await readIcons(root),
     languages,
@@ -294,6 +337,9 @@ export function worldOf(countries: PackDescription[], lang: string): WorldMap {
       name: pack?.name ?? regions.of(code) ?? shape.name,
       path: shape.d,
       pack: pack === undefined ? null : { slug: pack.slug, status: pack.certification.status },
+      // The same rule as `waitingOf`: a code of the UN list with no pack has a
+      // page. A shape the list does not name keeps the guide.
+      waiting: pack === undefined && code in m49.regions ? countryUrl(code.toLowerCase()) : null,
     } satisfies MapCountry;
   });
   shapes.sort((a, b) => a.name.localeCompare(b.name));
@@ -304,6 +350,59 @@ export function worldOf(countries: PackDescription[], lang: string): WorldMap {
     other: world.other,
     covered: shapes.filter((shape) => shape.pack !== null).length,
   };
+}
+
+/**
+ * The manifests several packs share, found by what they carry.
+ *
+ * Read from the directories of `packs/` that are not a country — a family
+ * such as a chart several States keep in common — and kept only where the
+ * manifest lists `members`. Nothing is named here: a family added to `packs/`
+ * turns its members from `not started` to `in progress` with no edit.
+ */
+export async function familiesOf(dir: string): Promise<PackFamily[]> {
+  const families: PackFamily[] = [];
+  for (const entry of await readdir(dir, { withFileTypes: true })) {
+    if (!entry.isDirectory()) continue;
+    const file = join(dir, entry.name, 'manifest.json');
+    if (!existsSync(file)) continue;
+    const manifest = JSON.parse(await readFile(file, 'utf8')) as { members?: unknown };
+    if (!Array.isArray(manifest.members)) continue;
+    families.push({
+      file: posix.join('packs', entry.name, 'manifest.json'),
+      members: manifest.members
+        .filter((member): member is string => typeof member === 'string')
+        .map((member) => member.toUpperCase()),
+    });
+  }
+  return families.sort((a, b) => a.file.localeCompare(b.file));
+}
+
+/**
+ * Every country of the UN list that no pack claims, named by the platform.
+ *
+ * The list is `data/regions.json`, the same one the regions come from, so the
+ * set is the world minus the packs, and O(n): one light page each. Exported
+ * because the test of scale builds it again for made-up packs.
+ */
+export function waitingOf(
+  countries: readonly PackDescription[],
+  families: readonly PackFamily[],
+  lang: string,
+): WaitingCountry[] {
+  const names = new Intl.DisplayNames([lang], { type: 'region' });
+  const table = m49.regions as Record<string, string>;
+  const taken = new Set(countries.flatMap((country) => [country.country, country.slug.toUpperCase()]));
+  return Object.keys(table)
+    .filter((code) => !taken.has(code))
+    .map((code) => ({
+      code,
+      slug: code.toLowerCase(),
+      name: names.of(code) ?? code,
+      region: table[code] ?? '',
+      family: families.find((family) => family.members.includes(code)) ?? null,
+    }))
+    .sort((a, b) => a.name.localeCompare(b.name, lang));
 }
 
 /**

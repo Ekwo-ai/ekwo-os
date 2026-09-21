@@ -1,7 +1,7 @@
 import { gzipSync } from 'node:zlib';
 import { describe, expect, it } from 'vitest';
-import type { PackDescription } from '../../../packages/cli/src/index.js';
-import { readSiteData, regionsOf, worldOf, type SiteData } from '../src/data.js';
+import { packsDir, repoRootDir, type PackDescription } from '../../../packages/cli/src/index.js';
+import { familiesOf, readSiteData, regionsOf, waitingOf, worldOf, type SiteData } from '../src/data.js';
 import { renderPages, type RenderedPage } from '../src/render.js';
 import { LANGUAGES, SOURCE } from '../src/strings/index.js';
 import { PICKERS } from '../src/pages/Compare.js';
@@ -18,12 +18,14 @@ import m49 from '../src/data/regions.json' with { type: 'json' };
  * `packs/`, and no country is named in this file.
  *
  * What is held: the number of pages grows by two per country — its page and
- * the page that sets it up — and never by one per pair; the comparison is one page whose weight grows by one column per
+ * the page that sets it up — in place of the one a country with no pack has,
+ * and never by one per pair; the comparison is one page whose weight grows by one column per
  * country; every list of countries stays grouped by region and links to every
  * pack.
  */
 
 const data = await readSiteData();
+const families = await familiesOf(packsDir(repoRootDir()));
 
 /** `count` packs: the real ones, then made-up ones for countries that have none. */
 function fakePacks(count: number): PackDescription[] {
@@ -45,6 +47,7 @@ function siteWith(count: number): { site: SiteData; pages: RenderedPage[] } {
     countries,
     regions: regionsOf(countries, SOURCE.lang),
     world: worldOf(countries, SOURCE.lang),
+    waiting: waitingOf(countries, families, SOURCE.lang),
   };
   return { site, pages: renderPages(site) };
 }
@@ -58,7 +61,12 @@ describe('the site at fifty and at two hundred countries', () => {
   it('has one page per country, and never one per pair', () => {
     for (const { count, site, pages } of sizes) {
       expect(site.countries).toHaveLength(count);
-      expect(pages).toHaveLength(LANGUAGES.length * (2 * count + data.docs.length + 9));
+      // Two per pack, and one for every country of the list without one: the
+      // world is a fixed number of pages, whatever the packs.
+      const world = Object.keys(m49.regions).length;
+      expect(site.waiting).toHaveLength(world - count);
+      expect(pages).toHaveLength(LANGUAGES.length * (2 * count + (world - count) + data.docs.length + 9));
+      expect(new Set(pages.map((page) => page.url)).size).toBe(pages.length);
       expect(pages.filter((page) => page.url.startsWith('/compare/'))).toHaveLength(1);
     }
   });

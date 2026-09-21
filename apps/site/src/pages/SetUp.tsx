@@ -145,7 +145,12 @@ export function SetUp({
             </span>
             <h2 className="mt-4 text-2xl">{s.withUsTitle}</h2>
             <p className="mt-3 text-ink-soft">{s.withUsBody}</p>
-            <SignupForm country={country} data={data} strings={strings} />
+            <SignupForm
+              country={country === null ? null : { code: country.country, name: country.name }}
+              page={country === null ? SIGNUP : setUpUrl(country)}
+              data={data}
+              strings={strings}
+            />
           </Card>
         </div>
       </main>
@@ -161,17 +166,25 @@ const LABEL = 'block text-sm font-medium text-ink';
 /**
  * The form, as the host reads it at deploy.
  *
+ * It is also the vote of a country with no pack: its page carries this same
+ * form with the country's code in `country`, so the host keeps one list and a
+ * request for a country nobody has written is counted where every other one is.
+ *
  * `form-name` is written out although the host adds it to a form it detects:
  * it costs one hidden field and makes the post correct on its own. The page
  * the form was sent from travels with it, so a reply can start from the
  * country somebody was reading about.
  */
-function SignupForm({
+export function SignupForm({
   country,
+  page,
   data,
   strings,
 }: {
-  country: PackDescription | null;
+  /** The country the page is about, sent without asking; null to ask. */
+  country: { code: string; name: string } | null;
+  /** The address of the page it is on, sent with it. */
+  page: string;
   data: SiteData;
   strings: Strings;
 }): ReactNode {
@@ -187,7 +200,7 @@ function SignupForm({
       className="mt-6 space-y-5"
     >
       <input type="hidden" name="form-name" value={SIGNUP_FORM} />
-      <input type="hidden" name="page" value={country === null ? SIGNUP : setUpUrl(country)} />
+      <input type="hidden" name="page" value={page} />
       <p hidden>
         <label>
           {f.honeypot} <input name={HONEYPOT} tabIndex={-1} autoComplete="off" />
@@ -226,7 +239,7 @@ function SignupForm({
         </label>
       ) : (
         <div>
-          <input type="hidden" name="country" value={country.country} />
+          <input type="hidden" name="country" value={country.code} />
           <p className="text-sm font-medium text-ink">{f.country}</p>
           <p className="mt-1.5 flex flex-wrap items-baseline gap-x-3 text-ink">
             {country.name}

@@ -15,6 +15,7 @@ import { AUDIENCES, LATER, SHIPPED } from '../src/data/multicountry.js';
 import { FOUNDATIONS, MODELS, NOT_LISTED } from '../src/data/ecosystem.js';
 import { LANGUAGES, SOURCE, fill, prefixOf } from '../src/strings/index.js';
 import { ICON_NAMES } from '../src/pages/icons.js';
+import m49 from '../src/data/regions.json' with { type: 'json' };
 import { HONEYPOT, SIGNUP, SIGNUP_FORM, THANKS, setUpCommand, setUpUrl } from '../src/pages/SetUp.js';
 
 /**
@@ -49,9 +50,13 @@ const DOCS_INDEX = '/docs/';
 const ROWS = statusRows(SOURCE);
 
 describe('the pages that exist', () => {
-  it('is two per pack and one per article, plus the nine pages of the site, for every language', () => {
-    // Per pack: its page and the page that sets it up.
-    expect(pages.length).toBe(LANGUAGES.length * (2 * slugs.length + data.docs.length + 9));
+  it('is two per pack, one per country without one and one per article, plus the nine pages of the site, for every language', () => {
+    // Per pack: its page and the page that sets it up. Per other country: its
+    // page saying where it stands.
+    expect(pages.length).toBe(
+      LANGUAGES.length * (2 * slugs.length + data.waiting.length + data.docs.length + 9),
+    );
+    expect(new Set(pages.map((page) => page.url)).size).toBe(pages.length);
   });
 
   it('publishes the source language at the root, and every other under its prefix', () => {
@@ -178,12 +183,14 @@ describe('no country is written into the site', () => {
     }
   });
 
-  it('links to every pack from the home page, and to nothing that is not one', () => {
+  it('links to every pack from the home page, and to no country that is neither a pack nor waiting for one', () => {
     const body = byUrl.get(HOME)!.body;
     const linked = new Set(
       [...body.matchAll(/href="\/countries\/([a-z]{2})\/"/g)].map((match) => match[1] as string),
     );
-    expect([...linked].sort()).toEqual([...slugs].sort());
+    for (const slug of slugs) expect(linked.has(slug), slug).toBe(true);
+    const waiting = new Set(data.waiting.map((country) => country.slug));
+    for (const slug of linked) expect(slugs.includes(slug) || waiting.has(slug), slug).toBe(true);
   });
 });
 
@@ -675,8 +682,12 @@ describe('setting Ekwo up', () => {
     }
   });
 
-  it('carries the form on every country\'s page and on the page for any country, and nowhere else', () => {
-    const expected = [...data.countries.map(setUpUrl), SIGNUP].sort();
+  it('carries the form on every country\'s page, on the page of a country with no pack and on the page for any country, and nowhere else', () => {
+    const expected = [
+      ...data.countries.map(setUpUrl),
+      ...data.waiting.map((country) => `${COUNTRIES}${country.slug}/`),
+      SIGNUP,
+    ].sort();
     expect(forms.map((page) => page.url).sort()).toEqual(expected);
   });
 
@@ -726,8 +737,9 @@ describe('setting Ekwo up', () => {
     expect(thanks.noindex).toBe(true);
     const template = '<html lang="en"><head><!--head--></head><body><!--body--></body></html>';
     expect(document(template, thanks)).toContain('<meta name="robots" content="noindex" />');
+    const waiting = new Set(data.waiting.map((country) => `${COUNTRIES}${country.slug}/`));
     for (const page of pages) {
-      if (page.url === THANKS) continue;
+      if (page.url === THANKS || waiting.has(page.url)) continue;
       expect(document(template, page), page.url).not.toContain('noindex');
     }
     expect(sitemap(pages, 'https://site.example')).not.toContain(THANKS);
@@ -735,6 +747,87 @@ describe('setting Ekwo up', () => {
 
   it('is reached from the header of every page and from the home page', () => {
     for (const page of pages) expect(page.body, page.url).toContain(`href="${SIGNUP}"`);
+  });
+});
+
+describe('a country with no pack', () => {
+  const taken = new Set(data.countries.map((country) => country.country));
+  const waitingUrl = (slug: string): string => `${COUNTRIES}${slug}/`;
+  const hasTag = (body: string, tag: string, attributes: string[]): boolean =>
+    [...body.matchAll(new RegExp(`<${tag}\\b[^>]*>`, 'g'))].some((match) =>
+      attributes.every((attribute) => match[0].includes(attribute)),
+    );
+
+  it('has a page for every country of the list that no pack claims, and for no other', () => {
+    const expected = Object.keys(m49.regions).filter((code) => !taken.has(code)).sort();
+    expect(data.waiting.map((country) => country.code).sort()).toEqual(expected);
+    for (const country of data.waiting) {
+      expect(slugs).not.toContain(country.slug);
+      const page = byUrl.get(waitingUrl(country.slug));
+      expect(page, `${country.code} has no page`).toBeDefined();
+      // Named by the platform, never by this repository.
+      expect(country.name).toBe(new Intl.DisplayNames([SOURCE.lang], { type: 'region' }).of(country.code));
+      expect(page!.title).toBe(fill(SOURCE.waiting.title, { country: country.name }));
+      const heading = fill(SOURCE.waiting.heading, { country: country.name }).replace(/&/g, '&amp;');
+      expect(page!.body).toContain(heading);
+    }
+  });
+
+  it('keeps those pages out of search engines and of the sitemap', () => {
+    const template = '<html lang="en"><head><!--head--></head><body><!--body--></body></html>';
+    const map = sitemap(pages, 'https://site.example');
+    for (const country of data.waiting) {
+      const page = byUrl.get(waitingUrl(country.slug))!;
+      expect(page.noindex).toBe(true);
+      expect(document(template, page)).toContain('<meta name="robots" content="noindex" />');
+      expect(map).not.toContain(`<loc>https://site.example${page.url}</loc>`);
+    }
+  });
+
+  it('is where the map and the list of countries lead', () => {
+    const home = byUrl.get(HOME)!.body;
+    const index = byUrl.get(COUNTRIES)!.body;
+    const drawn = data.world.countries.filter((shape) => shape.pack === null && shape.waiting !== null);
+    expect(drawn.length).toBeGreaterThan(data.countries.length);
+    for (const shape of drawn) expect(home).toContain(`href="${shape.waiting}"`);
+    for (const country of data.waiting) expect(index).toContain(`href="${waitingUrl(country.slug)}"`);
+  });
+
+  it('asks with the signup form of every other page, the country already on it', () => {
+    const fields = (body: string): string[] =>
+      [...new Set([...body.matchAll(/<(?:input|select|textarea)\b[^>]*name="([^"]+)"/g)].map((m) => m[1] as string))].sort();
+    const signup = fields(byUrl.get(SIGNUP)!.body);
+    for (const country of data.waiting) {
+      const body = byUrl.get(waitingUrl(country.slug))!.body;
+      expect(hasTag(body, 'form', [`name="${SIGNUP_FORM}"`, 'data-netlify="true"', `action="${THANKS}"`])).toBe(true);
+      expect(hasTag(body, 'input', ['type="hidden"', 'name="country"', `value="${country.code}"`])).toBe(true);
+      expect(hasTag(body, 'input', ['type="hidden"', 'name="page"', `value="${waitingUrl(country.slug)}"`])).toBe(true);
+      // The host keeps one list of fields per form name: not one more, not one fewer.
+      expect(fields(body)).toEqual(signup);
+    }
+  });
+
+  it('says where it stands from the repository, and offers the two other ways forward', () => {
+    let inProgress = 0;
+    for (const country of data.waiting) {
+      const body = byUrl.get(waitingUrl(country.slug))!.body;
+      const status = body.slice(body.indexOf('data-waiting-status'));
+      if (country.family === null) {
+        expect(status).toContain(`>${SOURCE.waiting.notStarted}<`);
+      } else {
+        inProgress += 1;
+        expect(country.family.members).toContain(country.code);
+        expect(existsSync(join(root, country.family.file))).toBe(true);
+        expect(status).toContain(`>${SOURCE.waiting.inProgress}<`);
+        expect(status).toContain(country.family.file);
+      }
+      expect(body).toContain(`#adding-a-country-in-a-day`);
+      expect(body).toContain(`packs/${country.slug}/`);
+      expect(body).toMatch(/href="mailto:[^"?]+\?subject=/);
+    }
+    // A member of a shared manifest with no folder is the only `in progress`.
+    const expected = data.waiting.filter((country) => country.family !== null).length;
+    expect(inProgress).toBe(expected);
   });
 });
 

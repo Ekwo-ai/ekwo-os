@@ -18,6 +18,9 @@
 import type { ComponentType, ReactNode } from 'react';
 import {
   Activity,
+  Bell,
+  GitPullRequest,
+  Handshake,
   Coins,
   BookCheck,
   Briefcase,
@@ -58,6 +61,9 @@ type Icon = ComponentType<{ className?: string; strokeWidth?: number; 'aria-hidd
 
 const ICONS: Record<string, Icon> = {
   activity: Activity,
+  bell: Bell,
+  gitPullRequest: GitPullRequest,
+  handshake: Handshake,
   bookCheck: BookCheck,
   briefcase: Briefcase,
   calendarClock: CalendarClock,

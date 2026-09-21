@@ -9,7 +9,7 @@
  * per pack of `listPacks()`, one per article of the documentation, plus the
  * home page, the core, the index of the documentation, the index of countries,
  * the page for a business in several countries, the comparison, the timeline of
- * what changed, the page that
+ * what changed, one page per country with no pack yet (not indexed), the page that
  * sets Ekwo up where no country is known and the one a sent form lands on.
  * Adding a country adds its page, the page that sets it up and a column of the
  * comparison — never a page per pair — and adding a language adds the whole
@@ -36,6 +36,7 @@ import { Compare, PICKERS } from './pages/Compare.js';
 import { MultiCountry } from './pages/MultiCountry.js';
 import { SetUp, Thanks } from './pages/SetUp.js';
 import { Changes } from './pages/Changes.js';
+import { Waiting } from './pages/Waiting.js';
 
 export interface RenderedPage {
   /** Where the file goes, relative to the output directory. */
@@ -48,7 +49,7 @@ export interface RenderedPage {
   description: string;
   /** The contents of `<body>`, complete and final. */
   body: string;
-  /** Kept out of search engines and of the sitemap: a page only a sent form leads to. */
+  /** Kept out of search engines and of the sitemap: a page only a sent form leads to, and the country with no pack. */
   noindex?: boolean;
 }
 
@@ -129,6 +130,21 @@ function pagesOf(data: SiteData, strings: Strings): RenderedPage[] {
         fill(s.setup.title, { country: country.name }),
         fill(s.setup.description, { country: country.name }),
         <SetUp country={country} data={data} strings={s} />,
+      ),
+    );
+  }
+
+  // Every other country of the world: where it stands, and how to ask for it
+  // or write it. Kept out of search engines and of the sitemap.
+  for (const country of data.waiting) {
+    pages.push(
+      page(
+        `${at}countries/${country.slug}/`,
+        lang,
+        fill(s.waiting.title, { country: country.name }),
+        fill(s.waiting.description, { country: country.name }),
+        <Waiting country={country} data={data} strings={s} />,
+        true,
       ),
     );
   }

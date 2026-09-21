@@ -3,7 +3,7 @@
  *
  * The map is the argument, so it is drawn the way the argument runs: every
  * country on earth is there, the handful with a pack are in the accent, and
- * **every other one is a link to the guide for writing theirs**. A map that
+ * **every other one is a link to a page about it**. A map that
  * showed only what is covered would say "a European tool with a few
  * neighbours"; this one says the target is the whole of it, and that each grey
  * shape is an opening.
@@ -11,6 +11,10 @@
  * The geometry is Natural Earth, public domain, simplified and projected once
  * into `src/data/world.json` — the attribution is in `apps/site/README.md`. The
  * colouring is `packs/`, read at build time. No country is named in this file.
+ *
+ * A grey shape leads to the country's own page, which says where it stands
+ * and how to ask for the pack or write it (`Waiting.tsx`); only a shape the UN
+ * list gives no code to still leads to the guide.
  *
  * Accessibility, and the same thing as working without scripting: the shapes
  * are links with accessible names, and the list underneath is the map in words
@@ -20,7 +24,7 @@
 
 import type { ReactNode } from 'react';
 import type { Region, Repository, WorldMap as WorldMapData } from '../data.js';
-import type { Strings } from '../strings/index.js';
+import { fill, type Strings } from '../strings/index.js';
 import { RegionSummary } from './Regions.js';
 
 export function WorldMap({
@@ -55,7 +59,7 @@ export function WorldMap({
           <title id="map-title">The countries Ekwo has a pack for</title>
           <desc id="map-desc">
             {covered.length} of {world.countries.length} countries have a country pack in this
-            repository. Every other country links to the guide for writing one. The same
+            repository. Every other country links to a page that says where it stands. The same
             information is listed in text below the map.
           </desc>
 
@@ -68,11 +72,15 @@ export function WorldMap({
             country.pack === null ? (
               <a
                 key={country.code}
-                href={write}
-                rel="noreferrer"
+                href={country.waiting ?? write}
+                rel={country.waiting === null ? 'noreferrer' : undefined}
                 className="[&>path]:hover:fill-brand-fill [&>path]:focus-visible:fill-brand-fill"
               >
-                <title>{`${country.name} — open, be the first to write the pack`}</title>
+                <title>
+                  {country.waiting === null
+                    ? `${country.name} — open, be the first to write the pack`
+                    : fill(strings.waiting.mapTitle, { country: country.name })}
+                </title>
                 <path
                   d={country.path}
                   className="fill-line stroke-bg transition-[fill] duration-150"
