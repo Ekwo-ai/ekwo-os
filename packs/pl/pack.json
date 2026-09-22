@@ -127,8 +127,7 @@
         "publisher": "OpenPEPPOL — list published by the European Commission",
         "url": "https://docs.peppol.eu/poacc/billing/3.0/codelist/UNCL5305/",
         "consulted_on": "2026-09-22",
-        "kind": "standard",
-        "reason_codes": true
+        "kind": "standard"
       },
       {
         "key": "vatex",

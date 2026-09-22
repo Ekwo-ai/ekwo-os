@@ -34,15 +34,15 @@ code,parent,type,reconcilable,name,sequence
 2220,2200,asset_current,false,2. Należności od pozostałych jednostek w których jednostka posiada zaangażowanie w kapitale,314
 2230,2200,asset_receivable,true,a) Należności z tytułu dostaw i usług,320
 2240,2200,asset_current,false,b) Należności z tytułu podatków dotacji ceł ubezpieczeń społecznych i zdrowotnych oraz innych świadczeń,330
-2241,2240,asset_current,true,VAT naliczony podlegający odliczeniu,340
+2241,2240,asset_current,false,VAT naliczony podlegający odliczeniu,340
 2242,2240,asset_current,true,Rozrachunki z urzędem skarbowym z tytułu VAT — nadwyżka do zwrotu,350
 2250,2200,asset_current,false,c) Pozostałe należności krótkoterminowe,360
 2260,2200,asset_current,false,d) Należności dochodzone na drodze sądowej,370
 2270,2200,asset_current,false,Rozrachunki nierozliczone (konto przejściowe),380
 2300,2000,asset_current,false,III. Inwestycje krótkoterminowe,390
 2310,2300,asset_cash,false,Kasa,400
-2320,2300,asset_cash,true,Rachunki bankowe,410
-2321,2300,asset_cash,true,Rachunek VAT (mechanizm podzielonej płatności),420
+2320,2300,asset_cash,false,Rachunki bankowe,410
+2321,2300,asset_cash,false,Rachunek VAT (mechanizm podzielonej płatności),420
 2340,2300,asset_current,false,Krótkoterminowe aktywa finansowe pozostałe,430
 2400,2000,asset_prepayments,false,IV. Krótkoterminowe rozliczenia międzyokresowe,440
 3100,,asset_current,false,C. Należne wpłaty na kapitał (fundusz) podstawowy,450
