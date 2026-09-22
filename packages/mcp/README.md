@@ -250,7 +250,7 @@ they cannot run: PostgREST and GoTrue. To exercise those, on a project you can
 throw away:
 
 ```sh
-npx ekwo-os init --country BE --org "Scratch" --company "Scratch BV" …   # a real project
+npx -y ekwo-os@latest init --country BE --org "Scratch" --company "Scratch BV" …   # a real project
 ```
 
 Then point a client at it — in Claude Desktop, the JSON block above — and:

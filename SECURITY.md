@@ -72,5 +72,5 @@ says what changed. `main` is where they land first.
 
 There is no backport to an earlier minor. Migrations move forward only —
 there is no `down` — so the answer to a fix on an old installation is
-`npx ekwo-os migrate`, and [`docs/releasing.md`](docs/releasing.md) is how a
-release carrying one is cut.
+`npx -y ekwo-os@latest migrate`, and [`docs/releasing.md`](docs/releasing.md)
+is how a release carrying one is cut.

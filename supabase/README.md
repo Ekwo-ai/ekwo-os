@@ -4,7 +4,7 @@ Everything that ends up in your Postgres lives here, and nothing else does.
 
 | Folder | What it is | When it runs |
 |---|---|---|
-| [`migrations/`](migrations/) | The schema: tables, enums, functions, triggers, row level security | `npx ekwo-os migrate` or `supabase db push`, once per version, on every installation |
+| [`migrations/`](migrations/) | The schema: tables, enums, functions, triggers, row level security | `npx -y ekwo-os@latest migrate` or `supabase db push`, once per version, on every installation |
 | [`seed/`](seed/) | Reference data: currencies, charts of accounts, taxes, and a demo company | After the migrations; the demo file is opt-in |
 | `config.toml` | The Supabase CLI configuration, including which seeds are applied by default | Read by the CLI |
 

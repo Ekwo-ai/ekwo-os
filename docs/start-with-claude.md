@@ -68,8 +68,13 @@ the connection string; Claude needs it written in full.
 In a terminal:
 
 ```sh
-npx ekwo-os init
+npx -y ekwo-os@latest init
 ```
+
+Keep the `@latest`, as for the server below: without a version, `npx` run from
+inside a clone of the Ekwo repository finds the workspace package of the same
+name and answers `ekwo: command not found`. With it, `npx` fetches the
+published installer wherever it is started.
 
 The installer asks its questions one by one:
 
@@ -91,8 +96,8 @@ Authentication. Do them while the dashboard is open; they are explained in the
 [installation guide](../packages/cli/README.md#before-you-go-live-four-things-on-your-project).
 
 Everything can also be given as flags, for example
-`npx ekwo-os init --country EE` or `npx ekwo-os init --country GB
---fiscal-year-start 2026-04-01`; the
+`npx -y ekwo-os@latest init --country EE` or
+`npx -y ekwo-os@latest init --country GB --fiscal-year-start 2026-04-01`; the
 [installation guide](../packages/cli/README.md) lists them.
 
 The installation itself is in no country; its companies are. The installer
@@ -224,9 +229,9 @@ In the terminal, the company the commands run on is chosen with `ekwo use`,
 once you are signed in:
 
 ```sh
-npx ekwo-os login            # asks the project URL, the key, your address and password
-npx ekwo-os use "Harbourlight Ledger Ltd"
-npx ekwo-os whoami           # the companies you can see, and the one in use
+npx -y ekwo-os@latest login            # asks the project URL, the key, your address and password
+npx -y ekwo-os@latest use "Harbourlight Ledger Ltd"
+npx -y ekwo-os@latest whoami           # the companies you can see, and the one in use
 ```
 
 The command line creates companies too. `ekwo company new` calls the same
@@ -238,10 +243,10 @@ subsidiary abroad — can start with none, and take each company in its own
 country:
 
 ```sh
-npx ekwo-os init --no-company --org "Põhjatuul Group" --admin-email "you@example.com"
-npx ekwo-os company new "Põhjatuul OÜ" --country EE
-npx ekwo-os company new "Harbourlight Ledger Ltd" --country GB --fiscal-year-start 2026-01-01
-npx ekwo-os company list
+npx -y ekwo-os@latest init --no-company --org "Põhjatuul Group" --admin-email "you@example.com"
+npx -y ekwo-os@latest company new "Põhjatuul OÜ" --country EE
+npx -y ekwo-os@latest company new "Harbourlight Ledger Ltd" --country GB --fiscal-year-start 2026-01-01
+npx -y ekwo-os@latest company list
 ```
 
 `--no-company` refuses every flag that only describes a company — `--country`

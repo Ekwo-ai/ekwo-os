@@ -35,10 +35,12 @@ Three ways in, all acting on the same functions of the schema:
   pack carries and what it does not do yet. Also as Markdown at
   `https://ekwo.ai/countries/<cc>/set-up.md`.
 - **What a pack holds:** the set-up page above; in a clone of this
-  repository, `npx ekwo-os pack describe <cc> --json` (it reads `packs/`, so
-  it needs the clone); once installed, the MCP tool `describe_pack`.
-- **Every command and flag:** `npx ekwo-os help --json` — the field `usage`
-  is the whole reference, as text.
+  repository, `npm run build`, then
+  `node packages/cli/dist/bin.js pack describe <cc> --json` (it reads `packs/`,
+  so it needs the clone, and `npx` there finds the workspace, not the
+  command); once installed, the MCP tool `describe_pack`.
+- **Every command and flag:** `npx -y ekwo-os@latest help --json` — the field
+  `usage` is the whole reference, as text.
 - **The installation guide:** [`packages/cli/README.md`](packages/cli/README.md).
 - **The tools of the MCP server:** [`packages/mcp/README.md`](packages/mcp/README.md).
 - **A declaration from computing to correcting:** [`docs/filing.md`](docs/filing.md).
@@ -62,7 +64,7 @@ Then one command. Put the country on it: `--country` takes the ISO code of
 the pack, and there is no default.
 
 ```sh
-npx ekwo-os init --country IE
+npx -y ekwo-os@latest init --country IE
 ```
 
 It asks for the rest. Where the pack offers a choice of chart of accounts or

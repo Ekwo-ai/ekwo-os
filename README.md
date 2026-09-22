@@ -41,9 +41,9 @@ What we are building, in order:
 
 1. **This repository — the core.** Schema, posting rules, VAT, reports, the
    FEC, and the country packs. Done, tested, installable today.
-2. **`npx ekwo-os init`** — point it at your own Supabase project and it applies
-   the schema, seeds the country rules, creates the first administrator and
-   the first company, in one command. Done; see
+2. **`npx -y ekwo-os@latest init`** — point it at your own Supabase project
+   and it applies the schema, seeds the country rules, creates the first
+   administrator and the first company, in one command. Done; see
    [`packages/cli`](packages/cli/).
 3. **The MCP server** — `npx @ekwo-ai/mcp`, so any AI assistant can operate
    the books: read the ledger, raise an invoice, post it, match a payment,
@@ -131,9 +131,9 @@ migrations, its own row level security and its own tests.
 | [`budgets`](modules/budgets/) | `budgets` | A budget per financial year and the variance against what the ledger holds. No country data, and nothing written to the ledger. |
 
 ```sh
-npx ekwo-os module list                          # what is here, and what the database holds
-npx ekwo-os module migrate                       # apply their migrations and country seeds
-npx ekwo-os module enable assets --company "…"   # turn one on for a company
+npx -y ekwo-os@latest module list                          # what is here, and what the database holds
+npx -y ekwo-os@latest module migrate                       # apply their migrations and country seeds
+npx -y ekwo-os@latest module enable assets --company "…"   # turn one on for a company
 ```
 
 Then add the schema to the project's exposed schemas — Supabase dashboard →
@@ -157,8 +157,12 @@ enough to start — and point the installer at it. Node 20 or later is the only
 thing you need locally: no Supabase CLI, no Docker, no clone.
 
 ```sh
-npx ekwo-os init
+npx -y ekwo-os@latest init
 ```
+
+The version is part of the command, as for the MCP server below: from inside a
+clone of this repository, a bare `npx ekwo-os` finds the workspace package of
+the same name and answers `ekwo: command not found`.
 
 Asking an AI assistant to do it with you? Point it at
 [`AGENTS.md`](AGENTS.md): what it needs, the commands, and what it must never
@@ -313,10 +317,10 @@ interchangeable: `ekwo migrate` and `supabase db push` read and write the same
 ### Keeping it running
 
 ```sh
-npx ekwo-os status    # schema version installed against available, instance, companies
-npx ekwo-os migrate   # apply what a new release adds
-npx ekwo-os doctor    # every object this release defines, row level security, orphaned memberships, statements
-npx ekwo-os demo      # the sample company, on explicit request only
+npx -y ekwo-os@latest status    # schema version installed against available, instance, companies
+npx -y ekwo-os@latest migrate   # apply what a new release adds
+npx -y ekwo-os@latest doctor    # every object this release defines, row level security, orphaned memberships, statements
+npx -y ekwo-os@latest demo      # the sample company, on explicit request only
 ```
 
 ## The schema in twenty lines

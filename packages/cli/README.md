@@ -6,13 +6,17 @@ books: the schema, the chart of accounts, the VAT codes, the first
 administrator, the first company and its first financial year.
 
 ```sh
-npx ekwo-os init
+npx -y ekwo-os@latest init
 ```
 
-The package is `ekwo-os` and the command it installs is `ekwo`: `npx ekwo-os
-<command>` runs it without installing anything, and after
-`npm install -g ekwo-os` every example below that starts with `ekwo ` works as
-written.
+The package is `ekwo-os` and the command it installs is `ekwo`:
+`npx -y ekwo-os@latest <command>` runs it without installing anything, and
+after `npm install -g ekwo-os` every example below that starts with `ekwo `
+works as written. Keep the version in the command: run from inside a clone of
+the Ekwo repository, a bare `npx ekwo-os` finds the workspace package of the
+same name, which links no command, and answers `ekwo: command not found`. With
+`@latest`, `npx` fetches the published CLI wherever it is started; the clone's
+own is `node packages/cli/dist/bin.js`, after `npm run build`.
 
 You need Node 20 or later. That is the whole list. The Supabase CLI is not
 required — this talks to Postgres directly — and Docker is not required
@@ -50,7 +54,7 @@ either.
 3. **Run the installer.**
 
    ```sh
-   npx ekwo-os init
+   npx -y ekwo-os@latest init
    ```
 
    It asks for the connection string, the country, the chart of accounts and
@@ -73,7 +77,7 @@ either.
 Everything above in one non-interactive line:
 
 ```sh
-npx ekwo-os init \
+npx -y ekwo-os@latest init \
   --db-url "postgresql://postgres.YOURREF:PASSWORD@aws-1-eu-west-3.pooler.supabase.com:5432/postgres" \
   --supabase-url "https://YOURREF.supabase.co" \
   --service-role-key "$SUPABASE_SERVICE_ROLE_KEY" \
@@ -131,7 +135,7 @@ books of companies in as many countries as it holds packs. When there is no
 install without one, then create each company in its own country:
 
 ```sh
-npx ekwo-os init --no-company \
+npx -y ekwo-os@latest init --no-company \
   --db-url "$EKWO_DB_URL" --supabase-url "https://YOURREF.supabase.co" \
   --service-role-key "$SUPABASE_SERVICE_ROLE_KEY" \
   --org "My Group" --admin-email "you@example.com" --yes
