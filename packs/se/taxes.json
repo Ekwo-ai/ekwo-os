@@ -1,0 +1,646 @@
+[
+  {
+    "code": "SE-S-25",
+    "name": "Utgående moms 25 %",
+    "description": "Normalskattesats; ruta 05 och ruta 10",
+    "rate": 25,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2023-07-01",
+    "legal_reference": "Mervärdesskattelag (2023:200) 9 kap. 2 § — skatt tas ut med 25 procent av beskattningsunderlaget om inte annat följer av 3–19 §§.",
+    "source": "ml",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "05"
+        },
+        {
+          "type": "tax",
+          "account": "2430",
+          "box": "10"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "05",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2430",
+          "box": "10",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 10
+  },
+  {
+    "code": "SE-S-12",
+    "name": "Utgående moms 12 %",
+    "description": "Restaurang- och cateringtjänster; ruta 05 och ruta 11",
+    "rate": 12,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2023-07-01",
+    "legal_reference": "Mervärdesskattelag (2023:200) 9 kap. 3 § och 9 kap. 5 § — skatt tas ut med 12 procent av beskattningsunderlaget för restaurang- och cateringtjänster, med undantag för den del som avser spritdrycker, vin och starköl.",
+    "source": "ml",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "05"
+        },
+        {
+          "type": "tax",
+          "account": "2431",
+          "box": "11"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "05",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2431",
+          "box": "11",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 20
+  },
+  {
+    "code": "SE-S-06",
+    "name": "Utgående moms 6 %",
+    "description": "Böcker och tidningar; ruta 05 och ruta 12",
+    "rate": 6,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2023-07-01",
+    "legal_reference": "Mervärdesskattelag (2023:200) 9 kap. 8 § och 9 kap. 9 § — skatt tas ut med 6 procent av beskattningsunderlaget för böcker, broschyrer, tidningar och tidskrifter.",
+    "source": "ml",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "05"
+        },
+        {
+          "type": "tax",
+          "account": "2432",
+          "box": "12"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "05",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2432",
+          "box": "12",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 30
+  },
+  {
+    "code": "SE-S-0-EXPORT",
+    "name": "Exportförsäljning, undantagen från moms",
+    "description": "Varuförsäljning till en plats utanför EU; ruta 36",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2023-07-01",
+    "legal_reference": "Mervärdesskattelag (2023:200) 10 kap. 64 § — undantag från skatteplikt för leverans av varor som säljaren eller någon för dennes räkning transporterar till en plats utanför EU. I mervärdesskattelagen kallas detta export.",
+    "source": "ml",
+    "vat_category": "G",
+    "exemption_code": "VATEX-EU-G",
+    "conditions": [
+      "transport_evidence"
+    ],
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "36"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "36",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 40
+  },
+  {
+    "code": "SE-S-0-IC-GOODS",
+    "name": "Unionsintern varuförsäljning",
+    "description": "Varor till en köpare som åberopar sitt momsregistreringsnummer i ett annat EU-land; ruta 35",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "intracom_goods",
+    "valid_from": "2023-07-01",
+    "legal_reference": "Mervärdesskattelag (2023:200) 10 kap. 42–48 §§ — undantag från skatteplikt för leverans av varor som transporteras till ett annat EU-land till en beskattningsbar person som där åberopar ett giltigt momsregistreringsnummer, under förutsättning att leveransen redovisas korrekt i den periodiska sammanställningen.",
+    "source": "ml",
+    "vat_category": "K",
+    "exemption_code": "VATEX-EU-IC",
+    "conditions": [
+      "buyer_status",
+      "transport_evidence"
+    ],
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "35"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "35",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 50
+  },
+  {
+    "code": "SE-S-0-IC-SERVICES",
+    "name": "Försäljning av tjänster till beskattningsbar person i annat EU-land",
+    "description": "Huvudregeln för tjänster, köparen skattskyldig i sitt land; ruta 39",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "intracom_services",
+    "valid_from": "2023-07-01",
+    "legal_reference": "Mervärdesskattelag (2023:200) 6 kap. (huvudregeln för omsättningsland för tjänster till beskattningsbara personer) jämförd med 17 kap. 16 § om faktureringstidpunkt; tjänsten anses omsatt i köparens land och köparen är där skattskyldig. Ruta 39 i broschyren SKV 409 beskriver redovisningen.",
+    "source": "skv409",
+    "vat_category": "K",
+    "exemption_code": "VATEX-EU-IC",
+    "conditions": [
+      "buyer_status"
+    ],
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "39"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "39",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 60
+  },
+  {
+    "code": "SE-S-EXEMPT-FIN",
+    "name": "Finansieringstjänst, undantagen från moms",
+    "description": "Kreditgivning och förmedling av krediter; ruta 42",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2023-07-01",
+    "legal_reference": "Mervärdesskattelag (2023:200) 10 kap. 33 § — undantag från skatteplikt för omsättning av bank- och finansieringstjänster, motsvarande artikel 135.1 b i direktiv 2006/112/EG.",
+    "source": "ml",
+    "vat_category": "E",
+    "exemption_code": "VATEX-EU-135-1B",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "42"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "42",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 70
+  },
+  {
+    "code": "SE-S-DRC",
+    "name": "Försäljning, köparen skattskyldig i Sverige",
+    "description": "Byggtjänster till en beskattningsbar person som själv tillhandahåller byggtjänster, eller avfall och skrot av vissa metaller; ruta 41",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "domestic_reverse_charge",
+    "valid_from": "2023-07-01",
+    "legal_reference": "Mervärdesskattelag (2023:200) 16 kap. 13 § (byggsektorn) och 16 kap. 14 § (avfall och skrot av vissa metaller) — köparen, inte säljaren, är skattskyldig för mervärdesskatten.",
+    "source": "ml",
+    "vat_category": "AE",
+    "exemption_code": "VATEX-EU-AE",
+    "conditions": [
+      "buyer_status",
+      "supply_nature"
+    ],
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "41"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "41",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 80
+  },
+  {
+    "code": "SE-P-25",
+    "name": "Ingående moms 25 %",
+    "description": "Avdragsgill ingående moms på inhemska inköp; ruta 48",
+    "rate": 25,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2023-07-01",
+    "legal_reference": "Mervärdesskattelag (2023:200) 13 kap. 6 § — den som bedriver en verksamhet som medför skattskyldighet har rätt att dra av ingående skatt som hänför sig till förvärv i verksamheten.",
+    "source": "ml",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "1510",
+          "box": "48"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "1510",
+          "box": "48",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 90
+  },
+  {
+    "code": "SE-P-12",
+    "name": "Ingående moms 12 %",
+    "description": "Avdragsgill ingående moms på inhemska inköp; ruta 48",
+    "rate": 12,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2023-07-01",
+    "legal_reference": "Mervärdesskattelag (2023:200) 13 kap. 6 §.",
+    "source": "ml",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "1511",
+          "box": "48"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "1511",
+          "box": "48",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 100
+  },
+  {
+    "code": "SE-P-06",
+    "name": "Ingående moms 6 %",
+    "description": "Avdragsgill ingående moms på inhemska inköp; ruta 48",
+    "rate": 6,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2023-07-01",
+    "legal_reference": "Mervärdesskattelag (2023:200) 13 kap. 6 §.",
+    "source": "ml",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "1512",
+          "box": "48"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "1512",
+          "box": "48",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 110
+  },
+  {
+    "code": "SE-P-IC-GOODS-25",
+    "name": "Unionsinternt förvärv av varor 25 %",
+    "description": "Köparen redovisar själv utgående och ingående moms på förvärvet; ruta 20, ruta 30 och ruta 48",
+    "rate": 25,
+    "scope": "purchase",
+    "treatment": "intracom_acquisition_goods",
+    "valid_from": "2023-07-01",
+    "legal_reference": "Mervärdesskattelag (2023:200), bestämmelserna om unionsinterna förvärv av varor och om förvärvarens skattskyldighet, jämförda med 13 kap. 6 § om avdragsrätt; broschyren SKV 409, block C och D, beskriver redovisningen i ruta 20, 30 och 48.",
+    "source": "skv409",
+    "vat_category": "K",
+    "exemption_code": "VATEX-EU-IC",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "20"
+        },
+        {
+          "type": "tax",
+          "account": "1513",
+          "box": "48"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2440",
+          "box": "30"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "20",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1513",
+          "box": "48",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2440",
+          "box": "30",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 120
+  },
+  {
+    "code": "SE-P-IC-SERVICES-25",
+    "name": "Köpt tjänst från annat EU-land, huvudregeln 25 %",
+    "description": "Köparen redovisar själv utgående och ingående moms; ruta 21, ruta 30 och ruta 48",
+    "rate": 25,
+    "scope": "purchase",
+    "treatment": "intracom_acquisition_services",
+    "valid_from": "2023-07-01",
+    "legal_reference": "Mervärdesskattelag (2023:200), huvudregeln för tjänster som köps av en beskattningsbar person från ett annat EU-land, jämförd med 13 kap. 6 § om avdragsrätt; broschyren SKV 409, block C och D, beskriver redovisningen i ruta 21, 30 och 48.",
+    "source": "skv409",
+    "vat_category": "K",
+    "exemption_code": "VATEX-EU-IC",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "21"
+        },
+        {
+          "type": "tax",
+          "account": "1514",
+          "box": "48"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2441",
+          "box": "30"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "21",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1514",
+          "box": "48",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2441",
+          "box": "30",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 130
+  },
+  {
+    "code": "SE-P-FOREIGN-SERVICES-25",
+    "name": "Köpt tjänst från land utanför EU, huvudregeln 25 %",
+    "description": "Köparen redovisar själv utgående och ingående moms; ruta 22, ruta 30 och ruta 48",
+    "rate": 25,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2023-07-01",
+    "legal_reference": "Mervärdesskattelag (2023:200), huvudregeln för tjänster som köps av en beskattningsbar person från en säljare utanför EU, jämförd med 13 kap. 6 § om avdragsrätt; broschyren SKV 409, block C och D, beskriver redovisningen i ruta 22, 30 och 48. Säljarens faktura omfattas inte av EN 16931, varför ingen kategori anges.",
+    "source": "skv409",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "22"
+        },
+        {
+          "type": "tax",
+          "account": "1514",
+          "box": "48"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2441",
+          "box": "30"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "22",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1514",
+          "box": "48",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2441",
+          "box": "30",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 140
+  },
+  {
+    "code": "SE-P-DRC-25",
+    "name": "Köpt byggtjänst, omvänd betalningsskyldighet 25 %",
+    "description": "Köparen redovisar själv utgående och ingående moms; ruta 24, ruta 30 och ruta 48",
+    "rate": 25,
+    "scope": "purchase",
+    "treatment": "domestic_reverse_charge",
+    "valid_from": "2023-07-01",
+    "legal_reference": "Mervärdesskattelag (2023:200) 16 kap. 13 § — köparen är skattskyldig för byggtjänster som köps av en beskattningsbar person som själv tillhandahåller sådana tjänster, jämförd med 13 kap. 6 § om avdragsrätt. Ruta 24 i broschyren SKV 409 nämner uttryckligen byggtjänster med omvänd skattskyldighet.",
+    "source": "skv409",
+    "vat_category": "AE",
+    "exemption_code": "VATEX-EU-AE",
+    "conditions": [
+      "buyer_status",
+      "supply_nature"
+    ],
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "24"
+        },
+        {
+          "type": "tax",
+          "account": "1515",
+          "box": "48"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2442",
+          "box": "30"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "24",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1515",
+          "box": "48",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2442",
+          "box": "30",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 150
+  },
+  {
+    "code": "SE-P-IMPORT-25",
+    "name": "Import av varor 25 %",
+    "description": "Momsregistrerad importör redovisar själv utgående och ingående moms i momsdeklarationen; ruta 50, ruta 60 och ruta 48",
+    "rate": 25,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2023-07-01",
+    "legal_reference": "Mervärdesskattelag (2023:200), bestämmelserna om import och om att en momsregistrerad importör redovisar importmomsen i momsdeklarationen i stället för till Tullverket, jämförd med 13 kap. 6 § om avdragsrätt. Broschyren SKV 409, block H, beskriver redovisningen i ruta 50, 60 och 48. Tulldeklarationen, inte en faktura enligt EN 16931, ligger till grund för beloppet, varför ingen kategori anges.",
+    "source": "skv409",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "50"
+        },
+        {
+          "type": "tax",
+          "account": "1516",
+          "box": "48"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2443",
+          "box": "60"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "50",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1516",
+          "box": "48",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2443",
+          "box": "60",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 160
+  }
+]

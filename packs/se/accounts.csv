@@ -1,0 +1,167 @@
+code,parent,type,reconcilable,name,sequence
+1010,,asset_fixed,false,Balanserade utgifter för utveckling,10
+1011,,asset_fixed,false,Ackumulerade avskrivningar balanserade utgifter,20
+1020,,asset_fixed,false,Koncessioner patent licenser och varumärken,30
+1021,,asset_fixed,false,Ackumulerade avskrivningar koncessioner patent licenser,40
+1030,,asset_fixed,false,Goodwill,50
+1031,,asset_fixed,false,Ackumulerade avskrivningar goodwill,60
+1040,,asset_fixed,false,Programvaror,70
+1041,,asset_fixed,false,Ackumulerade avskrivningar programvaror,80
+1110,,asset_fixed,false,Byggnader,90
+1111,,asset_fixed,false,Ackumulerade avskrivningar byggnader,100
+1120,,asset_fixed,false,Mark,110
+1130,,asset_fixed,false,Markanläggningar,120
+1131,,asset_fixed,false,Ackumulerade avskrivningar markanläggningar,130
+1150,,asset_fixed,false,Maskiner och andra tekniska anläggningar,140
+1151,,asset_fixed,false,Ackumulerade avskrivningar maskiner,150
+1160,,asset_fixed,false,"Inventarier, verktyg och installationer",160
+1161,,asset_fixed,false,Ackumulerade avskrivningar inventarier,170
+1170,,asset_fixed,false,Bilar och andra transportmedel,180
+1171,,asset_fixed,false,Ackumulerade avskrivningar bilar,190
+1180,,asset_fixed,false,Datorer,200
+1181,,asset_fixed,false,Ackumulerade avskrivningar datorer,210
+1190,,asset_fixed,false,Pågående nyanläggningar och förskott,220
+1210,,asset_non_current,false,Andelar i koncernföretag,230
+1220,,asset_non_current,false,Långfristiga fordringar hos koncernföretag,240
+1230,,asset_non_current,false,Andelar i intresseföretag,250
+1240,,asset_non_current,false,Andra långfristiga värdepappersinnehav,260
+1250,,asset_non_current,false,Lån till delägare eller närstående,270
+1260,,asset_non_current,false,Långfristiga fordringar hos övriga företag,280
+1270,,asset_non_current,false,Uppskjuten skattefordran,290
+1280,,asset_non_current,false,Långfristig deposition,300
+1310,,asset_current,false,Råvaror och förnödenheter,310
+1320,,asset_current,false,Varor under tillverkning,320
+1330,,asset_current,false,Färdiga varor och handelsvaror,330
+1340,,asset_current,false,Pågående arbete för annans räkning,340
+1350,,asset_current,false,Förskott till leverantörer,350
+1410,,asset_receivable,true,Kundfordringar,360
+1420,,asset_current,false,Osäkra kundfordringar,370
+1430,,asset_receivable,true,Kundfordringar hos koncernföretag,380
+1440,,asset_current,false,Kortfristiga fordringar hos intresseföretag,390
+1510,,asset_current,false,Ingående moms 25 procent,400
+1511,,asset_current,false,Ingående moms 12 procent,410
+1512,,asset_current,false,Ingående moms 6 procent,420
+1513,,asset_current,false,Ingående moms unionsinterna förvärv av varor,430
+1514,,asset_current,false,Ingående moms förvärv av tjänster från utlandet,440
+1515,,asset_current,false,Ingående moms inhemsk omvänd betalningsskyldighet,450
+1516,,asset_current,false,Ingående moms import,460
+1610,,asset_current,false,Kortfristiga fordringar hos anställda,470
+1620,,asset_current,false,Övriga kortfristiga fordringar,480
+1630,,asset_current,true,Skattekontot,490
+1640,,asset_current,false,Fordran arbetsgivaravgifter,500
+1710,,asset_prepayments,false,Förutbetalda hyreskostnader,510
+1720,,asset_prepayments,false,Förutbetalda försäkringspremier,520
+1730,,asset_prepayments,false,Upplupna hyresintäkter,530
+1740,,asset_prepayments,false,Upplupna ränteintäkter,540
+1790,,asset_prepayments,false,Övriga förutbetalda kostnader och upplupna intäkter,550
+1910,,asset_cash,false,Kassa,560
+1920,,asset_cash,true,Bankkonto,570
+1930,,asset_cash,true,Koncernkonto,580
+1940,,asset_cash,true,Placeringskonto,590
+2010,,equity,false,Aktiekapital,600
+2011,,equity,false,Ej registrerat aktiekapital,610
+2065,,equity,false,Reservfond,620
+2070,,equity,false,Överkursfond,630
+2080,,equity,false,Fond för utvecklingsutgifter,640
+2020,,equity_retained,false,Balanserat resultat,650
+2090,,equity_retained,false,Årets resultat,660
+2110,,liability_non_current,false,Periodiseringsfond,670
+2120,,liability_non_current,false,Ackumulerade överavskrivningar,680
+2210,,liability_non_current,false,Avsättningar för pensioner,690
+2220,,liability_non_current,false,Avsättningar för garantier,700
+2230,,liability_non_current,false,Övriga avsättningar,710
+2310,,liability_non_current,false,"Skulder till kreditinstitut, långfristiga",720
+2320,,liability_non_current,false,Checkräkningskredit långfristig del,730
+2330,,liability_non_current,false,Obligationslån,740
+2340,,liability_non_current,false,Långfristiga skulder till koncernföretag,750
+2350,,liability_non_current,false,Övriga långfristiga skulder,760
+2410,,liability_payable,true,Leverantörsskulder,770
+2420,,liability_credit_card,false,Checkräkningskredit kortfristig del,780
+2430,,liability_current,false,Utgående moms 25 procent,790
+2431,,liability_current,false,Utgående moms 12 procent,800
+2432,,liability_current,false,Utgående moms 6 procent,810
+2440,,liability_current,false,Utgående moms unionsinterna förvärv av varor,820
+2441,,liability_current,false,Utgående moms förvärvad tjänst,830
+2442,,liability_current,false,Utgående moms inhemsk omvänd betalningsskyldighet,840
+2443,,liability_current,false,Utgående moms import,850
+2510,,liability_current,false,Personalens preliminärskatt,860
+2520,,liability_current,false,Utgående arbetsgivaravgifter,870
+2530,,liability_current,false,Semesterlöneskuld,880
+2540,,liability_current,false,Upplupna löner,890
+2610,,liability_current,false,Upplupna sociala avgifter,900
+2710,,liability_current,false,Förutbetalda intäkter,910
+2720,,liability_current,false,Övriga upplupna kostnader,920
+2890,,liability_current,false,Övriga kortfristiga skulder,930
+2891,,liability_current,false,Kortfristiga skulder till koncernföretag,940
+3010,,income,false,Försäljning varor och tjänster 25 procent moms,950
+3020,,income,false,Försäljning varor och tjänster 12 procent moms,960
+3030,,income,false,Försäljning varor och tjänster 6 procent moms,970
+3040,,income,false,Försäljning undantagen från moms,980
+3050,,income,false,Försäljning varor till annat EU-land,990
+3060,,income,false,Försäljning varor utanför EU,1000
+3070,,income,false,Försäljning tjänster till annat EU-land,1010
+3080,,income,false,Försäljning köparen skattskyldig i Sverige,1020
+3090,,income,false,Fakturerade frakter,1030
+3091,,income,false,Fakturerade tjänster,1040
+3100,,income,false,Hyresintäkter,1050
+3510,,income,false,Lämnade rabatter,1060
+3690,,income_other,false,Valutakursvinster på fordringar och skulder av rörelsekaraktär,1070
+3900,,income_other,false,Övriga rörelseintäkter,1080
+3960,,income_other,false,Öres- och kronutjämning,1090
+4010,,expense_direct_cost,false,Inköp varor och tjänster Sverige,1100
+4020,,expense_direct_cost,false,Inköp varor från annat EU-land,1110
+4030,,expense_direct_cost,false,"Inköp varor utanför EU, import",1120
+4040,,expense_direct_cost,false,Köpta tjänster från annat EU-land,1130
+4050,,expense_direct_cost,false,Köpta tjänster utanför EU,1140
+4060,,expense_direct_cost,false,"Köpta byggtjänster, omvänd betalningsskyldighet",1150
+4070,,expense_direct_cost,false,Legoarbeten och underentreprenader,1160
+4090,,expense_direct_cost,false,Förändring av lager,1170
+5010,,expense,false,Lokalhyra,1180
+5020,,expense,false,El för belysning,1190
+5030,,expense,false,Städning och renhållning,1200
+5040,,expense,false,Reparation och underhåll av lokaler,1210
+5410,,expense,false,Förbrukningsinventarier,1220
+5420,,expense,false,Programvaror abonnemang,1230
+5460,,expense,false,Förbrukningsmaterial,1240
+5500,,expense,false,Reparation och underhåll av maskiner,1250
+5610,,expense,false,Personbilskostnader,1260
+5611,,expense,false,Drivmedel för personbilar,1270
+5615,,expense,false,Leasing av personbilar,1280
+5800,,expense,false,Resekostnader,1290
+5900,,expense,false,Reklam och PR,1300
+5910,,expense,false,Annonsering,1310
+6110,,expense,false,Kontorsmaterial,1320
+6150,,expense,false,Trycksaker,1330
+6211,,expense,false,Telefon,1340
+6212,,expense,false,Mobiltelefon,1350
+6230,,expense,false,Datakommunikation,1360
+6310,,expense,false,Företagsförsäkringar,1370
+6420,,expense,false,Ersättning till revisor,1380
+6530,,expense,false,Redovisningstjänster,1390
+6540,,expense,false,IT-tjänster,1400
+6550,,expense,false,Konsultarvoden,1410
+6560,,expense,false,Serviceavgifter till branschorganisationer,1420
+6570,,expense,false,Bankkostnader,1430
+6590,,expense,false,Övriga externa tjänster,1440
+6970,,expense,false,Tidningar tidskrifter och facklitteratur,1450
+6991,,expense,false,Övriga externa kostnader,1460
+7010,,expense,false,Löner till kollektivanställda,1470
+7210,,expense,false,Löner till tjänstemän,1480
+7290,,expense,false,Förändring av semesterlöneskuld,1490
+7510,,expense,false,Lagstadgade sociala avgifter,1500
+7570,,expense,false,Premier för arbetsmarknadsförsäkringar,1510
+7610,,expense,false,Utbildning,1520
+7690,,expense,false,Övriga personalkostnader,1530
+7830,,expense_depreciation,false,Avskrivningar immateriella anläggningstillgångar,1540
+7831,,expense_depreciation,false,Avskrivningar byggnader,1550
+7832,,expense_depreciation,false,Avskrivningar maskiner,1560
+7833,,expense_depreciation,false,Avskrivningar inventarier,1570
+7834,,expense_depreciation,false,Avskrivningar bilar,1580
+8310,,income_other,false,Ränteintäkter från koncernföretag,1590
+8311,,income_other,false,Övriga ränteintäkter,1600
+8330,,income_other,false,Valutakursvinster,1610
+8400,,expense,false,Räntekostnader till koncernföretag,1620
+8410,,expense,false,Övriga räntekostnader,1630
+8430,,expense,false,Valutakursförluster,1640
+8710,,expense,false,Avsättning till periodiseringsfond,1650
+8890,,expense,false,Skatt på årets resultat,1660

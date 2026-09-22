@@ -1,0 +1,279 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "SE",
+  "name": "Sverige",
+  "version": "0.1.0",
+  "schema_min": "20260921145425",
+  "seed_sequence": 37,
+  "released_at": "2026-09-22",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "ml",
+        "title": "Mervärdesskattelag (2023:200)",
+        "publisher": "Sveriges riksdag — Svensk författningssamling",
+        "url": "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/mervardesskattelag-2023200_sfs-2023-200/",
+        "consulted_on": "2026-09-22",
+        "kind": "law"
+      },
+      {
+        "key": "skv-momssatser",
+        "title": "Momssatser och undantag från moms",
+        "publisher": "Skatteverket",
+        "url": "https://www.skatteverket.se/foretag/moms/saljavarorochtjanster/momssatserochundantagfranmoms.4.58d555751259e4d66168000409.html",
+        "consulted_on": "2026-09-22",
+        "kind": "guidance"
+      },
+      {
+        "key": "skv-fakturering",
+        "title": "Momslagens regler om fakturering",
+        "publisher": "Skatteverket",
+        "url": "https://www.skatteverket.se/foretag/moms/saljavarorochtjanster/momslagensregleromfakturering.4.58d555751259e4d66168000403.html",
+        "consulted_on": "2026-09-22",
+        "kind": "guidance"
+      },
+      {
+        "key": "skv-deklarera",
+        "title": "När ska jag deklarera moms",
+        "publisher": "Skatteverket",
+        "url": "https://www.skatteverket.se/foretag/moms/deklareramoms/narskajagdeklareramoms.4.6d02084411db6e252fe80008988.html",
+        "consulted_on": "2026-09-22",
+        "kind": "guidance"
+      },
+      {
+        "key": "skv409",
+        "title": "Moms- och arbetsgivardeklarationer (SKV 409, utgåva 21) — rutorna i momsdeklarationen, block A till H",
+        "publisher": "Skatteverket",
+        "url": "https://www.skatteverket.se/download/18.4a4d586616058d860bcc0e3/1708610818566/moms-och-arbetsgivardeklarationer-skv409-utgava21.pdf",
+        "consulted_on": "2026-09-22",
+        "kind": "form"
+      },
+      {
+        "key": "skv-etjanst",
+        "title": "Moms- och arbetsgivardeklarationer — e-tjänsten där deklarationen lämnas",
+        "publisher": "Skatteverket",
+        "url": "https://www.skatteverket.se/foretag/moms/deklareramoms/skapaochskickainmomsdeklarationviafil.4.2fb39afe18dabf1e4d223cc.html",
+        "consulted_on": "2026-09-22",
+        "kind": "portal"
+      },
+      {
+        "key": "rantelagen",
+        "title": "Räntelag (1975:635)",
+        "publisher": "Sveriges riksdag — Svensk författningssamling",
+        "url": "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/rantelag-1975635_sfs-1975-635/",
+        "consulted_on": "2026-09-22",
+        "kind": "law"
+      },
+      {
+        "key": "inkassokostnadslagen",
+        "title": "Lag (1981:739) om ersättning för inkassokostnader m.m.",
+        "publisher": "Sveriges riksdag — Svensk författningssamling",
+        "url": "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/lag-1981739-om-ersattning-for-inkassokostnader_sfs-1981-739/",
+        "consulted_on": "2026-09-22",
+        "kind": "law"
+      },
+      {
+        "key": "bokforingslagen",
+        "title": "Bokföringslag (1999:1078)",
+        "publisher": "Sveriges riksdag — Svensk författningssamling",
+        "url": "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/bokforingslag-19991078_sfs-1999-1078/",
+        "consulted_on": "2026-09-22",
+        "kind": "law"
+      },
+      {
+        "key": "arsredovisningslagen",
+        "title": "Årsredovisningslag (1995:1554), 3 kap. och bilaga 1 — balansräkningens uppställningsform",
+        "publisher": "Sveriges riksdag — Svensk författningssamling",
+        "url": "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/arsredovisningslag-19951554_sfs-1995-1554/",
+        "consulted_on": "2026-09-22",
+        "kind": "law"
+      },
+      {
+        "key": "lag-2018-1277",
+        "title": "Lag (2018:1277) om elektroniska fakturor till följd av offentlig upphandling",
+        "publisher": "Sveriges riksdag — Svensk författningssamling",
+        "url": "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/lag-20181277-om-elektroniska-fakturor-till_sfs-2018-1277/",
+        "consulted_on": "2026-09-22",
+        "kind": "law"
+      },
+      {
+        "key": "sfti-peppol",
+        "title": "Instruktion för val av Peppol-ID — organisationsnummer (EAS 0007) och momsregistreringsnummer (EAS 9955)",
+        "publisher": "Upphandlingsmyndigheten / DIGG",
+        "url": "https://www.upphandlingsmyndigheten.se/digitalisering-och-e-handel/peppol/instruktion-for-val-av-peppol-id/",
+        "consulted_on": "2026-09-22",
+        "kind": "guidance"
+      },
+      {
+        "key": "en-16931",
+        "title": "EN 16931-1 — semantic data model of the electronic invoice, compliance under Directive 2014/55/EU",
+        "publisher": "European Commission",
+        "url": "https://ec.europa.eu/digital-building-blocks/sites/spaces/DIGITAL/pages/467108950/EN+16931+compliance",
+        "consulted_on": "2026-09-22",
+        "kind": "standard"
+      },
+      {
+        "key": "uncl5305",
+        "title": "UNCL5305 — Duty or tax or fee category codes (BT-118, BT-151), subset published for EN 16931",
+        "publisher": "OpenPEPPOL — list published by the European Commission",
+        "url": "https://docs.peppol.eu/poacc/billing/3.0/codelist/UNCL5305/",
+        "consulted_on": "2026-09-22",
+        "kind": "standard"
+      },
+      {
+        "key": "vatex",
+        "title": "VATEX — VAT exemption reason code list (BT-121)",
+        "publisher": "OpenPEPPOL — list published by the European Commission",
+        "url": "https://docs.peppol.eu/poacc/billing/3.0/codelist/vatex/",
+        "consulted_on": "2026-09-22",
+        "kind": "standard"
+      },
+      {
+        "key": "peppol-eas",
+        "title": "Electronic Address Scheme (EAS) code list, ISO 6523 — 0007 (Swedish organisationsnummer) and 9955 (Swedish VAT number)",
+        "publisher": "OpenPEPPOL",
+        "url": "https://docs.peppol.eu/poacc/billing/3.0/codelist/eas/",
+        "consulted_on": "2026-09-22",
+        "kind": "standard"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "SEK",
+    "language": "sv",
+    "rounding_method": "half_up",
+    "closing_style": "result_accounts",
+    "fiscal_year_default": "calendar",
+    "roles": {
+      "receivable": "1410",
+      "payable": "2410",
+      "suspense": "2890",
+      "rounding": "3960",
+      "retained_earnings": "2020",
+      "current_year_result_profit": "2090",
+      "current_year_result_loss": "2090",
+      "sales": "3010",
+      "purchase": "4010",
+      "bank": "1920",
+      "cash": "1910",
+      "fx_gain": "8330",
+      "fx_loss": "8430",
+      "tax_payable": "1630"
+    },
+    "journal_roles": {
+      "sales": "FV",
+      "purchase": "LV",
+      "miscellaneous": "DIV",
+      "opening": "IB"
+    }
+  },
+  "languages": [],
+  "journals": [
+    { "code": "FV", "type": "sales", "name": "Försäljningsfakturor", "sequence": 10 },
+    { "code": "LV", "type": "purchase", "name": "Leverantörsfakturor", "sequence": 20 },
+    { "code": "BNK", "type": "bank", "name": "Bank", "sequence": 30 },
+    { "code": "KAS", "type": "cash", "name": "Kassa", "sequence": 40 },
+    { "code": "DIV", "type": "general", "name": "Diverse verifikationer", "sequence": 50 },
+    { "code": "IB", "type": "opening", "name": "Ingående balans", "sequence": 60 }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Referenskontoplan för Sverige",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "legal_reference": "Bokföringslagen ställer inte upp någon lagstadgad kontoplan; kraven är att bokföringen är systematisk och kan presenteras i en systematisk ordning (5 kap. 1 §). Den vidast spridda referensen i svensk praxis är den kontoklassindelning som BAS-kontoplanen bygger på (klass 1 tillgångar, klass 2 eget kapital och skulder, klass 3 rörelsens intäkter, klass 4 material och varor, klass 5–6 övriga externa kostnader, klass 7 personalkostnader och avskrivningar, klass 8 finansiella poster och skatt). Denna plan följer den indelningen som referens men är Ekwos egen sammanställning: den återger varken BAS-kontoplanens fullständiga kontolista, dess kontonummer eller dess benämningar, som är Bas-intressenternas Förenings verk och inte publiceras under en öppen licens.",
+      "source": "bokforingslagen"
+    }
+  ],
+  "documents": {
+    "numbering": "gapless_per_year",
+    "number_format": "{CODE}-{YYYY}-{NNNN}",
+    "legal_payment_days": 30,
+    "late_payment_reference": "Räntelag (1975:635) 3 § och 6 § — har förfallodag inte avtalats löper dröjsmålsränta från trettio dagar efter det att borgenären framställt krav på betalning och angett att utebliven betalning medför skyldighet att betala ränta; räntan är enligt 6 § referensräntan med ett tillägg av åtta procentenheter. Lag (1981:739) om ersättning för inkassokostnader m.m. 4 a § ger därutöver, i förhållanden mellan näringsidkare, rätt till en förseningsersättning om 450 kronor.",
+    "tax_point": "earliest_of_delivery_or_payment",
+    "posted_edit_policy": "reversal_only",
+    "references": {
+      "numbering": {
+        "legal_reference": "Mervärdesskattelag (2023:200) 17 kap. 24 § — en faktura ska innehålla ett löpnummer grundat på en eller flera nummerserier, som ger fakturan ett unikt nummer. Skatteverkets vägledning om fakturans innehåll läser kravet som att nummerserien ska vara obruten under beskattningsåret, eftersom syftet är att kunna slå fast att ingen faktura saknas; ett hål i serien ska kunna förklaras.",
+        "source": "skv-fakturering"
+      },
+      "payment_terms": {
+        "legal_reference": "Räntelag (1975:635) 3 § — se late_payment_reference. Betalningsvillkor är i övrigt avtalsfrihet mellan parterna; 30 dagar är lagens utfyllande regel när inget annat har avtalats.",
+        "source": "rantelagen"
+      },
+      "tax_point": {
+        "legal_reference": "Mervärdesskattelag (2023:200) 7 kap. 4 § — den beskattningsgrundande händelsen inträffar och mervärdesskatt blir utgående när varan har levererats eller tjänsten har tillhandahållits (huvudregel); 7 kap. 7 § — vid förskottsbetalning inträffar den beskattningsgrundande händelsen och skatten blir utgående för den mottagna betalningen redan vid mottagandet, innan leverans eller tillhandahållande. Tillsammans är detta earliest_of_delivery_or_payment.",
+        "source": "ml"
+      },
+      "posted_edit_policy": {
+        "legal_reference": "Bokföringslag (1999:1078) 5 kap. 5 § — en verifikation får inte ändras så att den ursprungliga uppgiften inte längre går att fastställa; en rättelse ska i stället ske genom en ny verifikation eller genom en särskild rättelsepost. En bokförd faktura rättas därför med en kreditfaktura som hänvisar till den, inte genom redigering.",
+        "source": "bokforingslagen"
+      }
+    },
+    "mentions": [
+      {
+        "code": "reverse_charge",
+        "applies_when": "reverse_charge",
+        "text": "Omvänd betalningsskyldighet — köparen redovisar och betalar mervärdesskatten.",
+        "sequence": 10,
+        "legal_reference": "Mervärdesskattelag (2023:200) 17 kap. 24 § — vid omvänd betalningsskyldighet ska fakturan innehålla uppgiften ”Omvänd betalningsskyldighet” eller motsvarande hänvisning; artikel 226.11a i direktiv 2006/112/EG kräver hänvisningen på alla EU-språk.",
+        "source": "ml"
+      },
+      {
+        "code": "intracom_goods",
+        "applies_when": "intra_eu_goods",
+        "text": "Unionsintern varuförsäljning, undantagen från mervärdesskatt — köparens momsregistreringsnummer anges på fakturan.",
+        "sequence": 20,
+        "legal_reference": "Mervärdesskattelag (2023:200) 10 kap. 42–48 §§ — undantag för leverans av varor till en beskattningsbar person i ett annat EU-land som åberopar sitt momsregistreringsnummer där; 17 kap. 24 § kräver köparens momsregistreringsnummer på fakturan.",
+        "source": "ml"
+      },
+      {
+        "code": "intracom_services",
+        "applies_when": "intra_eu_services",
+        "text": "Omvänd betalningsskyldighet — köparen redovisar och betalar mervärdesskatten i sitt land.",
+        "sequence": 30,
+        "legal_reference": "Mervärdesskattelag (2023:200) 17 kap. 16 § — fakturan ska utfärdas senast den 15:e i månaden efter den månad då tjänsten tillhandahölls; 17 kap. 24 § kräver hänvisningen till omvänd betalningsskyldighet.",
+        "source": "ml"
+      },
+      {
+        "code": "export",
+        "applies_when": "export",
+        "text": "Exportförsäljning — varan är utförd ur EU, ingen mervärdesskatt tas ut.",
+        "sequence": 40,
+        "legal_reference": "Mervärdesskattelag (2023:200) 10 kap. 64 § — undantag från skatteplikt för leverans av varor som transporteras av säljaren eller för dennes räkning till en plats utanför EU.",
+        "source": "ml"
+      },
+      {
+        "code": "exempt",
+        "applies_when": "exempt",
+        "text": "Undantagen från mervärdesskatt enligt 10 kap. mervärdesskattelagen.",
+        "sequence": 50,
+        "legal_reference": "Mervärdesskattelag (2023:200) 10 kap. — generell skatteplikt och undantag, bland annat 10 kap. 32 § försäkringstjänster och 10 kap. 33 § finansieringstjänster. Lagen föreskriver ingen bestämd ordalydelse för hänvisningen.",
+        "source": "ml"
+      },
+      {
+        "code": "late_payment",
+        "applies_when": "late_payment",
+        "text": "Vid dröjsmål med betalningen utgår dröjsmålsränta enligt räntelagen samt, mellan näringsidkare, en förseningsersättning om 450 kronor.",
+        "sequence": 60,
+        "legal_reference": "Räntelag (1975:635) 3 § och 6 §; Lag (1981:739) om ersättning för inkassokostnader m.m. 4 a §. Ingen ordalydelse är föreskriven; hänvisningen är inte obligatorisk på fakturan.",
+        "source": "rantelagen"
+      }
+    ]
+  },
+  "einvoicing": {
+    "profile": "peppol-bis-3",
+    "obligation": "none",
+    "party_scheme": "0007",
+    "vat_scheme": "9955",
+    "legal_reference": "Vid released_at ålägger ingen författning svenska företag att sinsemellan utväxla e-fakturor — obligation är none för fakturering mellan näringsidkare. Lag (2018:1277) om elektroniska fakturor till följd av offentlig upphandling ålägger sedan den 1 april 2019 den som fakturerar en upphandlande myndighet eller enhet till följd av en offentlig upphandling enligt LOU, LUF, LUFS eller LUK att göra det med en elektronisk faktura i det format som avses i genomförandeförordning (EU) 2017/1870, det vill säga den europeiska standarden EN 16931; den skyldigheten träffar bara den delmängd av fakturor som riktas mot den offentliga sektorn efter en sådan upphandling, inte fakturering i allmänhet. SFTI och Upphandlingsmyndigheten rekommenderar Peppol BIS Billing 3 som tekniskt format. party_scheme 0007 är det svenska organisationsnumret i EAS-listan; vat_scheme 9955 är det svenska momsregistreringsnumret.",
+    "source": "lag-2018-1277"
+  },
+  "bank": {
+    "statement_formats": ["camt.053"],
+    "payment_formats": ["pain.001"]
+  }
+}

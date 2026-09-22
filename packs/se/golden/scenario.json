@@ -1,0 +1,95 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "Ett kvartal i böckerna hos ett svenskt aktiebolag, momsregistrerat och kvartalsredovisande",
+  "fiscal_year": { "name": "Räkenskapsår 2026", "start": "2026-01-01", "end": "2026-12-31" },
+  "periods": [
+    { "code": "2026-K1", "from": "2026-01-01", "to": "2026-03-31" }
+  ],
+  "contacts": [
+    { "ref": "kund-se", "name": "Nordiska Kontor AB", "type": "customer", "country": "SE" },
+    { "ref": "kund-de", "name": "Rhein Handel GmbH", "type": "customer", "country": "DE", "vat_number": "DE123456789" },
+    { "ref": "kund-us", "name": "Atlantic Traders LLC", "type": "customer", "country": "US" },
+    { "ref": "lev-se", "name": "Svensk Kontorsmaterial AB", "type": "supplier", "country": "SE" },
+    { "ref": "lev-de", "name": "Bayern Maschinen GmbH", "type": "supplier", "country": "DE", "vat_number": "DE987654321" },
+    { "ref": "lev-us", "name": "Cloud Software Inc", "type": "supplier", "country": "US" },
+    { "ref": "lev-bygg", "name": "Byggpartner i Sverige AB", "type": "supplier", "country": "SE" }
+  ],
+  "documents": [
+    {
+      "ref": "V1", "type": "sale_invoice", "contact": "kund-se", "date": "2026-01-15",
+      "why": "En vanlig inhemsk försäljning till normalskattesatsen 25 procent: grundar ruta 05 och den utgående momsen i ruta 10.",
+      "lines": [{ "name": "Konsulttjänster", "quantity": 1, "unit_price": 40000, "tax": "SE-S-25", "account": "3010" }]
+    },
+    {
+      "ref": "V2", "type": "sale_invoice", "contact": "kund-se", "date": "2026-01-20",
+      "why": "Försäljning till den reducerade skattesatsen 12 procent för en cateringtjänst: ruta 05 och ruta 11, samt underlag för kreditfakturan V7.",
+      "lines": [{ "name": "Cateringtjänst till kundevent", "quantity": 1, "unit_price": 10000, "tax": "SE-S-12", "account": "3020" }]
+    },
+    {
+      "ref": "V3", "type": "sale_invoice", "contact": "kund-se", "date": "2026-01-25",
+      "why": "Försäljning av böcker till den reducerade skattesatsen 6 procent: en andra reducerad skattesats, utöver 12 procent, i ruta 05 och ruta 12.",
+      "lines": [{ "name": "Facklitteratur", "quantity": 1, "unit_price": 5000, "tax": "SE-S-06", "account": "3030" }]
+    },
+    {
+      "ref": "V4", "type": "sale_invoice", "contact": "kund-us", "date": "2026-02-01",
+      "why": "Export av varor till en köpare i USA, utanför EU: nollskattesats enligt 10 kap. 64 § mervärdesskattelagen och ruta 36.",
+      "lines": [{ "name": "Exporterade varor", "quantity": 1, "unit_price": 30000, "tax": "SE-S-0-EXPORT", "account": "3060" }]
+    },
+    {
+      "ref": "V5", "type": "sale_invoice", "contact": "kund-de", "date": "2026-02-10",
+      "why": "Unionsintern varuförsäljning till en momsregistrerad köpare i Tyskland: nollskattesats enligt 10 kap. 42–48 §§ mervärdesskattelagen och ruta 35.",
+      "lines": [{ "name": "Varor till tysk återförsäljare", "quantity": 1, "unit_price": 25000, "tax": "SE-S-0-IC-GOODS", "account": "3050" }]
+    },
+    {
+      "ref": "V6", "type": "sale_invoice", "contact": "kund-se", "date": "2026-02-15",
+      "why": "Finansieringstjänst undantagen från moms enligt 10 kap. 33 § mervärdesskattelagen: ruta 42, en undantagen försäljning som varken är export eller unionsintern.",
+      "lines": [{ "name": "Förmedling av företagskredit", "quantity": 1, "unit_price": 8000, "tax": "SE-S-EXEMPT-FIN", "account": "3040" }]
+    },
+    {
+      "ref": "V7", "type": "sale_credit_note", "contact": "kund-se", "date": "2026-02-05",
+      "why": "En kreditfaktura som delvis krediterar V2 efter en reklamation på cateringtjänsten — minskar ruta 05 och ruta 11 och visar hur en kreditfaktura hanteras.",
+      "lines": [{ "name": "Kreditering av cateringtjänst V2", "quantity": 1, "unit_price": 2000, "tax": "SE-S-12", "account": "3020" }]
+    },
+    {
+      "ref": "V8", "type": "sale_invoice", "contact": "kund-de", "date": "2026-02-12",
+      "why": "Tjänsteförsäljning till en beskattningsbar person i Tyskland enligt huvudregeln: köparen är skattskyldig i sitt land, ruta 39 — kompletterar V5 med en tjänst i stället för en vara.",
+      "lines": [{ "name": "Konsulttjänst enligt huvudregeln", "quantity": 1, "unit_price": 15000, "tax": "SE-S-0-IC-SERVICES", "account": "3070" }]
+    },
+    {
+      "ref": "V9", "type": "sale_invoice", "contact": "kund-se", "date": "2026-02-18",
+      "why": "Byggtjänst till ett annat byggföretag med omvänd betalningsskyldighet enligt 16 kap. 13 § mervärdesskattelagen: köparen redovisar momsen, ruta 41.",
+      "lines": [{ "name": "Byggtjänst till byggföretag", "quantity": 1, "unit_price": 20000, "tax": "SE-S-DRC", "account": "3080" }]
+    },
+    {
+      "ref": "A1", "type": "purchase_invoice", "contact": "lev-se", "date": "2026-01-10",
+      "why": "Inhemskt inköp med avdragsgill ingående moms 25 procent: ruta 48, betalas i sin helhet av E3.",
+      "lines": [{ "name": "Kontorsmaterial", "quantity": 1, "unit_price": 4000, "tax": "SE-P-25", "account": "6110" }]
+    },
+    {
+      "ref": "A2", "type": "purchase_invoice", "contact": "lev-de", "date": "2026-01-18",
+      "why": "Unionsinternt förvärv av varor: köparen redovisar själv utgående och avdragsgill ingående moms, ruta 20, ruta 30 och ruta 48 — en unionsintern omvänd skattskyldighet på inköpssidan, som komplement till V5 på försäljningssidan.",
+      "lines": [{ "name": "Maskindelar från Tyskland", "quantity": 1, "unit_price": 18000, "tax": "SE-P-IC-GOODS-25", "account": "4020" }]
+    },
+    {
+      "ref": "A3", "type": "purchase_invoice", "contact": "lev-us", "date": "2026-01-22",
+      "why": "Tjänst köpt från ett land utanför EU enligt huvudregeln: köparen redovisar själv momsen, ruta 22, ruta 30 och ruta 48.",
+      "lines": [{ "name": "Molntjänst, prenumeration", "quantity": 1, "unit_price": 6000, "tax": "SE-P-FOREIGN-SERVICES-25", "account": "4050" }]
+    },
+    {
+      "ref": "A4", "type": "purchase_invoice", "contact": "lev-bygg", "date": "2026-02-01",
+      "why": "Byggtjänst med omvänd betalningsskyldighet från en annan byggfirma: köparen redovisar momsen, ruta 24, ruta 30 och ruta 48 — omvänd skattskyldighet på inköpssidan, som komplement till V9 på försäljningssidan.",
+      "lines": [{ "name": "Ombyggnad av kontorslokal", "quantity": 1, "unit_price": 50000, "tax": "SE-P-DRC-25", "account": "4060" }]
+    },
+    {
+      "ref": "A5", "type": "purchase_invoice", "contact": "lev-se", "date": "2026-02-20",
+      "why": "Inhemskt inköp till den reducerade skattesatsen 12 procent, med moms debiterad av säljaren som vanligt: ruta 48 vid en annan skattesats än 25 procent.",
+      "lines": [{ "name": "Konferens med catering", "quantity": 1, "unit_price": 3000, "tax": "SE-P-12", "account": "4010" }]
+    }
+  ],
+  "payments": [
+    { "ref": "E1", "direction": "inbound", "date": "2026-02-10", "amount": 50000, "contact": "kund-se", "journal": "BNK", "match": "V1", "why": "Kunden betalar faktura V1 i sin helhet — en matchad betalning." },
+    { "ref": "E2", "direction": "inbound", "date": "2026-02-25", "amount": 30000, "contact": "kund-us", "journal": "BNK", "match": "V4", "why": "Betalning för exportfakturan V4." },
+    { "ref": "E3", "direction": "outbound", "date": "2026-02-15", "amount": 5000, "contact": "lev-se", "journal": "BNK", "match": "A1", "why": "Betalning av leverantörsfaktura A1." },
+    { "ref": "E4", "direction": "inbound", "date": "2026-03-01", "amount": 15000, "contact": "kund-de", "journal": "BNK", "match": null, "why": "En förskottsbetalning från kunden i Tyskland som ännu inte har matchats mot någon faktura — en omatchad betalning, ett öppet poständ i reskontran." }
+  ]
+}

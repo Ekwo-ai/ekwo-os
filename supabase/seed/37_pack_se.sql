@@ -1,0 +1,567 @@
+-- Ekwo OS — Sverige: chart of accounts, journals, taxes and defaults.
+--
+-- Generated from packs/se at version 0.1.0, do not edit.
+-- Change the pack and run `ekwo pack build se`; `ekwo pack check --all`
+-- refuses a seed that is not the exact output of its pack, and the CI runs it.
+--
+-- Community pack — not reviewed.
+-- Written from:
+--   Mervärdesskattelag (2023:200) (Sveriges riksdag — Svensk författningssamling)
+--     https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/mervardesskattelag-2023200_sfs-2023-200/
+--   Momssatser och undantag från moms (Skatteverket)
+--     https://www.skatteverket.se/foretag/moms/saljavarorochtjanster/momssatserochundantagfranmoms.4.58d555751259e4d66168000409.html
+--   Momslagens regler om fakturering (Skatteverket)
+--     https://www.skatteverket.se/foretag/moms/saljavarorochtjanster/momslagensregleromfakturering.4.58d555751259e4d66168000403.html
+--   När ska jag deklarera moms (Skatteverket)
+--     https://www.skatteverket.se/foretag/moms/deklareramoms/narskajagdeklareramoms.4.6d02084411db6e252fe80008988.html
+--   Moms- och arbetsgivardeklarationer (SKV 409, utgåva 21) — rutorna i momsdeklarationen, block A till H (Skatteverket)
+--     https://www.skatteverket.se/download/18.4a4d586616058d860bcc0e3/1708610818566/moms-och-arbetsgivardeklarationer-skv409-utgava21.pdf
+--   Moms- och arbetsgivardeklarationer — e-tjänsten där deklarationen lämnas (Skatteverket)
+--     https://www.skatteverket.se/foretag/moms/deklareramoms/skapaochskickainmomsdeklarationviafil.4.2fb39afe18dabf1e4d223cc.html
+--   Räntelag (1975:635) (Sveriges riksdag — Svensk författningssamling)
+--     https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/rantelag-1975635_sfs-1975-635/
+--   Lag (1981:739) om ersättning för inkassokostnader m.m. (Sveriges riksdag — Svensk författningssamling)
+--     https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/lag-1981739-om-ersattning-for-inkassokostnader_sfs-1981-739/
+--   Bokföringslag (1999:1078) (Sveriges riksdag — Svensk författningssamling)
+--     https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/bokforingslag-19991078_sfs-1999-1078/
+--   Årsredovisningslag (1995:1554), 3 kap. och bilaga 1 — balansräkningens uppställningsform (Sveriges riksdag — Svensk författningssamling)
+--     https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/arsredovisningslag-19951554_sfs-1995-1554/
+--   Lag (2018:1277) om elektroniska fakturor till följd av offentlig upphandling (Sveriges riksdag — Svensk författningssamling)
+--     https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/lag-20181277-om-elektroniska-fakturor-till_sfs-2018-1277/
+--   Instruktion för val av Peppol-ID — organisationsnummer (EAS 0007) och momsregistreringsnummer (EAS 9955) (Upphandlingsmyndigheten / DIGG)
+--     https://www.upphandlingsmyndigheten.se/digitalisering-och-e-handel/peppol/instruktion-for-val-av-peppol-id/
+--   EN 16931-1 — semantic data model of the electronic invoice, compliance under Directive 2014/55/EU (European Commission)
+--     https://ec.europa.eu/digital-building-blocks/sites/spaces/DIGITAL/pages/467108950/EN+16931+compliance
+--   UNCL5305 — Duty or tax or fee category codes (BT-118, BT-151), subset published for EN 16931 (OpenPEPPOL — list published by the European Commission)
+--     https://docs.peppol.eu/poacc/billing/3.0/codelist/UNCL5305/
+--   VATEX — VAT exemption reason code list (BT-121) (OpenPEPPOL — list published by the European Commission)
+--     https://docs.peppol.eu/poacc/billing/3.0/codelist/vatex/
+--   Electronic Address Scheme (EAS) code list, ISO 6523 — 0007 (Swedish organisationsnummer) and 9955 (Swedish VAT number) (OpenPEPPOL)
+--     https://docs.peppol.eu/poacc/billing/3.0/codelist/eas/
+--
+-- Reference data: `install_country_template()` copies it into a company,
+-- nothing here belongs to a company.
+
+insert into country_packs
+  (country, name, version, released_at, schema_min, certification_status,
+   certified_by, certified_at, checksum, sources)
+values
+  ('SE', 'Sverige', '0.1.0', date '2026-09-22', '20260921145425', 'community', null, null, 'c93af392f61eefba012e8551e49926fa10d06e48f3a648d2a8a3d9db47bc8a9b', '[{"key":"ml","title":"Mervärdesskattelag (2023:200)","publisher":"Sveriges riksdag — Svensk författningssamling","url":"https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/mervardesskattelag-2023200_sfs-2023-200/","consulted_on":"2026-09-22","kind":"law"},{"key":"skv-momssatser","title":"Momssatser och undantag från moms","publisher":"Skatteverket","url":"https://www.skatteverket.se/foretag/moms/saljavarorochtjanster/momssatserochundantagfranmoms.4.58d555751259e4d66168000409.html","consulted_on":"2026-09-22","kind":"guidance"},{"key":"skv-fakturering","title":"Momslagens regler om fakturering","publisher":"Skatteverket","url":"https://www.skatteverket.se/foretag/moms/saljavarorochtjanster/momslagensregleromfakturering.4.58d555751259e4d66168000403.html","consulted_on":"2026-09-22","kind":"guidance"},{"key":"skv-deklarera","title":"När ska jag deklarera moms","publisher":"Skatteverket","url":"https://www.skatteverket.se/foretag/moms/deklareramoms/narskajagdeklareramoms.4.6d02084411db6e252fe80008988.html","consulted_on":"2026-09-22","kind":"guidance"},{"key":"skv409","title":"Moms- och arbetsgivardeklarationer (SKV 409, utgåva 21) — rutorna i momsdeklarationen, block A till H","publisher":"Skatteverket","url":"https://www.skatteverket.se/download/18.4a4d586616058d860bcc0e3/1708610818566/moms-och-arbetsgivardeklarationer-skv409-utgava21.pdf","consulted_on":"2026-09-22","kind":"form"},{"key":"skv-etjanst","title":"Moms- och arbetsgivardeklarationer — e-tjänsten där deklarationen lämnas","publisher":"Skatteverket","url":"https://www.skatteverket.se/foretag/moms/deklareramoms/skapaochskickainmomsdeklarationviafil.4.2fb39afe18dabf1e4d223cc.html","consulted_on":"2026-09-22","kind":"portal"},{"key":"rantelagen","title":"Räntelag (1975:635)","publisher":"Sveriges riksdag — Svensk författningssamling","url":"https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/rantelag-1975635_sfs-1975-635/","consulted_on":"2026-09-22","kind":"law"},{"key":"inkassokostnadslagen","title":"Lag (1981:739) om ersättning för inkassokostnader m.m.","publisher":"Sveriges riksdag — Svensk författningssamling","url":"https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/lag-1981739-om-ersattning-for-inkassokostnader_sfs-1981-739/","consulted_on":"2026-09-22","kind":"law"},{"key":"bokforingslagen","title":"Bokföringslag (1999:1078)","publisher":"Sveriges riksdag — Svensk författningssamling","url":"https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/bokforingslag-19991078_sfs-1999-1078/","consulted_on":"2026-09-22","kind":"law"},{"key":"arsredovisningslagen","title":"Årsredovisningslag (1995:1554), 3 kap. och bilaga 1 — balansräkningens uppställningsform","publisher":"Sveriges riksdag — Svensk författningssamling","url":"https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/arsredovisningslag-19951554_sfs-1995-1554/","consulted_on":"2026-09-22","kind":"law"},{"key":"lag-2018-1277","title":"Lag (2018:1277) om elektroniska fakturor till följd av offentlig upphandling","publisher":"Sveriges riksdag — Svensk författningssamling","url":"https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/lag-20181277-om-elektroniska-fakturor-till_sfs-2018-1277/","consulted_on":"2026-09-22","kind":"law"},{"key":"sfti-peppol","title":"Instruktion för val av Peppol-ID — organisationsnummer (EAS 0007) och momsregistreringsnummer (EAS 9955)","publisher":"Upphandlingsmyndigheten / DIGG","url":"https://www.upphandlingsmyndigheten.se/digitalisering-och-e-handel/peppol/instruktion-for-val-av-peppol-id/","consulted_on":"2026-09-22","kind":"guidance"},{"key":"en-16931","title":"EN 16931-1 — semantic data model of the electronic invoice, compliance under Directive 2014/55/EU","publisher":"European Commission","url":"https://ec.europa.eu/digital-building-blocks/sites/spaces/DIGITAL/pages/467108950/EN+16931+compliance","consulted_on":"2026-09-22","kind":"standard"},{"key":"uncl5305","title":"UNCL5305 — Duty or tax or fee category codes (BT-118, BT-151), subset published for EN 16931","publisher":"OpenPEPPOL — list published by the European Commission","url":"https://docs.peppol.eu/poacc/billing/3.0/codelist/UNCL5305/","consulted_on":"2026-09-22","kind":"standard"},{"key":"vatex","title":"VATEX — VAT exemption reason code list (BT-121)","publisher":"OpenPEPPOL — list published by the European Commission","url":"https://docs.peppol.eu/poacc/billing/3.0/codelist/vatex/","consulted_on":"2026-09-22","kind":"standard"},{"key":"peppol-eas","title":"Electronic Address Scheme (EAS) code list, ISO 6523 — 0007 (Swedish organisationsnummer) and 9955 (Swedish VAT number)","publisher":"OpenPEPPOL","url":"https://docs.peppol.eu/poacc/billing/3.0/codelist/eas/","consulted_on":"2026-09-22","kind":"standard"}]'::jsonb)
+on conflict (country) do update set
+  name                 = excluded.name,
+  version              = excluded.version,
+  released_at          = excluded.released_at,
+  schema_min           = excluded.schema_min,
+  certification_status = excluded.certification_status,
+  certified_by         = excluded.certified_by,
+  certified_at         = excluded.certified_at,
+  checksum             = excluded.checksum,
+  sources              = excluded.sources;
+
+insert into chart_templates
+  (country, code, name, name_i18n, is_default, audience, statements,
+   certification_status, legal_reference, source_key)
+values
+  ('SE', 'default', 'Referenskontoplan för Sverige', '{}'::jsonb, true, 'companies', '{}'::text[], null, 'Bokföringslagen ställer inte upp någon lagstadgad kontoplan; kraven är att bokföringen är systematisk och kan presenteras i en systematisk ordning (5 kap. 1 §). Den vidast spridda referensen i svensk praxis är den kontoklassindelning som BAS-kontoplanen bygger på (klass 1 tillgångar, klass 2 eget kapital och skulder, klass 3 rörelsens intäkter, klass 4 material och varor, klass 5–6 övriga externa kostnader, klass 7 personalkostnader och avskrivningar, klass 8 finansiella poster och skatt). Denna plan följer den indelningen som referens men är Ekwos egen sammanställning: den återger varken BAS-kontoplanens fullständiga kontolista, dess kontonummer eller dess benämningar, som är Bas-intressenternas Förenings verk och inte publiceras under en öppen licens.', 'bokforingslagen')
+on conflict (country, code) do update set
+  name                 = excluded.name,
+  name_i18n            = excluded.name_i18n,
+  is_default           = excluded.is_default,
+  audience             = excluded.audience,
+  statements           = excluded.statements,
+  certification_status = excluded.certification_status,
+  legal_reference      = excluded.legal_reference,
+  source_key           = excluded.source_key;
+
+insert into account_templates
+  (country, chart_code, code, name, name_i18n, account_type, reconcilable,
+   parent_code, sequence)
+values
+  ('SE', 'default', '1010', 'Balanserade utgifter för utveckling', '{}'::jsonb, 'asset_fixed', false, null, 10),
+  ('SE', 'default', '1011', 'Ackumulerade avskrivningar balanserade utgifter', '{}'::jsonb, 'asset_fixed', false, null, 20),
+  ('SE', 'default', '1020', 'Koncessioner patent licenser och varumärken', '{}'::jsonb, 'asset_fixed', false, null, 30),
+  ('SE', 'default', '1021', 'Ackumulerade avskrivningar koncessioner patent licenser', '{}'::jsonb, 'asset_fixed', false, null, 40),
+  ('SE', 'default', '1030', 'Goodwill', '{}'::jsonb, 'asset_fixed', false, null, 50),
+  ('SE', 'default', '1031', 'Ackumulerade avskrivningar goodwill', '{}'::jsonb, 'asset_fixed', false, null, 60),
+  ('SE', 'default', '1040', 'Programvaror', '{}'::jsonb, 'asset_fixed', false, null, 70),
+  ('SE', 'default', '1041', 'Ackumulerade avskrivningar programvaror', '{}'::jsonb, 'asset_fixed', false, null, 80),
+  ('SE', 'default', '1110', 'Byggnader', '{}'::jsonb, 'asset_fixed', false, null, 90),
+  ('SE', 'default', '1111', 'Ackumulerade avskrivningar byggnader', '{}'::jsonb, 'asset_fixed', false, null, 100),
+  ('SE', 'default', '1120', 'Mark', '{}'::jsonb, 'asset_fixed', false, null, 110),
+  ('SE', 'default', '1130', 'Markanläggningar', '{}'::jsonb, 'asset_fixed', false, null, 120),
+  ('SE', 'default', '1131', 'Ackumulerade avskrivningar markanläggningar', '{}'::jsonb, 'asset_fixed', false, null, 130),
+  ('SE', 'default', '1150', 'Maskiner och andra tekniska anläggningar', '{}'::jsonb, 'asset_fixed', false, null, 140),
+  ('SE', 'default', '1151', 'Ackumulerade avskrivningar maskiner', '{}'::jsonb, 'asset_fixed', false, null, 150),
+  ('SE', 'default', '1160', 'Inventarier, verktyg och installationer', '{}'::jsonb, 'asset_fixed', false, null, 160),
+  ('SE', 'default', '1161', 'Ackumulerade avskrivningar inventarier', '{}'::jsonb, 'asset_fixed', false, null, 170),
+  ('SE', 'default', '1170', 'Bilar och andra transportmedel', '{}'::jsonb, 'asset_fixed', false, null, 180),
+  ('SE', 'default', '1171', 'Ackumulerade avskrivningar bilar', '{}'::jsonb, 'asset_fixed', false, null, 190),
+  ('SE', 'default', '1180', 'Datorer', '{}'::jsonb, 'asset_fixed', false, null, 200),
+  ('SE', 'default', '1181', 'Ackumulerade avskrivningar datorer', '{}'::jsonb, 'asset_fixed', false, null, 210),
+  ('SE', 'default', '1190', 'Pågående nyanläggningar och förskott', '{}'::jsonb, 'asset_fixed', false, null, 220),
+  ('SE', 'default', '1210', 'Andelar i koncernföretag', '{}'::jsonb, 'asset_non_current', false, null, 230),
+  ('SE', 'default', '1220', 'Långfristiga fordringar hos koncernföretag', '{}'::jsonb, 'asset_non_current', false, null, 240),
+  ('SE', 'default', '1230', 'Andelar i intresseföretag', '{}'::jsonb, 'asset_non_current', false, null, 250),
+  ('SE', 'default', '1240', 'Andra långfristiga värdepappersinnehav', '{}'::jsonb, 'asset_non_current', false, null, 260),
+  ('SE', 'default', '1250', 'Lån till delägare eller närstående', '{}'::jsonb, 'asset_non_current', false, null, 270),
+  ('SE', 'default', '1260', 'Långfristiga fordringar hos övriga företag', '{}'::jsonb, 'asset_non_current', false, null, 280),
+  ('SE', 'default', '1270', 'Uppskjuten skattefordran', '{}'::jsonb, 'asset_non_current', false, null, 290),
+  ('SE', 'default', '1280', 'Långfristig deposition', '{}'::jsonb, 'asset_non_current', false, null, 300),
+  ('SE', 'default', '1310', 'Råvaror och förnödenheter', '{}'::jsonb, 'asset_current', false, null, 310),
+  ('SE', 'default', '1320', 'Varor under tillverkning', '{}'::jsonb, 'asset_current', false, null, 320),
+  ('SE', 'default', '1330', 'Färdiga varor och handelsvaror', '{}'::jsonb, 'asset_current', false, null, 330),
+  ('SE', 'default', '1340', 'Pågående arbete för annans räkning', '{}'::jsonb, 'asset_current', false, null, 340),
+  ('SE', 'default', '1350', 'Förskott till leverantörer', '{}'::jsonb, 'asset_current', false, null, 350),
+  ('SE', 'default', '1410', 'Kundfordringar', '{}'::jsonb, 'asset_receivable', true, null, 360),
+  ('SE', 'default', '1420', 'Osäkra kundfordringar', '{}'::jsonb, 'asset_current', false, null, 370),
+  ('SE', 'default', '1430', 'Kundfordringar hos koncernföretag', '{}'::jsonb, 'asset_receivable', true, null, 380),
+  ('SE', 'default', '1440', 'Kortfristiga fordringar hos intresseföretag', '{}'::jsonb, 'asset_current', false, null, 390),
+  ('SE', 'default', '1510', 'Ingående moms 25 procent', '{}'::jsonb, 'asset_current', false, null, 400),
+  ('SE', 'default', '1511', 'Ingående moms 12 procent', '{}'::jsonb, 'asset_current', false, null, 410),
+  ('SE', 'default', '1512', 'Ingående moms 6 procent', '{}'::jsonb, 'asset_current', false, null, 420),
+  ('SE', 'default', '1513', 'Ingående moms unionsinterna förvärv av varor', '{}'::jsonb, 'asset_current', false, null, 430),
+  ('SE', 'default', '1514', 'Ingående moms förvärv av tjänster från utlandet', '{}'::jsonb, 'asset_current', false, null, 440),
+  ('SE', 'default', '1515', 'Ingående moms inhemsk omvänd betalningsskyldighet', '{}'::jsonb, 'asset_current', false, null, 450),
+  ('SE', 'default', '1516', 'Ingående moms import', '{}'::jsonb, 'asset_current', false, null, 460),
+  ('SE', 'default', '1610', 'Kortfristiga fordringar hos anställda', '{}'::jsonb, 'asset_current', false, null, 470),
+  ('SE', 'default', '1620', 'Övriga kortfristiga fordringar', '{}'::jsonb, 'asset_current', false, null, 480),
+  ('SE', 'default', '1630', 'Skattekontot', '{}'::jsonb, 'asset_current', true, null, 490),
+  ('SE', 'default', '1640', 'Fordran arbetsgivaravgifter', '{}'::jsonb, 'asset_current', false, null, 500),
+  ('SE', 'default', '1710', 'Förutbetalda hyreskostnader', '{}'::jsonb, 'asset_prepayments', false, null, 510),
+  ('SE', 'default', '1720', 'Förutbetalda försäkringspremier', '{}'::jsonb, 'asset_prepayments', false, null, 520),
+  ('SE', 'default', '1730', 'Upplupna hyresintäkter', '{}'::jsonb, 'asset_prepayments', false, null, 530),
+  ('SE', 'default', '1740', 'Upplupna ränteintäkter', '{}'::jsonb, 'asset_prepayments', false, null, 540),
+  ('SE', 'default', '1790', 'Övriga förutbetalda kostnader och upplupna intäkter', '{}'::jsonb, 'asset_prepayments', false, null, 550),
+  ('SE', 'default', '1910', 'Kassa', '{}'::jsonb, 'asset_cash', false, null, 560),
+  ('SE', 'default', '1920', 'Bankkonto', '{}'::jsonb, 'asset_cash', true, null, 570),
+  ('SE', 'default', '1930', 'Koncernkonto', '{}'::jsonb, 'asset_cash', true, null, 580),
+  ('SE', 'default', '1940', 'Placeringskonto', '{}'::jsonb, 'asset_cash', true, null, 590),
+  ('SE', 'default', '2010', 'Aktiekapital', '{}'::jsonb, 'equity', false, null, 600),
+  ('SE', 'default', '2011', 'Ej registrerat aktiekapital', '{}'::jsonb, 'equity', false, null, 610),
+  ('SE', 'default', '2020', 'Balanserat resultat', '{}'::jsonb, 'equity_retained', false, null, 650),
+  ('SE', 'default', '2065', 'Reservfond', '{}'::jsonb, 'equity', false, null, 620),
+  ('SE', 'default', '2070', 'Överkursfond', '{}'::jsonb, 'equity', false, null, 630),
+  ('SE', 'default', '2080', 'Fond för utvecklingsutgifter', '{}'::jsonb, 'equity', false, null, 640),
+  ('SE', 'default', '2090', 'Årets resultat', '{}'::jsonb, 'equity_retained', false, null, 660),
+  ('SE', 'default', '2110', 'Periodiseringsfond', '{}'::jsonb, 'liability_non_current', false, null, 670),
+  ('SE', 'default', '2120', 'Ackumulerade överavskrivningar', '{}'::jsonb, 'liability_non_current', false, null, 680),
+  ('SE', 'default', '2210', 'Avsättningar för pensioner', '{}'::jsonb, 'liability_non_current', false, null, 690),
+  ('SE', 'default', '2220', 'Avsättningar för garantier', '{}'::jsonb, 'liability_non_current', false, null, 700),
+  ('SE', 'default', '2230', 'Övriga avsättningar', '{}'::jsonb, 'liability_non_current', false, null, 710),
+  ('SE', 'default', '2310', 'Skulder till kreditinstitut, långfristiga', '{}'::jsonb, 'liability_non_current', false, null, 720),
+  ('SE', 'default', '2320', 'Checkräkningskredit långfristig del', '{}'::jsonb, 'liability_non_current', false, null, 730),
+  ('SE', 'default', '2330', 'Obligationslån', '{}'::jsonb, 'liability_non_current', false, null, 740),
+  ('SE', 'default', '2340', 'Långfristiga skulder till koncernföretag', '{}'::jsonb, 'liability_non_current', false, null, 750),
+  ('SE', 'default', '2350', 'Övriga långfristiga skulder', '{}'::jsonb, 'liability_non_current', false, null, 760),
+  ('SE', 'default', '2410', 'Leverantörsskulder', '{}'::jsonb, 'liability_payable', true, null, 770),
+  ('SE', 'default', '2420', 'Checkräkningskredit kortfristig del', '{}'::jsonb, 'liability_credit_card', false, null, 780),
+  ('SE', 'default', '2430', 'Utgående moms 25 procent', '{}'::jsonb, 'liability_current', false, null, 790),
+  ('SE', 'default', '2431', 'Utgående moms 12 procent', '{}'::jsonb, 'liability_current', false, null, 800),
+  ('SE', 'default', '2432', 'Utgående moms 6 procent', '{}'::jsonb, 'liability_current', false, null, 810),
+  ('SE', 'default', '2440', 'Utgående moms unionsinterna förvärv av varor', '{}'::jsonb, 'liability_current', false, null, 820),
+  ('SE', 'default', '2441', 'Utgående moms förvärvad tjänst', '{}'::jsonb, 'liability_current', false, null, 830),
+  ('SE', 'default', '2442', 'Utgående moms inhemsk omvänd betalningsskyldighet', '{}'::jsonb, 'liability_current', false, null, 840),
+  ('SE', 'default', '2443', 'Utgående moms import', '{}'::jsonb, 'liability_current', false, null, 850),
+  ('SE', 'default', '2510', 'Personalens preliminärskatt', '{}'::jsonb, 'liability_current', false, null, 860),
+  ('SE', 'default', '2520', 'Utgående arbetsgivaravgifter', '{}'::jsonb, 'liability_current', false, null, 870),
+  ('SE', 'default', '2530', 'Semesterlöneskuld', '{}'::jsonb, 'liability_current', false, null, 880),
+  ('SE', 'default', '2540', 'Upplupna löner', '{}'::jsonb, 'liability_current', false, null, 890),
+  ('SE', 'default', '2610', 'Upplupna sociala avgifter', '{}'::jsonb, 'liability_current', false, null, 900),
+  ('SE', 'default', '2710', 'Förutbetalda intäkter', '{}'::jsonb, 'liability_current', false, null, 910),
+  ('SE', 'default', '2720', 'Övriga upplupna kostnader', '{}'::jsonb, 'liability_current', false, null, 920),
+  ('SE', 'default', '2890', 'Övriga kortfristiga skulder', '{}'::jsonb, 'liability_current', false, null, 930),
+  ('SE', 'default', '2891', 'Kortfristiga skulder till koncernföretag', '{}'::jsonb, 'liability_current', false, null, 940),
+  ('SE', 'default', '3010', 'Försäljning varor och tjänster 25 procent moms', '{}'::jsonb, 'income', false, null, 950),
+  ('SE', 'default', '3020', 'Försäljning varor och tjänster 12 procent moms', '{}'::jsonb, 'income', false, null, 960),
+  ('SE', 'default', '3030', 'Försäljning varor och tjänster 6 procent moms', '{}'::jsonb, 'income', false, null, 970),
+  ('SE', 'default', '3040', 'Försäljning undantagen från moms', '{}'::jsonb, 'income', false, null, 980),
+  ('SE', 'default', '3050', 'Försäljning varor till annat EU-land', '{}'::jsonb, 'income', false, null, 990),
+  ('SE', 'default', '3060', 'Försäljning varor utanför EU', '{}'::jsonb, 'income', false, null, 1000),
+  ('SE', 'default', '3070', 'Försäljning tjänster till annat EU-land', '{}'::jsonb, 'income', false, null, 1010),
+  ('SE', 'default', '3080', 'Försäljning köparen skattskyldig i Sverige', '{}'::jsonb, 'income', false, null, 1020),
+  ('SE', 'default', '3090', 'Fakturerade frakter', '{}'::jsonb, 'income', false, null, 1030),
+  ('SE', 'default', '3091', 'Fakturerade tjänster', '{}'::jsonb, 'income', false, null, 1040),
+  ('SE', 'default', '3100', 'Hyresintäkter', '{}'::jsonb, 'income', false, null, 1050),
+  ('SE', 'default', '3510', 'Lämnade rabatter', '{}'::jsonb, 'income', false, null, 1060),
+  ('SE', 'default', '3690', 'Valutakursvinster på fordringar och skulder av rörelsekaraktär', '{}'::jsonb, 'income_other', false, null, 1070),
+  ('SE', 'default', '3900', 'Övriga rörelseintäkter', '{}'::jsonb, 'income_other', false, null, 1080),
+  ('SE', 'default', '3960', 'Öres- och kronutjämning', '{}'::jsonb, 'income_other', false, null, 1090),
+  ('SE', 'default', '4010', 'Inköp varor och tjänster Sverige', '{}'::jsonb, 'expense_direct_cost', false, null, 1100),
+  ('SE', 'default', '4020', 'Inköp varor från annat EU-land', '{}'::jsonb, 'expense_direct_cost', false, null, 1110),
+  ('SE', 'default', '4030', 'Inköp varor utanför EU, import', '{}'::jsonb, 'expense_direct_cost', false, null, 1120),
+  ('SE', 'default', '4040', 'Köpta tjänster från annat EU-land', '{}'::jsonb, 'expense_direct_cost', false, null, 1130),
+  ('SE', 'default', '4050', 'Köpta tjänster utanför EU', '{}'::jsonb, 'expense_direct_cost', false, null, 1140),
+  ('SE', 'default', '4060', 'Köpta byggtjänster, omvänd betalningsskyldighet', '{}'::jsonb, 'expense_direct_cost', false, null, 1150),
+  ('SE', 'default', '4070', 'Legoarbeten och underentreprenader', '{}'::jsonb, 'expense_direct_cost', false, null, 1160),
+  ('SE', 'default', '4090', 'Förändring av lager', '{}'::jsonb, 'expense_direct_cost', false, null, 1170),
+  ('SE', 'default', '5010', 'Lokalhyra', '{}'::jsonb, 'expense', false, null, 1180),
+  ('SE', 'default', '5020', 'El för belysning', '{}'::jsonb, 'expense', false, null, 1190),
+  ('SE', 'default', '5030', 'Städning och renhållning', '{}'::jsonb, 'expense', false, null, 1200),
+  ('SE', 'default', '5040', 'Reparation och underhåll av lokaler', '{}'::jsonb, 'expense', false, null, 1210),
+  ('SE', 'default', '5410', 'Förbrukningsinventarier', '{}'::jsonb, 'expense', false, null, 1220),
+  ('SE', 'default', '5420', 'Programvaror abonnemang', '{}'::jsonb, 'expense', false, null, 1230),
+  ('SE', 'default', '5460', 'Förbrukningsmaterial', '{}'::jsonb, 'expense', false, null, 1240),
+  ('SE', 'default', '5500', 'Reparation och underhåll av maskiner', '{}'::jsonb, 'expense', false, null, 1250),
+  ('SE', 'default', '5610', 'Personbilskostnader', '{}'::jsonb, 'expense', false, null, 1260),
+  ('SE', 'default', '5611', 'Drivmedel för personbilar', '{}'::jsonb, 'expense', false, null, 1270),
+  ('SE', 'default', '5615', 'Leasing av personbilar', '{}'::jsonb, 'expense', false, null, 1280),
+  ('SE', 'default', '5800', 'Resekostnader', '{}'::jsonb, 'expense', false, null, 1290),
+  ('SE', 'default', '5900', 'Reklam och PR', '{}'::jsonb, 'expense', false, null, 1300),
+  ('SE', 'default', '5910', 'Annonsering', '{}'::jsonb, 'expense', false, null, 1310),
+  ('SE', 'default', '6110', 'Kontorsmaterial', '{}'::jsonb, 'expense', false, null, 1320),
+  ('SE', 'default', '6150', 'Trycksaker', '{}'::jsonb, 'expense', false, null, 1330),
+  ('SE', 'default', '6211', 'Telefon', '{}'::jsonb, 'expense', false, null, 1340),
+  ('SE', 'default', '6212', 'Mobiltelefon', '{}'::jsonb, 'expense', false, null, 1350),
+  ('SE', 'default', '6230', 'Datakommunikation', '{}'::jsonb, 'expense', false, null, 1360),
+  ('SE', 'default', '6310', 'Företagsförsäkringar', '{}'::jsonb, 'expense', false, null, 1370),
+  ('SE', 'default', '6420', 'Ersättning till revisor', '{}'::jsonb, 'expense', false, null, 1380),
+  ('SE', 'default', '6530', 'Redovisningstjänster', '{}'::jsonb, 'expense', false, null, 1390),
+  ('SE', 'default', '6540', 'IT-tjänster', '{}'::jsonb, 'expense', false, null, 1400),
+  ('SE', 'default', '6550', 'Konsultarvoden', '{}'::jsonb, 'expense', false, null, 1410),
+  ('SE', 'default', '6560', 'Serviceavgifter till branschorganisationer', '{}'::jsonb, 'expense', false, null, 1420),
+  ('SE', 'default', '6570', 'Bankkostnader', '{}'::jsonb, 'expense', false, null, 1430),
+  ('SE', 'default', '6590', 'Övriga externa tjänster', '{}'::jsonb, 'expense', false, null, 1440),
+  ('SE', 'default', '6970', 'Tidningar tidskrifter och facklitteratur', '{}'::jsonb, 'expense', false, null, 1450),
+  ('SE', 'default', '6991', 'Övriga externa kostnader', '{}'::jsonb, 'expense', false, null, 1460),
+  ('SE', 'default', '7010', 'Löner till kollektivanställda', '{}'::jsonb, 'expense', false, null, 1470),
+  ('SE', 'default', '7210', 'Löner till tjänstemän', '{}'::jsonb, 'expense', false, null, 1480),
+  ('SE', 'default', '7290', 'Förändring av semesterlöneskuld', '{}'::jsonb, 'expense', false, null, 1490),
+  ('SE', 'default', '7510', 'Lagstadgade sociala avgifter', '{}'::jsonb, 'expense', false, null, 1500),
+  ('SE', 'default', '7570', 'Premier för arbetsmarknadsförsäkringar', '{}'::jsonb, 'expense', false, null, 1510),
+  ('SE', 'default', '7610', 'Utbildning', '{}'::jsonb, 'expense', false, null, 1520),
+  ('SE', 'default', '7690', 'Övriga personalkostnader', '{}'::jsonb, 'expense', false, null, 1530),
+  ('SE', 'default', '7830', 'Avskrivningar immateriella anläggningstillgångar', '{}'::jsonb, 'expense_depreciation', false, null, 1540),
+  ('SE', 'default', '7831', 'Avskrivningar byggnader', '{}'::jsonb, 'expense_depreciation', false, null, 1550),
+  ('SE', 'default', '7832', 'Avskrivningar maskiner', '{}'::jsonb, 'expense_depreciation', false, null, 1560),
+  ('SE', 'default', '7833', 'Avskrivningar inventarier', '{}'::jsonb, 'expense_depreciation', false, null, 1570),
+  ('SE', 'default', '7834', 'Avskrivningar bilar', '{}'::jsonb, 'expense_depreciation', false, null, 1580),
+  ('SE', 'default', '8310', 'Ränteintäkter från koncernföretag', '{}'::jsonb, 'income_other', false, null, 1590),
+  ('SE', 'default', '8311', 'Övriga ränteintäkter', '{}'::jsonb, 'income_other', false, null, 1600),
+  ('SE', 'default', '8330', 'Valutakursvinster', '{}'::jsonb, 'income_other', false, null, 1610),
+  ('SE', 'default', '8400', 'Räntekostnader till koncernföretag', '{}'::jsonb, 'expense', false, null, 1620),
+  ('SE', 'default', '8410', 'Övriga räntekostnader', '{}'::jsonb, 'expense', false, null, 1630),
+  ('SE', 'default', '8430', 'Valutakursförluster', '{}'::jsonb, 'expense', false, null, 1640),
+  ('SE', 'default', '8710', 'Avsättning till periodiseringsfond', '{}'::jsonb, 'expense', false, null, 1650),
+  ('SE', 'default', '8890', 'Skatt på årets resultat', '{}'::jsonb, 'expense', false, null, 1660)
+on conflict (country, chart_code, code) do update set
+  name         = excluded.name,
+  name_i18n    = excluded.name_i18n,
+  account_type = excluded.account_type,
+  reconcilable = excluded.reconcilable,
+  parent_code  = excluded.parent_code,
+  sequence     = excluded.sequence;
+
+insert into journal_templates (country, code, name, name_i18n, journal_type, sequence) values
+  ('SE', 'BNK', 'Bank', '{}'::jsonb, 'bank', 30),
+  ('SE', 'DIV', 'Diverse verifikationer', '{}'::jsonb, 'general', 50),
+  ('SE', 'FV', 'Försäljningsfakturor', '{}'::jsonb, 'sales', 10),
+  ('SE', 'IB', 'Ingående balans', '{}'::jsonb, 'opening', 60),
+  ('SE', 'KAS', 'Kassa', '{}'::jsonb, 'cash', 40),
+  ('SE', 'LV', 'Leverantörsfakturor', '{}'::jsonb, 'purchase', 20)
+on conflict (country, code) do update set
+  name         = excluded.name,
+  name_i18n    = excluded.name_i18n,
+  journal_type = excluded.journal_type,
+  sequence     = excluded.sequence;
+
+insert into tax_templates
+  (country, code, name, name_i18n, description, amount_type, amount, applies_to, treatment,
+   valid_from, valid_to, legal_reference, vat_category, exemption_code, sequence,
+   tax_kind, recoverable, conditions, jurisdiction, price_include, cash_basis,
+   cash_basis_transition_account_code, source_key,
+   applies_seller_territory, applies_buyer_territory, applies_supply_territory,
+   applies_supply_vs_seller)
+values
+  ('SE', 'SE-P-06', 'Ingående moms 6 %', '{}'::jsonb, 'Avdragsgill ingående moms på inhemska inköp; ruta 48', 'percent', 6, 'purchase', 'domestic', date '2023-07-01', null, 'Mervärdesskattelag (2023:200) 13 kap. 6 §.', null, null, 110, 'vat', true, '{}'::tax_condition[], null, false, false, null, 'ml', null, null, null, null),
+  ('SE', 'SE-P-12', 'Ingående moms 12 %', '{}'::jsonb, 'Avdragsgill ingående moms på inhemska inköp; ruta 48', 'percent', 12, 'purchase', 'domestic', date '2023-07-01', null, 'Mervärdesskattelag (2023:200) 13 kap. 6 §.', null, null, 100, 'vat', true, '{}'::tax_condition[], null, false, false, null, 'ml', null, null, null, null),
+  ('SE', 'SE-P-25', 'Ingående moms 25 %', '{}'::jsonb, 'Avdragsgill ingående moms på inhemska inköp; ruta 48', 'percent', 25, 'purchase', 'domestic', date '2023-07-01', null, 'Mervärdesskattelag (2023:200) 13 kap. 6 § — den som bedriver en verksamhet som medför skattskyldighet har rätt att dra av ingående skatt som hänför sig till förvärv i verksamheten.', null, null, 90, 'vat', true, '{}'::tax_condition[], null, false, false, null, 'ml', null, null, null, null),
+  ('SE', 'SE-P-DRC-25', 'Köpt byggtjänst, omvänd betalningsskyldighet 25 %', '{}'::jsonb, 'Köparen redovisar själv utgående och ingående moms; ruta 24, ruta 30 och ruta 48', 'percent', 25, 'purchase', 'domestic_reverse_charge', date '2023-07-01', null, 'Mervärdesskattelag (2023:200) 16 kap. 13 § — köparen är skattskyldig för byggtjänster som köps av en beskattningsbar person som själv tillhandahåller sådana tjänster, jämförd med 13 kap. 6 § om avdragsrätt. Ruta 24 i broschyren SKV 409 nämner uttryckligen byggtjänster med omvänd skattskyldighet.', 'AE', 'VATEX-EU-AE', 150, 'vat', true, array['buyer_status', 'supply_nature']::tax_condition[], null, false, false, null, 'skv409', null, null, null, null),
+  ('SE', 'SE-P-FOREIGN-SERVICES-25', 'Köpt tjänst från land utanför EU, huvudregeln 25 %', '{}'::jsonb, 'Köparen redovisar själv utgående och ingående moms; ruta 22, ruta 30 och ruta 48', 'percent', 25, 'purchase', 'foreign_services_received', date '2023-07-01', null, 'Mervärdesskattelag (2023:200), huvudregeln för tjänster som köps av en beskattningsbar person från en säljare utanför EU, jämförd med 13 kap. 6 § om avdragsrätt; broschyren SKV 409, block C och D, beskriver redovisningen i ruta 22, 30 och 48. Säljarens faktura omfattas inte av EN 16931, varför ingen kategori anges.', null, null, 140, 'vat', true, '{}'::tax_condition[], null, false, false, null, 'skv409', null, null, null, null),
+  ('SE', 'SE-P-IC-GOODS-25', 'Unionsinternt förvärv av varor 25 %', '{}'::jsonb, 'Köparen redovisar själv utgående och ingående moms på förvärvet; ruta 20, ruta 30 och ruta 48', 'percent', 25, 'purchase', 'intracom_acquisition_goods', date '2023-07-01', null, 'Mervärdesskattelag (2023:200), bestämmelserna om unionsinterna förvärv av varor och om förvärvarens skattskyldighet, jämförda med 13 kap. 6 § om avdragsrätt; broschyren SKV 409, block C och D, beskriver redovisningen i ruta 20, 30 och 48.', 'K', 'VATEX-EU-IC', 120, 'vat', true, '{}'::tax_condition[], null, false, false, null, 'skv409', null, null, null, null),
+  ('SE', 'SE-P-IC-SERVICES-25', 'Köpt tjänst från annat EU-land, huvudregeln 25 %', '{}'::jsonb, 'Köparen redovisar själv utgående och ingående moms; ruta 21, ruta 30 och ruta 48', 'percent', 25, 'purchase', 'intracom_acquisition_services', date '2023-07-01', null, 'Mervärdesskattelag (2023:200), huvudregeln för tjänster som köps av en beskattningsbar person från ett annat EU-land, jämförd med 13 kap. 6 § om avdragsrätt; broschyren SKV 409, block C och D, beskriver redovisningen i ruta 21, 30 och 48.', 'K', 'VATEX-EU-IC', 130, 'vat', true, '{}'::tax_condition[], null, false, false, null, 'skv409', null, null, null, null),
+  ('SE', 'SE-P-IMPORT-25', 'Import av varor 25 %', '{}'::jsonb, 'Momsregistrerad importör redovisar själv utgående och ingående moms i momsdeklarationen; ruta 50, ruta 60 och ruta 48', 'percent', 25, 'purchase', 'import', date '2023-07-01', null, 'Mervärdesskattelag (2023:200), bestämmelserna om import och om att en momsregistrerad importör redovisar importmomsen i momsdeklarationen i stället för till Tullverket, jämförd med 13 kap. 6 § om avdragsrätt. Broschyren SKV 409, block H, beskriver redovisningen i ruta 50, 60 och 48. Tulldeklarationen, inte en faktura enligt EN 16931, ligger till grund för beloppet, varför ingen kategori anges.', null, null, 160, 'vat', true, '{}'::tax_condition[], null, false, false, null, 'skv409', null, null, null, null),
+  ('SE', 'SE-S-0-EXPORT', 'Exportförsäljning, undantagen från moms', '{}'::jsonb, 'Varuförsäljning till en plats utanför EU; ruta 36', 'percent', 0, 'sale', 'export', date '2023-07-01', null, 'Mervärdesskattelag (2023:200) 10 kap. 64 § — undantag från skatteplikt för leverans av varor som säljaren eller någon för dennes räkning transporterar till en plats utanför EU. I mervärdesskattelagen kallas detta export.', 'G', 'VATEX-EU-G', 40, 'vat', true, array['transport_evidence']::tax_condition[], null, false, false, null, 'ml', null, null, null, null),
+  ('SE', 'SE-S-0-IC-GOODS', 'Unionsintern varuförsäljning', '{}'::jsonb, 'Varor till en köpare som åberopar sitt momsregistreringsnummer i ett annat EU-land; ruta 35', 'percent', 0, 'sale', 'intracom_goods', date '2023-07-01', null, 'Mervärdesskattelag (2023:200) 10 kap. 42–48 §§ — undantag från skatteplikt för leverans av varor som transporteras till ett annat EU-land till en beskattningsbar person som där åberopar ett giltigt momsregistreringsnummer, under förutsättning att leveransen redovisas korrekt i den periodiska sammanställningen.', 'K', 'VATEX-EU-IC', 50, 'vat', true, array['buyer_status', 'transport_evidence']::tax_condition[], null, false, false, null, 'ml', null, null, null, null),
+  ('SE', 'SE-S-0-IC-SERVICES', 'Försäljning av tjänster till beskattningsbar person i annat EU-land', '{}'::jsonb, 'Huvudregeln för tjänster, köparen skattskyldig i sitt land; ruta 39', 'percent', 0, 'sale', 'intracom_services', date '2023-07-01', null, 'Mervärdesskattelag (2023:200) 6 kap. (huvudregeln för omsättningsland för tjänster till beskattningsbara personer) jämförd med 17 kap. 16 § om faktureringstidpunkt; tjänsten anses omsatt i köparens land och köparen är där skattskyldig. Ruta 39 i broschyren SKV 409 beskriver redovisningen.', 'K', 'VATEX-EU-IC', 60, 'vat', true, array['buyer_status']::tax_condition[], null, false, false, null, 'skv409', null, null, null, null),
+  ('SE', 'SE-S-06', 'Utgående moms 6 %', '{}'::jsonb, 'Böcker och tidningar; ruta 05 och ruta 12', 'percent', 6, 'sale', 'domestic', date '2023-07-01', null, 'Mervärdesskattelag (2023:200) 9 kap. 8 § och 9 kap. 9 § — skatt tas ut med 6 procent av beskattningsunderlaget för böcker, broschyrer, tidningar och tidskrifter.', 'S', null, 30, 'vat', true, '{}'::tax_condition[], null, false, false, null, 'ml', null, null, null, null),
+  ('SE', 'SE-S-12', 'Utgående moms 12 %', '{}'::jsonb, 'Restaurang- och cateringtjänster; ruta 05 och ruta 11', 'percent', 12, 'sale', 'domestic', date '2023-07-01', null, 'Mervärdesskattelag (2023:200) 9 kap. 3 § och 9 kap. 5 § — skatt tas ut med 12 procent av beskattningsunderlaget för restaurang- och cateringtjänster, med undantag för den del som avser spritdrycker, vin och starköl.', 'S', null, 20, 'vat', true, '{}'::tax_condition[], null, false, false, null, 'ml', null, null, null, null),
+  ('SE', 'SE-S-25', 'Utgående moms 25 %', '{}'::jsonb, 'Normalskattesats; ruta 05 och ruta 10', 'percent', 25, 'sale', 'domestic', date '2023-07-01', null, 'Mervärdesskattelag (2023:200) 9 kap. 2 § — skatt tas ut med 25 procent av beskattningsunderlaget om inte annat följer av 3–19 §§.', 'S', null, 10, 'vat', true, '{}'::tax_condition[], null, false, false, null, 'ml', null, null, null, null),
+  ('SE', 'SE-S-DRC', 'Försäljning, köparen skattskyldig i Sverige', '{}'::jsonb, 'Byggtjänster till en beskattningsbar person som själv tillhandahåller byggtjänster, eller avfall och skrot av vissa metaller; ruta 41', 'percent', 0, 'sale', 'domestic_reverse_charge', date '2023-07-01', null, 'Mervärdesskattelag (2023:200) 16 kap. 13 § (byggsektorn) och 16 kap. 14 § (avfall och skrot av vissa metaller) — köparen, inte säljaren, är skattskyldig för mervärdesskatten.', 'AE', 'VATEX-EU-AE', 80, 'vat', true, array['buyer_status', 'supply_nature']::tax_condition[], null, false, false, null, 'ml', null, null, null, null),
+  ('SE', 'SE-S-EXEMPT-FIN', 'Finansieringstjänst, undantagen från moms', '{}'::jsonb, 'Kreditgivning och förmedling av krediter; ruta 42', 'percent', 0, 'sale', 'exempt', date '2023-07-01', null, 'Mervärdesskattelag (2023:200) 10 kap. 33 § — undantag från skatteplikt för omsättning av bank- och finansieringstjänster, motsvarande artikel 135.1 b i direktiv 2006/112/EG.', 'E', 'VATEX-EU-135-1B', 70, 'vat', true, '{}'::tax_condition[], null, false, false, null, 'ml', null, null, null, null)
+on conflict (country, code) do update set
+  name            = excluded.name,
+  name_i18n       = excluded.name_i18n,
+  description     = excluded.description,
+  amount_type     = excluded.amount_type,
+  amount          = excluded.amount,
+  applies_to      = excluded.applies_to,
+  treatment       = excluded.treatment,
+  valid_from      = excluded.valid_from,
+  valid_to        = excluded.valid_to,
+  legal_reference = excluded.legal_reference,
+  vat_category    = excluded.vat_category,
+  exemption_code  = excluded.exemption_code,
+  sequence        = excluded.sequence,
+  tax_kind        = excluded.tax_kind,
+  recoverable     = excluded.recoverable,
+  conditions      = excluded.conditions,
+  jurisdiction    = excluded.jurisdiction,
+  price_include   = excluded.price_include,
+  cash_basis      = excluded.cash_basis,
+  cash_basis_transition_account_code = excluded.cash_basis_transition_account_code,
+  source_key      = excluded.source_key,
+  applies_seller_territory = excluded.applies_seller_territory,
+  applies_buyer_territory  = excluded.applies_buyer_territory,
+  applies_supply_territory = excluded.applies_supply_territory,
+  applies_supply_vs_seller = excluded.applies_supply_vs_seller;
+
+insert into tax_posting_templates
+  (tax_template_id, document_kind, posting_type, factor_percent, account_code,
+   declaration_box, declaration_boxes, box_factor_percent, report_code, sequence)
+select t.id,
+       v.document_kind::tax_document_kind,
+       v.posting_type::tax_posting_type,
+       v.factor_percent::numeric,
+       v.account_code::text,
+       v.declaration_box::text,
+       v.declaration_boxes::text[],
+       v.box_factor_percent::numeric,
+       v.report_code::text,
+       v.sequence::integer
+  from (values
+    ('SE-P-06', 'invoice', 'tax', 100, '1512', '48', array['48']::text[], 100, 'SE-MOMS', 10),
+    ('SE-P-06', 'credit_note', 'tax', 100, '1512', '48', array['48']::text[], -100, 'SE-MOMS', 10),
+    ('SE-P-12', 'invoice', 'tax', 100, '1511', '48', array['48']::text[], 100, 'SE-MOMS', 10),
+    ('SE-P-12', 'credit_note', 'tax', 100, '1511', '48', array['48']::text[], -100, 'SE-MOMS', 10),
+    ('SE-P-25', 'invoice', 'tax', 100, '1510', '48', array['48']::text[], 100, 'SE-MOMS', 10),
+    ('SE-P-25', 'credit_note', 'tax', 100, '1510', '48', array['48']::text[], -100, 'SE-MOMS', 10),
+    ('SE-P-DRC-25', 'invoice', 'base', 100, null, '24', array['24']::text[], 100, 'SE-MOMS', 10),
+    ('SE-P-DRC-25', 'invoice', 'tax', 100, '1515', '48', array['48']::text[], 100, 'SE-MOMS', 20),
+    ('SE-P-DRC-25', 'invoice', 'tax', -100, '2442', '30', array['30']::text[], 100, 'SE-MOMS', 30),
+    ('SE-P-DRC-25', 'credit_note', 'base', 100, null, '24', array['24']::text[], -100, 'SE-MOMS', 10),
+    ('SE-P-DRC-25', 'credit_note', 'tax', 100, '1515', '48', array['48']::text[], -100, 'SE-MOMS', 20),
+    ('SE-P-DRC-25', 'credit_note', 'tax', -100, '2442', '30', array['30']::text[], -100, 'SE-MOMS', 30),
+    ('SE-P-FOREIGN-SERVICES-25', 'invoice', 'base', 100, null, '22', array['22']::text[], 100, 'SE-MOMS', 10),
+    ('SE-P-FOREIGN-SERVICES-25', 'invoice', 'tax', 100, '1514', '48', array['48']::text[], 100, 'SE-MOMS', 20),
+    ('SE-P-FOREIGN-SERVICES-25', 'invoice', 'tax', -100, '2441', '30', array['30']::text[], 100, 'SE-MOMS', 30),
+    ('SE-P-FOREIGN-SERVICES-25', 'credit_note', 'base', 100, null, '22', array['22']::text[], -100, 'SE-MOMS', 10),
+    ('SE-P-FOREIGN-SERVICES-25', 'credit_note', 'tax', 100, '1514', '48', array['48']::text[], -100, 'SE-MOMS', 20),
+    ('SE-P-FOREIGN-SERVICES-25', 'credit_note', 'tax', -100, '2441', '30', array['30']::text[], -100, 'SE-MOMS', 30),
+    ('SE-P-IC-GOODS-25', 'invoice', 'base', 100, null, '20', array['20']::text[], 100, 'SE-MOMS', 10),
+    ('SE-P-IC-GOODS-25', 'invoice', 'tax', 100, '1513', '48', array['48']::text[], 100, 'SE-MOMS', 20),
+    ('SE-P-IC-GOODS-25', 'invoice', 'tax', -100, '2440', '30', array['30']::text[], 100, 'SE-MOMS', 30),
+    ('SE-P-IC-GOODS-25', 'credit_note', 'base', 100, null, '20', array['20']::text[], -100, 'SE-MOMS', 10),
+    ('SE-P-IC-GOODS-25', 'credit_note', 'tax', 100, '1513', '48', array['48']::text[], -100, 'SE-MOMS', 20),
+    ('SE-P-IC-GOODS-25', 'credit_note', 'tax', -100, '2440', '30', array['30']::text[], -100, 'SE-MOMS', 30),
+    ('SE-P-IC-SERVICES-25', 'invoice', 'base', 100, null, '21', array['21']::text[], 100, 'SE-MOMS', 10),
+    ('SE-P-IC-SERVICES-25', 'invoice', 'tax', 100, '1514', '48', array['48']::text[], 100, 'SE-MOMS', 20),
+    ('SE-P-IC-SERVICES-25', 'invoice', 'tax', -100, '2441', '30', array['30']::text[], 100, 'SE-MOMS', 30),
+    ('SE-P-IC-SERVICES-25', 'credit_note', 'base', 100, null, '21', array['21']::text[], -100, 'SE-MOMS', 10),
+    ('SE-P-IC-SERVICES-25', 'credit_note', 'tax', 100, '1514', '48', array['48']::text[], -100, 'SE-MOMS', 20),
+    ('SE-P-IC-SERVICES-25', 'credit_note', 'tax', -100, '2441', '30', array['30']::text[], -100, 'SE-MOMS', 30),
+    ('SE-P-IMPORT-25', 'invoice', 'base', 100, null, '50', array['50']::text[], 100, 'SE-MOMS', 10),
+    ('SE-P-IMPORT-25', 'invoice', 'tax', 100, '1516', '48', array['48']::text[], 100, 'SE-MOMS', 20),
+    ('SE-P-IMPORT-25', 'invoice', 'tax', -100, '2443', '60', array['60']::text[], 100, 'SE-MOMS', 30),
+    ('SE-P-IMPORT-25', 'credit_note', 'base', 100, null, '50', array['50']::text[], -100, 'SE-MOMS', 10),
+    ('SE-P-IMPORT-25', 'credit_note', 'tax', 100, '1516', '48', array['48']::text[], -100, 'SE-MOMS', 20),
+    ('SE-P-IMPORT-25', 'credit_note', 'tax', -100, '2443', '60', array['60']::text[], -100, 'SE-MOMS', 30),
+    ('SE-S-0-EXPORT', 'invoice', 'base', 100, null, '36', array['36']::text[], 100, 'SE-MOMS', 10),
+    ('SE-S-0-EXPORT', 'credit_note', 'base', 100, null, '36', array['36']::text[], -100, 'SE-MOMS', 10),
+    ('SE-S-0-IC-GOODS', 'invoice', 'base', 100, null, '35', array['35']::text[], 100, 'SE-MOMS', 10),
+    ('SE-S-0-IC-GOODS', 'credit_note', 'base', 100, null, '35', array['35']::text[], -100, 'SE-MOMS', 10),
+    ('SE-S-0-IC-SERVICES', 'invoice', 'base', 100, null, '39', array['39']::text[], 100, 'SE-MOMS', 10),
+    ('SE-S-0-IC-SERVICES', 'credit_note', 'base', 100, null, '39', array['39']::text[], -100, 'SE-MOMS', 10),
+    ('SE-S-06', 'invoice', 'base', 100, null, '05', array['05']::text[], 100, 'SE-MOMS', 10),
+    ('SE-S-06', 'invoice', 'tax', 100, '2432', '12', array['12']::text[], 100, 'SE-MOMS', 20),
+    ('SE-S-06', 'credit_note', 'base', 100, null, '05', array['05']::text[], -100, 'SE-MOMS', 10),
+    ('SE-S-06', 'credit_note', 'tax', 100, '2432', '12', array['12']::text[], -100, 'SE-MOMS', 20),
+    ('SE-S-12', 'invoice', 'base', 100, null, '05', array['05']::text[], 100, 'SE-MOMS', 10),
+    ('SE-S-12', 'invoice', 'tax', 100, '2431', '11', array['11']::text[], 100, 'SE-MOMS', 20),
+    ('SE-S-12', 'credit_note', 'base', 100, null, '05', array['05']::text[], -100, 'SE-MOMS', 10),
+    ('SE-S-12', 'credit_note', 'tax', 100, '2431', '11', array['11']::text[], -100, 'SE-MOMS', 20),
+    ('SE-S-25', 'invoice', 'base', 100, null, '05', array['05']::text[], 100, 'SE-MOMS', 10),
+    ('SE-S-25', 'invoice', 'tax', 100, '2430', '10', array['10']::text[], 100, 'SE-MOMS', 20),
+    ('SE-S-25', 'credit_note', 'base', 100, null, '05', array['05']::text[], -100, 'SE-MOMS', 10),
+    ('SE-S-25', 'credit_note', 'tax', 100, '2430', '10', array['10']::text[], -100, 'SE-MOMS', 20),
+    ('SE-S-DRC', 'invoice', 'base', 100, null, '41', array['41']::text[], 100, 'SE-MOMS', 10),
+    ('SE-S-DRC', 'credit_note', 'base', 100, null, '41', array['41']::text[], -100, 'SE-MOMS', 10),
+    ('SE-S-EXEMPT-FIN', 'invoice', 'base', 100, null, '42', array['42']::text[], 100, 'SE-MOMS', 10),
+    ('SE-S-EXEMPT-FIN', 'credit_note', 'base', 100, null, '42', array['42']::text[], -100, 'SE-MOMS', 10)
+  ) as v (tax_code, document_kind, posting_type, factor_percent, account_code,
+          declaration_box, declaration_boxes, box_factor_percent, report_code, sequence)
+  join tax_templates t on t.country = 'SE' and t.code = v.tax_code
+on conflict (tax_template_id, document_kind, posting_type, sequence) do update set
+  factor_percent     = excluded.factor_percent,
+  account_code       = excluded.account_code,
+  declaration_box    = excluded.declaration_box,
+  declaration_boxes  = excluded.declaration_boxes,
+  box_factor_percent = excluded.box_factor_percent,
+  report_code        = excluded.report_code;
+
+insert into tax_report_templates
+  (country, code, name, periods, period_default, valid_from, valid_to, legal_reference,
+   is_periodic_return, deadline_rule, deadline_day, deadline_plus_days,
+   deadline_reference, deadline_source_key, file_format,
+   rounding_unit, rounding_reference, rounding_source_key)
+values
+  ('SE', 'SE-MOMS', 'Momsdeklaration', array['month', 'quarter', 'year']::declaration_period[], null, date '2023-07-01', null, 'Mervärdesskattelag (2023:200) 26 kap. och skatteförfarandelagen (2011:1244) 26 kap. — den som är skattskyldig för moms ska lämna en momsdeklaration för varje redovisningsperiod. Redovisningsperioden är kalendermånad, kalenderkvartal eller beskattningsår beroende på företagets beskattningsunderlag och val; skatteförfarandelagen 26 kap. 11–17 §§ styr vilken period som gäller och när ett byte får ske. Eftersom periodens längd följer företagets egen omsättning och registrering, och inte en regel som gäller alla, föreslår detta pack ingen period_default. Rutorna är de i blankett SKV 4700, som förklaras ruta för ruta i broschyren SKV 409 (block A till H).', true,null, null, null, null, null, null, 1, 'Blankett SKV 4700 — anvisningen vid rutorna anger: "Fyll bara i hela kronor".', 'skv409')
+on conflict (country, code) do update set
+  name                = excluded.name,
+  periods             = excluded.periods,
+  period_default      = excluded.period_default,
+  valid_from          = excluded.valid_from,
+  valid_to            = excluded.valid_to,
+  legal_reference     = excluded.legal_reference,
+  is_periodic_return  = excluded.is_periodic_return,
+  deadline_rule       = excluded.deadline_rule,
+  deadline_day        = excluded.deadline_day,
+  deadline_plus_days  = excluded.deadline_plus_days,
+  deadline_reference  = excluded.deadline_reference,
+  deadline_source_key = excluded.deadline_source_key,
+  rounding_unit       = excluded.rounding_unit,
+  rounding_reference  = excluded.rounding_reference,
+  rounding_source_key = excluded.rounding_source_key,
+  file_format         = excluded.file_format;
+
+insert into tax_report_box_templates
+  (country, report_code, box, kind, name, name_i18n, sequence, print_sequence,
+   plus_boxes, minus_boxes, rate, rate_of_box, floor_zero, hidden, xml_element,
+   legal_reference, source_key)
+values
+  ('SE', 'SE-MOMS', '05', 'base', 'Momspliktig försäljning som inte ingår i ruta 06, 07 eller 08', '{}'::jsonb, 10, null, '{}'::text[], '{}'::text[], null, null, false, false, null, 'SKV 409, block A, ruta 05 — den momspliktiga försäljningen av varor och tjänster inom Sverige exklusive moms, oavsett skattesats.', 'skv409'),
+  ('SE', 'SE-MOMS', '06', 'base', 'Momspliktiga uttag', '{}'::jsonb, 20, null, '{}'::text[], '{}'::text[], null, null, false, false, null, 'SKV 409, block A, ruta 06 — värdet exklusive moms av varor och tjänster som uttagsbeskattas. Inte modellerad av detta pack: ingen uttagsskatt är definierad.', 'skv409'),
+  ('SE', 'SE-MOMS', '07', 'base', 'Beskattningsunderlag vid vinstmarginalbeskattning', '{}'::jsonb, 30, null, '{}'::text[], '{}'::text[], null, null, false, false, null, 'SKV 409, block A, ruta 07 — beskattningsunderlaget för varor och resetjänster som omfattas av vinstmarginalbeskattning. Inte modellerad av detta pack.', 'skv409'),
+  ('SE', 'SE-MOMS', '08', 'base', 'Hyresinkomster vid frivillig skattskyldighet', '{}'::jsonb, 40, null, '{}'::text[], '{}'::text[], null, null, false, false, null, 'SKV 409, block A, ruta 08 — hyresinkomster exklusive moms för fastigheter där uthyraren är frivilligt skattskyldig. Inte modellerad av detta pack.', 'skv409'),
+  ('SE', 'SE-MOMS', '10', 'tax', 'Utgående moms 25 %', '{}'::jsonb, 50, null, '{}'::text[], '{}'::text[], null, null, false, false, null, 'SKV 409, block B, ruta 10 — utgående moms på försäljning enligt ruta 05–08 till skattesatsen 25 procent.', 'skv409'),
+  ('SE', 'SE-MOMS', '11', 'tax', 'Utgående moms 12 %', '{}'::jsonb, 60, null, '{}'::text[], '{}'::text[], null, null, false, false, null, 'SKV 409, block B, ruta 11 — utgående moms till skattesatsen 12 procent.', 'skv409'),
+  ('SE', 'SE-MOMS', '12', 'tax', 'Utgående moms 6 %', '{}'::jsonb, 70, null, '{}'::text[], '{}'::text[], null, null, false, false, null, 'SKV 409, block B, ruta 12 — utgående moms till skattesatsen 6 procent.', 'skv409'),
+  ('SE', 'SE-MOMS', '20', 'base', 'Inköp av varor från ett annat EU-land', '{}'::jsonb, 80, null, '{}'::text[], '{}'::text[], null, null, false, false, null, 'SKV 409, block C, ruta 20 — värdet av varor köpta av en säljare i ett annat EU-land och transporterade till Sverige, ett unionsinternt förvärv köparen själv ska redovisa moms på.', 'skv409'),
+  ('SE', 'SE-MOMS', '21', 'base', 'Inköp av tjänster från ett annat EU-land, enligt huvudregeln', '{}'::jsonb, 90, null, '{}'::text[], '{}'::text[], null, null, false, false, null, 'SKV 409, block C, ruta 21 — tjänster köpta enligt huvudregeln från ett annat EU-land, där köparen är skattskyldig.', 'skv409'),
+  ('SE', 'SE-MOMS', '22', 'base', 'Inköp av tjänster från ett land utanför EU', '{}'::jsonb, 100, null, '{}'::text[], '{}'::text[], null, null, false, false, null, 'SKV 409, block C, ruta 22 — tjänster köpta enligt huvudregeln från ett land utanför EU, där köparen är skattskyldig.', 'skv409'),
+  ('SE', 'SE-MOMS', '23', 'base', 'Inköp av varor i Sverige där köparen är skattskyldig', '{}'::jsonb, 110, null, '{}'::text[], '{}'::text[], null, null, false, false, null, 'SKV 409, block C, ruta 23 — varor köpta i Sverige av en utländsk beskattningsbar person, där köparen redovisar momsen. Inte modellerad av detta pack.', 'skv409'),
+  ('SE', 'SE-MOMS', '24', 'base', 'Övriga inköp av tjänster', '{}'::jsonb, 120, null, '{}'::text[], '{}'::text[], null, null, false, false, null, 'SKV 409, block C, ruta 24 — bland annat byggtjänster med omvänd skattskyldighet enligt 16 kap. 13 § mervärdesskattelagen.', 'skv409'),
+  ('SE', 'SE-MOMS', '30', 'tax', 'Utgående moms 25 % på inköp i ruta 20–24', '{}'::jsonb, 130, null, '{}'::text[], '{}'::text[], null, null, false, false, null, 'SKV 409, block D, ruta 30 — utgående moms som köparen själv redovisar, till skattesatsen 25 procent.', 'skv409'),
+  ('SE', 'SE-MOMS', '31', 'tax', 'Utgående moms 12 % på inköp i ruta 20–24', '{}'::jsonb, 140, null, '{}'::text[], '{}'::text[], null, null, false, false, null, 'SKV 409, block D, ruta 31 — till skattesatsen 12 procent.', 'skv409'),
+  ('SE', 'SE-MOMS', '32', 'tax', 'Utgående moms 6 % på inköp i ruta 20–24', '{}'::jsonb, 150, null, '{}'::text[], '{}'::text[], null, null, false, false, null, 'SKV 409, block D, ruta 32 — till skattesatsen 6 procent.', 'skv409'),
+  ('SE', 'SE-MOMS', '35', 'base', 'Försäljning av varor till ett annat EU-land', '{}'::jsonb, 160, null, '{}'::text[], '{}'::text[], null, null, false, false, null, 'SKV 409, block E, ruta 35 — det fakturerade värdet av varor sålda utan moms till en köpare som är momsregistrerad i ett annat EU-land. Mervärdesskattelag (2023:200) 10 kap. 42–48 §§.', 'skv409'),
+  ('SE', 'SE-MOMS', '36', 'base', 'Försäljning av varor utanför EU', '{}'::jsonb, 170, null, '{}'::text[], '{}'::text[], null, null, false, false, null, 'SKV 409, block E, ruta 36 — värdet av varuförsäljning utanför EU (export). Mervärdesskattelag (2023:200) 10 kap. 64 §.', 'skv409'),
+  ('SE', 'SE-MOMS', '37', 'base', 'Mellanmans inköp av varor vid trepartshandel', '{}'::jsonb, 180, null, '{}'::text[], '{}'::text[], null, null, false, false, null, 'SKV 409, block E, ruta 37 — inköp som mellanman vid förenklad trepartshandel. Inte modellerad av detta pack.', 'skv409'),
+  ('SE', 'SE-MOMS', '38', 'base', 'Mellanmans försäljning av varor vid trepartshandel', '{}'::jsonb, 190, null, '{}'::text[], '{}'::text[], null, null, false, false, null, 'SKV 409, block E, ruta 38 — försäljning som mellanman vid förenklad trepartshandel. Inte modellerad av detta pack.', 'skv409'),
+  ('SE', 'SE-MOMS', '39', 'base', 'Försäljning av tjänster till en beskattningsbar person i ett annat EU-land, enligt huvudregeln', '{}'::jsonb, 200, null, '{}'::text[], '{}'::text[], null, null, false, false, null, 'SKV 409, block E, ruta 39 — tjänster sålda utan moms enligt huvudregeln, köparen skattskyldig i sitt land.', 'skv409'),
+  ('SE', 'SE-MOMS', '40', 'base', 'Övrig försäljning av tjänster omsatta utanför Sverige', '{}'::jsonb, 210, null, '{}'::text[], '{}'::text[], null, null, false, false, null, 'SKV 409, block E, ruta 40 — övrig försäljning av tjänster som anses omsatta utanför Sverige och som inte redovisas i ruta 39. Inte modellerad av detta pack.', 'skv409'),
+  ('SE', 'SE-MOMS', '41', 'base', 'Försäljning när köparen är skattskyldig i Sverige', '{}'::jsonb, 220, null, '{}'::text[], '{}'::text[], null, null, false, false, null, 'SKV 409, block E, ruta 41 — omvänd skattskyldighet inom Sverige, bland annat byggtjänster (16 kap. 13 § mervärdesskattelagen) och avfall och skrot av vissa metaller (16 kap. 14 §).', 'skv409'),
+  ('SE', 'SE-MOMS', '42', 'base', 'Övrig försäljning m.m. som är undantagen från moms', '{}'::jsonb, 230, null, '{}'::text[], '{}'::text[], null, null, false, false, null, 'SKV 409, block E, ruta 42 — försäljning undantagen från moms som inte redovisas i någon annan ruta, till exempel finansieringstjänster (10 kap. 33 § mervärdesskattelagen).', 'skv409'),
+  ('SE', 'SE-MOMS', '48', 'tax', 'Ingående moms att dra av', '{}'::jsonb, 240, null, '{}'::text[], '{}'::text[], null, null, false, false, null, 'SKV 409, block F, ruta 48 — summan av avdragsgill ingående moms, inklusive den moms köparen själv redovisar på förvärv enligt ruta 20–24 och import enligt ruta 50.', 'skv409'),
+  ('SE', 'SE-MOMS', '49', 'total', 'Moms att betala eller få tillbaka', '{}'::jsonb, 250, null, array['10', '11', '12', '30', '31', '32', '60', '61', '62']::text[], array['48']::text[], null, null, false, false, null, 'SKV 409, block G, ruta 49 — summan av rutorna 10, 11, 12, 30, 31, 32, 60, 61 och 62 minskad med ruta 48. Ett negativt belopp är moms att få tillbaka.', 'skv409'),
+  ('SE', 'SE-MOMS', '50', 'base', 'Beskattningsunderlag vid import', '{}'::jsonb, 260, null, '{}'::text[], '{}'::text[], null, null, false, false, null, 'SKV 409, block H, ruta 50 — beskattningsunderlaget för moms som en momsregistrerad importör redovisar i momsdeklarationen i stället för till Tullverket.', 'skv409'),
+  ('SE', 'SE-MOMS', '60', 'tax', 'Utgående moms 25 % vid import', '{}'::jsonb, 270, null, '{}'::text[], '{}'::text[], null, null, false, false, null, 'SKV 409, block H, ruta 60 — utgående moms på beskattningsunderlaget i ruta 50, till skattesatsen 25 procent.', 'skv409'),
+  ('SE', 'SE-MOMS', '61', 'tax', 'Utgående moms 12 % vid import', '{}'::jsonb, 280, null, '{}'::text[], '{}'::text[], null, null, false, false, null, 'SKV 409, block H, ruta 61 — till skattesatsen 12 procent. Inte modellerad av detta pack.', 'skv409'),
+  ('SE', 'SE-MOMS', '62', 'tax', 'Utgående moms 6 % vid import', '{}'::jsonb, 290, null, '{}'::text[], '{}'::text[], null, null, false, false, null, 'SKV 409, block H, ruta 62 — till skattesatsen 6 procent. Inte modellerad av detta pack.', 'skv409')
+on conflict (country, report_code, box, kind) do update set
+  name            = excluded.name,
+  name_i18n       = excluded.name_i18n,
+  sequence        = excluded.sequence,
+  print_sequence  = excluded.print_sequence,
+  plus_boxes      = excluded.plus_boxes,
+  minus_boxes     = excluded.minus_boxes,
+  rate            = excluded.rate,
+  rate_of_box     = excluded.rate_of_box,
+  floor_zero      = excluded.floor_zero,
+  hidden          = excluded.hidden,
+  xml_element     = excluded.xml_element,
+  legal_reference = excluded.legal_reference,
+  source_key      = excluded.source_key;
+
+insert into country_defaults
+  (country, name, name_i18n, languages, currency_code, receivable_code, payable_code, suspense_code,
+   rounding_code, retained_earnings_code, sales_account_code, purchase_account_code,
+   bank_account_code, cash_account_code, sales_journal_code, purchase_journal_code,
+   misc_journal_code, language_default, closing_style, current_year_result_profit_code,
+   current_year_result_loss_code, retained_earnings_loss_code, opening_journal_code,
+   rounding_method, cash_rounding_unit, fx_gain_code, fx_loss_code,
+   asset_disposal_gain_code, asset_disposal_loss_code,
+   asset_disposal_proceeds_code, asset_disposal_value_code,
+   tax_payable_code, tax_receivable_code, opening_entry_label,
+   vat_period_default)
+values
+  ('SE', 'Sverige', '{}'::jsonb, array['sv']::text[], 'SEK', '1410', '2410', '2890', '3960', '2020', '3010', '4010', '1920', '1910', 'FV', 'LV', 'DIV', 'sv', 'result_accounts', '2090', '2090', null, 'IB', 'half_up', default, '8330', '8430', null, null, null, null, '1630', null, null, null)
+on conflict (country) do update set
+  name                   = excluded.name,
+  name_i18n              = excluded.name_i18n,
+  languages              = excluded.languages,
+  currency_code          = excluded.currency_code,
+  receivable_code        = excluded.receivable_code,
+  payable_code           = excluded.payable_code,
+  suspense_code          = excluded.suspense_code,
+  rounding_code          = excluded.rounding_code,
+  retained_earnings_code = excluded.retained_earnings_code,
+  sales_account_code     = excluded.sales_account_code,
+  purchase_account_code  = excluded.purchase_account_code,
+  bank_account_code      = excluded.bank_account_code,
+  cash_account_code      = excluded.cash_account_code,
+  sales_journal_code     = excluded.sales_journal_code,
+  purchase_journal_code  = excluded.purchase_journal_code,
+  misc_journal_code      = excluded.misc_journal_code,
+  language_default       = excluded.language_default,
+  closing_style          = excluded.closing_style,
+  current_year_result_profit_code = excluded.current_year_result_profit_code,
+  current_year_result_loss_code   = excluded.current_year_result_loss_code,
+  retained_earnings_loss_code     = excluded.retained_earnings_loss_code,
+  opening_journal_code            = excluded.opening_journal_code,
+  rounding_method        = excluded.rounding_method,
+  cash_rounding_unit     = excluded.cash_rounding_unit,
+  fx_gain_code           = excluded.fx_gain_code,
+  fx_loss_code           = excluded.fx_loss_code,
+  asset_disposal_gain_code        = excluded.asset_disposal_gain_code,
+  asset_disposal_loss_code        = excluded.asset_disposal_loss_code,
+  asset_disposal_proceeds_code    = excluded.asset_disposal_proceeds_code,
+  asset_disposal_value_code       = excluded.asset_disposal_value_code,
+  tax_payable_code                = excluded.tax_payable_code,
+  tax_receivable_code             = excluded.tax_receivable_code,
+  opening_entry_label             = excluded.opening_entry_label,
+  vat_period_default              = excluded.vat_period_default;
+
+update country_defaults set
+  numbering_gapless             = true,
+  number_format                 = '{CODE}-{YYYY}-{NNNN}',
+  legal_payment_days            = 30,
+  late_payment_reference        = 'Räntelag (1975:635) 3 § och 6 § — har förfallodag inte avtalats löper dröjsmålsränta från trettio dagar efter det att borgenären framställt krav på betalning och angett att utebliven betalning medför skyldighet att betala ränta; räntan är enligt 6 § referensräntan med ett tillägg av åtta procentenheter. Lag (1981:739) om ersättning för inkassokostnader m.m. 4 a § ger därutöver, i förhållanden mellan näringsidkare, rätt till en förseningsersättning om 450 kronor.',
+  numbering_legal_reference     = 'Mervärdesskattelag (2023:200) 17 kap. 24 § — en faktura ska innehålla ett löpnummer grundat på en eller flera nummerserier, som ger fakturan ett unikt nummer. Skatteverkets vägledning om fakturans innehåll läser kravet som att nummerserien ska vara obruten under beskattningsåret, eftersom syftet är att kunna slå fast att ingen faktura saknas; ett hål i serien ska kunna förklaras.',
+  numbering_source_key          = 'skv-fakturering',
+  payment_terms_legal_reference = 'Räntelag (1975:635) 3 § — se late_payment_reference. Betalningsvillkor är i övrigt avtalsfrihet mellan parterna; 30 dagar är lagens utfyllande regel när inget annat har avtalats.',
+  payment_terms_source_key      = 'rantelagen',
+  tax_point_rule                = 'earliest_of_delivery_or_payment',
+  tax_point_legal_reference     = 'Mervärdesskattelag (2023:200) 7 kap. 4 § — den beskattningsgrundande händelsen inträffar och mervärdesskatt blir utgående när varan har levererats eller tjänsten har tillhandahållits (huvudregel); 7 kap. 7 § — vid förskottsbetalning inträffar den beskattningsgrundande händelsen och skatten blir utgående för den mottagna betalningen redan vid mottagandet, innan leverans eller tillhandahållande. Tillsammans är detta earliest_of_delivery_or_payment.',
+  tax_point_source_key          = 'ml',
+  posted_edit_policy            = 'reversal_only',
+  posted_edit_policy_legal_reference = 'Bokföringslag (1999:1078) 5 kap. 5 § — en verifikation får inte ändras så att den ursprungliga uppgiften inte längre går att fastställa; en rättelse ska i stället ske genom en ny verifikation eller genom en särskild rättelsepost. En bokförd faktura rättas därför med en kreditfaktura som hänvisar till den, inte genom redigering.',
+  posted_edit_policy_source_key = 'bokforingslagen',
+  einvoice_profile              = 'peppol-bis-3',
+  einvoice_mandatory_from       = null,
+  einvoice_obligation           = 'none',
+  einvoice_legal_reference      = 'Vid released_at ålägger ingen författning svenska företag att sinsemellan utväxla e-fakturor — obligation är none för fakturering mellan näringsidkare. Lag (2018:1277) om elektroniska fakturor till följd av offentlig upphandling ålägger sedan den 1 april 2019 den som fakturerar en upphandlande myndighet eller enhet till följd av en offentlig upphandling enligt LOU, LUF, LUFS eller LUK att göra det med en elektronisk faktura i det format som avses i genomförandeförordning (EU) 2017/1870, det vill säga den europeiska standarden EN 16931; den skyldigheten träffar bara den delmängd av fakturor som riktas mot den offentliga sektorn efter en sådan upphandling, inte fakturering i allmänhet. SFTI och Upphandlingsmyndigheten rekommenderar Peppol BIS Billing 3 som tekniskt format. party_scheme 0007 är det svenska organisationsnumret i EAS-listan; vat_scheme 9955 är det svenska momsregistreringsnumret.',
+  einvoice_source_key           = 'lag-2018-1277',
+  party_scheme                  = '0007',
+  vat_scheme                    = '9955',
+  bank_statement_formats        = array['camt.053']::text[],
+  payment_formats               = array['pain.001']::text[],
+  fiscal_year_default           = 'calendar'
+ where country = 'SE';
+
+insert into legal_mention_templates
+  (country, code, applies_when, text, text_i18n, sequence, valid_from, valid_to, legal_reference)
+values
+  ('SE', 'reverse_charge', 'reverse_charge', 'Omvänd betalningsskyldighet — köparen redovisar och betalar mervärdesskatten.', '{}'::jsonb, 10, date '1970-01-01', null, 'Mervärdesskattelag (2023:200) 17 kap. 24 § — vid omvänd betalningsskyldighet ska fakturan innehålla uppgiften ”Omvänd betalningsskyldighet” eller motsvarande hänvisning; artikel 226.11a i direktiv 2006/112/EG kräver hänvisningen på alla EU-språk.'),
+  ('SE', 'intracom_goods', 'intra_eu_goods', 'Unionsintern varuförsäljning, undantagen från mervärdesskatt — köparens momsregistreringsnummer anges på fakturan.', '{}'::jsonb, 20, date '1970-01-01', null, 'Mervärdesskattelag (2023:200) 10 kap. 42–48 §§ — undantag för leverans av varor till en beskattningsbar person i ett annat EU-land som åberopar sitt momsregistreringsnummer där; 17 kap. 24 § kräver köparens momsregistreringsnummer på fakturan.'),
+  ('SE', 'intracom_services', 'intra_eu_services', 'Omvänd betalningsskyldighet — köparen redovisar och betalar mervärdesskatten i sitt land.', '{}'::jsonb, 30, date '1970-01-01', null, 'Mervärdesskattelag (2023:200) 17 kap. 16 § — fakturan ska utfärdas senast den 15:e i månaden efter den månad då tjänsten tillhandahölls; 17 kap. 24 § kräver hänvisningen till omvänd betalningsskyldighet.'),
+  ('SE', 'export', 'export', 'Exportförsäljning — varan är utförd ur EU, ingen mervärdesskatt tas ut.', '{}'::jsonb, 40, date '1970-01-01', null, 'Mervärdesskattelag (2023:200) 10 kap. 64 § — undantag från skatteplikt för leverans av varor som transporteras av säljaren eller för dennes räkning till en plats utanför EU.'),
+  ('SE', 'exempt', 'exempt', 'Undantagen från mervärdesskatt enligt 10 kap. mervärdesskattelagen.', '{}'::jsonb, 50, date '1970-01-01', null, 'Mervärdesskattelag (2023:200) 10 kap. — generell skatteplikt och undantag, bland annat 10 kap. 32 § försäkringstjänster och 10 kap. 33 § finansieringstjänster. Lagen föreskriver ingen bestämd ordalydelse för hänvisningen.'),
+  ('SE', 'late_payment', 'late_payment', 'Vid dröjsmål med betalningen utgår dröjsmålsränta enligt räntelagen samt, mellan näringsidkare, en förseningsersättning om 450 kronor.', '{}'::jsonb, 60, date '1970-01-01', null, 'Räntelag (1975:635) 3 § och 6 §; Lag (1981:739) om ersättning för inkassokostnader m.m. 4 a §. Ingen ordalydelse är föreskriven; hänvisningen är inte obligatorisk på fakturan.')
+on conflict (country, code) do update set
+  applies_when    = excluded.applies_when,
+  text            = excluded.text,
+  text_i18n       = excluded.text_i18n,
+  sequence        = excluded.sequence,
+  valid_from      = excluded.valid_from,
+  valid_to        = excluded.valid_to,
+  legal_reference = excluded.legal_reference;
