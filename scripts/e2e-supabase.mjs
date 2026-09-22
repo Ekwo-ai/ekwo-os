@@ -74,7 +74,9 @@
  *
  *   npm run build && npm run e2e:supabase
  *
- * `--reset` empties the project first — see below. It is the only flag.
+ * `--reset` empties the project first — see below. `--multi-country` runs the
+ * other installation instead: see "The multi-country run" below. There is no
+ * third flag.
  *
  * It writes no secret anywhere and prints none: the connection string, the
  * keys and the password never reach the output, not even masked, because a
@@ -110,6 +112,26 @@
  * dropped, and it leaves Supabase's own schemas — `auth` included, so the
  * administrator this script created is still there and is found again rather
  * than duplicated.
+ *
+ * ---------------------------------------------------------------------------
+ * The multi-country run.
+ *
+ * `--multi-country` installs with `ekwo init --no-company` — the schema, every
+ * pack and the administrator, and no company — then creates two companies of
+ * two countries with `ekwo company new`, and checks them from both sides: the
+ * database (one instance with no country, two companies, each on its own pack
+ * and with its own first financial year) and PostgREST, signed in as the
+ * administrator, who sees both. It books nothing: the ledger is the ordinary
+ * run's business, and the two runs need two empty projects, or `--reset`
+ * between them. It needs, beside the variables above:
+ *
+ *   EKWO_E2E_SECOND_COUNTRY     the pack of the second company. Not the same
+ *                               as EKWO_E2E_COUNTRY: the point is two
+ *   EKWO_E2E_SECOND_CHART, EKWO_E2E_SECOND_LANGUAGE,
+ *   EKWO_E2E_SECOND_FISCAL_YEAR_START
+ *                               what that pack leaves open, as for the first
+ *
+ *   npm run build && npm run e2e:supabase -- --multi-country
  *
  * ---------------------------------------------------------------------------
  * The load steps.
@@ -157,6 +179,7 @@ import { fileURLToPath } from 'node:url';
 
 const repoRoot = fileURLToPath(new URL('..', import.meta.url));
 const reset = process.argv.slice(2).includes('--reset');
+const multiCountry = process.argv.slice(2).includes('--multi-country');
 const cliBin = `${repoRoot}packages/cli/dist/bin.js`;
 
 const SALE_BASE = 1000;
@@ -379,6 +402,34 @@ async function main() {
     }
   } finally {
     await db.close();
+  }
+
+  if (multiCountry) {
+    await multiCountrySteps({
+      connect,
+      dbUrl,
+      supabaseUrl,
+      anonKey,
+      env: { EKWO_DB_URL: dbUrl, SUPABASE_URL: supabaseUrl, SUPABASE_SERVICE_ROLE_KEY: serviceRoleKey },
+      adminEmail,
+      adminPassword,
+      companies: [
+        // `company new` records no filing cadence, so EKWO_E2E_VAT_PERIOD is not passed.
+        {
+          country,
+          flags: [...chartFlag, ...languageFlag, ...(yearStart === undefined ? [] : ['--fiscal-year-start', yearStart])],
+        },
+        {
+          country: required('EKWO_E2E_SECOND_COUNTRY').toUpperCase(),
+          flags: [
+            ...optionalFlag('--chart', 'EKWO_E2E_SECOND_CHART'),
+            ...optionalFlag('--language', 'EKWO_E2E_SECOND_LANGUAGE'),
+            ...optionalFlag('--fiscal-year-start', 'EKWO_E2E_SECOND_FISCAL_YEAR_START'),
+          ],
+        },
+      ],
+    });
+    return report();
   }
 
   // ---- 1. Install ---------------------------------------------------------
@@ -862,6 +913,133 @@ async function main() {
 }
 
 /** Median of three, in milliseconds. The first run pays for a cold cache. */
+/** `[flag, value]` when the variable is set, nothing when it is not. */
+function optionalFlag(flag, name) {
+  const value = process.env[name];
+  return value === undefined || value === '' ? [] : [flag, value];
+}
+
+/**
+ * `--multi-country`: `ekwo init --no-company`, then one `ekwo company new` per
+ * country, checked in the database and through PostgREST as the administrator.
+ */
+async function multiCountrySteps({ connect, dbUrl, supabaseUrl, anonKey, env, adminEmail, adminPassword, companies }) {
+  const [first, second] = companies;
+  if (first.country === second.country) {
+    throw new Error('EKWO_E2E_SECOND_COUNTRY is EKWO_E2E_COUNTRY: the multi-country run needs two countries.');
+  }
+  const install = ['init', '--no-company', '--org', 'End To End', '--admin-email', adminEmail,
+    '--admin-password', adminPassword, '--yes'];
+  const names = companies.map((c) => `End To End ${c.country}`);
+
+  await step('ekwo init --no-company', async () => {
+    const out = await run(install, env);
+    const applied = /(\d+) applied, \d+ were already there/.exec(out);
+    return `installed, ${applied === null ? 'no' : applied[1]} socle migration(s) applied, no company`;
+  });
+
+  await step('ekwo init --no-company is idempotent', async () => {
+    await run(install, env);
+    return 'a second run created nothing';
+  });
+
+  await step('the installation holds no company and names no country', async () => {
+    const db = await connect(dbUrl);
+    try {
+      const instance = await db.query('select country from instance');
+      if (instance.length !== 1 || instance[0].country !== null) {
+        throw new Error(`instance.country is ${JSON.stringify(instance[0]?.country)}`);
+      }
+      const held = await db.query('select count(*)::int as n from companies');
+      if (held[0].n !== 0) throw new Error(`${held[0].n} company(ies) already`);
+      const packs = await db.query('select count(*)::int as n from country_packs');
+      return `${packs[0].n} packs loaded, no company, no country on the instance`;
+    } finally {
+      await db.close();
+    }
+  });
+
+  for (const [index, company] of companies.entries()) {
+    await step(`ekwo company new — ${company.country}`, async () => {
+      await run(['company', 'new', names[index], '--country', company.country, ...company.flags,
+        '--fiscal-year', String(FISCAL_YEAR), '--yes'], env);
+      return `${names[index]} created`;
+    });
+  }
+
+  await step('two companies of two countries, each on its own pack', async () => {
+    const db = await connect(dbUrl);
+    try {
+      const rows = await db.query(
+        `select c.name, c.country, p.version, p.chart_code,
+                (select count(*)::int from accounts a where a.company_id = c.id) as accounts,
+                (select count(*)::int from fiscal_years y where y.company_id = c.id) as years,
+                (select count(*)::int from company_members m where m.company_id = c.id and m.role = 'owner') as owners
+           from companies c
+           left join company_packs p on p.company_id = c.id and p.country = c.country
+          order by c.name`,
+      );
+      if (rows.length !== 2) throw new Error(`${rows.length} companies`);
+      for (const [index, company] of companies.entries()) {
+        const row = rows.find((r) => r.name === names[index]);
+        if (row === undefined) throw new Error(`${names[index]} is missing`);
+        if (row.country !== company.country) throw new Error(`${row.name} is in ${row.country}`);
+        if (row.version === null || row.accounts === 0) throw new Error(`${row.name} copied no pack`);
+        if (row.years !== 1 || row.owners !== 1) throw new Error(`${row.name}: ${row.years} year(s), ${row.owners} owner(s)`);
+      }
+      return rows.map((r) => `${r.country} ${r.chart_code} ${r.version}, ${r.accounts} accounts`).join(' · ');
+    } finally {
+      await db.close();
+    }
+  });
+
+  await step('ekwo company list', async () => {
+    const out = await run(['company', 'list'], env);
+    for (const name of names) if (!out.includes(name)) throw new Error(`${name} is not listed`);
+    return 'both companies listed';
+  });
+
+  await step('ekwo status', async () => {
+    const out = await run(['status'], env);
+    if (/pending/i.test(out) && !/0 pending/i.test(out)) throw new Error('migrations still pending');
+    return 'no pending migration';
+  });
+
+  await step('ekwo doctor', async () => {
+    const out = await run(['doctor'], env);
+    const problems = /([1-9]\d*) problem/.exec(out);
+    if (problems !== null) throw new Error(out.trim().slice(-400));
+    const warnings = /(\d+) warning/.exec(out);
+    return `no problem${warnings === null || warnings[1] === '0' ? '' : `, ${warnings[1]} warning(s)`}`;
+  });
+
+  let token;
+  const signedIn = await step('sign in through GoTrue', async () => {
+    const answer = await fetch(`${supabaseUrl}/auth/v1/token?grant_type=password`, {
+      method: 'POST',
+      headers: { apikey: anonKey, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: adminEmail, password: adminPassword }),
+    });
+    if (!answer.ok) throw new Error(`GoTrue answered ${answer.status}`);
+    const body = await answer.json();
+    if (typeof body.access_token !== 'string') throw new Error('no access token');
+    token = body.access_token;
+    return 'a real JWT, as a real client gets one';
+  });
+  if (signedIn === undefined) return;
+  const rest = api(supabaseUrl, anonKey, token);
+
+  await step('the administrator sees both companies through PostgREST', async () => {
+    const seen = await rest.select('/companies?select=id,name,country&order=name');
+    if (seen.length !== 2) throw new Error(`${seen.length} companies visible`);
+    for (const company of seen) {
+      const accounts = await rest.select(`/accounts?select=id&company_id=eq.${company.id}&limit=1`);
+      if (accounts.length !== 1) throw new Error(`${company.name}: no account visible`);
+    }
+    return seen.map((c) => `${c.name} (${c.country})`).join(', ');
+  });
+}
+
 async function medianOfThree(fn) {
   const times = [];
   let answer;

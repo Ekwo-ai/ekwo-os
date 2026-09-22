@@ -131,6 +131,7 @@ that is not cut.
    | `EKWO_E2E_ADMIN_EMAIL` / `EKWO_E2E_ADMIN_PASSWORD` | the administrator it creates and signs in as |
    | `EKWO_E2E_PREVIOUS` | optional: install that release first, so the run upgrades an installation instead of creating one. Left out, those steps are skipped rather than passed |
    | `EKWO_E2E_LOAD_DOCUMENTS` | optional: multiply the books to that many documents and time the six hot paths, over SQL and over PostgREST |
+   | `EKWO_E2E_SECOND_COUNTRY` | `--multi-country` only: the pack of the second company, another country than `EKWO_E2E_COUNTRY`. `EKWO_E2E_SECOND_CHART`, `EKWO_E2E_SECOND_LANGUAGE` and `EKWO_E2E_SECOND_FISCAL_YEAR_START` as for the first |
 
    **Point `EKWO_E2E_PREVIOUS` at the last tag.** It is the only way the run
    exercises what a user will actually do. It takes a path to a built binary of
@@ -148,6 +149,14 @@ that is not cut.
    for the name and `npx` finds no `ekwo` to run. A release older than that was
    never published under that name, so for those the path is the only form
    that works.
+
+   **`--multi-country`** runs the other installation: `ekwo init --no-company`,
+   then `ekwo company new` in two countries, checked in the database and
+   through PostgREST as the administrator. It books nothing, and needs its own
+   empty project or `--reset`. First run on 22 September 2026, before any
+   release carried it, on a throwaway project in `eu-west-3`, deleted
+   afterwards: BE (`default` chart, `nl`) and FR (`fr`), 11 steps, all green,
+   62 s, the install alone 43 s.
 
    **The last run: 22 September 2026, for `0.6.0`**, on a throwaway project in
    `eu-west-3` (Postgres 17.6, session pooler `aws-1`), deleted afterwards. BE,
