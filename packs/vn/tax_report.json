@@ -1,0 +1,147 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "VN-VAT-01-GTGT",
+  "name": "Tờ khai thuế giá trị gia tăng (phương pháp khấu trừ) — Mẫu số 01/GTGT",
+  "period": ["month", "quarter"],
+  "valid_from": "2022-01-01",
+  "legal_reference": "Luật Quản lý thuế số 38/2019/QH14, Điều 8 và Điều 43 — người nộp thuế theo phương pháp khấu trừ tự khai, tự nộp thuế giá trị gia tăng theo kỳ tính thuế tháng hoặc quý; Nghị định 126/2020/NĐ-CP, Điều 9, khoản 1, điểm a — khai theo quý áp dụng cho người nộp thuế có tổng doanh thu bán hàng hóa, cung cấp dịch vụ của năm trước liền kề từ 50 tỷ đồng trở xuống, người nộp thuế mới bắt đầu hoạt động khai theo quý và được lựa chọn ổn định trong 3 năm. Không có kỳ mặc định chung cho mọi người nộp thuế — kỳ tính thuế phụ thuộc vào doanh thu năm trước, một sự kiện của công ty mà pack này không biết — nên `period_default` để trống và `ekwo init` hỏi. Mẫu số 01/GTGT được ban hành tại Thông tư 80/2021/TT-BTC (Phụ lục II) và, từ 01/07/2026, tại Thông tư 89/2026/TT-BTC (Phụ lục I, ký 30/06/2026, thay thế đồng thời Thông tư 80/2021/TT-BTC). Bộ khung các chỉ tiêu của tờ khai bên dưới được chuyển thể từ cấu trúc Mẫu 01/GTGT đã ổn định qua nhiều năm dưới Thông tư 80/2021/TT-BTC; nội dung chính xác của Phụ lục I Thông tư 89/2026/TT-BTC (có điều chỉnh một số chỉ tiêu) chưa được đối chiếu trực tiếp với văn bản gốc khi soạn gói này — xem README.",
+  "source": "vat-return-form",
+  "deadline": {
+    "rule": "day_of_month_after_period",
+    "day": 20,
+    "legal_reference": "Luật Quản lý thuế số 38/2019/QH14, Điều 44, khoản 1, điểm a — chậm nhất là ngày thứ 20 của tháng tiếp theo tháng phát sinh nghĩa vụ thuế, đối với trường hợp khai và nộp theo tháng. Người nộp thuế khai theo quý có thời hạn khác — chậm nhất là ngày cuối cùng của tháng đầu của quý tiếp theo quý phát sinh nghĩa vụ thuế (điểm b cùng khoản) — mà trường `deadline` của một tờ khai chỉ giữ được MỘT quy tắc; vì kỳ tính thuế của công ty (tháng hay quý) không được biết trước ở đây, pack khai báo quy tắc tháng và ghi khoảng cách này (kỳ quý cần một quy tắc khác) trong docs/international.md.",
+    "source": "tax-admin-38"
+  },
+  "boxes": [
+    {
+      "box": "22",
+      "kind": "tax",
+      "name": "Thuế GTGT còn được khấu trừ kỳ trước chuyển sang",
+      "sequence": 10,
+      "legal_reference": "Mẫu số 01/GTGT, chỉ tiêu [22] — bằng chỉ tiêu [43] của tờ khai kỳ tính thuế trước; không có bút toán thuế nào của pack này ghi trực tiếp vào chỉ tiêu này, giống cách chỉ tiêu tương ứng của Pháp (case 22, « report du crédit ») được xử lý.",
+      "source": "vat-return-form"
+    },
+    {
+      "box": "23",
+      "kind": "base",
+      "name": "Tổng giá trị hàng hóa, dịch vụ mua vào trong kỳ",
+      "sequence": 20,
+      "legal_reference": "Mẫu số 01/GTGT, chỉ tiêu [23] — tổng giá trị (chưa có thuế GTGT) của hàng hóa, dịch vụ mua vào chịu thuế GTGT trong kỳ, không kể hàng hóa, dịch vụ mua vào không chịu thuế hoặc từ người bán không xuất hóa đơn GTGT.",
+      "source": "vat-return-form"
+    },
+    {
+      "box": "24",
+      "kind": "tax",
+      "name": "Tổng số thuế GTGT của hàng hóa, dịch vụ mua vào",
+      "sequence": 30,
+      "legal_reference": "Mẫu số 01/GTGT, chỉ tiêu [24] — tổng số thuế giá trị gia tăng ghi trên hóa đơn giá trị gia tăng mua hàng hóa, dịch vụ hoặc chứng từ nộp thuế GTGT hàng nhập khẩu.",
+      "source": "vat-return-form"
+    },
+    {
+      "box": "25",
+      "kind": "total",
+      "name": "Tổng số thuế GTGT được khấu trừ kỳ này",
+      "sequence": 40,
+      "plus": ["24"],
+      "legal_reference": "Mẫu số 01/GTGT, chỉ tiêu [25] — bằng chỉ tiêu [24] khi toàn bộ hàng hóa, dịch vụ mua vào phục vụ hoạt động chịu thuế giá trị gia tăng. Luật Thuế giá trị gia tăng số 48/2024/QH15, Điều 14 quy định phân bổ khấu trừ khi hàng hóa, dịch vụ mua vào dùng chung cho hoạt động chịu thuế và không chịu thuế, theo tỷ lệ doanh thu chịu thuế trên tổng doanh thu — phép phân bổ này pack không tính, giống cách packs/jp không tính tỷ lệ 95%.",
+      "source": "vat-return-form"
+    },
+    {
+      "box": "26",
+      "kind": "base",
+      "name": "Hàng hóa, dịch vụ bán ra không chịu thuế GTGT",
+      "sequence": 50,
+      "legal_reference": "Mẫu số 01/GTGT, chỉ tiêu [26] — giá trị hàng hóa, dịch vụ bán ra thuộc đối tượng không chịu thuế giá trị gia tăng theo Điều 5 Luật Thuế giá trị gia tăng số 48/2024/QH15.",
+      "source": "vat-return-form"
+    },
+    {
+      "box": "27",
+      "kind": "total",
+      "name": "Tổng doanh thu hàng hóa, dịch vụ bán ra chịu thuế GTGT",
+      "sequence": 60,
+      "plus": ["28", "29", "31"],
+      "legal_reference": "Mẫu số 01/GTGT, chỉ tiêu [27] — tổng giá trị hàng hóa, dịch vụ bán ra chịu thuế, bằng tổng giá trị bán ra theo từng mức thuế suất (0%, 5%, 10%).",
+      "source": "vat-return-form"
+    },
+    {
+      "box": "28",
+      "kind": "base",
+      "name": "Hàng hóa, dịch vụ bán ra chịu thuế suất 0%",
+      "sequence": 70,
+      "legal_reference": "Mẫu số 01/GTGT, chỉ tiêu [28] — giá trị hàng hóa, dịch vụ bán ra áp dụng thuế suất 0% (Điều 9, khoản 1, Luật Thuế giá trị gia tăng số 48/2024/QH15).",
+      "source": "vat-return-form"
+    },
+    {
+      "box": "29",
+      "kind": "base",
+      "name": "Hàng hóa, dịch vụ bán ra chịu thuế suất 5% — giá trị",
+      "sequence": 80,
+      "legal_reference": "Mẫu số 01/GTGT, chỉ tiêu [29] — giá trị (chưa có thuế) hàng hóa, dịch vụ bán ra áp dụng thuế suất 5% (Điều 9, khoản 2, Luật Thuế giá trị gia tăng số 48/2024/QH15).",
+      "source": "vat-return-form"
+    },
+    {
+      "box": "30",
+      "kind": "tax",
+      "name": "Hàng hóa, dịch vụ bán ra chịu thuế suất 5% — thuế GTGT",
+      "sequence": 90,
+      "legal_reference": "Mẫu số 01/GTGT, chỉ tiêu [30] — thuế giá trị gia tăng của hàng hóa, dịch vụ bán ra tại chỉ tiêu [29].",
+      "source": "vat-return-form"
+    },
+    {
+      "box": "31",
+      "kind": "base",
+      "name": "Hàng hóa, dịch vụ bán ra chịu thuế suất 10% — giá trị",
+      "sequence": 100,
+      "legal_reference": "Mẫu số 01/GTGT, chỉ tiêu [31] — giá trị (chưa có thuế) hàng hóa, dịch vụ bán ra áp dụng thuế suất 10% (Điều 9, khoản 3, Luật Thuế giá trị gia tăng số 48/2024/QH15). Trong thời gian áp dụng Nghị quyết 204/2025/QH15 và Nghị định 174/2025/NĐ-CP (01/07/2025-31/12/2026), giá trị hàng hóa, dịch vụ được giảm còn thuế suất 8% cũng được kê khai trên chỉ tiêu này — pack giả định cách kê khai đó theo thực tiễn phổ biến của cơ quan thuế đối với chính sách giảm thuế theo tỷ lệ phần trăm trên thuế suất 10%, không được đối chiếu trực tiếp với hướng dẫn chính thức của Mẫu 01/GTGT cho kỳ áp dụng Nghị định 174/2025/NĐ-CP — xem README.",
+      "source": "vat-return-form"
+    },
+    {
+      "box": "32",
+      "kind": "tax",
+      "name": "Hàng hóa, dịch vụ bán ra chịu thuế suất 10% — thuế GTGT",
+      "sequence": 110,
+      "legal_reference": "Mẫu số 01/GTGT, chỉ tiêu [32] — thuế giá trị gia tăng của hàng hóa, dịch vụ bán ra tại chỉ tiêu [31], tại thuế suất thực tế áp dụng (10% hoặc, tạm thời, 8%).",
+      "source": "vat-return-form"
+    },
+    {
+      "box": "33",
+      "kind": "total",
+      "name": "Tổng doanh thu hàng hóa, dịch vụ bán ra",
+      "sequence": 120,
+      "plus": ["26", "27"],
+      "legal_reference": "Mẫu số 01/GTGT, chỉ tiêu [33] — tổng cộng chỉ tiêu [26] và [27].",
+      "source": "vat-return-form"
+    },
+    {
+      "box": "34",
+      "kind": "total",
+      "name": "Tổng số thuế GTGT đầu ra",
+      "sequence": 130,
+      "plus": ["30", "32"],
+      "legal_reference": "Mẫu số 01/GTGT — tổng số thuế giá trị gia tăng đầu ra phát sinh trong kỳ, bằng tổng chỉ tiêu [30] và [32].",
+      "source": "vat-return-form"
+    },
+    {
+      "box": "36",
+      "kind": "total",
+      "name": "Thuế GTGT phải nộp trong kỳ",
+      "sequence": 140,
+      "plus": ["34"],
+      "minus": ["25", "22"],
+      "floor_zero": true,
+      "legal_reference": "Mẫu số 01/GTGT, chỉ tiêu [36] (chỉ tiêu [40] tại một số phiên bản trước) — [34] trừ ([25] cộng [22]), khi số dương: thuế giá trị gia tăng phải nộp ngân sách nhà nước. Luật Thuế giá trị gia tăng số 48/2024/QH15, Điều 44, khoản 1, điểm g Luật Quản lý thuế 38/2019/QH14 quy định nộp thuế chậm nhất là ngày cuối cùng của thời hạn nộp hồ sơ khai thuế.",
+      "source": "vat-return-form"
+    },
+    {
+      "box": "43",
+      "kind": "total",
+      "name": "Thuế GTGT còn được khấu trừ chuyển kỳ sau",
+      "sequence": 150,
+      "plus": ["25", "22"],
+      "minus": ["34"],
+      "floor_zero": true,
+      "legal_reference": "Mẫu số 01/GTGT, chỉ tiêu [43] — ([25] cộng [22]) trừ [34], khi số dương: số thuế giá trị gia tăng đầu vào chưa được khấu trừ hết, chuyển sang kỳ tính thuế sau (Luật Thuế giá trị gia tăng số 48/2024/QH15, Điều 14). Chỉ tiêu [22] của kỳ sau bằng chỉ tiêu [43] của kỳ này.",
+      "source": "vat-return-form"
+    }
+  ]
+}

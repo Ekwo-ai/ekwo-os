@@ -1,0 +1,236 @@
+[
+  {
+    "code": "VN-S-10",
+    "name": "Bán ra — thuế suất 10%",
+    "description": "Thuế giá trị gia tăng đầu ra, thuế suất phổ thông",
+    "kind": "vat",
+    "rate": 10,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2025-07-01",
+    "legal_reference": "Luật Thuế giá trị gia tăng số 48/2024/QH15, Điều 9, khoản 3 — mức thuế suất 10% áp dụng đối với hàng hóa, dịch vụ không thuộc đối tượng áp dụng thuế suất 0% và 5% quy định tại khoản 1 và khoản 2 Điều này. Có hiệu lực từ 01/07/2025 (Điều 18, khoản 1). Giá trị được kê khai tại chỉ tiêu [31] và thuế tại chỉ tiêu [32] của Mẫu 01/GTGT.",
+    "source": "vat-law-48",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "31" },
+        { "type": "tax", "account": "3331", "box": "32" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "31", "box_factor": -100 },
+        { "type": "tax", "account": "3331", "box": "32", "box_factor": -100 }
+      ]
+    },
+    "sequence": 10
+  },
+  {
+    "code": "VN-S-8-NQ204",
+    "name": "Bán ra — thuế suất 8% (giảm tạm thời)",
+    "description": "Hàng hóa, dịch vụ được giảm 2 điểm thuế suất theo Nghị quyết 204/2025/QH15, từ 01/07/2025 đến 31/12/2026",
+    "kind": "vat",
+    "rate": 8,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2025-07-01",
+    "valid_to": "2026-12-31",
+    "conditions": ["supply_nature"],
+    "legal_reference": "Nghị quyết số 204/2025/QH15, Điều 1 — giảm 2% thuế suất thuế giá trị gia tăng đối với các nhóm hàng hóa, dịch vụ đang áp dụng mức thuế suất 10% (còn 8%), trừ một số nhóm hàng hóa, dịch vụ: viễn thông, hoạt động tài chính, ngân hàng, chứng khoán, bảo hiểm, kinh doanh bất động sản, sản phẩm kim loại, sản phẩm khai khoáng (trừ than), hàng hóa và dịch vụ chịu thuế tiêu thụ đặc biệt (trừ xăng); Nghị định số 174/2025/NĐ-CP quy định chi tiết danh mục loại trừ tại Phụ lục I và Phụ lục II — danh mục chi tiết theo mã HS/ngành nghề của hai phụ lục này chưa được đối chiếu từng dòng khi soạn gói này, nên `conditions: supply_nature` đánh dấu việc phân loại một hàng hóa/dịch vụ cụ thể vào hay ra khỏi danh mục giảm thuế là một câu hỏi mà sổ sách không tự trả lời được. Áp dụng từ 01/07/2025 đến hết 31/12/2026.",
+    "source": "vat-cut-nq204",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "31" },
+        { "type": "tax", "account": "3331", "box": "32" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "31", "box_factor": -100 },
+        { "type": "tax", "account": "3331", "box": "32", "box_factor": -100 }
+      ]
+    },
+    "sequence": 20
+  },
+  {
+    "code": "VN-S-5",
+    "name": "Bán ra — thuế suất 5%",
+    "description": "Thuế giá trị gia tăng đầu ra, thuế suất ưu đãi",
+    "kind": "vat",
+    "rate": 5,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2025-07-01",
+    "conditions": ["supply_nature"],
+    "legal_reference": "Luật Thuế giá trị gia tăng số 48/2024/QH15, Điều 9, khoản 2 — danh mục giới hạn các nhóm hàng hóa, dịch vụ áp dụng thuế suất 5% (nước sạch; phân bón, thuốc phòng trừ sâu bệnh và chất kích thích tăng trưởng vật nuôi, cây trồng; thực phẩm tươi sống, lâm sản chưa qua chế biến; mủ cao su sơ chế; đường và phụ phẩm; thiết bị, dụng cụ y tế, thuốc chữa bệnh, phòng bệnh; giáo cụ dùng để giảng dạy; hoạt động văn hóa, triển lãm, thể dục thể thao, nhà ở xã hội…). `conditions: supply_nature` vì việc một hàng hóa/dịch vụ cụ thể có nằm trong danh mục hay không là một câu hỏi về bản chất của hàng hóa mà sổ sách không tự trả lời.",
+    "source": "vat-law-48",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "29" },
+        { "type": "tax", "account": "3331", "box": "30" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "29", "box_factor": -100 },
+        { "type": "tax", "account": "3331", "box": "30", "box_factor": -100 }
+      ]
+    },
+    "sequence": 30
+  },
+  {
+    "code": "VN-S-0-EXP",
+    "name": "Bán ra — xuất khẩu, thuế suất 0%",
+    "description": "Hàng hóa, dịch vụ xuất khẩu",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2025-07-01",
+    "conditions": ["transport_evidence"],
+    "legal_reference": "Luật Thuế giá trị gia tăng số 48/2024/QH15, Điều 9, khoản 1 — thuế suất 0% áp dụng đối với hàng hóa xuất khẩu, dịch vụ xuất khẩu và một số trường hợp được coi như xuất khẩu; khoản 6 giao Chính phủ quy định điều kiện, hồ sơ, thủ tục áp dụng — hợp đồng bán hàng hóa, gia công hàng hóa, cung ứng dịch vụ; chứng từ thanh toán không dùng tiền mặt; tờ khai hải quan đối với hàng hóa xuất khẩu. `conditions: transport_evidence` ghi lại rằng quyền áp dụng thuế suất 0% phụ thuộc vào việc xuất trình các chứng từ này, việc sổ sách không tự chứng minh được.",
+    "source": "vat-law-48",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "28" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "28", "box_factor": -100 }
+      ]
+    },
+    "sequence": 40
+  },
+  {
+    "code": "VN-S-NT",
+    "name": "Bán ra — không chịu thuế GTGT",
+    "description": "Đối tượng không chịu thuế giá trị gia tăng, Điều 5",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2025-07-01",
+    "conditions": ["supply_nature"],
+    "legal_reference": "Luật Thuế giá trị gia tăng số 48/2024/QH15, Điều 5 — hai mươi tám nhóm đối tượng không chịu thuế giá trị gia tăng (sản phẩm nông nghiệp chưa chế biến do người sản xuất trực tiếp bán ra, dịch vụ tín dụng, chuyển nhượng vốn, bảo hiểm nhân thọ, y tế, giáo dục, chuyển giao công nghệ, phần mềm…). Khoản 27 — hàng hóa, dịch vụ này không được khấu trừ, hoàn thuế GTGT đầu vào tương ứng, trừ trường hợp áp dụng thuế suất 0% tại khoản 1 Điều 9.",
+    "source": "vat-law-48",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "26" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "26", "box_factor": -100 }
+      ]
+    },
+    "sequence": 50
+  },
+  {
+    "code": "VN-P-10",
+    "name": "Mua vào — thuế suất 10%",
+    "description": "Thuế giá trị gia tăng đầu vào được khấu trừ, thuế suất phổ thông",
+    "kind": "vat",
+    "rate": 10,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2025-07-01",
+    "legal_reference": "Luật Thuế giá trị gia tăng số 48/2024/QH15, Điều 11 — phương pháp khấu trừ thuế: số thuế giá trị gia tăng phải nộp bằng số thuế giá trị gia tăng đầu ra trừ số thuế giá trị gia tăng đầu vào được khấu trừ; Điều 14 — điều kiện khấu trừ (hóa đơn giá trị gia tăng hợp pháp, chứng từ thanh toán không dùng tiền mặt đối với hàng hóa, dịch vụ mua vào từ 5 triệu đồng trở lên). Kê khai tại chỉ tiêu [23] (giá trị) và [24] (thuế) của Mẫu 01/GTGT.",
+    "source": "vat-law-48",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "23" },
+        { "type": "tax", "account": "133", "box": "24" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "23", "box_factor": -100 },
+        { "type": "tax", "account": "133", "box": "24", "box_factor": -100 }
+      ]
+    },
+    "sequence": 60
+  },
+  {
+    "code": "VN-P-8-NQ204",
+    "name": "Mua vào — thuế suất 8% (giảm tạm thời)",
+    "description": "Thuế giá trị gia tăng đầu vào trên hàng hóa, dịch vụ được giảm thuế theo Nghị quyết 204/2025/QH15",
+    "kind": "vat",
+    "rate": 8,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2025-07-01",
+    "valid_to": "2026-12-31",
+    "conditions": ["supply_nature"],
+    "legal_reference": "Nghị quyết số 204/2025/QH15 và Nghị định số 174/2025/NĐ-CP — mặt mua vào tương ứng với VN-S-8-NQ204: trong thời gian áp dụng giảm thuế, người bán xuất hóa đơn thuế suất 8% và người mua khấu trừ thuế đầu vào theo cùng thuế suất và cùng điều kiện với VN-P-10 (Điều 14, Luật Thuế giá trị gia tăng số 48/2024/QH15).",
+    "source": "vat-cut-nq204",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "23" },
+        { "type": "tax", "account": "133", "box": "24" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "23", "box_factor": -100 },
+        { "type": "tax", "account": "133", "box": "24", "box_factor": -100 }
+      ]
+    },
+    "sequence": 70
+  },
+  {
+    "code": "VN-P-5",
+    "name": "Mua vào — thuế suất 5%",
+    "description": "Thuế giá trị gia tăng đầu vào được khấu trừ, thuế suất ưu đãi",
+    "kind": "vat",
+    "rate": 5,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2025-07-01",
+    "conditions": ["supply_nature"],
+    "legal_reference": "Luật Thuế giá trị gia tăng số 48/2024/QH15, Điều 9, khoản 2 và Điều 14 — thuế giá trị gia tăng đầu vào trên hàng hóa, dịch vụ mua vào thuộc danh mục thuế suất 5%, được khấu trừ theo cùng điều kiện với VN-P-10.",
+    "source": "vat-law-48",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "23" },
+        { "type": "tax", "account": "133", "box": "24" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "23", "box_factor": -100 },
+        { "type": "tax", "account": "133", "box": "24", "box_factor": -100 }
+      ]
+    },
+    "sequence": 80
+  },
+  {
+    "code": "VN-P-NT",
+    "name": "Mua vào — không chịu thuế GTGT",
+    "description": "Hàng hóa, dịch vụ mua vào từ người bán thuộc đối tượng không chịu thuế, hoặc không có hóa đơn giá trị gia tăng",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "exempt",
+    "valid_from": "2025-07-01",
+    "legal_reference": "Luật Thuế giá trị gia tăng số 48/2024/QH15, Điều 5 — người bán không tính thuế giá trị gia tăng trên hóa đơn, nên không có số thuế nào để khấu trừ; không thuộc chỉ tiêu [23]/[24] của Mẫu 01/GTGT.",
+    "source": "vat-law-48",
+    "postings": {
+      "invoice": [
+        { "type": "base" }
+      ],
+      "credit_note": [
+        { "type": "base" }
+      ]
+    },
+    "sequence": 90
+  },
+  {
+    "code": "VN-P-IMP-10",
+    "name": "Nhập khẩu — thuế suất 10%",
+    "description": "Thuế giá trị gia tăng hàng nhập khẩu, nộp cho cơ quan hải quan, thuế suất phổ thông",
+    "kind": "vat",
+    "rate": 10,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2025-07-01",
+    "legal_reference": "Luật Thuế giá trị gia tăng số 48/2024/QH15, Điều 7, khoản 2 — giá tính thuế đối với hàng hóa nhập khẩu là giá nhập tại cửa khẩu cộng thuế nhập khẩu (nếu có), cộng thuế tiêu thụ đặc biệt (nếu có), cộng thuế bảo vệ môi trường (nếu có); Điều 9, khoản 3 — thuế suất 10% khi hàng hóa không thuộc danh mục 0%/5%. Thuế do người nhập khẩu nộp cho cơ quan hải quan tại thời điểm thông quan, được khấu trừ theo Điều 14. Pack tính thuế trên giá trị hóa đơn của nhà cung cấp nước ngoài, không phải trị giá hải quan (khác biệt nằm ở thuế nhập khẩu và các khoản điều chỉnh khác mà pack không tính) — điểm cần một kế toán tại Việt Nam kiểm tra lại.",
+    "source": "vat-law-48",
+    "postings": {
+      "invoice": [
+        { "type": "base" },
+        { "type": "tax", "account": "133", "box": "24" },
+        { "type": "tax", "factor": -100, "account": "33312" }
+      ],
+      "credit_note": [
+        { "type": "base" },
+        { "type": "tax", "account": "133", "box": "24", "box_factor": -100 },
+        { "type": "tax", "factor": -100, "account": "33312", "box_factor": -100 }
+      ]
+    },
+    "sequence": 100
+  }
+]

@@ -3741,3 +3741,72 @@ hour.
   this chart's own accounts by their code ranges instead of transcribing
   that standard's paragraphs, the way `packs/sg/`'s statements do transcribe
   SFRS for Small Entities.
+
+## Vietnam
+
+`packs/vn/`, `community`, seed 53. Written from published sources alone on
+22 September 2026: a 34-account chart cut onto the account classes of Thông
+tư 99/2025/TT-BTC (in force 1 January 2026, replacing Thông tư 200/2014/TT-BTC),
+ten taxes — value added tax at 0 %, 5 % and 10 %, the temporary 8 % rate of
+Nghị quyết 204/2025/QH15 running from 1 July 2025 to 31 December 2026, exports,
+Điều 5's twenty-eight non-taxable categories, and import VAT paid to customs —
+the deduction-method return Mẫu số 01/GTGT, the balance sheet and income
+statement of Thông tư 99/2025/TT-BTC, and a register of thirteen texts. The
+pack's own [`README`](../packs/vn/README.md) says where each rule comes from
+and which points a Vietnamese accountant should read first — two of them
+because a text this pack needed could not be read in full even from a mirror,
+not because nobody looked.
+
+### From Vietnam
+
+**No word for "delivery or invoice, whichever is first."** Luật Thuế giá trị
+gia tăng số 48/2024/QH15, Điều 8, khoản 1 fixes the tax point at the transfer
+of ownership (or the completion of a service) *or* the date the invoice is
+issued, whichever comes first — not whichever the invoice or a payment
+displaces, and not delivery against a payment. `tax_point` has `invoice_date`,
+`delivery_date`, `payment_date`, `invoice_if_issued` (a supply displaced by an
+invoice a country requires) and `earliest_of_delivery_or_payment` (Estonia's
+KMS § 11: delivery against payment), and none of the five is "delivery against
+the invoice's own date." `packs/vn/` declares the closest of the five,
+`earliest_of_delivery_or_payment`, and says in its own `legal_reference` that
+the word it needs does not exist. *Fix*: a sixth value,
+`earliest_of_delivery_or_invoice`, which Vietnam is not likely to be the last
+pack to ask for — a business that invoices ahead of delivery is not a
+Vietnamese peculiarity.
+
+**A deadline that depends on the cadence, not only on the taxpayer.** Luật
+Quản lý thuế số 38/2019/QH14, Điều 44, khoản 1 gives two different rules in
+the same paragraph: the 20th of the next month for a monthly filer (point a),
+the last day of the first month of the next quarter for a quarterly one
+(point b) — and which cadence a given company files on is itself a fact the
+core does not know in advance (Nghị định 126/2020/NĐ-CP ties it to the
+turnover of the *previous* year). `tax_report.json` carries one `deadline`
+block for a form filed on several cadences, which is right where one rule
+covers every cadence (Japan's "within two months," read literally, does) and
+wrong here, where the rule itself changes with the cadence. `packs/vn/`
+declares the monthly rule and says so; a quarterly filer's return is due
+earlier, by the pack's own reading, than what `filing_deadline()` would
+answer. *Fix*: `deadline` keyed by cadence, the same shape `period` already
+takes as a list — Australia's BAS, due on different days for a monthly and a
+quarterly filer, would read it too.
+
+**A third-party withholding this pack chose not to guess at, not one the
+core cannot express.** Thuế nhà thầu nước ngoài — a Vietnamese payer
+withholding and remitting VAT (and corporate income tax) owed by a foreign
+contractor with no permanent establishment — is the same shape already
+named here for Mexico's *retención* on a *persona moral*'s payments and for
+DR Congo's mining-company withholding on a state-owned supplier: a purchase
+tax with a posting to a payable account, nothing the format lacks a word
+for. What stopped `packs/vn/` was not the format: Thông tư 103/2014/TT-BTC,
+the text that has governed it since 2014, appears from several convergent
+professional sources to lose effect on 1 July 2026, and this pack's research
+found two different, unconfirmed circular numbers offered as its successor
+by secondary sources, neither read on an official page. A withholding coded
+against a citation that might already be wrong is worse than none, so
+`packs/vn/` carries no foreign-contractor tax and says why in its own
+README rather than in a rule of this section.
+
+**VND** is added to `00_currencies.sql` at no decimals, the dong having no
+minor unit in use. `VN` is added to `00_territories.sql`, outside the common
+system of VAT, so `vat_category`, `exemption_code` and the five `intracom_*`
+treatments are read the way every non-EU pack's are.

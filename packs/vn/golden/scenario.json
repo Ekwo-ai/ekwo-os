@@ -1,0 +1,190 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "Một quý của công ty trách nhiệm hữu hạn, kê khai thuế GTGT theo quý, phương pháp khấu trừ — quý II/2026",
+  "chart": "default",
+  "fiscal_year": {
+    "name": "Năm tài chính 2026",
+    "start": "2026-01-01",
+    "end": "2026-12-31"
+  },
+  "periods": [
+    { "code": "2026-Q2", "from": "2026-04-01", "to": "2026-06-30" }
+  ],
+  "statements": ["VN-BCTC-BCTHTC", "VN-BCTC-KQKD"],
+  "contacts": [
+    { "ref": "cust-domestic", "name": "Công ty TNHH Thương mại Hoa Mai", "type": "customer", "country": "VN" },
+    { "ref": "cust-material", "name": "Công ty Cổ phần Xây dựng Bình Minh", "type": "customer", "country": "VN" },
+    { "ref": "cust-medical", "name": "Nhà thuốc Bệnh viện Đa khoa Tâm Đức", "type": "customer", "country": "VN" },
+    { "ref": "cust-export", "name": "Meridian Trading Pte. Ltd.", "type": "customer", "country": "SG" },
+    { "ref": "cust-training", "name": "Công ty Cổ phần Giáo dục Việt Tín", "type": "customer", "country": "VN" },
+    { "ref": "supp-metal", "name": "Công ty TNHH Sản xuất Bao bì Sông Hồng", "type": "supplier", "country": "VN" },
+    { "ref": "supp-office", "name": "Công ty TNHH Thiết bị Văn phòng Đông Á", "type": "supplier", "country": "VN" },
+    { "ref": "supp-fertilizer", "name": "Hợp tác xã Nông sản Xanh Cần Thơ", "type": "supplier", "country": "VN" },
+    { "ref": "supp-bank", "name": "Ngân hàng TMCP Đầu tư và Phát triển Việt Nam", "type": "supplier", "country": "VN" },
+    { "ref": "supp-cnc", "name": "Kobayashi Machinery Co., Ltd.", "type": "supplier", "country": "JP" }
+  ],
+  "documents": [
+    {
+      "ref": "S1",
+      "type": "sale_invoice",
+      "contact": "cust-domestic",
+      "date": "2026-04-10",
+      "why": "Bán hàng trong nước, thuế suất phổ thông 10% (VN-S-10): giá trị 30.000.000 đồng vào chỉ tiêu [31], thuế 3.000.000 đồng vào chỉ tiêu [32].",
+      "lines": [
+        { "name": "Máy in công nghiệp", "quantity": 2, "unit_price": 15000000, "tax": "VN-S-10", "account": "511" }
+      ]
+    },
+    {
+      "ref": "S2",
+      "type": "sale_invoice",
+      "contact": "cust-material",
+      "date": "2026-04-18",
+      "why": "Bán vật liệu xây dựng thuộc diện giảm thuế theo Nghị quyết 204/2025/QH15 (VN-S-8-NQ204): giá trị 25.000.000 đồng, thuế 2.000.000 đồng (8%), cùng vào chỉ tiêu [31]/[32] với VN-S-10.",
+      "lines": [
+        { "name": "Gạch ốp lát xây dựng", "quantity": 100, "unit_price": 250000, "tax": "VN-S-8-NQ204", "account": "511" }
+      ]
+    },
+    {
+      "ref": "S3",
+      "type": "sale_invoice",
+      "contact": "cust-medical",
+      "date": "2026-05-05",
+      "why": "Bán thiết bị y tế, thuế suất ưu đãi 5% (VN-S-5, Điều 9 khoản 2 Luật 48/2024/QH15): giá trị 40.000.000 đồng vào chỉ tiêu [29], thuế 2.000.000 đồng vào chỉ tiêu [30].",
+      "lines": [
+        { "name": "Máy đo huyết áp điện tử", "quantity": 50, "unit_price": 800000, "tax": "VN-S-5", "account": "511" }
+      ]
+    },
+    {
+      "ref": "S4",
+      "type": "sale_invoice",
+      "contact": "cust-export",
+      "date": "2026-05-12",
+      "why": "Xuất khẩu hàng thủ công mỹ nghệ sang Singapore, thuế suất 0% (VN-S-0-EXP): giá trị 60.000.000 đồng vào chỉ tiêu [28], không có thuế.",
+      "lines": [
+        { "name": "Đồ thủ công mỹ nghệ xuất khẩu", "quantity": 500, "unit_price": 120000, "tax": "VN-S-0-EXP", "account": "511" }
+      ]
+    },
+    {
+      "ref": "S5",
+      "type": "sale_invoice",
+      "contact": "cust-training",
+      "date": "2026-05-20",
+      "why": "Học phí khóa đào tạo, thuộc đối tượng không chịu thuế GTGT (VN-S-NT, Điều 5 khoản 13 Luật 48/2024/QH15 — hoạt động giáo dục): giá trị 35.000.000 đồng vào chỉ tiêu [26].",
+      "lines": [
+        { "name": "Học phí khóa đào tạo nghiệp vụ kế toán", "quantity": 1, "unit_price": 35000000, "tax": "VN-S-NT", "account": "511" }
+      ]
+    },
+    {
+      "ref": "S6",
+      "type": "sale_credit_note",
+      "contact": "cust-domestic",
+      "date": "2026-06-02",
+      "why": "Trả lại một máy in công nghiệp bị lỗi thuộc hóa đơn S1, cùng thuế suất 10%: giảm 15.000.000 đồng ở chỉ tiêu [31] và 1.500.000 đồng ở chỉ tiêu [32].",
+      "lines": [
+        { "name": "Trả lại: máy in công nghiệp bị lỗi", "quantity": 1, "unit_price": 15000000, "tax": "VN-S-10", "account": "511" }
+      ]
+    },
+    {
+      "ref": "P1",
+      "type": "purchase_invoice",
+      "contact": "supp-metal",
+      "date": "2026-04-08",
+      "why": "Mua nguyên liệu nhôm tấm, thuế suất 10% được khấu trừ (VN-P-10): giá trị 90.000.000 đồng vào chỉ tiêu [23], thuế 9.000.000 đồng vào chỉ tiêu [24].",
+      "lines": [
+        { "name": "Nhôm tấm nguyên liệu", "quantity": 1000, "unit_price": 90000, "tax": "VN-P-10", "account": "152" }
+      ]
+    },
+    {
+      "ref": "P2",
+      "type": "purchase_invoice",
+      "contact": "supp-office",
+      "date": "2026-04-25",
+      "why": "Mua công cụ, dụng cụ văn phòng thuộc diện giảm thuế theo Nghị quyết 204/2025/QH15 (VN-P-8-NQ204): giá trị 70.000.000 đồng, thuế 5.600.000 đồng (8%), khấu trừ vào chỉ tiêu [23]/[24].",
+      "lines": [
+        { "name": "Bộ bàn ghế và tủ hồ sơ văn phòng", "quantity": 20, "unit_price": 3500000, "tax": "VN-P-8-NQ204", "account": "153" }
+      ]
+    },
+    {
+      "ref": "P3",
+      "type": "purchase_invoice",
+      "contact": "supp-fertilizer",
+      "date": "2026-05-15",
+      "why": "Mua phân bón, thuế suất ưu đãi 5% được khấu trừ (VN-P-5): giá trị 24.000.000 đồng vào chỉ tiêu [23], thuế 1.200.000 đồng vào chỉ tiêu [24].",
+      "lines": [
+        { "name": "Phân bón NPK", "quantity": 2000, "unit_price": 12000, "tax": "VN-P-5", "account": "152" }
+      ]
+    },
+    {
+      "ref": "P4",
+      "type": "purchase_invoice",
+      "contact": "supp-bank",
+      "date": "2026-05-31",
+      "why": "Phí dịch vụ tín dụng, bảo lãnh ngân hàng quý II/2026, không chịu thuế GTGT (VN-P-NT, Điều 5 khoản 9 Luật 48/2024/QH15 — dịch vụ tín dụng): không có thuế được khấu trừ.",
+      "lines": [
+        { "name": "Phí dịch vụ tín dụng, bảo lãnh ngân hàng", "quantity": 1, "unit_price": 5000000, "tax": "VN-P-NT", "account": "635" }
+      ]
+    },
+    {
+      "ref": "P5",
+      "type": "purchase_invoice",
+      "contact": "supp-cnc",
+      "date": "2026-06-10",
+      "why": "Nhập khẩu máy CNC từ Nhật Bản, thuế GTGT hàng nhập khẩu nộp cho hải quan, thuế suất 10% (VN-P-IMP-10): thuế 80.000.000 đồng vào chỉ tiêu [24], ghi Có 33312 chờ nộp hải quan.",
+      "lines": [
+        { "name": "Máy CNC nhập khẩu", "quantity": 1, "unit_price": 800000000, "tax": "VN-P-IMP-10", "account": "211" }
+      ]
+    },
+    {
+      "ref": "P6",
+      "type": "purchase_credit_note",
+      "contact": "supp-metal",
+      "date": "2026-06-15",
+      "why": "Trả lại một phần nhôm tấm nguyên liệu kém chất lượng thuộc hóa đơn P1, cùng thuế suất 10%: giảm 9.000.000 đồng ở chỉ tiêu [23] và 900.000 đồng ở chỉ tiêu [24].",
+      "lines": [
+        { "name": "Trả lại: nhôm tấm nguyên liệu kém chất lượng", "quantity": 100, "unit_price": 90000, "tax": "VN-P-10", "account": "152" }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "PAY1",
+      "direction": "inbound",
+      "date": "2026-04-28",
+      "amount": 33000000,
+      "contact": "cust-domestic",
+      "journal": "BNK",
+      "match": "S1",
+      "why": "Công ty TNHH Thương mại Hoa Mai thanh toán toàn bộ hóa đơn S1 (30.000.000 + 3.000.000 đồng thuế GTGT)."
+    },
+    {
+      "ref": "PAY2",
+      "direction": "outbound",
+      "date": "2026-05-02",
+      "amount": 99000000,
+      "contact": "supp-metal",
+      "journal": "BNK",
+      "match": "P1",
+      "why": "Thanh toán toàn bộ hóa đơn mua nguyên liệu P1 (90.000.000 + 9.000.000 đồng thuế GTGT)."
+    },
+    {
+      "ref": "PAY3",
+      "direction": "outbound",
+      "date": "2026-06-25",
+      "amount": 880000000,
+      "contact": "supp-cnc",
+      "journal": "BNK",
+      "match": "P5",
+      "why": "Thanh toán toàn bộ hóa đơn nhập khẩu máy CNC P5 (800.000.000 + 80.000.000 đồng thuế GTGT hàng nhập khẩu)."
+    },
+    {
+      "ref": "PAY4",
+      "direction": "inbound",
+      "date": "2026-06-20",
+      "amount": 10000000,
+      "contact": "cust-material",
+      "journal": "BNK",
+      "match": null,
+      "why": "Công ty Cổ phần Xây dựng Bình Minh tạm ứng trước cho một đơn hàng vật liệu xây dựng của quý sau, chưa có hóa đơn phát hành trong quý II/2026 để đối chiếu."
+    }
+  ]
+}

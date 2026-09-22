@@ -1,0 +1,110 @@
+code,parent,type,reconcilable,name,sequence
+111,,asset_cash,false,Tiền mặt,10
+1111,111,asset_cash,false,Tiền Việt Nam,11
+1112,111,asset_cash,false,Ngoại tệ,12
+112,,asset_cash,false,Tiền gửi ngân hàng,20
+1121,112,asset_cash,false,Tiền Việt Nam,21
+1122,112,asset_cash,false,Ngoại tệ,22
+113,,asset_cash,false,Tiền đang chuyển,30
+121,,asset_current,false,Chứng khoán kinh doanh,40
+128,,asset_current,false,Đầu tư nắm giữ đến ngày đáo hạn,50
+131,,asset_receivable,true,Phải thu của khách hàng,60
+133,,asset_current,true,Thuế giá trị gia tăng được khấu trừ,70
+1331,133,asset_current,false,"Thuế GTGT được khấu trừ của hàng hóa, dịch vụ",71
+1332,133,asset_current,false,Thuế GTGT được khấu trừ của tài sản cố định,72
+136,,asset_current,false,Phải thu nội bộ,80
+138,,asset_current,false,Phải thu khác,90
+1381,138,asset_current,false,Tài sản thiếu chờ xử lý,91
+1385,138,asset_current,false,Phải thu về cổ phần hóa,92
+1388,138,asset_current,false,Phải thu khác,93
+141,,asset_current,false,Tạm ứng,100
+151,,asset_current,false,Hàng mua đang đi đường,110
+152,,asset_current,false,"Nguyên liệu, vật liệu",120
+153,,asset_current,false,"Công cụ, dụng cụ",130
+154,,asset_current,false,"Chi phí sản xuất, kinh doanh dở dang",140
+155,,asset_current,false,Thành phẩm,150
+156,,asset_current,false,Hàng hóa,160
+1561,156,asset_current,false,Giá mua hàng hóa,161
+1562,156,asset_current,false,Chi phí thu mua hàng hóa,162
+157,,asset_current,false,Hàng gửi đi bán,170
+158,,asset_current,false,Hàng hóa kho bảo thuế,180
+211,,asset_fixed,false,Tài sản cố định hữu hình,190
+2111,211,asset_fixed,false,"Nhà cửa, vật kiến trúc",191
+2112,211,asset_fixed,false,"Máy móc, thiết bị",192
+2113,211,asset_fixed,false,"Phương tiện vận tải, truyền dẫn",193
+2114,211,asset_fixed,false,"Thiết bị, dụng cụ quản lý",194
+2118,211,asset_fixed,false,Tài sản cố định hữu hình khác,195
+213,,asset_fixed,false,Tài sản cố định vô hình,200
+2131,213,asset_fixed,false,Quyền sử dụng đất,201
+2135,213,asset_fixed,false,Phần mềm,202
+2138,213,asset_fixed,false,Tài sản cố định vô hình khác,203
+214,,asset_fixed,false,Hao mòn tài sản cố định,210
+2141,214,asset_fixed,false,Hao mòn tài sản cố định hữu hình,211
+2143,214,asset_fixed,false,Hao mòn tài sản cố định vô hình,212
+241,,asset_non_current,false,Xây dựng cơ bản dở dang,220
+2411,241,asset_non_current,false,Mua sắm tài sản cố định,221
+2412,241,asset_non_current,false,Xây dựng cơ bản,222
+2413,241,asset_non_current,false,Sửa chữa lớn tài sản cố định,223
+242,,asset_prepayments,false,Chi phí trả trước,230
+243,,asset_non_current,false,Tài sản thuế thu nhập hoãn lại,240
+244,,asset_non_current,false,"Cầm cố, thế chấp, ký quỹ, ký cược",250
+331,,liability_payable,true,Phải trả cho người bán,260
+333,,liability_current,false,Thuế và các khoản phải nộp Nhà nước,270
+3331,333,liability_current,true,Thuế giá trị gia tăng phải nộp,271
+33311,3331,liability_current,false,Thuế giá trị gia tăng đầu ra,272
+33312,3331,liability_current,false,Thuế giá trị gia tăng hàng nhập khẩu,273
+3332,333,liability_current,false,Thuế tiêu thụ đặc biệt,274
+3333,333,liability_current,false,"Thuế xuất, nhập khẩu",275
+3334,333,liability_current,false,Thuế thu nhập doanh nghiệp,276
+3335,333,liability_current,false,Thuế thu nhập cá nhân,277
+3336,333,liability_current,false,Thuế tài nguyên,278
+3337,333,liability_current,false,"Thuế nhà đất, tiền thuê đất",279
+3339,333,liability_current,false,"Phí, lệ phí và các khoản phải nộp khác",280
+334,,liability_current,false,Phải trả người lao động,290
+335,,liability_current,false,Chi phí phải trả,300
+336,,liability_current,false,Phải trả nội bộ,310
+338,,liability_current,false,"Phải trả, phải nộp khác",320
+3382,338,liability_current,false,Kinh phí công đoàn,321
+3383,338,liability_current,false,Bảo hiểm xã hội,322
+3384,338,liability_current,false,Bảo hiểm y tế,323
+3386,338,liability_current,false,Bảo hiểm thất nghiệp,324
+3387,338,liability_current,false,Doanh thu chưa thực hiện,325
+3388,338,liability_current,false,"Phải trả, phải nộp khác",326
+341,,liability_non_current,false,Vay và nợ thuê tài chính,330
+352,,liability_non_current,false,Dự phòng phải trả,340
+3521,352,liability_non_current,false,Dự phòng bảo hành sản phẩm hàng hóa,341
+3524,352,liability_non_current,false,Dự phòng phải trả khác,342
+353,,liability_non_current,false,"Quỹ khen thưởng, phúc lợi",350
+411,,equity,false,Vốn đầu tư của chủ sở hữu,360
+4111,411,equity,false,Vốn góp của chủ sở hữu,361
+4112,411,equity,false,Thặng dư vốn cổ phần,362
+4118,411,equity,false,Vốn khác,363
+412,,equity,false,Chênh lệch đánh giá lại tài sản,370
+413,,equity,false,Chênh lệch tỷ giá hối đoái,380
+414,,equity,false,Quỹ đầu tư phát triển,390
+418,,equity,false,Các quỹ khác thuộc vốn chủ sở hữu,400
+419,,equity,false,Cổ phiếu quỹ,410
+421,,equity_retained,false,Lợi nhuận sau thuế chưa phân phối,420
+4211,421,equity_retained,false,Lợi nhuận sau thuế chưa phân phối năm trước,421
+4212,421,equity_retained,false,Lợi nhuận sau thuế chưa phân phối năm nay,422
+511,,income,false,Doanh thu bán hàng và cung cấp dịch vụ,430
+5111,511,income,false,Doanh thu bán hàng hóa,431
+5112,511,income,false,Doanh thu bán thành phẩm,432
+5113,511,income,false,Doanh thu cung cấp dịch vụ,433
+515,,income_other,false,Doanh thu hoạt động tài chính,440
+521,,income,false,Các khoản giảm trừ doanh thu,450
+611,,expense_direct_cost,false,Mua hàng,460
+621,,expense_direct_cost,false,"Chi phí nguyên liệu, vật liệu trực tiếp",470
+622,,expense_direct_cost,false,Chi phí nhân công trực tiếp,480
+623,,expense_direct_cost,false,Chi phí sử dụng máy thi công,490
+627,,expense_direct_cost,false,Chi phí sản xuất chung,500
+631,,expense_direct_cost,false,Giá thành sản xuất,510
+632,,expense_direct_cost,false,Giá vốn hàng bán,520
+635,,expense,false,Chi phí tài chính,530
+641,,expense,false,Chi phí bán hàng,540
+642,,expense,false,Chi phí quản lý doanh nghiệp,550
+711,,income_other,false,Thu nhập khác,560
+811,,expense,false,Chi phí khác,570
+821,,expense,false,Chi phí thuế thu nhập doanh nghiệp,580
+8211,821,expense,false,Chi phí thuế thu nhập doanh nghiệp hiện hành,581
+8212,821,expense,false,Chi phí thuế thu nhập doanh nghiệp hoãn lại,582

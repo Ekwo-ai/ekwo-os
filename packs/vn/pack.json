@@ -1,0 +1,215 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "VN",
+  "name": "Việt Nam",
+  "version": "0.1.0",
+  "schema_min": "20260921145425",
+  "seed_sequence": 53,
+  "released_at": "2026-09-22",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "vat-law-48",
+        "title": "Luật Thuế giá trị gia tăng số 48/2024/QH15, thông qua ngày 26/11/2024 (Quốc hội khóa XV, kỳ họp thứ 8)",
+        "publisher": "Chính phủ nước Cộng hòa xã hội chủ nghĩa Việt Nam — Cổng thông tin điện tử Chính phủ",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2025/01/luat48.pdf",
+        "consulted_on": "2026-09-22",
+        "kind": "law"
+      },
+      {
+        "key": "vat-law-149",
+        "title": "Luật số 149/2025/QH15 sửa đổi, bổ sung một số điều của Luật Thuế giá trị gia tăng, thông qua ngày 11/12/2025, hiệu lực 01/01/2026",
+        "publisher": "Chính phủ nước Cộng hòa xã hội chủ nghĩa Việt Nam — Cổng thông tin điện tử Chính phủ",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/01/luat149.signed.pdf",
+        "consulted_on": "2026-09-22",
+        "kind": "law"
+      },
+      {
+        "key": "vat-law-09-2026",
+        "title": "Luật số 09/2026/QH16 sửa đổi, bổ sung một số điều của Luật Thuế thu nhập cá nhân, Luật Thuế giá trị gia tăng, Luật Thuế thu nhập doanh nghiệp và Luật Thuế tiêu thụ đặc biệt, thông qua ngày 24/04/2026",
+        "publisher": "Chính phủ nước Cộng hòa xã hội chủ nghĩa Việt Nam — Cổng thông tin điện tử Chính phủ",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/5/09-qh.signed.pdf",
+        "consulted_on": "2026-09-22",
+        "kind": "law"
+      },
+      {
+        "key": "vat-cut-nq204",
+        "title": "Nghị quyết số 204/2025/QH15 của Quốc hội về giảm thuế giá trị gia tăng, thông qua ngày 17/06/2025, áp dụng từ 01/07/2025 đến hết 31/12/2026",
+        "publisher": "Chính phủ nước Cộng hòa xã hội chủ nghĩa Việt Nam — Cổng thông tin điện tử Chính phủ",
+        "url": "https://xaydungchinhsach.chinhphu.vn/toan-van-nghi-quyet-so-204-2025-qh15-ve-giam-thue-gia-tri-gia-tang-119250628082120511.htm",
+        "consulted_on": "2026-09-22",
+        "kind": "law"
+      },
+      {
+        "key": "vat-cut-nd174",
+        "title": "Nghị định số 174/2025/NĐ-CP quy định chính sách giảm thuế giá trị gia tăng theo Nghị quyết số 204/2025/QH15, ký ngày 30/06/2025",
+        "publisher": "Chính phủ nước Cộng hòa xã hội chủ nghĩa Việt Nam — Cổng thông tin điện tử Chính phủ",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2025/7/174nd.signed.pdf",
+        "consulted_on": "2026-09-22",
+        "kind": "regulation"
+      },
+      {
+        "key": "einvoice-nd70",
+        "title": "Nghị định số 70/2025/NĐ-CP sửa đổi, bổ sung Nghị định số 123/2020/NĐ-CP quy định về hóa đơn, chứng từ, ký ngày 20/03/2025, hiệu lực 01/06/2025",
+        "publisher": "Chính phủ nước Cộng hòa xã hội chủ nghĩa Việt Nam — Cổng thông tin điện tử Chính phủ",
+        "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2025/3/70-nd-cp.signed.pdf",
+        "consulted_on": "2026-09-22",
+        "kind": "regulation"
+      },
+      {
+        "key": "einvoice-nd123",
+        "title": "Nghị định số 123/2020/NĐ-CP quy định về hóa đơn, chứng từ, ký ngày 19/10/2020, hiệu lực 01/07/2022 (bản gốc, trước khi được Nghị định 70/2025/NĐ-CP sửa đổi)",
+        "publisher": "Chính phủ nước Cộng hòa xã hội chủ nghĩa Việt Nam (văn bản hợp nhất tham khảo)",
+        "url": "https://hethongphapluat.com/nghi-dinh-123-2020-nd-cp-quy-dinh-ve-hoa-don-chung-tu",
+        "consulted_on": "2026-09-22",
+        "kind": "regulation"
+      },
+      {
+        "key": "tax-admin-38",
+        "title": "Luật Quản lý thuế số 38/2019/QH14, Điều 44 (thời hạn nộp hồ sơ khai thuế)",
+        "publisher": "Quốc hội nước Cộng hòa xã hội chủ nghĩa Việt Nam (văn bản hợp nhất tham khảo)",
+        "url": "https://hethongphapluat.com/luat-quan-ly-thue-2019/dieu-44",
+        "consulted_on": "2026-09-22",
+        "kind": "law"
+      },
+      {
+        "key": "tax-admin-nd126",
+        "title": "Nghị định số 126/2020/NĐ-CP quy định chi tiết một số điều của Luật Quản lý thuế, Điều 9 (tiêu chí khai thuế theo quý)",
+        "publisher": "Chính phủ nước Cộng hòa xã hội chủ nghĩa Việt Nam",
+        "url": "https://hethongphapluat.com/nghi-dinh-126-2020-nd-cp-huong-dan-luat-quan-ly-thue",
+        "consulted_on": "2026-09-22",
+        "kind": "regulation"
+      },
+      {
+        "key": "vas-tt99",
+        "title": "Thông tư số 99/2025/TT-BTC hướng dẫn Chế độ kế toán doanh nghiệp, ký ngày 27/10/2025, hiệu lực 01/01/2026, thay thế Thông tư 200/2014/TT-BTC",
+        "publisher": "Bộ Tài chính — Công báo điện tử Chính phủ",
+        "url": "https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm",
+        "consulted_on": "2026-09-22",
+        "kind": "regulation"
+      },
+      {
+        "key": "vat-return-form",
+        "title": "Mẫu số 01/GTGT — Tờ khai thuế giá trị gia tăng (phương pháp khấu trừ), tại Thông tư 80/2021/TT-BTC (Phụ lục II) và, từ 01/07/2026, Thông tư 89/2026/TT-BTC (Phụ lục I, ký 30/06/2026)",
+        "publisher": "Bộ Tài chính",
+        "url": "https://thuvienphapluat.vn/van-ban/Thue-Phi-Le-Phi/Thong-tu-89-2026-TT-BTC-quy-dinh-chi-tiet-thi-hanh-mot-so-dieu-cua-Luat-Quan-ly-thue.aspx",
+        "consulted_on": "2026-09-22",
+        "kind": "form"
+      },
+      {
+        "key": "etax-portal",
+        "title": "Cổng thông tin điện tử ngành Thuế (eTax) — nơi nộp Tờ khai thuế GTGT",
+        "publisher": "Tổng cục Thuế — Bộ Tài chính",
+        "url": "https://thuedientu.gdt.gov.vn/",
+        "consulted_on": "2026-09-22",
+        "kind": "portal"
+      },
+      {
+        "key": "einvoice-portal",
+        "title": "Hệ thống hóa đơn điện tử",
+        "publisher": "Tổng cục Thuế — Bộ Tài chính",
+        "url": "https://hoadondientu.gdt.gov.vn/",
+        "consulted_on": "2026-09-22",
+        "kind": "portal"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "VND",
+    "language": "vi",
+    "rounding_method": "half_up",
+    "closing_style": "retained_earnings",
+    "fiscal_year_default": "calendar",
+    "roles": {
+      "receivable": "131",
+      "payable": "331",
+      "suspense": "338",
+      "rounding": "811",
+      "retained_earnings": "421",
+      "sales": "511",
+      "purchase": "632",
+      "bank": "112",
+      "cash": "111",
+      "fx_gain": "515",
+      "fx_loss": "635",
+      "asset_disposal_gain": "711",
+      "asset_disposal_loss": "811",
+      "tax_payable": "3331",
+      "tax_receivable": "133"
+    },
+    "journal_roles": {
+      "sales": "SAL",
+      "purchase": "PUR",
+      "miscellaneous": "GEN",
+      "opening": "OPN"
+    }
+  },
+  "languages": [],
+  "journals": [
+    { "code": "SAL", "type": "sales", "name": "Sổ nhật ký bán hàng", "sequence": 10 },
+    { "code": "PUR", "type": "purchase", "name": "Sổ nhật ký mua hàng", "sequence": 20 },
+    { "code": "BNK", "type": "bank", "name": "Sổ tiền gửi ngân hàng", "sequence": 30 },
+    { "code": "CSH", "type": "cash", "name": "Sổ quỹ tiền mặt", "sequence": 40 },
+    { "code": "GEN", "type": "general", "name": "Sổ nhật ký chung", "sequence": 50 },
+    { "code": "OPN", "type": "opening", "name": "Số dư đầu kỳ", "sequence": 60 }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Hệ thống tài khoản kế toán doanh nghiệp",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": ["VN-BCTC-BCTHTC", "VN-BCTC-KQKD"],
+      "legal_reference": "Thông tư số 99/2025/TT-BTC hướng dẫn Chế độ kế toán doanh nghiệp (Phụ lục II — Hệ thống tài khoản kế toán), hiệu lực 01/01/2026, thay thế Thông tư 200/2014/TT-BTC. Việt Nam quy định một hệ thống tài khoản thống nhất bắt buộc cho mọi doanh nghiệp (khác với PCMN của Bỉ hay PCG của Pháp, đây không phải một khung tối thiểu mà là danh mục tài khoản cấp 1 và cấp 2 áp dụng chung). Mã tài khoản ba chữ số theo Thông tư 200/2014/TT-BTC được giữ nguyên phần lớn trong Thông tư 99/2025/TT-BTC (đã xác nhận qua văn bản chính thức: các loại tài khoản Tài sản, Nợ phải trả, Vốn chủ sở hữu, Doanh thu, Chi phí sản xuất kinh doanh, Thu nhập khác, Chi phí khác vẫn dùng cùng khoảng mã — 1xx-2xx, 3xx, 4xx, 5xx, 6xx, 7xx, 8xx — nhưng nhãn « Loại 1 »/« Loại 2 » của TT200/2014 không còn, hai loại tài sản ngắn/dài hạn cũ được gộp vào một nhóm Tài sản); danh sách chi tiết từng tài khoản cấp 2 của Thông tư 99/2025/TT-BTC chưa được đối chiếu từng dòng trong lần soạn gói này — xem README.",
+      "source": "vas-tt99"
+    }
+  ],
+  "documents": {
+    "numbering": "free",
+    "number_format": "{CODE}{NNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "earliest_of_delivery_or_payment",
+    "references": {
+      "numbering": {
+        "legal_reference": "Nghị định 123/2020/NĐ-CP, Điều 10, khoản 3 — số hóa đơn là số thứ tự, tối đa 8 chữ số, bắt đầu từ số 1 vào ngày 01/01 hoặc ngày bắt đầu sử dụng hóa đơn và kết thúc vào ngày 31/12 hằng năm (dãy số theo năm, không nhất thiết liên tục tuyệt đối giữa các mẫu số/ký hiệu khác nhau của cùng một người bán); Điều 4, khoản 1 — mỗi hóa đơn được cấp một mã của cơ quan thuế hoặc, với hóa đơn không có mã, dữ liệu được chuyển đến cơ quan thuế. `number_format` không tái tạo được ký hiệu mẫu số/ký hiệu hóa đơn (6 ký tự) mà Điều 4, khoản 1 và Phụ lục IA của Nghị định 123/2020/NĐ-CP (chưa sửa đổi bởi Nghị định 70/2025/NĐ-CP trên các điểm này) quy định.",
+        "source": "einvoice-nd123"
+      },
+      "payment_terms": {
+        "legal_reference": "Không có văn bản nào quy định một thời hạn thanh toán pháp định chung giữa các doanh nghiệp khi không có thỏa thuận, nên legal_payment_days và late_payment_reference để trống."
+      },
+      "tax_point": {
+        "legal_reference": "Luật Thuế giá trị gia tăng số 48/2024/QH15, Điều 8, khoản 1 — đối với hàng hóa là thời điểm chuyển giao quyền sở hữu hoặc quyền sử dụng hàng hóa hoặc thời điểm lập hóa đơn, tùy thời điểm nào đến trước, không phân biệt đã thu được tiền hay chưa; đối với dịch vụ là thời điểm hoàn thành việc cung cấp dịch vụ hoặc thời điểm lập hóa đơn, tùy thời điểm nào đến trước. `earliest_of_delivery_or_payment` là gần đúng nhất trong từ vựng đóng của Ekwo: luật thực ra so sánh giao hàng/hoàn thành dịch vụ với NGÀY LẬP HÓA ĐƠN chứ không phải ngày thanh toán — không có mục nào của từ vựng diễn đạt đúng \"giao hàng hoặc hóa đơn, tùy cái nào trước\"; khoảng cách này được ghi trong docs/international.md. Các trường hợp đặc biệt (xuất khẩu, viễn thông, bảo hiểm, điện/nước, bất động sản, xây dựng, dầu khí) được giao cho nghị định hướng dẫn và không được gói này chuyển tải.",
+        "source": "vat-law-48"
+      }
+    },
+    "mentions": [
+      {
+        "code": "export",
+        "applies_when": "export",
+        "text": "Hàng hóa/dịch vụ xuất khẩu áp dụng thuế suất 0% (Điều 9, khoản 1, Luật Thuế giá trị gia tăng số 48/2024/QH15).",
+        "sequence": 10,
+        "legal_reference": "Luật Thuế giá trị gia tăng số 48/2024/QH15, Điều 9, khoản 1 và khoản 6 — thuế suất 0% áp dụng cho hàng hóa, dịch vụ xuất khẩu, với điều kiện có hợp đồng, chứng từ thanh toán không dùng tiền mặt và, với hàng hóa, tờ khai hải quan.",
+        "source": "vat-law-48"
+      },
+      {
+        "code": "exempt",
+        "applies_when": "exempt",
+        "text": "Đối tượng không chịu thuế giá trị gia tăng (Điều 5, Luật Thuế giá trị gia tăng số 48/2024/QH15).",
+        "sequence": 20,
+        "legal_reference": "Luật Thuế giá trị gia tăng số 48/2024/QH15, Điều 5 — hai mươi tám nhóm hàng hóa, dịch vụ không chịu thuế giá trị gia tăng; khoản 27 — không được khấu trừ, hoàn thuế giá trị gia tăng đầu vào đối với hàng hóa, dịch vụ này, trừ trường hợp áp dụng thuế suất 0% quy định tại khoản 1 Điều 9.",
+        "source": "vat-law-48"
+      }
+    ]
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "Việt Nam bắt buộc hóa đơn điện tử cho hầu hết người nộp thuế (Nghị định 123/2020/NĐ-CP, Điều 5, khoản 1, và Điều 91 Luật Quản lý thuế 38/2019/QH14) nhưng đây là một hệ thống CẤP MÃ (clearance): hóa đơn điện tử có mã của cơ quan thuế chỉ có giá trị sau khi Tổng cục Thuế cấp mã xác thực trong thời gian thực trước khi gửi cho người mua (Nghị định 123/2020/NĐ-CP, Điều 3, khoản 2 và Điều 17; sửa đổi bởi Nghị định 70/2025/NĐ-CP, bổ sung hóa đơn điện tử khởi tạo từ máy tính tiền và hóa đơn thương mại điện tử với dữ liệu truyền theo thời gian thực). Đây không phải một hồ sơ EN 16931/Peppol: không có \"profile\" của Ekwo (peppol-bis-3, factur-x-en16931, pint-*) mô tả đúng cơ chế cấp mã của cơ quan thuế Việt Nam — dùng một trong các mã đó sẽ khiến describePack() nói rằng hóa đơn được \"viết và xác thực\" theo chuẩn đó và có thể gửi qua một điểm truy cập Peppol, điều không đúng ở Việt Nam. Theo đúng cách packs/mx và packs/ci đã làm cho các hệ thống cấp mã tương tự, pack này để `profile`, `mandatory_from` và `obligation` trống và ghi rõ khoảng cách này trong docs/international.md (P1-UK và cách MX/CI xử lý). Cơ chế \"hóa đơn may mắn\" (lottery hóa đơn khuyến khích người mua lấy hóa đơn) được bổ sung bởi Nghị định 70/2025/NĐ-CP, Điều 1, khoản 3, điểm a (sửa đổi khoản 6 Điều 4 Nghị định 123/2020/NĐ-CP) — không có trường nào của định dạng này diễn tả một chương trình khuyến khích của Nhà nước, đây không phải một khoảng cách của một hóa đơn cụ thể mà của toàn bộ pack, ghi trong README.",
+    "source": "einvoice-nd70"
+  }
+}
