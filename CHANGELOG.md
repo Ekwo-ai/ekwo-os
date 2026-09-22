@@ -9,6 +9,20 @@ somewhere has already run it.
 
 ## [Unreleased]
 
+### Fixed
+
+- **`isServiceRoleKey()` read no key in a browser.** It decoded the payload of
+  a JWT with `Buffer` inside a `try`. A browser has no `Buffer`: the call
+  raised, the `catch` swallowed it, and the function answered *this is not a
+  service_role key* about every JWT it was ever shown — the one answer that is
+  never safe to guess, in the guard that exists so no surface acts with a key
+  that bypasses row level security. The payload is now decoded with base64url
+  written out and `TextDecoder`, which Node and every browser carry, and a key
+  shaped like a JWT whose payload cannot be read is refused rather than
+  cleared. The shape is read off the header — a JSON object naming its
+  algorithm — so a connection string or a password with two dots in it is
+  still not a token.
+
 ## [0.7.0] — 2026-09-22
 
 ### Added
