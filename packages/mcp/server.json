@@ -3,7 +3,7 @@
   "name": "ai.ekwo/mcp",
   "title": "Ekwo OS",
   "description": "Open source accounting data infrastructure on your own Postgres, acting as the user under RLS.",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "repository": {
     "url": "https://github.com/Ekwo-ai/ekwo-os",
     "source": "github",
@@ -15,7 +15,7 @@
       "registryType": "npm",
       "registryBaseUrl": "https://registry.npmjs.org",
       "identifier": "@ekwo-ai/mcp",
-      "version": "0.6.0",
+      "version": "0.7.0",
       "transport": {
         "type": "stdio"
       },

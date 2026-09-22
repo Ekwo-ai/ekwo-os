@@ -1,6 +1,6 @@
 {
   "name": "@ekwo-ai/journal-items",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "Reads an export of journal items as CSV — one row per line of an entry, with its entry, journal, date, account, partner, debit and credit — with the chart of accounts and the partners exported beside it, into plain objects in TypeScript: amounts as decimal strings, and what does not add up. Zero dependencies.",
   "keywords": [
     "journal-items",

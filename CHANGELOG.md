@@ -9,6 +9,8 @@ somewhere has already run it.
 
 ## [Unreleased]
 
+## [0.7.0] — 2026-09-22
+
 ### Added
 
 - **Start with Claude.** `docs/start-with-claude.md` walks somebody who keeps
@@ -35,14 +37,10 @@ somewhere has already run it.
   `import_books` tool: every suggested account taken as the answer at once,
   once the user has read them.
 
-### Fixed
-
-- **`ekwo init` sends a secret key of the newer form the way Supabase
-  documents it.** A project created today hands out `sb_secret_…` first; it is
-  not a JWT, and the CLI sent it as `Authorization: Bearer` as well as on
-  `apikey`, where anything verifying a JWT refuses it. It now goes on `apikey`
-  alone; the legacy `service_role` JWT is sent both ways, as before. The
-  end-to-end run was played with both forms.
+- **`npm run e2e:supabase -- --multi-country`** installs with
+  `ekwo init --no-company`, creates two companies of two countries with
+  `ekwo company new`, and checks them in the database and through PostgREST
+  as the administrator.
 
 ### Changed
 
@@ -83,6 +81,23 @@ somewhere has already run it.
   Without a version, `npx` run from inside a clone of this repository finds
   the workspace package of the same name, which has no built command, and
   answers `command not found`.
+
+- **The documented command of the CLI carries `@latest` too**
+  (`npx -y ekwo-os@latest`), in the README, `AGENTS.md`, `SECURITY.md`, the
+  READMEs of the CLI, the MCP server and `supabase/`, and the Start with Claude
+  guide, which also shows `ekwo init --no-company` and `ekwo company new`
+  beside `create_company`. Without a version, `npx` run from inside a clone of
+  this repository finds the workspace package of the same name, which links no
+  command, and answers `ekwo: command not found`.
+
+### Fixed
+
+- **`ekwo init` sends a secret key of the newer form the way Supabase
+  documents it.** A project created today hands out `sb_secret_…` first; it is
+  not a JWT, and the CLI sent it as `Authorization: Bearer` as well as on
+  `apikey`, where anything verifying a JWT refuses it. It now goes on `apikey`
+  alone; the legacy `service_role` JWT is sent both ways, as before. The
+  end-to-end run was played with both forms.
 
 ## [0.6.0] — 2026-09-22
 
@@ -3488,7 +3503,8 @@ against the latest tag, and a mistake is corrected by a new migration, always.
   period locks, reports, row level security, the instance singleton and its
   roles, and a golden FEC export.
 
-[Unreleased]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.6.0...HEAD
+[Unreleased]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.7.0...HEAD
+[0.7.0]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.6.0...v0.7.0
 [0.6.0]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.5.0...v0.6.0
 [0.5.0]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.4.1...v0.5.0
 [0.4.1]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.4.0...v0.4.1

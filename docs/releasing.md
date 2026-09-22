@@ -162,7 +162,19 @@ that is not cut.
    `--reset`: all green both times, about 58 s each. Run it with both forms of
    key: a new project hands out the new ones first.
 
-   **The last run: 22 September 2026, for `0.6.0`**, on a throwaway project in
+   **The last run: 22 September 2026, for `0.7.0`**, on a throwaway project in
+   `eu-west-3` (Postgres 17.6, session pooler `aws-1`), deleted afterwards. BE,
+   EE, FR, GB (year opening 1 April), LU (quarterly) and US, each upgraded from
+   `ekwo-os@0.6.0` on npm — 3 migrations pending — and `--reset` between runs:
+   21 steps each, all green, about 75 s a run. Then `--multi-country` with the
+   newer keys, `sb_publishable_…` as the anon key and `sb_secret_…` for
+   `ekwo init`: `init --no-company` installed 44 packs and no company, twice
+   with nothing created the second time, `ekwo company new` made an Estonian
+   and a British company (year opening 1 April) on their own packs, and the
+   administrator saw both through PostgREST — 12 steps, all green, 58 s. No
+   load run.
+
+   The run before, on 22 September 2026, for `0.6.0`, on a throwaway project in
    `eu-west-3` (Postgres 17.6, session pooler `aws-1`), deleted afterwards. BE,
    EE, FR, GB (year opening 1 April), LU (quarterly) and US, each upgraded from
    `ekwo-os@0.5.0` on npm — 2 migrations pending — and `--reset` between runs:
