@@ -7,10 +7,16 @@ a payment, pull the VAT return or the French FEC — **as you**, under the row
 level security of your own installation.
 
 ```sh
-npx @ekwo-ai/mcp
+npx -y @ekwo-ai/mcp@latest
 ```
 
-It speaks MCP over stdio and is started by a client, never by hand.
+It speaks MCP over stdio and is started by a client, never by hand. Keep the
+version in the command: run from inside a clone of the Ekwo repository, a bare
+`npx @ekwo-ai/mcp` finds the workspace package of the same name, which has no
+built command, and answers `ekwo-mcp: command not found`. With `@latest`, `npx`
+fetches the published server wherever it is started. To run the server of the
+clone itself, build it (`npm run build`) and start
+`node packages/mcp/dist/bin.js`.
 
 ## What it is, and what it is not
 
@@ -44,7 +50,7 @@ Three things it will never do:
   "mcpServers": {
     "ekwo": {
       "command": "npx",
-      "args": ["-y", "@ekwo-ai/mcp"],
+      "args": ["-y", "@ekwo-ai/mcp@latest"],
       "env": {
         "SUPABASE_URL": "https://YOURREF.supabase.co",
         "SUPABASE_ANON_KEY": "your anon (publishable) key",
@@ -163,7 +169,7 @@ Every write names its company explicitly.
 | `import_bank_statement` | A statement file (`camt.053`, `coda`, `cfonb120`) into statements and pending lines. Books nothing; the same file twice creates nothing; an unknown account or a statement that does not add up is refused by name, a missing statement is signalled |
 | `lock_period` | Moves the accounting and VAT lock dates. Needs `company.write`. |
 | `opening_balance` | The trial balance of whatever kept the books before, as the opening entry |
-| `import_books` | Books kept elsewhere — a FEC, an export of journal items, a journal report, a trial balance — whole or not at all. `dry_run: true` first: the correspondence proposed for every account and journal, what has no answer, and the import rehearsed by the database and taken back. Then again with the completed `mapping`. Every entry through `post_entry()`; no tax; the same files twice refused. `ekwo import` is the same function |
+| `import_books` | Books kept elsewhere — a FEC, an export of journal items, a journal report, a trial balance — whole or not at all. `dry_run: true` first: the correspondence proposed for every account and journal — `exact` only for the same code the files do not contradict, otherwise `suggested` with its reason, or `none` — what has no answer, and the import rehearsed by the database and taken back. Then again with the completed `mapping`, or `accept_suggestions` once the user has read every suggestion; nothing is posted while one is unconfirmed. Every entry through `post_entry()`; no tax; the same files twice refused, saying when and what. The files travel as text, 256 KiB at most: beyond, the tool answers with the `ekwo import` command that reads them from the disk. `ekwo import` is the same function |
 | `close_fiscal_year` / `reopen_fiscal_year` | Closes a year the way the country pack says, or reverses a close run too early |
 | `create_company` | A company on a country pack, with its chart and its first financial year. An instance-level act |
 | `update_company_profile` | What a company says about itself on its documents |

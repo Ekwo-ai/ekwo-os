@@ -132,7 +132,7 @@ It needs four values:
      "mcpServers": {
        "ekwo": {
          "command": "npx",
-         "args": ["-y", "@ekwo-ai/mcp"],
+         "args": ["-y", "@ekwo-ai/mcp@latest"],
          "env": {
            "SUPABASE_URL": "https://YOURREF.supabase.co",
            "SUPABASE_ANON_KEY": "sb_publishable_…",
@@ -165,11 +165,14 @@ claude mcp add --scope user \
   --env SUPABASE_ANON_KEY=sb_publishable_… \
   --env EKWO_EMAIL=you@example.com \
   --env EKWO_PASSWORD='the password you chose' \
-  --transport stdio ekwo -- npx -y @ekwo-ai/mcp
+  --transport stdio ekwo -- npx -y @ekwo-ai/mcp@latest
 ```
 
 Everything before `--` is for Claude Code; everything after it is the command
-that starts the server. `--scope user` keeps the entry in your own
+that starts the server. Keep the `@latest`: without a version, `npx` run from
+inside a clone of the Ekwo repository finds the workspace package of the same
+name, which has no built command, and answers `ekwo-mcp: command not found`.
+With it, `npx` always fetches the published server, wherever it is started. `--scope user` keeps the entry in your own
 `~/.claude.json`, for every project. Do not use `--scope project`: it writes
 the block, password included, into a `.mcp.json` meant to be committed with
 the project. Then run `/mcp` inside Claude Code: `ekwo` should read
@@ -236,50 +239,71 @@ Each company arrives with the trial balance of its previous ledger.
 show me first what you would do."** Attach the CSV to the message (in Claude
 Code, give its path). Claude calls `import_books` with `dry_run` on, which
 writes nothing. The answer is the **correspondence**: for every account of
-your old books, the account of the new chart it would go to, and how sure that
-is.
+your old books, the account of the new chart it would go to, how it was found,
+and why.
 
-| Old account | Proposed | Basis |
+| Old account | Proposed | Basis, and why |
 |---|---|---|
-| 101000 Bank current account | 1010 | same digits |
-| 120000 Customers | 1200 | same digits |
-| 297000 Retained earnings | 2970 | same digits |
+| 101000 Bank current account | 1010 | suggested, same digits — its name says a bank account, and 1010 is one |
+| 120000 Customers | 1200 | suggested, same digits — its name says a receivable, and 1200 is one |
+| 297000 Retained earnings | 2970 | suggested, same digits — its balance is on the credit side, and 2970 is an equity account |
 
-**Read every line before you agree.** The basis says how the proposal was
-found: `exact` (the same code), `same-digits` (the same code without the zeros
-padded on the right), `prefix` (the longest beginning the chart has), `none`
-(no answer). It is found from the codes alone, and two charts can use the same
-digits for different things. The other company shows why:
+**Read every line before you agree.** The codes give a candidate: the same
+code, the same code without the zeros padded on the right, or the longest
+beginning the chart has. Then what the file says of the old account — the type
+an export gives it, its name, the side of its balance — is held against what
+the new chart says the candidate is. Only the same code, confirmed, is
+`exact`; everything else is `suggested` and waits for you, or `none`. Nothing
+is posted while a line is only suggested. Two charts can use the same digits
+for different things, and the other company shows why:
 
-| Old account | Proposed | Basis |
+| Old account | Proposed | Basis, and why |
 |---|---|---|
-| 090 Business current account | — | none |
-| 610 Accounts receivable | 6100 | same digits — an **expense** account of the new chart: wrong |
-| 800 Accounts payable | 8000 | same digits — an **expense** account of the new chart: wrong |
+| 090 Business current account | — | none — the chart has neither the code nor its digits |
+| 610 Accounts receivable | 1100 | suggested, kind — 6100 has the same digits and is an **expense** account, so it is not proposed; 1100 Trade debtors is the chart's receivable |
+| 710 Office equipment | 7100 | suggested, same digits — only the side of the balance agrees, and 7100 is Rent: **wrong** |
+| 711 Office equipment depreciation | 7110 | suggested, same digits — its balance is on the credit side, and 7110 is an expense account: **wrong** |
+| 800 Accounts payable | 2100 | suggested, kind — 8000 is an **expense** account, so it is not proposed; 2100 Trade creditors is the chart's payable |
 | 970 Owner capital | — | none |
 
-**"610 is trade debtors, 1100. 800 is trade creditors, 2100. 090 is the bank
-current account, 1300. 970 is share capital, 3300; 960 is 3400."** Claude
-calls the rehearsal again with your answers. When nothing is left open, the
-database runs the whole import and takes it back, so what you see — the
-accounts, the customers and suppliers it would create, the numbers — is what
-would happen, and any refusal is the real one. Had you let the two wrong
-proposals through, the rehearsal would have refused them: an opening balance
-is made of balance sheet accounts, and 6100 is not one.
+**"610 is 1100 and 800 is 2100, as you suggest. 090 is the bank current
+account, 1300. 710 is office equipment, 0140, and 711 its depreciation, 0141.
+970 is share capital, 3300; 960 is 3400."** Claude calls the rehearsal again
+with your answers. When nothing is left open, the database runs the whole
+import and takes it back, so what you see — the accounts, the customers and
+suppliers it would create, the numbers — is what would happen, and any refusal
+is the real one. For the first company every suggestion was right, so the
+answer can be shorter: **"Every suggestion is right, accept them."**
+Claude passes `accept_suggestions`, which takes every suggested line as it was
+shown — only once you have read them all.
 
 **"That's right. Import it for real."** `import_books` without `dry_run`. The
 opening entry is posted, all of it or none of it, and the file is recorded:
-the same file a second time is refused rather than counted twice.
+the same file a second time is refused rather than counted twice, and the
+refusal says which file it was, when it was imported and what it wrote.
 
 For a larger history — the entries of a whole year, from an export of
 another ledger — the steps are the same: the rehearsal, the correspondence,
 then the import. A file that does not balance, or a date the file does not
 make unambiguous, is refused by name rather than guessed. The export each
 source expects is in [`compatibility.md`](compatibility.md) and the mechanics
-in [`import.md`](import.md). A very large file is easier to hand over from the
-terminal than through a conversation: signed in with `npx ekwo-os login`,
-`npx ekwo-os import <source> <files> --dry-run` runs the same import as the
-tool (`npx ekwo-os import --help` lists the sources).
+in [`import.md`](import.md).
+
+**A large export goes through the terminal.** The tool receives the files as
+text inside the conversation, and refuses more than 256 KiB of them — a year
+of entries is often more — with the command to run instead. Signed in once
+with `npx -y ekwo-os@latest login`,
+
+```sh
+npx -y ekwo-os@latest import <source> <files> --company "<company>" --dry-run --save-mapping correspondence.json
+```
+
+reads the files from the disk and runs the same import as the tool: the same
+correspondence, printed with the lines to read first, the same rehearsal, the
+same refusals. Answer the correspondence in `correspondence.json`, then run it
+again with `--mapping correspondence.json` and without `--dry-run`.
+`npx -y ekwo-os@latest import --help` lists the sources. Claude Code can run
+these commands for you.
 
 Bank statements are not books: say **"import this bank statement"** and Claude
 uses `import_bank_statement`, which records the lines to be matched and books
@@ -349,4 +373,6 @@ companies in two countries, the second created through `create_company` and
 chosen in the terminal with `ekwo use`, the rehearsal, the correction, the import, the
 refused second import, the balances, an invoice and the two returns. The two
 trial balances and the answered correspondence are beside it; the data is
-invented.
+invented. The two correspondence tables of step 4 are those of the release
+after 0.6.0, which holds each proposal against what the files say; the tests
+of the repository compute them from the same two files and the two charts.

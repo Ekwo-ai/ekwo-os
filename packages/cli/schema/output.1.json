@@ -508,7 +508,7 @@
       "import": {
         "oneOf": [
           {
-            "$comment": "Books or a bank statement from elsewhere. For books: what was read, the correspondence proposed and given (`mapping`, the shape --save-mapping writes), what has no answer, what the reader found that does not add up, and `result` — what import_books() wrote, or rehearsed under --dry-run, or null when a refusal came first. For a statement: one result per file. Amounts are decimal strings.",
+            "$comment": "Books or a bank statement from elsewhere. For books: what was read, the correspondence proposed and given (`mapping`, the shape --save-mapping writes, with what is only suggested under `suggested`), each account with its basis, match, reason and whether it is doubtful, what has no answer and what waits for confirmation, what the reader found that does not add up, and `result` — what import_books() wrote, or rehearsed under --dry-run, or null when a refusal came first. For a statement: one result per file. Amounts are decimal strings.",
             "type": "object",
             "required": ["source", "dry_run", "note"],
             "properties": {
@@ -522,12 +522,21 @@
                   "version": { "const": 1 },
                   "source": { "type": "string" },
                   "accounts": { "type": "object", "additionalProperties": { "type": ["string", "null"] } },
-                  "journals": { "type": "object", "additionalProperties": { "type": ["string", "null"] } }
+                  "journals": { "type": "object", "additionalProperties": { "type": ["string", "null"] } },
+                  "suggested": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "type": "object",
+                      "required": ["target", "reason"],
+                      "properties": { "target": { "type": "string" }, "reason": { "type": "string" } }
+                    }
+                  }
                 }
               },
               "mapping_saved_to": { "type": "string" },
               "accounts": { "type": "array", "items": { "$ref": "#/$defs/row" } },
               "unmapped_accounts": { "type": "array", "items": { "type": "string" } },
+              "unconfirmed_accounts": { "type": "array", "items": { "type": "string" } },
               "unmapped_journals": { "type": "array", "items": { "type": "string" } },
               "violations": { "type": "array", "items": { "$ref": "#/$defs/row" } },
               "refusals": { "type": "array", "items": { "type": "string" } },

@@ -563,7 +563,7 @@ source, and nothing is posted while an account has no answer:
 ```bash
 ekwo import fec 123456789FEC20251231.txt --dry-run --open-years --save-mapping map.json
 #   read, propose a correspondence, rehearse the import in the database, take it back
-$EDITOR map.json                                   # answer what is null, correct what is wrong
+$EDITOR map.json                                   # answer what is null — read `suggested` — correct what is wrong
 ekwo import fec 123456789FEC20251231.txt --mapping map.json --open-years
 ekwo import trial-balance balance.csv --opening-date 2026-01-01 --dry-run --save-mapping map.json
 ekwo import journal-items items.csv accounts.csv partners.csv --dry-run --save-mapping map.json
@@ -588,23 +588,33 @@ official page and state.
 
 **The correspondence is yours.** Every account of the old chart has to become
 an account of the company's chart, and every old journal a journal of the
-company. The core proposes, from the codes alone — the same code, the same
-digits without the zeros a chart pads with (`411` and `411000`), or the
-account whose digits are the longest beginning of the old code, three at least
-(`401ACME` → `401000`); a tie is no answer — and each proposal says which rule
-found it. `--save-mapping` writes it as JSON:
+company. The codes give a candidate — the same code, the same digits without
+the zeros a chart pads with (`411` and `411000`), or the account whose digits
+are the longest beginning of the old code, three at least (`401ACME` and
+`401000`); a tie is no answer — and what the files say of the old account —
+the type its export gives it, its name, the side of its balance — is held
+against the type of the candidate in the chart, because two charts give the
+same digits to different things. Only the same code, not contradicted, is
+`exact`. Anything else is `suggested`, with its reason, and waits for you; a
+candidate the files contradict is dropped for the one account of the chart of
+the kind they say. `--dry-run` prints the lines to read first, each with its
+reason, and `--save-mapping` writes the correspondence as JSON:
 
 ```json
 {
   "version": 1,
   "source": "fec",
-  "accounts": { "411000": "411000", "401ACME": "401000", "471200": null },
-  "journals": { "VE": "SAL", "AN": "@opening", "BQ1": "MISC" }
+  "accounts": { "411000": "411000", "401ACME": null, "471200": null },
+  "journals": { "VE": "SAL", "AN": "@opening", "BQ1": "MISC" },
+  "suggested": { "401ACME": { "target": "401000", "reason": "the longest beginning of the code the chart has; …" } }
 }
 ```
 
 and `--mapping` gives it back: what it answers wins over the proposal, so the
-second run posts what the first one showed. A journal mapped to `@opening`
+second run posts what the first one showed. A suggestion is confirmed by
+writing its code under `accounts`; `--accept-suggestions` takes all of them
+once you have read them. Nothing is posted while one the books use is only
+suggested. A journal mapped to `@opening`
 becomes the opening entry of its year instead of ordinary entries — the
 *à-nouveaux* of a FEC, typically. A journal whose code is the one the pack
 opens years on is proposed as `@opening` on its own; `*` stands for entries
@@ -628,7 +638,7 @@ dry run reads the file and asks nothing: a statement books nothing anyway.
 What else to know:
 
 - **Refused before the database is asked**, and listed under `refusals` by a
-  dry run: an account or a journal with no answer, books whose reader found
+  dry run: an account or a journal with no answer or only a suggestion, books whose reader found
   something that does not add up (an entry that does not balance, a line of a
   draft entry), a currency the files name that is not the company's.
 - **The numbers** are drawn by the journal each entry goes to; the old number
@@ -640,7 +650,8 @@ What else to know:
   statements, and no box of a VAT return. A period kept elsewhere was declared
   from where it was kept.
 - **The same files twice are refused** (`import_already_done`): `book_imports`
-  keeps the checksum of what each import read.
+  keeps the checksum of what each import read, and the refusal says which
+  files, when, and what that import wrote.
 - **Dates and encodings are said, never guessed**: `--encoding` for a file
   that is not UTF-8, `--date-order` for a report that writes dates in digits.
 - **Reconciliation marks are read and not re-applied yet**: the matching of an

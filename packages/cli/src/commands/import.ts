@@ -38,6 +38,7 @@ const IMPORT_FLAGS = [
   'opening-date',
   'allow-result-accounts',
   'keep-numbers',
+  'accept-suggestions',
   'encoding',
   'date-order',
   'bank-account',
@@ -62,7 +63,7 @@ export const NAMED_SOURCES = {
   xero: { reader: 'journal-report', export: 'the Journal Report or the General Ledger Detail of Xero, saved as CSV, with its chart of accounts and its contacts' },
 } as const satisfies Record<string, { reader: BookSource; export: string }>;
 
-export const IMPORT_USAGE = `usage: ekwo import <source> <file>… [--dry-run] [--mapping <file>] [--save-mapping <file>]
+export const IMPORT_USAGE = `usage: ekwo import <source> <file>… [--dry-run] [--mapping <file>] [--save-mapping <file>] [--accept-suggestions]
   books:      ${BOOK_SOURCES.join(', ')}
   by name:    ${Object.entries(NAMED_SOURCES).map(([name, { reader }]) => `${name} (= ${reader})`).join(', ')}
   statements: ${STATEMENT_FORMATS.join(', ')}
@@ -109,6 +110,7 @@ async function importBookFiles(args: ParsedArgs, deps: BooksDeps, source: BookSo
     opening_date: stringFlag(args, 'opening-date'),
     allow_result_accounts: boolFlag(args, 'allow-result-accounts'),
     keep_numbers: boolFlag(args, 'keep-numbers'),
+    accept_suggestions: boolFlag(args, 'accept-suggestions'),
     encoding,
     date_order: dateOrder,
   })) as Row;
@@ -126,13 +128,29 @@ async function importBookFiles(args: ParsedArgs, deps: BooksDeps, source: BookSo
     ['parties', text(read['contacts'])],
   ]);
 
-  const accounts = (result['accounts'] ?? []) as Row[];
+  // The lines to read come first: a suggestion, an account with no answer,
+  // an answer the files contradict. Each is followed by its reason.
+  const proposed = (result['accounts'] ?? []) as Row[];
+  const doubtful = proposed.filter((account) => account['doubtful'] === true);
+  const accounts = [...doubtful, ...proposed.filter((account) => account['doubtful'] !== true)];
   if (accounts.length > 0) {
     line();
     table(
-      [{ title: 'old account' }, { title: 'name' }, { title: 'becomes' }, { title: 'how' }],
-      accounts.map((account) => [text(account['source']), text(account['name']), text(account['target']) || '—', text(account['basis'])]),
+      [{ title: '' }, { title: 'old account' }, { title: 'name' }, { title: 'becomes' }, { title: 'how' }],
+      accounts.map((account) => [
+        account['doubtful'] === true ? '?' : '',
+        text(account['source']),
+        text(account['name']),
+        text(account['target']) || '—',
+        [text(account['basis']), text(account['match'])].filter((part) => part !== '').join(', '),
+      ]),
     );
+    if (doubtful.length > 0) {
+      line();
+      for (const account of doubtful) {
+        warn(`${text(account['source'])} → ${text(account['target']) || '—'} (${text(account['basis'])}): ${text(account['reason'])}`);
+      }
+    }
   }
   const journals = ((result['mapping'] ?? {}) as Row)['journals'] as Record<string, string | null> | undefined;
   if (journals !== undefined && Object.keys(journals).length > 0) {
@@ -162,14 +180,16 @@ async function importBookFiles(args: ParsedArgs, deps: BooksDeps, source: BookSo
       step(`fiscal year ${text(year['name'])} opened, ${text(year['start_date'])} to ${text(year['end_date'])}`);
     }
   }
-  if (savePath !== undefined) step(`correspondence saved to ${savePath}; answer what is empty and give it back with --mapping`);
+  if (savePath !== undefined) {
+    step(`correspondence saved to ${savePath}; write a code for each empty account — the suggestions are listed beside them — and give it back with --mapping`);
+  }
   line();
   note(dim(text(result['note'])));
   return refusals.length > 0 ? 1 : 0;
 }
 
 async function importStatements(args: ParsedArgs, deps: BooksDeps, format: StatementFormat, paths: string[]): Promise<number> {
-  for (const flag of ['mapping', 'save-mapping', 'open-years', 'opening-date', 'allow-result-accounts', 'keep-numbers', 'date-order', 'encoding']) {
+  for (const flag of ['mapping', 'save-mapping', 'open-years', 'opening-date', 'allow-result-accounts', 'keep-numbers', 'accept-suggestions', 'date-order', 'encoding']) {
     if (args.flags.has(flag)) throw new UsageError(`bad_flag: --${flag} is for books, and ${format} is a bank statement.`);
   }
   const bankAccount = stringFlag(args, 'bank-account');

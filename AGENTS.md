@@ -100,7 +100,7 @@ server refuses to start with one. The user gives their client this block
   "mcpServers": {
     "ekwo": {
       "command": "npx",
-      "args": ["-y", "@ekwo-ai/mcp"],
+      "args": ["-y", "@ekwo-ai/mcp@latest"],
       "env": {
         "SUPABASE_URL": "https://YOURREF.supabase.co",
         "SUPABASE_ANON_KEY": "the anon (publishable) key",

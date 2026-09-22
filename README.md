@@ -505,8 +505,12 @@ an entry. Configuration is a block of environment variables in
 [`packages/mcp`](packages/mcp/).
 
 ```sh
-npx @ekwo-ai/mcp
+npx -y @ekwo-ai/mcp@latest
 ```
+
+The version is part of the command: from inside a clone of this repository, a
+bare `npx @ekwo-ai/mcp` finds the unbuilt workspace package and answers
+`ekwo-mcp: command not found`.
 
 ## Format libraries
 

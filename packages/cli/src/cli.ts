@@ -245,13 +245,15 @@ ${bold('ekwo company')}
                             (--as-user); --owner names the first owner. A
                             company already here is refused.
 
-${bold('ekwo import')} ${dim('(one command, one reader per source; nothing is posted while an account has no answer)')}
+${bold('ekwo import')} ${dim('(one command, one reader per source; nothing is posted while an account has no confirmed answer)')}
   --dry-run                 Read the files, propose the correspondence and have
                             the database rehearse the import, then take it back.
                             For a statement: read the file, ask nothing.
   --save-mapping <file>     Write the correspondence — old account → account of
                             the chart, old journal → journal — as JSON, to edit.
   --mapping <file>          Give it back. What it answers wins over the proposal.
+  --accept-suggestions      Take every suggested account as the answer, once
+                            read. Left out, a suggestion stops the import.
   --open-years              Open the fiscal years the entries fall in, on the
                             length and first day of the company's own.
   --opening-date <d>        trial-balance: the first day of the year it opens.

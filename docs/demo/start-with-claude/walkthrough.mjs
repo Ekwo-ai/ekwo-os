@@ -268,7 +268,7 @@ try {
 
     const first = await tool('import_books', { ...base, dry_run: true });
     const unmapped = first.unmapped_accounts ?? [];
-    const bases = (first.accounts ?? []).map((a) => `${a.source} ${a.name} → ${a.target ?? '?'} (${a.basis})`);
+    const bases = (first.accounts ?? []).map((a) => `${a.source} ${a.name} → ${a.target ?? '?'} (${a.basis}${a.match ? `, ${a.match}` : ''})${a.reason ? ` — ${a.reason}` : ''}`);
     record(
       `${company.country}: dry run, nothing given`,
       first.refused === undefined && first.dry_run === true,
@@ -280,17 +280,20 @@ try {
 
     // Answering only what was left open, and trusting the rest, is the
     // mistake the guide warns about: the same digits in two charts are not
-    // the same account. The rehearsal has to refuse it.
+    // the same account. A suggestion is not an answer, so the rehearsal has
+    // to refuse it.
     if (mapping !== undefined && unmapped.length > 0) {
       const onlyGaps = { accounts: Object.fromEntries(unmapped.map((code) => [code, mapping.accounts[code]])) };
       const trusting = await tool('import_books', { ...base, mapping: onlyGaps, dry_run: true });
       const said = trusting.refused ?? (trusting.refusals ?? []).join(' | ');
       record(`${company.country}: dry run trusting every proposal is refused`, said !== '', said.split('\n')[0].slice(0, 160) || 'accepted');
     }
-    const withMapping = { ...base, ...(mapping === undefined ? {} : { mapping }) };
+    // The company with no correspondence file is the one whose every
+    // suggestion the guide reads and accepts.
+    const withMapping = { ...base, ...(mapping === undefined ? { accept_suggestions: true } : { mapping }) };
     const second = await tool('import_books', { ...withMapping, dry_run: true });
     record(
-      `${company.country}: dry run${mapping === undefined ? ' again' : ' with the answered correspondence'}`,
+      `${company.country}: dry run${mapping === undefined ? ' accepting the suggestions read' : ' with the answered correspondence'}`,
       second.refused === undefined && (second.refusals ?? []).length === 0 && second.result !== null,
       second.refused ?? ((second.refusals ?? []).join(' | ') || 'rehearsed by the database and rolled back'),
     );

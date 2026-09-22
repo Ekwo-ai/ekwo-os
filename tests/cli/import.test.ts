@@ -16,6 +16,7 @@ import type { PGlite } from '@electric-sql/pglite';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { BOOK_SOURCES } from '@ekwo-ai/core';
 import { EXIT_USAGE, run, validate, type OutputDocument } from '../../packages/cli/src/index.js';
+import { stripColour } from '../../packages/cli/src/ui.js';
 import { NAMED_SOURCES } from '../../packages/cli/src/commands/import.js';
 import { ImportBooksInput, NAMED_SOURCES as MCP_NAMED_SOURCES, sourceOf } from '../../packages/mcp/src/tools/import-books.js';
 import { freshDatabase, one, repoRoot } from '../helpers/db.js';
@@ -161,6 +162,27 @@ describe('a FEC, from the rehearsal to the books', () => {
     const broken = await ekwo(['import', 'fec', join(root, 'sample.fec.txt'), '--mapping', join(root, 'broken.json')]);
     expect(broken.exitCode).toBe(EXIT_USAGE);
     expect(broken.error?.message).toContain('bad_mapping');
+  });
+});
+
+describe('the correspondence, printed for a person', () => {
+  it('shows the lines to read first, each with its reason, and posts nothing while one waits', async () => {
+    const bank = somePack.accounts.find((account) => account.code === roleOf(somePack, 'bank'))!;
+    const path = join(root, 'doubtful.csv');
+    await writeFile(path, `account,name,debit,credit\n${bank.code},${bank.name},75.00,\nZZ9,Somewhere else,,75.00\n`);
+    const printed = await capture(() =>
+      run(['import', 'trial-balance', path, '--opening-date', '2026-01-01', '--dry-run'], { fetchImpl: instance.fetchImpl, env: { EKWO_CONFIG_DIR: join(root, 'owner') } }),
+    );
+    expect(printed.exitCode).toBe(1);
+    const rows = printed.stdout.split('\n').map(stripColour);
+    const unknown = rows.findIndex((row) => /^\s+\?\s+ZZ9\s/.test(row));
+    const exact = rows.findIndex((row) => row.includes(` ${bank.code} `) && row.includes('exact'));
+    expect(unknown).toBeGreaterThan(-1);
+    expect(exact).toBeGreaterThan(unknown);
+
+    const answer = await ekwo(['import', 'trial-balance', path, '--opening-date', '2026-01-01', '--accept-suggestions']);
+    expect(answer.exitCode).not.toBe(0);
+    expect(answer.error?.message).toContain('import_unmapped_accounts: no account of the chart answers for ZZ9');
   });
 });
 

@@ -31,6 +31,10 @@ somewhere has already run it.
   terminal (country, chart, language, first day of the year).
   `ekwo company list` shows them. Without `--no-company`, `init` is unchanged.
 
+- **`ekwo import --accept-suggestions`**, and `accept_suggestions` on the
+  `import_books` tool: every suggested account taken as the answer at once,
+  once the user has read them.
+
 ### Fixed
 
 - **`ekwo init` sends a secret key of the newer form the way Supabase
@@ -48,6 +52,37 @@ somewhere has already run it.
 - **`instance.country` is nullable** (`20260922115309`). It is the country of
   the first company when `init` created one, and null otherwise; nothing in the
   schema reads it.
+- **An account of the old books is posted to an account of the new chart only
+  once somebody has said so.** The correspondence was proposed from the codes
+  alone, and two charts give the same digits to different things: the `610`
+  receivable of one chart became the `6100` expense of another, and an import
+  of entries would have posted customers to carriage costs without a word.
+  The codes now only give a candidate, and what the files say of the old
+  account — the type its export gives it, its name in whatever language, the
+  side of its balance — is held against the type of the candidate in the
+  chart, never against a country. Only the same code, not contradicted, is
+  `exact`; any other candidate is `suggested`, kept under `mapping.suggested`
+  with its reason, and nothing is posted while one the books use is
+  unconfirmed (`import_unconfirmed_accounts`). A candidate the files
+  contradict is dropped for the one account of the chart of the kind they say.
+  An answer the caller gives that the files contradict is used and marked
+  doubtful. `--dry-run` prints the lines to read first, each with its reason.
+
+- **`import_already_done` says what the first import was**: the files, the
+  source, the minute in UTC, and what it wrote — its entries and their
+  numbers, its opening entry, its lines — where a trial balance used to read
+  "0 entries, — to —". A new migration republishes `import_books()`.
+
+- **The `import_books` tool refuses more than 256 KiB of text**, the files
+  travelling inside the conversation, and answers with the `ekwo import`
+  command that reads the same export from the disk.
+
+- **The documented command of the MCP server carries `@latest`**
+  (`npx -y @ekwo-ai/mcp@latest`), in the README, `AGENTS.md`, the server's
+  README and the Start with Claude guide, as do the guide's import commands.
+  Without a version, `npx` run from inside a clone of this repository finds
+  the workspace package of the same name, which has no built command, and
+  answers `command not found`.
 
 ## [0.6.0] — 2026-09-22
 

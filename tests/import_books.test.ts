@@ -13,10 +13,12 @@ import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import type { PGlite } from '@electric-sql/pglite';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
-import { importBooks, proposeAccount, type BookFile, type ImportMapping } from '@ekwo-ai/core';
+import { importBooks, proposeAccount, readBooks, type BookFile, type ImportMapping, type ProposedAccount, type SourceAccount } from '@ekwo-ai/core';
+import type { Pack } from '../packages/cli/src/index.js';
+import { MAX_TEXT_KIB, cliEquivalent, importBooksTool } from '../packages/mcp/src/tools/import-books.js';
 import { freshDatabase, one, repoRoot, rows } from './helpers/db.js';
 import { newCompany, newUser } from './helpers/factory.js';
-import { roleOf, somePack } from './helpers/packs.js';
+import { allPacks, packsWhere, roleOf, somePack } from './helpers/packs.js';
 import { backendFor } from './mcp/helpers.js';
 
 const HOME = somePack.manifest.country;
@@ -26,6 +28,8 @@ const fixture = (brick: string, name: string): BookFile => ({
   name,
   content: readFileSync(join(repoRoot, 'packages', 'formats', brick, 'test', 'fixtures', name), 'utf8'),
 });
+
+const fixtureAt = (path: string): BookFile => ({ name: path, content: readFileSync(join(repoRoot, path), 'utf8') });
 
 const FEC = fixture('fec', 'sample.fec.txt');
 
@@ -172,7 +176,7 @@ describe('a FEC taken over whole', () => {
     expect(record).toEqual({ source: 'fec', entry_count: 4, file_names: ['sample.fec.txt'] });
     await expect(
       importBooks(backendFor(db, owner), { company_id: companyId, source: 'fec', files: [FEC], mapping: FEC_MAPPING, open_years: true }),
-    ).rejects.toThrow(/import_already_done/);
+    ).rejects.toThrow(/import_already_done: sample\.fec\.txt \(fec\) was imported on \d{4}-\d{2}-\d{2} \d{2}:\d{2} UTC: 4 entries, numbered \S+ to \S+ and the opening entry \S+ and \d+ lines\./);
     expect(await count('entries', companyId)).toBe(5);
   });
 });
@@ -272,6 +276,13 @@ describe('a trial balance as the opening of a year', () => {
       db, `select count(*)::int as n from entry_lines where company_id = $1 and contact_id is not null`, [companyId],
     );
     expect(named.n).toBe(3);
+
+    // A balance has no entry: the refusal of a second import says what it did write.
+    const again = importBooks(backendFor(db, owner), {
+      company_id: companyId, source: 'trial-balance', files: [BALANCE], mapping, opening_date: '2026-01-01',
+    });
+    await expect(again).rejects.toThrow(/import_already_done: balance\.csv \(trial-balance\) was imported on .* UTC: the opening entry \S+ and \d+ lines\./);
+    await expect(again).rejects.not.toThrow(/0 entries/);
   });
 
   it('refuses an income or expense account unless the books are taken over in the middle of a year', async () => {
@@ -347,7 +358,16 @@ describe('the exports of other ledgers, through the same function', () => {
   });
 });
 
-describe('the proposal reads the codes and nothing else', () => {
+/** An account of the old books, as the proposal reads it. */
+const old = (code: string, name: string | null = null, type: string | null = null, side: 'debit' | 'credit' | null = null): SourceAccount => ({ code, name, type, side });
+
+/** A pack's default chart, as the proposal reads the company's. */
+const chartOf = (pack: Pack) => pack.accounts.map((account) => ({ code: account.code, name: account.name, account_type: account.type, deprecated: false }));
+
+/** A code without the zeros it was padded with on the right, the way the proposal compares digits. */
+const digitsOf = (code: string): string => code.replace(/0+$/, '') || code;
+
+describe('the proposal: the codes give a candidate, the files confirm it', () => {
   const chart = [
     { code: '411000', name: 'Customers', account_type: 'asset_receivable', deprecated: false },
     { code: '401000', name: 'Suppliers', account_type: 'liability_payable', deprecated: false },
@@ -356,17 +376,190 @@ describe('the proposal reads the codes and nothing else', () => {
     { code: '6062', name: 'Power', account_type: 'expense', deprecated: false },
   ];
 
-  it('the same code, the same digits without their padding, the longest beginning of three or more', () => {
-    expect(proposeAccount('411000', chart)).toEqual({ target: '411000', basis: 'exact' });
-    expect(proposeAccount('411', chart)).toEqual({ target: '411000', basis: 'same-digits' });
-    expect(proposeAccount('401ACME', chart)).toEqual({ target: '401000', basis: 'prefix' });
-    expect(proposeAccount('606100', chart)).toEqual({ target: '6061', basis: 'same-digits' });
-    expect(proposeAccount('60612', chart)).toEqual({ target: '6061', basis: 'prefix' });
+  it('is exact only for the same code, where the files say the same kind of account', () => {
+    expect(proposeAccount(old('411000', 'Customers'), chart)).toMatchObject({ target: '411000', basis: 'exact', match: 'same-code', doubtful: false });
+    expect(proposeAccount(old('6061', null, null, 'debit'), chart)).toMatchObject({ target: '6061', basis: 'exact' });
+  });
+
+  it('only suggests the same digits and the longest beginning, with the reason', () => {
+    const digits = proposeAccount(old('411', 'Clients'), chart);
+    expect(digits).toMatchObject({ target: '411000', basis: 'suggested', match: 'same-digits', doubtful: true });
+    expect(digits.reason).toContain('the same digits');
+    expect(proposeAccount(old('401ACME', null, null, 'credit'), chart)).toMatchObject({ target: '401000', basis: 'suggested', match: 'prefix' });
+    expect(proposeAccount(old('606100', null, null, 'debit'), chart)).toMatchObject({ target: '6061', basis: 'suggested', match: 'same-digits' });
+    expect(proposeAccount(old('60612', null, null, 'debit'), chart)).toMatchObject({ target: '6061', basis: 'suggested', match: 'prefix' });
+  });
+
+  it('does not take the same code for certain when the files say nothing of the account', () => {
+    const silent = proposeAccount(old('6061'), chart);
+    expect(silent).toMatchObject({ target: '6061', basis: 'suggested', doubtful: true });
+    expect(silent.reason).toContain('nothing in the files');
+  });
+
+  it('drops a candidate the files contradict, and names the one account of the kind they say', () => {
+    const contradicted = proposeAccount(old('6061', 'Customers', null, 'debit'), chart);
+    expect(contradicted).toMatchObject({ target: '411000', basis: 'suggested', match: 'kind' });
+    expect(contradicted.reason).toContain('6061');
+    expect(proposeAccount(old('6062', 'Sales', 'Revenue', 'credit'), chart)).toMatchObject({ target: null, basis: 'none' });
+  });
+
+  it('leaves to the user a candidate only the side of the balance disagrees with', () => {
+    // An accumulated depreciation is an asset with a credit balance: the side
+    // alone never drops a candidate, and never confirms one against it.
+    const side = proposeAccount(old('6062', 'Deposits received', null, 'credit'), chart);
+    expect(side).toMatchObject({ target: '6062', basis: 'suggested', doubtful: true });
+    expect(side.reason).toContain('credit side');
   });
 
   it('answers nothing on a tie, on two digits, or on a deprecated account', () => {
-    expect(proposeAccount('606', chart)).toEqual({ target: null, basis: 'none' });
-    expect(proposeAccount('61', chart)).toEqual({ target: null, basis: 'none' });
-    expect(proposeAccount('4010', chart)).toEqual({ target: '401000', basis: 'same-digits' });
+    expect(proposeAccount(old('606', null, null, 'debit'), chart)).toMatchObject({ target: null, basis: 'none' });
+    expect(proposeAccount(old('61', null, null, 'debit'), chart)).toMatchObject({ target: null, basis: 'none' });
+    expect(proposeAccount(old('4010', 'Suppliers', null, 'credit'), chart)).toMatchObject({ target: '401000', basis: 'suggested', match: 'same-digits' });
+  });
+
+  it('gives back every account of a chart, exact, from that same chart', () => {
+    for (const pack of allPacks) {
+      const own = chartOf(pack);
+      const wrong = own.filter((account) => {
+        const proposal = proposeAccount(old(account.code, account.name), own);
+        return proposal.basis !== 'exact' || proposal.target !== account.code;
+      });
+      expect(wrong.map((account) => `${pack.slug} ${account.code}`)).toEqual([]);
+    }
+  });
+});
+
+describe('two charts that give the same digits to different things', () => {
+  // A receivable of one chart is 610; in these packs the same digits are an
+  // account of another kind — an expense, typically. Read from the charts, so
+  // every pack where it holds is tested and none is named.
+  const clashes = packsWhere('whose chart gives the digits of 610 to an account that is not a receivable', (pack) =>
+    pack.accounts.some((account) => digitsOf(account.code) === '61' && account.type !== 'asset_receivable'),
+  );
+  const typeIn = (pack: Pack, code: string | null): string | undefined => pack.accounts.find((account) => account.code === code)?.type;
+
+  it('holds in the charts of more than one country', () => {
+    expect(new Set(clashes.map((pack) => pack.manifest.country)).size).toBeGreaterThanOrEqual(2);
+  });
+
+  it('never sends a receivable to them, whether the files give a type, a name in any language, or only a balance', () => {
+    for (const pack of clashes) {
+      for (const receivable of [
+        old('610', 'Accounts Receivable', 'Accounts Receivable', 'debit'),
+        old('610', 'Accounts receivable', null, 'debit'),
+        old('610', 'Clients', null, 'debit'),
+        old('610', 'Debiteuren', null, 'debit'),
+      ]) {
+        const proposal = proposeAccount(receivable, chartOf(pack));
+        expect(proposal.basis, `${pack.slug}: ${receivable.name}`).not.toBe('exact');
+        if (proposal.target !== null) expect(typeIn(pack, proposal.target), `${pack.slug}: ${receivable.name}`).toBe('asset_receivable');
+        expect(proposal.reason).not.toBeNull();
+      }
+      const payable = proposeAccount(old('800', 'Accounts payable', null, 'credit'), chartOf(pack));
+      expect(payable.basis).not.toBe('exact');
+      if (payable.target !== null) expect(typeIn(pack, payable.target), pack.slug).toBe('liability_payable');
+    }
+  });
+
+  it('posts none of it from an export of entries, until the user answers', async () => {
+    const pack = clashes[0]!;
+    const { companyId } = await newCompany(db, { country: pack.manifest.country, name: 'Report Clash', ownerId: owner });
+    const files = [fixture('journal-report', 'journal-report.csv'), fixture('journal-report', 'chart.csv')];
+    const base = { company_id: companyId, source: 'journal-report' as const, files, open_years: true, date_order: 'dmy' as const };
+
+    const rehearsal = await importBooks(backendFor(db, owner), { ...base, dry_run: true });
+    const receivable = (rehearsal['accounts'] as ProposedAccount[]).find((account) => account.source === '610')!;
+    expect(receivable.doubtful).toBe(true);
+    if (receivable.target !== null) expect(typeIn(pack, receivable.target)).toBe('asset_receivable');
+    expect((rehearsal['mapping'] as ImportMapping).accounts['610']).toBeNull();
+    expect(rehearsal['result']).toBeNull();
+
+    await expect(importBooks(backendFor(db, owner), base)).rejects.toThrow(/import_un(confirmed|mapped)_accounts: .*610/);
+    expect(await count('entries', companyId)).toBe(0);
+    // Accepting every suggestion accepts no clash either: 610 was never suggested onto one.
+    const accepted = await importBooks(backendFor(db, owner), { ...base, accept_suggestions: true, dry_run: true });
+    const taken = (accepted['mapping'] as ImportMapping).accounts['610'] ?? null;
+    if (taken !== null) expect(typeIn(pack, taken)).toBe('asset_receivable');
+
+    // An answer the files contradict is the user's to give, and is still said.
+    const clash = pack.accounts.find((account) => digitsOf(account.code) === '61' && account.type !== 'asset_receivable')!;
+    const given = await importBooks(backendFor(db, owner), { ...base, mapping: { accounts: { '610': clash.code } }, dry_run: true });
+    const answered = (given['accounts'] as ProposedAccount[]).find((account) => account.source === '610')!;
+    expect(answered).toMatchObject({ target: clash.code, basis: 'given', doubtful: true });
+    expect(answered.reason).toContain('Accounts Receivable');
+  });
+});
+
+describe('a suggestion waits for the user', () => {
+  // Two accounts of the company's own chart, written in the old books with one
+  // more padding zero: the same digits, so only suggested.
+  const own = somePack.accounts.filter((account) => somePack.accounts.filter((other) => digitsOf(other.code) === digitsOf(account.code)).length === 1);
+  const asset = own.find((account) => account.type === 'asset_cash')!;
+  const equity = own.find((account) => account.type.startsWith('equity'))!;
+  const balance: BookFile = {
+    name: 'padded.csv',
+    content: `account,name,debit,credit\n${asset.code}0,${asset.name},250.00,\n${equity.code}0,${equity.name},,250.00\n`,
+  };
+  const base = (companyId: string) => ({ company_id: companyId, source: 'trial-balance' as const, files: [balance], opening_date: '2026-01-01' });
+
+  it('is refused until it is confirmed, and taken once it is', async () => {
+    const companyId = await company('Suggested');
+    const rehearsal = await importBooks(backendFor(db, owner), { ...base(companyId), dry_run: true });
+    expect(rehearsal['unconfirmed_accounts']).toEqual([`${asset.code}0`, `${equity.code}0`].sort());
+    const mapping = rehearsal['mapping'] as ImportMapping;
+    expect(mapping.accounts[`${asset.code}0`]).toBeNull();
+    expect(mapping.suggested?.[`${asset.code}0`]?.target).toBe(asset.code);
+    expect((rehearsal['refusals'] as string[]).some((refusal) => refusal.startsWith('import_unconfirmed_accounts'))).toBe(true);
+
+    await expect(importBooks(backendFor(db, owner), base(companyId))).rejects.toThrow(/import_unconfirmed_accounts/);
+    expect(await count('entries', companyId)).toBe(0);
+
+    const accepted = await importBooks(backendFor(db, owner), { ...base(companyId), accept_suggestions: true });
+    expect((accepted['result'] as Record<string, unknown>)['opening_number']).not.toBeNull();
+  });
+
+  it('is confirmed one by one by writing its code in the correspondence', async () => {
+    const companyId = await company('Confirmed');
+    const mapping = { accounts: { [`${asset.code}0`]: asset.code, [`${equity.code}0`]: equity.code } };
+    const answer = await importBooks(backendFor(db, owner), { ...base(companyId), mapping });
+    expect(answer['unconfirmed_accounts']).toEqual([]);
+    expect((answer['result'] as Record<string, unknown>)['opening_number']).not.toBeNull();
+  });
+});
+
+describe('the tool, for a file too large to travel as text', () => {
+  it('refuses it and gives the command that imports it from the disk', async () => {
+    const content = 'x'.repeat(MAX_TEXT_KIB * 1024 + 1);
+    const args = { company_id: crypto.randomUUID(), source: 'fec' as const, files: [{ name: 'big export.txt', content }], open_years: true };
+    await expect(importBooksTool(backendFor(db, owner), args)).rejects.toThrow(/files_too_large/);
+    expect(cliEquivalent(args)).toBe(`npx -y ekwo-os@latest import fec 'big export.txt' --company ${args.company_id} --dry-run --open-years --save-mapping correspondence.json`);
+  });
+});
+
+describe('the correspondence the guide shows', () => {
+  // country-literal: docs/start-with-claude.md walks one Estonian and one British company through an import, and this recomputes its two tables
+  const guide = [
+    { slug: 'ee', file: 'ee-trial-balance.csv' },
+    { slug: 'gb', file: 'gb-trial-balance.csv' },
+  ];
+  const page = readFileSync(join(repoRoot, 'docs', 'start-with-claude.md'), 'utf8');
+
+  it('is what the proposal answers for its two files and its two charts', () => {
+    let checked = 0;
+    for (const { slug, file } of guide) {
+      const pack = allPacks.find((candidate) => candidate.slug === slug)!;
+      const books = readBooks('trial-balance', [fixtureAt(join('docs', 'demo', 'start-with-claude', file))]);
+      for (const row of page.split('\n').filter((line) => /^\| \d{3,6} /.test(line))) {
+        const [, code, proposed, basis] = /^\| (\d+) [^|]+\| (\S+) \| (\w+)/.exec(row) ?? [];
+        const account = books.accounts.find((candidate) => candidate.code === code);
+        if (account === undefined) continue;
+        const lines = books.opening.filter((line) => line.account === code);
+        const debit = lines.some((line) => Number(line.debit) > 0);
+        const proposal = proposeAccount(old(account.code, account.name, account.type, debit ? 'debit' : 'credit'), chartOf(pack));
+        expect({ code, target: proposal.target ?? '—', basis: proposal.basis }, `${file}: ${row}`).toEqual({ code, target: proposed, basis });
+        checked += 1;
+      }
+    }
+    expect(checked).toBe(9);
   });
 });

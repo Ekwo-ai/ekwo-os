@@ -70,23 +70,63 @@ What they share, and why:
 {
   "version": 1,
   "source": "fec",
-  "accounts": { "411000": "411000", "401ACME": "401000", "471200": null },
-  "journals": { "VE": "SAL", "AN": "@opening", "*": "MISC" }
+  "accounts": { "411000": "411000", "401ACME": null, "471200": null },
+  "journals": { "VE": "SAL", "AN": "@opening", "*": "MISC" },
+  "suggested": {
+    "401ACME": { "target": "401000", "reason": "the longest beginning of the code the chart has; its name, \"Acme, supplier\", says a payable account, and 401000 Suppliers is a payable account" }
+  }
 }
 ```
 
-**How an account is proposed.** Only the two codes are read — never the
-country, never the name:
+**How an account is proposed.** The codes give a candidate — never the
+country:
 
 1. the same code, where the chart has it;
 2. the same digits once the zeros a chart pads with on the right are set
-   aside: `411` and `411000` are one account;
+   aside: `411` and `411000`;
 3. the account of the chart whose digits are the longest beginning of the old
-   code, three digits at least: `401ACME` becomes `401000`.
+   code, three digits at least: `401ACME` and `401000`.
 
 A tie is no answer, two digits are no answer, a deprecated account is never
-proposed. Each proposal carries its `basis` — `given`, `exact`,
-`same-digits`, `prefix`, `none` — so the user knows how far to trust it.
+proposed.
+
+**Then the files are held against it**, because two charts give the same
+digits to different things: `610` is the receivable of one chart and `6100`
+an expense of another, and a correspondence made from the digits alone would
+post customers to carriage costs without a word. What the files say of the
+old account, strongest first:
+
+1. the type the export gives it (`Accounts Receivable`, `Expenses`,
+   `asset_receivable`…), where it gives one;
+2. a name that is the candidate's own name in the chart;
+3. a receivable, a payable or a bank named in its name, in whatever language
+   the books were kept — `Clients`, `Debiteuren`, `Suppliers`, `Banque` — and
+   not when the name turns it (`advances from customers`, `bank charges`);
+4. the side its balance is on in the files. The weakest: it confirms, and
+   where it disagrees — an accumulated depreciation, an overdrawn bank — it
+   leaves the candidate to the user rather than dropping it.
+
+Each is compared with the type of the candidate in the chart. Each proposal
+carries its `basis`, its `match` — `same-code`, `same-digits`, `prefix`,
+`kind` — and its `reason`:
+
+- **`exact`**: the same code, and the files say the same kind of account, or
+  its own name. Only this is taken without asking.
+- **`suggested`**: any other candidate, and the same code where the files say
+  nothing. It stays out of `accounts` and is written under `suggested`, with
+  its reason. A candidate the files contradict is dropped, and the one account
+  of the chart of the kind they say — the only receivable, the only payable,
+  the only bank — is suggested in its place (`kind`).
+- **`none`**: nothing to suggest, and the reason why.
+- **`given`**: the caller's answer. It is used as it is; where the files
+  contradict it, it is still marked `doubtful`, with the reason, so a
+  correspondence saved from an earlier proposal is not trusted blind.
+
+**Nothing is posted while a line the books use is only suggested**
+(`import_unconfirmed_accounts`). The user confirms a suggestion by writing its
+code under `accounts`, or accepts all of them at once after reading them
+(`--accept-suggestions`, `accept_suggestions`). A dry run prints the lines to
+read first, each with its reason.
 
 **How a journal is proposed**: the company's journal of the same code; the
 opening, `@opening`, for the journal whose code is the one the pack opens its
@@ -102,7 +142,8 @@ have to share one date, the first day of a fiscal year.
 **Given back, it wins.** The caller saves the correspondence
 (`--save-mapping`), answers the nulls, corrects what is wrong, and gives it back
 (`--mapping`). What it answers is used as it is; what it does not answer is
-proposed again. Nothing is posted while a used account or journal is null.
+proposed again; `suggested` is never read back. Nothing is posted while a used
+account or journal is null.
 
 ## `import_books()`
 
@@ -137,7 +178,9 @@ Invoker, so everything the caller may not do is refused to them — it needs
 6. **The record**, one row of `book_imports`: the source, the checksum of the
    files, the counts, the first and last number. The checksum is unique per
    company, so the same files a second time are refused
-   (`import_already_done`) rather than counted twice.
+   (`import_already_done`) rather than counted twice. The refusal says what
+   the first import was: the files, the source, the minute (UTC), and what it
+   wrote — its entries and their numbers, its opening entry, its lines.
 
 **The rehearsal** is the same function with `p_dry_run`: it runs all six steps
 inside a block that it then leaves by an exception, which rolls every one of
