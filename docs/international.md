@@ -3861,3 +3861,57 @@ new bank format, and no pack of this repository has needed one before.
 `packs/ch/README.md` names it for the same reason the deadline is named
 here: a country reading the pack should find the limitation before they find
 it themselves in production.
+## From Austria
+
+`packs/at/`, `community`, seed 53. Two things the format could not say for
+this pack, and one that is missing for a reason worth telling apart from the
+other two — a source that was never opened rather than a shape the format
+cannot hold.
+
+**A declaration deadline of "the fifteenth day of the second month after"
+has no rule to be.** UStG § 21 Abs. 1 sets the Umsatzsteuervoranmeldung due
+"bis zum 15. Tag des... zweitfolgenden Kalendermonats" — the fifteenth of the
+month that comes *after* the month immediately following the period, not of
+that immediate month itself. `tax_report.json.deadline` has three rules:
+`day_of_month_after_period` and `last_day_of_month_after_period` both reach
+one month past the period's end, and `depends_on_taxpayer` is for a schedule
+the administration assigns per filer, which this is not — every Austrian
+company faces the same fifteenth-of-the-second-month date. None of the three
+says "two months, then a day", so `packs/at/` declares no `deadline` at all
+rather than write `day_of_month_after_period, day: 15`, which would file the
+return a month early on every single period and be a wrong answer with the
+shape of a right one. `docs/packs.md` gives a missing `deadline` exactly one
+meaning — nobody has read the text yet — which is not quite this case
+either; the gap is recorded here, in the pack's own README, and in this
+section together so a reader of any one of the three finds the other two.
+
+**A periodic return that reports a reverse charge's tax with no base at
+all.** Every European pack this format has met so far gives a domestic or
+intra-Union reverse charge two Kennzahlen — a `base` posting on one box, a
+`tax` posting on the neighbouring one — because the form prints both. Form
+U30 does not, on the purchase side: Kennzahl `057` (§ 19 Abs. 1 zweiter Satz,
+a service from abroad) and Kennzahl `048` (§ 19 Abs. 1a, a construction
+service) each carry only the tax the buyer self-assesses, with no Kennzahl
+for the amount it was computed on anywhere in the form. The format already
+allows a `base` posting with no `box` — it is how a non-deductible tax's base
+stays on the line's own account without a figure to print — so
+`AT-P-EUDL-20`, `AT-P-AUSL-20` and `AT-P-BAU-20` use exactly that shape for a
+different reason: not because the base has nowhere recoverable to be, but
+because the form itself never asks for it. Nothing in the core changed; the
+pattern is named here because a reader moving from `packs/de/`, where the
+same reverse charges carry a base Kennzahl each, could otherwise read a
+missing `box` as an omission rather than as what the Austrian form actually
+does.
+
+**Two domestic reverse charges the form carries and this pack does not
+book**, for the plainer reason that no source read while writing this pack
+gave a citable text for either: Sicherungseigentum, Vorbehaltseigentum and a
+sale in enforced auction of land (§ 19 Abs. 1b UStG, Kennzahlen 044 and 087),
+and scrap, waste metal, game consoles, laptops, tablets, and gas or
+electricity certificates (§ 19 Abs. 1d, Kennzahlen 032 and 089). Both are
+named in the U30 instructions this pack's `certification.sources` already
+cites, so `tax_report.json` declares their Kennzahlen; what is missing is the
+tax code that would post to them, which is a text nobody working on this
+pack read closely enough to write down rather than a shape the format
+cannot hold. `packs/at/README.md` says the same under "Before this pack is
+`reviewed`".

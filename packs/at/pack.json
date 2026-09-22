@@ -1,0 +1,273 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "AT",
+  "name": "Austria",
+  "version": "0.1.0",
+  "schema_min": "20260921145425",
+  "seed_sequence": 53,
+  "released_at": "2026-09-22",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "ustg",
+        "title": "Umsatzsteuergesetz 1994 (UStG 1994), BGBl. Nr. 663/1994 in der geltenden Fassung",
+        "publisher": "Rechtsinformationssystem des Bundes (RIS) — Bundeskanzleramt Österreich",
+        "url": "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10004873",
+        "consulted_on": "2026-09-22",
+        "kind": "law"
+      },
+      {
+        "key": "ugb",
+        "title": "Unternehmensgesetzbuch (UGB), dRGBl. S 219/1897 in der geltenden Fassung — Drittes Buch, §§ 189 bis 231 (Rechnungslegung)",
+        "publisher": "Rechtsinformationssystem des Bundes (RIS) — Bundeskanzleramt Österreich",
+        "url": "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10001702",
+        "consulted_on": "2026-09-22",
+        "kind": "law"
+      },
+      {
+        "key": "bao",
+        "title": "Bundesabgabenordnung (BAO), BGBl. Nr. 194/1961 in der geltenden Fassung — § 134 (Erklärungsfristen), § 204 (Rundung)",
+        "publisher": "Rechtsinformationssystem des Bundes (RIS) — Bundeskanzleramt Österreich",
+        "url": "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10003940",
+        "consulted_on": "2026-09-22",
+        "kind": "law"
+      },
+      {
+        "key": "abgb",
+        "title": "Allgemeines bürgerliches Gesetzbuch (ABGB), JGS Nr. 946/1811 — § 907a (Erfüllung einer Geldschuld) in der Fassung des Zahlungsverzugsgesetzes 2013",
+        "publisher": "Rechtsinformationssystem des Bundes (RIS) — Bundeskanzleramt Österreich",
+        "url": "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10001622",
+        "consulted_on": "2026-09-22",
+        "kind": "law"
+      },
+      {
+        "key": "u30-2026",
+        "title": "Formular U30 — Umsatzsteuervoranmeldung 2026, und Ausfüllhilfe U30a",
+        "publisher": "Bundesministerium für Finanzen (BMF)",
+        "url": "https://www.usp.gv.at/formsearch/form/341",
+        "consulted_on": "2026-09-22",
+        "kind": "form"
+      },
+      {
+        "key": "finanzonline",
+        "title": "FinanzOnline — elektronische Abgabe der Umsatzsteuervoranmeldung, der Jahreserklärung und der Zusammenfassenden Meldung",
+        "publisher": "Bundesministerium für Finanzen (BMF)",
+        "url": "https://finanzonline.bmf.gv.at",
+        "consulted_on": "2026-09-22",
+        "kind": "portal"
+      },
+      {
+        "key": "usp-ust",
+        "title": "Unternehmensserviceportal (USP) — Umsatzsteuer, Umsatzsteuervoranmeldung, Zusammenfassende Meldung, Kleinunternehmer, Rechnung, E-Rechnung an die öffentliche Verwaltung",
+        "publisher": "Bundesministerium für Finanzen / Bundesministerium für Arbeit und Wirtschaft — usp.gv.at",
+        "url": "https://www.usp.gv.at/themen/steuern-finanzen/umsatzsteuer-ueberblick.html",
+        "consulted_on": "2026-09-22",
+        "kind": "guidance"
+      },
+      {
+        "key": "erechnung-bund",
+        "title": "e-Rechnung an den Bund — Rechtsgrundlage, Formate ebInterface und PEPPOL BIS, Leitfaden",
+        "publisher": "Bundesministerium für Finanzen (BMF) — erechnung.gv.at",
+        "url": "https://www.erechnung.gv.at/go/leitfaden",
+        "consulted_on": "2026-09-22",
+        "kind": "guidance"
+      },
+      {
+        "key": "en-16931",
+        "title": "EN 16931-1 — semantic data model of the electronic invoice, conformity under Directive 2014/55/EU",
+        "publisher": "European Commission",
+        "url": "https://ec.europa.eu/digital-building-blocks/sites/spaces/DIGITAL/pages/467108950/EN+16931+compliance",
+        "consulted_on": "2026-09-22",
+        "kind": "standard"
+      },
+      {
+        "key": "uncl5305",
+        "title": "UNCL5305 — code list of tax categories (BT-118 and BT-151), subset published for EN 16931",
+        "publisher": "OpenPEPPOL — list published by the European Commission",
+        "url": "https://docs.peppol.eu/poacc/billing/3.0/codelist/UNCL5305/",
+        "consulted_on": "2026-09-22",
+        "kind": "standard"
+      },
+      {
+        "key": "vatex",
+        "title": "VATEX — code list of VAT exemption reasons (BT-121)",
+        "publisher": "OpenPEPPOL — list published by the European Commission",
+        "url": "https://docs.peppol.eu/poacc/billing/3.0/codelist/vatex/",
+        "consulted_on": "2026-09-22",
+        "kind": "standard"
+      },
+      {
+        "key": "peppol-eas",
+        "title": "Electronic Address Scheme (EAS) — ISO 6523 identifier schemes, including 9915 (Austrian VAT number)",
+        "publisher": "OpenPEPPOL",
+        "url": "https://docs.peppol.eu/poacc/billing/3.0/codelist/eas/",
+        "consulted_on": "2026-09-22",
+        "kind": "standard"
+      },
+      {
+        "key": "oenb-basiszinssatz",
+        "title": "Basiszinssatz nach § 1 des 1. Euro-Justiz-Begleitgesetzes, maßgeblich für § 456 UGB",
+        "publisher": "Oesterreichische Nationalbank (OeNB)",
+        "url": "https://www.oenb.at/Service/Zins--und-Wechselkurse/Anknuepfungszinssaetze.html",
+        "consulted_on": "2026-09-22",
+        "kind": "guidance"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "EUR",
+    "language": "de",
+    "rounding_method": "half_up",
+    "closing_style": "retained_earnings",
+    "roles": {
+      "receivable": "2200",
+      "payable": "6400",
+      "suspense": "2239",
+      "rounding": "8818",
+      "retained_earnings": "4400",
+      "sales": "8100",
+      "purchase": "8500",
+      "bank": "2410",
+      "cash": "2400",
+      "fx_gain": "8430",
+      "fx_loss": "8808",
+      "tax_payable": "6810",
+      "tax_receivable": "2237"
+    },
+    "journal_roles": {
+      "sales": "VK",
+      "purchase": "EK",
+      "miscellaneous": "SO",
+      "opening": "EB"
+    },
+    "fiscal_year_default": "calendar"
+  },
+  "languages": [
+    "en"
+  ],
+  "journals": [
+    { "code": "VK", "type": "sales", "name": "Ausgangsrechnungen", "sequence": 10 },
+    { "code": "EK", "type": "purchase", "name": "Eingangsrechnungen", "sequence": 20 },
+    { "code": "BK", "type": "bank", "name": "Bank", "sequence": 30 },
+    { "code": "KA", "type": "cash", "name": "Kassa", "sequence": 40 },
+    { "code": "SO", "type": "general", "name": "Sonstige Buchungen", "sequence": 50 },
+    { "code": "EB", "type": "opening", "name": "Eröffnungsbuchungen", "sequence": 60 }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Referenzkontenplan nach der Gliederung der §§ 224 und 231 UGB",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": [
+        "AT-UGB-224-BS",
+        "AT-UGB-231-GKV"
+      ],
+      "legal_reference": "UGB § 189 verpflichtet Kapitalgesellschaften und bestimmte Personengesellschaften ohne unbeschränkt haftende natürliche Person kraft Rechtsform, sonstige Unternehmer ab Überschreiten der Umsatzschwellen des § 189 Abs. 1 Z 2, zur Rechnungslegung nach dem Dritten Buch. Das Gesetz schreibt keinen Kontenplan vor. In der Praxis weit verbreitet ist der Einheitskontenrahmen (EKR), ein Fachgutachten KFS/BW6 der Kammer der Steuerberater und Wirtschaftsprüfer (KSW), das unter dem Copyright der Kammer steht und hier weder in seinen Kontonummern noch in seinen Bezeichnungen übernommen wird. Dieser Plan ist eigenständig: vierstellige Nummern, deren erste Ziffer den Abschnitt der Bilanz nach § 224 (1 Anlagevermögen, 2 Umlaufvermögen, 3 Rechnungsabgrenzung/aktive latente Steuern, 4 Eigenkapital, 5 Rückstellungen, 6 Verbindlichkeiten, 7 Rechnungsabgrenzung passiv) oder der Gewinn- und Verlustrechnung nach § 231 Abs. 2 (8 Posten 1 bis 8, 9 Posten 10 bis 20) bezeichnet.",
+      "source": "ugb"
+    }
+  ],
+  "documents": {
+    "numbering": "sequential",
+    "number_format": "{CODE}-{YYYY}-{NNNN}",
+    "legal_payment_days": 30,
+    "late_payment_reference": "UGB § 456 — Verzugszinsen zwischen Unternehmern in Höhe von 9,2 Prozentpunkten über dem von der Oesterreichischen Nationalbank festgelegten Basiszinssatz; UGB § 458 — eine Pauschale von 40 Euro, die der Gläubiger unabhängig vom Nachweis eines Schadens verlangen kann; darüber hinausgehende zweckentsprechende Betreibungskosten nach § 1333 Abs. 2 ABGB.",
+    "tax_point": "earliest_of_delivery_or_payment",
+    "posted_edit_policy": "reversal_only",
+    "references": {
+      "numbering": {
+        "legal_reference": "UStG § 11 Abs. 1 Z 3 lit. h — eine fortlaufende Nummer mit einer oder mehreren Zahlenreihen, die zur Identifizierung der Rechnung vom Rechnungsaussteller einmalig vergeben wird. Das Gesetz verlangt Einmaligkeit und keine lückenlose Folge, daher sequential und nicht gapless; mehrere Nummernkreise sind zulässig.",
+        "source": "ustg"
+      },
+      "payment_terms": {
+        "legal_reference": "ABGB § 907a in der Fassung des Zahlungsverzugsgesetzes 2013 (BGBl. I Nr. 50/2013, Umsetzung der Richtlinie 2011/7/EU) regelt die Erfüllung einer Geldschuld; das Gesetz sieht mangels Vereinbarung eine Fälligkeit von 30 Tagen nach Erhalt der Rechnung oder der Leistung vor, mit einer Höchstgrenze von 60 Tagen bei ausdrücklicher Vereinbarung zwischen Unternehmern (§ 456 UGB). Dieser Punkt stützt sich auf sekundäre Quellen, die den RIS-Volltext zusammenfassen, und sollte vor einer Statusänderung auf reviewed am RIS-Volltext geprüft werden.",
+        "source": "abgb"
+      },
+      "tax_point": {
+        "legal_reference": "UStG § 19 Abs. 2 Z 1 lit. a — die Steuerschuld entsteht mit Ablauf des Kalendermonats, in dem die Lieferung oder sonstige Leistung ausgeführt worden ist (Sollbesteuerung, Grundsatz); wird das Entgelt oder ein Teil davon vereinnahmt, bevor die Leistung ausgeführt worden ist, entsteht die Steuerschuld insoweit bereits mit Ablauf des Voranmeldungszeitraums der Vereinnahmung. Beide Zweige zusammen sind earliest_of_delivery_or_payment. Nicht abgebildet: die Istbesteuerung nach § 17 auf Antrag oder kraft Berufs, die eigens als cash_basis auf der jeweiligen Steuer erklärt wird.",
+        "source": "ustg"
+      },
+      "posted_edit_policy": {
+        "legal_reference": "UGB § 190 Abs. 4 — eine Eintragung oder eine Aufzeichnung darf nicht in einer Weise verändert werden, dass der ursprüngliche Inhalt nicht mehr feststellbar ist. Eine gebuchte Rechnung wird daher nur durch eine Stornorechnung oder Gutschrift berichtigt, die auf sie verweist.",
+        "source": "ugb"
+      }
+    },
+    "mentions": [
+      {
+        "code": "reverse_charge",
+        "applies_when": "reverse_charge",
+        "text": "Steuerschuldnerschaft des Leistungsempfängers",
+        "sequence": 10,
+        "legal_reference": "UStG § 11 Abs. 1a — bei einer Leistung, für die der Empfänger die Steuer nach § 19 Abs. 1 zweiter Satz oder Abs. 1a bis 1e schuldet, hat der leistende Unternehmer auf die Steuerschuldnerschaft des Leistungsempfängers hinzuweisen; einen vorgeschriebenen Wortlaut kennt das Gesetz nicht.",
+        "source": "ustg"
+      },
+      {
+        "code": "intracom_goods",
+        "applies_when": "intra_eu_goods",
+        "text": "Steuerfreie innergemeinschaftliche Lieferung",
+        "sequence": 20,
+        "legal_reference": "UStG Art. 6 Abs. 1 iVm Art. 7 Abs. 1 Binnenmarktregelung — steuerfrei ist die innergemeinschaftliche Lieferung an einen Abnehmer, der eine ihm von einem anderen Mitgliedstaat erteilte Umsatzsteuer-Identifikationsnummer verwendet.",
+        "source": "ustg"
+      },
+      {
+        "code": "intracom_services",
+        "applies_when": "intra_eu_services",
+        "text": "Steuerschuldnerschaft des Leistungsempfängers",
+        "sequence": 30,
+        "legal_reference": "UStG § 11 Abs. 1a iVm § 3a Abs. 6 — eine sonstige Leistung an einen Unternehmer für dessen Unternehmen wird an dessen Sitz ausgeführt; der Leistungsempfänger schuldet die Steuer nach § 19 Abs. 1 zweiter Satz, und die Rechnung weist auf seine Steuerschuldnerschaft hin.",
+        "source": "ustg"
+      },
+      {
+        "code": "export",
+        "applies_when": "export",
+        "text": "Steuerfreie Ausfuhrlieferung",
+        "sequence": 40,
+        "legal_reference": "UStG § 6 Abs. 1 Z 1 iVm § 7 — steuerfrei sind Ausfuhrlieferungen; ein Hinweis auf die Steuerbefreiung ist nach § 11 Abs. 1 Z 3 lit. g erforderlich.",
+        "source": "ustg"
+      },
+      {
+        "code": "exempt",
+        "applies_when": "exempt",
+        "text": "Steuerfreier Umsatz",
+        "sequence": 50,
+        "legal_reference": "UStG § 11 Abs. 1 Z 3 lit. g — im Fall einer Steuerbefreiung ein Hinweis darauf, dass für die Lieferung oder sonstige Leistung eine Steuerbefreiung gilt. Das Gesetz schreibt für diesen Hinweis keinen Wortlaut vor.",
+        "source": "ustg"
+      },
+      {
+        "code": "small_business",
+        "applies_when": "small_business",
+        "text": "Steuerfrei nach § 6 Abs. 1 Z 27 UStG (Kleinunternehmerregelung)",
+        "sequence": 60,
+        "legal_reference": "UStG § 6 Abs. 1 Z 27 — steuerfrei sind die Umsätze eines Kleinunternehmers, dessen Umsätze im Veranlagungszeitraum die Kleinunternehmergrenze von 55 000 Euro im vorangegangenen Kalenderjahr nicht und im laufenden Jahr noch nicht übersteigen, mit einer Toleranz von 10 % bis zum Ende des Kalenderjahres. Seit 1. Jänner 2025 (Abgabenänderungsgesetz 2024) steht die Befreiung unter denselben Voraussetzungen auch Unternehmern anderer Mitgliedstaaten offen, deren unionsweiter Jahresumsatz 100 000 Euro nicht übersteigt (Art. 6a).",
+        "source": "ustg"
+      },
+      {
+        "code": "late_payment",
+        "applies_when": "late_payment",
+        "text": "Bei Zahlungsverzug gebühren Verzugszinsen in Höhe von 9,2 Prozentpunkten über dem Basiszinssatz sowie eine Pauschale von 40 Euro (§§ 456 und 458 UGB).",
+        "sequence": 70,
+        "legal_reference": "UGB § 456 und § 458 — siehe documents.late_payment_reference.",
+        "source": "ugb"
+      }
+    ]
+  },
+  "einvoicing": {
+    "profile": "peppol-bis-3",
+    "obligation": "none",
+    "mandatory_from": null,
+    "party_scheme": null,
+    "vat_scheme": "9915",
+    "legal_reference": "Für den Bund besteht die elektronische Rechnungslegung seit 1. Jänner 2014 verpflichtend (§ 5 IKT-Konsolidierungsgesetz, IKTKonG), in den Formaten ebInterface (nationales XML-Format) oder PEPPOL BIS, eingebracht über das Unternehmensserviceportal (USP) oder erechnung.gv.at; diese Pflicht bindet nur Lieferanten des Bundes und wird hier nicht als Landespflicht abgebildet. Eine allgemeine Pflicht zur elektronischen Rechnung zwischen Unternehmern besteht zum released_at dieses Packs nicht: die Reform ViDA (VAT in the Digital Age) der Europäischen Union sieht grenzüberschreitende digitale Meldepflichten erst ab Juli 2030 vor, ohne dass eine österreichische Umsetzung bereits veröffentlicht wäre. profile nennt das auf dem USP unterstützte PEPPOL-BIS-Billing-3.0-Profil, das dem semantischen Modell der EN 16931 entspricht; das nationale ebInterface-Format ist gleichwertig zulässig, aber nicht Teil dieses geschlossenen Vokabulars. vat_scheme 9915 ist die österreichische UID in der EAS-Liste. party_scheme bleibt leer: zwischen Unternehmen gibt es kein vorgeschriebenes Netz und keine einheitliche Adresskennung.",
+    "source": "erechnung-bund"
+  },
+  "bank": {
+    "statement_formats": [
+      "camt.053"
+    ],
+    "payment_formats": [
+      "pain.001"
+    ]
+  }
+}

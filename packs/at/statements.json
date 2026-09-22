@@ -1,0 +1,511 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/statements",
+  "statements": [
+    {
+      "code": "AT-UGB-224-BS",
+      "kind": "balance_sheet",
+      "framework": "AT-UGB",
+      "name": "Bilanz nach § 224 UGB",
+      "valid_from": "2016-01-01",
+      "legal_reference": "Unternehmensgesetzbuch § 224 Abs. 1 bis 3 in der Fassung des Rechnungslegungs-Änderungsgesetzes 2014 — Gliederung der Bilanz in Kontoform, Aktivseite Abs. 2 und Passivseite Abs. 3. Die Zeilen sind die gesetzlichen Posten mit Buchstaben und römischen Zahlen; kleine und mittelgroße Gesellschaften dürfen nach § 242 Abs. 1 iVm den Größenklassen des § 221 die mit Buchstaben und römischen Zahlen bezeichneten Posten zusammengefasst ausweisen, die hier als Summenzeilen vorhanden sind.",
+      "source": "ugb",
+      "lines": [
+        {
+          "code": "AKT",
+          "name": "Summe Aktiva",
+          "sequence": 10,
+          "is_total": true,
+          "plus": ["A", "B", "C", "D"],
+          "legal_reference": "UGB § 224 Abs. 2",
+          "source": "ugb"
+        },
+        {
+          "code": "A",
+          "parent": "AKT",
+          "name": "A. Anlagevermögen",
+          "sequence": 20,
+          "is_total": true,
+          "plus": ["A.I", "A.II", "A.III"],
+          "legal_reference": "UGB § 224 Abs. 2 A",
+          "source": "ugb"
+        },
+        {
+          "code": "A.I",
+          "parent": "A",
+          "name": "I. Immaterielle Vermögensgegenstände",
+          "sequence": 30,
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "1100", "code_to": "1199" }],
+          "legal_reference": "UGB § 224 Abs. 2 A.I",
+          "source": "ugb"
+        },
+        {
+          "code": "A.II",
+          "parent": "A",
+          "name": "II. Sachanlagen",
+          "sequence": 40,
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "1200", "code_to": "1299" }],
+          "legal_reference": "UGB § 224 Abs. 2 A.II",
+          "source": "ugb"
+        },
+        {
+          "code": "A.III",
+          "parent": "A",
+          "name": "III. Finanzanlagen",
+          "sequence": 50,
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "1300", "code_to": "1399" }],
+          "legal_reference": "UGB § 224 Abs. 2 A.III",
+          "source": "ugb"
+        },
+        {
+          "code": "B",
+          "parent": "AKT",
+          "name": "B. Umlaufvermögen",
+          "sequence": 60,
+          "is_total": true,
+          "plus": ["B.I", "B.II", "B.III", "B.IV"],
+          "legal_reference": "UGB § 224 Abs. 2 B",
+          "source": "ugb"
+        },
+        {
+          "code": "B.I",
+          "parent": "B",
+          "name": "I. Vorräte",
+          "sequence": 70,
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "2100", "code_to": "2199" }],
+          "legal_reference": "UGB § 224 Abs. 2 B.I",
+          "source": "ugb"
+        },
+        {
+          "code": "B.II",
+          "parent": "B",
+          "name": "II. Forderungen und sonstige Vermögensgegenstände",
+          "sequence": 80,
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "2200", "code_to": "2299" }],
+          "legal_reference": "UGB § 224 Abs. 2 B.II",
+          "source": "ugb"
+        },
+        {
+          "code": "B.III",
+          "parent": "B",
+          "name": "III. Wertpapiere und Anteile",
+          "sequence": 90,
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "2300", "code_to": "2399" }],
+          "legal_reference": "UGB § 224 Abs. 2 B.III",
+          "source": "ugb"
+        },
+        {
+          "code": "B.IV",
+          "parent": "B",
+          "name": "IV. Kassenbestand, Schecks, Guthaben bei Kreditinstituten",
+          "sequence": 100,
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "2400", "code_to": "2499" }],
+          "legal_reference": "UGB § 224 Abs. 2 B.IV",
+          "source": "ugb"
+        },
+        {
+          "code": "C",
+          "parent": "AKT",
+          "name": "C. Rechnungsabgrenzungsposten",
+          "sequence": 110,
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "3100", "code_to": "3199" }],
+          "legal_reference": "UGB § 224 Abs. 2 C",
+          "source": "ugb"
+        },
+        {
+          "code": "D",
+          "parent": "AKT",
+          "name": "D. Aktive latente Steuern",
+          "sequence": 120,
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "3200", "code_to": "3299" }],
+          "legal_reference": "UGB § 224 Abs. 2 D",
+          "source": "ugb"
+        },
+        {
+          "code": "PASS",
+          "name": "Summe Passiva",
+          "sequence": 130,
+          "is_total": true,
+          "plus": ["P.A", "P.B", "P.C", "P.D"],
+          "legal_reference": "UGB § 224 Abs. 3",
+          "source": "ugb"
+        },
+        {
+          "code": "P.A",
+          "parent": "PASS",
+          "name": "A. Eigenkapital",
+          "sequence": 140,
+          "is_total": true,
+          "plus": ["P.A.I", "P.A.II", "P.A.III", "P.A.IV"],
+          "legal_reference": "UGB § 224 Abs. 3 A",
+          "source": "ugb"
+        },
+        {
+          "code": "P.A.I",
+          "parent": "P.A",
+          "name": "I. Eingefordertes Nennkapital",
+          "sequence": 150,
+          "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "4100", "code_to": "4199" }],
+          "legal_reference": "UGB § 224 Abs. 3 A.I",
+          "source": "ugb"
+        },
+        {
+          "code": "P.A.II",
+          "parent": "P.A",
+          "name": "II. Kapitalrücklagen",
+          "sequence": 160,
+          "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "4200", "code_to": "4299" }],
+          "legal_reference": "UGB § 224 Abs. 3 A.II",
+          "source": "ugb"
+        },
+        {
+          "code": "P.A.III",
+          "parent": "P.A",
+          "name": "III. Gewinnrücklagen",
+          "sequence": 170,
+          "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "4300", "code_to": "4399" }],
+          "legal_reference": "UGB § 224 Abs. 3 A.III",
+          "source": "ugb"
+        },
+        {
+          "code": "P.A.IV",
+          "parent": "P.A",
+          "name": "IV. Bilanzgewinn (Bilanzverlust)",
+          "sequence": 180,
+          "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "4400", "code_to": "4499" }],
+          "legal_reference": "UGB § 224 Abs. 3 A.IV — nimmt nach dem Jahresabschluss auch den Jahresüberschuss/Jahresfehlbetrag auf, da dieses Pack keinen eigenen Zwischenposten dafür führt (closing_style retained_earnings).",
+          "source": "ugb"
+        },
+        {
+          "code": "P.B",
+          "parent": "PASS",
+          "name": "B. Rückstellungen",
+          "sequence": 190,
+          "is_total": true,
+          "plus": ["P.B.1", "P.B.2", "P.B.3", "P.B.4"],
+          "legal_reference": "UGB § 224 Abs. 3 B",
+          "source": "ugb"
+        },
+        {
+          "code": "P.B.1",
+          "parent": "P.B",
+          "name": "1. Rückstellungen für Abfertigungen",
+          "sequence": 200,
+          "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "5100", "code_to": "5199" }],
+          "legal_reference": "UGB § 224 Abs. 3 B.1",
+          "source": "ugb"
+        },
+        {
+          "code": "P.B.2",
+          "parent": "P.B",
+          "name": "2. Rückstellungen für Pensionen",
+          "sequence": 210,
+          "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "5200", "code_to": "5299" }],
+          "legal_reference": "UGB § 224 Abs. 3 B.2",
+          "source": "ugb"
+        },
+        {
+          "code": "P.B.3",
+          "parent": "P.B",
+          "name": "3. Steuerrückstellungen",
+          "sequence": 220,
+          "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "5300", "code_to": "5300" }],
+          "legal_reference": "UGB § 224 Abs. 3 B.3",
+          "source": "ugb"
+        },
+        {
+          "code": "P.B.4",
+          "parent": "P.B",
+          "name": "4. sonstige Rückstellungen",
+          "sequence": 230,
+          "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "5310", "code_to": "5399" }],
+          "legal_reference": "UGB § 224 Abs. 3 B.4 — führt auch die passiven latenten Steuern (5320), die UGB Rechnungslegungs-Änderungsgesetz 2014 als Rückstellung behandelt und nicht als eigenen Bilanzposten ausweist.",
+          "source": "ugb"
+        },
+        {
+          "code": "P.C",
+          "parent": "PASS",
+          "name": "C. Verbindlichkeiten",
+          "sequence": 240,
+          "is_total": true,
+          "plus": ["P.C.1", "P.C.2", "P.C.3", "P.C.4", "P.C.5", "P.C.6", "P.C.8"],
+          "legal_reference": "UGB § 224 Abs. 3 C",
+          "source": "ugb"
+        },
+        {
+          "code": "P.C.1",
+          "parent": "P.C",
+          "name": "1. Anleihen",
+          "sequence": 250,
+          "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "6100", "code_to": "6199" }],
+          "legal_reference": "UGB § 224 Abs. 3 C.1",
+          "source": "ugb"
+        },
+        {
+          "code": "P.C.2",
+          "parent": "P.C",
+          "name": "2. Verbindlichkeiten gegenüber Kreditinstituten",
+          "sequence": 260,
+          "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "6200", "code_to": "6299" }],
+          "legal_reference": "UGB § 224 Abs. 3 C.2",
+          "source": "ugb"
+        },
+        {
+          "code": "P.C.3",
+          "parent": "P.C",
+          "name": "3. Erhaltene Anzahlungen auf Bestellungen",
+          "sequence": 270,
+          "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "6300", "code_to": "6399" }],
+          "legal_reference": "UGB § 224 Abs. 3 C.3",
+          "source": "ugb"
+        },
+        {
+          "code": "P.C.4",
+          "parent": "P.C",
+          "name": "4. Verbindlichkeiten aus Lieferungen und Leistungen",
+          "sequence": 280,
+          "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "6400", "code_to": "6499" }],
+          "legal_reference": "UGB § 224 Abs. 3 C.4",
+          "source": "ugb"
+        },
+        {
+          "code": "P.C.5",
+          "parent": "P.C",
+          "name": "5. Verbindlichkeiten aus der Annahme gezogener Wechsel",
+          "sequence": 290,
+          "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "6500", "code_to": "6599" }],
+          "legal_reference": "UGB § 224 Abs. 3 C.5",
+          "source": "ugb"
+        },
+        {
+          "code": "P.C.6",
+          "parent": "P.C",
+          "name": "6./7. Verbindlichkeiten gegenüber verbundenen Unternehmen und Unternehmen, mit denen ein Beteiligungsverhältnis besteht",
+          "sequence": 300,
+          "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "6600", "code_to": "6699" }],
+          "legal_reference": "UGB § 224 Abs. 3 C.6 und C.7",
+          "source": "ugb"
+        },
+        {
+          "code": "P.C.8",
+          "parent": "P.C",
+          "name": "8. sonstige Verbindlichkeiten, davon aus Steuern und im Rahmen der sozialen Sicherheit",
+          "sequence": 310,
+          "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "6800", "code_to": "6899" }],
+          "legal_reference": "UGB § 224 Abs. 3 C.8",
+          "source": "ugb"
+        },
+        {
+          "code": "P.D",
+          "parent": "PASS",
+          "name": "D. Rechnungsabgrenzungsposten",
+          "sequence": 320,
+          "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "7100", "code_to": "7199" }],
+          "legal_reference": "UGB § 224 Abs. 3 D",
+          "source": "ugb"
+        }
+      ]
+    },
+    {
+      "code": "AT-UGB-231-GKV",
+      "kind": "income_statement",
+      "framework": "AT-UGB",
+      "name": "Gewinn- und Verlustrechnung nach § 231 Abs. 2 UGB (Gesamtkostenverfahren)",
+      "valid_from": "2016-01-01",
+      "legal_reference": "Unternehmensgesetzbuch § 231 Abs. 2 — Staffelform nach dem Gesamtkostenverfahren, Posten 1 bis 26 in der gesetzlichen Reihenfolge. Das Umsatzkostenverfahren (Abs. 3) setzt eine Kostenstellenrechnung voraus, die dieser Kontenplan nicht abbildet, und wird von diesem Pack nicht geführt. Die Posten 22 bis 26 (Rücklagenbewegung, Gewinnvortrag, Bilanzgewinn) sind nicht als eigene Zeilen dieser Rechnung geführt: dieses Pack schließt mit closing_style retained_earnings unmittelbar in das Bilanzkonto 4400, ohne ein eigenes Ergebnisverwendungskonto in der Gewinn- und Verlustrechnung.",
+      "source": "ugb",
+      "lines": [
+        {
+          "code": "1",
+          "name": "1. Umsatzerlöse",
+          "sequence": 10,
+          "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "8100", "code_to": "8108" }],
+          "legal_reference": "UGB § 231 Abs. 2 Z 1",
+          "source": "ugb"
+        },
+        {
+          "code": "2",
+          "name": "2. Veränderung des Bestands an fertigen und unfertigen Erzeugnissen",
+          "sequence": 20,
+          "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "8200", "code_to": "8200" }],
+          "legal_reference": "UGB § 231 Abs. 2 Z 2",
+          "source": "ugb"
+        },
+        {
+          "code": "3",
+          "name": "3. andere aktivierte Eigenleistungen",
+          "sequence": 30,
+          "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "8300", "code_to": "8300" }],
+          "legal_reference": "UGB § 231 Abs. 2 Z 3",
+          "source": "ugb"
+        },
+        {
+          "code": "4",
+          "name": "4. sonstige betriebliche Erträge",
+          "sequence": 40,
+          "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "8400", "code_to": "8430" }],
+          "legal_reference": "UGB § 231 Abs. 2 Z 4",
+          "source": "ugb"
+        },
+        {
+          "code": "5",
+          "name": "5. Aufwendungen für Material und sonstige bezogene Herstellungsleistungen",
+          "sequence": 50,
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "8500", "code_to": "8502" }],
+          "legal_reference": "UGB § 231 Abs. 2 Z 5",
+          "source": "ugb"
+        },
+        {
+          "code": "6",
+          "name": "6. Personalaufwand",
+          "sequence": 60,
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "8600", "code_to": "8630" }],
+          "legal_reference": "UGB § 231 Abs. 2 Z 6",
+          "source": "ugb"
+        },
+        {
+          "code": "7",
+          "name": "7. Abschreibungen",
+          "sequence": 70,
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "8700", "code_to": "8710" }],
+          "legal_reference": "UGB § 231 Abs. 2 Z 7",
+          "source": "ugb"
+        },
+        {
+          "code": "8",
+          "name": "8. sonstige betriebliche Aufwendungen",
+          "sequence": 80,
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "8800", "code_to": "8819" }],
+          "legal_reference": "UGB § 231 Abs. 2 Z 8",
+          "source": "ugb"
+        },
+        {
+          "code": "9",
+          "name": "9. Zwischensumme aus Z 1 bis 8",
+          "sequence": 90,
+          "is_total": true,
+          "plus": ["1", "2", "3", "4"],
+          "minus": ["5", "6", "7", "8"],
+          "legal_reference": "UGB § 231 Abs. 2 Z 9",
+          "source": "ugb"
+        },
+        {
+          "code": "10",
+          "name": "10. Erträge aus Beteiligungen",
+          "sequence": 100,
+          "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "9100", "code_to": "9100" }],
+          "legal_reference": "UGB § 231 Abs. 2 Z 10",
+          "source": "ugb"
+        },
+        {
+          "code": "12",
+          "name": "12. sonstige Zinsen und ähnliche Erträge",
+          "sequence": 110,
+          "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "9110", "code_to": "9110" }],
+          "legal_reference": "UGB § 231 Abs. 2 Z 12",
+          "source": "ugb"
+        },
+        {
+          "code": "15",
+          "name": "15. Zinsen und ähnliche Aufwendungen",
+          "sequence": 120,
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "9200", "code_to": "9200" }],
+          "legal_reference": "UGB § 231 Abs. 2 Z 15",
+          "source": "ugb"
+        },
+        {
+          "code": "16",
+          "name": "16. Zwischensumme aus Z 10 bis 15",
+          "sequence": 130,
+          "is_total": true,
+          "plus": ["10", "12"],
+          "minus": ["15"],
+          "legal_reference": "UGB § 231 Abs. 2 Z 16 — die Posten 11, 13 und 14 sind nicht geführt: dieses Pack bildet weder Wertpapiere des Finanzanlagevermögens noch Wertpapiere des Umlaufvermögens auf einem eigenen Ertrags- oder Aufwandskonto ab.",
+          "source": "ugb"
+        },
+        {
+          "code": "17",
+          "name": "17. Ergebnis vor Steuern",
+          "sequence": 140,
+          "is_total": true,
+          "plus": ["9", "16"],
+          "legal_reference": "UGB § 231 Abs. 2 Z 17",
+          "source": "ugb"
+        },
+        {
+          "code": "18",
+          "name": "18. Steuern vom Einkommen und vom Ertrag",
+          "sequence": 150,
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "9300", "code_to": "9300" }],
+          "legal_reference": "UGB § 231 Abs. 2 Z 18",
+          "source": "ugb"
+        },
+        {
+          "code": "19",
+          "name": "19. Ergebnis nach Steuern",
+          "sequence": 160,
+          "is_total": true,
+          "plus": ["17"],
+          "minus": ["18"],
+          "legal_reference": "UGB § 231 Abs. 2 Z 19",
+          "source": "ugb"
+        },
+        {
+          "code": "20",
+          "name": "20. sonstige Steuern",
+          "sequence": 170,
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "9310", "code_to": "9310" }],
+          "legal_reference": "UGB § 231 Abs. 2 Z 20",
+          "source": "ugb"
+        },
+        {
+          "code": "21",
+          "name": "21. Jahresüberschuss/Jahresfehlbetrag",
+          "sequence": 180,
+          "is_total": true,
+          "plus": ["19"],
+          "minus": ["20"],
+          "legal_reference": "UGB § 231 Abs. 2 Z 21",
+          "source": "ugb"
+        }
+      ]
+    }
+  ]
+}

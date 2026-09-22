@@ -1,0 +1,239 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "AT-UVA",
+  "name": "Umsatzsteuervoranmeldung (Formular U30)",
+  "period": [
+    "month",
+    "quarter"
+  ],
+  "valid_from": "2026-01-01",
+  "legal_reference": "UStG § 21 Abs. 1 und 2 — der Unternehmer hat eine Voranmeldung für den Kalendermonat (Voranmeldungszeitraum) elektronisch zu übermitteln; beträgt der Vorjahresumsatz höchstens 100 000 Euro, ist der Voranmeldungszeitraum das Kalendervierteljahr, mit Option auf den Kalendermonat für ein volles Kalenderjahr. Die Kennzahlen sind jene des Formulars U30 samt Ausfüllhilfe U30a für 2026.",
+  "source": "u30-2026",
+  "boxes": [
+    {
+      "box": "000",
+      "kind": "base",
+      "name": "Gesamtbetrag der Bemessungsgrundlage für Lieferungen, sonstige Leistungen und Eigenverbrauch (ohne gesondert angeführten Eigenverbrauch), einschließlich Anzahlungen",
+      "sequence": 10,
+      "legal_reference": "Formular U30, Punkt 4.1, Kennzahl 000 — eine reine Summenangabe, in die keine Steuer dieses Packs eigenständig hineinschreibt; siehe docs/international.md.",
+      "source": "u30-2026"
+    },
+    {
+      "box": "001",
+      "kind": "base",
+      "name": "Zuzüglich Eigenverbrauch (§ 1 Abs. 1 Z 2, § 3 Abs. 2 und § 3a Abs. 1a)",
+      "sequence": 20,
+      "legal_reference": "Formular U30, Punkt 4.2, Kennzahl 001 — das Pack führt keine Eigenverbrauchstatbestände, die Zeile bleibt leer.",
+      "source": "u30-2026"
+    },
+    {
+      "box": "022",
+      "kind": "base",
+      "name": "Lieferungen und sonstige Leistungen zum Normalsteuersatz 20 % — Bemessungsgrundlage",
+      "sequence": 30,
+      "legal_reference": "Formular U30, Punkt 4.14, Kennzahl 022; UStG § 10 Abs. 1",
+      "source": "u30-2026"
+    },
+    {
+      "box": "022",
+      "kind": "tax",
+      "name": "Lieferungen und sonstige Leistungen zum Normalsteuersatz 20 % — Umsatzsteuer",
+      "sequence": 40,
+      "legal_reference": "Formular U30, Punkt 4.14, Kennzahl 022, Spalte Umsatzsteuer",
+      "source": "u30-2026"
+    },
+    {
+      "box": "029",
+      "kind": "base",
+      "name": "Lieferungen und sonstige Leistungen zum ermäßigten Steuersatz 10 % — Bemessungsgrundlage",
+      "sequence": 50,
+      "legal_reference": "Formular U30, Punkt 4.15, Kennzahl 029; UStG § 10 Abs. 2",
+      "source": "u30-2026"
+    },
+    {
+      "box": "029",
+      "kind": "tax",
+      "name": "Lieferungen und sonstige Leistungen zum ermäßigten Steuersatz 10 % — Umsatzsteuer",
+      "sequence": 60,
+      "legal_reference": "Formular U30, Punkt 4.15, Kennzahl 029, Spalte Umsatzsteuer",
+      "source": "u30-2026"
+    },
+    {
+      "box": "006",
+      "kind": "base",
+      "name": "Lieferungen und sonstige Leistungen zum ermäßigten Steuersatz 13 % — Bemessungsgrundlage",
+      "sequence": 70,
+      "legal_reference": "Formular U30, Punkt 4.16, Kennzahl 006; UStG § 10 Abs. 3",
+      "source": "u30-2026"
+    },
+    {
+      "box": "006",
+      "kind": "tax",
+      "name": "Lieferungen und sonstige Leistungen zum ermäßigten Steuersatz 13 % — Umsatzsteuer",
+      "sequence": 80,
+      "legal_reference": "Formular U30, Punkt 4.16, Kennzahl 006, Spalte Umsatzsteuer",
+      "source": "u30-2026"
+    },
+    {
+      "box": "011",
+      "kind": "base",
+      "name": "Steuerfrei mit Vorsteuerabzug — § 6 Abs. 1 Z 1 iVm § 7 (Ausfuhrlieferungen)",
+      "sequence": 90,
+      "legal_reference": "Formular U30, Punkt 4.5, Kennzahl 011",
+      "source": "u30-2026"
+    },
+    {
+      "box": "017",
+      "kind": "base",
+      "name": "Steuerfrei mit Vorsteuerabzug — Art. 6 Abs. 1 (innergemeinschaftliche Lieferungen ohne Fahrzeuglieferungen)",
+      "sequence": 100,
+      "legal_reference": "Formular U30, Punkt 4.8, Kennzahl 017",
+      "source": "u30-2026"
+    },
+    {
+      "box": "020",
+      "kind": "base",
+      "name": "Steuerfrei ohne Vorsteuerabzug — übrige Umsätze nach § 6 Abs. 1 Z, hier Z 16 (Vermietung und Verpachtung von Grundstücken)",
+      "sequence": 110,
+      "legal_reference": "Formular U30, Punkt 4.12, Kennzahl 020; UStG § 6 Abs. 1 Z 16",
+      "source": "u30-2026"
+    },
+    {
+      "box": "021",
+      "kind": "base",
+      "name": "Abzüglich Umsätze, für die die Steuerschuld gemäß § 19 Abs. 1 zweiter Satz sowie § 19 Abs. 1a bis 1d auf den Leistungsempfänger übergegangen ist",
+      "sequence": 120,
+      "legal_reference": "Formular U30, Punkt 4.3, Kennzahl 021 — trägt sowohl die Bemessungsgrundlage der sonstigen Leistungen im übrigen Gemeinschaftsgebiet (§ 19 Abs. 1 zweiter Satz) als auch jene der Bauleistungen (§ 19 Abs. 1a), die dieses Pack führt; das Formular sieht dafür keine getrennten Kennzahlen vor.",
+      "source": "u30-2026"
+    },
+    {
+      "box": "072",
+      "kind": "base",
+      "name": "Innergemeinschaftliche Erwerbe zum Normalsteuersatz 20 % — Bemessungsgrundlage",
+      "sequence": 130,
+      "legal_reference": "Formular U30, Punkt 4.28, Kennzahl 072; UStG Art. 1",
+      "source": "u30-2026"
+    },
+    {
+      "box": "072",
+      "kind": "tax",
+      "name": "Innergemeinschaftliche Erwerbe zum Normalsteuersatz 20 % — Erwerbsteuer",
+      "sequence": 140,
+      "legal_reference": "Formular U30, Punkt 4.28, Kennzahl 072, Spalte Umsatzsteuer",
+      "source": "u30-2026"
+    },
+    {
+      "box": "070",
+      "kind": "total",
+      "name": "Gesamtbetrag der Bemessungsgrundlagen für innergemeinschaftliche Erwerbe",
+      "sequence": 150,
+      "plus": [
+        "072:base"
+      ],
+      "legal_reference": "Formular U30, Punkt 4.25, Kennzahl 070 — Summe der Bemessungsgrundlagen aller Erwerbsteuersätze, hier allein jener zu 20 %, die dieses Pack führt.",
+      "source": "u30-2026"
+    },
+    {
+      "box": "048",
+      "kind": "tax",
+      "name": "Steuerschuld gemäß § 19 Abs. 1a UStG (Bauleistungen)",
+      "sequence": 160,
+      "legal_reference": "Formular U30, Punkt 4.22, Kennzahl 048 — das Formular verlangt für diese Zeile keine gesonderte Bemessungsgrundlage, nur den geschuldeten Steuerbetrag.",
+      "source": "u30-2026"
+    },
+    {
+      "box": "057",
+      "kind": "tax",
+      "name": "Steuerschuld gemäß § 19 Abs. 1 zweiter Satz sowie Art. 25 Abs. 5 UStG",
+      "sequence": 170,
+      "legal_reference": "Formular U30, Punkt 4.21, Kennzahl 057 — Steuerschuld für sonstige Leistungen eines im Ausland (Gemeinschaftsgebiet oder Drittland) ansässigen Unternehmers; das Formular verlangt keine gesonderte Bemessungsgrundlage.",
+      "source": "u30-2026"
+    },
+    {
+      "box": "044",
+      "kind": "tax",
+      "name": "Steuerschuld gemäß § 19 Abs. 1b UStG (Sicherungseigentum, Vorbehaltseigentum und Grundstücke im Zwangsversteigerungsverfahren)",
+      "sequence": 175,
+      "legal_reference": "Formular U30, Punkt 4.23, Kennzahl 044 — keine Steuer dieses Packs schreibt in diese Zeile; siehe README und docs/international.md.",
+      "source": "u30-2026"
+    },
+    {
+      "box": "087",
+      "kind": "tax",
+      "name": "Vorsteuern betreffend die Steuerschuld gemäß § 19 Abs. 1b UStG",
+      "sequence": 176,
+      "legal_reference": "Formular U30, Punkt 5.7, Kennzahl 087 — keine Steuer dieses Packs schreibt in diese Zeile.",
+      "source": "u30-2026"
+    },
+    {
+      "box": "032",
+      "kind": "tax",
+      "name": "Steuerschuld gemäß § 19 Abs. 1d UStG (Schrott, Altmetalle, Videospielkonsolen, Laptops, Tablet-Computer, Gas- und Elektrizitätszertifikate)",
+      "sequence": 177,
+      "legal_reference": "Formular U30, Punkt 4.24, Kennzahl 032 — keine Steuer dieses Packs schreibt in diese Zeile; siehe README und docs/international.md.",
+      "source": "u30-2026"
+    },
+    {
+      "box": "089",
+      "kind": "tax",
+      "name": "Vorsteuern betreffend die Steuerschuld gemäß § 19 Abs. 1d UStG",
+      "sequence": 178,
+      "legal_reference": "Formular U30, Punkt 5.8, Kennzahl 089 — keine Steuer dieses Packs schreibt in diese Zeile.",
+      "source": "u30-2026"
+    },
+    {
+      "box": "060",
+      "kind": "tax",
+      "name": "Gesamtbetrag der Vorsteuern (ohne die gesondert angeführten Beträge)",
+      "sequence": 180,
+      "legal_reference": "Formular U30, Punkt 5.1, Kennzahl 060; UStG § 12 Abs. 1 Z 1",
+      "source": "u30-2026"
+    },
+    {
+      "box": "065",
+      "kind": "tax",
+      "name": "Vorsteuern aus dem innergemeinschaftlichen Erwerb",
+      "sequence": 190,
+      "legal_reference": "Formular U30, Punkt 5.4, Kennzahl 065; UStG § 12 Abs. 1 Z 1",
+      "source": "u30-2026"
+    },
+    {
+      "box": "066",
+      "kind": "tax",
+      "name": "Vorsteuern betreffend die Steuerschuld gemäß § 19 Abs. 1 zweiter Satz sowie Art. 25 Abs. 5",
+      "sequence": 200,
+      "legal_reference": "Formular U30, Punkt 5.5, Kennzahl 066; UStG § 12 Abs. 1 Z 3",
+      "source": "u30-2026"
+    },
+    {
+      "box": "082",
+      "kind": "tax",
+      "name": "Vorsteuern betreffend die Steuerschuld gemäß § 19 Abs. 1a (Bauleistungen)",
+      "sequence": 210,
+      "legal_reference": "Formular U30, Punkt 5.6, Kennzahl 082; UStG § 12 Abs. 1 Z 3",
+      "source": "u30-2026"
+    },
+    {
+      "box": "095",
+      "kind": "total",
+      "name": "Verbleibende Umsatzsteuervorauszahlung (Zahllast) bzw. Überschuss (Gutschrift)",
+      "sequence": 220,
+      "plus": [
+        "022:tax",
+        "029:tax",
+        "006:tax",
+        "072:tax",
+        "048",
+        "057"
+      ],
+      "minus": [
+        "060",
+        "065",
+        "066",
+        "082"
+      ],
+      "legal_reference": "Formular U30, Punkt 7, Kennzahl 095 — ein Überschuss wird mit Minuszeichen angegeben, deshalb ohne Untergrenze bei null.",
+      "source": "u30-2026"
+    }
+  ]
+}

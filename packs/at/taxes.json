@@ -1,0 +1,411 @@
+[
+  {
+    "code": "AT-S-20",
+    "name": "Umsatzsteuer 20 %",
+    "description": "Normalsteuersatz; Kennzahl 022",
+    "rate": 20,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "1984-01-01",
+    "legal_reference": "UStG § 10 Abs. 1 — die Steuer beträgt für jeden steuerpflichtigen Umsatz 20 % der Bemessungsgrundlage.",
+    "source": "ustg",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "022" },
+        { "type": "tax", "account": "6800", "box": "022" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "022", "box_factor": -100 },
+        { "type": "tax", "account": "6800", "box": "022", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 10
+  },
+  {
+    "code": "AT-S-13",
+    "name": "Umsatzsteuer 13 %",
+    "description": "Ermäßigter Steuersatz nach § 10 Abs. 3, unter anderem lebende Tiere und Pflanzen, Brennholz, kulturelle Veranstaltungen, künstlerische Tätigkeiten, Beherbergung; Kennzahl 006",
+    "rate": 13,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2016-01-01",
+    "legal_reference": "UStG § 10 Abs. 3 — die Steuer ermäßigt sich auf 13 % für die dort und in Anlage 2 genannten Umsätze.",
+    "source": "ustg",
+    "vat_category": "S",
+    "conditions": [
+      "supply_nature"
+    ],
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "006" },
+        { "type": "tax", "account": "6801", "box": "006" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "006", "box_factor": -100 },
+        { "type": "tax", "account": "6801", "box": "006", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 20
+  },
+  {
+    "code": "AT-S-10",
+    "name": "Umsatzsteuer 10 %",
+    "description": "Ermäßigter Steuersatz nach § 10 Abs. 2, unter anderem Lebensmittel, Bücher und Zeitungen, Wohnraumvermietung, Personenbeförderung; Kennzahl 029",
+    "rate": 10,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "1984-01-01",
+    "legal_reference": "UStG § 10 Abs. 2 — die Steuer ermäßigt sich auf 10 % für die dort und in Anlage 1 genannten Umsätze.",
+    "source": "ustg",
+    "vat_category": "S",
+    "conditions": [
+      "supply_nature"
+    ],
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "029" },
+        { "type": "tax", "account": "6802", "box": "029" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "029", "box_factor": -100 },
+        { "type": "tax", "account": "6802", "box": "029", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 30
+  },
+  {
+    "code": "AT-S-IGL",
+    "name": "Steuerfreie innergemeinschaftliche Lieferung",
+    "description": "An Abnehmer mit UID-Nummer eines anderen Mitgliedstaats; Kennzahl 017 und Zusammenfassende Meldung",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "intracom_goods",
+    "valid_from": "1995-01-01",
+    "legal_reference": "UStG Art. 6 Abs. 1 iVm Art. 7 Abs. 1 Binnenmarktregelung (Anhang zu § 29 Abs. 8) — steuerfrei ist die innergemeinschaftliche Lieferung an einen Abnehmer, der eine ihm von einem anderen Mitgliedstaat erteilte Umsatzsteuer-Identifikationsnummer verwendet und die Lieferung in der Zusammenfassenden Meldung nach Art. 21 Abs. 3 zutreffend angegeben ist.",
+    "source": "ustg",
+    "vat_category": "K",
+    "exemption_code": "VATEX-EU-IC",
+    "conditions": [
+      "buyer_status",
+      "transport_evidence"
+    ],
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "017" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "017", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 40
+  },
+  {
+    "code": "AT-S-EUDL",
+    "name": "Sonstige Leistung im übrigen Gemeinschaftsgebiet",
+    "description": "Nicht steuerbar im Inland, Steuerschuldner ist der im übrigen Gemeinschaftsgebiet ansässige Leistungsempfänger; Kennzahl 021 und Zusammenfassende Meldung",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "intracom_services",
+    "valid_from": "2010-01-01",
+    "legal_reference": "UStG § 3a Abs. 6 — eine sonstige Leistung an einen Unternehmer für dessen Unternehmen wird an dem Ort ausgeführt, von dem aus der Empfänger sein Unternehmen betreibt; § 19 Abs. 1 zweiter Satz verlagert die Steuerschuld auf den im übrigen Gemeinschaftsgebiet ansässigen Leistungsempfänger; § 11 Abs. 1a verlangt den Hinweis auf dessen Steuerschuldnerschaft, Art. 21 Abs. 3 die Angabe in der Zusammenfassenden Meldung.",
+    "source": "ustg",
+    "vat_category": "K",
+    "exemption_code": "VATEX-EU-IC",
+    "conditions": [
+      "buyer_status"
+    ],
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "021" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "021", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 50
+  },
+  {
+    "code": "AT-S-AUSF",
+    "name": "Steuerfreie Ausfuhrlieferung",
+    "description": "Lieferung in das Drittlandsgebiet; Kennzahl 011",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "1973-01-01",
+    "legal_reference": "UStG § 6 Abs. 1 Z 1 iVm § 7 — steuerfrei sind die Ausfuhrlieferungen; die Voraussetzungen sind nach § 7 Abs. 5 buch- und belegmäßig nachzuweisen.",
+    "source": "ustg",
+    "vat_category": "G",
+    "exemption_code": "VATEX-EU-G",
+    "conditions": [
+      "transport_evidence"
+    ],
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "011" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "011", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 60
+  },
+  {
+    "code": "AT-S-BAU",
+    "name": "Bauleistung, Steuerschuld beim Leistungsempfänger",
+    "description": "Leistender Unternehmer bei § 19 Abs. 1a (Bauleistungen an einen selbst bauleistenden Unternehmer); Kennzahl 021",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "domestic_reverse_charge",
+    "valid_from": "2002-01-01",
+    "legal_reference": "UStG § 19 Abs. 1a — bei Bauleistungen wird die Steuer vom Empfänger der Leistung geschuldet, wenn der Empfänger Unternehmer ist, der seinerseits mit der Erbringung von Bauleistungen beauftragt ist; § 11 Abs. 1a verlangt den Hinweis auf dessen Steuerschuldnerschaft.",
+    "source": "ustg",
+    "vat_category": "AE",
+    "exemption_code": "VATEX-EU-AE",
+    "conditions": [
+      "buyer_status",
+      "supply_nature"
+    ],
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "021" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "021", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 70
+  },
+  {
+    "code": "AT-S-VERM",
+    "name": "Steuerfreie Vermietung und Verpachtung von Grundstücken",
+    "description": "Unecht steuerbefreit, ohne Vorsteuerabzug; Kennzahl 020",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "1973-01-01",
+    "legal_reference": "UStG § 6 Abs. 1 Z 16 — steuerfrei ist die Vermietung und Verpachtung von Grundstücken, mit Ausnahmen unter anderem für die Vermietung für Wohnzwecke, kurzfristige Beherbergung und die Vermietung von Garagen; der Vorsteuerabzug ist nach § 12 Abs. 3 ausgeschlossen, sofern nicht nach § 6 Abs. 2 zur Steuerpflicht optiert wird. Richtlinie 2006/112/EG Art. 135 Abs. 1 Buchst. l, daher VATEX-EU-135-1.",
+    "source": "ustg",
+    "vat_category": "E",
+    "exemption_code": "VATEX-EU-135-1",
+    "conditions": [
+      "supply_nature"
+    ],
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "020" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "020", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 80
+  },
+  {
+    "code": "AT-P-20",
+    "name": "Vorsteuer 20 %",
+    "description": "Vorsteuer aus Rechnungen anderer Unternehmer; Kennzahl 060",
+    "rate": 20,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "1984-01-01",
+    "legal_reference": "UStG § 12 Abs. 1 Z 1 — als Vorsteuer abziehbar ist die von anderen Unternehmern in einer Rechnung (§§ 11, 11a) an ihn gesondert ausgewiesene Steuer für Lieferungen oder sonstige Leistungen, die im Inland für sein Unternehmen ausgeführt worden sind.",
+    "source": "ustg",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "tax", "account": "2231", "box": "060" }
+      ],
+      "credit_note": [
+        { "type": "tax", "account": "2231", "box": "060", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 90
+  },
+  {
+    "code": "AT-P-13",
+    "name": "Vorsteuer 13 %",
+    "description": "Vorsteuer aus Rechnungen anderer Unternehmer; Kennzahl 060",
+    "rate": 13,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2016-01-01",
+    "legal_reference": "UStG § 12 Abs. 1 Z 1, Satz nach § 10 Abs. 3.",
+    "source": "ustg",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "tax", "account": "2232", "box": "060" }
+      ],
+      "credit_note": [
+        { "type": "tax", "account": "2232", "box": "060", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 100
+  },
+  {
+    "code": "AT-P-10",
+    "name": "Vorsteuer 10 %",
+    "description": "Vorsteuer aus Rechnungen anderer Unternehmer; Kennzahl 060",
+    "rate": 10,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "1984-01-01",
+    "legal_reference": "UStG § 12 Abs. 1 Z 1, Satz nach § 10 Abs. 2.",
+    "source": "ustg",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "tax", "account": "2233", "box": "060" }
+      ],
+      "credit_note": [
+        { "type": "tax", "account": "2233", "box": "060", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 110
+  },
+  {
+    "code": "AT-P-20-NA",
+    "name": "Nicht abziehbare Vorsteuer 20 %",
+    "description": "Zum Beispiel Personenkraftwagen und Kombinationskraftwagen, sofern kein Ausnahmefall der Verordnung BGBl. Nr. 273/1996 vorliegt: die Steuer folgt dem Aufwandskonto",
+    "rate": 20,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "1984-01-01",
+    "recoverable": false,
+    "legal_reference": "UStG § 12 Abs. 2 Z 2 lit. b — nicht als für das Unternehmen ausgeführt gelten Lieferungen, sonstige Leistungen und Einfuhren im Zusammenhang mit der Anschaffung, Miete oder dem Betrieb von Personenkraftwagen, Kombinationskraftwagen und Krafträdern, soweit nicht in der Verordnung BGBl. Nr. 273/1996 als Ausnahme genannt (Fahrschulfahrzeuge, Vorführfahrzeuge, gewerbliche Personenbeförderung, Fiskal-Lkw und Kleinbusse u. a.). Die Steuer wird daher Teil der Anschaffungs- oder Aufwandskosten und erscheint in keiner Kennzahl der Voranmeldung.",
+    "source": "ustg",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "tax_on_base" }
+      ],
+      "credit_note": [
+        { "type": "tax_on_base" }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 120
+  },
+  {
+    "code": "AT-P-IGE-20",
+    "name": "Innergemeinschaftlicher Erwerb 20 %",
+    "description": "Erwerbsteuer und Vorsteuer aus dem innergemeinschaftlichen Erwerb; Kennzahl 072 und Kennzahl 065",
+    "rate": 20,
+    "scope": "purchase",
+    "treatment": "intracom_acquisition_goods",
+    "valid_from": "1995-01-01",
+    "legal_reference": "UStG Art. 1 Abs. 1 Binnenmarktregelung — der innergemeinschaftliche Erwerb im Inland gegen Entgelt unterliegt der Erwerbsteuer; Art. 19 Abs. 1 zweiter Unterabsatz bestimmt den Erwerber als Steuerschuldner; Art. 12 Abs. 1 Z 1 lässt die entstandene Erwerbsteuer als Vorsteuer abziehen, sofern der Erwerb für das Unternehmen erfolgt.",
+    "source": "ustg",
+    "vat_category": "K",
+    "exemption_code": "VATEX-EU-IC",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "072" },
+        { "type": "tax", "account": "2234", "box": "065" },
+        { "type": "tax", "factor": -100, "account": "6803", "box": "072" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "072", "box_factor": -100 },
+        { "type": "tax", "account": "2234", "box": "065", "box_factor": -100 },
+        { "type": "tax", "factor": -100, "account": "6803", "box": "072", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 130
+  },
+  {
+    "code": "AT-P-EUDL-20",
+    "name": "Sonstige Leistung eines im übrigen Gemeinschaftsgebiet ansässigen Unternehmers 20 %",
+    "description": "Leistungsempfänger als Steuerschuldner; Kennzahl 057 und Kennzahl 066. Das Formular verlangt keine gesonderte Bemessungsgrundlage für diese Zeile.",
+    "rate": 20,
+    "scope": "purchase",
+    "treatment": "intracom_acquisition_services",
+    "valid_from": "2010-01-01",
+    "legal_reference": "UStG § 19 Abs. 1 zweiter Satz — bei sonstigen Leistungen im Sinne des § 3a Abs. 6, die von einem im Ausland ansässigen Unternehmer ausgeführt werden, schuldet der Leistungsempfänger die Steuer, wenn er Unternehmer oder eine juristische Person ist; § 12 Abs. 1 Z 3 lässt die geschuldete Steuer als Vorsteuer abziehen.",
+    "source": "ustg",
+    "vat_category": "K",
+    "exemption_code": "VATEX-EU-IC",
+    "postings": {
+      "invoice": [
+        { "type": "base" },
+        { "type": "tax", "account": "2235", "box": "066" },
+        { "type": "tax", "factor": -100, "account": "6804", "box": "057" }
+      ],
+      "credit_note": [
+        { "type": "base", "box_factor": -100 },
+        { "type": "tax", "account": "2235", "box": "066", "box_factor": -100 },
+        { "type": "tax", "factor": -100, "account": "6804", "box": "057", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 140
+  },
+  {
+    "code": "AT-P-AUSL-20",
+    "name": "Leistung eines im Drittland ansässigen Unternehmers 20 %",
+    "description": "Leistungsempfänger als Steuerschuldner; Kennzahl 057 und Kennzahl 066. Anders als Deutschland unterscheidet das österreichische Formular nicht zwischen einem im übrigen Gemeinschaftsgebiet und einem im Drittland ansässigen leistenden Unternehmer.",
+    "rate": 20,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2010-01-01",
+    "legal_reference": "UStG § 19 Abs. 1 zweiter Satz — bei sonstigen Leistungen im Sinne des § 3a Abs. 6, die von einem im Ausland (auch außerhalb der Union) ansässigen Unternehmer ausgeführt werden, schuldet der Leistungsempfänger die Steuer; § 12 Abs. 1 Z 3 lässt sie als Vorsteuer abziehen. Die Rechnung des drittländischen Lieferers fällt nicht unter EN 16931, daher keine Kategorie.",
+    "source": "ustg",
+    "postings": {
+      "invoice": [
+        { "type": "base" },
+        { "type": "tax", "account": "2235", "box": "066" },
+        { "type": "tax", "factor": -100, "account": "6804", "box": "057" }
+      ],
+      "credit_note": [
+        { "type": "base", "box_factor": -100 },
+        { "type": "tax", "account": "2235", "box": "066", "box_factor": -100 },
+        { "type": "tax", "factor": -100, "account": "6804", "box": "057", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 150
+  },
+  {
+    "code": "AT-P-BAU-20",
+    "name": "Erhaltene Bauleistung, Steuerschuld beim Leistungsempfänger 20 %",
+    "description": "Empfänger einer Bauleistung nach § 19 Abs. 1a; Kennzahl 048 und Kennzahl 082",
+    "rate": 20,
+    "scope": "purchase",
+    "treatment": "domestic_reverse_charge",
+    "valid_from": "2002-01-01",
+    "legal_reference": "UStG § 19 Abs. 1a — bei Bauleistungen wird die Steuer vom Empfänger der Leistung geschuldet, wenn dieser selbst mit der Erbringung von Bauleistungen beauftragt ist; § 12 Abs. 1 Z 3 lässt sie als Vorsteuer abziehen.",
+    "source": "ustg",
+    "vat_category": "AE",
+    "exemption_code": "VATEX-EU-AE",
+    "conditions": [
+      "buyer_status",
+      "supply_nature"
+    ],
+    "postings": {
+      "invoice": [
+        { "type": "base" },
+        { "type": "tax", "account": "2236", "box": "082" },
+        { "type": "tax", "factor": -100, "account": "6805", "box": "048" }
+      ],
+      "credit_note": [
+        { "type": "base", "box_factor": -100 },
+        { "type": "tax", "account": "2236", "box": "082", "box_factor": -100 },
+        { "type": "tax", "factor": -100, "account": "6805", "box": "048", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 160
+  }
+]

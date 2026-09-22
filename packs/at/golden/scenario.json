@@ -1,0 +1,237 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "Ein Quartal eines österreichischen Handelsbetriebs, vierteljährlich erklärend",
+  "chart": "default",
+  "fiscal_year": { "name": "Wirtschaftsjahr 2026", "start": "2026-01-01", "end": "2026-12-31" },
+  "periods": [
+    { "code": "2026-Q1", "from": "2026-01-01", "to": "2026-03-31" }
+  ],
+  "statements": ["AT-UGB-224-BS", "AT-UGB-231-GKV"],
+  "contacts": [
+    { "ref": "client-at", "name": "Werkstatt Wagner GmbH", "type": "customer", "country": "AT", "vat_number": "ATU10000109" },
+    { "ref": "client-at-bau", "name": "Hochbau Steiner GmbH", "type": "customer", "country": "AT", "vat_number": "ATU10000206" },
+    { "ref": "tenant-at", "name": "Café Lindner e.U.", "type": "customer", "country": "AT", "vat_number": "ATU10000305" },
+    { "ref": "client-ch", "name": "Alpen Trading AG", "type": "customer", "country": "CH" },
+    { "ref": "client-de", "name": "Bayern Handel GmbH", "type": "customer", "country": "DE", "vat_number": "DE123456789" },
+    { "ref": "client-fr", "name": "Rhône Conseil SARL", "type": "customer", "country": "FR", "vat_number": "FR12345678901" },
+    { "ref": "supplier-at", "name": "Bürobedarf Huber KG", "type": "supplier", "country": "AT", "vat_number": "ATU10000404" },
+    { "ref": "supplier-at-bau", "name": "Fenster Gruber GmbH", "type": "supplier", "country": "AT", "vat_number": "ATU10000503" },
+    { "ref": "supplier-de", "name": "Sachsen Zulieferer GmbH", "type": "supplier", "country": "DE", "vat_number": "DE987654321" },
+    { "ref": "supplier-fr", "name": "Cabinet Lefèvre SARL", "type": "supplier", "country": "FR", "vat_number": "FR98765432109" },
+    { "ref": "supplier-ch", "name": "Zürich Cloud AG", "type": "supplier", "country": "CH" }
+  ],
+  "documents": [
+    {
+      "ref": "V1",
+      "type": "sale_invoice",
+      "contact": "client-at",
+      "date": "2026-01-15",
+      "why": "Une vente domestique au taux normal de 20 % : la grille 022 et la TVA collectée du compte 6800.",
+      "lines": [
+        { "name": "Pièces détachées", "quantity": 10, "unit_price": 100, "tax": "AT-S-20", "account": "8100" }
+      ]
+    },
+    {
+      "ref": "V2",
+      "type": "sale_invoice",
+      "contact": "client-at",
+      "date": "2026-01-20",
+      "why": "Une vente au taux réduit de 10 % (livres) : la grille 029.",
+      "lines": [
+        { "name": "Manuels techniques", "quantity": 1, "unit_price": 500, "tax": "AT-S-10", "account": "8102" }
+      ]
+    },
+    {
+      "ref": "V3",
+      "type": "sale_invoice",
+      "contact": "client-at",
+      "date": "2026-01-22",
+      "why": "Une vente au taux réduit de 13 % (bois de chauffage) : la grille 006.",
+      "lines": [
+        { "name": "Bois de chauffage", "quantity": 1, "unit_price": 300, "tax": "AT-S-13", "account": "8101" }
+      ]
+    },
+    {
+      "ref": "V4",
+      "type": "sale_invoice",
+      "contact": "client-ch",
+      "date": "2026-01-25",
+      "why": "Une exportation vers la Suisse, pays tiers : taux zéro à l'exportation, la grille 011.",
+      "lines": [
+        { "name": "Machines-outils d'occasion", "quantity": 1, "unit_price": 2000, "tax": "AT-S-AUSF", "account": "8105" }
+      ]
+    },
+    {
+      "ref": "V5",
+      "type": "sale_invoice",
+      "contact": "client-de",
+      "date": "2026-02-02",
+      "why": "Une livraison intracommunautaire de biens vers un client allemand identifié à la TVA : la grille 017 et le relevé récapitulatif (ZM).",
+      "lines": [
+        { "name": "Composants électroniques", "quantity": 1, "unit_price": 1500, "tax": "AT-S-IGL", "account": "8103" }
+      ]
+    },
+    {
+      "ref": "V6",
+      "type": "sale_invoice",
+      "contact": "client-fr",
+      "date": "2026-02-05",
+      "why": "Une prestation de conseil à une entreprise française : autoliquidation chez le preneur, la grille 021 et le relevé récapitulatif (ZM).",
+      "lines": [
+        { "name": "Prestation de conseil technique", "quantity": 1, "unit_price": 800, "tax": "AT-S-EUDL", "account": "8104" }
+      ]
+    },
+    {
+      "ref": "V7",
+      "type": "sale_invoice",
+      "contact": "client-at-bau",
+      "date": "2026-02-10",
+      "why": "Une prestation de construction à une entreprise elle-même active dans le bâtiment : autoliquidation domestique de l'article 19 Abs. 1a, la grille 021.",
+      "lines": [
+        { "name": "Travaux de gros œuvre", "quantity": 1, "unit_price": 5000, "tax": "AT-S-BAU", "account": "8106" }
+      ]
+    },
+    {
+      "ref": "V8",
+      "type": "sale_invoice",
+      "contact": "tenant-at",
+      "date": "2026-02-15",
+      "why": "Un loyer commercial exonéré sans droit à déduction : la grille 020, § 6 Abs. 1 Z 16 UStG.",
+      "lines": [
+        { "name": "Loyer commercial de février", "quantity": 1, "unit_price": 1200, "tax": "AT-S-VERM", "account": "8107" }
+      ]
+    },
+    {
+      "ref": "CN1",
+      "type": "sale_credit_note",
+      "contact": "client-at",
+      "date": "2026-02-20",
+      "why": "Un retour partiel de deux pièces de la vente V1 : vérifie qu'une note de crédit réduit la grille 022 et la TVA collectée au lieu de les augmenter.",
+      "lines": [
+        { "name": "Retour de pièces détachées", "quantity": 2, "unit_price": 100, "tax": "AT-S-20", "account": "8100" }
+      ]
+    },
+    {
+      "ref": "A1",
+      "type": "purchase_invoice",
+      "contact": "supplier-at",
+      "date": "2026-01-18",
+      "why": "Un achat domestique au taux normal de 20 % : la TVA déductible de la grille 060.",
+      "lines": [
+        { "name": "Fournitures de bureau", "quantity": 1, "unit_price": 800, "tax": "AT-P-20", "account": "8811" }
+      ]
+    },
+    {
+      "ref": "A2",
+      "type": "purchase_invoice",
+      "contact": "supplier-at",
+      "date": "2026-01-28",
+      "why": "Un achat au taux réduit de 13 % (bois de chauffage) : une seconde vérification de la grille 006 côté achat.",
+      "lines": [
+        { "name": "Bois de chauffage pour le local", "quantity": 1, "unit_price": 200, "tax": "AT-P-13", "account": "8801" }
+      ]
+    },
+    {
+      "ref": "A3",
+      "type": "purchase_invoice",
+      "contact": "supplier-at",
+      "date": "2026-02-03",
+      "why": "Un entretien de véhicule de tourisme : la TVA n'est pas déductible (§ 12 Abs. 2 Z 2 lit. b UStG) et reste sur le compte de charge.",
+      "lines": [
+        { "name": "Entretien du véhicule de service", "quantity": 1, "unit_price": 300, "tax": "AT-P-20-NA", "account": "8804" }
+      ]
+    },
+    {
+      "ref": "A4",
+      "type": "purchase_invoice",
+      "contact": "supplier-de",
+      "date": "2026-02-08",
+      "why": "Une acquisition intracommunautaire de biens auprès d'un fournisseur allemand : autoliquidation à la grille 072, TVA due et déductible dans la même déclaration.",
+      "lines": [
+        { "name": "Pièces détachées importées", "quantity": 1, "unit_price": 1000, "tax": "AT-P-IGE-20", "account": "8501" }
+      ]
+    },
+    {
+      "ref": "A5",
+      "type": "purchase_invoice",
+      "contact": "supplier-fr",
+      "date": "2026-02-12",
+      "why": "Une prestation de conseil reçue d'un cabinet français : autoliquidation de l'article 19 Abs. 1 zweiter Satz, la grille 057.",
+      "lines": [
+        { "name": "Conseil juridique", "quantity": 1, "unit_price": 600, "tax": "AT-P-EUDL-20", "account": "8809" }
+      ]
+    },
+    {
+      "ref": "A6",
+      "type": "purchase_invoice",
+      "contact": "supplier-ch",
+      "date": "2026-02-18",
+      "why": "Un abonnement logiciel reçu d'un prestataire suisse (pays tiers) : la même grille 057 que pour un prestataire européen, le formulaire autrichien ne distinguant pas les deux cas.",
+      "lines": [
+        { "name": "Abonnement logiciel infonuagique", "quantity": 1, "unit_price": 400, "tax": "AT-P-AUSL-20", "account": "8813" }
+      ]
+    },
+    {
+      "ref": "A7",
+      "type": "purchase_invoice",
+      "contact": "supplier-at-bau",
+      "date": "2026-02-22",
+      "why": "Une prestation de construction reçue d'un sous-traitant domestique : autoliquidation de l'article 19 Abs. 1a, la grille 048.",
+      "lines": [
+        { "name": "Pose de fenêtres", "quantity": 1, "unit_price": 4000, "tax": "AT-P-BAU-20", "account": "8502" }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "E1",
+      "direction": "inbound",
+      "date": "2026-02-14",
+      "amount": 1200,
+      "contact": "client-at",
+      "journal": "BK",
+      "match": "V1",
+      "why": "Un encaissement qui solde exactement la facture V1."
+    },
+    {
+      "ref": "E2",
+      "direction": "inbound",
+      "date": "2026-02-19",
+      "amount": 550,
+      "contact": "client-at",
+      "journal": "BK",
+      "match": "V2",
+      "why": "Un encaissement qui solde exactement la facture V2."
+    },
+    {
+      "ref": "E3",
+      "direction": "inbound",
+      "date": "2026-03-01",
+      "amount": 2000,
+      "contact": "client-ch",
+      "journal": "BK",
+      "match": "V4",
+      "why": "Un encaissement de la vente à l'exportation V4."
+    },
+    {
+      "ref": "Z1",
+      "direction": "outbound",
+      "date": "2026-02-16",
+      "amount": 960,
+      "contact": "supplier-at",
+      "journal": "BK",
+      "match": "A1",
+      "why": "Un paiement qui solde exactement la facture A1."
+    },
+    {
+      "ref": "Z2",
+      "direction": "outbound",
+      "date": "2026-03-05",
+      "amount": 2000,
+      "contact": "supplier-at-bau",
+      "journal": "BK",
+      "match": null,
+      "why": "Un acompte versé avant réception de la facture A7 : un paiement non lettré, qui laisse un poste ouvert."
+    }
+  ]
+}
