@@ -1,10 +1,10 @@
 # `@ekwo-ai/journal-report`
 
 Reads a **journal report**, or a **general ledger detail**, saved as CSV — the
-report a cloud accounting service prints of every journal it posted, one row
+report a cloud ledger prints of every journal it posted, one row
 per line with the number of its journal — into plain objects, in TypeScript,
 with no dependencies. Beside it, the chart of accounts and the contacts, which
-the same service exports as CSV directly.
+the same ledger exports as CSV directly.
 
 ```ts
 import { readJournalReport } from '@ekwo-ai/journal-report';
