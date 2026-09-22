@@ -1,0 +1,362 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "A year of a VAT-registered UAE trading and consulting company, filing quarterly, for the financial year 2026",
+  "chart": "default",
+  "fiscal_year": {
+    "name": "Financial year ended 31 December 2026",
+    "start": "2026-01-01",
+    "end": "2026-12-31"
+  },
+  "periods": [
+    {
+      "code": "2026-Q1",
+      "from": "2026-01-01",
+      "to": "2026-03-31"
+    },
+    {
+      "code": "2026-Q2",
+      "from": "2026-04-01",
+      "to": "2026-06-30"
+    },
+    {
+      "code": "2026-Q3",
+      "from": "2026-07-01",
+      "to": "2026-09-30"
+    },
+    {
+      "code": "2026-Q4",
+      "from": "2026-10-01",
+      "to": "2026-12-31"
+    }
+  ],
+  "statements": [
+    "AE-IFRSSME-SFP",
+    "AE-IFRSSME-IS"
+  ],
+  "contacts": [
+    {
+      "ref": "cust-ae",
+      "name": "Marasi Consulting Services LLC",
+      "type": "customer",
+      "country": "AE"
+    },
+    {
+      "ref": "cust-export",
+      "name": "Meridian Outfitters Inc.",
+      "type": "customer",
+      "country": "US"
+    },
+    {
+      "ref": "cust-metal",
+      "name": "Al Fardan Bullion Trading LLC",
+      "type": "customer",
+      "country": "AE"
+    },
+    {
+      "ref": "tenant",
+      "name": "Residential tenant — Al Reem Island apartment",
+      "type": "customer",
+      "country": "AE"
+    },
+    {
+      "ref": "cust-hc",
+      "name": "Ruwais Petrochemical Trading LLC",
+      "type": "customer",
+      "country": "AE"
+    },
+    {
+      "ref": "supp-ae",
+      "name": "Deira Office Supplies LLC",
+      "type": "supplier",
+      "country": "AE"
+    },
+    {
+      "ref": "supp-club",
+      "name": "Jumeirah Beach Hospitality LLC",
+      "type": "supplier",
+      "country": "AE"
+    },
+    {
+      "ref": "supp-car",
+      "name": "Al Barsha Fleet Leasing LLC",
+      "type": "supplier",
+      "country": "AE"
+    },
+    {
+      "ref": "supp-foreign",
+      "name": "Thames Valley Advisory Ltd",
+      "type": "supplier",
+      "country": "GB"
+    },
+    {
+      "ref": "supp-import",
+      "name": "Zhejiang Precision Parts Co. Ltd",
+      "type": "supplier",
+      "country": "CN"
+    },
+    {
+      "ref": "supp-hc",
+      "name": "Fujairah Hydrocarbon Trading LLC",
+      "type": "supplier",
+      "country": "AE"
+    }
+  ],
+  "documents": [
+    {
+      "ref": "INV-AE-SR-1",
+      "type": "sale_invoice",
+      "contact": "cust-ae",
+      "date": "2026-01-15",
+      "why": "Standard-rated domestic sale, to book the ordinary VAT box d1/d2 and to be partly returned by CN-AE-SR-1.",
+      "lines": [
+        {
+          "name": "Management consulting services — January engagement",
+          "quantity": 1,
+          "unit_price": 10000,
+          "tax": "AE-S-SR",
+          "account": "4010"
+        }
+      ]
+    },
+    {
+      "ref": "INV-AE-ZR-EXP-1",
+      "type": "sale_invoice",
+      "contact": "cust-export",
+      "date": "2026-01-20",
+      "why": "Direct export of goods to a customer outside the Implementing States, zero-rated under Article 45(1) of the Decree-Law — box e.",
+      "lines": [
+        {
+          "name": "Export of finished goods, FOB Jebel Ali",
+          "quantity": 1,
+          "unit_price": 25000,
+          "tax": "AE-S-ZR-EXP",
+          "account": "4020"
+        }
+      ]
+    },
+    {
+      "ref": "INV-AE-ZR-METAL-1",
+      "type": "sale_invoice",
+      "contact": "cust-metal",
+      "date": "2026-02-10",
+      "why": "Domestic zero-rated sale of investment gold, 99.9% purity, under Article 45(8) of the Decree-Law — box e, not export.",
+      "lines": [
+        {
+          "name": "Investment gold bars, 99.9% purity, LBMA-tradeable",
+          "quantity": 1,
+          "unit_price": 50000,
+          "tax": "AE-S-ZR-METAL",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "INV-AE-EX-RESI-1",
+      "type": "sale_invoice",
+      "contact": "tenant",
+      "date": "2026-02-15",
+      "why": "Annual residential lease, exempt under Article 46(2) of the Decree-Law — box f.",
+      "lines": [
+        {
+          "name": "Residential apartment rent, Al Reem Island — annual lease",
+          "quantity": 1,
+          "unit_price": 60000,
+          "tax": "AE-S-EX-RESI",
+          "account": "4040"
+        }
+      ]
+    },
+    {
+      "ref": "INV-AE-DRC-HC-1",
+      "type": "sale_invoice",
+      "contact": "cust-hc",
+      "date": "2026-03-05",
+      "why": "Domestic sale of crude oil to another Registrant for resale, no Output Tax charged by the supplier under Article 48(3) of the Decree-Law — box d1 only, the buyer self-assesses on AE-P-DRC-HC.",
+      "lines": [
+        {
+          "name": "Crude oil, sold for resale — domestic reverse charge",
+          "quantity": 1,
+          "unit_price": 100000,
+          "tax": "AE-S-DRC-HC",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "CN-AE-SR-1",
+      "type": "sale_credit_note",
+      "contact": "cust-ae",
+      "date": "2026-03-20",
+      "why": "Partial credit note against INV-AE-SR-1, one day of consulting cancelled by the client — proves box d1/d2 subtract correctly and a credit note flips the ledger side.",
+      "lines": [
+        {
+          "name": "Credit: one day of consulting cancelled",
+          "quantity": 1,
+          "unit_price": 2000,
+          "tax": "AE-S-SR",
+          "account": "4010"
+        }
+      ]
+    },
+    {
+      "ref": "INV-AE-SR-2",
+      "type": "sale_invoice",
+      "contact": "cust-ae",
+      "date": "2026-08-12",
+      "why": "A second standard-rated sale, in the third quarter, so the return is proved across more than one period.",
+      "lines": [
+        {
+          "name": "Management consulting services — August engagement",
+          "quantity": 1,
+          "unit_price": 12000,
+          "tax": "AE-S-SR",
+          "account": "4010"
+        }
+      ]
+    },
+    {
+      "ref": "BILL-AE-SR-1",
+      "type": "purchase_invoice",
+      "contact": "supp-ae",
+      "date": "2026-01-18",
+      "why": "Ordinary standard-rated purchase whose Input Tax is fully recoverable — box h1/h2.",
+      "lines": [
+        {
+          "name": "Office supplies and stationery",
+          "quantity": 1,
+          "unit_price": 3000,
+          "tax": "AE-P-SR",
+          "account": "6220"
+        }
+      ]
+    },
+    {
+      "ref": "BILL-AE-BL-ENT-1",
+      "type": "purchase_invoice",
+      "contact": "supp-club",
+      "date": "2026-02-01",
+      "why": "Entertainment provided to clients, Input Tax blocked under Article 53(1)(a) of the Executive Regulation — the tax lands on the expense line, not on box h2.",
+      "lines": [
+        {
+          "name": "Client entertainment — annual gala dinner",
+          "quantity": 1,
+          "unit_price": 5000,
+          "tax": "AE-P-BL-ENT",
+          "account": "6310"
+        }
+      ]
+    },
+    {
+      "ref": "BILL-AE-BL-CAR-1",
+      "type": "purchase_invoice",
+      "contact": "supp-car",
+      "date": "2026-02-20",
+      "why": "Lease of a motor vehicle available for the personal use of an employee, Input Tax blocked under Article 53(1)(b) of the Executive Regulation.",
+      "lines": [
+        {
+          "name": "Motor vehicle lease — available for personal use",
+          "quantity": 1,
+          "unit_price": 8000,
+          "tax": "AE-P-BL-CAR",
+          "account": "6320"
+        }
+      ]
+    },
+    {
+      "ref": "BILL-AE-RC-SVC-1",
+      "type": "purchase_invoice",
+      "contact": "supp-foreign",
+      "date": "2026-04-10",
+      "why": "Consulting services received from a supplier with no place of residence in the UAE, self-assessed under Article 48(1) of the Decree-Law — box g1/g2, fully recoverable in h2.",
+      "lines": [
+        {
+          "name": "Management consulting services from a non-resident supplier",
+          "quantity": 1,
+          "unit_price": 15000,
+          "tax": "AE-P-RC-SVC",
+          "account": "6400"
+        }
+      ]
+    },
+    {
+      "ref": "BILL-AE-IMP-1",
+      "type": "purchase_invoice",
+      "contact": "supp-import",
+      "date": "2026-04-15",
+      "why": "Goods imported for resale, self-assessed under Article 48(1) of the Decree-Law because the Taxable Person meets the conditions of Article 48(1) of the Executive Regulation — box g1/g2, fully recoverable in h2.",
+      "lines": [
+        {
+          "name": "Imported raw materials for resale",
+          "quantity": 1,
+          "unit_price": 20000,
+          "tax": "AE-P-IMP",
+          "account": "1210"
+        }
+      ]
+    },
+    {
+      "ref": "BILL-AE-DRC-HC-1",
+      "type": "purchase_invoice",
+      "contact": "supp-hc",
+      "date": "2026-05-05",
+      "why": "Domestic purchase of crude oil for resale, mirror of INV-AE-DRC-HC-1: the buyer self-assesses under Article 48(3)(b) of the Decree-Law — box g1/g2, fully recoverable in h2.",
+      "lines": [
+        {
+          "name": "Crude oil, purchased for resale — domestic reverse charge",
+          "quantity": 1,
+          "unit_price": 100000,
+          "tax": "AE-P-DRC-HC",
+          "account": "1200"
+        }
+      ]
+    },
+    {
+      "ref": "BILL-AE-SR-2",
+      "type": "purchase_invoice",
+      "contact": "supp-ae",
+      "date": "2026-11-05",
+      "why": "A second standard-rated purchase, in the fourth quarter, so the return is proved across every quarter of the year.",
+      "lines": [
+        {
+          "name": "Office supplies and stationery — fourth quarter",
+          "quantity": 1,
+          "unit_price": 4000,
+          "tax": "AE-P-SR",
+          "account": "6220"
+        }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "PMT-IN-1",
+      "direction": "inbound",
+      "date": "2026-08-25",
+      "amount": 12600.0,
+      "contact": "cust-ae",
+      "journal": "BNK",
+      "match": "INV-AE-SR-2",
+      "why": "Full settlement of INV-AE-SR-2 by bank transfer."
+    },
+    {
+      "ref": "PMT-OUT-1",
+      "direction": "outbound",
+      "date": "2026-01-25",
+      "amount": 3150.0,
+      "contact": "supp-ae",
+      "journal": "BNK",
+      "match": "BILL-AE-SR-1",
+      "why": "Full settlement of BILL-AE-SR-1 by bank transfer."
+    },
+    {
+      "ref": "PMT-IN-2",
+      "direction": "inbound",
+      "date": "2026-12-10",
+      "amount": 5000.0,
+      "contact": "cust-hc",
+      "journal": "BNK",
+      "match": null,
+      "why": "Advance on account from cust-hc, not yet matched to an invoice — leaves an open item, which is what a real ledger holds."
+    }
+  ]
+}

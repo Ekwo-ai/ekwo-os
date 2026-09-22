@@ -1,0 +1,112 @@
+code,parent,type,reconcilable,name,sequence
+1000,,asset_cash,false,Petty cash,10
+1010,,asset_cash,false,Current account — AED,20
+1020,,asset_cash,false,Fixed deposits placed for three months or less,30
+1030,,asset_cash,false,Foreign currency account,40
+1040,,asset_cash,false,Cash in transit — card and payment gateway settlements,50
+1050,,asset_cash,false,Money market funds,55
+1100,,asset_receivable,true,Trade receivables,60
+1110,,asset_current,false,Trade receivables — allowance for impairment,70
+1120,,asset_current,true,Other receivables,80
+1130,,asset_current,false,Amounts due from related parties,90
+1140,,asset_current,false,Deposits paid,100
+1150,,asset_current,false,VAT input tax,110
+1155,,asset_current,true,VAT refundable by the Federal Tax Authority — net of a filed return,120
+1157,,asset_current,false,Import VAT self-assessed — awaiting the supplier's goods,130
+1145,,asset_current,false,Loans to employees,135
+1160,,asset_current,false,Advances to staff,140
+1200,,asset_current,false,Inventories — goods for resale,150
+1210,,asset_current,false,Inventories — raw materials,160
+1220,,asset_current,false,Inventories — work in progress,170
+1230,,asset_current,false,Inventories — finished goods,180
+1300,,asset_current,false,Short-term investments,190
+1350,,asset_current,false,Corporate tax recoverable,200
+1400,,asset_prepayments,false,Prepayments,210
+1410,,asset_prepayments,false,Accrued income,220
+1420,,asset_prepayments,false,Prepaid rent,222
+1430,,asset_prepayments,false,Prepaid insurance,224
+1600,,asset_fixed,false,Land and buildings — cost,230
+1601,,asset_fixed,false,Land and buildings — accumulated depreciation,240
+1610,,asset_fixed,false,Leasehold improvements — cost,250
+1611,,asset_fixed,false,Leasehold improvements — accumulated depreciation,260
+1620,,asset_fixed,false,Plant and machinery — cost,270
+1621,,asset_fixed,false,Plant and machinery — accumulated depreciation,280
+1630,,asset_fixed,false,Office equipment and computers — cost,290
+1631,,asset_fixed,false,Office equipment and computers — accumulated depreciation,300
+1632,,asset_fixed,false,Furniture and fixtures — cost,310
+1633,,asset_fixed,false,Furniture and fixtures — accumulated depreciation,320
+1640,,asset_fixed,false,Motor vehicles — cost,330
+1641,,asset_fixed,false,Motor vehicles — accumulated depreciation,340
+1650,,asset_fixed,false,Capital work in progress,350
+1690,,asset_fixed,false,Right-of-use assets — cost,352
+1691,,asset_fixed,false,Right-of-use assets — accumulated depreciation,354
+1700,,asset_non_current,false,Investments in related parties,360
+1710,,asset_non_current,false,Long-term deposits and retentions held,370
+1730,,asset_non_current,false,Goodwill,375
+1750,,asset_non_current,false,Intangible assets — cost,380
+1751,,asset_non_current,false,Intangible assets — accumulated amortisation,390
+2000,,liability_payable,true,Trade payables,400
+2010,,liability_current,false,Other payables and accruals,410
+2020,,liability_current,false,Amounts due to related parties,420
+2030,,liability_current,false,Amounts due to directors and shareholders,430
+2040,,liability_current,false,Deposits received,440
+2045,,liability_current,false,Deferred revenue,445
+2050,,liability_current,false,Wages and salaries payable,450
+2055,,liability_current,false,Wage Protection System clearing account,455
+2100,,liability_current,false,VAT output tax,460
+2110,,liability_current,true,VAT payable to the Federal Tax Authority — net of a filed return,470
+2130,,liability_current,false,Corporate tax payable,480
+2150,,liability_current,false,End-of-service gratuity payable — current portion,490
+2200,,liability_current,false,Short-term loans and bank overdraft,500
+2210,,liability_current,false,Current portion of long-term loans,510
+2300,,liability_non_current,false,Long-term loans,520
+2320,,liability_non_current,false,Provision for onerous contracts,525
+2350,,liability_non_current,false,End-of-service gratuity provision — non-current portion,530
+2990,,liability_current,false,Suspense account,540
+3000,,equity,false,Share capital,550
+3010,,equity,false,Statutory reserve,560
+3020,,equity,false,Other reserves,570
+3030,,equity,false,Foreign currency translation reserve,575
+3200,,equity_retained,false,Retained earnings,580
+3210,,equity_retained,false,Dividends paid,590
+4000,,income,false,Sales of goods,600
+4010,,income,false,Sales of services,610
+4020,,income,false,Sales — export of goods,620
+4030,,income,false,Sales — export of services,630
+4040,,income,false,Rental income,640
+4700,,income_other,false,Realised foreign exchange gain,650
+4710,,income_other,false,Unrealised foreign exchange gain,660
+4750,,income_other,false,Gain on disposal of fixed assets,670
+4790,,income_other,false,Other income,680
+5000,,expense_direct_cost,false,Cost of goods sold,690
+5010,,expense_direct_cost,false,Freight and customs clearance,700
+5020,,expense_direct_cost,false,Subcontractor costs,710
+5030,,expense_direct_cost,false,Purchase returns and allowances,715
+6100,,expense,false,Salaries and wages,720
+6110,,expense,false,End-of-service gratuity charge for the year,730
+6120,,expense,false,Staff health insurance,740
+6130,,expense,false,Other staff costs,750
+6140,,expense,false,Recruitment and training,755
+6200,,expense,false,Rent,760
+6210,,expense,false,Utilities,770
+6220,,expense,false,Office supplies,780
+6230,,expense,false,IT and software,790
+6240,,expense,false,Repairs and maintenance,800
+6300,,expense,false,Travel,810
+6310,,expense,false,Entertainment — not recoverable for VAT,820
+6320,,expense,false,Motor vehicle running costs,830
+6400,,expense,false,Professional fees,840
+6410,,expense,false,Bank charges,850
+6420,,expense,false,Insurance,860
+6430,,expense,false,Marketing and advertising,870
+6435,,expense,false,Subscriptions and memberships,875
+6440,,expense,false,Licence fees and government charges,880
+6500,,expense_depreciation,false,Depreciation charge,890
+6510,,expense_depreciation,false,Amortisation charge,900
+6950,,expense,false,Realised foreign exchange loss,910
+6955,,expense,false,Unrealised foreign exchange loss,920
+6960,,expense,false,Loss on disposal of fixed assets,930
+6990,,expense,false,Rounding differences,940
+7100,,expense,false,Interest and finance charges,950
+7110,,expense,false,Bank facility and arrangement fees,955
+8000,,expense,false,Corporate tax charge for the year,960

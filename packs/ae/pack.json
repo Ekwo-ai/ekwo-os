@@ -1,0 +1,206 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "AE",
+  "name": "United Arab Emirates",
+  "version": "0.1.0",
+  "schema_min": "20260917170000",
+  "seed_sequence": 60,
+  "released_at": "2026-09-22",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "vat-decree-law",
+        "title": "Federal Decree-Law No. 8 of 2017 on Value Added Tax, and its amendments (consolidated text, publishing 28 November 2025)",
+        "publisher": "Ministry of Finance, published by the Federal Tax Authority",
+        "url": "https://tax.gov.ae//Datafolder/Files/Legislation/2025/Federal%20Decree-Law%20No.%208%20of%202017%20and%20amendments%20-%20publishing%2028%2011%202025.pdf",
+        "consulted_on": "2026-09-22",
+        "kind": "law"
+      },
+      {
+        "key": "vat-exec-reg",
+        "title": "Cabinet Decision No. 52 of 2017 on the Executive Regulation of Federal Decree-Law No. 8 of 2017 on Value Added Tax, and its amendments (consolidated text, publishing 10 September 2026)",
+        "publisher": "Ministry of Finance, published by the Federal Tax Authority",
+        "url": "https://tax.gov.ae//Datafolder/Files/Legislation/2026/Law-No-8-of-2017-and-its-amendments--09-2026.pdf",
+        "consulted_on": "2026-09-22",
+        "kind": "regulation"
+      },
+      {
+        "key": "fta-filing",
+        "title": "Filing VAT Returns and Making Payments",
+        "publisher": "Federal Tax Authority",
+        "url": "https://tax.gov.ae/en/taxes/Vat/vat.topics/filing.vat.returns.and.making.payments.aspx",
+        "consulted_on": "2026-09-22",
+        "kind": "guidance"
+      },
+      {
+        "key": "mof-vat",
+        "title": "Value Added Tax (VAT)",
+        "publisher": "Ministry of Finance",
+        "url": "https://mof.gov.ae/en/public-finance/tax/value-added-tax-vat/",
+        "consulted_on": "2026-09-22",
+        "kind": "guidance"
+      },
+      {
+        "key": "mof-einvoicing-guide",
+        "title": "UAE Electronic Invoicing Guidelines, Version 1.1, 1 June 2026",
+        "publisher": "Ministry of Finance",
+        "url": "https://mof.gov.ae/wp-content/uploads/2026/06/UAE-Electronic-Invoicing-Guidelines_V-1.1-01June2026.pdf",
+        "consulted_on": "2026-09-22",
+        "kind": "guidance"
+      },
+      {
+        "key": "fta-einvoicing-portal",
+        "title": "UAE E-Invoicing",
+        "publisher": "Federal Tax Authority",
+        "url": "https://tax.gov.ae/en/content/uae.einvoicing.aspx",
+        "consulted_on": "2026-09-22",
+        "kind": "portal"
+      },
+      {
+        "key": "mof-einvoicing-portal",
+        "title": "e-Invoicing — Ministry of Finance initiative portal",
+        "publisher": "Ministry of Finance",
+        "url": "https://mof.gov.ae/en/about-ministry/mof-initiatives/einvoicing/",
+        "consulted_on": "2026-09-22",
+        "kind": "portal"
+      },
+      {
+        "key": "fta-md64",
+        "title": "Ministerial Decision No. 64 of 2025 on the Eligibility Criteria and Accreditation Procedure for Service Providers under the Electronic Invoicing System, and its amendments",
+        "publisher": "Ministry of Finance, published by the Federal Tax Authority",
+        "url": "https://tax.gov.ae//Datafolder/Files/Legislation/2026/Ministerial%20Decision%20No.%2064%20of%202025%20and%20its%20amendments%20-%20publishing.pdf",
+        "consulted_on": "2026-09-22",
+        "kind": "regulation"
+      },
+      {
+        "key": "fta-acc-records",
+        "title": "Federal Tax Authority Decision No. 4 of 2026 on the Rules and Requirements for Maintaining the Information Contained in Accounting Records and Commercial Books",
+        "publisher": "Federal Tax Authority",
+        "url": "https://tax.gov.ae//Datafolder/Files/Legislation/2026/FTA%20Decision%20No.%204%20of%202026%20on%20the%20Rules%20and%20Requirements%20-%2018%2008%202026.pdf",
+        "consulted_on": "2026-09-22",
+        "kind": "regulation"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "AED",
+    "language": "en",
+    "rounding_method": "half_up",
+    "closing_style": "retained_earnings",
+    "fiscal_year_default": "calendar",
+    "roles": {
+      "receivable": "1100",
+      "payable": "2000",
+      "suspense": "2990",
+      "rounding": "6990",
+      "retained_earnings": "3200",
+      "sales": "4000",
+      "purchase": "5000",
+      "bank": "1010",
+      "cash": "1000",
+      "fx_gain": "4700",
+      "fx_loss": "6950",
+      "asset_disposal_gain": "4750",
+      "asset_disposal_loss": "6960",
+      "tax_payable": "2110",
+      "tax_receivable": "1155"
+    },
+    "journal_roles": {
+      "sales": "SAL",
+      "purchase": "PUR",
+      "miscellaneous": "GEN",
+      "opening": "OPN"
+    }
+  },
+  "languages": [],
+  "journals": [
+    {
+      "code": "SAL",
+      "type": "sales",
+      "name": "Sales journal",
+      "sequence": 10
+    },
+    {
+      "code": "PUR",
+      "type": "purchase",
+      "name": "Purchases journal",
+      "sequence": 20
+    },
+    {
+      "code": "BNK",
+      "type": "bank",
+      "name": "Bank",
+      "sequence": 30
+    },
+    {
+      "code": "CSH",
+      "type": "cash",
+      "name": "Petty cash",
+      "sequence": 40
+    },
+    {
+      "code": "GEN",
+      "type": "general",
+      "name": "General journal",
+      "sequence": 50
+    },
+    {
+      "code": "OPN",
+      "type": "opening",
+      "name": "Opening balances",
+      "sequence": 60
+    }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "United Arab Emirates reference chart of accounts",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": [
+        "AE-IFRSSME-SFP",
+        "AE-IFRSSME-IS"
+      ],
+      "legal_reference": "There is no legal chart of accounts in the United Arab Emirates. Federal Decree-Law No. 32 of 2021 on Commercial Companies requires a company to keep accounting records and prepare financial statements, and its Corporate Tax counterpart, Federal Decree-Law No. 47 of 2022, taxes a person on the accounting income of financial statements prepared under internationally-accepted accounting standards — in practice IFRS, and IFRS for Small and Medium-sized Entities for a smaller taxpayer. This pack's research could not open an official, directly-fetchable text of Federal Decree-Law No. 32 of 2021 to cite its own article: uaelegislation.gov.ae refused every unauthenticated request tried, and the Ministry of Economy and Tourism's own site returned no working legislation link in this pass. Nothing here was patched around that gap — it is named so a reviewer checks it first, the same way packs/sg/ names the SFRS for Small Entities text it could not open and packs/hk/ names the HKFRS text it could not open. The chart itself is original: four digits, blocked so that each range reaches one line item of the statement of financial position and the income statement of the IFRS for SMEs Accounting Standard, with the accounts a UAE company actually keeps — VAT input and output tax, VAT payable to and receivable from the Federal Tax Authority, import VAT awaiting a customs declaration, and a provision for employees' end-of-service gratuity, which this pack's research did not trace to a specific article of the Labour Law (Federal Decree-Law No. 33 of 2021) and which a reviewer should check as well.",
+      "source": "vat-decree-law"
+    }
+  ],
+  "documents": {
+    "numbering": "sequential",
+    "number_format": "{CODE}-{YYYY}-{NNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "earliest_of_delivery_or_payment",
+    "references": {
+      "numbering": {
+        "legal_reference": "Executive Regulation (Cabinet Decision No. 52 of 2017, as amended), Article 59(1)(d) — a Tax Invoice carries 'a sequential Tax Invoice number or a unique number which enables identification of the Tax Invoice and the order of the Tax Invoice in any sequence of invoices.' The article asks that each invoice be identified and that its place in a sequence be readable, and not that the series carry no gap, which is why the style is `sequential` and not a gapless one; the pattern in number_format is one a business may choose.",
+        "source": "vat-exec-reg"
+      },
+      "tax_point": {
+        "legal_reference": "Federal Decree-Law No. 8 of 2017, Article 25 — tax is calculated on the date of supply, the earliest of: the date goods were transferred or placed at the recipient's disposal, the date a service was completed, or 'the date of receipt of payment or the date on which the Tax Invoice was issued.' The general rule is therefore a three-way earliest test — delivery or completion, payment, or invoice — and the closed vocabulary of this field has no value for three triggers at once. `earliest_of_delivery_or_payment` is the nearest of the five and is what the rule reduces to in the ordinary case, because Article 67 already requires the Tax Invoice within 14 days of that same date of supply, so the invoice trigger rarely comes first in practice; a supply invoiced late, or paid before either delivery or an invoice, is the case this pack's approximation misses.",
+        "source": "vat-decree-law"
+      }
+    },
+    "mentions": [
+      {
+        "code": "reverse_charge",
+        "applies_when": "reverse_charge",
+        "text": "Reverse charge: the Recipient of Goods or Recipient of Services must account for the Value Added Tax due on this supply under Article 48 of Federal Decree-Law No. 8 of 2017.",
+        "sequence": 10,
+        "legal_reference": "Executive Regulation (Cabinet Decision No. 52 of 2017, as amended), Article 59(1)(l) — where the recipient is required to account for Tax, the Tax Invoice carries 'a statement that the Recipient is required to account for Tax, and a reference to the relevant provision of the Decree-Law.' This pack's research found no article of the Decree-Law or its Executive Regulation requiring a printed sentence on a zero-rated or an exempt line, unlike Singapore's reg. 11(3); a UAE tax invoice shows the rate of Tax against each line (Article 59(1)(h)), which is what distinguishes them.",
+        "source": "vat-exec-reg"
+      }
+    ]
+  },
+  "einvoicing": {
+    "profile": "pint-ae",
+    "mandatory_from": "2027-01-01",
+    "obligation": "mandatory",
+    "party_scheme": "0235",
+    "vat_scheme": null,
+    "legal_reference": "Federal Decree-Law No. 8 of 2017, Articles 65(5) and 70(4) (both added by Federal Decree-Law No. 16 of 2024) make a Registrant 'subject to the Electronic Invoicing System' issue and transmit Tax Invoices and Tax Credit Notes as Electronic Invoices and Electronic Credit Notes. Who is subject, and from when, is set by Ministerial Decision No. 243 of 2025 (the Electronic Invoicing System itself) and Ministerial Decision No. 244 of 2025 (its implementation timeline), read here from the Ministry of Finance's own UAE Electronic Invoicing Guidelines, Version 1.1 of 1 June 2026: a voluntary pilot and a general voluntary phase both open on 1 July 2026, and mandatory implementation is phased by the Person's annual revenue — by 1 January 2027 for a Person with revenue of AED 50,000,000 or more (Accredited Service Provider appointed by 31 July 2026), by 1 July 2027 for every other Person (Accredited Service Provider appointed by 31 March 2027), and by 1 October 2027 for a Government Entity (Accredited Service Provider appointed by 31 March 2027); a 24-month grace period from 1 January 2027 applies to transactions between members of the same VAT group. `mandatory_from` carries the earliest of these dates, 1 January 2027, the day the obligation first binds anyone; docs/international.md carries the rest of the calendar, which this field cannot hold on its own. The exchange is a 5-corner model the Guidelines call DCTCE (Decentralised Continuous Transaction Control and Exchange): the supplier's Accredited Service Provider (Corner 2) and the buyer's (Corner 3) exchange the Electronic Invoice over the OpenPeppol Interoperability Framework and each report the Tax Data to the Federal Tax Authority (Corner 5). Accreditation of a Service Provider is Ministerial Decision No. 64 of 2025, as amended by Ministerial Decision No. 56 of 2026; penalties for non-compliance are Cabinet Decision No. 106 of 2025. The format is PINT AE, the Peppol International invoicing specification localised for the UAE. A party's Participant Identifier on the network is ICD `0235` followed by its 10-digit Tax Identification Number (TIN), the first 10 digits of its 15-digit Tax Registration Number (TRN); `vat_scheme` is left empty because no separate ISO 6523 code is registered for the 15-digit TRN itself, which Article 59 of the Executive Regulation asks a Tax Invoice to print in full. PINT AE's own tax categories — Standard Rate, Exempt from VAT, Out of scope, Reverse Charge, Zero rated, Margin scheme — are a closed list of six the Guidelines print in full (section 10.5) and are not the UNCL5305 letters `vat_category` holds; each tax names the PINT AE category its treatment maps to in its own legal_reference.",
+    "source": "mof-einvoicing-guide"
+  }
+}

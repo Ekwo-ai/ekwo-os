@@ -1,0 +1,697 @@
+[
+  {
+    "code": "AE-S-SR",
+    "name": "Sale, standard-rated, VAT 5%",
+    "description": "A taxable supply made in the United Arab Emirates that is not zero-rated or exempt.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 5,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2018-01-01",
+    "legal_reference": "Federal Decree-Law No. 8 of 2017, Article 3 — '5% Tax shall be imposed on any supply or Import pursuant to Article 2 of this Decree-Law', in force since the Decree-Law commenced on 1 January 2018. The value is reported without Tax under Article 64(5)(d) of the Executive Regulation ('the value of Taxable Supplies made... and the Output Tax charged'). PINT AE tax category 1, Standard Rate (UAE Electronic Invoicing Guidelines, section 10.5).",
+    "source": "vat-decree-law",
+    "vat_category": "S",
+    "sequence": 10,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "d1"
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "d2"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "d1",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "d2",
+          "box_factor": -100
+        }
+      ]
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "AE-S-ZR-EXP",
+    "name": "Sale, zero-rated, direct or indirect export",
+    "description": "A direct or indirect export of goods or services to outside the Implementing States (the GCC member states that have brought the Common VAT Agreement into force).",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2018-01-01",
+    "legal_reference": "Federal Decree-Law No. 8 of 2017, Article 45(1); Executive Regulation, Article 30, which conditions the zero rate on the goods leaving the State within 90 days and on official and commercial evidence of the export being kept. Reported in box e (Executive Regulation, Article 64(5)(e)). PINT AE tax category 5, Zero rated.",
+    "source": "vat-decree-law",
+    "vat_category": "G",
+    "sequence": 20,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "e"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "e",
+          "box_factor": -100
+        }
+      ]
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "AE-S-ZR-TRANSPORT",
+    "name": "Sale, zero-rated, international transport of passengers or goods",
+    "description": "International transport of passengers or goods that starts or ends in the State or passes through its territory, including transport-related services, and international carriage of passengers by air.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2018-01-01",
+    "legal_reference": "Federal Decree-Law No. 8 of 2017, Article 45(2) and (3); Executive Regulation, Article 33. Reported in box e alongside other zero-rated supplies. PINT AE tax category 5, Zero rated.",
+    "source": "vat-decree-law",
+    "vat_category": "G",
+    "sequence": 30,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "e"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "e",
+          "box_factor": -100
+        }
+      ]
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "AE-S-ZR-METAL",
+    "name": "Sale, zero-rated, investment precious metals",
+    "description": "Gold, silver and platinum of a purity of 99% or more, in a form tradeable in global bullion markets.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2018-01-01",
+    "legal_reference": "Federal Decree-Law No. 8 of 2017, Article 45(8); Executive Regulation, Article 36. Reported in box e. PINT AE tax category 5, Zero rated.",
+    "source": "vat-exec-reg",
+    "vat_category": "Z",
+    "sequence": 40,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "e"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "e",
+          "box_factor": -100
+        }
+      ]
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "AE-S-ZR-RESI",
+    "name": "Sale, zero-rated, first supply of a residential building",
+    "description": "The first supply, by sale or lease, of a residential building within 3 years of its completion.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2018-01-01",
+    "legal_reference": "Federal Decree-Law No. 8 of 2017, Article 45(9); Executive Regulation, Articles 37 to 39. Reported in box e. PINT AE tax category 5, Zero rated.",
+    "source": "vat-exec-reg",
+    "vat_category": "Z",
+    "sequence": 50,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "e"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "e",
+          "box_factor": -100
+        }
+      ]
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "AE-S-EX-FIN",
+    "name": "Sale, exempt, financial services on margin",
+    "description": "A financial service of Article 42(2) of the Executive Regulation — dealing in money, credit, a debt or equity security, a life insurance contract — supplied for an implicit margin and not for an explicit fee, commission, discount or rebate.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2018-01-01",
+    "legal_reference": "Federal Decree-Law No. 8 of 2017, Article 46(1); Executive Regulation, Article 42(3)(a): a financial service of Clause 2 is exempt 'where they are not conducted in return for an explicit fee, discount, commission, and rebate or similar' — Clause 4 makes the same service taxable at the standard rate where it is. Reported in box f (Executive Regulation, Article 64(5)(f)). PINT AE tax category 2, Exempt from VAT.",
+    "source": "vat-exec-reg",
+    "vat_category": "E",
+    "sequence": 60,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "f"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "f",
+          "box_factor": -100
+        }
+      ]
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "AE-S-EX-RESI",
+    "name": "Sale, exempt, residential building beyond the first supply",
+    "description": "A supply of a residential building by sale, or by a lease of more than 6 months (or to a UAE-ID holder), other than the first supply that is zero-rated.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2018-01-01",
+    "legal_reference": "Federal Decree-Law No. 8 of 2017, Article 46(2); Executive Regulation, Article 43. Reported in box f. PINT AE tax category 2, Exempt from VAT.",
+    "source": "vat-exec-reg",
+    "vat_category": "E",
+    "sequence": 70,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "f"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "f",
+          "box_factor": -100
+        }
+      ]
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "AE-S-EX-LAND",
+    "name": "Sale, exempt, bare land",
+    "description": "A supply of land that is not covered by a completed or partially completed building or by civil engineering works.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2018-01-01",
+    "legal_reference": "Federal Decree-Law No. 8 of 2017, Article 46(3); Executive Regulation, Article 44. Reported in box f. PINT AE tax category 2, Exempt from VAT.",
+    "source": "vat-exec-reg",
+    "vat_category": "E",
+    "sequence": 80,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "f"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "f",
+          "box_factor": -100
+        }
+      ]
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "AE-S-EX-TRANSPORT",
+    "name": "Sale, exempt, local passenger transport",
+    "description": "Local passenger transport by a qualifying means of transport (taxi, bus, train, tram, ferry, or aircraft not constituting international carriage) from a place in the State to another place in the State.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2018-01-01",
+    "legal_reference": "Federal Decree-Law No. 8 of 2017, Article 46(4); Executive Regulation, Article 45. Reported in box f. PINT AE tax category 2, Exempt from VAT.",
+    "source": "vat-exec-reg",
+    "vat_category": "E",
+    "sequence": 90,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "f"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "f",
+          "box_factor": -100
+        }
+      ]
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "AE-S-OS",
+    "name": "Sale, out of scope",
+    "description": "A supply whose place of supply is outside the United Arab Emirates under the place-of-supply rules of Chapter Two of the Decree-Law, or a transfer of a whole or independent part of a Business to a Taxable Person for the purposes of continuing the Business that Article 7(2) of the Decree-Law excepts from being a supply at all.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "not_subject",
+    "valid_from": "2018-01-01",
+    "legal_reference": "Federal Decree-Law No. 8 of 2017, Articles 7(2) and 27 to 32 (place of supply). Not reported on any box of the return: Article 64(5) of the Executive Regulation names no box for a supply that is not made in the State. PINT AE tax category 3, Goods and services outside the scope of VAT.",
+    "source": "vat-decree-law",
+    "vat_category": "O",
+    "sequence": 100,
+    "exemption_code": null
+  },
+  {
+    "code": "AE-S-DRC-HC",
+    "name": "Sale, domestic reverse charge, crude oil, natural gas or pure hydrocarbons",
+    "description": "A taxable supply in the State, between two Registrants, of crude or refined oil, unprocessed or processed natural gas, or pure hydrocarbons, where the Recipient intends to resell the Goods as such or to use them to produce or distribute energy.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "domestic_reverse_charge",
+    "valid_from": "2018-01-01",
+    "legal_reference": "Federal Decree-Law No. 8 of 2017, Article 48(3): 'The Registrant making the supply shall not account for Tax on the value of the supply of the Goods'; Clause 4 conditions this on a written declaration from the Recipient of its intended use and of its own Tax Registration, verified by the supplier. The value is a taxable supply and is reported in box d1 with no Output Tax against it; the Recipient accounts for the Tax under AE-P-DRC-HC. PINT AE tax category 4, Reverse Charge.",
+    "source": "vat-decree-law",
+    "vat_category": "AE",
+    "sequence": 110,
+    "conditions": [
+      "buyer_certificate",
+      "buyer_status"
+    ],
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "d1"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "d1",
+          "box_factor": -100
+        }
+      ]
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "AE-P-SR",
+    "name": "Purchase, standard-rated, VAT recoverable",
+    "description": "A standard-rated purchase used to make a taxable supply, whose input tax may be recovered in full.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 5,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2018-01-01",
+    "legal_reference": "Federal Decree-Law No. 8 of 2017, Articles 54 and 55 (recoverable input tax); Executive Regulation, Article 64(5)(h). Reported in box h1 with the Recoverable Tax in box h2.",
+    "source": "vat-decree-law",
+    "vat_category": "S",
+    "sequence": 120,
+    "recoverable": true,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "h1"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "h2"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "h1",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "h2",
+          "box_factor": -100
+        }
+      ]
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "AE-P-BL-ENT",
+    "name": "Purchase, standard-rated, entertainment — input tax not recoverable",
+    "description": "Hospitality of any kind — accommodation, food and drink outside the normal course of a meeting, access to shows or events, or a trip for pleasure — provided to anyone not employed by the Person, including customers and potential customers.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 5,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2018-01-01",
+    "legal_reference": "Executive Regulation, Article 53(1)(a) and (2)(a). The Tax is not recoverable and lands on the account of the line it taxes rather than on 1150, and is not reported in any box of the return: Article 64(5)(h) reports only expenses incurred for the purposes of recovering Input Tax.",
+    "source": "vat-exec-reg",
+    "vat_category": "S",
+    "sequence": 130,
+    "recoverable": false,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax_on_base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax_on_base"
+        }
+      ]
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "AE-P-BL-CAR",
+    "name": "Purchase, standard-rated, motor vehicle available for personal use — input tax not recoverable",
+    "description": "A motor vehicle purchased, rented or leased for use in the Business and available for the personal use of any Person, other than a taxi, an emergency vehicle or a vehicle rented out in a vehicle rental business.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 5,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2018-01-01",
+    "legal_reference": "Executive Regulation, Article 53(1)(b) and (4). The Tax is not recoverable and lands on the account of the line it taxes rather than on 1150, and is not reported in any box of the return.",
+    "source": "vat-exec-reg",
+    "vat_category": "S",
+    "sequence": 140,
+    "recoverable": false,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax_on_base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax_on_base"
+        }
+      ]
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "AE-P-ZR",
+    "name": "Purchase, zero-rated",
+    "description": "A zero-rated purchase from a Registrant in the State, such as investment precious metals or an export-qualifying service.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2018-01-01",
+    "legal_reference": "Executive Regulation, Article 64(5)(h) — a purchase whose Input Tax may be recovered is reported in box h1 without regard to its rate; at a zero rate there is no Tax to add to box h2.",
+    "source": "vat-exec-reg",
+    "vat_category": "Z",
+    "sequence": 150,
+    "recoverable": true,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "h1"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "h1",
+          "box_factor": -100
+        }
+      ]
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "AE-P-EX",
+    "name": "Purchase, exempt",
+    "description": "A purchase of an exempt supply — a long lease of a residential building, bare land, local passenger transport, or a financial service on margin.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "exempt",
+    "valid_from": "2018-01-01",
+    "legal_reference": "Federal Decree-Law No. 8 of 2017, Article 46. Not reported on any box: an exempt purchase carries no Input Tax and Article 64(5)(h) reports only expenses incurred for the purposes of recovering Input Tax.",
+    "source": "vat-decree-law",
+    "vat_category": "E",
+    "sequence": 160,
+    "postings": {
+      "invoice": [],
+      "credit_note": []
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "AE-P-NR",
+    "name": "Purchase, not registered for VAT",
+    "description": "A purchase from a supplier established in the State who is not registered for VAT, so no Tax was charged.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "not_subject",
+    "valid_from": "2018-01-01",
+    "legal_reference": "No Tax is charged because the supplier is not a Registrant (Federal Decree-Law No. 8 of 2017, Article 2). Not reported on any box.",
+    "source": "vat-decree-law",
+    "vat_category": "O",
+    "sequence": 170,
+    "postings": {
+      "invoice": [],
+      "credit_note": []
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "AE-P-IMP",
+    "name": "Purchase, import of goods under the reverse charge",
+    "description": "Goods imported into the State by a Taxable Person for the purposes of their Business, who is treated as making a Taxable Supply to themselves under Article 48(1) of the Decree-Law.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 5,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2018-01-01",
+    "legal_reference": "Federal Decree-Law No. 8 of 2017, Article 48(1); Executive Regulation, Article 48(1), conditioned on the Taxable Person being able to demonstrate its Tax Registration and Customs registration number to the Authority at the time of import — the ordinary case for a VAT-registered importer, who self-assesses the Due Tax in the Tax Return rather than paying it at the border (Executive Regulation, Article 50 covers the Person who does not meet those conditions, and is not carried by this pack). The value is reported in box g1 (Executive Regulation, Article 64(5)(g): 'the value of any supplies subject to Clauses 1 and 3 of Article 48'); the self-assessed Tax is due in box g2 and, being fully recoverable for a taxable import, recoverable in box h2.",
+    "source": "vat-exec-reg",
+    "vat_category": null,
+    "sequence": 180,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "g1"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "h2"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2100",
+          "box": "g2"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "g1",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "h2",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2100",
+          "box": "g2",
+          "box_factor": -100
+        }
+      ]
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "AE-P-RC-SVC",
+    "name": "Purchase, imported services under the reverse charge",
+    "description": "A supply of Services with a place of supply in the State, received by a Taxable Person with a Place of Residence in the State from a supplier with no Place of Residence in the State who charges no Tax.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 5,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2018-01-01",
+    "legal_reference": "Federal Decree-Law No. 8 of 2017, Article 48(1) and (3) of the Executive Regulation (Concerned Services). Reported the same way as AE-P-IMP: value in box g1, self-assessed Tax due in box g2 and, where the service is used to make a taxable supply, recoverable in box h2.",
+    "source": "vat-exec-reg",
+    "vat_category": null,
+    "sequence": 190,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "g1"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "h2"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2100",
+          "box": "g2"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "g1",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "h2",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2100",
+          "box": "g2",
+          "box_factor": -100
+        }
+      ]
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "AE-P-DRC-HC",
+    "name": "Purchase, domestic reverse charge, crude oil, natural gas or pure hydrocarbons",
+    "description": "The mirror of AE-S-DRC-HC on the buyer's side: the Recipient of crude or refined oil, unprocessed or processed natural gas, or pure hydrocarbons intended for resale or for energy production, self-assesses the Tax the supplier did not charge.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 5,
+    "scope": "purchase",
+    "treatment": "domestic_reverse_charge",
+    "valid_from": "2018-01-01",
+    "legal_reference": "Federal Decree-Law No. 8 of 2017, Article 48(3)(b): 'The Recipient of the Goods shall calculate the Tax on the value of the Goods supplied to him and shall be responsible for all applicable Tax obligations.' Reported in box g1 and g2 like an import under Article 64(5)(g), which names 'Clauses 1 and 3 of Article 48' together; recoverable in box h2 to the extent the Goods are used for a taxable supply.",
+    "source": "vat-decree-law",
+    "vat_category": "AE",
+    "sequence": 200,
+    "conditions": [
+      "buyer_certificate",
+      "buyer_status"
+    ],
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "g1"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "h2"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2100",
+          "box": "g2"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "g1",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "h2",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2100",
+          "box": "g2",
+          "box_factor": -100
+        }
+      ]
+    },
+    "exemption_code": null
+  }
+]

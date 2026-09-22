@@ -1,0 +1,122 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "AE-VAT-RETURN",
+  "name": "VAT return",
+  "period": [
+    "month",
+    "quarter"
+  ],
+  "period_default": "quarter",
+  "valid_from": "2018-01-01",
+  "legal_reference": "Executive Regulation (Cabinet Decision No. 52 of 2017, as amended), Article 62(1): 'The standard Tax Period applicable to a Taxable Person shall be a period of three calendar months ending on the date that the Authority determines' — the default every Taxable Person receives. Article 62(2) lets the Authority assign 'a Person or class of Persons a shorter or longer Tax Period' where it considers that necessary or beneficial, without fixing a turnover threshold in the text this pack's research could open; in practice the Federal Tax Authority assigns a one-month period to larger taxable persons, which is why `month` is carried as the other cadence, but no article pins a figure to it, and this pack invents none. The Federal Tax Authority's own VAT201 return form and its administrative box numbering could not be opened as a directly-fetchable text in this research pass (the guide pages served only navigation, not the form itself); the boxes below are therefore built on the minimum content Article 64(5) of the Executive Regulation itself requires a Tax Return to hold, letter by letter, and not on the FTA's on-screen box numbers 1 to 13 that a filer actually sees on EmaraTax — the first thing a reviewer familiar with the live portal should check.",
+  "source": "vat-exec-reg",
+  "deadline": {
+    "rule": "day_of_month_after_period",
+    "day": 28,
+    "legal_reference": "Executive Regulation, Article 64(1): 'A Tax Return must be received by the Authority no later than the 28th (twenty eighth) day following the end of the Tax Period concerned or by such other date as directed by the Authority.' Article 64(3) sets the same day for payment.",
+    "source": "vat-exec-reg"
+  },
+  "boxes": [
+    {
+      "box": "d1",
+      "kind": "base",
+      "name": "Value of taxable supplies made in the Tax Period",
+      "legal_reference": "Executive Regulation, Article 64(5)(d): a Tax Return includes 'the value of Taxable Supplies made by the Person in the Tax Period and the Output Tax charged.' This box carries the value; box d2 carries the Output Tax. A domestic reverse charge supply (AE-S-DRC-HC) is a taxable supply and is included here with no amount in d2.",
+      "source": "vat-exec-reg",
+      "sequence": 10
+    },
+    {
+      "box": "d2",
+      "kind": "tax",
+      "name": "Output Tax charged on box d1",
+      "legal_reference": "Executive Regulation, Article 64(5)(d), second limb.",
+      "source": "vat-exec-reg",
+      "sequence": 20
+    },
+    {
+      "box": "e",
+      "kind": "base",
+      "name": "Value of supplies subject to the zero rate",
+      "legal_reference": "Executive Regulation, Article 64(5)(e): 'the value of Taxable Supplies subject to the zero-rate made by the Person in the Tax Period.'",
+      "source": "vat-exec-reg",
+      "sequence": 30
+    },
+    {
+      "box": "f",
+      "kind": "base",
+      "name": "Value of exempt supplies",
+      "legal_reference": "Executive Regulation, Article 64(5)(f): 'the value of Exempt Supplies made by the Person in the Tax Period.'",
+      "source": "vat-exec-reg",
+      "sequence": 40
+    },
+    {
+      "box": "g1",
+      "kind": "base",
+      "name": "Value of supplies subject to the reverse charge under Article 48(1) and (3) of the Decree-Law",
+      "legal_reference": "Executive Regulation, Article 64(5)(g): 'the value of any supplies subject to Clauses 1 and 3 of Article 48 of the Decree-Law' — the import of Concerned Goods and Concerned Services under Clause 1, and the domestic reverse charge on crude or refined oil, natural gas or pure hydrocarbons under Clause 3.",
+      "source": "vat-exec-reg",
+      "sequence": 50
+    },
+    {
+      "box": "g2",
+      "kind": "tax",
+      "name": "Tax self-assessed on box g1",
+      "legal_reference": "No clause of Article 64(5) names this figure separately from the value in box g1, but Article 48(4)(a) of the Decree-Law requires the Taxable Person to 'account for Tax on the value of the Concerned Goods or Concerned Services at the rate which would be applicable' — a value reported without the tax it carries would leave the Due Tax of box i1 short by exactly this amount. The box is this pack's own, built to hold that figure, and is the first thing in this return a reviewer should check against a real filing.",
+      "source": "vat-exec-reg",
+      "sequence": 60
+    },
+    {
+      "box": "h1",
+      "kind": "base",
+      "name": "Value of expenses for which Input Tax is recovered",
+      "legal_reference": "Executive Regulation, Article 64(5)(h), first limb: 'the value of expenses incurred in respect of which the Person seeks to recover Input Tax.' A purchase whose Input Tax Article 53 disallows (AE-P-BL-ENT, AE-P-BL-CAR) is not included, because the Person does not seek to recover it; an exempt or unregistered-supplier purchase (AE-P-EX, AE-P-NR) carries no Input Tax to seek.",
+      "source": "vat-exec-reg",
+      "sequence": 70
+    },
+    {
+      "box": "h2",
+      "kind": "tax",
+      "name": "Recoverable Tax on box h1, including the recoverable share of box g2",
+      "legal_reference": "Executive Regulation, Article 64(5)(h), second limb: 'the amount of Recoverable Tax.' Includes the Tax self-assessed in box g2 to the extent the import or domestic reverse charge is used to make a taxable supply (Decree-Law, Articles 54 and 55).",
+      "source": "vat-exec-reg",
+      "sequence": 80
+    },
+    {
+      "box": "i1",
+      "kind": "total",
+      "name": "Total Due Tax for the Tax Period",
+      "legal_reference": "Executive Regulation, Article 64(5)(i): 'the total value of Due Tax and Recoverable Tax for the Tax Period.' This box is the Due Tax half of that clause.",
+      "source": "vat-exec-reg",
+      "plus": [
+        "d2",
+        "g2"
+      ],
+      "sequence": 90
+    },
+    {
+      "box": "i2",
+      "kind": "total",
+      "name": "Total Recoverable Tax for the Tax Period",
+      "legal_reference": "Executive Regulation, Article 64(5)(i), the Recoverable Tax half.",
+      "source": "vat-exec-reg",
+      "plus": [
+        "h2"
+      ],
+      "sequence": 100
+    },
+    {
+      "box": "j",
+      "kind": "total",
+      "name": "Payable Tax or excess Tax for the Tax Period",
+      "legal_reference": "Executive Regulation, Article 64(5)(j): 'the Payable Tax or excess Tax, if any, for the Tax Period.' A negative figure is excess Recoverable Tax, which Article 65 of the Executive Regulation lets the Taxable Person request as a refund or carry forward; this pack applies no floor at zero.",
+      "source": "vat-exec-reg",
+      "plus": [
+        "i1"
+      ],
+      "minus": [
+        "i2"
+      ],
+      "sequence": 110
+    }
+  ]
+}

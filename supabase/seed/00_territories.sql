@@ -593,3 +593,31 @@ on conflict (code) do update set
   eu_vat_to       = excluded.eu_vat_to,
   vat_prefix      = excluded.vat_prefix,
   legal_reference = excluded.legal_reference;
+
+
+-- ---------------------------------------------------------------------------
+-- The rows — United Arab Emirates
+--
+-- A State outside the common system of VAT the way Australia or Singapore
+-- are: the United Arab Emirates levies a value added tax of its own under
+-- Federal Decree-Law No. 8 of 2017, article 3, at 5 % of the value of a
+-- taxable supply since the Decree-Law commenced on 1 January 2018 — no
+-- Union instrument reaches it. `vat_prefix` is null: a UAE Tax Registration
+-- Number carries no country prefix of this table's kind, and the identifier
+-- a party is addressed by on the electronic invoicing network is its Tax
+-- Identification Number under ICD 0235, which packs/ae/pack.json's
+-- `einvoicing` block carries and this table has no column for.
+-- ---------------------------------------------------------------------------
+
+insert into territories (code, code_source, name, parent_code, eu_vat_scope, eu_vat_from, eu_vat_to, vat_prefix, legal_reference) values
+  ('AE', 'iso_3166_1', 'United Arab Emirates', null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. The United Arab Emirates levies a value added tax of its own under Federal Decree-Law No. 8 of 2017, article 3, at 5 % since 1 January 2018 (Ministry of Finance / Federal Tax Authority, consolidated text).')
+on conflict (code) do update set
+  code_source     = excluded.code_source,
+  name            = excluded.name,
+  parent_code     = excluded.parent_code,
+  eu_vat_scope    = excluded.eu_vat_scope,
+  eu_vat_from     = excluded.eu_vat_from,
+  eu_vat_to       = excluded.eu_vat_to,
+  vat_prefix      = excluded.vat_prefix,
+  legal_reference = excluded.legal_reference;

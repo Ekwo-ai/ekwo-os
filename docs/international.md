@@ -3577,3 +3577,71 @@ its books to the State, which `packages/formats` has no brick for at all,
 Portuguese or otherwise. A company keeping its books on this pack still needs
 software of its own for all three, and nothing here pretends the `pack.json`
 section that comes closest, `einvoicing`, was built to hold them.
+
+## From the United Arab Emirates
+
+`packs/ae/`, `community`, seed 60, the first pack of the Gulf. Its value
+added tax is Federal Decree-Law No. 8 of 2017 and its Executive Regulation
+(Cabinet Decision No. 52 of 2017), both read consolidated and as amended as
+recently as September 2026; its electronic invoicing regime is read from the
+Ministry of Finance's own *UAE Electronic Invoicing Guidelines*, a
+51-page primary document and not a summary. Two things the format could not
+say, neither patched, and one editorial choice worth naming so a future pack
+does not repeat the same gap silently.
+
+**A reporting model `einvoicing` was not built for.** Every other pack's
+electronic invoicing is a 4-corner exchange — the seller's access point
+sends a document to the buyer's — where `mandatory_from` answers one
+question well: the day reception starts, "which binds everyone at once" even
+where issuance phases in later, as `packs/de/` already uses it. The UAE's
+model is 5-corner: the seller's and the buyer's Accredited Service Providers
+each report the same transaction's Tax Data to the Federal Tax Authority
+independently, so there is no reception side that binds before an issuance
+side does — a Person either reports, on both sides of every transaction it
+is party to, from its own mandatory date, or it does not report at all yet.
+`mandatory_from` therefore carries the earliest date *anyone* is bound
+(1 January 2027, a Person with AED 50,000,000 or more in revenue), which is
+the closest available reading and not a description of when the obligation
+reaches a given company — a reader has to open `pack.json`'s own
+`einvoicing.legal_reference` for the actual phased table (three thresholds,
+three dates, plus a 24-month grace period for transactions between members
+of one VAT group starting on the earliest date), because the field was not
+built to hold more than one date at all.
+
+**A designated zone is not a territory, and the `territories` table would
+be the wrong place for it anyway.** Article 51 of the Executive Regulation
+treats a Cabinet-designated, fenced and Customs-controlled area as outside
+the State for goods (not services, except in the narrow cases Clauses 6 to 8
+carve back in) — the same shape `applies_when.supply_in` already expresses
+for a sub-national EU territory such as the Canary Islands. What breaks the
+analogy is Clause 2 of the same article: a designated zone reverts to being
+treated as inside the State the moment it changes how it operates or
+breaches the conditions of Clause 1, by the Cabinet's own administrative
+finding, with no fixed date and no accession treaty to cite — `territories`
+is reference data precisely because Union membership is Union law that
+changes on a dated, citable event, and a status that can flip on an
+unannounced compliance finding is not that. `packs/ae/` does not model a
+designated zone at all rather than force it through a table built for a
+different kind of boundary; the list of zones the Cabinet has actually
+designated was not verified against a citable decision in this research
+pass either, so there was nothing yet to model even if the table fit.
+
+**Where a clause of the law only asks for a value, and Article 48(4)(a) asks
+for its tax a paragraph later.** Every other pack whose return boxes are
+read from an administrative form's own numbered boxes — Singapore's GST F5,
+France's CA3 — finds the tax figure already sitting in its own numbered box
+beside the value. The UAE has no such form this research pass could open (see
+`packs/ae/README.md`), so `tax_report.json` is built letter by letter on
+Article 64(5) of the Executive Regulation, which lists the *value* of a
+reverse-charge supply (paragraph g) as one of the minimum contents of a
+return, and says nothing in that same paragraph about the tax due on it —
+which paragraph (i) then needs, as part of "the total value of Due Tax", to
+balance at all. `packs/ae/tax_report.json`'s box `g2` is the pack's own
+addition to hold that figure, named as such in its own `legal_reference`
+rather than presented as a transcription of the article. This is not a gap
+in the format — `tax_report_box` already allows a box with no administrative
+number behind it — but the case is worth naming for the next pack built from
+a statute's minimum-content clause rather than from a form: a value without
+its tax is not a value a return can be filed on, and the missing box has to
+be written in, in the open, rather than left out because the law did not
+spell it out twice.
