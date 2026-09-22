@@ -1,0 +1,666 @@
+[
+  {
+    "code": "SA-S-SR",
+    "name": "Sale, standard-rated, VAT 15%",
+    "description": "A taxable supply made in the Kingdom that is neither zero-rated nor exempt.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 15,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2020-07-01",
+    "legal_reference": "VAT Law, Article 2(2): \"تطبق الضريبة بنسبة أساسية قدرها (15%) من قيمة التوريد أو الاستيراد، ما لم يرد نص للإعفاء أو فرض نسبة الصفر\" — Tax applies at a basic rate of 15 % of the value of the supply or of the import, unless a text grants an exemption or imposes the zero rate. The article was amended to 15 % by Royal Order No. A/638 dated 15/10/1441H, footnote (1) of the consolidated text; the rate was 5 % before, and Article 79(10) of the Implementing Regulations works out which supplies straddling 1 July 2020 take which rate, so `valid_from` is that day. Reported in field 1 of the return, whose sales side the filing guideline describes as \"المبيعات الخاضعة للنسبة الأساسية (15%)\". ZATCA's Electronic Invoice XML Implementation Standard puts a standard-rated line in UNCL5305 category S with no exemption reason.",
+    "source": "vat-law",
+    "vat_category": "S",
+    "sequence": 10,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "1"
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "1"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "1",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "1",
+          "box_factor": -100
+        }
+      ]
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "SA-S-ZR-EXP",
+    "name": "Sale, zero-rated, export of goods from the Kingdom",
+    "description": "An export of goods from the Kingdom to a place outside Council Territory, the supplier holding the customs, commercial and transport evidence.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2020-07-01",
+    "legal_reference": "Implementing Regulations, Article 32: the zero rate applies to \"an Export of Goods from the Kingdom to a place outside of Council Territory\" where \"the Supplier of those Goods must retain evidence that the Goods have been transported from Council Territory within ninety (90) days of the Supply taking place\" — customs export documentation, commercial documentation and transport documentation, each of them (Article 32(3)). Every other Member State of the Council is a place outside Council Territory today: Article 79(6) treats \"any Member State which has not introduced VAT, or which does not have an Electronic Services System in place with the Kingdom\" as a country outside it, and Article 79(8) leaves the day that system starts to an order of the Authority that this pack's research found no trace of. Reported in field 4, which the filing guideline glosses \"صادرات السلع من المملكة أو الخدمات المقدمة إلى عميل غير مقيم بالمملكة\". **vat_category is deliberately empty**: ZATCA's own XML standard puts an export of goods in UNCL5305 category Z with reason code VATEX-SA-32, and this format refuses anything but G on an export treatment. Rather than declare a category the Kingdom's own administration contradicts, or a treatment that is not what this is, the pack leaves BT-151 unsaid — which it may, no brick writing a Saudi invoice. docs/international.md carries the point.",
+    "source": "vat-ir",
+    "vat_category": null,
+    "sequence": 20,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "4"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "4",
+          "box_factor": -100
+        }
+      ]
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "SA-S-ZR-SVC",
+    "name": "Sale, zero-rated, services supplied to a customer outside the Council",
+    "description": "A supply of services to a customer with no place of residence in any Member State, none of the exclusions of Article 33(2) applying.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2020-07-01",
+    "legal_reference": "Implementing Regulations, Article 33(1): \"a Supply of services made by a Taxable Person to a Customer without a Place of Residence in any Member State shall be zero-rated\", subject to the four exclusions of Article 33(2) — a place of supply fixed in a Member State by Articles 17 to 21 of the Agreement, a customer resident in a Member State, a person benefiting directly from the service while in a Member State who cannot deduct the input tax in full, and a service performed on tangible goods located in a Member State. Paragraphs 2(c) and 2(d) were amended by Board Resolution No. (01-06-24) of 19 November 2024, and the wording carried here is the amended one as ZATCA's own guideline states it. Reported in field 4. ZATCA's XML standard files an export of services under category Z with reason code VATEX-SA-33; vat_category is left empty for the reason SA-S-ZR-EXP gives.",
+    "source": "vat-ir-amendments",
+    "vat_category": null,
+    "sequence": 30,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "4"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "4",
+          "box_factor": -100
+        }
+      ]
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "SA-S-ZR-TRANSPORT",
+    "name": "Sale, zero-rated, international transport of goods or passengers",
+    "description": "International transport of goods or passengers to or from a place outside the Kingdom, and the services directly connected and incidental to it.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2020-07-01",
+    "legal_reference": "Implementing Regulations, Article 34(1) and (2): \"The international transport of Goods is zero-rated\"; the international transport of passengers is, by a qualifying means of transport or a scheduled flight or voyage. Article 34(7) defines international transport as carriage \"to a place outside the Kingdom, or from a place outside the Kingdom into the Kingdom\", and Article 34(8) a qualifying means of transport as one designed to carry at least ten people or goods commercially, used predominantly internationally. The treatment is domestic and not export: it is a supply made in the Kingdom that the Regulations rate at zero, and its customer is as often Saudi as not — reported in field 3, the zero-rated domestic line the filing guideline glosses with medicines, medical equipment and qualifying investment metals. ZATCA's XML standard agrees on the category, Z, and codes it VATEX-SA-34-1 for goods and VATEX-SA-34-2 for passengers.",
+    "source": "vat-ir",
+    "vat_category": "Z",
+    "sequence": 40,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "3"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "3",
+          "box_factor": -100
+        }
+      ]
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "SA-S-ZR-MED",
+    "name": "Sale, zero-rated, qualifying medicines and medical goods",
+    "description": "Medicines and medical goods classified as qualifying by the Ministry of Health or another competent authority.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2020-07-01",
+    "legal_reference": "Implementing Regulations, Article 35: \"the Supply of any Qualifying Medicines or Qualifying Medical Goods is zero-rated\", the classification being the one \"issued by the Ministry of Health or any other competent authority from time to time\" and subject to any further controls of the Council's Ministers of Health Committee. The pack carries the rule and not the list, which is an administrative classification that changes without the Regulations changing. Reported in field 3; ZATCA's XML standard codes it VATEX-SA-35 in category Z.",
+    "source": "vat-ir",
+    "vat_category": "Z",
+    "sequence": 50,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "3"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "3",
+          "box_factor": -100
+        }
+      ]
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "SA-S-ZR-METAL",
+    "name": "Sale, zero-rated, first supply of an investment metal",
+    "description": "The first supply of gold, silver or platinum of at least 99 % purity, tradeable on the global bullion market, by its producer or refiner.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2020-07-01",
+    "legal_reference": "Implementing Regulations, Article 36(1): \"The first Supply of a Qualifying Metal by its Producer or Refiner is zero-rated\", a Qualifying Metal being gold, silver or platinum (Article 36(3)(a)) supplied for investment, that is \"at a purity level of not less than ninety-nine percent (99%) and tradeable on the global bullion market\" (Article 36(3)(b)). The zero rate is the **first** supply by the producer or the refiner, and a later trade in the same bar is not it — the narrower rule of the two the Council allows. Reported in field 3; ZATCA's XML standard codes it VATEX-SA-36 in category Z.",
+    "source": "vat-ir",
+    "vat_category": "Z",
+    "sequence": 60,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "3"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "3",
+          "box_factor": -100
+        }
+      ]
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "SA-S-EX-FIN",
+    "name": "Sale, exempt, financial services on an implicit margin",
+    "description": "A financial service of Article 29 — dealing in money, credit, an account, a financial instrument, a life insurance contract — supplied for an implicit margin rather than an explicit fee.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2020-07-01",
+    "legal_reference": "Implementing Regulations, Article 29(1): \"Supplies of Financial Services listed within this Article are exempt from VAT, except in cases where the Consideration payable in respect of the service is by way of an explicit fee, commission or commercial discount\" — so the same service is standard-rated the moment it is charged for openly. Article 29(3) puts Shari'ah-compliant products on the footing of the conventional product they achieve the same result as, and Article 29(5) gives the worked list: interest or lending fees on an implicit margin, including under a diminishing musharaka or a murabaha contract, and commissions on an implicit spread under a mudaraba or wakala contract. Article 29(7) and (8) exempt life insurance and takaful. Reported in field 5, which the filing guideline glosses \"الخدمات المالية والتوريدات العقارية\". ZATCA's XML standard codes it VATEX-SA-29 in category E.",
+    "source": "vat-ir",
+    "vat_category": "E",
+    "sequence": 70,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "5"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "5",
+          "box_factor": -100
+        }
+      ]
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "SA-S-EX-RESI",
+    "name": "Sale, exempt, lease or licence of residential real estate",
+    "description": "The supply of residential real estate through lease or licence — a permanent dwelling designed for human occupation, hotels and other temporary accommodation excepted.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2020-07-01",
+    "legal_reference": "Implementing Regulations, Article 30(1)(b): \"The Supply of residential real estate through lease or license\" is exempt. Article 30(2) defines Residential Real Estate as a permanent dwelling designed for human occupation, houses, flats and apartments among them, and student or pupil accommodation intended as a primary residence; Article 30(3) excludes \"any hotels, inns, guest houses, motels, serviced accommodation or any other building that is designed to offer temporary accommodation to visitors or travelers\", which are standard-rated. Reported in field 5; ZATCA's XML standard codes a real estate exemption VATEX-SA-30 in category E.",
+    "source": "vat-ir",
+    "vat_category": "E",
+    "sequence": 80,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "5"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "5",
+          "box_factor": -100
+        }
+      ]
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "SA-S-EX-REALESTATE",
+    "name": "Sale, exempt, transfer of ownership of real estate",
+    "description": "The supply of real estate — commercial, residential, agricultural, developed or bare land — by a transfer of ownership or of the right to dispose of it as owner. Outside VAT and inside the Real Estate Transaction Tax instead.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2020-10-04",
+    "legal_reference": "Implementing Regulations, Article 30(1)(a), as amended by Board Resolution No. (1-5-20) dated 14/02/1442H: \"The Supply of real estate, whether commercial, residential or agricultural real estate or developed or undeveloped bare land, through a transfer of ownership or transfer of the right to dispose of the same as an owner\" is exempt from VAT. The exemption is not a relief: the same transaction bears the Real Estate Transaction Tax at 5 %, now the Law of Royal Decree No. M/84 dated 19/03/1446H, in force since 10 April 2025. **This pack carries no RETT tax code**: it is a tax on a transaction between parties, declared and paid on its own ZATCA service and not on the VAT return, and nothing of it would land on a box of this form. `valid_from` is the day the amendment took effect, 14/02/1442H corresponding to 4 October 2020; before it, a supply of real estate was standard-rated. Reported in field 5; ZATCA's XML standard codes it VATEX-SA-30 in category E.",
+    "source": "vat-ir",
+    "vat_category": "E",
+    "sequence": 90,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "5"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "5",
+          "box_factor": -100
+        }
+      ]
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "SA-S-OS",
+    "name": "Sale, outside the scope of VAT",
+    "description": "A supply whose place of supply is outside the Kingdom under Chapter Four of the Regulations, or the transfer of an economic activity that Article 17 excepts from being a supply at all.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "not_subject",
+    "valid_from": "2020-07-01",
+    "legal_reference": "Implementing Regulations, Article 17 (transfer of an economic activity, which \"shall not be considered a Supply\") and Articles 22 to 28 (the place of supply). Not reported on any field of the return: the return is a statement of supplies made in the Kingdom. ZATCA's XML standard carries category O for it with reason code VATEX-SA-OOS, whose text is \"free text, to be provided by the taxpayer on case to case basis\" — a reason the seller writes, not one this pack can hold.",
+    "source": "vat-ir",
+    "vat_category": "O",
+    "sequence": 100,
+    "exemption_code": null
+  },
+  {
+    "code": "SA-P-SR",
+    "name": "Purchase, standard-rated, input tax deductible",
+    "description": "A standard-rated purchase received in the course of an economic activity and used to make taxable supplies, whose input tax is deductible in full.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 15,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2020-07-01",
+    "legal_reference": "Implementing Regulations, Article 49(1): a Taxable Person may deduct input tax on goods and services \"received in the course of carrying on an Economic Activity\" and constituting taxable supplies, internal supplies, or supplies that would have been taxable had they been made in the Kingdom. Article 53 is what makes the deduction provable: the tax invoice. Reported in field 7, the standard-rated purchases line, with its tax in the same field's tax column.",
+    "source": "vat-ir",
+    "vat_category": "S",
+    "sequence": 110,
+    "recoverable": true,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "7"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "7"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "7",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "7",
+          "box_factor": -100
+        }
+      ]
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "SA-P-BL-ENT",
+    "name": "Purchase, standard-rated, entertainment or catering — input tax blocked",
+    "description": "Entertainment, sporting or cultural services, and catering in hotels, restaurants and similar venues, which Article 50 treats as received outside the economic activity.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 15,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2020-07-01",
+    "legal_reference": "Implementing Regulations, Article 50(1)(a) and (b): expenditure on \"any form of entertainment, sporting or cultural services\" and on \"catering services in hotels, restaurants and similar venues\" is not incurred in the course of the economic activity, \"and consequently the Taxable Person will not be permitted to deduct the Input Tax relating to such expenditure\", unless it is supplied onwards as a taxable supply (Article 50(4)). Board Resolution No. (01-06-24) of 19 November 2024 added one exception ZATCA states in its own guideline — catering \"unless the taxable person is legally obligated to provide such services to employees at the workplace under applicable Kingdom regulations\" — which this tax does not model, because whether an employer is so obliged is a fact about the employer and not about the invoice. The tax lands on the account of the line it taxes rather than on 1150, and on no field of the return: the filing guideline lists catering, cars and their fuel among the purchases that may not go in field 7.",
+    "source": "vat-ir-amendments",
+    "vat_category": "S",
+    "sequence": 120,
+    "recoverable": false,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax_on_base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax_on_base"
+        }
+      ]
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "SA-P-BL-CAR",
+    "name": "Purchase, standard-rated, restricted motor vehicle — input tax blocked",
+    "description": "The purchase or lease of a road vehicle available for private use, and its repair, maintenance and fuel.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 15,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2020-07-01",
+    "legal_reference": "Implementing Regulations, Article 50(1)(c) to (e): the purchase or lease of a Restricted Motor Vehicle, services on one, and its fuel. Article 50(2) defines a Restricted Motor Vehicle as \"any vehicle designed to be used on the road unless the vehicle is either used exclusively by the Taxable Person or by its employees for work purposes, without being made available for any private use\", or is held for resale or for a vehicle-supplying business; the 2024 amendment states the ten-seat limit and adds emergency vehicles and heavy machinery to the exceptions. The tax lands on the account of the line it taxes and on no field of the return.",
+    "source": "vat-ir",
+    "vat_category": "S",
+    "sequence": 130,
+    "recoverable": false,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax_on_base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax_on_base"
+        }
+      ]
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "SA-P-ZR",
+    "name": "Purchase, zero-rated",
+    "description": "A zero-rated purchase from a supplier in the Kingdom — qualifying medicines, investment metals, international transport.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2020-07-01",
+    "legal_reference": "Chapter Six of the Implementing Regulations rates the supply at zero in the supplier's hands, so there is no input tax to deduct and the value is reported in field 10, the zero-rated purchases line of the return. Article 49(1)(a) counts a zero-rated supply among those whose input tax would be deductible, which is why a zero-rated purchase is a purchase of the return and not an absence of one.",
+    "source": "vat-ir",
+    "vat_category": "Z",
+    "sequence": 140,
+    "recoverable": true,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "10"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "10",
+          "box_factor": -100
+        }
+      ]
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "SA-P-EX",
+    "name": "Purchase, exempt",
+    "description": "A purchase of an exempt supply — a residential lease, a financial service on an implicit margin, a transfer of real estate.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "exempt",
+    "valid_from": "2020-07-01",
+    "legal_reference": "Implementing Regulations, Articles 29 and 30. An exempt purchase carries no input tax at all and is reported in field 11, the exempt purchases line.",
+    "source": "vat-ir",
+    "vat_category": "E",
+    "sequence": 150,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "11"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "11",
+          "box_factor": -100
+        }
+      ]
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "SA-P-NR",
+    "name": "Purchase, supplier not registered for VAT",
+    "description": "A purchase from a supplier established in the Kingdom who is below the registration threshold, so no tax was charged and none may be deducted.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "not_subject",
+    "valid_from": "2020-07-01",
+    "legal_reference": "No tax is charged because the supplier is not a Taxable Person: registration is mandatory above annual supplies of SAR 375,000 and optional above SAR 187,500, the thresholds ZATCA states on its registration service and which Articles 3 and 7 of the Implementing Regulations take from Articles 50(2) and 51(3) of the Common VAT Agreement. The filing guideline is explicit that a purchase whose tax the taxable person cannot evidence with a tax invoice does not go in field 7. Not reported on any field.",
+    "source": "registration-service",
+    "vat_category": "O",
+    "sequence": 160,
+    "postings": {
+      "invoice": [],
+      "credit_note": []
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "SA-P-IMP",
+    "name": "Purchase, import of goods, VAT paid to Customs on entry",
+    "description": "Goods imported into the Kingdom on which Saudi Customs collected the tax at the border, the ordinary case.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 15,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2020-07-01",
+    "legal_reference": "Implementing Regulations, Article 43(3): \"The Tax due on the Import of Goods shall be payable on the Import date; Saudi Customs shall be responsible for collecting such Tax as per Customs' procedures\", the importer having given Customs its Tax Identification Number (Article 43(1)) and receiving a monthly statement of the value imported and the tax collected (Article 43(2)). Reported in field 8, which the guideline on imports and exports calls the field \"which includes VAT paid to ZATCA\"; the tax is deductible under Article 49(1) and the field's tax column is what carries it. The tax is not owed to the supplier, so it is not credited to the supplier's account: it lands on 2105, the amount owed to Saudi Customs, which the customs payment settles.",
+    "source": "imports-exports-guideline",
+    "vat_category": null,
+    "sequence": 170,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "8"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "8"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2105"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "8",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "8",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2105"
+        }
+      ]
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "SA-P-IMP-RC",
+    "name": "Purchase, import of goods, tax paid through the return",
+    "description": "Goods imported by a taxable person ZATCA has authorised to pay import tax through its own return instead of at the border.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 15,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2020-07-01",
+    "legal_reference": "Implementing Regulations, Article 44(1): \"A Taxable Person may apply for authorization for the payment of Tax on imports to be made through that Taxable Person's Tax Return, instead of being collected by the Customs Department on importation entry\", granted only to an importer on a monthly tax period importing at least monthly, with twelve months of returns and payments on time and evidence of continuing financial stability (Article 44(2)). The guideline on imports and exports states where it lands: \"If the application is approved, VAT shall be included in Field 9 of the VAT return instead of Field 8\". Field 9 carries the tax due and the deduction of it at once, which is why its tax column comes to nothing here — see the field's own note.",
+    "source": "imports-exports-guideline",
+    "vat_category": null,
+    "sequence": 180,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "9"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "9",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2100",
+          "box": "9"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "9",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "9"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2100",
+          "box": "9",
+          "box_factor": -100
+        }
+      ]
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "SA-P-RC-SVC",
+    "name": "Purchase, services received from a non-resident, reverse charge",
+    "description": "A taxable service received from a supplier with no place of residence in the Kingdom, the customer accounting for the tax itself.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 15,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2020-07-01",
+    "legal_reference": "Implementing Regulations, Article 47(1): where the Agreement makes a Taxable Customer liable for tax on a supply received from a Nonresident Supplier, \"Tax shall be paid by way of the Reverse Charge Mechanism. The Taxable Customer must report the Output Tax on the Supply and any Input Tax (to the extent that the Customer can benefit from Input VAT deduction) in the Tax Return for that Tax Period.\" The guideline on imports and exports adds where: \"VAT accounted for under the Reverse Charge Mechanism shall be reported in Field 9 of the Tax Return, whereby the Tax Return form automatically treats the Input Tax as deductible on the supply\", and that the reverse charge reaches only services taxable by nature — the receipt of an exempt service from a non-resident, a loan for instance, is not reported at all. The supplier issues no tax invoice for it (Governor's Decision No. 62738 excludes a reverse-charge supply from electronic invoicing), and the Authority accepts the commercial invoice as evidence.",
+    "source": "imports-exports-guideline",
+    "vat_category": null,
+    "sequence": 190,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "9"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "9",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2100",
+          "box": "9"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "9",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "9"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2100",
+          "box": "9",
+          "box_factor": -100
+        }
+      ]
+    },
+    "exemption_code": null
+  }
+]

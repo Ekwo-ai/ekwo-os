@@ -683,3 +683,34 @@ on conflict (code) do update set
   eu_vat_to       = excluded.eu_vat_to,
   vat_prefix      = excluded.vat_prefix,
   legal_reference = excluded.legal_reference;
+
+
+-- ---------------------------------------------------------------------------
+-- The row — Saudi Arabia
+--
+-- A State outside the common system of VAT the way the United Arab Emirates
+-- or Singapore are: the Kingdom levies a value added tax of its own under the
+-- VAT Law of Royal Decree No. M/113, whose article 2(2) sets the basic rate at
+-- 15 % of the value of a supply or an import since Royal Order No. A/638
+-- amended it, and no Union instrument reaches it. The Common VAT Agreement of
+-- the States of the Gulf Cooperation Council is a framework treaty and not a
+-- second common system: its intra-GCC mechanism is not in force, article 79(6)
+-- of the Kingdom's Implementing Regulations treating every other Member State
+-- as a country outside Council Territory until an Electronic Services System
+-- is announced. `vat_prefix` is null: a Saudi VAT registration number is
+-- fifteen digits beginning and ending with 3 and carries no country prefix of
+-- this table's kind.
+-- ---------------------------------------------------------------------------
+
+insert into territories (code, code_source, name, parent_code, eu_vat_scope, eu_vat_from, eu_vat_to, vat_prefix, legal_reference) values
+  ('SA', 'iso_3166_1', 'Saudi Arabia', null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. Saudi Arabia levies a value added tax of its own under the Value Added Tax Law (Royal Decree No. M/113 dated 2 Dhul Qa''dah 1438H), article 2(2), at a basic rate of 15 % since Royal Order No. A/638 dated 15 Shawwal 1441H amended it, the rate having been 5 % from 1 January 2018 (Zakat, Tax and Customs Authority, consolidated Arabic text).')
+on conflict (code) do update set
+  code_source     = excluded.code_source,
+  name            = excluded.name,
+  parent_code     = excluded.parent_code,
+  eu_vat_scope    = excluded.eu_vat_scope,
+  eu_vat_from     = excluded.eu_vat_from,
+  eu_vat_to       = excluded.eu_vat_to,
+  vat_prefix      = excluded.vat_prefix,
+  legal_reference = excluded.legal_reference;

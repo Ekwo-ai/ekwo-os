@@ -1,0 +1,269 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "SA",
+  "name": "Saudi Arabia",
+  "version": "0.1.0",
+  "schema_min": "20260917170000",
+  "seed_sequence": 71,
+  "released_at": "2026-09-22",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "vat-agreement",
+        "title": "Common VAT Agreement of the States of the Gulf Cooperation Council (GCC), signed 27/2/1438H corresponding to 27 November 2016, ratified for the Kingdom by Royal Decree No. M/51 dated 3 Jumada I 1438H",
+        "publisher": "Gulf Cooperation Council, published by the Zakat, Tax and Customs Authority",
+        "url": "https://zatca.gov.sa/ar/RulesRegulations/Taxes/Documents/GCC%20VAT%20Agreement.pdf",
+        "consulted_on": "2026-09-22",
+        "kind": "law"
+      },
+      {
+        "key": "vat-law",
+        "title": "نظام ضريبة القيمة المضافة — the Value Added Tax Law, Royal Decree No. M/113 dated 2 Dhul Qa'dah 1438H, as amended by Royal Decree No. M/52 dated 28 Rabi II 1441H and Royal Order No. A/638 dated 15 Shawwal 1441H (consolidated Arabic text)",
+        "publisher": "Zakat, Tax and Customs Authority",
+        "url": "https://zatca.gov.sa/ar/RulesRegulations/Taxes/Documents/%D9%86%D8%B8%D8%A7%D9%85%20%D8%B6%D8%B1%D9%8A%D8%A8%D8%A9%20%D8%A7%D9%84%D9%82%D9%8A%D9%85%D8%A9%20%D8%A7%D9%84%D9%85%D8%B6%D8%A7%D9%81%D8%A9%20(2).pdf",
+        "consulted_on": "2026-09-22",
+        "kind": "law"
+      },
+      {
+        "key": "vat-ir",
+        "title": "Implementing Regulations of the Value Added Tax Law, Board Resolution No. (3839) dated 14/12/1438H, as amended — eighth edition, 04/04/1443H corresponding to 09/11/2021 (ZATCA English translation)",
+        "publisher": "Zakat, Tax and Customs Authority",
+        "url": "https://zatca.gov.sa/en/RulesRegulations/Taxes/Documents/Implmenting%20Regulations%20of%20the%20VAT%20Law_EN.pdf",
+        "consulted_on": "2026-09-22",
+        "kind": "regulation"
+      },
+      {
+        "key": "vat-ir-ar",
+        "title": "اللائحة التنفيذية لنظام ضريبة القيمة المضافة — the Implementing Regulations in the official Arabic the English translation defers to, tenth edition, Shawwal 1446H corresponding to April 2025",
+        "publisher": "Zakat, Tax and Customs Authority",
+        "url": "https://zatca.gov.sa/ar/RulesRegulations/Taxes/Documents/Implmenting%20Regulations%20of%20the%20VAT%20Law.pdf",
+        "consulted_on": "2026-09-22",
+        "kind": "regulation"
+      },
+      {
+        "key": "vat-ir-amendments",
+        "title": "Guideline for Amendments to the Implementing Regulation of Value Added Tax (VAT), issued by ZATCA's Board of Directors Resolution No. (01-06-24) dated November 19, 2024 — Issue 1, April 2025",
+        "publisher": "Zakat, Tax and Customs Authority",
+        "url": "https://zatca.gov.sa/en/HelpCenter/guidelines/Documents/Amendments-to-the-Implementing-Regulation-of-(VAT).PDF",
+        "consulted_on": "2026-09-22",
+        "kind": "guidance"
+      },
+      {
+        "key": "imports-exports-guideline",
+        "title": "Guideline on Imports and Exports under VAT Provisions, second edition, May 2026",
+        "publisher": "Zakat, Tax and Customs Authority",
+        "url": "https://zatca.gov.sa/en/HelpCenter/guidelines/Documents/Guideline-on-Imports-and-Exports-under-VAT-Provision.pdf",
+        "consulted_on": "2026-09-22",
+        "kind": "guidance"
+      },
+      {
+        "key": "filing-guideline",
+        "title": "الدليل المبسط لتقديم إقرار ضريبة القيمة المضافة — the simplified guideline to filing a VAT return, which reproduces the return's own sales screen with its fields numbered",
+        "publisher": "Zakat, Tax and Customs Authority",
+        "url": "https://zatca.gov.sa/ar/HelpCenter/guidelines/Documents/Simplified_VAT_Filing_Guidelines.pdf",
+        "consulted_on": "2026-09-22",
+        "kind": "guidance"
+      },
+      {
+        "key": "vat-return-manual",
+        "title": "User Guide — Submit VAT Return Service",
+        "publisher": "Zakat, Tax and Customs Authority",
+        "url": "https://zatca.gov.sa/en/eServices/Documents/eServices_Manual_009.pdf",
+        "consulted_on": "2026-09-22",
+        "kind": "form"
+      },
+      {
+        "key": "vat-return-service",
+        "title": "Submit VAT Return — the e-service a return is filed on",
+        "publisher": "Zakat, Tax and Customs Authority",
+        "url": "https://zatca.gov.sa/en/eServices/Pages/eServices-009.aspx",
+        "consulted_on": "2026-09-22",
+        "kind": "portal"
+      },
+      {
+        "key": "registration-service",
+        "title": "Register in Value Added Tax — the e-service, which states the mandatory and voluntary registration thresholds",
+        "publisher": "Zakat, Tax and Customs Authority",
+        "url": "https://zatca.gov.sa/en/eServices/Pages/eServices_002.aspx",
+        "consulted_on": "2026-09-22",
+        "kind": "portal"
+      },
+      {
+        "key": "einvoicing-regulation",
+        "title": "E-invoicing Regulation, published 4 December 2020",
+        "publisher": "Zakat, Tax and Customs Authority",
+        "url": "https://zatca.gov.sa/en/E-Invoicing/Introduction/LawsAndRegulations/Documents/E-invoicing-Regulations.pdf",
+        "consulted_on": "2026-09-22",
+        "kind": "regulation"
+      },
+      {
+        "key": "einvoicing-resolution",
+        "title": "Controls, Requirements, Technical Specifications and Procedural Rules for Implementing the Provisions of the E-Invoicing Regulation, Governor's Decision No. (62738) dated 23/11/1443H, version published 19 May 2023",
+        "publisher": "Zakat, Tax and Customs Authority",
+        "url": "https://zatca.gov.sa/en/E-Invoicing/Introduction/LawsAndRegulations/Documents/20230519_E-Invoicing%20Implementation%20Resolution%20English.pdf",
+        "consulted_on": "2026-09-22",
+        "kind": "regulation"
+      },
+      {
+        "key": "einvoicing-xml",
+        "title": "Electronic Invoice XML Implementation Standard, Version 1.2, 19/05/2023 — the UBL 2.1 subset a Saudi electronic invoice is written in, with the VAT category codes and the VATEX-SA reason codes in Arabic and English",
+        "publisher": "Zakat, Tax and Customs Authority",
+        "url": "https://zatca.gov.sa/ar/E-Invoicing/SystemsDevelopers/Documents/20230519_ZATCA_Electronic_Invoice_XML_Implementation_Standard_%20vF.pdf",
+        "consulted_on": "2026-09-22",
+        "kind": "standard"
+      },
+      {
+        "key": "einvoicing-phases",
+        "title": "E-Invoicing Roll-out phases — the Generation phase and the waves of the Integration phase",
+        "publisher": "Zakat, Tax and Customs Authority",
+        "url": "https://zatca.gov.sa/en/E-Invoicing/Introduction/Pages/Roll-out-phases.aspx",
+        "consulted_on": "2026-09-22",
+        "kind": "portal"
+      },
+      {
+        "key": "rett",
+        "title": "Real Estate Transaction Tax Law, Royal Decree No. M/84 dated 19/03/1446H, in force since 12 Shawwal 1446H corresponding to 10 April 2025",
+        "publisher": "Zakat, Tax and Customs Authority",
+        "url": "https://zatca.gov.sa/en/RulesRegulations/Taxes/Pages/RETTRegulation.aspx",
+        "consulted_on": "2026-09-22",
+        "kind": "regulation"
+      },
+      {
+        "key": "socpa-standards",
+        "title": "Overview of the professional standards endorsed by the Saudi Organization for Chartered and Professional Accountants — IFRS Accounting Standards, and the IFRS for SMEs Accounting Standard for small and medium-sized entities",
+        "publisher": "Saudi Organization for Chartered and Professional Accountants (SOCPA)",
+        "url": "https://socpa.org.sa/Socpa/Professional-standards/Overview-of-standards.aspx?lang=en-us",
+        "consulted_on": "2026-09-22",
+        "kind": "standard"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "SAR",
+    "language": "en",
+    "rounding_method": "half_up",
+    "closing_style": "retained_earnings",
+    "fiscal_year_default": "calendar",
+    "roles": {
+      "receivable": "1100",
+      "payable": "2000",
+      "suspense": "2990",
+      "rounding": "6990",
+      "retained_earnings": "3200",
+      "sales": "4000",
+      "purchase": "5000",
+      "bank": "1010",
+      "cash": "1000",
+      "fx_gain": "4700",
+      "fx_loss": "6950",
+      "asset_disposal_gain": "4750",
+      "asset_disposal_loss": "6960",
+      "tax_payable": "2110",
+      "tax_receivable": "1155"
+    },
+    "journal_roles": {
+      "sales": "SAL",
+      "purchase": "PUR",
+      "miscellaneous": "GEN",
+      "opening": "OPN"
+    }
+  },
+  "languages": [],
+  "journals": [
+    {
+      "code": "SAL",
+      "type": "sales",
+      "name": "Sales journal",
+      "sequence": 10
+    },
+    {
+      "code": "PUR",
+      "type": "purchase",
+      "name": "Purchases journal",
+      "sequence": 20
+    },
+    {
+      "code": "BNK",
+      "type": "bank",
+      "name": "Bank",
+      "sequence": 30
+    },
+    {
+      "code": "CSH",
+      "type": "cash",
+      "name": "Petty cash",
+      "sequence": 40
+    },
+    {
+      "code": "GEN",
+      "type": "general",
+      "name": "General journal",
+      "sequence": 50
+    },
+    {
+      "code": "OPN",
+      "type": "opening",
+      "name": "Opening balances",
+      "sequence": 60
+    }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Saudi Arabia reference chart of accounts",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": [
+        "SA-IFRSSME-SFP",
+        "SA-IFRSSME-IS"
+      ],
+      "legal_reference": "There is no legal chart of accounts in the Kingdom, as far as this pack's research could establish: neither the Zakat, Tax and Customs Authority nor the Saudi Organization for Chartered and Professional Accountants publishes one, and a search of both sites found no text prescribing a numbering of accounts. What is prescribed is the framework — SOCPA endorses the IFRS Accounting Standards, and the IFRS for SMEs Accounting Standard for a small or medium-sized entity, and issues standards of its own where IFRS does not reach, zakat being the named case. This is an absence of evidence and not a citable denial, which is why it is written out here rather than behind an article number. The chart itself is this pack's own: four digits, blocked so that each range reaches one line item of the statement of financial position and of the income statement below, carrying the accounts a Saudi company actually keeps — VAT input and output tax, the amount payable to and refundable by ZATCA, import VAT paid at Customs, withholding tax payable and suffered, GOSI contributions, an end-of-service benefits provision, and zakat apart from income tax. The statutory reserve of EQ.2 is the share of the annual net profit the Companies Law asks a Saudi company to set aside; this pack's research did not open the article of the Companies Law (Royal Decree No. M/132 of 1443H) that fixes it, and a reviewer should check that before the line is trusted.",
+      "source": "socpa-standards"
+    }
+  ],
+  "documents": {
+    "numbering": "sequential",
+    "number_format": "{CODE}-{YYYY}-{NNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "earliest_of_delivery_or_payment",
+    "references": {
+      "numbering": {
+        "legal_reference": "Implementing Regulations, Article 53(5)(b) — a Tax Invoice carries \"a sequential number which uniquely identifies the Tax Invoice\". The article asks that the number identify the invoice and run in sequence, not that the series carry no hole, which is why the style is `sequential` and not a gapless one. The Electronic Invoice XML Implementation Standard adds a second identifier beside it, a UUID per document, and chains each invoice to the one before it by a hash — neither of which is the number a reader sees, and neither of which this field holds. The pattern in `number_format` is one a business may choose.",
+        "source": "vat-ir"
+      },
+      "tax_point": {
+        "legal_reference": "Common VAT Agreement, Article 23(1), which the VAT Law applies by its own Article 2(1): \"Tax becomes due on the date of the supply of Goods or Services, the date of issuance of the tax invoice or upon partial or full receipt of the Consideration, whichever comes first, and to the extent of the received amount.\" That is a three-way earliest test — supply, invoice, payment — and the closed vocabulary of this field has no value for three triggers at once. `earliest_of_delivery_or_payment` is the nearest of the five and is what the rule reduces to in the ordinary case, because Article 53(1)(b) of the Implementing Regulations already requires the Tax Invoice by the fifteenth day of the month following the supply; a supply invoiced ahead of delivery is the case this approximation misses. docs/international.md records the same gap for Vietnam, whose Article 8 reads the same way.",
+        "source": "vat-agreement"
+      }
+    },
+    "mentions": [
+      {
+        "code": "reverse_charge",
+        "applies_when": "reverse_charge",
+        "text": "Reverse charge: the Customer must account for the Tax due on this supply, under Article 47 of the Implementing Regulations of the VAT Law.",
+        "sequence": 10,
+        "legal_reference": "Implementing Regulations, Article 53(5)(d) — where the Customer is required to self-account for Tax, the Tax Invoice carries \"the Customer's Tax Identification Number and a statement that the Customer must account for the Tax\". Article 53(5) requires every detail it lists to be printed **in Arabic**, any other language being a translation shown beside it: the sentence above is the pack's own English, and `i18n/ar.json` is where an Arabic wording belongs.",
+        "source": "vat-ir"
+      },
+      {
+        "code": "not_basic_rate",
+        "applies_when": "exempt",
+        "text": "This supply is not taxed at the basic rate of 15 %. The tax treatment applied to it, and the article of the Implementing Regulations it is granted by, are stated against the line.",
+        "sequence": 20,
+        "legal_reference": "Implementing Regulations, Article 53(5)(k) — \"in the case where Tax is not charged at the basic rate, a narration explaining the Tax treatment applied to the supply\". The article asks for a narration and prescribes no wording, so the sentence here is the pack's own and names where the reader finds the treatment. `applies_when` has no value for \"any line not at the basic rate\": it resolves `exempt` from the treatment of the line's tax, and `export` is a separate value the pack does not repeat this sentence on, so a zero-rated domestic line — international transport, qualifying medicines, investment metals — carries no mention here although Article 53(5)(k) asks for one. That gap is the vocabulary's and is written up in docs/international.md.",
+        "source": "vat-ir"
+      }
+    ]
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "Electronic invoicing is obligatory in the Kingdom and this pack still leaves all four fields above empty, for the reason packs/mx/, packs/vn/ and packs/kr/ leave them empty: FATOORA is a clearance regime, not an exchange between two parties' access points, and `profile` names an EN 16931 profile that a brick of packages/formats actually writes. The obligation itself: the E-invoicing Regulation published 4 December 2020 binds every taxable person resident in the Kingdom, and any customer or third party issuing on their behalf (Article 3(A)), to issue Electronic Invoices for every transaction requiring a tax invoice (Article 3(B)), with twelve months from publication to do so (Article 7(B)) — so 4 December 2021. The Governor's Decision No. (62738) dated 23/11/1443H splits the obligation in two: the **Generation** phase, \"applied to all Persons subject to the E-Invoicing Regulation effective 4th of December 2021\", and the **Integration** phase, \"in phases starting from 1st of January 2023\", each wave being a group ZATCA names and notifies at least six months ahead (Clause Sixth). In the Integration phase a Tax Invoice between businesses is **cleared**: the invoice is transmitted to ZATCA, which verifies it against the resolution and its annexes and \"shall insert the Cryptographic Stamp only on the Invoices and Notes which fulfil the aforesaid controls ... prior to sharing them with the customers\" — an invoice the Authority has not stamped is not an invoice the seller may give the buyer. A Simplified Tax Invoice, the business-to-consumer document, is instead **reported** to ZATCA \"within a period which must not exceed (24) hours from its generation\". The format is XML, or PDF/A-3 with the XML embedded, written against ZATCA's own Electronic Invoice XML Implementation Standard — a UBL 2.1 subset whose business rules are a subset of EN 16931 but which is not a PINT profile and is exchanged over ZATCA's API rather than over a four-corner network. No brick of packages/formats writes that XML, signs it with the ECDSA key the standard requires, embeds the invoice hash chain or the QR code, or talks to ZATCA: a document issued from Ekwo is not an Electronic Invoice, and `mandatory_from` with no `profile` would claim it was. `obligation` is left out for the same reason and not because nobody looked: the schema refuses `mandatory` without `mandatory_from`, and `mandatory_from` without a `profile`, so the three fields stand or fall together. `party_scheme` and `vat_scheme` are empty because the Kingdom has no ISO 6523 identifier: it is absent from the Peppol participant identifier scheme list v9.7, which carries AE and OM and no SA. What a Saudi invoice carries instead is the 15-digit VAT registration number whose first and last digits are 3 (Electronic Invoice XML Implementation Standard, rules BR-KSA-39 and BR-KSA-40). docs/international.md carries the rest.",
+    "source": "einvoicing-resolution"
+  }
+}

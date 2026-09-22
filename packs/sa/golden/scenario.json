@@ -1,0 +1,226 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "A year of a VAT-registered Saudi trading and services company, filing quarterly, for the financial year 2026",
+  "chart": "default",
+  "fiscal_year": {
+    "name": "Financial year ended 31 December 2026",
+    "start": "2026-01-01",
+    "end": "2026-12-31"
+  },
+  "periods": [
+    { "code": "2026-Q1", "from": "2026-01-01", "to": "2026-03-31" },
+    { "code": "2026-Q2", "from": "2026-04-01", "to": "2026-06-30" },
+    { "code": "2026-Q3", "from": "2026-07-01", "to": "2026-09-30" },
+    { "code": "2026-Q4", "from": "2026-10-01", "to": "2026-12-31" }
+  ],
+  "statements": ["SA-IFRSSME-SFP", "SA-IFRSSME-IS"],
+  "contacts": [
+    { "ref": "cust-sa", "name": "Najd Industrial Supplies Company", "type": "customer", "country": "SA" },
+    { "ref": "cust-export", "name": "Meridian Outfitters Inc.", "type": "customer", "country": "US" },
+    { "ref": "cust-svc", "name": "Thames Valley Advisory Ltd", "type": "customer", "country": "GB" },
+    { "ref": "cust-med", "name": "Al Waha Polyclinic Company", "type": "customer", "country": "SA" },
+    { "ref": "cust-metal", "name": "Tuwaiq Bullion Trading Company", "type": "customer", "country": "SA" },
+    { "ref": "tenant", "name": "Residential tenant — Al Malqa apartment", "type": "customer", "country": "SA" },
+    { "ref": "cust-transport", "name": "Gulf Line Freight Forwarding Company", "type": "customer", "country": "SA" },
+    { "ref": "supp-sa", "name": "Olaya Office Supplies Company", "type": "supplier", "country": "SA" },
+    { "ref": "supp-hosp", "name": "Corniche Catering Services Company", "type": "supplier", "country": "SA" },
+    { "ref": "supp-car", "name": "Rawdah Fleet Leasing Company", "type": "supplier", "country": "SA" },
+    { "ref": "supp-foreign", "name": "Helvetia Engineering Consultants AG", "type": "supplier", "country": "CH" },
+    { "ref": "supp-import", "name": "Zhejiang Precision Parts Co. Ltd", "type": "supplier", "country": "CN" },
+    { "ref": "supp-landlord", "name": "Al Masif Residential Properties Company", "type": "supplier", "country": "SA" }
+  ],
+  "documents": [
+    {
+      "ref": "INV-SA-SR-1",
+      "type": "sale_invoice",
+      "contact": "cust-sa",
+      "date": "2026-01-15",
+      "why": "Standard-rated domestic sale, the ordinary 15 % case, and the invoice CN-SA-SR-1 partly credits.",
+      "lines": [
+        { "name": "Industrial valves, supplied and installed", "quantity": 1, "unit_price": 100000, "tax": "SA-S-SR", "account": "4000" }
+      ]
+    },
+    {
+      "ref": "INV-SA-ZR-EXP-1",
+      "type": "sale_invoice",
+      "contact": "cust-export",
+      "date": "2026-01-22",
+      "why": "Export of goods to a place outside Council Territory, zero-rated under Article 32 of the Implementing Regulations.",
+      "lines": [
+        { "name": "Export of finished goods, FOB King Abdullah Port", "quantity": 1, "unit_price": 250000, "tax": "SA-S-ZR-EXP", "account": "4020" }
+      ]
+    },
+    {
+      "ref": "INV-SA-ZR-SVC-1",
+      "type": "sale_invoice",
+      "contact": "cust-svc",
+      "date": "2026-02-05",
+      "why": "Engineering services to a customer with no place of residence in any Member State, zero-rated under Article 33 — the export of a service, not of goods.",
+      "lines": [
+        { "name": "Engineering design services for a non-resident customer", "quantity": 1, "unit_price": 80000, "tax": "SA-S-ZR-SVC", "account": "4030" }
+      ]
+    },
+    {
+      "ref": "INV-SA-ZR-TRANSPORT-1",
+      "type": "sale_invoice",
+      "contact": "cust-transport",
+      "date": "2026-02-18",
+      "why": "International transport of goods out of the Kingdom, zero-rated under Article 34 — a zero-rated supply made to a Saudi customer, which is why it is not an export.",
+      "lines": [
+        { "name": "International carriage of goods, Riyadh to Rotterdam", "quantity": 1, "unit_price": 60000, "tax": "SA-S-ZR-TRANSPORT", "account": "4010" }
+      ]
+    },
+    {
+      "ref": "INV-SA-ZR-MED-1",
+      "type": "sale_invoice",
+      "contact": "cust-med",
+      "date": "2026-03-03",
+      "why": "Qualifying medicines and medical goods, zero-rated under Article 35 on the Ministry of Health classification.",
+      "lines": [
+        { "name": "Qualifying medical equipment, Ministry of Health classification", "quantity": 1, "unit_price": 40000, "tax": "SA-S-ZR-MED", "account": "4000" }
+      ]
+    },
+    {
+      "ref": "INV-SA-ZR-METAL-1",
+      "type": "sale_invoice",
+      "contact": "cust-metal",
+      "date": "2026-03-12",
+      "why": "First supply of gold of 99.9 % purity by its refiner, zero-rated under Article 36 — a domestic zero-rated supply, not an export.",
+      "lines": [
+        { "name": "Investment gold bars, 99.9 % purity, first supply by the refiner", "quantity": 1, "unit_price": 500000, "tax": "SA-S-ZR-METAL", "account": "4000" }
+      ]
+    },
+    {
+      "ref": "INV-SA-EX-RESI-1",
+      "type": "sale_invoice",
+      "contact": "tenant",
+      "date": "2026-03-20",
+      "why": "Annual lease of residential real estate, exempt under Article 30 — the exempt side of the return.",
+      "lines": [
+        { "name": "Residential apartment lease, Al Malqa — annual rent", "quantity": 1, "unit_price": 120000, "tax": "SA-S-EX-RESI", "account": "4040" }
+      ]
+    },
+    {
+      "ref": "CN-SA-SR-1",
+      "type": "sale_credit_note",
+      "contact": "cust-sa",
+      "date": "2026-03-25",
+      "why": "Partial credit note against INV-SA-SR-1, two valves returned — proves the standard-rated boxes subtract and the ledger flips side.",
+      "lines": [
+        { "name": "Credit: two valves returned", "quantity": 1, "unit_price": 20000, "tax": "SA-S-SR", "account": "4000" }
+      ]
+    },
+    {
+      "ref": "INV-SA-SR-2",
+      "type": "sale_invoice",
+      "contact": "cust-sa",
+      "date": "2026-08-10",
+      "why": "A second standard-rated sale, in the third quarter, so the return is proved across more than one period.",
+      "lines": [
+        { "name": "Industrial pumps, supplied and commissioned", "quantity": 1, "unit_price": 150000, "tax": "SA-S-SR", "account": "4000" }
+      ]
+    },
+    {
+      "ref": "BILL-SA-SR-1",
+      "type": "purchase_invoice",
+      "contact": "supp-sa",
+      "date": "2026-01-19",
+      "why": "Ordinary standard-rated purchase whose input tax is fully deductible.",
+      "lines": [
+        { "name": "Office supplies and stationery", "quantity": 1, "unit_price": 30000, "tax": "SA-P-SR", "account": "6220" }
+      ]
+    },
+    {
+      "ref": "BILL-SA-BL-ENT-1",
+      "type": "purchase_invoice",
+      "contact": "supp-hosp",
+      "date": "2026-02-08",
+      "why": "Hospitality and catering for a client event, input tax blocked by Article 50 — the tax lands on the expense line and on no box of the return.",
+      "lines": [
+        { "name": "Client hospitality — catering for a product launch", "quantity": 1, "unit_price": 20000, "tax": "SA-P-BL-ENT", "account": "6310" }
+      ]
+    },
+    {
+      "ref": "BILL-SA-BL-CAR-1",
+      "type": "purchase_invoice",
+      "contact": "supp-car",
+      "date": "2026-02-26",
+      "why": "Lease of a restricted motor vehicle made available for private use, input tax blocked by Article 50.",
+      "lines": [
+        { "name": "Motor vehicle lease — available for private use", "quantity": 1, "unit_price": 48000, "tax": "SA-P-BL-CAR", "account": "6320" }
+      ]
+    },
+    {
+      "ref": "BILL-SA-EX-1",
+      "type": "purchase_invoice",
+      "contact": "supp-landlord",
+      "date": "2026-03-01",
+      "why": "Lease of residential accommodation for staff, an exempt purchase that carries no input tax at all.",
+      "lines": [
+        { "name": "Residential accommodation leased for employees — annual rent", "quantity": 1, "unit_price": 60000, "tax": "SA-P-EX", "account": "6200" }
+      ]
+    },
+    {
+      "ref": "BILL-SA-RC-SVC-1",
+      "type": "purchase_invoice",
+      "contact": "supp-foreign",
+      "date": "2026-04-14",
+      "why": "Consultancy received from a supplier with no place of residence in the Kingdom, self-assessed under Article 47 — the reverse charge, output and input tax on the same return.",
+      "lines": [
+        { "name": "Engineering consultancy from a non-resident supplier", "quantity": 1, "unit_price": 100000, "tax": "SA-P-RC-SVC", "account": "6400" }
+      ]
+    },
+    {
+      "ref": "BILL-SA-IMP-1",
+      "type": "purchase_invoice",
+      "contact": "supp-import",
+      "date": "2026-05-06",
+      "why": "Goods imported for resale, VAT collected by Customs on entry under Article 43 and deducted on the return.",
+      "lines": [
+        { "name": "Imported precision components for resale", "quantity": 1, "unit_price": 200000, "tax": "SA-P-IMP", "account": "1210" }
+      ]
+    },
+    {
+      "ref": "BILL-SA-SR-2",
+      "type": "purchase_invoice",
+      "contact": "supp-sa",
+      "date": "2026-11-09",
+      "why": "A second standard-rated purchase, in the fourth quarter, so every quarter of the year carries something.",
+      "lines": [
+        { "name": "Office supplies and stationery — fourth quarter", "quantity": 1, "unit_price": 40000, "tax": "SA-P-SR", "account": "6220" }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "PMT-IN-1",
+      "direction": "inbound",
+      "date": "2026-08-27",
+      "amount": 172500.0,
+      "contact": "cust-sa",
+      "journal": "BNK",
+      "match": "INV-SA-SR-2",
+      "why": "Full settlement of INV-SA-SR-2 by bank transfer, 150,000 plus 15 % tax."
+    },
+    {
+      "ref": "PMT-OUT-1",
+      "direction": "outbound",
+      "date": "2026-01-29",
+      "amount": 34500.0,
+      "contact": "supp-sa",
+      "journal": "BNK",
+      "match": "BILL-SA-SR-1",
+      "why": "Full settlement of BILL-SA-SR-1 by bank transfer."
+    },
+    {
+      "ref": "PMT-IN-2",
+      "direction": "inbound",
+      "date": "2026-12-08",
+      "amount": 25000.0,
+      "contact": "cust-metal",
+      "journal": "BNK",
+      "match": null,
+      "why": "Advance on account from cust-metal, not matched to an invoice — an open item, which is what a real ledger holds."
+    }
+  ]
+}

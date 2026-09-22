@@ -1,0 +1,645 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/statements",
+  "statements": [
+    {
+      "code": "SA-IFRSSME-SFP",
+      "kind": "balance_sheet",
+      "framework": "SA-IFRS-SME",
+      "taxonomy": null,
+      "name": "Statement of financial position — IFRS for Small and Medium-sized Entities",
+      "legal_reference": "The Saudi Organization for Chartered and Professional Accountants endorses the IFRS for SMEs Accounting Standard for a small or medium-sized entity, and full IFRS for a listed entity; the Kingdom prescribes no chart of accounts and no statement format of its own. See the chart's own legal_reference in pack.json for what this pack's research could and could not open.",
+      "source": "socpa-standards",
+      "lines": [
+        {
+          "code": "CA",
+          "name": "Current assets",
+          "sequence": 10,
+          "is_total": true,
+          "plus": [
+            "CA.1",
+            "CA.2",
+            "CA.3",
+            "CA.4",
+            "CA.5",
+            "CA.6"
+          ],
+          "legal_reference": "IFRS for Small and Medium-sized Entities Accounting Standard, Section 4, paragraphs 4.4 to 4.6 — current and non-current assets are presented as separate classifications.",
+          "source": null
+        },
+        {
+          "code": "CA.1",
+          "name": "Cash and cash equivalents",
+          "sequence": 20,
+          "parent": "CA",
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1000",
+              "code_to": "1050"
+            }
+          ],
+          "legal_reference": "IFRS for Small and Medium-sized Entities Accounting Standard, paragraph 4.2(a).",
+          "source": null
+        },
+        {
+          "code": "CA.2",
+          "name": "Trade and other receivables",
+          "sequence": 30,
+          "parent": "CA",
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1100",
+              "code_to": "1160"
+            },
+            {
+              "kind": "account_code",
+              "code_from": "2990",
+              "side": "debit"
+            }
+          ],
+          "legal_reference": "IFRS for Small and Medium-sized Entities Accounting Standard, paragraph 4.2(b). VAT input tax, the amount refundable by ZATCA and withholding tax suffered on the entity's own receipts are presented here rather than as a current tax asset, which paragraph 4.2(n) keeps for the zakat and the income tax the entity is itself assessed on.",
+          "source": null
+        },
+        {
+          "code": "CA.3",
+          "name": "Inventories",
+          "sequence": 40,
+          "parent": "CA",
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1200",
+              "code_to": "1230"
+            }
+          ],
+          "legal_reference": "IFRS for Small and Medium-sized Entities Accounting Standard, paragraph 4.2(d).",
+          "source": null
+        },
+        {
+          "code": "CA.4",
+          "name": "Financial assets",
+          "sequence": 50,
+          "parent": "CA",
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1300"
+            }
+          ],
+          "legal_reference": "IFRS for Small and Medium-sized Entities Accounting Standard, paragraph 4.2(c), the part realised within twelve months.",
+          "source": null
+        },
+        {
+          "code": "CA.5",
+          "name": "Current tax assets",
+          "sequence": 60,
+          "parent": "CA",
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1350"
+            }
+          ],
+          "legal_reference": "IFRS for Small and Medium-sized Entities Accounting Standard, paragraph 4.2(n) — zakat and income tax recoverable from ZATCA on the entity's own assessment.",
+          "source": null
+        },
+        {
+          "code": "CA.6",
+          "name": "Prepayments and accrued income",
+          "sequence": 70,
+          "parent": "CA",
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1400",
+              "code_to": "1430"
+            }
+          ],
+          "legal_reference": "IFRS for Small and Medium-sized Entities Accounting Standard, paragraph 4.2(b), the part that is not a receivable.",
+          "source": null
+        },
+        {
+          "code": "NCA",
+          "name": "Non-current assets",
+          "sequence": 80,
+          "is_total": true,
+          "plus": [
+            "NCA.1",
+            "NCA.2",
+            "NCA.3",
+            "NCA.4"
+          ],
+          "legal_reference": "IFRS for Small and Medium-sized Entities Accounting Standard, Section 4, paragraphs 4.4 to 4.6.",
+          "source": null
+        },
+        {
+          "code": "NCA.1",
+          "name": "Property, plant and equipment",
+          "sequence": 90,
+          "parent": "NCA",
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1600",
+              "code_to": "1691"
+            }
+          ],
+          "legal_reference": "IFRS for Small and Medium-sized Entities Accounting Standard, paragraph 4.2(e). Right-of-use assets are carried among them: IFRS 16 reaches a lessee applying full IFRS, and a lessee applying the IFRS for SMEs capitalises a finance lease under Section 20.",
+          "source": null
+        },
+        {
+          "code": "NCA.2",
+          "name": "Investments",
+          "sequence": 100,
+          "parent": "NCA",
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1700"
+            }
+          ],
+          "legal_reference": "IFRS for Small and Medium-sized Entities Accounting Standard, paragraph 4.2(j) — investments in associates and in jointly controlled entities.",
+          "source": null
+        },
+        {
+          "code": "NCA.3",
+          "name": "Other non-current assets",
+          "sequence": 110,
+          "parent": "NCA",
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1710"
+            }
+          ],
+          "legal_reference": "IFRS for Small and Medium-sized Entities Accounting Standard, paragraph 4.2(c), the part not realised within twelve months.",
+          "source": null
+        },
+        {
+          "code": "NCA.4",
+          "name": "Intangible assets and goodwill",
+          "sequence": 120,
+          "parent": "NCA",
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1730",
+              "code_to": "1751"
+            }
+          ],
+          "legal_reference": "IFRS for Small and Medium-sized Entities Accounting Standard, paragraphs 4.2(g) and 4.2(h).",
+          "source": null
+        },
+        {
+          "code": "TA",
+          "name": "Total assets",
+          "sequence": 130,
+          "is_total": true,
+          "plus": [
+            "CA",
+            "NCA"
+          ],
+          "legal_reference": "IFRS for Small and Medium-sized Entities Accounting Standard, paragraph 4.2 — the statement presents the entity's assets, liabilities and equity as at the reporting date.",
+          "source": null
+        },
+        {
+          "code": "CL",
+          "name": "Current liabilities",
+          "sequence": 140,
+          "is_total": true,
+          "plus": [
+            "CL.1",
+            "CL.2",
+            "CL.3",
+            "CL.4",
+            "CL.5"
+          ],
+          "legal_reference": "IFRS for Small and Medium-sized Entities Accounting Standard, Section 4, paragraphs 4.7 and 4.8.",
+          "source": null
+        },
+        {
+          "code": "CL.1",
+          "name": "Trade and other payables",
+          "sequence": 150,
+          "parent": "CL",
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "2000",
+              "code_to": "2055"
+            },
+            {
+              "kind": "account_code",
+              "code_from": "2990",
+              "side": "credit"
+            }
+          ],
+          "legal_reference": "IFRS for Small and Medium-sized Entities Accounting Standard, paragraph 4.2(k). GOSI contributions payable are a payable to the General Organization for Social Insurance and not a tax liability.",
+          "source": null
+        },
+        {
+          "code": "CL.2",
+          "name": "Value added tax and withholding tax payable",
+          "sequence": 160,
+          "parent": "CL",
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "2100",
+              "code_to": "2120"
+            }
+          ],
+          "legal_reference": "IFRS for Small and Medium-sized Entities Accounting Standard, paragraph 4.2(k). A tax the entity collects or withholds on behalf of ZATCA is a payable of Section 4 and not a current tax liability of paragraph 4.2(n), which is the tax the entity is itself assessed on.",
+          "source": null
+        },
+        {
+          "code": "CL.3",
+          "name": "Zakat and income tax payable",
+          "sequence": 170,
+          "parent": "CL",
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "2130",
+              "code_to": "2135"
+            }
+          ],
+          "legal_reference": "IFRS for Small and Medium-sized Entities Accounting Standard, paragraph 4.2(n) — liabilities for current tax. Zakat is presented here beside income tax: both are assessed on the entity itself by ZATCA, on the shares held respectively by Saudi and GCC persons and by others.",
+          "source": null
+        },
+        {
+          "code": "CL.4",
+          "name": "Employee benefits — current portion",
+          "sequence": 180,
+          "parent": "CL",
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "2150"
+            }
+          ],
+          "legal_reference": "IFRS for Small and Medium-sized Entities Accounting Standard, Section 28 — the end-of-service award every employer owes on termination.",
+          "source": null
+        },
+        {
+          "code": "CL.5",
+          "name": "Financing and other financial liabilities",
+          "sequence": 190,
+          "parent": "CL",
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "2200",
+              "code_to": "2210"
+            }
+          ],
+          "legal_reference": "IFRS for Small and Medium-sized Entities Accounting Standard, paragraph 4.2(k).",
+          "source": null
+        },
+        {
+          "code": "NCL",
+          "name": "Non-current liabilities",
+          "sequence": 200,
+          "is_total": true,
+          "plus": [
+            "NCL.1",
+            "NCL.2",
+            "NCL.3"
+          ],
+          "legal_reference": "IFRS for Small and Medium-sized Entities Accounting Standard, Section 4, paragraphs 4.7 and 4.8.",
+          "source": null
+        },
+        {
+          "code": "NCL.1",
+          "name": "Financing and other financial liabilities",
+          "sequence": 210,
+          "parent": "NCL",
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "2300"
+            }
+          ],
+          "legal_reference": "IFRS for Small and Medium-sized Entities Accounting Standard, paragraph 4.2(k).",
+          "source": null
+        },
+        {
+          "code": "NCL.2",
+          "name": "Provisions",
+          "sequence": 220,
+          "parent": "NCL",
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "2320"
+            }
+          ],
+          "legal_reference": "IFRS for Small and Medium-sized Entities Accounting Standard, paragraph 4.2(l).",
+          "source": null
+        },
+        {
+          "code": "NCL.3",
+          "name": "Employee benefits — non-current portion",
+          "sequence": 230,
+          "parent": "NCL",
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "2350"
+            }
+          ],
+          "legal_reference": "IFRS for Small and Medium-sized Entities Accounting Standard, Section 28, paragraph 28.3 — the obligation for an end-of-service award, to the extent it is not settled within twelve months.",
+          "source": null
+        },
+        {
+          "code": "TL",
+          "name": "Total liabilities",
+          "sequence": 240,
+          "is_total": true,
+          "plus": [
+            "CL",
+            "NCL"
+          ],
+          "legal_reference": "IFRS for Small and Medium-sized Entities Accounting Standard, paragraph 4.2.",
+          "source": null
+        },
+        {
+          "code": "NA",
+          "name": "Net assets",
+          "sequence": 250,
+          "is_total": true,
+          "plus": [
+            "TA"
+          ],
+          "minus": [
+            "TL"
+          ],
+          "legal_reference": "IFRS for Small and Medium-sized Entities Accounting Standard, paragraph 4.2 — assets less liabilities, which equity equals once the result of the year has been closed.",
+          "source": null
+        },
+        {
+          "code": "EQ",
+          "name": "Equity",
+          "sequence": 260,
+          "is_total": true,
+          "plus": [
+            "EQ.1",
+            "EQ.2",
+            "EQ.3"
+          ],
+          "legal_reference": "IFRS for Small and Medium-sized Entities Accounting Standard, paragraph 4.2(q).",
+          "source": null
+        },
+        {
+          "code": "EQ.1",
+          "name": "Share capital",
+          "sequence": 270,
+          "parent": "EQ",
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "3000"
+            }
+          ],
+          "legal_reference": "IFRS for Small and Medium-sized Entities Accounting Standard, paragraph 4.2(q).",
+          "source": null
+        },
+        {
+          "code": "EQ.2",
+          "name": "Reserves",
+          "sequence": 280,
+          "parent": "EQ",
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "3010",
+              "code_to": "3030"
+            }
+          ],
+          "legal_reference": "IFRS for Small and Medium-sized Entities Accounting Standard, paragraph 4.2(q). The statutory reserve is the share of the annual net profit a Saudi joint stock or limited liability company transfers to a reserve under the Companies Law — see the chart's legal_reference in pack.json.",
+          "source": null
+        },
+        {
+          "code": "EQ.3",
+          "name": "Retained earnings",
+          "sequence": 290,
+          "parent": "EQ",
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "3200",
+              "code_to": "3210"
+            }
+          ],
+          "legal_reference": "IFRS for Small and Medium-sized Entities Accounting Standard, paragraph 4.2(q).",
+          "source": null
+        }
+      ]
+    },
+    {
+      "code": "SA-IFRSSME-IS",
+      "kind": "income_statement",
+      "framework": "SA-IFRS-SME",
+      "taxonomy": null,
+      "name": "Income statement — IFRS for Small and Medium-sized Entities",
+      "legal_reference": "The Saudi Organization for Chartered and Professional Accountants endorses the IFRS for SMEs Accounting Standard for a small or medium-sized entity, and full IFRS for a listed entity; the Kingdom prescribes no chart of accounts and no statement format of its own. See the chart's own legal_reference in pack.json for what this pack's research could and could not open.",
+      "source": "socpa-standards",
+      "lines": [
+        {
+          "code": "1",
+          "name": "Revenue",
+          "sequence": 10,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "4000",
+              "code_to": "4040"
+            }
+          ],
+          "legal_reference": "IFRS for Small and Medium-sized Entities Accounting Standard, paragraph 5.5(a).",
+          "source": null
+        },
+        {
+          "code": "2",
+          "name": "Other income",
+          "sequence": 20,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "4700",
+              "code_to": "4790"
+            }
+          ],
+          "legal_reference": "IFRS for Small and Medium-sized Entities Accounting Standard, paragraph 5.11(a) — an analysis of expenses by nature, the other items of income presented separately from revenue.",
+          "source": null
+        },
+        {
+          "code": "3",
+          "name": "Cost of sales",
+          "sequence": 30,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "5000",
+              "code_to": "5030"
+            }
+          ],
+          "legal_reference": "IFRS for Small and Medium-sized Entities Accounting Standard, paragraph 5.11(a).",
+          "source": null
+        },
+        {
+          "code": "4",
+          "name": "Employee benefits expense",
+          "sequence": 40,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "6100",
+              "code_to": "6140"
+            }
+          ],
+          "legal_reference": "IFRS for Small and Medium-sized Entities Accounting Standard, paragraph 5.11(a) — employee benefits expense, which in the Kingdom carries the employer's GOSI contributions and the end-of-service award of Section 28.",
+          "source": null
+        },
+        {
+          "code": "5",
+          "name": "Depreciation and amortisation",
+          "sequence": 50,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "6500",
+              "code_to": "6510"
+            }
+          ],
+          "legal_reference": "IFRS for Small and Medium-sized Entities Accounting Standard, paragraph 5.11(a).",
+          "source": null
+        },
+        {
+          "code": "6",
+          "name": "Other operating expenses",
+          "sequence": 60,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "6200",
+              "code_to": "6440"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "6950",
+              "code_to": "6990"
+            }
+          ],
+          "legal_reference": "IFRS for Small and Medium-sized Entities Accounting Standard, paragraph 5.11(a). Input tax the Implementing Regulations disallow lands on the expense line it taxes and is presented here with it, not as a tax.",
+          "source": null
+        },
+        {
+          "code": "7",
+          "name": "Finance costs",
+          "sequence": 70,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "7100",
+              "code_to": "7110"
+            }
+          ],
+          "legal_reference": "IFRS for Small and Medium-sized Entities Accounting Standard, paragraph 5.5(b).",
+          "source": null
+        },
+        {
+          "code": "8",
+          "name": "Profit before zakat and income tax",
+          "sequence": 80,
+          "is_total": true,
+          "plus": [
+            "1",
+            "2"
+          ],
+          "minus": [
+            "3",
+            "4",
+            "5",
+            "6",
+            "7"
+          ],
+          "legal_reference": "IFRS for Small and Medium-sized Entities Accounting Standard, paragraph 5.5(d) — profit or loss before tax.",
+          "source": null
+        },
+        {
+          "code": "9",
+          "name": "Zakat",
+          "sequence": 90,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "8000"
+            }
+          ],
+          "legal_reference": "Zakat is assessed by ZATCA on a Saudi or GCC person's share of a company and is presented apart from income tax, which is assessed on the rest. Neither is a value added tax and this pack carries neither as a tax of taxes.json — see packs/sa/README.md.",
+          "source": null
+        },
+        {
+          "code": "10",
+          "name": "Income tax expense",
+          "sequence": 100,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "8010"
+            }
+          ],
+          "legal_reference": "IFRS for Small and Medium-sized Entities Accounting Standard, paragraph 5.5(e) — tax expense excluding tax allocated to discontinued operations.",
+          "source": null
+        },
+        {
+          "code": "11",
+          "name": "Profit for the year",
+          "sequence": 110,
+          "is_total": true,
+          "plus": [
+            "8"
+          ],
+          "minus": [
+            "9",
+            "10"
+          ],
+          "legal_reference": "IFRS for Small and Medium-sized Entities Accounting Standard, paragraph 5.5(f).",
+          "source": null
+        }
+      ]
+    }
+  ]
+}

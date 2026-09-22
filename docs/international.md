@@ -3973,3 +3973,235 @@ debt is later paid, both corrections reverse. Nothing in the core ties a
 declaration box to the mere passage of time since a due date, so `packs/pl/`
 declares the four boxes the mechanism owns (`P_46`, `P_47`, seller-side
 `P_68`, `P_69`) and posts none of them.
+
+## From Saudi Arabia
+
+`packs/sa/`, `community`, seed 71, the second pack of the Gulf after
+`packs/ae/`. Its value added tax is the Law of Royal Decree No. M/113 and its
+Implementing Regulations, read in ZATCA's English eighth edition with the
+Arabic tenth edition of April 2025 beside it; its electronic invoicing regime
+is FATOORA, read from the E-invoicing Regulation, the Governor's Decision
+No. (62738) and the Electronic Invoice XML Implementation Standard themselves.
+Sixteen texts in the register. What follows is the decision this pack was
+asked to take about a shared Gulf folder, and six things the core could not
+say, none of them patched.
+
+### No `packs/gcc/`, and the evidence for it
+
+The six States of the Gulf Cooperation Council signed a Common VAT Agreement
+in November 2016 and four of them have enacted a VAT under it, so the question
+`packs/ohada/` answers for seventeen West and Central African States — write
+the common part once, copy it into every member, let the CI refuse a copy that
+has drifted — is a fair one to ask here. The answer is no, and it is no for a
+structural reason and not a doubtful one: **what `packs/ohada/` copies is a
+chart of accounts and two financial statements, and the Gulf has neither.**
+
+`scripts/ohada-packs.mjs` writes four things into each member: `accounts.csv`
+(the 1 358 accounts of the SYSCOHADA révisé), `statements.json` (the balance
+sheet and income statement of the Système normal), the part of `pack.json`
+that belongs to the chart — `charts`, `journals`, `defaults.roles`,
+`closing_style`, `rounding_method`, `fiscal_year_default` — and the two
+register entries every member cites. A `packs/gcc/` built on that model would
+write **nothing** into its members:
+
+- **No chart.** The Common VAT Agreement has seventy-eight articles and not
+  one of them is about accounting; its only bookkeeping provision is
+  Article 59, on how long records are kept. Saudi Arabia applies IFRS as
+  endorsed by SOCPA and prescribes no chart; the United Arab Emirates
+  prescribes none either, as `packs/ae/` records. There is no Gulf chart to
+  write once.
+- **No statements.** For the same reason: each State's entities present under
+  IFRS, and `packs/ae/` and `packs/sa/` each build their own statement of
+  financial position and income statement from the IFRS for SMEs line items.
+  Two packs that reached the same shape independently are not two packs
+  sharing a source.
+- **No rate.** Article 25(1) of the Agreement reads "Tax shall be applied at
+  the standard rate of 5%", and the Kingdom applies 15 % under its own
+  Article 2(2), Bahrain 10 %. Whatever the right reading of that divergence,
+  it is not a figure a common folder could hold.
+- **No invoice.** Article 56(1) hands the contents of a tax invoice to each
+  State: "Each Member State must determine the contents of the Tax Invoice and
+  the period within which it must be issued". Article 55(4) says the same of
+  its form, paper or electronic. The mentions cannot be shared because the
+  Agreement says they are not shared.
+- **And, decisively, no intra-GCC supply to model.** The Agreement's
+  reverse-charge mechanism between Member States (Article 9(1)), its clearing
+  of revenue between them (Articles 13 and 64) and the Electronic Services
+  System the Secretariat General was to run (Article 71) are **not in force**.
+  Article 79(6) of the Kingdom's Implementing Regulations: "any Member State
+  which has not introduced VAT, or which does not have an Electronic Services
+  System in place with the Kingdom shall be considered a country outside the
+  Council Territory ... A Person who is a resident in such Member State shall
+  be treated as a resident of a third country outside Council Territory."
+  Article 79(7) turns a supply to another Member State into an export and a
+  receipt from one into an import; Article 79(8) leaves the starting day to an
+  order of the Authority that this pack's research found no trace of. The
+  Federal Tax Authority says the same from the other side, in Public
+  Clarification VATP019: "currently, the UAE does not recognise any other state
+  as an 'Implementing State' for the purposes of VAT." Six countries that treat
+  each other as third countries have no common operation to share.
+
+What the Agreement really does give the six is **vocabulary and structure** —
+the definitions of Article 1, the place-of-supply rules of Articles 10 to 21,
+the tax due date of Article 23, the registration thresholds of Articles 50 and
+51, the obligatory zero rating of exports, international transport and
+investment metals, the exemption of financial services. That is a great deal,
+and every bit of it is already expressed in this repository's own vocabulary:
+`treatment`, `tax_point`, the boxes of a return. It is the shape of the data
+model, not data. A `packs/gcc/` holding it would be a folder of one register
+entry — the Agreement itself — which every member can and does cite from its
+own `certification.sources`, as `packs/sa/` does under the key `vat-agreement`.
+
+**How the four still to come will plug in**, then: each writes its own
+`packs/<cc>/`, cites the Agreement in its own register beside its own law, and
+shares nothing mechanically. Bahrain (10 % since 1 January 2022) and Oman
+(5 % since 2021) have a VAT of their own to transcribe; Qatar and Kuwait had
+none on 22 September 2026, and a VAT pack for either would be a pack of a law
+that does not exist. A member joining `packs/ae/` or `packs/sa/` to a shared
+folder would also have to edit a pack it does not own, which is the thing
+`packs/ohada/` was careful to make unnecessary by listing its seventeen members
+before any of them existed — and the Gulf cannot do that, because two of the
+six may never be members at all.
+
+### A clearance regime still has no word, and this is the fourth pack to say so
+
+`packs/mx/` (CFDI), `packs/vn/` (hóa đơn có mã) and `packs/kr/`
+(전자세금계산서) each leave `einvoicing.profile`, `mandatory_from` and
+`obligation` empty although electronic invoicing is obligatory in all three,
+because `profile` names an EN 16931 profile a brick of `packages/formats/`
+actually writes and a national clearance format is not one. `packs/sa/` is the
+fourth, and FATOORA is the strongest case yet: an invoice ZATCA has not
+stamped may not be given to the buyer at all (Governor's Decision No. 62738,
+Clause Second), and a simplified invoice must reach the Authority within 24
+hours of being generated. The three fields stand or fall together — the schema
+refuses `mandatory` without `mandatory_from`, and `mandatory_from` without a
+`profile` — so a pack in this position cannot say the one true thing it knows:
+that the obligation exists, since when, and that Ekwo does not discharge it.
+*Fix*: either a value of `obligation` that does not drag a profile behind it,
+or a field beside `profile` for the exchange model — `clearance`, `reporting`,
+`four_corner`, `five_corner` — which `packs/ae/`'s 5-corner DCTCE would read
+too. Four packs and a fifth already named is no longer one country's oddity.
+
+### A partial translation, which the format allows and the tests refuse
+
+`docs/packs.md` says of a translation file the manifest does not declare that
+it "may be partial, which is how a language is contributed one section at a
+time", and `ekwo pack check` accepts one: it holds a file to completeness only
+where `languages` declares it. The compiler then writes that file's labels into
+the seed like any other, and `tests/languages.test.ts` refuses a seed carrying
+a language the manifest does not declare — "a label under a language nobody
+declared is a label nobody maintains, and `ekwo init` would offer it." Each
+rule is right on its own and together they leave no room: a partial file fails
+the tests, and declaring the language demands every key.
+
+Saudi Arabia is the first pack to stand in that gap, and it stands in it with
+a source in hand. ZATCA publishes the Arabic of every VAT category and of every
+VATEX-SA exemption reason beside its English, in the same table of the same
+standard; the Kingdom's law is Arabic and its English is explicitly the
+translation. So ten Saudi tax labels have an official Arabic wording that this
+repository cannot carry as data — while the 115 accounts of a chart no Saudi
+authority publishes, the fields of a return whose own labels could not be read
+as text, and two invoice mentions this pack wrote itself have none, and
+inventing them would be worse than the gap: Article 53(5) of the Implementing
+Regulations requires the details it lists to be printed **in Arabic**, so an
+invented Arabic mention would be this pack's translation of this pack's
+sentence, presented as the wording a Saudi invoice must carry.
+`packs/sa/i18n/README.md` therefore carries the ten sourced labels as a table
+and no `ar.json`. *Fix*: either the compiler skips a language the manifest does
+not declare, which is what `ekwo pack check` already assumes of it, or
+`languages` grows a way to declare a language as partial — the second is more
+honest, because a reader of `ekwo pack describe` would then be told that Arabic
+exists and how far it goes, instead of being told nothing at all.
+
+### The Kingdom files an export under Z, and the core knows only G
+
+`TREATMENT_CODES` in `packages/cli/src/pack/vat-codes.ts` allows exactly one
+category on an `export`: `G`, *free export item, VAT not charged*, on the
+authority of UNCL5305 and of the European Commission's technical guidance.
+ZATCA publishes its own subset of that same UN/CEFACT list in the Electronic
+Invoice XML Implementation Standard, section 11.2.4, and files both the export
+of goods (VATEX-SA-32) and the export of services (VATEX-SA-33) under **`Z`,
+zero rated goods** — with `G` absent from the Saudi subset entirely. Both
+readings are defensible from UNCL5305; only one of them is what a Saudi
+invoice carries. `packs/sa/` leaves `vat_category` null on its two export taxes
+rather than declare a category its own administration contradicts, which it may
+because the requirement is lifted outside the common system. *Fix*: the table
+is the Union's answer, stated as universal. Where a country's own tax
+administration publishes a UNCL5305 subset, that subset is the one its invoices
+are written against, and the check has no way to be told so.
+
+### `VATEX-SA-*` is refused by its prefix, by the very check built to allow it
+
+ST38-1 provided for exactly this case: a pack outside the Union may carry a
+reason code from another published list, "on the condition that its register
+declares a published list — the entry of `certification.sources` carrying
+`reason_codes`". ZATCA publishes such a list, in the same standard and the same
+table, in Arabic and English: VATEX-SA-29 for financial services, VATEX-SA-30
+for real estate, VATEX-SA-32 and -33 for exports, VATEX-SA-34-1 to -34-5 for
+transport, VATEX-SA-35, VATEX-SA-36, VATEX-SA-EDU, VATEX-SA-HEA,
+VATEX-SA-MLTRY, VATEX-SA-OOS. But `reasonOutside()` tests
+`reason.startsWith('VATEX-')` *before* it looks at the declared list, and
+refuses every one of them as "a code of the VATEX list, whose codes name
+articles of Directive 2006/112/EC". The Kingdom happens to have named its codes
+in the shape the Union uses for a Member State's national codes —
+`VATEX-<country>-<article>` — and the check reads the shape as provenance.
+`packs/sa/` therefore carries no reason code at all and states each article in
+`legal_reference`, which is what the message asks for, and its register does not
+declare `reason_codes` since nothing would use it. *Fix*: read the declared list
+first; a register entry that says "these codes are mine" is a stronger signal
+than a prefix. The alternative — asking ZATCA to rename its codes — is not one.
+
+### A mention for "any line not at the basic rate"
+
+Article 53(5)(k) of the Implementing Regulations requires, on every invoice
+where tax is not charged at the basic rate, "a narration explaining the Tax
+treatment applied to the supply" — one sentence covering zero-rated, exempt and
+out-of-scope lines alike. `applies_when` is a closed vocabulary of nine values
+resolved from the treatment of a line's tax, and it has `exempt` and `export`
+as separate values and nothing that means "not at the standard rate".
+`packs/sa/` declares the mention on `exempt`, and a zero-rated domestic line —
+international transport, qualifying medicines, investment metals — carries no
+mention although the article asks for one. *Fix*: a tenth value, `zero_rated`,
+or one meaning "any relieved line", which more than one country outside the
+Union will want: the shape "say why, whenever it is not the normal rate" is
+common wherever the invoice, rather than a code list, carries the explanation.
+
+### A box with an adjustment column
+
+Field 9 of the Saudi return reports the value of a reverse-charge import or
+service, and its tax column carries the tax **net of the deduction of it**: the
+portal treats the input tax as deductible on the supply, so a taxable person
+deducting in full shows nothing there. A partly-deducting one enters the
+non-deductible share of the *value* in a third column of the same field — the
+adjustment — and the form computes the tax on that share alone; ZATCA's
+guideline works the case through for a bank deducting 70 %. `packs/sa/`
+reproduces the ordinary case exactly, with two tax postings that cancel in the
+box and stand in the ledger, and cannot reproduce the other one: a box has a
+base and a tax and no third figure, and proportional deduction (Articles 51 and
+52) is not something this format holds either. The pack says so at the box. No
+fix is proposed here, because the missing piece is the deduction rule and not
+the column: a country's proportional deduction is a computation over a year of
+supplies, and `tax_report.json` describes a form.
+
+### One already-named gap this pack met again
+
+**The three-way tax point.** Article 23(1) of the Common VAT Agreement, which
+the VAT Law applies directly, makes tax due on the earliest of the supply, the
+invoice and the payment. `tax_point` has no value for three triggers, as *From
+Vietnam* above records for Điều 8 of Luật số 48/2024/QH15;
+`packs/sa/documents.tax_point` declares the nearest of the five,
+`earliest_of_delivery_or_payment`, and says so. The Gulf makes the case
+broader than one country: the same sentence binds every State that enacts the
+Agreement, so four packs will declare the same approximation.
+
+### SAR and SA
+
+`SAR` is added to `00_currencies.sql` at two decimals. `SA` is added to
+`00_territories.sql` outside the common system of VAT, so `vat_category`,
+`exemption_code` and the five `intracom_*` treatments are read the way every
+non-EU pack's are. `vat_prefix` is null: a Saudi VAT registration number is
+fifteen digits whose first and last are 3 (Electronic Invoice XML
+Implementation Standard, rules BR-KSA-39 and BR-KSA-40), and carries no country
+prefix of that table's kind. The Kingdom has no ISO 6523 identifier either — it
+is absent from the Peppol participant identifier scheme list v9.7, which
+carries AE and OM.

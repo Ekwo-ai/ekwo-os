@@ -1,0 +1,217 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "SA-VAT-RETURN",
+  "name": "VAT return",
+  "period": [
+    "month",
+    "quarter"
+  ],
+  "valid_from": "2018-01-01",
+  "legal_reference": "Implementing Regulations, Article 58: \"1- For Taxpayers whose annual value of Taxable Supplies exceeds forty million (40,000,000) SAR during the previous twelve months, the Tax Period shall be monthly. 2- For all other Taxpayers, the standard Tax Period shall be three months.\" A taxpayer under the threshold may ask for the monthly period (Article 58(3)), and one who has filed monthly for two years may ask to go back to three months if it is still under it (Article 58(5)). ZATCA states the same on its own Arabic VAT page — a business whose annual taxable supplies do not exceed 40 million riyals files quarterly, and above it monthly. **`period_default` is deliberately absent**: the cadence turns on the taxpayer's own turnover and not on a rule that gives one answer to everybody, so `ekwo init` asks rather than this pack guessing. The return is a screen of the Authority's portal and not a printed form: the official User Guide to the Submit VAT Return service shows it only as screenshots, so its field labels could not be read as text in this research pass. What could be read is the numbering — the simplified filing guideline reproduces the sales screen with its fields numbered 1 to 5 and glosses each, and the guideline on imports and exports names fields 8 and 9 in words. The names below are this pack's own English, built on those glosses and on Article 62(2) of the Implementing Regulations, which lists what a return must disclose. A reviewer who files a real return should check the labels first.",
+  "source": "vat-ir",
+  "deadline": {
+    "rule": "last_day_of_month_after_period",
+    "legal_reference": "Implementing Regulations, Article 62(1): the Tax Return \"must be filed ... for each Tax Period with the Authority no later than the last day in the month following the end of the Tax Period to which the Tax Return relates.\" Article 59(1) sets the same day for payment: \"Payment of Tax due by a Taxable Person in respect of a Tax Period must be made at the latest by the last day of the month following the end of that Tax Period.\" Article 74 moves an obligation falling due on a non-working day, which this rule does not express and a filer should know of.",
+    "source": "vat-ir"
+  },
+  "boxes": [
+    {
+      "box": "1",
+      "kind": "base",
+      "name": "Standard-rated sales",
+      "legal_reference": "Field 1 of the sales screen, \"المبيعات الخاضعة للنسبة الأساسية (15%)\" — sales taxed at the basic rate of 15 %, whatever their value and however they were collected, as the filing guideline puts it. The value is entered without tax and the portal works the tax out: \"أدخل المشتريات غير شاملة للضريبة ... سيتم حساب مبلغ ضريبة القيمة المضافة تلقائيًا\". Article 62(2)(a) of the Implementing Regulations is the obligation behind it.",
+      "source": "filing-guideline",
+      "sequence": 10
+    },
+    {
+      "box": "1",
+      "kind": "tax",
+      "name": "VAT on standard-rated sales",
+      "legal_reference": "The tax column of field 1, computed by the portal from the value beside it. Article 62(2)(a): \"the total value of all Supplies ... subject to the basic rate and the zero-rate of Tax, and the total Output Tax on those Supplies\".",
+      "source": "vat-ir",
+      "sequence": 20
+    },
+    {
+      "box": "2",
+      "kind": "base",
+      "name": "Private education and private healthcare supplied to citizens",
+      "legal_reference": "Field 2 of the sales screen, which the filing guideline glosses \"مثل: الخدمات التعليمية الأهلية المقدمة للمواطنين والرعاية الصحية\". **No tax of this pack posts here.** The line exists because the State bears the tax on private education and private healthcare supplied to Saudi citizens, and ZATCA's XML standard shows how far the regime reaches into the invoice — reason codes VATEX-SA-EDU and VATEX-SA-HEA, with the buyer's National ID made mandatory on the invoice (rule 5.3). What this pack's research could not open is the instrument that grants it and the conditions on it, so the pack carries the field and no tax that posts to it rather than a rate it cannot cite. packs/sa/README.md says so under what the pack does not carry.",
+      "source": "filing-guideline",
+      "sequence": 30
+    },
+    {
+      "box": "2",
+      "kind": "tax",
+      "name": "VAT on private education and private healthcare supplied to citizens",
+      "legal_reference": "The tax column of field 2. Empty for the same reason as the value beside it.",
+      "source": "filing-guideline",
+      "sequence": 40
+    },
+    {
+      "box": "3",
+      "kind": "base",
+      "name": "Zero-rated domestic sales",
+      "legal_reference": "Field 3 of the sales screen, glossed \"مثل: الأدوية والمعدات الطبية والمعادن الاستثمارية المؤهلة\" — for example qualifying medicines, medical equipment and investment metals. It carries a supply made in the Kingdom that Chapter Six of the Implementing Regulations rates at zero and that is not an export: international transport (Article 34) lands here as well.",
+      "source": "filing-guideline",
+      "sequence": 50
+    },
+    {
+      "box": "4",
+      "kind": "base",
+      "name": "Exports",
+      "legal_reference": "Field 4 of the sales screen, glossed \"مثل: صادرات السلع من المملكة أو الخدمات المقدمة إلى عميل غير مقيم بالمملكة\" — exports of goods from the Kingdom, and services supplied to a customer not resident in it. Both the zero-rated export of goods of Article 32 and the zero-rated service of Article 33 are reported here, which is why this pack gives them one field and not two.",
+      "source": "filing-guideline",
+      "sequence": 60
+    },
+    {
+      "box": "5",
+      "kind": "base",
+      "name": "Exempt sales",
+      "legal_reference": "Field 5 of the sales screen, glossed \"مثل: الخدمات المالية والتوريدات العقارية وتشمل بيع العقارات وتأجير العقار السكني\" — financial services, and real estate supplies including the sale of real estate and the lease of residential property. Article 62(2)(g): \"the total value of Exempt Supplies made by the Taxable Person\".",
+      "source": "filing-guideline",
+      "sequence": 70
+    },
+    {
+      "box": "6",
+      "kind": "total",
+      "name": "Total sales, excluding VAT",
+      "legal_reference": "The total line of the sales screen. Its value is the sum of fields 1 to 5, each entered without tax.",
+      "source": "filing-guideline",
+      "plus": [
+        "1:base",
+        "2:base",
+        "3:base",
+        "4:base",
+        "5:base"
+      ],
+      "sequence": 80
+    },
+    {
+      "box": "7",
+      "kind": "base",
+      "name": "Standard-rated domestic purchases",
+      "legal_reference": "The first field of the purchases screen. The filing guideline is precise about what may not go in it: a purchase unconnected with the taxable economic activity (it names catering, cars, their fuel and their maintenance), a purchase whose tax the taxable person cannot evidence with a tax invoice, a purchase made outside the Kingdom other than an import meeting the conditions, and a purchase belonging to a later tax period. Article 62(2)(b): \"the total value of all Goods and services supplied to the Taxable Person, and the total deductible Input Tax\".",
+      "source": "filing-guideline",
+      "sequence": 90
+    },
+    {
+      "box": "7",
+      "kind": "tax",
+      "name": "Deductible VAT on standard-rated domestic purchases",
+      "legal_reference": "The tax column of field 7, the deductible input tax of Article 49 of the Implementing Regulations.",
+      "source": "vat-ir",
+      "sequence": 100
+    },
+    {
+      "box": "8",
+      "kind": "base",
+      "name": "Imports of goods subject to VAT paid at Customs",
+      "legal_reference": "Field 8, which the guideline on imports and exports names as the field \"which includes VAT paid to ZATCA\" — the ordinary import, on which Saudi Customs collected the tax at the border under Article 43(3) of the Implementing Regulations.",
+      "source": "imports-exports-guideline",
+      "sequence": 110
+    },
+    {
+      "box": "8",
+      "kind": "tax",
+      "name": "VAT paid at Customs on imports, deductible",
+      "legal_reference": "The tax column of field 8. Article 62(2)(f): \"the total value of Tax on imports reported through the Taxable Person's Tax Return; and the total Input Tax relating to all imports of Goods by the Taxable Person\". The tax was paid at the border and is deducted here.",
+      "source": "vat-ir",
+      "sequence": 120
+    },
+    {
+      "box": "9",
+      "kind": "base",
+      "name": "Taxable imports subject to VAT accounted for through the reverse charge mechanism",
+      "legal_reference": "Field 9, named word for word in the guideline on imports and exports, which reproduces the line of the return. It carries two things the Regulations treat alike: an import of goods by a taxable person authorised under Article 44 to pay through the return (\"VAT shall be included in Field 9 of the VAT return instead of Field 8\"), and a service received from a non-resident supplier under Article 47 (\"VAT accounted for under the Reverse Charge Mechanism shall be reported in Field 9 of the Tax Return\").",
+      "source": "imports-exports-guideline",
+      "sequence": 130
+    },
+    {
+      "box": "9",
+      "kind": "tax",
+      "name": "VAT self-assessed on field 9, net of the deduction of it",
+      "legal_reference": "The tax column of field 9, and the one box of this return that needs reading twice. The guideline on imports and exports says what the portal does: the form \"automatically treats the Input Tax as deductible on the supply\", so a taxable person deducting in full owes nothing on the line and this column comes to zero — which is what the two tax postings of SA-P-RC-SVC and SA-P-IMP-RC produce, the output tax and the deduction of it cancelling in the box while both stand in the ledger, on 2100 and 1150. The guideline's own worked example is a bank deducting 70 %: it enters the non-deductible 30 % of the value in the field's adjustment column and the form computes the tax on that share alone. **This pack carries no proportional deduction** — Articles 51 and 52 of the Implementing Regulations, which the core has no room for — so a partly-deducting taxable person has to make that adjustment outside the pack, and the total below will not have made it for them.",
+      "source": "imports-exports-guideline",
+      "sequence": 140
+    },
+    {
+      "box": "10",
+      "kind": "base",
+      "name": "Zero-rated purchases",
+      "legal_reference": "The zero-rated line of the purchases screen: a purchase of a supply Chapter Six of the Implementing Regulations rates at zero, which carries no tax to deduct.",
+      "source": "vat-ir",
+      "sequence": 150
+    },
+    {
+      "box": "11",
+      "kind": "base",
+      "name": "Exempt purchases",
+      "legal_reference": "The exempt line of the purchases screen: a purchase of a supply exempted by Articles 29 or 30 of the Implementing Regulations, which carries no tax at all.",
+      "source": "vat-ir",
+      "sequence": 160
+    },
+    {
+      "box": "12",
+      "kind": "total",
+      "name": "Total purchases, excluding VAT",
+      "legal_reference": "The total line of the purchases screen, the sum of fields 7 to 11, each entered without tax.",
+      "source": "filing-guideline",
+      "plus": [
+        "7:base",
+        "8:base",
+        "9:base",
+        "10:base",
+        "11:base"
+      ],
+      "sequence": 170
+    },
+    {
+      "box": "13",
+      "kind": "total",
+      "name": "Total VAT due for the current period",
+      "legal_reference": "The filing guideline states the arithmetic in words: \"ونتيجة تعبئة المبيعات والمشتريات سينتج عنها الضريبة المستحقة وهي ناتج الإقرار للفترة الضريبية (الفرق بين الضريبة المستحقة على المبيعات والضريبة القابلة للخصم)\" — filling in the sales and the purchases produces the tax due for the tax period, the difference between the tax due on sales and the deductible tax. Field 9 nets to zero for a taxable person deducting in full, which is why it is subtracted here with the other purchase fields rather than added.",
+      "source": "filing-guideline",
+      "plus": [
+        "1:tax",
+        "2:tax"
+      ],
+      "minus": [
+        "7:tax",
+        "8:tax",
+        "9:tax"
+      ],
+      "sequence": 180
+    },
+    {
+      "box": "14",
+      "kind": "tax",
+      "name": "Corrections from a previous period",
+      "legal_reference": "Implementing Regulations, Article 63, and the filing guideline: the corrections field takes the VAT amount only, up and down, \"في حدود ضريبة بحد أقصى 15,000 ريال\" — within a maximum of 15,000 riyals of tax. The English eighth edition still prints the figure this field had before, 5,000 riyals; the Arabic tenth edition of April 2025 and the filing guideline both say 15,000, and the Arabic is the version the English translation itself defers to. A larger error is corrected by amending the return it was made in, after notifying the Authority within twenty days of becoming aware of it. **No tax of this pack posts here**: a correction is a decision about a period already filed, not a consequence of a document.",
+      "source": "filing-guideline",
+      "sequence": 190
+    },
+    {
+      "box": "15",
+      "kind": "tax",
+      "name": "VAT credit carried forward from a previous period",
+      "legal_reference": "The filing guideline: where the tax collected on sales is less than the deductible tax on purchases, the return produces \"رصيد مرحل قابل للاسترداد\" — a carried-forward balance the taxable person may claim back. **No tax of this pack posts here either**: the figure is the balance of an earlier return, which ZATCA carries forward, and the pack computes one period at a time.",
+      "source": "filing-guideline",
+      "sequence": 200
+    },
+    {
+      "box": "16",
+      "kind": "total",
+      "name": "Net VAT due, or claimed",
+      "legal_reference": "The last line of the return: the tax due for the period, adjusted by the corrections of field 14 and reduced by the credit carried forward of field 15. A negative figure is a refundable balance, and this pack applies no floor at zero — the filing guideline describes both outcomes, an amount to pay and a balance to carry or reclaim.",
+      "source": "filing-guideline",
+      "plus": [
+        "13",
+        "14"
+      ],
+      "minus": [
+        "15"
+      ],
+      "sequence": 210
+    }
+  ]
+}
