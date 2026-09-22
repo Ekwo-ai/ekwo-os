@@ -9,6 +9,17 @@ somewhere has already run it.
 
 ## [Unreleased]
 
+### Added
+
+- **Start with Claude.** `docs/start-with-claude.md` walks somebody who keeps
+  books and already uses Claude from a free Supabase project to their own
+  books in Ekwo: `npx ekwo-os init`, the MCP server connected in Claude
+  Desktop or Claude Code, an export from another ledger taken over with
+  `import_books` — rehearsal first — then questions and a VAT return
+  prepared, with what is not there yet said plainly. It was run end to end on
+  a throwaway project, for two companies in two countries, and
+  `docs/demo/start-with-claude/walkthrough.mjs` runs it again.
+
 ## [0.6.0] — 2026-09-22
 
 ### Added

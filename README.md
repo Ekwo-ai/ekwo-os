@@ -9,6 +9,11 @@ Built and maintained by **Ekwo**. A fully managed edition — your own instance,
 side, with the published `ekwo-os` 0.5.0. How it was recorded, and a longer
 cut: [`docs/demo/`](docs/demo/).*
 
+**Try it on your own books.** Already using Claude? [Start with
+Claude](docs/start-with-claude.md) goes from a free Supabase project to your
+own books taken over, questioned and your next VAT return prepared — Claude
+Desktop or Claude Code, no web interface, about twenty minutes.
+
 ---
 
 ## Why Ekwo
