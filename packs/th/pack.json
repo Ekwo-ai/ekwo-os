@@ -1,0 +1,165 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "TH",
+  "name": "ประเทศไทย",
+  "version": "0.1.0",
+  "schema_min": "20260917170000",
+  "seed_sequence": 53,
+  "released_at": "2026-09-22",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "rc-vat-80",
+        "title": "Revenue Code, Title IV Chapter 4 (Value Added Tax) — sections 80, 80/1, 81 and 81/1: the standard rate, the zero rate, the exempt businesses and the small-business threshold",
+        "publisher": "Revenue Department of Thailand (English translation)",
+        "url": "https://www.rd.go.th/english/37732.html",
+        "consulted_on": "2026-09-22",
+        "kind": "law"
+      },
+      {
+        "key": "rc-vat-83",
+        "title": "Revenue Code, sections 83 to 84/4 — section 83/6: remittance of value added tax by the payer of a service performed abroad and used in Thailand",
+        "publisher": "Revenue Department of Thailand (English translation)",
+        "url": "https://www.rd.go.th/english/37735.html",
+        "consulted_on": "2026-09-22",
+        "kind": "law"
+      },
+      {
+        "key": "rc-vat-86",
+        "title": "Revenue Code, section 86/4 — the particulars a tax invoice states",
+        "publisher": "Revenue Department of Thailand (English translation)",
+        "url": "https://www.rd.go.th/english/37741.html",
+        "consulted_on": "2026-09-22",
+        "kind": "law"
+      },
+      {
+        "key": "rd-vat-guide",
+        "title": "Value Added Tax — registration threshold, form VAT 30 (ภ.พ.30) and its filing deadline, form VAT 36 (ภ.พ.36)",
+        "publisher": "Revenue Department of Thailand",
+        "url": "https://www.rd.go.th/english/6043.html",
+        "consulted_on": "2026-09-22",
+        "kind": "guidance"
+      },
+      {
+        "key": "rd-wht-corp",
+        "title": "Withholding tax on payments to a juristic person — rates and the form (ภ.ง.ด.53)",
+        "publisher": "Revenue Department of Thailand",
+        "url": "https://www.rd.go.th/english/6044.html",
+        "consulted_on": "2026-09-22",
+        "kind": "guidance"
+      },
+      {
+        "key": "rd-wht-indiv",
+        "title": "Withholding tax on payments to an individual — rates and the form (ภ.ง.ด.3)",
+        "publisher": "Revenue Department of Thailand",
+        "url": "https://www.rd.go.th/english/6045.html",
+        "consulted_on": "2026-09-22",
+        "kind": "guidance"
+      },
+      {
+        "key": "rd-sbt",
+        "title": "Specific Business Tax — the businesses it reaches, its bases and rates, and the return (ภธ.40)",
+        "publisher": "Revenue Department of Thailand",
+        "url": "https://www.rd.go.th/english/6042.html",
+        "consulted_on": "2026-09-22",
+        "kind": "guidance"
+      },
+      {
+        "key": "rd-efiling",
+        "title": "RD e-Filing — the Revenue Department's portal for submitting every kind of return and paying tax, including form VAT 30",
+        "publisher": "Revenue Department of Thailand",
+        "url": "https://efiling.rd.go.th",
+        "consulted_on": "2026-09-22",
+        "kind": "portal"
+      },
+      {
+        "key": "dc799",
+        "title": "Royal Decree issued under the Revenue Code Governing Reduction of the Rate of Value Added Tax (No. 799), B.E. 2568 (2025), continuing the reduction to 6.3 % national plus 0.7 % local tax, 7 % combined",
+        "publisher": "Revenue Department of Thailand, publishing the Royal Gazette text",
+        "url": "https://www.rd.go.th/fileadmin/user_upload/kormor/newlaw/dc799.pdf",
+        "consulted_on": "2026-09-22",
+        "kind": "regulation"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "THB",
+    "language": "th",
+    "closing_style": "retained_earnings",
+    "fiscal_year_default": "calendar",
+    "roles": {
+      "receivable": "1100",
+      "payable": "2000",
+      "suspense": "2990",
+      "rounding": "6990",
+      "retained_earnings": "3200",
+      "sales": "4000",
+      "purchase": "5000",
+      "bank": "1010",
+      "cash": "1000",
+      "fx_gain": "4700",
+      "fx_loss": "6950",
+      "asset_disposal_gain": "4750",
+      "asset_disposal_loss": "6960",
+      "tax_payable": "2110",
+      "tax_receivable": "1155"
+    },
+    "journal_roles": {
+      "sales": "SAL",
+      "purchase": "PUR",
+      "miscellaneous": "GEN",
+      "opening": "OPN"
+    }
+  },
+  "languages": ["en"],
+  "journals": [
+    { "code": "SAL", "type": "sales", "name": "สมุดรายวันขาย", "sequence": 10 },
+    { "code": "PUR", "type": "purchase", "name": "สมุดรายวันซื้อ", "sequence": 20 },
+    { "code": "BNK", "type": "bank", "name": "สมุดรายวันธนาคาร", "sequence": 30 },
+    { "code": "CSH", "type": "cash", "name": "สมุดรายวันเงินสดย่อย", "sequence": 40 },
+    { "code": "GEN", "type": "general", "name": "สมุดรายวันทั่วไป", "sequence": 50 },
+    { "code": "OPN", "type": "opening", "name": "รายการยกยอดต้นงวด", "sequence": 60 }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "ผังบัญชีอ้างอิงของประเทศไทย",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": ["TH-BS", "TH-IS"],
+      "legal_reference": "Thailand prescribes no chart of accounts. What this session could verify is that the Federation of Accounting Professions (สภาวิชาชีพบัญชี, tfac.or.th) issues Thai Financial Reporting Standards, among them a simplified standard for entities that are not publicly accountable, under the Accounting Professions Act B.E. 2547 (2004); and that the Department of Business Development (กรมพัฒนาธุรกิจการค้า) administers the Accounting Act B.E. 2543 (2000), which requires a business to keep accounts and file financial statements. Neither text, nor the standard's own paragraphs, could be read from here this session (see README, \"Sources\"), so this chart transcribes no numbered line item of a Thai standard the way the Belgian or the Australian chart does its own. It is original, four digits by class in the numbering the sibling Asian packs (Singapore, Japan) use — 1 assets, 2 liabilities, 3 equity, 4 revenue, 5 cost of sales, 6 operating expenses, 7 finance items, 8 income tax — with the accounts a VAT-registered Thai company's books hold: output and input value added tax, the VAT payable or refundable account a filed return settles to, withholding tax payable on a supplier's invoice, the Social Security Fund and a provident fund. Its statements, `TH-BS` and `TH-IS` in `statements.json`, are original: lines grouped by the code ranges this chart's own numbering gives its accounts, current and non-current, without transcribing a Thai standard's own line items or their numbering.",
+      "source": null
+    }
+  ],
+  "documents": {
+    "numbering": "sequential",
+    "number_format": "{CODE}-{YYYY}-{NNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "earliest_of_delivery_or_payment",
+    "references": {
+      "numbering": {
+        "legal_reference": "Revenue Code, section 86/4(4), read directly this session — a tax invoice states 'serial number of tax invoice and, if any, of book'. The text asks for an identifying number and not, in so many words, for a series with no gap, which is why numbering is `sequential` and not one of the gapless kinds; the pattern in number_format is one a business may choose.",
+        "source": "rc-vat-86"
+      },
+      "tax_point": {
+        "legal_reference": "Not independently read this session against the primary text of sections 78 and 78/1, which this session's attempts to open returned a server error. The rule stated here — a supply of goods is taxed at the earliest of transfer of ownership or possession, receipt of payment, or issue of a tax invoice, and a supply of services at the earliest of payment or the issue of a tax invoice — is the one consistently given by secondary guidance on the Revenue Code, and `earliest_of_delivery_or_payment` is the closest of this format's five values to it; the vocabulary has no word for a tax invoice itself as an independent third trigger, which is a gap of the core and not of this reading, and is carried in docs/international.md. The first thing for a reviewer to check against sections 78 and 78/1 directly.",
+        "source": "rc-vat-80"
+      },
+      "payment_terms": {
+        "legal_reference": "No statute setting a payment term between businesses in the absence of an agreement was found this session; the search was not exhaustive, and a duty analogous to the European late-payment directives may or may not exist in the Civil and Commercial Code. legal_payment_days and late_payment_reference are left null rather than guessed."
+      }
+    }
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "obligation": "none",
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "The Revenue Department operates e-Tax Invoice & e-Receipt (etax.rd.go.th), a system a business submits the data of its tax invoices to, by XML with a digital signature or, for a smaller business, by time stamp; it is not built on Peppol and this pack names no `profile`. This session could not open the portal (it renders through client-side script the tools available here could not execute) and so could not verify whether any turnover threshold makes participation mandatory rather than voluntary for a class of taxpayer, or from what date. `obligation` is therefore left at `none` rather than a guess, which states only that no statute was found requiring it — not that none exists. The first thing for a reviewer to check directly on etax.rd.go.th, and the leading item of this pack's section of docs/international.md.",
+    "source": null
+  }
+}

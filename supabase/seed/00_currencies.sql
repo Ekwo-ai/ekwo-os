@@ -31,5 +31,6 @@ insert into currencies (code, name, symbol, decimal_places) values
   ('HKD', 'Hong Kong dollar',     E'HK$',    2),
   ('TWD', 'New Taiwan dollar',    E'NT$',    2),
   ('KRW', 'South Korean won',     E'₩',      0),
-  ('AED', 'UAE dirham',           E'د.إ', 2)
+  ('AED', 'UAE dirham',           E'د.إ', 2),
+  ('THB', 'Thai baht',            E'฿', 2)
 on conflict (code) do nothing;

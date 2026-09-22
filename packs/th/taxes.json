@@ -1,0 +1,331 @@
+[
+  {
+    "code": "TH-S-STD",
+    "name": "ขาย ภาษีมูลค่าเพิ่มอัตราร้อยละ 7",
+    "description": "การขายสินค้าหรือให้บริการในประเทศ",
+    "kind": "vat",
+    "rate": 7,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2017-10-01",
+    "legal_reference": "Revenue Code, section 80 — the rate of value added tax calculation is 10.00 %, read directly this session. Royal Decree issued under the Revenue Code Governing Reduction of the Rate of Value Added Tax (No. 799), B.E. 2568 (2025) continues the reduction to 6.3 % plus a 0.7 % local tax, 7 % combined, a chain of decrees this session could not read as machine text (the PDF resisted extraction twice); the period this code opens on, 1 October 2017, is when a predecessor in the same chain of decrees is reported to have started it, and could not be independently re-verified against the Royal Gazette this session either. The 0.7 % local tax is not modelled as a second posting: it is an allocation the Revenue Department makes internally once it has collected the 7 %, and nothing read this session asks a taxpayer's own return or books to show the two shares apart, unlike Japan's national and local consumption tax. The base is reported and the tax charged, without a box this pack could verify the printed number of (see the pack's own README).",
+    "source": "rc-vat-80",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "SB"
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "OT"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "SB",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "OT",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 10
+  },
+  {
+    "code": "TH-S-ZR-EXP",
+    "name": "ขายส่งออก อัตราร้อยละ 0",
+    "description": "การส่งออกสินค้าซึ่งมิใช่การส่งออกที่ได้รับยกเว้นภาษีมูลค่าเพิ่มตามมาตรา 81(3)",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2017-10-01",
+    "conditions": [
+      "transport_evidence"
+    ],
+    "legal_reference": "Revenue Code, section 80/1(1), read directly this session: zero rate applies to the export of goods which is not exempt from value added tax under section 81(3). This session did not read what section 81(3) excludes, nor the export documents a business must hold, which stays a matter of `legal_reference` on a specific line and not of a ledger fact this pack can check.",
+    "source": "rc-vat-80",
+    "vat_category": "G",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "SZ"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "SZ",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 20
+  },
+  {
+    "code": "TH-S-ZR-SVC",
+    "name": "ขายบริการระหว่างประเทศ อัตราร้อยละ 0",
+    "description": "บริการที่กระทำในราชอาณาจักรและได้มีการใช้บริการนั้นในต่างประเทศ หรือการขนส่งระหว่างประเทศ",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2017-10-01",
+    "conditions": [
+      "supply_nature",
+      "buyer_status"
+    ],
+    "legal_reference": "Revenue Code, section 80/1(2), read directly this session: zero rate applies to the provision of services performed in Thailand and used in a foreign country, and (per the same page's paraphrase, not read word for word) to international transport by aircraft or vessel. Which service qualifies, and where its benefit is received, is a fact of the engagement the ledger does not hold, which is why this code carries `conditions` rather than a rule the core evaluates.",
+    "source": "rc-vat-80",
+    "vat_category": "G",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "SZ"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "SZ",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 30
+  },
+  {
+    "code": "TH-S-EX",
+    "name": "ขาย ได้รับยกเว้นภาษีมูลค่าเพิ่ม",
+    "description": "การประกอบกิจการที่ได้รับยกเว้นภาษีมูลค่าเพิ่มตามมาตรา 81 เช่น การให้เช่าอสังหาริมทรัพย์",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2017-10-01",
+    "conditions": [
+      "supply_nature"
+    ],
+    "legal_reference": "Revenue Code, section 81, read directly this session: the businesses it exempts include (among the others the page lists) 'rental of immovable property'. It carries no report box because nothing read this session shows form VAT 30 asking for the value of an exempt supply the way Singapore's form GST F5 does at its box 3; a business exempt under section 81 is, for that activity, outside the value added tax system rather than a registrant reporting a nil-rated line, which section 81/1's own small-business exemption confirms by its own separate threshold.",
+    "source": "rc-vat-80",
+    "vat_category": "E",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        }
+      ]
+    },
+    "sequence": 40
+  },
+  {
+    "code": "TH-P-STD",
+    "name": "ซื้อ ภาษีมูลค่าเพิ่มอัตราร้อยละ 7 เครดิตภาษีซื้อได้",
+    "description": "การซื้อสินค้าหรือรับบริการที่ต้องเสียภาษีมูลค่าเพิ่มในประเทศ ซึ่งนำภาษีซื้อมาหักในการคำนวณภาษีได้",
+    "kind": "vat",
+    "rate": 7,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2017-10-01",
+    "legal_reference": "Revenue Code, section 80, as for TH-S-STD, at the same 7 % combined rate under the same chain of Royal Decrees. This session did not read section 82/3 (the right to credit input tax) or section 82/5 (input tax the law excludes from credit — entertainment expenses and passenger cars among them, by general reputation and not by a text read this session) against their primary text, so this code assumes the purchase is one whose input tax is creditable in full; a purchase whose credit section 82/5 excludes is not carried, and is named as a gap of this pack below.",
+    "source": "rc-vat-80",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "PB"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "IT"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "PB",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "IT",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 50
+  },
+  {
+    "code": "TH-P-EX",
+    "name": "ซื้อ ไม่มีภาษีมูลค่าเพิ่ม (ผู้ขายได้รับยกเว้นหรือไม่อยู่ในระบบภาษีมูลค่าเพิ่ม)",
+    "description": "การซื้อสินค้าหรือรับบริการจากผู้ประกอบการที่ประกอบกิจการซึ่งได้รับยกเว้นภาษีมูลค่าเพิ่มตามมาตรา 81 เช่น ค่าธรรมเนียมธนาคาร",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "exempt",
+    "valid_from": "2017-10-01",
+    "legal_reference": "Revenue Code, section 81, as for TH-S-EX: what is bought carries no value added tax because the seller's activity is exempt, so there is no input tax and no box.",
+    "source": "rc-vat-80",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        }
+      ]
+    },
+    "sequence": 60
+  },
+  {
+    "code": "TH-P-RC",
+    "name": "ซื้อบริการจากต่างประเทศ นำส่งภาษีมูลค่าเพิ่มตามมาตรา 83/6",
+    "description": "บริการที่ทำในต่างประเทศและได้มีการใช้บริการนั้นในราชอาณาจักร ผู้จ่ายเงินมีหน้าที่นำส่งภาษีมูลค่าเพิ่ม",
+    "kind": "vat",
+    "rate": 7,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2017-10-01",
+    "conditions": [
+      "buyer_status"
+    ],
+    "legal_reference": "Revenue Code, section 83/6(2), read directly this session: where the payment for a service is made to a business person providing services abroad and the service is used in Thailand, the payer must remit value added tax — form VAT 36 per rd.go.th/english/6043.html, read directly this session. What is not carried is the two-form timing the law actually has: VAT 36 is remitted within seven days of the payment (rd-vat-guide, general topic list, not read to the article) and the amount remitted is then a credit on form VAT 30 of that month or the next, rather than on the same document as this pack posts it. This code books the self-assessment and the credit on the one document, which overstates how fast the credit is available and is named as a gap below; a reader who needs the timing right should not rely on this code alone.",
+    "source": "rc-vat-83",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "RC"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2100",
+          "box": "OT"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "IT"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "RC",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2100",
+          "box": "OT",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "IT",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 70
+  },
+  {
+    "code": "TH-P-WHT-SVC-3",
+    "name": "ค่าบริการ/ค่าที่ปรึกษา หัก ณ ที่จ่ายร้อยละ 3",
+    "description": "ค่าจ้างทำของหรือค่าบริการที่จ่ายให้บริษัทหรือผู้ประกอบการในประเทศที่ไม่ได้จดทะเบียนภาษีมูลค่าเพิ่ม",
+    "kind": "withholding",
+    "rate": 3,
+    "scope": "purchase",
+    "treatment": "not_subject",
+    "valid_from": "2026-01-01",
+    "conditions": [
+      "buyer_status"
+    ],
+    "legal_reference": "Revenue Department, Withholding tax on payments to a juristic person — the rate for a service fee or professional fee paid to a Thai company or branch is 3 %, withheld and remitted with form CIT 53 (ภ.ง.ด.53) within seven days of the month of payment. The rate is generally set under Revenue Code, section 3 tredecim and the Director-General's departmental instruction (คำสั่งกรมสรรพากร ที่ ท.ป.4/2528), which this session did not read; the day the 3 % rate itself first applied was not carried, so `valid_from` is 1 January of the golden scenario's year, not a verified commencement date. Modelled here for a fee paid to a small business person not registered for value added tax, so no value added tax code shares the line; a fee that is both value added tax-able and subject to withholding needs two postings this pack does not compose on one line, which is a gap named below.",
+    "source": "rd-wht-corp",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2140"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2140"
+        }
+      ]
+    },
+    "sequence": 80
+  },
+  {
+    "code": "TH-P-WHT-RENT-5",
+    "name": "ค่าเช่า หัก ณ ที่จ่ายร้อยละ 5",
+    "description": "ค่าเช่าอสังหาริมทรัพย์ที่จ่ายให้บุคคลธรรมดา ซึ่งเป็นกิจการที่ได้รับยกเว้นภาษีมูลค่าเพิ่ม",
+    "kind": "withholding",
+    "rate": 5,
+    "scope": "purchase",
+    "treatment": "not_subject",
+    "valid_from": "2026-01-01",
+    "conditions": [
+      "buyer_status"
+    ],
+    "legal_reference": "Revenue Department, Withholding tax on payments to an individual — rent is withheld at 5 % and remitted on form ภ.ง.ด.3. The Revenue Code provision setting the rate, and the day it started, were not read this session; `valid_from` is 1 January of the golden scenario's year and not a verified commencement date. The rent itself carries no value added tax (section 81, TH-S-EX/TH-P-EX), so the two never need to share a line.",
+    "source": "rd-wht-indiv",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2140"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2140"
+        }
+      ]
+    },
+    "sequence": 90
+  }
+]

@@ -1,0 +1,76 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "TH-VAT-30",
+  "name": "แบบแสดงรายการภาษีมูลค่าเพิ่ม (ภ.พ.30)",
+  "period": ["month"],
+  "period_default": "month",
+  "valid_from": "2017-10-01",
+  "legal_reference": "Revenue Code, section 83, read only through the Revenue Department's own English summary this session (rd-vat-guide) and not word for word: a VAT-registered business files a return every calendar month, with no other cadence the way some of this repository's forms offer a quarter or a half-year. That page names form 'VAT 30' in English for what is filed as ภ.พ.30; it lists what the form covers by topic — taxable person, exemptions, tax base, tax rates, time of supply, tax invoice, tax calculation, refund, registration, return and payment — and not the form's own printed item numbers or their exact wording. The boxes below are therefore this pack's own short codes for the mechanics that page confirms the form has — a base and an output tax on standard-rated sales, the same for zero-rated sales, a base and an input tax on purchases entitled to credit, and the net amount owed or carried forward — and they do not claim to reproduce the numbering or the Thai wording ภ.พ.30 prints. That is the first thing for a reviewer with a specimen return in hand to check.",
+  "source": "rd-vat-guide",
+  "deadline": {
+    "rule": "day_of_month_after_period",
+    "day": 15,
+    "legal_reference": "Revenue Department, Value Added Tax page, read directly this session: 'VAT return (Form VAT 30) together with tax payment, if any, must be submitted to Area Revenue Branch Office within 15 days of the following month.' This session could not confirm or rule out an extended deadline for filing through the Revenue Department's e-filing system, which several other countries in this repository grant; none is declared.",
+    "source": "rd-vat-guide"
+  },
+  "boxes": [
+    {
+      "box": "SB",
+      "kind": "base",
+      "name": "มูลค่าขายที่ต้องเสียภาษีมูลค่าเพิ่มในอัตราร้อยละ 7 (ไม่รวมภาษีมูลค่าเพิ่ม)",
+      "sequence": 10,
+      "legal_reference": "The value, without value added tax, of a sale taxed at the standard combined rate under section 80 and the Royal Decree reducing it — see TH-S-STD.",
+      "source": "rc-vat-80"
+    },
+    {
+      "box": "SZ",
+      "kind": "base",
+      "name": "มูลค่าขายที่เสียภาษีมูลค่าเพิ่มในอัตราร้อยละ 0",
+      "sequence": 20,
+      "legal_reference": "The value of an export of goods (section 80/1(1)) or a zero-rated service (section 80/1(2)) — see TH-S-ZR-EXP and TH-S-ZR-SVC.",
+      "source": "rc-vat-80"
+    },
+    {
+      "box": "OT",
+      "kind": "tax",
+      "name": "ภาษีขาย",
+      "sequence": 30,
+      "legal_reference": "The value added tax charged on box SB, and the tax a payer self-assesses under section 83/6 on a service bought from abroad and used in Thailand — see TH-S-STD and TH-P-RC.",
+      "source": "rc-vat-80"
+    },
+    {
+      "box": "PB",
+      "kind": "base",
+      "name": "มูลค่าซื้อที่นำภาษีซื้อมาหักในการคำนวณภาษีได้ (ไม่รวมภาษีมูลค่าเพิ่ม)",
+      "sequence": 40,
+      "legal_reference": "The value, without value added tax, of a purchase whose input tax this pack takes as fully creditable — see TH-P-STD.",
+      "source": "rc-vat-80"
+    },
+    {
+      "box": "RC",
+      "kind": "base",
+      "name": "มูลค่าบริการจากต่างประเทศที่นำส่งภาษีมูลค่าเพิ่มตามมาตรา 83/6",
+      "sequence": 50,
+      "legal_reference": "The value of a service bought from abroad and used in Thailand, reported separately from box PB because it reaches the return through the payer's own self-assessment under section 83/6 and not through a Thai supplier's tax invoice — see TH-P-RC.",
+      "source": "rc-vat-83"
+    },
+    {
+      "box": "IT",
+      "kind": "tax",
+      "name": "ภาษีซื้อ",
+      "sequence": 60,
+      "legal_reference": "The input tax of box PB, and the tax self-assessed on box RC that section 83/6 lets the same payer credit — see TH-P-STD and TH-P-RC. This pack claims that credit in the same period it is self-assessed, which is a simplification named in the pack's README and in docs/international.md.",
+      "source": "rc-vat-80"
+    },
+    {
+      "box": "NET",
+      "kind": "total",
+      "name": "ภาษีมูลค่าเพิ่มที่ต้องชำระ หรือภาษีที่ชำระไว้เกิน (ขอคืนหรือยกไป)",
+      "sequence": 70,
+      "plus": ["OT"],
+      "minus": ["IT"],
+      "legal_reference": "Output tax less input tax for the period. A negative figure is not floored to zero: this session could not verify Thailand's own rule for a small net amount (Singapore's equivalent form waives one under 5 Singapore dollars; nothing read here says whether Thailand has an equivalent), and a Revenue Code provision on carrying a credit forward or claiming a refund was not read, so what a negative NET becomes — a refund, a credit carried to the next month, or a choice between the two — is not modelled beyond the figure itself.",
+      "source": "rd-vat-guide"
+    }
+  ]
+}

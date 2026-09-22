@@ -3645,3 +3645,99 @@ a statute's minimum-content clause rather than from a form: a value without
 its tax is not a value a return can be filed on, and the missing box has to
 be written in, in the open, rather than left out because the law did not
 spell it out twice.
+
+## From Thailand
+
+`packs/th/`, `community`, seed 53, the first pack of mainland Southeast Asia.
+Value added tax under the Revenue Code, Title IV Chapter 4 — sections 80,
+80/1, 81, 81/1, 83 and 86/4 read directly this session from the Revenue
+Department's own English translation; the rest from its summary pages, which
+name what a form covers rather than its printed wording. Two things the
+format could not say, and one habit of the source material worth naming for
+whoever writes the next pack of the region.
+
+**A statute the tools here could not read at all: the Royal Decree that
+actually sets the rate.** Section 80 fixes value added tax at 10 %; the 7 %
+every business in fact charges is a reduction a Royal Decree grants and a
+new decree keeps renewing, apparently without a gap, since 1997. Thailand
+publishes these decrees as scanned PDFs of the Royal Gazette with Thai text
+in embedded fonts, and both a WebFetch of the decree currently said to be in
+force (No. 799, B.E. 2568) and of the one said to take over on 1 October
+2026 (No. 807) came back as unreadable binary streams — twice, from two
+independent attempts. `TH-S-STD` and `TH-P-STD` therefore state the 7 % rate
+and cite the chain of decrees by number and date as a secondary source
+reported it, with the reservation spelled out in their own
+`legal_reference`: neither the decree number, its date, nor the day the
+current one's own predecessor first set the rate running from could be
+read from a primary text this session opened itself. This is not the
+Légifrance 403 or the SSO script-only page this file already names for other
+countries — Thailand's site serves the file — it is a PDF whose text layer
+this session's tools could not extract. A reviewer with a PDF reader open on
+`https://www.rd.go.th/fileadmin/user_upload/kormor/newlaw/dc799.pdf` settles
+it in under a minute; nobody here could.
+
+**The 0.7 % local tax has no posting of its own, on purpose.** The 7 %
+combined rate is, by the same secondary account, 6.3 % national value added
+tax plus a 0.7 % local tax the Revenue Department allocates to local
+government after collecting the whole amount from the taxpayer. Unlike
+Japan, where `packs/jp/` posts the national and the local consumption tax as
+two shares of one rate because the return itself asks for both, nothing read
+here shows form VAT 30 asking a Thai company to split the two: the taxpayer
+pays and declares 7 % once. So `TH-S-STD` is one rate and one posting, and
+the split is named in its `legal_reference` rather than modelled — the
+opposite choice from Japan's, for what this session read as the opposite
+fact about the form.
+
+**A country pack cannot fall back to `packs/generic/`'s own lines, only to
+its shape.** The docs read at the start of this pack's work say a chart that
+declares no `statements` "falls back to `packs/generic/`", and `packs/be/`'s
+`asbl` chart does exactly that. What is not written down, and cost real time
+to find by reading `packages/cli/src/pack/read.ts`, is that the coverage
+check run on a country's own chart (`readPack`, "every account... reaches a
+line of *some* statement of that chart") calls `ruleCatches()`, which
+switches on `account_code`, `code_prefix` and `code_range` and returns
+`false` for anything else — `account_type` included. `packs/generic/`'s own
+`account_type` rules are validated and consumed by a *different* function,
+`readFrameworkPack()`, written for a pack with no chart and no company ever
+installed on it. A country pack's own `statements.json` — the golden
+scenario's `chart` runs through `readPack`, not `readFrameworkPack` — has to
+use `code_range`, `code_prefix` or `account_code` like every sibling pack
+already does; `account_type` there is silently refused by exactly the check
+meant to catch an account reaching nothing, which is what `packs/th/`'s
+first attempt at reusing `packs/generic/`'s own lines ran into, seventy-seven
+times over, before the two functions were told apart. `packs/th/statements.json`
+groups this chart's own code ranges instead, and this paragraph is here so
+the next community contributor who reads "falls back to `packs/generic/`"
+and reaches for `account_type` finds the correction before losing the same
+hour.
+
+**What this pack does not carry, named rather than guessed at:**
+
+- **Section 82/5**, the list of input tax the law excludes from credit
+  (entertainment expenses and passenger cars, by reputation and not by a
+  text read this session) — `TH-P-STD` assumes every standard-rated
+  purchase is fully creditable.
+- **The two-form timing of section 83/6.** A service bought from abroad is
+  self-assessed on form VAT 36 within seven days of payment and credited on
+  form VAT 30 of that month or the next; `TH-P-RC` books the self-assessment
+  and the credit on the same document, which is faster than the law allows.
+- **Specific Business Tax**, the Revenue Code's separate regime for banking,
+  finance, life insurance, pawnbroking and commercial real estate (sections
+  91/2 and 91/6): a business subject to it is outside value added tax for
+  that activity, files a different return (ภธ.40) at different rates, and
+  none of it is in this pack.
+- **The e-Tax Invoice & e-Receipt system.** Whether it is mandatory for any
+  class of taxpayer, and from what date, could not be read from
+  `etax.rd.go.th`, which renders through client-side script the tools
+  available here could not execute; `einvoicing.obligation` is `none`,
+  which states only that no statute was found requiring it.
+- **Sections 78 and 78/1**, the time of supply, read only through secondary
+  guidance after two direct attempts at the Revenue Code itself returned a
+  server error; `tax_point` is the closest of five closed values to what
+  that guidance says, and names the gap in its own `legal_reference`.
+- **A Thai financial reporting standard's own line items.** The Federation
+  of Accounting Professions' standard for entities that are not publicly
+  accountable could not be opened this session; `TH-BS` and `TH-IS` group
+  this chart's own accounts by their code ranges instead of transcribing
+  that standard's paragraphs, the way `packs/sg/`'s statements do transcribe
+  SFRS for Small Entities.

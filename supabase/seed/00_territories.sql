@@ -621,3 +621,27 @@ on conflict (code) do update set
   eu_vat_to       = excluded.eu_vat_to,
   vat_prefix      = excluded.vat_prefix,
   legal_reference = excluded.legal_reference;
+
+-- ---------------------------------------------------------------------------
+-- Thailand is outside the common system of VAT: Directive 2006/112/EC binds
+-- the Member States of the European Union and nobody else, so a third
+-- country's own value added tax — Thailand's, charged under Title IV Chapter
+-- 4 of the Revenue Code (sections 77 to 90/4) — is never a supply the common
+-- system reaches, whatever its own mechanics resemble. `vat_prefix` is null:
+-- a Thai VAT registrant is identified by a thirteen-digit taxpayer
+-- identification number, which carries no ISO country prefix comparable to
+-- an EU VAT number and was not verified this session against a register.
+-- ---------------------------------------------------------------------------
+
+insert into territories (code, code_source, name, parent_code, eu_vat_scope, eu_vat_from, eu_vat_to, vat_prefix, legal_reference) values
+  ('TH', 'iso_3166_1', 'Thailand', null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. Thailand levies its own value added tax under the Revenue Code, Title IV Chapter 4, sections 77 to 90/4 (Revenue Department of Thailand, https://www.rd.go.th/english/37732.html, read directly 22 September 2026), unrelated to the Union''s common system.')
+on conflict (code) do update set
+  code_source     = excluded.code_source,
+  name            = excluded.name,
+  parent_code     = excluded.parent_code,
+  eu_vat_scope    = excluded.eu_vat_scope,
+  eu_vat_from     = excluded.eu_vat_from,
+  eu_vat_to       = excluded.eu_vat_to,
+  vat_prefix      = excluded.vat_prefix,
+  legal_reference = excluded.legal_reference;

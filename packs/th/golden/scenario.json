@@ -1,0 +1,200 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "A year of a value-added-tax-registered Thai trading and consulting company, filing form VAT 30 every month, for the financial year 2026",
+  "chart": "default",
+  "fiscal_year": {
+    "name": "Financial year ended 31 December 2026",
+    "start": "2026-01-01",
+    "end": "2026-12-31"
+  },
+  "periods": [
+    { "code": "2026-01", "from": "2026-01-01", "to": "2026-01-31" },
+    { "code": "2026-02", "from": "2026-02-01", "to": "2026-02-28" },
+    { "code": "2026-03", "from": "2026-03-01", "to": "2026-03-31" },
+    { "code": "2026-04", "from": "2026-04-01", "to": "2026-04-30" },
+    { "code": "2026-05", "from": "2026-05-01", "to": "2026-05-31" },
+    { "code": "2026-06", "from": "2026-06-01", "to": "2026-06-30" },
+    { "code": "2026-07", "from": "2026-07-01", "to": "2026-07-31" },
+    { "code": "2026-08", "from": "2026-08-01", "to": "2026-08-31" },
+    { "code": "2026-09", "from": "2026-09-01", "to": "2026-09-30" },
+    { "code": "2026-10", "from": "2026-10-01", "to": "2026-10-31" },
+    { "code": "2026-11", "from": "2026-11-01", "to": "2026-11-30" },
+    { "code": "2026-12", "from": "2026-12-01", "to": "2026-12-31" }
+  ],
+  "statements": ["TH-BS", "TH-IS"],
+  "contacts": [
+    { "ref": "cust-th", "name": "Chatuchak Home Supplies Co., Ltd.", "type": "customer", "country": "TH" },
+    { "ref": "cust-sg", "name": "Marina Bay Trading Pte. Ltd.", "type": "customer", "country": "SG" },
+    { "ref": "cust-jp", "name": "Kyoto Design Partners K.K.", "type": "customer", "country": "JP" },
+    { "ref": "tenant-th", "name": "Somchai — residential tenant, Sukhumvit apartment", "type": "customer", "country": "TH" },
+    { "ref": "supp-th", "name": "Bangna Wholesale Supplies Co., Ltd.", "type": "supplier", "country": "TH" },
+    { "ref": "supp-bank", "name": "Krungthep Commercial Bank PCL", "type": "supplier", "country": "TH" },
+    { "ref": "supp-us", "name": "CloudWorks Software Inc.", "type": "supplier", "country": "US" },
+    { "ref": "supp-freelance", "name": "Niran Freelance Consulting", "type": "supplier", "country": "TH" },
+    { "ref": "landlord-th", "name": "Somsri — individual landlord", "type": "supplier", "country": "TH" }
+  ],
+  "documents": [
+    {
+      "ref": "S1",
+      "type": "sale_invoice",
+      "contact": "cust-th",
+      "date": "2026-01-15",
+      "why": "A standard-rated domestic sale: box SB takes the 50,000.00 value and box OT the 7 %, 3,500.00.",
+      "lines": [
+        { "name": "Home furnishings, domestic sale", "quantity": 1, "unit_price": 50000, "tax": "TH-S-STD", "account": "4000" }
+      ]
+    },
+    {
+      "ref": "P1",
+      "type": "purchase_invoice",
+      "contact": "supp-th",
+      "date": "2026-01-20",
+      "why": "A standard-rated domestic purchase of trading stock: box PB takes 20,000.00 and box IT the 7 %, 1,400.00.",
+      "lines": [
+        { "name": "Goods for resale", "quantity": 1, "unit_price": 20000, "tax": "TH-P-STD", "account": "5000" }
+      ]
+    },
+    {
+      "ref": "S2",
+      "type": "sale_invoice",
+      "contact": "cust-sg",
+      "date": "2026-02-10",
+      "why": "An export of goods, zero-rated under section 80/1(1): box SZ alone, 200,000.00, no output tax.",
+      "lines": [
+        { "name": "Furnishings shipped to Singapore", "quantity": 1, "unit_price": 200000, "tax": "TH-S-ZR-EXP", "account": "4020" }
+      ]
+    },
+    {
+      "ref": "P2",
+      "type": "purchase_invoice",
+      "contact": "supp-bank",
+      "date": "2026-02-15",
+      "why": "Bank charges, an exempt supply under section 81: no value added tax, no box.",
+      "lines": [
+        { "name": "Account and remittance charges", "quantity": 1, "unit_price": 2000, "tax": "TH-P-EX", "account": "6200" }
+      ]
+    },
+    {
+      "ref": "S3",
+      "type": "sale_invoice",
+      "contact": "cust-jp",
+      "date": "2026-03-05",
+      "why": "A design service performed in Thailand and used by a client in Japan, zero-rated under section 80/1(2): box SZ, 80,000.00.",
+      "lines": [
+        { "name": "Interior design consultancy for a Kyoto client", "quantity": 1, "unit_price": 80000, "tax": "TH-S-ZR-SVC", "account": "4030" }
+      ]
+    },
+    {
+      "ref": "P3",
+      "type": "purchase_invoice",
+      "contact": "supp-us",
+      "date": "2026-03-12",
+      "why": "A software subscription bought from a United States supplier and used in Thailand: the company self-assesses 7 % under section 83/6 and claims it back in the same period (a simplification the README names) — box RC 15,000.00, box OT and box IT both 1,050.00, net nil.",
+      "lines": [
+        { "name": "Design software subscription, one year", "quantity": 1, "unit_price": 15000, "tax": "TH-P-RC", "account": "6350" }
+      ]
+    },
+    {
+      "ref": "S4",
+      "type": "sale_invoice",
+      "contact": "tenant-th",
+      "date": "2026-04-08",
+      "why": "Residential rent, exempt under section 81: no box.",
+      "lines": [
+        { "name": "Rent of the Sukhumvit apartment, second quarter", "quantity": 1, "unit_price": 30000, "tax": "TH-S-EX", "account": "4500" }
+      ]
+    },
+    {
+      "ref": "P4",
+      "type": "purchase_invoice",
+      "contact": "supp-freelance",
+      "date": "2026-04-18",
+      "why": "A fee paid to a small consultant who is not registered for value added tax: no output tax on the supplier's side, and the company withholds 3 % (1,200.00) under section 3 tredecim, remitted on form CIT 53.",
+      "lines": [
+        { "name": "Marketing consulting, one engagement", "quantity": 1, "unit_price": 40000, "tax": "TH-P-WHT-SVC-3", "account": "6210" }
+      ]
+    },
+    {
+      "ref": "S5",
+      "type": "sale_credit_note",
+      "contact": "cust-th",
+      "date": "2026-05-06",
+      "why": "A credit note on S1 for goods returned: box SB and box OT go down, 5,000.00 and 350.00, in the month it is issued.",
+      "lines": [
+        { "name": "Returned home furnishings", "quantity": 1, "unit_price": 5000, "tax": "TH-S-STD", "account": "4000" }
+      ]
+    },
+    {
+      "ref": "P5",
+      "type": "purchase_invoice",
+      "contact": "landlord-th",
+      "date": "2026-05-20",
+      "why": "Office rent paid to an individual landlord, exempt from value added tax under section 81 and subject to 5 % withholding (1,250.00) on form PND 3.",
+      "lines": [
+        { "name": "Office rent, June", "quantity": 1, "unit_price": 25000, "tax": "TH-P-WHT-RENT-5", "account": "6100" }
+      ]
+    },
+    {
+      "ref": "P6",
+      "type": "purchase_credit_note",
+      "contact": "supp-th",
+      "date": "2026-06-10",
+      "why": "A credit note received on P1 for goods returned: box PB and box IT go down, 2,000.00 and 140.00.",
+      "lines": [
+        { "name": "Returned stock", "quantity": 1, "unit_price": 2000, "tax": "TH-P-STD", "account": "5000" }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "R1",
+      "direction": "inbound",
+      "date": "2026-02-20",
+      "amount": 200000,
+      "contact": "cust-sg",
+      "journal": "BNK",
+      "match": "S2",
+      "why": "A receipt that settles the export sale S2 in full, no value added tax to collect."
+    },
+    {
+      "ref": "D1",
+      "direction": "outbound",
+      "date": "2026-02-10",
+      "amount": 21400,
+      "contact": "supp-th",
+      "journal": "BNK",
+      "match": "P1",
+      "why": "A payment that settles P1 exactly, value plus value added tax."
+    },
+    {
+      "ref": "D2",
+      "direction": "outbound",
+      "date": "2026-04-25",
+      "amount": 38800,
+      "contact": "supp-freelance",
+      "journal": "BNK",
+      "match": "P4",
+      "why": "The 97 % of P4 the consultant is paid once 3 % has been withheld."
+    },
+    {
+      "ref": "D3",
+      "direction": "outbound",
+      "date": "2026-05-25",
+      "amount": 23750,
+      "contact": "landlord-th",
+      "journal": "BNK",
+      "match": "P5",
+      "why": "The 95 % of P5 the landlord is paid once 5 % has been withheld."
+    },
+    {
+      "ref": "R2",
+      "direction": "inbound",
+      "date": "2026-12-20",
+      "amount": 10000,
+      "contact": "cust-th",
+      "journal": "BNK",
+      "match": null,
+      "why": "A payment on account that matches no invoice and stays open."
+    }
+  ]
+}

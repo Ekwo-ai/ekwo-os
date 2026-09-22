@@ -1,0 +1,84 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/statements",
+  "statements": [
+    {
+      "code": "TH-BS",
+      "kind": "balance_sheet",
+      "framework": "TH-ORIGINAL",
+      "name": "งบแสดงฐานะการเงิน",
+      "legal_reference": "Thailand prescribes no line items of its own that this session could read: the Federation of Accounting Professions issues a Thai Financial Reporting Standard for entities that are not publicly accountable, and this session could not open its text (see the pack's README, \"Sources\"). This statement is original: it groups this chart's own accounts by the code ranges accounts.csv gives them — current and non-current, receivables and payables split from other balances — the same classification IFRS for SMEs, section 4, uses without transcribing that section's own line items or their numbering.",
+      "source": null,
+      "lines": [
+        { "code": "A-C-CASH", "parent": "A-C", "name": "เงินสดและรายการเทียบเท่าเงินสด", "sequence": 10,
+          "rules": [ { "kind": "code_range", "code_from": "1000", "code_to": "1099" } ] },
+        { "code": "A-C-REC", "parent": "A-C", "name": "ลูกหนี้การค้า", "sequence": 20,
+          "rules": [ { "kind": "code_range", "code_from": "1100", "code_to": "1119" } ] },
+        { "code": "A-C-OTH", "parent": "A-C", "name": "ภาษีซื้อ ลูกหนี้อื่น และสินค้าคงเหลือ", "sequence": 30,
+          "rules": [ { "kind": "code_range", "code_from": "1120", "code_to": "1299" } ] },
+        { "code": "A-C-PREP", "parent": "A-C", "name": "ค่าใช้จ่ายจ่ายล่วงหน้าและเงินประกันจ่าย", "sequence": 40,
+          "rules": [ { "kind": "code_range", "code_from": "1300", "code_to": "1399" } ] },
+        { "code": "A-C", "name": "สินทรัพย์หมุนเวียน", "sequence": 50, "is_total": true,
+          "plus": ["A-C-CASH", "A-C-REC", "A-C-OTH", "A-C-PREP"] },
+        { "code": "A-NC-FIX", "parent": "A-NC", "name": "ที่ดิน อาคาร และอุปกรณ์ (สุทธิจากค่าเสื่อมราคาสะสม)", "sequence": 60,
+          "rules": [ { "kind": "code_range", "code_from": "1600", "code_to": "1699" } ] },
+        { "code": "A-NC-OTH", "parent": "A-NC", "name": "สินทรัพย์ไม่มีตัวตนและสินทรัพย์ไม่หมุนเวียนอื่น", "sequence": 70,
+          "rules": [ { "kind": "code_range", "code_from": "1700", "code_to": "1799" } ] },
+        { "code": "A-NC", "name": "สินทรัพย์ไม่หมุนเวียน", "sequence": 80, "is_total": true,
+          "plus": ["A-NC-FIX", "A-NC-OTH"] },
+        { "code": "A-TOT", "name": "รวมสินทรัพย์", "sequence": 90, "is_total": true, "plus": ["A-C", "A-NC"] },
+        { "code": "L-C-PAY", "parent": "L-C", "name": "เจ้าหนี้การค้า", "sequence": 100, "sign": -1,
+          "rules": [ { "kind": "code_range", "code_from": "2000", "code_to": "2009" } ] },
+        { "code": "L-C-OTH", "parent": "L-C", "name": "ภาษีขาย ภาษีค้างจ่าย เจ้าหนี้อื่น และหนี้สินหมุนเวียนอื่น", "sequence": 110, "sign": -1,
+          "rules": [
+            { "kind": "code_range", "code_from": "2010", "code_to": "2499", "sequence": 10 },
+            { "kind": "code_range", "code_from": "2900", "code_to": "2999", "sequence": 20 }
+          ] },
+        { "code": "L-C", "name": "หนี้สินหมุนเวียน", "sequence": 120, "is_total": true, "plus": ["L-C-PAY", "L-C-OTH"] },
+        { "code": "L-NC", "parent": "L-TOT", "name": "หนี้สินไม่หมุนเวียน", "sequence": 130, "sign": -1,
+          "rules": [ { "kind": "code_range", "code_from": "2500", "code_to": "2599" } ] },
+        { "code": "L-TOT", "name": "รวมหนี้สิน", "sequence": 140, "is_total": true, "plus": ["L-C", "L-NC"] },
+        { "code": "E-CAP", "parent": "E-TOT", "name": "ทุนจดทะเบียนและเรียกชำระแล้ว และส่วนเกินมูลค่าหุ้น", "sequence": 150, "sign": -1,
+          "rules": [ { "kind": "code_range", "code_from": "3000", "code_to": "3199" } ] },
+        { "code": "E-RET", "parent": "E-TOT", "name": "กำไรสะสม", "sequence": 160, "sign": -1,
+          "rules": [ { "kind": "code_range", "code_from": "3200", "code_to": "3299" } ] },
+        { "code": "E-RESULT", "parent": "E-TOT", "name": "ผลการดำเนินงานของงวดที่ยังไม่ได้จัดสรร", "sequence": 170, "sign": -1,
+          "rules": [
+            { "kind": "code_range", "code_from": "4000", "code_to": "5999", "sequence": 10 },
+            { "kind": "code_range", "code_from": "6000", "code_to": "8999", "sequence": 20 }
+          ] },
+        { "code": "E-TOT", "name": "รวมส่วนของเจ้าของ", "sequence": 180, "is_total": true, "plus": ["E-CAP", "E-RET", "E-RESULT"] },
+        { "code": "EL-TOT", "name": "รวมหนี้สินและส่วนของเจ้าของ", "sequence": 190, "is_total": true, "plus": ["L-TOT", "E-TOT"] }
+      ]
+    },
+    {
+      "code": "TH-IS",
+      "kind": "income_statement",
+      "framework": "TH-ORIGINAL",
+      "name": "งบกำไรขาดทุน",
+      "legal_reference": "As TH-BS: original, grouped by the code ranges accounts.csv gives this chart's revenue, cost and expense accounts.",
+      "source": null,
+      "lines": [
+        { "code": "REV", "name": "รายได้", "sequence": 10, "sign": -1,
+          "rules": [ { "kind": "code_range", "code_from": "4000", "code_to": "4599" } ] },
+        { "code": "COST", "name": "ต้นทุนขาย", "sequence": 20,
+          "rules": [ { "kind": "code_range", "code_from": "5000", "code_to": "5099" } ] },
+        { "code": "GROSS", "name": "กำไรขั้นต้น", "sequence": 30, "is_total": true, "plus": ["REV"], "minus": ["COST"] },
+        { "code": "OTH-INC", "name": "รายได้อื่น", "sequence": 40, "sign": -1,
+          "rules": [ { "kind": "code_range", "code_from": "4700", "code_to": "4999" } ] },
+        { "code": "OPEX", "name": "ค่าใช้จ่ายในการขายและบริหาร และต้นทุนทางการเงิน", "sequence": 50,
+          "rules": [
+            { "kind": "code_range", "code_from": "6000", "code_to": "6969", "sequence": 10 },
+            { "kind": "code_range", "code_from": "6980", "code_to": "7099", "sequence": 20 }
+          ] },
+        { "code": "DEPR", "name": "ค่าเสื่อมราคา", "sequence": 60,
+          "rules": [ { "kind": "code_range", "code_from": "6970", "code_to": "6979" } ] },
+        { "code": "PRETAX", "name": "กำไรก่อนภาษีเงินได้", "sequence": 70, "is_total": true,
+          "plus": ["GROSS", "OTH-INC"], "minus": ["OPEX", "DEPR"] },
+        { "code": "TAX", "name": "ภาษีเงินได้นิติบุคคล", "sequence": 80,
+          "rules": [ { "kind": "code_range", "code_from": "8000", "code_to": "8099" } ] },
+        { "code": "PROFIT", "name": "กำไร (ขาดทุน) สุทธิสำหรับงวด", "sequence": 90, "is_total": true,
+          "plus": ["PRETAX"], "minus": ["TAX"] }
+      ]
+    }
+  ]
+}
