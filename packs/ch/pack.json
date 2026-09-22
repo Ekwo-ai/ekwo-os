@@ -117,7 +117,9 @@
       "bank": "1020",
       "cash": "1000",
       "tax_payable": "2140",
-      "tax_receivable": "1176"
+      "tax_receivable": "1176",
+      "fx_gain": "6960",
+      "fx_loss": "6920"
     },
     "journal_roles": {
       "sales": "SAL",
