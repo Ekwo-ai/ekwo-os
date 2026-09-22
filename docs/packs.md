@@ -241,7 +241,7 @@ says what they say. `ekwo pack describe <cc>` is everything one of them says.
 | [`th`](../packs/th/) | ประเทศไทย | `56_pack_th.sql` | th, en | `community` |
 | [`tw`](../packs/tw/) | 臺灣 | `53_pack_tw.sql` | zh, en | `community` |
 | [`us`](../packs/us/) | United States | `15_pack_us.sql` | en | `community` |
-| [`vn`](../packs/vn/) | Việt Nam | `53_pack_vn.sql` | vi | `community` |
+| [`vn`](../packs/vn/) | Việt Nam | `55_pack_vn.sql` | vi | `community` |
 <!-- /generated -->
 
 The SQL is a **build artefact**, like `docs/schema.md`. The source is the
