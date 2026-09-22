@@ -3412,3 +3412,49 @@ names for its own box 027, met here on form 401's box 108. Neither is a
 finding about the core beyond what those two packs already established; both
 are named here so that a reader of this section does not have to reconstruct
 them from `packs/tw/README.md` alone.
+
+## From South Korea
+
+`packs/kr/`, `community`, seed 53, KRW at zero decimals — the second pack of
+Asia after Japan, and the first whose VAT the seller does not merely invoice
+but reports to the tax administration almost as it happens.
+
+**전자세금계산서 is a same-day reporting duty to the NTS, and `einvoicing`
+cannot name it.** Every corporation since 2011, and since 1 July 2024 an
+individual business above 80,000,000 원 of the prior year's supplies
+(부가가치세법 제32조, 시행령 제68조), must issue its tax invoice electronically
+and transmit its particulars to the National Tax Service by the day after
+issuance, on pain of a graduated penalty (0.3% late, 0.5% not at all). That
+is not a profile `einvoicing.profile` can hold: the field names an EN 16931
+profile a brick of `packages/formats/` actually writes and a Peppol access
+point actually carries, and South Korea has joined no such network — it runs
+no Peppol Authority (OpenPeppol's own list, consulted 22 September 2026,
+does not carry it), so there is no PINT-KR the way there is a JP PINT for
+Japan or a PINT SG for Singapore. The 전자세금계산서 itself is the NTS's own
+XML, filed through its own Hometax portal, and nothing in this repository
+produces it or talks to that portal. `packs/kr/` therefore leaves `profile`,
+`mandatory_from`, `party_scheme`, `vat_scheme` and `obligation` all empty and
+states the duty in full in `legal_reference` instead — exactly the shape
+`packs/mx/` already gave this problem for the CFDI, and the same one Côte
+d'Ivoire's FNE and Chad's FEN gave it for a live clearance platform rather
+than a document standard. *Fix*: the clearance model `packs/mx/`'s own README
+already asks for — `obligation: mandatory` with a `model: clearance` (or,
+here, `model: real_time_report`) and a certifying or receiving
+administration named without borrowing the vocabulary EN 16931 built for a
+four-corner exchange between two businesses.
+
+**A reporting duty most individual taxpayers never actually file.** A
+corporation's quarterly return (제48조 예정신고, 제49조 확정신고) is an ordinary
+filing this pack's `tax_report.json` reads as `period: quarter` with no
+difficulty. Most individual general taxpayers, by contrast, do not file a
+preliminary return at all: 제48조제3항 has the NTS assess and collect half of
+the prior period's net tax by a notice of its own (예정고지), with no return
+behind it, unless the taxpayer's own books would show less. That is a
+payment on account raised by the administration itself rather than a
+cadence this pack's company declares — closer to Japan's own interim
+instalments of 消費税法 art. 42, which `packs/jp/` likewise declares and
+leaves the boxes for empty, than to a second `period` this format could
+name. `packs/kr/`'s chart targets a company (법인사업자), which always files,
+so the golden year carries none of it; a pack extending this one to an
+individual taxpayer would meet the same gap Japan's interim returns already
+named.

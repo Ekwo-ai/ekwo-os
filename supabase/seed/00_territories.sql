@@ -469,6 +469,28 @@ on conflict (code) do update set
 
 
 -- ---------------------------------------------------------------------------
+-- The rows — South Korea
+--
+-- Outside the common system, like Japan above: South Korea levies a
+-- value-added tax of its own under its own 부가가치세법 (Value-Added Tax Act),
+-- whose article 30 sets the rate at 10%, unrelated to Directive 2006/112/EC.
+-- ---------------------------------------------------------------------------
+
+insert into territories (code, code_source, name, parent_code, eu_vat_scope, eu_vat_from, eu_vat_to, vat_prefix, legal_reference) values
+  ('KR', 'iso_3166_1', 'South Korea', null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. South Korea levies a value-added tax of its own under 부가가치세법 (the Value-Added Tax Act), whose article 30 sets the rate at 10%.')
+on conflict (code) do update set
+  code_source     = excluded.code_source,
+  name            = excluded.name,
+  parent_code     = excluded.parent_code,
+  eu_vat_scope    = excluded.eu_vat_scope,
+  eu_vat_from     = excluded.eu_vat_from,
+  eu_vat_to       = excluded.eu_vat_to,
+  vat_prefix      = excluded.vat_prefix,
+  legal_reference = excluded.legal_reference;
+
+
+-- ---------------------------------------------------------------------------
 -- The rows — New Zealand
 --
 -- The second territory of Oceania, read beside Australia's row above: a goods

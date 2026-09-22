@@ -1,0 +1,203 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "KR",
+  "name": "대한민국",
+  "version": "0.1.0",
+  "schema_min": "20260917170000",
+  "seed_sequence": 53,
+  "released_at": "2026-09-22",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "vat-act",
+        "title": "부가가치세법 (Value-Added Tax Act) — 법률 제20776호, 2025. 3. 14. 일부개정, 2025. 7. 1. 시행",
+        "publisher": "국가법령정보센터 (Korea Ministry of Government Legislation)",
+        "url": "https://www.law.go.kr/법령/부가가치세법",
+        "consulted_on": "2026-09-22",
+        "kind": "law"
+      },
+      {
+        "key": "vat-decree",
+        "title": "부가가치세법 시행령 (Enforcement Decree of the Value-Added Tax Act)",
+        "publisher": "국가법령정보센터 (Korea Ministry of Government Legislation)",
+        "url": "https://www.law.go.kr/법령/부가가치세법시행령",
+        "consulted_on": "2026-09-22",
+        "kind": "regulation"
+      },
+      {
+        "key": "vat-form21",
+        "title": "부가가치세법 시행규칙 [별지 제21호서식] 일반과세자 부가가치세[예정, 확정, 기한후과세표준, 영세율 등 조기환급]신고서, 개정 2021. 3. 16.",
+        "publisher": "국가법령정보센터 (Korea Ministry of Government Legislation)",
+        "url": "https://www.law.go.kr/LSW/flDownload.do?flSeq=97706537",
+        "consulted_on": "2026-09-22",
+        "kind": "form"
+      },
+      {
+        "key": "corp-tax-act",
+        "title": "법인세법 (Corporate Tax Act), 제6조 (사업연도)",
+        "publisher": "국가법령정보센터 (Korea Ministry of Government Legislation)",
+        "url": "https://www.law.go.kr/법령/법인세법",
+        "consulted_on": "2026-09-22",
+        "kind": "law"
+      },
+      {
+        "key": "commercial-act",
+        "title": "상법 (Commercial Act), 제29조 (상업장부) 및 제447조 (재무제표의 작성)",
+        "publisher": "국가법령정보센터 (Korea Ministry of Government Legislation)",
+        "url": "https://www.law.go.kr/법령/상법",
+        "consulted_on": "2026-09-22",
+        "kind": "law"
+      },
+      {
+        "key": "treasury-funds-act",
+        "title": "국고금 관리법 (State Funds Management Act), 제47조 (국고금의 끝수 계산)",
+        "publisher": "국가법령정보센터 (Korea Ministry of Government Legislation)",
+        "url": "https://www.law.go.kr/법령/국고금관리법",
+        "consulted_on": "2026-09-22",
+        "kind": "law"
+      },
+      {
+        "key": "nts-filing-deadline",
+        "title": "부가가치세 신고·납부기한 안내",
+        "publisher": "국세청 (National Tax Service)",
+        "url": "https://www.nts.go.kr/nts/cm/cntnts/cntntsView.do?mi=2273&cntntsId=7694",
+        "consulted_on": "2026-09-22",
+        "kind": "guidance"
+      },
+      {
+        "key": "nts-einvoice-obligors",
+        "title": "전자(세금)계산서 — 발급의무대상자",
+        "publisher": "국세청 (National Tax Service)",
+        "url": "https://www.nts.go.kr/nts/cm/cntnts/cntntsView.do?mi=2461&cntntsId=7787",
+        "consulted_on": "2026-09-22",
+        "kind": "guidance"
+      },
+      {
+        "key": "nts-einvoice-deadline",
+        "title": "전자세금계산서 발급 및 전송 기한, 가산세",
+        "publisher": "국세청 (National Tax Service)",
+        "url": "https://www.nts.go.kr/nts/cm/cntnts/cntntsView.do?mi=2463&cntntsId=7789",
+        "consulted_on": "2026-09-22",
+        "kind": "guidance"
+      },
+      {
+        "key": "hometax",
+        "title": "홈택스 (Hometax) — 국세청 국세전자신고·납부 시스템",
+        "publisher": "국세청 (National Tax Service)",
+        "url": "https://www.hometax.go.kr",
+        "consulted_on": "2026-09-22",
+        "kind": "portal"
+      },
+      {
+        "key": "simplified-threshold",
+        "title": "간이과세 기준금액 1억 400만원으로 상향 (2024. 7. 1. 시행)",
+        "publisher": "대한민국 정책브리핑 (Korea Policy Briefing, korea.kr)",
+        "url": "https://www.korea.kr/news/policyNewsView.do?newsId=148930428",
+        "consulted_on": "2026-09-22",
+        "kind": "guidance"
+      },
+      {
+        "key": "peppol-authorities",
+        "title": "Peppol Authorities — list of members",
+        "publisher": "OpenPeppol",
+        "url": "https://peppol.org/members/peppol-authorities/",
+        "consulted_on": "2026-09-22",
+        "kind": "standard"
+      },
+      {
+        "key": "kasb",
+        "title": "한국회계기준원 (Korea Accounting Standards Board) — 일반기업회계기준",
+        "publisher": "한국회계기준원",
+        "url": "https://www.kasb.or.kr",
+        "consulted_on": "2026-09-22",
+        "kind": "standard"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "KRW",
+    "language": "ko",
+    "rounding_method": "down",
+    "closing_style": "retained_earnings",
+    "fiscal_year_default": "calendar",
+    "roles": {
+      "receivable": "1210",
+      "payable": "2110",
+      "suspense": "2195",
+      "rounding": "7145",
+      "retained_earnings": "3330",
+      "sales": "4100",
+      "purchase": "5120",
+      "bank": "1110",
+      "cash": "1100",
+      "fx_gain": "4220",
+      "fx_loss": "7110",
+      "asset_disposal_gain": "4230",
+      "asset_disposal_loss": "7130",
+      "tax_payable": "2155",
+      "tax_receivable": "1255"
+    },
+    "journal_roles": {
+      "sales": "SAL",
+      "purchase": "PUR",
+      "miscellaneous": "GEN",
+      "opening": "OPN"
+    }
+  },
+  "languages": ["en"],
+  "journals": [
+    { "code": "SAL", "type": "sales", "name": "매출장", "sequence": 10 },
+    { "code": "PUR", "type": "purchase", "name": "매입장", "sequence": 20 },
+    { "code": "BNK", "type": "bank", "name": "예금출납장", "sequence": 30 },
+    { "code": "CSH", "type": "cash", "name": "현금출납장", "sequence": 40 },
+    { "code": "GEN", "type": "general", "name": "분개장", "sequence": 50 },
+    { "code": "OPN", "type": "opening", "name": "기초분개", "sequence": 60 }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "대한민국 참고 계정과목표 (일반기업회계기준 기준)",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": ["KR-GAAP-BS", "KR-GAAP-IS"],
+      "legal_reference": "대한민국은 법정 계정과목표를 두지 않는다. 상법 제29조는 상업장부(회계장부와 대차대조표)의 작성 의무를, 제447조는 주식회사의 재무제표(대차대조표, 손익계산서 등) 작성 의무를 정할 뿐, 계정과목의 번호나 명칭을 지정하지 않는다. 외부감사 대상이 아니거나 한국채택국제회계기준(K-IFRS)을 적용하지 않는 회사는 한국회계기준원(KASB)이 제정한 일반기업회계기준에 따라 재무제표를 작성하며, 이 기준은 재무상태표의 유동·비유동 구분과 손익계산서의 단계별 이익(매출총이익·영업이익·법인세비용차감전순이익·당기순이익) 구조는 정하지만 계정과목표 자체는 정하지 않는다(작성사·회계프로그램마다 계정과목이 다르다). 이 계정과목표는 독자적으로 작성한 것으로, 네 자리 숫자로 대분류(1 자산, 2 부채, 3 자본, 4 수익, 5 매출원가, 6 판매비와관리비, 7 영업외비용, 8 법인세비용)를 나누고, 한국 실무에서 통용되는 계정명을 사용한다. 어떤 공식·상용 계정과목표도 그대로 옮기지 않았다. 부가가치세는 세금계산서에 부가가치세액을 별도로 표시하는 방식(세액 별도)으로 기장하며, 매출 시 부가세예수금(계정 2150), 매입 시 부가세대급금(계정 1250)에 각각 계상하고 신고·납부 시 미지급세금(2155) 또는 미수금(부가세환급세액)(1255)으로 정산한다.",
+      "source": "commercial-act"
+    }
+  ],
+  "documents": {
+    "numbering": "free",
+    "number_format": "{CODE}-{YYYY}-{NNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "delivery_date",
+    "references": {
+      "numbering": {
+        "legal_reference": "부가가치세법 제32조 및 같은 법 시행령 제53조 — 세금계산서는 작성 연월일 등 필요적 기재사항을 갖추어야 하고, 국세청이 부여하는 승인번호(전자세금계산서의 경우)를 가지지만, 법령은 사업자 스스로 매기는 일련번호에 대해 연간 결번 없는 하나의 체계를 강제하지 않는다. 그래서 numbering은 free이며, number_format은 그러한 자유 안에서 이 팩이 제안하는 관례일 뿐이다.",
+        "source": "vat-act"
+      },
+      "payment_terms": {
+        "legal_reference": "상법에는 사업자 간 매매대금의 지급기한을 일반적으로 정하는 규정이 없다(당사자의 약정에 따른다). 하도급거래 공정화에 관한 법률 제13조는 원사업자가 수급사업자에게 목적물 수령일로부터 60일 이내에 대금을 지급하도록 정하지만, 이는 하도급거래라는 특정 관계에만 적용되므로 이 팩은 이를 일반 규칙으로 반영하지 않는다. 그래서 legal_payment_days와 late_payment_reference는 비워 둔다.",
+        "source": "commercial-act"
+      },
+      "tax_point": {
+        "legal_reference": "부가가치세법 제15조(재화의 공급시기) — 재화가 이동하는 경우에는 재화가 인도되는 때, 이동이 필요하지 않은 경우에는 재화가 이용 가능하게 되는 때를 원칙으로 한다. 같은 법 제16조(용역의 공급시기)는 역무의 제공이 완료되는 때를 원칙으로 한다. 이 팩은 재화에 대한 제15조의 원칙을 delivery_date로 선언하며, 용역의 완료 시점도 같은 개념으로 다룬다. 세금계산서를 공급시기 전에 먼저 발급하는 경우 등 시행령이 정하는 특례는 이 팩이 검증하지 못했고, docs/international.md에 남긴다.",
+        "source": "vat-act"
+      }
+    },
+    "mentions": []
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "부가가치세법 제32조제2항 — 법인사업자와 대통령령으로 정하는 개인사업자(같은 법 시행령 제68조: 직전 연도 재화·용역 공급가액 합계액이 8천만원 이상인 개인사업자, 2024. 7. 1.부터 적용)는 세금계산서를 전자적 방법으로 발급하는 전자세금계산서(전자세금계산서)를 발급하여야 하고, 같은 조제3항에 따라 발급일의 다음 날까지 그 발급명세를 국세청장에게 전송하여야 한다(국세청, 전자세금계산서 발급 및 전송 기한). 법인사업자는 2011년 1월부터 의무 대상이다(국세청 안내). 전송이 지연되거나 이루어지지 않으면 공급가액의 0.3%(지연전송) 또는 0.5%(미전송)의 가산세가 부과된다(부가가치세법 시행규칙 별지 제21호서식 작성방법, (65)·(66)란). 이 제도는 국세청 홈택스로의 발급명세 전송을 요구하는 대한민국 고유의 전자세금계산서 체계이며, EN 16931/UBL에 기반한 프로파일이 아니고, OpenPeppol의 Peppol Authority 목록에도 대한민국은 올라 있지 않다(peppol.org, 회원 목록, 2026-09-22 확인) — 일본의 JP PINT나 싱가포르의 PINT SG처럼 Peppol 위에 구축된 프로파일이 존재하지 않는다. packages/formats/의 어떤 브릭도 전자세금계산서의 XML(국세청 표준 전자문서 표준)을 작성하거나 홈택스로 전송하지 않으므로, Ekwo가 발행한 문서는 전자세금계산서가 아니다. profile, mandatory_from, party_scheme, vat_scheme은 그래서 비워 둔다: profile은 packages/formats/의 한 조각이 실제로 작성하는 EN 16931 계열 프로파일을 가리키는 자리이고, 전자세금계산서는 그런 프로파일이 아니다. 사업자등록번호는 ISO 6523 식별자 목록에 없다. 자세한 내용은 docs/international.md의 'From South Korea' 절에 남긴다.",
+    "source": "nts-einvoice-obligors"
+  },
+  "bank": {
+    "statement_formats": ["csv"],
+    "payment_formats": ["csv"]
+  }
+}

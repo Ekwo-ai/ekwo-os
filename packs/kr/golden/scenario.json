@@ -1,0 +1,106 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "한강무역주식회사의 2026 회계연도, 분기별 부가가치세 신고",
+  "chart": "default",
+  "fiscal_year": { "name": "2026 회계연도", "start": "2026-01-01", "end": "2026-12-31" },
+  "periods": [
+    { "code": "2026-Q1", "from": "2026-01-01", "to": "2026-03-31" },
+    { "code": "2026-Q2", "from": "2026-04-01", "to": "2026-06-30" },
+    { "code": "2026-Q3", "from": "2026-07-01", "to": "2026-09-30" },
+    { "code": "2026-Q4", "from": "2026-10-01", "to": "2026-12-31" }
+  ],
+  "statements": ["KR-GAAP-BS", "KR-GAAP-IS"],
+  "contacts": [
+    { "ref": "cust-kr", "name": "서울전자 주식회사", "type": "customer", "country": "KR" },
+    { "ref": "cust-us", "name": "Pacific Rim Trading Inc.", "type": "customer", "country": "US" },
+    { "ref": "cust-jp", "name": "横浜デザイン株式会社", "type": "customer", "country": "JP" },
+    { "ref": "cust-retail", "name": "동네마트 주식회사", "type": "customer", "country": "KR" },
+    { "ref": "supp-kr", "name": "부산부품 주식회사", "type": "supplier", "country": "KR" },
+    { "ref": "supp-entertain", "name": "한정식 청담", "type": "supplier", "country": "KR" },
+    { "ref": "supp-food", "name": "청정농산 영농조합법인", "type": "supplier", "country": "KR" },
+    { "ref": "customs", "name": "인천본부세관", "type": "supplier", "country": "KR" }
+  ],
+  "documents": [
+    {
+      "ref": "S1", "type": "sale_invoice", "contact": "cust-kr", "date": "2026-01-15",
+      "why": "표준세율 10%의 국내 과세 매출. 세금계산서 발급분으로 신고서 (1)란과 매출세액 합계 ㉮에 들어간다.",
+      "lines": [{ "name": "산업용 부품", "quantity": 10, "unit_price": 1000000, "tax": "KR-S-10", "account": "4100" }]
+    },
+    {
+      "ref": "S2", "type": "sale_invoice", "contact": "cust-us", "date": "2026-02-10",
+      "why": "재화의 수출(부가가치세법 제21조)에 대한 영세율 매출. 신고서 (6)란 '기타' 영세율에 들어가고 매입세액 공제는 유지된다.",
+      "lines": [{ "name": "산업용 부품(수출)", "quantity": 5, "unit_price": 1200000, "tax": "KR-S-0-EXP", "account": "4100" }]
+    },
+    {
+      "ref": "P1", "type": "purchase_invoice", "contact": "supp-kr", "date": "2026-01-20",
+      "why": "표준세율 10%의 국내 과세 매입, 세금계산서 수취분. 신고서 (10)란 매입세액.",
+      "lines": [{ "name": "원재료", "quantity": 20, "unit_price": 300000, "tax": "KR-P-10", "account": "5120" }]
+    },
+    {
+      "ref": "P2", "type": "purchase_invoice", "contact": "supp-entertain", "date": "2026-02-25",
+      "why": "기업업무추진비(부가가치세법 제39조제1항제5호)로 매입세액이 공제되지 않는다. 세액은 비용 원가에 산입되고 신고서 (16)란에 들어간다.",
+      "lines": [{ "name": "거래처 접대", "quantity": 1, "unit_price": 800000, "tax": "KR-P-10-NC", "account": "6210" }]
+    },
+    {
+      "ref": "S3", "type": "sale_invoice", "contact": "cust-kr", "date": "2026-04-05",
+      "why": "표준세율 10%의 국내 과세 매출, 뒤에서 일부 반품으로 수정세금계산서(CN1)가 발행된다.",
+      "lines": [{ "name": "산업용 부품", "quantity": 8, "unit_price": 1000000, "tax": "KR-S-10", "account": "4100" }]
+    },
+    {
+      "ref": "CN1", "type": "sale_credit_note", "contact": "cust-kr", "date": "2026-04-20",
+      "why": "S3 중 일부의 품질 불량 반품에 따른 수정세금계산서. 과세표준과 매출세액을 함께 차감한다.",
+      "lines": [{ "name": "산업용 부품(반품)", "quantity": 2, "unit_price": 1000000, "tax": "KR-S-10", "account": "4100" }]
+    },
+    {
+      "ref": "S4", "type": "sale_invoice", "contact": "cust-jp", "date": "2026-05-12",
+      "why": "국외에서 공급하는 용역(부가가치세법 제22조)에 대한 영세율 매출 — 일본 소재 고객에게 제공한 설계 컨설팅.",
+      "lines": [{ "name": "설계 컨설팅 용역", "quantity": 1, "unit_price": 5000000, "tax": "KR-S-0-SVC", "account": "4120" }]
+    },
+    {
+      "ref": "P3", "type": "purchase_invoice", "contact": "supp-kr", "date": "2026-05-18",
+      "why": "표준세율 10%의 국내 과세 매입.",
+      "lines": [{ "name": "원재료", "quantity": 15, "unit_price": 300000, "tax": "KR-P-10", "account": "5120" }]
+    },
+    {
+      "ref": "S5", "type": "sale_invoice", "contact": "cust-retail", "date": "2026-06-08",
+      "why": "가공되지 아니한 식료품(부가가치세법 제26조제1항제1호)의 재판매로 면세 매출. 계산서로 발급하며 신고서 하단 면세사업 수입금액(80)란에 들어간다.",
+      "lines": [{ "name": "미가공 농산물(쌀)", "quantity": 1, "unit_price": 3000000, "tax": "KR-S-EXO", "account": "4100" }]
+    },
+    {
+      "ref": "P4", "type": "purchase_invoice", "contact": "supp-food", "date": "2026-07-14",
+      "why": "직원 식당용 미가공 농산물 매입. 면세 사업자로부터 계산서로 매입하므로 매입세액이 없다.",
+      "lines": [{ "name": "직원 식당용 쌀·채소", "quantity": 1, "unit_price": 600000, "tax": "KR-P-EXO", "account": "6120" }]
+    },
+    {
+      "ref": "S6", "type": "sale_invoice", "contact": "cust-kr", "date": "2026-08-02",
+      "why": "표준세율 10%의 국내 과세 매출.",
+      "lines": [{ "name": "산업용 부품", "quantity": 12, "unit_price": 1000000, "tax": "KR-S-10", "account": "4100" }]
+    },
+    {
+      "ref": "P5", "type": "purchase_invoice", "contact": "customs", "date": "2026-08-22",
+      "why": "보세구역에서 반입한 수입 재화에 대하여 세관장이 징수하는 부가가치세(부가가치세법 제50조). 세액은 부가세대급금으로 공제되고 상대계정은 세관에 대한 미지급관세등이다.",
+      "lines": [{ "name": "수입 원재료(관세완납가격)", "quantity": 1, "unit_price": 4000000, "tax": "KR-P-IMP-10", "account": "5120" }]
+    },
+    {
+      "ref": "S7", "type": "sale_invoice", "contact": "cust-kr", "date": "2026-10-10",
+      "why": "표준세율 10%의 국내 과세 매출.",
+      "lines": [{ "name": "산업용 부품", "quantity": 9, "unit_price": 1000000, "tax": "KR-S-10", "account": "4100" }]
+    },
+    {
+      "ref": "P6", "type": "purchase_invoice", "contact": "supp-kr", "date": "2026-11-05",
+      "why": "표준세율 10%의 국내 과세 매입.",
+      "lines": [{ "name": "원재료", "quantity": 10, "unit_price": 300000, "tax": "KR-P-10", "account": "5120" }]
+    }
+  ],
+  "payments": [
+    { "ref": "E1", "direction": "inbound", "date": "2026-01-25", "amount": 11000000,
+      "contact": "cust-kr", "journal": "BNK", "match": "S1",
+      "why": "S1을 정확히 정산하는 입금." },
+    { "ref": "E2", "direction": "outbound", "date": "2026-01-28", "amount": 6600000,
+      "contact": "supp-kr", "journal": "BNK", "match": "P1",
+      "why": "P1을 정확히 정산하는 출금." },
+    { "ref": "E3", "direction": "inbound", "date": "2026-03-02", "amount": 2000000,
+      "contact": "cust-us", "journal": "BNK",
+      "why": "특정 매출과 대응되지 않는 선수금 성격의 입금." }
+  ]
+}

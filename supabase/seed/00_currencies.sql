@@ -29,5 +29,6 @@ insert into currencies (code, name, symbol, decimal_places) values
   ('SGD', 'Singapore dollar',     '$',       2),
   ('NZD', 'New Zealand dollar',   '$',       2),
   ('HKD', 'Hong Kong dollar',     E'HK$',    2),
-  ('TWD', 'New Taiwan dollar',    E'NT$',    2)
+  ('TWD', 'New Taiwan dollar',    E'NT$',    2),
+  ('KRW', 'South Korean won',     E'₩',      0)
 on conflict (code) do nothing;

@@ -1,0 +1,190 @@
+[
+  {
+    "code": "KR-S-10",
+    "name": "과세 매출 10%(세금계산서 발급분)",
+    "description": "국내 재화·용역의 공급, 세금계산서 발급분",
+    "kind": "vat",
+    "rate": 10,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2000-01-01",
+    "legal_reference": "부가가치세법 제30조 — 부가가치세의 세율은 10퍼센트로 한다. 제32조제1항에 따라 사업자는 재화 또는 용역을 공급하는 경우 세금계산서를 발급하여야 한다. 신고서 별지 제21호서식 (1)란 '세금계산서 발급분'에 공급가액과 세액을 적는다.",
+    "source": "vat-act",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "1" },
+        { "type": "tax", "account": "2150", "box": "1" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "1", "box_factor": -100 },
+        { "type": "tax", "account": "2150", "box": "1", "box_factor": -100 }
+      ]
+    },
+    "sequence": 10
+  },
+  {
+    "code": "KR-S-0-EXP",
+    "name": "영세율 매출(재화의 수출)",
+    "description": "본邦으로부터 국외로 반출하는 재화의 공급",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2000-01-01",
+    "conditions": ["transport_evidence"],
+    "legal_reference": "부가가치세법 제21조 — 재화의 수출에는 영의 세율을 적용한다. 수출은 관세법에 따라 신고필증 등으로 그 반출 사실이 증명되어야 한다. 세금계산서 발급의무가 없는 수출에 해당하므로 신고서 별지 제21호서식 (6)란 '기타' 영세율란에 적는다. 영세율은 매입세액 공제를 유지한다는 점에서 면세(제26조)와 다르다.",
+    "source": "vat-act",
+    "vat_category": "G",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "6" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "6", "box_factor": -100 }
+      ]
+    },
+    "sequence": 20
+  },
+  {
+    "code": "KR-S-0-SVC",
+    "name": "영세율 매출(국외 공급 용역·외국항행용역)",
+    "description": "국외에서 공급하는 용역, 외국을 항행하는 선박·항공기에 의한 용역",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2000-01-01",
+    "legal_reference": "부가가치세법 제22조(용역의 국외공급) 및 제23조(외국항행용역의 공급) — 국외에서 공급하는 용역과 외국항행 선박·항공기에 의한 여객·화물 운송 용역에는 영의 세율을 적용한다. 세금계산서 발급의무가 없으므로 신고서 별지 제21호서식 (6)란 '기타' 영세율란에 적는다.",
+    "source": "vat-act",
+    "vat_category": "G",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "6" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "6", "box_factor": -100 }
+      ]
+    },
+    "sequence": 30
+  },
+  {
+    "code": "KR-S-EXO",
+    "name": "면세 매출",
+    "description": "미가공식료품, 의료보건 용역, 교육 용역 등 부가가치세법 제26조의 면세 공급",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2000-01-01",
+    "conditions": ["supply_nature"],
+    "legal_reference": "부가가치세법 제26조제1항 — 다음 각 호의 재화 또는 용역의 공급에 대하여는 부가가치세를 면제한다: 1호 가공되지 아니한 식료품(농산물·축산물·수산물·임산물 포함), 5호 의료보건 용역(수의사의 용역 포함), 6호 대통령령으로 정하는 교육 용역. 면세 사업자는 세금계산서가 아닌 계산서(소득세법 제163조, 법인세법 제121조)를 발급하며, 그 매출은 세금계산서 발급 의무가 있는 과세표준에 포함되지 않고 신고서 별지 제21호서식 하단 '면세사업 수입금액'란(28)~(83)에 별도로 적는다. 면세는 매입세액을 공제받지 못한다는 점에서 영세율과 다르다(제39조).",
+    "source": "vat-act",
+    "vat_category": "E",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "80" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "80", "box_factor": -100 }
+      ]
+    },
+    "sequence": 40
+  },
+  {
+    "code": "KR-P-10",
+    "name": "과세 매입 10%(세금계산서 수취분, 일반매입)",
+    "description": "국내 재화·용역의 매입, 세금계산서 수취분",
+    "kind": "vat",
+    "rate": 10,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2000-01-01",
+    "legal_reference": "부가가치세법 제38조 — 사업자가 자기의 사업을 위하여 사용하였거나 사용할 재화 또는 용역의 공급에 대한 세액은 매출세액에서 공제한다. 세금계산서를 발급받은 일반매입은 신고서 별지 제21호서식 (10)란 '세금계산서 수취분 — 일반매입'에 적는다.",
+    "source": "vat-act",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "base" },
+        { "type": "tax", "account": "1250", "box": "10" }
+      ],
+      "credit_note": [
+        { "type": "base" },
+        { "type": "tax", "account": "1250", "box": "10", "box_factor": -100 }
+      ]
+    },
+    "sequence": 50
+  },
+  {
+    "code": "KR-P-10-NC",
+    "name": "과세 매입 10%(공제받지 못할 매입세액)",
+    "description": "기업업무추진비 관련 매입, 비영업용 소형승용차의 구입·유지 등 매입세액이 공제되지 않는 매입",
+    "kind": "vat",
+    "rate": 10,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2000-01-01",
+    "recoverable": false,
+    "legal_reference": "부가가치세법 제39조제1항 — 기업업무추진비 및 이와 유사한 비용의 지출에 관련된 매입세액(제5호), 개별소비세법 제1조제2항제3호에 따른 비영업용 소형승용자동차의 구입·임차·유지에 관한 매입세액(제5호의2) 등은 매출세액에서 공제하지 아니한다. 세금계산서는 발급받았으나 공제되지 않으므로 세액은 그 매입 자산·비용의 원가에 산입되고, 신고서 별지 제21호서식 (16)란 '공제받지 못할 매입세액'에 적는다.",
+    "source": "vat-act",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "base" },
+        { "type": "tax_on_base", "box": "16" }
+      ],
+      "credit_note": [
+        { "type": "base" },
+        { "type": "tax_on_base", "box": "16", "box_factor": -100 }
+      ]
+    },
+    "sequence": 60
+  },
+  {
+    "code": "KR-P-IMP-10",
+    "name": "수입 재화 10%(세관 징수분)",
+    "description": "보세구역에서 반입하는 수입 재화에 대하여 세관장이 징수하는 부가가치세",
+    "kind": "vat",
+    "rate": 10,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2000-01-01",
+    "legal_reference": "부가가치세법 제50조 — 세관장은 수입되는 재화에 대하여 관세를 징수하는 때에 부가가치세를 징수한다. 제35조에 따라 세관장이 발급하는 수입세금계산서는 매입세액공제의 근거가 되며, 실무상 일반 세금계산서 수취분과 함께 신고서 별지 제21호서식 (10)란에 합산하여 적는다. 세액은 공급자가 아닌 세관에 납부하므로 상대 계정은 미지급관세등(2135)으로 한다.",
+    "source": "vat-act",
+    "postings": {
+      "invoice": [
+        { "type": "base" },
+        { "type": "tax", "account": "1250", "box": "10" },
+        { "type": "tax", "factor": -100, "account": "2135" }
+      ],
+      "credit_note": [
+        { "type": "base" },
+        { "type": "tax", "account": "1250", "box": "10", "box_factor": -100 },
+        { "type": "tax", "factor": -100, "account": "2135" }
+      ]
+    },
+    "sequence": 70
+  },
+  {
+    "code": "KR-P-EXO",
+    "name": "면세 매입",
+    "description": "면세 사업자로부터 계산서를 받고 매입하는 재화·용역",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "exempt",
+    "valid_from": "2000-01-01",
+    "legal_reference": "부가가치세법 제26조 및 제38조 — 면세 사업자는 부가가치세를 거래징수하지 않으므로 매입세액이 존재하지 않는다. 계산서(소득세법 제163조, 법인세법 제121조)로 매입하며, 신고서 별지 제21호서식 어느 란에도 적지 않는다(계산서 수취 명세는 (85)란에 별도 집계될 뿐 세액 계산에는 들어가지 않는다).",
+    "source": "vat-act",
+    "vat_category": "E",
+    "postings": {
+      "invoice": [
+        { "type": "base" }
+      ],
+      "credit_note": [
+        { "type": "base" }
+      ]
+    },
+    "sequence": 80
+  }
+]
