@@ -75,6 +75,8 @@ ${bold('Usage')}
 ${bold('Commands')}
   ${cyan('init')}        Apply the schema, seed the reference data, create the first
               administrator and the first company, on a project you already have.
+              --no-company stops before the company: one installation, companies
+              in several countries, each made by company new.
   ${cyan('migrate')}     Apply the migrations this release adds, and show the gap first.
   ${cyan('status')}      Schema version installed against available, the instance,
               its administrators and its companies.
@@ -86,8 +88,10 @@ ${bold('Commands')}
   ${cyan('pack')}        Compile a country pack into its seed, check that the committed
               seed is still the exact output of the pack, and move a company
               onto the version an installation holds.
-  ${cyan('company')}     One company leaves an installation with its books, as an archive
-              anybody can read, and arrives in another one alive.
+  ${cyan('company')}     new <name> --country <cc> — one more company, in its own country;
+              list — the companies held here. export and import: one company
+              leaves an installation with its books, as an archive anybody can
+              read, and arrives in another one alive.
   ${cyan('register')}    Opt in to security advisories and release notes. Never required.
   ${cyan('unregister')}  Opt back out. Clears the address and the date.
   ${cyan('demo')}        Load the sample company. Fictional data; ask for it explicitly.
@@ -175,6 +179,10 @@ ${bold('ekwo init')}
                             the packs this installation holds, by name.
   --org <name>              Your organisation. Written on the instance row.
   --company <name>          The first company. Defaults to --org.
+  --no-company              Install without a company: schema, every pack, the
+                            first administrator, and nothing in any country.
+                            Then ekwo company new, once per company. Refuses
+                            the flags that only describe a company.
   --admin-email <address>   The first administrator, created in your Supabase Auth.
   --admin-password <pw>     Their password. Omitted: an invite link is generated.
   --admin-user-id <uuid>    Use an account that already exists instead.
@@ -217,6 +225,14 @@ ${bold('ekwo pack')} ${dim('(build, check and list need a checkout of the reposi
                             listed and left alone until --apply.
 
 ${bold('ekwo company')}
+  new <name> --country <cc> Create a company through create_company(), as an
+                            administrator of the installation (--as-user, the
+                            only one by default), who becomes its owner. The
+                            refusals of init: --chart, --language and
+                            --fiscal-year-start where the pack offers a choice.
+                            --currency and --fiscal-year as for init.
+  list                      The companies this installation holds, with their
+                            country, currency, language, chart and pack.
   export <company> --out <dir>
                             Write the archive of one company: manifest.json and
                             one data/<table>.jsonl per table. Read as a member
@@ -271,8 +287,8 @@ ${bold('What this CLI does not do')}
 
   It never writes a password or a key to disk. The database password and the
   service_role key are read from a flag, the environment or a masked prompt,
-  used, and forgotten. ${cyan('ekwo.json')} holds the project URL, the country and the
-  schema version, and nothing else. The one thing kept is the session
+  used, and forgotten. ${cyan('ekwo.json')} holds the project URL and the schema
+  version, and nothing else: no country, since each company carries its own. The one thing kept is the session
   ${cyan('ekwo login')} obtains, in your own configuration directory, readable by you
   alone, and refused anywhere inside a repository.
 

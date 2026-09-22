@@ -77,7 +77,7 @@ export async function statusCommand(args: ParsedArgs, deps: CommandDeps = {}): P
     } else {
       pairs([
         ['organisation', report.instance.organization_name],
-        ['country', report.instance.country],
+        ['country', report.instance.country ?? 'none — each company has its own'],
         ['edition', report.instance.edition],
         ['instance id', report.instance.instance_id],
         ['administrators', String(report.admins)],

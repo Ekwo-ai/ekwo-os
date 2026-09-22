@@ -18,6 +18,7 @@ export {
 export {
   availableCountries,
   bootstrap,
+  claimInstance,
   countryCharts,
   countryLanguage,
   countryPack,

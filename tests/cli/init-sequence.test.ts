@@ -113,7 +113,7 @@ describe('the full non-interactive install', () => {
 
     // 5. ekwo.json, and nothing secret in it.
     const path = await writeConfig(
-      { project_url: supabaseUrl, country: HOME, ...(schemaVersion !== undefined ? { schema_version: schemaVersion } : {}) },
+      { project_url: supabaseUrl, ...(schemaVersion !== undefined ? { schema_version: schemaVersion } : {}) },
       cwd,
     );
     const written = await readFile(path, 'utf8');
@@ -124,7 +124,6 @@ describe('the full non-interactive install', () => {
     const parsed = JSON.parse(written) as Record<string, string>;
     expect(Object.keys(parsed).sort()).toEqual([
       '$comment',
-      'country',
       'project_url',
       'schema_version',
     ]);
@@ -134,7 +133,6 @@ describe('the full non-interactive install', () => {
     }
     expect(await readConfig(cwd)).toEqual({
       project_url: supabaseUrl,
-      country: HOME,
       schema_version: schemaVersion,
     });
 

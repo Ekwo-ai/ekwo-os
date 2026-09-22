@@ -1,8 +1,20 @@
 /**
- * `ekwo company` — one company leaves an installation, and arrives in another.
+ * `ekwo company` — the companies of an installation: a new one, the list, and
+ * one that leaves an installation and arrives in another.
  *
+ *   ekwo company new <name> --country <cc>      create a company, in its own country
+ *   ekwo company list                           the companies this installation holds
  *   ekwo company export <company> --out <dir>   write the archive of one company
  *   ekwo company import <dir>                   take an archive into this installation
+ *
+ * **A new company is `create_company()`**, the function the MCP server's
+ * `create_company` tool calls, called as an administrator of the installation
+ * so the schema judges that person exactly as it judges the tool: the copy of
+ * the country pack, the first financial year and the first membership happen
+ * in the database, and nowhere here. What this file adds is what a command line
+ * owes somebody with no conversation to fall back on — the questions `ekwo
+ * init` asks about its first company, asked the same way (`../company-choices.ts`),
+ * and refused the same way when there is a choice and nobody to make it.
  *
  * The archive is a directory: `manifest.json`, and one `data/<schema>.<table>.jsonl`
  * per table, one row per line. `docs/company-archive.md` is the format, and it
@@ -30,14 +42,32 @@
 import { createHash } from 'node:crypto';
 import { mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
 import { join, resolve } from 'node:path';
-import { rejectUnknownFlags, stringFlag, UsageError, type ParsedArgs } from '../args.js';
+import { boolFlag, numberFlag, rejectUnknownFlags, stringFlag, UsageError, type ParsedArgs } from '../args.js';
 import { CONNECTION_FLAGS, openDatabase, type CommandDeps } from '../context.js';
 import { setResult } from '../output.js';
 import { isInteractive } from '../prompt.js';
 import { asUser, first, type SqlClient } from '../sql.js';
-import { bold, dim, heading, line, note, pairs, step, warn } from '../ui.js';
+import { bold, dim, heading, line, note, pairs, step, table, warn } from '../ui.js';
+import {
+  chooseChart,
+  chooseCountry,
+  chooseFiscalYearStart,
+  chooseLanguage,
+} from '../company-choices.js';
 
-export const COMPANY_FLAGS = [...CONNECTION_FLAGS, 'out', 'as-user', 'owner', 'yes'] as const;
+export const COMPANY_FLAGS = [
+  ...CONNECTION_FLAGS,
+  'out',
+  'as-user',
+  'owner',
+  'country',
+  'chart',
+  'language',
+  'currency',
+  'fiscal-year',
+  'fiscal-year-start',
+  'yes',
+] as const;
 
 /** `public.accounts`. What a table of an archive may be called, and nothing else. */
 const TABLE_NAME = /^[a-z_][a-z0-9_]*\.[a-z_][a-z0-9_]*$/;
@@ -67,16 +97,200 @@ export async function companyCommand(args: ParsedArgs, deps: CommandDeps = {}): 
     line(usage());
     return 0;
   }
-  if (action !== 'export' && action !== 'import') {
+  if (action !== 'export' && action !== 'import' && action !== 'new' && action !== 'list') {
     throw new UsageError(`unknown subcommand: company ${action}\n${usage()}`);
   }
+  if (action === 'new' && args.positional[1] === undefined) {
+    throw new UsageError(`name the company: ekwo company new "<name>" --country <cc>\n${usage()}`);
+  }
 
-  const { db } = await openDatabase(args, { interactive: isInteractive(), connect: deps.connect });
+  const interactive = !boolFlag(args, 'yes') && isInteractive();
+  const { db } = await openDatabase(args, { interactive, connect: deps.connect });
   try {
+    if (action === 'new') return await newCommand(db, args, interactive);
+    if (action === 'list') return await listCommand(db);
     return action === 'export' ? await exportCommand(db, args) : await importCommand(db, args);
   } finally {
     await db.close();
   }
+}
+
+// ----------------------------------------------------------------------- new
+
+/**
+ * One more company, in whatever country its pack says.
+ *
+ * The answers are gathered first, with the refusals of `ekwo init`; then one
+ * call to `create_company()`, as an administrator of the installation. The
+ * pack's own currency and opening month are left to the function, which reads
+ * them from `country_defaults` as it does for the MCP tool: a flag overrides
+ * them, and nothing here restates them.
+ */
+async function newCommand(db: SqlClient, args: ParsedArgs, interactive: boolean): Promise<number> {
+  const name = args.positional[1] as string;
+
+  const country = await chooseCountry(db, args, interactive);
+  const known = await db.query<{ country: string }>(
+    'select country from country_defaults where country = $1',
+    [country],
+  );
+  if (known.length === 0) {
+    const packs = await db.query<{ country: string }>('select country from country_defaults order by country');
+    throw new UsageError(
+      `unknown_country: this installation holds no pack for ${country}. ` +
+        `It holds: ${packs.map((p) => p.country).join(', ') || 'none'}.`,
+    );
+  }
+  const fiscalYear = numberFlag(args, 'fiscal-year') ?? new Date().getUTCFullYear();
+  const fiscalYearStart = await chooseFiscalYearStart(db, args, country, fiscalYear, interactive);
+  const { chartCode } = await chooseChart(db, args, country, interactive);
+  const language = await chooseLanguage(db, args, country, interactive);
+  const currency = stringFlag(args, 'currency')?.toUpperCase();
+  const actor = await resolveAdministrator(db, stringFlag(args, 'as-user'));
+
+  heading(`Creating ${name}`);
+  note(dim(`as ${actor}, an administrator of the installation`));
+
+  const created = await asUser(db, actor, () =>
+    first<{ id: string; currency_code: string; language: string }>(
+      db,
+      `select id, currency_code, language
+         from create_company($1, $2, $3, $4, $5, $6, $7::date)`,
+      [name, country, currency ?? null, language, chartCode ?? null, fiscalYear, fiscalYearStart ?? null],
+    ),
+  );
+  if (created === undefined) throw new Error('create_company() answered nothing');
+
+  const pack = await first<{ version: string; chart_code: string }>(
+    db,
+    'select version, chart_code from company_packs where company_id = $1 and country = $2',
+    [created.id, country],
+  );
+  const year = await first<{ name: string; start_date: string; end_date: string }>(
+    db,
+    `select name, start_date::text, end_date::text from fiscal_years
+      where company_id = $1 order by start_date limit 1`,
+    [created.id],
+  );
+
+  step(`${name} is a company of this installation`);
+  line();
+  pairs([
+    ['company', `${name} (${country}, ${created.currency_code}, ${created.language})`],
+    ['id', created.id],
+    ['chart of accounts', pack?.chart_code ?? 'unknown'],
+    ['country pack', pack?.version ?? 'none recorded'],
+    ['financial year', year === undefined ? 'none' : `${year.name} — ${year.start_date} to ${year.end_date}`],
+    ['owner', actor],
+  ]);
+  line();
+  note(dim('`ekwo use` picks it for the commands that keep books; `ekwo doctor` says what it still lacks.'));
+  setResult({
+    company: {
+      id: created.id,
+      name,
+      country,
+      currency: created.currency_code,
+      language: created.language,
+      chart: pack?.chart_code ?? null,
+      packVersion: pack?.version ?? null,
+    },
+    fiscalYear:
+      year === undefined ? null : { name: year.name, start: year.start_date, end: year.end_date },
+    owner: actor,
+  });
+  line();
+  return 0;
+}
+
+/**
+ * Who creates the company: whoever `--as-user` names, or the one
+ * administrator of the installation when there is exactly one. Several is a
+ * question, and none is an installation `ekwo init` has not finished. The
+ * judgement stays with `create_company()`, which refuses anybody who is not an
+ * administrator — `not_instance_admin`, exit code 3 — as it refuses the MCP
+ * tool.
+ */
+async function resolveAdministrator(db: SqlClient, given: string | undefined): Promise<string> {
+  if (given !== undefined) return given;
+  const admins = await db.query<{ user_id: string }>(
+    'select user_id from instance_admins order by created_at, user_id',
+  );
+  const only = admins[0];
+  if (admins.length === 1 && only !== undefined) return only.user_id;
+  if (admins.length === 0) {
+    throw new UsageError(
+      'no_instance_admin: this installation has no administrator yet, and creating a company is ' +
+        'an instance-level act. Run `ekwo init` first — `--no-company` for an installation without one.',
+    );
+  }
+  throw new UsageError(
+    `missing_input: this installation has ${admins.length} administrators. ` +
+      `Pass --as-user, one of: ${admins.map((a) => a.user_id).join(', ')}.`,
+  );
+}
+
+// ---------------------------------------------------------------------- list
+
+/** The companies this installation holds, each in its own country. */
+async function listCommand(db: SqlClient): Promise<number> {
+  const companies = await db.query<{
+    id: string;
+    name: string;
+    country: string;
+    currency_code: string;
+    language: string;
+    chart_code: string | null;
+    pack_version: string | null;
+    members: number;
+  }>(
+    `select c.id, c.name, c.country, c.currency_code, c.language,
+            p.chart_code, p.version as pack_version,
+            (select count(*)::int from company_members m where m.company_id = c.id) as members
+       from companies c
+       left join company_packs p on p.company_id = c.id and p.country = c.country
+      order by c.name, c.id`,
+  );
+
+  heading('Companies');
+  if (companies.length === 0) {
+    note(dim('none yet — `ekwo company new "<name>" --country <cc>` creates one'));
+  } else {
+    table(
+      [
+        { title: 'name' },
+        { title: 'country' },
+        { title: 'currency' },
+        { title: 'language' },
+        { title: 'chart' },
+        { title: 'pack' },
+        { title: 'members', align: 'right' },
+      ],
+      companies.map((c) => [
+        c.name,
+        c.country,
+        c.currency_code,
+        c.language,
+        c.chart_code ?? '',
+        c.pack_version ?? '',
+        String(c.members),
+      ]),
+    );
+  }
+  setResult({
+    companies: companies.map((c) => ({
+      id: c.id,
+      name: c.name,
+      country: c.country,
+      currency: c.currency_code,
+      language: c.language,
+      chart: c.chart_code,
+      packVersion: c.pack_version,
+      members: c.members,
+    })),
+  });
+  line();
+  return 0;
 }
 
 // -------------------------------------------------------------------- export
@@ -318,15 +532,28 @@ async function resolveExporter(db: SqlClient, given: string | undefined, company
 }
 
 function usage(): string {
-  return `${bold('ekwo company')} — one company leaves an installation, and arrives in another.
+  return `${bold('ekwo company')} — the companies of an installation, each in its own country.
 
+  ekwo company new <name> --country <cc>      Create a company through create_company(): its
+                                              country pack copied in, its first financial year
+                                              opened, the administrator its first owner.
+  ekwo company list                           The companies this installation holds.
   ekwo company export <company> --out <dir>   Write the archive of one company: manifest.json
                                               and one data/<table>.jsonl per table.
   ekwo company import <dir>                   Take an archive into this installation, whole or
                                               not at all. A company already here is refused.
 
+  --country <cc>     new: which pack. No default; the refusal lists the packs held here.
+  --chart <code>     new: required where the country offers several charts.
+  --language <xx>    new: required where the pack publishes several languages.
+  --currency <ccy>   new: left out, the pack's.
+  --fiscal-year <y>  new: the calendar year the first financial year opens in. This year.
+  --fiscal-year-start <d>
+                     new: its first day, YYYY-MM-DD. Required where the pack names no month.
   --out <dir>        Where the archive is written. Empty, or not there yet.
-  --as-user <uuid>   export: the member the archive is read as, under row level security.
+  --as-user <uuid>   new: the administrator of the installation it is created as, who
+                     becomes its owner. Defaults to the only one, when there is one.
+                     export: the member the archive is read as, under row level security.
                      Defaults to an owner of the company. Needs company.export.
                      import: the administrator of the installation to act for. Defaults to
                      the installer, which this connection is.

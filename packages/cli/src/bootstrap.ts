@@ -385,20 +385,20 @@ export async function schemaIsInstalled(db: SqlClient): Promise<boolean> {
   return present === true;
 }
 
-export async function bootstrap(
+/**
+ * The first two steps of the installation sequence, on their own: the
+ * instance row, and its first administrator. `ekwo init --no-company` stops
+ * here; `bootstrap()` goes on to the first company.
+ *
+ * Without a country, `init_instance()` records none: an installation set up
+ * without a company is in no country, and each company it later holds carries
+ * its own.
+ */
+export async function claimInstance(
   db: SqlClient,
-  options: BootstrapOptions,
-): Promise<BootstrapResult> {
-  const country = options.country.toUpperCase();
+  options: { organization: string; country?: string | undefined; adminUserId: string },
+): Promise<{ instanceId: string; steps: Step[] }> {
   const steps: Step[] = [];
-
-  const countries = await availableCountries(db);
-  if (!countries.includes(country)) {
-    throw new Error(
-      `unknown_country: no chart of accounts seeded for ${country}. ` +
-        `This release ships ${countries.join(', ')}.`,
-    );
-  }
 
   // 1. The installation itself.
   const existingInstance = await first<{ instance_id: string; organization_name: string }>(
@@ -410,7 +410,7 @@ export async function bootstrap(
     const created = await first<{ instance_id: string }>(
       db,
       `select instance_id from init_instance($1, $2, 'community')`,
-      [options.organization, country],
+      [options.organization, options.country ?? null],
     );
     if (created === undefined) throw new Error('init_instance_failed: no row returned');
     instanceId = created.instance_id;
@@ -446,6 +446,33 @@ export async function bootstrap(
     await db.query('select claim_instance_admin($1)', [options.adminUserId]);
     steps.push({ name: 'administrator', outcome: 'created', detail: options.adminUserId });
   }
+
+  return { instanceId, steps };
+}
+
+export async function bootstrap(
+  db: SqlClient,
+  options: BootstrapOptions,
+): Promise<BootstrapResult> {
+  const country = options.country.toUpperCase();
+  const steps: Step[] = [];
+
+  const countries = await availableCountries(db);
+  if (!countries.includes(country)) {
+    throw new Error(
+      `unknown_country: no chart of accounts seeded for ${country}. ` +
+        `This release ships ${countries.join(', ')}.`,
+    );
+  }
+
+  // 1 and 2. The installation itself, and its first administrator.
+  const claimed = await claimInstance(db, {
+    organization: options.organization,
+    country,
+    adminUserId: options.adminUserId,
+  });
+  const instanceId = claimed.instanceId;
+  steps.push(...claimed.steps);
 
   // 3. The company. Its currency is chosen here or nowhere: the column has a
   //    default, so nothing downstream could tell a deliberate choice from a

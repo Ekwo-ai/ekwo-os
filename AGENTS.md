@@ -70,6 +70,11 @@ of language, it asks — and with `--yes` it **refuses** rather than choosing, s
 pass `--chart` and `--language` when you script it. The non-interactive form
 is in [`packages/cli/README.md`](packages/cli/README.md#from-a-free-supabase-account-to-a-first-invoice).
 
+Companies in **several countries**, or no obvious first one: install with
+`--no-company` and no country, then one `ekwo company new "<name>" --country
+<cc>` per company — each in its own country, with the same questions and
+refusals. See [several countries](packages/cli/README.md#several-countries-in-one-installation-init---no-company).
+
 Choosing the pack: one per country, listed at `https://ekwo.ai/countries/` and
 under `packs/`. Each has a **status** — `community` (nobody has reviewed it),
 `maintained` (kept up by Ekwo, not reviewed by a professional) or `reviewed`
@@ -114,7 +119,8 @@ From a terminal instead: `ekwo login`, then `ekwo use "<company>"`.
 | Task | Command line | MCP tool |
 |---|---|---|
 | First company | `ekwo init` creates it | — |
-| Another company | — | `create_company` |
+| Another company | `ekwo company new "<name>" --country <cc>` | `create_company` |
+| The companies of the installation | `ekwo company list` | `list_companies` |
 | Company details (address, VAT number) | — | `update_company_profile` |
 | A customer | `ekwo contact add "<name>" --country <cc> --ref <yours>` | `create_contact` |
 | Accounts and tax codes | the country's set-up page | `list_accounts`, `describe_pack` |

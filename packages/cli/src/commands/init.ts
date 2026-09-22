@@ -28,18 +28,16 @@ import {
   type ParsedArgs,
 } from '../args.js';
 import { createAuthUser, type CreateAuthUser } from '../auth.js';
-import {
-  bootstrap,
-  countryCharts,
-  countryCurrency,
-  countryFiscalYearOpening,
-  countryLanguage,
-  countryLanguages,
-  countryFilingForms,
-  countryPack,
-  installedPacks,
-} from '../bootstrap.js';
+import { bootstrap, claimInstance, countryFilingForms, countryPack, installedPacks } from '../bootstrap.js';
 import { printOperatorChecklist } from '../checklist.js';
+import {
+  chooseChart,
+  chooseCountry,
+  chooseCurrency,
+  chooseFiscalYearStart,
+  chooseLanguage,
+  required,
+} from '../company-choices.js';
 import { describeCertification, needsWarning } from '../pack/certification.js';
 import { DEMO_SEED, migrationsDir, seedDir } from '../bundle.js';
 import { writeConfig } from '../config.js';
@@ -49,7 +47,7 @@ import { listMigrations } from '../migrations.js';
 import { applyMigrations } from '../migrations.js';
 import { listModules } from '../module/read.js';
 import { applyModuleMigrations } from './module.js';
-import { ask as askText, askRequired, askSecret, choose, confirm, isInteractive, NotInteractiveError } from '../prompt.js';
+import { ask as askText, askRequired, askSecret, choose, confirm, isInteractive } from '../prompt.js';
 import { register, registryUrl } from '../registry.js';
 import { applyDemoSeed, applySeeds } from '../seeds.js';
 import { asUser, scalar } from '../sql.js';
@@ -79,7 +77,29 @@ export const INIT_FLAGS = [
   'register-email',
   'registry-url',
   'no-modules',
+  'no-company',
   'yes',
+] as const;
+
+/**
+ * What `--no-company` has nothing to apply to. Each of them describes the
+ * first company, and an installation made without one would take them in
+ * silence and do nothing with them — which reads, a month later, as a company
+ * set up in a currency nobody finds.
+ */
+const COMPANY_ONLY_FLAGS = [
+  'country',
+  'chart',
+  'company',
+  'fiscal-year',
+  'fiscal-year-start',
+  'currency',
+  'language',
+  'vat-period',
+  'filing-period',
+  'iban',
+  'bic',
+  'bank-name',
 ] as const;
 
 export interface InitDeps extends CommandDeps {
@@ -91,6 +111,8 @@ export interface InitDeps extends CommandDeps {
 
 export async function initCommand(args: ParsedArgs, deps: InitDeps = {}): Promise<number> {
   rejectUnknownFlags(args, INIT_FLAGS);
+  const noCompany = boolFlag(args, 'no-company');
+  if (noCompany) refuseCompanyFlags(args);
 
   const yes = boolFlag(args, 'yes');
   const interactive = !yes && isInteractive();
@@ -127,139 +149,29 @@ export async function initCommand(args: ParsedArgs, deps: InitDeps = {}): Promis
       await applyModuleMigrations(db, await listModules(), { heading: true });
     }
 
+    if (noCompany) {
+      return await installWithoutCompany(db, args, { interactive, connection, makeUser, migrations: result, deps });
+    }
+
     // ---- What this installation is -----------------------------------------
     //
-    // There is no default country, and there is no list of countries in this
-    // file: both come from the packs this installation holds, named as the
-    // pack names itself. A preselected country would be a choice nobody made,
-    // and the one question whose wrong answer is a chart of accounts.
-    const packs = await installedPacks(db);
-    if (packs.length === 0) {
-      throw new Error(
-        'no_country_pack: this database holds no country pack, so there is no chart of ' +
-          'accounts to install. Apply the reference seeds first.',
-      );
-    }
-    const country = (
-      stringFlag(args, 'country') ??
-      (interactive
-        ? await choose(
-            'Country whose accounting rules apply?',
-            packs.map((p) => ({ value: p.country, label: p.name })),
-          )
-        : requiredCountry(packs))
-    ).toUpperCase();
+    // Every question below is asked the way `ekwo company new` asks it, from
+    // `../company-choices.ts`: nothing is preselected on the three whose wrong
+    // answer is expensive — the country, the chart and the language — and a
+    // choice with nobody to make it is a refusal naming the flag.
+    const country = await chooseCountry(db, args, interactive);
 
-    const organization =
-      stringFlag(args, 'org') ??
-      (interactive
-        ? await askRequired('Name of your organisation?')
-        : required('--org', 'the organisation name'));
+    const organization = await chooseOrganization(args, interactive);
 
     const company =
       stringFlag(args, 'company') ??
       (interactive ? await askRequired('Name of the first company?', organization) : organization);
 
     const fiscalYear = numberFlag(args, 'fiscal-year') ?? new Date().getUTCFullYear();
-
-    // When the first financial year opens. The country model names a month —
-    // `calendar`, `april`, `july`, `october` — and the flag names a day. A
-    // pack that declares neither is asked about when there is a terminal, and
-    // refused when there is not: opening somebody's books on a date nobody
-    // chose is found out a year later, in a closing.
-    const packOpening = await countryFiscalYearOpening(db, country);
-    const askedStart = stringFlag(args, 'fiscal-year-start');
-    if (askedStart !== undefined && !/^\d{4}-\d{2}-\d{2}$/.test(askedStart)) {
-      throw new UsageError(`bad_date: --fiscal-year-start takes a day as YYYY-MM-DD, not "${askedStart}".`);
-    }
-    const fiscalYearStart =
-      askedStart ??
-      (packOpening !== undefined
-        ? undefined
-        : interactive
-          ? await askRequired(`First day of the financial year ${fiscalYear}? (YYYY-MM-DD)`)
-          : requiredFiscalYearStart(country));
-
-    // The currency has to be settled before the company row exists:
-    // `companies.currency_code` is `not null`, so there is no later moment at
-    // which it is empty and the country model could fill it. The pack answers
-    // it; a pack that does not is asked about, never guessed at.
-    const packCurrency = await countryCurrency(db, country);
-    const currencyCode = (
-      stringFlag(args, 'currency') ??
-      (interactive
-        ? await askRequired('Currency of the company?', packCurrency)
-        : (packCurrency ?? required('--currency', 'the currency')))
-    ).toUpperCase();
-
-    // Which chart of accounts. A country with one chart is not a question:
-    // there is nothing to choose. A country with two is asked about, with
-    // nothing preselected beyond the default the pack itself declares — the
-    // wrong answer here is a whole plan of accounts.
-    const charts = await countryCharts(db, country);
-    const askedChart = stringFlag(args, 'chart');
-    if (askedChart !== undefined && !charts.some((c) => c.code === askedChart)) {
-      throw new UsageError(
-        `unknown_chart: ${country} has no chart ${askedChart}. ` +
-          `It has: ${charts.map((c) => c.code).join(', ') || 'none'}.`,
-      );
-    }
-    const chartCode =
-      askedChart ??
-      (charts.length > 1 && interactive
-        ? await choose(
-            'Which chart of accounts?',
-            charts.map((c) => ({
-              value: c.code,
-              label:
-                `${c.name}${c.audience === null ? '' : ` — ${c.audience}`}` +
-                ` (${c.accounts} accounts${c.certificationStatus === null ? '' : `, ${c.certificationStatus}`})`,
-            })),
-          )
-        : charts.length > 1
-          ? requiredChart(country, charts)
-          : undefined);
-
-    // The language of the books, for the same reason as the currency: it is
-    // written on the company row, which does not exist yet, and it decides
-    // which label of the pack lands in `accounts.name`.
-    //
-    // The pack says which languages it publishes, and the question lists them
-    // with nothing pre-selected. A Belgian company keeps its books in French,
-    // Dutch or German, and offering the first of the three as the answer to
-    // press Enter on is how two of the three end up installed in the wrong
-    // one. Outside an interactive session `--language` is required whenever
-    // there is a choice to make.
-    const packLanguage = await countryLanguage(db, country);
-    const languages = await countryLanguages(db, country);
-    const askedLanguage = stringFlag(args, 'language');
-    if (
-      askedLanguage !== undefined &&
-      languages.length > 0 &&
-      !languages.some((l) => l.code === askedLanguage.toLowerCase())
-    ) {
-      warn(
-        `${country} publishes its labels in ${languages.map((l) => l.code).join(', ')}; ` +
-          `the books will be kept in ${askedLanguage.toLowerCase()} and the chart of accounts ` +
-          `will carry the pack's own wording.`,
-      );
-    }
-    const language = (
-      askedLanguage ??
-      (interactive && languages.length > 1
-        ? await choose(
-            'Language of the books?',
-            languages.map((l) => ({
-              value: l.code,
-              label: l.isPackLanguage ? `${l.label}, the language the pack is written in` : l.label,
-            })),
-          )
-        : interactive
-          ? await askRequired('Language of the books?', packLanguage)
-          : languages.length > 1
-            ? required('--language', `the language of the books (${languages.map((l) => l.code).join(', ')})`)
-            : (packLanguage ?? required('--language', 'the language of the books')))
-    ).toLowerCase();
+    const fiscalYearStart = await chooseFiscalYearStart(db, args, country, fiscalYear, interactive);
+    const currencyCode = await chooseCurrency(db, args, country, interactive);
+    const { chartCode, charts } = await chooseChart(db, args, country, interactive);
+    const language = await chooseLanguage(db, args, country, interactive);
 
     // How often the company files each declaration it is subject to. The third
     // question of the same family as the currency and the language, and the one
@@ -420,14 +332,7 @@ export async function initCommand(args: ParsedArgs, deps: InitDeps = {}): Promis
     }
 
     // ---- ekwo.json ----------------------------------------------------------
-    const configFile = await writeConfig(
-      {
-        ...(connection.supabaseUrl !== undefined ? { project_url: connection.supabaseUrl } : {}),
-        country,
-        ...(schemaVersion !== undefined ? { schema_version: schemaVersion } : {}),
-      },
-      deps.cwd,
-    );
+    const configFile = await writeInstallationConfig(connection, schemaVersion, deps);
 
     setResult({
       organization,
@@ -504,49 +409,135 @@ export async function initCommand(args: ParsedArgs, deps: InitDeps = {}): Promis
   }
 }
 
-function required(flag: string, what: string): never {
-  throw new NotInteractiveError(what, flag);
-}
-
-/**
- * The refusal when `--country` is missing and nobody can be asked. It names
- * the packs this installation holds rather than a country it prefers, because
- * it has no reason to prefer one.
- */
-function requiredCountry(packs: { country: string; name: string }[]): never {
-  throw new UsageError(
-    'missing_input: the country was not given and this is not a terminal. Pass --country, ' +
-      `one of: ${packs.map((p) => `${p.country} (${p.name})`).join(', ')}.`,
+/** The organisation, written on the instance row. Asked with or without a company. */
+async function chooseOrganization(args: ParsedArgs, interactive: boolean): Promise<string> {
+  return (
+    stringFlag(args, 'org') ??
+    (interactive ? await askRequired('Name of your organisation?') : required('--org', 'the organisation name'))
   );
 }
 
 /**
- * The refusal when the pack names no opening month, `--fiscal-year-start` is
- * missing and nobody can be asked. It names the field the pack should carry
- * as well as the flag, because one of the two is the real fix.
+ * `--no-company` with a flag that only describes a company is a usage error,
+ * refused before the database is touched. The message names where each of
+ * them goes instead: `ekwo company new`, once per company.
  */
-function requiredFiscalYearStart(country: string): never {
+function refuseCompanyFlags(args: ParsedArgs): void {
+  const given = COMPANY_ONLY_FLAGS.filter((name) => args.flags.has(name));
+  if (given.length === 0) return;
   throw new UsageError(
-    `missing_input: the ${country} pack declares no defaults.fiscal_year_default and this is not a ` +
-      'terminal. Pass --fiscal-year-start YYYY-MM-DD, or add the field to the pack.',
+    `company_flags_without_company: --no-company creates no company, so ${given
+      .map((name) => `--${name}`)
+      .join(', ')} would describe nothing. ` +
+      'Install first, then pass them to `ekwo company new "<name>" --country <cc>`, once per company.',
   );
 }
 
 /**
- * The refusal when a country offers several charts, `--chart` is missing and
- * nobody can be asked. It lists them rather than picking the default: a
- * non-interactive install that meant the other one would find out a year later.
+ * `ekwo.json`: which project this installation is, and at which schema
+ * version. No country — an installation holds companies of several, and each
+ * one carries its own.
  */
-function requiredChart(
-  country: string,
-  charts: { code: string; name: string; isDefault: boolean }[],
-): never {
-  throw new UsageError(
-    `missing_input: ${country} offers several charts of accounts and this is not a terminal. ` +
-      `Pass --chart, one of: ${charts
-        .map((c) => `${c.code} (${c.name}${c.isDefault ? ', the default' : ''})`)
-        .join(', ')}.`,
+async function writeInstallationConfig(
+  connection: { supabaseUrl?: string | undefined },
+  schemaVersion: string | undefined,
+  deps: InitDeps,
+): Promise<string> {
+  return writeConfig(
+    {
+      ...(connection.supabaseUrl !== undefined ? { project_url: connection.supabaseUrl } : {}),
+      ...(schemaVersion !== undefined ? { schema_version: schemaVersion } : {}),
+    },
+    deps.cwd,
   );
+}
+
+/**
+ * `ekwo init --no-company`: the schema, every pack, the modules, the first
+ * administrator and the instance row, and nothing else.
+ *
+ * For an installation that keeps the books of companies in several countries,
+ * where "the country of the installation" is a question with no answer. Each
+ * company is then created by `ekwo company new`, in its own country, on the
+ * same questions and the same refusals the first company of `init` meets.
+ */
+async function installWithoutCompany(
+  db: Awaited<ReturnType<typeof openDatabase>>['db'],
+  args: ParsedArgs,
+  options: {
+    interactive: boolean;
+    connection: { supabaseUrl?: string | undefined; serviceRoleKey?: string | undefined };
+    makeUser: CreateAuthUser;
+    migrations: { applied: { file: string }[]; alreadyApplied: number };
+    deps: InitDeps;
+  },
+): Promise<number> {
+  const { interactive, deps } = options;
+  const packs = await installedPacks(db);
+  const organization = await chooseOrganization(args, interactive);
+
+  heading('First administrator');
+  const adminUserId = await resolveAdminUser(db, args, {
+    interactive,
+    connection: options.connection,
+    makeUser: options.makeUser,
+  });
+
+  heading('Installation');
+  const claimed = await claimInstance(db, { organization, adminUserId });
+  for (const s of claimed.steps) {
+    const text = s.detail === undefined ? s.name : `${s.name} — ${s.detail}`;
+    if (s.outcome === 'created') step(text);
+    else skipped(`${text} (already there)`);
+  }
+  skipped('no company — --no-company');
+
+  const schemaVersion = await syncSchemaVersion(db);
+
+  if (boolFlag(args, 'demo')) {
+    heading('Demo company');
+    await asUser(db, adminUserId, () => applyDemoSeed(db, seedDir()));
+    step('Exemple Conseil SRL, its contacts, invoices, a payment and a statement');
+    warn('Fictional data, including a fictional administrator. Do not leave it on real books.');
+  }
+
+  const configFile = await writeInstallationConfig(options.connection, schemaVersion, deps);
+
+  setResult({
+    organization,
+    instanceId: claimed.instanceId,
+    adminUserId,
+    company: null,
+    fiscalYear: null,
+    filingPeriods: {},
+    bankAccountId: null,
+    migrations: {
+      applied: options.migrations.applied.map((m) => m.file),
+      alreadyApplied: options.migrations.alreadyApplied,
+    },
+    steps: claimed.steps,
+    schemaVersion: schemaVersion ?? null,
+    demo: boolFlag(args, 'demo'),
+    configFile,
+  });
+
+  await offerRegistration(db, args, { interactive, adminUserId, deps });
+
+  heading('Done');
+  pairs([
+    ['organisation', organization],
+    ['companies', 'none yet'],
+    ['country packs', packs.map((p) => `${p.country} (${p.name})`).join(', ') || 'none'],
+    ['schema version', schemaVersion ?? 'unknown'],
+    ['config', configFile],
+  ]);
+  line();
+  line(`  ${bold('Next:')} create each company in its own country, as this administrator:`);
+  line(`  ${cyan('ekwo company new "<name>" --country <cc>')}, then ${cyan('ekwo company list')}.`);
+
+  printOperatorChecklist();
+  line();
+  return 0;
 }
 
 /** An unanswered optional question is not an empty string. */

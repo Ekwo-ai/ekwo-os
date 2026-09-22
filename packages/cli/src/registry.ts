@@ -35,7 +35,8 @@ export function registryUrl(env: NodeJS.ProcessEnv = process.env): string {
 export interface InstanceRow {
   instance_id: string;
   organization_name: string;
-  country: string;
+  /** The country of the first company; null for an installation set up without one. */
+  country: string | null;
   edition: string;
   schema_version: string;
   contact_email: string | null;
@@ -54,7 +55,7 @@ export async function readInstance(db: SqlClient): Promise<InstanceRow | undefin
 export interface RegistrationPayload {
   instance_id: string;
   organization: string;
-  country: string;
+  country: string | null;
   edition: string;
   schema_version: string;
   contact_email: string;

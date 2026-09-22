@@ -20,6 +20,26 @@ somewhere has already run it.
   a throwaway project, for two companies in two countries, and
   `docs/demo/start-with-claude/walkthrough.mjs` runs it again.
 
+- **One installation, companies in several countries, from the command
+  line.** `ekwo init --no-company` installs the schema, every pack, the
+  modules and the first administrator, and no company: the instance row
+  records no country. `ekwo company new "<name>" --country <cc>` then creates
+  each company in its own country through `create_company()` — the function
+  of the MCP tool `create_company`, called as an administrator of the
+  installation, with the same refusal for anybody else — after asking what
+  `ekwo init` asks about its first company, and refusing the same way off a
+  terminal (country, chart, language, first day of the year).
+  `ekwo company list` shows them. Without `--no-company`, `init` is unchanged.
+
+### Changed
+
+- **`ekwo.json` describes the installation**: the project URL and the schema
+  version, and no longer a country, since each company carries its own. A file
+  written by 0.6 or earlier still reads; its `country` is taken for nothing.
+- **`instance.country` is nullable** (`20260922115309`). It is the country of
+  the first company when `init` created one, and null otherwise; nothing in the
+  schema reads it.
+
 ## [0.6.0] — 2026-09-22
 
 ### Added

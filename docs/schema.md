@@ -1219,7 +1219,7 @@ The installation itself. Exactly one row. Registration with Ekwo is optional and
 | `id` | `smallint` | not null |
 | `instance_id` | `uuid` | not null — Stable identifier of this installation, generated locally. Never a licence key. |
 | `organization_name` | `text` | not null |
-| `country` | `character(2)` | not null |
+| `country` | `character(2)` | The country of the first company, when `ekwo init` created one with the installation. Null for an installation set up without a company. Informative: every company carries its own country, and nothing reads this one to decide anything. |
 | `edition` | `instance_edition` | not null — community when you run it yourself, cloud when Ekwo operates it. Gates nothing in this repository. |
 | `schema_version` | `text` | not null — Version of the schema at install, updated by migrations. |
 | `installed_at` | `timestamp with time zone` | not null |

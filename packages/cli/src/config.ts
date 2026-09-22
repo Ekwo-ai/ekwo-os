@@ -1,10 +1,17 @@
 /**
  * `ekwo.json` — the one file the CLI writes, and what is deliberately not in it.
  *
- * It holds three things: which Supabase project this installation is on, which
- * country's rules it was set up for, and which schema version it was at. That
- * is enough for the next `ekwo status` or `ekwo migrate` to know where it is
- * pointed without being told again.
+ * It describes the installation, and holds two things: which Supabase project
+ * it is on, and which schema version it was at. That is enough for the next
+ * `ekwo status` or `ekwo migrate` to know where it is pointed without being
+ * told again.
+ *
+ * It names no country. An installation holds companies of several countries,
+ * and each company carries its own; the company the next commands act on is
+ * the one `ekwo use` picked, kept with the session and not here. Files written by
+ * 0.6 and earlier carry a `country` key — the country of the first company — and
+ * are still read: the key is left where it is and taken for nothing, so an
+ * older file keeps working and the next `ekwo init` writes it without one.
  *
  * It holds no password, no service_role key and no connection string with
  * credentials in it. Those are given per invocation, by flag, environment
@@ -20,7 +27,6 @@ export const CONFIG_FILE = 'ekwo.json';
 
 export interface EkwoConfig {
   project_url?: string;
-  country?: string;
   schema_version?: string;
 }
 
@@ -38,7 +44,6 @@ export async function readConfig(cwd = process.cwd()): Promise<EkwoConfig | unde
     const parsed = JSON.parse(text) as Record<string, unknown>;
     return {
       ...(typeof parsed['project_url'] === 'string' ? { project_url: parsed['project_url'] } : {}),
-      ...(typeof parsed['country'] === 'string' ? { country: parsed['country'] } : {}),
       ...(typeof parsed['schema_version'] === 'string'
         ? { schema_version: parsed['schema_version'] }
         : {}),
@@ -53,7 +58,6 @@ export async function writeConfig(config: EkwoConfig, cwd = process.cwd()): Prom
   const body = {
     $comment: HEADER,
     ...(config.project_url !== undefined ? { project_url: config.project_url } : {}),
-    ...(config.country !== undefined ? { country: config.country } : {}),
     ...(config.schema_version !== undefined ? { schema_version: config.schema_version } : {}),
   };
   await writeFile(path, `${JSON.stringify(body, null, 2)}\n`, 'utf8');

@@ -117,6 +117,52 @@ in `defaults.fiscal_year_default`; one that names none — the United Kingdom's,
 where a company's year ends on the accounting reference date it chose — asks
 for the day.
 
+`ekwo company new` asks the same questions about every other company, and
+refuses the same way.
+
+## Several countries in one installation: `init --no-company`
+
+An installation is not in a country; its companies are. `ekwo init` loads every
+pack of the release whatever `--country` says, so one installation keeps the
+books of companies in as many countries as it holds packs. When there is no
+"first company" to name — a group, a firm, a holding with subsidiaries abroad —
+install without one, then create each company in its own country:
+
+```sh
+npx ekwo-os init --no-company \
+  --db-url "$EKWO_DB_URL" --supabase-url "https://YOURREF.supabase.co" \
+  --service-role-key "$SUPABASE_SERVICE_ROLE_KEY" \
+  --org "My Group" --admin-email "you@example.com" --yes
+
+ekwo company new "My Company Belgium" --country BE --chart default --language nl --yes
+ekwo company new "My Company France"  --country FR --language fr --yes
+ekwo company list
+```
+
+`--no-company` runs the migrations, the seeds of every pack, the modules, the
+first administrator, `init_instance()` and `claim_instance_admin()`, and
+nothing else. The instance row records no country. A flag that only describes
+a company — `--country`, `--company`, `--chart`, `--language`, `--currency`,
+`--fiscal-year`, `--fiscal-year-start`, `--vat-period`, `--filing-period`,
+`--iban`, `--bic`, `--bank-name` — is refused with it, exit code 2, before the
+database is touched: it would describe nothing.
+
+**`ekwo company new` is `create_company()`**, the function the `create_company`
+tool of the MCP server calls: the country pack copied in, the first financial
+year opened, the administrator its first owner. It is called as an
+administrator of the installation — `--as-user`, or the only one when there is
+exactly one — so the database judges that person exactly as it judges the tool:
+anybody else is refused, `not_instance_admin`, exit code 3. Before the call,
+the CLI asks what `ekwo init` asks about its first company, from the packs the
+installation holds, and refuses the same way off a terminal: no country without
+`--country`, and `--chart`, `--language` and `--fiscal-year-start` wherever the
+pack offers a choice. `--currency` and `--fiscal-year` override the pack and
+this year.
+
+Without `--no-company`, `ekwo init` does what it always did, and the installation
+takes more companies later the same way. Neither writes a country into
+`ekwo.json`: see below.
+
 ## Where table access comes from
 
 **The schema grants its own rights.** Every table, view and function of Ekwo
@@ -222,7 +268,7 @@ and read by a person.
 | 2 | Applies every reference seed of `supabase/seed/`, in file-name order: `00_currencies.sql`, `00_territories.sql`, `05_framework_generic.sql`, then one `<n>_pack_<cc>.sql` per country pack, in the order of the number each pack declares | The currencies, the territories the tax rules name, the country-less financial statements every chart falls back on, and every country pack of the release — so a company in any of them can be created later without installing anything. They are exactly the seeds `supabase/config.toml` lists (a list `ekwo pack build` writes from `packs/`), so `supabase db push` installs the same set; a test compares both paths row by row. `90_demo_company.sql` is sample data and is never applied here |
 | 3 | Creates the first administrator through the Supabase Auth admin API | See below: a database connection cannot be a signed-in user |
 | 4 | `init_instance()`, `claim_instance_admin()`, the company, `company_members` as owner, `install_country_template()`, the first financial year, and the bank account when an IBAN was given | The six steps of the root README, in the same order, plus the one thing nobody can derive |
-| 5 | Writes `ekwo.json` | Project URL, country, schema version. Nothing else, ever |
+| 5 | Writes `ekwo.json` | The installation: project URL and schema version. Nothing else, ever — no country, since each company carries its own. A file written by 0.6 or earlier also names a country; it is still read, and the key is taken for nothing |
 | 6 | Asks whether to register with Ekwo | The default answer is no, and no is a supported answer forever |
 
 Every step checks before it acts. Running `ekwo init` twice on the same
@@ -250,7 +296,7 @@ instead if the account already exists, and no key is needed.
 
 | Command | What it does |
 |---|---|
-| `ekwo init` | The whole installation, interactive or not: the socle's migrations, the reference seeds, then the modules', as `ekwo migrate` applies them. |
+| `ekwo init` | The whole installation, interactive or not: the socle's migrations, the reference seeds, then the modules', as `ekwo migrate` applies them. `--no-company` stops before the first company: see [several countries](#several-countries-in-one-installation-init---no-company). |
 | `ekwo migrate` | Applies the migrations this release adds, after showing the gap — the socle's, then the modules'. Re-applies the reference seeds, which are idempotent. `--no-modules` leaves the modules alone. |
 | `ekwo status` | Schema version installed against available, pending migrations, the instance, its administrators, the country packs it holds and, per company, the pack version it copied. Exits 1 when something is pending. |
 | `ekwo doctor` | Every object this release defines and every privilege it grants, against what the database holds; row level security on every table, a policy on every protected table, no pending migration, no membership pointing at a deleted user, every company with a bank account, statements that tie to their lines, posted entries that balance. Exits 1 on a problem, 0 on warnings. |
@@ -258,7 +304,7 @@ instead if the account already exists, and no key is needed.
 | `ekwo unregister` | Opt back out. Clears the address and the date on the instance row. |
 | `ekwo demo` | Loads the sample company. Fictional data, explicit request only. |
 | `ekwo module` | What is installed beside the socle, applies a module's migrations and its country seeds, and turns one on or off for a company. |
-| `ekwo company` | One company leaves an installation with its books — `export` writes an archive anybody can read, as a member under row level security — and arrives in another one alive: `import` takes it in whole or not at all. |
+| `ekwo company` | `new` creates a company in its own country, through `create_company()`, and `list` shows the companies held here. One company leaves an installation with its books — `export` writes an archive anybody can read, as a member under row level security — and arrives in another one alive: `import` takes it in whole or not at all. |
 | `ekwo pack` | Compiles a country pack into its seed, and refuses a seed that is no longer the output of its pack. Runs in a checkout of the repository only. |
 | `ekwo login` | Signs in to an instance as yourself and keeps the session, in your own configuration directory. See [acting as a person](#acting-as-a-person-login-use-whoami). |
 | `ekwo logout` | Ends that session, here and on the instance. |
@@ -631,9 +677,23 @@ them as history it has no file for.
 
 ## `ekwo company`
 
-A firm keeps several companies in one installation, and each of them belongs to
-somebody. These two commands are how one of them leaves, and arrives somewhere
-else.
+A firm keeps several companies in one installation, each in its own country,
+and each of them belongs to somebody. `new` creates one and `list` shows them —
+see [several countries](#several-countries-in-one-installation-init---no-company):
+
+```sh
+ekwo company new "My Company Belgium" --country BE --chart default --language fr
+ekwo company new "My Company France" --country FR --language fr
+ekwo company list                                     # name, country, currency, language, chart, pack, members
+```
+
+`company new --json` answers the company (`id`, `country`, `currency`,
+`language`, `chart`, `packVersion`), its first financial year and its owner;
+`company list --json` answers `companies`, one per company. Both shapes are
+under `$defs/data` of the output schema, and the exit codes are the ones every
+command has: 2 for a missing answer, 3 when the database refuses.
+
+The two commands below are how a company leaves, and arrives somewhere else.
 
 ```sh
 ekwo company export "My Company" --out ./my-company   # manifest.json + data/<schema>.<table>.jsonl
@@ -845,6 +905,12 @@ dashboard under Connect → Session pooler, is the form that is never derived.
 | `--register` | Register without being asked. `--register-email` sets the address. |
 | `--registry-url <url>` | Where the registration is announced. |
 | `--no-modules` | Leave the modules out. By default `init` installs them, as `ekwo migrate` does — empty schemas until a company enables one. |
+| `--no-company` | Install without a company: schema, every pack, the modules, the first administrator, and no country on the instance row. The flags that only describe a company are refused with it. Then `ekwo company new`, once per company. |
+
+`ekwo company new <name>` takes `--country`, `--chart`, `--language`,
+`--currency`, `--fiscal-year` and `--fiscal-year-start` as `init` does, and
+`--as-user <uuid>`: the administrator of the installation it is created as,
+who becomes its owner — the only one, when there is exactly one.
 
 Every command takes `--json`; see [what a command answers](#what-a-command-answers---json-and-the-exit-codes).
 `ekwo migrate` takes `--skip-seeds`.
