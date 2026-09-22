@@ -55,9 +55,9 @@ code,parent,type,reconcilable,name,sequence
 1740,,asset_prepayments,false,Upplupna ränteintäkter,540
 1790,,asset_prepayments,false,Övriga förutbetalda kostnader och upplupna intäkter,550
 1910,,asset_cash,false,Kassa,560
-1920,,asset_cash,true,Bankkonto,570
-1930,,asset_cash,true,Koncernkonto,580
-1940,,asset_cash,true,Placeringskonto,590
+1920,,asset_cash,false,Bankkonto,570
+1930,,asset_cash,false,Koncernkonto,580
+1940,,asset_cash,false,Placeringskonto,590
 2010,,equity,false,Aktiekapital,600
 2011,,equity,false,Ej registrerat aktiekapital,610
 2065,,equity,false,Reservfond,620

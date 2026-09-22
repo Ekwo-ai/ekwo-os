@@ -230,7 +230,7 @@
     "legal_reference": "Mervärdesskattelag (2023:200) 10 kap. 33 § — undantag från skatteplikt för omsättning av bank- och finansieringstjänster, motsvarande artikel 135.1 b i direktiv 2006/112/EG.",
     "source": "ml",
     "vat_category": "E",
-    "exemption_code": "VATEX-EU-135-1B",
+    "exemption_code": "VATEX-EU-135-1",
     "postings": {
       "invoice": [
         {
