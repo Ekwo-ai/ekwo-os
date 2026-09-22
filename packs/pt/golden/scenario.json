@@ -61,6 +61,11 @@
       "lines": [{ "name": "Devolução de mercadorias", "quantity": 2, "unit_price": 1000, "tax": "PT-S-23", "account": "711" }]
     },
     {
+      "ref": "V9", "type": "sale_invoice", "contact": "cliente-fr", "date": "2026-08-07", "due_date": "2026-09-06",
+      "why": "Uma prestação intracomunitária de serviços: localizada no Estado-membro do adquirente, que aí se autoliquida — o mesmo campo 7 da transmissão de bens, mas a chave S na declaração recapitulativa em vez da chave E.",
+      "lines": [{ "name": "Assistência técnica prestada em França", "quantity": 1, "unit_price": 2500, "tax": "PT-S-ICS", "account": "72" }]
+    },
+    {
       "ref": "C1", "type": "purchase_invoice", "contact": "fornecedor-pt", "date": "2026-01-22", "due_date": "2026-02-21",
       "why": "Uma compra corrente de mercadorias à taxa normal: o imposto dedutível vai para o campo 23, sem base declarada — o formulário só pede o valor do imposto do lado da dedução.",
       "lines": [{ "name": "Mercadorias para revenda", "quantity": 1, "unit_price": 5000, "tax": "PT-P-BENS-23", "account": "32" }]
