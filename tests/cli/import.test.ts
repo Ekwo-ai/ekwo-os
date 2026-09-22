@@ -14,7 +14,10 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import type { PGlite } from '@electric-sql/pglite';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
+import { BOOK_SOURCES } from '@ekwo-ai/core';
 import { EXIT_USAGE, run, validate, type OutputDocument } from '../../packages/cli/src/index.js';
+import { NAMED_SOURCES } from '../../packages/cli/src/commands/import.js';
+import { ImportBooksInput, NAMED_SOURCES as MCP_NAMED_SOURCES, sourceOf } from '../../packages/mcp/src/tools/import-books.js';
 import { freshDatabase, one, repoRoot } from '../helpers/db.js';
 import { newCompany, newUser } from '../helpers/factory.js';
 import { roleOf, somePack } from '../helpers/packs.js';
@@ -158,6 +161,56 @@ describe('a FEC, from the rehearsal to the books', () => {
     const broken = await ekwo(['import', 'fec', join(root, 'sample.fec.txt'), '--mapping', join(root, 'broken.json')]);
     expect(broken.exitCode).toBe(EXIT_USAGE);
     expect(broken.error?.message).toContain('bad_mapping');
+  });
+});
+
+describe('a source named by the software its export comes from', () => {
+  // The names are read from the list that declares them, never written here:
+  // this file is not one of those allowed to name another product.
+  const names = Object.keys(NAMED_SOURCES) as (keyof typeof NAMED_SOURCES)[];
+
+  it('is the same list on the command line and in the MCP tool, each pointing at a reader that exists', () => {
+    expect(Object.fromEntries(names.map((n) => [n, NAMED_SOURCES[n].reader]))).toEqual(
+      Object.fromEntries(Object.entries(MCP_NAMED_SOURCES).map(([n, v]) => [n, v.reader])),
+    );
+    for (const name of names) {
+      expect(BOOK_SOURCES).toContain(NAMED_SOURCES[name].reader);
+      // The tool takes the name, and hands the core the reader it stands for.
+      expect(ImportBooksInput.shape.source.safeParse(name).success).toBe(true);
+      expect(sourceOf(name)).toBe(NAMED_SOURCES[name].reader);
+    }
+  });
+
+  it('is on the compatibility page, as available, with its command', async () => {
+    const page = await readFile(join(repoRoot, 'docs', 'compatibility.md'), 'utf8');
+    for (const name of names) {
+      const row = page.split('\n').find((line) => line.includes(`\`ekwo import ${name}\``));
+      expect(row, name).toBeDefined();
+      expect(row).toContain(`\`${NAMED_SOURCES[name].reader}\``);
+      expect(row).toMatch(/\| available \|$/);
+    }
+  });
+
+  it('is listed by ekwo import --help, with what it reads', async () => {
+    const help = await ekwo(['import', '--help']);
+    expect(help.exitCode).toBe(0);
+    const usage = (help.data as { usage: string }).usage;
+    for (const name of names) {
+      expect(usage).toContain(`${name} (= ${NAMED_SOURCES[name].reader})`);
+      expect(usage).toContain(`${name}: reads ${NAMED_SOURCES[name].export}`);
+    }
+  });
+
+  it('reads the files with the reader it names', async () => {
+    const byReport = names.find((n) => NAMED_SOURCES[n].reader === 'journal-report')!;
+    const answer = await ekwo([
+      'import', byReport, fixture('journal-report', 'journal-report.csv'), fixture('journal-report', 'chart.csv'),
+      '--date-order', 'dmy', '--dry-run', '--open-years',
+    ]);
+    expect(answer.error).toBeUndefined();
+    const data = answer.data as Row;
+    expect(data['source']).toBe('journal-report');
+    expect((data['read'] as Row)['entries']).toBe(3);
   });
 });
 

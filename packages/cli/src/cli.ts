@@ -11,7 +11,7 @@ import { contactCommand } from './commands/contact.js';
 import { demoCommand } from './commands/demo.js';
 import { cancelCommand, docCommand, postCommand } from './commands/document.js';
 import { reverseCommand } from './commands/entry.js';
-import { importCommand } from './commands/import.js';
+import { IMPORT_USAGE, importCommand } from './commands/import.js';
 import { doctorCommand } from './commands/doctor.js';
 import { initCommand, type InitDeps } from './commands/init.js';
 import { loginCommand, logoutCommand, type LoginDeps } from './commands/login.js';
@@ -123,8 +123,9 @@ ${bold('Connecting')} ${dim('(every command)')}
   ${cyan('payment')}     record — money in or out, booked and matched.
   ${cyan('match')}       <bank transaction> <document> — a statement line pays a document.
   ${cyan('import')}      <source> <file>… — books kept elsewhere, whole or not at all:
-              trial-balance, fec, journal-items, journal-report. Or a bank
-              statement: camt.053, coda, cfonb120, as pending lines for match.
+              trial-balance, fec, journal-items, journal-report, or the
+              export of another ledger by its name (ekwo import --help). Or a
+              bank statement: camt.053, coda, cfonb120, pending lines for match.
 
 ${bold('Acting as a person')} ${dim('(login … whoami, and every verb that keeps books — never a service_role key)')}
   --profile <name>          Which profile: a demo instance, production, one client
@@ -309,6 +310,14 @@ export async function run(argv: string[], deps: RunDeps = {}): Promise<number> {
     if (args.flags.get('version') === true && args.command === undefined) {
       setResult({ version: version() });
       line(version());
+      return 0;
+    }
+
+    // `ekwo import --help`: the sources, formats and software by name, which
+    // the general help leaves to the command that reads them.
+    if (args.command === 'import' && args.flags.get('help') === true) {
+      setResult({ usage: IMPORT_USAGE });
+      line(IMPORT_USAGE);
       return 0;
     }
 

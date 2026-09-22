@@ -131,6 +131,51 @@ describe('what the guard deliberately leaves alone', () => {
   });
 });
 
+describe('the files that declare what is read', () => {
+  const ALLOWED = [
+    'docs/compatibility.md',
+    'packages/cli/src/commands/import.ts',
+    'packages/mcp/src/tools/import-books.ts',
+    'packages/formats/journal-items/README.md',
+    'packages/formats/journal-report/README.md',
+  ];
+
+  it('may name the product whose export is read, and only those exact paths may', async () => {
+    const files = Object.fromEntries(ALLOWED.map((path) => [path, `Reads the export of ${NAME}.\n`]));
+    const result = await guardOver(files);
+    expect(result.code, result.stderr).toBe(0);
+  });
+
+  it('still refuses the name everywhere else, next to them and inside them', async () => {
+    const result = await guardOver({
+      'docs/compatibility.md': `Reads the export of ${NAME}.\n`,
+      'README.md': `Reads the export of ${NAME}.\n`,
+      'packs/xx/README.md': `${NAME}\n`,
+      'site/index.html': `${NAME}\n`,
+      'docs/decisions/0099-imports.md': `${NAME}\n`,
+      'docs/compatibility-notes.md': `${NAME}\n`,
+      'packages/formats/journal-items/src/index.ts': `${NAME}\n`,
+      'packages/formats/journal-report/README.md.bak': `${NAME}\n`,
+      'packages/cli/src/commands/import.test.ts': `${NAME}\n`,
+    });
+    expect(result.code).toBe(1);
+    for (const path of [
+      'README.md:1',
+      'packs/xx/README.md:1',
+      'site/index.html:1',
+      'docs/decisions/0099-imports.md:1',
+      'docs/compatibility-notes.md:1',
+      'packages/formats/journal-items/src/index.ts:1',
+      'packages/formats/journal-report/README.md.bak:1',
+      'packages/cli/src/commands/import.test.ts:1',
+    ]) {
+      expect(result.stderr).toContain(path);
+    }
+    expect(result.stderr).not.toContain('docs/compatibility.md:');
+    expect(result.stderr).toContain('8 line(s)');
+  });
+});
+
 describe('this repository', () => {
   it('names no refused product outside the frozen migrations', async () => {
     const result = await runGuard(repoRoot);

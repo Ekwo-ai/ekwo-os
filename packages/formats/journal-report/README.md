@@ -66,17 +66,23 @@ the correspondence is made by `ekwo import journal-report <files…> --date-orde
 
 ## Sources
 
-The format was read, on 22 September 2026, from the official help centre of
-the service:
+This reader was written against the reports of **Xero**, read on 22 September
+2026 from its help centre:
 
-- *General Ledger Detail report* and *Journal report*: the columns each offers,
-  the Journal ID and Account Code columns of the column picker, the grouping
-  by account or none;
-- *Export or print a report*: reports export to PDF, a spreadsheet or Google
-  Sheets, not to CSV;
-- *Export or print your chart of accounts* and *Import a chart of accounts*:
+- [General Ledger Detail report](https://central.xero.com/0/article/General-Ledger-Detail-report)
+  and [Journal report](https://central.xero.com/0/article/Journal-report): the
+  columns each offers, the Journal ID and Account Code columns of the column
+  picker, the grouping by account or none;
+- [Export or print a report](https://central.xero.com/0/article/Export-or-print-a-report):
+  reports export to PDF, a spreadsheet or Google Sheets, not to CSV;
+- [Export or print your chart of accounts](https://central.xero.com/0/article/Export-or-print-your-chart-of-accounts)
+  and [Import a chart of accounts](https://central.xero.com/s/article/Import-a-chart-of-accounts):
   the columns of the chart and the account types;
-- *Export contacts* and *Import contacts*: the columns of the contacts file.
+- [Export contacts out of Xero](https://central.xero.com/0/article/Export-contacts-out-of-Xero)
+  and [Import contacts into Xero](https://central.xero.com/0/article/Import-contacts-into-Xero):
+  the columns of the contacts file.
+
+`ekwo import xero <files…>` is the same as `ekwo import journal-report`.
 
 What those pages do not state — the exact text of the title and total rows —
 is why the reader finds the header by its columns and a line by its date,

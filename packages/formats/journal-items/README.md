@@ -77,17 +77,22 @@ becomes is the importer's business: in [Ekwo OS](https://github.com/Ekwo-ai/ekwo
 
 ## Sources
 
-The format was read, on 22 September 2026, from:
+This reader was written against the export of the **Journal Items** of Odoo
+(Accounting), versions 17 and 18, read on 22 September 2026 from:
 
-- the *Export and import data* page of the official documentation of the
-  software, versions 17.0 and 18.0 (`applications/essentials/export_import_data`):
+- [Export and import data — Odoo 17.0 documentation](https://www.odoo.com/documentation/17.0/applications/essentials/export_import_data.html)
+  and [18.0](https://www.odoo.com/documentation/18.0/applications/essentials/export_import_data.html):
   the two modes of an export, the ISO dates, the field names of an export for
   re-import;
-- the source of its accounting module on its official repository, branch 17.0
-  (`addons/account/models/account_move_line.py`, `account_account.py`,
-  `addons/base/models/res_partner.py`, `addons/web/controllers/export.py`): the
-  label of every field above, the display name of an account, and the way a
+- the source of the accounting module, branch 17.0:
+  [`account_move_line.py`](https://github.com/odoo/odoo/blob/17.0/addons/account/models/account_move_line.py),
+  [`account_account.py`](https://github.com/odoo/odoo/blob/17.0/addons/account/models/account_account.py),
+  [`res_partner.py`](https://github.com/odoo/odoo/blob/17.0/odoo/addons/base/models/res_partner.py) and
+  [`export.py`](https://github.com/odoo/odoo/blob/17.0/addons/web/controllers/export.py):
+  the label of every field above, the display name of an account, and the way a
   CSV is written — comma, double quotes, UTF-8, a point for decimals.
+
+`ekwo import odoo <files…>` is the same as `ekwo import journal-items`.
 
 The fixtures under `test/fixtures/` are written by hand from those pages and
 hold no real data.

@@ -532,8 +532,11 @@ ekwo import camt.053 statement.xml                 # or coda, cfonb120: pending 
 | `camt.053`, `coda`, `cfonb120` | A bank statement: its lines, pending, ready for `ekwo match` |
 
 Each reader is a brick of [`packages/formats/`](../formats/README.md), named
-after the file and not after the software that writes it; its README says
-which columns it reads and which official pages the format was read from.
+after the file; its README says which columns it reads and which official
+pages the format was read from. The exports of other ledgers can also be named
+by the software they come from: `ekwo import --help` lists those names, and
+[`docs/compatibility.md`](../../docs/compatibility.md) gives each one's export,
+official page and state.
 
 **The correspondence is yours.** Every account of the old chart has to become
 an account of the company's chart, and every old journal a journal of the

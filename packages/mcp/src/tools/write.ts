@@ -17,22 +17,19 @@
 import { z } from 'zod';
 import { EkwoMcpError, type Backend, type Filter, type Row } from '../backend.js';
 import {
-  BOOK_SOURCES,
-  BOOK_SOURCE_DESCRIPTIONS,
   DOC_TYPES,
-  NO_JOURNAL,
-  OPENING,
   STATEMENT_FORMATS,
   amountIn,
   columns,
   companyCurrency,
   idsByCode,
-  importBooks,
   importStatementFile,
   moneyFields,
   only,
 } from '@ekwo-ai/core';
 import { companyId, isoDate, uuid } from './read.js';
+
+export * from './import-books.js';
 
 // What a contact, a document, a payment and a matching are written with moved
 // to the core, where the command line calls the same functions. The inputs a
@@ -976,64 +973,6 @@ export async function lockPeriod(
 // be closed live in `close_fiscal_year`, next to the ones about balance and
 // locks, and this server does not repeat a word of them.
 // ---------------------------------------------------------------------------
-
-export const ImportBooksInput = z.object({
-  company_id: companyId,
-  source: z
-    .enum(BOOK_SOURCES)
-    .describe(
-      'What the files are, never guessed from their content: ' +
-        BOOK_SOURCES.map((source) => `\`${source}\` — ${BOOK_SOURCE_DESCRIPTIONS[source]}`).join('; ') +
-        '. A bank statement is not books: it goes through import_bank_statement.',
-    ),
-  files: z
-    .array(
-      z.object({
-        name: z.string().min(1).describe('The name the file had, kept on the record of the import.'),
-        content: z.string().min(1).describe('The file itself, as text (UTF-8).'),
-      }),
-    )
-    .min(1)
-    .describe('The files of one source, in the order given. `journal-items` and `journal-report` take the chart of accounts and the parties beside the lines, each recognised by its header; the others take one file.'),
-  mapping: z
-    .object({
-      accounts: z.record(z.string(), z.string().nullable()).optional().describe('Old account code → code of this company\'s chart.'),
-      journals: z
-        .record(z.string(), z.string().nullable())
-        .optional()
-        .describe(`Old journal → code of a journal of this company, or \`${OPENING}\` for the entries that are the opening balance. \`${NO_JOURNAL}\` stands for entries the source gives no journal.`),
-    })
-    .optional()
-    .describe('The correspondence, as a previous call with dry_run returned it and the user completed it. What it answers wins over the proposal.'),
-  dry_run: z.boolean().optional().describe('Show what would be written — the correspondence proposed, the entries, the numbers — and write nothing. Always first, and the user reads it before the real call.'),
-  open_years: z.boolean().optional().describe('Open the fiscal years the entries fall in where the company has none, on the length and first day of its own. Off, such an entry is refused by name.'),
-  opening_date: isoDate.optional().describe('For a trial balance: the first day of the fiscal year it opens. The file does not say it.'),
-  allow_result_accounts: z.boolean().optional().describe('Let an opening balance carry income and expense accounts: books taken over in the middle of a year.'),
-  keep_numbers: z.boolean().optional().describe('Post each entry under the number it had. Where the country forbids a hole in the sequence it takes the entries.import capability; left out, the journal draws the numbers and the old one is kept as the reference.'),
-  date_order: z.enum(['dmy', 'mdy', 'ymd']).optional().describe('For `journal-report`: the order of a date written only in digits, which the file does not say.'),
-});
-
-/**
- * Books from another system, all of them or none, through `importBooks()` of
- * the core — the function `ekwo import` calls.
- */
-export async function importBooksTool(
-  backend: Backend,
-  args: z.infer<typeof ImportBooksInput>,
-): Promise<unknown> {
-  return importBooks(backend, {
-    company_id: args.company_id,
-    source: args.source,
-    files: args.files,
-    mapping: args.mapping,
-    dry_run: args.dry_run,
-    open_years: args.open_years,
-    opening_date: args.opening_date,
-    allow_result_accounts: args.allow_result_accounts,
-    keep_numbers: args.keep_numbers,
-    date_order: args.date_order,
-  });
-}
 
 export const OpeningBalanceInput = z.object({
   company_id: companyId,

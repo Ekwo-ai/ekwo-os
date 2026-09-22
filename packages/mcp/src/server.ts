@@ -697,8 +697,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     'import_books',
     {
       title: 'Import books from another system',
-      description:
-        'Takes over the books a user kept elsewhere — a FEC, an export of journal items, a journal report, a trial balance — whole or not at all. Each file is read by the reader of its source; every account of the old chart is matched to one of this company\'s chart (proposed from the codes, never from a country: the same code, the same digits without the padding zeros, or the longest beginning of three digits or more) and every old journal to a journal of the company. Call it with dry_run first: it returns the correspondence proposed, what is unanswered, and — when everything is answered — what the database would write, rehearsed and rolled back. Show it to the user, let them correct the correspondence, and call again with it and without dry_run. Every entry is posted through post_entry(); a trial balance becomes the opening entry. Imported lines carry no tax and feed no VAT box. The same files twice are refused. Ask the user before the real call.',
+      description: write.IMPORT_BOOKS_DESCRIPTION,
       inputSchema: write.ImportBooksInput.shape,
       annotations: { readOnlyHint: false, destructiveHint: true, idempotentHint: true, openWorldHint: false },
     },

@@ -39,11 +39,13 @@ same `importBooks()`. Neither holds a rule.
 | `journal-items` | `@ekwo-ai/journal-items` | The lines of every entry exported as CSV from the list view of an ERP whose ledger is a table of lines, under its labels or its field names; the chart and the partners beside it. |
 | `journal-report` | `@ekwo-ai/journal-report` | A journal report or a general ledger detail, saved as CSV from a cloud service's spreadsheet export; the chart and the contacts beside it. |
 
-A reader is **named after the file**, never after the software that writes it:
-the same export can come from several, and a project that describes itself by
-what it does does not name another. Each README says which columns are read,
-and which official pages of the software the format was checked against on
-the day it was written.
+A reader is **named after the file**: the same kind of export can come from
+several places. A user looks for the software the file came from, so
+`ekwo import` and `import_books` also take the name of the software whose
+export a reader was written against — [`compatibility.md`](compatibility.md)
+lists them, with the official page of each export. Each README says which
+columns are read, and which pages the format was checked against on the day it
+was written.
 
 What they share, and why:
 

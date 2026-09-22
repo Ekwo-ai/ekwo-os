@@ -49,9 +49,25 @@ const DATE_ORDERS = ['dmy', 'mdy', 'ymd'] as const;
 
 const text = (value: unknown): string => (value === null || value === undefined ? '' : String(value));
 
+/**
+ * The software whose export a reader reads, by the name a user types. The
+ * readers are named after the file; a user looks for where it came from. A
+ * name is listed only once its reader exists and is tested, and it says what
+ * is read and nothing else. The MCP tool carries the same list
+ * (`packages/mcp/src/tools/import-books.ts`), and a test keeps the two equal;
+ * `docs/compatibility.md` is the same list for a person.
+ */
+export const NAMED_SOURCES = {
+  odoo: { reader: 'journal-items', export: 'the export of the Journal Items of Odoo (Accounting), as CSV, with its chart of accounts and its partners' },
+  xero: { reader: 'journal-report', export: 'the Journal Report or the General Ledger Detail of Xero, saved as CSV, with its chart of accounts and its contacts' },
+} as const satisfies Record<string, { reader: BookSource; export: string }>;
+
 export const IMPORT_USAGE = `usage: ekwo import <source> <file>… [--dry-run] [--mapping <file>] [--save-mapping <file>]
   books:      ${BOOK_SOURCES.join(', ')}
-  statements: ${STATEMENT_FORMATS.join(', ')}`;
+  by name:    ${Object.entries(NAMED_SOURCES).map(([name, { reader }]) => `${name} (= ${reader})`).join(', ')}
+  statements: ${STATEMENT_FORMATS.join(', ')}
+${Object.entries(NAMED_SOURCES).map(([name, { export: what }]) => `  ${name}: reads ${what}.`).join('\n')}
+See docs/compatibility.md.`;
 
 export async function importCommand(args: ParsedArgs, deps: BooksDeps = {}): Promise<number> {
   rejectUnknownFlags(args, IMPORT_FLAGS);
@@ -62,6 +78,8 @@ export async function importCommand(args: ParsedArgs, deps: BooksDeps = {}): Pro
   if ((STATEMENT_FORMATS as readonly string[]).includes(source)) {
     return importStatements(args, deps, source as StatementFormat, paths);
   }
+  const named = NAMED_SOURCES[source as keyof typeof NAMED_SOURCES]?.reader;
+  if (named !== undefined) return importBookFiles(args, deps, named, paths);
   if (!(BOOK_SOURCES as readonly string[]).includes(source)) {
     throw new UsageError(`unknown_source: ${source}.\n${IMPORT_USAGE}`);
   }

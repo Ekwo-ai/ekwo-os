@@ -28,6 +28,15 @@
  * migration. The files below carried a mention before the rule existed and
  * keep it. Nothing is ever added to this list: a new file with a mention is
  * written without it.
+ *
+ * **Compatibility is not comparison, and has its own list.** Saying that Ekwo
+ * reads the export of a named product is a fact a user needs to find the
+ * command; saying Ekwo is better than it, or an alternative to it, is what
+ * this guard exists to refuse. So the handful of files that declare which
+ * exports are read, and nothing else, may name the product: listed below by
+ * their exact path, never by a pattern, so that a new file is refused until
+ * somebody adds it here on purpose. What they say is factual — "reads the
+ * export of" — and a reviewer reads any change to this list.
  */
 
 import { execFile } from 'node:child_process';
@@ -52,6 +61,19 @@ const NAMES = [
 /** Published migrations that carried a mention before the rule; frozen. */
 const PUBLISHED_BEFORE_THE_RULE = new Set(['supabase/migrations/20260912074712_country_packs.sql']);
 
+/**
+ * The files that say which exports of which products are read, by exact path.
+ * Never a directory, never a glob: `tests/competitor_names.test.ts` proves the
+ * name is still refused next to each of them.
+ */
+const COMPATIBILITY = new Set([
+  'docs/compatibility.md',
+  'packages/cli/src/commands/import.ts',
+  'packages/mcp/src/tools/import-books.ts',
+  'packages/formats/journal-items/README.md',
+  'packages/formats/journal-report/README.md',
+]);
+
 const pattern = new RegExp(NAMES.join('|'), 'i');
 
 /** Every path git tracks, relative to the root of the working tree. */
@@ -66,7 +88,7 @@ async function trackedFiles() {
 const found = [];
 
 for (const path of await trackedFiles()) {
-  if (PUBLISHED_BEFORE_THE_RULE.has(path)) continue;
+  if (PUBLISHED_BEFORE_THE_RULE.has(path) || COMPATIBILITY.has(path)) continue;
   // A file git cannot hand back as UTF-8 is an image, a font or an archive.
   const text = await readFile(join(root, path), 'utf8').catch(() => null);
   if (text === null) continue;
