@@ -1,0 +1,38 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "TW-401",
+  "name": "營業人銷售額與稅額申報書（401）— General Business Entity Sales Amount and Tax Amount Return, general tax calculation method",
+  "period": ["month", "bimonth"],
+  "period_default": "bimonth",
+  "valid_from": "1986-04-01",
+  "legal_reference": "加值型及非加值型營業稅法第35條第1項 — a business entity files a return for each two-month period, before the fifteenth day of the month following it, whether or not it has any sale to report (paragraph 2 of the article requires a return even where none). Paragraph 2 also lets a taxpayer that only ever makes zero-rated sales ask to file monthly instead, once approved and for at least one year. Form 401 itself is the return for a taxpayer whose sales are exclusively taxable and zero-rated (its own note, transcribed here: \"本申報書適用專營應稅及零稅率之營業人填報。如營業人申報當期（月）之銷售額包括有免稅、特種稅額計算銷售額者，請改用（403）申報書申報。\" — a taxpayer whose period includes an exempt or special-tax-calculation sale files form 403 instead, whose own box layout this pack could not confirm against an official publication; see the README).",
+  "source": "bt-act",
+  "deadline": {
+    "rule": "day_of_month_after_period",
+    "day": 15,
+    "legal_reference": "加值型及非加值型營業稅法第35條第1項 — the return and the tax due are filed before the fifteenth day of the month following the two-month (or, once approved, the one-month) period.",
+    "source": "bt-act"
+  },
+  "rounding": {
+    "unit": 1,
+    "legal_reference": "The form's own header states \"金額單位：新臺幣元\" (amount unit: New Taiwan dollars, whole dollars) beside every box of the printed return.",
+    "source": "form-401"
+  },
+  "boxes": [
+    { "box": "21", "kind": "base", "name": "銷售額合計（應稅）", "sequence": 10, "legal_reference": "Form 401, row 合計, column 銷售額 — the sum of the taxable sales base of the period, before the zero-rated column.", "source": "form-401" },
+    { "box": "22", "kind": "tax", "name": "銷項稅額合計", "sequence": 20, "legal_reference": "Form 401, row 合計, column 稅額 — the output tax of the period; the same figure the form also prints at row 1 under code 101.", "source": "form-401" },
+    { "box": "101", "kind": "tax", "name": "本期(月)銷項稅額合計", "sequence": 30, "legal_reference": "Form 401, 稅額計算 section, row 1, code 101 — the same output tax total box 22 carries under the form's ② mark, printed a second time in the box code the tax calculation section reads.", "source": "form-401" },
+    { "box": "23", "kind": "base", "name": "零稅率銷售額合計", "sequence": 40, "legal_reference": "Form 401, row 合計, column 零稅率銷售額 — the sum of the zero-rated sales base of the period.", "source": "form-401" },
+    { "box": "25", "kind": "total", "name": "銷售額總計", "sequence": 50, "plus": ["21", "23"], "legal_reference": "Form 401, row 銷售額總計, code 25⑦ — the taxable and the zero-rated sales bases added together (①+③ on the printed form).", "source": "form-401" },
+    { "box": "44", "kind": "base", "name": "進貨及費用金額合計", "sequence": 60, "legal_reference": "Form 401, 進項 section, row 合計, column 進貨及費用金額 — the total value of the period's deductible purchases of goods and expenses, across every voucher type the form breaks the row into (this pack declares the total row and not the voucher-type breakdown; see the README).", "source": "form-401" },
+    { "box": "45", "kind": "tax", "name": "進貨及費用稅額合計", "sequence": 70, "legal_reference": "Form 401, 進項 section, row 合計, column 進貨及費用稅額, code 45⑨ — the deductible input tax of the period's purchases of goods and expenses.", "source": "form-401" },
+    { "box": "46", "kind": "base", "name": "固定資產金額合計", "sequence": 80, "legal_reference": "Form 401, 進項 section, row 合計, column 固定資產金額 — the total value of the period's deductible purchases of fixed assets.", "source": "form-401" },
+    { "box": "47", "kind": "tax", "name": "固定資產稅額合計", "sequence": 90, "legal_reference": "Form 401, 進項 section, row 合計, column 固定資產稅額, code 47⑩ — the deductible input tax of the period's purchases of fixed assets.", "source": "form-401" },
+    { "box": "107", "kind": "total", "name": "得扣抵進項稅額合計", "sequence": 100, "plus": ["45", "47"], "legal_reference": "Form 401, 稅額計算 section, row 7, code 107 — ⑨+⑩, the deductible input tax of goods, expenses and fixed assets added together.", "source": "form-401" },
+    { "box": "110", "kind": "total", "name": "小計", "sequence": 110, "plus": ["107"], "legal_reference": "Form 401, 稅額計算 section, row 10, code 110 — printed as 7+8, the deductible input tax of the period (row 7, box 107) plus the credit carried in from the previous period (row 8, box 108). Box 108 is not a fact this period's ledger holds — it is what the previous period's own return came to — and `vat_return()` evaluates one period at a time from the ledger it replays, with no carry-forward from a period outside the one asked for. This pack declares box 110 as row 7 alone and leaves box 108 undeclared, which is the same gap packs/gq documents for its own box 027 (crédit de TVA reporté) and no invention of this pack's own; see the README.", "source": "form-401" },
+    { "box": "111", "kind": "total", "name": "本期(月)應實繳稅額", "sequence": 120, "plus": ["101"], "minus": ["110"], "floor_zero": true, "legal_reference": "Form 401, 稅額計算 section, row 11, code 111 — 1−10, the tax payable this period where output tax exceeds deductible input tax.", "source": "form-401" },
+    { "box": "112", "kind": "total", "name": "本期(月)申報留抵稅額", "sequence": 130, "plus": ["110"], "minus": ["101"], "floor_zero": true, "legal_reference": "Form 401, 稅額計算 section, row 12, code 112 — 10−1, the credit reported this period where deductible input tax exceeds output tax.", "source": "form-401" },
+    { "box": "TWZR5", "kind": "total", "name": "零稅率銷售額 x 5%（計算用，未印於申報書）", "sequence": 140, "rate": 5, "rate_of": "23", "hidden": true, "legal_reference": "Not a box the form prints. Form 401's own box 13 (得退稅限額合計, code 113) is printed as ③×5%+⑩ — a rate of one box plus another box on the same line — and this format's box vocabulary offers a rate applied to one box (rate/rate_of) or a plus/minus list, never both on one box (docs/packs.md, \"A box is a list or a rate, never both\"). This working box carries the rate alone, on the working-box pattern packs/jp already uses for its own local-tax share, so that box 113 can still be declared as the plus of this box and box 110.", "source": "form-401" },
+    { "box": "113", "kind": "total", "name": "得退稅限額合計", "sequence": 150, "plus": ["TWZR5", "110"], "legal_reference": "Form 401, 稅額計算 section, row 13, code 113 — ③×5%+⑩, the refund a zero-rated exporter may claim is capped at 5% of its zero-rated sales plus the credit carried in from the previous period; see box TWZR5 for how this pack computes the rate term, and box 110 for why the carried-in term is incomplete.", "source": "form-401" }
+  ]
+}

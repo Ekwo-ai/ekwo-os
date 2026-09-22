@@ -1,0 +1,60 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/statements",
+  "statements": [
+    {
+      "code": "TW-BAA-BS",
+      "kind": "balance_sheet",
+      "framework": "商業會計處理準則",
+      "name": "資產負債表 — Statement of financial position",
+      "legal_reference": "商業會計處理準則第14條 — a balance sheet presents assets (current, non-current), liabilities (current, non-current) and equity (capital or paid-in capital, capital surplus, retained earnings or accumulated deficit, other equity, treasury shares).",
+      "source": "accounting-rules",
+      "lines": [
+        { "code": "CA", "name": "流動資產 Current assets", "sequence": 10, "sign": 1,
+          "rules": [ { "kind": "code_range", "code_from": "11", "code_to": "12" } ] },
+        { "code": "NCA", "name": "非流動資產 Non-current assets", "sequence": 20, "sign": 1,
+          "rules": [ { "kind": "code_range", "code_from": "13", "code_to": "15" } ] },
+        { "code": "TA", "name": "資產總計 Total assets", "sequence": 30, "is_total": true, "plus": ["CA", "NCA"] },
+        { "code": "CL", "name": "流動負債 Current liabilities", "sequence": 40, "sign": -1,
+          "rules": [ { "kind": "code_range", "code_from": "21", "code_to": "22" } ] },
+        { "code": "NCL", "name": "非流動負債 Non-current liabilities", "sequence": 50, "sign": -1,
+          "rules": [ { "kind": "code_range", "code_from": "23", "code_to": "23" } ] },
+        { "code": "TL", "name": "負債總計 Total liabilities", "sequence": 60, "is_total": true, "plus": ["CL", "NCL"] },
+        { "code": "EQCAP", "name": "股本 Share capital", "sequence": 70, "sign": -1,
+          "rules": [ { "kind": "code_range", "code_from": "31", "code_to": "31" } ] },
+        { "code": "EQCS", "name": "資本公積 Capital surplus", "sequence": 80, "sign": -1,
+          "rules": [ { "kind": "code_range", "code_from": "32", "code_to": "32" } ] },
+        { "code": "EQRE", "name": "保留盈餘（或累積虧損） Retained earnings (accumulated deficit)", "sequence": 90, "sign": -1,
+          "rules": [ { "kind": "code_range", "code_from": "33", "code_to": "33" } ] },
+        { "code": "EQTS", "name": "庫藏股票 Treasury shares", "sequence": 100, "sign": -1,
+          "rules": [ { "kind": "code_range", "code_from": "35", "code_to": "35" } ],
+          "legal_reference": "Treasury shares are a debit-normal deduction from equity: this line's -1 sign, applied to a normally-debit balance, prints as the negative figure that reduces the total of equity it is added into — the same mechanism a credit-normal equity line uses, read the other way." },
+        { "code": "TEQ", "name": "權益總計 Total equity", "sequence": 110, "is_total": true, "plus": ["EQCAP", "EQCS", "EQRE", "EQTS"] },
+        { "code": "TLE", "name": "負債及權益總計 Total liabilities and equity", "sequence": 120, "is_total": true, "plus": ["TL", "TEQ"] }
+      ]
+    },
+    {
+      "code": "TW-BAA-IS",
+      "kind": "income_statement",
+      "framework": "商業會計處理準則",
+      "name": "損益表 — Income statement",
+      "legal_reference": "商業會計處理準則第32條 — a comprehensive income statement may include operating revenue, operating costs, operating expenses, non-operating income and expense, income tax expense (or benefit), continuing and discontinued operations, and the net profit or loss of the period. This chart carries no discontinued-operations account and no item of other comprehensive income, so this statement stops at the net profit or loss of the period.",
+      "source": "accounting-rules",
+      "lines": [
+        { "code": "REV", "name": "營業收入 Operating revenue", "sequence": 10, "sign": -1,
+          "rules": [ { "kind": "code_range", "code_from": "41", "code_to": "41" } ] },
+        { "code": "COGS", "name": "營業成本 Operating costs", "sequence": 20, "sign": 1,
+          "rules": [ { "kind": "code_range", "code_from": "51", "code_to": "59" } ] },
+        { "code": "GP", "name": "營業毛利（毛損） Gross profit (loss)", "sequence": 30, "is_total": true, "plus": ["REV"], "minus": ["COGS"] },
+        { "code": "OPEX", "name": "營業費用 Operating expenses", "sequence": 40, "sign": 1,
+          "rules": [ { "kind": "code_range", "code_from": "61", "code_to": "61" } ] },
+        { "code": "OI", "name": "營業淨利（淨損） Operating income (loss)", "sequence": 50, "is_total": true, "plus": ["GP"], "minus": ["OPEX"] },
+        { "code": "NONOP", "name": "營業外收益及費損 Non-operating income and expense", "sequence": 60, "sign": 1,
+          "rules": [ { "kind": "code_range", "code_from": "71", "code_to": "72" } ],
+          "legal_reference": "Article 32 item 4 prints non-operating income and non-operating expense as one line, not two, which is why this pack keeps one code_range over both instead of separating an income_other type from an expense type — an account_type rule could not separate them cleanly either, since 7151 (interest expense) and 7182 (foreign exchange loss) sit inside the same 71xx range as their income counterparts on the official table. sign 1 reads the debit-minus-credit balance directly: a net expense here prints positive and a net non-operating gain prints negative, which is what NI below subtracts." },
+        { "code": "TAX", "name": "所得稅費用（或利益） Income tax expense (or benefit)", "sequence": 70, "sign": 1,
+          "rules": [ { "kind": "code_range", "code_from": "82", "code_to": "82" } ] },
+        { "code": "NI", "name": "本期純益（純損） Net profit (loss) for the period", "sequence": 80, "is_total": true, "plus": ["OI"], "minus": ["NONOP", "TAX"] }
+      ]
+    }
+  ]
+}

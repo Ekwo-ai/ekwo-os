@@ -518,3 +518,29 @@ on conflict (code) do update set
   eu_vat_to       = excluded.eu_vat_to,
   vat_prefix      = excluded.vat_prefix,
   legal_reference = excluded.legal_reference;
+
+-- ---------------------------------------------------------------------------
+-- Taiwan
+--
+-- Not a Member State and not a third country of the Directive's own kind
+-- either, the way Japan, Singapore and Hong Kong are already rows here for:
+-- the common system of VAT reaches a defined territory of the European
+-- Union and nowhere else, so a jurisdiction outside it is `none` regardless
+-- of what recognition question its own status raises. Taiwan levies a
+-- value-added business tax of its own under the 加值型及非加值型營業稅法
+-- (Value-Added and Non-Value-Added Business Tax Act), whose article 10 sets
+-- the rate.
+-- ---------------------------------------------------------------------------
+
+insert into territories (code, code_source, name, parent_code, eu_vat_scope, eu_vat_from, eu_vat_to, vat_prefix, legal_reference) values
+  ('TW', 'iso_3166_1', 'Taiwan', null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a jurisdiction outside it is held to `none` for every rule the Directive carries, whatever else its status raises. Taiwan levies a value-added business tax of its own under 加值型及非加值型營業稅法 (the Value-Added and Non-Value-Added Business Tax Act), article 10.')
+on conflict (code) do update set
+  code_source     = excluded.code_source,
+  name            = excluded.name,
+  parent_code     = excluded.parent_code,
+  eu_vat_scope    = excluded.eu_vat_scope,
+  eu_vat_from     = excluded.eu_vat_from,
+  eu_vat_to       = excluded.eu_vat_to,
+  vat_prefix      = excluded.vat_prefix,
+  legal_reference = excluded.legal_reference;

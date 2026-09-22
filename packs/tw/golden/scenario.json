@@ -1,0 +1,113 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden_scenario",
+  "name": "臺灣一般稅額計算營業人的一個會計年度，按二月為一期申報",
+  "chart": "default",
+  "fiscal_year": { "name": "會計年度 2026", "start": "2026-01-01", "end": "2026-12-31" },
+  "periods": [
+    { "code": "2026-B1", "from": "2026-01-01", "to": "2026-02-28" },
+    { "code": "2026-B2", "from": "2026-03-01", "to": "2026-04-30" }
+  ],
+  "statements": ["TW-BAA-BS", "TW-BAA-IS"],
+  "contacts": [
+    { "ref": "client-tw", "name": "大同貿易股份有限公司", "type": "customer", "country": "TW" },
+    { "ref": "client-foreign", "name": "Pacific Sourcing LLC", "type": "customer", "country": "US" },
+    { "ref": "supplier-tw", "name": "信義文具有限公司", "type": "supplier", "country": "TW" },
+    { "ref": "supplier-foreign", "name": "Nippon Materials K.K.", "type": "supplier", "country": "JP" }
+  ],
+  "documents": [
+    {
+      "ref": "V1", "type": "sale_invoice", "contact": "client-tw", "date": "2026-01-15",
+      "why": "A domestic sale at the standard 5% rate: the taxable sales base and the output tax of boxes 21, 22 and 101.",
+      "lines": [
+        { "name": "商品一批", "quantity": 100, "unit_price": 200, "tax": "TW-S-5", "account": "4111" }
+      ]
+    },
+    {
+      "ref": "V2", "type": "sale_invoice", "contact": "client-foreign", "date": "2026-01-20",
+      "why": "An export of goods at the zero rate: box 23, which — unlike an exemption under article 8 — keeps the right to deduct the input tax behind it, and feeds the refund cap of box 13.",
+      "lines": [
+        { "name": "外銷貨物一批", "quantity": 50, "unit_price": 1000, "tax": "TW-S-0-GOODS", "account": "4111" }
+      ]
+    },
+    {
+      "ref": "P1", "type": "purchase_invoice", "contact": "supplier-tw", "date": "2026-01-18",
+      "why": "A domestic purchase on a uniform invoice: the deductible input tax of boxes 44 and 45.",
+      "lines": [
+        { "name": "商品一批", "quantity": 80, "unit_price": 100, "tax": "TW-P-5", "account": "5121" }
+      ]
+    },
+    {
+      "ref": "P3", "type": "purchase_invoice", "contact": "supplier-tw", "date": "2026-01-25",
+      "why": "A purchase for client entertainment: article 19 denies the deduction, so the tax is not carried on the input-tax account but lands on the cost of the line itself, as a tax_on_base posting, and reaches no box of form 401.",
+      "lines": [
+        { "name": "交際應酬", "quantity": 1, "unit_price": 4000, "tax": "TW-P-5-NC", "account": "6121" }
+      ]
+    },
+    {
+      "ref": "P5", "type": "purchase_invoice", "contact": "supplier-tw", "date": "2026-02-10",
+      "why": "A purchase from a small-scale entity taxed under article 13's 1% method: it charges no business tax the buyer could deduct, so the line carries no input tax.",
+      "lines": [
+        { "name": "包裝材料", "quantity": 1, "unit_price": 5000, "tax": "TW-P-EXO", "account": "5121" }
+      ]
+    },
+    {
+      "ref": "CN1", "type": "sale_credit_note", "contact": "client-tw", "date": "2026-02-05",
+      "why": "A partial return against V1, at the same standard rate: the credit note that flips the box factors of boxes 21, 22 and 101 rather than a second document with its own tax.",
+      "lines": [
+        { "name": "商品退回", "quantity": 10, "unit_price": 200, "tax": "TW-S-5", "account": "4113" }
+      ]
+    },
+    {
+      "ref": "V3", "type": "sale_invoice", "contact": "client-foreign", "date": "2026-03-10",
+      "why": "A service related to the export, zero-rated under the second item of article 7 rather than the first: the same boxes as an exported good, kept as a separate code because it answers a different item of the same article.",
+      "lines": [
+        { "name": "技術服務（供境外客戶使用）", "quantity": 1, "unit_price": 30000, "tax": "TW-S-0-SVC", "account": "4121" }
+      ]
+    },
+    {
+      "ref": "V4", "type": "sale_invoice", "contact": "client-tw", "date": "2026-03-15",
+      "why": "An exempt sale of land under article 8: sold at its carrying amount, so the line removes the asset from the books at cost rather than booking a sale to a revenue account, and the tax reaches no box of TW-401 — a period that carries it is a period this taxpayer would in law file on form 403, not on this pack's TW-401 (see the README).",
+      "lines": [
+        { "name": "出售土地（帳面成本）", "quantity": 1, "unit_price": 500000, "tax": "TW-S-EXO-LAND", "account": "1391" }
+      ]
+    },
+    {
+      "ref": "P2", "type": "purchase_invoice", "contact": "supplier-tw", "date": "2026-03-05",
+      "why": "A purchase of a fixed asset: form 401 keeps this on the column of boxes 46 and 47, apart from an ordinary purchase of goods or expenses.",
+      "lines": [
+        { "name": "辦公設備", "quantity": 1, "unit_price": 60000, "tax": "TW-P-5-FA", "account": "1431" }
+      ]
+    },
+    {
+      "ref": "P4", "type": "purchase_invoice", "contact": "supplier-foreign", "date": "2026-03-20",
+      "why": "An import of goods cleared through Customs: the business tax is levied by Customs under article 41, not charged by the foreign supplier, so the posting removes it from what is owed to the supplier and carries it to the customs-clearance account instead, deducted on the strength of the customs authority's own tax payment certificate.",
+      "lines": [
+        { "name": "進口原料一批", "quantity": 1, "unit_price": 40000, "tax": "TW-P-IMP-5", "account": "5121" }
+      ]
+    },
+    {
+      "ref": "P6", "type": "purchase_invoice", "contact": "supplier-tw", "date": "2026-03-25",
+      "why": "A statutory duty paid to the tax authority, not consideration for a sale of goods or services from anyone: outside the scope article 1 draws, and carried at the not_subject treatment rather than any rate.",
+      "lines": [
+        { "name": "地價稅", "quantity": 1, "unit_price": 3000, "tax": "TW-P-NA", "account": "6123" }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "E1", "direction": "inbound", "date": "2026-02-20", "amount": 50000,
+      "contact": "client-foreign", "journal": "BNK", "match": "V2",
+      "why": "A collection that exactly settles the zero-rated export of V2."
+    },
+    {
+      "ref": "E2", "direction": "outbound", "date": "2026-01-30", "amount": 8400,
+      "contact": "supplier-tw", "journal": "BNK", "match": "P1",
+      "why": "A payment that exactly settles the domestic purchase of P1, tax included."
+    },
+    {
+      "ref": "E3", "direction": "inbound", "date": "2026-04-05", "amount": 10000,
+      "contact": "client-tw", "journal": "BNK", "match": null,
+      "why": "A deposit received on account, left unmatched to prove an open third-party line survives the golden replay."
+    }
+  ]
+}

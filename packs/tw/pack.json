@@ -1,0 +1,197 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "TW",
+  "name": "臺灣",
+  "version": "0.1.0",
+  "schema_min": "20260917170000",
+  "seed_sequence": 53,
+  "released_at": "2026-09-22",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "bt-act",
+        "title": "加值型及非加值型營業稅法 — Value-Added and Non-Value-Added Business Tax Act",
+        "publisher": "全國法規資料庫 Laws & Regulations Database of the Republic of China (Ministry of Justice)",
+        "url": "https://law.moj.gov.tw/ENG/LawClass/LawAll.aspx?pcode=G0340080",
+        "consulted_on": "2026-09-22",
+        "kind": "law"
+      },
+      {
+        "key": "income-tax-act",
+        "title": "所得稅法第23條 — Income Tax Act, article 23 (the accounting year)",
+        "publisher": "全國法規資料庫 Laws & Regulations Database of the Republic of China (Ministry of Justice)",
+        "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=G0340003&flno=23",
+        "consulted_on": "2026-09-22",
+        "kind": "law"
+      },
+      {
+        "key": "accounting-act",
+        "title": "商業會計法 — Business Accounting Act",
+        "publisher": "全國法規資料庫 Laws & Regulations Database of the Republic of China (Ministry of Justice)",
+        "url": "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=J0080009",
+        "consulted_on": "2026-09-22",
+        "kind": "law"
+      },
+      {
+        "key": "accounting-rules",
+        "title": "商業會計處理準則 — Regulations Governing Business Entity Accounting Handling",
+        "publisher": "全國法規資料庫 Laws & Regulations Database of the Republic of China (Ministry of Justice)",
+        "url": "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=J0080010",
+        "consulted_on": "2026-09-22",
+        "kind": "regulation"
+      },
+      {
+        "key": "accounting-items-table",
+        "title": "商業會計項目表（112年度及以後適用版本） — Business Accounting Items Table, issued under article 27 of the Business Accounting Act",
+        "publisher": "經濟部商業發展署 Department of Commerce, Ministry of Economic Affairs",
+        "url": "https://gcis.nat.gov.tw/F/t70492_p",
+        "consulted_on": "2026-09-22",
+        "kind": "regulation"
+      },
+      {
+        "key": "form-401",
+        "title": "營業人銷售額與稅額申報書及說明欄（401、403及404）A4格式 — General Business Entity Sales Amount and Tax Amount Return, form 401 and its notes",
+        "publisher": "財政部稅務入口網 Ministry of Finance e-Tax Portal",
+        "url": "https://www.etax.nat.gov.tw/etwmain/api/functions/etw212w/download/189b50a490600000c0cddfef1a752804/%E7%87%9F%E6%A5%AD%E4%BA%BA%E9%8A%B7%E5%94%AE%E9%A1%8D%E8%88%87%E7%A8%85%E9%A1%8D%E7%94%B3%E5%A0%B1%E6%9B%B8%E5%8F%8A%E8%AA%AA%E6%98%8E%E6%AC%84(401%E3%80%81403%E5%8F%8A404)A4%E6%A0%BC%E5%BC%8F.pdf",
+        "consulted_on": "2026-09-22",
+        "kind": "form"
+      },
+      {
+        "key": "uniform-invoice-rules",
+        "title": "統一發票使用辦法 — Uniform Invoice Using Method",
+        "publisher": "全國法規資料庫 Laws & Regulations Database of the Republic of China (Ministry of Justice)",
+        "url": "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=G0340082",
+        "consulted_on": "2026-09-22",
+        "kind": "regulation"
+      },
+      {
+        "key": "einvoice-rules",
+        "title": "電子發票實施作業要點 — Electronic Invoice Implementation Points",
+        "publisher": "財政部 Ministry of Finance",
+        "url": "https://law-out.mof.gov.tw/LawContent.aspx?id=FL041411",
+        "consulted_on": "2026-09-22",
+        "kind": "regulation"
+      },
+      {
+        "key": "einvoice-portal",
+        "title": "財政部電子發票整合服務平台 — Ministry of Finance Electronic Invoice Integration Service Platform",
+        "publisher": "財政部 Ministry of Finance",
+        "url": "https://www.einvoice.nat.gov.tw/",
+        "consulted_on": "2026-09-22",
+        "kind": "portal"
+      },
+      {
+        "key": "small-scale-threshold",
+        "title": "自114年1月1日起調高小規模營業人營業稅起徵點 — Small-scale business entity threshold raised from 1 January 2025",
+        "publisher": "財政部稅務入口網 Ministry of Finance e-Tax Portal",
+        "url": "https://www.etax.nat.gov.tw/etwmain/tax-info/network-transaction-taxtation-area/press/PEwQK1V",
+        "consulted_on": "2026-09-22",
+        "kind": "guidance"
+      },
+      {
+        "key": "etax-portal",
+        "title": "財政部稅務入口網 — Ministry of Finance e-Tax Portal, where the return is filed",
+        "publisher": "財政部 Ministry of Finance",
+        "url": "https://www.etax.nat.gov.tw/",
+        "consulted_on": "2026-09-22",
+        "kind": "portal"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "TWD",
+    "language": "zh",
+    "rounding_method": "half_up",
+    "closing_style": "retained_earnings",
+    "fiscal_year_default": "calendar",
+    "roles": {
+      "receivable": "1191",
+      "payable": "2171",
+      "suspense": "2251",
+      "rounding": "6135",
+      "retained_earnings": "3351",
+      "sales": "4111",
+      "purchase": "5121",
+      "bank": "1113",
+      "cash": "1111",
+      "fx_gain": "7181",
+      "fx_loss": "7182",
+      "asset_disposal_gain": "7201",
+      "asset_disposal_loss": "7202",
+      "tax_payable": "2194",
+      "tax_receivable": "1269"
+    },
+    "journal_roles": {
+      "sales": "SAL",
+      "purchase": "PUR",
+      "miscellaneous": "GEN",
+      "opening": "OPN"
+    }
+  },
+  "languages": ["en"],
+  "journals": [
+    { "code": "SAL", "type": "sales", "name": "銷貨簿", "sequence": 10 },
+    { "code": "PUR", "type": "purchase", "name": "進貨簿", "sequence": 20 },
+    { "code": "BNK", "type": "bank", "name": "銀行存款簿", "sequence": 30 },
+    { "code": "CSH", "type": "cash", "name": "現金簿", "sequence": 40 },
+    { "code": "GEN", "type": "general", "name": "轉帳傳票", "sequence": 50 },
+    { "code": "OPN", "type": "opening", "name": "期初分錄", "sequence": 60 }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "商業會計項目表（節錄） — Business Accounting Items Table, abridged",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": ["TW-BAA-BS", "TW-BAA-IS"],
+      "legal_reference": "商業會計法 (Business Accounting Act) article 27 — an accounting item is classified by the element of the financial statements it belongs to, and a business may add to or reduce them as actually needed (\"商業得視實際需要增減之\"). The codes and the Chinese and English names of every account of this chart are transcribed, unabridged where used, from 商業會計項目表 (the Business Accounting Items Table the Department of Commerce publishes under that article): 1111 is Cash on hand there and nowhere else. This chart carries a working subset of a table that runs to several hundred items across financial instruments, biological assets and construction contracts this pack's companies do not need; nothing renamed, nothing renumbered, and no code invented that the table does not carry, except the one rounding account it does not provide for and 401 asks a return to be filed in whole dollars, noted at its own row.",
+      "source": "accounting-items-table"
+    }
+  ],
+  "documents": {
+    "numbering": "gapless",
+    "number_format": "{CODE}-{NNNNNNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "invoice_date",
+    "references": {
+      "numbering": {
+        "legal_reference": "統一發票使用辦法 (Uniform Invoice Using Method) articles 7 and 9 — a uniform invoice's number is two letters (字軌, a \"word-rail\" prefix) and eight digits, and the letters and the ranges of numbers within them are allocated to each business by the competent tax authority for each two-month filing period, not chosen by the business. `gapless` is the closer of the two numbering words the format offers — no hole is tolerated inside an allocated range — but no value says \"externally pre-allocated per period\", which is written up in this pack's README rather than forced into `number_format`.",
+        "source": "uniform-invoice-rules"
+      },
+      "tax_point": {
+        "legal_reference": "加值型及非加值型營業稅法 (Business Tax Act) article 32, paragraph 1 — a business entity shall issue a uniform invoice at the time the business tax obligation arises (as article 16 defines it, in principle the day the goods are delivered or the service is completed), which in practice a general-method taxpayer states as the invoice date it is required to issue on the same occasion; article 33 conditions the buyer's deduction on holding that invoice. No general derogation to the payment date exists outside the closed list of deferred-issuance cases article 32 itself states (deferred-payment sales, transport, and a small number of regulated trades), which this pack does not carry as a separate tax point.",
+        "source": "bt-act"
+      }
+    },
+    "mentions": [
+      {
+        "code": "export",
+        "applies_when": "export",
+        "text": "外銷零稅率（加值型及非加值型營業稅法第7條第1款）",
+        "sequence": 10,
+        "legal_reference": "加值型及非加值型營業稅法第7條第1款 — the sale of goods exported, or of services related to export or supplied within the territory but used in a foreign country, is zero-rated.",
+        "source": "bt-act"
+      },
+      {
+        "code": "exempt",
+        "applies_when": "exempt",
+        "text": "免稅（加值型及非加值型營業稅法第8條）",
+        "sequence": 20,
+        "legal_reference": "加值型及非加值型營業稅法第8條 — the sale is exempt under one of the items the article lists.",
+        "source": "bt-act"
+      }
+    ]
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "obligation": "none",
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "No statute obliges a Taiwanese business to exchange a structured electronic invoice with its trading partner under EN 16931 or a Peppol profile — no Peppol Authority is registered for Taiwan and none of `peppol-bis-3`, `factur-x-en16931`, `xrechnung` or a PINT applies here. This is a null reading of a European-shaped question, not a statement that Taiwan has no electronic invoicing: the opposite is true, and what it has instead — a government-run clearance and lottery platform for the 統一發票, 電子發票實施作業要點 and 統一發票使用辦法 article 7 — is a different mechanism this field cannot express, written up in this pack's README and in docs/international.md under \"From Taiwan\".",
+    "source": "einvoice-rules"
+  }
+}

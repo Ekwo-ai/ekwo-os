@@ -1,0 +1,283 @@
+[
+  {
+    "code": "TW-S-5",
+    "name": "銷售 5%（一般稅額計算）",
+    "description": "國內一般銷售貨物或勞務，加值型營業稅一般稅額計算方式",
+    "kind": "vat",
+    "rate": 5,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "1986-04-01",
+    "legal_reference": "加值型及非加值型營業稅法 (Business Tax Act) article 10 — the tax rate on a general-method taxpayer's sale is not less than 5% and not more than 10%, the rate in force fixed by Executive Yuan order; it has stood at 5% since the value-added system itself took effect on 1 April 1986 (Ministry of Finance, 財政史料陳列室 archive). Reported in the general boxes of form 401 — sales base 21/25, output tax 22/101. This pack has not traced every Executive Yuan order since 1986 confirming no intervening change; a reviewer should hold this against the Ministry's own rate table before relying on it for a period before this pack's release.",
+    "source": "bt-act",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "21" },
+        { "type": "tax", "account": "2204", "box": ["22", "101"] }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "21", "box_factor": -100 },
+        { "type": "tax", "account": "2204", "box": ["22", "101"], "box_factor": -100 }
+      ]
+    },
+    "sequence": 10
+  },
+  {
+    "code": "TW-S-0-GOODS",
+    "name": "外銷貨物 零稅率",
+    "description": "外銷之貨物",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "1986-04-01",
+    "conditions": ["transport_evidence"],
+    "legal_reference": "加值型及非加值型營業稅法第7條第1款 — the sale of goods exported is zero-rated; the zero rate keeps the right to deduct the input tax on what went into it, unlike an exemption under article 8. Reported at the零稅率銷售額 column of form 401 (base 23, within the total 25), and at the refund-cap box 13 (得退稅限額合計), which this pack's tax_report.json computes as 5% of that base.",
+    "source": "bt-act",
+    "vat_category": "G",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "23" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "23", "box_factor": -100 }
+      ]
+    },
+    "sequence": 20
+  },
+  {
+    "code": "TW-S-0-SVC",
+    "name": "外銷相關勞務或境內供境外使用之勞務 零稅率",
+    "description": "與外銷有關之勞務，或在中華民國境內提供而在境外使用之勞務",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "1986-04-01",
+    "conditions": ["supply_nature"],
+    "legal_reference": "加值型及非加值型營業稅法第7條第2款 — a service related to export, or a service supplied within the territory of the Republic of China but used in a foreign country, is zero-rated on the same footing as an exported good. Same boxes as TW-S-0-GOODS: this pack keeps the two apart because they are two different items of one article, the way packs/jp keeps its export-of-goods and export-of-services codes apart.",
+    "source": "bt-act",
+    "vat_category": "G",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "23" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "23", "box_factor": -100 }
+      ]
+    },
+    "sequence": 30
+  },
+  {
+    "code": "TW-S-EXO-LAND",
+    "name": "土地出售 免稅",
+    "description": "出售土地",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "1986-04-01",
+    "conditions": ["supply_nature"],
+    "legal_reference": "加值型及非加值型營業稅法第8條第1項第1款 — the sale of land is exempt. Form 401 is the return for a taxpayer whose sales are exclusively taxable and zero-rated (its own note 二: a taxpayer whose period includes an exempt or special-tax-calculation sale must file form 403 instead); this pack carries this code for its invoice treatment, its category and its legal reference, and its base posting names no box of TW-401 for exactly that reason — form 403's own box layout could not be confirmed against an official Ministry of Finance publication, and is not modelled here. See this pack's README.",
+    "source": "bt-act",
+    "vat_category": "E",
+    "postings": {
+      "invoice": [
+        { "type": "base" }
+      ],
+      "credit_note": [
+        { "type": "base" }
+      ]
+    },
+    "sequence": 40
+  },
+  {
+    "code": "TW-S-EXO-FIN",
+    "name": "金融、信託及保險業之銷售額 免稅",
+    "description": "銀行業、保險業、信託投資業、證券業、期貨業、票券業及典當業經營之各種銀行、信託、證券、期貨及典當業務",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "1986-04-01",
+    "conditions": ["supply_nature"],
+    "legal_reference": "加值型及非加值型營業稅法第8條第1項第22款 — the banking, trust, securities, futures, bill and pawnbroking transactions of a business licensed to conduct them are exempt (a bank's core business is instead taxed under article 11's gross-receipts special rate, which this pack does not carry — see the README). This code is for the exempt insurance and financial income an ordinary company outside those licensed sectors occasionally books, such as an interest-bearing loan it is not in the business of making. Not reported on form 401, for the same reason as TW-S-EXO-LAND.",
+    "source": "bt-act",
+    "vat_category": "E",
+    "postings": {
+      "invoice": [
+        { "type": "base" }
+      ],
+      "credit_note": [
+        { "type": "base" }
+      ]
+    },
+    "sequence": 50
+  },
+  {
+    "code": "TW-S-NA",
+    "name": "非屬營業稅課稅範圍",
+    "description": "非銷售貨物或勞務之收入，或中華民國境外之交易",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "not_subject",
+    "valid_from": "1986-04-01",
+    "legal_reference": "加值型及非加值型營業稅法第1條 — the tax reaches only the sale of goods or services within the territory of the Republic of China and the import of goods; what is neither (compensation that is not consideration for a sale, a transaction that takes place outside the territory) is outside its scope and is reported nowhere on form 401.",
+    "source": "bt-act",
+    "vat_category": "O",
+    "postings": {
+      "invoice": [
+        { "type": "base" }
+      ],
+      "credit_note": [
+        { "type": "base" }
+      ]
+    },
+    "sequence": 60
+  },
+  {
+    "code": "TW-P-5",
+    "name": "進貨及費用 5%（可扣抵）",
+    "description": "得依統一發票扣抵聯或電子發票扣抵之進貨及費用",
+    "kind": "vat",
+    "rate": 5,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "1986-04-01",
+    "legal_reference": "加值型及非加值型營業稅法第15條及第33條 — the input tax on a purchase of goods or services a general-method taxpayer holds a uniform invoice for is deducted from the output tax of the same period. Reported at form 401's 進貨及費用 total row, base 44, tax 45. This pack declares that total row and not the finer breakdown by voucher type (三聯式發票, 二聯式發票, 載有稅額之其他憑證…) the printed form also carries, which the ledger has no fact to distinguish by — see the README.",
+    "source": "bt-act",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "44" },
+        { "type": "tax", "account": "1268", "box": "45" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "44", "box_factor": -100 },
+        { "type": "tax", "account": "1268", "box": "45", "box_factor": -100 }
+      ]
+    },
+    "sequence": 70
+  },
+  {
+    "code": "TW-P-5-FA",
+    "name": "購買固定資產 5%（可扣抵）",
+    "description": "得依統一發票扣抵聯或電子發票扣抵之購買固定資產",
+    "kind": "vat",
+    "rate": 5,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "1986-04-01",
+    "legal_reference": "加值型及非加值型營業稅法第15條及第33條, as TW-P-5, on the purchase of a fixed asset — form 401 keeps this on a column of its own, base 46, tax 47, because the refund cap and the deduction total (box 13, box 7) are worked out from the two columns together (box 107 = 45 + 47).",
+    "source": "bt-act",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "46" },
+        { "type": "tax", "account": "1268", "box": "47" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "46", "box_factor": -100 },
+        { "type": "tax", "account": "1268", "box": "47", "box_factor": -100 }
+      ]
+    },
+    "sequence": 80
+  },
+  {
+    "code": "TW-P-5-NC",
+    "name": "進貨及費用 5%（不得扣抵）",
+    "description": "交際應酬、酬勞員工個人等不得扣抵之進項稅額",
+    "kind": "vat",
+    "rate": 5,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "1986-04-01",
+    "recoverable": false,
+    "legal_reference": "加值型及非加值型營業稅法第19條第1項 — the input tax on goods or services used for entertainment, or given as an employee's own benefit rather than the business's, is not deductible; it is part of the cost and lands on the account of the line taxed. Reported nowhere on form 401.",
+    "source": "bt-act",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "base" },
+        { "type": "tax_on_base" }
+      ],
+      "credit_note": [
+        { "type": "base" },
+        { "type": "tax_on_base" }
+      ]
+    },
+    "sequence": 90
+  },
+  {
+    "code": "TW-P-IMP-5",
+    "name": "進口貨物 5%（海關代徵）",
+    "description": "進口應稅貨物，由海關代徵營業稅",
+    "kind": "vat",
+    "rate": 5,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "1986-04-01",
+    "legal_reference": "加值型及非加值型營業稅法第41條 — the business tax on an imported good is levied by Customs, under the Customs Act, at the time of clearance, and not through form 401; article 15 and 33 still let the importer deduct it in the period it is paid, on the strength of the customs authority's own tax payment certificate (海關代徵營業稅繳納證) rather than a supplier's uniform invoice. The counterpart of the tax lands on the customs-clearance account rather than on the supplier, and the deduction is reported at the same total row as TW-P-5 (base 44, tax 45): form 401 keeps a voucher-type breakdown of that row this pack does not model (see the README).",
+    "source": "bt-act",
+    "vat_category": null,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "44" },
+        { "type": "tax", "account": "1268", "box": "45" },
+        { "type": "tax", "factor": -100, "account": "2195" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "44", "box_factor": -100 },
+        { "type": "tax", "account": "1268", "box": "45", "box_factor": -100 },
+        { "type": "tax", "factor": -100, "account": "2195", "box_factor": -100 }
+      ]
+    },
+    "sequence": 100
+  },
+  {
+    "code": "TW-P-EXO",
+    "name": "向免稅事業或小規模營業人進貨",
+    "description": "供應商屬免稅或未使用統一發票，未載明營業稅額",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "exempt",
+    "valid_from": "1986-04-01",
+    "legal_reference": "加值型及非加值型營業稅法第8條, and article 13 for a small-scale entity taxed under the special 1% method — neither charges the buyer a business tax the buyer could deduct, so the line carries no input tax. Reported nowhere on form 401.",
+    "source": "bt-act",
+    "vat_category": null,
+    "postings": {
+      "invoice": [
+        { "type": "base" }
+      ],
+      "credit_note": [
+        { "type": "base" }
+      ]
+    },
+    "sequence": 110
+  },
+  {
+    "code": "TW-P-NA",
+    "name": "非屬營業稅課稅範圍之進項",
+    "description": "薪資、稅捐等非屬進貨或費用之支出",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "not_subject",
+    "valid_from": "1986-04-01",
+    "legal_reference": "加值型及非加值型營業稅法第1條 and article 19 — a wage, a statutory duty or tax, and any outlay that is not a purchase of goods or services from a business entity carries no business tax to begin with.",
+    "source": "bt-act",
+    "vat_category": null,
+    "postings": {
+      "invoice": [
+        { "type": "base" }
+      ],
+      "credit_note": [
+        { "type": "base" }
+      ]
+    },
+    "sequence": 120
+  }
+]

@@ -3317,3 +3317,98 @@ withholds and remits on the taxpayer's behalf. Equatorial Guinea adds a
 third rate tier to a mechanism the core already could not express at one —
 not a reason to guess at the missing list, so `packs/gq/` says what article
 167-4 does and books none of it.
+
+## From Taiwan
+
+`packs/tw/`, `community`, seed 53, the first pack of this repository whose
+country runs its own government clearance platform underneath every invoice
+its businesses issue. Its business tax (加值型營業稅) is read from the
+加值型及非加值型營業稅法, its balance sheet and income statement from
+商業會計處理準則, and its chart of accounts — unlike `packs/jp/`,
+`packs/hk/` or `packs/sg/`, each written from scratch because their own
+countries prescribe none — is transcribed from 商業會計項目表, an official
+table with a code and an English name for every item. Three things the
+format could not say, none patched for this pack's sake.
+
+**`einvoicing` was built for a bilateral exchange between a seller's and a
+buyer's own systems, and Taiwan's electronic uniform invoice (電子發票, eGUI)
+is not that.** `profile`, `obligation` and `mandatory_from` ask which
+EN 16931 or Peppol semantic model a country's invoices are exchanged under,
+and whether a statute obliges two trading parties to use one between
+themselves. Taiwan's own system answers a different question: a seller
+submits an invoice to 財政部電子發票整合服務平台 (the Ministry of Finance's
+own Electronic Invoice Integration Service Platform), which is a third party
+to the transaction and not a format either side chose — the invoice's own
+number is drawn from a 字軌 (a two-letter "word-rail" prefix) and a range of
+eight-digit numbers the tax authority itself allocates to the business for
+each two-month filing period (統一發票使用辦法), the platform authenticates
+and timestamps the invoice, and every uniform invoice's number is entered
+into a nationwide lottery for consumers (統一發票) that pays out against the
+number the state itself assigned. None of `profile`'s example values —
+`peppol-bis-3`, `factur-x-en16931`, `xrechnung`, a PINT — names a clearance
+model where the administration is inserted into the invoice's own issuance
+rather than merely receiving a copy of a document two parties already agreed
+on between themselves, because none of the packs this field was built
+against works that way: every VAT or GST jurisdiction in this repository so
+far either has no electronic-invoicing statute at all or has adopted a
+Peppol-family exchange profile. `packs/tw/` declares `obligation: "none"`
+and `profile: null`, which is the honest answer to the question the field
+asks and not a statement that Taiwan's own system is any less real or any
+less mandatory than a country whose pack declares a profile — the opposite
+is closer to true. A pack for a clearance-model country — closer cousins are
+Mexico's CFDI and Brazil's NF-e than any Peppol profile — will meet the same
+gap, and the fix is a country field this repository does not have a second
+example of yet to design against with any confidence: a `clearance` shape
+distinct from `profile`, naming the government platform an invoice is
+submitted to rather than the semantic model two parties exchange it under.
+This pack proposes no schema change and states what it found instead.
+
+**A box printed as a rate of one box plus another box, which the schema's
+own vocabulary was already documented to refuse together.**
+`tax_report_box`'s `rate`/`rate_of` names a percentage of exactly one other
+box, and a `plus`/`minus` list adds and subtracts a list of them — the two
+are declared mutually exclusive by `docs/packs.md` itself ("A box is a list
+or a rate, never both, and only a computed box carries either"). Form 401's
+box 13 (得退稅限額合計, the refund a zero-rated exporter may claim) is
+printed ③×5%+⑩: a percentage of the zero-rated sales base *and* the
+previous total added on, on one line. This is not a new gap — `packs/jp/`
+already met the same shape for its own local-tax share and answered it with
+a working box the return does not print, `hidden: true`, carrying the rate
+alone so the printed box can still be declared as a sum. `packs/tw/`'s own
+`TWZR5` is the same device applied a second time, which is worth recording
+here precisely because it is the second time: a rate applied to a box that
+is *itself* then added to something else is not a one-off Japanese local-tax
+artefact, and a third pack meeting it should reach for the same working-box
+pattern rather than treat it as a japanese peculiarity or ask for a
+plus/minus-and-rate box the check already refuses by name.
+
+**No minimum-of-two-boxes operator, met for the first time.** Form 401's box
+14 (本期應退稅額) is printed "如12>13則為13，13>12則為12" — the lesser of
+box 12 and box 13 — and box 15 is computed from box 14 in turn. Every
+arithmetic `tax_report_box` can express today is additive: a sum, a
+difference, a percentage of one box, a floor at zero. None of the returns
+this repository has carried so far has asked for a comparison between two
+boxes rather than an addition of them, so the gap was never met before this
+pack. `packs/tw/` leaves boxes 114 and 115 undeclared rather than approximate
+a minimum with a floor-at-zero difference (`plus: ["112"], minus: ["113"]`
+would compute a different figure whenever the refund cap binds, silently,
+which is exactly the kind of wrong-and-coherent figure `docs/packs.md`'s
+introduction to the golden scenario warns a country pack against) — a reader
+compares 112 and 113 by hand. Whether the format should grow a `min`/`max`
+kind of box, on the same closed-vocabulary footing as `rate`/`rate_of`, is a
+question for whoever meets a third country that needs one; one instance is
+a data point and not yet a pattern.
+
+Two further things, both already documented at the pack rather than novel
+here, and repeated in this section only because the brief for this pack asks
+for it: **a return whose own printed note excludes a period that carries any
+exempt sale** — form 401 is the return of a taxpayer whose sales are
+exclusively taxable and zero-rated; a period with an exempt sale is filed on
+form 403 instead, whose box layout this pack's research could not confirm
+against an official publication, so `packs/tw/`'s exempt tax codes carry no
+box of `TW-401` at all — and **a prior period's credit that this pack's own
+return cannot carry forward**, the same gap `packs/gq/README.md` already
+names for its own box 027, met here on form 401's box 108. Neither is a
+finding about the core beyond what those two packs already established; both
+are named here so that a reader of this section does not have to reconstruct
+them from `packs/tw/README.md` alone.
