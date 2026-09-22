@@ -1,0 +1,279 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "CH-MWST-ABR",
+  "name": "MWST-Abrechnung, effektive Methode (Formular Nr. 4470)",
+  "period": ["month", "quarter", "half_year", "year"],
+  "valid_from": "2024-01-01",
+  "legal_reference": "Art. 35 Abs. 1 MWSTG — die Abrechnung erfolgt vierteljährlich, bei Anwendung der Methode der Saldosteuersätze (Art. 37 Abs. 1 und 2) halbjährlich. Art. 35 Abs. 1bis lässt auf Gesuch hin eine monatliche Abrechnung zu, wer regelmässig Vorsteuerüberschüsse ausweist (Bst. a), oder eine jährliche, wer einen massgebenden Jahresumsatz von höchstens CHF 5'005'000 aus steuerbaren Leistungen erzielt (Bst. b, siehe Art. 35a). Keine dieser vier Kaderungen ist die gesetzliche Regel für jede steuerpflichtige Person: welche davon gilt, hängt von der gewählten Abrechnungsmethode und vom Umsatz ab, weshalb dieser Pack keinen period_default setzt.",
+  "source": "mwstg",
+  "boxes": [
+    {
+      "box": "200",
+      "kind": "base",
+      "name": "Total der vereinbarten oder vereinnahmten Entgelte (Weltumsatz)",
+      "sequence": 10,
+      "legal_reference": "Formular Nr. 4470, Ziffer 200 — Total des contre-prestations convenues ou reçues, y c. prestations imposées par option, transferts par procédure de déclaration, prestations à l'étranger (chiffre d'affaires mondial).",
+      "source": "mwst-4470"
+    },
+    {
+      "box": "205",
+      "kind": "base",
+      "name": "Entgelte aus optierten, von der Steuer ausgenommenen Leistungen",
+      "sequence": 20,
+      "legal_reference": "Formular Nr. 4470, Ziffer 205 — Art. 22 MWSTG (Option für die Versteuerung einer nach Art. 21 ausgenommenen Leistung). Dieser Pack bildet die Option nicht ab; siehe README.md.",
+      "source": "mwst-4470"
+    },
+    {
+      "box": "220",
+      "kind": "base",
+      "name": "Von der Steuer befreite Leistungen (Ausfuhr, Art. 23)",
+      "sequence": 30,
+      "legal_reference": "Formular Nr. 4470, Ziffer 220 — MWSTG Art. 23.",
+      "source": "mwst-4470"
+    },
+    {
+      "box": "221",
+      "kind": "base",
+      "name": "Leistungen mit Ort im Ausland",
+      "sequence": 40,
+      "legal_reference": "Formular Nr. 4470, Ziffer 221 — MWSTG Art. 8.",
+      "source": "mwst-4470"
+    },
+    {
+      "box": "225",
+      "kind": "base",
+      "name": "Übertragungen im Meldeverfahren",
+      "sequence": 50,
+      "legal_reference": "Formular Nr. 4470, Ziffer 225 — MWSTG Art. 38. Dieser Pack bildet das Meldeverfahren nicht ab; siehe README.md.",
+      "source": "mwst-4470"
+    },
+    {
+      "box": "230",
+      "kind": "base",
+      "name": "Von der Steuer ausgenommene Leistungen im Inland, nicht optiert",
+      "sequence": 60,
+      "legal_reference": "Formular Nr. 4470, Ziffer 230 — MWSTG Art. 21.",
+      "source": "mwst-4470"
+    },
+    {
+      "box": "235",
+      "kind": "base",
+      "name": "Entgeltsminderungen (Rabatte, Skonti usw.)",
+      "sequence": 70,
+      "legal_reference": "Formular Nr. 4470, Ziffer 235. Dieser Pack bildet Rabatte/Skonti als eigene Ziffer nicht ab; siehe README.md.",
+      "source": "mwst-4470"
+    },
+    {
+      "box": "280",
+      "kind": "base",
+      "name": "Diverses (Landwert, Einkaufspreis bei Margenbesteuerung)",
+      "sequence": 80,
+      "legal_reference": "Formular Nr. 4470, Ziffer 280 — MWSTG Art. 24 Abs. 6 Bst. c und Art. 24a (Margenbesteuerung). Dieser Pack bildet die Margenbesteuerung nicht ab; siehe README.md.",
+      "source": "mwst-4470"
+    },
+    {
+      "box": "289",
+      "kind": "total",
+      "name": "Total der Abzüge (Ziffern 220 bis 280)",
+      "sequence": 90,
+      "plus": ["220", "221", "225", "230", "235", "280"],
+      "legal_reference": "Formular Nr. 4470, Ziffer 289.",
+      "source": "mwst-4470"
+    },
+    {
+      "box": "299",
+      "kind": "total",
+      "name": "Total steuerbarer Umsatz (Ziffer 200 abzüglich Ziffer 289)",
+      "sequence": 100,
+      "plus": ["200"],
+      "minus": ["289"],
+      "legal_reference": "Formular Nr. 4470, Ziffer 299.",
+      "source": "mwst-4470"
+    },
+    {
+      "box": "302",
+      "kind": "tax",
+      "name": "Steuer zum Normalsatz, bis 31.12.2023 (7,7 %)",
+      "sequence": 110,
+      "legal_reference": "Formular Nr. 4470, Spalte «jusqu'au 31.12.2023». Von diesem Pack nicht bebucht: er bildet nur die seit 1. Januar 2024 geltende Rechtslage ab; siehe README.md.",
+      "source": "mwst-4470"
+    },
+    {
+      "box": "303",
+      "kind": "base",
+      "name": "Umsatz zum Normalsatz, ab 01.01.2024 (Bemessungsgrundlage)",
+      "sequence": 120,
+      "legal_reference": "Formular Nr. 4470, Ziffer 303, Spalte «Prestations CHF» — MWSTG Art. 25 Abs. 1.",
+      "source": "mwst-4470"
+    },
+    {
+      "box": "303",
+      "kind": "tax",
+      "name": "Steuer zum Normalsatz, ab 01.01.2024 (8,1 %)",
+      "sequence": 130,
+      "legal_reference": "Formular Nr. 4470, Ziffer 303, Spalte «Impôt CHF/ct.» — MWSTG Art. 25 Abs. 1.",
+      "source": "mwst-4470"
+    },
+    {
+      "box": "312",
+      "kind": "tax",
+      "name": "Steuer zum reduzierten Satz, bis 31.12.2023 (2,5 %)",
+      "sequence": 140,
+      "legal_reference": "Formular Nr. 4470, Spalte «jusqu'au 31.12.2023». Von diesem Pack nicht bebucht; siehe README.md.",
+      "source": "mwst-4470"
+    },
+    {
+      "box": "313",
+      "kind": "base",
+      "name": "Umsatz zum reduzierten Satz, ab 01.01.2024 (Bemessungsgrundlage)",
+      "sequence": 150,
+      "legal_reference": "Formular Nr. 4470, Ziffer 313, Spalte «Prestations CHF» — MWSTG Art. 25 Abs. 2.",
+      "source": "mwst-4470"
+    },
+    {
+      "box": "313",
+      "kind": "tax",
+      "name": "Steuer zum reduzierten Satz, ab 01.01.2024 (2,6 %)",
+      "sequence": 160,
+      "legal_reference": "Formular Nr. 4470, Ziffer 313, Spalte «Impôt CHF/ct.» — MWSTG Art. 25 Abs. 2.",
+      "source": "mwst-4470"
+    },
+    {
+      "box": "342",
+      "kind": "tax",
+      "name": "Steuer zum Sondersatz Beherbergung, bis 31.12.2023 (3,7 %)",
+      "sequence": 170,
+      "legal_reference": "Formular Nr. 4470, Spalte «jusqu'au 31.12.2023». Von diesem Pack nicht bebucht; siehe README.md.",
+      "source": "mwst-4470"
+    },
+    {
+      "box": "343",
+      "kind": "base",
+      "name": "Umsatz zum Sondersatz Beherbergung, ab 01.01.2024 (Bemessungsgrundlage)",
+      "sequence": 180,
+      "legal_reference": "Formular Nr. 4470, Ziffer 343, Spalte «Prestations CHF» — MWSTG Art. 25 Abs. 4.",
+      "source": "mwst-4470"
+    },
+    {
+      "box": "343",
+      "kind": "tax",
+      "name": "Steuer zum Sondersatz Beherbergung, ab 01.01.2024 (3,8 %)",
+      "sequence": 190,
+      "legal_reference": "Formular Nr. 4470, Ziffer 343, Spalte «Impôt CHF/ct.» — MWSTG Art. 25 Abs. 4.",
+      "source": "mwst-4470"
+    },
+    {
+      "box": "382",
+      "kind": "tax",
+      "name": "Bezugsteuer, bis 31.12.2023",
+      "sequence": 200,
+      "legal_reference": "Formular Nr. 4470, Spalte «jusqu'au 31.12.2023». Von diesem Pack nicht bebucht; siehe README.md.",
+      "source": "mwst-4470"
+    },
+    {
+      "box": "383",
+      "kind": "tax",
+      "name": "Bezugsteuer, ab 01.01.2024",
+      "sequence": 210,
+      "legal_reference": "Formular Nr. 4470, Ziffer 383 — MWSTG Art. 45–49.",
+      "source": "mwst-4470"
+    },
+    {
+      "box": "399",
+      "kind": "total",
+      "name": "Total geschuldete Steuer (Ziffern 302 bis 383)",
+      "sequence": 220,
+      "plus": ["302", "303:tax", "312", "313:tax", "342", "343:tax", "382", "383"],
+      "legal_reference": "Formular Nr. 4470, Ziffer 399.",
+      "source": "mwst-4470"
+    },
+    {
+      "box": "400",
+      "kind": "tax",
+      "name": "Vorsteuer auf Material- und Dienstleistungsaufwand",
+      "sequence": 230,
+      "legal_reference": "Formular Nr. 4470, Ziffer 400 — MWSTG Art. 28.",
+      "source": "mwst-4470"
+    },
+    {
+      "box": "405",
+      "kind": "tax",
+      "name": "Vorsteuer auf Investitionen und übrigem Betriebsaufwand",
+      "sequence": 240,
+      "legal_reference": "Formular Nr. 4470, Ziffer 405 — MWSTG Art. 28.",
+      "source": "mwst-4470"
+    },
+    {
+      "box": "410",
+      "kind": "tax",
+      "name": "Einlageentsteuerung (nachträglicher Vorsteuerabzug)",
+      "sequence": 250,
+      "legal_reference": "Formular Nr. 4470, Ziffer 410 — MWSTG Art. 32. Von diesem Pack nicht bebucht; siehe README.md.",
+      "source": "mwst-4470"
+    },
+    {
+      "box": "415",
+      "kind": "tax",
+      "name": "Vorsteuerkorrekturen: gemischte Verwendung (Art. 30), Eigenverbrauch (Art. 31)",
+      "sequence": 260,
+      "legal_reference": "Formular Nr. 4470, Ziffer 415 — MWSTG Art. 30 und Art. 31. Von diesem Pack nicht bebucht; siehe README.md.",
+      "source": "mwst-4470"
+    },
+    {
+      "box": "420",
+      "kind": "tax",
+      "name": "Vorsteuerkürzungen (Subventionen, Tourismusabgaben)",
+      "sequence": 270,
+      "legal_reference": "Formular Nr. 4470, Ziffer 420 — MWSTG Art. 33 Abs. 2. Von diesem Pack nicht bebucht; siehe README.md.",
+      "source": "mwst-4470"
+    },
+    {
+      "box": "479",
+      "kind": "total",
+      "name": "Total der Vorsteuer (Ziffern 400 bis 420)",
+      "sequence": 280,
+      "plus": ["400", "405", "410"],
+      "minus": ["415", "420"],
+      "legal_reference": "Formular Nr. 4470, Ziffer 479.",
+      "source": "mwst-4470"
+    },
+    {
+      "box": "500",
+      "kind": "total",
+      "name": "Zu bezahlender Betrag",
+      "sequence": 290,
+      "plus": ["399"],
+      "minus": ["479"],
+      "floor_zero": true,
+      "legal_reference": "Formular Nr. 4470, Ziffer 500.",
+      "source": "mwst-4470"
+    },
+    {
+      "box": "510",
+      "kind": "total",
+      "name": "Guthaben der steuerpflichtigen Person",
+      "sequence": 300,
+      "plus": ["479"],
+      "minus": ["399"],
+      "floor_zero": true,
+      "legal_reference": "Formular Nr. 4470, Ziffer 510.",
+      "source": "mwst-4470"
+    },
+    {
+      "box": "900",
+      "kind": "base",
+      "name": "Subventionen, Tourismusabgaben, Entsorgungs-/Wasserbeiträge",
+      "sequence": 310,
+      "legal_reference": "Formular Nr. 4470, Ziffer 900 — MWSTG Art. 18 Abs. 2 Bst. a–c. Von diesem Pack nicht bebucht: keine dieser Positionen ist eine Gegenleistung und keine löst eine Buchung im Sinne dieses Formats aus; siehe README.md.",
+      "source": "mwst-4470"
+    },
+    {
+      "box": "910",
+      "kind": "base",
+      "name": "Spenden, Dividenden, Schadenersatz usw.",
+      "sequence": 320,
+      "legal_reference": "Formular Nr. 4470, Ziffer 910 — MWSTG Art. 18 Abs. 2 Bst. d–l. Von diesem Pack nicht bebucht; siehe README.md.",
+      "source": "mwst-4470"
+    }
+  ]
+}

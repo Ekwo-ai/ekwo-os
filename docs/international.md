@@ -3810,3 +3810,54 @@ README rather than in a rule of this section.
 minor unit in use. `VN` is added to `00_territories.sql`, outside the common
 system of VAT, so `vat_category`, `exemption_code` and the five `intracom_*`
 treatments are read the way every non-EU pack's are.
+
+## From Switzerland
+
+`packs/ch/`, `community`, seed 37, the first pack of a country outside the
+common system of VAT whose own tax nonetheless looks the closest to it of
+any non-EU pack so far — three rates, an acquisition tax on services bought
+from abroad, an export exemption with full input deduction. Two things the
+format could not say, neither patched.
+
+**A deadline counted in days from the end of the period, where the closed
+vocabulary only counts a day of a following month.** Art. 71 and Art. 86
+MWSTG both give the same rule in the same words: the return is filed and the
+tax is paid "dans les 60 jours qui suivent l'expiration de la période de
+décompte" — sixty calendar days after the period ends, not the twentieth of
+the month that follows it the way Belgium's and Estonia's deadlines work, nor
+the last day of that month the way California's and the United Kingdom's do.
+`tax_report.json`'s `deadline` object is one of exactly three shapes, and all
+three are anchored on "the month that follows the period" — `day` picks a
+day inside it, `last_day_of_month_after_period` is its last one, and
+`plus_days` only extends either from there. None of the three can add sixty
+days to a period end that is itself the last day of a quarter without
+silently changing which month the count lands in as the quarters' lengths
+differ (31, 30, 31, 31 days to the next quarter's start, before the sixty are
+even added). Declaring `last_day_of_month_after_period` would print a date up
+to several days wrong depending on the period; declaring nothing said only
+that nobody had read the text, which was no longer true. `packs/ch/`
+declares no `deadline` and says why here rather than guess at a fourth shape
+this pack cannot itself introduce — the two articles are read in full in
+`packs/ch/README.md`, for whoever adds a day-count rule to the vocabulary
+next.
+
+**A structured payment reference the invoice itself carries, with no field
+of the document for it.** Since 30 September 2022 (1 October in the SIX
+Group's own wording) every Swiss franc or euro payment slip issued in
+Switzerland is a "QR-facture": a Swiss QR Code encoding, among other things,
+a structured creditor reference the payer's bank matches the payment to
+automatically, replacing the red and orange payment slips (BVR/ESR) it
+succeeds. It is not a statute — no law compels it, SIX Group's own
+interbank standard does, by every Swiss bank and PostFinance having stopped
+accepting the old slips on that date — which is itself the reason it sits
+here rather than in a tax code: this pack has nothing to cite `legal_reference`
+against. What it needs from the core is a field the format does not have on
+`documents`: a structured reference distinct from the invoice number, printed
+on the document and read back off an incoming bank statement to reconcile a
+payment automatically. `bank.payment_formats` and `bank.statement_formats`
+already carry `pain.001` and `camt.053`, which is the pipe the QR-bill's own
+data travels over end to end — the gap is a field on the *document*, not a
+new bank format, and no pack of this repository has needed one before.
+`packs/ch/README.md` names it for the same reason the deadline is named
+here: a country reading the pack should find the limitation before they find
+it themselves in production.

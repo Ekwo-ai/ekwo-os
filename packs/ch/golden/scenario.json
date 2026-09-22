@@ -1,0 +1,180 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "Ein Quartal eines schweizerischen KMU, das nach der effektiven Methode vierteljährlich abrechnet",
+  "chart": "default",
+  "fiscal_year": { "name": "Geschäftsjahr 2026", "start": "2026-01-01", "end": "2026-12-31" },
+  "periods": [{ "code": "2026-Q1", "from": "2026-01-01", "to": "2026-03-31" }],
+  "statements": ["CH-OR-959-BS", "CH-OR-959B-IS"],
+  "contacts": [
+    { "ref": "client-ch", "name": "Bäckerei Sonnenhof GmbH", "type": "customer", "country": "CH" },
+    { "ref": "client-de", "name": "Uhren Handel GmbH", "type": "customer", "country": "DE" },
+    { "ref": "guest-ch", "name": "Frau M. Keller", "type": "customer", "country": "CH" },
+    { "ref": "tenant-ch", "name": "Praxis Wegmann AG", "type": "customer", "country": "CH" },
+    { "ref": "supplier-ch", "name": "Bürobedarf Zürich AG", "type": "supplier", "country": "CH" },
+    { "ref": "supplier-ie", "name": "CloudWorks Ireland Ltd", "type": "supplier", "country": "IE" },
+    { "ref": "supplier-cn", "name": "Fernost Trading Co.", "type": "supplier", "country": "CN" }
+  ],
+  "documents": [
+    {
+      "ref": "V1",
+      "type": "sale_invoice",
+      "contact": "client-ch",
+      "date": "2026-01-15",
+      "why": "Ein Verkauf zum Normalsatz: die Ziffern 200/303 und die Steuer der Ziffer 303.",
+      "lines": [
+        { "name": "Handelswaren", "quantity": 10, "unit_price": 1000, "tax": "CH-S-81", "account": "3000" }
+      ]
+    },
+    {
+      "ref": "V2",
+      "type": "sale_invoice",
+      "contact": "client-ch",
+      "date": "2026-01-20",
+      "why": "Ein Verkauf zum reduzierten Satz: Lebensmittel nach Art. 25 Abs. 2 MWSTG, Ziffer 313.",
+      "lines": [
+        { "name": "Lebensmittel", "quantity": 1, "unit_price": 5000, "tax": "CH-S-26", "account": "3001" }
+      ]
+    },
+    {
+      "ref": "V3",
+      "type": "sale_invoice",
+      "contact": "guest-ch",
+      "date": "2026-01-25",
+      "why": "Eine Beherbergungsleistung zum Sondersatz von 3,8 % nach Art. 25 Abs. 4 MWSTG, Ziffer 343.",
+      "lines": [
+        { "name": "Übernachtung mit Frühstück, 3 Nächte", "quantity": 1, "unit_price": 2000, "tax": "CH-S-38-HEB", "account": "3002" }
+      ]
+    },
+    {
+      "ref": "V4",
+      "type": "sale_invoice",
+      "contact": "client-de",
+      "date": "2026-02-02",
+      "why": "Eine Ausfuhrlieferung, von der Steuer befreit nach Art. 23 MWSTG (Ziffer 220), mit vollem Vorsteuerabzugsrecht — der Taux-zéro-Fall.",
+      "lines": [
+        { "name": "Uhrwerke, Ausfuhr nach Deutschland", "quantity": 1, "unit_price": 8000, "tax": "CH-S-EXPORT", "account": "3040" }
+      ]
+    },
+    {
+      "ref": "V5",
+      "type": "sale_invoice",
+      "contact": "tenant-ch",
+      "date": "2026-02-05",
+      "why": "Eine von der Steuer ausgenommene Vermietung von Geschäftsräumen nach Art. 21 Abs. 2 Ziff. 21 MWSTG, ohne Option — die Exonération-Fall (Ziffer 230, kein Vorsteuerabzug beim Vermieter für diese Leistung).",
+      "lines": [
+        { "name": "Miete Praxisräume, Januar", "quantity": 1, "unit_price": 3000, "tax": "CH-S-EXCLU", "account": "3050" }
+      ]
+    },
+    {
+      "ref": "CN1",
+      "type": "sale_credit_note",
+      "contact": "client-ch",
+      "date": "2026-02-10",
+      "why": "Eine Gutschrift, die einen Teil von V1 storniert — beide Richtungen des Normalsatzes im Golden.",
+      "lines": [
+        { "name": "Rückgabe Handelswaren", "quantity": 2, "unit_price": 1000, "tax": "CH-S-81", "account": "3000" }
+      ]
+    },
+    {
+      "ref": "A1",
+      "type": "purchase_invoice",
+      "contact": "supplier-ch",
+      "date": "2026-01-18",
+      "why": "Ein laufender Betriebsaufwand zum Normalsatz, Vorsteuer auf Ziffer 400.",
+      "lines": [
+        { "name": "Büromaterial und Dienstleistungen", "quantity": 1, "unit_price": 2000, "tax": "CH-P-81", "account": "6500" }
+      ]
+    },
+    {
+      "ref": "A2",
+      "type": "purchase_invoice",
+      "contact": "supplier-ch",
+      "date": "2026-01-22",
+      "why": "Eine Investition (Mobiliar) zum Normalsatz, Vorsteuer auf Ziffer 405 statt 400.",
+      "lines": [
+        { "name": "Büromobiliar", "quantity": 1, "unit_price": 6000, "tax": "CH-P-81-INV", "account": "1500" }
+      ]
+    },
+    {
+      "ref": "A3",
+      "type": "purchase_invoice",
+      "contact": "supplier-ch",
+      "date": "2026-01-28",
+      "why": "Ein Wareneinkauf zum reduzierten Satz, Vorsteuer auf Ziffer 400 zu 2,6 %.",
+      "lines": [
+        { "name": "Lebensmittel für den Verkauf", "quantity": 1, "unit_price": 1000, "tax": "CH-P-26", "account": "4001" }
+      ]
+    },
+    {
+      "ref": "A4",
+      "type": "purchase_invoice",
+      "contact": "supplier-ch",
+      "date": "2026-02-03",
+      "why": "Ein Einkauf für die von V5 ausgenommene Vermietungstätigkeit: die Vorsteuer ist nach Art. 29 Abs. 1 MWSTG nicht abziehbar und wird zu Anschaffungskosten (tax_on_base) — der teilweise/nicht abziehbare Fall.",
+      "lines": [
+        { "name": "Unterhalt Praxisräume", "quantity": 1, "unit_price": 1000, "tax": "CH-P-81-NA", "account": "6500" }
+      ]
+    },
+    {
+      "ref": "A5",
+      "type": "purchase_invoice",
+      "contact": "supplier-ie",
+      "date": "2026-02-12",
+      "why": "Eine aus dem Ausland bezogene Dienstleistung: Bezugsteuer nach Art. 45 ff. MWSTG, Ziffer 383 und gleichzeitiger Vorsteuerabzug auf Ziffer 400.",
+      "lines": [
+        { "name": "IT-Beratung, Cloud-Hosting", "quantity": 1, "unit_price": 4000, "tax": "CH-P-BEZUGSTEUER-81", "account": "6500" }
+      ]
+    },
+    {
+      "ref": "A6",
+      "type": "purchase_invoice",
+      "contact": "supplier-cn",
+      "date": "2026-02-20",
+      "why": "Eine Wareneinfuhr: die Einfuhrsteuer wird von der Zollverwaltung erhoben, nicht über die MWST-Abrechnung geschuldet; nur der anschliessende Vorsteuerabzug erscheint auf Ziffer 405.",
+      "lines": [
+        { "name": "Uhrenkomponenten, Einfuhr aus China", "quantity": 1, "unit_price": 3000, "tax": "CH-P-IMPORT-81", "account": "1200" }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "E1",
+      "direction": "inbound",
+      "date": "2026-02-14",
+      "amount": 10810,
+      "contact": "client-ch",
+      "journal": "BNK",
+      "match": "V1",
+      "why": "Ein Zahlungseingang, der V1 vor der Gutschrift CN1 vollständig deckt."
+    },
+    {
+      "ref": "E2",
+      "direction": "inbound",
+      "date": "2026-02-18",
+      "amount": 5130,
+      "contact": "client-ch",
+      "journal": "BNK",
+      "match": "V2",
+      "why": "Ein Zahlungseingang, der V2 genau deckt."
+    },
+    {
+      "ref": "E3",
+      "direction": "outbound",
+      "date": "2026-02-25",
+      "amount": 2162,
+      "contact": "supplier-ch",
+      "journal": "BNK",
+      "match": "A1",
+      "why": "Eine Zahlung, die A1 genau deckt."
+    },
+    {
+      "ref": "E4",
+      "direction": "inbound",
+      "date": "2026-03-05",
+      "amount": 2076,
+      "contact": "guest-ch",
+      "journal": "BNK",
+      "why": "Ein nicht zugeordneter Zahlungseingang — der unverbuchte/nicht gematchte Fall."
+    }
+  ]
+}

@@ -1,0 +1,149 @@
+code,parent,type,reconcilable,name,sequence
+1000,,asset_cash,false,Kasse,10
+1010,,asset_cash,false,Kasse Fremdwährung,20
+1020,,asset_cash,false,Post-/Bankkonto CHF,30
+1021,,asset_cash,false,Post-/Bankkonto Fremdwährung,40
+1023,,asset_cash,false,PostFinance-Konto,50
+1030,,asset_current,true,Festgeldanlagen,60
+1050,,asset_current,true,Wertschriften Obligationen,70
+1055,,asset_current,true,Wertschriften Aktien,80
+1100,,asset_receivable,true,Forderungen aus Lieferungen und Leistungen,90
+1101,,asset_receivable,true,Forderungen gegenüber nahestehenden Personen,100
+1109,,asset_receivable,true,Delkredere (Wertberichtigung auf Forderungen),110
+1110,,asset_receivable,true,Kreditkartenforderungen,120
+1140,,asset_current,false,Vorschüsse an Mitarbeitende,130
+1150,,asset_current,false,Verrechnungssteuerguthaben,140
+1170,,asset_current,false,Vorsteuer Material- und Dienstleistungsaufwand,150
+1171,,asset_current,false,Vorsteuer Investitionen und übriger Betriebsaufwand,160
+1176,,asset_current,true,Verrechnungskonto Eidgenössische Steuerverwaltung (Vorsteuerüberschuss),170
+1180,,asset_current,false,Kautionen und Depots (kurzfristig),180
+1185,,asset_current,false,Übrige kurzfristige Forderungen,190
+1200,,asset_current,false,Handelswaren,200
+1210,,asset_current,false,Rohmaterial,210
+1220,,asset_current,false,Unfertige Erzeugnisse,220
+1230,,asset_current,false,Fertige Erzeugnisse,230
+1260,,asset_current,false,Wertberichtigung Warenlager,240
+1300,,asset_prepayments,false,Aktive Rechnungsabgrenzung,250
+1301,,asset_prepayments,false,Vorausbezahlte Miete,260
+1302,,asset_prepayments,false,Vorausbezahlte Versicherungen,270
+1500,,asset_fixed,false,Mobiliar und Einrichtungen,280
+1501,,asset_fixed,false,Werkzeuge,290
+1502,,asset_fixed,false,Ladeneinrichtung,300
+1510,,asset_fixed,false,Maschinen und Apparate,310
+1520,,asset_fixed,false,Fahrzeuge (Personenwagen),320
+1521,,asset_fixed,false,Fahrzeuge (Lieferwagen),330
+1530,,asset_fixed,false,Informatik Hardware,340
+1531,,asset_fixed,false,Softwarelizenzen,350
+1540,,asset_fixed,false,Mietereinbauten,360
+1600,,asset_fixed,false,Liegenschaften — Gebäude,370
+1601,,asset_fixed,false,Liegenschaften — Land,380
+1700,,asset_non_current,false,Darlehen an Dritte,390
+1710,,asset_non_current,false,Wertschriften (langfristig),400
+1720,,asset_non_current,false,Beteiligungen,410
+2000,,liability_payable,true,Verbindlichkeiten aus Lieferungen und Leistungen,420
+2001,,liability_payable,true,Verbindlichkeiten gegenüber nahestehenden Personen,430
+2020,,liability_payable,true,Kreditkartenverbindlichkeiten,440
+2030,,liability_current,false,Kurzfristige Bankverbindlichkeiten (Kontokorrent),450
+2050,,liability_current,false,Kurzfristige Darlehen Dritter,460
+2100,,liability_current,false,MWST geschuldet (Umsatzsteuer auf Leistungen),470
+2110,,liability_current,false,Bezugsteuer geschuldet,480
+2120,,liability_current,false,Quellensteuer geschuldet,490
+2130,,liability_current,false,AHV/IV/EO/ALV geschuldet,500
+2140,,liability_current,true,Verrechnungskonto Eidgenössische Steuerverwaltung (MWST geschuldet),510
+2150,,liability_current,false,Geschuldete Löhne,520
+2160,,liability_current,false,Ferien- und Überzeitguthaben Personal,530
+2200,,liability_current,false,Sonstige kurzfristige Verbindlichkeiten,540
+2210,,liability_current,false,Geschuldete Dividenden,550
+2260,,liability_current,false,Passive Rechnungsabgrenzung,560
+2261,,liability_current,false,Abgegrenzte Zinsen,570
+2270,,liability_current,false,Kurzfristige Rückstellungen,580
+2280,,liability_current,false,Garantierückstellungen,590
+2300,,liability_current,false,Durchlaufende Posten (Verrechnungskonto),600
+2400,,liability_non_current,false,Langfristige Bankverbindlichkeiten und Darlehen,610
+2410,,liability_non_current,false,Hypothek Geschäftsliegenschaft,620
+2420,,liability_non_current,false,Darlehen von Anteilseignern,630
+2450,,liability_non_current,false,Langfristige Rückstellungen,640
+2460,,liability_non_current,false,Rückstellung latente Steuern,650
+2800,,equity,false,Aktien- oder Stammkapital,660
+2801,,equity,false,Partizipationskapital,670
+2850,,equity,false,Gesetzliche Kapitalreserve,680
+2860,,equity,false,Gesetzliche Gewinnreserve,690
+2870,,equity,false,Freiwillige Gewinnreserven,700
+2890,,equity,false,Eigene Kapitalanteile (Minusposten),710
+2900,,equity_retained,false,Bilanzgewinn / Bilanzverlust,720
+2979,,equity_retained,false,Gewinnvortrag,730
+2989,,equity_retained,false,Verlustvortrag,740
+3000,,income,false,Erlöse aus Lieferungen — Normalsatz,750
+3001,,income,false,Erlöse aus Lieferungen — reduzierter Satz,760
+3002,,income,false,Erlöse aus Beherbergungsleistungen — Sondersatz,770
+3010,,income,false,Erlöse aus Dienstleistungen — Normalsatz,780
+3020,,income,false,Erlöse Detailhandel — Normalsatz,790
+3040,,income,false,Erlöse aus Ausfuhrlieferungen (steuerbefreit mit Vorsteuerabzug),800
+3041,,income,false,Erlöse aus Dienstleistungsexport,810
+3050,,income,false,Erlöse aus von der Steuer ausgenommenen Leistungen — Vermietung,820
+3051,,income,false,Erlöse aus von der Steuer ausgenommenen Leistungen — Bildung,830
+3052,,income,false,Erlöse aus von der Steuer ausgenommenen Leistungen — Versicherung,840
+3080,,income,false,Erlöse aus Anzahlungen,850
+3090,,income,false,"Erlösminderungen (Rabatte, Skonti, Verluste)",860
+4000,,expense_direct_cost,false,Materialaufwand und Wareneinkauf — Normalsatz,870
+4001,,expense_direct_cost,false,Materialaufwand und Wareneinkauf — reduzierter Satz,880
+4010,,expense_direct_cost,false,Fremdleistungen Dritter (Inland),890
+4020,,expense_direct_cost,false,Materialaufwand aus Einfuhr,900
+4040,,expense_direct_cost,false,Fremdleistungen aus dem Ausland (Bezugsteuer),910
+4050,,expense_direct_cost,false,Bestandesänderungen Handelswaren,920
+4060,,expense_direct_cost,false,Verpackungsmaterial,930
+4090,,expense_direct_cost,false,Aufwandminderungen (erhaltene Rabatte),940
+5000,,expense,false,Löhne Verwaltung,950
+5010,,expense,false,Löhne Verkauf,960
+5020,,expense,false,Löhne Produktion,970
+5700,,expense,false,AHV/IV/EO/ALV-Beiträge,980
+5710,,expense,false,Familienzulagen,990
+5720,,expense,false,Krankentaggeldversicherung,1000
+5730,,expense,false,Unfallversicherung (UVG),1010
+5740,,expense,false,Berufliche Vorsorge (BVG),1020
+5800,,expense,false,Übriger Personalaufwand,1030
+5810,,expense,false,Aus- und Weiterbildung,1040
+5820,,expense,false,Spesenentschädigungen Personal,1050
+6000,,expense,false,Raumaufwand (Miete),1060
+6030,,expense,false,Nebenkosten Miete,1070
+6040,,expense,false,Reinigung,1080
+6100,,expense,false,"Unterhalt, Reparaturen, Ersatz (Mobilien)",1090
+6105,,expense,false,Unterhalt Informatik,1100
+6200,,expense,false,Fahrzeug- und Transportaufwand,1110
+6210,,expense,false,Fahrzeugversicherungen und -steuern,1120
+6260,,expense,false,Versicherungsaufwand (Sachversicherungen),1130
+6300,,expense,false,Energie- und Entsorgungsaufwand,1140
+6400,,expense,false,Büromaterial und Drucksachen,1150
+6410,,expense,false,"Telefon, Internet und Kommunikation",1160
+6420,,expense,false,Bewilligungen und Gebühren,1170
+6440,,expense,false,Buchführungs- und Beratungsaufwand,1180
+6460,,expense,false,Werbeaufwand,1190
+6470,,expense,false,Marketing und Repräsentation,1200
+6480,,expense,false,Reisespesen,1210
+6500,,expense,false,Verwaltungsaufwand und übriger Betriebsaufwand,1220
+6570,,expense,false,Aufwand für Warenimport (Einfuhrsteuer),1230
+6600,,expense_depreciation,false,Abschreibungen Mobiliar und Einrichtungen,1240
+6601,,expense_depreciation,false,Abschreibungen Maschinen und Apparate,1250
+6602,,expense_depreciation,false,Abschreibungen Fahrzeuge,1260
+6603,,expense_depreciation,false,Abschreibungen Informatik,1270
+6604,,expense_depreciation,false,Abschreibungen Liegenschaften,1280
+6610,,expense_depreciation,false,Wertberichtigungen Finanzanlagen,1290
+6900,,expense,false,Zinsaufwand Kontokorrent,1300
+6901,,expense,false,Zinsaufwand Darlehen,1310
+6910,,expense,false,Bankspesen,1320
+6920,,expense,false,Kursverluste Fremdwährung,1330
+6930,,expense,false,Wertberichtigung Wertschriften,1340
+6950,,income_other,false,Zinsertrag,1350
+6951,,income_other,false,Wertschriftenertrag,1360
+6960,,income_other,false,Kursgewinne Fremdwährung,1370
+7500,,income_other,false,Mietertrag aus nicht betriebsnotwendigen Liegenschaften,1380
+7510,,income_other,false,Ertrag aus Beteiligungen,1390
+7900,,expense,false,Aufwand nicht betriebsnotwendige Liegenschaften,1400
+8500,,income_other,false,Gewinn aus Anlagenverkauf,1410
+8510,,income_other,false,Auflösung stiller Reserven,1420
+8900,,expense,false,Verlust aus Anlagenverkauf,1430
+8910,,expense,false,Bildung stiller Reserven,1440
+8950,,expense,false,Rundungsdifferenzen,1450
+8990,,expense,false,Kantons- und Gemeindesteuern,1460
+8991,,expense,false,Direkte Bundessteuer,1470
+8992,,expense,false,Kapitalsteuer,1480

@@ -1,0 +1,320 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/statements",
+  "statements": [
+    {
+      "code": "CH-OR-959-BS",
+      "kind": "balance_sheet",
+      "framework": "CH-OR",
+      "name": "Bilanz nach Art. 959 OR",
+      "legal_reference": "Obligationenrecht (OR), Art. 959 Abs. 1 — die Bilanz stellt die Vermögens- und Finanzierungslage des Unternehmens am Bilanzstichtag dar. Abs. 5 gibt die Mindestgliederung des Umlauf- und des Anlagevermögens, Abs. 6 die des kurz- und des langfristigen Fremdkapitals sowie des Eigenkapitals. Jede Position unten ist eine Ziffer dieser beiden Absätze; wo mehrere Ziffern zu einer Zeile zusammengefasst sind, weil dieser Kontenrahmen keine eigene Kontenreihe für sie führt, sagt die Zeile es selbst.",
+      "source": "or",
+      "lines": [
+        {
+          "code": "AKT",
+          "name": "Total Aktiven",
+          "sequence": 10,
+          "is_total": true,
+          "plus": ["UV", "AV"]
+        },
+        {
+          "code": "UV",
+          "parent": "AKT",
+          "name": "Umlaufvermögen",
+          "sequence": 20,
+          "is_total": true,
+          "plus": ["UV.1", "UV.2", "UV.3", "UV.4", "UV.5"],
+          "legal_reference": "OR Art. 959 Abs. 5 Ziff. 1",
+          "source": "or"
+        },
+        {
+          "code": "UV.1",
+          "parent": "UV",
+          "name": "Flüssige Mittel und kurzfristig gehaltene Aktiven mit Börsenkurs",
+          "sequence": 30,
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "1000", "code_to": "1099" }],
+          "legal_reference": "OR Art. 959 Abs. 5 Ziff. 1 Bst. a",
+          "source": "or"
+        },
+        {
+          "code": "UV.2",
+          "parent": "UV",
+          "name": "Forderungen aus Lieferungen und Leistungen",
+          "sequence": 40,
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "1100", "code_to": "1119" }],
+          "legal_reference": "OR Art. 959 Abs. 5 Ziff. 1 Bst. b",
+          "source": "or"
+        },
+        {
+          "code": "UV.3",
+          "parent": "UV",
+          "name": "Sonstige kurzfristige Forderungen",
+          "sequence": 50,
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "1140", "code_to": "1189" }],
+          "legal_reference": "OR Art. 959 Abs. 5 Ziff. 1 Bst. c",
+          "source": "or"
+        },
+        {
+          "code": "UV.4",
+          "parent": "UV",
+          "name": "Vorräte und nicht fakturierte Dienstleistungen",
+          "sequence": 60,
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "1200", "code_to": "1299" }],
+          "legal_reference": "OR Art. 959 Abs. 5 Ziff. 1 Bst. d",
+          "source": "or"
+        },
+        {
+          "code": "UV.5",
+          "parent": "UV",
+          "name": "Aktive Rechnungsabgrenzungen",
+          "sequence": 70,
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "1300", "code_to": "1399" }],
+          "legal_reference": "OR Art. 959 Abs. 5 Ziff. 1 Bst. e",
+          "source": "or"
+        },
+        {
+          "code": "AV",
+          "parent": "AKT",
+          "name": "Anlagevermögen",
+          "sequence": 80,
+          "is_total": true,
+          "plus": ["AV.1", "AV.2"],
+          "legal_reference": "OR Art. 959 Abs. 5 Ziff. 2",
+          "source": "or"
+        },
+        {
+          "code": "AV.1",
+          "parent": "AV",
+          "name": "Sachanlagen",
+          "sequence": 90,
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "1500", "code_to": "1699" }],
+          "legal_reference": "OR Art. 959 Abs. 5 Ziff. 2 Bst. c",
+          "source": "or"
+        },
+        {
+          "code": "AV.2",
+          "parent": "AV",
+          "name": "Finanzanlagen und Beteiligungen",
+          "sequence": 100,
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "1700", "code_to": "1799" }],
+          "legal_reference": "OR Art. 959 Abs. 5 Ziff. 2 Bst. a und b",
+          "source": "or"
+        },
+        {
+          "code": "PAS",
+          "name": "Total Passiven",
+          "sequence": 110,
+          "is_total": true,
+          "plus": ["FK1", "FK2", "EK"]
+        },
+        {
+          "code": "FK1",
+          "parent": "PAS",
+          "name": "Kurzfristiges Fremdkapital",
+          "sequence": 120,
+          "is_total": true,
+          "plus": ["FK1.1", "FK1.2"],
+          "legal_reference": "OR Art. 959 Abs. 6 Ziff. 1",
+          "source": "or"
+        },
+        {
+          "code": "FK1.1",
+          "parent": "FK1",
+          "name": "Verbindlichkeiten aus Lieferungen und Leistungen",
+          "sequence": 130,
+          "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "2000", "code_to": "2029" }],
+          "legal_reference": "OR Art. 959 Abs. 6 Ziff. 1 Bst. a",
+          "source": "or"
+        },
+        {
+          "code": "FK1.2",
+          "parent": "FK1",
+          "name": "Übrige kurzfristige Verbindlichkeiten, Rückstellungen und passive Rechnungsabgrenzungen",
+          "sequence": 140,
+          "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "2030", "code_to": "2399" }],
+          "legal_reference": "OR Art. 959 Abs. 6 Ziff. 1 Bst. b bis d — dieser Kontenrahmen führt für diese drei Ziffern eine gemeinsame Kontenreihe, so dass sie hier eine Zeile bilden.",
+          "source": "or"
+        },
+        {
+          "code": "FK2",
+          "parent": "PAS",
+          "name": "Langfristiges Fremdkapital",
+          "sequence": 150,
+          "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "2400", "code_to": "2799" }],
+          "legal_reference": "OR Art. 959 Abs. 6 Ziff. 2",
+          "source": "or"
+        },
+        {
+          "code": "EK",
+          "parent": "PAS",
+          "name": "Eigenkapital",
+          "sequence": 160,
+          "is_total": true,
+          "plus": ["EK.1", "EK.2"],
+          "legal_reference": "OR Art. 959 Abs. 6 Ziff. 3",
+          "source": "or"
+        },
+        {
+          "code": "EK.1",
+          "parent": "EK",
+          "name": "Kapital und Reserven",
+          "sequence": 170,
+          "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "2800", "code_to": "2899" }],
+          "legal_reference": "OR Art. 959 Abs. 6 Ziff. 3 Bst. a bis d",
+          "source": "or"
+        },
+        {
+          "code": "EK.2",
+          "parent": "EK",
+          "name": "Bilanzgewinn oder Bilanzverlust",
+          "sequence": 180,
+          "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "2900", "code_to": "2999" }],
+          "legal_reference": "OR Art. 959 Abs. 6 Ziff. 3 Bst. d",
+          "source": "or"
+        }
+      ]
+    },
+    {
+      "code": "CH-OR-959B-IS",
+      "kind": "income_statement",
+      "framework": "CH-OR",
+      "name": "Erfolgsrechnung nach Art. 959b Abs. 2 OR (Gliederung nach Aufwandsarten)",
+      "legal_reference": "Obligationenrecht (OR), Art. 959b Abs. 1 — die Erfolgsrechnung stellt die Ertragslage des Unternehmens dar. Abs. 2 gibt die Mindestgliederung nach der Art des Aufwands (dieser Pack wählt diese Variante; Abs. 3 lässt eine Gliederung nach Funktionen zu, mit Angabepflicht von Personalaufwand und Abschreibungen im Anhang, die dieser Pack nicht abbildet).",
+      "source": "or",
+      "lines": [
+        {
+          "code": "NE",
+          "name": "Nettoerlöse aus Lieferungen und Leistungen",
+          "sequence": 10,
+          "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "3000", "code_to": "3099" }],
+          "legal_reference": "OR Art. 959b Abs. 2 Ziff. 1",
+          "source": "or"
+        },
+        {
+          "code": "MAT",
+          "name": "Materialaufwand",
+          "sequence": 20,
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "4000", "code_to": "4099" }],
+          "legal_reference": "OR Art. 959b Abs. 2 Ziff. 3",
+          "source": "or"
+        },
+        {
+          "code": "PERS",
+          "name": "Personalaufwand",
+          "sequence": 30,
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "5000", "code_to": "5999" }],
+          "legal_reference": "OR Art. 959b Abs. 2 Ziff. 4",
+          "source": "or"
+        },
+        {
+          "code": "SBA",
+          "name": "Sonstiger betrieblicher Aufwand",
+          "sequence": 40,
+          "sign": 1,
+          "rules": [
+            { "kind": "code_range", "code_from": "6000", "code_to": "6570" },
+            { "kind": "code_range", "code_from": "8950", "code_to": "8969" }
+          ],
+          "legal_reference": "OR Art. 959b Abs. 2 Ziff. 5 — Rundungsdifferenzen (8950/8969) sind ein technisches Konto ohne eigene Ziffer und werden hier eingereiht.",
+          "source": "or"
+        },
+        {
+          "code": "ABS",
+          "name": "Abschreibungen und Wertberichtigungen auf Positionen des Anlagevermögens",
+          "sequence": 50,
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "6600", "code_to": "6699" }],
+          "legal_reference": "OR Art. 959b Abs. 2 Ziff. 6",
+          "source": "or"
+        },
+        {
+          "code": "FA",
+          "name": "Finanzaufwand",
+          "sequence": 60,
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "6900", "code_to": "6949" }],
+          "legal_reference": "OR Art. 959b Abs. 2 Ziff. 7",
+          "source": "or"
+        },
+        {
+          "code": "FE",
+          "name": "Finanzertrag",
+          "sequence": 70,
+          "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "6950", "code_to": "6999" }],
+          "legal_reference": "OR Art. 959b Abs. 2 Ziff. 7",
+          "source": "or"
+        },
+        {
+          "code": "BFA",
+          "name": "Betriebsfremder Aufwand",
+          "sequence": 80,
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "7900", "code_to": "7999" }],
+          "legal_reference": "OR Art. 959b Abs. 2 Ziff. 8",
+          "source": "or"
+        },
+        {
+          "code": "BFE",
+          "name": "Betriebsfremder Ertrag",
+          "sequence": 90,
+          "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "7500", "code_to": "7899" }],
+          "legal_reference": "OR Art. 959b Abs. 2 Ziff. 8",
+          "source": "or"
+        },
+        {
+          "code": "AOA",
+          "name": "Ausserordentlicher, einmaliger oder periodenfremder Aufwand",
+          "sequence": 100,
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "8900", "code_to": "8949" }],
+          "legal_reference": "OR Art. 959b Abs. 2 Ziff. 9",
+          "source": "or"
+        },
+        {
+          "code": "AOE",
+          "name": "Ausserordentlicher, einmaliger oder periodenfremder Ertrag",
+          "sequence": 110,
+          "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "8500", "code_to": "8899" }],
+          "legal_reference": "OR Art. 959b Abs. 2 Ziff. 9",
+          "source": "or"
+        },
+        {
+          "code": "STE",
+          "name": "Direkte Steuern",
+          "sequence": 120,
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "8990", "code_to": "8999" }],
+          "legal_reference": "OR Art. 959b Abs. 2 Ziff. 10",
+          "source": "or"
+        },
+        {
+          "code": "JG",
+          "name": "Jahresgewinn oder Jahresverlust",
+          "sequence": 130,
+          "is_total": true,
+          "plus": ["NE", "FE", "BFE", "AOE"],
+          "minus": ["MAT", "PERS", "SBA", "ABS", "FA", "BFA", "AOA", "STE"],
+          "legal_reference": "OR Art. 959b Abs. 2 Ziff. 11",
+          "source": "or"
+        }
+      ]
+    }
+  ]
+}

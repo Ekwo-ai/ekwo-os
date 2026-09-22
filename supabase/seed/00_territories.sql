@@ -241,6 +241,19 @@ on conflict (code) do update set
   vat_prefix      = excluded.vat_prefix,
   legal_reference = excluded.legal_reference;
 
+insert into territories (code, code_source, name, parent_code, eu_vat_scope, eu_vat_from, eu_vat_to, vat_prefix, legal_reference) values
+  ('CH', 'iso_3166_1', 'Switzerland', null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2): a State outside the territory of the Community as defined by the Treaties is a third country for every rule the Directive carries, and Switzerland has never acceded to the Union or to its common system of VAT. It levies its own federal value added tax under the Bundesgesetz uber die Mehrwertsteuer (MWSTG) of 12 June 2009 (SR 641.20), administered by the Eidgenossische Steuerverwaltung (ESTV) and unrelated to the Directive; vat_prefix is null because a Swiss UID/MWST number (CHE-xxx.xxx.xxx) is never validated against VIES, which is a register of the common system Switzerland is not part of.')
+on conflict (code) do update set
+  code_source     = excluded.code_source,
+  name            = excluded.name,
+  parent_code     = excluded.parent_code,
+  eu_vat_scope    = excluded.eu_vat_scope,
+  eu_vat_from     = excluded.eu_vat_from,
+  eu_vat_to       = excluded.eu_vat_to,
+  vat_prefix      = excluded.vat_prefix,
+  legal_reference = excluded.legal_reference;
+
 -- ---------------------------------------------------------------------------
 -- The territories a pack conditions a tax on
 --

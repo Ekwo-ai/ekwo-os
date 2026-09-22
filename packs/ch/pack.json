@@ -1,0 +1,181 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "CH",
+  "name": "Schweiz",
+  "version": "0.1.0",
+  "schema_min": "20260921145425",
+  "seed_sequence": 37,
+  "released_at": "2026-09-22",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "mwstg",
+        "title": "Bundesgesetz über die Mehrwertsteuer (Mehrwertsteuergesetz, MWSTG) vom 12. Juni 2009 (SR 641.20), Stand am 31. März 2025",
+        "publisher": "Bundeskanzlei — Fedlex",
+        "url": "https://www.fedlex.admin.ch/eli/cc/2009/615/de",
+        "consulted_on": "2026-09-22",
+        "kind": "law"
+      },
+      {
+        "key": "or",
+        "title": "Bundesgesetz betreffend die Ergänzung des Schweizerischen Zivilgesetzbuches (Fünfter Teil: Obligationenrecht, OR) vom 30. März 1911 (SR 220) — insbesondere Art. 75 und 104 (Erfüllungszeit, Verzugszins) und Art. 957–963b (kaufmännische Buchführung und Rechnungslegung)",
+        "publisher": "Bundeskanzlei — Fedlex",
+        "url": "https://www.fedlex.admin.ch/eli/cc/27/317_321_377/de",
+        "consulted_on": "2026-09-22",
+        "kind": "law"
+      },
+      {
+        "key": "tdfn-verordnung",
+        "title": "Verordnung der ESTV über die Höhe der Steuersätze für Saldosteuersätze nach Branche und Tätigkeit vom 5. September 2024 (SR 641.202.62), Stand am 1. Januar 2025",
+        "publisher": "Eidgenössische Steuerverwaltung (ESTV)",
+        "url": "https://www.fedlex.admin.ch/eli/cc/2024/500/de",
+        "consulted_on": "2026-09-22",
+        "kind": "regulation"
+      },
+      {
+        "key": "mwst-4470",
+        "title": "Formular Nr. 4470 — Abrechnung Mehrwertsteuer, effektive Methode, gültig ab 1. Januar 2024 (Muster)",
+        "publisher": "Eidgenössische Steuerverwaltung (ESTV)",
+        "url": "https://www.estv2.admin.ch/mwst/formulare/mwst-form-abr-muster-2024-4470-eff-fr.pdf",
+        "consulted_on": "2026-09-22",
+        "kind": "form"
+      },
+      {
+        "key": "estv-mwst-saetze",
+        "title": "MWST-Sätze in der Schweiz",
+        "publisher": "Eidgenössische Steuerverwaltung (ESTV)",
+        "url": "https://www.estv.admin.ch/de/mwst-steuersaetze-schweiz",
+        "consulted_on": "2026-09-22",
+        "kind": "guidance"
+      },
+      {
+        "key": "estv-saldosteuersatz",
+        "title": "Saldosteuersätze und Pauschalsteuersätze",
+        "publisher": "Eidgenössische Steuerverwaltung (ESTV)",
+        "url": "https://www.estv.admin.ch/de/mwst-saldosteuersaetze-pauschalsteuersaetze",
+        "consulted_on": "2026-09-22",
+        "kind": "guidance"
+      },
+      {
+        "key": "estv-bezugsteuer",
+        "title": "Steuerpflicht Bezugsteuer bei der Mehrwertsteuer",
+        "publisher": "Eidgenössische Steuerverwaltung (ESTV)",
+        "url": "https://www.estv.admin.ch/de/steuerpflicht-bezugsteuer-mwst",
+        "consulted_on": "2026-09-22",
+        "kind": "guidance"
+      },
+      {
+        "key": "ech-0217",
+        "title": "eCH-0217 Spezifikation e-MWST — Format für die elektronische Übermittlung der MWST-Abrechnung an das ESTV-Portal SuisseTax",
+        "publisher": "Verein eCH",
+        "url": "https://www.ech.ch/de/ech/ech-0217/1.0",
+        "consulted_on": "2026-09-22",
+        "kind": "standard"
+      },
+      {
+        "key": "ech-verbindlichkeit",
+        "title": "Verbindlichkeit der eCH-Standards — genehmigte eCH-Standards haben Empfehlungscharakter",
+        "publisher": "Verein eCH",
+        "url": "https://www.ech.ch/de/ech-standards/verbindlichkeit",
+        "consulted_on": "2026-09-22",
+        "kind": "guidance"
+      },
+      {
+        "key": "estv-decompte-online",
+        "title": "Décompter la TVA en ligne — le portail AFC (Décompte TVA pro) par lequel l'abrechnung est déposée",
+        "publisher": "Eidgenössische Steuerverwaltung (ESTV)",
+        "url": "https://www.estv.admin.ch/fr/decompter-la-tva-en-ligne",
+        "consulted_on": "2026-09-22",
+        "kind": "portal"
+      },
+      {
+        "key": "six-qr-rechnung",
+        "title": "QR-bill — the Swiss standard for payment slips with QR code, replacing the red and orange payment slips since 1 October 2022",
+        "publisher": "SIX Group",
+        "url": "https://www.six-group.com/en/products-services/banking-services/payment-standardization/standards/qr-bill.html",
+        "consulted_on": "2026-09-22",
+        "kind": "standard"
+      }
+    ]
+  },
+  "languages": ["fr"],
+  "defaults": {
+    "currency": "CHF",
+    "language": "de",
+    "rounding_method": "half_up",
+    "closing_style": "retained_earnings",
+    "fiscal_year_default": "calendar",
+    "roles": {
+      "receivable": "1100",
+      "payable": "2000",
+      "suspense": "2300",
+      "rounding": "8950",
+      "retained_earnings": "2900",
+      "sales": "3000",
+      "purchase": "4000",
+      "bank": "1020",
+      "cash": "1000",
+      "tax_payable": "2140",
+      "tax_receivable": "1176"
+    },
+    "journal_roles": {
+      "sales": "SAL",
+      "purchase": "PUR",
+      "miscellaneous": "GEN",
+      "opening": "OPN"
+    }
+  },
+  "journals": [
+    { "code": "SAL", "type": "sales", "name": "Verkaufsjournal", "sequence": 10 },
+    { "code": "PUR", "type": "purchase", "name": "Einkaufsjournal", "sequence": 20 },
+    { "code": "BNK", "type": "bank", "name": "Bank", "sequence": 30 },
+    { "code": "CSH", "type": "cash", "name": "Kasse", "sequence": 40 },
+    { "code": "GEN", "type": "general", "name": "Diverse Buchungen", "sequence": 50 },
+    { "code": "OPN", "type": "opening", "name": "Eröffnungsbilanz", "sequence": 60 }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Kontenrahmen nach Art. 959/959b OR",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": ["CH-OR-959-BS", "CH-OR-959B-IS"],
+      "legal_reference": "Das schweizerische Recht schreibt keinen gesetzlichen Kontenplan vor. Art. 957a OR verlangt eine den Verhältnissen des Unternehmens angemessene, vollständige, wahrheitsgetreue und systematische Erfassung der Geschäftsvorfälle, Art. 959/959a/959b OR geben die Mindestgliederung von Bilanz und Erfolgsrechnung vor. Der in der Praxis verbreitete « Schweizer Kontenrahmen KMU » (herausgegeben von veb.ch) hat keinen gesetzlichen Status; dieser Kontenrahmen kopiert ihn nicht, sondern folgt unmittelbar der Gliederung von Art. 959 Abs. 5/6 und Art. 959b Abs. 2 OR — siehe README.md.",
+      "source": "or"
+    }
+  ],
+  "documents": {
+    "numbering": "free",
+    "number_format": "{CODE}-{YYYY}-{NNNN}",
+    "legal_payment_days": 0,
+    "late_payment_reference": "Art. 75 OR: Fehlt eine Vereinbarung über die Erfüllungszeit, so kann die Forderung sofort eingefordert werden — die Schweiz kennt keine gesetzliche Zahlungsfrist von 30 Tagen wie sie ausserhalb der EU nicht gilt. Art. 102 Abs. 1 OR setzt Verzug erst mit einer Mahnung des Gläubigers oder mit einem vereinbarten Verfalltag; Art. 104 Abs. 1 OR setzt den Verzugszins auf 5 % pro Jahr fest, sofern kein höherer vertraglicher Zins vereinbart wurde. Anders als die EU-Richtlinie 2011/7/EU (die für die Schweiz nicht gilt) kennt das OR keinen automatischen Verzugszins ohne Mahnung und keine gesetzliche Pauschale für Beitreibungskosten.",
+    "tax_point": "invoice_date",
+    "references": {
+      "numbering": {
+        "legal_reference": "Art. 26 Abs. 2 MWSTG zählt die Pflichtangaben der Rechnung abschliessend auf (Bst. a–f: Name/Adresse und UID des Leistungserbringers, Name/Adresse des Empfängers, Datum oder Zeitraum der Leistung, Art/Gegenstand/Umfang der Leistung, Entgelt, Steuersatz und Steuerbetrag) und verlangt keine fortlaufende Rechnungsnummer. Art. 957a OR verlangt eine nachvollziehbare Buchführung anhand von Belegen, schreibt aber ebenfalls kein Nummerierungsschema vor. Dieser Pack schlägt daher ein Format vor, ohne eine gesetzliche Lückenlosigkeit zu behaupten, die keine Norm verlangt.",
+        "source": "mwstg"
+      },
+      "payment_terms": {
+        "legal_reference": "Art. 75 OR — mangels Vereinbarung ist die Forderung sofort fällig und einforderbar.",
+        "source": "or"
+      },
+      "tax_point": {
+        "legal_reference": "Art. 39 Abs. 1 MWSTG — die Regel ist die Abrechnung nach vereinbarten Entgelten; Art. 40 Abs. 1 Bst. a MWSTG — die Steuerforderung entsteht bei dieser Methode im Zeitpunkt der Rechnungsstellung. Art. 39 Abs. 2 MWSTG lässt auf Gesuch hin die Abrechnung nach vereinnahmten Entgelten (Ist-Methode, Zahlungszeitpunkt) zu; dieser unternehmensweite Methodenwechsel wird von diesem Pack nicht abgebildet — siehe README.md.",
+        "source": "mwstg"
+      }
+    }
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "obligation": "none",
+    "legal_reference": "Am 22. September 2026 verpflichtet kein Bundesgesetz Unternehmen zum Austausch strukturierter elektronischer Rechnungen untereinander (B2B). Der Bund verlangt seit 2016 von seinen eigenen Lieferanten bei Aufträgen über CHF 5'000 eine elektronische Rechnung (B2G), was keine B2B-Pflicht begründet. Die von eCH veröffentlichten Standards — eCH-0069 (Inhaltsstandard swissDIGIN für elektronische Rechnungen) und eCH-0217 (Format für die elektronische Übermittlung der MWST-Abrechnung an das ESTV-Portal SuisseTax, keine Rechnungsnorm) — haben nach den eigenen Nutzungsbestimmungen von eCH ausdrücklich nur Empfehlungscharakter.",
+    "source": "ech-verbindlichkeit"
+  },
+  "bank": {
+    "statement_formats": ["camt.053", "mt940", "csv"],
+    "payment_formats": ["pain.001", "csv"]
+  }
+}

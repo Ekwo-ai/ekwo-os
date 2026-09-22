@@ -1,0 +1,224 @@
+[
+  {
+    "code": "CH-S-81",
+    "name": "Verkauf, Normalsatz 8,1 %",
+    "rate": 8.1,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2024-01-01",
+    "legal_reference": "MWSTG Art. 25 Abs. 1 — der Steuersatz beträgt 8,1 % (Normalsatz); die Abs. 2 und 4 bleiben vorbehalten. Der Satz gilt gemäss Ziff. I der Verordnung vom 9. Dezember 2022 über die Erhöhung der Mehrwertsteuersätze zur Zusatzfinanzierung der AHV (AS 2022 863) seit dem 1. Januar 2024, nach der Volksabstimmung vom 25. September 2022 über den Bundesbeschluss vom 17. Dezember 2021.",
+    "source": "mwstg",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": ["200", "303"] },
+        { "type": "tax", "account": "2100", "box": "303" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": ["200", "303"], "box_factor": -100 },
+        { "type": "tax", "account": "2100", "box": "303", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 10
+  },
+  {
+    "code": "CH-S-26",
+    "name": "Verkauf, reduzierter Satz 2,6 %",
+    "rate": 2.6,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2024-01-01",
+    "legal_reference": "MWSTG Art. 25 Abs. 2 — der reduzierte Satz von 2,6 % gilt für eine abschliessende Liste von Leistungen: Wasser in Leitungen, Lebensmittel (ohne alkoholische Getränke) im Sinne des Lebensmittelgesetzes, Vieh/Geflügel/Fisch, Getreide, Saatgut, Futtermittel, Dünger, Arzneimittel, Zeitungen/Zeitschriften/Bücher ohne Reklamecharakter, Erzeugnisse zur Monatshygiene, u.a. Seit 1. Januar 2024 gemäss der gleichen Verordnung wie CH-S-81.",
+    "source": "mwstg",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": ["200", "313"] },
+        { "type": "tax", "account": "2100", "box": "313" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": ["200", "313"], "box_factor": -100 },
+        { "type": "tax", "account": "2100", "box": "313", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 20
+  },
+  {
+    "code": "CH-S-38-HEB",
+    "name": "Beherbergungsleistung, Sondersatz 3,8 %",
+    "rate": 3.8,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2024-01-01",
+    "legal_reference": "MWSTG Art. 25 Abs. 4 — der Steuersatz für Beherbergungsleistungen (Unterkunft mit Frühstück, auch wenn dieses separat in Rechnung gestellt wird) beträgt 3,8 % (Sondersatz), gültig bis längstens 31. Dezember 2027, sofern die Frist nach Art. 196 Ziff. 14 Abs. 1 der Bundesverfassung nicht verlängert wird. Dieser Pack setzt kein valid_to, weil das Gesetz selbst diese Frist als bedingte Obergrenze und nicht als feststehendes Enddatum formuliert; siehe README.md.",
+    "source": "mwstg",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": ["200", "343"] },
+        { "type": "tax", "account": "2100", "box": "343" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": ["200", "343"], "box_factor": -100 },
+        { "type": "tax", "account": "2100", "box": "343", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 30
+  },
+  {
+    "code": "CH-S-EXPORT",
+    "name": "Ausfuhrlieferung (von der Steuer befreit)",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2010-01-01",
+    "legal_reference": "MWSTG Art. 23 Abs. 1 und Abs. 2 Ziff. 1 — die Lieferung von Gegenständen, die direkt ins Ausland befördert oder versendet werden, ist von der Steuer befreit, mit Anspruch auf Vorsteuerabzug (echte Befreiung, im Gegensatz zu Art. 21).",
+    "source": "mwstg",
+    "vat_category": "G",
+    "postings": {
+      "invoice": [{ "type": "base", "box": ["200", "220"] }],
+      "credit_note": [{ "type": "base", "box": ["200", "220"], "box_factor": -100 }]
+    },
+    "kind": "vat",
+    "sequence": 40
+  },
+  {
+    "code": "CH-S-FOREIGN",
+    "name": "Dienstleistung mit Erbringungsort im Ausland",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "not_subject",
+    "valid_from": "2010-01-01",
+    "legal_reference": "MWSTG Art. 1 Abs. 2 Bst. a und Art. 8 Abs. 1 — der Inlandsteuer unterliegen nur im Inland gegen Entgelt erbrachte Leistungen. Eine Dienstleistung, deren Ort nach Art. 8 im Ausland liegt (Empfängerortsprinzip), fällt nicht in den Geltungsbereich der schweizerischen Mehrwertsteuer und wird auf dem Formular gleichwohl unter Ziffer 221 ausgewiesen.",
+    "source": "mwstg",
+    "vat_category": "O",
+    "postings": {
+      "invoice": [{ "type": "base", "box": ["200", "221"] }],
+      "credit_note": [{ "type": "base", "box": ["200", "221"], "box_factor": -100 }]
+    },
+    "kind": "vat",
+    "sequence": 50
+  },
+  {
+    "code": "CH-S-EXCLU",
+    "name": "Von der Steuer ausgenommene Leistung (ohne Option)",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2010-01-01",
+    "legal_reference": "MWSTG Art. 21 — eine von der Steuer ausgenommene Leistung ist nicht steuerbar, sofern nicht nach Art. 22 für ihre Versteuerung optiert wurde; anders als bei Art. 23 besteht dafür kein Anspruch auf Vorsteuerabzug. Beispiele in Art. 21 Abs. 2: humanmedizinische Heilbehandlungen (Ziff. 2/3), Bildung (Ziff. 11), Versicherungsgeschäfte (Ziff. 18), Vermietung von Grundstücken (Ziff. 21). Dieser Pack verzichtet auf einen Befreiungscode (exemption_code): die Schweiz liegt ausserhalb des gemeinsamen Mehrwertsteuersystems der EU, dessen Codeliste VATEX Art. 21 nicht kennt.",
+    "source": "mwstg",
+    "vat_category": "E",
+    "postings": {
+      "invoice": [{ "type": "base", "box": ["200", "230"] }],
+      "credit_note": [{ "type": "base", "box": ["200", "230"], "box_factor": -100 }]
+    },
+    "kind": "vat",
+    "sequence": 60
+  },
+  {
+    "code": "CH-P-81",
+    "name": "Einkauf Material-/Dienstleistungsaufwand, Normalsatz 8,1 %",
+    "rate": 8.1,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2024-01-01",
+    "legal_reference": "MWSTG Art. 28 Abs. 1 Bst. a — Anspruch auf Vorsteuerabzug für die im Rahmen der unternehmerischen Tätigkeit von anderen Steuerpflichtigen in Rechnung gestellte Inlandsteuer. Das Formular Nr. 4470 weist diese Vorsteuer unter Ziffer 400 aus (Vorsteuer auf Material- und Dienstleistungsaufwand), getrennt von den Investitionen (Ziffer 405, siehe CH-P-81-INV). Das Formular verlangt für den Bezug keinen eigenen Bemessungsgrundlage-Betrag, weshalb dieser Code keine base-Buchung trägt.",
+    "source": "mwst-4470",
+    "postings": {
+      "invoice": [{ "type": "tax", "account": "1170", "box": "400" }],
+      "credit_note": [{ "type": "tax", "account": "1170", "box": "400", "box_factor": -100 }]
+    },
+    "kind": "vat",
+    "sequence": 70
+  },
+  {
+    "code": "CH-P-81-INV",
+    "name": "Einkauf Investitionen und übriger Betriebsaufwand, Normalsatz 8,1 %",
+    "rate": 8.1,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2024-01-01",
+    "legal_reference": "MWSTG Art. 28 Abs. 1 Bst. a, ausgewiesen unter Ziffer 405 des Formulars Nr. 4470 (Vorsteuer auf Investitionen und übrigem Betriebsaufwand) — dieselbe gesetzliche Grundlage wie CH-P-81, aber die andere Zeile des Formulars, weil dieses zwischen laufendem Aufwand und Investitionen/übrigem Betriebsaufwand unterscheidet.",
+    "source": "mwst-4470",
+    "postings": {
+      "invoice": [{ "type": "tax", "account": "1171", "box": "405" }],
+      "credit_note": [{ "type": "tax", "account": "1171", "box": "405", "box_factor": -100 }]
+    },
+    "kind": "vat",
+    "sequence": 80
+  },
+  {
+    "code": "CH-P-26",
+    "name": "Einkauf Material-/Dienstleistungsaufwand, reduzierter Satz 2,6 %",
+    "rate": 2.6,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2024-01-01",
+    "legal_reference": "MWSTG Art. 28 Abs. 1 Bst. a, Ziffer 400 des Formulars Nr. 4470, zum reduzierten Satz von Art. 25 Abs. 2 MWSTG.",
+    "source": "mwst-4470",
+    "postings": {
+      "invoice": [{ "type": "tax", "account": "1170", "box": "400" }],
+      "credit_note": [{ "type": "tax", "account": "1170", "box": "400", "box_factor": -100 }]
+    },
+    "kind": "vat",
+    "sequence": 90
+  },
+  {
+    "code": "CH-P-81-NA",
+    "name": "Einkauf für eine von der Steuer ausgenommene Tätigkeit, Normalsatz 8,1 % (nicht abziehbar)",
+    "rate": 8.1,
+    "scope": "purchase",
+    "treatment": "exempt",
+    "valid_from": "2024-01-01",
+    "legal_reference": "MWSTG Art. 29 Abs. 1 — Leistungen, die für eine nach Art. 21 von der Steuer ausgenommene Tätigkeit verwendet werden, berechtigen nicht zum Vorsteuerabzug, sofern nicht nach Art. 22 optiert wurde. Die vom Lieferanten in Rechnung gestellte Steuer ist damit Teil der Anschaffungskosten und wird auf dem Konto der belasteten Zeile gebucht, ohne dass das Formular dafür eine eigene Ziffer vorsieht.",
+    "source": "mwstg",
+    "postings": {
+      "invoice": [{ "type": "tax_on_base" }],
+      "credit_note": [{ "type": "tax_on_base" }]
+    },
+    "kind": "vat",
+    "sequence": 100
+  },
+  {
+    "code": "CH-P-BEZUGSTEUER-81",
+    "name": "Bezug einer Dienstleistung aus dem Ausland, Bezugsteuer 8,1 %",
+    "rate": 8.1,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2024-01-01",
+    "legal_reference": "MWSTG Art. 45 Abs. 1 Bst. a und Art. 45 Abs. 2 — der Bezugsteuer unterliegen Dienstleistungen mit Ort im Inland (Art. 8 Abs. 1), die von einem Unternehmen mit Sitz im Ausland erbracht werden, das nicht im Register der steuerpflichtigen Personen eingetragen ist, sofern die bezugsteuerpflichtige Person nach Art. 10 steuerpflichtig ist oder solche Bezüge CHF 10'000 pro Kalenderjahr übersteigen. Art. 46 MWSTG verweist für Satz und Berechnung auf Art. 24/25. Das Formular Nr. 4470 weist die Bezugsteuer unter Ziffer 383 (Impôt sur les acquisitions) im Total der geschuldeten Steuer (Ziffer 399) aus; der volle Vorsteuerabzug erfolgt gleichzeitig unter Ziffer 400/405, sofern die Leistung für eine zum Vorsteuerabzug berechtigende Tätigkeit verwendet wird.",
+    "source": "mwstg",
+    "postings": {
+      "invoice": [
+        { "type": "tax", "account": "1170", "box": "400" },
+        { "type": "tax", "factor": -100, "account": "2110", "box": "383" }
+      ],
+      "credit_note": [
+        { "type": "tax", "account": "1170", "box": "400", "box_factor": -100 },
+        { "type": "tax", "factor": -100, "account": "2110", "box": "383", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 110
+  },
+  {
+    "code": "CH-P-IMPORT-81",
+    "name": "Einfuhr von Gegenständen, Einfuhrsteuer 8,1 %",
+    "rate": 8.1,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2024-01-01",
+    "legal_reference": "MWSTG Art. 50 und Art. 52 Abs. 1 Bst. a — der Einfuhrsteuer unterliegt die Einfuhr von Gegenständen; die Zollgesetzgebung ist anwendbar, soweit das MWSTG nichts anderes vorsieht. Die Einfuhrsteuer wird von der Eidgenössischen Zollverwaltung (Bundesamt für Zoll und Grenzsicherheit, BAZG) bei der Einfuhr erhoben, nicht über die periodische MWST-Abrechnung geschuldet; das Formular Nr. 4470 weist nur den anschliessenden Vorsteuerabzug unter Ziffer 400/405 aus (Art. 28 Abs. 1 Bst. c MWSTG). Dieser Code bildet daher nur den Vorsteuerabzug ab, keine Schuld gegenüber der ESTV.",
+    "source": "mwst-4470",
+    "postings": {
+      "invoice": [{ "type": "tax", "account": "1171", "box": "405" }],
+      "credit_note": [{ "type": "tax", "account": "1171", "box": "405", "box_factor": -100 }]
+    },
+    "kind": "vat",
+    "sequence": 120
+  }
+]
