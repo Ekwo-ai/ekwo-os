@@ -647,7 +647,8 @@ describe('a country page', () => {
     for (const country of data.countries) {
       const body = byUrl.get(`${COUNTRIES}${country.slug}/`)!.body;
       for (const source of country.certification.sources) {
-        expect(body).toContain(source.url);
+        // An address is written into HTML with its ampersands escaped.
+        expect(body).toContain(source.url.replaceAll('&', '&amp;'));
         expect(body).toContain(source.consulted_on);
       }
     }

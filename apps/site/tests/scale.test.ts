@@ -62,10 +62,13 @@ describe('the site at fifty and at two hundred countries', () => {
     for (const { count, site, pages } of sizes) {
       expect(site.countries).toHaveLength(count);
       // Two per pack, and one for every country of the list without one: the
-      // world is a fixed number of pages, whatever the packs.
+      // world is a fixed number of pages, whatever the packs. A pack may be for
+      // a territory the M49 list does not carry (Taiwan): it has its pages and
+      // leaves no country of the list without one.
       const world = Object.keys(m49.regions).length;
-      expect(site.waiting).toHaveLength(world - count);
-      expect(pages).toHaveLength(LANGUAGES.length * (2 * count + (world - count) + data.docs.length + 9));
+      const listed = site.countries.filter((country) => country.country in m49.regions).length;
+      expect(site.waiting).toHaveLength(world - listed);
+      expect(pages).toHaveLength(LANGUAGES.length * (2 * count + (world - listed) + data.docs.length + 9));
       expect(new Set(pages.map((page) => page.url)).size).toBe(pages.length);
       expect(pages.filter((page) => page.url.startsWith('/compare/'))).toHaveLength(1);
     }
