@@ -95,8 +95,10 @@ Everything can also be given as flags, for example
 --fiscal-year-start 2026-04-01`; the
 [installation guide](../packages/cli/README.md) lists them.
 
-A second company, even in another country, does not need a second
-installation: once Claude is connected, ask for it (see step 4).
+The installer needs a country for this first company: there is no
+installation without one today. Every other company, in the same country or
+another, comes later and needs no second installation — see
+[Several companies, several countries](#4-several-companies-several-countries).
 
 ## 3. Connect Ekwo to Claude
 
@@ -178,23 +180,57 @@ The password sits in plain text in either file, like any value in a client's
 configuration. It is the password of your Ekwo user on your own project;
 keep the file to yourself.
 
-## 4. Ask Claude to take over your books
+## 4. Several companies, several countries
 
 Start a conversation. Claude reads the name and description of every tool, so
-you speak about your books, not about tools. The examples below are two
-companies kept side by side in one installation — one in Estonia, one in the
-United Kingdom — each arriving with the trial balance of its previous ledger.
-The names and amounts are invented; the answers are what the server returned
-when this guide was run end to end (see [Checked for real](#checked-for-real)).
+you speak about your books, not about tools. The examples in this guide are
+two companies kept side by side in one installation — one in Estonia, one in
+the United Kingdom. The names and amounts are invented; the answers are what
+the server returned when this guide was run end to end (see
+[Checked for real](#checked-for-real)).
 
 **"Is Ekwo connected? List my companies."** Claude calls `status` and
 `list_companies`: the schema version, and the company the installer created,
 with you as its owner.
 
+One installation keeps the books of as many companies as you like, and they
+need not share a country. The installer loads the rules of every country Ekwo
+has a pack for, not only the one you chose, so a company in another country is
+one sentence away:
+
 **"Create a second company, Harbourlight Ledger Ltd, in the United Kingdom,
-financial year starting 1 January 2026."** `create_company`: its chart of
-accounts, its journals and its taxes are copied from the country pack, and you
-are its first member.
+its financial year starting on 1 January 2026."** Claude calls
+`create_company`. The company gets the United Kingdom's chart of accounts,
+journals, taxes and VAT return, in pounds, with you as its owner — while the
+first keeps Estonia's, in euros. Asked again, `list_companies` shows both:
+
+| Company | Country | Currency | Your role |
+|---|---|---|---|
+| Põhjatuul OÜ | EE | EUR | owner |
+| Harbourlight Ledger Ltd | GB | GBP | owner |
+
+Every tool that reads or writes the books names its company, so tell Claude
+which one you mean — "for Harbourlight, …" — whenever it could be either.
+Creating a company is an act on the whole installation: it needs an
+administrator, which the installer made you. A country whose year does not
+open on a fixed day — the United Kingdom again — needs the first day said: the tool
+refuses to pick one, so Claude asks you.
+
+In the terminal, the company the commands run on is chosen with `ekwo use`,
+once you are signed in:
+
+```sh
+npx ekwo-os login            # asks the project URL, the key, your address and password
+npx ekwo-os use "Harbourlight Ledger Ltd"
+npx ekwo-os whoami           # the companies you can see, and the one in use
+```
+
+The command line needs a country only once, for the first company, at
+`init`; it does not create companies after that. Ask Claude.
+
+## 5. Ask Claude to take over your books
+
+Each company arrives with the trial balance of its previous ledger.
 
 **"Here is the trial balance of Põhjatuul OÜ at 1 January 2026. Import it —
 show me first what you would do."** Attach the CSV to the message (in Claude
@@ -249,7 +285,7 @@ Bank statements are not books: say **"import this bank statement"** and Claude
 uses `import_bank_statement`, which records the lines to be matched and books
 nothing.
 
-## 5. Ask questions, prepare a return
+## 6. Ask questions, prepare a return
 
 Now it is your books. Sentences that work, and what answers them:
 
@@ -309,7 +345,8 @@ afterwards. The run is a script, so it can be repeated on any release:
 [`docs/demo/start-with-claude/walkthrough.mjs`](demo/start-with-claude/walkthrough.mjs)
 runs the installer, starts the MCP server with exactly the four variables
 above, and calls the tools Claude calls for the sentences of this guide — two
-companies, two countries, the rehearsal, the correction, the import, the
+companies in two countries, the second created through `create_company` and
+chosen in the terminal with `ekwo use`, the rehearsal, the correction, the import, the
 refused second import, the balances, an invoice and the two returns. The two
 trial balances and the answered correspondence are beside it; the data is
 invented.
