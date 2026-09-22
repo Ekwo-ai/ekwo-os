@@ -95,9 +95,10 @@ Everything can also be given as flags, for example
 --fiscal-year-start 2026-04-01`; the
 [installation guide](../packages/cli/README.md) lists them.
 
-The installer needs a country for this first company: there is no
-installation without one today. Every other company, in the same country or
-another, comes later and needs no second installation — see
+The installation itself is in no country; its companies are. The installer
+asks for a country only to create this first company, and `--no-company`
+installs without one. Every other company, in the same country or another,
+comes later and needs no second installation — see
 [Several companies, several countries](#4-several-companies-several-countries).
 
 ## 3. Connect Ekwo to Claude
@@ -228,8 +229,26 @@ npx ekwo-os use "Harbourlight Ledger Ltd"
 npx ekwo-os whoami           # the companies you can see, and the one in use
 ```
 
-The command line needs a country only once, for the first company, at
-`init`; it does not create companies after that. Ask Claude.
+The command line creates companies too. `ekwo company new` calls the same
+`create_company()` as the tool, as an administrator of the installation, and
+asks the same questions — the country always, and the first day of the year,
+the chart or the language wherever the pack leaves a choice. An installation
+that has no single first company to name — a group, a firm, a holding with a
+subsidiary abroad — can start with none, and take each company in its own
+country:
+
+```sh
+npx ekwo-os init --no-company --org "Põhjatuul Group" --admin-email "you@example.com"
+npx ekwo-os company new "Põhjatuul OÜ" --country EE
+npx ekwo-os company new "Harbourlight Ledger Ltd" --country GB --fiscal-year-start 2026-01-01
+npx ekwo-os company list
+```
+
+`--no-company` refuses every flag that only describes a company — `--country`
+among them — since there is no company for it to describe. `ekwo company new`
+connects the way `init` does, with the connection string; the
+[installation guide](../packages/cli/README.md#several-countries-in-one-installation-init---no-company)
+has every flag. Claude or the terminal: the company is the same.
 
 ## 5. Ask Claude to take over your books
 
