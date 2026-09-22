@@ -1,0 +1,1220 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/statements",
+  "statements": [
+    {
+      "code": "SE-ARL-BIL1-BS",
+      "kind": "balance_sheet",
+      "framework": "SE-ARL",
+      "name": "Balansräkning enligt bilaga 1 (kontoform)",
+      "valid_from": "2016-01-01",
+      "legal_reference": "Årsredovisningslag (1995:1554) 3 kap. 3 § första stycket — balansräkningen ska upprättas enligt den uppställningsform som anges i bilaga 1 till denna lag; bilaga 1, Uppställningsform för balansräkningen (kontoform), i den lydelse bilagan fick genom lag (2015:813), som förde in Europaparlamentets och rådets direktiv 2013/34/EU och som tillämpas första gången för det räkenskapsår som inleds närmast efter den 31 december 2015. Uppställningen följer aktiebolagens rad under rubriken A. Eget kapital, eftersom kontoplanen kontot 2010 Aktiekapital bär; posterna för ekonomiska föreningar, handelsbolag och övriga företagsformer, som bilagan ger som alternativ under samma rubrik, används inte av denna plan. Denna lag ställer inte upp någon kontoplan — se legal_reference på chart 'default' i pack.json — så varje rad nedan är en av Ekwos egna kontointervall i det plan denna pack bär, inte ett återgivande av BAS-kontoplanens numrering. En post i bilagan som ingen av kontona i denna pack svarar mot skrivs ut utan regel och läses noll; README räknar upp dem.",
+      "source": "arsredovisningslagen",
+      "lines": [
+        {
+          "code": "TG",
+          "name": "Summa tillgångar",
+          "sequence": 10,
+          "is_total": true,
+          "plus": [
+            "A",
+            "B",
+            "C"
+          ]
+        },
+        {
+          "code": "A",
+          "parent": "TG",
+          "name": "Tecknat men ej inbetalt kapital",
+          "sequence": 20,
+          "sign": 1
+        },
+        {
+          "code": "B",
+          "parent": "TG",
+          "name": "Anläggningstillgångar",
+          "sequence": 30,
+          "is_total": true,
+          "plus": [
+            "B.I",
+            "B.II",
+            "B.III"
+          ]
+        },
+        {
+          "code": "B.I",
+          "parent": "B",
+          "name": "Immateriella anläggningstillgångar",
+          "sequence": 40,
+          "is_total": true,
+          "plus": [
+            "B.I.1",
+            "B.I.2",
+            "B.I.3",
+            "B.I.4",
+            "B.I.5"
+          ]
+        },
+        {
+          "code": "B.I.1",
+          "parent": "B.I",
+          "name": "Balanserade utgifter för utvecklingsarbeten och liknande arbeten",
+          "sequence": 50,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1010",
+              "code_to": "1011"
+            }
+          ]
+        },
+        {
+          "code": "B.I.2",
+          "parent": "B.I",
+          "name": "Koncessioner, patent, licenser, varumärken samt liknande rättigheter",
+          "sequence": 60,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1020",
+              "code_to": "1021"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "1040",
+              "code_to": "1041"
+            }
+          ]
+        },
+        {
+          "code": "B.I.3",
+          "parent": "B.I",
+          "name": "Hyresrätter och liknande rättigheter",
+          "sequence": 70,
+          "sign": 1
+        },
+        {
+          "code": "B.I.4",
+          "parent": "B.I",
+          "name": "Goodwill",
+          "sequence": 80,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1030",
+              "code_to": "1031"
+            }
+          ]
+        },
+        {
+          "code": "B.I.5",
+          "parent": "B.I",
+          "name": "Förskott avseende immateriella anläggningstillgångar",
+          "sequence": 90,
+          "sign": 1
+        },
+        {
+          "code": "B.II",
+          "parent": "B",
+          "name": "Materiella anläggningstillgångar",
+          "sequence": 100,
+          "is_total": true,
+          "plus": [
+            "B.II.1",
+            "B.II.2",
+            "B.II.3",
+            "B.II.4"
+          ]
+        },
+        {
+          "code": "B.II.1",
+          "parent": "B.II",
+          "name": "Byggnader och mark",
+          "sequence": 110,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1110",
+              "code_to": "1131"
+            }
+          ]
+        },
+        {
+          "code": "B.II.2",
+          "parent": "B.II",
+          "name": "Maskiner och andra tekniska anläggningar",
+          "sequence": 120,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1150",
+              "code_to": "1151"
+            }
+          ]
+        },
+        {
+          "code": "B.II.3",
+          "parent": "B.II",
+          "name": "Inventarier, verktyg och installationer",
+          "sequence": 130,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1160",
+              "code_to": "1181"
+            }
+          ]
+        },
+        {
+          "code": "B.II.4",
+          "parent": "B.II",
+          "name": "Pågående nyanläggningar och förskott avseende materiella anläggningstillgångar",
+          "sequence": 140,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1190"
+            }
+          ]
+        },
+        {
+          "code": "B.III",
+          "parent": "B",
+          "name": "Finansiella anläggningstillgångar",
+          "sequence": 150,
+          "is_total": true,
+          "plus": [
+            "B.III.1",
+            "B.III.2",
+            "B.III.3",
+            "B.III.4",
+            "B.III.5",
+            "B.III.6",
+            "B.III.7",
+            "B.III.8",
+            "B.III.9"
+          ]
+        },
+        {
+          "code": "B.III.1",
+          "parent": "B.III",
+          "name": "Andelar i koncernföretag",
+          "sequence": 160,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1210"
+            }
+          ]
+        },
+        {
+          "code": "B.III.2",
+          "parent": "B.III",
+          "name": "Fordringar hos koncernföretag",
+          "sequence": 170,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1220"
+            }
+          ]
+        },
+        {
+          "code": "B.III.3",
+          "parent": "B.III",
+          "name": "Andelar i intresseföretag och gemensamt styrda företag",
+          "sequence": 180,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1230"
+            }
+          ]
+        },
+        {
+          "code": "B.III.4",
+          "parent": "B.III",
+          "name": "Fordringar hos intresseföretag och gemensamt styrda företag",
+          "sequence": 190,
+          "sign": 1
+        },
+        {
+          "code": "B.III.5",
+          "parent": "B.III",
+          "name": "Ägarintressen i övriga företag",
+          "sequence": 200,
+          "sign": 1
+        },
+        {
+          "code": "B.III.6",
+          "parent": "B.III",
+          "name": "Fordringar hos övriga företag som det finns ett ägarintresse i",
+          "sequence": 210,
+          "sign": 1
+        },
+        {
+          "code": "B.III.7",
+          "parent": "B.III",
+          "name": "Andra långfristiga värdepappersinnehav",
+          "sequence": 220,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1240"
+            }
+          ]
+        },
+        {
+          "code": "B.III.8",
+          "parent": "B.III",
+          "name": "Lån till delägare och andra, till vilka delägare står i sådant förhållande",
+          "sequence": 230,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1250"
+            }
+          ]
+        },
+        {
+          "code": "B.III.9",
+          "parent": "B.III",
+          "name": "Andra långfristiga fordringar",
+          "sequence": 240,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1260",
+              "code_to": "1280"
+            }
+          ]
+        },
+        {
+          "code": "C",
+          "parent": "TG",
+          "name": "Omsättningstillgångar",
+          "sequence": 250,
+          "is_total": true,
+          "plus": [
+            "C.I",
+            "C.II",
+            "C.III",
+            "C.IV"
+          ]
+        },
+        {
+          "code": "C.I",
+          "parent": "C",
+          "name": "Varulager m.m.",
+          "sequence": 260,
+          "is_total": true,
+          "plus": [
+            "C.I.1",
+            "C.I.2",
+            "C.I.3",
+            "C.I.4",
+            "C.I.5"
+          ]
+        },
+        {
+          "code": "C.I.1",
+          "parent": "C.I",
+          "name": "Råvaror och förnödenheter",
+          "sequence": 270,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1310"
+            }
+          ]
+        },
+        {
+          "code": "C.I.2",
+          "parent": "C.I",
+          "name": "Varor under tillverkning",
+          "sequence": 280,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1320"
+            }
+          ]
+        },
+        {
+          "code": "C.I.3",
+          "parent": "C.I",
+          "name": "Färdiga varor och handelsvaror",
+          "sequence": 290,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1330"
+            }
+          ]
+        },
+        {
+          "code": "C.I.4",
+          "parent": "C.I",
+          "name": "Pågående arbete för annans räkning",
+          "sequence": 300,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1340"
+            }
+          ]
+        },
+        {
+          "code": "C.I.5",
+          "parent": "C.I",
+          "name": "Förskott till leverantörer",
+          "sequence": 310,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1350"
+            }
+          ]
+        },
+        {
+          "code": "C.II",
+          "parent": "C",
+          "name": "Fordringar",
+          "sequence": 320,
+          "is_total": true,
+          "plus": [
+            "C.II.1",
+            "C.II.2",
+            "C.II.3",
+            "C.II.4",
+            "C.II.5",
+            "C.II.6"
+          ]
+        },
+        {
+          "code": "C.II.1",
+          "parent": "C.II",
+          "name": "Kundfordringar",
+          "sequence": 330,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1410",
+              "code_to": "1420"
+            }
+          ]
+        },
+        {
+          "code": "C.II.2",
+          "parent": "C.II",
+          "name": "Fordringar hos koncernföretag",
+          "sequence": 340,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1430"
+            }
+          ]
+        },
+        {
+          "code": "C.II.3",
+          "parent": "C.II",
+          "name": "Fordringar hos intresseföretag och gemensamt styrda företag",
+          "sequence": 350,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1440"
+            }
+          ]
+        },
+        {
+          "code": "C.II.4",
+          "parent": "C.II",
+          "name": "Fordringar hos övriga företag som det finns ett ägarintresse i",
+          "sequence": 360,
+          "sign": 1
+        },
+        {
+          "code": "C.II.5",
+          "parent": "C.II",
+          "name": "Övriga fordringar",
+          "sequence": 370,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1510",
+              "code_to": "1516"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "1610",
+              "code_to": "1640"
+            }
+          ]
+        },
+        {
+          "code": "C.II.6",
+          "parent": "C.II",
+          "name": "Förutbetalda kostnader och upplupna intäkter",
+          "sequence": 380,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1710",
+              "code_to": "1790"
+            }
+          ]
+        },
+        {
+          "code": "C.III",
+          "parent": "C",
+          "name": "Kortfristiga placeringar",
+          "sequence": 390,
+          "is_total": true,
+          "plus": [
+            "C.III.1",
+            "C.III.2"
+          ]
+        },
+        {
+          "code": "C.III.1",
+          "parent": "C.III",
+          "name": "Andelar i koncernföretag",
+          "sequence": 400,
+          "sign": 1
+        },
+        {
+          "code": "C.III.2",
+          "parent": "C.III",
+          "name": "Övriga kortfristiga placeringar",
+          "sequence": 410,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1940"
+            }
+          ]
+        },
+        {
+          "code": "C.IV",
+          "parent": "C",
+          "name": "Kassa och bank",
+          "sequence": 420,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1910",
+              "code_to": "1930"
+            }
+          ]
+        },
+        {
+          "code": "EKS",
+          "name": "Summa eget kapital, avsättningar och skulder",
+          "sequence": 430,
+          "is_total": true,
+          "plus": [
+            "P.A",
+            "P.B",
+            "P.C",
+            "P.D"
+          ]
+        },
+        {
+          "code": "P.A",
+          "parent": "EKS",
+          "name": "Eget kapital",
+          "sequence": 440,
+          "is_total": true,
+          "plus": [
+            "P.A.I",
+            "P.A.II",
+            "P.A.III",
+            "P.A.IV",
+            "P.A.V",
+            "P.A.VI"
+          ]
+        },
+        {
+          "code": "P.A.I",
+          "parent": "P.A",
+          "name": "I. Aktiekapital",
+          "sequence": 450,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "2010",
+              "code_to": "2011"
+            }
+          ]
+        },
+        {
+          "code": "P.A.II",
+          "parent": "P.A",
+          "name": "II. Överkursfonder",
+          "sequence": 460,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "2070"
+            }
+          ]
+        },
+        {
+          "code": "P.A.III",
+          "parent": "P.A",
+          "name": "III. Uppskrivningsfond",
+          "sequence": 470,
+          "sign": -1
+        },
+        {
+          "code": "P.A.IV",
+          "parent": "P.A",
+          "name": "IV. Andra fonder",
+          "sequence": 480,
+          "is_total": true,
+          "plus": [
+            "P.A.IV.1",
+            "P.A.IV.2",
+            "P.A.IV.3",
+            "P.A.IV.4",
+            "P.A.IV.5"
+          ]
+        },
+        {
+          "code": "P.A.IV.1",
+          "parent": "P.A.IV",
+          "name": "1. Reservfond",
+          "sequence": 490,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "2065"
+            }
+          ]
+        },
+        {
+          "code": "P.A.IV.2",
+          "parent": "P.A.IV",
+          "name": "2. Kapitalandelsfond",
+          "sequence": 500,
+          "sign": -1
+        },
+        {
+          "code": "P.A.IV.3",
+          "parent": "P.A.IV",
+          "name": "3. Fond för verkligt värde",
+          "sequence": 510,
+          "sign": -1
+        },
+        {
+          "code": "P.A.IV.4",
+          "parent": "P.A.IV",
+          "name": "4. Fond för utvecklingsutgifter",
+          "sequence": 520,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "2080"
+            }
+          ]
+        },
+        {
+          "code": "P.A.IV.5",
+          "parent": "P.A.IV",
+          "name": "5. Övrigt",
+          "sequence": 530,
+          "sign": -1
+        },
+        {
+          "code": "P.A.V",
+          "parent": "P.A",
+          "name": "V. Balanserad vinst eller förlust",
+          "sequence": 540,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "2020"
+            }
+          ]
+        },
+        {
+          "code": "P.A.VI",
+          "parent": "P.A",
+          "name": "VI. Årets resultat",
+          "sequence": 550,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "2090"
+            }
+          ]
+        },
+        {
+          "code": "P.B",
+          "parent": "EKS",
+          "name": "Obeskattade reserver",
+          "sequence": 560,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "2110",
+              "code_to": "2120"
+            }
+          ]
+        },
+        {
+          "code": "P.C",
+          "parent": "EKS",
+          "name": "Avsättningar",
+          "sequence": 570,
+          "is_total": true,
+          "plus": [
+            "P.C.1",
+            "P.C.2",
+            "P.C.3"
+          ]
+        },
+        {
+          "code": "P.C.1",
+          "parent": "P.C",
+          "name": "Avsättningar för pensioner och liknande förpliktelser",
+          "sequence": 580,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "2210"
+            }
+          ]
+        },
+        {
+          "code": "P.C.2",
+          "parent": "P.C",
+          "name": "Avsättningar för skatter",
+          "sequence": 590,
+          "sign": -1
+        },
+        {
+          "code": "P.C.3",
+          "parent": "P.C",
+          "name": "Övriga avsättningar",
+          "sequence": 600,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "2220",
+              "code_to": "2230"
+            }
+          ]
+        },
+        {
+          "code": "P.D",
+          "parent": "EKS",
+          "name": "Skulder",
+          "sequence": 610,
+          "is_total": true,
+          "plus": [
+            "P.D.1",
+            "P.D.2",
+            "P.D.3",
+            "P.D.4",
+            "P.D.5",
+            "P.D.6",
+            "P.D.7",
+            "P.D.8",
+            "P.D.9",
+            "P.D.10",
+            "P.D.11"
+          ]
+        },
+        {
+          "code": "P.D.1",
+          "parent": "P.D",
+          "name": "Obligationslån",
+          "sequence": 620,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "2330"
+            }
+          ]
+        },
+        {
+          "code": "P.D.2",
+          "parent": "P.D",
+          "name": "Skulder till kreditinstitut",
+          "sequence": 630,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "2310",
+              "code_to": "2320"
+            },
+            {
+              "kind": "account_code",
+              "code_from": "2420"
+            }
+          ]
+        },
+        {
+          "code": "P.D.3",
+          "parent": "P.D",
+          "name": "Förskott från kunder",
+          "sequence": 640,
+          "sign": -1
+        },
+        {
+          "code": "P.D.4",
+          "parent": "P.D",
+          "name": "Leverantörsskulder",
+          "sequence": 650,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "2410"
+            }
+          ]
+        },
+        {
+          "code": "P.D.5",
+          "parent": "P.D",
+          "name": "Växelskulder",
+          "sequence": 660,
+          "sign": -1
+        },
+        {
+          "code": "P.D.6",
+          "parent": "P.D",
+          "name": "Skulder till koncernföretag",
+          "sequence": 670,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "2340"
+            },
+            {
+              "kind": "account_code",
+              "code_from": "2891"
+            }
+          ]
+        },
+        {
+          "code": "P.D.7",
+          "parent": "P.D",
+          "name": "Skulder till intresseföretag och gemensamt styrda företag",
+          "sequence": 680,
+          "sign": -1
+        },
+        {
+          "code": "P.D.8",
+          "parent": "P.D",
+          "name": "Skulder till övriga företag som det finns ett ägarintresse i",
+          "sequence": 690,
+          "sign": -1
+        },
+        {
+          "code": "P.D.9",
+          "parent": "P.D",
+          "name": "Skatteskulder",
+          "sequence": 700,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "2430",
+              "code_to": "2443"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "2510",
+              "code_to": "2520"
+            }
+          ]
+        },
+        {
+          "code": "P.D.10",
+          "parent": "P.D",
+          "name": "Övriga skulder",
+          "sequence": 710,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "2350"
+            },
+            {
+              "kind": "account_code",
+              "code_from": "2890"
+            }
+          ]
+        },
+        {
+          "code": "P.D.11",
+          "parent": "P.D",
+          "name": "Upplupna kostnader och förutbetalda intäkter",
+          "sequence": 720,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "2530",
+              "code_to": "2540"
+            },
+            {
+              "kind": "account_code",
+              "code_from": "2610"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "2710",
+              "code_to": "2720"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "code": "SE-ARL-BIL2-IS",
+      "kind": "income_statement",
+      "framework": "SE-ARL",
+      "name": "Resultaträkning enligt bilaga 2 (kostnadsslagsindelad)",
+      "valid_from": "2016-01-01",
+      "legal_reference": "Årsredovisningslag (1995:1554) 3 kap. 3 § andra stycket — resultaträkningen ska upprättas enligt någon av de uppställningsformer som anges i bilagorna 2 och 3; denna pack använder bilaga 2, Uppställningsform I för resultaträkning (rapportform med kostnadsslagsindelning), i den lydelse bilagan fick genom lag (2015:813). Bilaga 3 (funktionsindelning, efter kostnad för sålda varor) bärs inte av denna pack. 2 kap. 2 § tillåter mindre företag att slå samman posterna 1–6 till en post benämnd bruttovinst eller bruttoförlust; den sammanslagningen görs inte här, så varje post i bilagan är en egen rad. En post i bilagan som ingen av kontona i denna pack svarar mot skrivs ut utan regel och läses noll; README räknar upp dem.",
+      "source": "arsredovisningslagen",
+      "lines": [
+        {
+          "code": "1",
+          "name": "1. Nettoomsättning",
+          "sequence": 10,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "3010",
+              "code_to": "3091"
+            },
+            {
+              "kind": "account_code",
+              "code_from": "3510"
+            }
+          ]
+        },
+        {
+          "code": "2",
+          "name": "2. Förändring av varulager",
+          "sequence": 20,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "4090"
+            }
+          ]
+        },
+        {
+          "code": "3",
+          "name": "3. Aktiverat arbete för egen räkning",
+          "sequence": 30,
+          "sign": -1
+        },
+        {
+          "code": "4",
+          "name": "4. Övriga rörelseintäkter",
+          "sequence": 40,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "3100"
+            },
+            {
+              "kind": "account_code",
+              "code_from": "3690"
+            },
+            {
+              "kind": "account_code",
+              "code_from": "3900"
+            },
+            {
+              "kind": "account_code",
+              "code_from": "3960"
+            }
+          ]
+        },
+        {
+          "code": "5",
+          "name": "5. Råvaror och förnödenheter",
+          "sequence": 50,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "4010",
+              "code_to": "4070"
+            }
+          ]
+        },
+        {
+          "code": "6",
+          "name": "6. Övriga externa kostnader",
+          "sequence": 60,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "5010",
+              "code_to": "5040"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "5410",
+              "code_to": "5460"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "5500",
+              "code_to": "5500"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "5610",
+              "code_to": "5615"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "5800",
+              "code_to": "5910"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "6110",
+              "code_to": "6150"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "6211",
+              "code_to": "6230"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "6310",
+              "code_to": "6310"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "6420",
+              "code_to": "6420"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "6530",
+              "code_to": "6590"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "6970",
+              "code_to": "6991"
+            }
+          ]
+        },
+        {
+          "code": "7",
+          "name": "7. Personalkostnader",
+          "sequence": 70,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "7010",
+              "code_to": "7290"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "7510",
+              "code_to": "7690"
+            }
+          ]
+        },
+        {
+          "code": "8",
+          "name": "8. Avskrivningar och nedskrivningar av materiella och immateriella anläggningstillgångar",
+          "sequence": 80,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "7830",
+              "code_to": "7834"
+            }
+          ]
+        },
+        {
+          "code": "9",
+          "name": "9. Nedskrivningar av omsättningstillgångar utöver normala nedskrivningar",
+          "sequence": 90,
+          "sign": 1
+        },
+        {
+          "code": "10",
+          "name": "10. Övriga rörelsekostnader",
+          "sequence": 100,
+          "sign": 1
+        },
+        {
+          "code": "11",
+          "name": "11. Intäkter från andelar i koncernföretag",
+          "sequence": 110,
+          "sign": -1
+        },
+        {
+          "code": "12",
+          "name": "12. Intäkter från andelar i intresseföretag och gemensamt styrda företag",
+          "sequence": 120,
+          "sign": -1
+        },
+        {
+          "code": "13",
+          "name": "13. Intäkter från övriga företag som det finns ett ägarintresse i",
+          "sequence": 130,
+          "sign": -1
+        },
+        {
+          "code": "14",
+          "name": "14. Intäkter från övriga värdepapper och fordringar som är anläggningstillgångar",
+          "sequence": 140,
+          "sign": -1
+        },
+        {
+          "code": "15",
+          "name": "15. Övriga ränteintäkter och liknande intäkter",
+          "sequence": 150,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "8310",
+              "code_to": "8330"
+            }
+          ]
+        },
+        {
+          "code": "16",
+          "name": "16. Nedskrivningar av finansiella anläggningstillgångar och kortfristiga placeringar",
+          "sequence": 160,
+          "sign": 1
+        },
+        {
+          "code": "17",
+          "name": "17. Räntekostnader och liknande kostnader",
+          "sequence": 170,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "8400",
+              "code_to": "8430"
+            }
+          ]
+        },
+        {
+          "code": "18",
+          "name": "18. Bokslutsdispositioner",
+          "sequence": 180,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "8710"
+            }
+          ]
+        },
+        {
+          "code": "19",
+          "name": "19. Skatt på årets resultat",
+          "sequence": 190,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "8890"
+            }
+          ]
+        },
+        {
+          "code": "20",
+          "name": "20. Övriga skatter",
+          "sequence": 200,
+          "sign": 1
+        },
+        {
+          "code": "21",
+          "name": "21. Årets resultat",
+          "sequence": 210,
+          "is_total": true,
+          "plus": [
+            "1",
+            "3",
+            "4",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15"
+          ],
+          "minus": [
+            "2",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20"
+          ]
+        }
+      ]
+    }
+  ]
+}

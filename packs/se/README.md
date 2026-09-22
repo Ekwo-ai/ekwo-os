@@ -117,6 +117,44 @@ tre regler för `deadline` inte kan uttrycka den svenska förfallodagen.
 period ett företag redovisar på beror på dess egen omsättning och val, inte
 på en regel lagen ger alla.
 
+## Årsredovisningen — bilaga 1 och 2
+
+`SE-ARL-BIL1-BS` (balansräkning, kontoform) och `SE-ARL-BIL2-IS`
+(resultaträkning, kostnadsslagsindelad) är årsredovisningslagens egna
+uppställningsformer, post för post — 3 kap. 3 § och bilagorna 1 och 2 till
+lagen (1995:1554), i den lydelse bilagorna fick genom lag (2015:813). Varje
+post är en av kontoplanens egna kontointervall; ingen post är gissad från
+kontonumren. Bilaga 1 ger fyra alternativa rader under rubriken A. Eget
+kapital beroende på företagsform (aktiebolag, ekonomisk förening,
+handelsbolag/enskild firma, övriga företag); detta paket bär bara
+aktiebolagets rad, eftersom konto 2010 Aktiekapital är det enda av de fyra
+kontoplanen har.
+
+En post i bilagan som ingen av de 166 kontona svarar mot skrivs ut med
+värdet noll i stället för att gissas. Det gäller:
+
+- **Balansräkningen**: A. Tecknat men ej inbetalt kapital; B.I.3 Hyresrätter
+  och liknande rättigheter; B.I.5 Förskott avseende immateriella
+  anläggningstillgångar; B.III.4–6 (fordringar och ägarintressen i
+  intresseföretag och övriga företag utöver kontona 1230/1240); C.II.4
+  (fordringar hos övriga företag med ägarintresse); C.III.1 (andelar i
+  koncernföretag bland kortfristiga placeringar); Eget kapital:
+  Uppskrivningsfond, Kapitalandelsfond, Fond för verkligt värde och den
+  öppna posten "Övrigt" bland Andra fonder; C. Avsättningar för skatter;
+  D. Förskott från kunder, Växelskulder, Skulder till intresseföretag och
+  Skulder till övriga företag med ägarintresse.
+- **Resultaträkningen**: post 3 Aktiverat arbete för egen räkning; post 9
+  Nedskrivningar av omsättningstillgångar utöver normala nedskrivningar;
+  post 10 Övriga rörelsekostnader; posterna 11–14 (intäkter från andelar
+  och värdepapper i koncern-, intresse- och övriga företag); post 16
+  Nedskrivningar av finansiella anläggningstillgångar; post 20 Övriga
+  skatter.
+
+Det är inte kontoplanen som är ofullständig för ett mindre aktiebolag utan
+posterna i lagens uppställningsform som täcker fler bolagsformer och
+koncernförhållanden än en enda mindre rörelse normalt bokför — se punkt 2 i
+"Innan detta paket blir `reviewed`" nedan.
+
 ## Luckor — inte kodifierat i detta paket
 
 Inget av detta är ett fel i formatet; det är arbete som återstår.
@@ -150,3 +188,9 @@ En granskare bör titta på detta först:
    fakturering mellan näringsidkare; lag (2018:1277) gäller bara fakturor som
    utfärdas till följd av en offentlig upphandling, vilket detta paket inte
    modellerar som en egen väg.
+6. **Årsredovisningens uppställningsformer** (`SE-ARL-BIL1-BS`,
+   `SE-ARL-BIL2-IS`) — särskilt fördelningen av moms- och
+   arbetsgivaravgiftskonton (2430–2520) till D.9 Skatteskulder i stället för
+   D.10 eller D.11, och av semesterlöneskuld och upplupna sociala avgifter
+   (2530, 2610) till D.11 i stället för D.10; se avsnittet "Årsredovisningen
+   — bilaga 1 och 2" ovan för de rader som saknar konto.

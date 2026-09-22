@@ -83,7 +83,7 @@
       },
       {
         "key": "arsredovisningslagen",
-        "title": "Årsredovisningslag (1995:1554), 3 kap. och bilaga 1 — balansräkningens uppställningsform",
+        "title": "Årsredovisningslag (1995:1554), 3 kap. 3 § och bilagorna 1–2 — balansräkningens och resultaträkningens uppställningsformer",
         "publisher": "Sveriges riksdag — Svensk författningssamling",
         "url": "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/arsredovisningslag-19951554_sfs-1995-1554/",
         "consulted_on": "2026-09-22",
@@ -184,6 +184,7 @@
       "accounts": "accounts.csv",
       "default": true,
       "audience": "companies",
+      "statements": ["SE-ARL-BIL1-BS", "SE-ARL-BIL2-IS"],
       "legal_reference": "Bokföringslagen ställer inte upp någon lagstadgad kontoplan; kraven är att bokföringen är systematisk och kan presenteras i en systematisk ordning (5 kap. 1 §). Den vidast spridda referensen i svensk praxis är den kontoklassindelning som BAS-kontoplanen bygger på (klass 1 tillgångar, klass 2 eget kapital och skulder, klass 3 rörelsens intäkter, klass 4 material och varor, klass 5–6 övriga externa kostnader, klass 7 personalkostnader och avskrivningar, klass 8 finansiella poster och skatt). Denna plan följer den indelningen som referens men är Ekwos egen sammanställning: den återger varken BAS-kontoplanens fullständiga kontolista, dess kontonummer eller dess benämningar, som är Bas-intressenternas Förenings verk och inte publiceras under en öppen licens.",
       "source": "bokforingslagen"
     }
