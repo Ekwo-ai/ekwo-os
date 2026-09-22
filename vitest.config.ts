@@ -46,16 +46,10 @@ export default defineConfig({
     // tests of each module. A brick and a module are published on their own,
     // so their suites stay where they live; one `npm test` has to run all
     // three, or one of them breaks where nobody looks.
-    //
-    // `apps/*` is the fourth for the same reason and one of its own: the site
-    // renders React, so its test cannot sit under `tests/`, which is compiled
-    // by a `tsconfig.json` that has no reason to know what JSX is. It stays
-    // beside what it tests and runs with everything else.
     include: [
       'tests/**/*.test.ts',
       'packages/formats/*/test/**/*.test.ts',
       'modules/*/tests/**/*.test.ts',
-      'apps/*/tests/**/*.test.ts',
     ],
     testTimeout: 60_000,
     hookTimeout: 60_000,

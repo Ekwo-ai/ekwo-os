@@ -36,17 +36,14 @@ import { fileURLToPath } from 'node:url';
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 
 /**
- * Where the suite lives. Everything under these, `.ts` only.
- *
- * `apps` is here because the site's test sits beside the site rather than
- * under `tests/` — it renders React, and the root `tsconfig.json` has no
- * reason to know what JSX is. A test that escaped this guard by living in
- * another folder would be exactly the test that named three countries.
+ * Where the suite lives. Everything under these, `.ts` only. A test that
+ * escaped this guard by living in another folder would be exactly the test
+ * that named three countries.
  */
-const ROOTS = ['tests', 'modules', 'apps'];
+const ROOTS = ['tests', 'modules'];
 
 /** Never walked: not source, and large. */
-const SKIP = new Set(['node_modules', 'dist', '.prerender']);
+const SKIP = new Set(['node_modules', 'dist']);
 
 /**
  * ISO 3166-1 alpha-2 codes of the European Union, plus the ones the packs of

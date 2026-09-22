@@ -675,8 +675,9 @@ ekwo pack describe --json | jq '.data.packs[] | {country, version}'
 ```
 
 Under `--json` the whole description of every pack is the result. It is the
-same object [`apps/site`](../../apps/site/) builds a page from, so the site and
-the command line cannot come to say different things about a country.
+same object the site at [ekwo.ai](https://ekwo.ai/countries/) builds each
+country's page from, so the site and the command line cannot come to say
+different things about a country.
 
 `check` validates every file of the pack against
 [`packs/schema/pack.1.json`](../../packs/schema/pack.1.json) and against the

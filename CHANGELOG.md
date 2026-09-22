@@ -11,6 +11,11 @@ somewhere has already run it.
 
 ### Changed
 
+- **The site at ekwo.ai is built outside this repository.** It still reads
+  the packs, the documentation, the READMEs and this changelog from here at
+  build time, so a pack merged into `packs/` still gets its page with nothing
+  else edited; `apps/site`, its workspace, its CI job and `netlify.toml` are
+  gone. The test of the sections of `DISCLAIMER.md` moved to `tests/`.
 - **The site compares any two countries on one page.** `/compare/` was a
   matrix of links to a page per pair — 1,225 pages at fifty countries, 19,900
   at two hundred. It is one page now, whose two pickers are native selects

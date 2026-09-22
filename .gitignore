@@ -16,11 +16,6 @@ supabase/.temp/
 # which project the person installed into.
 ekwo.json
 
-# The site's build. `dist/` above already covers its pages; this is the second
-# folder its build writes, holding the bundled prerender script that fills the
-# template. Both are output, and both are rebuilt by one command.
-apps/site/.prerender/
-
 # The key that proves the ai.ekwo namespace to the MCP registry
 # (docs/releasing.md). It signs every publish and never leaves the machine of
 # whoever publishes.
