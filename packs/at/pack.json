@@ -4,7 +4,7 @@
   "name": "Austria",
   "version": "0.1.0",
   "schema_min": "20260921145425",
-  "seed_sequence": 53,
+  "seed_sequence": 63,
   "released_at": "2026-09-22",
   "certification": {
     "status": "community",
