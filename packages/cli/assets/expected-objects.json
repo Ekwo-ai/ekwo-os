@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.7.0",
-  "migration": "20260922144500",
+  "migration": "20260922162600",
   "socle": {
     "schema": "public",
     "tables": [
@@ -3744,6 +3744,10 @@
         "arguments": "p_rounding money_rounding"
       },
       {
+        "name": "api_key_company",
+        "arguments": ""
+      },
+      {
         "name": "assert_may_close_year",
         "arguments": ""
       },
@@ -4004,6 +4008,10 @@
         "arguments": "p_company_id uuid, p_from date, p_to date, p_report_code text"
       },
       {
+        "name": "ekwo_pre_request",
+        "arguments": ""
+      },
+      {
         "name": "ekwo_schema_version",
         "arguments": ""
       },
@@ -4196,6 +4204,10 @@
         "arguments": ""
       },
       {
+        "name": "is_known_caller",
+        "arguments": ""
+      },
+      {
         "name": "label_for",
         "arguments": "p_name text, p_i18n jsonb, p_languages text[]"
       },
@@ -4326,6 +4338,10 @@
       {
         "name": "prepare_filing",
         "arguments": "p_company_id uuid, p_from date, p_to date, p_report_code text"
+      },
+      {
+        "name": "present_api_key",
+        "arguments": "p_secret text"
       },
       {
         "name": "purge_audit_log",
@@ -6830,6 +6846,19 @@
           ]
         },
         {
+          "name": "api_key_company",
+          "arguments": "",
+          "anon": [
+            "execute"
+          ],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
           "name": "assert_may_close_year",
           "arguments": "",
           "trigger": true,
@@ -7465,6 +7494,19 @@
           ]
         },
         {
+          "name": "ekwo_pre_request",
+          "arguments": "",
+          "anon": [
+            "execute"
+          ],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
           "name": "ekwo_schema_version",
           "arguments": "",
           "anon": [],
@@ -7871,7 +7913,9 @@
         {
           "name": "installed_schema_version",
           "arguments": "",
-          "anon": [],
+          "anon": [
+            "execute"
+          ],
           "authenticated": [
             "execute"
           ],
@@ -7966,6 +8010,19 @@
         },
         {
           "name": "is_instance_admin",
+          "arguments": "",
+          "anon": [
+            "execute"
+          ],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "is_known_caller",
           "arguments": "",
           "anon": [
             "execute"
@@ -8332,6 +8389,19 @@
           "name": "prepare_filing",
           "arguments": "p_company_id uuid, p_from date, p_to date, p_report_code text",
           "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "present_api_key",
+          "arguments": "p_secret text",
+          "anon": [
+            "execute"
+          ],
           "authenticated": [
             "execute"
           ],

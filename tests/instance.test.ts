@@ -311,15 +311,36 @@ describe('the version of the schema, asked on its own', () => {
     expect(columns.map((c) => c.column_name).sort()).toEqual(['edition', 'schema_version']);
   });
 
-  it('is not part of the anonymous surface', async () => {
+  it('answers an anonymous caller with no rows rather than with a refusal', async () => {
+    // It was granted to `authenticated` alone. `20260922161500` opened it to
+    // `anon` so that a screen can check a pasted key against an instance
+    // before presenting it — and moved the decision into the body, which is
+    // what keeps a scanner from learning the release an installation runs.
+    // The grant is not the answer; the row is, and there is none.
     const granted = await one<{ anon: boolean; authenticated: boolean }>(
       db,
       `select has_function_privilege('anon', 'installed_schema_version()', 'execute') as anon,
               has_function_privilege('authenticated', 'installed_schema_version()', 'execute')
                 as authenticated`,
     );
-    expect(granted.anon).toBe(false);
+    expect(granted.anon).toBe(true);
     expect(granted.authenticated).toBe(true);
+
+    await db.exec(`
+      select set_config('request.jwt.claims', '', false);
+      select set_config('ekwo.installing', '', false);
+      set role anon;
+    `);
+    let seen: unknown[];
+    try {
+      seen = await rows(db, `select * from installed_schema_version()`);
+    } finally {
+      await db.exec(`
+        reset role;
+        select set_config('ekwo.installing', 'on', false);
+      `);
+    }
+    expect(seen).toEqual([]);
   });
 });
 

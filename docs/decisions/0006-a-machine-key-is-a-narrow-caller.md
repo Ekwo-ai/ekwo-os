@@ -36,19 +36,30 @@ whenever `ekwo.api_key` is set.
 
 ## Consequences
 
-Known limits of a caller that cannot read `companies` or `fiscal_years`:
+**A key is not a session**, and that part holds: `auth.uid()` is null for one,
+so a policy that asks for a signed-in user answers no, and what a key may do is
+`has_capability()` and nothing else.
 
-- functions that read the company row as the caller (rounding by company,
-  per-company filing calendars) do not work for a key;
-- a key has no portfolio and cannot export a company;
-- `post_entry()` run by a key finds no financial year; the posted-entry guard
-  accepts a null year and refuses only a wrong one.
+**The rest was the open question, and it has been answered.**
+[0062](0062-a-key-reaches-the-api.md) makes a key reach the API through a
+header, and makes it *on* the company it was minted for. So these limits, which
+this record listed as known, are lifted:
 
-Deciding what of `companies` a key may read is an open question, recorded
-rather than patched per function.
+- ~~functions that read the company row as the caller (rounding by company,
+  per-company filing calendars) do not work for a key~~;
+- ~~a key has no portfolio and cannot export a company~~ — its portfolio is
+  that one company, and it exports it with the capabilities to read what the
+  archive carries;
+- ~~`post_entry()` run by a key finds no financial year~~; it reads
+  `fiscal_years` through the same capability a member does.
+
+What remains true of "a client holding a connection" is that it is still a way
+in, not the only one: `use_api_key()` on a direct connection is what the MCP
+server and the command line use, unchanged.
 
 ## See also
 
-- `tests/api_keys.test.ts`
+- `tests/api_keys.test.ts`, `tests/api_key_over_postgrest.test.ts`
+- [0062 A machine key reaches the API](0062-a-key-reaches-the-api.md)
 - [0004 A permission is a capability](0004-a-permission-is-a-capability.md)
 - [0040 A portfolio is what the caller may read](0040-a-portfolio-is-what-the-caller-may-read.md)

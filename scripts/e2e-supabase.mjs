@@ -867,6 +867,68 @@ async function main() {
   });
   if (schemes === undefined) return report();
 
+  // ---------------------------------------------------------------------
+  // A machine key, over HTTP, with the header a script sends.
+  //
+  // PGlite can present a key and can reproduce the role switch, but it is not
+  // a project: there is no PostgREST reading `pgrst.db_pre_request` and no
+  // gateway between the two headers. This is the only place that can say the
+  // transport works, so it says it here — first the statement the doctor
+  // prints, in case the migration was not allowed to write it, then a request
+  // that carries no session at all.
+  // ---------------------------------------------------------------------
+  await step('a machine key reaches the API over HTTP', async () => {
+    const held = await rest.rpc('member_capabilities', { p_company_id: company.id });
+    const key = await rest.rpc('create_api_key', {
+      p_company_id: company.id,
+      p_name: 'e2e over the API',
+      p_capabilities: held,
+      p_expires_at: null,
+    });
+    const secret = key[0]?.secret ?? key.secret;
+    if (typeof secret !== 'string') throw new Error('create_api_key returned no secret');
+
+    // The publishable key alone, plus the key in its own header: no session,
+    // no bearer token, which is the whole point.
+    const withKey = async (method, path, body) => {
+      const answer = await fetch(`${supabaseUrl}/rest/v1${path}`, {
+        method,
+        headers: {
+          apikey: anonKey,
+          'X-Ekwo-Api-Key': secret,
+          'Content-Type': 'application/json',
+        },
+        ...(body === undefined ? {} : { body: JSON.stringify(body) }),
+      });
+      const text = await answer.text();
+      if (!answer.ok) throw new Error(`${method} ${path} → ${answer.status} ${text.slice(0, 300)}`);
+      return text === '' ? null : JSON.parse(text);
+    };
+
+    const seen = await withKey('GET', '/companies?select=id,name');
+    if (!Array.isArray(seen) || seen.length !== 1 || seen[0].id !== company.id) {
+      throw new Error(
+        `the key read ${Array.isArray(seen) ? seen.length : 'no'} company row(s); it is on exactly one. ` +
+          'If this is 0, PostgREST was probably never told to call the pre-request: ' +
+          "alter role authenticator set pgrst.db_pre_request = 'public.ekwo_pre_request'; notify pgrst, 'reload config';",
+      );
+    }
+
+    const version = await withKey('POST', '/rpc/installed_schema_version', {});
+    if (!Array.isArray(version) || version.length !== 1) {
+      throw new Error('installed_schema_version() answered the key with no row');
+    }
+
+    // And the same request without the header reaches nothing, because `anon`
+    // holds no privilege on any table.
+    const anonymous = await fetch(`${supabaseUrl}/rest/v1/companies?select=id`, {
+      headers: { apikey: anonKey },
+    });
+    if (anonymous.ok) throw new Error('an anonymous request read `companies`; the grants are wrong');
+
+    return `${seen[0].name}, schema ${version[0].schema_version}, anonymous ${anonymous.status}`;
+  });
+
   const expectedResult = round(SALE_BASE - PURCHASE_BASE - taxInCost, decimals);
 
   await step('close the financial year', async () => {

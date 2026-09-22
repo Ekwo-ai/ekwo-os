@@ -358,25 +358,61 @@ describe('what is written down as missing', () => {
     expect(archive.tables['budgets.budgets']).toHaveLength(1);
   });
 
-  it('a machine key leaves with nothing, because the company row is closed to it', async () => {
-    const key = await asUser(db, owner, () =>
+  /**
+   * One export, presented the way a machine key is: one transaction, the key
+   * first. Answers the archive as text, or the refusal.
+   */
+  async function exportWithKey(secret: string): Promise<string> {
+    await db.exec(`select set_config('ekwo.installing', '', false); set role authenticated;`);
+    try {
+      let answer = '';
+      await db.transaction(async (tx) => {
+        await tx.query(`select present_api_key($1)`, [secret]);
+        const result = await tx.query<{ archive: string }>(
+          `select export_company($1)::text as archive`,
+          [companyId],
+        );
+        answer = result.rows[0]?.archive ?? '';
+      });
+      return answer;
+    } catch (error) {
+      return (error as Error).message;
+    } finally {
+      await db.exec(`reset role; select set_config('ekwo.installing', 'on', false);`);
+    }
+  }
+
+  it('a machine key leaves with the books, once it may read them', async () => {
+    // It used to leave with nothing: `companies` asked `is_company_member()`,
+    // a key was not one, and the archive stopped at `unknown_company` on the
+    // first table. Since `20260922160000` a key is on the company it was
+    // minted for, and what stops it now is the honest refusal — an archive is
+    // whole or it is not written, so a key that may export and may not read
+    // is told which table it cannot see.
+    const exportOnly = await asUser(db, owner, () =>
       one<{ secret: string }>(db, `select secret from create_api_key($1, 'exporter', '["company.export"]'::jsonb)`, [
         companyId,
       ]),
     );
-    await db.exec(`select set_config('ekwo.installing', '', false); set role authenticated;`);
-    let said = 'returned';
-    try {
-      await db.transaction(async (tx) => {
-        await tx.query(`select use_api_key($1)`, [key.secret]);
-        await tx.query(`select export_company($1)`, [companyId]);
-      });
-    } catch (error) {
-      said = (error as Error).message;
-    } finally {
-      await db.exec(`reset role; select set_config('ekwo.installing', 'on', false);`);
-    }
-    expect(said).toContain('unknown_company');
+    expect(await exportWithKey(exportOnly.secret)).toContain('export_incomplete');
+
+    // And with what a client holds — the preset a person exports under, read
+    // from the table that decides it — the whole company comes back.
+    const held = await rows<{ capability: string }>(
+      db,
+      `select capability from role_capabilities where role = 'client' order by capability`,
+    );
+    const full = await asUser(db, owner, () =>
+      one<{ secret: string }>(
+        db,
+        `select secret from create_api_key($1, 'sauvegarde', $2::jsonb)`,
+        [companyId, JSON.stringify(held.map((row) => row.capability))],
+      ),
+    );
+    const said = await exportWithKey(full.secret);
+    expect(said).not.toContain('export_incomplete');
+    expect(said).not.toContain('unknown_company');
+    expect(JSON.parse(said).manifest.company.id).toBe(companyId);
   });
 
   it('an administrator of the installation is not a member, and does not leave with a company either', async () => {

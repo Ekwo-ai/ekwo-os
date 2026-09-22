@@ -11,16 +11,54 @@ somewhere has already run it.
 
 ### Added
 
+- **A machine key reaches the API** (`20260922160000`, `20260922162500`,
+  decision [0062](docs/decisions/0062-a-key-reaches-the-api.md)). A key was for
+  a client holding a connection: `use_api_key()` presents it for one
+  transaction, and PostgREST runs each request in its own, so the key was never
+  presented when the work ran. Anything operated for somebody else — a backup,
+  a scheduled report, a function on a host with no psql — had to hold a
+  password of a real person or the `service_role` key.
+
+  The secret now travels in `X-Ekwo-Api-Key`, beside the publishable key.
+  `ekwo_pre_request()` is called by PostgREST at the start of every request's
+  transaction (`pgrst.db_pre_request`), presents the key, and only then moves
+  the request off `anon` — which holds no privilege on any table, so the grant
+  refused before row level security could decide. `auth.uid()` stays null: a
+  key is not a session, and what it may do is `has_capability()`, as before.
+
+  A key is now **on the company it was minted for**, which answers the question
+  decision 0006 left open by name: `is_company_member()` says true for that
+  company, so the rows that describe it — the company row, its members, its
+  modules, its filing periods, its matching settings, its audit trail — are
+  readable, exactly as they are to the narrowest member. Nothing of any other
+  company. The reference tables of the installation ask `is_known_caller()`
+  where they asked `auth.uid() is not null`: a signed-in user, or the holder of
+  a live key.
+
+  Three limits decision 0006 listed are lifted: a key reads `companies`, has a
+  portfolio of one company, and can export it. An archive is whole or it is not
+  written, so a key that backs a company up carries the capabilities to read
+  what the archive carries and not only `company.export` — the preset a person
+  exports under is `client`, and the refusal names the table and the two
+  counts. [`docs/machine-access.md`](docs/machine-access.md) is the page, with
+  the curl.
+
+  `ekwo doctor` reports whether PostgREST was told to call the pre-request, and
+  prints the two statements: a managed project may refuse the migration the
+  right to write the settings of `authenticator`, and a key that is silently
+  never read is not a thing to leave somebody to discover.
+
 - **The version of the schema, asked on its own** (`20260922143000`).
   `installed_schema_version()` returns `instance.schema_version` and the
   edition, and nothing else of the instance row. The policy on `instance`
   admits members of at least one company and instance administrators, so a
   freshly created account read no row and a client could not tell an
   installation behind its schema from one whose row it was never allowed to
-  see — the same silence, calling for opposite behaviour. Definer, `stable`,
-  granted to `authenticated`; `anon` does not get it, because the question is
-  asked after signing in and an anonymous scanner has no use for the release
-  number of somebody's installation.
+  see — the same silence, calling for opposite behaviour. Definer and `stable`.
+  `20260922161500` then opened it to `anon` and moved the decision into the
+  body: it answers a caller this installation knows — a signed-in user, or the
+  holder of a live key — and answers anybody else with no rows at all, so the
+  screen that checks a pasted key can call it and a scanner learns nothing.
 
 - **A financial statement asked for by kind** (`20260922144500`).
   `financial_statement()` takes the code of a scheme, and a code belongs to a

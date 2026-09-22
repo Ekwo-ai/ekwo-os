@@ -100,3 +100,4 @@ records it relies on). New records take the next free number.
 
 - [0060](0060-the-plan-is-the-assertion-the-clock-is-a-report.md) — Under load, the plan is the assertion, not the clock
 - [0061](0061-licensing-and-the-open-core-line.md) — AGPL core, MIT formats, an operational paid line
+- [0062](0062-a-key-reaches-the-api.md) — A machine key reaches the API, and is on its own company

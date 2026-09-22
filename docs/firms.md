@@ -148,8 +148,11 @@ which the manifest lists for somebody to copy.
 - **Separation of duties** between whoever prepares a return and whoever files
   it: the `ready` state exists for it, the rule that forbids one person both
   gestures does not.
-- **An API key has no portfolio.** The `companies` row is closed to a key, and
-  that row is where the functions start from.
+- ~~**An API key has no portfolio.**~~ Delivered: a key is on the company it
+  was minted on, so its portfolio is that company
+  ([`machine-access.md`](machine-access.md)). What is still missing is a key
+  across a firm's whole portfolio, which is one key on several companies and
+  therefore a different object.
 - **The portfolio across installations** (arrangement B), which is `ee/`.
 
 What is deliberately not here: billing a firm's clients and tracking its time

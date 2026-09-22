@@ -867,6 +867,10 @@ describe('a client writes nothing else — by the function', () => {
     ]);
     refused = {
       'public.post_document': { sql: `select post_document($1)`, params: [mine.draftDocumentId] },
+      // Presenting a key is a door and not a privilege: a client who does not
+      // hold one is told the secret is not a key of this installation, in the
+      // same words anybody else is told.
+      'public.present_api_key': { sql: `select present_api_key('not-a-key-of-this-installation')`, params: [] },
       // A rehearsal is the real call inside a block that is rolled back, so it
       // is refused where posting is — before there is anything to roll back.
       'public.rehearse_post_document': { sql: `select rehearse_post_document($1)`, params: [mine.draftDocumentId] },
@@ -1006,6 +1010,7 @@ describe('a client writes nothing else — by the function', () => {
         sql: `select documents_allocate_included_tax($1)`,
         params: [mine.draftDocumentId],
       },
+      'public.ekwo_pre_request': { sql: `select ekwo_pre_request()`, params: [] },
       'assets.create_asset': {
         sql: `select assets.create_asset($1, 'CLI', 'A van', $2::date, 1000, $3, $4, $5, null, 36)`,
         params: [mine.companyId, FROM, ...mine.accountCodes],
@@ -1058,6 +1063,10 @@ describe('a client writes nothing else — by the function', () => {
     'public.documents_allocate_included_tax',
     'public.documents_refresh_amount_paid',
     'public.documents_refresh_totals',
+    // PostgREST calls it at the start of every request. With no header on the
+    // request — which is every request a person makes — it returns having done
+    // nothing, and that is the whole of what it does here.
+    'public.ekwo_pre_request',
     'public.pin_referenced_accounts',
     'public.record_filing_outcome',
     'public.reopen_filing',

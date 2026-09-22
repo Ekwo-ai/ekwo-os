@@ -167,6 +167,7 @@ describe('doctor', () => {
       'row level security',
       'policies',
       'grants',
+      'api keys over the API',
       'company members',
       'instance administrators',
       'bank accounts',
@@ -174,6 +175,26 @@ describe('doctor', () => {
       'posted entries',
       'audit trail',
     ]);
+  });
+
+  it('warns when PostgREST was never told to call the pre-request', async () => {
+    // The migration sets `pgrst.db_pre_request` where it is allowed to, and a
+    // managed project may refuse it. A key in `X-Ekwo-Api-Key` is then simply
+    // never read, which is the kind of quiet nothing somebody discovers a
+    // month later, so the doctor says it and gives the two statements.
+    await db.query(`alter role authenticator reset pgrst.db_pre_request`);
+    try {
+      const report = await doctor(db, migrations);
+      const check = report.checks.find((c) => c.name === 'api keys over the API');
+      expect(check?.severity).toBe('warning');
+      expect(check?.details?.[0]).toContain('pgrst.db_pre_request');
+      expect(check?.details?.[0]).toContain('ekwo_pre_request');
+      expect(report.problems).toBe(0);
+    } finally {
+      await db.query(
+        `alter role authenticator set pgrst.db_pre_request = 'public.ekwo_pre_request'`,
+      );
+    }
   });
 
   it('warns about a company with no bank account, and never fails on it', async () => {

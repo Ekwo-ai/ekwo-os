@@ -66,8 +66,19 @@ begin
   if not exists (select 1 from pg_roles where rolname = 'service_role') then
     create role service_role nologin noinherit bypassrls;
   end if;
+  -- The login PostgREST connects with, and the reason a test can reproduce
+  -- what a request runs under. `set session authorization authenticator`
+  -- drops the superuser of the session, so `set role authenticated` from
+  -- `anon` is then allowed for the one reason it is allowed on a project:
+  -- `authenticator` is a member of both. Checked against PostgreSQL 14 with a
+  -- real `authenticator` login, which answers identically.
+  if not exists (select 1 from pg_roles where rolname = 'authenticator') then
+    create role authenticator noinherit login;
+  end if;
 end
 $$;
+
+grant anon, authenticated, service_role to authenticator;
 
 -- Usage on `auth`, which is Supabase's schema and not Ekwo's to grant. Its
 -- helpers are what every policy of the schema calls.

@@ -109,7 +109,13 @@ that is not cut.
      "permission denied" to the first user;
    - GoTrue, so row level security judged on a real JWT rather than on a
      session variable a test set;
-   - the extensions, roles and defaults a hosted project has.
+   - the extensions, roles and defaults a hosted project has;
+   - the `authenticator` role and `pgrst.db_pre_request`, so a machine key sent
+     in `X-Ekwo-Api-Key` is read by PostgREST rather than by a test that set a
+     session variable. The step *a machine key reaches the API over HTTP* is
+     the only one that can say the transport works, and its failure names the
+     two statements `ekwo doctor` prints when a project would not let the
+     migration write that setting.
 
    ```sh
    npm run build

@@ -78,24 +78,54 @@ describe('the anonymous role', () => {
     // which is null for `anon`. Without the grants, an anonymous select would
     // raise "permission denied for function" instead of returning nothing.
     //
-    // `shared_document` is the eleventh and the only one of a different kind:
-    // it does not answer about the caller, it *is* the public door of
-    // `20260915153000`. What it gives away is bounded by the token presented
-    // to it — one document, or the same null for every token that is not a
-    // live link — and it reaches no table on the caller's behalf. A twelfth
-    // entry here is a decision about what an anonymous visitor may reach, not
-    // a detail of a migration.
+    // `shared_document` is of a different kind: it does not answer about the
+    // caller, it *is* the public door of `20260915153000`. What it gives away
+    // is bounded by the token presented to it — one document, or the same null
+    // for every token that is not a live link — and it reaches no table on the
+    // caller's behalf. An entry here is a decision about what an anonymous
+    // visitor may reach, not a detail of a migration.
+    //
+    // Five arrived with `20260922160000`, which let a machine key reach the
+    // API, and each is a door or the hinge of one.
+    //
+    // `ekwo_pre_request` is the door: PostgREST calls it as `anon` at the
+    // start of every request, so `anon` has to be able to execute it or no
+    // request works at all. It answers void, and does nothing whatsoever
+    // without the header.
+    //
+    // `present_api_key` is what it calls. `use_api_key()` was not granted and
+    // is not granted now: it returns the row, `key_hash` included, and
+    // whatever the pre-request may call, an anonymous caller may call. This
+    // returns void. What an anonymous caller can learn from it is whether a
+    // secret they already hold is a live key of this installation — which is
+    // what presenting a bearer credential means, and the answer to a secret
+    // they do not hold is the refusal every wrong key gets.
+    //
+    // `api_key_company` and `is_known_caller` are hinges: `is_company_member`
+    // and the policies of the reference tables call them, and `anon` already
+    // executes those on behalf of a policy. Both answer about the key
+    // presented in this transaction, which for `anon` without a header is
+    // nothing — the same word `auth.uid()` gives it.
+    //
+    // `installed_schema_version` is granted and answers `anon` with zero rows
+    // (`20260922161500`): the grant is for the screen that checks a pasted key
+    // before presenting it, and an anonymous call learns nothing.
     expect(callable.map((r) => r.proname)).toEqual([
+      'api_key_company',
       'can_write_company',
       'company_has_no_member',
       'company_role',
+      'ekwo_pre_request',
       'has_capability',
+      'installed_schema_version',
       'instance_has_no_admin',
       'is_any_company_member',
       'is_company_member',
       'is_company_owner',
       'is_instance_admin',
+      'is_known_caller',
       'module_enabled',
+      'present_api_key',
       'shared_document',
     ]);
   });

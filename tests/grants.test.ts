@@ -210,25 +210,48 @@ describe('what the grants say, against what the policies say', () => {
     // word *no*. The list is asserted rather than counted, because a tenth
     // entry appearing here is a decision and not a detail.
     //
-    // `shared_document` is the one entry that is not a policy helper. It is a
-    // door rather than an answer about the caller: `20260915153000` publishes
-    // one document to whoever presents its token, and nothing else — no table
-    // is reached on the visitor's behalf, and a token that is not a live link
-    // gets the same null as a token that never existed.
+    // `shared_document` is one of the entries that is not a policy helper. It
+    // is a door rather than an answer about the caller: `20260915153000`
+    // publishes one document to whoever presents its token, and nothing else —
+    // no table is reached on the visitor's behalf, and a token that is not a
+    // live link gets the same null as a token that never existed.
+    //
+    // `ekwo_pre_request` and `present_api_key` are the second door, opened by
+    // `20260922160000` so that a machine key reaches the API: PostgREST calls
+    // the first as `anon` at the start of every request, and it does nothing
+    // at all without the header. Both answer `void`. `use_api_key()` is not
+    // granted and must not be — it returns the row, `key_hash` included.
+    //
+    // `api_key_company` and `is_known_caller` are policy helpers of the same
+    // kind as the rest: `is_company_member()` and the reference tables call
+    // them, `anon` already evaluates those on behalf of a policy, and without
+    // a key presented they answer the same nothing.
+    //
+    // `installed_schema_version` is granted and answers `anon` with zero rows
+    // (`20260922161500`), which is the shape of "learn nothing" for a function
+    // that has to be callable before a key is presented.
+    //
+    // The list is asserted rather than counted: an entry appearing here is a
+    // decision and not a detail.
     const callable = sections
       .flatMap((s) => s.functions.filter((f) => f.anon.length > 0).map((f) => `${s.schema}.${f.name}`))
       .sort();
     expect(callable).toEqual([
+      'public.api_key_company',
       'public.can_write_company',
       'public.company_has_no_member',
       'public.company_role',
+      'public.ekwo_pre_request',
       'public.has_capability',
+      'public.installed_schema_version',
       'public.instance_has_no_admin',
       'public.is_any_company_member',
       'public.is_company_member',
       'public.is_company_owner',
       'public.is_instance_admin',
+      'public.is_known_caller',
       'public.module_enabled',
+      'public.present_api_key',
       'public.shared_document',
     ]);
   });

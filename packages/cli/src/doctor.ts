@@ -75,6 +75,7 @@ export async function doctor(
   checks.push(await checkRowLevelSecurity(db));
   checks.push(await checkPolicies(db));
   checks.push(await checkGrants(db, expected));
+  checks.push(await checkPreRequest(db));
 
   checks.push(await checkOrphanMembers(db));
   checks.push(await checkOrphanAdmins(db));
@@ -427,6 +428,49 @@ async function checkBankAccounts(db: SqlClient): Promise<Check> {
       'Payments still book — the bank journal carries a default account — but there is no IBAN to',
       'put on an invoice and no statement to reconcile against.',
       'Add one with `ekwo init --iban …` on the same project, or the create_bank_account tool of the MCP server.',
+    ],
+  };
+}
+
+/**
+ * Whether PostgREST has been told to call `ekwo_pre_request()`.
+ *
+ * A machine key travels in `X-Ekwo-Api-Key` and is read by that function at
+ * the start of a request's transaction — which only happens if
+ * `pgrst.db_pre_request` names it on the `authenticator` role. The migration
+ * sets it where it is allowed to, and a managed project may not allow it, so
+ * this is the check that says so out loud instead of leaving somebody to
+ * discover that their key does nothing.
+ *
+ * A database with no `authenticator` role has no PostgREST in front of it —
+ * the command line's own connection, a plain Postgres — and there is nothing
+ * to report.
+ */
+async function checkPreRequest(db: SqlClient): Promise<Check> {
+  const name = 'api keys over the API';
+  const found = await db.query<{ setting: string | null }>(
+    `select (select s from unnest(coalesce(r.rolconfig, '{}')) as s
+              where s like 'pgrst.db_pre_request=%') as setting
+       from pg_roles r where r.rolname = 'authenticator'`,
+  );
+  if (found.length === 0) {
+    return { name, severity: 'ok', summary: 'no PostgREST in front of this database' };
+  }
+  const setting = found[0]?.setting ?? null;
+  if (setting !== null && setting.endsWith('ekwo_pre_request')) {
+    return { name, severity: 'ok', summary: 'PostgREST calls ekwo_pre_request()' };
+  }
+  return {
+    name,
+    severity: 'warning',
+    summary:
+      setting === null
+        ? 'PostgREST calls no pre-request, so a machine key in X-Ekwo-Api-Key is ignored'
+        : `PostgREST calls another pre-request (${setting}), so a machine key in X-Ekwo-Api-Key is ignored`,
+    details: [
+      "alter role authenticator set pgrst.db_pre_request = 'public.ekwo_pre_request';",
+      "notify pgrst, 'reload config';",
+      'Run both as a role that may write the settings of `authenticator`. Nothing else is affected: keys presented on a direct connection with use_api_key() work either way.',
     ],
   };
 }

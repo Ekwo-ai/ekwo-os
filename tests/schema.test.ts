@@ -69,6 +69,7 @@ describe('migrations', () => {
       'trial_balance', 'general_ledger', 'aged_balance', 'vat_return', 'fec_lines',
       'evaluate_totals', 'financial_statement', 'unmapped_accounts', 'available_statements',
       'default_statement_code', 'financial_statement_of_kind', 'installed_schema_version',
+      'api_key_company', 'is_known_caller', 'present_api_key', 'ekwo_pre_request',
       'install_country_template', 'account_id_by_code', 'commercial_entity',
       'init_instance', 'claim_instance_admin', 'register_instance', 'unregister_instance',
       'is_instance_admin', 'is_any_company_member', 'ekwo_schema_version',

@@ -351,7 +351,7 @@ describe('the rows that carry no date', () => {
 });
 
 describe('a machine key', () => {
-  it('has no portfolio, because the company row is closed to it', async () => {
+  it('has a portfolio of one company: the one it was minted on', async () => {
     const owner = await one<{ user_id: string }>(
       db,
       `select user_id from company_members where company_id = $1 and role = 'owner'`,
@@ -385,13 +385,15 @@ describe('a machine key', () => {
       await db.exec(`reset role;`);
       await db.exec(`select set_config('ekwo.installing', 'on', false);`);
     }
-    // Stated on 13 September 2026 and not changed here: a key is not a
-    // session, and the policies that ask for a member rather than for a
-    // capability — the company row among them — stay closed to it. So a key
-    // holding filings.read reads the declarations of its company and cannot
-    // be told which company that is; its portfolio is empty rather than wrong.
-    expect(coming).toEqual([]);
-    expect(moved).toEqual([]);
+    // Until `20260922160000` this was empty: a key is not a session, the
+    // company row asked `is_company_member()`, and a key holding filings.read
+    // read the declarations of a company it could not be told the name of.
+    // A key is now on the company it was minted for, so the portfolio is that
+    // company and nothing else — decision 0006's "a key has no portfolio" is
+    // the limit that migration lifted.
+    expect(new Set(coming.map((row) => row.company_id))).toEqual(new Set([thirdCo]));
+    expect(coming.length).toBeGreaterThan(0);
+    expect(moved.every((row) => row.company_id === thirdCo)).toBe(true);
   });
 });
 
