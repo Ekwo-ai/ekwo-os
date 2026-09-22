@@ -147,15 +147,25 @@ that is not cut.
    never published under that name, so for those the path is the only form
    that works.
 
-   **The last run: 19 September 2026**, on a throwaway project in `eu-west-3`
-   (Postgres 17.6, session pooler `aws-1`), deleted afterwards. Every pack,
-   each upgraded from `ekwo-os@0.4.1` on npm, `--reset` between runs: BE, EE,
-   FR, GB (year opening 1 April), LU (quarterly) and US all green, 21 steps
-   each. What it found and what was fixed: `ekwo init` left the modules out, so
-   `ekwo status` called a fresh installation sixteen migrations behind; the
-   script posted a New York sales tax on a supply it placed nowhere, found no
-   purchase tax in a pack whose purchase tax is not recoverable, and asked a
-   quarterly filer for a yearly return; `npx ekwo-os@…` ran from the
+   **The last run: 22 September 2026, for `0.5.0`**, on a throwaway project in
+   `eu-west-3` (Postgres 17.6, session pooler `aws-1`), deleted afterwards. BE,
+   EE, FR, GB (year opening 1 April), LU (quarterly) and US, each upgraded from
+   `ekwo-os@0.4.1` on npm — 24 migrations pending, applied by `ekwo migrate` in
+   about 10.5 s — and `--reset` between runs: 21 steps each, all green, about
+   67 s a run. Three packs new in this release installed fresh, since `0.4.1`
+   never carried them: IE, ES (`EKWO_E2E_LANGUAGE=es`) and SN (monthly), 18
+   steps each, all green. JP stops at the sale invoice: the script takes the
+   first plain domestic sale tax without reading its dates, and the plain one
+   of that pack is the 3 % of 1989 to 1997 — the standard rate splits into a
+   national and a local share, which the script does not yet book. No load
+   run this time.
+
+   The run before, on 19 September 2026, for `0.4.1`: the same six packs, 21
+   steps each. What it found and what was fixed: `ekwo init` left the modules
+   out, so `ekwo status` called a fresh installation sixteen migrations behind;
+   the script posted a New York sales tax on a supply it placed nowhere, found
+   no purchase tax in a pack whose purchase tax is not recoverable, and asked
+   a quarterly filer for a yearly return; `npx ekwo-os@…` ran from the
    repository found no binary; the load steps timed the return of an empty
    month. At 10 000 documents (FR, 90 000 ledger lines) every path is inside
    its budget over SQL, the slowest being `suggest_contacts` at 1.1 s; over

@@ -1,6 +1,6 @@
 {
   "name": "@ekwo-ai/des",
-  "version": "0.4.1",
+  "version": "0.5.0",
   "description": "The French DES — declaration europeenne de services — in TypeScript: the XML the DGDDI accepts, from plain statement rows. Zero dependencies.",
   "keywords": [
     "des",

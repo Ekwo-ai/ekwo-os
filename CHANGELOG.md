@@ -9,21 +9,7 @@ somewhere has already run it.
 
 ## [Unreleased]
 
-### Changed
-
-- **The site at ekwo.ai is built outside this repository.** It still reads
-  the packs, the documentation, the READMEs and this changelog from here at
-  build time, so a pack merged into `packs/` still gets its page with nothing
-  else edited; `apps/site`, its workspace, its CI job and `netlify.toml` are
-  gone. The test of the sections of `DISCLAIMER.md` moved to `tests/`.
-- **The site compares any two countries on one page.** `/compare/` was a
-  matrix of links to a page per pair — 1,225 pages at fifty countries, 19,900
-  at two hundred. It is one page now, whose two pickers are native selects
-  read by CSS `:has()`, still with scripting off; the old pair addresses are
-  sent there by one rule of `_redirects`, the pair kept. Every list of
-  countries — the index, `/os/`, the home page, the map in words — is grouped
-  by UN M49 region, with a count and a jump per region, and the index has a
-  field that narrows it.
+## [0.5.0] — 2026-09-22
 
 ### Added
 
@@ -35,6 +21,7 @@ somewhere has already run it.
   `service_role` key or a malformed `EKWO_ACT_AS_USER_ID` is still refused at
   start. `packages/mcp/scripts/introspect.mjs` runs the check, and the CI runs
   it on the built binary and on the image the new root `Dockerfile` builds.
+
 - **Ready for the official MCP registry.** `mcpName: ai.ekwo/mcp` in the
   manifest of `@ekwo-ai/mcp` and `packages/mcp/server.json`, kept equal to the
   manifest by a test; `glama.json` names the maintainer for Glama.
@@ -45,85 +32,13 @@ somewhere has already run it.
   `docs/mapping.md` lines each table up against EN 16931 and the FEC.
   `npm run check:no-competitor-names` keeps it that way in the CI's *hygiene*
   job.
+
 - **`/multi-country/` on the site: several countries, one set of books.** For
   a group with a company per country, an accounting firm with clients abroad
   and a company opening its next country. What works today is listed with the
   file that makes each line true; consolidation is said as planned, and
   intercompany matching, revaluation of open foreign-currency items and teams
   of collaborators as not there yet.
-
-### Fixed
-
-- **The site froze on the time of day it was opened at.** The blocking script
-  stamped `day` or `night` from `prefers-color-scheme` before the first paint,
-  so a machine that turned dark at dusk left the page in daylight, and the sun
-  and the moon disagreed with it. It stamps `data-theme` only for a reader who
-  has chosen one now; otherwise the stylesheet answers the system on its own,
-  live, and with scripting off alike. `data-js` reveals the two buttons, which
-  repaint when the system turns and flip what the reader is actually looking
-  at. Cobalt stays the default palette, gold one button away.
-
-- **A cancelled invoice could be unmatched from its credit note, and then said
-  `cancelled` and `not_paid` at once.** The matching is what makes `cancelled`
-  true; `unreconcile()` and a delete by hand now refuse it, for everybody, as
-  `document_cancelled_stays_matched`.
-
-- **A fresh installation was called behind by the next command.** `ekwo init`
-  applied the socle's migrations and not the modules', while `ekwo status` and
-  `ekwo doctor` count both, as `ekwo migrate` installs both: straight after a
-  successful install, `status` listed sixteen pending migrations and exited 1.
-  `init` installs the modules now, after the reference seeds, and
-  `--no-modules` leaves them out. Found by the first end-to-end run against a
-  real Supabase project, on 19 September 2026, which also fixed the script
-  itself — see `docs/releasing.md`.
-
-- **The midrib ran tip to tip, and cut the leaf into a pod.** A stroke across
-  the full diagonal splits the shell into two equal halves, which is what a
-  coffee bean or a cocoa pod looks like — not a leaf. It stops well short of
-  both tips now and floats inside the shape, which also leaves it the one
-  stroke with room to spare when the ink spreads at small sizes. The lockup
-  closes up with it: the gap is 6 and not 10, because the leaf carries about
-  three pixels of its own margin and six is what nine looks like.
-
-- **`ekwo invoice` created any kind of document, which is what `ekwo doc` is
-  called.** The verb that drafts a document was named after one of the four
-  types it can draft — a sale invoice, a bill, a quote, a credit note, chosen
-  with `--type` — while `post`, `doc list` and `doc show` were already named
-  after the object. It is `ekwo doc new` and `ekwo doc line add` now, beside
-  `doc list` and `doc show`, so the whole family reads `doc new → doc line add
-  → post → doc show`. `ekwo invoice` still works, unchanged and unannounced, so
-  that no published example stops running; the answer repeats whichever of the
-  two names was typed, and a test drafts the same document under both and
-  compares them.
-
-- **The animated demonstration on the home page showed a command that does not
-  run.** It passed the contact as a bare word — `ekwo doc new "Client"` — where
-  the command has only ever read `--contact`.
-
-- **The mark read as an equals sign.** It was two bars of equal weight in a
-  rounded square — the two sides of an entry — and was written into the source
-  as a placeholder from the first commit. It is a leaf now, in the header, the
-  footer and the favicon: two arcs meeting at a point with the midrib drawn,
-  two strokes at one weight so that it survives the 16 pixels of a browser tab.
-  It is not the `leaf` of the icon set, whose stem and second curve are lost at
-  that size, but the two rhyme — and that is the point, since the icon of the
-  carbon tile and the mark of the product say the same thing. It takes the
-  cobalt accent through `currentColor` and is never green; a test reads both
-  rules.
-
-- **A reader who asked for less motion was shown a heading that said "set
-  free." and nothing else.** The first word of the home page heading turns;
-  under `prefers-reduced-motion` every turning word was taken out, the first
-  included. The first one stays now, still and fully drawn, and a test reads
-  the rule.
-
-- **`docs/releasing.md` said one approval publishes every package. It took
-  fifteen.** The five minutes the approval page offers did not carry from one
-  `npm publish` to the next on the `0.4.1` run; the page says so now, and says
-  what a run that was not approved in time looks like and that it is simply run
-  again.
-
-### Added
 
 - **A silence a pack states is no longer printed as a gap.** Every country page
   lists what its pack does not say, and two of those were answers the format
@@ -212,7 +127,6 @@ somewhere has already run it.
   browser's own light or dark chrome; it is the only place in `apps/site`
   outside the stylesheet that names a colour.
 
-
 - **The bot `CONTRIBUTING.md` promised, and what a pull request goes through.**
   The guide has said since the first day that a bot asks for the Contributor
   Licence Agreement on a first contribution, and there was no bot.
@@ -224,6 +138,7 @@ somewhere has already run it.
   repository gains a pull request template that is the checklist of that guide,
   and two issue forms: something is wrong, and a country pack to propose,
   correct or review, which asks for the source before anything else.
+
 - **`ekwo pack describe [<cc>]` — the whole of one country, in one object.** A
   pack said what it carried in fifteen files and nothing read all of them at
   once.
@@ -237,6 +152,7 @@ somewhere has already run it.
   from `packs/<cc>/` and every "not yet" is a value rather than a missing one.
   `--json` prints the whole of it; the name is `describe` and not `status`
   because `pack status` already asks an installation what its companies copied.
+
 - **Three planned modules written down: `carbon`, `crypto` and `sign`.**
   `modules/README.md` gains a "Planned modules" section for the two that are
   decided and neither written, because the public site names them and nothing
@@ -252,6 +168,7 @@ somewhere has already run it.
   follow the rules the other modules do: a schema of their own, and
   `post_entry()` as the only way anything reaches the ledger. No date is
   attached to any of them.
+
 - **What the packs do not say yet, listed in `docs/international.md`.**
   Building a page per country made every silence visible at once: the packs
   that name no account for a side of the tax balance, the ones that state no
@@ -259,6 +176,7 @@ somewhere has already run it.
   bank formats named and read by nothing, and that no pack is `reviewed`. None
   is a wrong figure and none is filled in here — filling one in without reading
   the law would be the only way to make the list worse.
+
 - **A home page for Ekwo, and a world map that is the argument.** `/` is now
   the product: what it is for, before what it does. The countries with a pack
   are filled in on a map of every country there is, and every other one links
@@ -273,6 +191,7 @@ somewhere has already run it.
   invoice from a pack's golden year, posted to the accounts that pack's own tax
   postings name, with the declaration boxes the engine produced. The core's own
   page moved to `/os/`, unchanged.
+
 - **`apps/site` — one page per country, prerendered, with no JavaScript.** A
   private workspace that is never published: Vite compiles the stylesheet,
   `renderToStaticMarkup` writes the pages, and the result is HTML that is
@@ -284,7 +203,90 @@ somewhere has already run it.
   comparisons with nothing in `apps/site` edited. A test holds that, and holds
   that the home page names no country outside the menu the data generated.
 
+- **Thirty-four country packs more, from 6 to 40 countries.** Australia,
+  Germany, Hong Kong, Ireland, Italy, Japan, Mexico, the Netherlands, New
+  Zealand, Portugal, Singapore, South Korea, Spain, Taiwan, Thailand, the
+  United Arab Emirates and Viet Nam, and seventeen OHADA member States: Benin,
+  Burkina Faso, Cameroon, the Central African Republic, Chad, the Comoros,
+  Congo, the Democratic Republic of the Congo, Côte d'Ivoire, Equatorial
+  Guinea, Gabon, Guinea, Guinea-Bissau, Mali, Niger, Senegal and Togo. Each
+  carries its chart, its taxes, its periodic return where the country has one
+  and the texts it was read against; `docs/packs.md` has the table. A pack
+  with no periodic return, or with a single positive rate, passes the shared
+  suite on its own terms.
+
+- **One SYSCOHADA chart for the OHADA member States.** `packs/ohada/` holds
+  the SYSCOHADA révisé once — the chart of classes 1 to 8 from the Journal
+  officiel de l'OHADA of 15 February 2017, the balance sheet and income
+  statement of the Système normal, the journals and the roles — and
+  `npm run check:ohada` copies it into every member pack, which stays
+  autonomous, and refuses a copy that has drifted. The currencies XAF, KMF,
+  GNF and CDF and a territory row for each member State are seeded ahead of
+  their packs.
+
+- **The lists of packs outside `packs/` are written from `packs/`.** The seeds
+  of `supabase/config.toml`, the `psql -f` lines and the countries of the
+  README, the `/packs/<cc>/` lines of `.github/CODEOWNERS` and the table of
+  `docs/packs.md` sit between `generated:<name>` markers; `ekwo pack build`
+  writes them and `ekwo pack check` refuses a stale block. Adding a country is
+  `packs/<cc>/` and one command.
+
+- **A cadence of any whole number of months, and a box frozen at the unit of
+  its form.** Migrations `20260921145411` and `20260921145412`: `bimonth`,
+  `four_month` and `half_year` join `declaration_period`, and
+  `declaration_period_months()` and `declaration_period_start()` read a cadence
+  as a number of months anchored on 1 January — `upcoming_filings()` used to
+  file any cadence other than a month or a quarter as a year.
+  `tax_filing_boxes.amount` loses its fixed scale, so a return in a currency
+  without decimals freezes `1000000`, and a form may declare the unit it is
+  filed in (`tax_report.json` `rounding`). `packs/ie` 0.2.0 files on two-month
+  periods (VATCA 2010, s. 2); `packs/us` 0.7.0 rounds the California return to
+  the whole dollar (CDTFA-401-A).
+
+- **A supply measured against its seller.** Migration `20260921145425`:
+  `territories.outside_parent_tax` and `territory_within_for_tax()` stop a
+  country's tax at a territory its own law takes out — the Canary Islands,
+  Ceuta and Melilla, Büsingen and Heligoland, Livigno and Campione d'Italia —
+  and `applies_when.supply_vs_seller` (`same` or `other`) is judged by
+  `post_document()`. The seller, buyer and supply territories a document was
+  judged on are written at posting, frozen with it and cleared by
+  `unpost_document()`. `packs/es` 0.2.0 and `packs/us` 0.7.0 use it.
+
+- **The packs of the first countries go further.** `packs/fr` 1.15.0: the
+  rates of Guadeloupe, Martinique and La Réunion (CGI art. 296) on CA3 lines 10
+  and 11, and the lines of the 3310-CA3 around the totals. `packs/lu` 1.9.0:
+  the free-rate rows of section II.A of `TVA_DECM`. `packs/ee` 1.10.0: the
+  press rate on the purchase side (KMS § 29 (1)).
+
+- **Ekwo readable by an AI assistant.** `AGENTS.md` at the root says what Ekwo
+  OS is and is not, how to install it for somebody, the MCP server, common
+  tasks and what an assistant must never do. `ekwo help --json` answers the
+  whole of `--help` without colour, and `describePack()` gains `invoicing` —
+  the sales and purchase accounts and the open domestic sale taxes — and
+  `fiscalYearDefault`.
+
+- **One record per design decision.** `docs/decisions/` holds each decision
+  with its context, the rule it sets, its consequences and the files it relies
+  on, with an index by subject; `docs/decisions.md` points at the index,
+  because published migrations cite it. A test keeps the records to the
+  template.
+
 ### Changed
+
+- **The site at ekwo.ai is built outside this repository.** It still reads
+  the packs, the documentation, the READMEs and this changelog from here at
+  build time, so a pack merged into `packs/` still gets its page with nothing
+  else edited; `apps/site`, its workspace, its CI job and `netlify.toml` are
+  gone. The test of the sections of `DISCLAIMER.md` moved to `tests/`.
+
+- **The site compares any two countries on one page.** `/compare/` was a
+  matrix of links to a page per pair — 1,225 pages at fifty countries, 19,900
+  at two hundred. It is one page now, whose two pickers are native selects
+  read by CSS `:has()`, still with scripting off; the old pair addresses are
+  sent there by one rule of `_redirects`, the pair kept. Every list of
+  countries — the index, `/os/`, the home page, the map in words — is grouped
+  by UN M49 region, with a count and a jump per region, and the index has a
+  field that narrows it.
 
 - **`ekwo cancel` and the `cancel_document` tool choose, and say which.** Back to
   draft where `unpost_refusal()` finds nothing against it, the credit note
@@ -318,6 +320,7 @@ somewhere has already run it.
   own voice moved into one module per language, so translating it is a file
   rather than a refactor, and the country pages moved to `/countries/<cc>/` —
   a two-letter segment at the root cannot be both a country and a language.
+
 - **The statement formats a reader exists for moved to `@ekwo-ai/core`.** The
   list lived in `@ekwo-ai/mcp`, which is the one package that could not be
   asked for it by the command line: the installer depends on the core and one
@@ -325,6 +328,7 @@ somewhere has already run it.
   server. `@ekwo-ai/mcp` imports the list and exports it under the name it
   always had, so `writeTools.STATEMENT_FORMATS` and the test that keeps the
   ledger of what a pack names and nothing reads are untouched.
+
 - **The site is set in two typefaces, self-hosted, on one set of tokens.** A
   serif for headings and a sans for everything else, both variable, both under
   the SIL Open Font Licence and both served from the site — a page about owning
@@ -336,10 +340,92 @@ somewhere has already run it.
   column of everything, which is how a page becomes documentation: its head is
   a card, its rows have room, and its reading list is folded behind a
   `<details>` that opens without scripting.
+
 - **The country-literal guard reads `apps/` too.** The site's test sits beside
   the site, because it renders React and the root `tsconfig.json` has no reason
   to know what JSX is. A test that escaped the guard by living in another
   folder would be exactly the test that named three countries.
+
+- **Ekwo presents itself as open source data infrastructure, and says what it
+  is not.** It is software for businesses and their accountants, not an
+  accounting service: the README, the package READMEs and the npm
+  descriptions say so. `DISCLAIMER.md` is rewritten after a legal review — what
+  the project is and is not, who stays responsible, the warranty and liability
+  terms of the licences, that Ekwo transmits no return to any tax
+  administration, and the regulated professions of the EU, the UK, the US and
+  the OHADA States. The installation guide, the README and the manifesto no
+  longer carry lists of countries that age.
+
+### Fixed
+
+- **The site froze on the time of day it was opened at.** The blocking script
+  stamped `day` or `night` from `prefers-color-scheme` before the first paint,
+  so a machine that turned dark at dusk left the page in daylight, and the sun
+  and the moon disagreed with it. It stamps `data-theme` only for a reader who
+  has chosen one now; otherwise the stylesheet answers the system on its own,
+  live, and with scripting off alike. `data-js` reveals the two buttons, which
+  repaint when the system turns and flip what the reader is actually looking
+  at. Cobalt stays the default palette, gold one button away.
+
+- **A cancelled invoice could be unmatched from its credit note, and then said
+  `cancelled` and `not_paid` at once.** The matching is what makes `cancelled`
+  true; `unreconcile()` and a delete by hand now refuse it, for everybody, as
+  `document_cancelled_stays_matched`.
+
+- **A fresh installation was called behind by the next command.** `ekwo init`
+  applied the socle's migrations and not the modules', while `ekwo status` and
+  `ekwo doctor` count both, as `ekwo migrate` installs both: straight after a
+  successful install, `status` listed sixteen pending migrations and exited 1.
+  `init` installs the modules now, after the reference seeds, and
+  `--no-modules` leaves them out. Found by the first end-to-end run against a
+  real Supabase project, on 19 September 2026, which also fixed the script
+  itself — see `docs/releasing.md`.
+
+- **The midrib ran tip to tip, and cut the leaf into a pod.** A stroke across
+  the full diagonal splits the shell into two equal halves, which is what a
+  coffee bean or a cocoa pod looks like — not a leaf. It stops well short of
+  both tips now and floats inside the shape, which also leaves it the one
+  stroke with room to spare when the ink spreads at small sizes. The lockup
+  closes up with it: the gap is 6 and not 10, because the leaf carries about
+  three pixels of its own margin and six is what nine looks like.
+
+- **`ekwo invoice` created any kind of document, which is what `ekwo doc` is
+  called.** The verb that drafts a document was named after one of the four
+  types it can draft — a sale invoice, a bill, a quote, a credit note, chosen
+  with `--type` — while `post`, `doc list` and `doc show` were already named
+  after the object. It is `ekwo doc new` and `ekwo doc line add` now, beside
+  `doc list` and `doc show`, so the whole family reads `doc new → doc line add
+  → post → doc show`. `ekwo invoice` still works, unchanged and unannounced, so
+  that no published example stops running; the answer repeats whichever of the
+  two names was typed, and a test drafts the same document under both and
+  compares them.
+
+- **The animated demonstration on the home page showed a command that does not
+  run.** It passed the contact as a bare word — `ekwo doc new "Client"` — where
+  the command has only ever read `--contact`.
+
+- **The mark read as an equals sign.** It was two bars of equal weight in a
+  rounded square — the two sides of an entry — and was written into the source
+  as a placeholder from the first commit. It is a leaf now, in the header, the
+  footer and the favicon: two arcs meeting at a point with the midrib drawn,
+  two strokes at one weight so that it survives the 16 pixels of a browser tab.
+  It is not the `leaf` of the icon set, whose stem and second curve are lost at
+  that size, but the two rhyme — and that is the point, since the icon of the
+  carbon tile and the mark of the product say the same thing. It takes the
+  cobalt accent through `currentColor` and is never green; a test reads both
+  rules.
+
+- **A reader who asked for less motion was shown a heading that said "set
+  free." and nothing else.** The first word of the home page heading turns;
+  under `prefers-reduced-motion` every turning word was taken out, the first
+  included. The first one stays now, still and fully drawn, and a test reads
+  the rule.
+
+- **`docs/releasing.md` said one approval publishes every package. It took
+  fifteen.** The five minutes the approval page offers did not carry from one
+  `npm publish` to the next on the `0.4.1` run; the page says so now, and says
+  what a run that was not approved in time looks like and that it is simply run
+  again.
 
 ## [0.4.1] — 2026-09-18
 
@@ -3280,7 +3366,8 @@ against the latest tag, and a mistake is corrected by a new migration, always.
   period locks, reports, row level security, the instance singleton and its
   roles, and a golden FEC export.
 
-[Unreleased]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.4.1...HEAD
+[Unreleased]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.5.0...HEAD
+[0.5.0]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.4.1...v0.5.0
 [0.4.1]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.4.0...v0.4.1
 [0.4.0]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.2.0...v0.3.0
