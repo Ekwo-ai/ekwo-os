@@ -91,7 +91,7 @@ OpenAPI description, and row level security decides who sees what.
   its declaration boxes and its annual accounts in French, Dutch, German and
   English, and a company keeping its books in Dutch reads Dutch throughout.
   [`docs/languages.md`](docs/languages.md) is the mechanism.
-- **Every country a pack, out of the box.** <!-- generated:countries -->Australia (`au`), Belgium (`be`), Burkina Faso (`bf`), Bénin (`bj`), République démocratique du Congo (`cd`), Centrafrique (`cf`), Congo (`cg`), Côte d’Ivoire (`ci`), Cameroun (`cm`), Germany (`de`), Estonia (`ee`), España (`es`), France (`fr`), Gabon (`ga`), United Kingdom (`gb`), Guinée (`gn`), Guinée équatoriale (`gq`), Guinée-Bissau (`gw`), Hong Kong (`hk`), Ireland (`ie`), Italia (`it`), 日本 (`jp`), Comores (`km`), 대한민국 (`kr`), Luxembourg (`lu`), Mali (`ml`), México (`mx`), Niger (`ne`), Nederland (`nl`), New Zealand (`nz`), Portugal (`pt`), Singapore (`sg`), Sénégal (`sn`), Tchad (`td`), Togo (`tg`), 臺灣 (`tw`) and United States (`us`)<!-- /generated --> — each with its chart of accounts, its tax codes, its
+- **Every country a pack, out of the box.** <!-- generated:countries -->United Arab Emirates (`ae`), Australia (`au`), Belgium (`be`), Burkina Faso (`bf`), Bénin (`bj`), République démocratique du Congo (`cd`), Centrafrique (`cf`), Congo (`cg`), Côte d’Ivoire (`ci`), Cameroun (`cm`), Germany (`de`), Estonia (`ee`), España (`es`), France (`fr`), Gabon (`ga`), United Kingdom (`gb`), Guinée (`gn`), Guinée équatoriale (`gq`), Guinée-Bissau (`gw`), Hong Kong (`hk`), Ireland (`ie`), Italia (`it`), 日本 (`jp`), Comores (`km`), 대한민국 (`kr`), Luxembourg (`lu`), Mali (`ml`), México (`mx`), Niger (`ne`), Nederland (`nl`), New Zealand (`nz`), Portugal (`pt`), Singapore (`sg`), Sénégal (`sn`), Tchad (`td`), Togo (`tg`), 臺灣 (`tw`) and United States (`us`)<!-- /generated --> — each with its chart of accounts, its tax codes, its
   declaration boxes and its annual accounts, and each installed by `ekwo init`.
   The United Kingdom was the first that is not a Member State of the European
   Union; the United States, with the sales and use taxes of three states and
@@ -274,6 +274,7 @@ psql "$DATABASE_URL" -f supabase/seed/51_pack_jp.sql
 psql "$DATABASE_URL" -f supabase/seed/52_pack_hk.sql
 psql "$DATABASE_URL" -f supabase/seed/53_pack_tw.sql
 psql "$DATABASE_URL" -f supabase/seed/54_pack_kr.sql
+psql "$DATABASE_URL" -f supabase/seed/60_pack_ae.sql
 ```
 <!-- /generated -->
 
