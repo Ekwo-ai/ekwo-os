@@ -17,6 +17,27 @@ somewhere has already run it.
   and Estonia side by side, with the published 0.5.0. Two vhs tapes and
   `docs/demo/render.sh` record it again on two throwaway projects.
 
+- **Books kept elsewhere come in with one command.** `ekwo import <source>
+  <files…>`, and the MCP tool `import_books`, take over a FEC, an export of
+  journal items, a journal report or a trial balance, whole or not at all.
+  Each source is a reader of `packages/formats/` under MIT — `readFec()` in
+  `@ekwo-ai/fec`, and three new bricks, `@ekwo-ai/trial-balance`,
+  `@ekwo-ai/journal-items` and `@ekwo-ai/journal-report` — returning the same
+  shape: accounts, parties, entries, an opening balance. The core proposes a
+  correspondence from the codes alone (the same code, the same digits without
+  their padding, the longest beginning of three digits or more), the caller
+  saves it with `--save-mapping`, answers what is missing and gives it back
+  with `--mapping`. `import_books()` then opens the fiscal years asked for,
+  finds or creates the parties, posts every entry through `post_entry()` and a
+  balance through `opening_balance()`, in one transaction; `--dry-run` runs it
+  and rolls it back. `book_imports` records each import and refuses the same
+  files twice. `docs/import.md` is the long form.
+
+- **`ekwo import camt.053 | coda | cfonb120`**: a bank statement from the
+  command line, as pending lines for `ekwo match`. The reading moved from the
+  MCP server to the core (`importStatementFile()`), and `import_bank_statement`
+  calls it unchanged.
+
 ## [0.5.0] — 2026-09-22
 
 ### Added

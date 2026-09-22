@@ -271,6 +271,7 @@ instead if the account already exists, and no key is needed.
 | `ekwo reverse <entry>` | Undoes a posted entry keyed by hand, through `reverse_entry()`: its mirror, posted and matched against it. By id or by number; `--date` as for `cancel`. |
 | `ekwo payment record` | Money in or out, booked and matched. With `--doc`, against that document. |
 | `ekwo match <transaction> <document>` | A bank statement line pays a document, through `settle_from_statement()`. |
+| `ekwo import <source> <file>…` | Books kept elsewhere — `trial-balance`, `fec`, `journal-items`, `journal-report` — whole or not at all, through `import_books()`, with a correspondence of accounts and journals you save and give back; or a bank statement — `camt.053`, `coda`, `cfonb120` — as pending lines. `--dry-run` rehearses. See [taking over books](#taking-over-books-ekwo-import). |
 | `ekwo doc list` / `show` | What exists, and with `--unpaid` what is posted and still owed. See [keeping books](#keeping-books). |
 
 There is no `eject`, because there is nothing to eject from. The schema is in
@@ -505,6 +506,97 @@ is a rate where the books need a tax, and a currency belongs to the document
 Two values are supplied when nobody gives them, and said when they are:
 `--type` is `sale_invoice`, and `--date` is today on the machine running the
 command. Whether that date may be booked on is the database's decision.
+
+## Taking over books: `ekwo import`
+
+To try Ekwo on your own books, bring them. One command, one reader per
+source, and nothing is posted while an account has no answer:
+
+```bash
+ekwo import fec 123456789FEC20251231.txt --dry-run --open-years --save-mapping map.json
+#   read, propose a correspondence, rehearse the import in the database, take it back
+$EDITOR map.json                                   # answer what is null, correct what is wrong
+ekwo import fec 123456789FEC20251231.txt --mapping map.json --open-years
+ekwo import trial-balance balance.csv --opening-date 2026-01-01 --dry-run --save-mapping map.json
+ekwo import journal-items items.csv accounts.csv partners.csv --dry-run --save-mapping map.json
+ekwo import journal-report report.csv chart.csv --date-order dmy --dry-run --save-mapping map.json
+ekwo import camt.053 statement.xml                 # or coda, cfonb120: pending lines for `ekwo match`
+```
+
+| Source | What it reads |
+|---|---|
+| `trial-balance` | A trial balance as CSV — `account`, `debit`, `credit`, or one signed `balance` — which becomes the opening entry of the year `--opening-date` starts |
+| `fec` | A *fichier des écritures comptables*: the eighteen columns of the arrêté of 29 July 2013, tab or bar separated |
+| `journal-items` | The lines of every entry exported as CSV from the list view of an ERP whose ledger is a table of lines, with the chart of accounts and the partners exported beside it |
+| `journal-report` | A journal report or a general ledger detail, saved as CSV from a cloud service's spreadsheet export, with its Journal ID and Account Code columns, and the chart and the contacts beside it |
+| `camt.053`, `coda`, `cfonb120` | A bank statement: its lines, pending, ready for `ekwo match` |
+
+Each reader is a brick of [`packages/formats/`](../formats/README.md), named
+after the file and not after the software that writes it; its README says
+which columns it reads and which official pages the format was read from.
+
+**The correspondence is yours.** Every account of the old chart has to become
+an account of the company's chart, and every old journal a journal of the
+company. The core proposes, from the codes alone — the same code, the same
+digits without the zeros a chart pads with (`411` and `411000`), or the
+account whose digits are the longest beginning of the old code, three at least
+(`401ACME` → `401000`); a tie is no answer — and each proposal says which rule
+found it. `--save-mapping` writes it as JSON:
+
+```json
+{
+  "version": 1,
+  "source": "fec",
+  "accounts": { "411000": "411000", "401ACME": "401000", "471200": null },
+  "journals": { "VE": "SAL", "AN": "@opening", "BQ1": "MISC" }
+}
+```
+
+and `--mapping` gives it back: what it answers wins over the proposal, so the
+second run posts what the first one showed. A journal mapped to `@opening`
+becomes the opening entry of its year instead of ordinary entries — the
+*à-nouveaux* of a FEC, typically. A journal whose code is the one the pack
+opens years on is proposed as `@opening` on its own; `*` stands for entries
+the source gives no journal.
+
+**Whole or not at all.** `import_books()` is one call and one transaction: the
+fiscal years it needs (with `--open-years`, as years of the same length and
+first day as the company's own; without, an entry outside every year is
+refused by name), the parties the lines name — found by their code or their
+name, or created as customers or suppliers according to where their lines are
+booked — every entry as a draft then posted by `post_entry()`, and the opening
+through `opening_balance()`. One refusal — a locked period, an account the
+chart does not have, a capability you do not hold — and nothing stays, not
+even the years or the parties.
+
+**`--dry-run` is the real thing, taken back.** The database runs the whole
+import and rolls it back, so the numbers shown are the ones the entries would
+take now and a refusal is the one the import would give. For a bank statement a
+dry run reads the file and asks nothing: a statement books nothing anyway.
+
+What else to know:
+
+- **Refused before the database is asked**, and listed under `refusals` by a
+  dry run: an account or a journal with no answer, books whose reader found
+  something that does not add up (an entry that does not balance, a line of a
+  draft entry), a currency the files name that is not the company's.
+- **The numbers** are drawn by the journal each entry goes to; the old number
+  is kept as the entry's reference. `--keep-numbers` posts each under its old
+  number instead, where the country allows a number chosen by hand or you hold
+  `entries.import`.
+- **No tax.** An imported line carries an account and an amount, not the tax
+  that produced it: the history feeds the ledger, the trial balance and the
+  statements, and no box of a VAT return. A period kept elsewhere was declared
+  from where it was kept.
+- **The same files twice are refused** (`import_already_done`): `book_imports`
+  keeps the checksum of what each import read.
+- **Dates and encodings are said, never guessed**: `--encoding` for a file
+  that is not UTF-8, `--date-order` for a report that writes dates in digits.
+- **Reconciliation marks are read and not re-applied yet**: the matching of an
+  imported receivable against its payment is done in Ekwo, with `reconcile`.
+
+The MCP server offers the same as `import_books`, and `import_bank_statement`
+for a statement. [`docs/import.md`](../../docs/import.md) is the long form.
 
 ## `ekwo module`
 
