@@ -22,6 +22,18 @@ somewhere has already run it.
   asked after signing in and an anonymous scanner has no use for the release
   number of somebody's installation.
 
+- **A financial statement asked for by kind** (`20260922144500`).
+  `financial_statement()` takes the code of a scheme, and a code belongs to a
+  country pack, so a client that did not know the pack could not ask for a
+  balance sheet at all. `default_statement_code(company, kind, at)` gives the
+  one scheme of that kind a company reports on — one its chart declares, else
+  one of its country, else the generic framework — and
+  `financial_statement_of_kind(company, kind, from, to)` answers exactly as
+  `financial_statement()` does, with the code it chose in the first column.
+  The validity is read at the end of the period, so a scheme replaced this
+  year still prints last year. `available_statements()` is unchanged and still
+  lists every scheme a company may ask for.
+
 ### Fixed
 
 - **`isServiceRoleKey()` read no key in a browser.** It decoded the payload of

@@ -68,7 +68,7 @@ describe('migrations', () => {
       'reconcile', 'unreconcile', 'next_matching_number',
       'trial_balance', 'general_ledger', 'aged_balance', 'vat_return', 'fec_lines',
       'evaluate_totals', 'financial_statement', 'unmapped_accounts', 'available_statements',
-      'installed_schema_version',
+      'default_statement_code', 'financial_statement_of_kind', 'installed_schema_version',
       'install_country_template', 'account_id_by_code', 'commercial_entity',
       'init_instance', 'claim_instance_admin', 'register_instance', 'unregister_instance',
       'is_instance_admin', 'is_any_company_member', 'ekwo_schema_version',

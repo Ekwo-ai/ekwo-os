@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.7.0",
-  "migration": "20260922143000",
+  "migration": "20260922144500",
   "socle": {
     "schema": "public",
     "tables": [
@@ -3932,6 +3932,10 @@
         "arguments": "p_period declaration_period, p_day date"
       },
       {
+        "name": "default_statement_code",
+        "arguments": "p_company_id uuid, p_kind text, p_at date"
+      },
+      {
         "name": "disable_module",
         "arguments": "p_company_id uuid, p_code text"
       },
@@ -4094,6 +4098,10 @@
       {
         "name": "financial_statement",
         "arguments": "p_company_id uuid, p_statement_code text, p_from date, p_to date"
+      },
+      {
+        "name": "financial_statement_of_kind",
+        "arguments": "p_company_id uuid, p_kind text, p_from date, p_to date"
       },
       {
         "name": "fiscal_year_at",
@@ -7286,6 +7294,17 @@
           ]
         },
         {
+          "name": "default_statement_code",
+          "arguments": "p_company_id uuid, p_kind text, p_at date",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
           "name": "disable_module",
           "arguments": "p_company_id uuid, p_code text",
           "anon": [],
@@ -7680,6 +7699,17 @@
         {
           "name": "financial_statement",
           "arguments": "p_company_id uuid, p_statement_code text, p_from date, p_to date",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "financial_statement_of_kind",
+          "arguments": "p_company_id uuid, p_kind text, p_from date, p_to date",
           "anon": [],
           "authenticated": [
             "execute"
