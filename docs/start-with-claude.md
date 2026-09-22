@@ -53,11 +53,10 @@ nothing here touches the software your books come from.
    - **Project Settings → API Keys**: the **publishable key**
      (`sb_publishable_…`). If your dashboard only shows the older keys, the
      **`anon`** key does the same job. This is the key Claude will use.
-   - On the same page, under **Legacy API Keys**, the **`service_role`** key.
-     The installer uses it once, to create your user, and writes it nowhere.
-     Use the legacy `service_role` key, not a new secret key (`sb_secret_…`):
-     the installer of the 0.6 release sends it as a bearer token, which a
-     secret key does not accept.
+   - On the same page, the **secret key** (`sb_secret_…`): the dashboard
+     masks it until you reveal or copy it. The legacy **`service_role`** key,
+     under **Legacy API Keys**, does the same job. The installer uses it once,
+     to create your user, and writes it nowhere.
 
 The **Project URL** is `https://<ref>.supabase.co`, where `<ref>` is the part
 after `postgres.` in the connection string. The installer works it out from
@@ -268,7 +267,7 @@ and why.
 
 | Old account | Proposed | Basis, and why |
 |---|---|---|
-| 101000 Bank current account | 1010 | suggested, same digits — its name says a bank account, and 1010 is one |
+| 101000 Bank current account | 1010 | suggested, same digits — its name is the one 1010 has in the chart |
 | 120000 Customers | 1200 | suggested, same digits — its name says a receivable, and 1200 is one |
 | 297000 Retained earnings | 2970 | suggested, same digits — its balance is on the credit side, and 2970 is an equity account |
 
@@ -288,6 +287,7 @@ for different things, and the other company shows why:
 | 710 Office equipment | 7100 | suggested, same digits — only the side of the balance agrees, and 7100 is Rent: **wrong** |
 | 711 Office equipment depreciation | 7110 | suggested, same digits — its balance is on the credit side, and 7110 is an expense account: **wrong** |
 | 800 Accounts payable | 2100 | suggested, kind — 8000 is an **expense** account, so it is not proposed; 2100 Trade creditors is the chart's payable |
+| 960 Retained earnings | — | none |
 | 970 Owner capital | — | none |
 
 **"610 is 1100 and 800 is 2100, as you suggest. 090 is the bank current
@@ -387,16 +387,17 @@ books are yours.
 
 ## Checked for real
 
-Every step above was run against a throwaway Supabase project with the
-published `ekwo-os` and `@ekwo-ai/mcp` 0.6.0, and the project deleted
-afterwards. The run is a script, so it can be repeated on any release:
+Every step above was run against throwaway Supabase projects with the
+published `ekwo-os` and `@ekwo-ai/mcp` 0.7.0 and a project's newer keys — the
+secret key for the installer, the publishable key for Claude — and the
+projects deleted afterwards. The run is a script, so it can be repeated on any release:
 [`docs/demo/start-with-claude/walkthrough.mjs`](demo/start-with-claude/walkthrough.mjs)
 runs the installer, starts the MCP server with exactly the four variables
 above, and calls the tools Claude calls for the sentences of this guide — two
 companies in two countries, the second created through `create_company` and
-chosen in the terminal with `ekwo use`, the rehearsal, the correction, the import, the
+chosen in the terminal with `ekwo use` (or, with `--no-company`, both created
+by `ekwo company new` after `ekwo init --no-company`), the rehearsal, the correction, the import, the
 refused second import, the balances, an invoice and the two returns. The two
 trial balances and the answered correspondence are beside it; the data is
-invented. The two correspondence tables of step 4 are those of the release
-after 0.6.0, which holds each proposal against what the files say; the tests
-of the repository compute them from the same two files and the two charts.
+invented. The two correspondence tables of step 5 are the ones that run
+printed, reasons included.

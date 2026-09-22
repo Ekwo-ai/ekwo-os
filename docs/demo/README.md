@@ -71,4 +71,7 @@ source left.env    # the variables above, with EKWO_EMAIL added
 node docs/demo/start-with-claude/walkthrough.mjs
 ```
 
+`--no-company` takes the guide's other road on a second empty project:
+`ekwo init --no-company`, then `ekwo company new` for each company.
+
 Delete the project afterwards.

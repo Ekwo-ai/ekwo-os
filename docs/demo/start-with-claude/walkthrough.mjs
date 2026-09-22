@@ -14,14 +14,21 @@
  *
  *   node docs/demo/start-with-claude/walkthrough.mjs            # init, then the rest
  *   node docs/demo/start-with-claude/walkthrough.mjs --no-init  # the project is installed already
+ *   node docs/demo/start-with-claude/walkthrough.mjs --no-company
+ *
+ * `--no-company` takes the other road of the guide: `ekwo init --no-company`,
+ * then `ekwo company new` for each company, `ekwo company list`, and the rest
+ * as above — the assistant finds both companies already there.
  *
  * Needs, from the environment and nothing from a file:
  *
  *   EKWO_DB_URL                 the pooler connection string (init only)
  *   SUPABASE_SERVICE_ROLE_KEY   used once by init to create the administrator,
- *                               and never handed to the MCP server
+ *                               and never handed to the MCP server: the secret
+ *                               key (sb_secret_…) or the legacy service_role
  *   SUPABASE_URL                https://<ref>.supabase.co
- *   SUPABASE_ANON_KEY           the anon (publishable) key
+ *   SUPABASE_ANON_KEY           the publishable key (sb_publishable_…) or the
+ *                               legacy anon key
  *   EKWO_EMAIL / EKWO_PASSWORD  the administrator init creates, whom the MCP
  *                               server then signs in as
  *   EKWO_VERSION                optional: the release to run, `latest` otherwise
@@ -98,33 +105,65 @@ function need(name) {
 
 // ---- 1. npx ekwo-os init -----------------------------------------------------
 
+const noCompany = process.argv.includes('--no-company');
+
+/** The published command line, from the empty directory, with the environment given. */
+function ekwo(args, env = process.env) {
+  const run = spawnSync('npx', ['-y', `ekwo-os@${version}`, ...args], { cwd: outside, env, encoding: 'utf8' });
+  // What a failure said is its last lines: the refusal comes after the steps.
+  const said = `${run.stdout}${run.stderr}`.trim().split('\n').filter((l) => l.trim() !== '').slice(-2).join(' | ');
+  let json = null;
+  try {
+    json = JSON.parse(run.stdout);
+  } catch {}
+  return { status: run.status, json, said };
+}
+
+/** The flags that describe one company, for `init` and for `company new` alike. */
+function companyFlags(company) {
+  const flags = ['--country', company.country, '--fiscal-year', '2026'];
+  if (company.language !== null) flags.push('--language', company.language);
+  if (company.fiscal_year_start !== null) flags.push('--fiscal-year-start', company.fiscal_year_start);
+  return flags;
+}
+
 if (!process.argv.includes('--no-init')) {
   const [first] = COMPANIES;
   const flags = [
-    '--country', first.country,
     '--org', 'Northwind Books',
-    '--company', first.name,
     '--admin-email', need('EKWO_EMAIL'),
     // Without a terminal the installer takes the password as a flag only.
     // The project is a throwaway one, and the line is never printed.
     '--admin-password', need('EKWO_PASSWORD'),
-    '--fiscal-year', '2026',
     '--yes',
+    ...(noCompany ? ['--no-company'] : ['--company', first.name, ...companyFlags(first)]),
   ];
-  if (first.language !== null) flags.push('--language', first.language);
-  if (first.fiscal_year_start !== null) flags.push('--fiscal-year-start', first.fiscal_year_start);
   // The connection string and the key travel in the environment the
   // installer reads.
   need('EKWO_DB_URL');
   need('SUPABASE_SERVICE_ROLE_KEY');
-  const init = spawnSync('npx', ['-y', `ekwo-os@${version}`, 'init', ...flags], {
-    cwd: outside,
-    env: process.env,
-    encoding: 'utf8',
-  });
-  const last = (init.stdout + init.stderr).trim().split('\n').filter((l) => /error|refus/i.test(l)).slice(0, 3).join(' | ');
-  record('npx ekwo-os init', init.status === 0, init.status === 0 ? `${first.country}, ${first.name}` : last);
+  const init = ekwo(['init', ...flags]);
+  record(
+    `npx ekwo-os init${noCompany ? ' --no-company' : ''}`,
+    init.status === 0,
+    init.status !== 0 ? init.said : noCompany ? 'no company, no country' : `${first.country}, ${first.name}`,
+  );
   if (init.status !== 0) finish();
+
+  if (noCompany) {
+    // `--no-company` refuses a flag that describes a company, before the
+    // database is touched.
+    const refused = ekwo(['init', '--no-company', '--country', first.country, '--yes']);
+    record('init --no-company --country is refused', refused.status === 2, refused.said.slice(0, 140));
+    for (const company of COMPANIES) {
+      const made = ekwo(['company', 'new', company.name, ...companyFlags(company), '--yes', '--json']);
+      const c = made.json?.data?.company ?? made.json?.company;
+      record(`ekwo company new "${company.name}"`, made.status === 0, made.status !== 0 ? made.said : `${c?.country ?? '?'}, ${c?.currency ?? '?'}`);
+    }
+    const list = ekwo(['company', 'list', '--json']);
+    const listed = list.json?.data?.companies ?? list.json?.companies ?? [];
+    record('ekwo company list', list.status === 0 && COMPANIES.every((c) => listed.some((l) => l.name === c.name && l.country === c.country)), `${listed.length} companies`);
+  }
 }
 
 // ---- 2. The MCP server, started the way Claude starts it ----------------------
