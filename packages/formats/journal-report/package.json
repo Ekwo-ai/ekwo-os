@@ -1,6 +1,6 @@
 {
   "name": "@ekwo-ai/journal-report",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "Reads a journal report or a general ledger detail saved as CSV — date, journal number, account code, debit, credit — with the chart of accounts and the contacts exported beside it, into plain objects in TypeScript: amounts as decimal strings, and what does not add up. Zero dependencies.",
   "keywords": [
     "journal-report",

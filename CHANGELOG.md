@@ -9,6 +9,8 @@ somewhere has already run it.
 
 ## [Unreleased]
 
+## [0.6.0] — 2026-09-22
+
 ### Added
 
 - **An install demo in the README.** `docs/demo/install.gif`, and a longer
@@ -37,6 +39,22 @@ somewhere has already run it.
   command line, as pending lines for `ekwo match`. The reading moved from the
   MCP server to the core (`importStatementFile()`), and `import_bank_statement`
   calls it unchanged.
+
+- **An import names its source by format or by the software that wrote it.**
+  `ekwo import` and the `import_books` tool also take the name of the
+  software whose export a reader was written against and hand the files to
+  that reader; the names by format stay. `docs/compatibility.md` gives, per
+  source, the command, the export expected with its official page, its state,
+  and what an import does not take over.
+
+- **Four country packs more, 44 in all.** Austria (Umsatzsteuer at 20, 13 and
+  10 %, the U30 return Kennzahl by Kennzahl, the statements of UGB §§ 224 and
+  231), Switzerland (the three federal MWST rates since 1 January 2024, the
+  Bezugsteuer, form No. 4470, a chart and statements read from Art. 959 and
+  959b OR), Poland (VAT at 23, 8 and 5 %, the JPK_V7M and JPK_V7K boxes, the
+  statements of the ustawa o rachunkowości) and Saudi Arabia (the 15 % of the
+  VAT Law of Royal Decree M/113, a sixteen-field return, an IFRS for SMEs
+  chart). All four are `community`.
 
 ## [0.5.0] — 2026-09-22
 
@@ -3395,7 +3413,8 @@ against the latest tag, and a mistake is corrected by a new migration, always.
   period locks, reports, row level security, the instance singleton and its
   roles, and a golden FEC export.
 
-[Unreleased]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.5.0...HEAD
+[Unreleased]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.6.0...HEAD
+[0.6.0]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.5.0...v0.6.0
 [0.5.0]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.4.1...v0.5.0
 [0.4.1]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.4.0...v0.4.1
 [0.4.0]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.3.0...v0.4.0

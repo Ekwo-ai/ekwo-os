@@ -1,6 +1,6 @@
 {
   "name": "@ekwo-ai/peppol-ubl",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "Peppol BIS Billing 3.0 invoices and credit notes (UBL 2.1, EN 16931) in TypeScript, from a posted document, with every published rule the file breaks named by its identifier. Zero dependencies.",
   "keywords": [
     "peppol",

@@ -149,7 +149,21 @@ that is not cut.
    never published under that name, so for those the path is the only form
    that works.
 
-   **The last run: 22 September 2026, for `0.5.0`**, on a throwaway project in
+   **The last run: 22 September 2026, for `0.6.0`**, on a throwaway project in
+   `eu-west-3` (Postgres 17.6, session pooler `aws-1`), deleted afterwards. BE,
+   EE, FR, GB (year opening 1 April), LU (quarterly) and US, each upgraded from
+   `ekwo-os@0.5.0` on npm — 2 migrations pending — and `--reset` between runs:
+   21 steps each, all green, about 78 s a run, the install of `0.5.0` alone
+   taking 40 s of it. Four packs new in this release installed fresh: AT
+   (`de`), CH (`fr`, quarterly), PL and SA (quarterly), 18 steps each, all
+   green. On the FR run, `ekwo import fec` of the brick's own sample over
+   PostgREST as the administrator: `--dry-run --open-years --save-mapping`
+   wrote nothing and proposed eight accounts `exact`; the import with
+   `--mapping` opened 2025 and posted five entries, 7 852.00 each side, with
+   one `book_imports` row; the same file again was refused as
+   `import_already_done`. No load run.
+
+   The run before, on 22 September 2026, for `0.5.0`, on a throwaway project in
    `eu-west-3` (Postgres 17.6, session pooler `aws-1`), deleted afterwards. BE,
    EE, FR, GB (year opening 1 April), LU (quarterly) and US, each upgraded from
    `ekwo-os@0.4.1` on npm — 24 migrations pending, applied by `ekwo migrate` in

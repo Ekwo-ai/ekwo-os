@@ -1,6 +1,6 @@
 {
   "name": "@ekwo-ai/trial-balance",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "Reads a trial balance written as CSV — account, debit, credit — into the plain shape an opening balance is made of, in TypeScript: amounts as decimal strings, and what does not add up. Zero dependencies.",
   "keywords": [
     "trial-balance",
