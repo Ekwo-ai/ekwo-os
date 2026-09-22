@@ -13,7 +13,7 @@
  * the sentence the database wrote, word for word.
  */
 
-import { mkdtemp, readFile, rm } from 'node:fs/promises';
+import { mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import type { PGlite } from '@electric-sql/pglite';
@@ -339,6 +339,14 @@ describe('every command answers --json with one document of the published shape'
     );
     const numbered = await root.query<{ number: string }>(`select number from post_entry($1)`, [handId]);
     expect((await asPerson(['reverse', numbered.rows[0]?.number as string])).exitCode).toBe(0);
+
+    // Books from elsewhere: a balance on two accounts of the chart, rehearsed.
+    const cash = await root.query<{ code: string }>(`select a.code from bank_accounts b join accounts a on a.id = b.account_id where b.id = $1`, [bankAccount]);
+    const balance = join(cwd, 'balance.csv');
+    await writeFile(balance, `account,debit,credit\n${cash.rows[0]?.code},10.00,\n${sales},,10.00\n`);
+    const rehearsed = await asPerson(['import', 'trial-balance', balance, '--opening-date', '2026-01-01', '--allow-result-accounts', '--dry-run']);
+    expect(rehearsed.exitCode).toBe(0);
+    expect((rehearsed.data as { dry_run: boolean }).dry_run).toBe(true);
 
     expect((await asPerson(['logout'])).data).toMatchObject({ signedOut: true });
     // The commands that install act as nobody, and carry no such field.

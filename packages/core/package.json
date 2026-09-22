@@ -23,7 +23,13 @@
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
-    "@ekwo-ai/fec": "^0.5.0"
+    "@ekwo-ai/camt053": "^0.5.0",
+    "@ekwo-ai/cfonb120": "^0.5.0",
+    "@ekwo-ai/coda": "^0.5.0",
+    "@ekwo-ai/fec": "^0.5.0",
+    "@ekwo-ai/journal-items": "^0.5.0",
+    "@ekwo-ai/journal-report": "^0.5.0",
+    "@ekwo-ai/trial-balance": "^0.5.0"
   },
   "peerDependencies": {
     "@supabase/supabase-js": "^2.0.0"

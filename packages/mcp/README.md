@@ -163,6 +163,7 @@ Every write names its company explicitly.
 | `import_bank_statement` | A statement file (`camt.053`, `coda`, `cfonb120`) into statements and pending lines. Books nothing; the same file twice creates nothing; an unknown account or a statement that does not add up is refused by name, a missing statement is signalled |
 | `lock_period` | Moves the accounting and VAT lock dates. Needs `company.write`. |
 | `opening_balance` | The trial balance of whatever kept the books before, as the opening entry |
+| `import_books` | Books kept elsewhere — a FEC, an export of journal items, a journal report, a trial balance — whole or not at all. `dry_run: true` first: the correspondence proposed for every account and journal, what has no answer, and the import rehearsed by the database and taken back. Then again with the completed `mapping`. Every entry through `post_entry()`; no tax; the same files twice refused. `ekwo import` is the same function |
 | `close_fiscal_year` / `reopen_fiscal_year` | Closes a year the way the country pack says, or reverses a close run too early |
 | `create_company` | A company on a country pack, with its chart and its first financial year. An instance-level act |
 | `update_company_profile` | What a company says about itself on its documents |
@@ -184,7 +185,7 @@ line may name any account of the chart that is not deprecated, and every write
 tool still accepts one.
 
 `post_document`, `cancel_document`, `reverse_entry`, `record_payment`,
-`update_document_lines`, `unreconcile`, `lock_period`, `opening_balance`,
+`update_document_lines`, `unreconcile`, `lock_period`, `opening_balance`, `import_books`,
 `close_fiscal_year`, `reopen_fiscal_year`, `revoke_invitation` and
 `revoke_api_key` are annotated destructive in the protocol, so a client can ask
 before calling them.

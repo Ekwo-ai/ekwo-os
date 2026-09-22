@@ -11,6 +11,7 @@ import { contactCommand } from './commands/contact.js';
 import { demoCommand } from './commands/demo.js';
 import { cancelCommand, docCommand, postCommand } from './commands/document.js';
 import { reverseCommand } from './commands/entry.js';
+import { importCommand } from './commands/import.js';
 import { doctorCommand } from './commands/doctor.js';
 import { initCommand, type InitDeps } from './commands/init.js';
 import { loginCommand, logoutCommand, type LoginDeps } from './commands/login.js';
@@ -57,6 +58,7 @@ export const COMMANDS = [
   'reverse',
   'payment',
   'match',
+  'import',
   // An alias, last: `invoice` is what `doc` used to be called.
   'invoice',
 ] as const;
@@ -120,6 +122,9 @@ ${bold('Connecting')} ${dim('(every command)')}
               mirror, posted and matched against it. Its id or its number.
   ${cyan('payment')}     record — money in or out, booked and matched.
   ${cyan('match')}       <bank transaction> <document> — a statement line pays a document.
+  ${cyan('import')}      <source> <file>… — books kept elsewhere, whole or not at all:
+              trial-balance, fec, journal-items, journal-report. Or a bank
+              statement: camt.053, coda, cfonb120, as pending lines for match.
 
 ${bold('Acting as a person')} ${dim('(login … whoami, and every verb that keeps books — never a service_role key)')}
   --profile <name>          Which profile: a demo instance, production, one client
@@ -220,6 +225,27 @@ ${bold('ekwo company')}
                             installer or an administrator of the installation
                             (--as-user); --owner names the first owner. A
                             company already here is refused.
+
+${bold('ekwo import')} ${dim('(one command, one reader per source; nothing is posted while an account has no answer)')}
+  --dry-run                 Read the files, propose the correspondence and have
+                            the database rehearse the import, then take it back.
+                            For a statement: read the file, ask nothing.
+  --save-mapping <file>     Write the correspondence — old account → account of
+                            the chart, old journal → journal — as JSON, to edit.
+  --mapping <file>          Give it back. What it answers wins over the proposal.
+  --open-years              Open the fiscal years the entries fall in, on the
+                            length and first day of the company's own.
+  --opening-date <d>        trial-balance: the first day of the year it opens.
+  --allow-result-accounts   trial-balance: income and expense accounts too, for
+                            books taken over in the middle of a year.
+  --keep-numbers            Post each entry under the number it had. Left out,
+                            the journal draws them and the old one is the reference.
+  --encoding <e>            utf-8 (default, refused if the bytes are not),
+                            iso-8859-1, iso-8859-15. Never guessed.
+  --date-order <o>          journal-report: dmy, mdy or ymd, for a date written
+                            only in digits. Never guessed.
+  --bank-account <id>       A statement: the account, where the file names it otherwise.
+  --iban-country <cc>       cfonb120: the country the account is held in.
 
 ${bold('Environment')}
   EKWO_DB_URL               Same as --db-url. SUPABASE_DB_URL also works.
@@ -343,6 +369,8 @@ export async function run(argv: string[], deps: RunDeps = {}): Promise<number> {
         return await paymentCommand(args, deps);
       case 'match':
         return await matchCommand(args, deps);
+      case 'import':
+        return await importCommand(args, deps);
       default:
         throw new UsageError(`unknown command: ${args.command}\nRun \`ekwo --help\` for the list.`);
     }

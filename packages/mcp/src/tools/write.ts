@@ -14,19 +14,21 @@
  * date; it is the company telling the assistant that the month is closed.
  */
 
-import { createHash } from 'node:crypto';
-import { StatementFileError, readCamt053 } from '@ekwo-ai/camt053';
-import { StatementFileError as Cfonb120FileError, readCfonb120 } from '@ekwo-ai/cfonb120';
-import { StatementFileError as CodaFileError, readCoda } from '@ekwo-ai/coda';
 import { z } from 'zod';
 import { EkwoMcpError, type Backend, type Filter, type Row } from '../backend.js';
 import {
+  BOOK_SOURCES,
+  BOOK_SOURCE_DESCRIPTIONS,
   DOC_TYPES,
+  NO_JOURNAL,
+  OPENING,
   STATEMENT_FORMATS,
   amountIn,
   columns,
   companyCurrency,
   idsByCode,
+  importBooks,
+  importStatementFile,
   moneyFields,
   only,
 } from '@ekwo-ai/core';
@@ -587,13 +589,6 @@ export async function createBankTransaction(
  */
 export { STATEMENT_FORMATS } from '@ekwo-ai/core';
 
-/** What each format is delivered as, for the attachment the caller may have stored. */
-const STATEMENT_MIME_TYPES: Record<(typeof STATEMENT_FORMATS)[number], string> = {
-  'camt.053': 'application/xml',
-  coda: 'text/plain',
-  cfonb120: 'text/plain',
-};
-
 export const ImportBankStatementInput = z.object({
   company_id: companyId,
   format: z
@@ -616,52 +611,16 @@ export const ImportBankStatementInput = z.object({
     .describe('Only for `cfonb120`, which identifies an account by a bank code, a branch code and a number, and names no country. With the two letters of the country the account is held in, the statement is matched on the IBAN those make there; left out, on the three joined, as written. Never guessed.'),
 });
 
+/**
+ * Reads the file with the brick of its format and hands the statements to
+ * `import_bank_statement()`. The reading moved to the core when the command
+ * line needed it too (`ekwo import camt.053 <file>`); this is the same call.
+ */
 export async function importBankStatement(
   backend: Backend,
   args: z.infer<typeof ImportBankStatementInput>,
 ): Promise<unknown> {
-  let file;
-  try {
-    if (args.format === 'coda') file = readCoda(args.content);
-    else if (args.format === 'cfonb120') {
-      file = readCfonb120(args.content, args.iban_country === undefined ? {} : { ibanCountry: args.iban_country });
-    } else file = readCamt053(args.content);
-  } catch (error) {
-    if (
-      error instanceof StatementFileError ||
-      error instanceof CodaFileError ||
-      error instanceof Cfonb120FileError
-    ) {
-      throw new EkwoMcpError(`unreadable_statement_file: ${error.message}`, {
-        code: error.code,
-        hint: `Nothing was imported. The file is not a ${args.format} this server can read; the message says what stopped it.`,
-      });
-    }
-    throw error;
-  }
-  const bytes = Buffer.from(args.content, 'utf8');
-  const source = {
-    file_name: args.file_name ?? null,
-    checksum: `sha256:${createHash('sha256').update(bytes).digest('hex')}`,
-    byte_size: bytes.byteLength,
-    mime_type: STATEMENT_MIME_TYPES[args.format],
-    storage_path: args.storage_path ?? null,
-  };
-  const statements = await backend.rpc<Row>('import_bank_statement', {
-    p_company_id: args.company_id,
-    p_file: file,
-    p_source: source,
-    ...(args.bank_account_id !== undefined ? { p_bank_account_id: args.bank_account_id } : {}),
-  });
-  return {
-    format: args.format,
-    version: file.version,
-    version_verified: 'versionVerified' in file ? file.versionVerified : null,
-    checksum: source.checksum,
-    statements,
-    violations: file.violations,
-    note: 'A statement is not an entry: every imported line waits as `pending`, and nothing was booked or paid. Importing the same file again creates nothing; a statement that overlaps an earlier one imports only what is new (`lines_known` is the rest). `warnings` names a missing statement — an opening balance that is not the previous closing one — which is signalled and never refused.',
-  };
+  return importStatementFile(backend, args);
 }
 
 // ---------------------------------------------------------------------------
@@ -1017,6 +976,64 @@ export async function lockPeriod(
 // be closed live in `close_fiscal_year`, next to the ones about balance and
 // locks, and this server does not repeat a word of them.
 // ---------------------------------------------------------------------------
+
+export const ImportBooksInput = z.object({
+  company_id: companyId,
+  source: z
+    .enum(BOOK_SOURCES)
+    .describe(
+      'What the files are, never guessed from their content: ' +
+        BOOK_SOURCES.map((source) => `\`${source}\` — ${BOOK_SOURCE_DESCRIPTIONS[source]}`).join('; ') +
+        '. A bank statement is not books: it goes through import_bank_statement.',
+    ),
+  files: z
+    .array(
+      z.object({
+        name: z.string().min(1).describe('The name the file had, kept on the record of the import.'),
+        content: z.string().min(1).describe('The file itself, as text (UTF-8).'),
+      }),
+    )
+    .min(1)
+    .describe('The files of one source, in the order given. `journal-items` and `journal-report` take the chart of accounts and the parties beside the lines, each recognised by its header; the others take one file.'),
+  mapping: z
+    .object({
+      accounts: z.record(z.string(), z.string().nullable()).optional().describe('Old account code → code of this company\'s chart.'),
+      journals: z
+        .record(z.string(), z.string().nullable())
+        .optional()
+        .describe(`Old journal → code of a journal of this company, or \`${OPENING}\` for the entries that are the opening balance. \`${NO_JOURNAL}\` stands for entries the source gives no journal.`),
+    })
+    .optional()
+    .describe('The correspondence, as a previous call with dry_run returned it and the user completed it. What it answers wins over the proposal.'),
+  dry_run: z.boolean().optional().describe('Show what would be written — the correspondence proposed, the entries, the numbers — and write nothing. Always first, and the user reads it before the real call.'),
+  open_years: z.boolean().optional().describe('Open the fiscal years the entries fall in where the company has none, on the length and first day of its own. Off, such an entry is refused by name.'),
+  opening_date: isoDate.optional().describe('For a trial balance: the first day of the fiscal year it opens. The file does not say it.'),
+  allow_result_accounts: z.boolean().optional().describe('Let an opening balance carry income and expense accounts: books taken over in the middle of a year.'),
+  keep_numbers: z.boolean().optional().describe('Post each entry under the number it had. Where the country forbids a hole in the sequence it takes the entries.import capability; left out, the journal draws the numbers and the old one is kept as the reference.'),
+  date_order: z.enum(['dmy', 'mdy', 'ymd']).optional().describe('For `journal-report`: the order of a date written only in digits, which the file does not say.'),
+});
+
+/**
+ * Books from another system, all of them or none, through `importBooks()` of
+ * the core — the function `ekwo import` calls.
+ */
+export async function importBooksTool(
+  backend: Backend,
+  args: z.infer<typeof ImportBooksInput>,
+): Promise<unknown> {
+  return importBooks(backend, {
+    company_id: args.company_id,
+    source: args.source,
+    files: args.files,
+    mapping: args.mapping,
+    dry_run: args.dry_run,
+    open_years: args.open_years,
+    opening_date: args.opening_date,
+    allow_result_accounts: args.allow_result_accounts,
+    keep_numbers: args.keep_numbers,
+    date_order: args.date_order,
+  });
+}
 
 export const OpeningBalanceInput = z.object({
   company_id: companyId,

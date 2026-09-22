@@ -500,6 +500,35 @@
           "settled_lines": { "type": "array", "items": { "type": "string" } }
         }
       },
+      "import": {
+        "$comment": "Books or a bank statement from elsewhere. For books: what was read, the correspondence proposed and given (`mapping`, the shape --save-mapping writes), what has no answer, what the reader found that does not add up, and `result` — what import_books() wrote, or rehearsed under --dry-run, or null when a refusal came first. For a statement: one result per file. Amounts are decimal strings.",
+        "type": "object",
+        "required": ["source", "dry_run", "note"],
+        "properties": {
+          "source": { "type": "string" },
+          "dry_run": { "type": "boolean" },
+          "read": { "$ref": "#/$defs/row" },
+          "mapping": {
+            "type": "object",
+            "required": ["version", "source", "accounts", "journals"],
+            "properties": {
+              "version": { "const": 1 },
+              "source": { "type": "string" },
+              "accounts": { "type": "object", "additionalProperties": { "type": ["string", "null"] } },
+              "journals": { "type": "object", "additionalProperties": { "type": ["string", "null"] } }
+            }
+          },
+          "mapping_saved_to": { "type": "string" },
+          "accounts": { "type": "array", "items": { "$ref": "#/$defs/row" } },
+          "unmapped_accounts": { "type": "array", "items": { "type": "string" } },
+          "unmapped_journals": { "type": "array", "items": { "type": "string" } },
+          "violations": { "type": "array", "items": { "$ref": "#/$defs/row" } },
+          "refusals": { "type": "array", "items": { "type": "string" } },
+          "result": { "oneOf": [{ "$ref": "#/$defs/row" }, { "type": "null" }] },
+          "files": { "type": "array", "items": { "$ref": "#/$defs/row" } },
+          "note": { "type": "string" }
+        }
+      },
       "login": {
         "$comment": "No token is ever printed, in either form.",
         "type": "object",

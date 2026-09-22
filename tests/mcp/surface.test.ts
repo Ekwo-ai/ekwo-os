@@ -75,6 +75,7 @@ const WRITE_TOOLS = [
   'revoke_share',
   'lock_period',
   'opening_balance',
+  'import_books',
   'close_fiscal_year',
   'reopen_fiscal_year',
 ];
@@ -181,6 +182,7 @@ describe('the tools a client is offered', () => {
       'reverse_entry',
       'lock_period',
       'opening_balance',
+      'import_books',
       'close_fiscal_year',
       'reopen_fiscal_year',
     ]) {
@@ -200,6 +202,7 @@ describe('the tools a client is offered', () => {
       'import_bank_statement',
       'lock_period',
       'opening_balance',
+      'import_books',
     ];
     for (const name of needsCompany) {
       const schema = tools.find((tool) => tool.name === name)?.inputSchema as {
