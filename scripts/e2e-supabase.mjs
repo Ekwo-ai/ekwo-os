@@ -25,8 +25,11 @@
  *
  *   EKWO_DB_URL                 the pooler connection string of the project
  *   SUPABASE_URL                https://<ref>.supabase.co
- *   SUPABASE_ANON_KEY           the anon key — what a real client sends
- *   SUPABASE_SERVICE_ROLE_KEY   used once, by `ekwo init`, to create the admin
+ *   SUPABASE_ANON_KEY           the anon key — what a real client sends. The
+ *                               publishable key, `sb_publishable_…`, works too
+ *   SUPABASE_SERVICE_ROLE_KEY   used once, by `ekwo init`, to create the admin:
+ *                               the secret key, `sb_secret_…`, or the legacy
+ *                               service_role JWT. Run it with both
  *   EKWO_E2E_COUNTRY            the pack to install. No default: a default
  *                               country is a chart of accounts nobody chose
  *   EKWO_E2E_CHART              optional, and required in practice for a

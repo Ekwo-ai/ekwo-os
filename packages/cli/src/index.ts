@@ -8,6 +8,7 @@
 
 export { parseArgs, UsageError, type ParsedArgs } from './args.js';
 export {
+  adminHeaders,
   createAuthUser,
   findAuthUserByEmail,
   type AuthUser,

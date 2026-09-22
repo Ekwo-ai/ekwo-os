@@ -31,6 +31,15 @@ somewhere has already run it.
   terminal (country, chart, language, first day of the year).
   `ekwo company list` shows them. Without `--no-company`, `init` is unchanged.
 
+### Fixed
+
+- **`ekwo init` sends a secret key of the newer form the way Supabase
+  documents it.** A project created today hands out `sb_secret_…` first; it is
+  not a JWT, and the CLI sent it as `Authorization: Bearer` as well as on
+  `apikey`, where anything verifying a JWT refuses it. It now goes on `apikey`
+  alone; the legacy `service_role` JWT is sent both ways, as before. The
+  end-to-end run was played with both forms.
+
 ### Changed
 
 - **`ekwo.json` describes the installation**: the project URL and the schema

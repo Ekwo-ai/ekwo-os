@@ -47,12 +47,31 @@ function authBase(supabaseUrl: string): string {
   return `${supabaseUrl.replace(/\/+$/, '')}/auth/v1`;
 }
 
-function headers(serviceRoleKey: string): Record<string, string> {
+/**
+ * The headers the admin API is called with, for either form of the key.
+ *
+ * A legacy `service_role` key is a JWT, and GoTrue has always read it from
+ * `Authorization: Bearer` as well as from `apikey`. A secret key of the newer
+ * form — `sb_secret_…` — is a short string and not a JWT: Supabase documents
+ * that it travels on `apikey` and not on `Authorization: Bearer`, where
+ * anything that tries to verify it as a JWT refuses it. The CLI used to send
+ * it both ways; a walkthrough on a new project stopped at the first
+ * administrator with such a key, although a probe of 22 September 2026 found
+ * the gateway still tolerating a Bearer equal to `apikey`. What is documented
+ * is what is relied on: the new form goes on `apikey` alone, and the gateway
+ * turns it into the role it stands for.
+ */
+export function adminHeaders(key: string): Record<string, string> {
   return {
-    apikey: serviceRoleKey,
-    Authorization: `Bearer ${serviceRoleKey}`,
+    apikey: key,
+    ...(isOpaqueKey(key) ? {} : { Authorization: `Bearer ${key}` }),
     'Content-Type': 'application/json',
   };
+}
+
+/** A key of the newer form, `sb_secret_…` or `sb_publishable_…`: not a JWT. */
+export function isOpaqueKey(key: string): boolean {
+  return key.startsWith('sb_');
 }
 
 async function readBody(response: Response): Promise<Record<string, unknown>> {
@@ -92,7 +111,7 @@ export const createAuthUser: CreateAuthUser = async ({
   if (password === undefined || password.length === 0) {
     const response = await fetchImpl(`${base}/admin/generate_link`, {
       method: 'POST',
-      headers: headers(serviceRoleKey),
+      headers: adminHeaders(serviceRoleKey),
       body: JSON.stringify({ type: 'invite', email }),
     });
     const body = await readBody(response);
@@ -114,7 +133,7 @@ export const createAuthUser: CreateAuthUser = async ({
 
   const response = await fetchImpl(`${base}/admin/users`, {
     method: 'POST',
-    headers: headers(serviceRoleKey),
+    headers: adminHeaders(serviceRoleKey),
     body: JSON.stringify({ email, password, email_confirm: true }),
   });
   const body = await readBody(response);
@@ -167,7 +186,7 @@ export async function findAuthUserByEmail({
   fetchImpl?: FetchLike;
 }): Promise<AuthUser | undefined> {
   const url = `${authBase(supabaseUrl)}/admin/users?page=1&per_page=200&filter=${encodeURIComponent(email)}`;
-  const response = await fetchImpl(url, { headers: headers(serviceRoleKey) });
+  const response = await fetchImpl(url, { headers: adminHeaders(serviceRoleKey) });
   if (!response.ok) return undefined;
   const body = await readBody(response);
   const users = body['users'];

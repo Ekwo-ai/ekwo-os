@@ -595,7 +595,7 @@ async function resolveAdminUser(
   const key =
     serviceRoleKey ??
     (options.interactive
-      ? await askSecret('service_role key (Project Settings → API). It is never written to disk:')
+      ? await askSecret('Secret key — sb_secret_…, or the legacy service_role key (Project Settings → API Keys). It is never written to disk:')
       : required('--service-role-key', 'the service_role key'));
 
   const password =

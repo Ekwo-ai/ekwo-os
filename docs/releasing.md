@@ -156,7 +156,11 @@ that is not cut.
    empty project or `--reset`. First run on 22 September 2026, before any
    release carried it, on a throwaway project in `eu-west-3`, deleted
    afterwards: BE (`default` chart, `nl`) and FR (`fr`), 11 steps, all green,
-   62 s, the install alone 43 s.
+   62 s, the install alone 43 s. Played again the same day on a second throwaway
+   project, once with the new keys (`sb_secret_…` for the install,
+   `sb_publishable_…` for the client) and once with the legacy JWTs after
+   `--reset`: all green both times, about 58 s each. Run it with both forms of
+   key: a new project hands out the new ones first.
 
    **The last run: 22 September 2026, for `0.6.0`**, on a throwaway project in
    `eu-west-3` (Postgres 17.6, session pooler `aws-1`), deleted afterwards. BE,

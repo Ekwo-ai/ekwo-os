@@ -7,7 +7,7 @@
  */
 
 import { describe, expect, it } from 'vitest';
-import { createAuthUser, findAuthUserByEmail } from '../../packages/cli/src/index.js';
+import { adminHeaders, createAuthUser, findAuthUserByEmail } from '../../packages/cli/src/index.js';
 import { fakeFetch } from './helpers.js';
 
 const supabaseUrl = 'https://abcdefghijklmnopqrst.supabase.co';
@@ -126,5 +126,64 @@ describe('findAuthUserByEmail', () => {
         fetchImpl: empty,
       }),
     ).resolves.toBeUndefined();
+  });
+});
+
+describe('the two forms of the secret key', () => {
+  /** A GoTrue that answers like the gateway: the key on `apikey`, and a Bearer only if it is a JWT. */
+  function gateway(): {
+    fetchImpl: (url: string, init?: RequestInit) => Promise<Response>;
+    seen: Record<string, string>[];
+  } {
+    const seen: Record<string, string>[] = [];
+    const fetchImpl = async (_url: string, init?: RequestInit): Promise<Response> => {
+      const headers = { ...(init?.headers as Record<string, string>) };
+      seen.push(headers);
+      const bearer = headers['Authorization']?.replace(/^Bearer /, '');
+      // What the platform does with a key of the newer form presented as a JWT.
+      if (bearer !== undefined && !bearer.startsWith('eyJ')) {
+        return new Response(JSON.stringify({ msg: 'invalid JWT: unable to parse or verify signature' }), { status: 401 });
+      }
+      return new Response(JSON.stringify({ id, email: 'first@example.test' }), { status: 200 });
+    };
+    return { fetchImpl, seen };
+  }
+
+  // Built at run time so that no string in this file has the shape of a real key.
+  const FAKE_SECRET_KEY = `sb_secret_${'a'.repeat(22)}_${'b'.repeat(8)}`;
+
+  it('sends a secret key of the newer form on apikey alone, never as a Bearer', async () => {
+    const { fetchImpl, seen } = gateway();
+    const user = await createAuthUser({
+      supabaseUrl,
+      serviceRoleKey: FAKE_SECRET_KEY,
+      email: 'first@example.test',
+      password: 'a-long-enough-password',
+      fetchImpl,
+    });
+    expect(user.id).toBe(id);
+    expect(seen[0]?.['apikey']).toBe(FAKE_SECRET_KEY);
+    expect(seen[0]?.['Authorization']).toBeUndefined();
+  });
+
+  it('keeps sending a legacy service_role JWT both ways', async () => {
+    const { fetchImpl, seen } = gateway();
+    const legacy = 'eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoic2VydmljZV9yb2xlIn0.signature';
+    const user = await createAuthUser({
+      supabaseUrl,
+      serviceRoleKey: legacy,
+      email: 'first@example.test',
+      password: 'a-long-enough-password',
+      fetchImpl,
+    });
+    expect(user.id).toBe(id);
+    expect(seen[0]).toMatchObject({ apikey: legacy, Authorization: `Bearer ${legacy}` });
+  });
+
+  it('uses the same headers to look an account up', async () => {
+    const { fetchImpl, seen } = gateway();
+    await findAuthUserByEmail({ supabaseUrl, serviceRoleKey: 'sb_secret_x', email: 'first@example.test', fetchImpl });
+    expect(seen[0]?.['Authorization']).toBeUndefined();
+    expect(adminHeaders('sb_secret_x')).toEqual({ apikey: 'sb_secret_x', 'Content-Type': 'application/json' });
   });
 });

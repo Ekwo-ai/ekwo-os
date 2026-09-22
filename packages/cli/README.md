@@ -26,9 +26,11 @@ either.
 2. **Copy two things** from the dashboard:
    - Project Settings → Database → **Connection string** (URI). It contains
      your database password.
-   - Project Settings → API → **`service_role` key**, and the **Project URL**.
-     These are used once, to create the first administrator in your own
-     Supabase Auth, and are never written to disk.
+   - Project Settings → API Keys → the **secret key** (`sb_secret_…`), and the
+     **Project URL**. A project created before the new keys has the legacy
+     **`service_role` key** instead, and it works the same. These are used
+     once, to create the first administrator in your own Supabase Auth, and
+     are never written to disk.
 
    **Take the pooler string, not the direct one, unless you know you have
    IPv6.** The direct host `db.<ref>.supabase.co` resolves to an IPv6 address
@@ -870,7 +872,7 @@ Every command takes the connection flags:
 | `--db-password <pw>` | Database password. Prompted, masked, when omitted. |
 | `--db-region <region>` | With `--project-ref`, the session pooler in that region. Both generation prefixes are tried and the one that answers is kept. |
 | `--supabase-url <url>` | `https://<ref>.supabase.co`. Needed only to create a user. |
-| `--service-role-key <key>` | Needed only to create a user. |
+| `--service-role-key <key>` | Needed only to create a user. Either form Supabase issues: a secret key, `sb_secret_…`, sent on the `apikey` header alone because it is not a JWT, or the legacy `service_role` JWT, sent on `apikey` and as a Bearer as before. |
 | `--yes`, `-y` | Never ask a question. Everything must come from flags or the environment. |
 
 `--project-ref` with `--db-password` and `--db-region` builds the session

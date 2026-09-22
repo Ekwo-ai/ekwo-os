@@ -110,7 +110,9 @@ ${bold('Connecting')} ${dim('(every command)')}
   --db-password <password>  Database password. Prompted, masked, if omitted.
   --db-region <region>      Use the pooler in this region, e.g. eu-central-1.
   --supabase-url <url>      https://<ref>.supabase.co — needed to create a user.
-  --service-role-key <key>  Project Settings → API. Needed to create a user.
+  --service-role-key <key>  Project Settings → API Keys: the secret key
+                            (sb_secret_…) or the legacy service_role JWT.
+                            Needed to create a user.
 
   ${cyan('contact')}     add <name> | list — the people and companies the books name.
   ${cyan('doc')}         new | line add <document> — a draft and its lines; list | show
