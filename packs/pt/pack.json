@@ -1,0 +1,380 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "PT",
+  "name": "Portugal",
+  "version": "0.1.0",
+  "schema_min": "20260921145425",
+  "seed_sequence": 43,
+  "released_at": "2026-09-22",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "civa-art7",
+        "title": "Código do IVA, artigo 7.º — Facto gerador e exigibilidade do imposto",
+        "publisher": "Autoridade Tributária e Aduaneira",
+        "url": "https://info.portaldasfinancas.gov.pt/pt/informacao_fiscal/codigos_tributarios/civa_rep/Pages/iva7.aspx",
+        "consulted_on": "2026-09-22",
+        "kind": "law"
+      },
+      {
+        "key": "civa-art8",
+        "title": "Código do IVA, artigo 8.º — Exigibilidade do imposto em caso de obrigação de emitir fatura",
+        "publisher": "Autoridade Tributária e Aduaneira",
+        "url": "https://info.portaldasfinancas.gov.pt/pt/informacao_fiscal/codigos_tributarios/civa_rep/Pages/iva8.aspx",
+        "consulted_on": "2026-09-22",
+        "kind": "law"
+      },
+      {
+        "key": "civa-art9",
+        "title": "Código do IVA, artigo 9.º — Isenções nas operações internas",
+        "publisher": "Autoridade Tributária e Aduaneira",
+        "url": "https://info.portaldasfinancas.gov.pt/pt/informacao_fiscal/codigos_tributarios/civa_rep/Pages/iva9.aspx",
+        "consulted_on": "2026-09-22",
+        "kind": "law"
+      },
+      {
+        "key": "civa-art14",
+        "title": "Código do IVA, artigo 14.º — Isenções nas exportações, operações assimiladas a exportações e transportes internacionais",
+        "publisher": "Autoridade Tributária e Aduaneira",
+        "url": "https://info.portaldasfinancas.gov.pt/pt/informacao_fiscal/codigos_tributarios/civa_rep/Pages/iva14.aspx",
+        "consulted_on": "2026-09-22",
+        "kind": "law"
+      },
+      {
+        "key": "civa-art18",
+        "title": "Código do IVA, artigo 18.º — Taxas do imposto",
+        "publisher": "Autoridade Tributária e Aduaneira",
+        "url": "https://info.portaldasfinancas.gov.pt/pt/informacao_fiscal/codigos_tributarios/civa_rep/Pages/iva18.aspx",
+        "consulted_on": "2026-09-22",
+        "kind": "law"
+      },
+      {
+        "key": "civa-art18-ra",
+        "title": "Código do IVA, artigo 18.º, n.º 3 — Taxas do imposto nas Regiões Autónomas",
+        "publisher": "Autoridade Tributária e Aduaneira",
+        "url": "https://info.portaldasfinancas.gov.pt/pt/informacao_fiscal/codigos_tributarios/civa_rep/ra/Pages/iva18ra_202503.aspx",
+        "consulted_on": "2026-09-22",
+        "kind": "law"
+      },
+      {
+        "key": "civa-art21",
+        "title": "Código do IVA, artigo 21.º — Exclusões do direito à dedução",
+        "publisher": "Autoridade Tributária e Aduaneira",
+        "url": "https://info.portaldasfinancas.gov.pt/pt/informacao_fiscal/codigos_tributarios/civa_rep/Pages/iva21.aspx",
+        "consulted_on": "2026-09-22",
+        "kind": "law"
+      },
+      {
+        "key": "civa-art29",
+        "title": "Código do IVA, artigo 29.º — Obrigações em geral (obrigação de emitir fatura)",
+        "publisher": "Autoridade Tributária e Aduaneira",
+        "url": "https://info.portaldasfinancas.gov.pt/pt/apoio_contribuinte/questoes_frequentes/pages/faqs-01010.aspx",
+        "consulted_on": "2026-09-22",
+        "kind": "law"
+      },
+      {
+        "key": "civa-art36",
+        "title": "Código do IVA, artigo 36.º — Prazos de emissão e formalidades das faturas",
+        "publisher": "Autoridade Tributária e Aduaneira",
+        "url": "https://info.portaldasfinancas.gov.pt/pt/informacao_fiscal/codigos_tributarios/civa_rep/Pages/iva36.aspx",
+        "consulted_on": "2026-09-22",
+        "kind": "law"
+      },
+      {
+        "key": "civa-art41",
+        "title": "Código do IVA, artigo 41.º — Prazo de entrega da declaração periódica",
+        "publisher": "Autoridade Tributária e Aduaneira",
+        "url": "https://info.portaldasfinancas.gov.pt/pt/informacao_fiscal/codigos_tributarios/civa_rep/Pages/iva41.aspx",
+        "consulted_on": "2026-09-22",
+        "kind": "law"
+      },
+      {
+        "key": "riti",
+        "title": "RITI — Regime do IVA nas Transações Intracomunitárias, texto consolidado",
+        "publisher": "Autoridade Tributária e Aduaneira",
+        "url": "https://info.portaldasfinancas.gov.pt/pt/informacao_fiscal/codigos_tributarios/Cod_download/Documents/RITI.pdf",
+        "consulted_on": "2026-09-22",
+        "kind": "law"
+      },
+      {
+        "key": "dl-49-2025",
+        "title": "Decreto-Lei n.º 49/2025, de 27 de março — uniformiza no dia 20 o prazo de entrega da declaração periódica do IVA, mensal e trimestral",
+        "publisher": "Diário da República Eletrónico",
+        "url": "https://diariodarepublica.pt/dr/detalhe/decreto-lei/49-2025-912653926",
+        "consulted_on": "2026-09-22",
+        "kind": "regulation"
+      },
+      {
+        "key": "portaria-221-2017",
+        "title": "Declaração periódica do IVA e anexo R — modelo oficial e instruções de preenchimento",
+        "publisher": "Autoridade Tributária e Aduaneira",
+        "url": "https://info.portaldasfinancas.gov.pt/pt/apoio_contribuinte/modelos_formularios/iva/documents/declaracao_periodica_iva.pdf",
+        "consulted_on": "2026-09-22",
+        "kind": "form"
+      },
+      {
+        "key": "dlr-15-a-2021-a",
+        "title": "Decreto Legislativo Regional n.º 15-A/2021/A — taxas do IVA na Região Autónoma dos Açores (4 %, 9 %, 16 %)",
+        "publisher": "Diário da República Eletrónico",
+        "url": "https://info.portaldasfinancas.gov.pt/pt/informacao_fiscal/codigos_tributarios/civa_rep/ra/Pages/ivara18_062022.aspx",
+        "consulted_on": "2026-09-22",
+        "kind": "regulation"
+      },
+      {
+        "key": "lei-14-a-2012",
+        "title": "Lei n.º 14-A/2012, de 30 de março — taxas do IVA na Região Autónoma da Madeira (12 %, 22 %)",
+        "publisher": "Diário da República Eletrónico",
+        "url": "https://diariodarepublica.pt/dr/detalhe/lei/14-a-2012-553470",
+        "consulted_on": "2026-09-22",
+        "kind": "law"
+      },
+      {
+        "key": "dlr-6-2024-m",
+        "title": "Decreto Legislativo Regional n.º 6/2024/M, de 29 de julho, artigo 21.º — taxa reduzida do IVA na Região Autónoma da Madeira, 4 % desde 1 de outubro de 2024",
+        "publisher": "Diário da República Eletrónico",
+        "url": "https://diariodarepublica.pt/dr/detalhe/decreto-legislativo-regional/6-2024-873755644",
+        "consulted_on": "2026-09-22",
+        "kind": "regulation"
+      },
+      {
+        "key": "dl-62-2013",
+        "title": "Decreto-Lei n.º 62/2013, de 10 de maio — atrasos de pagamento em transações comerciais",
+        "publisher": "Procuradoria-Geral Distrital de Lisboa",
+        "url": "https://www.pgdlisboa.pt/leis/lei_mostra_articulado.php?nid=1920&tabela=leis",
+        "consulted_on": "2026-09-22",
+        "kind": "law"
+      },
+      {
+        "key": "dl-28-2019",
+        "title": "Decreto-Lei n.º 28/2019, de 15 de fevereiro — regime de arquivo e processamento de faturas e outros documentos fiscalmente relevantes",
+        "publisher": "Diário da República Eletrónico",
+        "url": "https://diariodarepublica.pt/dr/detalhe/decreto-lei/28-2019-119622094",
+        "consulted_on": "2026-09-22",
+        "kind": "regulation"
+      },
+      {
+        "key": "portaria-195-2020",
+        "title": "Portaria n.º 195/2020, de 13 de agosto — ATCUD e código QR nas faturas e outros documentos fiscalmente relevantes",
+        "publisher": "Diário da República Eletrónico",
+        "url": "https://diariodarepublica.pt/dr/detalhe/portaria/195-2020-140210523",
+        "consulted_on": "2026-09-22",
+        "kind": "regulation"
+      },
+      {
+        "key": "dl-111-b-2017",
+        "title": "Decreto-Lei n.º 111-B/2017, de 31 de agosto — transposição da Diretiva 2014/55/UE, faturação eletrónica nos contratos públicos",
+        "publisher": "Diário da República Eletrónico",
+        "url": "https://diariodarepublica.pt/dr/detalhe/decreto-lei/111-b-2017-108030200",
+        "consulted_on": "2026-09-22",
+        "kind": "regulation"
+      },
+      {
+        "key": "dl-14-2013",
+        "title": "Decreto-Lei n.º 14/2013, de 28 de janeiro — número de identificação fiscal (NIF)",
+        "publisher": "Diário da República Eletrónico",
+        "url": "https://diariodarepublica.pt/dr/detalhe/decreto-lei/14-2013-257001",
+        "consulted_on": "2026-09-22",
+        "kind": "law"
+      },
+      {
+        "key": "dl-158-2009",
+        "title": "Decreto-Lei n.º 158/2009, de 13 de julho — aprova o Sistema de Normalização Contabilística (SNC), texto consolidado",
+        "publisher": "Diário da República Eletrónico",
+        "url": "https://diariodarepublica.pt/dr/detalhe/decreto-lei/158-2009-492428",
+        "consulted_on": "2026-09-22",
+        "kind": "law"
+      },
+      {
+        "key": "portaria-1011-2009",
+        "title": "Portaria n.º 1011/2009, de 9 de setembro — Código de Contas do SNC",
+        "publisher": "Comissão de Normalização Contabilística",
+        "url": "https://www.cnc.gov.pt/pdf/snc/2016/normas%20com%20retifica%C3%A7%C3%A3o/CodigoContas.pdf",
+        "consulted_on": "2026-09-22",
+        "kind": "regulation"
+      },
+      {
+        "key": "portaria-220-2015",
+        "title": "Portaria n.º 220/2015, de 24 de julho — modelos de demonstrações financeiras do SNC (Balanço e Demonstração de Resultados)",
+        "publisher": "Diário da República Eletrónico",
+        "url": "https://diariodarepublica.pt/dr/detalhe/portaria/220-2015-69866634",
+        "consulted_on": "2026-09-22",
+        "kind": "regulation"
+      },
+      {
+        "key": "en-16931",
+        "title": "EN 16931-1 — the semantic data model of the core elements of an electronic invoice, and the conformity Directive 2014/55/EU requires",
+        "publisher": "European Commission",
+        "url": "https://ec.europa.eu/digital-building-blocks/sites/spaces/DIGITAL/pages/467108950/EN+16931+compliance",
+        "consulted_on": "2026-09-22",
+        "kind": "standard"
+      },
+      {
+        "key": "uncl5305",
+        "title": "UNCL5305 — VAT category code list (BT-118 and BT-151), the subset published for EN 16931",
+        "publisher": "OpenPEPPOL — list published by the European Commission",
+        "url": "https://docs.peppol.eu/poacc/billing/3.0/codelist/UNCL5305/",
+        "consulted_on": "2026-09-22",
+        "kind": "standard"
+      },
+      {
+        "key": "vatex",
+        "title": "VATEX — VAT exemption reason code list (BT-121)",
+        "publisher": "OpenPEPPOL — list published by the European Commission",
+        "url": "https://docs.peppol.eu/poacc/billing/3.0/codelist/vatex/",
+        "consulted_on": "2026-09-22",
+        "kind": "standard"
+      },
+      {
+        "key": "portal-dp-iva",
+        "title": "Entrega da Declaração Periódica do IVA — Portal das Finanças",
+        "publisher": "Autoridade Tributária e Aduaneira",
+        "url": "https://www.acesso.gov.pt/v2/loginForm?partID=IAT&path=/dashboard",
+        "consulted_on": "2026-09-22",
+        "kind": "portal"
+      },
+      {
+        "key": "peppol-eas",
+        "title": "Peppol participant identifier scheme list (EAS): 9946, Portugal VAT number",
+        "publisher": "OpenPEPPOL",
+        "url": "https://docs.peppol.eu/poacc/billing/3.0/codelist/eas/",
+        "consulted_on": "2026-09-22",
+        "kind": "standard"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "EUR",
+    "language": "pt",
+    "rounding_method": "half_up",
+    "opening_entry_label": "Lançamento de abertura",
+    "closing_style": "result_accounts",
+    "roles": {
+      "receivable": "211",
+      "payable": "221",
+      "suspense": "278",
+      "retained_earnings": "56",
+      "current_year_result_profit": "81",
+      "current_year_result_loss": "81",
+      "sales": "71",
+      "purchase": "61",
+      "bank": "12",
+      "cash": "11",
+      "fx_gain": "786",
+      "fx_loss": "686",
+      "tax_payable": "2436",
+      "tax_receivable": "2437"
+    },
+    "journal_roles": {
+      "sales": "VEN",
+      "purchase": "COM",
+      "miscellaneous": "DIV",
+      "opening": "ABE"
+    },
+    "fiscal_year_default": "calendar"
+  },
+  "languages": [
+    "en"
+  ],
+  "journals": [
+    { "code": "VEN", "type": "sales", "name": "Diário de vendas", "sequence": 10 },
+    { "code": "COM", "type": "purchase", "name": "Diário de compras", "sequence": 20 },
+    { "code": "BAN", "type": "bank", "name": "Diário de bancos", "sequence": 30 },
+    { "code": "CAI", "type": "cash", "name": "Diário de caixa", "sequence": 40 },
+    { "code": "DIV", "type": "general", "name": "Diário de operações diversas", "sequence": 50 },
+    { "code": "ABE", "type": "opening", "name": "Diário de abertura", "sequence": 60 }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "SNC — Sistema de Normalização Contabilística (seleção para PME)",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": ["PT-SNC-BAL", "PT-SNC-DR"],
+      "legal_reference": "Decreto-Lei n.º 158/2009, de 13 de julho, que aprova o SNC, alterado pelo Decreto-Lei n.º 98/2015, de 2 de junho; Portaria n.º 1011/2009, de 9 de setembro, que aprova o Código de Contas. Seleção de contas das classes 1 a 8 nos códigos e denominações oficiais, com as contas usadas na prática de uma sociedade comercial corrente; a lista completa é a da portaria",
+      "source": "portaria-1011-2009"
+    }
+  ],
+  "documents": {
+    "numbering": "gapless_per_year",
+    "number_format": "{CODE}/{YYYY}/{NNNN}",
+    "legal_payment_days": 30,
+    "late_payment_reference": "Decreto-Lei n.º 62/2013, art. 4.º, n.º 3 — a falta de acordo, trinta dias a contar da receção da fatura ou dos bens/serviços; taxa de juro de mora: taxa de refinanciamento principal do BCE mais oito pontos percentuais (alteração ao art. 102.º do Código Comercial); art. 7.º — indemnização forfetária mínima de 40 euros pelos custos de cobrança, sem interpelação nem prova",
+    "tax_point": "invoice_if_issued",
+    "posted_edit_policy": "reversal_only",
+    "references": {
+      "numbering": {
+        "legal_reference": "Decreto-Lei n.º 28/2019, de 15 de fevereiro — as séries de faturação são comunicadas previamente à Autoridade Tributária e a numeração é sequencial dentro de cada série; a prática corrente reinicia a série a cada ano civil",
+        "source": "dl-28-2019"
+      },
+      "payment_terms": {
+        "legal_reference": "Decreto-Lei n.º 62/2013, art. 4.º, n.º 3 — na falta de estipulação do prazo de pagamento no contrato, este é de trinta dias após a receção da fatura ou dos bens ou serviços",
+        "source": "dl-62-2013"
+      },
+      "tax_point": {
+        "legal_reference": "Código do IVA, art. 7.º, n.º 1 — o imposto é devido e exigível no momento em que os bens são postos à disposição do adquirente ou em que os serviços são realizados; art. 8.º, n.º 1 — quando exista obrigação de emitir fatura (art. 29.º), a exigibilidade ocorre no momento da sua emissão, se respeitado o prazo legal, ou no termo desse prazo se não for respeitado, ou no momento do recebimento se o pagamento for anterior. A emissão de fatura é a regra geral de quase toda operação sujeita, o que faz de art. 8.º a derrogação que na prática rege a maioria das operações",
+        "source": "civa-art8"
+      },
+      "posted_edit_policy": {
+        "legal_reference": "Decreto-Lei n.º 28/2019 — a série de faturação comunicada é sequencial e sem falhas; uma fatura processada por um programa certificado (Portaria n.º 195/2020, ATCUD incluído) não pode ser anulada, apenas corrigida por nota de crédito",
+        "source": "dl-28-2019"
+      }
+    },
+    "mentions": [
+      {
+        "code": "reverse_charge",
+        "applies_when": "reverse_charge",
+        "text": "IVA - autoliquidação",
+        "sequence": 10,
+        "legal_reference": "Código do IVA, art. 36.º, n.º 13, alínea j) — a fatura deve conter o motivo justificativo da não aplicação do imposto, sempre que for caso disso",
+        "source": "civa-art36"
+      },
+      {
+        "code": "intra_eu_goods",
+        "applies_when": "intra_eu_goods",
+        "text": "IVA - isento artigo 14.º do RITI",
+        "sequence": 20,
+        "legal_reference": "RITI, art. 14.º — isenção das transmissões intracomunitárias de bens; Código do IVA, art. 36.º, n.º 13, alínea j)",
+        "source": "riti"
+      },
+      {
+        "code": "intra_eu_services",
+        "applies_when": "intra_eu_services",
+        "text": "IVA - autoliquidação",
+        "sequence": 30,
+        "legal_reference": "Código do IVA, art. 6.º, n.º 6, alínea a) — localização no Estado-membro do adquirente sujeito passivo; art. 36.º, n.º 13, alínea j)",
+        "source": "civa-art36"
+      },
+      {
+        "code": "export",
+        "applies_when": "export",
+        "text": "IVA - isento artigo 14.º do CIVA",
+        "sequence": 40,
+        "legal_reference": "Código do IVA, art. 14.º — isenções nas exportações; art. 36.º, n.º 13, alínea j)",
+        "source": "civa-art14"
+      },
+      {
+        "code": "exempt",
+        "applies_when": "exempt",
+        "text": "IVA - isento artigo 9.º do CIVA",
+        "sequence": 50,
+        "legal_reference": "Código do IVA, art. 9.º — isenções nas operações internas; art. 36.º, n.º 13, alínea j)",
+        "source": "civa-art9"
+      }
+    ]
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "obligation": "none",
+    "party_scheme": "9946",
+    "vat_scheme": "9946",
+    "legal_reference": "A 22 de setembro de 2026 não existe, em Portugal, uma obrigação legal de troca de faturas eletrónicas estruturadas entre empresas: o mecanismo nacional passa pelo programa de faturação certificado (Decreto-Lei n.º 28/2019), pelo ATCUD e pelo código QR em toda fatura (Portaria n.º 195/2020) e pela submissão mensal do ficheiro SAF-T (PT) — três obrigações de certificação e de comunicação ao Estado, não um formato de fatura estruturada trocado entre as partes; ver o README do pacote. A faturação eletrónica é obrigatória apenas na contratação pública (Decreto-Lei n.º 111-B/2017, que transpõe a Diretiva 2014/55/UE): desde abril de 2019 para as entidades adjudicantes, desde janeiro de 2021 para as grandes empresas, e até 31 de dezembro de 2026 para as micro, pequenas e médias empresas e para as restantes entidades adjudicantes (Lei n.º 73-A/2025, Orçamento do Estado para 2026), gerida pela ESPAP. O esquema 9946 (NIF português) identifica a empresa e o número de IVA, que em Portugal são o mesmo número",
+    "source": "dl-111-b-2017"
+  },
+  "bank": {
+    "statement_formats": ["camt.053"],
+    "payment_formats": ["pain.001"]
+  }
+}

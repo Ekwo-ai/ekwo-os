@@ -285,6 +285,33 @@ on conflict (code) do update set
 -- California is a question this table has never answered for any country.
 -- ---------------------------------------------------------------------------
 
+-- Portugal's two autonomous regions are not a case of the common system
+-- stopping short, the way Ceuta or the Canary Islands are: Directive
+-- 2006/112/EC reaches the Azores and Madeira exactly as it reaches the
+-- mainland (eu_vat_scope 'full', no outside_parent_tax), and both file under
+-- the same tax as the mainland does, IVA. The row exists because the CIVA
+-- itself carries a rate the mainland one does not: article 18(3) lets the
+-- legislative assembly of each region set reduced rates of its own, under the
+-- Lei das Finanças das Regiões Autónomas, and packs/pt/ conditions those rates
+-- on a supply located here. A country the common system does not reach adds a
+-- row because a pack of it names a state; this pair is added for the same
+-- reason a Californian pack would be, one level below the country instead of
+-- outside it.
+insert into territories (code, code_source, name, parent_code, eu_vat_scope, eu_vat_from, eu_vat_to, vat_prefix, legal_reference) values
+  ('PT-20', 'iso_3166_2', 'Azores', 'PT', 'full', date '1986-01-01', null, null,
+   'Directive 2006/112/EC, article 5, reaches the Azores exactly as it reaches the rest of Portugal — no row of this table, and no provision of the Directive, excludes it. Lei Constitucional n.º 1/2004, art. 5.º(4) and the Estatuto Político-Administrativo da Região Autónoma dos Açores name the region; the Código do IVA, art. 18.º, n.º 3, and the Lei das Finanças das Regiões Autónomas (Lei Orgânica n.º 2/2013, de 2 de setembro) let its legislative assembly set rates of its own, which is the only reason this row exists.'),
+  ('PT-30', 'iso_3166_2', 'Madeira', 'PT', 'full', date '1986-01-01', null, null,
+   'Directive 2006/112/EC, article 5, reaches Madeira exactly as it reaches the rest of Portugal — no row of this table, and no provision of the Directive, excludes it. Lei Constitucional n.º 1/2004, art. 5.º(4) and the Estatuto Político-Administrativo da Região Autónoma da Madeira name the region; the Código do IVA, art. 18.º, n.º 3, and the Lei das Finanças das Regiões Autónomas (Lei Orgânica n.º 2/2013, de 2 de setembro) let its legislative assembly set rates of its own, which is the only reason this row exists.')
+on conflict (code) do update set
+  code_source     = excluded.code_source,
+  name            = excluded.name,
+  parent_code     = excluded.parent_code,
+  eu_vat_scope    = excluded.eu_vat_scope,
+  eu_vat_from     = excluded.eu_vat_from,
+  eu_vat_to       = excluded.eu_vat_to,
+  vat_prefix      = excluded.vat_prefix,
+  legal_reference = excluded.legal_reference;
+
 insert into territories (code, code_source, name, parent_code, eu_vat_scope, eu_vat_from, eu_vat_to, vat_prefix, legal_reference) values
   ('US-CA', 'iso_3166_2', 'California', 'US', 'none', null, null, null,
    'ISO 3166-2:US for the code. California Revenue and Taxation Code, sections 6051 and 6201, which impose the sales tax on a retailer''s gross receipts and the use tax on the storage, use or other consumption of tangible personal property in this State — the two statutes that make California a taxing territory of its own inside a country that levies no tax at all at federal level. Outside the common system of VAT with its parent, under Directive 2006/112/EC, article 5(2).'),

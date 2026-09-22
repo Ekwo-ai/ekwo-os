@@ -1,0 +1,116 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "Um ano de uma sociedade comercial portuguesa em regime normal, com entrega trimestral",
+  "chart": "default",
+  "fiscal_year": { "name": "Exercício de 2026", "start": "2026-01-01", "end": "2026-12-31" },
+  "periods": [
+    { "code": "2026-1T", "from": "2026-01-01", "to": "2026-03-31" },
+    { "code": "2026-2T", "from": "2026-04-01", "to": "2026-06-30" },
+    { "code": "2026-3T", "from": "2026-07-01", "to": "2026-09-30" },
+    { "code": "2026-4T", "from": "2026-10-01", "to": "2026-12-31" }
+  ],
+  "statements": ["PT-SNC-BAL", "PT-SNC-DR"],
+  "contacts": [
+    { "ref": "cliente-pt", "name": "Oficina do Tejo, Lda.", "type": "customer", "country": "PT" },
+    { "ref": "cliente-obras", "name": "Construções Serra d'Arga, S.A.", "type": "customer", "country": "PT" },
+    { "ref": "cliente-fr", "name": "Atelier Lumen SAS", "type": "customer", "country": "FR", "vat_number": "FR00999999999" },
+    { "ref": "cliente-ao", "name": "Comercial Kianda, Lda.", "type": "customer", "country": "AO" },
+    { "ref": "fornecedor-pt", "name": "Distribuidora do Douro, Lda.", "type": "supplier", "country": "PT" },
+    { "ref": "fornecedor-equip", "name": "Equipamentos Vouga, S.A.", "type": "supplier", "country": "PT" },
+    { "ref": "fornecedor-de", "name": "Nordwind Maschinen GmbH", "type": "supplier", "country": "DE", "vat_number": "DE999999999" }
+  ],
+  "documents": [
+    {
+      "ref": "V1", "type": "sale_invoice", "contact": "cliente-pt", "date": "2026-01-15", "due_date": "2026-02-14",
+      "why": "Uma venda à taxa normal: base no campo 3 e imposto liquidado no campo 4.",
+      "lines": [{ "name": "Mercadorias diversas", "quantity": 10, "unit_price": 1000, "tax": "PT-S-23", "account": "711" }]
+    },
+    {
+      "ref": "V2", "type": "sale_invoice", "contact": "cliente-pt", "date": "2026-01-28", "due_date": "2026-02-27",
+      "why": "A taxa intermédia, campos 5 e 6: um segundo imposto positivo que soma na declaração ao lado do da taxa normal.",
+      "lines": [{ "name": "Serviço de restauração", "quantity": 1, "unit_price": 2000, "tax": "PT-S-13", "account": "72" }]
+    },
+    {
+      "ref": "V3", "type": "sale_invoice", "contact": "cliente-pt", "date": "2026-02-10", "due_date": "2026-03-12",
+      "why": "A taxa reduzida, campos 1 e 2, a que o formulário dá o número de campo mais baixo apesar de ser impressa depois da taxa normal e da intermédia neste pacote.",
+      "lines": [{ "name": "Produtos alimentares", "quantity": 40, "unit_price": 50, "tax": "PT-S-6", "account": "711" }]
+    },
+    {
+      "ref": "V4", "type": "sale_invoice", "contact": "cliente-fr", "date": "2026-02-20", "due_date": "2026-03-22",
+      "why": "Uma transmissão intracomunitária de bens isenta: a base vai para o campo 7, não soma no imposto liquidado, e é a linha que a declaração recapitulativa levanta com a chave E.",
+      "lines": [{ "name": "Mercadorias enviadas para França", "quantity": 5, "unit_price": 1200, "tax": "PT-S-ICG", "account": "711" }]
+    },
+    {
+      "ref": "V5", "type": "sale_invoice", "contact": "cliente-ao", "date": "2026-03-05", "due_date": "2026-04-04",
+      "why": "Uma exportação isenta para um país terceiro: o campo 8, distinto do campo 7 das operações intracomunitárias.",
+      "lines": [{ "name": "Mercadorias enviadas para Angola", "quantity": 8, "unit_price": 900, "tax": "PT-S-EXP", "account": "711" }]
+    },
+    {
+      "ref": "V6", "type": "sale_invoice", "contact": "cliente-pt", "date": "2026-03-18", "due_date": "2026-04-17",
+      "why": "Uma operação interna isenta ao abrigo do artigo 9.º, sem direito à dedução do lado do adquirente: campo 9.",
+      "lines": [{ "name": "Serviço de formação profissional", "quantity": 1, "unit_price": 1500, "tax": "PT-S-EXE", "account": "72" }]
+    },
+    {
+      "ref": "V7", "type": "sale_invoice", "contact": "cliente-obras", "date": "2026-04-10", "due_date": "2026-05-10",
+      "why": "Uma empreitada de construção civil com inversão do sujeito passivo: o adquirente autoliquida o imposto, o transmitente não liquida nada e declara o valor no campo 8, e a fatura leva a menção «IVA - autoliquidação».",
+      "lines": [{ "name": "Empreitada de remodelação", "quantity": 1, "unit_price": 12000, "tax": "PT-S-ISP", "account": "72" }]
+    },
+    {
+      "ref": "V8", "type": "sale_credit_note", "contact": "cliente-pt", "date": "2026-05-06", "due_date": null,
+      "why": "Uma nota de crédito sobre uma venda à taxa normal: a regularização a favor do sujeito passivo vai para o campo 40 e não é deduzida diretamente na linha da taxa normal.",
+      "lines": [{ "name": "Devolução de mercadorias", "quantity": 2, "unit_price": 1000, "tax": "PT-S-23", "account": "711" }]
+    },
+    {
+      "ref": "C1", "type": "purchase_invoice", "contact": "fornecedor-pt", "date": "2026-01-22", "due_date": "2026-02-21",
+      "why": "Uma compra corrente de mercadorias à taxa normal: o imposto dedutível vai para o campo 23, sem base declarada — o formulário só pede o valor do imposto do lado da dedução.",
+      "lines": [{ "name": "Mercadorias para revenda", "quantity": 1, "unit_price": 5000, "tax": "PT-P-BENS-23", "account": "32" }]
+    },
+    {
+      "ref": "C2", "type": "purchase_invoice", "contact": "fornecedor-equip", "date": "2026-02-14", "due_date": "2026-03-16",
+      "why": "Um ativo fixo tangível: o campo 20 e não o 23, e um ativo no balanço em vez de um custo do período.",
+      "lines": [{ "name": "Equipamento informático", "quantity": 1, "unit_price": 4000, "tax": "PT-P-AFT-23", "account": "435" }]
+    },
+    {
+      "ref": "C3", "type": "purchase_invoice", "contact": "fornecedor-pt", "date": "2026-03-09", "due_date": "2026-04-08",
+      "why": "Um serviço corrente: o campo 24, o mesmo campo de outros bens e serviços, qualquer que seja a taxa da fatura.",
+      "lines": [{ "name": "Serviços de contabilidade", "quantity": 1, "unit_price": 800, "tax": "PT-P-SERV-23", "account": "622" }]
+    },
+    {
+      "ref": "C4", "type": "purchase_invoice", "contact": "fornecedor-de", "date": "2026-04-27", "due_date": "2026-05-27",
+      "why": "Uma aquisição intracomunitária de bens: o imposto autoliquidado nos campos 12/13 e deduzido no campo 24 no mesmo lançamento, sem afetar a tesouraria.",
+      "lines": [{ "name": "Mercadorias compradas na Alemanha", "quantity": 1, "unit_price": 3500, "tax": "PT-P-ICG-23", "account": "32" }]
+    },
+    {
+      "ref": "C5", "type": "purchase_invoice", "contact": "fornecedor-pt", "date": "2026-06-03", "due_date": "2026-07-03",
+      "why": "Uma despesa de representação excluída do direito à dedução pelo artigo 21.º: o imposto não é deduzido nem declarado, e acresce ao custo do serviço.",
+      "lines": [{ "name": "Despesas de representação", "quantity": 1, "unit_price": 600, "tax": "PT-P-EXC-23", "account": "629" }]
+    },
+    {
+      "ref": "C6", "type": "purchase_credit_note", "contact": "fornecedor-pt", "date": "2026-07-15", "due_date": null,
+      "why": "Uma nota de crédito recebida sobre a compra de mercadorias: a regularização a favor do Estado vai para o campo 41 e reduz o que foi deduzido, sem tocar no campo 23.",
+      "lines": [{ "name": "Abatimento sobre mercadorias", "quantity": 1, "unit_price": 500, "tax": "PT-P-BENS-23", "account": "32" }]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "B1", "direction": "inbound", "date": "2026-02-13", "amount": 12300, "contact": "cliente-pt",
+      "journal": "BAN", "match": "V1",
+      "why": "Um recebimento que salda exatamente a fatura V1."
+    },
+    {
+      "ref": "B2", "direction": "inbound", "date": "2026-03-20", "amount": 6000, "contact": "cliente-fr",
+      "journal": "BAN", "match": "V4",
+      "why": "O recebimento da entrega intracomunitária, sem IVA: a fatura e o recebimento coincidem na base."
+    },
+    {
+      "ref": "B3", "direction": "inbound", "date": "2026-06-30", "amount": 1000, "contact": "cliente-pt",
+      "journal": "BAN", "match": null,
+      "why": "Um recebimento sem fatura em frente: fica a crédito do cliente, por reconciliar."
+    },
+    {
+      "ref": "B4", "direction": "outbound", "date": "2026-02-20", "amount": 6150, "contact": "fornecedor-pt",
+      "journal": "BAN", "match": "C1",
+      "why": "O lado do fornecedor da reconciliação, para que ela não se prove por um único lado do balanço."
+    }
+  ]
+}

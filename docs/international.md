@@ -3519,3 +3519,61 @@ which is the one place a missing `deadline` is not read as "nobody looked",
 because the text next to it proves someone did. *Fix*: `months_after_period`
 with a day or `last`, exactly what Japan's entry already asks for, generalised
 to more than one month and checked against a leap year before it is trusted.
+
+## From Portugal
+
+`packs/pt/`, `community`, seed 43, inside the common system of VAT. Three
+things the format could not say, none patched, and one habit the register
+had to break for the first time.
+
+**A tax cannot name the one place it does *not* apply, and Portugal is the
+first pack where that costs something concrete.** Article 18.º, n.º 3 of the
+Código do IVA lets the Azores and Madeira set VAT rates of their own —
+4/9/16 % and 5-or-4/12/22 %, against the mainland's 6/13/23 % — under the
+same tax, filed on the same national declaration. `applies_when.supply_in`
+correctly restricts the Azorean and Madeiran codes to the territory rows this
+pack adds, `PT-20` and `PT-30` (full EU VAT scope, not
+`outside_parent_tax`: unlike the Canary Islands, Union VAT reaches both
+regions exactly as it reaches the mainland — only the rate differs). What it
+cannot do is restrict the *mainland* codes to "not the Azores, not Madeira":
+`docs/packs.md`'s own words for `applies_when` are "a tax cannot name a place
+a party is not in", written for a shipment-destination case at the time; here
+the same limit means three overlapping rate schedules in one country, and
+`post_document()` refuses nothing if a document established in Ponta Delgada
+is posted at the mainland's 23 % instead of the Azores' 16 %. Spain's
+Canarias, Ceuta and Melilla never met this, because there the parent's tax
+simply stops, and `outside_parent_tax` is a refusal, not a choice between two
+rates that both apply. `packs/pt/README.md` carries the same sentence.
+
+**The deadline vocabulary reaches one month past the period, and this
+declaration is due in the second.** Article 41.º of the Código do IVA, since
+Decreto-Lei n.º 49/2025 harmonised the monthly and the quarterly regime onto
+one date, sets the Declaração Periódica do IVA's deadline at the 20th of the
+*second* month after the period ends — a February return is due in April, not
+March. `tax_report.json`'s `deadline.rule: day_of_month_after_period` names
+only "the day of the month that follows the period", one month, the shape
+every other pack that uses it needs (Belgium's and Estonia's twentieth,
+Luxembourg's fourteenth). There is no second rule for a form due a month
+later still, and `last_day_of_month_after_period` does not reach two months
+either. `packs/pt/` declares no `deadline` at all rather than write a date
+the vocabulary cannot state and a reader would take for the wrong month; the
+true rule is in the pack's own `legal_reference` on `tax_report.json`'s
+top-level object, for a filing brick to read the day this vocabulary grows a
+third shape.
+
+**Software, a code and a file are not an invoice, and this is the first pack
+where all three sit beside a `none`.** Portugal has no statute requiring
+businesses to exchange a structured electronic invoice between themselves —
+`einvoicing.obligation` is correctly `none`, the same word the Spanish and
+the American packs already use for the same fact. What sits beside that word
+here, and what did not sit beside Spain's SII or VERI\*FACTU with quite this
+much weight, is three separate obligations at once: a certified invoicing
+program (Decreto-Lei n.º 28/2019), a per-document ATCUD code and a QR code
+printed on it (Portaria n.º 195/2020), and a monthly SAF-T (PT) file
+delivered to the tax administration and never to the customer (Portaria n.º
+302/2016). None of the three is `einvoicing.profile`, because none of them is
+a document format two businesses trade — they are how one business proves
+its books to the State, which `packages/formats` has no brick for at all,
+Portuguese or otherwise. A company keeping its books on this pack still needs
+software of its own for all three, and nothing here pretends the `pack.json`
+section that comes closest, `einvoicing`, was built to hold them.

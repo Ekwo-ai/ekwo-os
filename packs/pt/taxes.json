@@ -1,0 +1,528 @@
+[
+  {
+    "code": "PT-S-23",
+    "name": "Vendas e serviços à taxa normal (23 %)",
+    "kind": "vat",
+    "rate": 23,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2011-01-01",
+    "legal_reference": "Código do IVA, art. 18.º, n.º 1, alínea c) — taxa normal de 23 %, na redação da Lei n.º 55-A/2010, de 31 de dezembro (Orçamento do Estado para 2011), com efeitos desde 1 de janeiro de 2011. Declaração periódica, quadro 06, campo 3 (base) e campo 4 (imposto)",
+    "source": "civa-art18",
+    "vat_category": "S",
+    "sequence": 10,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "3" },
+        { "type": "tax", "account": "2433", "box": "4" }
+      ],
+      "credit_note": [
+        { "type": "tax", "account": "2433", "box": "40", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "PT-S-13",
+    "name": "Vendas e serviços à taxa intermédia (13 %)",
+    "kind": "vat",
+    "rate": 13,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2011-01-01",
+    "legal_reference": "Código do IVA, art. 18.º, n.º 1, alínea b) — taxa intermédia de 13 %, na redação da Lei n.º 55-A/2010. Declaração periódica, quadro 06, campo 5 (base) e campo 6 (imposto)",
+    "source": "civa-art18",
+    "vat_category": "S",
+    "sequence": 20,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "5" },
+        { "type": "tax", "account": "2433", "box": "6" }
+      ],
+      "credit_note": [
+        { "type": "tax", "account": "2433", "box": "40", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "PT-S-6",
+    "name": "Vendas e serviços à taxa reduzida (6 %)",
+    "kind": "vat",
+    "rate": 6,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2011-01-01",
+    "legal_reference": "Código do IVA, art. 18.º, n.º 1, alínea a) — taxa reduzida de 6 %, na redação da Lei n.º 55-A/2010. Declaração periódica, quadro 06, campo 1 (base) e campo 2 (imposto)",
+    "source": "civa-art18",
+    "vat_category": "S",
+    "sequence": 30,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "1" },
+        { "type": "tax", "account": "2433", "box": "2" }
+      ],
+      "credit_note": [
+        { "type": "tax", "account": "2433", "box": "40", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "PT-S-AC-16",
+    "name": "Vendas e serviços na Região Autónoma dos Açores, taxa normal (16 %)",
+    "kind": "vat",
+    "rate": 16,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2021-07-01",
+    "applies_when": { "supply_in": "PT-20" },
+    "legal_reference": "Código do IVA, art. 18.º, n.º 3; Decreto Legislativo Regional n.º 15-A/2021/A — taxa normal de 16 % aplicável às operações localizadas na Região Autónoma dos Açores, desde 1 de julho de 2021. Mesma linha do quadro 06 que a taxa normal do continente, campo 3 (base) e campo 4 (imposto): o formulário nacional não distingue a região do sujeito passivo",
+    "source": "dlr-15-a-2021-a",
+    "vat_category": "S",
+    "sequence": 40,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "3" },
+        { "type": "tax", "account": "2433", "box": "4" }
+      ],
+      "credit_note": [
+        { "type": "tax", "account": "2433", "box": "40", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "PT-S-AC-9",
+    "name": "Vendas e serviços na Região Autónoma dos Açores, taxa intermédia (9 %)",
+    "kind": "vat",
+    "rate": 9,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2021-07-01",
+    "applies_when": { "supply_in": "PT-20" },
+    "legal_reference": "Código do IVA, art. 18.º, n.º 3; Decreto Legislativo Regional n.º 15-A/2021/A — taxa intermédia de 9 %, desde 1 de julho de 2021. Campo 5 (base) e campo 6 (imposto)",
+    "source": "dlr-15-a-2021-a",
+    "vat_category": "S",
+    "sequence": 50,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "5" },
+        { "type": "tax", "account": "2433", "box": "6" }
+      ],
+      "credit_note": [
+        { "type": "tax", "account": "2433", "box": "40", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "PT-S-AC-4",
+    "name": "Vendas e serviços na Região Autónoma dos Açores, taxa reduzida (4 %)",
+    "kind": "vat",
+    "rate": 4,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2021-07-01",
+    "applies_when": { "supply_in": "PT-20" },
+    "legal_reference": "Código do IVA, art. 18.º, n.º 3; Decreto Legislativo Regional n.º 15-A/2021/A — taxa reduzida de 4 %, desde 1 de julho de 2021. Campo 1 (base) e campo 2 (imposto)",
+    "source": "dlr-15-a-2021-a",
+    "vat_category": "S",
+    "sequence": 60,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "1" },
+        { "type": "tax", "account": "2433", "box": "2" }
+      ],
+      "credit_note": [
+        { "type": "tax", "account": "2433", "box": "40", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "PT-S-MA-22",
+    "name": "Vendas e serviços na Região Autónoma da Madeira, taxa normal (22 %)",
+    "kind": "vat",
+    "rate": 22,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2012-04-01",
+    "applies_when": { "supply_in": "PT-30" },
+    "legal_reference": "Código do IVA, art. 18.º, n.º 3; Lei n.º 14-A/2012, de 30 de março — taxa normal de 22 % aplicável às operações localizadas na Região Autónoma da Madeira, desde 1 de abril de 2012. Campo 3 (base) e campo 4 (imposto)",
+    "source": "lei-14-a-2012",
+    "vat_category": "S",
+    "sequence": 70,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "3" },
+        { "type": "tax", "account": "2433", "box": "4" }
+      ],
+      "credit_note": [
+        { "type": "tax", "account": "2433", "box": "40", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "PT-S-MA-12",
+    "name": "Vendas e serviços na Região Autónoma da Madeira, taxa intermédia (12 %)",
+    "kind": "vat",
+    "rate": 12,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2012-04-01",
+    "applies_when": { "supply_in": "PT-30" },
+    "legal_reference": "Código do IVA, art. 18.º, n.º 3; Lei n.º 14-A/2012 — taxa intermédia de 12 %, desde 1 de abril de 2012. Campo 5 (base) e campo 6 (imposto)",
+    "source": "lei-14-a-2012",
+    "vat_category": "S",
+    "sequence": 80,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "5" },
+        { "type": "tax", "account": "2433", "box": "6" }
+      ],
+      "credit_note": [
+        { "type": "tax", "account": "2433", "box": "40", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "PT-S-MA-5",
+    "name": "Vendas e serviços na Região Autónoma da Madeira, taxa reduzida (5 %, até 30/09/2024)",
+    "kind": "vat",
+    "rate": 5,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2012-04-01",
+    "valid_to": "2024-09-30",
+    "applies_when": { "supply_in": "PT-30" },
+    "legal_reference": "Código do IVA, art. 18.º, n.º 3; Lei n.º 14-A/2012 — taxa reduzida de 5 %, de 1 de abril de 2012 a 30 de setembro de 2024, substituída pelos 4 % do Decreto Legislativo Regional n.º 6/2024/M. Campo 1 (base) e campo 2 (imposto)",
+    "source": "lei-14-a-2012",
+    "vat_category": "S",
+    "sequence": 90,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "1" },
+        { "type": "tax", "account": "2433", "box": "2" }
+      ],
+      "credit_note": [
+        { "type": "tax", "account": "2433", "box": "40", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "PT-S-MA-4",
+    "name": "Vendas e serviços na Região Autónoma da Madeira, taxa reduzida (4 %, desde 01/10/2024)",
+    "kind": "vat",
+    "rate": 4,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2024-10-01",
+    "applies_when": { "supply_in": "PT-30" },
+    "legal_reference": "Código do IVA, art. 18.º, n.º 3; Decreto Legislativo Regional n.º 6/2024/M, de 29 de julho, art. 21.º — taxa reduzida de 4 % na Região Autónoma da Madeira, desde 1 de outubro de 2024. Campo 1 (base) e campo 2 (imposto)",
+    "source": "dlr-6-2024-m",
+    "vat_category": "S",
+    "sequence": 100,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "1" },
+        { "type": "tax", "account": "2433", "box": "2" }
+      ],
+      "credit_note": [
+        { "type": "tax", "account": "2433", "box": "40", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "PT-S-ICG",
+    "name": "Transmissão intracomunitária de bens isenta",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "intracom_goods",
+    "valid_from": "1993-01-01",
+    "legal_reference": "RITI, art. 14.º — isenção das transmissões de bens expedidos ou transportados para outro Estado-membro, com destino a um sujeito passivo aí registado para efeitos de IVA. Declaração periódica, quadro 06, campo 7; declarada na declaração recapitulativa com o código E",
+    "source": "riti",
+    "vat_category": "K",
+    "exemption_code": "VATEX-EU-IC",
+    "conditions": ["transport_evidence", "buyer_status"],
+    "sequence": 110,
+    "postings": {
+      "invoice": [{ "type": "base", "box": "7" }],
+      "credit_note": [{ "type": "base", "box": "7", "box_factor": -100 }]
+    }
+  },
+  {
+    "code": "PT-S-ICS",
+    "name": "Prestação intracomunitária de serviços (autoliquidação pelo adquirente)",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "intracom_services",
+    "valid_from": "2010-01-01",
+    "legal_reference": "Código do IVA, art. 6.º, n.º 6, alínea a) — localização no Estado-membro do adquirente sujeito passivo, que aí se autoliquida. Declaração periódica, quadro 06, campo 7; declarada na declaração recapitulativa com o código S",
+    "source": "civa-art36",
+    "vat_category": "K",
+    "exemption_code": "VATEX-EU-IC",
+    "conditions": ["buyer_status"],
+    "sequence": 120,
+    "postings": {
+      "invoice": [{ "type": "base", "box": "7" }],
+      "credit_note": [{ "type": "base", "box": "7", "box_factor": -100 }]
+    }
+  },
+  {
+    "code": "PT-S-EXP",
+    "name": "Exportação isenta",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "1993-01-01",
+    "legal_reference": "Código do IVA, art. 14.º — isenções nas exportações, operações assimiladas a exportações e transportes internacionais. Declaração periódica, quadro 06, campo 8",
+    "source": "civa-art14",
+    "vat_category": "G",
+    "exemption_code": "VATEX-EU-G",
+    "conditions": ["transport_evidence"],
+    "sequence": 130,
+    "postings": {
+      "invoice": [{ "type": "base", "box": "8" }],
+      "credit_note": [{ "type": "base", "box": "8", "box_factor": -100 }]
+    }
+  },
+  {
+    "code": "PT-S-ISP",
+    "name": "Operação interna com inversão do sujeito passivo",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "domestic_reverse_charge",
+    "valid_from": "2007-04-01",
+    "legal_reference": "Código do IVA, art. 2.º, n.º 1, alíneas i), j) e l) — é sujeito passivo o adquirente, sendo este uma pessoa singular ou coletiva referida na alínea a), em operações de desperdícios, resíduos e sucatas recicláveis, de serviços de construção civil e de determinados bens e serviços indicados no Anexo I ao Código. Declaração periódica, quadro 06, campo 8 — o valor destas operações é inscrito no campo 8 pelo transmitente, que não liquida imposto",
+    "source": "civa-art18",
+    "vat_category": "AE",
+    "exemption_code": "VATEX-EU-AE",
+    "conditions": ["supply_nature", "buyer_status"],
+    "sequence": 140,
+    "postings": {
+      "invoice": [{ "type": "base", "box": "8" }],
+      "credit_note": [{ "type": "base", "box": "8", "box_factor": -100 }]
+    }
+  },
+  {
+    "code": "PT-S-EXE",
+    "name": "Operação interna isenta",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "1993-01-01",
+    "legal_reference": "Código do IVA, art. 9.º — isenções nas operações internas, sem direito à dedução. Declaração periódica, quadro 06, campo 9",
+    "source": "civa-art9",
+    "vat_category": "E",
+    "exemption_code": "VATEX-EU-132",
+    "conditions": ["supply_nature"],
+    "sequence": 150,
+    "postings": {
+      "invoice": [{ "type": "base", "box": "9" }],
+      "credit_note": [{ "type": "base", "box": "9", "box_factor": -100 }]
+    }
+  },
+  {
+    "code": "PT-P-BENS-23",
+    "name": "Compra de mercadorias à taxa normal (23 %), dedutível",
+    "kind": "vat",
+    "rate": 23,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2011-01-01",
+    "legal_reference": "Código do IVA, arts. 19.º a 25.º — direito à dedução. Declaração periódica, quadro 06, campo 23 — IVA dedutível de existências à taxa normal",
+    "source": "civa-art18",
+    "vat_category": "S",
+    "sequence": 160,
+    "postings": {
+      "invoice": [{ "type": "tax", "account": "2432", "box": "23" }],
+      "credit_note": [{ "type": "tax", "account": "2432", "box": "41", "box_factor": -100 }]
+    }
+  },
+  {
+    "code": "PT-P-BENS-13",
+    "name": "Compra de mercadorias à taxa intermédia (13 %), dedutível",
+    "kind": "vat",
+    "rate": 13,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2011-01-01",
+    "legal_reference": "Código do IVA, arts. 19.º a 25.º. Declaração periódica, quadro 06, campo 22 — IVA dedutível de existências à taxa intermédia",
+    "source": "civa-art18",
+    "vat_category": "S",
+    "sequence": 170,
+    "postings": {
+      "invoice": [{ "type": "tax", "account": "2432", "box": "22" }],
+      "credit_note": [{ "type": "tax", "account": "2432", "box": "41", "box_factor": -100 }]
+    }
+  },
+  {
+    "code": "PT-P-BENS-6",
+    "name": "Compra de mercadorias à taxa reduzida (6 %), dedutível",
+    "kind": "vat",
+    "rate": 6,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2011-01-01",
+    "legal_reference": "Código do IVA, arts. 19.º a 25.º. Declaração periódica, quadro 06, campo 21 — IVA dedutível de existências à taxa reduzida",
+    "source": "civa-art18",
+    "vat_category": "S",
+    "sequence": 180,
+    "postings": {
+      "invoice": [{ "type": "tax", "account": "2432", "box": "21" }],
+      "credit_note": [{ "type": "tax", "account": "2432", "box": "41", "box_factor": -100 }]
+    }
+  },
+  {
+    "code": "PT-P-SERV-23",
+    "name": "Compra de outros bens e serviços à taxa normal (23 %), dedutível",
+    "kind": "vat",
+    "rate": 23,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2011-01-01",
+    "legal_reference": "Código do IVA, arts. 19.º a 25.º. Declaração periódica, quadro 06, campo 24 — IVA dedutível de outros bens e serviços, sem desdobramento por taxa",
+    "source": "civa-art18",
+    "vat_category": "S",
+    "sequence": 190,
+    "postings": {
+      "invoice": [{ "type": "tax", "account": "2432", "box": "24" }],
+      "credit_note": [{ "type": "tax", "account": "2432", "box": "41", "box_factor": -100 }]
+    }
+  },
+  {
+    "code": "PT-P-AFT-23",
+    "name": "Compra de ativos fixos tangíveis à taxa normal (23 %), dedutível",
+    "kind": "vat",
+    "rate": 23,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2011-01-01",
+    "legal_reference": "Código do IVA, arts. 19.º a 25.º. Declaração periódica, quadro 06, campo 20 — IVA dedutível de ativos não correntes, sem desdobramento por taxa",
+    "source": "civa-art18",
+    "vat_category": "S",
+    "sequence": 200,
+    "postings": {
+      "invoice": [{ "type": "tax", "account": "2432", "box": "20" }],
+      "credit_note": [{ "type": "tax", "account": "2432", "box": "41", "box_factor": -100 }]
+    }
+  },
+  {
+    "code": "PT-P-ICG-23",
+    "name": "Aquisição intracomunitária de bens à taxa normal (23 %)",
+    "kind": "vat",
+    "rate": 23,
+    "scope": "purchase",
+    "treatment": "intracom_acquisition_goods",
+    "valid_from": "2011-01-01",
+    "legal_reference": "RITI, arts. 4.º a 8.º — sujeição a imposto e sujeito passivo o adquirente; art. 19.º e seguintes do CIVA quanto à dedução. Declaração periódica: base e imposto liquidado no campo 12/13, dedução no campo 24, sem desdobramento por taxa; declarada na declaração recapitulativa do fornecedor comunitário",
+    "source": "riti",
+    "vat_category": "K",
+    "exemption_code": "VATEX-EU-IC",
+    "sequence": 210,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "12" },
+        { "type": "tax", "account": "2432", "box": "24" },
+        { "type": "tax", "factor": -100, "account": "2433", "box": "13" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "12", "box_factor": -100 },
+        { "type": "tax", "account": "2432", "box": "24", "box_factor": -100 },
+        { "type": "tax", "factor": -100, "account": "2433", "box": "13", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "PT-P-ISP-23",
+    "name": "Compra interna com inversão do sujeito passivo, à taxa normal (23 %)",
+    "kind": "vat",
+    "rate": 23,
+    "scope": "purchase",
+    "treatment": "domestic_reverse_charge",
+    "valid_from": "2007-04-01",
+    "legal_reference": "Código do IVA, art. 2.º, n.º 1, alíneas i), j) e l) — o adquirente é sujeito passivo e autoliquida o imposto que, sendo dedutível, também deduz na mesma declaração. Declaração periódica: liquidação na mesma linha da taxa normal, campo 3/4, dedução no campo 24",
+    "source": "civa-art18",
+    "vat_category": "AE",
+    "exemption_code": "VATEX-EU-AE",
+    "sequence": 220,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "3" },
+        { "type": "tax", "account": "2432", "box": "24" },
+        { "type": "tax", "factor": -100, "account": "2433", "box": "4" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "3", "box_factor": -100 },
+        { "type": "tax", "account": "2432", "box": "24", "box_factor": -100 },
+        { "type": "tax", "factor": -100, "account": "2433", "box": "4", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "PT-P-EXT-23",
+    "name": "Serviço adquirido a prestador não estabelecido na União, à taxa normal (23 %)",
+    "kind": "vat",
+    "rate": 23,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2011-01-01",
+    "legal_reference": "Código do IVA, art. 6.º, n.º 6, alínea a), e art. 2.º, n.º 1, alínea e) — o adquirente sujeito passivo estabelecido em território nacional autoliquida o imposto devido por um prestador não estabelecido na União. Declaração periódica: liquidação no campo 16/17, dedução no campo 24",
+    "source": "civa-art18",
+    "sequence": 230,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "16" },
+        { "type": "tax", "account": "2432", "box": "24" },
+        { "type": "tax", "factor": -100, "account": "2433", "box": "17" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "16", "box_factor": -100 },
+        { "type": "tax", "account": "2432", "box": "24", "box_factor": -100 },
+        { "type": "tax", "factor": -100, "account": "2433", "box": "17", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "PT-P-IMP-23",
+    "name": "Importação à taxa normal (23 %), liquidada pela alfândega",
+    "kind": "vat",
+    "rate": 23,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2011-01-01",
+    "legal_reference": "Código do IVA, arts. 5.º e 17.º — sujeição das importações; art. 27.º — liquidação e cobrança pelos serviços aduaneiros; art. 19.º, n.º 1, alínea b) — o documento de importação justifica a dedução. Declaração periódica: campo 18/19",
+    "source": "civa-art18",
+    "sequence": 240,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "18" },
+        { "type": "tax", "account": "2432", "box": "24" },
+        { "type": "tax", "factor": -100, "account": "2433", "box": "19" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "18", "box_factor": -100 },
+        { "type": "tax", "account": "2432", "box": "24", "box_factor": -100 },
+        { "type": "tax", "factor": -100, "account": "2433", "box": "19", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "PT-P-EXC-23",
+    "name": "Despesa excluída do direito à dedução, à taxa normal (23 %)",
+    "kind": "vat",
+    "rate": 23,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2011-01-01",
+    "description": "Despesas de viaturas de turismo, de combustível, de deslocações e de representação, entre outras, excluídas do direito à dedução pelo art. 21.º do CIVA: o imposto suportado não é deduzido nem declarado, e acresce ao custo do bem ou serviço.",
+    "legal_reference": "Código do IVA, art. 21.º, n.º 1 — exclui do direito à dedução o imposto respeitante a despesas de aquisição, fabrico ou importação, locação, utilização, transformação e reparação de viaturas de turismo, de combustíveis (salvo as exceções do n.º 2), de transportes e viagens de negócios do sujeito passivo e do seu pessoal, e despesas de representação. Não figura na declaração periódica",
+    "source": "civa-art21",
+    "recoverable": false,
+    "sequence": 250,
+    "postings": {
+      "invoice": [{ "type": "tax_on_base", "factor": 100 }],
+      "credit_note": [{ "type": "tax_on_base", "factor": 100 }]
+    }
+  }
+]

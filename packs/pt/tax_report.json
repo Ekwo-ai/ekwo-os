@@ -1,0 +1,215 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "PT-DP-IVA",
+  "name": "Declaração Periódica do IVA",
+  "period": ["month", "quarter"],
+  "valid_from": "2024-09-01",
+  "legal_reference": "Código do IVA, art. 41.º — quem realizou, no ano civil anterior, um volume de negócios igual ou superior a 650 000 euros entrega a declaração mensalmente; os restantes sujeitos passivos, trimestralmente, podendo optar pelo regime mensal. Modelo aprovado pela Portaria n.º 221/2017, de 21 de julho, com as alterações posteriores; a caixa 165/167 dos períodos de 2024 e as caixas do novo modelo da Portaria n.º 298/2026/1, de 16 de julho, aplicável às declarações a partir do período de julho de 2027 (e, para algumas caixas, já a partir de julho de 2026), não são transcritas aqui",
+  "source": "civa-art41",
+  "boxes": [
+    {
+      "box": "1",
+      "kind": "base",
+      "name": "Continente/Açores/Madeira — base tributável à taxa reduzida",
+      "sequence": 10,
+      "legal_reference": "Declaração periódica do IVA, quadro 06 — base tributável das operações à taxa reduzida (6 % no continente, 4 % nos Açores, 4 % ou 5 % na Madeira, conforme a data)",
+      "source": "portaria-221-2017"
+    },
+    {
+      "box": "2",
+      "kind": "tax",
+      "name": "Continente/Açores/Madeira — imposto liquidado à taxa reduzida",
+      "sequence": 20,
+      "legal_reference": "Declaração periódica do IVA, quadro 06, campo 2",
+      "source": "portaria-221-2017"
+    },
+    {
+      "box": "5",
+      "kind": "base",
+      "name": "Continente/Açores/Madeira — base tributável à taxa intermédia",
+      "sequence": 30,
+      "legal_reference": "Declaração periódica do IVA, quadro 06 — base tributável das operações à taxa intermédia (13 % no continente, 9 % nos Açores, 12 % na Madeira)",
+      "source": "portaria-221-2017"
+    },
+    {
+      "box": "6",
+      "kind": "tax",
+      "name": "Continente/Açores/Madeira — imposto liquidado à taxa intermédia",
+      "sequence": 40,
+      "legal_reference": "Declaração periódica do IVA, quadro 06, campo 6",
+      "source": "portaria-221-2017"
+    },
+    {
+      "box": "3",
+      "kind": "base",
+      "name": "Continente/Açores/Madeira — base tributável à taxa normal",
+      "sequence": 50,
+      "legal_reference": "Declaração periódica do IVA, quadro 06 — base tributável das operações à taxa normal (23 % no continente, 16 % nos Açores, 22 % na Madeira)",
+      "source": "portaria-221-2017"
+    },
+    {
+      "box": "4",
+      "kind": "tax",
+      "name": "Continente/Açores/Madeira — imposto liquidado à taxa normal",
+      "sequence": 60,
+      "legal_reference": "Declaração periódica do IVA, quadro 06, campo 4",
+      "source": "portaria-221-2017"
+    },
+    {
+      "box": "7",
+      "kind": "base",
+      "name": "Transmissões intracomunitárias de bens e operações assimiladas, e prestações de serviços localizadas noutro Estado-membro",
+      "sequence": 70,
+      "legal_reference": "Declaração periódica do IVA, quadro 06, campo 7 — RITI, art. 14.º, e Código do IVA, art. 6.º, n.º 6, alínea a); operações incluídas na declaração recapitulativa",
+      "source": "portaria-221-2017"
+    },
+    {
+      "box": "8",
+      "kind": "base",
+      "name": "Outras operações isentas ou não tributadas que conferem direito à dedução",
+      "sequence": 80,
+      "legal_reference": "Declaração periódica do IVA, quadro 06, campo 8 — Código do IVA, art. 20.º, n.º 1, alínea b): exportações e operações assimiladas (art. 14.º) e operações em que ocorreu a regra de inversão do sujeito passivo (art. 2.º, n.º 1)",
+      "source": "portaria-221-2017"
+    },
+    {
+      "box": "9",
+      "kind": "base",
+      "name": "Operações isentas ou não tributadas sem direito à dedução",
+      "sequence": 90,
+      "legal_reference": "Declaração periódica do IVA, quadro 06, campo 9 — Código do IVA, art. 9.º",
+      "source": "portaria-221-2017"
+    },
+    {
+      "box": "12",
+      "kind": "base",
+      "name": "Aquisições intracomunitárias de bens e operações assimiladas — base tributável",
+      "sequence": 100,
+      "legal_reference": "Declaração periódica do IVA, quadro 06, campo 12 — RITI, arts. 4.º a 8.º",
+      "source": "portaria-221-2017"
+    },
+    {
+      "box": "13",
+      "kind": "tax",
+      "name": "Aquisições intracomunitárias de bens e operações assimiladas — imposto liquidado",
+      "sequence": 110,
+      "legal_reference": "Declaração periódica do IVA, quadro 06, campo 13",
+      "source": "portaria-221-2017"
+    },
+    {
+      "box": "16",
+      "kind": "base",
+      "name": "Aquisições de serviços a prestadores não estabelecidos na União Europeia — base tributável",
+      "sequence": 120,
+      "legal_reference": "Declaração periódica do IVA, quadro 06, campo 16 — Código do IVA, art. 6.º, n.º 6, alínea a), e art. 2.º, n.º 1, alínea e)",
+      "source": "portaria-221-2017"
+    },
+    {
+      "box": "17",
+      "kind": "tax",
+      "name": "Aquisições de serviços a prestadores não estabelecidos na União Europeia — imposto liquidado",
+      "sequence": 130,
+      "legal_reference": "Declaração periódica do IVA, quadro 06, campo 17",
+      "source": "portaria-221-2017"
+    },
+    {
+      "box": "18",
+      "kind": "base",
+      "name": "Importações de bens — base tributável",
+      "sequence": 140,
+      "legal_reference": "Declaração periódica do IVA, quadro 06, campo 18 — Código do IVA, art. 27.º",
+      "source": "portaria-221-2017"
+    },
+    {
+      "box": "19",
+      "kind": "tax",
+      "name": "Importações de bens — imposto liquidado",
+      "sequence": 150,
+      "legal_reference": "Declaração periódica do IVA, quadro 06, campo 19",
+      "source": "portaria-221-2017"
+    },
+    {
+      "box": "91",
+      "kind": "total",
+      "name": "Total do imposto liquidado",
+      "sequence": 160,
+      "plus": ["2", "4", "6", "13", "17", "19", "40"],
+      "legal_reference": "Código do IVA, art. 26.º — apuramento do imposto: soma de todo o imposto liquidado no período; o campo 40 já entra com o sinal da regularização a favor do sujeito passivo (negativo), pelo que somá-lo reduz o total. A numeração exata desta caixa de resultado (habitualmente entre 90 e 96 no impresso oficial) não foi confirmada campo a campo contra o formulário — ver README do pacote",
+      "source": "portaria-221-2017"
+    },
+    {
+      "box": "20",
+      "kind": "tax",
+      "name": "IVA dedutível de ativos não correntes",
+      "sequence": 170,
+      "legal_reference": "Declaração periódica do IVA, quadro 06, campo 20 — Código do IVA, arts. 19.º a 25.º",
+      "source": "portaria-221-2017"
+    },
+    {
+      "box": "21",
+      "kind": "tax",
+      "name": "IVA dedutível de existências à taxa reduzida",
+      "sequence": 180,
+      "legal_reference": "Declaração periódica do IVA, quadro 06, campo 21",
+      "source": "portaria-221-2017"
+    },
+    {
+      "box": "22",
+      "kind": "tax",
+      "name": "IVA dedutível de existências à taxa intermédia",
+      "sequence": 190,
+      "legal_reference": "Declaração periódica do IVA, quadro 06, campo 22",
+      "source": "portaria-221-2017"
+    },
+    {
+      "box": "23",
+      "kind": "tax",
+      "name": "IVA dedutível de existências à taxa normal",
+      "sequence": 200,
+      "legal_reference": "Declaração periódica do IVA, quadro 06, campo 23",
+      "source": "portaria-221-2017"
+    },
+    {
+      "box": "24",
+      "kind": "tax",
+      "name": "IVA dedutível de outros bens e serviços",
+      "sequence": 210,
+      "legal_reference": "Declaração periódica do IVA, quadro 06, campo 24",
+      "source": "portaria-221-2017"
+    },
+    {
+      "box": "92",
+      "kind": "total",
+      "name": "Total do imposto dedutível",
+      "sequence": 220,
+      "plus": ["20", "21", "22", "23", "24", "41"],
+      "legal_reference": "Código do IVA, art. 19.º e seguintes — soma de todo o imposto dedutível no período; o campo 41 já entra com o sinal da regularização a favor do Estado (negativo), pelo que somá-lo reduz o total. A numeração exata desta caixa de resultado não foi confirmada campo a campo contra o formulário — ver README do pacote",
+      "source": "portaria-221-2017"
+    },
+    {
+      "box": "40",
+      "kind": "tax",
+      "name": "Regularizações mensais/trimestrais a favor do sujeito passivo",
+      "sequence": 230,
+      "legal_reference": "Declaração periódica do IVA, quadro 06, campo 40 — Código do IVA, art. 78.º: notas de crédito emitidas a clientes, que reduzem o imposto liquidado",
+      "source": "portaria-221-2017"
+    },
+    {
+      "box": "41",
+      "kind": "tax",
+      "name": "Regularizações mensais/trimestrais a favor do Estado",
+      "sequence": 240,
+      "legal_reference": "Declaração periódica do IVA, quadro 06, campo 41 — Código do IVA, art. 78.º: notas de crédito recebidas de fornecedores, que reduzem o imposto dedutível",
+      "source": "portaria-221-2017"
+    },
+    {
+      "box": "93",
+      "kind": "total",
+      "name": "Imposto a entregar ao Estado / crédito a reportar ou a recuperar",
+      "sequence": 250,
+      "plus": ["91"],
+      "minus": ["92"],
+      "legal_reference": "Código do IVA, art. 27.º — quando o imposto liquidado excede o dedutível, o excesso é entregue ao Estado; no caso inverso, o crédito transita para o período seguinte (art. 22.º, n.º 4) ou é objeto de pedido de reembolso (art. 22.º, n.º 5 e seguintes). A numeração exata desta caixa não foi confirmada campo a campo contra o formulário — ver README do pacote",
+      "source": "portaria-221-2017"
+    }
+  ]
+}
