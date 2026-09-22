@@ -8,8 +8,9 @@
  * stands: it starts `npx -y @ekwo-ai/mcp` over stdio with the configuration
  * block of the guide — the four variables and nothing else — and calls the
  * tools Claude would call for the sentences the guide suggests. Two companies
- * in two countries, the books of each taken over from a trial balance an
- * earlier ledger exported.
+ * in two countries — the second created with `create_company`, then chosen
+ * in the terminal with `ekwo login` and `ekwo use` — the books of each taken
+ * over from a trial balance an earlier ledger exported.
  *
  *   node docs/demo/start-with-claude/walkthrough.mjs            # init, then the rest
  *   node docs/demo/start-with-claude/walkthrough.mjs --no-init  # the project is installed already
@@ -228,6 +229,36 @@ try {
     company.id = found?.id;
   }
   if (COMPANIES.some((c) => c.id === undefined)) finish();
+
+  // ---- 3b. The same companies from the terminal: login, use, whoami ----------
+
+  // The command line keeps a session in a configuration directory of its own,
+  // outside any repository; this one is thrown away with `outside`.
+  const configDir = join(outside, 'config');
+  const cli = (args, extra = {}) => {
+    const run = spawnSync('npx', ['-y', `ekwo-os@${version}`, ...args, '--json'], {
+      cwd: outside,
+      env: { PATH: env.PATH, HOME: env.HOME, EKWO_CONFIG_DIR: configDir, ...extra },
+      encoding: 'utf8',
+    });
+    let json = null;
+    try {
+      json = JSON.parse(run.stdout);
+    } catch {}
+    return { status: run.status, json, said: `${run.stdout}${run.stderr}`.trim().split('\n')[0] };
+  };
+  const login = cli(['login', '--supabase-url', env.SUPABASE_URL, '--anon-key', env.SUPABASE_ANON_KEY, '--email', env.EKWO_EMAIL, '--yes'], {
+    EKWO_PASSWORD: env.EKWO_PASSWORD,
+  });
+  record('ekwo login', login.status === 0, login.status === 0 ? 'session kept in a throwaway directory' : login.said);
+  const second = COMPANIES[1];
+  // Without the address and the password in the environment: with them, the
+  // environment is who you are and there is no profile to keep a company in.
+  const use = cli(['use', second.name]);
+  record(`ekwo use "${second.name}"`, use.status === 0, use.status === 0 ? '' : use.said);
+  const who = cli(['whoami']);
+  const inUse = JSON.stringify(who.json ?? {}).includes(second.id);
+  record('ekwo whoami names it as the company in use', who.status === 0 && inUse, who.status === 0 ? (inUse ? second.name : 'another company') : who.said);
 
   // ---- 4. "Import my books" — rehearsal, correspondence, import -------------
 
