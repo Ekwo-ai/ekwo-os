@@ -263,6 +263,66 @@ describe('who may read the instance row', () => {
   });
 });
 
+describe('the version of the schema, asked on its own', () => {
+  // A client asks one question before it draws anything: is this installation
+  // new enough for the code I ship? It used to read `instance.schema_version`,
+  // and a signed-in account on no company reads no row there — so "behind" and
+  // "not mine to see" arrived as the same silence, and they call for opposite
+  // behaviour. `installed_schema_version()` answers whoever is signed in.
+  it('answers a signed-in account that is on no company and administers nothing', async () => {
+    const stranger = await newUser(db);
+    const hidden = await asUser(db, stranger, async () => rows(db, `select id from instance`));
+    expect(hidden).toEqual([]);
+
+    const answered = await asUser(db, stranger, async () =>
+      one<{ schema_version: string; edition: string }>(db, `select * from installed_schema_version()`),
+    );
+    const defined = await one<{ version: string }>(db, `select ekwo_schema_version() as version`);
+    expect(answered.schema_version).toBe(defined.version);
+    expect(answered.edition).toBe('community');
+  });
+
+  it('gives the same answer as the row, to somebody who may read the row', async () => {
+    const company = await one<{ id: string }>(db, `select id from companies limit 1`);
+    const member = await newUser(db);
+    await db.query(
+      `insert into company_members (company_id, user_id, role) values ($1, $2, 'viewer')`,
+      [company.id, member],
+    );
+    const both = await asUser(db, member, async () =>
+      one<{ from_function: string; from_row: string }>(
+        db,
+        `select (select v.schema_version from installed_schema_version() v) as from_function,
+                (select i.schema_version from instance i) as from_row`,
+      ),
+    );
+    expect(both.from_function).toBe(both.from_row);
+  });
+
+  it('gives away nothing else of the instance row', async () => {
+    const columns = await rows<{ column_name: string }>(
+      db,
+      `select a.attname as column_name
+         from pg_proc p
+         join unnest(p.proallargtypes, p.proargnames) as a(atttypid, attname) on true
+        where p.proname = 'installed_schema_version'
+          and p.pronamespace = 'public'::regnamespace`,
+    );
+    expect(columns.map((c) => c.column_name).sort()).toEqual(['edition', 'schema_version']);
+  });
+
+  it('is not part of the anonymous surface', async () => {
+    const granted = await one<{ anon: boolean; authenticated: boolean }>(
+      db,
+      `select has_function_privilege('anon', 'installed_schema_version()', 'execute') as anon,
+              has_function_privilege('authenticated', 'installed_schema_version()', 'execute')
+                as authenticated`,
+    );
+    expect(granted.anon).toBe(false);
+    expect(granted.authenticated).toBe(true);
+  });
+});
+
 describe('no tenant column anywhere', () => {
   it('has company_id and never tenant_id', async () => {
     const offenders = await rows<{ table_name: string; column_name: string }>(

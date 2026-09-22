@@ -9,6 +9,19 @@ somewhere has already run it.
 
 ## [Unreleased]
 
+### Added
+
+- **The version of the schema, asked on its own** (`20260922143000`).
+  `installed_schema_version()` returns `instance.schema_version` and the
+  edition, and nothing else of the instance row. The policy on `instance`
+  admits members of at least one company and instance administrators, so a
+  freshly created account read no row and a client could not tell an
+  installation behind its schema from one whose row it was never allowed to
+  see — the same silence, calling for opposite behaviour. Definer, `stable`,
+  granted to `authenticated`; `anon` does not get it, because the question is
+  asked after signing in and an anonymous scanner has no use for the release
+  number of somebody's installation.
+
 ### Fixed
 
 - **`isServiceRoleKey()` read no key in a browser.** It decoded the payload of

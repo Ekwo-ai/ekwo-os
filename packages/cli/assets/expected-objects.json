@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.7.0",
-  "migration": "20260922124012",
+  "migration": "20260922143000",
   "socle": {
     "schema": "public",
     "tables": [
@@ -4152,6 +4152,10 @@
         "arguments": "p_company_id uuid, p_country character, p_language character, p_chart_code text"
       },
       {
+        "name": "installed_schema_version",
+        "arguments": ""
+      },
+      {
         "name": "instance_has_no_admin",
         "arguments": ""
       },
@@ -7826,6 +7830,17 @@
         {
           "name": "install_country_template",
           "arguments": "p_company_id uuid, p_country character, p_language character, p_chart_code text",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "installed_schema_version",
+          "arguments": "",
           "anon": [],
           "authenticated": [
             "execute"
