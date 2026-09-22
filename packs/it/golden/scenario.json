@@ -1,0 +1,128 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "Un anno di una società italiana in regime ordinario, con dichiarazione IVA annuale",
+  "chart": "default",
+  "fiscal_year": { "name": "Esercizio 2026", "start": "2026-01-01", "end": "2026-12-31" },
+  "periods": [
+    { "code": "2026", "from": "2026-01-01", "to": "2026-12-31" }
+  ],
+  "statements": ["IT-CC-BS", "IT-CC-IS"],
+  "contacts": [
+    { "ref": "cliente-it", "name": "Ferramenta Lombarda S.r.l.", "type": "customer", "country": "IT" },
+    { "ref": "cliente-export", "name": "Alpine Trading LLC", "type": "customer", "country": "US" },
+    { "ref": "cliente-fr", "name": "Atelier Lumen SAS", "type": "customer", "country": "FR", "vat_number": "FR00999999999" },
+    { "ref": "cliente-de", "name": "Studio Nordlicht GmbH", "type": "customer", "country": "DE", "vat_number": "DE999999999" },
+    { "ref": "cliente-clinica", "name": "Poliambulatorio San Zeno S.r.l.", "type": "customer", "country": "IT" },
+    { "ref": "cliente-appaltatore", "name": "Costruzioni Adige S.p.A.", "type": "customer", "country": "IT" },
+    { "ref": "cliente-immobiliare", "name": "Gestioni Immobiliari Po S.r.l.", "type": "customer", "country": "IT" },
+    { "ref": "fornitore-it", "name": "Ferramenta Veneta S.r.l.", "type": "supplier", "country": "IT" },
+    { "ref": "fornitore-de", "name": "Nordwind Maschinen GmbH", "type": "supplier", "country": "DE", "vat_number": "DE888888888" },
+    { "ref": "fornitore-ie", "name": "Shannon Consulting Ltd", "type": "supplier", "country": "IE", "vat_number": "IE9999999L" },
+    { "ref": "fornitore-us", "name": "Cloudworks Inc.", "type": "supplier", "country": "US" },
+    { "ref": "professionista", "name": "Arch. Marco Bellini", "type": "supplier", "country": "IT" }
+  ],
+  "documents": [
+    {
+      "ref": "V1", "type": "sale_invoice", "contact": "cliente-it", "date": "2026-01-20", "due_date": "2026-02-19",
+      "why": "Una vendita all'aliquota ordinaria: imponibile e imposta finiscono nel rigo VE23, e non nella VE22 della Spagna che numera i suoi tipi in ordine inverso.",
+      "lines": [{ "name": "Ferramenta", "quantity": 10, "unit_price": 1000, "tax": "IT-S-22", "account": "4000" }]
+    },
+    {
+      "ref": "V2", "type": "sale_invoice", "contact": "cliente-it", "date": "2026-02-12", "due_date": "2026-03-14",
+      "why": "L'aliquota ridotta del 10%, rigo VE22: una seconda aliquota positiva, condizione che il replay generico richiede.",
+      "lines": [{ "name": "Prestazione di manutenzione", "quantity": 1, "unit_price": 3000, "tax": "IT-S-10", "account": "4010" }]
+    },
+    {
+      "ref": "V3", "type": "sale_invoice", "contact": "cliente-it", "date": "2026-03-05", "due_date": "2026-04-04",
+      "why": "L'aliquota ridotta del 5%, rigo VE21, introdotta nel 2016: la riga che il modello stampa tra il 4% e il 10%.",
+      "lines": [{ "name": "Prodotti della parte II-bis della tabella A", "quantity": 20, "unit_price": 100, "tax": "IT-S-5", "account": "4000" }]
+    },
+    {
+      "ref": "V4", "type": "sale_invoice", "contact": "cliente-it", "date": "2026-03-18", "due_date": "2026-04-17",
+      "why": "L'aliquota minima del 4%, rigo VE20: pubblicazioni e generi di prima necessità.",
+      "lines": [{ "name": "Libri", "quantity": 25, "unit_price": 40, "tax": "IT-S-4", "account": "4000" }]
+    },
+    {
+      "ref": "V5", "type": "sale_credit_note", "contact": "cliente-it", "date": "2026-04-10", "due_date": null,
+      "why": "Una nota di variazione sulla vendita al 22% (art. 26): riduce imponibile e imposta con lo stesso segno negativo, invece di cancellare la fattura originaria.",
+      "lines": [{ "name": "Reso di ferramenta", "quantity": 1, "unit_price": 1000, "tax": "IT-S-22", "account": "4020" }]
+    },
+    {
+      "ref": "V6", "type": "sale_invoice", "contact": "cliente-export", "date": "2026-04-22", "due_date": "2026-05-22",
+      "why": "Una cessione all'esportazione (art. 8): il rigo VE30, campo 2, non imponibile e fuori dal totale VE24/VE26.",
+      "lines": [{ "name": "Macchinari inviati negli Stati Uniti", "quantity": 5, "unit_price": 900, "tax": "IT-S-EXP", "account": "4000" }]
+    },
+    {
+      "ref": "V7", "type": "sale_invoice", "contact": "cliente-fr", "date": "2026-05-14", "due_date": "2026-06-13",
+      "why": "Una cessione intracomunitaria di beni (art. 41 D.L. 331/1993): il rigo VE30, campo 3, e il lato « venduto » dell'operazione UE che il replay generico chiede su entrambi i lati.",
+      "lines": [{ "name": "Merci spedite in Francia", "quantity": 4, "unit_price": 1500, "tax": "IT-S-ICG", "account": "4000" }]
+    },
+    {
+      "ref": "V8", "type": "sale_invoice", "contact": "cliente-de", "date": "2026-06-09", "due_date": "2026-07-09",
+      "why": "Una prestazione di servizi generica resa a un soggetto passivo tedesco (art. 7-ter): non soggetta, rigo VE34, distinto dal VE30 riservato ai beni.",
+      "lines": [{ "name": "Consulenza tecnica", "quantity": 1, "unit_price": 2500, "tax": "IT-S-ICS", "account": "4010" }]
+    },
+    {
+      "ref": "V9", "type": "sale_invoice", "contact": "cliente-clinica", "date": "2026-07-03", "due_date": "2026-08-02",
+      "why": "Un'operazione esente (art. 10, n. 18): rigo VE33, senza imposta e senza il rigo VF60 perché non è l'unica attività della società.",
+      "lines": [{ "name": "Prestazione sanitaria di diagnosi", "quantity": 1, "unit_price": 1200, "tax": "IT-S-EXE", "account": "4010" }]
+    },
+    {
+      "ref": "V10", "type": "sale_invoice", "contact": "cliente-appaltatore", "date": "2026-08-11", "due_date": "2026-09-10",
+      "why": "Un subappalto nel settore edile (art. 17, comma 6, lettera a): la fattura esce senza IVA, rigo VE35 campo 4, con la menzione « inversione contabile ».",
+      "lines": [{ "name": "Posa di impianti elettrici in subappalto", "quantity": 1, "unit_price": 8000, "tax": "IT-S-RC-EDIL", "account": "4010" }]
+    },
+    {
+      "ref": "V11", "type": "sale_invoice", "contact": "cliente-immobiliare", "date": "2026-09-08", "due_date": "2026-10-08",
+      "why": "Un servizio di pulizia su un edificio (art. 17, comma 6, lettera a-ter): la seconda inversione contabile del settore edile, rigo VE35 campo 8, distinta dal subappalto di V10.",
+      "lines": [{ "name": "Servizio di pulizia degli uffici", "quantity": 1, "unit_price": 3000, "tax": "IT-S-RC-PULIZIE", "account": "4010" }]
+    },
+    {
+      "ref": "C1", "type": "purchase_invoice", "contact": "fornitore-it", "date": "2026-01-28", "due_date": "2026-02-27",
+      "why": "Un acquisto interno corrente al 22%: imponibile e imposta nel rigo VF13, e l'imposta è interamente detraibile.",
+      "lines": [{ "name": "Acquisto di ferramenta", "quantity": 1, "unit_price": 4000, "tax": "IT-P-22", "account": "5000" }]
+    },
+    {
+      "ref": "C2", "type": "purchase_invoice", "contact": "fornitore-it", "date": "2026-02-24", "due_date": "2026-03-26",
+      "why": "Un acquisto al 10%, rigo VF11: una seconda aliquota d'acquisto positiva.",
+      "lines": [{ "name": "Manutenzione degli impianti", "quantity": 1, "unit_price": 2000, "tax": "IT-P-10", "account": "5140" }]
+    },
+    {
+      "ref": "C3", "type": "purchase_invoice", "contact": "fornitore-de", "date": "2026-04-15", "due_date": "2026-05-15",
+      "why": "Un acquisto intracomunitario di beni (art. 38 D.L. 331/1993): l'acquirente integra la fattura, la stessa base finisce nel rigo VJ9 (dovuto) e nel rigo VF13 (detratto), e il libro mastro non ne risente perché le due imposte si compensano — il lato « acquistato » dell'operazione UE di V7.",
+      "lines": [{ "name": "Componenti meccanici dalla Germania", "quantity": 1, "unit_price": 3000, "tax": "IT-P-ICG-22", "account": "5000" }]
+    },
+    {
+      "ref": "C4", "type": "purchase_invoice", "contact": "fornitore-ie", "date": "2026-05-20", "due_date": "2026-06-19",
+      "why": "Un acquisto di un servizio generico da un prestatore irlandese (art. 7-ter e art. 17, comma 2): la stessa integrazione di C3, ma nel rigo VJ3, condiviso con i servizi extra-UE di C5.",
+      "lines": [{ "name": "Consulenza contabile e fiscale dall'Irlanda", "quantity": 1, "unit_price": 2000, "tax": "IT-P-ICS-22", "account": "5125" }]
+    },
+    {
+      "ref": "C5", "type": "purchase_invoice", "contact": "fornitore-us", "date": "2026-06-17", "due_date": "2026-07-17",
+      "why": "Un servizio reso da un prestatore statunitense, non stabilito nell'Unione (art. 17, comma 2): integrazione nello stesso rigo VJ3 di C4, ma senza alcun modello 349 perché non è un'operazione intracomunitaria.",
+      "lines": [{ "name": "Abbonamento a un servizio software", "quantity": 1, "unit_price": 1200, "tax": "IT-P-EXT-22", "account": "5410" }]
+    },
+    {
+      "ref": "C6", "type": "purchase_invoice", "contact": "professionista", "date": "2026-07-22", "due_date": "2026-08-21",
+      "why": "Un compenso occasionale di lavoro autonomo (art. 25 D.P.R. 600/1973): una ritenuta d'acconto del 20%, che non è IVA e non tocca nessuna casella della dichiarazione, contro un conto di attesa da versare all'erario.",
+      "lines": [{ "name": "Prestazione professionale occasionale", "quantity": 1, "unit_price": 1000, "tax": "IT-P-RA-20", "account": "5120" }]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "B1", "direction": "inbound", "date": "2026-02-18", "amount": 12200, "contact": "cliente-it",
+      "journal": "BAN", "match": "V1",
+      "why": "Un incasso che salda esattamente la fattura V1."
+    },
+    {
+      "ref": "B2", "direction": "inbound", "date": "2026-06-30", "amount": 500, "contact": "cliente-it",
+      "journal": "BAN", "match": null,
+      "why": "Un incasso senza fattura di fronte: resta in avere del cliente, non riconciliato."
+    },
+    {
+      "ref": "B3", "direction": "outbound", "date": "2026-02-20", "amount": 4880, "contact": "fornitore-it",
+      "journal": "BAN", "match": "C1",
+      "why": "Il lato fornitore della riconciliazione, perché non sia provata da un solo lato del bilancio."
+    }
+  ]
+}

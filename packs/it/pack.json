@@ -1,0 +1,268 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "IT",
+  "name": "Italia",
+  "version": "0.1.0",
+  "schema_min": "20260921145425",
+  "seed_sequence": 37,
+  "released_at": "2026-09-22",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "dpr-633-1972",
+        "title": "Decreto del Presidente della Repubblica 26 ottobre 1972, n. 633 — Istituzione e disciplina dell'imposta sul valore aggiunto — testo vigente",
+        "publisher": "Normattiva — Presidenza del Consiglio dei Ministri",
+        "url": "https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:decreto.del.presidente.della.repubblica:1972-10-26;633",
+        "consulted_on": "2026-09-22",
+        "kind": "law"
+      },
+      {
+        "key": "dl-331-1993",
+        "title": "Decreto-legge 30 agosto 1993, n. 331, convertito con modificazioni dalla legge 29 ottobre 1993, n. 427 — disciplina IVA delle operazioni intracomunitarie, titolo II, capo II — testo vigente",
+        "publisher": "Normattiva — Presidenza del Consiglio dei Ministri",
+        "url": "https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:decreto.legge:1993-08-30;331",
+        "consulted_on": "2026-09-22",
+        "kind": "law"
+      },
+      {
+        "key": "dpr-600-1973",
+        "title": "Decreto del Presidente della Repubblica 29 settembre 1973, n. 600 — Disposizioni comuni in materia di accertamento delle imposte sui redditi — testo vigente",
+        "publisher": "Normattiva — Presidenza del Consiglio dei Ministri",
+        "url": "https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:decreto.del.presidente.della.repubblica:1973-09-29;600",
+        "consulted_on": "2026-09-22",
+        "kind": "law"
+      },
+      {
+        "key": "codice-civile",
+        "title": "Regio Decreto 16 marzo 1942, n. 262 — Codice civile, libro V, titolo V, capo V, sezione IX (artt. 2423-2435-bis, bilancio d'esercizio) — testo vigente",
+        "publisher": "Normattiva — Presidenza del Consiglio dei Ministri",
+        "url": "https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:regio.decreto:1942-03-16;262",
+        "consulted_on": "2026-09-22",
+        "kind": "law"
+      },
+      {
+        "key": "dlgs-231-2002",
+        "title": "Decreto legislativo 9 ottobre 2002, n. 231 — Attuazione della direttiva 2000/35/CE relativa alla lotta contro i ritardi di pagamento nelle transazioni commerciali — testo vigente",
+        "publisher": "Normattiva — Presidenza del Consiglio dei Ministri",
+        "url": "https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:decreto.legislativo:2002-10-09;231",
+        "consulted_on": "2026-09-22",
+        "kind": "law"
+      },
+      {
+        "key": "legge-205-2017",
+        "title": "Legge 27 dicembre 2017, n. 205, art. 1, commi 909-910 — legge di bilancio 2018: obbligo generalizzato di fatturazione elettronica tramite il Sistema di Interscambio dal 1° gennaio 2019",
+        "publisher": "Normattiva — Presidenza del Consiglio dei Ministri",
+        "url": "https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:legge:2017-12-27;205",
+        "consulted_on": "2026-09-22",
+        "kind": "law"
+      },
+      {
+        "key": "modello-iva-2026-istr",
+        "title": "Modello IVA 2026, periodo d'imposta 2025 — istruzioni per la compilazione",
+        "publisher": "Agenzia delle Entrate",
+        "url": "https://www.agenziaentrate.gov.it/portale/documents/20143/9602686/IVA_ANNUALE_2026_istr.pdf/2a42fb92-1b76-229a-d0f5-06069d79b514",
+        "consulted_on": "2026-09-22",
+        "kind": "form"
+      },
+      {
+        "key": "modello-iva-2026-mod",
+        "title": "Modello IVA 2026, periodo d'imposta 2025 — modello",
+        "publisher": "Agenzia delle Entrate",
+        "url": "https://www.agenziaentrate.gov.it/portale/documents/20143/9602686/IVA_ANNUALE_2026_mod.pdf/016d3be2-98cb-2ed8-2d66-32408b08b749",
+        "consulted_on": "2026-09-22",
+        "kind": "form"
+      },
+      {
+        "key": "dpr-322-1998",
+        "title": "Decreto del Presidente della Repubblica 22 luglio 1998, n. 322, art. 8, comma 1 — termine di presentazione della dichiarazione annuale IVA, tra il 1° febbraio e il 30 aprile — testo vigente",
+        "publisher": "Normattiva — Presidenza del Consiglio dei Ministri",
+        "url": "https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:decreto.del.presidente.della.repubblica:1998-07-22;322",
+        "consulted_on": "2026-09-22",
+        "kind": "law"
+      },
+      {
+        "key": "provvedimento-fatturapa",
+        "title": "Provvedimento del Direttore dell'Agenzia delle entrate — regole tecniche per l'emissione e la ricezione delle fatture elettroniche tramite il Sistema di Interscambio, e allegato A, specifiche tecniche versione 1.9.1",
+        "publisher": "Agenzia delle Entrate",
+        "url": "https://www.agenziaentrate.gov.it/portale/aree-tematiche/fatturazione-elettronica",
+        "consulted_on": "2026-09-22",
+        "kind": "regulation"
+      },
+      {
+        "key": "peppol-it-codici",
+        "title": "Entrata in vigore dei nuovi codici 0210 (Codice Fiscale) e 0211 (Partita IVA) sulla rete Peppol",
+        "publisher": "AGID — Peppol Italia",
+        "url": "https://peppol.agid.gov.it/it/news/entrata-in-vigore-nuovi-codici/",
+        "consulted_on": "2026-09-22",
+        "kind": "guidance"
+      },
+      {
+        "key": "en-16931",
+        "title": "EN 16931-1 — semantic data model of the core elements of an electronic invoice, required by Directive 2014/55/EU",
+        "publisher": "European Commission",
+        "url": "https://ec.europa.eu/digital-building-blocks/sites/spaces/DIGITAL/pages/467108950/EN+16931+compliance",
+        "consulted_on": "2026-09-22",
+        "kind": "standard"
+      },
+      {
+        "key": "uncl5305",
+        "title": "UNCL5305 — VAT category code list (BT-118 and BT-151), the subset published for EN 16931",
+        "publisher": "OpenPEPPOL — list published by the European Commission",
+        "url": "https://docs.peppol.eu/poacc/billing/3.0/codelist/UNCL5305/",
+        "consulted_on": "2026-09-22",
+        "kind": "standard"
+      },
+      {
+        "key": "vatex",
+        "title": "VATEX — VAT exemption reason code list (BT-121)",
+        "publisher": "OpenPEPPOL — list published by the European Commission",
+        "url": "https://docs.peppol.eu/poacc/billing/3.0/codelist/vatex/",
+        "consulted_on": "2026-09-22",
+        "kind": "standard"
+      },
+      {
+        "key": "sede-dichiarazioni",
+        "title": "Dichiarazioni fiscali — invio telematico tramite i servizi Entratel e Fisconline",
+        "publisher": "Agenzia delle Entrate",
+        "url": "https://www.agenziaentrate.gov.it/portale/web/guest/dichiarazioni",
+        "consulted_on": "2026-09-22",
+        "kind": "portal"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "EUR",
+    "language": "it",
+    "rounding_method": "half_up",
+    "opening_entry_label": "Scrittura di apertura",
+    "closing_style": "result_accounts",
+    "roles": {
+      "receivable": "1100",
+      "payable": "2100",
+      "suspense": "2900",
+      "rounding": "5460",
+      "retained_earnings": "3100",
+      "current_year_result_profit": "3200",
+      "current_year_result_loss": "3200",
+      "sales": "4000",
+      "purchase": "5000",
+      "bank": "1300",
+      "cash": "1310",
+      "fx_gain": "4340",
+      "fx_loss": "8010",
+      "tax_payable": "2200",
+      "tax_receivable": "1110"
+    },
+    "journal_roles": {
+      "sales": "VEN",
+      "purchase": "ACQ",
+      "miscellaneous": "VAR",
+      "opening": "APE"
+    },
+    "fiscal_year_default": "calendar"
+  },
+  "languages": [
+    "en"
+  ],
+  "journals": [
+    { "code": "VEN", "type": "sales", "name": "Giornale vendite", "sequence": 10 },
+    { "code": "ACQ", "type": "purchase", "name": "Giornale acquisti", "sequence": 20 },
+    { "code": "BAN", "type": "bank", "name": "Giornale di banca", "sequence": 30 },
+    { "code": "CAS", "type": "cash", "name": "Giornale di cassa", "sequence": 40 },
+    { "code": "VAR", "type": "general", "name": "Operazioni diverse", "sequence": 50 },
+    { "code": "APE", "type": "opening", "name": "Scrittura di apertura", "sequence": 60 }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Piano dei conti civilistico — schema di stato patrimoniale e conto economico",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": ["IT-CC-BS", "IT-CC-IS"],
+      "legal_reference": "Il codice civile impone lo schema dello stato patrimoniale (art. 2424) e del conto economico (art. 2425), non una codifica dei conti: l'Italia non ha, a differenza della Spagna, del Belgio o della Francia, un piano dei conti ufficiale numerato. La numerazione di questo file è quindi una convenzione di questo pacchetto, scelta per rispecchiare le macroclassi e le voci degli articoli 2424 e 2425, e non un testo da citare. Va rivista da un dottore commercialista prima di un uso in produzione — si veda il README",
+      "source": "codice-civile"
+    }
+  ],
+  "documents": {
+    "numbering": "gapless_per_year",
+    "number_format": "{CODE}/{YYYY}/{NNNN}",
+    "legal_payment_days": 30,
+    "late_payment_reference": "Decreto legislativo 9 ottobre 2002, n. 231, art. 5, comma 2 — interesse di mora: il tasso di riferimento della Banca centrale europea per le operazioni di rifinanziamento più recenti, maggiorato di otto punti percentuali; art. 6, comma 2 — indennizzo forfettario di 40 euro per i costi di recupero, dovuto senza bisogno di costituzione in mora",
+    "tax_point": "invoice_if_issued",
+    "posted_edit_policy": "reversal_only",
+    "references": {
+      "numbering": {
+        "legal_reference": "Decreto del Presidente della Repubblica 26 ottobre 1972, n. 633, art. 21, comma 2, lettera b) — numero progressivo che identifichi la fattura in modo univoco. Dal 1° gennaio 2013 (legge 24 dicembre 2012, n. 228, art. 1, comma 325, lettera d) la norma non impone più l'azzeramento del numero a ogni anno: basta la progressività e l'univocità. Una serie per anno, con l'anno nel numero, resta la convenzione più diffusa ed è quella proposta da questo pacchetto",
+        "source": "dpr-633-1972"
+      },
+      "payment_terms": {
+        "legal_reference": "Decreto legislativo 9 ottobre 2002, n. 231, art. 4, comma 2 — in mancanza di pattuizione, trenta giorni dal ricevimento della fattura o di richiesta di pagamento equivalente; art. 7, comma 1 — un termine superiore a sessanta giorni concordato tra imprese deve essere provato per iscritto e non deve essere gravemente iniquo per il creditore",
+        "source": "dlgs-231-2002"
+      },
+      "tax_point": {
+        "legal_reference": "Decreto del Presidente della Repubblica 26 ottobre 1972, n. 633, art. 6, comma 1 — le cessioni di beni si considerano effettuate al momento della consegna o spedizione; comma 3 — le prestazioni di servizi al momento del pagamento del corrispettivo; comma 4 — se anteriormente al verificarsi di questi eventi è emessa fattura, l'operazione si considera effettuata, limitatamente all'importo fatturato, alla data della fattura. La regola generale è dunque la consegna o il pagamento, con la fattura emessa in anticipo che anticipa il momento impositivo",
+        "source": "dpr-633-1972"
+      },
+      "posted_edit_policy": {
+        "legal_reference": "Codice civile, art. 2219 — le scritture contabili devono essere tenute senza abrasioni e ogni cancellazione deve risultare da apposita annotazione; Decreto del Presidente della Repubblica 26 ottobre 1972, n. 633, art. 26 — una fattura registrata si rettifica con una nota di variazione, mai con una cancellazione. Una fattura contabilizzata si annulla con una nota di credito che la richiama, mai tornando a bozza",
+        "source": "codice-civile"
+      }
+    },
+    "mentions": [
+      {
+        "code": "reverse_charge",
+        "applies_when": "reverse_charge",
+        "text": "Inversione contabile — operazione soggetta al regime del reverse charge, ai sensi dell'art. 17 del D.P.R. 26 ottobre 1972, n. 633.",
+        "sequence": 10,
+        "legal_reference": "Decreto del Presidente della Repubblica 26 ottobre 1972, n. 633, art. 21, comma 6, lettera a) — la fattura relativa alle operazioni di cui all'art. 17, sesto comma, è emessa senza addebito d'imposta, con l'annotazione «inversione contabile»",
+        "source": "dpr-633-1972"
+      },
+      {
+        "code": "intracom_goods",
+        "applies_when": "intra_eu_goods",
+        "text": "Operazione non imponibile — cessione intracomunitaria, art. 41 del D.L. 30 agosto 1993, n. 331; art. 138 della direttiva 2006/112/CE.",
+        "sequence": 20,
+        "legal_reference": "Decreto del Presidente della Repubblica 26 ottobre 1972, n. 633, art. 21, comma 6, lettera b) — la fattura relativa alle cessioni intracomunitarie di cui all'art. 41 del D.L. n. 331 del 1993 reca l'annotazione «operazione non imponibile», con l'indicazione della norma",
+        "source": "dpr-633-1972"
+      },
+      {
+        "code": "intracom_services",
+        "applies_when": "intra_eu_services",
+        "text": "Operazione non soggetta — prestazione di servizi generica resa a soggetto passivo stabilito in altro Stato membro, artt. 7-ter e 21, comma 6-bis, lettera a) del D.P.R. n. 633 del 1972; artt. 44 e 196 della direttiva 2006/112/CE.",
+        "sequence": 30,
+        "legal_reference": "Decreto del Presidente della Repubblica 26 ottobre 1972, n. 633, art. 21, comma 6-bis, lettera a) — fattura con l'annotazione «inversione contabile» per le prestazioni di servizi generiche rese a soggetti passivi stabiliti in un altro Stato membro",
+        "source": "dpr-633-1972"
+      },
+      {
+        "code": "export",
+        "applies_when": "export",
+        "text": "Operazione non imponibile — cessione all'esportazione, art. 8, comma 1, del D.P.R. 26 ottobre 1972, n. 633.",
+        "sequence": 40,
+        "legal_reference": "Decreto del Presidente della Repubblica 26 ottobre 1972, n. 633, art. 21, comma 6, lettera b) — annotazione «operazione non imponibile» con l'indicazione della norma, per le cessioni all'esportazione dell'art. 8",
+        "source": "dpr-633-1972"
+      },
+      {
+        "code": "exempt",
+        "applies_when": "exempt",
+        "text": "Operazione esente, art. 10 del D.P.R. 26 ottobre 1972, n. 633.",
+        "sequence": 50,
+        "legal_reference": "Decreto del Presidente della Repubblica 26 ottobre 1972, n. 633, art. 21, comma 6, lettera b) — annotazione «operazione esente» con l'indicazione della norma",
+        "source": "dpr-633-1972"
+      }
+    ]
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "party_scheme": null,
+    "vat_scheme": "0211",
+    "legal_reference": "Legge 27 dicembre 2017, n. 205, art. 1, commi 909-910, che modifica il decreto legislativo 5 agosto 2015, n. 127, art. 1 — dal 1° gennaio 2019 la fattura tra soggetti stabiliti in Italia deve essere emessa esclusivamente in formato elettronico tramite il Sistema di Interscambio (SdI), gestito dall'Agenzia delle entrate, nel formato FatturaPA (provvedimento del Direttore dell'Agenzia delle entrate, allegato A). Non si tratta di uno scambio d'un profilo EN 16931 tra le parti: lo SdI convalida e recapita la fattura, la respinge in caso di scarto, e ne conserva copia — una funzione di clearance dello Stato, non di trasporto. Nessun mattone di packages/formats scrive o convalida oggi una fattura conforme allo SdI: dichiarare un profile affermerebbe il contrario. profile e mandatory_from restano dunque vuoti, come per il Messico e la Spagna (si veda la sezione « From Italy » di docs/international.md), pur essendo l'obbligo italiano pienamente in vigore dal 2019 — a differenza della Spagna, dove l'obbligo B2B non è ancora entrato in vigore. Lo schema 0211 (AGID, rete Peppol italiana) identifica la partita IVA; il Codice Destinatario a sette caratteri con cui un operatore è raggiunto sullo SdI non è un identificatore ISO 6523 e non ha una casella qui",
+    "source": "legge-205-2017"
+  },
+  "bank": {
+    "statement_formats": ["camt.053", "mt940"],
+    "payment_formats": ["pain.001", "pain.008"]
+  }
+}

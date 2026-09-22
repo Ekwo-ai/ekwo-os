@@ -1,0 +1,127 @@
+code,parent,type,reconcilable,name,sequence
+0010,,asset_fixed,false,Costi di impianto e di ampliamento,10
+0015,,asset_fixed,false,Costi di sviluppo,20
+0020,,asset_fixed,false,Diritti di brevetto industriale,30
+0025,,asset_fixed,false,Diritti di utilizzazione di opere dell'ingegno,40
+0030,,asset_fixed,false,"Concessioni, licenze, marchi e diritti simili",50
+0035,,asset_fixed,false,Licenze d'uso di software,60
+0040,,asset_fixed,false,Avviamento,70
+0045,,asset_fixed,false,Migliorie su beni di terzi,80
+0050,,asset_fixed,false,Immobilizzazioni immateriali in corso e acconti,90
+0090,,asset_fixed,false,Fondo ammortamento immobilizzazioni immateriali,100
+0100,,asset_fixed,false,Terreni,110
+0105,,asset_fixed,false,Fabbricati industriali,120
+0110,,asset_fixed,false,Fabbricati civili,130
+0115,,asset_fixed,false,Impianti generici,140
+0120,,asset_fixed,false,Impianti specifici,150
+0125,,asset_fixed,false,Macchinario,160
+0130,,asset_fixed,false,Attrezzatura industriale e commerciale,170
+0135,,asset_fixed,false,Mobili e arredi,180
+0140,,asset_fixed,false,Macchine d'ufficio elettroniche,190
+0145,,asset_fixed,false,Automezzi,200
+0150,,asset_fixed,false,Autovetture,210
+0155,,asset_fixed,false,Immobilizzazioni materiali in corso e acconti,220
+0190,,asset_fixed,false,Fondo ammortamento immobilizzazioni materiali,230
+0200,,asset_non_current,false,Partecipazioni in imprese controllate,240
+0205,,asset_non_current,false,Partecipazioni in imprese collegate,250
+0210,,asset_non_current,false,Partecipazioni in altre imprese,260
+0220,,asset_non_current,false,Crediti finanziari verso imprese controllate,270
+0225,,asset_non_current,false,Crediti finanziari verso imprese collegate,280
+0230,,asset_non_current,false,Altri crediti finanziari immobilizzati,290
+1000,,asset_current,false,Materie prime,300
+1005,,asset_current,false,Semilavorati,310
+1010,,asset_current,false,Prodotti in corso di lavorazione,320
+1015,,asset_current,false,Prodotti finiti,330
+1020,,asset_current,false,Merci,340
+1025,,asset_current,false,Acconti a fornitori per rimanenze,350
+1100,,asset_receivable,true,Crediti verso clienti Italia,360
+1101,,asset_receivable,true,Crediti verso clienti UE,370
+1102,,asset_receivable,true,Crediti verso clienti extra-UE,380
+1103,,asset_receivable,true,Clienti c/fatture da emettere,390
+1104,,asset_receivable,true,Clienti insoluti,400
+1105,,asset_current,false,Fondo svalutazione crediti verso clienti,410
+1110,,asset_current,true,Erario c/IVA a credito,420
+1115,,asset_current,false,Erario c/acconti imposte dirette,430
+1120,,asset_current,false,Crediti verso INPS,440
+1125,,asset_current,false,Anticipi a fornitori,450
+1130,,asset_current,false,Cauzioni attive,460
+1135,,asset_current,false,Crediti diversi,470
+1300,,asset_cash,false,Banca c/c 1,480
+1305,,asset_cash,false,Banca c/c 2,490
+1310,,asset_cash,false,Cassa contanti,500
+1315,,asset_cash,false,Assegni,510
+1400,,asset_prepayments,false,Ratei attivi,520
+1410,,asset_prepayments,false,Risconti attivi,530
+2000,,liability_current,false,Debiti verso banche c/c passivi,540
+2010,,liability_current,false,Mutui passivi,550
+2100,,liability_payable,true,Debiti verso fornitori Italia,560
+2105,,liability_payable,true,Debiti verso fornitori UE,570
+2110,,liability_payable,true,Debiti verso fornitori extra-UE,580
+2115,,liability_payable,true,Fornitori c/fatture da ricevere,590
+2200,,liability_current,true,Erario c/IVA a debito,600
+2210,,liability_current,false,Erario c/ritenute da versare,610
+2220,,liability_current,false,Erario c/IRES da versare,620
+2230,,liability_current,false,Erario c/IRAP da versare,630
+2300,,liability_current,false,Debiti verso INPS,640
+2305,,liability_current,false,Debiti verso INAIL,650
+2310,,liability_current,false,Debiti verso dipendenti per retribuzioni,660
+2315,,liability_current,false,Debiti verso dipendenti per ferie e permessi maturati,670
+2320,,liability_current,false,Fondo trattamento di fine rapporto,680
+2340,,liability_current,false,Cauzioni passive,690
+2350,,liability_current,false,Debiti diversi,700
+2400,,liability_current,false,Ratei passivi,710
+2410,,liability_current,false,Risconti passivi,720
+2900,,liability_current,true,Partite in sospeso,730
+3000,,equity,false,Capitale sociale,740
+3010,,equity,false,Riserva legale,750
+3020,,equity,false,Riserva straordinaria,760
+3025,,equity,false,Riserva statutaria,770
+3030,,equity,false,Riserva da sovrapprezzo azioni,780
+3100,,equity_retained,false,Utili portati a nuovo,790
+3105,,equity_retained,false,Perdite portate a nuovo,800
+3200,,equity,false,Utile (perdita) dell'esercizio,810
+4000,,income,false,Ricavi delle vendite di prodotti,820
+4005,,income,false,Ricavi delle vendite di merci,830
+4010,,income,false,Ricavi delle prestazioni di servizi,840
+4020,,income,false,Resi su vendite,850
+4025,,income,false,Abbuoni e sconti su vendite,860
+4300,,income_other,false,Ricavi e proventi diversi,870
+4305,,income_other,false,Plusvalenze da alienazione di beni strumentali,880
+4310,,income_other,false,Sopravvenienze attive,890
+4320,,income_other,false,Proventi da partecipazioni,900
+4330,,income_other,false,Interessi attivi bancari,910
+4335,,income_other,false,Interessi attivi diversi,920
+4340,,income_other,false,Utili su cambi,930
+5000,,expense_direct_cost,false,Acquisti di materie prime,940
+5005,,expense_direct_cost,false,Acquisti di merci,950
+5010,,expense_direct_cost,false,Acquisti di materiali di consumo,960
+5015,,expense_direct_cost,false,Trasporti su acquisti,970
+5100,,expense,false,Spese telefoniche,980
+5105,,expense,false,Spese per energia elettrica,990
+5110,,expense,false,Spese postali,1000
+5115,,expense,false,Spese di pulizia,1010
+5120,,expense,false,Consulenze legali e notarili,1020
+5125,,expense,false,Consulenze fiscali e contabili,1030
+5130,,expense,false,Compensi agli amministratori,1040
+5135,,expense,false,Provvigioni passive,1050
+5140,,expense,false,Spese di manutenzione e riparazione,1060
+5145,,expense,false,Assicurazioni,1070
+5200,,expense,false,Canoni di leasing,1080
+5205,,expense,false,Affitti passivi,1090
+5250,,expense,false,Salari e stipendi,1100
+5255,,expense,false,Oneri sociali INPS,1110
+5260,,expense,false,Oneri sociali INAIL,1120
+5265,,expense,false,Accantonamento trattamento di fine rapporto,1130
+5270,,expense,false,Altri costi per il personale,1140
+5300,,expense_depreciation,false,Ammortamento delle immobilizzazioni immateriali,1150
+5305,,expense_depreciation,false,Ammortamento delle immobilizzazioni materiali,1160
+5310,,expense,false,Svalutazione crediti verso clienti,1170
+5400,,expense,false,Minusvalenze da alienazione di beni strumentali,1180
+5405,,expense,false,Sopravvenienze passive,1190
+5410,,expense,false,Oneri diversi di gestione,1200
+5460,,expense,false,Arrotondamenti passivi,1210
+8000,,expense,false,Interessi passivi bancari,1220
+8005,,expense,false,Interessi passivi diversi,1230
+8010,,expense,false,Perdite su cambi,1240
+8200,,expense,false,IRES corrente,1250
+8205,,expense,false,IRAP corrente,1260

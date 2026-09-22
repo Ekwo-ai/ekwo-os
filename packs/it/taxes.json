@@ -1,0 +1,627 @@
+[
+  {
+    "code": "IT-S-22",
+    "name": "Vendite — aliquota ordinaria 22%",
+    "kind": "vat",
+    "rate": 22,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2013-10-01",
+    "vat_category": "S",
+    "legal_reference": "Decreto del Presidente della Repubblica 26 ottobre 1972, n. 633, art. 16, comma 1 — aliquota ordinaria, elevata al 22% dal 1° ottobre 2013 (decreto-legge 26 giugno 2012, n. 63, art. 1, comma 480, lettera f), come da ultimo modificato dal decreto-legge 30 agosto 2013, n. 102)",
+    "source": "dpr-633-1972",
+    "sequence": 10,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "VE23"
+        },
+        {
+          "type": "tax",
+          "account": "2200",
+          "box": "VE23"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "VE23",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2200",
+          "box": "VE23",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "IT-S-10",
+    "name": "Vendite — aliquota ridotta 10%",
+    "kind": "vat",
+    "rate": 10,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "1997-01-01",
+    "vat_category": "S",
+    "legal_reference": "Decreto del Presidente della Repubblica 26 ottobre 1972, n. 633, art. 16, comma 3 — beni e servizi elencati nella parte III della tabella A allegata",
+    "source": "dpr-633-1972",
+    "sequence": 20,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "VE22"
+        },
+        {
+          "type": "tax",
+          "account": "2200",
+          "box": "VE22"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "VE22",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2200",
+          "box": "VE22",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "IT-S-5",
+    "name": "Vendite — aliquota ridotta 5%",
+    "kind": "vat",
+    "rate": 5,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2016-01-01",
+    "vat_category": "S",
+    "legal_reference": "Decreto del Presidente della Repubblica 26 ottobre 1972, n. 633, art. 16, comma 2-bis — beni e servizi elencati nella parte II-bis della tabella A allegata, introdotta dalla legge 28 dicembre 2015, n. 208, art. 1, comma 960",
+    "source": "dpr-633-1972",
+    "sequence": 30,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "VE21"
+        },
+        {
+          "type": "tax",
+          "account": "2200",
+          "box": "VE21"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "VE21",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2200",
+          "box": "VE21",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "IT-S-4",
+    "name": "Vendite — aliquota minima 4%",
+    "kind": "vat",
+    "rate": 4,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "1989-01-01",
+    "vat_category": "S",
+    "legal_reference": "Decreto del Presidente della Repubblica 26 ottobre 1972, n. 633, art. 16, comma 2 — beni e servizi elencati nella parte II della tabella A allegata, tra cui i generi alimentari di prima necessità, l'abitazione principale «prima casa» e le pubblicazioni",
+    "source": "dpr-633-1972",
+    "sequence": 40,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "VE20"
+        },
+        {
+          "type": "tax",
+          "account": "2200",
+          "box": "VE20"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "VE20",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2200",
+          "box": "VE20",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "IT-S-EXP",
+    "name": "Cessioni all'esportazione — non imponibile",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "1973-01-01",
+    "vat_category": "G",
+    "exemption_code": "VATEX-EU-G",
+    "conditions": [
+      "transport_evidence"
+    ],
+    "legal_reference": "Decreto del Presidente della Repubblica 26 ottobre 1972, n. 633, art. 8, comma 1, lettera a) — cessioni eseguite mediante trasporto o spedizione dei beni fuori dal territorio dell'Unione europea, a cura o a nome del cedente",
+    "source": "dpr-633-1972",
+    "sequence": 50,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "VE30C2"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "VE30C2",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "IT-S-ICG",
+    "name": "Cessioni intracomunitarie di beni — non imponibile",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "intracom_goods",
+    "valid_from": "1993-01-01",
+    "vat_category": "K",
+    "exemption_code": "VATEX-EU-IC",
+    "conditions": [
+      "transport_evidence",
+      "buyer_status"
+    ],
+    "legal_reference": "Decreto-legge 30 agosto 1993, n. 331, art. 41, comma 1, lettera a) — cessioni a titolo oneroso di beni trasportati o spediti nel territorio di un altro Stato membro dal cedente o dal cessionario, nei confronti di un soggetto passivo o di un ente non soggetto passivo",
+    "source": "dl-331-1993",
+    "sequence": 60,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "VE30C3"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "VE30C3",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "IT-S-ICS",
+    "name": "Prestazioni di servizi generiche rese a soggetto passivo UE — non soggetta",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "intracom_services",
+    "valid_from": "2010-01-01",
+    "vat_category": "K",
+    "exemption_code": "VATEX-EU-IC",
+    "legal_reference": "Decreto del Presidente della Repubblica 26 ottobre 1972, n. 633, art. 7-ter, comma 1, lettera a) — le prestazioni di servizi generiche si considerano effettuate nel territorio dello Stato del committente; una prestazione resa a un soggetto passivo stabilito in un altro Stato membro non è quindi soggetta a imposta in Italia (artt. 44 e 196 della direttiva 2006/112/CE)",
+    "source": "dpr-633-1972",
+    "sequence": 70,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "VE34"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "VE34",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "IT-S-EXE",
+    "name": "Operazioni esenti — prestazioni sanitarie",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "1973-01-01",
+    "vat_category": "E",
+    "exemption_code": "VATEX-EU-D",
+    "legal_reference": "Decreto del Presidente della Repubblica 26 ottobre 1972, n. 633, art. 10, comma 1, n. 18 — prestazioni sanitarie di diagnosi, cura e riabilitazione rese alla persona nell'esercizio delle professioni e arti sanitarie soggette a vigilanza. Il codice VATEX-EU-D è uno dei quattro codici che la lista VATEX associa alla categoria E ed è qui un segnaposto: la scelta tra -D, -F, -I e -J per questo motivo esatto è da confermare da un dottore commercialista, si veda il README",
+    "source": "dpr-633-1972",
+    "sequence": 80,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "VE33"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "VE33",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "IT-S-RC-EDIL",
+    "name": "Subappalto nel settore edile — inversione contabile",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "domestic_reverse_charge",
+    "valid_from": "2007-01-01",
+    "vat_category": "AE",
+    "exemption_code": "VATEX-EU-AE",
+    "legal_reference": "Decreto del Presidente della Repubblica 26 ottobre 1972, n. 633, art. 17, comma 6, lettera a) — prestazioni di servizi, compresa la manodopera, rese nel settore edile da soggetti subappaltatori nei confronti delle imprese che svolgono l'attività di costruzione o ristrutturazione di immobili, o nei confronti dell'appaltatore principale o di un altro subappaltatore",
+    "source": "dpr-633-1972",
+    "sequence": 90,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "VE35C4"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "VE35C4",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "IT-S-RC-PULIZIE",
+    "name": "Servizi di pulizia, demolizione, installazione e completamento su edifici — inversione contabile",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "domestic_reverse_charge",
+    "valid_from": "2015-01-01",
+    "vat_category": "AE",
+    "exemption_code": "VATEX-EU-AE",
+    "legal_reference": "Decreto del Presidente della Repubblica 26 ottobre 1972, n. 633, art. 17, comma 6, lettera a-ter) — prestazioni di servizi di pulizia, di demolizione, di installazione di impianti e di completamento relative a edifici, introdotta dalla legge 28 dicembre 2015, n. 208, art. 1, comma 44",
+    "source": "dpr-633-1972",
+    "sequence": 100,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "VE35C8"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "VE35C8",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "IT-P-22",
+    "name": "Acquisti — aliquota ordinaria 22%",
+    "kind": "vat",
+    "rate": 22,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2013-10-01",
+    "legal_reference": "Decreto del Presidente della Repubblica 26 ottobre 1972, n. 633, art. 16, comma 1, e art. 19 — detrazione dell'imposta assolta sugli acquisti inerenti all'attività",
+    "source": "dpr-633-1972",
+    "sequence": 110,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "VF13"
+        },
+        {
+          "type": "tax",
+          "account": "1110",
+          "box": "VF13"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "VF13",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1110",
+          "box": "VF13",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "IT-P-10",
+    "name": "Acquisti — aliquota ridotta 10%",
+    "kind": "vat",
+    "rate": 10,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "1997-01-01",
+    "legal_reference": "Decreto del Presidente della Repubblica 26 ottobre 1972, n. 633, art. 16, comma 3, e art. 19",
+    "source": "dpr-633-1972",
+    "sequence": 120,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "VF11"
+        },
+        {
+          "type": "tax",
+          "account": "1110",
+          "box": "VF11"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "VF11",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1110",
+          "box": "VF11",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "IT-P-ICG-22",
+    "name": "Acquisti intracomunitari di beni — integrazione al 22%",
+    "kind": "vat",
+    "rate": 22,
+    "scope": "purchase",
+    "treatment": "intracom_acquisition_goods",
+    "valid_from": "1993-01-01",
+    "vat_category": "K",
+    "exemption_code": "VATEX-EU-IC",
+    "legal_reference": "Decreto-legge 30 agosto 1993, n. 331, art. 38 — l'acquisto intracomunitario di beni è soggetto a imposta; art. 46, comma 1, e art. 47, comma 1 — l'acquirente integra la fattura del cedente con l'IVA italiana e la annota sia nel registro delle fatture emesse (rigo VJ9, imposta dovuta) sia, ai fini della detrazione, nel registro degli acquisti (rigo VF13, tra gli acquisti imponibili al 22%, imposta detraibile). Una sola posting di base, riportata nei due righi, come per l'acquisizione intracomunitaria estone di docs/packs.md",
+    "source": "dl-331-1993",
+    "sequence": 130,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": [
+            "VJ9",
+            "VF13"
+          ]
+        },
+        {
+          "type": "tax",
+          "account": "1110",
+          "box": "VF13"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2200",
+          "box": "VJ9"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": [
+            "VJ9",
+            "VF13"
+          ],
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1110",
+          "box": "VF13",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2200",
+          "box": "VJ9",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "IT-P-ICS-22",
+    "name": "Acquisti di servizi generici da soggetto passivo UE — integrazione al 22%",
+    "kind": "vat",
+    "rate": 22,
+    "scope": "purchase",
+    "treatment": "intracom_acquisition_services",
+    "valid_from": "2010-01-01",
+    "vat_category": "K",
+    "exemption_code": "VATEX-EU-IC",
+    "legal_reference": "Decreto del Presidente della Repubblica 26 ottobre 1972, n. 633, art. 17, comma 2 — il committente italiano assolve l'imposta mediante il meccanismo dell'inversione contabile per le prestazioni di servizi generiche rese da un soggetto passivo stabilito in un altro Stato membro (art. 7-ter). Il modello IVA non riserva un rigo distinto ai servizi UE rispetto ai servizi extra-UE: entrambi confluiscono nel rigo VJ3, ed è la categoria dell'imposta — non il modello — a distinguerli sulla fattura",
+    "source": "dpr-633-1972",
+    "sequence": 140,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": [
+            "VJ3",
+            "VF13"
+          ]
+        },
+        {
+          "type": "tax",
+          "account": "1110",
+          "box": "VF13"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2200",
+          "box": "VJ3"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": [
+            "VJ3",
+            "VF13"
+          ],
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1110",
+          "box": "VF13",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2200",
+          "box": "VJ3",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "IT-P-EXT-22",
+    "name": "Acquisti di servizi da soggetto non stabilito nell'Unione — integrazione al 22%",
+    "kind": "vat",
+    "rate": 22,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2010-01-01",
+    "legal_reference": "Decreto del Presidente della Repubblica 26 ottobre 1972, n. 633, art. 17, comma 2 — il committente italiano assolve l'imposta mediante autofattura o integrazione per le prestazioni di servizi generiche rese da un soggetto non stabilito nell'Unione europea (art. 7-ter)",
+    "source": "dpr-633-1972",
+    "sequence": 150,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": [
+            "VJ3",
+            "VF13"
+          ]
+        },
+        {
+          "type": "tax",
+          "account": "1110",
+          "box": "VF13"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2200",
+          "box": "VJ3"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": [
+            "VJ3",
+            "VF13"
+          ],
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1110",
+          "box": "VF13",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2200",
+          "box": "VJ3",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "IT-P-RA-20",
+    "name": "Ritenuta d'acconto 20% — compensi per lavoro autonomo",
+    "kind": "withholding",
+    "rate": 20,
+    "scope": "purchase",
+    "treatment": "not_subject",
+    "valid_from": "1973-01-01",
+    "conditions": [
+      "buyer_status"
+    ],
+    "legal_reference": "Decreto del Presidente della Repubblica 29 settembre 1973, n. 600, art. 25, comma 1 — i soggetti indicati nel primo comma dell'art. 23 (sostituti d'imposta) che corrispondono compensi per prestazioni di lavoro autonomo devono operare all'atto del pagamento una ritenuta del 20% a titolo di acconto dell'IRPEF dovuta dal percipiente, con obbligo di rivalsa. Non è un'imposta sul valore aggiunto: nessuna casella della dichiarazione IVA la riguarda, e la somma resta dovuta all'erario su un conto di attesa fino al versamento",
+    "source": "dpr-600-1973",
+    "sequence": 160,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2210"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2210"
+        }
+      ]
+    }
+  }
+]

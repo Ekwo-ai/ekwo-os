@@ -3458,3 +3458,64 @@ name. `packs/kr/`'s chart targets a company (법인사업자), which always file
 so the golden year carries none of it; a pack extending this one to an
 individual taxpayer would meet the same gap Japan's interim returns already
 named.
+
+## From Italy
+
+`packs/it/`, `community`, seed 37. A first Southern-European member with no
+official chart of accounts to transcribe — its `accounts.csv` is this pack's
+own numbering, built to read onto the captions of art. 2424 and art. 2425 of
+the Codice civile, which the README says plainly so a reviewer knows which
+half of the pack a citation can settle and which half cannot. Three things
+the format could not say, none patched, all left to the README and to this
+section instead.
+
+**Clearance, again, and confirmed.** The Sistema di Interscambio has
+validated, sealed and delivered every business-to-business and
+business-to-consumer invoice in Italy since 1 January 2019 (legge 205/2017,
+art. 1, commi 909-910) — five years before Mexico's CFDI is that shape, in
+this same document's own words: "Italy's SdI, India's IRN and most of Latin
+America are the same shape." Nothing here changes that reading; `packs/it/`
+is simply the second pack to meet it, with `einvoicing.profile` and
+`mandatory_from` both null and the obligation itself — fully in force,
+unlike Spain's not-yet-commenced one — spelled out only in
+`einvoicing.legal_reference` and in the README, because no brick of
+`packages/formats/` writes, validates or transmits a FatturaPA envelope
+today and declaring a profile would claim otherwise. The fix asked for there
+— `obligation: mandatory` with a `model: clearance` and a certifying party,
+no EN 16931 profile required — is the same fix this pack would need.
+
+**A three-party withholding once more, on the buyer side of the state's own
+purchases.** Article 17-ter of D.P.R. 633/1972 has a public administration
+(and certain other listed bodies) pay a supplier's invoice net of VAT and
+remit the tax itself, straight to the Treasury — *scissione dei pagamenti*,
+split payment. The supplier still shows the VAT on the invoice and still
+owes nothing to the buyer for it; the debt is the supplier's, the payment is
+the buyer's, and no posting of this core expresses that split for the party
+who never touches the remittance. This is the exact shape already named for
+Senegal's *précompte*, Côte d'Ivoire's *TVA pour compte de tiers*, Chad's
+art. 245 and 229-V, DR Congo's OL 10/001, Guinea's art. 373 Ter and
+Equatorial Guinea's art. 167-4 — six countries into the same gap before
+Italy is the seventh. `packs/it/` carries no tax code for art. 17-ter and
+says so in its README, rather than guess at a two-party approximation that
+would post the VAT to the wrong side of the ledger.
+
+**A declaration due two months after the month the deadline rules already
+reach, and unsafe to approximate where Japan's was not.** The annual VAT
+return is due between 1 February and 30 April of the following year (D.P.R.
+322/1998, art. 8, comma 1) — the last day of the *second* month after the
+period ends, where `deadline.rule` only reaches a day, or the last day, of
+the *first*. Japan's own two-month gap (see "From Japan" above) is declared
+anyway, as the last day of the next month plus a fixed number of days,
+because every one of its months lands on or before the true deadline. The
+same fix cannot be trusted here: Italy's window spans February, so a
+constant `plus_days` computed to land exactly on 30 April in an ordinary
+year lands on 29 April — a day *early*, harmlessly — in a leap year only if
+the number of days added is chosen for the worse case; get the arithmetic
+one day wrong in the other direction and a leap year's 30 April becomes 1
+May, past the law. Rather than ship a rule that is exactly right three years
+in four and silently late in the fourth, `packs/it/tax_report.json` declares
+no `deadline` at all and says so, in full, in its own `legal_reference` —
+which is the one place a missing `deadline` is not read as "nobody looked",
+because the text next to it proves someone did. *Fix*: `months_after_period`
+with a day or `last`, exactly what Japan's entry already asks for, generalised
+to more than one month and checked against a leap year before it is trusted.

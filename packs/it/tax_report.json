@@ -1,0 +1,380 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "IT-DICH-IVA",
+  "name": "Dichiarazione IVA annuale — Quadri VE, VF, VJ, VL, VX",
+  "period": [
+    "year"
+  ],
+  "period_default": "year",
+  "valid_from": "2016-01-01",
+  "legal_reference": "Decreto del Presidente della Repubblica 26 ottobre 1972, n. 633, art. 8 — ogni soggetto passivo presenta annualmente la dichiarazione relativa all'imposta dovuta per l'anno solare precedente. I numeri di rigo e la loro disposizione sono verificati sul Modello IVA 2026 (periodo d'imposta 2025); la ripartizione per aliquota dei righi VE20-VE23 e VF1-VF13 è quella prestampata su tale modello. I campi di un rigo che il modello dispone in colonne separate (ad esempio VE30, campo 2 « Esportazioni » e campo 3 « Cessioni intracomunitarie ») sono trascritti come identificatori di casella distinti — VE30C2, VE30C3 — perché il formato del pacchetto non ammette i due punti nell'identificatore di una casella, riservati alla qualification base/tax/total di un riferimento. `deadline` non è dichiarato: il termine di presentazione corre dal 1° febbraio al 30 aprile dell'anno successivo (decreto del Presidente della Repubblica 22 luglio 1998, n. 322, art. 8, comma 1), cioè l'ultimo giorno del *secondo* mese successivo alla fine del periodo, mentre il vocabolario chiuso di `deadline.rule` conosce solo il giorno o l'ultimo giorno del *primo* mese successivo: nessuna delle tre regole esprime questo termine senza rischiare, in un anno bisestile, una data calcolata dopo il 30 aprile. Si veda la sezione « From Italy » di docs/international.md",
+  "source": "dpr-633-1972",
+  "boxes": [
+    {
+      "box": "VE20",
+      "kind": "base",
+      "name": "Operazioni imponibili — aliquota 4% — imponibile",
+      "sequence": 10,
+      "legal_reference": "Modello IVA 2026, quadro VE, sezione 2, rigo VE20 — aliquota prestampata 4%. Decreto del Presidente della Repubblica 26 ottobre 1972, n. 633, art. 16, comma 2",
+      "source": "modello-iva-2026-mod"
+    },
+    {
+      "box": "VE20",
+      "kind": "tax",
+      "name": "Operazioni imponibili — aliquota 4% — imposta",
+      "sequence": 20,
+      "legal_reference": "Modello IVA 2026, quadro VE, sezione 2, rigo VE20 — aliquota prestampata 4%. Decreto del Presidente della Repubblica 26 ottobre 1972, n. 633, art. 16, comma 2",
+      "source": "modello-iva-2026-mod"
+    },
+    {
+      "box": "VE21",
+      "kind": "base",
+      "name": "Operazioni imponibili — aliquota 5% — imponibile",
+      "sequence": 30,
+      "legal_reference": "Modello IVA 2026, quadro VE, sezione 2, rigo VE21 — aliquota prestampata 5%. Decreto del Presidente della Repubblica 26 ottobre 1972, n. 633, art. 16, comma 2-bis",
+      "source": "modello-iva-2026-mod"
+    },
+    {
+      "box": "VE21",
+      "kind": "tax",
+      "name": "Operazioni imponibili — aliquota 5% — imposta",
+      "sequence": 40,
+      "legal_reference": "Modello IVA 2026, quadro VE, sezione 2, rigo VE21 — aliquota prestampata 5%. Decreto del Presidente della Repubblica 26 ottobre 1972, n. 633, art. 16, comma 2-bis",
+      "source": "modello-iva-2026-mod"
+    },
+    {
+      "box": "VE22",
+      "kind": "base",
+      "name": "Operazioni imponibili — aliquota 10% — imponibile",
+      "sequence": 50,
+      "legal_reference": "Modello IVA 2026, quadro VE, sezione 2, rigo VE22 — aliquota prestampata 10%. Decreto del Presidente della Repubblica 26 ottobre 1972, n. 633, art. 16, comma 3",
+      "source": "modello-iva-2026-mod"
+    },
+    {
+      "box": "VE22",
+      "kind": "tax",
+      "name": "Operazioni imponibili — aliquota 10% — imposta",
+      "sequence": 60,
+      "legal_reference": "Modello IVA 2026, quadro VE, sezione 2, rigo VE22 — aliquota prestampata 10%. Decreto del Presidente della Repubblica 26 ottobre 1972, n. 633, art. 16, comma 3",
+      "source": "modello-iva-2026-mod"
+    },
+    {
+      "box": "VE23",
+      "kind": "base",
+      "name": "Operazioni imponibili — aliquota 22% — imponibile",
+      "sequence": 70,
+      "legal_reference": "Modello IVA 2026, quadro VE, sezione 2, rigo VE23 — aliquota prestampata 22%. Decreto del Presidente della Repubblica 26 ottobre 1972, n. 633, art. 16, comma 1",
+      "source": "modello-iva-2026-mod"
+    },
+    {
+      "box": "VE23",
+      "kind": "tax",
+      "name": "Operazioni imponibili — aliquota 22% — imposta",
+      "sequence": 80,
+      "legal_reference": "Modello IVA 2026, quadro VE, sezione 2, rigo VE23 — aliquota prestampata 22%. Decreto del Presidente della Repubblica 26 ottobre 1972, n. 633, art. 16, comma 1",
+      "source": "modello-iva-2026-mod"
+    },
+    {
+      "box": "VE24",
+      "kind": "total",
+      "name": "Totale imposta — sezioni 1 e 2",
+      "sequence": 90,
+      "plus": [
+        "VE20:tax",
+        "VE21:tax",
+        "VE22:tax",
+        "VE23:tax"
+      ],
+      "legal_reference": "Modello IVA 2026, quadro VE, sezione 3, rigo VE24, colonna imposta — somma dei righi da VE1 a VE11 (regime agricolo, non trattato da questo pacchetto) e da VE20 a VE23. Solo la colonna imposta è transcritta: nessuna riga a valle di questo pacchetto legge la colonna imponibile del rigo VE24",
+      "source": "modello-iva-2026-mod"
+    },
+    {
+      "box": "VE26",
+      "kind": "total",
+      "name": "Totale imposta sulle operazioni imponibili",
+      "sequence": 100,
+      "plus": [
+        "VE24"
+      ],
+      "legal_reference": "Modello IVA 2026, quadro VE, sezione 3, rigo VE26 = VE24 ± VE25. Il rigo VE25 (variazioni e arrotondamenti d'imposta) non è scritto da nessuna imposta di questo pacchetto e non compare qui",
+      "source": "modello-iva-2026-mod"
+    },
+    {
+      "box": "VE30C2",
+      "kind": "base",
+      "name": "Operazioni non imponibili — esportazioni",
+      "sequence": 110,
+      "legal_reference": "Modello IVA 2026, quadro VE, sezione 4, rigo VE30, campo 2. Decreto del Presidente della Repubblica 26 ottobre 1972, n. 633, art. 8, comma 1, lettera a)",
+      "source": "modello-iva-2026-mod"
+    },
+    {
+      "box": "VE30C3",
+      "kind": "base",
+      "name": "Operazioni non imponibili — cessioni intracomunitarie",
+      "sequence": 120,
+      "legal_reference": "Modello IVA 2026, quadro VE, sezione 4, rigo VE30, campo 3. Decreto-legge 30 agosto 1993, n. 331, art. 41, comma 1, lettera a)",
+      "source": "modello-iva-2026-mod"
+    },
+    {
+      "box": "VE33",
+      "kind": "base",
+      "name": "Operazioni esenti",
+      "sequence": 130,
+      "legal_reference": "Modello IVA 2026, quadro VE, sezione 4, rigo VE33. Decreto del Presidente della Repubblica 26 ottobre 1972, n. 633, art. 10",
+      "source": "modello-iva-2026-mod"
+    },
+    {
+      "box": "VE34",
+      "kind": "base",
+      "name": "Operazioni non soggette all'imposta per carenza del requisito di territorialità",
+      "sequence": 140,
+      "legal_reference": "Modello IVA 2026, quadro VE, sezione 4, rigo VE34. Decreto del Presidente della Repubblica 26 ottobre 1972, n. 633, artt. da 7 a 7-septies",
+      "source": "modello-iva-2026-mod"
+    },
+    {
+      "box": "VE35C4",
+      "kind": "base",
+      "name": "Operazioni con applicazione del reverse charge — subappalto nel settore edile",
+      "sequence": 150,
+      "legal_reference": "Modello IVA 2026, quadro VE, sezione 4, rigo VE35, campo 4. Decreto del Presidente della Repubblica 26 ottobre 1972, n. 633, art. 17, comma 6, lettera a)",
+      "source": "modello-iva-2026-mod"
+    },
+    {
+      "box": "VE35C8",
+      "kind": "base",
+      "name": "Operazioni con applicazione del reverse charge — prestazioni comparto edile e settori connessi",
+      "sequence": 160,
+      "legal_reference": "Modello IVA 2026, quadro VE, sezione 4, rigo VE35, campo 8. Decreto del Presidente della Repubblica 26 ottobre 1972, n. 633, art. 17, comma 6, lettera a-ter)",
+      "source": "modello-iva-2026-mod"
+    },
+    {
+      "box": "VF11",
+      "kind": "base",
+      "name": "Acquisti e importazioni imponibili — aliquota 10% — imponibile",
+      "sequence": 190,
+      "legal_reference": "Modello IVA 2026, quadro VF, sezione 1, rigo VF11 — aliquota prestampata 10%",
+      "source": "modello-iva-2026-mod"
+    },
+    {
+      "box": "VF11",
+      "kind": "tax",
+      "name": "Acquisti e importazioni imponibili — aliquota 10% — imposta",
+      "sequence": 200,
+      "legal_reference": "Modello IVA 2026, quadro VF, sezione 1, rigo VF11 — aliquota prestampata 10%",
+      "source": "modello-iva-2026-mod"
+    },
+    {
+      "box": "VF13",
+      "kind": "base",
+      "name": "Acquisti e importazioni imponibili — aliquota 22% — imponibile",
+      "sequence": 210,
+      "legal_reference": "Modello IVA 2026, quadro VF, sezione 1, rigo VF13 — aliquota prestampata 22%. Vi confluiscono gli acquisti interni, gli acquisti intracomunitari e i servizi esteri integrati al 22%",
+      "source": "modello-iva-2026-mod"
+    },
+    {
+      "box": "VF13",
+      "kind": "tax",
+      "name": "Acquisti e importazioni imponibili — aliquota 22% — imposta",
+      "sequence": 220,
+      "legal_reference": "Modello IVA 2026, quadro VF, sezione 1, rigo VF13 — aliquota prestampata 22%. Vi confluiscono gli acquisti interni, gli acquisti intracomunitari e i servizi esteri integrati al 22%",
+      "source": "modello-iva-2026-mod"
+    },
+    {
+      "box": "VF25",
+      "kind": "total",
+      "name": "Totale acquisti e importazioni — imposta",
+      "sequence": 230,
+      "plus": [
+        "VF11:tax",
+        "VF13:tax"
+      ],
+      "legal_reference": "Modello IVA 2026, quadro VF, sezione 2, rigo VF25, colonna imposta — somma dei righi da VF1 a VF13. Solo la colonna imposta è transcritta",
+      "source": "modello-iva-2026-mod"
+    },
+    {
+      "box": "VF27",
+      "kind": "total",
+      "name": "Totale imposta sugli acquisti e importazioni imponibili",
+      "sequence": 240,
+      "plus": [
+        "VF25"
+      ],
+      "legal_reference": "Modello IVA 2026, quadro VF, sezione 2, rigo VF27 = VF25 colonna 2 + VF26. Il rigo VF26 (variazioni e arrotondamenti) non è scritto da nessuna imposta di questo pacchetto",
+      "source": "modello-iva-2026-mod"
+    },
+    {
+      "box": "VF71",
+      "kind": "total",
+      "name": "IVA ammessa in detrazione",
+      "sequence": 250,
+      "plus": [
+        "VF27"
+      ],
+      "legal_reference": "Modello IVA 2026, quadro VF, sezione 3, rigo VF71. Questo pacchetto non tratta il pro rata (sezione 3-A) né il regime speciale agricolo (sezione 3-B): per un'impresa senza operazioni esenti significative, l'imposta ammessa in detrazione coincide con il rigo VF27",
+      "source": "modello-iva-2026-mod"
+    },
+    {
+      "box": "VJ3",
+      "kind": "base",
+      "name": "Acquisti di beni e servizi da soggetti non residenti — imponibile",
+      "sequence": 270,
+      "legal_reference": "Modello IVA 2026, quadro VJ, rigo VJ3. Decreto del Presidente della Repubblica 26 ottobre 1972, n. 633, art. 17, comma 2",
+      "source": "modello-iva-2026-mod"
+    },
+    {
+      "box": "VJ3",
+      "kind": "tax",
+      "name": "Acquisti di beni e servizi da soggetti non residenti — imposta",
+      "sequence": 280,
+      "legal_reference": "Modello IVA 2026, quadro VJ, rigo VJ3. Decreto del Presidente della Repubblica 26 ottobre 1972, n. 633, art. 17, comma 2",
+      "source": "modello-iva-2026-mod"
+    },
+    {
+      "box": "VJ9",
+      "kind": "base",
+      "name": "Acquisti intracomunitari di beni — imponibile",
+      "sequence": 290,
+      "legal_reference": "Modello IVA 2026, quadro VJ, rigo VJ9. Decreto-legge 30 agosto 1993, n. 331, art. 38",
+      "source": "modello-iva-2026-mod"
+    },
+    {
+      "box": "VJ9",
+      "kind": "tax",
+      "name": "Acquisti intracomunitari di beni — imposta",
+      "sequence": 300,
+      "legal_reference": "Modello IVA 2026, quadro VJ, rigo VJ9. Decreto-legge 30 agosto 1993, n. 331, art. 38",
+      "source": "modello-iva-2026-mod"
+    },
+    {
+      "box": "VJ19",
+      "kind": "total",
+      "name": "Totale imposta — quadro VJ",
+      "sequence": 310,
+      "plus": [
+        "VJ3:tax",
+        "VJ9:tax"
+      ],
+      "legal_reference": "Modello IVA 2026, quadro VJ, rigo VJ19 — somma dei righi da VJ1 a VJ18",
+      "source": "modello-iva-2026-mod"
+    },
+    {
+      "box": "VL1",
+      "kind": "total",
+      "name": "IVA a debito",
+      "sequence": 320,
+      "plus": [
+        "VE26",
+        "VJ19"
+      ],
+      "legal_reference": "Modello IVA 2026, quadro VL, sezione 1, rigo VL1 — somma dei righi VE26 e VJ19",
+      "source": "modello-iva-2026-mod"
+    },
+    {
+      "box": "VL2",
+      "kind": "total",
+      "name": "IVA detraibile",
+      "sequence": 330,
+      "plus": [
+        "VF71"
+      ],
+      "legal_reference": "Modello IVA 2026, quadro VL, sezione 1, rigo VL2 — importo di cui al rigo VF71",
+      "source": "modello-iva-2026-mod"
+    },
+    {
+      "box": "VL3",
+      "kind": "total",
+      "name": "Imposta dovuta",
+      "sequence": 340,
+      "plus": [
+        "VL1"
+      ],
+      "minus": [
+        "VL2"
+      ],
+      "floor_zero": true,
+      "legal_reference": "Modello IVA 2026, quadro VL, sezione 1, rigo VL3 = VL1 − VL2, quando positivo",
+      "source": "modello-iva-2026-mod"
+    },
+    {
+      "box": "VL4",
+      "kind": "total",
+      "name": "Imposta a credito",
+      "sequence": 350,
+      "plus": [
+        "VL2"
+      ],
+      "minus": [
+        "VL1"
+      ],
+      "floor_zero": true,
+      "legal_reference": "Modello IVA 2026, quadro VL, sezione 1, rigo VL4 = VL2 − VL1, quando positivo",
+      "source": "modello-iva-2026-mod"
+    },
+    {
+      "box": "VL32",
+      "kind": "total",
+      "name": "IVA a debito — sezione 3",
+      "sequence": 360,
+      "plus": [
+        "VL3"
+      ],
+      "legal_reference": "Modello IVA 2026, quadro VL, sezione 3, rigo VL32. Questo pacchetto non tratta i righi VL5 a VL31 (eccedenze di anni precedenti, gruppo IVA, rimborsi infrannuali)",
+      "source": "modello-iva-2026-mod"
+    },
+    {
+      "box": "VL33",
+      "kind": "total",
+      "name": "IVA a credito — sezione 3",
+      "sequence": 370,
+      "plus": [
+        "VL4"
+      ],
+      "legal_reference": "Modello IVA 2026, quadro VL, sezione 3, rigo VL33",
+      "source": "modello-iva-2026-mod"
+    },
+    {
+      "box": "VL38",
+      "kind": "total",
+      "name": "Totale IVA dovuta",
+      "sequence": 380,
+      "plus": [
+        "VL32"
+      ],
+      "legal_reference": "Modello IVA 2026, quadro VL, sezione 3, rigo VL38 = VL32 − VL34 − VL35 + VL36. I righi VL34 a VL36 (crediti d'imposta di categorie particolari) non sono trattati da questo pacchetto",
+      "source": "modello-iva-2026-mod"
+    },
+    {
+      "box": "VL39",
+      "kind": "total",
+      "name": "Totale IVA a credito",
+      "sequence": 390,
+      "plus": [
+        "VL33"
+      ],
+      "legal_reference": "Modello IVA 2026, quadro VL, sezione 3, rigo VL39 = VL33 − VL37. Il rigo VL37 (credito ceduto) non è trattato da questo pacchetto",
+      "source": "modello-iva-2026-mod"
+    },
+    {
+      "box": "VX1",
+      "kind": "total",
+      "name": "IVA da versare",
+      "sequence": 400,
+      "plus": [
+        "VL38"
+      ],
+      "legal_reference": "Modello IVA 2026, quadro VX, rigo VX1 — importo di cui al rigo VL38",
+      "source": "modello-iva-2026-mod"
+    },
+    {
+      "box": "VX2",
+      "kind": "total",
+      "name": "IVA a credito",
+      "sequence": 410,
+      "plus": [
+        "VL39"
+      ],
+      "legal_reference": "Modello IVA 2026, quadro VX, rigo VX2 — eccedenza annuale d'imposta detraibile di cui al rigo VL39",
+      "source": "modello-iva-2026-mod"
+    }
+  ]
+}

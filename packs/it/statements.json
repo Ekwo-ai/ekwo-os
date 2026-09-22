@@ -1,0 +1,622 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/statements",
+  "statements": [
+    {
+      "code": "IT-CC-BS",
+      "kind": "balance_sheet",
+      "framework": "IT-CC",
+      "name": "Stato patrimoniale",
+      "legal_reference": "Codice civile, art. 2424 — contenuto dello stato patrimoniale. Le lettere e i numeri romani riportati sono le macroclassi e le classi dell'articolo; le voci che nessun conto di questo pacchetto raggiunge (A — crediti verso soci, B — fondi per rischi e oneri, C — trattamento di fine rapporto lavoro subordinato come voce separata dai debiti, III — attività finanziarie che non costituiscono immobilizzazioni) non figurano qui, per la regola per cui una riga senza conto non serve a nulla",
+      "source": "codice-civile",
+      "lines": [
+        {
+          "code": "B.I",
+          "name": "Immobilizzazioni immateriali",
+          "sequence": 10,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "0010",
+              "code_to": "0099"
+            }
+          ]
+        },
+        {
+          "code": "B.II",
+          "name": "Immobilizzazioni materiali",
+          "sequence": 20,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "0100",
+              "code_to": "0199"
+            }
+          ]
+        },
+        {
+          "code": "B.III",
+          "name": "Immobilizzazioni finanziarie",
+          "sequence": 30,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "0200",
+              "code_to": "0299"
+            }
+          ]
+        },
+        {
+          "code": "B",
+          "name": "Totale immobilizzazioni",
+          "sequence": 40,
+          "is_total": true,
+          "plus": [
+            "B.I",
+            "B.II",
+            "B.III"
+          ]
+        },
+        {
+          "code": "C.I",
+          "name": "Rimanenze",
+          "sequence": 50,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1000",
+              "code_to": "1099"
+            }
+          ]
+        },
+        {
+          "code": "C.II",
+          "name": "Crediti",
+          "sequence": 60,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1100",
+              "code_to": "1199"
+            }
+          ]
+        },
+        {
+          "code": "C.IV",
+          "name": "Disponibilità liquide",
+          "sequence": 70,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1300",
+              "code_to": "1399"
+            }
+          ]
+        },
+        {
+          "code": "C",
+          "name": "Totale attivo circolante",
+          "sequence": 80,
+          "is_total": true,
+          "plus": [
+            "C.I",
+            "C.II",
+            "C.IV"
+          ]
+        },
+        {
+          "code": "D-ATT",
+          "name": "Ratei e risconti attivi",
+          "sequence": 90,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1400",
+              "code_to": "1499"
+            }
+          ]
+        },
+        {
+          "code": "TOT-ATT",
+          "name": "Totale attivo",
+          "sequence": 100,
+          "is_total": true,
+          "plus": [
+            "B",
+            "C",
+            "D-ATT"
+          ]
+        },
+        {
+          "code": "A.I",
+          "name": "Capitale",
+          "sequence": 110,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "3000"
+            }
+          ]
+        },
+        {
+          "code": "A.IV-VI",
+          "name": "Riserva legale e altre riserve",
+          "sequence": 120,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "3010",
+              "code_to": "3039"
+            }
+          ]
+        },
+        {
+          "code": "A.VIII",
+          "name": "Utili (perdite) portati a nuovo",
+          "sequence": 130,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "3100",
+              "code_to": "3109"
+            }
+          ]
+        },
+        {
+          "code": "A.IX",
+          "name": "Utile (perdita) dell'esercizio",
+          "sequence": 140,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "3200"
+            }
+          ]
+        },
+        {
+          "code": "A",
+          "name": "Totale patrimonio netto",
+          "sequence": 150,
+          "is_total": true,
+          "plus": [
+            "A.I",
+            "A.IV-VI",
+            "A.VIII",
+            "A.IX"
+          ]
+        },
+        {
+          "code": "D.banche",
+          "name": "Debiti verso banche",
+          "sequence": 160,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "2000",
+              "code_to": "2099"
+            }
+          ]
+        },
+        {
+          "code": "D.fornitori",
+          "name": "Debiti verso fornitori",
+          "sequence": 170,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "2100",
+              "code_to": "2199"
+            }
+          ]
+        },
+        {
+          "code": "D.tributari",
+          "name": "Debiti tributari",
+          "sequence": 180,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "2200",
+              "code_to": "2239"
+            }
+          ]
+        },
+        {
+          "code": "D.previdenza",
+          "name": "Debiti verso istituti di previdenza e di sicurezza sociale",
+          "sequence": 190,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "2300",
+              "code_to": "2309"
+            }
+          ]
+        },
+        {
+          "code": "D.personale",
+          "name": "Debiti verso il personale e fondo TFR",
+          "sequence": 200,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "2310",
+              "code_to": "2329"
+            }
+          ]
+        },
+        {
+          "code": "D.altri",
+          "name": "Altri debiti",
+          "sequence": 210,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "2340",
+              "code_to": "2359",
+              "sequence": 10
+            },
+            {
+              "kind": "account_code",
+              "code_from": "2900",
+              "sequence": 20
+            }
+          ]
+        },
+        {
+          "code": "D",
+          "name": "Totale debiti",
+          "sequence": 220,
+          "is_total": true,
+          "plus": [
+            "D.banche",
+            "D.fornitori",
+            "D.tributari",
+            "D.previdenza",
+            "D.personale",
+            "D.altri"
+          ]
+        },
+        {
+          "code": "E-PASS",
+          "name": "Ratei e risconti passivi",
+          "sequence": 230,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "2400",
+              "code_to": "2499"
+            }
+          ]
+        },
+        {
+          "code": "TOT-PASS",
+          "name": "Totale patrimonio netto e passivo",
+          "sequence": 240,
+          "is_total": true,
+          "plus": [
+            "A",
+            "D",
+            "E-PASS"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "IT-CC-IS",
+      "kind": "income_statement",
+      "framework": "IT-CC",
+      "name": "Conto economico",
+      "legal_reference": "Codice civile, art. 2425 — contenuto del conto economico, forma scalare per natura. Le voci A.2, A.3, A.4, B.11, B.12, B.13 e C.17-bis, che nessun conto di questo pacchetto raggiunge, non figurano qui",
+      "source": "codice-civile",
+      "lines": [
+        {
+          "code": "A.1",
+          "name": "Ricavi delle vendite e delle prestazioni",
+          "sequence": 10,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "4000",
+              "code_to": "4099"
+            }
+          ]
+        },
+        {
+          "code": "A.5",
+          "name": "Altri ricavi e proventi",
+          "sequence": 20,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "4300",
+              "code_to": "4329"
+            }
+          ]
+        },
+        {
+          "code": "A",
+          "name": "Totale valore della produzione",
+          "sequence": 30,
+          "is_total": true,
+          "plus": [
+            "A.1",
+            "A.5"
+          ]
+        },
+        {
+          "code": "B.6",
+          "name": "Costi per materie prime, sussidiarie, di consumo e di merci",
+          "sequence": 40,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "5000",
+              "code_to": "5019"
+            }
+          ]
+        },
+        {
+          "code": "B.7",
+          "name": "Costi per servizi",
+          "sequence": 50,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "5100",
+              "code_to": "5149"
+            }
+          ]
+        },
+        {
+          "code": "B.8",
+          "name": "Costi per godimento di beni di terzi",
+          "sequence": 60,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "5200",
+              "code_to": "5249"
+            }
+          ]
+        },
+        {
+          "code": "B.9.a",
+          "name": "Salari e stipendi",
+          "sequence": 70,
+          "sign": 1,
+          "parent": "B.9",
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "5250"
+            }
+          ]
+        },
+        {
+          "code": "B.9.b",
+          "name": "Oneri sociali",
+          "sequence": 80,
+          "sign": 1,
+          "parent": "B.9",
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "5255",
+              "code_to": "5264"
+            }
+          ]
+        },
+        {
+          "code": "B.9.c",
+          "name": "Trattamento di fine rapporto e altri costi",
+          "sequence": 90,
+          "sign": 1,
+          "parent": "B.9",
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "5265",
+              "code_to": "5299"
+            }
+          ]
+        },
+        {
+          "code": "B.9",
+          "name": "Costi per il personale",
+          "sequence": 100,
+          "is_total": true,
+          "plus": [
+            "B.9.a",
+            "B.9.b",
+            "B.9.c"
+          ]
+        },
+        {
+          "code": "B.10.a",
+          "name": "Ammortamento delle immobilizzazioni immateriali",
+          "sequence": 110,
+          "sign": 1,
+          "parent": "B.10",
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "5300"
+            }
+          ]
+        },
+        {
+          "code": "B.10.b",
+          "name": "Ammortamento delle immobilizzazioni materiali",
+          "sequence": 120,
+          "sign": 1,
+          "parent": "B.10",
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "5305"
+            }
+          ]
+        },
+        {
+          "code": "B.10.c",
+          "name": "Svalutazione dei crediti compresi nell'attivo circolante",
+          "sequence": 130,
+          "sign": 1,
+          "parent": "B.10",
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "5310"
+            }
+          ]
+        },
+        {
+          "code": "B.10",
+          "name": "Ammortamenti e svalutazioni",
+          "sequence": 140,
+          "is_total": true,
+          "plus": [
+            "B.10.a",
+            "B.10.b",
+            "B.10.c"
+          ]
+        },
+        {
+          "code": "B.14",
+          "name": "Oneri diversi di gestione",
+          "sequence": 150,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "5400",
+              "code_to": "5469"
+            }
+          ]
+        },
+        {
+          "code": "B",
+          "name": "Totale costi della produzione",
+          "sequence": 160,
+          "is_total": true,
+          "plus": [
+            "B.6",
+            "B.7",
+            "B.8",
+            "B.9",
+            "B.10",
+            "B.14"
+          ]
+        },
+        {
+          "code": "DIFF",
+          "name": "Differenza tra valore e costi della produzione",
+          "sequence": 170,
+          "is_total": true,
+          "plus": [
+            "A"
+          ],
+          "minus": [
+            "B"
+          ]
+        },
+        {
+          "code": "C.16",
+          "name": "Altri proventi finanziari",
+          "sequence": 180,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "4330",
+              "code_to": "4349"
+            }
+          ]
+        },
+        {
+          "code": "C.17",
+          "name": "Interessi e altri oneri finanziari",
+          "sequence": 190,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "8000",
+              "code_to": "8019"
+            }
+          ]
+        },
+        {
+          "code": "C",
+          "name": "Totale proventi e oneri finanziari",
+          "sequence": 200,
+          "is_total": true,
+          "plus": [
+            "C.16"
+          ],
+          "minus": [
+            "C.17"
+          ]
+        },
+        {
+          "code": "RISULTATO-ANTE",
+          "name": "Risultato prima delle imposte",
+          "sequence": 210,
+          "is_total": true,
+          "plus": [
+            "DIFF",
+            "C"
+          ]
+        },
+        {
+          "code": "20",
+          "name": "Imposte sul reddito dell'esercizio",
+          "sequence": 220,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "8200",
+              "code_to": "8219"
+            }
+          ]
+        },
+        {
+          "code": "21",
+          "name": "Utile (perdita) dell'esercizio",
+          "sequence": 230,
+          "is_total": true,
+          "plus": [
+            "RISULTATO-ANTE"
+          ],
+          "minus": [
+            "20"
+          ]
+        }
+      ]
+    }
+  ]
+}
