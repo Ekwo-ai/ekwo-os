@@ -978,6 +978,10 @@ describe('the pack format', () => {
       const einvoicing = { ...(manifest['einvoicing'] as Record<string, unknown>) };
       delete einvoicing['legal_reference'];
       delete einvoicing['source'];
+      // An obligation is a claim about the law too: stripped with its
+      // citation, or the pack would fail on it before the rule under test.
+      delete einvoicing['obligation'];
+      delete einvoicing['mandatory_from'];
       manifest['documents'] = documents;
       manifest['einvoicing'] = einvoicing;
       manifest['certification'] = {
