@@ -9,6 +9,14 @@ somewhere has already run it.
 
 ## [Unreleased]
 
+### Added
+
+- **An install demo in the README.** `docs/demo/install.gif`, and a longer
+  `install.mp4`: an empty Supabase project, `npx ekwo-os init`, `ekwo status`,
+  a sale invoice posted and its VAT return prepared, for the United Kingdom
+  and Estonia side by side, with the published 0.5.0. Two vhs tapes and
+  `docs/demo/render.sh` record it again on two throwaway projects.
+
 ## [0.5.0] — 2026-09-22
 
 ### Added
