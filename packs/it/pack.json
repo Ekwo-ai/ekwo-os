@@ -151,8 +151,8 @@
       "cash": "1310",
       "fx_gain": "4340",
       "fx_loss": "8010",
-      "tax_payable": "2200",
-      "tax_receivable": "1110"
+      "tax_payable": "2201",
+      "tax_receivable": "1111"
     },
     "journal_roles": {
       "sales": "VEN",

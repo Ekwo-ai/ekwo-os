@@ -41,6 +41,7 @@ code,parent,type,reconcilable,name,sequence
 1104,,asset_receivable,true,Clienti insoluti,400
 1105,,asset_current,false,Fondo svalutazione crediti verso clienti,410
 1110,,asset_current,true,Erario c/IVA a credito,420
+1111,,asset_current,true,Erario c/IVA a credito da riportare,425
 1115,,asset_current,false,Erario c/acconti imposte dirette,430
 1120,,asset_current,false,Crediti verso INPS,440
 1125,,asset_current,false,Anticipi a fornitori,450
@@ -59,6 +60,7 @@ code,parent,type,reconcilable,name,sequence
 2110,,liability_payable,true,Debiti verso fornitori extra-UE,580
 2115,,liability_payable,true,Fornitori c/fatture da ricevere,590
 2200,,liability_current,true,Erario c/IVA a debito,600
+2201,,liability_current,true,Erario c/IVA da versare,605
 2210,,liability_current,false,Erario c/ritenute da versare,610
 2220,,liability_current,false,Erario c/IRES da versare,620
 2230,,liability_current,false,Erario c/IRAP da versare,630

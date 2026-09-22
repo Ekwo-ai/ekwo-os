@@ -93,9 +93,20 @@ charge on services are declared once — as EN 16931's Estonian example in
 `docs/packs.md` already shows — with a `base` posting naming both the VJ row
 (the tax due) and the VF row (the tax deducted) as a list, and two `tax`
 postings, one to each side. The pack's VAT control accounts (1110
-receivable, 2200 payable) carry both legs, so the two amounts, being equal,
+deductible, 2200 output) carry both legs, so the two amounts, being equal,
 leave the cash position untouched and only the declaration shows they
 happened.
+
+**The liquidazione clears into accounts of its own.** 1110 and 2200 accrue,
+invoice by invoice, the VAT a period deducts and the VAT it collects; they
+are never the account a return settles into, since clearing a period's tax
+into the same account that period posted to would net the accrual against
+itself and post nothing. `defaults.roles.tax_payable` (2201, Erario c/IVA da
+versare) and `tax_receivable` (1111, Erario c/IVA a credito da riportare)
+are separate accounts that only the liquidazione touches, carrying what a
+period owes or the credit it carries forward until the payment or the next
+declaration clears them in turn — the same split as `packs/fr`'s 445710/
+445660 against 445510/445670.
 
 **What is not here, and why:**
 
