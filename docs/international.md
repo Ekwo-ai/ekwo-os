@@ -3915,3 +3915,61 @@ tax code that would post to them, which is a text nobody working on this
 pack read closely enough to write down rather than a shape the format
 cannot hold. `packs/at/README.md` says the same under "Before this pack is
 `reviewed`".
+
+## From Poland
+
+`packs/pl/`, `community`, seed 53, inside the common system of VAT since
+1 May 2004. Its VAT rates, its declaration and its balance sheet are read
+from the consolidated ustawa o podatku od towarów i usług and the
+ustawa o rachunkowości; two things the format could not say, and one
+decision worth keeping beside them.
+
+**A national e-invoicing system built on clearance, not on exchange between
+peers.** `einvoicing.profile` and the rest of that section assume a
+structured invoice moves directly between the seller's and the buyer's own
+systems, in a format built on the semantic model of EN 16931 — Peppol,
+Factur-X, XRechnung, a PINT. Poland's Krajowy System e-Faktur (KSeF) is a
+different shape: a faktura ustrukturyzowana is deemed issued the moment it is
+sent **to the administration's own system** (art. 106na ust. 1 ustawy o VAT)
+and deemed received only once that system — not the seller — assigns it a
+KSeF number (art. 106na ust. 3). The seller's own numbering, which
+`documents.number_format` exists to describe, is not the number the buyer
+ever sees stamped on the exchange; a second, administration-issued
+identifier sits on top of it, and the format has no field for one. Four
+degraded modes the statute names (a KSeF outage, a total outage, the
+"offline24" procedure, and the system being unreachable) each carry their own
+consequence for whether a correction is later owed, which compounds the same
+gap rather than opening a new one. `packs/pl/` names a profile
+(`ksef-fa3`) only so that `obligation` and `mandatory_from` can be read at
+all, and says in its own `legal_reference` that the value names no
+interoperable EN 16931 profile — it is the closest word available for "a
+national clearance schema," not a claim that KSeF is one of the network
+profiles this field was written for.
+
+**A mandatory means of payment that a per-line tax cannot trigger.** The
+split payment mechanism (mechanizm podzielonej płatności, art. 108a ust. 1a)
+turns on a fact no single line of an invoice carries by itself: the
+invoice's **total**, gross of every line, exceeding 15 000 zł, **and** at
+least one line naming a good or service of załącznik nr 15 — a list of a
+hundred and fifty PKWiU positions from coal to scrap metal to processor
+chips. A tax's own `applies_when` and the closed vocabulary of a document
+mention both reason about one line or one invoice-wide category
+(`reverse_charge`, `export`, `small_business`...), never about a threshold
+computed over the whole document and a lookup into an external list of
+goods. `packs/pl/` states the rule in its README and leaves the mandatory
+"mechanizm podzielonej płatności" wording unposted rather than approximating
+the condition on a tax that cannot see the invoice total or the annex.
+
+**A correction that is neither a credit note nor a company's choice.** The
+Belgian, French and German packs already model VAT that a seller books and
+declares as usual; the ulga na złe długi of art. 89a-89b is a different
+mechanism again from the three-party withholdings `docs/international.md`
+already tracks above — here every party is the same two, but the correction
+runs on a clock the parties do not control. A seller unpaid ninety days past
+the invoice's due date must reduce output VAT already declared (art. 89a
+ust. 1), and the buyer must mirror that reduction on their own input VAT
+(art. 89b ust. 1) whether or not either party does anything about it; if the
+debt is later paid, both corrections reverse. Nothing in the core ties a
+declaration box to the mere passage of time since a due date, so `packs/pl/`
+declares the four boxes the mechanism owns (`P_46`, `P_47`, seller-side
+`P_68`, `P_69`) and posts none of them.

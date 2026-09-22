@@ -1,0 +1,275 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "PL",
+  "name": "Polska",
+  "version": "0.1.0",
+  "schema_min": "20260921145425",
+  "seed_sequence": 53,
+  "released_at": "2026-09-22",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "ustawa-vat",
+        "title": "Obwieszczenie Marszałka Sejmu Rzeczypospolitej Polskiej z dnia 21 maja 2025 r. w sprawie ogłoszenia jednolitego tekstu ustawy o podatku od towarów i usług (Dz. U. z 2025 r. poz. 775)",
+        "publisher": "Kancelaria Sejmu — Internetowy System Aktów Prawnych (ISAP)",
+        "url": "https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20250000775",
+        "consulted_on": "2026-09-22",
+        "kind": "law"
+      },
+      {
+        "key": "ustawa-vat-zwolnienie-2026",
+        "title": "Ustawa z dnia 24 czerwca 2025 r. o zmianie ustawy o podatku od towarów i usług (Dz. U. z 2025 r. poz. 896) — podnosi próg zwolnienia podmiotowego art. 113 ust. 1 do 240 000 zł od 1 stycznia 2026 r.",
+        "publisher": "Kancelaria Sejmu — Internetowy System Aktów Prawnych (ISAP)",
+        "url": "https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20250000896",
+        "consulted_on": "2026-09-22",
+        "kind": "law"
+      },
+      {
+        "key": "ustawa-ksef-2023",
+        "title": "Ustawa z dnia 16 czerwca 2023 r. o zmianie ustawy o podatku od towarów i usług oraz niektórych innych ustaw (Dz. U. z 2023 r. poz. 1598) — wprowadza obowiązkowe fakturowanie w Krajowym Systemie e-Faktur",
+        "publisher": "Kancelaria Sejmu — Internetowy System Aktów Prawnych (ISAP)",
+        "url": "https://eli.gov.pl/eli/DU/2023/1598",
+        "consulted_on": "2026-09-22",
+        "kind": "law"
+      },
+      {
+        "key": "ustawa-ksef-2025",
+        "title": "Ustawa z dnia 5 sierpnia 2025 r. o zmianie ustawy o podatku od towarów i usług oraz ustawy o zmianie ustawy o podatku od towarów i usług oraz niektórych innych ustaw (Dz. U. z 2025 r. poz. 1203) — harmonogram obowiązku KSeF według progu obrotu",
+        "publisher": "Kancelaria Sejmu — Internetowy System Aktów Prawnych (ISAP)",
+        "url": "https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20250001203",
+        "consulted_on": "2026-09-22",
+        "kind": "law"
+      },
+      {
+        "key": "rozporzadzenie-jpk",
+        "title": "Rozporządzenie Ministra Finansów, Inwestycji i Rozwoju z dnia 15 października 2019 r. w sprawie szczegółowego zakresu danych zawartych w deklaracjach podatkowych i w ewidencji w zakresie podatku od towarów i usług (Dz. U. z 2019 r. poz. 1988, z późn. zm., ost. zm. Dz. U. z 2025 r. poz. 1800)",
+        "publisher": "Kancelaria Sejmu — Internetowy System Aktów Prawnych (ISAP)",
+        "url": "https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20190001988",
+        "consulted_on": "2026-09-22",
+        "kind": "regulation"
+      },
+      {
+        "key": "broszura-jpk",
+        "title": "JPK_VAT z deklaracją [JPK_V7M(3), JPK_V7K(3)] — broszura informacyjna dot. struktury, Warszawa, styczeń 2026 r.",
+        "publisher": "Ministerstwo Finansów",
+        "url": "https://www.podatki.gov.pl/media/wgbkrejs/broszura-jpk_vat-z-deklaracj%C4%85-od-1-lutego-2026-r.pdf",
+        "consulted_on": "2026-09-22",
+        "kind": "form"
+      },
+      {
+        "key": "ustawa-rachunkowosc",
+        "title": "Obwieszczenie Marszałka Sejmu Rzeczypospolitej Polskiej z dnia 30 marca 2026 r. w sprawie ogłoszenia jednolitego tekstu ustawy o rachunkowości (Dz. U. z 2026 r. poz. 522), w tym załącznik nr 1 — zakres informacji wykazywanych w sprawozdaniu finansowym",
+        "publisher": "Kancelaria Sejmu — Internetowy System Aktów Prawnych (ISAP)",
+        "url": "https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20260000522",
+        "consulted_on": "2026-09-22",
+        "kind": "law"
+      },
+      {
+        "key": "ustawa-oplaty",
+        "title": "Obwieszczenie Marszałka Sejmu Rzeczypospolitej Polskiej w sprawie ogłoszenia jednolitego tekstu ustawy o przeciwdziałaniu nadmiernym opóźnieniom w transakcjach handlowych (Dz. U. z 2023 r. poz. 1790)",
+        "publisher": "Kancelaria Sejmu — Internetowy System Aktów Prawnych (ISAP)",
+        "url": "https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20230001790",
+        "consulted_on": "2026-09-22",
+        "kind": "law"
+      },
+      {
+        "key": "mp-odsetki-2026-2",
+        "title": "Obwieszczenie Ministra Finansów i Gospodarki z dnia 22 czerwca 2026 r. w sprawie wysokości odsetek ustawowych za opóźnienie w transakcjach handlowych (M.P. z 2026 r. poz. 642) — 13,75 % (11,75 % wobec podmiotu leczniczego) na okres od 1 lipca do 31 grudnia 2026 r.",
+        "publisher": "Kancelaria Sejmu — Internetowy System Aktów Prawnych (ISAP)",
+        "url": "https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WMP20260000642",
+        "consulted_on": "2026-09-22",
+        "kind": "guidance"
+      },
+      {
+        "key": "ksef-portal",
+        "title": "Krajowy System e-Faktur (KSeF) — informacje ogólne, podstawy prawne oraz kluczowe terminy",
+        "publisher": "Ministerstwo Finansów / Krajowa Administracja Skarbowa",
+        "url": "https://ksef.podatki.gov.pl/informacje-ogolne-ksef-20/podstawy-prawne-oraz-kluczowe-terminy/",
+        "consulted_on": "2026-09-22",
+        "kind": "portal"
+      },
+      {
+        "key": "ksef-fa3",
+        "title": "Struktura logiczna faktury ustrukturyzowanej FA(3), w mocy od 1 lutego 2026 r. (wzór opublikowany w CRWDE 25 czerwca 2025 r., http://crd.gov.pl/wzor/2025/06/25/13775/)",
+        "publisher": "Ministerstwo Finansów / Krajowa Administracja Skarbowa",
+        "url": "https://ksef.podatki.gov.pl/informacje-ogolne-ksef-20/struktura-logiczna-fa-3/",
+        "consulted_on": "2026-09-22",
+        "kind": "standard"
+      },
+      {
+        "key": "mpp-portal",
+        "title": "Mechanizm podzielonej płatności (MPP) — poradnik",
+        "publisher": "Ministerstwo Finansów",
+        "url": "https://www.podatki.gov.pl/podatki-firmowe/vat/poradniki-i-informatory/mechanizm-podzielonej-platnosci-mpp",
+        "consulted_on": "2026-09-22",
+        "kind": "guidance"
+      },
+      {
+        "key": "e-deklaracje-portal",
+        "title": "Portal podatki.gov.pl — usługi elektroniczne do złożenia JPK_VAT z deklaracją",
+        "publisher": "Ministerstwo Finansów",
+        "url": "https://www.podatki.gov.pl/jednolity-plik-kontrolny/jpk-vat-z-deklaracja",
+        "consulted_on": "2026-09-22",
+        "kind": "portal"
+      },
+      {
+        "key": "en-16931",
+        "title": "EN 16931-1 — semantic data model of the electronic invoice, conformant with Directive 2014/55/EU",
+        "publisher": "European Commission",
+        "url": "https://ec.europa.eu/digital-building-blocks/sites/spaces/DIGITAL/pages/467108950/EN+16931+compliance",
+        "consulted_on": "2026-09-22",
+        "kind": "standard"
+      },
+      {
+        "key": "uncl5305",
+        "title": "UNCL5305 — code list of VAT categories (BT-118 and BT-151), subset published for EN 16931",
+        "publisher": "OpenPEPPOL — list published by the European Commission",
+        "url": "https://docs.peppol.eu/poacc/billing/3.0/codelist/UNCL5305/",
+        "consulted_on": "2026-09-22",
+        "kind": "standard",
+        "reason_codes": true
+      },
+      {
+        "key": "vatex",
+        "title": "VATEX — code list of VAT exemption reasons (BT-121)",
+        "publisher": "OpenPEPPOL — list published by the European Commission",
+        "url": "https://docs.peppol.eu/poacc/billing/3.0/codelist/vatex/",
+        "consulted_on": "2026-09-22",
+        "kind": "standard"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "PLN",
+    "language": "pl",
+    "rounding_method": "half_up",
+    "closing_style": "result_accounts",
+    "roles": {
+      "receivable": "2230",
+      "payable": "7400",
+      "suspense": "2270",
+      "rounding": "8320",
+      "retained_earnings": "4500",
+      "current_year_result_profit": "4610",
+      "current_year_result_loss": "4620",
+      "sales": "8100",
+      "purchase": "8230",
+      "bank": "2320",
+      "cash": "2310",
+      "fx_gain": "8411",
+      "fx_loss": "8421",
+      "tax_payable": "7720",
+      "tax_receivable": "2242"
+    },
+    "journal_roles": {
+      "sales": "SP",
+      "purchase": "ZA",
+      "miscellaneous": "OG",
+      "opening": "BO"
+    },
+    "fiscal_year_default": "calendar"
+  },
+  "languages": [],
+  "journals": [
+    { "code": "SP", "type": "sales", "name": "Sprzedaż", "sequence": 10 },
+    { "code": "ZA", "type": "purchase", "name": "Zakupy", "sequence": 20 },
+    { "code": "BANK", "type": "bank", "name": "Bank", "sequence": 30 },
+    { "code": "KASA", "type": "cash", "name": "Kasa", "sequence": 40 },
+    { "code": "OG", "type": "general", "name": "Operacje pozostałe", "sequence": 50 },
+    { "code": "BO", "type": "opening", "name": "Bilans otwarcia", "sequence": 60 }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Plan kont odpowiadający załącznikowi nr 1 do ustawy o rachunkowości",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": ["PL-UOR-BILANS", "PL-UOR-RZIS-POROWNAWCZY"],
+      "legal_reference": "Ustawa o rachunkowości art. 10 ust. 1 pkt 3 lit. a nakazuje à chaque jednostce de tenir sa propre documentation décrivant son zakładowy plan kont — la loi n'impose pas de plan de comptes national (contrairement, par exemple, au plan comptable français). Le plan-type à neuf groupes (zespoły 0 à 9) enseigné dans la pratique comptable polonaise est un usage professionnel et non une obligation légale ; ce pack ne le reprend pas et propose à la place un plan à quatre chiffres dont le premier chiffre renvoie directement à la lettre de la section du bilan (art. 45 et załącznik nr 1) : 1 Aktywa trwałe (A), 2 Aktywa obrotowe (B), 3 Należne wpłaty i udziały własne (C, D), 4 Kapitał własny (A pasywów), 5 Rezerwy na zobowiązania (B.I pasywów), 6 Zobowiązania długoterminowe (B.II), 7 Zobowiązania krótkoterminowe et rozliczenia międzyokresowe bierne (B.III, B.IV), 8 et 9 postes du rachunek zysków i strat en wariant porównawczy (załącznik nr 1). Chaque compte porte donc, par construction, le poste légal auquel il se rattache.",
+      "source": "ustawa-rachunkowosc"
+    }
+  ],
+  "documents": {
+    "numbering": "sequential",
+    "number_format": "{CODE}/{NNNN}/{YYYY}",
+    "legal_payment_days": null,
+    "late_payment_reference": "Ustawa z dnia 8 marca 2013 r. o przeciwdziałaniu nadmiernym opóźnieniom w transakcjach handlowych, art. 7 ust. 1-2 — entre entreprises, intérêt dû sans mise en demeure dès l'échéance impayée ; le terme contractuel ne peut dépasser 60 jours à compter de la remise de la facture (60 jours impératifs, art. 7 ust. 2a, lorsque le débiteur est une grande entreprise et le créancier une micro, petite ou moyenne entreprise). Art. 4 pkt 3 lit. b — taux : taux de référence NBP + 10 points (+ 8 points si le débiteur est un podmiot leczniczy), publié tous les six mois au Monitor Polski (art. 11c) ; pour le second semestre 2026, 13,75 % (11,75 % pour un podmiot leczniczy), M.P. 2026 poz. 642. Art. 10 — indemnité forfaitaire de recouvrement due sans mise en demeure : 40 EUR si la créance ne dépasse pas 5 000 zł, 70 EUR entre 5 000 et 50 000 zł, 100 EUR à partir de 50 000 zł, convertis au cours moyen EUR de la NBP du dernier jour ouvré du mois précédant l'exigibilité.",
+    "tax_point": "delivery_date",
+    "posted_edit_policy": "reversal_only",
+    "references": {
+      "numbering": {
+        "legal_reference": "Ustawa o VAT art. 106e ust. 1 pkt 2 — la facture porte « kolejny numer nadany w ramach jednej lub więcej serii, który w sposób jednoznaczny identyfikuje fakturę » : un numéro séquentiel, éventuellement réparti sur plusieurs séries, dont la loi exige seulement qu'il identifie la facture de façon univoque — ni continuité sans trou ni remise à zéro annuelle n'est imposée, d'où sequential et non gapless_per_year.",
+        "source": "ustawa-vat"
+      },
+      "payment_terms": {
+        "legal_reference": "Ustawa o przeciwdziałaniu nadmiernym opóźnieniom, art. 7 ust. 2 et 2a — ce n'est pas un délai supplétif en l'absence d'accord (le code civil, art. 455 k.c., rend une créance pécuniaire sans terme exigible « niezwłocznie » sur demande, ce qui n'est pas un nombre de jours à coder) mais un plafond impératif de 60 jours sur le délai que les parties peuvent convenir entre elles ; legal_payment_days reste donc vide plutôt que de présenter ce plafond comme le délai que la loi fixerait à défaut d'accord.",
+        "source": "ustawa-oplaty"
+      },
+      "tax_point": {
+        "legal_reference": "Ustawa o VAT art. 19a ust. 1 — « Obowiązek podatkowy powstaje z chwilą dokonania dostawy towarów lub wykonania usługi ». Non modélisées ici, les dérogations à l'émission de la facture de l'art. 19a ust. 5 pkt 3-4 (construction, presse imprimée, énergie, loyers, télécommunications) et à l'encaissement de l'ust. 5 pkt 1-2 (commission, services financiers et d'assurance exonérés, subventions) : elles touchent des activités précises plutôt que d'être une dérogation générale ouverte à toute facture, à la différence de la Belgique ou du Luxembourg.",
+        "source": "ustawa-vat"
+      },
+      "posted_edit_policy": {
+        "legal_reference": "Ustawa o rachunkowości art. 25 ust. 1 — une erreur constatée dans une écriture ne se corrige que par annulation lisible du texte initial ou par une pièce de correction portant des écritures positives ou négatives, jamais par une modification qui rendrait le contenu initial illisible. Ustawa o VAT art. 106j — une facture émise se corrige par une faktura korygująca qui la vise, jamais par une annulation.",
+        "source": "ustawa-rachunkowosc"
+      }
+    },
+    "mentions": [
+      {
+        "code": "reverse_charge",
+        "applies_when": "reverse_charge",
+        "text": "odwrotne obciążenie",
+        "sequence": 10,
+        "legal_reference": "Ustawa o VAT art. 106e ust. 1 pkt 18 — lorsque l'acquéreur du bien ou du service est tenu de liquider la taxe, la facture porte la mention « odwrotne obciążenie ».",
+        "source": "ustawa-vat"
+      },
+      {
+        "code": "intra_eu_services",
+        "applies_when": "intra_eu_services",
+        "text": "odwrotne obciążenie",
+        "sequence": 20,
+        "legal_reference": "Ustawa o VAT art. 106e ust. 1 pkt 18 — la même mention s'applique lorsque l'acquéreur, établi dans un autre État membre, est celui qui liquide la taxe sur une prestation de services relevant de la règle générale B2B (art. 28b).",
+        "source": "ustawa-vat"
+      },
+      {
+        "code": "exempt",
+        "applies_when": "exempt",
+        "text": "zwolnione z VAT",
+        "sequence": 30,
+        "legal_reference": "Ustawa o VAT art. 106e ust. 1 pkt 19 — pour une opération exonérée, la facture indique la disposition de la loi ou de son texte d'application, ou l'article de la directive 2006/112/CE, qui fonde l'exonération ; le libellé exact n'est pas imposé, seule la référence l'est.",
+        "source": "ustawa-vat"
+      },
+      {
+        "code": "small_business",
+        "applies_when": "small_business",
+        "text": "zwolnienie podmiotowe — art. 113 ustawy o VAT",
+        "sequence": 40,
+        "legal_reference": "Ustawa o VAT art. 106e ust. 1 pkt 19 et art. 113 ust. 1 — l'entité bénéficiant de la franchise en base cite de même la disposition qui l'exonère. Aucune colonne du socle ne porte ce statut d'ensemble de l'entreprise ; la ligne existe pour un moteur de rendu qui le connaîtrait par ailleurs.",
+        "source": "ustawa-vat"
+      },
+      {
+        "code": "late_payment",
+        "applies_when": "late_payment",
+        "text": "En cas de retard de paiement entre entreprises, des intérêts au taux de référence NBP majoré de 10 points (8 points si le débiteur est un podmiot leczniczy) sont dus de plein droit, ainsi qu'une indemnité forfaitaire de recouvrement de 40, 70 ou 100 EUR selon le montant de la créance (art. 7 et 10 de la loi du 8 mars 2013).",
+        "sequence": 50,
+        "legal_reference": "Ustawa o przeciwdziałaniu nadmiernym opóźnieniom w transakcjach handlowych, art. 7 ust. 1 et art. 10 — la mention n'est pas imposée par le texte ; elle est ici informative, à l'image des autres packs européens du dépôt qui rappellent le fondement de l'intérêt de retard.",
+        "source": "ustawa-oplaty"
+      }
+    ]
+  },
+  "einvoicing": {
+    "profile": "ksef-fa3",
+    "obligation": "mandatory",
+    "mandatory_from": "2026-02-01",
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "Ustawa z dnia 16 czerwca 2023 r. (Dz. U. 2023 poz. 1598), modifiée en dernier lieu par la loi du 5 août 2025 (Dz. U. 2025 poz. 1203) — la faktura ustrukturyzowana devient obligatoire par palier de chiffre d'affaires : 1er février 2026 pour les entreprises dont les ventes TTC ont dépassé 200 millions de zł en 2024, 1er avril 2026 pour toutes les autres, 1er janvier 2027 pour les plus petites factures (jusqu'à 450 zł l'unité et 10 000 zł cumulés par mois). mandatory_from porte la date qui lie tout le monde à la fois : depuis le 1er février 2026, recevoir une facture par le KSeF est obligatoire pour tout assujetti, que sa propre obligation d'émettre ait déjà commencé ou non. Le profil ksef-fa3 n'est PAS l'un des profils fondés sur le modèle sémantique EN 16931 que ce champ nomme d'ordinaire (peppol-bis-3, factur-x-en16931, xrechnung, un PINT) : FA(3) est un schéma XML national propre, publié au CRWDE (http://crd.gov.pl/wzor/2025/06/25/13775/) et non une des variantes interopérables du modèle européen. party_scheme et vat_scheme restent vides : le KSeF identifie les parties par leur NIP directement, sans registre ISO 6523 à quatre chiffres comparable à celui du réseau Peppol. Voir docs/international.md, section « From Poland », pour la lacune du socle que cela ouvre : le KSeF est une clearance en temps réel — une faktura ustrukturyzowana est réputée émise à son envoi au système (art. 106na ust. 1) et reçue seulement à l'attribution, PAR le système, d'un numéro KSeF (art. 106na ust. 3) — que le socle, conçu pour un échange décentralisé entre pairs au format EN 16931, ne modélise pas.",
+    "source": "ustawa-ksef-2023"
+  },
+  "bank": {
+    "statement_formats": ["mt940", "camt.053"],
+    "payment_formats": ["pain.001"]
+  }
+}

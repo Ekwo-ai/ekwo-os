@@ -1,0 +1,151 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "Rok obrotowy polskiej spółki handlowo-usługowej, deklaracja JPK_VAT miesięczna",
+  "chart": "default",
+  "fiscal_year": { "name": "Rok obrotowy 2026", "start": "2026-01-01", "end": "2026-12-31" },
+  "periods": [
+    { "code": "2026-02", "from": "2026-02-01", "to": "2026-02-28" },
+    { "code": "2026-03", "from": "2026-03-01", "to": "2026-03-31" },
+    { "code": "2026-04", "from": "2026-04-01", "to": "2026-04-30" }
+  ],
+  "statements": ["PL-UOR-BILANS", "PL-UOR-RZIS-POROWNAWCZY"],
+  "contacts": [
+    { "ref": "klient-pl", "name": "Nowoczesne Biuro Sp. z o.o.", "type": "customer", "country": "PL" },
+    { "ref": "klient-de", "name": "Rheinmetall Werkzeuge GmbH", "type": "customer", "country": "DE", "vat_number": "DE999999999" },
+    { "ref": "klient-us", "name": "Prairie Import Corp.", "type": "customer", "country": "US" },
+    { "ref": "klient-fr", "name": "Atelier Numérique SARL", "type": "customer", "country": "FR", "vat_number": "FR00999999999" },
+    { "ref": "najemca-pl", "name": "Przychodnia Zdrowie Sp. z o.o.", "type": "customer", "country": "PL" },
+    { "ref": "dostawca-pl", "name": "Konsulting Biznesowy Kowalski Sp. z o.o.", "type": "supplier", "country": "PL" },
+    { "ref": "dostawca-paliwo", "name": "Orlen Stacja Paliw S.A.", "type": "supplier", "country": "PL" },
+    { "ref": "dostawca-de", "name": "Bayern Rohstoffe GmbH", "type": "supplier", "country": "DE", "vat_number": "DE888888888" },
+    { "ref": "dostawca-ie", "name": "Dublin Digital Marketing Ltd.", "type": "supplier", "country": "IE", "vat_number": "IE9999999L" },
+    { "ref": "dostawca-us", "name": "Cloudworks Hosting Inc.", "type": "supplier", "country": "US" },
+    { "ref": "dostawca-cn", "name": "Shenzhen Trading Co. Ltd.", "type": "supplier", "country": "CN" },
+    { "ref": "dostawca-uk", "name": "Manchester Supplies Ltd.", "type": "supplier", "country": "GB" },
+    { "ref": "ubezpieczyciel-pl", "name": "Towarzystwo Ubezpieczeń Ochrona S.A.", "type": "supplier", "country": "PL" }
+  ],
+  "documents": [
+    {
+      "ref": "V1", "type": "sale_invoice", "contact": "klient-pl", "date": "2026-02-15",
+      "why": "Une vente domestique au taux normal 23 % : la base et la TVA due se lisent en P_19/P_20.",
+      "lines": [{ "name": "Meble biurowe", "quantity": 10, "unit_price": 1000, "tax": "PL-S-23", "account": "8100" }]
+    },
+    {
+      "ref": "V2", "type": "sale_invoice", "contact": "klient-pl", "date": "2026-02-20",
+      "why": "Une vente domestique au taux réduit 8 % : P_17/P_18.",
+      "lines": [{ "name": "Usługa transportowa", "quantity": 20, "unit_price": 100, "tax": "PL-S-8", "account": "8100" }]
+    },
+    {
+      "ref": "V3", "type": "sale_invoice", "contact": "klient-pl", "date": "2026-02-25",
+      "why": "Une vente domestique au taux réduit 5 % (denrées alimentaires de l'annexe 10), livrée comme marchandise : P_15/P_16.",
+      "lines": [{ "name": "Pieczywo pakowane", "quantity": 50, "unit_price": 40, "tax": "PL-S-5", "account": "8130" }]
+    },
+    {
+      "ref": "V4", "type": "sale_invoice", "contact": "klient-de", "date": "2026-03-05",
+      "why": "Une livraison intracommunautaire de biens au taux zéro : P_21, et la mention légale de l'exonération.",
+      "lines": [{ "name": "Narzędzia przemysłowe", "quantity": 5, "unit_price": 2000, "tax": "PL-S-WDT", "account": "8100" }]
+    },
+    {
+      "ref": "V5", "type": "sale_invoice", "contact": "klient-us", "date": "2026-03-10",
+      "why": "Un export de biens hors Union au taux zéro : P_22.",
+      "lines": [{ "name": "Maszyny rolnicze", "quantity": 2, "unit_price": 3000, "tax": "PL-S-EXPORT", "account": "8100" }]
+    },
+    {
+      "ref": "V6", "type": "sale_invoice", "contact": "klient-fr", "date": "2026-03-15",
+      "why": "Une prestation de services à un assujetti établi dans un autre État membre, sous la règle générale B2B : P_11 et P_12, mention odwrotne obciążenie.",
+      "lines": [{ "name": "Usługa doradztwa informatycznego", "quantity": 1, "unit_price": 8000, "tax": "PL-S-USLUGI-UE", "account": "8100" }]
+    },
+    {
+      "ref": "V7", "type": "sale_invoice", "contact": "najemca-pl", "date": "2026-03-20",
+      "why": "Une exonération domestique (location d'un local à usage d'habitation) : P_10, mention de l'article qui l'exonère.",
+      "lines": [{ "name": "Czynsz najmu lokalu mieszkalnego — marzec 2026", "quantity": 1, "unit_price": 3000, "tax": "PL-S-ZW-NAJEM", "account": "8100" }]
+    },
+    {
+      "ref": "V8", "type": "sale_credit_note", "contact": "klient-pl", "date": "2026-04-05",
+      "why": "Une note de crédit corrigeant partiellement V1 (retour de deux meubles) : elle réduit P_19/P_20 de la période où la correction doit être déclarée.",
+      "lines": [{ "name": "Zwrot — meble biurowe", "quantity": 2, "unit_price": 1000, "tax": "PL-S-23", "account": "8100" }]
+    },
+    {
+      "ref": "Z1", "type": "purchase_invoice", "contact": "dostawca-pl", "date": "2026-02-10",
+      "why": "Un achat domestique de services au taux normal, entièrement déductible : P_42/P_43.",
+      "lines": [{ "name": "Usługi księgowe — luty 2026", "quantity": 1, "unit_price": 2000, "tax": "PL-P-23", "account": "8230" }]
+    },
+    {
+      "ref": "Z2", "type": "purchase_invoice", "contact": "dostawca-pl", "date": "2026-02-18",
+      "why": "Un achat domestique d'une immobilisation : P_40/P_41, distincts des autres achats.",
+      "lines": [{ "name": "Komputer przenośny (środek trwały)", "quantity": 1, "unit_price": 5000, "tax": "PL-P-23-ST", "account": "1213" }]
+    },
+    {
+      "ref": "Z3", "type": "purchase_invoice", "contact": "dostawca-pl", "date": "2026-02-22",
+      "why": "Un achat domestique au taux réduit de 8 % : P_42/P_43.",
+      "lines": [{ "name": "Usługa gastronomiczna — spotkanie z klientem", "quantity": 1, "unit_price": 1000, "tax": "PL-P-8", "account": "8230" }]
+    },
+    {
+      "ref": "Z4", "type": "purchase_invoice", "contact": "dostawca-pl", "date": "2026-02-28",
+      "why": "Un achat domestique de marchandises au taux réduit de 5 %, destiné au stock : P_42/P_43.",
+      "lines": [{ "name": "Pieczywo pakowane (towar do odsprzedaży)", "quantity": 100, "unit_price": 20, "tax": "PL-P-5", "account": "2140" }]
+    },
+    {
+      "ref": "Z5", "type": "purchase_invoice", "contact": "dostawca-paliwo", "date": "2026-03-03",
+      "why": "Des frais de véhicule à usage mixte : seule la moitié de la TVA est déductible (art. 86a), l'autre moitié majore le coût.",
+      "lines": [{ "name": "Paliwo do samochodu osobowego", "quantity": 1, "unit_price": 400, "tax": "PL-P-23-POJAZD", "account": "8230" }]
+    },
+    {
+      "ref": "Z6", "type": "purchase_invoice", "contact": "dostawca-de", "date": "2026-03-08",
+      "why": "Une acquisition intracommunautaire de biens, autoliquidée : P_23/P_24 côté taxe due et P_42/P_43 côté déduction, sans TVA facturée par le fournisseur allemand.",
+      "lines": [{ "name": "Surowiec metalowy", "quantity": 3, "unit_price": 1000, "tax": "PL-P-WNT-23", "account": "2110" }]
+    },
+    {
+      "ref": "Z7", "type": "purchase_invoice", "contact": "dostawca-ie", "date": "2026-03-12",
+      "why": "Un service reçu d'un assujetti établi dans un autre État membre sous la règle générale B2B (art. 28b) : P_29/P_30 et P_42/P_43.",
+      "lines": [{ "name": "Usługa marketingowa", "quantity": 1, "unit_price": 1500, "tax": "PL-P-USLUGI-UE-23", "account": "8230" }]
+    },
+    {
+      "ref": "Z8", "type": "purchase_invoice", "contact": "dostawca-us", "date": "2026-03-18",
+      "why": "Un service reçu d'un prestataire établi hors de l'Union : P_27/P_28 et P_42/P_43.",
+      "lines": [{ "name": "Usługa hostingu w chmurze", "quantity": 1, "unit_price": 1200, "tax": "PL-P-USLUGI-SPOZA-UE-23", "account": "8230" }]
+    },
+    {
+      "ref": "Z9", "type": "purchase_invoice", "contact": "dostawca-cn", "date": "2026-03-25",
+      "why": "Un import de biens hors Union sous la procédure simplifiée de l'art. 33a : P_25/P_26 et P_42/P_43.",
+      "lines": [{ "name": "Komponenty elektroniczne (import)", "quantity": 1, "unit_price": 4000, "tax": "PL-P-IMPORT-23", "account": "2140" }]
+    },
+    {
+      "ref": "Z10", "type": "purchase_invoice", "contact": "dostawca-uk", "date": "2026-04-02",
+      "why": "Une livraison de biens sur le territoire national par un fournisseur qui n'y a ni siège ni établissement stable : P_31/P_32 et P_42/P_43.",
+      "lines": [{ "name": "Części zamienne", "quantity": 1, "unit_price": 2500, "tax": "PL-P-RC-17-1-5", "account": "2110" }]
+    },
+    {
+      "ref": "Z11", "type": "purchase_invoice", "contact": "ubezpieczyciel-pl", "date": "2026-04-10",
+      "why": "Un achat exonéré (prime d'assurance) : rien à déduire, aucune case de TVA.",
+      "lines": [{ "name": "Polisa ubezpieczenia OC działalności", "quantity": 1, "unit_price": 600, "tax": "PL-P-ZW", "account": "8270" }]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "E1", "direction": "inbound", "date": "2026-03-14", "amount": 12300,
+      "contact": "klient-pl", "journal": "BANK", "match": "V1",
+      "why": "Un encaissement qui solde exactement V1."
+    },
+    {
+      "ref": "E2", "direction": "inbound", "date": "2026-04-01", "amount": 10000,
+      "contact": "klient-de", "journal": "BANK", "match": "V4",
+      "why": "Un encaissement qui solde exactement la livraison intracommunautaire V4."
+    },
+    {
+      "ref": "E3", "direction": "outbound", "date": "2026-03-20", "amount": 2460,
+      "contact": "dostawca-pl", "journal": "BANK", "match": "Z1",
+      "why": "Un paiement qui solde exactement Z1."
+    },
+    {
+      "ref": "E4", "direction": "inbound", "date": "2026-04-15", "amount": 5000,
+      "contact": "klient-pl", "journal": "BANK", "match": null,
+      "why": "Une zaliczka encaissée d'avance, non rapprochée d'une facture : un poste ouvert, comme un rachunek réel en garderait un."
+    },
+    {
+      "ref": "E5", "direction": "outbound", "date": "2026-04-10", "amount": 3000,
+      "contact": "dostawca-de", "journal": "BANK", "match": "Z6",
+      "why": "Un paiement qui solde exactement Z6, pour son seul montant net : le fournisseur allemand ne facture aucune TVA polonaise."
+    }
+  ]
+}

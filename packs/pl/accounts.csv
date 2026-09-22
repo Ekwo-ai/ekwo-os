@@ -1,0 +1,109 @@
+code,parent,type,reconcilable,name,sequence
+1000,,asset_fixed,false,A. Aktywa trwałe,10
+1100,1000,asset_fixed,false,I. Wartości niematerialne i prawne,20
+1110,1100,asset_fixed,false,Koszty zakończonych prac rozwojowych,30
+1120,1100,asset_fixed,false,Wartość firmy,40
+1130,1100,asset_fixed,false,Inne wartości niematerialne i prawne,50
+1140,1100,asset_fixed,false,Zaliczki na wartości niematerialne i prawne,60
+1200,1000,asset_fixed,false,II. Rzeczowe aktywa trwałe,70
+1210,1200,asset_fixed,false,1. Środki trwałe,80
+1211,1210,asset_fixed,false,a) Grunty (w tym prawo użytkowania wieczystego gruntu),90
+1212,1210,asset_fixed,false,b) Budynki lokale prawa do lokali i obiekty inżynierii lądowej i wodnej,100
+1213,1210,asset_fixed,false,c) Urządzenia techniczne i maszyny,110
+1214,1210,asset_fixed,false,d) Środki transportu,120
+1215,1210,asset_fixed,false,e) Inne środki trwałe,130
+1220,1200,asset_fixed,false,2. Środki trwałe w budowie,140
+1230,1200,asset_fixed,false,3. Zaliczki na środki trwałe w budowie,150
+1300,1000,asset_non_current,false,III. Należności długoterminowe,160
+1310,1300,asset_non_current,false,Należności długoterminowe od pozostałych jednostek,170
+1400,1000,asset_non_current,false,IV. Inwestycje długoterminowe,180
+1410,1400,asset_non_current,false,Długoterminowe aktywa finansowe,190
+1420,1400,asset_non_current,false,Inne inwestycje długoterminowe,200
+1500,1000,asset_non_current,false,V. Długoterminowe rozliczenia międzyokresowe,210
+1510,1500,asset_non_current,false,1. Aktywa z tytułu odroczonego podatku dochodowego,220
+1520,1500,asset_non_current,false,2. Inne rozliczenia międzyokresowe długoterminowe,230
+2000,,asset_current,false,B. Aktywa obrotowe,240
+2100,2000,asset_current,false,I. Zapasy,250
+2110,2100,asset_current,false,1. Materiały,260
+2120,2100,asset_current,false,2. Półprodukty i produkty w toku,270
+2130,2100,asset_current,false,3. Produkty gotowe,280
+2140,2100,asset_current,false,4. Towary,290
+2150,2100,asset_prepayments,false,5. Zaliczki na dostawy i usługi,300
+2200,2000,asset_current,false,II. Należności krótkoterminowe,310
+2210,2200,asset_current,false,1. Należności od jednostek powiązanych,312
+2220,2200,asset_current,false,2. Należności od pozostałych jednostek w których jednostka posiada zaangażowanie w kapitale,314
+2230,2200,asset_receivable,true,a) Należności z tytułu dostaw i usług,320
+2240,2200,asset_current,false,b) Należności z tytułu podatków dotacji ceł ubezpieczeń społecznych i zdrowotnych oraz innych świadczeń,330
+2241,2240,asset_current,true,VAT naliczony podlegający odliczeniu,340
+2242,2240,asset_current,true,Rozrachunki z urzędem skarbowym z tytułu VAT — nadwyżka do zwrotu,350
+2250,2200,asset_current,false,c) Pozostałe należności krótkoterminowe,360
+2260,2200,asset_current,false,d) Należności dochodzone na drodze sądowej,370
+2270,2200,asset_current,false,Rozrachunki nierozliczone (konto przejściowe),380
+2300,2000,asset_current,false,III. Inwestycje krótkoterminowe,390
+2310,2300,asset_cash,false,Kasa,400
+2320,2300,asset_cash,true,Rachunki bankowe,410
+2321,2300,asset_cash,true,Rachunek VAT (mechanizm podzielonej płatności),420
+2340,2300,asset_current,false,Krótkoterminowe aktywa finansowe pozostałe,430
+2400,2000,asset_prepayments,false,IV. Krótkoterminowe rozliczenia międzyokresowe,440
+3100,,asset_current,false,C. Należne wpłaty na kapitał (fundusz) podstawowy,450
+3200,,asset_current,false,D. Udziały (akcje) własne,460
+4100,,equity,false,I. Kapitał (fundusz) podstawowy,470
+4200,,equity,false,II. Kapitał (fundusz) zapasowy,480
+4300,,equity,false,III. Kapitał (fundusz) z aktualizacji wyceny,490
+4400,,equity,false,IV. Pozostałe kapitały (fundusze) rezerwowe,500
+4500,,equity_retained,false,V. Zysk (strata) z lat ubiegłych,510
+4610,,equity,false,VI. Zysk netto roku obrotowego,520
+4620,,equity,false,VI. Strata netto roku obrotowego (wielkość ujemna),530
+4700,,equity,false,VII. Odpisy z zysku netto w ciągu roku obrotowego (wielkość ujemna),540
+5100,,liability_non_current,false,1. Rezerwa z tytułu odroczonego podatku dochodowego,550
+5200,,liability_non_current,false,2. Rezerwa na świadczenia emerytalne i podobne,560
+5300,,liability_non_current,false,3. Pozostałe rezerwy na zobowiązania,570
+6100,,liability_non_current,false,a) Kredyty i pożyczki długoterminowe,580
+6200,,liability_non_current,false,b) Zobowiązania z tytułu emisji dłużnych papierów wartościowych długoterminowe,590
+6300,,liability_non_current,false,c) Inne zobowiązania finansowe długoterminowe,600
+6400,,liability_non_current,false,d) Inne zobowiązania długoterminowe,610
+7100,,liability_current,false,a) Kredyty i pożyczki krótkoterminowe,620
+7200,,liability_current,false,b) Zobowiązania z tytułu emisji dłużnych papierów wartościowych krótkoterminowe,630
+7300,,liability_current,false,c) Inne zobowiązania finansowe krótkoterminowe,640
+7400,,liability_payable,true,d) Zobowiązania z tytułu dostaw i usług,650
+7500,,liability_current,false,e) Zaliczki otrzymane na dostawy i usługi,660
+7600,,liability_current,false,f) Zobowiązania wekslowe,670
+7700,,liability_current,false,g) Zobowiązania z tytułu podatków ceł ubezpieczeń społecznych i zdrowotnych oraz innych świadczeń,680
+7710,7700,liability_current,false,VAT należny,690
+7720,7700,liability_current,true,Rozrachunki z urzędem skarbowym z tytułu VAT — zobowiązanie,700
+7730,7700,liability_current,false,Pozostałe zobowiązania publicznoprawne,710
+7800,,liability_current,false,h) Zobowiązania z tytułu wynagrodzeń,720
+7900,,liability_current,false,i) Inne zobowiązania krótkoterminowe,730
+7950,,liability_current,false,4. Fundusze specjalne,740
+7960,,liability_current,false,1. Rozliczenia międzyokresowe bierne krótkoterminowe,750
+7970,,liability_non_current,false,2. Ujemna wartość firmy,760
+8100,,income,false,I. Przychody netto ze sprzedaży produktów,770
+8110,,income,false,II. Zmiana stanu produktów,780
+8120,,income,false,III. Koszt wytworzenia produktów na własne potrzeby jednostki,790
+8130,,income,false,IV. Przychody netto ze sprzedaży towarów i materiałów,800
+8210,,expense_depreciation,false,I. Amortyzacja,810
+8220,,expense,false,II. Zużycie materiałów i energii — materiały biurowe,820
+8221,,expense,false,II. Zużycie materiałów i energii — energia elektryczna i cieplna,822
+8222,,expense,false,II. Zużycie materiałów i energii — paliwo i woda,824
+8230,,expense,false,III. Usługi obce — pozostałe,830
+8231,,expense,false,III. Usługi obce — telekomunikacyjne i internet,831
+8232,,expense,false,III. Usługi obce — najem i dzierżawa,832
+8233,,expense,false,III. Usługi obce — doradcze prawne i księgowe,833
+8234,,expense,false,III. Usługi obce — transportowe,834
+8235,,expense,false,III. Usługi obce — remontowe i konserwacyjne,835
+8240,,expense,false,IV. Podatki i opłaty,840
+8250,,expense,false,V. Wynagrodzenia,850
+8260,,expense,false,VI. Ubezpieczenia społeczne i inne świadczenia,860
+8270,,expense,false,VII. Pozostałe koszty rodzajowe — pozostałe,870
+8271,,expense,false,VII. Pozostałe koszty rodzajowe — ubezpieczenia majątkowe,871
+8272,,expense,false,VII. Pozostałe koszty rodzajowe — reprezentacja i reklama,872
+8273,,expense,false,VII. Pozostałe koszty rodzajowe — podróże służbowe,873
+8280,,expense_direct_cost,false,VIII. Wartość sprzedanych towarów i materiałów,880
+8310,,income_other,false,D. Pozostałe przychody operacyjne,890
+8320,,expense,false,E. Pozostałe koszty operacyjne (w tym zaokrąglenia),900
+8410,,income_other,false,Przychody finansowe — pozostałe,910
+8411,,income_other,false,Przychody finansowe — dodatnie różnice kursowe,920
+8420,,expense,false,Koszty finansowe — pozostałe,930
+8421,,expense,false,Koszty finansowe — ujemne różnice kursowe,940
+8500,,expense,false,J. Podatek dochodowy,950
+8510,,expense,false,K. Pozostałe obowiązkowe zmniejszenia zysku (zwiększenia straty),960

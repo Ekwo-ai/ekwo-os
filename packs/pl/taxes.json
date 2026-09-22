@@ -1,0 +1,438 @@
+[
+  {
+    "code": "PL-S-23",
+    "name": "VAT sprzedaż 23%",
+    "description": "Stawka podstawowa, sprzedaż krajowa. Pola P_19 (podstawa) i P_20 (podatek).",
+    "rate": 23,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2011-01-01",
+    "legal_reference": "Ustawa o VAT art. 41 ust. 1 fixe le taux nominal à 22 %, mais l'art. 146ef ust. 1 pkt 1 le porte à 23 % tant que les dépenses de défense excèdent 3 % du PIB (période ouverte depuis le 1er janvier 2024, prorogée chaque année par obwieszczenie du ministre au Monitor Polski, art. 146ef ust. 2) : ce code transcrit le taux effectivement appliqué depuis le 1er janvier 2011, et non le taux nominal de l'art. 41.",
+    "source": "ustawa-vat",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "19" },
+        { "type": "tax", "account": "7710", "box": "20" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "19", "box_factor": -100 },
+        { "type": "tax", "account": "7710", "box": "20", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 10
+  },
+  {
+    "code": "PL-S-8",
+    "name": "VAT sprzedaż 8%",
+    "description": "Stawka obniżona (załącznik nr 3). Pola P_17 (podstawa) i P_18 (podatek).",
+    "rate": 8,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2011-01-01",
+    "legal_reference": "Ustawa o VAT art. 41 ust. 2 fixe le taux nominal à 7 % pour les biens et services de l'annexe 3 ; l'art. 146ef ust. 1 pkt 2 le porte à 8 % pour la même période que le taux standard (voir PL-S-23).",
+    "source": "ustawa-vat",
+    "vat_category": "S",
+    "conditions": ["supply_nature"],
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "17" },
+        { "type": "tax", "account": "7710", "box": "18" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "17", "box_factor": -100 },
+        { "type": "tax", "account": "7710", "box": "18", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 20
+  },
+  {
+    "code": "PL-S-5",
+    "name": "VAT sprzedaż 5%",
+    "description": "Stawka obniżona (załącznik nr 10 — m.in. podstawowe artykuły spożywcze, książki). Pola P_15 (podstawa) i P_16 (podatek).",
+    "rate": 5,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2011-01-01",
+    "legal_reference": "Ustawa o VAT art. 41 ust. 2a — pour les biens et services de l'annexe 10 ; ce taux n'est pas surchargé par l'art. 146ef, à la différence des deux précédents.",
+    "source": "ustawa-vat",
+    "vat_category": "S",
+    "conditions": ["supply_nature"],
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "15" },
+        { "type": "tax", "account": "7710", "box": "16" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "15", "box_factor": -100 },
+        { "type": "tax", "account": "7710", "box": "16", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 30
+  },
+  {
+    "code": "PL-S-WDT",
+    "name": "Wewnątrzwspólnotowa dostawa towarów 0%",
+    "description": "Livraison intracommunautaire de biens. Pole P_21.",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "intracom_goods",
+    "valid_from": "2004-05-01",
+    "legal_reference": "Ustawa o VAT art. 41 ust. 3 en liaison avec l'art. 42 (conditions de fond et de preuve du taux zéro : acquéreur identifié à la TVA dans un autre État membre, biens transportés hors de Pologne, documents de transport, récapitulatif VAT-UE).",
+    "source": "ustawa-vat",
+    "vat_category": "K",
+    "exemption_code": "VATEX-EU-IC",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "21" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "21", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 40
+  },
+  {
+    "code": "PL-S-EXPORT",
+    "name": "Eksport towarów 0%",
+    "description": "Export de biens hors Union européenne. Pole P_22.",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2004-05-01",
+    "legal_reference": "Ustawa o VAT art. 41 ust. 4-5 — taux zéro sous réserve de la confirmation en douane de la sortie du territoire de l'Union avant l'expiration du délai de déclaration (ust. 6-9b organisent le report d'un mois et la correction ultérieure si le document arrive plus tard).",
+    "source": "ustawa-vat",
+    "vat_category": "G",
+    "exemption_code": "VATEX-EU-G",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "22" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "22", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 50
+  },
+  {
+    "code": "PL-S-USLUGI-UE",
+    "name": "Świadczenie usług na rzecz podatnika z innego państwa UE (art. 28b)",
+    "description": "Service à un assujetti établi dans un autre État membre, taxé chez l'acquéreur (règle générale B2B). Pole P_11, mémorisé aussi en P_12 pour le récapitulatif VAT-UE.",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "intracom_services",
+    "valid_from": "2010-01-01",
+    "legal_reference": "Ustawa o VAT art. 28b — lieu de la prestation au siège de l'acquéreur assujetti ; art. 100 ust. 1 pkt 4 — obligation de la déclarer dans la déclaration récapitulative VAT-UE, d'où le report en P_12 en plus de P_11.",
+    "source": "ustawa-vat",
+    "vat_category": "K",
+    "exemption_code": "VATEX-EU-IC",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": ["11", "12"] }
+      ],
+      "credit_note": [
+        { "type": "base", "box": ["11", "12"], "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 60
+  },
+  {
+    "code": "PL-S-ZW-NAJEM",
+    "name": "Najem nieruchomości mieszkalnej na cele mieszkaniowe — zwolniony",
+    "description": "Exemple de vente exonérée (location d'un bien immobilier résidentiel à usage d'habitation). Pole P_10.",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2004-05-01",
+    "legal_reference": "Ustawa o VAT art. 43 ust. 1 pkt 36 — exonération de la location d'un bien immobilier de caractère résidentiel, réalisée pour son propre compte, exclusivement à des fins d'habitation.",
+    "source": "ustawa-vat",
+    "vat_category": "E",
+    "exemption_code": "VATEX-EU-135",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "10" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "10", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 70
+  },
+  {
+    "code": "PL-P-23",
+    "name": "VAT zakup 23% — towary i usługi pozostałe",
+    "description": "Achat domestique au taux standard, hors immobilisations. Pole P_42 (net) et P_43 (VAT).",
+    "rate": 23,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2011-01-01",
+    "legal_reference": "Ustawa o VAT art. 86 ust. 1 — droit à déduction de la taxe facturée par un fournisseur national, dans la mesure où les biens ou services acquis servent des opérations taxées ; le taux facturé par le fournisseur est celui de l'art. 41 ust. 1 en liaison avec l'art. 146ef ust. 1 pkt 1 (voir PL-S-23).",
+    "source": "ustawa-vat",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "42" },
+        { "type": "tax", "account": "2241", "box": "43" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "42", "box_factor": -100 },
+        { "type": "tax", "account": "2241", "box": "43", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 100
+  },
+  {
+    "code": "PL-P-23-ST",
+    "name": "VAT zakup 23% — środki trwałe",
+    "description": "Achat domestique d'une immobilisation au taux standard. Pole P_40 (net) et P_41 (VAT).",
+    "rate": 23,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2011-01-01",
+    "legal_reference": "Ustawa o VAT art. 86 ust. 1 ; le formulaire distingue en P_40/P_41 la valeur nette et la taxe des acquisitions classées par l'acquéreur parmi ses środki trwałe, séparément des autres achats (P_42/P_43).",
+    "source": "ustawa-vat",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "40" },
+        { "type": "tax", "account": "2241", "box": "41" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "40", "box_factor": -100 },
+        { "type": "tax", "account": "2241", "box": "41", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 110
+  },
+  {
+    "code": "PL-P-8",
+    "name": "VAT zakup 8% — towary i usługi pozostałe",
+    "description": "Achat domestique au taux réduit de 8 %. Pole P_42 (net) et P_43 (VAT).",
+    "rate": 8,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2011-01-01",
+    "legal_reference": "Ustawa o VAT art. 86 ust. 1 en liaison avec l'art. 41 ust. 2 et l'art. 146ef ust. 1 pkt 2 (voir PL-S-8).",
+    "source": "ustawa-vat",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "42" },
+        { "type": "tax", "account": "2241", "box": "43" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "42", "box_factor": -100 },
+        { "type": "tax", "account": "2241", "box": "43", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 120
+  },
+  {
+    "code": "PL-P-5",
+    "name": "VAT zakup 5% — towary i usługi pozostałe",
+    "description": "Achat domestique au taux réduit de 5 %. Pole P_42 (net) et P_43 (VAT).",
+    "rate": 5,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2011-01-01",
+    "legal_reference": "Ustawa o VAT art. 86 ust. 1 en liaison avec l'art. 41 ust. 2a (voir PL-S-5).",
+    "source": "ustawa-vat",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "42" },
+        { "type": "tax", "account": "2241", "box": "43" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "42", "box_factor": -100 },
+        { "type": "tax", "account": "2241", "box": "43", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 130
+  },
+  {
+    "code": "PL-P-23-POJAZD",
+    "name": "VAT zakup 23% — pojazd samochodowy, odliczenie 50%",
+    "description": "Frais liés à un véhicule à usage mixte : seule la moitié de la taxe est déductible. Pole P_42 (valeur nette entière) et P_43 (VAT — seulement la moitié déductible).",
+    "rate": 23,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2014-04-01",
+    "legal_reference": "Ustawa o VAT art. 86a ust. 1 — pour les dépenses liées aux véhicules à moteur utilisés à la fois pour l'activité de l'assujetti et à d'autres fins, le montant de la taxe déductible est de 50 % du montant facturé, sauf tenue d'un registre du kilométrage démontrant un usage exclusivement professionnel (art. 86a ust. 3-4).",
+    "source": "ustawa-vat",
+    "conditions": ["supply_nature"],
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "42" },
+        { "type": "tax", "factor": 50, "account": "2241", "box": "43", "box_factor": 50 },
+        { "type": "tax_on_base", "factor": 50, "box": "42", "box_factor": 50 }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "42", "box_factor": -100 },
+        { "type": "tax", "factor": 50, "account": "2241", "box": "43", "box_factor": -50 },
+        { "type": "tax_on_base", "factor": 50, "box": "42", "box_factor": -50 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 140
+  },
+  {
+    "code": "PL-P-WNT-23",
+    "name": "Wewnątrzwspólnotowe nabycie towarów 23%",
+    "description": "Acquisition intracommunautaire de biens, autoliquidée intégralement déductible. Base en P_23 et P_42, taxe due en P_24, taxe déduite en P_43.",
+    "rate": 23,
+    "scope": "purchase",
+    "treatment": "intracom_acquisition_goods",
+    "valid_from": "2011-01-01",
+    "legal_reference": "Ustawa o VAT art. 17 ust. 1 pkt 3 et art. 20 — l'acquéreur liquide lui-même la taxe sur l'acquisition intracommunautaire, au taux de l'art. 41 ust. 1 en liaison avec l'art. 146ef ; art. 86 ust. 2 pkt 4 lit. c — la même taxe ouvre droit à déduction dans la même déclaration, sans passer par un compte fournisseur.",
+    "source": "ustawa-vat",
+    "vat_category": "K",
+    "exemption_code": "VATEX-EU-IC",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": ["23", "42"] },
+        { "type": "tax", "account": "7710", "box": "24" },
+        { "type": "tax", "account": "2241", "box": "43" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": ["23", "42"], "box_factor": -100 },
+        { "type": "tax", "account": "7710", "box": "24", "box_factor": -100 },
+        { "type": "tax", "account": "2241", "box": "43", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 150
+  },
+  {
+    "code": "PL-P-USLUGI-UE-23",
+    "name": "Import usług od podatnika z UE (art. 28b) 23%",
+    "description": "Service reçu d'un assujetti établi dans un autre État membre, sous la règle générale B2B. Base en P_29 et P_42, taxe due en P_30, taxe déduite en P_43.",
+    "rate": 23,
+    "scope": "purchase",
+    "treatment": "intracom_acquisition_services",
+    "valid_from": "2010-01-01",
+    "legal_reference": "Ustawa o VAT art. 17 ust. 1 pkt 4 et art. 28b — le preneur, assujetti établi en Pologne, liquide lui-même la taxe sur une prestation dont le lieu est fixé au siège de l'acquéreur ; art. 86 ust. 2 pkt 4 lit. a — déduction dans la même déclaration.",
+    "source": "ustawa-vat",
+    "vat_category": "K",
+    "exemption_code": "VATEX-EU-IC",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": ["29", "42"] },
+        { "type": "tax", "account": "7710", "box": "30" },
+        { "type": "tax", "account": "2241", "box": "43" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": ["29", "42"], "box_factor": -100 },
+        { "type": "tax", "account": "7710", "box": "30", "box_factor": -100 },
+        { "type": "tax", "account": "2241", "box": "43", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 160
+  },
+  {
+    "code": "PL-P-USLUGI-SPOZA-UE-23",
+    "name": "Import usług od podatnika spoza UE 23%",
+    "description": "Service reçu d'un prestataire établi hors de l'Union, non identifié à la TVA d'un autre État membre. Base en P_27 et P_42, taxe due en P_28, taxe déduite en P_43.",
+    "rate": 23,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2010-01-01",
+    "legal_reference": "Ustawa o VAT art. 17 ust. 1 pkt 4 et art. 28b — le preneur liquide lui-même la taxe ; ce code couvre les prestataires que l'art. 29 (déclaration P_29/P_30) n'atteint pas, c'est-à-dire non identifiés à la taxe sur la valeur ajoutée d'un autre État membre.",
+    "source": "ustawa-vat",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": ["27", "42"] },
+        { "type": "tax", "account": "7710", "box": "28" },
+        { "type": "tax", "account": "2241", "box": "43" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": ["27", "42"], "box_factor": -100 },
+        { "type": "tax", "account": "7710", "box": "28", "box_factor": -100 },
+        { "type": "tax", "account": "2241", "box": "43", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 170
+  },
+  {
+    "code": "PL-P-IMPORT-23",
+    "name": "Import towarów rozliczany zgodnie z art. 33a 23%",
+    "description": "Import de biens hors Union sous la procédure simplifiée de l'art. 33a : la taxe due sur la déclaration douanière est déclarée et déduite sur la déclaration de TVA elle-même. Base en P_25 et P_42, taxe due en P_26, taxe déduite en P_43.",
+    "rate": 23,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2011-01-01",
+    "legal_reference": "Ustawa o VAT art. 33a — sur autorisation, l'assujetti déclare la taxe due sur l'importation directement dans la déclaration de TVA plutôt que de la verser au bureau des douanes ; art. 86 ust. 2 pkt 2 — la même taxe ouvre droit à déduction. Le régime de droit commun (taxe versée à la douane sur la base du document douanier) n'est pas modélisé ici : voir docs/international.md, section « From Poland ».",
+    "source": "ustawa-vat",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": ["25", "42"] },
+        { "type": "tax", "account": "7710", "box": "26" },
+        { "type": "tax", "account": "2241", "box": "43" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": ["25", "42"], "box_factor": -100 },
+        { "type": "tax", "account": "7710", "box": "26", "box_factor": -100 },
+        { "type": "tax", "account": "2241", "box": "43", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 180
+  },
+  {
+    "code": "PL-P-RC-17-1-5",
+    "name": "Dostawa towarów, dla której podatnikiem jest nabywca (art. 17 ust. 1 pkt 5) 23%",
+    "description": "Achat de biens livrés en Pologne par un fournisseur qui n'y a ni siège ni établissement stable : l'acquéreur liquide lui-même la taxe. Base en P_31 et P_42, taxe due en P_32, taxe déduite en P_43.",
+    "rate": 23,
+    "scope": "purchase",
+    "treatment": "domestic_reverse_charge",
+    "valid_from": "2013-04-01",
+    "legal_reference": "Ustawa o VAT art. 17 ust. 1 pkt 5 — l'acquéreur, assujetti établi en Pologne, est redevable de la taxe lorsque le fournisseur n'a en Pologne ni siège ni établissement stable participant à la livraison (et n'est pas identifié selon l'art. 96 ust. 4) ; art. 86 ust. 2 pkt 4 lit. b — déduction dans la même déclaration.",
+    "source": "ustawa-vat",
+    "vat_category": "AE",
+    "exemption_code": "VATEX-EU-AE",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": ["31", "42"] },
+        { "type": "tax", "account": "7710", "box": "32" },
+        { "type": "tax", "account": "2241", "box": "43" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": ["31", "42"], "box_factor": -100 },
+        { "type": "tax", "account": "7710", "box": "32", "box_factor": -100 },
+        { "type": "tax", "account": "2241", "box": "43", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 190
+  },
+  {
+    "code": "PL-P-ZW",
+    "name": "Zakup zwolniony lub niepodlegający VAT",
+    "description": "Achat d'un bien ou service exonéré ou hors champ (par exemple une prime d'assurance) : aucune taxe à déduire, aucune case de la déclaration.",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "exempt",
+    "valid_from": "2004-05-01",
+    "legal_reference": "Ustawa o VAT art. 86 ust. 1 — faute de taxe facturée par le fournisseur (l'assurance étant elle-même exonérée par l'art. 43 ust. 1 pkt 37), il n'y a rien à déduire ni à déclarer côté acquéreur.",
+    "source": "ustawa-vat",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "42" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "42", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 200
+  }
+]
