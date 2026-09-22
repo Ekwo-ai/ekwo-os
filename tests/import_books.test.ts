@@ -545,6 +545,13 @@ describe('the correspondence the guide shows', () => {
   const page = readFileSync(join(repoRoot, 'docs', 'start-with-claude.md'), 'utf8');
 
   it('is what the proposal answers for its two files and its two charts', () => {
+    // Every row of the two tables is checked, and the count is read off the
+    // page rather than written here: a row added to the guide used to leave
+    // this number behind, and a number that has to be kept in step by hand is
+    // the thing it was guarding against. What it still catches is the loop
+    // falling through — a fixture whose codes no longer reach the page — which
+    // is a count below this one and never a stale expectation.
+    const tabulated = page.split('\n').filter((line) => /^\| \d{3,6} /.test(line)).length;
     let checked = 0;
     for (const { slug, file } of guide) {
       const pack = allPacks.find((candidate) => candidate.slug === slug)!;
@@ -560,6 +567,7 @@ describe('the correspondence the guide shows', () => {
         checked += 1;
       }
     }
-    expect(checked).toBe(9);
+    expect(tabulated).toBeGreaterThan(0);
+    expect(checked).toBe(tabulated);
   });
 });
