@@ -6,6 +6,7 @@
     "month",
     "quarter"
   ],
+  "period_default": "month",
   "valid_from": "2026-01-01",
   "legal_reference": "UStG § 21 Abs. 1 und 2 — der Unternehmer hat eine Voranmeldung für den Kalendermonat (Voranmeldungszeitraum) elektronisch zu übermitteln; beträgt der Vorjahresumsatz höchstens 100 000 Euro, ist der Voranmeldungszeitraum das Kalendervierteljahr, mit Option auf den Kalendermonat für ein volles Kalenderjahr. Die Kennzahlen sind jene des Formulars U30 samt Ausfüllhilfe U30a für 2026.",
   "source": "u30-2026",
