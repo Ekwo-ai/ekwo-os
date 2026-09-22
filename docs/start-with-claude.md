@@ -5,7 +5,8 @@ your own, one command to install, and then Claude — the desktop application or
 Claude Code — doing the rest in plain sentences. You bring an export of your
 books from wherever they are kept today; Claude takes them over, answers
 questions about them and prepares your next VAT return. No web interface is
-involved, because there is none yet.
+involved: Ekwo OS is a database, a command line and an MCP server. The web
+application is Ekwo Cloud, the hosted edition on ekwo.ai.
 
 It takes about twenty minutes, most of it in the Supabase dashboard. You do
 not need to be a developer, but you will paste a few lines into a terminal and
@@ -14,7 +15,8 @@ one block into a settings file.
 **Before you start, know what is not there yet** — the full list is at the end,
 under [What this does not do yet](#what-this-does-not-do-yet):
 
-- there is no web interface: you work through Claude, or the command line;
+- Ekwo OS has no web interface: you work through Claude, or the command line
+  (the web application is Ekwo Cloud, the hosted edition on ekwo.ai);
 - Ekwo prepares a declaration and does not file it: sending it is yours;
 - the history you import carries no VAT: it feeds the ledger and the balances,
   not the boxes of a return;
@@ -363,8 +365,9 @@ keeping what was sent, noticing a period that changed afterwards — is in
 
 Said plainly, so that nothing is a surprise:
 
-- **No web interface.** Ekwo is a database, a command line and the MCP server
-  today. A Community web application is planned and not released.
+- **No web interface in Ekwo OS.** Ekwo OS is a database, a command line and
+  the MCP server. The web application is Ekwo Cloud, the hosted edition on
+  ekwo.ai, for the people signed up there.
 - **No filing.** Ekwo prepares a declaration and does not transmit it to any
   administration. Sending it, and answering for it, is yours.
 - **No VAT on imported history.** An imported line has an account and an

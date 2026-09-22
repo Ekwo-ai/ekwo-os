@@ -12,7 +12,7 @@ cut: [`docs/demo/`](docs/demo/).*
 **Try it on your own books.** Already using Claude? [Start with
 Claude](docs/start-with-claude.md) goes from a free Supabase project to your
 own books taken over, questioned and your next VAT return prepared — Claude
-Desktop or Claude Code, no web interface, about twenty minutes.
+Desktop or Claude Code, no web interface needed, about twenty minutes.
 
 ---
 
