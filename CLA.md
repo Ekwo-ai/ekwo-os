@@ -75,5 +75,6 @@ implied, to the fullest extent permitted by law.
 
 ## 7. Governing law
 
-This agreement is governed by Belgian law. Any dispute falls to the courts of
-Brussels, Belgium.
+This agreement is governed by the law of Estonia, where Karuna Co OÜ, the
+company that operates Ekwo, is registered. Any dispute falls to the Harju
+County Court in Tallinn, Estonia.
