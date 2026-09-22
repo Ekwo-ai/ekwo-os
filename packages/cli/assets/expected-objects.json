@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.5.0",
-  "migration": "20260922072635",
+  "migration": "20260922081645",
   "socle": {
     "schema": "public",
     "tables": [
@@ -596,6 +596,59 @@
           {
             "name": "value_date",
             "type": "date"
+          }
+        ]
+      },
+      {
+        "name": "book_imports",
+        "columns": [
+          {
+            "name": "checksum",
+            "type": "text"
+          },
+          {
+            "name": "company_id",
+            "type": "uuid"
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp with time zone"
+          },
+          {
+            "name": "created_by",
+            "type": "uuid"
+          },
+          {
+            "name": "entry_count",
+            "type": "integer"
+          },
+          {
+            "name": "file_names",
+            "type": "text[]"
+          },
+          {
+            "name": "first_number",
+            "type": "text"
+          },
+          {
+            "name": "id",
+            "type": "uuid"
+          },
+          {
+            "name": "last_number",
+            "type": "text"
+          },
+          {
+            "name": "line_count",
+            "type": "integer"
+          },
+          {
+            "name": "opening_number",
+            "type": "text"
+          },
+          {
+            "name": "source",
+            "type": "text"
           }
         ]
       },
@@ -4079,8 +4132,16 @@
         "arguments": "p_company_id uuid, p_file jsonb, p_source jsonb, p_bank_account_id uuid"
       },
       {
+        "name": "import_books",
+        "arguments": "p_company_id uuid, p_books jsonb, p_dry_run boolean, p_open_years boolean, p_allow_result_accounts boolean"
+      },
+      {
         "name": "import_company",
         "arguments": "p_archive jsonb, p_owner_user_id uuid"
+      },
+      {
+        "name": "import_fiscal_year_for",
+        "arguments": "p_company_id uuid, p_date date"
       },
       {
         "name": "init_instance",
@@ -4568,6 +4629,16 @@
         "table": "bank_transactions",
         "name": "bank_transactions_write",
         "command": "all"
+      },
+      {
+        "table": "book_imports",
+        "name": "book_imports_insert",
+        "command": "insert"
+      },
+      {
+        "table": "book_imports",
+        "name": "book_imports_select",
+        "command": "select"
       },
       {
         "table": "capabilities",
@@ -5957,6 +6028,18 @@
             "insert",
             "select",
             "update"
+          ]
+        },
+        {
+          "name": "book_imports",
+          "anon": [],
+          "authenticated": [
+            "insert",
+            "select"
+          ],
+          "service_role": [
+            "insert",
+            "select"
           ]
         },
         {
@@ -7697,8 +7780,30 @@
           ]
         },
         {
+          "name": "import_books",
+          "arguments": "p_company_id uuid, p_books jsonb, p_dry_run boolean, p_open_years boolean, p_allow_result_accounts boolean",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
           "name": "import_company",
           "arguments": "p_archive jsonb, p_owner_user_id uuid",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "import_fiscal_year_for",
+          "arguments": "p_company_id uuid, p_date date",
           "anon": [],
           "authenticated": [
             "execute"

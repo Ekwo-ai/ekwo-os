@@ -243,6 +243,15 @@ export async function furnish(db: PGlite, pack: Pack, name: string, tag: string)
     [companyId, someDocument, `UNPOSTED-${tag}`, ownerId],
   );
 
+  // The record of books taken over from another system, as import_books()
+  // writes it. Written by hand: what an import posts is `import_books.test.ts`,
+  // that its record travels is this.
+  await db.query(
+    `insert into book_imports (company_id, source, checksum, file_names, entry_count, line_count, created_by)
+     values ($1, 'fec', 'sha256:' || encode(sha256(convert_to($2, 'UTF8')), 'hex'), array[$2], 0, 0, $3)`,
+    [companyId, `books-${tag}.txt`, ownerId],
+  );
+
   // A declaration that went, with its proof, and the draft of the next one.
   const period = filedPeriod(pack);
   const filing = await one<{ id: string }>(db, `select id from prepare_filing($1, $2::date, $3::date)`, [

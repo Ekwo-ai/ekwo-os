@@ -928,6 +928,16 @@ describe('a client writes nothing else — by the function', () => {
         sql: `select import_bank_statement($1, '{"statements": []}'::jsonb)`,
         params: [mine.companyId],
       },
+      // Refused on the person, by name, before the books are read.
+      'public.import_books': {
+        sql: `select import_books($1, jsonb_build_object('source', 'fec', 'checksum', 'sha256:' || repeat('0', 64), 'entries', '[]'::jsonb))`,
+        params: [mine.companyId],
+      },
+      // Invoker: the year it would open is refused by the policy of fiscal_years.
+      'public.import_fiscal_year_for': {
+        sql: `select import_fiscal_year_for($1, ($2::date - interval '20 years')::date)`,
+        params: [mine.companyId, FROM],
+      },
       'public.close_fiscal_year': { sql: `select close_fiscal_year($1)`, params: [mine.fiscalYearId] },
       'public.reopen_fiscal_year': { sql: `select reopen_fiscal_year($1)`, params: [mine.fiscalYearId] },
       'public.opening_balance': {

@@ -150,6 +150,7 @@ the return say the same thing, because they are the same rows.
 | [`bank_statement_lines`](#bank_statement_lines) | Which lines a statement lists. A line is stored once, in bank_transactions, under the first statement that brought it; a later statement that overlaps the first lists the same line here instead of duplicating it, and its closing balance is proved over the list. |
 | [`bank_statements`](#bank_statements) | Imported statements. `is_consistent` compares the declared closing balance with the sum of the lines. |
 | [`bank_transactions`](#bank_transactions) | Statement lines. `amount` is signed; `raw` keeps whatever the source sent. |
+| [`book_imports`](#book_imports) | One row per set of books taken over by import_books(): which reader, the checksum of the files, how many entries and lines, and the numbers they were posted under. The same files twice in one company are refused by the unique checksum. |
 | [`capabilities`](#capabilities) | Everything a member may be allowed to do, one row per code. Seeded by this migration for the core; a module adds its own with `area` set to the module code. |
 | [`chart_templates`](#chart_templates) | Charts of accounts a country offers, from the `charts` list of packs/<cc>/pack.json. One of them is the default `ekwo init` installs when nobody names one. |
 | [`companies`](#companies) | Legal entities kept in this instance. One instance may hold several. |
@@ -467,6 +468,32 @@ Statement lines. `amount` is signed; `raw` keeps whatever the source sent.
 
 Constraints:
 
+- `PRIMARY KEY (id)`
+
+### `book_imports`
+
+One row per set of books taken over by import_books(): which reader, the checksum of the files, how many entries and lines, and the numbers they were posted under. The same files twice in one company are refused by the unique checksum.
+
+| Column | Type | Notes |
+|---|---|---|
+| `id` | `uuid` | not null |
+| `company_id` | `uuid` | not null |
+| `source` | `text` | not null — The reader the files were read with — fec, trial-balance, journal-items, journal-report — as the caller named it. |
+| `checksum` | `text` | not null — sha256 of the files read, in the order given, as the caller computed it. Unique per company, which is what refuses the same import twice. |
+| `file_names` | `text[]` | not null |
+| `entry_count` | `integer` | not null |
+| `line_count` | `integer` | not null |
+| `first_number` | `text` | Number of the first entry the import posted, and last_number of the last: the range to read, or to reverse, afterwards. |
+| `last_number` | `text` |  |
+| `opening_number` | `text` | Number of the opening entry the import posted through opening_balance(), when the files carried a trial balance. |
+| `created_by` | `uuid` |  |
+| `created_at` | `timestamp with time zone` | not null |
+
+Constraints:
+
+- `CHECK ((checksum ~ '^sha256:[0-9a-f]{64}$'::text))`
+- `CHECK (((entry_count >= 0) AND (line_count >= 0)))`
+- `CHECK ((source ~ '^[a-z0-9][a-z0-9.-]{0,39}$'::text))`
 - `PRIMARY KEY (id)`
 
 ### `capabilities`
@@ -1994,7 +2021,9 @@ Constraints:
 | `has_capability(p_company_id uuid, p_capability text)` | Whether the current caller may do one named thing in one company — a signed-in member by their preset and their adjustments, or a machine key by its own list. Revoked beats granted, and a non-member holding no key holds nothing. |
 | `has_opening_entry(p_fiscal_year_id uuid)` | Whether a fiscal year already carries an opening entry that still stands — an imported balance or the re-opening of the year before. |
 | `import_bank_statement(p_company_id uuid, p_file jsonb, p_source jsonb, p_bank_account_id uuid)` | Writes what a format reader read out of a bank file into bank_statements and bank_transactions, and nothing else: no entry, no payment, no matching. Idempotent on import_key — a replayed file imports nothing, an overlapping statement imports what is new and lists the rest. Refuses, by name and before writing anything: an account the company does not have (unknown_bank_account), a statement that does not add up (unbalanced_statement) or has no balances, a booked line it cannot hold as it is (unreadable_statement_line), a currency that is not the account's, and the same statement with other balances (statement_conflict). Signals and does not refuse: an opening balance that is not the previous closing one, a hole in the bank's numbering. One row per statement of the file; the whole file is imported or none of it. |
+| `import_books(p_company_id uuid, p_books jsonb, p_dry_run boolean, p_open_years boolean, p_allow_result_accounts boolean)` | Takes over books read from another system, whole or not at all: the fiscal years they need (p_open_years), their parties, every entry posted through post_entry() and a trial balance through opening_balance(). Account codes arrive already translated into the company's chart. p_dry_run does all of it and rolls it back, so the answer and the refusals are the real ones. The same files twice are refused (import_already_done). |
 | `import_company(p_archive jsonb, p_owner_user_id uuid)` | Takes in the archive `export_company()` wrote: one company, whole, with its identifiers, its numbers, its locks and its trail. The installer or an administrator of the installation only. Rows are inserted with the user triggers of the filled tables off for the length of the transaction, foreign keys on, and the result is checked — ownership of every row, no reference into another company, balance, matching, counters — before anything stays. A company already here is refused. `p_owner_user_id`, or the caller, becomes its first owner. |
+| `import_fiscal_year_for(p_company_id uuid, p_date date)` | The fiscal year a date falls in, opened when there is none as a year of the same length and on the same first day as the company's earliest one. Called by import_books() when the caller asks for years to be opened. |
 | `init_instance(p_organization_name text, p_country character, p_edition instance_edition)` | Records the installation. Called once, by the installer. Leaves the registration fields empty. |
 | `install_country_template(p_company_id uuid, p_country character, p_language character, p_chart_code text)` | Copies one chart of a country pack into a company in one language, with the country's journals and taxes, wires the default roles, pins the accounts it wired, and records the pack version and the chart in company_packs. A tax posting is copied with every declaration box it prints in. |
 | `invite_member(p_company_id uuid, p_email text, p_role member_role, p_capabilities jsonb, p_valid_for interval)` | Invites an address into a company and returns the token once. Only the hash is stored; re-inviting the same address revokes the pending invitation. |
