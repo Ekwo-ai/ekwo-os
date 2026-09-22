@@ -55,3 +55,20 @@ docs/demo/render.sh left.env right.env
 ```
 
 Keep both files out of the repository, and delete the projects afterwards.
+
+## The walkthrough of Start with Claude
+
+[`start-with-claude/`](start-with-claude/) is not a recording: it is
+[`docs/start-with-claude.md`](../start-with-claude.md) run for real.
+`walkthrough.mjs` installs into an empty project, starts the published MCP
+server with the four variables the guide puts in Claude's configuration, and
+calls the tools Claude calls for the guide's sentences — for an Estonian and a
+British company, each taking over the invented trial balance beside it. It
+prints one line per step and exits non-zero if one fails.
+
+```sh
+source left.env    # the variables above, with EKWO_EMAIL added
+node docs/demo/start-with-claude/walkthrough.mjs
+```
+
+Delete the project afterwards.

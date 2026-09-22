@@ -1,0 +1,9 @@
+account,name,debit,credit,contact,contact name
+090,Business current account,12300.00,,,
+610,Accounts receivable,1800.00,,C-01,Harbourlight Studio
+610,Accounts receivable,600.00,,C-02,Tessellate Joinery
+710,Office equipment,4000.00,,,
+711,Office equipment depreciation,,800.00,,
+800,Accounts payable,,1150.00,S-01,Kestrel Paper Supply
+970,Owner capital,,1000.00,,
+960,Retained earnings,,15750.00,,

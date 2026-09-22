@@ -1,0 +1,9 @@
+account,name,debit,credit,contact,contact name
+101000,Bank current account,8400.00,,,
+120000,Customers,1500.00,,K-01,Lõuna Pagarid
+120000,Customers,250.50,,K-02,Vesiveski Disain
+177000,Equipment,3000.00,,,
+177500,Equipment depreciation,,1000.00,,
+210000,Suppliers,,900.00,T-01,Rabapuu Kontor
+290000,Share capital,,2500.00,,
+297000,Retained earnings,,8750.50,,
