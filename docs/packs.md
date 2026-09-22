@@ -238,6 +238,7 @@ says what they say. `ekwo pack describe <cc>` is everything one of them says.
 | [`sn`](../packs/sn/) | Sénégal | `20_pack_sn.sql` | fr | `community` |
 | [`td`](../packs/td/) | Tchad | `35_pack_td.sql` | fr | `community` |
 | [`tg`](../packs/tg/) | Togo | `36_pack_tg.sql` | fr | `community` |
+| [`th`](../packs/th/) | ประเทศไทย | `56_pack_th.sql` | th, en | `community` |
 | [`tw`](../packs/tw/) | 臺灣 | `53_pack_tw.sql` | zh, en | `community` |
 | [`us`](../packs/us/) | United States | `15_pack_us.sql` | en | `community` |
 <!-- /generated -->
