@@ -1,24 +1,24 @@
 {
-  "name": "@ekwo-ai/fec",
+  "name": "@ekwo-ai/journal-items",
   "version": "0.5.0",
-  "description": "The French FEC — fichier des ecritures comptables — in TypeScript: the eighteen columns of the arrete du 29 juillet 2013, from plain ledger rows, and read back into accounts, parties and entries. Zero dependencies.",
+  "description": "Reads an export of journal items as CSV — one row per line of an entry, with its entry, journal, date, account, partner, debit and credit — with the chart of accounts and the partners exported beside it, into plain objects in TypeScript: amounts as decimal strings, and what does not add up. Zero dependencies.",
   "keywords": [
-    "fec",
-    "fichier-des-ecritures-comptables",
-    "france",
-    "dgfip",
+    "journal-items",
+    "general-ledger",
+    "csv",
     "accounting",
     "bookkeeping",
-    "ledger",
-    "export"
+    "migration",
+    "import",
+    "parser"
   ],
   "license": "MIT",
   "author": "Ekwo AI",
-  "homepage": "https://github.com/Ekwo-ai/ekwo-os/tree/main/packages/formats/fec#readme",
+  "homepage": "https://github.com/Ekwo-ai/ekwo-os/tree/main/packages/formats/journal-items#readme",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Ekwo-ai/ekwo-os.git",
-    "directory": "packages/formats/fec"
+    "directory": "packages/formats/journal-items"
   },
   "bugs": {
     "url": "https://github.com/Ekwo-ai/ekwo-os/issues"

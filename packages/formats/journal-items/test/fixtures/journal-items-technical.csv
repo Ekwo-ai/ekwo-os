@@ -1,0 +1,3 @@
+"id","move_name","journal_id","date","account_id","partner_id","name","debit","credit"
+"__export__.account_move_line_1_0a1b2c3d","MISC/2025/02/0001","Miscellaneous Operations","2025-02-01","610000 Supplies","","Correction","15.5","0"
+"__export__.account_move_line_2_0a1b2c3e","MISC/2025/02/0001","Miscellaneous Operations","2025-02-01","550000 Bank","","Correction","0","15.5"

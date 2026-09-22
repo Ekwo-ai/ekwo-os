@@ -1,0 +1,8 @@
+"Number","Journal","Date","Account","Partner","Label","Reference","Debit","Credit","Amount in Currency","Currency","Company Currency","Due Date","Matching #","Status"
+"MISC/2025/01/0001","Miscellaneous Operations","2025-01-01","101000 Share Capital","","Opening","","0.0","5000.0","-5000.0","EUR","EUR","2025-01-01","","Posted"
+"MISC/2025/01/0001","Miscellaneous Operations","2025-01-01","550000 Bank","","Opening","","5000.0","0.0","5000.0","EUR","EUR","2025-01-01","","Posted"
+"INV/2025/00001","Customer Invoices","2025-01-15","400000 Receivable","Atelier Sirocco","INV/2025/00001","","1210.0","0.0","1210.0","EUR","EUR","2025-02-14","P1","Posted"
+"INV/2025/00001","Customer Invoices","2025-01-15","700000 Services","Atelier Sirocco","Design work","","0.0","1000.0","-1000.0","EUR","EUR","2025-01-15","","Posted"
+"INV/2025/00001","Customer Invoices","2025-01-15","451000 Tax Payable","Atelier Sirocco","Tax 21%","","0.0","210.0","-210.0","EUR","EUR","2025-01-15","","Posted"
+"BILL/2025/01/0001","Vendor Bills","2025-01-20","440000 Payable","Verger du Moulin","BILL/2025/01/0001","A-17","0.0","92.0","-100.0","USD","EUR","2025-02-19","","Posted"
+"BILL/2025/01/0001","Vendor Bills","2025-01-20","610000 Supplies","Verger du Moulin","Paper","A-17","92.0","0.0","100.0","USD","EUR","2025-01-20","","Posted"

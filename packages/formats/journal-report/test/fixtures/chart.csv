@@ -1,0 +1,6 @@
+*Code,*Name,*Type,*Tax Code,Description,Dashboard,Expense Claims,Enable Payments,Balance
+090,Business Bank Account,Bank,Tax Exempt,,Yes,No,No,
+200,Sales,Revenue,Tax on Sales,,No,No,No,
+610,Accounts Receivable,Accounts Receivable,Tax Exempt,,No,No,No,
+820,Sales Tax,Current Liability,Tax Exempt,,No,No,No,
+970,Owner Funds Introduced,Equity,Tax Exempt,,No,No,No,

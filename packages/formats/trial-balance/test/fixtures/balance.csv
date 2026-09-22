@@ -1,0 +1,8 @@
+account,name,debit,credit,contact,contact name
+512000,Bank,8400.00,,,
+411000,Customers,1500.00,,C0001,Atelier Sirocco
+411000,Customers,250.50,,C0002,Brume et Fils
+401000,Suppliers,,900.00,F0001,Verger du Moulin
+101000,Share capital,,5000.00,,
+120000,Result carried forward,,4250.50,,
+218300,Office equipment,2000.00,2000.00,,

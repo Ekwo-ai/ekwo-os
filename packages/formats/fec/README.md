@@ -49,6 +49,43 @@ knowing when you read a file:
 An extract that is not a whole financial year gets no opening lines: it is an
 extract of movements, and `fecFileName` is built from a year end.
 
+## Reading one back
+
+`readFec()` goes the other way: the file this package writes, and the one any
+package that keeps books in France hands over when asked for a year, into the
+plain shape every reader of an accounting export in this repository declares
+— accounts, parties, entries, violations.
+
+```ts
+import { readFec } from '@ekwo-ai/fec';
+
+const books = readFec(bytesOrString);                            // UTF-8, fatally
+const latin = readFec(bytes, { encoding: 'iso-8859-15' });       // said, never guessed
+
+books.entries;    // [{ journal: 'VE', number: '1', date: '2025-01-15', reference: 'F-001', lines: […] }, …]
+books.contacts;   // one per CompAuxNum, named by CompAuxLib
+books.violations; // an entry that does not balance, a line with two sides, an entry on two dates
+```
+
+- The columns are found **by their names in the header**, which the arrêté
+  makes mandatory: the variants of the text add columns (a cash-basis
+  taxpayer's four) or write `Montant` and `Sens` instead of `Debit` and
+  `Credit`, and all of them read.
+- The separator is the one the header uses, a tab or a vertical bar. Dates are
+  `AAAAMMJJ`, refused otherwise; an amount has a comma or a point as its
+  decimal mark and nothing else.
+- An entry is the lines that share a `JournalCode` and an `EcritureNum`. Each
+  line keeps its party (`CompAuxNum`), its currency amount (`Montantdevise`,
+  `Idevise`) and its reconciliation mark (`EcritureLet`).
+- A FEC is kept in the currency of the books and never says which, so
+  `currency` is null. The *à-nouveaux* arrive as the entries of their journal,
+  like any other: saying that journal is the opening is the importer's
+  business.
+
+What does not add up comes back in `violations`, the entry as written beside
+it; what is not a FEC is thrown as a `BooksFileError` with a `code`. In
+[Ekwo OS](https://github.com/Ekwo-ai/ekwo-os) this is `ekwo import fec <file>`.
+
 The separators are options: `decimalSeparator`, `fieldSeparator`, `newline`,
 `header`. The defaults are what the French tooling expects.
 

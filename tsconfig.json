@@ -27,7 +27,10 @@
       "@ekwo-ai/peppol-ubl": ["./packages/formats/peppol-ubl/src/index.ts"],
       "@ekwo-ai/camt053": ["./packages/formats/camt053/src/index.ts"],
       "@ekwo-ai/coda": ["./packages/formats/coda/src/index.ts"],
-      "@ekwo-ai/cfonb120": ["./packages/formats/cfonb120/src/index.ts"]
+      "@ekwo-ai/cfonb120": ["./packages/formats/cfonb120/src/index.ts"],
+      "@ekwo-ai/trial-balance": ["./packages/formats/trial-balance/src/index.ts"],
+      "@ekwo-ai/journal-items": ["./packages/formats/journal-items/src/index.ts"],
+      "@ekwo-ai/journal-report": ["./packages/formats/journal-report/src/index.ts"]
     }
   },
   "include": [

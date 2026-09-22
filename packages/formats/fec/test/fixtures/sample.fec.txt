@@ -1,0 +1,13 @@
+JournalCode|JournalLib|EcritureNum|EcritureDate|CompteNum|CompteLib|CompAuxNum|CompAuxLib|PieceRef|PieceDate|EcritureLib|Debit|Credit|EcritureLet|DateLet|ValidDate|Montantdevise|Idevise
+AN|À-nouveaux|1|20250101|512000|Banque|||AN2025|20250101|À-nouveaux|5000,00|0,00|||20250101||
+AN|À-nouveaux|1|20250101|101000|Capital|||AN2025|20250101|À-nouveaux|0,00|5000,00|||20250101||
+VE|Ventes|1|20250115|411000|Clients|C0001|Atelier Sirocco|F-001|20250115|Facture F-001|1200,00|0,00|A|20250130|20250115||
+VE|Ventes|1|20250115|706000|Prestations de services|||F-001|20250115|Facture F-001|0,00|1000,00|||20250115||
+VE|Ventes|1|20250115|445710|TVA collectée|||F-001|20250115|Facture F-001|0,00|200,00|||20250115||
+AC|Achats|1|20250120|606100|Fournitures|||A-17|20250120|Facture A-17|300,00|0,00|||20250120||
+AC|Achats|1|20250120|445660|TVA déductible|||A-17|20250120|Facture A-17|60,00|0,00|||20250120||
+AC|Achats|1|20250120|401000|Fournisseurs|F0001|Verger du Moulin|A-17|20250120|Facture A-17|0,00|360,00|||20250120||
+AC|Achats|2|20250125|606100|Fournitures|||A-18|20250125|Facture A-18 en devise|92,00|0,00|||20250125|100,00|USD
+AC|Achats|2|20250125|401000|Fournisseurs|F0002|Kestrel Joinery|A-18|20250125|Facture A-18 en devise|0,00|92,00|||20250125|100,00|USD
+BQ|Banque|1|20250130|512000|Banque|||R-001|20250130|Règlement F-001|1200,00|0,00|||20250130||
+BQ|Banque|1|20250130|411000|Clients|C0001|Atelier Sirocco|R-001|20250130|Règlement F-001|0,00|1200,00|A|20250130|20250130||

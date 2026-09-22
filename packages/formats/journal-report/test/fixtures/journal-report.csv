@@ -1,0 +1,14 @@
+Journal Report
+Example Trading Ltd
+For the period 1 January 2025 to 31 January 2025
+
+Date,Journal ID,Source,Account Code,Account,Description,Reference,Debit,Credit
+Opening Balance,,,,,,,,
+01/01/2025,101,Manual Journal,090,Business Bank Account,Opening,,"5,000.00",
+01/01/2025,101,Manual Journal,970,Owner Funds Introduced,Opening,,,"5,000.00"
+15/01/2025,102,Receivable Invoice,610,Accounts Receivable,INV-0001,Atelier Sirocco,"1,150.00",
+15/01/2025,102,Receivable Invoice,200,Sales,Design work,Atelier Sirocco,,"1,000.00"
+15/01/2025,102,Receivable Invoice,820,Sales Tax,Tax on sales,Atelier Sirocco,,150.00
+Total Receivable Invoice,,,,,,,"6,150.00","6,150.00"
+28/01/2025,103,Receive Money,090,Business Bank Account,Payment INV-0001,,"1,150.00",
+28/01/2025,103,Receive Money,610,Accounts Receivable,Payment INV-0001,,,"1,150.00"

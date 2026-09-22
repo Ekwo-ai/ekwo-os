@@ -286,3 +286,18 @@ export function fromQueryRow(row: FecQueryRow): FecLine {
     idevise: row.idevise,
   };
 }
+
+// Reading goes the other way, and lives beside: `readFec()` returns what a set
+// of books is once read, in the shape every reader of an export declares.
+export { readFec, BooksFileError } from './read/index.js';
+export type {
+  BooksFileErrorCode,
+  Encoding,
+  ImportedAccount,
+  ImportedBooks,
+  ImportedContact,
+  ImportedEntry,
+  ImportedLine,
+  ReadOptions,
+  Violation,
+} from './read/index.js';
