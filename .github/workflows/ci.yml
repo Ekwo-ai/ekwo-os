@@ -4,6 +4,8 @@ on:
   push:
     branches: [main]
   pull_request:
+  # Started by hand when an automatic run did not happen, on any branch.
+  workflow_dispatch:
 
 jobs:
   test:
