@@ -43,6 +43,13 @@ been proven, never before. Three things make that sound:
   one, so the privilege check is the ordinary one: the session user is
   `authenticator`, which is a member of `authenticated`. A session that is a
   member of neither is refused by the server, not by us;
+- **it writes nothing.** PostgREST opens a GET, and an RPC whose function is
+  not volatile, inside a read-only transaction, so a hook that wrote would fail
+  the request it was presented for. `use_api_key()` records the use when the
+  transaction may write and skips it when it may not, which makes
+  `api_keys.last_used_at` a floor and never a ceiling. This was found against a
+  real project and could not have been found anywhere else: a test opens the
+  transaction it asks for, and none of ours had asked for a read-only one;
 - `present_api_key()` raises on a key that is unknown, withdrawn or expired,
   and a raise in a pre-request fails the whole request;
 - `authenticated` is not a person. `auth.uid()` stays null, so every policy

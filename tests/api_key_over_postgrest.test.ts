@@ -40,13 +40,20 @@ function headers(secret?: string): string {
 
 /**
  * One request, as PostgREST makes it: a transaction, the anonymous role, the
- * pre-request, then the work. `set session authorization` is what makes the
- * role switch inside it a real privilege check rather than a superuser's.
+ * pre-request, then the work.
+ *
+ * `readOnly` is the half a test has to ask for on purpose and a real request
+ * never does: PostgREST opens a GET, and an RPC whose function is not
+ * volatile, inside a read-only transaction. Nothing in this suite met one
+ * until it was written down here, which is how a pre-request that stamped
+ * `last_used_at` reached a real project and failed every read with
+ * `cannot execute UPDATE in a read-only transaction`.
  */
 async function request<T>(
   secret: string | undefined,
   fn: () => Promise<T>,
   database: PGlite = db,
+  readOnly = false,
 ): Promise<T> {
   const target = database;
   await target.exec(`
@@ -54,6 +61,7 @@ async function request<T>(
     select set_config('ekwo.installing', '', false);
   `);
   await target.query('begin');
+  if (readOnly) await target.query('set transaction read only');
   await target.exec(`
     set local role anon;
     select set_config('request.headers', '${headers(secret)}', true);
@@ -212,6 +220,76 @@ describe('what a key is on', () => {
     expect(refused).toMatch(/row-level security|violates/i);
     const after = await one<{ n: number }>(db, `select count(*)::int as n from contacts`);
     expect(after.n).toBe(before.n);
+  });
+});
+
+describe('a read request, which is what PostgREST opens for a GET', () => {
+  // The whole of it: a key presented in a read-only transaction reads, and the
+  // pre-request writes nothing that would fail the request it was presented
+  // for.
+  it('presents the key and reads, in a transaction that may not write', async () => {
+    const secret = await issue('Lecture seule sur GET', ['entries.read', 'settings.read']);
+    const seen = await request(
+      secret,
+      async () =>
+        one<{ role: string; company: string | null; n: number }>(
+          db,
+          `select current_user::text as role, api_key_company()::text as company,
+                  (select count(*)::int from companies) as n`,
+        ),
+      db,
+      true,
+    );
+    expect(seen.role).toBe('authenticated');
+    expect(seen.company).toBe(companyId);
+    expect(seen.n).toBe(1);
+  });
+
+  it('leaves last_used_at alone there, and stamps it where it can', async () => {
+    const secret = await issue('Horodatee', ['entries.read']);
+    const id = await request(secret, async () =>
+      one<{ id: string }>(db, `select id::text from current_api_key()`),
+    );
+    // That first request could write, so it stamped. Clear it, and read again
+    // in a read-only transaction: the read works and the stamp stays empty.
+    await db.query(`update api_keys set last_used_at = null where id = $1`, [id.id]);
+    await request(
+      secret,
+      async () => one<{ n: number }>(db, `select count(*)::int as n from companies`),
+      db,
+      true,
+    );
+    const afterRead = await one<{ used: string | null }>(
+      db,
+      `select last_used_at::text as used from api_keys where id = $1`,
+      [id.id],
+    );
+    expect(afterRead.used).toBeNull();
+
+    // And a request that may write records the use, as it always did.
+    await request(secret, async () => one<{ n: number }>(db, `select count(*)::int as n from companies`));
+    const afterWrite = await one<{ used: string | null }>(
+      db,
+      `select last_used_at::text as used from api_keys where id = $1`,
+      [id.id],
+    );
+    expect(afterWrite.used).not.toBeNull();
+  });
+
+  it('answers the version in a read-only transaction, which is how a client asks it', async () => {
+    // `installed_schema_version()` is `stable`, so PostgREST runs it read-only
+    // even as an RPC. This is the handshake a client makes before anything
+    // else, and it was failing with a message about an UPDATE.
+    const secret = await issue('Poignee de main', ['entries.read']);
+    const answered = await request(
+      secret,
+      async () =>
+        one<{ schema_version: string }>(db, `select * from installed_schema_version()`),
+      db,
+      true,
+    );
+    const defined = await one<{ version: string }>(db, `select ekwo_schema_version() as version`);
+    expect(answered.schema_version).toBe(defined.version);
   });
 });
 

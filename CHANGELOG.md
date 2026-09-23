@@ -43,6 +43,14 @@ somewhere has already run it.
   counts. [`docs/machine-access.md`](docs/machine-access.md) is the page, with
   the curl.
 
+  **The pre-request writes nothing**, which is not a style: PostgREST opens a
+  GET, and an RPC whose function is not volatile, inside a read-only
+  transaction, so the stamp `use_api_key()` puts on `api_keys.last_used_at`
+  failed every read with `cannot execute UPDATE in a read-only transaction`.
+  The use is now recorded when the transaction may write and skipped when it
+  may not, so `last_used_at` is a floor and never a ceiling — a key read from
+  every night and never written with carries an old date, or none.
+
   `ekwo doctor` reports whether PostgREST was told to call the pre-request, and
   prints the two statements: a managed project may refuse the migration the
   right to write the settings of `authenticator`, and a key that is silently

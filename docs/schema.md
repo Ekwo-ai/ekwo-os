@@ -311,7 +311,7 @@ Machine access to one company. Hashed at rest, scoped to an explicit list of cap
 | `created_by` | `uuid` | auth.users.id of whoever issued it. No foreign key, for the same reason company_members has none. |
 | `created_at` | `timestamp with time zone` | not null |
 | `expires_at` | `timestamp with time zone` |  |
-| `last_used_at` | `timestamp with time zone` |  |
+| `last_used_at` | `timestamp with time zone` | When this key was last presented in a transaction that could write it down. A read over the API runs read-only and is not stamped, so this is a floor and never a ceiling: a key with an old date may still be in daily use for reading. |
 | `revoked_at` | `timestamp with time zone` |  |
 
 Constraints:
@@ -2118,7 +2118,7 @@ Constraints:
 | `unreconcile(p_reconciliation_id uuid)` | Undoes a matching, and with it what the matching had booked: the exchange difference it realised and the share of a cash-basis tax it had made due. |
 | `unregister_instance()` | Undoes register_instance(). Opting in is reversible, or it is not a choice. |
 | `upcoming_filings(p_company_id uuid, p_from date, p_to date)` | What this company has to file between two dates: the periods its cadences produce — any whole number of months, anchored on 1 January — the day each is due where the pack says, and the declaration already prepared or sent against it. Read-only; sending the reminder is somebody else's job, because a reminder needs a channel and somebody to operate it. |
-| `use_api_key(p_secret text)` | Presents a machine key for the current transaction: has_capability() answers for it until the transaction ends. Refuses a key that is unknown, withdrawn or expired. |
+| `use_api_key(p_secret text)` | Presents a machine key for the current transaction: has_capability() answers for it until the transaction ends. Refuses a key that is unknown, withdrawn or expired. Records the use when the transaction may write — a read request runs in a read-only transaction, where the stamp is worth less than the request. |
 | `vat_prefix_of(p_code text)` | The two letters a territory's VAT identification numbers carry: EL for Greece, FR for Monaco, GB for the Isle of Man, and the code itself everywhere else — including for a territory this table does not carry, whose own two letters come back unchanged. Null when what it resolves to is not two letters, which is a territory that identifies under nobody. |
 | `vat_return(p_company_id uuid, p_from date, p_to date, p_report_code text)` | Declaration boxes for a period: summed from the ledger by the day each figure's tax fell due — `entry_lines.tax_point_date`, the entry's own date where the line carries none — then the totals of the country's form worked out by evaluate_totals(), the same evaluator financial_statement() uses. Refuses a period the company does not file **this form** on, when it has recorded one for it. No country rule lives in this function. |
 | `version_at_least(p_version text, p_floor text)` | Whether a three-part version is at or above another, number by number: 0.10.0 is above 0.9.0, which a comparison of text gets wrong. |

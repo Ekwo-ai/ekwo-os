@@ -61,6 +61,18 @@ that ask for a signed-in user still answer no, and what the caller may do is
 decided by `has_capability()`, which consults the key's own list. The role is
 the door; the capabilities are the rooms.
 
+**The pre-request writes nothing**, and it cannot. PostgREST opens a GET — and
+an RPC whose function is not volatile — inside a **read-only transaction**, so
+anything the hook wrote would fail the request it was presented for, with a
+message about an UPDATE nobody asked for. It sets two configuration values and
+stops. The use of a key is therefore recorded on the requests that may write,
+and `api_keys.last_used_at` is a floor rather than a ceiling: a key read from
+every night and never written with will carry an old date, or none.
+
+The work itself is unaffected. `export_company()` is volatile, so PostgREST
+runs it in a read-write transaction and it writes `company_exported` on the
+audit trail as it always did.
+
 ## What a key may read and write
 
 Its own company, and what its capabilities name.
