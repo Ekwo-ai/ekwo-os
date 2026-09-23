@@ -9,6 +9,8 @@ somewhere has already run it.
 
 ## [Unreleased]
 
+## [0.8.0] — 2026-09-23
+
 ### Added
 
 - **A machine key reaches the API** (`20260922160000`, `20260922162500`,
@@ -43,13 +45,14 @@ somewhere has already run it.
   counts. [`docs/machine-access.md`](docs/machine-access.md) is the page, with
   the curl.
 
-  **The pre-request writes nothing**, which is not a style: PostgREST opens a
-  GET, and an RPC whose function is not volatile, inside a read-only
-  transaction, so the stamp `use_api_key()` puts on `api_keys.last_used_at`
-  failed every read with `cannot execute UPDATE in a read-only transaction`.
-  The use is now recorded when the transaction may write and skipped when it
-  may not, so `last_used_at` is a floor and never a ceiling — a key read from
-  every night and never written with carries an old date, or none.
+  **The pre-request writes nothing** (`20260922171000`), which is not a style:
+  PostgREST opens a GET, and an RPC whose function is not volatile, inside a
+  read-only transaction, so the stamp `use_api_key()` puts on
+  `api_keys.last_used_at` failed every read with `cannot execute UPDATE in a
+  read-only transaction`. The use is now recorded when the transaction may
+  write and skipped when it may not, so `last_used_at` is a floor and never a
+  ceiling — a key read from every night and never written with carries an
+  old date, or none.
 
   `ekwo doctor` reports whether PostgREST was told to call the pre-request, and
   prints the two statements: a managed project may refuse the migration the
@@ -79,6 +82,41 @@ somewhere has already run it.
   The validity is read at the end of the period, so a scheme replaced this
   year still prints last year. `available_statements()` is unchanged and still
   lists every scheme a company may ask for.
+
+### Changed
+
+- **The schema of this release is 0.8.0, and the packages refuse an older
+  database by name** (`20260923093000`). `ekwo-os`, `@ekwo-ai/core` and
+  `@ekwo-ai/mcp` are built and tested against `ekwo_pre_request()`,
+  `present_api_key()`, `is_known_caller()`, `installed_schema_version()`,
+  `default_statement_code()` and `financial_statement_of_kind()`, and a 0.7.0
+  database has none of them — so the floor of the three rises to 0.8.0, and
+  an installation left behind is named as such rather than failing later in a
+  query nobody can place.
+
+  **An installation already running takes one command**, from anywhere, with
+  the connection string of its project: `npx -y ekwo-os@latest migrate`. Then
+  `ekwo doctor`, which on this release is not a formality: it is the only
+  thing that says whether PostgREST was told to call the pre-request. A
+  managed project may refuse the migration the right to write the settings of
+  the `authenticator` role, and a key that is then never read answers nothing
+  and explains nothing; where that happened, `doctor` prints the two
+  statements to run as the owner of the database. Nothing else of the release
+  asks anything of an existing installation, and what was booked, filed and
+  closed is untouched.
+
+- **The web application has a name: Ekwo Cloud, the hosted edition on
+  ekwo.ai.** Ekwo OS has no screens by design — a database, a command line
+  and an MCP server — and the README and the Start with Claude guide said
+  there was no web interface, as if one were missing. They now name the one
+  there is. Support and every other request go through an Ekwo Cloud account,
+  at `https://cloud.ekwo.ai/account`, where somebody answers, so
+  [`DISCLAIMER.md`](DISCLAIMER.md) prints no address.
+
+- **The contributor licence agreement is governed by the law of Estonia.**
+  It named Belgian law and the courts of Brussels; Ekwo is operated by Karuna
+  Co OÜ, a company registered in Estonia, and a dispute falls to the Harju
+  County Court in Tallinn. [`CLA.md`](CLA.md).
 
 ### Fixed
 
@@ -3588,7 +3626,8 @@ against the latest tag, and a mistake is corrected by a new migration, always.
   period locks, reports, row level security, the instance singleton and its
   roles, and a golden FEC export.
 
-[Unreleased]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.7.0...HEAD
+[Unreleased]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.8.0...HEAD
+[0.8.0]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.7.0...v0.8.0
 [0.7.0]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.6.0...v0.7.0
 [0.6.0]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.5.0...v0.6.0
 [0.5.0]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.4.1...v0.5.0

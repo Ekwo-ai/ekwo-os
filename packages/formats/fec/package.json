@@ -1,6 +1,6 @@
 {
   "name": "@ekwo-ai/fec",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "description": "The French FEC — fichier des ecritures comptables — in TypeScript: the eighteen columns of the arrete du 29 juillet 2013, from plain ledger rows, and read back into accounts, parties and entries. Zero dependencies.",
   "keywords": [
     "fec",

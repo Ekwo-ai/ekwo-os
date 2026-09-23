@@ -1,6 +1,6 @@
 {
   "name": "@ekwo-ai/cfonb120",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "description": "Reads a CFONB 120 statement of account (relevé de compte sur support informatique, 120-character records) into plain objects in TypeScript: account, balances and lines, amounts as decimal strings, and what does not add up. Zero dependencies.",
   "keywords": [
     "cfonb",
