@@ -97,6 +97,44 @@ it. `ekwo doctor` reports the state and prints the two statements, so a key
 that is silently never read is a thing somebody is told about rather than
 discovers.
 
+## What a reviewer should look for
+
+A guard written one way holds for a key and the same guard written the other
+way does not, and the two look alike:
+
+```sql
+if not is_installer() and not has_capability(p_company_id, 'company.write') then  -- holds
+if auth.uid() is not null and not has_capability(p_company_id, 'company.write') then  -- does not
+```
+
+The second reads "check the caller, unless there is nobody to check", and it
+was true while a null `auth.uid()` meant the installer on a direct connection.
+A key presented over the API is `authenticated` with a null `auth.uid()`, so
+that condition is false, the raise never happens, and whoever holds any key of
+the company walks past it. `is_installer()` is false whenever `ekwo.api_key` is
+set — *a key is never the installer*, from
+[0005](0005-a-guard-answers-true-or-false.md) and
+[0006](0006-a-machine-key-is-a-narrow-caller.md) — so the first asks the
+question of a key too.
+
+`20260913102115` moved the guards to `is_installer()` for this reason, one
+release before a key could reach the API. **One was written afterwards and
+copied the older phrasing from its neighbours**: `pack_upgrade()`, which is
+definer, is executable by `authenticated`, asks for `company.write`, and with
+`p_apply` moves a company onto another version of its country pack — the chart
+of accounts, the taxes and where each one posts, the boxes of the declaration
+form. A key holding nothing but `entries.read` was answered. `20260923140000`
+closes it.
+
+Every guard was then swept, against the bodies the database holds rather than
+the migrations that wrote them: a function is republished, and only its last
+definition runs. Seven functions test whether `auth.uid()` is null and six were
+right — two raise when it is null, one demands a user *before* allowing, and
+three ask the question in the direction that makes a key a caller rather than
+an absence. `tests/guards_a_key_meets.test.ts` holds that list against the
+database, so a guard written the skipping way tomorrow fails there instead of
+being found a year later.
+
 ## Consequences
 
 - The three limits 0006 listed are lifted for a key that reaches the API: it

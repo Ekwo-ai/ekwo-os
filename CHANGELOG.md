@@ -9,6 +9,28 @@ somewhere has already run it.
 
 ## [Unreleased]
 
+### Fixed
+
+- **One guard a machine key walked past** (`20260923140000`). Letting a key
+  reach the API changed what "nobody is signed in" means: it used to be the
+  installer on a direct connection, and it is now also a key, which arrives as
+  `authenticated` with a null `auth.uid()`. A guard written
+  `if auth.uid() is not null and not has_capability(…)` therefore stopped
+  firing for one — it says "check the caller, unless there is nobody to check".
+  `20260913102115` had moved the guards to `is_installer()`, which is false
+  whenever a key is presented; `pack_upgrade()` was written after it and copied
+  the older phrasing from its neighbours. It is definer, executable by
+  `authenticated`, asks for `company.write`, and with `p_apply` moves a company
+  onto another version of its country pack — the chart of accounts, the taxes
+  and where each one posts, the boxes of the declaration form. A key holding
+  nothing but `entries.read` was answered.
+
+  Every guard was then swept, against the bodies the database holds rather than
+  the migrations that wrote them, and this was the only one.
+  `tests/guards_a_key_meets.test.ts` holds the list of functions that may test
+  `auth.uid()` for null against the database, so the next one written the
+  skipping way fails there instead of being found a year later.
+
 ## [0.8.0] — 2026-09-23
 
 ### Added
