@@ -9,6 +9,39 @@ somewhere has already run it.
 
 ## [Unreleased]
 
+### Fixed
+
+- **An archive survives an honest reader printing it again**
+  (`20260923110000`). The checksum of a table was the sha256 of the bytes the
+  database wrote, which is what makes `shasum` check an archive without Ekwo
+  and is kept. It also meant the checksum answered a question about *text*, and
+  anything that stores an archive, streams it, or moves it between two services
+  parses it and prints it again — which changes the text without changing one
+  value. That reader was told `archive_corrupt` on `audit_log`, with the same
+  row count and another checksum, which reads like a damaged archive and is not
+  one.
+
+  One thing changes on that round trip, and only one: `jsonb` normalises key
+  order and whitespace already, so what differs is numbers **nested inside a
+  jsonb column**. PostgreSQL keeps the trailing zeros of `1230.00`; a JSON
+  parser hands back `1230`. The rule that decimals leave as strings was written
+  for that hazard and reaches the `numeric` columns, which it converts on the
+  way out; it cannot reach inside a `jsonb` one, and `audit_log.old_values` and
+  `new_values` are full of amounts — so the audit trail failed every time and
+  the books looked fine beside it.
+
+  The manifest now carries two checksums per table, because there are two
+  questions. `sha256` is the file, byte for byte, and `shasum` still checks it;
+  `values_sha256` is the same rows in a canonical form — `canonical_json()`
+  re-renders every nested number through `trim_scale()` — and that is what
+  `import_company()` checks. The data files do not change. A changed value, an
+  added row, a removed row and a row of another company are refused exactly as
+  before. An archive written before 0.9.0 carries `sha256` alone and is checked
+  against it, with a refusal that now says why its bytes may differ.
+  [`docs/company-archive.md`](docs/company-archive.md) says what each checksum
+  guarantees and what it does not.
+
+
 ## [0.8.0] — 2026-09-23
 
 ### Added

@@ -63,7 +63,7 @@ empty file.
   "company": { "id": "…", "name": "…", "country": "…", "fiscal_country": "…", "currency_code": "…" },
   "packs":   [ { "country": "…", "version": "1.2.0", "chart_code": "…" } ],
   "modules": [ { "code": "budgets", "version": "1.0.0" } ],
-  "tables":  [ { "name": "public.accounts", "file": "data/public.accounts.jsonl", "rows": 355, "sha256": "…" } ],
+  "tables":  [ { "name": "public.accounts", "file": "data/public.accounts.jsonl", "rows": 355, "sha256": "…", "values_sha256": "…" } ],
   "excluded": [ { "name": "public.api_keys", "reason": "A credential of the installation it was issued in. …" } ],
   "files": { "transported": false,
              "list": [ { "attachment_id": "…", "storage_path": "…", "file_name": "…",
@@ -76,9 +76,56 @@ empty file.
 | `format`, `format_version` | What this is. A reader that does not know the version refuses. |
 | `socle_version`, `packs`, `modules` | What an installation needs to take the company in: a socle at least that recent, each pack at least at the version the company copied, each module the company had on. |
 | `origin_instance`, `exported_at`, `exported_by` | Where it came from, when, and the member who took it. Written on the audit trail of the company on both sides. |
-| `tables` | Every table carried, in the order an import fills them, with its row count and **the sha256 of the data file, byte for byte**. `shasum -a 256 data/*.jsonl` checks an archive without Ekwo. |
+| `tables` | Every table carried, in the order an import fills them, with its row count and **two checksums**: `sha256` over the data file byte for byte, and `values_sha256` over the same rows in a canonical form. See *What the checksums answer*. |
 | `excluded` | Every table of a company that stays behind, with the reason. |
 | `files` | The files the attachments point at. **They are not in the archive** — see below. |
+
+
+## What the checksums answer
+
+Two questions, and each checksum answers one of them.
+
+**`sha256` is the file.** The sha256 of `data/<table>.jsonl`, byte for byte, as
+the database wrote it: one row per line, the columns in the order the schema
+documents them, decimals as strings, timestamps in UTC.
+`shasum -a 256 data/*.jsonl` checks an archive on any machine, with no Ekwo and
+no database. `ekwo company export` verifies it as it writes each file, and
+`ekwo company import` verifies it again before handing the archive over — so a
+file damaged in transit is a finding of the command line and never a refusal of
+the books.
+
+**`values_sha256` is the rows.** The same rows with every number they hold, at
+any depth, re-rendered in a canonical form. It is what `import_company()`
+checks, and the reason is that a program which is not the command line reads an
+archive by parsing it, and prints it again to store it, stream it or hand it to
+another service. That changes the file without changing one value: PostgreSQL
+keeps the trailing zeros of `1230.00` inside a `jsonb` column, and a JSON parser
+hands back `1230`. The rule that decimals leave as strings was written for that
+hazard and it reaches the `numeric` columns, which are converted on the way
+out; it cannot reach inside a `jsonb` one, and `audit_log.old_values` and
+`new_values` are full of amounts. Before `values_sha256`, such a reader was told
+`archive_corrupt` on the audit trail, with the same row count and another
+checksum — which reads like a damaged archive and is not one.
+
+**What `values_sha256` guarantees.** A value that changed, a row added, a row
+removed, a row of another company: all refused, exactly as before. The
+canonical form normalises how a number is *written* and never what it is, so
+`1230.00` and `1230.01` remain two different archives, and so do `1230` and
+`12300`.
+
+**What it does not guarantee.** That a reader may lose precision for free. A
+number with more significant digits than a double carries does not survive a
+JSON parser, and an archive that went through one is refused — the value really
+did change. No column of this schema keeps such a number inside a `jsonb`, and
+the refusal is there for the day one does. It also says nothing about the bytes:
+two files that differ in whitespace, in key order, or in the notation of a
+number have the same `values_sha256` on purpose. When the question is "is this
+the file that left", that is `sha256`.
+
+**An archive written before 0.9.0 carries `sha256` alone**, and
+`import_company()` checks that one for it. Such an archive has to arrive as the
+database wrote it; one that has been printed again is refused, and the refusal
+says so and tells you to export it again.
 
 ## What travels
 

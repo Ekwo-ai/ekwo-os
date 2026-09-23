@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.8.0",
-  "migration": "20260923093000",
+  "migration": "20260923110000",
   "socle": {
     "schema": "public",
     "tables": [
@@ -3820,6 +3820,10 @@
         "arguments": "p_document_id uuid, p_date date"
       },
       {
+        "name": "canonical_json",
+        "arguments": "p_value jsonb"
+      },
+      {
         "name": "catch_up_journal_sequence",
         "arguments": "p_journal_id uuid, p_date date, p_number text"
       },
@@ -7018,6 +7022,17 @@
         {
           "name": "cancel_document",
           "arguments": "p_document_id uuid, p_date date",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "canonical_json",
+          "arguments": "p_value jsonb",
           "anon": [],
           "authenticated": [
             "execute"

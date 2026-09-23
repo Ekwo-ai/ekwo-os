@@ -35,7 +35,7 @@ export interface Manifest {
   company: { id: string; name: string };
   packs: { country: string; version: string }[];
   modules: { code: string; version: string }[];
-  tables: { name: string; file: string; rows: number; sha256: string }[];
+  tables: { name: string; file: string; rows: number; sha256: string; values_sha256: string }[];
   excluded: { name: string; reason: string }[];
   files: { transported: boolean; list: { storage_path: string; checksum: string | null }[] };
 }
@@ -361,18 +361,24 @@ export async function figures(db: PGlite, reader: string, f: Furnished, golden: 
 
 /** The manifest line of a table, recomputed by the database that will read it. */
 export async function reseal(db: PGlite, archive: Archive, table: string): Promise<void> {
-  const sealed = await one<{ rows: number; sha256: string }>(
+  // Both checksums, because the manifest carries both and `import_company()`
+  // reads the one over the values. A test that tampered with a table and
+  // resealed only its bytes would be stopped by the checksum it forgot,
+  // never reaching the guard it is about.
+  const sealed = await one<{ rows: number; sha256: string; values_sha256: string }>(
     db,
     `select count(*)::int as rows,
-            encode(sha256(convert_to(coalesce(string_agg(x.r::text || E'\\n', '' order by x.n), ''), 'UTF8')), 'hex') as sha256
+            encode(sha256(convert_to(coalesce(string_agg(x.r::text || E'\\n', '' order by x.n), ''), 'UTF8')), 'hex') as sha256,
+            encode(sha256(convert_to(coalesce(string_agg(canonical_json(x.r)::text || E'\\n', '' order by x.n), ''), 'UTF8')), 'hex') as values_sha256
        from jsonb_array_elements($1::jsonb) with ordinality as x(r, n)`,
     [JSON.stringify(archive.tables[table] ?? [])],
   );
   let line = archive.manifest.tables.find((t) => t.name === table);
   if (line === undefined) {
-    line = { name: table, file: `data/${table}.jsonl`, rows: 0, sha256: '' };
+    line = { name: table, file: `data/${table}.jsonl`, rows: 0, sha256: '', values_sha256: '' };
     archive.manifest.tables.push(line);
   }
   line.rows = sealed.rows;
   line.sha256 = sealed.sha256;
+  line.values_sha256 = sealed.values_sha256;
 }
