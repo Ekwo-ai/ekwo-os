@@ -91,9 +91,15 @@ jobs:
       # so a country is added in its folder and nowhere else.
       - name: The country seeds and the lists of packs are the output of packs/
         run: |
-          # The CLI reads a refusal through the core, and the core writes the
-          # FEC through its brick: both are built before it, in that order.
-          npm run build --workspace @ekwo-ai/fec --workspace @ekwo-ai/core --workspace ekwo-os
+          # Everything, in dependency order, because the list that used to be
+          # here went stale. It named `@ekwo-ai/fec`, `@ekwo-ai/core` and the
+          # CLI, from when the core wrote the FEC through that one brick; the
+          # core has since come to read six more — trial-balance,
+          # journal-items, journal-report, camt053, cfonb120, coda — and
+          # `tsc` on it could not find a single one of their declarations.
+          # A list of workspaces kept by hand is a list that drifts from
+          # `packages/core/package.json`; `npm run build` reads the graph.
+          npm run build
           node packages/cli/dist/bin.js pack check --all
       # Seventeen countries keep their books on one chart, written once in
       # packs/ohada/ and copied into each of them. A member whose copy differs
