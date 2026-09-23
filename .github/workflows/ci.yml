@@ -93,9 +93,10 @@ jobs:
       # so a country is added in its folder and nowhere else.
       - name: The country seeds and the lists of packs are the output of packs/
         run: |
-          # The CLI reads a refusal through the core, and the core writes the
-          # FEC through its brick: both are built before it, in that order.
-          npm run build --workspace @ekwo-ai/fec --workspace @ekwo-ai/core --workspace ekwo-os
+          # The CLI reads a refusal through the core, and the core reads and
+          # writes books through every format brick: the workspaces are built
+          # in their declared order, bricks first, so that nothing is missing.
+          npm run build
           node packages/cli/dist/bin.js pack check --all
       # Seventeen countries keep their books on one chart, written once in
       # packs/ohada/ and copied into each of them. A member whose copy differs
