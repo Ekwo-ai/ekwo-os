@@ -123,6 +123,75 @@ The `Dockerfile` at the root of the repository builds the same server from the
 checkout; `docker run -i --rm <image>` speaks MCP over stdio, with the variables
 passed as `-e`.
 
+## Over HTTP: hosting it for others
+
+The same server, reached by URL instead of started by a client:
+`handleHttpRequest` answers the **Streamable HTTP** transport of MCP. It is
+**stateless** — each request builds a server, answers in JSON and closes it,
+with no session id and nothing kept — so it runs on a function platform,
+behind a load balancer, or in one process. A `GET` is answered `405`: this
+server never speaks first, so there is no stream to open.
+
+What it does not do is decide who is calling. That is the host's job, and the
+whole of it: the host authenticates the request its own way, then hands in
+**the connection that request may use**.
+
+```ts
+import { handleHttpRequest } from '@ekwo-ai/mcp';
+
+export default async function (request: Request): Promise<Response> {
+  const who = await yourOwnAuthentication(request);      // a token you issued
+  if (who === undefined) return new Response(null, { status: 401 });
+  return handleHttpRequest(request, {
+    supabaseUrl: who.supabaseUrl,                         // https://<ref>.supabase.co
+    anonKey: who.publishableKey,                          // never the service_role key
+    apiKey: who.ekwoKey,                                  // or: accessToken: who.session
+  });
+}
+```
+
+A connection is one of two things, never both:
+
+- **A person's access token** on the instance. Row level security decides,
+  exactly as for that person in a browser.
+- **A key of Ekwo OS**, as `create_api_key()` issues it. It travels in the
+  `X-Ekwo-Api-Key` header with no `Authorization` beside it, the schema's
+  pre-request hook presents it (decision
+  [0062](../../docs/decisions/0062-a-key-reaches-the-api.md)), and the caller
+  is on that key's one company with that key's capabilities. A key issued
+  without a capability that writes gives an agent that reads.
+
+A `service_role` key is refused in all three slots, as on stdio. For
+`node:http` (or anything built on it), `handleNodeRequest(req, res,
+connection, { origin })` is the same handler.
+
+### Putting it in front of people: authorization
+
+A remote MCP client — Claude and the others — expects the server to follow
+the [authorization part of the MCP
+specification](https://modelcontextprotocol.io/specification/2025-11-25/basic/authorization):
+OAuth 2.1 with PKCE. That belongs to the host, not to this package, and a
+host that wants the clients to connect on their own serves:
+
+1. **`401` with `WWW-Authenticate: Bearer resource_metadata="…"`** on the MCP
+   endpoint when there is no valid token.
+2. **Protected resource metadata** (RFC 9728) at
+   `/.well-known/oauth-protected-resource`, naming the endpoint as the
+   `resource` and the authorization server.
+3. **Authorization server metadata** (RFC 8414) at
+   `/.well-known/oauth-authorization-server`, with `S256` in
+   `code_challenge_methods_supported`.
+4. **Dynamic client registration** (RFC 7591), or client metadata documents,
+   so a client registers itself.
+5. **An authorization page** where the person signs in the host's way and
+   chooses what the client may reach; then a token endpoint that issues short
+   access tokens and rotating refresh tokens.
+
+Each access token the host issues maps to a connection — for instance to a
+key of Ekwo OS the person issued on their own installation for this purpose,
+held by the host encrypted and opened in memory for the one request. The
+database stays the only place that decides what may be read or written.
+
 ## The tools
 
 Every write names its company explicitly.

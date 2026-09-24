@@ -42,10 +42,18 @@ export async function listCompanies(backend: Backend): Promise<unknown> {
     columns: ['id', 'name', 'country', 'fiscal_country', 'vat_number', 'currency_code'],
     order: [{ column: 'name' }],
   });
-  const roles = await backend.select<{ company_id: string; role: string }>({
-    table: 'company_members',
-    columns: ['company_id', 'role'],
-  });
+  // Your role, and only yours. `company_members` shows every member of a
+  // company one is on, so an unfiltered read would give whichever member's
+  // role came last. A key of Ekwo OS is nobody's member: it has no role, and
+  // says so with null rather than borrowing one.
+  const roles =
+    backend.actingAs === undefined
+      ? []
+      : await backend.select<{ company_id: string; role: string }>({
+          table: 'company_members',
+          columns: ['company_id', 'role'],
+          where: [{ column: 'user_id', op: 'eq', value: backend.actingAs }],
+        });
   const mine = new Map(roles.map((row) => [row.company_id, row.role]));
   return {
     companies: companies.map((company) => ({

@@ -87,6 +87,38 @@ export interface PostgrestBackendOptions {
   accessToken?: string | undefined;
   email?: string | undefined;
   password?: string | undefined;
+  /**
+   * A key of Ekwo OS — what `create_api_key()` issues — instead of a person.
+   *
+   * It travels in `X-Ekwo-Api-Key` and the core's `db_pre_request` hook
+   * presents it at the top of every request's transaction (decision 0062), so
+   * the caller is on the key's company with the key's capabilities and
+   * nothing else. Such a request carries **no `Authorization`**: PostgREST
+   * decides the role from that header before any function of the core runs,
+   * and the hook is what moves the request off `anon`.
+   */
+  apiKey?: string | undefined;
+  /** The `fetch` every request goes through. A host or a test may hand its own. */
+  fetch?: typeof globalThis.fetch | undefined;
+}
+
+/** The header the core's pre-request hook reads a key out of. */
+export const API_KEY_HEADER = 'X-Ekwo-Api-Key';
+
+/**
+ * A `fetch` that never sends `Authorization`.
+ *
+ * `supabase-js` puts the publishable key in `Authorization` when nothing else
+ * is there. With a key of Ekwo OS on the request that is the one header that
+ * must be absent, so it is taken off on the way out rather than trusted not to
+ * be added.
+ */
+function withoutAuthorization(inner: typeof globalThis.fetch): typeof globalThis.fetch {
+  return (input, init) => {
+    const headers = new Headers(init?.headers ?? (input instanceof Request ? input.headers : undefined));
+    headers.delete('authorization');
+    return inner(input, { ...init, headers });
+  };
 }
 
 /**
@@ -97,23 +129,32 @@ export interface PostgrestBackendOptions {
  * server outlives the first hour without a credential cache existing.
  */
 export async function postgrestBackend(options: PostgrestBackendOptions): Promise<Backend> {
+  const apiKey = options.apiKey !== undefined && options.apiKey.length > 0 ? options.apiKey : undefined;
   const headers: Record<string, string> = {};
-  if (options.accessToken !== undefined && options.accessToken.length > 0) {
+  if (apiKey !== undefined) {
+    headers[API_KEY_HEADER] = apiKey;
+  } else if (options.accessToken !== undefined && options.accessToken.length > 0) {
     headers['Authorization'] = `Bearer ${options.accessToken}`;
   }
 
+  const baseFetch = options.fetch ?? globalThis.fetch;
   const client: SupabaseClient = createClient(options.supabaseUrl, options.anonKey, {
     auth: {
       persistSession: false,
-      autoRefreshToken: options.accessToken === undefined,
+      autoRefreshToken: apiKey === undefined && options.accessToken === undefined,
       detectSessionInUrl: false,
     },
-    global: { headers },
+    global: { headers, fetch: apiKey === undefined ? baseFetch : withoutAuthorization(baseFetch) },
   });
 
   let actingAs: string | undefined;
 
-  if (options.accessToken === undefined || options.accessToken.length === 0) {
+  if (apiKey !== undefined) {
+    // A key is not a person: there is nobody to sign in and no user id to
+    // report. What it may do is decided by the capabilities it carries, on
+    // the one company it was issued for.
+    actingAs = undefined;
+  } else if (options.accessToken === undefined || options.accessToken.length === 0) {
     if (options.email === undefined || options.password === undefined) {
       throw new EkwoMcpError(
         'no_credentials: set EKWO_EMAIL and EKWO_PASSWORD, or EKWO_ACCESS_TOKEN',

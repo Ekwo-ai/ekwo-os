@@ -11,6 +11,15 @@ somewhere has already run it.
 
 ### Added
 
+- **The MCP server answers over HTTP too** (`handleHttpRequest`,
+  `handleNodeRequest` in `@ekwo-ai/mcp`): the Streamable HTTP transport,
+  stateless and in JSON, for a host that puts the server on the network. The
+  host authenticates each request its own way and hands in the connection it
+  may use — a person's access token, or a key of Ekwo OS, which travels in
+  `X-Ekwo-Api-Key` with no `Authorization` beside it. A `service_role` key is
+  refused in every slot. stdio is unchanged. How to host it behind an OAuth
+  of one's own is in `packages/mcp/README.md`.
+
 - **The FEC of two more ledgers is found by the name of the ledger**:
   `ekwo import <name>` and the MCP tool read it with the FEC reader, and
   `docs/compatibility.md` gives the menu each exports it from and its official
@@ -47,6 +56,11 @@ somewhere has already run it.
   or key is renamed. Published decisions and migrations keep their wording.
 
 ### Fixed
+
+- **`list_companies` gives each caller their own role.** Two members of a
+  company see each other's membership rows, and the role shown was whichever
+  came last; it is now read for the caller alone, and a key of Ekwo OS, which
+  is nobody's member, is given none.
 
 - **An archive survives an honest reader printing it again**
   (`20260923110000`). The checksum of a table was the sha256 of the bytes the
