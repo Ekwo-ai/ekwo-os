@@ -56,7 +56,23 @@ const NAMES = [
   ['o', 'd', 'o', 'o'],
   ['x', 'e', 'r', 'o'],
   ['q', 'u', 'i', 'c', 'k', 'b', 'o', 'o', 'k', 's'],
+  ['p', 'e', 'n', 'n', 'y', 'l', 'a', 'n', 'e'],
 ].map((letters) => letters.join(''));
+
+/**
+ * Names refused only as a whole word, because as a part of one they are
+ * everywhere: this one sits inside "usage" and "message".
+ */
+const WORDS = [['s', 'a', 'g', 'e']].map((letters) => letters.join(''));
+
+/**
+ * Names made of two common words, refused only together — each word alone is
+ * ordinary prose. Written with a space, a hyphen or nothing between them.
+ */
+const PAIRS = [[['e', 'x', 'a', 'c', 't'], ['o', 'n', 'l', 'i', 'n', 'e']]].map(([first, second]) => [
+  first.join(''),
+  second.join(''),
+]);
 
 /** Published migrations that carried a mention before the rule; frozen. */
 const PUBLISHED_BEFORE_THE_RULE = new Set(['supabase/migrations/20260912074712_country_packs.sql']);
@@ -72,9 +88,18 @@ const COMPATIBILITY = new Set([
   'packages/mcp/src/tools/import-books.ts',
   'packages/formats/journal-items/README.md',
   'packages/formats/journal-report/README.md',
+  'packages/formats/transaction-journal/README.md',
+  'packages/formats/xaf/README.md',
 ]);
 
-const pattern = new RegExp(NAMES.join('|'), 'i');
+const pattern = new RegExp(
+  [
+    ...NAMES,
+    ...WORDS.map((word) => `\\b${word}\\b`),
+    ...PAIRS.map(([first, second]) => `\\b${first}[ _-]?${second}\\b`),
+  ].join('|'),
+  'i',
+);
 
 /** Every path git tracks, relative to the root of the working tree. */
 async function trackedFiles() {

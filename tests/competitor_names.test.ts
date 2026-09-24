@@ -24,7 +24,14 @@ const GUARD = join('scripts', 'check-no-competitor-names.mjs');
 
 /** The refused names, and the published migration that keeps the first. */
 const NAME = ['O', 'd', 'o', 'o'].join('');
-const OTHERS = [['X', 'e', 'r', 'o'].join(''), ['Q', 'u', 'i', 'c', 'k', 'B', 'o', 'o', 'k', 's'].join('')];
+const OTHERS = [
+  ['X', 'e', 'r', 'o'].join(''),
+  ['Q', 'u', 'i', 'c', 'k', 'B', 'o', 'o', 'k', 's'].join(''),
+  ['P', 'e', 'n', 'n', 'y', 'l', 'a', 'n', 'e'].join(''),
+];
+/** A name refused as a whole word only, and one made of two common words. */
+const WORD = ['S', 'a', 'g', 'e'].join('');
+const PAIR = [['E', 'x', 'a', 'c', 't'].join(''), ['O', 'n', 'l', 'i', 'n', 'e'].join('')] as const;
 const FROZEN = 'supabase/migrations/20260912074712_country_packs.sql';
 
 /** Directories to remove when the suite is done. */
@@ -97,9 +104,33 @@ describe('what the guard refuses', () => {
     });
 
     expect(result.code).toBe(1);
-    expect(result.stderr).toContain('docs/international.md:1');
-    expect(result.stderr).toContain('docs/international.md:2');
-    expect(result.stderr).toContain('2 line(s)');
+    for (const [index] of OTHERS.entries()) expect(result.stderr).toContain(`docs/international.md:${index + 1}`);
+    expect(result.stderr).toContain(`${OTHERS.length} line(s)`);
+  });
+
+  it('refuses a name that is a word only as that word, and a name of two words only as the pair', async () => {
+    const [first, second] = PAIR;
+    const result = await guardOver({
+      'docs/words.md': [
+        `Exported from ${WORD} 50.`,
+        `See ${WORD.toLowerCase()}.example for the file.`,
+        `Exported from ${first} ${second}.`,
+        `A file of ${first.toLowerCase()}-${second.toLowerCase()}.`,
+        `The ${first.toLowerCase()}${second.toLowerCase()}.example help centre.`,
+        '',
+      ].join('\n'),
+      // The same letters inside other words, and each word of the pair alone.
+      'docs/prose.md': [
+        `The u${WORD.toLowerCase()} of the command, and its mes${WORD.toLowerCase()}.`,
+        `An ${first.toLowerCase()} amount, and a copy kept ${second.toLowerCase()}.`,
+        '',
+      ].join('\n'),
+    });
+
+    expect(result.code).toBe(1);
+    for (const line of [1, 2, 3, 4, 5]) expect(result.stderr).toContain(`docs/words.md:${line}`);
+    expect(result.stderr).not.toContain('docs/prose.md');
+    expect(result.stderr).toContain('5 line(s)');
   });
 
   it('refuses a migration that is not on the frozen list', async () => {
@@ -138,6 +169,8 @@ describe('the files that declare what is read', () => {
     'packages/mcp/src/tools/import-books.ts',
     'packages/formats/journal-items/README.md',
     'packages/formats/journal-report/README.md',
+    'packages/formats/transaction-journal/README.md',
+    'packages/formats/xaf/README.md',
   ];
 
   it('may name the product whose export is read, and only those exact paths may', async () => {
