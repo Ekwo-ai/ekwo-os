@@ -357,6 +357,57 @@ describe('the exports of other ledgers, through the same function', () => {
     expect((answer['result'] as Record<string, unknown>)['entries']).toBe(3);
   });
 
+  it('takes over a transaction journal, each transaction gathered by the order of its rows, the ledger even to the cent', async () => {
+    const companyId = await company('Transaction journal');
+    const files = [fixture('transaction-journal', 'journal.csv'), fixture('transaction-journal', 'account-list.csv')];
+    const general = journalRoles['miscellaneous']!;
+    const mapping: Partial<ImportMapping> = {
+      accounts: {
+        '1000': roleOf(somePack, 'bank'),
+        '3000': roleOf(somePack, 'retained_earnings'),
+        '1200': roleOf(somePack, 'receivable'),
+        '4000': roleOf(somePack, 'sales'),
+        '2200': roleOf(somePack, 'tax_payable'),
+        '6000': roleOf(somePack, 'purchase'),
+        '2000': roleOf(somePack, 'payable'),
+      },
+      journals: {
+        'Journal Entry': general,
+        Invoice: journalRoles['sales']!,
+        'Credit Memo': journalRoles['sales']!,
+        Bill: journalRoles['purchase']!,
+        Payment: general,
+      },
+    };
+    await expect(
+      importBooks(backendFor(db, owner), { company_id: companyId, source: 'transaction-journal', files, mapping, open_years: true }),
+    ).rejects.toThrow(/in which order/);
+
+    const done = await importBooks(backendFor(db, owner), {
+      company_id: companyId, source: 'transaction-journal', files, mapping, open_years: true, date_order: 'mdy',
+    });
+    expect((done['result'] as Record<string, unknown>)['entries']).toBe(5);
+    const totals = await one<{ debit: string; credit: string }>(
+      db, `select sum(debit)::text as debit, sum(credit)::text as credit from entry_lines where company_id = $1`, [companyId],
+    );
+    expect(totals).toEqual({ debit: '7392.00', credit: '7392.00' });
+    const receivable = await one<{ balance: string }>(
+      db,
+      `select sum(l.debit - l.credit)::text as balance from entry_lines l join accounts a on a.id = l.account_id
+        where l.company_id = $1 and a.code = $2`,
+      [companyId, roleOf(somePack, 'receivable')],
+    );
+    // Invoiced 1150.00, credited 115.00, paid 1035.00: nothing left open.
+    expect(Number(receivable.balance)).toBe(0);
+    const parties = await rows<{ name: string; contact_type: string }>(
+      db, `select name, contact_type::text from contacts where company_id = $1 order by name`, [companyId],
+    );
+    expect(parties).toEqual([
+      { name: 'Atelier Sirocco', contact_type: 'customer' },
+      { name: 'Kestrel Joinery', contact_type: 'supplier' },
+    ]);
+  });
+
   it('takes over an audit file, its opening balance on the day the file gives, the ledger even to the cent', async () => {
     const companyId = await company('Audit file');
     const currency = (await one<{ currency_code: string }>(db, `select currency_code from companies where id = $1`, [companyId])).currency_code;

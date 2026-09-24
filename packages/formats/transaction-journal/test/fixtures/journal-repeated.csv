@@ -1,0 +1,11 @@
+﻿Example Trading Company;;;;;;;
+Journal;;;;;;;
+;;;;;;;
+Date;Transaction Type;Num;Name;Memo/Description;Account;Debit;Credit
+15/01/2025;Invoice;1001;Atelier Sirocco;;Accounts Receivable (A/R);1 150,00;
+15/01/2025;Invoice;1001;Atelier Sirocco;Design work;Sales;;1 000,00
+15/01/2025;Invoice;1001;Atelier Sirocco;Sales tax;Sales Tax Payable;;150,00
+;;;;;;;
+28/01/2025;Payment;;Atelier Sirocco;;Checking;1 150,00;
+28/01/2025;Payment;;Atelier Sirocco;;Accounts Receivable (A/R);;1 150,00
+;;;;;;;

@@ -45,12 +45,14 @@ own `types.ts`. It is the core saying what `import_bank_statement()` takes, and
 three bricks each choosing to return it — what only one format says (a CODA
 transaction code, a CFONB operation code) comes after, under its own name.
 
-Five more read **books** — what another system kept, when somebody brings it
+Six more read **books** — what another system kept, when somebody brings it
 over: `fec` (whose `readFec()` reads back the file the package writes),
 `trial-balance`, `journal-items` (the lines of every entry, exported from the
 list view of an ERP whose ledger is a table of lines), `journal-report` (a
 journal report or a general ledger detail, saved as CSV from a cloud
-service's spreadsheet export) and `xaf` (the XML Audit File Financial,
+service's spreadsheet export), `transaction-journal` (a journal printed
+transaction after transaction, where the order of the rows is what gathers
+them) and `xaf` (the XML Audit File Financial,
 versions 3.2 and 4.0, read with the strict XML reader of the statements,
 copied). Each returns accounts, parties, entries and an
 opening balance under the same names, declared in its own `types.ts`, which is

@@ -38,6 +38,7 @@ same `importBooks()`. Neither holds a rule.
 | `fec` | `@ekwo-ai/fec` (`readFec()`) | The *fichier des écritures comptables*, found by the names of its columns, in any of the variants of the text. |
 | `journal-items` | `@ekwo-ai/journal-items` | The lines of every entry exported as CSV from the list view of an ERP whose ledger is a table of lines, under its labels or its field names; the chart and the partners beside it. |
 | `journal-report` | `@ekwo-ai/journal-report` | A journal report or a general ledger detail, saved as CSV from a cloud service's spreadsheet export; the chart and the contacts beside it. |
+| `transaction-journal` | `@ekwo-ai/transaction-journal` | A transaction journal saved as CSV from a spreadsheet export, each transaction a run of rows under one date, type and number; the list of accounts beside it. |
 | `xaf` | `@ekwo-ai/xaf` (`readXaf()`) | An XML Audit File Financial, version 3.2 or 4.0: accounts, parties, the opening balance with the day it opens, and every transaction, in one XML file whose totals are checked against its lines. |
 
 A reader is **named after the file**: the same kind of export can come from

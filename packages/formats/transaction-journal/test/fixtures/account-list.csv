@@ -1,0 +1,13 @@
+Example Trading Company
+Account List
+
+Account,Type,Detail Type,Description,Balance
+Checking,Bank,Checking,,"6,035.00"
+Accounts Receivable (A/R),Accounts receivable (A/R),Accounts Receivable (A/R),,0.00
+Accounts Payable (A/P),Accounts payable (A/P),Accounts Payable (A/P),,92.00
+Sales Tax Payable,Other Current Liabilities,Sales Tax Payable,,135.00
+Opening Balance Equity,Equity,Opening Balance Equity,,"5,000.00"
+Sales,Income,Service/Fee Income,,
+Office Supplies,Expenses,Office/General Administrative Expenses,,
+
+"Tuesday, February 4, 2025 10:12 AM GMT-08:00"

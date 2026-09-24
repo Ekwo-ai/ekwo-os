@@ -129,8 +129,9 @@ ${bold('Connecting')} ${dim('(every command)')}
   ${cyan('payment')}     record — money in or out, booked and matched.
   ${cyan('match')}       <bank transaction> <document> — a statement line pays a document.
   ${cyan('import')}      <source> <file>… — books kept elsewhere, whole or not at all:
-              trial-balance, fec, journal-items, journal-report, xaf, or
-              the export of another ledger by its name (ekwo import --help). Or a
+              trial-balance, fec, journal-items, journal-report,
+              transaction-journal, xaf, or the export of another ledger by
+              its name (ekwo import --help). Or a
               bank statement: camt.053, coda, cfonb120, pending lines for match.
 
 ${bold('Acting as a person')} ${dim('(login … whoami, and every verb that keeps books — never a service_role key)')}
@@ -264,8 +265,8 @@ ${bold('ekwo import')} ${dim('(one command, one reader per source; nothing is po
                             the journal draws them and the old one is the reference.
   --encoding <e>            utf-8 (default, refused if the bytes are not),
                             iso-8859-1, iso-8859-15. Never guessed.
-  --date-order <o>          journal-report: dmy, mdy or ymd, for a date written
-                            only in digits. Never guessed.
+  --date-order <o>          journal-report, transaction-journal: dmy, mdy or
+                            ymd, for a date written only in digits. Never guessed.
   --bank-account <id>       A statement: the account, where the file names it otherwise.
   --iban-country <cc>       cfonb120: the country the account is held in.
 

@@ -20,13 +20,14 @@ import { readFec, type ImportedBooks, type ImportedLine } from '@ekwo-ai/fec';
 import { readTrialBalance } from '@ekwo-ai/trial-balance';
 import { readJournalItems } from '@ekwo-ai/journal-items';
 import { readJournalReport, type DateOrder } from '@ekwo-ai/journal-report';
+import { readTransactionJournal } from '@ekwo-ai/transaction-journal';
 import { readXaf } from '@ekwo-ai/xaf';
 import { BooksError, type Backend, type Row } from './backend.js';
 
 export type { ImportedBooks, ImportedLine } from '@ekwo-ai/fec';
 
 /** The sources an import reads, each by one brick of `packages/formats/`. */
-export const BOOK_SOURCES = ['trial-balance', 'fec', 'journal-items', 'journal-report', 'xaf'] as const;
+export const BOOK_SOURCES = ['trial-balance', 'fec', 'journal-items', 'journal-report', 'transaction-journal', 'xaf'] as const;
 export type BookSource = (typeof BOOK_SOURCES)[number];
 
 /** What each source is, in one sentence, for a help text and a tool description. */
@@ -37,6 +38,8 @@ export const BOOK_SOURCE_DESCRIPTIONS: Record<BookSource, string> = {
     'an export of journal items as CSV — one row per line of an entry, with its entry, journal, date, account, partner, debit and credit — optionally with the chart of accounts and the partners exported beside it',
   'journal-report':
     'a journal report or a general ledger detail saved as CSV — date, journal number, account code, debit, credit — optionally with the chart of accounts and the contacts exported beside it',
+  'transaction-journal':
+    'a transaction journal saved as CSV — each transaction a run of rows under one date, type and number, with its account, debit and credit — optionally with the list of accounts exported beside it',
   xaf: 'an XML Audit File Financial (XAF), version 3.2 or 4.0 — the accounts, the parties, the opening balance and every transaction of a year, in one XML file',
 };
 
@@ -55,7 +58,7 @@ export interface BookFile {
 export interface ReadBooksOptions {
   /** How bytes are decoded, where a file arrives as bytes. Never guessed. */
   encoding?: 'utf-8' | 'iso-8859-1' | 'iso-8859-15' | undefined;
-  /** For `journal-report`: how a date that is not ISO is written. Never guessed. */
+  /** For `journal-report` and `transaction-journal`: how a date that is not ISO is written. Never guessed. */
   date_order?: DateOrder | undefined;
 }
 
@@ -101,6 +104,11 @@ export function readBooks(source: BookSource, files: BookFile[], options: ReadBo
       );
     case 'journal-report':
       return readJournalReport(files.map((file) => file.content), {
+        ...(options.encoding === undefined ? {} : { encoding: options.encoding === 'iso-8859-15' ? 'iso-8859-1' : options.encoding }),
+        ...(options.date_order === undefined ? {} : { dateOrder: options.date_order }),
+      });
+    case 'transaction-journal':
+      return readTransactionJournal(files.map((file) => file.content), {
         ...(options.encoding === undefined ? {} : { encoding: options.encoding === 'iso-8859-15' ? 'iso-8859-1' : options.encoding }),
         ...(options.date_order === undefined ? {} : { dateOrder: options.date_order }),
       });

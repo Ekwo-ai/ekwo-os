@@ -31,6 +31,7 @@
       "@ekwo-ai/trial-balance": ["./packages/formats/trial-balance/src/index.ts"],
       "@ekwo-ai/journal-items": ["./packages/formats/journal-items/src/index.ts"],
       "@ekwo-ai/journal-report": ["./packages/formats/journal-report/src/index.ts"],
+      "@ekwo-ai/transaction-journal": ["./packages/formats/transaction-journal/src/index.ts"],
       "@ekwo-ai/xaf": ["./packages/formats/xaf/src/index.ts"]
     }
   },

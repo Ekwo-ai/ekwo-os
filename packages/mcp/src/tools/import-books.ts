@@ -24,6 +24,10 @@ export const NAMED_SOURCES = {
     reader: 'journal-report',
     export: 'the Journal Report or the General Ledger Detail of Xero, saved as CSV, with its chart of accounts and its contacts',
   },
+  'quickbooks-online': {
+    reader: 'transaction-journal',
+    export: 'the Journal report of QuickBooks Online, exported to Excel and saved as CSV, with its Account # column, and its Account List exported the same way',
+  },
   'exact-online': {
     reader: 'xaf',
     export: 'the XML Audit File (XAF, version 3.2 or 4.0) of Exact Online, exported under Import/Export > Export > Audit file',
@@ -47,7 +51,7 @@ export function sourceOf(source: BookSource | keyof typeof NAMED_SOURCES): BookS
 export const MAX_TEXT_KIB = 256;
 
 export const IMPORT_BOOKS_DESCRIPTION =
-  "Takes over the books a user kept elsewhere — a FEC, an XML audit file, an export of journal items, a journal report, a trial balance, or the export of " +
+  "Takes over the books a user kept elsewhere — a FEC, an XML audit file, an export of journal items, a journal report, a transaction journal, a trial balance, or the export of " +
   NAMED_SOURCE_KEYS.join(' or ') +
   " by name — whole or not at all. Each file is read by the reader of its source; every account of the old chart is matched to one of this company's chart and every old journal to a journal of the company. The codes give a candidate (the same code, the same digits without the padding zeros, or the longest beginning of three digits or more), and what the files say of the old account — its type, its name, the side of its balance — is held against what the chart says the candidate is, never a country: only the same code, not contradicted, is `exact`; anything else is `suggested` with its reason, or `none`. Call it with dry_run first: it returns the correspondence proposed, the suggestions under mapping.suggested, what is unanswered, and — when everything is answered — what the database would write, rehearsed and rolled back. Show the user every suggested line and its reason first; nothing is posted while one is unconfirmed. Settle each by writing its code under mapping.accounts, or, once the user has read and approved them all, pass accept_suggestions. Every entry is posted through post_entry(); a trial balance becomes the opening entry. Imported lines carry no tax and feed no VAT box. The same files twice are refused. The files travel as text, up to " + MAX_TEXT_KIB + " KiB in all: a larger export is imported from the terminal with `ekwo import`, which reads it from the disk. Ask the user before the real call.";
 
@@ -70,7 +74,7 @@ export const ImportBooksInput = z.object({
       }),
     )
     .min(1)
-    .describe('The files of one source, in the order given. `journal-items` and `journal-report` take the chart of accounts and the parties beside the lines, each recognised by its header; the others take one file.'),
+    .describe('The files of one source, in the order given. `journal-items` and `journal-report` take the chart of accounts and the parties beside the lines, and `transaction-journal` the list of accounts, each recognised by its header; the others take one file.'),
   mapping: z
     .object({
       accounts: z.record(z.string(), z.string().nullable()).optional().describe('Old account code → code of this company\'s chart.'),
@@ -86,7 +90,7 @@ export const ImportBooksInput = z.object({
   opening_date: isoDate.optional().describe('For a trial balance: the first day of the fiscal year it opens. The file does not say it; an audit file does, and needs none.'),
   allow_result_accounts: z.boolean().optional().describe('Let an opening balance carry income and expense accounts: books taken over in the middle of a year.'),
   keep_numbers: z.boolean().optional().describe('Post each entry under the number it had. Where the country forbids a hole in the sequence it takes the entries.import capability; left out, the journal draws the numbers and the old one is kept as the reference.'),
-  date_order: z.enum(['dmy', 'mdy', 'ymd']).optional().describe('For `journal-report`: the order of a date written only in digits, which the file does not say.'),
+  date_order: z.enum(['dmy', 'mdy', 'ymd']).optional().describe('For `journal-report` and `transaction-journal`: the order of a date written only in digits, which the file does not say.'),
   accept_suggestions: z
     .boolean()
     .optional()

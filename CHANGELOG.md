@@ -11,6 +11,17 @@ somewhere has already run it.
 
 ### Added
 
+- **A transaction journal saved as CSV is read as books**
+  (`@ekwo-ai/transaction-journal`, `ekwo import transaction-journal`). The
+  report a ledger prints transaction after transaction names no transaction
+  on its lines: a dated row starts one — or continues it, in a layout that
+  repeats the date, the type and the number on every line — a row with no
+  date continues it, and a row with no account, its total, ends it. The
+  header is found under the title rows by the names of its columns; a date in
+  digits is read in the order the caller names, and never guessed. The list of
+  accounts exported beside it gives each account its type. The export of a
+  named ledger that prints one is listed in `docs/compatibility.md`.
+
 - **An XML Audit File Financial is read as books** (`@ekwo-ai/xaf`,
   `ekwo import xaf`). Versions 3.2 and 4.0, each found by the namespace of its
   schema: the accounts, the parties, the opening balance — posted on the day

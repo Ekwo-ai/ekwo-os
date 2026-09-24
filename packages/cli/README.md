@@ -324,7 +324,7 @@ instead if the account already exists, and no key is needed.
 | `ekwo reverse <entry>` | Undoes a posted entry keyed by hand, through `reverse_entry()`: its mirror, posted and matched against it. By id or by number; `--date` as for `cancel`. |
 | `ekwo payment record` | Money in or out, booked and matched. With `--doc`, against that document. |
 | `ekwo match <transaction> <document>` | A bank statement line pays a document, through `settle_from_statement()`. |
-| `ekwo import <source> <file>…` | Books kept elsewhere — `trial-balance`, `fec`, `journal-items`, `journal-report`, `xaf` — whole or not at all, through `import_books()`, with a correspondence of accounts and journals you save and give back; or a bank statement — `camt.053`, `coda`, `cfonb120` — as pending lines. `--dry-run` rehearses. See [taking over books](#taking-over-books-ekwo-import). |
+| `ekwo import <source> <file>…` | Books kept elsewhere — `trial-balance`, `fec`, `journal-items`, `journal-report`, `transaction-journal`, `xaf` — whole or not at all, through `import_books()`, with a correspondence of accounts and journals you save and give back; or a bank statement — `camt.053`, `coda`, `cfonb120` — as pending lines. `--dry-run` rehearses. See [taking over books](#taking-over-books-ekwo-import). |
 | `ekwo doc list` / `show` | What exists, and with `--unpaid` what is posted and still owed. See [keeping books](#keeping-books). |
 
 There is no `eject`, because there is nothing to eject from. The schema is in
@@ -573,6 +573,7 @@ ekwo import fec 123456789FEC20251231.txt --mapping map.json --open-years
 ekwo import trial-balance balance.csv --opening-date 2026-01-01 --dry-run --save-mapping map.json
 ekwo import journal-items items.csv accounts.csv partners.csv --dry-run --save-mapping map.json
 ekwo import journal-report report.csv chart.csv --date-order dmy --dry-run --save-mapping map.json
+ekwo import transaction-journal journal.csv account-list.csv --date-order mdy --dry-run --save-mapping map.json
 ekwo import xaf books.xaf --open-years --dry-run --save-mapping map.json
 ekwo import camt.053 statement.xml                 # or coda, cfonb120: pending lines for `ekwo match`
 ```
@@ -583,6 +584,7 @@ ekwo import camt.053 statement.xml                 # or coda, cfonb120: pending 
 | `fec` | A *fichier des écritures comptables*: the eighteen columns of the arrêté of 29 July 2013, tab or bar separated |
 | `journal-items` | The lines of every entry exported as CSV from the list view of an ERP whose ledger is a table of lines, with the chart of accounts and the partners exported beside it |
 | `journal-report` | A journal report or a general ledger detail, saved as CSV from a cloud service's spreadsheet export, with its Journal ID and Account Code columns, and the chart and the contacts beside it |
+| `transaction-journal` | A transaction journal, saved as CSV from a spreadsheet export: each transaction a run of rows under one date, type and number, closed by its total; the list of accounts beside it |
 | `xaf` | An XML Audit File Financial, version 3.2 or 4.0: the accounts, the parties, the opening balance — on the day the file gives it — and every transaction of a year, in one file |
 | `camt.053`, `coda`, `cfonb120` | A bank statement: its lines, pending, ready for `ekwo match` |
 

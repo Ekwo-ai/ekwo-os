@@ -1,0 +1,31 @@
+Example Trading Company
+Journal
+"January 1-31, 2025"
+
+,Date,Transaction Type,Num,Name,Memo/Description,Account #,Account,Debit,Credit
+,01/01/2025,Journal Entry,1,,Opening balance,1000,Checking,"5,000.00",
+,,,,,Opening balance,3000,Opening Balance Equity,,"5,000.00"
+,,,,,,,,"5,000.00","5,000.00"
+,,,,,,,,,
+,01/15/2025,Invoice,1001,Atelier Sirocco,,1200,Accounts Receivable (A/R),"1,150.00",
+,,,,Atelier Sirocco,Design work,4000,Sales,,"1,000.00"
+,,,,Atelier Sirocco,Sales tax,2200,Sales Tax Payable,,150.00
+,,,,,,,,"1,150.00","1,150.00"
+,,,,,,,,,
+,01/20/2025,Credit Memo,1002,Atelier Sirocco,,1200,Accounts Receivable (A/R),,115.00
+,,,,Atelier Sirocco,"Design work, credited",4000,Sales,100.00,
+,,,,Atelier Sirocco,Sales tax,2200,Sales Tax Payable,15.00,
+,,,,,,,,115.00,115.00
+,,,,,,,,,
+,01/22/2025,Bill,A-17,Kestrel Joinery,Paper,6000,Office Supplies,92.00,
+,,,,Kestrel Joinery,,2000,Accounts Payable (A/P),,92.00
+,,,,,,,,92.00,92.00
+,,,,,,,,,
+,01/28/2025,Payment,,Atelier Sirocco,,1000,Checking,"1,035.00",
+,,,,Atelier Sirocco,,1200,Accounts Receivable (A/R),,"1,035.00"
+,,,,,,,,"1,035.00","1,035.00"
+,,,,,,,,,
+TOTAL,,,,,,,,"7,392.00","7,392.00"
+
+
+"Accrual basis Tuesday, February 4, 2025 10:12 AM GMT-08:00"
