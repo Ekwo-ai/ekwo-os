@@ -53,14 +53,13 @@ lets name another product. The text says what is read, and nothing else.
 
 ## Writing back — planned
 
-Today Ekwo reads the software above and writes into none of it. What is
-coming, with no date: a connector per software, through its public API,
-that reads continuously instead of from an export, and writes back into it —
-received invoices as draft bills with their attachment, the entries an
-assistant proposes as drafts, and the status of each obligation (sent,
-received, filed, refused).
+Today Ekwo reads the software above from its exports and writes into none of
+it. What is coming, with no date, in [Ekwo Cloud](https://cloud.ekwo.ai), the
+hosted edition: connectors that read that software continuously through its
+public API, and write back into it — received invoices as draft bills with
+their attachment, the entries an assistant proposes as drafts, and the status
+of each obligation (sent, received, filed, refused).
 
 Nothing is ever posted or approved in the other software on the user's
-behalf: whatever Ekwo writes there arrives as a draft. A connector is listed
-here as available only once it exists and is tested in this repository, like
-a reader.
+behalf: whatever Ekwo writes there arrives as a draft. The readers of the
+exports stay here, in the open, and so does everything they bring in.
