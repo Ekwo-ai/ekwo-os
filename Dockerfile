@@ -16,11 +16,12 @@ RUN npm ci --no-audit --no-fund
 # The server and the workspaces it depends on, in dependency order.
 RUN npm run build -w @ekwo-ai/fec -w @ekwo-ai/camt053 -w @ekwo-ai/cfonb120 \
       -w @ekwo-ai/coda -w @ekwo-ai/trial-balance -w @ekwo-ai/journal-items \
-      -w @ekwo-ai/journal-report -w @ekwo-ai/core -w @ekwo-ai/mcp \
+      -w @ekwo-ai/journal-report -w @ekwo-ai/xaf -w @ekwo-ai/core -w @ekwo-ai/mcp \
  && mkdir /pack \
  && npm pack --pack-destination /pack -w @ekwo-ai/fec -w @ekwo-ai/camt053 \
       -w @ekwo-ai/cfonb120 -w @ekwo-ai/coda -w @ekwo-ai/trial-balance \
-      -w @ekwo-ai/journal-items -w @ekwo-ai/journal-report -w @ekwo-ai/core -w @ekwo-ai/mcp
+      -w @ekwo-ai/journal-items -w @ekwo-ai/journal-report -w @ekwo-ai/xaf \
+      -w @ekwo-ai/core -w @ekwo-ai/mcp
 
 # What `npx @ekwo-ai/mcp` would install, from the tarballs above, plus the
 # Postgres driver the direct-connection route needs (an optional peer).

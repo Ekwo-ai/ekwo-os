@@ -129,8 +129,8 @@ ${bold('Connecting')} ${dim('(every command)')}
   ${cyan('payment')}     record — money in or out, booked and matched.
   ${cyan('match')}       <bank transaction> <document> — a statement line pays a document.
   ${cyan('import')}      <source> <file>… — books kept elsewhere, whole or not at all:
-              trial-balance, fec, journal-items, journal-report, or the
-              export of another ledger by its name (ekwo import --help). Or a
+              trial-balance, fec, journal-items, journal-report, xaf, or
+              the export of another ledger by its name (ekwo import --help). Or a
               bank statement: camt.053, coda, cfonb120, pending lines for match.
 
 ${bold('Acting as a person')} ${dim('(login … whoami, and every verb that keeps books — never a service_role key)')}
@@ -257,6 +257,7 @@ ${bold('ekwo import')} ${dim('(one command, one reader per source; nothing is po
   --open-years              Open the fiscal years the entries fall in, on the
                             length and first day of the company's own.
   --opening-date <d>        trial-balance: the first day of the year it opens.
+                            An audit file (xaf) says it, and needs none.
   --allow-result-accounts   trial-balance: income and expense accounts too, for
                             books taken over in the middle of a year.
   --keep-numbers            Post each entry under the number it had. Left out,

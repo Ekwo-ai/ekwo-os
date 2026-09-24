@@ -38,6 +38,7 @@ same `importBooks()`. Neither holds a rule.
 | `fec` | `@ekwo-ai/fec` (`readFec()`) | The *fichier des écritures comptables*, found by the names of its columns, in any of the variants of the text. |
 | `journal-items` | `@ekwo-ai/journal-items` | The lines of every entry exported as CSV from the list view of an ERP whose ledger is a table of lines, under its labels or its field names; the chart and the partners beside it. |
 | `journal-report` | `@ekwo-ai/journal-report` | A journal report or a general ledger detail, saved as CSV from a cloud service's spreadsheet export; the chart and the contacts beside it. |
+| `xaf` | `@ekwo-ai/xaf` (`readXaf()`) | An XML Audit File Financial, version 3.2 or 4.0: accounts, parties, the opening balance with the day it opens, and every transaction, in one XML file whose totals are checked against its lines. |
 
 A reader is **named after the file**: the same kind of export can come from
 several places. A user looks for the software the file came from, so
@@ -51,9 +52,10 @@ What they share, and why:
 
 - **The header decides.** Columns are found by their names, never by their
   position, and the separator is the one the header row uses. A column the
-  reader needs and does not find is refused by name.
+  reader needs and does not find is refused by name. An XML file is found by
+  its namespace, and its elements by their names.
 - **Nothing is guessed.** The encoding is UTF-8 unless the caller says
-  otherwise, and bytes that are not UTF-8 are refused, because every sequence
+  otherwise — or, for an XML file, unless its declaration does, and bytes that are not UTF-8 are refused, because every sequence
   of bytes is valid Latin. A date written in digits in an order the file does
   not state is refused until the caller names the order. An amount that could
   be read two ways — a comma in a comma-separated file — is refused.

@@ -48,6 +48,7 @@ export default defineConfig({
       '@ekwo-ai/journal-report': fileURLToPath(
         new URL('./packages/formats/journal-report/src/index.ts', import.meta.url),
       ),
+      '@ekwo-ai/xaf': fileURLToPath(new URL('./packages/formats/xaf/src/index.ts', import.meta.url)),
     },
   },
   test: {

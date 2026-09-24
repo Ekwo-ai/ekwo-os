@@ -1,0 +1,56 @@
+{
+  "name": "@ekwo-ai/xaf",
+  "version": "0.8.0",
+  "description": "Reads an XML Audit File Financial (XAF, versions 3.2 and 4.0) — the accounts, the parties, the opening balance and every transaction of a year — into plain objects in TypeScript: amounts as decimal strings, the file's own totals checked, and what does not add up. A strict XML reader, no DOCTYPE, no entities. Zero dependencies.",
+  "keywords": [
+    "xaf",
+    "auditfile",
+    "audit-file",
+    "xml",
+    "accounting",
+    "bookkeeping",
+    "migration",
+    "import",
+    "parser"
+  ],
+  "license": "MIT",
+  "author": "Ekwo AI",
+  "homepage": "https://github.com/Ekwo-ai/ekwo-os/tree/main/packages/formats/xaf#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ekwo-ai/ekwo-os.git",
+    "directory": "packages/formats/xaf"
+  },
+  "bugs": {
+    "url": "https://github.com/Ekwo-ai/ekwo-os/issues"
+  },
+  "type": "module",
+  "sideEffects": false,
+  "engines": {
+    "node": ">=18"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "typescript": "^5.9.0",
+    "vitest": "^3.2.0",
+    "xmllint-wasm": "^5.3.0"
+  }
+}

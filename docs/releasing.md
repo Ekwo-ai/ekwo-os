@@ -43,8 +43,8 @@ that is not cut.
    Check the dependency ranges between the workspaces afterwards —
    `@ekwo-ai/core` on `@ekwo-ai/fec`, on the three statement readers,
    `@ekwo-ai/camt053`, `@ekwo-ai/coda` and `@ekwo-ai/cfonb120`, and on the
-   three book readers, `@ekwo-ai/trial-balance`, `@ekwo-ai/journal-items` and
-   `@ekwo-ai/journal-report`; `ekwo-os` on `@ekwo-ai/core`; `@ekwo-ai/mcp` on
+   four book readers, `@ekwo-ai/trial-balance`, `@ekwo-ai/journal-items`,
+   `@ekwo-ai/journal-report` and `@ekwo-ai/xaf`; `ekwo-os` on `@ekwo-ai/core`; `@ekwo-ai/mcp` on
    the core and on `@ekwo-ai/fec` — and the
    formatting of the manifests, which npm rewrites. The final `npm install`
    `npm version` runs on its own fails until those ranges name the new number,

@@ -29,7 +29,8 @@
     "@ekwo-ai/fec": "^0.8.0",
     "@ekwo-ai/journal-items": "^0.8.0",
     "@ekwo-ai/journal-report": "^0.8.0",
-    "@ekwo-ai/trial-balance": "^0.8.0"
+    "@ekwo-ai/trial-balance": "^0.8.0",
+    "@ekwo-ai/xaf": "^0.8.0"
   },
   "peerDependencies": {
     "@supabase/supabase-js": "^2.0.0"

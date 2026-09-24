@@ -20,12 +20,13 @@ import { readFec, type ImportedBooks, type ImportedLine } from '@ekwo-ai/fec';
 import { readTrialBalance } from '@ekwo-ai/trial-balance';
 import { readJournalItems } from '@ekwo-ai/journal-items';
 import { readJournalReport, type DateOrder } from '@ekwo-ai/journal-report';
+import { readXaf } from '@ekwo-ai/xaf';
 import { BooksError, type Backend, type Row } from './backend.js';
 
 export type { ImportedBooks, ImportedLine } from '@ekwo-ai/fec';
 
 /** The sources an import reads, each by one brick of `packages/formats/`. */
-export const BOOK_SOURCES = ['trial-balance', 'fec', 'journal-items', 'journal-report'] as const;
+export const BOOK_SOURCES = ['trial-balance', 'fec', 'journal-items', 'journal-report', 'xaf'] as const;
 export type BookSource = (typeof BOOK_SOURCES)[number];
 
 /** What each source is, in one sentence, for a help text and a tool description. */
@@ -36,6 +37,7 @@ export const BOOK_SOURCE_DESCRIPTIONS: Record<BookSource, string> = {
     'an export of journal items as CSV — one row per line of an entry, with its entry, journal, date, account, partner, debit and credit — optionally with the chart of accounts and the partners exported beside it',
   'journal-report':
     'a journal report or a general ledger detail saved as CSV — date, journal number, account code, debit, credit — optionally with the chart of accounts and the contacts exported beside it',
+  xaf: 'an XML Audit File Financial (XAF), version 3.2 or 4.0 — the accounts, the parties, the opening balance and every transaction of a year, in one XML file',
 };
 
 /** The journal an entry is mapped to when it is to become the opening balance rather than an entry. */
@@ -102,7 +104,26 @@ export function readBooks(source: BookSource, files: BookFile[], options: ReadBo
         ...(options.encoding === undefined ? {} : { encoding: options.encoding === 'iso-8859-15' ? 'iso-8859-1' : options.encoding }),
         ...(options.date_order === undefined ? {} : { dateOrder: options.date_order }),
       });
+    case 'xaf': {
+      // An XML file names its encoding in its declaration; the reader reads
+      // that, and refuses a caller who names another.
+      if (options.encoding === 'iso-8859-15') {
+        throw new BooksError('bad_encoding: an audit file is read in the encoding its XML declaration names, UTF-8 or ISO-8859-1; ISO-8859-15 is neither.');
+      }
+      return readXaf(single().content, options.encoding === undefined ? {} : { encoding: options.encoding });
+    }
   }
+}
+
+/**
+ * The day the opening balance of these books opens on, where the file says
+ * it — an audit file does, a trial balance does not. Nothing when there is
+ * no opening balance to open.
+ */
+function openingDateOf(books: ImportedBooks): string | undefined {
+  if (books.opening.length === 0) return undefined;
+  const said = (books as ImportedBooks & { openingDate?: unknown }).openingDate;
+  return typeof said === 'string' ? said : undefined;
 }
 
 /** sha256 of the files, in the order given: what `book_imports` keys an import on. */
@@ -652,7 +673,10 @@ export async function importBooks(backend: Backend, args: ImportBooksArgs): Prom
     });
   }
 
-  const payload = buildPayload(books, proposal.mapping, proposal.account_types, currency, args);
+  const payload = buildPayload(books, proposal.mapping, proposal.account_types, currency, {
+    ...args,
+    opening_date: args.opening_date ?? openingDateOf(books),
+  });
   payload['checksum'] = booksChecksum(args.files);
   payload['file_names'] = args.files.map((file) => file.name);
 

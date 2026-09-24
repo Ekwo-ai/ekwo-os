@@ -356,6 +356,60 @@ describe('the exports of other ledgers, through the same function', () => {
     expect(Object.values((answer['mapping'] as ImportMapping).journals).every((code) => code === journalRoles['miscellaneous'])).toBe(true);
     expect((answer['result'] as Record<string, unknown>)['entries']).toBe(3);
   });
+
+  it('takes over an audit file, its opening balance on the day the file gives, the ledger even to the cent', async () => {
+    const companyId = await company('Audit file');
+    const currency = (await one<{ currency_code: string }>(db, `select currency_code from companies where id = $1`, [companyId])).currency_code;
+    // The file states the currency of its books; written in this company's, it is taken.
+    const file = fixture('xaf', 'books.v4.xaf');
+    const files: BookFile[] = [{ ...file, content: (file.content as string).replace('<curCode>EUR</curCode>', `<curCode>${currency}</curCode>`) }];
+    const mapping: Partial<ImportMapping> = {
+      accounts: {
+        '0500': roleOf(somePack, 'retained_earnings'),
+        '1100': roleOf(somePack, 'bank'),
+        '1300': roleOf(somePack, 'receivable'),
+        '1500': roleOf(somePack, 'tax_payable'),
+        '1600': roleOf(somePack, 'payable'),
+        '4500': roleOf(somePack, 'purchase'),
+        '8000': roleOf(somePack, 'sales'),
+      },
+      journals: { VK: journalRoles['sales']!, IK: journalRoles['purchase']!, BNK: journalRoles['miscellaneous']! },
+    };
+
+    const rehearsal = await importBooks(backendFor(db, owner), { company_id: companyId, source: 'xaf', files, mapping, open_years: true, dry_run: true });
+    expect(rehearsal['refusals']).toEqual([]);
+    expect(await count('entries', companyId)).toBe(0);
+
+    const done = await importBooks(backendFor(db, owner), { company_id: companyId, source: 'xaf', files, mapping, open_years: true });
+    const result = done['result'] as Record<string, unknown>;
+    expect(result['entries']).toBe(4);
+    expect(result['opening_number']).not.toBeNull();
+
+    const opening = await one<{ entry_date: string; total_debit: string }>(
+      db, `select entry_date::text, total_debit::text from entries where company_id = $1 and kind = 'opening'`, [companyId],
+    );
+    expect(opening).toEqual({ entry_date: '2025-01-01', total_debit: '5000.00' });
+    // The opening, 5000.00, and the four transactions, 2512.00: each side to the cent.
+    const totals = await one<{ debit: string; credit: string }>(
+      db, `select sum(debit)::text as debit, sum(credit)::text as credit from entry_lines where company_id = $1`, [companyId],
+    );
+    expect(totals).toEqual({ debit: '7512.00', credit: '7512.00' });
+    const receivable = await one<{ balance: string }>(
+      db,
+      `select sum(l.debit - l.credit)::text as balance from entry_lines l join accounts a on a.id = l.account_id
+        where l.company_id = $1 and a.code = $2`,
+      [companyId, roleOf(somePack, 'receivable')],
+    );
+    // Invoiced 1210.00, credited 121.00, paid 1089.00: nothing left open.
+    expect(Number(receivable.balance)).toBe(0);
+    const parties = await rows<{ name: string; contact_type: string; auxiliary_code: string }>(
+      db, `select name, contact_type::text, auxiliary_code from contacts where company_id = $1 order by auxiliary_code`, [companyId],
+    );
+    expect(parties).toEqual([
+      { name: 'Atelier Sirocco', contact_type: 'customer', auxiliary_code: 'C01' },
+      { name: 'Kestrel Joinery', contact_type: 'supplier', auxiliary_code: 'S02' },
+    ]);
+  });
 });
 
 /** An account of the old books, as the proposal reads it. */

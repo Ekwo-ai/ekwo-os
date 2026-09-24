@@ -45,19 +45,22 @@ own `types.ts`. It is the core saying what `import_bank_statement()` takes, and
 three bricks each choosing to return it — what only one format says (a CODA
 transaction code, a CFONB operation code) comes after, under its own name.
 
-Four more read **books** — what another system kept, when somebody brings it
+Five more read **books** — what another system kept, when somebody brings it
 over: `fec` (whose `readFec()` reads back the file the package writes),
 `trial-balance`, `journal-items` (the lines of every entry, exported from the
-list view of an ERP whose ledger is a table of lines) and `journal-report` (a
+list view of an ERP whose ledger is a table of lines), `journal-report` (a
 journal report or a general ledger detail, saved as CSV from a cloud
-service's spreadsheet export). Each returns accounts, parties, entries and an
+service's spreadsheet export) and `xaf` (the XML Audit File Financial,
+versions 3.2 and 4.0, read with the strict XML reader of the statements,
+copied). Each returns accounts, parties, entries and an
 opening balance under the same names, declared in its own `types.ts`, which is
 what the core's `import_books()` takes once the codes are translated into a
 company's chart. They are named after the file, never after the software that
 writes it, and each README says which official pages the format was read from.
 Their CSV is read by each of them, with the separator taken from the header,
 the encoding said and never guessed, and a number refused rather than read two
-ways.
+ways; the XML one holds the file's own totals against its lines, and its
+fixtures against the published schemas, as the camt.053 reader does.
 
 There is no shared abstraction between them and there will not be one: no
 `Filing` interface, no plugin registry, no common `xml` package. Two formats

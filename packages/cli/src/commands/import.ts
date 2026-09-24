@@ -61,6 +61,7 @@ const text = (value: unknown): string => (value === null || value === undefined 
 export const NAMED_SOURCES = {
   odoo: { reader: 'journal-items', export: 'the export of the Journal Items of Odoo (Accounting), as CSV, with its chart of accounts and its partners' },
   xero: { reader: 'journal-report', export: 'the Journal Report or the General Ledger Detail of Xero, saved as CSV, with its chart of accounts and its contacts' },
+  'exact-online': { reader: 'xaf', export: 'the XML Audit File (XAF, version 3.2 or 4.0) of Exact Online, exported under Import/Export > Export > Audit file' },
 } as const satisfies Record<string, { reader: BookSource; export: string }>;
 
 export const IMPORT_USAGE = `usage: ekwo import <source> <file>… [--dry-run] [--mapping <file>] [--save-mapping <file>] [--accept-suggestions]

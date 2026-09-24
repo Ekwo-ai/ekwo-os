@@ -9,6 +9,18 @@ somewhere has already run it.
 
 ## [Unreleased]
 
+### Added
+
+- **An XML Audit File Financial is read as books** (`@ekwo-ai/xaf`,
+  `ekwo import xaf`). Versions 3.2 and 4.0, each found by the namespace of its
+  schema: the accounts, the parties, the opening balance — posted on the day
+  the file gives it, so no `--opening-date` is asked — and every transaction of
+  every journal. The totals the file states for its opening and its
+  transactions are held against its lines, and a file that disagrees with
+  itself is refused. The XML is read by the strict reader of the statements,
+  copied; the fixtures are validated against the published schemas. The export
+  of a named ledger that writes one is listed in `docs/compatibility.md`.
+
 ### Fixed
 
 - **An archive survives an honest reader printing it again**
