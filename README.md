@@ -12,7 +12,8 @@ cut: [`docs/demo/`](docs/demo/).*
 **Try it on your own books.** Already using Claude? [Start with
 Claude](docs/start-with-claude.md) goes from a free Supabase project to your
 own books taken over, questioned and your next VAT return prepared — Claude
-Desktop or Claude Code, no web interface needed, about twenty minutes.
+Desktop or Claude Code, about twenty minutes — or open the same books in
+the web application, [Ekwo Cloud](https://cloud.ekwo.ai).
 
 ---
 
@@ -48,7 +49,8 @@ What we are building, in order:
 3. **The MCP server** — `npx @ekwo-ai/mcp`, so any AI assistant can operate
    the books: read the ledger, raise an invoice, post it, match a payment,
    pull the VAT return or the FEC. Done; see [`packages/mcp`](packages/mcp/).
-   A Community web application comes next.
+   The web application is [Ekwo Cloud](https://cloud.ekwo.ai), and it opens
+   an instance you run yourself as well as one we host.
 4. **Any country as a versioned pack of data**, with one golden test per
    country. Every folder of [`packs/`](packs/) ships today — the list is under
    [What is in this repository](#what-is-in-this-repository) — and more arrive

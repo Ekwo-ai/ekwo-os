@@ -65,9 +65,10 @@ either.
    three questions whose wrong answer is expensive: the country, the chart and
    the language.
 
-4. **Sign in** to your project as that administrator and start booking. Until
-   the Community web application lands, the interface is the REST API Supabase
-   generates from the schema, or `psql`, or `@ekwo-ai/core`.
+4. **Sign in** to your project as that administrator and start booking — in
+   the web application, [Ekwo Cloud](https://cloud.ekwo.ai), which opens your
+   own instance, or through the REST API Supabase generates from the schema,
+   `psql` or `@ekwo-ai/core`.
 
 5. **Do the four things below**, while the dashboard is still open. The
    installer prints them at the end of a successful run, because three of them
