@@ -5,7 +5,7 @@
  * model has carried the answer since document rules became pack data, and
  * these are its readers: the
  * function that turns a month into two days, the installer, and the company
- * an assistant creates.
+ * an agent creates.
  */
 
 import type { PGlite } from '@electric-sql/pglite';

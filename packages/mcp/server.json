@@ -33,7 +33,7 @@
         },
         {
           "name": "EKWO_EMAIL",
-          "description": "The user the assistant acts as",
+          "description": "The user the agent acts as",
           "isRequired": false
         },
         {

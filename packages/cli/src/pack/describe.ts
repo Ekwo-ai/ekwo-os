@@ -217,7 +217,7 @@ export interface DescribedSaleTax {
  * What a first invoice needs from the pack: the codes a line is written with.
  *
  * A line names an account and a tax by their **code**, never a rate, and
- * somebody at a terminal — or an assistant writing the command for them — has
+ * somebody at a terminal — or an agent writing the command for them — has
  * no way to guess `4000` or a tax code. These are read from the default
  * chart's roles and from the taxes open today, and nothing is chosen: which
  * tax a given sale carries is the seller's question, and the list is every

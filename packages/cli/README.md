@@ -339,7 +339,7 @@ place, so the output reads the same in a file or a CI log — and takes `--json`
 for a program.
 
 `ekwo help --json` answers the list of commands and, in `usage`, the whole
-text of `--help` without colour: every flag and variable, for an assistant
+text of `--help` without colour: every flag and variable, for an agent
 that reads one document rather than a terminal.
 
 Under `--json` the standard output is **one JSON document and nothing else**;

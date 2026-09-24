@@ -11,7 +11,7 @@
  *
  * The second rule is that a refusal from the database is the answer. A
  * `period_locked:` raise is not an error to be worked around by moving a
- * date; it is the company telling the assistant that the month is closed.
+ * date; it is the company telling the agent that the month is closed.
  */
 
 import { z } from 'zod';

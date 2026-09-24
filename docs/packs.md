@@ -1363,7 +1363,7 @@ upgrading, and moving the number would hide that difference at the next run.
 
 The same three rules are in the schema — `pack_upgrade_diff(company)` and
 `pack_upgrade(company, country, apply)` — so an application, a module or an
-assistant asking the same question gets the same answer, and every upgrade
+agent asking the same question gets the same answer, and every upgrade
 writes a `pack_upgraded` row into [`audit_log`](schema.md) naming what it
 applied and what it left. Installing again in the meantime adds what is
 missing and changes nothing that exists.

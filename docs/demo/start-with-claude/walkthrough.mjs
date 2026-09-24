@@ -18,7 +18,7 @@
  *
  * `--no-company` takes the other road of the guide: `ekwo init --no-company`,
  * then `ekwo company new` for each company, `ekwo company list`, and the rest
- * as above — the assistant finds both companies already there.
+ * as above — the agent finds both companies already there.
  *
  * Needs, from the environment and nothing from a file:
  *
@@ -49,7 +49,7 @@ const version = process.env['EKWO_VERSION'] ?? 'latest';
 
 /**
  * The two companies. The first is the one `ekwo init` creates; the second is
- * asked of the assistant afterwards, the way the guide shows. Each arrives with
+ * asked of the agent afterwards, the way the guide shows. Each arrives with
  * the trial balance its earlier ledger exported, and one of them with the
  * correspondence its owner answered after the rehearsal.
  */

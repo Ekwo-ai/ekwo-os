@@ -22,7 +22,7 @@ PostgreSQL schema it installs on a database it controls — together with:
   declaration boxes and statements, written as files with their sources;
 - **format libraries** that write and read published file formats;
 - **tools** — a command line, a TypeScript client and an MCP server — through
-  which a person, a script or an AI assistant works on that data.
+  which a person, a script or an AI agent works on that data.
 
 Ekwo's mission is to provide that infrastructure, openly, in every country. It
 is not to replace the accountant. The tools are built to be used by
@@ -91,7 +91,7 @@ Some functions produce estimates by design — a tax estimate during the year,
 a cash-basis view, a carbon footprint. They say so. An estimate is not a
 declaration.
 
-An AI assistant connected through the MCP server acts with your rights and on
+An AI agent connected through the MCP server acts with your rights and on
 your instruction. What it reads from a document, proposes or drafts is the
 output of a model you chose, which Ekwo neither supplies nor controls. Check it
 before it is posted or filed.

@@ -38,6 +38,14 @@ somewhere has already run it.
   copied; the fixtures are validated against the published schemas. The export
   of a named ledger that writes one is listed in `docs/compatibility.md`.
 
+### Changed
+
+- **The AI that works on the books is called an agent.** The README, `AGENTS.md`,
+  the documentation, the READMEs of the packages, the help of `ekwo` and of
+  `@ekwo-ai/mcp` and the description of the MCP server say "agent" where they
+  said "assistant". Only the words change: no command, option, variable, tool
+  or key is renamed. Published decisions and migrations keep their wording.
+
 ### Fixed
 
 - **An archive survives an honest reader printing it again**

@@ -5,7 +5,7 @@
  * do the opposite: they read an installation and know nothing about `packs/`.
  * The difference between what a company copied and what the installation now
  * holds is computed by the schema — `pack_upgrade_diff()` — and not here, so
- * that an application, a module or an assistant asking the same question gets
+ * that an application, a module or an agent asking the same question gets
  * the same answer.
  */
 

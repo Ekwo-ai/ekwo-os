@@ -62,7 +62,7 @@ Today Ekwo reads the software above from its exports and writes into none of
 it. What is coming, with no date, in [Ekwo Cloud](https://cloud.ekwo.ai), the
 hosted edition: connectors that read that software continuously through its
 public API, and write back into it — received invoices as draft bills with
-their attachment, the entries an assistant proposes as drafts, and the status
+their attachment, the entries an agent proposes as drafts, and the status
 of each obligation (sent, received, filed, refused).
 
 Nothing is ever posted or approved in the other software on the user's

@@ -11,7 +11,7 @@
  *
  * The one thing this file exists to refuse is a `service_role` key. It would
  * work — that is the problem. Every policy in the schema would be bypassed,
- * and an assistant that can read every company of an installation is not the
+ * and an agent that can read every company of an installation is not the
  * thing anybody asked for. It is refused wherever it can arrive, and there are
  * two doors, not one: `SUPABASE_ANON_KEY` is the obvious paste, and
  * `EKWO_ACCESS_TOKEN` is the quiet one — it goes into the `Authorization`

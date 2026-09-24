@@ -1,7 +1,7 @@
 # @ekwo-ai/mcp
 
 The [Model Context Protocol](https://modelcontextprotocol.io) server for
-[Ekwo OS](https://github.com/Ekwo-ai/ekwo-os). It lets an AI assistant work on
+[Ekwo OS](https://github.com/Ekwo-ai/ekwo-os). It lets an AI agent work on
 the books in your own Postgres: read the ledger, raise an invoice, post it, match
 a payment, pull the VAT return or the French FEC — **as you**, under the row
 level security of your own installation.
@@ -38,7 +38,7 @@ Three things it will never do:
   accounting has always worked. `unreconcile` is the only undo here, and
   matching changes no account.
 - **Use a `service_role` key.** It would work, and that is the objection: it
-  bypasses every policy, so the assistant would answer for companies its user
+  bypasses every policy, so the agent would answer for companies its user
   was never invited to. The server refuses to start with one.
 
 ## Configuration
@@ -95,7 +95,7 @@ alongside the server; the recommended route needs no driver at all.
 |---|---|
 | `SUPABASE_URL` | `https://<ref>.supabase.co` |
 | `SUPABASE_ANON_KEY` | The anon (publishable) key. A `service_role` key is refused. |
-| `EKWO_EMAIL` / `EKWO_PASSWORD` | The user this assistant acts as |
+| `EKWO_EMAIL` / `EKWO_PASSWORD` | The user this agent acts as |
 | `EKWO_ACCESS_TOKEN` | A session already in hand, instead of the two above |
 | `EKWO_DB_URL` | A direct Postgres connection, for a self-hosted installation |
 | `EKWO_ACT_AS_USER_ID` | Required with `EKWO_DB_URL`: the `auth.users` id to act for |

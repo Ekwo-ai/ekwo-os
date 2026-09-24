@@ -50,7 +50,7 @@ does — including once through a real client over the in-memory transport.
 
 | File | Proves |
 |---|---|
-| `mcp/accounting.test.ts` | a quarter of bookkeeping through the tools an assistant calls: a contact, a Belgian invoice at 21 %, posting it to 704 / 451 / 400, two payments matched against it, un-matching and re-matching, then the trial balance, the VAT return and the FEC read back |
+| `mcp/accounting.test.ts` | a quarter of bookkeeping through the tools an agent calls: a contact, a Belgian invoice at 21 %, posting it to 704 / 451 / 400, two payments matched against it, un-matching and re-matching, then the trial balance, the VAT return and the FEC read back |
 | `mcp/guards.test.ts` | the refusals, all of them the database's: a locked period, a viewer who may read and not write, an owner of one company who cannot see or write the other, a stranger who sees nothing |
 | `mcp/surface.test.ts` | what a client actually sees, over the in-memory transport: every tool this release ships, a valid JSON Schema for each, the read-only and destructive annotations, the two resources, the two prompts, and a refusal arriving as a tool error rather than a broken connection |
 | `mcp/shares.test.ts` | the three sharing tools: the token in the answer and only its hash in the table, the list without token or hash and with the withdrawn ones on request, the database's refusals handed back unsoftened, and `shared_document` deliberately not offered as a tool |

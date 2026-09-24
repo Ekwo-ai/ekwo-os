@@ -46,7 +46,7 @@ What we are building, in order:
    and it applies the schema, seeds the country rules, creates the first
    administrator and the first company, in one command. Done; see
    [`packages/cli`](packages/cli/).
-3. **The MCP server** — `npx @ekwo-ai/mcp`, so any AI assistant can operate
+3. **The MCP server** — `npx @ekwo-ai/mcp`, so any AI agent can operate
    the books: read the ledger, raise an invoice, post it, match a payment,
    pull the VAT return or the FEC. Done; see [`packages/mcp`](packages/mcp/).
    The web application is [Ekwo Cloud](https://cloud.ekwo.ai), and it opens
@@ -166,7 +166,7 @@ The version is part of the command, as for the MCP server below: from inside a
 clone of this repository, a bare `npx ekwo-os` finds the workspace package of
 the same name and answers `ekwo: command not found`.
 
-Asking an AI assistant to do it with you? Point it at
+Asking an AI agent to do it with you? Point it at
 [`AGENTS.md`](AGENTS.md): what it needs, the commands, and what it must never
 do. Each country also has its own step-by-step page on the site, generated
 from its pack, and the whole documentation is served to a model as
@@ -495,7 +495,7 @@ const fec     = await ekwo.generateFec({ companyId, from: '2026-01-01', to: '202
 ```
 
 `packages/mcp` is the Model Context Protocol server, published as
-`@ekwo-ai/mcp`. It is the same idea as the client above, for an assistant
+`@ekwo-ai/mcp`. It is the same idea as the client above, for an agent
 rather than for your code: tools over stdio — read the chart of accounts,
 create a draft invoice, post it, register a bank account, record and match a
 payment, import an opening balance, close a year, pull the trial balance, the

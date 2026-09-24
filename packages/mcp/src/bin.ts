@@ -51,7 +51,7 @@ in claude_desktop_config.json or .mcp.json with:
 
   SUPABASE_URL            https://<ref>.supabase.co
   SUPABASE_ANON_KEY       the anon (publishable) key — never the service_role key
-  EKWO_EMAIL              the user this assistant acts as
+  EKWO_EMAIL              the user this agent acts as
   EKWO_PASSWORD           their password
   EKWO_ACCESS_TOKEN       an access token, instead of the two above
 

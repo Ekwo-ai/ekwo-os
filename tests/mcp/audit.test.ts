@@ -1,7 +1,7 @@
 /**
  * The audit trail through the server, and the schema floor in front of it.
  *
- * Two things are proved here. An assistant can read who changed what, under
+ * Two things are proved here. An agent can read who changed what, under
  * the same row level security as everything else — a member of one company
  * sees that company and nothing beside it. And a database older than this
  * server is refused by name before a single tool is offered, rather than

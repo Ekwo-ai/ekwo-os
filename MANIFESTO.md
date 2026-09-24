@@ -25,7 +25,7 @@ So Ekwo is five commitments.
 ## 1. Books a business owns, not rents.
 
 A company should be able to keep its own books, understand them, and act on
-them, with software it owns and an assistant it controls. Not a subscription
+them, with software it owns and an agent it controls. Not a subscription
 that reads its data; a ledger in a database it holds the keys to, with an open
 API and an AI that works *for* it. Every installation stands on its own, with
 us or without us, for as long as its owner wants it to. That is the test every
@@ -40,7 +40,7 @@ between a business that knows where it stands and one that hopes.
 
 Ekwo is designed to be operated by a machine. The data sits in Postgres, the
 REST API and its OpenAPI description come with it, and an MCP server sits on
-top: an assistant built on the model you choose can read the ledger, raise an
+top: an agent built on the model you choose can read the ledger, raise an
 invoice, post it, match a payment, pull the VAT return — as *you*, under your own row level security,
 without the data leaving your account. The agent is a user of the books, with
 the same rights and the same limits as the human beside it, and it can be

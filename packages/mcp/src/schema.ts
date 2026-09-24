@@ -1,11 +1,11 @@
 /**
  * What this server needs of the database it is pointed at.
  *
- * An MCP client is installed by whoever wants an assistant, and the database
+ * An MCP client is installed by whoever wants an agent, and the database
  * it reaches was installed by whoever runs the books — two decisions, two
  * dates. So the server asks the schema its version before it answers anything,
  * and refuses one it is too new for, by name. The alternative is what an
- * assistant does with a missing column: it improvises, and the improvisation
+ * agent does with a missing column: it improvises, and the improvisation
  * is an accounting entry.
  *
  * Declared in `package.json` under `ekwo.schemaMin`, as a country pack

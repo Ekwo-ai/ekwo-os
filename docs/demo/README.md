@@ -30,7 +30,7 @@ published files were recorded on were throwaway ones, deleted afterwards.
 **The return is not an `ekwo` command.** The command line has no verb for it
 yet. The return is `vat_return()`, a function of the schema, and
 `vat-return.mjs` asks for it through the MCP server, as the signed-in person,
-the way an assistant would. It prints what came back and computes nothing.
+the way an agent would. It prints what came back and computes nothing.
 
 ## Rendering it again
 

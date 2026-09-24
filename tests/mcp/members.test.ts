@@ -1,5 +1,5 @@
 /**
- * Inviting somebody, through the tools an assistant actually calls.
+ * Inviting somebody, through the tools an agent actually calls.
  *
  * The interesting assertions are the two refusals: the token is in the answer
  * and nowhere else, and a member who may not manage members gets the

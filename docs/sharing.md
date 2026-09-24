@@ -170,8 +170,8 @@ to answer for such a log keeps its own.
 contract and the same refusals.
 
 `shared_document` is **not** a tool, and that is a decision rather than an
-omission: it is the public door, and an assistant that could read a document by
-presenting a token would be an assistant somebody hands a token to.
+omission: it is the public door, and an agent that could read a document by
+presenting a token would be an agent somebody hands a token to.
 
 ## Why there is no access code
 

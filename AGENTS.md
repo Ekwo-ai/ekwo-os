@@ -1,6 +1,6 @@
-# AGENTS.md — for an AI assistant helping somebody use Ekwo OS
+# AGENTS.md — for an AI agent helping somebody use Ekwo OS
 
-You are an AI assistant, and somebody asked you to help them install Ekwo OS
+You are an AI agent, and somebody asked you to help them install Ekwo OS
 or keep their books with it. This page is what you need to do that without
 guessing. Humans are welcome to read it too.
 
@@ -21,7 +21,7 @@ Three ways in, all acting on the same functions of the schema:
 | Tool | For | Package |
 |---|---|---|
 | `ekwo` command line | installing, then keeping books from a terminal | [`ekwo-os`](packages/cli/README.md) on npm |
-| MCP server | you, the assistant, keeping books through tools | [`@ekwo-ai/mcp`](packages/mcp/README.md) on npm |
+| MCP server | you, the agent, keeping books through tools | [`@ekwo-ai/mcp`](packages/mcp/README.md) on npm |
 | REST API | anything else: Supabase generates it from the schema | — |
 
 ## Where to read what
@@ -95,7 +95,7 @@ administrators, keep the `service_role` key off other machines, read
 
 Keeping books acts **as a person**, never with the `service_role` key — the
 server refuses to start with one. The user gives their client this block
-(the MCP configuration of the assistant — for many clients, `.mcp.json` at the root of a project):
+(the MCP configuration of the agent — for many clients, `.mcp.json` at the root of a project):
 
 ```json
 {

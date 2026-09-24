@@ -4,7 +4,7 @@
  *
  * The command line has no verb for a return yet. The return itself is
  * `vat_return()`, a function of the schema; this script asks for it the way
- * an assistant does, through the published MCP server `@ekwo-ai/mcp`, over
+ * an agent does, through the published MCP server `@ekwo-ai/mcp`, over
  * stdio, as the person named — never as the owner of the database.
  *
  *   node vat-return.mjs <email> "<company name>" <from> <to>

@@ -1,5 +1,5 @@
 /**
- * A quarter of bookkeeping, through the tools an assistant actually calls.
+ * A quarter of bookkeeping, through the tools an agent actually calls.
  *
  * Create a customer, invoice them 1 000 € at 21 %, post it, take the payment
  * in two instalments, match both, then read the balance, the VAT return and
@@ -314,7 +314,7 @@ describe('the books, through the tools', () => {
     expect(amount('71')).toBe('210.00');
 
     // The form says which one it is and what each box is called, so an
-    // assistant can read the return out without knowing the country.
+    // agent can read the return out without knowing the country.
     expect(vat['report_code']).toBe('BE-VAT-PERIODIC');
     expect(boxes.find((row) => row['box'] === '54')?.['name']).toBe(
       'TVA due sur les opérations des grilles 01, 02 et 03',

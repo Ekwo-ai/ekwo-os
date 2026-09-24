@@ -1,5 +1,5 @@
 /**
- * The two portfolio readings, as the tools an assistant calls.
+ * The two portfolio readings, as the tools an agent calls.
  *
  * The database side is proved in `tests/filing_portfolio.test.ts`. What is
  * proved here is that the tools add nothing to it and take nothing away: the

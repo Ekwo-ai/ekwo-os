@@ -1,12 +1,12 @@
 /**
- * Publishing a document, through the tools an assistant actually calls.
+ * Publishing a document, through the tools an agent actually calls.
  *
  * The contract is the database's and the refusals are the database's: this
  * file proves the server does not soften either. The one thing it adds is what
  * a model is told afterwards — the token is in the answer and nowhere else —
  * and the one thing it deliberately does not carry is `shared_document`. That
- * function is the public door, not an agent's tool: an assistant that could
- * read a document by presenting a token would be an assistant somebody hands a
+ * function is the public door, not a tool of the agent: an agent that could
+ * read a document by presenting a token would be an agent somebody hands a
  * token to.
  */
 
