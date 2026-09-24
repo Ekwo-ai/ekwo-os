@@ -28,6 +28,14 @@ export const NAMED_SOURCES = {
     reader: 'transaction-journal',
     export: 'the Journal report of QuickBooks Online, exported to Excel and saved as CSV, with its Account # column, and its Account List exported the same way',
   },
+  pennylane: {
+    reader: 'fec',
+    export: 'the FEC (fichier des écritures comptables) of Pennylane, exported under Comptabilité > Saisie > Exports: the tab-separated text file inside the ZIP it downloads',
+  },
+  'sage-50': {
+    reader: 'fec',
+    export: 'the FEC (fichier des écritures comptables) of Sage 50, exported under Échanges > Exporter des écritures, format FEC',
+  },
   'exact-online': {
     reader: 'xaf',
     export: 'the XML Audit File (XAF, version 3.2 or 4.0) of Exact Online, exported under Import/Export > Export > Audit file',

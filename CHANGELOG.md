@@ -11,6 +11,12 @@ somewhere has already run it.
 
 ### Added
 
+- **The FEC of two more ledgers is found by the name of the ledger**:
+  `ekwo import <name>` and the MCP tool read it with the FEC reader, and
+  `docs/compatibility.md` gives the menu each exports it from and its official
+  page. The FEC reader is tested on the variant they write — separated by
+  tabs, in UTF-8, not validated yet, with a column after the eighteen.
+
 - **A transaction journal saved as CSV is read as books**
   (`@ekwo-ai/transaction-journal`, `ekwo import transaction-journal`). The
   report a ledger prints transaction after transaction names no transaction

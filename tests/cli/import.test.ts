@@ -224,15 +224,32 @@ describe('a source named by the software its export comes from', () => {
   });
 
   it('reads the files with the reader it names', async () => {
-    const byReport = names.find((n) => NAMED_SOURCES[n].reader === 'journal-report')!;
-    const answer = await ekwo([
-      'import', byReport, fixture('journal-report', 'journal-report.csv'), fixture('journal-report', 'chart.csv'),
-      '--date-order', 'dmy', '--dry-run', '--open-years',
-    ]);
-    expect(answer.error).toBeUndefined();
-    const data = answer.data as Row;
-    expect(data['source']).toBe('journal-report');
-    expect((data['read'] as Row)['entries']).toBe(3);
+    // The fixtures of each reader, and what a dry run reads out of them. A
+    // FEC this file has already imported for real is changed by one trailing
+    // line, so that the rehearsal is not refused as the same files twice.
+    const again = join(root, 'again.fec.txt');
+    await writeFile(again, `${await readFile(fixture('fec', 'sample.fec.txt'), 'utf8')}\n`, 'utf8');
+    const FILES: Record<string, { files: string[]; flags: string[]; entries: number }> = {
+      fec: { files: [again], flags: [], entries: 5 },
+      'journal-items': { files: [fixture('journal-items', 'journal-items.csv'), fixture('journal-items', 'accounts.csv')], flags: [], entries: 3 },
+      'journal-report': { files: [fixture('journal-report', 'journal-report.csv'), fixture('journal-report', 'chart.csv')], flags: ['--date-order', 'dmy'], entries: 3 },
+      'transaction-journal': {
+        files: [fixture('transaction-journal', 'journal.csv'), fixture('transaction-journal', 'account-list.csv')],
+        flags: ['--date-order', 'mdy'],
+        entries: 5,
+      },
+      xaf: { files: [fixture('xaf', 'books.v4.xaf')], flags: [], entries: 4 },
+    };
+    for (const name of names) {
+      const reader = NAMED_SOURCES[name].reader;
+      const given = FILES[reader];
+      expect(given, `a fixture for ${reader}`).toBeDefined();
+      const answer = await ekwo(['import', name, ...given!.files, ...given!.flags, '--dry-run', '--open-years']);
+      expect(answer.error, name).toBeUndefined();
+      const data = answer.data as Row;
+      expect(data['source'], name).toBe(reader);
+      expect((data['read'] as Row)['entries'], name).toBe(given!.entries);
+    }
   });
 });
 

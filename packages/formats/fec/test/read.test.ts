@@ -84,6 +84,25 @@ describe('the variants of the text', () => {
     ]);
   });
 
+  it('reads a file separated by tabs, in UTF-8, whose entries are not validated yet, with columns after the eighteen', () => {
+    const header = 'JournalCode\tJournalLib\tEcritureNum\tEcritureDate\tCompteNum\tCompteLib\tCompAuxNum\tCompAuxLib\tPieceRef\tPieceDate\tEcritureLib\tDebit\tCredit\tEcritureLet\tDateLet\tValidDate\tMontantdevise\tIdevise\tPieceFileName';
+    const file = [
+      header,
+      'HA\tAchats\tHA1\t20260105\t6061100009\tFournitures\t\t\tF-12\t20260105\tPapier é\t100,00\t0,00\t\t\t\t\t\tF-12.pdf',
+      'HA\tAchats\tHA1\t20260105\t4456600009\tTVA déductible\t\t\tF-12\t20260105\tPapier é\t20,00\t0,00\t\t\t\t\t\tF-12.pdf',
+      'HA\tAchats\tHA1\t20260105\t401000\tFournisseurs\t0FKESTREL\tKestrel Joinery\tF-12\t20260105\tPapier é\t0,00\t120,00\t\t\t\t\t\tF-12.pdf',
+      '',
+    ].join('\n');
+    const read = readFec(new TextEncoder().encode(file));
+    expect(read.violations).toEqual([]);
+    expect(read.entries[0]!.lines.map((l) => [l.account, l.debit, l.credit, l.contact])).toEqual([
+      ['6061100009', '100.00', '0.00', null],
+      ['4456600009', '20.00', '0.00', null],
+      ['401000', '0.00', '120.00', '0FKESTREL'],
+    ]);
+    expect(read.entries[0]!.lines[0]!.label).toBe('Papier é');
+  });
+
   it('reads a file written in ISO 8859-15 when told so, and refuses it read as UTF-8', () => {
     const bytes = Uint8Array.from(Buffer.from(sample, 'latin1'));
     expect(() => readFec(bytes)).toThrow(/not UTF-8/);
