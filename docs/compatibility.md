@@ -7,7 +7,8 @@ repository; anything else is not listed. Each reader lives in
 columns it reads. How an import works — the correspondence of accounts, the
 rehearsal, all or nothing — is [`import.md`](import.md).
 
-This page says what is read. It says nothing else about the software named.
+This page says what is read, and — under [Writing back](#writing-back--planned) —
+what is coming. It says nothing else about the software named.
 
 ## Books
 
@@ -49,3 +50,17 @@ the software, an entry in the two lists that name them —
 `packages/mcp/src/tools/import-books.ts` — which are, with this page and the
 two reader READMEs above, the only files `scripts/check-no-competitor-names.mjs`
 lets name another product. The text says what is read, and nothing else.
+
+## Writing back — planned
+
+Today Ekwo reads the software above and writes into none of it. What is
+coming, with no date: a connector per software, through its public API,
+that reads continuously instead of from an export, and writes back into it —
+received invoices as draft bills with their attachment, the entries an
+assistant proposes as drafts, and the status of each obligation (sent,
+received, filed, refused).
+
+Nothing is ever posted or approved in the other software on the user's
+behalf: whatever Ekwo writes there arrives as a draft. A connector is listed
+here as available only once it exists and is tested in this repository, like
+a reader.
