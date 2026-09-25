@@ -74,6 +74,7 @@ sql_paths = [
   "./seed/66_pack_no.sql",
   "./seed/67_pack_fi.sql",
   "./seed/68_pack_cz.sql",
+  "./seed/69_pack_sk.sql",
   "./seed/70_pack_hu.sql",
   "./seed/71_pack_sa.sql",
   "./seed/72_pack_ro.sql",
