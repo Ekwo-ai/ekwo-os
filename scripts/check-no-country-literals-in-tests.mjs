@@ -183,6 +183,11 @@ async function main() {
       const bare = /(['"])([a-z]{2})\1/g;
       for (const match of slice.matchAll(bare)) {
         if (!slugs.has(match[2])) continue;
+        // `row['id']` names a property, not the Indonesian pack: a two-letter
+        // string between square brackets is a key, and a key is never a country.
+        const before = slice[match.index - 1];
+        const after = slice[match.index + match[0].length];
+        if (before === '[' && after === ']') continue;
         flag(from + match.index, 1, `the pack ${match[2]} is expected by hand`);
       }
     }
