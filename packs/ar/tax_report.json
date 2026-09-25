@@ -1,0 +1,181 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "AR-IVA",
+  "name": "Declaración jurada del Impuesto al Valor Agregado",
+  "period": ["month"],
+  "period_default": "month",
+  "valid_from": "2025-11-01",
+  "legal_reference": "Ley de Impuesto al Valor Agregado, art. 27, primer párrafo — el impuesto resultante por aplicación de los arts. 11 a 24 se liquidará y abonará por mes calendario sobre la base de declaración jurada efectuada en formulario oficial. El art. 27 admite una opción trimestral para responsables cuyas operaciones correspondan exclusivamente a la actividad agropecuaria, que este paquete no modela. Desde el período fiscal noviembre de 2025 la declaración se presenta mediante el sistema \"IVA Simple\" y el formulario F. 2051, que reemplazó a los formularios F. 731, F. 810, F. 2082 y F. 2002 \"IVA por Actividad\" (Resolución General (ARCA) 5705/2025, arts. 2, 3 y 8). El nuevo sistema pone a disposición del contribuyente los comprobantes electrónicos ya autorizados y no numera sus campos como los formularios que reemplaza; los identificadores de este paquete son siglas propias sobre la sustancia de la determinación que fijan los arts. 11, 12 y 24 de la ley — débito fiscal, crédito fiscal y saldo técnico — y no los nombres de pantalla del portal, que este paquete no pudo verificar; ver README.md",
+  "source": "liva",
+  "deadline": {
+    "rule": "depends_on_taxpayer",
+    "legal_reference": "Resolución General (AFIP) 4172/2017 y sus modificatorias, Anexo — la Agenda General de Vencimientos fija, para cada obligación, un día de vencimiento por cada terminación del número de C.U.I.T. del contribuyente, calendario que la (hoy) Agencia de Recaudación y Control Aduanero actualiza y publica cada año; la Resolución General (ARCA) 5705/2025, art. 5, remite a ese mismo cronograma vigente para la presentación de la declaración jurada mensual y el ingreso del saldo resultante del \"IVA Simple\"",
+    "source": "rg4172"
+  },
+  "boxes": [
+    {
+      "box": "G21",
+      "kind": "base",
+      "name": "Ventas y prestaciones gravadas al 21 %",
+      "sequence": 10,
+      "legal_reference": "Ley de Impuesto al Valor Agregado, art. 27 — base sobre la que se liquida el débito fiscal del art. 11 a la alícuota general del art. 28, primer párrafo",
+      "source": "liva"
+    },
+    {
+      "box": "C21",
+      "kind": "tax",
+      "name": "Débito fiscal al 21 %",
+      "sequence": 20,
+      "legal_reference": "Ley de Impuesto al Valor Agregado, art. 11 — el débito fiscal resulta de aplicar la alícuota fijada para las operaciones a los precios netos totales de las ventas, locaciones y prestaciones de servicios gravadas",
+      "source": "liva"
+    },
+    {
+      "box": "G27",
+      "kind": "base",
+      "name": "Ventas y prestaciones gravadas al 27 %",
+      "sequence": 30,
+      "legal_reference": "Ley de Impuesto al Valor Agregado, art. 27 — base sobre la que se liquida el débito fiscal del art. 11 a la alícuota incrementada del art. 28, segundo párrafo",
+      "source": "liva"
+    },
+    {
+      "box": "C27",
+      "kind": "tax",
+      "name": "Débito fiscal al 27 %",
+      "sequence": 40,
+      "legal_reference": "Ley de Impuesto al Valor Agregado, art. 11",
+      "source": "liva"
+    },
+    {
+      "box": "G105",
+      "kind": "base",
+      "name": "Ventas y prestaciones gravadas al 10,5 %",
+      "sequence": 50,
+      "legal_reference": "Ley de Impuesto al Valor Agregado, art. 27 — base sobre la que se liquida el débito fiscal del art. 11 a la alícuota reducida del art. 28, tercer y cuarto párrafo",
+      "source": "liva"
+    },
+    {
+      "box": "C105",
+      "kind": "tax",
+      "name": "Débito fiscal al 10,5 %",
+      "sequence": 60,
+      "legal_reference": "Ley de Impuesto al Valor Agregado, art. 11",
+      "source": "liva"
+    },
+    {
+      "box": "GEXP",
+      "kind": "base",
+      "name": "Exportaciones",
+      "sequence": 70,
+      "legal_reference": "Ley de Impuesto al Valor Agregado, art. 8, inciso d) y art. 43 — el valor de las operaciones de exportación, que no generan débito fiscal y dan derecho al cómputo, devolución o transferencia del crédito fiscal vinculado",
+      "source": "liva"
+    },
+    {
+      "box": "GEXE",
+      "kind": "base",
+      "name": "Operaciones exentas",
+      "sequence": 80,
+      "legal_reference": "Ley de Impuesto al Valor Agregado, art. 7 — el valor de las ventas, locaciones y prestaciones exentas del impuesto",
+      "source": "liva"
+    },
+    {
+      "box": "DEBFIS",
+      "kind": "total",
+      "name": "Débito fiscal del período",
+      "sequence": 90,
+      "plus": ["C21", "C27", "C105"],
+      "legal_reference": "Ley de Impuesto al Valor Agregado, art. 11 — la suma de los débitos fiscales de todas las operaciones gravadas del período",
+      "source": "liva"
+    },
+    {
+      "box": "PC21",
+      "kind": "base",
+      "name": "Compras y prestaciones recibidas gravadas al 21 %, destinadas a operaciones gravadas",
+      "sequence": 100,
+      "legal_reference": "Ley de Impuesto al Valor Agregado, art. 12 — base sobre la que se computa el crédito fiscal vinculado a operaciones gravadas a la alícuota general",
+      "source": "liva"
+    },
+    {
+      "box": "CF21",
+      "kind": "tax",
+      "name": "Crédito fiscal al 21 %",
+      "sequence": 110,
+      "legal_reference": "Ley de Impuesto al Valor Agregado, art. 12 — el crédito fiscal es el impuesto que, facturado por los proveedores, le hubiera sido liquidado al responsable por compras, locaciones o prestaciones vinculadas a las operaciones gravadas",
+      "source": "liva"
+    },
+    {
+      "box": "PC27",
+      "kind": "base",
+      "name": "Compras y prestaciones recibidas gravadas al 27 %",
+      "sequence": 120,
+      "legal_reference": "Ley de Impuesto al Valor Agregado, art. 12",
+      "source": "liva"
+    },
+    {
+      "box": "CF27",
+      "kind": "tax",
+      "name": "Crédito fiscal al 27 %",
+      "sequence": 130,
+      "legal_reference": "Ley de Impuesto al Valor Agregado, art. 12",
+      "source": "liva"
+    },
+    {
+      "box": "PC105",
+      "kind": "base",
+      "name": "Compras y prestaciones recibidas gravadas al 10,5 %",
+      "sequence": 140,
+      "legal_reference": "Ley de Impuesto al Valor Agregado, art. 12",
+      "source": "liva"
+    },
+    {
+      "box": "CF105",
+      "kind": "tax",
+      "name": "Crédito fiscal al 10,5 %",
+      "sequence": 150,
+      "legal_reference": "Ley de Impuesto al Valor Agregado, art. 12",
+      "source": "liva"
+    },
+    {
+      "box": "PCEXE",
+      "kind": "base",
+      "name": "Compras exentas",
+      "sequence": 160,
+      "legal_reference": "Ley de Impuesto al Valor Agregado, art. 7",
+      "source": "liva"
+    },
+    {
+      "box": "PCIMP",
+      "kind": "base",
+      "name": "Importaciones definitivas gravadas",
+      "sequence": 170,
+      "legal_reference": "Ley de Impuesto al Valor Agregado, art. 1, inciso c) y art. 25",
+      "source": "liva"
+    },
+    {
+      "box": "CFIMP",
+      "kind": "tax",
+      "name": "Crédito fiscal por importaciones definitivas",
+      "sequence": 180,
+      "legal_reference": "Ley de Impuesto al Valor Agregado, art. 12 y art. 25",
+      "source": "liva"
+    },
+    {
+      "box": "CREDFIS",
+      "kind": "total",
+      "name": "Crédito fiscal del período",
+      "sequence": 190,
+      "plus": ["CF21", "CF27", "CF105", "CFIMP"],
+      "legal_reference": "Ley de Impuesto al Valor Agregado, art. 12 — la suma del crédito fiscal computable del período",
+      "source": "liva"
+    },
+    {
+      "box": "SALDOTEC",
+      "kind": "total",
+      "name": "Saldo técnico del período — a ingresar, o a favor del contribuyente",
+      "sequence": 200,
+      "plus": ["DEBFIS"],
+      "minus": ["CREDFIS"],
+      "legal_reference": "Ley de Impuesto al Valor Agregado, art. 24, primer párrafo — cuando el crédito fiscal supere al débito fiscal, el excedente sólo se aplicará a los débitos fiscales de los ejercicios fiscales siguientes; el saldo técnico se muestra aquí como una resta, de modo que un período a favor sale con signo negativo. Este paquete no liquida el saldo de libre disponibilidad del art. 24, segundo párrafo (retenciones, percepciones y otros ingresos directos), fuera de su alcance — ver README.md",
+      "source": "liva"
+    }
+  ]
+}

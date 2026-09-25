@@ -1,0 +1,197 @@
+[
+  {
+    "code": "AR-S-21",
+    "name": "Ventas y servicios al 21 %",
+    "description": "Alícuota general del Impuesto al Valor Agregado sobre ventas de cosas muebles, locaciones y prestaciones de servicios gravadas",
+    "kind": "vat",
+    "rate": 21,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "1990-01-01",
+    "legal_reference": "Ley de Impuesto al Valor Agregado, art. 28, primer párrafo — la alícuota del impuesto será del veintiuno por ciento (21 %)",
+    "source": "liva",
+    "sequence": 10,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "G21" },
+        { "type": "tax", "account": "2131", "box": "C21" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "G21", "box_factor": -100 },
+        { "type": "tax", "account": "2131", "box": "C21", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "AR-S-27",
+    "name": "Ventas y servicios al 27 %",
+    "description": "Alícuota incrementada sobre la venta de gas, energía eléctrica y aguas reguladas por medidor, y demás prestaciones del art. 3, inciso e), puntos 4, 5 y 6, cuando la venta o prestación se efectúe fuera de domicilios destinados exclusivamente a vivienda y el comprador o usuario sea un responsable inscripto o un sujeto que optó por el Régimen Simplificado",
+    "kind": "vat",
+    "rate": 27,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "1990-01-01",
+    "legal_reference": "Ley de Impuesto al Valor Agregado, art. 28, segundo párrafo — esta alícuota se incrementará al veintisiete por ciento (27 %) para las ventas de gas, energía eléctrica y aguas reguladas por medidor y demás prestaciones comprendidas en los puntos 4, 5 y 6 del inciso e) del artículo 3, cuando la venta o prestación se efectúe fuera de domicilios destinados exclusivamente a vivienda o casa de recreo o veraneo o en su caso, terrenos baldíos y el comprador o usuario sea un sujeto categorizado en este impuesto como responsable inscripto o se trate de sujetos que optaron por el Régimen Simplificado para pequeños contribuyentes. El decreto reglamentario, art. 46, precisa qué se entiende por prestaciones comprendidas en los puntos 4, 5 y 6 del inciso e); este paquete no condiciona el código al domicilio del comprador, que el contable elige",
+    "source": "liva",
+    "sequence": 20,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "G27" },
+        { "type": "tax", "account": "2131", "box": "C27" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "G27", "box_factor": -100 },
+        { "type": "tax", "account": "2131", "box": "C27", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "AR-S-105",
+    "name": "Ventas y servicios al 10,5 %",
+    "description": "Alícuota reducida, equivalente al cincuenta por ciento (50 %) de la alícuota general, sobre las ventas y prestaciones enumeradas en el art. 28, cuarto párrafo — entre otras, animales vivos y carnes de las especies bovina y ovina, frutas y hortalizas frescas, miel a granel, granos y legumbres secas, ciertas obras y locaciones vinculadas a esos bienes, las obras del art. 3, inciso b), destinadas a vivienda, los intereses de préstamos de entidades regidas por la Ley 21.526, ciertos bienes de capital, el transporte de pasajeros de más de 100 km, los servicios de asistencia sanitaria no exentos y la venta de diarios, revistas y publicaciones periódicas",
+    "kind": "vat",
+    "rate": 10.5,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "1990-01-01",
+    "legal_reference": "Ley de Impuesto al Valor Agregado, art. 28, tercer y cuarto párrafo — estarán alcanzados por una alícuota equivalente al cincuenta por ciento (50 %) de la establecida en el primer párrafo las ventas, locaciones e importaciones definitivas que el propio artículo enumera en sus incisos a) a g)",
+    "source": "liva",
+    "sequence": 30,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "G105" },
+        { "type": "tax", "account": "2131", "box": "C105" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "G105", "box_factor": -100 },
+        { "type": "tax", "account": "2131", "box": "C105", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "AR-S-EXP",
+    "name": "Exportaciones",
+    "description": "Exportación de bienes o servicios, exenta del impuesto con derecho al cómputo, devolución o transferencia del crédito fiscal vinculado",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "1990-01-01",
+    "legal_reference": "Ley de Impuesto al Valor Agregado, art. 8, inciso d) — las exportaciones están exentas del impuesto; art. 43 — los exportadores pueden computar el impuesto que les hubiera sido facturado por bienes, servicios y locaciones destinados efectivamente a las exportaciones, contra el impuesto que en definitiva adeudasen por sus operaciones internas gravadas, y si la compensación no resultara posible o se realizara sólo parcialmente, el saldo se le acreditará, devolverá o transferirá. La República Argentina no está dentro del sistema común de IVA de la Unión Europea, por lo que este paquete no declara `exemption_code`: el artículo que exime va en `legal_reference`, y no se declara ninguno de los tratamientos `intracom_*`",
+    "source": "liva",
+    "sequence": 40,
+    "postings": {
+      "invoice": [{ "type": "base", "box": "GEXP" }],
+      "credit_note": [{ "type": "base", "box": "GEXP", "box_factor": -100 }]
+    }
+  },
+  {
+    "code": "AR-S-EXE",
+    "name": "Ventas y servicios exentos",
+    "description": "Ventas, locaciones y prestaciones exentas del impuesto por el art. 7 de la Ley de Impuesto al Valor Agregado",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "1990-01-01",
+    "legal_reference": "Ley de Impuesto al Valor Agregado, art. 7 — enumera las ventas, locaciones y prestaciones exentas del impuesto: entre otras, libros, folletos e impresos similares, sellos postales, agua ordinaria natural, pan común, leche sin aditivos destinada a consumidor final o sujetos exentos, medicamentos cuando se trate de su reventa por farmacias, servicios educativos comprendidos en la normativa respectiva, prestaciones de obras sociales y de medicina prepaga, y el transporte internacional de pasajeros y cargas",
+    "source": "liva",
+    "sequence": 50,
+    "postings": {
+      "invoice": [{ "type": "base", "box": "GEXE" }],
+      "credit_note": [{ "type": "base", "box": "GEXE", "box_factor": -100 }]
+    }
+  },
+  {
+    "code": "AR-P-21",
+    "name": "Compras y servicios al 21 %",
+    "description": "Crédito fiscal a la alícuota general sobre compras, locaciones y prestaciones de servicios gravadas destinadas a operaciones gravadas",
+    "kind": "vat",
+    "rate": 21,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "1990-01-01",
+    "legal_reference": "Ley de Impuesto al Valor Agregado, art. 28, primer párrafo, para la alícuota, y art. 12 — el crédito fiscal es el impuesto que, facturado por sus proveedores, le hubiera sido liquidado por compras, locaciones o prestaciones de servicios vinculadas a las operaciones gravadas",
+    "source": "liva",
+    "sequence": 60,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "PC21" },
+        { "type": "tax", "account": "1151", "box": "CF21" }
+      ]
+    }
+  },
+  {
+    "code": "AR-P-27",
+    "name": "Compras y servicios al 27 %",
+    "description": "Crédito fiscal sobre la compra de gas, energía eléctrica y aguas reguladas por medidor y demás prestaciones alcanzadas por la alícuota incrementada del art. 28, segundo párrafo",
+    "kind": "vat",
+    "rate": 27,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "1990-01-01",
+    "legal_reference": "Ley de Impuesto al Valor Agregado, art. 28, segundo párrafo, para la alícuota, y art. 12 para el cómputo como crédito fiscal",
+    "source": "liva",
+    "sequence": 70,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "PC27" },
+        { "type": "tax", "account": "1151", "box": "CF27" }
+      ]
+    }
+  },
+  {
+    "code": "AR-P-105",
+    "name": "Compras y servicios al 10,5 %",
+    "description": "Crédito fiscal a la alícuota reducida sobre las compras, locaciones y prestaciones enumeradas en el art. 28, tercer y cuarto párrafo",
+    "kind": "vat",
+    "rate": 10.5,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "1990-01-01",
+    "legal_reference": "Ley de Impuesto al Valor Agregado, art. 28, tercer y cuarto párrafo, para la alícuota, y art. 12 para el cómputo como crédito fiscal",
+    "source": "liva",
+    "sequence": 80,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "PC105" },
+        { "type": "tax", "account": "1151", "box": "CF105" }
+      ]
+    }
+  },
+  {
+    "code": "AR-P-EXE",
+    "name": "Compras y servicios exentos",
+    "description": "Compras, locaciones y prestaciones exentas del impuesto por el art. 7 de la Ley de Impuesto al Valor Agregado",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "exempt",
+    "valid_from": "1990-01-01",
+    "legal_reference": "Ley de Impuesto al Valor Agregado, art. 7",
+    "source": "liva",
+    "sequence": 90,
+    "postings": {
+      "invoice": [{ "type": "base", "box": "PCEXE" }]
+    }
+  },
+  {
+    "code": "AR-P-IMP",
+    "name": "Importación definitiva de cosas muebles",
+    "description": "Impuesto que se liquida e ingresa juntamente con el despacho de importación por la importación definitiva de cosas muebles, computable como crédito fiscal",
+    "kind": "vat",
+    "rate": 21,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "1990-01-01",
+    "legal_reference": "Ley de Impuesto al Valor Agregado, art. 1, inciso c) — el hecho imponible alcanza a las importaciones definitivas de cosas muebles; art. 25 — en el caso de importaciones definitivas el impuesto se liquida e ingresa juntamente con la liquidación y pago de los derechos de importación; art. 28 para la alícuota, que sigue la de la venta interna del mismo bien. El importe se computa como crédito fiscal por el art. 12",
+    "source": "liva",
+    "sequence": 100,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "PCIMP" },
+        { "type": "tax", "account": "1151", "box": "CFIMP" }
+      ]
+    }
+  }
+]

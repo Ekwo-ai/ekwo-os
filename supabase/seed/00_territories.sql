@@ -1023,3 +1023,33 @@ on conflict (code) do update set
   eu_vat_to       = excluded.eu_vat_to,
   vat_prefix      = excluded.vat_prefix,
   legal_reference = excluded.legal_reference;
+
+
+-- ---------------------------------------------------------------------------
+-- The row — Argentina
+--
+-- A State outside the common system of VAT the way Mexico or Côte d'Ivoire
+-- are: the Republic levies a value added tax of its own under the Ley de
+-- Impuesto al Valor Agregado, texto ordenado in 1997 (Decreto 280/1997) and
+-- its amendments, whose article 28 sets a general rate of 21 %, an increased
+-- rate of 27 % on metered gas, electricity and water sold outside a dwelling
+-- to a registered taxpayer, and a reduced rate of 10.5 % on the goods and
+-- services the same article lists, and no Union instrument reaches it.
+-- `vat_prefix` is null: the C.U.I.T. (Clave Única de Identificación
+-- Tributaria) is an eleven-digit number issued by the Agencia de Recaudación
+-- y Control Aduanero (ARCA, formerly AFIP) and carries no country prefix of
+-- this table's kind.
+-- ---------------------------------------------------------------------------
+
+insert into territories (code, code_source, name, parent_code, eu_vat_scope, eu_vat_from, eu_vat_to, vat_prefix, legal_reference) values
+  ('AR', 'iso_3166_1', 'Argentina', null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. Argentina levies a value added tax of its own under the Ley de Impuesto al Valor Agregado, texto ordenado en 1997 (Decreto 280/1997) y sus modificaciones, article 28, at a general rate of 21 %.')
+on conflict (code) do update set
+  code_source     = excluded.code_source,
+  name            = excluded.name,
+  parent_code     = excluded.parent_code,
+  eu_vat_scope    = excluded.eu_vat_scope,
+  eu_vat_from     = excluded.eu_vat_from,
+  eu_vat_to       = excluded.eu_vat_to,
+  vat_prefix      = excluded.vat_prefix,
+  legal_reference = excluded.legal_reference;

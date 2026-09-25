@@ -5895,3 +5895,98 @@ the common system of VAT, so `vat_category`, `exemption_code` and the five
 `vat_prefix` is null: a Philippine Taxpayer Identification Number is twelve
 digits, the last three of which are the branch code, and carries no ISO
 country prefix of this table's kind.
+
+## From Argentina
+
+Written from published sources alone, on 25 September 2026, and `community`
+like every pack nobody who files the return has read. A chart with **no
+numbered plan to transcribe** — the Código Civil y Comercial asks only that
+bookkeeping be kept on a uniform basis, and the Ley General de Sociedades
+fixes what a statement shows, not what an account is called — value added tax
+at 21 %, 27 % and 10.5 %, exports at a rate of zero with the right to recover
+under art. 43, the exemptions of art. 7, the monthly determination of arts.
+11, 12 and 24, a minimal balance sheet and income statement over the rubros
+of arts. 63 and 64, and a golden year of 11 documents. The pack's own
+[`README`](../packs/ar/README.md) says where each piece comes from; what
+follows is what it could not say inside the format.
+
+**Clearance is not an obligation to exchange, a fifth time over.** A factura
+with a Código de Autorización Electrónico exists only once ARCA (formerly
+AFIP; Decreto 953/2024) has validated it through the web service of
+Resolución General (AFIP) 4291/2018, and Resolución General (AFIP) 4290/2018
+binds essentially every taxpayer who issues one. `einvoicing.obligation:
+mandatory` still requires a `mandatory_from`, which still requires a
+`profile` a brick of `packages/formats/` actually writes, and no such brick
+speaks ARCA's web service. `packs/ar/` leaves the three fields empty, prints
+the mention `no_cae` on every document, and says in the legal reference,
+capitalised, that Ekwo neither generates, authorises nor transmits a
+comprobante — exactly the shape *From Mexico* and the Saudi section above
+already name. Five packs (Mexico, Vietnam, South Korea, Saudi Arabia,
+Argentina) is no longer four countries' oddity; the fix proposed there — a
+`model: clearance` beside `obligation`, with no profile required — is the one
+this pack needs too.
+
+**No inflation adjustment, and no place in the format for one.** Ley 27.468
+reinstated *ajuste por inflación contable* — a restatement of every
+non-monetary balance for the loss of the currency's purchasing power — for a
+fiscal year whose cumulative inflation crosses the thresholds it sets, which
+every year available to this pack has crossed. `docs/packs.md` has a base, a
+rate and a total for a tax, and a rule for a statement line; it has nothing
+that rescales a whole trial balance by an index between the date a balance
+was struck and the date it is reported. This pack carries no accounts, no
+tax and no golden document that models the adjustment, and says so rather
+than approximating it with a tax code that would compute nothing like it.
+*Fix*: out of reach of a small addition — an inflation adjustment is a
+function of the entire trial balance and a monthly index, closer to a second
+`close_fiscal_year()` than to a posting a tax or a statement rule can state.
+Naming the gap is what a pack of a chronically inflationary economy can do
+today.
+
+**A saldo técnico is not a `tax_receivable`, exactly.** Article 24, first
+paragraph, confines a credit produced by crédito fiscal exceeding débito
+fiscal to offsetting the débito fiscal of a following period — never
+refunded, never transferred, except through the export mechanism of art. 43
+this pack already carries as a rate of zero. A second kind of balance, from
+retenciones, percepciones and other direct payments (art. 24, second
+paragraph), can be offset against other taxes or refunded, and this pack does
+not liquidate it at all, for the reason below. `tax_payable` /
+`tax_receivable` name one pair of accounts a period's net is carried to, with
+no way to say that what sits in the receivable one may only ever be used
+against the same tax. Chile, Uruguay and most of the region draw the same
+line between a technical and a freely disponible balance, so a pack that
+needs to state the restriction will meet this again. *Fix*: a role or a flag
+that marks a `tax_receivable` account as confined to its own future débito
+fiscal, read by whatever function would otherwise let it settle or transfer
+like an ordinary credit.
+
+**Three collection-agent regimes, not one posting-timing gap.** *From
+Mexico* and the Senegalese BRS describe a withholding whose tax posting lags
+behind the invoice because it is due on payment — a timing problem inside a
+tax this format already has a shape for. Argentina's regimes are a different
+kind of gap: IVA withholdings and perceptions (a buyer or a card processor
+collects part of another party's tax and deposits it under its own
+obligation, at rates and thresholds set by resolution and revised often), the
+Impuesto a las Ganancias withholding on the same operations, and Ingresos
+Brutos, a tax **each of the twenty-four provincial jurisdictions levies on
+its own base, rate and collection-agent list**, several of them coordinated
+by the Convenio Multilateral and its SIRCREB withholding at source on bank
+credits. None of it is one country's rate a pack can transcribe: it is
+sub-national tax law, revised by resolution more often than a VAT rate is,
+the way American sales tax is out of `docs/packs.md` by the same reasoning
+("Also deliberately out" in *What is not in a pack*, `docs/packs.md`). This
+pack carries no code, no role and no box for any of the three, and the
+README says so rather than modelling one province of twenty-four as if it
+were the rule.
+
+**A rate conditioned on facts a tax cannot ask about.** The 27 % rate of
+art. 28, second paragraph, applies only where the buyer is registered as a
+responsable inscripto or a monotributista and the supply is not to a
+dwelling — a condition on the buyer's own tax status and on the address of
+the delivery, neither of which `applies_when` can express: its four keys
+compare territories, not a party's registration category or a property's
+use. The bookkeeper who knows the buyer picks `AR-S-27` over `AR-S-21`, the
+same gap the Mexican border-region decrees describe for a seller's own
+status.
+
+**ARS** is added to `00_currencies.sql` at two decimals, and `AR` to
+`00_territories.sql`, outside the common system of VAT.

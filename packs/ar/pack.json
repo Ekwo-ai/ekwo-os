@@ -1,0 +1,221 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "AR",
+  "name": "Argentina",
+  "version": "0.1.0",
+  "schema_min": "20260921084143",
+  "seed_sequence": 93,
+  "released_at": "2026-09-25",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "liva",
+        "title": "Ley de Impuesto al Valor Agregado — texto ordenado en 1997 y sus modificaciones (Decreto 280/1997)",
+        "publisher": "Ministerio de Justicia y Derechos Humanos — InfoLeg, Información Legislativa",
+        "url": "https://servicios.infoleg.gob.ar/infolegInternet/anexos/40000-44999/42701/texact.htm",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "rliva",
+        "title": "Decreto Reglamentario 692/1998 de la Ley de Impuesto al Valor Agregado, texto ordenado y sus modificaciones",
+        "publisher": "Ministerio de Justicia y Derechos Humanos — InfoLeg, Información Legislativa",
+        "url": "https://servicios.infoleg.gob.ar/infolegInternet/verNorma.do?id=51323",
+        "consulted_on": "2026-09-25",
+        "kind": "regulation"
+      },
+      {
+        "key": "lgs",
+        "title": "Ley General de Sociedades N.º 19.550, texto ordenado 1984 y sus modificaciones — Sección IX, De la documentación y de la contabilidad, arts. 61 a 73",
+        "publisher": "Ministerio de Justicia y Derechos Humanos — InfoLeg, Información Legislativa",
+        "url": "https://servicios.infoleg.gob.ar/infolegInternet/anexos/25000-29999/25553/texact.htm",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "ccyc",
+        "title": "Código Civil y Comercial de la Nación (Ley 26.994) — Capítulo 4, De la contabilidad y estados contables, arts. 320 a 331",
+        "publisher": "Ministerio de Justicia y Derechos Humanos — InfoLeg, Información Legislativa",
+        "url": "https://servicios.infoleg.gob.ar/infolegInternet/verNorma.do?id=235975",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "decreto953-2024",
+        "title": "Decreto 953/2024 — Disolución de la Administración Federal de Ingresos Públicos (AFIP) y creación de la Agencia de Recaudación y Control Aduanero (ARCA)",
+        "publisher": "Poder Ejecutivo Nacional — Boletín Oficial de la República Argentina",
+        "url": "https://www.argentina.gob.ar/normativa/nacional/decreto-953-2024-405666",
+        "consulted_on": "2026-09-25",
+        "kind": "regulation"
+      },
+      {
+        "key": "rg4290",
+        "title": "Resolución General (AFIP) 4290/2018 — Facturación y registración. Simplificación normativa. Generalización de la emisión de comprobantes electrónicos o mediante controlador fiscal",
+        "publisher": "Administración Federal de Ingresos Públicos (hoy Agencia de Recaudación y Control Aduanero) — Boletín Oficial",
+        "url": "https://www.argentina.gob.ar/normativa/nacional/norma-313087/texto",
+        "consulted_on": "2026-09-25",
+        "kind": "regulation"
+      },
+      {
+        "key": "rg4291",
+        "title": "Resolución General (AFIP) 4291/2018 — Régimen de emisión de comprobantes electrónicos originales (factura electrónica, Código de Autorización Electrónico, CAE), en sustitución de la Resolución General 2485 y sus modificatorias",
+        "publisher": "Administración Federal de Ingresos Públicos (hoy Agencia de Recaudación y Control Aduanero) — Boletín Oficial",
+        "url": "https://www.argentina.gob.ar/normativa/nacional/resoluci%C3%B3n-4291-2018-313088/actualizacion",
+        "consulted_on": "2026-09-25",
+        "kind": "regulation"
+      },
+      {
+        "key": "rg5705-2025",
+        "title": "Resolución General (ARCA) 5705/2025 — Régimen de determinación e ingreso del Impuesto al Valor Agregado. \"IVA Simple\". Formulario de declaración jurada F. 2051, en sustitución de los formularios F. 731, F. 810, F. 2082 y F. 2002 \"IVA por Actividad\"",
+        "publisher": "Agencia de Recaudación y Control Aduanero — Boletín Oficial",
+        "url": "https://www.argentina.gob.ar/normativa/nacional/resoluci%C3%B3n-5705-2025-413494/texto",
+        "consulted_on": "2026-09-25",
+        "kind": "regulation"
+      },
+      {
+        "key": "rg4172",
+        "title": "Resolución General (AFIP) 4172/2017 y sus modificatorias — Agenda General de Vencimientos, cronograma de vencimientos por terminación de C.U.I.T.",
+        "publisher": "Administración Federal de Ingresos Públicos (hoy Agencia de Recaudación y Control Aduanero)",
+        "url": "https://servicios.infoleg.gob.ar/infolegInternet/anexos/305000-309999/305148/norma.htm",
+        "consulted_on": "2026-09-25",
+        "kind": "regulation"
+      },
+      {
+        "key": "arca-iva-portal",
+        "title": "IVA — Formularios y presentación de la declaración jurada",
+        "publisher": "Agencia de Recaudación y Control Aduanero — Portal de trámites y servicios",
+        "url": "https://www.arca.gob.ar/iva/formularios/iva-listo.asp",
+        "consulted_on": "2026-09-25",
+        "kind": "portal"
+      },
+      {
+        "key": "arca-fe-portal",
+        "title": "Factura electrónica — Emisión y autorización, sujetos obligados",
+        "publisher": "Agencia de Recaudación y Control Aduanero — Portal de trámites y servicios",
+        "url": "https://www.afip.gob.ar/fe/emision-autorizacion/sujetos.asp",
+        "consulted_on": "2026-09-25",
+        "kind": "portal"
+      },
+      {
+        "key": "facpce",
+        "title": "Resoluciones Técnicas de la Federación Argentina de Consejos Profesionales de Ciencias Económicas (FACPCE), en particular la RT 8 (Normas generales de exposición contable) y la RT 9 (Normas particulares de exposición contable para entes comerciales, industriales y de servicios)",
+        "publisher": "Federación Argentina de Consejos Profesionales de Ciencias Económicas (FACPCE)",
+        "url": "https://www.facpce.org.ar/",
+        "consulted_on": "2026-09-25",
+        "kind": "standard"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "ARS",
+    "language": "es",
+    "opening_entry_label": "Asiento de apertura",
+    "closing_style": "result_accounts",
+    "roles": {
+      "receivable": "1131",
+      "payable": "2111",
+      "suspense": "117",
+      "rounding": "563",
+      "retained_earnings": "341",
+      "retained_earnings_loss": "342",
+      "current_year_result_profit": "351",
+      "current_year_result_loss": "352",
+      "sales": "411",
+      "purchase": "511",
+      "bank": "1112",
+      "cash": "1111",
+      "fx_gain": "462",
+      "fx_loss": "562",
+      "tax_payable": "2132",
+      "tax_receivable": "1152"
+    },
+    "journal_roles": {
+      "sales": "VTA",
+      "purchase": "CPR",
+      "miscellaneous": "DIA",
+      "opening": "APE"
+    }
+  },
+  "languages": [],
+  "journals": [
+    { "code": "VTA", "type": "sales", "name": "Diario de ventas", "sequence": 10 },
+    { "code": "CPR", "type": "purchase", "name": "Diario de compras", "sequence": 20 },
+    { "code": "BCO", "type": "bank", "name": "Bancos", "sequence": 30 },
+    { "code": "CAJ", "type": "cash", "name": "Caja", "sequence": 40 },
+    { "code": "DIA", "type": "general", "name": "Diario general", "sequence": 50 },
+    { "code": "APE", "type": "opening", "name": "Asiento de apertura", "sequence": 60 }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Plan de cuentas de referencia sobre la estructura de los arts. 63 y 64 de la Ley General de Sociedades",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": ["AR-ESP", "AR-ER"],
+      "legal_reference": "La República Argentina no impone un plan de cuentas único ni numerado: el Código Civil y Comercial, art. 321, exige sólo que la contabilidad sea llevada \"sobre una base uniforme\" que permita \"la individualización de las operaciones\", y el art. 322 enumera los registros indispensables (diario; inventario y balances) sin prescribir cuentas. La Ley General de Sociedades, arts. 63 y 64, fija en cambio el contenido mínimo del estado de situación patrimonial y del estado de resultados — activo corriente y no corriente, pasivo corriente y no corriente, patrimonio neto; ingresos por ventas o servicios agrupados por tipo de actividad, costo de lo vendido, gastos de comercialización y de administración, resultados financieros y por tenencia, resultado del ejercicio. Este plan es original: sigue una numeración propia de cuatro dígitos y cada bloque de códigos corresponde a una línea de AR-ESP o de AR-ER, de modo que las cuentas de este paquete se leen directamente sobre esos dos esquemas. Las Resoluciones Técnicas de la FACPCE (en especial la RT 8 y la RT 9) son la fuente profesional de la presentación de los estados contables, pero la Federación es una entidad profesional y no un organismo del Estado, y su texto no se transcribe aquí; ver README.md",
+      "source": "lgs"
+    }
+  ],
+  "documents": {
+    "numbering": "gapless",
+    "number_format": "{CODE}-{NNNNNNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "invoice_if_issued",
+    "posted_edit_policy": "reversal_only",
+    "references": {
+      "numbering": {
+        "legal_reference": "Resolución General (AFIP) 4291/2018, arts. 1 a 4 y Anexo — el comprobante electrónico se identifica por punto de venta y número correlativo, sin admitir saltos, asignado por el emisor y validado por el servicio web de la (hoy) Agencia de Recaudación y Control Aduanero al momento de autorizarlo con el Código de Autorización Electrónico (CAE); Resolución General (AFIP) 4290/2018 generaliza la obligación de emitir por este medio o por controlador fiscal a la generalidad de las operaciones de venta de cosas muebles, locaciones y prestaciones de servicios. El número que declara este paquete es el de la pieza contable — correlativo por diario, sin reinicio anual — y no el número de comprobante fiscal, que sólo asigna el emisor bajo las reglas de la Resolución General 4291; ver README.md",
+        "source": "rg4291"
+      },
+      "tax_point": {
+        "legal_reference": "Ley de Impuesto al Valor Agregado, art. 5, inciso a) — en el caso de ventas, el hecho imponible se perfecciona en el momento de la entrega del bien, emisión de la factura respectiva, o acto equivalente, el que fuere anterior; inciso b) — en el caso de prestaciones de servicios y locaciones de obras y servicios, en el momento en que se termina la ejecución o prestación, o en el de la percepción total o parcial del precio, el que fuere anterior, salvo que se facture antes de alguno de esos hechos. Dado que la Resolución General 4291/2018 exige emitir la factura electrónica no después de la entrega o de la prestación, en la generalidad de los casos la factura es contemporánea o anterior a la entrega, de modo que el hecho que en la práctica fija el impuesto es el de la emisión — de ahí invoice_if_issued, en el sentido del vocabulario de este formato: la entrega es el principio y la factura lo desplaza cuando se emite",
+        "source": "liva"
+      },
+      "posted_edit_policy": {
+        "legal_reference": "Código Civil y Comercial, art. 321 — los asientos deben respaldarse con la documentación respectiva y no está prevista su alteración; art. 331 — impugnación de los registros contables. Resolución General (AFIP) 4291/2018, art. 21 — un comprobante electrónico autorizado con CAE sólo se anula o corrige mediante una nota de crédito que lo referencia; no existe un procedimiento para volver un comprobante autorizado a borrador",
+        "source": "ccyc"
+      }
+    },
+    "mentions": [
+      {
+        "code": "no_cae",
+        "applies_when": "always",
+        "text": "Este comprobante no lleva el Código de Autorización Electrónico (CAE) de la Agencia de Recaudación y Control Aduanero (ARCA, ex AFIP): no es válido como factura a los efectos fiscales hasta ser autorizado por ese organismo.",
+        "sequence": 10,
+        "legal_reference": "Resolución General (AFIP) 4291/2018, arts. 1, 7 y 8 — el comprobante electrónico se autoriza mediante un servicio web de la Agencia antes de su entrega, que le asigna el Código de Autorización Electrónico; sin él el documento no respalda la operación frente al fisco. Ekwo no emite, no solicita autorización ni transmite comprobantes a la Agencia — ver README.md",
+        "source": "rg4291"
+      },
+      {
+        "code": "export",
+        "applies_when": "export",
+        "text": "Exportación — operación gravada a tasa cero del Impuesto al Valor Agregado (artículo 8, inciso d), de la Ley de Impuesto al Valor Agregado).",
+        "sequence": 20,
+        "legal_reference": "Ley de Impuesto al Valor Agregado, art. 8, inciso d) — las exportaciones están exentas del impuesto; art. 43 — el exportador puede computar el impuesto que le hubiera sido facturado por bienes, servicios y locaciones destinados efectivamente a la exportación contra el impuesto que en definitiva adeudase, o, si no fuera absorbido, se le acredite, devuelva o transfiera. La combinación de ambos artículos es la exención con derecho a recupero que en este paquete se declara con tasa 0 %",
+        "source": "liva"
+      },
+      {
+        "code": "exempt",
+        "applies_when": "exempt",
+        "text": "Operación exenta del Impuesto al Valor Agregado (artículo 7 de la Ley de Impuesto al Valor Agregado).",
+        "sequence": 30,
+        "legal_reference": "Ley de Impuesto al Valor Agregado, art. 7 — enumera las ventas, locaciones y prestaciones exentas: entre otras, libros, folletos e impresos similares, sellos postales, agua ordinaria natural, pan común, leche sin aditivos, medicamentos cuando se trate de su reventa por farmacias, servicios educativos, prestaciones de obras sociales y de medicina prepaga, transporte internacional de pasajeros y cargas, y las demás que el propio artículo detalla",
+        "source": "liva"
+      }
+    ]
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "Resolución General (AFIP) 4290/2018 y Resolución General (AFIP) 4291/2018 — desde el 1 de abril de 2019 (cronograma de la Resolución General 4291, Anexo IV, completado en esa fecha) toda persona humana o jurídica que emite comprobantes por operaciones de venta de cosas muebles, locaciones y prestaciones de servicios, locaciones de obras y señas o anticipos que congelen el precio, sea responsable inscripto, exento o monotributista, debe hacerlo como comprobante electrónico con Código de Autorización Electrónico (CAE) o mediante controlador fiscal, en sustitución de la Resolución General 2485. Es un régimen de validación previa (clearance): antes de entregar el comprobante al receptor, el emisor solicita su autorización a un servicio web de la (hoy) Agencia de Recaudación y Control Aduanero, que valida los datos y devuelve el CAE; sin ese código el comprobante no respalda la operación. El formato del comprobante no es el de una factura construida sobre EN 16931 — no hay Peppol, no hay perfil semántico europeo, y no existe una pieza de packages/formats que redacte el XML del webservice de facturación de ARCA ni que hable con ese servicio. EKWO NO GENERA, NO SOLICITA AUTORIZACIÓN NI TRANSMITE COMPROBANTES A ARCA: un documento emitido desde Ekwo registra la operación en la contabilidad y no es la factura fiscal. Por eso profile, mandatory_from y obligation quedan vacíos aunque la obligación exista: profile nombra un perfil construido sobre EN 16931 que una pieza de packages/formats escribe, y este formato no tiene una palabra para \"válido sólo tras la autorización previa de un tercero\" — ver docs/international.md. La C.U.I.T. identifica al emisor y al receptor y no tiene código ISO 6523: party_scheme y vat_scheme quedan vacíos",
+    "source": "rg4291"
+  },
+  "bank": {
+    "statement_formats": ["csv"],
+    "payment_formats": []
+  }
+}

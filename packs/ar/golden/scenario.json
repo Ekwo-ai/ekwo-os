@@ -1,0 +1,173 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "Un año de una comercializadora argentina, responsable inscripta, que declara el IVA cada mes",
+  "chart": "default",
+  "fiscal_year": { "name": "Ejercicio 2026", "start": "2026-01-01", "end": "2026-12-31" },
+  "periods": [
+    { "code": "2026-01", "from": "2026-01-01", "to": "2026-01-31" },
+    { "code": "2026-02", "from": "2026-02-01", "to": "2026-02-28" },
+    { "code": "2026-03", "from": "2026-03-01", "to": "2026-03-31" }
+  ],
+  "statements": ["AR-ESP", "AR-ER"],
+  "contacts": [
+    { "ref": "cliente-interior", "name": "Distribuidora del Plata S.A.", "type": "customer", "country": "AR" },
+    { "ref": "cliente-exterior", "name": "Southern Cone Imports LLC", "type": "customer", "country": "US" },
+    { "ref": "proveedor-mercaderias", "name": "Mayorista San Martín S.R.L.", "type": "supplier", "country": "AR" },
+    { "ref": "proveedor-servicios", "name": "Servicios Integrales del Litoral S.A.", "type": "supplier", "country": "AR" },
+    { "ref": "despachante-aduana", "name": "Despachante de Aduana Puerto Nuevo", "type": "supplier", "country": "AR" }
+  ],
+  "documents": [
+    {
+      "ref": "V1",
+      "type": "sale_invoice",
+      "contact": "cliente-interior",
+      "date": "2026-01-10",
+      "why": "Una venta de mercaderías a la alícuota general: la base de la grilla G21 y el débito fiscal de la grilla C21.",
+      "lines": [
+        { "name": "Mercaderías varias", "quantity": 10, "unit_price": 50000, "tax": "AR-S-21", "account": "411" }
+      ]
+    },
+    {
+      "ref": "V2",
+      "type": "sale_invoice",
+      "contact": "cliente-interior",
+      "date": "2026-01-18",
+      "why": "Una venta de energía eléctrica a un local comercial, a la alícuota incrementada del art. 28, segundo párrafo: la base de la grilla G27 y el débito fiscal de la grilla C27.",
+      "lines": [
+        { "name": "Suministro de energía eléctrica — local comercial", "quantity": 1, "unit_price": 100000, "tax": "AR-S-27", "account": "413" }
+      ]
+    },
+    {
+      "ref": "CN1",
+      "type": "sale_credit_note",
+      "contact": "cliente-interior",
+      "date": "2026-01-25",
+      "why": "Una devolución parcial de la venta V1: prueba que la nota de crédito resta de las mismas grillas G21 y C21 que la factura que corrige.",
+      "lines": [
+        { "name": "Devolución de mercaderías", "quantity": 2, "unit_price": 50000, "tax": "AR-S-21", "account": "411" }
+      ]
+    },
+    {
+      "ref": "V3",
+      "type": "sale_invoice",
+      "contact": "cliente-interior",
+      "date": "2026-02-05",
+      "why": "Una venta de granos, alcanzada por la alícuota reducida del art. 28, cuarto párrafo, apartado 5: la base de la grilla G105 y el débito fiscal de la grilla C105.",
+      "lines": [
+        { "name": "Venta de granos", "quantity": 1, "unit_price": 200000, "tax": "AR-S-105", "account": "411" }
+      ]
+    },
+    {
+      "ref": "V4",
+      "type": "sale_invoice",
+      "contact": "cliente-exterior",
+      "date": "2026-02-12",
+      "why": "Una exportación de mercaderías, exenta con derecho a recupero del art. 8, inciso d), y art. 43: la base de la grilla GEXP, sin débito fiscal.",
+      "lines": [
+        { "name": "Mercaderías exportadas", "quantity": 1, "unit_price": 300000, "tax": "AR-S-EXP", "account": "412" }
+      ]
+    },
+    {
+      "ref": "V5",
+      "type": "sale_invoice",
+      "contact": "cliente-interior",
+      "date": "2026-03-02",
+      "why": "Una venta de libros, exenta por el art. 7: la base de la grilla GEXE, sin débito fiscal.",
+      "lines": [
+        { "name": "Venta de libros", "quantity": 5, "unit_price": 10000, "tax": "AR-S-EXE", "account": "411" }
+      ]
+    },
+    {
+      "ref": "C1",
+      "type": "purchase_invoice",
+      "contact": "proveedor-mercaderias",
+      "date": "2026-01-15",
+      "why": "Una compra de mercaderías a la alícuota general: la base de la grilla PC21 y el crédito fiscal de la grilla CF21.",
+      "lines": [
+        { "name": "Compra de mercaderías", "quantity": 1, "unit_price": 300000, "tax": "AR-P-21", "account": "511" }
+      ]
+    },
+    {
+      "ref": "C2",
+      "type": "purchase_invoice",
+      "contact": "proveedor-servicios",
+      "date": "2026-01-22",
+      "why": "Una compra de energía eléctrica para la planta, a la alícuota incrementada: la base de la grilla PC27 y el crédito fiscal de la grilla CF27.",
+      "lines": [
+        { "name": "Energía eléctrica — planta", "quantity": 1, "unit_price": 50000, "tax": "AR-P-27", "account": "533" }
+      ]
+    },
+    {
+      "ref": "C3",
+      "type": "purchase_invoice",
+      "contact": "proveedor-mercaderias",
+      "date": "2026-02-08",
+      "why": "Una compra de insumos agropecuarios a la alícuota reducida: la base de la grilla PC105 y el crédito fiscal de la grilla CF105.",
+      "lines": [
+        { "name": "Insumos agropecuarios", "quantity": 1, "unit_price": 150000, "tax": "AR-P-105", "account": "511" }
+      ]
+    },
+    {
+      "ref": "C4",
+      "type": "purchase_invoice",
+      "contact": "proveedor-servicios",
+      "date": "2026-02-18",
+      "why": "Una compra exenta por el art. 7: la base de la grilla PCEXE, sin crédito fiscal.",
+      "lines": [
+        { "name": "Libros técnicos", "quantity": 1, "unit_price": 20000, "tax": "AR-P-EXE", "account": "533" }
+      ]
+    },
+    {
+      "ref": "C5",
+      "type": "purchase_invoice",
+      "contact": "despachante-aduana",
+      "date": "2026-03-10",
+      "why": "Una importación definitiva de mercaderías liquidada con el despacho de importación: la base de la grilla PCIMP y el crédito fiscal de la grilla CFIMP.",
+      "lines": [
+        { "name": "Importación definitiva de mercaderías", "quantity": 1, "unit_price": 400000, "tax": "AR-P-IMP", "account": "511" }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "E1",
+      "direction": "inbound",
+      "date": "2026-02-20",
+      "amount": 605000,
+      "contact": "cliente-interior",
+      "journal": "BCO",
+      "match": "V1",
+      "why": "Un cobro que salda exactamente la factura V1."
+    },
+    {
+      "ref": "E2",
+      "direction": "outbound",
+      "date": "2026-02-25",
+      "amount": 363000,
+      "contact": "proveedor-mercaderias",
+      "journal": "BCO",
+      "match": "C1",
+      "why": "Un pago que salda exactamente la factura C1."
+    },
+    {
+      "ref": "E3",
+      "direction": "inbound",
+      "date": "2026-01-28",
+      "amount": 50000,
+      "contact": "cliente-interior",
+      "journal": "BCO",
+      "match": null,
+      "why": "Un anticipo de un cliente sin factura asociada todavía: queda como una partida abierta, sin conciliar."
+    },
+    {
+      "ref": "E4",
+      "direction": "inbound",
+      "date": "2026-03-15",
+      "amount": 300000,
+      "contact": "cliente-exterior",
+      "journal": "BCO",
+      "match": "V4",
+      "why": "Un cobro que salda la exportación V4."
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+code,parent,type,reconcilable,name,sequence
+100,,asset_current,false,Activo,10
+110,100,asset_current,false,Activo corriente,20
+111,110,asset_cash,false,Caja y bancos,30
+1111,111,asset_cash,false,Caja,40
+1112,111,asset_cash,false,Bancos,50
+112,110,asset_current,false,Inversiones corrientes,60
+113,110,asset_receivable,true,Créditos por ventas,70
+1131,113,asset_receivable,true,Deudores por ventas - Mercado interno,80
+1132,113,asset_receivable,true,Deudores por ventas - Exterior,90
+1133,113,asset_receivable,true,Documentos a cobrar,100
+114,110,asset_current,false,Otros créditos,110
+1141,114,asset_current,false,Anticipos a proveedores,120
+1142,114,asset_prepayments,false,Gastos pagados por adelantado,130
+1143,114,asset_current,false,Anticipo Impuesto a las Ganancias,140
+115,110,asset_current,false,Créditos fiscales,150
+1151,115,asset_current,false,IVA Crédito Fiscal,160
+1152,115,asset_current,true,IVA Saldo a Favor - Técnico,170
+116,110,asset_current,false,Bienes de cambio,180
+117,110,asset_current,false,Partidas pendientes de imputación,190
+120,100,asset_non_current,false,Activo no corriente,200
+121,120,asset_non_current,false,Créditos no corrientes,210
+122,120,asset_fixed,false,Bienes de uso,220
+1221,122,asset_fixed,false,Bienes de uso - Valor de origen,230
+1222,122,asset_fixed,false,Bienes de uso - Amortización acumulada,240
+123,120,asset_non_current,false,Activos intangibles,250
+200,,liability_current,false,Pasivo,260
+210,200,liability_current,false,Pasivo corriente,270
+211,210,liability_payable,true,Cuentas por pagar comerciales,280
+2111,211,liability_payable,true,Proveedores - Mercado interno,290
+2112,211,liability_payable,true,Proveedores - Exterior,300
+2113,211,liability_payable,true,Documentos a pagar,310
+212,210,liability_current,false,Remuneraciones y cargas sociales a pagar,320
+213,210,liability_current,false,Cargas fiscales a pagar,330
+2131,213,liability_current,false,IVA Débito Fiscal,340
+2132,213,liability_current,true,IVA a Pagar,350
+2133,213,liability_current,false,Impuesto a las Ganancias a pagar,360
+2134,213,liability_current,false,Ingresos Brutos a pagar,370
+214,210,liability_current,false,Anticipos de clientes,380
+215,210,liability_current,false,Provisiones,390
+220,200,liability_non_current,false,Pasivo no corriente,400
+221,220,liability_non_current,false,Deudas bancarias,410
+222,220,liability_non_current,false,Otras deudas,420
+300,,equity,false,Patrimonio neto,430
+310,300,equity,false,Capital social,440
+320,300,equity,false,Reserva legal,450
+330,300,equity,false,Otras reservas,460
+340,300,equity_retained,false,Resultados no asignados,470
+341,340,equity_retained,false,Resultados no asignados - Ganancias,480
+342,340,equity_retained,false,Resultados no asignados - Pérdidas,490
+350,300,equity,false,Resultado del ejercicio,500
+351,350,equity,false,Resultado del ejercicio - Ganancia,510
+352,350,equity,false,Resultado del ejercicio - Pérdida,520
+400,,income,false,Ingresos,530
+410,400,income,false,Ventas,540
+411,410,income,false,Ventas de mercaderías - Mercado interno,550
+412,410,income,false,Ventas de mercaderías - Exportaciones,560
+413,410,income,false,Ventas de servicios,570
+460,400,income_other,false,Resultados financieros y por tenencia positivos,580
+461,460,income_other,false,Intereses ganados,590
+462,460,income_other,false,Diferencia de cambio positiva,600
+480,400,income_other,false,Otros ingresos,610
+500,,expense,false,Costos y gastos,620
+510,500,expense_direct_cost,false,Costo de ventas,630
+511,510,expense_direct_cost,false,Compras de mercaderías,640
+520,500,expense,false,Gastos de comercialización,650
+521,520,expense,false,Gastos de comercialización varios,660
+530,500,expense,false,Gastos de administración,670
+531,530,expense,false,Sueldos y cargas sociales,680
+532,530,expense,false,Honorarios profesionales,690
+533,530,expense,false,Gastos generales de administración,700
+534,530,expense_depreciation,false,Amortización de bienes de uso,710
+560,500,expense,false,Resultados financieros y por tenencia negativos,720
+561,560,expense,false,Intereses pagados,730
+562,560,expense,false,Diferencia de cambio negativa,740
+563,560,expense,false,Redondeo,750
+570,500,expense,false,Impuesto a las Ganancias,760
+580,500,expense,false,Otros egresos,770
