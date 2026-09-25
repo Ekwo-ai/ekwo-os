@@ -1,0 +1,117 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "CY-VAT4",
+  "name": "VAT return (Έντυπο Φ.Π.Α.4)",
+  "period": ["quarter"],
+  "period_default": "quarter",
+  "valid_from": "2001-07-27",
+  "legal_reference": "Οι περί Φόρου Προστιθέμενης Αξίας (Γενικοί) Κανονισμοί του 2001 (Κ.Δ.Π. 314/2001), regulation 17 — every registered person furnishes a return for each period of a quarter, or such other period of three months as the Commissioner of Taxation notifies to them, no later than the tenth day after the end of the month that follows the end of the period. Regulation 17 was read directly in the PDF of the Official Gazette notice (Ε.Ε. Παρ. ΙΙΙ(Ι), Αρ. 3518, 27/7/2001, p. 3381). This pack was not able to confirm a monthly or other cadence offered on request, as several other Member States' forms are, so only the quarter the Regulation itself gives is declared.",
+  "source": "vat-regs-2001",
+  "boxes": [
+    {
+      "box": "1",
+      "kind": "tax",
+      "name": "Output VAT",
+      "sequence": 10,
+      "legal_reference": "The total VAT due on domestic supplies of goods and services at every rate, and on a self-accounted supply that is not an intra-Community acquisition of goods (a reverse charge under article 11 or article 11Β of Ν. 95(Ι)/2000). Box 1 of Form 4, as described in the unofficial translation of the Tax Department's completion notes published by Chelco VAT Ltd (VAT Definitive Guides, Issue 2) — the Department's own guide could not be retrieved for this pack; see the README.",
+      "source": "cy-vat4-guide-chelco"
+    },
+    {
+      "box": "2",
+      "kind": "tax",
+      "name": "Output VAT on intra-Community acquisitions of goods",
+      "sequence": 20,
+      "legal_reference": "The VAT self-accounted under article 12Α of Ν. 95(Ι)/2000 on the acquisition of goods from another Member State. Box 2 of Form 4, Chelco VAT Ltd's unofficial translation of the completion notes.",
+      "source": "cy-vat4-guide-chelco"
+    },
+    {
+      "box": "3",
+      "kind": "total",
+      "name": "Total output VAT due",
+      "sequence": 30,
+      "plus": ["1", "2"],
+      "legal_reference": "Box 3 of Form 4 is the sum of boxes 1 and 2, Chelco VAT Ltd's unofficial translation of the completion notes.",
+      "source": "cy-vat4-guide-chelco"
+    },
+    {
+      "box": "4",
+      "kind": "tax",
+      "name": "Input VAT",
+      "sequence": 40,
+      "legal_reference": "The total VAT the person is entitled to deduct, on domestic purchases, imports, intra-Community acquisitions and services received from abroad, subject to holding a valid VAT invoice under regulation 12(1) of Κ.Δ.Π. 314/2001. Box 4 of Form 4, Chelco VAT Ltd's unofficial translation of the completion notes.",
+      "source": "cy-vat4-guide-chelco"
+    },
+    {
+      "box": "5",
+      "kind": "total",
+      "name": "VAT due for the period",
+      "sequence": 50,
+      "plus": ["3"],
+      "minus": ["4"],
+      "legal_reference": "Box 5 of Form 4 is box 3 less box 4: an amount owed to the Tax Department where positive, a credit carried or claimed where negative. Chelco VAT Ltd's unofficial translation of the completion notes.",
+      "source": "cy-vat4-guide-chelco"
+    },
+    {
+      "box": "6",
+      "kind": "base",
+      "name": "Total value of sales, excluding VAT",
+      "sequence": 60,
+      "legal_reference": "The value, net of VAT, of every sale of the period at every rate, including a zero-rated, exempt or reverse-charged one; boxes 8A, 8B and 9 report parts of this total separately as well. Box 6 of Form 4, Chelco VAT Ltd's unofficial translation of the completion notes.",
+      "source": "cy-vat4-guide-chelco"
+    },
+    {
+      "box": "7",
+      "kind": "base",
+      "name": "Total value of purchases and expenses, excluding VAT",
+      "sequence": 70,
+      "legal_reference": "The value, net of VAT, of every purchase of the period at every rate, including an intra-Community acquisition or a service received from abroad; boxes 11A and 11B report parts of this total separately as well. Box 7 of Form 4, Chelco VAT Ltd's unofficial translation of the completion notes.",
+      "source": "cy-vat4-guide-chelco"
+    },
+    {
+      "box": "8A",
+      "kind": "base",
+      "name": "Value of goods dispatched to other Member States",
+      "sequence": 80,
+      "legal_reference": "The value of an intra-Community supply of goods, article 25(8)(α) of Ν. 95(Ι)/2000, already counted in box 6. Box 8A of Form 4, Chelco VAT Ltd's unofficial translation of the completion notes.",
+      "source": "cy-vat4-guide-chelco"
+    },
+    {
+      "box": "8B",
+      "kind": "base",
+      "name": "Value of services supplied to taxable persons in other Member States",
+      "sequence": 90,
+      "legal_reference": "The value of a business-to-business service taxed where the customer is established, article 44 of Council Directive 2006/112/EC, already counted in box 6. Box 8B of Form 4, Chelco VAT Ltd's unofficial translation of the completion notes.",
+      "source": "cy-vat4-guide-chelco"
+    },
+    {
+      "box": "9",
+      "kind": "base",
+      "name": "Value of supplies at the zero rate, other than 8A and 8B",
+      "sequence": 100,
+      "legal_reference": "The value of a domestic zero-rated supply (article 25 of Ν. 95(Ι)/2000) or an export (article 25(6)), already counted in box 6. Box 9 of Form 4, Chelco VAT Ltd's unofficial translation of the completion notes.",
+      "source": "cy-vat4-guide-chelco"
+    },
+    {
+      "box": "11A",
+      "kind": "base",
+      "name": "Value of intra-Community acquisitions of goods",
+      "sequence": 110,
+      "legal_reference": "The value of an acquisition taxed under article 12Α of Ν. 95(Ι)/2000, already counted in box 7. Box 11A of Form 4, Chelco VAT Ltd's unofficial translation of the completion notes.",
+      "source": "cy-vat4-guide-chelco"
+    },
+    {
+      "box": "11B",
+      "kind": "base",
+      "name": "Value of services received from taxable persons in other Member States",
+      "sequence": 120,
+      "legal_reference": "The value of a service self-accounted under article 11 of Ν. 95(Ι)/2000 where the supplier is established in another Member State, already counted in box 7. Box 11B of Form 4, Chelco VAT Ltd's unofficial translation of the completion notes; this pack reads box 11B as reported within box 7 alone, the source consulted being ambiguous between box 6, box 7 and both — see the README.",
+      "source": "cy-vat4-guide-chelco"
+    }
+  ],
+  "deadline": {
+    "rule": "last_day_of_month_after_period",
+    "plus_days": 10,
+    "legal_reference": "Κ.Δ.Π. 314/2001, regulation 17 — the return and payment are due no later than the tenth day after the end of the month that follows the end of the period: a quarter ending 31 March falls due on the last day of April (30 April) plus ten days, 10 May. Read directly in the Official Gazette PDF (Ε.Ε. Παρ. ΙΙΙ(Ι), Αρ. 3518, 27/7/2001, p. 3381).",
+    "source": "vat-regs-2001"
+  }
+}

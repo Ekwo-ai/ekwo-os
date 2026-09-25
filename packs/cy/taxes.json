@@ -1,0 +1,463 @@
+[
+  {
+    "code": "CY-S-19",
+    "name": "Sale, standard rate 19 %",
+    "rate": 19,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2014-01-13",
+    "legal_reference": "The Value Added Tax Laws of 2000 to 2023 (Ν. 95(Ι)/2000, as consolidated), article 17 — the standard rate is nineteen per cent (19%) from 13 January 2014 (eighteen per cent from 14 January 2013 to 12 January 2014). Own translation of the Greek text: \"Φ.Π.Α. επιβάλλεται με συντελεστή ... δεκαεννέα τοις εκατόν (19%) από 13 Ιανουαρίου 2014\". Box 1 of the return, VAT Definitive Guides (Chelco VAT Ltd) §3.",
+    "source": "vat-law-95-2000",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "6" },
+        { "type": "tax", "account": "2200", "box": "1" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "6", "box_factor": -100 },
+        { "type": "tax", "account": "2200", "box": "1", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 10
+  },
+  {
+    "code": "CY-S-09",
+    "name": "Sale, reduced rate 9 %",
+    "rate": 9,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2014-01-13",
+    "legal_reference": "Ν. 95(Ι)/2000 as consolidated, article 18Α, and the Twelfth Schedule (Δωδέκατο Παράρτημα) it refers to — goods and services taxed at nine per cent, among them most hotel and tourist accommodation, restaurant and catering services, and local passenger transport, subject to the temporary substitution recorded in CY-S-05-COVID below. The Article and Schedule were read directly in the consolidated text; the precise date this Article's current wording commenced was not independently confirmed in the sources consulted for this pack, and 13 January 2014 — the date of the concurrent standard-rate change of article 17 — is used pending that confirmation; see the pack README.",
+    "source": "vat-law-95-2000",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "6" },
+        { "type": "tax", "account": "2200", "box": "1" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "6", "box_factor": -100 },
+        { "type": "tax", "account": "2200", "box": "1", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 20
+  },
+  {
+    "code": "CY-S-05-COVID",
+    "name": "Sale, 5 % — temporary rate for accommodation, catering and passenger transport",
+    "description": "The temporary substitution of the 9 % rate by 5 % for tourist accommodation, restaurant/catering services and passenger transport",
+    "rate": 5,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2020-07-01",
+    "valid_to": "2021-01-10",
+    "legal_reference": "Κ.Δ.Π. 268/2020, Το περί Φόρου Προστιθέμενης Αξίας (Τροποποίηση του Πέμπτου Παραρτήματος και Δωδέκατου Παραρτήματος) Διάταγμα του 2020, issued by the Council of Ministers under articles 18(2) and 18Α(2) of Ν. 95(Ι)/2000, Ε.Ε. Παρ. ΙΙΙ(Ι), Αρ. 5303, 23/6/2020 — hotel and tourist accommodation, restaurant and catering services, and urban, inter-urban and rural taxi and coach transport moved from the Twelfth Schedule (9 %) to the Fifth Schedule (5 %) from 1 July 2020, and paragraphs (1) to (3) of the Twelfth Schedule were deleted for the duration; the Order itself fixes its end at 10 January 2021, after which the 9 % of CY-S-09 applies again. Read directly in the primary text (Ε.Ε. Παρ. ΙΙΙ(Ι), Αρ. 5303).",
+    "source": "kdp-268-2020",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "6" },
+        { "type": "tax", "account": "2200", "box": "1" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "6", "box_factor": -100 },
+        { "type": "tax", "account": "2200", "box": "1", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 25
+  },
+  {
+    "code": "CY-S-05",
+    "name": "Sale, reduced rate 5 %",
+    "rate": 5,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2014-01-13",
+    "legal_reference": "Ν. 95(Ι)/2000 as consolidated, article 18, and the Fifth Schedule (Πέμπτο Παράρτημα) it refers to — goods and services taxed at five per cent, among them foodstuffs not otherwise zero-rated, pharmaceutical products, books, newspapers and periodicals before the introduction of the three per cent rate, and (since Κ.Δ.Π. 268/2020, see CY-S-05-COVID) tourist accommodation, catering and passenger transport outside the temporary window. The Article and Schedule were read directly in the consolidated text; the commencement date of this Article's current wording was not independently confirmed and 13 January 2014 is used on the same basis as CY-S-09 — see the pack README.",
+    "source": "vat-law-95-2000",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "6" },
+        { "type": "tax", "account": "2200", "box": "1" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "6", "box_factor": -100 },
+        { "type": "tax", "account": "2200", "box": "1", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 30
+  },
+  {
+    "code": "CY-S-03",
+    "name": "Sale, reduced rate 3 %",
+    "rate": 3,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2023-07-21",
+    "legal_reference": "Ν. 95(Ι)/2000 as consolidated, article 18Β, and the Fifteenth Schedule (Δέκατο Πέμπτο Παράρτημα) it refers to — books, newspapers and magazines, in print and in electronic form (other than material devoted wholly or predominantly to advertising), taxed at three per cent. The Article and Schedule were read directly in the consolidated text at cylaw.org. The commencement date of 21 July 2023 is that of \"The Value Added Tax (Amendment) (No. 3) Law of 2023\", as reported by professional VAT commentary (KPMG Cyprus, PwC Cyprus) rather than read directly by this pack in the Official Gazette; it should be checked against the Gazette text before this pack is relied on — see the pack README.",
+    "source": "vat-law-95-2000",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "6" },
+        { "type": "tax", "account": "2200", "box": "1" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "6", "box_factor": -100 },
+        { "type": "tax", "account": "2200", "box": "1", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 40
+  },
+  {
+    "code": "CY-S-00",
+    "name": "Sale, zero rate",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2004-05-01",
+    "legal_reference": "Ν. 95(Ι)/2000 as consolidated, article 25 and the Sixth Schedule (Έκτο Παράρτημα) it refers to — goods and services taxed at zero per cent, among them (as read directly in the consolidated text) international transport and related services, seagoing vessels and aircraft used for international transport, gold supplied to the Central Bank, humanitarian donations, infant milk, nappies, sanitary protection, Braille equipment and vehicles for disabled persons, and, temporarily, fresh vegetables and fruit (K.Δ.Π. 337/2025, 1 January to 31 December 2026) and fresh or frozen meat and fish (K.Δ.Π. 168/2026, 6 April to 30 September 2026). A zero-rated supply is a taxable supply and keeps the right to deduct.",
+    "source": "vat-law-95-2000",
+    "vat_category": "Z",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": ["6", "9"] }
+      ],
+      "credit_note": [
+        { "type": "base", "box": ["6", "9"], "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 50
+  },
+  {
+    "code": "CY-S-EXEMPT",
+    "name": "Sale, exempt activity",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2004-05-01",
+    "legal_reference": "Ν. 95(Ι)/2000 as consolidated, article 26 — transactions and acquisitions listed in the Seventh Schedule (Έβδομο Παράρτημα) are exempt, without a right to deduct. This pack confirmed the Article and Schedule reference directly in the consolidated text but did not re-read the Seventh Schedule item by item; the usual European exemptions of health, education, insurance, financial services and residential letting are assumed to be among its contents by analogy with every other Member State's transposition of Title IX, Chapter 2 of Council Directive 2006/112/EC, and should be checked against the Schedule itself before this pack is relied on for a specific exempt activity. The reason code is the general public-interest one of Article 132 of the Directive; a supply exempt under a different article should name that article instead.",
+    "source": "vat-law-95-2000",
+    "vat_category": "E",
+    "exemption_code": "VATEX-EU-132",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "6" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "6", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 60
+  },
+  {
+    "code": "CY-S-EXPORT",
+    "name": "Export of goods outside the European Union",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2004-05-01",
+    "legal_reference": "Ν. 95(Ι)/2000 as consolidated, article 25(6) — the export of goods to a destination outside the Member States is zero-rated where the Commissioner of Taxation is satisfied that the person exported the goods, transposing article 146 of Council Directive 2006/112/EC. Read directly in the consolidated text.",
+    "source": "vat-law-95-2000",
+    "vat_category": "G",
+    "exemption_code": "VATEX-EU-G",
+    "conditions": ["transport_evidence"],
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": ["6", "9"] }
+      ],
+      "credit_note": [
+        { "type": "base", "box": ["6", "9"], "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 70
+  },
+  {
+    "code": "CY-S-ICG",
+    "name": "Intra-Community supply of goods",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "intracom_goods",
+    "valid_from": "2004-05-01",
+    "legal_reference": "Ν. 95(Ι)/2000 as consolidated, article 25(8)(α) — the Council of Ministers is empowered to zero-rate the supply of goods dispatched to a person liable for the acquisition in another Member State under the equivalent there of article 12Α, transposing article 138 of Council Directive 2006/112/EC. Read directly in the consolidated text; the implementing Order made under that power was not separately located, and the requirement to hold the customer's VAT number and to state the supply is intra-Community rests on Regulation 12(1) of Κ.Δ.Π. 314/2001 (mandatory invoice particulars) read generally rather than a provision specific to this case.",
+    "source": "vat-law-95-2000",
+    "vat_category": "K",
+    "exemption_code": "VATEX-EU-IC",
+    "conditions": ["buyer_status", "transport_evidence"],
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": ["6", "8A"] }
+      ],
+      "credit_note": [
+        { "type": "base", "box": ["6", "8A"], "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 80
+  },
+  {
+    "code": "CY-S-ICS",
+    "name": "Services supplied to a taxable person in another Member State",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "intracom_services",
+    "valid_from": "2004-05-01",
+    "legal_reference": "The general business-to-business place-of-supply rule of article 44 of Council Directive 2006/112/EC — a service supplied to a taxable person established in another Member State is taxed where the customer is established, and the customer accounts for the tax there under article 196. This pack was not able to confirm, in the sources consulted, the precise article of Ν. 95(Ι)/2000 that transposes article 44 for the place of supply of a business-to-business service (as distinct from article 11, confirmed as the domestic self-accounting mechanism for a service received from abroad); see the pack README.",
+    "source": "vat-directive-2006-112",
+    "vat_category": "K",
+    "exemption_code": "VATEX-EU-IC",
+    "conditions": ["buyer_status"],
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": ["6", "8B"] }
+      ],
+      "credit_note": [
+        { "type": "base", "box": ["6", "8B"], "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 90
+  },
+  {
+    "code": "CY-S-RCC",
+    "name": "Construction services, domestic reverse charge",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "domestic_reverse_charge",
+    "valid_from": "2005-01-01",
+    "legal_reference": "Ν. 95(Ι)/2000 as consolidated, article 11Β, inserted by Ν. 88(Ι)/2005 — where a service, or a service with goods, is supplied in the course of the construction, conversion, demolition, repair or maintenance of a building or civil engineering work to a taxable person registered for VAT in Cyprus, that person accounts for the tax instead of the supplier. Read directly in the consolidated text; the commencement date of Ν. 88(Ι)/2005 was not independently re-verified in the Official Gazette and 1 January 2005 is used as the year of the amending law.",
+    "source": "vat-law-95-2000",
+    "vat_category": "AE",
+    "exemption_code": "VATEX-EU-AE",
+    "conditions": ["buyer_status"],
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "6" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "6", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 100
+  },
+  {
+    "code": "CY-P-19",
+    "name": "Purchase, standard rate 19 %",
+    "rate": 19,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2014-01-13",
+    "legal_reference": "Ν. 95(Ι)/2000 as consolidated, article 17 for the rate; the general right of deduction of input tax charged by another taxable person by VAT invoice, subject to holding that invoice under Regulation 12(1) of Κ.Δ.Π. 314/2001. Box 4 of the return.",
+    "source": "vat-law-95-2000",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "7" },
+        { "type": "tax", "account": "1140", "box": "4" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "7", "box_factor": -100 },
+        { "type": "tax", "account": "1140", "box": "4", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 110
+  },
+  {
+    "code": "CY-P-09",
+    "name": "Purchase, reduced rate 9 %",
+    "rate": 9,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2014-01-13",
+    "legal_reference": "Ν. 95(Ι)/2000 as consolidated, article 18Α and the Twelfth Schedule, on the same basis as CY-S-09. Box 4 of the return.",
+    "source": "vat-law-95-2000",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "7" },
+        { "type": "tax", "account": "1140", "box": "4" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "7", "box_factor": -100 },
+        { "type": "tax", "account": "1140", "box": "4", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 120
+  },
+  {
+    "code": "CY-P-05",
+    "name": "Purchase, reduced rate 5 %",
+    "rate": 5,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2014-01-13",
+    "legal_reference": "Ν. 95(Ι)/2000 as consolidated, article 18 and the Fifth Schedule, on the same basis as CY-S-05. Box 4 of the return.",
+    "source": "vat-law-95-2000",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "7" },
+        { "type": "tax", "account": "1140", "box": "4" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "7", "box_factor": -100 },
+        { "type": "tax", "account": "1140", "box": "4", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 130
+  },
+  {
+    "code": "CY-P-03",
+    "name": "Purchase, reduced rate 3 %",
+    "rate": 3,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2023-07-21",
+    "legal_reference": "Ν. 95(Ι)/2000 as consolidated, article 18Β and the Fifteenth Schedule, on the same basis as CY-S-03. Box 4 of the return.",
+    "source": "vat-law-95-2000",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "7" },
+        { "type": "tax", "account": "1140", "box": "4" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "7", "box_factor": -100 },
+        { "type": "tax", "account": "1140", "box": "4", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 140
+  },
+  {
+    "code": "CY-P-EXEMPT",
+    "name": "Purchase of an exempt supply",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "exempt",
+    "valid_from": "2004-05-01",
+    "legal_reference": "Ν. 95(Ι)/2000 as consolidated, article 26 and the Seventh Schedule — the supplier carries on an exempt activity and charges no tax, on the same basis as CY-S-EXEMPT.",
+    "source": "vat-law-95-2000",
+    "vat_category": "E",
+    "exemption_code": "VATEX-EU-132",
+    "postings": {},
+    "kind": "vat",
+    "sequence": 150
+  },
+  {
+    "code": "CY-P-ICG-19",
+    "name": "Intra-Community acquisition of goods, 19 %",
+    "rate": 19,
+    "scope": "purchase",
+    "treatment": "intracom_acquisition_goods",
+    "valid_from": "2004-05-01",
+    "legal_reference": "Ν. 95(Ι)/2000 as consolidated, article 12Α — VAT is charged on the acquisition of goods from another Member State where the acquisition is a taxable acquisition made in Cyprus by a taxable person, transposing Title V, Chapter 2 of Council Directive 2006/112/EC; article 12Γ (read in the same consolidated text, adjacent to article 12Α) sets the time of the acquisition. The tax is self-accounted and, being for a taxable use, deducted in the same period. Read directly in the consolidated text. Box 2 (output) and box 4 (input) of the return; the value in box 7 and box 11A.",
+    "source": "vat-law-95-2000",
+    "vat_category": "K",
+    "exemption_code": "VATEX-EU-IC",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": ["7", "11A"] },
+        { "type": "tax", "account": "1140", "box": "4" },
+        { "type": "tax", "factor": -100, "account": "2200", "box": "2" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": ["7", "11A"], "box_factor": -100 },
+        { "type": "tax", "account": "1140", "box": "4", "box_factor": -100 },
+        { "type": "tax", "factor": -100, "account": "2200", "box": "2", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 160
+  },
+  {
+    "code": "CY-P-ICS-19",
+    "name": "Service received from a taxable person in another Member State, 19 %",
+    "rate": 19,
+    "scope": "purchase",
+    "treatment": "intracom_acquisition_services",
+    "valid_from": "2004-05-01",
+    "legal_reference": "Ν. 95(Ι)/2000 as consolidated, article 11 — a taxable person in Cyprus who receives a service from a person established abroad accounts for the tax as if the recipient had made the supply, transposing the general business-to-business self-accounting mechanism behind articles 44 and 196 of Council Directive 2006/112/EC. Read directly in the consolidated text for the self-accounting mechanism; the reason code and category follow from the supplier's establishment in another Member State rather than from a separate article naming the acquisition (see CY-S-ICS on the same point). Box 1 (output, general — not box 2, which this pack reads as confined to the acquisition of goods under article 12Α) and box 4 (input); the value in box 6 and box 7 and box 11B.",
+    "source": "vat-law-95-2000",
+    "vat_category": "K",
+    "exemption_code": "VATEX-EU-IC",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": ["7", "11B"] },
+        { "type": "tax", "account": "1140", "box": "4" },
+        { "type": "tax", "factor": -100, "account": "2200", "box": "1" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": ["7", "11B"], "box_factor": -100 },
+        { "type": "tax", "account": "1140", "box": "4", "box_factor": -100 },
+        { "type": "tax", "factor": -100, "account": "2200", "box": "1", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 170
+  },
+  {
+    "code": "CY-P-FSR-19",
+    "name": "Service received from a supplier outside the European Union, 19 %",
+    "rate": 19,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2004-05-01",
+    "legal_reference": "Ν. 95(Ι)/2000 as consolidated, article 11 — the same self-accounting mechanism as CY-P-ICS-19, for a supplier established outside the European Union. Read directly in the consolidated text. Box 1 (output) and box 4 (input); no box carries the value, as boxes 8B and 11B are for a supplier established in another Member State only.",
+    "source": "vat-law-95-2000",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "7" },
+        { "type": "tax", "account": "1140", "box": "4" },
+        { "type": "tax", "factor": -100, "account": "2200", "box": "1" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "7", "box_factor": -100 },
+        { "type": "tax", "account": "1140", "box": "4", "box_factor": -100 },
+        { "type": "tax", "factor": -100, "account": "2200", "box": "1", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 180
+  },
+  {
+    "code": "CY-P-RCC",
+    "name": "Construction services from a subcontractor, domestic reverse charge",
+    "rate": 19,
+    "scope": "purchase",
+    "treatment": "domestic_reverse_charge",
+    "valid_from": "2005-01-01",
+    "legal_reference": "Ν. 95(Ι)/2000 as consolidated, article 11Β, on the same basis as CY-S-RCC: the recipient, a taxable person registered for VAT in Cyprus, self-accounts for the tax on a construction service received. Box 1 (output) and box 4 (input); the value in box 7 and not in a box of its own, no such box being carried by this form for a domestic reverse charge.",
+    "source": "vat-law-95-2000",
+    "vat_category": "AE",
+    "exemption_code": "VATEX-EU-AE",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "7" },
+        { "type": "tax", "account": "1140", "box": "4" },
+        { "type": "tax", "factor": -100, "account": "2200", "box": "1" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "7", "box_factor": -100 },
+        { "type": "tax", "account": "1140", "box": "4", "box_factor": -100 },
+        { "type": "tax", "factor": -100, "account": "2200", "box": "1", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 190
+  }
+]

@@ -1,0 +1,231 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "A year of a VAT-registered Cyprus trading and services company, filing quarterly",
+  "chart": "default",
+  "fiscal_year": {
+    "name": "Year ended 31 December 2026",
+    "start": "2026-01-01",
+    "end": "2026-12-31"
+  },
+  "periods": [
+    { "code": "2026-Q1", "from": "2026-01-01", "to": "2026-03-31" },
+    { "code": "2026-Q2", "from": "2026-04-01", "to": "2026-06-30" },
+    { "code": "2026-Q3", "from": "2026-07-01", "to": "2026-09-30" }
+  ],
+  "contacts": [
+    { "ref": "cust-cy", "name": "Ledra Retail Ltd", "type": "customer", "country": "CY" },
+    { "ref": "cust-books", "name": "Makarios Bookshop Ltd", "type": "customer", "country": "CY" },
+    { "ref": "cust-pc", "name": "Troodos Developers Ltd", "type": "customer", "country": "CY" },
+    { "ref": "cust-de", "name": "Rheinmetall Handel GmbH", "type": "customer", "country": "DE", "vat_number": "DE999999999" },
+    { "ref": "cust-fr", "name": "Atelier Provence SARL", "type": "customer", "country": "FR", "vat_number": "FR99999999999" },
+    { "ref": "cust-us", "name": "Cascade Instruments Inc.", "type": "customer", "country": "US" },
+    { "ref": "supp-cy", "name": "Kyrenia Supplies Ltd", "type": "supplier", "country": "CY" },
+    { "ref": "supp-sub", "name": "Limassol Groundworks Ltd", "type": "supplier", "country": "CY" },
+    { "ref": "supp-de", "name": "Ostwind Komponenten GmbH", "type": "supplier", "country": "DE" },
+    { "ref": "supp-nl", "name": "Grachtwerk Software B.V.", "type": "supplier", "country": "NL" },
+    { "ref": "supp-us", "name": "Northwind Cloud Inc.", "type": "supplier", "country": "US" }
+  ],
+  "documents": [
+    {
+      "ref": "S1",
+      "type": "sale_invoice",
+      "contact": "cust-cy",
+      "date": "2026-01-15",
+      "why": "A domestic sale at the standard rate: the base goes to box 6 and the tax to box 1.",
+      "lines": [
+        { "name": "Goods sold", "quantity": 10, "unit_price": 1000, "tax": "CY-S-19", "account": "4000" }
+      ]
+    },
+    {
+      "ref": "S2",
+      "type": "sale_invoice",
+      "contact": "cust-cy",
+      "date": "2026-01-28",
+      "why": "The reduced rate of 9 %: a second positive rate in box 1, aggregated with the standard rate because the return carries no breakdown by rate.",
+      "lines": [
+        { "name": "Catering services", "quantity": 1, "unit_price": 4000, "tax": "CY-S-09", "account": "4020" }
+      ]
+    },
+    {
+      "ref": "S3",
+      "type": "sale_invoice",
+      "contact": "cust-books",
+      "date": "2026-02-10",
+      "why": "The three per cent rate of article 18Β and the Fifteenth Schedule, in force since 21 July 2023: a third positive rate, for a supply of printed books.",
+      "lines": [
+        { "name": "Printed books", "quantity": 1, "unit_price": 500, "tax": "CY-S-03", "account": "4040" }
+      ]
+    },
+    {
+      "ref": "P1",
+      "type": "purchase_invoice",
+      "contact": "supp-cy",
+      "date": "2026-01-20",
+      "why": "A domestic purchase at the standard rate: the input tax goes to box 4, deductible against the output tax of box 1 through box 5.",
+      "lines": [
+        { "name": "Goods for resale", "quantity": 1, "unit_price": 3000, "tax": "CY-P-19", "account": "5000" }
+      ]
+    },
+    {
+      "ref": "S4",
+      "type": "sale_invoice",
+      "contact": "cust-cy",
+      "date": "2026-04-05",
+      "why": "The reduced rate of 5 %: a fourth positive rate, for a foodstuff of the Fifth Schedule.",
+      "lines": [
+        { "name": "Foodstuffs", "quantity": 1, "unit_price": 2000, "tax": "CY-S-05", "account": "4030" }
+      ]
+    },
+    {
+      "ref": "S5",
+      "type": "sale_invoice",
+      "contact": "cust-cy",
+      "date": "2026-04-12",
+      "why": "A zero-rated domestic supply under the Sixth Schedule: a taxable supply that keeps the right to deduct, reported in box 9 and nothing in box 1.",
+      "lines": [
+        { "name": "Infant milk", "quantity": 1, "unit_price": 800, "tax": "CY-S-00", "account": "4050" }
+      ]
+    },
+    {
+      "ref": "S6",
+      "type": "sale_invoice",
+      "contact": "cust-cy",
+      "date": "2026-04-20",
+      "why": "An exempt activity under article 26 and the Seventh Schedule: counted in box 6 and nowhere else, and carrying no right to deduct, unlike the zero rate above.",
+      "lines": [
+        { "name": "Insurance intermediation", "quantity": 1, "unit_price": 1500, "tax": "CY-S-EXEMPT", "account": "4060" }
+      ]
+    },
+    {
+      "ref": "S7",
+      "type": "sale_invoice",
+      "contact": "cust-us",
+      "date": "2026-05-06",
+      "why": "An export of goods to the United States, zero-rated under article 25(6): reported in box 9 like the domestic zero rate, and distinguished from it only by the tax code and its legal reference.",
+      "lines": [
+        { "name": "Goods for export", "quantity": 1, "unit_price": 6000, "tax": "CY-S-EXPORT", "account": "4070" }
+      ]
+    },
+    {
+      "ref": "P2",
+      "type": "purchase_invoice",
+      "contact": "supp-cy",
+      "date": "2026-05-10",
+      "why": "A domestic purchase at the reduced rate of 5 %, deductible in box 4 like the standard-rated one.",
+      "lines": [
+        { "name": "Packaging materials", "quantity": 1, "unit_price": 1200, "tax": "CY-P-05", "account": "5000" }
+      ]
+    },
+    {
+      "ref": "P3",
+      "type": "purchase_invoice",
+      "contact": "supp-de",
+      "date": "2026-05-15",
+      "why": "An intra-Community acquisition of goods under article 12Α: box 2 and box 4 take the same self-accounted tax and the ledger nets to nothing, while box 7 and box 11A take the value.",
+      "lines": [
+        { "name": "Components", "quantity": 1, "unit_price": 2500, "tax": "CY-P-ICG-19", "account": "5010" }
+      ]
+    },
+    {
+      "ref": "P4",
+      "type": "purchase_invoice",
+      "contact": "supp-nl",
+      "date": "2026-05-22",
+      "why": "A service received from a taxable person in the Netherlands under the general business-to-business rule: box 1 and box 4 take the self-accounted tax, and box 7 and box 11B the value.",
+      "lines": [
+        { "name": "Software consultancy", "quantity": 1, "unit_price": 1000, "tax": "CY-P-ICS-19", "account": "7140" }
+      ]
+    },
+    {
+      "ref": "S8",
+      "type": "sale_invoice",
+      "contact": "cust-de",
+      "date": "2026-07-08",
+      "why": "An intra-Community supply of goods to a customer registered in Germany: box 6 and box 8A take the value and box 1 nothing.",
+      "lines": [
+        { "name": "Goods dispatched to Germany", "quantity": 1, "unit_price": 5000, "tax": "CY-S-ICG", "account": "4080" }
+      ]
+    },
+    {
+      "ref": "S9",
+      "type": "sale_invoice",
+      "contact": "cust-fr",
+      "date": "2026-07-15",
+      "why": "A service to a taxable person in France, taxed where the customer is established: box 6 and box 8B take the value and box 1 nothing.",
+      "lines": [
+        { "name": "Consultancy services", "quantity": 1, "unit_price": 2500, "tax": "CY-S-ICS", "account": "4090" }
+      ]
+    },
+    {
+      "ref": "S10",
+      "type": "sale_invoice",
+      "contact": "cust-pc",
+      "date": "2026-07-22",
+      "why": "The subcontractor's side of the construction reverse charge of article 11Β: the invoice carries no VAT and the reverse-charge sentence, and box 1 sees nothing.",
+      "lines": [
+        { "name": "Groundworks, reverse charge applies", "quantity": 1, "unit_price": 8000, "tax": "CY-S-RCC", "account": "4100" }
+      ]
+    },
+    {
+      "ref": "SC1",
+      "type": "sale_credit_note",
+      "contact": "cust-cy",
+      "date": "2026-08-05",
+      "why": "A credit note on the standard-rated sale of January, issued in a later period: box 1 of the third quarter goes down by the tax it credits, and box 6 by the value.",
+      "lines": [
+        { "name": "Goods returned", "quantity": 2, "unit_price": 1000, "tax": "CY-S-19", "account": "4000" }
+      ]
+    },
+    {
+      "ref": "P5",
+      "type": "purchase_invoice",
+      "contact": "supp-us",
+      "date": "2026-08-12",
+      "why": "A service received from a supplier outside the European Union: box 1 and box 4 take the self-accounted tax, and no box carries the value, because box 8B and box 11B are for a supplier established in another Member State only.",
+      "lines": [
+        { "name": "Cloud software subscription", "quantity": 1, "unit_price": 900, "tax": "CY-P-FSR-19", "account": "7140" }
+      ]
+    },
+    {
+      "ref": "P6",
+      "type": "purchase_invoice",
+      "contact": "supp-sub",
+      "date": "2026-08-20",
+      "why": "The principal's side of the construction reverse charge of article 11Β: box 1 and box 4 take the self-accounted tax, and box 7 the value.",
+      "lines": [
+        { "name": "Groundworks by a subcontractor", "quantity": 1, "unit_price": 6000, "tax": "CY-P-RCC", "account": "5030" }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "R1",
+      "direction": "inbound",
+      "date": "2026-02-19",
+      "amount": 11900,
+      "contact": "cust-cy",
+      "journal": "BNK",
+      "match": "S1",
+      "why": "A receipt that settles the standard-rated sale exactly, VAT included, and closes it."
+    },
+    {
+      "ref": "R2",
+      "direction": "outbound",
+      "date": "2026-02-20",
+      "amount": 3570,
+      "contact": "supp-cy",
+      "journal": "BNK",
+      "match": "P1",
+      "why": "A payment that settles the standard-rated purchase exactly, VAT included."
+    },
+    {
+      "ref": "R3",
+      "direction": "inbound",
+      "date": "2026-09-10",
+      "amount": 1000,
+      "contact": "cust-cy",
+      "journal": "BNK",
+      "why": "A payment on account matched to no document: it leaves an open item, which is what a real ledger holds."
+    }
+  ]
+}

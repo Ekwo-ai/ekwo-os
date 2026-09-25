@@ -4966,3 +4966,53 @@ Saudi partial-deduction column in the section above proposes none — a
 `mandatory_from` per counterparty class is a bigger change than the
 inconsistency it would resolve, and Latvia may be the only pack in this
 repository so far whose statute actually needs it.
+
+## From Cyprus
+
+`packs/cy/`, `community`, seed 79, inside the common system of VAT since
+1 May 2004. Its rates, its reverse charges and its return are read from the
+Value Added Tax Law (Ν. 95(Ι)/2000), consolidated; one thing already written
+down elsewhere in this file was met again in a shape worth recording, and one
+thing is a limit of the research behind this pack rather than of the core.
+
+### An election the tax point word cannot carry, met again
+
+`documents.tax_point` is one word for the whole country, and "Three things
+this left open" above already names the shape this pack ran into: a rule that
+turns on a fact known only at the level of one taxable person's own choice,
+rather than of a supply. Article 9(5) of the Cyprus law is a new variant of
+it. The basic time of supply is delivery or performance (article 9(2)–(3));
+an invoice issued within fourteen days after that time brings the tax point
+forward to the invoice date **by default** — not on request, the reverse of
+`cash_basis` — unless the taxable person has given the Commissioner of
+Taxation written notice not to apply it (article 9(6) lets the Commissioner
+extend the fourteen days itself, on request, which stacks a second
+per-taxpayer variable on top). `packs/cy/` declares `invoice_if_issued`,
+which is right for the ordinary case an opt-out notice takes a company out
+of, and cannot say that a specific company has opted out, any more than
+`packs/be/` or `packs/gb/` could say which of their own companies had asked
+for the derogation those packs already describe. The fix proposed there —
+a column the company record carries, rather than one the country does —
+would close this one at the same time.
+
+### A government site that blocks the tooling used to verify a source
+
+Every automated request this pack's research made to `gov.cy` and to
+`mof.gov.cy`, the Tax Department's own domain, answered `403`, including a
+former direct link to the Department's VAT return guide that now redirects
+to a `gov.cy` page not carrying the document, with no snapshot of the old one
+on the Wayback Machine either. The law itself was still readable, at
+[cylaw.org](https://www.cylaw.org/), the country's free-access legal
+consolidator — after a first attempt read its `Windows-1253`-encoded Greek as
+UTF-8 and produced unusable mojibake, which cost more of the time budget than
+the block itself did. What could not be replaced this way is the Tax
+Department's own description of which figure its VAT return's boxes ask for:
+`packs/cy/tax_report.json` rests that description on an unofficial
+translation published by a private Cyprus VAT advisory firm, named as such on
+every box, for want of anything closer this pack could reach. This is not a
+gap in the format — every field a pack needs already exists — and it is not
+a new one for the register of sources, which has always allowed an entry to
+say plainly what it is. It is left here because the next country whose
+finance ministry runs the same kind of bot wall should not have to rediscover
+that a browser and an automated fetch are answered differently, or spend the
+time this pack did finding that out the hard way.

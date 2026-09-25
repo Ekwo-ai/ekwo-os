@@ -1,0 +1,267 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "CY",
+  "name": "Cyprus",
+  "version": "0.1.0",
+  "schema_min": "20260923110000",
+  "seed_sequence": 79,
+  "released_at": "2026-09-25",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "vat-law-95-2000",
+        "title": "The Value Added Tax Laws of 2000 to 2023 (Ν. 95(Ι)/2000), consolidated text",
+        "publisher": "CyLII — Cyprus Legal Information Institute (cylaw.org). Unofficial consolidation: the Department of the Law Commissioner and the Tax Department's own sites returned 403 to every automated request made while building this pack, so the base law and every amendment were read here instead, decoded from the site's native Windows-1253 encoding to avoid the mojibake a naive UTF-8 read produces. A reviewer should check a citation against the enacted text and the Official Gazette before relying on it.",
+        "url": "https://www.cylaw.org/nomoi/enop/non-ind/2000_1_95/full.html",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "vat-regs-2001",
+        "title": "Οι περί Φόρου Προστιθέμενης Αξίας (Γενικοί) Κανονισμοί του 2001 (Κ.Δ.Π. 314/2001) — the VAT (General) Regulations 2001",
+        "publisher": "Cyprus Official Gazette (Επίσημη Εφημερίδα της Κυπριακής Δημοκρατίας), Παράρτημα Τρίτο (Ι), reproduced by cylaw.org",
+        "url": "https://www.cylaw.org/KDP/data/2001_1_314.pdf",
+        "consulted_on": "2026-09-25",
+        "kind": "regulation"
+      },
+      {
+        "key": "kdp-268-2020",
+        "title": "Το περί Φόρου Προστιθέμενης Αξίας (Τροποποίηση του Πέμπτου Παραρτήματος και Δωδέκατου Παραρτήματος) Διάταγμα του 2020 (Κ.Δ.Π. 268/2020)",
+        "publisher": "Cyprus Official Gazette (Επίσημη Εφημερίδα της Κυπριακής Δημοκρατίας), Παράρτημα Τρίτο (Ι), Αρ. 5303, reproduced by cylaw.org",
+        "url": "https://www.cylaw.org/KDP/data/2020_1_268.pdf",
+        "consulted_on": "2026-09-25",
+        "kind": "regulation"
+      },
+      {
+        "key": "late-payments-law-2012",
+        "title": "The Late Payments in Commercial Transactions Law of 2012 (Ν. 123(Ι)/2012)",
+        "publisher": "CyLII — Cyprus Legal Information Institute (cylaw.org), unofficial consolidation",
+        "url": "https://www.cylaw.org/nomoi/enop/non-ind/2012_1_123/full.html",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "companies-law-cap113",
+        "title": "The Companies Law, Cap. 113, English translation made July 2014",
+        "publisher": "Department of the Registrar of Companies and Intellectual Property, Ministry of Energy, Commerce and Industry",
+        "url": "https://www.companies.gov.cy/assets/modules/wgp/articles/201801/49/docs/cap_113_translation_made_july_2014.pdf",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "ifrs-cyprus",
+        "title": "IFRS jurisdiction profile — Cyprus",
+        "publisher": "IFRS Foundation",
+        "url": "https://www.ifrs.org/content/ifrs/home/use-around-the-world/use-of-ifrs-standards-by-jurisdiction/view-jurisdiction.html/cyprus",
+        "consulted_on": "2026-09-25",
+        "kind": "guidance"
+      },
+      {
+        "key": "ec-einvoicing-cy",
+        "title": "eInvoicing in Cyprus",
+        "publisher": "European Commission — Digital Building Blocks",
+        "url": "https://ec.europa.eu/digital-building-blocks/sites/display/DIGITAL/eInvoicing+in+Cyprus",
+        "consulted_on": "2026-09-25",
+        "kind": "guidance"
+      },
+      {
+        "key": "eu-sme-rules-cy",
+        "title": "Cyprus SME VAT rules — national annual threshold €15,600",
+        "publisher": "European Commission — Taxation and Customs Union",
+        "url": "https://sme-vat-rules.ec.europa.eu/national-vat-rules/cyprus-sme-rules_en",
+        "consulted_on": "2026-09-25",
+        "kind": "guidance"
+      },
+      {
+        "key": "taxforall-portal",
+        "title": "Tax For All (TFA) — the portal the VAT return and the VIES statement are filed on",
+        "publisher": "Tax Department, Ministry of Finance",
+        "url": "https://taxforall.mof.gov.cy/",
+        "consulted_on": "2026-09-25",
+        "kind": "portal"
+      },
+      {
+        "key": "cy-vat4-guide-chelco",
+        "title": "VAT Definitive Guides, Issue 2 — including an unofficial translation of VAT Return Form 4 and its completion notes",
+        "publisher": "Chelco VAT Ltd. Not an official source: the Tax Department's own guide could not be retrieved for this pack (its former mof.gov.cy address now redirects to gov.cy, and the document was not found at the new one or in the Wayback Machine). Kept as the best available description of which figure the return asks for in which box, and flagged wherever it is relied on; see the pack README.",
+        "url": "https://chelcovat.com/wp-content/uploads/2021/09/VAT-Definitive-Guides-i.2-VAT-Returns-%CE%95%CE%9D.pdf",
+        "consulted_on": "2026-09-25",
+        "kind": "form"
+      },
+      {
+        "key": "vat-directive-2006-112",
+        "title": "Council Directive 2006/112/EC of 28 November 2006 on the common system of value added tax, consolidated text",
+        "publisher": "Publications Office of the European Union — EUR-Lex",
+        "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02006L0112-20220701",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "en-16931",
+        "title": "EN 16931 compliance — the European standard on electronic invoicing under Directive 2014/55/EU",
+        "publisher": "European Commission — Digital Building Blocks",
+        "url": "https://ec.europa.eu/digital-building-blocks/sites/spaces/DIGITAL/pages/467108950/EN+16931+compliance",
+        "consulted_on": "2026-09-25",
+        "kind": "standard"
+      },
+      {
+        "key": "uncl5305",
+        "title": "UNCL5305 — the VAT category code list of EN 16931 (BT-118 and BT-151), as the OpenPEPPOL subset publishes it",
+        "publisher": "OpenPEPPOL — the list itself is published by the European Commission",
+        "url": "https://docs.peppol.eu/poacc/billing/3.0/codelist/UNCL5305/",
+        "consulted_on": "2026-09-25",
+        "kind": "standard"
+      },
+      {
+        "key": "vatex",
+        "title": "VATEX — the VAT exemption reason code list of EN 16931 (BT-121)",
+        "publisher": "OpenPEPPOL — the list itself is published by the European Commission",
+        "url": "https://docs.peppol.eu/poacc/billing/3.0/codelist/vatex/",
+        "consulted_on": "2026-09-25",
+        "kind": "standard"
+      },
+      {
+        "key": "peppol-eas",
+        "title": "Peppol code list of electronic address schemes (ISO 6523 ICD)",
+        "publisher": "OpenPEPPOL",
+        "url": "https://docs.peppol.eu/poacc/billing/3.0/codelist/eas/",
+        "consulted_on": "2026-09-25",
+        "kind": "standard"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "EUR",
+    "language": "en",
+    "rounding_method": "half_up",
+    "closing_style": "retained_earnings",
+    "fiscal_year_default": "calendar",
+    "roles": {
+      "receivable": "1100",
+      "payable": "2100",
+      "suspense": "2400",
+      "rounding": "7310",
+      "retained_earnings": "3400",
+      "sales": "4000",
+      "purchase": "5000",
+      "bank": "1500",
+      "cash": "1530",
+      "fx_gain": "4330",
+      "fx_loss": "7300",
+      "asset_disposal_gain": "4320",
+      "asset_disposal_loss": "7290",
+      "tax_payable": "2210",
+      "tax_receivable": "1150"
+    },
+    "journal_roles": {
+      "sales": "SAL",
+      "purchase": "PUR",
+      "miscellaneous": "GEN",
+      "opening": "OPN"
+    }
+  },
+  "languages": [],
+  "journals": [
+    { "code": "SAL", "type": "sales", "name": "Sales journal", "sequence": 10 },
+    { "code": "PUR", "type": "purchase", "name": "Purchases journal", "sequence": 20 },
+    { "code": "BNK", "type": "bank", "name": "Bank", "sequence": 30 },
+    { "code": "CSH", "type": "cash", "name": "Cash", "sequence": 40 },
+    { "code": "GEN", "type": "general", "name": "General journal", "sequence": 50 },
+    { "code": "OPN", "type": "opening", "name": "Opening balances", "sequence": 60 }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Cyprus reference chart of accounts",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": [],
+      "legal_reference": "Cyprus prescribes no chart of accounts and no statutory balance sheet or profit and loss format. The Companies Law, Cap. 113, s. 141A (as substituted) requires every company's accounts to give a true and fair view and to be prepared in accordance with International Financial Reporting Standards as adopted by the European Union under Regulation (EC) No 1606/2002; the Eighth Schedule to Cap. 113, which once set out a statutory balance sheet and profit and loss format transposing the Fourth Company Law Directive (78/660/EEC), was repealed in 2003 by s. 20 of Ν. 167(Ι)/2003 when that requirement was introduced, and IAS 1's own layout is deliberately not a fixed table of captions. This chart is therefore original, follows no published format, and its statements are the ones `packs/generic/` already carries for a chart that names none: a balance sheet and an income statement built from the eighteen account types alone.",
+      "source": "companies-law-cap113"
+    }
+  ],
+  "documents": {
+    "numbering": "sequential",
+    "number_format": "{CODE}-{YYYY}-{NNNN}",
+    "legal_payment_days": 30,
+    "late_payment_reference": "Ν. 123(Ι)/2012, transposing Directive 2011/7/EU — where the parties have agreed no payment date, the statutory period is 30 calendar days after the later of the receipt of the goods or services and the receipt of the invoice; statutory interest runs at the European Central Bank's main refinancing rate plus 8 percentage points.",
+    "tax_point": "invoice_if_issued",
+    "references": {
+      "numbering": {
+        "legal_reference": "Κ.Δ.Π. 314/2001, regulation 12(1) — a VAT invoice carries an identifying number among its mandatory particulars. The Regulation was read directly for its list of mandatory particulars; it was not found to require the absence of a gap in the sequence, so numbering is declared sequential rather than gapless.",
+        "source": "vat-regs-2001"
+      },
+      "payment_terms": {
+        "legal_reference": "Ν. 123(Ι)/2012, transposing Directive 2011/7/EU, the default payment term where the contract sets none.",
+        "source": "late-payments-law-2012"
+      },
+      "tax_point": {
+        "legal_reference": "Ν. 95(Ι)/2000 as consolidated, article 9(2)–(3) — the basic time of a supply of goods is when they are transported or, if not transported, put at the recipient's disposal, and of a service when it is performed; article 9(4) brings that time forward to the date of an earlier invoice or an advance payment, to the extent invoiced or paid; article 9(5) brings it forward again to the date of an invoice issued within fourteen days after the basic time, unless the taxable person has given the Commissioner written notice not to apply that rule (article 9(6) lets the Commissioner extend the fourteen days on request). Read directly in the consolidated text. `invoice_if_issued` is used because an invoice issued within the ordinary fourteen-day window — which covers the practical majority of supplies — displaces the basic time to the invoice date; a supply invoiced later, or after an opt-out notice, falls back to the basic time of article 9(2)–(3), which this single word does not carry, and neither does article 9(4)'s advance-payment rule, which this pack does not model as a prepayment document.",
+        "source": "vat-law-95-2000"
+      }
+    },
+    "mentions": [
+      {
+        "code": "reverse_charge",
+        "applies_when": "reverse_charge",
+        "text": "Reverse charge — VAT to be accounted for by the recipient.",
+        "sequence": 10,
+        "legal_reference": "Article 226(11a) of Council Directive 2006/112/EC requires the mention 'Reverse charge' where the customer is liable for the tax; Ν. 95(Ι)/2000, articles 11 and 11Β are the domestic mechanisms that make the customer liable. This pack was not able to confirm a Cyprus-specific wording requirement distinct from the Directive's own in the sources consulted.",
+        "source": "vat-directive-2006-112"
+      },
+      {
+        "code": "intracom_goods",
+        "applies_when": "intra_eu_goods",
+        "text": "Intra-Community supply of goods — zero-rated under article 25(8) of the Value Added Tax Law (article 138 of Council Directive 2006/112/EC).",
+        "sequence": 20,
+        "legal_reference": "Article 226(11) of Council Directive 2006/112/EC requires a reference to article 138; Κ.Δ.Π. 314/2001, regulation 12(1) requires the customer's identifying particulars on every VAT invoice, read generally rather than as a provision specific to this mention.",
+        "source": "vat-directive-2006-112"
+      },
+      {
+        "code": "intracom_services",
+        "applies_when": "intra_eu_services",
+        "text": "Reverse charge — the customer is liable to account for the VAT (articles 44 and 196 of Council Directive 2006/112/EC).",
+        "sequence": 30,
+        "legal_reference": "Article 226(11a) of Council Directive 2006/112/EC.",
+        "source": "vat-directive-2006-112"
+      },
+      {
+        "code": "export",
+        "applies_when": "export",
+        "text": "Export of goods outside the European Union — zero-rated under article 25(6) of the Value Added Tax Law.",
+        "sequence": 40,
+        "legal_reference": "Κ.Δ.Π. 314/2001, regulation 12(1) — the invoice states the rate of tax, which on an export is the zero rate of article 25.",
+        "source": "vat-regs-2001"
+      },
+      {
+        "code": "exempt",
+        "applies_when": "exempt",
+        "text": "Exempt from VAT under article 26 and the Seventh Schedule of the Value Added Tax Law.",
+        "sequence": 50,
+        "legal_reference": "Κ.Δ.Π. 314/2001, regulation 12(1) — the invoice states the rate of tax; an exempt activity is charged at none.",
+        "source": "vat-regs-2001"
+      },
+      {
+        "code": "late_payment",
+        "applies_when": "late_payment",
+        "text": "Statutory interest and compensation for recovery costs apply to a payment received after the due date, under the Late Payments in Commercial Transactions Law of 2012.",
+        "sequence": 60,
+        "legal_reference": "Ν. 123(Ι)/2012, the interest and compensation it makes an implied term of every commercial transaction.",
+        "source": "late-payments-law-2012"
+      }
+    ]
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "obligation": "none",
+    "legal_reference": "No enactment obliges a Cyprus business to issue a structured electronic invoice to another business today. Public bodies must be able to receive and process an EN 16931 invoice under Directive 2014/55/EU, transposed for central government from April 2019 and for sub-central contracting authorities from April 2020; that is an obligation on the public buyer's reception, not on a supplier's issuance, and the European Commission's own country page records that a wider B2B or B2C obligation is under discussion with no date fixed. No profile is declared for the same reason `packs/ie/` declares none where nothing is mandated: this pack was not able to confirm which profile, if any, Cyprus Peppol participants in fact exchange.",
+    "source": "ec-einvoicing-cy"
+  },
+  "bank": {
+    "statement_formats": ["camt.053"],
+    "payment_formats": []
+  }
+}
