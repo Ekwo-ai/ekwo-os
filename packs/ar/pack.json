@@ -109,6 +109,7 @@
   },
   "defaults": {
     "currency": "ARS",
+    "fiscal_year_default": "calendar",
     "language": "es",
     "opening_entry_label": "Asiento de apertura",
     "closing_style": "result_accounts",

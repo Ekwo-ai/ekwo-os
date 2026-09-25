@@ -117,6 +117,7 @@
   },
   "defaults": {
     "currency": "ZAR",
+    "fiscal_year_default": "calendar",
     "language": "en",
     "closing_style": "retained_earnings",
     "roles": {
