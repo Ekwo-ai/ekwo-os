@@ -1,0 +1,245 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "LV",
+  "name": "Latvija",
+  "version": "0.1.0",
+  "schema_min": "20260923110000",
+  "seed_sequence": 78,
+  "released_at": "2026-09-25",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "pvn-likums",
+        "title": "Pievienotās vērtības nodokļa likums",
+        "publisher": "Latvijas Vēstnesis — likumi.lv",
+        "url": "https://likumi.lv/ta/id/253451-pievienotas-vertibas-nodokla-likums",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "pvn-deklaracijas-noteikumi",
+        "title": "Ministru kabineta 2013. gada 15. janvāra noteikumi Nr. 40 \"Noteikumi par pievienotās vērtības nodokļa deklarācijām\"",
+        "publisher": "Ministru kabinets — likumi.lv",
+        "url": "https://likumi.lv/ta/id/254279-noteikumi-par-pievienotas-vertibas-nodokla-deklaracijam",
+        "consulted_on": "2026-09-25",
+        "kind": "regulation"
+      },
+      {
+        "key": "pvn-metodika",
+        "title": "Metodiskais materiāls par pievienotās vērtības nodokļa deklarācijas un tās pielikumu aizpildīšanu (aktualizēts 29.05.2026)",
+        "publisher": "Valsts ieņēmumu dienests",
+        "url": "https://www.vid.gov.lv/lv/media/2299/download",
+        "consulted_on": "2026-09-25",
+        "kind": "form"
+      },
+      {
+        "key": "eds-portal",
+        "title": "Elektroniskā deklarēšanas sistēma (EDS) — kur PVN deklarācija tiek iesniegta",
+        "publisher": "Valsts ieņēmumu dienests",
+        "url": "https://eds.vid.gov.lv/",
+        "consulted_on": "2026-09-25",
+        "kind": "portal"
+      },
+      {
+        "key": "vid-pvn-likmes",
+        "title": "Pievienotās vērtības nodokļa likmes",
+        "publisher": "Valsts ieņēmumu dienests",
+        "url": "https://www.vid.gov.lv/lv/pievienotas-vertibas-nodokla-likmes",
+        "consulted_on": "2026-09-25",
+        "kind": "guidance"
+      },
+      {
+        "key": "civillikums",
+        "title": "Civillikums. Ceturtā daļa. Saistību tiesības",
+        "publisher": "Latvijas Vēstnesis — likumi.lv",
+        "url": "https://likumi.lv/ta/id/90220-civillikums-ceturta-dala-saistibu-tiesibas",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "gramatvedibas-likums",
+        "title": "Grāmatvedības likums",
+        "publisher": "Latvijas Vēstnesis — likumi.lv",
+        "url": "https://likumi.lv/ta/id/324249-gramatvedibas-likums",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "gada-parskatu-likums",
+        "title": "Gada pārskatu un konsolidēto gada pārskatu likums",
+        "publisher": "Latvijas Vēstnesis — likumi.lv",
+        "url": "https://likumi.lv/ta/id/277779-gada-parskatu-un-konsolideto-gada-parskatu-likums",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "en-16931",
+        "title": "EN 16931-1 — Electronic invoicing. Part 1: Semantic data model of the core elements of an electronic invoice",
+        "publisher": "European Commission",
+        "url": "https://ec.europa.eu/digital-building-blocks/sites/spaces/DIGITAL/pages/467108950/EN+16931+compliance",
+        "consulted_on": "2026-09-25",
+        "kind": "standard"
+      },
+      {
+        "key": "uncl5305",
+        "title": "UNCL5305 — VAT category code list (BT-118 and BT-151), OpenPEPPOL subset published for EN 16931",
+        "publisher": "OpenPEPPOL — list published by the European Commission",
+        "url": "https://docs.peppol.eu/poacc/billing/3.0/codelist/UNCL5305/",
+        "consulted_on": "2026-09-25",
+        "kind": "standard"
+      },
+      {
+        "key": "vatex",
+        "title": "VATEX — VAT exemption reason code list (BT-121)",
+        "publisher": "OpenPEPPOL — list published by the European Commission",
+        "url": "https://docs.peppol.eu/poacc/billing/3.0/codelist/vatex/",
+        "consulted_on": "2026-09-25",
+        "kind": "standard"
+      },
+      {
+        "key": "peppol-icd",
+        "title": "ISO 6523 International Code Designator (ICD) list — Peppol BIS Billing 3.0 code list",
+        "publisher": "OpenPEPPOL",
+        "url": "https://docs.peppol.eu/poacc/billing/3.0/codelist/ICD/",
+        "consulted_on": "2026-09-25",
+        "kind": "standard"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "EUR",
+    "language": "lv",
+    "rounding_method": "half_up",
+    "closing_style": "result_accounts",
+    "roles": {
+      "receivable": "2110",
+      "payable": "5035",
+      "suspense": "5095",
+      "rounding": "7390",
+      "retained_earnings": "3080",
+      "current_year_result_profit": "3090",
+      "current_year_result_loss": "3090",
+      "sales": "6010",
+      "purchase": "7010",
+      "bank": "2320",
+      "cash": "2310",
+      "fx_gain": "8070",
+      "fx_loss": "8140",
+      "tax_payable": "5090",
+      "tax_receivable": "2160"
+    },
+    "journal_roles": {
+      "sales": "PIL",
+      "purchase": "IEP",
+      "miscellaneous": "CIT",
+      "opening": "SAK"
+    },
+    "fiscal_year_default": "calendar"
+  },
+  "languages": [],
+  "journals": [
+    { "code": "PIL", "type": "sales", "name": "Pārdošanas žurnāls", "sequence": 10 },
+    { "code": "IEP", "type": "purchase", "name": "Iepirkumu žurnāls", "sequence": 20 },
+    { "code": "BNK", "type": "bank", "name": "Bankas žurnāls", "sequence": 30 },
+    { "code": "KSE", "type": "cash", "name": "Kases žurnāls", "sequence": 40 },
+    { "code": "CIT", "type": "general", "name": "Citi darījumi", "sequence": 50 },
+    { "code": "SAK", "type": "opening", "name": "Sākuma atlikumu žurnāls", "sequence": 60 }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Kontu plāns pēc Gada pārskatu un konsolidēto gada pārskatu likuma 1. un 2. pielikuma shēmas",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": ["LV-GPL-BS", "LV-GPL-IS"],
+      "legal_reference": "Grāmatvedības likuma 11. panta pirmā daļa — Latvijā nav ar likumu noteikts obligāts kontu plāns; attaisnojuma dokumentu un grāmatvedības reģistru kārtošanas apraksts, tostarp kontu plāns, ir katra uzņēmuma paša izstrādāts iekšējais dokuments. Šis kontu plāns ir oriģināls un strukturēts tā, lai katrs konts pēc pirmā cipara nepārprotami atbilstu Gada pārskatu un konsolidēto gada pārskatu likuma 1. pielikuma (bilances shēma) vai 2. pielikuma (peļņas vai zaudējumu aprēķina shēma pēc izdevumu veidiem) postenim.",
+      "source": "gramatvedibas-likums"
+    }
+  ],
+  "documents": {
+    "numbering": "sequential",
+    "number_format": "{CODE}-{YYYY}-{NNNN}",
+    "legal_payment_days": 30,
+    "late_payment_reference": "Civillikuma 1765.panta trešā daļa — likumisko procentu apmērs par tāda naudas parāda samaksas nokavējumu, kas kā atlīdzība nolīgta līgumā par preces piegādi, pirkumu vai pakalpojuma sniegšanu, ir astoņi procentpunkti virs procentu pamatlikmes (Eiropas Centrālās bankas pēdējā galveno refinansēšanas operāciju likme) gadā.",
+    "tax_point": "delivery_date",
+    "references": {
+      "numbering": {
+        "legal_reference": "Pievienotās vērtības nodokļa likuma 125. panta pirmās daļas 2. punkts — nodokļa rēķinā jānorāda tā kārtas numurs, kas unikāli identificē rēķinu; Grāmatvedības likuma 11. panta piektās daļas 3. punkts prasa attaisnojuma dokumenta numuru vispārīgi. Nedz viens, nedz otrs pants neprasa nepārtrauktu (gapless) numerāciju, tāpēc numbering ir sequential.",
+        "source": "pvn-likums"
+      },
+      "payment_terms": {
+        "legal_reference": "Civillikuma 1668.2 pants — ja līgumā par preces piegādi, pirkumu vai pakalpojuma sniegšanu nav noteikts atlīdzības samaksas termiņš, parādnieka nokavējums iestājas pats no sevis, ja parādnieks nav veicis samaksu trīsdesmit dienu laikā pēc rēķina vai preces/pakalpojuma saņemšanas dienas.",
+        "source": "civillikums"
+      },
+      "tax_point": {
+        "legal_reference": "Pievienotās vērtības nodokļa likuma 31. panta pirmā daļa (preču piegāde) un 32. panta pirmā daļa (pakalpojuma sniegšana) — darījuma brīdis ir brīdis, kad faktiski notiek preču piegāde vai pakalpojuma sniegšana saņēmējam. Likums nesatur vispārīgu atkāpi uz rēķina izrakstīšanas datumu; avansa maksājumu īpašais režīms šajā pakā nav modelēts (sk. docs/international.md).",
+        "source": "pvn-likums"
+      }
+    },
+    "mentions": [
+      {
+        "code": "export",
+        "applies_when": "export",
+        "text": "Piemērota nodokļa 0 procentu likme — preču eksports (Pievienotās vērtības nodokļa likuma 43. panta pirmā daļa).",
+        "sequence": 10,
+        "legal_reference": "Pievienotās vērtības nodokļa likuma 125. panta pirmās daļas 15. punkts — ja piemērota 0 procentu likme vai atbrīvojums no nodokļa, rēķinā jānorāda atsauce uz likuma pantu vai Direktīvas 2006/112/EK pantu, saskaņā ar kuru tā piemērota.",
+        "source": "pvn-likums"
+      },
+      {
+        "code": "intracom_goods",
+        "applies_when": "intra_eu_goods",
+        "text": "Piemērota nodokļa 0 procentu likme — preču piegāde Eiropas Savienības teritorijā (Pievienotās vērtības nodokļa likuma 43. panta ceturtā daļa; Padomes direktīvas 2006/112/EK 138. pants).",
+        "sequence": 20,
+        "legal_reference": "Pievienotās vērtības nodokļa likuma 125. panta pirmās daļas 15. punkts",
+        "source": "pvn-likums"
+      },
+      {
+        "code": "exempt",
+        "applies_when": "exempt",
+        "text": "Ar nodokli neapliekams darījums (Pievienotās vērtības nodokļa likuma 52. pants).",
+        "sequence": 30,
+        "legal_reference": "Pievienotās vērtības nodokļa likuma 125. panta pirmās daļas 15. punkts",
+        "source": "pvn-likums"
+      },
+      {
+        "code": "reverse_charge",
+        "applies_when": "reverse_charge",
+        "text": "Nodokļa apgrieztā maksāšana.",
+        "sequence": 40,
+        "legal_reference": "Pievienotās vērtības nodokļa likuma 125. panta pirmās daļas 16. punkts — ja par nodokļa samaksu ir atbildīgs preču vai pakalpojumu saņēmējs, rēķinā jānorāda \"nodokļa apgrieztā maksāšana\".",
+        "source": "pvn-likums"
+      },
+      {
+        "code": "small_business",
+        "applies_when": "small_business",
+        "text": "Nodoklis netiek piemērots — piegādātājs nav reģistrēts Valsts ieņēmumu dienesta pievienotās vērtības nodokļa maksātāju reģistrā (Pievienotās vērtības nodokļa likuma 59. pants).",
+        "sequence": 50,
+        "legal_reference": "Pievienotās vērtības nodokļa likuma 59. panta pirmā daļa — iekšzemes nodokļa maksātājs ir tiesīgs nereģistrēties, kamēr tā ar nodokli apliekamo darījumu vērtība kalendāra gadā nepārsniedz 50 000 euro reģistrācijas slieksni.",
+        "source": "pvn-likums"
+      },
+      {
+        "code": "late_payment",
+        "applies_when": "late_payment",
+        "text": "Maksājuma kavējuma gadījumā kreditoram ir tiesības uz likumiskajiem procentiem astoņu procentpunktu apmērā virs procentu pamatlikmes gadā (Civillikuma 1765. panta trešā daļa), neskarot tiesības uz zaudējumu atlīdzību.",
+        "sequence": 60,
+        "legal_reference": "Civillikuma 1668.2 un 1765. pants",
+        "source": "civillikums"
+      }
+    ]
+  },
+  "einvoicing": {
+    "profile": "peppol-bis-3",
+    "mandatory_from": "2028-01-01",
+    "obligation": "mandatory",
+    "party_scheme": "0218",
+    "vat_scheme": "0219",
+    "legal_reference": "Grāmatvedības likuma 11. panta četrpadsmitā daļa — attaisnojuma dokumentu, kuru uzņēmums izsniedz citam Latvijas Republikā reģistrētam uzņēmumam samaksāšanai, noformē kā strukturētu elektronisko rēķinu atbilstoši standartam LVS EN 16931-1:2017. Pārejas noteikumu 8. punkts (05.06.2025. likuma redakcijā) atliek šo pienākumu darījumiem starp uzņēmumiem, kas nav budžeta iestādes, līdz 2028. gada 1. janvārim (sākotnēji plānotā 2026. gada 1. janvāra vietā). Attiecībā uz rēķiniem budžeta iestādēm pienākums jau piemērojams kopš 2025. gada 1. janvāra, ar pārejas periodu līdz 2026. gada 1. janvārim līgumiem, kas noslēgti līdz 2024. gada 31. decembrim (pārejas noteikumu 9. punkts); strukturēto rēķinu datu nodošana Valsts ieņēmumu dienestam sākas 2026. gada 1. janvārī budžeta iestāžu darījumiem un 2028. gada 1. janvārī pārējiem uzņēmumiem (pārejas noteikumu 10. punkts). Likums neparedz vienotu tīklu; rēķinu var nosūtīt caur e-adresi vai jebkuru Peppol pieejas punktu. Šis pakas modelis izmanto peppol-bis-3 profilu, jo tas ir standarts LVS EN 16931-1:2017 atbilstošs sintakses profils, ko faktiski izmanto e-adreses un komerciālo Peppol operatoru starpā (sk. docs/international.md par to, ka likums pats neuzspiež konkrētu sintaksi).",
+    "source": "gramatvedibas-likums"
+  },
+  "bank": {
+    "statement_formats": ["camt.053", "camt.052"],
+    "payment_formats": ["pain.001"]
+  }
+}

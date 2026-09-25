@@ -1,0 +1,188 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "LV-PVN-DEKLARACIJA",
+  "name": "Pievienotās vērtības nodokļa deklarācija par taksācijas periodu",
+  "period": ["month", "quarter"],
+  "valid_from": "2013-01-01",
+  "legal_reference": "Pievienotās vērtības nodokļa likuma 115. pants — taksācijas periods ir viens kalendāra mēnesis, ja reģistrētā nodokļa maksātāja ar nodokli apliekamo darījumu vērtība pārsniedz 50 000 euro vai tas veic noteiktus pārrobežu darījumus, citādi viens ceturksnis (panta pirmā, otrā un trešā daļa). Šī paka nemodelē, kurš no diviem nosacījumiem konkrētam uzņēmumam iestājas, tāpēc period_default nav deklarēts. Deklarācijas un tās pielikumu veidlapu paraugus un aizpildīšanas kārtību nosaka Ministru kabineta 2013. gada 15. janvāra noteikumi Nr. 40.",
+  "source": "pvn-likums",
+  "deadline": {
+    "rule": "day_of_month_after_period",
+    "day": 20,
+    "legal_reference": "Pievienotās vērtības nodokļa likuma 118. panta pirmā daļa — reģistrēts nodokļa maksātājs deklarāciju un tās pielikumus iesniedz Valsts ieņēmumu dienestam 20 dienu laikā pēc taksācijas perioda beigām",
+    "source": "pvn-likums"
+  },
+  "boxes": [
+    {
+      "box": "40",
+      "kind": "total",
+      "name": "Taksācijas perioda kopējā darījumu vērtība bez nodokļa",
+      "sequence": 10,
+      "plus": ["41", "42", "42a", "43", "49"],
+      "legal_reference": "Metodiskā materiāla 40. rindas skaidrojums — taksācijas perioda kopējo darījumu vērtību bez nodokļa veido 41., 41.1, 42., 42.1, 43., 48.2 un 49. rindas kopsumma. Šī paka nemodelē 41.1 un 48.2 rindu (īpašā režīma darījumi un ārpus iekšzemes sniegtie pakalpojumi), tāpēc 40. rindas formula šeit summē tikai 41., 42., 42.1, 43. un 49. rindu.",
+      "source": "pvn-metodika"
+    },
+    {
+      "box": "41",
+      "kind": "base",
+      "name": "Ar nodokļa standartlikmi apliekamo darījumu vērtība",
+      "sequence": 20,
+      "legal_reference": "Metodiskā materiāla 41. rindas skaidrojums; Pievienotās vērtības nodokļa likuma 41. panta pirmās daļas 1. punkts",
+      "source": "pvn-metodika"
+    },
+    {
+      "box": "42",
+      "kind": "base",
+      "name": "Ar samazināto nodokļa likmi 12 procentu apmērā apliekamo darījumu vērtība",
+      "sequence": 30,
+      "legal_reference": "Metodiskā materiāla 42. rindas skaidrojums; Pievienotās vērtības nodokļa likuma 42. pants",
+      "source": "pvn-metodika"
+    },
+    {
+      "box": "42a",
+      "kind": "base",
+      "name": "Ar samazināto nodokļa likmi 5 procentu apmērā apliekamo preču piegādes vērtība",
+      "sequence": 40,
+      "legal_reference": "Metodiskā materiāla 42a rindas skaidrojums; Pievienotās vērtības nodokļa likuma 42. panta piektā daļa",
+      "source": "pvn-metodika"
+    },
+    {
+      "box": "43",
+      "kind": "total",
+      "name": "Ar nodokļa 0 procentu likmi apliekamo darījumu vērtība",
+      "sequence": 50,
+      "plus": ["45", "48a"],
+      "legal_reference": "Metodiskā materiāla 43. rindas skaidrojums — rindā ietver arī 44., 45.1, 46., 47. un 48. rindā norādīto vērtību. Šī paka modelē tikai preču piegādi Eiropas Savienības teritorijā (45. rinda) un preču eksportu (48a rinda); pārējie 0 procentu likmes gadījumi (brīvostas, jauni transportlīdzekļi, ķēdes darījumi, ārpus iekšzemes sniegti pakalpojumi) šajā pakā nav modelēti — sk. docs/international.md.",
+      "source": "pvn-metodika"
+    },
+    {
+      "box": "45",
+      "kind": "base",
+      "name": "Uz citu dalībvalsti piegādāto preču vērtība",
+      "sequence": 60,
+      "legal_reference": "Metodiskā materiāla 45. rindas skaidrojums; Pievienotās vērtības nodokļa likuma 43. panta ceturtā daļa",
+      "source": "pvn-metodika"
+    },
+    {
+      "box": "48a",
+      "kind": "base",
+      "name": "Eksportēto preču vērtība",
+      "sequence": 70,
+      "legal_reference": "Metodiskā materiāla 48a rindas skaidrojums; Pievienotās vērtības nodokļa likuma 43. panta pirmā daļa",
+      "source": "pvn-metodika"
+    },
+    {
+      "box": "49",
+      "kind": "base",
+      "name": "Ar nodokli neapliekamo darījumu vērtība",
+      "sequence": 80,
+      "legal_reference": "Metodiskā materiāla 49. rindas skaidrojums; Pievienotās vērtības nodokļa likuma 52. pants",
+      "source": "pvn-metodika"
+    },
+    {
+      "box": "50",
+      "kind": "base",
+      "name": "Ar nodokļa standartlikmi apliekamā vērtība par preču iegādi Eiropas Savienības teritorijā",
+      "sequence": 90,
+      "legal_reference": "Metodiskā materiāla 50. rindas skaidrojums; Pievienotās vērtības nodokļa likuma 5. panta pirmās daļas 3. punkts un 19. panta pirmā daļa",
+      "source": "pvn-metodika"
+    },
+    {
+      "box": "52",
+      "kind": "tax",
+      "name": "Pēc standartlikmes aprēķinātā nodokļa summa",
+      "sequence": 100,
+      "legal_reference": "Metodiskā materiāla 52. rindas skaidrojums — 41. rinda x standartlikme : 100",
+      "source": "pvn-metodika"
+    },
+    {
+      "box": "53",
+      "kind": "tax",
+      "name": "Pēc samazinātās nodokļa likmes 12 procentu apmērā aprēķinātā nodokļa summa",
+      "sequence": 110,
+      "legal_reference": "Metodiskā materiāla 53. rindas skaidrojums — 42. rinda x samazinātā nodokļa likme 12 procentu apmērā : 100",
+      "source": "pvn-metodika"
+    },
+    {
+      "box": "53a",
+      "kind": "tax",
+      "name": "Pēc samazinātās nodokļa likmes 5 procentu apmērā aprēķinātā nodokļa summa",
+      "sequence": 120,
+      "legal_reference": "Metodiskā materiāla 53a rindas skaidrojums — 42a rinda x samazinātā nodokļa likme 5 procentu apmērā : 100",
+      "source": "pvn-metodika"
+    },
+    {
+      "box": "55",
+      "kind": "tax",
+      "name": "Pēc standartlikmes aprēķinātā nodokļa summa par preču iegādi Eiropas Savienības teritorijā",
+      "sequence": 130,
+      "legal_reference": "Metodiskā materiāla 55. rindas skaidrojums — 50. rinda x standartlikme : 100",
+      "source": "pvn-metodika"
+    },
+    {
+      "box": "60",
+      "kind": "total",
+      "name": "Priekšnodoklis",
+      "sequence": 140,
+      "plus": ["62", "64"],
+      "legal_reference": "Metodiskā materiāla 60. rindas skaidrojums — 60. rindu veido 61., 62., 63., 64. un 65. rindas kopsumma. Šī paka modelē tikai 62. un 64. rindu (iekšzemē un Eiropas Savienības teritorijā saņemto preču un pakalpojumu priekšnodoklis); importa, pakalpojumu pašaprēķina un lauksaimniecības kompensācijas priekšnodoklis (61., 63., 65. rinda) šajā pakā nav modelēts — sk. docs/international.md.",
+      "source": "pvn-metodika"
+    },
+    {
+      "box": "62",
+      "kind": "tax",
+      "name": "Priekšnodoklis par iekšzemē saņemtajām precēm un pakalpojumiem",
+      "sequence": 150,
+      "legal_reference": "Metodiskā materiāla 62. rindas skaidrojums; Pievienotās vērtības nodokļa likuma 92. pants",
+      "source": "pvn-metodika"
+    },
+    {
+      "box": "64",
+      "kind": "tax",
+      "name": "Priekšnodoklis par precēm, kas iegādātas Eiropas Savienības teritorijā",
+      "sequence": 160,
+      "legal_reference": "Metodiskā materiāla 64. rindas skaidrojums; Pievienotās vērtības nodokļa likuma 92. un 93. pants",
+      "source": "pvn-metodika"
+    },
+    {
+      "box": "P",
+      "kind": "total",
+      "name": "Priekšnodoklis, ko aprēķina",
+      "sequence": 170,
+      "plus": ["60"],
+      "legal_reference": "Metodiskā materiāla (P) rindas skaidrojums — 60. rinda – 66. rinda + 67. rinda. Šī paka nemodelē 66. un 67. rindu (neatskaitāmā priekšnodokļa proporciju un zaudēto parādu korekcijas), tāpēc (P) šeit ir vienāds ar 60. rindu — sk. docs/international.md.",
+      "source": "pvn-metodika"
+    },
+    {
+      "box": "S",
+      "kind": "total",
+      "name": "Nodokļa summa, ko aprēķina",
+      "sequence": 180,
+      "plus": ["52", "53", "53a", "55"],
+      "legal_reference": "Metodiskā materiāla (S) rindas skaidrojums — 52. + 53. + 53.1 + 54. + 55. + 56. + 56.1 + 57. rinda. Šī paka nemodelē 54., 56., 56.1 un 57. rindu (pakalpojumu pašaprēķins, samazināto likmju iegādes Eiropas Savienības teritorijā un iepriekšējo periodu korekcijas) — sk. docs/international.md.",
+      "source": "pvn-metodika"
+    },
+    {
+      "box": "70",
+      "kind": "total",
+      "name": "Pārmaksātā nodokļa summa",
+      "sequence": 190,
+      "plus": ["P"],
+      "minus": ["S"],
+      "floor_zero": true,
+      "legal_reference": "Metodiskā materiāla 70. rindas skaidrojums — (P) rinda – (S) rinda, ja priekšnodoklis ir lielāks",
+      "source": "pvn-metodika"
+    },
+    {
+      "box": "80",
+      "kind": "total",
+      "name": "Valsts budžetā maksājamā nodokļa summa",
+      "sequence": 200,
+      "plus": ["S"],
+      "minus": ["P"],
+      "floor_zero": true,
+      "legal_reference": "Metodiskā materiāla 80. rindas skaidrojums — (S) rinda – (P) rinda, ja aprēķinātā nodokļa summa ir lielāka",
+      "source": "pvn-metodika"
+    }
+  ]
+}

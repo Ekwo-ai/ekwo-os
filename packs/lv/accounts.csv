@@ -1,0 +1,121 @@
+code,parent,type,reconcilable,name,sequence
+1010,,asset_non_current,false,Attīstības izmaksas,10
+1020,,asset_non_current,false,Koncesijas patenti licences un preču zīmes,20
+1030,,asset_non_current,false,Citi nemateriālie ieguldījumi,30
+1040,,asset_non_current,false,Nemateriālā vērtība,40
+1090,,asset_non_current,false,Avansa maksājumi par nemateriālajiem ieguldījumiem,50
+1110,,asset_fixed,false,Zemesgabali ēkas un inženierbūves,60
+1115,,asset_fixed,false,Ieguldījuma īpašumi,70
+1120,,asset_fixed,false,Darba vai produktīvie dzīvnieki un ilggadīgie stādījumi,80
+1125,,asset_fixed,false,Bioloģiskie aktīvi (ilgtermiņa),90
+1130,,asset_fixed,false,Ilgtermiņa ieguldījumi nomātajos pamatlīdzekļos,100
+1140,,asset_fixed,false,Tehnoloģiskās iekārtas un ierīces,110
+1150,,asset_fixed,false,Pārējie pamatlīdzekļi un inventārs,120
+1160,,asset_fixed,false,Pamatlīdzekļu izveidošana un nepabeigto celtniecības objektu izmaksas,130
+1190,,asset_fixed,false,Avansa maksājumi par pamatlīdzekļiem,140
+1210,,asset_non_current,false,Līdzdalība radniecīgo sabiedrību kapitālā,150
+1220,,asset_non_current,false,Aizdevumi radniecīgajām sabiedrībām,160
+1230,,asset_non_current,false,Līdzdalība asociēto sabiedrību kapitālā,170
+1240,,asset_non_current,false,Aizdevumi asociētajām sabiedrībām,180
+1250,,asset_non_current,false,Pārējie vērtspapīri un ieguldījumi,190
+1260,,asset_non_current,false,Pārējie aizdevumi un citi ilgtermiņa debitori,200
+1270,,asset_non_current,false,Aizdevumi akcionāriem vai dalībniekiem un vadībai,210
+1290,,asset_non_current,false,Atliktā nodokļa aktīvi,220
+2010,,asset_current,false,Izejvielas pamatmateriāli un palīgmateriāli,230
+2020,,asset_current,false,Nepabeigtie ražojumi un pasūtījumi,240
+2030,,asset_current,false,Gatavie ražojumi un preces pārdošanai,250
+2040,,asset_current,false,Dzīvnieki un viengadīgie stādījumi,260
+2050,,asset_current,false,Bioloģiskie aktīvi (apgrozāmie),270
+2090,,asset_current,false,Avansa maksājumi par krājumiem,280
+2110,,asset_receivable,true,Pircēju un pasūtītāju parādi,290
+2115,,asset_current,false,Radniecīgo sabiedrību parādi,300
+2120,,asset_current,false,Asociēto sabiedrību parādi,310
+2125,,asset_current,false,Citi debitori,320
+2130,,asset_current,false,Neiemaksātās daļas sabiedrības kapitālā,330
+2135,,asset_current,false,Īstermiņa aizdevumi akcionāriem vai dalībniekiem un vadībai,340
+2140,,asset_prepayments,false,Nākamo periodu izmaksas,350
+2145,,asset_current,false,Uzkrātie ieņēmumi,360
+2150,,asset_current,false,Iepirkumu PVN (priekšnodoklis),370
+2155,,asset_current,false,Atskaitāmais priekšnodoklis par precēm no Eiropas Savienības teritorijas,380
+2160,,asset_current,true,PVN pārmaksa — iesniegtās deklarācijas atlikums,390
+2210,,asset_current,false,Līdzdalība radniecīgo sabiedrību kapitālā (īstermiņa),400
+2220,,asset_current,false,Pašu akcijas vai daļas,410
+2230,,asset_current,false,Pārējie vērtspapīri un līdzdalība kapitālos,420
+2240,,asset_current,false,Atvasināti finanšu instrumenti,430
+2310,,asset_cash,false,Kase,440
+2320,,asset_cash,false,Norēķinu konti kredītiestādēs,450
+3010,,equity,false,Akciju vai daļu kapitāls (pamatkapitāls),460
+3020,,equity,false,Akciju (daļu) emisijas uzcenojums,470
+3030,,equity,false,Ilgtermiņa ieguldījumu pārvērtēšanas rezerve,480
+3040,,equity,false,Finanšu instrumentu patiesās vērtības rezerve,490
+3050,,equity,false,Likumā noteiktās rezerves,500
+3055,,equity,false,Rezerves pašu akcijām vai daļām,510
+3060,,equity,false,Sabiedrības statūtos noteiktās rezerves,520
+3065,,equity,false,Rezerves kas novirzītas attīstībai,530
+3070,,equity,false,Ārvalstu valūtu pārrēķināšanas rezerve,540
+3075,,equity,false,Pārējās rezerves,550
+3080,,equity_retained,false,Iepriekšējo gadu nesadalītā peļņa vai nesegtie zaudējumi,560
+3090,,equity_retained,false,Pārskata gada peļņa vai zaudējumi,570
+4010,,liability_non_current,false,Uzkrājumi pensijām un tamlīdzīgām saistībām,580
+4020,,liability_non_current,false,Uzkrājumi paredzamajiem nodokļiem,590
+4090,,liability_non_current,false,Citi uzkrājumi,600
+4110,,liability_non_current,false,Aizņēmumi pret obligācijām (ilgtermiņa),610
+4120,,liability_non_current,false,Akcijās pārvēršamie aizņēmumi (ilgtermiņa),620
+4130,,liability_non_current,false,Aizņēmumi no kredītiestādēm (ilgtermiņa),630
+4140,,liability_non_current,false,Citi aizņēmumi (ilgtermiņa),640
+4150,,liability_non_current,false,No pircējiem saņemtie avansi (ilgtermiņa),650
+4160,,liability_non_current,false,Parādi piegādātājiem un darbuzņēmējiem (ilgtermiņa),660
+4165,,liability_non_current,false,Maksājamie vekseļi (ilgtermiņa),670
+4170,,liability_non_current,false,Parādi radniecīgajām sabiedrībām (ilgtermiņa),680
+4175,,liability_non_current,false,Parādi asociētajām sabiedrībām (ilgtermiņa),690
+4180,,liability_non_current,false,Nodokļi un valsts sociālās apdrošināšanas obligātās iemaksas (ilgtermiņa),700
+4185,,liability_non_current,false,Atliktā nodokļa saistības,710
+4190,,liability_non_current,false,Pārējie kreditori (ilgtermiņa),720
+4195,,liability_non_current,false,Nākamo periodu ieņēmumi (ilgtermiņa),730
+5010,,liability_current,false,Aizņēmumi pret obligācijām (īstermiņa),740
+5015,,liability_current,false,Akcijās pārvēršamie aizņēmumi (īstermiņa),750
+5020,,liability_current,false,Aizņēmumi no kredītiestādēm (īstermiņa),760
+5025,,liability_current,false,Citi aizņēmumi (īstermiņa),770
+5030,,liability_current,false,No pircējiem saņemtie avansi,780
+5035,,liability_payable,true,Parādi piegādātājiem un darbuzņēmējiem,790
+5040,,liability_current,false,Maksājamie vekseļi,800
+5045,,liability_current,false,Parādi radniecīgajām sabiedrībām,810
+5050,,liability_current,false,Parādi asociētajām sabiedrībām,820
+5055,,liability_current,false,Nodokļi un valsts sociālās apdrošināšanas obligātās iemaksas,830
+5060,,liability_current,false,Pārējie kreditori,840
+5065,,liability_current,false,Nākamo periodu ieņēmumi,850
+5070,,liability_current,false,Neizmaksātās dividendes,860
+5080,,liability_current,false,Pārdošanas PVN (izejošais nodoklis),870
+5085,,liability_current,false,PVN par Eiropas Savienības teritorijā iegādātām precēm (pašaprēķins),880
+5090,,liability_current,true,PVN maksājamā summa — iesniegtās deklarācijas atlikums,890
+5095,,liability_current,false,Starpkontu norēķini,900
+6010,,income,false,Ieņēmumi no pārdošanas — pamatdarbība,910
+6015,,income,false,Ieņēmumi no sniegtajiem būvniecības pakalpojumiem,920
+6018,,income,false,Ieņēmumi no citiem pamatdarbības veidiem,930
+6110,,income_other,false,Gatavās produkcijas un nepabeigto ražojumu krājumu izmaiņas,940
+6120,,income_other,false,Lauksaimnieciskās produkcijas krājumu izmaiņas,950
+6130,,income_other,false,Peļņa vai zaudējumi no bioloģiskajiem aktīviem,960
+6140,,income_other,false,Uz pašu ilgtermiņa ieguldījumiem attiecinātās (kapitalizētās) izmaksas,970
+6210,,income_other,false,Pārējie saimnieciskās darbības ieņēmumi,980
+7010,,expense_direct_cost,false,Izejvielu un palīgmateriālu izmaksas,990
+7020,,expense_direct_cost,false,Pārējās ārējās izmaksas,1000
+7110,,expense,false,Atlīdzība par darbu,1010
+7120,,expense,false,Pensijas no sabiedrības līdzekļiem,1020
+7130,,expense,false,Valsts sociālās apdrošināšanas obligātās iemaksas,1030
+7140,,expense,false,Pārējās sociālās nodrošināšanas izmaksas,1040
+7210,,expense_depreciation,false,Pamatlīdzekļu un nemateriālo ieguldījumu vērtības samazinājuma korekcijas,1050
+7220,,expense,false,Apgrozāmo līdzekļu vērtības samazinājuma korekcijas,1060
+7310,,expense,false,Pārējās saimnieciskās darbības izmaksas,1070
+7390,,expense,false,Noapaļošanas starpības,1080
+8010,,income_other,false,Ieņēmumi no līdzdalības radniecīgo sabiedrību kapitālā,1090
+8020,,income_other,false,Ieņēmumi no līdzdalības asociēto sabiedrību kapitālā,1100
+8030,,income_other,false,Ieņēmumi no līdzdalības citu sabiedrību kapitālā,1110
+8040,,income_other,false,Ieņēmumi no pārējiem vērtspapīriem un aizdevumiem,1120
+8050,,income_other,false,Procentu ieņēmumi no radniecīgajām sabiedrībām,1130
+8060,,income_other,false,Pārējie procentu ieņēmumi un tamlīdzīgi ieņēmumi,1140
+8070,,income_other,false,Ārvalstu valūtas kursa peļņa,1150
+8110,,expense,false,Ilgtermiņa un īstermiņa finanšu ieguldījumu vērtības samazinājuma korekcijas,1160
+8120,,expense,false,Procentu maksājumi radniecīgajām sabiedrībām,1170
+8130,,expense,false,Procentu maksājumi un tamlīdzīgas izmaksas citām personām,1180
+8140,,expense,false,Ārvalstu valūtas kursa zaudējumi,1190
+8210,,expense,false,Uzņēmumu ienākuma nodoklis par pārskata gadu,1200

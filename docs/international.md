@@ -4933,3 +4933,36 @@ this pack cannot itself add to a vocabulary three other packs already rely
 on. A `months_after_period` count, taken together with a `day`, would say
 Iceland's rule, Belgium's (`months_after_period: 1`) and Luxembourg's in one
 shape without disturbing either.
+
+## From Latvia
+
+### One `mandatory_from`, three dates
+
+Grāmatvedības likuma 11. panta četrpadsmitā daļa requires a structured
+electronic invoice on every payable document one Latvia-registered
+"uzņēmums" issues to another — a definition wide enough to include a budget
+institution. But the transitional provisions split that single obligation
+into three dates, not one: it already binds invoices **to a budget
+institution** (1 January 2025, with a grace period to 1 January 2026 for a
+contract concluded before 31 December 2024); it binds invoices **between two
+companies that are not budget institutions** only from 1 January 2028 — a
+date the law itself moved back from 1 January 2026 by an amendment of 5 June
+2025; and **reporting the structured invoice's data to the tax
+administration**, which is a separate duty again, starts 1 January 2026 for
+the first group and 1 January 2028 for the second. `einvoicing.obligation`
+and `einvoicing.mandatory_from` hold one word and one date for the whole
+country, which is the right shape for a Belgium or an Estonia, where the
+obligation starts on one day for everybody a pack's companies actually are —
+but a straight reading of the two fields cannot state a country whose
+economy-wide (B2B) date, government-facing date and data-reporting date are
+three different years. `packs/lv/pack.json` keeps the later, economy-wide
+date (2028-01-01, the one that actually governs company-to-company invoicing,
+which is what `ekwo init` mostly installs for) and writes the other two in
+`legal_reference`, which is a fact a person reads and not a value a company
+or the API can act on — an installation that only invoices budget
+institutions has no column that would tell it its own obligation started
+three years earlier. *Fix*: none proposed here, for the same reason the
+Saudi partial-deduction column in the section above proposes none — a
+`mandatory_from` per counterparty class is a bigger change than the
+inconsistency it would resolve, and Latvia may be the only pack in this
+repository so far whose statute actually needs it.

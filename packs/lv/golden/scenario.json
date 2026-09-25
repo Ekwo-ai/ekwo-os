@@ -1,0 +1,152 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden_scenario",
+  "name": "Latvijas uzņēmuma darījumi 2026. gada pirmajā pusgadā, deklarējot pa ceturkšņiem",
+  "chart": "default",
+  "fiscal_year": { "name": "2026. pārskata gads", "start": "2026-01-01", "end": "2026-12-31" },
+  "periods": [
+    { "code": "2026-Q1", "from": "2026-01-01", "to": "2026-03-31" },
+    { "code": "2026-Q2", "from": "2026-04-01", "to": "2026-06-30" }
+  ],
+  "statements": ["LV-GPL-BS", "LV-GPL-IS"],
+  "contacts": [
+    { "ref": "klients-lv", "name": "Baltic Mēbeles SIA", "type": "customer", "country": "LV" },
+    { "ref": "klients-de", "name": "Nordwind Handels GmbH", "type": "customer", "country": "DE", "vat_number": "DE999999999" },
+    { "ref": "klients-us", "name": "Prairie Import LLC", "type": "customer", "country": "US" },
+    { "ref": "pircejs-ipasums", "name": "Rīgas Nekustamie Īpašumi SIA", "type": "customer", "country": "LV" },
+    { "ref": "piegadatajs-lv", "name": "Vidzemes Ražotne SIA", "type": "supplier", "country": "LV" },
+    { "ref": "piegadatajs-ee", "name": "Tallinn Tarvikud OÜ", "type": "supplier", "country": "EE", "vat_number": "EE999999999" }
+  ],
+  "documents": [
+    {
+      "ref": "V1",
+      "type": "sale_invoice",
+      "contact": "klients-lv",
+      "date": "2026-01-15",
+      "why": "Standarta likmes 21% pārdošana iekšzemē — testē 41. un 52. rindu, un ir vēlāk daļēji kreditēta ar CN1.",
+      "lines": [
+        { "name": "Biroja mēbeles", "quantity": 10, "unit_price": 200, "tax": "LV-S-21", "account": "6010" }
+      ]
+    },
+    {
+      "ref": "V2",
+      "type": "sale_invoice",
+      "contact": "klients-lv",
+      "date": "2026-01-20",
+      "why": "Samazinātās likmes 12% pārdošana — izmitināšanas pakalpojums tūristu mītnē (42. panta desmitā daļa) — testē 42. un 53. rindu.",
+      "lines": [
+        { "name": "Izmitināšana viesu namā", "quantity": 5, "unit_price": 100, "tax": "LV-S-12", "account": "6010" }
+      ]
+    },
+    {
+      "ref": "V3",
+      "type": "sale_invoice",
+      "contact": "klients-lv",
+      "date": "2026-01-25",
+      "why": "Samazinātās likmes 5% pārdošana — mācību grāmatu piegāde valsts valodā (42. panta piektā daļa) — testē 42a un 53a rindu.",
+      "lines": [
+        { "name": "Mācību grāmatas", "quantity": 20, "unit_price": 15, "tax": "LV-S-5", "account": "6010" }
+      ]
+    },
+    {
+      "ref": "V4",
+      "type": "sale_invoice",
+      "contact": "klients-us",
+      "date": "2026-02-05",
+      "why": "Preču eksports uz trešo valsti, nodokļa 0% likme (43. panta pirmā daļa) — testē 48a un 43. rindu, un export mentions.",
+      "lines": [
+        { "name": "Kokapstrādes iekārta", "quantity": 1, "unit_price": 5000, "tax": "LV-S-EXPORT", "account": "6010" }
+      ]
+    },
+    {
+      "ref": "V5",
+      "type": "sale_invoice",
+      "contact": "klients-de",
+      "date": "2026-02-10",
+      "why": "Preču piegāde Eiropas Savienības teritorijā reģistrētam nodokļa maksātājam, nodokļa 0% likme (43. panta ceturtā daļa) — testē 45. un 43. rindu, un intra_eu_goods mentions.",
+      "lines": [
+        { "name": "Koka paletes", "quantity": 100, "unit_price": 20, "tax": "LV-S-IC-GOODS", "account": "6010" }
+      ]
+    },
+    {
+      "ref": "V6",
+      "type": "sale_invoice",
+      "contact": "pircejs-ipasums",
+      "date": "2026-02-15",
+      "why": "Lietota nekustamā īpašuma pārdošana, ar nodokli neapliekams darījums (52. panta pirmās daļas 24. punkts) — testē 49. rindu un exempt mentions.",
+      "lines": [
+        { "name": "Noliktavas ēka Liepājā (lietota)", "quantity": 1, "unit_price": 80000, "tax": "LV-S-EXEMPT-RE", "account": "6210" }
+      ]
+    },
+    {
+      "ref": "CN1",
+      "type": "sale_credit_note",
+      "contact": "klients-lv",
+      "date": "2026-02-20",
+      "why": "Kredītrēķins par daļu no V1 atgrieztajām precēm — testē abus virzienus uz 41. un 52. rindas.",
+      "lines": [
+        { "name": "Biroja mēbeles (atgriezts daudzums)", "quantity": 2, "unit_price": 200, "tax": "LV-S-21", "account": "6010" }
+      ]
+    },
+    {
+      "ref": "P1",
+      "type": "purchase_invoice",
+      "contact": "piegadatajs-lv",
+      "date": "2026-01-18",
+      "why": "Iekšzemes iepirkums standarta likmē — atskaitāms priekšnodoklis, testē 62. rindu; vēlāk pilnībā apmaksāts ar E3.",
+      "lines": [
+        { "name": "Izejmateriāli", "quantity": 50, "unit_price": 40, "tax": "LV-P-21", "account": "7010" }
+      ]
+    },
+    {
+      "ref": "P2",
+      "type": "purchase_invoice",
+      "contact": "piegadatajs-lv",
+      "date": "2026-01-22",
+      "why": "Iekšzemes iepirkums samazinātā likmē 12% — atskaitāms priekšnodoklis, testē vairāk nekā vienu pozitīvu likmi iepirkumu pusē.",
+      "lines": [
+        { "name": "Transporta pakalpojums", "quantity": 1, "unit_price": 1000, "tax": "LV-P-12", "account": "7020" }
+      ]
+    },
+    {
+      "ref": "P3",
+      "type": "purchase_invoice",
+      "contact": "piegadatajs-ee",
+      "date": "2026-02-01",
+      "why": "Preču iegāde Eiropas Savienības teritorijā, pašaprēķins (5. panta pirmās daļas 3. punkts) — testē 50., 55. un 64. rindu, un reverse_charge mentions abās pusēs vienlaicīgi.",
+      "lines": [
+        { "name": "Iekārtu detaļas", "quantity": 1, "unit_price": 3000, "tax": "LV-P-IC-GOODS-21", "account": "7010" }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "E1",
+      "direction": "inbound",
+      "date": "2026-02-25",
+      "amount": 2420,
+      "contact": "klients-lv",
+      "journal": "BNK",
+      "match": "V1",
+      "why": "Pilna V1 rēķina apmaksa pirms tās daļējas kreditēšanas ar CN1 — testē saistītu ienākošu maksājumu."
+    },
+    {
+      "ref": "E2",
+      "direction": "inbound",
+      "date": "2026-03-10",
+      "amount": 315,
+      "contact": "klients-lv",
+      "journal": "BNK",
+      "why": "Ienākošs maksājums bez sasaistes ar konkrētu rēķinu — testē nesaistītu maksājumu, kas paliek atvērts."
+    },
+    {
+      "ref": "E3",
+      "direction": "outbound",
+      "date": "2026-02-05",
+      "amount": 2420,
+      "contact": "piegadatajs-lv",
+      "journal": "BNK",
+      "match": "P1",
+      "why": "Pilna P1 rēķina apmaksa piegādātājam — testē izejošu maksājumu, kas noslēdz pirkuma rēķinu."
+    }
+  ]
+}
