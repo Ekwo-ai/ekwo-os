@@ -1,0 +1,143 @@
+[
+  {
+    "code": "PE-V-18",
+    "name": "Venta gravada, 18 %",
+    "description": "Venta de bienes muebles, prestación de servicios, contratos de construcción o primera venta de inmuebles por el constructor, en el país",
+    "kind": "vat",
+    "rate": 18,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "legal_reference": "TUO de la Ley del IGV e ISC (Decreto Supremo N.° 055-99-EF), art. 1° — operaciones gravadas (venta de bienes muebles, prestación o utilización de servicios, contratos de construcción, primera venta de inmuebles por el constructor, importación de bienes) y art. 17° — la tasa del impuesto es 15,5 % desde el 1 de enero de 2026 (Ley N.° 32387, que reduce progresivamente la tasa del IGV del 16 % vigente hasta el 31 de diciembre de 2025); a ella se agrega el 2,5 % del Impuesto de Promoción Municipal del mismo período (Ley de Tributación Municipal, Decreto Legislativo N.° 776, art. 76°, en la redacción de la Ley N.° 32387), que grava las mismas operaciones con las mismas normas del IGV, de modo que la tasa combinada que se traslada en el comprobante de pago es 18 %. El comprobante no desagrega el 15,5 % del 2,5 %; SUNAT recauda ambos como IGV y distribuye el segundo al FONCOMUN",
+    "source": "ley-igv",
+    "vat_category": "S",
+    "sequence": 10,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "100" },
+        { "type": "tax", "account": "401111", "box": "101" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "102" },
+        { "type": "tax", "account": "401111", "box": "103" }
+      ]
+    }
+  },
+  {
+    "code": "PE-V-EXP",
+    "name": "Exportación, inafecta",
+    "description": "Exportación de bienes, servicios y contratos de construcción ejecutados en el exterior",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2026-01-01",
+    "conditions": ["transport_evidence"],
+    "legal_reference": "TUO de la Ley del IGV e ISC, art. 33° — «la exportación de bienes o servicios, así como los contratos de construcción ejecutados en el exterior, no están afectos al Impuesto General a las Ventas», y los numerales que asimilan a exportación ciertas operaciones realizadas en el país (ventas a establecimientos ubicados en zona internacional de puertos y aeropuertos, hospedaje a no domiciliados, entre otras). El servicio de exportación exige además figurar en el Apéndice V de la misma ley y cumplir los requisitos de su art. 33°, penúltimo párrafo (uso, explotación o aprovechamiento económico fuera del país). El paquete no distingue estos casos especiales: declara la exportación ordinaria de bienes y servicios; véase el README",
+    "source": "ley-igv",
+    "vat_category": "G",
+    "sequence": 20,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "106" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "106", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "PE-V-EXO",
+    "name": "Venta exonerada",
+    "description": "Venta de bienes y servicios comprendidos en los Apéndices I y II de la Ley del IGV",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2026-01-01",
+    "conditions": ["supply_nature"],
+    "legal_reference": "TUO de la Ley del IGV e ISC, art. 5° — «están exoneradas del Impuesto General a las Ventas las operaciones contenidas en los Apéndices I y II». El Apéndice II, numeral 2 (texto vigente según el Decreto Supremo N.° 180-2007-EF), exonera el servicio de transporte público terrestre de pasajeros dentro del país, con excepción del transporte ferroviario y aéreo; el Apéndice I exonera, entre otros bienes, ciertos productos agropecuarios, los libros y publicaciones culturales. El paquete declara la exoneración con esta cita genérica; el bien o servicio exonerado concreto y su numeral corresponden a cada operación y no al código — véase el README",
+    "source": "ley-igv",
+    "vat_category": "E",
+    "sequence": 30,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "105" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "105", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "PE-C-18",
+    "name": "Compra gravada, 18 %, con derecho a crédito fiscal",
+    "description": "Adquisición de bienes, servicios o contratos de construcción destinados exclusivamente a operaciones gravadas o de exportación",
+    "kind": "vat",
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "legal_reference": "TUO de la Ley del IGV e ISC, art. 18° — el crédito fiscal está constituido por el IGV consignado en el comprobante de pago que grava la adquisición de bienes, servicios y contratos de construcción, siempre que sean permitidos como costo o gasto de la renta de tercera categoría y se destinen a operaciones gravadas (requisitos sustanciales); art. 19° — el impuesto debe estar consignado por separado en el comprobante, que debe cumplir los requisitos de la Ley del IGV y del Reglamento de Comprobantes de Pago, y la operación anotada en el Registro de Compras (requisitos formales); art. 17° y Ley N.° 32387 — tasa de 15,5 % de IGV más 2,5 % de Impuesto de Promoción Municipal (Decreto Legislativo N.° 776, art. 76°) desde el 1 de enero de 2026, tasa combinada 18 %",
+    "source": "ley-igv",
+    "vat_category": "S",
+    "sequence": 110,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "107" },
+        { "type": "tax", "account": "401112", "box": "108" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "107", "box_factor": -100 },
+        { "type": "tax", "account": "401112", "box": "108", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "PE-C-18-NOCRED",
+    "name": "Compra gravada, 18 %, sin derecho a crédito fiscal",
+    "description": "Adquisición gravada destinada a operaciones no gravadas, o que no cumple los requisitos del crédito fiscal",
+    "kind": "vat",
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "recoverable": false,
+    "legal_reference": "TUO de la Ley del IGV e ISC, art. 18°, inciso b) — el crédito fiscal exige que las adquisiciones se destinen a operaciones gravadas con el impuesto; el IGV de una adquisición destinada a una operación no gravada, o que no cumple los demás requisitos del art. 18° o del art. 19°, no otorga derecho a crédito fiscal y forma parte del costo o gasto de la adquisición (art. 69°, referido al IGV que no constituye costo o gasto para el Impuesto a la Renta salvo esta excepción). El Formulario Virtual N.° 621 no tiene casilla propia para este impuesto no deducible: la base se declara en la casilla 113 y el impuesto queda en el costo de la línea, sin casilla",
+    "source": "ley-igv",
+    "vat_category": "S",
+    "sequence": 120,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "113" },
+        { "type": "tax_on_base", "factor": 100 }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "113", "box_factor": -100 },
+        { "type": "tax_on_base", "factor": 100, "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "PE-C-EXO",
+    "name": "Compra no gravada",
+    "description": "Adquisición de bienes o servicios exonerados o inafectos del IGV",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "exempt",
+    "valid_from": "2026-01-01",
+    "legal_reference": "TUO de la Ley del IGV e ISC, art. 5° y Apéndices I y II — bienes y servicios exonerados; art. 2° — conceptos no gravados (entre otros, la transferencia de bienes usados que efectúan las personas naturales o jurídicas que no realizan actividad empresarial). El Formulario Virtual N.° 621 declara esta adquisición en la casilla 120, «Compras internas no gravadas»",
+    "source": "ley-igv",
+    "vat_category": "E",
+    "sequence": 130,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "120" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "120", "box_factor": -100 }
+      ]
+    }
+  }
+]

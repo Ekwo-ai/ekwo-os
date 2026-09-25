@@ -1,0 +1,805 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/statements",
+  "statements": [
+    {
+      "code": "PE-EF-ESF",
+      "kind": "balance_sheet",
+      "framework": "PE-PCGE",
+      "name": "Estado de Situación Financiera",
+      "legal_reference": "Ley General de Sociedades, Ley N.° 26887, art. 223 — los estados financieros se preparan y presentan de conformidad con las disposiciones legales sobre la materia y con principios de contabilidad generalmente aceptados en el país, que remiten a las Normas Internacionales de Información Financiera (NIIF) oficializadas por el Consejo Normativo de Contabilidad.",
+      "source": "lgs",
+      "lines": [
+        {
+          "code": "ACT",
+          "parent": null,
+          "name": "Activo",
+          "sequence": 10,
+          "is_total": true,
+          "plus": [
+            "AC",
+            "ANC"
+          ]
+        },
+        {
+          "code": "AC",
+          "parent": "ACT",
+          "name": "Activo corriente",
+          "sequence": 20,
+          "is_total": true,
+          "plus": [
+            "10",
+            "12",
+            "14",
+            "16",
+            "18",
+            "19",
+            "20",
+            "29",
+            "IGVCF"
+          ]
+        },
+        {
+          "code": "10",
+          "parent": "AC",
+          "name": "Efectivo y equivalentes de efectivo",
+          "sequence": 30,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "10",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Resolución N.° 002-2019-EF/30 del Consejo Normativo de Contabilidad — Plan Contable General Empresarial modificado 2019, cuyas cuentas de mayor (dos dígitos) agrupan los elementos 1 a 7; la correspondencia con las líneas del estado es la que aquí se declara.",
+          "source": "pcge-2019"
+        },
+        {
+          "code": "12",
+          "parent": "AC",
+          "name": "Cuentas por cobrar comerciales – Terceros",
+          "sequence": 40,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "12",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Resolución N.° 002-2019-EF/30 del Consejo Normativo de Contabilidad — Plan Contable General Empresarial modificado 2019, cuyas cuentas de mayor (dos dígitos) agrupan los elementos 1 a 7; la correspondencia con las líneas del estado es la que aquí se declara.",
+          "source": "pcge-2019"
+        },
+        {
+          "code": "14",
+          "parent": "AC",
+          "name": "Cuentas por cobrar al personal, accionistas y directores",
+          "sequence": 50,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "14",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Resolución N.° 002-2019-EF/30 del Consejo Normativo de Contabilidad — Plan Contable General Empresarial modificado 2019, cuyas cuentas de mayor (dos dígitos) agrupan los elementos 1 a 7; la correspondencia con las líneas del estado es la que aquí se declara.",
+          "source": "pcge-2019"
+        },
+        {
+          "code": "16",
+          "parent": "AC",
+          "name": "Cuentas por cobrar diversas – Terceros",
+          "sequence": 60,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "16",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Resolución N.° 002-2019-EF/30 del Consejo Normativo de Contabilidad — Plan Contable General Empresarial modificado 2019, cuyas cuentas de mayor (dos dígitos) agrupan los elementos 1 a 7; la correspondencia con las líneas del estado es la que aquí se declara.",
+          "source": "pcge-2019"
+        },
+        {
+          "code": "18",
+          "parent": "AC",
+          "name": "Servicios y otros contratados por anticipado",
+          "sequence": 70,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "18",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Resolución N.° 002-2019-EF/30 del Consejo Normativo de Contabilidad — Plan Contable General Empresarial modificado 2019, cuyas cuentas de mayor (dos dígitos) agrupan los elementos 1 a 7; la correspondencia con las líneas del estado es la que aquí se declara.",
+          "source": "pcge-2019"
+        },
+        {
+          "code": "19",
+          "parent": "AC",
+          "name": "Estimación de cuentas de cobranza dudosa",
+          "sequence": 80,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "19",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Resolución N.° 002-2019-EF/30 del Consejo Normativo de Contabilidad — Plan Contable General Empresarial modificado 2019, cuyas cuentas de mayor (dos dígitos) agrupan los elementos 1 a 7; la correspondencia con las líneas del estado es la que aquí se declara.",
+          "source": "pcge-2019"
+        },
+        {
+          "code": "20",
+          "parent": "AC",
+          "name": "Mercaderías",
+          "sequence": 90,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "20",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Resolución N.° 002-2019-EF/30 del Consejo Normativo de Contabilidad — Plan Contable General Empresarial modificado 2019, cuyas cuentas de mayor (dos dígitos) agrupan los elementos 1 a 7; la correspondencia con las líneas del estado es la que aquí se declara.",
+          "source": "pcge-2019"
+        },
+        {
+          "code": "29",
+          "parent": "AC",
+          "name": "Desvalorización de inventarios",
+          "sequence": 100,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "29",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Resolución N.° 002-2019-EF/30 del Consejo Normativo de Contabilidad — Plan Contable General Empresarial modificado 2019, cuyas cuentas de mayor (dos dígitos) agrupan los elementos 1 a 7; la correspondencia con las líneas del estado es la que aquí se declara.",
+          "source": "pcge-2019"
+        },
+        {
+          "code": "IGVCF",
+          "parent": "AC",
+          "name": "Crédito fiscal y saldo a favor del IGV",
+          "sequence": 110,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "401112",
+              "sequence": 10
+            },
+            {
+              "kind": "account_code",
+              "code_from": "401114",
+              "sequence": 20
+            }
+          ],
+          "legal_reference": "Resolución N.° 002-2019-EF/30 del Consejo Normativo de Contabilidad — Plan Contable General Empresarial modificado 2019, cuyas cuentas de mayor (dos dígitos) agrupan los elementos 1 a 7; la correspondencia con las líneas del estado es la que aquí se declara. El plan contable no separa cuentas de dos dígitos para el crédito fiscal y el saldo a favor: 401112 y 401114 son subcuentas de la cuenta 40111 «IGV – Cuenta propia» abiertas por este paquete — véase el README.",
+          "source": "pcge-2019"
+        },
+        {
+          "code": "ANC",
+          "parent": "ACT",
+          "name": "Activo no corriente",
+          "sequence": 120,
+          "is_total": true,
+          "plus": [
+            "33",
+            "34",
+            "37",
+            "39"
+          ]
+        },
+        {
+          "code": "33",
+          "parent": "ANC",
+          "name": "Propiedad, planta y equipo",
+          "sequence": 130,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "33",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Resolución N.° 002-2019-EF/30 del Consejo Normativo de Contabilidad — Plan Contable General Empresarial modificado 2019, cuyas cuentas de mayor (dos dígitos) agrupan los elementos 1 a 7; la correspondencia con las líneas del estado es la que aquí se declara.",
+          "source": "pcge-2019"
+        },
+        {
+          "code": "34",
+          "parent": "ANC",
+          "name": "Intangibles",
+          "sequence": 140,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "34",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Resolución N.° 002-2019-EF/30 del Consejo Normativo de Contabilidad — Plan Contable General Empresarial modificado 2019, cuyas cuentas de mayor (dos dígitos) agrupan los elementos 1 a 7; la correspondencia con las líneas del estado es la que aquí se declara.",
+          "source": "pcge-2019"
+        },
+        {
+          "code": "37",
+          "parent": "ANC",
+          "name": "Activo diferido",
+          "sequence": 150,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "37",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Resolución N.° 002-2019-EF/30 del Consejo Normativo de Contabilidad — Plan Contable General Empresarial modificado 2019, cuyas cuentas de mayor (dos dígitos) agrupan los elementos 1 a 7; la correspondencia con las líneas del estado es la que aquí se declara.",
+          "source": "pcge-2019"
+        },
+        {
+          "code": "39",
+          "parent": "ANC",
+          "name": "Depreciación y amortización acumulados",
+          "sequence": 160,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "39",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Resolución N.° 002-2019-EF/30 del Consejo Normativo de Contabilidad — Plan Contable General Empresarial modificado 2019, cuyas cuentas de mayor (dos dígitos) agrupan los elementos 1 a 7; la correspondencia con las líneas del estado es la que aquí se declara.",
+          "source": "pcge-2019"
+        },
+        {
+          "code": "PYP",
+          "parent": null,
+          "name": "Pasivo y patrimonio",
+          "sequence": 170,
+          "is_total": true,
+          "plus": [
+            "PAS",
+            "PAT"
+          ]
+        },
+        {
+          "code": "PAS",
+          "parent": "PYP",
+          "name": "Pasivo",
+          "sequence": 180,
+          "is_total": true,
+          "plus": [
+            "PC",
+            "PNC"
+          ]
+        },
+        {
+          "code": "PC",
+          "parent": "PAS",
+          "name": "Pasivo corriente",
+          "sequence": 190,
+          "is_total": true,
+          "plus": [
+            "IGVDEB",
+            "41",
+            "42",
+            "46"
+          ]
+        },
+        {
+          "code": "IGVDEB",
+          "parent": "PC",
+          "name": "Tributos por pagar",
+          "sequence": 200,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "401111",
+              "sequence": 10
+            },
+            {
+              "kind": "account_code",
+              "code_from": "401113",
+              "sequence": 20
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "4017",
+              "sequence": 30
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "403",
+              "sequence": 40
+            }
+          ],
+          "legal_reference": "Resolución N.° 002-2019-EF/30 del Consejo Normativo de Contabilidad — Plan Contable General Empresarial modificado 2019, cuyas cuentas de mayor (dos dígitos) agrupan los elementos 1 a 7; la correspondencia con las líneas del estado es la que aquí se declara. 401111 y 401113 son subcuentas de 40111 abiertas por este paquete; 40171 y 403 son cuentas del propio agrupador (impuesto a la renta de tercera categoría, ESSALUD, ONP).",
+          "source": "pcge-2019"
+        },
+        {
+          "code": "41",
+          "parent": "PC",
+          "name": "Remuneraciones y participaciones por pagar",
+          "sequence": 210,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "41",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Resolución N.° 002-2019-EF/30 del Consejo Normativo de Contabilidad — Plan Contable General Empresarial modificado 2019, cuyas cuentas de mayor (dos dígitos) agrupan los elementos 1 a 7; la correspondencia con las líneas del estado es la que aquí se declara.",
+          "source": "pcge-2019"
+        },
+        {
+          "code": "42",
+          "parent": "PC",
+          "name": "Cuentas por pagar comerciales – Terceros",
+          "sequence": 220,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "42",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Resolución N.° 002-2019-EF/30 del Consejo Normativo de Contabilidad — Plan Contable General Empresarial modificado 2019, cuyas cuentas de mayor (dos dígitos) agrupan los elementos 1 a 7; la correspondencia con las líneas del estado es la que aquí se declara.",
+          "source": "pcge-2019"
+        },
+        {
+          "code": "46",
+          "parent": "PC",
+          "name": "Cuentas por pagar diversas – Terceros",
+          "sequence": 230,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "46",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Resolución N.° 002-2019-EF/30 del Consejo Normativo de Contabilidad — Plan Contable General Empresarial modificado 2019, cuyas cuentas de mayor (dos dígitos) agrupan los elementos 1 a 7; la correspondencia con las líneas del estado es la que aquí se declara.",
+          "source": "pcge-2019"
+        },
+        {
+          "code": "PNC",
+          "parent": "PAS",
+          "name": "Pasivo no corriente",
+          "sequence": 240,
+          "is_total": true,
+          "plus": [
+            "45",
+            "48"
+          ]
+        },
+        {
+          "code": "45",
+          "parent": "PNC",
+          "name": "Obligaciones financieras",
+          "sequence": 250,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "45",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Resolución N.° 002-2019-EF/30 del Consejo Normativo de Contabilidad — Plan Contable General Empresarial modificado 2019, cuyas cuentas de mayor (dos dígitos) agrupan los elementos 1 a 7; la correspondencia con las líneas del estado es la que aquí se declara.",
+          "source": "pcge-2019"
+        },
+        {
+          "code": "48",
+          "parent": "PNC",
+          "name": "Provisiones",
+          "sequence": 260,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "48",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Resolución N.° 002-2019-EF/30 del Consejo Normativo de Contabilidad — Plan Contable General Empresarial modificado 2019, cuyas cuentas de mayor (dos dígitos) agrupan los elementos 1 a 7; la correspondencia con las líneas del estado es la que aquí se declara.",
+          "source": "pcge-2019"
+        },
+        {
+          "code": "PAT",
+          "parent": "PYP",
+          "name": "Patrimonio neto",
+          "sequence": 270,
+          "is_total": true,
+          "plus": [
+            "50",
+            "58",
+            "59"
+          ]
+        },
+        {
+          "code": "50",
+          "parent": "PAT",
+          "name": "Capital",
+          "sequence": 280,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "50",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Resolución N.° 002-2019-EF/30 del Consejo Normativo de Contabilidad — Plan Contable General Empresarial modificado 2019, cuyas cuentas de mayor (dos dígitos) agrupan los elementos 1 a 7; la correspondencia con las líneas del estado es la que aquí se declara.",
+          "source": "pcge-2019"
+        },
+        {
+          "code": "58",
+          "parent": "PAT",
+          "name": "Reservas",
+          "sequence": 290,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "58",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Resolución N.° 002-2019-EF/30 del Consejo Normativo de Contabilidad — Plan Contable General Empresarial modificado 2019, cuyas cuentas de mayor (dos dígitos) agrupan los elementos 1 a 7; la correspondencia con las líneas del estado es la que aquí se declara.",
+          "source": "pcge-2019"
+        },
+        {
+          "code": "59",
+          "parent": "PAT",
+          "name": "Resultados acumulados",
+          "sequence": 300,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "59",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Resolución N.° 002-2019-EF/30 del Consejo Normativo de Contabilidad — Plan Contable General Empresarial modificado 2019, cuyas cuentas de mayor (dos dígitos) agrupan los elementos 1 a 7; la correspondencia con las líneas del estado es la que aquí se declara.",
+          "source": "pcge-2019"
+        }
+      ]
+    },
+    {
+      "code": "PE-EF-ER",
+      "kind": "income_statement",
+      "framework": "PE-PCGE",
+      "name": "Estado de Resultados (por naturaleza)",
+      "legal_reference": "Ley General de Sociedades, Ley N.° 26887, art. 223 — los estados financieros se preparan y presentan de conformidad con las disposiciones legales sobre la materia y con principios de contabilidad generalmente aceptados en el país, que remiten a las Normas Internacionales de Información Financiera (NIIF) oficializadas por el Consejo Normativo de Contabilidad. El Plan Contable General Empresarial presenta el resultado por naturaleza del gasto (elementos 6 y 7); la reclasificación por función (administración, ventas) que un estado por función exige se hace, cuando corresponde, con las cuentas 94 a 96, que este paquete no incorpora — véase el README.",
+      "source": "lgs",
+      "lines": [
+        {
+          "code": "ING",
+          "parent": null,
+          "name": "Ingresos de operación",
+          "sequence": 10,
+          "is_total": true,
+          "plus": [
+            "70",
+            "73",
+            "75"
+          ]
+        },
+        {
+          "code": "70",
+          "parent": "ING",
+          "name": "Ventas",
+          "sequence": 20,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "70",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Resolución N.° 002-2019-EF/30 del Consejo Normativo de Contabilidad — Plan Contable General Empresarial modificado 2019, cuyas cuentas de mayor (dos dígitos) agrupan los elementos 1 a 7; la correspondencia con las líneas del estado es la que aquí se declara.",
+          "source": "pcge-2019"
+        },
+        {
+          "code": "73",
+          "parent": "ING",
+          "name": "Descuentos, rebajas y bonificaciones obtenidos",
+          "sequence": 30,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "73",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Resolución N.° 002-2019-EF/30 del Consejo Normativo de Contabilidad — Plan Contable General Empresarial modificado 2019, cuyas cuentas de mayor (dos dígitos) agrupan los elementos 1 a 7; la correspondencia con las líneas del estado es la que aquí se declara.",
+          "source": "pcge-2019"
+        },
+        {
+          "code": "75",
+          "parent": "ING",
+          "name": "Otros ingresos de gestión",
+          "sequence": 40,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "75",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Resolución N.° 002-2019-EF/30 del Consejo Normativo de Contabilidad — Plan Contable General Empresarial modificado 2019, cuyas cuentas de mayor (dos dígitos) agrupan los elementos 1 a 7; la correspondencia con las líneas del estado es la que aquí se declara.",
+          "source": "pcge-2019"
+        },
+        {
+          "code": "CV",
+          "parent": null,
+          "name": "Costo de ventas",
+          "sequence": 50,
+          "is_total": true,
+          "plus": [
+            "60",
+            "69"
+          ]
+        },
+        {
+          "code": "60",
+          "parent": "CV",
+          "name": "Compras",
+          "sequence": 60,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "60",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Resolución N.° 002-2019-EF/30 del Consejo Normativo de Contabilidad — Plan Contable General Empresarial modificado 2019, cuyas cuentas de mayor (dos dígitos) agrupan los elementos 1 a 7; la correspondencia con las líneas del estado es la que aquí se declara.",
+          "source": "pcge-2019"
+        },
+        {
+          "code": "69",
+          "parent": "CV",
+          "name": "Costo de ventas",
+          "sequence": 70,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "69",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Resolución N.° 002-2019-EF/30 del Consejo Normativo de Contabilidad — Plan Contable General Empresarial modificado 2019, cuyas cuentas de mayor (dos dígitos) agrupan los elementos 1 a 7; la correspondencia con las líneas del estado es la que aquí se declara.",
+          "source": "pcge-2019"
+        },
+        {
+          "code": "UB",
+          "parent": null,
+          "name": "Utilidad (pérdida) bruta",
+          "sequence": 80,
+          "is_total": true,
+          "plus": [
+            "ING"
+          ],
+          "minus": [
+            "CV"
+          ]
+        },
+        {
+          "code": "GO",
+          "parent": null,
+          "name": "Gastos operativos",
+          "sequence": 90,
+          "is_total": true,
+          "plus": [
+            "62",
+            "63",
+            "64",
+            "65",
+            "68"
+          ]
+        },
+        {
+          "code": "62",
+          "parent": "GO",
+          "name": "Gastos de personal, directores y gerentes",
+          "sequence": 100,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "62",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Resolución N.° 002-2019-EF/30 del Consejo Normativo de Contabilidad — Plan Contable General Empresarial modificado 2019, cuyas cuentas de mayor (dos dígitos) agrupan los elementos 1 a 7; la correspondencia con las líneas del estado es la que aquí se declara.",
+          "source": "pcge-2019"
+        },
+        {
+          "code": "63",
+          "parent": "GO",
+          "name": "Gastos de servicios prestados por terceros",
+          "sequence": 110,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "63",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Resolución N.° 002-2019-EF/30 del Consejo Normativo de Contabilidad — Plan Contable General Empresarial modificado 2019, cuyas cuentas de mayor (dos dígitos) agrupan los elementos 1 a 7; la correspondencia con las líneas del estado es la que aquí se declara.",
+          "source": "pcge-2019"
+        },
+        {
+          "code": "64",
+          "parent": "GO",
+          "name": "Gastos por tributos",
+          "sequence": 120,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "64",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Resolución N.° 002-2019-EF/30 del Consejo Normativo de Contabilidad — Plan Contable General Empresarial modificado 2019, cuyas cuentas de mayor (dos dígitos) agrupan los elementos 1 a 7; la correspondencia con las líneas del estado es la que aquí se declara.",
+          "source": "pcge-2019"
+        },
+        {
+          "code": "65",
+          "parent": "GO",
+          "name": "Otros gastos de gestión",
+          "sequence": 130,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "65",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Resolución N.° 002-2019-EF/30 del Consejo Normativo de Contabilidad — Plan Contable General Empresarial modificado 2019, cuyas cuentas de mayor (dos dígitos) agrupan los elementos 1 a 7; la correspondencia con las líneas del estado es la que aquí se declara.",
+          "source": "pcge-2019"
+        },
+        {
+          "code": "68",
+          "parent": "GO",
+          "name": "Valuación y deterioro de activos y provisiones",
+          "sequence": 140,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "68",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Resolución N.° 002-2019-EF/30 del Consejo Normativo de Contabilidad — Plan Contable General Empresarial modificado 2019, cuyas cuentas de mayor (dos dígitos) agrupan los elementos 1 a 7; la correspondencia con las líneas del estado es la que aquí se declara.",
+          "source": "pcge-2019"
+        },
+        {
+          "code": "UO",
+          "parent": null,
+          "name": "Utilidad (pérdida) de operación",
+          "sequence": 150,
+          "is_total": true,
+          "plus": [
+            "UB"
+          ],
+          "minus": [
+            "GO"
+          ]
+        },
+        {
+          "code": "RF",
+          "parent": null,
+          "name": "Resultado financiero",
+          "sequence": 160,
+          "is_total": true,
+          "plus": [
+            "77"
+          ],
+          "minus": [
+            "67"
+          ]
+        },
+        {
+          "code": "77",
+          "parent": "RF",
+          "name": "Ingresos financieros",
+          "sequence": 170,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "77",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Resolución N.° 002-2019-EF/30 del Consejo Normativo de Contabilidad — Plan Contable General Empresarial modificado 2019, cuyas cuentas de mayor (dos dígitos) agrupan los elementos 1 a 7; la correspondencia con las líneas del estado es la que aquí se declara.",
+          "source": "pcge-2019"
+        },
+        {
+          "code": "67",
+          "parent": "RF",
+          "name": "Gastos financieros",
+          "sequence": 180,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "67",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Resolución N.° 002-2019-EF/30 del Consejo Normativo de Contabilidad — Plan Contable General Empresarial modificado 2019, cuyas cuentas de mayor (dos dígitos) agrupan los elementos 1 a 7; la correspondencia con las líneas del estado es la que aquí se declara.",
+          "source": "pcge-2019"
+        },
+        {
+          "code": "UAI",
+          "parent": null,
+          "name": "Utilidad (pérdida) antes de impuesto a las ganancias",
+          "sequence": 190,
+          "is_total": true,
+          "plus": [
+            "UO",
+            "RF"
+          ]
+        },
+        {
+          "code": "88",
+          "parent": null,
+          "name": "Impuesto a las ganancias",
+          "sequence": 200,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "88",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Resolución N.° 002-2019-EF/30 del Consejo Normativo de Contabilidad — Plan Contable General Empresarial modificado 2019, cuyas cuentas de mayor (dos dígitos) agrupan los elementos 1 a 7; la correspondencia con las líneas del estado es la que aquí se declara.",
+          "source": "pcge-2019"
+        },
+        {
+          "code": "UN",
+          "parent": null,
+          "name": "Utilidad (pérdida) neta del ejercicio",
+          "sequence": 210,
+          "is_total": true,
+          "plus": [
+            "UAI"
+          ],
+          "minus": [
+            "88"
+          ]
+        }
+      ]
+    }
+  ]
+}

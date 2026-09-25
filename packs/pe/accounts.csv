@@ -1,0 +1,175 @@
+code,parent,type,reconcilable,name,sequence
+1,,asset_current,false,Activo disponible y exigible,10
+10,1,asset_cash,false,Efectivo y equivalentes de efectivo,20
+101,10,asset_cash,false,Caja,30
+104,10,asset_cash,false,Cuentas corrientes en instituciones financieras,40
+1041,104,asset_cash,false,Cuentas corrientes operativas,50
+106,10,asset_cash,false,Depósitos en instituciones financieras,60
+1062,106,asset_cash,false,Depósitos a plazo,70
+12,1,asset_receivable,true,Cuentas por cobrar comerciales – Terceros,80
+121,12,asset_receivable,true,"Facturas, boletas y otros comprobantes por cobrar",90
+1212,121,asset_receivable,true,Emitidas en cartera,100
+122,12,asset_current,false,Anticipos de clientes,110
+123,12,asset_receivable,true,Letras por cobrar,120
+1232,123,asset_receivable,true,En cartera,130
+14,1,asset_current,false,"Cuentas por cobrar al personal, a los accionistas (socios) y directores",140
+141,14,asset_current,false,Personal,150
+1413,141,asset_current,false,Entregas a rendir cuenta,160
+142,14,asset_current,false,Accionistas (o socios),170
+1422,142,asset_current,false,Préstamos,180
+16,1,asset_current,false,Cuentas por cobrar diversas – Terceros,190
+167,16,asset_current,false,Tributos por acreditar,200
+1671,167,asset_current,false,Pagos a cuenta del impuesto a la renta,210
+169,16,asset_current,false,Otras cuentas por cobrar diversas,220
+1699,169,asset_current,false,Otras cuentas por cobrar diversas,230
+18,1,asset_prepayments,false,Servicios y otros contratados por anticipado,240
+182,18,asset_prepayments,false,Seguros,250
+183,18,asset_prepayments,false,Alquileres,260
+189,18,asset_prepayments,false,Otros gastos contratados por anticipado,270
+19,1,asset_current,false,Estimación de cuentas de cobranza dudosa,280
+191,19,asset_current,false,Cuentas por cobrar comerciales – Terceros,290
+1911,191,asset_current,false,"Facturas, boletas y otros comprobantes por cobrar",300
+2,,asset_current,false,Activo realizable,310
+20,2,asset_current,false,Mercaderías,320
+201,20,asset_current,false,Mercaderías,330
+2011,201,asset_current,false,Mercaderías,340
+29,2,asset_current,false,Desvalorización de inventarios,350
+291,29,asset_current,false,Mercaderías,360
+3,,asset_fixed,false,Activo inmovilizado,370
+33,3,asset_fixed,false,"Propiedad, planta y equipo",380
+331,33,asset_fixed,false,Terrenos,390
+332,33,asset_fixed,false,Edificaciones,400
+3321,332,asset_fixed,false,Edificaciones,410
+333,33,asset_fixed,false,Maquinaria y equipo de explotación,420
+3331,333,asset_fixed,false,Maquinaria y equipo de explotación,430
+334,33,asset_fixed,false,Unidades de transporte,440
+3341,334,asset_fixed,false,Vehículos motorizados,450
+335,33,asset_fixed,false,Muebles y enseres,460
+3351,335,asset_fixed,false,Muebles,470
+336,33,asset_fixed,false,Equipos diversos,480
+3361,336,asset_fixed,false,Equipo para procesamiento de información,490
+34,3,asset_non_current,false,Intangibles,500
+343,34,asset_non_current,false,Programas de computadora (software),510
+3431,343,asset_non_current,false,Aplicaciones informáticas,520
+37,3,asset_non_current,false,Activo diferido,530
+371,37,asset_non_current,false,Impuesto a la renta diferido,540
+39,3,asset_fixed,false,Depreciación y amortización acumulados,550
+395,39,asset_fixed,false,"Depreciación acumulada de propiedad, planta y equipo",560
+3952,395,asset_fixed,false,Depreciación acumulada – Costo,570
+396,39,asset_fixed,false,Amortización acumulada,580
+3961,396,asset_fixed,false,Intangibles – Costo,590
+4,,liability_current,false,Pasivo,600
+40,4,liability_current,false,"Tributos, contraprestaciones y aportes al sistema público de pensiones y de salud por pagar",610
+401,40,liability_current,false,Gobierno nacional,620
+4011,401,liability_current,false,Impuesto general a las ventas,630
+40111,4011,liability_current,false,IGV – Cuenta propia,640
+401111,40111,liability_current,false,IGV – Débito fiscal (IGV de ventas),650
+401112,40111,asset_current,false,IGV – Crédito fiscal (IGV de compras),660
+401113,40111,liability_current,true,IGV – Tributo por pagar,670
+401114,40111,asset_current,true,IGV – Saldo a favor del IGV,680
+4017,401,liability_current,false,Impuesto a la renta,690
+40171,4017,liability_current,false,Renta de tercera categoría,700
+403,40,liability_current,false,Instituciones públicas,710
+4031,403,liability_current,false,ESSALUD,720
+4032,403,liability_current,false,ONP,730
+41,4,liability_current,false,Remuneraciones y participaciones por pagar,740
+411,41,liability_current,false,Remuneraciones por pagar,750
+4111,411,liability_current,false,Sueldos y salarios por pagar,760
+415,41,liability_current,false,Beneficios sociales de los trabajadores por pagar,770
+4151,415,liability_current,false,Compensación por tiempo de servicios,780
+42,4,liability_payable,true,Cuentas por pagar comerciales – Terceros,790
+421,42,liability_payable,true,"Facturas, boletas y otros comprobantes por pagar",800
+4212,421,liability_payable,true,Emitidas,810
+422,42,liability_current,false,Anticipos a proveedores,820
+423,42,liability_payable,true,Letras por pagar,830
+4231,423,liability_payable,true,Letras por pagar,840
+45,4,liability_non_current,false,Obligaciones financieras,850
+451,45,liability_non_current,false,Préstamos de instituciones financieras y otras entidades,860
+4511,451,liability_non_current,false,Instituciones financieras,870
+46,4,liability_current,false,Cuentas por pagar diversas – Terceros,880
+469,46,liability_current,false,Otras cuentas por pagar diversas,890
+4699,469,liability_current,false,Otras cuentas por pagar,900
+48,4,liability_non_current,false,Provisiones,910
+486,48,liability_non_current,false,Provisión para garantías,920
+5,,equity,false,Patrimonio neto,930
+50,5,equity,false,Capital,940
+501,50,equity,false,Capital social,950
+5011,501,equity,false,Acciones,960
+58,5,equity,false,Reservas,970
+582,58,equity,false,Legal,980
+59,5,equity_retained,false,Resultados acumulados,990
+591,59,equity_retained,false,Utilidades no distribuidas,1000
+5911,591,equity_retained,false,Utilidades acumuladas,1010
+592,59,equity_retained,false,Pérdidas acumuladas,1020
+5921,592,equity_retained,false,Pérdidas acumuladas,1030
+6,,expense,false,Gastos por naturaleza,1040
+60,6,expense_direct_cost,false,Compras,1050
+601,60,expense_direct_cost,false,Mercaderías,1060
+6011,601,expense_direct_cost,false,Mercaderías,1070
+62,6,expense,false,"Gastos de personal, directores y gerentes",1080
+621,62,expense,false,Remuneraciones,1090
+6211,621,expense,false,Sueldos y salarios,1100
+627,62,expense,false,"Seguridad, previsión social y otras contribuciones",1110
+6271,627,expense,false,Régimen de prestaciones de salud,1120
+629,62,expense,false,Beneficios sociales de los trabajadores,1130
+6291,629,expense,false,Compensación por tiempo de servicio,1140
+63,6,expense,false,Gastos de servicios prestados por terceros,1150
+631,63,expense,false,"Transporte, correos y gastos de viaje",1160
+6311,631,expense,false,Transporte,1170
+632,63,expense,false,Asesoría y consultoría,1180
+6323,632,expense,false,Auditoría y contable,1190
+635,63,expense,false,Alquileres,1200
+6352,635,expense,false,Edificaciones,1210
+636,63,expense,false,Servicios básicos,1220
+6364,636,expense,false,Teléfono,1230
+6365,636,expense,false,Internet,1240
+637,63,expense,false,"Publicidad, publicaciones, relaciones públicas",1250
+6371,637,expense,false,Publicidad,1260
+639,63,expense,false,Otros servicios prestados por terceros,1270
+6391,639,expense,false,Gastos bancarios,1280
+64,6,expense,false,Gastos por tributos,1290
+641,64,expense,false,Gobierno nacional,1300
+6412,641,expense,false,Impuesto a las transacciones financieras,1310
+6413,641,expense,false,Impuesto temporal a los activos netos,1320
+643,64,expense,false,Gobierno local,1330
+6431,643,expense,false,Impuesto predial,1340
+65,6,expense,false,Otros gastos de gestión,1350
+651,65,expense,false,Seguros,1360
+659,65,expense,false,Otros gastos de gestión,1370
+67,6,expense,false,Gastos financieros,1380
+673,67,expense,false,Intereses por préstamos y otras obligaciones,1390
+6731,673,expense,false,Préstamos de instituciones financieras y otras entidades,1400
+676,67,expense,false,Diferencia de cambio,1410
+68,6,expense_depreciation,false,Valuación y deterioro de activos y provisiones,1420
+684,68,expense_depreciation,false,"Depreciación de propiedad, planta y equipo",1430
+6841,684,expense_depreciation,false,"Depreciación de propiedad, planta y equipo – Costo",1440
+686,68,expense_depreciation,false,Amortización de intangibles,1450
+6861,686,expense_depreciation,false,Amortización de intangibles – Costo,1460
+687,68,expense,false,Valuación de activos,1470
+6871,687,expense,false,Estimación de cuentas de cobranza dudosa,1480
+69,6,expense_direct_cost,false,Costo de ventas,1490
+691,69,expense_direct_cost,false,Mercaderías,1500
+6912,691,expense_direct_cost,false,Mercaderías – venta local,1510
+69121,6912,expense_direct_cost,false,Terceros,1520
+6911,691,expense_direct_cost,false,Mercaderías – exportación,1530
+69111,6911,expense_direct_cost,false,Terceros,1540
+88,6,expense,false,Impuesto a las ganancias,1550
+881,88,expense,false,Impuesto a las ganancias – Corriente,1560
+7,,income,false,Ingresos,1570
+70,7,income,false,Ventas,1580
+701,70,income,false,Mercaderías,1590
+7011,701,income,false,Mercaderías – venta de exportación,1600
+7012,701,income,false,Mercaderías – venta local,1610
+709,70,income,false,Devoluciones sobre ventas,1620
+7091,709,income,false,Mercaderías – Venta de exportación,1630
+7092,709,income,false,Mercaderías – Venta local,1640
+73,7,income,false,"Descuentos, rebajas y bonificaciones obtenidos",1650
+731,73,income,false,"Descuentos, rebajas y bonificaciones obtenidos",1660
+7311,731,income,false,Terceros,1670
+75,7,income_other,false,Otros ingresos de gestión,1680
+759,75,income_other,false,Otros ingresos de gestión,1690
+7599,759,income_other,false,Otros ingresos de gestión,1700
+77,7,income_other,false,Ingresos financieros,1710
+776,77,income_other,false,Diferencia en cambio,1720
+772,77,income_other,false,Rendimientos ganados,1730
+7721,772,income_other,false,Depósitos en instituciones financieras,1740

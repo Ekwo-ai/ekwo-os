@@ -435,8 +435,8 @@ on conflict (code) do update set
 insert into territories (code, code_source, name, parent_code, eu_vat_scope, eu_vat_from, eu_vat_to, vat_prefix, legal_reference) values
   ('MX', 'iso_3166_1', 'Mexico', null, 'none', null, null, null,
    'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. Mexico levies a value added tax of its own under the Ley del Impuesto al Valor Agregado, whose article 1o. sets the general rate.'),
-  ('CL', 'iso_3166_1', 'Chile', null, 'none', null, null, null,
-   'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. Chile levies a value added tax of its own under Decreto Ley N° 825, de 1974, whose article 14 sets the general rate at 19 %.')
+  ('PE', 'iso_3166_1', 'Peru', null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. Peru levies a value added tax of its own, the Impuesto General a las Ventas, under the Texto Único Ordenado approved by Decreto Supremo N.° 055-99-EF, whose article 17 sets its rate.')
 on conflict (code) do update set
   code_source     = excluded.code_source,
   name            = excluded.name,

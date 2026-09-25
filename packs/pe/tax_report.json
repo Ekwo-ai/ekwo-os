@@ -1,0 +1,107 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "PE-SUNAT-621",
+  "name": "Formulario Virtual N.° 621 — IGV Renta mensual (declaración del IGV)",
+  "period": ["month"],
+  "period_default": "month",
+  "valid_from": "2026-01-01",
+  "legal_reference": "TUO de la Ley del IGV e ISC, art. 29° — el impuesto se determina mensualmente deduciendo del impuesto bruto de cada período el crédito fiscal; Código Tributario (Decreto Supremo N.° 133-2013-EF), art. 29° — los tributos de determinación mensual se declaran y pagan dentro de los primeros doce días hábiles del mes siguiente, según el cronograma que aprueba la SUNAT. El Formulario Virtual N.° 621 sustituyó al PDT N.° 621 y es de uso obligatorio desde el período enero de 2016; las casillas de este paquete son las de la «Ayuda para el registro del Formulario Virtual N.° 621» de la SUNAT",
+  "source": "form-621-ayuda",
+  "deadline": {
+    "rule": "depends_on_taxpayer",
+    "legal_reference": "Código Tributario, art. 29°, penúltimo párrafo — la SUNAT puede establecer cronogramas de vencimiento con carácter general, que en la práctica escalonan la fecha según el último dígito del RUC del contribuyente; el cronograma de cada año se aprueba por resolución de superintendencia (para 2026, la Resolución de Superintendencia que fija el cronograma de vencimientos mensuales del ejercicio 2026). El día exacto depende del RUC de cada contribuyente y no de una regla que el paquete pueda calcular",
+    "source": "cronograma-2026"
+  },
+  "boxes": [
+    {
+      "box": "100",
+      "kind": "base",
+      "name": "Ventas netas gravadas",
+      "sequence": 10,
+      "legal_reference": "Ayuda del Formulario Virtual N.° 621 — «Casilla 100 – Ventas netas gravadas (Base imponible)»: monto correspondiente a las operaciones gravadas, sin incluir el impuesto",
+      "source": "form-621-ayuda"
+    },
+    {
+      "box": "101",
+      "kind": "tax",
+      "name": "Ventas netas gravadas — IGV",
+      "sequence": 20,
+      "legal_reference": "Ayuda del Formulario Virtual N.° 621 — «Casilla 101 – Ventas netas gravadas (Tributo)»: el sistema calcula el IGV que resulta de aplicar la tasa del impuesto al monto declarado en la casilla 100",
+      "source": "form-621-ayuda"
+    },
+    {
+      "box": "102",
+      "kind": "base",
+      "name": "Descuentos concedidos y devolución de ventas",
+      "sequence": 30,
+      "legal_reference": "Ayuda del Formulario Virtual N.° 621 — «Casilla 102 – Descuentos concedidos y devolución de ventas (Base imponible)»: monto por descuentos concedidos y devoluciones efectuadas por las ventas realizadas y declaradas en períodos anteriores",
+      "source": "form-621-ayuda"
+    },
+    {
+      "box": "103",
+      "kind": "tax",
+      "name": "Descuentos concedidos y devolución de ventas — IGV",
+      "sequence": 40,
+      "legal_reference": "Ayuda del Formulario Virtual N.° 621 — «Casilla 103 – Descuentos concedidos y devolución de ventas (Tributo)»: el sistema calcula el IGV que resulta de aplicar la tasa del impuesto al monto declarado en la casilla 102",
+      "source": "form-621-ayuda"
+    },
+    {
+      "box": "106",
+      "kind": "base",
+      "name": "Exportaciones facturadas en el período",
+      "sequence": 50,
+      "legal_reference": "Ayuda del Formulario Virtual N.° 621 — «Casilla 106: Exportaciones facturadas en el periodo»: monto neto de las exportaciones que cuenten con comprobante de pago o notas de débito y crédito, luego de deducir las devoluciones",
+      "source": "form-621-ayuda"
+    },
+    {
+      "box": "105",
+      "kind": "base",
+      "name": "Ventas no gravadas (sin considerar exportaciones)",
+      "sequence": 60,
+      "legal_reference": "Ayuda del Formulario Virtual N.° 621 — «Casilla 105: Ventas no gravadas (sin considerar exportaciones)»: monto de las ventas de bienes y servicios no gravados, sin incluir las exportaciones, netos de descuentos y rebajas; se entiende por ventas no gravadas a las que se encuentran exoneradas o inafectas del IGV",
+      "source": "form-621-ayuda"
+    },
+    {
+      "box": "107",
+      "kind": "base",
+      "name": "Compras netas destinadas a ventas gravadas",
+      "sequence": 70,
+      "legal_reference": "Ayuda del Formulario Virtual N.° 621 — «Casilla 107 - Compras netas destinadas a ventas gravadas (Base imponible)»: monto de las adquisiciones internas de bienes o servicios gravadas, netas de descuentos, devoluciones y/o reintegros, destinadas exclusivamente a ventas gravadas",
+      "source": "form-621-ayuda"
+    },
+    {
+      "box": "108",
+      "kind": "tax",
+      "name": "Compras netas destinadas a ventas gravadas — crédito fiscal",
+      "sequence": 80,
+      "legal_reference": "Ayuda del Formulario Virtual N.° 621 — «Casilla 108 - Compras netas destinadas a ventas gravadas (Tributo)»: el sistema calcula el IGV que resulta de aplicar la tasa del impuesto al monto declarado en la casilla 107",
+      "source": "form-621-ayuda"
+    },
+    {
+      "box": "113",
+      "kind": "base",
+      "name": "Compras netas destinadas a ventas no gravadas",
+      "sequence": 90,
+      "legal_reference": "Ayuda del Formulario Virtual N.° 621 — «Casilla 113 - Compras netas destinadas a ventas no gravadas (Base imponible)»: monto de compras internas totales de bienes y servicios que hayan sido destinadas a operaciones no gravadas exclusivamente, netas de descuentos, devoluciones y/o reintegros",
+      "source": "form-621-ayuda"
+    },
+    {
+      "box": "120",
+      "kind": "base",
+      "name": "Compras internas no gravadas",
+      "sequence": 100,
+      "legal_reference": "Ayuda del Formulario Virtual N.° 621 — «Casilla 120 - Compras netas internas no gravadas»: monto total de las adquisiciones internas de bienes o servicios no gravadas, netas de descuentos y devoluciones",
+      "source": "form-621-ayuda"
+    },
+    {
+      "box": "140",
+      "kind": "total",
+      "name": "Impuesto resultante o saldo a favor",
+      "sequence": 110,
+      "plus": ["101"],
+      "minus": ["103", "108"],
+      "legal_reference": "Ayuda del Formulario Virtual N.° 621, sección III «Determinación de la deuda» — «Casilla Impuesto Resultante o Saldo a Favor (casillas 140, …): el sistema calcula para la casilla 140 el importe resultante de calcular las ventas menos las compras»: IGV de ventas (casilla 101) menos IGV de descuentos y devoluciones de ventas (casilla 103) menos crédito fiscal (casilla 108). Un resultado positivo es tributo a pagar y uno negativo, saldo a favor del período; este paquete no declara la compensación con el saldo a favor de períodos anteriores (casillas 145/184), las percepciones ni las retenciones del IGV, que se llevan en cuentas y casillas propias fuera del alcance de este paquete — véase el README",
+      "source": "form-621-ayuda"
+    }
+  ]
+}
