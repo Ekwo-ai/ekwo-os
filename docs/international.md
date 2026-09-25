@@ -5609,3 +5609,110 @@ five `intracom_*` treatments are read the way every non-EU pack's are.
 `vat_prefix` is null: an Indonesian taxpayer is addressed by its Nomor Pokok
 Wajib Pajak (NPWP, sixteen digits since Coretax), which carries no country
 prefix of that table's kind and no ISO 6523 identifier of its own.
+
+## From Malaysia
+
+`packs/my/`, `community`, seed 91. The first pack of a country whose only
+indirect taxes are a single-stage Sales Tax and a single-stage Service Tax,
+neither of them recoverable by a registered buyer — `packs/us/`'s shape, not
+`packs/sg/`'s or `packs/th/`'s, and the reason every tax of this pack is
+`kind: sales_tax` and `recoverable: false`. Four things the format could not
+say, and one blocker outside the pack entirely.
+
+### `seed_sequence`'s own ceiling, not a country fact
+
+`packs/schema/pack.1.json` bounds `seed_sequence` between 10 and 89. This
+pack's number, 91, was assigned outside this session and is outside that
+range: `ekwo pack check my` refuses the manifest with `seed_sequence: above
+89` before it reads a single tax, and `readPack()` — which every test of this
+repository that loops over `allPacks` calls through
+[`tests/helpers/packs.ts`](../tests/helpers/packs.ts) — throws on the same
+manifest, which would fail every one of those tests for every pack and not
+only this one. This is not a country's law and there is nothing in
+`packs/my/` that could work around it — no rule here reads `seed_sequence` a
+second time, the way a tax reads `territories` or a box reads
+`tax_report.json`. The content of this pack was proved against its own golden
+year, `tests/golden.test.ts` and the rest of the targeted suite, with
+`seed_sequence` set to a free, in-range placeholder for that run alone and
+never committed; the manifest committed here declares 91, as instructed, and
+will not pass `ekwo pack check` or compile a seed until the schema's own
+`maximum` is raised past the numbers this round of packs is claiming. *Fix*:
+raise `packs/schema/pack.1.json`'s `seed_sequence.maximum` centrally, once,
+for every pack waiting on a number above 89 — not a change any one pack's
+worktree should make on its own, since several are being written from the
+same base at once.
+
+### A tax point that is one rule for two Acts
+
+`documents.tax_point` is one value for the whole country. Sales Tax falls due
+at the sale, disposal or first use of the goods (Sales Tax Act 2018, s. 8) —
+closer to delivery — and Service Tax generally falls due at payment, or
+twelve months after the invoice if no payment came first (Service Tax Act
+2018, s. 7, read with RMCD's general guide) — closer to payment. Belgium and
+the United Kingdom needed `invoice_if_issued` because one word had to carry a
+principle and its derogation; Malaysia needs one word to carry two unrelated
+Acts, each with its own principle, and `earliest_of_delivery_or_payment` is
+the nearest of the five values to both and exact for neither. A country whose
+document-level rule truly differs by the *kind of tax* rather than by a
+derogation `cash_basis` already carries is a shape the vocabulary has not met
+before this pack.
+
+### MyInvois is a clearance model, and the core has no status for one
+
+Every e-invoicing profile this format has met until now — Peppol BIS Billing,
+Factur-X, XRechnung, PINT SG — is an exchange between two businesses, or a
+transmission to a tax administration that happens to travel with the invoice
+(Singapore's InvoiceNow). Malaysia's MyInvois is neither: LHDNM validates the
+invoice **before** it is legally the taxpayer's, and returns a Unique
+Identifier Number and a QR code the invoice is not complete without,
+ordinarily before the buyer ever sees it. `post_document()` has one status for
+a document that is posted and none for one that is posted and waiting on an
+external validator to say so. `packs/my/` declares the profile (`pint-my`)
+and the party scheme (`0230`) it can state honestly and stops there, the same
+choice `packs/sa/` made for a box with a third column no format has. *Fix*: a
+document status between posted and sent — `pending_clearance`, or a flag
+beside `sent` — that a future pack for any clearance-model country (much of
+Latin America works this way already) would need in exactly this shape.
+
+### An exemption threshold that moves by guideline, not by a dated rule
+
+`einvoicing.obligation` is `mandatory` once `mandatory_from` is reached, and
+the format has one date. LHDNM's own phased mandate has four: 1 August 2024,
+1 January 2025, 1 July 2025 and 1 January 2026, each by a taxpayer's own
+annual turnover — and *underneath* all four, a second, independently moving
+threshold below which a taxpayer is exempted altogether, raised twice by
+administrative guideline in the four months before this pack's own
+`released_at` (RM500,000 to RM1,000,000 in December 2025, to RM3,000,000 in
+August 2026), with no gazetted rule this session could find setting either
+figure. `mandatory_from` states the day the earliest phase began and cannot
+state that most Malaysian companies are, on the day this pack was released,
+below a threshold that has moved twice since the statute itself last changed.
+A pack for a country whose obligation phases in *and* exempts out on two
+independent, separately moving schedules has nowhere in `country_defaults` to
+say so.
+
+### RMCD's own SST-02 guideline, unreadable twice, from two mirrors
+
+The item numbers this pack states for the *amount of tax* on SST-02 — 12(a)
+to 12(d) and the total, 12 — are this pack's own arithmetic (a percentage of a
+value already declared, stated as `rate` and `rate_of`) and not RMCD's own
+numbering: `Appendix II_Return SST02 Guidelines.pdf`, fetched twice this
+session from `mysst.customs.gov.my` directly and from a professional-firm
+mirror, came back either as a 404 or as an unreadable binary stream, the same
+failure `packs/th/` records for a Royal Gazette PDF. What did read as text was
+a third-party ERP implementation guide describing a `2026`-dated
+configuration against the *earlier*, pre-2024 rate structure (`SST5`, `SST10`,
+`SST6`, `SSTH` — a single named service group rather than a general rate
+band), which is where items 11(a), 11(b), 11(c), 18(a), 18(b)(ii), 18(d) and
+19 in this pack's `tax_report.json` come from, and which item 11(d), the
+general 8 % band this pack added on top of it, could not be checked against.
+`packs/my/README.md` names the same gap at the rule; it is repeated here
+because it is a source-availability problem RMCD's own site presents to an
+automated reader and not a reading choice this pack made.
+
+### MYR and MY
+
+`MYR` is added to `00_currencies.sql` at two decimals. `MY` is added to
+`00_territories.sql` outside the common system of VAT, `vat_prefix` null: a
+Sales Tax or Service Tax registration number RMCD issues carries no ISO
+country prefix of that table's kind.

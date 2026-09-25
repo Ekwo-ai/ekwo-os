@@ -1,0 +1,129 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "MY-SST-02",
+  "name": "SST-02 — Return of Sales Tax and Service Tax",
+  "period": ["bimonth"],
+  "period_default": "bimonth",
+  "valid_from": "2018-09-01",
+  "legal_reference": "Sales Tax Act 2018, section 26 and Service Tax Act 2018, section 26 each fix the taxable period at two months, a registered person furnishing one return to the Director General for both taxes on the one form, SST-02. This pack carries the parts and the item numbers RMCD's own guidelines describe — Part B2, items 11(a) to 11(d), 18(a), 18(b)(ii), 18(d) and 19 — for the value of taxable goods and services by rate, the values relieved as an export, as a manufacturer of nontaxable goods, as a nontaxable service, and as a registered manufacturer's raw material exempted under Schedule C. The item numbers that compute the amount of tax due on each rate band, and the totals that sum them to the figure payable, could not be read from a machine-readable copy of the RMCD guideline this session (see the pack's README, \"Sources\"); this pack states them as the ordinary arithmetic of an ad valorem tax — the rate of the value already declared — and a reviewer with the live SST-02 form open should check the item numbers before relying on them.",
+  "source": "sst02-return-guide",
+  "boxes": [
+    {
+      "box": "11a",
+      "kind": "base",
+      "name": "Value of taxable goods sold, disposed of or first used, at 5 %",
+      "sequence": 10,
+      "legal_reference": "SST-02, Part B2, item 11(a) — the value of taxable goods taxed at the reduced rate the Sales Tax (Rates of Tax) Order 2018, First Schedule, sets for a specified list of goods.",
+      "source": "sst02-return-guide"
+    },
+    {
+      "box": "12a",
+      "kind": "total",
+      "name": "Sales Tax at 5 % on item 11(a)",
+      "sequence": 20,
+      "rate": 5,
+      "rate_of": "11a",
+      "legal_reference": "Sales Tax Act 2018, section 15 — the tax is charged at the rate specified in the Sales Tax (Rates of Tax) Order 2018. The item number the form itself gives this figure could not be confirmed this session; the arithmetic is not in doubt.",
+      "source": "sst-rates-guide"
+    },
+    {
+      "box": "11b",
+      "kind": "base",
+      "name": "Value of taxable goods sold, disposed of or first used, at 10 %",
+      "sequence": 30,
+      "legal_reference": "SST-02, Part B2, item 11(b) — the value of taxable goods taxed at the standard rate, the residual rule of the Sales Tax (Rates of Tax) Order 2018 for a taxable good the First Schedule does not name at 5 % and that is not taxed at a specific rate.",
+      "source": "sst02-return-guide"
+    },
+    {
+      "box": "12b",
+      "kind": "total",
+      "name": "Sales Tax at 10 % on item 11(b)",
+      "sequence": 40,
+      "rate": 10,
+      "rate_of": "11b",
+      "legal_reference": "As item 12(a), at the standard rate.",
+      "source": "sst-rates-guide"
+    },
+    {
+      "box": "11c",
+      "kind": "base",
+      "name": "Value of taxable services at 6 %",
+      "sequence": 50,
+      "legal_reference": "SST-02, Part B2, item 11(c) — the value of a taxable service the Service Tax (Rate of Tax) Order keeps at 6 % rather than raising to the general rate: food and beverage service, telecommunication, parking and logistics, per the Ministry of Finance's announcement of the rate increase and scope expansion effective 1 March 2024 and 1 July 2025.",
+      "source": "mof-sst-2025"
+    },
+    {
+      "box": "12c",
+      "kind": "total",
+      "name": "Service Tax at 6 % on item 11(c)",
+      "sequence": 60,
+      "rate": 6,
+      "rate_of": "11c",
+      "legal_reference": "Service Tax Act 2018, section 26 — the tax is charged at the rate specified in the Service Tax (Rate of Tax) Order.",
+      "source": "sst-rates-guide"
+    },
+    {
+      "box": "11d",
+      "kind": "base",
+      "name": "Value of taxable services at 8 %",
+      "sequence": 70,
+      "legal_reference": "SST-02, Part B2 — the value of a taxable service at the general rate the Ministry of Finance raised from 6 % to 8 % effective 1 March 2024, and extended on 1 July 2025 to leasing and rental, financial services and other newly taxable groups: professional, consultancy, management, IT, employment, credit card and most other services regulation 2018's First Schedule lists. This pack's placement of the general 8 % band on item 11(d) is its own reading and not a confirmed reading of the current form: the secondary source this session could read for the form's item numbers predates the 2024 rate restructuring and shows only a single-group example. A reviewer with the live SST-02 form open should check this item number before relying on it.",
+      "source": "mof-sst-2025"
+    },
+    {
+      "box": "12d",
+      "kind": "total",
+      "name": "Service Tax at 8 % on item 11(d)",
+      "sequence": 80,
+      "rate": 8,
+      "rate_of": "11d",
+      "legal_reference": "As item 12(c), at the general rate.",
+      "source": "sst-rates-guide"
+    },
+    {
+      "box": "12",
+      "kind": "total",
+      "name": "Total Sales Tax and Service Tax due for the period",
+      "sequence": 90,
+      "plus": ["12a", "12b", "12c", "12d"],
+      "legal_reference": "The sum of the tax due at every rate this pack carries. RMCD's own form carries further items this pack does not model — bad debt relief, a deduction for tax already accounted for on a credit note, penalties and a carried-forward credit — which is why this total is this pack's own and not necessarily the form's own printed line; see the pack's README.",
+      "source": "sst02-return-guide"
+    },
+    {
+      "box": "18a",
+      "kind": "base",
+      "name": "Exempted export, Special Area and Designated Area",
+      "sequence": 100,
+      "legal_reference": "SST-02, Part B2, item 18(a). Sales Tax Act 2018, section 41 — where it is proved to the satisfaction of the Director General that taxable goods have been exported, the tax is remitted or, if paid, refunded; goods moved into a Special Area (Labuan, Langkawi, Tioman and a free zone) or a Designated Area receive the same relief under the Act's own territorial rules for those areas.",
+      "source": "sales-tax-act"
+    },
+    {
+      "box": "18b2",
+      "kind": "base",
+      "name": "Schedule B — manufacturer of specific nontaxable goods",
+      "sequence": 110,
+      "legal_reference": "SST-02, Part B2, item 18(b)(ii). Sales Tax Act 2018, section 2 defines \"taxable goods\" as goods other than goods exempted from tax by order of the Minister under section 34, and the Sales Tax (Goods Exempted From Sales Tax) Order 2018, Schedule B, names the goods a scheduled manufacturer produces that carry no Sales Tax at all — basic foodstuffs (rice, sugar, salt, flour and the like) among them. The value is reported here because the goods are outside the definition of taxable goods, and not because a taxable supply was relieved.",
+      "source": "sst-rates-guide"
+    },
+    {
+      "box": "18d",
+      "kind": "base",
+      "name": "Nontaxable services",
+      "sequence": 120,
+      "legal_reference": "SST-02, Part B2, item 18(d) — the value of a service a registered person provides that is not itself a taxable service under the First Schedule of the Service Tax Regulations 2018: outside the schedule's own groups, or supplied by a person below the threshold that group carries.",
+      "source": "sst02-return-guide"
+    },
+    {
+      "box": "19",
+      "kind": "base",
+      "name": "Purchase or importation of raw materials exempted from Sales Tax",
+      "sequence": 130,
+      "legal_reference": "SST-02, Part B2, item 19. Sales Tax (Persons Exempted From Payment of Tax) Order 2018, Schedule C — a registered manufacturer approved by the Director General purchases or imports a raw material, component or packaging material used solely in manufacturing taxable goods free of Sales Tax, against a CJ(P) exemption certificate; this item records what the exemption relieved.",
+      "source": "sst-rates-guide"
+    }
+  ],
+  "deadline": {
+    "rule": "last_day_of_month_after_period",
+    "legal_reference": "Sales Tax Act 2018 and Service Tax Act 2018, each section 26 with the Regulations made under it — a registered person furnishes the return and pays the tax due not later than the last day of the month following the taxable period. For a taxable period of January and February, the return and the payment are due by 31 March."
+  }
+}

@@ -942,3 +942,32 @@ on conflict (code) do update set
   eu_vat_to       = excluded.eu_vat_to,
   vat_prefix      = excluded.vat_prefix,
   legal_reference = excluded.legal_reference;
+
+
+-- ---------------------------------------------------------------------------
+-- The row — Malaysia
+--
+-- Malaysia levies no value added tax at all, in either direction: it charges
+-- a Sales Tax (Sales Tax Act 2018, Act 806) at the point of manufacture or
+-- import of taxable goods, and a Service Tax (Service Tax Act 2018, Act 807)
+-- on taxable services, each a single-stage tax with no mechanism anywhere in
+-- either Act for a registered buyer to deduct the tax a supplier charged
+-- them — the whole difference between this and the common system of VAT, and
+-- the reason both are modelled in `packs/my/` as `kind: sales_tax`,
+-- `recoverable: false`. `vat_prefix` is null: the Sales Tax and Service Tax
+-- registration numbers the Royal Malaysian Customs Department issues carry
+-- no ISO country prefix comparable to an EU VAT number.
+-- ---------------------------------------------------------------------------
+
+insert into territories (code, code_source, name, parent_code, eu_vat_scope, eu_vat_from, eu_vat_to, vat_prefix, legal_reference) values
+  ('MY', 'iso_3166_1', 'Malaysia', null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. Malaysia levies its own Sales Tax under the Sales Tax Act 2018 (Act 806), section 8 (manufacture) and section 9 (importation), and its own Service Tax under the Service Tax Act 2018 (Act 807), section 7, both administered by the Royal Malaysian Customs Department (Jabatan Kastam Diraja Malaysia) and unrelated to the Union''s common system.')
+on conflict (code) do update set
+  code_source     = excluded.code_source,
+  name            = excluded.name,
+  parent_code     = excluded.parent_code,
+  eu_vat_scope    = excluded.eu_vat_scope,
+  eu_vat_from     = excluded.eu_vat_from,
+  eu_vat_to       = excluded.eu_vat_to,
+  vat_prefix      = excluded.vat_prefix,
+  legal_reference = excluded.legal_reference;

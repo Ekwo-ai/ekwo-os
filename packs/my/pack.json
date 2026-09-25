@@ -1,0 +1,195 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "MY",
+  "name": "Malaysia",
+  "version": "0.1.0",
+  "schema_min": "20260923110000",
+  "seed_sequence": 91,
+  "released_at": "2026-09-25",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "sales-tax-act",
+        "title": "Sales Tax Act 2018 (Act 806) — section 8 charges the tax on a taxable person manufacturing taxable goods in Malaysia, section 9 on the importation of taxable goods, section 13 the registration threshold, section 15 the rate of tax, and section 41 the exemption of goods on which it is proved to the satisfaction of the Director General that the goods have been exported",
+        "publisher": "Attorney General's Chambers of Malaysia — Federal Legislation Portal",
+        "url": "https://lom.agc.gov.my/ilims/upload/portal/akta/LOM/EN/Act%20806%20-%20Reprint%20Online%20(1-10-2020).pdf",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "service-tax-act",
+        "title": "Service Tax Act 2018 (Act 807) — section 7 charges the tax on any taxable person who provides taxable services in Malaysia, section 13 the registration threshold, section 26 the rate of tax, and section 26A the remittance of tax by a person in Malaysia who imports a taxable service",
+        "publisher": "Attorney General's Chambers of Malaysia — Federal Legislation Portal",
+        "url": "https://lom.agc.gov.my/ilims/upload/portal/akta/outputaktap/2590513_BI/Act%20807%20(Online%202024).pdf",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "sst-rates-guide",
+        "title": "Guide on Sales Tax Rates for Various Goods, and the General Guide on Sales Tax — the First Schedule of the Sales Tax (Rates of Tax) Order 2018 taxes a specified list of goods at 5 %, the Second Schedule and the residual rule tax everything else taxable at 10 %, and a specific rate applies to petroleum",
+        "publisher": "Royal Malaysian Customs Department (Jabatan Kastam Diraja Malaysia) — MySST",
+        "url": "https://mysst.customs.gov.my/assets/document/General%20Guides/V4.0%20Guide%20On%20Sales%20Tax%20Rates%20%20for%20Various%20Goods_07.09.pdf",
+        "consulted_on": "2026-09-25",
+        "kind": "form"
+      },
+      {
+        "key": "mof-sst-2025",
+        "title": "Targeted Revision of Sales Tax Rate and Expansion of Service Tax Scope, effective 1 July 2025 — the Sales Tax (Rates of Tax) (Amendment) Order 2025 narrows the 0 % rate to essential goods and taxes selected non-essential and discretionary goods at 5 % or 10 %; the Service Tax scope is expanded to leasing and rental, construction, financial services, private healthcare and education, each with its own rate and registration threshold, with targeted exemptions",
+        "publisher": "Ministry of Finance Malaysia (Kementerian Kewangan Malaysia)",
+        "url": "https://www.mof.gov.my/portal/en/news/press-release/targeted-revision-of-sales-tax-rate-and-expansion-of-service-tax-scope-effective-1-july-2025",
+        "consulted_on": "2026-09-25",
+        "kind": "guidance"
+      },
+      {
+        "key": "sst02-return-guide",
+        "title": "Guidelines: SST-02 Return — the taxable period, the fields of Part B2 of the form (11a and 11b the value of taxable goods at 5 % and 10 %, 11c and 11d the value of taxable services, 13 and 13d credit-note and bad-debt adjustments, 18a to 18e and 19 to 21 the exempted values), and the filing and payment deadline",
+        "publisher": "Royal Malaysian Customs Department (Jabatan Kastam Diraja Malaysia) — MySST",
+        "url": "https://mysst.customs.gov.my/assets/document/Specific%20Guides/Appendix%20II_Return%20SST02%20Guidelines.pdf",
+        "consulted_on": "2026-09-25",
+        "kind": "form"
+      },
+      {
+        "key": "mysst-portal",
+        "title": "MySST — registration, the SST-02 and SST-02A returns, and payment",
+        "publisher": "Royal Malaysian Customs Department (Jabatan Kastam Diraja Malaysia)",
+        "url": "https://mysst.customs.gov.my/",
+        "consulted_on": "2026-09-25",
+        "kind": "portal"
+      },
+      {
+        "key": "companies-act-my",
+        "title": "Companies Act 2016 (Act 777) — section 245 requires a company's financial statements to comply with approved accounting standards, and section 248 the accounting period",
+        "publisher": "Companies Commission of Malaysia (Suruhanjaya Syarikat Malaysia)",
+        "url": "https://www.ssm.com.my/Pages/Legal_Framework/Document/Act%20777%20Reprint.pdf",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "masb-standards",
+        "title": "MASB Approved Accounting Standards — the Malaysian Financial Reporting Standards (MFRS), which converge with IFRS, and the Malaysian Private Entities Reporting Standard (MPERS), which converges with the IFRS for SMEs Accounting Standard",
+        "publisher": "Malaysian Accounting Standards Board (MASB)",
+        "url": "https://www.masb.org.my/pages.php?id=20",
+        "consulted_on": "2026-09-25",
+        "kind": "guidance"
+      },
+      {
+        "key": "ita-1967-82c",
+        "title": "Income Tax Act 1967 (Act 53), section 82C — the duty to issue an electronic invoice for a transaction in respect of goods sold or services performed, phased in by the Minister's order; the Income Tax (Issuance of Electronic Invoice) Rules 2024 [P.U. (A) 265/2024], in force 1 October 2024, prescribe the particulars and the manner of issuance",
+        "publisher": "Attorney General's Chambers of Malaysia, and Inland Revenue Board of Malaysia (Lembaga Hasil Dalam Negeri Malaysia, LHDNM)",
+        "url": "https://www.hasil.gov.my/en/e-invoice/",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "einvoice-guideline",
+        "title": "e-Invoice Guideline — the phased mandatory implementation timeline by annual turnover or revenue (1 August 2024 above RM100 million, 1 January 2025 above RM25 million, 1 July 2025 above RM5 million, 1 January 2026 above RM1 million), the exemption threshold since raised in stages, and the MyInvois validation flow: a taxpayer submits the invoice to LHDNM for validation, which returns a Unique Identifier Number (UIN) and a QR code before the document is shared with the buyer",
+        "publisher": "Inland Revenue Board of Malaysia (Lembaga Hasil Dalam Negeri Malaysia, LHDNM)",
+        "url": "https://www.hasil.gov.my/media/fzagbaj2/irbm-e-invoice-guideline.pdf",
+        "consulted_on": "2026-09-25",
+        "kind": "guidance"
+      },
+      {
+        "key": "einvoice-exemption",
+        "title": "e-Invoice General Guideline, version 4.8 (30 August 2026), section 1.6.1(e) — a taxpayer with an annual turnover or revenue below RM3,000,000, subject to a related-party carve-out, is exempted from issuing an e-Invoice, including a self-billed e-Invoice, at the date this pack was released",
+        "publisher": "Inland Revenue Board of Malaysia (Lembaga Hasil Dalam Negeri Malaysia, LHDNM)",
+        "url": "https://www.hasil.gov.my/wp-content/uploads/IRBM-e-Invoice-Guideline.pdf",
+        "consulted_on": "2026-09-25",
+        "kind": "guidance"
+      },
+      {
+        "key": "pint-my",
+        "title": "Peppol International (PINT) model for Billing, Malaysia — PINT MY, the Peppol-network data format aligned with LHDNM's MyInvois particulars, for a taxpayer that chooses to transmit through a Peppol access point rather than the MyInvois Portal or API directly",
+        "publisher": "OpenPeppol, with the Malaysia Digital Economy Corporation (MDEC) as the Malaysia Peppol Authority",
+        "url": "https://docs.peppol.eu/poac/my/pint-my-sb/bis/",
+        "consulted_on": "2026-09-25",
+        "kind": "standard"
+      },
+      {
+        "key": "peppol-scheme",
+        "title": "Peppol Code Lists — participant identifier schemes: 0230, the Malaysia National ID Registration Number (SSM registration number) scheme",
+        "publisher": "OpenPeppol",
+        "url": "https://docs.peppol.eu/edelivery/codelists/",
+        "consulted_on": "2026-09-25",
+        "kind": "standard"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "MYR",
+    "language": "ms",
+    "rounding_method": "half_up",
+    "closing_style": "retained_earnings",
+    "fiscal_year_default": "calendar",
+    "roles": {
+      "receivable": "1100",
+      "payable": "2000",
+      "suspense": "2990",
+      "rounding": "6990",
+      "retained_earnings": "3200",
+      "sales": "4000",
+      "purchase": "5000",
+      "bank": "1010",
+      "cash": "1000",
+      "fx_gain": "4700",
+      "fx_loss": "6950",
+      "asset_disposal_gain": "4750",
+      "asset_disposal_loss": "6960",
+      "tax_payable": "2110",
+      "tax_receivable": "1155"
+    },
+    "journal_roles": {
+      "sales": "SAL",
+      "purchase": "PUR",
+      "miscellaneous": "GEN",
+      "opening": "OPN"
+    }
+  },
+  "languages": [],
+  "journals": [
+    { "code": "SAL", "type": "sales", "name": "Sales journal", "sequence": 10 },
+    { "code": "PUR", "type": "purchase", "name": "Purchases journal", "sequence": 20 },
+    { "code": "BNK", "type": "bank", "name": "Bank", "sequence": 30 },
+    { "code": "CSH", "type": "cash", "name": "Petty cash", "sequence": 40 },
+    { "code": "GEN", "type": "general", "name": "General journal", "sequence": 50 },
+    { "code": "OPN", "type": "opening", "name": "Opening balances", "sequence": 60 }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Malaysia reference chart of accounts",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": ["MY-BS", "MY-IS"],
+      "legal_reference": "Malaysia prescribes no chart of accounts. Companies Act 2016, section 245 requires a company to keep accounting and other records that sufficiently explain its transactions and enable true and fair financial statements to comply with the approved accounting standards to be prepared; the standards themselves — the Malaysian Financial Reporting Standards (MFRS) and the Malaysian Private Entities Reporting Standard (MPERS) — are issued by the Malaysian Accounting Standards Board and prescribe the content of a set of financial statements, never a ledger. This chart is original: four digits by class in the numbering the sibling Asian packs (Singapore, Thailand) use — 1 assets, 2 liabilities, 3 equity, 4 revenue, 5 cost of sales, 6 operating expenses, 7 finance items, 8 income tax — with the accounts a Malaysian company's books actually hold: Sales Tax and Service Tax payable, kept apart from each other and from the settlement account a filed SST-02 return clears to, EPF, SOCSO and EIS contributions and the HRD Corp levy. Its statements, `MY-BS` and `MY-IS` in `statements.json`, are original: lines grouped by the code ranges this chart's own numbering gives its accounts, current and non-current apart, without transcribing MFRS's or MPERS's own line items or their paragraph numbering — neither of which this session could read as a primary, openly served text (see the pack's README, \"Sources\").",
+      "source": "companies-act-my"
+    }
+  ],
+  "documents": {
+    "numbering": "sequential",
+    "number_format": "{CODE}-{YYYY}-{NNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "earliest_of_delivery_or_payment",
+    "references": {
+      "numbering": {
+        "legal_reference": "Sales Tax Regulations 2018 and Service Tax Regulations 2018 prescribe the particulars an invoice must state, a serial number among them; neither regulation's own numbered provision could be read as a primary text this session (RMCD's guides describe the particulars in prose rather than quoting the regulation), so `sequential` records that an identifying number is required and not, in so many words, that the series may carry no gap. The pattern in number_format is one a business may choose.",
+        "source": "sst-rates-guide"
+      },
+      "tax_point": {
+        "legal_reference": "Sales Tax Act 2018, section 8 charges the tax on a taxable person who sells, disposes of otherwise than by sale, or first uses, taxable goods manufactured by them in Malaysia — a rule closer to the delivery or removal of the goods than to the invoice. Service Tax Act 2018, section 7 read with the general guide on Service Tax: the tax is generally due when payment is received for the taxable service, or, failing payment within twelve months of the invoice, on the day after that period — closer to payment than to delivery. `documents.tax_point` is one value for the whole country and neither rule alone states it; `earliest_of_delivery_or_payment` is the closest of the five values to both halves, and is exact for neither. The approximation is recorded in docs/international.md.",
+        "source": "sales-tax-act"
+      }
+    }
+  },
+  "einvoicing": {
+    "profile": "pint-my",
+    "mandatory_from": "2024-08-01",
+    "obligation": "mandatory",
+    "party_scheme": "0230",
+    "vat_scheme": null,
+    "legal_reference": "Income Tax Act 1967, section 82C imposes a duty to issue an electronic invoice for a transaction in respect of goods sold or services performed, phased in by the Minister; the Income Tax (Issuance of Electronic Invoice) Rules 2024 [P.U. (A) 265/2024] set the particulars, in force 1 October 2024. LHDNM phased the duty by annual turnover or revenue: 1 August 2024 above RM100 million, 1 January 2025 above RM25 million, 1 July 2025 above RM5 million and 1 January 2026 above RM1 million: `mandatory_from` states the first of these, the day the duty first bound any taxpayer. The exemption threshold below which a taxpayer need not comply has since been raised in stages — to RM1,000,000 in December 2025 and to RM3,000,000 by the e-Invoice General Guideline, version 4.8 of 30 August 2026 — which this pack's `released_at` falls after, so a large share of Malaysian companies are, at that date, not yet bound by a duty the statute still imposes on the rest; docs/international.md records that the format has no field for a turnover-dependent exemption threshold that moves by administrative guideline rather than by a dated rule. The profile is PINT MY, built on UBL 2.1 in the same shape as the MyInvois JSON/XML particulars; a taxpayer submitting through a Peppol access point rather than the MyInvois Portal or API directly still submits to LHDNM's MyInvois system for validation, which is a **pre-issuance clearance**: the invoice is not legally the taxpayer's until LHDNM returns a Unique Identifier Number and a QR code, ordinarily before it reaches the buyer. Ekwo has no document status for a step that happens between posting and delivery and waits on an external answer; docs/international.md records that gap under \"From Malaysia\", and this pack does not attempt to model the UIN, the QR code or the 72-hour rejection window. The party scheme, 0230, is the SSM registration number, the identifier PINT MY and the MyInvois particulars both use; `vat_scheme` is empty, as it is for every pack of a country that levies no value added tax: Malaysia's Tax Identification Number (Nombor Pengenalan Cukai, TIN) is a LHDNM identifier with no ISO 6523 scheme of its own found this session.",
+    "source": "ita-1967-82c"
+  }
+}

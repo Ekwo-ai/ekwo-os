@@ -1,0 +1,351 @@
+[
+  {
+    "code": "MY-S-RED",
+    "name": "Sale of taxable goods, Sales Tax at 5 %",
+    "description": "Goods the First Schedule of the Sales Tax (Rates of Tax) Order 2018 taxes at the reduced rate",
+    "kind": "sales_tax",
+    "rate": 5,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2018-09-01",
+    "recoverable": false,
+    "legal_reference": "Sales Tax Act 2018, section 8 charges the tax on a registered manufacturer who sells, disposes of otherwise than by sale, or first uses, taxable goods manufactured in Malaysia; section 15 sets the rate at that specified by order. The Sales Tax (Rates of Tax) Order 2018, First Schedule, lists the goods taxed at 5 % — building materials, timber, certain foodstuffs and other goods this session could not enumerate against a machine-readable copy of the Order itself (see the pack's README). There is no mechanism anywhere in the Act for a registered buyer to deduct this tax against a tax of their own: `recoverable` is false on every Sales Tax and Service Tax code of this pack, the whole difference between Malaysia's Sales Tax and Service Tax and a value added tax.",
+    "source": "sst-rates-guide",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "11a" },
+        { "type": "tax", "account": "2100" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "11a", "box_factor": -100 },
+        { "type": "tax", "account": "2100" }
+      ]
+    },
+    "sequence": 10
+  },
+  {
+    "code": "MY-S-STD",
+    "name": "Sale of taxable goods, Sales Tax at 10 %",
+    "description": "The residual rate: a taxable good the First Schedule does not name at 5 % and that is not taxed at a specific rate",
+    "kind": "sales_tax",
+    "rate": 10,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2018-09-01",
+    "recoverable": false,
+    "legal_reference": "Sales Tax Act 2018, sections 8 and 15, as for MY-S-RED. The Sales Tax (Rates of Tax) Order 2018, Second Schedule and its residual rule, tax at 10 % every taxable good the First Schedule does not name at 5 % and that carries no specific rate of its own (petroleum products among the latter, and not carried by this pack). This is the ordinary rate of Sales Tax.",
+    "source": "sst-rates-guide",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "11b" },
+        { "type": "tax", "account": "2100" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "11b", "box_factor": -100 },
+        { "type": "tax", "account": "2100" }
+      ]
+    },
+    "sequence": 20
+  },
+  {
+    "code": "MY-SVT-FB",
+    "name": "Taxable service, Service Tax at 6 %",
+    "description": "Food and beverage service, telecommunication, parking and logistics — the groups the Ministry of Finance kept at 6 % when the general rate rose",
+    "kind": "sales_tax",
+    "rate": 6,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2018-09-01",
+    "recoverable": false,
+    "legal_reference": "Service Tax Act 2018, section 7 charges the tax on a taxable person who provides a taxable service in Malaysia; section 26 sets the rate at that specified by order. Food and beverage service (First Schedule, Group B), telecommunication (Group I), parking and logistics kept the original 6 % rate when the Ministry of Finance raised the general Service Tax rate to 8 % effective 1 March 2024 and again expanded the scope of taxable services effective 1 July 2025.",
+    "source": "mof-sst-2025",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "11c" },
+        { "type": "tax", "account": "2101" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "11c", "box_factor": -100 },
+        { "type": "tax", "account": "2101" }
+      ]
+    },
+    "sequence": 30
+  },
+  {
+    "code": "MY-SVT-STD",
+    "name": "Taxable service, Service Tax at 8 %",
+    "description": "The general rate since 1 March 2024: professional, consultancy, management, IT, employment and most other taxable services, and — since 1 July 2025 — leasing and rental and financial services",
+    "kind": "sales_tax",
+    "rate": 8,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2024-03-01",
+    "recoverable": false,
+    "legal_reference": "Service Tax Act 2018, sections 7 and 26, as for MY-SVT-FB. The Ministry of Finance's press release of 1 July 2025 (\"Targeted Revision of Sales Tax Rate and Expansion of Service Tax Scope\") records the general rate rising from 6 % to 8 % on 1 March 2024 and the scope of taxable services expanding on 1 July 2025 to leasing and rental, construction, financial services, private healthcare and education, each with its own rate and registration threshold this pack does not separately carry — a single representative 8 % code stands for the general rate, and the README names the gap.",
+    "source": "mof-sst-2025",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "11d" },
+        { "type": "tax", "account": "2101" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "11d", "box_factor": -100 },
+        { "type": "tax", "account": "2101" }
+      ]
+    },
+    "sequence": 40
+  },
+  {
+    "code": "MY-S-ZERO",
+    "name": "Export of taxable goods",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2018-09-01",
+    "conditions": ["transport_evidence"],
+    "recoverable": false,
+    "legal_reference": "Sales Tax Act 2018, section 41 — where it is proved to the satisfaction of the Director General that taxable goods manufactured in Malaysia have been exported, the tax is not charged, or, if it was paid, is drawn back. What proves the export — the shipping and customs documents — is a fact of the movement of the goods that the ledger does not hold, which is why this code carries `conditions` rather than a rule the core evaluates.",
+    "source": "sales-tax-act",
+    "vat_category": "G",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "18a" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "18a", "box_factor": -100 }
+      ]
+    },
+    "sequence": 50
+  },
+  {
+    "code": "MY-S-EXEMPT",
+    "name": "Sale of goods that are not taxable goods (Schedule B)",
+    "description": "Basic foodstuffs and other goods a scheduled manufacturer produces, outside the definition of taxable goods entirely",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "not_subject",
+    "valid_from": "2018-09-01",
+    "conditions": ["supply_nature"],
+    "recoverable": false,
+    "legal_reference": "Sales Tax Act 2018, section 2 defines \"taxable goods\" as goods of a class or kind not for the time being exempted from tax by order of the Minister under section 34; the Sales Tax (Goods Exempted From Sales Tax) Order 2018, Schedule B, names the goods a scheduled manufacturer produces that carry no Sales Tax at all, basic foodstuffs among them (rice, sugar, salt and the like, by RMCD's own guide — the Order's own First Schedule numbering could not be read from a machine-readable copy this session). What makes a good fall inside Schedule B is a fact about the good, which the ledger does not hold on its own, hence `conditions`. The line is outside the scope of the tax rather than a taxable supply relieved of it, which is why the treatment is `not_subject` and not `exempt`.",
+    "source": "sst-rates-guide",
+    "vat_category": "O",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "18b2" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "18b2", "box_factor": -100 }
+      ]
+    },
+    "sequence": 60
+  },
+  {
+    "code": "MY-SVT-EXEMPT",
+    "name": "Service that is not a taxable service",
+    "description": "A service outside the First Schedule of the Service Tax Regulations 2018, or supplied by a person below the group's own registration threshold",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "not_subject",
+    "valid_from": "2018-09-01",
+    "conditions": ["supply_nature"],
+    "recoverable": false,
+    "legal_reference": "Service Tax Act 2018, section 2 defines \"taxable service\" as a service of a description in the First Schedule of the Service Tax Regulations 2018, provided by a taxable person; a service the Schedule does not describe is outside the tax entirely, and so is one a person below that group's own registration threshold provides — the general RM500,000, or RM1,000,000 or RM1,500,000 for the groups the Ministry of Finance's 2025 expansion names, each in the past twelve months.",
+    "source": "service-tax-act",
+    "vat_category": "O",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "18d" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "18d", "box_factor": -100 }
+      ]
+    },
+    "sequence": 70
+  },
+  {
+    "code": "MY-P-RED",
+    "name": "Purchase of goods bearing Sales Tax at 5 %",
+    "description": "The buyer's side: the tax is a cost and never a claim on RMCD",
+    "rate": 5,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2018-09-01",
+    "recoverable": false,
+    "legal_reference": "Sales Tax Act 2018, section 8 imposes the tax on the registered manufacturer, who adds it to the price. The Act contains no mechanism for the buyer to credit it against a tax of their own — the whole difference between a sales tax and a value added tax — so `recoverable` is false and the tax is booked by a `tax_on_base` posting at the full amount, landing it on the accounts of the lines it taxes: a machine bought for 10,000.00 ringgit is capitalised at 10,500.00. Neither the base nor the tax reaches a box of SST-02, which reports a registered person's own sales and not what they paid on a purchase.",
+    "source": "sales-tax-act",
+    "postings": {
+      "invoice": [
+        { "type": "base" },
+        { "type": "tax_on_base" }
+      ],
+      "credit_note": [
+        { "type": "base" },
+        { "type": "tax_on_base" }
+      ]
+    },
+    "sequence": 80
+  },
+  {
+    "code": "MY-P-STD",
+    "name": "Purchase of goods bearing Sales Tax at 10 %",
+    "rate": 10,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2018-09-01",
+    "recoverable": false,
+    "legal_reference": "As MY-P-RED, at the standard rate.",
+    "source": "sales-tax-act",
+    "postings": {
+      "invoice": [
+        { "type": "base" },
+        { "type": "tax_on_base" }
+      ],
+      "credit_note": [
+        { "type": "base" },
+        { "type": "tax_on_base" }
+      ]
+    },
+    "sequence": 90
+  },
+  {
+    "code": "MY-P-IMPORT",
+    "name": "Importation of taxable goods, Sales Tax at 10 %",
+    "description": "Charged by the Royal Malaysian Customs Department at the point of import, on the customs declaration, and not through SST-02",
+    "rate": 10,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2018-09-01",
+    "recoverable": false,
+    "legal_reference": "Sales Tax Act 2018, section 9 charges the tax on the importation of taxable goods into Malaysia, collected by the Royal Malaysian Customs Department as if it were a customs duty, at the same rates as a domestic sale. It is assessed on the customs declaration at the point of import and is never a line of SST-02, which is a registered person's own periodic return of what they sold; `recoverable` is false for the same reason as every other Sales Tax code of this pack.",
+    "source": "sales-tax-act",
+    "postings": {
+      "invoice": [
+        { "type": "base" },
+        { "type": "tax_on_base" }
+      ],
+      "credit_note": [
+        { "type": "base" },
+        { "type": "tax_on_base" }
+      ]
+    },
+    "sequence": 100
+  },
+  {
+    "code": "MY-P-RAWMAT-EXEMPT",
+    "name": "Purchase or importation of raw material exempted from Sales Tax (Schedule C)",
+    "description": "A registered manufacturer, approved by the Director General, buys or imports a raw material, component or packaging material used solely to manufacture taxable goods, free of Sales Tax",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "exempt",
+    "valid_from": "2018-09-01",
+    "conditions": ["buyer_status"],
+    "recoverable": false,
+    "legal_reference": "Sales Tax (Persons Exempted From Payment of Tax) Order 2018, Schedule C — a manufacturer of taxable goods approved by the Director General may purchase or import a raw material, component or packaging material used solely in manufacturing taxable goods without paying Sales Tax, against a CJ(P) exemption certificate. Whether the buyer holds that approval is a fact `conditions` records and the ledger does not: `buyer_status`, a quality of the buyer the Order names. This is the relief a Sales Tax registered manufacturer uses instead of an input tax credit, which the Act has none of.",
+    "source": "sst-rates-guide",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "19" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "19", "box_factor": -100 }
+      ]
+    },
+    "sequence": 110
+  },
+  {
+    "code": "MY-P-SVT-FB",
+    "name": "Purchase of a taxable service bearing Service Tax at 6 %",
+    "rate": 6,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2018-09-01",
+    "recoverable": false,
+    "legal_reference": "Service Tax Act 2018, section 7 imposes the tax on the taxable person providing the service, who adds it to the price; there is no credit for a registered buyer, so `recoverable` is false and the tax lands on the account of the line it taxes by a `tax_on_base` posting, as MY-P-RED does for Sales Tax. Neither figure reaches a box of SST-02.",
+    "source": "service-tax-act",
+    "postings": {
+      "invoice": [
+        { "type": "base" },
+        { "type": "tax_on_base" }
+      ],
+      "credit_note": [
+        { "type": "base" },
+        { "type": "tax_on_base" }
+      ]
+    },
+    "sequence": 120
+  },
+  {
+    "code": "MY-P-SVT-STD",
+    "name": "Purchase of a taxable service bearing Service Tax at 8 %",
+    "rate": 8,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2024-03-01",
+    "recoverable": false,
+    "legal_reference": "As MY-P-SVT-FB, at the general rate the Ministry of Finance raised to 8 % effective 1 March 2024.",
+    "source": "mof-sst-2025",
+    "postings": {
+      "invoice": [
+        { "type": "base" },
+        { "type": "tax_on_base" }
+      ],
+      "credit_note": [
+        { "type": "base" },
+        { "type": "tax_on_base" }
+      ]
+    },
+    "sequence": 130
+  },
+  {
+    "code": "MY-P-SVT-IMPORT",
+    "name": "Imported taxable service, self-assessed Service Tax at 8 %",
+    "description": "A service provided by a person outside Malaysia and used in Malaysia: the recipient accounts for the tax themselves, on form SST-02A, which this pack does not carry",
+    "rate": 8,
+    "scope": "purchase",
+    "treatment": "self_assessed",
+    "valid_from": "2019-01-01",
+    "conditions": ["buyer_status"],
+    "recoverable": false,
+    "legal_reference": "Service Tax Act 2018, section 26A — a person in Malaysia, whether or not registered for Service Tax, who acquires an imported taxable service, is treated as providing that service themselves and accounts for the tax on it, due at the time of payment or receipt of invoice, whichever earlier. This session could not independently verify 1 January 2019 as the commencement date of section 26A against the Gazette order that brought it into force, only against secondary accounts; a reviewer should check it. The declaration is form SST-02A, quite apart from SST-02, which this pack does not carry (`docs/packs.md` records that a pack carries one form); the postings here book the cost and the liability and reach no box. `buyer_status` records that the duty turns on the recipient being in Malaysia, which `conditions` states and the core does not evaluate. Nothing is recovered at the other end: there is no exempt supply behind this, no supplier who was relieved of anything, and the `tax_on_base` posting puts the whole of the tax on the account of the line it taxes, exactly as a domestic purchase does.",
+    "source": "service-tax-act",
+    "postings": {
+      "invoice": [
+        { "type": "base" },
+        { "type": "tax_on_base" },
+        { "type": "tax", "factor": -100, "account": "2102" }
+      ],
+      "credit_note": [
+        { "type": "base" },
+        { "type": "tax_on_base" },
+        { "type": "tax", "factor": -100, "account": "2102" }
+      ]
+    },
+    "sequence": 140
+  },
+  {
+    "code": "MY-P-EXEMPT",
+    "name": "Purchase not subject to Sales Tax or Service Tax",
+    "description": "The ordinary untaxed purchase: a service outside the First Schedule of the Service Tax Regulations 2018, or a good that is not a taxable good",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "not_subject",
+    "valid_from": "2018-09-01",
+    "recoverable": false,
+    "legal_reference": "Sales Tax Act 2018, section 2 and Service Tax Act 2018, section 2 — neither tax reaches a good that is not a taxable good or a service the First Schedule of the Service Tax Regulations 2018 does not describe: professional rent, most financial services before 1 July 2025, and a great many ordinary running costs of a Malaysian business. This code reaches no box of SST-02, which has no input side at all.",
+    "source": "sales-tax-act",
+    "postings": {
+      "invoice": [
+        { "type": "base" }
+      ],
+      "credit_note": [
+        { "type": "base" }
+      ]
+    },
+    "sequence": 150
+  }
+]

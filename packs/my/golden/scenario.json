@@ -1,0 +1,262 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "A year of a Sales Tax and Service Tax registered Malaysian trading and services company, filing SST-02 bimonthly, for the financial year 2026",
+  "chart": "default",
+  "fiscal_year": {
+    "name": "Financial year ended 31 December 2026",
+    "start": "2026-01-01",
+    "end": "2026-12-31"
+  },
+  "periods": [
+    { "code": "2026-P1", "from": "2026-01-01", "to": "2026-02-28" },
+    { "code": "2026-P2", "from": "2026-03-01", "to": "2026-04-30" }
+  ],
+  "statements": ["MY-BS", "MY-IS"],
+  "contacts": [
+    { "ref": "cust-kl", "name": "Menara Bintang Trading Sdn. Bhd.", "type": "customer", "country": "MY" },
+    { "ref": "cust-svc", "name": "Lembah Consulting Sdn. Bhd.", "type": "customer", "country": "MY" },
+    { "ref": "cust-fnb", "name": "Kedai Makan Selera Kita Sdn. Bhd.", "type": "customer", "country": "MY" },
+    { "ref": "cust-export", "name": "Marina Bay Furnishings Pte. Ltd.", "type": "customer", "country": "SG" },
+    { "ref": "supp-goods", "name": "Perindustrian Besi Jaya Sdn. Bhd.", "type": "supplier", "country": "MY" },
+    { "ref": "supp-import", "name": "Guangzhou Precision Components Co. Ltd.", "type": "supplier", "country": "CN" },
+    { "ref": "supp-rawmat", "name": "Kimia Polimer Sdn. Bhd.", "type": "supplier", "country": "MY" },
+    { "ref": "supp-svc", "name": "Tetuan Rahim & Rakan-Rakan", "type": "supplier", "country": "MY" },
+    { "ref": "supp-fnb", "name": "Katering Nikmat Sdn. Bhd.", "type": "supplier", "country": "MY" },
+    { "ref": "supp-foreign", "name": "Raffles Cloud Services Pte. Ltd.", "type": "supplier", "country": "SG" },
+    { "ref": "supp-charity", "name": "Yayasan Amal Harapan", "type": "supplier", "country": "MY" }
+  ],
+  "documents": [
+    {
+      "ref": "V1",
+      "type": "sale_invoice",
+      "contact": "cust-kl",
+      "date": "2026-01-15",
+      "why": "A domestic sale of taxable goods at the standard 10 % Sales Tax rate: items 11(b) and 12(b) take 2,000.00 and 200.00.",
+      "lines": [
+        { "name": "Steel fittings", "quantity": 20, "unit_price": 100, "tax": "MY-S-STD", "account": "4000" }
+      ]
+    },
+    {
+      "ref": "V2",
+      "type": "sale_invoice",
+      "contact": "cust-kl",
+      "date": "2026-01-20",
+      "why": "A sale of goods the First Schedule of the Sales Tax (Rates of Tax) Order 2018 taxes at the reduced 5 % rate: items 11(a) and 12(a) take 1,000.00 and 50.00.",
+      "lines": [
+        { "name": "Portland cement, bagged", "quantity": 50, "unit_price": 20, "tax": "MY-S-RED", "account": "4000" }
+      ]
+    },
+    {
+      "ref": "V3",
+      "type": "sale_invoice",
+      "contact": "cust-svc",
+      "date": "2026-01-22",
+      "why": "A taxable service at the general 8 % Service Tax rate in force since 1 March 2024: items 11(d) and 12(d) take 5,000.00 and 400.00.",
+      "lines": [
+        { "name": "Management consultancy services", "quantity": 1, "unit_price": 5000, "tax": "MY-SVT-STD", "account": "4010" }
+      ]
+    },
+    {
+      "ref": "V4",
+      "type": "sale_invoice",
+      "contact": "cust-fnb",
+      "date": "2026-01-25",
+      "why": "Food and beverage service, one of the groups the Ministry of Finance kept at 6 % when the general rate rose on 1 March 2024: items 11(c) and 12(c) take 3,000.00 and 180.00.",
+      "lines": [
+        { "name": "Catering for a corporate event", "quantity": 1, "unit_price": 3000, "tax": "MY-SVT-FB", "account": "4010" }
+      ]
+    },
+    {
+      "ref": "P1",
+      "type": "purchase_invoice",
+      "contact": "supp-goods",
+      "date": "2026-01-18",
+      "why": "A purchase of goods bearing Sales Tax at 10 %: the tax is a cost, capitalised with the goods, since the Act gives a registered buyer no input tax credit.",
+      "lines": [
+        { "name": "Steel sheet stock", "quantity": 30, "unit_price": 100, "tax": "MY-P-STD", "account": "5000" }
+      ]
+    },
+    {
+      "ref": "P2",
+      "type": "purchase_invoice",
+      "contact": "supp-goods",
+      "date": "2026-01-19",
+      "why": "A purchase of goods bearing Sales Tax at 5 %, the reduced rate: again a cost, and again no box of SST-02, which reports a registered person's own sales and not what they paid.",
+      "lines": [
+        { "name": "Portland cement, bagged", "quantity": 100, "unit_price": 10, "tax": "MY-P-RED", "account": "5000" }
+      ]
+    },
+    {
+      "ref": "P3",
+      "type": "purchase_invoice",
+      "contact": "supp-import",
+      "date": "2026-01-21",
+      "why": "Sales Tax charged by the Royal Malaysian Customs Department at the point of import: capitalised with the goods, on the customs declaration and not on SST-02.",
+      "lines": [
+        { "name": "Imported machinery component", "quantity": 1, "unit_price": 5000, "tax": "MY-P-IMPORT", "account": "1620" }
+      ]
+    },
+    {
+      "ref": "P4",
+      "type": "purchase_invoice",
+      "contact": "supp-rawmat",
+      "date": "2026-01-23",
+      "why": "A registered manufacturer's raw material bought free of Sales Tax under Schedule C of the Persons Exempted From Payment of Tax Order 2018: item 19, no tax paid.",
+      "lines": [
+        { "name": "PVC resin, raw material for manufacturing", "quantity": 200, "unit_price": 15, "tax": "MY-P-RAWMAT-EXEMPT", "account": "1210" }
+      ]
+    },
+    {
+      "ref": "P5",
+      "type": "purchase_invoice",
+      "contact": "supp-svc",
+      "date": "2026-01-26",
+      "why": "Professional fees bearing Service Tax at the general 8 % rate: a cost, since there is no input tax credit for Service Tax either.",
+      "lines": [
+        { "name": "Legal advisory fees", "quantity": 1, "unit_price": 2000, "tax": "MY-P-SVT-STD", "account": "6420" }
+      ]
+    },
+    {
+      "ref": "P6",
+      "type": "purchase_invoice",
+      "contact": "supp-fnb",
+      "date": "2026-01-27",
+      "why": "A catering purchase bearing Service Tax at the retained 6 % rate: a cost, landing on staff welfare.",
+      "lines": [
+        { "name": "Working lunch catering", "quantity": 1, "unit_price": 500, "tax": "MY-P-SVT-FB", "account": "6060" }
+      ]
+    },
+    {
+      "ref": "P7",
+      "type": "purchase_invoice",
+      "contact": "supp-foreign",
+      "date": "2026-01-29",
+      "why": "A cloud software subscription from a Singapore provider: an imported taxable service under section 26A, self-assessed at 8 % and owed to RMCD on form SST-02A, not to the supplier and not through SST-02.",
+      "lines": [
+        { "name": "Cloud software subscription", "quantity": 1, "unit_price": 1000, "tax": "MY-P-SVT-IMPORT", "account": "6420" }
+      ]
+    },
+    {
+      "ref": "V1CN",
+      "type": "sale_credit_note",
+      "contact": "cust-kl",
+      "date": "2026-02-10",
+      "why": "A credit note against V1 for five units returned faulty: items 11(b) and 12(b) go down by 500.00 and 50.00, proving the credit-note direction of the standard-rate code.",
+      "lines": [
+        { "name": "Steel fittings, returned", "quantity": 5, "unit_price": 100, "tax": "MY-S-STD", "account": "4000" }
+      ]
+    },
+    {
+      "ref": "V5",
+      "type": "sale_invoice",
+      "contact": "cust-export",
+      "date": "2026-03-05",
+      "why": "An export of taxable goods under section 41 of the Sales Tax Act 2018: item 18(a) alone, no Sales Tax charged.",
+      "lines": [
+        { "name": "Furniture exported to Singapore", "quantity": 10, "unit_price": 300, "tax": "MY-S-ZERO", "account": "4020" }
+      ]
+    },
+    {
+      "ref": "V6",
+      "type": "sale_invoice",
+      "contact": "cust-kl",
+      "date": "2026-03-08",
+      "why": "A sale of rice, a Schedule B good outside the definition of taxable goods entirely: item 18(b)(ii), no Sales Tax.",
+      "lines": [
+        { "name": "Polished rice, 50 kg bags", "quantity": 100, "unit_price": 10, "tax": "MY-S-EXEMPT", "account": "4000" }
+      ]
+    },
+    {
+      "ref": "V7",
+      "type": "sale_invoice",
+      "contact": "cust-svc",
+      "date": "2026-03-12",
+      "why": "A service outside the First Schedule of the Service Tax Regulations 2018: item 18(d), no Service Tax.",
+      "lines": [
+        { "name": "Translation of internal documents", "quantity": 1, "unit_price": 800, "tax": "MY-SVT-EXEMPT", "account": "4010" }
+      ]
+    },
+    {
+      "ref": "P8",
+      "type": "purchase_invoice",
+      "contact": "supp-charity",
+      "date": "2026-03-15",
+      "why": "A donation is not a supply of any taxable good or service: no Sales Tax, no Service Tax, and no box of SST-02.",
+      "lines": [
+        { "name": "Corporate donation", "quantity": 1, "unit_price": 500, "tax": "MY-P-EXEMPT", "account": "6900" }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "R1",
+      "direction": "inbound",
+      "date": "2026-02-05",
+      "amount": 2200,
+      "contact": "cust-kl",
+      "journal": "BNK",
+      "match": "V1",
+      "why": "A receipt that settles V1 exactly."
+    },
+    {
+      "ref": "R2",
+      "direction": "inbound",
+      "date": "2026-02-15",
+      "amount": 5400,
+      "contact": "cust-svc",
+      "journal": "BNK",
+      "match": "V3",
+      "why": "A receipt that settles V3 exactly."
+    },
+    {
+      "ref": "D1",
+      "direction": "outbound",
+      "date": "2026-02-20",
+      "amount": 3300,
+      "contact": "supp-goods",
+      "journal": "BNK",
+      "match": "P1",
+      "why": "A payment that settles P1 exactly."
+    },
+    {
+      "ref": "D2",
+      "direction": "outbound",
+      "date": "2026-02-22",
+      "amount": 5500,
+      "contact": "supp-import",
+      "journal": "BNK",
+      "match": "P3",
+      "why": "A payment that settles P3 exactly."
+    },
+    {
+      "ref": "D3",
+      "direction": "outbound",
+      "date": "2026-02-25",
+      "amount": 1000,
+      "contact": "supp-foreign",
+      "journal": "BNK",
+      "match": "P7",
+      "why": "The Singapore provider is paid the value alone: the 80.00 self-assessed Service Tax is owed to RMCD, not to the supplier."
+    },
+    {
+      "ref": "R3",
+      "direction": "inbound",
+      "date": "2026-04-01",
+      "amount": 3000,
+      "contact": "cust-export",
+      "journal": "BNK",
+      "match": "V5",
+      "why": "A receipt that settles the export sale V5 exactly."
+    },
+    {
+      "ref": "R4",
+      "direction": "inbound",
+      "date": "2026-04-10",
+      "amount": 1000,
+      "contact": "cust-kl",
+      "journal": "BNK",
+      "match": null,
+      "why": "A payment on account that matches no invoice and stays open."
+    }
+  ]
+}
