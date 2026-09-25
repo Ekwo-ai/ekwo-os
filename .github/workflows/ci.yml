@@ -10,7 +10,9 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    timeout-minutes: 90
     strategy:
+      fail-fast: false
       matrix:
         node: [22, 24]
     steps:
@@ -21,7 +23,9 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run typecheck
-      - run: npm test
+      # Two workers: the suite opens a PGlite database per test file, and the
+      # hosted runner runs out of memory with one worker per core.
+      - run: npm test -- --maxWorkers=2
       # Builds both workspaces; the CLI also copies supabase/ into its dist.
       - run: npm run build
       # The published binary has to run. A broken shebang or a missing export
