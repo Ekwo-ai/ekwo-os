@@ -1,0 +1,309 @@
+[
+  {
+    "code": "EG-S-STD",
+    "name": "بيع، معدل قياسي 14%",
+    "description": "A domestic sale of a taxable commodity or service, not on the Table, not zero-rated and not exempt.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 14,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2017-07-01",
+    "legal_reference": "VAT Law No. 67 of 2016, article 3, first paragraph: the standard rate is 13% for fiscal year 2016/2017 and 14% as of the beginning of fiscal year 2017/2018, of which 1% is allocated to social justice spending programmes. Executive Regulations, article 4(1) repeats the same two rates and dates.",
+    "source": "vat-law",
+    "vat_category": "S",
+    "sequence": 10,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "a1" },
+        { "type": "tax", "account": "2100", "box": "a2" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "a1", "box_factor": -100 },
+        { "type": "tax", "account": "2100", "box": "a2", "box_factor": -100 }
+      ]
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "EG-S-CAPEQ",
+    "name": "بيع آلات ومعدات إنتاج، معدل مخفض 5%",
+    "description": "A sale of machinery and equipment imported or bought on the local market for use in manufacturing a commodity or providing a service — the buyer's production line, not a bus or a passenger car.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 5,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2017-07-01",
+    "legal_reference": "VAT Law No. 67 of 2016, article 3, second paragraph: 'tax on machines and equipment used in manufacturing a commodity or provision of a service shall be 5% except for buses and passenger cars.' Executive Regulations, article 4(2)-(4): the reduced rate reaches whole production lines even where supplied in parts, and spare parts of such machines are taxed at the standard rate instead (article 4(4)). Reported the same way as a standard sale, in box a1/a2: neither the law nor the Executive Regulations name a separate box for it.",
+    "source": "vat-exec-reg",
+    "vat_category": "S",
+    "sequence": 20,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "a1" },
+        { "type": "tax", "account": "2100", "box": "a2" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "a1", "box_factor": -100 },
+        { "type": "tax", "account": "2100", "box": "a2", "box_factor": -100 }
+      ]
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "EG-S-EXPORT",
+    "name": "بيع، تصدير، معدل صفر",
+    "description": "A commodity or a service exported abroad, following the Customs procedures stipulated for an export.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2017-07-01",
+    "legal_reference": "VAT Law No. 67 of 2016, article 3, last paragraph: 'goods and services exported under the terms and conditions stipulated by the Executive Regulations shall be zero-rated.' Executive Regulations, article 5, First: the exporter follows Customs export procedures and keeps, for five years, the export certificate the Customs Authority issues or an equivalent official certificate; a service is proved exported by the service contract or an equivalent, a copy of the tax invoice detailing the service, and proof that payment reached Egypt by bank transfer through a bank supervised by the Central Bank of Egypt.",
+    "source": "vat-law",
+    "vat_category": "G",
+    "sequence": 30,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "b" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "b", "box_factor": -100 }
+      ]
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "EG-S-FREEZONE",
+    "name": "بيع لمشروعات المناطق الحرة، معدل صفر",
+    "description": "Goods or services supplied to a project of a free zone, a free city or a free market, for the authorised business operations it carries out there — other than a passenger car.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2017-07-01",
+    "legal_reference": "VAT Law No. 67 of 2016, article 6, second paragraph: 'goods and services supplied to such projects for carrying out related authorised business operations within the free zones, cities and markets except for passenger cars shall be zero-rated.' Executive Regulations, article 9, Second (as replaced by Ministerial Decree No. 24 of 2023): the registrant seller keeps the invoice of the goods sold to the free zone, a letter of the General Authority for Free Zones and Investments (GAFI) or the General Authority for the Economic Zone confirming the goods or services are necessary to the licensed project, and a customs export certificate (form 13 Customs). Treated as `domestic` and not `export`: the supply does not leave Egypt's territory, only its customs area.",
+    "source": "vat-exec-reg",
+    "vat_category": "Z",
+    "sequence": 40,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "b" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "b", "box_factor": -100 }
+      ]
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "EG-S-EXEMPT",
+    "name": "بيع، سلع وخدمات معفاة",
+    "description": "A sale of a commodity or a service on the list of goods and services exempted from VAT annexed to the Law — food staples, agricultural produce, water, healthcare, education, financial and insurance services, residential land and housing among fifty-eight items.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2017-07-01",
+    "legal_reference": "VAT Law No. 67 of 2016, article 1, definition of 'Exempted Goods and Services' — 'goods and services included in the exemption lists attached hereto' — and the List of Goods and Services Exempted from VAT annexed to the Law, items 1 to 58 (milk and infant food, bread, meat, fish, agricultural produce, water distribution, crude oil and natural gas, banking and insurance, healthcare, education, residential and agricultural land, and the rest of the list). One code covers the whole list: this pack's golden scenario exercises item 26, notebooks, books, educational booklets, newspapers and magazines.",
+    "source": "vat-law",
+    "vat_category": "E",
+    "sequence": 50,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "c" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "c", "box_factor": -100 }
+      ]
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "EG-S-TABLETAX-PROF",
+    "name": "بيع خدمات مهنية واستشارية، ضريبة جدول فقط 10%",
+    "description": "Professional and consultancy services, item First:12 of the Table attached to the Law — a service bearing Table Tax alone, and no VAT.",
+    "kind": "other",
+    "amount_type": "percent",
+    "rate": 10,
+    "scope": "sale",
+    "treatment": "not_subject",
+    "valid_from": "2017-07-01",
+    "legal_reference": "Table attached to the VAT Law, section 'First — Goods and Services subject only to Table Tax', item 12: 'Professional and consultancy services', tax rate 10% of value. VAT Law, article 2, first paragraph excludes a Table item from the general VAT charge 'unless otherwise enumerated in the attached table'; item 12 carries no such exception, so the service bears Table Tax and no VAT — `not_subject` for VAT purposes, and reported on this same monthly return under article 31(a) of the Unified Tax Procedures Law, which covers 'VAT, and Table Tax due or either, as applicable'. `kind: other`, because Table Tax is a distinct tax stacked on nothing here, not a VAT rate.",
+    "source": "vat-law",
+    "vat_category": null,
+    "sequence": 60,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "d1" },
+        { "type": "tax", "account": "2101", "box": "d2" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "d1", "box_factor": -100 },
+        { "type": "tax", "account": "2101", "box": "d2", "box_factor": -100 }
+      ]
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "EG-P-STD",
+    "name": "شراء، معدل قياسي 14%، ضريبة قابلة للخصم",
+    "description": "A domestic purchase taxed at the standard rate, whose input tax the registrant deducts against the tax due on its own sales.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 14,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2017-07-01",
+    "legal_reference": "VAT Law No. 67 of 2016, article 22, first paragraph: a registrant deducts, within limits and conditions the Executive Regulations set, 'the tax previously paid or charged on their returned sales and inputs... at all phases of distribution.' Executive Regulations, article 5, item 3: inputs are declared in the tax return of the period the purchase falls in.",
+    "source": "vat-law",
+    "vat_category": "S",
+    "sequence": 70,
+    "recoverable": true,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "f1" },
+        { "type": "tax", "account": "1150", "box": "f2" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "f1", "box_factor": -100 },
+        { "type": "tax", "account": "1150", "box": "f2", "box_factor": -100 }
+      ]
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "EG-P-CAPEQ",
+    "name": "شراء آلات ومعدات إنتاج، معدل مخفض 5%",
+    "description": "A purchase of machinery and equipment, imported or bought locally, for use in manufacturing a commodity or providing a service.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 5,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2017-07-01",
+    "legal_reference": "VAT Law No. 67 of 2016, article 3, second paragraph (5% rate); article 30, item 4: the tax previously paid on machines and equipment used in producing a taxable commodity or service is refunded upon filing the first tax return — unless the buyer's licensed activity is itself buses or passenger cars — 'without prejudice to the registrant's entitlement to tax refund' (Executive Regulations, article 4(2)). Reported like an ordinary recoverable purchase, in box f1/f2.",
+    "source": "vat-law",
+    "vat_category": "S",
+    "sequence": 80,
+    "recoverable": true,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "f1" },
+        { "type": "tax", "account": "1150", "box": "f2" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "f1", "box_factor": -100 },
+        { "type": "tax", "account": "1150", "box": "f2", "box_factor": -100 }
+      ]
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "EG-P-IMPORT",
+    "name": "استيراد سلع، ضريبة تحصّل عند الإفراج الجمركي",
+    "description": "Imported goods, taxed at the point Customs releases them, regardless of the purpose of import.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 14,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2017-07-01",
+    "legal_reference": "VAT Law No. 67 of 2016, article 5, second paragraph: 'Imported goods shall be taxed... in the customs release stage.' Article 31, second paragraph: 'Tax on imported goods shall be paid upon release by Customs Authority according to procedures set for payment of customs duties' — collected at the border and not self-assessed on the return, unlike an imported service. The importer then deducts it as an ordinary recoverable input under article 22, in box f1/f2.",
+    "source": "vat-law",
+    "vat_category": null,
+    "sequence": 90,
+    "recoverable": true,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "f1" },
+        { "type": "tax", "account": "1150", "box": "f2" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "f1", "box_factor": -100 },
+        { "type": "tax", "account": "1150", "box": "f2", "box_factor": -100 }
+      ]
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "EG-P-IMPSVC",
+    "name": "شراء خدمة مستوردة من الخارج، خضوع عكسي",
+    "description": "A service rendered in Egypt by a non-resident with no permanent establishment here and no Egyptian registration, self-assessed by the Egyptian beneficiary.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 14,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2017-07-01",
+    "legal_reference": "VAT Law No. 67 of 2016, article 5, third paragraph: 'Imported services shall be taxed upon rendering such services to service recipients in Egypt regardless of service rendering method.' Executive Regulations, article 32: where a non-resident not registered in ETA sells a service in Egypt to a registered person, 'the beneficiary of such service shall calculate and pay the due tax to ETA within 30 days as of selling date' unless the non-resident is itself registered under the streamlined supplier registration system. The beneficiary self-assesses the tax it would otherwise have been charged, and recovers it under the same conditions as any other input, factor -100 on the output posting netting the self-assessment to zero on the amount due.",
+    "source": "vat-exec-reg",
+    "vat_category": null,
+    "sequence": 100,
+    "recoverable": true,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "e1" },
+        { "type": "tax", "account": "1150", "box": "f2" },
+        { "type": "tax", "factor": -100, "account": "2100", "box": "e2" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "e1", "box_factor": -100 },
+        { "type": "tax", "account": "1150", "box": "f2", "box_factor": -100 },
+        { "type": "tax", "factor": -100, "account": "2100", "box": "e2", "box_factor": -100 }
+      ]
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "EG-P-EXEMPT",
+    "name": "شراء سلع وخدمات معفاة",
+    "description": "A purchase of a good or a service on the list of goods and services exempted from VAT — no tax is charged and none is deductible.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "exempt",
+    "valid_from": "2017-07-01",
+    "legal_reference": "VAT Law No. 67 of 2016, article 22, third paragraph, item 3: the deduction of article 22 does not apply to 'exempted goods and services' — there is no input tax on an exempt purchase to begin with, since the exempted supplier charges none.",
+    "source": "vat-law",
+    "vat_category": "E",
+    "sequence": 110,
+    "postings": {
+      "invoice": [],
+      "credit_note": []
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "EG-P-TABLETAX-PROF",
+    "name": "شراء خدمات مهنية واستشارية، ضريبة جدول غير قابلة للخصم",
+    "description": "The buyer's side of EG-S-TABLETAX-PROF: Table Tax charged on professional and consultancy services, which is not VAT and is not deductible from VAT due, so it lands on the cost of the service bought.",
+    "kind": "other",
+    "amount_type": "percent",
+    "rate": 10,
+    "scope": "purchase",
+    "treatment": "not_subject",
+    "valid_from": "2017-07-01",
+    "legal_reference": "VAT Law No. 67 of 2016, article 22, third paragraph, item 1: the deduction of article 22 does not apply to 'Table Tax on goods and services, whether taxable as they are or as inputs of taxable goods and services, unless otherwise provided by a special provision herein.' No special provision reaches professional and consultancy services, so the Table Tax the buyer is charged is a cost, not an input: `recoverable: false`, no account of its own, landing on the account of the expense line it taxes.",
+    "source": "vat-law",
+    "vat_category": null,
+    "sequence": 120,
+    "recoverable": false,
+    "postings": {
+      "invoice": [
+        { "type": "base" },
+        { "type": "tax_on_base" }
+      ],
+      "credit_note": [
+        { "type": "base" },
+        { "type": "tax_on_base" }
+      ]
+    },
+    "exemption_code": null
+  }
+]

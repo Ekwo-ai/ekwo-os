@@ -1,0 +1,125 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "EG-VAT-RETURN",
+  "name": "الإقرار الضريبي الشهري — نموذج 10 ضريبة القيمة المضافة",
+  "period": ["month"],
+  "period_default": "month",
+  "valid_from": "2017-07-01",
+  "legal_reference": "VAT Law No. 67 of 2016, article 1, definitions of 'Month' and 'Tax Period': a calendar month, at the end of which registrants file a monthly return. Executive Regulations, the repealed text of article 16 (in force until Ministerial Decree No. 286 of 2021) named the form 'form No. 10 VAT'; this pack's research could not open a directly-fetchable, currently-in-force text or screen naming the live boxes of that form, so the boxes below are built from the minimum content the two texts this pack could open actually require: what a registrant's tax summary book has to hold (Executive Regulations, the repealed text of article 14) and what the monthly return has to declare under article 31(a) of the Unified Tax Procedures Law — 'VAT, and Table Tax due or either, as applicable.' A reviewer who has filed on the live ETA taxpayer workspace should check this first: this pack's box letters are its own, not a transcription of the portal's on-screen fields.",
+  "source": "vat-law",
+  "deadline": {
+    "rule": "last_day_of_month_after_period",
+    "legal_reference": "قانون رقم 206 لسنة 2020، المادة 31(أ): 'على كل مكلف أن يقدم للمأمورية المختصة إقرارًا شهريًا عن الضريبة على القيمة المضافة، وضريبة الجدول المستحقة أو إحداهما، بحسب الأحوال... خلال الشهر التالي لانتهاء الفترة الضريبية' — Unified Tax Procedures Law No. 206 of 2020, article 31(a): every taxpayer files a monthly return for VAT and/or Table Tax due, on the form prepared for the purpose, during the month following the end of the tax period; a return is due even where no taxable sale or service was made in the period. Article 32 makes payment due 'on the same day' the return is filed electronically, so the return and the payment share one deadline: the last day of the month that follows the tax period. This replaced the two-month deadline the Executive Regulations' own article 16 stated before its repeal by Ministerial Decree No. 286 of 2021, in line with Law No. 206 of 2020.",
+    "source": "utpl"
+  },
+  "boxes": [
+    {
+      "box": "a1",
+      "kind": "base",
+      "name": "قيمة المبيعات الخاضعة للمعدل القياسي أو المخفض",
+      "legal_reference": "Value of taxable supplies at the standard rate (14%) or at the reduced rate on production machinery and equipment (5%), VAT Law article 3.",
+      "source": "vat-law",
+      "sequence": 10
+    },
+    {
+      "box": "a2",
+      "kind": "tax",
+      "name": "الضريبة المحصلة على قيمة الصندوق a1",
+      "legal_reference": "Output tax charged on box a1.",
+      "source": "vat-law",
+      "sequence": 20
+    },
+    {
+      "box": "b",
+      "kind": "base",
+      "name": "قيمة المبيعات الخاضعة لمعدل الصفر",
+      "legal_reference": "VAT Law, article 3 last paragraph (export) and article 6 (free zones, free cities and free markets), zero-rated supplies.",
+      "source": "vat-law",
+      "sequence": 30
+    },
+    {
+      "box": "c",
+      "kind": "base",
+      "name": "قيمة المبيعات المعفاة",
+      "legal_reference": "VAT Law, article 1 definition of 'Exempted Goods and Services' and the List of Goods and Services Exempted from VAT annexed to the Law.",
+      "source": "vat-law",
+      "sequence": 40
+    },
+    {
+      "box": "d1",
+      "kind": "base",
+      "name": "قيمة المبيعات الخاضعة لضريبة الجدول فقط",
+      "legal_reference": "Table attached to the VAT Law, section 'First — Goods and Services subject only to Table Tax': the value, exclusive of Table Tax, of a Table item that bears no VAT.",
+      "source": "vat-law",
+      "sequence": 50
+    },
+    {
+      "box": "d2",
+      "kind": "tax",
+      "name": "ضريبة الجدول المستحقة على قيمة الصندوق d1",
+      "legal_reference": "Table Tax due on box d1, VAT Law article 36.",
+      "source": "vat-law",
+      "sequence": 60
+    },
+    {
+      "box": "e1",
+      "kind": "base",
+      "name": "قيمة الخدمات المستوردة الخاضعة للخضوع العكسي",
+      "legal_reference": "VAT Law, article 5, third paragraph, and Executive Regulations article 32: the value of a service rendered by a non-resident, self-assessed by the Egyptian beneficiary.",
+      "source": "vat-exec-reg",
+      "sequence": 70
+    },
+    {
+      "box": "e2",
+      "kind": "tax",
+      "name": "الضريبة المحتسبة ذاتيًا على قيمة الصندوق e1",
+      "legal_reference": "The tax the beneficiary of an imported service calculates and pays under Executive Regulations article 32; not a separate clause of the law, this box is this pack's own addition so the value in e1 is not reported without the tax it carries — the same reasoning packs/ae records for its own box g2.",
+      "source": "vat-exec-reg",
+      "sequence": 80
+    },
+    {
+      "box": "f1",
+      "kind": "base",
+      "name": "قيمة المشتريات التي تخصم عنها الضريبة",
+      "legal_reference": "VAT Law, article 22: the value of inputs, whether local, imported or self-assessed, whose input tax the registrant seeks to deduct.",
+      "source": "vat-law",
+      "sequence": 90
+    },
+    {
+      "box": "f2",
+      "kind": "tax",
+      "name": "الضريبة القابلة للخصم على قيمة الصندوق f1، متضمنة نصيب الصندوق e2 القابل للخصم",
+      "legal_reference": "VAT Law, article 22: deductible input tax on box f1, including the recoverable share of the self-assessed tax of box e2.",
+      "source": "vat-law",
+      "sequence": 100
+    },
+    {
+      "box": "h",
+      "kind": "total",
+      "name": "إجمالي الضريبة المستحقة عن الفترة",
+      "legal_reference": "The period's total VAT and Table Tax due, before deduction of input tax.",
+      "source": "vat-law",
+      "plus": ["a2", "d2", "e2"],
+      "sequence": 110
+    },
+    {
+      "box": "i",
+      "kind": "total",
+      "name": "إجمالي الضريبة القابلة للخصم عن الفترة",
+      "legal_reference": "The period's total deductible input tax.",
+      "source": "vat-law",
+      "plus": ["f2"],
+      "sequence": 120
+    },
+    {
+      "box": "j",
+      "kind": "total",
+      "name": "صافي الضريبة المستحقة السداد أو رصيد الاسترداد",
+      "legal_reference": "VAT Law, article 22, third paragraph, item 3: a non-deductible amount is carried forward to the following tax period until it is fully deducted; article 30, item 3, entitles the registrant to a refund of a credit balance that has lasted more than six successive tax periods. No floor at zero: a negative figure is the credit balance the law carries forward or, past six periods, lets the registrant reclaim.",
+      "source": "vat-law",
+      "plus": ["h"],
+      "minus": ["i"],
+      "sequence": 130
+    }
+  ]
+}

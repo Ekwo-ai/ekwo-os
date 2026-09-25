@@ -5105,3 +5105,56 @@ GİB's own platform or an accredited private integrator, in UBL-TR, and not a
 four-corner exchange of an EN 16931 profile between the two parties' own
 access points, the same shape `packs/sa/`'s FATOORA already recorded a gap
 for.
+
+## From Egypt
+
+`packs/eg/`, `community`, seed 83. Its value added tax is Law No. 67 of 2016
+and its Executive Regulations (Minister of Finance Decree No. 66 of 2017),
+both read in ETA's own English translation; its filing deadline is the
+Unified Tax Procedures Law No. 206 of 2020, read from the Arabic original
+because this research pass found no ETA English translation of that law. One
+thing the format could not say, not patched, and one already-named gap this
+pack met again.
+
+**A tax that stacks on another tax, on the same line, has no shape in this
+format yet.** VAT Law article 36 charges Table Tax "in addition to the tax
+stipulated in Article 2" on a defined list of goods and services — soft
+drinks, alcoholic beverages, mobile telecommunication services, cosmetics,
+television sets, air conditioners, most passenger cars — so one sale carries
+both a 14% VAT line and a Table Tax line of its own rate, computed on the
+same base. `docs/packs.md` already names the shape this would need, under
+"What `ekwo pack check` refuses": a `group`, "reserved for the country that
+stacks two taxes on one line and which the core does not carry yet." Every
+other Table item this pack carries needs no such thing, because it bears
+*either* VAT *or* Table Tax and never both — `EG-S-TABLETAX-PROF` is
+`not_subject` to VAT precisely so the ordinary single-tax-per-line model
+still applies. `packs/eg/` therefore carries no tax of the stacked list at
+all rather than force two independent tax codes onto one line and let a
+company post the second one twice or not at all: a document line names one
+`tax`, and there is nowhere on it to name a second. Until the core has a
+`group`, an Egyptian company selling a mobile-network service or a bottle of
+imported spirits records the VAT this pack's `EG-S-STD` carries and posts
+the Table Tax through a manual journal entry — which is exactly the manual
+step a `group` would remove, and exactly why this is a gap of the socle and
+not a choice this pack could make instead.
+
+**One already-named gap this pack met again.** The three-way tax point.
+VAT Law article 1, definition of "Sale": ownership transfer or service
+provision is deemed to occur, whichever precedes, on the issuance of an
+invoice, delivery, or payment. `tax_point` has no value for three triggers
+at once, as *From Saudi Arabia* above records for the same three-way wording
+in the Common VAT Agreement; `packs/eg/documents.tax_point` declares the
+nearest of the five, `earliest_of_delivery_or_payment`, and says so in its
+own `legal_reference`. A fourth pack now carries the identical approximation
+for the identical reason.
+
+### EGP and EG
+
+`EGP` is added to `00_currencies.sql` at two decimals. `EG` is added to
+`00_territories.sql` outside the common system of VAT, so `vat_category`,
+`exemption_code` and the five `intracom_*` treatments are read the way
+every non-EU pack's are. `vat_prefix` is null: an Egyptian Tax Registration
+Number carries no country prefix of that table's kind, and the identifier a
+party is addressed by on the ETA electronic invoice system is that same
+number plus a UUID the Authority itself issues on clearance, which this
+table has no column for.

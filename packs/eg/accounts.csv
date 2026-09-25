@@ -1,0 +1,106 @@
+code,parent,type,reconcilable,name,sequence
+1000,,asset_cash,false,الصندوق,10
+1010,,asset_cash,false,البنك - حساب جاري بالجنيه المصري,20
+1020,,asset_cash,false,البنك - ودائع لأجل لا تتجاوز ثلاثة أشهر,30
+1030,,asset_cash,false,البنك - حساب بالعملة الأجنبية,40
+1035,,asset_cash,false,شيكات تحت التحصيل,45
+1040,,asset_cash,false,أموال في الطريق - تسويات بطاقات ووسائل الدفع الإلكترونية,50
+1100,,asset_receivable,true,العملاء,60
+1110,,asset_current,false,العملاء - مخصص الديون المشكوك في تحصيلها,70
+1120,,asset_current,true,مدينون آخرون,80
+1130,,asset_current,false,أرصدة مدينة لأطراف ذات علاقة,90
+1140,,asset_current,false,عربون ودائع مدفوعة,100
+1145,,asset_current,false,قروض للعاملين,105
+1150,,asset_current,false,ضريبة القيمة المضافة على المشتريات - مدخلات,110
+1155,,asset_current,true,رصيد دائن لمصلحة الضرائب - ضريبة قيمة مضافة وضريبة جدول مستحقة الاسترداد,120
+1160,,asset_current,false,سلف للعاملين,130
+1200,,asset_current,false,مخزون بضاعة معدة للبيع,140
+1210,,asset_current,false,مخزون خامات ومستلزمات إنتاج,150
+1220,,asset_current,false,مخزون إنتاج تحت التشغيل,160
+1230,,asset_current,false,مخزون إنتاج تام,170
+1300,,asset_current,false,استثمارات قصيرة الأجل,180
+1350,,asset_current,false,ضريبة الدخل مقدمة الدفع,190
+1400,,asset_prepayments,false,مصروفات مدفوعة مقدمًا,200
+1410,,asset_prepayments,false,إيرادات مستحقة غير محصلة,210
+1415,,asset_prepayments,false,تأمين مدفوع مقدمًا,215
+1420,,asset_prepayments,false,إيجار مدفوع مقدمًا,220
+1600,,asset_fixed,false,أراضٍ ومبانٍ - التكلفة,230
+1601,,asset_fixed,false,أراضٍ ومبانٍ - مجمع الإهلاك,240
+1610,,asset_fixed,false,آلات ومعدات الإنتاج - التكلفة,250
+1611,,asset_fixed,false,آلات ومعدات الإنتاج - مجمع الإهلاك,260
+1620,,asset_fixed,false,أثاث وتجهيزات مكتبية - التكلفة,270
+1621,,asset_fixed,false,أثاث وتجهيزات مكتبية - مجمع الإهلاك,280
+1630,,asset_fixed,false,أجهزة حاسب آلي - التكلفة,290
+1631,,asset_fixed,false,أجهزة حاسب آلي - مجمع الإهلاك,300
+1640,,asset_fixed,false,وسائل نقل - التكلفة,310
+1641,,asset_fixed,false,وسائل نقل - مجمع الإهلاك,320
+1650,,asset_fixed,false,أعمال رأسمالية تحت التنفيذ,330
+1700,,asset_non_current,false,استثمارات في شركات شقيقة وتابعة,340
+1710,,asset_non_current,false,ودائع طويلة الأجل وتأمينات مستردة,350
+1730,,asset_non_current,false,شهرة المحل,360
+1740,,asset_non_current,false,أصول غير ملموسة - التكلفة,370
+1741,,asset_non_current,false,أصول غير ملموسة - مجمع الإطفاء,380
+2000,,liability_payable,true,الموردون,390
+2010,,liability_current,false,دائنون آخرون ومصروفات مستحقة,400
+2020,,liability_current,false,أرصدة دائنة لأطراف ذات علاقة,410
+2030,,liability_current,false,أرصدة دائنة للشركاء والمساهمين,420
+2040,,liability_current,false,عربون ودائع محصلة,430
+2050,,liability_current,false,أجور ومرتبات مستحقة,440
+2060,,liability_current,false,التأمينات الاجتماعية مستحقة,450
+2100,,liability_current,false,ضريبة القيمة المضافة على المبيعات - مخرجات,460
+2101,,liability_current,false,ضريبة الجدول تحت التحصيل,470
+2110,,liability_current,true,مستحق لمصلحة الضرائب - ضريبة قيمة مضافة وضريبة جدول مستحقة السداد,480
+2130,,liability_current,false,ضريبة الدخل مستحقة السداد,490
+2150,,liability_current,false,مخصص مكافأة نهاية الخدمة - الجزء المتداول,500
+2200,,liability_current,false,قروض وسحب على المكشوف قصيرة الأجل,510
+2210,,liability_current,false,الجزء المتداول من القروض طويلة الأجل,520
+2300,,liability_non_current,false,قروض طويلة الأجل,530
+2350,,liability_non_current,false,مخصص مكافأة نهاية الخدمة - الجزء غير المتداول,540
+2990,,liability_current,false,حساب معلق,550
+3000,,equity,false,رأس المال المصدر,560
+3010,,equity,false,احتياطي قانوني,570
+3020,,equity,false,احتياطيات أخرى,580
+3025,,equity,false,احتياطي إعادة تقييم الأصول,585
+3030,,equity,false,فروق ترجمة عملات أجنبية,590
+3200,,equity_retained,false,أرباح مرحلة,600
+3210,,equity_retained,false,توزيعات أرباح,610
+4000,,income,false,مبيعات بضاعة,620
+4010,,income,false,إيرادات خدمات,630
+4020,,income,false,مبيعات تصدير,640
+4030,,income,false,إيرادات إيجارية,650
+4700,,income_other,false,أرباح فروق عملة محققة,660
+4710,,income_other,false,أرباح فروق عملة غير محققة,670
+4750,,income_other,false,أرباح بيع أصول ثابتة,680
+4790,,income_other,false,إيرادات أخرى,690
+5000,,expense_direct_cost,false,تكلفة البضاعة المباعة,700
+5010,,expense_direct_cost,false,مصروفات نقل وتخليص جمركي,710
+5020,,expense_direct_cost,false,أعمال مقاولي الباطن,720
+5030,,expense_direct_cost,false,مردودات ومسموحات مشتريات,730
+6100,,expense,false,أجور ومرتبات,740
+6110,,expense,false,مخصص مكافأة نهاية الخدمة عن السنة,750
+6115,,expense,false,مساهمة الشركة في التأمينات الاجتماعية,755
+6120,,expense,false,التأمين الصحي للعاملين,760
+6130,,expense,false,مصروفات تدريب وتوظيف,770
+6200,,expense,false,إيجارات,780
+6210,,expense,false,مرافق - كهرباء ومياه وغاز,790
+6220,,expense,false,أدوات ومطبوعات مكتبية,800
+6230,,expense,false,نظم معلومات وبرمجيات,810
+6240,,expense,false,صيانة وإصلاحات,820
+6300,,expense,false,انتقالات وسفر,830
+6310,,expense,false,ضيافة وعلاقات عامة,840
+6320,,expense,false,مصروفات تشغيل وسائل النقل,850
+6400,,expense,false,أتعاب مهنية واستشارية,860
+6410,,expense,false,مصروفات بنكية,870
+6420,,expense,false,تأمين,880
+6430,,expense,false,دعاية وإعلان,890
+6435,,expense,false,اشتراكات وعضويات,895
+6440,,expense,false,رسوم ورخص حكومية,900
+6500,,expense_depreciation,false,مصروف إهلاك,910
+6510,,expense_depreciation,false,مصروف إطفاء,920
+6900,,expense,false,ضريبة الجدول غير القابلة للخصم,930
+6950,,expense,false,خسائر فروق عملة محققة,940
+6955,,expense,false,خسائر فروق عملة غير محققة,950
+6960,,expense,false,خسائر بيع أصول ثابتة,960
+6990,,expense,false,فروق تقريب,970
+7100,,expense,false,فوائد وأعباء تمويلية,980
+8000,,expense,false,مصروف ضريبة الدخل عن السنة,990

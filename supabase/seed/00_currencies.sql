@@ -38,5 +38,6 @@ insert into currencies (code, name, symbol, decimal_places) values
   ('SAR', 'Saudi riyal',          E'ر.س', 2),
   ('HUF', 'Hungarian forint',     'Ft',      2),
   ('ISK', 'Icelandic krona',      'kr',      0),
-  ('TRY', 'Turkish lira',         E'₺', 2)
+  ('TRY', 'Turkish lira',         E'₺', 2),
+  ('EGP', 'Egyptian pound',       E'ج.م', 2)
 on conflict (code) do nothing;

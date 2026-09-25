@@ -1,0 +1,155 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "EG",
+  "name": "مصر",
+  "version": "0.1.0",
+  "schema_min": "20260917170000",
+  "seed_sequence": 83,
+  "released_at": "2026-09-25",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "vat-law",
+        "title": "Value Added Tax Law No. (67) of 2016, as amended (consolidated text updated 15 January 2023)",
+        "publisher": "Egyptian Tax Authority (ETA), Ministry of Finance — General Department of Translation",
+        "url": "https://www.eta.gov.eg/sites/default/files/2024-02/Law-english-no.67-2016.pdf.pdf",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "vat-exec-reg",
+        "title": "Executive Regulations of Value Added Tax Law No. (67) of 2016, Minister of Finance Decree No. 66 of 2017, as amended (consolidated text updated 15 January 2023)",
+        "publisher": "Egyptian Tax Authority (ETA), Ministry of Finance — General Department of Translation",
+        "url": "https://www.eta.gov.eg/sites/default/files/2024-02/VAT-Executive-Regulations-English.pdf",
+        "consulted_on": "2026-09-25",
+        "kind": "regulation"
+      },
+      {
+        "key": "utpl",
+        "title": "قانون رقم 206 لسنة 2020 بإصدار قانون الإجراءات الضريبية الموحد — Law No. 206 of 2020 promulgating the Unified Tax Procedures Law, Official Gazette, issue 42 bis (C), 19 October 2020",
+        "publisher": "Egyptian Tax Authority (ETA), Ministry of Finance",
+        "url": "https://www.eta.gov.eg/sites/default/files/2024-03/law_no.206-2020.pdf",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "eta-home",
+        "title": "Egyptian Tax Authority — home page, electronic invoice system notice",
+        "publisher": "Egyptian Tax Authority (ETA)",
+        "url": "https://eta.gov.eg/en/home",
+        "consulted_on": "2026-09-25",
+        "kind": "portal"
+      },
+      {
+        "key": "eta-einvoice-guide",
+        "title": "دليل منظومة الفاتورة الإلكترونية — Electronic Invoice System guide",
+        "publisher": "Egyptian Tax Authority (ETA)",
+        "url": "https://www.eta.gov.eg/ar/content/e-invoice-services",
+        "consulted_on": "2026-09-25",
+        "kind": "portal"
+      },
+      {
+        "key": "eta-ereceipt-guide",
+        "title": "دليل منظومة الإيصال الإلكتروني — Electronic Receipt System guide",
+        "publisher": "Egyptian Tax Authority (ETA)",
+        "url": "https://www.eta.gov.eg/ar/content/e-receipt-services",
+        "consulted_on": "2026-09-25",
+        "kind": "portal"
+      },
+      {
+        "key": "workspace",
+        "title": "مساحة عمل الممول — Taxpayer workspace, where the monthly return (form 10 VAT) is filed and paid electronically",
+        "publisher": "Egyptian Tax Authority (ETA)",
+        "url": "https://workspace.eta.gov.eg",
+        "consulted_on": "2026-09-25",
+        "kind": "portal"
+      },
+      {
+        "key": "eas-ifrs-profile",
+        "title": "IFRS Standards — Application Around the World, Jurisdictional Profile: Egypt (profile last updated 31 January 2024)",
+        "publisher": "IFRS Foundation",
+        "url": "https://www.ifrs.org/content/dam/ifrs/publications/jurisdictions/pdf-profiles/egypt-ifrs-profile.pdf",
+        "consulted_on": "2026-09-25",
+        "kind": "guidance"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "EGP",
+    "language": "ar",
+    "closing_style": "retained_earnings",
+    "fiscal_year_default": "calendar",
+    "roles": {
+      "receivable": "1100",
+      "payable": "2000",
+      "suspense": "2990",
+      "rounding": "6990",
+      "retained_earnings": "3200",
+      "sales": "4000",
+      "purchase": "5000",
+      "bank": "1010",
+      "cash": "1000",
+      "fx_gain": "4700",
+      "fx_loss": "6950",
+      "asset_disposal_gain": "4750",
+      "asset_disposal_loss": "6960",
+      "tax_payable": "2110",
+      "tax_receivable": "1155"
+    },
+    "journal_roles": {
+      "sales": "SAL",
+      "purchase": "PUR",
+      "miscellaneous": "GEN",
+      "opening": "OPN"
+    }
+  },
+  "languages": [
+    "en"
+  ],
+  "journals": [
+    { "code": "SAL", "type": "sales", "name": "دفتر يومية المبيعات", "sequence": 10 },
+    { "code": "PUR", "type": "purchase", "name": "دفتر يومية المشتريات", "sequence": 20 },
+    { "code": "BNK", "type": "bank", "name": "البنك", "sequence": 30 },
+    { "code": "CSH", "type": "cash", "name": "الصندوق", "sequence": 40 },
+    { "code": "GEN", "type": "general", "name": "دفتر اليومية العامة", "sequence": 50 },
+    { "code": "OPN", "type": "opening", "name": "أرصدة افتتاحية", "sequence": 60 }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "الدليل المحاسبي المرجعي لمصر",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": ["EG-EAS-SFP", "EG-EAS-IS"],
+      "legal_reference": "This pack's research found no legally mandated chart of accounts for an ordinary Egyptian company. The historic 'Uniform Accounting System' (النظام المحاسبي الموحد) is a public-sector numbering scheme and this research pass found no text extending it to private companies generally; what the law does prescribe is the reporting framework — the Minister of Investment issues Egyptian Accounting Standards (EAS) by ministerial decree published in the Official Gazette, EAS being based on IFRS Accounting Standards but not identical to them, with a dedicated simplified standard for small and medium-sized entities effective 1 January 2016 (IFRS Foundation, Jurisdictional Profile: Egypt, 'Relevant jurisdictional authority' and 'Application of the IFRS for SMEs Accounting Standard'). This pack's research could not open the Arabic text of the ministerial decree that lists the EAS chart of accounts, if any; the chart below is therefore this pack's own construction — four digits, blocked so that each range reaches one line item of the statement of financial position and the income statement below — and not a transcription of an official numbering. A reviewer should check it against a real Egyptian company's books before it is trusted.",
+      "source": "eas-ifrs-profile"
+    }
+  ],
+  "documents": {
+    "numbering": "sequential",
+    "number_format": "{CODE}-{YYYY}-{NNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "earliest_of_delivery_or_payment",
+    "references": {
+      "numbering": {
+        "legal_reference": "VAT Law No. 67 of 2016, article 1, definition of 'Tax Invoice' ('Invoice prepared according to form issued by a decree of the Minister or his authorised representative'); the repealed text of Executive Regulations article 13, in force until Ministerial Decree No. 286 of 2021, required invoices to 'have numbers serialised according to issuance dates and free of any strikes or scratches' — a running, date-ordered sequence rather than an explicit no-gap rule, which is why the style is `sequential` and not a gapless one. Since Ministerial Decree No. 188 of 2020 the electronic invoice/receipt system (ETA) additionally chains every accepted document to a UUID and an internal reference the seller assigns, which is a second identifier this field does not hold — see `einvoicing` below.",
+        "source": "vat-exec-reg"
+      },
+      "tax_point": {
+        "legal_reference": "VAT Law No. 67 of 2016, article 1, definition of 'Sale': ownership transfer or service provision, deemed to occur, whichever precedes, on (1) issuance of an invoice, (2) delivery of the goods or provision of the service, or (3) whole or partial payment. That is a three-way earliest test — invoice, delivery, payment — and the closed vocabulary of this field has no value for three triggers at once. `earliest_of_delivery_or_payment` is the nearest of the five and is what the rule reduces to whenever no invoice is issued ahead of delivery or payment; a supply invoiced before either is the case this approximation misses, exactly the gap packs/sa and packs/ae record for the same three-way wording in the Common VAT Agreement and in Federal Decree-Law No. 8 of 2017.",
+        "source": "vat-law"
+      }
+    }
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "Electronic invoicing is obligatory in Egypt and this pack still leaves all four fields above empty, for the reason packs/sa/, packs/vn/ and packs/kr/ leave them empty: the ETA electronic invoice (B2B) and electronic receipt (B2C) systems are a clearance regime, not an exchange between two parties' own access points — a document is submitted to ETA, which validates it against its own schema and returns a UUID and, for a business invoice, a digital signature reference before the document is valid — and none of it is an EN 16931 profile a brick of packages/formats writes, so `mandatory_from` would name a day with no `profile` to say what became obligatory on it. This pack's research verified one fact at a directly-fetchable ETA page: 'As of April 1, 2023, no entity will be allowed to import, export or deal with the customs system except for entities that issue and deal with electronic tax invoices' (eta.gov.eg, home page). The rollout itself was phased over several years by taxpayer size, starting with large taxpayers registered at the Large Taxpayers Centre from November 2020 under Ministerial Decision No. 188 of 2020, and reaching the last waves of ordinary VAT-registered businesses by 2023; this pack's research could not open Ministerial Decision No. 188 of 2020 itself, nor the later wave-by-wave decisions, at a directly-fetchable official text, and does not invent the dates of intermediate waves from a secondary source. A second, separate obligation reaches business-to-consumer receipts (e-receipt), phased from 2022 and tightened by ETA Decision No. 281 of 2025 for taxpayers on a published list from 15 September 2025; this pack's research could not open Decision No. 281 of 2025 either. `party_scheme` and `vat_scheme` stay null because Egypt is not on the Peppol participant identifier scheme list and issues no ISO 6523 identifier: what an Egyptian electronic invoice carries instead is the seller's and buyer's Tax Registration Numbers and the ETA-issued UUID, neither of which this pack's fields hold. docs/international.md carries the rest of what the core cannot say about a clearance system.",
+    "source": "eta-home"
+  }
+}
