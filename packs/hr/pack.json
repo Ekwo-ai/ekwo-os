@@ -1,0 +1,275 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "HR",
+  "name": "Croatia",
+  "version": "0.1.0",
+  "schema_min": "20260921145425",
+  "seed_sequence": 74,
+  "released_at": "2026-09-25",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "zakon-pdv",
+        "title": "Zakon o porezu na dodanu vrijednost (pročišćeni tekst, na snazi od 1. siječnja 2026.)",
+        "publisher": "Zakon.hr — Poslovni info servis d.o.o., prijepis Narodnih novina",
+        "url": "https://www.zakon.hr/z/1455/zakon-o-porezu-na-dodanu-vrijednost",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "zakon-pdv-nn151-25",
+        "title": "Zakon o izmjenama i dopunama Zakona o porezu na dodanu vrijednost, Narodne novine br. 151/2025 — pomiče rok predaje prijave PDV-a (čl. 4., kojim se mijenja čl. 85. st. 6. Zakona o PDV-u) s 20. dana na zadnji dan mjeseca koji slijedi po završetku obračunskog razdoblja, s primjenom od 1. siječnja 2026.",
+        "publisher": "Narodne novine — službeni list Republike Hrvatske",
+        "url": "https://narodne-novine.nn.hr/clanci/sluzbeni/2025_12_151_2262.html",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "zakon-fiskalizacija",
+        "title": "Zakon o fiskalizaciji, Narodne novine br. 89/2025 — obveza izdavanja i zaprimanja eRačuna u B2B transakcijama (čl. 33.-57., na snazi od 1. siječnja 2026.)",
+        "publisher": "Narodne novine — službeni list Republike Hrvatske",
+        "url": "https://narodne-novine.nn.hr/clanci/sluzbeni/full/2025_06_89_1233.html",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "zakon-eracun-javna-nabava",
+        "title": "Zakon o elektroničkom izdavanju računa u javnoj nabavi, Narodne novine br. 94/18 — obveza zaprimanja eRačuna od 1. prosinca 2018. i izdavanja od 1. srpnja 2019. u javnoj nabavi (B2G), prenosi Direktivu 2014/55/EU",
+        "publisher": "Narodne novine — službeni list Republike Hrvatske",
+        "url": "https://narodne-novine.nn.hr/clanci/sluzbeni/2018_10_94_1817.html",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "zakon-rokovi-placanja",
+        "title": "Zakon o rokovima ispunjenja novčanih obveza, Narodne novine br. 125/11 — rok plaćanja od 30 dana kad ugovorom nije određen, u odnosima među poduzetnicima",
+        "publisher": "Narodne novine — službeni list Republike Hrvatske",
+        "url": "https://narodne-novine.nn.hr/clanci/sluzbeni/2011_11_125_2501.html",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "zakon-obvezni-odnosi",
+        "title": "Zakon o obveznim odnosima (pročišćeni tekst) — čl. 29., zatezna kamata: referentna stopa uvećana za 8 postotnih poena u trgovačkim ugovorima, ažurirana polugodišnje i objavljena u Narodnim novinama",
+        "publisher": "Zakon.hr — Poslovni info servis d.o.o., prijepis Narodnih novina",
+        "url": "https://www.zakon.hr/z/75/zakon-o-obveznim-odnosima",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "obrazac-pdv",
+        "title": "Obrazac PDV — Prijava poreza na dodanu vrijednost (obrazac u primjeni od veljače 2026., uključuje podatke o donacijama hrane)",
+        "publisher": "Porezna uprava Republike Hrvatske",
+        "url": "https://porezna-uprava.gov.hr/UserDocsImages/Arhiva/HR_obrasci/Documents/POREZ%20NA%20DODANU%20VRIJEDNOST/PDV.pdf",
+        "consulted_on": "2026-09-25",
+        "kind": "form"
+      },
+      {
+        "key": "eporezna-uputa-pdv",
+        "title": "Korisničke upute — Obrazac PDV",
+        "publisher": "Porezna uprava Republike Hrvatske — ePorezna",
+        "url": "https://e-porezna.porezna-uprava.hr/Upute/G2B/Korisni%C4%8Dke%20upute%20-%20Obrazac%20PDV.pdf",
+        "consulted_on": "2026-09-25",
+        "kind": "guidance"
+      },
+      {
+        "key": "fiskalizacija2-portal",
+        "title": "Fiskalizacija 2.0 — pojmovnik, informacijski posrednik, pristupna točka, format eRačuna (UBL 2.1 + HR-EXT, temeljen na Peppol BIS Billing 3.0 / EN 16931)",
+        "publisher": "Porezna uprava Republike Hrvatske",
+        "url": "https://fiskalizacija2.hr/rjecnik-fiskalizacije-2-0/",
+        "consulted_on": "2026-09-25",
+        "kind": "guidance"
+      },
+      {
+        "key": "eporezna-portal",
+        "title": "ePorezna — elektroničko podnošenje prijave PDV-a i drugih poreznih obrazaca",
+        "publisher": "Porezna uprava Republike Hrvatske",
+        "url": "https://e-porezna.porezna-uprava.hr/",
+        "consulted_on": "2026-09-25",
+        "kind": "portal"
+      },
+      {
+        "key": "en-16931",
+        "title": "EN 16931-1 — semantic data model of the electronic invoice, conformant with Directive 2014/55/EU",
+        "publisher": "European Commission",
+        "url": "https://ec.europa.eu/digital-building-blocks/sites/spaces/DIGITAL/pages/467108950/EN+16931+compliance",
+        "consulted_on": "2026-09-25",
+        "kind": "standard"
+      },
+      {
+        "key": "uncl5305",
+        "title": "UNCL5305 — code list of VAT categories (BT-118 and BT-151), subset published for EN 16931",
+        "publisher": "OpenPEPPOL — list published by the European Commission",
+        "url": "https://docs.peppol.eu/poacc/billing/3.0/codelist/UNCL5305/",
+        "consulted_on": "2026-09-25",
+        "kind": "standard"
+      },
+      {
+        "key": "vatex",
+        "title": "VATEX — code list of VAT exemption reasons (BT-121)",
+        "publisher": "OpenPEPPOL — list published by the European Commission",
+        "url": "https://docs.peppol.eu/poacc/billing/3.0/codelist/vatex/",
+        "consulted_on": "2026-09-25",
+        "kind": "standard"
+      },
+      {
+        "key": "peppol-eas",
+        "title": "Electronic Address Scheme (EAS) — ISO 6523 identifier schemes, including 9934 (Croatia VAT number)",
+        "publisher": "OpenPEPPOL",
+        "url": "https://docs.peppol.eu/poacc/billing/3.0/codelist/eas/",
+        "consulted_on": "2026-09-25",
+        "kind": "standard"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "EUR",
+    "language": "hr",
+    "rounding_method": "half_up",
+    "closing_style": "result_accounts",
+    "roles": {
+      "receivable": "1200",
+      "payable": "6200",
+      "suspense": "6900",
+      "rounding": "8910",
+      "retained_earnings": "4500",
+      "retained_earnings_loss": "4510",
+      "current_year_result_profit": "4610",
+      "current_year_result_loss": "4620",
+      "sales": "8100",
+      "purchase": "7300",
+      "bank": "1000",
+      "cash": "1020",
+      "fx_gain": "8410",
+      "fx_loss": "7420",
+      "tax_payable": "6400",
+      "tax_receivable": "1400"
+    },
+    "journal_roles": {
+      "sales": "IRA",
+      "purchase": "URA",
+      "miscellaneous": "TEM",
+      "opening": "OTV"
+    },
+    "fiscal_year_default": "calendar"
+  },
+  "languages": [],
+  "journals": [
+    { "code": "IRA", "type": "sales", "name": "Knjiga izlaznih računa", "sequence": 10 },
+    { "code": "URA", "type": "purchase", "name": "Knjiga ulaznih računa", "sequence": 20 },
+    { "code": "BAN", "type": "bank", "name": "Banka", "sequence": 30 },
+    { "code": "BLG", "type": "cash", "name": "Blagajna", "sequence": 40 },
+    { "code": "TEM", "type": "general", "name": "Temeljnica", "sequence": 50 },
+    { "code": "OTV", "type": "opening", "name": "Otvaranje poslovnih knjiga", "sequence": 60 }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Neovisni računski plan po vrsti računa",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": [],
+      "legal_reference": "Zakon o računovodstvu (pročišćeni tekst) čl. 8. propisuje samo da poduzetnik vodi poslovne knjige po načelu dvojnog knjigovodstva i sastavlja financijske izvještaje prema Hrvatskim standardima financijskog izvještavanja (HSFI) ili MSFI/MSFI za MSS — ne postoji zakonom propisan računski plan. U praksi je najrašireniji \"Računski plan za poduzetnike\" koji svake godine objavljuje RRiF (Hrvatska zajednica računovođa i financijskih djelatnika), djelo zaštićeno autorskim pravom čije brojeve računa i nazive ovaj pack ne preuzima. Ovaj plan je samostalan: četveroznamenkasti brojevi čija prva znamenka razlikuje dugotrajnu imovinu (1xxx-0xxx po vrsti), kratkotrajnu imovinu (1xxx), kapital (4xxx), dugoročne obveze i rezerviranja (5xxx), kratkoročne obveze (6xxx), rashode (7xxx) i prihode (8xxx); potonja dva razreda dodatno prate podjelu HSFI 15/MSFI-jevog računa dobiti i gubitka na poslovne, financijske i ostale stavke. Zbog toga financijski izvještaji ovog pack-a padaju na okvir generic (packs/generic/), koji ih izvodi iz osamnaest vrsta računa; hrvatska Bilanca i RDG s AOP oznakama (Pravilnik o strukturi i sadržaju godišnjih financijskih izvještaja) nisu još preslikani red po red — vidi README.md i docs/international.md, odjeljak \"From Croatia\".",
+      "source": "zakon-pdv"
+    }
+  ],
+  "documents": {
+    "numbering": "sequential",
+    "number_format": "{CODE}-{YYYY}-{NNNN}",
+    "legal_payment_days": 30,
+    "late_payment_reference": "Zakon o obveznim odnosima čl. 29. — zatezna kamata u trgovačkim ugovorima: referentna stopa uvećana za 8 postotnih poena, ažurirana polugodišnje (1. siječnja i 1. srpnja) i objavljena u Narodnim novinama.",
+    "tax_point": "delivery_date",
+    "posted_edit_policy": "reversal_only",
+    "references": {
+      "numbering": {
+        "legal_reference": "Zakon o PDV čl. 79. st. 1. t. 3. — račun sadrži broj računa koji ga jednoznačno identificira; obveznici fiskalizacije iskazuju broj u tri dijela (redni broj, oznaka poslovnog prostora, oznaka naplatnog uređaja). Zakon traži jednoznačnost, a ne neprekinutu godišnju numeraciju, otuda sequential i ne gapless_per_year.",
+        "source": "zakon-pdv"
+      },
+      "payment_terms": {
+        "legal_reference": "Zakon o rokovima ispunjenja novčanih obveza čl. 4. — kad ugovorom između poduzetnika nije određen rok ispunjenja novčane obveze, dužnik je obvezan ispuniti novčanu obvezu u roku od 30 dana.",
+        "source": "zakon-rokovi-placanja"
+      },
+      "tax_point": {
+        "legal_reference": "Zakon o PDV čl. 30. st. 1. — obveza obračuna PDV-a nastaje u trenutku kada su dobra isporučena ili usluge obavljene. St. 5. — kod predujma, obveza nastaje u trenutku primitka predujma, do visine primljenog iznosa. Ovaj pack ne modelira izdavanje računa kao zamjenu za trenutak isporuke, jer za to u Zakonu o PDV-u — za razliku od Austrije ili Luksemburga — nije pronađena opća odredba.",
+        "source": "zakon-pdv"
+      },
+      "posted_edit_policy": {
+        "legal_reference": "Zakon o računovodstvu čl. 9. st. 4. — poslovni događaj se u poslovnim knjigama iskazuje na temelju vjerodostojne knjigovodstvene isprave; ispravak pogrešno unesenog podatka obavlja se na način da se može utvrditi izvorni sadržaj, pa se knjižena isporuka ispravlja knjigovodstvenom ispravkom (storno knjiženjem ili odobrenjem/terećenjem), a ne izmjenom izvornog zapisa.",
+        "source": "zakon-pdv"
+      }
+    },
+    "mentions": [
+      {
+        "code": "reverse_charge",
+        "applies_when": "reverse_charge",
+        "text": "Prijenos porezne obveze",
+        "sequence": 10,
+        "legal_reference": "Zakon o PDV čl. 78. st. 1. — kad je za obračun PDV-a obvezan primatelj dobara ili usluga, umjesto iznosa PDV-a na računu se navodi napomena o prijenosu porezne obveze na primatelja.",
+        "source": "zakon-pdv"
+      },
+      {
+        "code": "intracom_goods",
+        "applies_when": "intra_eu_goods",
+        "text": "Oslobođeno PDV-a — isporuka dobara unutar Europske unije (čl. 41. Zakona o PDV-u)",
+        "sequence": 20,
+        "legal_reference": "Zakon o PDV čl. 78. st. 1. t. 2. i čl. 41. st. 1. t. a) — isporuka dobara poreznom obvezniku registriranom za potrebe PDV-a u drugoj državi članici je oslobođena, a račun mora sadržavati upućivanje na odredbu na temelju koje je isporuka oslobođena.",
+        "source": "zakon-pdv"
+      },
+      {
+        "code": "intracom_services",
+        "applies_when": "intra_eu_services",
+        "text": "Prijenos porezne obveze — usluga oporeziva u državi sjedišta primatelja (čl. 17. st. 1. Zakona o PDV-u)",
+        "sequence": 30,
+        "legal_reference": "Zakon o PDV čl. 78. st. 1. t. 2. i čl. 17. st. 1. — mjesto obavljanja usluge poreznom obvezniku je mjesto njegova sjedišta; kad je to druga država članica, primatelj obračunava PDV, a račun upućuje na odredbu na temelju koje se isporuka smatra oslobođenom u tuzemstvu.",
+        "source": "zakon-pdv"
+      },
+      {
+        "code": "export",
+        "applies_when": "export",
+        "text": "Izvozna isporuka oslobođena PDV-a (čl. 45. Zakona o PDV-u)",
+        "sequence": 40,
+        "legal_reference": "Zakon o PDV čl. 78. st. 1. t. 2. i čl. 45. st. 1. t. 1. — izvozna isporuka dobara je oslobođena PDV-a; račun upućuje na tu odredbu.",
+        "source": "zakon-pdv"
+      },
+      {
+        "code": "exempt",
+        "applies_when": "exempt",
+        "text": "Oslobođeno PDV-a bez prava na odbitak pretporeza",
+        "sequence": 50,
+        "legal_reference": "Zakon o PDV čl. 78. st. 1. t. 2. — za oslobođenu isporuku račun upućuje na odredbu Zakona o PDV-u, propisa donesenog na temelju njega ili Direktive 2006/112/EZ na temelju koje je isporuka oslobođena.",
+        "source": "zakon-pdv"
+      },
+      {
+        "code": "small_business",
+        "applies_when": "small_business",
+        "text": "Oslobođeno PDV-a — mali poduzetnik (čl. 90. Zakona o PDV-u)",
+        "sequence": 60,
+        "legal_reference": "Zakon o PDV čl. 90. st. 1. — porezni obveznik s sjedištem u tuzemstvu čija vrijednost isporuka u prethodnoj kalendarskoj godini nije prešla 60.000,00 eura je oslobođen plaćanja PDV-a bez prava na odbitak pretporeza. Ni jedan stupac u jezgri ne pamti taj status poduzeća u cjelini; redak postoji za renderer koji bi ga poznavao odande.",
+        "source": "zakon-pdv"
+      },
+      {
+        "code": "late_payment",
+        "applies_when": "late_payment",
+        "text": "U slučaju zakašnjenja plaćanja obračunava se zatezna kamata po stopi iz članka 29. Zakona o obveznim odnosima.",
+        "sequence": 70,
+        "legal_reference": "Zakon o obveznim odnosima čl. 29. — vidjeti documents.late_payment_reference.",
+        "source": "zakon-obvezni-odnosi"
+      }
+    ]
+  },
+  "einvoicing": {
+    "profile": "peppol-bis-3",
+    "obligation": "mandatory",
+    "mandatory_from": "2026-01-01",
+    "party_scheme": null,
+    "vat_scheme": "9934",
+    "legal_reference": "Zakon o fiskalizaciji (NN 89/25) čl. 33.-57., na snazi od 1. siječnja 2026. — svaki obveznik fiskalizacije s poslovnim nastanom u Republici Hrvatskoj mora od tog dana izdavati i zaprimati eRačune u transakcijama s drugim obveznicima fiskalizacije (B2B); tuzemni eRačun se razmjenjuje preko ovlaštenog informacijskog posrednika ili pristupne točke, u formatu UBL 2.1 s hrvatskim CIUS proširenjem HR-EXT nad Peppol BIS Billing 3.0, koji je semantički model EN 16931. mandatory_from nosi datum koji obvezuje sve odjednom — obveza zaprimanja vrijedi od 1. siječnja 2026. i za obveznike PDV-a i za one koji nisu, dok obveza izdavanja za neobveznike PDV-a počinje tek 1. siječnja 2027. i nije ovdje posebno modelirana. Prema Zakonu o elektroničkom izdavanju računa u javnoj nabavi (NN 94/18), obveza zaprimanja eRačuna u javnoj nabavi (B2G) postoji već od 1. prosinca 2018., a obveza izdavanja od 1. srpnja 2019., preko središnje platforme FINA-e; ta starija obveza ne mijenja gornju riječ jer B2B obveza od 2026. postoji za sve. profile imenuje temeljni europski format; hrvatsko CIUS proširenje HR-EXT i sama razmjena preko informacijskog posrednika/FINA-e nisu ovim pack-om modelirani — vidi docs/international.md, odjeljak \"From Croatia\".",
+    "source": "zakon-fiskalizacija"
+  },
+  "bank": {
+    "statement_formats": ["camt.053"],
+    "payment_formats": ["pain.001"]
+  }
+}

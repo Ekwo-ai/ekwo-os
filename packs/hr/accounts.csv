@@ -1,0 +1,139 @@
+code,parent,type,reconcilable,name,sequence
+0100,,asset_fixed,false,Nematerijalna imovina - koncesije patenti i licencije,10
+0110,,asset_fixed,false,Nematerijalna imovina - goodwill,20
+0120,,asset_fixed,false,Nematerijalna imovina - softver,30
+0130,,asset_fixed,false,Predujmovi za nematerijalnu imovinu,40
+0190,,asset_fixed,false,Ispravak vrijednosti nematerijalne imovine,50
+0200,,asset_fixed,false,Zemljišta,60
+0210,,asset_fixed,false,Građevinski objekti,70
+0220,,asset_fixed,false,Postrojenja i strojevi,80
+0230,,asset_fixed,false,Prijevozna sredstva,90
+0240,,asset_fixed,false,Uredska oprema,100
+0250,,asset_fixed,false,Alati i inventar,110
+0260,,asset_fixed,false,Ulaganja u tuđu nekretninu (najam),120
+0270,,asset_fixed,false,Dugotrajna imovina u pripremi,130
+0280,,asset_fixed,false,Predujmovi za materijalnu imovinu,140
+0291,,asset_fixed,false,Ispravak vrijednosti građevinskih objekata,150
+0292,,asset_fixed,false,Ispravak vrijednosti postrojenja i strojeva,160
+0293,,asset_fixed,false,Ispravak vrijednosti uredske opreme,170
+0294,,asset_fixed,false,Ispravak vrijednosti prijevoznih sredstava,180
+0300,,asset_non_current,false,Udjeli u povezanim poduzetnicima,190
+0310,,asset_non_current,false,Dani zajmovi povezanim poduzetnicima,200
+0320,,asset_non_current,false,Dugoročna ulaganja u vrijednosne papire,210
+0330,,asset_non_current,false,Dugoročni depoziti,220
+0340,,asset_non_current,false,Odgođena porezna imovina,230
+1000,,asset_cash,false,Banka - žiro račun EUR,240
+1010,,asset_cash,false,Banka - devizni račun,250
+1020,,asset_cash,false,Blagajna,260
+1030,,asset_cash,false,Blagajna - devizna,270
+1100,,asset_current,false,Kratkoročni depoziti,280
+1110,,asset_current,false,Kratkoročna ulaganja u vrijednosne papire,290
+1200,,asset_receivable,true,Potraživanja od kupaca u zemlji,300
+1210,,asset_receivable,true,Potraživanja od kupaca u EU,310
+1220,,asset_receivable,true,Potraživanja od kupaca izvan EU,320
+1230,,asset_current,false,Potraživanja po primljenim mjenicama,330
+1290,,asset_current,false,Ispravak vrijednosti potraživanja od kupaca,340
+1300,,asset_current,false,Zalihe sirovina i materijala,350
+1310,,asset_current,false,Zalihe trgovačke robe,360
+1320,,asset_current,false,Proizvodnja u tijeku,370
+1330,,asset_current,false,Zalihe proizvoda,380
+1340,,asset_current,false,Zalihe ambalaže,390
+1350,,asset_current,false,Predujmovi za zalihe,400
+1400,,asset_current,true,Pretporez,410
+1410,,asset_current,true,Pretporez - stjecanje dobara unutar EU,420
+1420,,asset_current,true,Pretporez - uvoz,430
+1500,,asset_prepayments,false,Predujmovi plaćeni dobavljačima,440
+1510,,asset_prepayments,false,Unaprijed plaćeni troškovi osiguranja,450
+1520,,asset_prepayments,false,Unaprijed plaćeni troškovi zakupa,460
+1530,,asset_prepayments,false,Unaprijed plaćene pretplate i licencije,470
+1600,,asset_current,false,Potraživanja od zaposlenika,480
+1610,,asset_current,false,Potraživanja od države - porez na dobit,490
+1620,,asset_current,false,Potraživanja od države - ostalo,500
+1630,,asset_current,false,Potraživanja od povezanih poduzetnika,510
+1700,,asset_current,false,Dani kratkoročni zajmovi,520
+1710,,asset_current,false,Namjenski kratkoročni depoziti,530
+4000,,equity,false,Temeljni (upisani) kapital,540
+4010,,equity,false,Vlastite dionice i udjeli,550
+4100,,equity,false,Kapitalne rezerve,560
+4200,,equity,false,Zakonske rezerve,570
+4210,,equity,false,Statutarne rezerve,580
+4220,,equity,false,Ostale rezerve,590
+4300,,equity,false,Revalorizacijske rezerve,600
+4500,,equity_retained,false,Zadržana dobit,610
+4510,,equity_retained,false,Preneseni gubitak,620
+4610,,equity,false,Dobit poslovne godine,630
+4620,,equity,false,Gubitak poslovne godine,640
+5000,,liability_non_current,false,Rezerviranja za otpremnine i jubilarne nagrade,650
+5010,,liability_non_current,false,Rezerviranja za sudske sporove,660
+5020,,liability_non_current,false,Rezerviranja za jamstva na proizvode,670
+5100,,liability_non_current,false,Dugoročni krediti kod banaka,680
+5110,,liability_non_current,false,Dugoročni krediti od povezanih poduzetnika,690
+5120,,liability_non_current,false,Izdane dugoročne obveznice,700
+5200,,liability_non_current,false,Dugoročne obveze prema dobavljačima,710
+5300,,liability_non_current,false,Odgođena porezna obveza,720
+5400,,liability_non_current,false,Dugoročno razgraničene državne potpore,730
+6200,,liability_payable,true,Obveze prema dobavljačima u zemlji,740
+6210,,liability_payable,true,Obveze prema dobavljačima u EU,750
+6220,,liability_payable,true,Obveze prema dobavljačima izvan EU,760
+6230,,liability_current,false,Obveze po primljenim predujmovima,770
+6300,,liability_current,false,Obveze za plaće,780
+6310,,liability_current,false,Obveze za doprinose na plaće,790
+6320,,liability_current,false,Obveze za porez na dohodak iz plaća,800
+6330,,liability_current,false,Obveze za prirez,810
+6400,,liability_current,true,Obveza za PDV,820
+6410,,liability_current,false,Obveza za porez na dobit,830
+6420,,liability_current,false,Obveze za ostale poreze i doprinose,840
+6500,,liability_current,false,Obveze za kamate,850
+6510,,liability_current,false,Obveze za dividende,860
+6600,,liability_current,false,Kratkoročni krediti kod banaka,870
+6610,,liability_current,false,Kratkoročni dio dugoročnih kredita,880
+6700,,liability_current,false,Kratkoročno razgraničeni prihodi,890
+6710,,liability_current,false,Obračunani troškovi,900
+6800,,liability_current,false,Obveze prema povezanim poduzetnicima,910
+6900,,liability_current,false,Prijelazni račun,920
+6910,,liability_current,false,Ostale kratkoročne obveze,930
+7100,,expense_direct_cost,false,Trošak sirovina i materijala,940
+7110,,expense_direct_cost,false,Trošak prodane trgovačke robe,950
+7120,,expense,false,Trošak energije,960
+7130,,expense,false,Trošak ambalaže,970
+7200,,expense,false,Troškovi plaća,980
+7210,,expense,false,Troškovi doprinosa na plaće,990
+7220,,expense,false,Troškovi naknada radnicima (dnevnice prijevoz),1000
+7230,,expense,false,Troškovi osiguranja radnika,1010
+7300,,expense,false,Troškovi usluga,1020
+7310,,expense,false,Troškovi zakupa i najma,1030
+7320,,expense,false,Troškovi promidžbe i reprezentacije,1040
+7330,,expense,false,Troškovi intelektualnih i osobnih usluga,1050
+7340,,expense,false,Troškovi telekomunikacija i poštarine,1060
+7350,,expense,false,Troškovi tekućeg i investicijskog održavanja,1070
+7360,,expense,false,Troškovi osiguranja imovine,1080
+7370,,expense,false,Troškovi bankarskih usluga i platnog prometa,1090
+7400,,expense_depreciation,false,Amortizacija nematerijalne imovine,1100
+7410,,expense_depreciation,false,Amortizacija materijalne imovine,1110
+7420,,expense,false,Tečajne razlike - rashodi,1120
+7430,,expense,false,Kamate i ostali financijski rashodi,1130
+7440,,expense,false,Vrijednosno usklađenje financijske imovine,1140
+7500,,expense,false,Vrijednosno usklađenje potraživanja,1150
+7510,,expense,false,Vrijednosno usklađenje zaliha,1160
+7600,,expense,false,Nabavna vrijednost prodane dugotrajne imovine,1170
+7610,,expense,false,Nabavna vrijednost osobnih automobila i sredstava za osobni prijevoz,1180
+7700,,expense,false,Porez na dobit,1190
+7900,,expense,false,Ostali (izvanredni) rashodi,1200
+8100,,income,false,Prihodi od prodaje robe u zemlji,1210
+8110,,income,false,Prihodi od prodaje robe u EU,1220
+8120,,income,false,Prihodi od izvoza robe,1230
+8130,,income,false,Prihodi od usluga u zemlji,1240
+8140,,income,false,Prihodi od usluga u EU,1250
+8150,,income,false,Prihodi od izvoza usluga,1260
+8200,,income,false,Prihodi od najma,1270
+8300,,income_other,false,Prihodi od državnih potpora,1280
+8310,,income_other,false,Dobit od prodaje dugotrajne imovine,1290
+8400,,income_other,false,Prihodi od kamata,1300
+8410,,income_other,false,Tečajne razlike - prihodi,1310
+8420,,income_other,false,Prihodi od dividendi i udjela u dobiti,1320
+8900,,income_other,false,Ostali (izvanredni) prihodi,1330
+8910,,income_other,false,Razlike u zaokruživanju,1340
+9000,,off_balance,false,Tuđa dugotrajna imovina,1350
+9010,,off_balance,false,Primljena osiguranja plaćanja,1360
+9020,,off_balance,false,Roba na komisiji,1370
+9030,,off_balance,false,Zakupljena imovina - operativni leasing,1380

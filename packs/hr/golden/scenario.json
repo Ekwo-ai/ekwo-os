@@ -1,0 +1,193 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "Poslovna godina 2026. — tri mjesečna razdoblja obračuna PDV-a",
+  "fiscal_year": {
+    "name": "Poslovna godina 2026.",
+    "start": "2026-01-01",
+    "end": "2026-12-31"
+  },
+  "periods": [
+    { "code": "2026-01", "from": "2026-01-01", "to": "2026-01-31" },
+    { "code": "2026-02", "from": "2026-02-01", "to": "2026-02-28" },
+    { "code": "2026-03", "from": "2026-03-01", "to": "2026-03-31" }
+  ],
+  "contacts": [
+    { "ref": "C-DOM", "name": "Jadran Trgovina d.o.o.", "type": "customer", "country": "HR", "vat_number": "HR12345678901" },
+    { "ref": "C-BUILDER", "name": "Zagreb Nekretnine d.o.o.", "type": "customer", "country": "HR", "vat_number": "HR23456789012" },
+    { "ref": "C-EU", "name": "Bayern Handel GmbH", "type": "customer", "country": "DE", "vat_number": "DE123456789" },
+    { "ref": "C-EXPORT", "name": "Liberty Import Corp.", "type": "customer", "country": "US" },
+    { "ref": "C-TENANT", "name": "Ana Marić", "type": "customer", "country": "HR" },
+    { "ref": "C-SOLAR", "name": "Ivan Kovač", "type": "customer", "country": "HR" },
+    { "ref": "S-DOM", "name": "Kvarner Ured d.o.o.", "type": "supplier", "country": "HR", "vat_number": "HR34567890123" },
+    { "ref": "S-CARDEALER", "name": "Panonija Automobili d.o.o.", "type": "supplier", "country": "HR", "vat_number": "HR45678901234" },
+    { "ref": "S-BUILDER", "name": "Dalmacija Gradnja d.o.o.", "type": "supplier", "country": "HR", "vat_number": "HR56789012345" },
+    { "ref": "S-EU-GOODS", "name": "Sachsen Rohstoffe AG", "type": "supplier", "country": "DE", "vat_number": "DE234567890" },
+    { "ref": "S-EU-SERVICE", "name": "Berlin IT Consulting GmbH", "type": "supplier", "country": "DE", "vat_number": "DE345678901" },
+    { "ref": "S-US-SERVICE", "name": "Liberty Consulting LLC", "type": "supplier", "country": "US" },
+    { "ref": "S-US-GOODS", "name": "Atlantic Equipment Inc.", "type": "supplier", "country": "US" }
+  ],
+  "documents": [
+    {
+      "ref": "D1",
+      "type": "sale_invoice",
+      "contact": "C-DOM",
+      "date": "2026-01-10",
+      "why": "Jedan račun s tri pozitivne tuzemne stope PDV-a (25%, 13%, 5%) na različitim linijama.",
+      "lines": [
+        { "name": "Trgovačka roba", "quantity": 1, "unit_price": 1000, "tax": "HR-S-25", "account": "8100" },
+        { "name": "Smještaj na poslovnom putu", "quantity": 1, "unit_price": 300, "tax": "HR-S-13", "account": "8100" },
+        { "name": "Knjige", "quantity": 1, "unit_price": 200, "tax": "HR-S-5", "account": "8100" }
+      ]
+    },
+    {
+      "ref": "D2",
+      "type": "sale_credit_note",
+      "contact": "C-DOM",
+      "date": "2026-01-15",
+      "why": "Djelomični povrat trgovačke robe s računa D1 — provjerava umanjenje kutije II3 i konta obveze za PDV.",
+      "lines": [
+        { "name": "Povrat trgovačke robe", "quantity": 1, "unit_price": 200, "tax": "HR-S-25", "account": "8100" }
+      ]
+    },
+    {
+      "ref": "D3",
+      "type": "sale_invoice",
+      "contact": "C-EU",
+      "date": "2026-01-18",
+      "why": "Isporuka dobara kupcu registriranom za PDV u Njemačkoj — oslobođeno s pravom na odbitak pretporeza, kutija I3.",
+      "lines": [
+        { "name": "Strojna oprema", "quantity": 1, "unit_price": 5000, "tax": "HR-S-ICG", "account": "8110" }
+      ]
+    },
+    {
+      "ref": "D4",
+      "type": "sale_invoice",
+      "contact": "C-EU",
+      "date": "2026-01-20",
+      "why": "Konzultantska usluga poreznom obvezniku u Njemačkoj — mjesto oporezivanja u državi kupca, kutija I4.",
+      "lines": [
+        { "name": "Konzultantske usluge", "quantity": 1, "unit_price": 2000, "tax": "HR-S-ICS", "account": "8110" }
+      ]
+    },
+    {
+      "ref": "D5",
+      "type": "sale_invoice",
+      "contact": "C-EXPORT",
+      "date": "2026-01-25",
+      "why": "Izvozna isporuka strojne opreme u SAD — stopa 0% s pravom na odbitak pretporeza, kutija I9.",
+      "lines": [
+        { "name": "Strojna oprema za izvoz", "quantity": 1, "unit_price": 8000, "tax": "HR-S-EXPORT", "account": "8120" }
+      ]
+    },
+    {
+      "ref": "D6",
+      "type": "sale_invoice",
+      "contact": "C-TENANT",
+      "date": "2026-02-01",
+      "why": "Najam stana za stanovanje — oslobođeno PDV-a bez prava na odbitak pretporeza, kutija I8.",
+      "lines": [
+        { "name": "Najam stana za veljaču 2026.", "quantity": 1, "unit_price": 600, "tax": "HR-S-EXEMPT-RENT", "account": "8200" }
+      ]
+    },
+    {
+      "ref": "D7",
+      "type": "sale_invoice",
+      "contact": "C-SOLAR",
+      "date": "2026-02-05",
+      "why": "Isporuka i ugradnja solarnih ploča na privatni stambeni objekt — stopa 0%, kutija I11.",
+      "lines": [
+        { "name": "Isporuka i ugradnja solarnih ploča", "quantity": 1, "unit_price": 4000, "tax": "HR-S-0", "account": "8100" }
+      ]
+    },
+    {
+      "ref": "D8",
+      "type": "sale_invoice",
+      "contact": "C-BUILDER",
+      "date": "2026-02-10",
+      "why": "Građevinska usluga poreznom obvezniku registriranom za PDV u RH — prijenos porezne obveze na primatelja, kutija I1.",
+      "lines": [
+        { "name": "Građevinske usluge — fasada", "quantity": 1, "unit_price": 3000, "tax": "HR-S-DOMRC", "account": "8100" }
+      ]
+    },
+    {
+      "ref": "D9",
+      "type": "purchase_invoice",
+      "contact": "S-DOM",
+      "date": "2026-02-12",
+      "why": "Jedan ulazni račun s tri stope pretporeza (25%, 13%, 5%) na različitim linijama.",
+      "lines": [
+        { "name": "Uredski materijal", "quantity": 1, "unit_price": 400, "tax": "HR-P-25", "account": "7300" },
+        { "name": "Smještaj na poslovnom putu", "quantity": 1, "unit_price": 150, "tax": "HR-P-13", "account": "7300" },
+        { "name": "Knjige za uredsku knjižnicu", "quantity": 1, "unit_price": 100, "tax": "HR-P-5", "account": "7300" }
+      ]
+    },
+    {
+      "ref": "D10",
+      "type": "purchase_invoice",
+      "contact": "S-CARDEALER",
+      "date": "2026-02-15",
+      "why": "Nabava osobnog automobila — pretporez odbitan samo 50%, ostatak povećava nabavnu vrijednost sredstva.",
+      "lines": [
+        { "name": "Osobni automobil", "quantity": 1, "unit_price": 20000, "tax": "HR-P-CAR-25", "account": "0230" }
+      ]
+    },
+    {
+      "ref": "D11",
+      "type": "purchase_invoice",
+      "contact": "S-BUILDER",
+      "date": "2026-03-01",
+      "why": "Primljena građevinska usluga — samoobračun PDV-a i istovremeni odbitak pretporeza, kutije II4 i III4.",
+      "lines": [
+        { "name": "Građevinske usluge — krov", "quantity": 1, "unit_price": 5000, "tax": "HR-P-DOMRC", "account": "7300" }
+      ]
+    },
+    {
+      "ref": "D12",
+      "type": "purchase_invoice",
+      "contact": "S-EU-GOODS",
+      "date": "2026-03-05",
+      "why": "Stjecanje dobara unutar EU — samoobračun i odbitak pretporeza, kutije II7 i III7.",
+      "lines": [
+        { "name": "Sirovine iz Njemačke", "quantity": 1, "unit_price": 6000, "tax": "HR-P-ICG-25", "account": "7100" }
+      ]
+    },
+    {
+      "ref": "D13",
+      "type": "purchase_invoice",
+      "contact": "S-EU-SERVICE",
+      "date": "2026-03-10",
+      "why": "Primljena usluga iz EU — samoobračun i odbitak pretporeza, kutije II10 i III10.",
+      "lines": [
+        { "name": "IT usluge iz Njemačke", "quantity": 1, "unit_price": 1500, "tax": "HR-P-ICS-25", "account": "7300" }
+      ]
+    },
+    {
+      "ref": "D14",
+      "type": "purchase_invoice",
+      "contact": "S-US-SERVICE",
+      "date": "2026-03-15",
+      "why": "Usluga primljena od poreznog obveznika bez sjedišta u RH — samoobračun i odbitak pretporeza, kutije II13 i III13.",
+      "lines": [
+        { "name": "Konzultantske usluge iz SAD-a", "quantity": 1, "unit_price": 2500, "tax": "HR-P-FOREIGN-25", "account": "7300" }
+      ]
+    },
+    {
+      "ref": "D15",
+      "type": "purchase_invoice",
+      "contact": "S-US-GOODS",
+      "date": "2026-03-20",
+      "why": "Uvoz opreme iz SAD-a — PDV pri uvozu obračunan na temelju carinske deklaracije i odbijen, kutije II15 i III14.",
+      "lines": [
+        { "name": "Uvoz opreme", "quantity": 1, "unit_price": 10000, "tax": "HR-P-IMPORT", "account": "0220" }
+      ]
+    }
+  ],
+  "payments": [
+    { "ref": "P1", "direction": "inbound", "date": "2026-01-20", "amount": 1799.00, "contact": "C-DOM", "journal": "BAN", "match": "D1", "why": "Naplata računa D1 u cijelosti." },
+    { "ref": "P2", "direction": "inbound", "date": "2026-01-25", "amount": 5000.00, "contact": "C-EU", "journal": "BAN", "match": "D3", "why": "Naplata isporuke dobara unutar EU." },
+    { "ref": "P3", "direction": "inbound", "date": "2026-02-01", "amount": 8000.00, "contact": "C-EXPORT", "journal": "BAN", "match": "D5", "why": "Naplata izvozne isporuke." },
+    { "ref": "P4", "direction": "outbound", "date": "2026-02-20", "amount": 774.50, "contact": "S-DOM", "journal": "BAN", "match": "D9", "why": "Plaćanje ulaznog računa D9." },
+    { "ref": "P5", "direction": "outbound", "date": "2026-02-25", "amount": 25000.00, "contact": "S-CARDEALER", "journal": "BAN", "match": "D10", "why": "Plaćanje računa za osobni automobil." },
+    { "ref": "P6", "direction": "inbound", "date": "2026-01-05", "amount": 500.00, "contact": "C-BUILDER", "journal": "BAN", "match": null, "why": "Predujam za buduću građevinsku uslugu — otvorena stavka do izdavanja računa D8." }
+  ]
+}

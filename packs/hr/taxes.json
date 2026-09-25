@@ -1,0 +1,396 @@
+[
+  {
+    "code": "HR-S-25",
+    "name": "PDV 25% — tuzemna isporuka",
+    "rate": 25,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "legal_reference": "Zakon o PDV čl. 38. st. 1. — opća stopa PDV-a od 25%.",
+    "source": "zakon-pdv",
+    "vat_category": "S",
+    "sequence": 10,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "II3" },
+        { "type": "tax", "account": "6400", "box": "II3" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "II3", "box_factor": -100 },
+        { "type": "tax", "account": "6400", "box": "II3", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "HR-S-13",
+    "name": "PDV 13% — tuzemna isporuka",
+    "rate": 13,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "legal_reference": "Zakon o PDV čl. 38. st. 3. — snižena stopa 13% (npr. smještaj u hotelima, voda, električna energija).",
+    "source": "zakon-pdv",
+    "vat_category": "S",
+    "sequence": 20,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "II2" },
+        { "type": "tax", "account": "6400", "box": "II2" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "II2", "box_factor": -100 },
+        { "type": "tax", "account": "6400", "box": "II2", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "HR-S-5",
+    "name": "PDV 5% — tuzemna isporuka",
+    "rate": 5,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "legal_reference": "Zakon o PDV čl. 38. st. 2. — snižena stopa 5% (npr. kruh, mlijeko, lijekovi, knjige).",
+    "source": "zakon-pdv",
+    "vat_category": "S",
+    "sequence": 30,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "II1" },
+        { "type": "tax", "account": "6400", "box": "II1" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "II1", "box_factor": -100 },
+        { "type": "tax", "account": "6400", "box": "II1", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "HR-S-0",
+    "name": "PDV 0% — solarne ploče na privatnim stambenim objektima",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "legal_reference": "Zakon o PDV čl. 38. st. 6. — isporuka i ugradnja solarnih ploča na privatne stambene objekte oporezuje se po stopi 0%.",
+    "source": "zakon-pdv",
+    "vat_category": "Z",
+    "conditions": ["supply_nature"],
+    "sequence": 40,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "I11" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "I11", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "HR-S-EXPORT",
+    "name": "Izvozna isporuka",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2026-01-01",
+    "legal_reference": "Zakon o PDV čl. 45. st. 1. t. 1. — izvozna isporuka dobara otpremljenih ili prevezenih izvan Europske unije je oslobođena PDV-a s pravom na odbitak pretporeza.",
+    "source": "zakon-pdv",
+    "vat_category": "G",
+    "exemption_code": "VATEX-EU-G",
+    "sequence": 50,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "I9" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "I9", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "HR-S-ICG",
+    "name": "Isporuka dobara unutar EU",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "intracom_goods",
+    "valid_from": "2026-01-01",
+    "legal_reference": "Zakon o PDV čl. 41. st. 1. t. a) — isporuka dobara poreznom obvezniku registriranom za potrebe PDV-a u drugoj državi članici je oslobođena PDV-a.",
+    "source": "zakon-pdv",
+    "vat_category": "K",
+    "exemption_code": "VATEX-EU-IC",
+    "sequence": 60,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "I3" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "I3", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "HR-S-ICS",
+    "name": "Usluga oporeziva u državi sjedišta primatelja (EU)",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "intracom_services",
+    "valid_from": "2026-01-01",
+    "legal_reference": "Zakon o PDV čl. 17. st. 1. — mjesto obavljanja usluge poreznom obvezniku je mjesto njegova sjedišta; primatelj u drugoj državi članici obračunava PDV.",
+    "source": "zakon-pdv",
+    "vat_category": "K",
+    "exemption_code": "VATEX-EU-IC",
+    "sequence": 70,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "I4" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "I4", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "HR-S-DOMRC",
+    "name": "Građevinska usluga — prijenos porezne obveze na primatelja",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "domestic_reverse_charge",
+    "valid_from": "2026-01-01",
+    "legal_reference": "Zakon o PDV čl. 75. st. 3. t. a) — kad se obavljaju građevinske usluge poreznom obvezniku registriranom za potrebe PDV-a u RH, PDV obračunava primatelj.",
+    "source": "zakon-pdv",
+    "vat_category": "AE",
+    "exemption_code": "VATEX-EU-AE",
+    "sequence": 80,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "I1" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "I1", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "HR-S-EXEMPT-RENT",
+    "name": "Najam stambenih prostorija — oslobođeno bez prava na odbitak",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2026-01-01",
+    "legal_reference": "Zakon o PDV čl. 40. st. 1. t. l) — najam stambenih prostorija za stanovanje je oslobođen PDV-a bez prava na odbitak pretporeza (transponira čl. 135. st. 1. t. l) Direktive 2006/112/EZ).",
+    "source": "zakon-pdv",
+    "vat_category": "E",
+    "exemption_code": "VATEX-EU-135-1",
+    "conditions": ["supply_nature"],
+    "sequence": 90,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "I8" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "I8", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "HR-P-25",
+    "name": "PDV 25% — tuzemna nabava",
+    "rate": 25,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "legal_reference": "Zakon o PDV čl. 38. st. 1. i čl. 58.-61. — pravo na odbitak pretporeza po općoj stopi 25%.",
+    "source": "zakon-pdv",
+    "sequence": 100,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "III3" },
+        { "type": "tax", "account": "1400", "box": "III3" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "III3", "box_factor": -100 },
+        { "type": "tax", "account": "1400", "box": "III3", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "HR-P-13",
+    "name": "PDV 13% — tuzemna nabava",
+    "rate": 13,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "legal_reference": "Zakon o PDV čl. 38. st. 3. i čl. 58.-61.",
+    "source": "zakon-pdv",
+    "sequence": 110,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "III2" },
+        { "type": "tax", "account": "1400", "box": "III2" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "III2", "box_factor": -100 },
+        { "type": "tax", "account": "1400", "box": "III2", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "HR-P-5",
+    "name": "PDV 5% — tuzemna nabava",
+    "rate": 5,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "legal_reference": "Zakon o PDV čl. 38. st. 2. i čl. 58.-61.",
+    "source": "zakon-pdv",
+    "sequence": 120,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "III1" },
+        { "type": "tax", "account": "1400", "box": "III1" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "III1", "box_factor": -100 },
+        { "type": "tax", "account": "1400", "box": "III1", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "HR-P-CAR-25",
+    "name": "PDV 25% — osobni automobil, 50% neodbitno",
+    "rate": 25,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "legal_reference": "Zakon o PDV čl. 61. st. 2. — ne može se odbiti 50% pretporeza obračunanog za nabavu osobnih automobila i drugih sredstava za osobni prijevoz te dobara i usluga u vezi s tim sredstvima.",
+    "source": "zakon-pdv",
+    "sequence": 130,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "III3" },
+        { "type": "tax", "factor": 50, "account": "1400", "box": "III3", "box_factor": 50 },
+        { "type": "tax_on_base", "factor": 50 }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "III3", "box_factor": -100 },
+        { "type": "tax", "factor": 50, "account": "1400", "box": "III3", "box_factor": -50 },
+        { "type": "tax_on_base", "factor": 50, "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "HR-P-DOMRC",
+    "name": "Građevinska usluga primljena — prijenos porezne obveze",
+    "rate": 25,
+    "scope": "purchase",
+    "treatment": "domestic_reverse_charge",
+    "valid_from": "2026-01-01",
+    "legal_reference": "Zakon o PDV čl. 75. st. 3. t. a) — primatelj građevinske usluge, registriran za potrebe PDV-a u RH, obračunava PDV i istovremeno ostvaruje pravo na odbitak (čl. 58.-61.).",
+    "source": "zakon-pdv",
+    "sequence": 140,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": ["II4", "III4"] },
+        { "type": "tax", "account": "6400", "box": "II4" },
+        { "type": "tax", "account": "1400", "box": "III4" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": ["II4", "III4"], "box_factor": -100 },
+        { "type": "tax", "account": "6400", "box": "II4", "box_factor": -100 },
+        { "type": "tax", "account": "1400", "box": "III4", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "HR-P-ICG-25",
+    "name": "Stjecanje dobara unutar EU — 25%",
+    "rate": 25,
+    "scope": "purchase",
+    "treatment": "intracom_acquisition_goods",
+    "valid_from": "2026-01-01",
+    "legal_reference": "Zakon o PDV, oporezivanje stjecanja dobara unutar Europske unije — primatelj obračunava PDV po stopi kojom bi dobra bila oporezovana u tuzemstvu, i istovremeno odbija pretporez (čl. 58.-61.).",
+    "source": "zakon-pdv",
+    "sequence": 150,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": ["II7", "III7"] },
+        { "type": "tax", "account": "6400", "box": "II7" },
+        { "type": "tax", "account": "1400", "box": "III7" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": ["II7", "III7"], "box_factor": -100 },
+        { "type": "tax", "account": "6400", "box": "II7", "box_factor": -100 },
+        { "type": "tax", "account": "1400", "box": "III7", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "HR-P-ICS-25",
+    "name": "Primljena usluga iz EU — 25%",
+    "rate": 25,
+    "scope": "purchase",
+    "treatment": "intracom_acquisition_services",
+    "valid_from": "2026-01-01",
+    "legal_reference": "Zakon o PDV čl. 75. st. 1. t. 6. — primatelj obračunava PDV na usluge primljene od poreznog obveznika iz druge države članice, i istovremeno odbija pretporez (čl. 58.-61.).",
+    "source": "zakon-pdv",
+    "sequence": 160,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": ["II10", "III10"] },
+        { "type": "tax", "account": "6400", "box": "II10" },
+        { "type": "tax", "account": "1400", "box": "III10" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": ["II10", "III10"], "box_factor": -100 },
+        { "type": "tax", "account": "6400", "box": "II10", "box_factor": -100 },
+        { "type": "tax", "account": "1400", "box": "III10", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "HR-P-FOREIGN-25",
+    "name": "Primljena isporuka od poreznog obveznika bez sjedišta u RH — 25%",
+    "rate": 25,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2026-01-01",
+    "legal_reference": "Zakon o PDV čl. 75. st. 2. — kad oporezivu isporuku u tuzemstvu obavlja porezni obveznik bez sjedišta, prebivališta ili uobičajenog boravišta u RH i nije registriran za potrebe PDV-a u tuzemstvu, PDV plaća primatelj, koji istovremeno odbija pretporez (čl. 58.-61.).",
+    "source": "zakon-pdv",
+    "sequence": 170,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": ["II13", "III13"] },
+        { "type": "tax", "account": "6400", "box": "II13" },
+        { "type": "tax", "account": "1400", "box": "III13" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": ["II13", "III13"], "box_factor": -100 },
+        { "type": "tax", "account": "6400", "box": "II13", "box_factor": -100 },
+        { "type": "tax", "account": "1400", "box": "III13", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "HR-P-IMPORT",
+    "name": "PDV pri uvozu dobara",
+    "rate": 25,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2026-01-01",
+    "legal_reference": "Zakon o PDV čl. 32. st. 1. — oporezivi događaj kod uvoza dobara nastaje u trenutku uvoza; PDV obračunava carinska služba na temelju uvozne deklaracije, a obveznik odbija pretporez (čl. 58.-61.).",
+    "source": "zakon-pdv",
+    "sequence": 180,
+    "postings": {
+      "invoice": [
+        { "type": "base" },
+        { "type": "tax", "account": "6400", "box": "II15" },
+        { "type": "tax", "account": "1400", "box": "III14" }
+      ],
+      "credit_note": [
+        { "type": "base", "box_factor": -100 },
+        { "type": "tax", "account": "6400", "box": "II15", "box_factor": -100 },
+        { "type": "tax", "account": "1400", "box": "III14", "box_factor": -100 }
+      ]
+    }
+  }
+]

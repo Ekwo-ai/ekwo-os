@@ -4674,3 +4674,53 @@ gross one, or not reporting box 25 at all where nothing is deductible — box
 and only the cross-check box reads low. A posting type that carries a box and
 no ledger line — `type: "box_only"`, carrying no `account` and skipping the
 `entry_lines` insert altogether — is the shape a fix would take.
+
+## From Croatia
+
+### A box with a percentage and no ledger amount behind it
+
+Section V of Obrazac PDV asks for a single figure that is not a base, a tax
+or a sum of either: the annual pro-rata deduction percentage a partly-exempt
+taxpayer applies through the year, fixed once at the start of the year from
+the previous year's ratio of taxable to total supplies and reconciled in the
+December return. `tax_report_box.kind` is `base`, `tax` or `total`, and all
+three assume the box is either posted to or computed from boxes that are;
+there is no fourth kind for a rate the taxpayer declares about themselves
+rather than a rate the postings compute. Section VI is the same shape twice
+over — the value of non-current assets bought or sold in the period, a
+transfer of a going concern, services exchanged with a non-established
+person, goods received in a triangular transaction, and whether the cash
+scheme is in use — each a disclosure the return asks for and none of them a
+base, a tax or a sum of one. Section VII, added to the form from 1 January
+2026, states the same fact (food donated free of charge) in three different
+values — the cost without VAT, and the VAT-exclusive value it would have
+been sold for — of which only one could ever be a `base` posting, and even
+that one is not part of `IV`. `packs/hr/tax_report.json` models sections I
+through IV, where every box is a base, a tax or a sum of either, and leaves
+V, VI and VII out rather than force a percentage or a disclosure column into
+a kind that means something else. *Fix*: none proposed here, for the same
+reason `packs/sa/` proposes none for its own adjustment column — the missing
+piece is a fourth kind of box, disclosed rather than computed, and
+`tax_report.json` describes a return's liability, not its annexes.
+
+### A CIUS the base profile does not carry
+
+Croatia's own technical documentation of Fiskalizacija 2.0 describes the
+domestic eRačun as UBL 2.1 with a Croatian CIUS extension, `HR-EXT`, layered
+on Peppol BIS Billing 3.0 — the same base semantic model EN 16931 gives
+`packs/at/`, and the one this pack names in `einvoicing.profile`. A CIUS
+narrows a base profile — makes an optional field mandatory, restricts a code
+list, adds a business rule — without leaving the semantic model it narrows,
+which is exactly why `packs/at/` and this pack can both write `peppol-bis-3`
+in good faith: every field `HR-EXT` requires already exists in the base
+profile. What neither this pack nor `packages/formats/` states is which
+fields `HR-EXT` makes mandatory that Peppol BIS Billing 3.0 leaves optional,
+so a Peppol BIS Billing 3.0 invoice this repository already knows how to
+write is not yet known to be one Croatia's own intermediaries would accept.
+*Fix*: a CIUS is a document a national administration publishes, the way a
+profile is; the day a brick of `packages/formats/` reads one, `profile`
+would need a way to name a CIUS distinctly from the base it narrows —
+`peppol-bis-3+hr-ext`, or a field beside `profile` for it, the way ST38-1
+gave `certification.sources` a flag rather than a new field where a shape
+already existed close enough. Neither is proposed here on the strength of
+one country.
