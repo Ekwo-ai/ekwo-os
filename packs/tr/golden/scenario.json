@@ -1,0 +1,189 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "Aylık beyanname veren, KDV mükellefi bir Türk ticaret ve danışmanlık şirketinin 2026 yılına ait bir yılı",
+  "chart": "default",
+  "fiscal_year": { "name": "2026 Hesap Dönemi", "start": "2026-01-01", "end": "2026-12-31" },
+  "periods": [
+    { "code": "2026-01", "from": "2026-01-01", "to": "2026-01-31" },
+    { "code": "2026-02", "from": "2026-02-01", "to": "2026-02-28" },
+    { "code": "2026-03", "from": "2026-03-01", "to": "2026-03-31" },
+    { "code": "2026-08", "from": "2026-08-01", "to": "2026-08-31" },
+    { "code": "2026-11", "from": "2026-11-01", "to": "2026-11-30" }
+  ],
+  "statements": ["TR-TDHP-BILANCO", "TR-TDHP-GELIR"],
+  "contacts": [
+    { "ref": "cust-tr", "name": "Boğaziçi Danışmanlık Ltd. Şti.", "type": "customer", "country": "TR" },
+    { "ref": "cust-tr2", "name": "Anadolu Tekstil ve Konfeksiyon A.Ş.", "type": "customer", "country": "TR" },
+    { "ref": "cust-export", "name": "Rheinland Handels GmbH", "type": "customer", "country": "DE" },
+    { "ref": "cust-sigorta", "name": "Güven Sigorta A.Ş.", "type": "customer", "country": "TR" },
+    { "ref": "supp-tr", "name": "Marmara Büro Malzemeleri Ltd. Şti.", "type": "supplier", "country": "TR" },
+    { "ref": "supp-tr2", "name": "Ege Tekstil Toptan Satış Ltd. Şti.", "type": "supplier", "country": "TR" },
+    { "ref": "supp-import", "name": "Shenzhen Precision Components Co. Ltd", "type": "supplier", "country": "CN" },
+    { "ref": "supp-foreign", "name": "Nordic Strategy Advisors Oy", "type": "supplier", "country": "FI" },
+    { "ref": "supp-sigorta", "name": "Güven Sigorta A.Ş.", "type": "supplier", "country": "TR" }
+  ],
+  "documents": [
+    {
+      "ref": "INV-SR-1",
+      "type": "sale_invoice",
+      "contact": "cust-tr",
+      "date": "2026-01-15",
+      "why": "Genel orana (%20) tabi bir danışmanlık hizmeti satışı — matrah kutusu m20 ve hesaplanan KDV kutusu t20'yi besler, aynı zamanda CN-SR-1 ile kısmen iade edilecektir.",
+      "lines": [
+        { "name": "Ocak ayı yönetim danışmanlığı hizmeti", "quantity": 1, "unit_price": 20000, "tax": "TR-S-SR", "account": "600" }
+      ]
+    },
+    {
+      "ref": "INV-RR10-1",
+      "type": "sale_invoice",
+      "contact": "cust-tr2",
+      "date": "2026-01-20",
+      "why": "2007/13033 sayılı Kararın (II) sayılı listesinde yer alan bir teslim, indirimli %10 oranla — kutu m10/t10.",
+      "lines": [
+        { "name": "Tekstil ürünü toptan satışı", "quantity": 100, "unit_price": 150, "tax": "TR-S-RR10", "account": "600" }
+      ]
+    },
+    {
+      "ref": "INV-RR1-1",
+      "type": "sale_invoice",
+      "contact": "cust-tr",
+      "date": "2026-02-05",
+      "why": "2007/13033 sayılı Kararın (I) sayılı listesindeki temel bir gıda maddesi teslimi, %1 oranla — kutu m1/t1.",
+      "lines": [
+        { "name": "Temel gıda maddesi toptan satışı", "quantity": 500, "unit_price": 40, "tax": "TR-S-RR1", "account": "600" }
+      ]
+    },
+    {
+      "ref": "INV-EXP-1",
+      "type": "sale_invoice",
+      "contact": "cust-export",
+      "date": "2026-02-10",
+      "why": "Madde 11/1-a uyarınca ihracat istisnası kapsamında, yurt dışındaki bir müşteriye yapılan mal ihracatı — tam istisna, kutu mihr, madde 32 uyarınca iade hakkı doğurur.",
+      "lines": [
+        { "name": "Mamul ihracatı, FOB İzmir", "quantity": 1, "unit_price": 45000, "tax": "TR-S-ZR-EXP", "account": "601" }
+      ]
+    },
+    {
+      "ref": "INV-EX-FIN-1",
+      "type": "sale_invoice",
+      "contact": "cust-sigorta",
+      "date": "2026-02-20",
+      "why": "Madde 17/4-e uyarınca BSMV kapsamındaki bir sigorta acenteliği komisyon geliri, KDV'den istisna — kutu mist.",
+      "lines": [
+        { "name": "Sigorta acenteliği komisyon geliri", "quantity": 1, "unit_price": 6000, "tax": "TR-S-EX-FIN", "account": "649" }
+      ]
+    },
+    {
+      "ref": "CN-SR-1",
+      "type": "sale_credit_note",
+      "contact": "cust-tr",
+      "date": "2026-03-05",
+      "why": "INV-SR-1'e karşı kısmi iade — müşterinin iptal ettiği bir günlük danışmanlık, kutu m20/t20'nin eksi yönde de doğru işlediğini ve bir alacak dekontunun defter tarafını çevirdiğini kanıtlar.",
+      "lines": [
+        { "name": "İade: bir günlük danışmanlık hizmeti", "quantity": 1, "unit_price": 4000, "tax": "TR-S-SR", "account": "600" }
+      ]
+    },
+    {
+      "ref": "INV-SR-2",
+      "type": "sale_invoice",
+      "contact": "cust-tr",
+      "date": "2026-08-12",
+      "why": "Yılın ikinci yarısında ikinci bir genel oranlı satış — beyannamenin birden fazla ay için doğru hesaplandığını kanıtlar.",
+      "lines": [
+        { "name": "Ağustos ayı yönetim danışmanlığı hizmeti", "quantity": 1, "unit_price": 22000, "tax": "TR-S-SR", "account": "600" }
+      ]
+    },
+    {
+      "ref": "BILL-SR-1",
+      "type": "purchase_invoice",
+      "contact": "supp-tr",
+      "date": "2026-01-18",
+      "why": "Genel orana tabi, tamamı indirilebilir sıradan bir alış — kutu iyi/tyi.",
+      "lines": [
+        { "name": "Büro malzemesi alımı", "quantity": 1, "unit_price": 5000, "tax": "TR-P-SR", "account": "632" }
+      ]
+    },
+    {
+      "ref": "BILL-RR10-1",
+      "type": "purchase_invoice",
+      "contact": "supp-tr2",
+      "date": "2026-01-25",
+      "why": "İndirimli %10 oranına tabi bir alış — kutu iyi/tyi.",
+      "lines": [
+        { "name": "Tekstil ürünü toptan alışı", "quantity": 50, "unit_price": 120, "tax": "TR-P-RR10", "account": "153" }
+      ]
+    },
+    {
+      "ref": "BILL-IMP-1",
+      "type": "purchase_invoice",
+      "contact": "supp-import",
+      "date": "2026-02-15",
+      "why": "Yeniden satış amacıyla ithal edilen bir mal — KDV, madde 21 uyarınca hesaplanan matrah üzerinden, madde 46/2 gereği gümrük vergisiyle birlikte gümrük idaresine ödenmiş ve aynı dönemde indirilmiştir — kutu iith/tith.",
+      "lines": [
+        { "name": "İthal yedek parça, gümrükte CİF değer artı gümrük vergisi", "quantity": 1, "unit_price": 30000, "tax": "TR-P-IMP", "account": "153" }
+      ]
+    },
+    {
+      "ref": "BILL-RC-SVC-1",
+      "type": "purchase_invoice",
+      "contact": "supp-foreign",
+      "date": "2026-03-10",
+      "why": "Türkiye'de ikametgâhı, işyeri, kanuni ve iş merkezi bulunmayan bir danışmanlık firmasından alınan ve Türkiye'de faydalanılan bir hizmet — madde 9 uyarınca sorumlu sıfatıyla KDV, aynı dönemde 1 No'lu beyannamede indirilir — kutu trc.",
+      "lines": [
+        { "name": "Stratejik danışmanlık hizmeti, yurt dışı sağlayıcı", "quantity": 1, "unit_price": 12000, "tax": "TR-P-RC-SVC", "account": "632" }
+      ]
+    },
+    {
+      "ref": "BILL-EX-1",
+      "type": "purchase_invoice",
+      "contact": "supp-sigorta",
+      "date": "2026-03-15",
+      "why": "BSMV kapsamındaki bir sigorta primi — üzerinde hiç KDV hesaplanmamış bir alış.",
+      "lines": [
+        { "name": "İşyeri sigortası yıllık primi", "quantity": 1, "unit_price": 9000, "tax": "TR-P-EX", "account": "632" }
+      ]
+    },
+    {
+      "ref": "BILL-SR-2",
+      "type": "purchase_invoice",
+      "contact": "supp-tr",
+      "date": "2026-11-05",
+      "why": "Yılın son çeyreğinde ikinci bir genel oranlı alış — birden fazla ay boyunca beyannamenin tutarlılığını kanıtlar.",
+      "lines": [
+        { "name": "Büro malzemesi alımı, dördüncü çeyrek", "quantity": 1, "unit_price": 6000, "tax": "TR-P-SR", "account": "632" }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "PMT-IN-1",
+      "direction": "inbound",
+      "date": "2026-08-25",
+      "amount": 26400.0,
+      "contact": "cust-tr",
+      "journal": "BNK",
+      "match": "INV-SR-2",
+      "why": "INV-SR-2'nin banka havalesiyle tam tahsilatı."
+    },
+    {
+      "ref": "PMT-OUT-1",
+      "direction": "outbound",
+      "date": "2026-01-28",
+      "amount": 6000.0,
+      "contact": "supp-tr",
+      "journal": "BNK",
+      "match": "BILL-SR-1",
+      "why": "BILL-SR-1'in banka havalesiyle tam ödemesi."
+    },
+    {
+      "ref": "PMT-IN-2",
+      "direction": "inbound",
+      "date": "2026-11-20",
+      "amount": 5000.0,
+      "contact": "cust-tr2",
+      "journal": "BNK",
+      "match": null,
+      "why": "Henüz bir faturaya eşleştirilmemiş bir avans tahsilatı — açık kalan bir kalemin de gerçek bir defterde bulunduğunu gösterir."
+    }
+  ]
+}

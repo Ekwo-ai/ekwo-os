@@ -5016,3 +5016,92 @@ say plainly what it is. It is left here because the next country whose
 finance ministry runs the same kind of bot wall should not have to rediscover
 that a browser and an automated fetch are answered differently, or spend the
 time this pack did finding that out the hard way.
+
+## From Turkey
+
+`packs/tr/`, `community`, seed 82. Its value added tax is 3065 sayılı Katma
+Değer Vergisi Kanunu of 25 October 1984, its rates the Presidential Decisions
+made under article 28, and its chart of accounts — unlike every other pack
+outside the common system of VAT this repository carries so far, `packs/ae/`
+and `packs/sa/` among them — is not this pack's own design: 1 Sıra No'lu
+Muhasebe Sistemi Uygulama Genel Tebliği of 26 December 1992 makes the three-
+digit main accounts of the Tekdüzen Hesap Planı a legal obligation on every
+taxpayer keeping books on a balance-sheet basis, and `accounts.csv` transcribes
+them rather than inventing a shape. Two things the core could not say, and one
+thing worth recording so the next pack outside the common system does not
+re-derive it.
+
+### A country that files two returns over one responsibility, and a format that expects one
+
+Article 9 of the Law lets the Ministry make a party to a transaction
+responsible for the tax instead of the party who would ordinarily account for
+it — "vergi sorumlusu" — and the case this pack carries, a service bought from
+a supplier with no establishment in Turkey, is declared and paid on a return of
+its own, the **2 No'lu KDV Beyannamesi**, filed by the responsible party rather
+than by the taxpayer whose ordinary sales and purchases are on the **1 No'lu
+KDV Beyannamesi**. The two are not one form with two sections, the way a base
+and a tax share a box elsewhere in this repository: they are separate filings,
+on separate deadlines (the 21st day historically, administratively extended to
+the 25th by Circular No. 164, against the 1 No'lu return's 28th), and
+`docs/packs.md` already names the shape this meets — "A posting whose `report`
+names a form other than the one in `tax_report.json` is not cross-checked,
+because the pack carries one form; the day a country files two, it will be."
+That day is this pack's. `packs/tr/tax_report.json` models only the 1 No'lu
+return, and `TR-P-RC-SVC` posts the self-assessed liability with no box at all
+— it is not this form's box to carry — while the *deduction* article 29 lets
+the responsible party claim in the same period, on the 1 No'lu return, is the
+only half of the operation this pack's boxes report. A future pack able to
+declare a second `tax_report.json` would let a posting's `report` field, which
+already exists and is already read by nothing, name which of the two a box
+belongs to; until then, half a Turkish reverse charge is outside every box this
+format can check.
+
+### A withholding that is neither the tax nor the reverse charge this vocabulary has a word for
+
+The same article 9, read together with the Katma Değer Vergisi Genel Uygulama
+Tebliği's section I/C-2.1.3, also grounds **kısmi tevkifat** — a list of
+services and supplies (construction and its engineering, cleaning, security,
+scrap metal, and dozens more, the list itself amended by Tebliğ after Tebliğ)
+where the buyer pays the seller only the untaxed price plus the seller's own
+fraction of the tax, withholds the rest at a fraction the Tebliğ fixes per
+class of supply (2/10, 5/10, 7/10, 9/10 among them), and pays that fraction
+directly to the tax office on the same 2 No'lu KDV Beyannamesi as the
+foreign-service case above — while the seller still reports the **whole**
+base, and the **whole** tax net of what was withheld, on their own 1 No'lu
+return. `treatment: domestic_reverse_charge` is the nearest value this format
+has, and it is the wrong shape for two reasons at once: a reverse charge moves
+the *entire* tax to the buyer and the seller's own return never sees it, where
+here the seller keeps reporting a smaller cash receipt and a smaller net tax
+position on the *same* invoice the buyer is partly withholding from; and the
+fraction itself — 2/10 here, 9/10 there — is exactly the kind of number
+`conditions` was built to refuse holding ("no threshold amount ... no
+operator"), because it is a rate set by administrative Tebliğ and revised
+often, not a fact the ledger could ever be asked to compute. `packs/tr/` does
+not code kısmi tevkifat for both reasons: the shape does not fit `treatment`,
+and the fraction does not belong beside a `postings.factor` the way the
+Belgian vehicle tax's 50 % does, because that 50 % is a rate set by the same
+law that names the tax and never changes with the year's Tebliğ. This is a
+gap for whoever adds a fifth or sixth non-EU pack that meets the same kind of
+partial withholding under a different name; `packs/tr/README.md` names it
+under "Bu pack'in taşımadıkları" and codes only the full responsibility of
+article 9/1, foreign services received.
+
+### TRY and TR
+
+`TRY` is added to `00_currencies.sql` at two decimals — no rounding rule
+coarser than the currency's own was found for the return itself. `TR` is
+added to `00_territories.sql` outside the common system of VAT (`eu_vat_scope
+= 'none'`), the same row every non-EU pack needs before `vat_category`,
+`exemption_code` and the five `intracom_*` treatments are read the relaxed way
+this format reserves for a country the Union's rules do not reach; without
+it, `ekwo pack check` held this pack to VATEX and refused every zero-rated and
+exempt tax it declared. `vat_prefix` is null: a Turkish taxpayer is addressed
+by a Vergi Kimlik Numarası that carries no country prefix of that table's
+kind, and Turkey has no ISO 6523 identifier of its own either — it is absent
+from the Peppol participant identifier scheme list v9.7 — which is also why
+`packs/tr/pack.json`'s `einvoicing.party_scheme` and `vat_scheme` are null,
+alongside `profile`: e-Fatura and e-Arşiv Fatura are a clearance model through
+GİB's own platform or an accredited private integrator, in UBL-TR, and not a
+four-corner exchange of an EN 16931 profile between the two parties' own
+access points, the same shape `packs/sa/`'s FATOORA already recorded a gap
+for.

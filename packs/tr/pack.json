@@ -1,0 +1,164 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "TR",
+  "name": "Türkiye",
+  "version": "0.1.0",
+  "schema_min": "20260917170000",
+  "seed_sequence": 82,
+  "released_at": "2026-09-25",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "kdv-kanunu",
+        "title": "3065 sayılı Katma Değer Vergisi Kanunu, 25/10/1984 tarihli ve 18563 sayılı Resmî Gazete'de yayımlanmış, güncel konsolide metin",
+        "publisher": "Cumhurbaşkanlığı Mevzuat Bilgi Sistemi (mevzuat.gov.tr)",
+        "url": "https://www.mevzuat.gov.tr/mevzuatmetin/1.5.3065.pdf",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "vuk",
+        "title": "213 sayılı Vergi Usul Kanunu, 4/1/1961, güncel konsolide metin",
+        "publisher": "Cumhurbaşkanlığı Mevzuat Bilgi Sistemi (mevzuat.gov.tr)",
+        "url": "https://www.mevzuat.gov.tr/mevzuatmetin/1.4.213.pdf",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "kdv-oran-karari",
+        "title": "Mal ve Hizmetlere Uygulanacak Katma Değer Vergisi Oranlarının Tespitine İlişkin Kararda Değişiklik Yapılmasına Dair Karar (Karar Sayısı: 7346), 6 Temmuz 2023 — 7/7/2023 tarihli ve 32241 sayılı Resmî Gazete, genel oranı %18'den %20'ye ve (II) sayılı listedeki oranı %8'den %10'a yükselten karar; 2007/13033 sayılı Bakanlar Kurulu Kararının (24/12/2007, 30/12/2007 tarihli ve 26742 sayılı Resmî Gazete) değişikliği",
+        "publisher": "Cumhurbaşkanlığı — Resmî Gazete",
+        "url": "https://www.resmigazete.gov.tr/eskiler/2023/07/20230707-11.pdf",
+        "consulted_on": "2026-09-25",
+        "kind": "regulation"
+      },
+      {
+        "key": "kdv-genel-uygulama-tebligi",
+        "title": "Katma Değer Vergisi Genel Uygulama Tebliği, 26/4/2014 tarihli ve 28983 sayılı Resmî Gazete, sonraki seri no'lu tebliğlerle değişik güncel metin",
+        "publisher": "Hazine ve Maliye Bakanlığı — Gelir İdaresi Başkanlığı",
+        "url": "https://cdn.gib.gov.tr/api/gibportal-file/file/getFile?objectKey=MEVZUAT_TEBLIGLER%2FUNIVERSAL%2F2026%2Fkdv_genteb.pdf",
+        "consulted_on": "2026-09-25",
+        "kind": "regulation"
+      },
+      {
+        "key": "gib-beyan-uzatma",
+        "title": "149 Sıra No'lu Vergi Usul Kanunu Sirküleri — Katma Değer Vergisi Beyannamelerinin Verilme ve Ödeme Sürelerinin Uzatılması (1 Aralık 2022'den itibaren verilecek KDV beyannameleri için verilme ve ödeme süresi izleyen ayın 28. günü sonuna uzatılmıştır)",
+        "publisher": "Gelir İdaresi Başkanlığı",
+        "url": "https://www.gib.gov.tr/149-nolu-vergi-usul-kanunu-sirkuleri-ile-katma-deger-vergisi-beyannamelerinin-verilme-ve-odeme",
+        "consulted_on": "2026-09-25",
+        "kind": "guidance"
+      },
+      {
+        "key": "gib-efatura",
+        "title": "e-Fatura, e-Arşiv Fatura ve e-Defter uygulamaları — 509 Sıra No'lu Vergi Usul Kanunu Genel Tebliği ve sonraki değişiklikleri (535, 550, 573, 589 sıra no'lu tebliğler dahil)",
+        "publisher": "Gelir İdaresi Başkanlığı",
+        "url": "https://ebelge.gib.gov.tr/efaturamevzuat.html",
+        "consulted_on": "2026-09-25",
+        "kind": "portal"
+      },
+      {
+        "key": "muhasebe-tebligi-1",
+        "title": "1 Sıra No'lu Muhasebe Sistemi Uygulama Genel Tebliği — Tekdüzen Hesap Çerçevesi, Hesap Planı ve İşleyişi, 26/12/1992 tarihli ve 21447 sayılı Resmî Gazete",
+        "publisher": "Maliye ve Gümrük Bakanlığı",
+        "url": "https://www.resmigazete.gov.tr/arsiv/21447_1.pdf",
+        "consulted_on": "2026-09-25",
+        "kind": "regulation"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "TRY",
+    "language": "tr",
+    "rounding_method": "half_up",
+    "closing_style": "result_accounts",
+    "fiscal_year_default": "calendar",
+    "roles": {
+      "receivable": "120",
+      "payable": "320",
+      "suspense": "1369",
+      "rounding": "659",
+      "retained_earnings": "570",
+      "retained_earnings_loss": "580",
+      "current_year_result_profit": "590",
+      "current_year_result_loss": "591",
+      "sales": "600",
+      "purchase": "632",
+      "bank": "102",
+      "cash": "100",
+      "fx_gain": "646",
+      "fx_loss": "656",
+      "asset_disposal_gain": "679",
+      "asset_disposal_loss": "689",
+      "tax_payable": "3600",
+      "tax_receivable": "192"
+    },
+    "journal_roles": {
+      "sales": "SAL",
+      "purchase": "PUR",
+      "miscellaneous": "GEN",
+      "opening": "OPN"
+    }
+  },
+  "languages": [],
+  "journals": [
+    { "code": "SAL", "type": "sales", "name": "Satış Yevmiyesi", "sequence": 10 },
+    { "code": "PUR", "type": "purchase", "name": "Alış Yevmiyesi", "sequence": 20 },
+    { "code": "BNK", "type": "bank", "name": "Banka", "sequence": 30 },
+    { "code": "CSH", "type": "cash", "name": "Kasa", "sequence": 40 },
+    { "code": "GEN", "type": "general", "name": "Genel Yevmiye", "sequence": 50 },
+    { "code": "OPN", "type": "opening", "name": "Açılış Kayıtları", "sequence": 60 }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Tekdüzen Hesap Planı",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": ["TR-TDHP-BILANCO", "TR-TDHP-GELIR"],
+      "legal_reference": "1 Sıra No'lu Muhasebe Sistemi Uygulama Genel Tebliği, bilânço esasına göre defter tutan gerçek ve tüzel kişilerin Tekdüzen Hesap Çerçevesi'ni, Hesap Planı'nı ve işleyiş kurallarını 1/1/1994 tarihinden itibaren uygulamalarını zorunlu kılar. Bu pack yalnızca üç haneli ana hesapları (Tebliğ'in kendisinin belirlediği, değiştirilemez) ve KDV ile tahsilat/ödeme işleyişi için gerekli birkaç dört haneli alt hesabı taşır; bir işletmenin tuttuğu tüm alt hesaplar burada sayılmamıştır.",
+      "source": "muhasebe-tebligi-1"
+    }
+  ],
+  "documents": {
+    "numbering": "gapless_per_year",
+    "number_format": "{CODE}{YYYY}{NNNNNNNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "invoice_if_issued",
+    "posted_edit_policy": "reversal_only",
+    "references": {
+      "numbering": {
+        "legal_reference": "213 sayılı Vergi Usul Kanunu, madde 230/1-2 — faturada düzenlenme tarihi ile fatura seri ve sıra numarasının bulunması zorunludur; madde 231/1 — faturalar sıra numarası dahilinde teselsül ettirilir. Elektronik fatura (e-Fatura) ve e-Arşiv Fatura uygulamasında bu numara, Gelir İdaresi Başkanlığı'nın teknik kılavuzlarının belirlediği üç karakterlik seri kodu, dört haneli yıl ve dokuz haneli müteselsil sayaçtan oluşan on altı karakterlik biçimde üretilir; format burada bir işletmenin seçebileceği bir örnektir, dayatılan tek biçim değildir.",
+        "source": "vuk"
+      },
+      "tax_point": {
+        "legal_reference": "3065 sayılı Kanun, madde 10 — vergiyi doğuran olay kural olarak (a) bendi uyarınca malın tesliminde veya hizmetin ifasında meydana gelir; (b) bendi bunu, teslim veya ifadan önce fatura ya da benzeri belge düzenlenmesi hâlinde, bu belgede gösterilen miktarla sınırlı olmak üzere belgenin düzenlenmesi anına ileri çeker — teslim/ifa kural, önceden kesilen fatura istisnadır, tıpkı Belçika'nın madde 16/22 - 17/22bis'i ve Lüksemburg'un madde 21 - 24, par. 1'i gibi. İthalatta vergiyi doğuran olay ayrıca (ı) bendinde düzenlenmiştir: gümrük vergisine tabi işlemlerde gümrük vergisi ödeme mükellefiyetinin başlaması, tabi olmayanlarda gümrük beyannamesinin tescili.",
+        "source": "kdv-kanunu"
+      },
+      "posted_edit_policy": {
+        "legal_reference": "6102 sayılı Türk Ticaret Kanunu, madde 64/3 — tacirin tuttuğu ticari defterlere yapılan kayıtların, izleyen bir düzeltme kaydı düşülmeden değiştirilmesi, okunamaz hâle getirilmesi ya da kayıt sürecinin izlenmesini engelleyecek şekilde ortadan kaldırılması yasaktır; 213 sayılı Vergi Usul Kanunu, madde 231/1 faturaların sıra numarası dahilinde teselsül ettirilmesini ister. Bir işlenmiş faturanın taslağa dönmesi bu iki kuralı birlikte ihlal eder — numarası boşta kalır ve kaydı sanki hiç yapılmamış gibi geri almak, izleyen bir düzeltme kaydı düşmeden değişiklik yapmak demektir. Düzeltme, 3065 sayılı Kanun'un fatura ve benzeri belgeler için tanıdığı alacak dekontu (iade faturası) iledir.",
+        "source": "vuk"
+      }
+    },
+    "mentions": [
+      {
+        "code": "reverse_charge",
+        "applies_when": "reverse_charge",
+        "text": "KDV, alıcı tarafından sorumlu sıfatıyla 3065 sayılı Kanun'un 9'uncu maddesi uyarınca 2 No'lu KDV Beyannamesi ile beyan edilip ödenecektir.",
+        "sequence": 10,
+        "legal_reference": "3065 sayılı Kanun, madde 9 — Maliye Bakanlığı (Hazine ve Maliye Bakanlığı), vergi alacağının emniyet altına alınması amacıyla, vergiye tabi işlemlere taraf olanları verginin ödenmesinden sorumlu tutabilir; Katma Değer Vergisi Genel Uygulama Tebliği I/C-2 bölümü bu sorumluluğun beyanının 2 No'lu KDV Beyannamesi ile yapılacağını düzenler. Faturaya basılacak cümlenin metni bu Kanunda yer almadığından pack'in kendi ifadesidir.",
+        "source": "kdv-kanunu"
+      }
+    ]
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "e-Fatura ve e-Arşiv Fatura, Gelir İdaresi Başkanlığı'nın (GİB) kendi platformu veya GİB onaylı özel entegratörler üzerinden, ciro eşiğini aşan mükellefler için 213 sayılı Vergi Usul Kanunu'nun mükerrer 257'nci maddesindeki yetkiye dayanan 509 Sıra No'lu Vergi Usul Kanunu Genel Tebliği (ve 535, 550, 573, 589 sıra no'lu değişiklik tebliğleri) ile zorunlu kılınmıştır — bu pack'in araştırmasının ulaştığı en güncel eşik, bir önceki yıl brüt satış hasılatı 3.000.000 TL ve üzerinde olan mükellefler için genel olarak, e-ticaret/gayrimenkul ve motorlu taşıt ticareti yapanlar için 500.000 TL olarak, izleyen yılın 1 Temmuz'undan itibaren geçerlidir; 1 Ocak 2026'dan itibaren bilanço esasına göre defter tutan hiçbir mükellef artık kâğıt fatura düzenleyemez, tutarı ne olursa olsun e-Fatura veya e-Arşiv Fatura düzenlemek zorundadır. `profile` bu yüzden boş bırakılmıştır: e-Fatura ve e-Arşiv Fatura, UBL-TR (UBL 2.1'in GİB tarafından yerelleştirilmiş bir alt kümesi) biçiminde yazılır ve GİB'in kendi platformu ya da bir özel entegratör üzerinden GİB'e iletilir — iki taraf arasında doğrudan bir EN 16931 profili (Peppol BIS, Factur-X, XRechnung, bir PINT) değişimi değil, idarenin kendisinin arada durduğu bir teyit (clearance benzeri) modelidir; packages/formats'ın hiçbir bileşeni bu XML'i yazmaz, imzalamaz ya da GİB'e iletmez. `party_scheme` ve `vat_scheme` de bu yüzden boştur: Türkiye'nin ISO 6523 kayıtlı bir katılımcı kimlik şeması yoktur (Peppol katılımcı kimlik şeması listesi v9.7'de TR yer almaz); bir e-Fatura mükellefi GİB tarafından atanan bir Posta Kutusu Etiketi (PK etiketi, ör. urn:mail:defaultpk@... biçiminde) ile adreslenir, VKN/TCKN ise ayrı bir alanda taşınır.",
+    "source": "gib-efatura"
+  }
+}

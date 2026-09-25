@@ -740,3 +740,32 @@ on conflict (code) do update set
   eu_vat_to       = excluded.eu_vat_to,
   vat_prefix      = excluded.vat_prefix,
   legal_reference = excluded.legal_reference;
+
+
+-- ---------------------------------------------------------------------------
+-- The row — Turkey
+--
+-- A State outside the common system of VAT, and outside the European Union's
+-- customs union for VAT purposes too: Türkiye levies a value added tax of its
+-- own (Katma Değer Vergisi) under Law No. 3065 of 25 October 1984, whose
+-- article 28 sets the standard rate at 10 %, a rate the President may raise
+-- up to four times over or reduce to 1 %, and has raised to 20 % since
+-- Presidential Decision No. 7346 of 6 July 2023 (Ministry of Treasury and
+-- Finance / Revenue Administration, consolidated text). `vat_prefix` is null:
+-- a Turkish taxpayer is addressed by a ten- or eleven-digit Tax Identification
+-- Number (Vergi Kimlik Numarası) that carries no country prefix of this
+-- table's kind.
+-- ---------------------------------------------------------------------------
+
+insert into territories (code, code_source, name, parent_code, eu_vat_scope, eu_vat_from, eu_vat_to, vat_prefix, legal_reference) values
+  ('TR', 'iso_3166_1', 'Turkey', null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. Turkey levies a value added tax of its own, Katma Değer Vergisi, under Law No. 3065 of 25 October 1984, article 28, at a standard rate of 20 % since Presidential Decision No. 7346 of 6 July 2023 (Revenue Administration, consolidated text).')
+on conflict (code) do update set
+  code_source     = excluded.code_source,
+  name            = excluded.name,
+  parent_code     = excluded.parent_code,
+  eu_vat_scope    = excluded.eu_vat_scope,
+  eu_vat_from     = excluded.eu_vat_from,
+  eu_vat_to       = excluded.eu_vat_to,
+  vat_prefix      = excluded.vat_prefix,
+  legal_reference = excluded.legal_reference;

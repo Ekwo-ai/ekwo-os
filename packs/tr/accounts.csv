@@ -1,0 +1,181 @@
+code,parent,type,reconcilable,name,sequence
+100,,asset_cash,false,Kasa,10
+101,,asset_cash,false,Alınan Çekler,15
+102,,asset_cash,false,Bankalar,20
+103,,asset_cash,false,Verilen Çekler ve Ödeme Emirleri (-),25
+108,,asset_cash,false,Diğer Hazır Değerler,28
+110,,asset_current,false,Hisse Senetleri,30
+111,,asset_current,false,Özel Kesim Tahvil Senet ve Bonoları,31
+112,,asset_current,false,Kamu Kesimi Tahvil Senet ve Bonoları,32
+118,,asset_current,false,Diğer Menkul Kıymetler,33
+119,,asset_current,false,Menkul Değerler Değer Düşüklüğü Karşılığı (-),34
+120,,asset_receivable,true,Alıcılar,40
+121,,asset_current,false,Alacak Senetleri,41
+122,,asset_current,false,Alacak Senetleri Reeskontu (-),42
+126,,asset_current,false,Verilen Depozito ve Teminatlar,43
+127,,asset_current,false,Diğer Ticari Alacaklar,44
+128,,asset_current,false,Şüpheli Ticari Alacaklar,45
+129,,asset_current,false,Şüpheli Alacaklar Karşılığı (-),46
+131,,asset_current,false,Ortaklardan Alacaklar,50
+132,,asset_current,false,İştiraklerden Alacaklar,51
+133,,asset_current,false,Bağlı Ortaklıklardan Alacaklar,52
+135,,asset_current,false,Personelden Alacaklar,53
+136,,asset_current,false,Diğer Çeşitli Alacaklar,54
+1369,136,asset_current,false,Geçici Hesap (Askıda Tutulan İşlemler),55
+137,,asset_current,false,Diğer Alacak Senetleri Reeskontu (-),56
+138,,asset_current,false,Şüpheli Diğer Alacaklar,57
+139,,asset_current,false,Şüpheli Diğer Alacaklar Karşılığı (-),58
+151,,asset_current,false,Yarı Mamuller — Üretim,60
+152,,asset_current,false,Mamuller,61
+153,,asset_current,false,Ticari Mallar,62
+157,,asset_current,false,Diğer Stoklar,63
+158,,asset_current,false,Stok Değer Düşüklüğü Karşılığı (-),64
+159,,asset_current,false,Verilen Sipariş Avansları,65
+180,,asset_prepayments,false,Gelecek Aylara Ait Giderler,70
+181,,asset_prepayments,false,Gelir Tahakkukları,71
+190,,asset_current,false,Devreden Katma Değer Vergisi,80
+191,,asset_current,false,İndirilecek KDV,81
+192,,asset_current,true,Diğer Katma Değer Vergisi,82
+193,,asset_prepayments,false,Peşin Ödenen Vergiler ve Fonlar,83
+195,,asset_current,false,İş Avansları,84
+196,,asset_current,false,Personel Avansları,85
+197,,asset_current,false,Sayım ve Tesellüm Noksanları,86
+198,,asset_current,false,Diğer Çeşitli Dönen Varlıklar,87
+199,,asset_current,false,Diğer Dönen Varlıklar Karşılığı (-),88
+220,,asset_non_current,false,Alıcılar (Uzun Vadeli),100
+226,,asset_non_current,false,Verilen Depozito ve Teminatlar,101
+229,,asset_non_current,false,Şüpheli Alacaklar Karşılığı (-),102
+240,,asset_non_current,false,Bağlı Menkul Kıymetler,110
+242,,asset_non_current,false,İştirakler,111
+245,,asset_non_current,false,Bağlı Ortaklıklar,112
+248,,asset_non_current,false,Diğer Mali Duran Varlıklar,113
+251,,asset_fixed,false,Yeraltı ve Yerüstü Düzenleri,120
+252,,asset_fixed,false,Binalar,121
+253,,asset_fixed,false,Tesis Makine ve Cihazlar,122
+254,,asset_fixed,false,Taşıtlar,123
+255,,asset_fixed,false,Demirbaşlar,124
+256,,asset_fixed,false,Diğer Maddi Duran Varlıklar,125
+257,,asset_fixed,false,Birikmiş Amortismanlar (-),126
+258,,asset_fixed,false,Yapılmakta Olan Yatırımlar,127
+259,,asset_fixed,false,Verilen Avanslar,128
+260,,asset_non_current,false,Haklar,130
+261,,asset_non_current,false,Şerefiye,131
+262,,asset_non_current,false,Kuruluş ve Örgütlenme Giderleri,132
+263,,asset_non_current,false,Araştırma ve Geliştirme Giderleri,133
+264,,asset_non_current,false,Özel Maliyetler,134
+267,,asset_non_current,false,Diğer Maddi Olmayan Duran Varlıklar,135
+268,,asset_non_current,false,Birikmiş Amortismanlar (-) (İtfa Payları),136
+269,,asset_non_current,false,Verilen Avanslar,137
+280,,asset_prepayments,false,Gelecek Yıllara Ait Giderler,140
+281,,asset_prepayments,false,Gelir Tahakkukları,141
+291,,asset_non_current,false,Gelecek Yıllarda İndirilecek KDV,150
+292,,asset_non_current,false,Diğer KDV,151
+293,,asset_non_current,false,Gelecek Yıllar İhtiyacı Stoklar,152
+294,,asset_non_current,false,Elden Çıkarılacak Stoklar ve Maddi Duran Varlıklar,153
+297,,asset_non_current,false,Diğer Çeşitli Duran Varlıklar,154
+298,,asset_non_current,false,Stok Değer Düşüklüğü Karşılığı (-),155
+299,,asset_non_current,false,Birikmiş Amortismanlar (-),156
+300,,liability_current,false,Banka Kredileri (Kısa Vadeli),170
+303,,liability_current,false,Uzun Vadeli Kredilerin Anapara Taksitleri ve Faizleri,171
+309,,liability_current,false,Diğer Mali Borçlar,172
+320,,liability_payable,true,Satıcılar,180
+321,,liability_current,false,Borç Senetleri,181
+322,,liability_current,false,Borç Senetleri Reeskontu (-),182
+326,,liability_current,false,Alınan Depozito ve Teminatlar,183
+329,,liability_current,false,Diğer Ticari Borçlar,184
+331,,liability_current,false,Ortaklara Borçlar,190
+332,,liability_current,false,İştiraklere Borçlar,191
+333,,liability_current,false,Bağlı Ortaklıklara Borçlar,192
+334,,liability_current,false,Üyelere Borçlar,193
+335,,liability_current,false,Personele Borçlar,194
+336,,liability_current,false,Diğer Çeşitli Borçlar,195
+337,,liability_current,false,Diğer Borç Senetleri Reeskontu (-),196
+340,,liability_current,false,Alınan Sipariş Avansları,200
+349,,liability_current,false,Alınan Diğer Avanslar,201
+360,,liability_current,false,Ödenecek Vergi ve Fonlar,220
+3600,360,liability_current,true,Ödenecek Katma Değer Vergisi,221
+361,,liability_current,false,Ödenecek Sosyal Güvenlik Kesintileri,222
+368,,liability_current,false,Vadesi Geçmiş Ertelenmiş veya Taksitlendirilmiş Vergi ve Diğer Yükümlülükler,223
+369,,liability_current,false,Ödenecek Diğer Yükümlülükler,224
+370,,liability_current,false,Dönem Karı Vergi ve Diğer Yasal Yükümlülük Karşılıkları,230
+371,,liability_current,false,Dönem Karının Peşin Ödenen Vergi ve Diğer Yükümlülükleri (-),231
+372,,liability_current,false,Kıdem Tazminatı Karşılığı (Kısa Vadeli),232
+373,,liability_current,false,Maliyet Giderleri Karşılığı,233
+379,,liability_current,false,Diğer Borç ve Gider Karşılıkları,234
+380,,liability_current,false,Gelecek Aylara Ait Gelirler,240
+381,,liability_current,false,Gider Tahakkukları,241
+391,,liability_current,false,Hesaplanan KDV,250
+392,,liability_current,false,Diğer KDV (Sorumlu Sıfatıyla Beyan Edilecek),251
+393,,liability_current,false,Merkez ve Şubeler Cari Hesabı,252
+397,,liability_current,false,Sayım ve Tesellüm Fazlaları,253
+399,,liability_current,false,Diğer Çeşitli Kısa Vadeli Yabancı Kaynaklar,254
+400,,liability_non_current,false,Banka Kredileri (Uzun Vadeli),270
+409,,liability_non_current,false,Diğer Mali Borçlar,271
+421,,liability_non_current,false,Borç Senetleri,280
+422,,liability_non_current,false,Borç Senetleri Reeskontu (-),281
+426,,liability_non_current,false,Alınan Depozito ve Teminatlar,282
+429,,liability_non_current,false,Diğer Ticari Borçlar,283
+431,,liability_non_current,false,Ortaklara Borçlar,290
+432,,liability_non_current,false,İştiraklere Borçlar,291
+433,,liability_non_current,false,Bağlı Ortaklıklara Borçlar,292
+434,,liability_non_current,false,Üyelere Borçlar,293
+436,,liability_non_current,false,Diğer Çeşitli Borçlar,294
+437,,liability_non_current,false,Diğer Borç Senetleri Reeskontu (-),295
+438,,liability_non_current,false,Kamuya Olan Ertelenmiş veya Taksitlendirilmiş Borçlar,296
+440,,liability_non_current,false,Alınan Sipariş Avansları,300
+449,,liability_non_current,false,Alınan Diğer Avanslar,301
+472,,liability_non_current,false,Kıdem Tazminatı Karşılığı (Uzun Vadeli),310
+479,,liability_non_current,false,Diğer Borç ve Gider Karşılıkları,311
+480,,liability_non_current,false,Gelecek Yıllara Ait Gelirler,320
+481,,liability_non_current,false,Gider Tahakkukları,321
+492,,liability_non_current,false,Gelecek Yıllara Ertelenen veya Terkin Edilecek KDV,330
+493,,liability_non_current,false,Tesise Katılma Payları,331
+499,,liability_non_current,false,Diğer Çeşitli Uzun Vadeli Yabancı Kaynaklar,332
+500,,equity,false,Sermaye,350
+501,,equity,false,Ödenmiş Sermaye (-),351
+522,,equity,false,Maddi Duran Varlık Yeniden Değerleme Artışları,360
+523,,equity,false,İştirakler Yeniden Değerleme Artışları,361
+529,,equity,false,Diğer Sermaye Yedekleri,362
+540,,equity,false,Yasal Yedekler,370
+541,,equity,false,Statü Yedekleri,371
+542,,equity,false,Olağanüstü Yedekler,372
+548,,equity,false,Diğer Kâr Yedekleri,373
+549,,equity,false,Özel Fonlar,374
+570,,equity_retained,false,Geçmiş Yıllar Karları,380
+580,,equity_retained,false,Geçmiş Yıllar Zararları (-),390
+590,,equity_retained,false,Dönem Net Karı,400
+591,,equity_retained,false,Dönem Net Zararı (-),401
+600,,income,false,Yurtiçi Satışlar,410
+601,,income,false,Yurtdışı Satışlar,411
+602,,income_other,false,Diğer Gelirler,412
+603,,income_other,false,Bağış ve Yardımlar,413
+604,,income_other,false,Prim ve Aidatlar,414
+610,,income,false,Satıştan İadeler (-),420
+611,,income,false,Satış İskontoları (-),421
+620,,expense_direct_cost,false,Satılan Mamuller Maliyeti (-),430
+621,,expense_direct_cost,false,Satılan Ticari Mallar Maliyeti (-),431
+622,,expense_direct_cost,false,Satılan Hizmet Maliyeti (-),432
+630,,expense,false,Araştırma ve Geliştirme Giderleri (-),440
+631,,expense,false,Pazarlama Satış ve Dağıtım Giderleri (-),441
+632,,expense,false,Genel Yönetim Giderleri (-),442
+640,,income_other,false,İştiraklerden Temettü Gelirleri,450
+641,,income_other,false,Bağlı Ortaklıklardan Temettü Gelirleri,451
+642,,income_other,false,Faiz Gelirleri,452
+644,,income_other,false,Konusu Kalmayan Karşılıklar,453
+645,,income_other,false,Menkul Kıymet Satış Karları,454
+646,,income_other,false,Kambiyo Karları,455
+647,,income_other,false,Reeskont Faiz Gelirleri,456
+648,,income_other,false,İktisadi İşletme Gelirleri,457
+649,,income_other,false,Diğer Olağan Gelir ve Karlar,458
+653,,expense,false,Komisyon Giderleri (-),460
+654,,expense,false,Karşılık Giderleri (-),461
+655,,expense,false,Menkul Kıymet Satış Zararları (-),462
+656,,expense,false,Kambiyo Zararları (-),463
+657,,expense,false,Reeskont Faiz Giderleri (-),464
+659,,expense,false,Diğer Gider ve Zararlar (-),465
+660,,expense,false,Kısa Vadeli Borçlanma Giderleri (-),470
+671,,income_other,false,Önceki Dönem Gelir ve Karları,480
+679,,income_other,false,Diğer Olağandışı Gelir ve Karlar,481
+680,,expense,false,Çalışmayan Kısım Gider ve Zararları (-),490
+681,,expense,false,Önceki Dönem Gider ve Zararları (-),491
+689,,expense,false,Diğer Olağandışı Gider ve Zararlar (-),492

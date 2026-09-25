@@ -1,0 +1,291 @@
+[
+  {
+    "code": "TR-S-SR",
+    "name": "Satış, genel oran, KDV %20",
+    "description": "(I) ve (II) sayılı listelerde sayılmayan her türlü teslim ve hizmet.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 20,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2023-07-10",
+    "legal_reference": "3065 sayılı Kanun, madde 28 — katma değer vergisi oranı, vergiye tabi her bir işlem için %10'dur; Cumhurbaşkanı bu oranı dört katına kadar artırmaya, %1'e kadar indirmeye yetkilidir. Bu yetkiye dayanılarak yürürlükte olan 2007/13033 sayılı Bakanlar Kurulu Kararı, (I) ve (II) sayılı listelerde sayılmayan işlemler için oranı %18 olarak belirlemişti; 7346 sayılı Cumhurbaşkanı Kararı ile 10 Temmuz 2023'ten itibaren bu oran %20'ye yükseltilmiştir.",
+    "source": "kdv-oran-karari",
+    "vat_category": "S",
+    "sequence": 10,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "m20" },
+        { "type": "tax", "account": "391", "box": "t20" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "m20", "box_factor": -100 },
+        { "type": "tax", "account": "391", "box": "t20", "box_factor": -100 }
+      ]
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "TR-S-RR10",
+    "name": "Satış, indirimli oran, KDV %10",
+    "description": "2007/13033 sayılı Kararın eki (II) sayılı listede sayılan teslim ve hizmetler (ör. gıda hizmeti/lokanta, konaklama, tekstil ürünlerinin bir kısmı, kitap ve süreli yayınlar).",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 10,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2023-07-10",
+    "legal_reference": "3065 sayılı Kanun, madde 28; 2007/13033 sayılı Bakanlar Kurulu Kararı eki (II) sayılı liste. 7346 sayılı Cumhurbaşkanı Kararı ile 10 Temmuz 2023'ten itibaren bu listedeki oran %8'den %10'a yükseltilmiştir. Bu pack (II) sayılı listenin tamamını madde madde taşımaz — hangi kalemlerin listede olduğu 2007/13033 sayılı Kararın ekinde okunmalıdır; bu, bir sonraki sürümde eklenecek bir eksikliktir.",
+    "source": "kdv-oran-karari",
+    "vat_category": "S",
+    "sequence": 20,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "m10" },
+        { "type": "tax", "account": "391", "box": "t10" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "m10", "box_factor": -100 },
+        { "type": "tax", "account": "391", "box": "t10", "box_factor": -100 }
+      ]
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "TR-S-RR1",
+    "name": "Satış, indirimli oran, KDV %1",
+    "description": "2007/13033 sayılı Kararın eki (I) sayılı listede sayılan teslim ve hizmetler (temel gıda maddelerinin bir kısmı, gazete ve dergi, nakdi ve gayrinakdi kredi teminatı ücretleri gibi).",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 1,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2007-12-31",
+    "legal_reference": "3065 sayılı Kanun, madde 28; 2007/13033 sayılı Bakanlar Kurulu Kararı eki (I) sayılı liste — oran %1'dir ve 7346 sayılı Cumhurbaşkanı Kararı bu oranda değişiklik yapmamıştır. Bu pack (I) sayılı listenin tamamını madde madde taşımaz.",
+    "source": "kdv-oran-karari",
+    "vat_category": "S",
+    "sequence": 30,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "m1" },
+        { "type": "tax", "account": "391", "box": "t1" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "m1", "box_factor": -100 },
+        { "type": "tax", "account": "391", "box": "t1", "box_factor": -100 }
+      ]
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "TR-S-ZR-EXP",
+    "name": "Satış, ihracat istisnası (tam istisna)",
+    "description": "İhracat teslimleri ve bu teslimlere ilişkin hizmetler.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "1985-01-01",
+    "legal_reference": "3065 sayılı Kanun, madde 11/1-a — ihracat teslimleri ve bu teslimlere ilişkin hizmetler vergiden müstesnadır; madde 12 bu istisnanın şartlarını (malın yurt dışındaki bir müşteriye veya yetkili gümrük antreposu işleticisine teslimi ve Türkiye Cumhuriyeti gümrük bölgesinden çıkışı) düzenler. Madde 32 uyarınca bu tam istisna kapsamındaki işlem nedeniyle yüklenilen ve indirim yoluyla giderilemeyen KDV, ihracatçıya iade olunur.",
+    "source": "kdv-kanunu",
+    "vat_category": "G",
+    "sequence": 40,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "mihr" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "mihr", "box_factor": -100 }
+      ]
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "TR-S-EX-FIN",
+    "name": "Satış, BSMV kapsamındaki işlemler istisnası",
+    "description": "Banka ve Sigorta Muameleleri Vergisi kapsamına giren işlemler ile sigorta acente ve prodüktörlerinin sigorta muamelelerine ilişkin işlemleri.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "1985-01-01",
+    "legal_reference": "3065 sayılı Kanun, madde 17/4-e — Banka ve Sigorta Muameleleri Vergisi Kanunu kapsamına giren işlemler ile sigorta acente ve prodüktörlerinin sigorta muamelelerine ilişkin işlemleri vergiden müstesnadır. 6802 sayılı Gider Vergileri Kanunu madde 28 vd., sigorta şirketlerinin lehlerine aldıkları paraları BSMV'ye tabi tutar; madde 30 mükellefiyeti sigorta şirketlerine yükler, acente ve prodüktörlerin komisyonları da bu kapsamdadır. Türkiye Avrupa Birliği ortak KDV sistemi dışında olduğundan bu satırda bir VATEX kodu yerine yalnızca madde ataması yapılmıştır.",
+    "source": "kdv-kanunu",
+    "vat_category": "E",
+    "sequence": 50,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "mist" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "mist", "box_factor": -100 }
+      ]
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "TR-S-OS",
+    "name": "Satış, verginin konusuna girmeyen işlem",
+    "description": "Türkiye'de yapılmayan, dolayısıyla 3065 sayılı Kanun'un konusuna hiç girmeyen teslim ve hizmetler.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "not_subject",
+    "valid_from": "1985-01-01",
+    "legal_reference": "3065 sayılı Kanun, madde 1 — Türkiye'de yapılan ticari, sınai, zirai faaliyet ve serbest meslek faaliyeti çerçevesindeki teslim ve hizmetler ile her türlü mal ve hizmet ithalatı verginin konusunu oluşturur; işlemin Türkiye dışında gerçekleşmesi hâlinde Kanunun konusuna girmez ve hiçbir kutuya yansımaz.",
+    "source": "kdv-kanunu",
+    "vat_category": "O",
+    "sequence": 60,
+    "exemption_code": null
+  },
+  {
+    "code": "TR-P-SR",
+    "name": "Alış, genel oran, KDV %20, indirilebilir",
+    "description": "Genel orana tabi ve indirim hakkı doğuran alış.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 20,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2023-07-10",
+    "legal_reference": "3065 sayılı Kanun, madde 28 (oran) ve madde 29 (mükellefler, faaliyetlerine ilişkin olarak kendilerine yapılan teslim ve hizmetler dolayısıyla hesaplanan KDV'yi, faaliyetlerine ait vergiye tabi işlemler üzerinden hesaplanan KDV'den indirebilirler).",
+    "source": "kdv-kanunu",
+    "vat_category": "S",
+    "sequence": 70,
+    "recoverable": true,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "iyi" },
+        { "type": "tax", "account": "191", "box": "tyi" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "iyi", "box_factor": -100 },
+        { "type": "tax", "account": "191", "box": "tyi", "box_factor": -100 }
+      ]
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "TR-P-RR10",
+    "name": "Alış, indirimli oran, KDV %10, indirilebilir",
+    "description": "(II) sayılı listede sayılan bir alış.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 10,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2023-07-10",
+    "legal_reference": "3065 sayılı Kanun, madde 28 ve madde 29; 2007/13033 sayılı Bakanlar Kurulu Kararı eki (II) sayılı liste.",
+    "source": "kdv-oran-karari",
+    "vat_category": "S",
+    "sequence": 80,
+    "recoverable": true,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "iyi" },
+        { "type": "tax", "account": "191", "box": "tyi" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "iyi", "box_factor": -100 },
+        { "type": "tax", "account": "191", "box": "tyi", "box_factor": -100 }
+      ]
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "TR-P-EX",
+    "name": "Alış, istisna kapsamındaki mal veya hizmet",
+    "description": "BSMV kapsamındaki bir sigorta ya da finansal işlem gibi, üzerinde hiç KDV hesaplanmamış bir alış.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "exempt",
+    "valid_from": "1985-01-01",
+    "legal_reference": "3065 sayılı Kanun, madde 17/4-e — satıcı BSMV kapsamında işlem yaptığından faturada KDV hesaplanmaz, dolayısıyla indirilecek bir tutar da doğmaz.",
+    "source": "kdv-kanunu",
+    "vat_category": "E",
+    "sequence": 90,
+    "postings": {
+      "invoice": [],
+      "credit_note": []
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "TR-P-NR",
+    "name": "Alış, KDV mükellefi olmayan satıcıdan",
+    "description": "Esnaf muaflığından yararlanan ya da KDV mükellefiyeti bulunmayan bir satıcıdan yapılan, üzerinde KDV hesaplanmamış alış.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "not_subject",
+    "valid_from": "1985-01-01",
+    "legal_reference": "Satıcı 3065 sayılı Kanun'un mükellefi olmadığından (madde 1 ve madde 8) fatura üzerinde hesaplanmış bir KDV yoktur.",
+    "source": "kdv-kanunu",
+    "vat_category": "O",
+    "sequence": 100,
+    "postings": {
+      "invoice": [],
+      "credit_note": []
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "TR-P-IMP",
+    "name": "Alış, mal ithalatı, gümrükte ödenen ve indirilebilir KDV",
+    "description": "Yurt dışından satın alınan ve Türkiye gümrük bölgesine giren bir malın ithalinde gümrük idaresine, gümrük vergisi ile birlikte ve aynı anda ödenen KDV.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 20,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2023-07-10",
+    "legal_reference": "3065 sayılı Kanun, madde 1/2 (her türlü mal ithalatı verginin konusuna girer); madde 21 (ithalatta matrah, malın gümrük vergisi tarhına esas kıymeti — bulunmadığı hâllerde CİF değeri — artı ithalat sırasında ödenen her türlü vergi, resim, harç ve paylardır); madde 46/2 (ithalde alınan KDV, gümrük vergisi ile birlikte ve aynı zamanda ödenir); madde 29 (bu KDV, ödendiği dönemde indirim konusu yapılır). Türkiye Avrupa Birliği gümrük birliği dışında kaldığından mal ithalatında bir topluluk içi alım (intracom_acquisition_goods) değil, doğrudan bir ithalat söz konusudur ve bu KDV — Körfez ülkeleri paketlerinin (AE, SA) aksine — dönem beyannamesinde bir sorumluluk (reverse charge) olarak değil, gümrükte fiilen ödenmiş ve sonradan indirilen bir tutar olarak izlenir.",
+    "source": "kdv-kanunu",
+    "vat_category": null,
+    "sequence": 110,
+    "recoverable": true,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "iith" },
+        { "type": "tax", "account": "191", "box": "tith" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "iith", "box_factor": -100 },
+        { "type": "tax", "account": "191", "box": "tith", "box_factor": -100 }
+      ]
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "TR-P-RC-SVC",
+    "name": "Alış, yurt dışından hizmet ithali, sorumlu sıfatıyla KDV",
+    "description": "Türkiye'de ikametgâhı, işyeri, kanuni merkezi ve iş merkezi bulunmayan bir satıcıdan alınan ve Türkiye'de faydalanılan bir hizmet — hizmeti alan, KDV'yi kendisi hesaplayıp sorumlu sıfatıyla beyan eder.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 20,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2023-07-10",
+    "legal_reference": "3065 sayılı Kanun, madde 1 (hizmetten Türkiye'de faydalanılması verginin konusuna sokar) ve madde 9/1 (Maliye Bakanlığı, Türkiye'de ikametgâhı, işyeri, kanuni ve iş merkezi bulunmayanlar tarafından yapılan işlemlerde, işleme taraf olanı verginin ödenmesinden sorumlu tutabilir; Katma Değer Vergisi Genel Uygulama Tebliği I/C-2.1.2.1 bu sorumluluğu tam tevkifat olarak düzenler). Bu KDV, 2 No'lu KDV Beyannamesi ile ayrı olarak beyan edilip ödenir — bu pack'in tax_report.json'ı yalnızca 1 No'lu KDV Beyannamesini modeller, bu yüzden bu tutarın kendisi hiçbir kutuya yazılmaz; madde 29 uyarınca aynı dönemde 1 No'lu beyannamede indirim konusu yapılabilen payı ise İndirilecek KDV tablosunda izlenir.",
+    "source": "kdv-genel-uygulama-tebligi",
+    "vat_category": null,
+    "sequence": 120,
+    "postings": {
+      "invoice": [
+        { "type": "tax", "account": "191", "box": "trc" },
+        { "type": "tax", "factor": -100, "account": "392" }
+      ],
+      "credit_note": [
+        { "type": "tax", "account": "191", "box": "trc", "box_factor": -100 },
+        { "type": "tax", "factor": -100, "account": "392", "box_factor": -100 }
+      ]
+    },
+    "exemption_code": null
+  }
+]

@@ -1,0 +1,35 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "TR-KDV1",
+  "name": "1 No'lu Katma Değer Vergisi Beyannamesi",
+  "period": ["month"],
+  "period_default": "month",
+  "valid_from": "2023-07-10",
+  "legal_reference": "3065 sayılı Kanun, madde 39 — katma değer vergisinde vergilendirme dönemi, faaliyette bulunulan takvim yılının birer aylık dönemleridir. Madde 42, beyannamenin şekil ve muhtevasının Hazine ve Maliye Bakanlığınca belirleneceğini söyler; bu belirleme Katma Değer Vergisi Genel Uygulama Tebliği ve GİB'in e-Beyanname sisteminin 1 No'lu KDV Beyannamesi ekranıdır. Bu pack, GİB'in canlı e-Beyanname ekranındaki kutu numaralarını (bu araştırma sırasında doğrulanabilir, tek başına erişilebilir bir metin olarak bulunamadı) değil, kanunun ve tebliğin sözünü ettiği içeriği — oran bazında matrah ve hesaplanan KDV, indirilecek KDV'nin kaynakları, ödenecek/devreden KDV — kendi kutu adlarıyla taşır. Bir GİB e-Beyanname ekranını bilen bir kişi bunu ilk kontrol etmelidir.",
+  "source": "kdv-genel-uygulama-tebligi",
+  "deadline": {
+    "rule": "day_of_month_after_period",
+    "day": 28,
+    "legal_reference": "3065 sayılı Kanun, madde 41/1 — mükellefler KDV beyannamelerini vergilendirme dönemini takip eden ayın yirmidördüncü günü akşamına kadar vermekle yükümlüdür; madde 46/1 aynı günün akşamına kadar ödenmesini ister. 149 Sıra No'lu Vergi Usul Kanunu Sirküleri, 213 sayılı Kanunun mükerrer 28'inci maddesindeki yetkiye dayanarak, 1 Aralık 2022'den itibaren verilmesi gereken KDV beyannamelerinin verilme ve bu beyannameler üzerine tahakkuk eden verginin ödeme süresini, yeni bir belirleme yapılıncaya kadar, izleyen ayın 28'inci günü sonuna uzatmıştır — bu pack idari olarak fiilen uygulanan günü (28) taşır ve kanuni günü (24) burada kaydeder.",
+    "source": "gib-beyan-uzatma"
+  },
+  "boxes": [
+    { "box": "m20", "kind": "base", "name": "Genel orana (%20) tabi işlemlerin matrahı", "sequence": 10, "legal_reference": "3065 sayılı Kanun, madde 42; Katma Değer Vergisi Genel Uygulama Tebliği'nin matrah tablosu, oran bazında ayrı satırlar ister.", "source": "kdv-genel-uygulama-tebligi" },
+    { "box": "t20", "kind": "tax", "name": "Genel orana (%20) tabi işlemler üzerinden hesaplanan KDV", "sequence": 20, "legal_reference": "3065 sayılı Kanun, madde 34 ve madde 42.", "source": "kdv-genel-uygulama-tebligi" },
+    { "box": "m10", "kind": "base", "name": "İndirimli orana (%10) tabi işlemlerin matrahı", "sequence": 30, "legal_reference": "3065 sayılı Kanun, madde 42; 2007/13033 sayılı Karar eki (II) sayılı liste.", "source": "kdv-genel-uygulama-tebligi" },
+    { "box": "t10", "kind": "tax", "name": "İndirimli orana (%10) tabi işlemler üzerinden hesaplanan KDV", "sequence": 40, "legal_reference": "3065 sayılı Kanun, madde 34 ve madde 42.", "source": "kdv-genel-uygulama-tebligi" },
+    { "box": "m1", "kind": "base", "name": "İndirimli orana (%1) tabi işlemlerin matrahı", "sequence": 50, "legal_reference": "3065 sayılı Kanun, madde 42; 2007/13033 sayılı Karar eki (I) sayılı liste.", "source": "kdv-genel-uygulama-tebligi" },
+    { "box": "t1", "kind": "tax", "name": "İndirimli orana (%1) tabi işlemler üzerinden hesaplanan KDV", "sequence": 60, "legal_reference": "3065 sayılı Kanun, madde 34 ve madde 42.", "source": "kdv-genel-uygulama-tebligi" },
+    { "box": "htop", "kind": "total", "name": "Hesaplanan KDV toplamı", "sequence": 70, "legal_reference": "Katma Değer Vergisi Genel Uygulama Tebliği'nin matrah tablosunun sonuç satırı; her oranın hesaplanan KDV'sinin toplamıdır.", "source": "kdv-genel-uygulama-tebligi", "plus": ["t20", "t10", "t1"] },
+    { "box": "mihr", "kind": "base", "name": "İhracat istisnası kapsamındaki teslim ve hizmetlerin bedeli", "sequence": 80, "legal_reference": "3065 sayılı Kanun, madde 11/1-a ve madde 32; beyannamenin istisnalar tablosu.", "source": "kdv-kanunu" },
+    { "box": "mist", "kind": "base", "name": "Kısmi istisna kapsamındaki (BSMV dâhil) teslim ve hizmetlerin bedeli", "sequence": 90, "legal_reference": "3065 sayılı Kanun, madde 17; beyannamenin istisnalar tablosu.", "source": "kdv-kanunu" },
+    { "box": "iyi", "kind": "base", "name": "Yurtiçi alışlara ait bu döneme ait indirilecek KDV'nin matrahı", "sequence": 100, "legal_reference": "3065 sayılı Kanun, madde 29; beyannamenin indirimler tablosu.", "source": "kdv-genel-uygulama-tebligi" },
+    { "box": "tyi", "kind": "tax", "name": "Yurtiçi alışlara ait bu döneme ait indirilecek KDV", "sequence": 110, "legal_reference": "3065 sayılı Kanun, madde 29.", "source": "kdv-genel-uygulama-tebligi" },
+    { "box": "iith", "kind": "base", "name": "İthalatta ödenen ve indirilecek KDV'nin matrahı", "sequence": 120, "legal_reference": "3065 sayılı Kanun, madde 21 (ithalatta matrah) ve madde 46/2 (ithalde alınan KDV'nin gümrük vergisiyle birlikte ödenmesi).", "source": "kdv-kanunu" },
+    { "box": "tith", "kind": "tax", "name": "İthalatta ödenen ve bu dönemde indirilen KDV", "sequence": 130, "legal_reference": "3065 sayılı Kanun, madde 29 ve madde 46/2.", "source": "kdv-kanunu" },
+    { "box": "trc", "kind": "tax", "name": "Sorumlu sıfatıyla (2 No'lu KDV) beyan edilip bu dönemde indirilen KDV", "sequence": 140, "legal_reference": "3065 sayılı Kanun, madde 9 ve madde 29; Katma Değer Vergisi Genel Uygulama Tebliği I/C-2.1.1.2 — sorumlu sıfatıyla beyan edilen KDV, beyan edildiği dönemde 1 No'lu KDV Beyannamesinde indirim konusu yapılabilir. 2 No'lu KDV Beyannamesinin kendisi bu formun dışındadır.", "source": "kdv-genel-uygulama-tebligi" },
+    { "box": "tind", "kind": "total", "name": "İndirilecek KDV toplamı", "sequence": 150, "legal_reference": "Katma Değer Vergisi Genel Uygulama Tebliği'nin indirimler tablosunun sonuç satırı.", "source": "kdv-genel-uygulama-tebligi", "plus": ["tyi", "tith", "trc"] },
+    { "box": "odn", "kind": "total", "name": "Ödenecek KDV", "sequence": 160, "legal_reference": "3065 sayılı Kanun, madde 29/1 — hesaplanan KDV'nin indirilecek KDV'yi aşan kısmı, o dönem için ödenecek KDV'dir.", "source": "kdv-kanunu", "plus": ["htop"], "minus": ["tind"], "floor_zero": true },
+    { "box": "dev", "kind": "total", "name": "Sonraki döneme devreden KDV", "sequence": 170, "legal_reference": "3065 sayılı Kanun, madde 29/2 — indirilecek KDV toplamının hesaplanan KDV'yi aştığı hâllerde aradaki fark, iade edilmeyip sonraki döneme devrolunur.", "source": "kdv-kanunu", "plus": ["tind"], "minus": ["htop"], "floor_zero": true }
+  ]
+}
