@@ -13,17 +13,41 @@ code,parent,type,reconcilable,name,sequence
 1141,114,asset_current,false,Anticipos a proveedores,120
 1142,114,asset_prepayments,false,Gastos pagados por adelantado,130
 1143,114,asset_current,false,Anticipo Impuesto a las Ganancias,140
+1144,114,asset_current,false,Préstamos a sociedades relacionadas,141
+1145,114,asset_current,false,Créditos con socios y accionistas,142
+1146,114,asset_current,false,Depósitos en garantía,143
 115,110,asset_current,false,Créditos fiscales,150
 1151,115,asset_current,false,IVA Crédito Fiscal,160
 1152,115,asset_current,true,IVA Saldo a Favor - Técnico,170
 116,110,asset_current,false,Bienes de cambio,180
+1161,116,asset_current,false,Materias primas,181
+1162,116,asset_current,false,Productos en proceso de elaboración,182
+1163,116,asset_current,false,Productos terminados,183
+1164,116,asset_current,false,Mercaderías de reventa,184
+1165,116,asset_current,false,Envases y embalajes,185
 117,110,asset_current,false,Partidas pendientes de imputación,190
 120,100,asset_non_current,false,Activo no corriente,200
 121,120,asset_non_current,false,Créditos no corrientes,210
 122,120,asset_fixed,false,Bienes de uso,220
 1221,122,asset_fixed,false,Bienes de uso - Valor de origen,230
+12211,1221,asset_fixed,false,Terrenos,231
+12212,1221,asset_fixed,false,Edificios y construcciones,232
+12213,1221,asset_fixed,false,Maquinarias y equipos,233
+12214,1221,asset_fixed,false,Muebles y útiles,234
+12215,1221,asset_fixed,false,Rodados,235
+12216,1221,asset_fixed,false,Equipos de computación,236
+12217,1221,asset_fixed,false,Instalaciones,237
 1222,122,asset_fixed,false,Bienes de uso - Amortización acumulada,240
+12221,1222,asset_fixed,false,Amortización acumulada - Edificios y construcciones,241
+12222,1222,asset_fixed,false,Amortización acumulada - Maquinarias y equipos,242
+12223,1222,asset_fixed,false,Amortización acumulada - Muebles y útiles,243
+12224,1222,asset_fixed,false,Amortización acumulada - Rodados,244
+12225,1222,asset_fixed,false,Amortización acumulada - Equipos de computación,245
+12226,1222,asset_fixed,false,Amortización acumulada - Instalaciones,246
 123,120,asset_non_current,false,Activos intangibles,250
+1231,123,asset_non_current,false,Marcas y patentes,251
+1232,123,asset_non_current,false,Software y licencias,252
+1233,123,asset_non_current,false,Llave de negocio,253
 200,,liability_current,false,Pasivo,260
 210,200,liability_current,false,Pasivo corriente,270
 211,210,liability_payable,true,Cuentas por pagar comerciales,280
@@ -31,6 +55,12 @@ code,parent,type,reconcilable,name,sequence
 2112,211,liability_payable,true,Proveedores - Exterior,300
 2113,211,liability_payable,true,Documentos a pagar,310
 212,210,liability_current,false,Remuneraciones y cargas sociales a pagar,320
+2121,212,liability_current,false,Sueldos a pagar,321
+2122,212,liability_current,false,Cargas sociales a pagar - Aportes personales,322
+2123,212,liability_current,false,Contribuciones patronales a pagar,323
+2124,212,liability_current,false,Retenciones al personal a pagar,324
+2125,212,liability_current,false,Provisión para sueldo anual complementario,325
+2126,212,liability_current,false,Provisión para vacaciones,326
 213,210,liability_current,false,Cargas fiscales a pagar,330
 2131,213,liability_current,false,IVA Débito Fiscal,340
 2132,213,liability_current,true,IVA a Pagar,350
@@ -41,6 +71,10 @@ code,parent,type,reconcilable,name,sequence
 220,200,liability_non_current,false,Pasivo no corriente,400
 221,220,liability_non_current,false,Deudas bancarias,410
 222,220,liability_non_current,false,Otras deudas,420
+2221,222,liability_non_current,false,Deudas con socios y accionistas,421
+2222,222,liability_non_current,false,Deudas por arrendamiento financiero,422
+2223,222,liability_non_current,false,Depósitos de terceros en garantía,423
+2224,222,liability_non_current,false,Provisiones para juicios y contingencias,424
 300,,equity,false,Patrimonio neto,430
 310,300,equity,false,Capital social,440
 320,300,equity,false,Reserva legal,450
@@ -59,20 +93,37 @@ code,parent,type,reconcilable,name,sequence
 460,400,income_other,false,Resultados financieros y por tenencia positivos,580
 461,460,income_other,false,Intereses ganados,590
 462,460,income_other,false,Diferencia de cambio positiva,600
+463,460,income_other,false,Descuentos obtenidos,601
+464,460,income_other,false,Resultado por tenencia de bienes de cambio,602
 480,400,income_other,false,Otros ingresos,610
 500,,expense,false,Costos y gastos,620
 510,500,expense_direct_cost,false,Costo de ventas,630
 511,510,expense_direct_cost,false,Compras de mercaderías,640
 520,500,expense,false,Gastos de comercialización,650
 521,520,expense,false,Gastos de comercialización varios,660
+522,520,expense,false,Publicidad y propaganda,661
+523,520,expense,false,Comisiones sobre ventas,662
+524,520,expense,false,Fletes sobre ventas,663
+525,520,expense,false,Gastos de viajes y representación,664
 530,500,expense,false,Gastos de administración,670
 531,530,expense,false,Sueldos y cargas sociales,680
+5311,531,expense,false,Sueldos,681
+5312,531,expense,false,Cargas sociales,682
+5313,531,expense,false,Sueldo anual complementario y vacaciones,683
 532,530,expense,false,Honorarios profesionales,690
 533,530,expense,false,Gastos generales de administración,700
+5331,533,expense,false,Alquileres,701
+5332,533,expense,false,Servicios públicos,702
+5333,533,expense,false,Papelería y útiles de oficina,703
+5334,533,expense,false,Gastos de mantenimiento,704
+5335,533,expense,false,Seguros,705
+5336,533,expense,false,Impuestos tasas y contribuciones,706
 534,530,expense_depreciation,false,Amortización de bienes de uso,710
 560,500,expense,false,Resultados financieros y por tenencia negativos,720
 561,560,expense,false,Intereses pagados,730
 562,560,expense,false,Diferencia de cambio negativa,740
 563,560,expense,false,Redondeo,750
+564,560,expense,false,Descuentos otorgados,751
+565,560,expense,false,Gastos e intereses bancarios,752
 570,500,expense,false,Impuesto a las Ganancias,760
 580,500,expense,false,Otros egresos,770

@@ -90,11 +90,16 @@ non-current liabilities, equity; revenue by type of activity, cost of sales,
 administrative and selling expenses, financial and holding results — but
 still names rubros, not accounts.
 
-This pack's 77 accounts are therefore **original**: a four-digit convention
-of its own, in which the first digit is Activo (1), Pasivo (2), Patrimonio
-Neto (3), Ingresos (4) or Costos y Gastos (5), and every block of three-digit
+This pack's 128 accounts are therefore **original**: a convention of its own,
+three to five digits deep depending on how far a rubro is broken down by
+nature, in which the first digit is Activo (1), Pasivo (2), Patrimonio Neto
+(3), Ingresos (4) or Costos y Gastos (5), and every block of three-digit
 codes corresponds to exactly one line of `AR-ESP` or of `AR-ER`, so the chart
-reads straight off the two statements it feeds. The professional presentation
+reads straight off the two statements it feeds; the four- and five-digit
+accounts underneath a block — bienes de uso by nature with their own
+amortización acumulada, bienes de cambio by stage, cargas sociales, gastos by
+nature — are that block's own detail and do not move the statement line they
+roll up to. The professional presentation
 standard is the FACPCE's Resoluciones Técnicas — chiefly RT 8 (normas
 generales de exposición) and RT 9 (normas particulares para entes
 comerciales, industriales y de servicios) — but the Federación is a
@@ -124,15 +129,19 @@ Four decisions:
   transcribed as a rule of this pack since no tax or statement line depends
   on it).
 
-**No inflation adjustment.** Ley 27.468 reinstated *ajuste por inflación
-contable* (art. 62, LGS, and RT 6 of the FACPCE) for a fiscal year whose
-cumulative inflation crosses the thresholds the law sets, which Argentina's
-has for every year this pack could check. Restating a chart of accounts for
-the loss of purchasing power of the currency is a computation over a whole
-year of balances, not a fact one document or one tax can carry, and
-`docs/packs.md` has no mechanism for it anywhere in the format. This pack
-carries no inflation adjustment, on any account, in any golden document; see
-*From Argentina* in `docs/international.md`.
+**No inflation adjustment, and no RECPAM.** Ley 27.468 reinstated *ajuste por
+inflación contable* (art. 62, LGS, and RT 6 of the FACPCE) for a fiscal year
+whose cumulative inflation crosses the thresholds the law sets, which
+Argentina's has for every year this pack could check. That restatement
+produces the *Resultado por Exposición al Cambio en el Poder Adquisitivo de
+la Moneda* (RECPAM) — the gain or loss a company books from holding monetary
+assets and liabilities while the currency loses value — as a line of its own
+in the estado de resultados. Restating a chart of accounts for the loss of
+purchasing power of the currency is a computation over a whole year of
+balances, not a fact one document or one tax can carry, and `docs/packs.md`
+has no mechanism for it anywhere in the format: this pack carries no RECPAM
+account and no inflation adjustment, on any account, in any golden document;
+see *From Argentina* in `docs/international.md`.
 
 ## Taxes
 

@@ -39,7 +39,7 @@
     "seed_sequence": {
       "type": "integer",
       "minimum": 10,
-      "maximum": 99,
+      "maximum": 89,
       "description": "The number this pack's compiled seed carries: `13` gives `supabase/seed/13_pack_ee.sql`. Immutable once published — the seeds are applied in file-name order and listed by name in supabase/config.toml, so a release that renamed one would rename a file an installation already holds. Take the first number no pack of the checkout has taken; `ekwo pack build` refuses two packs claiming one. It is declared rather than derived because the alphabetical rank it used to be moved every country after the one being added."
     },
     "released_at": {
