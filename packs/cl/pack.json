@@ -72,7 +72,8 @@
         "url": "https://www.sii.cl/preguntas_frecuentes/impuestos_mensuales/001_130_1060.htm",
         "consulted_on": "2026-09-25",
         "kind": "guidance"
-      }
+      },
+      {"key": "sii-f29-portal", "title": "Declarar y pagar IVA mensual — Formulario 29", "publisher": "Servicio de Impuestos Internos — Servicios online", "url": "https://www.sii.cl/servicios_online/1044-1049.html", "consulted_on": "2026-09-25", "kind": "portal"}
     ]
   },
   "defaults": {
