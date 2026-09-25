@@ -1,0 +1,191 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden_scenario",
+  "name": "Ένα τρίμηνο βιβλίων ελληνικής εμπορικής επιχείρησης, με πωλήσεις και αγορές στο εσωτερικό, εντός Ε.Ε. και εκτός Ε.Ε.",
+  "chart": "default",
+  "fiscal_year": { "name": "Χρήση 2026", "start": "2026-01-01", "end": "2026-12-31" },
+  "periods": [{ "code": "2026-T1", "from": "2026-01-01", "to": "2026-03-31" }],
+  "contacts": [
+    { "ref": "client-gr", "name": "Ελαιώνας Αττικής Α.Ε.", "type": "customer", "country": "GR" },
+    { "ref": "client-de", "name": "Rheinland Handel GmbH", "type": "customer", "country": "DE", "vat_number": "DE999999999" },
+    { "ref": "client-us", "name": "Aegean Imports LLC", "type": "customer", "country": "US" },
+    { "ref": "supplier-gr", "name": "Θεσσαλική Βιοτεχνία Ε.Π.Ε.", "type": "supplier", "country": "GR" },
+    { "ref": "supplier-de", "name": "Bayern Komponenten GmbH", "type": "supplier", "country": "DE", "vat_number": "DE888888888" },
+    { "ref": "supplier-cn", "name": "Shenzhen Trading Co.", "type": "supplier", "country": "CN" }
+  ],
+  "documents": [
+    {
+      "ref": "V1",
+      "type": "sale_invoice",
+      "contact": "client-gr",
+      "date": "2026-01-10",
+      "due_date": "2026-02-09",
+      "why": "Πώληση στον κανονικό συντελεστή 24%: η φορολογητέα αξία και ο αναλογών φόρος καταλήγουν στα πεδία 303 και 333 της δήλωσης.",
+      "lines": [
+        { "name": "Οικιακός εξοπλισμός", "quantity": 1, "unit_price": 1000, "tax": "GR-S-24", "account": "7000" }
+      ]
+    },
+    {
+      "ref": "V2",
+      "type": "sale_invoice",
+      "contact": "client-gr",
+      "date": "2026-01-12",
+      "due_date": "2026-02-11",
+      "why": "Πώληση στον μειωμένο συντελεστή 13%: πεδία 301 και 331.",
+      "lines": [
+        { "name": "Είδη διατροφής", "quantity": 1, "unit_price": 1000, "tax": "GR-S-13", "account": "7000" }
+      ]
+    },
+    {
+      "ref": "V3",
+      "type": "sale_invoice",
+      "contact": "client-gr",
+      "date": "2026-01-15",
+      "due_date": "2026-02-14",
+      "why": "Πώληση στον υπερμειωμένο συντελεστή 6%: πεδία 302 και 332.",
+      "lines": [
+        { "name": "Βιβλία", "quantity": 1, "unit_price": 1000, "tax": "GR-S-6", "account": "7100" }
+      ]
+    },
+    {
+      "ref": "V4",
+      "type": "sale_invoice",
+      "contact": "client-gr",
+      "date": "2026-01-18",
+      "due_date": "2026-02-17",
+      "why": "Απαλλασσόμενη πράξη — υπηρεσίες ιατρικής περίθαλψης, άρθρο 27 του Κώδικα ΦΠΑ: πεδίο 310, χωρίς φόρο.",
+      "lines": [
+        { "name": "Ιατρική εξέταση", "quantity": 1, "unit_price": 500, "tax": "GR-S-EXE", "account": "7300" }
+      ]
+    },
+    {
+      "ref": "V5",
+      "type": "sale_credit_note",
+      "contact": "client-gr",
+      "date": "2026-01-25",
+      "why": "Μερική επιστροφή της V1: ο κανονικός συντελεστής μειώνει τα πεδία 303/333 αντί να τα αυξάνει, δοκιμάζοντας το πρόσημο του πιστωτικού τιμολογίου.",
+      "lines": [
+        { "name": "Οικιακός εξοπλισμός — επιστροφή", "quantity": 1, "unit_price": 200, "tax": "GR-S-24", "account": "7000" }
+      ]
+    },
+    {
+      "ref": "V6",
+      "type": "sale_invoice",
+      "contact": "client-us",
+      "date": "2026-01-20",
+      "due_date": "2026-02-19",
+      "why": "Εξαγωγή εκτός Ευρωπαϊκής Ένωσης, άρθρο 29: πεδίο 348, μηδενικός φόρος με δικαίωμα έκπτωσης.",
+      "lines": [
+        { "name": "Εξοπλισμός προς εξαγωγή", "quantity": 1, "unit_price": 2000, "tax": "GR-S-EXP", "account": "7002" }
+      ]
+    },
+    {
+      "ref": "V7",
+      "type": "sale_invoice",
+      "contact": "client-de",
+      "date": "2026-01-22",
+      "due_date": "2026-02-21",
+      "why": "Ενδοκοινοτική παράδοση αγαθών, άρθρο 33: πεδίο 342, με τον αγοραστή εγγεγραμμένο στο σύστημα ΦΠΑ της Γερμανίας.",
+      "lines": [
+        { "name": "Εξαρτήματα προς Γερμανία", "quantity": 1, "unit_price": 1500, "tax": "GR-S-ICG", "account": "7001" }
+      ]
+    },
+    {
+      "ref": "V8",
+      "type": "sale_invoice",
+      "contact": "client-de",
+      "date": "2026-01-24",
+      "due_date": "2026-02-23",
+      "why": "Παροχή υπηρεσίας προς υποκείμενο στον φόρο άλλου κράτους μέλους, αντίστροφη επιβάρυνση του λήπτη: πεδίο 345.",
+      "lines": [
+        { "name": "Συμβουλευτικές υπηρεσίες", "quantity": 1, "unit_price": 800, "tax": "GR-S-ICS", "account": "7301" }
+      ]
+    },
+    {
+      "ref": "C1",
+      "type": "purchase_invoice",
+      "contact": "supplier-gr",
+      "date": "2026-01-11",
+      "due_date": "2026-02-10",
+      "why": "Αγορά στο εσωτερικό της χώρας με τον κανονικό συντελεστή 24%: πεδία 361 και 381, ΦΠΑ εκπιπτόμενο.",
+      "lines": [
+        { "name": "Πρώτες ύλες", "quantity": 1, "unit_price": 1000, "tax": "GR-P-24", "account": "2002" }
+      ]
+    },
+    {
+      "ref": "C2",
+      "type": "purchase_invoice",
+      "contact": "supplier-gr",
+      "date": "2026-01-13",
+      "due_date": "2026-02-12",
+      "why": "Αγορά στο εσωτερικό της χώρας με τον μειωμένο συντελεστή 13%.",
+      "lines": [
+        { "name": "Είδη διατροφής προσωπικού", "quantity": 1, "unit_price": 600, "tax": "GR-P-13", "account": "2002" }
+      ]
+    },
+    {
+      "ref": "C3",
+      "type": "purchase_invoice",
+      "contact": "supplier-gr",
+      "date": "2026-01-16",
+      "due_date": "2026-02-15",
+      "why": "Αγορά στο εσωτερικό της χώρας με τον υπερμειωμένο συντελεστή 6%.",
+      "lines": [
+        { "name": "Βιβλία τεχνικής βιβλιοθήκης", "quantity": 1, "unit_price": 400, "tax": "GR-P-6", "account": "2002" }
+      ]
+    },
+    {
+      "ref": "C4",
+      "type": "purchase_invoice",
+      "contact": "supplier-de",
+      "date": "2026-01-23",
+      "due_date": "2026-02-22",
+      "why": "Ενδοκοινοτική απόκτηση αγαθών: μία posting βάσης αναγραφόμενη ταυτόχρονα στο πεδίο εκροών 303/333 και στο πεδίο εισροών 364/384, όπως στο εσθονικό παράδειγμα του docs/packs.md — μηδενική επίπτωση στο υπόλοιπο, δύο πεδία γεμάτα.",
+      "lines": [
+        { "name": "Εξαρτήματα από Γερμανία", "quantity": 1, "unit_price": 900, "tax": "GR-P-ICG-24", "account": "2002" }
+      ]
+    },
+    {
+      "ref": "C5",
+      "type": "purchase_invoice",
+      "contact": "supplier-cn",
+      "date": "2026-01-26",
+      "due_date": "2026-02-25",
+      "why": "Εισαγωγή αγαθών από τρίτη χώρα: πεδία 363 και 383, ΦΠΑ εκπιπτόμενο επί της δασμολογητέας αξίας.",
+      "lines": [
+        { "name": "Εξαρτήματα από Κίνα", "quantity": 1, "unit_price": 1200, "tax": "GR-P-IMPORT", "account": "2002" }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "P1",
+      "direction": "inbound",
+      "date": "2026-02-05",
+      "amount": 1240,
+      "contact": "client-gr",
+      "journal": "BNK",
+      "match": "V1",
+      "why": "Είσπραξη που εξοφλεί ακριβώς το τιμολόγιο V1."
+    },
+    {
+      "ref": "P2",
+      "direction": "inbound",
+      "date": "2026-02-10",
+      "amount": 300,
+      "contact": "client-gr",
+      "journal": "BNK",
+      "match": null,
+      "why": "Είσπραξη χωρίς αντίστοιχο τιμολόγιο: παραμένει άτακτη, για να ελεγχθεί ένα μη συμψηφισμένο υπόλοιπο."
+    },
+    {
+      "ref": "P3",
+      "direction": "outbound",
+      "date": "2026-02-06",
+      "amount": 1240,
+      "contact": "supplier-gr",
+      "journal": "BNK",
+      "match": "C1",
+      "why": "Η πλευρά του προμηθευτή στον συμψηφισμό, ώστε να μην αποδεικνύεται μόνο από τη μία πλευρά του ισοζυγίου."
+    }
+  ]
+}

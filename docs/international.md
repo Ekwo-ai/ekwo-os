@@ -4724,3 +4724,72 @@ would need a way to name a CIUS distinctly from the base it narrows —
 gave `certification.sources` a flag rather than a new field where a shape
 already existed close enough. Neither is proposed here on the strength of
 one country.
+
+## From Greece
+
+`packs/gr/`, `community`, seed 76, inside the common system of VAT. Three
+things the format could not say, none patched, all left to the README and to
+this section instead.
+
+**A rate that depends on a named list of islands, not a subdivision, and the
+format has nothing for that shape.** Ν.5144/2024, άρθρο 26, as amended by
+Ν.5246/2025 and read by the AADE circular Ε.2113/31.12.2025, reduces the
+three VAT rates by 30 % for supplies established on a list of Aegean islands
+— currently twenty-four of them, drawn island by island rather than by
+administrative region. Portugal's Azores and Madeira meet the same shape of
+rule — a rate that varies within a country still fully inside the common
+system — with `applies_when.supply_in` naming a territory row; Greece cannot
+use the same fix, because no row of `territories` corresponds to this list at
+any useful grain and building twenty-four of them (plus every islet the
+circular's own annex lists) would need re-verifying against a ministerial
+circular, not a law, every time the list moves — which it has, sharply: most
+of the larger islands (Rhodes, Corfu, Mykonos, Santorini among them) were
+taken off it in 2015-2017, and a different set was added back from 1 January
+2026. `packs/gr/` therefore carries no tax code for the reduced rates at all,
+and documents the list and its instability in its own README and in
+`certification.sources` rather than modelling a territory list one circular
+from being wrong. *Fix*: none proposed here — the closest one, a `territories`
+row per island, would commit the framework to a granularity Portugal's two
+stable regions never asked for, for a list this volatile. A country whose
+sub-national rate follows a named, revisable list rather than a subdivision
+is the case to design for, if a second one turns up.
+
+**A fifth pack meets the channel a clearance regime already has no word for,
+and this one is not even a clearance regime.** `packs/mx/`, `packs/vn/`,
+`packs/kr/`, `packs/sa/` and `packs/it/` each leave `einvoicing.profile` null
+because their obligatory format is validated or stamped by the state itself,
+which is not what `profile` describes. Greece's business-to-business
+obligation — legislated by άρθρο 239 of Ν.5222/2025, phased in by Απόφαση
+Α.1128/2025 from 2 February 2026 — requires the EN 16931 semantic model
+itself, the one `profile` was built to name, but transmitted through AADE's
+own "Τιμολόγιο" application or a certified πάροχος ηλεκτρονικής τιμολόγησης,
+with no confirmation found that either channel runs over Peppol or any other
+network a brick of `packages/formats/` could plug into. So this is a sixth
+shape and not a repetition of the fifth: an EN 16931 invoice, exchanged
+through a national channel this pack cannot name a profile for, because
+`profile`'s own list — `peppol-bis-3`, `factur-x-en16931`, `xrechnung`, a
+PINT — is a list of networks and encodings, not of semantic models, and the
+semantic model here is the only part that is not in question. `packs/gr/`
+leaves `profile` and `mandatory_from` null and says the whole of this in
+`einvoicing.legal_reference` and in its own README. *Fix*: the same one
+"From Vietnam" and "From Saudi Arabia" already ask for — a field beside
+`profile` for the exchange model — would need a value for "EN 16931, over an
+unconfirmed or a national channel" distinct from "a national format entirely,
+stamped by the state", which today's proposals do not yet distinguish.
+
+**A deadline that is the last day of a month, except when that day is not a
+business day, and `deadline.rule` has no word for the exception.** The Φ2
+return is due on the last business day of the month that follows the filing
+period (Εθνικό Μητρώο Διοικητικών Διαδικασιών "Μίτος").
+`last_day_of_month_after_period` answers the last *calendar* day, which is the true deadline
+except on the months — several, in any twelve — where that day is a Saturday,
+a Sunday or a public holiday and the filing moves earlier. This is a third
+shape of the same limit "From Italy" and "From Portugal" already name for a
+deadline the vocabulary cannot state without risking a date past the legal
+one: theirs is a month the rule does not reach at all, this one is a business-
+day adjustment inside a month the rule does reach. `packs/gr/tax_report.json`
+declares no `deadline` and states the true rule, in full, in its own
+`legal_reference`. *Fix*: a fourth `rule` —
+`last_business_day_of_month_after_period` — reading a calendar of public holidays neither this table nor
+any pack has needed before now, which is the part no proposal here has
+designed.
