@@ -4417,3 +4417,41 @@ one is chosen; `packs/hu/` leaves `deadline` out entirely, for two-thirds of
 its cadences correct on the day and for one-third wrong by more than a
 month, which is the same choice `packs/at` already made for a single
 ill-fitting cadence and worse here for being avoidable on part of the form.
+
+## From Bulgaria
+
+### A box that is a sum plus a product cannot be declared
+
+Box 40 of the „Справка-декларация за ДДС" (Приложение № 13 към чл. 116, ал. 1
+ППЗДДС) totals deductible input tax as „кл. 41 + кл. 42 х кл. 33 + кл. 43" —
+box 41 (VAT with a full credit right) and box 43 (an annual correction) added
+straight, plus box 42 (VAT with a *partial* credit right) multiplied by the
+pro-rata coefficient of box 33 (чл. 73, ал. 5 ЗДДС). A `tax_report.json` box
+is a `plus` list, a `minus` list, or a single `rate` of a single `rate_of`
+box — never a product folded into a larger sum. The one existing multiplying
+shape, `rate`/`rate_of`, covers a form that states a whole line as one
+multiplication (California's CDTFA-401-A, *From asking when a declaration is
+due* above); it cannot cover a form that adds two plain boxes to a third box
+that is itself a product. `packs/bg/tax_report.json` declares box 40 as
+`41 + 42 + 43`, which is exactly the official formula wherever box 42 and the
+coefficient of box 33 are unused — a company with no partially deductible
+input tax, which is what this pack's golden scenario is — and says so at the
+box. A company that does partially deduct would see this pack's box 40
+overstate its credit by `42 × (1 − коефициент)`. *Fix*: a second multiplying
+shape on a `total` box, `plus_rated: { box, rate_of }`, added to whatever
+`plus` and `minus` already sum — the box that needed it first (CDTFA-401-A)
+had nothing else to add, so the gap did not show until a form asked for both
+at once.
+
+### BGN and BG needed no new row
+
+Bulgaria joined the euro area on 1 January 2026 and the lev stopped being
+legal tender on 1 February 2026 (European Central Bank, press releases of
+8 July 2025 and 1 January 2026); on 25 September 2026, the day this pack was
+written, every figure a Bulgarian company books and declares is in euro. `EUR`
+was already a row of `00_currencies.sql`, carried by the earlier European
+packs, so this pack adds none. `BG` was already a row of
+`00_territories.sql` with `eu_vat_scope` `full` since 1 January 2007 (Treaty
+of Accession 2005), so `packs/bg/` touches neither file — the two-file
+exception of [The two places a pack is written](packs.md#the-two-places-a-pack-is-written)
+stays exactly two files here.

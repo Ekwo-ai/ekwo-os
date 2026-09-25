@@ -1,0 +1,113 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "Година от книгите на българско търговско дружество, месечна справка-декларация по ЗДДС",
+  "chart": "default",
+  "fiscal_year": { "name": "Отчетна 2026 година", "start": "2026-01-01", "end": "2026-12-31" },
+  "periods": [
+    { "code": "2026-02", "from": "2026-02-01", "to": "2026-02-28" },
+    { "code": "2026-03", "from": "2026-03-01", "to": "2026-03-31" },
+    { "code": "2026-04", "from": "2026-04-01", "to": "2026-04-30" }
+  ],
+  "statements": ["BG-SS1-BALANS", "BG-SS1-OPR"],
+  "contacts": [
+    { "ref": "klient-bg", "name": "Слънчев Бряг Търговия ЕООД", "type": "customer", "country": "BG" },
+    { "ref": "klient-de", "name": "Rheinmetall Werkzeuge GmbH", "type": "customer", "country": "DE", "vat_number": "DE999999999" },
+    { "ref": "klient-us", "name": "Prairie Import Corp.", "type": "customer", "country": "US" },
+    { "ref": "klient-fr", "name": "Atelier Numérique SARL", "type": "customer", "country": "FR", "vat_number": "FR00999999999" },
+    { "ref": "наемател-bg", "name": "Иванов, физическо лице", "type": "customer", "country": "BG" },
+    { "ref": "dostavchik-bg", "name": "Консултинг Партньори ЕООД", "type": "supplier", "country": "BG" },
+    { "ref": "dostavchik-hotel-bg", "name": "Хотел Витоша АД", "type": "supplier", "country": "BG" },
+    { "ref": "dostavchik-de", "name": "Bayern Rohstoffe GmbH", "type": "supplier", "country": "DE", "vat_number": "DE888888888" },
+    { "ref": "dostavchik-fr", "name": "Marketing Digital Paris SARL", "type": "supplier", "country": "FR", "vat_number": "FR00888888888" },
+    { "ref": "zastrahovatel-bg", "name": "Застрахователно Дружество Защита АД", "type": "supplier", "country": "BG" }
+  ],
+  "documents": [
+    {
+      "ref": "V1", "type": "sale_invoice", "contact": "klient-bg", "date": "2026-02-10",
+      "why": "Une vente domestique au taux normal 20% : la base et la TVA due se lisent en клетка 11/21.",
+      "lines": [{ "name": "Стоки — партида офис обзавеждане", "quantity": 10, "unit_price": 100, "tax": "BG-S-20", "account": "9110" }]
+    },
+    {
+      "ref": "V2", "type": "sale_invoice", "contact": "klient-bg", "date": "2026-02-15",
+      "why": "Une vente domestique au taux réduit 9% (hébergement hôtelier) : клетка 13/24.",
+      "lines": [{ "name": "Настаняване — 5 нощувки", "quantity": 5, "unit_price": 80, "tax": "BG-S-9", "account": "9110" }]
+    },
+    {
+      "ref": "V3", "type": "sale_invoice", "contact": "klient-de", "date": "2026-03-05",
+      "why": "Une livraison intracommunautaire de biens (ВОД) au taux zéro : клетка 15, et la mention légale de l'exonération.",
+      "lines": [{ "name": "Индустриални инструменти", "quantity": 5, "unit_price": 2000, "tax": "BG-S-VOD", "account": "9110" }]
+    },
+    {
+      "ref": "V4", "type": "sale_invoice", "contact": "klient-us", "date": "2026-03-10",
+      "why": "Un export de biens hors Union européenne au taux zéro : клетка 14.",
+      "lines": [{ "name": "Селскостопанска машина", "quantity": 2, "unit_price": 3000, "tax": "BG-S-EXPORT", "account": "9110" }]
+    },
+    {
+      "ref": "V5", "type": "sale_invoice", "contact": "klient-fr", "date": "2026-03-15",
+      "why": "Une prestation de services à un assujetti établi dans un autre État membre, sous la règle générale B2B : клетка 17, obratno nachislyavane.",
+      "lines": [{ "name": "Услуга по ИТ консултиране", "quantity": 1, "unit_price": 5000, "tax": "BG-S-USLUGI-ES", "account": "9110" }]
+    },
+    {
+      "ref": "V6", "type": "sale_invoice", "contact": "наемател-bg", "date": "2026-03-20",
+      "why": "Une exonération domestique (location d'un logement à un particulier, art. 45, al. 4 ЗДДС) : клетка 19.",
+      "lines": [{ "name": "Наем на жилище — март 2026", "quantity": 1, "unit_price": 800, "tax": "BG-S-EXEMPT-NAEM", "account": "9110" }]
+    },
+    {
+      "ref": "V7", "type": "sale_credit_note", "contact": "klient-bg", "date": "2026-04-05",
+      "why": "Une note de crédit corrigeant partiellement V1 (retour de deux articles) : elle réduit клетка 11/21 de la période où la correction doit être déclarée.",
+      "lines": [{ "name": "Връщане — офис обзавеждане", "quantity": 2, "unit_price": 100, "tax": "BG-S-20", "account": "9110" }]
+    },
+    {
+      "ref": "Z1", "type": "purchase_invoice", "contact": "dostavchik-bg", "date": "2026-02-08",
+      "why": "Un achat domestique de services au taux normal, entièrement déductible : клетка 31/41.",
+      "lines": [{ "name": "Консултантски услуги — февруари 2026", "quantity": 1, "unit_price": 1500, "tax": "BG-P-20", "account": "8225" }]
+    },
+    {
+      "ref": "Z2", "type": "purchase_invoice", "contact": "dostavchik-hotel-bg", "date": "2026-02-12",
+      "why": "Un achat domestique au taux réduit 9% (nuitées d'un déplacement professionnel), entièrement déductible : клетка 31/41.",
+      "lines": [{ "name": "Настаняване — 2 нощувки, командировка", "quantity": 2, "unit_price": 90, "tax": "BG-P-9", "account": "8227" }]
+    },
+    {
+      "ref": "Z3", "type": "purchase_invoice", "contact": "dostavchik-de", "date": "2026-03-08",
+      "why": "Une acquisition intracommunautaire de biens (ВОП), autoliquidée : клетка 12/22 côté taxe due et клетка 31/41 côté déduction, sans TVA facturée par le fournisseur allemand.",
+      "lines": [{ "name": "Метални суровини", "quantity": 3, "unit_price": 1000, "tax": "BG-P-VOP-20", "account": "2010" }]
+    },
+    {
+      "ref": "Z4", "type": "purchase_invoice", "contact": "dostavchik-fr", "date": "2026-03-12",
+      "why": "Un service reçu d'un assujetti établi dans un autre État membre sous la règle générale B2B (art. 21, al. 2 et art. 82, al. 2, т. 3 ЗДДС) : клетка 12/22 et клетка 31/41.",
+      "lines": [{ "name": "Маркетингова услуга", "quantity": 1, "unit_price": 1200, "tax": "BG-P-USLUGI-ES-20", "account": "8226" }]
+    },
+    {
+      "ref": "Z5", "type": "purchase_invoice", "contact": "zastrahovatel-bg", "date": "2026-04-10",
+      "why": "Un achat exonéré (prime d'assurance, art. 47 ЗДДС) : rien à déduire, seule клетка 30 est renseignée.",
+      "lines": [{ "name": "Застрахователна премия — обща гражданска отговорност", "quantity": 1, "unit_price": 500, "tax": "BG-P-EXEMPT", "account": "8510" }]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "E1", "direction": "inbound", "date": "2026-03-10", "amount": 1200,
+      "contact": "klient-bg", "journal": "BANK", "match": "V1",
+      "why": "Un encaissement qui solde exactement V1."
+    },
+    {
+      "ref": "E2", "direction": "inbound", "date": "2026-04-01", "amount": 10000,
+      "contact": "klient-de", "journal": "BANK", "match": "V3",
+      "why": "Un encaissement qui solde exactement la livraison intracommunautaire V3."
+    },
+    {
+      "ref": "E3", "direction": "outbound", "date": "2026-03-01", "amount": 1800,
+      "contact": "dostavchik-bg", "journal": "BANK", "match": "Z1",
+      "why": "Un paiement qui solde exactement Z1."
+    },
+    {
+      "ref": "E4", "direction": "inbound", "date": "2026-04-15", "amount": 500,
+      "contact": "klient-bg", "journal": "BANK", "match": null,
+      "why": "Un acompte encaissé d'avance, non rapproché d'une facture : un poste ouvert, comme un relevé réel en garderait un."
+    },
+    {
+      "ref": "E5", "direction": "outbound", "date": "2026-04-05", "amount": 3000,
+      "contact": "dostavchik-de", "journal": "BANK", "match": "Z3",
+      "why": "Un paiement qui solde exactement Z3, pour son seul montant net : le fournisseur allemand ne facture aucune TVA bulgare."
+    }
+  ]
+}

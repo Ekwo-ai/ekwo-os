@@ -1,0 +1,45 @@
+{
+  "statements": [
+    {
+      "code": "BG-SS1-BALANS",
+      "from": "2026-01-01",
+      "to": "2026-12-31",
+      "lines": {
+        "AKTIV": "22552.20",
+        "AKTIV.A": "0.00",
+        "AKTIV.B": "0.00",
+        "AKTIV.B.I": "0.00",
+        "AKTIV.B.II": "0.00",
+        "AKTIV.B.III": "0.00",
+        "AKTIV.B.IV": "0.00",
+        "AKTIV.V": "22552.20",
+        "AKTIV.V.I": "3000.00",
+        "AKTIV.V.II": "12652.20",
+        "AKTIV.V.III": "0.00",
+        "AKTIV.V.IV": "6900.00",
+        "AKTIV.G": "0.00",
+        "PASIV": "2932.20",
+        "PASIV.A": "0.00",
+        "PASIV.A.I": "0.00",
+        "PASIV.A.II": "0.00",
+        "PASIV.A.III": "0.00",
+        "PASIV.A.IV": "0.00",
+        "PASIV.A.V": "0.00",
+        "PASIV.A.VI": "0.00",
+        "PASIV.B": "0.00",
+        "PASIV.V": "2932.20",
+        "PASIV.G": "0.00"
+      }
+    },
+    {
+      "code": "BG-SS1-OPR",
+      "from": "2026-01-01",
+      "to": "2026-12-31",
+      "lines": {
+        "OPR.A": "3380.00",
+        "OPR.B": "23000.00",
+        "OPR.V": "19620.00"
+      }
+    }
+  ]
+}
