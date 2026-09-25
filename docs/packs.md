@@ -260,6 +260,7 @@ says what they say. `ekwo pack describe <cc>` is everything one of them says.
 | [`no`](../packs/no/) | Norge | `66_pack_no.sql` | nb | `community` |
 | [`nz`](../packs/nz/) | New Zealand | `41_pack_nz.sql` | en | `community` |
 | [`pe`](../packs/pe/) | Perú | `48_pack_pe.sql` | es, en | `community` |
+| [`ph`](../packs/ph/) | Philippines | `44_pack_ph.sql` | en | `community` |
 | [`pl`](../packs/pl/) | Polska | `64_pack_pl.sql` | pl | `community` |
 | [`pt`](../packs/pt/) | Portugal | `43_pack_pt.sql` | pt, en | `community` |
 | [`ro`](../packs/ro/) | Romania | `72_pack_ro.sql` | ro | `community` |
