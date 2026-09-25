@@ -1,0 +1,112 @@
+code,parent,type,reconcilable,name,sequence
+1100,,asset_fixed,false,Vagyoni értékű jogok,10
+1110,,asset_fixed,false,Szellemi termékek (szoftver),20
+1120,,asset_fixed,false,Kísérleti fejlesztés aktivált értéke,30
+1130,,asset_fixed,false,Üzleti vagy cégérték,40
+1140,,asset_fixed,false,Immateriális javakra adott előlegek,50
+1200,,asset_fixed,false,Ingatlanok és a kapcsolódó vagyoni értékű jogok,60
+1210,,asset_fixed,false,"Műszaki berendezések, gépek, járművek",70
+1220,,asset_fixed,false,"Egyéb berendezések, felszerelések",80
+1230,,asset_fixed,false,"Beruházások, felújítások",90
+1240,,asset_fixed,false,Beruházásokra adott előlegek,100
+1300,,asset_non_current,false,Tartós részesedés kapcsolt vállalkozásban,110
+1310,,asset_non_current,false,Tartósan adott kölcsön kapcsolt vállalkozásnak,120
+1320,,asset_non_current,false,Egyéb hosszú lejáratú befektetett pénzügyi eszköz,130
+2100,,asset_current,false,Anyagok,140
+2110,,asset_current,false,Befejezetlen termelés és félkész termékek,150
+2120,,asset_current,false,Késztermékek,160
+2130,,asset_current,false,Áruk,170
+2140,,asset_current,false,Készletekre adott előlegek,180
+2200,,asset_receivable,true,Vevőkövetelések,190
+2210,,asset_current,false,Kapcsolt vállalkozással szembeni követelés,200
+2215,,asset_current,false,Munkavállalókkal szembeni követelés,220
+2216,,asset_current,false,Tagokkal (tulajdonosokkal) szembeni követelés,230
+2220,,asset_current,false,Egyéb követelés,240
+2221,,asset_current,false,Levonható előzetesen felszámított áfa 27%,250
+2222,,asset_current,false,Levonható előzetesen felszámított áfa 18%,260
+2223,,asset_current,false,Levonható előzetesen felszámított áfa 5%,270
+2224,,asset_current,false,"Levonható előzetesen felszámított áfa — önadózás (közösségi beszerzés, fordított adózás, külföldi szolgáltatás)",280
+2230,,asset_current,true,Költségvetéssel szembeni követelés — általános forgalmi adó,290
+2235,,asset_current,false,Költségvetéssel szembeni egyéb követelés,300
+2240,,asset_current,true,Elszámolási (átvezetési) számla,310
+2300,,asset_current,false,Egyéb részesedés,320
+2310,,asset_current,false,"Saját részvények, üzletrészek",330
+2320,,asset_current,false,Egyéb értékpapír,340
+2400,,asset_cash,false,Pénztár,350
+2410,,asset_cash,false,Bankbetétek — elszámolási számla,360
+2420,,asset_cash,false,Bankbetétek — elkülönített számla,370
+3100,,asset_prepayments,false,Aktív időbeli elhatárolás — bevételek,380
+3110,,asset_prepayments,false,"Aktív időbeli elhatárolás — költségek, ráfordítások",390
+3120,,asset_prepayments,false,Halasztott ráfordítások,400
+4100,,equity,false,Jegyzett tőke,410
+4200,,equity,false,"Jegyzett, de még be nem fizetett tőke",420
+4300,,equity,false,Tőketartalék,430
+4400,,equity_retained,false,Eredménytartalék,440
+4500,,equity,false,Lekötött tartalék,450
+4600,,equity,false,Értékelési tartalék,460
+4710,,equity,false,Adózott eredmény — nyereség,470
+4720,,equity,false,Adózott eredmény — veszteség,480
+5100,,liability_non_current,false,Céltartalék várható kötelezettségekre,490
+5110,,liability_non_current,false,Céltartalék jövőbeni költségekre,500
+5120,,liability_non_current,false,Egyéb céltartalék,510
+6100,,liability_non_current,false,Hátrasorolt kötelezettség kapcsolt vállalkozással szemben,520
+6110,,liability_non_current,false,Hátrasorolt kötelezettség egyéb részesedési viszonyban lévő vállalkozással szemben,530
+6200,,liability_non_current,false,Hosszú lejáratú hitel,540
+6210,,liability_non_current,false,Hosszú lejáratú kölcsön,550
+6220,,liability_non_current,false,Egyéb hosszú lejáratú kötelezettség,560
+6300,,liability_payable,true,Szállítói kötelezettség,570
+6310,,liability_payable,true,Kapcsolt vállalkozással szembeni kötelezettség,580
+6315,,liability_current,false,Tagokkal (tulajdonosokkal) szembeni kötelezettség,590
+6320,,liability_current,false,Váltótartozás,600
+6321,,liability_current,false,Fizetendő áfa 27%,610
+6322,,liability_current,false,Fizetendő áfa 18%,620
+6323,,liability_current,false,Fizetendő áfa 5%,630
+6324,,liability_current,false,"Fizetendő áfa — önadózás (közösségi beszerzés, fordított adózás)",640
+6330,,liability_current,true,Költségvetéssel szembeni kötelezettség — általános forgalmi adó,650
+6335,,liability_current,false,Költségvetéssel szembeni egyéb kötelezettség,660
+6340,,liability_current,false,Munkavállalókkal szembeni kötelezettség (bér),670
+6350,,liability_current,false,Társadalombiztosítással szembeni kötelezettség,680
+6360,,liability_current,false,Rövid lejáratú hitel,690
+6370,,liability_current,false,Egyéb rövid lejáratú kötelezettség,700
+7100,,liability_current,false,Passzív időbeli elhatárolás — bevételek,710
+7110,,liability_current,false,"Passzív időbeli elhatárolás — költségek, ráfordítások",720
+7120,,liability_current,false,Halasztott bevételek,730
+8100,,income,false,Belföldi értékesítés nettó árbevétele — termék,740
+8101,,income,false,Belföldi értékesítés nettó árbevétele — szolgáltatás,750
+8110,,income,false,Exportértékesítés nettó árbevétele,760
+8120,,income,false,Közösségen belüli értékesítés nettó árbevétele,770
+8200,,income_other,false,Saját termelésű készletek állományváltozása,780
+8300,,income_other,false,Saját előállítású eszközök aktivált értéke,790
+8400,,income_other,false,Egyéb bevételek — kapott támogatás,800
+8401,,income_other,false,"Egyéb bevételek — kapott kötbér, kártérítés",810
+8402,,income_other,false,Egyéb bevételek — értékesített tárgyi eszköz bevétele,820
+8403,,income_other,false,Egyéb bevételek — céltartalék felhasználása,830
+8500,,expense,false,Anyagköltség — alapanyag,840
+8501,,expense,false,Anyagköltség — irodaszer,850
+8502,,expense,false,"Anyagköltség — energia (villany, gáz)",860
+8510,,expense,false,Igénybe vett szolgáltatások — bérleti díj,870
+8511,,expense,false,"Igénybe vett szolgáltatások — szakértői, tanácsadói díj",880
+8512,,expense,false,"Igénybe vett szolgáltatások — telekommunikáció, internet",890
+8513,,expense,false,"Igénybe vett szolgáltatások — szállítási, fuvarozási",900
+8514,,expense,false,"Igénybe vett szolgáltatások — karbantartás, javítás",910
+8515,,expense,false,"Igénybe vett szolgáltatások — oktatás, továbbképzés",920
+8520,,expense,false,"Egyéb szolgáltatások értéke — hatósági díjak, illetékek",930
+8521,,expense,false,Egyéb szolgáltatások értéke — biztosítás,940
+8522,,expense,false,Egyéb szolgáltatások értéke — bankköltség,950
+8530,,expense_direct_cost,false,Eladott áruk beszerzési értéke,960
+8540,,expense_direct_cost,false,Eladott (közvetített) szolgáltatások értéke,970
+8600,,expense,false,Bérköltség,980
+8610,,expense,false,Személyi jellegű egyéb kifizetések,990
+8620,,expense,false,Bérjárulékok — szociális hozzájárulási adó,1000
+8621,,expense,false,Bérjárulékok — egyéb,1010
+8700,,expense_depreciation,false,Értékcsökkenési leírás,1020
+8800,,expense,false,"Egyéb ráfordítások — adók, illetékek",1030
+8801,,expense,false,"Egyéb ráfordítások — adott kötbér, kártérítés",1040
+8810,,expense,false,Le nem vonható áfa — személygépkocsi,1050
+8820,,expense,false,Kerekítési különbözet,1060
+9100,,income_other,false,Kapott osztalék és részesedés,1070
+9110,,income_other,false,Egyéb kapott kamatok és kamatjellegű bevételek,1080
+9120,,income_other,false,Árfolyamnyereség,1090
+9200,,expense,false,Fizetendő kamatok és kamatjellegű ráfordítások,1100
+9210,,expense,false,Árfolyamveszteség,1110
+9300,,expense,false,Adófizetési kötelezettség (társasági adó),1120

@@ -1,0 +1,275 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "HU",
+  "name": "Magyarország",
+  "version": "0.1.0",
+  "schema_min": "20260921145425",
+  "seed_sequence": 70,
+  "released_at": "2026-09-25",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "afa-torveny",
+        "title": "2007. évi CXXVII. törvény az általános forgalmi adóról",
+        "publisher": "Nemzeti Jogszabálytár / net.jogtar.hu (a Wolters Kluwer Hatályos Jogszabályok Gyűjteménye, az Igazságügyi Minisztérium közreműködésével gondozott hatályos szövegtár)",
+        "url": "https://net.jogtar.hu/jogszabaly?docid=a0700127.tv",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "szamviteli-torveny",
+        "title": "2000. évi C. törvény a számvitelről",
+        "publisher": "Nemzeti Jogszabálytár / net.jogtar.hu",
+        "url": "https://net.jogtar.hu/jogszabaly?docid=a0000100.tv",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "art-torveny",
+        "title": "2017. évi CL. törvény az adózás rendjéről, 2. melléklet I./B./3. pont — az áfabevallás gyakorisága",
+        "publisher": "Nemzeti Jogszabálytár / net.jogtar.hu",
+        "url": "https://net.jogtar.hu/jogszabaly?docid=a1700150.tv",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "ptk",
+        "title": "2013. évi V. törvény a Polgári Törvénykönyvről, Hatodik könyv, 6:130. § — pénztartozás teljesítésének ideje",
+        "publisher": "Nemzeti Jogszabálytár / net.jogtar.hu",
+        "url": "https://net.jogtar.hu/jogszabaly?docid=a1300005.tv",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "kerekitesi-torveny",
+        "title": "2008. évi III. törvény az 1 és 2 forintos címletű érmék bevonása következtében szükséges kerekítés szabályairól",
+        "publisher": "Nemzeti Jogszabálytár / net.jogtar.hu",
+        "url": "https://net.jogtar.hu/jogszabaly?docid=a0800003.tv",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "nyomtatvany-2665",
+        "title": "2665 számú áfabevallás és kitöltési útmutatója, a 2026. évi bevallási időszakokra",
+        "publisher": "Nemzeti Adó- és Vámhivatal (NAV)",
+        "url": "https://nav.gov.hu/pfile/file?path=%2Fnyomtatvanyok%2Fletoltesek%2Fnyomtatvanykitolto_programok%2Fnyomtatvanykitolto_programok_nav%2F2665%2F2665-kitoltesi-utmutato",
+        "consulted_on": "2026-09-25",
+        "kind": "form"
+      },
+      {
+        "key": "nav-afakulcsok",
+        "title": "Áfakulcsok és a tevékenység közérdekű vagy egyéb sajátos jellegére tekintettel adómentes tevékenységek köre",
+        "publisher": "Nemzeti Adó- és Vámhivatal (NAV)",
+        "url": "https://nav.gov.hu/pfile/file?path=%2Fugyfeliranytu%2Fadokulcsok_jarulekmertekek%2Fafakulcs_adomen%2FAfa_kulcsok_es_a_tevekenyseg_kozerdeku_vagy_egyeb_sajatos_jellegere_tekintettel_adomentes_tevekenysegek_kore",
+        "consulted_on": "2026-09-25",
+        "kind": "guidance"
+      },
+      {
+        "key": "nav-alanyi-mentesseg",
+        "title": "Emelkedik az alanyi adómentesség értékhatára",
+        "publisher": "Nemzeti Adó- és Vámhivatal (NAV)",
+        "url": "https://nav.gov.hu/ado/afa/Emelkedik_az_alanyi_adomentesseg_ertekhatara",
+        "consulted_on": "2026-09-25",
+        "kind": "guidance"
+      },
+      {
+        "key": "nav-online-szamla",
+        "title": "A számlakibocsátók adatszolgáltatási kötelezettsége (Online Számla, valós idejű adatszolgáltatás)",
+        "publisher": "Nemzeti Adó- és Vámhivatal (NAV)",
+        "url": "https://nav.gov.hu/ado/afa/A_szamlakibocsatok_sz20201231",
+        "consulted_on": "2026-09-25",
+        "kind": "guidance"
+      },
+      {
+        "key": "onlineszamla-portal",
+        "title": "Online Számla — a NAV valós idejű számla-adatszolgáltatási rendszere",
+        "publisher": "Nemzeti Adó- és Vámhivatal (NAV)",
+        "url": "https://onlineszamla.nav.gov.hu/",
+        "consulted_on": "2026-09-25",
+        "kind": "portal"
+      },
+      {
+        "key": "peppol-eas",
+        "title": "Electronic Address Scheme (EAS) — ISO 6523 identifier schemes, including 9910 (Hungary VAT number)",
+        "publisher": "OpenPeppol",
+        "url": "https://docs.peppol.eu/poacc/billing/3.0/codelist/eas/",
+        "consulted_on": "2026-09-25",
+        "kind": "standard"
+      },
+      {
+        "key": "en-16931",
+        "title": "EN 16931-1 — semantic data model of the electronic invoice, conformant with Directive 2014/55/EU",
+        "publisher": "European Commission",
+        "url": "https://ec.europa.eu/digital-building-blocks/sites/spaces/DIGITAL/pages/467108950/EN+16931+compliance",
+        "consulted_on": "2026-09-25",
+        "kind": "standard"
+      },
+      {
+        "key": "uncl5305",
+        "title": "UNCL5305 — code list of VAT categories (BT-118 and BT-151), subset published for EN 16931",
+        "publisher": "OpenPEPPOL — list published by the European Commission",
+        "url": "https://docs.peppol.eu/poacc/billing/3.0/codelist/UNCL5305/",
+        "consulted_on": "2026-09-25",
+        "kind": "standard"
+      },
+      {
+        "key": "vatex",
+        "title": "VATEX — code list of VAT exemption reasons (BT-121)",
+        "publisher": "OpenPEPPOL — list published by the European Commission",
+        "url": "https://docs.peppol.eu/poacc/billing/3.0/codelist/vatex/",
+        "consulted_on": "2026-09-25",
+        "kind": "standard"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "HUF",
+    "language": "hu",
+    "rounding_method": "half_up",
+    "cash_rounding_unit": 5,
+    "closing_style": "result_accounts",
+    "roles": {
+      "receivable": "2200",
+      "payable": "6300",
+      "suspense": "2240",
+      "rounding": "8820",
+      "retained_earnings": "4400",
+      "current_year_result_profit": "4710",
+      "current_year_result_loss": "4720",
+      "sales": "8100",
+      "purchase": "8510",
+      "bank": "2410",
+      "cash": "2400",
+      "fx_gain": "9120",
+      "fx_loss": "9210",
+      "tax_payable": "6330",
+      "tax_receivable": "2230"
+    },
+    "journal_roles": {
+      "sales": "KI",
+      "purchase": "BE",
+      "miscellaneous": "VE",
+      "opening": "NY"
+    },
+    "fiscal_year_default": "calendar"
+  },
+  "languages": [],
+  "journals": [
+    { "code": "KI", "type": "sales", "name": "Kimenő számlák", "sequence": 10 },
+    { "code": "BE", "type": "purchase", "name": "Bejövő számlák", "sequence": 20 },
+    { "code": "BK", "type": "bank", "name": "Bank", "sequence": 30 },
+    { "code": "PT", "type": "cash", "name": "Pénztár", "sequence": 40 },
+    { "code": "VE", "type": "general", "name": "Vegyes tételek", "sequence": 50 },
+    { "code": "NY", "type": "opening", "name": "Nyitás", "sequence": 60 }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "A mérleg és az eredménykimutatás „A” változatának tagolására épülő számlatükör",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": ["HU-SZT-MERLEG-A", "HU-SZT-EREDMENY-A"],
+      "legal_reference": "A számvitelről szóló 2000. évi C. törvény 14. §-a minden gazdálkodót saját számviteli politika és — ahhoz igazodó — saját számlarend írásbeli kialakítására kötelez; a törvény nem ír elő egységes, számokkal rögzített nemzeti számlatükröt (ellentétben például a francia PCG-vel vagy a belga PCMN-nel). Ez a számlatükör ezért e pack saját, a törvény 22. §-a szerinti, az 1. számú melléklet „A” változatában rögzített mérlegtagolásra és a 71. §, 2. számú melléklet szerinti, összköltség eljárással készített eredménykimutatás „A” változatára épülő javaslata: a kód első számjegye közvetlenül a mérleg vagy az eredménykimutatás azon fő tételére utal, amelyhez a számla tartozik (1 A) Befektetett eszközök, 2 B) Forgóeszközök, 3 C) Aktív időbeli elhatárolások, 4 D) Saját tőke, 5 E) Céltartalékok, 6 F) Kötelezettségek, 7 G) Passzív időbeli elhatárolások, 8–9 az eredménykimutatás 2. számú melléklet szerinti sorai).",
+      "source": "szamviteli-torveny"
+    }
+  ],
+  "documents": {
+    "numbering": "gapless_per_year",
+    "number_format": "{CODE}/{YYYY}/{NNNN}",
+    "legal_payment_days": 30,
+    "late_payment_reference": "A Polgári Törvénykönyvről szóló 2013. évi V. törvény (Ptk.) 6:130. §-a szerint, megállapodás hiányában, a pénztartozást a jogosult fizetési felszólításának, illetve számlájának kézhezvételétől számított harminc napon belül kell teljesíteni; vállalkozások közötti szerződésben hatvan napnál hosszabb határidő csak akkor köthető ki, ha az a szerződés tárgyára tekintettel kifejezetten nem méltánytalan a jogosultra nézve. A 2011/7/EU irányelv átültetése. E pack nem tudta a 6:130. §-t közvetlenül, a törvény teljes szövegéből ellenőrizni — a net.jogtar.hu kinyerése a Hatodik Könyv előtt megszakadt minden kísérletnél —, a fenti szöveg egybehangzó másodlagos jogi szakirodalmi forrásokból (ügyvédi irodák, szakcikkek) származik; egy felülvizsgálónak a törvény teljes szövegén kell ezt ellenőriznie a reviewed státusz előtt.",
+    "tax_point": "earliest_of_delivery_or_payment",
+    "posted_edit_policy": "reversal_only",
+    "references": {
+      "numbering": {
+        "legal_reference": "Áfa tv. 169. § (1) b) — a számla kötelező adattartalma egyebek mellett a számla sorszáma, amely a számlát kétséget kizáróan azonosítja; a törvény szövege szerint a sorszámnak egyedinek, folytonosnak és kihagyásmentesnek kell lennie, ami — Ausztriával ellentétben, ahol a törvény csak az egyediséget írja elő — a gapless_per_year-t indokolja. Számlázó programmal kibocsátott számla esetén a folytonos, ismétlődés- és kihagyásmentes sorszámozást magának a programnak kell automatikusan biztosítania.",
+        "source": "afa-torveny"
+      },
+      "payment_terms": {
+        "legal_reference": "Ptk. 6:130. § — lásd documents.late_payment_reference; e pontot csak másodlagos forrásokból lehetett megerősíteni, lásd a fenti megjegyzést.",
+        "source": "ptk"
+      },
+      "tax_point": {
+        "legal_reference": "Áfa tv. 55. § (1) — az adófizetési kötelezettséget az a tény keletkezteti, amellyel az adóztatandó ügylet tényállásszerűen megvalósul (teljesítés); ez a főszabály. Áfa tv. 59. § — ha a teljesítést megelőzően fizetnek az ellenértékből (előleg), a fizetendő adó a fizetendő összeg jóváírásakor, kézhezvételekor keletkezik. A két ág együtt earliest_of_delivery_or_payment. Nem modellezve: a folyamatos teljesítésű ügyletekre vonatkozó 58. § szerinti különös szabály.",
+        "source": "afa-torveny"
+      },
+      "posted_edit_policy": {
+        "legal_reference": "Számv. tv. 165. § (3) és 166. § — a könyvviteli nyilvántartásokba csak szabályszerűen kiállított bizonylat alapján szabad adatot bejegyezni, és a nyilvántartásba bejegyzett adatot bizonylat nélkül megváltoztatni nem lehet; egy könyvelt számlát ezért csak arra hivatkozó helyesbítő számlával (jóváírással) lehet érvényteleníteni, nem törléssel.",
+        "source": "szamviteli-torveny"
+      }
+    },
+    "mentions": [
+      {
+        "code": "reverse_charge",
+        "applies_when": "reverse_charge",
+        "text": "Fordított adózás",
+        "sequence": 10,
+        "legal_reference": "Áfa tv. 142. § (7) — a fordított adózás alá eső ügyletről kibocsátott számla nem tartalmazhat áthárított adót, és a számlán fel kell tüntetni a fordított adózásra való utalást.",
+        "source": "afa-torveny"
+      },
+      {
+        "code": "intra_eu_goods",
+        "applies_when": "intra_eu_goods",
+        "text": "Adómentes Közösségen belüli termékértékesítés",
+        "sequence": 20,
+        "legal_reference": "Áfa tv. 89. § (1) — mentes az adó alól a termék Közösségen belüli értékesítése egy olyan, más tagállamban közösségi adószámmal rendelkező adóalany részére, aki a termékbeszerzés után saját tagállamában adófizetésre kötelezett.",
+        "source": "afa-torveny"
+      },
+      {
+        "code": "intra_eu_services",
+        "applies_when": "intra_eu_services",
+        "text": "Fordított adózás — a szolgáltatás igénybevevője a teljesítési hely szerinti tagállamban adófizetésre kötelezett",
+        "sequence": 30,
+        "legal_reference": "Áfa tv. 37. § (1) — az adóalanynak nyújtott szolgáltatás teljesítési helye az a hely, ahol a szolgáltatást igénybevevő adóalany gazdasági céllal letelepedett; a törvény adófizetésre kötelezettről szóló fejezete (138–140. §) az igénybevevőt teszi adófizetésre kötelezetté, ha a szolgáltatást nyújtó nem telepedett le belföldön — a 139. és 140. § pontos elhatárolása e pack készítése során nem volt közvetlenül ellenőrizhető a törvény szövegéből, lásd README.",
+        "source": "afa-torveny"
+      },
+      {
+        "code": "export",
+        "applies_when": "export",
+        "text": "Adómentes termékexport a Közösségen kívülre",
+        "sequence": 40,
+        "legal_reference": "Áfa tv. 98. § (1) — mentes az adó alól a termék Közösség területén kívülre történő értékesítése, feltéve hogy a termék az értékesítés következtében elhagyja a Közösség területét.",
+        "source": "afa-torveny"
+      },
+      {
+        "code": "exempt",
+        "applies_when": "exempt",
+        "text": "Adómentes ügylet",
+        "sequence": 50,
+        "legal_reference": "Áfa tv. 169. § h) — adómentesség esetén jogszabályi hivatkozás vagy bármely, arra utaló megjelölés feltüntetése, hogy a termékértékesítés vagy szolgáltatásnyújtás mentes az adó alól.",
+        "source": "afa-torveny"
+      },
+      {
+        "code": "small_business",
+        "applies_when": "small_business",
+        "text": "Alanyi adómentes — Áfa tv. 187–188. §",
+        "sequence": 60,
+        "legal_reference": "Áfa tv. 188. § (2) — alanyi adómentesség választható, ha az adóalany gazdasági céllal belföldön telepedett le, és sem a tárgy naptári évet megelőző évben, sem a tárgy naptári évben ésszerűen várhatóan nem haladja meg a 20 000 000 forintot; e küszöbérték a 377. § (1)-gyel módosítva 2026-tól. A törvény a mentesség tényét feltüntetteti a számlán (169. § h) is), a szövegre a szakmai gyakorlat szerinti megjelölést e pack sora adja meg. Egy egységes alkalmazási feltétel az egész vállalkozásra vonatkozik, amit egyetlen tétel adata nem hordoz — lásd a magban erről szóló megjegyzést.",
+        "source": "afa-torveny"
+      },
+      {
+        "code": "late_payment",
+        "applies_when": "late_payment",
+        "text": "Késedelmes fizetés esetén a Ptk. 6:130. §-a szerinti törvényes késedelmi kamat jár.",
+        "sequence": 70,
+        "legal_reference": "Ptk. 6:155. § — lásd documents.late_payment_reference a kamat mértékéről és a Ptk. 6:130. §-ról.",
+        "source": "ptk"
+      }
+    ]
+  },
+  "einvoicing": {
+    "profile": null,
+    "obligation": "none",
+    "mandatory_from": null,
+    "party_scheme": null,
+    "vat_scheme": "9910",
+    "legal_reference": "E pack released_at napján egyetlen jogszabály sem kötelezi a vállalkozásokat arra, hogy egymás között az EN 16931 szemantikai adatmodelljére épülő strukturált elektronikus számlát (Peppol, Factur-X, XRechnung, egy PINT) váltsanak — a papír- vagy PDF-számla önmagában továbbra is érvényes. Ami kötelező, egy harmadik, e mezők egyikével sem leírható alak: az Áfa tv. 10. számú melléklete és a 158/A. §, valamint a 169–172. és 176. § szerinti adattartalom alapján minden, az Áfa tv. hatálya alá tartozó számláról — 2021. január 4-től a vevő adóalanyiságától és honosságától függetlenül — valós idejű adatszolgáltatást kell teljesíteni a NAV Online Számla rendszere felé: számlázó programmal kiállított számla esetén azonnal, XML-ben, emberi beavatkozás nélkül; kézi számla esetén a kibocsátás napját követő naptári napon (ha az áthárított adó eléri az 500 000 forintot) vagy négy naptári napon belül (egyéb esetben). Ez nem az EN 16931 modelljére épülő partnerek közötti csere (profile ezt írná le) és nem is a felek közötti számlaváltást helyettesítő állami clearance (mint Lengyelország KSeF-je vagy Olaszország SdI-je, ahol a számla csak a rendszeren áthaladva minősül kibocsátottnak/kézbesítettnek): a számla a felek között a megszokott módon jön létre és érvényes, a NAV csak annak adatait kapja meg, utólag, valós időben, ellenőrzési célból. A magnak nincs mezője erre a harmadik alakra — lásd docs/international.md, „From Hungary” szakasz. vat_scheme 9910 a magyar áfaalany-azonosító az EAS listán; party_scheme üresen marad, mert a cégjegyzékszámhoz nem található ISO 6523-kód, és vállalkozások között nincs kötelező hálózat vagy egységes címzési séma.",
+    "source": "nav-online-szamla"
+  },
+  "bank": {
+    "statement_formats": ["camt.053"],
+    "payment_formats": ["pain.001"]
+  }
+}

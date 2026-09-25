@@ -34,5 +34,6 @@ insert into currencies (code, name, symbol, decimal_places) values
   ('AED', 'UAE dirham',           E'د.إ', 2),
   ('THB', 'Thai baht',            E'฿', 2),
   ('VND', 'Vietnamese dong',      E'₫', 0),
-  ('SAR', 'Saudi riyal',          E'ر.س', 2)
+  ('SAR', 'Saudi riyal',          E'ر.س', 2),
+  ('HUF', 'Hungarian forint',     'Ft',      2)
 on conflict (code) do nothing;

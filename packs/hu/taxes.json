@@ -1,0 +1,365 @@
+[
+  {
+    "code": "HU-S-27",
+    "name": "Áfa 27%",
+    "description": "Általános (normál) adómérték",
+    "rate": 27,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2012-01-01",
+    "legal_reference": "Áfa tv. 82. § (1) — az adó mértéke az adóalap 27 százaléka, ha e törvény másként nem rendelkezik.",
+    "source": "afa-torveny",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "07" },
+        { "type": "tax", "account": "6321", "box": "07" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "07", "box_factor": -100 },
+        { "type": "tax", "account": "6321", "box": "07", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 10
+  },
+  {
+    "code": "HU-S-18",
+    "name": "Áfa 18%",
+    "description": "Kedvezményes adómérték — egyebek mellett egyes tejtermékek (a nyers tej kivételével), pékáruk, valamint a kereskedelmi szálláshely-szolgáltatás és az étkeztetés",
+    "rate": 18,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2018-01-01",
+    "legal_reference": "Áfa tv. 82. § (3), a 3/A. számú melléklet szerinti termékekre és szolgáltatásokra.",
+    "source": "afa-torveny",
+    "vat_category": "S",
+    "conditions": ["supply_nature"],
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "06" },
+        { "type": "tax", "account": "6322", "box": "06" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "06", "box_factor": -100 },
+        { "type": "tax", "account": "6322", "box": "06", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 20
+  },
+  {
+    "code": "HU-S-5",
+    "name": "Áfa 5%",
+    "description": "Kedvezményes adómérték — egyebek mellett a nyers tej, egyes alapvető élelmiszerek, gyógyszerek, könyvek és a távhőszolgáltatás",
+    "rate": 5,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2009-01-01",
+    "legal_reference": "Áfa tv. 82. § (2), a 3. számú melléklet szerinti termékekre és szolgáltatásokra.",
+    "source": "afa-torveny",
+    "vat_category": "S",
+    "conditions": ["supply_nature"],
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "05" },
+        { "type": "tax", "account": "6323", "box": "05" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "05", "box_factor": -100 },
+        { "type": "tax", "account": "6323", "box": "05", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 30
+  },
+  {
+    "code": "HU-S-EXPORT",
+    "name": "Adómentes termékexport",
+    "description": "Termék Közösség területén kívülre történő értékesítése",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2008-01-01",
+    "legal_reference": "Áfa tv. 98. § (1) — mentes az adó alól a termék Közösség területén kívülre történő értékesítése, feltéve hogy a termék az értékesítés következtében elhagyja a Közösség területét, és ezt a kiléptető hatóság igazolja.",
+    "source": "afa-torveny",
+    "vat_category": "G",
+    "exemption_code": "VATEX-EU-G",
+    "conditions": ["transport_evidence"],
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "01" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "01", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 40
+  },
+  {
+    "code": "HU-S-IGL",
+    "name": "Adómentes Közösségen belüli termékértékesítés",
+    "description": "Termékértékesítés másik tagállamban közösségi adószámmal rendelkező adóalany részére",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "intracom_goods",
+    "valid_from": "2004-05-01",
+    "legal_reference": "Áfa tv. 89. § (1) — mentes az adó alól a termék Közösségen belüli értékesítése egy olyan, más tagállamban közösségi adószámmal rendelkező adóalany részére, aki a termékbeszerzés után saját tagállamában adófizetésre kötelezett.",
+    "source": "afa-torveny",
+    "vat_category": "K",
+    "exemption_code": "VATEX-EU-IC",
+    "conditions": ["buyer_status", "transport_evidence"],
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "02" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "02", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 50
+  },
+  {
+    "code": "HU-S-EUDL",
+    "name": "Másik tagállami adóalany részére nyújtott szolgáltatás — fordított adózás",
+    "description": "A teljesítési hely általános szabálya (37. § (1)) alá tartozó szolgáltatás, ha az igénybevevő másik tagállamban letelepedett adóalany",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "intracom_services",
+    "valid_from": "2010-01-01",
+    "legal_reference": "Áfa tv. 37. § (1) — az adóalanynak nyújtott szolgáltatás teljesítési helye ott van, ahol az igénybevevő adóalany gazdasági céllal letelepedett; a másik tagállamban letelepedett igénybevevő ott adófizetésre kötelezett, a magyar számlán a fordított adózásra való utalás kötelező.",
+    "source": "afa-torveny",
+    "vat_category": "K",
+    "exemption_code": "VATEX-EU-IC",
+    "conditions": ["buyer_status"],
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "92" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "92", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 60
+  },
+  {
+    "code": "HU-S-EXEMPT",
+    "name": "Ingatlan bérbeadása — adómentes, adólevonási jog nélkül",
+    "description": "Kereskedelmi ingatlan bérbeadása, adókötelessé tétel választása nélkül",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2008-01-01",
+    "legal_reference": "Áfa tv. 86. § (1) — mentes az adó alól a tevékenység egyéb sajátos jellegére tekintettel egyebek mellett az ingatlan (ingatlanrész) bérbeadása, feltéve hogy az adóalany nem élt a 88. § szerinti adókötelessé tétel választásával; a pontos betűjelzés nem volt közvetlenül ellenőrizhető a törvény szövegéből — lásd README.",
+    "source": "afa-torveny",
+    "vat_category": "E",
+    "exemption_code": "VATEX-EU-135-1",
+    "conditions": ["supply_nature"],
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "08" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "08", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 70
+  },
+  {
+    "code": "HU-S-RC",
+    "name": "Fordított adózás — építési-szerelési munka",
+    "description": "Építési hatósági engedélyhez vagy tudomásulvételi eljáráshoz kötött, ingatlanra vonatkozó építési-szerelési munka",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "domestic_reverse_charge",
+    "valid_from": "2008-01-01",
+    "legal_reference": "Áfa tv. 142. § (1) b) — a termék értékesítése, szolgáltatás nyújtása után az adót a termék beszerzője, szolgáltatás igénybevevője fizeti, ha az ingatlan létrehozatalára, bővítésére, átalakítására vagy egyéb megváltoztatására — az ingatlan bontását is ideértve — irányuló, építési hatósági engedélyköteles vagy építési hatósági tudomásulvételi eljáráshoz kötött munka. Az így kiállított számla nem tartalmazhat áthárított adót (142. § (7)).",
+    "source": "afa-torveny",
+    "vat_category": "AE",
+    "exemption_code": "VATEX-EU-AE",
+    "conditions": ["buyer_status", "supply_nature"],
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "04" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "04", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 80
+  },
+  {
+    "code": "HU-P-27",
+    "name": "Levonható előzetesen felszámított adó 27%",
+    "description": "Más adóalany által rá áthárított adó",
+    "rate": 27,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2012-01-01",
+    "legal_reference": "Áfa tv. 120. § — az adóalanyt, ha adóköteles termékértékesítést, szolgáltatásnyújtást végez, megilleti az az adó levonásának joga, amelyet termék beszerzéséhez, szolgáltatás igénybevételéhez kapcsolódóan egy másik adóalany rá áthárított.",
+    "source": "afa-torveny",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "tax", "account": "2221", "box": "64" }
+      ],
+      "credit_note": [
+        { "type": "tax", "account": "2221", "box": "64", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 90
+  },
+  {
+    "code": "HU-P-18",
+    "name": "Levonható előzetesen felszámított adó 18%",
+    "description": "Más adóalany által rá áthárított adó",
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2018-01-01",
+    "legal_reference": "Áfa tv. 120. §, a 82. § (3) szerinti tétel után.",
+    "source": "afa-torveny",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "tax", "account": "2222", "box": "64" }
+      ],
+      "credit_note": [
+        { "type": "tax", "account": "2222", "box": "64", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 100
+  },
+  {
+    "code": "HU-P-5",
+    "name": "Levonható előzetesen felszámított adó 5%",
+    "description": "Más adóalany által rá áthárított adó",
+    "rate": 5,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2009-01-01",
+    "legal_reference": "Áfa tv. 120. §, a 82. § (2) szerinti tétel után.",
+    "source": "afa-torveny",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "tax", "account": "2223", "box": "64" }
+      ],
+      "credit_note": [
+        { "type": "tax", "account": "2223", "box": "64", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 110
+  },
+  {
+    "code": "HU-P-27-NA",
+    "name": "Le nem vonható előzetesen felszámított adó 27% — személygépkocsi",
+    "description": "Személygépkocsi (vámtarifaszám 8703) beszerzését terhelő adó, amelyre a levonási jog nem érvényesíthető",
+    "rate": 27,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2012-01-01",
+    "recoverable": false,
+    "legal_reference": "Áfa tv. 124. § (1) d) — nem vonható le a személygépkocsi beszerzését terhelő előzetesen felszámított adó; a 125. § szerinti kivételek (például továbbértékesítési vagy taxi célú beszerzés) e tételre nem alkalmazandók. E pontot csak másodlagos, egybehangzó szakmai forrásokból lehetett megerősíteni, nem a törvény szövegének közvetlen olvasásából — lásd README.",
+    "source": "afa-torveny",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "tax_on_base" }
+      ],
+      "credit_note": [
+        { "type": "tax_on_base" }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 120
+  },
+  {
+    "code": "HU-P-EUDL-27",
+    "name": "Másik tagállamban letelepedett adóalanytól igénybe vett szolgáltatás — önadózás 27%",
+    "description": "A teljesítési hely általános szabálya (37. § (1)) alá tartozó szolgáltatás, másik tagállamban letelepedett szolgáltatótól",
+    "rate": 27,
+    "scope": "purchase",
+    "treatment": "intracom_acquisition_services",
+    "valid_from": "2010-01-01",
+    "legal_reference": "Áfa tv. 37. § (1) a teljesítés helyéről; 138–140. § arról, hogy a belföldön le nem telepedett szolgáltató helyett a belföldi igénybevevő fizeti az adót — a 139. és 140. § pontos elhatárolása nem volt közvetlenül ellenőrizhető a törvény szövegéből, lásd README. Áfa tv. 120. § a levonási jogról.",
+    "source": "afa-torveny",
+    "vat_category": "K",
+    "exemption_code": "VATEX-EU-IC",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "18B" },
+        { "type": "tax", "factor": -100, "account": "6324", "box": "18B" },
+        { "type": "tax", "account": "2224", "box": "64" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "18B", "box_factor": -100 },
+        { "type": "tax", "factor": -100, "account": "6324", "box": "18B", "box_factor": -100 },
+        { "type": "tax", "account": "2224", "box": "64", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 130
+  },
+  {
+    "code": "HU-P-FOREIGN-27",
+    "name": "Harmadik országban letelepedett adóalanytól igénybe vett szolgáltatás — önadózás 27%",
+    "description": "A teljesítési hely általános szabálya (37. § (1)) alá tartozó szolgáltatás, harmadik országban letelepedett szolgáltatótól",
+    "rate": 27,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2010-01-01",
+    "legal_reference": "Áfa tv. 37. § (1) a teljesítés helyéről; 138–140. § arról, hogy a belföldön le nem telepedett szolgáltató helyett a belföldi igénybevevő fizeti az adót. A harmadik országbeli szolgáltató számlájára az EN 16931 nem alkalmazandó, ezért kategória nem szerepel rajta.",
+    "source": "afa-torveny",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "27" },
+        { "type": "tax", "factor": -100, "account": "6324", "box": "27" },
+        { "type": "tax", "account": "2224", "box": "64" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "27", "box_factor": -100 },
+        { "type": "tax", "factor": -100, "account": "6324", "box": "27", "box_factor": -100 },
+        { "type": "tax", "account": "2224", "box": "64", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 140
+  },
+  {
+    "code": "HU-P-RC-27",
+    "name": "Fordított adózás — építési-szerelési munka, önadózás 27%",
+    "description": "Belföldi fordított adózás alá eső, igénybe vett építési-szerelési munka",
+    "rate": 27,
+    "scope": "purchase",
+    "treatment": "domestic_reverse_charge",
+    "valid_from": "2008-01-01",
+    "legal_reference": "Áfa tv. 142. § (1) b) — az adót a szolgáltatás igénybevevője fizeti; a felek belföldön nyilvántartásba vett adóalanyok (142. § (3)), a kapott számla áthárított adót nem tartalmaz (142. § (7)). Áfa tv. 120. § a levonási jogról.",
+    "source": "afa-torveny",
+    "vat_category": "AE",
+    "exemption_code": "VATEX-EU-AE",
+    "conditions": ["buyer_status", "supply_nature"],
+    "postings": {
+      "invoice": [
+        { "type": "base" },
+        { "type": "tax", "factor": -100, "account": "6324", "box": "29" },
+        { "type": "tax", "account": "2224", "box": "64" }
+      ],
+      "credit_note": [
+        { "type": "base", "box_factor": -100 },
+        { "type": "tax", "factor": -100, "account": "6324", "box": "29", "box_factor": -100 },
+        { "type": "tax", "account": "2224", "box": "64", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 150
+  }
+]

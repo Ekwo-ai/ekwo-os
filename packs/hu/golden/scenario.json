@@ -1,0 +1,237 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "Egy negyedév egy magyar kereskedelmi vállalkozás könyveiből",
+  "chart": "default",
+  "fiscal_year": { "name": "2026. üzleti év", "start": "2026-01-01", "end": "2026-12-31" },
+  "periods": [
+    { "code": "2026-Q1", "from": "2026-01-01", "to": "2026-03-31" }
+  ],
+  "statements": ["HU-SZT-MERLEG-A", "HU-SZT-EREDMENY-A"],
+  "contacts": [
+    { "ref": "client-hu", "name": "Bástya Irodaszer Kft.", "type": "customer", "country": "HU", "vat_number": "HU12345676" },
+    { "ref": "client-hu-epito", "name": "Kőműves-Team Építőipari Kft.", "type": "customer", "country": "HU", "vat_number": "HU23456785" },
+    { "ref": "tenant-hu", "name": "Belvárosi Kávézó Kft.", "type": "customer", "country": "HU", "vat_number": "HU34567894" },
+    { "ref": "client-de", "name": "Bayern Elektronik GmbH", "type": "customer", "country": "DE", "vat_number": "DE123456789" },
+    { "ref": "client-fr", "name": "Cabinet Rhône Conseil SARL", "type": "customer", "country": "FR", "vat_number": "FR12345678901" },
+    { "ref": "client-us", "name": "Prairie Tools Inc.", "type": "customer", "country": "US" },
+    { "ref": "supplier-hu", "name": "Papír-Fórum Kereskedelmi Kft.", "type": "supplier", "country": "HU", "vat_number": "HU45678903" },
+    { "ref": "supplier-hu-auto", "name": "Autó-Centrum Zrt.", "type": "supplier", "country": "HU", "vat_number": "HU56789012" },
+    { "ref": "supplier-hu-epito", "name": "Ablak-Profi Kft.", "type": "supplier", "country": "HU", "vat_number": "HU67890121" },
+    { "ref": "supplier-de", "name": "Sachsen Rechtsberatung GmbH", "type": "supplier", "country": "DE", "vat_number": "DE987654321" },
+    { "ref": "supplier-us", "name": "Cloudward Systems Inc.", "type": "supplier", "country": "US" }
+  ],
+  "documents": [
+    {
+      "ref": "V1",
+      "type": "sale_invoice",
+      "contact": "client-hu",
+      "date": "2026-01-12",
+      "why": "Belföldi értékesítés a 27%-os normál adómértékkel: a 07. sor adóalapja és fizetendő adója.",
+      "lines": [
+        { "name": "Irodai szék", "quantity": 10, "unit_price": 50000, "tax": "HU-S-27", "account": "8100" }
+      ]
+    },
+    {
+      "ref": "V2",
+      "type": "sale_invoice",
+      "contact": "client-hu",
+      "date": "2026-01-18",
+      "why": "Belföldi étkeztetési szolgáltatás a 18%-os kedvezményes adómértékkel: a 06. sor.",
+      "lines": [
+        { "name": "Üzleti étkeztetés", "quantity": 1, "unit_price": 200000, "tax": "HU-S-18", "account": "8100" }
+      ]
+    },
+    {
+      "ref": "V3",
+      "type": "sale_invoice",
+      "contact": "client-hu",
+      "date": "2026-01-22",
+      "why": "Belföldi könyvértékesítés az 5%-os kedvezményes adómértékkel: a 05. sor.",
+      "lines": [
+        { "name": "Szakkönyvek", "quantity": 1, "unit_price": 100000, "tax": "HU-S-5", "account": "8100" }
+      ]
+    },
+    {
+      "ref": "V4",
+      "type": "sale_invoice",
+      "contact": "client-us",
+      "date": "2026-01-25",
+      "why": "Termékexport egy harmadik országbeli (amerikai) vevő részére: adómentes, nulla adómérték, a 01. sor.",
+      "lines": [
+        { "name": "Használt szerszámgépek", "quantity": 1, "unit_price": 800000, "tax": "HU-S-EXPORT", "account": "8110" }
+      ]
+    },
+    {
+      "ref": "V5",
+      "type": "sale_invoice",
+      "contact": "client-de",
+      "date": "2026-02-02",
+      "why": "Közösségen belüli adómentes termékértékesítés egy közösségi adószámmal rendelkező német vevő részére: a 02. sor és az összesítő nyilatkozat.",
+      "lines": [
+        { "name": "Elektronikai alkatrészek", "quantity": 1, "unit_price": 600000, "tax": "HU-S-IGL", "account": "8120" }
+      ]
+    },
+    {
+      "ref": "V6",
+      "type": "sale_invoice",
+      "contact": "client-fr",
+      "date": "2026-02-05",
+      "why": "Tanácsadási szolgáltatás egy francia adóalany részére: fordított adózás az igénybevevő tagállamában, a 92. sor és az összesítő nyilatkozat.",
+      "lines": [
+        { "name": "Piackutatási tanácsadás", "quantity": 1, "unit_price": 300000, "tax": "HU-S-EUDL", "account": "8120" }
+      ]
+    },
+    {
+      "ref": "V7",
+      "type": "sale_invoice",
+      "contact": "tenant-hu",
+      "date": "2026-02-10",
+      "why": "Kereskedelmi ingatlan bérbeadása, adómentesen, adólevonási jog nélkül (adókötelessé tétel nélkül): a 08. sor.",
+      "lines": [
+        { "name": "Üzlethelyiség bérleti díja — február", "quantity": 1, "unit_price": 250000, "tax": "HU-S-EXEMPT", "account": "8100" }
+      ]
+    },
+    {
+      "ref": "V8",
+      "type": "sale_invoice",
+      "contact": "client-hu-epito",
+      "date": "2026-02-14",
+      "why": "Építési hatósági engedélyhez kötött építési-szerelési munka egy másik, maga is építőipari tevékenységet folytató adóalany részére: belföldi fordított adózás, a 04. sor, áthárított adó nélkül.",
+      "lines": [
+        { "name": "Tetőszerkezet felújítása", "quantity": 1, "unit_price": 1500000, "tax": "HU-S-RC", "account": "8100" }
+      ]
+    },
+    {
+      "ref": "CN1",
+      "type": "sale_credit_note",
+      "contact": "client-hu",
+      "date": "2026-02-20",
+      "why": "A V1 számla két sérült székének visszaküldése: ellenőrzi, hogy a jóváíró számla csökkenti — és nem növeli — a 07. sor adóalapját és fizetendő adóját.",
+      "lines": [
+        { "name": "Sérült irodai székek visszaküldése", "quantity": 2, "unit_price": 50000, "tax": "HU-S-27", "account": "8100" }
+      ]
+    },
+    {
+      "ref": "A1",
+      "type": "purchase_invoice",
+      "contact": "supplier-hu",
+      "date": "2026-01-15",
+      "why": "Belföldi beszerzés a 27%-os normál adómértékkel: a levonható adó a 64. soron.",
+      "lines": [
+        { "name": "Irodaszerek", "quantity": 1, "unit_price": 200000, "tax": "HU-P-27", "account": "8510" }
+      ]
+    },
+    {
+      "ref": "A2",
+      "type": "purchase_invoice",
+      "contact": "supplier-hu",
+      "date": "2026-01-19",
+      "why": "Belföldi üzleti étkeztetés a 18%-os kedvezményes adómértékkel: a levonható adó második ellenőrzése.",
+      "lines": [
+        { "name": "Üzleti ebéd — ügyféltárgyalás", "quantity": 1, "unit_price": 80000, "tax": "HU-P-18", "account": "8520" }
+      ]
+    },
+    {
+      "ref": "A3",
+      "type": "purchase_invoice",
+      "contact": "supplier-hu",
+      "date": "2026-01-27",
+      "why": "Belföldi könyvbeszerzés az 5%-os kedvezményes adómértékkel.",
+      "lines": [
+        { "name": "Szakkönyvek beszerzése", "quantity": 1, "unit_price": 60000, "tax": "HU-P-5", "account": "8510" }
+      ]
+    },
+    {
+      "ref": "A4",
+      "type": "purchase_invoice",
+      "contact": "supplier-hu-auto",
+      "date": "2026-02-03",
+      "why": "Személygépkocsi vásárlása: az előzetesen felszámított adó nem levonható, és a tárgyi eszköz bekerülési értékét növeli.",
+      "lines": [
+        { "name": "Személygépkocsi", "quantity": 1, "unit_price": 5000000, "tax": "HU-P-27-NA", "account": "1200" }
+      ]
+    },
+    {
+      "ref": "A5",
+      "type": "purchase_invoice",
+      "contact": "supplier-de",
+      "date": "2026-02-08",
+      "why": "Másik tagállamban letelepedett adóalanytól igénybe vett jogi tanácsadás: önadózás, a 18B mező, fizetendő és ugyanabban a bevallásban levonható adó.",
+      "lines": [
+        { "name": "Jogi tanácsadás", "quantity": 1, "unit_price": 400000, "tax": "HU-P-EUDL-27", "account": "8510" }
+      ]
+    },
+    {
+      "ref": "A6",
+      "type": "purchase_invoice",
+      "contact": "supplier-us",
+      "date": "2026-02-16",
+      "why": "Harmadik országban (Egyesült Államok) letelepedett szolgáltatótól igénybe vett felhőszolgáltatás: önadózás, a 27. sor.",
+      "lines": [
+        { "name": "Felhőalapú szoftverelőfizetés", "quantity": 1, "unit_price": 250000, "tax": "HU-P-FOREIGN-27", "account": "8510" }
+      ]
+    },
+    {
+      "ref": "A7",
+      "type": "purchase_invoice",
+      "contact": "supplier-hu-epito",
+      "date": "2026-02-24",
+      "why": "Belföldi alvállalkozótól igénybe vett, engedélyköteles építési-szerelési munka: belföldi fordított adózás az igénybevevő oldalán, a 29. sor.",
+      "lines": [
+        { "name": "Nyílászárók beépítése", "quantity": 1, "unit_price": 900000, "tax": "HU-P-RC-27", "account": "8510" }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "E1",
+      "direction": "inbound",
+      "date": "2026-02-12",
+      "amount": 236000,
+      "contact": "client-hu",
+      "journal": "BK",
+      "match": "V2",
+      "why": "Egy beérkezés, amely pontosan kiegyenlíti a V2 számlát."
+    },
+    {
+      "ref": "E2",
+      "direction": "inbound",
+      "date": "2026-02-25",
+      "amount": 600000,
+      "contact": "client-de",
+      "journal": "BK",
+      "match": "V5",
+      "why": "A Közösségen belüli értékesítés (V5) ellenértékének beérkezése."
+    },
+    {
+      "ref": "E3",
+      "direction": "inbound",
+      "date": "2026-03-02",
+      "amount": 800000,
+      "contact": "client-us",
+      "journal": "BK",
+      "match": "V4",
+      "why": "Az exportértékesítés (V4) ellenértékének beérkezése."
+    },
+    {
+      "ref": "Z1",
+      "direction": "outbound",
+      "date": "2026-02-04",
+      "amount": 254000,
+      "contact": "supplier-hu",
+      "journal": "BK",
+      "match": "A1",
+      "why": "Egy kifizetés, amely pontosan kiegyenlíti az A1 számlát."
+    },
+    {
+      "ref": "Z2",
+      "direction": "outbound",
+      "date": "2026-02-18",
+      "amount": 900000,
+      "contact": "supplier-hu-epito",
+      "journal": "BK",
+      "match": null,
+      "why": "Előleg az A7 számla kézhezvétele előtt: egy le nem lettezett kifizetés, amely nyitva hagy egy tételt."
+    }
+  ]
+}

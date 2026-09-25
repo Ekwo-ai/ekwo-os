@@ -4365,3 +4365,55 @@ Finland already uses `EUR`, on the books of every pack that names it since
 Belgium's; no row was added to `00_currencies.sql`. `FI` needed no row in
 `00_territories.sql` either: the common system of VAT reaches it in full,
 and it carries no territory below it that any tax here conditions on.
+
+## From Hungary
+
+`packs/hu/`, `community`, seed 70, inside the common system of VAT since
+1 May 2004. Its rates, its return and its balance sheet are read from the
+consolidated Áfa tv. and Számv. tv.; two things the format could not say.
+
+**A third shape of mandatory invoice data, neither exchange nor clearance.**
+`einvoicing.obligation`, `profile` and the rest of that section assume one of
+two shapes: a structured invoice moving directly between the seller's and the
+buyer's own systems, built on the semantic model of EN 16931 (`profile`
+names one — Peppol, Factur-X, XRechnung, a PINT); or **clearance**, where the
+state's own system stands between the parties and the invoice is not issued,
+or not received, until it has passed through it — Poland's KSeF and Italy's
+SdI, already named above, and Mexico's CFDI, India's IRN and most of Latin
+America with them. Hungary's Online Számla is a third thing this format has
+no field for at all: since 4 January 2021, every invoice an Áfa tv.-governed
+transaction requires has its *data* reported to the tax administration in
+real time — instantly and in XML with no human step, where a billing program
+issues the invoice; within a day or four calendar days otherwise, depending
+on the tax charged (Áfa tv. 10. számú melléklet) — but the invoice itself is
+issued and received exactly as it would be with no such system watching:
+there is no moment at which the state's system stands between the seller and
+the buyer, no number it assigns that the invoice waits on, and nothing that
+fails to become a valid invoice for want of it. It is **audit reporting**,
+running beside an ordinary, uncontrolled exchange, not a condition of that
+exchange. `packs/hu/` therefore declares `obligation: "none"` — which is true
+of the exchange this section describes — and states the reporting duty in
+prose in the same field's `legal_reference`, because there is no vocabulary
+here for "a copy of every invoice's data must reach the tax authority, on a
+clock, without changing what the invoice is." A country that layered
+**both** — a peer-to-peer or clearance obligation for the invoice itself,
+*and* a real-time audit feed of its data to the administration — would need
+the two questions kept apart, which `profile`/`obligation` and this new
+question currently cannot be: only one of them has anywhere to be recorded.
+
+**One `deadline` per form, and Hungary's own law gives two shapes to it.**
+`tax_report.json`'s `deadline` is one rule for the whole of a form, not one
+per cadence a company may file it under — Austria and Italy already met a
+single such rule with no vocabulary to express it and left the field out
+rather than approximate. Hungary's 2665 return, filed on three cadences
+(month, quarter, year), is due the 20th of the following month for a monthly
+or a quarterly filer, which `day_of_month_after_period` says exactly — and
+the 25th of *February* of the year after for an annual filer, more than a
+calendar month past the period's end, which fits none of the three rules any
+more than Austria's own two-month span did. Since the field holds one rule
+for every cadence a form accepts together, a form whose cadences do not share
+a deadline shape cannot state a correct one for all of them at once, whatever
+one is chosen; `packs/hu/` leaves `deadline` out entirely, for two-thirds of
+its cadences correct on the day and for one-third wrong by more than a
+month, which is the same choice `packs/at` already made for a single
+ill-fitting cadence and worse here for being avoidable on part of the form.

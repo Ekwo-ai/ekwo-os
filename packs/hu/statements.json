@@ -1,0 +1,540 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/statements",
+  "statements": [
+    {
+      "code": "HU-SZT-MERLEG-A",
+      "kind": "balance_sheet",
+      "framework": "HU-SZT",
+      "name": "Mérleg — „A” változat",
+      "valid_from": "2016-01-01",
+      "legal_reference": "A számvitelről szóló 2000. évi C. törvény 22. § — a mérleg tagolását az 1. számú melléklet tartalmazza, „A”, illetve „B” változatban; e pack az „A” változatot követi. A törvény betűkkel (A–G) és — az eszközoldalon — római számokkal jelöli a fő- és altételeket; e pack ugyanezeket a jelöléseket használja sorkódként.",
+      "source": "szamviteli-torveny",
+      "lines": [
+        {
+          "code": "AKT",
+          "name": "ESZKÖZÖK (AKTÍVÁK) ÖSSZESEN",
+          "sequence": 10,
+          "is_total": true,
+          "plus": ["A", "B", "C"],
+          "legal_reference": "Szvt. 1. számú melléklet, eszközoldal",
+          "source": "szamviteli-torveny"
+        },
+        {
+          "code": "A",
+          "parent": "AKT",
+          "name": "A) Befektetett eszközök",
+          "sequence": 20,
+          "is_total": true,
+          "plus": ["A.I", "A.II", "A.III"],
+          "legal_reference": "Szvt. 1. számú melléklet A)",
+          "source": "szamviteli-torveny"
+        },
+        {
+          "code": "A.I",
+          "parent": "A",
+          "name": "I. Immateriális javak",
+          "sequence": 30,
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "1100", "code_to": "1199" }],
+          "legal_reference": "Szvt. 1. számú melléklet A) I.",
+          "source": "szamviteli-torveny"
+        },
+        {
+          "code": "A.II",
+          "parent": "A",
+          "name": "II. Tárgyi eszközök",
+          "sequence": 40,
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "1200", "code_to": "1299" }],
+          "legal_reference": "Szvt. 1. számú melléklet A) II.",
+          "source": "szamviteli-torveny"
+        },
+        {
+          "code": "A.III",
+          "parent": "A",
+          "name": "III. Befektetett pénzügyi eszközök",
+          "sequence": 50,
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "1300", "code_to": "1399" }],
+          "legal_reference": "Szvt. 1. számú melléklet A) III.",
+          "source": "szamviteli-torveny"
+        },
+        {
+          "code": "B",
+          "parent": "AKT",
+          "name": "B) Forgóeszközök",
+          "sequence": 60,
+          "is_total": true,
+          "plus": ["B.I", "B.II", "B.III", "B.IV"],
+          "legal_reference": "Szvt. 1. számú melléklet B)",
+          "source": "szamviteli-torveny"
+        },
+        {
+          "code": "B.I",
+          "parent": "B",
+          "name": "I. Készletek",
+          "sequence": 70,
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "2100", "code_to": "2199" }],
+          "legal_reference": "Szvt. 1. számú melléklet B) I.",
+          "source": "szamviteli-torveny"
+        },
+        {
+          "code": "B.II",
+          "parent": "B",
+          "name": "II. Követelések",
+          "sequence": 80,
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "2200", "code_to": "2299" }],
+          "legal_reference": "Szvt. 1. számú melléklet B) II. — e sor a vevőkövetelések (2200) mellett a költségvetéssel szembeni, áfából eredő követelést (2230) és az elszámolási számlát (2240) is hordozza, mivel e pack számlatükre nem nyit ezekre külön római alcímet.",
+          "source": "szamviteli-torveny"
+        },
+        {
+          "code": "B.III",
+          "parent": "B",
+          "name": "III. Értékpapírok",
+          "sequence": 90,
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "2300", "code_to": "2399" }],
+          "legal_reference": "Szvt. 1. számú melléklet B) III.",
+          "source": "szamviteli-torveny"
+        },
+        {
+          "code": "B.IV",
+          "parent": "B",
+          "name": "IV. Pénzeszközök",
+          "sequence": 100,
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "2400", "code_to": "2499" }],
+          "legal_reference": "Szvt. 1. számú melléklet B) IV.",
+          "source": "szamviteli-torveny"
+        },
+        {
+          "code": "C",
+          "parent": "AKT",
+          "name": "C) Aktív időbeli elhatárolások",
+          "sequence": 110,
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "3100", "code_to": "3199" }],
+          "legal_reference": "Szvt. 1. számú melléklet C)",
+          "source": "szamviteli-torveny"
+        },
+        {
+          "code": "PASS",
+          "name": "FORRÁSOK (PASSZÍVÁK) ÖSSZESEN",
+          "sequence": 120,
+          "is_total": true,
+          "plus": ["D", "E", "F", "G"],
+          "legal_reference": "Szvt. 1. számú melléklet, forrásoldal",
+          "source": "szamviteli-torveny"
+        },
+        {
+          "code": "D",
+          "parent": "PASS",
+          "name": "D) Saját tőke",
+          "sequence": 130,
+          "is_total": true,
+          "plus": ["D.I", "D.II", "D.III", "D.IV", "D.V", "D.VI", "D.VII"],
+          "legal_reference": "Szvt. 1. számú melléklet D)",
+          "source": "szamviteli-torveny"
+        },
+        {
+          "code": "D.I",
+          "parent": "D",
+          "name": "I. Jegyzett tőke",
+          "sequence": 140,
+          "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "4100", "code_to": "4199" }],
+          "legal_reference": "Szvt. 1. számú melléklet D) I.",
+          "source": "szamviteli-torveny"
+        },
+        {
+          "code": "D.II",
+          "parent": "D",
+          "name": "II. Jegyzett, de még be nem fizetett tőke (-)",
+          "sequence": 150,
+          "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "4200", "code_to": "4299" }],
+          "legal_reference": "Szvt. 1. számú melléklet D) II.",
+          "source": "szamviteli-torveny"
+        },
+        {
+          "code": "D.III",
+          "parent": "D",
+          "name": "III. Tőketartalék",
+          "sequence": 160,
+          "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "4300", "code_to": "4399" }],
+          "legal_reference": "Szvt. 1. számú melléklet D) III.",
+          "source": "szamviteli-torveny"
+        },
+        {
+          "code": "D.IV",
+          "parent": "D",
+          "name": "IV. Eredménytartalék",
+          "sequence": 170,
+          "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "4400", "code_to": "4499" }],
+          "legal_reference": "Szvt. 1. számú melléklet D) IV.",
+          "source": "szamviteli-torveny"
+        },
+        {
+          "code": "D.V",
+          "parent": "D",
+          "name": "V. Lekötött tartalék",
+          "sequence": 180,
+          "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "4500", "code_to": "4599" }],
+          "legal_reference": "Szvt. 1. számú melléklet D) V.",
+          "source": "szamviteli-torveny"
+        },
+        {
+          "code": "D.VI",
+          "parent": "D",
+          "name": "VI. Értékelési tartalék",
+          "sequence": 190,
+          "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "4600", "code_to": "4699" }],
+          "legal_reference": "Szvt. 1. számú melléklet D) VI.",
+          "source": "szamviteli-torveny"
+        },
+        {
+          "code": "D.VII",
+          "parent": "D",
+          "name": "VII. Adózott eredmény",
+          "sequence": 200,
+          "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "4700", "code_to": "4799" }],
+          "legal_reference": "Szvt. 1. számú melléklet D) VII. — a 2013/34/EU irányelv átültetése óta (2016-tól) a mérleg saját tőkéje közvetlenül az adózott eredményt mutatja, önálló mérleg szerinti eredmény tétel nélkül; az osztalékról szóló döntés a döntés évében rendezi az elhatárolást, nem az eredmény évében.",
+          "source": "szamviteli-torveny"
+        },
+        {
+          "code": "E",
+          "parent": "PASS",
+          "name": "E) Céltartalékok",
+          "sequence": 210,
+          "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "5100", "code_to": "5199" }],
+          "legal_reference": "Szvt. 1. számú melléklet E)",
+          "source": "szamviteli-torveny"
+        },
+        {
+          "code": "F",
+          "parent": "PASS",
+          "name": "F) Kötelezettségek",
+          "sequence": 220,
+          "is_total": true,
+          "plus": ["F.I", "F.II", "F.III"],
+          "legal_reference": "Szvt. 1. számú melléklet F)",
+          "source": "szamviteli-torveny"
+        },
+        {
+          "code": "F.I",
+          "parent": "F",
+          "name": "I. Hátrasorolt kötelezettségek",
+          "sequence": 230,
+          "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "6100", "code_to": "6199" }],
+          "legal_reference": "Szvt. 1. számú melléklet F) I.",
+          "source": "szamviteli-torveny"
+        },
+        {
+          "code": "F.II",
+          "parent": "F",
+          "name": "II. Hosszú lejáratú kötelezettségek",
+          "sequence": 240,
+          "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "6200", "code_to": "6299" }],
+          "legal_reference": "Szvt. 1. számú melléklet F) II.",
+          "source": "szamviteli-torveny"
+        },
+        {
+          "code": "F.III",
+          "parent": "F",
+          "name": "III. Rövid lejáratú kötelezettségek",
+          "sequence": 250,
+          "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "6300", "code_to": "6399" }],
+          "legal_reference": "Szvt. 1. számú melléklet F) III. — e sor a szállítói kötelezettségek (6300) mellett a költségvetéssel szembeni, áfából eredő kötelezettséget (6330) is hordozza.",
+          "source": "szamviteli-torveny"
+        },
+        {
+          "code": "G",
+          "parent": "PASS",
+          "name": "G) Passzív időbeli elhatárolások",
+          "sequence": 260,
+          "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "7100", "code_to": "7199" }],
+          "legal_reference": "Szvt. 1. számú melléklet G)",
+          "source": "szamviteli-torveny"
+        }
+      ]
+    },
+    {
+      "code": "HU-SZT-EREDMENY-A",
+      "kind": "income_statement",
+      "framework": "HU-SZT",
+      "name": "Eredménykimutatás — összköltség eljárással, „A” változat",
+      "valid_from": "2016-01-01",
+      "legal_reference": "Szvt. 71. § (2) — az eredmény megállapításának összköltség, illetve forgalmi költség eljárása szerinti tagolását a 2. és 3. számú melléklet tartalmazza; e pack az összköltség eljárás szerinti, 2. számú melléklet szerinti „A” változatot követi.",
+      "source": "szamviteli-torveny",
+      "lines": [
+        {
+          "code": "01",
+          "name": "01. Belföldi értékesítés nettó árbevétele",
+          "sequence": 10,
+          "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "8100", "code_to": "8109" }],
+          "legal_reference": "Szvt. 2. számú melléklet, 01. sor",
+          "source": "szamviteli-torveny"
+        },
+        {
+          "code": "02",
+          "name": "02. Exportértékesítés nettó árbevétele",
+          "sequence": 20,
+          "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "8110", "code_to": "8129" }],
+          "legal_reference": "Szvt. 2. számú melléklet, 02. sor — e pack e soron mutatja be a Közösségen kívülre (8110), illetve a Közösségen belülre (8120) történő értékesítés árbevételét egyaránt, mivel a törvény szövege ezekhez külön sort nem rendel.",
+          "source": "szamviteli-torveny"
+        },
+        {
+          "code": "I",
+          "name": "I. Értékesítés nettó árbevétele",
+          "sequence": 30,
+          "is_total": true,
+          "plus": ["01", "02"],
+          "legal_reference": "Szvt. 2. számú melléklet, I. sor",
+          "source": "szamviteli-torveny"
+        },
+        {
+          "code": "03",
+          "name": "03. Saját termelésű készletek állományváltozása",
+          "sequence": 40,
+          "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "8200", "code_to": "8209" }],
+          "legal_reference": "Szvt. 2. számú melléklet, 03. sor",
+          "source": "szamviteli-torveny"
+        },
+        {
+          "code": "04",
+          "name": "04. Saját előállítású eszközök aktivált értéke",
+          "sequence": 50,
+          "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "8300", "code_to": "8309" }],
+          "legal_reference": "Szvt. 2. számú melléklet, 04. sor",
+          "source": "szamviteli-torveny"
+        },
+        {
+          "code": "II",
+          "name": "II. Aktivált saját teljesítmények értéke",
+          "sequence": 60,
+          "is_total": true,
+          "plus": ["03", "04"],
+          "legal_reference": "Szvt. 2. számú melléklet, II. sor",
+          "source": "szamviteli-torveny"
+        },
+        {
+          "code": "III",
+          "name": "III. Egyéb bevételek",
+          "sequence": 70,
+          "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "8400", "code_to": "8409" }],
+          "legal_reference": "Szvt. 2. számú melléklet, III. sor",
+          "source": "szamviteli-torveny"
+        },
+        {
+          "code": "05",
+          "name": "05. Anyagköltség",
+          "sequence": 80,
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "8500", "code_to": "8509" }],
+          "legal_reference": "Szvt. 2. számú melléklet, 05. sor",
+          "source": "szamviteli-torveny"
+        },
+        {
+          "code": "06",
+          "name": "06. Igénybe vett szolgáltatások értéke",
+          "sequence": 90,
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "8510", "code_to": "8519" }],
+          "legal_reference": "Szvt. 2. számú melléklet, 06. sor",
+          "source": "szamviteli-torveny"
+        },
+        {
+          "code": "07",
+          "name": "07. Egyéb szolgáltatások értéke",
+          "sequence": 100,
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "8520", "code_to": "8529" }],
+          "legal_reference": "Szvt. 2. számú melléklet, 07. sor",
+          "source": "szamviteli-torveny"
+        },
+        {
+          "code": "08",
+          "name": "08. Eladott áruk beszerzési értéke",
+          "sequence": 110,
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "8530", "code_to": "8539" }],
+          "legal_reference": "Szvt. 2. számú melléklet, 08. sor",
+          "source": "szamviteli-torveny"
+        },
+        {
+          "code": "09",
+          "name": "09. Eladott (közvetített) szolgáltatások értéke",
+          "sequence": 120,
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "8540", "code_to": "8549" }],
+          "legal_reference": "Szvt. 2. számú melléklet, 09. sor",
+          "source": "szamviteli-torveny"
+        },
+        {
+          "code": "IV",
+          "name": "IV. Anyagjellegű ráfordítások",
+          "sequence": 130,
+          "is_total": true,
+          "plus": ["05", "06", "07", "08", "09"],
+          "legal_reference": "Szvt. 2. számú melléklet, IV. sor",
+          "source": "szamviteli-torveny"
+        },
+        {
+          "code": "10",
+          "name": "10. Bérköltség",
+          "sequence": 140,
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "8600", "code_to": "8609" }],
+          "legal_reference": "Szvt. 2. számú melléklet, 10. sor",
+          "source": "szamviteli-torveny"
+        },
+        {
+          "code": "11",
+          "name": "11. Személyi jellegű egyéb kifizetések",
+          "sequence": 150,
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "8610", "code_to": "8619" }],
+          "legal_reference": "Szvt. 2. számú melléklet, 11. sor",
+          "source": "szamviteli-torveny"
+        },
+        {
+          "code": "12",
+          "name": "12. Bérjárulékok",
+          "sequence": 160,
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "8620", "code_to": "8629" }],
+          "legal_reference": "Szvt. 2. számú melléklet, 12. sor",
+          "source": "szamviteli-torveny"
+        },
+        {
+          "code": "V",
+          "name": "V. Személyi jellegű ráfordítások",
+          "sequence": 170,
+          "is_total": true,
+          "plus": ["10", "11", "12"],
+          "legal_reference": "Szvt. 2. számú melléklet, V. sor",
+          "source": "szamviteli-torveny"
+        },
+        {
+          "code": "VI",
+          "name": "VI. Értékcsökkenési leírás",
+          "sequence": 180,
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "8700", "code_to": "8709" }],
+          "legal_reference": "Szvt. 2. számú melléklet, VI. sor",
+          "source": "szamviteli-torveny"
+        },
+        {
+          "code": "VII",
+          "name": "VII. Egyéb ráfordítások",
+          "sequence": 190,
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "8800", "code_to": "8829" }],
+          "legal_reference": "Szvt. 2. számú melléklet, VII. sor — e sor a le nem vonható áfát (8810) és a kerekítési különbözetet (8820) is hordozza.",
+          "source": "szamviteli-torveny"
+        },
+        {
+          "code": "A_EREDM",
+          "name": "A) ÜZEMI (ÜZLETI) TEVÉKENYSÉG EREDMÉNYE",
+          "sequence": 200,
+          "is_total": true,
+          "plus": ["I", "II", "III"],
+          "minus": ["IV", "V", "VI", "VII"],
+          "legal_reference": "Szvt. 2. számú melléklet, A) sor",
+          "source": "szamviteli-torveny"
+        },
+        {
+          "code": "VIII",
+          "name": "VIII. Kapott (járó) osztalék és részesedés",
+          "sequence": 210,
+          "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "9100", "code_to": "9109" }],
+          "legal_reference": "Szvt. 2. számú melléklet, VIII. sor",
+          "source": "szamviteli-torveny"
+        },
+        {
+          "code": "IX",
+          "name": "IX. Pénzügyi műveletek egyéb bevételei",
+          "sequence": 220,
+          "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "9110", "code_to": "9129" }],
+          "legal_reference": "Szvt. 2. számú melléklet, IX. sor — e sor a kapott kamatokat (9110) és az árfolyamnyereséget (9120) is hordozza.",
+          "source": "szamviteli-torveny"
+        },
+        {
+          "code": "X",
+          "name": "X. Fizetendő kamatok és kamatjellegű ráfordítások",
+          "sequence": 230,
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "9200", "code_to": "9209" }],
+          "legal_reference": "Szvt. 2. számú melléklet, X. sor",
+          "source": "szamviteli-torveny"
+        },
+        {
+          "code": "XII",
+          "name": "XII. Pénzügyi műveletek egyéb ráfordításai",
+          "sequence": 240,
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "9210", "code_to": "9219" }],
+          "legal_reference": "Szvt. 2. számú melléklet, XII. sor — e sor az árfolyamveszteséget (9210) hordozza.",
+          "source": "szamviteli-torveny"
+        },
+        {
+          "code": "B_EREDM",
+          "name": "B) PÉNZÜGYI MŰVELETEK EREDMÉNYE",
+          "sequence": 250,
+          "is_total": true,
+          "plus": ["VIII", "IX"],
+          "minus": ["X", "XII"],
+          "legal_reference": "Szvt. 2. számú melléklet, B) sor — a XI. (részesedések, értékpapírok értékvesztése) sort e pack számlatükre nem hordozza, ezért itt nem szerepel.",
+          "source": "szamviteli-torveny"
+        },
+        {
+          "code": "C_EREDM",
+          "name": "C) ADÓZÁS ELŐTTI EREDMÉNY",
+          "sequence": 260,
+          "is_total": true,
+          "plus": ["A_EREDM", "B_EREDM"],
+          "legal_reference": "Szvt. 2. számú melléklet, C) sor",
+          "source": "szamviteli-torveny"
+        },
+        {
+          "code": "XIII",
+          "name": "XIII. Adófizetési kötelezettség",
+          "sequence": 270,
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "9300", "code_to": "9309" }],
+          "legal_reference": "Szvt. 2. számú melléklet, XIII. sor",
+          "source": "szamviteli-torveny"
+        },
+        {
+          "code": "D_EREDM",
+          "name": "D) ADÓZOTT EREDMÉNY",
+          "sequence": 280,
+          "is_total": true,
+          "plus": ["C_EREDM"],
+          "minus": ["XIII"],
+          "legal_reference": "Szvt. 2. számú melléklet, D) sor",
+          "source": "szamviteli-torveny"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,175 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "HU-AFA-2665",
+  "name": "Általános forgalmi adó bevallása (2665 számú nyomtatvány, 2026. évi bevallási időszakok)",
+  "period": ["month", "quarter", "year"],
+  "valid_from": "2026-01-01",
+  "legal_reference": "Az adózás rendjéről szóló 2017. évi CL. törvény 2. melléklet I./B./3. pontja szerint az áfabevallás gyakoriságát a tárgyévet megelőző második év adatai döntik el: havi, ha az elszámolandó adó egyenlege a +1 000 000 forintot elérte; negyedéves, ha ezt nem éri el, de a +/- 250 000 forintos és az 50 000 000 forintos éves küszöböket túllépte; éves, ha az elszámolandó adó egyenlege a +/- 250 000 forintot nem haladja meg és a nettó árbevétel az 50 000 000 forintot nem éri el, feltéve hogy az adóalanynak nincs közösségi adószáma. A sorok — 01-től 36-ig, a 64. és a 85. sor — a 2665 számú nyomtatvány és kitöltési útmutatója szerintiek.",
+  "source": "art-torveny",
+  "boxes": [
+    {
+      "box": "01",
+      "kind": "base",
+      "name": "Termék Közösség területén kívülre történő értékesítése (export)",
+      "sequence": 10,
+      "legal_reference": "2665A-01-01 lap, 01. sor; Áfa tv. 98. § (1).",
+      "source": "nyomtatvany-2665"
+    },
+    {
+      "box": "02",
+      "kind": "base",
+      "name": "Termék Közösségen belüli adómentes értékesítése",
+      "sequence": 20,
+      "legal_reference": "2665A-01-01 lap, 02. sor; Áfa tv. 89. § (1).",
+      "source": "nyomtatvany-2665"
+    },
+    {
+      "box": "04",
+      "kind": "base",
+      "name": "Fordított adózás alá eső, belföldön teljesített termékértékesítés, szolgáltatásnyújtás — az értékesítő oldala",
+      "sequence": 30,
+      "legal_reference": "2665A-01-01 lap, 04. sor; Áfa tv. 142. §. A számlán ilyenkor áthárított adó nincs, a sor csak az adóalapot hordozza.",
+      "source": "nyomtatvany-2665"
+    },
+    {
+      "box": "05",
+      "kind": "base",
+      "name": "Belföldi értékesítés 5%-os adómérték alá tartozó adóalapja",
+      "sequence": 40,
+      "legal_reference": "2665A-01-01 lap, 05. sor; Áfa tv. 82. § (2).",
+      "source": "nyomtatvany-2665"
+    },
+    {
+      "box": "05",
+      "kind": "tax",
+      "name": "Belföldi értékesítés 5%-os adómérték alá tartozó fizetendő adója",
+      "sequence": 50,
+      "legal_reference": "2665A-01-01 lap, 05. sor, adó oszlop.",
+      "source": "nyomtatvany-2665"
+    },
+    {
+      "box": "06",
+      "kind": "base",
+      "name": "Belföldi értékesítés 18%-os adómérték alá tartozó adóalapja",
+      "sequence": 60,
+      "legal_reference": "2665A-01-01 lap, 06. sor; Áfa tv. 82. § (3).",
+      "source": "nyomtatvany-2665"
+    },
+    {
+      "box": "06",
+      "kind": "tax",
+      "name": "Belföldi értékesítés 18%-os adómérték alá tartozó fizetendő adója",
+      "sequence": 70,
+      "legal_reference": "2665A-01-01 lap, 06. sor, adó oszlop.",
+      "source": "nyomtatvany-2665"
+    },
+    {
+      "box": "07",
+      "kind": "base",
+      "name": "Belföldi értékesítés 27%-os adómérték alá tartozó adóalapja",
+      "sequence": 80,
+      "legal_reference": "2665A-01-01 lap, 07. sor; Áfa tv. 82. § (1) — a törvény szövegében nem szerepel önálló Kulcs-jelölés, a bevallás nyomtatványa rendeli a legmagasabb sorszámot a legmagasabb, 27%-os adómértékhez a kitöltési útmutató 05.–07. sorainak sorrendje szerint.",
+      "source": "nyomtatvany-2665"
+    },
+    {
+      "box": "07",
+      "kind": "tax",
+      "name": "Belföldi értékesítés 27%-os adómérték alá tartozó fizetendő adója",
+      "sequence": 90,
+      "legal_reference": "2665A-01-01 lap, 07. sor, adó oszlop.",
+      "source": "nyomtatvany-2665"
+    },
+    {
+      "box": "08",
+      "kind": "base",
+      "name": "A tevékenység közérdekű vagy egyéb sajátos jellegére tekintettel, valamint egyéb okból adómentes termékértékesítés, szolgáltatásnyújtás ellenértéke",
+      "sequence": 100,
+      "legal_reference": "2665A-01-01 lap, 08. sor; Áfa tv. 85. §, 86. § és 87. §.",
+      "source": "nyomtatvany-2665"
+    },
+    {
+      "box": "18B",
+      "kind": "base",
+      "name": "Közösségen belülről igénybe vett, a teljesítési hely általános szabálya alá tartozó szolgáltatás adóalapja — az igénybevevő oldala",
+      "sequence": 110,
+      "legal_reference": "2665A-01-01 lap kiegészítő 18B mező; Áfa tv. 37. § (1) a teljesítés helyéről, 138–140. § arról, hogy a belföldön le nem telepedett szolgáltatót nyújtó helyett a belföldi igénybevevő fizeti az adót — a 139. és 140. § pontos elhatárolása nem volt közvetlenül ellenőrizhető a törvény szövegéből, lásd README.",
+      "source": "nyomtatvany-2665"
+    },
+    {
+      "box": "18B",
+      "kind": "tax",
+      "name": "Közösségen belülről igénybe vett szolgáltatás után önadózással fizetendő adó",
+      "sequence": 120,
+      "legal_reference": "2665A-01-01 lap kiegészítő 18B mező, adó oszlop.",
+      "source": "nyomtatvany-2665"
+    },
+    {
+      "box": "27",
+      "kind": "base",
+      "name": "Harmadik országban letelepedett adóalanytól igénybe vett szolgáltatás adóalapja — az igénybevevő oldala",
+      "sequence": 130,
+      "legal_reference": "2665A-01-01 lap, 27. sor; Áfa tv. 37. § (1) a teljesítés helyéről, 138–140. § arról, hogy a belföldön le nem telepedett szolgáltatót nyújtó helyett a belföldi igénybevevő fizeti az adót.",
+      "source": "nyomtatvany-2665"
+    },
+    {
+      "box": "27",
+      "kind": "tax",
+      "name": "Harmadik országban letelepedett adóalanytól igénybe vett szolgáltatás után önadózással fizetendő adó",
+      "sequence": 140,
+      "legal_reference": "2665A-01-01 lap, 27. sor, adó oszlop.",
+      "source": "nyomtatvany-2665"
+    },
+    {
+      "box": "29",
+      "kind": "tax",
+      "name": "Fordított adózás alá eső, belföldön teljesített termékértékesítés, szolgáltatásnyújtás után az igénybevevő által önadózással fizetendő adó",
+      "sequence": 150,
+      "legal_reference": "2665A-01-01 lap, 29. sor; Áfa tv. 142. §. A nyomtatvány e sorhoz nem rendel önálló adóalap-oszlopot, csak a fizetendő adó összegét — az adóalapot a 04. sor hordozza az értékesítő bevallásában.",
+      "source": "nyomtatvany-2665"
+    },
+    {
+      "box": "92",
+      "kind": "base",
+      "name": "Másik tagállamban letelepedett adóalany részére nyújtott, a teljesítési hely általános szabálya alá tartozó szolgáltatás ellenértéke — az értékesítő oldala",
+      "sequence": 160,
+      "legal_reference": "2665A-02 lap, 92. sor; Áfa tv. 37. § (1).",
+      "source": "nyomtatvany-2665"
+    },
+    {
+      "box": "36ALAP",
+      "kind": "total",
+      "name": "36. sor — Fizetendő adó összesen, adóalap oszlop",
+      "sequence": 170,
+      "plus": ["01", "02", "04", "05:base", "06:base", "07:base", "08", "27:base"],
+      "legal_reference": "2665A-01-01 lap, 36. sor: „Ebben a sorban kell összesíteni adóalap és adó bontásban a 01-35. és 110. sorokban található részösszegeket.” A nyomtatvány egyetlen sorszáma (36) alatt két oszlopot (adóalap, adó) nyomtat; e pack — az olasz IT-DICH-IVA pack VE30C2/VE30C3 mintáját követve, kettőspont helyett betűjelzéssel — a két oszlopot 36ALAP és 36ADO azonosítóval különbözteti meg, mivel egy total csak egy képletet hordozhat. E pack a 110. sort (belföldi, 0%-os adómértékű ügyletek, Áfa tv. 82. § (4)) nem modellezi — lásd README.",
+      "source": "nyomtatvany-2665"
+    },
+    {
+      "box": "36ADO",
+      "kind": "total",
+      "name": "36. sor — Fizetendő adó összesen, adó oszlop",
+      "sequence": 180,
+      "plus": ["05:tax", "06:tax", "07:tax", "27:tax", "29"],
+      "legal_reference": "2665A-01-01 lap, 36. sor, adó oszlop — ugyanazon összesítő sor a 01-35. sorok adó oszlopára; lásd 36ALAP a sorszám-felbontásról.",
+      "source": "nyomtatvany-2665"
+    },
+    {
+      "box": "64",
+      "kind": "tax",
+      "name": "Levonható előzetesen felszámított adó összesen",
+      "sequence": 190,
+      "legal_reference": "2665A-01-02 lap, 64. sor; Áfa tv. 120–121. §. A nyomtatvány a levonható adót több sorra (64., 65., 66., 68. sor) bontja, amelyek együtt adják a 109. sor összegét; e pack, mivel a 64–68. sorok pontos elhatárolását a rendelkezésre álló forrásokból nem lehetett megerősíteni, az összes levonható adót — a belföldi beszerzések és az önadózás alá eső ügyletek levonható részét egyaránt — ezen az egy soron összesíti. Lásd README.",
+      "source": "nyomtatvany-2665"
+    },
+    {
+      "box": "85",
+      "kind": "total",
+      "name": "A bevallási időszakban elszámolandó adó — pozitív előjellel fizetendő, negatív előjellel visszaigényelhető",
+      "sequence": 200,
+      "plus": ["36ADO", "18B:tax"],
+      "minus": ["64"],
+      "legal_reference": "2665A-01-02 lap, 85. sor („visszaigényelhető előzetesen felszámított adó”). A rendelkezésre álló forrásokból nem volt közvetlenül megerősíthető, hogy a nyomtatvány a fizetendő és a visszaigényelhető összeget egyetlen előjeles soron (mint az osztrák U30 095. Kennzahl-ja) vagy két külön sorban mutatja-e be; e pack — amíg ez nincs megerősítve — az osztrák mintát követve egyetlen előjeles összesítő sort ír, floor_zero nélkül. Egy felülvizsgálónak ezt a kitöltési útmutató teljes szövegén kell ellenőriznie a reviewed státusz előtt — lásd README.",
+      "source": "nyomtatvany-2665"
+    }
+  ]
+}
