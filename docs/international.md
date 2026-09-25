@@ -5210,3 +5210,53 @@ income-statement lines, is this pack's own construction on top of that
 confirmed skeleton, not a transcription of NC 01's own printed model. A
 Tunisian accountant with access to the primary text should be the first
 reviewer this pack gets.
+
+## From Algeria
+
+`packs/dz/`, `community`, seed 86. Its own chart of accounts, own value added
+tax and own two statements — Algeria copies no other pack, being neither a
+member of the OHADA area nor of the Union its Maghreb neighbours are outside
+of for the same reason. The Système comptable financier (SCF, loi n° 07-11 of
+2007) is numbered close to the French plan comptable général on the surface
+— classes 1 to 7, a 4 for third parties — but its own arrêté fixes the
+nomenclature, and this pack reads that arrêté and not the neighbour the
+numbers resemble.
+
+### A tax due on collection, and a regularisation the core has no date for
+
+CTCA art. 14 makes the fait générateur of a prestation de services its
+encashment, and — the part this pack cannot carry — makes the tax exigible
+regardless, "at the expiry of a one-year period" from delivery, if it is
+never encashed. `cash_basis` already moves a tax's box from the invoice to
+the payment; nothing in the engine moves a tax's box on a date nobody posted
+a document on. A service invoiced and never paid stays out of every box of
+`packs/dz/`'s declaration forever, where the CTCA would eventually force it
+in. The gap is named at `taxes.json`'s `DZ-S-19-SRV` rather than approximated
+by, for instance, treating every service as due at invoice date: that would
+be wrong for the common case to be right for the rare one.
+
+### A credit the box does not carry to the next month
+
+`vat_return()` computes every box of every period this repository knows from
+that period's own postings, and `CRED` — the VAT credit of `packs/dz/`'s G n°
+50 — is no exception: a company running a credit in January that the
+February return should absorb first gets February's own credit instead,
+computed as if January had not happened. Nothing here is specific to
+Algeria — the same box exists, and the same gap with it, in every pack whose
+declaration is a monthly or quarterly net-due figure rather than a lump-sum
+tax — but the CTCA is explicit that an unabsorbed credit is *reported* onto
+the following declarations, which makes the gap concrete rather than
+theoretical for a country whose deductible tax on capital goods routinely
+exceeds one month's collection. Until the core keeps a balance across
+declarations, `packs/dz/golden/` computes each month on its own, and a real
+company's accountant carries the credit by hand.
+
+### DZD and DZ
+
+`DZD` is added to `00_currencies.sql` at two decimals. `DZ` is added to
+`00_territories.sql` outside the common system of VAT, on the same footing
+as Saudi Arabia and the United Arab Emirates above: the CTCA is Algeria's
+own text, unrelated to Directive 2006/112/EC. `vat_prefix` is null — an
+Algerian numéro d'identification fiscale carries no prefix of that table's
+kind, and is never checked against VIES, a register of a system Algeria is
+not part of.

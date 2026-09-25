@@ -819,3 +819,29 @@ on conflict (code) do update set
   eu_vat_to       = excluded.eu_vat_to,
   vat_prefix      = excluded.vat_prefix,
   legal_reference = excluded.legal_reference;
+
+
+-- ---------------------------------------------------------------------------
+-- The row — Algeria
+--
+-- A State outside the common system of VAT the way Saudi Arabia or the United
+-- Arab Emirates are: Algeria levies a value added tax of its own under the
+-- code des taxes sur le chiffre d'affaires (CTCA), unrelated to Directive
+-- 2006/112/EC. `vat_prefix` is null: an Algerian numéro d'identification
+-- fiscale (NIF) carries no country prefix of this table's kind and is never
+-- validated against VIES, a register of the common system Algeria is not
+-- part of.
+-- ---------------------------------------------------------------------------
+
+insert into territories (code, code_source, name, parent_code, eu_vat_scope, eu_vat_from, eu_vat_to, vat_prefix, legal_reference) values
+  ('DZ', 'iso_3166_1', 'Algeria', null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. Algeria levies a value added tax of its own under the code des taxes sur le chiffre d''affaires, whose article 21 sets the normal rate at 19 % and article 23 the reduced rate at 9 % (Direction générale des impôts, consolidated text distributed by the Direction générale des douanes).')
+on conflict (code) do update set
+  code_source     = excluded.code_source,
+  name            = excluded.name,
+  parent_code     = excluded.parent_code,
+  eu_vat_scope    = excluded.eu_vat_scope,
+  eu_vat_from     = excluded.eu_vat_from,
+  eu_vat_to       = excluded.eu_vat_to,
+  vat_prefix      = excluded.vat_prefix,
+  legal_reference = excluded.legal_reference;

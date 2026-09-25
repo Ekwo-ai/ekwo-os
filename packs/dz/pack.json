@@ -1,0 +1,142 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "DZ",
+  "name": "Algérie",
+  "version": "0.1.0",
+  "schema_min": "20260923110000",
+  "seed_sequence": 86,
+  "released_at": "2026-09-25",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "ctca",
+        "title": "Code des taxes sur le chiffre d'affaires (CTCA)",
+        "publisher": "Direction générale des impôts — texte mis à disposition par la Direction générale des douanes",
+        "url": "https://www.douane.gov.dz/IMG/pdf/code_des_taxes_sur_le_chiffre_d_affaire.pdf",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "mfdgi-tva",
+        "title": "La taxe sur la valeur ajoutée (TVA)",
+        "publisher": "Direction générale des impôts (DGI)",
+        "url": "https://www.mfdgi.gov.dz/fr/professionnels/services-pro/regime-reel/la-taxe-sur-la-valeur-ajoutee",
+        "consulted_on": "2026-09-25",
+        "kind": "guidance"
+      },
+      {
+        "key": "mfdgi-calendrier",
+        "title": "Paiement mensuel de la taxe sur le chiffre d'affaires, TVA, TIC et TPP",
+        "publisher": "Direction générale des impôts (DGI)",
+        "url": "https://www.mfdgi.gov.dz/fr/professionnels/calandrier-fiscal-pro/593-regime-reel/18-paiement-mensuel-de-la-taxe-sur-le-chiffre-d-affaires-tva-tic-et-tpp",
+        "consulted_on": "2026-09-25",
+        "kind": "guidance"
+      },
+      {
+        "key": "decret-05-468",
+        "title": "Décret exécutif n° 05-468 du 8 Dhou El Kaada 1426 correspondant au 10 décembre 2005 fixant les conditions et les modalités d'établissement de la facture, du bon de livraison, du bon de transfert et de la facture récapitulative",
+        "publisher": "Ministère du Commerce",
+        "url": "https://www.commerce.gov.dz/fr/reglementation/decret-executif-n05-468",
+        "consulted_on": "2026-09-25",
+        "kind": "regulation"
+      },
+      {
+        "key": "jibayatic",
+        "title": "Jibaya'tic — télédéclaration et télépaiement des impôts et taxes",
+        "publisher": "Direction générale des impôts (DGI)",
+        "url": "https://jibayatic.mf.gov.dz",
+        "consulted_on": "2026-09-25",
+        "kind": "portal"
+      },
+      {
+        "key": "scf",
+        "title": "Loi n° 07-11 du 25 novembre 2007 portant système comptable financier, et arrêté du 23 Rajab 1429 correspondant au 26 juillet 2008 fixant les règles d'évaluation et de comptabilisation, le contenu et la présentation des états financiers ainsi que la nomenclature et les règles de fonctionnement des comptes",
+        "publisher": "Ministère des Finances",
+        "url": "https://www.mf.gov.dz/pdf/Le_Systeme_comptable_Financier.pdf",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "DZD",
+    "language": "fr",
+    "rounding_method": "half_up",
+    "opening_entry_label": "À-nouveaux",
+    "closing_style": "result_accounts",
+    "roles": {
+      "receivable": "411",
+      "payable": "401",
+      "suspense": "471",
+      "rounding": "658",
+      "retained_earnings": "110",
+      "retained_earnings_loss": "119",
+      "current_year_result_profit": "120",
+      "current_year_result_loss": "129",
+      "sales": "700",
+      "purchase": "607",
+      "bank": "512",
+      "cash": "530",
+      "fx_gain": "766",
+      "fx_loss": "666",
+      "tax_payable": "44551",
+      "tax_receivable": "44567"
+    },
+    "journal_roles": {
+      "sales": "VT",
+      "purchase": "AC",
+      "miscellaneous": "OD",
+      "opening": "AN"
+    },
+    "fiscal_year_default": "calendar"
+  },
+  "languages": [],
+  "journals": [
+    { "code": "VT", "type": "sales", "name": "Journal des ventes", "sequence": 10 },
+    { "code": "AC", "type": "purchase", "name": "Journal des achats", "sequence": 20 },
+    { "code": "BQ", "type": "bank", "name": "Journal de banque", "sequence": 30 },
+    { "code": "CA", "type": "cash", "name": "Journal de caisse", "sequence": 40 },
+    { "code": "OD", "type": "general", "name": "Opérations diverses", "sequence": 50 },
+    { "code": "AN", "type": "opening", "name": "Journal des à-nouveaux", "sequence": 60 }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "SCF — nomenclature générale des comptes",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": ["DZ-SCF-BS", "DZ-SCF-IS"],
+      "legal_reference": "Loi n° 07-11 du 25 novembre 2007 portant système comptable financier, art. 17 — recours à une nomenclature des comptes fixée par voie réglementaire ; arrêté du 26 juillet 2008, titre III — nomenclature et règles de fonctionnement des comptes, classes 1 à 7. La classe 8 (engagements hors bilan) n'est pas reprise : elle ne porte pas de comptes numérotés destinés à recevoir une écriture de l'exploitant.",
+      "source": "scf"
+    }
+  ],
+  "documents": {
+    "numbering": "gapless",
+    "number_format": "{CODE}-{NNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "delivery_date",
+    "references": {
+      "numbering": {
+        "legal_reference": "Décret exécutif n° 05-468 du 10 décembre 2005 ; décret exécutif n° 16-66 du 16 février 2016, art. 5, qui reprend la même règle pour les documents équivalents des secteurs agricole, de la pêche et de l'artisanat — les factures et documents en tenant lieu sont extraits d'un carnet à souches, ou d'une suite logicielle, à « numération de série ininterrompue et chronologique ». Le texte impose la continuité de la séquence, jamais une remise à zéro annuelle ni une forme particulière du numéro.",
+        "source": "decret-05-468"
+      },
+      "tax_point": {
+        "legal_reference": "Code des taxes sur le chiffre d'affaires, art. 14 — pour une vente, le fait générateur est la livraison juridique ou matérielle du bien ; pour une prestation de services, il est constitué par l'encaissement partiel ou total du prix, avec exigibilité au plus tard un an après la livraison à défaut d'encaissement — régularisation que ce pack ne modélise pas. delivery_date dit le principe des ventes de biens ; la branche des prestations de services est portée par les taxes de service en cash_basis, et non par une seconde règle du pays.",
+        "source": "ctca"
+      }
+    },
+    "mentions": []
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "obligation": "none",
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "À la date de ce pack, aucun texte de portée générale n'oblige les entreprises algériennes à échanger des factures électroniques entre elles : le Code des taxes sur le chiffre d'affaires et le décret exécutif n° 05-468 du 10 décembre 2005 organisent la facture sur support ordinaire, et la Direction générale des impôts déploie des téléservices de déclaration et de paiement (Jibaya'tic) sans qu'un format ni une obligation de facturation électronique interentreprises n'aient été publiés et vérifiés cette session. Une facturation numérique existe déjà pour certains grands comptes et fournisseurs de l'État, sous des dispositifs particuliers que ce pack ne modélise pas faute de texte consolidé retrouvé.",
+    "source": "mfdgi-tva"
+  }
+}

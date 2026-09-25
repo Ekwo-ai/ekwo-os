@@ -1,0 +1,205 @@
+[
+  {
+    "code": "DZ-S-19",
+    "name": "Vente 19 %",
+    "description": "Livraisons de biens et prestations de services au taux normal",
+    "kind": "vat",
+    "rate": 19,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2017-01-01",
+    "legal_reference": "Code des taxes sur le chiffre d'affaires, art. 21 — « la taxe sur la valeur ajoutée est perçue au taux normal de 19 % », taux résiduel applicable à toute opération taxable qui ne relève ni du taux réduit de l'art. 23 ni d'une exonération ; art. 14 — pour une vente de biens, le fait générateur est constitué par la livraison juridique ou matérielle du bien",
+    "source": "ctca",
+    "vat_category": "S",
+    "sequence": 10,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "CA19" },
+        { "type": "tax", "account": "44571", "box": "TVA19" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "CA19", "box_factor": -100 },
+        { "type": "tax", "account": "44571", "box": "TVA19", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "DZ-S-19-SRV",
+    "name": "Prestation de services 19 % — TVA sur les encaissements",
+    "description": "Prestations de services au taux normal : le fait générateur est l'encaissement, total ou partiel, du prix",
+    "kind": "vat",
+    "rate": 19,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2017-01-01",
+    "legal_reference": "Code des taxes sur le chiffre d'affaires, art. 14 — « pour les prestations de services, le fait générateur est constitué par l'encaissement partiel ou total du prix » ; à défaut d'encaissement, la taxe devient exigible à l'expiration d'un délai d'un an à compter de la livraison juridique ou matérielle, régularisation que ce pack ne modélise pas ; art. 21 pour le taux",
+    "source": "ctca",
+    "vat_category": "S",
+    "cash_basis": true,
+    "cash_basis_transition_account": "44572",
+    "sequence": 20,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "CA19" },
+        { "type": "tax", "account": "44571", "box": "TVA19" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "CA19", "box_factor": -100 },
+        { "type": "tax", "account": "44571", "box": "TVA19", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "DZ-S-9",
+    "name": "Vente 9 %",
+    "description": "Produits, biens, travaux, opérations et services énumérés à l'article 23 du CTCA (produits alimentaires de base, produits pharmaceutiques, livres, transport ferroviaire de voyageurs, actes médicaux, notamment)",
+    "kind": "vat",
+    "rate": 9,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2017-01-01",
+    "conditions": ["supply_nature"],
+    "legal_reference": "Code des taxes sur le chiffre d'affaires, art. 23 — « le taux réduit de la taxe sur la valeur ajoutée est fixé à 9 %. Il s'applique aux produits, biens, travaux, opérations et services ci-après : ... » ; un bien ou un service qui n'y figure pas relève du taux normal de l'art. 21",
+    "source": "ctca",
+    "vat_category": "S",
+    "sequence": 30,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "CA9" },
+        { "type": "tax", "account": "44571", "box": "TVA9" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "CA9", "box_factor": -100 },
+        { "type": "tax", "account": "44571", "box": "TVA9", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "DZ-S-EXP",
+    "name": "Exportation exonérée",
+    "description": "Vente de marchandises exportées, exonérée avec maintien du droit à déduction",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2017-01-01",
+    "conditions": ["transport_evidence"],
+    "legal_reference": "Code des taxes sur le chiffre d'affaires, art. 13, section I — « les affaires de vente et de façon qui portent sur les marchandises exportées » sont exonérées, sous réserve de la justification de l'exportation par les documents douaniers ; section III — les antiquités, œuvres d'art et métaux précieux restent exclus de l'exonération ; l'exportation ouvre droit à déduction de la taxe ayant grevé les éléments du prix de l'opération exonérée",
+    "source": "ctca",
+    "vat_category": "G",
+    "sequence": 40,
+    "postings": {
+      "invoice": [{ "type": "base", "box": "EXP" }],
+      "credit_note": [{ "type": "base", "box": "EXP", "box_factor": -100 }]
+    }
+  },
+  {
+    "code": "DZ-S-EXO",
+    "name": "Opération exonérée (art. 8 à 12)",
+    "description": "Opérations exonérées énumérées aux articles 8 à 12 du CTCA (notamment les produits et services de première nécessité, les opérations bancaires réservées aux établissements financiers, les biens acquis dans le cadre d'un régime privilégié)",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2017-01-01",
+    "conditions": ["supply_nature"],
+    "legal_reference": "Code des taxes sur le chiffre d'affaires, art. 8, 9, 10, 11 et 12 — opérations exonérées de la taxe sur la valeur ajoutée. Le pack ne reprend pas la liste, longue et modifiée à chaque loi de finances ; le code exact de l'exonération applicable à une opération donnée se lit dans l'article visé sur la facture",
+    "source": "ctca",
+    "vat_category": "E",
+    "sequence": 50,
+    "postings": {
+      "invoice": [{ "type": "base", "box": "EXO" }],
+      "credit_note": [{ "type": "base", "box": "EXO", "box_factor": -100 }]
+    }
+  },
+  {
+    "code": "DZ-P-19",
+    "name": "Achat 19 % déductible",
+    "description": "Achats de biens et services au taux normal, déductibles",
+    "kind": "vat",
+    "rate": 19,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2017-01-01",
+    "legal_reference": "Code des taxes sur le chiffre d'affaires — la taxe ayant grevé les biens et services acquis pour les besoins de l'exploitation et non exclus du droit à déduction (art. 41) est déductible de la taxe due par l'assujetti ; art. 21 pour le taux",
+    "source": "ctca",
+    "vat_category": "S",
+    "sequence": 110,
+    "postings": {
+      "invoice": [{ "type": "tax", "account": "44566", "box": "DEDBS" }],
+      "credit_note": [{ "type": "tax", "account": "44566", "box": "DEDBS", "box_factor": -100 }]
+    }
+  },
+  {
+    "code": "DZ-P-19-IMMO",
+    "name": "Achat d'immobilisations 19 % déductible",
+    "description": "Acquisitions d'immobilisations au taux normal, déductibles",
+    "kind": "vat",
+    "rate": 19,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2017-01-01",
+    "legal_reference": "Code des taxes sur le chiffre d'affaires — la taxe ayant grevé les biens constituant des immobilisations est déductible dans les mêmes conditions que celle grevant les biens et services, sous réserve des exclusions de l'art. 41 ; art. 21 pour le taux",
+    "source": "ctca",
+    "vat_category": "S",
+    "sequence": 120,
+    "postings": {
+      "invoice": [{ "type": "tax", "account": "44562", "box": "DEDIMMO" }],
+      "credit_note": [{ "type": "tax", "account": "44562", "box": "DEDIMMO", "box_factor": -100 }]
+    }
+  },
+  {
+    "code": "DZ-P-9",
+    "name": "Achat 9 % déductible",
+    "description": "Achats de biens et services relevant du taux réduit de l'article 23, déductibles",
+    "kind": "vat",
+    "rate": 9,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2017-01-01",
+    "legal_reference": "Code des taxes sur le chiffre d'affaires, art. 23 pour le taux ; la taxe est déductible dans les mêmes conditions que celle du taux normal",
+    "source": "ctca",
+    "vat_category": "S",
+    "sequence": 130,
+    "postings": {
+      "invoice": [{ "type": "tax", "account": "44566", "box": "DEDBS" }],
+      "credit_note": [{ "type": "tax", "account": "44566", "box": "DEDBS", "box_factor": -100 }]
+    }
+  },
+  {
+    "code": "DZ-P-19-ND",
+    "name": "Achat 19 % non déductible (art. 41)",
+    "description": "Biens et services exclus du droit à déduction : notamment les véhicules de tourisme ne constituant pas l'outil indispensable de l'activité, et les biens ou services non liés à l'exploitation",
+    "kind": "vat",
+    "rate": 19,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2017-01-01",
+    "recoverable": false,
+    "legal_reference": "Code des taxes sur le chiffre d'affaires, art. 41 — exclusions du droit à déduction, notamment les véhicules de tourisme qui ne constituent pas l'outil indispensable à l'exercice de l'activité ; la taxe non déductible est un élément du coût du bien ou du service acquis",
+    "source": "ctca",
+    "vat_category": "S",
+    "sequence": 140,
+    "postings": {
+      "invoice": [{ "type": "tax_on_base", "factor": 100 }],
+      "credit_note": [{ "type": "tax_on_base", "factor": 100 }]
+    }
+  },
+  {
+    "code": "DZ-P-IMP-19",
+    "name": "Importation 19 % (TVA acquittée en douane)",
+    "description": "TVA liquidée et perçue par les services des douanes lors du dédouanement",
+    "kind": "vat",
+    "rate": 19,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2017-01-01",
+    "legal_reference": "Code des taxes sur le chiffre d'affaires — la taxe sur la valeur ajoutée à l'importation est liquidée et perçue par les services des douanes sur une base incluant la valeur en douane et les droits et taxes d'entrée, à l'exclusion de la taxe elle-même ; le document douanier justifie la déduction. Le numéro d'article exact de l'assiette à l'importation, dans la numérotation en vigueur, n'a pas pu être vérifié dans une édition consolidée officielle cette session : à faire relire",
+    "source": "ctca",
+    "sequence": 150,
+    "postings": {
+      "invoice": [{ "type": "tax", "account": "44566", "box": "DEDBS" }],
+      "credit_note": [{ "type": "tax", "account": "44566", "box": "DEDBS", "box_factor": -100 }]
+    }
+  }
+]

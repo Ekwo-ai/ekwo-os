@@ -1,0 +1,131 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "DZ-G50",
+  "name": "Déclaration mensuelle — série G n° 50",
+  "period": ["month"],
+  "period_default": "month",
+  "valid_from": "2017-01-01",
+  "legal_reference": "Code des taxes sur le chiffre d'affaires, art. 28 — les redevables souscrivent, avant le vingtième jour de chaque mois, une déclaration mensuelle des opérations réalisées au titre du mois précédent, y compris en l'absence d'opérations taxables (« déclaration Néant ») ; art. 76-1 — paiement mensuel de la taxe sur le chiffre d'affaires réalisé, au titre du mois précédent, par les contribuables soumis au régime du réel, entre le 1er et le 20 du mois. Le modèle officiel de l'imprimé série G n° 50 n'a pas été retrouvé publié en texte consolidé cette session : les cases de ce formulaire suivent le contenu que l'article 28 impose (opérations taxables et exonérées, taxe exigible, déductions), et non la numérotation de l'imprimé lui-même.",
+  "source": "mfdgi-calendrier",
+  "deadline": {
+    "rule": "day_of_month_after_period",
+    "day": 20,
+    "legal_reference": "Code des taxes sur le chiffre d'affaires, art. 76-1, tel que retranscrit par le calendrier fiscal de la Direction générale des impôts : dépôt et paiement entre le 1er et le 20 du mois qui suit celui des opérations, reporté au premier jour ouvrable suivant lorsque le 20 tombe un jour férié ou chômé",
+    "source": "mfdgi-calendrier"
+  },
+  "boxes": [
+    {
+      "box": "CA19",
+      "kind": "base",
+      "name": "Opérations taxables au taux normal de 19 %",
+      "sequence": 10,
+      "legal_reference": "Code des taxes sur le chiffre d'affaires, art. 28 — la déclaration porte le montant des opérations taxables ; art. 21 pour le taux",
+      "source": "ctca"
+    },
+    {
+      "box": "CA9",
+      "kind": "base",
+      "name": "Opérations taxables au taux réduit de 9 %",
+      "sequence": 20,
+      "legal_reference": "Code des taxes sur le chiffre d'affaires, art. 28 et art. 23 pour le taux",
+      "source": "ctca"
+    },
+    {
+      "box": "EXP",
+      "kind": "base",
+      "name": "Exportations exonérées ouvrant droit à déduction",
+      "sequence": 30,
+      "legal_reference": "Code des taxes sur le chiffre d'affaires, art. 28 — montant des opérations exonérées ; art. 13 pour l'exonération des exportations",
+      "source": "ctca"
+    },
+    {
+      "box": "EXO",
+      "kind": "base",
+      "name": "Autres opérations exonérées (art. 8 à 12)",
+      "sequence": 40,
+      "legal_reference": "Code des taxes sur le chiffre d'affaires, art. 28 — montant des opérations exonérées ; art. 8 à 12 pour la liste",
+      "source": "ctca"
+    },
+    {
+      "box": "CAT",
+      "kind": "total",
+      "name": "Chiffre d'affaires total du mois",
+      "sequence": 50,
+      "plus": ["CA19", "CA9", "EXP", "EXO"],
+      "legal_reference": "Code des taxes sur le chiffre d'affaires, art. 28 — montant des opérations taxables et exonérées",
+      "source": "ctca"
+    },
+    {
+      "box": "TVA19",
+      "kind": "tax",
+      "name": "Taxe exigible au taux de 19 %",
+      "sequence": 60,
+      "legal_reference": "Code des taxes sur le chiffre d'affaires, art. 28 — taxe exigible ; art. 14 pour le fait générateur et l'exigibilité",
+      "source": "ctca"
+    },
+    {
+      "box": "TVA9",
+      "kind": "tax",
+      "name": "Taxe exigible au taux de 9 %",
+      "sequence": 70,
+      "legal_reference": "Code des taxes sur le chiffre d'affaires, art. 28 et art. 23",
+      "source": "ctca"
+    },
+    {
+      "box": "TVAB",
+      "kind": "total",
+      "name": "Total de la taxe exigible",
+      "sequence": 80,
+      "plus": ["TVA19", "TVA9"],
+      "legal_reference": "Code des taxes sur le chiffre d'affaires, art. 28",
+      "source": "ctca"
+    },
+    {
+      "box": "DEDIMMO",
+      "kind": "tax",
+      "name": "TVA déductible sur immobilisations",
+      "sequence": 90,
+      "legal_reference": "Code des taxes sur le chiffre d'affaires, art. 28 — déductions ; les conditions et exclusions du droit à déduction sont à l'art. 41",
+      "source": "ctca"
+    },
+    {
+      "box": "DEDBS",
+      "kind": "tax",
+      "name": "TVA déductible sur biens et services (y compris importations)",
+      "sequence": 100,
+      "legal_reference": "Code des taxes sur le chiffre d'affaires, art. 28 — déductions ; art. 41 pour les conditions et exclusions",
+      "source": "ctca"
+    },
+    {
+      "box": "DEDT",
+      "kind": "total",
+      "name": "Total des déductions",
+      "sequence": 110,
+      "plus": ["DEDIMMO", "DEDBS"],
+      "legal_reference": "Code des taxes sur le chiffre d'affaires, art. 28",
+      "source": "ctca"
+    },
+    {
+      "box": "NET",
+      "kind": "total",
+      "name": "TVA nette à décaisser",
+      "sequence": 120,
+      "plus": ["TVAB"],
+      "minus": ["DEDT"],
+      "floor_zero": true,
+      "legal_reference": "Code des taxes sur le chiffre d'affaires, art. 76-1 — la déclaration vaut titre de paiement de la taxe exigible diminuée des déductions",
+      "source": "mfdgi-calendrier"
+    },
+    {
+      "box": "CRED",
+      "kind": "total",
+      "name": "Crédit de TVA à reporter",
+      "sequence": 130,
+      "plus": ["DEDT"],
+      "minus": ["TVAB"],
+      "floor_zero": true,
+      "legal_reference": "Code des taxes sur le chiffre d'affaires — l'excédent de taxe déductible non imputé est reporté sur les déclarations suivantes jusqu'à son absorption, ou remboursé dans les conditions que le code fixe pour les crédits nés notamment de l'exportation ou d'un taux de taxe d'amont supérieur au taux de taxe d'aval. Le numéro d'article exact du report et du remboursement n'a pas pu être vérifié dans une édition consolidée officielle cette session : à faire relire",
+      "source": "ctca"
+    }
+  ]
+}

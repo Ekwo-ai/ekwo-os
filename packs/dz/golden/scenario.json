@@ -1,0 +1,296 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "Un trimestre d'une société algérienne assujettie, déclarant chaque mois",
+  "chart": "default",
+  "fiscal_year": {
+    "name": "Exercice 2026",
+    "start": "2026-01-01",
+    "end": "2026-12-31"
+  },
+  "periods": [
+    {
+      "code": "2026-01",
+      "from": "2026-01-01",
+      "to": "2026-01-31"
+    },
+    {
+      "code": "2026-02",
+      "from": "2026-02-01",
+      "to": "2026-02-28"
+    },
+    {
+      "code": "2026-03",
+      "from": "2026-03-01",
+      "to": "2026-03-31"
+    }
+  ],
+  "statements": [
+    "DZ-SCF-BS",
+    "DZ-SCF-IS"
+  ],
+  "contacts": [
+    {
+      "ref": "client-dz",
+      "name": "SARL Atlas Négoce",
+      "type": "customer",
+      "country": "DZ",
+      "vat_number": null,
+      "auxiliary_code": "C0001"
+    },
+    {
+      "ref": "client-exp",
+      "name": "Comptoir Méditerranée SAS",
+      "type": "customer",
+      "country": "FR",
+      "vat_number": "FR12345678901",
+      "auxiliary_code": "C0002"
+    },
+    {
+      "ref": "fourn-dz",
+      "name": "SARL Fournitures Djazaïr",
+      "type": "supplier",
+      "country": "DZ",
+      "vat_number": null,
+      "auxiliary_code": "F0001"
+    },
+    {
+      "ref": "fourn-imp",
+      "name": "Guangzhou Trading Co.",
+      "type": "supplier",
+      "country": "CN",
+      "vat_number": null,
+      "auxiliary_code": "F0002"
+    }
+  ],
+  "documents": [
+    {
+      "ref": "V1",
+      "type": "sale_invoice",
+      "contact": "client-dz",
+      "date": "2026-01-10",
+      "due_date": "2026-02-09",
+      "why": "Une vente de marchandises au taux normal de 19 % : la base remplit la case CA19 et la taxe la case TVA19.",
+      "lines": [
+        {
+          "name": "Marchandises diverses",
+          "quantity": 10,
+          "unit_price": 5000,
+          "tax": "DZ-S-19",
+          "account": "700"
+        }
+      ]
+    },
+    {
+      "ref": "V2",
+      "type": "sale_invoice",
+      "contact": "client-dz",
+      "date": "2026-01-15",
+      "due_date": "2026-02-14",
+      "why": "Une vente de produits relevant du taux réduit de l'article 23 : la case CA9 et la case TVA9, distinctes du taux normal.",
+      "lines": [
+        {
+          "name": "Produits alimentaires de base",
+          "quantity": 1,
+          "unit_price": 20000,
+          "tax": "DZ-S-9",
+          "account": "700"
+        }
+      ]
+    },
+    {
+      "ref": "V3",
+      "type": "sale_invoice",
+      "contact": "client-dz",
+      "date": "2026-01-20",
+      "due_date": "2026-02-19",
+      "why": "Une prestation de services au taux normal : le fait générateur est l'encaissement, donc la taxe attend sur le compte de transition 44572 et ne remplit TVA19 qu'au mois où le client paie.",
+      "lines": [
+        {
+          "name": "Prestation de conseil",
+          "quantity": 1,
+          "unit_price": 40000,
+          "tax": "DZ-S-19-SRV",
+          "account": "706"
+        }
+      ]
+    },
+    {
+      "ref": "V4",
+      "type": "sale_invoice",
+      "contact": "client-exp",
+      "date": "2026-01-25",
+      "due_date": "2026-02-24",
+      "why": "Une exportation de marchandises, exonérée avec maintien du droit à déduction : une base en case EXP et aucune taxe.",
+      "lines": [
+        {
+          "name": "Marchandises exportées",
+          "quantity": 5,
+          "unit_price": 8000,
+          "tax": "DZ-S-EXP",
+          "account": "700"
+        }
+      ]
+    },
+    {
+      "ref": "V5",
+      "type": "sale_invoice",
+      "contact": "client-dz",
+      "date": "2026-02-05",
+      "due_date": "2026-03-07",
+      "why": "Une opération exonérée des articles 8 à 12 : une base en case EXO et aucune taxe, distincte de l'exonération à l'exportation.",
+      "lines": [
+        {
+          "name": "Opération exonérée (art. 8 à 12)",
+          "quantity": 1,
+          "unit_price": 15000,
+          "tax": "DZ-S-EXO",
+          "account": "700"
+        }
+      ]
+    },
+    {
+      "ref": "V6",
+      "type": "sale_credit_note",
+      "contact": "client-dz",
+      "date": "2026-02-10",
+      "due_date": null,
+      "why": "Un avoir sur une partie de la vente V1 au taux normal : la déclaration n'a pas de case pour les avoirs, elle les porte en négatif sur la case de la vente, ce que le pack écrit avec box_factor.",
+      "lines": [
+        {
+          "name": "Retour de marchandises",
+          "quantity": 2,
+          "unit_price": 5000,
+          "tax": "DZ-S-19",
+          "account": "700"
+        }
+      ]
+    },
+    {
+      "ref": "A1",
+      "type": "purchase_invoice",
+      "contact": "fourn-dz",
+      "date": "2026-01-12",
+      "due_date": "2026-02-11",
+      "why": "Un achat de marchandises au taux normal, déductible : la taxe remplit la case DEDBS, sans base déclarée à l'entrée.",
+      "lines": [
+        {
+          "name": "Marchandises",
+          "quantity": 1,
+          "unit_price": 30000,
+          "tax": "DZ-P-19",
+          "account": "607"
+        }
+      ]
+    },
+    {
+      "ref": "A2",
+      "type": "purchase_invoice",
+      "contact": "fourn-dz",
+      "date": "2026-01-18",
+      "due_date": "2026-02-17",
+      "why": "Une acquisition d'immobilisation au taux normal : la case DEDIMMO et non DEDBS, et un actif au bilan.",
+      "lines": [
+        {
+          "name": "Matériel de bureau et informatique",
+          "quantity": 1,
+          "unit_price": 60000,
+          "tax": "DZ-P-19-IMMO",
+          "account": "2183"
+        }
+      ]
+    },
+    {
+      "ref": "A3",
+      "type": "purchase_invoice",
+      "contact": "fourn-dz",
+      "date": "2026-02-08",
+      "due_date": "2026-03-10",
+      "why": "Un achat au taux réduit de l'article 23, déductible dans les mêmes conditions que le taux normal.",
+      "lines": [
+        {
+          "name": "Fournitures de bureau relevant du taux réduit",
+          "quantity": 1,
+          "unit_price": 12000,
+          "tax": "DZ-P-9",
+          "account": "607"
+        }
+      ]
+    },
+    {
+      "ref": "A4",
+      "type": "purchase_invoice",
+      "contact": "fourn-dz",
+      "date": "2026-02-14",
+      "due_date": "2026-03-16",
+      "why": "Un véhicule de tourisme exclu du droit à déduction par l'article 41 : la taxe n'est portée à aucune case, elle s'ajoute au coût du bien sur son propre compte (tax_on_base), preuve que le pack déclare bien une taxe partiellement non récupérable.",
+      "lines": [
+        {
+          "name": "Véhicule de tourisme",
+          "quantity": 1,
+          "unit_price": 900000,
+          "tax": "DZ-P-19-ND",
+          "account": "2182"
+        }
+      ]
+    },
+    {
+      "ref": "A5",
+      "type": "purchase_invoice",
+      "contact": "fourn-imp",
+      "date": "2026-03-02",
+      "due_date": "2026-04-01",
+      "why": "Une importation dont la TVA est liquidée en douane : déductible comme un achat de biens et services, case DEDBS.",
+      "lines": [
+        {
+          "name": "Marchandises importées",
+          "quantity": 1,
+          "unit_price": 200000,
+          "tax": "DZ-P-IMP-19",
+          "account": "607"
+        }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "E1",
+      "direction": "inbound",
+      "date": "2026-02-25",
+      "amount": 21800,
+      "contact": "client-dz",
+      "journal": "BQ",
+      "match": "V2",
+      "why": "Un encaissement qui solde exactement la facture V2, sans effet sur la déclaration puisque V2 n'est pas une prestation à l'encaissement."
+    },
+    {
+      "ref": "E2",
+      "direction": "inbound",
+      "date": "2026-03-10",
+      "amount": 47600,
+      "contact": "client-dz",
+      "journal": "BQ",
+      "match": "V3",
+      "why": "Le paiement de la prestation de services V3, un mois et demi après la facture : c'est ce paiement, et non la facture, qui rend la taxe exigible et remplit CA19 et TVA19 du mois de mars."
+    },
+    {
+      "ref": "E3",
+      "direction": "outbound",
+      "date": "2026-01-30",
+      "amount": 35700,
+      "contact": "fourn-dz",
+      "journal": "BQ",
+      "match": "A1",
+      "why": "Le côté fournisseur du lettrage, pour qu'il ne soit pas prouvé d'un seul côté du bilan."
+    },
+    {
+      "ref": "E4",
+      "direction": "inbound",
+      "date": "2026-03-20",
+      "amount": 5000,
+      "contact": "client-dz",
+      "journal": "BQ",
+      "match": null,
+      "why": "Un acompte reçu sans facture en face : il reste au crédit du compte client, non lettré."
+    }
+  ]
+}

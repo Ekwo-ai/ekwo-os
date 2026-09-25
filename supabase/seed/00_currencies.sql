@@ -40,5 +40,6 @@ insert into currencies (code, name, symbol, decimal_places) values
   ('ISK', 'Icelandic krona',      'kr',      0),
   ('TRY', 'Turkish lira',         E'₺', 2),
   ('EGP', 'Egyptian pound',       E'ج.م', 2),
-  ('TND', 'Tunisian dinar',       E'د.ت', 3)
+  ('TND', 'Tunisian dinar',       E'د.ت', 3),
+  ('DZD', 'Algerian dinar',       E'د.ج', 2)
 on conflict (code) do nothing;

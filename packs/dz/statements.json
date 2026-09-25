@@ -1,0 +1,329 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/statements",
+  "statements": [
+    {
+      "code": "DZ-SCF-BS",
+      "kind": "balance_sheet",
+      "framework": "SCF",
+      "name": "Bilan",
+      "valid_from": "2010-01-01",
+      "legal_reference": "Loi n° 07-11 du 25 novembre 2007 portant système comptable financier, art. 25 et 26 ; arrêté du 26 juillet 2008, titre II, chapitre 2 — modèle de bilan. En vigueur pour les exercices ouverts à compter du 1er janvier 2010.",
+      "source": "scf",
+      "lines": [
+        { "code": "ANC-GW", "parent": "ANC-TOT", "name": "Écart d'acquisition (goodwill)", "sequence": 10, "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "207", "code_to": "207" }],
+          "legal_reference": "Arrêté du 26 juillet 2008, titre II, chapitre 2 — modèle de bilan, actif", "source": "scf" },
+        { "code": "ANC-INC", "parent": "ANC-TOT", "name": "Immobilisations incorporelles", "sequence": 20, "sign": 1,
+          "rules": [
+            { "kind": "code_range", "code_from": "203", "code_to": "205" },
+            { "kind": "code_range", "code_from": "208", "code_to": "208" },
+            { "kind": "code_range", "code_from": "280", "code_to": "280" }
+          ],
+          "legal_reference": "Arrêté du 26 juillet 2008, titre II, chapitre 2 — modèle de bilan, actif, présenté net des amortissements", "source": "scf" },
+        { "code": "ANC-TER", "parent": "ANC-TOT", "name": "Terrains", "sequence": 30, "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "211", "code_to": "211" }],
+          "legal_reference": "Arrêté du 26 juillet 2008, titre II, chapitre 2 — modèle de bilan, actif", "source": "scf" },
+        { "code": "ANC-CON", "parent": "ANC-TOT", "name": "Constructions", "sequence": 40, "sign": 1,
+          "rules": [
+            { "kind": "code_range", "code_from": "213", "code_to": "213" },
+            { "kind": "code_range", "code_from": "2813", "code_to": "2813" }
+          ],
+          "legal_reference": "Arrêté du 26 juillet 2008, titre II, chapitre 2 — modèle de bilan, actif, présenté net des amortissements", "source": "scf" },
+        { "code": "ANC-AUT", "parent": "ANC-TOT", "name": "Autres immobilisations corporelles", "sequence": 50, "sign": 1,
+          "rules": [
+            { "kind": "code_range", "code_from": "215", "code_to": "215" },
+            { "kind": "code_range", "code_from": "2182", "code_to": "2184" },
+            { "kind": "code_range", "code_from": "2815", "code_to": "2815" },
+            { "kind": "code_range", "code_from": "2818", "code_to": "2818" },
+            { "kind": "code_range", "code_from": "29", "code_to": "29" }
+          ],
+          "legal_reference": "Arrêté du 26 juillet 2008, titre II, chapitre 2 — modèle de bilan, actif, présenté net des amortissements et des pertes de valeur", "source": "scf" },
+        { "code": "ANC-CCN", "parent": "ANC-TOT", "name": "Immobilisations en concession", "sequence": 60, "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "22", "code_to": "22" }],
+          "legal_reference": "Arrêté du 26 juillet 2008, titre II, chapitre 2 — modèle de bilan, actif", "source": "scf" },
+        { "code": "ANC-ENC", "parent": "ANC-TOT", "name": "Immobilisations en cours", "sequence": 70, "sign": 1,
+          "rules": [
+            { "kind": "code_range", "code_from": "232", "code_to": "232" },
+            { "kind": "code_range", "code_from": "237", "code_to": "237" }
+          ],
+          "legal_reference": "Arrêté du 26 juillet 2008, titre II, chapitre 2 — modèle de bilan, actif", "source": "scf" },
+        { "code": "ANC-FIN", "parent": "ANC-TOT", "name": "Immobilisations financières", "sequence": 80, "sign": 1,
+          "rules": [
+            { "kind": "code_range", "code_from": "261", "code_to": "261" },
+            { "kind": "code_range", "code_from": "267", "code_to": "267" },
+            { "kind": "code_range", "code_from": "274", "code_to": "276" }
+          ],
+          "legal_reference": "Arrêté du 26 juillet 2008, titre II, chapitre 2 — modèle de bilan, actif", "source": "scf" },
+        { "code": "ANC-IDA", "parent": "ANC-TOT", "name": "Impôts différés actif", "sequence": 90, "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "133", "code_to": "133" }],
+          "legal_reference": "Arrêté du 26 juillet 2008, titre II, chapitre 2 — modèle de bilan, actif", "source": "scf" },
+        { "code": "ANC-TOT", "parent": "ACTIF-TOT", "name": "TOTAL ACTIF NON COURANT", "sequence": 100, "is_total": true,
+          "plus": ["ANC-GW", "ANC-INC", "ANC-TER", "ANC-CON", "ANC-AUT", "ANC-CCN", "ANC-ENC", "ANC-FIN", "ANC-IDA"],
+          "legal_reference": "Arrêté du 26 juillet 2008, titre II, chapitre 2 — modèle de bilan, actif", "source": "scf" },
+
+        { "code": "AC-STK", "parent": "AC-TOT", "name": "Stocks et en cours", "sequence": 110, "sign": 1,
+          "rules": [
+            { "kind": "code_range", "code_from": "30", "code_to": "31" },
+            { "kind": "code_range", "code_from": "35", "code_to": "35" },
+            { "kind": "code_range", "code_from": "39", "code_to": "39" }
+          ],
+          "legal_reference": "Arrêté du 26 juillet 2008, titre II, chapitre 2 — modèle de bilan, actif, présenté net des pertes de valeur", "source": "scf" },
+        { "code": "AC-CLI", "parent": "AC-TOT", "name": "Clients", "sequence": 120, "sign": 1,
+          "rules": [
+            { "kind": "code_range", "code_from": "411", "code_to": "411" },
+            { "kind": "code_range", "code_from": "413", "code_to": "413" },
+            { "kind": "code_range", "code_from": "416", "code_to": "416" },
+            { "kind": "code_range", "code_from": "418", "code_to": "418" },
+            { "kind": "code_range", "code_from": "49", "code_to": "49" }
+          ],
+          "legal_reference": "Arrêté du 26 juillet 2008, titre II, chapitre 2 — modèle de bilan, actif, présenté net des pertes de valeur sur créances", "source": "scf" },
+        { "code": "AC-AUT", "parent": "AC-TOT", "name": "Autres créances et emplois assimilés", "sequence": 130, "sign": 1,
+          "rules": [
+            { "kind": "code_range", "code_from": "409", "code_to": "409" },
+            { "kind": "code_range", "code_from": "425", "code_to": "425" },
+            { "kind": "code_range", "code_from": "441", "code_to": "441" },
+            { "kind": "code_range", "code_from": "44562", "code_to": "44562" },
+            { "kind": "code_range", "code_from": "44566", "code_to": "44566" },
+            { "kind": "code_range", "code_from": "44567", "code_to": "44567" },
+            { "kind": "code_range", "code_from": "462", "code_to": "462" },
+            { "kind": "code_range", "code_from": "486", "code_to": "486" }
+          ],
+          "legal_reference": "Arrêté du 26 juillet 2008, titre II, chapitre 2 — modèle de bilan, actif", "source": "scf" },
+        { "code": "AC-DISP", "parent": "AC-TOT", "name": "Disponibilités et assimilés", "sequence": 140, "sign": 1,
+          "rules": [
+            { "kind": "code_range", "code_from": "50", "code_to": "50" },
+            { "kind": "code_range", "code_from": "511", "code_to": "512" },
+            { "kind": "code_range", "code_from": "530", "code_to": "530" },
+            { "kind": "code_range", "code_from": "54", "code_to": "54" },
+            { "kind": "code_range", "code_from": "58", "code_to": "58" },
+            { "kind": "code_range", "code_from": "59", "code_to": "59" }
+          ],
+          "legal_reference": "Arrêté du 26 juillet 2008, titre II, chapitre 2 — modèle de bilan, actif", "source": "scf" },
+        { "code": "AC-TOT", "parent": "ACTIF-TOT", "name": "TOTAL ACTIF COURANT", "sequence": 150, "is_total": true,
+          "plus": ["AC-STK", "AC-CLI", "AC-AUT", "AC-DISP"],
+          "legal_reference": "Arrêté du 26 juillet 2008, titre II, chapitre 2 — modèle de bilan, actif", "source": "scf" },
+        { "code": "ACTIF-TOT", "name": "TOTAL GENERAL ACTIF", "sequence": 160, "is_total": true,
+          "plus": ["ANC-TOT", "AC-TOT"],
+          "legal_reference": "Arrêté du 26 juillet 2008, titre II, chapitre 2 — modèle de bilan", "source": "scf" },
+
+        { "code": "CP-CAP", "parent": "CP-TOT", "name": "Capital émis", "sequence": 170, "sign": -1,
+          "rules": [
+            { "kind": "code_range", "code_from": "101", "code_to": "101" },
+            { "kind": "code_range", "code_from": "103", "code_to": "103" },
+            { "kind": "code_range", "code_from": "108", "code_to": "109" }
+          ],
+          "legal_reference": "Arrêté du 26 juillet 2008, titre II, chapitre 2 — modèle de bilan, passif — capitaux propres", "source": "scf" },
+        { "code": "CP-REE", "parent": "CP-TOT", "name": "Écarts de réévaluation", "sequence": 180, "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "105", "code_to": "105" }],
+          "legal_reference": "Arrêté du 26 juillet 2008, titre II, chapitre 2 — modèle de bilan, passif — capitaux propres", "source": "scf" },
+        { "code": "CP-RES", "parent": "CP-TOT", "name": "Réserves", "sequence": 190, "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "106", "code_to": "106" }],
+          "legal_reference": "Arrêté du 26 juillet 2008, titre II, chapitre 2 — modèle de bilan, passif — capitaux propres", "source": "scf" },
+        { "code": "CP-RNE", "parent": "CP-TOT", "name": "Résultat net de l'exercice", "sequence": 200, "sign": -1,
+          "rules": [
+            { "kind": "code_range", "code_from": "120", "code_to": "120" },
+            { "kind": "code_range", "code_from": "129", "code_to": "129" }
+          ],
+          "legal_reference": "Arrêté du 26 juillet 2008, titre II, chapitre 2 — modèle de bilan, passif — capitaux propres", "source": "scf" },
+        { "code": "CP-RAN", "parent": "CP-TOT", "name": "Autres capitaux propres — report à nouveau", "sequence": 210, "sign": -1,
+          "rules": [
+            { "kind": "code_range", "code_from": "110", "code_to": "110" },
+            { "kind": "code_range", "code_from": "119", "code_to": "119" }
+          ],
+          "legal_reference": "Arrêté du 26 juillet 2008, titre II, chapitre 2 — modèle de bilan, passif — capitaux propres", "source": "scf" },
+        { "code": "CP-TOT", "parent": "PASSIF-TOT", "name": "TOTAL I — CAPITAUX PROPRES", "sequence": 220, "is_total": true,
+          "plus": ["CP-CAP", "CP-REE", "CP-RES", "CP-RNE", "CP-RAN"],
+          "legal_reference": "Arrêté du 26 juillet 2008, titre II, chapitre 2 — modèle de bilan, passif", "source": "scf" },
+
+        { "code": "PNC-EMP", "parent": "PNC-TOT", "name": "Emprunts et dettes financières", "sequence": 230, "sign": -1,
+          "rules": [
+            { "kind": "code_range", "code_from": "164", "code_to": "165" },
+            { "kind": "code_range", "code_from": "168", "code_to": "168" },
+            { "kind": "code_range", "code_from": "17", "code_to": "17" }
+          ],
+          "legal_reference": "Arrêté du 26 juillet 2008, titre II, chapitre 2 — modèle de bilan, passif — passifs non courants", "source": "scf" },
+        { "code": "PNC-IMP", "parent": "PNC-TOT", "name": "Impôts (différés et provisionnés)", "sequence": 240, "sign": -1,
+          "rules": [
+            { "kind": "code_range", "code_from": "134", "code_to": "134" },
+            { "kind": "code_range", "code_from": "155", "code_to": "155" }
+          ],
+          "legal_reference": "Arrêté du 26 juillet 2008, titre II, chapitre 2 — modèle de bilan, passif — passifs non courants", "source": "scf" },
+        { "code": "PNC-AUT", "parent": "PNC-TOT", "name": "Autres dettes non courantes", "sequence": 250, "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "18", "code_to": "18" }],
+          "legal_reference": "Arrêté du 26 juillet 2008, titre II, chapitre 2 — modèle de bilan, passif — passifs non courants", "source": "scf" },
+        { "code": "PNC-PROV", "parent": "PNC-TOT", "name": "Provisions et produits comptabilisés d'avance", "sequence": 260, "sign": -1,
+          "rules": [
+            { "kind": "code_range", "code_from": "131", "code_to": "132" },
+            { "kind": "code_range", "code_from": "138", "code_to": "138" },
+            { "kind": "code_range", "code_from": "153", "code_to": "153" },
+            { "kind": "code_range", "code_from": "158", "code_to": "158" }
+          ],
+          "legal_reference": "Arrêté du 26 juillet 2008, titre II, chapitre 2 — modèle de bilan, passif — passifs non courants", "source": "scf" },
+        { "code": "PNC-TOT", "parent": "PASSIF-TOT", "name": "TOTAL II — PASSIFS NON COURANTS", "sequence": 270, "is_total": true,
+          "plus": ["PNC-EMP", "PNC-IMP", "PNC-AUT", "PNC-PROV"],
+          "legal_reference": "Arrêté du 26 juillet 2008, titre II, chapitre 2 — modèle de bilan, passif", "source": "scf" },
+
+        { "code": "PC-FOU", "parent": "PC-TOT", "name": "Fournisseurs et comptes rattachés", "sequence": 280, "sign": -1,
+          "rules": [
+            { "kind": "code_range", "code_from": "401", "code_to": "401" },
+            { "kind": "code_range", "code_from": "403", "code_to": "404" },
+            { "kind": "code_range", "code_from": "408", "code_to": "408" }
+          ],
+          "legal_reference": "Arrêté du 26 juillet 2008, titre II, chapitre 2 — modèle de bilan, passif — passifs courants", "source": "scf" },
+        { "code": "PC-IMP", "parent": "PC-TOT", "name": "Impôts", "sequence": 290, "sign": -1,
+          "rules": [
+            { "kind": "code_range", "code_from": "444", "code_to": "444" },
+            { "kind": "code_range", "code_from": "44551", "code_to": "44551" },
+            { "kind": "code_range", "code_from": "44571", "code_to": "44572" },
+            { "kind": "code_range", "code_from": "447", "code_to": "448" }
+          ],
+          "legal_reference": "Arrêté du 26 juillet 2008, titre II, chapitre 2 — modèle de bilan, passif — passifs courants", "source": "scf" },
+        { "code": "PC-AUT", "parent": "PC-TOT", "name": "Autres dettes", "sequence": 300, "sign": -1,
+          "rules": [
+            { "kind": "code_range", "code_from": "419", "code_to": "419" },
+            { "kind": "code_range", "code_from": "421", "code_to": "421" },
+            { "kind": "code_range", "code_from": "428", "code_to": "428" },
+            { "kind": "code_range", "code_from": "431", "code_to": "431" },
+            { "kind": "code_range", "code_from": "438", "code_to": "438" },
+            { "kind": "code_range", "code_from": "455", "code_to": "455" },
+            { "kind": "code_range", "code_from": "457", "code_to": "457" },
+            { "kind": "code_range", "code_from": "467", "code_to": "467" }
+          ],
+          "legal_reference": "Arrêté du 26 juillet 2008, titre II, chapitre 2 — modèle de bilan, passif — passifs courants", "source": "scf" },
+        { "code": "PC-REG", "parent": "PC-TOT", "name": "Comptes de régularisation et transitoires", "sequence": 310, "sign": -1,
+          "rules": [
+            { "kind": "code_range", "code_from": "471", "code_to": "471" },
+            { "kind": "code_range", "code_from": "487", "code_to": "487" }
+          ],
+          "legal_reference": "Arrêté du 26 juillet 2008, titre II, chapitre 2 — modèle de bilan, passif — passifs courants", "source": "scf" },
+        { "code": "PC-TOT", "parent": "PASSIF-TOT", "name": "TOTAL III — PASSIFS COURANTS", "sequence": 320, "is_total": true,
+          "plus": ["PC-FOU", "PC-IMP", "PC-AUT", "PC-REG"],
+          "legal_reference": "Arrêté du 26 juillet 2008, titre II, chapitre 2 — modèle de bilan, passif", "source": "scf" },
+        { "code": "PASSIF-TOT", "name": "TOTAL GENERAL PASSIF", "sequence": 330, "is_total": true,
+          "plus": ["CP-TOT", "PNC-TOT", "PC-TOT"],
+          "legal_reference": "Arrêté du 26 juillet 2008, titre II, chapitre 2 — modèle de bilan", "source": "scf" }
+      ]
+    },
+    {
+      "code": "DZ-SCF-IS",
+      "kind": "income_statement",
+      "framework": "SCF",
+      "name": "Compte de résultat (par nature)",
+      "valid_from": "2010-01-01",
+      "legal_reference": "Loi n° 07-11 du 25 novembre 2007 portant système comptable financier, art. 25 et 26 ; arrêté du 26 juillet 2008, titre II, chapitre 3 — modèle de compte de résultat, présentation par nature. En vigueur pour les exercices ouverts à compter du 1er janvier 2010. Les charges sont lues ici en positif et retranchées par les soldes intermédiaires, là où le modèle les imprime affectées du signe « - ».",
+      "source": "scf",
+      "lines": [
+        { "code": "IS-CA", "parent": "IS-TPO", "name": "Chiffre d'affaires", "sequence": 10, "sign": -1,
+          "rules": [
+            { "kind": "code_range", "code_from": "700", "code_to": "701" },
+            { "kind": "code_range", "code_from": "706", "code_to": "706" },
+            { "kind": "code_range", "code_from": "709", "code_to": "709" }
+          ],
+          "legal_reference": "Arrêté du 26 juillet 2008, titre II, chapitre 3 — modèle de compte de résultat", "source": "scf" },
+        { "code": "IS-PS", "parent": "IS-TPO", "name": "Production stockée (ou déstockage)", "sequence": 20, "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "72", "code_to": "72" }],
+          "legal_reference": "Arrêté du 26 juillet 2008, titre II, chapitre 3 — modèle de compte de résultat", "source": "scf" },
+        { "code": "IS-PI", "parent": "IS-TPO", "name": "Production immobilisée", "sequence": 30, "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "73", "code_to": "73" }],
+          "legal_reference": "Arrêté du 26 juillet 2008, titre II, chapitre 3 — modèle de compte de résultat", "source": "scf" },
+        { "code": "IS-SUB", "parent": "IS-TPO", "name": "Subventions d'exploitation", "sequence": 40, "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "74", "code_to": "74" }],
+          "legal_reference": "Arrêté du 26 juillet 2008, titre II, chapitre 3 — modèle de compte de résultat", "source": "scf" },
+        { "code": "IS-APO", "parent": "IS-TPO", "name": "Autres produits opérationnels", "sequence": 50, "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "758", "code_to": "758" }],
+          "legal_reference": "Arrêté du 26 juillet 2008, titre II, chapitre 3 — modèle de compte de résultat", "source": "scf" },
+        { "code": "IS-REP", "parent": "IS-TPO", "name": "Reprises sur pertes de valeur et provisions", "sequence": 60, "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "78", "code_to": "78" }],
+          "legal_reference": "Arrêté du 26 juillet 2008, titre II, chapitre 3 — modèle de compte de résultat", "source": "scf" },
+        { "code": "IS-TPO", "parent": "IS-ROP", "name": "TOTAL DES PRODUITS OPERATIONNELS", "sequence": 70, "is_total": true,
+          "plus": ["IS-CA", "IS-PS", "IS-PI", "IS-SUB", "IS-APO", "IS-REP"],
+          "legal_reference": "Arrêté du 26 juillet 2008, titre II, chapitre 3 — modèle de compte de résultat", "source": "scf" },
+
+        { "code": "IS-ACH", "parent": "IS-TCO", "name": "Achats consommés", "sequence": 80, "sign": 1,
+          "rules": [
+            { "kind": "code_range", "code_from": "601", "code_to": "603" },
+            { "kind": "code_range", "code_from": "607", "code_to": "607" },
+            { "kind": "code_range", "code_from": "609", "code_to": "609" }
+          ],
+          "legal_reference": "Arrêté du 26 juillet 2008, titre II, chapitre 3 — modèle de compte de résultat", "source": "scf" },
+        { "code": "IS-SE", "parent": "IS-TCO", "name": "Services extérieurs et autres consommations", "sequence": 90, "sign": 1,
+          "rules": [
+            { "kind": "code_range", "code_from": "611", "code_to": "611" },
+            { "kind": "code_range", "code_from": "613", "code_to": "613" },
+            { "kind": "code_range", "code_from": "615", "code_to": "616" },
+            { "kind": "code_range", "code_from": "621", "code_to": "628" }
+          ],
+          "legal_reference": "Arrêté du 26 juillet 2008, titre II, chapitre 3 — modèle de compte de résultat", "source": "scf" },
+        { "code": "IS-PER", "parent": "IS-TCO", "name": "Charges de personnel", "sequence": 100, "sign": 1,
+          "rules": [
+            { "kind": "code_range", "code_from": "631", "code_to": "631" },
+            { "kind": "code_range", "code_from": "635", "code_to": "635" },
+            { "kind": "code_range", "code_from": "638", "code_to": "638" }
+          ],
+          "legal_reference": "Arrêté du 26 juillet 2008, titre II, chapitre 3 — modèle de compte de résultat", "source": "scf" },
+        { "code": "IS-TAX", "parent": "IS-TCO", "name": "Impôts, taxes et versements assimilés", "sequence": 110, "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "641", "code_to": "641" }],
+          "legal_reference": "Arrêté du 26 juillet 2008, titre II, chapitre 3 — modèle de compte de résultat", "source": "scf" },
+        { "code": "IS-ACO", "parent": "IS-TCO", "name": "Autres charges opérationnelles", "sequence": 120, "sign": 1,
+          "rules": [
+            { "kind": "code_range", "code_from": "651", "code_to": "651" },
+            { "kind": "code_range", "code_from": "654", "code_to": "654" },
+            { "kind": "code_range", "code_from": "658", "code_to": "658" }
+          ],
+          "legal_reference": "Arrêté du 26 juillet 2008, titre II, chapitre 3 — modèle de compte de résultat", "source": "scf" },
+        { "code": "IS-DOT", "parent": "IS-TCO", "name": "Dotations aux amortissements et aux provisions", "sequence": 130, "sign": 1,
+          "rules": [
+            { "kind": "code_range", "code_from": "681", "code_to": "681" },
+            { "kind": "code_range", "code_from": "685", "code_to": "685" }
+          ],
+          "legal_reference": "Arrêté du 26 juillet 2008, titre II, chapitre 3 — modèle de compte de résultat", "source": "scf" },
+        { "code": "IS-TCO", "parent": "IS-ROP", "name": "TOTAL DES CHARGES OPERATIONNELLES", "sequence": 140, "is_total": true,
+          "plus": ["IS-ACH", "IS-SE", "IS-PER", "IS-TAX", "IS-ACO", "IS-DOT"],
+          "legal_reference": "Arrêté du 26 juillet 2008, titre II, chapitre 3 — modèle de compte de résultat", "source": "scf" },
+
+        { "code": "IS-ROP", "parent": "IS-ROA", "name": "RESULTAT OPERATIONNEL", "sequence": 150, "is_total": true,
+          "plus": ["IS-TPO"], "minus": ["IS-TCO"],
+          "legal_reference": "Arrêté du 26 juillet 2008, titre II, chapitre 3 — modèle de compte de résultat", "source": "scf" },
+
+        { "code": "IS-PF", "parent": "IS-RF", "name": "Produits financiers", "sequence": 160, "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "766", "code_to": "768" }],
+          "legal_reference": "Arrêté du 26 juillet 2008, titre II, chapitre 3 — modèle de compte de résultat", "source": "scf" },
+        { "code": "IS-CF", "parent": "IS-RF", "name": "Charges financières", "sequence": 170, "sign": 1,
+          "rules": [
+            { "kind": "code_range", "code_from": "661", "code_to": "661" },
+            { "kind": "code_range", "code_from": "666", "code_to": "666" },
+            { "kind": "code_range", "code_from": "668", "code_to": "668" }
+          ],
+          "legal_reference": "Arrêté du 26 juillet 2008, titre II, chapitre 3 — modèle de compte de résultat", "source": "scf" },
+        { "code": "IS-RF", "parent": "IS-ROA", "name": "RESULTAT FINANCIER", "sequence": 180, "is_total": true,
+          "plus": ["IS-PF"], "minus": ["IS-CF"],
+          "legal_reference": "Arrêté du 26 juillet 2008, titre II, chapitre 3 — modèle de compte de résultat", "source": "scf" },
+
+        { "code": "IS-ROA", "parent": "IS-RAO", "name": "RESULTAT ORDINAIRE AVANT IMPOTS", "sequence": 190, "is_total": true,
+          "plus": ["IS-ROP", "IS-RF"],
+          "legal_reference": "Arrêté du 26 juillet 2008, titre II, chapitre 3 — modèle de compte de résultat", "source": "scf" },
+
+        { "code": "IS-IMP", "parent": "IS-RAO", "name": "Impôts exigibles sur résultats ordinaires", "sequence": 200, "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "695", "code_to": "698" }],
+          "legal_reference": "Arrêté du 26 juillet 2008, titre II, chapitre 3 — modèle de compte de résultat", "source": "scf" },
+        { "code": "IS-RAO", "parent": "IS-RES", "name": "RESULTAT NET DES ACTIVITES ORDINAIRES", "sequence": 210, "is_total": true,
+          "plus": ["IS-ROA"], "minus": ["IS-IMP"],
+          "legal_reference": "Arrêté du 26 juillet 2008, titre II, chapitre 3 — modèle de compte de résultat", "source": "scf" },
+
+        { "code": "IS-PEX", "parent": "IS-REX", "name": "Produits extraordinaires", "sequence": 220, "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "77", "code_to": "77" }],
+          "legal_reference": "Arrêté du 26 juillet 2008, titre II, chapitre 3 — modèle de compte de résultat", "source": "scf" },
+        { "code": "IS-CEX", "parent": "IS-REX", "name": "Charges extraordinaires", "sequence": 230, "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "67", "code_to": "67" }],
+          "legal_reference": "Arrêté du 26 juillet 2008, titre II, chapitre 3 — modèle de compte de résultat", "source": "scf" },
+        { "code": "IS-REX", "parent": "IS-RES", "name": "RESULTAT EXTRAORDINAIRE", "sequence": 240, "is_total": true,
+          "plus": ["IS-PEX"], "minus": ["IS-CEX"],
+          "legal_reference": "Arrêté du 26 juillet 2008, titre II, chapitre 3 — modèle de compte de résultat", "source": "scf" },
+
+        { "code": "IS-RES", "name": "RESULTAT NET DE L'EXERCICE", "sequence": 250, "is_total": true,
+          "plus": ["IS-RAO", "IS-REX"],
+          "legal_reference": "Arrêté du 26 juillet 2008, titre II, chapitre 3 — modèle de compte de résultat", "source": "scf" }
+      ]
+    }
+  ]
+}
