@@ -1,0 +1,110 @@
+code,parent,type,reconcilable,name,sequence
+012,,asset_fixed,false,Aktivované náklady na vývoj,10
+013,,asset_fixed,false,Softvér,20
+014,,asset_fixed,false,Oceniteľné práva,30
+015,,asset_fixed,false,Goodwill,40
+019,,asset_fixed,false,Ostatný dlhodobý nehmotný majetok,50
+021,,asset_fixed,false,Stavby,60
+022,,asset_fixed,false,Samostatné hnuteľné veci a súbory hnuteľných vecí,70
+023,,asset_fixed,false,Pestovateľské celky trvalých porastov,80
+025,,asset_fixed,false,Základné stádo a ťažné zvieratá,90
+026,,asset_fixed,false,Iný dlhodobý hmotný majetok,100
+031,,asset_fixed,false,Pozemky,110
+032,,asset_fixed,false,Umelecké diela a zbierky,120
+041,,asset_fixed,false,Obstaranie dlhodobého nehmotného majetku,130
+042,,asset_fixed,false,Obstaranie dlhodobého hmotného majetku,140
+052,,asset_fixed,false,Poskytnuté preddavky na dlhodobý hmotný majetok,150
+061,,asset_non_current,false,Podielové cenné papiere a podiely v dcérskej účtovnej jednotke,160
+062,,asset_non_current,false,Podielové cenné papiere a podiely v spoločnosti s podstatným vplyvom,170
+065,,asset_non_current,false,Dlhopisy a ostatné dlhodobé cenné papiere,180
+066,,asset_non_current,false,Pôžičky prepojeným účtovným jednotkám,190
+067,,asset_non_current,false,Ostatné pôžičky,200
+069,,asset_non_current,false,Ostatné realizovateľné cenné papiere a podiely,210
+071,,asset_fixed,false,Oprávky k aktivovaným nákladom na vývoj,220
+072,,asset_fixed,false,Oprávky ku goodwillu,230
+073,,asset_fixed,false,Oprávky k softvéru,240
+079,,asset_fixed,false,Oprávky k ostatnému dlhodobému nehmotnému majetku,250
+081,,asset_fixed,false,Oprávky k stavbám,260
+082,,asset_fixed,false,Oprávky k samostatným hnuteľným veciam a súborom hnuteľných vecí,270
+083,,asset_fixed,false,Oprávky k pestovateľským celkom trvalých porastov,280
+085,,asset_fixed,false,Oprávky k základnému stádu a ťažným zvieratám,290
+089,,asset_fixed,false,Oprávky k inému dlhodobému hmotnému majetku,300
+112,,asset_current,false,Materiál na sklade,310
+121,,asset_current,false,Nedokončená výroba,320
+122,,asset_current,false,Polotovary vlastnej výroby,330
+123,,asset_current,false,Výrobky,340
+124,,asset_current,false,Zvieratá,350
+132,,asset_current,false,Tovar na sklade a v predajniach,360
+133,,asset_current,false,Tovar na ceste,370
+211,,asset_cash,false,Pokladnica,380
+213,,asset_cash,false,Ceniny,390
+221,,asset_cash,false,Bankové účty,400
+251,,asset_current,false,Majetkové cenné papiere na obchodovanie,410
+252,,asset_current,false,Vlastné akcie a vlastné obchodné podiely,420
+253,,asset_current,false,Dlhové cenné papiere na obchodovanie,430
+255,,asset_current,false,Vlastné dlhopisy,440
+256,,asset_current,false,Dlhové cenné papiere so splatnosťou do jedného roka držané do splatnosti,450
+261,,asset_cash,false,Peniaze na ceste,460
+311,,asset_receivable,true,Odberatelia,470
+313,,asset_current,false,Pohľadávky za eskontované cenné papiere,480
+314,,asset_current,false,Poskytnuté prevádzkové preddavky,490
+315,,asset_current,true,Ostatné pohľadávky,500
+317,,asset_current,false,Iné pohľadávky z hlavnej činnosti,510
+318,,asset_current,false,Pohľadávky voči účastníkom združenia,520
+321,,liability_payable,true,Dodávatelia,530
+324,,liability_current,true,Prijaté preddavky,540
+325,,liability_current,false,Ostatné záväzky,550
+331,,liability_current,true,Zamestnanci,560
+333,,liability_current,false,Ostatné záväzky voči zamestnancom,570
+336,,liability_current,false,Zúčtovanie s inštitúciami sociálneho a zdravotného poistenia,580
+341,,liability_current,false,Daň z príjmov,590
+342,,liability_current,false,Ostatné priame dane,600
+343,,liability_current,true,Daň z pridanej hodnoty,610
+345,,liability_current,false,Ostatné dane a poplatky,620
+346,,liability_current,false,Dotácie zo štátneho rozpočtu,630
+347,,liability_current,false,Ostatné dotácie,640
+349,,liability_current,false,Daňové pohľadávky a záväzky,650
+379,,liability_current,true,Iné záväzky,660
+381,,asset_prepayments,false,Náklady budúcich období,670
+384,,liability_current,false,Výnosy budúcich období,680
+411,,equity,false,Základné imanie,690
+413,,equity,false,Ostatné kapitálové fondy,700
+421,,equity,false,Zákonný rezervný fond,710
+428,,equity_retained,false,Nerozdelený zisk minulých rokov,720
+429,,equity_retained,false,Neuhradená strata minulých rokov,730
+431,,equity_retained,false,Výsledok hospodárenia v schvaľovacom konaní,740
+451,,liability_non_current,false,Rezervy zákonné,750
+459,,liability_current,false,Ostatné rezervy,760
+461,,liability_non_current,true,Bankové úvery dlhodobé,770
+479,,liability_non_current,true,Ostatné dlhodobé záväzky,780
+481,,liability_non_current,false,Odložený daňový záväzok,790
+501,,expense,false,Spotreba materiálu,800
+502,,expense,false,Spotreba energie,810
+504,,expense_direct_cost,false,Predaný tovar,820
+511,,expense,false,Opravy a udržiavanie,830
+512,,expense,false,Cestovné,840
+513,,expense,false,Náklady na reprezentáciu,850
+518,,expense,false,Ostatné služby,860
+521,,expense,false,Mzdové náklady,870
+524,,expense,false,Zákonné sociálne poistenie,880
+527,,expense,false,Zákonné sociálne náklady,890
+531,,expense,false,Daň z motorových vozidiel,900
+532,,expense,false,Daň z nehnuteľností,910
+538,,expense,false,Ostatné dane a poplatky,920
+541,,expense,false,Zostatková cena predaného dlhodobého majetku,930
+544,,expense,false,"Zmluvné pokuty, penále a úroky z omeškania",940
+546,,expense,false,Tvorba opravnej položky k pohľadávkam,950
+548,,expense,false,Ostatné náklady na hospodársku činnosť,960
+551,,expense_depreciation,false,Odpisy dlhodobého nehmotného a hmotného majetku,970
+562,,expense,false,Úroky,980
+563,,expense,false,Kurzové straty,990
+568,,expense,false,Ostatné finančné náklady,1000
+591,,expense,false,Daň z príjmov z bežnej činnosti — splatná,1010
+601,,income,false,Tržby za vlastné výrobky,1020
+602,,income,false,Tržby z predaja služieb,1030
+604,,income,false,Tržby za tovar,1040
+644,,income_other,false,"Zmluvné pokuty, penále a úroky z omeškania",1050
+648,,income_other,false,Ostatné výnosy z hospodárskej činnosti,1060
+662,,income_other,false,Úroky,1070
+663,,income_other,false,Kurzové zisky,1080
+668,,income_other,false,Ostatné finančné výnosy,1090

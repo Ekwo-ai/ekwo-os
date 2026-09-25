@@ -1,0 +1,201 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "SK-DPH",
+  "name": "Daňové priznanie k dani z pridanej hodnoty (tlačivo DPHv25, MF/007833/2025-731)",
+  "period": ["month", "quarter"],
+  "period_default": "month",
+  "valid_from": "2025-07-01",
+  "legal_reference": "Zákon č. 222/2004 Z. z., § 78 ods. 2 — platiteľ podáva daňové priznanie za každé zdaňovacie obdobie. Riadky citované nižšie sú riadky poučenia na vyplnenie tlačiva DPHv25, platného od 1.7.2025; toto je pracovná podmnožina formulára — chýbajúce riadky (trojstranný obchod, samozdanenie dovozu podľa § 84a, opravy základu dane, uplatnenie odpočtu pri registrácii, vrátenie dane cestujúcim, prenos nadmerného odpočtu) sú vysvetlené v README a v docs/international.md, sekcia „From Slovakia“.",
+  "source": "tlacivo-dph",
+  "deadline": {
+    "rule": "day_of_month_after_period",
+    "day": 25,
+    "legal_reference": "Zákon č. 222/2004 Z. z., § 78 ods. 1 a 2 — daň je splatná a daňové priznanie sa podáva do 25 dní po skončení zdaňovacieho obdobia.",
+    "source": "zakon-dph"
+  },
+  "boxes": [
+    {
+      "box": "01",
+      "kind": "base",
+      "name": "Základ dane pri sadzbe 19 % podľa § 27 ods. 2",
+      "sequence": 10,
+      "legal_reference": "Poučenie k DPHv25, riadok 01 — základ dane za zdaniteľné obchody v tuzemsku v zníženej sadzbe podľa § 27 ods. 2.",
+      "source": "tlacivo-dph"
+    },
+    {
+      "box": "02",
+      "kind": "tax",
+      "name": "Daň pri sadzbe 19 % podľa § 27 ods. 2",
+      "sequence": 20,
+      "legal_reference": "Poučenie k DPHv25, riadok 02.",
+      "source": "tlacivo-dph"
+    },
+    {
+      "box": "01a",
+      "kind": "base",
+      "name": "Základ dane pri sadzbe 5 % podľa § 27 ods. 3",
+      "sequence": 30,
+      "legal_reference": "Poučenie k DPHv25, riadok 01a — základ dane za zdaniteľné obchody v tuzemsku v zníženej sadzbe podľa § 27 ods. 3.",
+      "source": "tlacivo-dph"
+    },
+    {
+      "box": "02a",
+      "kind": "tax",
+      "name": "Daň pri sadzbe 5 % podľa § 27 ods. 3",
+      "sequence": 40,
+      "legal_reference": "Poučenie k DPHv25, riadok 02a.",
+      "source": "tlacivo-dph"
+    },
+    {
+      "box": "03",
+      "kind": "base",
+      "name": "Základ dane pri základnej sadzbe 23 %",
+      "sequence": 50,
+      "legal_reference": "Poučenie k DPHv25, riadok 03.",
+      "source": "tlacivo-dph"
+    },
+    {
+      "box": "04",
+      "kind": "tax",
+      "name": "Daň pri základnej sadzbe 23 %",
+      "sequence": 60,
+      "legal_reference": "Poučenie k DPHv25, riadok 04.",
+      "source": "tlacivo-dph"
+    },
+    {
+      "box": "07",
+      "kind": "base",
+      "name": "Základ dane pri nadobudnutí tovaru z iného členského štátu, základná sadzba",
+      "sequence": 70,
+      "legal_reference": "Poučenie k DPHv25, riadok 07.",
+      "source": "tlacivo-dph"
+    },
+    {
+      "box": "08",
+      "kind": "tax",
+      "name": "Daň pri nadobudnutí tovaru z iného členského štátu, základná sadzba",
+      "sequence": 80,
+      "legal_reference": "Poučenie k DPHv25, riadok 08.",
+      "source": "tlacivo-dph"
+    },
+    {
+      "box": "09b",
+      "kind": "base",
+      "name": "Základ dane — tovary a služby, pri ktorých daň platí príjemca plnenia, základná sadzba",
+      "sequence": 90,
+      "legal_reference": "Poučenie k DPHv25, riadok 09b — zahŕňa tuzemský prenos daňovej povinnosti podľa § 69 ods. 12 aj samozdanenie služby dodanej zahraničnou osobou podľa § 69 ods. 2 a 3, spoločne v jednom riadku.",
+      "source": "tlacivo-dph"
+    },
+    {
+      "box": "10b",
+      "kind": "tax",
+      "name": "Daň — tovary a služby, pri ktorých daň platí príjemca plnenia, základná sadzba",
+      "sequence": 100,
+      "legal_reference": "Poučenie k DPHv25, riadok 10b.",
+      "source": "tlacivo-dph"
+    },
+    {
+      "box": "13",
+      "kind": "base",
+      "name": "Základ dane za všetky dodané tovary a služby oslobodené od dane podľa § 28 až § 43, § 46, § 47",
+      "sequence": 110,
+      "legal_reference": "Poučenie k DPHv25, riadok 13. Súčtová informačná položka, do ktorej píše každá oslobodená dodávka tohto balíka — vrátane tej, ktorá nemá vlastný pamätný riadok 14 alebo 15 (napríklad nájom podľa § 38).",
+      "source": "tlacivo-dph"
+    },
+    {
+      "box": "14",
+      "kind": "base",
+      "name": "Z toho dodanie tovaru do iného členského štátu podľa § 43 ods. 1 a 4",
+      "sequence": 120,
+      "legal_reference": "Poučenie k DPHv25, riadok 14 — pamätná podpoložka riadku 13, slúži aj súhrnnému výkazu.",
+      "source": "tlacivo-dph"
+    },
+    {
+      "box": "15",
+      "kind": "base",
+      "name": "Z toho vývoz tovaru podľa § 46, § 47, § 48 ods. 8",
+      "sequence": 130,
+      "legal_reference": "Poučenie k DPHv25, riadok 15 — pamätná podpoložka riadku 13.",
+      "source": "tlacivo-dph"
+    },
+    {
+      "box": "17",
+      "kind": "total",
+      "name": "Daň celkom",
+      "sequence": 140,
+      "plus": ["02", "02a", "04", "08", "10b"],
+      "legal_reference": "Poučenie k DPHv25, riadok 17 — súčet riadkov 02, 02a, 04, 06, 06a, 08, 10, 10a, 10b, 12, 12a, 12b, 12c, 12d, 12e a 16. Tento balík deklaruje len podmnožinu riadkov (trojstranný obchod, samozdanenie dovozu, osobitné schémy nie sú modelované), preto súčet obsahuje len riadky, ktoré tento balík skutočne používa.",
+      "source": "tlacivo-dph"
+    },
+    {
+      "box": "18",
+      "kind": "tax",
+      "name": "Odpočítateľná daň podľa § 49 až § 52 a § 54 až § 54d, znížená sadzba 19 %",
+      "sequence": 150,
+      "legal_reference": "Poučenie k DPHv25, riadok 18.",
+      "source": "tlacivo-dph"
+    },
+    {
+      "box": "18a",
+      "kind": "tax",
+      "name": "Odpočítateľná daň podľa § 49 až § 52 a § 54 až § 54d, znížená sadzba 5 %",
+      "sequence": 160,
+      "legal_reference": "Poučenie k DPHv25, riadok 18a.",
+      "source": "tlacivo-dph"
+    },
+    {
+      "box": "19",
+      "kind": "tax",
+      "name": "Odpočítateľná daň podľa § 49 až § 52 a § 54 až § 54d, základná sadzba 23 %",
+      "sequence": 170,
+      "legal_reference": "Poučenie k DPHv25, riadok 19 — všeobecný riadok odpočtu pri základnej sadzbe, do ktorého tento balík priznáva odpočet tuzemského nákupu, tuzemského prenosu daňovej povinnosti aj nadobudnutia z iného členského štátu.",
+      "source": "tlacivo-dph"
+    },
+    {
+      "box": "22",
+      "kind": "tax",
+      "name": "Daň zaplatená colnému orgánu pri dovoze tovaru, znížená sadzba 19 %",
+      "sequence": 180,
+      "legal_reference": "Poučenie k DPHv25, riadok 22.",
+      "source": "tlacivo-dph"
+    },
+    {
+      "box": "22a",
+      "kind": "tax",
+      "name": "Daň zaplatená colnému orgánu pri dovoze tovaru, znížená sadzba 5 %",
+      "sequence": 190,
+      "legal_reference": "Poučenie k DPHv25, riadok 22a.",
+      "source": "tlacivo-dph"
+    },
+    {
+      "box": "23",
+      "kind": "tax",
+      "name": "Daň zaplatená colnému orgánu pri dovoze tovaru, základná sadzba 23 %",
+      "sequence": 200,
+      "legal_reference": "Poučenie k DPHv25, riadok 23.",
+      "source": "tlacivo-dph"
+    },
+    {
+      "box": "32",
+      "kind": "total",
+      "name": "Vlastná daňová povinnosť",
+      "sequence": 210,
+      "plus": ["17"],
+      "minus": ["18", "18a", "19", "22", "22a", "23"],
+      "floor_zero": true,
+      "legal_reference": "Poučenie k DPHv25, riadok 32 — kladný výsledok (riadok 17 mínus riadky odpočtu). Vzorec tu obsahuje len riadky, ktoré tento balík deklaruje; oficiálny riadok 32 odpočítava aj riadky 24 až 31 (opravy základu dane, opravy odpočtu, odpočet pri registrácii, vrátenie dane cestujúcim), ktoré tento balík nemodeluje — pozri README.",
+      "source": "tlacivo-dph"
+    },
+    {
+      "box": "33",
+      "kind": "total",
+      "name": "Nadmerný odpočet",
+      "sequence": 220,
+      "plus": ["18", "18a", "19", "22", "22a", "23"],
+      "minus": ["17"],
+      "floor_zero": true,
+      "legal_reference": "Poučenie k DPHv25, riadok 33 — záporný výsledok, vykázaný ako kladné číslo na opačnej strane páru s riadkom 32. Rovnaké obmedzenie vzorca ako pri riadku 32.",
+      "source": "tlacivo-dph"
+    }
+  ]
+}

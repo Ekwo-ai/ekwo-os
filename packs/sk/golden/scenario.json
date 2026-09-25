@@ -1,0 +1,247 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "Dva mesiace kníh slovenskej obchodnej spoločnosti, mesačne priznávajúcej DPH",
+  "chart": "default",
+  "fiscal_year": { "name": "Účtovné obdobie 2026", "start": "2026-01-01", "end": "2026-12-31" },
+  "periods": [
+    { "code": "2026-01", "from": "2026-01-01", "to": "2026-01-31" },
+    { "code": "2026-02", "from": "2026-02-01", "to": "2026-02-28" }
+  ],
+  "statements": ["SK-UCT-SUVAHA", "SK-UCT-VZAS"],
+  "contacts": [
+    { "ref": "client-sk", "name": "Tatra Obchod s.r.o.", "type": "customer", "country": "SK", "vat_number": "SK2020000011" },
+    { "ref": "client-sk-stavby", "name": "Váh Stavby s.r.o.", "type": "customer", "country": "SK", "vat_number": "SK2020000029" },
+    { "ref": "client-cz", "name": "Morava Trade s.r.o.", "type": "customer", "country": "CZ", "vat_number": "CZ12345678" },
+    { "ref": "client-gb", "name": "Thames Import Ltd", "type": "customer", "country": "GB" },
+    { "ref": "supplier-sk", "name": "Nitra Kancelária s.r.o.", "type": "supplier", "country": "SK", "vat_number": "SK2020000037" },
+    { "ref": "supplier-sk-stavby", "name": "Hron Stavebná a.s.", "type": "supplier", "country": "SK", "vat_number": "SK2020000045" },
+    { "ref": "supplier-cz", "name": "Brno Komponenty s.r.o.", "type": "supplier", "country": "CZ", "vat_number": "CZ87654321" },
+    { "ref": "supplier-us", "name": "Cascade Cloud Inc.", "type": "supplier", "country": "US" },
+    { "ref": "supplier-cn", "name": "Yangtze Parts Co.", "type": "supplier", "country": "CN" },
+    { "ref": "supplier-poistovna", "name": "Dunaj Poisťovňa a.s.", "type": "supplier", "country": "SK", "vat_number": "SK2020000053" }
+  ],
+  "documents": [
+    {
+      "ref": "V1",
+      "type": "sale_invoice",
+      "contact": "client-sk",
+      "date": "2026-01-15",
+      "why": "Une vente domestique au taux normal de 23 % : la base va au riadok 03 et la taxe collectée au riadok 04, sur le compte de TVA unique 343.",
+      "lines": [
+        { "name": "Náhradné diely", "quantity": 10, "unit_price": 100, "tax": "SK-S-23", "account": "604" }
+      ]
+    },
+    {
+      "ref": "V2",
+      "type": "sale_invoice",
+      "contact": "client-sk",
+      "date": "2026-01-16",
+      "why": "Une vente domestique au taux réduit de 19 % (§ 27 ods. 2) : riadok 01/02.",
+      "lines": [
+        { "name": "Elektrina pre prevádzku klienta", "quantity": 1, "unit_price": 500, "tax": "SK-S-19", "account": "602" }
+      ]
+    },
+    {
+      "ref": "V3",
+      "type": "sale_invoice",
+      "contact": "client-sk",
+      "date": "2026-01-17",
+      "why": "Une vente domestique au second taux réduit de 5 % (§ 27 ods. 3, denrées alimentaires fraîches) : riadok 01a/02a.",
+      "lines": [
+        { "name": "Čerstvá zelenina", "quantity": 1, "unit_price": 300, "tax": "SK-S-5", "account": "604" }
+      ]
+    },
+    {
+      "ref": "V4",
+      "type": "sale_invoice",
+      "contact": "client-gb",
+      "date": "2026-01-20",
+      "why": "Un export de biens vers le Royaume-Uni, pays tiers depuis le Brexit : taux zéro à l'exportation, riadok 13/15.",
+      "lines": [
+        { "name": "Použité obrábacie stroje", "quantity": 1, "unit_price": 2000, "tax": "SK-S-EXPORT", "account": "601" }
+      ]
+    },
+    {
+      "ref": "V5",
+      "type": "sale_invoice",
+      "contact": "client-cz",
+      "date": "2026-01-22",
+      "why": "Une livraison intracommunautaire de biens vers un client tchèque identifié à la TVA : riadok 13/14, taux zéro avec droit à déduction.",
+      "lines": [
+        { "name": "Elektronické súčiastky", "quantity": 1, "unit_price": 1500, "tax": "SK-S-IC", "account": "601" }
+      ]
+    },
+    {
+      "ref": "V6",
+      "type": "sale_invoice",
+      "contact": "client-sk-stavby",
+      "date": "2026-01-26",
+      "why": "Une prestation de travaux de construction à une autre entreprise slovaque du bâtiment : autoliquidation domestique de l'article 69 ods. 12 j), sans TVA sur la facture, mention « prenesenie daňovej povinnosti ».",
+      "lines": [
+        { "name": "Hrubá stavba — murárske práce", "quantity": 1, "unit_price": 5000, "tax": "SK-S-RC-STAVBY", "account": "602" }
+      ]
+    },
+    {
+      "ref": "V7",
+      "type": "sale_invoice",
+      "contact": "client-sk",
+      "date": "2026-01-28",
+      "why": "Un loyer commercial exonéré sans droit à déduction (§ 38 ods. 3) : riadok 13.",
+      "lines": [
+        { "name": "Nájom nebytových priestorov za január", "quantity": 1, "unit_price": 1200, "tax": "SK-S-EXEMPT-NAJOM", "account": "602" }
+      ]
+    },
+    {
+      "ref": "CN1",
+      "type": "sale_credit_note",
+      "contact": "client-sk",
+      "date": "2026-02-02",
+      "why": "Un retour partiel de deux pièces de la vente V1, dans la période suivante : vérifie qu'un dobropis réduit le riadok 03/04 de la période où il est émis, au lieu de corriger V1 lui-même.",
+      "lines": [
+        { "name": "Vrátenie náhradných dielov", "quantity": 2, "unit_price": 100, "tax": "SK-S-23", "account": "604" }
+      ]
+    },
+    {
+      "ref": "A1",
+      "type": "purchase_invoice",
+      "contact": "supplier-sk",
+      "date": "2026-01-18",
+      "why": "Un achat domestique au taux normal de 23 % : la TVA déductible va au riadok 19.",
+      "lines": [
+        { "name": "Kancelárske potreby", "quantity": 1, "unit_price": 800, "tax": "SK-P-23", "account": "501" }
+      ]
+    },
+    {
+      "ref": "A2",
+      "type": "purchase_invoice",
+      "contact": "supplier-sk",
+      "date": "2026-01-19",
+      "why": "Un achat au taux réduit de 19 % (hébergement lors d'un déplacement professionnel) : riadok 18.",
+      "lines": [
+        { "name": "Ubytovanie na pracovnej ceste", "quantity": 1, "unit_price": 200, "tax": "SK-P-19", "account": "512" }
+      ]
+    },
+    {
+      "ref": "A3",
+      "type": "purchase_invoice",
+      "contact": "supplier-sk",
+      "date": "2026-01-21",
+      "why": "Un achat au second taux réduit de 5 % (denrées alimentaires pour le personnel) : riadok 18a.",
+      "lines": [
+        { "name": "Občerstvenie pre zamestnancov", "quantity": 1, "unit_price": 150, "tax": "SK-P-5", "account": "518" }
+      ]
+    },
+    {
+      "ref": "A4",
+      "type": "purchase_invoice",
+      "contact": "supplier-sk",
+      "date": "2026-01-23",
+      "why": "Un dîner d'affaires avec un client : la TVA n'est pas du tout déductible (§ 49 ods. 7 písm. a), pohostenie a zábava) et reste sur le compte de charge.",
+      "lines": [
+        { "name": "Obchodná večera s klientom", "quantity": 1, "unit_price": 300, "tax": "SK-P-POHOSTENIE", "account": "513" }
+      ]
+    },
+    {
+      "ref": "A5",
+      "type": "purchase_invoice",
+      "contact": "supplier-cz",
+      "date": "2026-01-24",
+      "why": "Une acquisition intracommunautaire de biens auprès d'un fournisseur tchèque : autoliquidation aux riadky 07/08, déduite dans la même déclaration au riadok 19.",
+      "lines": [
+        { "name": "Dovezené náhradné diely", "quantity": 1, "unit_price": 1000, "tax": "SK-P-IC-23", "account": "501" }
+      ]
+    },
+    {
+      "ref": "A6",
+      "type": "purchase_invoice",
+      "contact": "supplier-sk-stavby",
+      "date": "2026-01-27",
+      "why": "Une prestation de travaux de construction reçue d'un sous-traitant domestique : autoliquidation de l'article 69 ods. 12 j), riadky 09b/10b, déduite au riadok 19.",
+      "lines": [
+        { "name": "Rekonštrukcia prevádzkových priestorov", "quantity": 1, "unit_price": 4000, "tax": "SK-P-RC-STAVBY-23", "account": "511" }
+      ]
+    },
+    {
+      "ref": "A7",
+      "type": "purchase_invoice",
+      "contact": "supplier-cz",
+      "date": "2026-01-29",
+      "why": "Une prestation de conseil reçue d'un prestataire tchèque, règle générale B2B de l'article 15 ods. 1 : mêmes riadky 09b/10b/19 que l'autoliquidation domestique.",
+      "lines": [
+        { "name": "Právne poradenstvo", "quantity": 1, "unit_price": 600, "tax": "SK-P-SLUZBA-EU-23", "account": "518" }
+      ]
+    },
+    {
+      "ref": "A8",
+      "type": "purchase_invoice",
+      "contact": "supplier-us",
+      "date": "2026-01-30",
+      "why": "Un abonnement logiciel infonuagique reçu d'un prestataire américain, pays tiers : le formulaire slovaque ne distingue pas le prestataire de l'Union de celui d'un pays tiers, mêmes riadky 09b/10b/19.",
+      "lines": [
+        { "name": "Predplatné cloudového softvéru", "quantity": 1, "unit_price": 400, "tax": "SK-P-SLUZBA-MIMO-EU-23", "account": "518" }
+      ]
+    },
+    {
+      "ref": "A9",
+      "type": "purchase_invoice",
+      "contact": "supplier-cn",
+      "date": "2026-02-03",
+      "why": "Un import de pièces détachées depuis la Chine, régime ordinaire (pas de statut d'opérateur économique agréé) : la TVA est payée à la douane puis déduite au riadok 23.",
+      "lines": [
+        { "name": "Dovezené strojové súčiastky", "quantity": 1, "unit_price": 1200, "tax": "SK-P-DOVOZ-23", "account": "501" }
+      ]
+    },
+    {
+      "ref": "A10",
+      "type": "purchase_invoice",
+      "contact": "supplier-poistovna",
+      "date": "2026-02-04",
+      "why": "Une prime d'assurance, opération exonérée chez le fournisseur (§ 37) : aucune TVA facturée, rien à déduire.",
+      "lines": [
+        { "name": "Poistenie majetku spoločnosti", "quantity": 1, "unit_price": 250, "tax": "SK-P-OSLOBODENE", "account": "548" }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "E1",
+      "direction": "inbound",
+      "date": "2026-02-05",
+      "amount": 1230,
+      "contact": "client-sk",
+      "journal": "BANK",
+      "match": "V1",
+      "why": "Un encaissement qui solde exactement la facture V1 (1000 + 230 de TVA)."
+    },
+    {
+      "ref": "E2",
+      "direction": "inbound",
+      "date": "2026-02-10",
+      "amount": 2000,
+      "contact": "client-gb",
+      "journal": "BANK",
+      "match": "V4",
+      "why": "Un encaissement de la vente à l'exportation V4."
+    },
+    {
+      "ref": "Z1",
+      "direction": "outbound",
+      "date": "2026-02-06",
+      "amount": 984,
+      "contact": "supplier-sk",
+      "journal": "BANK",
+      "match": "A1",
+      "why": "Un paiement qui solde exactement la facture A1 (800 + 184 de TVA)."
+    },
+    {
+      "ref": "Z2",
+      "direction": "outbound",
+      "date": "2026-02-12",
+      "amount": 1500,
+      "contact": "supplier-sk-stavby",
+      "journal": "BANK",
+      "match": null,
+      "why": "Un acompte versé avant réception d'une prochaine facture de travaux : un paiement non lettré, qui laisse un poste ouvert dans le grand livre."
+    }
+  ]
+}

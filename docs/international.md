@@ -4548,3 +4548,58 @@ Added to `00_currencies.sql` at two decimals. `RO` already carried a row of
 the date the common system of VAT started applying zero rate and reverse
 charge in Romania's own domestic law, which is exactly the day this table's
 own `From making a tax follow the territory` section above expects.
+
+## From Slovakia
+
+`packs/sk/`, `community`, seed 69, inside the common system of VAT since
+1 May 2004. Its VAT rates, its declaration and its balance sheet are read
+from the consolidated zákon č. 222/2004 Z. z. o dani z pridanej hodnote and
+the opatrenia of the Ministry of Finance on accounting; a few things the
+format could not say, kept here rather than patched into the pack.
+
+**A control statement the format has no shape for.** Alongside the ordinary
+periodic return, § 78a obliges every registered person to file a kontrolný
+výkaz for the same period, at the same twenty-five-day deadline, in XML —
+but its content is not boxes summed from the ledger: it is one row per
+invoice, carrying the counterparty's VAT number, the invoice number, the
+date and the base and tax by rate. `tax_report.json` describes a form made
+of boxes a `total` sums or a tax posts to; it has no way to describe a
+report whose unit is the invoice itself, so `packs/sk/` declares only the
+periodic return and leaves the kontrolný výkaz undeclared. One consequence
+worth naming: a domestic supply reverse-charged under § 69 ods. 12 (`SK-S-RC-STAVBY`
+in this pack) is exactly the kind of line the kontrolný výkaz exists to
+carry, and exactly the kind this pack's declared return has no box for on
+the seller's side — the gap is not an oversight of one tax, it is the
+missing report itself.
+
+**A reverse charge the seller turns on by choosing a sentence.** Under § 69
+ods. 12 písm. j) and ods. 16, a construction supply shifts the liability to
+the buyer only if the invoice the seller issues actually carries the words
+"prenesenie daňovej povinnosti" — the statute conditions who owes the tax
+on which wording the document carries, not only on what was supplied. Every
+other closed-vocabulary mention in this format (`reverse_charge`,
+`export`, `exempt`...) is the mirror of a treatment the tax already fixed;
+here the treatment and the mention are the same decision, made once, by the
+seller, and nothing double-checks that a construction supply invoiced
+without the sentence was not meant to be one. `packs/sk/` declares the
+treatment as if the sentence were always printed, which is the case its
+`documents.mentions` entry guarantees, and says so here rather than
+modelling a condition the core has no way to read back off a rendered
+invoice.
+
+**A self-assessed import gated on a customs status the core does not
+hold.** § 84a lets a registered person calculate and declare import VAT
+directly on the periodic return, deducting it in the same filing, instead
+of paying it to the customs office first — the mechanism Article 211 of
+Directive 2006/112/EC opens to Member States, and the same shape France and
+Poland already give a tax in this repository. In Slovakia it is not a
+choice open to every importer: it is reserved, since 1 July 2025 (general
+case) and 1 January 2026 (centralised customs clearance), to a registered
+person who also holds the customs authorities' own authorised-economic-operator
+status. Nothing in `applies_when` or `conditions` reasons about a status
+granted by a different administration under a different procedure — the
+closest existing word, `conditions: seller_threshold`, means a running total
+the seller crossed, not a certificate a customs office issued. `packs/sk/`
+models only the ordinary route, VAT paid to customs and deducted once paid
+(`SK-P-DOVOZ-23`), and leaves § 84a's own boxes (11c–12e, 23a–23c)
+undeclared.

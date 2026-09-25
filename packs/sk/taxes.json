@@ -1,0 +1,412 @@
+[
+  {
+    "code": "SK-S-23",
+    "name": "DPH 23 % — základná sadzba, tuzemsko",
+    "description": "Základná sadzba na dodanie tovaru a služby v tuzemsku. Riadok 03 (základ), riadok 04 (daň).",
+    "rate": 23,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2025-01-01",
+    "legal_reference": "Zákon č. 222/2004 Z. z., § 27 ods. 1 — základná sadzba dane na tovary a služby je 23 % zo základu dane, s účinnosťou od 1.1.2025 (zákon č. 278/2024 Z. z.).",
+    "source": "zakon-dph",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "03" },
+        { "type": "tax", "account": "343", "box": "04" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "03", "box_factor": -100 },
+        { "type": "tax", "account": "343", "box": "04", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 10
+  },
+  {
+    "code": "SK-S-19",
+    "name": "DPH 19 % — znížená sadzba, tuzemsko",
+    "description": "Znížená sadzba podľa § 27 ods. 2 a prílohy č. 7 bod 1 / č. 7a bod 1 — okrem iného základné potraviny nezahrnuté do 5 % pásma, elektrina, reštauračné a stravovacie služby (bez alkoholu nad 0,5 %). Riadok 01 (základ), riadok 02 (daň).",
+    "rate": 19,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2025-01-01",
+    "legal_reference": "Zákon č. 222/2004 Z. z., § 27 ods. 2 — znížená sadzba dane 19 % sa uplatňuje na tovary uvedené v prílohe č. 7 bode 1 a na služby uvedené v prílohe č. 7a bode 1, s účinnosťou od 1.1.2025.",
+    "source": "zakon-dph",
+    "vat_category": "S",
+    "conditions": ["supply_nature"],
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "01" },
+        { "type": "tax", "account": "343", "box": "02" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "01", "box_factor": -100 },
+        { "type": "tax", "account": "343", "box": "02", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 20
+  },
+  {
+    "code": "SK-S-5",
+    "name": "DPH 5 % — druhá znížená sadzba, tuzemsko",
+    "description": "Znížená sadzba podľa § 27 ods. 3 a prílohy č. 7 body 2 a 3 / č. 7a bod 2 — okrem iného čerstvé potraviny, lieky, knihy, ubytovacie služby. Riadok 01a (základ), riadok 02a (daň).",
+    "rate": 5,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2025-01-01",
+    "legal_reference": "Zákon č. 222/2004 Z. z., § 27 ods. 3 — znížená sadzba dane 5 % sa uplatňuje na tovary uvedené v prílohe č. 7 bodoch 2 a 3 a na služby uvedené v prílohe č. 7a bode 2, s účinnosťou od 1.1.2025.",
+    "source": "zakon-dph",
+    "vat_category": "S",
+    "conditions": ["supply_nature"],
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "01a" },
+        { "type": "tax", "account": "343", "box": "02a" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "01a", "box_factor": -100 },
+        { "type": "tax", "account": "343", "box": "02a", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 30
+  },
+  {
+    "code": "SK-S-IC",
+    "name": "Dodanie tovaru do iného členského štátu — oslobodené",
+    "description": "Intrakomunitárna dodávka tovaru odberateľovi identifikovanému pre DPH v inom členskom štáte. Riadok 13 (súčet oslobodených dodaní) a riadok 14 (z toho dodanie podľa § 43).",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "intracom_goods",
+    "valid_from": "2025-01-01",
+    "legal_reference": "Zákon č. 222/2004 Z. z., § 43 ods. 1 — oslobodené od dane je dodanie tovaru odoslaného alebo prepraveného z tuzemska do iného členského štátu nadobúdateľovi, ktorý je zdaniteľnou osobou konajúcou v tomto postavení v inom členskom štáte a ktorý dodávateľovi oznámil svoje identifikačné číslo pre daň; § 43 ods. 10 (od 1.1.2025) odopiera oslobodenie, ak dodávateľ sám nie je platiteľom dane.",
+    "source": "zakon-dph",
+    "vat_category": "K",
+    "exemption_code": "VATEX-EU-IC",
+    "conditions": ["buyer_status", "transport_evidence"],
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": ["13", "14"] }
+      ],
+      "credit_note": [
+        { "type": "base", "box": ["13", "14"], "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 40
+  },
+  {
+    "code": "SK-S-EXPORT",
+    "name": "Vývoz tovaru do tretieho štátu — oslobodený",
+    "description": "Riadok 13 (súčet oslobodených dodaní) a riadok 15 (z toho vývoz podľa § 46, § 47, § 48 ods. 8).",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2025-01-01",
+    "legal_reference": "Zákon č. 222/2004 Z. z., § 47 ods. 1 — oslobodené od dane je dodanie tovaru, ktorý je odoslaný alebo prepravený predávajúcim alebo na jeho účet do miesta určenia na území tretieho štátu; § 47 ods. 3 vyžaduje colný doklad potvrdzujúci výstup tovaru z územia Únie.",
+    "source": "zakon-dph",
+    "vat_category": "G",
+    "exemption_code": "VATEX-EU-G",
+    "conditions": ["transport_evidence"],
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": ["13", "15"] }
+      ],
+      "credit_note": [
+        { "type": "base", "box": ["13", "15"], "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 50
+  },
+  {
+    "code": "SK-S-EXEMPT-NAJOM",
+    "name": "Nájom nebytových priestorov — oslobodený bez nároku na odpočet",
+    "description": "Príklad oslobodenej dodávky bez nároku na odpočet: nájom nebytových (komerčných) priestorov. Riadok 13 (súčet oslobodených dodaní podľa § 28 až § 43, § 46, § 47).",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2025-01-01",
+    "legal_reference": "Zákon č. 222/2004 Z. z., § 38 ods. 3 — oslobodený od dane je nájom nehnuteľnosti alebo jej časti, okrem nájmu v ubytovacích zariadeniach, nájmu priestorov a miest na parkovanie vozidiel, nájmu bezpečnostných schránok a nájmu trvalo inštalovaných zariadení a strojov; § 38 ods. 5 pripúšťa voľbu zdanenia, ktorá tu nie je uplatnená.",
+    "source": "zakon-dph",
+    "vat_category": "E",
+    "exemption_code": "VATEX-EU-135",
+    "conditions": ["supply_nature"],
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "13" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "13", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 60
+  },
+  {
+    "code": "SK-S-RC-STAVBY",
+    "name": "Stavebné práce — prenesenie daňovej povinnosti na príjemcu",
+    "description": "Tuzemské dodanie stavebných prác inému platiteľovi identifikovanému pre DPH: dodávateľ neúčtuje daň a faktúra nesie slovnú informáciu „prenesenie daňovej povinnosti“. Táto strana dodávateľa nemá vlastný riadok v daňovom priznaní — údaje o faktúre sa uvádzajú v kontrolnom výkaze (§ 78a), ktorý tento balík nemodeluje ako samostatnú tlačivovú štruktúru; pozri README.",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "domestic_reverse_charge",
+    "valid_from": "2025-01-01",
+    "legal_reference": "Zákon č. 222/2004 Z. z., § 69 ods. 12 písm. j) — pri dodaní stavebných prác vrátane dodania stavby alebo jej časti, ktoré patria do sekcie F štatistickej klasifikácie produktov, je povinný platiť daň platiteľ, ktorému je táto stavebná práca dodaná; § 69 ods. 16 podmieňuje prenos daňovej povinnosti tým, že faktúra nesie slovnú informáciu „prenesenie daňovej povinnosti“ a obe strany majú pridelené identifikačné číslo pre daň podľa § 4, § 4b alebo § 5.",
+    "source": "zakon-dph",
+    "vat_category": "AE",
+    "exemption_code": "VATEX-EU-AE",
+    "conditions": ["buyer_status", "supply_nature"],
+    "postings": {
+      "invoice": [
+        { "type": "base" }
+      ],
+      "credit_note": [
+        { "type": "base", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 70
+  },
+  {
+    "code": "SK-P-23",
+    "name": "DPH 23 % — odpočítateľná daň, tuzemský nákup",
+    "description": "Nákup tovaru alebo služby od tuzemského platiteľa, základná sadzba, plný nárok na odpočet. Riadok 19 (odpočítateľná daň pri základnej sadzbe).",
+    "rate": 23,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2025-01-01",
+    "legal_reference": "Zákon č. 222/2004 Z. z., § 49 ods. 1 a ods. 2 písm. a) — platiteľ môže odpočítať daň, ktorú voči nemu uplatnil iný platiteľ za tovar alebo službu dodanú v tuzemsku, ak ju použije na svoje zdaniteľné dodania.",
+    "source": "zakon-dph",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "tax", "account": "343", "box": "19" }
+      ],
+      "credit_note": [
+        { "type": "tax", "account": "343", "box": "19", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 100
+  },
+  {
+    "code": "SK-P-19",
+    "name": "DPH 19 % — odpočítateľná daň, tuzemský nákup",
+    "description": "Riadok 18 (odpočítateľná daň pri zníženej sadzbe § 27 ods. 2).",
+    "rate": 19,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2025-01-01",
+    "legal_reference": "Zákon č. 222/2004 Z. z., § 49 ods. 1 a ods. 2 písm. a), vo výške sadzby podľa § 27 ods. 2.",
+    "source": "zakon-dph",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "tax", "account": "343", "box": "18" }
+      ],
+      "credit_note": [
+        { "type": "tax", "account": "343", "box": "18", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 110
+  },
+  {
+    "code": "SK-P-5",
+    "name": "DPH 5 % — odpočítateľná daň, tuzemský nákup",
+    "description": "Riadok 18a (odpočítateľná daň pri zníženej sadzbe § 27 ods. 3).",
+    "rate": 5,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2025-01-01",
+    "legal_reference": "Zákon č. 222/2004 Z. z., § 49 ods. 1 a ods. 2 písm. a), vo výške sadzby podľa § 27 ods. 3.",
+    "source": "zakon-dph",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "tax", "account": "343", "box": "18a" }
+      ],
+      "credit_note": [
+        { "type": "tax", "account": "343", "box": "18a", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 120
+  },
+  {
+    "code": "SK-P-POHOSTENIE",
+    "name": "Nedeliteľná daň — pohostenie a zábava",
+    "description": "Nákup tovaru alebo služby na účely pohostenia a zábavy (napríklad obchodná večera s klientom): daň nie je odpočítateľná vôbec, zostáva súčasťou obstarávacej ceny a nevstupuje do žiadneho riadku priznania.",
+    "rate": 23,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2025-01-01",
+    "recoverable": false,
+    "legal_reference": "Zákon č. 222/2004 Z. z., § 49 ods. 7 písm. a) — platiteľ nemôže odpočítať daň pri kúpe tovarov a služieb na účely pohostenia a zábavy. Ide o úplné vylúčenie, nie o pomerné krátenie ako pri osobných automobiloch v iných členských štátoch — takéto osobitné krátenie sa v zákone nenašlo, pozri README.",
+    "source": "zakon-dph",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "tax_on_base" }
+      ],
+      "credit_note": [
+        { "type": "tax_on_base" }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 130
+  },
+  {
+    "code": "SK-P-IC-23",
+    "name": "Nadobudnutie tovaru z iného členského štátu 23 %",
+    "description": "Riadok 07 (základ), riadok 08 (daň z nadobudnutia), riadok 19 (odpočítanie tej istej dane v tej istej lehote).",
+    "rate": 23,
+    "scope": "purchase",
+    "treatment": "intracom_acquisition_goods",
+    "valid_from": "2025-01-01",
+    "legal_reference": "Zákon č. 222/2004 Z. z., § 11 ods. 1 a 2 — nadobudnutie tovaru v tuzemsku z iného členského štátu; § 69 ods. 6 — daň platí osoba, ktorá tovar nadobudne podľa § 11 a § 11a; § 49 ods. 2 písm. c) — táto daň je súčasne odpočítateľná.",
+    "source": "zakon-dph",
+    "vat_category": "K",
+    "exemption_code": "VATEX-EU-IC",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "07" },
+        { "type": "tax", "account": "343", "box": "19" },
+        { "type": "tax", "factor": -100, "account": "343", "box": "08" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "07", "box_factor": -100 },
+        { "type": "tax", "account": "343", "box": "19", "box_factor": -100 },
+        { "type": "tax", "factor": -100, "account": "343", "box": "08", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 140
+  },
+  {
+    "code": "SK-P-RC-STAVBY-23",
+    "name": "Prijaté stavebné práce — prenesenie daňovej povinnosti 23 %",
+    "description": "Riadok 09b (základ), riadok 10b (daň, ktorú platí príjemca), riadok 19 (odpočítanie tej istej dane).",
+    "rate": 23,
+    "scope": "purchase",
+    "treatment": "domestic_reverse_charge",
+    "valid_from": "2025-01-01",
+    "legal_reference": "Zákon č. 222/2004 Z. z., § 69 ods. 12 písm. j) — príjemca stavebných prác zaradených do sekcie F je povinný platiť daň; § 49 ods. 2 písm. b) — táto daň je súčasne odpočítateľná, ak sú splnené záznamy podľa § 70.",
+    "source": "zakon-dph",
+    "vat_category": "AE",
+    "exemption_code": "VATEX-EU-AE",
+    "conditions": ["buyer_status", "supply_nature"],
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "09b" },
+        { "type": "tax", "account": "343", "box": "19" },
+        { "type": "tax", "factor": -100, "account": "343", "box": "10b" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "09b", "box_factor": -100 },
+        { "type": "tax", "account": "343", "box": "19", "box_factor": -100 },
+        { "type": "tax", "factor": -100, "account": "343", "box": "10b", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 150
+  },
+  {
+    "code": "SK-P-SLUZBA-EU-23",
+    "name": "Služba od osoby z iného členského štátu 23 %",
+    "description": "Všeobecné pravidlo B2B (§ 15 ods. 1): miesto dodania je v tuzemsku, príjemca si daň sám vyrubí a odpočíta. Riadok 09b (základ), riadok 10b (daň), riadok 19 (odpočítanie).",
+    "rate": 23,
+    "scope": "purchase",
+    "treatment": "intracom_acquisition_services",
+    "valid_from": "2025-01-01",
+    "legal_reference": "Zákon č. 222/2004 Z. z., § 69 ods. 3 — zdaniteľná osoba je povinná platiť daň pri službe dodanej zahraničnou osobou z iného členského štátu, ak je miesto dodania služby podľa § 15 ods. 1 v tuzemsku; § 49 ods. 2 písm. b) — daň je súčasne odpočítateľná.",
+    "source": "zakon-dph",
+    "vat_category": "K",
+    "exemption_code": "VATEX-EU-IC",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "09b" },
+        { "type": "tax", "account": "343", "box": "19" },
+        { "type": "tax", "factor": -100, "account": "343", "box": "10b" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "09b", "box_factor": -100 },
+        { "type": "tax", "account": "343", "box": "19", "box_factor": -100 },
+        { "type": "tax", "factor": -100, "account": "343", "box": "10b", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 160
+  },
+  {
+    "code": "SK-P-SLUZBA-MIMO-EU-23",
+    "name": "Služba od osoby z tretieho štátu 23 %",
+    "description": "Rovnaké všeobecné pravidlo B2B, dodávateľ mimo Únie: zákon nerozlišuje dodávateľa z iného členského štátu od dodávateľa z tretieho štátu, obe idú do rovnakých riadkov 09b/10b/19.",
+    "rate": 23,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2025-01-01",
+    "legal_reference": "Zákon č. 222/2004 Z. z., § 69 ods. 3 — zdaniteľná osoba je povinná platiť daň aj pri službe dodanej zahraničnou osobou z tretieho štátu, ak je miesto dodania podľa § 15 ods. 1 v tuzemsku. Faktúra dodávateľa z tretieho štátu nepodlieha smernici 2006/112/ES, preto bez kategórie.",
+    "source": "zakon-dph",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "09b" },
+        { "type": "tax", "account": "343", "box": "19" },
+        { "type": "tax", "factor": -100, "account": "343", "box": "10b" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "09b", "box_factor": -100 },
+        { "type": "tax", "account": "343", "box": "19", "box_factor": -100 },
+        { "type": "tax", "factor": -100, "account": "343", "box": "10b", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 170
+  },
+  {
+    "code": "SK-P-DOVOZ-23",
+    "name": "Dovoz tovaru z tretieho štátu 23 % — daň zaplatená colnému orgánu",
+    "description": "Bežný prípad dovozu (platiteľ nemá štatút schváleného hospodárskeho subjektu, samozdanenie podľa § 84a sa neuplatňuje): daň vyrubí a vyberie colný úrad, platiteľ si ju odpočíta po zaplatení. Riadok 23 (odpočítateľná daň zaplatená pri dovoze, základná sadzba).",
+    "rate": 23,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2025-01-01",
+    "legal_reference": "Zákon č. 222/2004 Z. z., § 21 — daňová povinnosť pri dovoze tovaru vzniká prepustením tovaru do voľného obehu; § 69 ods. 8 — daň platí osoba, ktorá je dlžníkom podľa colných predpisov; § 49 ods. 2 písm. d) — daň zaplatená colnému orgánu v tuzemsku pri dovoze je odpočítateľná. Samozdanenie podľa § 84a (vyžadujúce štatút schváleného hospodárskeho subjektu, riadky 11c–12e) nie je modelované — pozri README.",
+    "source": "zakon-dph",
+    "postings": {
+      "invoice": [
+        { "type": "base" },
+        { "type": "tax", "account": "343", "box": "23" }
+      ],
+      "credit_note": [
+        { "type": "base", "box_factor": -100 },
+        { "type": "tax", "account": "343", "box": "23", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 180
+  },
+  {
+    "code": "SK-P-OSLOBODENE",
+    "name": "Nákup oslobodenej dodávky",
+    "description": "Nákup od dodávateľa, ktorého dodávka je oslobodená bez nároku na odpočet (napríklad poistenie): žiadna daň na faktúre, nič na odpočítanie, žiadny riadok priznania.",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "exempt",
+    "valid_from": "2025-01-01",
+    "legal_reference": "Zákon č. 222/2004 Z. z., § 49 ods. 1 — bez dane uplatnenej dodávateľom (tu oslobodenej podľa § 37, poisťovacia činnosť) nie je čo odpočítať ani kam priznať.",
+    "source": "zakon-dph",
+    "postings": {
+      "invoice": [
+        { "type": "base" }
+      ],
+      "credit_note": [
+        { "type": "base", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 190
+  }
+]

@@ -1,0 +1,266 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "SK",
+  "name": "Slovensko",
+  "version": "0.1.0",
+  "schema_min": "20260921145425",
+  "seed_sequence": 69,
+  "released_at": "2026-09-25",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "zakon-dph",
+        "title": "Zákon č. 222/2004 Z. z. o dani z pridanej hodnoty, úplné znenie k 1.1.2025 (v znení zákona č. 278/2024 Z. z. a zákona č. 102/2024 Z. z.)",
+        "publisher": "Finančné riaditeľstvo SR",
+        "url": "https://www.financnasprava.sk/_img/pfsedit/Dokumenty_PFS/Zverejnovanie_dok/Sprievodca/Sprievodca_danami/2025/2025.01.28_zakon_DPH.pdf",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "novela-278-2024",
+        "title": "Zákon č. 278/2024 Z. z., ktorým sa mení a dopĺňa zákon č. 222/2004 Z. z. o dani z pridanej hodnoty — nové sadzby dane 23 %, 19 % a 5 % od 1.1.2025 (konsolidačný balíček)",
+        "publisher": "Kancelária Národnej rady Slovenskej republiky — Elektronická zbierka zákonov (Slov-Lex)",
+        "url": "https://www.slov-lex.sk/ezbierky/pravne-predpisy/SK/ZZ/2024/278/",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "novela-102-2024",
+        "title": "Zákon č. 102/2024 Z. z., ktorým sa mení a dopĺňa zákon č. 222/2004 Z. z. o dani z pridanej hodnoty — nový spôsob registrácie, prahy obratu a § 84a (samozdanenie pri dovoze tovaru) od 1.1.2025",
+        "publisher": "Kancelária Národnej rady Slovenskej republiky — Elektronická zbierka zákonov (Slov-Lex)",
+        "url": "https://www.slov-lex.sk/ezbierky/pravne-predpisy/SK/ZZ/2024/102/",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "tlacivo-dph",
+        "title": "Poučenie na vyplnenie daňového priznania k dani z pridanej hodnoty (tlačivo MF/007833/2025-731, „DPHv25“), platné od 1.7.2025",
+        "publisher": "Finančné riaditeľstvo SR",
+        "url": "https://www.podnikajte.sk/assets/prilohy-v-clankoch/2025-05-29-vzor-danove-priznanie/2025-05-29-danove-priznanie-dph-poucenie.pdf",
+        "consulted_on": "2026-09-25",
+        "kind": "form"
+      },
+      {
+        "key": "efaktura-faq",
+        "title": "9/DPH/2025/IM — Najčastejšie otázky a odpovede k eFaktúre",
+        "publisher": "Finančné riaditeľstvo SR",
+        "url": "https://www.financnasprava.sk/_img/pfsedit/Dokumenty_PFS/Podnikatelia/Dan_z_pridanej_hodnoty/efaktura/2026/2026.09.11_FAQ_eFaktura.pdf",
+        "consulted_on": "2026-09-25",
+        "kind": "guidance"
+      },
+      {
+        "key": "opatrenie-uctova-osnova",
+        "title": "Opatrenie Ministerstva financií Slovenskej republiky zo 16. decembra 2002 č. 23054/2002-92, ktorým sa ustanovujú podrobnosti o postupoch účtovania a rámcovej účtovej osnove pre podnikateľov účtujúcich v sústave podvojného účtovníctva, úplné znenie",
+        "publisher": "Ministerstvo financií Slovenskej republiky",
+        "url": "https://www.mfsr.sk/files/sk/dane-cla-uctovnictvo/uctovnictvo-audit/uctovnictvo/legislativa-sr/opatrenia-oblasti-uctovnictva/uctovnictvo-podnikatelov/podvojne-uctovnictvo/postupy-uctovania/Uplne_znenie_23054_2002_92_PU1.pdf",
+        "consulted_on": "2026-09-25",
+        "kind": "regulation"
+      },
+      {
+        "key": "zakon-uctovnictvo",
+        "title": "Zákon č. 431/2002 Z. z. o účtovníctve, v znení neskorších predpisov (naposledy zákon č. 105/2024 Z. z.)",
+        "publisher": "Kancelária Národnej rady Slovenskej republiky — Elektronická zbierka zákonov (Slov-Lex)",
+        "url": "https://www.slov-lex.sk/ezbierky/pravne-predpisy/SK/ZZ/2002/431/",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "tlacivo-suvaha",
+        "title": "Súvaha Úč POD 1-01 (súčasť tlačiva UZPODv14, opatrenie MF SR č. MF/18009/2014-74)",
+        "publisher": "Finančné riaditeľstvo SR",
+        "url": "https://pfseform.financnasprava.sk/Formulare/VzoryTlacivEdit/UVPOD104-11-print-edit-save.pdf",
+        "consulted_on": "2026-09-25",
+        "kind": "form"
+      },
+      {
+        "key": "tlacivo-vzas",
+        "title": "Výkaz ziskov a strát Úč POD 2-01 (súčasť tlačiva UZPODv14 — Účtovná závierka podnikateľov v podvojnom účtovníctve, opatrenie MF SR č. MF/18009/2014-74, platné pre účtovné obdobia od 31.12.2014)",
+        "publisher": "Finančné riaditeľstvo SR",
+        "url": "https://pfseform.financnasprava.sk/Formulare/VzoryTlaciv/UZPODv14.pdf",
+        "consulted_on": "2026-09-25",
+        "kind": "form"
+      },
+      {
+        "key": "obchodny-zakonnik",
+        "title": "Zákon č. 513/1991 Zb. Obchodný zákonník, § 340a, § 369 a § 369c, v znení zákona č. 9/2013 Z. z. (transpozícia smernice 2011/7/EÚ)",
+        "publisher": "Kancelária Národnej rady Slovenskej republiky — Elektronická zbierka zákonov (Slov-Lex)",
+        "url": "https://www.slov-lex.sk/ezbierky/pravne-predpisy/SK/ZZ/1991/513/",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "nariadenie-21-2013",
+        "title": "Nariadenie vlády Slovenskej republiky č. 21/2013 Z. z. z 23. januára 2013, ktorým sa vykonávajú niektoré ustanovenia Obchodného zákonníka — § 1 (sadzba úrokov z omeškania) a § 2 (paušálna náhrada 40 eur)",
+        "publisher": "Vláda Slovenskej republiky — Elektronická zbierka zákonov (Slov-Lex)",
+        "url": "https://www.slov-lex.sk/ezbierky/pravne-predpisy/SK/ZZ/2013/21/",
+        "consulted_on": "2026-09-25",
+        "kind": "regulation"
+      },
+      {
+        "key": "portal-financnasprava",
+        "title": "Elektronické služby Finančnej správy SR — podávanie daňového priznania k DPH a kontrolného výkazu",
+        "publisher": "Finančné riaditeľstvo SR",
+        "url": "https://www.financnasprava.sk/sk/elektronicke-sluzby",
+        "consulted_on": "2026-09-25",
+        "kind": "portal"
+      },
+      {
+        "key": "en-16931",
+        "title": "EN 16931-1 — semantic data model of the electronic invoice, conformant with Directive 2014/55/EU",
+        "publisher": "European Commission",
+        "url": "https://ec.europa.eu/digital-building-blocks/sites/spaces/DIGITAL/pages/467108950/EN+16931+compliance",
+        "consulted_on": "2026-09-25",
+        "kind": "standard"
+      },
+      {
+        "key": "uncl5305",
+        "title": "UNCL5305 — code list of VAT categories (BT-118 and BT-151), subset published for EN 16931",
+        "publisher": "OpenPEPPOL — list published by the European Commission",
+        "url": "https://docs.peppol.eu/poacc/billing/3.0/codelist/UNCL5305/",
+        "consulted_on": "2026-09-25",
+        "kind": "standard"
+      },
+      {
+        "key": "vatex",
+        "title": "VATEX — code list of VAT exemption reasons (BT-121)",
+        "publisher": "OpenPEPPOL — list published by the European Commission",
+        "url": "https://docs.peppol.eu/poacc/billing/3.0/codelist/vatex/",
+        "consulted_on": "2026-09-25",
+        "kind": "standard"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "EUR",
+    "language": "sk",
+    "rounding_method": "half_up",
+    "closing_style": "result_accounts",
+    "roles": {
+      "receivable": "311",
+      "payable": "321",
+      "suspense": "379",
+      "rounding": "548",
+      "retained_earnings": "428",
+      "retained_earnings_loss": "429",
+      "current_year_result_profit": "431",
+      "current_year_result_loss": "431",
+      "sales": "604",
+      "purchase": "501",
+      "bank": "221",
+      "cash": "211",
+      "fx_gain": "663",
+      "fx_loss": "563",
+      "tax_payable": "343"
+    },
+    "journal_roles": {
+      "sales": "FV",
+      "purchase": "FP",
+      "miscellaneous": "IUD",
+      "opening": "PZS"
+    },
+    "fiscal_year_default": "calendar"
+  },
+  "languages": [],
+  "journals": [
+    { "code": "FV", "type": "sales", "name": "Faktúry vydané", "sequence": 10 },
+    { "code": "FP", "type": "purchase", "name": "Faktúry prijaté", "sequence": 20 },
+    { "code": "BANK", "type": "bank", "name": "Bankové výpisy", "sequence": 30 },
+    { "code": "POK", "type": "cash", "name": "Pokladničné doklady", "sequence": 40 },
+    { "code": "IUD", "type": "general", "name": "Interné účtovné doklady", "sequence": 50 },
+    { "code": "PZS", "type": "opening", "name": "Začiatočný stav", "sequence": 60 }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Rámcová účtová osnova pre podnikateľov",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": ["SK-UCT-SUVAHA", "SK-UCT-VZAS"],
+      "legal_reference": "Opatrenie MF SR č. 23054/2002-92 v znení neskorších predpisov, § 1 ods. 3 a Príloha č. 1 — ustanovuje rámcovú účtovú osnovu ako záväzný zoznam syntetických účtov (číslo aj slovné označenie), z ktorej si účtovná jednotka podľa § 3 opatrenia zostavuje vlastný účtový rozvrh s analytickými účtami. Na rozdiel od poľského alebo rakúskeho balíka tohto repozitára ide o skutočne záväzné trojmiestne syntetické čísla (napr. 311 Odberatelia, 343 Daň z pridanej hodnoty, 411 Základné imanie), nie o číslovanie vytvorené pre tento balík. Tento pack preberá reálne slovenské syntetické účty tried 0 až 6 v rozsahu, ktorý pokrýva bežnú agendu malej alebo strednej spoločnosti; triedy 7 (uzávierkové a podsúvahové účty) a 8/9 (vnútropodnikové účtovníctvo, § 6 ods. 1 opatrenia — obsah je u každej účtovnej jednotky voľný) nie sú prevzaté, pretože jadro tohto formátu nečíta uzávierkové účty priamo a analytika vnútropodnikového účtovníctva nemá záväznú štruktúru, ktorú by bolo možné prepísať.",
+      "source": "opatrenie-uctova-osnova"
+    }
+  ],
+  "documents": {
+    "numbering": "sequential",
+    "number_format": "{CODE}/{YYYY}/{NNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": "Obchodný zákonník (zákon č. 513/1991 Zb.), § 369 a § 369c, v znení zákona č. 9/2013 Z. z. — pri omeškaní s peňažným záväzkom medzi podnikateľmi patrí veriteľovi bez upomienky úrok z omeškania vo výške základnej úrokovej sadzby Európskej centrálnej banky platnej k prvému dňu omeškania zvýšenej o deväť percentuálnych bodov (nariadenie vlády SR č. 21/2013 Z. z., § 1 ods. 1), a paušálna náhrada nákladov spojených s uplatnením pohľadávky vo výške 40 eur jednorazovo bez ohľadu na dĺžku omeškania (nariadenie vlády SR č. 21/2013 Z. z., § 2).",
+    "tax_point": "earliest_of_delivery_or_payment",
+    "posted_edit_policy": "reversal_only",
+    "references": {
+      "numbering": {
+        "legal_reference": "Zákon č. 222/2004 Z. z. o dani z pridanej hodnoty, § 74 ods. 1 písm. c) — faktúra musí obsahovať poradové číslo faktúry. Zákon vyžaduje jednoznačnú identifikáciu, nie neprerušenú číselnú radu ani ročný reset, preto sequential a nie gapless_per_year.",
+        "source": "zakon-dph"
+      },
+      "payment_terms": {
+        "legal_reference": "Obchodný zákonník, § 340a ods. 1 — medzi podnikateľmi dohodnutá lehota splatnosti nesmie presiahnuť 60 dní odo dňa doručenia faktúry alebo odo dňa plnenia, ak je neskorší, okrem výnimiek dojednaných výslovne a nie hrubo nespravodlivých voči veriteľovi. Toto je strop na dohodnutú lehotu, nie subsidiárna lehota v prípade, že sa strany na ničom nedohodnú; presné číslo dní platné bez dohody sa v texte dostupnom pri príprave tohto balíka nepodarilo overiť doslovne, preto legal_payment_days zostáva prázdne namiesto toho, aby stropovú hodnotu vydávalo za subsidiárnu — pozri README, časť na doplnenie účtovníkom.",
+        "source": "obchodny-zakonnik"
+      },
+      "tax_point": {
+        "legal_reference": "Zákon č. 222/2004 Z. z., § 19 ods. 1 a 2 — daňová povinnosť vzniká dňom dodania tovaru alebo dňom dodania služby; § 19 ods. 4 — ak je platba prijatá pred dodaním, daňová povinnosť z prijatej platby vzniká dňom prijatia platby. Obe vetvy spolu zodpovedajú earliest_of_delivery_or_payment.",
+        "source": "zakon-dph"
+      },
+      "posted_edit_policy": {
+        "legal_reference": "Zákon č. 222/2004 Z. z., § 71 ods. 2 — za faktúru sa považuje aj každý doklad alebo oznámenie, ktoré mení pôvodnú faktúru a osobitne a jednoznačne sa na ňu vzťahuje; opravu základu dane a opravný doklad upravuje § 25 a § 25a. Vyhotovená faktúra sa teda opravuje odkazujúcim dokladom (dobropisom), nie tichou úpravou pôvodného záznamu.",
+        "source": "zakon-dph"
+      }
+    },
+    "mentions": [
+      {
+        "code": "reverse_charge",
+        "applies_when": "reverse_charge",
+        "text": "Prenesenie daňovej povinnosti",
+        "sequence": 10,
+        "legal_reference": "Zákon č. 222/2004 Z. z., § 74 ods. 1 písm. k) — ak je osobou povinnou platiť daň príjemca tovaru alebo služby, faktúra obsahuje slovnú informáciu „prenesenie daňovej povinnosti“; zákon nepripúšťa inú formuláciu.",
+        "source": "zakon-dph"
+      },
+      {
+        "code": "intra_eu_goods",
+        "applies_when": "intra_eu_goods",
+        "text": "Dodanie je oslobodené od dane podľa § 43 zákona č. 222/2004 Z. z.",
+        "sequence": 20,
+        "legal_reference": "Zákon č. 222/2004 Z. z., § 74 ods. 1 písm. h) — pri oslobodení od dane faktúra uvádza odkaz na ustanovenie tohto zákona alebo smernice 2006/112/ES, alebo slovnú informáciu „dodanie je oslobodené od dane“; § 43 je oslobodenie s nárokom na odpočet pri dodaní tovaru do iného členského štátu.",
+        "source": "zakon-dph"
+      },
+      {
+        "code": "export",
+        "applies_when": "export",
+        "text": "Dodanie je oslobodené od dane podľa § 47 zákona č. 222/2004 Z. z.",
+        "sequence": 30,
+        "legal_reference": "Zákon č. 222/2004 Z. z., § 74 ods. 1 písm. h) a § 47 — oslobodenie od dane pri vývoze tovaru do tretieho štátu, s nárokom na odpočet.",
+        "source": "zakon-dph"
+      },
+      {
+        "code": "exempt",
+        "applies_when": "exempt",
+        "text": "Dodanie je oslobodené od dane",
+        "sequence": 40,
+        "legal_reference": "Zákon č. 222/2004 Z. z., § 74 ods. 1 písm. h) — všeobecná slovná informácia, keď sa dodávateľ neodvoláva na konkrétny paragraf; každá jednotlivá oslobodená daň tohto balíka cituje svoj vlastný článok v legal_reference.",
+        "source": "zakon-dph"
+      },
+      {
+        "code": "late_payment",
+        "applies_when": "late_payment",
+        "text": "Pri omeškaní s platbou patrí veriteľovi úrok z omeškania vo výške základnej úrokovej sadzby ECB zvýšenej o deväť percentuálnych bodov a paušálna náhrada nákladov 40 eur (§ 369 a § 369c Obchodného zákonníka, § 1 a § 2 nariadenia vlády SR č. 21/2013 Z. z.).",
+        "sequence": 50,
+        "legal_reference": "Pozri documents.late_payment_reference.",
+        "source": "obchodny-zakonnik"
+      }
+    ]
+  },
+  "einvoicing": {
+    "profile": "peppol-bis-3",
+    "obligation": "mandatory",
+    "mandatory_from": "2027-01-01",
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "Novelizovaný zákon č. 222/2004 Z. z. (nové § 76a a § 85o), podľa informačného dokumentu Finančného riaditeľstva SR 9/DPH/2025/IM — od 1. januára 2027 sú platitelia DPH povinní vyhotoviť a prijímať faktúry z tuzemských dodaní tovarov a služieb v ustanovenom elektronickom formáte (B2B a B2G, nie B2C), a každá osoba, ktorej má byť takáto faktúra vystavená, ju musí vedieť prijať. Od 1. januára 2026 do 31. decembra 2026 beží dobrovoľné prechodné obdobie. Kontrolný výkaz a súhrnný výkaz sa e-faktúrou nerušia — ich zrušenie sa plánuje až od 1. júla 2030, súbežne s cezhraničnou digitálnou report­ovacou povinnosťou európskej iniciatívy ViDA (VAT in the Digital Age). Formát je štruktúrovaný XML podľa európskej normy EN 16931 (syntax UBL alebo CII), prenášaný cez sieť Peppol, ktorej autoritou pre Slovensko je Finančné riaditeľstvo SR. Presné číslo novelizujúceho zákona a jeho paragrafové znenie sa nepodarilo overiť priamym čítaním na slov-lex.gov.sk pri príprave tohto balíka (kandidát: zákon č. 385/2025 Z. z., neoverené) — pozri README. party_scheme a vat_scheme zostávajú prázdne: konkrétna schéma ISO 6523 pre slovenských účastníkov siete Peppol nebola overená zo žiadneho zdroja použitého pri príprave tohto balíka.",
+    "source": "efaktura-faq"
+  },
+  "bank": {
+    "statement_formats": ["camt.053"],
+    "payment_formats": ["pain.001"]
+  }
+}
