@@ -4793,3 +4793,53 @@ declares no `deadline` and states the true rule, in full, in its own
 `last_business_day_of_month_after_period` — reading a calendar of public holidays neither this table nor
 any pack has needed before now, which is the part no proposal here has
 designed.
+
+## From Slovenia
+
+### A second declaration the socle has no function for: the monthly report of 76.a-člen supplies
+
+Field `11a` of the DDV-O — the base of a domestic reverse-charge supply under
+76.a člen ZDDV-1, the construction case `packs/si` models — carries its own
+filing obligation beyond the DDV-O itself: FURS's own Navodilo za
+izpolnjevanje says a taxable person who makes such a supply reports it in a
+**poročilo o dobavah**, filed for every calendar month, whether or not a
+76.a-člen supply was made in it. That is a second, monthly-only declaration a
+company on quarterly VAT still owes, and it is not `SI-DDV-O`: it names no
+box, no rate and no total, only which supplies happened and to whom, closer
+in shape to a recapitulative statement than to a return. `tax_report.json`
+describes one form's boxes and their totals; there is nothing in the schema
+for a report that is a list of transactions rather than a set of sums, the
+way `ec_sales_list()` is a function of the core and not a pack file for the
+intra-Union case. `packs/si` states the requirement in `SI-S-RC-GRADNJA`'s and
+`SI-P-RC-GRADNJA`'s own `legal_reference` and goes no further.
+
+### KIR and KPR: a return that is no longer typed by the filer
+
+Since 2026, FURS pre-fills the DDV-O itself from two ledgers a VAT-registered
+taxpayer must transmit every month or quarter in a standardised XML shape:
+the **KIR** (knjiga izdanih računov, issued invoices) and the **KPR** (knjiga
+prejetih računov, received invoices) — document by document, not box by box.
+The taxpayer then reviews and confirms what FURS computed rather than filling
+the boxes themselves. `vat_return()` answers exactly the boxes `tax_report.json`
+describes, computed from the ledger the same way every pack's declaration is;
+what it does not do, for Slovenia or for any pack, is write out a ledger of
+individual documents in the shape an administration's own pre-filling system
+consumes. That is closer to what a SAF-T or FEC export does — a document- or
+entry-level file, not a set of totals — and no brick of this checkout writes
+one for Slovenia. `packs/si` computes the DDV-O `vat_return()` already
+answers correctly; it does not, and today could not, produce the KIR/KPR
+files FURS asks for first.
+
+### e-SLOG has no writer or reader in this checkout
+
+`packs/si`'s `einvoicing.profile` names `eslog-2.0`, the Slovenian national
+syntax the law itself designates — for the public-sector obligation in force
+since 2015 (ZOPSPU-1) and, from 1 January 2028, for the general obligation
+between businesses (ZIERDED), which also accepts any EN 16931-compliant
+syntax the parties agree on. That is a statement of which format the law
+names, not a claim that this checkout can produce it: `packages/formats`
+carries no e-SLOG writer and no e-SLOG reader today, the way it carries
+`camt.053` for a bank statement. A company installed on this pack can be
+billed and can bill in e-SLOG through any outside tool; nothing here reads or
+writes the file itself yet.
+

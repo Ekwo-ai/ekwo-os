@@ -1,0 +1,133 @@
+code,parent,type,reconcilable,name,sequence
+1000,,asset_fixed,false,Neopredmetena sredstva,10
+1010,,asset_fixed,false,Dolgoročne premoženjske pravice,20
+1020,,asset_fixed,false,Dobro ime,30
+1100,,asset_fixed,false,Zemljišča,40
+1110,,asset_fixed,false,Zgradbe,50
+1200,,asset_fixed,false,Proizvajalne naprave in stroji,60
+1210,,asset_fixed,false,"Druge naprave, oprema in nadomestni deli",70
+1220,,asset_fixed,false,Drobni inventar,80
+1230,,asset_fixed,false,Osnovna sredstva v gradnji in izdelavi,90
+1300,,asset_non_current,false,Naložbene nepremičnine,100
+1400,,asset_non_current,false,Dolgoročne finančne naložbe,110
+1410,,asset_non_current,false,Deleži v kapitalu drugih podjetij,120
+1420,,asset_non_current,false,Dana dolgoročna posojila,130
+1430,,asset_non_current,false,Dolgoročne naložbe v vrednostne papirje,140
+1500,,asset_non_current,false,Dolgoročne poslovne terjatve,150
+1510,,asset_non_current,false,Dolgoročne terjatve do kupcev,160
+1520,,asset_non_current,false,Dolgoročne terjatve do drugih,170
+1600,,asset_non_current,false,Odložene terjatve za davek,180
+2000,,asset_current,false,Zaloge materiala,190
+2010,,asset_current,false,Zaloge trgovskega blaga,200
+2020,,asset_current,false,Zaloge nedokončane proizvodnje,210
+2030,,asset_current,false,Zaloge gotovih izdelkov,220
+2040,,asset_current,false,Predujmi za zaloge,230
+2100,,asset_current,false,Kratkoročne finančne naložbe,240
+2110,,asset_current,false,Kratkoročno dana posojila,250
+2120,,asset_current,false,Kratkoročne naložbe v vrednostne papirje,260
+2200,,asset_receivable,true,Kratkoročne poslovne terjatve do kupcev v Sloveniji,270
+2210,,asset_receivable,true,Kratkoročne poslovne terjatve do kupcev v EU,280
+2220,,asset_receivable,true,Kratkoročne poslovne terjatve do kupcev izven EU,290
+2230,,asset_current,false,Terjatve za vstopni DDV po stopnji 22 %,300
+2231,,asset_current,false,"Terjatve za vstopni DDV po stopnji 9,5 %",310
+2232,,asset_current,false,Terjatve za vstopni DDV od pridobitev blaga znotraj EU,320
+2233,,asset_current,false,Terjatve za vstopni DDV od prejetih storitev iz EU,330
+2234,,asset_current,false,Terjatve za vstopni DDV od prejetih tujih storitev,340
+2235,,asset_current,false,Terjatve za vstopni DDV od nabav po 76.a členu ZDDV-1,350
+2240,,asset_current,true,Terjatve do države za DDV,360
+2250,,asset_current,false,Druge kratkoročne terjatve in prehodni konto,370
+2260,,asset_current,false,Terjatve do zaposlenih,380
+2270,,asset_current,false,Terjatve do države za druge davke,390
+2280,,asset_current,false,Terjatve iz naslova preplačil,400
+2500,,asset_cash,false,Denarna sredstva na transakcijskem računu,410
+2510,,asset_cash,false,Denarna sredstva v blagajni,420
+2520,,asset_cash,false,Denarna sredstva na deviznem računu,430
+2530,,asset_cash,false,Kratkoročni denarni depoziti,440
+3000,,asset_prepayments,false,Kratkoročno odloženi stroški,450
+3010,,asset_prepayments,false,Nezaračunani prihodki,460
+3020,,asset_prepayments,false,Vnaprej vračunani stroški,470
+4000,,equity,false,Osnovni kapital,480
+4010,,equity,false,Nevpoklicani kapital,490
+4100,,equity,false,Kapitalske rezerve,500
+4110,,equity,false,Splošni prevrednotovalni popravek kapitala,510
+4200,,equity,false,Rezerve iz dobička,520
+4210,,equity,false,Zakonske rezerve,530
+4220,,equity,false,Statutarne rezerve,540
+4230,,equity,false,Rezerve za lastne deleže,550
+4300,,equity_retained,false,Preneseni čisti poslovni izid,560
+4400,,equity_retained,false,Čisti poslovni izid poslovnega leta,570
+5000,,liability_non_current,false,Dolgoročne rezervacije za pokojnine in podobne obveznosti,580
+5010,,liability_non_current,false,Dolgoročne rezervacije za garancije,590
+5020,,liability_non_current,false,Druge dolgoročne rezervacije,600
+5100,,liability_non_current,false,Dolgoročne pasivne časovne razmejitve,610
+5110,,liability_non_current,false,Dolgoročno odloženi prihodki iz naslova državnih podpor,620
+6000,,liability_non_current,false,Dolgoročna posojila pri bankah,630
+6010,,liability_non_current,false,Dolgoročne obveznosti iz finančnega najema,640
+6100,,liability_non_current,false,Dolgoročne poslovne obveznosti,650
+6110,,liability_non_current,false,Dolgoročne obveznosti do dobaviteljev,660
+6200,,liability_non_current,false,Odložene obveznosti za davek,670
+7000,,liability_current,false,Kratkoročna posojila pri bankah,680
+7010,,liability_current,false,Kratkoročna posojila pri drugih pravnih osebah,690
+7100,,liability_payable,true,Kratkoročne poslovne obveznosti do dobaviteljev v Sloveniji,700
+7110,,liability_payable,true,Kratkoročne poslovne obveznosti do dobaviteljev v EU,710
+7120,,liability_payable,true,Kratkoročne poslovne obveznosti do dobaviteljev izven EU,720
+7130,,liability_current,false,Kratkoročne obveznosti za predujme kupcev,730
+7200,,liability_current,false,Obveznosti za DDV po stopnji 22 %,740
+7210,,liability_current,false,"Obveznosti za DDV po stopnji 9,5 %",750
+7220,,liability_current,false,Obveznosti za DDV po posebni nižji stopnji 5 %,760
+7230,,liability_current,false,Obveznosti za DDV od pridobitev blaga znotraj EU,770
+7240,,liability_current,false,Obveznosti za DDV od prejetih storitev iz EU,780
+7250,,liability_current,false,Obveznosti za DDV od samoobdavčitve prejemnika (76.a člen in tuje storitve),790
+7270,,liability_current,true,Obveznost do države za DDV,800
+7300,,liability_current,false,Obveznosti do zaposlenih,810
+7310,,liability_current,false,Obveznosti za druge davke in prispevke,820
+7320,,liability_current,false,Obveznosti do družbenikov,830
+7330,,liability_current,false,Obveznosti iz naslova dividend,840
+7900,,liability_current,false,Kratkoročne pasivne časovne razmejitve,850
+7910,,liability_current,false,Vnaprej vračunani stroški in odhodki,860
+8000,,income,false,Čisti prihodki od prodaje po splošni stopnji,870
+8010,,income,false,Čisti prihodki od prodaje po nižji stopnji,880
+8020,,income,false,Čisti prihodki od prodaje po posebni nižji stopnji,890
+8030,,income,false,Prihodki od izvoza,900
+8040,,income,false,Prihodki od dobav blaga v druge države članice EU,910
+8050,,income,false,Prihodki od gradbenih storitev po 76.a členu ZDDV-1,920
+8060,,income,false,Oproščeni prihodki brez pravice do odbitka DDV,930
+8100,,income_other,false,Sprememba vrednosti zalog proizvodov in nedokončane proizvodnje,940
+8110,,income_other,false,Usredstveni lastni proizvodi in lastne storitve,950
+8120,,income_other,false,Drugi poslovni prihodki,960
+8130,,income_other,false,Prevrednotovalni poslovni prihodki,970
+8200,,expense_direct_cost,false,Stroški materiala,980
+8210,,expense_direct_cost,false,Stroški storitev,990
+8220,,expense_direct_cost,false,Nabavna vrednost prodanega trgovskega blaga,1000
+8230,,expense_direct_cost,false,Stroški energije,1010
+8300,,expense,false,Stroški plač,1020
+8310,,expense,false,Stroški socialnih zavarovanj,1030
+8320,,expense,false,Drugi stroški dela,1040
+8330,,expense,false,Stroški prevoza zaposlenih na delo,1050
+8400,,expense_depreciation,false,Amortizacija,1060
+8410,,expense,false,Prevrednotovalni poslovni odhodki pri terjatvah,1070
+8420,,expense,false,Prevrednotovalni poslovni odhodki pri opredmetenih sredstvih,1080
+8500,,expense,false,Stroški reprezentance,1090
+8510,,expense,false,Drugi poslovni odhodki,1100
+8520,,expense,false,Stroški zavarovalnih premij,1110
+8530,,expense,false,Najemnine in zakupnine,1120
+8540,,expense,false,Stroški vzdrževanja,1130
+8550,,expense,false,"Stroški storitev fizičnih oseb, ki ne opravljajo dejavnosti",1140
+9000,,income_other,false,Finančni prihodki iz deležev,1150
+9010,,income_other,false,Finančni prihodki iz danih posojil,1160
+9020,,income_other,false,Finančni prihodki iz poslovnih terjatev,1170
+9030,,income_other,false,Finančni prihodki iz tečajnih razlik,1180
+9040,,income_other,false,Finančni prihodki iz obresti na denarna sredstva,1190
+9100,,expense,false,Finančni odhodki iz oslabitve finančnih naložb,1200
+9110,,expense,false,Finančni odhodki iz finančnih obveznosti,1210
+9120,,expense,false,Finančni odhodki iz poslovnih obveznosti,1220
+9130,,expense,false,Finančni odhodki iz tečajnih razlik,1230
+9140,,expense,false,Finančni odhodki iz obresti na kratkoročna posojila,1240
+9200,,income_other,false,Drugi prihodki,1250
+9201,,income_other,false,Prihodki od odprave dolgoročnih rezervacij,1260
+9210,,expense,false,Drugi odhodki,1270
+9211,,expense,false,Odhodki za donacije,1280
+9220,,expense,false,Odhodki iz naslova zaokroževanja,1290
+9300,,expense,false,Davek od dobička,1300
+9301,,expense,false,Davek od dobička iz preteklih let,1310
+9310,,expense,false,Odloženi davki,1320

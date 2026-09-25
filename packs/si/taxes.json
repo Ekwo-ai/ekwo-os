@@ -1,0 +1,330 @@
+[
+  {
+    "code": "SI-S-22",
+    "name": "DDV 22 %",
+    "description": "Splošna stopnja DDV; polje 21 obračuna DDV, osnova v polju 11.",
+    "rate": 22,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2013-07-01",
+    "legal_reference": "ZDDV-1, 41. člen, prvi odstavek — DDV se obračunava in plačuje po splošni, 22-odstotni stopnji od davčne osnove, enaki za dobavo blaga in za opravljanje storitev.",
+    "source": "zddv-1",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "11" },
+        { "type": "tax", "account": "7200", "box": "21" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "11", "box_factor": -100 },
+        { "type": "tax", "account": "7200", "box": "21", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 10
+  },
+  {
+    "code": "SI-S-9_5",
+    "name": "DDV 9,5 %",
+    "description": "Nižja stopnja DDV za dobave iz Priloge I k ZDDV-1 (med drugim hrana, voda, zdravila, prevoz oseb, vstopnine, gostinske storitve); polje 22.",
+    "rate": 9.5,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2020-01-01",
+    "legal_reference": "ZDDV-1, 41. člen, drugi odstavek, in Priloga I k ZDDV-1 — za dobave blaga in storitev, ki so navedene v Prilogi I, se DDV obračunava po nižji, 9,5-odstotni stopnji. Glej tudi FURS, Davek na dodano vrednost — Stopnje DDV (14. izdaja, junij 2026), poglavje 2, »Priloga I – 9,5 %«.",
+    "source": "zddv-1",
+    "vat_category": "S",
+    "conditions": ["supply_nature"],
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "11" },
+        { "type": "tax", "account": "7210", "box": "22" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "11", "box_factor": -100 },
+        { "type": "tax", "account": "7210", "box": "22", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 20
+  },
+  {
+    "code": "SI-S-5",
+    "name": "DDV 5 %",
+    "description": "Posebna nižja stopnja DDV za dobave iz Priloge IV k ZDDV-1 (1. točka: tiskane in elektronske knjige, časopisi in periodične publikacije); polje 22a.",
+    "rate": 5,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2020-01-01",
+    "legal_reference": "ZDDV-1, 41. člen, drugi odstavek, in Priloga IV k ZDDV-1, 1. točka — za dobavo tiskanih knjig, časopisov, periodičnih publikacij in njihovih elektronskih različic se DDV obračunava po posebni nižji, 5-odstotni stopnji. Glej FURS, Davek na dodano vrednost — Stopnje DDV (14. izdaja, junij 2026), poglavje 3.1.",
+    "source": "zddv-1",
+    "vat_category": "S",
+    "conditions": ["supply_nature"],
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "11" },
+        { "type": "tax", "account": "7220", "box": "22a" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "11", "box_factor": -100 },
+        { "type": "tax", "account": "7220", "box": "22a", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 30
+  },
+  {
+    "code": "SI-S-IGL",
+    "name": "Oproščena dobava blaga v drugo državo članico EU",
+    "description": "Dobava blaga davčnemu zavezancu, identificiranemu za DDV v drugi državi članici; polje 12 in rekapitulacijsko poročilo.",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "intracom_goods",
+    "valid_from": "2004-05-01",
+    "legal_reference": "ZDDV-1, 46. člen, prvi odstavek, 1. točka — plačila DDV je oproščena dobava blaga, ki ga iz Slovenije v drugo državo članico odpošlje ali odpelje prodajalec, kupec ali druga oseba za njun račun, opravljena drugemu davčnemu zavezancu, identificiranemu za namene DDV v drugi državi članici, pod pogojem, da je dobava prijavljena v rekapitulacijskem poročilu iz 90. člena tega zakona.",
+    "source": "zddv-1",
+    "vat_category": "K",
+    "exemption_code": "VATEX-EU-IC",
+    "conditions": ["buyer_status", "transport_evidence"],
+    "postings": {
+      "invoice": [{ "type": "base", "box": "12" }],
+      "credit_note": [{ "type": "base", "box": "12", "box_factor": -100 }]
+    },
+    "kind": "vat",
+    "sequence": 40
+  },
+  {
+    "code": "SI-S-EXP",
+    "name": "Oproščena izvozna dobava blaga",
+    "description": "Dobava blaga, odposlano ali odpeljano izven Unije; všteto v polje 11 skupaj z obdavčenimi domačimi dobavami, kot to izrecno določa Navodilo za izpolnjevanje obračuna DDV k polju 11.",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2004-05-01",
+    "legal_reference": "ZDDV-1, 52. člen, prvi odstavek, 1. točka — plačila DDV so oproščene dobave blaga, ki ga iz Slovenije odpošlje ali odpelje izven Unije prodajalec ali druga oseba za njegov račun. Navodilo za izpolnjevanje obračuna DDV, polje 11 (Priloga X k obrazcu DDV-O), izrecno uvršča »oproščene izvozne dobave blaga« med zneske, ki se vpisujejo v polje 11 skupaj z obdavčenimi dobavami na ozemlju Slovenije.",
+    "source": "obrazec-ddv-o",
+    "vat_category": "G",
+    "exemption_code": "VATEX-EU-G",
+    "conditions": ["transport_evidence"],
+    "postings": {
+      "invoice": [{ "type": "base", "box": "11" }],
+      "credit_note": [{ "type": "base", "box": "11", "box_factor": -100 }]
+    },
+    "kind": "vat",
+    "sequence": 50
+  },
+  {
+    "code": "SI-S-RC-GRADNJA",
+    "name": "Gradbena storitev, obrnjena davčna obveznost (76.a člen)",
+    "description": "Gradbene storitve na nepremičnini, ko je plačnik DDV prejemnik; polje 11a, brez obračunanega DDV na strani izdajatelja.",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "domestic_reverse_charge",
+    "valid_from": "2010-01-01",
+    "legal_reference": "ZDDV-1, 76.a člen, prvi odstavek, točka a) — plačnik DDV je vsak davčni zavezanec, identificiran za namene DDV v Sloveniji, ki mu je opravljena gradbena storitev, vključno s popravilom, čiščenjem, vzdrževanjem, rekonstrukcijo in rušenjem v zvezi z nepremičnino. Navodilo za izpolnjevanje obračuna DDV, polje 11a, in Mehanizem obrnjene davčne obveznosti v določenih sektorjih (FURS): izdajatelj računa DDV ne obračuna, na računu pa navede, da gre za obrnjeno davčno obveznost.",
+    "source": "zddv-1",
+    "vat_category": "AE",
+    "exemption_code": "VATEX-EU-AE",
+    "conditions": ["buyer_status", "supply_nature"],
+    "postings": {
+      "invoice": [{ "type": "base", "box": "11a" }],
+      "credit_note": [{ "type": "base", "box": "11a", "box_factor": -100 }]
+    },
+    "kind": "vat",
+    "sequence": 60
+  },
+  {
+    "code": "SI-S-EXE",
+    "name": "Oproščen najem nepremičnine",
+    "description": "Najem oziroma zakup nepremičnine brez pravice do odbitka DDV; polje 15.",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2004-05-01",
+    "legal_reference": "ZDDV-1, 44. člen — plačila DDV je oproščen najem oziroma zakup nepremičnin, z izjemami, ki jih zakon določa (med drugim nastanitev, garaže, parkirni prostori ter trajno vgrajena oprema in stroji); Direktiva Sveta 2006/112/ES, člen 135(1)(l). Točna alineja 44. člena naj pred statusom reviewed preveri slovenski davčni svetovalec — glej README.",
+    "source": "zddv-1",
+    "vat_category": "E",
+    "exemption_code": "VATEX-EU-135-1",
+    "conditions": ["supply_nature"],
+    "postings": {
+      "invoice": [{ "type": "base", "box": "15" }],
+      "credit_note": [{ "type": "base", "box": "15", "box_factor": -100 }]
+    },
+    "kind": "vat",
+    "sequence": 70
+  },
+  {
+    "code": "SI-P-22",
+    "name": "Vstopni DDV 22 %",
+    "description": "Vstopni DDV od nabav blaga in storitev v Sloveniji; osnova v polju 31, odbitek v polju 41.",
+    "rate": 22,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2013-07-01",
+    "legal_reference": "ZDDV-1, 63. člen, prvi odstavek, točka a) — davčni zavezanec sme odbiti DDV, ki ga je dolžan plačati ali ga je plačal pri nabavah blaga ali storitev, opravljenih s strani drugega davčnega zavezanca, če je te uporabil ali jih bo uporabil za namene svojih obdavčenih transakcij.",
+    "source": "zddv-1",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "31" },
+        { "type": "tax", "account": "2230", "box": "41" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "31", "box_factor": -100 },
+        { "type": "tax", "account": "2230", "box": "41", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 80
+  },
+  {
+    "code": "SI-P-9_5",
+    "name": "Vstopni DDV 9,5 %",
+    "description": "Vstopni DDV od nabav po nižji stopnji; osnova v polju 31, odbitek v polju 42.",
+    "rate": 9.5,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2020-01-01",
+    "legal_reference": "ZDDV-1, 63. člen, prvi odstavek, točka a), v zvezi z 41. členom, drugim odstavkom, in Prilogo I.",
+    "source": "zddv-1",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "31" },
+        { "type": "tax", "account": "2231", "box": "42" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "31", "box_factor": -100 },
+        { "type": "tax", "account": "2231", "box": "42", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 90
+  },
+  {
+    "code": "SI-P-22-NA",
+    "name": "Nabave za reprezentanco, neodbitni DDV 22 %",
+    "description": "DDV od izdatkov za reprezentanco (pogostitev, zabava, hrana in pijača ter nastanitev ob poslovnih ali družabnih stikih), ki ni odbiten; DDV ostane strošek in ne nastopa v nobenem polju obračuna DDV.",
+    "rate": 22,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2013-07-01",
+    "recoverable": false,
+    "legal_reference": "ZDDV-1, 66. člen, prvi odstavek, točka b) — davčni zavezanec ne sme odbiti vstopnega DDV od izdatkov za reprezentanco; kot izdatki za reprezentanco se štejejo izdatki za pogostitev in zabavo ob poslovnih ali družabnih stikih ter izdatki za hrano, pijačo in nastanitev.",
+    "source": "zddv-1",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [{ "type": "tax_on_base" }],
+      "credit_note": [{ "type": "tax_on_base" }]
+    },
+    "kind": "vat",
+    "sequence": 100
+  },
+  {
+    "code": "SI-P-IGA-22",
+    "name": "Pridobitev blaga znotraj EU 22 %",
+    "description": "Samoobdavčitev ob pridobitvi blaga iz druge države članice; osnova v polju 32, obračunani DDV v polju 23, odbitek v polju 41.",
+    "rate": 22,
+    "scope": "purchase",
+    "treatment": "intracom_acquisition_goods",
+    "valid_from": "2013-07-01",
+    "legal_reference": "ZDDV-1, 34. člen — pridobitev blaga znotraj Unije, opravljena v Sloveniji za plačilo, je predmet DDV; 76. člen, prvi odstavek, 3. točka — plačnik DDV je oseba, ki pridobi blago znotraj Unije; 63. člen omogoča odbitek tako obračunanega DDV, če je pridobitev opravljena za namene obdavčenih transakcij.",
+    "source": "zddv-1",
+    "vat_category": "K",
+    "exemption_code": "VATEX-EU-IC",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "32" },
+        { "type": "tax", "account": "7230", "box": "23" },
+        { "type": "tax", "account": "2232", "box": "41" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "32", "box_factor": -100 },
+        { "type": "tax", "account": "7230", "box": "23", "box_factor": -100 },
+        { "type": "tax", "account": "2232", "box": "41", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 110
+  },
+  {
+    "code": "SI-P-ICS-22",
+    "name": "Prejeta storitev iz druge države članice EU 22 %",
+    "description": "Samoobdavčitev ob prejemu splošne storitve od davčnega zavezanca s sedežem v drugi državi članici; osnova v polju 32a, obračunani DDV v polju 23a, odbitek v polju 41.",
+    "rate": 22,
+    "scope": "purchase",
+    "treatment": "intracom_acquisition_services",
+    "valid_from": "2010-01-01",
+    "legal_reference": "ZDDV-1, 25. člen, prvi odstavek — kraj opravljanja storitve osebi, ki je davčni zavezanec, je kraj, kjer ima ta oseba sedež svoje dejavnosti; 76. člen, prvi odstavek, 2. točka — plačnik DDV je davčni zavezanec, prejemnik storitve iz 25. člena, ki jo opravi davčni zavezanec, ki nima sedeža v Sloveniji; 63. člen omogoča odbitek tako obračunanega DDV.",
+    "source": "zddv-1",
+    "vat_category": "K",
+    "exemption_code": "VATEX-EU-IC",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "32a" },
+        { "type": "tax", "account": "7240", "box": "23a" },
+        { "type": "tax", "account": "2233", "box": "41" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "32a", "box_factor": -100 },
+        { "type": "tax", "account": "7240", "box": "23a", "box_factor": -100 },
+        { "type": "tax", "account": "2233", "box": "41", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 120
+  },
+  {
+    "code": "SI-P-EXT-22",
+    "name": "Prejeta storitev izven EU 22 %",
+    "description": "Samoobdavčitev ob prejemu splošne storitve od davčnega zavezanca s sedežem v tretji državi; osnova v polju 31 (skupaj z drugimi nabavami), obračunani DDV v polju 25, odbitek v polju 41.",
+    "rate": 22,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2010-01-01",
+    "legal_reference": "ZDDV-1, 25. člen, prvi odstavek — kraj opravljanja storitve je kraj sedeža prejemnika; 76. člen, prvi odstavek, 2. točka — plačnik DDV je prejemnik storitve, ki jo opravi davčni zavezanec s sedežem izven Slovenije, tudi kadar gre za sedež izven Unije. Navodilo za izpolnjevanje obračuna DDV, polje 25, izrecno navaja storitve po prvem odstavku 25. člena, ki jih opravi davčni zavezanec s sedežem v tretji državi.",
+    "source": "obrazec-ddv-o",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "31" },
+        { "type": "tax", "account": "7250", "box": "25" },
+        { "type": "tax", "account": "2234", "box": "41" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "31", "box_factor": -100 },
+        { "type": "tax", "account": "7250", "box": "25", "box_factor": -100 },
+        { "type": "tax", "account": "2234", "box": "41", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 130
+  },
+  {
+    "code": "SI-P-RC-GRADNJA",
+    "name": "Prejeta gradbena storitev, obrnjena davčna obveznost (76.a člen)",
+    "description": "Samoobdavčitev prejemnika gradbene storitve po 76.a členu; osnova v polju 31a, obračunani DDV v polju 25, odbitek v polju 41.",
+    "rate": 22,
+    "scope": "purchase",
+    "treatment": "domestic_reverse_charge",
+    "valid_from": "2010-01-01",
+    "legal_reference": "ZDDV-1, 76.a člen, prvi odstavek, točka a) — plačnik DDV je prejemnik gradbene storitve. Navodilo za izpolnjevanje obračuna DDV, polji 31a in 25: osnova nabav po 76.a členu se všteva v polje 31a, obračunani DDV nanjo pa v polje 25 skupaj s samoobdavčitvijo storitev tretjih držav; 63. člen omogoča odbitek.",
+    "source": "obrazec-ddv-o",
+    "vat_category": "AE",
+    "exemption_code": "VATEX-EU-AE",
+    "conditions": ["buyer_status", "supply_nature"],
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "31a" },
+        { "type": "tax", "account": "7250", "box": "25" },
+        { "type": "tax", "account": "2235", "box": "41" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "31a", "box_factor": -100 },
+        { "type": "tax", "account": "7250", "box": "25", "box_factor": -100 },
+        { "type": "tax", "account": "2235", "box": "41", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 140
+  }
+]

@@ -1,0 +1,117 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "Eno leto poslovanja slovenske družbe, ki trguje z blagom, gradi in izvaja storitve",
+  "chart": "default",
+  "fiscal_year": { "name": "Poslovno leto 2026", "start": "2026-01-01", "end": "2026-12-31" },
+  "periods": [
+    { "code": "2026", "from": "2026-01-01", "to": "2026-12-31" }
+  ],
+  "statements": ["SI-ZGD-BS", "SI-ZGD-IS"],
+  "contacts": [
+    { "ref": "kupec-si", "name": "Trgovina Zarja d.o.o.", "type": "customer", "country": "SI" },
+    { "ref": "kupec-gradnja", "name": "Gradbeništvo Savinja d.o.o.", "type": "customer", "country": "SI" },
+    { "ref": "najemnik", "name": "Pisarniški Center Ljubljana d.o.o.", "type": "customer", "country": "SI" },
+    { "ref": "kupec-us", "name": "Rocky Mountain Traders LLC", "type": "customer", "country": "US" },
+    { "ref": "kupec-de", "name": "Nordwind Handel GmbH", "type": "customer", "country": "DE", "vat_number": "DE999999999" },
+    { "ref": "dobavitelj-si", "name": "Papir in Pisarna d.o.o.", "type": "supplier", "country": "SI" },
+    { "ref": "dobavitelj-de", "name": "Rheinmetall Büro GmbH", "type": "supplier", "country": "DE", "vat_number": "DE888888888" },
+    { "ref": "dobavitelj-ie", "name": "Dublin Consulting Ltd", "type": "supplier", "country": "IE", "vat_number": "IE9999999L" },
+    { "ref": "dobavitelj-us", "name": "CloudSoft Inc.", "type": "supplier", "country": "US" },
+    { "ref": "podizvajalec", "name": "Fasaderstvo Kranj d.o.o.", "type": "supplier", "country": "SI" },
+    { "ref": "gostilna", "name": "Gostilna Pri Lipi d.o.o.", "type": "supplier", "country": "SI" }
+  ],
+  "documents": [
+    {
+      "ref": "V1", "type": "sale_invoice", "contact": "kupec-si", "date": "2026-01-15", "due_date": "2026-02-14",
+      "why": "Prodaja po splošni, 22-odstotni stopnji: osnova in DDV se vštevata v polji 11 in 21.",
+      "lines": [{ "name": "Pisarniško pohištvo", "quantity": 10, "unit_price": 100, "tax": "SI-S-22", "account": "8000" }]
+    },
+    {
+      "ref": "V2", "type": "sale_invoice", "contact": "kupec-si", "date": "2026-02-10", "due_date": "2026-03-12",
+      "why": "Prodaja po nižji, 9,5-odstotni stopnji iz Priloge I k ZDDV-1 (gostinske storitve): polje 22.",
+      "lines": [{ "name": "Gostinske storitve — poslovno kosilo", "quantity": 1, "unit_price": 2000, "tax": "SI-S-9_5", "account": "8010" }]
+    },
+    {
+      "ref": "V3", "type": "sale_invoice", "contact": "kupec-si", "date": "2026-03-05", "due_date": "2026-04-04",
+      "why": "Prodaja po posebni nižji, 5-odstotni stopnji iz Priloge IV k ZDDV-1 (knjige): polje 22a.",
+      "lines": [{ "name": "Strokovne knjige", "quantity": 50, "unit_price": 40, "tax": "SI-S-5", "account": "8020" }]
+    },
+    {
+      "ref": "V4", "type": "sale_credit_note", "contact": "kupec-si", "date": "2026-04-01", "due_date": null,
+      "why": "Dobropis za del prodaje V1 po 26. členu ZDDV-1: zmanjša osnovo in DDV z enakim predznakom, namesto da bi se izvirni račun brisal.",
+      "lines": [{ "name": "Vračilo pisarniškega pohištva", "quantity": 2, "unit_price": 100, "tax": "SI-S-22", "account": "8000" }]
+    },
+    {
+      "ref": "V5", "type": "sale_invoice", "contact": "kupec-us", "date": "2026-04-20", "due_date": "2026-05-20",
+      "why": "Izvozna dobava blaga izven Unije (52. člen ZDDV-1): osnova gre v polje 11 skupaj z domačimi obdavčenimi dobavami, kot to izrecno določa Navodilo za polje 11.",
+      "lines": [{ "name": "Strojna oprema za izvoz", "quantity": 5, "unit_price": 1000, "tax": "SI-S-EXP", "account": "8030" }]
+    },
+    {
+      "ref": "V6", "type": "sale_invoice", "contact": "kupec-de", "date": "2026-05-12", "due_date": "2026-06-11",
+      "why": "Oproščena dobava blaga davčnemu zavezancu v drugi državi članici EU (46. člen ZDDV-1): polje 12, ločeno od izvoza v polju 11 — to je stran »prodano« operacije EU, katere stran »kupljeno« je C3.",
+      "lines": [{ "name": "Blago za dobavo v Nemčijo", "quantity": 4, "unit_price": 1250, "tax": "SI-S-IGL", "account": "8040" }]
+    },
+    {
+      "ref": "V7", "type": "sale_invoice", "contact": "kupec-gradnja", "date": "2026-06-08", "due_date": "2026-07-08",
+      "why": "Gradbena storitev na nepremičnini, obrnjena davčna obveznost (76.a člen ZDDV-1): izdajatelj DDV ne obračuna, osnova gre v polje 11a; stran »prejeto« te operacije je C6.",
+      "lines": [{ "name": "Elektroinstalacijska dela", "quantity": 1, "unit_price": 8000, "tax": "SI-S-RC-GRADNJA", "account": "8050" }]
+    },
+    {
+      "ref": "V8", "type": "sale_invoice", "contact": "najemnik", "date": "2026-07-01", "due_date": "2026-07-31",
+      "why": "Oproščen najem poslovnih prostorov brez pravice do odbitka DDV (44. člen ZDDV-1): polje 15.",
+      "lines": [{ "name": "Najemnina poslovnih prostorov za julij", "quantity": 1, "unit_price": 3000, "tax": "SI-S-EXE", "account": "8060" }]
+    },
+    {
+      "ref": "C1", "type": "purchase_invoice", "contact": "dobavitelj-si", "date": "2026-01-20", "due_date": "2026-02-19",
+      "why": "Domači nakup po splošni stopnji, v celoti odbiten DDV: osnova v polju 31, odbitek v polju 41.",
+      "lines": [{ "name": "Pisarniški material", "quantity": 1, "unit_price": 4000, "tax": "SI-P-22", "account": "8200" }]
+    },
+    {
+      "ref": "C2", "type": "purchase_invoice", "contact": "dobavitelj-si", "date": "2026-02-18", "due_date": "2026-03-20",
+      "why": "Domači nakup po nižji stopnji: osnova v polju 31, odbitek v polju 42 — drugi odbitni stopnji poleg 22 %.",
+      "lines": [{ "name": "Vzdrževanje opreme", "quantity": 1, "unit_price": 1000, "tax": "SI-P-9_5", "account": "8210" }]
+    },
+    {
+      "ref": "C3", "type": "purchase_invoice", "contact": "dobavitelj-de", "date": "2026-05-05", "due_date": "2026-06-04",
+      "why": "Pridobitev blaga znotraj EU (34. člen ZDDV-1): kupec samoobdavči po 76. členu, ista osnova gre v polje 32, DDV pa hkrati v polje 23 (obračunan) in v polje 41 (odbiten) — stran »kupljeno« operacije EU, katere stran »prodano« je V6.",
+      "lines": [{ "name": "Nadomestni deli iz Nemčije", "quantity": 1, "unit_price": 3000, "tax": "SI-P-IGA-22", "account": "8200" }]
+    },
+    {
+      "ref": "C4", "type": "purchase_invoice", "contact": "dobavitelj-ie", "date": "2026-05-25", "due_date": "2026-06-24",
+      "why": "Splošna storitev, prejeta od davčnega zavezanca s sedežem v drugi državi članici (25. in 76. člen ZDDV-1): ista samoobdavčitev kot C3, a v polju 23a, ločeno od storitev iz tretjih držav v C5.",
+      "lines": [{ "name": "Svetovalne storitve iz Irske", "quantity": 1, "unit_price": 2000, "tax": "SI-P-ICS-22", "account": "8210" }]
+    },
+    {
+      "ref": "C5", "type": "purchase_invoice", "contact": "dobavitelj-us", "date": "2026-06-15", "due_date": "2026-07-15",
+      "why": "Storitev, prejeta od davčnega zavezanca s sedežem v tretji državi (25. člen ZDDV-1): samoobdavčitev v istem polju 25 kot gradbena storitev C6, a brez rekapitulacijskega poročila, ker ne gre za operacijo znotraj EU.",
+      "lines": [{ "name": "Naročnina na programsko opremo", "quantity": 1, "unit_price": 1200, "tax": "SI-P-EXT-22", "account": "8210" }]
+    },
+    {
+      "ref": "C6", "type": "purchase_invoice", "contact": "podizvajalec", "date": "2026-06-20", "due_date": "2026-07-20",
+      "why": "Prejeta gradbena storitev, obrnjena davčna obveznost (76.a člen ZDDV-1): osnova v polju 31a, DDV v polju 25 in odbitek v polju 41 — stran »prejeto« operacije, katere stran »opravljeno« je V7.",
+      "lines": [{ "name": "Fasaderska dela v podizvajanju", "quantity": 1, "unit_price": 6000, "tax": "SI-P-RC-GRADNJA", "account": "8210" }]
+    },
+    {
+      "ref": "C7", "type": "purchase_invoice", "contact": "gostilna", "date": "2026-07-10", "due_date": "2026-08-09",
+      "why": "Izdatki za reprezentanco (66. člen ZDDV-1): DDV ni odbiten in ne nastopa v nobenem polju obračuna, temveč poveča strošek.",
+      "lines": [{ "name": "Poslovno kosilo s strankami", "quantity": 1, "unit_price": 500, "tax": "SI-P-22-NA", "account": "8500" }]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "B1", "direction": "inbound", "date": "2026-02-14", "amount": 1220, "contact": "kupec-si",
+      "journal": "BAN", "match": "V1",
+      "why": "Plačilo, ki v celoti poravna račun V1."
+    },
+    {
+      "ref": "B2", "direction": "inbound", "date": "2026-06-30", "amount": 500, "contact": "kupec-si",
+      "journal": "BAN", "match": null,
+      "why": "Plačilo brez pripadajočega računa: ostane v dobro kupca, nerazknjiženo."
+    },
+    {
+      "ref": "B3", "direction": "outbound", "date": "2026-02-20", "amount": 4880, "contact": "dobavitelj-si",
+      "journal": "BAN", "match": "C1",
+      "why": "Stran dobavitelja pri razknjiževanju, da ta ni dokazana le z ene strani bilance."
+    }
+  ]
+}

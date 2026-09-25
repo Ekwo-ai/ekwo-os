@@ -1,0 +1,166 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "SI-DDV-O",
+  "name": "Obračun davka na dodano vrednost (obrazec DDV-O)",
+  "period": ["month", "quarter"],
+  "valid_from": "2020-01-01",
+  "legal_reference": "ZDDV-1, 88. in 89. člen, ter Priloga X k Pravilniku o izvajanju ZDDV-1 (obrazec DDV-O in Navodilo za izpolnjevanje obračuna DDV). Polja so oštevilčena, kot jih navaja Priloga X, ki jo je nazadnje objavil Uradni list RS, št. 104/2010; od 10. februarja 2022 (Uradni list RS, št. 16/22) obrazec in navodilo nista več priloga Pravilnika, temveč sta objavljena samostojno na portalu eDavki, pri čemer številčenje polj ostaja isto. Polji 22a (posebna nižja stopnja 5 %) je bilo v obrazec dodano z uvedbo te stopnje 1. januarja 2020; njegovo besedilo v tem paketu izhaja iz sekundarnih virov računovodske stroke in ni bilo preverjeno na uradnem PDF-ju ali na eDavkih — glej README.",
+  "source": "obrazec-ddv-o",
+  "deadline": {
+    "rule": "last_day_of_month_after_period",
+    "legal_reference": "ZDDV-1, 88. člen, prvi odstavek — davčni zavezanec mora predložiti obračun DDV davčnemu organu do zadnjega delovnega dne meseca, ki sledi poteku davčnega obdobja, na katero se obračun nanaša. Potrjeno tudi na angleški strani FURS: \"A taxable person shall submit a tax return to the tax authority by the last business day of the month following the expiration of the tax period.\"",
+    "source": "furs-vat-en"
+  },
+  "boxes": [
+    {
+      "box": "11",
+      "kind": "base",
+      "name": "Dobave blaga in storitev",
+      "sequence": 10,
+      "legal_reference": "Navodilo za izpolnjevanje obračuna DDV, polje 11 — vrednost v Sloveniji obdavčljivih dobav blaga in storitev brez DDV, po vseh stopnjah, skupaj z oproščenimi izvoznimi dobavami blaga in drugimi oproščenimi dobavami s pravico do odbitka DDV (razen dobav v druge države članice EU, ki gredo v polje 12).",
+      "source": "obrazec-ddv-o"
+    },
+    {
+      "box": "11a",
+      "kind": "base",
+      "name": "Dobave blaga in storitev v Sloveniji, od katerih obračuna DDV prejemnik",
+      "sequence": 20,
+      "legal_reference": "Navodilo za izpolnjevanje obračuna DDV, polje 11a — vrednost dobav blaga in opravljenih storitev iz 76.a člena ZDDV-1, katerih plačnik DDV je prejemnik.",
+      "source": "obrazec-ddv-o"
+    },
+    {
+      "box": "12",
+      "kind": "base",
+      "name": "Dobave blaga in storitev v druge države članice EU",
+      "sequence": 30,
+      "legal_reference": "Navodilo za izpolnjevanje obračuna DDV, polje 12 — vrednost oproščenih dobav blaga davčnim zavezancem, identificiranim za DDV v drugih državah članicah, o katerih se poroča v rekapitulacijskem poročilu, ter storitev, obdavčenih v drugi državi članici po členu 196 Direktive 2006/112/ES.",
+      "source": "obrazec-ddv-o"
+    },
+    {
+      "box": "15",
+      "kind": "base",
+      "name": "Oproščene dobave brez pravice do odbitka DDV",
+      "sequence": 40,
+      "legal_reference": "Navodilo za izpolnjevanje obračuna DDV, polje 15 — vrednost oproščenih dobav blaga in storitev brez pravice do odbitka DDV, na primer bolnišnična in zdravstvena oskrba, zavarovalne in finančne transakcije, najem nepremičnin.",
+      "source": "obrazec-ddv-o"
+    },
+    {
+      "box": "21",
+      "kind": "tax",
+      "name": "Obračunani DDV po splošni stopnji",
+      "sequence": 50,
+      "legal_reference": "Navodilo za izpolnjevanje obračuna DDV, polje 21 — obračunani DDV od dobav, pri katerih je obveznost za DDV nastala v Sloveniji po splošni stopnji. Besedilo Priloge X iz 2010 navaja takratno splošno stopnjo 20 %; od 1. julija 2013 (ZDDV-1F) znaša splošna stopnja 22 % (41. člen ZDDV-1), oštevilčenje polja pa se ni spremenilo.",
+      "source": "obrazec-ddv-o"
+    },
+    {
+      "box": "22",
+      "kind": "tax",
+      "name": "Obračunani DDV po nižji stopnji",
+      "sequence": 60,
+      "legal_reference": "Navodilo za izpolnjevanje obračuna DDV, polje 22 — obračunani DDV od dobav, obdavčenih po nižji stopnji iz Priloge I k ZDDV-1. Besedilo Priloge X iz 2010 navaja takratno nižjo stopnjo 8,5 %; od 1. januarja 2020 (ZDDV-1L) znaša nižja stopnja 9,5 %, oštevilčenje polja pa se ni spremenilo.",
+      "source": "obrazec-ddv-o"
+    },
+    {
+      "box": "22a",
+      "kind": "tax",
+      "name": "Obračunani DDV po posebni nižji stopnji",
+      "sequence": 70,
+      "legal_reference": "Obrazec DDV-O je bil s 1. januarjem 2020 (uvedba posebne nižje 5-odstotne stopnje po Prilogi IV k ZDDV-1, ZDDV-1L) dopolnjen s poljem 22a za obračunani DDV po tej stopnji. Obstoj in številka polja izhajata iz sekundarnih virov računovodske stroke (ne iz uradnega PDF-ja ali eDavkov, ki ju avtomatizirano branje ni moglo prikazati v celoti); pred statusom reviewed naj polje preveri, kdor ima dostop do trenutno veljavnega obrazca na eDavkih. Glej README.",
+      "source": "furs-stopnje-ddv"
+    },
+    {
+      "box": "23",
+      "kind": "tax",
+      "name": "Obračunani DDV od pridobitev blaga iz drugih držav članic EU",
+      "sequence": 80,
+      "legal_reference": "Navodilo za izpolnjevanje obračuna DDV, polje 23 — obračunani DDV, ki ga davčni zavezanec obračuna od pridobitev blaga iz drugih držav članic po splošni stopnji.",
+      "source": "obrazec-ddv-o"
+    },
+    {
+      "box": "23a",
+      "kind": "tax",
+      "name": "Obračunani DDV od prejetih storitev iz drugih držav članic EU",
+      "sequence": 90,
+      "legal_reference": "Navodilo za izpolnjevanje obračuna DDV, polje 23a — obračunani DDV, ki ga davčni zavezanec obračuna od prejetih storitev iz drugih držav članic po splošni stopnji.",
+      "source": "obrazec-ddv-o"
+    },
+    {
+      "box": "25",
+      "kind": "tax",
+      "name": "Obračunani DDV na podlagi samoobdavčitve kot prejemnik blaga in storitev",
+      "sequence": 100,
+      "legal_reference": "Navodilo za izpolnjevanje obračuna DDV, polje 25 — obračunani DDV, ki ga obračuna davčni zavezanec kot prejemnik dobave blaga ali storitev, ki jo opravi davčni zavezanec s sedežem v tretji državi (prvi odstavek 25. člena ZDDV-1), ali kot prejemnik dobav in danih predplačil iz 76.a člena ZDDV-1.",
+      "source": "obrazec-ddv-o"
+    },
+    {
+      "box": "31",
+      "kind": "base",
+      "name": "Nabave blaga in storitev",
+      "sequence": 110,
+      "legal_reference": "Navodilo za izpolnjevanje obračuna DDV, polje 31 — vrednost obdavčenih nabav blaga in storitev v Sloveniji ter nabav od davčnih zavezancev s sedežem v tujini (tudi izven EU), za katere je nastala obveznost za obračun in plačilo DDV v Sloveniji, razen nabav iz 76.a člena (polje 31a) in pridobitev oziroma prejetih storitev iz drugih držav članic EU (polji 32 in 32a).",
+      "source": "obrazec-ddv-o"
+    },
+    {
+      "box": "31a",
+      "kind": "base",
+      "name": "Nabave blaga in storitev v Sloveniji, od katerih obračuna DDV prejemnik",
+      "sequence": 120,
+      "legal_reference": "Navodilo za izpolnjevanje obračuna DDV, polje 31a — vrednost nabav blaga in prejetih storitev ter danih predplačil iz 76.a člena ZDDV-1, katerih plačnik DDV je prejemnik.",
+      "source": "obrazec-ddv-o"
+    },
+    {
+      "box": "32",
+      "kind": "base",
+      "name": "Pridobitve blaga iz drugih držav članic EU",
+      "sequence": 130,
+      "legal_reference": "Navodilo za izpolnjevanje obračuna DDV, polje 32 — vrednost pridobitev blaga znotraj Skupnosti, ki je predmet obdavčitve v Sloveniji.",
+      "source": "obrazec-ddv-o"
+    },
+    {
+      "box": "32a",
+      "kind": "base",
+      "name": "Prejete storitve iz drugih držav članic EU",
+      "sequence": 140,
+      "legal_reference": "Navodilo za izpolnjevanje obračuna DDV, polje 32a — vrednost prejetih storitev znotraj Skupnosti brez DDV, ki je predmet obdavčitve v Sloveniji.",
+      "source": "obrazec-ddv-o"
+    },
+    {
+      "box": "41",
+      "kind": "tax",
+      "name": "Odbitek DDV po splošni stopnji",
+      "sequence": 150,
+      "legal_reference": "Navodilo za izpolnjevanje obračuna DDV, polje 41 — odbitek DDV od nabav blaga in storitev, pridobitev blaga in prejetih storitev iz drugih držav članic EU ter od uvoza po splošni stopnji, pri katerih ima davčni zavezanec pravico do odbitka; besedilo se po analogiji uporablja tudi za samoobdavčitev prejemnika storitev s sedežem v tretji državi in za nabave po 76.a členu, ki jih obrazec obračunava v polju 25 in odbija v istem polju 41.",
+      "source": "obrazec-ddv-o"
+    },
+    {
+      "box": "42",
+      "kind": "tax",
+      "name": "Odbitek DDV po nižji stopnji",
+      "sequence": 160,
+      "legal_reference": "Navodilo za izpolnjevanje obračuna DDV, polje 42 — odbitek DDV od zgoraj navedenih nabav po nižji stopnji iz Priloge I.",
+      "source": "obrazec-ddv-o"
+    },
+    {
+      "box": "51",
+      "kind": "total",
+      "name": "Obveznost DDV",
+      "sequence": 170,
+      "plus": ["21", "22", "22a", "23", "23a", "25"],
+      "minus": ["41", "42"],
+      "floor_zero": true,
+      "legal_reference": "Navodilo za izpolnjevanje obračuna DDV, polje 51 — razlika med obračunanim DDV (vsota polj 21 do 26) in odbitkom DDV (vsota polj 41 do 43), kadar je obračunani DDV večji.",
+      "source": "obrazec-ddv-o"
+    },
+    {
+      "box": "52",
+      "kind": "total",
+      "name": "Presežek DDV",
+      "sequence": 180,
+      "plus": ["41", "42"],
+      "minus": ["21", "22", "22a", "23", "23a", "25"],
+      "floor_zero": true,
+      "legal_reference": "Navodilo za izpolnjevanje obračuna DDV, polje 52 — razlika med odbitkom DDV in obračunanim DDV, kadar je odbitek DDV večji.",
+      "source": "obrazec-ddv-o"
+    }
+  ]
+}
