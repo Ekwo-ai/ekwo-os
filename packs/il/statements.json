@@ -1,0 +1,379 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/statements",
+  "statements": [
+    {
+      "code": "IL-IAS1-SFP",
+      "kind": "balance_sheet",
+      "framework": "IL-IAS1",
+      "taxonomy": null,
+      "name": "דוח על המצב הכספי (Statement of financial position — IAS 1)",
+      "legal_reference": "תקן חשבונאות מספר 29 of the Israel Accounting Standards Board requires a 'reporting corporation' — a public company and a private company that has issued bonds to the public — to prepare its financial statements under IFRS for periods beginning 1 January 2008, and תקנות ניירות ערך (דוחות כספיים שנתיים), התש״ע-2010 sets out what such a corporation's annual report must contain without itself fixing a numbered chart of lines. No statute this pack's research found binds every other Israeli company — the overwhelming majority of them, private and outside that definition — to this or to any other fixed statement format; those companies keep books under Israeli GAAP or under IFRS by choice, with no numbered scheme of their own either. The lines below are therefore built, exactly as packs/ae/ and packs/sg/ and packs/hk/ each build theirs where no country-specific statutory format exists, on the minimum line items IAS 1 itself requires (paragraph 54), current and non-current apart. This is the first thing a reviewer should check.",
+      "source": "accounting-standard-29",
+      "lines": [
+        {
+          "code": "CA",
+          "name": "רכוש שוטף (Current assets)",
+          "sequence": 10,
+          "is_total": true,
+          "plus": ["CA.1", "CA.2", "CA.3", "CA.4"],
+          "legal_reference": "IAS 1, paragraphs 60 and 66 — an entity presents current and non-current assets as separate classifications.",
+          "source": null
+        },
+        {
+          "code": "CA.1",
+          "name": "מזומנים ושווי מזומנים (Cash and cash equivalents)",
+          "sequence": 20,
+          "parent": "CA",
+          "sign": 1,
+          "rules": [
+            { "kind": "code_range", "code_from": "1000", "code_to": "1020" }
+          ],
+          "legal_reference": "IAS 1, paragraph 54(i).",
+          "source": null
+        },
+        {
+          "code": "CA.2",
+          "name": "לקוחות וחייבים אחרים (Trade and other receivables)",
+          "sequence": 30,
+          "parent": "CA",
+          "sign": 1,
+          "rules": [
+            { "kind": "code_range", "code_from": "1100", "code_to": "1160" }
+          ],
+          "legal_reference": "IAS 1, paragraph 54(h). VAT input tax and the net amount receivable from the Tax Authority are presented here rather than as current tax, which paragraph 54(n) keeps for income tax.",
+          "source": null
+        },
+        {
+          "code": "CA.3",
+          "name": "מלאי (Inventories)",
+          "sequence": 40,
+          "parent": "CA",
+          "sign": 1,
+          "rules": [
+            { "kind": "code_range", "code_from": "1200", "code_to": "1230" }
+          ],
+          "legal_reference": "IAS 1, paragraph 54(g).",
+          "source": null
+        },
+        {
+          "code": "CA.4",
+          "name": "השקעות לזמן קצר (Short-term investments)",
+          "sequence": 50,
+          "parent": "CA",
+          "sign": 1,
+          "rules": [
+            { "kind": "account_code", "code_from": "1300" }
+          ],
+          "legal_reference": "IAS 1, paragraph 54(d).",
+          "source": null
+        },
+        {
+          "code": "NCA",
+          "name": "רכוש קבוע ולא שוטף (Non-current assets)",
+          "sequence": 60,
+          "is_total": true,
+          "plus": ["NCA.1", "NCA.2", "NCA.3"],
+          "legal_reference": "IAS 1, paragraphs 60 and 66.",
+          "source": null
+        },
+        {
+          "code": "NCA.1",
+          "name": "רכוש קבוע, נטו (Property, plant and equipment, net)",
+          "sequence": 70,
+          "parent": "NCA",
+          "sign": 1,
+          "rules": [
+            { "kind": "code_range", "code_from": "1600", "code_to": "1641" }
+          ],
+          "legal_reference": "IAS 1, paragraph 54(a). Cost and accumulated depreciation sit in the same range, so a class nets to its carrying amount.",
+          "source": null
+        },
+        {
+          "code": "NCA.2",
+          "name": "השקעות וחייבים לזמן ארוך (Investments and long-term receivables)",
+          "sequence": 80,
+          "parent": "NCA",
+          "sign": 1,
+          "rules": [
+            { "kind": "code_range", "code_from": "1700", "code_to": "1710" }
+          ],
+          "legal_reference": "IAS 1, paragraph 54(e).",
+          "source": null
+        },
+        {
+          "code": "NCA.3",
+          "name": "נכסים בלתי מוחשיים, נטו (Intangible assets, net)",
+          "sequence": 90,
+          "parent": "NCA",
+          "sign": 1,
+          "rules": [
+            { "kind": "code_range", "code_from": "1750", "code_to": "1751" }
+          ],
+          "legal_reference": "IAS 1, paragraph 54(c).",
+          "source": null
+        },
+        {
+          "code": "TA",
+          "name": "סך כל הרכוש (Total assets)",
+          "sequence": 100,
+          "is_total": true,
+          "plus": ["CA", "NCA"],
+          "legal_reference": null,
+          "source": null
+        },
+        {
+          "code": "CL",
+          "name": "התחייבויות שוטפות (Current liabilities)",
+          "sequence": 110,
+          "is_total": true,
+          "plus": ["CL.1", "CL.2", "CL.3", "CL.4", "CL.5"],
+          "legal_reference": "IAS 1, paragraphs 60 and 69.",
+          "source": null
+        },
+        {
+          "code": "CL.1",
+          "name": "ספקים (Trade payables)",
+          "sequence": 120,
+          "parent": "CL",
+          "sign": -1,
+          "rules": [
+            { "kind": "account_code", "code_from": "2000" }
+          ],
+          "legal_reference": "IAS 1, paragraph 54(k).",
+          "source": null
+        },
+        {
+          "code": "CL.2",
+          "name": "זכאים אחרים וחשבון מעבר (Other payables and the suspense account)",
+          "sequence": 130,
+          "parent": "CL",
+          "sign": -1,
+          "rules": [
+            { "kind": "code_range", "code_from": "2010", "code_to": "2060" },
+            { "kind": "account_code", "code_from": "2990" }
+          ],
+          "legal_reference": "IAS 1, paragraph 55.",
+          "source": null
+        },
+        {
+          "code": "CL.3",
+          "name": "מע״מ לשלם (VAT payable)",
+          "sequence": 140,
+          "parent": "CL",
+          "sign": -1,
+          "rules": [
+            { "kind": "code_range", "code_from": "2100", "code_to": "2110" }
+          ],
+          "legal_reference": "IAS 1, paragraph 54(n).",
+          "source": null
+        },
+        {
+          "code": "CL.4",
+          "name": "הפרשות שוטפות (Current provisions)",
+          "sequence": 150,
+          "parent": "CL",
+          "sign": -1,
+          "rules": [
+            { "kind": "account_code", "code_from": "2150" }
+          ],
+          "legal_reference": "IAS 1, paragraph 54(l).",
+          "source": null
+        },
+        {
+          "code": "CL.5",
+          "name": "אשראי לזמן קצר (Short-term borrowings)",
+          "sequence": 160,
+          "parent": "CL",
+          "sign": -1,
+          "rules": [
+            { "kind": "code_range", "code_from": "2200", "code_to": "2210" }
+          ],
+          "legal_reference": "IAS 1, paragraph 54(m).",
+          "source": null
+        },
+        {
+          "code": "NCL",
+          "name": "התחייבויות לא שוטפות (Non-current liabilities)",
+          "sequence": 170,
+          "is_total": true,
+          "plus": ["NCL.1", "NCL.2"],
+          "legal_reference": "IAS 1, paragraphs 60 and 69.",
+          "source": null
+        },
+        {
+          "code": "NCL.1",
+          "name": "הלוואות לזמן ארוך (Long-term borrowings)",
+          "sequence": 180,
+          "parent": "NCL",
+          "sign": -1,
+          "rules": [
+            { "kind": "account_code", "code_from": "2300" }
+          ],
+          "legal_reference": "IAS 1, paragraph 54(m).",
+          "source": null
+        },
+        {
+          "code": "NCL.2",
+          "name": "הפרשות לא שוטפות (Non-current provisions)",
+          "sequence": 190,
+          "parent": "NCL",
+          "sign": -1,
+          "rules": [
+            { "kind": "account_code", "code_from": "2350" }
+          ],
+          "legal_reference": "IAS 1, paragraph 54(l).",
+          "source": null
+        },
+        {
+          "code": "TL",
+          "name": "סך כל ההתחייבויות (Total liabilities)",
+          "sequence": 200,
+          "is_total": true,
+          "plus": ["CL", "NCL"],
+          "legal_reference": null,
+          "source": null
+        },
+        {
+          "code": "EQ.1",
+          "name": "הון מניות ופרמיה (Share capital and premium)",
+          "sequence": 210,
+          "sign": -1,
+          "rules": [
+            { "kind": "code_range", "code_from": "3000", "code_to": "3020" }
+          ],
+          "legal_reference": "IAS 1, paragraph 54(r) and 79.",
+          "source": null
+        },
+        {
+          "code": "EQ.2",
+          "name": "עודפים (Retained earnings)",
+          "sequence": 220,
+          "sign": -1,
+          "rules": [
+            { "kind": "code_range", "code_from": "3200", "code_to": "3210" }
+          ],
+          "legal_reference": "IAS 1, paragraph 54(r).",
+          "source": null
+        },
+        {
+          "code": "TE",
+          "name": "סך כל ההון (Total equity)",
+          "sequence": 230,
+          "is_total": true,
+          "plus": ["EQ.1", "EQ.2"],
+          "legal_reference": null,
+          "source": null
+        }
+      ]
+    },
+    {
+      "code": "IL-IAS1-IS",
+      "kind": "income_statement",
+      "framework": "IL-IAS1",
+      "taxonomy": null,
+      "name": "דוח רווח והפסד (Statement of profit or loss — IAS 1)",
+      "legal_reference": "See the legal_reference of IL-IAS1-SFP: the same reading applies here. Expenses are classified by nature, which is what a small business's ledger holds without allocating a cost to a function — IAS 1, paragraph 99 lets either classification stand and paragraph 102 illustrates the by-nature form.",
+      "source": "accounting-standard-29",
+      "lines": [
+        {
+          "code": "REV",
+          "name": "הכנסות (Revenue)",
+          "sequence": 10,
+          "sign": -1,
+          "rules": [
+            { "kind": "code_range", "code_from": "4000", "code_to": "4030" }
+          ],
+          "legal_reference": "IAS 1, paragraph 82(a).",
+          "source": null
+        },
+        {
+          "code": "OINC",
+          "name": "הכנסות אחרות (Other income)",
+          "sequence": 20,
+          "sign": -1,
+          "rules": [
+            { "kind": "code_range", "code_from": "4700", "code_to": "4790" }
+          ],
+          "legal_reference": "IAS 1, paragraph 85.",
+          "source": null
+        },
+        {
+          "code": "COS",
+          "name": "עלות המכר (Cost of sales)",
+          "sequence": 30,
+          "sign": 1,
+          "rules": [
+            { "kind": "code_range", "code_from": "5000", "code_to": "5030" }
+          ],
+          "legal_reference": "IAS 1, paragraph 99 and 103 (by-nature classification: raw materials and consumables used).",
+          "source": null
+        },
+        {
+          "code": "EMP",
+          "name": "הוצאות שכר (Employee benefits expense)",
+          "sequence": 40,
+          "sign": 1,
+          "rules": [
+            { "kind": "code_range", "code_from": "6100", "code_to": "6130" }
+          ],
+          "legal_reference": "IAS 1, paragraph 102(d).",
+          "source": null
+        },
+        {
+          "code": "DEP",
+          "name": "פחת והפחתות (Depreciation and amortisation)",
+          "sequence": 50,
+          "sign": 1,
+          "rules": [
+            { "kind": "code_range", "code_from": "6500", "code_to": "6510" }
+          ],
+          "legal_reference": "IAS 1, paragraph 102(b), and paragraph 104 (the entity discloses depreciation and amortisation among its by-nature expenses).",
+          "source": null
+        },
+        {
+          "code": "OPEX",
+          "name": "הוצאות תפעוליות אחרות (Other operating expenses)",
+          "sequence": 60,
+          "sign": 1,
+          "rules": [
+            { "kind": "code_range", "code_from": "6200", "code_to": "6440" }
+          ],
+          "legal_reference": "IAS 1, paragraph 99.",
+          "source": null
+        },
+        {
+          "code": "FIN",
+          "name": "הוצאות מימון, נטו (Finance costs, net)",
+          "sequence": 70,
+          "sign": 1,
+          "rules": [
+            { "kind": "code_range", "code_from": "6950", "code_to": "7100" }
+          ],
+          "legal_reference": "IAS 1, paragraph 82(b). Realised and unrealised exchange differences and rounding differences are grouped with interest expense here rather than split into a line of their own.",
+          "source": null
+        },
+        {
+          "code": "TAX",
+          "name": "הוצאות מסים על ההכנסה (Income tax expense)",
+          "sequence": 80,
+          "sign": 1,
+          "rules": [
+            { "kind": "account_code", "code_from": "8000" }
+          ],
+          "legal_reference": "IAS 1, paragraph 82(d).",
+          "source": null
+        },
+        {
+          "code": "PROFIT",
+          "name": "רווח (הפסד) לתקופה (Profit (loss) for the period)",
+          "sequence": 90,
+          "is_total": true,
+          "plus": ["REV", "OINC"],
+          "minus": ["COS", "EMP", "DEP", "OPEX", "FIN", "TAX"],
+          "legal_reference": "IAS 1, paragraph 81A(a).",
+          "source": null
+        }
+      ]
+    }
+  ]
+}

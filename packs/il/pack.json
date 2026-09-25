@@ -1,0 +1,186 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "IL",
+  "name": "Israel",
+  "version": "0.1.0",
+  "schema_min": "20260921145425",
+  "seed_sequence": 87,
+  "released_at": "2026-09-25",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "vat-law",
+        "title": "חוק מס ערך מוסף, התשל\"ו-1975 (Value Added Tax Law, 5736-1975), consolidated text",
+        "publisher": "Nevo Legal Database — a private publisher. The Knesset's own official National Legislation Database (מאגר החקיקה הלאומי, main.knesset.gov.il) lists the law and every amendment to it but did not serve a fetchable consolidated text to this research pass; Nevo is the text every Israeli professional source this pack read in turn cites, and is used here for that reason and named as what it is.",
+        "url": "https://www.nevo.co.il/law_html/Law01/271_001.htm",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "vat-regulations",
+        "title": "תקנות מס ערך מוסף, התשל\"ו-1976 (Value Added Tax Regulations, 5736-1976), consolidated text",
+        "publisher": "Nevo Legal Database — a private publisher; see the note on the \"vat-law\" entry above, which applies here too.",
+        "url": "https://www.nevo.co.il/law_html/law01/271_005.htm",
+        "consulted_on": "2026-09-25",
+        "kind": "regulation"
+      },
+      {
+        "key": "eilat-law",
+        "title": "חוק אזור סחר חפשי באילת (פטורים והנחות ממסים), התשמ\"ה-1985 (Free Trade Area (Eilat) Law (Exemptions and Tax Reductions), 5745-1985), consolidated text",
+        "publisher": "Nevo Legal Database — a private publisher; see the note on the \"vat-law\" entry above.",
+        "url": "https://www.nevo.co.il/law_html/law01/009_001.htm",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "vat-rate-order",
+        "title": "צו מס ערך מוסף (שיעור המס על עסקה ועל יבוא טובין), התשס\"ה-2005, כפי שתוקן (Value Added Tax Order (Rate of Tax on a Transaction and on Import of Goods), 5765-2005, as amended) — the order made under section 2 of the Law that has carried every rate since 2005, including the reduction to 17% from 1 October 2015 (Amendment 5775-2015, Reshumot 10 September 2015) and the increase to 18% from 1 January 2025 (Amendment 5784-2024, Reshumot 28 February 2024)",
+        "publisher": "Nevo Legal Database — a private publisher; see the note on the \"vat-law\" entry above. The two amending orders were each published in Reshumot (the Official Gazette), which this research pass could not open at a stable, directly-fetchable URL for either one specifically; the Tax Authority's own announcements of both changes are the \"vat-rate-change-2025\" and \"vat-filing-guidance\" entries below.",
+        "url": "https://www.nevo.co.il/law_html/law01/999_481.htm",
+        "consulted_on": "2026-09-25",
+        "kind": "regulation"
+      },
+      {
+        "key": "vat-rate-change-2025",
+        "title": "העלאת שיעור המע\"מ בשנת 2025 (Raising the VAT rate in 2025) — government decision page, and הוראת פרשנות מס' 1/2024 (Interpretive Directive 1/2024) on the transactions each rate applies to",
+        "publisher": "Prime Minister's Office / Israel Tax Authority (gov.il)",
+        "url": "https://www.gov.il/he/pages/dec1270-2024",
+        "consulted_on": "2026-09-25",
+        "kind": "guidance"
+      },
+      {
+        "key": "vat-filing-guidance",
+        "title": "קביעת מועדי הדיווח והתשלום — דוחות תקופתיים מע\"מ, מקדמות מס הכנסה וניכויים, שנת המס 2025 (Setting the reporting and payment dates — periodic VAT reports, income tax advances and withholdings, tax year 2025)",
+        "publisher": "Israel Tax Authority (gov.il)",
+        "url": "https://www.gov.il/he/pages/pa271024-1",
+        "consulted_on": "2026-09-25",
+        "kind": "guidance"
+      },
+      {
+        "key": "vat-filing-portal",
+        "title": "דיווח ותשלום של דוחות מע\"מ (Reporting and paying VAT returns)",
+        "publisher": "Israel Tax Authority (gov.il)",
+        "url": "https://www.gov.il/he/service/reporting-or-payment-of-vat-reports",
+        "consulted_on": "2026-09-25",
+        "kind": "portal"
+      },
+      {
+        "key": "invoice-allocation-number",
+        "title": "בקשה למספר הקצאה לחשבונית מס (Requesting an allocation number for a tax invoice)",
+        "publisher": "Israel Tax Authority (gov.il)",
+        "url": "https://www.gov.il/he/service/request-assignment-number-for-tax-invoice",
+        "consulted_on": "2026-09-25",
+        "kind": "portal"
+      },
+      {
+        "key": "invoice-allocation-threshold",
+        "title": "החל מה-1 ביוני 2026: חובת מספר הקצאה בניכוי מס תשומות תחול מ-5,000 ₪ (From 1 June 2026: the allocation-number requirement for an input-tax deduction applies from NIS 5,000) — the declining threshold of the \"Israel Invoices\" model, enacted by the Economic Efficiency Law (Legislative Amendments to Achieve the Budget Targets for the 2023 and 2024 Budget Years), 5783-2023",
+        "publisher": "Israel Tax Authority (gov.il)",
+        "url": "https://www.gov.il/he/pages/pa240525-1",
+        "consulted_on": "2026-09-25",
+        "kind": "guidance"
+      },
+      {
+        "key": "securities-regs-annual-reports",
+        "title": "תקנות ניירות ערך (דוחות כספיים שנתיים), התש\"ע-2010 (Securities Regulations (Annual Financial Statements), 5770-2010)",
+        "publisher": "Nevo Legal Database — a private publisher; see the note on the \"vat-law\" entry above. The Israel Securities Authority (isa.gov.il) is the regulator these regulations belong to.",
+        "url": "https://www.nevo.co.il/law_html/law01/500_271.htm",
+        "consulted_on": "2026-09-25",
+        "kind": "regulation"
+      },
+      {
+        "key": "accounting-standard-29",
+        "title": "תקן חשבונאות מספר 29 — אימוץ תקני דיווח כספי בין-לאומיים (IFRS) (Accounting Standard No. 29 — Adoption of International Financial Reporting Standards), the Israel Accounting Standards Board decision requiring a reporting corporation to prepare its financial statements under IFRS for periods beginning 1 January 2008",
+        "publisher": "המוסד הישראלי לתקינה בחשבונאות — the Israel Accounting Standards Board",
+        "url": "https://www.iasb.org.il/",
+        "consulted_on": "2026-09-25",
+        "kind": "standard"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "ILS",
+    "language": "he",
+    "rounding_method": "half_up",
+    "closing_style": "retained_earnings",
+    "fiscal_year_default": "calendar",
+    "roles": {
+      "receivable": "1100",
+      "payable": "2000",
+      "suspense": "2990",
+      "rounding": "6990",
+      "retained_earnings": "3200",
+      "sales": "4000",
+      "purchase": "5000",
+      "bank": "1010",
+      "cash": "1000",
+      "fx_gain": "4700",
+      "fx_loss": "6950",
+      "tax_payable": "2110",
+      "tax_receivable": "1155"
+    },
+    "journal_roles": {
+      "sales": "SAL",
+      "purchase": "PUR",
+      "miscellaneous": "GEN",
+      "opening": "OPN"
+    }
+  },
+  "languages": [
+    "en"
+  ],
+  "journals": [
+    { "code": "SAL", "type": "sales", "name": "יומן מכירות", "sequence": 10 },
+    { "code": "PUR", "type": "purchase", "name": "יומן רכש", "sequence": 20 },
+    { "code": "BNK", "type": "bank", "name": "בנק", "sequence": 30 },
+    { "code": "CSH", "type": "cash", "name": "קופה", "sequence": 40 },
+    { "code": "GEN", "type": "general", "name": "יומן כללי", "sequence": 50 },
+    { "code": "OPN", "type": "opening", "name": "יתרות פתיחה", "sequence": 60 }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "לוח חשבונות ייחוס לישראל",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": ["IL-IAS1-SFP", "IL-IAS1-IS"],
+      "legal_reference": "There is no statutory chart of accounts in Israel. The Companies Law, 5759-1999 requires a company to keep books and prepare financial statements, and Accounting Standard 29 of the Israel Accounting Standards Board requires a 'reporting corporation' — a public company, and a private company that has issued bonds to the public — to prepare them under IFRS from periods beginning 1 January 2008; a private company outside that definition is bound by no statute to a specific chart or a specific framework, and in practice keeps books under Israeli GAAP or under IFRS by choice. This pack's research found no official, numbered reference chart of accounts to transcribe, the same finding packs/ae/ and packs/sg/ and packs/hk/ each record for their own country. The chart below is therefore original: four digits, blocked by class, built to reach one line of the IAS 1 statement of financial position and statement of profit or loss this pack carries (see statements.json), with the accounts an Israeli VAT-registered business actually keeps — VAT input and output tax, the net amount payable to or receivable from the Tax Authority, and the split default roles a periodic return needs. A reviewer should check this chart against a real set of Israeli books before trusting it as more than a working scaffold.",
+      "source": "accounting-standard-29"
+    }
+  ],
+  "documents": {
+    "numbering": "gapless",
+    "number_format": "{CODE}-{NNNNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "invoice_if_issued",
+    "references": {
+      "numbering": {
+        "legal_reference": "תקנות מס ערך מוסף, התשל\"ו-1976, תקנה 9ב — a tax invoice issued by computer must carry a running, sequential number with no gap and no repetition, assigned by the software itself ('מספרי החשבוניות ינופקו ברצף רץ ללא הפסק וללא חזרה על אותו מספר'), for as long as the dealer keeps books by computer under the Records-Keeping Rules. This pack's research read that requirement from secondary professional sources rather than from a directly-fetchable copy of regulation 9ב itself; nevo.co.il's regulations text (see \"vat-regulations\") should be checked for the exact wording before this citation is relied on.",
+        "source": "vat-regulations"
+      },
+      "tax_point": {
+        "legal_reference": "חוק מס ערך מוסף, התשל\"ו-1975, סעיף 24 (מכר טובין) וסעיף 28 (מתן שירות) קובעים כי מועד החיוב במס הוא מועד מסירת הטובין או מועד גמר מתן השירות, ואילו סעיף 29 גובר עליהם ומקדים את מועד החיוב למועד הוצאת החשבונית, ככל שזו קדמה למסירה או לגמר השירות — the delivery of the goods or the completion of the service is the principle, and the invoice date displaces it wherever the invoice was issued first, which is the ordinary case for a business that invoices before or on delivery. A registered dealer whose annual turnover does not exceed the cash-basis ceiling of section 21 may instead be taxed on collection; that derogation is carried on the tax itself as cash_basis and not on this country-wide rule.",
+        "source": "vat-law"
+      }
+    },
+    "mentions": [
+      {
+        "code": "reverse_charge",
+        "applies_when": "reverse_charge",
+        "text": "חשבונית עצמית — המס על עסקה זו מדווח ומשולם על ידי מקבל השירות, בהתאם לתקנה 6ג/6ד לתקנות מס ערך מוסף, התשל\"ו-1976.",
+        "sequence": 10,
+        "legal_reference": "תקנות מס ערך מוסף, התשל\"ו-1976, תקנה 6ג ותקנה 6ד — an Israeli dealer who imports a service or an intangible asset from a person with no place of business in Israel issues a self-invoice (חשבונית עצמית) in their own name and reports the tax with the periodic report filed under regulation 23. This pack's research read the mechanism from professional secondary sources rather than from a directly-fetchable copy of the two regulations; see the note on the \"vat-regulations\" entry.",
+        "source": "vat-regulations"
+      }
+    ]
+  },
+  "einvoicing": {
+    "profile": null,
+    "obligation": "none",
+    "legal_reference": "No statute this pack's research found obliges an Israeli business to exchange a structured electronic invoice — a Peppol-style document a buyer's software can read — with another business. What the Economic Efficiency Law (Legislative Amendments to Achieve the Budget Targets for the 2023 and 2024 Budget Years), 5783-2023 requires instead, from 1 January 2024, is a real-time control of a different shape: a seller who wants a buyer to be able to deduct the input tax of a tax invoice above a declining threshold must first request an 'allocation number' (מספר הקצאה) from the Tax Authority's own system for that specific invoice, and print it on the document — the threshold itself falling from NIS 25,000 in May 2024 to NIS 20,000 from 1 January 2025, NIS 10,000 from 1 January 2026 and NIS 5,000 from 1 June 2026. The invoice a buyer receives is not itself required to be a structured document of any named format; the control is an authorisation number requested and returned over the Tax Authority's own API before or when the invoice is issued, closer to a real-time clearance model than to a Peppol exchange. This pack format has a field for the profile of a structured invoice exchanged between two parties and none for a clearance control of this shape, so `profile` and `mandatory_from` stay empty rather than naming something this is not; the allocation-number regime itself is documented in this pack's README and in docs/international.md under \"Israel\", and is not patched into the schema.",
+    "source": "invoice-allocation-threshold"
+  }
+}

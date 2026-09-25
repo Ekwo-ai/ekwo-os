@@ -1,0 +1,186 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "שנה של עסק ישראלי החייב במע״מ, המדווח דו-חודשית, לשנת 2026",
+  "chart": "default",
+  "fiscal_year": { "name": "שנת הכספים 2026", "start": "2026-01-01", "end": "2026-12-31" },
+  "periods": [
+    { "code": "2026-B1", "from": "2026-01-01", "to": "2026-02-28" },
+    { "code": "2026-B2", "from": "2026-03-01", "to": "2026-04-30" }
+  ],
+  "statements": ["IL-IAS1-SFP", "IL-IAS1-IS"],
+  "contacts": [
+    { "ref": "cust-domestic", "name": "מזרחי תעשיות בע״מ", "type": "customer", "country": "IL" },
+    { "ref": "cust-export", "name": "Nordwind Trading GmbH", "type": "customer", "country": "DE" },
+    { "ref": "cust-eilat", "name": "מלון דקל אילת בע״מ", "type": "customer", "country": "IL" },
+    { "ref": "cust-resi", "name": "דנה כהן", "type": "customer", "country": "IL" },
+    { "ref": "supp-domestic", "name": "ציוד משרדי בע״מ", "type": "supplier", "country": "IL" },
+    { "ref": "supp-capex", "name": "מכונות דפוס בע״מ", "type": "supplier", "country": "IL" },
+    { "ref": "supp-carlease", "name": "רכבי החברה בע״מ", "type": "supplier", "country": "IL" },
+    { "ref": "supp-broker", "name": "סוכנות מכס ומשלחים בע״מ", "type": "supplier", "country": "IL" },
+    { "ref": "supp-foreign-svc", "name": "CloudStack Ireland Ltd", "type": "supplier", "country": "IE" },
+    { "ref": "supp-landlord", "name": "בעל הבית — דירת אירוח לעובדים", "type": "supplier", "country": "IL" }
+  ],
+  "documents": [
+    {
+      "ref": "PUR-SR-1",
+      "type": "purchase_invoice",
+      "contact": "supp-domestic",
+      "date": "2026-01-10",
+      "why": "רכישה שוטפת החייבת בשיעור המלא, ניתנת לניכוי במלואה — בודקת את תיבות 5/6 ואת יתרת מס התשומות.",
+      "lines": [
+        { "name": "ציוד משרדי וחומרי הפעלה", "quantity": 1, "unit_price": 4000, "tax": "IL-P-SR", "account": "6220" }
+      ]
+    },
+    {
+      "ref": "PUR-CAP-1",
+      "type": "purchase_invoice",
+      "contact": "supp-capex",
+      "date": "2026-01-12",
+      "why": "רכישת רכוש קבוע — בודקת שהתשומות בגין רכוש קבוע נספרות בתיבות 7/8 ולא מעורבבות עם תשומות שוטפות.",
+      "lines": [
+        { "name": "מכונת דפוס תעשייתית", "quantity": 1, "unit_price": 20000, "tax": "IL-P-CAP", "account": "1620" }
+      ]
+    },
+    {
+      "ref": "PUR-VEH-1",
+      "type": "purchase_invoice",
+      "contact": "supp-carlease",
+      "date": "2026-01-18",
+      "why": "רכישת רכב פרטי לשימוש בעסק — מס התשומות חסום לפי תקנה 14(א) ואינו נזקף לתיבה כלשהי; העלות המלאה כולל המע״מ נזקפת לחשבון הרכב עצמו.",
+      "lines": [
+        { "name": "רכב פרטי לשימוש מנהל העסק", "quantity": 1, "unit_price": 15000, "tax": "IL-P-BL-VEH", "account": "1640" }
+      ]
+    },
+    {
+      "ref": "INV-SR-1",
+      "type": "sale_invoice",
+      "contact": "cust-domestic",
+      "date": "2026-01-15",
+      "why": "מכירה חייבת בשיעור המלא ללקוח מקומי — בודקת את תיבות 1/2, ומצטמצמת בהמשך על ידי CN-SR-1.",
+      "lines": [
+        { "name": "אספקת ציוד תעשייתי", "quantity": 1, "unit_price": 10000, "tax": "IL-S-SR", "account": "4000" }
+      ]
+    },
+    {
+      "ref": "INV-EXP-1",
+      "type": "sale_invoice",
+      "contact": "cust-export",
+      "date": "2026-01-20",
+      "why": "יצוא טובין בשיעור אפס, לפי סעיף 30(א)(1) — בודקת את תיבה 3 ואת ההבדל מעסקה חייבת.",
+      "lines": [
+        { "name": "יצוא ציוד תעשייתי לגרמניה", "quantity": 1, "unit_price": 25000, "tax": "IL-S-ZR-EXP", "account": "4020" }
+      ]
+    },
+    {
+      "ref": "INV-EILAT-1",
+      "type": "sale_invoice",
+      "contact": "cust-eilat",
+      "date": "2026-01-25",
+      "why": "שירות הניתן באזור אילת בידי עוסק שהוא תושב אזור אילת — פטור לפי סעיף 5(ה) לחוק אזור סחר חפשי באילת, נבדל מיצוא ומהפטור למגורים.",
+      "lines": [
+        { "name": "שירותי תחזוקה למלון באילת", "quantity": 1, "unit_price": 8000, "tax": "IL-S-ZR-EILAT", "account": "4010" }
+      ]
+    },
+    {
+      "ref": "INV-RESI-1",
+      "type": "sale_invoice",
+      "contact": "cust-resi",
+      "date": "2026-02-01",
+      "why": "השכרת דירה למגורים בלבד — פטורה לפי סעיף 31(1), נבדלת מן הפטור באזור אילת ומייצוא בשיעור אפס.",
+      "lines": [
+        { "name": "דמי שכירות חודשיים לדירת מגורים", "quantity": 1, "unit_price": 5000, "tax": "IL-S-EX-RESI", "account": "4030" }
+      ]
+    },
+    {
+      "ref": "INV-SR-2",
+      "type": "sale_invoice",
+      "contact": "cust-domestic",
+      "date": "2026-02-10",
+      "why": "מכירה חייבת נוספת בשיעור המלא, המסולקת במלואה בתשלום E1 — בודקת תשלום שהותאם לחשבונית.",
+      "lines": [
+        { "name": "אספקת ציוד תעשייתי נוסף", "quantity": 2, "unit_price": 3000, "tax": "IL-S-SR", "account": "4000" }
+      ]
+    },
+    {
+      "ref": "CN-SR-1",
+      "type": "sale_credit_note",
+      "contact": "cust-domestic",
+      "date": "2026-03-05",
+      "why": "זיכוי חלקי על INV-SR-1, בשל החזרת פריט — בודק שתיבות 1/2 קטנות בזיכוי ולא רק גדלות.",
+      "lines": [
+        { "name": "זיכוי בגין החזרת פריט מתוך אספקת ציוד תעשייתי", "quantity": 1, "unit_price": 1000, "tax": "IL-S-SR", "account": "4000" }
+      ]
+    },
+    {
+      "ref": "INV-SVCEXP-1",
+      "type": "sale_invoice",
+      "contact": "cust-export",
+      "date": "2026-03-12",
+      "why": "מתן שירות לתושב חוץ בשיעור אפס לפי סעיף 30(א)(5) — נבדל ממכירת יצוא טובין, על אף שניהם נספרים בתיבה 3.",
+      "lines": [
+        { "name": "שירותי ייעוץ הנדסי לחברה גרמנית", "quantity": 1, "unit_price": 15000, "tax": "IL-S-ZR-SVC", "account": "4010" }
+      ]
+    },
+    {
+      "ref": "PUR-IMP-1",
+      "type": "purchase_invoice",
+      "contact": "supp-broker",
+      "date": "2026-03-02",
+      "why": "ייבוא טובין לפי רשימון יבוא, באמצעות סוכן המכס — בודקת שהתשומות והמס המשולם למכס נספרים בתיבות 11/12 בנפרד מתשומות שוטפות.",
+      "lines": [
+        { "name": "ייבוא חומרי גלם, כנגד רשימון יבוא", "quantity": 1, "unit_price": 30000, "tax": "IL-P-IMP", "account": "1210" }
+      ]
+    },
+    {
+      "ref": "PUR-RC-1",
+      "type": "purchase_invoice",
+      "contact": "supp-foreign-svc",
+      "date": "2026-03-08",
+      "why": "יבוא שירות תוכנה מספק שאין לו עסקים בישראל — חשבונית עצמית לפי תקנה 6ג/6ד, בודקת שהמס המשודר לעצמו מופיע גם כחוב וגם כניכוי (תיבות 6 ו-10) ושסכום התשלום לספק אינו כולל את המע״מ.",
+      "lines": [
+        { "name": "מנוי שנתי לתשתית ענן", "quantity": 1, "unit_price": 12000, "tax": "IL-P-RC-SVC", "account": "6230" }
+      ]
+    },
+    {
+      "ref": "PUR-EX-1",
+      "type": "purchase_invoice",
+      "contact": "supp-landlord",
+      "date": "2026-03-15",
+      "why": "רכישת עסקה פטורה — שכירת דירת מגורים לאירוח עובדים — בודקת שאין מס תשומות ושאין תיבה שהעסקה נזקפת אליה.",
+      "lines": [
+        { "name": "שכירות חודשית לדירת אירוח עובדים", "quantity": 1, "unit_price": 3500, "tax": "IL-P-EX", "account": "6200" }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "E1",
+      "direction": "inbound",
+      "date": "2026-02-20",
+      "amount": 7080,
+      "contact": "cust-domestic",
+      "journal": "BNK",
+      "match": "INV-SR-2",
+      "why": "גבייה שמסלקת במדויק את INV-SR-2."
+    },
+    {
+      "ref": "E2",
+      "direction": "outbound",
+      "date": "2026-01-25",
+      "amount": 4720,
+      "contact": "supp-domestic",
+      "journal": "BNK",
+      "match": "PUR-SR-1",
+      "why": "תשלום שמסלק במדויק את PUR-SR-1."
+    },
+    {
+      "ref": "E3",
+      "direction": "inbound",
+      "date": "2026-04-01",
+      "amount": 2000,
+      "contact": "cust-domestic",
+      "journal": "BNK",
+      "why": "מקדמה על חשבון שטרם הותאמה לחשבונית — בודקת תשלום שאינו מותאם."
+    }
+  ]
+}

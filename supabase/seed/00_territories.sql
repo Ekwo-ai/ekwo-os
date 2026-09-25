@@ -971,3 +971,29 @@ on conflict (code) do update set
   eu_vat_to       = excluded.eu_vat_to,
   vat_prefix      = excluded.vat_prefix,
   legal_reference = excluded.legal_reference;
+
+-- ---------------------------------------------------------------------------
+-- The row — Israel
+--
+-- A State outside the common system of VAT the way the United Arab Emirates
+-- and Saudi Arabia are: Israel levies a value added tax of its own under the
+-- Value Added Tax Law, 5736-1975, section 2, at 18 % of the value of a
+-- transaction or an import of goods since the Value Added Tax Order (Rate of
+-- Tax on a Transaction and on Import of Goods) (Amendment), 5784-2024 raised
+-- it from 17 % with effect from 1 January 2025, and no Union instrument
+-- reaches it. `vat_prefix` is null: an Israeli dealer file number carries no
+-- country prefix of this table's kind.
+-- ---------------------------------------------------------------------------
+
+insert into territories (code, code_source, name, parent_code, eu_vat_scope, eu_vat_from, eu_vat_to, vat_prefix, legal_reference) values
+  ('IL', 'iso_3166_1', 'Israel', null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. Israel levies a value added tax of its own under the Value Added Tax Law, 5736-1975, section 2, at 18 % since the Value Added Tax Order (Rate of Tax on a Transaction and on Import of Goods) (Amendment), 5784-2024 (published in Reshumot on 28 February 2024) raised it from 17 % with effect from 1 January 2025 (Israel Tax Authority, consolidated text of the Order).')
+on conflict (code) do update set
+  code_source     = excluded.code_source,
+  name            = excluded.name,
+  parent_code     = excluded.parent_code,
+  eu_vat_scope    = excluded.eu_vat_scope,
+  eu_vat_from     = excluded.eu_vat_from,
+  eu_vat_to       = excluded.eu_vat_to,
+  vat_prefix      = excluded.vat_prefix,
+  legal_reference = excluded.legal_reference;

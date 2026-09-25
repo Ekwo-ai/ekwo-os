@@ -5716,3 +5716,83 @@ automated reader and not a reading choice this pack made.
 `00_territories.sql` outside the common system of VAT, `vat_prefix` null: a
 Sales Tax or Service Tax registration number RMCD issues carries no ISO
 country prefix of that table's kind.
+
+## From Israel
+
+### A real-time allocation-number control, and no field for it
+
+The Economic Efficiency Law (Legislative Amendments to Achieve the Budget
+Targets for the 2023 and 2024 Budget Years), 5783-2023, from 1 January 2024,
+conditions a buyer's input-tax deduction of a tax invoice above a declining
+threshold on the seller first requesting an "allocation number" (מספר הקצאה)
+for that specific invoice from the Tax Authority's own system, and printing
+it on the document — the threshold itself falling from NIS 25,000 in May 2024
+to NIS 20,000 from 1 January 2025, NIS 10,000 from 1 January 2026 and
+NIS 5,000 from 1 June 2026. `einvoicing.profile` names the shape of a
+structured document two parties exchange — `peppol-bis-3`, `pint-ae`,
+`xrechnung` — and `obligation` says whether exchanging one is mandatory. Israel
+asks for neither: the invoice itself carries no required structured format,
+and what is mandatory is a per-invoice authorisation number requested over an
+API before or when the invoice is issued, closer to a real-time clearance
+model — Chile's DTE or Brazil's NF-e are the same shape — than to a
+document exchanged between two parties' own software. `packs/il/` declares
+`obligation: "none"` and leaves `profile` null, which is true as far as the
+vocabulary reaches and silent about the control that actually exists,
+documented instead in the pack's own README. *Fix*: a fourth `obligation`
+value, or a second field beside it, for a clearance control that gates a
+document's own validity rather than naming a format for it — the same shape
+would describe Chile, Brazil, and eventually a Peppol country's own domestic
+extension once one legislates real-time reporting alongside the exchange.
+
+### A sub-national exemption with no territory to hang it on
+
+חוק אזור סחר חפשי באילת (פטורים והנחות ממסים), התשמ״ה-1985, section 5(ה)
+exempts a service supplied in the Eilat free-trade area by a resident of that
+area from VAT — an ordinary condition of *where* in shape, the same as
+`US-CA-S-SHIPPED`'s `supply_vs_seller` or a Canary Islands supply's
+`territories.outside_parent_tax`. Both of those work because the table
+carries a row for the territory the condition names: `US-CA` is an ISO
+3166-2 code, `ES-CN` is too. Eilat has no ISO 3166-2 code of its own —
+ISO 3166-2:IL's own subdivisions stop at district level (`IL-M`, the Southern
+District, which reaches Eilat and a great deal of the Negev besides), and the
+free-trade area the Law defines is neither a district nor open to being
+approximated as one without asserting a boundary this pack's research did not
+verify. `packs/il/` therefore carries the Eilat exemption as an ordinary tax
+with `conditions: ["supply_nature"]` rather than as a territory rule, which
+records that the question exists and records nothing about where the answer
+is drawn — exactly the gap `conditions` was built to admit rather than paper
+over (see "What an exemption depends on" in `docs/packs.md`). *Fix*: none
+proposed here. A territory table keyed on ISO 3166-2 has no row to add for an
+area a national statute defines and ISO does not, and inventing a code this
+pack's own request would be the one to name would be asserting a boundary
+nobody published for this table to hold.
+
+### Three ways to be a taxable person, and this pack carries one
+
+The Law does not tax every registered person the same way. סעיף 1 defines
+three: an עוסק (an ordinary dealer, taxed on output less input in the way
+every pack in this repository already models); a מלכ״ר, a non-profit body,
+which פרק ד׳ of the Law taxes on its wage bill alone (מס שכר) and which
+charges no output VAT on what it does and deducts no input VAT on what it
+buys; and a מוסד כספי, a financial institution, which the same chapter taxes
+on wages and profit together (מס שכר ורווח) rather than on the ordinary VAT
+chain, because most of what it supplies is itself VAT-exempt under section 41
+of the Law. Ekwo's tax format has one scope vocabulary — `sale` and
+`purchase` — built for exactly the ordinary chain a מלכ״ר and a מוסד כספי are
+each carved out of by a different mechanism, on a different base (a wage
+bill, or a wage bill plus a profit figure neither invoice nor journal entry
+states on its own), assessed by a return this pack does not carry either.
+`packs/il/` covers only the עוסק — the ordinary case, and the one every other
+pack in this repository already assumes every registered person is. *Fix*:
+none proposed here either. A wage-tax base is not a transaction of any
+document Ekwo posts, and a second taxpayer type is a different computation
+from a different set of facts, not a variant of the one this format already
+has a shape for.
+
+### ILS and IL
+
+`ILS` is added to `00_currencies.sql` at two decimals. `IL` is added to
+`00_territories.sql` outside the common system of VAT, so `vat_category`,
+`exemption_code` and the five `intracom_*` treatments are read the way every
+non-EU pack's are. `vat_prefix` is null: an Israeli dealer's file number
+("מספר תיק במע״מ") carries no country prefix of that table's kind.

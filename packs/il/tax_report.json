@@ -1,0 +1,141 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "IL-VAT-PERIODIC",
+  "name": "דוח תקופתי למע״מ (Periodic VAT report)",
+  "period": ["month", "bimonth"],
+  "valid_from": "1976-01-01",
+  "legal_reference": "חוק מס ערך מוסף, התשל״ו-1975, סעיף 67(א2)(1) — the ordinary reporting period of a registered dealer is two months, unless the dealer's turnover in the preceding tax year exceeded an amount the section itself sets and the Tax Authority updates every 1 January by the rise in the consumer price index (NIS 1,725,000 for the 2025 tax year, per the Tax Authority's own published table), in which case the period is one month. Section 67(א2)(2) also lets a dealer whose turnover is under the ceiling elect the monthly period. Because the ceiling is a fact about each dealer's own turnover and not an answer the law gives every dealer alike, this pack proposes no `period_default` — the same reading packs/lu/ gives its own turnover-conditioned cadence.",
+  "source": "vat-law",
+  "deadline": {
+    "rule": "day_of_month_after_period",
+    "day": 23,
+    "legal_reference": "חוק מס ערך מוסף, התשל״ו-1975, סעיף 67(ב) sets the baseline: a report is due within fifteen days of the end of the report period, and section 71 sets the same day for payment. תקנות מס ערך מוסף, התשל״ו-1976, תקנה 23(ג) extends that date for a dealer who files online — the ordinary case since online filing became the norm — to the 23rd of the month after the period; the Tax Authority's own yearly notice of reporting and payment dates (see \"vat-filing-guidance\" in certification.sources) states the 23rd for every 2025 period. This pack's research could not open a directly-fetchable copy of regulation 23(ג) itself to quote its own words, and names that gap rather than inventing them; a reviewer should check the regulation's text before this citation is relied on for a dealer who still files on paper, who remains on the fifteen-day rule of section 67(ב).",
+    "source": "vat-filing-guidance"
+  },
+  "boxes": [
+    {
+      "box": "1",
+      "kind": "base",
+      "name": "שווי עסקאות חייבות במס בשיעור מלא (Value of taxable domestic transactions, standard rate)",
+      "legal_reference": "חוק מס ערך מוסף, התשל״ו-1975, סעיף 38(א) conditions the deduction and the reporting of tax on a periodic report; the value reported here excludes the tax itself, which box 2 carries. This pack's research could not open a directly-fetchable copy of the periodic report's own administrative field list (the live misim.gov.il screen, or regulation 23 of the VAT Regulations, which most likely prescribes it) — see the note on the \"vat-regulations\" source. The box numbering below is this pack's own, built on what every independent professional description of the report agrees it holds, and not the Tax Authority's own field numbers.",
+      "source": "vat-law",
+      "sequence": 10
+    },
+    {
+      "box": "2",
+      "kind": "tax",
+      "name": "מע״מ על עסקאות (Output tax on box 1)",
+      "legal_reference": "חוק מס ערך מוסף, התשל״ו-1975, סעיף 2 וסעיף 9 — the tax charged on box 1 at the rate in force.",
+      "source": "vat-law",
+      "sequence": 20
+    },
+    {
+      "box": "3",
+      "kind": "base",
+      "name": "שווי עסקאות בשיעור אפס (Value of zero-rated transactions — export and Eilat)",
+      "legal_reference": "חוק מס ערך מוסף, התשל״ו-1975, סעיף 30 (export of goods and of services to a foreign resident) and חוק אזור סחר חפשי באילת (פטורים והנחות ממסים), התשמ״ה-1985, סעיף 5 (a service supplied in the Eilat area by an Eilat-area resident).",
+      "source": "vat-law",
+      "sequence": 30
+    },
+    {
+      "box": "4",
+      "kind": "base",
+      "name": "שווי עסקאות פטורות ממס (Value of exempt transactions)",
+      "legal_reference": "חוק מס ערך מוסף, התשל״ו-1975, סעיף 31.",
+      "source": "vat-law",
+      "sequence": 40
+    },
+    {
+      "box": "5",
+      "kind": "base",
+      "name": "שווי תשומות שוטפות (Value of ordinary inputs — goods and services, not fixed assets)",
+      "legal_reference": "חוק מס ערך מוסף, התשל״ו-1975, סעיף 38(א) — the value of a purchase whose input tax the dealer seeks to deduct, other than the purchase of a fixed asset, which box 7 carries apart: multiple independent professional descriptions of the periodic report agree it keeps the two apart, which this research reads as reflecting the different capital-goods disclosures the Income Tax Ordinance and VAT statistics ask of a fixed asset; this pack's research could not open a primary text naming the distinction itself.",
+      "source": "vat-law",
+      "sequence": 50
+    },
+    {
+      "box": "6",
+      "kind": "tax",
+      "name": "מע״מ תשומות שוטפות, לרבות מס שהעוסק שידר לעצמו (Input tax on box 5, including the recoverable share of a self-invoiced import of services)",
+      "legal_reference": "חוק מס ערך מוסף, התשל״ו-1975, סעיף 38(א), and — for a self-invoice — תקנות מס ערך מוסף, התשל״ו-1976, תקנה 6ג ו-6ד.",
+      "source": "vat-law",
+      "sequence": 60
+    },
+    {
+      "box": "7",
+      "kind": "base",
+      "name": "שווי תשומות בגין רכוש קבוע (Value of inputs — fixed assets)",
+      "legal_reference": "חוק מס ערך מוסף, התשל״ו-1975, סעיף 38(א), applied to the purchase or the import of a fixed asset of the business.",
+      "source": "vat-law",
+      "sequence": 70
+    },
+    {
+      "box": "8",
+      "kind": "tax",
+      "name": "מע״מ תשומות בגין רכוש קבוע (Input tax on box 7)",
+      "legal_reference": "חוק מס ערך מוסף, התשל״ו-1975, סעיף 38(א).",
+      "source": "vat-law",
+      "sequence": 80
+    },
+    {
+      "box": "9",
+      "kind": "base",
+      "name": "שווי יבוא שירותים ונכסים בלתי מוחשיים לפי חשבונית עצמית (Value of imported services and intangible assets, self-invoiced)",
+      "legal_reference": "תקנות מס ערך מוסף, התשל״ו-1976, תקנה 6ג ו-6ד — a dealer who imports a service or an intangible asset from a person with no place of business in Israel self-assesses the tax by issuing a self-invoice (חשבונית עצמית) and reporting it with the periodic report filed under regulation 23; the same source note as box 1 applies to the exact wording.",
+      "source": "vat-regulations",
+      "sequence": 90
+    },
+    {
+      "box": "10",
+      "kind": "tax",
+      "name": "מע״מ שהעוסק שידר לעצמו על יבוא שירותים (Tax self-assessed on box 9)",
+      "legal_reference": "תקנות מס ערך מוסף, התשל״ו-1976, תקנה 6ג ו-6ד. The recoverable share of this same amount, where the imported service is used for a taxable activity, is deducted through box 6 and not counted here a second time.",
+      "source": "vat-regulations",
+      "sequence": 100
+    },
+    {
+      "box": "11",
+      "kind": "base",
+      "name": "שווי טובין מיובאים לפי רשימוני יבוא (Value of imported goods, per import declarations)",
+      "legal_reference": "חוק מס ערך מוסף, התשל״ו-1975, פרק ו׳ (סעיפים 19 עד 20) sets the charge on the import of goods, assessed and collected by Customs against the import declaration (רשימון יבוא) rather than reported by the dealer on this return; the value is reported here for the same reason box 1's is — as the base the tax of box 12 was charged on. This pack's research corroborates a distinct import-of-goods category in the periodic report from the table of contents of the Tax Authority's own guide to the detailed electronic report file (PCN874), which lists 'פקודות רשומוני יבוא' as a posting category apart from an ordinary domestic purchase.",
+      "source": "vat-law",
+      "sequence": 110
+    },
+    {
+      "box": "12",
+      "kind": "tax",
+      "name": "מע״מ ששולם למכס על יבוא טובין, ניתן לניכוי (Tax paid to Customs on box 11, recoverable)",
+      "legal_reference": "חוק מס ערך מוסף, התשל״ו-1975, סעיף 38(א), once the tax has been paid to Customs against the import declaration.",
+      "source": "vat-law",
+      "sequence": 120
+    },
+    {
+      "box": "13",
+      "kind": "total",
+      "name": "סך מס עסקאות לתשלום (Total output tax due)",
+      "legal_reference": "חוק מס ערך מוסף, התשל״ו-1975, סעיף 38.",
+      "source": "vat-law",
+      "plus": ["2", "10"],
+      "sequence": 130
+    },
+    {
+      "box": "14",
+      "kind": "total",
+      "name": "סך מס תשומות הניתן לניכוי (Total input tax recoverable)",
+      "legal_reference": "חוק מס ערך מוסף, התשל״ו-1975, סעיף 38.",
+      "source": "vat-law",
+      "plus": ["6", "8", "12"],
+      "sequence": 140
+    },
+    {
+      "box": "15",
+      "kind": "total",
+      "name": "יתרת מס לתשלום או לקבלה (Net tax payable or refundable for the period)",
+      "legal_reference": "חוק מס ערך מוסף, התשל״ו-1975, סעיף 38 וסעיף 39 — a negative figure is an excess of input tax, which section 39 lets the dealer carry to the next period or, past six periods, claim as a refund under section 40; this pack applies no floor at zero.",
+      "source": "vat-law",
+      "plus": ["13"],
+      "minus": ["14"],
+      "sequence": 150
+    }
+  ]
+}

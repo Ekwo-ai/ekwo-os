@@ -1,0 +1,86 @@
+code,parent,type,reconcilable,name,sequence
+1000,,asset_cash,false,קופה,10
+1010,,asset_cash,false,בנק — חשבון שקלי,20
+1015,,asset_cash,false,בנק — חשבון מט״ח,30
+1020,,asset_cash,false,פיקדונות לזמן קצר,40
+1100,,asset_receivable,true,לקוחות,50
+1110,,asset_current,false,לקוחות — הפרשה לחובות מסופקים,60
+1120,,asset_current,true,חייבים אחרים,70
+1130,,asset_prepayments,false,הוצאות מראש,80
+1140,,asset_current,false,מקדמות לספקים,90
+1150,,asset_current,false,מע״מ תשומות,100
+1155,,asset_current,true,מע״מ לקבל מרשות המסים — נטו לאחר הגשת דוח,110
+1160,,asset_current,false,מקדמות מס הכנסה,120
+1200,,asset_current,false,מלאי — סחורה למכירה,130
+1210,,asset_current,false,מלאי — חומרי גלם,140
+1220,,asset_current,false,מלאי — עבודה בתהליך,150
+1230,,asset_current,false,מלאי — תוצרת גמורה,160
+1300,,asset_current,false,השקעות לזמן קצר,170
+1600,,asset_fixed,false,קרקעות ומבנים — עלות,180
+1601,,asset_fixed,false,קרקעות ומבנים — פחת נצבר,190
+1610,,asset_fixed,false,השבחות במושכר — עלות,200
+1611,,asset_fixed,false,השבחות במושכר — פחת נצבר,210
+1620,,asset_fixed,false,מכונות וציוד — עלות,220
+1621,,asset_fixed,false,מכונות וציוד — פחת נצבר,230
+1630,,asset_fixed,false,ריהוט וציוד משרדי — עלות,240
+1631,,asset_fixed,false,ריהוט וציוד משרדי — פחת נצבר,250
+1640,,asset_fixed,false,כלי רכב — עלות,260
+1641,,asset_fixed,false,כלי רכב — פחת נצבר,270
+1700,,asset_non_current,false,השקעות בחברות מוחזקות,280
+1710,,asset_non_current,false,פיקדונות והלוואות לזמן ארוך,290
+1750,,asset_non_current,false,נכסים בלתי מוחשיים — עלות,300
+1751,,asset_non_current,false,נכסים בלתי מוחשיים — הפחתה נצברת,310
+2000,,liability_payable,true,ספקים,320
+2010,,liability_current,false,זכאים שונים והוצאות לשלם,330
+2020,,liability_current,false,הכנסות מראש,340
+2030,,liability_current,false,מקדמות מלקוחות,350
+2050,,liability_current,false,שכר עבודה לשלם,360
+2060,,liability_current,false,מוסדות — ניכויים לביטוח לאומי ולמס הכנסה,370
+2100,,liability_current,false,מע״מ עסקאות,380
+2110,,liability_current,true,מע״מ לשלם לרשות המסים — נטו לאחר הגשת דוח,390
+2150,,liability_current,false,הפרשה לפיצויי פרישה — חלק שוטף,400
+2200,,liability_current,false,אשראי בנקאי לזמן קצר ומשיכת יתר,410
+2210,,liability_current,false,חלות שוטפות של הלוואות לזמן ארוך,420
+2300,,liability_non_current,false,הלוואות לזמן ארוך,430
+2350,,liability_non_current,false,הפרשה לפיצויי פרישה — חלק לא שוטף,440
+2990,,liability_current,false,חשבון מעבר,450
+3000,,equity,false,הון מניות,460
+3010,,equity,false,פרמיה על מניות,470
+3020,,equity,false,קרנות הון,480
+3200,,equity_retained,false,עודפים,490
+3210,,equity_retained,false,דיבידנד שהוכרז,500
+4000,,income,false,הכנסות ממכירת טובין בישראל,510
+4010,,income,false,הכנסות ממתן שירותים בישראל,520
+4020,,income,false,הכנסות ממכירות ליצוא,530
+4030,,income,false,הכנסות משכירות,540
+4700,,income_other,false,רווחי שער חליפין — ממומשים,550
+4710,,income_other,false,רווחי שער חליפין — טרם מומשו,560
+4790,,income_other,false,הכנסות אחרות,570
+5000,,expense_direct_cost,false,עלות המכר — סחורה,580
+5010,,expense_direct_cost,false,הובלה ושחרור מכס,590
+5020,,expense_direct_cost,false,עבודות קבלני משנה,600
+5030,,expense_direct_cost,false,החזרות וזיכויים מספקים,610
+6100,,expense,false,שכר עבודה ונלוות,620
+6110,,expense,false,הפרשה לפיצויי פרישה — הוצאות השנה,630
+6120,,expense,false,ביטוח בריאות ורפואי לעובדים,640
+6130,,expense,false,הכשרה וגיוס עובדים,650
+6200,,expense,false,שכירות והחזקת משרד,660
+6210,,expense,false,חשמל ומים,670
+6220,,expense,false,ציוד וחומרים משרדיים,680
+6230,,expense,false,תקשוב ותוכנה,690
+6240,,expense,false,תיקונים ואחזקה,700
+6300,,expense,false,נסיעות,710
+6310,,expense,false,אירוח — מע״מ אינו ניתן לניכוי,720
+6320,,expense,false,הוצאות החזקת רכב,730
+6400,,expense,false,שכר טרחה מקצועי,740
+6410,,expense,false,עמלות והוצאות בנק,750
+6420,,expense,false,ביטוח,760
+6430,,expense,false,שיווק ופרסום,770
+6440,,expense,false,אגרות ותשלומים לרשויות,780
+6500,,expense_depreciation,false,פחת,790
+6510,,expense_depreciation,false,הפחתת נכסים בלתי מוחשיים,800
+6950,,expense,false,הפסדי שער חליפין — ממומשים,810
+6955,,expense,false,הפסדי שער חליפין — טרם מומשו,820
+6990,,expense,false,הפרשי עיגול,830
+7100,,expense,false,הוצאות מימון,840
+8000,,expense,false,הוצאות מס חברות לשנה,850
