@@ -1,0 +1,536 @@
+[
+  {
+    "code": "MT-S-18",
+    "name": "Sale, standard rate 18%",
+    "rate": 18,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2004-05-01",
+    "legal_reference": "Value Added Tax Act, article 19(1) — the tax chargeable on every taxable supply, other than a supply specified in the Eighth Schedule, is eighteen per cent of the taxable value of the supply. Box 18 of the VAT Return carries the value of a domestic supply taxed at the standard rate and box 23 the tax.",
+    "source": "vat-act",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "18" },
+        { "type": "tax", "account": "2200", "box": "23" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "18", "box_factor": -100 },
+        { "type": "tax", "account": "2200", "box": "23", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 10
+  },
+  {
+    "code": "MT-S-07",
+    "name": "Sale, reduced rate 7% — accommodation and sporting facilities",
+    "rate": 7,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2004-05-01",
+    "legal_reference": "Value Added Tax Act, article 19(2) and Eighth Schedule [article 19(2)], items 1 and 11 — licensed tourist accommodation and the use of sporting facilities are taxed at seven per cent. Box 18a carries the value and box 23a the tax.",
+    "source": "vat-act",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "18a" },
+        { "type": "tax", "account": "2200", "box": "23a" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "18a", "box_factor": -100 },
+        { "type": "tax", "account": "2200", "box": "23a", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 20
+  },
+  {
+    "code": "MT-S-12",
+    "name": "Sale, reduced rate 12% — securities, credit management, boat hire, body care",
+    "rate": 12,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2024-01-01",
+    "legal_reference": "Value Added Tax Act, Eighth Schedule [article 19(2)], items 12 to 15, inserted by the Value Added Tax Act (Amendment of Eighth Schedule) Regulations, 2023 (Legal Notice 231 of 2023) with effect from 1 January 2024 — custody and management of securities; management of credit and credit guarantees by a person other than the one who granted the credit; the short-term hiring of a pleasure boat not exceeding five weeks over a running twelve-month period; and services consisting of the care of the human body delivered by a person exercising a profession regulated by the Health Care Professions Act, including a health studio, other than an exempt supply of item 11 of Part Two of the Fifth Schedule. Box 18b carries the value and box 23b the tax.",
+    "source": "ln-231-2023",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "18b" },
+        { "type": "tax", "account": "2200", "box": "23b" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "18b", "box_factor": -100 },
+        { "type": "tax", "account": "2200", "box": "23b", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 30
+  },
+  {
+    "code": "MT-S-05",
+    "name": "Sale, reduced rate 5%",
+    "rate": 5,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2004-05-01",
+    "legal_reference": "Value Added Tax Act, Eighth Schedule [article 19(2)], items 2 to 10 — among them the supply of electricity (item 2), printed matter including e-books (item 5), the importation of works of art, collector's items and antiques (item 7), minor repairs of bicycles, shoes and clothing (item 8), domestic care services (item 9) and admission to museums, art exhibitions, concerts and theatres (item 10). Box 19 carries the value and box 24 the tax.",
+    "source": "vat-act",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "19" },
+        { "type": "tax", "account": "2200", "box": "24" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "19", "box_factor": -100 },
+        { "type": "tax", "account": "2200", "box": "24", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 40
+  },
+  {
+    "code": "MT-S-FOOD",
+    "name": "Sale, food for human consumption — exempt with credit",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2004-05-01",
+    "legal_reference": "Value Added Tax Act, Fifth Schedule, Part One, item 9 — the supply of food for human consumption, excluding food supplied in the course of catering, is exempt with credit. Box 20, \"Exempt with Credit / Exports\", carries the value; there is no tax.",
+    "source": "vat-act",
+    "vat_category": "Z",
+    "postings": {
+      "invoice": [ { "type": "base", "box": "20" } ],
+      "credit_note": [ { "type": "base", "box": "20", "box_factor": -100 } ]
+    },
+    "kind": "vat",
+    "sequence": 50
+  },
+  {
+    "code": "MT-S-PHARMA",
+    "name": "Sale, pharmaceutical goods — exempt with credit",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2004-05-01",
+    "legal_reference": "Value Added Tax Act, Fifth Schedule, Part One, item 10 — the supply of pharmaceutical goods is exempt with credit. Box 20 carries the value.",
+    "source": "vat-act",
+    "vat_category": "Z",
+    "postings": {
+      "invoice": [ { "type": "base", "box": "20" } ],
+      "credit_note": [ { "type": "base", "box": "20", "box_factor": -100 } ]
+    },
+    "kind": "vat",
+    "sequence": 60
+  },
+  {
+    "code": "MT-S-EXPORT",
+    "name": "Export of goods outside the European Union",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2004-05-01",
+    "legal_reference": "Value Added Tax Act, Fifth Schedule, Part One, item 1(1) — the supply of goods dispatched or transported to a destination outside the Community by or on behalf of the seller is exempt with credit. Box 20, \"Exempt with Credit / Exports\", carries the value.",
+    "source": "vat-act",
+    "vat_category": "G",
+    "exemption_code": "VATEX-EU-G",
+    "conditions": ["transport_evidence"],
+    "postings": {
+      "invoice": [ { "type": "base", "box": "20" } ],
+      "credit_note": [ { "type": "base", "box": "20", "box_factor": -100 } ]
+    },
+    "kind": "vat",
+    "sequence": 70
+  },
+  {
+    "code": "MT-S-EDUCATION",
+    "name": "Sale, education — exempt without credit",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2004-05-01",
+    "legal_reference": "Value Added Tax Act, article 9(1)(a) and Fifth Schedule, Part Two, item 12(1) — the provision of education or educational research, vocational training or retraining by a government school or institution, the University of Malta, a school registered under the Education Act, or an establishment the Commissioner recognises for the purpose, is exempt without credit. Box 21 carries the value; there is no tax and no right to deduct the tax incurred on the related purchases.",
+    "source": "vat-act",
+    "vat_category": "E",
+    "exemption_code": "VATEX-EU-132-1I",
+    "postings": {
+      "invoice": [ { "type": "base", "box": "21" } ],
+      "credit_note": [ { "type": "base", "box": "21", "box_factor": -100 } ]
+    },
+    "kind": "vat",
+    "sequence": 80
+  },
+  {
+    "code": "MT-S-INSURANCE",
+    "name": "Sale, insurance and reinsurance — exempt without credit",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2004-05-01",
+    "legal_reference": "Value Added Tax Act, Fifth Schedule, Part Two, item 2 — the supply by a person licensed under the Insurance Business Act or the Insurance Distribution Act of insurance and reinsurance transactions, including related services specific to and essential for them, is exempt without credit. Box 21 carries the value.",
+    "source": "vat-act",
+    "vat_category": "E",
+    "exemption_code": "VATEX-EU-135-1",
+    "postings": {
+      "invoice": [ { "type": "base", "box": "21" } ],
+      "credit_note": [ { "type": "base", "box": "21", "box_factor": -100 } ]
+    },
+    "kind": "vat",
+    "sequence": 90
+  },
+  {
+    "code": "MT-S-FINANCE",
+    "name": "Sale, credit and financial services — exempt without credit",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2004-05-01",
+    "legal_reference": "Value Added Tax Act, Fifth Schedule, Part Two, item 3 — the granting and negotiation of credit, transactions concerning deposit and current accounts, payments, currency and securities, and the management of a collective investment scheme, are exempt without credit. Box 21 carries the value.",
+    "source": "vat-act",
+    "vat_category": "E",
+    "exemption_code": "VATEX-EU-135-1",
+    "postings": {
+      "invoice": [ { "type": "base", "box": "21" } ],
+      "credit_note": [ { "type": "base", "box": "21", "box_factor": -100 } ]
+    },
+    "kind": "vat",
+    "sequence": 100
+  },
+  {
+    "code": "MT-S-LETTING",
+    "name": "Sale, letting of immovable property — exempt without credit",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2004-05-01",
+    "legal_reference": "Value Added Tax Act, Fifth Schedule, Part Two, item 1(1) — the letting of immovable property is exempt without credit, excluding licensed tourist accommodation, designated parking, permanently installed equipment, a letting to a person registered under article 10 for the purpose of that person's economic activity, and a letting of no more than thirty days, among other carve-outs the item lists. Box 21 carries the value.",
+    "source": "vat-act",
+    "vat_category": "E",
+    "exemption_code": "VATEX-EU-135-1",
+    "postings": {
+      "invoice": [ { "type": "base", "box": "21" } ],
+      "credit_note": [ { "type": "base", "box": "21", "box_factor": -100 } ]
+    },
+    "kind": "vat",
+    "sequence": 110
+  },
+  {
+    "code": "MT-S-ICG",
+    "name": "Intra-Community supply of goods",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "intracom_goods",
+    "valid_from": "2004-05-01",
+    "legal_reference": "Value Added Tax Act, Fifth Schedule, Part One, item 3(1) — the intra-Community supply of goods to a person identified on the invoice by a valid and active value added tax identification number of a Member State other than Malta is exempt with credit, subject to the recapitulative statement of article 30(2). Box 1, \"Exempt IC Supplies of Goods and Supplies of Services where customer is liable for the tax\", carries the value.",
+    "source": "vat-act",
+    "vat_category": "K",
+    "exemption_code": "VATEX-EU-IC",
+    "conditions": ["buyer_status", "transport_evidence"],
+    "postings": {
+      "invoice": [ { "type": "base", "box": "1" } ],
+      "credit_note": [ { "type": "base", "box": "1", "box_factor": -100 } ]
+    },
+    "kind": "vat",
+    "sequence": 120
+  },
+  {
+    "code": "MT-S-ICS",
+    "name": "Services supplied to a taxable person in another Member State",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "intracom_services",
+    "valid_from": "2004-05-01",
+    "legal_reference": "Value Added Tax Act, Third Schedule, Part Two, item 2(a) [article 7] — the place of supply of a service to a taxable person acting as such is where that person is established, so a service supplied to a business in another Member State is outside the scope of Maltese VAT and the customer accounts for the tax under Articles 44 and 196 of Directive 2006/112/EC. Box 1, which the form describes as covering \"Supplies of Services where customer is liable for the tax\" alongside intra-Community goods, carries the value.",
+    "source": "vat-act",
+    "vat_category": "K",
+    "exemption_code": "VATEX-EU-IC",
+    "conditions": ["buyer_status"],
+    "postings": {
+      "invoice": [ { "type": "base", "box": "1" } ],
+      "credit_note": [ { "type": "base", "box": "1", "box_factor": -100 } ]
+    },
+    "kind": "vat",
+    "sequence": 130
+  },
+  {
+    "code": "MT-P-18-RESALE",
+    "name": "Purchase for re-sale, standard rate 18%",
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2004-05-01",
+    "legal_reference": "Value Added Tax Act, article 19(1) for the rate and article 23 for the right of deduction. Box 27 of the VAT Return carries the value of a taxable purchase for re-sale at the standard rate and box 34 the input tax.",
+    "source": "vat-act",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "27" },
+        { "type": "tax", "account": "1140", "box": "34" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "27", "box_factor": -100 },
+        { "type": "tax", "account": "1140", "box": "34", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 200
+  },
+  {
+    "code": "MT-P-05-RESALE",
+    "name": "Purchase for re-sale, reduced rate 5%",
+    "rate": 5,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2004-05-01",
+    "legal_reference": "Value Added Tax Act, Eighth Schedule [article 19(2)] for the rate and article 23 for the right of deduction. Box 28 carries the value and box 35 the input tax.",
+    "source": "vat-act",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "28" },
+        { "type": "tax", "account": "1140", "box": "35" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "28", "box_factor": -100 },
+        { "type": "tax", "account": "1140", "box": "35", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 210
+  },
+  {
+    "code": "MT-P-EXEMPT-RESALE",
+    "name": "Purchase for re-sale, exempt supply",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "exempt",
+    "valid_from": "2004-05-01",
+    "legal_reference": "Value Added Tax Act, Fifth Schedule — the supplier carries on an activity exempt with or without credit and charges no tax. Box 29 carries the value; there is no tax. `vat_category` is left null: the category on the invoice is the one the supplier chose, and this purchase-only tax does not record it.",
+    "source": "vat-act",
+    "postings": {
+      "invoice": [ { "type": "base", "box": "29" } ],
+      "credit_note": [ { "type": "base", "box": "29", "box_factor": -100 } ]
+    },
+    "kind": "vat",
+    "sequence": 220
+  },
+  {
+    "code": "MT-P-CAPITAL",
+    "name": "Purchase of capital goods, standard rate 18%",
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2004-05-01",
+    "legal_reference": "Value Added Tax Act, article 23 and the Tenth Schedule (Deductions), which hold a capital good to a longer adjustment period than a current purchase, which is why the VAT Return reports it apart from ordinary purchases and overheads. Box 30 carries the value and box 36 the input tax.",
+    "source": "vat-act",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "30" },
+        { "type": "tax", "account": "1140", "box": "36" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "30", "box_factor": -100 },
+        { "type": "tax", "account": "1140", "box": "36", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 230
+  },
+  {
+    "code": "MT-P-18-OVERHEAD",
+    "name": "Purchase of services and overheads, standard rate 18%",
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2004-05-01",
+    "legal_reference": "Value Added Tax Act, article 19(1) and article 23. Box 31 carries the value of services and overheads taxed at the standard rate and box 37 the input tax.",
+    "source": "vat-act",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "31" },
+        { "type": "tax", "account": "1140", "box": "37" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "31", "box_factor": -100 },
+        { "type": "tax", "account": "1140", "box": "37", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 240
+  },
+  {
+    "code": "MT-P-07-OVERHEAD",
+    "name": "Purchase of services and overheads, reduced rate 7%",
+    "rate": 7,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2004-05-01",
+    "legal_reference": "Value Added Tax Act, Eighth Schedule [article 19(2)], items 1 and 11, and article 23. Box 31a carries the value and box 37a the input tax.",
+    "source": "vat-act",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "31a" },
+        { "type": "tax", "account": "1140", "box": "37a" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "31a", "box_factor": -100 },
+        { "type": "tax", "account": "1140", "box": "37a", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 250
+  },
+  {
+    "code": "MT-P-12-OVERHEAD",
+    "name": "Purchase of services and overheads, reduced rate 12%",
+    "rate": 12,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2024-01-01",
+    "legal_reference": "Value Added Tax Act, Eighth Schedule [article 19(2)], items 12 to 15, inserted by Legal Notice 231 of 2023 with effect from 1 January 2024, and article 23. Box 31b carries the value and box 37b the input tax.",
+    "source": "ln-231-2023",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "31b" },
+        { "type": "tax", "account": "1140", "box": "37b" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "31b", "box_factor": -100 },
+        { "type": "tax", "account": "1140", "box": "37b", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 260
+  },
+  {
+    "code": "MT-P-05-OVERHEAD",
+    "name": "Purchase of services and overheads, reduced rate 5%",
+    "rate": 5,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2004-05-01",
+    "legal_reference": "Value Added Tax Act, Eighth Schedule [article 19(2)] and article 23. Box 32 carries the value and box 38 the input tax.",
+    "source": "vat-act",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "32" },
+        { "type": "tax", "account": "1140", "box": "38" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "32", "box_factor": -100 },
+        { "type": "tax", "account": "1140", "box": "38", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 270
+  },
+  {
+    "code": "MT-P-ICG",
+    "name": "Intra-Community acquisition of goods, standard rate 18%",
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "intracom_acquisition_goods",
+    "valid_from": "2004-05-01",
+    "legal_reference": "Value Added Tax Act, article 4(b) and article 20(1)(b) — tax is charged on an intra-Community acquisition made for consideration and is a liability of the person who makes the acquisition; article 23 gives the right to deduct it in the same period. The VAT Return carries the value in box 3 (\"IC Acquisitions of Goods and Services received from other EU Member States\") and again in box 9 (\"IC Acquisitions of Goods excluding Capital Goods\"), the self-assessed output tax in box 6 and its deduction in box 13, so that a fully deductible acquisition nets to nothing.",
+    "source": "vat-act",
+    "vat_category": "K",
+    "exemption_code": "VATEX-EU-IC",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": ["3", "9"] },
+        { "type": "tax", "account": "1140", "box": "13" },
+        { "type": "tax", "factor": -100, "account": "2200", "box": "6" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": ["3", "9"], "box_factor": -100 },
+        { "type": "tax", "account": "1140", "box": "13", "box_factor": -100 },
+        { "type": "tax", "factor": -100, "account": "2200", "box": "6", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 280
+  },
+  {
+    "code": "MT-P-ICG-CAPITAL",
+    "name": "Intra-Community acquisition of capital goods, standard rate 18%",
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "intracom_acquisition_goods",
+    "valid_from": "2004-05-01",
+    "legal_reference": "Value Added Tax Act, article 4(b), article 20(1)(b) and the Tenth Schedule (Deductions), which holds a capital good to a longer adjustment period, which is why the VAT Return reports it apart from an ordinary intra-Community acquisition of goods. The value is carried in box 3 and again in box 10 (\"IC Acquisitions of Capital Goods\"), the self-assessed output tax in box 6 and its deduction in box 14.",
+    "source": "vat-act",
+    "vat_category": "K",
+    "exemption_code": "VATEX-EU-IC",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": ["3", "10"] },
+        { "type": "tax", "account": "1140", "box": "14" },
+        { "type": "tax", "factor": -100, "account": "2200", "box": "6" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": ["3", "10"], "box_factor": -100 },
+        { "type": "tax", "account": "1140", "box": "14", "box_factor": -100 },
+        { "type": "tax", "factor": -100, "account": "2200", "box": "6", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 290
+  },
+  {
+    "code": "MT-P-ICS",
+    "name": "Service received from a supplier in another Member State, standard rate 18%",
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "intracom_acquisition_services",
+    "valid_from": "2004-05-01",
+    "legal_reference": "Value Added Tax Act, article 20(2)(b) read with the Third Schedule, Part Two, item 2(a) — the tax on a service supplied by a person not established in Malta to a taxable person registered under article 10 is that person's liability, self-assessed; article 23 gives the right to deduct it. The value is carried in box 3 and again in box 9a (\"Services received from EU Member States where the purchaser is liable for VAT\"), the self-assessed output tax in box 6 and its deduction in box 13a.",
+    "source": "vat-act",
+    "vat_category": "K",
+    "exemption_code": "VATEX-EU-IC",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": ["3", "9a"] },
+        { "type": "tax", "account": "1140", "box": "13a" },
+        { "type": "tax", "factor": -100, "account": "2200", "box": "6" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": ["3", "9a"], "box_factor": -100 },
+        { "type": "tax", "account": "1140", "box": "13a", "box_factor": -100 },
+        { "type": "tax", "factor": -100, "account": "2200", "box": "6", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 300
+  },
+  {
+    "code": "MT-P-FSR",
+    "name": "Service received from a supplier outside the European Union, standard rate 18%",
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2004-05-01",
+    "legal_reference": "Value Added Tax Act, article 20(2)(b) read with the Third Schedule, Part Two, item 2(a) — the same self-assessment where the supplier is established outside the Union; article 23 gives the right to deduct it. The VAT Return has no box for a service received from another EU Member State outside boxes 3/9a/13a, so a service from a supplier outside the Union is carried in box 4 (\"Goods and Services received where Place of Supply is Malta other than those reported in Box 3\") and again in box 11, the self-assessed output tax in box 7 and its deduction in box 15.",
+    "source": "vat-act",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": ["4", "11"] },
+        { "type": "tax", "account": "1140", "box": "15" },
+        { "type": "tax", "factor": -100, "account": "2200", "box": "7" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": ["4", "11"], "box_factor": -100 },
+        { "type": "tax", "account": "1140", "box": "15", "box_factor": -100 },
+        { "type": "tax", "factor": -100, "account": "2200", "box": "7", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 310
+  }
+]

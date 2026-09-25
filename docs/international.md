@@ -4843,3 +4843,62 @@ carries no e-SLOG writer and no e-SLOG reader today, the way it carries
 billed and can bill in e-SLOG through any outside tool; nothing here reads or
 writes the file itself yet.
 
+
+## From Malta
+
+`packs/mt/`, `community`, seed 80, inside the common system of VAT since
+accession on 1 May 2004. Its rates, its VAT Return and its balance sheet are
+read from the Value Added Tax Act (Cap. 406), the Commercial Code and the
+GAPSME accounting regulations; one thing the format could not say.
+
+### A deadline that is a month later than the vocabulary can place it
+
+`tax_report.deadline` names three rules, closed: a day of the month that
+follows the period, the last day of that month, and "depends on the
+taxpayer" for a state that assigns the day per filer. Article 27(1) of the
+Value Added Tax Act sets Malta's own rule as none of the three: the return is
+due "not later than the fifteenth day of the second month following the
+month during which that tax period ends" — a quarter ending 31 March is due
+15 May, not 15 April. A specimen VAT Return this pack's authors read confirms
+it to the day: a period ending 31 January 2024 carries a printed due date of
+15 March 2024.
+
+`day_of_month_after_period` computes a day of the month immediately *after*
+the one the period ends in (`date_trunc('month', p_period_end + interval '1
+month')`, `packages/cli`'s own SQL), and `plus_days` only adds a fixed count
+of calendar days to what that produces — it cannot add a calendar month,
+because a month has no fixed number of days. Trying it anyway breaks on the
+first quarter it is asked to generalise over: 15 April plus thirty days lands
+on 15 May, which is right for a quarter ending in March, but 15 July plus
+thirty lands on 14 August, a day short of what article 27(1) actually asks
+for a quarter ending in June. A pack cannot declare a deadline that is right
+three quarters out of four and call the fourth close enough.
+
+*Fix*: a fourth rule, `day_of_month_after_period` with a `months` field (or
+an equivalent second offset) naming how many months after the period's own
+end month the day falls in — Belgium's twentieth is one month, Malta's
+fifteenth is two. `packs/mt/` declares no `deadline` at all rather than a
+date that reads right for nine weeks of the year and wrong for the rest, and
+says so in its README.
+
+### A box the specimen names and nowhere explains
+
+The VAT Return prints box 1 ("Exempt IC Supplies of Goods and Supplies of
+Services where customer is liable for the tax") beside box 2 ("Supplies of
+Goods and Services where Place of Supply is outside Malta - EU and Non EU"),
+under one heading, "Intra-Community and Non-EU Trade". Box 1's own label is
+specific enough to post to: it is the intra-Community supply of goods and the
+business-to-business service reverse-charged to a customer elsewhere in the
+Union, both already named by a tax's own `treatment`. Box 2's is not — it
+could be every other supply whose place is not Malta, or a narrower category
+this pack's authors have no way to name from the box's printed words alone.
+The explanatory guide that would settle it lives on `cfr.gov.mt` and
+`mtca.gov.mt` (Malta's tax administration, renamed from the Commissioner for
+Revenue to the Malta Tax and Customs Administration), both of which answered
+every automated request made of them — `WebFetch` and a browser-like `curl`
+alike — with a Cloudflare challenge rather than a page. `packs/mt/` declares
+box 2 so that `ekwo pack check` accepts the box 5 subtotal that names it, and
+posts no tax code to it. This is not a gap of the format; it is a gap of what
+a reader without a browser session could reach of Malta's own guidance, worth
+naming here so that whoever next opens `cfr.gov.mt` from an office and not a
+script can close it in an afternoon.

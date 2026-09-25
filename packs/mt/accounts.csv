@@ -1,0 +1,149 @@
+code,parent,type,reconcilable,name,sequence
+0010,,asset_fixed,false,Development costs,10
+0011,,asset_fixed,false,Development costs — accumulated amortisation,20
+0020,,asset_fixed,false,"Concessions, patents, licences, trade marks and similar rights and assets",30
+0021,,asset_fixed,false,"Concessions, patents, licences, trade marks and similar rights and assets — accumulated amortisation",40
+0030,,asset_fixed,false,Goodwill,50
+0031,,asset_fixed,false,Goodwill — accumulated amortisation,60
+0040,,asset_fixed,false,Intangible assets — payments on account,70
+0100,,asset_fixed,false,Land and buildings,80
+0101,,asset_fixed,false,Land and buildings — accumulated depreciation,90
+0110,,asset_fixed,false,Plant and machinery,100
+0111,,asset_fixed,false,Plant and machinery — accumulated depreciation,110
+0120,,asset_fixed,false,"Other fixtures, fittings, tools and equipment",120
+0121,,asset_fixed,false,"Other fixtures, fittings, tools and equipment — accumulated depreciation",130
+0130,,asset_fixed,false,Payments on account and tangible assets in the course of construction,140
+0150,,asset_fixed,false,Investment property,150
+0200,,asset_non_current,false,Shares in subsidiaries,160
+0210,,asset_non_current,false,Loans to subsidiaries,170
+0220,,asset_non_current,false,Shares in associates and jointly controlled entities,180
+0230,,asset_non_current,false,Loans to associates and jointly controlled entities,190
+0240,,asset_non_current,false,Other non-current investments other than loans,200
+0250,,asset_non_current,false,Other loans,210
+0300,,asset_non_current,false,Trade receivables — due after more than one year,220
+0310,,asset_non_current,false,Amounts owed by group entities — due after more than one year,230
+0320,,asset_non_current,false,Amounts owed by associates and jointly controlled entities — due after more than one year,240
+0330,,asset_non_current,false,Other receivables — due after more than one year,250
+0340,,asset_non_current,false,Subscribed capital called but not paid — due after more than one year,260
+0350,,asset_prepayments,false,Prepayments and accrued income — due after more than one year,270
+0400,,asset_non_current,false,Deferred tax assets,280
+1000,,asset_current,false,Stocks — raw materials and consumables,290
+1010,,asset_current,false,Stocks — work in progress,300
+1020,,asset_current,false,Stocks — finished goods and goods for resale,310
+1030,,asset_prepayments,false,Stocks — payments on account,320
+1100,,asset_receivable,true,Trade receivables,330
+1110,,asset_current,false,Amounts owed by group entities,340
+1120,,asset_current,false,Amounts owed by associates and jointly controlled entities,350
+1130,,asset_current,false,Other receivables,360
+1140,,asset_current,false,Input VAT — deductible,370
+1150,,asset_current,true,VAT recoverable from the Commissioner for Revenue,380
+1160,,asset_current,false,Corporate tax recoverable,390
+1170,,asset_current,false,Subscribed capital called but not paid,400
+1180,,asset_prepayments,false,Prepayments and accrued income,410
+1200,,asset_current,false,Shares in subsidiaries — held as a current asset,420
+1210,,asset_current,false,Loans to subsidiaries — held as a current asset,430
+1220,,asset_current,false,Shares in associates and jointly controlled entities — held as a current asset,440
+1230,,asset_current,false,Other current investments,450
+1500,,asset_cash,false,Bank current account,460
+1510,,asset_cash,false,Bank deposit account,470
+1520,,asset_cash,false,Bank account in a foreign currency,480
+1530,,asset_cash,false,Petty cash,490
+1540,,asset_cash,false,Cash in transit,500
+1550,,asset_cash,false,Card acquirer settlement account,510
+2000,,liability_current,false,Bank loans — current,520
+2010,,liability_current,false,Bank overdraft,530
+2020,,liability_current,false,Other borrowings — current,540
+2030,,liability_credit_card,false,Credit card account,550
+2100,,liability_payable,true,Trade payables,560
+2105,,liability_current,false,Payments received on account of orders,570
+2110,,liability_current,false,Bills of exchange payable,580
+2120,,liability_current,false,Amounts owed to group entities,590
+2130,,liability_current,false,Amounts owed to associates and jointly controlled entities,600
+2200,,liability_current,false,Output VAT,610
+2210,,liability_current,true,VAT payable to the Commissioner for Revenue,620
+2220,,liability_current,false,Social security and other payroll taxes payable,630
+2230,,liability_current,false,Corporate tax payable,640
+2300,,liability_current,false,Other creditors including indirect tax and social security,650
+2400,,liability_current,false,Accruals and deferred income,660
+2450,,liability_current,false,Suspense account,670
+2500,,liability_current,false,Provisions for employee benefits and similar obligations — current,680
+2510,,liability_current,false,Other provisions — current,690
+3000,,equity,false,Share capital,700
+3010,,equity,false,Share premium account,710
+3020,,equity,false,Revaluation reserve,720
+3030,,equity,false,Other reserves,730
+3400,,equity_retained,false,Retained earnings,740
+3460,,equity,false,Minority interest,760
+4000,,liability_non_current,false,Bank loans — due after more than one year,770
+4010,,liability_non_current,false,Other borrowings — due after more than one year,780
+4100,,liability_non_current,false,Payments received on account of orders — due after more than one year,790
+4110,,liability_non_current,false,Trade payables — due after more than one year,800
+4120,,liability_non_current,false,Bills of exchange payable — due after more than one year,810
+4130,,liability_non_current,false,Amounts owed to group entities — due after more than one year,820
+4140,,liability_non_current,false,Amounts owed to associates and jointly controlled entities — due after more than one year,830
+4150,,liability_non_current,false,Other creditors including indirect tax and social security — due after more than one year,840
+4160,,liability_non_current,false,Accruals and deferred income — due after more than one year,850
+4200,,liability_non_current,false,Deferred tax liabilities,860
+4300,,liability_non_current,false,Provisions for employee benefits and similar obligations,870
+4310,,liability_non_current,false,Other provisions,880
+5000,,income,false,Sales — goods and services at the standard rate (18%),890
+5010,,income,false,Sales — services at 7%,900
+5020,,income,false,Sales — services at 12%,910
+5030,,income,false,Sales — goods and services at 5%,920
+5040,,income,false,Sales — exempt with credit and exports,930
+5050,,income,false,Sales — intra-Community supply of goods,940
+5060,,income,false,Sales — services supplied to a taxable person in another Member State,950
+5070,,income,false,Sales — exempt without credit,960
+5100,,income,false,Sales returns and allowances,970
+5110,,income,false,Discounts allowed,980
+5200,,income_other,false,Other operating income,990
+5210,,income_other,false,Rental income,1000
+5220,,income_other,false,Profit on disposal of fixed assets,1010
+5230,,income_other,false,Foreign exchange gains,1020
+5240,,income_other,false,Income from shares in subsidiaries and associates,1030
+5250,,income_other,false,Income from other investments,1040
+5260,,income_other,false,Other interest receivable and similar income,1050
+6000,,expense_direct_cost,false,Purchases — goods for resale at the standard rate (18%),1060
+6010,,expense_direct_cost,false,Purchases — goods for resale at 5%,1070
+6020,,expense_direct_cost,false,Purchases — exempt goods for resale,1080
+6030,,expense_direct_cost,false,Carriage inwards,1090
+6040,,expense_direct_cost,false,Customs duty and freight on imports,1100
+6050,,expense_direct_cost,false,Purchase returns and allowances,1110
+6060,,expense_direct_cost,false,Discounts received,1120
+6100,,expense_direct_cost,false,Opening stock,1130
+6110,,expense_direct_cost,false,Closing stock,1140
+7000,,expense,false,Advertising and marketing,1150
+7010,,expense,false,Carriage outwards,1160
+7020,,expense,false,Distribution staff — wages and salaries,1170
+7030,,expense,false,Distribution staff — social security costs,1180
+7040,,expense,false,Delivery vehicle running costs,1190
+7050,,expense_depreciation,false,Depreciation — distribution assets,1200
+7100,,expense,false,Directors' remuneration,1210
+7110,,expense,false,Wages and salaries,1220
+7120,,expense,false,Social security costs,1230
+7130,,expense,false,Staff training and welfare,1240
+7200,,expense,false,Rent,1250
+7210,,expense,false,"Light, water and communal charges",1260
+7220,,expense,false,Insurance,1270
+7230,,expense,false,Repairs and maintenance,1280
+7240,,expense,false,Telephone and internet,1290
+7250,,expense,false,"Printing, postage and stationery",1300
+7260,,expense,false,Software and subscriptions,1310
+7270,,expense,false,Motor vehicle running costs,1320
+7280,,expense,false,Travel and subsistence,1330
+7290,,expense,false,Accountancy and legal fees,1340
+7300,,expense,false,Bank charges and card processing fees,1350
+7310,,expense,false,Sundry administrative expenses,1360
+7400,,expense_depreciation,false,Depreciation — land and buildings,1370
+7410,,expense_depreciation,false,Depreciation — plant and machinery,1380
+7420,,expense_depreciation,false,"Depreciation — other fixtures, fittings, tools and equipment",1390
+7430,,expense_depreciation,false,Amortisation of goodwill,1400
+7440,,expense_depreciation,false,Amortisation of other intangible assets,1410
+7670,,expense,false,Loss on disposal of fixed assets,1420
+7680,,expense,false,Foreign exchange losses,1430
+7690,,expense,false,Rounding differences,1440
+8000,,expense,false,Adjustments to the carrying amounts of other investments held as current assets,1450
+8010,,expense,false,Bank and loan interest payable,1460
+8020,,expense,false,Other interest payable and similar charges,1470
+8030,,expense,false,Late payment interest and compensation for recovery costs,1480
+8100,,expense,false,Tax on profit or loss,1490

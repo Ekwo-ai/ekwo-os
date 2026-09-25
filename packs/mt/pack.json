@@ -1,0 +1,229 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "MT",
+  "name": "Malta",
+  "version": "0.1.0",
+  "schema_min": "20260921084143",
+  "seed_sequence": 80,
+  "released_at": "2026-09-25",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "vat-act",
+        "title": "Value Added Tax Act (Chapter 406 of the Laws of Malta), consolidated text",
+        "publisher": "Ministry for Justice — legislation.mt",
+        "url": "https://legislation.mt/eli/cap/406/eng",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "ln-231-2023",
+        "title": "Value Added Tax Act (Amendment of Eighth Schedule) Regulations, 2023 (Legal Notice 231 of 2023) — the 12% rate",
+        "publisher": "Ministry for Justice — legislation.mt",
+        "url": "https://legislation.mt/eli/ln/2023/231/eng",
+        "consulted_on": "2026-09-25",
+        "kind": "regulation"
+      },
+      {
+        "key": "commercial-code",
+        "title": "Commercial Code (Chapter 13 of the Laws of Malta), Title II-A, Of Late Payment in Commercial Transactions, inserted by Legal Notice 272 of 2012",
+        "publisher": "Ministry for Justice — legislation.mt",
+        "url": "https://legislation.mt/eli/cap/13/eng",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "companies-act",
+        "title": "Companies Act (Chapter 386 of the Laws of Malta), consolidated text",
+        "publisher": "Ministry for Justice — legislation.mt",
+        "url": "https://legislation.mt/eli/cap/386/eng",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "gapsme",
+        "title": "Accountancy Profession (General Accounting Principles for Small and Medium-Sized Entities) Regulations (S.L. 281.05), Section 4 — Presentation of Financial Statements",
+        "publisher": "Ministry for Justice — legislation.mt",
+        "url": "https://legislation.mt/eli/sl/281.5/eng",
+        "consulted_on": "2026-09-25",
+        "kind": "regulation"
+      },
+      {
+        "key": "cfr-vat-return",
+        "title": "VAT Return (specimen), Office of the Commissioner for Revenue",
+        "publisher": "Office of the Commissioner for Revenue / Malta Tax and Customs Administration",
+        "url": "https://cfr.gov.mt/en/vat/general_information/Pages/VAT-Return.aspx",
+        "consulted_on": "2026-09-25",
+        "kind": "form"
+      },
+      {
+        "key": "cfr-online-filing",
+        "title": "Mandatory Online Filing of VAT returns through CFR VAT e-Services",
+        "publisher": "Office of the Commissioner for Revenue / Malta Tax and Customs Administration",
+        "url": "https://cfr.gov.mt/en/vat/general_information/Pages/Mandatory-Online-Filing-of-VAT-returns-through-CFR-VAT-e-Services.aspx",
+        "consulted_on": "2026-09-25",
+        "kind": "portal"
+      },
+      {
+        "key": "en-16931",
+        "title": "EN 16931 compliance — the European standard on electronic invoicing under Directive 2014/55/EU",
+        "publisher": "European Commission — Digital Building Blocks",
+        "url": "https://ec.europa.eu/digital-building-blocks/sites/spaces/DIGITAL/pages/467108950/EN+16931+compliance",
+        "consulted_on": "2026-09-25",
+        "kind": "standard"
+      },
+      {
+        "key": "uncl5305",
+        "title": "UNCL5305 — the VAT category code list of EN 16931 (BT-118 and BT-151), as the OpenPEPPOL subset publishes it",
+        "publisher": "OpenPEPPOL — the list itself is published by the European Commission",
+        "url": "https://docs.peppol.eu/poacc/billing/3.0/codelist/UNCL5305/",
+        "consulted_on": "2026-09-25",
+        "kind": "standard"
+      },
+      {
+        "key": "vatex",
+        "title": "VATEX — the VAT exemption reason code list of EN 16931 (BT-121)",
+        "publisher": "OpenPEPPOL — the list itself is published by the European Commission",
+        "url": "https://docs.peppol.eu/poacc/billing/3.0/codelist/vatex/",
+        "consulted_on": "2026-09-25",
+        "kind": "standard"
+      },
+      {
+        "key": "peppol-eas",
+        "title": "Peppol code list of electronic address schemes (ISO 6523 ICD): 0088 Global Location Number, 9943 Malta VAT number",
+        "publisher": "OpenPEPPOL",
+        "url": "https://docs.peppol.eu/poacc/billing/3.0/codelist/eas/",
+        "consulted_on": "2026-09-25",
+        "kind": "standard"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "EUR",
+    "language": "en",
+    "rounding_method": "half_up",
+    "closing_style": "retained_earnings",
+    "fiscal_year_default": "calendar",
+    "roles": {
+      "receivable": "1100",
+      "payable": "2100",
+      "suspense": "2450",
+      "rounding": "7690",
+      "retained_earnings": "3400",
+      "sales": "5000",
+      "purchase": "6000",
+      "bank": "1500",
+      "cash": "1530",
+      "fx_gain": "5230",
+      "fx_loss": "7680",
+      "asset_disposal_gain": "5220",
+      "asset_disposal_loss": "7670",
+      "tax_payable": "2210",
+      "tax_receivable": "1150"
+    },
+    "journal_roles": {
+      "sales": "SAL",
+      "purchase": "PUR",
+      "miscellaneous": "GEN",
+      "opening": "OPN"
+    }
+  },
+  "languages": [],
+  "journals": [
+    { "code": "SAL", "type": "sales", "name": "Sales day book", "sequence": 10 },
+    { "code": "PUR", "type": "purchase", "name": "Purchases day book", "sequence": 20 },
+    { "code": "BNK", "type": "bank", "name": "Bank", "sequence": 30 },
+    { "code": "CSH", "type": "cash", "name": "Cash book", "sequence": 40 },
+    { "code": "GEN", "type": "general", "name": "General journal", "sequence": 50 },
+    { "code": "OPN", "type": "opening", "name": "Opening balances", "sequence": 60 }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Malta reference chart of accounts (GAPSME horizontal layout)",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": ["MT-GAPSME-BS", "MT-GAPSME-IS"],
+      "legal_reference": "Malta prescribes no numbered chart of accounts. Companies Act (Cap. 386), article 167(1) requires accounts that give a true and fair view and comply with generally accepted accounting principles and practice; article 183 and the Accountancy Profession Act (Cap. 281) make GAPSME — the Accountancy Profession (General Accounting Principles for Small and Medium-Sized Entities) Regulations, S.L. 281.05 — the default financial reporting framework for a qualifying small or medium-sized entity, unless the board resolves to report under IFRS as adopted by the EU (S.L. 281.05, regulation 4) or the entity exceeds the size thresholds of regulation 5, in which case IFRS applies. This chart is original: its account blocks follow the balance sheet headings GAPSME §4.13 lists for the horizontal layout, so that the statements of this pack read straight off the chart.",
+      "source": "gapsme"
+    }
+  ],
+  "documents": {
+    "numbering": "sequential",
+    "number_format": "{CODE}-{YYYY}-{NNNN}",
+    "legal_payment_days": 30,
+    "late_payment_reference": "Commercial Code (Cap. 13), Title II-A (Of Late Payment in Commercial Transactions), inserted by Legal Notice 272 of 2012 transposing Directive 2011/7/EU — thirty calendar days from receipt of the goods or services, or of the invoice if later, in the absence of an agreed term; statutory interest at the European Central Bank's main refinancing rate plus eight percentage points (10.15% from 1 July 2025), and a fixed minimum compensation of €40 for recovery costs",
+    "tax_point": "earliest_of_delivery_or_payment",
+    "references": {
+      "numbering": {
+        "legal_reference": "Value Added Tax Act, Twelfth Schedule [article 50(5)], item 3 — every tax invoice carries \"a sequential number, based on one or more series, which uniquely identifies the invoice\". The text requires a sequence, series and uniqueness and prescribes no shape and no rule against a hole, which is why `numbering` is `sequential` rather than gapless.",
+        "source": "vat-act"
+      },
+      "payment_terms": {
+        "legal_reference": "Commercial Code (Cap. 13), Title II-A, inserted by Legal Notice 272 of 2012 — where the contract fixes no date, the debtor is in default, and interest starts to run, thirty calendar days after the later of the receipt of the goods or services and the receipt of the invoice.",
+        "source": "commercial-code"
+      },
+      "tax_point": {
+        "legal_reference": "Value Added Tax Act, Fourth Schedule [article 8], item 3 — the tax on a supply becomes chargeable on the earlier of the date of the chargeable event (delivery of the goods or performance of the services, item 1 and item 2) and the date a payment is made for the supply, to the extent covered by that payment; a proviso brings the date forward to that of a tax invoice issued by the fifteenth day of the month following, which this pack does not model separately — a tax that departs from the general rule says so through `cash_basis`, and this pack declares none.",
+        "source": "vat-act"
+      }
+    },
+    "mentions": [
+      {
+        "code": "intracom_goods",
+        "applies_when": "intra_eu_goods",
+        "text": "Intra-Community supply of goods — exempt with credit under item 3, Part One of the Fifth Schedule to the Value Added Tax Act (Article 138 of Directive 2006/112/EC).",
+        "sequence": 10,
+        "legal_reference": "Value Added Tax Act, Fifth Schedule, Part One, item 3(1) — the intra-Community supply of goods to a person identified on the invoice by a valid value added tax identification number of another Member State is exempt with credit, subject to the recapitulative statement of article 30(2).",
+        "source": "vat-act"
+      },
+      {
+        "code": "intracom_services",
+        "applies_when": "intra_eu_services",
+        "text": "Reverse charge — the customer is liable to account for the VAT (Articles 44 and 196 of Directive 2006/112/EC).",
+        "sequence": 20,
+        "legal_reference": "Value Added Tax Act, article 20(2)(b) read with the Third Schedule, Part Two, item 2(a) — the place of a service supplied to a taxable person is where that person is established, so the payment of the tax on a service supplied to a taxable person identified for VAT in another Member State is that person's liability.",
+        "source": "vat-act"
+      },
+      {
+        "code": "export",
+        "applies_when": "export",
+        "text": "Export of goods outside the European Union — exempt with credit under item 1, Part One of the Fifth Schedule to the Value Added Tax Act.",
+        "sequence": 30,
+        "legal_reference": "Value Added Tax Act, Fifth Schedule, Part One, item 1 — the supply of goods dispatched or transported to a destination outside the Community by or on behalf of the seller, or by or on behalf of a purchaser not established in Malta, is exempt with credit.",
+        "source": "vat-act"
+      },
+      {
+        "code": "exempt",
+        "applies_when": "exempt",
+        "text": "Exempt from VAT under the Fifth Schedule to the Value Added Tax Act.",
+        "sequence": 40,
+        "legal_reference": "Value Added Tax Act, article 9(1) and the Fifth Schedule — the supplies to which Part One (exempt with credit) or Part Two (exempt without credit) of the Fifth Schedule applies are exempt from tax.",
+        "source": "vat-act"
+      },
+      {
+        "code": "late_payment",
+        "applies_when": "late_payment",
+        "text": "If this invoice is not paid within the term stated, statutory interest and a fixed minimum compensation of €40 for recovery costs are due under the Commercial Code (Cap. 13), Title II-A.",
+        "sequence": 50,
+        "legal_reference": "Commercial Code (Cap. 13), Title II-A, inserted by Legal Notice 272 of 2012.",
+        "source": "commercial-code"
+      }
+    ]
+  },
+  "einvoicing": {
+    "profile": "peppol-bis-3",
+    "mandatory_from": null,
+    "obligation": "none",
+    "party_scheme": "0088",
+    "vat_scheme": "9943",
+    "legal_reference": "No Maltese statute obliges a business to issue a structured electronic invoice to another business today, so `obligation` is `none` and `mandatory_from` is empty. A contracting authority must be able to receive and process an EN 16931 invoice under the European Union (public procurement) electronic invoicing rules; that is an obligation of the public buyer, not of the supplier, and this pack carries no separate field for it. The EU's VAT in the Digital Age package will require structured, EN 16931-based invoicing for intra-Union cross-border business-to-business supplies from 1 July 2030, and Malta's own tax administration has signalled work on a national e-invoicing and digital reporting regime ahead of that date, but at the day this pack was released no Maltese legal notice had set a date or a mandatory profile. The profile declared is Peppol BIS Billing 3.0, which is what Peppol participants in Malta exchange today, and is not a legal requirement. The two identifiers are ISO 6523 codes of the Peppol electronic address scheme list: 0088 is the Global Location Number, because that list carries no code for a Malta Business Registry company number; 9943 is the Malta VAT number.",
+    "source": "peppol-eas"
+  },
+  "bank": {
+    "statement_formats": ["camt.053"],
+    "payment_formats": []
+  }
+}

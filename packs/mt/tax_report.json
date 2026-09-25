@@ -1,0 +1,472 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "MT-VAT-RETURN",
+  "name": "VAT Return",
+  "period": ["quarter"],
+  "period_default": "quarter",
+  "valid_from": "2004-05-01",
+  "legal_reference": "Value Added Tax Act, article 17(2) — except as otherwise provided, a tax period means a period of three calendar months commencing on the first day immediately following the end of the preceding tax period. Article 17(3) lets the Minister prescribe a different period by regulation for a class of persons; this pack carries no text naming such a regulation, so only the quarter the Act itself gives everybody is declared. Article 27(1) and (3) require the return to be furnished, either on the prescribed form or electronically through the Commissioner's web portal, for every tax period. Box numbers and their layout are transcribed from a specimen of the form itself.",
+  "source": "vat-act",
+  "boxes": [
+    {
+      "box": "1",
+      "kind": "base",
+      "name": "Exempt IC Supplies of Goods and Supplies of Services where customer is liable for the tax",
+      "sequence": 10,
+      "legal_reference": "Value Added Tax Act, Fifth Schedule, Part One, item 3(1) (the intra-Community supply of goods) and article 20(2)(b) read with the Third Schedule, Part Two, item 2(a) (a service supplied to a taxable person established in another Member State, who accounts for the tax there). The VAT Return prints the two together in one box.",
+      "source": "cfr-vat-return"
+    },
+    {
+      "box": "2",
+      "kind": "base",
+      "name": "Supplies of Goods and Services where Place of Supply is outside Malta - EU and Non EU",
+      "sequence": 20,
+      "legal_reference": "Value Added Tax Act, Third Schedule — the value of a supply whose place is not Malta and which is not already reported in box 1. This pack declares the box, which `ekwo pack check` requires of every reference in box 5, and posts no tax code to it: which of a pack's treatments the Office of the Commissioner for Revenue means this box to carry, beyond the intra-Community case of box 1, could not be confirmed against an explanatory guide (cfr.gov.mt and mtca.gov.mt refused every automated request this pack's authors made of them), so nothing is asserted about its scope beyond its own printed words.",
+      "source": "cfr-vat-return"
+    },
+    {
+      "box": "3",
+      "kind": "base",
+      "name": "IC Acquisitions of Goods and Services received from other EU Member States",
+      "sequence": 30,
+      "legal_reference": "Value Added Tax Act, article 4(b) (intra-Community acquisitions of goods) and article 20(2)(b) (services received from a supplier in another Member State). The same value is carried again, split by kind, in boxes 9, 9a and 10 of the deduction section below.",
+      "source": "cfr-vat-return"
+    },
+    {
+      "box": "4",
+      "kind": "base",
+      "name": "Goods and Services received where Place of Supply is Malta other than those reported in Box 3",
+      "sequence": 40,
+      "legal_reference": "Value Added Tax Act, article 20(2)(b) — a supply received from a person not established in Malta and not registered under article 10, whose place of supply is Malta, other than one already carried in box 3 (a supply from another Member State): a service received from a supplier outside the European Union. The same value is carried again in box 11.",
+      "source": "cfr-vat-return"
+    },
+    {
+      "box": "5",
+      "kind": "total",
+      "name": "Sub-Total (Intra-Community and Non-EU Trade, value)",
+      "sequence": 50,
+      "plus": ["1", "2", "3", "4"],
+      "legal_reference": "The value sub-total the form prints under the \"Intra-Community and Non-EU Trade\" heading.",
+      "source": "cfr-vat-return"
+    },
+    {
+      "box": "6",
+      "kind": "tax",
+      "name": "Output tax self-assessed on IC Acquisitions of Goods and Services received from other EU Member States",
+      "sequence": 60,
+      "legal_reference": "Value Added Tax Act, article 20(1)(b) and article 20(2)(b) — the tax self-assessed by the person who makes the acquisition or receives the service, on the value of box 3.",
+      "source": "cfr-vat-return"
+    },
+    {
+      "box": "7",
+      "kind": "tax",
+      "name": "Output tax self-assessed on Goods and Services received where Place of Supply is Malta",
+      "sequence": 70,
+      "legal_reference": "Value Added Tax Act, article 20(2)(b) — the tax self-assessed on the value of box 4.",
+      "source": "cfr-vat-return"
+    },
+    {
+      "box": "8",
+      "kind": "total",
+      "name": "Sub-Total (Intra-Community and Non-EU Trade, output tax)",
+      "sequence": 80,
+      "plus": ["6", "7"],
+      "legal_reference": "The output tax sub-total the form prints under the \"Intra-Community and Non-EU Trade\" heading.",
+      "source": "cfr-vat-return"
+    },
+    {
+      "box": "9",
+      "kind": "base",
+      "name": "IC Acquisitions of Goods excluding Capital Goods",
+      "sequence": 90,
+      "legal_reference": "The value of box 3 that is an acquisition of goods other than a capital good, repeated here for the deduction the person who made the acquisition is entitled to under article 23.",
+      "source": "cfr-vat-return"
+    },
+    {
+      "box": "9a",
+      "kind": "base",
+      "name": "Services received from EU Member States where the purchaser is liable for VAT",
+      "sequence": 100,
+      "legal_reference": "The value of box 3 that is a service, repeated here for its deduction under article 23.",
+      "source": "cfr-vat-return"
+    },
+    {
+      "box": "10",
+      "kind": "base",
+      "name": "IC Acquisitions of Capital Goods",
+      "sequence": 110,
+      "legal_reference": "The value of box 3 that is an acquisition of a capital good, repeated here for its deduction under article 23 and the Tenth Schedule (Deductions), which holds a capital good to a longer adjustment period.",
+      "source": "cfr-vat-return"
+    },
+    {
+      "box": "11",
+      "kind": "base",
+      "name": "Goods and Services Received where Place of Supply is Malta",
+      "sequence": 120,
+      "legal_reference": "The value of box 4, repeated here for its deduction under article 23.",
+      "source": "cfr-vat-return"
+    },
+    {
+      "box": "12",
+      "kind": "total",
+      "name": "Sub-Total (Deductions of Self-Charged VAT, value)",
+      "sequence": 130,
+      "plus": ["9", "9a", "10", "11"],
+      "legal_reference": "The value sub-total the form prints under the \"Deductions of Self-Charged VAT\" heading.",
+      "source": "cfr-vat-return"
+    },
+    {
+      "box": "13",
+      "kind": "tax",
+      "name": "Input tax deducted on IC Acquisitions of Goods excluding Capital Goods",
+      "sequence": 140,
+      "legal_reference": "Value Added Tax Act, article 23 — the deduction of the tax self-assessed in box 6 that corresponds to box 9.",
+      "source": "cfr-vat-return"
+    },
+    {
+      "box": "13a",
+      "kind": "tax",
+      "name": "Input tax deducted on Services received from EU Member States",
+      "sequence": 150,
+      "legal_reference": "Value Added Tax Act, article 23 — the deduction corresponding to box 9a.",
+      "source": "cfr-vat-return"
+    },
+    {
+      "box": "14",
+      "kind": "tax",
+      "name": "Input tax deducted on IC Acquisitions of Capital Goods",
+      "sequence": 160,
+      "legal_reference": "Value Added Tax Act, article 23 and the Tenth Schedule — the deduction corresponding to box 10.",
+      "source": "cfr-vat-return"
+    },
+    {
+      "box": "15",
+      "kind": "tax",
+      "name": "Input tax deducted on Goods and Services Received where Place of Supply is Malta",
+      "sequence": 170,
+      "legal_reference": "Value Added Tax Act, article 23 — the deduction corresponding to box 11.",
+      "source": "cfr-vat-return"
+    },
+    {
+      "box": "16",
+      "kind": "total",
+      "name": "Sub-Total (Deductions of Self-Charged VAT, input tax)",
+      "sequence": 180,
+      "plus": ["13", "13a", "14", "15"],
+      "legal_reference": "The input tax sub-total the form prints under the \"Deductions of Self-Charged VAT\" heading.",
+      "source": "cfr-vat-return"
+    },
+    {
+      "box": "17",
+      "kind": "total",
+      "name": "Net self-charged VAT",
+      "sequence": 190,
+      "plus": ["8"],
+      "minus": ["16"],
+      "legal_reference": "The form prints \"( 8 - 16 )\" beside this box: the self-assessed output tax of box 8 less its deduction in box 16, carried into box 26.",
+      "source": "cfr-vat-return"
+    },
+    {
+      "box": "18",
+      "kind": "base",
+      "name": "Taxable Goods/Services @ 18%",
+      "sequence": 200,
+      "legal_reference": "Value Added Tax Act, article 19(1) — the value of a domestic supply at the standard rate.",
+      "source": "cfr-vat-return"
+    },
+    {
+      "box": "18a",
+      "kind": "base",
+      "name": "Taxable Services @7%",
+      "sequence": 210,
+      "legal_reference": "Value Added Tax Act, Eighth Schedule [article 19(2)], items 1 and 11 — the value of a domestic supply of services at 7%.",
+      "source": "cfr-vat-return"
+    },
+    {
+      "box": "18b",
+      "kind": "base",
+      "name": "Taxable Services @12%",
+      "sequence": 220,
+      "legal_reference": "Value Added Tax Act, Eighth Schedule [article 19(2)], items 12 to 15, inserted by Legal Notice 231 of 2023 — the value of a domestic supply of services at 12%.",
+      "source": "ln-231-2023"
+    },
+    {
+      "box": "19",
+      "kind": "base",
+      "name": "Taxable Goods/Services @ 5%",
+      "sequence": 230,
+      "legal_reference": "Value Added Tax Act, Eighth Schedule [article 19(2)] — the value of a domestic supply of goods or services at 5%.",
+      "source": "cfr-vat-return"
+    },
+    {
+      "box": "20",
+      "kind": "base",
+      "name": "Exempt with Credit / Exports",
+      "sequence": 240,
+      "legal_reference": "Value Added Tax Act, Fifth Schedule, Part One — the value of a supply exempt with credit, among them the export of goods (item 1), food for human consumption (item 9) and pharmaceutical goods (item 10).",
+      "source": "cfr-vat-return"
+    },
+    {
+      "box": "21",
+      "kind": "base",
+      "name": "Exempt without Credit",
+      "sequence": 250,
+      "legal_reference": "Value Added Tax Act, Fifth Schedule, Part Two — the value of a supply exempt without credit.",
+      "source": "cfr-vat-return"
+    },
+    {
+      "box": "22",
+      "kind": "total",
+      "name": "Sub-Total (Domestic Supplies & Exports, value)",
+      "sequence": 260,
+      "plus": ["18", "18a", "18b", "19", "20", "21"],
+      "legal_reference": "The value sub-total the form prints under the \"Domestic Supplies & Exports\" heading.",
+      "source": "cfr-vat-return"
+    },
+    {
+      "box": "23",
+      "kind": "tax",
+      "name": "Output tax on Taxable Goods/Services @ 18%",
+      "sequence": 270,
+      "legal_reference": "The tax on box 18.",
+      "source": "cfr-vat-return"
+    },
+    {
+      "box": "23a",
+      "kind": "tax",
+      "name": "Output tax on Taxable Services @7%",
+      "sequence": 280,
+      "legal_reference": "The tax on box 18a.",
+      "source": "cfr-vat-return"
+    },
+    {
+      "box": "23b",
+      "kind": "tax",
+      "name": "Output tax on Taxable Services @12%",
+      "sequence": 290,
+      "legal_reference": "The tax on box 18b.",
+      "source": "cfr-vat-return"
+    },
+    {
+      "box": "24",
+      "kind": "tax",
+      "name": "Output tax on Taxable Goods/Services @ 5%",
+      "sequence": 300,
+      "legal_reference": "The tax on box 19.",
+      "source": "cfr-vat-return"
+    },
+    {
+      "box": "25",
+      "kind": "total",
+      "name": "Sub-Total output tax (Domestic Supplies & Exports)",
+      "sequence": 310,
+      "plus": ["23", "23a", "23b", "24"],
+      "legal_reference": "The form prints \"( 23 + 23a + 23b + 24 )\" beside this box.",
+      "source": "cfr-vat-return"
+    },
+    {
+      "box": "26",
+      "kind": "total",
+      "name": "Total output tax",
+      "sequence": 320,
+      "plus": ["17", "25"],
+      "legal_reference": "The form prints \"( 17 + 25 )\" beside this box: the net self-charged VAT of box 17 plus the domestic output tax of box 25.",
+      "source": "cfr-vat-return"
+    },
+    {
+      "box": "27",
+      "kind": "base",
+      "name": "Taxable Purchases for re-sale @ 18%",
+      "sequence": 330,
+      "legal_reference": "Value Added Tax Act, article 23 — a purchase of goods for re-sale taxed at the standard rate.",
+      "source": "cfr-vat-return"
+    },
+    {
+      "box": "28",
+      "kind": "base",
+      "name": "Taxable Purchases for re-sale @ 5%",
+      "sequence": 340,
+      "legal_reference": "Value Added Tax Act, article 23 — a purchase of goods for re-sale taxed at 5%.",
+      "source": "cfr-vat-return"
+    },
+    {
+      "box": "29",
+      "kind": "base",
+      "name": "Exempt Purchases for re-sale",
+      "sequence": 350,
+      "legal_reference": "A purchase of goods for re-sale on which the supplier charged no tax.",
+      "source": "cfr-vat-return"
+    },
+    {
+      "box": "30",
+      "kind": "base",
+      "name": "Capital Goods",
+      "sequence": 360,
+      "legal_reference": "Value Added Tax Act, article 23 and the Tenth Schedule (Deductions) — the value of a capital good acquired domestically.",
+      "source": "cfr-vat-return"
+    },
+    {
+      "box": "31",
+      "kind": "base",
+      "name": "Services & Overheads @ 18%",
+      "sequence": 370,
+      "legal_reference": "Value Added Tax Act, article 23 — services and overheads taxed at the standard rate.",
+      "source": "cfr-vat-return"
+    },
+    {
+      "box": "31a",
+      "kind": "base",
+      "name": "Services & Overheads @7%",
+      "sequence": 380,
+      "legal_reference": "Value Added Tax Act, article 23 — services and overheads taxed at 7%.",
+      "source": "cfr-vat-return"
+    },
+    {
+      "box": "31b",
+      "kind": "base",
+      "name": "Services & Overheads @12%",
+      "sequence": 390,
+      "legal_reference": "Value Added Tax Act, article 23 — services and overheads taxed at 12%, the rate of Legal Notice 231 of 2023.",
+      "source": "ln-231-2023"
+    },
+    {
+      "box": "32",
+      "kind": "base",
+      "name": "Services & Overheads @ 5%",
+      "sequence": 400,
+      "legal_reference": "Value Added Tax Act, article 23 — services and overheads taxed at 5%.",
+      "source": "cfr-vat-return"
+    },
+    {
+      "box": "33",
+      "kind": "total",
+      "name": "Sub-Total (Domestic Purchases & Imports, value)",
+      "sequence": 410,
+      "plus": ["27", "28", "29", "30", "31", "31a", "31b", "32"],
+      "legal_reference": "The value sub-total the form prints under the \"Domestic Purchases & Imports\" heading.",
+      "source": "cfr-vat-return"
+    },
+    {
+      "box": "34",
+      "kind": "tax",
+      "name": "Input tax on Taxable Purchases for re-sale @ 18%",
+      "sequence": 420,
+      "legal_reference": "The tax on box 27.",
+      "source": "cfr-vat-return"
+    },
+    {
+      "box": "35",
+      "kind": "tax",
+      "name": "Input tax on Taxable Purchases for re-sale @ 5%",
+      "sequence": 430,
+      "legal_reference": "The tax on box 28.",
+      "source": "cfr-vat-return"
+    },
+    {
+      "box": "36",
+      "kind": "tax",
+      "name": "Input tax on Capital Goods",
+      "sequence": 440,
+      "legal_reference": "The tax on box 30.",
+      "source": "cfr-vat-return"
+    },
+    {
+      "box": "37",
+      "kind": "tax",
+      "name": "Input tax on Services & Overheads @ 18%",
+      "sequence": 450,
+      "legal_reference": "The tax on box 31.",
+      "source": "cfr-vat-return"
+    },
+    {
+      "box": "37a",
+      "kind": "tax",
+      "name": "Input tax on Services & Overheads @7%",
+      "sequence": 460,
+      "legal_reference": "The tax on box 31a.",
+      "source": "cfr-vat-return"
+    },
+    {
+      "box": "37b",
+      "kind": "tax",
+      "name": "Input tax on Services & Overheads @12%",
+      "sequence": 470,
+      "legal_reference": "The tax on box 31b.",
+      "source": "cfr-vat-return"
+    },
+    {
+      "box": "38",
+      "kind": "tax",
+      "name": "Input tax on Services & Overheads @ 5%",
+      "sequence": 480,
+      "legal_reference": "The tax on box 32.",
+      "source": "cfr-vat-return"
+    },
+    {
+      "box": "39",
+      "kind": "total",
+      "name": "Total input tax",
+      "sequence": 490,
+      "plus": ["34", "35", "36", "37", "37a", "37b", "38"],
+      "legal_reference": "The form prints \"(34 +35 +36 +37 +37a + 37b +38)\" beside this box.",
+      "source": "cfr-vat-return"
+    },
+    {
+      "box": "40",
+      "kind": "tax",
+      "name": "Adjustment in favour of the Department",
+      "sequence": 500,
+      "legal_reference": "A manual adjustment the form allows and no code of this pack posts: it is a correction the filer enters by hand, not a fact the ledger states. It reads zero in a return this pack has never had reason to adjust.",
+      "source": "cfr-vat-return"
+    },
+    {
+      "box": "41",
+      "kind": "tax",
+      "name": "Adjustment in favour of the taxpayer",
+      "sequence": 510,
+      "legal_reference": "The same, in the taxpayer's favour.",
+      "source": "cfr-vat-return"
+    },
+    {
+      "box": "42",
+      "kind": "total",
+      "name": "Excess Credit",
+      "sequence": 520,
+      "plus": ["39", "41"],
+      "minus": ["26", "40"],
+      "floor_zero": true,
+      "legal_reference": "The form prints \"(39 - 26) + (41 - 40)\" beside this box, floored at zero: the amount by which deductible tax exceeds tax due, before any credit brought forward from an earlier period.",
+      "source": "cfr-vat-return"
+    },
+    {
+      "box": "43",
+      "kind": "total",
+      "name": "Net tax due before credit brought forward",
+      "sequence": 530,
+      "plus": ["26", "40"],
+      "minus": ["39", "41"],
+      "floor_zero": true,
+      "legal_reference": "The form prints \"(26 - 39) + (40 - 41)\" beside this box, floored at zero, with no printed name of its own: the amount by which tax due exceeds deductible tax, before any credit brought forward.",
+      "source": "cfr-vat-return"
+    },
+    {
+      "box": "44",
+      "kind": "tax",
+      "name": "Excess Credit brought forward",
+      "sequence": 540,
+      "legal_reference": "The credit a person carries from an earlier tax period, printed on the form and settled against box 43. No code of this pack posts to it — a balance brought forward from a prior return is not a fact this period's ledger states — and the golden scenario of this pack never reaches a period where one is owed, so it reads zero throughout.",
+      "source": "cfr-vat-return"
+    },
+    {
+      "box": "45",
+      "kind": "total",
+      "name": "Tax Payable",
+      "sequence": 550,
+      "plus": ["43"],
+      "minus": ["44"],
+      "floor_zero": true,
+      "legal_reference": "The form prints \"( 43 - 44 )\" beside this box.",
+      "source": "cfr-vat-return"
+    }
+  ]
+}

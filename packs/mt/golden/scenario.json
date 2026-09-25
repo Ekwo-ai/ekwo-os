@@ -1,0 +1,260 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "A year of a VAT-registered Maltese trading company, filing on the quarters of the Act",
+  "chart": "default",
+  "fiscal_year": {
+    "name": "Year ended 31 December 2026",
+    "start": "2026-01-01",
+    "end": "2026-12-31"
+  },
+  "periods": [
+    { "code": "2026-Q1", "from": "2026-01-01", "to": "2026-03-31" },
+    { "code": "2026-Q2", "from": "2026-04-01", "to": "2026-06-30" }
+  ],
+  "statements": ["MT-GAPSME-BS", "MT-GAPSME-IS"],
+  "contacts": [
+    { "ref": "cust-mt", "name": "Valletta Retail Co. Ltd", "type": "customer", "country": "MT" },
+    { "ref": "cust-mt2", "name": "Sliema Health Studio Ltd", "type": "customer", "country": "MT" },
+    { "ref": "cust-us", "name": "Harborview Trading Inc.", "type": "customer", "country": "US" },
+    { "ref": "cust-de", "name": "Rheinbrücke Handel GmbH", "type": "customer", "country": "DE", "vat_number": "DE999999999" },
+    { "ref": "cust-fr", "name": "Atelier Rhône SARL", "type": "customer", "country": "FR", "vat_number": "FR99999999999" },
+    { "ref": "supp-mt", "name": "Marsaxlokk Supplies Ltd", "type": "supplier", "country": "MT" },
+    { "ref": "supp-mt2", "name": "Birkirkara Motors Ltd", "type": "supplier", "country": "MT" },
+    { "ref": "supp-de", "name": "Nordwind Komponenten GmbH", "type": "supplier", "country": "DE" },
+    { "ref": "supp-nl", "name": "Grachtenwerk Advies B.V.", "type": "supplier", "country": "NL" },
+    { "ref": "supp-us", "name": "Cascade Cloud Services Inc.", "type": "supplier", "country": "US" }
+  ],
+  "documents": [
+    {
+      "ref": "S1",
+      "type": "sale_invoice",
+      "contact": "cust-mt",
+      "date": "2026-01-12",
+      "why": "A domestic sale at the standard rate: the value goes to box 18 and the tax to box 23.",
+      "lines": [
+        { "name": "Goods", "quantity": 10, "unit_price": 1000, "tax": "MT-S-18", "account": "5000" }
+      ]
+    },
+    {
+      "ref": "SC1",
+      "type": "sale_credit_note",
+      "contact": "cust-mt",
+      "date": "2026-01-25",
+      "why": "A credit note on the standard-rated sale of January: box 18 and box 23 go down by what it credits, in the same period.",
+      "lines": [
+        { "name": "Goods returned", "quantity": 2, "unit_price": 1000, "tax": "MT-S-18", "account": "5000" }
+      ]
+    },
+    {
+      "ref": "S2",
+      "type": "sale_invoice",
+      "contact": "cust-mt",
+      "date": "2026-01-20",
+      "why": "Licensed tourist accommodation at 7%: box 18a and box 23a.",
+      "lines": [
+        { "name": "Licensed guest accommodation, three nights", "quantity": 3, "unit_price": 200, "tax": "MT-S-07", "account": "5010" }
+      ]
+    },
+    {
+      "ref": "S3",
+      "type": "sale_invoice",
+      "contact": "cust-mt2",
+      "date": "2026-01-28",
+      "why": "The custody and management of securities at 12%, the rate Legal Notice 231 of 2023 added from 1 January 2024: box 18b and box 23b.",
+      "lines": [
+        { "name": "Custody and management of securities", "quantity": 1, "unit_price": 2500, "tax": "MT-S-12", "account": "5020" }
+      ]
+    },
+    {
+      "ref": "S4",
+      "type": "sale_invoice",
+      "contact": "cust-mt",
+      "date": "2026-02-05",
+      "why": "The supply of electricity at 5%: box 19 and box 24.",
+      "lines": [
+        { "name": "Electricity supplied", "quantity": 1, "unit_price": 1800, "tax": "MT-S-05", "account": "5030" }
+      ]
+    },
+    {
+      "ref": "S5",
+      "type": "sale_invoice",
+      "contact": "cust-us",
+      "date": "2026-02-10",
+      "why": "An export of goods to the United States, exempt with credit: box 20, no tax.",
+      "lines": [
+        { "name": "Goods for export", "quantity": 1, "unit_price": 6000, "tax": "MT-S-EXPORT", "account": "5040" }
+      ]
+    },
+    {
+      "ref": "S6",
+      "type": "sale_invoice",
+      "contact": "cust-mt",
+      "date": "2026-02-14",
+      "why": "Food for human consumption, exempt with credit under item 9 of Part One of the Fifth Schedule: box 20, no tax, and the right to deduct is kept.",
+      "lines": [
+        { "name": "Packaged foodstuffs", "quantity": 1, "unit_price": 900, "tax": "MT-S-FOOD", "account": "5040" }
+      ]
+    },
+    {
+      "ref": "S7",
+      "type": "sale_invoice",
+      "contact": "cust-mt2",
+      "date": "2026-02-20",
+      "why": "Private tuition recognised as education under item 12 of Part Two of the Fifth Schedule, exempt without credit: box 21, no tax and no deduction on the related purchases.",
+      "lines": [
+        { "name": "Accredited vocational training course", "quantity": 1, "unit_price": 1200, "tax": "MT-S-EDUCATION", "account": "5070" }
+      ]
+    },
+    {
+      "ref": "S8",
+      "type": "sale_invoice",
+      "contact": "cust-de",
+      "date": "2026-02-25",
+      "why": "An intra-Community supply of goods to a VAT-registered customer in Germany: box 1, no tax.",
+      "lines": [
+        { "name": "Goods dispatched to Germany", "quantity": 1, "unit_price": 5000, "tax": "MT-S-ICG", "account": "5050" }
+      ]
+    },
+    {
+      "ref": "S9",
+      "type": "sale_invoice",
+      "contact": "cust-fr",
+      "date": "2026-03-02",
+      "why": "A service to a business customer in France, taxed where the customer is established: box 1, no tax.",
+      "lines": [
+        { "name": "Consultancy services", "quantity": 1, "unit_price": 3000, "tax": "MT-S-ICS", "account": "5060" }
+      ]
+    },
+    {
+      "ref": "P1",
+      "type": "purchase_invoice",
+      "contact": "supp-mt",
+      "date": "2026-01-15",
+      "why": "A domestic purchase of goods for re-sale at the standard rate: box 27 and box 34.",
+      "lines": [
+        { "name": "Goods for resale", "quantity": 1, "unit_price": 4000, "tax": "MT-P-18-RESALE", "account": "6000" }
+      ]
+    },
+    {
+      "ref": "P2",
+      "type": "purchase_invoice",
+      "contact": "supp-mt",
+      "date": "2026-01-22",
+      "why": "A domestic purchase of goods for re-sale at 5%: box 28 and box 35.",
+      "lines": [
+        { "name": "Goods for resale, reduced rate", "quantity": 1, "unit_price": 1500, "tax": "MT-P-05-RESALE", "account": "6010" }
+      ]
+    },
+    {
+      "ref": "P3",
+      "type": "purchase_invoice",
+      "contact": "supp-mt2",
+      "date": "2026-01-29",
+      "why": "A capital good bought domestically: box 30 and box 36, reported apart from an ordinary purchase because the Tenth Schedule holds it to a longer deduction-adjustment period.",
+      "lines": [
+        { "name": "Office equipment", "quantity": 1, "unit_price": 8000, "tax": "MT-P-CAPITAL", "account": "0120" }
+      ]
+    },
+    {
+      "ref": "P4",
+      "type": "purchase_invoice",
+      "contact": "supp-mt",
+      "date": "2026-02-03",
+      "why": "Services and overheads at the standard rate: box 31 and box 37.",
+      "lines": [
+        { "name": "Professional fees", "quantity": 1, "unit_price": 1000, "tax": "MT-P-18-OVERHEAD", "account": "7290" }
+      ]
+    },
+    {
+      "ref": "P5",
+      "type": "purchase_invoice",
+      "contact": "supp-mt2",
+      "date": "2026-02-08",
+      "why": "Services and overheads at 7% — accommodation for a business trip: box 31a and box 37a.",
+      "lines": [
+        { "name": "Licensed accommodation for a business trip", "quantity": 2, "unit_price": 150, "tax": "MT-P-07-OVERHEAD", "account": "7280" }
+      ]
+    },
+    {
+      "ref": "P6",
+      "type": "purchase_invoice",
+      "contact": "supp-mt",
+      "date": "2026-02-12",
+      "why": "Services and overheads at 12% — management of a credit guarantee: box 31b and box 37b.",
+      "lines": [
+        { "name": "Management of a credit guarantee", "quantity": 1, "unit_price": 600, "tax": "MT-P-12-OVERHEAD", "account": "7290" }
+      ]
+    },
+    {
+      "ref": "P7",
+      "type": "purchase_invoice",
+      "contact": "supp-mt",
+      "date": "2026-02-18",
+      "why": "Services and overheads at 5% — electricity for the office: box 32 and box 38.",
+      "lines": [
+        { "name": "Electricity", "quantity": 1, "unit_price": 500, "tax": "MT-P-05-OVERHEAD", "account": "7210" }
+      ]
+    },
+    {
+      "ref": "P8",
+      "type": "purchase_invoice",
+      "contact": "supp-de",
+      "date": "2026-02-22",
+      "why": "An intra-Community acquisition of goods from Germany: the value in box 3 and again in box 9, the self-assessed tax in box 6 and its deduction in box 13, netting to nothing in the ledger.",
+      "lines": [
+        { "name": "Components acquired from Germany", "quantity": 1, "unit_price": 3000, "tax": "MT-P-ICG", "account": "6000" }
+      ]
+    },
+    {
+      "ref": "P9",
+      "type": "purchase_invoice",
+      "contact": "supp-nl",
+      "date": "2026-03-01",
+      "why": "A service received from a supplier in the Netherlands: the value in box 3 and again in box 9a, the self-assessed tax in box 6 and its deduction in box 13a.",
+      "lines": [
+        { "name": "Advisory services", "quantity": 1, "unit_price": 1400, "tax": "MT-P-ICS", "account": "7290" }
+      ]
+    },
+    {
+      "ref": "P10",
+      "type": "purchase_invoice",
+      "contact": "supp-us",
+      "date": "2026-03-10",
+      "why": "A service received from a supplier outside the European Union: the value in box 4 and again in box 11, the self-assessed tax in box 7 and its deduction in box 15.",
+      "lines": [
+        { "name": "Cloud software subscription", "quantity": 1, "unit_price": 900, "tax": "MT-P-FSR", "account": "7260" }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "R1",
+      "direction": "outbound",
+      "date": "2026-02-14",
+      "amount": 4720,
+      "contact": "supp-mt",
+      "journal": "BNK",
+      "match": "P1",
+      "why": "A payment that settles the standard-rated purchase for resale exactly, VAT included."
+    },
+    {
+      "ref": "R2",
+      "direction": "inbound",
+      "date": "2026-02-20",
+      "amount": 642,
+      "contact": "cust-mt",
+      "journal": "BNK",
+      "match": "S2",
+      "why": "A receipt that settles its invoice exactly, VAT included, and closes it."
+    },
+    {
+      "ref": "R3",
+      "direction": "inbound",
+      "date": "2026-03-15",
+      "amount": 1000,
+      "contact": "cust-mt2",
+      "journal": "BNK",
+      "why": "A payment on account matched to nothing: it leaves an open item, which is what a real ledger holds."
+    }
+  ]
+}
