@@ -1,0 +1,107 @@
+code,parent,type,reconcilable,name,sequence
+1000,,asset_fixed,false,Kehittämismenot,10
+1010,,asset_fixed,false,Aineettomat oikeudet,20
+1020,,asset_fixed,false,Liikearvo,30
+1030,,asset_fixed,false,Muut pitkävaikutteiset menot,40
+1040,,asset_fixed,false,Ennakkomaksut (aineettomat hyödykkeet),50
+1050,,asset_fixed,false,Aineettomien hyödykkeiden kertyneet poistot,60
+1100,,asset_fixed,false,Maa- ja vesialueet,70
+1110,,asset_fixed,false,Rakennukset ja rakennelmat,80
+1115,,asset_fixed,false,Rakennusten kertyneet poistot,90
+1120,,asset_fixed,false,Koneet ja kalusto,100
+1125,,asset_fixed,false,Koneiden ja kaluston kertyneet poistot,110
+1130,,asset_fixed,false,Muut aineelliset hyödykkeet,120
+1135,,asset_fixed,false,Muiden aineellisten hyödykkeiden kertyneet poistot,130
+1140,,asset_fixed,false,Ennakkomaksut ja keskeneräiset hankinnat,140
+1200,,asset_non_current,false,Osuudet saman konsernin yrityksissä,150
+1210,,asset_non_current,false,Saamiset saman konsernin yrityksiltä,160
+1220,,asset_non_current,false,Osuudet omistusyhteysyrityksissä,170
+1230,,asset_non_current,false,Saamiset omistusyhteysyrityksiltä,180
+1240,,asset_non_current,false,Muut osakkeet ja osuudet,190
+1250,,asset_non_current,false,Muut saamiset (pitkäaikaiset),200
+1300,,asset_current,false,Aineet ja tarvikkeet,210
+1310,,asset_current,false,Keskeneräiset tuotteet,220
+1320,,asset_current,false,Valmiit tuotteet/tavarat,230
+1330,,asset_current,false,Muu vaihto-omaisuus,240
+1340,,asset_prepayments,false,Ennakkomaksut (vaihto-omaisuus),250
+1500,,asset_receivable,true,Myyntisaamiset,260
+1510,,asset_current,false,Saamiset saman konsernin yrityksiltä (lyhytaikaiset),270
+1520,,asset_current,false,Saamiset omistusyhteysyrityksiltä (lyhytaikaiset),280
+1530,,asset_current,false,Lainasaamiset,290
+1540,,asset_current,false,Muut saamiset,300
+1550,,asset_current,false,Maksamattomat osakkeet tai osuudet,310
+1560,,asset_prepayments,false,Siirtosaamiset,320
+1590,,asset_current,true,Arvonlisäverosaaminen — annetun ilmoituksen saldo,330
+1600,,asset_current,false,Rahoitusarvopaperit,340
+1700,,asset_cash,false,Kassa,350
+1710,,asset_cash,false,Pankkitili,360
+1720,,asset_cash,false,Pankkitili valuuttamääräinen,370
+2000,,equity,false,Osake- tai osuuspääoma,380
+2010,,equity,false,Ylikurssirahasto,390
+2020,,equity,false,Arvonkorotusrahasto,400
+2030,,equity,false,Muut rahastot,410
+2040,,equity_retained,false,Edellisten tilikausien voitto (tappio),420
+2050,,equity_retained,false,Tilikauden voitto (tappio),430
+2100,,liability_non_current,false,Poistoero,440
+2110,,liability_non_current,false,Vapaaehtoiset varaukset,450
+2150,,liability_non_current,false,Pakolliset varaukset,460
+2200,,liability_non_current,false,Joukkovelkakirjalainat,470
+2210,,liability_non_current,false,Lainat rahoituslaitoksilta (pitkäaikaiset),480
+2220,,liability_non_current,false,Eläkelainat,490
+2230,,liability_non_current,false,Saadut ennakot (pitkäaikaiset),500
+2240,,liability_non_current,false,Ostovelat (pitkäaikaiset),510
+2250,,liability_non_current,false,Velat saman konsernin yrityksille (pitkäaikaiset),520
+2260,,liability_non_current,false,Muut pitkäaikaiset velat,530
+2300,,liability_current,false,Lainat rahoituslaitoksilta (lyhytaikaiset),540
+2310,,liability_current,false,Saadut ennakot (lyhytaikaiset),550
+2320,,liability_payable,true,Ostovelat,560
+2330,,liability_current,false,Velat saman konsernin yrityksille (lyhytaikaiset),570
+2340,,liability_current,false,Palkkavelka,580
+2345,,liability_current,false,Ennakonpidätysvelka,590
+2350,,liability_current,false,Sosiaaliturvamaksuvelka,600
+2360,,liability_current,false,Muut lyhytaikaiset velat,610
+2365,,liability_current,false,Selvittämättömät maksut,620
+2370,,liability_current,false,Siirtovelat,630
+2450,,liability_current,false,Myynnin arvonlisäverovelka,640
+2455,,asset_current,false,Ostojen arvonlisäverosaaminen,650
+2460,,liability_current,true,Arvonlisäverovelka — annetun ilmoituksen saldo,660
+3000,,income,false,Myynti kotimaahan,670
+3010,,income,false,Myynti Euroopan unionin alueelle,680
+3020,,income,false,Vienti Euroopan unionin ulkopuolelle,690
+3030,,income,false,Verottomaan toimintaan liittyvä myynti,700
+3100,,income_other,false,Valmiiden ja keskeneräisten tuotteiden varastojen muutos,710
+3110,,income_other,false,Valmistus omaan käyttöön,720
+3200,,income_other,false,Liiketoiminnan muut tuotot,730
+3210,,income_other,false,Käyttöomaisuuden myyntivoitot,740
+4000,,expense_direct_cost,false,Ostot tilikauden aikana,750
+4010,,expense_direct_cost,false,Varastojen muutos,760
+4100,,expense_direct_cost,false,Ulkopuoliset palvelut,770
+5000,,expense,false,Palkat ja palkkiot,780
+5010,,expense,false,Eläkekulut,790
+5020,,expense,false,Muut henkilösivukulut,800
+6000,,expense_depreciation,false,Suunnitelman mukaiset poistot,810
+6010,,expense_depreciation,false,Arvonalentumiset pysyvien vastaavien hyödykkeistä,820
+7000,,expense,false,Vuokrat,830
+7010,,expense,false,Sähkö ja muu energia,840
+7020,,expense,false,Tietoliikenne- ja tietotekniikkakulut,850
+7030,,expense,false,Matkustuskulut,860
+7040,,expense,false,Markkinointikulut,870
+7050,,expense,false,Toimistokulut,880
+7060,,expense,false,Asiantuntijapalvelut,890
+7070,,expense,false,Koulutuskulut,900
+7080,,expense,false,Vakuutukset,910
+7090,,expense,false,Pankkikulut,920
+7100,,expense,false,Edustuskulut,930
+7110,,expense,false,Ajoneuvokulut,940
+7200,,expense,false,Muut liiketoiminnan kulut,950
+7900,,expense,false,Käyttöomaisuuden myyntitappiot,960
+7910,,expense,false,Pyöristyserot,970
+8000,,income_other,false,Korkotuotot,980
+8010,,income_other,false,Muut rahoitustuotot,990
+8020,,income_other,false,Kurssivoitot,1000
+8100,,expense,false,Korkokulut,1010
+8110,,expense,false,Muut rahoituskulut,1020
+8120,,expense,false,Kurssitappiot,1030
+9000,,expense,false,Tilinpäätössiirrot,1040
+9100,,expense,false,Tuloverot,1050
+9110,,expense,false,Muut välittömät verot,1060

@@ -1,0 +1,242 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "FI",
+  "name": "Finland",
+  "version": "0.1.0",
+  "schema_min": "20260923110000",
+  "seed_sequence": 67,
+  "released_at": "2026-09-25",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "avl",
+        "title": "Arvonlisäverolaki 1501/1993",
+        "publisher": "Oikeusministeriö — Finlex",
+        "url": "https://www.finlex.fi/fi/laki/ajantasa/1993/19931501",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "kpl",
+        "title": "Kirjanpitolaki 1336/1997",
+        "publisher": "Oikeusministeriö — Finlex",
+        "url": "https://www.finlex.fi/fi/laki/ajantasa/1997/19971336",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "kpa",
+        "title": "Kirjanpitoasetus 1339/1997",
+        "publisher": "Oikeusministeriö — Finlex",
+        "url": "https://www.finlex.fi/fi/laki/ajantasa/1997/19971339",
+        "consulted_on": "2026-09-25",
+        "kind": "regulation"
+      },
+      {
+        "key": "maksuehtolaki",
+        "title": "Laki kaupallisten sopimusten maksuehdoista 30/2013",
+        "publisher": "Oikeusministeriö — Finlex",
+        "url": "https://www.finlex.fi/fi/laki/ajantasa/2013/20130030",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "korkolaki",
+        "title": "Korkolaki 633/1982",
+        "publisher": "Oikeusministeriö — Finlex",
+        "url": "https://www.finlex.fi/fi/laki/ajantasa/1982/19820633",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "perintalaki",
+        "title": "Laki saatavien perinnästä 513/1999",
+        "publisher": "Oikeusministeriö — Finlex",
+        "url": "https://www.finlex.fi/fi/laki/ajantasa/1999/19990513",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "sahkoinen-laskutus",
+        "title": "Laki hankintayksiköiden ja elinkeinonharjoittajien sähköisestä laskutuksesta 241/2019",
+        "publisher": "Oikeusministeriö — Finlex",
+        "url": "https://www.finlex.fi/fi/laki/ajantasa/2019/20190241",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "vero-alv-rates",
+        "title": "VAT rates",
+        "publisher": "Verohallinto",
+        "url": "https://www.vero.fi/en/businesses-and-corporations/taxes-and-charges/vat/rates-of-vat/",
+        "consulted_on": "2026-09-25",
+        "kind": "guidance"
+      },
+      {
+        "key": "vero-filing",
+        "title": "When to file and pay VAT",
+        "publisher": "Verohallinto",
+        "url": "https://www.vero.fi/en/businesses-and-corporations/taxes-and-charges/vat/when-to-file-and-pay/",
+        "consulted_on": "2026-09-25",
+        "kind": "guidance"
+      },
+      {
+        "key": "vero-vsralvkv",
+        "title": "Return for self-assessed taxes, VAT (VSRALVKV) — Description of the data file",
+        "publisher": "Verohallinto",
+        "url": "https://www.vero.fi/contentassets/ef5905e0f5b74bcba89aa9ba9c34015d/finnish-tax-administration_description-of-the-data-file_vsralvkv_290824.pdf",
+        "consulted_on": "2026-09-25",
+        "kind": "form"
+      },
+      {
+        "key": "vero-laskutus",
+        "title": "Laskutusvaatimukset arvonlisäverotuksessa",
+        "publisher": "Verohallinto",
+        "url": "https://www.vero.fi/syventavat-vero-ohjeet/ohje-hakusivu/48090/laskutusvaatimukset_arvonlisaverotukses/",
+        "consulted_on": "2026-09-25",
+        "kind": "guidance"
+      },
+      {
+        "key": "omavero",
+        "title": "OmaVero — palvelu, jossa arvonlisäveroilmoitus annetaan",
+        "publisher": "Verohallinto",
+        "url": "https://www.vero.fi/omavero/",
+        "consulted_on": "2026-09-25",
+        "kind": "portal"
+      },
+      {
+        "key": "peppol-eas",
+        "title": "Peppol BIS Billing 3.0 — Electronic Address Scheme code list (FI:OVT2, 0216)",
+        "publisher": "OpenPeppol AISBL",
+        "url": "https://docs.peppol.eu/poacc/billing/3.0/codelist/eas/",
+        "consulted_on": "2026-09-25",
+        "kind": "standard"
+      },
+      {
+        "key": "en-16931",
+        "title": "EN 16931-1 — European e-invoicing semantic data model and Directive 2014/55/EU conformity",
+        "publisher": "European Commission",
+        "url": "https://ec.europa.eu/digital-building-blocks/sites/spaces/DIGITAL/pages/467108950/EN+16931+compliance",
+        "consulted_on": "2026-09-25",
+        "kind": "standard"
+      },
+      {
+        "key": "uncl5305",
+        "title": "UNCL5305 — Duty or tax or fee category code list (BT-118 and BT-151), subset published for EN 16931",
+        "publisher": "OpenPEPPOL — list published by the European Commission",
+        "url": "https://docs.peppol.eu/poacc/billing/3.0/codelist/UNCL5305/",
+        "consulted_on": "2026-09-25",
+        "kind": "standard"
+      },
+      {
+        "key": "vatex",
+        "title": "VATEX — VAT exemption reason code list (BT-121)",
+        "publisher": "OpenPEPPOL — list published by the European Commission",
+        "url": "https://docs.peppol.eu/poacc/billing/3.0/codelist/vatex/",
+        "consulted_on": "2026-09-25",
+        "kind": "standard"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "EUR",
+    "language": "fi",
+    "rounding_method": "half_up",
+    "closing_style": "result_accounts",
+    "roles": {
+      "receivable": "1500",
+      "payable": "2320",
+      "suspense": "2365",
+      "rounding": "7910",
+      "retained_earnings": "2040",
+      "current_year_result_profit": "2050",
+      "current_year_result_loss": "2050",
+      "sales": "3000",
+      "purchase": "4000",
+      "bank": "1710",
+      "cash": "1700",
+      "fx_gain": "8020",
+      "fx_loss": "8120",
+      "tax_payable": "2460",
+      "tax_receivable": "1590"
+    },
+    "journal_roles": {
+      "sales": "MYY",
+      "purchase": "OST",
+      "miscellaneous": "MUU",
+      "opening": "ALK"
+    },
+    "fiscal_year_default": "calendar"
+  },
+  "languages": [
+    "en"
+  ],
+  "journals": [
+    { "code": "MYY", "type": "sales", "name": "Myyntipäiväkirja", "sequence": 10 },
+    { "code": "OST", "type": "purchase", "name": "Ostopäiväkirja", "sequence": 20 },
+    { "code": "PNK", "type": "bank", "name": "Pankkipäiväkirja", "sequence": 30 },
+    { "code": "KAS", "type": "cash", "name": "Kassapäiväkirja", "sequence": 40 },
+    { "code": "MUU", "type": "general", "name": "Muistiotositteet", "sequence": 50 },
+    { "code": "ALK", "type": "opening", "name": "Alkusaldot", "sequence": 60 }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Suomalaisen pien- ja keskisuuren kirjanpitovelvollisen tilikartta",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": ["FI-KPA-BS", "FI-KPA-IS"],
+      "legal_reference": "Kirjanpitolaki 1336/1997, 2 luku 2 § — kirjanpitovelvollisella tulee olla kultakin tilikaudelta selkeä ja riittävästi eritelty tililuettelo, joka selittää tilien sisällön; Suomessa ei ole lailla säädettyä yhtenäistä tilikarttaa, vaan jokainen kirjanpitovelvollinen laatii omansa. Tämä tilikartta on pakin oma, laadittu noudattamaan yleisesti käytettyä nelinumeroista luokittelua (1 vastaavaa, 2 vastattavaa, 3 liikevaihto, 4 aineet ja palvelut, 5 henkilöstökulut, 6 poistot, 7 muut kulut, 8 rahoituserät, 9 tilinpäätössiirrot ja verot), joka seuraa kirjanpitoasetuksen tuloslaskelma- ja tasekaavojen omaa järjestystä ja jota useimmat suomalaiset kirjanpito-ohjelmat ja -oppikirjat käyttävät oletuksena.",
+      "source": "kpl"
+    }
+  ],
+  "documents": {
+    "numbering": "sequential",
+    "number_format": "{CODE}-{YYYY}-{NNNN}",
+    "legal_payment_days": 30,
+    "late_payment_reference": "Korkolaki 633/1982, 6 § — jos eräpäivää ei ole sovittu, viivästyskorkoa on maksettava 30 päivän kuluttua siitä, kun velkoja lähetti laskun; 4 § — viivästyskorko on viitekoron (12 §) lisäksi seitsemän prosenttiyksikköä, ja 4 a § — kaupallisissa sopimuksissa (elinkeinonharjoittajien ja hankintayksiköiden välillä) kahdeksan prosenttiyksikköä; laki kaupallisten sopimusten maksuehdoista 30/2013, 5 § — elinkeinonharjoittajien välillä maksuaika saa ylittää 30 päivää vain, jos siitä on nimenomaisesti sovittu, enintään 60 päivää; laki saatavien perinnästä 513/1999, 10 § — velkojalla on oikeus 40 euron vakiokorvaukseen perintäkuluista heti, kun viivästyskorkoon on oikeus.",
+    "references": {
+      "numbering": {
+        "legal_reference": "Arvonlisäverolaki 209 e § 1 momentti — laskussa on mainittava muun ohella laskun järjestysnumero, joka perustuu yhteen tai useampaan sarjaan ja jolla lasku voidaan yksilöidä. Laki vaatii juoksevan ja yksilöivän numeron, ei tiettyä muotoa eikä katkeamattomuutta, joten numbering on tässä sequential eikä gapless.",
+        "source": "avl"
+      },
+      "payment_terms": {
+        "legal_reference": "Korkolaki 633/1982, 6 § yhdessä 4 §:n kanssa; laki kaupallisten sopimusten maksuehdoista 30/2013, 5 § rajoittaa sovitun maksuajan enintään 60 päivään elinkeinonharjoittajien välillä.",
+        "source": "maksuehtolaki"
+      }
+    },
+    "mentions": [
+      {
+        "code": "reverse_charge",
+        "applies_when": "reverse_charge",
+        "text": "Käännetty verovelvollisuus",
+        "sequence": 10,
+        "legal_reference": "Arvonlisäverolaki 209 e § 1 momentti 12 kohta — jos verovelvollinen on 2 a, 8 a–8 d tai 9 §:n taikka toisen jäsenvaltion vastaavan säännöksen perusteella ostaja, laskuun on merkittävä \"käännetty verovelvollisuus\". Verohallinnon ohje suosittaa täsmentämään perusteen, esimerkiksi rakennusalalla \"AVL 8 c §\".",
+        "source": "avl"
+      },
+      {
+        "code": "late_payment",
+        "applies_when": "late_payment",
+        "text": "Maksun viivästyessä myyjällä on oikeus korkolain 4 tai 4 a §:n mukaiseen viivästyskorkoon sekä lain saatavien perinnästä 10 §:n mukaiseen 40 euron vakiokorvaukseen perintäkuluista.",
+        "sequence": 20,
+        "legal_reference": "Korkolaki 633/1982, 4 § ja 4 a §; laki saatavien perinnästä 513/1999, 10 §",
+        "source": "korkolaki"
+      }
+    ]
+  },
+  "einvoicing": {
+    "profile": "peppol-bis-3",
+    "party_scheme": "0216",
+    "vat_scheme": null,
+    "legal_reference": "Laki hankintayksiköiden ja elinkeinonharjoittajien sähköisestä laskutuksesta 241/2019, 3 § — hankintayksikön on otettava vastaan ja käsiteltävä sähköinen lasku, joka perustuu lain 1397/2016, 1398/2016 tai 1531/2011 mukaiseen hankintaan; voimaan keskushallinnon hankintayksiköille ja yhteishankintayksiköille 1.4.2019, muille hankintayksiköille 1.4.2020 (5 §). 4 § — hankintayksiköllä ja elinkeinonharjoittajalla on oikeus saada pyynnöstä lasku toiselta hankintayksiköltä tai elinkeinonharjoittajalta sähköisenä laskuna, sovellettavissa 1.4.2020 alkaen (5 §): tämä on suomalainen kansallinen laajennus direktiivin 2014/55/EU vähimmäisvaatimukseen (joka koskee vain julkisia hankintayksiköitä ostajana), ei yleinen velvollisuus jokaiselle yritykselle. Laki ei nimeä yksittäistä syntaksia, vaan viittaa eurooppalaiseen standardiin EN 16931 ja komission julkaisemiin syntakseihin: käytännössä Peppol BIS Billing 3.0, Finvoice 3.0 (Finanssiala ry) ja TEAPPSXML 3.0 täyttävät kaikki tämän vaatimuksen rinnakkain, eikä mikään niistä ole ilmoitettu vanhentuneeksi. party_scheme 0216 (OVT-koodi) on Peppolin nykyinen suomalainen osoiteskeema; erillistä ICD-koodia suomalaiselle arvonlisäverotunnisteelle ei Peppolin skeemaluettelossa ole (vat_scheme jää tyhjäksi).",
+    "source": "sahkoinen-laskutus",
+    "mandatory_from": null,
+    "obligation": "on_request"
+  },
+  "bank": {
+    "statement_formats": ["camt.053", "camt.052"],
+    "payment_formats": ["pain.001"]
+  }
+}

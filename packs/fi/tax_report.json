@@ -1,0 +1,150 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "FI-ALV",
+  "name": "Arvonlisäveroilmoitus (oma-aloitteisten verojen veroilmoitus, VSRALVKV)",
+  "period": ["month", "quarter", "year"],
+  "period_default": "month",
+  "valid_from": "2017-01-01",
+  "legal_reference": "Laki oma-aloitteisten verojen verotusmenettelystä 768/2016, 11 § — verokausi on kalenterikuukausi, jollei 12 §:ssä toisin säädetä; 12 § 1 momentti — verovelvollinen, jonka kalenterivuoden liikevaihto on enintään 100 000 euroa, voi hakemuksesta siirtyä neljänneskalenterivuoden verokauteen; 2 momentti — liikevaihdoltaan enintään 30 000 euron verovelvollinen voi hakemuksesta siirtyä kalenterivuoden verokauteen. Lomakkeen kohdat noudattavat Verohallinnon julkaisemaa tietuekuvausta VSRALVKV.",
+  "source": "vero-vsralvkv",
+  "boxes": [
+    {
+      "box": "301",
+      "kind": "tax",
+      "name": "Vero kotimaan myynnistä, yleinen verokanta",
+      "sequence": 10,
+      "legal_reference": "VSRALVKV-tietuekuvaus, kohta 301 \"Tax on domestic sales at 24% of 25.5%\" — arvonlisäverolain 84 §:n mukainen yleisen verokannan (25,5 % 1.9.2024 alkaen) mukainen vero kotimaan myynnistä. Lomake ei erittele myynnin arvoa verokannoittain, vaan ainoastaan verokannan mukaisen veron.",
+      "source": "vero-vsralvkv"
+    },
+    {
+      "box": "302",
+      "kind": "tax",
+      "name": "Vero kotimaan myynnistä, alempi korotettu verokanta",
+      "sequence": 20,
+      "legal_reference": "VSRALVKV-tietuekuvaus, kohta 302 \"Tax on domestic sales at 14% or 13,5%\" — arvonlisäverolain 85 §:n mukainen verokanta (13,5 % 1.1.2026 alkaen, 14 % 1.1.2025–31.12.2025) mukainen vero kotimaan myynnistä.",
+      "source": "vero-vsralvkv"
+    },
+    {
+      "box": "303",
+      "kind": "tax",
+      "name": "Vero kotimaan myynnistä, alennettu verokanta",
+      "sequence": 30,
+      "legal_reference": "VSRALVKV-tietuekuvaus, kohta 303 \"Tax on domestic sales at 10%\" — arvonlisäverolain 85 a §:n mukainen 10 prosentin verokanta.",
+      "source": "vero-vsralvkv"
+    },
+    {
+      "box": "304",
+      "kind": "tax",
+      "name": "Vero tavaroiden maahantuonnista Euroopan unionin ulkopuolelta",
+      "sequence": 40,
+      "legal_reference": "VSRALVKV-tietuekuvaus, kohta 304 \"VAT on import of goods from outside the EU\". Tämä pakki ei mallinna maahantuontia (ks. README): kohta on kuvattu lomakkeen täydellisyyden vuoksi, mutta mikään vero ei kirjoita siihen.",
+      "source": "vero-vsralvkv"
+    },
+    {
+      "box": "305",
+      "kind": "tax",
+      "name": "Vero tavaraostoista muista EU-maista",
+      "sequence": 50,
+      "legal_reference": "VSRALVKV-tietuekuvaus, kohta 305 \"Tax on goods purchased from other EU countries\" — ostajan itse suorittama vero yhteisöhankinnasta.",
+      "source": "vero-vsralvkv"
+    },
+    {
+      "box": "306",
+      "kind": "tax",
+      "name": "Vero palveluostoista muista EU-maista",
+      "sequence": 60,
+      "legal_reference": "VSRALVKV-tietuekuvaus, kohta 306 \"Tax on services purchased from other EU countries\" — ostajan itse suorittama vero yleisen säännön mukaisesta palvelun myynnistä.",
+      "source": "vero-vsralvkv"
+    },
+    {
+      "box": "307",
+      "kind": "tax",
+      "name": "Verokauden vähennettävä vero",
+      "sequence": 70,
+      "legal_reference": "VSRALVKV-tietuekuvaus, kohta 307 \"Tax deductible for the tax period\" — arvonlisäverolain 10 luvun mukaan vähennyskelpoinen ostojen vero, jo rajoitusten (114 §) jälkeisenä määränä.",
+      "source": "vero-vsralvkv"
+    },
+    {
+      "box": "308",
+      "kind": "total",
+      "name": "Maksettava vero / palautukseen oikeuttava vero (-)",
+      "sequence": 400,
+      "plus": ["301", "302", "303", "304", "305", "306", "318"],
+      "minus": ["307"],
+      "legal_reference": "VSRALVKV-tietuekuvaus, kohta 308: 301+302+303+304+305+306+318-307. Voi olla negatiivinen, jolloin kyse on palautukseen oikeuttavasta verosta; arvonlisäverolaki 149 §, laki oma-aloitteisten verojen verotusmenettelystä 768/2016.",
+      "source": "vero-vsralvkv"
+    },
+    {
+      "box": "309",
+      "kind": "base",
+      "name": "Nollaverokannan alainen myynti",
+      "sequence": 80,
+      "legal_reference": "VSRALVKV-tietuekuvaus, kohta 309 \"Sales taxable at zero VAT rate\" — arvonlisäverolain 70 §:n mukainen vienti Euroopan unionin ulkopuolelle ja muu 0-verokannan myynti, joka ei sisälly kohtiin 311 tai 312.",
+      "source": "vero-vsralvkv"
+    },
+    {
+      "box": "310",
+      "kind": "base",
+      "name": "Tavaroiden maahantuonti Euroopan unionin ulkopuolelta",
+      "sequence": 90,
+      "legal_reference": "VSRALVKV-tietuekuvaus, kohta 310 \"Imports of goods from outside the EU\". Tämä pakki ei mallinna maahantuontia (ks. README): kohta on kuvattu lomakkeen täydellisyyden vuoksi, mutta mikään vero ei kirjoita siihen.",
+      "source": "vero-vsralvkv"
+    },
+    {
+      "box": "311",
+      "kind": "base",
+      "name": "Tavaroiden myynti muihin EU-maihin",
+      "sequence": 100,
+      "legal_reference": "VSRALVKV-tietuekuvaus, kohta 311 \"Sales of goods to other EU countries\" — arvonlisäverolain 72 a ja 72 b §:n mukainen yhteisömyynti.",
+      "source": "vero-vsralvkv"
+    },
+    {
+      "box": "312",
+      "kind": "base",
+      "name": "Palveluiden myynti muihin EU-maihin",
+      "sequence": 110,
+      "legal_reference": "VSRALVKV-tietuekuvaus, kohta 312 \"Sales of services to other EU countries\" — yleisen säännön mukainen palvelun myynti toisessa jäsenvaltiossa olevalle elinkeinonharjoittajalle, jonka ostaja tilittää veron.",
+      "source": "vero-vsralvkv"
+    },
+    {
+      "box": "313",
+      "kind": "base",
+      "name": "Tavaraostot muista EU-maista",
+      "sequence": 120,
+      "legal_reference": "VSRALVKV-tietuekuvaus, kohta 313 \"Purchases of goods from other EU countries\" — yhteisöhankinnan arvo.",
+      "source": "vero-vsralvkv"
+    },
+    {
+      "box": "314",
+      "kind": "base",
+      "name": "Palveluostot muista EU-maista",
+      "sequence": 130,
+      "legal_reference": "VSRALVKV-tietuekuvaus, kohta 314 \"Purchases of services from other EU countries\" — yleisen säännön mukaisen ostetun palvelun arvo.",
+      "source": "vero-vsralvkv"
+    },
+    {
+      "box": "318",
+      "kind": "tax",
+      "name": "Vero rakentamispalvelun tai metalliromun ostosta (käännetty verovelvollisuus)",
+      "sequence": 140,
+      "legal_reference": "VSRALVKV-tietuekuvaus, kohta 318 \"Tax on purchases of construction services/scrap metal (reverse charge)\" — arvonlisäverolain 8 c ja 8 d §:n mukainen ostajan itse suorittama vero.",
+      "source": "vero-vsralvkv"
+    },
+    {
+      "box": "319",
+      "kind": "base",
+      "name": "Rakentamispalvelun tai metalliromun myynti (käännetty verovelvollisuus)",
+      "sequence": 150,
+      "legal_reference": "VSRALVKV-tietuekuvaus, kohta 319 \"Sales of construction services/scrap metal\" — myyjän 8 c tai 8 d §:n perusteella verottomana laskuttama myynti.",
+      "source": "vero-vsralvkv"
+    },
+    {
+      "box": "320",
+      "kind": "base",
+      "name": "Rakentamispalvelun tai metalliromun ostot (käännetty verovelvollisuus)",
+      "sequence": 160,
+      "legal_reference": "VSRALVKV-tietuekuvaus, kohta 320 \"Purchases of construction services/scrap metal\" — ostajan 8 c tai 8 d §:n perusteella itse verottaman oston arvo.",
+      "source": "vero-vsralvkv"
+    }
+  ]
+}

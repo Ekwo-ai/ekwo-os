@@ -1,0 +1,225 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "Suomalaisen arvonlisäverovelvollisen kauppa- ja palveluyrityksen vuosi",
+  "chart": "default",
+  "fiscal_year": { "name": "Tilikausi 2026", "start": "2026-01-01", "end": "2026-12-31" },
+  "periods": [
+    { "code": "2026-01", "from": "2026-01-01", "to": "2026-01-31" },
+    { "code": "2026-02", "from": "2026-02-01", "to": "2026-02-28" },
+    { "code": "2026-03", "from": "2026-03-01", "to": "2026-03-31" },
+    { "code": "2026-04", "from": "2026-04-01", "to": "2026-04-30" }
+  ],
+  "statements": ["FI-KPA-BS", "FI-KPA-IS"],
+  "contacts": [
+    { "ref": "asiakas-fi", "name": "Kotimaan Kauppa Oy", "type": "customer", "country": "FI" },
+    { "ref": "asiakas-de", "name": "Nordfracht Handels GmbH", "type": "customer", "country": "DE", "vat_number": "DE999999999" },
+    { "ref": "asiakas-us", "name": "Lakeview Instruments Inc.", "type": "customer", "country": "US" },
+    { "ref": "tavarantoimittaja-fi", "name": "Suomen Toimistotarvike Oy", "type": "supplier", "country": "FI" },
+    { "ref": "tavarantoimittaja-se", "name": "Nordisk Råvara AB", "type": "supplier", "country": "SE", "vat_number": "SE999999999901" },
+    { "ref": "tavarantoimittaja-nl", "name": "Delta Software B.V.", "type": "supplier", "country": "NL", "vat_number": "NL999999999B01" }
+  ],
+  "documents": [
+    {
+      "ref": "V1",
+      "type": "sale_invoice",
+      "contact": "asiakas-fi",
+      "date": "2026-01-15",
+      "why": "Kotimainen myynti yleisellä verokannalla: koko myynnin vero tilitetään kohtaan 301, eikä lomake erittele myynnin arvoa erikseen.",
+      "lines": [
+        { "name": "Tavaraa varastosta", "quantity": 10, "unit_price": 1000, "tax": "FI-S-255", "account": "3000" }
+      ]
+    },
+    {
+      "ref": "V2",
+      "type": "sale_invoice",
+      "contact": "asiakas-fi",
+      "date": "2026-01-20",
+      "why": "Alempi korotettu verokanta 13,5 %: ravintolapalvelu erottuu kohdassa 302 yleisestä verokannasta.",
+      "lines": [
+        { "name": "Ravintolapalvelu", "quantity": 50, "unit_price": 20, "tax": "FI-S-135", "account": "3000" }
+      ]
+    },
+    {
+      "ref": "V3",
+      "type": "sale_invoice",
+      "contact": "asiakas-fi",
+      "date": "2026-02-03",
+      "why": "Alennettu verokanta 10 %: 1.1.2026 alkaen ainoa tässä verokannassa oleva ryhmä on sanoma- ja aikakauslehdet, kohta 303.",
+      "lines": [
+        { "name": "Aikakauslehden tilaus", "quantity": 100, "unit_price": 15, "tax": "FI-S-10", "account": "3000" }
+      ]
+    },
+    {
+      "ref": "V4",
+      "type": "sale_invoice",
+      "contact": "asiakas-de",
+      "date": "2026-02-10",
+      "why": "Tavaran yhteisömyynti 0 %: peruste kohdassa 311, ei tilitettävää veroa.",
+      "lines": [
+        { "name": "Tavaraa Saksaan", "quantity": 1, "unit_price": 5000, "tax": "FI-S-0-ICG", "account": "3010" }
+      ]
+    },
+    {
+      "ref": "V5",
+      "type": "sale_invoice",
+      "contact": "asiakas-de",
+      "date": "2026-02-18",
+      "why": "Palvelun myynti toiseen jäsenvaltioon, käännetty verovelvollisuus: peruste kohdassa 312.",
+      "lines": [
+        { "name": "Konsultointipalvelu", "quantity": 1, "unit_price": 2000, "tax": "FI-S-0-ICS", "account": "3010" }
+      ]
+    },
+    {
+      "ref": "V6",
+      "type": "sale_invoice",
+      "contact": "asiakas-us",
+      "date": "2026-03-02",
+      "why": "Vienti Euroopan unionin ulkopuolelle: peruste kohdassa 309, ei tilitettävää veroa.",
+      "lines": [
+        { "name": "Tavaraa Yhdysvaltoihin", "quantity": 1, "unit_price": 7000, "tax": "FI-S-0-EXP", "account": "3020" }
+      ]
+    },
+    {
+      "ref": "V7",
+      "type": "sale_invoice",
+      "contact": "asiakas-fi",
+      "date": "2026-03-10",
+      "why": "Veroton terveydenhoitopalvelu: ei arvonlisäveroa eikä kohtaa tällä lomakkeella.",
+      "lines": [
+        { "name": "Terveydenhoitopalvelu", "quantity": 1, "unit_price": 900, "tax": "FI-S-VAPAA-132", "account": "3030" }
+      ]
+    },
+    {
+      "ref": "V8",
+      "type": "sale_credit_note",
+      "contact": "asiakas-fi",
+      "date": "2026-03-15",
+      "why": "Hyvityslasku yleisellä verokannalla: vähentää samaa kohtaa 301 kuin alkuperäinen lasku.",
+      "lines": [
+        { "name": "Palautettu tavaraerä", "quantity": 1, "unit_price": 500, "tax": "FI-S-255", "account": "3000" }
+      ]
+    },
+    {
+      "ref": "O1",
+      "type": "purchase_invoice",
+      "contact": "tavarantoimittaja-fi",
+      "date": "2026-01-12",
+      "why": "Kotimainen hankinta yleisellä verokannalla, täysi vähennysoikeus kohdassa 307.",
+      "lines": [
+        { "name": "Toimistotarvikkeet", "quantity": 1, "unit_price": 2000, "tax": "FI-P-255", "account": "4000" }
+      ]
+    },
+    {
+      "ref": "O2",
+      "type": "purchase_invoice",
+      "contact": "tavarantoimittaja-fi",
+      "date": "2026-01-22",
+      "why": "Alempi korotettu verokanta ostopuolella: sama kohta 307 kuin yleisellä verokannalla, koska lomake ei eritä vähennystä verokannoittain.",
+      "lines": [
+        { "name": "Henkilöstöravintolan lasku", "quantity": 1, "unit_price": 800, "tax": "FI-P-135", "account": "4100" }
+      ]
+    },
+    {
+      "ref": "O3",
+      "type": "purchase_invoice",
+      "contact": "tavarantoimittaja-se",
+      "date": "2026-02-05",
+      "why": "Tavaran yhteisöhankinta: ostaja tilittää veron itse kohtaan 305 ja vähentää sen samassa ilmoituksessa kohdassa 307.",
+      "lines": [
+        { "name": "Raaka-ainetta Ruotsista", "quantity": 1, "unit_price": 3000, "tax": "FI-P-EU-G", "account": "4000" }
+      ]
+    },
+    {
+      "ref": "O4",
+      "type": "purchase_invoice",
+      "contact": "tavarantoimittaja-nl",
+      "date": "2026-02-14",
+      "why": "Palvelun osto toisesta jäsenvaltiosta, käännetty verovelvollisuus: kohta 306 ja vähennys kohdassa 307.",
+      "lines": [
+        { "name": "Ohjelmistokehityspalvelu", "quantity": 1, "unit_price": 1500, "tax": "FI-P-EU-S", "account": "4100" }
+      ]
+    },
+    {
+      "ref": "O5",
+      "type": "purchase_invoice",
+      "contact": "tavarantoimittaja-fi",
+      "date": "2026-02-25",
+      "why": "Rakentamispalvelun kotimainen käännetty verovelvollisuus: ostaja tilittää veron kohtaan 318 ja vähentää sen kohdassa 307.",
+      "lines": [
+        { "name": "Toimitilan korjausrakentaminen", "quantity": 1, "unit_price": 6000, "tax": "FI-P-RAKENNUS", "account": "4100" }
+      ]
+    },
+    {
+      "ref": "O6",
+      "type": "purchase_invoice",
+      "contact": "tavarantoimittaja-fi",
+      "date": "2026-03-05",
+      "why": "Henkilöauton hankinta ilman yksinomaista vähennykseen oikeuttavaa käyttöä: koko arvonlisävero jää vähentämättä ja lisää auton hankintamenoa.",
+      "lines": [
+        { "name": "Henkilöauto", "quantity": 1, "unit_price": 25000, "tax": "FI-P-AUTO-ND", "account": "1120" }
+      ]
+    },
+    {
+      "ref": "O7",
+      "type": "purchase_invoice",
+      "contact": "tavarantoimittaja-fi",
+      "date": "2026-03-18",
+      "why": "Edustuskulu: arvonlisävero ei ole koskaan vähennyskelpoinen, koko määrä jää kulutilille.",
+      "lines": [
+        { "name": "Asiakastilaisuuden tarjoilu", "quantity": 1, "unit_price": 400, "tax": "FI-P-EDUSTUS", "account": "7100" }
+      ]
+    },
+    {
+      "ref": "O8",
+      "type": "purchase_invoice",
+      "contact": "tavarantoimittaja-fi",
+      "date": "2026-04-02",
+      "why": "Veroton hankinta: myyjän laskulla ei ole arvonlisäveroa eikä sitä kirjata mihinkään kohtaan.",
+      "lines": [
+        { "name": "Vakuutusmaksu", "quantity": 1, "unit_price": 300, "tax": "FI-P-VAPAA", "account": "7080" }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "L1",
+      "direction": "inbound",
+      "date": "2026-02-10",
+      "amount": 12550,
+      "contact": "asiakas-fi",
+      "journal": "PNK",
+      "match": "V1",
+      "why": "Maksu, joka kattaa laskun V1 täysin."
+    },
+    {
+      "ref": "M1",
+      "direction": "outbound",
+      "date": "2026-02-15",
+      "amount": 2510,
+      "contact": "tavarantoimittaja-fi",
+      "journal": "PNK",
+      "match": "O1",
+      "why": "Maksu, joka sulkee ostolaskun O1."
+    },
+    {
+      "ref": "M2",
+      "direction": "outbound",
+      "date": "2026-03-25",
+      "amount": 31375,
+      "contact": "tavarantoimittaja-fi",
+      "journal": "PNK",
+      "match": "O6",
+      "why": "Auton lasku maksetaan kokonaisuudessaan: vähennysrajoitus koskee vain arvonlisäveron vähennysoikeutta, ei toimittajalle maksettavaa määrää."
+    },
+    {
+      "ref": "L2",
+      "direction": "inbound",
+      "date": "2026-04-20",
+      "amount": 3000,
+      "contact": "asiakas-fi",
+      "journal": "PNK",
+      "match": null,
+      "why": "Ennakko ilman kohdistettua laskua: jää avoimeksi, mitä pääkirjan ja siitä lasketun ilmoituksen on kestettävä."
+    }
+  ]
+}

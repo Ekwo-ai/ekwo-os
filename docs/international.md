@@ -4310,3 +4310,58 @@ general rule and the exception in prose, in `tax_report.json`'s
 `legal_reference` and in `packs/no/README.md`, for whoever extends the
 vocabulary with a "months and days" rule next and has to decide, at the same
 time, how a rule states an exception to itself.
+
+## From Finland
+
+`packs/fi/`, `community`, seed 67, inside the common system of VAT since
+Finland's accession on 1 January 1995. Its rates, its return and its
+statement schemes are read from the consolidated Arvonlisäverolaki (AVL) and
+the Kirjanpitoasetus (KPA); two things the format could not say as declared
+fields, and a third worth keeping beside them.
+
+**A periodic return with no deadline this format can state.** Laki
+oma-aloitteisten verojen verotusmenettelystä 768/2016 sets the general
+filing period at the calendar month (11 §) and makes the return due, and
+the tax payable, on the twelfth day of the *second* month following the
+period — a January return is due in March, not February.
+`tax_report_box.deadline` offers three rules: a day of the month
+*immediately* following the period, the last day of that month, and "it
+depends on the taxpayer" for a country whose administration assigns the day
+per filer. None of the three can say "two months later, on a fixed day
+that is the same for every filer" — the middle ground between the first
+rule (one month) and the third (no day at all) has no word here.
+`packs/fi/tax_report.json` leaves `deadline` out rather than stretch
+`day_of_month_after_period` to mean something it was not built to mean; a
+fourth rule, `day_of_month_after_period_offset` or similar, carrying a
+month offset beside the day, is the shape a fix would take.
+
+**A return that reports the tax charged, not the value it was charged on.**
+Boxes 301, 302 and 303 of form VSRALVKV are each "the VAT at this rate", with
+no companion box for the turnover it came from — unlike the Belgian,
+French, Dutch and Estonian returns already in this repository, which pair a
+base grid with a tax grid for a domestic rate. Nothing in the pack format
+assumes a base box exists: `packs/fi/taxes.json` simply declares no `base`
+posting on a domestic-rate tax, the same shape `packs/fr/` already uses for
+a purchase's base, so this needed no change to the core — it is recorded
+here because it is easy to read as an omission on a first pass through the
+pack rather than as a fact about the Finnish form.
+
+**One VAT account, filed either way, reads onto two statement lines by
+side.** Finnish practice keeps output VAT (2450) and input VAT (2455) as
+two distinct accounts rather than one two-sided control account, but a
+monthly filer can still close a period with either account in the balance
+its type does not expect — a large export month can leave output VAT in
+debit. `packs/fi/statements.json` reads both accounts on both the asset
+line and the liability line of the balance sheet, split by `side`, the
+mechanism `docs/packs.md` already describes for exactly this shape (a
+suspense account "a receivable while it is in debit and a payable while it
+is in credit"); `packs/ee/` uses the same mechanism for its own 2310/2311.
+No gap here, just a second pack leaning on a mechanism the format already
+has.
+
+### EUR and FI
+
+Finland already uses `EUR`, on the books of every pack that names it since
+Belgium's; no row was added to `00_currencies.sql`. `FI` needed no row in
+`00_territories.sql` either: the common system of VAT reaches it in full,
+and it carries no territory below it that any tax here conditions on.

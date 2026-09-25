@@ -1,0 +1,433 @@
+[
+  {
+    "code": "FI-S-255",
+    "name": "Myynti 25,5 %",
+    "description": "Yleinen verokanta",
+    "rate": 25.5,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2024-09-01",
+    "legal_reference": "Arvonlisäverolaki 84 § — suoritettava vero on 25,5 prosenttia veron perusteesta, ellei 85 tai 85 a §:ssä toisin säädetä. Laki 462/2024, voimaan 1.9.2024. Verokannan soveltaminen määräytyy sen mukaan, milloin tavara on toimitettu tai palvelu suoritettu (15 §), ei laskun päivämäärän mukaan.",
+    "source": "avl",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [{ "type": "tax", "account": "2450", "box": "301" }],
+      "credit_note": [{ "type": "tax", "account": "2450", "box": "301", "box_factor": -100 }]
+    },
+    "kind": "vat",
+    "sequence": 10
+  },
+  {
+    "code": "FI-S-24",
+    "name": "Myynti 24 %",
+    "description": "Yleinen verokanta 1.1.2013–31.8.2024",
+    "rate": 24,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2013-01-01",
+    "valid_to": "2024-08-31",
+    "legal_reference": "Arvonlisäverolaki 84 §, sellaisena kuin se oli laissa 706/2012, voimaan 1.1.2013 — yleinen verokanta 24 prosenttia. Kumottu 1.9.2024 laissa 462/2024.",
+    "source": "avl",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [{ "type": "tax", "account": "2450", "box": "301" }],
+      "credit_note": [{ "type": "tax", "account": "2450", "box": "301", "box_factor": -100 }]
+    },
+    "kind": "vat",
+    "sequence": 20
+  },
+  {
+    "code": "FI-S-135",
+    "name": "Myynti 13,5 %",
+    "description": "Elintarvikkeet, ravintola- ja ateriapalvelut, rehu, henkilökuljetus, majoitustilan käyttöoikeus, lääkkeet, kirjat, liikunta- ja kulttuuripalvelut, taide-esineet, tekijänoikeuskorvaukset sekä Yleisradio Oy:n televisio- ja radiorahastoon suoritettava maksu",
+    "rate": 13.5,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "legal_reference": "Arvonlisäverolaki 85 §, sellaisena kuin se on laissa 1358/2025 (voimaan 1.1.2026, verokanta 14 prosentista 13,5 prosenttiin) ja laissa 921/2024 (voimaan 1.1.2026, Yleisradio Oy:n tv- ja radiorahaston maksu siirretty 85 a §:stä 85 §:ään). Soveltamisalaa laajennettiin 1.1.2025 alkaen laissa 691/2024, joka siirsi henkilökuljetuksen, majoituksen, lääkkeet, kirjat, liikunta- ja kulttuuripalvelut, taide-esineet ja tekijänoikeuskorvaukset aiemmasta 10 prosentin verokannasta tähän verokantaan.",
+    "source": "avl",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [{ "type": "tax", "account": "2450", "box": "302" }],
+      "credit_note": [{ "type": "tax", "account": "2450", "box": "302", "box_factor": -100 }]
+    },
+    "kind": "vat",
+    "sequence": 30
+  },
+  {
+    "code": "FI-S-14",
+    "name": "Myynti 14 %",
+    "description": "Sama soveltamisala kuin FI-S-135:llä, verokanta 1.1.2025–31.12.2025",
+    "rate": 14,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2025-01-01",
+    "valid_to": "2025-12-31",
+    "legal_reference": "Arvonlisäverolaki 85 §, sellaisena kuin se oli laissa 691/2024, voimaan 1.1.2025 — verokanta 14 prosenttia. Korvattu 1.1.2026 laissa 1358/2025 verokannalla 13,5 prosenttia.",
+    "source": "avl",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [{ "type": "tax", "account": "2450", "box": "302" }],
+      "credit_note": [{ "type": "tax", "account": "2450", "box": "302", "box_factor": -100 }]
+    },
+    "kind": "vat",
+    "sequence": 40
+  },
+  {
+    "code": "FI-S-10",
+    "name": "Myynti 10 %",
+    "description": "Sanoma- ja aikakauslehdet fyysisellä alustalla tai sähköisesti luovutettuna",
+    "rate": 10,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2025-01-01",
+    "legal_reference": "Arvonlisäverolaki 85 a §, sellaisena kuin se on laissa 691/2024 (voimaan 1.1.2025) ja laissa 921/2024 (voimaan 1.1.2026, Yleisradion maksu poistettu tästä pykälästä) — 10 prosentin verokanta fyysisellä alustalla olevien tai sähköisesti luovutettavien sanoma- ja aikakauslehtien myynnistä, lukuun ottamatta pääasiallisesti mainoksia tai yksityistä käyttöä varten tarkoitettua ääni- tai kuvatallennetta sisältäviä julkaisuja. Verokanta itsessään ei ole tälle myynnille uusi 1.1.2025: pykälän 85 a soveltamisala vain supistui tähän yhteen ryhmään, kun muut ryhmät siirtyivät 85 §:ään.",
+    "source": "avl",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [{ "type": "tax", "account": "2450", "box": "303" }],
+      "credit_note": [{ "type": "tax", "account": "2450", "box": "303", "box_factor": -100 }]
+    },
+    "kind": "vat",
+    "sequence": 50
+  },
+  {
+    "code": "FI-S-0-EXP",
+    "name": "Vienti Euroopan unionin ulkopuolelle",
+    "description": "Tavaran myynti kuljetettuna Euroopan unionin ulkopuolelle",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "1994-06-01",
+    "legal_reference": "Arvonlisäverolaki 70 § 1 momentti 1 kohta — veroa ei suoriteta tavaran myynnistä, kun myyjä tai joku muu hänen puolestaan kuljettaa tavaran Euroopan unionin ulkopuolelle. Pykälä on ollut arvonlisäverolaissa sen alkuperäisestä, 1.6.1994 voimaan tulleesta sanamuodosta lähtien.",
+    "source": "avl",
+    "vat_category": "G",
+    "exemption_code": "VATEX-EU-G",
+    "postings": {
+      "invoice": [{ "type": "base", "box": "309" }],
+      "credit_note": [{ "type": "base", "box": "309", "box_factor": -100 }]
+    },
+    "kind": "vat",
+    "sequence": 60
+  },
+  {
+    "code": "FI-S-0-ICG",
+    "name": "Tavaran yhteisömyynti",
+    "description": "Tavaran myynti kuljetettuna Suomesta toiseen jäsenvaltioon arvonlisäverovelvolliselle ostajalle",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "intracom_goods",
+    "valid_from": "1995-01-01",
+    "legal_reference": "Arvonlisäverolaki 72 a § — veroa ei suoriteta 72 b §:ssä tarkoitetusta tavaran yhteisömyynnistä; 72 b § — yhteisömyynnillä tarkoitetaan irtaimen esineen myyntiä, jos myyjä, ostaja tai joku muu heidän puolestaan kuljettaa esineen ostajalle Suomesta toiseen jäsenvaltioon. Neuvoston direktiivin 2006/112/EY 138 artikla. Suomi on ollut Euroopan unionin jäsen 1.1.1995 alkaen.",
+    "source": "avl",
+    "vat_category": "K",
+    "exemption_code": "VATEX-EU-IC",
+    "postings": {
+      "invoice": [{ "type": "base", "box": "311" }],
+      "credit_note": [{ "type": "base", "box": "311", "box_factor": -100 }]
+    },
+    "kind": "vat",
+    "sequence": 70
+  },
+  {
+    "code": "FI-S-0-ICS",
+    "name": "Palvelun myynti toiseen jäsenvaltioon, käännetty verovelvollisuus",
+    "description": "Yleisen säännön mukainen palvelun myynti toisessa jäsenvaltiossa olevalle elinkeinonharjoittajalle, joka tilittää veron itse",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "intracom_services",
+    "valid_from": "2010-01-01",
+    "legal_reference": "Arvonlisäverolaki 65 § — palvelu on myyty Suomen ulkopuolella, jos se luovutetaan ostajan kiinteään toimipaikkaan toisessa valtiossa tai, jollei palvelua luovuteta kiinteään toimipaikkaan, ostajan kotipaikkaan; 68 a § vastaavasti ulkomaille sijoittautuneelle ostajalle. Neuvoston direktiivin 2006/112/EY 44 ja 196 artikla, sellaisina kuin ne ovat direktiivissä 2008/8/EY, sovellettu 1.1.2010 alkaen.",
+    "source": "avl",
+    "vat_category": "K",
+    "exemption_code": "VATEX-EU-IC",
+    "postings": {
+      "invoice": [{ "type": "base", "box": "312" }],
+      "credit_note": [{ "type": "base", "box": "312", "box_factor": -100 }]
+    },
+    "kind": "vat",
+    "sequence": 80
+  },
+  {
+    "code": "FI-S-RAKENNUS",
+    "name": "Rakentamispalvelun myynti, käännetty verovelvollisuus",
+    "description": "Ostaja on verovelvollinen arvonlisäverolain 8 c §:n mukaisesti",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "domestic_reverse_charge",
+    "valid_from": "2011-04-01",
+    "legal_reference": "Arvonlisäverolaki 8 c § 1 momentti — rakentamispalvelun sekä työvoiman vuokrauksen rakentamispalvelua varten myynnistä verovelvollinen on ostaja, jos ostaja on elinkeinonharjoittaja, joka muutoin kuin satunnaisesti myy rakentamispalveluja tai 31 §:n 1 momentin 1 kohdassa tai 33 §:ssä tarkoitettuja kiinteistön luovutuksia. Säännös lisättiin lailla 686/2010, voimaan 1.4.2011.",
+    "source": "avl",
+    "vat_category": "AE",
+    "exemption_code": "VATEX-EU-AE",
+    "postings": {
+      "invoice": [{ "type": "base", "box": "319" }],
+      "credit_note": [{ "type": "base", "box": "319", "box_factor": -100 }]
+    },
+    "kind": "vat",
+    "sequence": 90
+  },
+  {
+    "code": "FI-S-VAPAA-132",
+    "name": "Terveyden- ja sairaanhoito sekä koulutus, veroton",
+    "description": "Veroton toiminta yleisen edun vuoksi",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "1994-06-01",
+    "legal_reference": "Arvonlisäverolaki 34 § — veroa ei suoriteta terveyden- ja sairaanhoitopalvelun myynnistä; 39 § — veroa ei suoriteta koulutuspalvelun myynnistä. Neuvoston direktiivin 2006/112/EY 132 artikla 1 kohta b ja i alakohta.",
+    "source": "avl",
+    "vat_category": "E",
+    "exemption_code": "VATEX-EU-132",
+    "postings": {
+      "invoice": [{ "type": "base" }],
+      "credit_note": [{ "type": "base" }]
+    },
+    "kind": "vat",
+    "sequence": 100
+  },
+  {
+    "code": "FI-S-VAPAA-135",
+    "name": "Rahoitus- ja vakuutuspalvelut sekä kiinteistön luovutus, veroton",
+    "description": "Muu direktiivin 135 artiklan mukainen vapautus",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "1994-06-01",
+    "legal_reference": "Arvonlisäverolaki 27 § — veroa ei suoriteta kiinteistön myynnistä eikä maanvuokraoikeuden, huoneenvuokraoikeuden, rasiteoikeuden tai muun niihin verrattavan kiinteistöön kohdistuvan oikeuden luovuttamisesta; 41 § — veroa ei suoriteta rahoituspalvelun myynnistä; 44 § — veroa ei suoriteta vakuutuspalvelun myynnistä ja välityksestä. Neuvoston direktiivin 2006/112/EY 135 artikla 1 kohta a, b–g ja l alakohta.",
+    "source": "avl",
+    "vat_category": "E",
+    "exemption_code": "VATEX-EU-135",
+    "postings": {
+      "invoice": [{ "type": "base" }],
+      "credit_note": [{ "type": "base" }]
+    },
+    "kind": "vat",
+    "sequence": 110
+  },
+  {
+    "code": "FI-P-255",
+    "name": "Osto 25,5 %",
+    "description": "Kotimainen hankinta, täysi vähennysoikeus",
+    "rate": 25.5,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2024-09-01",
+    "legal_reference": "Arvonlisäverolaki 84 § yhdessä 102 §:n kanssa — verovelvollinen saa vähentää verollista liiketoimintaa varten hankkimastaan tavarasta tai palvelusta suoritettavan veron.",
+    "source": "avl",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [{ "type": "tax", "account": "2455", "box": "307" }],
+      "credit_note": [{ "type": "tax", "account": "2455", "box": "307", "box_factor": -100 }]
+    },
+    "kind": "vat",
+    "sequence": 120
+  },
+  {
+    "code": "FI-P-24",
+    "name": "Osto 24 %",
+    "description": "Kotimainen hankinta 1.1.2013–31.8.2024, täysi vähennysoikeus",
+    "rate": 24,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2013-01-01",
+    "valid_to": "2024-08-31",
+    "legal_reference": "Arvonlisäverolaki 84 §, sellaisena kuin se oli laissa 706/2012, yhdessä 102 §:n kanssa.",
+    "source": "avl",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [{ "type": "tax", "account": "2455", "box": "307" }],
+      "credit_note": [{ "type": "tax", "account": "2455", "box": "307", "box_factor": -100 }]
+    },
+    "kind": "vat",
+    "sequence": 130
+  },
+  {
+    "code": "FI-P-135",
+    "name": "Osto 13,5 %",
+    "description": "Kotimainen hankinta, täysi vähennysoikeus",
+    "rate": 13.5,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "legal_reference": "Arvonlisäverolaki 85 §, sellaisena kuin se on laissa 1358/2025, yhdessä 102 §:n kanssa.",
+    "source": "avl",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [{ "type": "tax", "account": "2455", "box": "307" }],
+      "credit_note": [{ "type": "tax", "account": "2455", "box": "307", "box_factor": -100 }]
+    },
+    "kind": "vat",
+    "sequence": 140
+  },
+  {
+    "code": "FI-P-14",
+    "name": "Osto 14 %",
+    "description": "Kotimainen hankinta 1.1.2025–31.12.2025, täysi vähennysoikeus",
+    "rate": 14,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2025-01-01",
+    "valid_to": "2025-12-31",
+    "legal_reference": "Arvonlisäverolaki 85 §, sellaisena kuin se oli laissa 691/2024, yhdessä 102 §:n kanssa.",
+    "source": "avl",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [{ "type": "tax", "account": "2455", "box": "307" }],
+      "credit_note": [{ "type": "tax", "account": "2455", "box": "307", "box_factor": -100 }]
+    },
+    "kind": "vat",
+    "sequence": 150
+  },
+  {
+    "code": "FI-P-10",
+    "name": "Osto 10 %",
+    "description": "Sanoma- ja aikakauslehden hankinta, täysi vähennysoikeus",
+    "rate": 10,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2025-01-01",
+    "legal_reference": "Arvonlisäverolaki 85 a §, sellaisena kuin se on laissa 691/2024, yhdessä 102 §:n kanssa.",
+    "source": "avl",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [{ "type": "tax", "account": "2455", "box": "307" }],
+      "credit_note": [{ "type": "tax", "account": "2455", "box": "307", "box_factor": -100 }]
+    },
+    "kind": "vat",
+    "sequence": 160
+  },
+  {
+    "code": "FI-P-EU-G",
+    "name": "Tavaran yhteisöhankinta 25,5 %",
+    "description": "Ostaja tilittää veron itse; vähennysoikeus samassa ilmoituksessa",
+    "rate": 25.5,
+    "scope": "purchase",
+    "treatment": "intracom_acquisition_goods",
+    "valid_from": "2024-09-01",
+    "legal_reference": "Arvonlisäverolaki 1 § 1 momentti 3 kohta ja 26 a § — veroa suoritetaan tavaran yhteisöhankinnasta; 2 a § — velvollinen suorittamaan veron yhteisöhankinnasta on ostaja; 102 § — vero on samalla ilmoituksella vähennyskelpoinen, jos hankinta tehdään verollista liiketoimintaa varten.",
+    "source": "avl",
+    "vat_category": "K",
+    "exemption_code": "VATEX-EU-IC",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "313" },
+        { "type": "tax", "account": "2455", "box": "307", "sequence": 10 },
+        { "type": "tax", "factor": -100, "account": "2450", "box": "305", "sequence": 20 }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "313", "box_factor": -100 },
+        { "type": "tax", "account": "2455", "box": "307", "box_factor": -100, "sequence": 10 },
+        { "type": "tax", "factor": -100, "account": "2450", "box": "305", "box_factor": -100, "sequence": 20 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 170
+  },
+  {
+    "code": "FI-P-EU-S",
+    "name": "Palvelun osto toisesta jäsenvaltiosta, käännetty verovelvollisuus 25,5 %",
+    "description": "Yleisen säännön mukainen palvelun osto; ostaja tilittää veron itse ja vähentää sen samassa ilmoituksessa",
+    "rate": 25.5,
+    "scope": "purchase",
+    "treatment": "intracom_acquisition_services",
+    "valid_from": "2024-09-01",
+    "legal_reference": "Arvonlisäverolaki 9 § yhdessä 65 §:n kanssa — palvelu on myyty Suomessa, kun se on luovutettu täällä olevaan kiinteään toimipaikkaan tai, jollei toimipaikkaa ole, ostajan kotipaikkaan; jos myyjä on ulkomaalainen, jolla ei ole Suomessa kiinteää toimipaikkaa, verovelvollinen on ostaja. 102 § — sama ilmoitus vähentää veron.",
+    "source": "avl",
+    "vat_category": "K",
+    "exemption_code": "VATEX-EU-IC",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "314" },
+        { "type": "tax", "account": "2455", "box": "307", "sequence": 10 },
+        { "type": "tax", "factor": -100, "account": "2450", "box": "306", "sequence": 20 }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "314", "box_factor": -100 },
+        { "type": "tax", "account": "2455", "box": "307", "box_factor": -100, "sequence": 10 },
+        { "type": "tax", "factor": -100, "account": "2450", "box": "306", "box_factor": -100, "sequence": 20 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 180
+  },
+  {
+    "code": "FI-P-RAKENNUS",
+    "name": "Rakentamispalvelun osto, käännetty verovelvollisuus 25,5 %",
+    "description": "Ostaja tilittää veron itse ja vähentää sen samassa ilmoituksessa",
+    "rate": 25.5,
+    "scope": "purchase",
+    "treatment": "domestic_reverse_charge",
+    "valid_from": "2024-09-01",
+    "legal_reference": "Arvonlisäverolaki 8 c § 1 momentti — rakentamispalvelun ostajana toimiva elinkeinonharjoittaja on verovelvollinen, jos hän muutoin kuin satunnaisesti myy rakentamispalveluja; 102 § — sama ilmoitus vähentää veron, jos hankinta tehdään verollista liiketoimintaa varten. Säännös lisättiin lailla 686/2010, voimaan 1.4.2011.",
+    "source": "avl",
+    "vat_category": "AE",
+    "exemption_code": "VATEX-EU-AE",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "320" },
+        { "type": "tax", "account": "2455", "box": "307", "sequence": 10 },
+        { "type": "tax", "factor": -100, "account": "2450", "box": "318", "sequence": 20 }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "320", "box_factor": -100 },
+        { "type": "tax", "account": "2455", "box": "307", "box_factor": -100, "sequence": 10 },
+        { "type": "tax", "factor": -100, "account": "2450", "box": "318", "box_factor": -100, "sequence": 20 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 190
+  },
+  {
+    "code": "FI-P-AUTO-ND",
+    "name": "Henkilöauton hankinta 25,5 %, ei vähennysoikeutta",
+    "description": "Henkilöauto, joka ei ole yksinomaan vähennykseen oikeuttavassa käytössä (jälleenmyynti, vuokraus, henkilökuljetus, ajo-opetus)",
+    "rate": 25.5,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "recoverable": false,
+    "valid_from": "2024-09-01",
+    "legal_reference": "Arvonlisäverolaki 114 § 1 momentti 5 kohta — vähennystä ei saa tehdä, kun hankinta koskee henkilöautoa ja siihen tai sen käyttöön liittyviä tavaroita ja palveluja, ellei auto ole yksinomaan vähennykseen oikeuttavassa käytössä (Verohallinnon ohje: jälleenmyynti, vuokraustoiminta, henkilökuljetus tai ajo-opetus).",
+    "source": "avl",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [{ "type": "tax_on_base" }],
+      "credit_note": [{ "type": "tax_on_base" }]
+    },
+    "kind": "vat",
+    "sequence": 200
+  },
+  {
+    "code": "FI-P-EDUSTUS",
+    "name": "Edustuskulun hankinta 25,5 %, ei vähennysoikeutta",
+    "description": "Edustustarkoitukseen käytettävä tavara tai palvelu",
+    "rate": 25.5,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "recoverable": false,
+    "valid_from": "2024-09-01",
+    "legal_reference": "Arvonlisäverolaki 114 § 1 momentti 3 kohta — vähennystä ei saa tehdä, kun hankinta koskee edustustarkoitukseen käytettäviä tavaroita ja palveluja.",
+    "source": "avl",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [{ "type": "tax_on_base" }],
+      "credit_note": [{ "type": "tax_on_base" }]
+    },
+    "kind": "vat",
+    "sequence": 210
+  },
+  {
+    "code": "FI-P-VAPAA",
+    "name": "Veroton hankinta",
+    "description": "Lasku ilman arvonlisäveroa",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "exempt",
+    "valid_from": "1994-06-01",
+    "legal_reference": "Arvonlisäverolaki 27, 34, 39, 41 tai 44 § — myyjän veroton myynti; ostajan laskulla ei ole arvonlisäveroa. Myyjän valitsema peruste (132 vai 135 artikla) ei ole ostajan kirjanpidosta pääteltävissä, joten sitä ei kirjata tähän ostoveroon.",
+    "source": "avl",
+    "postings": {},
+    "kind": "vat",
+    "sequence": 220
+  }
+]
