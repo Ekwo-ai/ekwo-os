@@ -1,0 +1,109 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "name": "Un año de una comercializadora colombiana, declarante de IVA bimestral",
+  "chart": "default",
+  "fiscal_year": { "name": "Ejercicio 2026", "start": "2026-01-01", "end": "2026-12-31" },
+  "periods": [
+    { "code": "2026-01", "from": "2026-01-01", "to": "2026-02-28" },
+    { "code": "2026-02", "from": "2026-03-01", "to": "2026-04-30" }
+  ],
+  "statements": ["CO-DECRETO2649-ESF", "CO-DECRETO2649-ER"],
+  "contacts": [
+    { "ref": "cust-sabana", "name": "Supermercados La Sabana S.A.S.", "type": "customer", "country": "CO" },
+    { "ref": "cust-export", "name": "Fresh Export Foods LLC", "type": "customer", "country": "US" },
+    { "ref": "cust-lechera", "name": "Distribuidora Lechera Andina S.A.S.", "type": "customer", "country": "CO" },
+    { "ref": "sup-oficina", "name": "Suministros de Oficina S.A.S.", "type": "supplier", "country": "CO" },
+    { "ref": "sup-tueste", "name": "Tueste Andino S.A.S.", "type": "supplier", "country": "CO" },
+    { "ref": "sup-logistica", "name": "Almacenamiento y Logística S.A.S.", "type": "supplier", "country": "CO" },
+    { "ref": "sup-cultivos", "name": "Cultivos La Vega S.A.S.", "type": "supplier", "country": "CO" }
+  ],
+  "documents": [
+    {
+      "ref": "V1", "type": "sale_invoice", "contact": "cust-sabana", "date": "2026-01-15",
+      "why": "Una venta de mercancía general a la tarifa del 19 %: prueba la casilla 28 de ingresos y la 59 de impuesto generado.",
+      "lines": [{ "name": "Mercancía general", "quantity": 1, "unit_price": 5000000, "tax": "CO-S-19", "account": "4135" }]
+    },
+    {
+      "ref": "V2", "type": "sale_invoice", "contact": "cust-sabana", "date": "2026-01-20",
+      "why": "Una venta de café tostado a la tarifa del 5 % del artículo 468-1: prueba la casilla 27 y la 58.",
+      "lines": [{ "name": "Café tostado", "quantity": 1, "unit_price": 2000000, "tax": "CO-S-5", "account": "4135" }]
+    },
+    {
+      "ref": "V3", "type": "sale_invoice", "contact": "cust-sabana", "date": "2026-01-25",
+      "why": "Una venta de papa, bien excluido del artículo 424: prueba la casilla 39, sin impuesto generado ni derecho a descuento.",
+      "lines": [{ "name": "Papa", "quantity": 1, "unit_price": 1000000, "tax": "CO-S-EXC", "account": "4135" }]
+    },
+    {
+      "ref": "V4", "type": "sale_invoice", "contact": "cust-export", "date": "2026-02-05",
+      "why": "Una exportación de bienes, exenta con derecho a devolución bimestral del artículo 481, literal a): prueba la casilla 30.",
+      "lines": [{ "name": "Mercancía exportada", "quantity": 1, "unit_price": 8000000, "tax": "CO-S-EXP", "account": "4135" }]
+    },
+    {
+      "ref": "V5", "type": "sale_invoice", "contact": "cust-lechera", "date": "2026-02-10",
+      "why": "Una venta de leche fresca, bien exento del artículo 477 con derecho a descuento: prueba la casilla 35, distinta de un bien excluido.",
+      "lines": [{ "name": "Leche fresca", "quantity": 1, "unit_price": 3000000, "tax": "CO-S-EXE", "account": "4135" }]
+    },
+    {
+      "ref": "CN1", "type": "sale_credit_note", "contact": "cust-sabana", "date": "2026-02-20",
+      "why": "Una devolución parcial de la venta V1: prueba que la nota crédito reduce la casilla 28 y la 59 en vez de sumar una segunda base.",
+      "lines": [{ "name": "Devolución de mercancía general", "quantity": 1, "unit_price": 500000, "tax": "CO-S-19", "account": "4135" }]
+    },
+    {
+      "ref": "C1", "type": "purchase_invoice", "contact": "sup-oficina", "date": "2026-01-10",
+      "why": "Una compra de mercancía general a la tarifa general: prueba la casilla 51 y el descuento de la 72.",
+      "lines": [{ "name": "Mercancía general", "quantity": 1, "unit_price": 3000000, "tax": "CO-P-19", "account": "6205" }]
+    },
+    {
+      "ref": "C2", "type": "purchase_invoice", "contact": "sup-tueste", "date": "2026-01-12",
+      "why": "Una compra de café tostado a la tarifa del 5 % para su reventa: prueba la casilla 50 y el descuento de la 71.",
+      "lines": [{ "name": "Café tostado", "quantity": 1, "unit_price": 1500000, "tax": "CO-P-5", "account": "6205" }]
+    },
+    {
+      "ref": "C3", "type": "purchase_invoice", "contact": "sup-logistica", "date": "2026-01-18",
+      "why": "Una compra de un servicio de almacenamiento a la tarifa general: prueba que el impuesto descontable de un servicio cae en la casilla 75 y no en la 72 de bienes.",
+      "lines": [{ "name": "Servicio de almacenamiento", "quantity": 1, "unit_price": 800000, "tax": "CO-P-19-SERV", "account": "5135" }]
+    },
+    {
+      "ref": "C4", "type": "purchase_invoice", "contact": "sup-cultivos", "date": "2026-01-22",
+      "why": "Una compra de papa, bien excluido, para su reventa: prueba la casilla 54, sin impuesto descontable.",
+      "lines": [{ "name": "Papa", "quantity": 1, "unit_price": 900000, "tax": "CO-P-EXC", "account": "6205" }]
+    },
+    {
+      "ref": "V6", "type": "sale_invoice", "contact": "cust-sabana", "date": "2026-03-10",
+      "why": "Una venta en el segundo período bimestral, menor que la compra C5 del mismo período: prueba que la casilla 59 y el saldo del formulario se calculan por período y no se acumulan del anterior.",
+      "lines": [{ "name": "Mercancía general", "quantity": 1, "unit_price": 2000000, "tax": "CO-S-19", "account": "4135" }]
+    },
+    {
+      "ref": "C5", "type": "purchase_invoice", "contact": "sup-oficina", "date": "2026-03-15",
+      "why": "Una compra grande en el segundo período bimestral, que deja ese período en saldo a favor: prueba la casilla 83.",
+      "lines": [{ "name": "Mercancía general", "quantity": 1, "unit_price": 5000000, "tax": "CO-P-19", "account": "6205" }]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "P1", "direction": "inbound", "date": "2026-02-05", "amount": 5950000,
+      "contact": "cust-sabana", "journal": "BAN", "match": "V1",
+      "why": "El cliente paga exactamente la factura V1: un pago que concilia una línea de cliente."
+    },
+    {
+      "ref": "P2", "direction": "inbound", "date": "2026-03-01", "amount": 8000000,
+      "contact": "cust-export", "journal": "BAN", "match": "V4",
+      "why": "El cobro de la exportación V4, en la misma cuenta de clientes."
+    },
+    {
+      "ref": "P3", "direction": "outbound", "date": "2026-02-01", "amount": 3570000,
+      "contact": "sup-oficina", "journal": "BAN", "match": "C1",
+      "why": "El pago de la factura C1 al proveedor, dentro del mismo período."
+    },
+    {
+      "ref": "P4", "direction": "inbound", "date": "2026-02-15", "amount": 1000000,
+      "contact": "cust-sabana", "journal": "BAN", "match": null,
+      "why": "Un anticipo del cliente sin factura que salda: deja abierta la partida de V2 y V3, como sostiene un libro real."
+    },
+    {
+      "ref": "P5", "direction": "outbound", "date": "2026-03-20", "amount": 1575000,
+      "contact": "sup-tueste", "journal": "BAN", "match": "C2",
+      "why": "El pago de la compra de café C2, para probar una conciliación en el segundo período."
+    }
+  ]
+}

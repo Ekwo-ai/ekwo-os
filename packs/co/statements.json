@@ -1,0 +1,104 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "statements": [
+    {
+      "code": "CO-DECRETO2649-ESF",
+      "kind": "balance_sheet",
+      "framework": "CO-PUC",
+      "name": "Estado de situación financiera",
+      "legal_reference": "Decreto 2650 de 1993, art. 4 — el catálogo de cuentas agrupa las clases 1 (activo), 2 (pasivo) y 3 (patrimonio), que conforman el balance general; Decreto 2706 de 2012, sección 4 (grupo 3, microempresas) — estado de situación financiera abreviado, el formato oficial más simple para quien no está obligado a la presentación completa de los grupos 1 y 2",
+      "source": "decreto2706",
+      "lines": [
+        { "code": "11", "parent": "AC", "name": "Disponible", "sequence": 10, "sign": 1,
+          "rules": [{ "kind": "code_prefix", "code_from": "11" }] },
+        { "code": "12", "parent": "ANC", "name": "Inversiones", "sequence": 20, "sign": 1,
+          "rules": [{ "kind": "code_prefix", "code_from": "12" }] },
+        { "code": "13", "parent": "AC", "name": "Deudores", "sequence": 30, "sign": 1,
+          "rules": [{ "kind": "code_prefix", "code_from": "13" }] },
+        { "code": "14", "parent": "AC", "name": "Inventarios", "sequence": 40, "sign": 1,
+          "rules": [{ "kind": "code_prefix", "code_from": "14" }] },
+        { "code": "15", "parent": "ANC", "name": "Propiedades, planta y equipo", "sequence": 50, "sign": 1,
+          "rules": [{ "kind": "code_prefix", "code_from": "15" }] },
+        { "code": "16", "parent": "ANC", "name": "Intangibles", "sequence": 60, "sign": 1,
+          "rules": [{ "kind": "code_prefix", "code_from": "16" }] },
+        { "code": "17", "parent": "AC", "name": "Diferidos", "sequence": 70, "sign": 1,
+          "rules": [{ "kind": "code_prefix", "code_from": "17" }] },
+        { "code": "AC", "parent": "ACT", "name": "Total activo corriente", "sequence": 80, "is_total": true,
+          "plus": ["11", "13", "14", "17"] },
+        { "code": "ANC", "parent": "ACT", "name": "Total activo no corriente", "sequence": 90, "is_total": true,
+          "plus": ["12", "15", "16"] },
+        { "code": "ACT", "parent": null, "name": "Total activo", "sequence": 100, "is_total": true,
+          "plus": ["AC", "ANC"] },
+
+        { "code": "21", "parent": "PAS", "name": "Obligaciones financieras", "sequence": 110, "sign": -1,
+          "rules": [{ "kind": "code_prefix", "code_from": "21" }] },
+        { "code": "22", "parent": "PAS", "name": "Proveedores", "sequence": 120, "sign": -1,
+          "rules": [{ "kind": "code_prefix", "code_from": "22" }] },
+        { "code": "23", "parent": "PAS", "name": "Cuentas por pagar", "sequence": 130, "sign": -1,
+          "rules": [{ "kind": "code_prefix", "code_from": "23" }] },
+        { "code": "24", "parent": "PAS", "name": "Impuestos, gravámenes y tasas", "sequence": 140, "sign": -1,
+          "rules": [{ "kind": "code_prefix", "code_from": "24" }] },
+        { "code": "25", "parent": "PAS", "name": "Obligaciones laborales", "sequence": 150, "sign": -1,
+          "rules": [{ "kind": "code_prefix", "code_from": "25" }] },
+        { "code": "26", "parent": "PAS", "name": "Pasivos estimados y provisiones", "sequence": 160, "sign": -1,
+          "rules": [{ "kind": "code_prefix", "code_from": "26" }] },
+        { "code": "27", "parent": "PAS", "name": "Diferidos", "sequence": 170, "sign": -1,
+          "rules": [{ "kind": "code_prefix", "code_from": "27" }] },
+        { "code": "28", "parent": "PAS", "name": "Otros pasivos", "sequence": 180, "sign": -1,
+          "rules": [{ "kind": "code_prefix", "code_from": "28" }] },
+        { "code": "PAS", "parent": null, "name": "Total pasivo", "sequence": 190, "is_total": true,
+          "plus": ["21", "22", "23", "24", "25", "26", "27", "28"] },
+
+        { "code": "31", "parent": "PAT", "name": "Capital social", "sequence": 200, "sign": -1,
+          "rules": [{ "kind": "code_prefix", "code_from": "31" }] },
+        { "code": "33", "parent": "PAT", "name": "Reservas", "sequence": 210, "sign": -1,
+          "rules": [{ "kind": "code_prefix", "code_from": "33" }] },
+        { "code": "36", "parent": "PAT", "name": "Resultado del ejercicio", "sequence": 220, "sign": -1,
+          "rules": [{ "kind": "code_prefix", "code_from": "36" }] },
+        { "code": "37", "parent": "PAT", "name": "Resultados de ejercicios anteriores", "sequence": 230, "sign": -1,
+          "rules": [{ "kind": "code_prefix", "code_from": "37" }] },
+        { "code": "PAT", "parent": null, "name": "Total patrimonio", "sequence": 240, "is_total": true,
+          "plus": ["31", "33", "36", "37"] }
+      ]
+    },
+    {
+      "code": "CO-DECRETO2649-ER",
+      "kind": "income_statement",
+      "framework": "CO-PUC",
+      "name": "Estado de resultado integral",
+      "legal_reference": "Decreto 2650 de 1993, art. 4 — el catálogo de cuentas agrupa las clases 4 (ingresos), 5 (gastos) y 6 (costos de ventas), de las que resulta el estado de resultados; Decreto 2706 de 2012, sección 4 — estado de resultado integral abreviado del grupo 3 (microempresas)",
+      "source": "decreto2706",
+      "lines": [
+        { "code": "41", "parent": "ING", "name": "Ingresos operacionales", "sequence": 10, "sign": -1,
+          "rules": [{ "kind": "code_prefix", "code_from": "41" }] },
+        { "code": "42", "parent": "ING", "name": "Ingresos no operacionales", "sequence": 20, "sign": -1,
+          "rules": [{ "kind": "code_prefix", "code_from": "42" }] },
+        { "code": "ING", "parent": null, "name": "Total ingresos", "sequence": 30, "is_total": true,
+          "plus": ["41", "42"] },
+
+        { "code": "61", "parent": "CV", "name": "Costo de ventas y de prestación de servicios", "sequence": 40, "sign": 1,
+          "rules": [{ "kind": "code_prefix", "code_from": "61" }] },
+        { "code": "62", "parent": "CV", "name": "Compras", "sequence": 50, "sign": 1,
+          "rules": [{ "kind": "code_prefix", "code_from": "62" }] },
+        { "code": "CV", "parent": null, "name": "Total costo de ventas", "sequence": 60, "is_total": true,
+          "plus": ["61", "62"] },
+
+        { "code": "51", "parent": "GO", "name": "Gastos operacionales de administración", "sequence": 70, "sign": 1,
+          "rules": [{ "kind": "code_prefix", "code_from": "51" }] },
+        { "code": "52", "parent": "GO", "name": "Gastos operacionales de ventas", "sequence": 80, "sign": 1,
+          "rules": [{ "kind": "code_prefix", "code_from": "52" }] },
+        { "code": "GO", "parent": null, "name": "Total gastos operacionales", "sequence": 90, "is_total": true,
+          "plus": ["51", "52"] },
+
+        { "code": "53", "parent": null, "name": "Gastos no operacionales", "sequence": 100, "sign": 1,
+          "rules": [{ "kind": "code_prefix", "code_from": "53" }] },
+
+        { "code": "54", "parent": null, "name": "Impuesto de renta y complementarios", "sequence": 110, "sign": 1,
+          "rules": [{ "kind": "code_prefix", "code_from": "54" }] },
+
+        { "code": "UN", "parent": null, "name": "Utilidad o pérdida del ejercicio", "sequence": 120, "is_total": true,
+          "plus": ["ING"], "minus": ["CV", "GO", "53", "54"] }
+      ]
+    }
+  ]
+}

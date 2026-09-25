@@ -1,0 +1,181 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "code": "CO-VAT-300",
+  "name": "Declaración del Impuesto sobre las Ventas — IVA (Formulario 300)",
+  "period": ["bimonth", "four_month"],
+  "legal_reference": "Estatuto Tributario, art. 600 — los responsables del impuesto sobre las ventas declaran de forma bimestral cuando son grandes contribuyentes, cuando se trata de los sujetos de los artículos 477 y 481, cuando inician actividades en el ejercicio, o cuando sus ingresos brutos a 31 de diciembre del año anterior fueron iguales o superiores a 92.000 UVT; o de forma cuatrimestral cuando esos ingresos fueron inferiores a 92.000 UVT. La ley no da una respuesta única a todo declarante — depende de un hecho propio de cada uno, el monto de sus ingresos del año anterior — por lo que este formulario no declara un period_default",
+  "source": "et",
+  "deadline": {
+    "rule": "depends_on_taxpayer",
+    "legal_reference": "Decreto 1625 de 2016 (Decreto Único Reglamentario en materia tributaria), a partir del art. 1.6.1.13.2.6 — los plazos para presentar y pagar la declaración del impuesto sobre las ventas, bimestral o cuatrimestral, se asignan por el último dígito del Número de Identificación Tributaria (NIT) del declarante, sin el dígito de verificación, y se fijan de nuevo cada año por el decreto que compila el calendario tributario del período siguiente",
+    "source": "dur1625"
+  },
+  "rounding": {
+    "unit": 1000,
+    "legal_reference": "Estatuto Tributario, art. 868 — aproximación de las cifras al múltiplo de mil más cercano cuando el resultado supera diez mil pesos; el instructivo del Formulario 300 lo repite para toda casilla: «todas las casillas destinadas a valores deben ser diligenciadas y aproximadas al múltiplo de mil (1000) más cercano»",
+    "source": "form300"
+  },
+  "boxes": [
+    {
+      "box": "27",
+      "kind": "base",
+      "name": "Por operaciones gravadas al 5 %",
+      "sequence": 10,
+      "legal_reference": "Formulario 300, casilla 27 — ingresos por operaciones gravadas a la tarifa del 5 %, de los artículos 468-1 y 468-3 del Estatuto Tributario",
+      "source": "form300"
+    },
+    {
+      "box": "28",
+      "kind": "base",
+      "name": "Por operaciones gravadas a la tarifa general",
+      "sequence": 20,
+      "legal_reference": "Formulario 300, casilla 28 — ingresos por operaciones gravadas a la tarifa general del impuesto sobre las ventas",
+      "source": "form300"
+    },
+    {
+      "box": "30",
+      "kind": "base",
+      "name": "Por exportación de bienes",
+      "sequence": 30,
+      "legal_reference": "Formulario 300, casilla 30 — valor FOB de las exportaciones de bienes realizadas en el período (Estatuto Tributario, art. 481, literal a)",
+      "source": "form300"
+    },
+    {
+      "box": "35",
+      "kind": "base",
+      "name": "Por operaciones exentas",
+      "sequence": 40,
+      "legal_reference": "Formulario 300, casilla 35 — ingresos por operaciones exentas realizadas en el territorio nacional (Estatuto Tributario, art. 477)",
+      "source": "form300"
+    },
+    {
+      "box": "39",
+      "kind": "base",
+      "name": "Por operaciones excluidas",
+      "sequence": 50,
+      "legal_reference": "Formulario 300, casilla 39 — valores de operaciones de venta de bienes y de prestación de servicios que la ley ha calificado como excluidas (Estatuto Tributario, arts. 424, 426, 427 y 476)",
+      "source": "form300"
+    },
+    {
+      "box": "50",
+      "kind": "base",
+      "name": "De bienes gravados a la tarifa del 5 %",
+      "sequence": 60,
+      "legal_reference": "Formulario 300, casilla 50 — compras nacionales de bienes del artículo 468-1 del Estatuto Tributario",
+      "source": "form300"
+    },
+    {
+      "box": "51",
+      "kind": "base",
+      "name": "De bienes gravados a la tarifa general",
+      "sequence": 70,
+      "legal_reference": "Formulario 300, casilla 51 — compras nacionales de bienes gravados a la tarifa general",
+      "source": "form300"
+    },
+    {
+      "box": "53",
+      "kind": "base",
+      "name": "De servicios gravados a la tarifa general",
+      "sequence": 80,
+      "legal_reference": "Formulario 300, casilla 53 — servicios gravados a la tarifa general tomados en el período",
+      "source": "form300"
+    },
+    {
+      "box": "54",
+      "kind": "base",
+      "name": "De bienes y servicios excluidos, exentos y no gravados",
+      "sequence": 90,
+      "legal_reference": "Formulario 300, casilla 54 — compras de bienes y servicios excluidos, exentos y no gravados efectuadas en el período",
+      "source": "form300"
+    },
+    {
+      "box": "58",
+      "kind": "tax",
+      "name": "A la tarifa del 5 %",
+      "sequence": 100,
+      "legal_reference": "Formulario 300, casilla 58 — impuesto generado durante el período a la tarifa del 5 %, sobre las operaciones de los artículos 468-1 y 468-3 del Estatuto Tributario",
+      "source": "form300"
+    },
+    {
+      "box": "59",
+      "kind": "tax",
+      "name": "A la tarifa general",
+      "sequence": 110,
+      "legal_reference": "Formulario 300, casilla 59 — impuesto generado durante el período a la tarifa general",
+      "source": "form300"
+    },
+    {
+      "box": "67",
+      "kind": "total",
+      "name": "Total impuesto generado por operaciones gravadas",
+      "sequence": 120,
+      "plus": ["58", "59"],
+      "legal_reference": "Formulario 300, casilla 67 — suma de los valores del impuesto generado declarados en las casillas 58 a 66; este paquete sólo declara las casillas 58 y 59",
+      "source": "form300"
+    },
+    {
+      "box": "71",
+      "kind": "tax",
+      "name": "Por compras de bienes gravados a la tarifa del 5 %",
+      "sequence": 130,
+      "legal_reference": "Formulario 300, casilla 71 — impuesto sobre las ventas facturado en la compra de bienes gravados a la tarifa del 5 % para el desarrollo de las actividades productoras de renta",
+      "source": "form300"
+    },
+    {
+      "box": "72",
+      "kind": "tax",
+      "name": "Por compras de bienes gravados a la tarifa general",
+      "sequence": 140,
+      "legal_reference": "Formulario 300, casilla 72 — impuesto sobre las ventas facturado en la compra de bienes gravados a la tarifa general",
+      "source": "form300"
+    },
+    {
+      "box": "75",
+      "kind": "tax",
+      "name": "Por servicios gravados a la tarifa general",
+      "sequence": 150,
+      "legal_reference": "Formulario 300, casilla 75 — impuesto sobre las ventas facturado en la prestación de servicios gravados a la tarifa general, necesarios para el desarrollo de las actividades productoras de renta",
+      "source": "form300"
+    },
+    {
+      "box": "77",
+      "kind": "total",
+      "name": "Total impuesto pagado o facturado",
+      "sequence": 160,
+      "plus": ["71", "72", "75"],
+      "legal_reference": "Formulario 300, casilla 77 — suma de los valores registrados en las casillas 68 a 76; este paquete sólo declara las casillas 71, 72 y 75",
+      "source": "form300"
+    },
+    {
+      "box": "81",
+      "kind": "total",
+      "name": "Total impuestos descontables",
+      "sequence": 170,
+      "plus": ["77"],
+      "legal_reference": "Formulario 300, casilla 81 — suma de la casilla 77 (total impuesto pagado o facturado), la casilla 78 (IVA retenido por servicios de no domiciliados) y la casilla 79 (IVA de devoluciones en ventas), menos la casilla 80 (ajuste por pérdidas, hurto o castigo de inventarios); este paquete no declara las casillas 78, 79 y 80",
+      "source": "form300"
+    },
+    {
+      "box": "82",
+      "kind": "total",
+      "name": "Saldo a pagar por el período fiscal",
+      "sequence": 180,
+      "plus": ["67"],
+      "minus": ["81"],
+      "floor_zero": true,
+      "legal_reference": "Formulario 300, casilla 82 — resultado de tomar la casilla 67 (total impuesto generado) y restar la casilla 81 (total impuestos descontables); si el resultado es negativo, se escribe cero",
+      "source": "form300"
+    },
+    {
+      "box": "83",
+      "kind": "total",
+      "name": "Saldo a favor del período fiscal",
+      "sequence": 190,
+      "plus": ["81"],
+      "minus": ["67"],
+      "floor_zero": true,
+      "legal_reference": "Formulario 300, casilla 83 — resultado de tomar la casilla 81 (total impuestos descontables) y restar la casilla 67 (total impuesto generado); si el resultado es negativo, se escribe cero",
+      "source": "form300"
+    }
+  ]
+}

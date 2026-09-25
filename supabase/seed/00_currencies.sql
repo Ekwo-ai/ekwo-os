@@ -22,6 +22,7 @@ insert into currencies (code, name, symbol, decimal_places) values
   ('JPY', 'Japanese yen',         E'¥', 0),
   ('XOF', 'CFA franc BCEAO',      'F CFA',   0),
   ('MXN', 'Mexican peso',         '$',       2),
+  ('COP', 'Colombian peso',       '$',       2),
   ('XAF', 'CFA franc BEAC',       'F CFA',   0),
   ('KMF', 'Comorian franc',       'CF',      0),
   ('GNF', 'Guinean franc',        'FG',      0),

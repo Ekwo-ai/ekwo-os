@@ -6167,3 +6167,60 @@ Union's common system does. `vat_prefix` is null: a Chilean Rol Único
 Tributario carries no ISO 6523 identifier of the kind `party_scheme` and
 `vat_scheme` would read, the same silence Mexico's own RFC leaves.
 
+
+## Colombia
+
+Written from published sources alone, on 25 September 2026, and `community`
+like every pack nobody who files the return has read: a chart built on the
+nomenclature of the **Plan Único de Cuentas** (Decreto 2650 de 1993), the
+**impuesto sobre las ventas** at its general rate, its 5 % rate, an export
+exemption and an exclusion, the fields of **Formulario 300**, an abridged
+balance sheet and income statement on Decreto 2706 de 2012, and a golden year
+of twelve documents. The pack's own [`README`](../packs/co/README.md) says
+where each piece comes from; four things it could not say are changes to the
+core, none taken here, and two of them are shapes already named below for
+other countries.
+
+### From Colombia
+
+**Clearance is not an obligation to exchange**, the shape already named for
+Mexico's CFDI. A factura electrónica de venta is valid only once the DIAN, or
+an authorised technology provider, has validated it and assigned the Código
+Único de Factura Electrónica (Resolución DIAN 000165 de 2023). `einvoicing`
+cannot say "mandatory" without a `profile` built on EN 16931, and the
+Colombian format is not one; declaring one anyway would have
+`describePack()` promise a writer brick and a certified access point on
+Peppol that do not exist for Colombia. The pack leaves `profile`,
+`mandatory_from` and `obligation` empty, says the obligation in the legal
+reference, and prints on every document that it is not a validated invoice.
+*Fix*: the same one asked for Mexico — a clearance model the format can
+state without borrowing an EN 16931 profile.
+
+**A box fed by a return this pack does not declare.** Casilla 78 of
+Formulario 300 — the input tax a company claims for a service received from a
+non-domiciled supplier — is not computed from the invoice at all: Estatuto
+Tributario, art. 437-2, numeral 3, makes the recipient a *retenedor* who
+withholds 100 % of the tax and pays it through Formulario 350, the separate
+retention return, before claiming it back as descontable here. A pack
+declares one periodic return; the Canadian, Senegalese and Mexican gap of "a
+second form beside the main one" now includes a case where the second form
+feeds a box of the first. The pack declares neither casilla 78 nor
+Formulario 350, and says so in its README.
+
+**A withholding stacked on an ordinary line, the shape already named for
+Mexico.** ReteIVA (Estatuto Tributario, arts. 437-1 and 437-2) is a 15 %
+withholding of the IVA an ordinary line already carries, practised by a
+qualified buyer and reported, again, on Formulario 350 rather than on the
+periodic return this pack declares. A line carries one tax and `group` is
+reserved, so a sale at 19 % with 15 % of that IVA withheld cannot be one
+code — exactly the VAT-plus-withholding stack Mexico's CFDI already named.
+ReteFuente (an income-tax withholding, a different tax base entirely) and ICA
+— Impuesto de Industria y Comercio, a business tax whose rate each of
+Colombia's more than one thousand municipalities sets on its own, the reason
+American sales tax rates are not in a pack either — are left for the same
+reason: none of the three is sourced or declared here.
+
+**COP** is added to `00_currencies.sql` at two decimals, the exponent ISO
+4217 gives it (a peso in circulation has none in practice, which is a fact
+about the coin and not about the currency's own decimal places). **CO** is
+added to `00_territories.sql`, outside the common system of VAT.

@@ -1081,3 +1081,29 @@ on conflict (code) do update set
   eu_vat_to       = excluded.eu_vat_to,
   vat_prefix      = excluded.vat_prefix,
   legal_reference = excluded.legal_reference;
+
+
+-- ---------------------------------------------------------------------------
+-- The row — Colombia
+--
+-- A State of the Americas outside the common system of VAT the way Mexico is:
+-- Colombia levies an impuesto sobre las ventas (IVA) of its own under Book
+-- Three of the Estatuto Tributario Nacional (Decreto 624 de 1989), whose
+-- article 468 sets the general rate. `vat_prefix` is null: a Colombian
+-- registration is the Número de Identificación Tributaria (NIT) recorded in
+-- the Registro Único Tributario, which carries no country prefix of this
+-- table's kind.
+-- ---------------------------------------------------------------------------
+
+insert into territories (code, code_source, name, parent_code, eu_vat_scope, eu_vat_from, eu_vat_to, vat_prefix, legal_reference) values
+  ('CO', 'iso_3166_1', 'Colombia', null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. Colombia levies an impuesto sobre las ventas (IVA) of its own under the Estatuto Tributario Nacional, whose article 468 sets the general rate.')
+on conflict (code) do update set
+  code_source     = excluded.code_source,
+  name            = excluded.name,
+  parent_code     = excluded.parent_code,
+  eu_vat_scope    = excluded.eu_vat_scope,
+  eu_vat_from     = excluded.eu_vat_from,
+  eu_vat_to       = excluded.eu_vat_to,
+  vat_prefix      = excluded.vat_prefix,
+  legal_reference = excluded.legal_reference;

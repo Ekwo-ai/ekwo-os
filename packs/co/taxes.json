@@ -1,0 +1,210 @@
+[
+  {
+    "code": "CO-S-19",
+    "name": "Ventas y servicios a la tarifa general",
+    "description": "Venta de bienes corporales muebles y prestación de servicios en el territorio nacional a la tarifa general",
+    "kind": "vat",
+    "rate": 19,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2017-01-01",
+    "legal_reference": "Estatuto Tributario, art. 468, en la redacción del art. 184 de la Ley 1819 de 2016 — la tarifa general del impuesto sobre las ventas es del diecinueve por ciento (19 %), salvo las excepciones del título III del libro tercero del Estatuto; en vigor desde el año gravable 2017",
+    "source": "et",
+    "vat_category": "S",
+    "sequence": 10,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "28" },
+        { "type": "tax", "account": "240805", "box": "59" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "28", "box_factor": -100 },
+        { "type": "tax", "account": "240805", "box": "59", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "CO-S-5",
+    "name": "Ventas y servicios a la tarifa del cinco por ciento",
+    "description": "Café tostado, incluso descafeinado, y demás bienes y servicios del artículo 468-1 del Estatuto Tributario",
+    "kind": "vat",
+    "rate": 5,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2017-01-01",
+    "legal_reference": "Estatuto Tributario, art. 468-1, numeral 1 — el café, incluso tostado o descafeinado, tostado o sin tostar, cáscara y cascarilla de café y los sucedáneos del café que contengan café en cualquier proporción (partida arancelaria 09.01), gravados a la tarifa del cinco por ciento (5 %)",
+    "source": "et",
+    "vat_category": "S",
+    "sequence": 20,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "27" },
+        { "type": "tax", "account": "240810", "box": "58" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "27", "box_factor": -100 },
+        { "type": "tax", "account": "240810", "box": "58", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "CO-S-EXE",
+    "name": "Bienes exentos — leche",
+    "description": "Leche fresca (partida arancelaria 04.01), exenta con derecho a descuento y devolución bimestral para su productor",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "1990-01-01",
+    "legal_reference": "Estatuto Tributario, art. 477 — bienes que se encuentran exentos del impuesto sobre las ventas, con derecho a compensación y devolución, entre ellos la leche de la partida arancelaria 04.01; a diferencia de un bien excluido, el productor del bien exento sí descuenta el impuesto que le facturaron en su producción (art. 489)",
+    "source": "et",
+    "vat_category": "Z",
+    "sequence": 30,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "35" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "35", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "CO-S-EXP",
+    "name": "Exportación de bienes",
+    "description": "Bienes corporales muebles exportados, exentos con derecho a devolución bimestral",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "1990-01-01",
+    "legal_reference": "Estatuto Tributario, art. 481, literal a) — están exentos del impuesto, con derecho a devolución bimestral, los bienes corporales muebles que se exporten, así como los bienes que se vendan en el país a sociedades de comercialización internacional o a través de zonas francas siempre que efectivamente se exporten",
+    "source": "et",
+    "vat_category": "G",
+    "sequence": 40,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "30" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "30", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "CO-S-EXC",
+    "name": "Bienes excluidos — productos agrícolas en estado natural",
+    "description": "Papa y demás productos agrícolas en estado natural, excluidos del impuesto",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "1990-01-01",
+    "legal_reference": "Estatuto Tributario, art. 424 — bienes que no causan el impuesto sobre las ventas, entre ellos las hortalizas, legumbres, tubérculos y demás productos agrícolas en estado natural de la canasta familiar, como la papa (partida arancelaria 07.01). A diferencia del bien exento del artículo 477, la venta de un bien excluido no genera el impuesto y no da derecho a descontar el impuesto pagado en su producción (art. 491)",
+    "source": "et",
+    "vat_category": "E",
+    "sequence": 50,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "39" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "39", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "CO-P-19",
+    "name": "Compras a la tarifa general — bienes",
+    "description": "Adquisición de bienes corporales muebles gravados a la tarifa general, destinados a operaciones gravadas",
+    "kind": "vat",
+    "recoverable": true,
+    "rate": 19,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2017-01-01",
+    "legal_reference": "Estatuto Tributario, art. 483 — el impuesto sobre las ventas resulta de restar del impuesto generado por las operaciones gravadas el impuesto descontable; art. 488 — sólo son descontables los impuestos originados en operaciones que constituyan costo o gasto en el impuesto sobre la renta y se destinen a operaciones gravadas o exentas",
+    "source": "et",
+    "sequence": 60,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "51" },
+        { "type": "tax", "account": "240815", "box": "72" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "51", "box_factor": -100 },
+        { "type": "tax", "account": "240815", "box": "72", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "CO-P-19-SERV",
+    "name": "Compras a la tarifa general — servicios",
+    "description": "Adquisición de servicios gravados a la tarifa general, destinados a operaciones gravadas",
+    "kind": "vat",
+    "recoverable": true,
+    "rate": 19,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2017-01-01",
+    "legal_reference": "Estatuto Tributario, art. 483 y art. 488, en los mismos términos que la compra de bienes; el Formulario 300 declara el impuesto descontable de servicios en una casilla distinta de la de bienes (casilla 75 frente a la 72)",
+    "source": "et",
+    "sequence": 70,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "53" },
+        { "type": "tax", "account": "240815", "box": "75" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "53", "box_factor": -100 },
+        { "type": "tax", "account": "240815", "box": "75", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "CO-P-5",
+    "name": "Compras a la tarifa del cinco por ciento — bienes",
+    "description": "Adquisición de café tostado y demás bienes del artículo 468-1, para su reventa",
+    "kind": "vat",
+    "recoverable": true,
+    "rate": 5,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2017-01-01",
+    "legal_reference": "Estatuto Tributario, art. 468-1, numeral 1, y art. 483 — el impuesto facturado en la compra de café tostado, gravado a la tarifa del cinco por ciento, es descontable para quien lo revende gravado",
+    "source": "et",
+    "sequence": 80,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "50" },
+        { "type": "tax", "account": "240820", "box": "71" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "50", "box_factor": -100 },
+        { "type": "tax", "account": "240820", "box": "71", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "CO-P-EXC",
+    "name": "Compras de bienes y servicios excluidos, exentos y no gravados",
+    "description": "Adquisición de papa y demás bienes o servicios excluidos, exentos o no gravados",
+    "kind": "vat",
+    "recoverable": false,
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "exempt",
+    "valid_from": "1990-01-01",
+    "legal_reference": "Estatuto Tributario, art. 424 — la compra de un bien excluido, como la papa, no liquida impuesto sobre las ventas; el Formulario 300 reúne en una sola casilla (54) las compras de bienes y servicios excluidos, exentos y no gravados",
+    "source": "et",
+    "sequence": 90,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "54" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "54", "box_factor": -100 }
+      ]
+    }
+  }
+]

@@ -1,0 +1,207 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "CO",
+  "name": "Colombia",
+  "version": "0.1.0",
+  "schema_min": "20260923110000",
+  "seed_sequence": 47,
+  "released_at": "2026-09-25",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "et",
+        "title": "Estatuto Tributario Nacional (Decreto 624 de 1989) — compilación jurídica vigente",
+        "publisher": "Dirección de Impuestos y Aduanas Nacionales (DIAN)",
+        "url": "https://normograma.dian.gov.co/dian/compilacion/docs/estatuto_tributario.htm",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "dur1625",
+        "title": "Decreto 1625 de 2016 — Decreto Único Reglamentario en materia tributaria, Título 1 (plazos para declarar y pagar), modificado cada año por el decreto que fija el calendario tributario",
+        "publisher": "Departamento Administrativo de la Función Pública — Gestor Normativo",
+        "url": "https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=83233",
+        "consulted_on": "2026-09-25",
+        "kind": "regulation"
+      },
+      {
+        "key": "form300",
+        "title": "Formulario 300 — Declaración del Impuesto sobre las Ventas (IVA), y su instructivo de diligenciamiento",
+        "publisher": "Dirección de Impuestos y Aduanas Nacionales (DIAN)",
+        "url": "https://www.dian.gov.co/atencionciudadano/formulariosinstructivos/Formularios/2024/Formulario_300_2025.pdf",
+        "consulted_on": "2026-09-25",
+        "kind": "form"
+      },
+      {
+        "key": "res165",
+        "title": "Resolución DIAN No. 000165 del 1 de noviembre de 2023 — sistema de facturación electrónica, Anexo Técnico de Factura Electrónica de Venta",
+        "publisher": "Dirección de Impuestos y Aduanas Nacionales (DIAN)",
+        "url": "https://www.dian.gov.co/normatividad/Normatividad/Resoluci%C3%B3n%20000165%20de%2001-11-2023.pdf",
+        "consulted_on": "2026-09-25",
+        "kind": "regulation"
+      },
+      {
+        "key": "anexo-doc-equivalente",
+        "title": "Anexo Técnico del Documento Equivalente Electrónico, versión 1.0",
+        "publisher": "Dirección de Impuestos y Aduanas Nacionales (DIAN)",
+        "url": "https://www.dian.gov.co/impuestos/factura-electronica/Documents/Anexo-Tecnico-Documento-Equivalente-Electronico-V1-0-final.pdf",
+        "consulted_on": "2026-09-25",
+        "kind": "standard"
+      },
+      {
+        "key": "dian-validacion",
+        "title": "Validación previa de la factura electrónica — cómo funciona el sistema de facturación electrónica",
+        "publisher": "Dirección de Impuestos y Aduanas Nacionales (DIAN)",
+        "url": "https://www.dian.gov.co/impuestos/factura-electronica/factura-electronica/Paginas/validacion-previa.aspx",
+        "consulted_on": "2026-09-25",
+        "kind": "guidance"
+      },
+      {
+        "key": "dian-calendario",
+        "title": "Calendario Tributario",
+        "publisher": "Dirección de Impuestos y Aduanas Nacionales (DIAN)",
+        "url": "https://www.dian.gov.co/Paginas/CalendarioTributario.aspx",
+        "consulted_on": "2026-09-25",
+        "kind": "portal"
+      },
+      {
+        "key": "decreto2650",
+        "title": "Decreto 2650 de 1993 — Plan Único de Cuentas para comerciantes",
+        "publisher": "Superintendencia de Sociedades",
+        "url": "https://www.supersociedades.gov.co/documents/107391/831530/Decreto+2650+del+29+de+diciembre+de+1993.pdf/4c2f354e-2505-e1a1-10c9-b5e10e0da0f2?t=1670597246533&download=true",
+        "consulted_on": "2026-09-25",
+        "kind": "regulation"
+      },
+      {
+        "key": "decreto2420",
+        "title": "Decreto 2420 de 2015 — Decreto Único Reglamentario de las Normas de Contabilidad, de Información Financiera y de Aseguramiento de la Información",
+        "publisher": "Departamento Administrativo de la Función Pública — Gestor Normativo",
+        "url": "https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=76745",
+        "consulted_on": "2026-09-25",
+        "kind": "regulation"
+      },
+      {
+        "key": "decreto2706",
+        "title": "Decreto 2706 de 2012 — Marco técnico normativo de información financiera para los preparadores de información financiera que se clasifican en el grupo 3 (microempresas)",
+        "publisher": "Departamento Administrativo de la Función Pública — Gestor Normativo",
+        "url": "https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=51148",
+        "consulted_on": "2026-09-25",
+        "kind": "regulation"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "COP",
+    "language": "es",
+    "rounding_method": "half_up",
+    "opening_entry_label": "Comprobante de apertura",
+    "closing_style": "result_accounts",
+    "roles": {
+      "receivable": "1305",
+      "payable": "2205",
+      "suspense": "2815",
+      "rounding": "429581",
+      "retained_earnings": "3705",
+      "retained_earnings_loss": "3710",
+      "current_year_result_profit": "3605",
+      "current_year_result_loss": "3610",
+      "sales": "4135",
+      "purchase": "6205",
+      "bank": "111005",
+      "cash": "110505",
+      "fx_gain": "421020",
+      "fx_loss": "530525",
+      "tax_payable": "240825",
+      "tax_receivable": "135520"
+    },
+    "journal_roles": {
+      "sales": "VEN",
+      "purchase": "COM",
+      "miscellaneous": "DIA",
+      "opening": "APE"
+    },
+    "fiscal_year_default": "calendar"
+  },
+  "languages": [],
+  "journals": [
+    { "code": "VEN", "type": "sales", "name": "Diario de ventas", "sequence": 10 },
+    { "code": "COM", "type": "purchase", "name": "Diario de compras", "sequence": 20 },
+    { "code": "BAN", "type": "bank", "name": "Bancos", "sequence": 30 },
+    { "code": "CAJ", "type": "cash", "name": "Caja", "sequence": 40 },
+    { "code": "DIA", "type": "general", "name": "Comprobantes de contabilidad", "sequence": 50 },
+    { "code": "APE", "type": "opening", "name": "Comprobante de apertura", "sequence": 60 }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Plan Único de Cuentas (Decreto 2650 de 1993) — selección para pymes",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": ["CO-DECRETO2649-ESF", "CO-DECRETO2649-ER"],
+      "legal_reference": "Decreto 2650 de 1993, art. 4 — el catálogo de cuentas ordena las clases, grupos, cuentas y subcuentas de activo, pasivo, patrimonio, ingresos, gastos y costos de ventas con un código numérico y su denominación. Desde el 1 de enero de 2015, con la convergencia a las Normas Internacionales de Información Financiera (Ley 1314 de 2009, Decreto 2420 de 2015), la aplicación de este plan dejó de ser obligatoria para quien prepara estados financieros bajo NIIF: cada entidad define su propio catálogo. Colombia no impone entonces un catálogo único a toda empresa, y este paquete usa, como catálogo propio, una selección de códigos de la nomenclatura del Decreto 2650 — la que casi todo software contable colombiano y la propia información exógena de la DIAN siguen empleando en la práctica — de la misma manera que el paquete de México usa el código agrupador del SAT: la identidad de código y de nombre es la asociación, no una obligación legal de usar precisamente esta numeración",
+      "source": "decreto2650"
+    }
+  ],
+  "documents": {
+    "numbering": "gapless",
+    "number_format": "{CODE}{NNNNNNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "invoice_if_issued",
+    "posted_edit_policy": "reversal_only",
+    "references": {
+      "numbering": {
+        "legal_reference": "Estatuto Tributario, art. 617, literal d) — la factura debe llevar «un número que corresponda a un sistema de numeración consecutiva de facturas de venta», y la Resolución DIAN 000165 de 2023 (título de numeración) autoriza rangos de numeración por prefijo a cada facturador. Ese consecutivo — el número de la pieza contable de este paquete — es distinto del CUFE (Código Único de Factura Electrónica), la huella criptográfica de 96 caracteres que la validación previa añade a cada documento y que Ekwo no calcula: ver la sección de facturación electrónica",
+        "source": "et"
+      },
+      "tax_point": {
+        "legal_reference": "Estatuto Tributario, art. 429 — en las ventas de bienes, el impuesto se causa en la fecha de emisión de la factura o documento equivalente y, a falta de estos, en el momento de la entrega, aunque se haya pactado reserva de dominio, pacto de retroventa o condición resolutoria (literal a); en la prestación de servicios, en la fecha de emisión de la factura, o en la fecha de terminación de los servicios, o en la fecha del pago o abono en cuenta, la que fuere anterior (literal b). El paquete declara la regla general de la venta de bienes, invoice_if_issued; la prestación de servicios añade un tercer punto de anclaje (la terminación del servicio) que el vocabulario cerrado de esta casilla no nombra — ver docs/international.md",
+        "source": "et"
+      },
+      "posted_edit_policy": {
+        "legal_reference": "Estatuto Tributario, art. 617 y art. 616-1 en concordancia con la Resolución DIAN 000165 de 2023 — una factura de venta validada previamente por la DIAN sólo se anula o corrige mediante una nota crédito o una nota débito que la referencie; no existe un mecanismo para devolver un documento validado a borrador",
+        "source": "res165"
+      }
+    },
+    "mentions": [
+      {
+        "code": "cufe_not_assigned",
+        "applies_when": "always",
+        "text": "Este documento no es una factura electrónica de venta: no lleva el Código Único de Factura Electrónica (CUFE) ni ha sido validado previamente por la DIAN. Sólo la factura electrónica validada ampara la operación para efectos tributarios.",
+        "sequence": 10,
+        "legal_reference": "Estatuto Tributario, art. 616-1, y Resolución DIAN 000165 de 2023 — el sistema de facturación electrónica exige la validación previa del documento por la DIAN, o por su plataforma gratuita, antes de su expedición; la validación asigna el CUFE. Ekwo no genera ni transmite el XML UBL de la factura electrónica ni habla con el sistema de la DIAN: ver la sección de facturación electrónica de este paquete",
+        "source": "res165"
+      },
+      {
+        "code": "export",
+        "applies_when": "export",
+        "text": "Exportación de bienes — bien exento del impuesto sobre las ventas con derecho a devolución bimestral (artículo 481, literal a, del Estatuto Tributario).",
+        "sequence": 20,
+        "legal_reference": "Estatuto Tributario, art. 481, literal a) — los bienes corporales muebles que se exporten están exentos del impuesto sobre las ventas, con derecho a devolución bimestral para su productor",
+        "source": "et"
+      },
+      {
+        "code": "exempt",
+        "applies_when": "exempt",
+        "text": "Bien excluido del impuesto sobre las ventas: su venta no causa el impuesto y no da derecho a descontar el impuesto pagado en su producción (artículos 424 y 476 del Estatuto Tributario).",
+        "sequence": 30,
+        "legal_reference": "Estatuto Tributario, art. 424 — bienes que no causan el impuesto, entre ellos productos agrícolas de la canasta familiar en su estado natural, como la papa; art. 476 — servicios excluidos del impuesto. Ninguno de los dos da derecho a descontar el impuesto pagado en la producción del bien o la prestación del servicio (art. 491), a diferencia del bien exento del artículo 477, que si lo da y que este paquete declara con tratamiento domestic a tarifa cero — véase la tabla de tratamientos de docs/packs.md",
+        "source": "et"
+      }
+    ]
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "Estatuto Tributario, art. 615 y art. 616-1 — todo obligado a facturar debe expedir factura electrónica de venta con validación previa por parte de la DIAN, y la Resolución DIAN 000165 de 2023, título I, adopta el Anexo Técnico de Factura Electrónica de Venta, versión 1.9, en vigor desde el 1 de mayo de 2024. Es un régimen de validación previa (clearance): antes de su expedición, el documento se transmite a la DIAN (o a un proveedor tecnológico autorizado) para su validación, que le asigna el Código Único de Factura Electrónica (CUFE), un resumen criptográfico de 96 caracteres calculado sobre los datos de la factura y una clave técnica de la DIAN — no un intercambio par a par entre el emisor y el comprador construido sobre el modelo semántico de EN 16931. EKWO NO GENERA, NO CALCULA EL CUFE Y NO TRANSMITE NINGÚN DOCUMENTO A LA DIAN: ningún componente de packages/formats escribe el XML UBL de la factura electrónica de venta ni dialoga con la DIAN o con un proveedor tecnológico. Por eso profile, mandatory_from, party_scheme y vat_scheme quedan vacíos aunque la obligación exista: profile nombra un perfil construido sobre EN 16931 que una pieza de packages/formats escribe (peppol-bis-3, factur-x-en16931, xrechnung, un PINT), y la factura electrónica colombiana no es ninguno de ellos; el formato tampoco tiene una palabra para «válida sólo tras la validación previa de un tercero» — véase docs/international.md. El Número de Identificación Tributaria (NIT) identifica al emisor y al receptor y no tiene un código ISO 6523 registrado: party_scheme y vat_scheme quedan vacíos por la misma razón que en México",
+    "source": "res165"
+  },
+  "bank": {
+    "statement_formats": ["csv"],
+    "payment_formats": []
+  }
+}
