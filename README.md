@@ -104,7 +104,7 @@ OpenAPI description, and row level security decides who sees what.
   its declaration boxes and its annual accounts in French, Dutch, German and
   English, and a company keeping its books in Dutch reads Dutch throughout.
   [`docs/languages.md`](docs/languages.md) is the mechanism.
-- **Every country a pack, out of the box.** <!-- generated:countries -->United Arab Emirates (`ae`), Austria (`at`), Australia (`au`), Belgium (`be`), Burkina Faso (`bf`), Bénin (`bj`), République démocratique du Congo (`cd`), Centrafrique (`cf`), Congo (`cg`), Schweiz (`ch`), Côte d’Ivoire (`ci`), Cameroun (`cm`), Czechia (`cz`), Germany (`de`), Danmark (`dk`), Estonia (`ee`), España (`es`), Finland (`fi`), France (`fr`), Gabon (`ga`), United Kingdom (`gb`), Guinée (`gn`), Guinée équatoriale (`gq`), Guinée-Bissau (`gw`), Hong Kong (`hk`), Ireland (`ie`), Italia (`it`), 日本 (`jp`), Comores (`km`), 대한민국 (`kr`), Luxembourg (`lu`), Mali (`ml`), México (`mx`), Niger (`ne`), Nederland (`nl`), Norge (`no`), New Zealand (`nz`), Polska (`pl`), Portugal (`pt`), Saudi Arabia (`sa`), Sverige (`se`), Singapore (`sg`), Sénégal (`sn`), Tchad (`td`), Togo (`tg`), ประเทศไทย (`th`), 臺灣 (`tw`), United States (`us`) and Việt Nam (`vn`)<!-- /generated --> — each with its chart of accounts, its tax codes, its
+- **Every country a pack, out of the box.** <!-- generated:countries -->United Arab Emirates (`ae`), Austria (`at`), Australia (`au`), Belgium (`be`), Burkina Faso (`bf`), Bénin (`bj`), République démocratique du Congo (`cd`), Centrafrique (`cf`), Congo (`cg`), Schweiz (`ch`), Côte d’Ivoire (`ci`), Cameroun (`cm`), Czechia (`cz`), Germany (`de`), Danmark (`dk`), Estonia (`ee`), España (`es`), Finland (`fi`), France (`fr`), Gabon (`ga`), United Kingdom (`gb`), Guinée (`gn`), Guinée équatoriale (`gq`), Guinée-Bissau (`gw`), Hong Kong (`hk`), Magyarország (`hu`), Ireland (`ie`), Italia (`it`), 日本 (`jp`), Comores (`km`), 대한민국 (`kr`), Luxembourg (`lu`), Mali (`ml`), México (`mx`), Niger (`ne`), Nederland (`nl`), Norge (`no`), New Zealand (`nz`), Polska (`pl`), Portugal (`pt`), Saudi Arabia (`sa`), Sverige (`se`), Singapore (`sg`), Sénégal (`sn`), Tchad (`td`), Togo (`tg`), ประเทศไทย (`th`), 臺灣 (`tw`), United States (`us`) and Việt Nam (`vn`)<!-- /generated --> — each with its chart of accounts, its tax codes, its
   declaration boxes and its annual accounts, and each installed by `ekwo init`.
   The United Kingdom was the first that is not a Member State of the European
   Union; the United States, with the sales and use taxes of three states and
@@ -302,6 +302,7 @@ psql "$DATABASE_URL" -f supabase/seed/65_pack_dk.sql
 psql "$DATABASE_URL" -f supabase/seed/66_pack_no.sql
 psql "$DATABASE_URL" -f supabase/seed/67_pack_fi.sql
 psql "$DATABASE_URL" -f supabase/seed/68_pack_cz.sql
+psql "$DATABASE_URL" -f supabase/seed/70_pack_hu.sql
 psql "$DATABASE_URL" -f supabase/seed/71_pack_sa.sql
 ```
 <!-- /generated -->
