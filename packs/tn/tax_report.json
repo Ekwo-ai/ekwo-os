@@ -1,0 +1,137 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "TN-TVA",
+  "name": "Déclaration mensuelle — volet taxe sur la valeur ajoutée",
+  "period": ["month"],
+  "period_default": "month",
+  "valid_from": "2018-01-01",
+  "legal_reference": "Code de la TVA, art. 18-IV — les assujettis à la TVA, autres que ceux soumis au régime forfaitaire, sont tenus de souscrire et de déposer, au titre de chaque mois, une déclaration du modèle fourni par l'administration ; la déclaration est due même en l'absence d'opération imposable. Le modèle de l'imprimé n'a pas pu être lu en texte par cette recherche — c'est un formulaire du portail de télédéclaration de la DGI et non un texte publié en clair — et la déclaration mensuelle unique couvre aussi d'autres impôts que la TVA (retenues à la source, taxe sur les établissements à caractère industriel, commercial ou professionnel, FOPROLOS…) que ce pack ne porte pas : les cases ci-dessous sont donc la construction propre de ce pack pour la seule TVA, dans le même esprit que packs/sn/, et non la numérotation d'un formulaire officiel lu par cette recherche.",
+  "source": "code-tva",
+  "deadline": {
+    "rule": "depends_on_taxpayer",
+    "legal_reference": "Code de la TVA, art. 18-IV — la déclaration est déposée dans les quinze premiers jours de chaque mois pour les personnes physiques, et dans les vingt-huit premiers jours de chaque mois pour les personnes morales, pour les opérations du mois précédent.",
+    "source": "code-tva"
+  },
+  "boxes": [
+    {
+      "box": "CA19",
+      "kind": "base",
+      "name": "Chiffre d'affaires imposable au taux de 19 %",
+      "sequence": 10,
+      "legal_reference": "Code de la TVA, art. 7 et art. 18-IV — montant des opérations imposables déclarées.",
+      "source": "code-tva"
+    },
+    {
+      "box": "CA13",
+      "kind": "base",
+      "name": "Chiffre d'affaires imposable au taux de 13 %",
+      "sequence": 20,
+      "legal_reference": "Code de la TVA, art. 7, tableau « B bis » et art. 18-IV.",
+      "source": "code-tva"
+    },
+    {
+      "box": "CA7",
+      "kind": "base",
+      "name": "Chiffre d'affaires imposable au taux de 7 %",
+      "sequence": 30,
+      "legal_reference": "Code de la TVA, art. 7, tableau « B » et art. 18-IV.",
+      "source": "code-tva"
+    },
+    {
+      "box": "EXP",
+      "kind": "base",
+      "name": "Chiffre d'affaires à l'exportation et opérations assimilées",
+      "sequence": 40,
+      "legal_reference": "Code de la TVA, art. 9 et art. 15.",
+      "source": "code-tva"
+    },
+    {
+      "box": "EXO",
+      "kind": "base",
+      "name": "Chiffre d'affaires exonéré — tableau « A »",
+      "sequence": 50,
+      "legal_reference": "Code de la TVA, tableau « A » annexé à l'article premier.",
+      "source": "jurisite-tva"
+    },
+    {
+      "box": "CAT",
+      "kind": "total",
+      "name": "Chiffre d'affaires total",
+      "sequence": 60,
+      "plus": ["CA19", "CA13", "CA7", "EXP", "EXO"],
+      "legal_reference": "Code de la TVA, art. 18-IV.",
+      "source": "code-tva"
+    },
+    {
+      "box": "TVA19",
+      "kind": "tax",
+      "name": "Taxe due au taux de 19 %",
+      "sequence": 70,
+      "legal_reference": "Code de la TVA, art. 7 et art. 18-IV.",
+      "source": "code-tva"
+    },
+    {
+      "box": "TVA13",
+      "kind": "tax",
+      "name": "Taxe due au taux de 13 %",
+      "sequence": 80,
+      "legal_reference": "Code de la TVA, art. 7 et art. 18-IV.",
+      "source": "code-tva"
+    },
+    {
+      "box": "TVA7",
+      "kind": "tax",
+      "name": "Taxe due au taux de 7 %",
+      "sequence": 90,
+      "legal_reference": "Code de la TVA, art. 7 et art. 18-IV.",
+      "source": "code-tva"
+    },
+    {
+      "box": "TVANR",
+      "kind": "tax",
+      "name": "Taxe retenue à la source sur les prestations de non-résidents (art. 19)",
+      "sequence": 100,
+      "legal_reference": "Code de la TVA, art. 19 — retenue de la totalité de la taxe due par une personne non établie en Tunisie, opérée par la partie tunisienne cocontractante. Voir la note de TN-P-NR-19 dans taxes.json sur l'incertitude quant au formulaire de reversement.",
+      "source": "jurisite-tva"
+    },
+    {
+      "box": "TVAC",
+      "kind": "total",
+      "name": "Total de la taxe collectée et retenue",
+      "sequence": 110,
+      "plus": ["TVA19", "TVA13", "TVA7", "TVANR"],
+      "legal_reference": "Code de la TVA, art. 18-IV.",
+      "source": "code-tva"
+    },
+    {
+      "box": "DED",
+      "kind": "tax",
+      "name": "Taxe déductible sur biens, services et immobilisations",
+      "sequence": 120,
+      "legal_reference": "Code de la TVA, art. 9 et art. 10 — droit à déduction et ses exclusions ; art. 18-IV.",
+      "source": "code-tva"
+    },
+    {
+      "box": "NET",
+      "kind": "total",
+      "name": "Taxe due à payer",
+      "sequence": 130,
+      "plus": ["TVAC"],
+      "minus": ["DED"],
+      "floor_zero": true,
+      "legal_reference": "Code de la TVA, art. 18-IV — la déclaration porte le montant de la taxe due après déduction.",
+      "source": "code-tva"
+    },
+    {
+      "box": "CRED",
+      "kind": "total",
+      "name": "Crédit de taxe à reporter ou à restituer",
+      "sequence": 140,
+      "plus": ["DED"],
+      "minus": ["TVAC"],
+      "floor_zero": true,
+      "legal_reference": "Code de la TVA, art. 15 — la fraction de taxe déductible qui ne peut être imputée est reportée sur les déclarations suivantes ou restituée sur demande, dans les conditions de l'article.",
+      "source": "code-tva"
+    }
+  ]
+}

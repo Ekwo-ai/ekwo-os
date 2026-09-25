@@ -1,0 +1,172 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "TN",
+  "name": "Tunisie",
+  "version": "0.1.0",
+  "schema_min": "20260923110000",
+  "seed_sequence": 85,
+  "released_at": "2026-09-25",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "code-tva",
+        "title": "Code de la taxe sur la valeur ajoutée, promulgué par la loi n° 88-61 du 2 juin 1988, texte consolidé",
+        "publisher": "Ministère des Finances — Direction Générale des Études et de la Législation Fiscales",
+        "url": "https://www.finances.gov.tn/sites/default/files/CODE%20TVA%202017%20FR.pdf",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "jurisite-tva",
+        "title": "Code de la TVA — texte article par article, avec le tableau « A » des exonérations, le tableau « B » (taux de 7 %) et le tableau « B bis » (taux de 13 %) annexés",
+        "publisher": "JurisiteTunisie",
+        "url": "https://www.jurisitetunisie.com/tunisie/codes/tva/menu.html",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "loi-2017-66",
+        "title": "Loi de finances pour l'année 2018, loi n° 2017-66 du 18 décembre 2017, art. 43 — relèvement des taux de la TVA de 18 %, 12 % et 6 % à 19 %, 13 % et 7 %",
+        "publisher": "Imprimerie Officielle de la République Tunisienne (IORT), Journal officiel de la République tunisienne",
+        "url": "https://www.finances.gov.tn/fr/lois-de-finances",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "sce-1996",
+        "title": "Loi n° 96-112 du 30 décembre 1996, relative au système comptable des entreprises",
+        "publisher": "Conseil du Marché Financier (texte de la loi, publication officielle)",
+        "url": "https://www.cmf.tn/sites/default/files/pdfs/reglementation/textes-reference/loi_96-112_301296_fr.pdf",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "nc01",
+        "title": "Norme comptable générale NC 01, homologuée par le décret n° 96-2459 du 30 décembre 1996 — présentation des états financiers, organisation comptable et nomenclature des comptes",
+        "publisher": "Ministère des Finances — Ordre des Experts Comptables de Tunisie (texte de la norme)",
+        "url": "https://oect.org.tn/wp-content/uploads/2023/01/NC_01.pdf",
+        "consulted_on": "2026-09-25",
+        "kind": "regulation"
+      },
+      {
+        "key": "el-fatoora",
+        "title": "Loi de finances pour l'année 2016 (loi n° 2015-53 du 25 décembre 2015), art. 22, assimilant la facture électronique à la facture papier et désignant Tunisie TradeNet (TTN) comme opérateur technique ; décret gouvernemental n° 2016-1066 du 15 août 2016, fixant les conditions et modalités d'émission et d'archivage de la facture électronique",
+        "publisher": "Imprimerie Officielle de la République Tunisienne (IORT)",
+        "url": "https://www.ttn.tn",
+        "consulted_on": "2026-09-25",
+        "kind": "regulation"
+      },
+      {
+        "key": "dgi-calendrier",
+        "title": "Calendrier fiscal — déclaration mensuelle des impôts, délais de dépôt et de paiement",
+        "publisher": "Direction Générale des Impôts (DGI)",
+        "url": "https://www.impots.finances.gov.tn",
+        "consulted_on": "2026-09-25",
+        "kind": "portal"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "TND",
+    "language": "fr",
+    "rounding_method": "half_up",
+    "closing_style": "result_accounts",
+    "fiscal_year_default": "calendar",
+    "roles": {
+      "receivable": "411",
+      "payable": "401",
+      "suspense": "471",
+      "rounding": "658",
+      "retained_earnings": "120",
+      "current_year_result_profit": "131",
+      "current_year_result_loss": "139",
+      "sales": "701",
+      "purchase": "601",
+      "bank": "532",
+      "cash": "54",
+      "fx_gain": "766",
+      "fx_loss": "666",
+      "tax_payable": "4368",
+      "tax_receivable": "4369"
+    },
+    "journal_roles": {
+      "sales": "VT",
+      "purchase": "AC",
+      "miscellaneous": "OD",
+      "opening": "AN"
+    }
+  },
+  "languages": [],
+  "journals": [
+    { "code": "VT", "type": "sales", "name": "Journal des ventes", "sequence": 10 },
+    { "code": "AC", "type": "purchase", "name": "Journal des achats", "sequence": 20 },
+    { "code": "BQ", "type": "bank", "name": "Journal de banque", "sequence": 30 },
+    { "code": "CA", "type": "cash", "name": "Journal de caisse", "sequence": 40 },
+    { "code": "OD", "type": "general", "name": "Journal des opérations diverses", "sequence": 50 },
+    { "code": "AN", "type": "opening", "name": "Journal des à-nouveaux", "sequence": 60 }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Système comptable des entreprises — nomenclature des comptes",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": ["TN-SCE-BS", "TN-SCE-IS"],
+      "legal_reference": "Loi n° 96-112 du 30 décembre 1996, relative au système comptable des entreprises, art. 7 — les normes comptables comprennent une norme générale, des normes techniques et des normes sectorielles ; décret n° 96-2459 du 30 décembre 1996 portant approbation des normes comptables, dont la norme comptable générale NC 01. Les sept classes de comptes (1 capitaux propres et passifs non courants, 2 actifs non courants, 3 stocks, 4 tiers, 5 comptes financiers, 6 charges, 7 produits) et les comptes 101 (capital social, avec ses sous-comptes 1011/1012/1013/1018), 11 (réserves), 12 (résultats reportés), 13 (résultat de l'exercice), 20/21/28 (immobilisations et leurs amortissements), 40 (fournisseurs), 41 (clients) et 436 (État, taxes sur le chiffre d'affaires) sont vérifiés contre plusieurs sources indépendantes citées ci-dessus. Au-delà de ce squelette vérifié, cette recherche n'a pas pu ouvrir une nomenclature intégrale et officielle en texte exploitable (les PDF consultés du Journal officiel et de la norme NC 01 ne se laissent pas extraire en texte) : le détail des sous-comptes est la construction propre de ce pack, dans le même esprit que packs/sa/ lorsqu'aucune nomenclature officielle exploitable n'a pu être ouverte. Un comptable tunisien devrait vérifier la numérotation fine avant tout usage réel.",
+      "source": "sce-1996"
+    }
+  ],
+  "documents": {
+    "numbering": "sequential",
+    "number_format": "{CODE}-{YYYY}-{NNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "earliest_of_delivery_or_payment",
+    "references": {
+      "numbering": {
+        "legal_reference": "Code de la TVA, art. 18 — les assujettis sont tenus de délivrer une facture pour chacune des opérations qu'ils réalisent ; cette recherche n'a pas trouvé de texte imposant explicitement une numérotation continue ou sans rupture des factures (à la différence de la facture électronique du décret n° 2016-1066, dont la structure XML impose un numéro unique et un chaînage). `numbering` est donc laissé à `sequential`, la forme la plus prudente, plutôt que `gapless_per_year` : un pack qui affirmerait l'absence de rupture sans l'avoir lu dans un texte irait au-delà de ce que cette recherche a vérifié.",
+        "source": "code-tva"
+      },
+      "tax_point": {
+        "legal_reference": "Code de la TVA, art. 5 — le fait générateur est, pour les ventes de biens, la livraison de la marchandise, et pour les prestations de services, la réalisation du service ou l'encaissement du prix, le premier de ces faits l'emportant. `earliest_of_delivery_or_payment` est le plus proche des cinq valeurs du vocabulaire fermé pour cette double règle, mais il la simplifie : le Code ne fait pas de l'encaissement un fait générateur pour une vente de biens, seulement pour une prestation de services, ce que le mot unique ne distingue pas. Régime particulier non repris ici : les entreprises de travaux publics et de bâtiment travaillant pour l'État, les collectivités publiques locales et les établissements publics acquittent la taxe sur les encaissements (art. 5), un régime de trésorerie qu'aucune taxe de ce pack ne porte en `cash_basis` faute d'avoir vérifié ses comptes de transition.",
+        "source": "jurisite-tva"
+      }
+    },
+    "mentions": [
+      {
+        "code": "reverse_charge",
+        "applies_when": "reverse_charge",
+        "text": "Taxe sur la valeur ajoutée retenue à la source par le client tunisien, en application de l'article 19 du Code de la TVA — prestataire non établi en Tunisie.",
+        "sequence": 10,
+        "legal_reference": "Code de la TVA, art. 19 — la réalisation d'opérations imposables par une personne qui n'a pas d'établissement en Tunisie donne lieu à une retenue à la source de la totalité de la taxe par la partie tunisienne, retenue libératoire pour la partie étrangère.",
+        "source": "jurisite-tva"
+      },
+      {
+        "code": "exempt",
+        "applies_when": "exempt",
+        "text": "Opération exonérée de la taxe sur la valeur ajoutée — tableau « A » annexé au Code de la TVA.",
+        "sequence": 20,
+        "legal_reference": "Code de la TVA, tableau « A » annexé à l'article premier — liste des opérations exonérées.",
+        "source": "jurisite-tva"
+      },
+      {
+        "code": "export",
+        "applies_when": "export",
+        "text": "Exportation — taxe sur la valeur ajoutée non applicable, opération ouvrant droit à déduction.",
+        "sequence": 30,
+        "legal_reference": "Code de la TVA, art. 9 — les recettes provenant de l'exportation de produits ou services passibles de la taxe ouvrent droit à déduction ; art. 15 — restitution du crédit de taxe provenant de l'exportation.",
+        "source": "jurisite-tva"
+      }
+    ]
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "La facture électronique « El Fatoora » existe depuis la loi de finances pour 2016 (loi n° 2015-53 du 25 décembre 2015), art. 22, qui assimile la facture électronique à la facture papier et désigne Tunisie TradeNet (TTN) comme opérateur technique du système ; le décret gouvernemental n° 2016-1066 du 15 août 2016 en fixe les conditions et modalités d'émission et d'archivage. L'obligation, à la date de ce pack, ne couvre pas toutes les entreprises : elle porte sur les opérations avec les marchés publics (B2G) et sur les grandes entreprises rattachées à la Direction des Grandes Entreprises (DGE), sans que cette recherche ait pu ouvrir un texte daté et exhaustif fixant le périmètre exact et son calendrier d'extension — `obligation` reste donc vide plutôt que `mandatory` pour tout le pack, à vérifier auprès d'un professionnel local avant de fier une entreprise donnée sur ce point. `profile`, `mandatory_from`, `party_scheme` et `vat_scheme` restent vides pour la même raison que packs/sa/, packs/mx/ et packs/vn/ : TTN est un système de validation (« clearance »), la facture est un XML propre au standard tunisien (TEIF) transmis à TTN puis à l'administration, et aucune brique de packages/formats/ n'écrit ce XML, ne le signe, ni ne dialogue avec TTN — un document émis par Ekwo n'est donc pas une facture électronique El Fatoora. La déclaration mensuelle de TVA, elle, est obligatoirement télé-déclarée sur le portail de la DGI (Code de la TVA, art. 18-V).",
+    "source": "el-fatoora"
+  }
+}

@@ -794,3 +794,28 @@ on conflict (code) do update set
   eu_vat_to       = excluded.eu_vat_to,
   vat_prefix      = excluded.vat_prefix,
   legal_reference = excluded.legal_reference;
+
+-- ---------------------------------------------------------------------------
+-- The row — Tunisia
+--
+-- A State outside the common system of VAT the way Saudi Arabia or Thailand
+-- are: Tunisia levies a value added tax of its own under the Code de la TVA,
+-- promulgated by the loi n° 88-61 du 2 juin 1988, whose article 7 sets three
+-- positive rates — 19 %, 13 % and 7 % since the loi de finances pour 2018
+-- (loi n° 2017-66 du 18 décembre 2017), article 43 — and no Union instrument
+-- reaches it. `vat_prefix` is null: a Tunisian taxpayer is identified by a
+-- matricule fiscal that carries no ISO country prefix of this table's kind.
+-- ---------------------------------------------------------------------------
+
+insert into territories (code, code_source, name, parent_code, eu_vat_scope, eu_vat_from, eu_vat_to, vat_prefix, legal_reference) values
+  ('TN', 'iso_3166_1', 'Tunisia', null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. Tunisia levies a value added tax of its own under the Code de la TVA, loi n° 88-61 du 2 juin 1988, article 7 fixing rates of 19 %, 13 % and 7 % since the loi n° 2017-66 du 18 décembre 2017, article 43 (Ministère des Finances, Direction Générale des Études et de la Législation Fiscales, consolidated French text).')
+on conflict (code) do update set
+  code_source     = excluded.code_source,
+  name            = excluded.name,
+  parent_code     = excluded.parent_code,
+  eu_vat_scope    = excluded.eu_vat_scope,
+  eu_vat_from     = excluded.eu_vat_from,
+  eu_vat_to       = excluded.eu_vat_to,
+  vat_prefix      = excluded.vat_prefix,
+  legal_reference = excluded.legal_reference;

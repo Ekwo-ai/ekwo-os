@@ -5158,3 +5158,55 @@ Number carries no country prefix of that table's kind, and the identifier a
 party is addressed by on the ETA electronic invoice system is that same
 number plus a UUID the Authority itself issues on clearance, which this
 table has no column for.
+
+## From Tunisia
+
+`TND`, the Tunisian dinar, is added to `00_currencies.sql` at three decimals —
+the currency `currencies.decimal_places` and `round_amount()` were already
+written to hold, in the migration comment that reads "the yen has none and
+the dinar has three". `TN` is added to `00_territories.sql` outside the
+common system of VAT (`eu_vat_scope: 'none'`), so `vat_category`,
+`exemption_code` and the five `intracom_*` treatments are read the way every
+non-EU pack's are, and `packs/tn/` needs no `vat_category` on a line unless it
+one day declares an e-invoicing profile built on EN 16931 — it declares none.
+
+**The monthly return bundles more than VAT.** Code de la TVA, art. 18-IV
+requires one monthly declaration per taxpayer, but the form the DGI's portal
+serves also carries withholding tax, the local business tax and FOPROLOS,
+none of which this repository's schema has a place for outside VAT.
+`packs/tn/tax_report.json` therefore transcribes the VAT boxes alone, under
+box codes this pack invented rather than read from a published, numbered
+form — the return is a portal screen, not a text this research pass could
+open as a document with box numbers printed on it, the same gap `packs/sn/`
+and `packs/sa/` record for their own returns.
+
+**The deadline depends on the filer's legal form, not on a date the law gives
+everybody.** Article 18-IV sets the fifteenth of the month for a *personne
+physique* and the twenty-eighth for a *personne morale*: `deadline.rule` is
+`depends_on_taxpayer`, because the format's `day_of_month_after_period` takes
+one day and the law gives two, by a fact about the filer the schema has no
+column for beyond `depends_on_taxpayer` itself.
+
+**A reverse charge with no clearly-sourced box of its own.** Article 19 makes
+a Tunisian buyer withhold the whole of the tax due by a supplier with no
+establishment in Tunisia, the withholding final for the foreign party and
+immediately deductible for the Tunisian one — mechanically close to the
+Saudi field 9 this document already records under *From Saudi Arabia* above,
+and `packs/tn/taxes.json`'s `TN-P-NR-19` nets it the same way, to zero, in a
+box this pack built rather than found printed on a form.
+
+**No machine-readable text of the chart of accounts.** Loi n° 96-112 du 30
+décembre 1996 and the norme comptable générale NC 01 it authorises are real,
+named, dated texts — unlike `packs/sa/`, where this research pass established
+that no official chart exists at all. What this session's tools could not do
+is extract the PDFs of the Journal officiel or of NC 01 into text a legal
+citation could be read from line by line: every fetch of those two documents
+came back compressed or image-only. The seven classes and roughly a dozen
+account codes `packs/tn/accounts.csv` cites a source for — 101, 11, 12, 13,
+20/21/28, 40, 41, 436 — were confirmed by cross-checking several independent
+secondary pages instead; the rest of the chart's numbering, and the whole of
+`packs/tn/statements.json`'s grouping of accounts into balance-sheet and
+income-statement lines, is this pack's own construction on top of that
+confirmed skeleton, not a transcription of NC 01's own printed model. A
+Tunisian accountant with access to the primary text should be the first
+reviewer this pack gets.

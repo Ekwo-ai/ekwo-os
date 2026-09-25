@@ -1,0 +1,255 @@
+[
+  {
+    "code": "TN-S-19",
+    "name": "Vente au taux de 19 %",
+    "description": "Opération taxable au taux normal.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 19,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2018-01-01",
+    "legal_reference": "Code de la TVA, art. 7 — taux de 19 %, applicable aux opérations qui ne sont pas soumises à un autre taux par un tableau annexé au Code ; loi de finances pour 2018 (loi n° 2017-66 du 18 décembre 2017), art. 43 — relèvement du taux de 18 % à 19 % à compter du 1er janvier 2018.",
+    "source": "loi-2017-66",
+    "vat_category": null,
+    "sequence": 10,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "CA19" },
+        { "type": "tax", "account": "4361", "box": "TVA19" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "CA19", "box_factor": -100 },
+        { "type": "tax", "account": "4361", "box": "TVA19", "box_factor": -100 }
+      ]
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "TN-S-13",
+    "name": "Vente au taux de 13 %",
+    "description": "Opération taxable au taux intermédiaire — tableau « B bis » annexé au Code, par exemple les prestations des architectes, ingénieurs-conseils, avocats et experts, l'hôtellerie et le matériel informatique.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 13,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2018-01-01",
+    "legal_reference": "Code de la TVA, art. 7 et tableau « B bis » annexé, point II — notamment les honoraires des architectes, ingénieurs-conseils, topographes, avocats, notaires, experts-comptables et experts ; loi n° 2017-66 du 18 décembre 2017, art. 43 — relèvement du taux de 12 % à 13 % à compter du 1er janvier 2018.",
+    "source": "loi-2017-66",
+    "vat_category": null,
+    "sequence": 20,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "CA13" },
+        { "type": "tax", "account": "4361", "box": "TVA13" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "CA13", "box_factor": -100 },
+        { "type": "tax", "account": "4361", "box": "TVA13", "box_factor": -100 }
+      ]
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "TN-S-7",
+    "name": "Vente au taux de 7 %",
+    "description": "Opération taxable au taux réduit — tableau « B » annexé au Code, par exemple les produits pharmaceutiques, le savon ordinaire et les conserves de tomate et de sardine.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 7,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2018-01-01",
+    "legal_reference": "Code de la TVA, art. 7 et tableau « B » annexé — produits pharmaceutiques, conserves de tomate et de sardines, savon ordinaire, entre autres ; loi n° 2017-66 du 18 décembre 2017, art. 43 — relèvement du taux de 6 % à 7 % à compter du 1er janvier 2018.",
+    "source": "loi-2017-66",
+    "vat_category": null,
+    "sequence": 30,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "CA7" },
+        { "type": "tax", "account": "4361", "box": "TVA7" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "CA7", "box_factor": -100 },
+        { "type": "tax", "account": "4361", "box": "TVA7", "box_factor": -100 }
+      ]
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "TN-S-EXP",
+    "name": "Exportation",
+    "description": "Vente de biens exportés ou de services utilisés ou exploités hors de Tunisie, taxe non applicable, opération ouvrant droit à déduction.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2018-01-01",
+    "conditions": ["transport_evidence"],
+    "legal_reference": "Code de la TVA, art. 9 — les recettes provenant de l'exportation de produits ou de services passibles de la taxe concourent à la formation du droit à déduction au même titre que les opérations taxées ; art. 15 — le crédit de taxe provenant de l'exportation de marchandises ou de services utilisés ou exploités hors de Tunisie est restituable. Le Code ne classe pas l'exportation dans le tableau « A » des exonérations : c'est une opération hors du champ de la taxe due à la destination, qui garde le droit à déduction — d'où `treatment: export` et non `exempt`.",
+    "source": "code-tva",
+    "vat_category": null,
+    "sequence": 40,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "EXP" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "EXP", "box_factor": -100 }
+      ]
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "TN-S-EXO",
+    "name": "Opération exonérée — tableau « A »",
+    "description": "Opération exonérée de la taxe sur la valeur ajoutée, par exemple les produits de première nécessité, les opérations bancaires et d'assurance ou l'enseignement.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2018-01-01",
+    "conditions": ["supply_nature"],
+    "legal_reference": "Code de la TVA, tableau « A » annexé à l'article premier — liste des opérations exonérées, notamment les produits alimentaires de première nécessité (point 1), les opérations bancaires et les intérêts de prêts (point 39) et l'enseignement (point 9).",
+    "source": "jurisite-tva",
+    "vat_category": null,
+    "sequence": 50,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "EXO" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "EXO", "box_factor": -100 }
+      ]
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "TN-P-19",
+    "name": "Achat au taux de 19 %, déductible",
+    "description": "Achat de biens ou de services au taux normal, engagé pour les besoins de l'exploitation.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 19,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2018-01-01",
+    "legal_reference": "Code de la TVA, art. 9 — droit à déduction de la taxe ayant grevé les biens et services nécessaires à l'exploitation, sous réserve des exclusions de l'art. 10 ; art. 7 et loi n° 2017-66 pour le taux.",
+    "source": "code-tva",
+    "vat_category": null,
+    "sequence": 110,
+    "postings": {
+      "invoice": [
+        { "type": "tax", "account": "4366", "box": "DED" }
+      ],
+      "credit_note": [
+        { "type": "tax", "account": "4366", "box": "DED", "box_factor": -100 }
+      ]
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "TN-P-13",
+    "name": "Achat au taux de 13 %, déductible",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 13,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2018-01-01",
+    "legal_reference": "Code de la TVA, art. 9 — droit à déduction ; art. 7 et tableau « B bis » et loi n° 2017-66 pour le taux.",
+    "source": "code-tva",
+    "vat_category": null,
+    "sequence": 120,
+    "postings": {
+      "invoice": [
+        { "type": "tax", "account": "4366", "box": "DED" }
+      ],
+      "credit_note": [
+        { "type": "tax", "account": "4366", "box": "DED", "box_factor": -100 }
+      ]
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "TN-P-7",
+    "name": "Achat au taux de 7 %, déductible",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 7,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2018-01-01",
+    "legal_reference": "Code de la TVA, art. 9 — droit à déduction ; art. 7 et tableau « B » et loi n° 2017-66 pour le taux.",
+    "source": "code-tva",
+    "vat_category": null,
+    "sequence": 130,
+    "postings": {
+      "invoice": [
+        { "type": "tax", "account": "4366", "box": "DED" }
+      ],
+      "credit_note": [
+        { "type": "tax", "account": "4366", "box": "DED", "box_factor": -100 }
+      ]
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "TN-P-ND-19",
+    "name": "Achat au taux de 19 %, non déductible — voiture de tourisme",
+    "description": "Achat, location ou entretien d'une voiture de tourisme servant au transport de personnes autre que celles objet de l'exploitation.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 19,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2018-01-01",
+    "recoverable": false,
+    "legal_reference": "Code de la TVA, art. 10, 1° — sont exclus du droit à déduction les voitures de tourisme servant au transport de personnes autres que celles objet de l'exploitation, ainsi que la location et les dépenses assurant leur fonctionnement.",
+    "source": "code-tva",
+    "vat_category": null,
+    "sequence": 140,
+    "postings": {
+      "invoice": [
+        { "type": "base" },
+        { "type": "tax_on_base", "factor": 100 }
+      ],
+      "credit_note": [
+        { "type": "base" },
+        { "type": "tax_on_base", "factor": 100 }
+      ]
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "TN-P-NR-19",
+    "name": "Prestation d'un non-résident sans établissement en Tunisie, retenue à la source au taux de 19 %",
+    "description": "Service rendu par une personne qui n'a pas d'établissement en Tunisie — formation, étude, assistance technique, redevance, location de biens meubles ou immeubles. La taxe est retenue par le client tunisien, libératoire pour le prestataire étranger, puis récupérable par le client selon les conditions de droit commun.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 19,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2018-01-01",
+    "legal_reference": "Code de la TVA, art. 19 — la réalisation d'opérations soumises à la taxe par une personne qui n'a pas d'établissement en Tunisie donne lieu à une retenue de la totalité de la taxe par la partie tunisienne cocontractante, retenue libératoire pour la personne non établie ; le prestataire peut opter pour le dépôt d'une déclaration avec déduction de la taxe qui a grevé les biens et services nécessaires à la prestation. La taxe ainsi retenue est récupérable par l'entreprise tunisienne assujettie selon les conditions de droit commun de l'art. 9. Cette recherche n'a pas pu vérifier si le reversement de la retenue se fait sur la déclaration mensuelle de TVA elle-même ou sur un imprimé séparé : la case TVANR ci-dessous est donc la transcription de ce pack et non la case numérotée d'un formulaire officiel lu par cette recherche.",
+    "source": "jurisite-tva",
+    "vat_category": null,
+    "sequence": 150,
+    "postings": {
+      "invoice": [
+        { "type": "base" },
+        { "type": "tax", "account": "4366", "box": "TVANR" },
+        { "type": "tax", "factor": -100, "account": "4362", "box": "TVANR", "box_factor": -100 }
+      ],
+      "credit_note": [
+        { "type": "base" },
+        { "type": "tax", "account": "4366", "box": "TVANR", "box_factor": -100 },
+        { "type": "tax", "factor": -100, "account": "4362", "box": "TVANR" }
+      ]
+    },
+    "exemption_code": null
+  }
+]

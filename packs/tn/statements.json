@@ -1,0 +1,415 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/statements",
+  "statements": [
+    {
+      "code": "TN-SCE-BS",
+      "kind": "balance_sheet",
+      "framework": "SCE",
+      "name": "Bilan",
+      "valid_from": "1997-01-01",
+      "legal_reference": "Loi n° 96-112 du 30 décembre 1996 relative au système comptable des entreprises, art. 15 à 19 — les états financiers comprennent notamment un bilan ; norme comptable générale NC 01, homologuée par le décret n° 96-2459 du 30 décembre 1996, chapitre consacré à la présentation des états financiers. Cette recherche n'a pas pu extraire en texte exploitable le modèle chiffré officiel du bilan de la norme NC 01 (document PDF non extractible) : les postes ci-dessous regroupent donc les comptes de ce pack par classe et sous-classe, dans l'esprit de la norme plutôt que sur la base de son modèle imprimé ligne à ligne, et un comptable tunisien devrait comparer cette présentation à celle de la norme avant tout usage réel.",
+      "source": "nc01",
+      "lines": [
+        {
+          "code": "BS-10",
+          "name": "Immobilisations incorporelles",
+          "sequence": 10,
+          "sign": 1,
+          "rules": [
+            { "kind": "code_range", "code_from": "20", "code_to": "20" },
+            { "kind": "code_range", "code_from": "281", "code_to": "281" }
+          ],
+          "legal_reference": "NC 01 — regroupement des comptes 20x (immobilisations incorporelles) et de leur amortissement 281, propre à ce pack.",
+          "source": "nc01"
+        },
+        {
+          "code": "BS-20",
+          "name": "Immobilisations corporelles",
+          "sequence": 20,
+          "sign": 1,
+          "rules": [
+            { "kind": "code_range", "code_from": "21", "code_to": "21" },
+            { "kind": "code_range", "code_from": "23", "code_to": "23" },
+            { "kind": "code_range", "code_from": "282", "code_to": "282" }
+          ],
+          "legal_reference": "NC 01 — regroupement des comptes 21x (immobilisations corporelles), 23x (immobilisations en cours) et de leur amortissement 282, propre à ce pack.",
+          "source": "nc01"
+        },
+        {
+          "code": "BS-30",
+          "name": "Immobilisations financières",
+          "sequence": 30,
+          "sign": 1,
+          "rules": [
+            { "kind": "code_range", "code_from": "26", "code_to": "27" },
+            { "kind": "code_range", "code_from": "292", "code_to": "292" },
+            { "kind": "code_range", "code_from": "296", "code_to": "296" }
+          ],
+          "legal_reference": "NC 01 — regroupement des comptes 26 et 27 (immobilisations financières) et de leurs provisions 292 et 296, propre à ce pack.",
+          "source": "nc01"
+        },
+        {
+          "code": "BS-40",
+          "name": "Stocks",
+          "sequence": 40,
+          "sign": 1,
+          "rules": [
+            { "kind": "code_range", "code_from": "3", "code_to": "3" }
+          ],
+          "legal_reference": "NC 01 — regroupement de la classe 3 (stocks et en-cours), avec leur provision pour dépréciation 39, propre à ce pack.",
+          "source": "nc01"
+        },
+        {
+          "code": "BS-50",
+          "name": "Clients et comptes rattachés",
+          "sequence": 50,
+          "sign": 1,
+          "rules": [
+            { "kind": "code_range", "code_from": "411", "code_to": "418" }
+          ],
+          "legal_reference": "NC 01 — regroupement des comptes 411 à 418 (clients et comptes rattachés, solde débiteur), propre à ce pack.",
+          "source": "nc01"
+        },
+        {
+          "code": "BS-51",
+          "name": "Fournisseurs débiteurs, avances et acomptes versés",
+          "sequence": 60,
+          "sign": 1,
+          "rules": [
+            { "kind": "code_range", "code_from": "409", "code_to": "409" }
+          ],
+          "legal_reference": "NC 01 — compte 409, propre à ce pack.",
+          "source": "nc01"
+        },
+        {
+          "code": "BS-60",
+          "name": "Autres créances",
+          "sequence": 70,
+          "sign": 1,
+          "rules": [
+            { "kind": "code_range", "code_from": "425", "code_to": "425" },
+            { "kind": "code_range", "code_from": "4366", "code_to": "4367" },
+            { "kind": "code_range", "code_from": "4369", "code_to": "4369" },
+            { "kind": "code_range", "code_from": "486", "code_to": "486" }
+          ],
+          "legal_reference": "NC 01 — regroupement des avances au personnel (425), de la TVA déductible et du crédit de TVA (4366, 4367, 4369) et des charges constatées d'avance (486), propre à ce pack.",
+          "source": "nc01"
+        },
+        {
+          "code": "BS-70",
+          "name": "Disponibilités",
+          "sequence": 80,
+          "sign": 1,
+          "rules": [
+            { "kind": "code_range", "code_from": "53", "code_to": "54" },
+            { "kind": "code_range", "code_from": "58", "code_to": "59" }
+          ],
+          "legal_reference": "NC 01 — regroupement des comptes 53, 54 (banques et caisse), 58 (virements internes) et 59 (provisions pour dépréciation des comptes financiers), propre à ce pack.",
+          "source": "nc01"
+        },
+        {
+          "code": "BS-ACTIF",
+          "name": "TOTAL ACTIF",
+          "sequence": 90,
+          "is_total": true,
+          "plus": ["BS-10", "BS-20", "BS-30", "BS-40", "BS-50", "BS-51", "BS-60", "BS-70"],
+          "legal_reference": "NC 01.",
+          "source": "nc01"
+        },
+        {
+          "code": "BS-100",
+          "name": "Capital",
+          "sequence": 100,
+          "sign": -1,
+          "rules": [
+            { "kind": "code_range", "code_from": "10", "code_to": "10" }
+          ],
+          "legal_reference": "NC 01 — compte 10 (capital), propre à ce pack.",
+          "source": "nc01"
+        },
+        {
+          "code": "BS-110",
+          "name": "Réserves et primes liées au capital",
+          "sequence": 110,
+          "sign": -1,
+          "rules": [
+            { "kind": "code_range", "code_from": "11", "code_to": "11" }
+          ],
+          "legal_reference": "NC 01 — compte 11 (réserves et primes), propre à ce pack.",
+          "source": "nc01"
+        },
+        {
+          "code": "BS-120",
+          "name": "Résultats reportés",
+          "sequence": 120,
+          "sign": -1,
+          "rules": [
+            { "kind": "code_range", "code_from": "12", "code_to": "12" }
+          ],
+          "legal_reference": "NC 01 — compte 12 (résultats reportés), propre à ce pack.",
+          "source": "nc01"
+        },
+        {
+          "code": "BS-130",
+          "name": "Résultat de l'exercice",
+          "sequence": 130,
+          "sign": -1,
+          "rules": [
+            { "kind": "code_range", "code_from": "13", "code_to": "13" }
+          ],
+          "legal_reference": "NC 01 — compte 13 (résultat de l'exercice, en instance d'affectation), propre à ce pack.",
+          "source": "nc01"
+        },
+        {
+          "code": "BS-140",
+          "name": "Subventions d'investissement",
+          "sequence": 140,
+          "sign": -1,
+          "rules": [
+            { "kind": "code_range", "code_from": "14", "code_to": "14" }
+          ],
+          "legal_reference": "NC 01 — compte 14, propre à ce pack.",
+          "source": "nc01"
+        },
+        {
+          "code": "BS-150",
+          "name": "Provisions pour risques et charges",
+          "sequence": 150,
+          "sign": -1,
+          "rules": [
+            { "kind": "code_range", "code_from": "15", "code_to": "15" }
+          ],
+          "legal_reference": "NC 01 — compte 15, propre à ce pack.",
+          "source": "nc01"
+        },
+        {
+          "code": "BS-160",
+          "name": "Emprunts et dettes assimilées",
+          "sequence": 160,
+          "sign": -1,
+          "rules": [
+            { "kind": "code_range", "code_from": "16", "code_to": "16" }
+          ],
+          "legal_reference": "NC 01 — compte 16, propre à ce pack.",
+          "source": "nc01"
+        },
+        {
+          "code": "BS-170",
+          "name": "Fournisseurs et comptes rattachés",
+          "sequence": 170,
+          "sign": -1,
+          "rules": [
+            { "kind": "code_range", "code_from": "401", "code_to": "408" }
+          ],
+          "legal_reference": "NC 01 — comptes 401 à 408 (fournisseurs, solde créditeur), propre à ce pack.",
+          "source": "nc01"
+        },
+        {
+          "code": "BS-175",
+          "name": "Clients créditeurs, avances et acomptes reçus",
+          "sequence": 180,
+          "sign": -1,
+          "rules": [
+            { "kind": "code_range", "code_from": "419", "code_to": "419" }
+          ],
+          "legal_reference": "NC 01 — compte 419, propre à ce pack.",
+          "source": "nc01"
+        },
+        {
+          "code": "BS-180",
+          "name": "Personnel",
+          "sequence": 190,
+          "sign": -1,
+          "rules": [
+            { "kind": "code_range", "code_from": "421", "code_to": "421" },
+            { "kind": "code_range", "code_from": "428", "code_to": "428" }
+          ],
+          "legal_reference": "NC 01 — comptes 421 et 428, propre à ce pack.",
+          "source": "nc01"
+        },
+        {
+          "code": "BS-190",
+          "name": "État et organismes sociaux",
+          "sequence": 200,
+          "sign": -1,
+          "rules": [
+            { "kind": "code_range", "code_from": "431", "code_to": "432" },
+            { "kind": "code_range", "code_from": "4361", "code_to": "4362" },
+            { "kind": "code_range", "code_from": "4368", "code_to": "4368" },
+            { "kind": "code_range", "code_from": "437", "code_to": "438" }
+          ],
+          "legal_reference": "NC 01 — regroupement des comptes 431, 432, 4361, 4362, 4368, 437 et 438, propre à ce pack.",
+          "source": "nc01"
+        },
+        {
+          "code": "BS-195",
+          "name": "Comptes d'attente et de régularisation",
+          "sequence": 210,
+          "sign": -1,
+          "rules": [
+            { "kind": "code_range", "code_from": "471", "code_to": "471" },
+            { "kind": "code_range", "code_from": "487", "code_to": "487" }
+          ],
+          "legal_reference": "NC 01 — comptes 471 et 487, propre à ce pack.",
+          "source": "nc01"
+        },
+        {
+          "code": "BS-PASSIF",
+          "name": "TOTAL PASSIF",
+          "sequence": 220,
+          "is_total": true,
+          "plus": ["BS-100", "BS-110", "BS-120", "BS-130", "BS-140", "BS-150", "BS-160", "BS-170", "BS-175", "BS-180", "BS-190", "BS-195"],
+          "legal_reference": "NC 01.",
+          "source": "nc01"
+        }
+      ]
+    },
+    {
+      "code": "TN-SCE-IS",
+      "kind": "income_statement",
+      "framework": "SCE",
+      "name": "État de résultat",
+      "valid_from": "1997-01-01",
+      "legal_reference": "Loi n° 96-112 du 30 décembre 1996, art. 15 à 19 ; norme comptable générale NC 01. Comme pour le bilan, cette recherche n'a pas pu extraire en texte exploitable le modèle chiffré officiel de l'état de résultat par nature de la norme NC 01 : les postes ci-dessous regroupent les comptes de charges et de produits de ce pack par classe, propre à ce pack.",
+      "source": "nc01",
+      "lines": [
+        {
+          "code": "IS-10",
+          "name": "Achats",
+          "sequence": 10,
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "60", "code_to": "60" }],
+          "legal_reference": "NC 01 — compte 60, propre à ce pack.",
+          "source": "nc01"
+        },
+        {
+          "code": "IS-20",
+          "name": "Services extérieurs",
+          "sequence": 20,
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "61", "code_to": "62" }],
+          "legal_reference": "NC 01 — comptes 61 et 62, propre à ce pack.",
+          "source": "nc01"
+        },
+        {
+          "code": "IS-30",
+          "name": "Impôts, taxes et versements assimilés",
+          "sequence": 30,
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "63", "code_to": "63" }],
+          "legal_reference": "NC 01 — compte 63, propre à ce pack.",
+          "source": "nc01"
+        },
+        {
+          "code": "IS-40",
+          "name": "Charges de personnel",
+          "sequence": 40,
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "64", "code_to": "64" }],
+          "legal_reference": "NC 01 — compte 64, propre à ce pack.",
+          "source": "nc01"
+        },
+        {
+          "code": "IS-50",
+          "name": "Charges diverses ordinaires",
+          "sequence": 50,
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "65", "code_to": "65" }],
+          "legal_reference": "NC 01 — compte 65, propre à ce pack.",
+          "source": "nc01"
+        },
+        {
+          "code": "IS-60",
+          "name": "Charges financières",
+          "sequence": 60,
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "66", "code_to": "66" }],
+          "legal_reference": "NC 01 — compte 66, propre à ce pack.",
+          "source": "nc01"
+        },
+        {
+          "code": "IS-70",
+          "name": "Dotations aux amortissements et aux provisions",
+          "sequence": 70,
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "68", "code_to": "68" }],
+          "legal_reference": "NC 01 — compte 68, propre à ce pack.",
+          "source": "nc01"
+        },
+        {
+          "code": "IS-80",
+          "name": "Impôt sur les bénéfices",
+          "sequence": 80,
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "69", "code_to": "69" }],
+          "legal_reference": "NC 01 — compte 69, propre à ce pack.",
+          "source": "nc01"
+        },
+        {
+          "code": "IS-CHARGES",
+          "name": "TOTAL DES CHARGES",
+          "sequence": 90,
+          "is_total": true,
+          "plus": ["IS-10", "IS-20", "IS-30", "IS-40", "IS-50", "IS-60", "IS-70", "IS-80"],
+          "legal_reference": "NC 01.",
+          "source": "nc01"
+        },
+        {
+          "code": "IS-90",
+          "name": "Ventes",
+          "sequence": 100,
+          "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "70", "code_to": "70" }],
+          "legal_reference": "NC 01 — compte 70, propre à ce pack.",
+          "source": "nc01"
+        },
+        {
+          "code": "IS-100",
+          "name": "Produits divers ordinaires",
+          "sequence": 110,
+          "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "75", "code_to": "75" }],
+          "legal_reference": "NC 01 — compte 75, propre à ce pack.",
+          "source": "nc01"
+        },
+        {
+          "code": "IS-110",
+          "name": "Produits financiers",
+          "sequence": 120,
+          "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "76", "code_to": "76" }],
+          "legal_reference": "NC 01 — compte 76, propre à ce pack.",
+          "source": "nc01"
+        },
+        {
+          "code": "IS-120",
+          "name": "Reprises sur amortissements et provisions",
+          "sequence": 130,
+          "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "78", "code_to": "78" }],
+          "legal_reference": "NC 01 — compte 78, propre à ce pack.",
+          "source": "nc01"
+        },
+        {
+          "code": "IS-PRODUITS",
+          "name": "TOTAL DES PRODUITS",
+          "sequence": 140,
+          "is_total": true,
+          "plus": ["IS-90", "IS-100", "IS-110", "IS-120"],
+          "legal_reference": "NC 01.",
+          "source": "nc01"
+        },
+        {
+          "code": "IS-RESULTAT",
+          "name": "RÉSULTAT DE L'EXERCICE",
+          "sequence": 150,
+          "is_total": true,
+          "plus": ["IS-PRODUITS"],
+          "minus": ["IS-CHARGES"],
+          "legal_reference": "NC 01.",
+          "source": "nc01"
+        }
+      ]
+    }
+  ]
+}
