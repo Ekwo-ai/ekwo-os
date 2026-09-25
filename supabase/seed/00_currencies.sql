@@ -49,5 +49,6 @@ insert into currencies (code, name, symbol, decimal_places) values
   ('MYR', 'Malaysian ringgit',    'RM',      2),
   ('ILS', 'Israeli new shekel',   E'₪', 2),
   ('PHP', 'Philippine peso',      E'₱', 2),
-  ('ARS', 'Argentine peso',       '$',       2)
+  ('ARS', 'Argentine peso',       '$',       2),
+  ('NGN', 'Nigerian naira',       E'₦', 2)
 on conflict (code) do nothing;

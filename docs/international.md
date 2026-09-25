@@ -5990,3 +5990,102 @@ status.
 
 **ARS** is added to `00_currencies.sql` at two decimals, and `AR` to
 `00_territories.sql`, outside the common system of VAT.
+
+## From Nigeria
+
+`packs/ng/`, `community`, seed 49. Its value added tax is Chapter Six of the
+Nigeria Tax Act 2025 and Chapter Two of the Nigeria Tax Administration Act
+2025, both in force from 1 January 2026 and both read from the Federal
+Republic of Nigeria Official Gazette that carries them; its chart and its two
+statements are original, built against the First Schedule of the Companies
+and Allied Matters Act 2020. Seven texts in the register. What follows is what
+the core could not say about a return filed on a portal this pack's research
+could not open, a mechanism the socle has no shape for, and two gaps it shares
+with packs already in this file.
+
+### A return numbered against the statute, because the portal would not open
+
+Every other pack that numbers a declaration's boxes reads them off a printed
+form or a screen its research could read as text — `packs/be/`'s eCDF sections,
+`packs/sa/`'s sales screen, glossed field by field in the simplified Arabic
+filing guideline. Nigeria's VAT return has neither, for this pack's research:
+TaxPro-Max, the Nigeria Revenue Service's e-filing portal, has taken no manual
+VAT return since June 2021, and no specimen of its screens — no user guide with
+the fields numbered, no accessible screenshots — turned up in this pass. What
+did turn up is **Form VAT 002**, a paper form FIRS still publishes, whose own
+explanatory notes describe an arithmetic no other pack in this repository
+carries: its box 4, "Total Supplies subject to VAT", is stated **inclusive**
+of the tax, and its box 5, the tax itself, is the amount that arithmetic
+extracts back out of box 4 at `rate ÷ (100 + rate)` — the worked example checks
+to the cent at the old 5 % rate. There is no way to write that as a `total`
+box of this format, which offers a list to add, a list to subtract and a rate
+applied to *another* box, never a rate extracted from inside the box itself.
+
+`packs/ng/tax_report.json` does not attempt it. Nigeria Tax Administration Act
+2025, s. 22(3), states in one sentence what the return is asked to contain —
+"the input tax paid, output tax collected and Value Added Tax payable" — and
+the pack numbers ten boxes against that sentence instead of against Form VAT
+002's, net of tax throughout, the shape every other pack in this repository
+already uses. The figures a company would file are the same either way: what
+might differ is which printed box a given figure lands in, and that is a
+question about TaxPro-Max's current screen that only a reviewer with a live
+filing in front of them can answer. `packs/ng/README.md` says so at the top.
+
+### VAT withheld at source is a second return, not a box of this one
+
+Nigeria Tax Act 2025, s. 154, makes certain persons — a government ministry,
+department or agency chief among them — withhold VAT from a payment instead of
+paying it to the supplier gross, and remit it themselves, on the fourteenth
+day of the month rather than the return's own twenty-first. FIRS files that
+obligation on its own form, VAT 006, separate from the ordinary return this
+pack's `tax_report.json` carries. A `tax` posting of this format lands on one
+declaration; a withheld amount would need a second one, filed on a different
+cadence, by a person who may not even be the taxable person whose supply it
+is. This pack carries the accounts such a withholding would move through —
+2270, withholding tax payable; 1150, withholding tax credit notes receivable —
+and no tax code that drives them, the way a chart carries an account nothing
+posts to yet rather than pretending the mechanism does not exist.
+
+### A Ministerial order can turn a tax on or off, and this pack cannot follow it
+
+Nigeria Tax Act 2025, Eleventh Schedule, paragraph 1, does something no other
+pack in this repository's taxes have needed a word for: it leaves the
+**charging and collection** of VAT on petroleum products, renewable energy
+equipment, CNG, LPG and other gaseous hydrocarbons to be started or suspended
+by the Minister, "by an Order issued in the Official Gazette", at a date this
+pack's research found no order naming. A `valid_from` and a `valid_to` on a
+tax code say when a *rate* changed, on a day the Act itself fixes; they have no
+way to say "in force only while an instrument outside this Act says so, and
+nobody has published one yet". Rather than write a tax code whose true
+condition is unknowable from the text alone, `packs/ng/taxes.json` carries none
+for these five items, and `packs/ng/README.md` names the gap instead of
+guessing a rate that could be right today and wrong by the time this pack is
+installed.
+
+### Two gaps this pack met again, already named above
+
+**Proportional input tax deduction.** Nigeria Tax Act 2025, s. 155(4)'s
+proviso restricts a deduction to the taxable share of a purchase used for both
+taxable and non-taxable supplies, exactly the shape *From Saudi Arabia* above
+records for Implementing Regulations, Articles 51–52: a box has a base and a
+tax and no third figure for the non-deductible share, and the core has no
+column for one either. `packs/ng/tax_report.json` says so at `NG-P-SR`'s box.
+
+**The three-way tax point.** Nigeria Tax Act 2025, s. 146(1), makes a taxable
+supply take place at the earliest of the invoice, the delivery and the
+payment — the same shape *From Saudi Arabia* records for Article 23(1) of the
+Common VAT Agreement, and *From Vietnam* for Điều 8 of Luật số 48/2024/QH15.
+`packs/ng/documents.tax_point` declares the same nearest approximation,
+`earliest_of_delivery_or_payment`, missing only the case an invoice is issued
+ahead of both delivery and payment.
+
+### NGN and NG
+
+`NGN` is added to `00_currencies.sql` at two decimals. `NG` is added to
+`00_territories.sql` outside the common system of VAT, so `vat_category`,
+`exemption_code` and the five `intracom_*` treatments are read the way every
+non-EU pack's are. `vat_prefix` is null: a Nigerian taxable person is
+identified by the Tax Identification Number the Nigeria Revenue Service issues
+under Nigeria Tax Administration Act 2025, s. 7, which carries no country
+prefix of that table's kind, and Nigeria carries no ISO 6523 identifier this
+pack's research could find in the Peppol participant identifier scheme list.

@@ -1,0 +1,189 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "A quarter of a VAT-registered Nigerian trading company, filing monthly, January to March of the financial year 2026",
+  "chart": "default",
+  "fiscal_year": {
+    "name": "Financial year ended 31 December 2026",
+    "start": "2026-01-01",
+    "end": "2026-12-31"
+  },
+  "periods": [
+    { "code": "2026-01", "from": "2026-01-01", "to": "2026-01-31" },
+    { "code": "2026-02", "from": "2026-02-01", "to": "2026-02-28" },
+    { "code": "2026-03", "from": "2026-03-01", "to": "2026-03-31" }
+  ],
+  "statements": ["NG-CAMA-BS", "NG-CAMA-IS"],
+  "contacts": [
+    { "ref": "cust-lekki", "name": "Lekki Retail Stores Ltd", "type": "customer", "country": "NG" },
+    { "ref": "cust-accra", "name": "Accra Textiles Ltd", "type": "customer", "country": "GH" },
+    { "ref": "cust-pharm", "name": "Ikeja Community Pharmacy Ltd", "type": "customer", "country": "NG" },
+    { "ref": "supp-apapa", "name": "Apapa Wholesale Distributors Ltd", "type": "supplier", "country": "NG" },
+    { "ref": "supp-shenzhen", "name": "Shenzhen Precision Electronics Co.", "type": "supplier", "country": "CN" },
+    { "ref": "supp-yaba", "name": "Yaba Print & Agro Supplies Ltd", "type": "supplier", "country": "NG" },
+    { "ref": "supp-ngozi", "name": "Mama Ngozi Catering Services", "type": "supplier", "country": "NG" }
+  ],
+  "documents": [
+    {
+      "ref": "INV-2026-0001",
+      "type": "sale_invoice",
+      "contact": "cust-lekki",
+      "date": "2026-01-15",
+      "why": "Domestic sale of goods at the standard rate, the ordinary 7.5 % case, and the invoice CRN-2026-0001 partly credits.",
+      "lines": [
+        { "name": "Office furniture, supplied and delivered", "quantity": 1, "unit_price": 200000, "tax": "NG-S-SR", "account": "4000" }
+      ]
+    },
+    {
+      "ref": "INV-2026-0002",
+      "type": "sale_invoice",
+      "contact": "cust-accra",
+      "date": "2026-01-20",
+      "why": "Export of goods to a customer in Ghana, zero-rated under Nigeria Tax Act 2025, s. 186(n).",
+      "lines": [
+        { "name": "Textile machinery spare parts, exported to Accra", "quantity": 1, "unit_price": 500000, "tax": "NG-S-ZR-EXPORT", "account": "4040" }
+      ]
+    },
+    {
+      "ref": "INV-2026-0003",
+      "type": "sale_invoice",
+      "contact": "cust-pharm",
+      "date": "2026-01-25",
+      "why": "Domestic sale of pharmaceutical products, zero-rated under s. 186(b) — medical and pharmaceutical products.",
+      "lines": [
+        { "name": "Assorted pharmaceutical products", "quantity": 1, "unit_price": 120000, "tax": "NG-S-ZR-DOM", "account": "4020" }
+      ]
+    },
+    {
+      "ref": "CRN-2026-0001",
+      "type": "sale_credit_note",
+      "contact": "cust-lekki",
+      "date": "2026-02-05",
+      "why": "Partial credit note against INV-2026-0001, one item returned — proves the standard-rated boxes subtract and the ledger flips side.",
+      "lines": [
+        { "name": "Credit: office furniture item returned", "quantity": 1, "unit_price": 40000, "tax": "NG-S-SR", "account": "4000" }
+      ]
+    },
+    {
+      "ref": "INV-2026-0004",
+      "type": "sale_invoice",
+      "contact": "cust-pharm",
+      "date": "2026-02-10",
+      "why": "Sale of a parcel of land, exempt under s. 185(1)(l) — the exempt side of the return.",
+      "lines": [
+        { "name": "Sale of land — Plot 14, Epe", "quantity": 1, "unit_price": 2000000, "tax": "NG-S-EX", "account": "4030" }
+      ]
+    },
+    {
+      "ref": "INV-2026-0005",
+      "type": "sale_invoice",
+      "contact": "cust-lekki",
+      "date": "2026-03-05",
+      "why": "A second standard-rated sale, in the third period of the scenario, so the return is proved across more than one month.",
+      "lines": [
+        { "name": "Office equipment maintenance service", "quantity": 1, "unit_price": 150000, "tax": "NG-S-SR", "account": "4010" }
+      ]
+    },
+    {
+      "ref": "PINV-2026-0001",
+      "type": "purchase_invoice",
+      "contact": "supp-apapa",
+      "date": "2026-01-10",
+      "why": "Ordinary standard-rated purchase whose input tax is fully deductible.",
+      "lines": [
+        { "name": "Raw materials — steel sheets", "quantity": 1, "unit_price": 300000, "tax": "NG-P-SR", "account": "5010" }
+      ]
+    },
+    {
+      "ref": "PINV-2026-0002",
+      "type": "purchase_invoice",
+      "contact": "supp-shenzhen",
+      "date": "2026-01-18",
+      "why": "Goods imported for use in production, VAT paid to the Nigeria Customs Service on entry under s. 155(3) and deducted on the return — the amount owed to the foreign supplier is the goods price alone, not the VAT.",
+      "lines": [
+        { "name": "Imported electronic components", "quantity": 1, "unit_price": 400000, "tax": "NG-P-IMP", "account": "5010" }
+      ]
+    },
+    {
+      "ref": "PINV-2026-0003",
+      "type": "purchase_invoice",
+      "contact": "supp-yaba",
+      "date": "2026-02-02",
+      "why": "Purchase of locally produced agricultural chemicals for resale, zero-rated under s. 186(e) — no input tax to deduct because none was charged.",
+      "lines": [
+        { "name": "Locally produced agricultural chemicals, for resale", "quantity": 1, "unit_price": 90000, "tax": "NG-P-ZR", "account": "5010" }
+      ]
+    },
+    {
+      "ref": "PINV-2026-0004",
+      "type": "purchase_invoice",
+      "contact": "supp-yaba",
+      "date": "2026-02-15",
+      "why": "Lease of office premises, exempt under s. 185(1)(l) — an exempt purchase carrying no VAT at all.",
+      "lines": [
+        { "name": "Office premises lease, first quarter rent", "quantity": 1, "unit_price": 250000, "tax": "NG-P-EX", "account": "7100" }
+      ]
+    },
+    {
+      "ref": "PINV-2026-0005",
+      "type": "purchase_invoice",
+      "contact": "supp-ngozi",
+      "date": "2026-03-01",
+      "why": "Purchase from a small business under the turnover threshold of Nigeria Tax Administration Act 2025, s. 22(4) and s. 202 — not required to charge VAT.",
+      "lines": [
+        { "name": "Staff event catering services", "quantity": 1, "unit_price": 60000, "tax": "NG-P-NR", "account": "7050" }
+      ]
+    },
+    {
+      "ref": "PINV-2026-0006",
+      "type": "purchase_invoice",
+      "contact": "supp-apapa",
+      "date": "2026-03-10",
+      "why": "A second standard-rated purchase, in the third period, so every period of the scenario carries something on both sides of the return.",
+      "lines": [
+        { "name": "Printing and stationery supplies", "quantity": 1, "unit_price": 45000, "tax": "NG-P-SR", "account": "7220" }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "PMT-IN-1",
+      "direction": "inbound",
+      "date": "2026-03-20",
+      "amount": 161250.0,
+      "contact": "cust-lekki",
+      "journal": "BNK",
+      "match": "INV-2026-0005",
+      "why": "Full settlement of INV-2026-0005 by bank transfer, 150,000 plus 7.5 % VAT."
+    },
+    {
+      "ref": "PMT-IN-2",
+      "direction": "inbound",
+      "date": "2026-01-31",
+      "amount": 100000.0,
+      "contact": "cust-accra",
+      "journal": "BNK",
+      "match": null,
+      "why": "Advance received from Accra Textiles Ltd on account, not yet matched to an invoice — an open item, which is what a real ledger holds."
+    },
+    {
+      "ref": "PMT-OUT-1",
+      "direction": "outbound",
+      "date": "2026-01-25",
+      "amount": 322500.0,
+      "contact": "supp-apapa",
+      "journal": "BNK",
+      "match": "PINV-2026-0001",
+      "why": "Full settlement of PINV-2026-0001 by bank transfer."
+    },
+    {
+      "ref": "PMT-OUT-2",
+      "direction": "outbound",
+      "date": "2026-02-10",
+      "amount": 400000.0,
+      "contact": "supp-shenzhen",
+      "journal": "BNK",
+      "match": "PINV-2026-0002",
+      "why": "Settlement of PINV-2026-0002 for the goods price alone — the VAT was paid to the Nigeria Customs Service, not to Shenzhen Precision Electronics Co."
+    }
+  ]
+}

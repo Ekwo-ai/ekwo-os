@@ -1,0 +1,153 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "NG",
+  "name": "Nigeria",
+  "version": "0.1.0",
+  "schema_min": "20260917170000",
+  "seed_sequence": 49,
+  "released_at": "2026-09-25",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "nta-2025",
+        "title": "Nigeria Tax Act, 2025 (Act No. 7 of 2025), Federal Republic of Nigeria Official Gazette No. 117, Vol. 112, 26 June 2025, pages A387–A596 — in force from 1 January 2026, repealing the Value Added Tax Act, Cap. V1, LFN 2004",
+        "publisher": "Federal Government Printer, Lagos — mirrored by the Tax Appeal Tribunal",
+        "url": "https://tat.gov.ng/Nigeria-Tax-Act-2025.pdf",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "ntaa-2025",
+        "title": "Nigeria Tax Administration Act, 2025 (Act No. 5 of 2025), Federal Republic of Nigeria Official Gazette No. 117, Vol. 112, 26 June 2025, pages A259–A345 — in force from 1 January 2026",
+        "publisher": "Federal Government Printer, Lagos — mirrored by the Tax Appeal Tribunal",
+        "url": "https://tat.gov.ng/NIGERIA-TAX-ADMINISTRATION-ACT-2025.pdf",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "nrs-act-2025",
+        "title": "Nigeria Revenue Service (Establishment) Act, 2025 (Act No. 4 of 2025) — renames the Federal Inland Revenue Service the Nigeria Revenue Service and continues it as \"the Service\" of the Nigeria Tax Act and the Nigeria Tax Administration Act",
+        "publisher": "Federal Government Printer, Lagos — mirrored by the Tax Appeal Tribunal",
+        "url": "https://tat.gov.ng/NIGERIA-REVENUE-SERVICE-ACT-2025.pdf",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "vat-form-002",
+        "title": "Value Added Tax Return, Form VAT 002, and its explanatory notes — the most recent public specimen of the paper return, printed with a worked example at the 5% rate that preceded the Finance Act 2019",
+        "publisher": "Federal Inland Revenue Service",
+        "url": "https://firs.gov.ng/wp-content/uploads/2020/10/VAT-FORM-20-02-20.pdf",
+        "consulted_on": "2026-09-25",
+        "kind": "form"
+      },
+      {
+        "key": "taxpro-max",
+        "title": "TaxPro-Max — the e-filing portal the Service has required for VAT returns since June 2021; no manual submission is accepted for a naira-denominated return",
+        "publisher": "Federal Inland Revenue Service",
+        "url": "https://taxpromax.firs.gov.ng/",
+        "consulted_on": "2026-09-25",
+        "kind": "portal"
+      },
+      {
+        "key": "mbs-rollout",
+        "title": "FIRS e-Invoicing — the Merchant-Buyer Solution: live from 1 August 2025, onboarding of taxpayers with an annual turnover of at least ₦5 billion required by 1 November 2025 after a three-month extension",
+        "publisher": "Federal Inland Revenue Service",
+        "url": "https://firs.gov.ng/e-invoice/",
+        "consulted_on": "2026-09-25",
+        "kind": "portal"
+      },
+      {
+        "key": "cama-2020",
+        "title": "Companies and Allied Matters Act, 2020 (Act No. 3 of 2020), assented 7 August 2020 — Part XI (Accounts and Audit) and the First Schedule (form and content of financial statements)",
+        "publisher": "Corporate Affairs Commission",
+        "url": "https://www.cac.gov.ng/wp-content/uploads/2020/12/CAMA-NOTE-BOOK-FULL-VERSION.pdf",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "frc-act-2011",
+        "title": "Financial Reporting Council of Nigeria Act, 2011 (Act No. 6 of 2011)",
+        "publisher": "Financial Reporting Council of Nigeria",
+        "url": "https://frcnigeria.gov.ng/wp-content/uploads/2024/08/The-FRC-Act_merged.pdf",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "NGN",
+    "language": "en",
+    "rounding_method": "half_up",
+    "closing_style": "retained_earnings",
+    "roles": {
+      "receivable": "1100",
+      "payable": "2100",
+      "suspense": "2900",
+      "rounding": "7710",
+      "retained_earnings": "3400",
+      "sales": "4000",
+      "purchase": "5000",
+      "bank": "1300",
+      "cash": "1330",
+      "fx_gain": "4240",
+      "fx_loss": "7700",
+      "asset_disposal_gain": "4230",
+      "asset_disposal_loss": "7690",
+      "tax_payable": "2210",
+      "tax_receivable": "1155"
+    },
+    "journal_roles": {
+      "sales": "SAL",
+      "purchase": "PUR",
+      "miscellaneous": "GEN",
+      "opening": "OPN"
+    }
+  },
+  "languages": [],
+  "journals": [
+    { "code": "SAL", "type": "sales", "name": "Sales journal", "sequence": 10 },
+    { "code": "PUR", "type": "purchase", "name": "Purchases journal", "sequence": 20 },
+    { "code": "BNK", "type": "bank", "name": "Bank", "sequence": 30 },
+    { "code": "CSH", "type": "cash", "name": "Petty cash", "sequence": 40 },
+    { "code": "GEN", "type": "general", "name": "General journal", "sequence": 50 },
+    { "code": "OPN", "type": "opening", "name": "Opening balances", "sequence": 60 }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Nigeria reference chart of accounts",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": ["NG-CAMA-BS", "NG-CAMA-IS"],
+      "legal_reference": "There is no legal chart of accounts in Nigeria. Companies and Allied Matters Act 2020, s. 378(1) requires the financial statements every company's directors prepare under s. 377 to comply with the First Schedule to the Act \"so far as applicable\" for their form and content, and with the accounting standards the Financial Reporting Council of Nigeria lays down under the Financial Reporting Council of Nigeria Act 2011 — the FRC having adopted the IFRS Accounting Standards for public interest entities and the IFRS for SMEs Standard for other entities. Neither prescribes a nominal ledger, only a balance sheet and profit and loss account format (First Schedule, Section C, Format 1, the format this chart's statements follow) and a set of recognition and measurement standards. This chart is original: four digits, blocked so that each range reaches one line of the First Schedule Format 1 balance sheet or profit and loss account, carrying the accounts a Nigerian company actually keeps — VAT recoverable and payable, the amount due to or from the Service, VAT paid to the Nigeria Customs Service on import, Pay As You Earn, Pension Reform Act and National Housing Fund contributions, the Nigeria Social Insurance Trust Fund and Industrial Training Fund levies, withholding tax credit notes and withholding tax payable, and Companies Income Tax and Development Levy apart from VAT.",
+      "source": "cama-2020"
+    }
+  ],
+  "documents": {
+    "numbering": "sequential",
+    "number_format": "{CODE}-{YYYY}-{NNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "earliest_of_delivery_or_payment",
+    "references": {
+      "numbering": {
+        "legal_reference": "Nigeria Tax Act 2025, s. 152(1): a taxable person making a taxable supply \"shall maintain a sequential invoice numbering\" and furnish the purchaser with a VAT invoice. The section asks the numbering to run in sequence and says nothing of a hole in it, which is why `numbering` is `sequential` and not gapless; the pattern in `number_format` is one series a business may choose and not one the Act prints.",
+        "source": "nta-2025"
+      },
+      "tax_point": {
+        "legal_reference": "Nigeria Tax Act 2025, s. 146(1): \"a taxable supply shall be deemed to take place at the time an invoice or receipt is issued by the supplier, or where goods are delivered or made available for use, or payment is due to or received by the supplier in respect of that supply, whichever occurs first.\" That is a three-way earliest test — invoice, delivery, payment — and the closed vocabulary of this field has no value naming all three at once. `earliest_of_delivery_or_payment` is the nearest of the five and misses only the case where an invoice is issued ahead of both delivery and payment, which s. 146(1) would still make the tax point; docs/international.md records the same gap this pack found for Saudi Arabia and Vietnam under an equivalent three-way rule.",
+        "source": "nta-2025"
+      }
+    }
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "Electronic invoicing exists in Nigeria and this pack still leaves all four fields above empty, for the reason packs/sa/ and packs/mx/ leave them empty: the FIRS Merchant-Buyer Solution (MBS), live since 1 August 2025, is a clearance platform a seller transmits an invoice to before it reaches the buyer, built to the Service's own schema and exchanged over the Service's API — not an EN 16931 profile any brick of packages/formats writes, and not a four-corner network a `party_scheme`/`vat_scheme` pair of ISO 6523 identifiers addresses (Nigeria carries no entry in the Peppol electronic address scheme list). Nigeria Tax Act 2025, s. 152(4), gives the statutory hook: \"the Service may direct any taxable person who makes taxable supplies to adopt the use of electronic invoice, provided that it gives a notice of, at least 30 days\". Under that hook the Service required every taxable person with an annual turnover of at least ₦5 billion to onboard to the MBS by 1 November 2025 (extended from 1 August 2025), covering business-to-business, business-to-government and business-to-consumer supplies; the pilot ran from November 2024. No instrument this pack's research could find sets a date for taxpayers below that turnover, so `mandatory_from` would be a date nobody has fixed for most companies a reader installs this pack for. `obligation` is left out for the same reason `packs/sa/pack.json` leaves it out: the schema refuses `mandatory` without `mandatory_from`, and there is no profile to hang either on. docs/international.md carries the rest, including Nigeria Tax Act 2025, s. 157, and Nigeria Tax Administration Act 2025, s. 23, which give the Service a second and wider power to deploy an Electronic Fiscal System for recording and reporting supplies, by regulations this pack's research found none yet published.",
+    "source": "mbs-rollout"
+  }
+}

@@ -253,6 +253,7 @@ says what they say. `ekwo pack describe <cc>` is everything one of them says.
 | [`mx`](../packs/mx/) | México | `42_pack_mx.sql` | es, en | `community` |
 | [`my`](../packs/my/) | Malaysia | `39_pack_my.sql` | ms | `community` |
 | [`ne`](../packs/ne/) | Niger | `33_pack_ne.sql` | fr | `community` |
+| [`ng`](../packs/ng/) | Nigeria | `49_pack_ng.sql` | en | `community` |
 | [`nl`](../packs/nl/) | Nederland | `17_pack_nl.sql` | nl, en | `community` |
 | [`no`](../packs/no/) | Norge | `66_pack_no.sql` | nb | `community` |
 | [`nz`](../packs/nz/) | New Zealand | `41_pack_nz.sql` | en | `community` |

@@ -1,0 +1,126 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "NG-VAT-RETURN",
+  "name": "VAT return",
+  "period": ["month"],
+  "period_default": "month",
+  "valid_from": "2026-01-01",
+  "legal_reference": "Nigeria Tax Administration Act 2025, s. 22(1): \"A taxable person shall, in respect of Value Added Tax (VAT), with or without a notice and whether or not an economic activity has taken place, submit a return to the Service in the prescribed form, on or before the 21st day of the following month\"; s. 22(3): \"the returns shall contain the input tax paid, output tax collected and Value Added Tax payable in respect of all taxable supplies in the preceding month.\" A tax period is one calendar month, and no cadence but monthly exists for it — unlike Belgium or Ireland, nothing in the Act lets a taxable person ask for a longer one. **The return is filed on the Service's own portal, TaxPro-Max, which has accepted no manual VAT return since June 2021** (Federal Inland Revenue Service Information Circular on e-filing, June 2021); the most recent public specimen of a printed form this pack's research could find is Form VAT 002, whose worked example still carries the 5% rate the Finance Act 2019 superseded and whose figures are stated inclusive of VAT in a way TaxPro-Max's own sales-schedule upload (net value entered, VAT computed at 7.5%) does not appear to reproduce. Rather than transcribe a paper form's box numbers as if they were what the portal shows today, this pack numbers its own boxes against the statutory description of s. 22(3) — output tax, input tax, VAT payable — the way packs/sa/tax_report.json numbers a return that is itself a screen and not a printed form. A reviewer who files a real return on TaxPro-Max should check the boxes against what the portal shows.",
+  "source": "ntaa-2025",
+  "deadline": {
+    "rule": "day_of_month_after_period",
+    "day": 21,
+    "legal_reference": "Nigeria Tax Administration Act 2025, s. 22(1), quoted above. Section 49(1) sets the same day for payment: \"every person shall make payment of tax due on or before the due date of filing\", and s. 154(4), for VAT collected, withheld or self-accounted by a government body or an appointed collector, gives the fourteenth day instead — a different obligation on a different person, which this pack does not model (packs/ng/README.md).",
+    "source": "ntaa-2025"
+  },
+  "boxes": [
+    {
+      "box": "1",
+      "kind": "base",
+      "name": "Standard-rated sales",
+      "legal_reference": "Nigeria Tax Act 2025, s. 147: taxable supplies at the standard rate of 7.5%, stated net of the tax itself under s. 148(1)(a).",
+      "source": "nta-2025",
+      "sequence": 10
+    },
+    {
+      "box": "1",
+      "kind": "tax",
+      "name": "Output VAT on standard-rated sales",
+      "legal_reference": "Nigeria Tax Administration Act 2025, s. 22(3): the output tax collected on taxable supplies.",
+      "source": "ntaa-2025",
+      "sequence": 20
+    },
+    {
+      "box": "2",
+      "kind": "base",
+      "name": "Zero-rated sales",
+      "legal_reference": "Nigeria Tax Act 2025, s. 186: exported goods, services and incorporeal property, and the domestic supplies the section lists — basic food, medical and pharmaceutical products, educational materials, agricultural inputs, electricity supplied to or by the national grid, medical services and equipment, and tuition.",
+      "source": "nta-2025",
+      "sequence": 30
+    },
+    {
+      "box": "3",
+      "kind": "base",
+      "name": "Exempt sales",
+      "legal_reference": "Nigeria Tax Act 2025, s. 185(1): oil and gas exports, crude petroleum oil and feed gas, land and buildings, money and securities, government licences, and the other items of that section.",
+      "source": "nta-2025",
+      "sequence": 40
+    },
+    {
+      "box": "4",
+      "kind": "total",
+      "name": "Total output tax",
+      "legal_reference": "Nigeria Tax Administration Act 2025, s. 22(3), the \"output tax collected\" component of the return.",
+      "source": "ntaa-2025",
+      "plus": ["1:tax"],
+      "sequence": 50
+    },
+    {
+      "box": "5",
+      "kind": "base",
+      "name": "Standard-rated domestic purchases",
+      "legal_reference": "Nigeria Tax Act 2025, s. 155(4): input tax deductible on a taxable supply, including services and fixed assets, to the extent used in making taxable supplies.",
+      "source": "nta-2025",
+      "sequence": 60
+    },
+    {
+      "box": "5",
+      "kind": "tax",
+      "name": "Deductible input VAT on standard-rated domestic purchases",
+      "legal_reference": "Nigeria Tax Act 2025, s. 155(4), the deductible input tax of a standard-rated domestic purchase.",
+      "source": "nta-2025",
+      "sequence": 70
+    },
+    {
+      "box": "6",
+      "kind": "base",
+      "name": "Zero-rated purchases",
+      "legal_reference": "A purchase of a supply section 186 rates at zero percent, carrying no input tax to deduct.",
+      "source": "nta-2025",
+      "sequence": 80
+    },
+    {
+      "box": "7",
+      "kind": "base",
+      "name": "Exempt purchases",
+      "legal_reference": "A purchase of a supply section 185 exempts, carrying no VAT at all.",
+      "source": "nta-2025",
+      "sequence": 90
+    },
+    {
+      "box": "8",
+      "kind": "base",
+      "name": "Imports of goods",
+      "legal_reference": "Nigeria Tax Act 2025, s. 149: the value of an imported taxable supply, plus non-VAT duties and charges and the costs of getting it to the port or point of entry.",
+      "source": "nta-2025",
+      "sequence": 100
+    },
+    {
+      "box": "8",
+      "kind": "tax",
+      "name": "VAT paid to the Nigeria Customs Service on import, deductible",
+      "legal_reference": "Nigeria Tax Act 2025, s. 155(3): an importer pays the VAT on taxable goods to the Service, in practice through the Nigeria Customs Service, before clearing them; the tax is then deductible under s. 155(4) like any other input tax.",
+      "source": "nta-2025",
+      "sequence": 110
+    },
+    {
+      "box": "9",
+      "kind": "total",
+      "name": "Total input tax deductible",
+      "legal_reference": "Nigeria Tax Administration Act 2025, s. 22(3), the \"input tax paid\" component of the return.",
+      "source": "ntaa-2025",
+      "plus": ["5:tax", "8:tax"],
+      "sequence": 120
+    },
+    {
+      "box": "10",
+      "kind": "total",
+      "name": "VAT payable, or refundable",
+      "legal_reference": "Nigeria Tax Act 2025, s. 155(1): where output VAT exceeds input VAT the excess is remitted to the Service; where input VAT exceeds output VAT the taxable person carries the excess forward as a credit against subsequent months, or under s. 155(2) may request a refund. This pack applies no floor at zero: a negative figure here is the credit or the refund s. 155 describes.",
+      "source": "nta-2025",
+      "plus": ["4"],
+      "minus": ["9"],
+      "sequence": 130
+    }
+  ]
+}

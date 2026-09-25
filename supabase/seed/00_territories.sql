@@ -1053,3 +1053,29 @@ on conflict (code) do update set
   eu_vat_to       = excluded.eu_vat_to,
   vat_prefix      = excluded.vat_prefix,
   legal_reference = excluded.legal_reference;
+
+-- ---------------------------------------------------------------------------
+-- The row — Nigeria
+--
+-- A State outside the common system of VAT the way Saudi Arabia or the United
+-- Arab Emirates are: Nigeria levies a value added tax of its own, first under
+-- the Value Added Tax Act, Cap. V1, LFN 2004, and from 1 January 2026 under
+-- Chapter Six of the Nigeria Tax Act 2025, whose section 147 sets the rate at
+-- 7.5 %, and no Union instrument reaches it. `vat_prefix` is null: a Nigerian
+-- taxable person is identified by the Tax Identification Number the Nigeria
+-- Revenue Service issues under Nigeria Tax Administration Act 2025, s. 7,
+-- which carries no ISO country prefix comparable to an EU VAT number.
+-- ---------------------------------------------------------------------------
+
+insert into territories (code, code_source, name, parent_code, eu_vat_scope, eu_vat_from, eu_vat_to, vat_prefix, legal_reference) values
+  ('NG', 'iso_3166_1', 'Nigeria', null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. Nigeria levies a value added tax of its own, most recently under the Nigeria Tax Act 2025, s. 147, which sets the rate at 7.5 % with effect from 1 January 2026 (Federal Republic of Nigeria Official Gazette No. 117, Vol. 112, 26 June 2025), unrelated to the Union''s common system.')
+on conflict (code) do update set
+  code_source     = excluded.code_source,
+  name            = excluded.name,
+  parent_code     = excluded.parent_code,
+  eu_vat_scope    = excluded.eu_vat_scope,
+  eu_vat_from     = excluded.eu_vat_from,
+  eu_vat_to       = excluded.eu_vat_to,
+  vat_prefix      = excluded.vat_prefix,
+  legal_reference = excluded.legal_reference;
