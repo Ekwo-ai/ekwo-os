@@ -53,5 +53,6 @@ insert into currencies (code, name, symbol, decimal_places) values
   ('ARS', 'Argentine peso',       '$',       2),
   ('NGN', 'Nigerian naira',       E'₦', 2),
   ('CLP', 'Chilean peso',         '$',       0),
-  ('PEN', 'Peruvian sol',         'S/',      2)
+  ('PEN', 'Peruvian sol',         'S/',      2),
+  ('UAH', 'Ukrainian hryvnia',    E'₴', 2)
 on conflict (code) do nothing;

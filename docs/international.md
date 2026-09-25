@@ -4379,3 +4379,66 @@ the second reason `docs/packs.md` gives for a row, at its fullest: a country
 whose tax law genuinely lives one level down. `CAD` needed nothing — the
 currency has been in `00_currencies.sql` at two decimals since before this
 pack.
+
+## From Ukraine
+
+`packs/ua/`, `community`, seed 57, outside the common system of VAT the way
+Turkey is: a candidate for accession since 2024, not a member, and Directive
+2006/112/EC, article 5(2), reaches the territory of the Community as the
+Treaties define it and nothing a candidacy announces. `UAH` is added to
+`00_currencies.sql` at two decimals; `UA` is added to `00_territories.sql`
+with `eu_vat_scope` `none`, on the same footing as `TR`. Three things the
+format could not say, read from the Tax Code of Ukraine (Податковий кодекс
+України, Law No. 2755-VI).
+
+**A tax point that is neither a principle-and-derogation pair nor either
+date alone.** Every value `documents.tax_point` carries reads a country's
+rule as a single word standing for the whole of it: `invoice_if_issued`
+names a supply that is the rule and an invoice that displaces it,
+`earliest_of_delivery_or_payment` names two branches with a fixed order
+between them. Point 187.1 of article 187 is a third shape this vocabulary
+was not built for: the tax becomes chargeable on **whichever of a payment
+received and a delivery made happens first**, with neither branch reading as
+the principle and the other as its exception, and no invoice date entering
+the comparison at all unless it happens to coincide with one of the two.
+`packs/ua/` declares `invoice_if_issued`, which is the closest word available
+and not a transcription of point 187.1 — a reader who wants the rule itself
+reads the article, named in `documents.references.tax_point`.
+
+**A national registry that decides a buyer's right to deduct, and that no
+field of `einvoicing` was built to describe.** The Єдиний реєстр податкових
+накладних (ЄРПН) is not a clearance system in the Polish or Hungarian sense —
+a податкова накладна is issued by the seller, not stamped into existence by
+the state — but three of its mechanics have nowhere to land in this pack
+format regardless: the registration deadline runs from the **document's own
+date** in two branches (to the end of the month for a document dated in its
+first half, to the fifteenth of the following month for one dated in its
+second half — article 201.10), which no `deadline` vocabulary here reads
+from anything but the end of a filing period; a registered document changes
+who may deduct (the buyer) without changing who owes the tax (the seller),
+an asymmetry `treatment` has no word for; and the Систем моніторингу
+критеріїв оцінки ризиків (СМКОР, Resolution of the Cabinet of Ministers No.
+1165 of 11 December 2019) can suspend the registration of one document
+pending review, a per-document administrative hold with no equivalent
+anywhere in this format. `packs/ua/` leaves `einvoicing.profile` null rather
+than naming the registry as if it were an EN 16931 profile — see the Poland
+section above for the pack that made the opposite choice and what it cost.
+
+**A filing deadline and a payment deadline that fall on different days, where
+`deadline` reads only one of them.** Point 203.1 of article 203 gives twenty
+calendar days after the end of the month to file; point 203.2 gives ten more
+after *that* to pay. Belgium and Estonia both proposed cadences precisely
+because their form ties the two together on one date; Ukraine's does not, and
+`tax_report.json.deadline` — one rule, one day — has nowhere to carry the
+second date. `packs/ua/` declares the filing deadline (the twentieth) and
+states the payment deadline (the thirtieth, in effect) only in prose, in the
+same field's `legal_reference`.
+
+**Self-assessment on a service received from a supplier established
+outside Ukraine (article 208) is not modelled.** The mechanic is the double
+posting `docs/packs.md` shows for Estonia's intra-Community acquisition of
+goods — one `tax` posting for the self-assessed liability, a second, on the
+same tax, crediting the recoverable side — and Ukraine's own version of it
+needs the same shape a first `community` version of this pack did not yet
+write. `packs/ua/README.md` names the gap; no tax of this pack carries the
+treatment `foreign_services_received`.
