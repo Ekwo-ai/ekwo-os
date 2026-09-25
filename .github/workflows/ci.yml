@@ -11,6 +11,9 @@ jobs:
   test:
     runs-on: ubuntu-latest
     timeout-minutes: 90
+    # The Node 24 job is informative for now: the hosted runner is shut down
+    # under it part-way through the suite (issue #28), while Node 22 passes.
+    continue-on-error: ${{ matrix.node == 24 }}
     strategy:
       fail-fast: false
       matrix:
