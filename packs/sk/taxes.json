@@ -13,11 +13,11 @@
     "postings": {
       "invoice": [
         { "type": "base", "box": "03" },
-        { "type": "tax", "account": "343", "box": "04" }
+        { "type": "tax", "account": "3431", "box": "04" }
       ],
       "credit_note": [
         { "type": "base", "box": "03", "box_factor": -100 },
-        { "type": "tax", "account": "343", "box": "04", "box_factor": -100 }
+        { "type": "tax", "account": "3431", "box": "04", "box_factor": -100 }
       ]
     },
     "kind": "vat",
@@ -38,11 +38,11 @@
     "postings": {
       "invoice": [
         { "type": "base", "box": "01" },
-        { "type": "tax", "account": "343", "box": "02" }
+        { "type": "tax", "account": "3431", "box": "02" }
       ],
       "credit_note": [
         { "type": "base", "box": "01", "box_factor": -100 },
-        { "type": "tax", "account": "343", "box": "02", "box_factor": -100 }
+        { "type": "tax", "account": "3431", "box": "02", "box_factor": -100 }
       ]
     },
     "kind": "vat",
@@ -63,11 +63,11 @@
     "postings": {
       "invoice": [
         { "type": "base", "box": "01a" },
-        { "type": "tax", "account": "343", "box": "02a" }
+        { "type": "tax", "account": "3431", "box": "02a" }
       ],
       "credit_note": [
         { "type": "base", "box": "01a", "box_factor": -100 },
-        { "type": "tax", "account": "343", "box": "02a", "box_factor": -100 }
+        { "type": "tax", "account": "3431", "box": "02a", "box_factor": -100 }
       ]
     },
     "kind": "vat",
@@ -132,7 +132,7 @@
     "legal_reference": "Zákon č. 222/2004 Z. z., § 38 ods. 3 — oslobodený od dane je nájom nehnuteľnosti alebo jej časti, okrem nájmu v ubytovacích zariadeniach, nájmu priestorov a miest na parkovanie vozidiel, nájmu bezpečnostných schránok a nájmu trvalo inštalovaných zariadení a strojov; § 38 ods. 5 pripúšťa voľbu zdanenia, ktorá tu nie je uplatnená.",
     "source": "zakon-dph",
     "vat_category": "E",
-    "exemption_code": "VATEX-EU-135",
+    "exemption_code": "VATEX-EU-135-1",
     "conditions": ["supply_nature"],
     "postings": {
       "invoice": [
@@ -182,10 +182,10 @@
     "vat_category": "S",
     "postings": {
       "invoice": [
-        { "type": "tax", "account": "343", "box": "19" }
+        { "type": "tax", "account": "3432", "box": "19" }
       ],
       "credit_note": [
-        { "type": "tax", "account": "343", "box": "19", "box_factor": -100 }
+        { "type": "tax", "account": "3432", "box": "19", "box_factor": -100 }
       ]
     },
     "kind": "vat",
@@ -204,10 +204,10 @@
     "vat_category": "S",
     "postings": {
       "invoice": [
-        { "type": "tax", "account": "343", "box": "18" }
+        { "type": "tax", "account": "3432", "box": "18" }
       ],
       "credit_note": [
-        { "type": "tax", "account": "343", "box": "18", "box_factor": -100 }
+        { "type": "tax", "account": "3432", "box": "18", "box_factor": -100 }
       ]
     },
     "kind": "vat",
@@ -226,10 +226,10 @@
     "vat_category": "S",
     "postings": {
       "invoice": [
-        { "type": "tax", "account": "343", "box": "18a" }
+        { "type": "tax", "account": "3432", "box": "18a" }
       ],
       "credit_note": [
-        { "type": "tax", "account": "343", "box": "18a", "box_factor": -100 }
+        { "type": "tax", "account": "3432", "box": "18a", "box_factor": -100 }
       ]
     },
     "kind": "vat",
@@ -273,13 +273,13 @@
     "postings": {
       "invoice": [
         { "type": "base", "box": "07" },
-        { "type": "tax", "account": "343", "box": "19" },
-        { "type": "tax", "factor": -100, "account": "343", "box": "08" }
+        { "type": "tax", "account": "3432", "box": "19" },
+        { "type": "tax", "factor": -100, "account": "3431", "box": "08" }
       ],
       "credit_note": [
         { "type": "base", "box": "07", "box_factor": -100 },
-        { "type": "tax", "account": "343", "box": "19", "box_factor": -100 },
-        { "type": "tax", "factor": -100, "account": "343", "box": "08", "box_factor": -100 }
+        { "type": "tax", "account": "3432", "box": "19", "box_factor": -100 },
+        { "type": "tax", "factor": -100, "account": "3431", "box": "08", "box_factor": -100 }
       ]
     },
     "kind": "vat",
@@ -301,13 +301,13 @@
     "postings": {
       "invoice": [
         { "type": "base", "box": "09b" },
-        { "type": "tax", "account": "343", "box": "19" },
-        { "type": "tax", "factor": -100, "account": "343", "box": "10b" }
+        { "type": "tax", "account": "3432", "box": "19" },
+        { "type": "tax", "factor": -100, "account": "3431", "box": "10b" }
       ],
       "credit_note": [
         { "type": "base", "box": "09b", "box_factor": -100 },
-        { "type": "tax", "account": "343", "box": "19", "box_factor": -100 },
-        { "type": "tax", "factor": -100, "account": "343", "box": "10b", "box_factor": -100 }
+        { "type": "tax", "account": "3432", "box": "19", "box_factor": -100 },
+        { "type": "tax", "factor": -100, "account": "3431", "box": "10b", "box_factor": -100 }
       ]
     },
     "kind": "vat",
@@ -328,13 +328,13 @@
     "postings": {
       "invoice": [
         { "type": "base", "box": "09b" },
-        { "type": "tax", "account": "343", "box": "19" },
-        { "type": "tax", "factor": -100, "account": "343", "box": "10b" }
+        { "type": "tax", "account": "3432", "box": "19" },
+        { "type": "tax", "factor": -100, "account": "3431", "box": "10b" }
       ],
       "credit_note": [
         { "type": "base", "box": "09b", "box_factor": -100 },
-        { "type": "tax", "account": "343", "box": "19", "box_factor": -100 },
-        { "type": "tax", "factor": -100, "account": "343", "box": "10b", "box_factor": -100 }
+        { "type": "tax", "account": "3432", "box": "19", "box_factor": -100 },
+        { "type": "tax", "factor": -100, "account": "3431", "box": "10b", "box_factor": -100 }
       ]
     },
     "kind": "vat",
@@ -353,13 +353,13 @@
     "postings": {
       "invoice": [
         { "type": "base", "box": "09b" },
-        { "type": "tax", "account": "343", "box": "19" },
-        { "type": "tax", "factor": -100, "account": "343", "box": "10b" }
+        { "type": "tax", "account": "3432", "box": "19" },
+        { "type": "tax", "factor": -100, "account": "3431", "box": "10b" }
       ],
       "credit_note": [
         { "type": "base", "box": "09b", "box_factor": -100 },
-        { "type": "tax", "account": "343", "box": "19", "box_factor": -100 },
-        { "type": "tax", "factor": -100, "account": "343", "box": "10b", "box_factor": -100 }
+        { "type": "tax", "account": "3432", "box": "19", "box_factor": -100 },
+        { "type": "tax", "factor": -100, "account": "3431", "box": "10b", "box_factor": -100 }
       ]
     },
     "kind": "vat",
@@ -378,11 +378,11 @@
     "postings": {
       "invoice": [
         { "type": "base" },
-        { "type": "tax", "account": "343", "box": "23" }
+        { "type": "tax", "account": "3432", "box": "23" }
       ],
       "credit_note": [
         { "type": "base", "box_factor": -100 },
-        { "type": "tax", "account": "343", "box": "23", "box_factor": -100 }
+        { "type": "tax", "account": "3432", "box": "23", "box_factor": -100 }
       ]
     },
     "kind": "vat",

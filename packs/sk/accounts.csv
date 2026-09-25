@@ -60,6 +60,8 @@ code,parent,type,reconcilable,name,sequence
 341,,liability_current,false,Daň z príjmov,590
 342,,liability_current,false,Ostatné priame dane,600
 343,,liability_current,true,Daň z pridanej hodnoty,610
+3431,343,liability_current,false,DPH na výstupe,611
+3432,343,asset_current,false,DPH na vstupe,612
 345,,liability_current,false,Ostatné dane a poplatky,620
 346,,liability_current,false,Dotácie zo štátneho rozpočtu,630
 347,,liability_current,false,Ostatné dotácie,640
