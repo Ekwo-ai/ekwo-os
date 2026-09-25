@@ -36,6 +36,8 @@
 --     https://docs.peppol.eu/poacc/billing/3.0/codelist/vatex/
 --   Peppol code list of electronic address schemes (ISO 6523 ICD) (OpenPEPPOL)
 --     https://docs.peppol.eu/poacc/billing/3.0/codelist/eas/
+--   The IFRS for SMEs Accounting Standard (2015 edition), section 4 — Statement of Financial Position, and section 5 — Statement of Comprehensive Income and Income Statement (IFRS Foundation)
+--     https://www.ifrs.org/issued-standards/ifrs-for-smes/
 --
 -- Reference data: `install_country_template()` copies it into a company,
 -- nothing here belongs to a company.
@@ -44,7 +46,7 @@ insert into country_packs
   (country, name, version, released_at, schema_min, certification_status,
    certified_by, certified_at, checksum, sources)
 values
-  ('CY', 'Cyprus', '0.1.0', date '2026-09-25', '20260923110000', 'community', null, null, '5505373e2ac1241bcc0f3ec7e29c573f08a08e82bea5445abfc72d65b7c33f5d', '[{"key":"vat-law-95-2000","title":"The Value Added Tax Laws of 2000 to 2023 (Ν. 95(Ι)/2000), consolidated text","publisher":"CyLII — Cyprus Legal Information Institute (cylaw.org). Unofficial consolidation: the Department of the Law Commissioner and the Tax Department''s own sites returned 403 to every automated request made while building this pack, so the base law and every amendment were read here instead, decoded from the site''s native Windows-1253 encoding to avoid the mojibake a naive UTF-8 read produces. A reviewer should check a citation against the enacted text and the Official Gazette before relying on it.","url":"https://www.cylaw.org/nomoi/enop/non-ind/2000_1_95/full.html","consulted_on":"2026-09-25","kind":"law"},{"key":"vat-regs-2001","title":"Οι περί Φόρου Προστιθέμενης Αξίας (Γενικοί) Κανονισμοί του 2001 (Κ.Δ.Π. 314/2001) — the VAT (General) Regulations 2001","publisher":"Cyprus Official Gazette (Επίσημη Εφημερίδα της Κυπριακής Δημοκρατίας), Παράρτημα Τρίτο (Ι), reproduced by cylaw.org","url":"https://www.cylaw.org/KDP/data/2001_1_314.pdf","consulted_on":"2026-09-25","kind":"regulation"},{"key":"kdp-268-2020","title":"Το περί Φόρου Προστιθέμενης Αξίας (Τροποποίηση του Πέμπτου Παραρτήματος και Δωδέκατου Παραρτήματος) Διάταγμα του 2020 (Κ.Δ.Π. 268/2020)","publisher":"Cyprus Official Gazette (Επίσημη Εφημερίδα της Κυπριακής Δημοκρατίας), Παράρτημα Τρίτο (Ι), Αρ. 5303, reproduced by cylaw.org","url":"https://www.cylaw.org/KDP/data/2020_1_268.pdf","consulted_on":"2026-09-25","kind":"regulation"},{"key":"late-payments-law-2012","title":"The Late Payments in Commercial Transactions Law of 2012 (Ν. 123(Ι)/2012)","publisher":"CyLII — Cyprus Legal Information Institute (cylaw.org), unofficial consolidation","url":"https://www.cylaw.org/nomoi/enop/non-ind/2012_1_123/full.html","consulted_on":"2026-09-25","kind":"law"},{"key":"companies-law-cap113","title":"The Companies Law, Cap. 113, English translation made July 2014","publisher":"Department of the Registrar of Companies and Intellectual Property, Ministry of Energy, Commerce and Industry","url":"https://www.companies.gov.cy/assets/modules/wgp/articles/201801/49/docs/cap_113_translation_made_july_2014.pdf","consulted_on":"2026-09-25","kind":"law"},{"key":"ifrs-cyprus","title":"IFRS jurisdiction profile — Cyprus","publisher":"IFRS Foundation","url":"https://www.ifrs.org/content/ifrs/home/use-around-the-world/use-of-ifrs-standards-by-jurisdiction/view-jurisdiction.html/cyprus","consulted_on":"2026-09-25","kind":"guidance"},{"key":"ec-einvoicing-cy","title":"eInvoicing in Cyprus","publisher":"European Commission — Digital Building Blocks","url":"https://ec.europa.eu/digital-building-blocks/sites/display/DIGITAL/eInvoicing+in+Cyprus","consulted_on":"2026-09-25","kind":"guidance"},{"key":"eu-sme-rules-cy","title":"Cyprus SME VAT rules — national annual threshold €15,600","publisher":"European Commission — Taxation and Customs Union","url":"https://sme-vat-rules.ec.europa.eu/national-vat-rules/cyprus-sme-rules_en","consulted_on":"2026-09-25","kind":"guidance"},{"key":"taxforall-portal","title":"Tax For All (TFA) — the portal the VAT return and the VIES statement are filed on","publisher":"Tax Department, Ministry of Finance","url":"https://taxforall.mof.gov.cy/","consulted_on":"2026-09-25","kind":"portal"},{"key":"cy-vat4-guide-chelco","title":"VAT Definitive Guides, Issue 2 — including an unofficial translation of VAT Return Form 4 and its completion notes","publisher":"Chelco VAT Ltd. Not an official source: the Tax Department''s own guide could not be retrieved for this pack (its former mof.gov.cy address now redirects to gov.cy, and the document was not found at the new one or in the Wayback Machine). Kept as the best available description of which figure the return asks for in which box, and flagged wherever it is relied on; see the pack README.","url":"https://chelcovat.com/wp-content/uploads/2021/09/VAT-Definitive-Guides-i.2-VAT-Returns-%CE%95%CE%9D.pdf","consulted_on":"2026-09-25","kind":"form"},{"key":"vat-directive-2006-112","title":"Council Directive 2006/112/EC of 28 November 2006 on the common system of value added tax, consolidated text","publisher":"Publications Office of the European Union — EUR-Lex","url":"https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02006L0112-20220701","consulted_on":"2026-09-25","kind":"law"},{"key":"en-16931","title":"EN 16931 compliance — the European standard on electronic invoicing under Directive 2014/55/EU","publisher":"European Commission — Digital Building Blocks","url":"https://ec.europa.eu/digital-building-blocks/sites/spaces/DIGITAL/pages/467108950/EN+16931+compliance","consulted_on":"2026-09-25","kind":"standard"},{"key":"uncl5305","title":"UNCL5305 — the VAT category code list of EN 16931 (BT-118 and BT-151), as the OpenPEPPOL subset publishes it","publisher":"OpenPEPPOL — the list itself is published by the European Commission","url":"https://docs.peppol.eu/poacc/billing/3.0/codelist/UNCL5305/","consulted_on":"2026-09-25","kind":"standard"},{"key":"vatex","title":"VATEX — the VAT exemption reason code list of EN 16931 (BT-121)","publisher":"OpenPEPPOL — the list itself is published by the European Commission","url":"https://docs.peppol.eu/poacc/billing/3.0/codelist/vatex/","consulted_on":"2026-09-25","kind":"standard"},{"key":"peppol-eas","title":"Peppol code list of electronic address schemes (ISO 6523 ICD)","publisher":"OpenPEPPOL","url":"https://docs.peppol.eu/poacc/billing/3.0/codelist/eas/","consulted_on":"2026-09-25","kind":"standard"}]'::jsonb)
+  ('CY', 'Cyprus', '0.1.0', date '2026-09-25', '20260923110000', 'community', null, null, 'ae1b0488639ff33d488c6983911f99008a9a83f3cf180bab3acf3a03c682a11b', '[{"key":"vat-law-95-2000","title":"The Value Added Tax Laws of 2000 to 2023 (Ν. 95(Ι)/2000), consolidated text","publisher":"CyLII — Cyprus Legal Information Institute (cylaw.org). Unofficial consolidation: the Department of the Law Commissioner and the Tax Department''s own sites returned 403 to every automated request made while building this pack, so the base law and every amendment were read here instead, decoded from the site''s native Windows-1253 encoding to avoid the mojibake a naive UTF-8 read produces. A reviewer should check a citation against the enacted text and the Official Gazette before relying on it.","url":"https://www.cylaw.org/nomoi/enop/non-ind/2000_1_95/full.html","consulted_on":"2026-09-25","kind":"law"},{"key":"vat-regs-2001","title":"Οι περί Φόρου Προστιθέμενης Αξίας (Γενικοί) Κανονισμοί του 2001 (Κ.Δ.Π. 314/2001) — the VAT (General) Regulations 2001","publisher":"Cyprus Official Gazette (Επίσημη Εφημερίδα της Κυπριακής Δημοκρατίας), Παράρτημα Τρίτο (Ι), reproduced by cylaw.org","url":"https://www.cylaw.org/KDP/data/2001_1_314.pdf","consulted_on":"2026-09-25","kind":"regulation"},{"key":"kdp-268-2020","title":"Το περί Φόρου Προστιθέμενης Αξίας (Τροποποίηση του Πέμπτου Παραρτήματος και Δωδέκατου Παραρτήματος) Διάταγμα του 2020 (Κ.Δ.Π. 268/2020)","publisher":"Cyprus Official Gazette (Επίσημη Εφημερίδα της Κυπριακής Δημοκρατίας), Παράρτημα Τρίτο (Ι), Αρ. 5303, reproduced by cylaw.org","url":"https://www.cylaw.org/KDP/data/2020_1_268.pdf","consulted_on":"2026-09-25","kind":"regulation"},{"key":"late-payments-law-2012","title":"The Late Payments in Commercial Transactions Law of 2012 (Ν. 123(Ι)/2012)","publisher":"CyLII — Cyprus Legal Information Institute (cylaw.org), unofficial consolidation","url":"https://www.cylaw.org/nomoi/enop/non-ind/2012_1_123/full.html","consulted_on":"2026-09-25","kind":"law"},{"key":"companies-law-cap113","title":"The Companies Law, Cap. 113, English translation made July 2014","publisher":"Department of the Registrar of Companies and Intellectual Property, Ministry of Energy, Commerce and Industry","url":"https://www.companies.gov.cy/assets/modules/wgp/articles/201801/49/docs/cap_113_translation_made_july_2014.pdf","consulted_on":"2026-09-25","kind":"law"},{"key":"ifrs-cyprus","title":"IFRS jurisdiction profile — Cyprus","publisher":"IFRS Foundation","url":"https://www.ifrs.org/content/ifrs/home/use-around-the-world/use-of-ifrs-standards-by-jurisdiction/view-jurisdiction.html/cyprus","consulted_on":"2026-09-25","kind":"guidance"},{"key":"ec-einvoicing-cy","title":"eInvoicing in Cyprus","publisher":"European Commission — Digital Building Blocks","url":"https://ec.europa.eu/digital-building-blocks/sites/display/DIGITAL/eInvoicing+in+Cyprus","consulted_on":"2026-09-25","kind":"guidance"},{"key":"eu-sme-rules-cy","title":"Cyprus SME VAT rules — national annual threshold €15,600","publisher":"European Commission — Taxation and Customs Union","url":"https://sme-vat-rules.ec.europa.eu/national-vat-rules/cyprus-sme-rules_en","consulted_on":"2026-09-25","kind":"guidance"},{"key":"taxforall-portal","title":"Tax For All (TFA) — the portal the VAT return and the VIES statement are filed on","publisher":"Tax Department, Ministry of Finance","url":"https://taxforall.mof.gov.cy/","consulted_on":"2026-09-25","kind":"portal"},{"key":"cy-vat4-guide-chelco","title":"VAT Definitive Guides, Issue 2 — including an unofficial translation of VAT Return Form 4 and its completion notes","publisher":"Chelco VAT Ltd. Not an official source: the Tax Department''s own guide could not be retrieved for this pack (its former mof.gov.cy address now redirects to gov.cy, and the document was not found at the new one or in the Wayback Machine). Kept as the best available description of which figure the return asks for in which box, and flagged wherever it is relied on; see the pack README.","url":"https://chelcovat.com/wp-content/uploads/2021/09/VAT-Definitive-Guides-i.2-VAT-Returns-%CE%95%CE%9D.pdf","consulted_on":"2026-09-25","kind":"form"},{"key":"vat-directive-2006-112","title":"Council Directive 2006/112/EC of 28 November 2006 on the common system of value added tax, consolidated text","publisher":"Publications Office of the European Union — EUR-Lex","url":"https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02006L0112-20220701","consulted_on":"2026-09-25","kind":"law"},{"key":"en-16931","title":"EN 16931 compliance — the European standard on electronic invoicing under Directive 2014/55/EU","publisher":"European Commission — Digital Building Blocks","url":"https://ec.europa.eu/digital-building-blocks/sites/spaces/DIGITAL/pages/467108950/EN+16931+compliance","consulted_on":"2026-09-25","kind":"standard"},{"key":"uncl5305","title":"UNCL5305 — the VAT category code list of EN 16931 (BT-118 and BT-151), as the OpenPEPPOL subset publishes it","publisher":"OpenPEPPOL — the list itself is published by the European Commission","url":"https://docs.peppol.eu/poacc/billing/3.0/codelist/UNCL5305/","consulted_on":"2026-09-25","kind":"standard"},{"key":"vatex","title":"VATEX — the VAT exemption reason code list of EN 16931 (BT-121)","publisher":"OpenPEPPOL — the list itself is published by the European Commission","url":"https://docs.peppol.eu/poacc/billing/3.0/codelist/vatex/","consulted_on":"2026-09-25","kind":"standard"},{"key":"peppol-eas","title":"Peppol code list of electronic address schemes (ISO 6523 ICD)","publisher":"OpenPEPPOL","url":"https://docs.peppol.eu/poacc/billing/3.0/codelist/eas/","consulted_on":"2026-09-25","kind":"standard"},{"key":"ifrs-for-smes-standard","title":"The IFRS for SMEs Accounting Standard (2015 edition), section 4 — Statement of Financial Position, and section 5 — Statement of Comprehensive Income and Income Statement","publisher":"IFRS Foundation","url":"https://www.ifrs.org/issued-standards/ifrs-for-smes/","consulted_on":"2026-09-25","kind":"standard"}]'::jsonb)
 on conflict (country) do update set
   name                 = excluded.name,
   version              = excluded.version,
@@ -60,7 +62,7 @@ insert into chart_templates
   (country, code, name, name_i18n, is_default, audience, statements,
    certification_status, legal_reference, source_key)
 values
-  ('CY', 'default', 'Cyprus reference chart of accounts', '{}'::jsonb, true, 'companies', '{}'::text[], null, 'Cyprus prescribes no chart of accounts and no statutory balance sheet or profit and loss format. The Companies Law, Cap. 113, s. 141A (as substituted) requires every company''s accounts to give a true and fair view and to be prepared in accordance with International Financial Reporting Standards as adopted by the European Union under Regulation (EC) No 1606/2002; the Eighth Schedule to Cap. 113, which once set out a statutory balance sheet and profit and loss format transposing the Fourth Company Law Directive (78/660/EEC), was repealed in 2003 by s. 20 of Ν. 167(Ι)/2003 when that requirement was introduced, and IAS 1''s own layout is deliberately not a fixed table of captions. This chart is therefore original, follows no published format, and its statements are the ones `packs/generic/` already carries for a chart that names none: a balance sheet and an income statement built from the eighteen account types alone.', 'companies-law-cap113')
+  ('CY', 'default', 'Cyprus reference chart of accounts', '{}'::jsonb, true, 'companies', array['CY-IFRS-SME-BS', 'CY-IFRS-SME-IS']::text[], null, 'Cyprus prescribes no chart of accounts and no statutory balance sheet or profit and loss format. The Companies Law, Cap. 113, s. 141A (as substituted) requires every company''s accounts to give a true and fair view and to be prepared in accordance with International Financial Reporting Standards as adopted by the European Union under Regulation (EC) No 1606/2002; the Eighth Schedule to Cap. 113, which once set out a statutory balance sheet and profit and loss format transposing the Fourth Company Law Directive (78/660/EEC), was repealed in 2003 by s. 20 of Ν. 167(Ι)/2003 when that requirement was introduced, and IAS 1''s own layout is deliberately not a fixed table of captions. This chart is therefore original, follows no published format, and instead of leaving every account to fall back onto `packs/generic/`, `statements.json` gives it a statement of financial position and a statement of comprehensive income of its own, built on the minimum line items of the IFRS for SMEs Accounting Standard, sections 4 and 5 — chosen as an illustrative layout precise enough to read a Cyprus chart against, not because Cyprus law requires or permits that Standard in place of full IFRS as adopted by the European Union.', 'companies-law-cap113')
 on conflict (country, code) do update set
   name                 = excluded.name,
   name_i18n            = excluded.name_i18n,
@@ -461,6 +463,132 @@ on conflict (country, report_code, box, kind) do update set
   xml_element     = excluded.xml_element,
   legal_reference = excluded.legal_reference,
   source_key      = excluded.source_key;
+
+insert into statement_templates
+  (code, country, chart_code, name, kind, framework, valid_from, valid_to, legal_reference,
+   source_key)
+values
+  ('CY-IFRS-SME-BS', 'CY', 'default', 'Statement of financial position', 'balance_sheet', 'IFRS-SME', date '1970-01-01', null, 'Companies Law, Cap. 113, s. 141A (as substituted) requires every company''s accounts to be prepared in accordance with International Financial Reporting Standards as adopted by the European Union, which prescribe no fixed table of captions — the Eighth Schedule that once did was repealed in 2003 by s. 20 of Ν. 167(Ι)/2003. The lines below are the minimum line items of section 4.2 of the IFRS for SMEs Accounting Standard (2015), used here as an illustrative layout precise enough to read this chart against, and grouped onto the codes of `accounts.csv`, which are themselves original and not a published format.', 'ifrs-for-smes-standard'),
+  ('CY-IFRS-SME-IS', 'CY', 'default', 'Statement of comprehensive income (single statement)', 'income_statement', 'IFRS-SME', date '1970-01-01', null, 'IFRS for SMEs Accounting Standard (2015), section 5.3: an entity presents its total comprehensive income for a period in a single statement of comprehensive income where, as here, it has no item of other comprehensive income to show separately from profit or loss. The lines below are the minimum line items of section 5.5, grouped onto the codes of `accounts.csv`.', 'ifrs-for-smes-standard')
+on conflict (code) do update set
+  country         = excluded.country,
+  chart_code      = excluded.chart_code,
+  name            = excluded.name,
+  kind            = excluded.kind,
+  framework       = excluded.framework,
+  valid_from      = excluded.valid_from,
+  valid_to        = excluded.valid_to,
+  legal_reference = excluded.legal_reference,
+  source_key      = excluded.source_key;
+
+insert into statement_line_templates
+  (statement_code, code, parent_code, name, name_i18n, sequence, sign, is_total,
+   plus_lines, minus_lines, xbrl_element, legal_reference, source_key)
+values
+  ('CY-IFRS-SME-BS', 'NC-INT', 'NC', 'Intangible assets', '{}'::jsonb, 10, 1, false, '{}'::text[], '{}'::text[], null, null, null),
+  ('CY-IFRS-SME-BS', 'NC-INV', 'NC', 'Investment property', '{}'::jsonb, 20, 1, false, '{}'::text[], '{}'::text[], null, null, null),
+  ('CY-IFRS-SME-BS', 'NC-PPE', 'NC', 'Property, plant and equipment', '{}'::jsonb, 30, 1, false, '{}'::text[], '{}'::text[], null, null, null),
+  ('CY-IFRS-SME-BS', 'NC-FIN', 'NC', 'Investments and other non-current financial assets', '{}'::jsonb, 40, 1, false, '{}'::text[], '{}'::text[], null, null, null),
+  ('CY-IFRS-SME-BS', 'NC-DTA', 'NC', 'Deferred tax asset', '{}'::jsonb, 50, 1, false, '{}'::text[], '{}'::text[], null, null, null),
+  ('CY-IFRS-SME-BS', 'NC', null, 'Non-current assets', '{}'::jsonb, 60, 1, true, array['NC-INT', 'NC-INV', 'NC-PPE', 'NC-FIN', 'NC-DTA']::text[], '{}'::text[], null, null, null),
+  ('CY-IFRS-SME-BS', 'C-INV', 'C', 'Inventories', '{}'::jsonb, 70, 1, false, '{}'::text[], '{}'::text[], null, null, null),
+  ('CY-IFRS-SME-BS', 'C-REC', 'C', 'Trade and other receivables', '{}'::jsonb, 80, 1, false, '{}'::text[], '{}'::text[], null, null, null),
+  ('CY-IFRS-SME-BS', 'C-TAX', 'C', 'Current tax assets and other recoverable amounts', '{}'::jsonb, 90, 1, false, '{}'::text[], '{}'::text[], null, null, null),
+  ('CY-IFRS-SME-BS', 'C-PRE', 'C', 'Prepayments and accrued income', '{}'::jsonb, 100, 1, false, '{}'::text[], '{}'::text[], null, null, null),
+  ('CY-IFRS-SME-BS', 'C-CASH', 'C', 'Cash and cash equivalents', '{}'::jsonb, 110, 1, false, '{}'::text[], '{}'::text[], null, null, null),
+  ('CY-IFRS-SME-BS', 'C', null, 'Current assets', '{}'::jsonb, 120, 1, true, array['C-INV', 'C-REC', 'C-TAX', 'C-PRE', 'C-CASH']::text[], '{}'::text[], null, null, null),
+  ('CY-IFRS-SME-BS', 'A-TOT', null, 'Total assets', '{}'::jsonb, 130, 1, true, array['NC', 'C']::text[], '{}'::text[], null, null, null),
+  ('CY-IFRS-SME-BS', 'E-SHARE', 'E', 'Share capital', '{}'::jsonb, 140, -1, false, '{}'::text[], '{}'::text[], null, null, null),
+  ('CY-IFRS-SME-BS', 'E-PREM', 'E', 'Share premium', '{}'::jsonb, 150, -1, false, '{}'::text[], '{}'::text[], null, null, null),
+  ('CY-IFRS-SME-BS', 'E-REVAL', 'E', 'Revaluation reserve', '{}'::jsonb, 160, -1, false, '{}'::text[], '{}'::text[], null, null, null),
+  ('CY-IFRS-SME-BS', 'E-LEGAL', 'E', 'Legal reserve', '{}'::jsonb, 170, -1, false, '{}'::text[], '{}'::text[], null, 'Companies Law, Cap. 113, s. 55 — the non-distributable reserve a company keeps against a reduction of capital.', 'companies-law-cap113'),
+  ('CY-IFRS-SME-BS', 'E-OTH', 'E', 'Other reserves', '{}'::jsonb, 180, -1, false, '{}'::text[], '{}'::text[], null, null, null),
+  ('CY-IFRS-SME-BS', 'E-RET', 'E', 'Retained earnings', '{}'::jsonb, 190, -1, false, '{}'::text[], '{}'::text[], null, '`defaults.closing_style` is `retained_earnings`: the result of a closed year is carried straight onto `3400`, and this line reads it there beside `3410`, exactly as `packs/gb/`''s own `K.V` does for the same closing style.', null),
+  ('CY-IFRS-SME-BS', 'E', null, 'Total equity', '{}'::jsonb, 200, 1, true, array['E-SHARE', 'E-PREM', 'E-REVAL', 'E-LEGAL', 'E-OTH', 'E-RET']::text[], '{}'::text[], null, null, null),
+  ('CY-IFRS-SME-BS', 'LNC-BOR', 'LNC', 'Borrowings and lease liabilities', '{}'::jsonb, 210, -1, false, '{}'::text[], '{}'::text[], null, null, null),
+  ('CY-IFRS-SME-BS', 'LNC-DTL', 'LNC', 'Deferred tax liability', '{}'::jsonb, 220, -1, false, '{}'::text[], '{}'::text[], null, null, null),
+  ('CY-IFRS-SME-BS', 'LNC-PROV', 'LNC', 'Provisions', '{}'::jsonb, 230, -1, false, '{}'::text[], '{}'::text[], null, null, null),
+  ('CY-IFRS-SME-BS', 'LNC', null, 'Non-current liabilities', '{}'::jsonb, 240, 1, true, array['LNC-BOR', 'LNC-DTL', 'LNC-PROV']::text[], '{}'::text[], null, null, null),
+  ('CY-IFRS-SME-BS', 'LC-BOR', 'LC', 'Borrowings', '{}'::jsonb, 250, -1, false, '{}'::text[], '{}'::text[], null, null, null),
+  ('CY-IFRS-SME-BS', 'LC-PAY', 'LC', 'Trade and other payables', '{}'::jsonb, 260, -1, false, '{}'::text[], '{}'::text[], null, null, null),
+  ('CY-IFRS-SME-BS', 'LC-TAX', 'LC', 'Tax, social insurance and other current liabilities', '{}'::jsonb, 270, -1, false, '{}'::text[], '{}'::text[], null, null, null),
+  ('CY-IFRS-SME-BS', 'LC', null, 'Current liabilities', '{}'::jsonb, 280, 1, true, array['LC-BOR', 'LC-PAY', 'LC-TAX']::text[], '{}'::text[], null, null, null),
+  ('CY-IFRS-SME-BS', 'L-TOT', null, 'Total liabilities', '{}'::jsonb, 290, 1, true, array['LNC', 'LC']::text[], '{}'::text[], null, null, null),
+  ('CY-IFRS-SME-BS', 'EL-TOT', null, 'Total equity and liabilities', '{}'::jsonb, 300, 1, true, array['E', 'L-TOT']::text[], '{}'::text[], null, null, null),
+  ('CY-IFRS-SME-IS', 'REV', null, 'Revenue', '{}'::jsonb, 10, -1, false, '{}'::text[], '{}'::text[], null, null, null),
+  ('CY-IFRS-SME-IS', 'RET', null, 'Sales returns, allowances and discounts', '{}'::jsonb, 20, 1, false, '{}'::text[], '{}'::text[], null, null, null),
+  ('CY-IFRS-SME-IS', 'NETREV', null, 'Net revenue', '{}'::jsonb, 30, 1, true, array['REV']::text[], array['RET']::text[], null, null, null),
+  ('CY-IFRS-SME-IS', 'COST', null, 'Cost of sales', '{}'::jsonb, 40, 1, false, '{}'::text[], '{}'::text[], null, null, null),
+  ('CY-IFRS-SME-IS', 'GROSS', null, 'Gross profit', '{}'::jsonb, 50, 1, true, array['NETREV']::text[], array['COST']::text[], null, null, null),
+  ('CY-IFRS-SME-IS', 'OTHINC', null, 'Other operating income', '{}'::jsonb, 60, -1, false, '{}'::text[], '{}'::text[], null, null, null),
+  ('CY-IFRS-SME-IS', 'DIST', null, 'Distribution costs', '{}'::jsonb, 70, 1, false, '{}'::text[], '{}'::text[], null, null, null),
+  ('CY-IFRS-SME-IS', 'ADMIN', null, 'Administrative expenses', '{}'::jsonb, 80, 1, false, '{}'::text[], '{}'::text[], null, null, null),
+  ('CY-IFRS-SME-IS', 'DEPR', null, 'Depreciation and amortisation', '{}'::jsonb, 90, 1, false, '{}'::text[], '{}'::text[], null, null, null),
+  ('CY-IFRS-SME-IS', 'OPPROFIT', null, 'Operating profit', '{}'::jsonb, 100, 1, true, array['GROSS', 'OTHINC']::text[], array['DIST', 'ADMIN', 'DEPR']::text[], null, null, null),
+  ('CY-IFRS-SME-IS', 'FINCOST', null, 'Finance costs', '{}'::jsonb, 110, 1, false, '{}'::text[], '{}'::text[], null, null, null),
+  ('CY-IFRS-SME-IS', 'PBT', null, 'Profit before tax', '{}'::jsonb, 120, 1, true, array['OPPROFIT']::text[], array['FINCOST']::text[], null, null, null),
+  ('CY-IFRS-SME-IS', 'TAX', null, 'Income tax expense', '{}'::jsonb, 130, 1, false, '{}'::text[], '{}'::text[], null, null, null),
+  ('CY-IFRS-SME-IS', 'PROFIT', null, 'Profit for the year', '{}'::jsonb, 140, 1, true, array['PBT']::text[], array['TAX']::text[], null, null, null)
+on conflict (statement_code, code) do update set
+  parent_code     = excluded.parent_code,
+  name            = excluded.name,
+  name_i18n       = excluded.name_i18n,
+  sequence        = excluded.sequence,
+  sign            = excluded.sign,
+  is_total        = excluded.is_total,
+  plus_lines      = excluded.plus_lines,
+  minus_lines     = excluded.minus_lines,
+  xbrl_element    = excluded.xbrl_element,
+  legal_reference = excluded.legal_reference,
+  source_key      = excluded.source_key;
+
+insert into statement_line_rules
+  (statement_code, line_code, sequence, rule_kind, code_from, code_to,
+   account_type, balance_side)
+select v.statement_code, v.line_code, v.sequence, v.rule_kind, v.code_from,
+       v.code_to, v.account_type::account_type, v.balance_side
+  from (values
+    ('CY-IFRS-SME-BS', 'NC-INT', 10, 'code_range', '0010', '0030', null, 'any'),
+    ('CY-IFRS-SME-BS', 'NC-INV', 10, 'account_code', '0100', null, null, 'any'),
+    ('CY-IFRS-SME-BS', 'NC-PPE', 10, 'code_range', '0110', '0180', null, 'any'),
+    ('CY-IFRS-SME-BS', 'NC-FIN', 10, 'code_range', '0200', '0240', null, 'any'),
+    ('CY-IFRS-SME-BS', 'NC-DTA', 10, 'account_code', '0250', null, null, 'any'),
+    ('CY-IFRS-SME-BS', 'C-INV', 10, 'code_range', '1000', '1030', null, 'any'),
+    ('CY-IFRS-SME-BS', 'C-REC', 10, 'code_range', '1100', '1130', null, 'any'),
+    ('CY-IFRS-SME-BS', 'C-REC', 20, 'account_code', '2400', null, null, 'debit'),
+    ('CY-IFRS-SME-BS', 'C-TAX', 10, 'code_range', '1140', '1170', null, 'any'),
+    ('CY-IFRS-SME-BS', 'C-PRE', 10, 'code_range', '1300', '1310', null, 'any'),
+    ('CY-IFRS-SME-BS', 'C-CASH', 10, 'code_range', '1500', '1550', null, 'any'),
+    ('CY-IFRS-SME-BS', 'E-SHARE', 10, 'account_code', '3300', null, null, 'any'),
+    ('CY-IFRS-SME-BS', 'E-PREM', 10, 'account_code', '3310', null, null, 'any'),
+    ('CY-IFRS-SME-BS', 'E-REVAL', 10, 'account_code', '3320', null, null, 'any'),
+    ('CY-IFRS-SME-BS', 'E-LEGAL', 10, 'account_code', '3330', null, null, 'any'),
+    ('CY-IFRS-SME-BS', 'E-OTH', 10, 'account_code', '3340', null, null, 'any'),
+    ('CY-IFRS-SME-BS', 'E-RET', 10, 'code_range', '3400', '3410', null, 'any'),
+    ('CY-IFRS-SME-BS', 'LNC-BOR', 10, 'code_range', '3000', '3020', null, 'any'),
+    ('CY-IFRS-SME-BS', 'LNC-DTL', 10, 'account_code', '3030', null, null, 'any'),
+    ('CY-IFRS-SME-BS', 'LNC-PROV', 10, 'code_range', '3100', '3110', null, 'any'),
+    ('CY-IFRS-SME-BS', 'LC-BOR', 10, 'code_range', '2000', '2030', null, 'any'),
+    ('CY-IFRS-SME-BS', 'LC-PAY', 10, 'code_range', '2040', '2110', null, 'any'),
+    ('CY-IFRS-SME-BS', 'LC-PAY', 20, 'account_code', '2400', null, null, 'credit'),
+    ('CY-IFRS-SME-BS', 'LC-TAX', 10, 'code_range', '2200', '2300', null, 'any'),
+    ('CY-IFRS-SME-IS', 'REV', 10, 'code_range', '4000', '4100', null, 'any'),
+    ('CY-IFRS-SME-IS', 'RET', 10, 'code_range', '4200', '4210', null, 'any'),
+    ('CY-IFRS-SME-IS', 'COST', 10, 'code_range', '5000', '5080', null, 'any'),
+    ('CY-IFRS-SME-IS', 'OTHINC', 10, 'code_range', '4300', '4350', null, 'any'),
+    ('CY-IFRS-SME-IS', 'DIST', 10, 'code_range', '6000', '6060', null, 'any'),
+    ('CY-IFRS-SME-IS', 'ADMIN', 10, 'code_range', '7000', '7320', null, 'any'),
+    ('CY-IFRS-SME-IS', 'DEPR', 10, 'code_range', '7400', '7460', null, 'any'),
+    ('CY-IFRS-SME-IS', 'FINCOST', 10, 'code_range', '8000', '8030', null, 'any'),
+    ('CY-IFRS-SME-IS', 'TAX', 10, 'code_range', '8100', '8130', null, 'any')
+  ) as v (statement_code, line_code, sequence, rule_kind, code_from, code_to,
+          account_type, balance_side)
+on conflict (statement_code, line_code, sequence) do update set
+  rule_kind    = excluded.rule_kind,
+  code_from    = excluded.code_from,
+  code_to      = excluded.code_to,
+  account_type = excluded.account_type,
+  balance_side = excluded.balance_side;
 
 insert into country_defaults
   (country, name, name_i18n, languages, currency_code, receivable_code, payable_code, suspense_code,

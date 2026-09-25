@@ -12,6 +12,7 @@
     { "code": "2026-Q2", "from": "2026-04-01", "to": "2026-06-30" },
     { "code": "2026-Q3", "from": "2026-07-01", "to": "2026-09-30" }
   ],
+  "statements": ["CY-IFRS-SME-BS", "CY-IFRS-SME-IS"],
   "contacts": [
     { "ref": "cust-cy", "name": "Ledra Retail Ltd", "type": "customer", "country": "CY" },
     { "ref": "cust-books", "name": "Makarios Bookshop Ltd", "type": "customer", "country": "CY" },

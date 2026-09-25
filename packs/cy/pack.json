@@ -128,6 +128,14 @@
         "url": "https://docs.peppol.eu/poacc/billing/3.0/codelist/eas/",
         "consulted_on": "2026-09-25",
         "kind": "standard"
+      },
+      {
+        "key": "ifrs-for-smes-standard",
+        "title": "The IFRS for SMEs Accounting Standard (2015 edition), section 4 — Statement of Financial Position, and section 5 — Statement of Comprehensive Income and Income Statement",
+        "publisher": "IFRS Foundation",
+        "url": "https://www.ifrs.org/issued-standards/ifrs-for-smes/",
+        "consulted_on": "2026-09-25",
+        "kind": "standard"
       }
     ]
   },
@@ -177,8 +185,11 @@
       "accounts": "accounts.csv",
       "default": true,
       "audience": "companies",
-      "statements": [],
-      "legal_reference": "Cyprus prescribes no chart of accounts and no statutory balance sheet or profit and loss format. The Companies Law, Cap. 113, s. 141A (as substituted) requires every company's accounts to give a true and fair view and to be prepared in accordance with International Financial Reporting Standards as adopted by the European Union under Regulation (EC) No 1606/2002; the Eighth Schedule to Cap. 113, which once set out a statutory balance sheet and profit and loss format transposing the Fourth Company Law Directive (78/660/EEC), was repealed in 2003 by s. 20 of Ν. 167(Ι)/2003 when that requirement was introduced, and IAS 1's own layout is deliberately not a fixed table of captions. This chart is therefore original, follows no published format, and its statements are the ones `packs/generic/` already carries for a chart that names none: a balance sheet and an income statement built from the eighteen account types alone.",
+      "statements": [
+        "CY-IFRS-SME-BS",
+        "CY-IFRS-SME-IS"
+      ],
+      "legal_reference": "Cyprus prescribes no chart of accounts and no statutory balance sheet or profit and loss format. The Companies Law, Cap. 113, s. 141A (as substituted) requires every company's accounts to give a true and fair view and to be prepared in accordance with International Financial Reporting Standards as adopted by the European Union under Regulation (EC) No 1606/2002; the Eighth Schedule to Cap. 113, which once set out a statutory balance sheet and profit and loss format transposing the Fourth Company Law Directive (78/660/EEC), was repealed in 2003 by s. 20 of Ν. 167(Ι)/2003 when that requirement was introduced, and IAS 1's own layout is deliberately not a fixed table of captions. This chart is therefore original, follows no published format, and instead of leaving every account to fall back onto `packs/generic/`, `statements.json` gives it a statement of financial position and a statement of comprehensive income of its own, built on the minimum line items of the IFRS for SMEs Accounting Standard, sections 4 and 5 — chosen as an illustrative layout precise enough to read a Cyprus chart against, not because Cyprus law requires or permits that Standard in place of full IFRS as adopted by the European Union.",
       "source": "companies-law-cap113"
     }
   ],

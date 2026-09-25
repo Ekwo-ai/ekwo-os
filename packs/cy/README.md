@@ -1,8 +1,9 @@
 # Cyprus
 
 Everything Cyprus adds to Ekwo, as data: a chart of accounts, the journals,
-the VAT rates and where each one posts, the boxes of the VAT return, and the
-sentences the law puts on an invoice. The format is
+the VAT rates and where each one posts, the boxes of the VAT return, the
+balance sheet and the income statement, and the sentences the law puts on an
+invoice. The format is
 [`docs/packs.md`](../../docs/packs.md); this file says where the content came
 from and which decisions it rests on, so that a Cyprus accountant reading the
 pack can disagree with a specific sentence rather than with the whole of it.
@@ -59,10 +60,11 @@ own site or against the return itself on
 | The temporary 5 % rate for accommodation, catering and passenger transport | Κ.Δ.Π. 268/2020 | `cylaw.org/KDP/data/2020_1_268.pdf` |
 | Payment terms and late payment | Ν. 123(Ι)/2012, transposing Directive 2011/7/EU | `cylaw.org/nomoi/enop/non-ind/2012_1_123` |
 | The absence of a legal chart of accounts, and of a statutory statement format | Companies Law, Cap. 113, s. 141A and the repealed Eighth Schedule | `companies.gov.cy` (official PDF translation) |
+| The layout of the balance sheet and the income statement | IFRS for SMEs Accounting Standard (2015), sections 4 and 5 | IFRS Foundation, `ifrs.org` |
 | Electronic invoicing | eInvoicing in Cyprus | European Commission, Digital Building Blocks |
 | The VAT return's boxes (unofficial) | VAT Definitive Guides, Issue 2 | Chelco VAT Ltd |
 
-## The chart of accounts, and why it falls back to the generic statements
+## The chart of accounts, and the statements built on it
 
 **Cyprus prescribes no chart of accounts and, since 2003, no statutory
 balance sheet or profit and loss format either.** The Companies Law, Cap.
@@ -75,17 +77,31 @@ Company Law Directive (78/660/EEC), in the same shape as Ireland's Schedule
 the IFRS requirement came in, and IAS 1's own layout is deliberately not a
 fixed table of captions the way a transposed Fourth Directive schedule is.
 
-So, unlike `packs/ie/` and `packs/gb/`, this pack's `charts[0].statements` is
-empty and carries no `statements.json` of its own: `ekwo pack check` and the
-engine fall back to `packs/generic/`, whose balance sheet and income
-statement are built from the eighteen account types alone rather than from
-any country's legal codes. Every account of `accounts.csv` carries one of
-those types and reaches a line of the generic statements; the 161 accounts
-themselves are original — there is nothing published to copy — and follow the
-four-digit convention this pack's Irish and British neighbours use: `0`
-non-current assets, `1` current assets, `2` current liabilities, `3`
-non-current liabilities and equity, `4` income, `5` cost of sales, `6`
-distribution costs, `7` administrative expenses, `8` finance costs and tax.
+The 161 accounts of `accounts.csv` are, for the same reason, original —
+there is nothing published to copy — and follow the four-digit convention
+this pack's Irish and British neighbours use: `0` non-current assets, `1`
+current assets, `2` current liabilities, `3` non-current liabilities and
+equity, `4` income, `5` cost of sales, `6` distribution costs, `7`
+administrative expenses, `8` finance costs and tax.
+
+**`statements.json` gives that chart a statement of financial position and a
+statement of comprehensive income of its own**, rather than leaving every
+account to fall back onto `packs/generic/`. Full IFRS as adopted by the EU
+prescribes no fixed table of captions, so there is no statutory list of line
+items to transcribe the way `packs/ie/` transcribes Schedule 3A; what this
+pack transcribes instead is the **minimum line items of the IFRS for SMEs
+Accounting Standard**, sections 4.2 and 5.5 — a real IFRS text with a
+concrete list of captions, used here as an illustrative layout precise
+enough to group a chart against, and **not** because Cyprus law requires or
+even permits a company to report under that Standard in place of full IFRS.
+A reviewer should read `CY-IFRS-SME-BS` and `CY-IFRS-SME-IS` as this pack's
+own choice of presentation, not as a second statutory format beside the one
+that was repealed. Both statements present a single statement of
+comprehensive income (section 5.3), because none of this pack's accounts
+carries an item of other comprehensive income to show apart from profit or
+loss. `E-LEGAL` reads the non-distributable reserve of s. 55 of Cap. 113; the
+33 remaining lines carry no Cyprus-specific citation of their own, only the
+IFRS for SMEs line item they transcribe.
 
 **Two VAT posting accounts and two settlement accounts**, as the framework's
 own rule for a periodic return asks: `2200` output tax and `1140` input tax
@@ -253,9 +269,8 @@ Ekwo writes none.
    pack did not find changes which box a European one belongs in.
 4. **The non-deductible input tax gap.** A Cyprus accountant will know at
    once which purchases this pack wrongly deducts in full.
-5. **The chart's fall-back to `packs/generic/`**, and whether an IFRS
-   statement of financial position built from eighteen account types, with no
-   Cyprus-specific line at all, is what a reviewer would want a company here
-   to see — or whether it is worth someone's time to build a chart-specific
-   `statements.json` on a particular set of IFRS captions after all, even
-   though no statute requires one.
+5. **The choice of the IFRS for SMEs line items** for `statements.json`,
+   built on this pack's own chart rather than falling back to
+   `packs/generic/`'s eighteen account types — and whether a Cyprus
+   accountant would group these accounts, or name these lines, differently
+   even though no statute prescribes either.

@@ -1,0 +1,427 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/statements",
+  "statements": [
+    {
+      "code": "CY-IFRS-SME-BS",
+      "kind": "balance_sheet",
+      "framework": "IFRS-SME",
+      "name": "Statement of financial position",
+      "legal_reference": "Companies Law, Cap. 113, s. 141A (as substituted) requires every company's accounts to be prepared in accordance with International Financial Reporting Standards as adopted by the European Union, which prescribe no fixed table of captions — the Eighth Schedule that once did was repealed in 2003 by s. 20 of Ν. 167(Ι)/2003. The lines below are the minimum line items of section 4.2 of the IFRS for SMEs Accounting Standard (2015), used here as an illustrative layout precise enough to read this chart against, and grouped onto the codes of `accounts.csv`, which are themselves original and not a published format.",
+      "source": "ifrs-for-smes-standard",
+      "lines": [
+        {
+          "code": "NC-INT",
+          "parent": "NC",
+          "name": "Intangible assets",
+          "sequence": 10,
+          "sign": 1,
+          "rules": [
+            { "kind": "code_range", "code_from": "0010", "code_to": "0030" }
+          ]
+        },
+        {
+          "code": "NC-INV",
+          "parent": "NC",
+          "name": "Investment property",
+          "sequence": 20,
+          "sign": 1,
+          "rules": [
+            { "kind": "account_code", "code_from": "0100" }
+          ]
+        },
+        {
+          "code": "NC-PPE",
+          "parent": "NC",
+          "name": "Property, plant and equipment",
+          "sequence": 30,
+          "sign": 1,
+          "rules": [
+            { "kind": "code_range", "code_from": "0110", "code_to": "0180" }
+          ]
+        },
+        {
+          "code": "NC-FIN",
+          "parent": "NC",
+          "name": "Investments and other non-current financial assets",
+          "sequence": 40,
+          "sign": 1,
+          "rules": [
+            { "kind": "code_range", "code_from": "0200", "code_to": "0240" }
+          ]
+        },
+        {
+          "code": "NC-DTA",
+          "parent": "NC",
+          "name": "Deferred tax asset",
+          "sequence": 50,
+          "sign": 1,
+          "rules": [
+            { "kind": "account_code", "code_from": "0250" }
+          ]
+        },
+        {
+          "code": "NC",
+          "name": "Non-current assets",
+          "sequence": 60,
+          "is_total": true,
+          "plus": ["NC-INT", "NC-INV", "NC-PPE", "NC-FIN", "NC-DTA"]
+        },
+        {
+          "code": "C-INV",
+          "parent": "C",
+          "name": "Inventories",
+          "sequence": 70,
+          "sign": 1,
+          "rules": [
+            { "kind": "code_range", "code_from": "1000", "code_to": "1030" }
+          ]
+        },
+        {
+          "code": "C-REC",
+          "parent": "C",
+          "name": "Trade and other receivables",
+          "sequence": 80,
+          "sign": 1,
+          "rules": [
+            { "kind": "code_range", "code_from": "1100", "code_to": "1130", "sequence": 10 },
+            { "kind": "account_code", "code_from": "2400", "side": "debit", "sequence": 20 }
+          ]
+        },
+        {
+          "code": "C-TAX",
+          "parent": "C",
+          "name": "Current tax assets and other recoverable amounts",
+          "sequence": 90,
+          "sign": 1,
+          "rules": [
+            { "kind": "code_range", "code_from": "1140", "code_to": "1170" }
+          ]
+        },
+        {
+          "code": "C-PRE",
+          "parent": "C",
+          "name": "Prepayments and accrued income",
+          "sequence": 100,
+          "sign": 1,
+          "rules": [
+            { "kind": "code_range", "code_from": "1300", "code_to": "1310" }
+          ]
+        },
+        {
+          "code": "C-CASH",
+          "parent": "C",
+          "name": "Cash and cash equivalents",
+          "sequence": 110,
+          "sign": 1,
+          "rules": [
+            { "kind": "code_range", "code_from": "1500", "code_to": "1550" }
+          ]
+        },
+        {
+          "code": "C",
+          "name": "Current assets",
+          "sequence": 120,
+          "is_total": true,
+          "plus": ["C-INV", "C-REC", "C-TAX", "C-PRE", "C-CASH"]
+        },
+        {
+          "code": "A-TOT",
+          "name": "Total assets",
+          "sequence": 130,
+          "is_total": true,
+          "plus": ["NC", "C"]
+        },
+        {
+          "code": "E-SHARE",
+          "parent": "E",
+          "name": "Share capital",
+          "sequence": 140,
+          "sign": -1,
+          "rules": [
+            { "kind": "account_code", "code_from": "3300" }
+          ]
+        },
+        {
+          "code": "E-PREM",
+          "parent": "E",
+          "name": "Share premium",
+          "sequence": 150,
+          "sign": -1,
+          "rules": [
+            { "kind": "account_code", "code_from": "3310" }
+          ]
+        },
+        {
+          "code": "E-REVAL",
+          "parent": "E",
+          "name": "Revaluation reserve",
+          "sequence": 160,
+          "sign": -1,
+          "rules": [
+            { "kind": "account_code", "code_from": "3320" }
+          ]
+        },
+        {
+          "code": "E-LEGAL",
+          "parent": "E",
+          "name": "Legal reserve",
+          "sequence": 170,
+          "sign": -1,
+          "legal_reference": "Companies Law, Cap. 113, s. 55 — the non-distributable reserve a company keeps against a reduction of capital.",
+          "source": "companies-law-cap113",
+          "rules": [
+            { "kind": "account_code", "code_from": "3330" }
+          ]
+        },
+        {
+          "code": "E-OTH",
+          "parent": "E",
+          "name": "Other reserves",
+          "sequence": 180,
+          "sign": -1,
+          "rules": [
+            { "kind": "account_code", "code_from": "3340" }
+          ]
+        },
+        {
+          "code": "E-RET",
+          "parent": "E",
+          "name": "Retained earnings",
+          "sequence": 190,
+          "sign": -1,
+          "legal_reference": "`defaults.closing_style` is `retained_earnings`: the result of a closed year is carried straight onto `3400`, and this line reads it there beside `3410`, exactly as `packs/gb/`'s own `K.V` does for the same closing style.",
+          "rules": [
+            { "kind": "code_range", "code_from": "3400", "code_to": "3410" }
+          ]
+        },
+        {
+          "code": "E",
+          "name": "Total equity",
+          "sequence": 200,
+          "is_total": true,
+          "plus": ["E-SHARE", "E-PREM", "E-REVAL", "E-LEGAL", "E-OTH", "E-RET"]
+        },
+        {
+          "code": "LNC-BOR",
+          "parent": "LNC",
+          "name": "Borrowings and lease liabilities",
+          "sequence": 210,
+          "sign": -1,
+          "rules": [
+            { "kind": "code_range", "code_from": "3000", "code_to": "3020" }
+          ]
+        },
+        {
+          "code": "LNC-DTL",
+          "parent": "LNC",
+          "name": "Deferred tax liability",
+          "sequence": 220,
+          "sign": -1,
+          "rules": [
+            { "kind": "account_code", "code_from": "3030" }
+          ]
+        },
+        {
+          "code": "LNC-PROV",
+          "parent": "LNC",
+          "name": "Provisions",
+          "sequence": 230,
+          "sign": -1,
+          "rules": [
+            { "kind": "code_range", "code_from": "3100", "code_to": "3110" }
+          ]
+        },
+        {
+          "code": "LNC",
+          "name": "Non-current liabilities",
+          "sequence": 240,
+          "is_total": true,
+          "plus": ["LNC-BOR", "LNC-DTL", "LNC-PROV"]
+        },
+        {
+          "code": "LC-BOR",
+          "parent": "LC",
+          "name": "Borrowings",
+          "sequence": 250,
+          "sign": -1,
+          "rules": [
+            { "kind": "code_range", "code_from": "2000", "code_to": "2030" }
+          ]
+        },
+        {
+          "code": "LC-PAY",
+          "parent": "LC",
+          "name": "Trade and other payables",
+          "sequence": 260,
+          "sign": -1,
+          "rules": [
+            { "kind": "code_range", "code_from": "2040", "code_to": "2110", "sequence": 10 },
+            { "kind": "account_code", "code_from": "2400", "side": "credit", "sequence": 20 }
+          ]
+        },
+        {
+          "code": "LC-TAX",
+          "parent": "LC",
+          "name": "Tax, social insurance and other current liabilities",
+          "sequence": 270,
+          "sign": -1,
+          "rules": [
+            { "kind": "code_range", "code_from": "2200", "code_to": "2300" }
+          ]
+        },
+        {
+          "code": "LC",
+          "name": "Current liabilities",
+          "sequence": 280,
+          "is_total": true,
+          "plus": ["LC-BOR", "LC-PAY", "LC-TAX"]
+        },
+        {
+          "code": "L-TOT",
+          "name": "Total liabilities",
+          "sequence": 290,
+          "is_total": true,
+          "plus": ["LNC", "LC"]
+        },
+        {
+          "code": "EL-TOT",
+          "name": "Total equity and liabilities",
+          "sequence": 300,
+          "is_total": true,
+          "plus": ["E", "L-TOT"]
+        }
+      ]
+    },
+    {
+      "code": "CY-IFRS-SME-IS",
+      "kind": "income_statement",
+      "framework": "IFRS-SME",
+      "name": "Statement of comprehensive income (single statement)",
+      "legal_reference": "IFRS for SMEs Accounting Standard (2015), section 5.3: an entity presents its total comprehensive income for a period in a single statement of comprehensive income where, as here, it has no item of other comprehensive income to show separately from profit or loss. The lines below are the minimum line items of section 5.5, grouped onto the codes of `accounts.csv`.",
+      "source": "ifrs-for-smes-standard",
+      "lines": [
+        {
+          "code": "REV",
+          "name": "Revenue",
+          "sequence": 10,
+          "sign": -1,
+          "rules": [
+            { "kind": "code_range", "code_from": "4000", "code_to": "4100" }
+          ]
+        },
+        {
+          "code": "RET",
+          "name": "Sales returns, allowances and discounts",
+          "sequence": 20,
+          "sign": 1,
+          "rules": [
+            { "kind": "code_range", "code_from": "4200", "code_to": "4210" }
+          ]
+        },
+        {
+          "code": "NETREV",
+          "name": "Net revenue",
+          "sequence": 30,
+          "is_total": true,
+          "plus": ["REV"],
+          "minus": ["RET"]
+        },
+        {
+          "code": "COST",
+          "name": "Cost of sales",
+          "sequence": 40,
+          "sign": 1,
+          "rules": [
+            { "kind": "code_range", "code_from": "5000", "code_to": "5080" }
+          ]
+        },
+        {
+          "code": "GROSS",
+          "name": "Gross profit",
+          "sequence": 50,
+          "is_total": true,
+          "plus": ["NETREV"],
+          "minus": ["COST"]
+        },
+        {
+          "code": "OTHINC",
+          "name": "Other operating income",
+          "sequence": 60,
+          "sign": -1,
+          "rules": [
+            { "kind": "code_range", "code_from": "4300", "code_to": "4350" }
+          ]
+        },
+        {
+          "code": "DIST",
+          "name": "Distribution costs",
+          "sequence": 70,
+          "sign": 1,
+          "rules": [
+            { "kind": "code_range", "code_from": "6000", "code_to": "6060" }
+          ]
+        },
+        {
+          "code": "ADMIN",
+          "name": "Administrative expenses",
+          "sequence": 80,
+          "sign": 1,
+          "rules": [
+            { "kind": "code_range", "code_from": "7000", "code_to": "7320" }
+          ]
+        },
+        {
+          "code": "DEPR",
+          "name": "Depreciation and amortisation",
+          "sequence": 90,
+          "sign": 1,
+          "rules": [
+            { "kind": "code_range", "code_from": "7400", "code_to": "7460" }
+          ]
+        },
+        {
+          "code": "OPPROFIT",
+          "name": "Operating profit",
+          "sequence": 100,
+          "is_total": true,
+          "plus": ["GROSS", "OTHINC"],
+          "minus": ["DIST", "ADMIN", "DEPR"]
+        },
+        {
+          "code": "FINCOST",
+          "name": "Finance costs",
+          "sequence": 110,
+          "sign": 1,
+          "rules": [
+            { "kind": "code_range", "code_from": "8000", "code_to": "8030" }
+          ]
+        },
+        {
+          "code": "PBT",
+          "name": "Profit before tax",
+          "sequence": 120,
+          "is_total": true,
+          "plus": ["OPPROFIT"],
+          "minus": ["FINCOST"]
+        },
+        {
+          "code": "TAX",
+          "name": "Income tax expense",
+          "sequence": 130,
+          "sign": 1,
+          "rules": [
+            { "kind": "code_range", "code_from": "8100", "code_to": "8130" }
+          ]
+        },
+        {
+          "code": "PROFIT",
+          "name": "Profit for the year",
+          "sequence": 140,
+          "is_total": true,
+          "plus": ["PBT"],
+          "minus": ["TAX"]
+        }
+      ]
+    }
+  ]
+}
