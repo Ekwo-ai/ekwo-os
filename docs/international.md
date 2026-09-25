@@ -4277,3 +4277,36 @@ for most filers, since a quarterly or half-yearly cadence is the ordinary
 case and not the exception. *Fix*: unchanged from "From Australia" — a
 deadline per cadence, which Spain's form 303 and Denmark's momsangivelse
 would both use.
+
+## From Norway
+
+`packs/no/`, `community`, seed 66. Outside the European Union and outside the
+common system of VAT despite being inside the European Economic Area — the
+EEA Agreement's annexes do not extend the VAT directives, so Norway's own
+merverdiavgiftsloven owes nothing to Directive 2006/112/EC and has no
+intra-Community mechanic of any kind. One gap, not patched.
+
+**A deadline counted in months and days from the end of a period longer than
+one month, with a one-off calendar exception the text states by name.**
+Skatteforvaltningsforskriften § 8-3-10 gives the ordinary rule in these
+words: "Leveringsfrist for skattemelding er en måned og ti dager etter
+utløpet av hver skattleggingsperiode" — one month and ten days after the
+period ends. Norway's own skattleggingsperiode for VAT is two calendar
+months (January–February, March–April, and so on), so unlike Switzerland's
+sixty days from a quarter — already recorded above as a gap this format
+cannot close — Norway's rule adds a fixed span of a *month and days* to a
+period that is itself two months long, landing the deadline in the *second*
+month after the period ends (a period ending 28 February is due 10 April,
+not 10 March). `tax_report.json`'s `deadline` is one of three shapes, and
+all three anchor on "the month that follows the period" — none can express
+a delay that skips a whole extra month before counting the days. The
+regulation then states a further, one-off exception by name: the third
+period of the year (May–June) is due 31 August, not the 10 August the
+one-month-and-ten-days rule would otherwise give, because the ordinary
+deadline would fall in the middle of the Norwegian summer holiday period.
+No shape of `deadline` has room for a named exception to itself on one
+period of six. `packs/no/` declares no `deadline` and states both the
+general rule and the exception in prose, in `tax_report.json`'s
+`legal_reference` and in `packs/no/README.md`, for whoever extends the
+vocabulary with a "months and days" rule next and has to decide, at the same
+time, how a rule states an exception to itself.

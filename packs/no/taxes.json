@@ -1,0 +1,214 @@
+[
+  {
+    "code": "NO-S-25",
+    "name": "Salg, alminnelig sats 25 %",
+    "rate": 25,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "legal_reference": "Merverdiavgiftsloven §§ 5-1 og 5-2 — den alminnelige satsen gjelder all avgiftspliktig omsetning som ikke er nevnt i lovens kapittel 5 for øvrig. Satsen selv er fastsatt i Stortingsvedtak om merverdiavgift for 2026, § 2: «Merverdiavgift beregnes med 25 pst. av avgiftspliktig omsetning».",
+    "source": "stortingsvedtak-mva-2026",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "3" },
+        { "type": "tax", "account": "2620", "box": "3" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "3", "box_factor": -100 },
+        { "type": "tax", "account": "2620", "box": "3", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 10
+  },
+  {
+    "code": "NO-S-15",
+    "name": "Salg, redusert sats 15 % (næringsmidler)",
+    "rate": 15,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "legal_reference": "Merverdiavgiftsloven § 5-2 første ledd — «Det skal beregnes merverdiavgift med redusert sats ved omsetning … av næringsmidler». Satsen selv er fastsatt i Stortingsvedtak om merverdiavgift for 2026, § 3: «Merverdiavgift beregnes med 15 pst. av omsetning … av næringsmidler».",
+    "source": "stortingsvedtak-mva-2026",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "31" },
+        { "type": "tax", "account": "2621", "box": "31" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "31", "box_factor": -100 },
+        { "type": "tax", "account": "2621", "box": "31", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 20
+  },
+  {
+    "code": "NO-S-12",
+    "name": "Salg, lav sats 12 % (persontransport, overnatting, m.m.)",
+    "rate": 12,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "legal_reference": "Merverdiavgiftsloven §§ 5-3 (persontransport), 5-5 (overnatting), 5-6 (kringkasting/kino), 5-9 (museer), 5-10 (fornøyelsesparker) og 5-11 (idrettsarrangement). Satsen selv er fastsatt i Stortingsvedtak om merverdiavgift for 2026, § 4: «Merverdiavgift beregnes med 12 pst. av omsetning … av tjenester».",
+    "source": "stortingsvedtak-mva-2026",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "33" },
+        { "type": "tax", "account": "2622", "box": "33" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "33", "box_factor": -100 },
+        { "type": "tax", "account": "2622", "box": "33", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 30
+  },
+  {
+    "code": "NO-S-0",
+    "name": "Salg, fritatt for merverdiavgift (nullsats innenlands — bøker)",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "legal_reference": "Merverdiavgiftsloven § 6-4 — omsetning av bøker, herunder e-bøker, er fritatt for merverdiavgift, med fradragsrett for inngående avgift etter § 8-1 (nullsats, ikke unntak). Samme lovs kapittel 6 fritar på tilsvarende vis aviser (§ 6-1) og elbiler til og med 300 000 kroner per kjøretøy (§ 6-8, endret ved lov 22. desember 2025 nr. 121 med virkning fra 1. januar 2026, som senket beløpsgrensen fra 500 000 til 300 000 kroner).",
+    "source": "mval",
+    "vat_category": "Z",
+    "postings": {
+      "invoice": [{ "type": "base", "box": "5" }],
+      "credit_note": [{ "type": "base", "box": "5", "box_factor": -100 }]
+    },
+    "kind": "vat",
+    "sequence": 40
+  },
+  {
+    "code": "NO-S-EXPORT",
+    "name": "Utførsel av varer og tjenester (eksport)",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2026-01-01",
+    "legal_reference": "Merverdiavgiftsloven §§ 6-21 og 6-22 — omsetning av varer og av tjenester ut av merverdiavgiftsområdet er fritatt for merverdiavgift, med fradragsrett for inngående avgift etter § 8-1.",
+    "source": "mval",
+    "vat_category": "G",
+    "postings": {
+      "invoice": [{ "type": "base", "box": "52" }],
+      "credit_note": [{ "type": "base", "box": "52", "box_factor": -100 }]
+    },
+    "kind": "vat",
+    "sequence": 50
+  },
+  {
+    "code": "NO-S-EXEMPT",
+    "name": "Salg av finansielle tjenester (unntatt fra loven)",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2026-01-01",
+    "legal_reference": "Merverdiavgiftsloven § 3-6 — omsetning og formidling av finansielle tjenester, herunder forsikringstjenester, långivning og annen finansiering, er unntatt fra loven, uten fradragsrett for inngående avgift. Denne omsetningen svarer til de sju bokstavene a til g i § 3-6, som ikke er transkribert enkeltvis her.",
+    "source": "mval",
+    "vat_category": "E",
+    "postings": {
+      "invoice": [{ "type": "base" }],
+      "credit_note": [{ "type": "base", "box_factor": -100 }]
+    },
+    "kind": "vat",
+    "sequence": 60
+  },
+  {
+    "code": "NO-P-25",
+    "name": "Innenlands kjøp, fradragsberettiget, alminnelig sats 25 %",
+    "rate": 25,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "legal_reference": "Merverdiavgiftsloven § 8-1 — fradragsrett for inngående merverdiavgift på varer og tjenester til bruk i den registrerte virksomheten, ved kjøp avgiftsberegnet med alminnelig sats etter § 5-1.",
+    "source": "mval",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "1" },
+        { "type": "tax", "account": "1540", "box": "1" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "1", "box_factor": -100 },
+        { "type": "tax", "account": "1540", "box": "1", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 70
+  },
+  {
+    "code": "NO-P-12",
+    "name": "Innenlands kjøp, fradragsberettiget, lav sats 12 %",
+    "rate": 12,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "legal_reference": "Merverdiavgiftsloven § 8-1, ved kjøp avgiftsberegnet med lav sats etter § 5-3, § 5-5, § 5-6, § 5-9, § 5-10 eller § 5-11.",
+    "source": "mval",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "13" },
+        { "type": "tax", "account": "1541", "box": "13" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "13", "box_factor": -100 },
+        { "type": "tax", "account": "1541", "box": "13", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 80
+  },
+  {
+    "code": "NO-P-IMPORT-25",
+    "name": "Innførsel av varer, alminnelig sats 25 %",
+    "rate": 25,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2026-01-01",
+    "legal_reference": "Merverdiavgiftsloven § 11-1 tredje ledd — mottakeren av varen er ansvarlig for å beregne og betale merverdiavgift ved innførsel, i mva-meldingen for den terminen varen innføres, i stedet for å betale avgiften til Tolletaten ved grensepassering (ordningen fra 1. januar 2017). Fradragsretten for det samme beløpet følger av § 8-1. Denne pakken bokfører derfor to motstående linjer for samme beløp — fradraget på kode 14 og den selvberegnede avgiften på kode 3 — på samme måte som packs/gb bokfører sin «postponed VAT accounting», siden SAF-T-kodelisten ikke har noen egen utgående kode for innførsel (se README.md).",
+    "source": "mval",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "21" },
+        { "type": "tax", "account": "1542", "box": "14" },
+        { "type": "tax", "factor": -100, "account": "2645", "box": "3" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "21", "box_factor": -100 },
+        { "type": "tax", "account": "1542", "box": "14", "box_factor": -100 },
+        { "type": "tax", "factor": -100, "account": "2645", "box": "3", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 90
+  },
+  {
+    "code": "NO-P-FOREIGN-25",
+    "name": "Fjernleverbar tjeneste kjøpt fra utlandet, alminnelig sats 25 % (snudd avregning)",
+    "rate": 25,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2026-01-01",
+    "legal_reference": "Merverdiavgiftsloven § 3-30 første ledd — kjøp av en fjernleverbar tjeneste fra en tilbyder som ikke har forretningssted eller hjemsted i merverdiavgiftsområdet, er avgiftspliktig når mottakeren er hjemmehørende i merverdiavgiftsområdet og tjenesten er avgiftspliktig ved omsetning her (snudd avregning). Fradragsretten for det samme beløpet følger av § 8-1. Samme bokføringsløsning som NO-P-IMPORT-25, av samme grunn: SAF-T-kodelisten har ingen egen utgående kode for denne selvberegnede avgiften, og den selvpålagte avgiften bokføres derfor på den alminnelige utgående koden 3.",
+    "source": "mval",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "86" },
+        { "type": "tax", "account": "1543", "box": "86" },
+        { "type": "tax", "factor": -100, "account": "2645", "box": "3" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "86", "box_factor": -100 },
+        { "type": "tax", "account": "1543", "box": "86", "box_factor": -100 },
+        { "type": "tax", "factor": -100, "account": "2645", "box": "3", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 100
+  }
+]

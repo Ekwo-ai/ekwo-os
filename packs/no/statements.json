@@ -1,0 +1,213 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/statements",
+  "statements": [
+    {
+      "code": "NO-RSKL-BS",
+      "kind": "balance_sheet",
+      "framework": "NO-RSKL",
+      "name": "Balanse etter regnskapsloven § 6-2",
+      "legal_reference": "Regnskapsloven (LOV-1998-07-17-56) § 6-2 første ledd gir oppstillingsplanen for balansen: eiendeler inndelt i A. Anleggsmidler (I. Immaterielle eiendeler, II. Varige driftsmidler, III. Finansielle anleggsmidler) og B. Omløpsmidler (I. Varer, II. Fordringer, III. Investeringer, IV. Bankinnskudd, kontanter og lignende), og egenkapital og gjeld inndelt i C. Egenkapital (I. Innskutt egenkapital, II. Opptjent egenkapital) og D. Gjeld (I. Avsetning for forpliktelser, II. Annen langsiktig gjeld, III. Kortsiktig gjeld). Denne planen er felles for alle regnskapspliktige, jf. NRS 8 God regnskapsskikk for små foretak, kapittel 3.2.1, som bekrefter at små foretak benytter samme oppstillingsplan som øvrige foretak. Linjene under er gruppert på romertallsnivå (I-IV): § 6-2 tallfester underposter innenfor hver romertallsgruppe, men NRS 8 kapittel 3, første avsnitt, tillater sammenslåing av poster når det gjør regnskapet mer oversiktlig, som er den forenklingen et lite foretaks kontoplan vanligvis bruker.",
+      "source": "regnskapsl",
+      "lines": [
+        { "code": "EIENDELER", "name": "Sum eiendeler", "sequence": 10, "is_total": true, "plus": ["ANLEGGSMIDLER", "OMLOPSMIDLER"] },
+        {
+          "code": "ANLEGGSMIDLER", "parent": "EIENDELER", "name": "A. Anleggsmidler", "sequence": 20, "is_total": true,
+          "plus": ["A.I", "A.II", "A.III"], "legal_reference": "Regnskapsloven § 6-2 første ledd, post A", "source": "regnskapsl"
+        },
+        {
+          "code": "A.I", "parent": "ANLEGGSMIDLER", "name": "I. Immaterielle eiendeler", "sequence": 30, "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "1000", "code_to": "1099" }],
+          "legal_reference": "Regnskapsloven § 6-2 første ledd, post A.I", "source": "regnskapsl"
+        },
+        {
+          "code": "A.II", "parent": "ANLEGGSMIDLER", "name": "II. Varige driftsmidler", "sequence": 40, "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "1100", "code_to": "1299" }],
+          "legal_reference": "Regnskapsloven § 6-2 første ledd, post A.II", "source": "regnskapsl"
+        },
+        {
+          "code": "A.III", "parent": "ANLEGGSMIDLER", "name": "III. Finansielle anleggsmidler", "sequence": 50, "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "1300", "code_to": "1399" }],
+          "legal_reference": "Regnskapsloven § 6-2 første ledd, post A.III", "source": "regnskapsl"
+        },
+        {
+          "code": "OMLOPSMIDLER", "parent": "EIENDELER", "name": "B. Omløpsmidler", "sequence": 60, "is_total": true,
+          "plus": ["B.I", "B.II", "B.III", "B.IV"], "legal_reference": "Regnskapsloven § 6-2 første ledd, post B", "source": "regnskapsl"
+        },
+        {
+          "code": "B.I", "parent": "OMLOPSMIDLER", "name": "I. Varer", "sequence": 70, "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "1400", "code_to": "1499" }],
+          "legal_reference": "Regnskapsloven § 6-2 første ledd, post B.I", "source": "regnskapsl"
+        },
+        {
+          "code": "B.II", "parent": "OMLOPSMIDLER", "name": "II. Fordringer", "sequence": 80, "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "1500", "code_to": "1599" }],
+          "legal_reference": "Regnskapsloven § 6-2 første ledd, post B.II — omfatter kundefordringer, andre fordringer og inngående/til gode merverdiavgift", "source": "regnskapsl"
+        },
+        {
+          "code": "B.III", "parent": "OMLOPSMIDLER", "name": "III. Investeringer", "sequence": 90, "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "1600", "code_to": "1699" }],
+          "legal_reference": "Regnskapsloven § 6-2 første ledd, post B.III", "source": "regnskapsl"
+        },
+        {
+          "code": "B.IV", "parent": "OMLOPSMIDLER", "name": "IV. Bankinnskudd, kontanter og lignende", "sequence": 100, "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "1900", "code_to": "1999" }],
+          "legal_reference": "Regnskapsloven § 6-2 første ledd, post B.IV", "source": "regnskapsl"
+        },
+        { "code": "EK_OG_GJELD", "name": "Sum egenkapital og gjeld", "sequence": 110, "is_total": true, "plus": ["EGENKAPITAL", "GJELD"] },
+        {
+          "code": "EGENKAPITAL", "parent": "EK_OG_GJELD", "name": "C. Egenkapital", "sequence": 120, "is_total": true,
+          "plus": ["C.I", "C.II"], "legal_reference": "Regnskapsloven § 6-2 første ledd, post C", "source": "regnskapsl"
+        },
+        {
+          "code": "C.I", "parent": "EGENKAPITAL", "name": "I. Innskutt egenkapital", "sequence": 130, "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "2000", "code_to": "2099" }],
+          "legal_reference": "Regnskapsloven § 6-2 første ledd, post C.I", "source": "regnskapsl"
+        },
+        {
+          "code": "C.II", "parent": "EGENKAPITAL", "name": "II. Opptjent egenkapital", "sequence": 140, "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "2100", "code_to": "2199" }],
+          "legal_reference": "Regnskapsloven § 6-2 første ledd, post C.II — regnskapsloven kjenner ingen egen post for årets resultat på balansen; resultatet føres direkte mot annen egenkapital", "source": "regnskapsl"
+        },
+        {
+          "code": "GJELD", "parent": "EK_OG_GJELD", "name": "D. Gjeld", "sequence": 150, "is_total": true,
+          "plus": ["D.I", "D.II", "D.III"], "legal_reference": "Regnskapsloven § 6-2 første ledd, post D", "source": "regnskapsl"
+        },
+        {
+          "code": "D.I", "parent": "GJELD", "name": "I. Avsetning for forpliktelser", "sequence": 160, "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "2200", "code_to": "2299" }],
+          "legal_reference": "Regnskapsloven § 6-2 første ledd, post D.I", "source": "regnskapsl"
+        },
+        {
+          "code": "D.II", "parent": "GJELD", "name": "II. Annen langsiktig gjeld", "sequence": 170, "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "2300", "code_to": "2399" }],
+          "legal_reference": "Regnskapsloven § 6-2 første ledd, post D.II", "source": "regnskapsl"
+        },
+        {
+          "code": "D.III", "parent": "GJELD", "name": "III. Kortsiktig gjeld", "sequence": 180, "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "2400", "code_to": "2799" }],
+          "legal_reference": "Regnskapsloven § 6-2 første ledd, post D.III — omfatter leverandørgjeld, betalbar skatt, skyldige offentlige avgifter (herunder utgående merverdiavgift og oppgjørskonto merverdiavgift) og annen kortsiktig gjeld", "source": "regnskapsl"
+        }
+      ]
+    },
+    {
+      "code": "NO-RSKL-IS",
+      "kind": "income_statement",
+      "framework": "NO-RSKL",
+      "name": "Resultatregnskap etter art, regnskapsloven § 6-1",
+      "legal_reference": "Regnskapsloven § 6-1 gir oppstillingsplanen for resultatregnskapet etter art, en flat, nummerert liste fra post 1 til post 24. Postene 22 (ekstraordinære inntekter og kostnader) og 23 (skattekostnad på ekstraordinære poster) bortfaller for regnskapsår påbegynt 1. juli 2021 eller senere, jf. Norsk RegnskapsStandard 8 God regnskapsskikk for små foretak (Norsk RegnskapsStiftelse, januar 2022), kapittel 3.1.1, note 4 og 6, som gjengir lovens någjeldende ordlyd etter denne endringen; denne pakken transkriberer derfor bare postene 1-21 og 24, og det er ingen linje for 22/23.",
+      "source": "nrs8",
+      "lines": [
+        {
+          "code": "1", "name": "Salgsinntekt", "sequence": 10, "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "3000", "code_to": "3059" }],
+          "legal_reference": "Regnskapsloven § 6-1 nr. 1", "source": "regnskapsl"
+        },
+        {
+          "code": "2", "name": "Annen driftsinntekt", "sequence": 20, "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "3060", "code_to": "3089" }],
+          "legal_reference": "Regnskapsloven § 6-1 nr. 2", "source": "regnskapsl"
+        },
+        {
+          "code": "3", "name": "Endring i beholdning av varer under tilvirkning og ferdig tilvirkede varer", "sequence": 30, "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "4090", "code_to": "4099" }],
+          "legal_reference": "Regnskapsloven § 6-1 nr. 3 — ingen konto i denne pakkens kontoplan bokfører på dette området ennå; linjen er med for å transkribere loven fullstendig", "source": "regnskapsl"
+        },
+        {
+          "code": "4", "name": "Endring i beholdning av egentilvirkede anleggsmidler", "sequence": 40, "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "3090", "code_to": "3099" }],
+          "legal_reference": "Regnskapsloven § 6-1 nr. 4 — ingen konto i denne pakkens kontoplan bokfører på dette området ennå; linjen er med for å transkribere loven fullstendig", "source": "regnskapsl"
+        },
+        {
+          "code": "5", "name": "Varekostnad", "sequence": 50, "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "4000", "code_to": "4089" }],
+          "legal_reference": "Regnskapsloven § 6-1 nr. 5", "source": "regnskapsl"
+        },
+        {
+          "code": "6", "name": "Lønnskostnad", "sequence": 60, "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "5000", "code_to": "5999" }],
+          "legal_reference": "Regnskapsloven § 6-1 nr. 6", "source": "regnskapsl"
+        },
+        {
+          "code": "7", "name": "Avskrivning på varige driftsmidler og immaterielle eiendeler", "sequence": 70, "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "6000", "code_to": "6099" }],
+          "legal_reference": "Regnskapsloven § 6-1 nr. 7", "source": "regnskapsl"
+        },
+        {
+          "code": "8", "name": "Nedskrivning på varige driftsmidler og immaterielle eiendeler", "sequence": 80, "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "6100", "code_to": "6199" }],
+          "legal_reference": "Regnskapsloven § 6-1 nr. 8", "source": "regnskapsl"
+        },
+        {
+          "code": "9", "name": "Annen driftskostnad", "sequence": 90, "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "7000", "code_to": "7999" }],
+          "legal_reference": "Regnskapsloven § 6-1 nr. 9", "source": "regnskapsl"
+        },
+        {
+          "code": "10", "name": "Driftsresultat", "sequence": 100, "is_total": true,
+          "plus": ["1", "2", "3", "4"], "minus": ["5", "6", "7", "8", "9"],
+          "legal_reference": "Regnskapsloven § 6-1 nr. 10", "source": "regnskapsl"
+        },
+        {
+          "code": "11", "name": "Inntekt på investering i datterselskap og tilknyttet selskap", "sequence": 110, "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "8040", "code_to": "8049" }],
+          "legal_reference": "Regnskapsloven § 6-1 nr. 11", "source": "regnskapsl"
+        },
+        {
+          "code": "12", "name": "Inntekt på andre investeringer", "sequence": 120, "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "8050", "code_to": "8059" }],
+          "legal_reference": "Regnskapsloven § 6-1 nr. 12", "source": "regnskapsl"
+        },
+        {
+          "code": "13", "name": "Renteinntekt fra foretak i samme konsern", "sequence": 130, "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "8000", "code_to": "8019" }],
+          "legal_reference": "Regnskapsloven § 6-1 nr. 13", "source": "regnskapsl"
+        },
+        {
+          "code": "14", "name": "Annen finansinntekt", "sequence": 140, "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "8020", "code_to": "8039" }],
+          "legal_reference": "Regnskapsloven § 6-1 nr. 14", "source": "regnskapsl"
+        },
+        {
+          "code": "15", "name": "Verdiendring av finansielle instrumenter vurdert til virkelig verdi", "sequence": 150, "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "8060", "code_to": "8069" }],
+          "legal_reference": "Regnskapsloven § 6-1 nr. 15", "source": "regnskapsl"
+        },
+        {
+          "code": "16", "name": "Nedskrivning av finansielle eiendeler", "sequence": 160, "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "8140", "code_to": "8149" }],
+          "legal_reference": "Regnskapsloven § 6-1 nr. 16", "source": "regnskapsl"
+        },
+        {
+          "code": "17", "name": "Rentekostnad til foretak i samme konsern", "sequence": 170, "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "8100", "code_to": "8109" }],
+          "legal_reference": "Regnskapsloven § 6-1 nr. 17", "source": "regnskapsl"
+        },
+        {
+          "code": "18", "name": "Annen finanskostnad", "sequence": 180, "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "8110", "code_to": "8139" }],
+          "legal_reference": "Regnskapsloven § 6-1 nr. 18", "source": "regnskapsl"
+        },
+        {
+          "code": "19", "name": "Ordinært resultat før skattekostnad", "sequence": 190, "is_total": true,
+          "plus": ["10", "11", "12", "13", "14", "15"], "minus": ["16", "17", "18"],
+          "legal_reference": "Regnskapsloven § 6-1 nr. 19", "source": "regnskapsl"
+        },
+        {
+          "code": "20", "name": "Skattekostnad på ordinært resultat", "sequence": 200, "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "8300", "code_to": "8399" }],
+          "legal_reference": "Regnskapsloven § 6-1 nr. 20", "source": "regnskapsl"
+        },
+        {
+          "code": "21", "name": "Ordinært resultat", "sequence": 210, "is_total": true,
+          "plus": ["19"], "minus": ["20"],
+          "legal_reference": "Regnskapsloven § 6-1 nr. 21", "source": "regnskapsl"
+        },
+        {
+          "code": "24", "name": "Årsresultat", "sequence": 220, "is_total": true,
+          "plus": ["21"],
+          "legal_reference": "Regnskapsloven § 6-1 nr. 24. Uten poster 22 og 23 (bortfalt, se ovenfor) er årsresultatet identisk med det ordinære resultatet i post 21.", "source": "nrs8"
+        }
+      ]
+    }
+  ]
+}

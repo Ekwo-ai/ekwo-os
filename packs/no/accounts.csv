@@ -1,0 +1,105 @@
+code,parent,type,reconcilable,name,sequence
+1000,,asset_fixed,false,Utvikling,10
+1010,,asset_fixed,false,"Konsesjoner, patenter, lisenser, varemerker og lignende rettigheter",20
+1040,,asset_fixed,false,Utsatt skattefordel,30
+1050,,asset_fixed,false,Goodwill,40
+1100,,asset_fixed,false,"Tomter, bygninger og annen fast eiendom",50
+1150,,asset_fixed,false,Maskiner og anlegg,60
+1200,,asset_fixed,false,"Skip, rigger, fly og lignende",70
+1220,,asset_fixed,false,"Driftsløsøre, inventar, verktøy, kontormaskiner og lignende",80
+1300,,asset_non_current,false,Investeringer i datterselskap,90
+1310,,asset_non_current,false,Investeringer i annet foretak i samme konsern,95
+1320,,asset_non_current,false,Lån til foretak i samme konsern,98
+1330,,asset_non_current,false,Investeringer i tilknyttet selskap,100
+1340,,asset_non_current,false,Lån til tilknyttet selskap og felleskontrollert virksomhet,105
+1350,,asset_non_current,false,Investeringer i aksjer og andeler,110
+1360,,asset_non_current,false,Obligasjoner,120
+1370,,asset_non_current,false,Andre langsiktige fordringer,130
+1400,,asset_current,false,Varebeholdning,140
+1500,,asset_receivable,true,Kundefordringer,150
+1510,,asset_current,false,"Opptjent, ikke fakturert driftsinntekt",160
+1540,,asset_current,false,"Inngående merverdiavgift, alminnelig sats (kode 1)",170
+1541,,asset_current,false,"Inngående merverdiavgift, redusert sats (kode 13)",180
+1542,,asset_current,false,"Fradragsberettiget innførselsmerverdiavgift (kode 14)",185
+1543,,asset_current,false,"Fradragsberettiget merverdiavgift, tjeneste kjøpt fra utlandet (kode 86)",187
+1545,,asset_current,true,Til gode merverdiavgift (oppgjørskonto),190
+1550,,asset_current,false,Andre fordringer,200
+1560,,asset_current,false,Krav på innbetaling av selskapskapital,205
+1590,,asset_current,false,Aksjer og andeler i foretak i samme konsern,208
+1600,,asset_current,false,Markedsbaserte aksjer,210
+1630,,asset_current,false,Markedsbaserte obligasjoner,220
+1650,,asset_current,false,Andre markedsbaserte finansielle instrumenter,225
+1670,,asset_current,false,Andre finansielle instrumenter,228
+1900,,asset_cash,false,Kasse,230
+1920,,asset_cash,true,Bankinnskudd,240
+2000,,equity,false,Selskapskapital,250
+2010,,equity,false,Overkurs,260
+2020,,equity,false,Annen innskutt egenkapital,270
+2100,,equity_retained,false,Fond,280
+2120,,equity_retained,false,Annen egenkapital,290
+2200,,liability_non_current,false,Pensjonsforpliktelser,300
+2220,,liability_non_current,false,Utsatt skatt,310
+2240,,liability_non_current,false,Andre avsetninger for forpliktelser,320
+2300,,liability_non_current,false,Konvertible lån (langsiktig),325
+2310,,liability_non_current,false,Obligasjonslån,328
+2320,,liability_non_current,false,Gjeld til kredittinstitusjoner (langsiktig),330
+2360,,liability_non_current,false,Øvrig langsiktig gjeld,340
+2400,,liability_current,false,Konvertible lån (kortsiktig),345
+2410,,liability_current,false,Sertifikatlån,348
+2420,,liability_current,false,Gjeld til kredittinstitusjoner (kortsiktig),350
+2500,,liability_payable,true,Leverandørgjeld,360
+2600,,liability_current,false,Betalbar skatt,370
+2620,,liability_current,false,"Utgående merverdiavgift, alminnelig sats 25 % (kode 3)",380
+2621,,liability_current,false,"Utgående merverdiavgift, redusert sats 15 % (kode 31)",390
+2622,,liability_current,false,"Utgående merverdiavgift, redusert sats 12 % (kode 33)",400
+2630,,liability_current,false,Skyldig arbeidsgiveravgift,410
+2640,,liability_current,false,Skyldig forskuddstrekk,420
+2645,,liability_current,false,"Skyldig avgift, innførsel og fjernleverbar tjeneste (snudd avregning)",425
+2650,,liability_current,true,Skyldig merverdiavgift (oppgjørskonto),430
+2700,,liability_current,false,Skyldig lønn,440
+2720,,liability_current,false,Skyldige feriepenger,450
+2790,,liability_current,true,Uidentifiserte innbetalinger (gjennomgangskonto),460
+3000,,income,false,"Salgsinntekt, avgiftspliktig alminnelig sats 25 %",470
+3010,,income,false,"Salgsinntekt, avgiftspliktig redusert sats 15 % (næringsmidler)",480
+3020,,income,false,"Salgsinntekt, avgiftspliktig redusert sats 12 %",490
+3030,,income,false,"Salgsinntekt, fritatt (nullsats innenlands)",500
+3040,,income,false,"Salgsinntekt, utførsel (eksport)",510
+3050,,income,false,"Salgsinntekt, unntatt avgiftsplikt",520
+3060,,income_other,false,Annen driftsinntekt,530
+3070,,income_other,false,Gevinst ved salg av driftsmiddel,535
+3080,,income_other,false,Offentlig tilskudd,538
+4000,,expense_direct_cost,false,"Varekostnad, innenlands kjøp",540
+4010,,expense_direct_cost,false,"Varekostnad, innførsel (import)",550
+5000,,expense,false,Lønn,560
+5400,,expense,false,Arbeidsgiveravgift,570
+5900,,expense,false,Annen personalkostnad,580
+5920,,expense,false,Feriepenger,585
+5940,,expense,false,Pensjonskostnad,588
+6000,,expense_depreciation,false,Avskrivning på varige driftsmidler,590
+6020,,expense_depreciation,false,Avskrivning på immaterielle eiendeler,600
+6100,,expense_depreciation,false,Nedskrivning på varige driftsmidler og immaterielle eiendeler,610
+7000,,expense,false,Frakt- og transportkostnad,620
+7020,,expense,false,"Fremmed tjeneste kjøpt fra utlandet (fjernleverbar tjeneste, snudd avregning)",630
+7050,,expense,false,Forsikring,635
+7060,,expense,false,Vedlikehold,638
+7100,,expense,false,Kontorkostnad,640
+7150,,expense,false,IT-kostnad,642
+7200,,expense,false,Reisekostnad,644
+7300,,expense,false,Markedsføringskostnad,646
+7400,,expense,false,Revisjons- og regnskapshonorar,648
+7500,,expense,false,Husleie,650
+7600,,expense,false,Kontingenter og gaver,655
+7700,,expense,false,Annen driftskostnad,660
+7800,,expense,false,Tap på fordringer,665
+7900,,expense,false,Avrundingsdifferanser,670
+8000,,income_other,false,Renteinntekt fra foretak i samme konsern,680
+8020,,income_other,false,Annen finansinntekt,690
+8030,,income_other,false,Agiogevinst,700
+8040,,income_other,false,Inntekt på investering i datterselskap og tilknyttet selskap,710
+8050,,income_other,false,Inntekt på andre investeringer,720
+8060,,income_other,false,Verdiendring av finansielle instrumenter vurdert til virkelig verdi,730
+8100,,expense,false,Rentekostnad til foretak i samme konsern,740
+8110,,expense,false,Annen finanskostnad,750
+8130,,expense,false,Agiotap,760
+8140,,expense,false,Nedskrivning av finansielle eiendeler,770
+8300,,expense,false,Skattekostnad på ordinært resultat,780

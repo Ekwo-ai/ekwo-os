@@ -1,0 +1,116 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "NO-MVA-MELDING",
+  "name": "Mva-melding for merverdiavgift (kodebasert skjema, mvaKoder etter SAF-T-standarden)",
+  "period": ["bimonth", "year"],
+  "period_default": "bimonth",
+  "valid_from": "2022-04-01",
+  "legal_reference": "Skatteforvaltningsforskriften (FOR-2016-11-23-1360) § 8-3 gjør skattleggingsperioden for merverdiavgift til to kalendermåneder (januar-februar, mars-april, mai-juni, juli-august, september-oktober, november-desember) som hovedregel for alle avgiftssubjekter; § 8-3-3 lar skattekontoret samtykke i årlig levering når avgiftspliktig omsetning og uttak ikke overstiger én million kroner i et kalenderår, og § 8-3-7 gir primærnæringene (jordbruk, skogbruk, fiske) en tilsvarende årlig periode uavhengig av omsetning. Siden april 2022 leveres mva-meldingen ikke lenger på faste, trykte poster (det tidligere skjemaet RF-0002), men som enkeltlinjer merket med en mvaKode fra Skatteetatens standardiserte kodeliste for SAF-T, hver med et grunnlagsbeløp og et avgiftsbeløp; boksene i denne filen er derfor kodene i den listen og ikke sidenumre på et skjema. Denne pakken transkriberer bare et utvalg av kodene — de som trengs for de avgiftsbehandlingene taxes.json dekker — og ikke hele listen; se README.md.",
+  "source": "mva-meldingen-modell",
+  "boxes": [
+    {
+      "box": "3", "kind": "base", "name": "Utgående merverdiavgift, alminnelig sats — grunnlag", "sequence": 10,
+      "legal_reference": "SAF-T-standardens mvaKode 3, «Utgående merverdiavgift», alminnelig sats. Denne koden mottar også grunnlaget for salg til alminnelig sats etter merverdiavgiftsloven §§ 5-1 og 5-2, jf. Stortingsvedtak om merverdiavgift for 2026 § 2 (25 %).",
+      "source": "saf-t-koder"
+    },
+    {
+      "box": "3", "kind": "tax", "name": "Utgående merverdiavgift, alminnelig sats — avgift", "sequence": 20,
+      "legal_reference": "SAF-T-standardens mvaKode 3. Denne boksen mottar også den selvpålagte utgående avgiften av innførsel av varer og av fjernleverbare tjenester kjøpt fra utlandet (kode 14/21 og 86 i denne filen), fordi kodelisten ikke har en egen utgående kode for disse to tilfellene — se README.md for begrunnelsen, som følger samme lesning som packs/gb gjør for sin boks 1.",
+      "source": "saf-t-koder"
+    },
+    {
+      "box": "31", "kind": "base", "name": "Utgående merverdiavgift, redusert sats (næringsmidler) — grunnlag", "sequence": 30,
+      "legal_reference": "SAF-T-standardens mvaKode 31. Grunnlag for salg av næringsmidler etter merverdiavgiftsloven § 5-2, jf. Stortingsvedtak om merverdiavgift for 2026 § 3 (15 %).",
+      "source": "saf-t-koder"
+    },
+    {
+      "box": "31", "kind": "tax", "name": "Utgående merverdiavgift, redusert sats (næringsmidler) — avgift", "sequence": 40,
+      "legal_reference": "SAF-T-standardens mvaKode 31.",
+      "source": "saf-t-koder"
+    },
+    {
+      "box": "33", "kind": "base", "name": "Utgående merverdiavgift, lav sats — grunnlag", "sequence": 50,
+      "legal_reference": "SAF-T-standardens mvaKode 33. Grunnlag for persontransport, overnatting, kino, kringkasting, museer, fornøyelsesparker og idrettsarrangementer etter merverdiavgiftsloven §§ 5-3, 5-5, 5-6, 5-9, 5-10 og 5-11, jf. Stortingsvedtak om merverdiavgift for 2026 § 4 (12 %).",
+      "source": "saf-t-koder"
+    },
+    {
+      "box": "33", "kind": "tax", "name": "Utgående merverdiavgift, lav sats — avgift", "sequence": 60,
+      "legal_reference": "SAF-T-standardens mvaKode 33.",
+      "source": "saf-t-koder"
+    },
+    {
+      "box": "5", "kind": "base", "name": "Innenlands omsetning fritatt for merverdiavgift (nullsats)", "sequence": 70,
+      "legal_reference": "SAF-T-standardens mvaKode 5. Grunnlag for omsetning som er fritatt med fradragsrett — bøker (§ 6-4), aviser (§ 6-1) og elbiler til og med 300 000 kroner (§ 6-8), blant andre — til forskjell fra en unntatt (avgiftsfri uten fradragsrett) omsetning, som denne kodelisten ikke har en egen kode for og som derfor ikke bokføres på noen boks i denne filen, se README.md.",
+      "source": "mval"
+    },
+    {
+      "box": "52", "kind": "base", "name": "Utførsel av varer og tjenester (eksport)", "sequence": 80,
+      "legal_reference": "SAF-T-standardens mvaKode 52. Merverdiavgiftsloven §§ 6-21 og 6-22 fritar utførsel av varer og tjenester ut av merverdiavgiftsområdet, med fradragsrett.",
+      "source": "mval"
+    },
+    {
+      "box": "1", "kind": "base", "name": "Innenlands kjøp, fradragsberettiget, alminnelig sats — grunnlag", "sequence": 90,
+      "legal_reference": "SAF-T-standardens mvaKode 1.",
+      "source": "saf-t-koder"
+    },
+    {
+      "box": "1", "kind": "tax", "name": "Innenlands kjøp, fradragsberettiget, alminnelig sats — fradrag", "sequence": 100,
+      "legal_reference": "SAF-T-standardens mvaKode 1. Fradragsretten følger merverdiavgiftsloven § 8-1.",
+      "source": "saf-t-koder"
+    },
+    {
+      "box": "13", "kind": "base", "name": "Innenlands kjøp, fradragsberettiget, lav sats — grunnlag", "sequence": 110,
+      "legal_reference": "SAF-T-standardens mvaKode 13.",
+      "source": "saf-t-koder"
+    },
+    {
+      "box": "13", "kind": "tax", "name": "Innenlands kjøp, fradragsberettiget, lav sats — fradrag", "sequence": 120,
+      "legal_reference": "SAF-T-standardens mvaKode 13. Fradragsretten følger merverdiavgiftsloven § 8-1.",
+      "source": "saf-t-koder"
+    },
+    {
+      "box": "21", "kind": "base", "name": "Kostnad ved innførsel av varer, alminnelig sats", "sequence": 130,
+      "legal_reference": "SAF-T-standardens mvaKode 21. Merverdiavgiftsloven § 11-1 tredje ledd gjør den registrerte mottakeren ansvarlig for å beregne og betale merverdiavgift ved innførsel av varer selv, i mva-meldingen, i stedet for å betale avgiften til Tolletaten ved grensepassering.",
+      "source": "mval"
+    },
+    {
+      "box": "14", "kind": "tax", "name": "Fradragsberettiget innførselsmerverdiavgift, alminnelig sats", "sequence": 140,
+      "legal_reference": "SAF-T-standardens mvaKode 14. Fradragsretten følger merverdiavgiftsloven § 8-1, på samme grunnlag som mvaKode 21.",
+      "source": "saf-t-koder"
+    },
+    {
+      "box": "86", "kind": "base", "name": "Fjernleverbare tjenester kjøpt fra utlandet, fradragsberettiget, alminnelig sats — grunnlag", "sequence": 150,
+      "legal_reference": "SAF-T-standardens mvaKode 86. Merverdiavgiftsloven § 3-30 pålegger mottakeren å beregne og betale merverdiavgift av en fjernleverbar tjeneste kjøpt fra en tilbyder utenfor merverdiavgiftsområdet.",
+      "source": "mval"
+    },
+    {
+      "box": "86", "kind": "tax", "name": "Fjernleverbare tjenester kjøpt fra utlandet, fradragsberettiget, alminnelig sats — fradrag", "sequence": 160,
+      "legal_reference": "SAF-T-standardens mvaKode 86. Fradragsretten følger merverdiavgiftsloven § 8-1.",
+      "source": "saf-t-koder"
+    },
+    {
+      "box": "UTSUM", "kind": "total", "name": "Sum utgående merverdiavgift", "sequence": 170, "hidden": true,
+      "plus": ["3:tax", "31:tax", "33:tax"],
+      "legal_reference": "Ikke et boksnummer i mva-meldingen: mellomsummen som denne pakken bruker for å beregne nettobeløpet, siden det kodebaserte skjemaet (se ovenfor) ikke selv navngir et felt for den.",
+      "source": "mva-meldingen-modell"
+    },
+    {
+      "box": "INNSUM", "kind": "total", "name": "Sum fradragsberettiget inngående merverdiavgift", "sequence": 180, "hidden": true,
+      "plus": ["1:tax", "13:tax", "14", "86:tax"],
+      "legal_reference": "Ikke et boksnummer i mva-meldingen, av samme grunn som UTSUM.",
+      "source": "mva-meldingen-modell"
+    },
+    {
+      "box": "BETALES", "kind": "total", "name": "Merverdiavgift til betaling", "sequence": 190, "floor_zero": true,
+      "plus": ["UTSUM"], "minus": ["INNSUM"],
+      "legal_reference": "Ikke et boksnummer i mva-meldingen: nettobeløpet fastsettes av skattemyndigheten (fastsattMerverdiavgift) fra summen av kodene, uten et eget skjemafelt for mellomregningen.",
+      "source": "mva-meldingen-modell"
+    },
+    {
+      "box": "TILGODE", "kind": "total", "name": "Merverdiavgift til gode", "sequence": 200, "floor_zero": true,
+      "plus": ["INNSUM"], "minus": ["UTSUM"],
+      "legal_reference": "Ikke et boksnummer i mva-meldingen, av samme grunn som BETALES.",
+      "source": "mva-meldingen-modell"
+    }
+  ]
+}

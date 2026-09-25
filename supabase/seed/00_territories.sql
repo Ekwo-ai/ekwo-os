@@ -703,6 +703,19 @@ on conflict (code) do update set
 -- ---------------------------------------------------------------------------
 
 insert into territories (code, code_source, name, parent_code, eu_vat_scope, eu_vat_from, eu_vat_to, vat_prefix, legal_reference) values
+  ('NO', 'iso_3166_1', 'Norway', null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. Norway is a member of the European Economic Area (EEA/EØS) under the EEA Agreement of 2 May 1992, which gives it access to the internal market, but value added tax is a matter the EEA Agreement does not cover (it is outside annexes I to XXII listing the Union acquis extended to the EEA): Norway levies its own merverdiavgift under the Lov om merverdiavgift (LOV-2009-06-19-58), unrelated to the Directive and administered by Skatteetaten, with no intra-Community acquisition or supply of any kind between Norway and a Member State.')
+on conflict (code) do update set
+  code_source     = excluded.code_source,
+  name            = excluded.name,
+  parent_code     = excluded.parent_code,
+  eu_vat_scope    = excluded.eu_vat_scope,
+  eu_vat_from     = excluded.eu_vat_from,
+  eu_vat_to       = excluded.eu_vat_to,
+  vat_prefix      = excluded.vat_prefix,
+  legal_reference = excluded.legal_reference;
+
+insert into territories (code, code_source, name, parent_code, eu_vat_scope, eu_vat_from, eu_vat_to, vat_prefix, legal_reference) values
   ('SA', 'iso_3166_1', 'Saudi Arabia', null, 'none', null, null, null,
    'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. Saudi Arabia levies a value added tax of its own under the Value Added Tax Law (Royal Decree No. M/113 dated 2 Dhul Qa''dah 1438H), article 2(2), at a basic rate of 15 % since Royal Order No. A/638 dated 15 Shawwal 1441H amended it, the rate having been 5 % from 1 January 2018 (Zakat, Tax and Customs Authority, consolidated Arabic text).')
 on conflict (code) do update set

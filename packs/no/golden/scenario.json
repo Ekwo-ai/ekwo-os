@@ -1,0 +1,93 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "To måneder av et norsk foretaks bøker, som leverer mva-melding annenhver måned",
+  "chart": "default",
+  "fiscal_year": { "name": "Regnskapsår 2026", "start": "2026-01-01", "end": "2026-12-31" },
+  "periods": [{ "code": "2026-B1", "from": "2026-01-01", "to": "2026-02-28" }],
+  "statements": ["NO-RSKL-BS", "NO-RSKL-IS"],
+  "contacts": [
+    { "ref": "client-no", "name": "Fjord Konsulent AS", "type": "customer", "country": "NO" },
+    { "ref": "client-transport", "name": "Vestlandsruta AS", "type": "customer", "country": "NO" },
+    { "ref": "client-books", "name": "Bokhandelen på Hjørnet AS", "type": "customer", "country": "NO" },
+    { "ref": "client-de", "name": "Nordisch Handel GmbH", "type": "customer", "country": "DE" },
+    { "ref": "client-finance", "name": "Låneformidling Øst AS", "type": "customer", "country": "NO" },
+    { "ref": "supplier-no", "name": "Kontordrift Oslo AS", "type": "supplier", "country": "NO" },
+    { "ref": "supplier-transport", "name": "Ruteservice Vest AS", "type": "supplier", "country": "NO" },
+    { "ref": "supplier-cn", "name": "Shenzhen Trading Co.", "type": "supplier", "country": "CN" },
+    { "ref": "supplier-ie", "name": "CloudWorks Ireland Ltd", "type": "supplier", "country": "IE" }
+  ],
+  "documents": [
+    {
+      "ref": "V1", "type": "sale_invoice", "contact": "client-no", "date": "2026-01-15",
+      "why": "Et vanlig innenlands salg til alminnelig sats: kode 3 (grunnlag og avgift) i mva-meldingen.",
+      "lines": [{ "name": "Konsulentbistand", "quantity": 1, "unit_price": 10000, "tax": "NO-S-25", "account": "3000" }]
+    },
+    {
+      "ref": "V2", "type": "sale_invoice", "contact": "client-no", "date": "2026-01-20",
+      "why": "Salg av næringsmidler til redusert sats 15 %: kode 31.",
+      "lines": [{ "name": "Næringsmidler", "quantity": 1, "unit_price": 5000, "tax": "NO-S-15", "account": "3010" }]
+    },
+    {
+      "ref": "V3", "type": "sale_invoice", "contact": "client-transport", "date": "2026-01-25",
+      "why": "Salg av en persontransporttjeneste til lav sats 12 %: kode 33.",
+      "lines": [{ "name": "Persontransport", "quantity": 1, "unit_price": 3000, "tax": "NO-S-12", "account": "3020" }]
+    },
+    {
+      "ref": "V4", "type": "sale_invoice", "contact": "client-books", "date": "2026-02-02",
+      "why": "Salg av bøker, fritatt for merverdiavgift med fradragsrett (nullsats): kode 5 — nullsats-/taux-zéro-tilfellet, til forskjell fra en unntatt omsetning.",
+      "lines": [{ "name": "Bøker", "quantity": 10, "unit_price": 300, "tax": "NO-S-0", "account": "3030" }]
+    },
+    {
+      "ref": "V5", "type": "sale_invoice", "contact": "client-de", "date": "2026-02-05",
+      "why": "Utførsel av varer til Tyskland, fritatt for merverdiavgift med fradragsrett: kode 52 — eksporttilfellet.",
+      "lines": [{ "name": "Vareeksport til Tyskland", "quantity": 1, "unit_price": 20000, "tax": "NO-S-EXPORT", "account": "3040" }]
+    },
+    {
+      "ref": "V6", "type": "sale_invoice", "contact": "client-finance", "date": "2026-02-10",
+      "why": "Formidlingsprovisjon av finansielle tjenester, unntatt fra loven uten fradragsrett: unntakstilfellet, ingen boks i mva-meldingen.",
+      "lines": [{ "name": "Låneformidlingsprovisjon", "quantity": 1, "unit_price": 4000, "tax": "NO-S-EXEMPT", "account": "3050" }]
+    },
+    {
+      "ref": "CN1", "type": "sale_credit_note", "contact": "client-no", "date": "2026-02-12",
+      "why": "Kreditnota som retter en feilfakturert mengde på V2, til samme reduserte sats 15 %: kredittnota-tilfellet.",
+      "lines": [{ "name": "Korreksjon, næringsmidler", "quantity": 1, "unit_price": 1000, "tax": "NO-S-15", "account": "3010" }]
+    },
+    {
+      "ref": "P1", "type": "purchase_invoice", "contact": "supplier-no", "date": "2026-01-18",
+      "why": "Innenlands kjøp av kontorrekvisita, fradragsberettiget alminnelig sats 25 %: kode 1.",
+      "lines": [{ "name": "Kontorrekvisita", "quantity": 1, "unit_price": 2000, "tax": "NO-P-25", "account": "7100" }]
+    },
+    {
+      "ref": "P2", "type": "purchase_invoice", "contact": "supplier-transport", "date": "2026-01-28",
+      "why": "Innenlands kjøp av en persontransporttjeneste, fradragsberettiget lav sats 12 %: kode 13.",
+      "lines": [{ "name": "Persontransport, ansattreiser", "quantity": 1, "unit_price": 1500, "tax": "NO-P-12", "account": "7000" }]
+    },
+    {
+      "ref": "P3", "type": "purchase_invoice", "contact": "supplier-cn", "date": "2026-02-08",
+      "why": "Innførsel av varer fra Kina: egenberegnet innførselsmerverdiavgift (kode 21/14) med samtidig fradragsrett, i stedet for betaling til Tolletaten.",
+      "lines": [{ "name": "Varer, innførsel fra Kina", "quantity": 1, "unit_price": 8000, "tax": "NO-P-IMPORT-25", "account": "4010" }]
+    },
+    {
+      "ref": "P4", "type": "purchase_invoice", "contact": "supplier-ie", "date": "2026-02-15",
+      "why": "Kjøp av en fjernleverbar skytjeneste fra en tilbyder i Irland: snudd avregning etter § 3-30 (kode 86), med samtidig fradragsrett.",
+      "lines": [{ "name": "Skytjeneste, abonnement", "quantity": 1, "unit_price": 6000, "tax": "NO-P-FOREIGN-25", "account": "7020" }]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "E1", "direction": "inbound", "date": "2026-01-25", "amount": 12500,
+      "contact": "client-no", "journal": "BNK", "match": "V1",
+      "why": "Et innbetalt beløp som slår nøyaktig sammen med V1 — det avstemte tilfellet."
+    },
+    {
+      "ref": "E2", "direction": "inbound", "date": "2026-03-01", "amount": 1000,
+      "contact": "client-no", "journal": "BNK", "match": null,
+      "why": "Et innbetalt forskudd fra client-no som ennå ikke er knyttet til noen bestemt faktura — det uavstemte tilfellet."
+    },
+    {
+      "ref": "U1", "direction": "outbound", "date": "2026-01-30", "amount": 2500,
+      "contact": "supplier-no", "journal": "BNK", "match": "P1",
+      "why": "Fullt oppgjør av P1."
+    }
+  ]
+}
