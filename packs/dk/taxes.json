@@ -1,0 +1,211 @@
+[
+    {
+      "code": "DK-S-25",
+      "name": "Salg — 25 % standardsats",
+      "kind": "vat",
+      "rate": 25,
+      "scope": "sale",
+      "treatment": "domestic",
+      "valid_from": "1992-01-01",
+      "legal_reference": "Momsloven, § 33 — afgiften udgør 25 pct. af afgiftsgrundlaget. Danmark har kun denne ene sats: der findes ingen nedsat sats",
+      "source": "momsloven",
+      "vat_category": "S",
+      "postings": {
+        "invoice": [
+          { "type": "base" },
+          { "type": "tax", "account": "5160", "box": "salgs" }
+        ],
+        "credit_note": [
+          { "type": "base", "box_factor": -100 },
+          { "type": "tax", "account": "5160", "box": "salgs", "box_factor": -100 }
+        ]
+      },
+      "sequence": 10
+    },
+    {
+      "code": "DK-P-25",
+      "name": "Køb — 25 % standardsats, fradragsberettiget",
+      "kind": "vat",
+      "rate": 25,
+      "scope": "purchase",
+      "treatment": "domestic",
+      "valid_from": "1992-01-01",
+      "legal_reference": "Momsloven, § 33 og § 37, stk. 1 — en registreret virksomhed kan ved opgørelsen af afgiftstilsvaret fradrage afgiften for varer og ydelser, der udelukkende anvendes til brug for virksomhedens fradragsberettigede leverancer",
+      "source": "momsloven",
+      "postings": {
+        "invoice": [
+          { "type": "base" },
+          { "type": "tax", "account": "2160", "box": "koebs" }
+        ],
+        "credit_note": [
+          { "type": "base", "box_factor": -100 },
+          { "type": "tax", "account": "2160", "box": "koebs", "box_factor": -100 }
+        ]
+      },
+      "sequence": 20
+    },
+    {
+      "code": "DK-S-EU-GOODS-0",
+      "name": "Salg af varer til andre EU-lande — 0 %",
+      "kind": "vat",
+      "rate": 0,
+      "scope": "sale",
+      "treatment": "intracom_goods",
+      "valid_from": "1993-01-01",
+      "legal_reference": "Momsloven, § 34, stk. 1, nr. 1 — levering af varer, der af virksomheden eller af erhververen eller for disses regning forsendes eller transporteres til et andet EU-land, er fritaget for afgift, når erhververen er en afgiftspligtig person eller en ikkeafgiftspligtig juridisk person, der er registreret for merværdiafgift i et andet EU-land",
+      "source": "momsloven",
+      "vat_category": "K",
+      "exemption_code": "VATEX-EU-IC",
+      "postings": {
+        "invoice": [
+          { "type": "base", "box": "bvarer" }
+        ],
+        "credit_note": [
+          { "type": "base", "box": "bvarer", "box_factor": -100 }
+        ]
+      },
+      "sequence": 30
+    },
+    {
+      "code": "DK-S-EU-SERVICES-0",
+      "name": "Salg af ydelser til andre EU-lande — omvendt betalingspligt",
+      "kind": "vat",
+      "rate": 0,
+      "scope": "sale",
+      "treatment": "intracom_services",
+      "valid_from": "2010-01-01",
+      "legal_reference": "Momsloven, § 16, stk. 1 — leveringsstedet for en ydelse leveret til en afgiftspligtig person er dér, hvor denne har etableret stedet for sin økonomiske virksomhed; er dette et andet EU-land, ligger leveringsstedet uden for Danmark, og modtageren afregner ydelsesmomsen i sit eget land efter momssystemdirektivets artikel 196",
+      "source": "momsloven",
+      "vat_category": "K",
+      "exemption_code": "VATEX-EU-IC",
+      "postings": {
+        "invoice": [
+          { "type": "base", "box": "bydels" }
+        ],
+        "credit_note": [
+          { "type": "base", "box": "bydels", "box_factor": -100 }
+        ]
+      },
+      "sequence": 40
+    },
+    {
+      "code": "DK-S-EXPORT-0",
+      "name": "Udførsel til steder uden for EU — 0 %",
+      "kind": "vat",
+      "rate": 0,
+      "scope": "sale",
+      "treatment": "export",
+      "valid_from": "1993-01-01",
+      "legal_reference": "Momsloven, § 34, stk. 1, nr. 5 — levering af varer, som af virksomheden eller for dennes regning udføres til steder uden for EU, er fritaget for afgift",
+      "source": "momsloven",
+      "vat_category": "G",
+      "exemption_code": "VATEX-EU-G",
+      "postings": {
+        "invoice": [
+          { "type": "base", "box": "c" }
+        ],
+        "credit_note": [
+          { "type": "base", "box": "c", "box_factor": -100 }
+        ]
+      },
+      "sequence": 50
+    },
+    {
+      "code": "DK-S-EXEMPT-PROPERTY",
+      "name": "Udlejning af fast ejendom — momsfri",
+      "kind": "vat",
+      "rate": 0,
+      "scope": "sale",
+      "treatment": "exempt",
+      "valid_from": "1967-01-01",
+      "legal_reference": "Momsloven, § 13, stk. 1, nr. 8 — udlejning og bortforpagtning af fast ejendom, herunder den hertil knyttede levering af gas, vand, elektricitet og varme, er fritaget for afgift. En udlejer kan i visse tilfælde lade sig frivilligt registrere for udlejningen efter § 51, hvorved leverancen i stedet afgiftsbelægges; det er ikke modelleret her",
+      "source": "momsloven",
+      "vat_category": "E",
+      "exemption_code": "VATEX-EU-135-1",
+      "postings": {
+        "invoice": [
+          { "type": "base", "box": "c" }
+        ],
+        "credit_note": [
+          { "type": "base", "box": "c", "box_factor": -100 }
+        ]
+      },
+      "sequence": 60
+    },
+    {
+      "code": "DK-P-EU-GOODS",
+      "name": "Erhvervelse af varer fra andre EU-lande — omvendt betalingspligt",
+      "kind": "vat",
+      "rate": 25,
+      "scope": "purchase",
+      "treatment": "intracom_acquisition_goods",
+      "valid_from": "1993-01-01",
+      "legal_reference": "Momsloven, § 11, stk. 1, nr. 1 — der betales afgift ved erhvervelse mod vederlag af varer fra andre EU-lande, når sælgeren er en afgiftspligtig person registreret for merværdiafgift i et andet EU-land og erhververen er en afgiftspligtig person her i landet; § 46, stk. 4 — afgiften påhviler den, der foretager en afgiftspligtig erhvervelse; § 37, stk. 1 — afgiften er samtidig fradragsberettiget hos erhververen",
+      "source": "momsloven",
+      "vat_category": "K",
+      "exemption_code": "VATEX-EU-IC",
+      "postings": {
+        "invoice": [
+          { "type": "base", "box": "avarer" },
+          { "type": "tax", "account": "2170", "box": "koebs" },
+          { "type": "tax", "factor": -100, "account": "5170", "box": "eumoms" }
+        ],
+        "credit_note": [
+          { "type": "base", "box": "avarer", "box_factor": -100 },
+          { "type": "tax", "account": "2170", "box": "koebs", "box_factor": -100 },
+          { "type": "tax", "factor": -100, "account": "5170", "box": "eumoms", "box_factor": -100 }
+        ]
+      },
+      "sequence": 70
+    },
+    {
+      "code": "DK-P-EU-SERVICES",
+      "name": "Køb af ydelser fra andre EU-lande — omvendt betalingspligt",
+      "kind": "vat",
+      "rate": 25,
+      "scope": "purchase",
+      "treatment": "intracom_acquisition_services",
+      "valid_from": "2010-01-01",
+      "legal_reference": "Momsloven, § 16, stk. 1 og § 46, stk. 1, nr. 3 — leveringsstedet for en ydelse leveret til en dansk afgiftspligtig person af en afgiftspligtig person, der ikke er etableret her i landet, er her i landet, og køberen afregner afgiften; § 37, stk. 1 — afgiften er samtidig fradragsberettiget",
+      "source": "momsloven",
+      "vat_category": "K",
+      "exemption_code": "VATEX-EU-IC",
+      "postings": {
+        "invoice": [
+          { "type": "base", "box": "aydels" },
+          { "type": "tax", "account": "2170", "box": "koebs" },
+          { "type": "tax", "factor": -100, "account": "5170", "box": "ydmoms" }
+        ],
+        "credit_note": [
+          { "type": "base", "box": "aydels", "box_factor": -100 },
+          { "type": "tax", "account": "2170", "box": "koebs", "box_factor": -100 },
+          { "type": "tax", "factor": -100, "account": "5170", "box": "ydmoms", "box_factor": -100 }
+        ]
+      },
+      "sequence": 80
+    },
+    {
+      "code": "DK-P-NONEU-SERVICES",
+      "name": "Køb af ydelser fra lande uden for EU — omvendt betalingspligt",
+      "kind": "vat",
+      "rate": 25,
+      "scope": "purchase",
+      "treatment": "foreign_services_received",
+      "valid_from": "2010-01-01",
+      "legal_reference": "Momsloven, § 16, stk. 1 og § 46, stk. 1, nr. 3 — den almindelige hovedregel om leveringssted efter modtagerens hjemsted gælder uanset hvor leverandøren er etableret, og køberen afregner afgiften af ydelseskøb i udlandet med omvendt betalingspligt; § 37, stk. 1 — afgiften er samtidig fradragsberettiget",
+      "source": "momsloven",
+      "postings": {
+        "invoice": [
+          { "type": "base" },
+          { "type": "tax", "account": "2170", "box": "koebs" },
+          { "type": "tax", "factor": -100, "account": "5170", "box": "ydmoms" }
+        ],
+        "credit_note": [
+          { "type": "base", "box_factor": -100 },
+          { "type": "tax", "account": "2170", "box": "koebs", "box_factor": -100 },
+          { "type": "tax", "factor": -100, "account": "5170", "box": "ydmoms", "box_factor": -100 }
+        ]
+      },
+      "sequence": 90
+    }
+]

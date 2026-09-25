@@ -4251,3 +4251,29 @@ company and per form) was built to hold, and `ec_sales_list()` reads the
 `intracom_goods` and `intracom_services` treatments this pack's taxes already
 carry. Two already-solved gaps met again, and one that is not, side by side in
 one country's pack.
+
+## From Denmark
+
+`packs/dk/`, `community`, seed 65, inside the common system of VAT with the
+Union's one standard rate and no reduced one — momsloven, § 33, has set 25 %
+and nothing else since 1992. Its chart is original, because Denmark
+prescribes none (bogføringslovens § 6 asks for a description of the
+bookkeeping procedures, not a chart), built around nine numeric classes that
+line up with årsregnskabslovens bilag 2. One gap met an already-named one
+rather than opening a new one.
+
+**A deadline that depends on the cadence, wider than the gap already named
+under "From Australia".** Momslovens § 57 files a business monthly above
+50 million kr. of annual taxable turnover, quarterly between 5 and 50
+million, and half-yearly below — three cadences `tax_report.json`'s one
+`deadline` rule cannot each give their own day, the same shape the
+Australian pack meets with its monthly/quarterly split. Denmark's version is
+wider: the monthly return is due the 25th of the following month, and the
+quarterly and half-yearly ones the *first day of the third* month after —
+two months out, not a handful of days. `packs/dk/` declares the monthly
+rule, `day_of_month_after_period` with `day: 25`, on the same reasoning
+Australia's pack states: never later than the law, and several weeks early
+for most filers, since a quarterly or half-yearly cadence is the ordinary
+case and not the exception. *Fix*: unchanged from "From Australia" — a
+deadline per cadence, which Spain's form 303 and Denmark's momsangivelse
+would both use.

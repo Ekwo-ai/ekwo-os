@@ -216,6 +216,7 @@ says what they say. `ekwo pack describe <cc>` is everything one of them says.
 | [`cm`](../packs/cm/) | Cameroun | `24_pack_cm.sql` | fr | `community` |
 | [`cz`](../packs/cz/) | Czechia | `68_pack_cz.sql` | cs | `community` |
 | [`de`](../packs/de/) | Germany | `18_pack_de.sql` | de, en | `community` |
+| [`dk`](../packs/dk/) | Danmark | `65_pack_dk.sql` | da, en | `community` |
 | [`ee`](../packs/ee/) | Estonia | `13_pack_ee.sql` | et, en | `community` |
 | [`es`](../packs/es/) | España | `19_pack_es.sql` | es, en | `community` |
 | [`fr`](../packs/fr/) | France | `11_pack_fr.sql` | fr, en | `maintained` |

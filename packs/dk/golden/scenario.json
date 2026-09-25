@@ -1,0 +1,104 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "Et dansk handels- og konsulentselskab, der afregner moms kvartalsvis",
+  "chart": "default",
+  "fiscal_year": { "name": "Regnskabsår 2026", "start": "2026-01-01", "end": "2026-12-31" },
+  "periods": [
+    { "code": "2026-K1", "from": "2026-01-01", "to": "2026-03-31" },
+    { "code": "2026-K2", "from": "2026-04-01", "to": "2026-06-30" },
+    { "code": "2026-K3", "from": "2026-07-01", "to": "2026-09-30" },
+    { "code": "2026-K4", "from": "2026-10-01", "to": "2026-12-31" }
+  ],
+  "statements": ["DK-ARL-BS", "DK-ARL-IS"],
+  "contacts": [
+    { "ref": "kunde-dk", "name": "Nørrebro Kontorforsyning ApS", "type": "customer", "country": "DK" },
+    { "ref": "kunde-de", "name": "Hamburg Handelsgesellschaft mbH", "type": "customer", "country": "DE", "vat_number": "DE123456789" },
+    { "ref": "kunde-se", "name": "Stockholm Konsult AB", "type": "customer", "country": "SE", "vat_number": "SE556677889901" },
+    { "ref": "kunde-no", "name": "Oslo Import AS", "type": "customer", "country": "NO" },
+    { "ref": "lejer-dk", "name": "Østerbro Lager A/S", "type": "customer", "country": "DK" },
+    { "ref": "leverandoer-dk", "name": "København Kontor A/S", "type": "supplier", "country": "DK" },
+    { "ref": "revisor-dk", "name": "Danske Revisorer I/S", "type": "supplier", "country": "DK" },
+    { "ref": "leverandoer-de", "name": "Berlin Maschinen GmbH", "type": "supplier", "country": "DE", "vat_number": "DE998877665" },
+    { "ref": "leverandoer-fr", "name": "Paris Conseil SARL", "type": "supplier", "country": "FR", "vat_number": "FR12345678901" },
+    { "ref": "leverandoer-gb", "name": "London Software Ltd", "type": "supplier", "country": "GB" }
+  ],
+  "documents": [
+    {
+      "ref": "V1", "type": "sale_invoice", "contact": "kunde-dk", "date": "2026-01-15",
+      "why": "En almindelig indenlandsk fakturering til standardsatsen: salgsmomsen lander i rubrikken Salgsmoms.",
+      "lines": [ { "name": "Kontorartikler", "quantity": 100, "unit_price": 80, "tax": "DK-S-25", "account": "6000" } ]
+    },
+    {
+      "ref": "V2", "type": "sale_invoice", "contact": "kunde-dk", "date": "2026-02-10",
+      "why": "En anden indenlandsk fakturering til standardsatsen, så salgsmomsen for kvartalet ikke hviler på ét bilag.",
+      "lines": [ { "name": "Konsulentydelse", "quantity": 1, "unit_price": 24000, "tax": "DK-S-25", "account": "6000" } ]
+    },
+    {
+      "ref": "CN1", "type": "sale_credit_note", "contact": "kunde-dk", "date": "2026-02-20",
+      "why": "En kreditnota, der korrigerer V2 delvist efter en fejl i den fakturerede mængde, og viser at rubrikken Salgsmoms falder med kreditnotaen.",
+      "lines": [ { "name": "Konsulentydelse, korrektion", "quantity": 1, "unit_price": 4000, "tax": "DK-S-25", "account": "6000" } ]
+    },
+    {
+      "ref": "V3", "type": "sale_invoice", "contact": "kunde-de", "date": "2026-03-05",
+      "why": "En EU-vareleverance til en momsregistreret aftager i Tyskland: rubrik B-varer, og ingen dansk moms efter § 34, stk. 1, nr. 1.",
+      "lines": [ { "name": "Møbler", "quantity": 20, "unit_price": 1000, "tax": "DK-S-EU-GOODS-0", "account": "6010" } ]
+    },
+    {
+      "ref": "V4", "type": "sale_invoice", "contact": "kunde-se", "date": "2026-04-12",
+      "why": "En rådgivningsydelse til en momsregistreret kunde i Sverige: rubrik B-ydelser, omvendt betalingspligt hos kunden efter § 16, stk. 1.",
+      "lines": [ { "name": "Rådgivning", "quantity": 1, "unit_price": 15000, "tax": "DK-S-EU-SERVICES-0", "account": "6020" } ]
+    },
+    {
+      "ref": "V5", "type": "sale_invoice", "contact": "kunde-no", "date": "2026-05-08",
+      "why": "Udførsel af varer til en kunde i Norge, uden for EU: rubrik C, momsfri efter § 34, stk. 1, nr. 5.",
+      "lines": [ { "name": "Maskindele", "quantity": 10, "unit_price": 2000, "tax": "DK-S-EXPORT-0", "account": "6030" } ]
+    },
+    {
+      "ref": "V6", "type": "sale_invoice", "contact": "lejer-dk", "date": "2026-06-01",
+      "why": "Momsfri udlejning af et lagerlokale: rubrik C, fritaget efter § 13, stk. 1, nr. 8, uden frivillig registrering.",
+      "lines": [ { "name": "Husleje, lager, 2. kvartal", "quantity": 1, "unit_price": 18000, "tax": "DK-S-EXEMPT-PROPERTY", "account": "6040" } ]
+    },
+    {
+      "ref": "P1", "type": "purchase_invoice", "contact": "leverandoer-dk", "date": "2026-01-20",
+      "why": "Indkøb af kontorartikler til standardsatsen: fradragsberettiget købsmoms i rubrikken Købsmoms.",
+      "lines": [ { "name": "Kontorartikler", "quantity": 1, "unit_price": 6000, "tax": "DK-P-25", "account": "7120" } ]
+    },
+    {
+      "ref": "P2", "type": "purchase_invoice", "contact": "revisor-dk", "date": "2026-07-15",
+      "why": "Revisorhonorar til standardsatsen: en anden indenlandsk købsmoms, så fradraget for kvartalet ikke hviler på ét bilag.",
+      "lines": [ { "name": "Revision af årsrapport", "quantity": 1, "unit_price": 12000, "tax": "DK-P-25", "account": "7180" } ]
+    },
+    {
+      "ref": "P3", "type": "purchase_invoice", "contact": "leverandoer-de", "date": "2026-08-04",
+      "why": "Erhvervelse af varer fra en tysk leverandør: omvendt betalingspligt efter § 11 og § 46, stk. 4, rubrik A-varer og rubrikken Moms af varekøb i udlandet.",
+      "lines": [ { "name": "Reservedele", "quantity": 5, "unit_price": 2000, "tax": "DK-P-EU-GOODS", "account": "7020" } ]
+    },
+    {
+      "ref": "P4", "type": "purchase_invoice", "contact": "leverandoer-fr", "date": "2026-09-10",
+      "why": "Køb af en konsulentydelse fra en fransk leverandør: omvendt betalingspligt efter § 16, stk. 1 og § 46, stk. 1, nr. 3, rubrik A-ydelser.",
+      "lines": [ { "name": "Konsulentydelse", "quantity": 1, "unit_price": 8000, "tax": "DK-P-EU-SERVICES", "account": "7160" } ]
+    },
+    {
+      "ref": "P5", "type": "purchase_invoice", "contact": "leverandoer-gb", "date": "2026-11-02",
+      "why": "Køb af et softwareabonnement fra en leverandør uden for EU: omvendt betalingspligt efter § 16, stk. 1 og § 46, stk. 1, nr. 3, uden for rubrik A, som kun dækker EU-lande.",
+      "lines": [ { "name": "Softwareabonnement", "quantity": 1, "unit_price": 4000, "tax": "DK-P-NONEU-SERVICES", "account": "7170" } ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "E1", "direction": "inbound", "date": "2026-01-25", "amount": 10000,
+      "contact": "kunde-dk", "journal": "BNK", "match": "V1",
+      "why": "En indbetaling, der lukker V1 præcist."
+    },
+    {
+      "ref": "E2", "direction": "outbound", "date": "2026-02-05", "amount": 7500,
+      "contact": "leverandoer-dk", "journal": "BNK", "match": "P1",
+      "why": "En udbetaling, der lukker P1 præcist."
+    },
+    {
+      "ref": "E3", "direction": "inbound", "date": "2026-10-05", "amount": 5000,
+      "contact": "kunde-no", "journal": "BNK", "match": null,
+      "why": "En indbetaling fra den norske kunde, der endnu ikke er afstemt mod en bestemt faktura — et åbent mellemværende, der viser en ubetalt post ved siden af de lukkede."
+    }
+  ]
+}

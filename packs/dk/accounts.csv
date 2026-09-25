@@ -1,0 +1,137 @@
+code,parent,type,reconcilable,name,sequence
+1010,,asset_fixed,false,Erhvervede koncessioner patenter licenser og lignende rettigheder,10
+1015,,asset_fixed,false,Software,15
+1020,,asset_fixed,false,Goodwill,20
+1030,,asset_fixed,false,Færdiggjorte udviklingsprojekter,30
+1040,,asset_fixed,false,Udviklingsprojekter under udførelse,40
+1110,,asset_fixed,false,Grunde og bygninger,50
+1120,,asset_fixed,false,Produktionsanlæg og maskiner,60
+1125,,asset_fixed,false,Indretning af lejede lokaler,65
+1130,,asset_fixed,false,Andre anlæg driftsmateriel og inventar,70
+1135,,asset_fixed,false,Biler,75
+1140,,asset_fixed,false,Materielle anlægsaktiver under udførelse,80
+1210,,asset_non_current,false,Kapitalandele i tilknyttede virksomheder,90
+1220,,asset_non_current,false,Andre værdipapirer og kapitalandele — anlæg,100
+1230,,asset_non_current,false,Andre tilgodehavender — anlæg,110
+1240,,asset_non_current,false,Deposita,115
+1250,,asset_non_current,false,Udskudt skatteaktiv,118
+2010,,asset_current,false,Råvarer og hjælpematerialer,120
+2015,,asset_current,false,Emballage,125
+2020,,asset_current,false,Varer under fremstilling,130
+2025,,asset_current,false,Halvfabrikata,135
+2030,,asset_current,false,Fremstillede varer og handelsvarer,140
+2040,,asset_current,false,Hensættelse til ukurante varer,145
+2100,,asset_receivable,true,Tilgodehavender fra salg og tjenesteydelser,150
+2101,,asset_current,false,Hensættelse til tab på debitorer,152
+2110,,asset_current,false,Tilgodehavender hos tilknyttede virksomheder,160
+2115,,asset_current,false,Tilgodehavender hos associerede virksomheder,165
+2120,,asset_current,false,Andre tilgodehavender,170
+2125,,asset_current,false,Tilgodehavende udbytte,172
+2130,,asset_prepayments,false,Periodeafgrænsningsposter — aktiv,180
+2140,,asset_current,false,Igangværende arbejder for fremmed regning,185
+2160,,asset_current,false,Indgående moms — købsmoms,190
+2170,,asset_current,false,Afgift af varekøb og ydelseskøb fra udlandet — indgående del,195
+2180,,asset_current,false,Andre tilgodehavender hos det offentlige,197
+2199,,asset_current,true,Tilgodehavende moms — afregningskonto,200
+2200,,asset_current,false,Andre værdipapirer og kapitalandele — omsætning,210
+2210,,asset_current,false,Børsnoterede obligationer,215
+2310,,asset_cash,false,Bankindestående i DKK,220
+2311,,asset_cash,false,Bankindestående — opsparingskonto,222
+2320,,asset_cash,false,Bankindestående i fremmed valuta,230
+2330,,asset_cash,false,Kassebeholdning,240
+2340,,asset_cash,false,Girokonto,245
+3000,,equity,false,Virksomhedskapital,250
+3010,,equity,false,Overkurs ved emission,260
+3020,,equity,false,Reserve for opskrivninger,270
+3030,,equity,false,Andre reserver,280
+3040,,equity,false,Reserve for udviklingsomkostninger,285
+3045,,equity,false,Vedtægtsmæssige reserver,288
+3090,,equity_retained,false,Overført overskud eller underskud,290
+4010,,liability_non_current,false,Hensættelse til pension og lignende forpligtelser,300
+4015,,liability_non_current,false,Hensættelse til garantiforpligtelser,305
+4020,,liability_non_current,false,Hensættelse til udskudt skat,310
+4025,,liability_non_current,false,Hensættelse til tab på igangværende arbejder,315
+4030,,liability_non_current,false,Andre hensatte forpligtelser,320
+4110,,liability_non_current,false,Gæld til kreditinstitutter — langfristet del,330
+4115,,liability_non_current,false,Gæld til realkreditinstitutter — langfristet del,335
+4120,,liability_non_current,false,Anden langfristet gæld,340
+4125,,liability_non_current,false,Leasingforpligtelse — langfristet del,345
+4130,,liability_non_current,false,Gæld til virksomhedsdeltagere og ledelse — langfristet,350
+4135,,liability_non_current,false,Konvertible gældsbreve,355
+5010,,liability_current,false,Gæld til kreditinstitutter — kortfristet del,360
+5015,,liability_current,false,Gæld til realkreditinstitutter — kortfristet del,365
+5020,,liability_current,false,Kassekredit,370
+5025,,liability_current,false,Leasingforpligtelse — kortfristet del,375
+5100,,liability_payable,true,Leverandører af varer og tjenesteydelser,380
+5105,,liability_current,false,Leverandørgæld til tilknyttede virksomheder,385
+5150,,liability_current,false,Modtagne forudbetalinger fra kunder,390
+5155,,liability_current,false,Deposita fra kunder,392
+5160,,liability_current,false,Udgående moms — salgsmoms,400
+5170,,liability_current,false,Afgift af varekøb og ydelseskøb fra udlandet — udgående del,405
+5180,,liability_current,false,Skyldig løn,407
+5190,,liability_current,false,Skyldige feriepenge,408
+5199,,liability_current,true,Skyldig moms — afregningskonto,410
+5200,,liability_current,false,Skyldigt ATP-bidrag,415
+5210,,liability_current,false,Skyldig A-skat og AM-bidrag,420
+5220,,liability_current,false,Anden gæld,430
+5225,,liability_current,false,Skyldige renter,432
+5230,,liability_current,false,Periodeafgrænsningsposter — passiv,440
+5235,,liability_current,false,Anden gæld til det offentlige,442
+5240,,liability_current,false,Gæld til virksomhedsdeltagere og ledelse — kortfristet,450
+5250,,liability_current,false,Mellemregning under afklaring,460
+6000,,income,false,Salg af varer og ydelser — indland,470
+6005,,income,false,Salg til tilknyttede virksomheder,472
+6010,,income,false,Salg af varer — andre EU-lande,480
+6015,,income,false,Salg af ydelser — indland,485
+6020,,income,false,Salg af ydelser — andre EU-lande,490
+6030,,income,false,Salg af varer og ydelser — uden for EU (eksport),500
+6040,,income,false,Udlejningsindtægter — momsfri,510
+6900,,income_other,false,Andre driftsindtægter,520
+6910,,income_other,false,Lejeindtægter — momspligtig,522
+6920,,income_other,false,Avance ved salg af anlægsaktiver,524
+6930,,income_other,false,Offentlige tilskud,526
+7010,,expense_direct_cost,false,Varekøb — indland,530
+7015,,expense_direct_cost,false,Varekøb — uden for EU (import),535
+7020,,expense_direct_cost,false,Varekøb — andre EU-lande,540
+7025,,expense_direct_cost,false,Fragt og told,545
+7030,,expense_direct_cost,false,Fremmed arbejde,550
+7035,,expense_direct_cost,false,Underleverandører,555
+7110,,expense,false,Lokaleomkostninger,560
+7115,,expense,false,Husleje,562
+7120,,expense,false,Kontorhold og it,570
+7125,,expense,false,El vand og varme,572
+7130,,expense,false,Salgs- og rejseomkostninger,580
+7135,,expense,false,Rengøring,582
+7140,,expense,false,Autodrift,590
+7145,,expense,false,Reparation og vedligeholdelse,592
+7150,,expense,false,Forsikringer,600
+7155,,expense,false,Marketing og annoncer,602
+7160,,expense,false,Køb af ydelser — andre EU-lande,610
+7165,,expense,false,Telefon og internet,612
+7170,,expense,false,Køb af ydelser — uden for EU,620
+7175,,expense,false,Kontingenter og abonnementer,622
+7180,,expense,false,Revisor og advokat,630
+7185,,expense,false,Småanskaffelser,632
+7195,,expense,false,Porto og gebyrer,635
+7197,,expense,false,Kursus og uddannelse,638
+7210,,expense,false,Lønninger,640
+7215,,expense,false,Feriepenge,645
+7220,,expense,false,Pensioner,650
+7225,,expense,false,ATP-bidrag,655
+7230,,expense,false,Andre omkostninger til social sikring,660
+7235,,expense,false,Personaleforsikringer,665
+7310,,expense_depreciation,false,Af- og nedskrivninger af materielle og immaterielle anlægsaktiver,670
+7315,,expense_depreciation,false,Nedskrivning af anlægsaktiver,672
+7900,,expense,false,Andre driftsomkostninger,680
+7910,,expense,false,Tab på debitorer,682
+8010,,income_other,false,Andre finansielle indtægter,690
+8015,,income_other,false,Renteindtægter — bank,692
+8020,,income_other,false,Valutakursgevinster,700
+8090,,income_other,false,Rundingsdifferencer,710
+8110,,expense,false,Øvrige finansielle omkostninger,720
+8115,,expense,false,Renteomkostninger — kreditinstitutter,722
+8120,,expense,false,Valutakurstab,730
+8200,,expense,false,Skat af årets resultat,740
+8210,,expense,false,Udskudt skat — årets regulering,745
+8300,,expense,false,Andre skatter,750
+8310,,expense,false,Ejendomsskatter,755

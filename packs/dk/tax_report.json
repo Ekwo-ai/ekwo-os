@@ -1,0 +1,99 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "DK-MOMS",
+  "name": "Momsangivelse",
+  "period": ["month", "quarter", "half_year"],
+  "valid_from": "1992-01-01",
+  "legal_reference": "Momsloven, § 57 — afgiftsperioden er kalendermåneden for virksomheder, hvis samlede afgiftspligtige leverancer overstiger 50 mio. kr. årligt; kalenderkvartalet for virksomheder, hvis leverancer overstiger 5 mio. kr., men ikke 50 mio. kr. årligt; og halvåret for virksomheder, hvis leverancer ikke overstiger 5 mio. kr. årligt. Loven giver ikke én afgiftsperiode til alle virksomheder, hvorfor pakken ikke angiver period_default",
+  "source": "momsloven",
+  "deadline": {
+    "rule": "day_of_month_after_period",
+    "day": 25,
+    "legal_reference": "Momsloven, § 57, stk. 1 — den månedlige angivelse skal foretages senest den 25. i måneden efter afgiftsperiodens udløb (med en forlængelse til 1 måned og 17 dage for juni). § 57, stk. 3 og 4 giver kvartalsvise og halvårlige afgiftsperioder en senere frist, den 1. i den tredje måned efter periodens udløb, som dette formats tre lukkede regler ikke kan udtrykke (to måneder ud, ikke én) — se docs/international.md, afsnittet »From Denmark«. Den 25. er derfor aldrig senere end loven, og typisk tidligere for en kvartals- eller halvårsangiver, efter samme løsning som packs/au/ vælger for sin egen flercadence-frist",
+    "source": "momsloven"
+  },
+  "boxes": [
+    {
+      "box": "salgs",
+      "kind": "tax",
+      "name": "Salgsmoms (udgående moms)",
+      "sequence": 10,
+      "legal_reference": "Hjælpetekster til momsangivelsen — Salgsmoms (Udgående moms): »Her skriver du den moms, du har opkrævet ved dit salg af varer og ydelser i momsperioden«",
+      "source": "momsangivelsen-hjaelp"
+    },
+    {
+      "box": "eumoms",
+      "kind": "tax",
+      "name": "Moms af varekøb i udlandet",
+      "sequence": 20,
+      "legal_reference": "Momsbekendtgørelsen, § 76, stk. 1, nr. 3 og § 76, stk. 5 — kontoen for afgift af varekøb fra udlandet omfatter afgiften af EU-erhvervelser af varer, jf. momslovens § 11. Hjælpetekster til momsangivelsen: »Momsen af varekøb fra momsregistrerede virksomheder i andre EU-lande (25 % af det beløb, du indberetter i rubrik A – varer)«",
+      "source": "momsbekendtgoerelsen"
+    },
+    {
+      "box": "ydmoms",
+      "kind": "tax",
+      "name": "Moms af ydelseskøb i udlandet med omvendt betalingspligt",
+      "sequence": 30,
+      "legal_reference": "Momsbekendtgørelsen, § 76, stk. 1, nr. 4 og § 76, stk. 6 — kontoen for afgift af køb af ydelser fra udlandet med omvendt betalingspligt efter momslovens § 46, stk. 1, nr. 3, uden forskel på om leverandøren er etableret i et andet EU-land eller uden for EU. Hjælpetekster til momsangivelsen: »Du beregner momsen med 25 % af ydelsernes fakturaværdi«",
+      "source": "momsangivelsen-hjaelp"
+    },
+    {
+      "box": "koebs",
+      "kind": "tax",
+      "name": "Købsmoms (indgående moms)",
+      "sequence": 40,
+      "legal_reference": "Momsloven, § 37, stk. 1. Hjælpetekster til momsangivelsen — Købsmoms (indgående moms): »Her skriver du momsen af de fradragsberettigede køb, du har haft i momsperioden … Hvis du har indtastet moms af køb i udlandet i felterne ovenfor, kan du også trække disse momsbeløb fra sammen med momsen af dine danske køb«",
+      "source": "momsangivelsen-hjaelp"
+    },
+    {
+      "box": "ialt",
+      "kind": "total",
+      "name": "Momstilsvar (moms i alt)",
+      "sequence": 50,
+      "plus": ["salgs", "eumoms", "ydmoms"],
+      "minus": ["koebs"],
+      "legal_reference": "Momsloven, § 56, stk. 1 — den samlede afgiftspligtiges udgående afgift med fradrag af indgående afgift efter kapitel 9 er virksomhedens afgiftstilsvar for perioden. Hjælpetekster til momsangivelsen — Moms i alt: »Feltet viser beløbet af din samlede moms på grundlag af de tal, du har indtastet i felterne ovenfor. Hvis beløbet er positivt, betyder det, at du skal betale, og er det negativt, har du penge til gode«, hvorfor boksen ikke bundes ved nul",
+      "source": "momsloven"
+    },
+    {
+      "box": "avarer",
+      "kind": "base",
+      "name": "Rubrik A – varer: værdi af varekøb i andre EU-lande",
+      "sequence": 60,
+      "legal_reference": "Momsbekendtgørelsen, § 79, stk. 1, nr. 1 og stk. 2 — værdien uden afgift af erhvervelse af varer fra andre EU-lande, jf. momslovens § 11",
+      "source": "momsbekendtgoerelsen"
+    },
+    {
+      "box": "aydels",
+      "kind": "base",
+      "name": "Rubrik A – ydelser: værdi af ydelseskøb i andre EU-lande",
+      "sequence": 70,
+      "legal_reference": "Momsbekendtgørelsen, § 79, stk. 1, nr. 2 og stk. 3 — værdien uden afgift af køb af ydelser fra andre EU-lande, når køberen er betalingspligtig for afgiften efter momslovens § 46, stk. 1, nr. 3",
+      "source": "momsbekendtgoerelsen"
+    },
+    {
+      "box": "bvarer",
+      "kind": "base",
+      "name": "Rubrik B – varer, EU-salgsangivelse",
+      "sequence": 80,
+      "legal_reference": "Momsbekendtgørelsen, § 79, stk. 1, nr. 3 og stk. 4 — værdien uden afgift af leverancer af varer til registrerede købere i andre EU-lande, jf. momslovens § 34, stk. 1, nr. 1-4",
+      "source": "momsbekendtgoerelsen"
+    },
+    {
+      "box": "bydels",
+      "kind": "base",
+      "name": "Rubrik B – ydelser",
+      "sequence": 90,
+      "legal_reference": "Momsbekendtgørelsen, § 79, stk. 1, nr. 5 og stk. 6 — værdien uden afgift af leverancer af ydelser til andre EU-lande, hvor køberen er betalingspligtig for afgiften, idet leveringsstedet er bestemt efter momslovens § 16, stk. 1",
+      "source": "momsbekendtgoerelsen"
+    },
+    {
+      "box": "c",
+      "kind": "base",
+      "name": "Rubrik C: andre varer og ydelser leveret uden afgift her i landet, i andre EU-lande og i lande uden for EU",
+      "sequence": 100,
+      "legal_reference": "Momsbekendtgørelsen, § 79, stk. 1, nr. 6 og stk. 7 — værdien uden afgift af leverancer af andre varer og ydelser til købere her i landet, til andre EU-lande og til steder uden for EU. Rubrik C er et opsamlingsfelt for det momsfri salg, der ikke skal medtages i en af de tre B-rubrikker: momsfri udførsel efter § 34, stk. 1, nr. 5-21, og momsfri leverancer efter § 13",
+      "source": "momsbekendtgoerelsen"
+    }
+  ]
+}
