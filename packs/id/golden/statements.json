@@ -1,0 +1,82 @@
+{
+  "statements": [
+    {
+      "code": "ID-LK-BS",
+      "from": "2026-01-01",
+      "to": "2026-03-31",
+      "lines": {
+        "TOTAL-ASET": "1116230000",
+        "ASET-LANCAR": "1076230000",
+        "KAS-BANK": "53300000",
+        "PIUTANG": "1015450000",
+        "PPN-MASUKAN": "7480000",
+        "PERSEDIAAN": "0",
+        "ASET-LANCAR-LAIN": "0",
+        "ASET-TIDAK-LANCAR": "40000000",
+        "ASET-TETAP": "40000000",
+        "ASET-LAIN": "0",
+        "TOTAL-PASIVA": "169230000",
+        "TOTAL-LIABILITAS": "169230000",
+        "LIABILITAS-LANCAR": "169230000",
+        "LIABILITAS-TIDAK-LANCAR": "0",
+        "TOTAL-EKUITAS": "0"
+      }
+    },
+    {
+      "code": "ID-LK-LR",
+      "from": "2026-01-01",
+      "to": "2026-03-31",
+      "lines": {
+        "PENDAPATAN-NETO": "990000000",
+        "HPP": "33000000",
+        "LABA-KOTOR": "957000000",
+        "BEBAN-USAHA": "10000000",
+        "LABA-USAHA": "947000000",
+        "PENDAPATAN-LAIN": "0",
+        "BEBAN-LAIN": "0",
+        "LABA-SEBELUM-PAJAK": "947000000",
+        "BEBAN-PPH": "0",
+        "LABA-BERSIH": "947000000"
+      }
+    },
+    {
+      "code": "IFRS-SME-BS",
+      "from": "2026-01-01",
+      "to": "2026-03-31",
+      "lines": {
+        "A-NC-FIX": "40000000",
+        "A-NC-OTH": "0",
+        "A-NC": "40000000",
+        "A-C-REC": "1015450000",
+        "A-C-OTH": "7480000",
+        "A-C-CASH": "53300000",
+        "A-C": "1076230000",
+        "A-TOT": "1116230000",
+        "E-CAP": "0",
+        "E-RET": "0",
+        "E-RESULT": "947000000",
+        "E-TOT": "947000000",
+        "L-NC": "0",
+        "L-C-PAY": "62780000",
+        "L-C-OTH": "106450000",
+        "L-C": "169230000",
+        "L-TOT": "169230000",
+        "EL-TOT": "1116230000"
+      }
+    },
+    {
+      "code": "IFRS-SME-IS",
+      "from": "2026-01-01",
+      "to": "2026-03-31",
+      "lines": {
+        "REV": "990000000",
+        "COST": "33000000",
+        "GROSS": "957000000",
+        "OTH-INC": "0",
+        "OPEX": "10000000",
+        "DEPR": "0",
+        "PROFIT": "947000000"
+      }
+    }
+  ]
+}

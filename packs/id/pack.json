@@ -1,0 +1,207 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "ID",
+  "name": "Indonesia",
+  "version": "0.1.0",
+  "schema_min": "20260923110000",
+  "seed_sequence": 90,
+  "released_at": "2026-09-25",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "vat-law-42-2009",
+        "title": "Undang-Undang Nomor 42 Tahun 2009 tentang Perubahan Ketiga atas Undang-Undang Nomor 8 Tahun 1983 tentang Pajak Pertambahan Nilai Barang dan Jasa dan Pajak Penjualan atas Barang Mewah",
+        "publisher": "Badan Pemeriksa Keuangan Republik Indonesia — JDIH BPK",
+        "url": "https://peraturan.bpk.go.id/Details/38787/uu-no-42-tahun-2009",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "vat-law-hpp-7-2021",
+        "title": "Undang-Undang Nomor 7 Tahun 2021 tentang Harmonisasi Peraturan Perpajakan, Bab IV — Pajak Pertambahan Nilai, mengubah Undang-Undang Nomor 8 Tahun 1983 (Pasal 7, 9, 4A, 16B dan lain-lain)",
+        "publisher": "Sekretariat Negara — JDIH BPK",
+        "url": "https://peraturan.bpk.go.id/Download/178620/UU%20Nomor%207%20Tahun%202021.pdf",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "kup-law-6-1983",
+        "title": "Undang-Undang Nomor 6 Tahun 1983 tentang Ketentuan Umum dan Tata Cara Perpajakan, sebagaimana diubah terakhir dengan Undang-Undang Nomor 7 Tahun 2021, Pasal 3 ayat (3) huruf b — batas waktu penyampaian Surat Pemberitahuan Masa",
+        "publisher": "Badan Pemeriksa Keuangan Republik Indonesia — JDIH BPK",
+        "url": "https://peraturan.bpk.go.id/Details/46986/uu-no-6-tahun-1983",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "pmk-131-2024",
+        "title": "Peraturan Menteri Keuangan Nomor 131 Tahun 2024 tentang Perlakuan Pajak Pertambahan Nilai atas Impor Barang Kena Pajak, Penyerahan Barang Kena Pajak, Penyerahan Jasa Kena Pajak, Pemanfaatan Barang Kena Pajak Tidak Berwujud dari Luar Daerah Pabean di Dalam Daerah Pabean, dan Pemanfaatan Jasa Kena Pajak dari Luar Daerah Pabean di Dalam Daerah Pabean",
+        "publisher": "Kementerian Keuangan — JDIH Kemenkeu",
+        "url": "https://jdih.kemenkeu.go.id/api/download/ad276b82-94bd-4197-b409-af33e2842cd6/2024pmkeuangan131.pdf",
+        "consulted_on": "2026-09-25",
+        "kind": "regulation"
+      },
+      {
+        "key": "pp-49-2022",
+        "title": "Peraturan Pemerintah Nomor 49 Tahun 2022 tentang Pajak Pertambahan Nilai Dibebaskan dan Pajak Pertambahan Nilai atau Pajak Pertambahan Nilai dan Pajak Penjualan atas Barang Mewah Tidak Dipungut atas Impor dan/atau Penyerahan Barang Kena Pajak Tertentu dan/atau Penyerahan Jasa Kena Pajak Tertentu dan/atau Pemanfaatan Jasa Kena Pajak Tertentu dari Luar Daerah Pabean",
+        "publisher": "Sekretariat Negara — JDIH BPK",
+        "url": "https://peraturan.bpk.go.id/Download/280043/PP%20Nomor%2049%20Tahun%202022.pdf",
+        "consulted_on": "2026-09-25",
+        "kind": "regulation"
+      },
+      {
+        "key": "pmk-197-2013",
+        "title": "Peraturan Menteri Keuangan Nomor 197/PMK.03/2013 tentang Perubahan atas Peraturan Menteri Keuangan Nomor 68/PMK.03/2010 tentang Batasan Pengusaha Kecil Pajak Pertambahan Nilai",
+        "publisher": "Kementerian Keuangan — JDIH BPK",
+        "url": "https://peraturan.bpk.go.id/Details/150339/pmk-no-197pmk032013",
+        "consulted_on": "2026-09-25",
+        "kind": "regulation"
+      },
+      {
+        "key": "pmk-81-2024-coretax",
+        "title": "Peraturan Menteri Keuangan Nomor 81 Tahun 2024 tentang Ketentuan Perpajakan dalam Rangka Pelaksanaan Sistem Inti Administrasi Perpajakan (Coretax)",
+        "publisher": "Kementerian Keuangan — JDIH Nasional",
+        "url": "https://www.jdihn.go.id/api/download/637047be-3dba-4347-aba1-98fa7fd5ab3f/2024pmkeuangan081.pdf",
+        "consulted_on": "2026-09-25",
+        "kind": "regulation"
+      },
+      {
+        "key": "per-11-2025-efaktur",
+        "title": "Peraturan Direktur Jenderal Pajak Nomor PER-11/PJ/2025 tentang Ketentuan Pelaporan Pajak Penghasilan, Pajak Pertambahan Nilai, Pajak Penjualan atas Barang Mewah, dan Bea Meterai dalam Rangka Pelaksanaan Sistem Inti Administrasi Perpajakan — Pasal 44, batas unggah Faktur Pajak",
+        "publisher": "Direktorat Jenderal Pajak",
+        "url": "https://www.pajak.go.id/sites/default/files/lampiran/PER-11_PJ_2025_0.pdf",
+        "consulted_on": "2026-09-25",
+        "kind": "regulation"
+      },
+      {
+        "key": "vat-return-form-1111",
+        "title": "Formulir 1111 — Surat Pemberitahuan Masa Pajak Pertambahan Nilai (SPT Masa PPN), lampiran Peraturan Direktur Jenderal Pajak Nomor PER-29/PJ/2015",
+        "publisher": "Direktorat Jenderal Pajak",
+        "url": "https://www.pajak.go.id/en/node/10244",
+        "consulted_on": "2026-09-25",
+        "kind": "form"
+      },
+      {
+        "key": "coretax-portal",
+        "title": "Coretax DJP — sistem inti administrasi perpajakan: pembuatan Faktur Pajak elektronik dan pelaporan SPT Masa PPN",
+        "publisher": "Direktorat Jenderal Pajak",
+        "url": "https://coretaxdjp.pajak.go.id/",
+        "consulted_on": "2026-09-25",
+        "kind": "portal"
+      },
+      {
+        "key": "sak-iai",
+        "title": "Kerangka Standar Pelaporan Keuangan Indonesia dan PSAK 201 (dahulu PSAK 1) — Penyajian Laporan Keuangan; SAK EMKM — Standar Akuntansi Keuangan Entitas Mikro, Kecil, dan Menengah",
+        "publisher": "Dewan Standar Akuntansi Keuangan — Ikatan Akuntan Indonesia",
+        "url": "https://web.iaiglobal.or.id/SAK-IAI",
+        "consulted_on": "2026-09-25",
+        "kind": "standard"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "IDR",
+    "language": "id",
+    "rounding_method": "half_up",
+    "closing_style": "retained_earnings",
+    "fiscal_year_default": "calendar",
+    "roles": {
+      "receivable": "1100",
+      "payable": "2000",
+      "suspense": "2400",
+      "rounding": "7540",
+      "retained_earnings": "3200",
+      "sales": "4000",
+      "purchase": "5000",
+      "bank": "1021",
+      "cash": "1010",
+      "fx_gain": "7020",
+      "fx_loss": "7520",
+      "asset_disposal_gain": "7030",
+      "asset_disposal_loss": "7530",
+      "tax_payable": "2110",
+      "tax_receivable": "1150"
+    },
+    "journal_roles": {
+      "sales": "SAL",
+      "purchase": "PUR",
+      "miscellaneous": "GEN",
+      "opening": "OPN"
+    }
+  },
+  "languages": [],
+  "journals": [
+    { "code": "SAL", "type": "sales", "name": "Jurnal penjualan", "sequence": 10 },
+    { "code": "PUR", "type": "purchase", "name": "Jurnal pembelian", "sequence": 20 },
+    { "code": "BNK", "type": "bank", "name": "Jurnal bank", "sequence": 30 },
+    { "code": "CSH", "type": "cash", "name": "Jurnal kas kecil", "sequence": 40 },
+    { "code": "GEN", "type": "general", "name": "Jurnal umum", "sequence": 50 },
+    { "code": "OPN", "type": "opening", "name": "Saldo awal", "sequence": 60 }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Bagan akun umum Indonesia",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": ["ID-LK-BS", "ID-LK-LR"],
+      "legal_reference": "Indonesia tidak mewajibkan satu bagan akun tunggal oleh undang-undang: Undang-Undang Nomor 40 Tahun 2007 tentang Perseroan Terbatas dan Undang-Undang Nomor 8 Tahun 1997 tentang Dokumen Perusahaan mewajibkan pembukuan dan penyimpanan dokumen, dan Kerangka Standar Pelaporan Keuangan Indonesia serta PSAK 201 (dahulu PSAK 1, disahkan oleh Dewan Standar Akuntansi Keuangan — Ikatan Akuntan Indonesia) menetapkan struktur dan isi minimal laporan keuangan, tidak pernah kode akun bernomor. Bagan akun ini karena itu original, empat digit per kelas (1 aset, 2 liabilitas, 3 ekuitas, 4 pendapatan, 5 beban pokok penjualan, 6 beban usaha, 7 pendapatan/beban lain-lain, 8 beban pajak penghasilan), mengikuti semangat yang sama dengan packs/th dan packs/sg untuk negara Asia Tenggara tanpa bagan akun yang diwajibkan undang-undang — lihat README.",
+      "source": "sak-iai"
+    }
+  ],
+  "documents": {
+    "numbering": "free",
+    "number_format": "{CODE}/{NNNN}/{MM}/{YYYY}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "invoice_if_issued",
+    "references": {
+      "numbering": {
+        "legal_reference": "Undang-Undang Nomor 42 Tahun 2009, Pasal 13 ayat (5) — Faktur Pajak harus mencantumkan nomor seri Faktur Pajak; sejak berlakunya Coretax (Peraturan Menteri Keuangan Nomor 81 Tahun 2024 dan Peraturan Direktur Jenderal Pajak Nomor PER-11/PJ/2025), nomor seri Faktur Pajak diterbitkan dan divalidasi oleh Coretax DJP saat faktur diunggah (lihat einvoicing di bawah); format di atas hanya menjelaskan nomor internal dokumen Ekwo sebelum divalidasi oleh Coretax, bukan nomor seri Faktur Pajak itu sendiri (13 digit, dialokasikan oleh DJP) — kesenjangan ini dicatat dalam docs/international.md.",
+        "source": "vat-law-42-2009"
+      },
+      "payment_terms": {
+        "legal_reference": "Tidak ditemukan ketentuan yang menetapkan jangka waktu pembayaran hukum baku antar-pelaku usaha tanpa kesepakatan pada sesi riset ini; pencarian tidak menyeluruh dan ketentuan semacam itu mungkin ada dalam Kitab Undang-Undang Hukum Perdata. legal_payment_days dan late_payment_reference dibiarkan kosong daripada ditebak."
+      },
+      "tax_point": {
+        "legal_reference": "Undang-Undang Nomor 42 Tahun 2009, Pasal 11 jo. Pasal 17 Peraturan Pemerintah Nomor 1 Tahun 2012 — terutangnya pajak atas penyerahan barang berwujud terjadi pada saat penyerahan barang, atau saat pembayaran jika pembayaran diterima sebelum penyerahan, atau saat Faktur Pajak dibuat jika lebih dahulu dari keduanya; atas jasa, pada saat mulai tersedianya fasilitas atau pemberian jasa, atau saat pembayaran jika lebih dahulu. `invoice_if_issued` adalah pendekatan terdekat dalam kosakata tertutup Ekwo: undang-undang pada prinsipnya mengacu pada penyerahan/pemberian jasa, kecuali pembayaran atau Faktur Pajak terjadi lebih dahulu — sesuatu yang tidak sepenuhnya tercakup baik oleh `delivery_date` maupun `earliest_of_delivery_or_payment` sendiri (tidak ada satu pun dari lima kata yang menyatakan \"penyerahan, kecuali faktur atau pembayaran lebih dahulu, mana yang lebih cepat\" dengan Faktur Pajak sebagai pemicu tersendiri) — kesenjangan ini dicatat dalam docs/international.md.",
+        "source": "vat-law-42-2009"
+      }
+    },
+    "mentions": [
+      {
+        "code": "export",
+        "applies_when": "export",
+        "text": "Ekspor Barang Kena Pajak/Jasa Kena Pajak dikenai Pajak Pertambahan Nilai dengan tarif 0% (nol persen).",
+        "sequence": 10,
+        "legal_reference": "Undang-Undang Nomor 42 Tahun 2009, Pasal 7 ayat (2) sebagaimana diubah dengan Undang-Undang Nomor 7 Tahun 2021 — tarif 0% atas ekspor Barang Kena Pajak Berwujud, Barang Kena Pajak Tidak Berwujud, dan Jasa Kena Pajak.",
+        "source": "vat-law-hpp-7-2021"
+      },
+      {
+        "code": "exempt",
+        "applies_when": "exempt",
+        "text": "Penyerahan ini dibebaskan dari pengenaan Pajak Pertambahan Nilai.",
+        "sequence": 20,
+        "legal_reference": "Undang-Undang Nomor 42 Tahun 2009, Pasal 16B, dan Peraturan Pemerintah Nomor 49 Tahun 2022 — fasilitas Pajak Pertambahan Nilai dibebaskan atas impor dan/atau penyerahan Barang Kena Pajak tertentu dan/atau Jasa Kena Pajak tertentu.",
+        "source": "pp-49-2022"
+      },
+      {
+        "code": "reverse_charge",
+        "applies_when": "reverse_charge",
+        "text": "Pajak Pertambahan Nilai atas pemanfaatan Jasa Kena Pajak dari luar Daerah Pabean ini dipungut, disetor, dan dilaporkan sendiri oleh pihak yang memanfaatkan.",
+        "sequence": 30,
+        "legal_reference": "Undang-Undang Nomor 42 Tahun 2009, Pasal 3A ayat (3) — Pajak Pertambahan Nilai yang terutang atas pemanfaatan Barang Kena Pajak Tidak Berwujud dan/atau Jasa Kena Pajak dari luar Daerah Pabean di dalam Daerah Pabean wajib dipungut, disetor, dan dilaporkan oleh orang pribadi atau badan yang memanfaatkannya.",
+        "source": "vat-law-42-2009"
+      }
+    ]
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "Setiap Pengusaha Kena Pajak (PKP) wajib membuat Faktur Pajak untuk setiap penyerahan (Undang-Undang Nomor 42 Tahun 2009, Pasal 13), dan sejak Peraturan Menteri Keuangan Nomor 81 Tahun 2024 (berlaku 1 Januari 2025) serta Peraturan Direktur Jenderal Pajak Nomor PER-11/PJ/2025, setiap Faktur Pajak dibuat dan DIVALIDASI secara real time oleh Coretax DJP (coretaxdjp.pajak.go.id) sebelum sampai ke pembeli — sebuah mekanisme clearance oleh otoritas pajak, dan bukan format terstruktur yang dipertukarkan langsung antar pihak. Tidak ada `profile` Ekwo (peppol-bis-3, factur-x-en16931, pint-*) yang menggambarkan mekanisme ini: mendeklarasikan salah satunya akan membuat describePack() menyatakan bahwa Ekwo menulis dan mengirimkan Faktur Pajak yang sah, padahal tidak — pilihan yang sama dengan packs/vn (Nghị định 123/2020/NĐ-CP) dan packs/mx untuk sistem clearance mereka sendiri. `party_scheme` dan `vat_scheme` dibiarkan kosong: identitas wajib pajak Indonesia (NPWP, 16 digit sejak Coretax) bukan register ISO 6523. Nomor seri Faktur Pajak (13 digit) dialokasikan oleh Coretax saat validasi, bukan oleh pack ini — lihat docs/international.md.",
+    "source": "pmk-81-2024-coretax"
+  }
+}

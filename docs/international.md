@@ -5527,3 +5527,85 @@ totals of boxes has no fraction to give it.
 non-EU pack's are; `vat_prefix` is null, since a Kenyan PIN carries no VAT
 prefix of that table's kind and this pack declares no e-invoicing profile that
 would need one.
+
+## From Indonesia
+
+### A rate multiplied by a second fraction of the base
+
+Peraturan Menteri Keuangan Nomor 131 Tahun 2024 does not lower the rate of
+Pajak Pertambahan Nilai for most goods and services: the nominal rate stays at
+12 % (Undang-Undang Nomor 42 Tahun 2009, Pasal 7 ayat (1)), and the tax base
+itself is redefined as "nilai lain" of 11/12 of the selling price (Pasal 2-3
+of the Regulation, under the authority Pasal 8A and Pasal 16G of the Law give
+the Ministry to define such a base). The arithmetic a business actually files
+is therefore a rate applied to a fraction of the ordinary base, not a lower
+rate applied to the ordinary base — 12 % × (11/12 × harga jual) — and it comes
+to the same figure as 11 % × harga jual only because the fraction happens to
+be the reciprocal of twelfths. `taxes.json` has one `rate` multiplied by one
+base with no second, tax-specific fraction of it: `postings[].factor` scales
+what reaches the ledger and the box, but there is no field that says "the
+*base itself* is eleven twelfths of what the line otherwise reads." `packs/id`
+declares the effective rate, `11`, directly on `ID-S-11` and `ID-P-11`, which
+reaches the right figure and loses the two-step working an auditor comparing
+this pack against a Coretax printout would expect to find. *Fix*: a
+`base_factor` beside `rate`, read the way `factor` already is on a posting,
+so a pack can state the law's own two numbers instead of the one they
+multiply to. Until then, a country that computes a tax base as a fraction of
+the price rather than at the price itself is one Ekwo can only approximate.
+
+### Three triggers, not two, for when the tax is due — met again
+
+Undang-Undang Nomor 42 Tahun 2009, Pasal 11, read with Peraturan Pemerintah
+Nomor 1 Tahun 2012, Pasal 17, fixes the tax point at the earliest of delivery
+(or the start of a service), payment received in advance, and the issuance of
+a Faktur Pajak — a third, independent trigger neither `delivery_date` nor
+`earliest_of_delivery_or_payment` can name, exactly the gap *From Vietnam* and
+*From Saudi Arabia* above already record for their own three-way rules.
+`packs/id` declares `invoice_if_issued`, the closest of the five words, and
+says in `documents.references.tax_point` why it is not exact: that value
+reads as "delivery, unless the country requires an invoice, in which case the
+invoice" (Belgium, Luxembourg), which is close but not identical to "delivery,
+unless a payment or an invoice comes first, whichever of the two". A fourth
+country asking the same question makes the case for the value proposed
+there — a genuine three-way trigger — rather than a sixth approximation.
+
+### A clearance system with no category to record, met again
+
+Coretax DJP validates a Faktur Pajak in real time and allocates its own
+thirteen-digit serial number at that moment, the same shape of fact
+*From Vietnam* records for Nghị định 123/2020/NĐ-CP: `einvoicing.profile` has
+no value for "the administration itself issues the document's identifying
+number as a condition of its validity", so `numbering` and `number_format`
+describe a number Coretax does not use, and a pack can only say so in prose.
+`packs/id` leaves `profile` null and explains the gap in `pack.json` and in
+its own README rather than picking the nearest Peppol-shaped word for it.
+
+### A government-appointed collector, and a bonded zone, met without a word for either
+
+Formulir 1111 prints two rows this pack does not reach: I.A.3, a supply whose
+Pajak Pertambahan Nilai is collected by a government-appointed Pemungut PPN
+rather than by the seller (Undang-Undang Nomor 42 Tahun 2009, Pasal 16A — a
+government treasury, a state-owned enterprise, a handful of other appointed
+bodies withhold the tax and remit it themselves), and I.A.4, a supply into a
+bonded zone or a special economic zone where the tax is suspended rather than
+charged (Peraturan Pemerintah on Kawasan Berikat and Kawasan Ekonomi Khusus).
+Neither is a reverse charge — the seller is not relieved of an intra-Union
+supply, and no VATEX-shaped reason applies — and neither is a rate of zero on
+an ordinary sale: the first moves *who* remits an ordinary domestic tax, the
+second suspends it by *where* the buyer is licensed to receive goods, and
+`treatment`'s closed vocabulary has a word for neither shape. `packs/id`
+carries the two boxes in `tax_report.json`, reachable by nothing, and names
+the gap rather than forcing `domestic_reverse_charge` (wrong: no intra-Union
+supply is exempted at the other end) or `not_subject` (wrong: the supply is
+taxable, only who pays or when differs) onto either case.
+
+### IDR and ID
+
+`IDR` is added to `00_currencies.sql` at zero decimals: the rupiah's minor
+unit, the sen, has not been issued since the 1950s and no price, invoice or
+return in current use states one. `ID` is added to `00_territories.sql`
+outside the common system of VAT, so `vat_category`, `exemption_code` and the
+five `intracom_*` treatments are read the way every non-EU pack's are.
+`vat_prefix` is null: an Indonesian taxpayer is addressed by its Nomor Pokok
+Wajib Pajak (NPWP, sixteen digits since Coretax), which carries no country
+prefix of that table's kind and no ISO 6523 identifier of its own.

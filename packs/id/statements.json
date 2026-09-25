@@ -1,0 +1,269 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/statements",
+  "statements": [
+    {
+      "code": "ID-LK-BS",
+      "kind": "balance_sheet",
+      "framework": "ID-SAK",
+      "taxonomy": null,
+      "name": "Laporan Posisi Keuangan",
+      "legal_reference": "Kerangka Standar Pelaporan Keuangan Indonesia dan PSAK 201 (dahulu PSAK 1) - Penyajian Laporan Keuangan, disahkan oleh Dewan Standar Akuntansi Keuangan - Ikatan Akuntan Indonesia, menetapkan pemisahan aset dan liabilitas menjadi lancar/tidak lancar dan komponen minimal laporan posisi keuangan, tanpa menetapkan nomor kode akun. Baris di bawah ini mengelompokkan akun bagan akun original pack ini (accounts.csv) menurut struktur umum tersebut; isi baris demi baris PSAK 201 yang lengkap, dan SAK EMKM sebagai kerangka yang lebih sederhana bagi entitas mikro, kecil dan menengah, tidak ditelusuri secara terperinci pada sesi riset ini - lihat README.",
+      "source": "sak-iai",
+      "lines": [
+        {
+          "code": "TOTAL-ASET",
+          "name": "TOTAL ASET",
+          "sequence": 10,
+          "is_total": true,
+          "plus": ["ASET-LANCAR", "ASET-TIDAK-LANCAR"],
+          "legal_reference": "Kerangka Standar Pelaporan Keuangan Indonesia - total aset.",
+          "source": "sak-iai"
+        },
+        {
+          "code": "ASET-LANCAR",
+          "parent": "TOTAL-ASET",
+          "name": "Aset Lancar",
+          "sequence": 20,
+          "is_total": true,
+          "plus": ["KAS-BANK", "PIUTANG", "PPN-MASUKAN", "PERSEDIAAN", "ASET-LANCAR-LAIN"],
+          "legal_reference": "Kerangka Standar Pelaporan Keuangan Indonesia - klasifikasi aset lancar.",
+          "source": "sak-iai"
+        },
+        {
+          "code": "KAS-BANK",
+          "parent": "ASET-LANCAR",
+          "name": "Kas dan bank",
+          "sequence": 30,
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "1000", "code_to": "1099" }],
+          "legal_reference": "accounts.csv, kode 1000-1099.",
+          "source": "sak-iai"
+        },
+        {
+          "code": "PIUTANG",
+          "parent": "ASET-LANCAR",
+          "name": "Piutang usaha",
+          "sequence": 40,
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "1100", "code_to": "1149" }],
+          "legal_reference": "accounts.csv, kode 1100-1149.",
+          "source": "sak-iai"
+        },
+        {
+          "code": "PPN-MASUKAN",
+          "parent": "ASET-LANCAR",
+          "name": "Pajak Pertambahan Nilai Masukan",
+          "sequence": 50,
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "1150", "code_to": "1199" }],
+          "legal_reference": "accounts.csv, kode 1150-1199.",
+          "source": "sak-iai"
+        },
+        {
+          "code": "PERSEDIAAN",
+          "parent": "ASET-LANCAR",
+          "name": "Persediaan",
+          "sequence": 60,
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "1200", "code_to": "1249" }],
+          "legal_reference": "accounts.csv, kode 1200-1249.",
+          "source": "sak-iai"
+        },
+        {
+          "code": "ASET-LANCAR-LAIN",
+          "parent": "ASET-LANCAR",
+          "name": "Aset lancar lainnya",
+          "sequence": 70,
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "1250", "code_to": "1299" }],
+          "legal_reference": "accounts.csv, kode 1250-1299.",
+          "source": "sak-iai"
+        },
+        {
+          "code": "ASET-TIDAK-LANCAR",
+          "parent": "TOTAL-ASET",
+          "name": "Aset Tidak Lancar",
+          "sequence": 80,
+          "is_total": true,
+          "plus": ["ASET-TETAP", "ASET-LAIN"],
+          "legal_reference": "Kerangka Standar Pelaporan Keuangan Indonesia - klasifikasi aset tidak lancar.",
+          "source": "sak-iai"
+        },
+        {
+          "code": "ASET-TETAP",
+          "parent": "ASET-TIDAK-LANCAR",
+          "name": "Aset tetap (setelah akumulasi penyusutan)",
+          "sequence": 90,
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "1300", "code_to": "1399" }],
+          "legal_reference": "accounts.csv, kode 1300-1399, termasuk akumulasi penyusutan (1390).",
+          "source": "sak-iai"
+        },
+        {
+          "code": "ASET-LAIN",
+          "parent": "ASET-TIDAK-LANCAR",
+          "name": "Aset tidak lancar lainnya",
+          "sequence": 100,
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "1400", "code_to": "1499" }],
+          "legal_reference": "accounts.csv, kode 1400-1499.",
+          "source": "sak-iai"
+        },
+        {
+          "code": "TOTAL-PASIVA",
+          "name": "TOTAL LIABILITAS DAN EKUITAS",
+          "sequence": 110,
+          "is_total": true,
+          "plus": ["TOTAL-LIABILITAS", "TOTAL-EKUITAS"],
+          "legal_reference": "Kerangka Standar Pelaporan Keuangan Indonesia - sama dengan TOTAL ASET pada tahun buku yang ditutup.",
+          "source": "sak-iai"
+        },
+        {
+          "code": "TOTAL-LIABILITAS",
+          "parent": "TOTAL-PASIVA",
+          "name": "Total Liabilitas",
+          "sequence": 120,
+          "is_total": true,
+          "plus": ["LIABILITAS-LANCAR", "LIABILITAS-TIDAK-LANCAR"],
+          "legal_reference": "Kerangka Standar Pelaporan Keuangan Indonesia - total liabilitas.",
+          "source": "sak-iai"
+        },
+        {
+          "code": "LIABILITAS-LANCAR",
+          "parent": "TOTAL-LIABILITAS",
+          "name": "Liabilitas Jangka Pendek",
+          "sequence": 130,
+          "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "2000", "code_to": "2899" }],
+          "legal_reference": "accounts.csv, kode 2000-2899.",
+          "source": "sak-iai"
+        },
+        {
+          "code": "LIABILITAS-TIDAK-LANCAR",
+          "parent": "TOTAL-LIABILITAS",
+          "name": "Liabilitas Jangka Panjang",
+          "sequence": 140,
+          "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "2900", "code_to": "2999" }],
+          "legal_reference": "accounts.csv, kode 2900-2999.",
+          "source": "sak-iai"
+        },
+        {
+          "code": "TOTAL-EKUITAS",
+          "parent": "TOTAL-PASIVA",
+          "name": "Ekuitas",
+          "sequence": 150,
+          "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "3000", "code_to": "3999" }],
+          "legal_reference": "accounts.csv, kode 3000-3999.",
+          "source": "sak-iai"
+        }
+      ]
+    },
+    {
+      "code": "ID-LK-LR",
+      "kind": "income_statement",
+      "framework": "ID-SAK",
+      "taxonomy": null,
+      "name": "Laporan Laba Rugi",
+      "legal_reference": "Kerangka Standar Pelaporan Keuangan Indonesia dan PSAK 201 (dahulu PSAK 1) - Penyajian Laporan Keuangan; struktur di bawah adalah pengelompokan original berdasarkan kelas akun bagan akun ini (accounts.csv), bukan transkripsi baris demi baris dari suatu format resmi bernomor, karena tidak ada satu pun - lihat README.",
+      "source": "sak-iai",
+      "lines": [
+        {
+          "code": "PENDAPATAN-NETO",
+          "name": "Pendapatan usaha (neto)",
+          "sequence": 10,
+          "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "4000", "code_to": "4899" }],
+          "legal_reference": "accounts.csv, kode 4000-4899, termasuk retur dan potongan penjualan (4100).",
+          "source": "sak-iai"
+        },
+        {
+          "code": "HPP",
+          "name": "Beban pokok penjualan",
+          "sequence": 20,
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "5000", "code_to": "5999" }],
+          "legal_reference": "accounts.csv, kode 5000-5999.",
+          "source": "sak-iai"
+        },
+        {
+          "code": "LABA-KOTOR",
+          "name": "Laba Kotor",
+          "sequence": 30,
+          "is_total": true,
+          "plus": ["PENDAPATAN-NETO"],
+          "minus": ["HPP"],
+          "legal_reference": "Pendapatan usaha neto dikurangi beban pokok penjualan.",
+          "source": "sak-iai"
+        },
+        {
+          "code": "BEBAN-USAHA",
+          "name": "Beban Usaha",
+          "sequence": 40,
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "6000", "code_to": "6999" }],
+          "legal_reference": "accounts.csv, kode 6000-6999 (beban penjualan, administrasi dan umum, penyusutan).",
+          "source": "sak-iai"
+        },
+        {
+          "code": "LABA-USAHA",
+          "name": "Laba Usaha",
+          "sequence": 50,
+          "is_total": true,
+          "plus": ["LABA-KOTOR"],
+          "minus": ["BEBAN-USAHA"],
+          "legal_reference": "Laba kotor dikurangi beban usaha.",
+          "source": "sak-iai"
+        },
+        {
+          "code": "PENDAPATAN-LAIN",
+          "name": "Pendapatan lain-lain",
+          "sequence": 60,
+          "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "7000", "code_to": "7099" }],
+          "legal_reference": "accounts.csv, kode 7000-7099.",
+          "source": "sak-iai"
+        },
+        {
+          "code": "BEBAN-LAIN",
+          "name": "Beban lain-lain",
+          "sequence": 70,
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "7500", "code_to": "7599" }],
+          "legal_reference": "accounts.csv, kode 7500-7599.",
+          "source": "sak-iai"
+        },
+        {
+          "code": "LABA-SEBELUM-PAJAK",
+          "name": "Laba Sebelum Pajak Penghasilan",
+          "sequence": 80,
+          "is_total": true,
+          "plus": ["LABA-USAHA", "PENDAPATAN-LAIN"],
+          "minus": ["BEBAN-LAIN"],
+          "legal_reference": "Laba usaha ditambah pendapatan lain-lain dikurangi beban lain-lain.",
+          "source": "sak-iai"
+        },
+        {
+          "code": "BEBAN-PPH",
+          "name": "Beban Pajak Penghasilan",
+          "sequence": 90,
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "8000", "code_to": "8099" }],
+          "legal_reference": "accounts.csv, kode 8000-8099.",
+          "source": "sak-iai"
+        },
+        {
+          "code": "LABA-BERSIH",
+          "name": "Laba (Rugi) Bersih Tahun Berjalan",
+          "sequence": 100,
+          "is_total": true,
+          "plus": ["LABA-SEBELUM-PAJAK"],
+          "minus": ["BEBAN-PPH"],
+          "legal_reference": "Laba sebelum pajak penghasilan dikurangi beban pajak penghasilan.",
+          "source": "sak-iai"
+        }
+      ]
+    }
+  ]
+}

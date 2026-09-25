@@ -1,0 +1,117 @@
+code,parent,type,reconcilable,name,sequence
+1000,,asset_cash,false,Kas dan bank,10
+1010,1000,asset_cash,false,Kas kecil,11
+1011,1000,asset_cash,false,Kas besar,12
+1020,1000,asset_cash,false,Bank,13
+1021,1020,asset_cash,false,Bank Rupiah,14
+1022,1020,asset_cash,false,Bank valuta asing,15
+1100,,asset_receivable,true,Piutang usaha - pihak ketiga,20
+1105,,asset_receivable,true,Piutang usaha - pihak berelasi,21
+1110,,asset_current,false,Piutang karyawan,22
+1120,,asset_current,false,Piutang lain-lain,23
+1130,,asset_current,false,Penyisihan kerugian piutang,24
+1150,,asset_current,true,Pajak Pertambahan Nilai Masukan,30
+1151,1150,asset_current,false,PPN Masukan - perolehan dalam negeri,31
+1152,1150,asset_current,false,PPN Masukan - impor dan pemanfaatan dari luar Daerah Pabean,32
+1160,,asset_current,false,Pajak Penghasilan dibayar dimuka,33
+1161,1160,asset_current,false,PPh Pasal 22 dibayar dimuka,34
+1162,1160,asset_current,false,PPh Pasal 23 dibayar dimuka,35
+1163,1160,asset_current,false,PPh Pasal 25 dibayar dimuka,36
+1200,,asset_current,false,Persediaan barang dagangan,40
+1210,,asset_current,false,Persediaan bahan baku,41
+1220,,asset_current,false,Persediaan barang dalam proses,42
+1230,,asset_current,false,Persediaan barang jadi,43
+1240,,asset_current,false,Persediaan perlengkapan,44
+1250,,asset_current,false,Uang muka pembelian,50
+1260,,asset_prepayments,false,Biaya dibayar dimuka,51
+1261,1260,asset_prepayments,false,Sewa dibayar dimuka,52
+1262,1260,asset_prepayments,false,Asuransi dibayar dimuka,53
+1270,,asset_current,false,Aset lancar lainnya,54
+1300,,asset_fixed,false,Tanah,70
+1310,,asset_fixed,false,Bangunan,71
+1311,,asset_fixed,false,Akumulasi penyusutan bangunan,72
+1320,,asset_fixed,false,Mesin dan peralatan,73
+1321,,asset_fixed,false,Akumulasi penyusutan mesin dan peralatan,74
+1330,,asset_fixed,false,Kendaraan,75
+1331,,asset_fixed,false,Akumulasi penyusutan kendaraan,76
+1340,,asset_fixed,false,Peralatan kantor,77
+1341,,asset_fixed,false,Akumulasi penyusutan peralatan kantor,78
+1350,,asset_fixed,false,Perabot dan perlengkapan,79
+1351,,asset_fixed,false,Akumulasi penyusutan perabot dan perlengkapan,80
+1400,,asset_non_current,false,Aset tak berwujud,90
+1410,,asset_non_current,false,Piutang jangka panjang,91
+1420,,asset_non_current,false,Investasi jangka panjang,92
+1430,,asset_non_current,false,Uang jaminan,93
+1490,,asset_non_current,false,Aset tidak lancar lainnya,94
+2000,,liability_payable,true,Utang usaha - pihak ketiga,100
+2005,,liability_payable,true,Utang usaha - pihak berelasi,101
+2100,,liability_current,false,Utang Pajak Pertambahan Nilai,110
+2110,2100,liability_current,true,PPN Keluaran - akun penyelesaian SPT Masa PPN,111
+2111,2110,liability_current,false,PPN Keluaran - dipungut sendiri,112
+2112,2110,liability_current,false,PPN yang harus dipungut sendiri atas impor dan pemanfaatan dari luar Daerah Pabean,113
+2150,,liability_current,false,Utang Pajak Penghasilan,120
+2151,2150,liability_current,false,Utang PPh Pasal 21,121
+2152,2150,liability_current,false,Utang PPh Pasal 23,122
+2153,2150,liability_current,false,Utang PPh Pasal 25/29,123
+2154,2150,liability_current,false,Utang PPh Pasal 4 ayat (2),124
+2200,,liability_current,false,Uang muka penjualan,130
+2250,,liability_current,false,Utang gaji dan upah,140
+2260,,liability_current,false,Utang BPJS Ketenagakerjaan dan Kesehatan,141
+2300,,liability_current,false,Biaya masih harus dibayar,150
+2310,2300,liability_current,false,Bunga masih harus dibayar,151
+2320,2300,liability_current,false,Utang lain-lain,152
+2400,,liability_current,false,Akun antara,160
+2500,,liability_current,false,Utang bank jangka pendek,170
+2900,,liability_non_current,false,Utang bank jangka panjang,200
+2910,,liability_non_current,false,Liabilitas imbalan kerja,201
+2990,,liability_non_current,false,Liabilitas jangka panjang lainnya,202
+3000,,equity,false,Modal disetor,210
+3010,,equity,false,Tambahan modal disetor,211
+3200,,equity_retained,false,Saldo laba (rugi),212
+3300,,equity,false,Laba (rugi) tahun berjalan,213
+4000,,income,false,Penjualan dalam negeri,300
+4010,,income,false,Penjualan ekspor,301
+4020,,income,false,Pendapatan jasa,302
+4100,,income,false,Retur dan potongan penjualan,310
+4110,,income,false,Potongan tunai penjualan,311
+5000,,expense_direct_cost,false,Beban pokok penjualan,400
+5010,,expense_direct_cost,false,Biaya angkut pembelian,401
+5020,,expense_direct_cost,false,Retur dan potongan pembelian,402
+5090,,expense_direct_cost,false,Selisih persediaan,403
+6000,,expense,false,Beban penjualan,500
+6010,6000,expense,false,Beban iklan dan promosi,501
+6020,6000,expense,false,Beban pengiriman,502
+6030,6000,expense,false,Beban komisi penjualan,503
+6100,,expense,false,Beban administrasi dan umum,510
+6110,6100,expense,false,Beban gaji dan tunjangan,511
+6120,6100,expense,false,Beban BPJS Ketenagakerjaan dan Kesehatan,512
+6130,6100,expense,false,Beban sewa kantor,513
+6140,6100,expense,false,Beban listrik air dan telepon,514
+6150,6100,expense,false,Beban alat tulis kantor,515
+6160,6100,expense,false,Beban perjalanan dinas,516
+6170,6100,expense,false,Beban pemeliharaan dan perbaikan,517
+6180,6100,expense,false,Beban asuransi,518
+6190,6100,expense,false,Beban jasa profesional,519
+6200,,expense_depreciation,false,Beban penyusutan,520
+6210,6200,expense_depreciation,false,Beban penyusutan bangunan,521
+6220,6200,expense_depreciation,false,Beban penyusutan mesin dan peralatan,522
+6230,6200,expense_depreciation,false,Beban penyusutan kendaraan,523
+6240,6200,expense_depreciation,false,Beban penyusutan peralatan kantor,524
+6250,6200,expense_depreciation,false,Beban penyusutan perabot dan perlengkapan,525
+6300,,expense,false,Beban umum lainnya,530
+7000,,income_other,false,Pendapatan lain-lain,600
+7010,7000,income_other,false,Pendapatan bunga,601
+7020,7000,income_other,false,Keuntungan selisih kurs,602
+7030,7000,income_other,false,Keuntungan pelepasan aset tetap,603
+7040,7000,income_other,false,Pendapatan sewa,604
+7050,7000,income_other,false,Pendapatan lain-lain sundry,605
+7500,,expense,false,Beban lain-lain,700
+7510,7500,expense,false,Beban bunga,701
+7520,7500,expense,false,Kerugian selisih kurs,702
+7530,7500,expense,false,Kerugian pelepasan aset tetap,703
+7540,7500,expense,false,Selisih pembulatan,704
+7550,7500,expense,false,Beban administrasi bank,705
+7560,7500,expense,false,Beban lain-lain sundry,706
+8000,,expense,false,Beban pajak penghasilan,800
+8010,8000,expense,false,Beban pajak penghasilan kini,801
+8020,8000,expense,false,Beban (manfaat) pajak penghasilan tangguhan,802

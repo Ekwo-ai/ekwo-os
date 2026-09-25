@@ -1,0 +1,157 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "PT Contoh Sejahtera - satu triwulan (Januari-Maret 2026)",
+  "fiscal_year": {
+    "name": "Tahun Buku 2026 (Triwulan I)",
+    "start": "2026-01-01",
+    "end": "2026-03-31"
+  },
+  "periods": [
+    { "code": "2026-01", "from": "2026-01-01", "to": "2026-01-31" },
+    { "code": "2026-02", "from": "2026-02-01", "to": "2026-02-28" },
+    { "code": "2026-03", "from": "2026-03-01", "to": "2026-03-31" }
+  ],
+  "contacts": [
+    { "ref": "cust-domestic", "name": "PT Nusantara Elektronik", "type": "customer", "country": "ID" },
+    { "ref": "cust-lux", "name": "Griya Mewah Cipta", "type": "customer", "country": "ID" },
+    { "ref": "cust-export", "name": "Orchard Trading Pte Ltd", "type": "customer", "country": "SG" },
+    { "ref": "supp-domestic", "name": "CV Sumber Dagang", "type": "supplier", "country": "ID" },
+    { "ref": "supp-import", "name": "Yamato Machinery Co.", "type": "supplier", "country": "JP" },
+    { "ref": "supp-foreign-service", "name": "Cloudledger Inc.", "type": "supplier", "country": "US" },
+    { "ref": "supp-nonpkp", "name": "Kelompok Tani Makmur", "type": "supplier", "country": "ID" }
+  ],
+  "documents": [
+    {
+      "ref": "INV-001",
+      "type": "sale_invoice",
+      "contact": "cust-domestic",
+      "date": "2026-01-10",
+      "why": "Domestic sale of goods at the general effective rate, to exercise ID-S-11 and box 1 of the return.",
+      "lines": [
+        { "name": "Penjualan barang elektronik dalam negeri", "unit_price": 50000000, "tax": "ID-S-11", "account": "4000" }
+      ]
+    },
+    {
+      "ref": "INV-002",
+      "type": "sale_invoice",
+      "contact": "cust-lux",
+      "date": "2026-02-05",
+      "why": "Sale of a luxury motor vehicle taxed at the full 12% rate without the nilai-lain reduction, to exercise ID-S-12-LUX and the pack's second positive rate.",
+      "lines": [
+        { "name": "Penjualan mobil mewah tertentu kepada konsumen akhir", "unit_price": 800000000, "tax": "ID-S-12-LUX", "account": "4000" }
+      ]
+    },
+    {
+      "ref": "INV-003",
+      "type": "sale_invoice",
+      "contact": "cust-export",
+      "date": "2026-03-12",
+      "why": "Export sale taxed at the zero rate, to exercise ID-S-0-EXP and box A1 of the return.",
+      "lines": [
+        { "name": "Ekspor komponen elektronik", "unit_price": 120000000, "tax": "ID-S-0-EXP", "account": "4010" }
+      ]
+    },
+    {
+      "ref": "INV-004",
+      "type": "sale_invoice",
+      "contact": "cust-domestic",
+      "date": "2026-01-20",
+      "why": "Sale of a staple good exempted under PP 49/2022, to exercise ID-S-EXEMPT and box 4 of the return.",
+      "lines": [
+        { "name": "Penjualan beras kemasan (kebutuhan pokok)", "unit_price": 25000000, "tax": "ID-S-EXEMPT", "account": "4000" }
+      ]
+    },
+    {
+      "ref": "CN-001",
+      "type": "sale_credit_note",
+      "contact": "cust-domestic",
+      "date": "2026-03-18",
+      "why": "Partial return of the goods sold on INV-001, to exercise a sale credit note and the box_factor -100 postings of ID-S-11.",
+      "lines": [
+        { "name": "Retur sebagian barang elektronik dari INV-001", "unit_price": 5000000, "tax": "ID-S-11", "account": "4100" }
+      ]
+    },
+    {
+      "ref": "BILL-001",
+      "type": "purchase_invoice",
+      "contact": "supp-domestic",
+      "date": "2026-01-15",
+      "why": "Domestic purchase of trading goods, to exercise ID-P-11 and the creditable input tax box 5.",
+      "lines": [
+        { "name": "Pembelian barang dagangan dari pemasok dalam negeri", "unit_price": 20000000, "tax": "ID-P-11", "account": "5000" }
+      ]
+    },
+    {
+      "ref": "BILL-002",
+      "type": "purchase_invoice",
+      "contact": "supp-import",
+      "date": "2026-02-10",
+      "why": "Import of a production machine, VAT self-paid to customs at the effective 11% rate and credited, to exercise ID-P-IMP-11.",
+      "lines": [
+        { "name": "Impor mesin produksi", "unit_price": 40000000, "tax": "ID-P-IMP-11", "account": "1320" }
+      ]
+    },
+    {
+      "ref": "BILL-003",
+      "type": "purchase_invoice",
+      "contact": "supp-foreign-service",
+      "date": "2026-03-08",
+      "why": "Subscription to foreign accounting software, a Jasa Kena Pajak utilised inside the Daerah Pabean and self-assessed under Pasal 3A ayat (3), to exercise ID-P-RC.",
+      "lines": [
+        { "name": "Langganan perangkat lunak akuntansi dari luar negeri", "unit_price": 10000000, "tax": "ID-P-RC", "account": "6190" }
+      ]
+    },
+    {
+      "ref": "BILL-004",
+      "type": "purchase_invoice",
+      "contact": "supp-nonpkp",
+      "date": "2026-01-25",
+      "why": "Purchase from a non-PKP supplier who charges no Pajak Pertambahan Nilai at all, a line genuinely outside the scope of any tax code of this pack.",
+      "lines": [
+        { "name": "Pembelian beras dari kelompok tani (bukan PKP)", "unit_price": 15000000, "tax": null, "account": "5000" }
+      ]
+    },
+    {
+      "ref": "CN-002",
+      "type": "purchase_credit_note",
+      "contact": "supp-domestic",
+      "date": "2026-02-20",
+      "why": "Partial return of goods to the domestic supplier of BILL-001, to exercise a purchase credit note.",
+      "lines": [
+        { "name": "Retur sebagian barang dagangan ke pemasok (dari BILL-001)", "unit_price": 2000000, "tax": "ID-P-11", "account": "5000" }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "PAY-001",
+      "direction": "inbound",
+      "date": "2026-01-25",
+      "amount": 55500000,
+      "contact": "cust-domestic",
+      "journal": "BNK",
+      "match": "INV-001",
+      "why": "The customer pays INV-001 in full, to close a receivable and prove reconciliation."
+    },
+    {
+      "ref": "PAY-002",
+      "direction": "inbound",
+      "date": "2026-03-25",
+      "amount": 20000000,
+      "contact": "cust-domestic",
+      "journal": "BNK",
+      "match": null,
+      "why": "An advance received from a customer, not yet allocated to any invoice, to leave an open item on the receivable account."
+    },
+    {
+      "ref": "PAY-003",
+      "direction": "outbound",
+      "date": "2026-01-30",
+      "amount": 22200000,
+      "contact": "supp-domestic",
+      "journal": "BNK",
+      "match": "BILL-001",
+      "why": "Payment of BILL-001 in full to the domestic supplier, to close a payable and prove reconciliation."
+    }
+  ]
+}

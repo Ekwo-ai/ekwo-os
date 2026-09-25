@@ -1,0 +1,102 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "ID-SPT-MASA-PPN",
+  "name": "Surat Pemberitahuan Masa Pajak Pertambahan Nilai (SPT Masa PPN) - Formulir 1111",
+  "period": ["month"],
+  "period_default": "month",
+  "valid_from": "2015-01-01",
+  "legal_reference": "Undang-Undang Nomor 42 Tahun 2009, Pasal 3A ayat (1) jo. Undang-Undang Nomor 6 Tahun 1983 tentang Ketentuan Umum dan Tata Cara Perpajakan — Pengusaha Kena Pajak wajib memungut, menyetor, dan melaporkan Pajak Pertambahan Nilai yang terutang untuk setiap Masa Pajak, yaitu setiap bulan kalender; tidak ada pilihan periode triwulanan untuk Pajak Pertambahan Nilai, berbeda dari beberapa jenis pajak penghasilan. Struktur kotak (kode I.A, I.B, II.A-II.D) di bawah ini ditranskripsi dari Formulir 1111 (lampiran Peraturan Direktur Jenderal Pajak Nomor PER-29/PJ/2015), yang tetap menjadi struktur perhitungan yang berlaku secara substansi; sejak 1 Januari 2025 formulir ini disampaikan melalui Coretax DJP (Peraturan Menteri Keuangan Nomor 81 Tahun 2024 dan Peraturan Direktur Jenderal Pajak Nomor PER-11/PJ/2025), dan tampilan layar Coretax tidak ditelusuri baris demi baris pada sesi riset ini untuk memastikan kode kotak tetap identik - lihat README.",
+  "source": "vat-return-form-1111",
+  "deadline": {
+    "rule": "last_day_of_month_after_period",
+    "legal_reference": "Undang-Undang Nomor 6 Tahun 1983 tentang Ketentuan Umum dan Tata Cara Perpajakan, Pasal 3 ayat (3) huruf b — Surat Pemberitahuan Masa disampaikan paling lama 20 (dua puluh) hari setelah akhir Masa Pajak, KECUALI untuk Surat Pemberitahuan Masa Pajak Pertambahan Nilai yang disampaikan paling lama pada akhir bulan berikutnya setelah berakhirnya Masa Pajak. Teks konsolidasi pasal ini setelah perubahan oleh Undang-Undang Nomor 7 Tahun 2021 tidak dibaca langsung dari salinan resmi pada sesi ini; aturan yang dinyatakan di sini bersumber dari silang beberapa referensi sekunder yang konsisten (Online Pajak, Pajakku) dan merupakan hal pertama yang perlu diverifikasi terhadap teks resmi. Batas waktu PEMBAYARAN adalah tanggal 15 bulan berikutnya (Peraturan Menteri Keuangan Nomor 81 Tahun 2024, Pasal 94), yang mendahului batas waktu pelaporan ini dan tidak dimodelkan secara terpisah oleh field ini.",
+    "source": "kup-law-6-1983"
+  },
+  "boxes": [
+    {
+      "box": "A1",
+      "kind": "base",
+      "name": "I.A.1 Ekspor",
+      "sequence": 10,
+      "legal_reference": "Formulir 1111, bagian I.A.1 — Dasar Pengenaan Pajak atas ekspor Barang Kena Pajak Berwujud, Barang Kena Pajak Tidak Berwujud, dan/atau Jasa Kena Pajak, tarif 0% (Undang-Undang Nomor 42 Tahun 2009, Pasal 7 ayat (2)).",
+      "source": "vat-return-form-1111"
+    },
+    {
+      "box": "1",
+      "kind": "base",
+      "name": "I.A.2 Penyerahan dalam negeri yang PPN-nya dipungut sendiri - Dasar Pengenaan Pajak",
+      "sequence": 20,
+      "legal_reference": "Formulir 1111, bagian I.A.2 — Dasar Pengenaan Pajak atas penyerahan dalam negeri yang Pajak Pertambahan Nilai-nya harus dipungut sendiri oleh Pengusaha Kena Pajak penjual, termasuk pemanfaatan Barang Kena Pajak Tidak Berwujud/Jasa Kena Pajak dari luar Daerah Pabean yang dipungut sendiri oleh pihak yang memanfaatkan.",
+      "source": "vat-return-form-1111"
+    },
+    {
+      "box": "1",
+      "kind": "tax",
+      "name": "I.A.2 Penyerahan dalam negeri yang PPN-nya dipungut sendiri - Pajak Pertambahan Nilai",
+      "sequence": 25,
+      "legal_reference": "Formulir 1111, bagian I.A.2 — Pajak Pertambahan Nilai atas penyerahan pada baris di atas.",
+      "source": "vat-return-form-1111"
+    },
+    {
+      "box": "4",
+      "kind": "base",
+      "name": "I.A.5 Penyerahan yang dibebaskan dari pengenaan PPN",
+      "sequence": 30,
+      "legal_reference": "Formulir 1111, bagian I.A.5 — Dasar Pengenaan Pajak atas penyerahan yang dibebaskan dari pengenaan Pajak Pertambahan Nilai (Undang-Undang Nomor 42 Tahun 2009, Pasal 16B; Peraturan Pemerintah Nomor 49 Tahun 2022).",
+      "source": "vat-return-form-1111"
+    },
+    {
+      "box": "IA",
+      "kind": "total",
+      "name": "Jumlah I.A (I.A.1 + I.A.2 + I.A.3 + I.A.4 + I.A.5)",
+      "sequence": 40,
+      "plus": ["A1", "1:base", "4"],
+      "legal_reference": "Formulir 1111, bagian I.A — jumlah seluruh penyerahan yang terutang Pajak Pertambahan Nilai. Baris I.A.3 (penyerahan yang PPN-nya dipungut oleh Pemungut PPN, Pasal 16A) dan I.A.4 (penyerahan yang PPN-nya tidak dipungut, fasilitas kawasan tertentu) tidak dimodelkan oleh pack ini - lihat README.",
+      "source": "vat-return-form-1111"
+    },
+    {
+      "box": "IB",
+      "kind": "base",
+      "name": "I.B Penyerahan yang tidak terutang PPN",
+      "sequence": 50,
+      "legal_reference": "Formulir 1111, bagian I.B — penyerahan barang dan/atau jasa yang bukan Barang Kena Pajak/Jasa Kena Pajak (Undang-Undang Nomor 42 Tahun 2009, Pasal 4A). Tidak ada kode pajak dari pack ini yang membukukan langsung ke kotak ini: sebuah baris dokumen di luar cakupan PPN sama sekali menggunakan tax:null, bukan sebuah kode pajak - lihat docs/packs.md.",
+      "source": "vat-return-form-1111"
+    },
+    {
+      "box": "IC",
+      "kind": "total",
+      "name": "I.C Jumlah Seluruh Penyerahan (I.A + I.B)",
+      "sequence": 60,
+      "plus": ["IA", "IB"],
+      "legal_reference": "Formulir 1111, bagian I.C.",
+      "source": "vat-return-form-1111"
+    },
+    {
+      "box": "5",
+      "kind": "tax",
+      "name": "II.C Pajak Masukan yang dapat diperhitungkan",
+      "sequence": 70,
+      "legal_reference": "Formulir 1111, bagian II.C, sama dengan bagian III.C Formulir 1111 AB — jumlah Pajak Masukan atas perolehan dalam negeri, impor, dan pemanfaatan Barang Kena Pajak Tidak Berwujud/Jasa Kena Pajak dari luar Daerah Pabean yang dapat dikreditkan (Undang-Undang Nomor 42 Tahun 2009, Pasal 9).",
+      "source": "vat-return-form-1111"
+    },
+    {
+      "box": "IIA",
+      "kind": "total",
+      "name": "II.A Pajak Keluaran yang harus dipungut sendiri",
+      "sequence": 80,
+      "plus": ["1:tax"],
+      "legal_reference": "Formulir 1111, bagian II.A — sama dengan jumlah Pajak Pertambahan Nilai pada I.A.2.",
+      "source": "vat-return-form-1111"
+    },
+    {
+      "box": "IID",
+      "kind": "total",
+      "name": "II.D PPN kurang atau (lebih) bayar",
+      "sequence": 90,
+      "plus": ["IIA"],
+      "minus": ["5"],
+      "legal_reference": "Formulir 1111, bagian II.D = II.A - II.B - II.C. Baris II.B (PPN disetor dimuka dalam Masa Pajak yang sama) tidak dimodelkan oleh pack ini, sehingga rumus di sini adalah II.A - II.C. Nilai negatif berarti lebih bayar (dikompensasikan ke Masa Pajak berikutnya atau dimintakan restitusi, bagian II.H Formulir 1111), sehingga kotak ini tidak dibulatkan ke nol.",
+      "source": "vat-return-form-1111"
+    }
+  ]
+}

@@ -699,6 +699,30 @@ on conflict (code) do update set
 
 
 -- ---------------------------------------------------------------------------
+-- The rows — Indonesia
+--
+-- A value added tax of its own (Pajak Pertambahan Nilai), charged by a
+-- Pengusaha Kena Pajak and deducted by a registered buyer, declared on one
+-- monthly return, under no Union instrument. `vat_prefix` is null: an
+-- Indonesian taxpayer is addressed by its Nomor Pokok Wajib Pajak (NPWP),
+-- which carries no country prefix of this table's kind.
+-- ---------------------------------------------------------------------------
+
+insert into territories (code, code_source, name, parent_code, eu_vat_scope, eu_vat_from, eu_vat_to, vat_prefix, legal_reference) values
+  ('ID', 'iso_3166_1', 'Indonesia', null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. Indonesia levies a value added tax of its own (Pajak Pertambahan Nilai) under Undang-Undang Nomor 42 Tahun 2009, whose Pasal 7 sets the rates, as amended by Undang-Undang Nomor 7 Tahun 2021, unrelated to the Union''s common system.')
+on conflict (code) do update set
+  code_source     = excluded.code_source,
+  name            = excluded.name,
+  parent_code     = excluded.parent_code,
+  eu_vat_scope    = excluded.eu_vat_scope,
+  eu_vat_from     = excluded.eu_vat_from,
+  eu_vat_to       = excluded.eu_vat_to,
+  vat_prefix      = excluded.vat_prefix,
+  legal_reference = excluded.legal_reference;
+
+
+-- ---------------------------------------------------------------------------
 -- The row — Saudi Arabia
 --
 -- A State outside the common system of VAT the way the United Arab Emirates

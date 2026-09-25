@@ -1,0 +1,166 @@
+[
+  {
+    "code": "ID-S-11",
+    "name": "Penjualan - PPN 11% (tarif efektif)",
+    "description": "Pajak Pertambahan Nilai keluaran atas penyerahan dalam negeri, selain barang mewah tertentu",
+    "kind": "vat",
+    "rate": 11,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2025-01-01",
+    "legal_reference": "Peraturan Menteri Keuangan Nomor 131 Tahun 2024, Pasal 2 dan Pasal 3 — atas penyerahan Barang Kena Pajak dan/atau Jasa Kena Pajak selain barang mewah tertentu, Pajak Pertambahan Nilai dihitung dengan cara mengalikan tarif 12% (Undang-Undang Nomor 42 Tahun 2009, Pasal 7 ayat (1) sebagaimana diubah dengan Undang-Undang Nomor 7 Tahun 2021) dengan Dasar Pengenaan Pajak berupa nilai lain sebesar 11/12 dari harga jual atau penggantian (Undang-Undang Nomor 42 Tahun 2009, Pasal 8A ayat (1) jo. Pasal 16G). Hasilnya setara tarif efektif 11%: 12% x (11/12 x harga jual) = 11% x harga jual. Pack ini memodelkan langsung tarif efektif 11% atas harga jual, karena format Ekwo tidak memiliki mekanisme perkalian dua tahap (tarif nominal x pecahan nilai lain) — kode tarif ini menghasilkan angka yang sama dengan mekanisme resmi, tetapi tidak mereproduksi langkah nilai lain itu sendiri pada dokumen, yang dicatat sebagai kesenjangan dalam docs/international.md.",
+    "source": "pmk-131-2024",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "1" },
+        { "type": "tax", "account": "2111", "box": "1" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "1", "box_factor": -100 },
+        { "type": "tax", "account": "2111", "box": "1", "box_factor": -100 }
+      ]
+    },
+    "sequence": 10
+  },
+  {
+    "code": "ID-S-12-LUX",
+    "name": "Penjualan - PPN 12% (barang mewah tertentu)",
+    "description": "Pajak Pertambahan Nilai keluaran atas penyerahan barang mewah tertentu kepada konsumen akhir, tanpa mekanisme nilai lain",
+    "kind": "vat",
+    "rate": 12,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2025-02-01",
+    "conditions": ["supply_nature"],
+    "legal_reference": "Peraturan Menteri Keuangan Nomor 131 Tahun 2024, Pasal 5 — atas penyerahan barang mewah tertentu (yang tergolong sangat mewah dan dikenai Pajak Penjualan atas Barang Mewah, antara lain kendaraan bermotor tertentu, hunian mewah, kapal pesiar, dan pesawat udara pribadi tertentu) kepada konsumen akhir, Pajak Pertambahan Nilai dihitung dengan tarif 12% dikalikan Dasar Pengenaan Pajak berupa nilai lain sebesar 100% dari harga jual, sehingga tarif efektifnya tetap 12%; berlaku sejak 1 Februari 2025. `conditions: supply_nature` mencatat bahwa apakah suatu barang termasuk daftar barang mewah tertentu ini adalah pertanyaan tentang sifat barang yang tidak dijawab sendiri oleh pembukuan. Daftar rinci barang yang termasuk kategori ini tidak ditelusuri baris demi baris pada sesi ini — lihat README.",
+    "source": "pmk-131-2024",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "1" },
+        { "type": "tax", "account": "2111", "box": "1" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "1", "box_factor": -100 },
+        { "type": "tax", "account": "2111", "box": "1", "box_factor": -100 }
+      ]
+    },
+    "sequence": 20
+  },
+  {
+    "code": "ID-S-0-EXP",
+    "name": "Penjualan - ekspor, tarif 0%",
+    "description": "Ekspor Barang Kena Pajak Berwujud, Barang Kena Pajak Tidak Berwujud, atau Jasa Kena Pajak",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2022-04-01",
+    "conditions": ["transport_evidence"],
+    "legal_reference": "Undang-Undang Nomor 42 Tahun 2009, Pasal 7 ayat (2) sebagaimana diubah dengan Undang-Undang Nomor 7 Tahun 2021 — Pajak Pertambahan Nilai dengan tarif 0% (nol persen) diterapkan atas ekspor Barang Kena Pajak Berwujud, ekspor Barang Kena Pajak Tidak Berwujud, dan ekspor Jasa Kena Pajak; Pasal 9 ayat (4) memungkinkan pengkreditan Pajak Masukan atas penyerahan ini. `conditions: transport_evidence` mencatat bahwa hak atas tarif 0% bergantung pada dokumen yang membuktikan barang/jasa benar keluar dari Daerah Pabean (kontrak, bukti pembayaran, dan untuk barang, Pemberitahuan Ekspor Barang), yang tidak dibuktikan sendiri oleh pembukuan.",
+    "source": "vat-law-hpp-7-2021",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "A1" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "A1", "box_factor": -100 }
+      ]
+    },
+    "sequence": 30
+  },
+  {
+    "code": "ID-S-EXEMPT",
+    "name": "Penjualan - dibebaskan dari pengenaan PPN",
+    "description": "Barang Kena Pajak tertentu dan/atau Jasa Kena Pajak tertentu yang dibebaskan dari pengenaan Pajak Pertambahan Nilai",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2022-12-12",
+    "conditions": ["supply_nature"],
+    "legal_reference": "Undang-Undang Nomor 42 Tahun 2009, Pasal 16B, dan Peraturan Pemerintah Nomor 49 Tahun 2022 — fasilitas Pajak Pertambahan Nilai dibebaskan atas penyerahan barang kebutuhan pokok tertentu (antara lain beras, jagung, kedelai, garam konsumsi, daging, telur, susu, buah-buahan dan sayur-sayuran) serta jasa tertentu (antara lain jasa pelayanan kesehatan medis, jasa pendidikan, dan jasa keuangan dan asuransi tertentu). Pajak Masukan atas penyerahan yang dibebaskan ini tidak dapat dikreditkan (Undang-Undang Nomor 42 Tahun 2009, Pasal 16B ayat (3)). `conditions: supply_nature` mencatat bahwa apakah suatu barang/jasa termasuk daftar ini adalah pertanyaan tentang sifatnya. Tanggal `valid_from` adalah tanggal pengundangan Peraturan Pemerintah Nomor 49 Tahun 2022; tanggal mulai berlaku efektif untuk setiap kategori barang/jasa tidak ditelusuri secara terperinci pada sesi ini — lihat README.",
+    "source": "pp-49-2022",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "4" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "4", "box_factor": -100 }
+      ]
+    },
+    "sequence": 40
+  },
+  {
+    "code": "ID-P-11",
+    "name": "Pembelian - PPN 11% (tarif efektif), dapat dikreditkan",
+    "description": "Pajak Pertambahan Nilai masukan atas perolehan Barang Kena Pajak/Jasa Kena Pajak dalam negeri",
+    "kind": "vat",
+    "rate": 11,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2025-01-01",
+    "legal_reference": "Undang-Undang Nomor 42 Tahun 2009, Pasal 9 — Pajak Masukan dalam suatu Masa Pajak dikreditkan dengan Pajak Keluaran dalam Masa Pajak yang sama, sepanjang memenuhi syarat Faktur Pajak yang sah (Pasal 9 ayat (2) dan (8)); tarif efektif 11% mengikuti mekanisme nilai lain Peraturan Menteri Keuangan Nomor 131 Tahun 2024 yang sama dengan sisi penjualan (lihat ID-S-11).",
+    "source": "pmk-131-2024",
+    "postings": {
+      "invoice": [
+        { "type": "base" },
+        { "type": "tax", "account": "1151", "box": "5" }
+      ],
+      "credit_note": [
+        { "type": "base" },
+        { "type": "tax", "account": "1151", "box": "5", "box_factor": -100 }
+      ]
+    },
+    "sequence": 50
+  },
+  {
+    "code": "ID-P-IMP-11",
+    "name": "Impor - PPN 11% (tarif efektif), dibayar sendiri kepada Bea Cukai",
+    "description": "Pajak Pertambahan Nilai atas impor Barang Kena Pajak, dibayar pada saat impor dan dikreditkan sebagai Pajak Masukan",
+    "kind": "vat",
+    "rate": 11,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2025-01-01",
+    "legal_reference": "Undang-Undang Nomor 42 Tahun 2009, Pasal 7 ayat (1) dan Pasal 9, jo. Peraturan Menteri Keuangan Nomor 131 Tahun 2024 (yang secara eksplisit turut mengatur impor Barang Kena Pajak) — Pajak Pertambahan Nilai atas impor dipungut dan disetor oleh importir pada saat impor melalui dokumen kepabeanan, dengan tarif efektif 11% dari mekanisme nilai lain yang sama dengan penyerahan dalam negeri, dan dapat dikreditkan sebagai Pajak Masukan. Pack ini menghitung pajak atas nilai faktur pemasok luar negeri, bukan nilai pabean (yang menambahkan bea masuk dan pungutan impor lain) — perbedaan yang harus diperiksa oleh akuntan di Indonesia.",
+    "source": "pmk-131-2024",
+    "postings": {
+      "invoice": [
+        { "type": "base" },
+        { "type": "tax", "account": "1152", "box": "5" },
+        { "type": "tax", "factor": -100, "account": "2112" }
+      ],
+      "credit_note": [
+        { "type": "base" },
+        { "type": "tax", "account": "1152", "box": "5", "box_factor": -100 },
+        { "type": "tax", "factor": -100, "account": "2112", "box_factor": -100 }
+      ]
+    },
+    "sequence": 60
+  },
+  {
+    "code": "ID-P-RC",
+    "name": "Pemanfaatan JKP/BKP tidak berwujud dari luar Daerah Pabean - dipungut sendiri",
+    "description": "Pajak Pertambahan Nilai atas pemanfaatan Jasa Kena Pajak dan/atau Barang Kena Pajak Tidak Berwujud dari luar Daerah Pabean, dipungut, disetor, dan dilaporkan sendiri oleh pihak yang memanfaatkan, dan dikreditkan pada Masa Pajak yang sama",
+    "kind": "vat",
+    "rate": 11,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2025-01-01",
+    "legal_reference": "Undang-Undang Nomor 42 Tahun 2009, Pasal 3A ayat (3) — orang pribadi atau badan yang memanfaatkan Barang Kena Pajak Tidak Berwujud dan/atau Jasa Kena Pajak dari luar Daerah Pabean di dalam Daerah Pabean wajib memungut, menyetor, dan melaporkan sendiri Pajak Pertambahan Nilai yang terutang, dengan tarif efektif mengikuti Peraturan Menteri Keuangan Nomor 131 Tahun 2024. Pajak Masukan atas pemanfaatan ini dapat dikreditkan sepanjang tidak termasuk dalam Pajak Masukan yang tidak dapat dikreditkan (Pasal 9 ayat (8)). Pack ini membukukan pemungutan sendiri dan pengkreditannya pada satu dokumen yang sama, yang melebih-lebihkan kecepatan tersedianya kredit dibanding praktik administratif sesungguhnya — kesenjangan yang dicatat dalam docs/international.md, mengikuti pendekatan yang sama dengan packs/th (TH-P-RC).",
+    "source": "vat-law-42-2009",
+    "postings": {
+      "invoice": [
+        { "type": "base" },
+        { "type": "tax", "account": "1152", "box": "5" },
+        { "type": "tax", "factor": -100, "account": "2112" }
+      ],
+      "credit_note": [
+        { "type": "base" },
+        { "type": "tax", "account": "1152", "box": "5", "box_factor": -100 },
+        { "type": "tax", "factor": -100, "account": "2112", "box_factor": -100 }
+      ]
+    },
+    "sequence": 70
+  }
+]

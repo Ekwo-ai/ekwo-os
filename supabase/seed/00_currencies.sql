@@ -44,5 +44,6 @@ insert into currencies (code, name, symbol, decimal_places) values
   ('DZD', 'Algerian dinar',       E'د.ج', 2),
   ('MAD', 'Moroccan dirham',      E'د.م.', 2),
   ('ZAR', 'South African rand',   'R',       2),
-  ('KES', 'Kenyan shilling',      E'KSh',    2)
+  ('KES', 'Kenyan shilling',      E'KSh',    2),
+  ('IDR', 'Indonesian rupiah',    'Rp',      0)
 on conflict (code) do nothing;
