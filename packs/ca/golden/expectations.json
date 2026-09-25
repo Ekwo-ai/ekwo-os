@@ -1,0 +1,14 @@
+{
+  "note": "What the GST/HST Return Working Copy prints beside each of its totals, in as many words, held against what packs/ca/tax_report.json says. A box that adds the wrong boxes and a tax that posts to the wrong box agree with each other, and no golden figure would catch either; this file is the second reading. Like the rest of golden/ beside scenario.json, it is outside the pack checksum: it is evidence about the pack and not part of it.",
+  "report_arithmetic": [
+    { "box": "105", "kind": "total", "plus": ["103", "104"], "minus": [] },
+    { "box": "108", "kind": "total", "plus": ["106", "107"], "minus": [] },
+    { "box": "109", "kind": "total", "plus": ["105"], "minus": ["108"] },
+    { "box": "112", "kind": "total", "plus": ["110", "111"], "minus": [] },
+    { "box": "113A", "kind": "total", "plus": ["109"], "minus": ["112"] },
+    { "box": "113B", "kind": "total", "plus": ["205", "405"], "minus": [] },
+    { "box": "113C", "kind": "total", "plus": ["113A", "113B"], "minus": [] },
+    { "box": "114", "kind": "total", "plus": [], "minus": ["113C"] },
+    { "box": "115", "kind": "total", "plus": ["113C"], "minus": [] }
+  ]
+}

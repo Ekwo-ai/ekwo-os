@@ -1,0 +1,518 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/statements",
+  "statements": [
+    {
+      "code": "CA-ASPE-BS",
+      "kind": "balance_sheet",
+      "framework": "ASPE",
+      "name": "Balance sheet — ASPE, short form",
+      "legal_reference": "CPA Canada Handbook — Accounting, Part II, Section 1521, Balance sheet, which names the items a balance sheet presents and the order it presents them in, read with Section 1510, Current assets and current liabilities, for the current/non-current split. Section 71 of the Canada Business Corporations Regulations, 2001 requires annual financial statements to be prepared in accordance with Canadian GAAP, and section 70 of the same regulations defines Canadian GAAP as “generally accepted accounting principles as set out in the CPA Canada Handbook – Accounting”. Canada prescribes no chart of accounts and no statutory line-by-line scheme: this is the short-form presentation ASPE asks for, and the line names are the Handbook's own words.",
+      "source": "aspe",
+      "taxonomy": null,
+      "lines": [
+        {
+          "code": "10",
+          "name": "Cash and cash equivalents",
+          "sequence": 10,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1000",
+              "code_to": "1099"
+            }
+          ]
+        },
+        {
+          "code": "20",
+          "name": "Accounts receivable",
+          "sequence": 20,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1100",
+              "code_to": "1199"
+            }
+          ]
+        },
+        {
+          "code": "30",
+          "name": "Inventory",
+          "sequence": 30,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1200",
+              "code_to": "1299"
+            }
+          ],
+          "legal_reference": "CPA Canada Handbook — Accounting, Part II, Section 3031, Inventories, which requires the carrying amount of inventories to be presented; Section 1510 puts it among the current assets.",
+          "source": "aspe"
+        },
+        {
+          "code": "40",
+          "name": "Prepaid expenses",
+          "sequence": 40,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1300",
+              "code_to": "1329"
+            }
+          ]
+        },
+        {
+          "code": "50",
+          "name": "Recoverable sales taxes",
+          "sequence": 50,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1330",
+              "code_to": "1349"
+            }
+          ],
+          "legal_reference": "Input tax credits under subsection 169(1) of the Excise Tax Act and input tax refunds under section 199 of the Act respecting the Québec sales tax are amounts receivable from two administrations, so they sit among the current assets and not as a deduction from the taxes charged. The account the return is settled to, 1340, is on this line too: a period that ends in a credit is a claim on the Receiver General.",
+          "source": "aspe"
+        },
+        {
+          "code": "60",
+          "name": "Other current assets",
+          "sequence": 60,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1350",
+              "code_to": "1399"
+            }
+          ]
+        },
+        {
+          "code": "100",
+          "name": "Total current assets",
+          "sequence": 70,
+          "is_total": true,
+          "plus": [
+            "10",
+            "20",
+            "30",
+            "40",
+            "50",
+            "60"
+          ]
+        },
+        {
+          "code": "110",
+          "name": "Capital assets, at cost",
+          "sequence": 80,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1400",
+              "code_to": "1499"
+            }
+          ],
+          "legal_reference": "CPA Canada Handbook — Accounting, Part II, Section 3061, Property, plant and equipment, which requires the cost, the accumulated amortization and the amortization of the period to be disclosed for each major category.",
+          "source": "aspe"
+        },
+        {
+          "code": "120",
+          "name": "Accumulated amortization",
+          "sequence": 90,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1500",
+              "code_to": "1599"
+            }
+          ],
+          "legal_reference": "Section 3061 again: the accumulated amortization is presented, and it carries a credit balance, so this line reads negative and is added to the line above rather than subtracted from it.",
+          "source": "aspe"
+        },
+        {
+          "code": "130",
+          "name": "Intangible and other long-term assets",
+          "sequence": 100,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1600",
+              "code_to": "1699"
+            }
+          ],
+          "legal_reference": "CPA Canada Handbook — Accounting, Part II, Section 3064, Goodwill and intangible assets.",
+          "source": "aspe"
+        },
+        {
+          "code": "140",
+          "name": "Total capital and other assets",
+          "sequence": 110,
+          "is_total": true,
+          "plus": [
+            "110",
+            "120",
+            "130"
+          ]
+        },
+        {
+          "code": "200",
+          "name": "TOTAL ASSETS",
+          "sequence": 120,
+          "is_total": true,
+          "plus": [
+            "100",
+            "140"
+          ]
+        },
+        {
+          "code": "300",
+          "name": "Accounts payable and accrued liabilities",
+          "sequence": 130,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "2000",
+              "code_to": "2199"
+            }
+          ]
+        },
+        {
+          "code": "310",
+          "name": "Sales taxes payable",
+          "sequence": 140,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "2200",
+              "code_to": "2299"
+            }
+          ],
+          "legal_reference": "The tax a registrant collects is held for the administration that levies it — the Receiver General under subsection 228(2) of the Excise Tax Act, Revenu Québec, or a province under its own sales tax statute — so it is a liability of the company and never its revenue. The four administrations keep separate accounts here and one line presents them.",
+          "source": "aspe"
+        },
+        {
+          "code": "320",
+          "name": "Other current liabilities",
+          "sequence": 150,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "2300",
+              "code_to": "2399"
+            }
+          ]
+        },
+        {
+          "code": "330",
+          "name": "Current portion of long-term debt",
+          "sequence": 160,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "2400",
+              "code_to": "2499"
+            }
+          ]
+        },
+        {
+          "code": "400",
+          "name": "Total current liabilities",
+          "sequence": 170,
+          "is_total": true,
+          "plus": [
+            "300",
+            "310",
+            "320",
+            "330"
+          ]
+        },
+        {
+          "code": "410",
+          "name": "Long-term liabilities",
+          "sequence": 180,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "2500",
+              "code_to": "2599"
+            }
+          ]
+        },
+        {
+          "code": "500",
+          "name": "Total liabilities",
+          "sequence": 190,
+          "is_total": true,
+          "plus": [
+            "400",
+            "410"
+          ]
+        },
+        {
+          "code": "600",
+          "name": "Share capital",
+          "sequence": 200,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "3000",
+              "code_to": "3099"
+            }
+          ],
+          "legal_reference": "CPA Canada Handbook — Accounting, Part II, Section 3251, Equity, which requires share capital, contributed surplus and retained earnings to be presented separately.",
+          "source": "aspe"
+        },
+        {
+          "code": "610",
+          "name": "Contributed surplus and accumulated other comprehensive income",
+          "sequence": 210,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "3100",
+              "code_to": "3199"
+            }
+          ]
+        },
+        {
+          "code": "620",
+          "name": "Dividends declared",
+          "sequence": 220,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "3200",
+              "code_to": "3299"
+            }
+          ],
+          "legal_reference": "Section 3251 again: a dividend declared is a charge against retained earnings and is presented separately. The account carries a debit balance, so the line reads negative.",
+          "source": "aspe"
+        },
+        {
+          "code": "630",
+          "name": "Retained earnings",
+          "sequence": 230,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "3300",
+              "code_to": "3399"
+            }
+          ],
+          "legal_reference": "Section 3251, and Section 1521 for its place on the balance sheet. The result of the open year is not here until close_fiscal_year() puts it there: until then the assets of this statement exceed the liabilities and the equity by exactly the net income of the income statement.",
+          "source": "aspe"
+        },
+        {
+          "code": "700",
+          "name": "Total shareholders' equity",
+          "sequence": 240,
+          "is_total": true,
+          "plus": [
+            "600",
+            "610",
+            "620",
+            "630"
+          ]
+        },
+        {
+          "code": "800",
+          "name": "TOTAL LIABILITIES AND SHAREHOLDERS' EQUITY",
+          "sequence": 250,
+          "is_total": true,
+          "plus": [
+            "500",
+            "700"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "CA-ASPE-IS",
+      "kind": "income_statement",
+      "framework": "ASPE",
+      "name": "Income statement — ASPE, short form",
+      "legal_reference": "CPA Canada Handbook — Accounting, Part II, Section 1520, Income statement, which lists the items presented separately in an income statement, read with Section 1400, General standards of financial statement presentation. Section 71 of the Canada Business Corporations Regulations, 2001 is what makes the Handbook the standard. Canada prescribes no statutory income statement format, so the grouping here is the short-form one ASPE asks for and no more.",
+      "source": "aspe",
+      "taxonomy": null,
+      "lines": [
+        {
+          "code": "10",
+          "name": "Revenue",
+          "sequence": 10,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "4000",
+              "code_to": "4499"
+            }
+          ],
+          "legal_reference": "CPA Canada Handbook — Accounting, Part II, Section 3400, Revenue, and Section 1520, which requires revenue to be presented as a separate item of the income statement.",
+          "source": "aspe"
+        },
+        {
+          "code": "20",
+          "name": "Cost of goods sold",
+          "sequence": 20,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "5000",
+              "code_to": "5499"
+            }
+          ]
+        },
+        {
+          "code": "30",
+          "name": "Gross profit",
+          "sequence": 30,
+          "is_total": true,
+          "plus": [
+            "10"
+          ],
+          "minus": [
+            "20"
+          ]
+        },
+        {
+          "code": "40",
+          "name": "Salaries, wages and employee benefits",
+          "sequence": 40,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "5500",
+              "code_to": "5999"
+            }
+          ]
+        },
+        {
+          "code": "50",
+          "name": "Operating expenses",
+          "sequence": 50,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "6000",
+              "code_to": "6999"
+            }
+          ],
+          "legal_reference": "Section 1520 lists amortization of property, plant and equipment and of intangible assets among the items presented separately; this pack keeps them in accounts 6800 and 6810 so a reader of the chart finds them, and presents them inside operating expenses, which is what a short-form statement does.",
+          "source": "aspe"
+        },
+        {
+          "code": "60",
+          "name": "Total operating expenses",
+          "sequence": 60,
+          "is_total": true,
+          "plus": [
+            "40",
+            "50"
+          ]
+        },
+        {
+          "code": "70",
+          "name": "Income from operations",
+          "sequence": 70,
+          "is_total": true,
+          "plus": [
+            "30"
+          ],
+          "minus": [
+            "60"
+          ]
+        },
+        {
+          "code": "80",
+          "name": "Other income",
+          "sequence": 80,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "4500",
+              "code_to": "4599"
+            }
+          ],
+          "legal_reference": "Section 1520 requires investment income and gains from the disposal of property, plant and equipment to be presented separately from revenue; this line is where the pack's chart keeps them, with the foreign exchange gain of Section 1651.",
+          "source": "aspe"
+        },
+        {
+          "code": "90",
+          "name": "Other expenses",
+          "sequence": 90,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "7000",
+              "code_to": "7099"
+            }
+          ],
+          "legal_reference": "Section 1520 for interest on long-term debt and for losses from the disposal of property, plant and equipment, and Section 1651, Foreign currency translation, for the exchange loss.",
+          "source": "aspe"
+        },
+        {
+          "code": "100",
+          "name": "Income before income taxes",
+          "sequence": 100,
+          "is_total": true,
+          "plus": [
+            "70",
+            "80"
+          ],
+          "minus": [
+            "90"
+          ]
+        },
+        {
+          "code": "110",
+          "name": "Income taxes",
+          "sequence": 110,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "8000",
+              "code_to": "8099"
+            }
+          ],
+          "legal_reference": "CPA Canada Handbook — Accounting, Part II, Section 3465, Income taxes, and Section 1520, which requires income taxes to be presented separately.",
+          "source": "aspe"
+        },
+        {
+          "code": "120",
+          "name": "Net income",
+          "sequence": 120,
+          "is_total": true,
+          "plus": [
+            "100"
+          ],
+          "minus": [
+            "110"
+          ]
+        }
+      ]
+    }
+  ]
+}

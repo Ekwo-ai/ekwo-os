@@ -4276,3 +4276,106 @@ left its DIOT and its *IVA retenciones* declaration.
 is added to `00_territories.sql` outside the common system of VAT, on the
 same footing as `MX`, so `vat_category`, `exemption_code` and the five
 `intracom_*` treatments are read the way every non-EU pack's are.
+
+## From Canada
+
+The pack is [`packs/ca/`](../packs/ca/README.md), and it is the country two
+fields of this format were written for and one reservation of the schema still
+names. `defaults.region` exists because Canadian tax follows the province;
+`packs/schema/pack.1.json` reserves `amount_type: "group"` to "phase 1
+(Canada)" and the compiler refuses it. Both are still true, and the pack ships
+without either.
+
+**Two taxes on one line, and the code that carries them.** Québec levies a
+value added tax of its own beside the federal one — 9.975 % under section 16
+of the Act respecting the Québec sales tax, on the same consideration as the
+5 % of subsection 165(1) of the Excise Tax Act and not on top of it — and
+British Columbia, Saskatchewan and Manitoba each levy a retail sales tax
+beside it. A `document_line` takes one `tax_id`, so the pack states one code
+per province at the combined rate and splits it at the posting: two `tax`
+postings with different `factor`s, and a `box_factor` equal to the first
+posting's `factor` so that line 103 of the federal return reports the federal
+share and not the whole. It works, to the cent, and it is the shape Canadian
+bookkeeping has settled on: Revenu Québec publishes the same combined rate
+itself, for a cash register that computes the two taxes in one step. What it costs is that the two taxes
+are one `vat_rate` on the line and one row of `document_tax_summary`: an
+invoice renderer cannot print "GST 5 %" and "QST 9.975 %" on separate lines
+out of what the core stores, which is what every Québec invoice actually
+shows. A `group` tax with `tax_group_members` and a snapshot per line would
+close that, and it is the shape `docs/decisions.md` already names.
+
+**A pack declares one declaration form, and a Québec company files two.**
+`readPack` reads `tax_report.json` as one object and keeps one `report`, so
+the pack carries the federal GST34 and the QST reaches no box at all. A
+registrant in Québec files form FPZ-500 with Revenu Québec for the same
+period — the QST collected, the input tax refunds claimed, and the federal
+figures again, because Revenu Québec administers the GST there — and British
+Columbia, Saskatchewan and Manitoba each take a provincial return besides.
+Five forms for one company, and the pack states one. The database has carried
+the shape for this since `tax_report_templates` was keyed `(country, code)`,
+and a posting has carried `report` since the day boxes stopped being unique
+across a country; what is missing is the pack format's side of it — a
+`tax_report.json` that is a list, and a `pack check` that resolves a posting's
+box against the form that posting names. This is the country that needs it,
+and it is the same gap the United States records with its fifty state forms,
+one administration down.
+
+**`settle_filing()` clears every tax account of the period, and not the ones
+the form reaches.** `filing_tax_movements()` selects the posted entry lines
+flagged `tax_line` inside the period, whatever declaration box they carry or
+do not carry. In a country with one administration that is exactly right. In
+Canada it means that settling a GST34 clears the QST accounts, the three
+provincial sales tax accounts and the customs account into the account the
+pack names for what is owed to the Receiver General — a debt moved to the
+wrong administration. The return itself is unaffected: `vat_return()` reads
+the boxes the postings name, and the provincial taxes name none. The fix is
+not a country's to write: the settlement should clear what the filing's own
+boxes reached, and carry the rest nowhere.
+
+**A form is filed in one unit, and GST34 is filed in two.** The GST/HST Return
+Working Copy prints a fixed `00` in the cents column of line 101 — total sales
+and other revenue is filed in whole dollars — and every other line of the same
+sheet takes cents. `tax_report.rounding` is one unit for the whole form, so
+`packs/ca/` declares none and files every box at the cent. A `rounding` on a
+box, beside the one on the form, is what would say it.
+
+**One deadline per form, and four filers.** `last_day_of_month_after_period`
+is paragraph 238(1)(b) of the Excise Tax Act and it is the rule for a monthly
+and a quarterly filer. An annual filer has three months under subparagraph
+238(1)(a)(iii); a listed financial institution six under subparagraph (i); and
+an individual with business income and a 31 December year end files by 15 June
+under subparagraph (ii) while still remitting by 30 April under paragraph
+228(2)(a). The deadline rule is a property of the form and the cadence is a
+property of the company, so none of the three can be said beside the first —
+the same shape as Ireland's bimonthly return and the United Kingdom's seven
+days, one step further. A deadline per cadence, rather than per form, is the
+smallest thing that would carry it.
+
+**A remittance rate instead of a tax.** The Quick Method of accounting lets a
+small registrant report GST-inclusive figures on line 101 and remit a
+percentage of them, keeping the difference instead of claiming input tax
+credits; the simplified input tax credit method works the other side the same
+way. Neither is a rate on a line, so neither is a `tax` this format's three
+posting types can express, and neither is invented in the pack. They are named
+as a gap, the way Mexico named its DIOT.
+
+**The province of a party is still not read by anything.**
+`companies.region` and `contacts.region` have existed since before this pack
+and nothing consumes them; `packs/ca/pack.json` leaves `defaults.region` null,
+because no province is the lawful default for a Canadian company. Choosing
+between `CA-ON-S-13` and `CA-BC-S-12` is therefore a human decision, and what
+the core does is refuse the wrong one: every standard-rate code carries
+`applies_when.supply_in`, so `post_document()` raises `tax_territory_mismatch`
+on a code whose province is not the one the document resolves to. That is the
+right division — the core refuses and never chooses — and the missing half is
+a *suggestion*: `tax_rule_templates` and `suggest_tax()`, which
+`docs/packs.md` already names as phase 1 and which no pack can stand in for.
+
+**CA and thirteen provinces in `territories`; `CAD` was already there.**
+Canada is outside the common system of VAT, so `00_territories.sql` needed a
+row for it on the same footing as `US` and `MX`, and thirteen more below it
+because every standard-rate code of the pack conditions on a province. That is
+the second reason `docs/packs.md` gives for a row, at its fullest: a country
+whose tax law genuinely lives one level down. `CAD` needed nothing — the
+currency has been in `00_currencies.sql` at two decimals since before this
+pack.

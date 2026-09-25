@@ -1,0 +1,1507 @@
+[
+  {
+    "code": "CA-ON-S-13",
+    "name": "Sale in Ontario — HST 13 %",
+    "description": "The harmonized sales tax of a participating province: one rate, one administration, one box",
+    "rate": 13,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "applies_when": {
+      "supply_in": "CA-ON"
+    },
+    "legal_reference": "Excise Tax Act, subsection 165(1): every recipient of a taxable supply made in Canada pays tax calculated at the rate of 5 % on the value of the consideration, and subsection 165(2) adds, on a supply made in a participating province, tax at the tax rate for that province — the definition of “tax rate” in subsection 123(1) taking the rate prescribed for the province where a sales tax harmonization agreement is in force. Ontario is a participating province: the federal and the provincial parts are levied and administered together as the harmonized sales tax, 13 % in all, of which 5 points are the tax of subsection 165(1) and 8 points the tax of subsection 165(2). Which province a supply is made in is decided by Schedule IX and by the New Harmonized Value-added Tax System Regulations, and never by where the invoice was addressed, which is what `applies_when.supply_in` records here. The whole of the tax is collected for the Receiver General, so one `tax` posting carries it to the GST/HST charged account and to line 103 of form GST34.",
+    "source": "cra-rates",
+    "vat_category": "S",
+    "kind": "gst",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "101"
+        },
+        {
+          "type": "tax",
+          "account": "2200",
+          "box": "103"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "101",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2200",
+          "box": "103",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 10
+  },
+  {
+    "code": "CA-NS-S-14",
+    "name": "Sale in Nova Scotia — HST 14 %",
+    "description": "The harmonized sales tax of a participating province: one rate, one administration, one box",
+    "rate": 14,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "applies_when": {
+      "supply_in": "CA-NS"
+    },
+    "legal_reference": "Excise Tax Act, subsection 165(1): every recipient of a taxable supply made in Canada pays tax calculated at the rate of 5 % on the value of the consideration, and subsection 165(2) adds, on a supply made in a participating province, tax at the tax rate for that province — the definition of “tax rate” in subsection 123(1) taking the rate prescribed for the province where a sales tax harmonization agreement is in force. Nova Scotia is a participating province: the federal and the provincial parts are levied and administered together as the harmonized sales tax, 14 % in all, of which 5 points are the tax of subsection 165(1) and 9 points the tax of subsection 165(2). Nova Scotia's provincial part fell from 10 points to 9 on 1 April 2025, which is why the rate here is 14 % and not the 15 % the three other Atlantic provinces charge; the Canada Revenue Agency states the change in as many words. Which province a supply is made in is decided by Schedule IX and by the New Harmonized Value-added Tax System Regulations, and never by where the invoice was addressed, which is what `applies_when.supply_in` records here. The whole of the tax is collected for the Receiver General, so one `tax` posting carries it to the GST/HST charged account and to line 103 of form GST34.",
+    "source": "cra-which-rate",
+    "vat_category": "S",
+    "kind": "gst",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "101"
+        },
+        {
+          "type": "tax",
+          "account": "2200",
+          "box": "103"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "101",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2200",
+          "box": "103",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 20
+  },
+  {
+    "code": "CA-NB-S-15",
+    "name": "Sale in New Brunswick — HST 15 %",
+    "description": "The harmonized sales tax of a participating province: one rate, one administration, one box",
+    "rate": 15,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "applies_when": {
+      "supply_in": "CA-NB"
+    },
+    "legal_reference": "Excise Tax Act, subsection 165(1): every recipient of a taxable supply made in Canada pays tax calculated at the rate of 5 % on the value of the consideration, and subsection 165(2) adds, on a supply made in a participating province, tax at the tax rate for that province — the definition of “tax rate” in subsection 123(1) taking the rate prescribed for the province where a sales tax harmonization agreement is in force. New Brunswick is a participating province: the federal and the provincial parts are levied and administered together as the harmonized sales tax, 15 % in all, of which 5 points are the tax of subsection 165(1) and 10 points the tax of subsection 165(2). Which province a supply is made in is decided by Schedule IX and by the New Harmonized Value-added Tax System Regulations, and never by where the invoice was addressed, which is what `applies_when.supply_in` records here. The whole of the tax is collected for the Receiver General, so one `tax` posting carries it to the GST/HST charged account and to line 103 of form GST34.",
+    "source": "cra-rates",
+    "vat_category": "S",
+    "kind": "gst",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "101"
+        },
+        {
+          "type": "tax",
+          "account": "2200",
+          "box": "103"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "101",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2200",
+          "box": "103",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 30
+  },
+  {
+    "code": "CA-NL-S-15",
+    "name": "Sale in Newfoundland and Labrador — HST 15 %",
+    "description": "The harmonized sales tax of a participating province: one rate, one administration, one box",
+    "rate": 15,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "applies_when": {
+      "supply_in": "CA-NL"
+    },
+    "legal_reference": "Excise Tax Act, subsection 165(1): every recipient of a taxable supply made in Canada pays tax calculated at the rate of 5 % on the value of the consideration, and subsection 165(2) adds, on a supply made in a participating province, tax at the tax rate for that province — the definition of “tax rate” in subsection 123(1) taking the rate prescribed for the province where a sales tax harmonization agreement is in force. Newfoundland and Labrador is a participating province: the federal and the provincial parts are levied and administered together as the harmonized sales tax, 15 % in all, of which 5 points are the tax of subsection 165(1) and 10 points the tax of subsection 165(2). Which province a supply is made in is decided by Schedule IX and by the New Harmonized Value-added Tax System Regulations, and never by where the invoice was addressed, which is what `applies_when.supply_in` records here. The whole of the tax is collected for the Receiver General, so one `tax` posting carries it to the GST/HST charged account and to line 103 of form GST34.",
+    "source": "cra-rates",
+    "vat_category": "S",
+    "kind": "gst",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "101"
+        },
+        {
+          "type": "tax",
+          "account": "2200",
+          "box": "103"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "101",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2200",
+          "box": "103",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 40
+  },
+  {
+    "code": "CA-PE-S-15",
+    "name": "Sale in Prince Edward Island — HST 15 %",
+    "description": "The harmonized sales tax of a participating province: one rate, one administration, one box",
+    "rate": 15,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "applies_when": {
+      "supply_in": "CA-PE"
+    },
+    "legal_reference": "Excise Tax Act, subsection 165(1): every recipient of a taxable supply made in Canada pays tax calculated at the rate of 5 % on the value of the consideration, and subsection 165(2) adds, on a supply made in a participating province, tax at the tax rate for that province — the definition of “tax rate” in subsection 123(1) taking the rate prescribed for the province where a sales tax harmonization agreement is in force. Prince Edward Island is a participating province: the federal and the provincial parts are levied and administered together as the harmonized sales tax, 15 % in all, of which 5 points are the tax of subsection 165(1) and 10 points the tax of subsection 165(2). Which province a supply is made in is decided by Schedule IX and by the New Harmonized Value-added Tax System Regulations, and never by where the invoice was addressed, which is what `applies_when.supply_in` records here. The whole of the tax is collected for the Receiver General, so one `tax` posting carries it to the GST/HST charged account and to line 103 of form GST34.",
+    "source": "cra-rates",
+    "vat_category": "S",
+    "kind": "gst",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "101"
+        },
+        {
+          "type": "tax",
+          "account": "2200",
+          "box": "103"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "101",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2200",
+          "box": "103",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 50
+  },
+  {
+    "code": "CA-AB-S-5",
+    "name": "Sale in Alberta — GST 5 %",
+    "rate": 5,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "applies_when": {
+      "supply_in": "CA-AB"
+    },
+    "legal_reference": "Excise Tax Act, subsection 165(1): every recipient of a taxable supply made in Canada pays tax calculated at the rate of 5 % on the value of the consideration, and subsection 165(2) adds, on a supply made in a participating province, tax at the tax rate for that province — the definition of “tax rate” in subsection 123(1) taking the rate prescribed for the province where a sales tax harmonization agreement is in force. Alberta is not a participating province and levies no general sales tax of its own, so 5 % is the whole of the tax on a supply made there and the Canada Revenue Agency publishes it as such. Which province a supply is made in is decided by Schedule IX and by the New Harmonized Value-added Tax System Regulations, and never by where the invoice was addressed, which is what `applies_when.supply_in` records here. One `tax` posting carries it to the GST/HST charged account and to line 103 of form GST34.",
+    "source": "cra-rates",
+    "vat_category": "S",
+    "kind": "gst",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "101"
+        },
+        {
+          "type": "tax",
+          "account": "2200",
+          "box": "103"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "101",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2200",
+          "box": "103",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 60
+  },
+  {
+    "code": "CA-NT-S-5",
+    "name": "Sale in Northwest Territories — GST 5 %",
+    "rate": 5,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "applies_when": {
+      "supply_in": "CA-NT"
+    },
+    "legal_reference": "Excise Tax Act, subsection 165(1): every recipient of a taxable supply made in Canada pays tax calculated at the rate of 5 % on the value of the consideration, and subsection 165(2) adds, on a supply made in a participating province, tax at the tax rate for that province — the definition of “tax rate” in subsection 123(1) taking the rate prescribed for the province where a sales tax harmonization agreement is in force. Northwest Territories is not a participating province and levies no general sales tax of its own, so 5 % is the whole of the tax on a supply made there and the Canada Revenue Agency publishes it as such. Which province a supply is made in is decided by Schedule IX and by the New Harmonized Value-added Tax System Regulations, and never by where the invoice was addressed, which is what `applies_when.supply_in` records here. One `tax` posting carries it to the GST/HST charged account and to line 103 of form GST34.",
+    "source": "cra-rates",
+    "vat_category": "S",
+    "kind": "gst",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "101"
+        },
+        {
+          "type": "tax",
+          "account": "2200",
+          "box": "103"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "101",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2200",
+          "box": "103",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 70
+  },
+  {
+    "code": "CA-NU-S-5",
+    "name": "Sale in Nunavut — GST 5 %",
+    "rate": 5,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "applies_when": {
+      "supply_in": "CA-NU"
+    },
+    "legal_reference": "Excise Tax Act, subsection 165(1): every recipient of a taxable supply made in Canada pays tax calculated at the rate of 5 % on the value of the consideration, and subsection 165(2) adds, on a supply made in a participating province, tax at the tax rate for that province — the definition of “tax rate” in subsection 123(1) taking the rate prescribed for the province where a sales tax harmonization agreement is in force. Nunavut is not a participating province and levies no general sales tax of its own, so 5 % is the whole of the tax on a supply made there and the Canada Revenue Agency publishes it as such. Which province a supply is made in is decided by Schedule IX and by the New Harmonized Value-added Tax System Regulations, and never by where the invoice was addressed, which is what `applies_when.supply_in` records here. One `tax` posting carries it to the GST/HST charged account and to line 103 of form GST34.",
+    "source": "cra-rates",
+    "vat_category": "S",
+    "kind": "gst",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "101"
+        },
+        {
+          "type": "tax",
+          "account": "2200",
+          "box": "103"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "101",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2200",
+          "box": "103",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 80
+  },
+  {
+    "code": "CA-YT-S-5",
+    "name": "Sale in Yukon — GST 5 %",
+    "rate": 5,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "applies_when": {
+      "supply_in": "CA-YT"
+    },
+    "legal_reference": "Excise Tax Act, subsection 165(1): every recipient of a taxable supply made in Canada pays tax calculated at the rate of 5 % on the value of the consideration, and subsection 165(2) adds, on a supply made in a participating province, tax at the tax rate for that province — the definition of “tax rate” in subsection 123(1) taking the rate prescribed for the province where a sales tax harmonization agreement is in force. Yukon is not a participating province and levies no general sales tax of its own, so 5 % is the whole of the tax on a supply made there and the Canada Revenue Agency publishes it as such. Which province a supply is made in is decided by Schedule IX and by the New Harmonized Value-added Tax System Regulations, and never by where the invoice was addressed, which is what `applies_when.supply_in` records here. One `tax` posting carries it to the GST/HST charged account and to line 103 of form GST34.",
+    "source": "cra-rates",
+    "vat_category": "S",
+    "kind": "gst",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "101"
+        },
+        {
+          "type": "tax",
+          "account": "2200",
+          "box": "103"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "101",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2200",
+          "box": "103",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 90
+  },
+  {
+    "code": "CA-QC-S-14975",
+    "name": "Sale in Québec — GST 5 % and Québec sales tax (QST), 14.975 % in all",
+    "description": "The federal and the provincial tax on one line, split at the posting",
+    "rate": 14.975,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "jurisdiction": "CA-QC",
+    "applies_when": {
+      "supply_in": "CA-QC"
+    },
+    "legal_reference": "Excise Tax Act, subsection 165(1): every recipient of a taxable supply made in Canada pays tax calculated at the rate of 5 % on the value of the consideration, and subsection 165(2) adds, on a supply made in a participating province, tax at the tax rate for that province — the definition of “tax rate” in subsection 123(1) taking the rate prescribed for the province where a sales tax harmonization agreement is in force. Section 16 of the Act respecting the Québec sales tax imposes the Québec sales tax at 9.975 % on the value of the consideration for a taxable supply made in Québec, and 0 % where the supply is zero-rated. The QST is charged on the same consideration as the GST and not on the consideration plus the GST: neither tax is in the base of the other. Which province a supply is made in is decided by Schedule IX and by the New Harmonized Value-added Tax System Regulations, and never by where the invoice was addressed, which is what `applies_when.supply_in` records here. Two taxes, two administrations, and one code a bookkeeper picks: the rate stated here is the two added together, and the postings split it. The first `tax` posting is 33.389 % of the tax — the federal 5 points — and goes to the GST/HST charged account and to line 103 of form GST34; the second is 66.611 % — the provincial part — and goes to its own account and to no box of this form, because the provincial tax is not declared on the federal return. `box_factor` on the first posting is the same share as `factor`, so line 103 reports the federal part and not the whole. Revenu Québec publishes both ways of working the pair out and says that a cash register calculating the GST and the QST in one step uses the single rate of 14.975 %, which is the rate this code carries. The QST is declared to Revenu Québec on form FPZ-500 and this pack carries one declaration form; the README says what that leaves out.",
+    "source": "ltvq",
+    "vat_category": "S",
+    "kind": "gst",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "101"
+        },
+        {
+          "type": "tax",
+          "factor": 33.389,
+          "account": "2200",
+          "box": "103",
+          "box_factor": 33.389
+        },
+        {
+          "type": "tax",
+          "factor": 66.611,
+          "account": "2210"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "101",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": 33.389,
+          "account": "2200",
+          "box": "103",
+          "box_factor": -33.389
+        },
+        {
+          "type": "tax",
+          "factor": 66.611,
+          "account": "2210"
+        }
+      ]
+    },
+    "sequence": 100
+  },
+  {
+    "code": "CA-BC-S-12",
+    "name": "Sale in British Columbia — GST 5 % and provincial sales tax (PST), 12 % in all",
+    "description": "The federal and the provincial tax on one line, split at the posting",
+    "rate": 12,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "jurisdiction": "CA-BC",
+    "applies_when": {
+      "supply_in": "CA-BC"
+    },
+    "legal_reference": "Excise Tax Act, subsection 165(1): every recipient of a taxable supply made in Canada pays tax calculated at the rate of 5 % on the value of the consideration, and subsection 165(2) adds, on a supply made in a participating province, tax at the tax rate for that province — the definition of “tax rate” in subsection 123(1) taking the rate prescribed for the province where a sales tax harmonization agreement is in force. Section 37 of the Provincial Sales Tax Act (SBC 2012, c. 35) makes a purchaser of tangible personal property liable for tax, and subsection 34(1) of the same Act sets that tax at 7 % of the purchase price; the Province states the general rate as “7 % on the purchase or lease price of goods and services, with some exceptions”. Which province a supply is made in is decided by Schedule IX and by the New Harmonized Value-added Tax System Regulations, and never by where the invoice was addressed, which is what `applies_when.supply_in` records here. Two taxes, two administrations, and one code a bookkeeper picks: the rate stated here is the two added together, and the postings split it. The first `tax` posting is 41.667 % of the tax — the federal 5 points — and goes to the GST/HST charged account and to line 103 of form GST34; the second is 58.333 % — the provincial part — and goes to its own account and to no box of this form, because the provincial tax is not declared on the federal return. `box_factor` on the first posting is the same share as `factor`, so line 103 reports the federal part and not the whole.",
+    "source": "bc-psta",
+    "vat_category": "S",
+    "kind": "gst",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "101"
+        },
+        {
+          "type": "tax",
+          "factor": 41.667,
+          "account": "2200",
+          "box": "103",
+          "box_factor": 41.667
+        },
+        {
+          "type": "tax",
+          "factor": 58.333,
+          "account": "2220"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "101",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": 41.667,
+          "account": "2200",
+          "box": "103",
+          "box_factor": -41.667
+        },
+        {
+          "type": "tax",
+          "factor": 58.333,
+          "account": "2220"
+        }
+      ]
+    },
+    "sequence": 110
+  },
+  {
+    "code": "CA-SK-S-11",
+    "name": "Sale in Saskatchewan — GST 5 % and provincial sales tax (PST), 11 % in all",
+    "description": "The federal and the provincial tax on one line, split at the posting",
+    "rate": 11,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "jurisdiction": "CA-SK",
+    "applies_when": {
+      "supply_in": "CA-SK"
+    },
+    "legal_reference": "Excise Tax Act, subsection 165(1): every recipient of a taxable supply made in Canada pays tax calculated at the rate of 5 % on the value of the consideration, and subsection 165(2) adds, on a supply made in a participating province, tax at the tax rate for that province — the definition of “tax rate” in subsection 123(1) taking the rate prescribed for the province where a sales tax harmonization agreement is in force. Subsection 5(1) of The Provincial Sales Tax Act (RSS 1978, c. P-34.1) makes every consumer of tangible personal property purchased at a retail sale in Saskatchewan liable for a tax “computed at the rate of 6 % of the value of the property to be consumed”, and subsections 5(2) and 5(3) say the same of a user of property and of a taxable service. Which province a supply is made in is decided by Schedule IX and by the New Harmonized Value-added Tax System Regulations, and never by where the invoice was addressed, which is what `applies_when.supply_in` records here. Two taxes, two administrations, and one code a bookkeeper picks: the rate stated here is the two added together, and the postings split it. The first `tax` posting is 45.455 % of the tax — the federal 5 points — and goes to the GST/HST charged account and to line 103 of form GST34; the second is 54.545 % — the provincial part — and goes to its own account and to no box of this form, because the provincial tax is not declared on the federal return. `box_factor` on the first posting is the same share as `factor`, so line 103 reports the federal part and not the whole.",
+    "source": "sk-psta",
+    "vat_category": "S",
+    "kind": "gst",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "101"
+        },
+        {
+          "type": "tax",
+          "factor": 45.455,
+          "account": "2200",
+          "box": "103",
+          "box_factor": 45.455
+        },
+        {
+          "type": "tax",
+          "factor": 54.545,
+          "account": "2225"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "101",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": 45.455,
+          "account": "2200",
+          "box": "103",
+          "box_factor": -45.455
+        },
+        {
+          "type": "tax",
+          "factor": 54.545,
+          "account": "2225"
+        }
+      ]
+    },
+    "sequence": 120
+  },
+  {
+    "code": "CA-MB-S-12",
+    "name": "Sale in Manitoba — GST 5 % and retail sales tax (RST), 12 % in all",
+    "description": "The federal and the provincial tax on one line, split at the posting",
+    "rate": 12,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "jurisdiction": "CA-MB",
+    "applies_when": {
+      "supply_in": "CA-MB"
+    },
+    "legal_reference": "Excise Tax Act, subsection 165(1): every recipient of a taxable supply made in Canada pays tax calculated at the rate of 5 % on the value of the consideration, and subsection 165(2) adds, on a supply made in a participating province, tax at the tax rate for that province — the definition of “tax rate” in subsection 123(1) taking the rate prescribed for the province where a sales tax harmonization agreement is in force. Subsection 2(1) of The Retail Sales Tax Act (CCSM c. R130) makes every purchaser of tangible personal property or a taxable service pay tax equal to the fair value multiplied by the general sales tax rate, and the definition of “general sales tax rate” in subsection 1(1) sets that rate at 7 % for tax that becomes payable after 30 June 2019. Which province a supply is made in is decided by Schedule IX and by the New Harmonized Value-added Tax System Regulations, and never by where the invoice was addressed, which is what `applies_when.supply_in` records here. Two taxes, two administrations, and one code a bookkeeper picks: the rate stated here is the two added together, and the postings split it. The first `tax` posting is 41.667 % of the tax — the federal 5 points — and goes to the GST/HST charged account and to line 103 of form GST34; the second is 58.333 % — the provincial part — and goes to its own account and to no box of this form, because the provincial tax is not declared on the federal return. `box_factor` on the first posting is the same share as `factor`, so line 103 reports the federal part and not the whole.",
+    "source": "mb-rsta",
+    "vat_category": "S",
+    "kind": "gst",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "101"
+        },
+        {
+          "type": "tax",
+          "factor": 41.667,
+          "account": "2200",
+          "box": "103",
+          "box_factor": 41.667
+        },
+        {
+          "type": "tax",
+          "factor": 58.333,
+          "account": "2230"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "101",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": 41.667,
+          "account": "2200",
+          "box": "103",
+          "box_factor": -41.667
+        },
+        {
+          "type": "tax",
+          "factor": 58.333,
+          "account": "2230"
+        }
+      ]
+    },
+    "sequence": 130
+  },
+  {
+    "code": "CA-S-Z-EXPORT",
+    "name": "Zero-rated sale — goods exported by the recipient",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2026-01-01",
+    "conditions": [
+      "transport_evidence"
+    ],
+    "legal_reference": "Excise Tax Act, subsection 165(3): the tax rate in respect of a taxable supply that is a zero-rated supply is 0 %. Schedule VI, Part V, section 1 zero-rates a supply of tangible personal property made to a recipient other than a consumer who intends to export it, on five conditions the ledger cannot see: the recipient exports it as soon as is reasonable, does not acquire it for consumption, use or supply in Canada before exporting it, does not have it further processed in Canada, and the supplier “maintains evidence satisfactory to the Minister of the exportation of the property by the recipient”. `conditions` records that last one as `transport_evidence` and records no document: there is nowhere in the core to keep a proof of export, and the README says so. The supply is zero-rated and not exempt, so the seller keeps full input tax credits on what it cost to make. No exemption reason code: BT-121 comes from the VATEX list of EN 16931, whose codes name articles of Directive 2006/112/EC, and Canada is outside the common system of VAT.",
+    "source": "eta",
+    "vat_category": "G",
+    "kind": "gst",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "101"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "101",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 140
+  },
+  {
+    "code": "CA-S-Z-SERVICE-NR",
+    "name": "Zero-rated sale — service supplied to a non-resident",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2026-01-01",
+    "conditions": [
+      "buyer_status"
+    ],
+    "legal_reference": "Excise Tax Act, Schedule VI, Part V, section 7 zero-rates a supply of a service made to a non-resident person, and then takes eight kinds of service back out of it: a service made to an individual who is in Canada when they have contact with the supplier about it, a service rendered to an individual while that individual is in Canada, an advisory, consulting or professional service, a postal service, a service in respect of real property situated in Canada, a service in respect of tangible personal property situated in Canada when the service is performed, a service of acting as agent, and a transportation or telecommunication service. Whether the customer is a non-resident is a fact about the party and not a figure in the books, which is what `buyer_status` records. Subsection 165(3) is what makes the rate 0 %.",
+    "source": "eta",
+    "vat_category": "G",
+    "kind": "gst",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "101"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "101",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 150
+  },
+  {
+    "code": "CA-S-Z-GROCERIES",
+    "name": "Zero-rated sale — basic groceries",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "conditions": [
+      "supply_nature"
+    ],
+    "legal_reference": "Excise Tax Act, Schedule VI, Part III, section 1 zero-rates supplies of food or beverages for human consumption, and excludes a long list the ledger cannot tell apart from the rest: alcoholic beverages, cannabis products, carbonated beverages, fruit-flavoured drinks under 25 % juice, candies and confectionery, chips and similar snack foods, salted nuts and seeds, granola and snack mixtures other than breakfast cereals, and ice lollies. What is supplied, classified more finely than any chart of accounts holds it, is exactly what `supply_nature` is for. Subsection 165(3) sets the rate at 0 %, and a zero-rated supply keeps the seller's input tax credits.",
+    "source": "eta",
+    "vat_category": "Z",
+    "kind": "gst",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "101"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "101",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 160
+  },
+  {
+    "code": "CA-S-E-FINANCIAL",
+    "name": "Exempt sale — financial service",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2026-01-01",
+    "legal_reference": "Excise Tax Act, Schedule V, Part VII, section 1 exempts a supply of a financial service that is not included in Part IX of Schedule VI, and section 2 exempts a supply deemed to be one by subsection 150(1). “Financial service” is defined in subsection 123(1) in fourteen paragraphs and taken back in nine. An exempt supply is not a taxable supply, so no tax is charged on it and — unlike a zero-rated supply — no input tax credit is available on what was bought to make it. No exemption reason code: the VATEX list of EN 16931 names articles of Directive 2006/112/EC and Canada is outside the common system of VAT, so the article this line is exempt under is stated here instead.",
+    "source": "eta",
+    "vat_category": "E",
+    "kind": "gst",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "101"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "101",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 170
+  },
+  {
+    "code": "CA-S-E-RESIDENTIAL-RENT",
+    "name": "Exempt sale — residential rent of at least one month",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2026-01-01",
+    "conditions": [
+      "supply_nature"
+    ],
+    "legal_reference": "Excise Tax Act, Schedule V, Part I, section 6 exempts a supply of a residential complex or of a residential unit in one, by way of lease, licence or similar arrangement, for occupancy as a place of residence or lodging by an individual, “where the period throughout which continuous occupancy of the complex or unit is given to the same individual under the arrangement is at least one month”; paragraph (b) exempts a residential unit let for no more than $20 a day of occupancy. The month and the kind of premises are facts about the arrangement and not figures in the books, which `supply_nature` records. A commercial lease is not in this section and is taxable. No exemption reason code, for the reason given on CA-S-E-FINANCIAL.",
+    "source": "eta",
+    "vat_category": "E",
+    "kind": "gst",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "101"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "101",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 180
+  },
+  {
+    "code": "CA-S-O-OUTSIDE",
+    "name": "Sale of a supply made outside Canada",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "not_subject",
+    "valid_from": "2026-01-01",
+    "legal_reference": "Excise Tax Act, subsection 165(1) taxes a taxable supply “made in Canada” and nothing else, and section 142 is what decides where a supply is made: goods are supplied in Canada where they are, or are to be, delivered or made available in Canada, and a service is supplied in Canada where it is, or is to be, performed in whole or in part in Canada. A supply that section 142 places outside Canada is outside Division II altogether — it is not zero-rated and it is not exempt, and no tax of any rate applies to it. The revenue still reaches line 101, which asks for total sales and other revenue.",
+    "source": "eta",
+    "vat_category": "O",
+    "kind": "gst",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "101"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "101",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 190
+  },
+  {
+    "code": "CA-ON-P-13",
+    "name": "Purchase in Ontario — HST 13 % recoverable",
+    "rate": 13,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "applies_when": {
+      "supply_in": "CA-ON"
+    },
+    "legal_reference": "Excise Tax Act, subsection 165(1): every recipient of a taxable supply made in Canada pays tax calculated at the rate of 5 % on the value of the consideration, and subsection 165(2) adds, on a supply made in a participating province, tax at the tax rate for that province — the definition of “tax rate” in subsection 123(1) taking the rate prescribed for the province where a sales tax harmonization agreement is in force. Ontario is a participating province and the harmonized sales tax a supplier charges there is 13 %. Excise Tax Act, subsection 169(1): a registrant acquiring property or a service for consumption, use or supply in the course of a commercial activity has an input tax credit for the tax that becomes payable on it, and subsection 225(1) subtracts the credits claimed from the tax collected to give the net tax of the reporting period. The credit is claimed on line 106 of the return. The base of a purchase reaches no box: form GST34 has no input side other than the credit itself. The whole of the harmonized tax is recoverable, federal part and provincial part alike: subsection 169(1) makes no distinction between them.",
+    "source": "cra-rates",
+    "kind": "gst",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1330",
+          "box": "106"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1330",
+          "box": "106",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 200
+  },
+  {
+    "code": "CA-NS-P-14",
+    "name": "Purchase in Nova Scotia — HST 14 % recoverable",
+    "rate": 14,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "applies_when": {
+      "supply_in": "CA-NS"
+    },
+    "legal_reference": "Excise Tax Act, subsection 165(1): every recipient of a taxable supply made in Canada pays tax calculated at the rate of 5 % on the value of the consideration, and subsection 165(2) adds, on a supply made in a participating province, tax at the tax rate for that province — the definition of “tax rate” in subsection 123(1) taking the rate prescribed for the province where a sales tax harmonization agreement is in force. Nova Scotia is a participating province and the harmonized sales tax a supplier charges there is 14 %. Nova Scotia's provincial part fell from 10 points to 9 on 1 April 2025, which is why the rate here is 14 % and not 15 %. Excise Tax Act, subsection 169(1): a registrant acquiring property or a service for consumption, use or supply in the course of a commercial activity has an input tax credit for the tax that becomes payable on it, and subsection 225(1) subtracts the credits claimed from the tax collected to give the net tax of the reporting period. The credit is claimed on line 106 of the return. The base of a purchase reaches no box: form GST34 has no input side other than the credit itself. The whole of the harmonized tax is recoverable, federal part and provincial part alike: subsection 169(1) makes no distinction between them.",
+    "source": "cra-which-rate",
+    "kind": "gst",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1330",
+          "box": "106"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1330",
+          "box": "106",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 210
+  },
+  {
+    "code": "CA-NB-P-15",
+    "name": "Purchase in New Brunswick — HST 15 % recoverable",
+    "rate": 15,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "applies_when": {
+      "supply_in": "CA-NB"
+    },
+    "legal_reference": "Excise Tax Act, subsection 165(1): every recipient of a taxable supply made in Canada pays tax calculated at the rate of 5 % on the value of the consideration, and subsection 165(2) adds, on a supply made in a participating province, tax at the tax rate for that province — the definition of “tax rate” in subsection 123(1) taking the rate prescribed for the province where a sales tax harmonization agreement is in force. New Brunswick is a participating province and the harmonized sales tax a supplier charges there is 15 %. Excise Tax Act, subsection 169(1): a registrant acquiring property or a service for consumption, use or supply in the course of a commercial activity has an input tax credit for the tax that becomes payable on it, and subsection 225(1) subtracts the credits claimed from the tax collected to give the net tax of the reporting period. The credit is claimed on line 106 of the return. The base of a purchase reaches no box: form GST34 has no input side other than the credit itself. The whole of the harmonized tax is recoverable, federal part and provincial part alike: subsection 169(1) makes no distinction between them.",
+    "source": "cra-rates",
+    "kind": "gst",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1330",
+          "box": "106"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1330",
+          "box": "106",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 220
+  },
+  {
+    "code": "CA-NL-P-15",
+    "name": "Purchase in Newfoundland and Labrador — HST 15 % recoverable",
+    "rate": 15,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "applies_when": {
+      "supply_in": "CA-NL"
+    },
+    "legal_reference": "Excise Tax Act, subsection 165(1): every recipient of a taxable supply made in Canada pays tax calculated at the rate of 5 % on the value of the consideration, and subsection 165(2) adds, on a supply made in a participating province, tax at the tax rate for that province — the definition of “tax rate” in subsection 123(1) taking the rate prescribed for the province where a sales tax harmonization agreement is in force. Newfoundland and Labrador is a participating province and the harmonized sales tax a supplier charges there is 15 %. Excise Tax Act, subsection 169(1): a registrant acquiring property or a service for consumption, use or supply in the course of a commercial activity has an input tax credit for the tax that becomes payable on it, and subsection 225(1) subtracts the credits claimed from the tax collected to give the net tax of the reporting period. The credit is claimed on line 106 of the return. The base of a purchase reaches no box: form GST34 has no input side other than the credit itself. The whole of the harmonized tax is recoverable, federal part and provincial part alike: subsection 169(1) makes no distinction between them.",
+    "source": "cra-rates",
+    "kind": "gst",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1330",
+          "box": "106"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1330",
+          "box": "106",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 230
+  },
+  {
+    "code": "CA-PE-P-15",
+    "name": "Purchase in Prince Edward Island — HST 15 % recoverable",
+    "rate": 15,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "applies_when": {
+      "supply_in": "CA-PE"
+    },
+    "legal_reference": "Excise Tax Act, subsection 165(1): every recipient of a taxable supply made in Canada pays tax calculated at the rate of 5 % on the value of the consideration, and subsection 165(2) adds, on a supply made in a participating province, tax at the tax rate for that province — the definition of “tax rate” in subsection 123(1) taking the rate prescribed for the province where a sales tax harmonization agreement is in force. Prince Edward Island is a participating province and the harmonized sales tax a supplier charges there is 15 %. Excise Tax Act, subsection 169(1): a registrant acquiring property or a service for consumption, use or supply in the course of a commercial activity has an input tax credit for the tax that becomes payable on it, and subsection 225(1) subtracts the credits claimed from the tax collected to give the net tax of the reporting period. The credit is claimed on line 106 of the return. The base of a purchase reaches no box: form GST34 has no input side other than the credit itself. The whole of the harmonized tax is recoverable, federal part and provincial part alike: subsection 169(1) makes no distinction between them.",
+    "source": "cra-rates",
+    "kind": "gst",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1330",
+          "box": "106"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1330",
+          "box": "106",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 240
+  },
+  {
+    "code": "CA-AB-P-5",
+    "name": "Purchase in Alberta — GST 5 % recoverable",
+    "rate": 5,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "applies_when": {
+      "supply_in": "CA-AB"
+    },
+    "legal_reference": "Excise Tax Act, subsection 165(1): every recipient of a taxable supply made in Canada pays tax calculated at the rate of 5 % on the value of the consideration, and subsection 165(2) adds, on a supply made in a participating province, tax at the tax rate for that province — the definition of “tax rate” in subsection 123(1) taking the rate prescribed for the province where a sales tax harmonization agreement is in force. Alberta is not a participating province and levies no general sales tax of its own, so a supplier there charges 5 % and nothing else. Excise Tax Act, subsection 169(1): a registrant acquiring property or a service for consumption, use or supply in the course of a commercial activity has an input tax credit for the tax that becomes payable on it, and subsection 225(1) subtracts the credits claimed from the tax collected to give the net tax of the reporting period. The credit is claimed on line 106 of the return. The base of a purchase reaches no box: form GST34 has no input side other than the credit itself. ",
+    "source": "cra-rates",
+    "kind": "gst",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1330",
+          "box": "106"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1330",
+          "box": "106",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 250
+  },
+  {
+    "code": "CA-NT-P-5",
+    "name": "Purchase in Northwest Territories — GST 5 % recoverable",
+    "rate": 5,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "applies_when": {
+      "supply_in": "CA-NT"
+    },
+    "legal_reference": "Excise Tax Act, subsection 165(1): every recipient of a taxable supply made in Canada pays tax calculated at the rate of 5 % on the value of the consideration, and subsection 165(2) adds, on a supply made in a participating province, tax at the tax rate for that province — the definition of “tax rate” in subsection 123(1) taking the rate prescribed for the province where a sales tax harmonization agreement is in force. Northwest Territories is not a participating province and levies no general sales tax of its own, so a supplier there charges 5 % and nothing else. Excise Tax Act, subsection 169(1): a registrant acquiring property or a service for consumption, use or supply in the course of a commercial activity has an input tax credit for the tax that becomes payable on it, and subsection 225(1) subtracts the credits claimed from the tax collected to give the net tax of the reporting period. The credit is claimed on line 106 of the return. The base of a purchase reaches no box: form GST34 has no input side other than the credit itself. ",
+    "source": "cra-rates",
+    "kind": "gst",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1330",
+          "box": "106"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1330",
+          "box": "106",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 260
+  },
+  {
+    "code": "CA-NU-P-5",
+    "name": "Purchase in Nunavut — GST 5 % recoverable",
+    "rate": 5,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "applies_when": {
+      "supply_in": "CA-NU"
+    },
+    "legal_reference": "Excise Tax Act, subsection 165(1): every recipient of a taxable supply made in Canada pays tax calculated at the rate of 5 % on the value of the consideration, and subsection 165(2) adds, on a supply made in a participating province, tax at the tax rate for that province — the definition of “tax rate” in subsection 123(1) taking the rate prescribed for the province where a sales tax harmonization agreement is in force. Nunavut is not a participating province and levies no general sales tax of its own, so a supplier there charges 5 % and nothing else. Excise Tax Act, subsection 169(1): a registrant acquiring property or a service for consumption, use or supply in the course of a commercial activity has an input tax credit for the tax that becomes payable on it, and subsection 225(1) subtracts the credits claimed from the tax collected to give the net tax of the reporting period. The credit is claimed on line 106 of the return. The base of a purchase reaches no box: form GST34 has no input side other than the credit itself. ",
+    "source": "cra-rates",
+    "kind": "gst",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1330",
+          "box": "106"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1330",
+          "box": "106",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 270
+  },
+  {
+    "code": "CA-YT-P-5",
+    "name": "Purchase in Yukon — GST 5 % recoverable",
+    "rate": 5,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "applies_when": {
+      "supply_in": "CA-YT"
+    },
+    "legal_reference": "Excise Tax Act, subsection 165(1): every recipient of a taxable supply made in Canada pays tax calculated at the rate of 5 % on the value of the consideration, and subsection 165(2) adds, on a supply made in a participating province, tax at the tax rate for that province — the definition of “tax rate” in subsection 123(1) taking the rate prescribed for the province where a sales tax harmonization agreement is in force. Yukon is not a participating province and levies no general sales tax of its own, so a supplier there charges 5 % and nothing else. Excise Tax Act, subsection 169(1): a registrant acquiring property or a service for consumption, use or supply in the course of a commercial activity has an input tax credit for the tax that becomes payable on it, and subsection 225(1) subtracts the credits claimed from the tax collected to give the net tax of the reporting period. The credit is claimed on line 106 of the return. The base of a purchase reaches no box: form GST34 has no input side other than the credit itself. ",
+    "source": "cra-rates",
+    "kind": "gst",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1330",
+          "box": "106"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1330",
+          "box": "106",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 280
+  },
+  {
+    "code": "CA-QC-P-14975",
+    "name": "Purchase in Québec — GST 5 % and Québec sales tax (QST), 14.975 % in all",
+    "description": "Both taxes recoverable, each from its own administration",
+    "rate": 14.975,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "jurisdiction": "CA-QC",
+    "applies_when": {
+      "supply_in": "CA-QC"
+    },
+    "legal_reference": "Excise Tax Act, subsection 165(1): every recipient of a taxable supply made in Canada pays tax calculated at the rate of 5 % on the value of the consideration, and subsection 165(2) adds, on a supply made in a participating province, tax at the tax rate for that province — the definition of “tax rate” in subsection 123(1) taking the rate prescribed for the province where a sales tax harmonization agreement is in force. Section 16 of the Act respecting the Québec sales tax imposes the Québec sales tax at 9.975 % on the value of the consideration for a taxable supply made in Québec, and 0 % where the supply is zero-rated. The QST is charged on the same consideration as the GST and not on the consideration plus the GST: neither tax is in the base of the other. Excise Tax Act, subsection 169(1): a registrant acquiring property or a service for consumption, use or supply in the course of a commercial activity has an input tax credit for the tax that becomes payable on it, and subsection 225(1) subtracts the credits claimed from the tax collected to give the net tax of the reporting period. The credit is claimed on line 106 of the return. The base of a purchase reaches no box: form GST34 has no input side other than the credit itself. The Québec sales tax is recoverable on the same footing: section 199 of the Act respecting the Québec sales tax gives a registrant an input tax refund for the tax payable on property and services acquired in the course of its commercial activities. So the code has two `tax` postings and no cost: 33.389 % of the tax — the federal 5 points — to the GST/HST recoverable account and to line 106 of form GST34, and 66.611 % to the QST recoverable account and to no box, because the refund is claimed from Revenu Québec on form FPZ-500 and this pack carries the federal form.",
+    "source": "ltvq",
+    "kind": "gst",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "factor": 33.389,
+          "account": "1330",
+          "box": "106",
+          "box_factor": 33.389
+        },
+        {
+          "type": "tax",
+          "factor": 66.611,
+          "account": "1335"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "factor": 33.389,
+          "account": "1330",
+          "box": "106",
+          "box_factor": -33.389
+        },
+        {
+          "type": "tax",
+          "factor": 66.611,
+          "account": "1335"
+        }
+      ]
+    },
+    "sequence": 290
+  },
+  {
+    "code": "CA-BC-P-12",
+    "name": "Purchase in British Columbia — GST 5 % and provincial sales tax (PST), 12 % in all",
+    "description": "The federal part recoverable, the provincial part a cost on the line it taxes",
+    "rate": 12,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "jurisdiction": "CA-BC",
+    "applies_when": {
+      "supply_in": "CA-BC"
+    },
+    "legal_reference": "Excise Tax Act, subsection 165(1): every recipient of a taxable supply made in Canada pays tax calculated at the rate of 5 % on the value of the consideration, and subsection 165(2) adds, on a supply made in a participating province, tax at the tax rate for that province — the definition of “tax rate” in subsection 123(1) taking the rate prescribed for the province where a sales tax harmonization agreement is in force. Section 37 of the Provincial Sales Tax Act (SBC 2012, c. 35) makes a purchaser of tangible personal property liable for tax, and subsection 34(1) of the same Act sets that tax at 7 % of the purchase price; the Province states the general rate as “7 % on the purchase or lease price of goods and services, with some exceptions”. Excise Tax Act, subsection 169(1): a registrant acquiring property or a service for consumption, use or supply in the course of a commercial activity has an input tax credit for the tax that becomes payable on it, and subsection 225(1) subtracts the credits claimed from the tax collected to give the net tax of the reporting period. The credit is claimed on line 106 of the return. The base of a purchase reaches no box: form GST34 has no input side other than the credit itself. The provincial tax is **not** recoverable: neither the Excise Tax Act nor the provincial statute gives a purchaser a credit for it, which is the whole difference between a retail sales tax and a value added tax. So the code splits: 41.667 % of the tax — the federal 5 points — is a `tax` posting to the GST/HST recoverable account and to line 106 of form GST34, and 58.333 % is a `tax_on_base` posting, which carries no account of its own and lands on the accounts of the lines it taxes. A machine bought for $10,000 is capitalised at $10,700.",
+    "source": "bc-psta",
+    "kind": "gst",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "factor": 41.667,
+          "account": "1330",
+          "box": "106",
+          "box_factor": 41.667
+        },
+        {
+          "type": "tax_on_base",
+          "factor": 58.333
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "factor": 41.667,
+          "account": "1330",
+          "box": "106",
+          "box_factor": -41.667
+        },
+        {
+          "type": "tax_on_base",
+          "factor": 58.333
+        }
+      ]
+    },
+    "sequence": 300
+  },
+  {
+    "code": "CA-SK-P-11",
+    "name": "Purchase in Saskatchewan — GST 5 % and provincial sales tax (PST), 11 % in all",
+    "description": "The federal part recoverable, the provincial part a cost on the line it taxes",
+    "rate": 11,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "jurisdiction": "CA-SK",
+    "applies_when": {
+      "supply_in": "CA-SK"
+    },
+    "legal_reference": "Excise Tax Act, subsection 165(1): every recipient of a taxable supply made in Canada pays tax calculated at the rate of 5 % on the value of the consideration, and subsection 165(2) adds, on a supply made in a participating province, tax at the tax rate for that province — the definition of “tax rate” in subsection 123(1) taking the rate prescribed for the province where a sales tax harmonization agreement is in force. Subsection 5(1) of The Provincial Sales Tax Act (RSS 1978, c. P-34.1) makes every consumer of tangible personal property purchased at a retail sale in Saskatchewan liable for a tax “computed at the rate of 6 % of the value of the property to be consumed”, and subsections 5(2) and 5(3) say the same of a user of property and of a taxable service. Excise Tax Act, subsection 169(1): a registrant acquiring property or a service for consumption, use or supply in the course of a commercial activity has an input tax credit for the tax that becomes payable on it, and subsection 225(1) subtracts the credits claimed from the tax collected to give the net tax of the reporting period. The credit is claimed on line 106 of the return. The base of a purchase reaches no box: form GST34 has no input side other than the credit itself. The provincial tax is **not** recoverable: neither the Excise Tax Act nor the provincial statute gives a purchaser a credit for it, which is the whole difference between a retail sales tax and a value added tax. So the code splits: 45.455 % of the tax — the federal 5 points — is a `tax` posting to the GST/HST recoverable account and to line 106 of form GST34, and 54.545 % is a `tax_on_base` posting, which carries no account of its own and lands on the accounts of the lines it taxes. A machine bought for $10,000 is capitalised at $10,700.",
+    "source": "sk-psta",
+    "kind": "gst",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "factor": 45.455,
+          "account": "1330",
+          "box": "106",
+          "box_factor": 45.455
+        },
+        {
+          "type": "tax_on_base",
+          "factor": 54.545
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "factor": 45.455,
+          "account": "1330",
+          "box": "106",
+          "box_factor": -45.455
+        },
+        {
+          "type": "tax_on_base",
+          "factor": 54.545
+        }
+      ]
+    },
+    "sequence": 310
+  },
+  {
+    "code": "CA-MB-P-12",
+    "name": "Purchase in Manitoba — GST 5 % and retail sales tax (RST), 12 % in all",
+    "description": "The federal part recoverable, the provincial part a cost on the line it taxes",
+    "rate": 12,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "jurisdiction": "CA-MB",
+    "applies_when": {
+      "supply_in": "CA-MB"
+    },
+    "legal_reference": "Excise Tax Act, subsection 165(1): every recipient of a taxable supply made in Canada pays tax calculated at the rate of 5 % on the value of the consideration, and subsection 165(2) adds, on a supply made in a participating province, tax at the tax rate for that province — the definition of “tax rate” in subsection 123(1) taking the rate prescribed for the province where a sales tax harmonization agreement is in force. Subsection 2(1) of The Retail Sales Tax Act (CCSM c. R130) makes every purchaser of tangible personal property or a taxable service pay tax equal to the fair value multiplied by the general sales tax rate, and the definition of “general sales tax rate” in subsection 1(1) sets that rate at 7 % for tax that becomes payable after 30 June 2019. Excise Tax Act, subsection 169(1): a registrant acquiring property or a service for consumption, use or supply in the course of a commercial activity has an input tax credit for the tax that becomes payable on it, and subsection 225(1) subtracts the credits claimed from the tax collected to give the net tax of the reporting period. The credit is claimed on line 106 of the return. The base of a purchase reaches no box: form GST34 has no input side other than the credit itself. The provincial tax is **not** recoverable: neither the Excise Tax Act nor the provincial statute gives a purchaser a credit for it, which is the whole difference between a retail sales tax and a value added tax. So the code splits: 41.667 % of the tax — the federal 5 points — is a `tax` posting to the GST/HST recoverable account and to line 106 of form GST34, and 58.333 % is a `tax_on_base` posting, which carries no account of its own and lands on the accounts of the lines it taxes. A machine bought for $10,000 is capitalised at $10,700.",
+    "source": "mb-rsta",
+    "kind": "gst",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "factor": 41.667,
+          "account": "1330",
+          "box": "106",
+          "box_factor": 41.667
+        },
+        {
+          "type": "tax_on_base",
+          "factor": 58.333
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "factor": 41.667,
+          "account": "1330",
+          "box": "106",
+          "box_factor": -41.667
+        },
+        {
+          "type": "tax_on_base",
+          "factor": 58.333
+        }
+      ]
+    },
+    "sequence": 320
+  },
+  {
+    "code": "CA-P-Z",
+    "name": "Zero-rated purchase",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "legal_reference": "Excise Tax Act, subsection 165(3): the tax rate in respect of a taxable supply that is a zero-rated supply is 0 %. This is the buyer's side of a purchase the supplier zero-rated — basic groceries under Schedule VI, Part III, prescription drugs under Part I, medical devices under Part II, freight transportation under Part VII. Nothing was charged and nothing is recovered, so the code carries a base posting and no tax posting, and reaches no box of form GST34.",
+    "source": "eta",
+    "vat_category": "Z",
+    "kind": "gst",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        }
+      ]
+    },
+    "sequence": 330
+  },
+  {
+    "code": "CA-P-E",
+    "name": "Exempt purchase",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "exempt",
+    "valid_from": "2026-01-01",
+    "legal_reference": "Excise Tax Act, Schedule V lists the exempt supplies — Part I real property, Part II health care, Part V.1 supplies by charities, Part VI supplies by public institutions, Part VII financial services. A supplier making one charges no tax, so the buyer has none to claim, and the purchase reaches no box of form GST34. No exemption reason code: the VATEX list belongs to the common system of VAT, which does not reach Canada, and the article is stated here instead.",
+    "source": "eta",
+    "vat_category": "E",
+    "kind": "gst",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        }
+      ]
+    },
+    "sequence": 340
+  },
+  {
+    "code": "CA-P-O",
+    "name": "Purchase outside the scope of the tax",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "not_subject",
+    "valid_from": "2026-01-01",
+    "legal_reference": "Excise Tax Act, subsection 165(1) taxes a taxable supply made in Canada. Wages and salaries, dividends, interest on a loan the lender treats as a financial service, a payment to a person who is not required to be registered because their taxable supplies stay under the $30,000 small-supplier threshold of section 148, and a supply section 142 places outside Canada are all outside it, each for its own reason. This is the code for an outlay that carries no tax and gives rise to none, and it reaches no box.",
+    "source": "eta",
+    "vat_category": "O",
+    "kind": "gst",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        }
+      ]
+    },
+    "sequence": 350
+  },
+  {
+    "code": "CA-P-IMP-5",
+    "name": "Import of goods — GST 5 % paid at the border",
+    "description": "The tax is assessed on a customs document and not on the supplier's invoice",
+    "rate": 5,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2026-01-01",
+    "legal_reference": "Excise Tax Act, section 212 imposes tax at the rate set out in subsection 165(1) on every person who is liable under the Customs Act to pay duty on imported goods, calculated on the value of the goods, and section 214 makes it payable and collected as if it were a customs duty. The supplier's own invoice carries no Canadian tax: the tax is assessed on the accounting document the Canada Border Services Agency releases the goods against, which is why the two `tax` postings of this code net to nothing on the supplier's account — one debits the input tax credit and carries it to line 106 under subsection 169(1), the other credits what is owed at the border. Only the provincial part of the HST is left out: section 212.1 charges it on goods imported by a resident of a participating province, and a commercial importer accounts for it on their return rather than at the border.",
+    "source": "eta",
+    "kind": "gst",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1330",
+          "box": "106"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2245"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1330",
+          "box": "106",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2245"
+        }
+      ]
+    },
+    "sequence": 360
+  },
+  {
+    "code": "CA-P-SA-5",
+    "name": "Imported taxable supply — GST 5 % self-assessed",
+    "description": "Nobody charged the tax, the recipient owes it, and it is a cost",
+    "rate": 5,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2026-01-01",
+    "recoverable": false,
+    "legal_reference": "Excise Tax Act, section 218: every recipient of an imported taxable supply shall pay tax calculated at the rate set out in subsection 165(1) on the value of the consideration. Section 217 defines an imported taxable supply, and its first paragraph is the case this code is for — a taxable supply of a service or of intangible personal property made outside Canada to a person resident in Canada, otherwise than for consumption, use or supply exclusively in the course of commercial activities. Because the recipient is not using it in commercial activities, there is no input tax credit under subsection 169(1) at the other end: the tax is a cost, which the `tax_on_base` posting puts on the accounts of the lines it taxes, and the `tax` posting at −100 credits what is owed and carries it to line 405 of form GST34, “other GST/HST to be self-assessed”. A recipient who does use the service in commercial activities owes nothing under section 218 and books the purchase with CA-P-O.",
+    "source": "eta",
+    "kind": "gst",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax_on_base"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2240",
+          "box": "405"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax_on_base"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2240",
+          "box": "405",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 370
+  }
+]

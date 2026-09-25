@@ -1,0 +1,205 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "CA-GST34",
+  "name": "Goods and Services Tax / Harmonized Sales Tax Return (GST34)",
+  "period": [
+    "month",
+    "quarter",
+    "year"
+  ],
+  "period_default": "quarter",
+  "valid_from": "2026-01-01",
+  "legal_reference": "Excise Tax Act, subsection 238(1): every registrant shall file a return with the Minister for each reporting period. The reporting period is section 245: paragraph 245(2)(c) makes it “the fiscal quarter of the registrant” in all cases the two paragraphs before it do not catch, and those two are the exceptions — the fiscal month where the threshold amount exceeds $6,000,000 or the registrant has elected under section 246, and the fiscal year where an election under section 248 is in effect or the registrant is a charity or a listed financial institution. So the form is filed on three cadences and the statute still gives one of them to everybody who has asked for nothing, which is what `period_default` states. The Canada Revenue Agency describes the same thing administratively by turnover: annual under $1.5 million, quarterly between $1.5 and $6 million, monthly above. This form is the federal one and the only one the pack carries; a registrant in Québec files form FPZ-500 with Revenu Québec for the same period, and the README says what that leaves out here.",
+  "source": "eta",
+  "deadline": {
+    "rule": "last_day_of_month_after_period",
+    "legal_reference": "Excise Tax Act, paragraph 238(1)(b): a return is filed “within one month after the end of the reporting period of the registrant”, and paragraph 228(2)(b) makes the net tax remittable on or before the same day. That is the rule for a monthly and a quarterly filer, and the Canada Revenue Agency states it as “1 month after the end of the reporting period”. Two cases this rule does not produce, and neither is expressible as a second deadline on one form: an annual filer has three months under subparagraph 238(1)(a)(iii), six under subparagraph (i) if they are a listed financial institution, and an individual with business income and a 31 December year end files by 15 June under subparagraph (ii) while still remitting by 30 April under paragraph 228(2)(a). The README records that gap.",
+    "source": "eta"
+  },
+  "boxes": [
+    {
+      "box": "101",
+      "kind": "base",
+      "name": "Total sales and other revenue",
+      "sequence": 10,
+      "legal_reference": "GST/HST Return Working Copy, line 101: “Enter your total sales and other revenue. Do not include provincial sales tax, GST or HST. If you are using the quick method of accounting, include the GST or HST.” Every sale of this pack posts its base here, taxable, zero-rated, exempt or outside the scope of the tax alike, and nothing else does: form GST34 carries no input-side base. The printed box asks for whole dollars, and the pack files it in cents — the README says why.",
+      "source": "gst34"
+    },
+    {
+      "box": "103",
+      "kind": "tax",
+      "name": "GST/HST collected or collectible",
+      "sequence": 20,
+      "legal_reference": "GST/HST Return Working Copy, line 103: “Enter the total of all GST and HST amounts that you collected or that became collectible by you in the reporting period.” It is element A(a) of the net tax formula of subsection 225(1) of the Excise Tax Act. Only the federal tax reaches it: on a Québec, British Columbia, Saskatchewan or Manitoba code the posting reports its own share through `box_factor`, and the provincial tax reaches no box of this form.",
+      "source": "gst34"
+    },
+    {
+      "box": "104",
+      "kind": "tax",
+      "name": "Adjustments to be added to the net tax",
+      "sequence": 30,
+      "legal_reference": "GST/HST Return Working Copy, line 104: “Enter the total amount of adjustments to be added to the net tax for the reporting period (for example, the GST/HST obtained from the recovery of a bad debt).” Element A(b) of subsection 225(1). No tax of this pack posts here: an adjustment is an entry somebody makes, not a rate on a line.",
+      "source": "gst34"
+    },
+    {
+      "box": "105",
+      "kind": "total",
+      "name": "Total GST/HST and adjustments for period",
+      "sequence": 40,
+      "plus": [
+        "103",
+        "104"
+      ],
+      "legal_reference": "GST/HST Return Working Copy, line 105: “Total GST/HST and adjustments for period (add lines 103 and 104)”.",
+      "source": "gst34"
+    },
+    {
+      "box": "106",
+      "kind": "tax",
+      "name": "GST/HST paid or payable (input tax credits)",
+      "sequence": 50,
+      "legal_reference": "GST/HST Return Working Copy, line 106: “Enter the GST/HST you paid or that is payable by you on qualifying expenses (input tax credits – ITCs) for the current period and any eligible unclaimed ITCs from a previous period.” The credit itself is subsection 169(1) of the Excise Tax Act and it is element B(a) of the net tax formula of subsection 225(1). The Québec input tax refund is not here: it is claimed from Revenu Québec on form FPZ-500.",
+      "source": "gst34"
+    },
+    {
+      "box": "107",
+      "kind": "tax",
+      "name": "Adjustments to be deducted when determining the net tax",
+      "sequence": 60,
+      "legal_reference": "GST/HST Return Working Copy, line 107: “Enter the total amount of adjustments to be deducted when determining the net tax for the reporting period (for example, the GST/HST included in a bad debt).” Element B(b) of subsection 225(1). No tax of this pack posts here.",
+      "source": "gst34"
+    },
+    {
+      "box": "108",
+      "kind": "total",
+      "name": "Total ITCs and adjustments",
+      "sequence": 70,
+      "plus": [
+        "106",
+        "107"
+      ],
+      "legal_reference": "GST/HST Return Working Copy, line 108: “Total ITCs and adjustments (add lines 106 and 107)”.",
+      "source": "gst34"
+    },
+    {
+      "box": "109",
+      "kind": "total",
+      "name": "Net tax",
+      "sequence": 80,
+      "plus": [
+        "105"
+      ],
+      "minus": [
+        "108"
+      ],
+      "legal_reference": "GST/HST Return Working Copy, line 109: “Net tax (subtract line 108 from line 105)”. It is the formula A − B of subsection 225(1) of the Excise Tax Act, written out on the form.",
+      "source": "gst34"
+    },
+    {
+      "box": "110",
+      "kind": "tax",
+      "name": "Instalment and other annual filer payments",
+      "sequence": 90,
+      "legal_reference": "GST/HST Return Working Copy, line 110: “Enter any instalment and other annual filer payments you made for the reporting period.” Section 237 of the Excise Tax Act is what makes an annual filer pay instalments. No tax of this pack posts here: an instalment is a payment, not a tax on a document.",
+      "source": "gst34"
+    },
+    {
+      "box": "111",
+      "kind": "tax",
+      "name": "Rebates",
+      "sequence": 100,
+      "legal_reference": "GST/HST Return Working Copy, line 111: “Enter the total amount of the GST/HST rebates, only if the rebate form indicates that you can claim the amount on this line.” The instructions add that the rebate application is generally filed with the return. No tax of this pack posts here.",
+      "source": "gst34"
+    },
+    {
+      "box": "112",
+      "kind": "total",
+      "name": "Total other credits",
+      "sequence": 110,
+      "plus": [
+        "110",
+        "111"
+      ],
+      "legal_reference": "GST/HST Return Working Copy, line 112: “Total other credits (add lines 110 and 111)”.",
+      "source": "gst34"
+    },
+    {
+      "box": "113A",
+      "kind": "total",
+      "name": "Balance",
+      "sequence": 120,
+      "plus": [
+        "109"
+      ],
+      "minus": [
+        "112"
+      ],
+      "legal_reference": "GST/HST Return Working Copy, line 113 A: “Balance (subtract line 112 from line 109)”.",
+      "source": "gst34"
+    },
+    {
+      "box": "205",
+      "kind": "tax",
+      "name": "GST/HST due on purchases of real property or of emission allowances",
+      "sequence": 130,
+      "legal_reference": "GST/HST Return Working Copy, line 205: “Enter the total amount of the GST/HST due on purchases of real property or purchases of emission allowances”, filled out only where the supplier was neither required nor deemed to have collected the tax — subsection 221(2) of the Excise Tax Act relieves the supplier of a taxable supply of real property to a registrant, and section 228(4) makes the recipient account for it. No tax of this pack posts here: Ekwo has no real-property purchase document, and the README says so.",
+      "source": "gst34"
+    },
+    {
+      "box": "405",
+      "kind": "tax",
+      "name": "Other GST/HST to be self-assessed",
+      "sequence": 140,
+      "legal_reference": "GST/HST Return Working Copy, line 405: “Enter the total amount of other GST/HST to be self-assessed”, filled out “only if you have to self-assess GST/HST on an imported taxable supply or you have to self-assess the provincial part of HST”. Section 218 of the Excise Tax Act is the first of those and CA-P-SA-5 is the code that posts here.",
+      "source": "gst34"
+    },
+    {
+      "box": "113B",
+      "kind": "total",
+      "name": "Total other debits",
+      "sequence": 150,
+      "plus": [
+        "205",
+        "405"
+      ],
+      "legal_reference": "GST/HST Return Working Copy, line 113 B: “Total other debits (add lines 205 and 405)”.",
+      "source": "gst34"
+    },
+    {
+      "box": "113C",
+      "kind": "total",
+      "name": "Balance",
+      "sequence": 160,
+      "plus": [
+        "113A",
+        "113B"
+      ],
+      "legal_reference": "GST/HST Return Working Copy, line 113 C: “Balance (add lines 113 A and 113 B)”.",
+      "source": "gst34"
+    },
+    {
+      "box": "114",
+      "kind": "total",
+      "name": "Refund claimed",
+      "sequence": 170,
+      "minus": [
+        "113C"
+      ],
+      "floor_zero": true,
+      "legal_reference": "GST/HST Return Working Copy, lines 114 and 115: “If the result entered on line 113 C is a negative amount, enter the amount of the refund you are claiming on line 114. If the result entered on line 113 C is a positive amount, enter the amount of your payment on line 115.” One figure, two boxes and a sign: this one is line 113 C subtracted and floored at zero, so it carries the credit and nothing else.",
+      "source": "gst34"
+    },
+    {
+      "box": "115",
+      "kind": "total",
+      "name": "Payment enclosed",
+      "sequence": 180,
+      "plus": [
+        "113C"
+      ],
+      "floor_zero": true,
+      "legal_reference": "GST/HST Return Working Copy, line 115, the other side of the pair described on line 114: line 113 C added and floored at zero, so it carries what is owed and nothing else. Subsection 228(2) of the Excise Tax Act is what makes a positive net tax remittable, and paragraph 228(2)(b) makes it due on the day the return is due.",
+      "source": "gst34"
+    }
+  ]
+}

@@ -1121,3 +1121,66 @@ on conflict (code) do update set
   eu_vat_to       = excluded.eu_vat_to,
   vat_prefix      = excluded.vat_prefix,
   legal_reference = excluded.legal_reference;
+
+
+-- ---------------------------------------------------------------------------
+-- The rows — Canada, and the thirteen provinces and territories its pack taxes
+--
+-- Two reasons at once, and the file already names both. Canada is a State
+-- outside the common system of VAT: Part IX of the Excise Tax Act levies a
+-- goods and services tax of its own, and a Canadian seller is bound by no
+-- Directive. And Canadian tax follows the province the supply is made in —
+-- 5 per cent where the federal tax stands alone, 13, 14 or 15 in a
+-- participating province under subsection 165(2), and a provincial sales tax
+-- of the province's own beside the federal one in British Columbia,
+-- Saskatchewan, Manitoba and Québec — so `packs/ca/` conditions every one of
+-- its standard-rate codes on `supply_in`, and each of those codes needs a row
+-- to point at.
+--
+-- Thirteen rows and not a district: this table says where a body of tax law
+-- applies and never what it charges. A Québec municipality levies nothing of
+-- this kind, and the province is as far down as the question goes.
+--
+-- `vat_prefix` is null on all fourteen: a Canadian registration is a business
+-- number with an RT programme account, and a Québec one a NEQ-based QST
+-- number, and neither carries a country prefix of this table's kind.
+-- ---------------------------------------------------------------------------
+
+insert into territories (code, code_source, name, parent_code, eu_vat_scope, eu_vat_from, eu_vat_to, vat_prefix, legal_reference) values
+  ('CA', 'iso_3166_1', 'Canada', null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. Canada levies a goods and services tax of its own under Part IX of the Excise Tax Act (R.S.C. 1985, c. E-15), whose subsection 165(1) sets the rate at 5 per cent and whose subsection 165(2) adds the provincial part of the harmonized sales tax on a supply made in a participating province.'),
+  ('CA-AB', 'iso_3166_2', 'Alberta',                   'CA', 'none', null, null, null,
+   'ISO 3166-2:CA for the code. Alberta is not a participating province within the meaning of subsection 123(1) of the Excise Tax Act and levies no general sales tax of its own, so the tax on a supply made there is the 5 per cent of subsection 165(1) and nothing more. A territory with no provincial tax is a territory all the same: it is what says that a delivery there carries none.'),
+  ('CA-BC', 'iso_3166_2', 'British Columbia',          'CA', 'none', null, null, null,
+   'ISO 3166-2:CA for the code. British Columbia is not a participating province and levies a provincial sales tax of its own: section 37 of the Provincial Sales Tax Act (S.B.C. 2012, c. 35) imposes the tax on a purchaser of tangible personal property and subsection 34(1) sets it at 7 per cent of the purchase price, beside the 5 per cent of subsection 165(1) of the Excise Tax Act.'),
+  ('CA-MB', 'iso_3166_2', 'Manitoba',                  'CA', 'none', null, null, null,
+   'ISO 3166-2:CA for the code. Manitoba is not a participating province and levies a retail sales tax of its own: subsection 2(1) of The Retail Sales Tax Act (C.C.S.M. c. R130) makes every purchaser of tangible personal property or a taxable service pay tax at the general sales tax rate, which subsection 1(1) sets at 7 per cent for tax payable after 30 June 2019.'),
+  ('CA-NB', 'iso_3166_2', 'New Brunswick',             'CA', 'none', null, null, null,
+   'ISO 3166-2:CA for the code. New Brunswick is a participating province within the meaning of subsection 123(1) of the Excise Tax Act: subsection 165(2) adds the provincial part to the 5 per cent of subsection 165(1), and the Canada Revenue Agency publishes the combined harmonized sales tax rate at 15 per cent.'),
+  ('CA-NL', 'iso_3166_2', 'Newfoundland and Labrador', 'CA', 'none', null, null, null,
+   'ISO 3166-2:CA for the code. Newfoundland and Labrador is a participating province within the meaning of subsection 123(1) of the Excise Tax Act: subsection 165(2) adds the provincial part to the 5 per cent of subsection 165(1), and the Canada Revenue Agency publishes the combined harmonized sales tax rate at 15 per cent.'),
+  ('CA-NS', 'iso_3166_2', 'Nova Scotia',               'CA', 'none', null, null, null,
+   'ISO 3166-2:CA for the code. Nova Scotia is a participating province within the meaning of subsection 123(1) of the Excise Tax Act. Its provincial part fell from 10 points to 9 on 1 April 2025, so the Canada Revenue Agency publishes the combined harmonized sales tax rate at 14 per cent and no longer at 15.'),
+  ('CA-NT', 'iso_3166_2', 'Northwest Territories',     'CA', 'none', null, null, null,
+   'ISO 3166-2:CA for the code. The Northwest Territories are not a participating province and levy no general sales tax, so the tax on a supply made there is the 5 per cent of subsection 165(1) of the Excise Tax Act and nothing more.'),
+  ('CA-NU', 'iso_3166_2', 'Nunavut',                   'CA', 'none', null, null, null,
+   'ISO 3166-2:CA for the code. Nunavut is not a participating province and levies no general sales tax, so the tax on a supply made there is the 5 per cent of subsection 165(1) of the Excise Tax Act and nothing more.'),
+  ('CA-ON', 'iso_3166_2', 'Ontario',                   'CA', 'none', null, null, null,
+   'ISO 3166-2:CA for the code. Ontario is a participating province within the meaning of subsection 123(1) of the Excise Tax Act: subsection 165(2) adds the provincial part to the 5 per cent of subsection 165(1), and the Canada Revenue Agency publishes the combined harmonized sales tax rate at 13 per cent.'),
+  ('CA-PE', 'iso_3166_2', 'Prince Edward Island',      'CA', 'none', null, null, null,
+   'ISO 3166-2:CA for the code. Prince Edward Island is a participating province within the meaning of subsection 123(1) of the Excise Tax Act: subsection 165(2) adds the provincial part to the 5 per cent of subsection 165(1), and the Canada Revenue Agency publishes the combined harmonized sales tax rate at 15 per cent.'),
+  ('CA-QC', 'iso_3166_2', 'Québec',                    'CA', 'none', null, null, null,
+   'ISO 3166-2:CA for the code. Québec is not a participating province and levies a value added tax of its own, administered by its own administration: section 16 of the Act respecting the Québec sales tax (CQLR c. T-0.1) imposes the Québec sales tax at 9.975 per cent on the value of the consideration for a taxable supply made in Québec, beside the 5 per cent of subsection 165(1) of the Excise Tax Act and not on top of it.'),
+  ('CA-SK', 'iso_3166_2', 'Saskatchewan',              'CA', 'none', null, null, null,
+   'ISO 3166-2:CA for the code. Saskatchewan is not a participating province and levies a provincial sales tax of its own: subsection 5(1) of The Provincial Sales Tax Act (R.S.S. 1978, c. P-34.1) makes every consumer of tangible personal property purchased at a retail sale in Saskatchewan pay a tax computed at 6 per cent of the value of the property, beside the 5 per cent of subsection 165(1) of the Excise Tax Act.'),
+  ('CA-YT', 'iso_3166_2', 'Yukon',                     'CA', 'none', null, null, null,
+   'ISO 3166-2:CA for the code. Yukon is not a participating province and levies no general sales tax, so the tax on a supply made there is the 5 per cent of subsection 165(1) of the Excise Tax Act and nothing more.')
+on conflict (code) do update set
+  code_source     = excluded.code_source,
+  name            = excluded.name,
+  parent_code     = excluded.parent_code,
+  eu_vat_scope    = excluded.eu_vat_scope,
+  eu_vat_from     = excluded.eu_vat_from,
+  eu_vat_to       = excluded.eu_vat_to,
+  vat_prefix      = excluded.vat_prefix,
+  legal_reference = excluded.legal_reference;

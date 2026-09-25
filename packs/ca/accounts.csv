@@ -1,0 +1,163 @@
+code,parent,type,reconcilable,name,sequence
+1000,,asset_cash,false,Petty cash,10
+1010,,asset_cash,false,Bank — chequing account,20
+1020,,asset_cash,false,Bank — savings account,30
+1030,,asset_cash,false,Bank — United States dollar account,40
+1040,,asset_cash,false,Bank — payroll account,50
+1050,,asset_cash,false,Undeposited funds,60
+1060,,asset_cash,false,Credit card clearing account,70
+1070,,asset_cash,false,Cash in transit,80
+1100,,asset_receivable,true,Accounts receivable,90
+1110,,asset_current,false,Allowance for doubtful accounts,100
+1120,,asset_current,false,Other receivables,110
+1130,,asset_current,false,Advances to employees,120
+1140,,asset_current,false,Accrued revenue,130
+1150,,asset_current,false,Amounts receivable from related parties,140
+1160,,asset_current,false,Interest receivable,150
+1200,,asset_current,false,Inventory — merchandise,160
+1210,,asset_current,false,Inventory — raw materials,170
+1220,,asset_current,false,Inventory — work in progress,180
+1230,,asset_current,false,Inventory — finished goods,190
+1240,,asset_current,false,Inventory — supplies,200
+1250,,asset_current,false,Provision for obsolete inventory,210
+1300,,asset_prepayments,false,Prepaid expenses,220
+1310,,asset_prepayments,false,Prepaid insurance,230
+1320,,asset_prepayments,false,Prepaid rent,240
+1330,,asset_current,false,GST/HST recoverable — input tax credits,250
+1335,,asset_current,false,QST recoverable — input tax refunds,260
+1340,,asset_current,true,GST/HST refund claimed from the Receiver General,270
+1345,,asset_current,false,Income taxes recoverable,280
+1350,,asset_current,false,Short-term investments,290
+1360,,asset_current,false,Deposits paid,300
+1370,,asset_current,false,Deferred charges — current portion,310
+1400,,asset_fixed,false,Land,320
+1410,,asset_fixed,false,Buildings,330
+1420,,asset_fixed,false,Leasehold improvements,340
+1430,,asset_fixed,false,Machinery and equipment,350
+1440,,asset_fixed,false,Furniture and fixtures,360
+1450,,asset_fixed,false,Computer hardware,370
+1460,,asset_fixed,false,Vehicles,380
+1470,,asset_fixed,false,Tools and shop equipment,390
+1480,,asset_fixed,false,Assets under construction,400
+1510,,asset_fixed,false,Accumulated amortization — buildings,410
+1520,,asset_fixed,false,Accumulated amortization — leasehold improvements,420
+1530,,asset_fixed,false,Accumulated amortization — machinery and equipment,430
+1540,,asset_fixed,false,Accumulated amortization — furniture and fixtures,440
+1550,,asset_fixed,false,Accumulated amortization — computer hardware,450
+1560,,asset_fixed,false,Accumulated amortization — vehicles,460
+1570,,asset_fixed,false,Accumulated amortization — tools and shop equipment,470
+1600,,asset_non_current,false,Goodwill,480
+1610,,asset_non_current,false,Computer software,490
+1620,,asset_non_current,false,Accumulated amortization — computer software,500
+1630,,asset_non_current,false,"Patents, trademarks and licences",510
+1640,,asset_non_current,false,Long-term investments,520
+1650,,asset_non_current,false,Long-term deposits,530
+1660,,asset_non_current,false,Due from shareholders,540
+2000,,liability_payable,true,Accounts payable,550
+2010,,liability_current,false,Accrued liabilities,560
+2020,,liability_credit_card,false,Credit card payable,570
+2030,,liability_current,false,Customer deposits,580
+2040,,liability_current,false,Amounts payable to related parties,590
+2100,,liability_current,false,Wages and salaries payable,600
+2110,,liability_current,false,Vacation pay payable,610
+2120,,liability_current,false,Employee income tax withheld,620
+2130,,liability_current,false,Canada Pension Plan contributions payable,630
+2140,,liability_current,false,Employment Insurance premiums payable,640
+2150,,liability_current,false,Employer health tax payable,650
+2160,,liability_current,false,Workers' compensation payable,660
+2170,,liability_current,false,Group insurance and pension payable,670
+2200,,liability_current,false,GST/HST charged on sales,680
+2210,,liability_current,false,QST charged on sales,690
+2220,,liability_current,false,Provincial sales tax payable — British Columbia,700
+2225,,liability_current,false,Provincial sales tax payable — Saskatchewan,710
+2230,,liability_current,false,Retail sales tax payable — Manitoba,720
+2240,,liability_current,false,GST/HST self-assessed on imported taxable supplies,730
+2245,,liability_current,false,GST payable on imported goods — Canada Border Services Agency,740
+2250,,liability_current,true,GST/HST payable to the Receiver General,750
+2300,,liability_current,false,Deferred revenue,760
+2310,,liability_current,false,Income taxes payable,770
+2320,,liability_current,false,Dividends payable,780
+2330,,liability_current,false,Accrued interest payable,790
+2350,,liability_current,false,Suspense account,800
+2400,,liability_current,false,Current portion of long-term debt,810
+2410,,liability_current,false,Current portion of lease obligations,820
+2500,,liability_non_current,false,Bank loans — long-term portion,830
+2510,,liability_non_current,false,Mortgage payable,840
+2520,,liability_non_current,false,Lease obligations — long-term portion,850
+2530,,liability_non_current,false,Shareholder loans,860
+2540,,liability_non_current,false,Deferred income taxes,870
+3000,,equity,false,Common shares,880
+3010,,equity,false,Preferred shares,890
+3020,,equity,false,Share subscriptions receivable,900
+3100,,equity,false,Contributed surplus,910
+3110,,equity,false,Accumulated other comprehensive income,920
+3200,,equity_retained,false,Dividends declared,930
+3300,,equity_retained,false,Retained earnings,940
+4000,,income,false,Sales — goods,950
+4010,,income,false,Sales — services,960
+4020,,income,false,Sales — other provinces,970
+4030,,income,false,Sales — exports,980
+4040,,income,false,Freight and delivery charged to customers,990
+4050,,income,false,Sales returns and allowances,1000
+4060,,income,false,Sales discounts,1010
+4070,,income,false,Rental revenue,1020
+4080,,income,false,Commission revenue,1030
+4500,,income_other,false,Interest income,1040
+4510,,income_other,false,Dividend income,1050
+4550,,income_other,false,Foreign exchange gain,1060
+4560,,income_other,false,Gain on disposal of capital assets,1070
+4570,,income_other,false,Miscellaneous income,1080
+5000,,expense_direct_cost,false,Purchases,1090
+5010,,expense_direct_cost,false,Purchase returns and allowances,1100
+5020,,expense_direct_cost,false,Purchase discounts,1110
+5030,,expense_direct_cost,false,Freight-in and customs,1120
+5040,,expense_direct_cost,false,Direct labour,1130
+5050,,expense_direct_cost,false,Subcontractors,1140
+5060,,expense_direct_cost,false,Direct materials,1150
+5070,,expense_direct_cost,false,Inventory adjustments,1160
+5080,,expense_direct_cost,false,Manufacturing overhead applied,1170
+5500,,expense,false,Salaries and wages,1180
+5510,,expense,false,Management salaries,1190
+5520,,expense,false,Commissions and bonuses,1200
+5530,,expense,false,Employer's Canada Pension Plan contributions,1210
+5540,,expense,false,Employer's Employment Insurance premiums,1220
+5550,,expense,false,Employer health tax,1230
+5560,,expense,false,Workers' compensation premiums,1240
+5570,,expense,false,Group insurance and pension,1250
+5580,,expense,false,Vacation pay expense,1260
+5590,,expense,false,Staff training and development,1270
+6000,,expense,false,Advertising and promotion,1280
+6010,,expense,false,Bad debts,1290
+6020,,expense,false,Bank charges,1300
+6030,,expense,false,"Business taxes, licences and memberships",1310
+6040,,expense,false,Computer and internet,1320
+6050,,expense,false,Courier and postage,1330
+6060,,expense,false,Delivery and freight-out,1340
+6070,,expense,false,Donations,1350
+6080,,expense,false,Dues and subscriptions,1360
+6090,,expense,false,Insurance,1370
+6100,,expense,false,Meals and entertainment,1380
+6110,,expense,false,Office supplies,1390
+6120,,expense,false,Professional fees — accounting and legal,1400
+6130,,expense,false,Rent,1410
+6140,,expense,false,Repairs and maintenance,1420
+6150,,expense,false,Telephone,1430
+6160,,expense,false,Travel,1440
+6170,,expense,false,Utilities,1450
+6180,,expense,false,Vehicle expenses,1460
+6190,,expense,false,Property taxes,1470
+6200,,expense,false,Small tools and supplies,1480
+6210,,expense,false,Security,1490
+6220,,expense,false,Waste removal,1500
+6230,,expense,false,Equipment rental,1510
+6240,,expense,false,Software subscriptions,1520
+6800,,expense_depreciation,false,Amortization of capital assets,1530
+6810,,expense_depreciation,false,Amortization of intangible assets,1540
+6950,,expense,false,Rounding differences,1550
+7000,,expense,false,Interest and bank loan charges,1560
+7010,,expense,false,Interest on long-term debt,1570
+7050,,expense,false,Foreign exchange loss,1580
+7060,,expense,false,Loss on disposal of capital assets,1590
+7070,,expense,false,Write-off of capital assets,1600
+8000,,expense,false,Current income tax expense,1610
+8010,,expense,false,Deferred income tax expense,1620

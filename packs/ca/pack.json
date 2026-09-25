@@ -1,0 +1,321 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "CA",
+  "name": "Canada",
+  "version": "0.1.0",
+  "schema_min": "20260921145425",
+  "seed_sequence": 58,
+  "released_at": "2026-09-25",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "eta",
+        "title": "Excise Tax Act, R.S.C. 1985, c. E-15 — Part IX, the goods and services tax: section 165 imposes it and sets the rates, 168 and 152 fix when it is payable, 169 gives the input tax credit, 212 and 214 tax imported goods, 217 and 218 the imported taxable supply, 221 and 228 the collection and the remittance, 225 the net tax, 238 the return, 245 and 248 the reporting period, 286 the records; Schedule V lists the exempt supplies and Schedule VI the zero-rated ones",
+        "publisher": "Department of Justice Canada — Justice Laws Website",
+        "url": "https://laws-lois.justice.gc.ca/eng/acts/E-15/",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "cra-rates",
+        "title": "GST/HST calculator (and rates) — the rate of every province and territory, with the provincial sales tax charged beside it",
+        "publisher": "Canada Revenue Agency",
+        "url": "https://www.canada.ca/en/revenue-agency/services/tax/businesses/topics/gst-hst-businesses/charge-collect-which-rate/calculator.html",
+        "consulted_on": "2026-09-25",
+        "kind": "guidance"
+      },
+      {
+        "key": "cra-which-rate",
+        "title": "Which GST/HST rate to charge — and the decrease of the Nova Scotia rate to 14 % on 1 April 2025",
+        "publisher": "Canada Revenue Agency",
+        "url": "https://www.canada.ca/en/revenue-agency/services/tax/businesses/topics/gst-hst-businesses/charge-collect-which-rate.html",
+        "consulted_on": "2026-09-25",
+        "kind": "guidance"
+      },
+      {
+        "key": "cra-place-of-supply",
+        "title": "GST/HST rates and place-of-supply rules — which province a supply is made in, and therefore which rate applies",
+        "publisher": "Canada Revenue Agency",
+        "url": "https://www.canada.ca/en/revenue-agency/services/tax/businesses/topics/gst-hst-businesses/charge-collect-place-supply.html",
+        "consulted_on": "2026-09-25",
+        "kind": "guidance"
+      },
+      {
+        "key": "gst34",
+        "title": "GST/HST Return Working Copy — form GST34 line by line, with the arithmetic each total is printed with",
+        "publisher": "Canada Revenue Agency",
+        "url": "https://www.canada.ca/content/dam/cra-arc/migration/cra-arc/tx/bsnss/tpcs/gst-tps/bspsbch/rtrns/wrkngcp-eng.pdf",
+        "consulted_on": "2026-09-25",
+        "kind": "form"
+      },
+      {
+        "key": "gst34-inst",
+        "title": "Instructions for preparing a GST/HST return — what goes on each line of form GST34",
+        "publisher": "Canada Revenue Agency",
+        "url": "https://www.canada.ca/en/revenue-agency/services/tax/businesses/topics/gst-hst-businesses/complete-file-instructions.html",
+        "consulted_on": "2026-09-25",
+        "kind": "form"
+      },
+      {
+        "key": "cra-deadlines",
+        "title": "Reporting requirements and deadlines — one month after the end of a monthly or quarterly period, three months after an annual one, and the two exceptions",
+        "publisher": "Canada Revenue Agency",
+        "url": "https://www.canada.ca/en/revenue-agency/services/tax/businesses/topics/gst-hst-businesses/file-gst-hst-return/reporting-requirements-deadlines.html",
+        "consulted_on": "2026-09-25",
+        "kind": "guidance"
+      },
+      {
+        "key": "cra-netfile",
+        "title": "Using the online GST/HST NETFILE form — where a GST/HST return is filed, with or without a CRA account",
+        "publisher": "Canada Revenue Agency",
+        "url": "https://www.canada.ca/en/revenue-agency/services/e-services/digital-services-businesses/gst-hst-netfile.html",
+        "consulted_on": "2026-09-25",
+        "kind": "portal"
+      },
+      {
+        "key": "cra-efiling",
+        "title": "Businesses: Are you affected by the change to GST/HST electronic filing requirements? — electronic filing is required of every registrant other than a charity or a selected listed financial institution for reporting periods beginning on or after 1 January 2024",
+        "publisher": "Canada Revenue Agency",
+        "url": "https://www.canada.ca/en/revenue-agency/news/newsroom/tax-tips/tax-tips-2024/businesses-affected-change-gst-hst-electronic-filing-requirements.html",
+        "consulted_on": "2026-09-25",
+        "kind": "guidance"
+      },
+      {
+        "key": "itc-regs",
+        "title": "Input Tax Credit Information (GST/HST) Regulations, SOR/91-45 — section 2 on what counts as supporting documentation and section 3 on the information an invoice has to carry at the $100 and $500 thresholds",
+        "publisher": "Department of Justice Canada — Justice Laws Website",
+        "url": "https://laws-lois.justice.gc.ca/eng/regulations/SOR-91-45/FullText.html",
+        "consulted_on": "2026-09-25",
+        "kind": "regulation"
+      },
+      {
+        "key": "ltvq",
+        "title": "Act respecting the Québec sales tax, CQLR c. T-0.1 — section 16 imposes the tax at 9.975 % and section 199 gives the input tax refund",
+        "publisher": "Publications Québec — LégisQuébec",
+        "url": "https://www.legisquebec.gouv.qc.ca/en/document/cs/T-0.1",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "rq-rates",
+        "title": "Tables of GST and QST Rates",
+        "publisher": "Revenu Québec",
+        "url": "https://www.revenuquebec.ca/en/businesses/consumption-taxes/gsthst-and-qst/basic-rules-for-applying-the-gsthst-and-qst/tables-of-gst-and-qst-rates/",
+        "consulted_on": "2026-09-25",
+        "kind": "guidance"
+      },
+      {
+        "key": "rq-calc",
+        "title": "Calculating the Taxes — 9.975 % where a cash register works the two taxes out in two steps, 14.975 % where it works them out in one",
+        "publisher": "Revenu Québec",
+        "url": "https://www.revenuquebec.ca/en/businesses/consumption-taxes/gsthst-and-qst/collecting-gst-and-qst/calculating-the-taxes/",
+        "consulted_on": "2026-09-25",
+        "kind": "guidance"
+      },
+      {
+        "key": "fpz-500",
+        "title": "GST/HST-QST Return, form FPZ-500-V — the combined federal and Québec return a registrant in Québec files with Revenu Québec",
+        "publisher": "Revenu Québec",
+        "url": "https://www.revenuquebec.ca/en/online-services/forms-and-publications/current-details/fpz-500-v/",
+        "consulted_on": "2026-09-25",
+        "kind": "form"
+      },
+      {
+        "key": "rq-filing",
+        "title": "Filing GST/HST and QST Returns — where and how form FPZ-500 is filed, online since 1 January 2024 for every registrant other than a charity",
+        "publisher": "Revenu Québec",
+        "url": "https://www.revenuquebec.ca/en/businesses/consumption-taxes/gsthst-and-qst/reporting-gsthst-and-qst/filing-gsthst-and-qst-returns/",
+        "consulted_on": "2026-09-25",
+        "kind": "portal"
+      },
+      {
+        "key": "bc-psta",
+        "title": "Provincial Sales Tax Act, S.B.C. 2012, c. 35 — Part 3, Division 1: subsection 34(1) sets the rate at 7 % and section 37 imposes the tax on a purchase of tangible personal property",
+        "publisher": "King's Printer, Victoria — BC Laws",
+        "url": "https://www.bclaws.gov.bc.ca/civix/document/id/complete/statreg/12035_03",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "bc-pst",
+        "title": "Provincial sales tax (PST) — “Generally, the rate of PST is 7% on the purchase or lease price of goods and services, with some exceptions”",
+        "publisher": "Government of British Columbia",
+        "url": "https://www2.gov.bc.ca/gov/content/taxes/sales-taxes/pst",
+        "consulted_on": "2026-09-25",
+        "kind": "guidance"
+      },
+      {
+        "key": "sk-psta",
+        "title": "The Provincial Sales Tax Act, R.S.S. 1978, c. P-34.1 — subsections 5(1) to 5(3), the tax on a consumer, a user and a taxable service at 6 %",
+        "publisher": "Queen's Printer for Saskatchewan — Publications Saskatchewan",
+        "url": "https://publications.saskatchewan.ca/api/v1/products/779/formats/1196/download",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "sk-pst",
+        "title": "Provincial Sales Tax — “a six per cent sales tax that applies to taxable goods and services consumed or used in Saskatchewan”",
+        "publisher": "Government of Saskatchewan",
+        "url": "https://www.saskatchewan.ca/business/taxes-licensing-and-reporting/provincial-taxes-policies-and-bulletins/provincial-sales-tax",
+        "consulted_on": "2026-09-25",
+        "kind": "guidance"
+      },
+      {
+        "key": "mb-rsta",
+        "title": "The Retail Sales Tax Act, C.C.S.M. c. R130 — subsection 2(1) imposes the tax and the definition of “general sales tax rate” in subsection 1(1) sets it at 7 %",
+        "publisher": "Government of Manitoba — Manitoba Laws",
+        "url": "https://web2.gov.mb.ca/laws/statutes/ccsm/r130.php?lang=en",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "mb-rst",
+        "title": "Retail Sales Tax — “The general sales tax rate is 7%”",
+        "publisher": "Manitoba Finance — Taxation Division",
+        "url": "https://www.gov.mb.ca/finance/taxation/taxes/retail.html",
+        "consulted_on": "2026-09-25",
+        "kind": "guidance"
+      },
+      {
+        "key": "cbca-regs",
+        "title": "Canada Business Corporations Regulations, 2001, SOR/2001-512 — section 70 defines Canadian GAAP as the CPA Canada Handbook – Accounting and section 71 requires annual financial statements to be prepared in accordance with it",
+        "publisher": "Department of Justice Canada — Justice Laws Website",
+        "url": "https://laws-lois.justice.gc.ca/eng/regulations/SOR-2001-512/FullText.html",
+        "consulted_on": "2026-09-25",
+        "kind": "regulation"
+      },
+      {
+        "key": "aspe",
+        "title": "Accounting Standards for Private Enterprises — Part II of the CPA Canada Handbook – Accounting, set by the Accounting Standards Board: Section 1400 general standards, 1510 current assets and liabilities, 1520 income statement, 1521 balance sheet, 3251 equity",
+        "publisher": "Accounting Standards Board — Financial Reporting & Assurance Standards Canada",
+        "url": "https://www.frascanada.ca/en/aspe",
+        "consulted_on": "2026-09-25",
+        "kind": "standard"
+      }
+    ]
+  },
+  "languages": [
+    "fr"
+  ],
+  "defaults": {
+    "currency": "CAD",
+    "language": "en",
+    "rounding_method": "half_up",
+    "closing_style": "retained_earnings",
+    "fiscal_year_default": "calendar",
+    "roles": {
+      "receivable": "1100",
+      "payable": "2000",
+      "suspense": "2350",
+      "rounding": "6950",
+      "retained_earnings": "3300",
+      "sales": "4000",
+      "purchase": "5000",
+      "bank": "1010",
+      "cash": "1000",
+      "fx_gain": "4550",
+      "fx_loss": "7050",
+      "asset_disposal_gain": "4560",
+      "asset_disposal_loss": "7060",
+      "tax_payable": "2250",
+      "tax_receivable": "1340"
+    },
+    "journal_roles": {
+      "sales": "SAL",
+      "purchase": "PUR",
+      "miscellaneous": "GEN",
+      "opening": "OPN"
+    }
+  },
+  "journals": [
+    {
+      "code": "SAL",
+      "type": "sales",
+      "name": "Sales journal",
+      "sequence": 10
+    },
+    {
+      "code": "PUR",
+      "type": "purchase",
+      "name": "Purchases journal",
+      "sequence": 20
+    },
+    {
+      "code": "BNK",
+      "type": "bank",
+      "name": "Bank",
+      "sequence": 30
+    },
+    {
+      "code": "CSH",
+      "type": "cash",
+      "name": "Petty cash",
+      "sequence": 40
+    },
+    {
+      "code": "GEN",
+      "type": "general",
+      "name": "General journal",
+      "sequence": 50
+    },
+    {
+      "code": "OPN",
+      "type": "opening",
+      "name": "Opening balances",
+      "sequence": 60
+    }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Canadian reference chart of accounts",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": [
+        "CA-ASPE-BS",
+        "CA-ASPE-IS"
+      ],
+      "legal_reference": "There is no legal chart of accounts in Canada and no statute prescribes one for a company of any size. What is prescribed is the standard the statements are prepared to: section 71 of the Canada Business Corporations Regulations, 2001 requires the annual financial statements of a corporation to be prepared in accordance with Canadian GAAP, and section 70 defines that as the CPA Canada Handbook – Accounting, whose Part II holds the accounting standards for private enterprises. This chart is original. It follows the four-digit, five-block convention Canadian bookkeeping software shares — 1000 assets, 2000 liabilities, 3000 equity, 4000 revenue, 5000 and above expenses — and every block of codes is cut so that it reaches exactly one line of the two ASPE statements this pack carries. The labels are English because there is no official Canadian chart in either official language to transcribe; the French of a Québec set of books is in i18n/fr.json.",
+      "source": "cbca-regs"
+    }
+  ],
+  "documents": {
+    "numbering": "free",
+    "number_format": "{CODE}-{NNNN}",
+    "tax_point": "invoice_date",
+    "posted_edit_policy": "reversal_only",
+    "references": {
+      "numbering": {
+        "legal_reference": "No statute of Canada requires the invoice of a business to carry a number, and neither does any province. What the law asks of a document is set out in section 3 of the Input Tax Credit Information (GST/HST) Regulations, and it is a list of facts and not a sequence: under $100 the supplier's name, the date and the total; from $100 the supplier's registration number and the tax; from $500 the recipient's name, the terms of payment and a description of each supply. Section 2 of the same regulations makes any of an invoice, a receipt, a credit-card slip, a debit note, a book of account, a written contract or “any record contained in a computerized or electronic retrieval or data storage system” supporting documentation. `free` is therefore Canada's answer and not a gap in this pack, and `{CODE}-{NNNN}` is a convention it proposes rather than a form anybody prescribes.",
+        "source": "itc-regs"
+      },
+      "tax_point": {
+        "legal_reference": "Excise Tax Act, subsection 168(1): tax is payable on the earlier of the day the consideration is paid and the day it becomes due. Subsection 152(1) is what makes the invoice the usual answer to the second half — consideration becomes due on the earliest of the day the supplier first issues an invoice for it, the date of that invoice, the day the supplier would have issued it but for an undue delay, and the day the recipient is required to pay under a written agreement. The supply is the backstop and not the principle: subsection 168(3) reaches only the case where the consideration has neither been paid nor become due by the last day of the month following the month the property was delivered. So the invoice fixes the tax point of an invoiced supply, which is what `invoice_date` says, and the payment branch of 168(1) bites only on a prepayment — a document Ekwo has no concept of, which docs/international.md already records as a limit of the core.",
+        "source": "eta"
+      },
+      "posted_edit_policy": {
+        "legal_reference": "Excise Tax Act, section 286 requires every person carrying on a business to keep records in such form and containing such information as will enable the determination of their liabilities and obligations, and to keep them for six years after the end of the year they relate to; subsection 286(3) lets the Minister require a person who has not kept adequate records to keep the ones the Minister specifies. A record that could be taken back after the fact is not one of those, so a posted document of a Canadian company is undone by a credit note that names it and in no other way.",
+        "source": "eta"
+      }
+    }
+  },
+  "einvoicing": {
+    "obligation": "none",
+    "legal_reference": "No statute of Canada, federal or provincial, obliges businesses to exchange electronic invoices between themselves, and no date has been set for one. There is therefore no national profile to declare. What the law says about the medium it says in section 2 of the Input Tax Credit Information (GST/HST) Regulations, and it says it the other way round: supporting documentation for an input tax credit already includes “any record contained in a computerized or electronic retrieval or data storage system”, so an electronic invoice has been good enough for thirty-five years and has never been compulsory. What is compulsory is the *return*: for reporting periods beginning on or after 1 January 2024 every GST/HST registrant other than a charity or a selected listed financial institution has to file electronically, and Revenu Québec requires the same of form FPZ-500 from the same date. Filing a return online is not issuing an electronic invoice, and the two are not run together here. A supplier to the federal government invoices through the CanadaBuys procurement system, which is procurement policy and reaches nobody else. `party_scheme` and `vat_scheme` are empty: nothing prescribes which of a Canadian party's several registration identifiers — the business number, the GST/HST account, the QST number — it would be addressed by on a network no statute names.",
+    "source": "itc-regs"
+  },
+  "bank": {
+    "statement_formats": [
+      "bai2",
+      "ofx",
+      "csv",
+      "camt.053"
+    ],
+    "payment_formats": [
+      "eft",
+      "csv"
+    ]
+  }
+}
