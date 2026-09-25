@@ -109,7 +109,25 @@ function inForce(taxes: PackTax[], on: string): Map<string, PackTax> {
   );
 }
 
-const slugs = await listPacks();
+/**
+ * The CI replays the packs in several jobs, each taking a slice: the memory of
+ * the databases a run opens stays with the process until it ends, and the
+ * whole tree no longer fits one hosted runner. `EKWO_GOLDEN_SHARD=2/4` takes
+ * every fourth pack starting at the second; unset, every pack is replayed.
+ */
+function sliceOf<T>(list: readonly T[], spec: string | undefined): T[] {
+  if (spec === undefined || spec === '') return [...list];
+  const match = /^(\d+)\/(\d+)$/.exec(spec);
+  if (match === null) throw new Error(`EKWO_GOLDEN_SHARD: expected i/n, got ${spec}`);
+  const index = Number(match[1]);
+  const count = Number(match[2]);
+  if (count < 1 || index < 1 || index > count) {
+    throw new Error(`EKWO_GOLDEN_SHARD: ${spec} is not a slice of a whole`);
+  }
+  return list.filter((_, position) => position % count === index - 1);
+}
+
+const slugs = sliceOf(await listPacks(), process.env['EKWO_GOLDEN_SHARD']);
 
 for (const slug of slugs) {
   const pack = await readPack(slug);
