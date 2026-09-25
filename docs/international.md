@@ -4205,3 +4205,49 @@ Implementation Standard, rules BR-KSA-39 and BR-KSA-40), and carries no country
 prefix of that table's kind. The Kingdom has no ISO 6523 identifier either — it
 is absent from the Peppol participant identifier scheme list v9.7, which
 carries AE and OM.
+
+## From Czechia
+
+`packs/cz/`, `community`, seed 68, inside the common system of VAT since
+1 May 2004. Its rates, its declaration and its balance sheet are read from
+the consolidated zákon č. 235/2004 Sb. and from the vyhláška č. 500/2002 Sb.;
+one gap the format does not close, distinct from the ones already named for
+Poland and Italy though it sits beside them.
+
+### A transaction listing is not a shape a declaration form has here
+
+`tax_report.json` describes one thing everywhere in this repository: a set of
+boxes, each a sum of what postings wrote to it, or a total computed from other
+boxes. Belgium's grid 54, France's ligne 08, Poland's P_19 and Czechia's own
+řádek 1 are all the same shape — a figure the ledger already holds, read back
+by the declaration. `docs/international.md` already names, under "From the
+recapitulative statement", that a pack declares only **one** such form even
+though a country files several, and proposes a list of forms as the fix. That
+fix would not reach the kontrolní hlášení (§ 101c to § 101i zákona
+č. 235/2004 Sb.), because the problem is not that this form is a second one —
+it is that above 10 000 Kč gross, the kontrolní hlášení is not a sum at all:
+section A (a taxable person's own supplies) and section B (what was received)
+each require, per taxable document above that threshold, the counterparty's
+DIČ, the document's own reference, its date of the chargeable event, and its
+base and tax by rate — a row per invoice, not a figure per box. Nothing in this
+format carries a party identifier or a document reference on a box; a
+`tax_report_box` sums an amount and names nothing else. What the kontrolní
+hlášení asks for is closer to what `packages/formats/` already produces for a
+transaction journal or a FEC — a listing keyed on the document — than to
+anything `tax_report.json` was built to hold. *No fix is proposed here*: unlike
+the missing-forms gap above, whose fix is a list of the same shape repeated,
+this one asks for a second, genuinely different shape — declarative evidence
+at the document level, filed on a cadence and read against thresholds a
+`tax_report_box` has no field for. `packs/cz/` states the boxes of the
+periodic return it can state, and leaves the kontrolní hlášení to whichever
+means an installation already files it by; the sanctions for not filing it
+(§ 101h zákona č. 235/2004 Sb., up to 500 000 Kč) are the taxpayer's to carry
+regardless of what this pack does.
+
+The souhrnné hlášení (§ 102), by contrast, needed nothing new: its monthly
+cadence — filed monthly even for a taxable person whose periodic return is
+itself quarterly — is exactly the case `company_filing_periods` (one row per
+company and per form) was built to hold, and `ec_sales_list()` reads the
+`intracom_goods` and `intracom_services` treatments this pack's taxes already
+carry. Two already-solved gaps met again, and one that is not, side by side in
+one country's pack.

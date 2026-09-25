@@ -1,0 +1,229 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "CZ-DPH-PRIZNANI",
+  "name": "Přiznání k dani z přidané hodnoty (tiskopis 25 5401 MFin 5401, vzor č. 25)",
+  "period": [
+    "month",
+    "quarter"
+  ],
+  "period_default": "month",
+  "valid_from": "2025-01-01",
+  "legal_reference": "Zákon č. 235/2004 Sb., § 99 — zdaňovacím obdobím je kalendářní měsíc, není-li dále stanoveno jinak ; § 99a odst. 1 — un assujetti dont le chiffre d'affaires de l'année civile précédente n'a pas dépassé 15 000 000 Kč peut opter, par une déclaration à l'administration, pour un exercice trimestriel (seuil relevé de 10 000 000 Kč à 15 000 000 Kč par la novelle applicable depuis le 1er janvier 2025). La loi donne donc une réponse valable pour tous — mensuel — et une option ouverte sous condition de chiffre d'affaires, d'où period_default mensuel.",
+  "source": "zakon-dph",
+  "deadline": {
+    "rule": "day_of_month_after_period",
+    "day": 25,
+    "legal_reference": "Zákon č. 235/2004 Sb., § 101 odst. 1 — le plátce dépose sa déclaration au plus tard le vingt-cinquième jour suivant la fin de la période imposable, y compris lorsqu'aucune taxe n'est due ; ce délai ne peut être prorogé.",
+    "source": "zakon-dph"
+  },
+  "boxes": [
+    {
+      "box": "1",
+      "kind": "base",
+      "name": "Dodání zboží nebo poskytnutí služby s místem plnění v tuzemsku — základní sazba",
+      "sequence": 10,
+      "legal_reference": "Tiskopis 25 5401, řádek 1 (základ daně) ; zákon č. 235/2004 Sb., § 47 odst. 1 písm. a).",
+      "source": "priznani-dph-tiskopis"
+    },
+    {
+      "box": "1",
+      "kind": "tax",
+      "name": "Dodání zboží nebo poskytnutí služby s místem plnění v tuzemsku — základní sazba — daň",
+      "sequence": 20,
+      "legal_reference": "Tiskopis 25 5401, řádek 1 (daň).",
+      "source": "priznani-dph-tiskopis"
+    },
+    {
+      "box": "2",
+      "kind": "base",
+      "name": "Dodání zboží nebo poskytnutí služby s místem plnění v tuzemsku — snížená sazba",
+      "sequence": 30,
+      "legal_reference": "Tiskopis 25 5401, řádek 2 (základ daně) ; zákon č. 235/2004 Sb., § 47 odst. 1 písm. b).",
+      "source": "priznani-dph-tiskopis"
+    },
+    {
+      "box": "2",
+      "kind": "tax",
+      "name": "Dodání zboží nebo poskytnutí služby s místem plnění v tuzemsku — snížená sazba — daň",
+      "sequence": 40,
+      "legal_reference": "Tiskopis 25 5401, řádek 2 (daň).",
+      "source": "priznani-dph-tiskopis"
+    },
+    {
+      "box": "3",
+      "kind": "base",
+      "name": "Pořízení zboží z jiného členského státu — základní sazba",
+      "sequence": 50,
+      "legal_reference": "Tiskopis 25 5401, řádek 3 (základ daně) ; zákon č. 235/2004 Sb., § 25 a § 108 odst. 1 písm. b).",
+      "source": "priznani-dph-tiskopis"
+    },
+    {
+      "box": "3",
+      "kind": "tax",
+      "name": "Pořízení zboží z jiného členského státu — základní sazba — daň",
+      "sequence": 60,
+      "legal_reference": "Tiskopis 25 5401, řádek 3 (daň).",
+      "source": "priznani-dph-tiskopis"
+    },
+    {
+      "box": "10",
+      "kind": "base",
+      "name": "Režim přenesení daňové povinnosti — příjemce — základní sazba",
+      "sequence": 70,
+      "legal_reference": "Tiskopis 25 5401, řádek 10 (základ daně) ; zákon č. 235/2004 Sb., § 92a a § 92e.",
+      "source": "priznani-dph-tiskopis"
+    },
+    {
+      "box": "10",
+      "kind": "tax",
+      "name": "Režim přenesení daňové povinnosti — příjemce — základní sazba — daň",
+      "sequence": 80,
+      "legal_reference": "Tiskopis 25 5401, řádek 10 (daň).",
+      "source": "priznani-dph-tiskopis"
+    },
+    {
+      "box": "20",
+      "kind": "base",
+      "name": "Dodání zboží do jiného členského státu",
+      "sequence": 90,
+      "legal_reference": "Tiskopis 25 5401, řádek 20 ; zákon č. 235/2004 Sb., § 64.",
+      "source": "priznani-dph-tiskopis"
+    },
+    {
+      "box": "21",
+      "kind": "base",
+      "name": "Poskytnutí služeb s místem plnění v jiném členském státě",
+      "sequence": 100,
+      "legal_reference": "Tiskopis 25 5401, řádek 21 ; zákon č. 235/2004 Sb., § 9 odst. 1.",
+      "source": "priznani-dph-tiskopis"
+    },
+    {
+      "box": "22",
+      "kind": "base",
+      "name": "Vývoz zboží",
+      "sequence": 110,
+      "legal_reference": "Tiskopis 25 5401, řádek 22 ; zákon č. 235/2004 Sb., § 66.",
+      "source": "priznani-dph-tiskopis"
+    },
+    {
+      "box": "50",
+      "kind": "base",
+      "name": "Plnění osvobozená od daně bez nároku na odpočet daně",
+      "sequence": 120,
+      "legal_reference": "Tiskopis 25 5401, řádek 50 ; zákon č. 235/2004 Sb., § 51 a násl.",
+      "source": "priznani-dph-tiskopis"
+    },
+    {
+      "box": "40",
+      "kind": "base",
+      "name": "Přijatá zdanitelná plnění od plátců — základní sazba",
+      "sequence": 130,
+      "legal_reference": "Tiskopis 25 5401, řádek 40 (základ daně) ; zákon č. 235/2004 Sb., § 72 odst. 1 písm. a).",
+      "source": "priznani-dph-tiskopis"
+    },
+    {
+      "box": "40",
+      "kind": "tax",
+      "name": "Přijatá zdanitelná plnění od plátců — základní sazba — daň v plné výši",
+      "sequence": 140,
+      "legal_reference": "Tiskopis 25 5401, řádek 40 (daň v plné výši).",
+      "source": "priznani-dph-tiskopis"
+    },
+    {
+      "box": "41",
+      "kind": "base",
+      "name": "Přijatá zdanitelná plnění od plátců — snížená sazba",
+      "sequence": 150,
+      "legal_reference": "Tiskopis 25 5401, řádek 41 (základ daně) ; zákon č. 235/2004 Sb., § 72 odst. 1 písm. a).",
+      "source": "priznani-dph-tiskopis"
+    },
+    {
+      "box": "41",
+      "kind": "tax",
+      "name": "Přijatá zdanitelná plnění od plátců — snížená sazba — daň v plné výši",
+      "sequence": 160,
+      "legal_reference": "Tiskopis 25 5401, řádek 41 (daň v plné výši).",
+      "source": "priznani-dph-tiskopis"
+    },
+    {
+      "box": "43",
+      "kind": "total",
+      "name": "Zdanitelná plnění řádků 3 a 10 — základní sazba (nárok na odpočet)",
+      "sequence": 170,
+      "plus": [
+        "3:tax",
+        "10:tax"
+      ],
+      "legal_reference": "Tiskopis 25 5401, řádek 43 — reporte, côté déduction, la taxe autoliquidée déjà déclarée aux lignes 3 à 13 côté sortie ; ce pack ne pose que les lignes 3 et 10, la somme se limite donc à elles deux. Zákon č. 235/2004 Sb., § 73 odst. 1 písm. b).",
+      "source": "priznani-dph-tiskopis"
+    },
+    {
+      "box": "46",
+      "kind": "total",
+      "name": "Odpočet daně celkem",
+      "sequence": 180,
+      "plus": [
+        "40:tax",
+        "41:tax",
+        "43"
+      ],
+      "legal_reference": "Tiskopis 25 5401, řádek 46 — součet řádků 40, 41, 42, 43, 44 a 45 ; ce pack ne pose que les lignes 40, 41 et 43.",
+      "source": "priznani-dph-tiskopis"
+    },
+    {
+      "box": "62",
+      "kind": "total",
+      "name": "Daň na výstupu",
+      "sequence": 190,
+      "plus": [
+        "1:tax",
+        "2:tax",
+        "3:tax",
+        "10:tax"
+      ],
+      "legal_reference": "Tiskopis 25 5401, řádek 62 — součet řádků 1 až 13, snížený o řádek 61 ; ce pack ne pose que les lignes 1, 2, 3 et 10, et ne modélise pas la ligne 61 (vrácení daně, § 84).",
+      "source": "priznani-dph-tiskopis"
+    },
+    {
+      "box": "63",
+      "kind": "total",
+      "name": "Odpočet daně",
+      "sequence": 200,
+      "plus": [
+        "46"
+      ],
+      "legal_reference": "Tiskopis 25 5401, řádek 63 — součet řádků 46, 52, 53 a 60 ; ce pack ne pose que la ligne 46.",
+      "source": "priznani-dph-tiskopis"
+    },
+    {
+      "box": "64",
+      "kind": "total",
+      "name": "Vlastní daňová povinnost",
+      "sequence": 210,
+      "plus": [
+        "62"
+      ],
+      "minus": [
+        "63"
+      ],
+      "floor_zero": true,
+      "legal_reference": "Tiskopis 25 5401, řádek 64 — rozdíl řádků 62 a 63, je-li kladný.",
+      "source": "priznani-dph-tiskopis"
+    },
+    {
+      "box": "65",
+      "kind": "total",
+      "name": "Nadměrný odpočet",
+      "sequence": 220,
+      "plus": [
+        "63"
+      ],
+      "minus": [
+        "62"
+      ],
+      "floor_zero": true,
+      "legal_reference": "Tiskopis 25 5401, řádek 65 — rozdíl řádků 63 a 62, je-li kladný.",
+      "source": "priznani-dph-tiskopis"
+    }
+  ]
+}

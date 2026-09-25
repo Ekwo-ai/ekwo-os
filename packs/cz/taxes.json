@@ -1,0 +1,224 @@
+[
+  {
+    "code": "CZ-S-21",
+    "name": "Daň na výstupu 21 %",
+    "description": "Základní sazba",
+    "rate": 21,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2024-01-01",
+    "legal_reference": "Zákon č. 235/2004 Sb., § 47 odst. 1 písm. a) — základní sazba daně činí 21 % pro zdanitelné plnění, není-li dále stanoveno jinak, ve znění zákona č. 349/2023 Sb. s účinností od 1. ledna 2024.",
+    "source": "zakon-dph",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "1" },
+        { "type": "tax", "account": "3431", "box": "1" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "1", "box_factor": -100 },
+        { "type": "tax", "account": "3431", "box": "1", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 10
+  },
+  {
+    "code": "CZ-S-12",
+    "name": "Daň na výstupu 12 %",
+    "description": "Snížená sazba",
+    "rate": 12,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2024-01-01",
+    "legal_reference": "Zákon č. 235/2004 Sb., § 47 odst. 1 písm. b) — snížená sazba daně činí 12 %, pro zboží a služby uvedené v přílohách č. 2 a č. 3 zákona ; ve znění zákona č. 349/2023 Sb. depuis le 1er janvier 2024, qui fusionne les deux anciens taux réduits de 10 % et 15 % en un seul.",
+    "source": "zakon-dph",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "2" },
+        { "type": "tax", "account": "3432", "box": "2" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "2", "box_factor": -100 },
+        { "type": "tax", "account": "3432", "box": "2", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 20
+  },
+  {
+    "code": "CZ-S-VOP",
+    "name": "Dodání zboží do jiného členského státu",
+    "description": "Livraison intracommunautaire de biens, exonérée avec droit à déduction",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "intracom_goods",
+    "valid_from": "2004-05-01",
+    "legal_reference": "Zákon č. 235/2004 Sb., § 64 odst. 1 — la livraison de biens expédiés ou transportés d'un autre État membre par le vendeur, l'acquéreur ou en leur nom à destination d'une personne enregistrée à la TVA dans un autre État membre est exonérée avec droit à déduction.",
+    "source": "zakon-dph",
+    "vat_category": "K",
+    "exemption_code": "VATEX-EU-IC",
+    "postings": {
+      "invoice": [{ "type": "base", "box": "20" }],
+      "credit_note": [{ "type": "base", "box": "20", "box_factor": -100 }]
+    },
+    "kind": "vat",
+    "sequence": 30
+  },
+  {
+    "code": "CZ-S-SLUZBY-EU",
+    "name": "Poskytnutí služby osobě registrované k dani v jiném členském státě",
+    "description": "Prestation de services B2B intracommunautaire, règle générale de territorialité",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "intracom_services",
+    "valid_from": "2010-01-01",
+    "legal_reference": "Zákon č. 235/2004 Sb., § 9 odst. 1 — le lieu de la prestation d'un service à un assujetti est le lieu où celui-ci a établi le siège de son activité économique, transposition de l'article 44 de la directive 2006/112/CE ; la taxe y est due par le preneur, ce qui exonère le prestataire tchèque sans le priver du droit à déduction.",
+    "source": "zakon-dph",
+    "vat_category": "K",
+    "exemption_code": "VATEX-EU-IC",
+    "postings": {
+      "invoice": [{ "type": "base", "box": "21" }],
+      "credit_note": [{ "type": "base", "box": "21", "box_factor": -100 }]
+    },
+    "kind": "vat",
+    "sequence": 40
+  },
+  {
+    "code": "CZ-S-VYVOZ",
+    "name": "Vývoz zboží",
+    "description": "Export de biens hors de l'Union européenne",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2004-05-01",
+    "legal_reference": "Zákon č. 235/2004 Sb., § 66 — l'exportation de biens, c'est-à-dire leur sortie du territoire douanier de l'Union européenne, est exonérée avec droit à déduction, sous réserve de la preuve de la sortie.",
+    "source": "zakon-dph",
+    "vat_category": "G",
+    "exemption_code": "VATEX-EU-G",
+    "postings": {
+      "invoice": [{ "type": "base", "box": "22" }],
+      "credit_note": [{ "type": "base", "box": "22", "box_factor": -100 }]
+    },
+    "kind": "vat",
+    "sequence": 50
+  },
+  {
+    "code": "CZ-S-OSV-NAJEM",
+    "name": "Nájem nemovité věci osvobozený od daně",
+    "description": "Bail immobilier exonéré sans droit à déduction",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2004-05-01",
+    "legal_reference": "Zákon č. 235/2004 Sb., § 56a odst. 1 — le nájem (bail) d'un bien immeuble est exonéré de la taxe sans droit à déduction, sauf option du bailleur pour la taxation prévue à l'odst. 3 lorsque le preneur est lui-même assujetti ; ce pack ne modélise pas l'option. Correspond à l'article 135, paragraphe 1, point l), de la directive 2006/112/CE (location de biens immeubles).",
+    "source": "zakon-dph",
+    "vat_category": "E",
+    "exemption_code": "VATEX-EU-135-1",
+    "postings": {
+      "invoice": [{ "type": "base", "box": "50" }],
+      "credit_note": [{ "type": "base", "box": "50", "box_factor": -100 }]
+    },
+    "kind": "vat",
+    "sequence": 60
+  },
+  {
+    "code": "CZ-P-21",
+    "name": "Daň na vstupu 21 % — plný nárok na odpočet",
+    "description": "Achat domestique au taux de base, intégralement déductible",
+    "rate": 21,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2024-01-01",
+    "legal_reference": "Zákon č. 235/2004 Sb., § 72 odst. 1 písm. a) et § 47 odst. 1 písm. a) — l'assujetti a droit à la déduction de la taxe qui lui a été facturée sur une acquisition utilisée pour ses activités économiques imposables, ici au taux de base de 21 %.",
+    "source": "zakon-dph",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "40" },
+        { "type": "tax", "account": "3433", "box": "40" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "40", "box_factor": -100 },
+        { "type": "tax", "account": "3433", "box": "40", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 70
+  },
+  {
+    "code": "CZ-P-12",
+    "name": "Daň na vstupu 12 % — plný nárok na odpočet",
+    "description": "Achat domestique au taux réduit, intégralement déductible",
+    "rate": 12,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2024-01-01",
+    "legal_reference": "Zákon č. 235/2004 Sb., § 72 odst. 1 písm. a) et § 47 odst. 1 písm. b).",
+    "source": "zakon-dph",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "41" },
+        { "type": "tax", "account": "3433", "box": "41" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "41", "box_factor": -100 },
+        { "type": "tax", "account": "3433", "box": "41", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 80
+  },
+  {
+    "code": "CZ-P-VOP",
+    "name": "Pořízení zboží z jiného členského státu",
+    "description": "Acquisition intracommunautaire de biens, autoliquidée par l'acquéreur, base standard",
+    "rate": 21,
+    "scope": "purchase",
+    "treatment": "intracom_acquisition_goods",
+    "valid_from": "2024-01-01",
+    "legal_reference": "Zákon č. 235/2004 Sb., § 25 — l'acquisition intracommunautaire de biens est réalisée, et la taxe devient exigible, à la date d'émission du document fiscal ou, au plus tard, le quinzième jour du mois suivant celui de l'acquisition ; § 108 odst. 1 písm. b) désigne l'acquéreur comme redevable ; § 73 odst. 1 písm. b) lui ouvre, dans la même déclaration, le droit à déduction de la même somme lorsque le bien est affecté à son activité économique imposable.",
+    "source": "zakon-dph",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "3" },
+        { "type": "tax", "account": "3431", "box": "3" },
+        { "type": "tax", "account": "3433", "factor": -100 }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "3", "box_factor": -100 },
+        { "type": "tax", "account": "3431", "box": "3", "box_factor": -100 },
+        { "type": "tax", "account": "3433", "factor": 100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 90
+  },
+  {
+    "code": "CZ-P-PN-STAVBY",
+    "name": "Stavební nebo montážní práce v režimu přenesení daňové povinnosti",
+    "description": "Reverse charge domestique du secteur du bâtiment, base standard",
+    "rate": 21,
+    "scope": "purchase",
+    "treatment": "domestic_reverse_charge",
+    "valid_from": "2024-01-01",
+    "legal_reference": "Zákon č. 235/2004 Sb., § 92a et § 92e — le preneur assujetti d'une prestation de travaux de construction ou de montage (code CZ-CPA 41 à 43) reçue d'un autre assujetti établi et pour laquelle le lieu de la prestation est le territoire national est tenu de déclarer lui-même la taxe ; § 73 odst. 1 písm. b) lui ouvre, dans la même déclaration, le droit à déduction de la même somme lorsque la prestation est affectée à son activité économique imposable.",
+    "source": "zakon-dph",
+    "vat_category": "AE",
+    "exemption_code": "VATEX-EU-AE",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "10" },
+        { "type": "tax", "account": "3431", "box": "10" },
+        { "type": "tax", "account": "3433", "factor": -100 }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "10", "box_factor": -100 },
+        { "type": "tax", "account": "3431", "box": "10", "box_factor": -100 },
+        { "type": "tax", "account": "3433", "factor": 100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 100
+  }
+]

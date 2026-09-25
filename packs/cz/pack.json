@@ -1,0 +1,332 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "CZ",
+  "name": "Czechia",
+  "version": "0.1.0",
+  "schema_min": "20260921145425",
+  "seed_sequence": 68,
+  "released_at": "2026-09-25",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "zakon-dph",
+        "title": "Zákon č. 235/2004 Sb., o dani z přidané hodnoty, ve znění pozdějších předpisů (konsolidované znění účinné od 1. 1. 2026)",
+        "publisher": "Ministerstvo vnitra ČR — e-Sbírka",
+        "url": "https://e-sbirka.gov.cz/sb/2004/235",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "zakon-konsolidacni-balicek",
+        "title": "Zákon č. 349/2023 Sb., kterým se mění některé zákony v souvislosti s konsolidací veřejných rozpočtů — sjednocení snížené sazby DPH na 12 % a novelizace § 47 zákona č. 235/2004 Sb. od 1. 1. 2024",
+        "publisher": "Ministerstvo vnitra ČR — e-Sbírka",
+        "url": "https://e-sbirka.gov.cz/sb/2023/349",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "gfr-sazby-2024",
+        "title": "Informace GFŘ ke změnám sazeb DPH od 1. 1. 2024, č.j. 916/24/7100-30116-050822",
+        "publisher": "Generální finanční ředitelství",
+        "url": "https://financnisprava.gov.cz/assets/cs/prilohy/d-seznam-dani/Informace_GFR_ke_zmenam_sazeb_DPH_od_1_1_2024.pdf",
+        "consulted_on": "2026-09-25",
+        "kind": "guidance"
+      },
+      {
+        "key": "gfr-novela-2025",
+        "title": "Informace ke změnám v plátcovství a registračním řízení v oblasti DPH od 1. 1. 2025 (limity 2 000 000 Kč a 2 536 500 Kč podle § 6, prodloužení hranice čtvrtletního zdaňovacího období podle § 99a na 15 000 000 Kč)",
+        "publisher": "Finanční správa ČR",
+        "url": "https://financnisprava.gov.cz/assets/cs/prilohy/d-seznam-dani/82973_Souhrnna-informace-k-novele-DPH-2025.pdf",
+        "consulted_on": "2026-09-25",
+        "kind": "guidance"
+      },
+      {
+        "key": "priznani-dph-tiskopis",
+        "title": "Přiznání k dani z přidané hodnoty, tiskopis 25 5401 MFin 5401, vzor č. 25",
+        "publisher": "Finanční správa ČR",
+        "url": "https://financnisprava.gov.cz/assets/tiskopisy/5401_25.pdf",
+        "consulted_on": "2026-09-25",
+        "kind": "form"
+      },
+      {
+        "key": "moje-dane-portal",
+        "title": "Moje daně — portál pro elektronické podání daňového přiznání, kontrolního hlášení a souhrnného hlášení",
+        "publisher": "Finanční správa ČR",
+        "url": "https://adisspr.mfcr.cz",
+        "consulted_on": "2026-09-25",
+        "kind": "portal"
+      },
+      {
+        "key": "kontrolni-hlaseni-info",
+        "title": "Kontrolní hlášení DPH — základní informace, struktura oddílů A a B, práh 10 000 Kč pro řádkový záznam",
+        "publisher": "Finanční správa ČR",
+        "url": "https://financnisprava.gov.cz/cs/dane/dane/dan-z-pridane-hodnoty/kontrolni-hlaseni-dph/zakladni-informace",
+        "consulted_on": "2026-09-25",
+        "kind": "guidance"
+      },
+      {
+        "key": "kontrolni-hlaseni-sankce",
+        "title": "Kontrolní hlášení DPH — sankce podle § 101h zákona č. 235/2004 Sb.",
+        "publisher": "Finanční správa ČR",
+        "url": "https://financnisprava.gov.cz/cs/dane/dane/dan-z-pridane-hodnoty/kontrolni-hlaseni-dph/sankce",
+        "consulted_on": "2026-09-25",
+        "kind": "guidance"
+      },
+      {
+        "key": "souhrnne-hlaseni-info",
+        "title": "Souhrnné hlášení — informace, formulář 25 5525 MFin 5525",
+        "publisher": "Finanční správa ČR",
+        "url": "https://financnisprava.gov.cz/cs/dane/dane/dan-z-pridane-hodnoty/informace-stanoviska-a-sdeleni/souhrnna-hlaseni",
+        "consulted_on": "2026-09-25",
+        "kind": "guidance"
+      },
+      {
+        "key": "zakon-ucetnictvi",
+        "title": "Zákon č. 563/1991 Sb., o účetnictví, ve znění pozdějších předpisů",
+        "publisher": "Ministerstvo vnitra ČR — e-Sbírka",
+        "url": "https://e-sbirka.gov.cz/sb/1991/563",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "vyhlaska-500-2002",
+        "title": "Vyhláška č. 500/2002 Sb., kterou se provádějí některá ustanovení zákona č. 563/1991 Sb., o účetnictví, pro účetní jednotky, které jsou podnikateli účtujícími v soustavě podvojného účetnictví — přílohy č. 1 (rozvaha), č. 2 (výkaz zisku a ztráty, druhové členění) a č. 4 (směrná účtová osnova)",
+        "publisher": "Ministerstvo vnitra ČR — e-Sbírka",
+        "url": "https://e-sbirka.gov.cz/sb/2002/500",
+        "consulted_on": "2026-09-25",
+        "kind": "regulation"
+      },
+      {
+        "key": "obcansky-zakonik",
+        "title": "Zákon č. 89/2012 Sb., občanský zákoník — § 1963 (splatnost ceny mezi podnikateli) a § 1970 a násl. (úrok z prodlení)",
+        "publisher": "Ministerstvo vnitra ČR — e-Sbírka",
+        "url": "https://e-sbirka.gov.cz/sb/2012/89",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "nv-351-2013",
+        "title": "Nařízení vlády č. 351/2013 Sb., kterým se určuje výše úroků z prodlení — repo sazba ČNB platná pro první den příslušného kalendářního pololetí, zvýšená o 8 procentních bodů",
+        "publisher": "Ministerstvo vnitra ČR — e-Sbírka",
+        "url": "https://e-sbirka.gov.cz/sb/2013/351",
+        "consulted_on": "2026-09-25",
+        "kind": "regulation"
+      },
+      {
+        "key": "cnb-repo",
+        "title": "Jak postupovat při výpočtu úroku z prodlení — dvoutýdenní repo sazba ČNB",
+        "publisher": "Česká národní banka",
+        "url": "https://www.cnb.cz/cs/casto-kladene-dotazy/Vypocet-uroku-z-prodleni/",
+        "consulted_on": "2026-09-25",
+        "kind": "guidance"
+      },
+      {
+        "key": "zakon-ochrana-spotrebitele",
+        "title": "Zákon č. 634/1992 Sb., o ochraně spotřebitele — § 3 odst. 1 písm. c), arrondi du montant total à la valeur nominale la plus proche de la monnaie légale en circulation lors d'un paiement en espèces",
+        "publisher": "Ministerstvo vnitra ČR — e-Sbírka",
+        "url": "https://e-sbirka.gov.cz/sb/1992/634",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "mf-zaokrouhleni-karta",
+        "title": "Zaokrouhlování při platbě kartou — stanovisko Ministerstva financí ČR : seul un paiement en espèces peut être arrondi, jamais un paiement sans espèces",
+        "publisher": "Ministerstvo financí ČR",
+        "url": "https://mfcr.gov.cz/cs/kontrola-a-regulace/cenova-regulace-a-kontrola/stanoviska-a-odpovedi/2017/zaokrouhlovani-pri-platbe-kartou-28591",
+        "consulted_on": "2026-09-25",
+        "kind": "guidance"
+      },
+      {
+        "key": "zakon-zadavani-vz",
+        "title": "Zákon č. 134/2016 Sb., o zadávání veřejných zakázek — § 221 et § 279 odst. 5 písm. a), obligation pour les principaux pouvoirs adjudicateurs d'accepter depuis le 1er avril 2019 une facture électronique conforme à la norme EN 16931",
+        "publisher": "Ministerstvo vnitra ČR — e-Sbírka",
+        "url": "https://e-sbirka.gov.cz/sb/2016/134",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "mf-e-fakturace",
+        "title": "Elektronická fakturace — právní rámce (EN 16931, marchés publics)",
+        "publisher": "Ministerstvo financí ČR",
+        "url": "https://mfcr.gov.cz/cs/verejny-sektor/elektronicka-fakturace/pravni-ramce",
+        "consulted_on": "2026-09-25",
+        "kind": "guidance"
+      },
+      {
+        "key": "isdoc-mvcr",
+        "title": "ISDOC — formát elektronické fakturace (Information System Document), licence a značka u Ministerstva vnitra ČR od 5. května 2021",
+        "publisher": "Ministerstvo vnitra ČR",
+        "url": "https://mv.gov.cz/isdoc/clanek/elektronicka-fakturace.aspx",
+        "consulted_on": "2026-09-25",
+        "kind": "portal"
+      },
+      {
+        "key": "en-16931",
+        "title": "EN 16931-1 — semantic data model of the electronic invoice, conformant with Directive 2014/55/EU",
+        "publisher": "European Commission",
+        "url": "https://ec.europa.eu/digital-building-blocks/sites/spaces/DIGITAL/pages/467108950/EN+16931+compliance",
+        "consulted_on": "2026-09-25",
+        "kind": "standard"
+      },
+      {
+        "key": "uncl5305",
+        "title": "UNCL5305 — code list of VAT categories (BT-118 and BT-151), subset published for EN 16931",
+        "publisher": "OpenPEPPOL — list published by the European Commission",
+        "url": "https://docs.peppol.eu/poacc/billing/3.0/codelist/UNCL5305/",
+        "consulted_on": "2026-09-25",
+        "kind": "standard"
+      },
+      {
+        "key": "vatex",
+        "title": "VATEX — code list of VAT exemption reasons (BT-121)",
+        "publisher": "OpenPEPPOL — list published by the European Commission",
+        "url": "https://docs.peppol.eu/poacc/billing/3.0/codelist/vatex/",
+        "consulted_on": "2026-09-25",
+        "kind": "standard"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "CZK",
+    "language": "cs",
+    "rounding_method": "half_up",
+    "cash_rounding_unit": 1,
+    "closing_style": "result_accounts",
+    "roles": {
+      "receivable": "311",
+      "payable": "321",
+      "suspense": "315",
+      "rounding": "549",
+      "retained_earnings": "428",
+      "retained_earnings_loss": "429",
+      "current_year_result_profit": "431",
+      "current_year_result_loss": "431",
+      "sales": "604",
+      "purchase": "5185",
+      "bank": "221",
+      "cash": "211",
+      "fx_gain": "663",
+      "fx_loss": "563",
+      "tax_payable": "3438",
+      "tax_receivable": "3439"
+    },
+    "journal_roles": {
+      "sales": "FV",
+      "purchase": "FP",
+      "miscellaneous": "INT",
+      "opening": "PS"
+    },
+    "fiscal_year_default": "calendar"
+  },
+  "languages": [],
+  "journals": [
+    { "code": "FV", "type": "sales", "name": "Faktury vydané", "sequence": 10 },
+    { "code": "FP", "type": "purchase", "name": "Faktury přijaté", "sequence": 20 },
+    { "code": "BANK", "type": "bank", "name": "Bankovní výpisy", "sequence": 30 },
+    { "code": "POKL", "type": "cash", "name": "Pokladna", "sequence": 40 },
+    { "code": "INT", "type": "general", "name": "Interní doklady", "sequence": 50 },
+    { "code": "PS", "type": "opening", "name": "Počáteční stavy", "sequence": 60 }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Účtový rozvrh podle směrné účtové osnovy (příloha č. 4 vyhlášky č. 500/2002 Sb.)",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": ["CZ-VYHL500-ROZVAHA", "CZ-VYHL500-VZZ-DRUHOVE"],
+      "legal_reference": "Vyhláška č. 500/2002 Sb., příloha č. 4 — la směrná účtová osnova fixe, par force de la loi, les účtové třídy (classe, un chiffre) et účtové skupiny (groupe, deux chiffres) que toute entreprise doit respecter ; elle ne va pas plus loin, à la différence du plan comptable général français normalisé jusqu'au sixième chiffre. Chaque entreprise construit ensuite son propre účtový rozvrh, ses comptes synthétiques (troisième chiffre et au-delà) et analytiques, dans le cadre de ces groupes — zákon č. 563/1991 Sb. § 4 odst. 8 renvoie ce pouvoir réglementaire à la vyhláška, qui l'exerce à ce niveau précis. Les comptes à trois chiffres et plus de ce fichier sont donc la construction de ce pack, dans la convention la plus répandue de la pratique comptable tchèque (celle enseignée et celle des logiciels du marché), et non un texte à citer un par un ; seuls le chiffre de la třída et les deux chiffres de la skupina — les deux premiers chiffres de chaque code — sont d'origine légale.",
+      "source": "vyhlaska-500-2002"
+    }
+  ],
+  "documents": {
+    "numbering": "sequential",
+    "number_format": "{CODE}{YYYY}{NNNN}",
+    "legal_payment_days": 30,
+    "late_payment_reference": "Zákon č. 89/2012 Sb., občanský zákoník, § 1963 odst. 1 — à défaut d'accord entre les parties, le prix est exigible dans les 30 jours suivant la remise de la facture (ou la livraison, ou la réception, selon l'événement le plus tardif prévu par le texte) ; § 1963 odst. 2 — un délai supérieur à 60 jours n'est licite qu'à la condition de ne pas être manifestement inéquitable envers le créancier. § 1970 et § 1971 — l'intérêt de retard est dû de plein droit dès l'exigibilité, à un taux fixé par le gouvernement (nařízení vlády č. 351/2013 Sb. : la sazba repo à deux semaines de la ČNB en vigueur le premier jour du semestre civil où le retard survient, majorée de 8 points — 3,75 % + 8 = 11,75 % au second semestre 2026) plutôt que par la loi elle-même.",
+    "tax_point": "earliest_of_delivery_or_payment",
+    "posted_edit_policy": "reversal_only",
+    "references": {
+      "numbering": {
+        "legal_reference": "Zákon č. 235/2004 Sb., § 29 odst. 1 písm. e) — le daňový doklad porte un « evidenční číslo daňového dokladu », un numéro d'évidence qui l'identifie ; la loi exige l'unicité de ce numéro et non une suite sans trou ni une remise à zéro annuelle, d'où sequential et non gapless.",
+        "source": "zakon-dph"
+      },
+      "payment_terms": {
+        "legal_reference": "Zákon č. 89/2012 Sb., § 1963.",
+        "source": "obcansky-zakonik"
+      },
+      "tax_point": {
+        "legal_reference": "Zákon č. 235/2004 Sb., § 20a odst. 1 — la taxe devient exigible au jour de la réalisation de l'opération imposable (livraison du bien, prestation du service) ; odst. 2 — si un paiement est reçu avant cette réalisation, la taxe devient exigible, à hauteur du paiement reçu, au jour de sa réception, dès lors que l'opération future est connue avec une certitude suffisante à cette date. Les deux alinéas ensemble sont earliest_of_delivery_or_payment.",
+        "source": "zakon-dph"
+      },
+      "posted_edit_policy": {
+        "legal_reference": "Zákon č. 563/1991 Sb., § 35 odst. 1 — une écriture erronée ne se corrige que d'une manière qui laisse le contenu initial lisible, jamais par une modification qui l'effacerait. Zákon č. 235/2004 Sb., § 42 et § 43 — un daňový doklad déjà émis se corrige par un opravný daňový doklad qui le vise, jamais par son annulation silencieuse.",
+        "source": "zakon-ucetnictvi"
+      }
+    },
+    "mentions": [
+      {
+        "code": "reverse_charge",
+        "applies_when": "reverse_charge",
+        "text": "Daň odvede zákazník",
+        "sequence": 10,
+        "legal_reference": "Zákon č. 235/2004 Sb., § 29 odst. 2 písm. c) — lorsque la personne tenue de déclarer la taxe est celle pour qui l'opération est réalisée, le daňový doklad porte la mention « daň odvede zákazník » ; le libellé est fixé par la loi elle-même.",
+        "source": "zakon-dph"
+      },
+      {
+        "code": "intracom_goods",
+        "applies_when": "intra_eu_goods",
+        "text": "Osvobozeno od daně podle § 64 zákona č. 235/2004 Sb.",
+        "sequence": 20,
+        "legal_reference": "Zákon č. 235/2004 Sb., § 29 odst. 2 písm. a) — en cas d'exonération, le doklad renvoie à la disposition de la loi, de la directive ou toute autre mention indiquant que l'opération en est exonérée ; § 64 exonère avec droit à déduction la livraison de biens à destination d'un autre État membre à une personne y identifiée à la TVA.",
+        "source": "zakon-dph"
+      },
+      {
+        "code": "intracom_services",
+        "applies_when": "intra_eu_services",
+        "text": "Daň odvede zákazník",
+        "sequence": 30,
+        "legal_reference": "Zákon č. 235/2004 Sb., § 29 odst. 2 písm. c) — la prestation de services à un assujetti établi dans un autre État membre, taxée là où le preneur est établi (§ 9 odst. 1, transposition de l'article 44 de la directive 2006/112/CE), porte la même mention que le reverse charge domestique : c'est le preneur qui déclare la taxe.",
+        "source": "zakon-dph"
+      },
+      {
+        "code": "export",
+        "applies_when": "export",
+        "text": "Vývoz zboží osvobozený od daně podle § 66 zákona č. 235/2004 Sb.",
+        "sequence": 40,
+        "legal_reference": "Zákon č. 235/2004 Sb., § 29 odst. 2 písm. a) et § 66 — l'exportation de biens hors du territoire de l'Union est exonérée avec droit à déduction, sous réserve de la preuve de sortie du territoire douanier.",
+        "source": "zakon-dph"
+      },
+      {
+        "code": "exempt",
+        "applies_when": "exempt",
+        "text": "Osvobozeno od daně bez nároku na odpočet daně podle § 56a zákona č. 235/2004 Sb.",
+        "sequence": 50,
+        "legal_reference": "Zákon č. 235/2004 Sb., § 29 odst. 2 písm. a) et § 56a — le nájem (bail) de biens immeubles à une personne autre qu'un assujetti ou pour un usage résidentiel est exonéré sans droit à déduction ; le doklad renvoie à l'article qui exonère l'opération, dont le libellé exact n'est pas imposé par la loi.",
+        "source": "zakon-dph"
+      },
+      {
+        "code": "late_payment",
+        "applies_when": "late_payment",
+        "text": "En cas de retard de paiement entre entreprises, un intérêt de retard est dû de plein droit au taux repo à deux semaines de la ČNB en vigueur le premier jour du semestre, majoré de 8 points (§ 1970 zákona č. 89/2012 Sb. et nařízení vlády č. 351/2013 Sb.).",
+        "sequence": 60,
+        "legal_reference": "Zákon č. 89/2012 Sb., § 1970 et nařízení vlády č. 351/2013 Sb. — la mention n'est pas imposée par le texte ; elle est ici informative, à l'image des autres packs européens du dépôt qui rappellent le fondement de l'intérêt de retard.",
+        "source": "nv-351-2013"
+      }
+    ]
+  },
+  "einvoicing": {
+    "profile": null,
+    "obligation": "none",
+    "mandatory_from": null,
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "À la date released_at de ce pack, aucun texte n'impose l'échange d'une facture électronique structurée entre entreprises tchèques, ni en B2B ni en B2G au sens général. Ce que la loi impose est plus étroit : zákon č. 134/2016 Sb., o zadávání veřejných zakázek, § 221 et § 279 odst. 5 písm. a) — depuis le 1er avril 2019, les principaux pouvoirs adjudicateurs (dont l'État tchèque et la Česká národní banka) ne peuvent refuser une facture électronique conforme à la norme EN 16931-1:2017 dans le cadre d'un marché public ; c'est une obligation de réception pesant sur l'acheteur public, non une obligation d'émission pesant sur toute entreprise. Le format national ISDOC (XML, initié en 2008 par SPIS/ICT UNIE, dont la licence et la marque appartiennent depuis le 5 mai 2021 au Ministerstvo vnitra) est recommandé aux côtés d'EN 16931 pour ces marchés (usnesení vlády č. 347/2017), mais reste, comme EN 16931 lui-même ici, un format qu'aucune loi n'impose à une entreprise tchèque hors marché public. Voir docs/international.md, section « From Czechia », pour le paquet ViDA (adopté par le Conseil de l'Union le 11 mars 2025), dont le calendrier — 1er juillet 2030 pour les opérations intracommunautaires B2B, 1er janvier 2035 au plus tard pour l'harmonisation des systèmes domestiques — n'a encore fait l'objet d'aucun projet de loi tchèque de transposition à released_at.",
+    "source": "zakon-zadavani-vz"
+  },
+  "bank": {
+    "statement_formats": ["camt.053"],
+    "payment_formats": ["pain.001"]
+  }
+}

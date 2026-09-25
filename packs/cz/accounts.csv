@@ -1,0 +1,107 @@
+code,parent,type,reconcilable,name,sequence
+013,,asset_fixed,false,Software,10
+073,,asset_fixed,false,Oprávky k softwaru,20
+021,,asset_fixed,false,Stavby,30
+081,,asset_fixed,false,Oprávky ke stavbám,40
+022,,asset_fixed,false,Samostatné hmotné movité věci a soubory movitých věcí,50
+082,,asset_fixed,false,Oprávky k samostatným hmotným movitým věcem a souborům movitých věcí,60
+061,,asset_non_current,false,Podíly — ovládaná nebo ovládající osoba,70
+132,,asset_current,false,Zboží na skladě a v prodejnách,80
+311,,asset_receivable,true,Odběratelé,90
+314,,asset_current,false,Poskytnuté zálohy,100
+315,,asset_current,false,Ostatní pohledávky,110
+335,,asset_current,false,Pohledávky za zaměstnanci,120
+3433,,asset_current,false,Daň z přidané hodnoty na vstupu — nárok na odpočet,130
+3439,,asset_current,true,Zúčtování s finančním úřadem — daň z přidané hodnoty — nadměrný odpočet,140
+211,,asset_cash,false,Pokladna,150
+221,,asset_cash,false,Bankovní účty,160
+381,,asset_prepayments,false,Náklady příštích období,170
+385,,asset_current,false,Příjmy příštích období,180
+411,,equity,false,Základní kapitál,190
+428,,equity_retained,false,Nerozdělený zisk minulých let,200
+429,,equity_retained,false,Neuhrazená ztráta minulých let,210
+431,,equity,false,Výsledek hospodaření ve schvalovacím řízení,220
+461,,liability_non_current,false,Bankovní úvěry,230
+321,,liability_payable,true,Dodavatelé,240
+324,,liability_current,false,Přijaté zálohy,250
+325,,liability_current,false,Ostatní závazky,260
+331,,liability_current,false,Zaměstnanci,270
+336,,liability_current,false,Zúčtování s institucemi sociálního zabezpečení a zdravotního pojištění,280
+341,,liability_current,false,Daň z příjmů,290
+3431,,liability_current,false,Daň z přidané hodnoty na výstupu — základní sazba,300
+3432,,liability_current,false,Daň z přidané hodnoty na výstupu — snížená sazba,310
+3438,,liability_current,true,Zúčtování s finančním úřadem — daň z přidané hodnoty — závazek k úhradě,320
+383,,liability_current,false,Výdaje příštích období,330
+384,,liability_current,false,Výnosy příštích období,340
+602,,income,false,Tržby z prodeje služeb,350
+604,,income,false,Tržby za zboží,360
+648,,income_other,false,Ostatní provozní výnosy,370
+662,,income_other,false,Výnosové úroky,380
+663,,income_other,false,Kurzové zisky,390
+504,,expense_direct_cost,false,Prodané zboží,400
+501,,expense,false,Spotřeba materiálu,410
+502,,expense,false,Spotřeba energie,420
+511,,expense,false,Opravy a udržování,430
+512,,expense,false,Cestovné,440
+513,,expense,false,Náklady na reprezentaci,450
+5181,,expense,false,Nájemné,460
+5182,,expense,false,Telekomunikační služby a internet,470
+5183,,expense,false,"Poradenské, právní a účetní služby",480
+5184,,expense,false,Přepravné a poštovné,490
+5185,,expense,false,Ostatní služby,495
+521,,expense,false,Mzdové náklady,500
+524,,expense,false,Zákonné sociální a zdravotní pojištění,510
+538,,expense,false,Ostatní daně a poplatky,520
+544,,expense,false,Smluvní pokuty a úroky z prodlení,530
+549,,expense,false,Jiné provozní náklady,540
+551,,expense_depreciation,false,Odpisy dlouhodobého nehmotného a hmotného majetku,550
+562,,expense,false,Nákladové úroky,560
+563,,expense,false,Kurzové ztráty,570
+568,,expense,false,Ostatní finanční náklady,580
+591,,expense,false,Daň z příjmů splatná,590
+012,,asset_fixed,false,Ocenitelná práva,600
+019,,asset_fixed,false,Ostatní dlouhodobý nehmotný majetek,610
+079,,asset_fixed,false,Oprávky k ostatnímu dlouhodobému nehmotnému majetku,620
+042,,asset_fixed,false,Nedokončený dlouhodobý hmotný majetek,630
+052,,asset_fixed,false,Poskytnuté zálohy na dlouhodobý hmotný majetek,640
+097,,asset_fixed,false,Opravná položka k dlouhodobému hmotnému majetku,650
+062,,asset_non_current,false,Podíly v účetních jednotkách pod podstatným vlivem,660
+063,,asset_non_current,false,Ostatní dlouhodobé cenné papíry a podíly,670
+069,,asset_non_current,false,Jiný dlouhodobý finanční majetek,680
+111,,asset_current,false,Pořízení materiálu,690
+112,,asset_current,false,Materiál na skladě,700
+119,,asset_current,false,Materiál na cestě,710
+121,,asset_current,false,Nedokončená výroba,720
+123,,asset_current,false,Výrobky,730
+131,,asset_current,false,Pořízení zboží,740
+139,,asset_current,false,Zboží na cestě,750
+213,,asset_cash,false,Ceniny,760
+312,,asset_current,false,Směnky k inkasu,770
+355,,asset_current,false,Ostatní pohledávky za společníky,780
+378,,asset_current,false,Jiné pohledávky,790
+388,,asset_current,false,Dohadné účty aktivní,800
+391,,asset_current,false,Opravná položka k pohledávkám,810
+231,,liability_current,false,Krátkodobé bankovní úvěry,820
+365,,liability_current,false,Ostatní závazky ke společníkům a členům družstva,830
+379,,liability_current,false,Jiné závazky,840
+389,,liability_current,false,Dohadné účty pasivní,850
+412,,equity,false,Ážio,860
+413,,equity,false,Ostatní kapitálové fondy,870
+419,,equity,false,Změny základního kapitálu,880
+421,,equity,false,Rezervní fond,890
+423,,equity,false,Statutární fondy,900
+427,,equity,false,Ostatní fondy,910
+426,,equity_retained,false,Jiný výsledek hospodaření minulých let,920
+451,,liability_non_current,false,Rezervy podle zvláštních právních předpisů,930
+459,,liability_non_current,false,Ostatní rezervy,940
+479,,liability_non_current,false,Jiné dlouhodobé závazky,950
+481,,liability_non_current,false,Odložený daňový závazek a pohledávka,960
+543,,expense,false,Dary,970
+546,,expense,false,Odpis pohledávky,980
+558,,expense,false,Náklady z drobného dlouhodobého majetku,990
+601,,income,false,Tržby za vlastní výrobky,1000
+621,,income_other,false,Aktivace materiálu a zboží,1010
+641,,income_other,false,Tržby z prodeje dlouhodobého nehmotného a hmotného majetku,1020
+642,,income_other,false,Tržby z prodeje materiálu,1030
+644,,income_other,false,Smluvní pokuty a úroky z prodlení,1040
+646,,income_other,false,Výnosy z odepsaných pohledávek,1050

@@ -1,0 +1,164 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/statements",
+  "statements": [
+    {
+      "code": "CZ-VYHL500-ROZVAHA",
+      "kind": "balance_sheet",
+      "framework": "CZ-VYHL500",
+      "name": "Rozvaha podle přílohy č. 1 vyhlášky č. 500/2002 Sb.",
+      "valid_from": "2016-01-01",
+      "legal_reference": "Vyhláška č. 500/2002 Sb., § 4 a příloha č. 1 — structure de la rozvaha en quatre blocs (B. Stálá aktiva, C. Oběžná aktiva, D.1 Časové rozlišení aktiv côté actif ; A. Vlastní kapitál, B.+C. Cizí zdroje, D.1 Časové rozlišení pasiv côté passif), dans sa forme simplifiée en vigueur depuis la novelle de 2016 (vyhláška č. 250/2015 Sb.).",
+      "source": "vyhlaska-500-2002",
+      "lines": [
+        { "code": "AKT", "name": "AKTIVA CELKEM", "sequence": 10, "is_total": true, "plus": ["AKT.B", "AKT.C", "AKT.D"] },
+        { "code": "AKT.B", "parent": "AKT", "name": "B. Stálá aktiva", "sequence": 20, "is_total": true, "plus": ["AKT.B.I", "AKT.B.II", "AKT.B.III"] },
+        { "code": "AKT.B.I", "parent": "AKT.B", "name": "B.I. Dlouhodobý nehmotný majetek", "sequence": 30, "sign": 1,
+          "rules": [
+            { "kind": "account_code", "code_from": "013" }, { "kind": "account_code", "code_from": "073" },
+            { "kind": "account_code", "code_from": "012" }, { "kind": "account_code", "code_from": "019" },
+            { "kind": "account_code", "code_from": "079" }
+          ] },
+        { "code": "AKT.B.II", "parent": "AKT.B", "name": "B.II. Dlouhodobý hmotný majetek", "sequence": 40, "sign": 1,
+          "rules": [
+            { "kind": "account_code", "code_from": "021" }, { "kind": "account_code", "code_from": "081" },
+            { "kind": "account_code", "code_from": "022" }, { "kind": "account_code", "code_from": "082" },
+            { "kind": "account_code", "code_from": "042" }, { "kind": "account_code", "code_from": "052" },
+            { "kind": "account_code", "code_from": "097" }
+          ] },
+        { "code": "AKT.B.III", "parent": "AKT.B", "name": "B.III. Dlouhodobý finanční majetek", "sequence": 50, "sign": 1,
+          "rules": [
+            { "kind": "account_code", "code_from": "061" }, { "kind": "account_code", "code_from": "062" },
+            { "kind": "account_code", "code_from": "063" }, { "kind": "account_code", "code_from": "069" }
+          ] },
+        { "code": "AKT.C", "parent": "AKT", "name": "C. Oběžná aktiva", "sequence": 60, "is_total": true, "plus": ["AKT.C.I", "AKT.C.II", "AKT.C.III"] },
+        { "code": "AKT.C.I", "parent": "AKT.C", "name": "C.I. Zásoby", "sequence": 70, "sign": 1,
+          "rules": [
+            { "kind": "account_code", "code_from": "132" }, { "kind": "account_code", "code_from": "111" },
+            { "kind": "account_code", "code_from": "112" }, { "kind": "account_code", "code_from": "119" },
+            { "kind": "account_code", "code_from": "121" }, { "kind": "account_code", "code_from": "123" },
+            { "kind": "account_code", "code_from": "131" }, { "kind": "account_code", "code_from": "139" }
+          ] },
+        { "code": "AKT.C.II", "parent": "AKT.C", "name": "C.II. Pohledávky", "sequence": 80, "sign": 1,
+          "rules": [
+            { "kind": "account_code", "code_from": "311" }, { "kind": "account_code", "code_from": "314" },
+            { "kind": "account_code", "code_from": "315" }, { "kind": "account_code", "code_from": "335" },
+            { "kind": "account_code", "code_from": "3433" }, { "kind": "account_code", "code_from": "3439" },
+            { "kind": "account_code", "code_from": "312" }, { "kind": "account_code", "code_from": "355" },
+            { "kind": "account_code", "code_from": "378" }, { "kind": "account_code", "code_from": "388" },
+            { "kind": "account_code", "code_from": "391" }
+          ] },
+        { "code": "AKT.C.III", "parent": "AKT.C", "name": "C.III./C.IV. Peněžní prostředky", "sequence": 90, "sign": 1,
+          "rules": [
+            { "kind": "account_code", "code_from": "211" }, { "kind": "account_code", "code_from": "221" },
+            { "kind": "account_code", "code_from": "213" }
+          ] },
+        { "code": "AKT.D", "parent": "AKT", "name": "D.1. Časové rozlišení aktiv", "sequence": 100, "sign": 1,
+          "rules": [{ "kind": "account_code", "code_from": "381" }, { "kind": "account_code", "code_from": "385" }] },
+        { "code": "PAS", "name": "PASIVA CELKEM", "sequence": 110, "is_total": true, "plus": ["PAS.A", "PAS.BC", "PAS.D"] },
+        { "code": "PAS.A", "parent": "PAS", "name": "A. Vlastní kapitál", "sequence": 120, "is_total": true, "plus": ["PAS.A.I", "PAS.A.II", "PAS.A.III", "PAS.A.IV", "PAS.A.V"] },
+        { "code": "PAS.A.I", "parent": "PAS.A", "name": "A.I. Základní kapitál", "sequence": 130, "sign": -1,
+          "rules": [{ "kind": "account_code", "code_from": "411" }, { "kind": "account_code", "code_from": "419" }] },
+        { "code": "PAS.A.II", "parent": "PAS.A", "name": "A.II. Ážio a kapitálové fondy", "sequence": 135, "sign": -1,
+          "rules": [{ "kind": "account_code", "code_from": "412" }, { "kind": "account_code", "code_from": "413" }] },
+        { "code": "PAS.A.III", "parent": "PAS.A", "name": "A.III. Fondy ze zisku", "sequence": 138, "sign": -1,
+          "rules": [
+            { "kind": "account_code", "code_from": "421" }, { "kind": "account_code", "code_from": "423" },
+            { "kind": "account_code", "code_from": "427" }
+          ] },
+        { "code": "PAS.A.IV", "parent": "PAS.A", "name": "A.IV. Výsledek hospodaření minulých let (+/-)", "sequence": 140, "sign": -1,
+          "rules": [
+            { "kind": "account_code", "code_from": "428" }, { "kind": "account_code", "code_from": "429" },
+            { "kind": "account_code", "code_from": "426" }
+          ] },
+        { "code": "PAS.A.V", "parent": "PAS.A", "name": "A.V. Výsledek hospodaření běžného účetního období (+/-)", "sequence": 150, "sign": -1,
+          "rules": [{ "kind": "account_code", "code_from": "431" }] },
+        { "code": "PAS.BC", "parent": "PAS", "name": "B.+C. Cizí zdroje", "sequence": 160, "is_total": true, "plus": ["PAS.BC.0", "PAS.BC.I", "PAS.BC.II"] },
+        { "code": "PAS.BC.0", "parent": "PAS.BC", "name": "B. Rezervy", "sequence": 165, "sign": -1,
+          "rules": [{ "kind": "account_code", "code_from": "451" }, { "kind": "account_code", "code_from": "459" }] },
+        { "code": "PAS.BC.I", "parent": "PAS.BC", "name": "C.I. Dlouhodobé závazky", "sequence": 170, "sign": -1,
+          "rules": [
+            { "kind": "account_code", "code_from": "461" }, { "kind": "account_code", "code_from": "479" },
+            { "kind": "account_code", "code_from": "481" }
+          ] },
+        { "code": "PAS.BC.II", "parent": "PAS.BC", "name": "C.II. Krátkodobé závazky", "sequence": 180, "sign": -1,
+          "rules": [
+            { "kind": "account_code", "code_from": "321" }, { "kind": "account_code", "code_from": "324" },
+            { "kind": "account_code", "code_from": "325" }, { "kind": "account_code", "code_from": "331" },
+            { "kind": "account_code", "code_from": "336" }, { "kind": "account_code", "code_from": "341" },
+            { "kind": "account_code", "code_from": "3431" }, { "kind": "account_code", "code_from": "3432" },
+            { "kind": "account_code", "code_from": "3438" }, { "kind": "account_code", "code_from": "231" },
+            { "kind": "account_code", "code_from": "365" }, { "kind": "account_code", "code_from": "379" },
+            { "kind": "account_code", "code_from": "389" }
+          ] },
+        { "code": "PAS.D", "parent": "PAS", "name": "D.1. Časové rozlišení pasiv", "sequence": 190, "sign": -1,
+          "rules": [{ "kind": "account_code", "code_from": "383" }, { "kind": "account_code", "code_from": "384" }] }
+      ]
+    },
+    {
+      "code": "CZ-VYHL500-VZZ-DRUHOVE",
+      "kind": "income_statement",
+      "framework": "CZ-VYHL500",
+      "name": "Výkaz zisku a ztráty v druhovém členění podle přílohy č. 2 vyhlášky č. 500/2002 Sb.",
+      "valid_from": "2016-01-01",
+      "legal_reference": "Vyhláška č. 500/2002 Sb., § 3a odst. 1 et příloha č. 2 — le druhové členění (classification par nature de charge) est l'une des deux présentations que l'annexe autorise, retenue par ce pack ; l'účelové členění (par fonction, příloha č. 3) n'est pas modélisé ici.",
+      "source": "vyhlaska-500-2002",
+      "lines": [
+        { "code": "VZZ.R1", "name": "I. Tržby z prodeje výrobků a služeb", "sequence": 10, "sign": -1,
+          "rules": [{ "kind": "account_code", "code_from": "602" }, { "kind": "account_code", "code_from": "601" }] },
+        { "code": "VZZ.R2", "name": "II. Tržby za prodej zboží", "sequence": 20, "sign": -1,
+          "rules": [{ "kind": "account_code", "code_from": "604" }] },
+        { "code": "VZZ.C", "name": "C. Aktivace", "sequence": 25, "sign": -1,
+          "rules": [{ "kind": "account_code", "code_from": "621" }] },
+        { "code": "VZZ.A", "name": "A. Výkonová spotřeba", "sequence": 30, "is_total": true, "plus": ["VZZ.A1", "VZZ.A2", "VZZ.A3"] },
+        { "code": "VZZ.A1", "parent": "VZZ.A", "name": "A.1. Náklady vynaložené na prodané zboží", "sequence": 40, "sign": 1,
+          "rules": [{ "kind": "account_code", "code_from": "504" }] },
+        { "code": "VZZ.A2", "parent": "VZZ.A", "name": "A.2. Spotřeba materiálu a energie", "sequence": 50, "sign": 1,
+          "rules": [{ "kind": "account_code", "code_from": "501" }, { "kind": "account_code", "code_from": "502" }] },
+        { "code": "VZZ.A3", "parent": "VZZ.A", "name": "A.3. Služby", "sequence": 60, "sign": 1,
+          "rules": [
+            { "kind": "account_code", "code_from": "511" }, { "kind": "account_code", "code_from": "512" },
+            { "kind": "account_code", "code_from": "513" }, { "kind": "account_code", "code_from": "5181" },
+            { "kind": "account_code", "code_from": "5182" }, { "kind": "account_code", "code_from": "5183" },
+            { "kind": "account_code", "code_from": "5184" }, { "kind": "account_code", "code_from": "5185" }
+          ] },
+        { "code": "VZZ.D", "name": "D. Osobní náklady", "sequence": 70, "is_total": true, "plus": ["VZZ.D1", "VZZ.D2"] },
+        { "code": "VZZ.D1", "parent": "VZZ.D", "name": "D.1. Mzdové náklady", "sequence": 80, "sign": 1,
+          "rules": [{ "kind": "account_code", "code_from": "521" }] },
+        { "code": "VZZ.D2", "parent": "VZZ.D", "name": "D.2. Náklady na sociální zabezpečení, zdravotní pojištění a ostatní náklady", "sequence": 90, "sign": 1,
+          "rules": [{ "kind": "account_code", "code_from": "524" }] },
+        { "code": "VZZ.E", "name": "E. Úpravy hodnot v provozní oblasti", "sequence": 100, "sign": 1,
+          "rules": [{ "kind": "account_code", "code_from": "551" }] },
+        { "code": "VZZ.R3", "name": "III. Ostatní provozní výnosy", "sequence": 110, "sign": -1,
+          "rules": [
+            { "kind": "account_code", "code_from": "648" }, { "kind": "account_code", "code_from": "641" },
+            { "kind": "account_code", "code_from": "642" }, { "kind": "account_code", "code_from": "644" },
+            { "kind": "account_code", "code_from": "646" }
+          ] },
+        { "code": "VZZ.F", "name": "F. Ostatní provozní náklady", "sequence": 120, "sign": 1,
+          "rules": [
+            { "kind": "account_code", "code_from": "538" }, { "kind": "account_code", "code_from": "544" },
+            { "kind": "account_code", "code_from": "549" }, { "kind": "account_code", "code_from": "543" },
+            { "kind": "account_code", "code_from": "546" }, { "kind": "account_code", "code_from": "558" }
+          ] },
+        { "code": "VZZ.PROVOZNI", "name": "* Provozní výsledek hospodaření", "sequence": 130, "is_total": true,
+          "plus": ["VZZ.R1", "VZZ.R2", "VZZ.C", "VZZ.R3"], "minus": ["VZZ.A", "VZZ.D", "VZZ.E", "VZZ.F"] },
+        { "code": "VZZ.R6", "name": "VI. Výnosové úroky a podobné výnosy", "sequence": 140, "sign": -1,
+          "rules": [{ "kind": "account_code", "code_from": "662" }] },
+        { "code": "VZZ.R7", "name": "VII. Ostatní finanční výnosy", "sequence": 150, "sign": -1,
+          "rules": [{ "kind": "account_code", "code_from": "663" }] },
+        { "code": "VZZ.H", "name": "H. Nákladové úroky a podobné náklady", "sequence": 160, "sign": 1,
+          "rules": [{ "kind": "account_code", "code_from": "562" }] },
+        { "code": "VZZ.I", "name": "I. Ostatní finanční náklady", "sequence": 170, "sign": 1,
+          "rules": [{ "kind": "account_code", "code_from": "563" }, { "kind": "account_code", "code_from": "568" }] },
+        { "code": "VZZ.FINANCNI", "name": "* Finanční výsledek hospodaření", "sequence": 180, "is_total": true,
+          "plus": ["VZZ.R6", "VZZ.R7"], "minus": ["VZZ.H", "VZZ.I"] },
+        { "code": "VZZ.PRED-ZDANENIM", "name": "** Výsledek hospodaření před zdaněním", "sequence": 190, "is_total": true,
+          "plus": ["VZZ.PROVOZNI", "VZZ.FINANCNI"] },
+        { "code": "VZZ.J", "name": "J. Daň z příjmů", "sequence": 200, "sign": 1,
+          "rules": [{ "kind": "account_code", "code_from": "591" }] },
+        { "code": "VZZ.VYSLEDEK", "name": "*** Výsledek hospodaření za účetní období", "sequence": 210, "is_total": true,
+          "plus": ["VZZ.PRED-ZDANENIM"], "minus": ["VZZ.J"] }
+      ]
+    }
+  ]
+}

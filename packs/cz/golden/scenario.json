@@ -1,0 +1,101 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "Tři měsíce účetnictví české obchodní společnosti, plátce DPH s měsíčním zdaňovacím obdobím",
+  "chart": "default",
+  "fiscal_year": { "name": "Účetní rok 2026", "start": "2026-01-01", "end": "2026-12-31" },
+  "periods": [
+    { "code": "2026-01", "from": "2026-01-01", "to": "2026-01-31" },
+    { "code": "2026-02", "from": "2026-02-01", "to": "2026-02-28" },
+    { "code": "2026-03", "from": "2026-03-01", "to": "2026-03-31" }
+  ],
+  "statements": ["CZ-VYHL500-ROZVAHA", "CZ-VYHL500-VZZ-DRUHOVE"],
+  "contacts": [
+    { "ref": "zakaznik-cz", "name": "Pražská kancelářská s.r.o.", "type": "customer", "country": "CZ" },
+    { "ref": "zakaznik-de", "name": "Bayern Komponenten GmbH", "type": "customer", "country": "DE", "vat_number": "DE999999999" },
+    { "ref": "zakaznik-fr", "name": "Atelier Numérique SARL", "type": "customer", "country": "FR", "vat_number": "FR00999999999" },
+    { "ref": "zakaznik-us", "name": "Prairie Machinery Corp.", "type": "customer", "country": "US" },
+    { "ref": "najemce-cz", "name": "Moravský Obchodní Dům a.s.", "type": "customer", "country": "CZ" },
+    { "ref": "dodavatel-cz", "name": "Kancelářské Potřeby Novák s.r.o.", "type": "supplier", "country": "CZ" },
+    { "ref": "dodavatel-de", "name": "Sachsen Rohstoffe GmbH", "type": "supplier", "country": "DE", "vat_number": "DE888888888" },
+    { "ref": "dodavatel-stavby", "name": "Stavební Práce Horák s.r.o.", "type": "supplier", "country": "CZ" }
+  ],
+  "documents": [
+    {
+      "ref": "V1", "type": "sale_invoice", "contact": "zakaznik-cz", "date": "2026-01-15",
+      "why": "Une vente domestique au taux de base 21 % : la base et la TVA se lisent au řádek 1.",
+      "lines": [{ "name": "Kancelářský nábytek", "quantity": 10, "unit_price": 5000, "tax": "CZ-S-21", "account": "604" }]
+    },
+    {
+      "ref": "V2", "type": "sale_invoice", "contact": "zakaznik-cz", "date": "2026-01-20",
+      "why": "Une vente domestique au taux réduit 12 % (hébergement, annexe n° 2 de la loi) : řádek 2.",
+      "lines": [{ "name": "Ubytovací služby — penzion", "quantity": 5, "unit_price": 2000, "tax": "CZ-S-12", "account": "602" }]
+    },
+    {
+      "ref": "V3", "type": "sale_invoice", "contact": "zakaznik-de", "date": "2026-01-25",
+      "why": "Une livraison intracommunautaire de biens exonérée avec droit à déduction : řádek 20, mention de l'article 64.",
+      "lines": [{ "name": "Průmyslové součástky", "quantity": 3, "unit_price": 4000, "tax": "CZ-S-VOP", "account": "604" }]
+    },
+    {
+      "ref": "V4", "type": "sale_invoice", "contact": "zakaznik-fr", "date": "2026-02-05",
+      "why": "Une prestation de services à un assujetti établi dans un autre État membre, règle générale B2B : řádek 21, mention daň odvede zákazník.",
+      "lines": [{ "name": "IT poradenství", "quantity": 1, "unit_price": 15000, "tax": "CZ-S-SLUZBY-EU", "account": "602" }]
+    },
+    {
+      "ref": "V5", "type": "sale_invoice", "contact": "zakaznik-us", "date": "2026-02-10",
+      "why": "Un export de biens hors Union européenne : řádek 22, mention de l'article 66.",
+      "lines": [{ "name": "Strojní zařízení", "quantity": 2, "unit_price": 20000, "tax": "CZ-S-VYVOZ", "account": "604" }]
+    },
+    {
+      "ref": "V6", "type": "sale_invoice", "contact": "najemce-cz", "date": "2026-02-15",
+      "why": "Une exonération domestique sans droit à déduction (bail immobilier, § 56a) : řádek 50.",
+      "lines": [{ "name": "Nájem kancelářských prostor — únor 2026", "quantity": 1, "unit_price": 8000, "tax": "CZ-S-OSV-NAJEM", "account": "602" }]
+    },
+    {
+      "ref": "V7", "type": "sale_credit_note", "contact": "zakaznik-cz", "date": "2026-03-05",
+      "why": "Une note de crédit corrigeant partiellement V1 (retour de deux meubles) : elle réduit le řádek 1 de la période où la correction est déclarée.",
+      "lines": [{ "name": "Vrácení — kancelářský nábytek", "quantity": 2, "unit_price": 5000, "tax": "CZ-S-21", "account": "604" }]
+    },
+    {
+      "ref": "Z1", "type": "purchase_invoice", "contact": "dodavatel-cz", "date": "2026-01-12",
+      "why": "Un achat domestique au taux de base, intégralement déductible : řádek 40.",
+      "lines": [{ "name": "Kancelářské potřeby", "quantity": 1, "unit_price": 3000, "tax": "CZ-P-21", "account": "501" }]
+    },
+    {
+      "ref": "Z2", "type": "purchase_invoice", "contact": "dodavatel-cz", "date": "2026-01-18",
+      "why": "Un achat domestique au taux réduit, intégralement déductible : řádek 41.",
+      "lines": [{ "name": "Ubytování na služební cestě", "quantity": 1, "unit_price": 2000, "tax": "CZ-P-12", "account": "512" }]
+    },
+    {
+      "ref": "Z3", "type": "purchase_invoice", "contact": "dodavatel-de", "date": "2026-02-01",
+      "why": "Une acquisition intracommunautaire de biens autoliquidée par l'acquéreur : řádek 3 côté sortie et řádek 43 côté déduction, pour un montant identique.",
+      "lines": [{ "name": "Materiál z Německa", "quantity": 1, "unit_price": 10000, "tax": "CZ-P-VOP", "account": "501" }]
+    },
+    {
+      "ref": "Z4", "type": "purchase_invoice", "contact": "dodavatel-stavby", "date": "2026-02-20",
+      "why": "Des travaux de construction en régime national d'autoliquidation (§ 92e) : řádek 10 côté sortie et řádek 43 côté déduction.",
+      "lines": [{ "name": "Stavební práce — oprava provozovny", "quantity": 1, "unit_price": 25000, "tax": "CZ-P-PN-STAVBY", "account": "511" }]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "E1", "direction": "inbound", "date": "2026-02-10", "amount": 60500,
+      "contact": "zakaznik-cz", "journal": "BANK", "match": "V1",
+      "why": "Un encaissement qui solde exactement la facture V1 (50 000 + 10 500 de TVA)."
+    },
+    {
+      "ref": "E2", "direction": "inbound", "date": "2026-02-20", "amount": 12000,
+      "contact": "zakaznik-de", "journal": "BANK", "match": "V3",
+      "why": "Un encaissement qui solde exactement la livraison intracommunautaire V3, sans TVA."
+    },
+    {
+      "ref": "E3", "direction": "outbound", "date": "2026-02-15", "amount": 3630,
+      "contact": "dodavatel-cz", "journal": "BANK", "match": "Z1",
+      "why": "Un paiement qui solde exactement la facture Z1 (3 000 + 630 de TVA)."
+    },
+    {
+      "ref": "E4", "direction": "inbound", "date": "2026-03-01", "amount": 5000,
+      "contact": "zakaznik-cz", "journal": "BANK", "match": null,
+      "why": "Une avance reçue d'un client sans facture correspondante dans ce golden : un paiement non lettré, qui laisse un poste ouvert."
+    }
+  ]
+}
