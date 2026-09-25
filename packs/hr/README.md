@@ -44,7 +44,8 @@ non-current assets, `1xxx` current assets (receivables, inventory, cash and
 the VAT control accounts), `4xxx` equity, `5xxx` provisions and long-term
 liabilities, `6xxx` current liabilities, `7xxx` expenses, `8xxx` income,
 `9xxx` off-balance. It carries only the eighteen account types the
-framework itself defines, and reports through no chart-specific statement.
+framework itself defines, and reports through the chart-specific statement
+below rather than through `packs/generic/`.
 
 **`6400` (Obveza za PDV) never carries a tax line.** Output VAT — on a
 domestic sale or on the self-assessed half of a reverse charge, an
@@ -60,15 +61,21 @@ account that also carried the tax lines it settles would net a period's
 movements into themselves and post an empty entry — see `packs/cz/`, split
 the same way for the same reason.
 
-**This pack ships no `statements.json`.** Every account falls back to
-`packs/generic/`, the country-less framework that sums a balance sheet and
-an income statement from account types alone (`IFRS-SME-BS`,
-`IFRS-SME-IS`). Croatia does have an official, AOP-coded Bilanca and Račun
-dobiti i gubitka (Pravilnik o strukturi i sadržaju godišnjih financijskih
-izvještaja, filed to FINA as GFI-POD) — reproducing that line by line, AOP
-code by AOP code, is real work this pack has chosen not to guess at rather
-than ship a mapping nobody has checked against the actual Prilog. See
-"Before this pack is `reviewed`" below.
+**`statements.json` carries the skraćeni (abridged) Bilanca and Račun
+dobiti i gubitka** that Zakon o računovodstvu čl. 19. st. 4. lets a mikro or
+mali poduzetnik file instead of the full, numbered Prilog I of the
+Pravilnik o strukturi i sadržaju godišnjih financijskih izvještaja (NN
+95/16, 144/20, 158/23) — the same annex FINA compiles into its GFI-POD form.
+The full form breaks every position down to Arapski-numbered line items
+(over two hundred AOP positions across the two statements); the abridged
+one a mali poduzetnik is entitled to file stops one level higher, at the
+lettered and Roman-numeral positions (`HR-PSFI-BS`, `HR-PSFI-IS`), which is
+what this pack's own chart — with no group-company, joint-venture or
+discontinued-operation accounts to begin with — can honestly fill in line
+by line, each carrying its own AOP code in `legal_reference`. A mikro
+poduzetnik may go shorter still, to the lettered positions alone; this pack
+keeps the Roman numerals too, because they cost it nothing extra and read
+closer to the statutory Prilog. See "Before this pack is `reviewed`" below.
 
 ## Single language
 
@@ -166,9 +173,11 @@ exactly where `packages/formats/` stops. See `docs/international.md`,
 
 ## Before this pack is `reviewed`
 
-1. The AOP-coded Bilanca and Račun dobiti i gubitka (Pravilnik o strukturi
-   i sadržaju godišnjih financijskih izvještaja) are not mapped; this pack
-   reports through `packs/generic/` only.
+1. The abridged Bilanca and Račun dobiti i gubitka (`statements.json`) have
+   not been checked by a local reviewer line by line against the Pravilnik's
+   Prilog I; positions this chart has no account for (dugoročna potraživanja,
+   rezerve fer vrijednosti, manjinski interes, udjeli u povezanim društvima
+   i zajedničkim pothvatima) read zero rather than being guessed at.
 2. Several sub-point citations of section I of the return (I.2, I.5, I.6,
    I.10) and of the intra-Community acquisition of goods should be
    checked against the consolidated Zakon o PDV rather than this pack's

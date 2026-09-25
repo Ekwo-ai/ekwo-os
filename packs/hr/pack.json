@@ -120,6 +120,22 @@
         "url": "https://docs.peppol.eu/poacc/billing/3.0/codelist/eas/",
         "consulted_on": "2026-09-25",
         "kind": "standard"
+      },
+      {
+        "key": "zakon-racunovodstvo",
+        "title": "Zakon o računovodstvu (pročišćeni tekst) — čl. 19. propisuje da mali i mikro poduzetnici sastavljaju bilancu i račun dobiti i gubitka u skraćenom obliku, na pozicijama označenima slovima i rimskim brojevima",
+        "publisher": "Zakon.hr — Poslovni info servis d.o.o., prijepis Narodnih novina",
+        "url": "https://www.zakon.hr/z/118/zakon-o-racunovodstvu",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "pravilnik-fin-izvjestaji",
+        "title": "Pravilnik o strukturi i sadržaju godišnjih financijskih izvještaja, Narodne novine br. 95/16, s izmjenama i dopunama 144/20 i 158/23 — Prilog I. propisuje AOP oznaku, naziv i redoslijed svake pozicije Bilance i Računa dobiti i gubitka",
+        "publisher": "Narodne novine — službeni list Republike Hrvatske",
+        "url": "https://narodne-novine.nn.hr/clanci/sluzbeni/2016_10_95_2052.html",
+        "consulted_on": "2026-09-25",
+        "kind": "regulation"
       }
     ]
   },
@@ -169,9 +185,9 @@
       "accounts": "accounts.csv",
       "default": true,
       "audience": "companies",
-      "statements": [],
-      "legal_reference": "Zakon o računovodstvu (pročišćeni tekst) čl. 8. propisuje samo da poduzetnik vodi poslovne knjige po načelu dvojnog knjigovodstva i sastavlja financijske izvještaje prema Hrvatskim standardima financijskog izvještavanja (HSFI) ili MSFI/MSFI za MSS — ne postoji zakonom propisan računski plan. U praksi je najrašireniji \"Računski plan za poduzetnike\" koji svake godine objavljuje RRiF (Hrvatska zajednica računovođa i financijskih djelatnika), djelo zaštićeno autorskim pravom čije brojeve računa i nazive ovaj pack ne preuzima. Ovaj plan je samostalan: četveroznamenkasti brojevi čija prva znamenka razlikuje dugotrajnu imovinu (1xxx-0xxx po vrsti), kratkotrajnu imovinu (1xxx), kapital (4xxx), dugoročne obveze i rezerviranja (5xxx), kratkoročne obveze (6xxx), rashode (7xxx) i prihode (8xxx); potonja dva razreda dodatno prate podjelu HSFI 15/MSFI-jevog računa dobiti i gubitka na poslovne, financijske i ostale stavke. Zbog toga financijski izvještaji ovog pack-a padaju na okvir generic (packs/generic/), koji ih izvodi iz osamnaest vrsta računa; hrvatska Bilanca i RDG s AOP oznakama (Pravilnik o strukturi i sadržaju godišnjih financijskih izvještaja) nisu još preslikani red po red — vidi README.md i docs/international.md, odjeljak \"From Croatia\".",
-      "source": "zakon-pdv"
+      "statements": ["HR-PSFI-BS", "HR-PSFI-IS"],
+      "legal_reference": "Zakon o računovodstvu (pročišćeni tekst) čl. 8. propisuje samo da poduzetnik vodi poslovne knjige po načelu dvojnog knjigovodstva i sastavlja financijske izvještaje prema Hrvatskim standardima financijskog izvještavanja (HSFI) ili MSFI/MSFI za MSS — ne postoji zakonom propisan računski plan. U praksi je najrašireniji \"Računski plan za poduzetnike\" koji svake godine objavljuje RRiF (Hrvatska zajednica računovođa i financijskih djelatnika), djelo zaštićeno autorskim pravom čije brojeve računa i nazive ovaj pack ne preuzima. Ovaj plan je samostalan: četveroznamenkasti brojevi čija prva znamenka razlikuje dugotrajnu imovinu (0xxx), kratkotrajnu imovinu (1xxx), kapital (4xxx), dugoročne obveze i rezerviranja (5xxx), kratkoročne obveze (6xxx), rashode (7xxx) i prihode (8xxx); potonja dva razreda dodatno prate podjelu HSFI 15/MSFI-jevog računa dobiti i gubitka na poslovne i financijske stavke. Financijski izvještaji ovog pack-a (statements.json) preslikavaju Bilancu i Račun dobiti i gubitka u skraćenom obliku za mikro i male poduzetnike (Zakon o računovodstvu čl. 19. st. 4., Pravilnik o strukturi i sadržaju godišnjih financijskih izvještaja NN 95/16), red po red, na AOP pozicije označene slovima i rimskim brojevima — vidi packs/hr/statements.json i README.md.",
+      "source": "zakon-racunovodstvo"
     }
   ],
   "documents": {

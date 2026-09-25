@@ -1,0 +1,422 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/statements",
+  "statements": [
+    {
+      "code": "HR-PSFI-BS",
+      "kind": "balance_sheet",
+      "framework": "HR-HSFI",
+      "name": "Bilanca — skraćeni oblik za mikro i male poduzetnike",
+      "valid_from": "2016-01-01",
+      "legal_reference": "Zakon o računovodstvu čl. 19. st. 4. — mali poduzetnici sastavljaju skraćenu bilancu tako da popunjavaju samo pozicije označene slovima i rimskim brojevima, bez daljnje razrade po arapskim brojevima; mikro poduzetnici prema st. 3. smiju ići i kraće, na same slovne pozicije. Pravilnik o strukturi i sadržaju godišnjih financijskih izvještaja (NN 95/16, 144/20, 158/23) čl. 2. i Prilog I. propisuju AOP oznaku, naziv i redoslijed svake pozicije; svaka je linija ovog obrasca imenovana svojom AOP oznakom. Ovaj pack nema zakonom propisan računski plan (vidi pack.json, charts[].legal_reference) pa se AOP pozicija razrade — gdje ih plan iz accounts.csv ne razlikuje, npr. IV. Potraživanja dugoročna, V. Rezerve fer vrijednosti, VIII. Manjinski interes — čitaju kao nula umjesto brisanja pozicije, tako da obrazac ostaje prepoznatljiv onome tko ga uspoređuje s Obrascom POD-BIL. Izvanbilančni zapisi (AOP 066 i 124) nisu vlastita linija: to je memorandumska evidencija izvan dvojnog knjigovodstva, koju plan bilježi na kontima 9xxx (account_type off_balance), isključenima iz odgovornosti svake izjave po definiciji financial_statement().",
+      "source": "pravilnik-fin-izvjestaji",
+      "lines": [
+        {
+          "code": "AKT",
+          "name": "E) UKUPNO AKTIVA",
+          "sequence": 10,
+          "is_total": true,
+          "plus": ["AKT.A", "AKT.B", "AKT.C", "AKT.D"],
+          "legal_reference": "Pravilnik NN 95/16, Prilog I, AOP 065 = AOP 001+002+037+064.",
+          "source": "pravilnik-fin-izvjestaji"
+        },
+        {
+          "code": "AKT.A",
+          "parent": "AKT",
+          "name": "A) Potraživanja za upisani a neuplaćeni kapital",
+          "sequence": 20,
+          "sign": 1,
+          "rules": [],
+          "legal_reference": "Pravilnik NN 95/16, Prilog I, AOP 001. Nijedan konto ovog plana ne prati upisani a neuplaćeni temeljni kapital; pozicija čita nulu dok se takav konto ne otvori.",
+          "source": "pravilnik-fin-izvjestaji"
+        },
+        {
+          "code": "AKT.B",
+          "parent": "AKT",
+          "name": "B) Dugotrajna imovina",
+          "sequence": 30,
+          "is_total": true,
+          "plus": ["AKT.B.I", "AKT.B.II", "AKT.B.III", "AKT.B.IV", "AKT.B.V"],
+          "legal_reference": "Pravilnik NN 95/16, Prilog I, AOP 002 = AOP 003+010+020+031+036.",
+          "source": "pravilnik-fin-izvjestaji"
+        },
+        {
+          "code": "AKT.B.I",
+          "parent": "AKT.B",
+          "name": "I. Nematerijalna imovina",
+          "sequence": 40,
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "0100", "code_to": "0199" }],
+          "legal_reference": "Pravilnik NN 95/16, Prilog I, AOP 003 — koncesije, patenti i licencije (0100), goodwill (0110), softver (0120), predujmovi (0130), umanjeno za ispravak vrijednosti (0190).",
+          "source": "pravilnik-fin-izvjestaji"
+        },
+        {
+          "code": "AKT.B.II",
+          "parent": "AKT.B",
+          "name": "II. Materijalna imovina",
+          "sequence": 50,
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "0200", "code_to": "0299" }],
+          "legal_reference": "Pravilnik NN 95/16, Prilog I, AOP 010 — zemljišta, građevinski objekti, postrojenja i strojevi, prijevozna sredstva, uredska oprema, alati i inventar, ulaganja u tuđu nekretninu, imovina u pripremi i predujmovi (0200-0280), umanjeno za ispravke vrijednosti (0291-0294).",
+          "source": "pravilnik-fin-izvjestaji"
+        },
+        {
+          "code": "AKT.B.III",
+          "parent": "AKT.B",
+          "name": "III. Dugotrajna financijska imovina",
+          "sequence": 60,
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "0300", "code_to": "0339" }],
+          "legal_reference": "Pravilnik NN 95/16, Prilog I, AOP 020 — udjeli u povezanim poduzetnicima (0300), dani zajmovi povezanim poduzetnicima (0310), dugoročna ulaganja u vrijednosne papire (0320), dugoročni depoziti (0330).",
+          "source": "pravilnik-fin-izvjestaji"
+        },
+        {
+          "code": "AKT.B.IV",
+          "parent": "AKT.B",
+          "name": "IV. Potraživanja",
+          "sequence": 70,
+          "sign": 1,
+          "rules": [],
+          "legal_reference": "Pravilnik NN 95/16, Prilog I, AOP 031. Ovaj plan ne razlikuje dugoročna potraživanja od dugoročnih financijskih ulaganja (AKT.B.III); pozicija čita nulu.",
+          "source": "pravilnik-fin-izvjestaji"
+        },
+        {
+          "code": "AKT.B.V",
+          "parent": "AKT.B",
+          "name": "V. Odgođena porezna imovina",
+          "sequence": 80,
+          "sign": 1,
+          "rules": [{ "kind": "account_code", "code_from": "0340" }],
+          "legal_reference": "Pravilnik NN 95/16, Prilog I, AOP 036.",
+          "source": "pravilnik-fin-izvjestaji"
+        },
+        {
+          "code": "AKT.C",
+          "parent": "AKT",
+          "name": "C) Kratkotrajna imovina",
+          "sequence": 90,
+          "is_total": true,
+          "plus": ["AKT.C.I", "AKT.C.II", "AKT.C.III", "AKT.C.IV"],
+          "legal_reference": "Pravilnik NN 95/16, Prilog I, AOP 037 = AOP 038+046+053+063.",
+          "source": "pravilnik-fin-izvjestaji"
+        },
+        {
+          "code": "AKT.C.I",
+          "parent": "AKT.C",
+          "name": "I. Zalihe",
+          "sequence": 100,
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "1300", "code_to": "1359" }],
+          "legal_reference": "Pravilnik NN 95/16, Prilog I, AOP 038 — sirovine i materijal, proizvodnja u tijeku, gotovi proizvodi, trgovačka roba, predujmovi za zalihe (1300-1350).",
+          "source": "pravilnik-fin-izvjestaji"
+        },
+        {
+          "code": "AKT.C.II",
+          "parent": "AKT.C",
+          "name": "II. Potraživanja",
+          "sequence": 110,
+          "sign": 1,
+          "rules": [
+            { "kind": "code_range", "code_from": "1200", "code_to": "1299", "sequence": 10 },
+            { "kind": "code_range", "code_from": "1400", "code_to": "1429", "sequence": 20 },
+            { "kind": "account_code", "code_from": "1500", "sequence": 30 },
+            { "kind": "code_range", "code_from": "1600", "code_to": "1639", "sequence": 40 }
+          ],
+          "legal_reference": "Pravilnik NN 95/16, Prilog I, AOP 046 — potraživanja od kupaca u zemlji, EU i izvan EU umanjena za ispravak vrijednosti (1200-1290), pretporez kao potraživanje od države (1400-1420), predujmovi dani dobavljačima (1500) i ostala potraživanja od zaposlenika, države i povezanih poduzetnika (1600-1630).",
+          "source": "pravilnik-fin-izvjestaji"
+        },
+        {
+          "code": "AKT.C.III",
+          "parent": "AKT.C",
+          "name": "III. Kratkotrajna financijska imovina",
+          "sequence": 120,
+          "sign": 1,
+          "rules": [
+            { "kind": "code_range", "code_from": "1100", "code_to": "1119", "sequence": 10 },
+            { "kind": "code_range", "code_from": "1700", "code_to": "1719", "sequence": 20 }
+          ],
+          "legal_reference": "Pravilnik NN 95/16, Prilog I, AOP 053 — kratkoročni depoziti i ulaganja u vrijednosne papire (1100-1110), dani kratkoročni zajmovi i namjenski depoziti (1700-1710).",
+          "source": "pravilnik-fin-izvjestaji"
+        },
+        {
+          "code": "AKT.C.IV",
+          "parent": "AKT.C",
+          "name": "IV. Novac u banci i blagajni",
+          "sequence": 130,
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "1000", "code_to": "1039" }],
+          "legal_reference": "Pravilnik NN 95/16, Prilog I, AOP 063.",
+          "source": "pravilnik-fin-izvjestaji"
+        },
+        {
+          "code": "AKT.D",
+          "parent": "AKT",
+          "name": "D) Plaćeni troškovi budućeg razdoblja i obračunati prihodi",
+          "sequence": 140,
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "1510", "code_to": "1539" }],
+          "legal_reference": "Pravilnik NN 95/16, Prilog I, AOP 064 — unaprijed plaćeni troškovi osiguranja, zakupa i pretplata (1510-1530).",
+          "source": "pravilnik-fin-izvjestaji"
+        },
+        {
+          "code": "PAS",
+          "name": "F) UKUPNO — PASIVA",
+          "sequence": 150,
+          "is_total": true,
+          "plus": ["PAS.A", "PAS.B", "PAS.C", "PAS.D", "PAS.E"],
+          "legal_reference": "Pravilnik NN 95/16, Prilog I, AOP 123 = AOP 067+088+095+107+122.",
+          "source": "pravilnik-fin-izvjestaji"
+        },
+        {
+          "code": "PAS.A",
+          "parent": "PAS",
+          "name": "A) Kapital i rezerve",
+          "sequence": 160,
+          "is_total": true,
+          "plus": [
+            "PAS.A.I",
+            "PAS.A.II",
+            "PAS.A.III",
+            "PAS.A.IV",
+            "PAS.A.V",
+            "PAS.A.VI",
+            "PAS.A.VII",
+            "PAS.A.VIII"
+          ],
+          "legal_reference": "Pravilnik NN 95/16, Prilog I, AOP 067 = AOP 068+069+070+076+077+081+084+087.",
+          "source": "pravilnik-fin-izvjestaji"
+        },
+        {
+          "code": "PAS.A.I",
+          "parent": "PAS.A",
+          "name": "I. Temeljni (upisani) kapital",
+          "sequence": 170,
+          "sign": -1,
+          "rules": [{ "kind": "account_code", "code_from": "4000" }],
+          "legal_reference": "Pravilnik NN 95/16, Prilog I, AOP 068.",
+          "source": "pravilnik-fin-izvjestaji"
+        },
+        {
+          "code": "PAS.A.II",
+          "parent": "PAS.A",
+          "name": "II. Kapitalne rezerve",
+          "sequence": 180,
+          "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "4100", "code_to": "4199" }],
+          "legal_reference": "Pravilnik NN 95/16, Prilog I, AOP 069.",
+          "source": "pravilnik-fin-izvjestaji"
+        },
+        {
+          "code": "PAS.A.III",
+          "parent": "PAS.A",
+          "name": "III. Rezerve iz dobiti",
+          "sequence": 190,
+          "sign": -1,
+          "rules": [
+            { "kind": "code_range", "code_from": "4200", "code_to": "4229", "sequence": 10 },
+            { "kind": "account_code", "code_from": "4010", "sequence": 20 }
+          ],
+          "legal_reference": "Pravilnik NN 95/16, Prilog I, AOP 070 = AOP 071+072-073+074+075 — zakonske rezerve (4200), statutarne rezerve (4210), ostale rezerve (4220), umanjeno za vlastite dionice i udjele kao odbitnu stavku (4010).",
+          "source": "pravilnik-fin-izvjestaji"
+        },
+        {
+          "code": "PAS.A.IV",
+          "parent": "PAS.A",
+          "name": "IV. Revalorizacijske rezerve",
+          "sequence": 200,
+          "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "4300", "code_to": "4399" }],
+          "legal_reference": "Pravilnik NN 95/16, Prilog I, AOP 076.",
+          "source": "pravilnik-fin-izvjestaji"
+        },
+        {
+          "code": "PAS.A.V",
+          "parent": "PAS.A",
+          "name": "V. Rezerve fer vrijednosti",
+          "sequence": 210,
+          "sign": -1,
+          "rules": [],
+          "legal_reference": "Pravilnik NN 95/16, Prilog I, AOP 077. Ovaj plan ne knjiži financijsku imovinu raspoloživu za prodaju na zaseban konto; pozicija čita nulu.",
+          "source": "pravilnik-fin-izvjestaji"
+        },
+        {
+          "code": "PAS.A.VI",
+          "parent": "PAS.A",
+          "name": "VI. Zadržana dobit ili preneseni gubitak",
+          "sequence": 220,
+          "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "4500", "code_to": "4519" }],
+          "legal_reference": "Pravilnik NN 95/16, Prilog I, AOP 081 — zadržana dobit (4500), preneseni gubitak (4510).",
+          "source": "pravilnik-fin-izvjestaji"
+        },
+        {
+          "code": "PAS.A.VII",
+          "parent": "PAS.A",
+          "name": "VII. Dobit ili gubitak poslovne godine",
+          "sequence": 230,
+          "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "4610", "code_to": "4629" }],
+          "legal_reference": "Pravilnik NN 95/16, Prilog I, AOP 084 — dobit poslovne godine (4610), gubitak poslovne godine (4620); nosi i rezultat razdoblja dok se poslovna godina ne zaključi (closing_style current_year_result_profit/loss).",
+          "source": "pravilnik-fin-izvjestaji"
+        },
+        {
+          "code": "PAS.A.VIII",
+          "parent": "PAS.A",
+          "name": "VIII. Manjinski (nekontrolirajući) interes",
+          "sequence": 240,
+          "sign": -1,
+          "rules": [],
+          "legal_reference": "Pravilnik NN 95/16, Prilog I, AOP 087. Ovaj pack ne modelira konsolidaciju; pozicija čita nulu.",
+          "source": "pravilnik-fin-izvjestaji"
+        },
+        {
+          "code": "PAS.B",
+          "parent": "PAS",
+          "name": "B) Rezerviranja",
+          "sequence": 250,
+          "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "5000", "code_to": "5029" }],
+          "legal_reference": "Pravilnik NN 95/16, Prilog I, AOP 088 — rezerviranja za otpremnine i jubilarne nagrade (5000), za sudske sporove (5010), za jamstva na proizvode (5020).",
+          "source": "pravilnik-fin-izvjestaji"
+        },
+        {
+          "code": "PAS.C",
+          "parent": "PAS",
+          "name": "C) Dugoročne obveze",
+          "sequence": 260,
+          "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "5100", "code_to": "5499" }],
+          "legal_reference": "Pravilnik NN 95/16, Prilog I, AOP 095 — dugoročni krediti i izdane obveznice (5100-5120), dugoročne obveze prema dobavljačima (5200), odgođena porezna obveza (5300), dugoročno razgraničene državne potpore (5400).",
+          "source": "pravilnik-fin-izvjestaji"
+        },
+        {
+          "code": "PAS.D",
+          "parent": "PAS",
+          "name": "D) Kratkoročne obveze",
+          "sequence": 270,
+          "sign": -1,
+          "rules": [
+            { "kind": "code_range", "code_from": "6200", "code_to": "6699", "sequence": 10 },
+            { "kind": "code_range", "code_from": "6800", "code_to": "6919", "sequence": 20 }
+          ],
+          "legal_reference": "Pravilnik NN 95/16, Prilog I, AOP 107 — obveze prema dobavljačima (6200-6230), obveze za plaće, doprinose, porez na dohodak i prirez (6300-6330), obveza za PDV i porez na dobit (6400-6420), obveze za kamate i dividende (6500-6510), kratkoročni krediti (6600-6610), obveze prema povezanim poduzetnicima i ostale kratkoročne obveze (6800-6910); isključuje kratkoročno razgraničene prihode i obračunane troškove (6700-6710), koji čine PAS.E.",
+          "source": "pravilnik-fin-izvjestaji"
+        },
+        {
+          "code": "PAS.E",
+          "parent": "PAS",
+          "name": "E) Odgođeno plaćanje troškova i prihod budućega razdoblja",
+          "sequence": 280,
+          "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "6700", "code_to": "6799" }],
+          "legal_reference": "Pravilnik NN 95/16, Prilog I, AOP 122 — kratkoročno razgraničeni prihodi (6700), obračunani troškovi (6710).",
+          "source": "pravilnik-fin-izvjestaji"
+        }
+      ]
+    },
+    {
+      "code": "HR-PSFI-IS",
+      "kind": "income_statement",
+      "framework": "HR-HSFI",
+      "name": "Račun dobiti i gubitka — skraćeni oblik za mikro i male poduzetnike",
+      "valid_from": "2016-01-01",
+      "legal_reference": "Zakon o računovodstvu čl. 19. st. 4. — mali poduzetnici sastavljaju skraćeni račun dobiti i gubitka na pozicijama označenima rimskim brojevima. Pravilnik o strukturi i sadržaju godišnjih financijskih izvještaja (NN 95/16, 144/20, 158/23) čl. 2. i Prilog I. propisuju AOP oznaku, naziv i redoslijed svake pozicije. Od 2016. Zakon o računovodstvu ne poznaje više izvanredne prihode i rashode; ono što je ovaj plan još naziva izvanrednim (konta 7900, 8900) čita se kao ostali poslovni prihod/rashod (pozicije I i II). Pozicije V do VIII (udio u dobiti ili gubitku društava povezanih sudjelujućim interesom i zajedničkih pothvata) i XIV do XVIII (prekinuto poslovanje) izostavljene su: ovaj plan ne knjiži udjele u povezanim društvima niti prekinuto poslovanje na zasebnim kontima, pa bi te pozicije uvijek čitale nulu.",
+      "source": "pravilnik-fin-izvjestaji",
+      "lines": [
+        {
+          "code": "RDG.I",
+          "name": "I. Poslovni prihodi",
+          "sequence": 10,
+          "sign": -1,
+          "rules": [
+            { "kind": "code_range", "code_from": "8100", "code_to": "8319", "sequence": 10 },
+            { "kind": "account_code", "code_from": "8900", "sequence": 20 }
+          ],
+          "legal_reference": "Pravilnik NN 95/16, Prilog I, AOP 125 — prihodi od prodaje robe i usluga u zemlji, EU i izvozu (8100-8150), prihodi od najma (8200), prihodi od državnih potpora i dobit od prodaje dugotrajne imovine (8300-8310), ostali prihodi (8900).",
+          "source": "pravilnik-fin-izvjestaji"
+        },
+        {
+          "code": "RDG.II",
+          "name": "II. Poslovni rashodi",
+          "sequence": 20,
+          "sign": 1,
+          "rules": [
+            { "kind": "code_range", "code_from": "7100", "code_to": "7379", "sequence": 10 },
+            { "kind": "code_range", "code_from": "7400", "code_to": "7419", "sequence": 20 },
+            { "kind": "code_range", "code_from": "7500", "code_to": "7619", "sequence": 30 },
+            { "kind": "account_code", "code_from": "7900", "sequence": 40 }
+          ],
+          "legal_reference": "Pravilnik NN 95/16, Prilog I, AOP 131 — materijalni troškovi i troškovi osoblja (7100-7370), amortizacija (7400-7410), vrijednosna usklađenja potraživanja i zaliha te nabavna vrijednost prodane dugotrajne imovine (7500-7610), ostali rashodi (7900); isključuje porez na dobit (7700), koji čini poziciju XII.",
+          "source": "pravilnik-fin-izvjestaji"
+        },
+        {
+          "code": "RDG.III",
+          "name": "III. Financijski prihodi",
+          "sequence": 30,
+          "sign": -1,
+          "rules": [
+            { "kind": "code_range", "code_from": "8400", "code_to": "8429", "sequence": 10 },
+            { "kind": "account_code", "code_from": "8910", "sequence": 20 }
+          ],
+          "legal_reference": "Pravilnik NN 95/16, Prilog I, AOP 154 — prihodi od kamata (8400), tečajne razlike (8410), prihodi od dividendi (8420); nosi i razlike u zaokruživanju (8910), koje ovaj plan ne knjiži na zaseban konto izvan financijskog rezultata.",
+          "source": "pravilnik-fin-izvjestaji"
+        },
+        {
+          "code": "RDG.IV",
+          "name": "IV. Financijski rashodi",
+          "sequence": 40,
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "7420", "code_to": "7449" }],
+          "legal_reference": "Pravilnik NN 95/16, Prilog I, AOP 165 — tečajne razlike (7420), kamate i ostali financijski rashodi (7430), vrijednosno usklađenje financijske imovine (7440).",
+          "source": "pravilnik-fin-izvjestaji"
+        },
+        {
+          "code": "RDG.IX",
+          "name": "IX. Ukupni prihodi",
+          "sequence": 50,
+          "is_total": true,
+          "plus": ["RDG.I", "RDG.III"],
+          "legal_reference": "Pravilnik NN 95/16, Prilog I, AOP 177 = AOP 125+154 na ovom planu (izostavljene pozicije 173-174, vidi legal_reference obrasca).",
+          "source": "pravilnik-fin-izvjestaji"
+        },
+        {
+          "code": "RDG.X",
+          "name": "X. Ukupni rashodi",
+          "sequence": 60,
+          "is_total": true,
+          "plus": ["RDG.II", "RDG.IV"],
+          "legal_reference": "Pravilnik NN 95/16, Prilog I, AOP 178 = AOP 131+165 na ovom planu (izostavljene pozicije 175-176, vidi legal_reference obrasca).",
+          "source": "pravilnik-fin-izvjestaji"
+        },
+        {
+          "code": "RDG.XI",
+          "name": "XI. Dobit ili gubitak prije oporezivanja",
+          "sequence": 70,
+          "is_total": true,
+          "plus": ["RDG.IX"],
+          "minus": ["RDG.X"],
+          "legal_reference": "Pravilnik NN 95/16, Prilog I, AOP 179 = AOP 177-178.",
+          "source": "pravilnik-fin-izvjestaji"
+        },
+        {
+          "code": "RDG.XII",
+          "name": "XII. Porez na dobit",
+          "sequence": 80,
+          "sign": 1,
+          "rules": [{ "kind": "account_code", "code_from": "7700" }],
+          "legal_reference": "Pravilnik NN 95/16, Prilog I, AOP 182.",
+          "source": "pravilnik-fin-izvjestaji"
+        },
+        {
+          "code": "RDG.XIII",
+          "name": "XIII. Dobit ili gubitak razdoblja",
+          "sequence": 90,
+          "is_total": true,
+          "plus": ["RDG.XI"],
+          "minus": ["RDG.XII"],
+          "legal_reference": "Pravilnik NN 95/16, Prilog I, AOP 183 = AOP 179-182.",
+          "source": "pravilnik-fin-izvjestaji"
+        }
+      ]
+    }
+  ]
+}
