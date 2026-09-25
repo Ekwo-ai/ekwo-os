@@ -31,7 +31,7 @@ code,parent,type,reconcilable,name,sequence
 1650,,asset_current,false,Andre markedsbaserte finansielle instrumenter,225
 1670,,asset_current,false,Andre finansielle instrumenter,228
 1900,,asset_cash,false,Kasse,230
-1920,,asset_cash,true,Bankinnskudd,240
+1920,,asset_cash,false,Bankinnskudd,240
 2000,,equity,false,Selskapskapital,250
 2010,,equity,false,Overkurs,260
 2020,,equity,false,Annen innskutt egenkapital,270
@@ -58,7 +58,7 @@ code,parent,type,reconcilable,name,sequence
 2650,,liability_current,true,Skyldig merverdiavgift (oppgjørskonto),430
 2700,,liability_current,false,Skyldig lønn,440
 2720,,liability_current,false,Skyldige feriepenger,450
-2790,,liability_current,true,Uidentifiserte innbetalinger (gjennomgangskonto),460
+2790,,liability_current,false,Uidentifiserte innbetalinger (gjennomgangskonto),460
 3000,,income,false,"Salgsinntekt, avgiftspliktig alminnelig sats 25 %",470
 3010,,income,false,"Salgsinntekt, avgiftspliktig redusert sats 15 % (næringsmidler)",480
 3020,,income,false,"Salgsinntekt, avgiftspliktig redusert sats 12 %",490
