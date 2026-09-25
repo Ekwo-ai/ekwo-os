@@ -53,19 +53,30 @@ translation for a reader and never a filing — see `i18n/README.md`.
 
 ## The statements
 
-This version carries no `statements.json`. Greece prescribes financial
-statement layouts of its own — Ν.4308/2014, Παράρτημα Β — and mapping them
-correctly needs a primary text this research could not obtain and verify
-line by line (the ΕΛΠ text itself is behind a paid consolidation on the site
-that carries it most completely). Declaring an approximate mapping would be
-worse than none: a wrong caption on a statement line is a defect a reader
-trusts. The chart therefore falls back to `packs/generic/`, the country-less
-framework whose lines are all `account_type` rules — which is what the
-eighteen account types buy, and gives this chart a balance sheet that ties
-out without asserting a single Greek caption. A future version should carry
-`GR-ELP-BS` / `GR-ELP-IS` (or whichever of the Παράρτημα Β models a reviewer
-picks — it offers more than one, by company size) once read against the
-official text.
+`GR-ELP-BS` and `GR-ELP-IS` carry the **συνοπτικός** (abridged) Ισολογισμός
+and Κατάσταση Αποτελεσμάτων of Υποδείγματα Β.5 / Β.6, Παράρτημα Β of
+Ν.4308/2014 — the form άρθρο 16 παρ. 7 lets a "πολύ μικρή οντότητα" file
+instead of the full Β.1 / Β.2 models. Two reasons drove that choice over the
+full models: it is the format the chart's ΕΓΛΣ subset — a flat list with no
+group headers a company posts to — maps onto without inventing a split
+`accounts.csv` does not carry (fixed assets net of accumulated depreciation
+in one figure, not gross and provision on two lines; one "Απαιτήσεις" line,
+not the finer debtor categories of Β.1); and it is what the filed example
+this pack's captions and ordering were checked against actually uses (a
+real Β.5/Β.6 pair, retrieved and read line by line — see
+`certification.sources.n4308-2014`).
+
+Two lines of the official Β.6 do not appear: "Μεταβολές αποθεμάτων" and
+"Αγορές εμπορευμάτων και υλικών", because `accounts.csv` does not yet
+separate cost of goods sold from the closing inventory — account `2002`
+(purchases of the period) reads whole into `GR-ELP-BS:AC-INV`, as stock, the
+way it did under the generic framework this version replaces. **The
+statement also stops at "Αποτέλεσμα προ φόρων"**: the chart carries no
+income-tax or τέλος επιτηδεύματος expense account yet (only the withheld/
+prepaid amount as a liability, `5403`), so "Αποτέλεσμα περιόδου μετά από
+φόρους" is not modelled rather than approximated — a professional's
+computation, not this pack's, until a future version adds the account. Both
+gaps are named on the lines themselves, in `legal_reference`.
 
 ## Taxes
 
@@ -202,9 +213,11 @@ and should be re-confirmed at `aade.gr` before anyone relies on them.
 
 1. **The chart of accounts is a convention, not a citation** past its first
    two digits — see above.
-2. **No statements are modelled**: the chart falls back to the generic
-   account-type framework rather than to a transcribed Παράρτημα Β, which a
-   future version should carry once read against the primary text.
+2. **The statements are the abridged Β.5/Β.6 models, not the full ones**,
+   and the account-to-line mapping past the ΕΓΛΣ group is this pack's own
+   reading — see "The statements" above. The income statement stops at the
+   pre-tax result for the same reason the chart carries no income-tax
+   expense account.
 3. **The 30 % island rate is not modelled**, only documented — a company
    established on one of the named islands needs a professional's rates,
    not this pack's, until a future version adds them.
