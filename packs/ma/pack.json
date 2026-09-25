@@ -75,8 +75,10 @@
       "bank": "5141",
       "cash": "5161",
       "tax_payable": "4456",
-      "tax_receivable": "3456"
-    },
+      "tax_receivable": "3456",
+    "fx_gain": "733",
+    "fx_loss": "633"
+  },
     "journal_roles": {
       "sales": "VT",
       "purchase": "AC",
