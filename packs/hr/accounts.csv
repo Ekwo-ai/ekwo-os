@@ -39,7 +39,7 @@ code,parent,type,reconcilable,name,sequence
 1330,,asset_current,false,Zalihe proizvoda,380
 1340,,asset_current,false,Zalihe ambalaže,390
 1350,,asset_current,false,Predujmovi za zalihe,400
-1400,,asset_current,true,Pretporez,410
+1400,,asset_current,false,Pretporez,410
 1410,,asset_current,true,Pretporez - stjecanje dobara unutar EU,420
 1420,,asset_current,true,Pretporez - uvoz,430
 1500,,asset_prepayments,false,Predujmovi plaćeni dobavljačima,440
@@ -81,6 +81,7 @@ code,parent,type,reconcilable,name,sequence
 6320,,liability_current,false,Obveze za porez na dohodak iz plaća,800
 6330,,liability_current,false,Obveze za prirez,810
 6400,,liability_current,true,Obveza za PDV,820
+6401,,liability_current,false,Obveza za izlazni PDV,825
 6410,,liability_current,false,Obveza za porez na dobit,830
 6420,,liability_current,false,Obveze za ostale poreze i doprinose,840
 6500,,liability_current,false,Obveze za kamate,850

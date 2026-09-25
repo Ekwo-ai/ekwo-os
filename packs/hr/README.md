@@ -46,6 +46,20 @@ liabilities, `6xxx` current liabilities, `7xxx` expenses, `8xxx` income,
 `9xxx` off-balance. It carries only the eighteen account types the
 framework itself defines, and reports through no chart-specific statement.
 
+**`6400` (Obveza za PDV) never carries a tax line.** Output VAT — on a
+domestic sale or on the self-assessed half of a reverse charge, an
+intra-Community acquisition, an import or a service received from a
+supplier without a Croatian establishment — posts to `6401`; input VAT,
+including the deducted half of those same self-assessed transactions,
+posts to `1400` (Pretporez). `6400` is `defaults.roles.tax_payable` alone,
+the account `settle_filing()` clears the period's net into; `tax_receivable`
+is left unset so a credit settles into that same account rather than a
+second one this chart has no use for, which is the schema's own fallback
+"for a chart that keeps one control account for both signs." A control
+account that also carried the tax lines it settles would net a period's
+movements into themselves and post an empty entry — see `packs/cz/`, split
+the same way for the same reason.
+
 **This pack ships no `statements.json`.** Every account falls back to
 `packs/generic/`, the country-less framework that sums a balance sheet and
 an income statement from account types alone (`IFRS-SME-BS`,
@@ -83,8 +97,8 @@ EU under čl. 75. st. 2.), import VAT assessed on the customs declaration
 
 Every self-assessed purchase tax posts the same base into **two** boxes at
 once — the output box of section II and the input box of section III — and
-two `tax` postings, one to the payable account in box II and one to the
-receivable account in box III: the return states the tax as due and
+two `tax` postings, one to the output account (`6401`) in box II and one to
+the input account (`1400`) in box III: the return states the tax as due and
 deducts it in the same line, which is exactly what Croatian VAT does with a
 reverse charge, and the two boxes are not a sum of one another so neither
 can carry the amount alone (`docs/packs.md`, "A base is written once").
@@ -117,7 +131,7 @@ base/tax lines of section III (input VAT, mirroring II), and the final box
 IV, `II − III`, which is what is owed — positive — or refundable —
 negative. `floor_zero` is deliberately **not** set on IV: unlike Belgium's
 71/72 pair, Croatia states the one figure with its sign, and a company in
-credit settles against `tax_receivable` rather than `tax_payable`.
+credit settles into the same `6400` a company that owes money does.
 
 **Not modelled**: sections V (the annual pro-rata deduction percentage),
 VI (other information — acquisitions and disposals of immovable property,

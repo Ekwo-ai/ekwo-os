@@ -143,8 +143,7 @@
       "cash": "1020",
       "fx_gain": "8410",
       "fx_loss": "7420",
-      "tax_payable": "6400",
-      "tax_receivable": "1400"
+      "tax_payable": "6400"
     },
     "journal_roles": {
       "sales": "IRA",
