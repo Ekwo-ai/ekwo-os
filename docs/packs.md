@@ -261,6 +261,7 @@ says what they say. `ekwo pack describe <cc>` is everything one of them says.
 | [`td`](../packs/td/) | Tchad | `35_pack_td.sql` | fr | `community` |
 | [`tg`](../packs/tg/) | Togo | `36_pack_tg.sql` | fr | `community` |
 | [`th`](../packs/th/) | ประเทศไทย | `56_pack_th.sql` | th, en | `community` |
+| [`tn`](../packs/tn/) | Tunisie | `85_pack_tn.sql` | fr | `community` |
 | [`tr`](../packs/tr/) | Türkiye | `82_pack_tr.sql` | tr | `community` |
 | [`tw`](../packs/tw/) | 臺灣 | `53_pack_tw.sql` | zh, en | `community` |
 | [`us`](../packs/us/) | United States | `15_pack_us.sql` | en | `community` |
