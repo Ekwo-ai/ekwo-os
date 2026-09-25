@@ -1,0 +1,228 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "ZA-VAT201",
+  "name": "Value-Added Tax return (VAT201)",
+  "period": ["month", "bimonth"],
+  "valid_from": "2018-04-01",
+  "legal_reference": "Value-Added Tax Act 89 of 1991, s. 27 — a vendor's tax period falls into one of six categories: Category A and Category B, two calendar months each, the Commissioner assigning a vendor to one or the other so as to keep the two roughly equal in number (s. 27(4)); Category C, one calendar month, compulsory once taxable supplies exceed R30 million in a 12-month period (s. 27(3)); Category D, six calendar months, for farming enterprises and qualifying micro businesses under R1,5 million; Category E, twelve months ending on the vendor's own year of assessment, for certain companies, trusts and connected persons; Category F, four calendar months, ending June, October and February. This engine's cadences are fixed to the calendar and anchored on 1 January: `bimonth` — January-February, March-April and so on — matches Category B exactly, and `month` matches Category C; Category A's periods (December-January, February-March …), Category D's (September-February, March-August) and Category F's (March-June, July-October, November-February) are each offset from the engine's anchoring and Category E is anchored on a company's own year of assessment rather than the calendar year, so none of the four is expressible by this pack — see this pack's section of docs/international.md. s. 28(1) requires the return and payment on or before the 25th of the month following the tax period; VAT201 guide, GEN-ELEC-04-G01, 3(d) — a vendor who files and pays by SARS eFiling has until the last business day of that month instead, which almost every vendor uses and which this pack's single `day_of_month_after_period` rule cannot also express. Filed on eFiling: SARS, VAT201 return.",
+  "source": "vat-act",
+  "deadline": {
+    "rule": "day_of_month_after_period",
+    "day": 25,
+    "legal_reference": "Value-Added Tax Act 89 of 1991, s. 28(1) — a vendor shall furnish a return and make payment within the period ending on the twenty-fifth day of the first month commencing after the end of a tax period.",
+    "source": "vat-act"
+  },
+  "boxes": [
+    {
+      "box": "1",
+      "kind": "base",
+      "name": "Standard rate (excluding capital goods and/or services and accommodation)",
+      "sequence": 10,
+      "legal_reference": "VAT201, Field 1, and VAT201 guide, GEN-ELEC-04-G01, 7.6(b) — the VAT-inclusive consideration for standard-rated supplies, other than capital goods and services (Field 1A) and commercial accommodation (Fields 5 and 7).",
+      "source": "vat201-guide"
+    },
+    {
+      "box": "1A",
+      "kind": "base",
+      "name": "Standard rate (only capital goods and/or services)",
+      "sequence": 20,
+      "legal_reference": "VAT201, Field 1A — the VAT-inclusive consideration for capital goods and services supplied: sale of land and buildings, plant and machinery, intellectual property, and VAT on assets on termination of registration.",
+      "source": "vat201-guide"
+    },
+    {
+      "box": "2",
+      "kind": "base",
+      "name": "Zero rate (excluding goods exported)",
+      "sequence": 30,
+      "legal_reference": "VAT201, Field 2 — supplies at the zero rate under s. 11 of the Value-Added Tax Act 89 of 1991, other than exported goods (Field 2A).",
+      "source": "vat201-guide"
+    },
+    {
+      "box": "2A",
+      "kind": "base",
+      "name": "Zero rate (only exported goods)",
+      "sequence": 40,
+      "legal_reference": "VAT201, Field 2A — goods exported from the Republic at the zero rate under s. 11(1) of the Value-Added Tax Act 89 of 1991; the Customs Code field is mandatory when this field is completed, which this pack does not carry.",
+      "source": "vat201-guide"
+    },
+    {
+      "box": "3",
+      "kind": "base",
+      "name": "Exempt and non-supplies",
+      "sequence": 50,
+      "legal_reference": "VAT201, Field 3 — supplies exempt under s. 12 of the Value-Added Tax Act 89 of 1991, and non-supplies.",
+      "source": "vat201-guide"
+    },
+    {
+      "box": "4",
+      "kind": "tax",
+      "name": "VAT on standard rate supplies (Field 1)",
+      "sequence": 60,
+      "legal_reference": "VAT201, Field 4 — 'Field 1 x (r / (100 + r))', where r is 15. This pack posts the VAT itself, the real ledger amount, which equals the form's own tax-fraction reconstruction of Field 1 at 15 %, the only standard rate this pack carries.",
+      "source": "vat201-guide"
+    },
+    {
+      "box": "4A",
+      "kind": "tax",
+      "name": "VAT on standard rate capital goods and/or services (Field 1A)",
+      "sequence": 70,
+      "legal_reference": "VAT201, Field 4A — 'Field 1A x (r / (100 + r))', held to the ledger's own figure for the reason given at Field 4.",
+      "source": "vat201-guide"
+    },
+    {
+      "box": "5",
+      "kind": "base",
+      "name": "Supply of commercial accommodation exceeding 28 days",
+      "sequence": 80,
+      "legal_reference": "VAT201, Field 5, and Value-Added Tax Act 89 of 1991, s. 8(13) — accommodation supplied for a full period exceeding 28 days is deemed to be supplied at 60 % of its all-inclusive value. Declared and left empty: this pack carries no tax code for the accommodation apportionment of s. 8(13), which a hospitality-specific pack would need — see this pack's section of docs/international.md.",
+      "source": "vat-act"
+    },
+    {
+      "box": "6",
+      "kind": "total",
+      "name": "60 % of Field 5",
+      "sequence": 90,
+      "rate": 60,
+      "rate_of": "5",
+      "legal_reference": "VAT201, Field 6 — 'Field 5 x 60 %'.",
+      "source": "vat201-guide"
+    },
+    {
+      "box": "7",
+      "kind": "base",
+      "name": "Supply of commercial accommodation not exceeding 28 days",
+      "sequence": 100,
+      "legal_reference": "VAT201, Field 7 — the VAT-exclusive value of commercial accommodation supplied for a period of 28 days or less, taxed at the standard rate on its full value. Declared and left empty, for the reason given at Field 5.",
+      "source": "vat201-guide"
+    },
+    {
+      "box": "8",
+      "kind": "total",
+      "name": "Field 6 plus Field 7",
+      "sequence": 110,
+      "plus": ["6", "7"],
+      "legal_reference": "VAT201, Field 8 — 'the sum of Fields 6 and 7'.",
+      "source": "vat201-guide"
+    },
+    {
+      "box": "9",
+      "kind": "total",
+      "name": "VAT on commercial accommodation",
+      "sequence": 120,
+      "rate": 15,
+      "rate_of": "8",
+      "legal_reference": "VAT201, Field 9 — 'Field 8 x (r / 100)', applying the tax rate rather than the tax fraction because Field 8 is already the deemed taxable value and not a VAT-inclusive figure.",
+      "source": "vat201-guide"
+    },
+    {
+      "box": "10",
+      "kind": "base",
+      "name": "Change in use and export of second-hand goods",
+      "sequence": 130,
+      "legal_reference": "VAT201, Field 10 — consideration on goods or services acquired for taxable supplies but applied to private or exempt use, and the price of second-hand goods on which notional input tax was deducted and which were subsequently exported. Declared and left empty: this pack does not carry a change-in-use or a second-hand-goods notional-input-tax code — see this pack's section of docs/international.md.",
+      "source": "vat201-guide"
+    },
+    {
+      "box": "11",
+      "kind": "total",
+      "name": "VAT on Field 10",
+      "sequence": 140,
+      "rate": 15,
+      "rate_of": "10",
+      "legal_reference": "VAT201, Field 11 — 'Field 10 x (r / (100 + r))'.",
+      "source": "vat201-guide"
+    },
+    {
+      "box": "12",
+      "kind": "tax",
+      "name": "Other and imported services",
+      "sequence": 150,
+      "legal_reference": "VAT201, Field 12, and Value-Added Tax Act 89 of 1991, s. 7(1)(c) and s. 14 — VAT payable on imported services not wholly for a taxable purpose, self-assessed by the recipient, which this pack carries; the guide also lists debit notes issued, credit notes received outside the ordinary credit-note flow, barter transactions and adjustments on a going concern or a change of accounting basis, none of which this pack carries — see this pack's section of docs/international.md.",
+      "source": "vat201-guide"
+    },
+    {
+      "box": "13",
+      "kind": "total",
+      "name": "Total Output Tax",
+      "sequence": 160,
+      "plus": ["4", "4A", "9", "11", "12"],
+      "legal_reference": "VAT201, Field 13 — 'the sum of Fields (4+4A+9+11+12)'.",
+      "source": "vat201-guide"
+    },
+    {
+      "box": "14",
+      "kind": "tax",
+      "name": "Capital goods and/or services supplied to you",
+      "sequence": 170,
+      "legal_reference": "VAT201, Field 14 — the permissible VAT amount of capital goods and/or services supplied to the vendor: office equipment, furniture, trucks, land and buildings.",
+      "source": "vat201-guide"
+    },
+    {
+      "box": "14A",
+      "kind": "tax",
+      "name": "Capital goods imported by you",
+      "sequence": 180,
+      "legal_reference": "VAT201, Field 14A — the permissible VAT amount of capital goods imported by the vendor; the Customs Code field is mandatory on the return, which this pack does not carry.",
+      "source": "vat201-guide"
+    },
+    {
+      "box": "15",
+      "kind": "tax",
+      "name": "Other goods and/or services supplied to you (not capital goods)",
+      "sequence": 190,
+      "legal_reference": "VAT201, Field 15 — the permissible VAT amount of other goods and services supplied to the vendor: accounting fees, advertising, rent, stock, telephone, water and lights.",
+      "source": "vat201-guide"
+    },
+    {
+      "box": "15A",
+      "kind": "tax",
+      "name": "Other goods imported by you (not capital goods)",
+      "sequence": 200,
+      "legal_reference": "VAT201, Field 15A — the permissible VAT amount of other goods (not capital goods) imported by the vendor, held apart from Field 14A.",
+      "source": "vat201-guide"
+    },
+    {
+      "box": "16",
+      "kind": "tax",
+      "name": "Change in use",
+      "sequence": 210,
+      "legal_reference": "VAT201, Field 16 — the VAT on goods or services previously applied for non-taxable purposes and now applied, wholly or partly, for taxable purposes. Declared and left empty, for the reason given at Field 10.",
+      "source": "vat201-guide"
+    },
+    {
+      "box": "17",
+      "kind": "tax",
+      "name": "Bad debts",
+      "sequence": 220,
+      "legal_reference": "VAT201, Field 17, and Value-Added Tax Act 89 of 1991, s. 22(1) — the VAT on an irrecoverable debt written off, on the invoice basis. Declared and left empty: this pack has no document for a debt write-off.",
+      "source": "vat201-guide"
+    },
+    {
+      "box": "18",
+      "kind": "tax",
+      "name": "Other",
+      "sequence": 230,
+      "legal_reference": "VAT201, Field 18 — credit notes issued, debit notes received and VAT adjustments on a change of accounting basis, outside the ordinary invoice and credit-note flow this pack's taxes already carry. Declared and left empty.",
+      "source": "vat201-guide"
+    },
+    {
+      "box": "19",
+      "kind": "total",
+      "name": "Total Input Tax",
+      "sequence": 240,
+      "plus": ["14", "14A", "15", "15A", "16", "17", "18"],
+      "legal_reference": "VAT201, Field 19 — 'the sum of Fields (14+14A+15+15A+16+17+18)'.",
+      "source": "vat201-guide"
+    },
+    {
+      "box": "20",
+      "kind": "total",
+      "name": "VAT Payable / Refundable (Total A - Total B)",
+      "sequence": 250,
+      "plus": ["13"],
+      "minus": ["19"],
+      "legal_reference": "VAT201, Field 20 — 'the difference between Fields 13 and 19'; a negative figure is a refund, marked with a minus sign on the form. This pack writes the signed subtraction directly.",
+      "source": "vat201-guide"
+    }
+  ]
+}

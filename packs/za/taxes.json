@@ -1,0 +1,412 @@
+[
+  {
+    "code": "ZA-S-VAT",
+    "name": "Sale, standard rate 15 %",
+    "description": "A taxable supply made by a vendor in the course or furtherance of an enterprise, in the Republic",
+    "kind": "vat",
+    "rate": 15,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2018-04-01",
+    "legal_reference": "Value-Added Tax Act 89 of 1991, s. 7(1)(a) — VAT is levied on the supply of goods or services by a vendor in the course or furtherance of an enterprise; s. 7(1) — the rate is 15 %, from 1 April 2018 (14 % before, and the increase to 15,5 % from 1 May 2025 proposed in the 2025 Budget was reversed by clause 13 of the Rates and Monetary Amounts and Amendment of Revenue Laws Bill, 2025, so the rate never in fact changed on that date). VAT201 Field 1 carries the VAT-inclusive consideration of a standard-rated supply, excluding capital goods and services and commercial accommodation; the engine holds the GST-exclusive value of the line, so this posting grosses it to the VAT-inclusive figure that Field 1 asks for — box_factor 115 — and Field 4 is the VAT itself, which is real ledger money rather than a reconstruction of Field 1 × 15/115.",
+    "source": "vat-act",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "1", "box_factor": 115 },
+        { "type": "tax", "account": "2100", "box": "4" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "1", "box_factor": -115 },
+        { "type": "tax", "account": "2100", "box": "4", "box_factor": -100 }
+      ]
+    },
+    "sequence": 10
+  },
+  {
+    "code": "ZA-S-VAT-CASH",
+    "name": "Sale, standard rate 15 %, vendor on the payments basis",
+    "kind": "vat",
+    "rate": 15,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2018-04-01",
+    "cash_basis": true,
+    "cash_basis_transition_account": "2105",
+    "conditions": ["seller_threshold"],
+    "legal_reference": "Value-Added Tax Act 89 of 1991, s. 15(2) — a vendor that is a public authority, a municipality, a welfare organisation, or a natural person (or a partnership of natural persons) whose taxable supplies have not exceeded, and are not likely to exceed, R2,5 million in a period of 12 months, may account for VAT on the payments basis: output tax on a sale is declared only to the extent payment has been received, and input tax on a purchase deducted only to the extent it has been paid. VAT 404, Guide for Vendors, chapter 4. Reported the same way as ZA-S-VAT, at the time payment is received rather than at the time the invoice is issued.",
+    "source": "vat404",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "1", "box_factor": 115 },
+        { "type": "tax", "account": "2100", "box": "4" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "1", "box_factor": -115 },
+        { "type": "tax", "account": "2100", "box": "4", "box_factor": -100 }
+      ]
+    },
+    "sequence": 20
+  },
+  {
+    "code": "ZA-S-VAT-CAP",
+    "name": "Sale of capital goods or services, standard rate 15 %",
+    "kind": "vat",
+    "rate": 15,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2018-04-01",
+    "legal_reference": "Value-Added Tax Act 89 of 1991, s. 7(1)(a); VAT201 Field 1A carries the VAT-inclusive consideration for capital goods and services supplied — land and buildings, plant and machinery, intellectual property — separately from Field 1, and Field 4A is the VAT itself, computed the same way as Field 4.",
+    "source": "vat201-guide",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "1A", "box_factor": 115 },
+        { "type": "tax", "account": "2100", "box": "4A" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "1A", "box_factor": -115 },
+        { "type": "tax", "account": "2100", "box": "4A", "box_factor": -100 }
+      ]
+    },
+    "sequence": 30
+  },
+  {
+    "code": "ZA-S-ZERO",
+    "name": "Sale, zero-rated, domestic",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2018-04-01",
+    "conditions": ["supply_nature"],
+    "legal_reference": "Value-Added Tax Act 89 of 1991, s. 11(1)(j) to (zA) and Schedule 2, Part I — a list of goods and services zero-rated at 0 %, among them: brown bread, maize meal, rice, dried beans, lentils, milk, eggs, edible legumes, vegetable oil (Schedule 2, Part I, items 1 to 19, basic foodstuffs); s. 11(1)(g) international transport of goods and passengers; s. 11(2)(l) municipal property rates on residential property; s. 8(25) and s. 11(1)(e) the sale of a business or part of a business capable of separate operation, sold as a going concern; and fuel levy goods such as petrol and diesel, which fall outside VAT because they carry the general fuel levy under the Customs and Excise Act 91 of 1964 instead. VAT201 Field 2 — zero rate, excluding goods exported. A zero-rated supply is a taxable supply at a nil charge, not an exempt one: the input tax on what went into it stays deductible.",
+    "source": "vat-act",
+    "vat_category": "Z",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "2", "box_factor": 100 }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "2", "box_factor": -100 }
+      ]
+    },
+    "sequence": 40
+  },
+  {
+    "code": "ZA-S-EXPORT",
+    "name": "Export of goods, zero-rated",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2018-04-01",
+    "conditions": ["transport_evidence"],
+    "legal_reference": "Value-Added Tax Act 89 of 1991, s. 11(1)(a) — the supply of movable goods is zero-rated where the supplier exports them from the Republic, or supplies them in circumstances the regulations under s. 11(1) treat as an export (the Export Regulations, direct or indirect export); s. 11(3) requires the vendor to obtain and retain documentary proof, acceptable to the Commissioner, before the zero rate applies — a bill of lading or air waybill, a customs export declaration, the tax invoice and proof of payment. VAT 404, chapter 13: goods generally have to leave the Republic within 90 days of the earlier of invoice or payment. VAT201 Field 2A — zero rate, only exported goods, separately from Field 2.",
+    "source": "vat-act",
+    "vat_category": "G",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "2A", "box_factor": 100 }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "2A", "box_factor": -100 }
+      ]
+    },
+    "sequence": 50
+  },
+  {
+    "code": "ZA-S-EXEMPT",
+    "name": "Exempt supply",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2018-04-01",
+    "legal_reference": "Value-Added Tax Act 89 of 1991, s. 12 — supplies exempt from VAT: s. 12(a) financial services as defined in s. 2; s. 12(c) the letting and hiring of a dwelling for residential accommodation; s. 12(h) transport of fare-paying passengers by road or rail (other than by a vendor conducting a tour or game viewing); s. 12(h) educational services supplied by an approved educational institution; s. 12(g) membership contributions to an employee organisation such as a trade union; s. 12(fA) donated goods or services supplied by an association not for gain. An exempt supply carries no output tax, and no input tax on what went into it may be deducted (s. 17(1)); no exemption reason code is carried, because the VATEX list names articles of a Directive of the European Union that does not bind a South African supplier — this pack's section of docs/international.md records the gap. VAT201 Field 3 — exempt and non-supplies.",
+    "source": "vat-act",
+    "vat_category": "E",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "3", "box_factor": 100 }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "3", "box_factor": -100 }
+      ]
+    },
+    "sequence": 60
+  },
+  {
+    "code": "ZA-S-NOT-SUBJECT",
+    "name": "Supply outside the scope of VAT",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "not_subject",
+    "valid_from": "2018-04-01",
+    "legal_reference": "Value-Added Tax Act 89 of 1991, s. 7(1)(a) and the definition of \"enterprise\" in s. 1(1) — VAT is levied only on a supply made by a vendor in the course or furtherance of an enterprise; a sale made in a private capacity, or a supply that is not \"in the Republic\" for VAT purposes (s. 7(1) read with the place-of-supply rules of the Act), is not a taxable supply at all and carries no VAT201 field: VAT 404 does not report it anywhere on the return.",
+    "source": "vat-act",
+    "vat_category": "O",
+    "postings": {
+      "invoice": [
+        { "type": "base" }
+      ],
+      "credit_note": [
+        { "type": "base" }
+      ]
+    },
+    "sequence": 70
+  },
+  {
+    "code": "ZA-P-VAT",
+    "name": "Purchase, standard rate 15 %",
+    "kind": "vat",
+    "rate": 15,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2018-04-01",
+    "legal_reference": "Value-Added Tax Act 89 of 1991, s. 16(3) — a vendor may deduct input tax on a supply to it that is a taxable supply, s. 17(1) to the extent the goods or services are acquired for consumption, use or supply in the course of making taxable supplies; s. 20(4) and s. 20(5) require a tax invoice, a full one above R5 000, before the deduction is made. Unlike VAT201 Field 1 on the sale side, Field 15 carries the VAT amount itself rather than a value to be grossed up: \"the permissible VAT amount of other goods and/or services supplied to you (not capital goods)\" (VAT201 guide, Field 15). There is no separate base box for a purchase on this form, so the base posting names none.",
+    "source": "vat-act",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "base" },
+        { "type": "tax", "account": "1150", "box": "15" }
+      ],
+      "credit_note": [
+        { "type": "base" },
+        { "type": "tax", "account": "1150", "box": "15", "box_factor": -100 }
+      ]
+    },
+    "sequence": 130
+  },
+  {
+    "code": "ZA-P-VAT-CASH",
+    "name": "Purchase, standard rate 15 %, vendor on the payments basis",
+    "kind": "vat",
+    "rate": 15,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2018-04-01",
+    "cash_basis": true,
+    "cash_basis_transition_account": "1152",
+    "legal_reference": "Value-Added Tax Act 89 of 1991, s. 16(3) read with s. 15(2) — a vendor on the payments basis deducts input tax only to the extent it has paid the consideration. The turnover condition is the purchasing vendor's own and no word of `conditions` names it for a purchase, as ZA-S-VAT-CASH records for the sale side.",
+    "source": "vat404",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "base" },
+        { "type": "tax", "account": "1150", "box": "15" }
+      ],
+      "credit_note": [
+        { "type": "base" },
+        { "type": "tax", "account": "1150", "box": "15", "box_factor": -100 }
+      ]
+    },
+    "sequence": 140
+  },
+  {
+    "code": "ZA-P-VAT-CAP",
+    "name": "Purchase of capital goods or services, standard rate 15 %",
+    "kind": "vat",
+    "rate": 15,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2018-04-01",
+    "legal_reference": "Value-Added Tax Act 89 of 1991, s. 16(3). VAT201 Field 14 — the permissible VAT amount of capital goods and/or services supplied to you: office equipment, furniture, trucks, land and buildings — separately from Field 15.",
+    "source": "vat201-guide",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "base" },
+        { "type": "tax", "account": "1150", "box": "14" }
+      ],
+      "credit_note": [
+        { "type": "base" },
+        { "type": "tax", "account": "1150", "box": "14", "box_factor": -100 }
+      ]
+    },
+    "sequence": 150
+  },
+  {
+    "code": "ZA-P-VAT-NC",
+    "name": "Purchase, standard rate 15 %, input tax denied — entertainment and motor cars",
+    "kind": "vat",
+    "rate": 15,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2018-04-01",
+    "recoverable": false,
+    "legal_reference": "Value-Added Tax Act 89 of 1991, s. 17(2)(a) — no input tax is deductible on goods or services acquired to provide entertainment, subject to the exceptions of the proviso (a vendor whose business is to provide entertainment for a charge); s. 17(2)(c) — no input tax is deductible on a \"motor car\" as defined in s. 1(1), subject to the exceptions for a car dealer, a car rental business or a driving school. The VAT is part of what the thing cost, so it lands on the account of the line; there is no box to report it in, because this return carries no base box for a purchase.",
+    "source": "vat-act",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "base" },
+        { "type": "tax_on_base" }
+      ],
+      "credit_note": [
+        { "type": "base" },
+        { "type": "tax_on_base" }
+      ]
+    },
+    "sequence": 160
+  },
+  {
+    "code": "ZA-P-VAT-ITS",
+    "name": "Purchase, standard rate 15 %, input tax denied — relates to exempt supplies",
+    "kind": "vat",
+    "rate": 15,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2018-04-01",
+    "recoverable": false,
+    "legal_reference": "Value-Added Tax Act 89 of 1991, s. 17(1) — input tax is deductible only to the extent goods or services are acquired for consumption, use or supply in the course of making taxable supplies; where an acquisition relates wholly to exempt supplies (bank charges, interest, residential rent paid) no part of the VAT is deductible, and where it relates to both an apportionment applies that this pack does not carry. The VAT follows the account of the line.",
+    "source": "vat-act",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "base" },
+        { "type": "tax_on_base" }
+      ],
+      "credit_note": [
+        { "type": "base" },
+        { "type": "tax_on_base" }
+      ]
+    },
+    "sequence": 170
+  },
+  {
+    "code": "ZA-P-ZERO",
+    "name": "Purchase, zero-rated",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2018-04-01",
+    "legal_reference": "The supplier charged VAT at 0 % under s. 11(1) of the Value-Added Tax Act 89 of 1991, so there is no input tax to claim; there is no box on VAT201 for the value of a purchase carrying no VAT.",
+    "source": "vat-act",
+    "vat_category": "Z",
+    "postings": {
+      "invoice": [
+        { "type": "base" }
+      ],
+      "credit_note": [
+        { "type": "base" }
+      ]
+    },
+    "sequence": 180
+  },
+  {
+    "code": "ZA-P-EXEMPT",
+    "name": "Purchase, exempt",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "exempt",
+    "valid_from": "2018-04-01",
+    "legal_reference": "The supplier made an exempt supply under s. 12 of the Value-Added Tax Act 89 of 1991 — bank charges and interest under s. 12(a) among them — and charged no VAT.",
+    "source": "vat-act",
+    "vat_category": "E",
+    "postings": {
+      "invoice": [
+        { "type": "base" }
+      ],
+      "credit_note": [
+        { "type": "base" }
+      ]
+    },
+    "sequence": 190
+  },
+  {
+    "code": "ZA-P-NOT-SUBJECT",
+    "name": "Purchase from a person who is not a vendor",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "not_subject",
+    "valid_from": "2018-04-01",
+    "legal_reference": "Value-Added Tax Act 89 of 1991, s. 1(1) definition of \"vendor\" — a supplier who is not registered, and not required to be registered, for VAT charges none; there is nothing to deduct.",
+    "source": "vat-act",
+    "vat_category": "O",
+    "postings": {
+      "invoice": [
+        { "type": "base" }
+      ],
+      "credit_note": [
+        { "type": "base" }
+      ]
+    },
+    "sequence": 200
+  },
+  {
+    "code": "ZA-P-IMPORT-GOODS",
+    "name": "Importation of goods, VAT 15 %",
+    "kind": "vat",
+    "rate": 15,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2018-04-01",
+    "legal_reference": "Value-Added Tax Act 89 of 1991, s. 7(1)(b) and s. 13 — VAT is levied on the importation of goods into the Republic, collected by Customs on entry (s. 13(5)); s. 16(3)(a) lets the importer deduct it as input tax once it holds the bill of entry and the Customs receipt for payment (or a valid release document). VAT201 Field 15A — the permissible VAT amount of other goods (not capital goods) imported by you; the Customs Code field is mandatory on the return, which this pack does not carry. There is no base box for the customs value on this form.",
+    "source": "vat201-guide",
+    "postings": {
+      "invoice": [
+        { "type": "base" },
+        { "type": "tax", "account": "1150", "box": "15A" }
+      ],
+      "credit_note": [
+        { "type": "base" },
+        { "type": "tax", "account": "1150", "box": "15A", "box_factor": -100 }
+      ]
+    },
+    "sequence": 210
+  },
+  {
+    "code": "ZA-P-IMPORT-GOODS-CAP",
+    "name": "Importation of capital goods, VAT 15 %",
+    "kind": "vat",
+    "rate": 15,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2018-04-01",
+    "legal_reference": "Value-Added Tax Act 89 of 1991, s. 7(1)(b), s. 13 and s. 16(3)(a), as ZA-P-IMPORT-GOODS. VAT201 Field 14A — the permissible VAT amount of capital goods imported by you, held apart from Field 15A.",
+    "source": "vat201-guide",
+    "postings": {
+      "invoice": [
+        { "type": "base" },
+        { "type": "tax", "account": "1150", "box": "14A" }
+      ],
+      "credit_note": [
+        { "type": "base" },
+        { "type": "tax", "account": "1150", "box": "14A", "box_factor": -100 }
+      ]
+    },
+    "sequence": 220
+  },
+  {
+    "code": "ZA-P-RC-IMPORT",
+    "name": "Imported services, reverse charged, not deductible",
+    "kind": "vat",
+    "rate": 15,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2018-04-01",
+    "recoverable": false,
+    "legal_reference": "Value-Added Tax Act 89 of 1991, s. 7(1)(c) and s. 14 — VAT is levied on the supply of \"imported services\": a service supplied by a person not established in the Republic to a recipient in the Republic, to the extent the recipient does not use it wholly for consumption, use or supply in the course of making taxable supplies; s. 14(5) makes the recipient itself liable for the VAT, self-assessed and declared on the VAT201 rather than charged by the (non-registered, non-resident) supplier. VAT201 Field 12 — Other and imported services — receives the VAT payable on \"services imported by you for purposes of making non-taxable supplies\" (VAT201 guide, Field 12); because the acquisition is not for a wholly taxable purpose, no part of it is deductible, so the VAT lands on the account of the line as a cost (tax_on_base) as well as being credited to the VAT output account and reported at Field 12, which forms part of Total Output Tax (Field 13). This pack does not carry the other items VAT201 lists under Field 12 — debit notes issued, credit notes received outside the ordinary credit-note flow, barter transactions, or adjustments on the acquisition of a going concern or a change of accounting basis.",
+    "source": "vat201-guide",
+    "postings": {
+      "invoice": [
+        { "type": "base" },
+        { "type": "tax_on_base" },
+        { "type": "tax", "factor": -100, "account": "2100", "box": "12" }
+      ],
+      "credit_note": [
+        { "type": "base" },
+        { "type": "tax_on_base" },
+        { "type": "tax", "factor": -100, "account": "2100", "box": "12", "box_factor": -100 }
+      ]
+    },
+    "sequence": 230
+  }
+]

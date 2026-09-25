@@ -871,3 +871,26 @@ on conflict (code) do update set
   eu_vat_to       = excluded.eu_vat_to,
   vat_prefix      = excluded.vat_prefix,
   legal_reference = excluded.legal_reference;
+
+
+-- ---------------------------------------------------------------------------
+-- The row — South Africa
+--
+-- A State outside the common system of VAT the way Australia or New Zealand
+-- are: the Republic levies a value-added tax of its own under the
+-- Value-Added Tax Act 89 of 1991, section 7(1), currently at 15 % since
+-- 1 April 2018, and no Union instrument reaches it.
+-- ---------------------------------------------------------------------------
+
+insert into territories (code, code_source, name, parent_code, eu_vat_scope, eu_vat_from, eu_vat_to, vat_prefix, legal_reference) values
+  ('ZA', 'iso_3166_1', 'South Africa', null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. South Africa levies a value-added tax of its own under the Value-Added Tax Act 89 of 1991, section 7(1), at a standard rate of 15 % since 1 April 2018.')
+on conflict (code) do update set
+  code_source     = excluded.code_source,
+  name            = excluded.name,
+  parent_code     = excluded.parent_code,
+  eu_vat_scope    = excluded.eu_vat_scope,
+  eu_vat_from     = excluded.eu_vat_from,
+  eu_vat_to       = excluded.eu_vat_to,
+  vat_prefix      = excluded.vat_prefix,
+  legal_reference = excluded.legal_reference;

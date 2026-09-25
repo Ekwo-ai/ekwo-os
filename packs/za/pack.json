@@ -1,0 +1,215 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "ZA",
+  "name": "South Africa",
+  "version": "0.1.0",
+  "schema_min": "20260917170000",
+  "seed_sequence": 88,
+  "released_at": "2026-09-25",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "vat-act",
+        "title": "Value-Added Tax Act, 1991 (Act No. 89 of 1991), consolidated text, sections 1, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 20, 23, 27 and 28",
+        "publisher": "Acts Online (Van Zyl Rudd & Associates), a consolidation of the Government Gazette text kept current with amendments; South Africa keeps no official online consolidated register of its own statutes, unlike Legilux or Légifrance — see this pack's section of docs/international.md",
+        "url": "https://www.acts.co.za/value-added-tax-act-1991/",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "rates-bill-2025",
+        "title": "Rates and Monetary Amounts and Amendment of Revenue Laws Bill, 2025 — clause 13, reversal of the VAT rate increase to 15,5 %",
+        "publisher": "National Treasury of the Republic of South Africa",
+        "url": "https://www.treasury.gov.za/comm_media/press/2025/2024042401%20Media%20Statement%20on%20the%20reversal%20of%20the%20vat%20rate%20increase.pdf",
+        "consulted_on": "2026-09-25",
+        "kind": "regulation"
+      },
+      {
+        "key": "vat404",
+        "title": "VAT 404 – Guide for Vendors",
+        "publisher": "South African Revenue Service",
+        "url": "https://www.sars.gov.za/wp-content/uploads/Ops/Guides/Legal-Pub-Guide-VAT404-VAT-404-Guide-for-Vendors.pdf",
+        "consulted_on": "2026-09-25",
+        "kind": "guidance"
+      },
+      {
+        "key": "vat201-guide",
+        "title": "Guide for Completing the Value-Added Tax VAT201 Declaration — External Guide (GEN-ELEC-04-G01, Revision 11, effective 12 May 2025)",
+        "publisher": "South African Revenue Service",
+        "url": "https://www.sars.gov.za/wp-content/uploads/Ops/Guides/GEN-ELEC-04-G01-Guide-for-completing-the-Value-Added-Tax-VAT201-Declaration-External-Guide.pdf",
+        "consulted_on": "2026-09-25",
+        "kind": "form"
+      },
+      {
+        "key": "vat-tax-periods",
+        "title": "Tax periods for VAT",
+        "publisher": "South African Revenue Service",
+        "url": "https://www.sars.gov.za/types-of-tax/value-added-tax/tax-periods-for-vat-vendors/",
+        "consulted_on": "2026-09-25",
+        "kind": "guidance"
+      },
+      {
+        "key": "vat-overview",
+        "title": "Value-Added Tax",
+        "publisher": "South African Revenue Service",
+        "url": "https://www.sars.gov.za/types-of-tax/value-added-tax/",
+        "consulted_on": "2026-09-25",
+        "kind": "guidance"
+      },
+      {
+        "key": "efiling",
+        "title": "SARS eFiling",
+        "publisher": "South African Revenue Service",
+        "url": "https://www.sarsefiling.co.za/",
+        "consulted_on": "2026-09-25",
+        "kind": "portal"
+      },
+      {
+        "key": "companies-act",
+        "title": "Companies Act 71 of 2008, s. 29 and s. 30 — financial records and annual financial statements",
+        "publisher": "South African Government — Department of Trade, Industry and Competition",
+        "url": "https://www.gov.za/documents/companies-act-0",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "companies-regs-2011",
+        "title": "Companies Regulations, 2011, Regulation 27 and Regulation 28 — financial reporting standards and the public interest score",
+        "publisher": "South African Government — Department of Trade, Industry and Competition",
+        "url": "https://www.gov.za/documents/companies-act-regulations-2011",
+        "consulted_on": "2026-09-25",
+        "kind": "regulation"
+      },
+      {
+        "key": "ifrs-for-smes",
+        "title": "IFRS for SMEs Accounting Standard — Section 4, Statement of Financial Position, and Section 5, Statement of Comprehensive Income and Income Statement",
+        "publisher": "IFRS Foundation, approved for use in South Africa by the Financial Reporting Standards Council under Companies Regulation 27",
+        "url": "https://www.ifrs.org/issued-standards/ifrs-for-smes/",
+        "consulted_on": "2026-09-25",
+        "kind": "standard"
+      },
+      {
+        "key": "prescribed-rate-interest-act",
+        "title": "Prescribed Rate of Interest Act 55 of 1975 — the rate of interest on an unpaid debt where none is agreed",
+        "publisher": "South African Government",
+        "url": "https://www.gov.za/documents/prescribed-rate-interest-act-8-jun-1975-0000",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "sars-vat-modernisation",
+        "title": "SARS Strategic Plan 2025/26–2029/30 and the VAT Modernisation programme — no obligation to issue a structured electronic invoice at the date of this pack",
+        "publisher": "South African Revenue Service",
+        "url": "https://www.sars.gov.za/about/sars-strategic-and-annual-performance-plan/",
+        "consulted_on": "2026-09-25",
+        "kind": "guidance"
+      },
+      {
+        "key": "uncl5305",
+        "title": "UNCL5305 — duty or tax or fee category code",
+        "publisher": "OpenPEPPOL — the list itself is published by UN/CEFACT",
+        "url": "https://docs.peppol.eu/poacc/billing/3.0/codelist/UNCL5305/",
+        "consulted_on": "2026-09-25",
+        "kind": "standard"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "ZAR",
+    "language": "en",
+    "closing_style": "retained_earnings",
+    "roles": {
+      "receivable": "1100",
+      "payable": "2000",
+      "suspense": "2990",
+      "rounding": "6990",
+      "retained_earnings": "3200",
+      "sales": "4000",
+      "purchase": "5000",
+      "bank": "1010",
+      "cash": "1000",
+      "fx_gain": "4700",
+      "fx_loss": "6950",
+      "asset_disposal_gain": "4750",
+      "asset_disposal_loss": "6960",
+      "tax_payable": "2110",
+      "tax_receivable": "1155"
+    },
+    "journal_roles": {
+      "sales": "SAL",
+      "purchase": "PUR",
+      "miscellaneous": "GEN",
+      "opening": "OPN"
+    }
+  },
+  "languages": [],
+  "journals": [
+    { "code": "SAL", "type": "sales", "name": "Sales journal", "sequence": 10 },
+    { "code": "PUR", "type": "purchase", "name": "Purchases journal", "sequence": 20 },
+    { "code": "BNK", "type": "bank", "name": "Bank", "sequence": 30 },
+    { "code": "CSH", "type": "cash", "name": "Petty cash", "sequence": 40 },
+    { "code": "GEN", "type": "general", "name": "General journal", "sequence": 50 },
+    { "code": "OPN", "type": "opening", "name": "Opening balances", "sequence": 60 }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "South Africa reference chart of accounts",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": ["ZA-IFRSSME-SFP", "ZA-IFRSSME-PL"],
+      "legal_reference": "There is no chart of accounts prescribed by South African law. Companies Act 71 of 2008, s. 28 requires a company to keep accurate and complete accounting records, and s. 29 requires financial statements that satisfy the financial reporting standard applicable to that company and fairly present its state of affairs; s. 30 requires an annual financial statement within six months of the financial year end. Companies Regulation 27 sets the financial reporting standard by the company's public interest score: a company required to be audited (Regulation 28) applies full IFRS, and every other company may apply the IFRS for SMEs Accounting Standard, as the Financial Reporting Standards Council approves it for use in the Republic. This chart is original — four digits, blocked so that each range reaches one line item of Section 4.2 (statement of financial position) and Section 5.5 (statement of comprehensive income) of the IFRS for SMEs Accounting Standard, which is what the great majority of South African companies — those with no public interest in being audited — report under; a company that files nothing keeps the same books and uses the same statements as management accounts.",
+      "source": "companies-act"
+    }
+  ],
+  "documents": {
+    "numbering": "sequential",
+    "number_format": "{CODE}-{YYYY}-{NNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "invoice_date",
+    "references": {
+      "numbering": {
+        "legal_reference": "Value-Added Tax Act 89 of 1991, s. 20(4)(b) — a full tax invoice must reflect a serial number and the date of issue; s. 20(5) requires the same of an abridged tax invoice, issued where the consideration is less than R5 000. Neither subsection requires the numbering to be unbroken or to restart with the year, so numbering is `sequential` rather than `gapless_per_year`; the pattern in number_format is a business's own choice of a serial number, not one the Act prescribes.",
+        "source": "vat-act"
+      },
+      "payment_terms": {
+        "legal_reference": "No statute of general application fixes a payment term between businesses in South Africa in the absence of an agreement, and none fixes a statutory rate of interest specific to a late commercial invoice, so legal_payment_days and late_payment_reference are left empty. The Prescribed Rate of Interest Act 55 of 1975, s. 1, fixes the rate of interest that runs on any unpaid debt (mora interest) where the parties have not agreed one, currently set by the Minister by notice in the Gazette; it is a general fallback rate on any debt and not a term the VAT Act or company law imposes on an invoice.",
+        "source": "prescribed-rate-interest-act"
+      },
+      "tax_point": {
+        "legal_reference": "Value-Added Tax Act 89 of 1991, s. 9(1) — a supply is deemed to take place at the time an invoice is issued by the supplier or recipient in respect of that supply, or the time any payment of consideration is received by the supplier, whichever time is earlier. `invoice_date` is right whenever the invoice comes first, which is the ordinary case between VAT vendors, and wrong for a deposit received before any invoice is issued, which Ekwo has no document for; s. 15(2) moves the whole of it to payment for a vendor registered on the payments basis, which the taxes that declare cash_basis carry.",
+        "source": "vat-act"
+      }
+    },
+    "mentions": [
+      {
+        "code": "export",
+        "applies_when": "export",
+        "text": "Zero-rated export in terms of section 11(1) of the Value-Added Tax Act 89 of 1991.",
+        "sequence": 10,
+        "legal_reference": "Value-Added Tax Act 89 of 1991, s. 11(3) — the vendor must obtain and retain documentary proof, acceptable to the Commissioner, substantiating a rate of zero per cent charged under s. 11(1) or s. 11(2); VAT 404, Guide for Vendors, chapter 13, requires a full tax invoice on a zero-rated supply that states the rate charged. The sentence records the article the zero rate is claimed under, since South Africa is outside the VATEX list of the European Union's common system and carries no exemption reason code of its own.",
+        "source": "vat-act"
+      },
+      {
+        "code": "exempt",
+        "applies_when": "exempt",
+        "text": "Exempt supply in terms of section 12 of the Value-Added Tax Act 89 of 1991 — no VAT is charged and no input tax on what went into it may be deducted.",
+        "sequence": 20,
+        "legal_reference": "Value-Added Tax Act 89 of 1991, s. 12 — the supplies exempt from VAT: financial services, the letting of a dwelling for residential accommodation, the letting of leasehold land for residential purposes, educational services, transport of fare-paying passengers by road or rail, and the other exemptions the section lists.",
+        "source": "vat-act"
+      }
+    ]
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "obligation": "none",
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "No provision of the Value-Added Tax Act 89 of 1991 obliges a vendor to issue or to accept a structured electronic invoice, and South Africa carries no Peppol authority or network profile at the date of this pack. SARS's Strategic Plan 2025/26–2029/30 and its VAT Modernisation programme describe a multi-year, phased move towards real-time, transaction-level VAT reporting with e-invoicing as a foundational pillar, beginning with voluntary onboarding of the largest Category C vendors; no bill amending the VAT Act to make any of it mandatory had been introduced in Parliament at 25 September 2026. A tax invoice today is a document, on paper or as a PDF, that carries the particulars of section 20(4) or 20(5).",
+    "source": "sars-vat-modernisation"
+  }
+}

@@ -1,0 +1,201 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "A year of a VAT-registered South African trading company, filing Category B two-monthly, for the financial year ended 31 December 2026",
+  "chart": "default",
+  "fiscal_year": {
+    "name": "Financial year ended 31 December 2026",
+    "start": "2026-01-01",
+    "end": "2026-12-31"
+  },
+  "periods": [
+    { "code": "2026-B1", "from": "2026-01-01", "to": "2026-02-28" },
+    { "code": "2026-B2", "from": "2026-03-01", "to": "2026-04-30" }
+  ],
+  "statements": ["ZA-IFRSSME-SFP", "ZA-IFRSSME-PL"],
+  "contacts": [
+    { "ref": "cust-jhb", "name": "Highveld Retailers (Pty) Ltd", "type": "customer", "country": "ZA" },
+    { "ref": "cust-food", "name": "Free State Wholesale Foods CC", "type": "customer", "country": "ZA" },
+    { "ref": "cust-exp", "name": "Gaborone Distributors (Pty) Ltd", "type": "customer", "country": "BW" },
+    { "ref": "tenant", "name": "Residential tenant — Unit 12", "type": "customer", "country": "ZA" },
+    { "ref": "supp-jhb", "name": "Rand Office Supplies (Pty) Ltd", "type": "supplier", "country": "ZA" },
+    { "ref": "supp-cap", "name": "TechCape Solutions (Pty) Ltd", "type": "supplier", "country": "ZA" },
+    { "ref": "supp-ent", "name": "Fynbos Function Venue (Pty) Ltd", "type": "supplier", "country": "ZA" },
+    { "ref": "supp-food", "name": "Boland Grain Merchants (Pty) Ltd", "type": "supplier", "country": "ZA" },
+    { "ref": "supp-bank", "name": "Karoo Merchant Bank Ltd", "type": "supplier", "country": "ZA" },
+    { "ref": "supp-foreign", "name": "CloudStack Software Inc.", "type": "supplier", "country": "US" }
+  ],
+  "documents": [
+    {
+      "ref": "S1",
+      "type": "sale_invoice",
+      "contact": "cust-jhb",
+      "date": "2026-01-15",
+      "why": "A standard-rated domestic sale: Field 1 carries the VAT-inclusive value, R11 500 on a R10 000 base, and Field 4 the VAT itself, R1 500.",
+      "lines": [
+        { "name": "Point-of-sale hardware units", "quantity": 10, "unit_price": 1000, "tax": "ZA-S-VAT", "account": "4000" }
+      ]
+    },
+    {
+      "ref": "S2",
+      "type": "sale_invoice",
+      "contact": "cust-jhb",
+      "date": "2026-02-20",
+      "why": "A sale on the payments basis (s. 15(2)): the VAT waits on the transition account until the payment settles it in period 2026-B2, so period 2026-B1's Field 4 does not carry it even though the invoice is dated inside it.",
+      "lines": [
+        { "name": "Consulting services", "quantity": 1, "unit_price": 4000, "tax": "ZA-S-VAT-CASH", "account": "4010" }
+      ]
+    },
+    {
+      "ref": "S3",
+      "type": "sale_invoice",
+      "contact": "cust-food",
+      "date": "2026-01-22",
+      "why": "Basic foodstuffs zero-rated under s. 11(1)(j) and Schedule 2, Part I: Field 2 carries the value, no VAT.",
+      "lines": [
+        { "name": "Maize meal, 10 kg bags", "quantity": 500, "unit_price": 12, "tax": "ZA-S-ZERO", "account": "4020" }
+      ]
+    },
+    {
+      "ref": "S4",
+      "type": "sale_invoice",
+      "contact": "cust-exp",
+      "date": "2026-02-05",
+      "why": "Goods exported to Botswana, zero-rated under s. 11(1)(a) with documentary proof held under s. 11(3): Field 2A, kept apart from Field 2.",
+      "lines": [
+        { "name": "Export consignment of hardware units", "quantity": 1, "unit_price": 8000, "tax": "ZA-S-EXPORT", "account": "4030" }
+      ]
+    },
+    {
+      "ref": "S5",
+      "type": "sale_invoice",
+      "contact": "tenant",
+      "date": "2026-01-31",
+      "why": "Residential letting exempt under s. 12(c): Field 3, no output tax and no input tax on what went into it.",
+      "lines": [
+        { "name": "Residential rent — Unit 12, January", "quantity": 1, "unit_price": 5000, "tax": "ZA-S-EXEMPT", "account": "4040" }
+      ]
+    },
+    {
+      "ref": "S6",
+      "type": "sale_credit_note",
+      "contact": "cust-jhb",
+      "date": "2026-01-28",
+      "why": "A credit note on two units returned from S1: Field 1 and Field 4 go down by R2 300 and R300 in the period it is issued.",
+      "lines": [
+        { "name": "Returned hardware units", "quantity": 2, "unit_price": 1000, "tax": "ZA-S-VAT", "account": "4000" }
+      ]
+    },
+    {
+      "ref": "P1",
+      "type": "purchase_invoice",
+      "contact": "supp-jhb",
+      "date": "2026-01-12",
+      "why": "A creditable domestic purchase of trading stock: Field 15 takes the VAT, R3 000 on a R20 000 base.",
+      "lines": [
+        { "name": "Trading stock — hardware components", "quantity": 1, "unit_price": 20000, "tax": "ZA-P-VAT", "account": "5000" }
+      ]
+    },
+    {
+      "ref": "P2",
+      "type": "purchase_invoice",
+      "contact": "supp-cap",
+      "date": "2026-01-25",
+      "why": "A capital purchase: Field 14 takes the VAT, R1 800 on a R12 000 base, apart from Field 15.",
+      "lines": [
+        { "name": "Office computer equipment", "quantity": 1, "unit_price": 12000, "tax": "ZA-P-VAT-CAP", "account": "1650" }
+      ]
+    },
+    {
+      "ref": "P3",
+      "type": "purchase_invoice",
+      "contact": "supp-ent",
+      "date": "2026-02-14",
+      "why": "Client entertainment: input tax is denied under s. 17(2)(a), so the R450 VAT lands on the expense account and no box carries it.",
+      "lines": [
+        { "name": "Client entertainment — restaurant", "quantity": 1, "unit_price": 3000, "tax": "ZA-P-VAT-NC", "account": "6390" }
+      ]
+    },
+    {
+      "ref": "P4",
+      "type": "purchase_invoice",
+      "contact": "supp-food",
+      "date": "2026-01-18",
+      "why": "Basic foodstuffs bought for resale, zero-rated at the supplier: nothing to claim, and no box for the value on the purchase side of this return.",
+      "lines": [
+        { "name": "Maize meal, 10 kg bags — for resale", "quantity": 500, "unit_price": 10, "tax": "ZA-P-ZERO", "account": "5000" }
+      ]
+    },
+    {
+      "ref": "P5",
+      "type": "purchase_invoice",
+      "contact": "supp-bank",
+      "date": "2026-02-28",
+      "why": "Bank charges, an exempt financial service under s. 12(a): the supplier charged no VAT.",
+      "lines": [
+        { "name": "Monthly bank charges", "quantity": 1, "unit_price": 350, "tax": "ZA-P-EXEMPT", "account": "6430" }
+      ]
+    },
+    {
+      "ref": "P6",
+      "type": "purchase_invoice",
+      "contact": "supp-foreign",
+      "date": "2026-03-15",
+      "why": "A cloud software subscription from a non-resident supplier, used partly to support the residential letting of S5 and so not wholly for a taxable purpose: self-assessed under s. 7(1)(c) and s. 14, R300 credited to VAT output and reported at Field 12, and — being non-deductible — also landed on the expense account as a cost.",
+      "lines": [
+        { "name": "Cloud software subscription", "quantity": 1, "unit_price": 2000, "tax": "ZA-P-RC-IMPORT", "account": "6350" }
+      ]
+    },
+    {
+      "ref": "P7",
+      "type": "purchase_credit_note",
+      "contact": "supp-jhb",
+      "date": "2026-03-05",
+      "why": "A credit note on P1 for damaged stock returned: Field 15 goes down by R150 in the period it is issued, period 2026-B2.",
+      "lines": [
+        { "name": "Damaged stock returned", "quantity": 1, "unit_price": 1000, "tax": "ZA-P-VAT", "account": "5000" }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "R1", "direction": "inbound", "date": "2026-01-25", "amount": 11500,
+      "contact": "cust-jhb", "journal": "BNK", "match": "S1",
+      "why": "A receipt that settles S1 exactly."
+    },
+    {
+      "ref": "R2", "direction": "inbound", "date": "2026-02-02", "amount": 6000,
+      "contact": "cust-food", "journal": "BNK", "match": "S3",
+      "why": "A receipt that settles S3 exactly."
+    },
+    {
+      "ref": "R3", "direction": "inbound", "date": "2026-03-10", "amount": 4600,
+      "contact": "cust-jhb", "journal": "BNK", "match": "S2",
+      "why": "The payment that settles S2 and, because S2 is on the payments basis, is what moves its VAT out of the transition account and into Field 4 of period 2026-B2."
+    },
+    {
+      "ref": "R4", "direction": "inbound", "date": "2026-02-25", "amount": 1000,
+      "contact": "cust-jhb", "journal": "BNK", "match": null,
+      "why": "A payment on account that matches no invoice and stays open."
+    },
+    {
+      "ref": "D1", "direction": "outbound", "date": "2026-01-20", "amount": 23000,
+      "contact": "supp-jhb", "journal": "BNK", "match": "P1",
+      "why": "A payment that settles P1 exactly."
+    },
+    {
+      "ref": "D2", "direction": "outbound", "date": "2026-02-01", "amount": 13800,
+      "contact": "supp-cap", "journal": "BNK", "match": "P2",
+      "why": "A payment that settles P2 exactly."
+    },
+    {
+      "ref": "D3", "direction": "outbound", "date": "2026-01-25", "amount": 5000,
+      "contact": "supp-food", "journal": "BNK", "match": "P4",
+      "why": "A payment that settles P4 exactly."
+    },
+    {
+      "ref": "D4", "direction": "outbound", "date": "2026-02-20", "amount": 3450,
+      "contact": "supp-ent", "journal": "BNK", "match": "P3",
+      "why": "A payment that settles P3 exactly."
+    }
+  ]
+}

@@ -5325,3 +5325,114 @@ pack distinguish a country that has said nothing from one whose administration
 has already legislated the principle and left only the timetable to reglement,
 which at least one other Union candidate for a pack (Tunisia's decree-by-
 arrêté rollout, not yet attempted here) is likely to want the same word for.
+
+## From South Africa
+
+`packs/za/`, `community`, seed 88, written against `packs/au/` and
+`packs/nz/`: a value-added tax outside the common system of the European
+Union, one positive rate, and a return that prints a VAT-inclusive figure the
+engine grosses up rather than one it sums directly. Its VAT is the
+Value-Added Tax Act 89 of 1991, read from Acts Online with SARS's own guides
+— VAT 404 and the VAT201 external guide — beside it; its statements are the
+IFRS for SMEs Accounting Standard, sections 4 and 5. Fourteen texts in the
+register. What follows is what the core could not say, none of it patched.
+
+### Four tax-period categories the engine's cadences cannot anchor
+
+Section 27 of the Act gives a vendor one of six categories, and this engine's
+six cadences are each a whole number of months anchored on 1 January —
+`declaration_period_of()`, `supabase/migrations/20260921145411_three_cadences_more.sql`.
+Two of the six categories fall on that anchor exactly: Category B (periods
+ending February, April, June, August, October, December) is `bimonth`, and
+Category C (every calendar month) is `month`. The other four do not, and each
+fails for a different reason:
+
+- **Category A** (periods ending January, March, May, July, September,
+  November) is the same two-month grouping as Category B, offset by one
+  month — December-January, February-March, and so on. The engine has no
+  "offset bimonth".
+- **Category F** (periods ending June, October, February) is `four_month`
+  offset by two months — March-June instead of January-April — and its last
+  period of the cycle, November-February, crosses a calendar year boundary,
+  which none of the six cadences is built to do.
+- **Category D** (periods ending February and August) is `half_year` offset
+  by two months for the same reason, and its first period, September-February,
+  crosses a year boundary too.
+- **Category E** (twelve months ending on the vendor's own year of
+  assessment) follows a fact about the company — like a fiscal year that does
+  not start in January — and not the calendar the engine's `year` cadence is
+  anchored to; a vendor whose year of assessment happens to be the calendar
+  year is the one case this cadence does cover, by coincidence and not by
+  the rule.
+
+`packs/za/tax_report.json` declares `period: ["month", "bimonth"]` and no
+`period_default`, since s. 27(4) has the Commissioner assign Category A or B
+so as to keep the two roughly equal, which is not one answer the law gives
+everybody. A vendor on Category A, D, E or F is not told which cadence to
+file on by this pack, and installing the pack does not let one be recorded
+for a form that does not offer it. *Fix, if one is wanted*: a cadence that
+names its own anchor month rather than assuming January — `bimonth` starting
+in any of the twelve months rather than only the odd ones — would cover
+Category A and, for the vendors whose year of assessment is not the calendar
+year, would still leave Category E and the year-crossing shape of D and F
+short. The anchor is a property of a *form*, `tax_report.json`, and not of
+the `declaration_period` enum a whole database reads; nothing here was
+patched for this pack's sake.
+
+### The eFiling deadline, which almost every vendor in fact files on
+
+Section 28(1) requires a return and payment by the 25th of the month after
+the tax period, and `deadline.rule: day_of_month_after_period, day: 25` says
+exactly that. SARS's own VAT201 external guide (GEN-ELEC-04-G01, 3(d)) then
+gives a vendor who files and pays through eFiling — which is effectively
+every vendor, since a manual return at a SARS branch is now the exception —
+until the *last business day* of that month instead, one rule for one channel
+overriding the statutory one for another. `last_day_of_month_after_period`
+exists and would say the eFiling date, but a form declares one deadline rule
+and this pack cannot say "the 25th, or the last business day for whoever
+files electronically" in the same field. `packs/za/` declares the statutory
+rule, the 25th, which is never later than the practical one eFiling gives —
+so a company that plans around this pack's answer is never late, only early
+by up to six days.
+
+### No official consolidated register of the Act itself
+
+Every European pack in this repository cites a national government's own
+publication of its VAT law — Légifrance, Legilux, Riigi Teataja — and every
+Gulf pack cites the authority that administers the tax republishing the law
+itself. South Africa has neither: the Interpretation Act 33 of 1957 makes the
+Government Gazette the sole medium of authentic publication, and no free
+government service republishes a statute consolidated with its amendments,
+kept current, the way those do. `packs/za/pack.json` cites Acts Online, a
+long-established private consolidation, and says so in the register entry's
+own `publisher` field rather than pretending a government source exists. This
+is not a gap in the pack; it is a gap in what a reader outside South Africa
+can rely on being told is "the current Act" without paying for a subscription
+service, and it will recur for the next Southern African Development
+Community pack this repository adds.
+
+### Partial input tax where an acquisition serves both a taxable and an
+### exempt supply
+
+Section 17(1) apportions input tax where an acquisition is used partly to
+make taxable supplies and partly to make exempt ones — the ordinary case of a
+mixed business, a landlord who also trades, a bank's own overhead — by a
+formula SARS's Binding General Ruling 16 sets out, turning on the vendor's own
+mix of taxable and exempt turnover for a period. `packs/za/` carries
+`ZA-P-VAT-ITS` only for the acquisition that relates *wholly* to an exempt
+supply, denying the input tax in full; there is no tax code for a share, and
+none is proposed, because the share is a fact about the whole of a vendor's
+turnover for a period and not about one document a tax code taxes. A
+`conditions` word does not reach this either — `supply_nature` says a question
+turns on what is supplied, not on a percentage carried forward from a return.
+This is the same shape as Australia's `AU-P-GST-ITS` and Singapore's
+apportioned input tax, recorded there for the same reason.
+
+### ZAR and ZA
+
+`ZAR` is added to `00_currencies.sql` at two decimals, symbol `R`. `ZA` is
+added to `00_territories.sql` outside the common system of VAT, so
+`vat_category`, `exemption_code` and the five `intracom_*` treatments are read
+the way every non-EU pack's are, and so that an exempt or zero-rated line
+states its article in `legal_reference` rather than being asked for a VATEX
+code that names a Directive no South African seller is bound by.
