@@ -38,7 +38,7 @@
           "parent": "CA",
           "sign": 1,
           "rules": [
-            { "kind": "code_range", "code_from": "1100", "code_to": "1160" }
+            { "kind": "code_range", "code_from": "1100", "code_to": "1170" }
           ],
           "legal_reference": "IAS 1, paragraph 54(h). VAT input tax and the net amount receivable from the Tax Authority are presented here rather than as current tax, which paragraph 54(n) keeps for income tax.",
           "source": null
@@ -50,7 +50,7 @@
           "parent": "CA",
           "sign": 1,
           "rules": [
-            { "kind": "code_range", "code_from": "1200", "code_to": "1230" }
+            { "kind": "code_range", "code_from": "1200", "code_to": "1240" }
           ],
           "legal_reference": "IAS 1, paragraph 54(g).",
           "source": null
@@ -62,7 +62,7 @@
           "parent": "CA",
           "sign": 1,
           "rules": [
-            { "kind": "account_code", "code_from": "1300" }
+            { "kind": "code_range", "code_from": "1300", "code_to": "1310" }
           ],
           "legal_reference": "IAS 1, paragraph 54(d).",
           "source": null
@@ -83,7 +83,7 @@
           "parent": "NCA",
           "sign": 1,
           "rules": [
-            { "kind": "code_range", "code_from": "1600", "code_to": "1641" }
+            { "kind": "code_range", "code_from": "1600", "code_to": "1661" }
           ],
           "legal_reference": "IAS 1, paragraph 54(a). Cost and accumulated depreciation sit in the same range, so a class nets to its carrying amount.",
           "source": null
@@ -95,7 +95,7 @@
           "parent": "NCA",
           "sign": 1,
           "rules": [
-            { "kind": "code_range", "code_from": "1700", "code_to": "1710" }
+            { "kind": "code_range", "code_from": "1700", "code_to": "1720" }
           ],
           "legal_reference": "IAS 1, paragraph 54(e).",
           "source": null
@@ -107,7 +107,7 @@
           "parent": "NCA",
           "sign": 1,
           "rules": [
-            { "kind": "code_range", "code_from": "1750", "code_to": "1751" }
+            { "kind": "code_range", "code_from": "1750", "code_to": "1760" }
           ],
           "legal_reference": "IAS 1, paragraph 54(c).",
           "source": null
@@ -137,7 +137,7 @@
           "parent": "CL",
           "sign": -1,
           "rules": [
-            { "kind": "account_code", "code_from": "2000" }
+            { "kind": "code_range", "code_from": "2000", "code_to": "2005" }
           ],
           "legal_reference": "IAS 1, paragraph 54(k).",
           "source": null
@@ -149,7 +149,7 @@
           "parent": "CL",
           "sign": -1,
           "rules": [
-            { "kind": "code_range", "code_from": "2010", "code_to": "2060" },
+            { "kind": "code_range", "code_from": "2010", "code_to": "2070" },
             { "kind": "account_code", "code_from": "2990" }
           ],
           "legal_reference": "IAS 1, paragraph 55.",
@@ -174,7 +174,7 @@
           "parent": "CL",
           "sign": -1,
           "rules": [
-            { "kind": "account_code", "code_from": "2150" }
+            { "kind": "code_range", "code_from": "2150", "code_to": "2160" }
           ],
           "legal_reference": "IAS 1, paragraph 54(l).",
           "source": null
@@ -186,7 +186,7 @@
           "parent": "CL",
           "sign": -1,
           "rules": [
-            { "kind": "code_range", "code_from": "2200", "code_to": "2210" }
+            { "kind": "code_range", "code_from": "2200", "code_to": "2220" }
           ],
           "legal_reference": "IAS 1, paragraph 54(m).",
           "source": null
@@ -207,7 +207,7 @@
           "parent": "NCL",
           "sign": -1,
           "rules": [
-            { "kind": "account_code", "code_from": "2300" }
+            { "kind": "code_range", "code_from": "2300", "code_to": "2310" }
           ],
           "legal_reference": "IAS 1, paragraph 54(m).",
           "source": null
@@ -219,7 +219,7 @@
           "parent": "NCL",
           "sign": -1,
           "rules": [
-            { "kind": "account_code", "code_from": "2350" }
+            { "kind": "code_range", "code_from": "2350", "code_to": "2360" }
           ],
           "legal_reference": "IAS 1, paragraph 54(l).",
           "source": null
@@ -239,7 +239,7 @@
           "sequence": 210,
           "sign": -1,
           "rules": [
-            { "kind": "code_range", "code_from": "3000", "code_to": "3020" }
+            { "kind": "code_range", "code_from": "3000", "code_to": "3030" }
           ],
           "legal_reference": "IAS 1, paragraph 54(r) and 79.",
           "source": null
@@ -281,7 +281,7 @@
           "sequence": 10,
           "sign": -1,
           "rules": [
-            { "kind": "code_range", "code_from": "4000", "code_to": "4030" }
+            { "kind": "code_range", "code_from": "4000", "code_to": "4040" }
           ],
           "legal_reference": "IAS 1, paragraph 82(a).",
           "source": null
@@ -303,7 +303,7 @@
           "sequence": 30,
           "sign": 1,
           "rules": [
-            { "kind": "code_range", "code_from": "5000", "code_to": "5030" }
+            { "kind": "code_range", "code_from": "5000", "code_to": "5040" }
           ],
           "legal_reference": "IAS 1, paragraph 99 and 103 (by-nature classification: raw materials and consumables used).",
           "source": null
@@ -314,7 +314,7 @@
           "sequence": 40,
           "sign": 1,
           "rules": [
-            { "kind": "code_range", "code_from": "6100", "code_to": "6130" }
+            { "kind": "code_range", "code_from": "6100", "code_to": "6160" }
           ],
           "legal_reference": "IAS 1, paragraph 102(d).",
           "source": null
@@ -325,7 +325,7 @@
           "sequence": 50,
           "sign": 1,
           "rules": [
-            { "kind": "code_range", "code_from": "6500", "code_to": "6510" }
+            { "kind": "code_range", "code_from": "6500", "code_to": "6520" }
           ],
           "legal_reference": "IAS 1, paragraph 102(b), and paragraph 104 (the entity discloses depreciation and amortisation among its by-nature expenses).",
           "source": null
@@ -336,7 +336,7 @@
           "sequence": 60,
           "sign": 1,
           "rules": [
-            { "kind": "code_range", "code_from": "6200", "code_to": "6440" }
+            { "kind": "code_range", "code_from": "6200", "code_to": "6490" }
           ],
           "legal_reference": "IAS 1, paragraph 99.",
           "source": null
@@ -358,7 +358,7 @@
           "sequence": 80,
           "sign": 1,
           "rules": [
-            { "kind": "account_code", "code_from": "8000" }
+            { "kind": "code_range", "code_from": "8000", "code_to": "8010" }
           ],
           "legal_reference": "IAS 1, paragraph 82(d).",
           "source": null
