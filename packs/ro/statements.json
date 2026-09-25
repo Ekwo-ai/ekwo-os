@@ -1,0 +1,849 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/statements",
+  "statements": [
+    {
+      "code": "RO-OMFP-BS",
+      "kind": "balance_sheet",
+      "framework": "RO-OMFP-1802",
+      "name": "Bilanț prescurtat",
+      "legal_reference": "Ordinul ministrului finanțelor publice nr. 1.802/2014, pct. 451 și anexa — formatul bilanțului prescurtat, pentru microentitățile și entitățile mici definite la pct. 9-10 din același ordin",
+      "source": "omfp-1802-2014",
+      "lines": [
+        {
+          "code": "A",
+          "name": "A. Active imobilizate",
+          "sequence": 10,
+          "plus": [
+            "A.I",
+            "A.II",
+            "A.III"
+          ],
+          "is_total": true
+        },
+        {
+          "code": "A.I",
+          "parent": "A",
+          "name": "I. Imobilizări necorporale",
+          "sequence": 20,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "20",
+              "sequence": 10
+            },
+            {
+              "kind": "account_code",
+              "code_from": "233",
+              "sequence": 20
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "280",
+              "sequence": 30
+            }
+          ]
+        },
+        {
+          "code": "A.II",
+          "parent": "A",
+          "name": "II. Imobilizări corporale",
+          "sequence": 30,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "21",
+              "sequence": 10
+            },
+            {
+              "kind": "account_code",
+              "code_from": "231",
+              "sequence": 20
+            },
+            {
+              "kind": "account_code",
+              "code_from": "234",
+              "sequence": 30
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "281",
+              "sequence": 40
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "291",
+              "sequence": 50
+            }
+          ]
+        },
+        {
+          "code": "A.III",
+          "parent": "A",
+          "name": "III. Imobilizări financiare",
+          "sequence": 40,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "26",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "B",
+          "name": "B. Active circulante",
+          "sequence": 50,
+          "plus": [
+            "B.I",
+            "B.II",
+            "B.III",
+            "B.IV"
+          ],
+          "is_total": true
+        },
+        {
+          "code": "B.I",
+          "parent": "B",
+          "name": "I. Stocuri",
+          "sequence": 60,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "30",
+              "sequence": 10
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "33",
+              "sequence": 20
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "34",
+              "sequence": 30
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "37",
+              "sequence": 40
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "38",
+              "sequence": 50
+            }
+          ]
+        },
+        {
+          "code": "B.II",
+          "parent": "B",
+          "name": "II. Creanțe",
+          "sequence": 70,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "409",
+              "sequence": 10
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "411",
+              "sequence": 20
+            },
+            {
+              "kind": "account_code",
+              "code_from": "413",
+              "sequence": 30
+            },
+            {
+              "kind": "account_code",
+              "code_from": "418",
+              "sequence": 40
+            },
+            {
+              "kind": "account_code",
+              "code_from": "425",
+              "sequence": 50
+            },
+            {
+              "kind": "account_code",
+              "code_from": "4424",
+              "sequence": 60
+            },
+            {
+              "kind": "account_code",
+              "code_from": "4426",
+              "sequence": 70
+            },
+            {
+              "kind": "account_code",
+              "code_from": "461",
+              "sequence": 80
+            },
+            {
+              "kind": "account_code",
+              "code_from": "491",
+              "sequence": 90
+            }
+          ]
+        },
+        {
+          "code": "B.III",
+          "parent": "B",
+          "name": "III. Investiții pe termen scurt",
+          "sequence": 80,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "508",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "B.IV",
+          "parent": "B",
+          "name": "IV. Casa și conturi la bănci",
+          "sequence": 90,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "512",
+              "sequence": 10
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "531",
+              "sequence": 20
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "54",
+              "sequence": 30
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "58",
+              "sequence": 40
+            }
+          ]
+        },
+        {
+          "code": "C",
+          "name": "C. Cheltuieli în avans",
+          "sequence": 100,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "471",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "D",
+          "name": "D. Datorii ce trebuie plătite într-o perioadă de un an",
+          "sequence": 110,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "401",
+              "sequence": 10
+            },
+            {
+              "kind": "account_code",
+              "code_from": "403",
+              "sequence": 20
+            },
+            {
+              "kind": "account_code",
+              "code_from": "404",
+              "sequence": 30
+            },
+            {
+              "kind": "account_code",
+              "code_from": "408",
+              "sequence": 40
+            },
+            {
+              "kind": "account_code",
+              "code_from": "419",
+              "sequence": 50
+            },
+            {
+              "kind": "account_code",
+              "code_from": "421",
+              "sequence": 60
+            },
+            {
+              "kind": "account_code",
+              "code_from": "423",
+              "sequence": 70
+            },
+            {
+              "kind": "account_code",
+              "code_from": "424",
+              "sequence": 80
+            },
+            {
+              "kind": "account_code",
+              "code_from": "427",
+              "sequence": 90
+            },
+            {
+              "kind": "account_code",
+              "code_from": "428",
+              "sequence": 100
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "43",
+              "sequence": 110
+            },
+            {
+              "kind": "account_code",
+              "code_from": "441",
+              "sequence": 120
+            },
+            {
+              "kind": "account_code",
+              "code_from": "4423",
+              "sequence": 130
+            },
+            {
+              "kind": "account_code",
+              "code_from": "4427",
+              "sequence": 140
+            },
+            {
+              "kind": "account_code",
+              "code_from": "4428",
+              "sequence": 150
+            },
+            {
+              "kind": "account_code",
+              "code_from": "444",
+              "sequence": 160
+            },
+            {
+              "kind": "account_code",
+              "code_from": "446",
+              "sequence": 170
+            },
+            {
+              "kind": "account_code",
+              "code_from": "447",
+              "sequence": 180
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "45",
+              "sequence": 190
+            },
+            {
+              "kind": "account_code",
+              "code_from": "462",
+              "sequence": 200
+            },
+            {
+              "kind": "account_code",
+              "code_from": "473",
+              "sequence": 210
+            },
+            {
+              "kind": "account_code",
+              "code_from": "519",
+              "sequence": 220
+            }
+          ]
+        },
+        {
+          "code": "E",
+          "name": "E. Active circulante nete, respectiv datorii curente nete",
+          "sequence": 120,
+          "plus": [
+            "B",
+            "C"
+          ],
+          "minus": [
+            "D"
+          ],
+          "is_total": true
+        },
+        {
+          "code": "F",
+          "name": "F. Total active minus datorii curente",
+          "sequence": 130,
+          "plus": [
+            "A",
+            "E"
+          ],
+          "is_total": true
+        },
+        {
+          "code": "G",
+          "name": "G. Datorii ce trebuie plătite într-o perioadă mai mare de un an",
+          "sequence": 140,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "16",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "H",
+          "name": "H. Provizioane",
+          "sequence": 150,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "15",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "I",
+          "name": "I. Venituri în avans",
+          "sequence": 160,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "131",
+              "sequence": 10
+            },
+            {
+              "kind": "account_code",
+              "code_from": "472",
+              "sequence": 20
+            }
+          ]
+        },
+        {
+          "code": "J",
+          "name": "J. Capital și rezerve",
+          "sequence": 170,
+          "plus": [
+            "J.I",
+            "J.II",
+            "J.III",
+            "J.IV",
+            "J.V",
+            "J.VI"
+          ],
+          "is_total": true
+        },
+        {
+          "code": "J.I",
+          "parent": "J",
+          "name": "I. Capital",
+          "sequence": 180,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1012",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "J.II",
+          "parent": "J",
+          "name": "II. Prime de capital",
+          "sequence": 190,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1041",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "J.III",
+          "parent": "J",
+          "name": "III. Rezerve din reevaluare",
+          "sequence": 200,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "105",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "J.IV",
+          "parent": "J",
+          "name": "IV. Rezerve",
+          "sequence": 210,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "106",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "J.V",
+          "parent": "J",
+          "name": "V. Profitul sau pierderea reportat(ă)",
+          "sequence": 220,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "117",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "J.VI",
+          "parent": "J",
+          "name": "VI. Profitul sau pierderea exercițiului financiar",
+          "sequence": 230,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "121",
+              "sequence": 10
+            },
+            {
+              "kind": "account_code",
+              "code_from": "129",
+              "sequence": 20
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "code": "RO-OMFP-IS",
+      "kind": "income_statement",
+      "framework": "RO-OMFP-1802",
+      "name": "Contul de profit și pierdere",
+      "legal_reference": "Ordinul ministrului finanțelor publice nr. 1.802/2014, pct. 428 și anexa — formatul contului de profit și pierdere (formatul „listă”, preluat din anexa V a Directivei 2013/34/UE)",
+      "source": "omfp-1802-2014",
+      "lines": [
+        {
+          "code": "1",
+          "name": "1. Cifra de afaceri netă",
+          "sequence": 10,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "70",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "2",
+          "name": "2. Variația stocurilor de produse finite și a producției în curs de execuție",
+          "sequence": 20,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "71",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "3",
+          "name": "3. Producția realizată de entitate pentru scopurile proprii și capitalizată",
+          "sequence": 30
+        },
+        {
+          "code": "4",
+          "name": "4. Alte venituri din exploatare",
+          "sequence": 40,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "74",
+              "sequence": 10
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "75",
+              "sequence": 20
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "78",
+              "sequence": 30
+            }
+          ]
+        },
+        {
+          "code": "5a",
+          "name": "5.a) Cheltuieli cu materiile prime și materialele consumabile",
+          "sequence": 50,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "60",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "5b",
+          "name": "5.b) Alte cheltuieli externe (cu energia și apa)",
+          "sequence": 60,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "61",
+              "sequence": 10
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "62",
+              "sequence": 20
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "63",
+              "sequence": 30
+            }
+          ]
+        },
+        {
+          "code": "6a",
+          "name": "6.a) Cheltuieli cu salariile personalului",
+          "sequence": 70,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "641",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "6b",
+          "name": "6.b) Cheltuieli cu asigurările sociale",
+          "sequence": 80,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "645",
+              "sequence": 10
+            },
+            {
+              "kind": "account_code",
+              "code_from": "646",
+              "sequence": 20
+            }
+          ]
+        },
+        {
+          "code": "7a",
+          "name": "7.a) Ajustări de valoare privind imobilizările corporale și necorporale",
+          "sequence": 90,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "681",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "7b",
+          "name": "7.b) Ajustări de valoare privind activele circulante",
+          "sequence": 100,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "654",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "8",
+          "name": "8. Alte cheltuieli de exploatare",
+          "sequence": 110,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "658",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "9",
+          "name": "9. Venituri din interese de participare",
+          "sequence": 120
+        },
+        {
+          "code": "10",
+          "name": "10. Venituri din alte investiții și împrumuturi care fac parte din activele imobilizate",
+          "sequence": 130,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "761",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "11",
+          "name": "11. Alte dobânzi de încasat și venituri similare",
+          "sequence": 140,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "765",
+              "sequence": 10
+            },
+            {
+              "kind": "account_code",
+              "code_from": "766",
+              "sequence": 20
+            },
+            {
+              "kind": "account_code",
+              "code_from": "767",
+              "sequence": 30
+            },
+            {
+              "kind": "account_code",
+              "code_from": "768",
+              "sequence": 40
+            }
+          ]
+        },
+        {
+          "code": "12",
+          "name": "12. Ajustări de valoare privind imobilizările financiare",
+          "sequence": 150,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "686",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "13",
+          "name": "13. Dobânzi de plătit și cheltuieli similare",
+          "sequence": 160,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "66",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "14",
+          "name": "14. Impozitul pe profit",
+          "sequence": 170,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "691",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "15",
+          "name": "15. Profitul sau pierderea la sfârșitul perioadei de raportare, după impozitare",
+          "sequence": 180,
+          "plus": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "9",
+            "10",
+            "11"
+          ],
+          "minus": [
+            "5a",
+            "5b",
+            "6a",
+            "6b",
+            "7a",
+            "7b",
+            "8",
+            "12",
+            "13",
+            "14"
+          ],
+          "is_total": true
+        },
+        {
+          "code": "16",
+          "name": "16. Alte impozite neprezentate la elementele de mai sus",
+          "sequence": 190,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "698",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "17",
+          "name": "17. Profitul sau pierderea exercițiului financiar",
+          "sequence": 200,
+          "plus": [
+            "15"
+          ],
+          "minus": [
+            "16"
+          ],
+          "is_total": true
+        }
+      ]
+    }
+  ]
+}

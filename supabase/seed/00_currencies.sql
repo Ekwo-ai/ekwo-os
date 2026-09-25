@@ -17,6 +17,7 @@ insert into currencies (code, name, symbol, decimal_places) values
   ('NOK', 'Norwegian krone',      'kr',      2),
   ('PLN', 'Polish zloty',         E'z\u0142', 2),
   ('CZK', 'Czech koruna',         E'Kč', 2),
+  ('RON', 'Romanian leu',         'lei',     2),
   ('CAD', 'Canadian dollar',      '$',       2),
   ('JPY', 'Japanese yen',         E'¥', 0),
   ('XOF', 'CFA franc BCEAO',      'F CFA',   0),

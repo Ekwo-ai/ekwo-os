@@ -1,0 +1,115 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "Un an din contabilitatea unei societăți românești plătitoare de TVA, cu declarare lunară",
+  "chart": "default",
+  "fiscal_year": { "name": "Exercițiul financiar 2026", "start": "2026-01-01", "end": "2026-12-31" },
+  "periods": [
+    { "code": "2026-T1", "from": "2026-01-01", "to": "2026-03-31" },
+    { "code": "2026-T2", "from": "2026-04-01", "to": "2026-06-30" }
+  ],
+  "statements": ["RO-OMFP-BS", "RO-OMFP-IS"],
+  "contacts": [
+    { "ref": "client-ro", "name": "Atelierul Mecanic SRL", "type": "customer", "country": "RO" },
+    { "ref": "client-ro-alim", "name": "Brutăria Bunei Speranțe SRL", "type": "customer", "country": "RO" },
+    { "ref": "client-us", "name": "Meridian Auto Parts LLC", "type": "customer", "country": "US" },
+    { "ref": "client-fr", "name": "Atelier Lumen SAS", "type": "customer", "country": "FR", "vat_number": "FR00999999999" },
+    { "ref": "client-de", "name": "Nordlicht Consulting GmbH", "type": "customer", "country": "DE", "vat_number": "DE999999999" },
+    { "ref": "client-ro-financiar", "name": "Capital Prietenos IFN SA", "type": "customer", "country": "RO" },
+    { "ref": "client-ro-cereale", "name": "Moara Câmpiei SRL", "type": "customer", "country": "RO" },
+    { "ref": "supplier-ro", "name": "Birotica Generală SRL", "type": "supplier", "country": "RO" },
+    { "ref": "supplier-ro-2", "name": "Catering Ospitalier SRL", "type": "supplier", "country": "RO" },
+    { "ref": "supplier-de", "name": "Nordwind Elektronik GmbH", "type": "supplier", "country": "DE", "vat_number": "DE888888888" },
+    { "ref": "supplier-ie", "name": "Shannon Legal Consulting Ltd", "type": "supplier", "country": "IE", "vat_number": "IE9999999L" },
+    { "ref": "supplier-us", "name": "Cloudworks Inc.", "type": "supplier", "country": "US" },
+    { "ref": "supplier-cn", "name": "Guangdong Components Co. Ltd", "type": "supplier", "country": "CN" }
+  ],
+  "documents": [
+    {
+      "ref": "V1", "type": "sale_invoice", "contact": "client-ro", "date": "2026-01-15", "due_date": "2026-02-14",
+      "why": "O vânzare la cota standard: baza și taxa ajung la rd. 9 din formularul 300.",
+      "lines": [{ "name": "Echipamente electronice", "quantity": 10, "unit_price": 1000, "tax": "RO-S-21", "account": "707" }]
+    },
+    {
+      "ref": "V2", "type": "sale_invoice", "contact": "client-ro-alim", "date": "2026-01-22", "due_date": "2026-02-21",
+      "why": "O vânzare de produse alimentare la cota redusă unică de 11%, introdusă la 1 august 2025: rd. 10, distinct de rd. 9.",
+      "lines": [{ "name": "Pâine și produse de panificație", "quantity": 100, "unit_price": 10, "tax": "RO-S-11", "account": "707" }]
+    },
+    {
+      "ref": "V3", "type": "sale_credit_note", "contact": "client-ro-alim", "date": "2026-02-05",
+      "why": "O notă de credit parțială pe vânzarea V2, la aceeași cotă de 11%: reduce baza și taxa de la rd. 10 cu semn negativ, în loc să anuleze factura inițială.",
+      "lines": [{ "name": "Retur produse de panificație", "quantity": 10, "unit_price": 10, "tax": "RO-S-11", "account": "707" }]
+    },
+    {
+      "ref": "V4", "type": "sale_invoice", "contact": "client-us", "date": "2026-02-18", "due_date": "2026-03-20",
+      "why": "Un export de bunuri în afara Uniunii Europene: scutit cu drept de deducere, declarat la rd. 14 din formularul 300.",
+      "lines": [{ "name": "Piese auto exportate în Statele Unite", "quantity": 5, "unit_price": 800, "tax": "RO-S-EXPORT", "account": "707" }]
+    },
+    {
+      "ref": "V5", "type": "sale_invoice", "contact": "client-fr", "date": "2026-03-10", "due_date": "2026-04-09",
+      "why": "O livrare intracomunitară de bunuri către un cumpărător francez înregistrat în scopuri de TVA: scutită, rd. 1 din formularul 300 — latura «vândută» a operațiunii intracomunitare reluate din partea de cumpărare la C3.",
+      "lines": [{ "name": "Mobilier expediat în Franța", "quantity": 4, "unit_price": 1200, "tax": "RO-S-ICG", "account": "707" }]
+    },
+    {
+      "ref": "V6", "type": "sale_invoice", "contact": "client-de", "date": "2026-04-14", "due_date": "2026-05-14",
+      "why": "O prestare de servicii generice către o persoană impozabilă germană, neimpozabilă în România conform regulii generale B2B: rd. 3 din formularul 300.",
+      "lines": [{ "name": "Servicii de consultanță IT", "quantity": 1, "unit_price": 3500, "tax": "RO-S-ICS", "account": "704" }]
+    },
+    {
+      "ref": "V7", "type": "sale_invoice", "contact": "client-ro-financiar", "date": "2026-05-20", "due_date": "2026-06-19",
+      "why": "O operațiune financiară scutită fără drept de deducere (dobânzi aferente unui împrumut acordat): rd. 15 din formularul 300.",
+      "lines": [{ "name": "Dobânzi aferente unui împrumut acordat", "quantity": 1, "unit_price": 600, "tax": "RO-S-EXE", "account": "766" }]
+    },
+    {
+      "ref": "V8", "type": "sale_invoice", "contact": "client-ro-cereale", "date": "2026-06-25", "due_date": "2026-07-25",
+      "why": "O livrare de cereale supusă măsurilor de simplificare ale art. 331 din Codul fiscal: factura iese fără TVA, cu mențiunea «taxare inversă», rd. 13 din formularul 300, informativ.",
+      "lines": [{ "name": "Grâu furajer, livrare supusă taxării inverse", "quantity": 20, "unit_price": 250, "tax": "RO-S-RC-331", "account": "701" }]
+    },
+    {
+      "ref": "C1", "type": "purchase_invoice", "contact": "supplier-ro", "date": "2026-01-20", "due_date": "2026-02-19",
+      "why": "O achiziție internă curentă la cota standard: baza și taxa deductibilă ajung la rd. 24 din formularul 300.",
+      "lines": [{ "name": "Materiale de birou", "quantity": 1, "unit_price": 2000, "tax": "RO-P-21", "account": "602" }]
+    },
+    {
+      "ref": "C2", "type": "purchase_invoice", "contact": "supplier-ro-2", "date": "2026-02-10", "due_date": "2026-03-12",
+      "why": "O achiziție internă la cota redusă de 11%: rd. 25, distinct de rd. 24.",
+      "lines": [{ "name": "Produse alimentare pentru protocol", "quantity": 1, "unit_price": 800, "tax": "RO-P-11", "account": "623" }]
+    },
+    {
+      "ref": "C3", "type": "purchase_invoice", "contact": "supplier-de", "date": "2026-03-15", "due_date": "2026-04-14",
+      "why": "O achiziție intracomunitară de bunuri: cumpărătorul autolichidează taxa, aceeași bază apare la rd. 5 (colectată) și la rd. 20 (dedusă) — latura «cumpărată» a operațiunii de la V5.",
+      "lines": [{ "name": "Componente electronice din Germania", "quantity": 1, "unit_price": 3000, "tax": "RO-P-ICG-21", "account": "301" }]
+    },
+    {
+      "ref": "C4", "type": "purchase_invoice", "contact": "supplier-ie", "date": "2026-04-22", "due_date": "2026-05-22",
+      "why": "O achiziție de servicii generice de la un prestator stabilit în alt stat membru: taxare inversă la rd. 7 (colectată) și rd. 22 (dedusă).",
+      "lines": [{ "name": "Servicii de consultanță juridică din Irlanda", "quantity": 1, "unit_price": 2500, "tax": "RO-P-ICS-21", "account": "622" }]
+    },
+    {
+      "ref": "C5", "type": "purchase_invoice", "contact": "supplier-us", "date": "2026-05-28", "due_date": "2026-06-27",
+      "why": "Un serviciu primit de la un prestator stabilit în afara Uniunii Europene: aceeași taxare inversă, aceleași rd. 7 și rd. 22 ca serviciile intracomunitare de la C4, pe care formularul 300 nu le separă.",
+      "lines": [{ "name": "Abonament software din Statele Unite", "quantity": 1, "unit_price": 1200, "tax": "RO-P-EXT-21", "account": "628" }]
+    },
+    {
+      "ref": "C6", "type": "purchase_invoice", "contact": "supplier-cn", "date": "2026-06-30", "due_date": "2026-07-30",
+      "why": "Un import de bunuri care nu beneficiază de amânarea plății TVA la import (art. 326 alin. (4)-(5)): baza și taxa ajung la rd. 24, alături de achizițiile interne cu cota de 21%.",
+      "lines": [{ "name": "Componente importate din China", "quantity": 1, "unit_price": 4000, "tax": "RO-P-IMPORT-21", "account": "301" }]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "B1", "direction": "inbound", "date": "2026-02-14", "amount": 12100, "contact": "client-ro",
+      "journal": "BNC", "match": "V1",
+      "why": "Un încasat care soldează exact factura V1."
+    },
+    {
+      "ref": "B2", "direction": "inbound", "date": "2026-03-01", "amount": 500, "contact": "client-ro-alim",
+      "journal": "BNC", "match": null,
+      "why": "Un încasat fără factură în față: rămâne în creditul clientului, nereconciliat."
+    },
+    {
+      "ref": "B3", "direction": "outbound", "date": "2026-02-19", "amount": 2420, "contact": "supplier-ro",
+      "journal": "BNC", "match": "C1",
+      "why": "Latura furnizorului reconcilierii, pentru ca aceasta să nu fie dovedită dintr-o singură parte a bilanțului."
+    }
+  ]
+}

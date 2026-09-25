@@ -4455,3 +4455,96 @@ packs, so this pack adds none. `BG` was already a row of
 of Accession 2005), so `packs/bg/` touches neither file — the two-file
 exception of [The two places a pack is written](packs.md#the-two-places-a-pack-is-written)
 stays exactly two files here.
+
+## From Romania
+
+`packs/ro/`, `community`, seed 72, inside the common system of VAT since 1
+January 2007. Its rates and the boxes of its return come from the
+consolidated Codul fiscal (Legea nr. 227/2015) and from Ordinul președintelui
+ANAF nr. 174/2026's own formularul 300, its chart of accounts from OMFP nr.
+1.802/2014's Planul de conturi general — a country with an official numbered
+chart, unlike Italy or Poland above. Eleven texts in the register. Three
+things the format could not say.
+
+### A clearance system built, this time, on the format the field was written for
+
+`packs/it/`, `packs/pl/`, `packs/mx/`, `packs/vn/`, `packs/kr/` and `packs/sa/`
+above all leave `einvoicing.profile` null because their national systems —
+FatturaPA, FA(3), CFDI, hóa đơn có mã, 전자세금계산서, FATOORA — are not built
+on the semantic model of EN 16931 at all: declaring `peppol-bis-3` or
+`xrechnung` of a FatturaPA invoice would be true of nothing. RO e-Factura is
+the first of this repository's clearance systems where that reason does not
+apply: its CIUS-RO technical specification (Ordinul ministrului finanțelor nr.
+1.366/2021, modified by nr. 4.092/2022) is a Core Invoice Usage Specification
+of EN 16931 in exactly the sense `peppol-bis-3` and `xrechnung` are, written in
+UBL 2.1, the same syntax `packages/formats/peppol-ubl` already reads and
+writes. And `packs/ro/` still declares `profile: null`, for a reason none of
+the six packs above needed: **the buyer never receives the seller's file.**
+OUG nr. 120/2021, art. 4 alin. (4) and (6): a structured invoice that passes
+validation is sealed by the system — "se aplică sigiliul electronic al
+Ministerului Finanțelor" — and only then reaches its recipient, and "the
+original of the electronic invoice is deemed to be the XML file accompanied by
+the electronic seal of the Ministry of Finance." What the buyer opens is a
+copy the State re-issued with its own seal, not the file the seller
+transmitted — Poland's own KSeF is deemed issued the moment it reaches the
+system and received only once the system stamps a KSeF number on it (art.
+106na ust. 1 and 3 ustawy o VAT, this document's own words above), which is
+the same shape stated from the other end: an EN-16931-conformant syntax
+changes what a peer-to-peer profile *could* look like the day this repository
+writes one, and changes nothing about whether `packages/formats/` may claim one
+exists today. It does not: no brick anywhere under `packages/formats/`
+implements CIUS-RO's own Schematron rules (`BR-RO-*`), and `peppol-ubl`
+conforming to EN 16931 in general is not conforming to a national CIUS in
+particular, exactly as a French pack conforming to Factur-X says nothing about
+whether it conforms to XRechnung. *Fix*: none proposed beyond the one already
+on file for the five packs above — a field for the exchange model
+(`clearance`, `four_corner`, `five_corner`) beside `profile`, which would let
+`packs/ro/` say two true things at once instead of one: the format is EN
+16931's, and the transport is the State's.
+
+### A tax point with two derogations, and a field for one
+
+Codul fiscal art. 282 alin. (2) opens with the ordinary derogation this field
+already has a word for — an invoice issued before delivery moves the tax
+point to the invoice date, lit. a) — and adds, in the same paragraph, a second
+one no sibling pack has needed side by side with the first: an advance payment
+collected before delivery, lit. b), moves the tax point to the date of
+collection. `tax_point` is one word for a country's *general* rule, and
+`invoice_if_issued` already states lit. a) honestly, the way `docs/packs.md`
+asks it to; a tax could restate lit. b) for itself through `cash_basis`, but
+that field marks a tax whose *whole* regime falls due on collection, and an
+advance payment is one operation of an otherwise ordinary sale, not a second
+tax. Estonia's KMS § 11 lg 1 already forced the vocabulary to grow one value,
+`earliest_of_delivery_or_payment`, for a rule with exactly two branches and no
+invoice in between; Romania's is a rule with three — delivery, an earlier
+invoice, an earlier payment — read down to the two the format can hold.
+`packs/ro/documents.tax_point` declares `invoice_if_issued` and says in its own
+`legal_reference` which branch it leaves out, rather than silently answering
+half the question the way `docs/packs.md`'s own Belgian, Luxembourgish and
+Estonian examples record having done once already.
+
+### Postponed import VAT, on no row of the return at all
+
+An intra-Community acquisition is declared on both sides of the same return —
+rd. 5 and rd. 20 of the formularul 300, the shape `docs/packs.md`'s Estonian
+KMD example already generalises. An import under the postponed-accounting
+regime of Codul fiscal art. 326 alin. (4)-(5) is not: an authorised importer
+never pays the tax to customs and never self-assesses it as output tax either,
+and the instructions of the formularul 300 say so of rd. 24/25 in as many
+words — that row excludes exactly this case. No other row was found for it.
+`RO-P-IMPORT-21` therefore models only the ordinary, non-deferred import
+(rd. 24, the row it shares with a domestic purchase at the standard rate), and
+an authorised importer under the postponed regime has no tax code of this pack
+to book its imports with. This is not the pro rata or the carry-forward gap
+`packs/pl/` already names for its own return above — those are amounts a
+single period's postings genuinely cannot compute; this is an operation the
+return's own instructions place nowhere, which no field of `tax_report.json`
+was built to leave silent on purpose.
+
+### RON
+
+Added to `00_currencies.sql` at two decimals. `RO` already carried a row of
+`00_territories.sql`, `full` since 1 January 2007 — the accession date, not
+the date the common system of VAT started applying zero rate and reverse
+charge in Romania's own domestic law, which is exactly the day this table's
+own `From making a tax follow the territory` section above expects.

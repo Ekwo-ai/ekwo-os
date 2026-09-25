@@ -1,0 +1,253 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "RO",
+  "name": "Romania",
+  "version": "0.1.0",
+  "schema_min": "20260921145425",
+  "seed_sequence": 72,
+  "released_at": "2026-09-25",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "codul-fiscal",
+        "title": "Legea nr. 227/2015 privind Codul fiscal, cu modificările și completările ulterioare — formă consolidată",
+        "publisher": "Ministerul Justiției — Portalul Legislativ",
+        "url": "https://legislatie.just.ro/Public/DetaliiDocument/171282",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "legea-141-2025",
+        "title": "Legea nr. 141/2025 privind unele măsuri fiscal-bugetare, în domeniul pensiilor și al gestionării eficiente a resurselor din instituțiile publice, pentru fortificarea capacității financiare — art. II pct. 42-45, care modifică art. 291 din Codul fiscal (cotele de TVA) și art. III (regim tranzitoriu locuințe)",
+        "publisher": "Agenția Națională de Administrare Fiscală",
+        "url": "https://static.anaf.ro/static/10/Anaf/legislatie/L_141_2025.pdf",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "opanaf-174-2026",
+        "title": "Ordinul președintelui ANAF nr. 174/2026 pentru aprobarea modelului și conținutului formularului (300) „Decont de taxă pe valoarea adăugată”",
+        "publisher": "Agenția Națională de Administrare Fiscală",
+        "url": "https://static.anaf.ro/static/10/Anaf/legislatie/OPANAF_174_2026.pdf",
+        "consulted_on": "2026-09-25",
+        "kind": "regulation"
+      },
+      {
+        "key": "d300-formular",
+        "title": "Formularul (300) „Decont de taxă pe valoarea adăugată” — anexele 1-3 la Ordinul președintelui ANAF nr. 174/2026: modelul, instrucțiunile de completare și caracteristicile de editare",
+        "publisher": "Agenția Națională de Administrare Fiscală",
+        "url": "https://static.anaf.ro/static/10/Anaf/formulare/D300_OPANAF_174_2026.pdf",
+        "consulted_on": "2026-09-25",
+        "kind": "form"
+      },
+      {
+        "key": "oug-120-2021",
+        "title": "Ordonanța de urgență a Guvernului nr. 120/2021 privind administrarea, funcționarea și implementarea sistemului național privind factura electronică RO e-Factura, cu modificările și completările ulterioare — formă consolidată",
+        "publisher": "Ministerul Justiției — Portalul Legislativ",
+        "url": "https://legislatie.just.ro/Public/DetaliiDocument/247243",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "omf-4092-2022",
+        "title": "Ordinul ministrului finanțelor nr. 4.092/2022 pentru modificarea Ordinului nr. 1.366/2021 privind aprobarea specificațiilor tehnice ale sistemului RO e-Factura — Core Invoice Usage Specification pentru România (CIUS-RO), versiunea 1.0.1",
+        "publisher": "Ministerul Finanțelor",
+        "url": "https://legislatie.just.ro/Public/DetaliiDocument/262568",
+        "consulted_on": "2026-09-25",
+        "kind": "regulation"
+      },
+      {
+        "key": "oanaf-1783-2021",
+        "title": "Ordinul președintelui ANAF nr. 1.783/2021 privind natura informațiilor pe care contribuabilul/plătitorul are obligația să le declare prin fișierul standard de control fiscal (SAF-T) și modelul de raportare, precum și calendarul de implementare — formă consolidată",
+        "publisher": "Ministerul Justiției — Portalul Legislativ",
+        "url": "https://legislatie.just.ro/public/DetaliiDocument/248326",
+        "consulted_on": "2026-09-25",
+        "kind": "regulation"
+      },
+      {
+        "key": "legea-72-2013",
+        "title": "Legea nr. 72/2013 privind măsurile pentru combaterea întârzierii în executarea obligațiilor de plată a unor sume de bani rezultând din contracte încheiate între profesioniști și între aceștia și autorități contractante — formă consolidată",
+        "publisher": "Ministerul Justiției — Portalul Legislativ",
+        "url": "https://legislatie.just.ro/Public/DetaliiDocumentAfis/174101",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "omfp-1802-2014",
+        "title": "Ordinul ministrului finanțelor publice nr. 1.802/2014 pentru aprobarea Reglementărilor contabile privind situațiile financiare anuale individuale și situațiile financiare anuale consolidate — formă consolidată, inclusiv Planul de conturi general (pct. 14) și formatele bilanțului și contului de profit și pierdere",
+        "publisher": "Ministerul Justiției — Portalul Legislativ",
+        "url": "https://legislatie.just.ro/Public/DetaliiDocument/164320",
+        "consulted_on": "2026-09-25",
+        "kind": "regulation"
+      },
+      {
+        "key": "spv-portal",
+        "title": "Spațiul Privat Virtual (SPV) — portalul prin care se depun declarațiile fiscale, inclusiv decontul de TVA și facturile RO e-Factura",
+        "publisher": "Agenția Națională de Administrare Fiscală",
+        "url": "https://www.anaf.ro/anaf/internet/ANAF/servicii_online/serviciul_spatiul_privat_virtual/",
+        "consulted_on": "2026-09-25",
+        "kind": "portal"
+      },
+      {
+        "key": "en-16931",
+        "title": "EN 16931-1 — semantic data model of the core elements of an electronic invoice, required by Directive 2014/55/EU",
+        "publisher": "European Commission",
+        "url": "https://ec.europa.eu/digital-building-blocks/sites/spaces/DIGITAL/pages/467108950/EN+16931+compliance",
+        "consulted_on": "2026-09-25",
+        "kind": "standard"
+      },
+      {
+        "key": "uncl5305",
+        "title": "UNCL5305 — VAT category code list (BT-118 and BT-151), the subset published for EN 16931",
+        "publisher": "OpenPEPPOL — list published by the European Commission",
+        "url": "https://docs.peppol.eu/poacc/billing/3.0/codelist/UNCL5305/",
+        "consulted_on": "2026-09-25",
+        "kind": "standard"
+      },
+      {
+        "key": "vatex",
+        "title": "VATEX — VAT exemption reason code list (BT-121)",
+        "publisher": "OpenPEPPOL — list published by the European Commission",
+        "url": "https://docs.peppol.eu/poacc/billing/3.0/codelist/vatex/",
+        "consulted_on": "2026-09-25",
+        "kind": "standard"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "RON",
+    "language": "ro",
+    "rounding_method": "half_up",
+    "opening_entry_label": "Notă contabilă de deschidere",
+    "closing_style": "result_accounts",
+    "roles": {
+      "receivable": "4111",
+      "payable": "401",
+      "suspense": "473",
+      "rounding": "6588",
+      "retained_earnings": "1171",
+      "current_year_result_profit": "121",
+      "current_year_result_loss": "121",
+      "sales": "707",
+      "purchase": "607",
+      "bank": "5121",
+      "cash": "5311",
+      "fx_gain": "765",
+      "fx_loss": "665",
+      "tax_payable": "4423",
+      "tax_receivable": "4424"
+    },
+    "journal_roles": {
+      "sales": "VNZ",
+      "purchase": "CMP",
+      "miscellaneous": "DIV",
+      "opening": "DES"
+    },
+    "fiscal_year_default": "calendar"
+  },
+  "languages": [],
+  "journals": [
+    { "code": "VNZ", "type": "sales", "name": "Jurnal de vânzări", "sequence": 10 },
+    { "code": "CMP", "type": "purchase", "name": "Jurnal de cumpărări", "sequence": 20 },
+    { "code": "BNC", "type": "bank", "name": "Jurnal de bancă", "sequence": 30 },
+    { "code": "CAS", "type": "cash", "name": "Jurnal de casă", "sequence": 40 },
+    { "code": "DIV", "type": "general", "name": "Operațiuni diverse", "sequence": 50 },
+    { "code": "DES", "type": "opening", "name": "Notă de deschidere", "sequence": 60 }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Planul de conturi general (clasele 1-7)",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": ["RO-OMFP-BS", "RO-OMFP-IS"],
+      "legal_reference": "Ordinul ministrului finanțelor publice nr. 1.802/2014, pct. 14 și anexă — Planul de conturi general, cu nouă clase (1-9). Acest pachet transcrie un subset funcțional al claselor 1-7 (capitaluri, imobilizări, stocuri, terți, trezorerie, cheltuieli, venituri), folosind exact codurile oficiale ale conturilor sintetice de gradul I și II; clasele 8 (conturi speciale, în afara bilanțului) și 9 (conturi de gestiune, contabilitate de gestiune internă) nu sunt reluate, fiind opționale și fără corespondent direct în formularul de TVA sau în situațiile financiare prescurtate. Câteva conturi analitice de gradul II fără o subdiviziune oficială fixă (de exemplu 6588) sunt o convenție a acestui pachet, semnalată în README",
+      "source": "omfp-1802-2014"
+    }
+  ],
+  "documents": {
+    "numbering": "sequential",
+    "number_format": "{CODE}-{YYYY}-{NNNN}",
+    "legal_payment_days": 30,
+    "late_payment_reference": "Legea nr. 72/2013, art. 3 — dobânda legală penalizatoare curge de plin drept de la data scadenței, fără nicio notificare prealabilă; art. 4 — în lipsa unei dobânzi convenite, se aplică dobânda legală penalizatoare stabilită conform art. 3 din Ordonanța Guvernului nr. 13/2011, la nivelul ratei dobânzii de referință a Băncii Naționale a României în vigoare în prima zi calendaristică a semestrului, majorată cu 8 puncte procentuale.",
+    "tax_point": "invoice_if_issued",
+    "references": {
+      "numbering": {
+        "legal_reference": "Codul fiscal, art. 319 alin. (20) lit. a) — factura cuprinde în mod obligatoriu «numărul de ordine, în baza uneia sau a mai multor serii, care identifică factura în mod unic». Legea cere doar un număr secvențial și unic, ca și la art. 106e ust. 1 pkt 2 din legea poloneză a TVA — nici continuitate fără goluri, nici o remitere la zero anuală nu sunt impuse de text; seria anuală (an în număr) este o convenție larg răspândită în practică, posibil precizată doar în Normele metodologice de aplicare (Hotărârea Guvernului nr. 1/2016), text pe care cercetarea acestui pachet nu l-a putut verifica separat.",
+        "source": "codul-fiscal"
+      },
+      "payment_terms": {
+        "legal_reference": "Legea nr. 72/2013, art. 3 alin. (1) — dobânda curge după 30 de zile calendaristice de la data primirii facturii sau, dacă data primirii facturii este incertă ori anterioară recepției bunurilor/serviciilor, de la data recepției acestora.",
+        "source": "legea-72-2013"
+      },
+      "tax_point": {
+        "legal_reference": "Codul fiscal, art. 281 alin. (1) — faptul generator intervine la data livrării bunurilor sau la data prestării serviciilor, cu regulile speciale ale alin. (7)-(8) pentru livrări/prestări continue sau cu decontări succesive; art. 282 alin. (1) — exigibilitatea taxei intervine, ca regulă, la data faptului generator; art. 282 alin. (2) lit. a) — derogare: dacă factura este emisă înainte de data faptului generator, exigibilitatea intervine la data emiterii facturii. Nemodelat: art. 282 alin. (2) lit. b) — un avans încasat înainte de faptul generator face taxa exigibilă la data încasării, o derogare pe care acest câmp nu poate exprima decât prin cash_basis pe o taxă anume, ca și în Belgia sau Luxemburg.",
+        "source": "codul-fiscal"
+      }
+    },
+    "mentions": [
+      {
+        "code": "reverse_charge",
+        "applies_when": "reverse_charge",
+        "text": "Taxare inversă",
+        "sequence": 10,
+        "legal_reference": "Codul fiscal, art. 319 alin. (20) — mențiunile obligatorii ale facturii, printre care mențiunea corespunzătoare atunci când beneficiarul este persoana obligată la plata taxei.",
+        "source": "codul-fiscal"
+      },
+      {
+        "code": "intracom_goods",
+        "applies_when": "intra_eu_goods",
+        "text": "Scutit de TVA — livrare intracomunitară de bunuri, art. 294 alin. (2) lit. a) din Codul fiscal.",
+        "sequence": 20,
+        "legal_reference": "Codul fiscal, art. 319 alin. (20) — mențiunea corespunzătoare unei operațiuni scutite, cu trimitere la dispoziția legală aplicabilă; art. 294 alin. (2) lit. a) — livrarea intracomunitară de bunuri scutită, transpunând art. 138 din Directiva 2006/112/CE.",
+        "source": "codul-fiscal"
+      },
+      {
+        "code": "intracom_services",
+        "applies_when": "intra_eu_services",
+        "text": "Taxare inversă — prestare de servicii intracomunitară, art. 278 alin. (2) din Codul fiscal.",
+        "sequence": 30,
+        "legal_reference": "Codul fiscal, art. 319 alin. (20); art. 278 alin. (2) — regula generală B2B, locul prestării la sediul beneficiarului, care devine persoana obligată la plata taxei (art. 44 și 196 din Directiva 2006/112/CE).",
+        "source": "codul-fiscal"
+      },
+      {
+        "code": "export",
+        "applies_when": "export",
+        "text": "Scutit de TVA — export, art. 294 alin. (1) din Codul fiscal.",
+        "sequence": 40,
+        "legal_reference": "Codul fiscal, art. 319 alin. (20); art. 294 alin. (1) lit. a) — scutirea cu drept de deducere pentru bunurile expediate sau transportate în afara Uniunii Europene de către furnizor.",
+        "source": "codul-fiscal"
+      },
+      {
+        "code": "exempt",
+        "applies_when": "exempt",
+        "text": "Scutit de TVA, art. 292 din Codul fiscal.",
+        "sequence": 50,
+        "legal_reference": "Codul fiscal, art. 319 alin. (20); art. 292 — scutirile fără drept de deducere pentru anumite activități de interes general și pentru alte operațiuni.",
+        "source": "codul-fiscal"
+      },
+      {
+        "code": "late_payment",
+        "applies_when": "late_payment",
+        "text": "În caz de întârziere la plată, se datorează de plin drept dobânda legală penalizatoare prevăzută de Legea nr. 72/2013, precum și o indemnizație forfetară de recuperare a creanței.",
+        "sequence": 60,
+        "legal_reference": "Legea nr. 72/2013, art. 3 și art. 13 — dobânda legală penalizatoare și indemnizația forfetară de recuperare a creanței, datorate fără punere în întârziere.",
+        "source": "legea-72-2013"
+      }
+    ]
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "Ordonanța de urgență a Guvernului nr. 120/2021, cu modificările ulterioare — sistemul național RO e-Factura este obligatoriu în relația B2B dintre persoane impozabile stabilite în România începând cu 1 iulie 2024 (perioadă de grație fără sancțiuni până la 31 decembrie 2024; sancțiuni aplicabile de la 1 iulie 2025), cu un termen de transmitere de 5 zile lucrătoare de la data emiterii facturii. Factura electronică este redactată în format UBL 2.1, potrivit specificațiilor tehnice CIUS-RO aprobate prin Ordinul ministrului finanțelor nr. 1.366/2021, modificat prin Ordinul nr. 4.092/2022 — un profil conform modelului semantic EN 16931, spre deosebire de FatturaPA (Italia) sau de schema XML națională FA(3) (Polonia). Dar RO e-Factura n-a rămas pentru asta un schimb descentralizat între parteneri: art. 4 alin. (4)-(6) din OUG 120/2021 dispune că, dacă factura respectă structura impusă, sistemul aplică «sigiliul electronic al Ministerului Finanțelor» și abia atunci o comunică destinatarului, iar «exemplarul original al facturii electronice se consideră fișierul de tip XML însoțit de sigiliul electronic al Ministerului Finanțelor» — nu fișierul emis de vânzător. Cumpărătorul primește deci o copie sigilată de stat, nu factura direct de la vânzător: o clearance de tip CTC, ca și SdI-ul italian sau KSeF-ul polonez, deși construită pe un format nominal EN 16931. Niciun brick din packages/formats/ nu scrie, validează sau transmite azi o factură conformă CIUS-RO (regulile Schematron BR-RO-* nu sunt implementate); profile și mandatory_from rămân deci vide, ca la Italia și Polonia, mai degrabă decât să afirme o interoperabilitate pe care acest depozit n-o oferă încă — a se vedea secțiunea «From Romania» din docs/international.md. vat_scheme și party_scheme rămân de asemenea vide: canalul RO e-Factura identifică părțile prin codul de identificare fiscală (CIF), nu printr-o schemă ISO 6523 verificată oficial; o eventuală schemă Peppol pentru context transfrontalier nu a putut fi confirmată dintr-o sursă oficială românească în cadrul acestei cercetări.",
+    "source": "oug-120-2021"
+  },
+  "bank": {
+    "statement_formats": ["camt.053", "mt940"],
+    "payment_formats": ["pain.001"]
+  }
+}

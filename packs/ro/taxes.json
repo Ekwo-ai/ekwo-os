@@ -1,0 +1,282 @@
+[
+  {
+    "code": "RO-S-21",
+    "name": "Vânzări — cota standard 21%",
+    "kind": "vat",
+    "rate": 21,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2025-08-01",
+    "vat_category": "S",
+    "legal_reference": "Codul fiscal, art. 291 alin. (1), astfel cum a fost modificat de art. II pct. 42 din Legea nr. 141/2025 — cota standard de 21%, aplicabilă de la 1 august 2025 (anterior 19%, de la 1 ianuarie 2017).",
+    "source": "legea-141-2025",
+    "sequence": 10,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "9" },
+        { "type": "tax", "account": "4427", "box": "9" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "9", "box_factor": -100 },
+        { "type": "tax", "account": "4427", "box": "9", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "RO-S-11",
+    "name": "Vânzări — cota redusă 11%",
+    "kind": "vat",
+    "rate": 11,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2025-08-01",
+    "vat_category": "S",
+    "legal_reference": "Codul fiscal, art. 291 alin. (2), astfel cum a fost modificat de art. II pct. 42 din Legea nr. 141/2025 — cota redusă unică de 11%, care înlocuiește de la 1 august 2025 cele două cote reduse anterioare de 9% și 5%, pentru: medicamente de uz uman; alimente și băuturi destinate consumului uman și animal (cu excepția băuturilor alcoolice, a celor de la codul NC 2202 și a produselor cu peste 10 g zahăr/100 g, altele decât laptele praf pentru nou-născuți); apă și canalizare; îngrășăminte și pesticide de uz agricol; manuale școlare, cărți, ziare și reviste; acces la castele, muzee, monumente, grădini zoologice și botanice; lemn de foc și peleți; energie termică furnizată populației și anumitor instituții în sezonul rece (1 noiembrie — 31 martie); locuințe ca parte a politicii sociale; cazare hotelieră; servicii de restaurant și catering (cu aceleași excepții privind băuturile).",
+    "source": "legea-141-2025",
+    "sequence": 20,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "10" },
+        { "type": "tax", "account": "4427", "box": "10" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "10", "box_factor": -100 },
+        { "type": "tax", "account": "4427", "box": "10", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "RO-S-EXPORT",
+    "name": "Export de bunuri — scutit cu drept de deducere",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2016-01-01",
+    "vat_category": "G",
+    "exemption_code": "VATEX-EU-G",
+    "conditions": ["transport_evidence"],
+    "legal_reference": "Codul fiscal, art. 294 alin. (1) lit. a) — scutire cu drept de deducere pentru livrarea de bunuri expediate sau transportate în afara Uniunii Europene de către furnizor sau de altă persoană în contul acestuia. Rândul formularului 300 nu numește explicit exportul: acest pachet îl declară la rd. 14 « Livrări de bunuri și prestări de servicii scutite cu drept de deducere, altele decât cele de la rd. 1-3 », singurul rând rămas pentru o scutire cu drept de deducere care nu este nici o livrare intracomunitară (rd. 1), nici o operațiune al cărei loc de livrare este în afara României (rd. 3) — o lectură a formularului și nu o casetă dedicată exportului, de reverificat de un contabil.",
+    "source": "d300-formular",
+    "sequence": 30,
+    "postings": {
+      "invoice": [ { "type": "base", "box": "14" } ],
+      "credit_note": [ { "type": "base", "box": "14", "box_factor": -100 } ]
+    }
+  },
+  {
+    "code": "RO-S-ICG",
+    "name": "Livrare intracomunitară de bunuri — scutită",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "intracom_goods",
+    "valid_from": "2007-01-01",
+    "vat_category": "K",
+    "exemption_code": "VATEX-EU-IC",
+    "conditions": ["transport_evidence", "buyer_status"],
+    "legal_reference": "Codul fiscal, art. 294 alin. (2) lit. a) — scutire cu drept de deducere pentru livrarea intracomunitară de bunuri către o persoană care îi comunică furnizorului un cod valabil de înregistrare în scopuri de TVA dintr-un alt stat membru, transpunând art. 138 din Directiva 2006/112/CE.",
+    "source": "codul-fiscal",
+    "sequence": 40,
+    "postings": {
+      "invoice": [ { "type": "base", "box": "1" } ],
+      "credit_note": [ { "type": "base", "box": "1", "box_factor": -100 } ]
+    }
+  },
+  {
+    "code": "RO-S-ICS",
+    "name": "Prestare de servicii intracomunitară — neimpozabilă în România",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "intracom_services",
+    "valid_from": "2010-01-01",
+    "vat_category": "K",
+    "exemption_code": "VATEX-EU-IC",
+    "legal_reference": "Codul fiscal, art. 278 alin. (2) — locul prestării unui serviciu generic către o persoană impozabilă este locul unde beneficiarul este stabilit; taxa se datorează, prin taxare inversă, de beneficiarul stabilit în alt stat membru (art. 44 și 196 din Directiva 2006/112/CE).",
+    "source": "codul-fiscal",
+    "sequence": 50,
+    "postings": {
+      "invoice": [ { "type": "base", "box": "3" } ],
+      "credit_note": [ { "type": "base", "box": "3", "box_factor": -100 } ]
+    }
+  },
+  {
+    "code": "RO-S-EXE",
+    "name": "Operațiuni financiare scutite — dobânzi pentru credite acordate",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2007-01-01",
+    "vat_category": "E",
+    "exemption_code": "VATEX-EU-135",
+    "legal_reference": "Codul fiscal, art. 292 alin. (2) lit. a) pct. 1 — scutirea fără drept de deducere pentru acordarea și negocierea de credite, precum și gestiunea creditelor de către persoana care le acordă, inclusiv dobânzile aferente, transpunând art. 135 alin. (1) lit. b) din Directiva 2006/112/CE. Codul VATEX-EU-135 este un cod generic pentru articolul 135; alegerea sa aici, în locul unui cod mai specific dacă lista VATEX ar publica unul, este de reconfirmat de un contabil.",
+    "source": "codul-fiscal",
+    "sequence": 60,
+    "postings": {
+      "invoice": [ { "type": "base", "box": "15" } ],
+      "credit_note": [ { "type": "base", "box": "15", "box_factor": -100 } ]
+    }
+  },
+  {
+    "code": "RO-S-RC-331",
+    "name": "Livrare supusă taxării inverse — măsuri de simplificare",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "domestic_reverse_charge",
+    "valid_from": "2016-01-01",
+    "vat_category": "AE",
+    "exemption_code": "VATEX-EU-AE",
+    "legal_reference": "Codul fiscal, art. 331 alin. (2) — printre bunurile și serviciile supuse măsurilor de simplificare (taxare inversă) se numără cerealele și plantele tehnice, potrivit casetei « livrare de cereale și plante tehnice » a formularului 300; taxa este datorată de beneficiar, care o înregistrează în decontul propriu, iar factura se emite fără TVA, cu mențiunea « taxare inversă ».",
+    "source": "codul-fiscal",
+    "sequence": 70,
+    "postings": {
+      "invoice": [ { "type": "base", "box": "13" } ],
+      "credit_note": [ { "type": "base", "box": "13", "box_factor": -100 } ]
+    }
+  },
+  {
+    "code": "RO-P-21",
+    "name": "Achiziții — cota standard 21%",
+    "kind": "vat",
+    "rate": 21,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2025-08-01",
+    "legal_reference": "Codul fiscal, art. 291 alin. (1), astfel cum a fost modificat de art. II pct. 42 din Legea nr. 141/2025 — cota standard de 21%; art. 297 și art. 298 — dreptul de deducere a taxei aferente achizițiilor destinate operațiunilor taxabile.",
+    "source": "legea-141-2025",
+    "sequence": 80,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "24" },
+        { "type": "tax", "account": "4426", "box": "24" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "24", "box_factor": -100 },
+        { "type": "tax", "account": "4426", "box": "24", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "RO-P-11",
+    "name": "Achiziții — cota redusă 11%",
+    "kind": "vat",
+    "rate": 11,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2025-08-01",
+    "legal_reference": "Codul fiscal, art. 291 alin. (2), astfel cum a fost modificat de art. II pct. 42 din Legea nr. 141/2025 — cota redusă de 11%; art. 297 și art. 298 — dreptul de deducere.",
+    "source": "legea-141-2025",
+    "sequence": 90,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "25" },
+        { "type": "tax", "account": "4426", "box": "25" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "25", "box_factor": -100 },
+        { "type": "tax", "account": "4426", "box": "25", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "RO-P-IMPORT-21",
+    "name": "Import de bunuri — cota standard 21%",
+    "kind": "vat",
+    "rate": 21,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2025-08-01",
+    "legal_reference": "Codul fiscal, art. 291 alin. (1); art. 326 — taxa datorată pentru importul de bunuri se stabilește prin declarația vamală. Instrucțiunile formularului 300 nu rezervă un rând distinct importurilor: rd. 24 cuprinde « baza de impozitare și taxa aferentă importurilor care nu se încadrează în prevederile art. 326 alin. (4) și (5) », alături de achizițiile interne cu cota de 21%. Regimul de amânare a plății TVA la import (art. 326 alin. (4)-(5), «taxare prin decontul de taxă», des utilizat de importatorii înregistrați) rămâne nemodelat: formularul însuși îl exclude din rd. 24/25 fără să-i rezerve un alt rând — a se vedea secțiunea «From Romania» din docs/international.md.",
+    "source": "d300-formular",
+    "sequence": 100,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "24" },
+        { "type": "tax", "account": "4426", "box": "24" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "24", "box_factor": -100 },
+        { "type": "tax", "account": "4426", "box": "24", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "RO-P-ICG-21",
+    "name": "Achiziție intracomunitară de bunuri — taxare inversă 21%",
+    "kind": "vat",
+    "rate": 21,
+    "scope": "purchase",
+    "treatment": "intracom_acquisition_goods",
+    "valid_from": "2025-08-01",
+    "vat_category": "K",
+    "exemption_code": "VATEX-EU-IC",
+    "legal_reference": "Codul fiscal, art. 273 — achiziția intracomunitară de bunuri este operațiune impozabilă; art. 308 — cumpărătorul înregistrat în scopuri de TVA colectează taxa prin taxare inversă, o înscrie atât ca taxă colectată (rd. 5 din formularul 300), cât și, în măsura dreptului de deducere, ca taxă deductibilă (rd. 20) — o singură bază, reluată în cele două rânduri, exact ca la achiziția intracomunitară estoniană din docs/packs.md.",
+    "source": "codul-fiscal",
+    "sequence": 110,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": ["5", "20"] },
+        { "type": "tax", "account": "4427", "box": "5" },
+        { "type": "tax", "factor": -100, "account": "4426", "box": "20" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": ["5", "20"], "box_factor": -100 },
+        { "type": "tax", "account": "4427", "box": "5", "box_factor": -100 },
+        { "type": "tax", "factor": -100, "account": "4426", "box": "20", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "RO-P-ICS-21",
+    "name": "Achiziție de servicii intracomunitare — taxare inversă 21%",
+    "kind": "vat",
+    "rate": 21,
+    "scope": "purchase",
+    "treatment": "intracom_acquisition_services",
+    "valid_from": "2025-08-01",
+    "vat_category": "K",
+    "exemption_code": "VATEX-EU-IC",
+    "legal_reference": "Codul fiscal, art. 278 alin. (2) și art. 307 alin. (2) — beneficiarul stabilit în România al unui serviciu generic prestat de o persoană impozabilă stabilită în alt stat membru este obligat la plata taxei prin taxare inversă. Formularul 300 nu rezervă rd. 7/22 exclusiv serviciilor intracomunitare: același rând cuprinde și achizițiile de bunuri și servicii de la persoane neînregistrate în România, altele decât cele de la rd. 5/20 — a se vedea RO-P-EXT-21.",
+    "source": "codul-fiscal",
+    "sequence": 120,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": ["7", "22"] },
+        { "type": "tax", "account": "4427", "box": "7" },
+        { "type": "tax", "factor": -100, "account": "4426", "box": "22" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": ["7", "22"], "box_factor": -100 },
+        { "type": "tax", "account": "4427", "box": "7", "box_factor": -100 },
+        { "type": "tax", "factor": -100, "account": "4426", "box": "22", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "RO-P-EXT-21",
+    "name": "Achiziție de servicii de la un prestator din afara Uniunii — taxare inversă 21%",
+    "kind": "vat",
+    "rate": 21,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2025-08-01",
+    "legal_reference": "Codul fiscal, art. 278 alin. (2) și art. 307 alin. (2) — regula generală B2B plasează prestarea la sediul beneficiarului stabilit în România, indiferent dacă prestatorul este stabilit în Uniune sau în afara ei; beneficiarul este obligat la plata taxei prin taxare inversă. Formularul 300 nu separă cele două cazuri: rd. 7/22 le cuprinde pe amândouă, ca și rândul VJ3 al modelului italian descris în docs/packs.md.",
+    "source": "codul-fiscal",
+    "sequence": 130,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": ["7", "22"] },
+        { "type": "tax", "account": "4427", "box": "7" },
+        { "type": "tax", "factor": -100, "account": "4426", "box": "22" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": ["7", "22"], "box_factor": -100 },
+        { "type": "tax", "account": "4427", "box": "7", "box_factor": -100 },
+        { "type": "tax", "factor": -100, "account": "4426", "box": "22", "box_factor": -100 }
+      ]
+    }
+  }
+]
