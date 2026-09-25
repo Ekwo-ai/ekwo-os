@@ -1,0 +1,185 @@
+[
+  {
+    "code": "IS-S-24",
+    "name": "Sala, almennt skatthlutfall 24%",
+    "rate": 24,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2015-01-01",
+    "legal_reference": "1. mgr. 14. gr. laga nr. 50/1988 — virðisaukaskattur skal vera 24% og rennur hann í ríkissjóð. Núverandi hlutfall gildir frá 1. janúar 2015 (áður 25,5%).",
+    "source": "vsklog",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "A" },
+        { "type": "tax", "account": "2500", "box": "D" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "A", "box_factor": -100 },
+        { "type": "tax", "account": "2500", "box": "D", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 10
+  },
+  {
+    "code": "IS-S-11",
+    "name": "Sala, lægra skatthlutfall 11%",
+    "rate": 11,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2015-01-01",
+    "legal_reference": "2. mgr. 14. gr. laga nr. 50/1988 — 11% skatthlutfall gildir m.a. um útleigu hótel- og gistiherbergja, farþegaflutninga (aðra en almenningssamgöngur, sem eru undanþegnar), þjónustu ferðaskrifstofa og ferðaskipuleggjenda, afnotagjöld hljóðvarps- og sjónvarpsstöðva, sölu dagblaða, tímarita og héraðsfréttablaða, sölu bóka og hljóðbóka, sölu á heitu vatni, rafmagni og olíu til hitunar húsa, sölu matvæla og annarra vara til manneldis, aðgangseyri að vegamannvirkjum, sölu hljómplatna og annarra sambærilegra miðla með tónlist, sölu á vörum til getnaðarvarna og margnota bleyjum, aðgang að baðhúsum, gufuböðum og heilsulindum og leiðsöguþjónustu. Núverandi hlutfall gildir frá 1. janúar 2015 (áður 7%).",
+    "source": "vsklog",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "B" },
+        { "type": "tax", "account": "2501", "box": "D" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "B", "box_factor": -100 },
+        { "type": "tax", "account": "2501", "box": "D", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 20
+  },
+  {
+    "code": "IS-S-EXPORT",
+    "name": "Útflutningur vöru (undanþegin, með innskattsrétti)",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "1990-01-01",
+    "legal_reference": "1. tölul. 1. mgr. 12. gr. laga nr. 50/1988 — vara sem seld er úr landi telst ekki til skattskyldrar veltu, en réttur til innskattsfrádráttar helst óskertur af sölunni (skýr undantekning frá afhendingarreglunni, ólíkt undanþeginni starfsemi 2. gr.).",
+    "source": "vsklog",
+    "vat_category": "G",
+    "postings": {
+      "invoice": [{ "type": "base", "box": "C" }],
+      "credit_note": [{ "type": "base", "box": "C", "box_factor": -100 }]
+    },
+    "kind": "vat",
+    "sequence": 30
+  },
+  {
+    "code": "IS-S-SERVICES-EXPORT",
+    "name": "Þjónustusala til erlendra atvinnufyrirtækja (undanþegin, með innskattsrétti)",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "1990-01-01",
+    "legal_reference": "2. tölul. 1. mgr. 12. gr. laga nr. 50/1988 — sala þjónustu til atvinnufyrirtækja sem hafa hvorki heimilisfesti né fasta starfsstöð hér á landi telst ekki til skattskyldrar veltu, með óskertum innskattsrétti. Meðal dæma sem tíunduð eru í leiðbeiningum Skattsins (rsk_1119, bls. 24): auglýsingaþjónusta, ráðgjafarþjónusta, verkfræðiþjónusta, lögfræðiþjónusta, bókhalds- og endurskoðunarþjónusta, fjarskiptaþjónusta og rafrænt veitt þjónusta.",
+    "source": "vsklog",
+    "vat_category": "G",
+    "postings": {
+      "invoice": [{ "type": "base", "box": "C" }],
+      "credit_note": [{ "type": "base", "box": "C", "box_factor": -100 }]
+    },
+    "kind": "vat",
+    "sequence": 40
+  },
+  {
+    "code": "IS-S-EXEMPT",
+    "name": "Fasteignaleiga (undanþegin starfsemi, án innskattsréttar)",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "1990-01-01",
+    "legal_reference": "3. mgr. 2. gr. laga nr. 50/1988 — starfsemi sem talin er upp í málsgreininni er undanþegin virðisaukaskatti, þar á meðal fasteignaleiga (leiðbeiningar Skattsins, rsk_1119, bls. 7: „Fasteignaleiga... Endurgjald fyrir ýmis fasteignatengd réttindi fellur hér undir, leigusali lætur leigutaka í té slík afnot fasteignar sinnar eða hluta hennar að viðjafnist á við raunveruleg umráð eiganda.“). Ólíkt útflutningi 12. gr. veitir þessi undanþága engan rétt til innskattsfrádráttar af aðföngum sem varða hana (16. gr.). RSK 10.01 gerir enga kröfu um að undanþegin velta sé tilgreind í skýrslunni (sjá skýringu við reit C), svo grunnfjárhæðin er bókuð en ekki tilkynnt í neinum reit.",
+    "source": "vsklog",
+    "vat_category": "E",
+    "postings": {
+      "invoice": [{ "type": "base" }],
+      "credit_note": [{ "type": "base" }]
+    },
+    "kind": "vat",
+    "sequence": 50
+  },
+  {
+    "code": "IS-P-24",
+    "name": "Innkaup, almennt skatthlutfall 24%",
+    "rate": 24,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2015-01-01",
+    "legal_reference": "15. og 16. gr. laga nr. 50/1988 — virðisaukaskattur sem skattskyldum aðila er reiknaður af aðföngum sem eingöngu varða skattskylda starfsemi hans telst til innskatts og dregst frá útskatti.",
+    "source": "vsklog",
+    "postings": {
+      "invoice": [{ "type": "tax", "account": "1600", "box": "E" }],
+      "credit_note": [{ "type": "tax", "account": "1600", "box": "E", "box_factor": -100 }]
+    },
+    "kind": "vat",
+    "sequence": 60
+  },
+  {
+    "code": "IS-P-11",
+    "name": "Innkaup, lægra skatthlutfall 11%",
+    "rate": 11,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2015-01-01",
+    "legal_reference": "15. og 16. gr. laga nr. 50/1988.",
+    "source": "vsklog",
+    "postings": {
+      "invoice": [{ "type": "tax", "account": "1601", "box": "E" }],
+      "credit_note": [{ "type": "tax", "account": "1601", "box": "E", "box_factor": -100 }]
+    },
+    "kind": "vat",
+    "sequence": 70
+  },
+  {
+    "code": "IS-P-24-NA",
+    "name": "Innkaup fyrir undanþegna starfsemi, 24% (án innskattsréttar)",
+    "rate": 24,
+    "scope": "purchase",
+    "treatment": "exempt",
+    "valid_from": "2015-01-01",
+    "legal_reference": "16. gr. laga nr. 50/1988 — innkaup sem eingöngu varða undanþegna starfsemi samkvæmt 2. gr. veita engan rétt til innskattsfrádráttar; skatturinn sem seljandinn lagði á reikninginn leggst þá við kaupverð þeirrar vöru eða þjónustu sem keypt var.",
+    "source": "vsklog",
+    "postings": {
+      "invoice": [{ "type": "tax_on_base" }],
+      "credit_note": [{ "type": "tax_on_base" }]
+    },
+    "kind": "vat",
+    "sequence": 80
+  },
+  {
+    "code": "IS-P-FOREIGN-24",
+    "name": "Aðkeypt þjónusta erlendis frá, virðisaukaskattur til uppgjörs 24%",
+    "rate": 24,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2015-01-01",
+    "legal_reference": "35. gr. laga nr. 50/1988 — skattskyldur aðili sem kaupir virðisaukaskattsskylda þjónustu frá aðila sem hvorki hefur heimilisfesti né fasta starfsstöð hér á landi skal sjálfur standa skil á virðisaukaskatti af þjónustunni. RSK 10.01 hefur engan sérstakan reit fyrir þessa fjárhæð (ólíkt t.d. svissneska eyðublaðinu, sem hefur reit fyrir bezugsteuer): hún er því færð beint í útskatt (reit D) og, að því marki sem kaupin varða eingöngu skattskylda starfsemi kaupanda og veita fullan innskattsrétt samkvæmt 15. gr., samhliða í innskatt (reit E) — sjá leiðbeiningar Skattsins, rsk_1119, bls. 9.",
+    "source": "vsklog",
+    "postings": {
+      "invoice": [
+        { "type": "tax", "account": "1603", "box": "E" },
+        { "type": "tax", "factor": -100, "account": "2502", "box": "D" }
+      ],
+      "credit_note": [
+        { "type": "tax", "account": "1603", "box": "E", "box_factor": -100 },
+        { "type": "tax", "factor": -100, "account": "2502", "box": "D", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 90
+  },
+  {
+    "code": "IS-P-IMPORT-24",
+    "name": "Innflutningur vöru, innskattur af innflutningsskatti 24%",
+    "rate": 24,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2015-01-01",
+    "legal_reference": "Virðisaukaskattur af innflutningi er lagður á og innheimtur af tollyfirvöldum samkvæmt tollalögum nr. 88/2005 og 8.–10. gr. laga nr. 50/1988 um skattverð, við tollafgreiðslu og óháð virðisaukaskattsskýrslu tímabilsins (sjá leiðbeiningar Skattsins, rsk_1119, bls. 37). 4. mgr. 15. gr. sömu laga heimilar að telja þennan skatt til innskatts. RSK 10.01 hefur því engan reit fyrir grunn eða fjárhæð innflutningsskatts sjálfs — aðeins hinn frádráttarbæri innskattur birtist, í reit E.",
+    "source": "vsklog",
+    "postings": {
+      "invoice": [{ "type": "tax", "account": "1602", "box": "E" }],
+      "credit_note": [{ "type": "tax", "account": "1602", "box": "E", "box_factor": -100 }]
+    },
+    "kind": "vat",
+    "sequence": 100
+  }
+]

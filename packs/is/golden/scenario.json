@@ -1,0 +1,171 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "Tveggja mánaða uppgjörstímabil íslensks skattskylds fyrirtækis",
+  "chart": "default",
+  "fiscal_year": { "name": "Rekstrarár 2026", "start": "2026-01-01", "end": "2026-12-31" },
+  "periods": [{ "code": "2026-01/02", "from": "2026-01-01", "to": "2026-02-28" }],
+  "statements": ["IS-696-BS", "IS-696-IS"],
+  "contacts": [
+    { "ref": "client-is", "name": "Bakarí Sólrúnar ehf.", "type": "customer", "country": "IS" },
+    { "ref": "guest-is", "name": "Jón Jónsson", "type": "customer", "country": "IS" },
+    { "ref": "client-de", "name": "Nordisk Design GmbH", "type": "customer", "country": "DE" },
+    { "ref": "client-us", "name": "Blue Harbor Consulting Inc.", "type": "customer", "country": "US" },
+    { "ref": "tenant-is", "name": "Tannlæknastofan Bros ehf.", "type": "customer", "country": "IS" },
+    { "ref": "supplier-is", "name": "Skrifstofuvörur Reykjavíkur ehf.", "type": "supplier", "country": "IS" },
+    { "ref": "supplier-ie", "name": "Emerald Cloud Services Ltd", "type": "supplier", "country": "IE" },
+    { "ref": "supplier-cn", "name": "Fjord Import Trading Co.", "type": "supplier", "country": "CN" }
+  ],
+  "documents": [
+    {
+      "ref": "V1",
+      "type": "sale_invoice",
+      "contact": "client-is",
+      "date": "2026-01-10",
+      "why": "Sala á almennu skatthlutfalli: reitur A og útskatturinn af honum í reit D.",
+      "lines": [
+        { "name": "Bakkelsi í heildsölu", "quantity": 10, "unit_price": 10000, "tax": "IS-S-24", "account": "3000" }
+      ]
+    },
+    {
+      "ref": "V2",
+      "type": "sale_invoice",
+      "contact": "client-is",
+      "date": "2026-01-14",
+      "why": "Sala á lægra skatthlutfalli samkvæmt 2. mgr. 14. gr.: matvæli, reitur B.",
+      "lines": [
+        { "name": "Matvæli til endursölu", "quantity": 1, "unit_price": 50000, "tax": "IS-S-11", "account": "3010" }
+      ]
+    },
+    {
+      "ref": "V3",
+      "type": "sale_invoice",
+      "contact": "client-de",
+      "date": "2026-01-18",
+      "why": "Útflutningur vöru úr landi, undanþeginn samkvæmt 1. tölul. 1. mgr. 12. gr., með fullum innskattsrétti — taux zéro/export-tilvikið, reitur C.",
+      "lines": [
+        { "name": "Hönnunarvörur, útflutt til Þýskalands", "quantity": 1, "unit_price": 200000, "tax": "IS-S-EXPORT", "account": "3020" }
+      ]
+    },
+    {
+      "ref": "V4",
+      "type": "sale_invoice",
+      "contact": "client-us",
+      "date": "2026-01-20",
+      "why": "Sala ráðgjafarþjónustu til atvinnufyrirtækis án heimilisfestis hér á landi, undanþegin samkvæmt 2. tölul. 1. mgr. 12. gr., reitur C.",
+      "lines": [
+        { "name": "Ráðgjafarþjónusta um sjávarútveg", "quantity": 1, "unit_price": 150000, "tax": "IS-S-SERVICES-EXPORT", "account": "3030" }
+      ]
+    },
+    {
+      "ref": "V5",
+      "type": "sale_invoice",
+      "contact": "tenant-is",
+      "date": "2026-01-25",
+      "why": "Fasteignaleiga, undanþegin virðisaukaskatti samkvæmt 3. mgr. 2. gr., án innskattsréttar — l'exonération-tilvikið, ekkert bókast í reit C.",
+      "lines": [
+        { "name": "Húsaleiga, tannlæknastofa, janúar", "quantity": 1, "unit_price": 80000, "tax": "IS-S-EXEMPT", "account": "3040" }
+      ]
+    },
+    {
+      "ref": "CN1",
+      "type": "sale_credit_note",
+      "contact": "client-is",
+      "date": "2026-02-02",
+      "why": "Kreditreikningur sem afturkallar hluta af V1 — báðar áttir á almenna skatthlutfallinu í sama Golden.",
+      "lines": [
+        { "name": "Endursend bakkelsi", "quantity": 2, "unit_price": 10000, "tax": "IS-S-24", "account": "3000" }
+      ]
+    },
+    {
+      "ref": "A1",
+      "type": "purchase_invoice",
+      "contact": "supplier-is",
+      "date": "2026-01-12",
+      "why": "Venjuleg rekstrarkaup á almennu skatthlutfalli, innskattur í reit E.",
+      "lines": [
+        { "name": "Skrifstofuvörur", "quantity": 1, "unit_price": 40000, "tax": "IS-P-24", "account": "6100" }
+      ]
+    },
+    {
+      "ref": "A2",
+      "type": "purchase_invoice",
+      "contact": "supplier-is",
+      "date": "2026-01-16",
+      "why": "Vörukaup á lægra skatthlutfalli til endursölu, innskattur af 11% í reit E.",
+      "lines": [
+        { "name": "Matvæli til endursölu", "quantity": 1, "unit_price": 20000, "tax": "IS-P-11", "account": "4010" }
+      ]
+    },
+    {
+      "ref": "A3",
+      "type": "purchase_invoice",
+      "contact": "supplier-is",
+      "date": "2026-02-04",
+      "why": "Viðhald á húsnæði sem eingöngu er notað fyrir undanþegna fasteignaleigu (V5): 16. gr. veitir engan innskattsrétt, svo skatturinn leggst við kostnaðinn — hlutfrádráttur/óskattfrádráttarbæra tilvikið.",
+      "lines": [
+        { "name": "Viðhald á leiguhúsnæði", "quantity": 1, "unit_price": 15000, "tax": "IS-P-24-NA", "account": "6000" }
+      ]
+    },
+    {
+      "ref": "A4",
+      "type": "purchase_invoice",
+      "contact": "supplier-ie",
+      "date": "2026-02-09",
+      "why": "Aðkeypt þjónusta erlendis frá (35. gr.): kaupandi stendur sjálfur skil á virðisaukaskattinum, færður bæði í útskatt (reit D) og innskatt (reit E) þar sem kaupin varða eingöngu skattskylda starfsemi.",
+      "lines": [
+        { "name": "Hýsingarþjónusta og hugbúnaðarráðgjöf", "quantity": 1, "unit_price": 60000, "tax": "IS-P-FOREIGN-24", "account": "6600" }
+      ]
+    },
+    {
+      "ref": "A5",
+      "type": "purchase_invoice",
+      "contact": "supplier-cn",
+      "date": "2026-02-11",
+      "why": "Innflutningur vöru: innflutningsskatturinn er lagður á og innheimtur af tollyfirvöldum utan þessarar skýrslu, aðeins innskatturinn af honum birtist í reit E.",
+      "lines": [
+        { "name": "Innfluttar vörubirgðir", "quantity": 1, "unit_price": 90000, "tax": "IS-P-IMPORT-24", "account": "1400" }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "E1",
+      "direction": "inbound",
+      "date": "2026-01-28",
+      "amount": 124000,
+      "contact": "client-is",
+      "journal": "BNK",
+      "match": "V1",
+      "why": "Innborgun sem stendur nákvæmlega undir V1, á undan kreditreikningnum CN1."
+    },
+    {
+      "ref": "E2",
+      "direction": "inbound",
+      "date": "2026-02-05",
+      "amount": 55500,
+      "contact": "client-is",
+      "journal": "BNK",
+      "match": "V2",
+      "why": "Innborgun sem stendur nákvæmlega undir V2."
+    },
+    {
+      "ref": "E3",
+      "direction": "outbound",
+      "date": "2026-02-06",
+      "amount": 49600,
+      "contact": "supplier-is",
+      "journal": "BNK",
+      "match": "A1",
+      "why": "Greiðsla sem stendur nákvæmlega undir A1."
+    },
+    {
+      "ref": "E4",
+      "direction": "inbound",
+      "date": "2026-02-20",
+      "amount": 18600,
+      "contact": "guest-is",
+      "journal": "BNK",
+      "why": "Ósamtengd innborgun — óráðstafaða/ómátaða tilvikið."
+    }
+  ]
+}

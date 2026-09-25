@@ -232,6 +232,7 @@ says what they say. `ekwo pack describe <cc>` is everything one of them says.
 | [`hr`](../packs/hr/) | Croatia | `74_pack_hr.sql` | hr | `community` |
 | [`hu`](../packs/hu/) | Magyarország | `70_pack_hu.sql` | hu | `community` |
 | [`ie`](../packs/ie/) | Ireland | `16_pack_ie.sql` | en | `community` |
+| [`is`](../packs/is/) | Ísland | `81_pack_is.sql` | is | `community` |
 | [`it`](../packs/it/) | Italia | `37_pack_it.sql` | it, en | `community` |
 | [`jp`](../packs/jp/) | 日本 | `51_pack_jp.sql` | ja, en | `community` |
 | [`km`](../packs/km/) | Comores | `26_pack_km.sql` | fr | `community` |

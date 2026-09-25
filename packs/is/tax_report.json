@@ -1,0 +1,79 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "IS-VSK-10.01",
+  "name": "Virðisaukaskattsskýrsla (RSK 10.01)",
+  "period": ["bimonth", "month", "year"],
+  "period_default": "bimonth",
+  "valid_from": "2015-01-01",
+  "legal_reference": "1. mgr. 24. gr. laga nr. 50/1988 og reglugerð nr. 667/1995 — almenna reglan er sú að hvert uppgjörstímabil virðisaukaskatts sé tveir mánuðir (janúar/febrúar, mars/apríl, maí/júní, júlí/ágúst, september/október, nóvember/desember), sem gildir um alla skattskylda aðila nema þeir falli undir sérstakar undantekningar. Þeir sem stunda umfangsmikinn rekstur geta fengið mánaðarlegt uppgjörstímabil (rg. 667/1995, um mánaðarskil) og þeir sem selja skattskylda vöru eða þjónustu fyrir 4.000.000 kr. eða minna á ári geta óskað eftir árlegu uppgjöri (24. gr., um ársskil). Bændur og nytjaskógræktendur hafa sérreglur með uppgjöri tvisvar á ári (1. september og 1. mars), sem þessi pakki modelar ekki — sjá README.md.",
+  "source": "vsklog",
+  "boxes": [
+    {
+      "box": "A",
+      "kind": "base",
+      "name": "Skattskyld velta án VSK í 24% þrepi",
+      "sequence": 10,
+      "legal_reference": "RSK 10.01, reitur A — skattskyld velta samkvæmt 24% skatthlutfalli 14. gr. laga nr. 50/1988.",
+      "source": "rsk-1001"
+    },
+    {
+      "box": "B",
+      "kind": "base",
+      "name": "Skattskyld velta án VSK í 11% þrepi",
+      "sequence": 20,
+      "legal_reference": "RSK 10.01, reitur B — skattskyld velta samkvæmt 11% skatthlutfalli 14. gr. laga nr. 50/1988.",
+      "source": "rsk-1001"
+    },
+    {
+      "box": "C",
+      "kind": "base",
+      "name": "Undanþegin velta, svo sem útflutningur",
+      "sequence": 30,
+      "legal_reference": "RSK 10.01, reitur C — hér er aðeins átt við útflutning og aðra sölu sem ber núllskatt samkvæmt 12. gr. laga nr. 50/1988. Ekki er heimilt að færa í þennan reit upplýsingar um undanþegna starfsemi samkvæmt 2. gr., skaðabætur eða aðra hreina styrki (leiðbeiningar Skattsins, rsk_1119, bls. 35).",
+      "source": "rsk-1119"
+    },
+    {
+      "box": "D",
+      "kind": "tax",
+      "name": "Útskattur",
+      "sequence": 40,
+      "legal_reference": "RSK 10.01, reitur D — samtals útskattur á uppgjörstímabilinu.",
+      "source": "rsk-1001"
+    },
+    {
+      "box": "E",
+      "kind": "tax",
+      "name": "Innskattur",
+      "sequence": 50,
+      "legal_reference": "RSK 10.01, reitur E — samtals innskattur á uppgjörstímabilinu.",
+      "source": "rsk-1001"
+    },
+    {
+      "box": "F",
+      "kind": "total",
+      "name": "Álagning (D − E)",
+      "sequence": 60,
+      "plus": ["D"],
+      "minus": ["E"],
+      "legal_reference": "RSK 10.01, reitur F — mismunur útskatts og innskatts samkvæmt reitum D og E.",
+      "source": "rsk-1001"
+    },
+    {
+      "box": "G",
+      "kind": "base",
+      "name": "Álag á vangreiddan virðisaukaskatt",
+      "sequence": 70,
+      "legal_reference": "RSK 10.01, reitur G — álag samkvæmt 28. gr. laga nr. 50/1988, sem leggst á ef greitt er eftir gjalddaga. Fjárhæðin er reiknuð af vefskilakerfi Skattsins út frá greiðsludegi, sem er utan þess sem þessi pakki heldur utan um, svo ekkert bókast í þennan reit — sjá README.md.",
+      "source": "rsk-1001"
+    },
+    {
+      "box": "H",
+      "kind": "total",
+      "name": "Samtala — til greiðslu eða inneign",
+      "sequence": 80,
+      "plus": ["F", "G"],
+      "legal_reference": "RSK 10.01, reitur H — sé samtalan jákvæð er hún til greiðslu, sé hún neikvæð er hún inneign (leiðbeiningar Skattsins, rsk_1119, bls. 35).",
+      "source": "rsk-1119"
+    }
+  ]
+}

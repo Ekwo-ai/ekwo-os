@@ -1,0 +1,308 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/statements",
+  "statements": [
+    {
+      "code": "IS-696-BS",
+      "kind": "balance_sheet",
+      "framework": "IS-696",
+      "name": "Efnahagsreikningur samkvæmt 3. gr. reglugerðar nr. 696/2019",
+      "legal_reference": "Reglugerð nr. 696/2019 um framsetningu og innihald ársreikninga og samstæðureikninga, 3. gr., sett samkvæmt heimild í 6. gr. laga nr. 3/2006 um ársreikninga, sem innleiðir tilskipun 2013/34/ESB (sbr. lög nr. 73/2016). 3. gr. skiptir efnahagsreikningnum í fastafjármuni (a. óefnislegar eignir, b. efnislegar eignir, c. fjáreignir) og veltufjármuni (a. birgðir, b. skammtímakröfur, c. verðbréf, d. handbært fé) á eignahlið, og eigið fé, langtímaskuldir og skammtímaskuldir á hinni.",
+      "source": "reglugerd696-2019",
+      "lines": [
+        { "code": "EIGNIR", "name": "Eignir samtals", "sequence": 10, "is_total": true, "plus": ["AV", "UV"] },
+        {
+          "code": "AV",
+          "parent": "EIGNIR",
+          "name": "Fastafjármunir",
+          "sequence": 20,
+          "is_total": true,
+          "plus": ["AV.1", "AV.2", "AV.3"],
+          "legal_reference": "Reglugerð nr. 696/2019, 3. gr., 1. tölul.",
+          "source": "reglugerd696-2019"
+        },
+        {
+          "code": "AV.1",
+          "parent": "AV",
+          "name": "Óefnislegar eignir",
+          "sequence": 30,
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "1010", "code_to": "1099" }],
+          "legal_reference": "Reglugerð nr. 696/2019, 3. gr., 1. tölul., a-liður",
+          "source": "reglugerd696-2019"
+        },
+        {
+          "code": "AV.2",
+          "parent": "AV",
+          "name": "Efnislegar eignir",
+          "sequence": 40,
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "1100", "code_to": "1299" }],
+          "legal_reference": "Reglugerð nr. 696/2019, 3. gr., 1. tölul., b-liður",
+          "source": "reglugerd696-2019"
+        },
+        {
+          "code": "AV.3",
+          "parent": "AV",
+          "name": "Fjáreignir",
+          "sequence": 50,
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "1300", "code_to": "1399" }],
+          "legal_reference": "Reglugerð nr. 696/2019, 3. gr., 1. tölul., c-liður",
+          "source": "reglugerd696-2019"
+        },
+        {
+          "code": "UV",
+          "parent": "EIGNIR",
+          "name": "Veltufjármunir",
+          "sequence": 60,
+          "is_total": true,
+          "plus": ["UV.1", "UV.2", "UV.3", "UV.4"],
+          "legal_reference": "Reglugerð nr. 696/2019, 3. gr., 2. tölul.",
+          "source": "reglugerd696-2019"
+        },
+        {
+          "code": "UV.1",
+          "parent": "UV",
+          "name": "Birgðir",
+          "sequence": 70,
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "1400", "code_to": "1499" }],
+          "legal_reference": "Reglugerð nr. 696/2019, 3. gr., 2. tölul., a-liður",
+          "source": "reglugerd696-2019"
+        },
+        {
+          "code": "UV.2",
+          "parent": "UV",
+          "name": "Skammtímakröfur og fyrirfram greiddur kostnaður",
+          "sequence": 80,
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "1500", "code_to": "1799" }],
+          "legal_reference": "Reglugerð nr. 696/2019, 3. gr., 2. tölul., b-liður — meðal annars sundurliðunar á virðisaukaskattskröfum og fyrirfram greiddum kostnaði, sem þessi kontóáætlun hefur ekki sérstaka reikningaröð fyrir og raðar því hér.",
+          "source": "reglugerd696-2019"
+        },
+        {
+          "code": "UV.3",
+          "parent": "UV",
+          "name": "Verðbréf",
+          "sequence": 90,
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "1800", "code_to": "1899" }],
+          "legal_reference": "Reglugerð nr. 696/2019, 3. gr., 2. tölul., c-liður",
+          "source": "reglugerd696-2019"
+        },
+        {
+          "code": "UV.4",
+          "parent": "UV",
+          "name": "Handbært fé",
+          "sequence": 100,
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "1900", "code_to": "1999" }],
+          "legal_reference": "Reglugerð nr. 696/2019, 3. gr., 2. tölul., d-liður",
+          "source": "reglugerd696-2019"
+        },
+        { "code": "SKEF", "name": "Skuldir og eigið fé samtals", "sequence": 110, "is_total": true, "plus": ["EK", "LS", "SS"] },
+        {
+          "code": "EK",
+          "parent": "SKEF",
+          "name": "Eigið fé",
+          "sequence": 120,
+          "is_total": true,
+          "plus": ["EK.1", "EK.2", "EK.3"],
+          "legal_reference": "Reglugerð nr. 696/2019, 3. gr., 3. tölul.",
+          "source": "reglugerd696-2019"
+        },
+        {
+          "code": "EK.1",
+          "parent": "EK",
+          "name": "Hlutafé og yfirverðsreikningur hlutafjár",
+          "sequence": 130,
+          "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "2000", "code_to": "2019" }],
+          "legal_reference": "Reglugerð nr. 696/2019, 3. gr., 3. tölul., a-liður",
+          "source": "reglugerd696-2019"
+        },
+        {
+          "code": "EK.2",
+          "parent": "EK",
+          "name": "Lögbundnir sjóðir",
+          "sequence": 140,
+          "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "2020", "code_to": "2089" }],
+          "legal_reference": "Reglugerð nr. 696/2019, 3. gr., 3. tölul.",
+          "source": "reglugerd696-2019"
+        },
+        {
+          "code": "EK.3",
+          "parent": "EK",
+          "name": "Óráðstafað eigið fé",
+          "sequence": 150,
+          "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "2090", "code_to": "2099" }],
+          "legal_reference": "Reglugerð nr. 696/2019, 3. gr., 3. tölul.",
+          "source": "reglugerd696-2019"
+        },
+        {
+          "code": "LS",
+          "parent": "SKEF",
+          "name": "Langtímaskuldir",
+          "sequence": 160,
+          "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "2200", "code_to": "2399" }],
+          "legal_reference": "Reglugerð nr. 696/2019, 3. gr., 4. tölul.",
+          "source": "reglugerd696-2019"
+        },
+        {
+          "code": "SS",
+          "parent": "SKEF",
+          "name": "Skammtímaskuldir",
+          "sequence": 170,
+          "is_total": true,
+          "plus": ["SS.1", "SS.2", "SS.3", "SS.4"],
+          "legal_reference": "Reglugerð nr. 696/2019, 3. gr., 5. tölul.",
+          "source": "reglugerd696-2019"
+        },
+        {
+          "code": "SS.1",
+          "parent": "SS",
+          "name": "Næsta árs afborgun langtímalána",
+          "sequence": 180,
+          "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "2400", "code_to": "2409" }],
+          "legal_reference": "Reglugerð nr. 696/2019, 3. gr., 5. tölul., a-liður",
+          "source": "reglugerd696-2019"
+        },
+        {
+          "code": "SS.2",
+          "parent": "SS",
+          "name": "Viðskiptaskuldir",
+          "sequence": 190,
+          "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "2410", "code_to": "2499" }],
+          "legal_reference": "Reglugerð nr. 696/2019, 3. gr., 5. tölul.",
+          "source": "reglugerd696-2019"
+        },
+        {
+          "code": "SS.3",
+          "parent": "SS",
+          "name": "Virðisaukaskattur og aðrar opinberar skuldir",
+          "sequence": 200,
+          "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "2500", "code_to": "2699" }],
+          "legal_reference": "Reglugerð nr. 696/2019, 3. gr., 5. tölul.",
+          "source": "reglugerd696-2019"
+        },
+        {
+          "code": "SS.4",
+          "parent": "SS",
+          "name": "Fyrirframinnheimtar tekjur",
+          "sequence": 210,
+          "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "2700", "code_to": "2799" }],
+          "legal_reference": "Reglugerð nr. 696/2019, 3. gr., 5. tölul.",
+          "source": "reglugerd696-2019"
+        }
+      ]
+    },
+    {
+      "code": "IS-696-IS",
+      "kind": "income_statement",
+      "framework": "IS-696",
+      "name": "Rekstrarreikningur samkvæmt 5. gr. reglugerðar nr. 696/2019 (eftir eðli kostnaðar)",
+      "legal_reference": "Reglugerð nr. 696/2019, 5. gr. — rekstrarreikningur eftir eðli kostnaðar, liðir 1 til 12: hrein velta, aðrar rekstrartekjur, kostnaðarverð seldra vara, laun og launatengd gjöld, önnur rekstrargjöld, afskriftir og virðisrýrnun, fjármunatekjur og fjármagnsgjöld, og hagnaður eða tap ársins. Þessi pakki velur þessa framsetningu; 4. gr., 2. mgr. leyfir framsetningu eftir starfsemisflokkun kostnaðar ef hún þykir gefa gleggri mynd, sem þessi pakki notar ekki.",
+      "source": "reglugerd696-2019",
+      "lines": [
+        {
+          "code": "NE",
+          "name": "Hrein velta",
+          "sequence": 10,
+          "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "3000", "code_to": "3099" }],
+          "legal_reference": "Reglugerð nr. 696/2019, 5. gr., 1. tölul.",
+          "source": "reglugerd696-2019"
+        },
+        {
+          "code": "KSV",
+          "name": "Kostnaðarverð seldra vara",
+          "sequence": 20,
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "4000", "code_to": "4099" }],
+          "legal_reference": "Reglugerð nr. 696/2019, 5. gr., 3. tölul.",
+          "source": "reglugerd696-2019"
+        },
+        {
+          "code": "LAUN",
+          "name": "Laun og launatengd gjöld",
+          "sequence": 30,
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "5000", "code_to": "5199" }],
+          "legal_reference": "Reglugerð nr. 696/2019, 5. gr., 4. tölul.",
+          "source": "reglugerd696-2019"
+        },
+        {
+          "code": "ONNUR",
+          "name": "Önnur rekstrargjöld",
+          "sequence": 40,
+          "sign": 1,
+          "rules": [
+            { "kind": "code_range", "code_from": "6000", "code_to": "6999" },
+            { "kind": "code_range", "code_from": "9900", "code_to": "9999" }
+          ],
+          "legal_reference": "Reglugerð nr. 696/2019, 5. gr., 5. tölul. — jöfnunarmismunur (9900) er tæknilegur reikningur án eigin liðar og er felldur hér inn.",
+          "source": "reglugerd696-2019"
+        },
+        {
+          "code": "AFSKR",
+          "name": "Afskriftir og virðisrýrnun",
+          "sequence": 50,
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "7000", "code_to": "7099" }],
+          "legal_reference": "Reglugerð nr. 696/2019, 5. gr., 6. tölul.",
+          "source": "reglugerd696-2019"
+        },
+        {
+          "code": "FE",
+          "name": "Fjármunatekjur",
+          "sequence": 60,
+          "sign": -1,
+          "rules": [
+            { "kind": "code_range", "code_from": "8000", "code_to": "8099" },
+            { "kind": "code_range", "code_from": "8200", "code_to": "8299" }
+          ],
+          "legal_reference": "Reglugerð nr. 696/2019, 5. gr., 7. tölul.",
+          "source": "reglugerd696-2019"
+        },
+        {
+          "code": "FA",
+          "name": "Fjármagnsgjöld",
+          "sequence": 70,
+          "sign": 1,
+          "rules": [
+            { "kind": "code_range", "code_from": "8100", "code_to": "8199" },
+            { "kind": "code_range", "code_from": "8300", "code_to": "8399" }
+          ],
+          "legal_reference": "Reglugerð nr. 696/2019, 5. gr., 7. tölul.",
+          "source": "reglugerd696-2019"
+        },
+        {
+          "code": "SKATT",
+          "name": "Reiknaður tekjuskattur",
+          "sequence": 80,
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "9000", "code_to": "9099" }],
+          "legal_reference": "Reglugerð nr. 696/2019, 5. gr., 10. tölul.",
+          "source": "reglugerd696-2019"
+        },
+        {
+          "code": "JG",
+          "name": "Hagnaður eða tap ársins",
+          "sequence": 90,
+          "is_total": true,
+          "plus": ["NE", "FE"],
+          "minus": ["KSV", "LAUN", "ONNUR", "AFSKR", "FA", "SKATT"],
+          "legal_reference": "Reglugerð nr. 696/2019, 5. gr., 12. tölul.",
+          "source": "reglugerd696-2019"
+        }
+      ]
+    }
+  ]
+}

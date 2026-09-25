@@ -1,0 +1,114 @@
+code,parent,type,reconcilable,name,sequence
+1010,,asset_fixed,false,Þróunarkostnaður,10
+1020,,asset_fixed,false,Viðskiptavild,20
+1030,,asset_fixed,false,Hugverkaréttindi og leyfi,30
+1040,,asset_fixed,false,Fyrirframgreiðslur vegna óefnislegra eigna,40
+1100,,asset_fixed,false,Lóðir og lendur,50
+1110,,asset_fixed,false,Byggingar og mannvirki,60
+1120,,asset_fixed,false,Vélar og tæki,70
+1130,,asset_fixed,false,Áhöld og innréttingar,80
+1140,,asset_fixed,false,Bifreiðar,90
+1150,,asset_fixed,false,Tölvubúnaður og hugbúnaður,100
+1160,,asset_fixed,false,Skrifstofubúnaður,110
+1170,,asset_fixed,false,Fyrirframgreiðslur og eignir í smíðum,120
+1300,,asset_non_current,false,Eignarhlutir í dótturfélögum,130
+1310,,asset_non_current,false,Eignarhlutir í öðrum félögum,140
+1320,,asset_non_current,false,Langtímakröfur á tengda aðila,150
+1330,,asset_non_current,false,Aðrar langtímakröfur,160
+1400,,asset_current,false,Hráefnisbirgðir,170
+1410,,asset_current,false,Vörur í vinnslu,180
+1420,,asset_current,false,Fullunnar vörur,190
+1430,,asset_current,false,Vörubirgðir til endursölu,200
+1440,,asset_current,false,Niðurfærsla vörubirgða,210
+1500,,asset_receivable,true,Viðskiptakröfur,220
+1501,,asset_receivable,true,Kröfur á tengda aðila,230
+1502,,asset_current,false,Ógreiddar vaxtatekjur,240
+1510,,asset_current,false,Aðrar skammtímakröfur,250
+1600,,asset_current,false,"Innskattur, 24% þrep",260
+1601,,asset_current,false,"Innskattur, 11% þrep",270
+1602,,asset_current,false,Innskattur af innflutningi vöru,280
+1603,,asset_current,false,Innskattur af aðkeyptri þjónustu erlendis frá,290
+1690,,asset_current,true,Uppgjör virðisaukaskatts — inneign,300
+1700,,asset_prepayments,false,Fyrirfram greiddur kostnaður,310
+1710,,asset_prepayments,false,Fyrirfram greidd tryggingariðgjöld,320
+1720,,asset_prepayments,false,Fyrirfram greidd leiga,330
+1800,,asset_current,false,"Markaðsverðbréf, hlutabréf",340
+1810,,asset_current,false,"Markaðsverðbréf, skuldabréf",350
+1900,,asset_cash,false,Sjóður,360
+1910,,asset_cash,false,Bankareikningur,370
+1920,,asset_cash,false,Gjaldeyrisreikningur,380
+2000,,equity,false,Hlutafé,390
+2010,,equity,false,Yfirverðsreikningur hlutafjár,400
+2020,,equity,false,Lögbundinn varasjóður,410
+2030,,equity,false,Endurmatsreikningur,420
+2090,,equity_retained,false,Óráðstafað eigið fé,430
+2200,,liability_non_current,false,Langtímalán hjá lánastofnunum,440
+2210,,liability_non_current,false,"Skuldir við tengda aðila, langtíma",450
+2220,,liability_non_current,false,Skuldabréfaútgáfa,460
+2230,,liability_non_current,false,Skuldbinding vegna lífeyris,470
+2400,,liability_current,false,Næsta árs afborgun langtímalána,480
+2410,,liability_payable,true,Viðskiptaskuldir,490
+2411,,liability_payable,true,"Skuldir við tengda aðila, skammtíma",500
+2420,,liability_current,false,Ógreiddir vextir,510
+2500,,liability_current,false,"Útskattur, 24% þrep",520
+2501,,liability_current,false,"Útskattur, 11% þrep",530
+2502,,liability_current,false,Útskattur af aðkeyptri þjónustu erlendis frá,540
+2590,,liability_current,true,Uppgjör virðisaukaskatts — til greiðslu,550
+2600,,liability_current,false,Ógreidd laun,560
+2610,,liability_current,false,Staðgreiðsla og lífeyrissjóðsiðgjöld,570
+2620,,liability_current,false,Tryggingagjald,580
+2630,,liability_current,false,Orlofsskuldbinding,590
+2650,,liability_current,false,Milligreiðslureikningur,600
+2660,,liability_current,false,Ógreiddur tekjuskattur,610
+2700,,liability_current,false,Fyrirframinnheimtar tekjur,620
+2710,,liability_current,false,Fyrirframinnheimtar leigutekjur,630
+3000,,income,false,"Sala, 24% þrep",640
+3010,,income,false,"Sala, 11% þrep",650
+3020,,income,false,Útflutningur vöru,660
+3030,,income,false,Þjónustusala til erlendra fyrirtækja,670
+3040,,income,false,Undanþegin velta — fasteignaleiga,680
+3050,,income,false,Undanþegin velta — önnur,690
+3090,,income,false,Afsláttur og endursendar vörur,700
+4000,,expense_direct_cost,false,"Vörunotkun/kostnaðarverð seldra vara, 24% þrep",710
+4010,,expense_direct_cost,false,"Vörunotkun, 11% þrep",720
+4020,,expense_direct_cost,false,Vörunotkun af innfluttri vöru,730
+4030,,expense_direct_cost,false,Flutningskostnaður vegna vara,740
+4090,,expense_direct_cost,false,Afsláttur birgja,750
+5000,,expense,false,Laun,760
+5010,,expense,false,Yfirvinnulaun,770
+5020,,expense,false,Verktakalaun,780
+5100,,expense,false,Launatengd gjöld,790
+5110,,expense,false,Lífeyrissjóðsiðgjöld launagreiðanda,800
+5120,,expense,false,Tryggingagjald,810
+6000,,expense,false,Húsnæðiskostnaður,820
+6010,,expense,false,Hiti og rafmagn,830
+6020,,expense,false,Ræsting,840
+6100,,expense,false,Rekstrarvörur og skrifstofukostnaður,850
+6110,,expense,false,Prentkostnaður,860
+6200,,expense,false,Sími og netþjónusta,870
+6210,,expense,false,Póstburðargjöld,880
+6300,,expense,false,Auglýsingar og markaðsstarf,890
+6310,,expense,false,Vefsíðurekstur,900
+6400,,expense,false,Bókhalds- og endurskoðunarkostnaður,910
+6410,,expense,false,Lögfræðiþjónusta,920
+6500,,expense,false,Ferða- og risnukostnaður,930
+6510,,expense,false,Námskeið og fræðsla,940
+6600,,expense,false,Aðkeypt sérfræðiþjónusta erlendis frá,950
+6700,,expense,false,Tryggingar,960
+6710,,expense,false,Bifreiðakostnaður,970
+6720,,expense,false,Viðhald véla og tækja,980
+6800,,expense,false,Félagsgjöld og styrkir,990
+6900,,expense,false,Annar rekstrarkostnaður,1000
+7000,,expense_depreciation,false,Afskriftir óefnislegra eigna,1010
+7010,,expense_depreciation,false,Afskriftir bygginga og mannvirkja,1020
+7020,,expense_depreciation,false,Afskriftir véla og tækja,1030
+7030,,expense_depreciation,false,Afskriftir bifreiða,1040
+8000,,income_other,false,Vaxtatekjur,1050
+8010,,income_other,false,Arðstekjur,1060
+8100,,expense,false,Vaxtagjöld,1070
+8110,,expense,false,Bankakostnaður,1080
+8200,,income_other,false,Gengishagnaður,1090
+8300,,expense,false,Gengistap,1100
+9000,,expense,false,Reiknaður tekjuskattur,1110
+9010,,expense,false,Tekjuskattur fyrri ára,1120
+9900,,expense,false,Jöfnunarmismunur,1130

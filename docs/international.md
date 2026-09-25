@@ -4902,3 +4902,34 @@ posts no tax code to it. This is not a gap of the format; it is a gap of what
 a reader without a browser session could reach of Malta's own guidance, worth
 naming here so that whoever next opens `cfr.gov.mt` from an office and not a
 script can close it in an afternoon.
+
+## From Iceland
+
+`packs/is/`, `community`, seed 81, the second pack of a country outside the
+common system of VAT but, unlike Switzerland, inside the European Economic
+Area — which is why its accounting law transposes the Union's own accounting
+directive even though its VAT law owes the Union nothing. One thing the
+format could not say, not patched.
+
+**A deadline counted from the second month after the period ends, where the
+closed vocabulary only reaches the first.** Art. 24, 1. mgr. of Lög nr.
+50/1988 fixes the day the periodic return (and the tax with it) is due in one
+sentence: "fimmta degi annars mánaðar eftir lok uppgjörstímabils" — the fifth
+day of the *second* month that follows the end of the filing period. For the
+January–February period that is 5 April: February is followed by March, the
+first month after the period, and then by April, the second — not the
+twentieth of the month that follows the period the way Belgium's and
+Estonia's `day_of_month_after_period` reads, and not a count of calendar days
+the way `packs/ch/`'s Art. 71/86 MWSTG reads either (this pack's is a fixed
+day of a fixed month, not sixty days from an end date). `tax_report.json`'s
+`deadline` object anchors `day` and `last_day_of_month_after_period` alike on
+"the month that follows the period" — the very next one — and has no way to
+skip a month before counting. Declaring `day_of_month_after_period` with
+`day: 5` would print a date a full month too early on every one of the six
+periods a year; declaring nothing said only that nobody had read the text,
+which was no longer true once Art. 24 had been. `packs/is/` declares no
+`deadline` and says why in its own README, rather than invent a fourth rule
+this pack cannot itself add to a vocabulary three other packs already rely
+on. A `months_after_period` count, taken together with a `day`, would say
+Iceland's rule, Belgium's (`months_after_period: 1`) and Luxembourg's in one
+shape without disturbing either.

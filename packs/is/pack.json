@@ -1,0 +1,199 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "IS",
+  "name": "Ísland",
+  "version": "0.1.0",
+  "schema_min": "20260923110000",
+  "seed_sequence": 81,
+  "released_at": "2026-09-25",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "vsklog",
+        "title": "Lög nr. 50/1988 um virðisaukaskatt, með síðari breytingum",
+        "publisher": "Alþingi — Lagasafn",
+        "url": "https://www.althingi.is/lagas/nuna/1988050.html",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "reglugerd667-1995",
+        "title": "Reglugerð nr. 667/1995 um framtal og skil á virðisaukaskatti",
+        "publisher": "Fjármála- og efnahagsráðuneytið",
+        "url": "https://www.reglugerd.is/reglugerdir/eftir-raduneytum/fjarmala--og-efnahagsraduneyti/nr/667-1995",
+        "consulted_on": "2026-09-25",
+        "kind": "regulation"
+      },
+      {
+        "key": "reglugerd50-1993",
+        "title": "Reglugerð nr. 50/1993 um bókhald og tekjuskráningu virðisaukaskattsskyldra aðila",
+        "publisher": "Fjármála- og efnahagsráðuneytið",
+        "url": "https://www.reglugerd.is/reglugerdir/eftir-raduneytum/fjarmala--og-efnahagsraduneyti/nr/50-1993",
+        "consulted_on": "2026-09-25",
+        "kind": "regulation"
+      },
+      {
+        "key": "rsk-1001",
+        "title": "RSK 10.01 — Virðisaukaskattsskýrsla (eyðublað)",
+        "publisher": "Skatturinn — Ríkisskattstjóri",
+        "url": "https://www.skatturinn.is/media/rsk10/rsk_1001.is.pdf",
+        "consulted_on": "2026-09-25",
+        "kind": "form"
+      },
+      {
+        "key": "rsk-1119",
+        "title": "Leiðbeiningar um virðisaukaskatt, 19. útgáfa 2022",
+        "publisher": "Skatturinn — Ríkisskattstjóri",
+        "url": "https://www.skatturinn.is/media/baeklingar/rsk_1119.is.pdf",
+        "consulted_on": "2026-09-25",
+        "kind": "guidance"
+      },
+      {
+        "key": "arsreikningalog",
+        "title": "Lög nr. 3/2006 um ársreikninga, með síðari breytingum (m.a. lög nr. 73/2016 um innleiðingu tilskipunar 2013/34/ESB)",
+        "publisher": "Alþingi — Lagasafn",
+        "url": "https://www.althingi.is/lagas/nuna/2006003.html",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "reglugerd696-2019",
+        "title": "Reglugerð nr. 696/2019 um framsetningu og innihald ársreikninga og samstæðureikninga",
+        "publisher": "Atvinnuvega- og nýsköpunarráðuneytið",
+        "url": "https://island.is/reglugerdir/nr/0696-2019",
+        "consulted_on": "2026-09-25",
+        "kind": "regulation"
+      },
+      {
+        "key": "vextir38-2001",
+        "title": "Lög nr. 38/2001 um vexti og verðtryggingu",
+        "publisher": "Alþingi — Lagasafn",
+        "url": "https://www.althingi.is/lagas/nuna/2001038.html",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "greidsludrattur8-2015",
+        "title": "Lög nr. 8/2015 um greiðsludrátt í verslunarviðskiptum, sem leiðir í íslenskan rétt tilskipun 2011/7/ESB samkvæmt ákvörðun sameiginlegu EES-nefndarinnar nr. 55/2012",
+        "publisher": "Alþingi — Lagasafn",
+        "url": "https://www.althingi.is/lagas/154c/2015008.html",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "reglugerd44-2019",
+        "title": "Reglugerð nr. 44/2019 um rafræna reikninga vegna opinberra samninga",
+        "publisher": "Fjármála- og efnahagsráðuneytið",
+        "url": "https://island.is/reglugerdir/nr/0044-2019",
+        "consulted_on": "2026-09-25",
+        "kind": "regulation"
+      },
+      {
+        "key": "tollalog88-2005",
+        "title": "Tollalög nr. 88/2005",
+        "publisher": "Alþingi — Lagasafn",
+        "url": "https://www.althingi.is/lagas/nuna/2005088.html",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "skatturinn-vefskil",
+        "title": "Vefskil virðisaukaskatts — þjónustuvefur Skattsins þar sem virðisaukaskattsskýrslu er skilað",
+        "publisher": "Skatturinn — Ríkisskattstjóri",
+        "url": "https://www.skatturinn.is/atvinnurekstur/virdisaukaskattur/",
+        "consulted_on": "2026-09-25",
+        "kind": "portal"
+      },
+      {
+        "key": "peppol-authority-is",
+        "title": "Iceland — country profile: Fjársýsla ríkisins as the Icelandic Peppol Authority",
+        "publisher": "OpenPeppol",
+        "url": "https://peppol.org/learn-more/country-profiles/iceland/",
+        "consulted_on": "2026-09-25",
+        "kind": "guidance"
+      }
+    ]
+  },
+  "languages": [],
+  "defaults": {
+    "currency": "ISK",
+    "language": "is",
+    "rounding_method": "half_up",
+    "closing_style": "retained_earnings",
+    "fiscal_year_default": "calendar",
+    "roles": {
+      "receivable": "1500",
+      "payable": "2410",
+      "suspense": "2650",
+      "rounding": "9900",
+      "retained_earnings": "2090",
+      "sales": "3000",
+      "purchase": "4000",
+      "bank": "1910",
+      "cash": "1900",
+      "tax_payable": "2590",
+      "tax_receivable": "1690",
+      "fx_gain": "8200",
+      "fx_loss": "8300"
+    },
+    "journal_roles": {
+      "sales": "SAL",
+      "purchase": "PUR",
+      "miscellaneous": "GEN",
+      "opening": "OPN"
+    }
+  },
+  "journals": [
+    { "code": "SAL", "type": "sales", "name": "Sölubók", "sequence": 10 },
+    { "code": "PUR", "type": "purchase", "name": "Innkaupabók", "sequence": 20 },
+    { "code": "BNK", "type": "bank", "name": "Banki", "sequence": 30 },
+    { "code": "CSH", "type": "cash", "name": "Sjóður", "sequence": 40 },
+    { "code": "GEN", "type": "general", "name": "Ýmsar færslur", "sequence": 50 },
+    { "code": "OPN", "type": "opening", "name": "Opnunarfærsla", "sequence": 60 }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Kontóáætlun byggð á 3. og 5. gr. reglugerðar nr. 696/2019",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": ["IS-696-BS", "IS-696-IS"],
+      "legal_reference": "Ísland mælir ekki fyrir um lögbundna kontóáætlun. Lög nr. 3/2006 um ársreikninga, 6. gr., fela ráðherra að setja reglur um framsetningu ársreikninga; reglugerð nr. 696/2019 (sem innleiðir tilskipun 2013/34/ESB um ársreikninga, sbr. lög nr. 73/2016) mælir fyrir um lágmarksuppsetningu efnahagsreiknings (3. gr.) og rekstrarreiknings (5. gr.), en tekur enga afstöðu til kontónúmera. Kontóáætlun þessa pakka er frumsamin fyrir hann og fylgir beint uppbyggingu 3. og 5. gr. reglugerðarinnar — sjá README.md.",
+      "source": "reglugerd696-2019"
+    }
+  ],
+  "documents": {
+    "numbering": "gapless",
+    "number_format": "{CODE}-{NNNN}",
+    "legal_payment_days": 0,
+    "late_payment_reference": "Þegar greiðslufrestur er ekki umsaminn er dráttarvaxta krafist skv. 3. mgr. 5. gr. laga nr. 38/2001 um vexti og verðtryggingu: dráttarvextir reiknast frá og með þeim degi þegar liðinn er mánuður frá því að kröfuhafi sannanlega krafði skuldara um greiðslu, en ekki frá útgáfudegi reiknings sjálfkrafa. Vextirnir eru samtala grunns dráttarvaxta Seðlabanka Íslands og átta hundraðshluta álags í viðskiptum milli fyrirtækja eða fyrirtækis og opinbers aðila (3. mgr. 6. gr. sömu laga). Sé greiðslufrestur umsaminn má hann almennt ekki vera lengri en 60 almanaksdagar (1. mgr. 3. gr. laga nr. 8/2015, sem leiðir tilskipun 2011/7/ESB um sein greiðsluskil í viðskiptum inn í íslenskan rétt á grundvelli EES-samningsins).",
+    "tax_point": "invoice_if_issued",
+    "references": {
+      "numbering": {
+        "legal_reference": "1. mgr. 20. gr. laga nr. 50/1988 — sölureikninga ber að forprenta og tölusetja í samfelldri töluröð; nánar útfært í reglugerð nr. 50/1993, sem gerir hvorki kröfu um að númeraröðin hefjist að nýju ár hvert né um fjölda eyðublaða sem keypt eða notuð eru hverju sinni.",
+        "source": "reglugerd50-1993"
+      },
+      "payment_terms": {
+        "legal_reference": "3. mgr. 5. gr. laga nr. 38/2001 — sé greiðslufrestur ekki umsaminn ber ekki að reikna hann sjálfkrafa út frá útgáfudegi reiknings.",
+        "source": "vextir38-2001"
+      },
+      "tax_point": {
+        "legal_reference": "Afhendingarreglan (13. gr. laga nr. 50/1988): meginreglan er sú að afhending hins selda ráði því til hvaða uppgjörstímabils salan telst. Undantekning: hafi sölureikningur verið gefinn út vegna sölunnar áður en afhending fer fram ræður útgáfudagur reikningsins. Innborganir teljast til skattskyldrar veltu við móttöku.",
+        "source": "rsk-1119"
+      }
+    }
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "obligation": "none",
+    "legal_reference": "Þann 25. september 2026 skyldar engin almenn löggjöf fyrirtæki til að skiptast á rafrænum reikningum sín á milli (B2B). Reglugerð nr. 44/2019 um rafræna reikninga vegna opinberra samninga skyldar aðeins kaupendur í opinberum innkaupum (4. gr.) — ríkisaðila frá 18. apríl 2019, sveitarfélög og opinber fyrirtæki frá 18. apríl 2020 — til að taka á móti og vinna úr rafrænum reikningum sem uppfylla evrópska staðalinn EN 16931, útfærðan með tækniforskriftinni TS236:2017. Reglugerðin leggur enga skyldu á seljanda til að gefa út slíkan reikning; í reynd verður birgir opinbers aðila þó að nota Peppol-netið til að fá reikninga sína samþykkta, og Fjársýsla ríkisins er tilnefndur Peppol-yfirvald (Peppol Authority) Íslands.",
+    "source": "reglugerd44-2019"
+  },
+  "bank": {
+    "statement_formats": ["camt.053", "csv"],
+    "payment_formats": ["pain.001", "csv"]
+  }
+}

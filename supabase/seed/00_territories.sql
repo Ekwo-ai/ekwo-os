@@ -254,6 +254,19 @@ on conflict (code) do update set
   vat_prefix      = excluded.vat_prefix,
   legal_reference = excluded.legal_reference;
 
+insert into territories (code, code_source, name, parent_code, eu_vat_scope, eu_vat_from, eu_vat_to, vat_prefix, legal_reference) values
+  ('IS', 'iso_3166_1', 'Iceland', null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2): a State outside the territory of the Community as defined by the Treaties is a third country for every rule the Directive carries. Iceland is a member of the European Free Trade Association and of the European Economic Area (Agreement on the European Economic Area, Porto, 2 May 1992, in force 1 January 1994), which extends the internal market''s four freedoms and, through it, the Union''s accounting directives, but Annex IX of the EEA Agreement does not carry the common system of VAT: Iceland has never acceded to the Union and levies its own virðisaukaskattur (VSK) under lög um virðisaukaskatt nr. 50/1988, administered by Skatturinn (Ríkisskattstjóri) and unrelated to Directive 2006/112/EC. vat_prefix is null because an Icelandic VSK number is never validated against VIES, which is a register of the common system Iceland is not part of.')
+on conflict (code) do update set
+  code_source     = excluded.code_source,
+  name            = excluded.name,
+  parent_code     = excluded.parent_code,
+  eu_vat_scope    = excluded.eu_vat_scope,
+  eu_vat_from     = excluded.eu_vat_from,
+  eu_vat_to       = excluded.eu_vat_to,
+  vat_prefix      = excluded.vat_prefix,
+  legal_reference = excluded.legal_reference;
+
 -- ---------------------------------------------------------------------------
 -- The territories a pack conditions a tax on
 --
