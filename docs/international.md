@@ -5260,3 +5260,68 @@ own text, unrelated to Directive 2006/112/EC. `vat_prefix` is null — an
 Algerian numéro d'identification fiscale carries no prefix of that table's
 kind, and is never checked against VIES, a register of a system Algeria is
 not part of.
+
+## From Morocco
+
+`packs/ma/`, `community`, seed 84. Its value added tax is the Code général des
+impôts, its accounting standard the Code général de normalisation comptable
+(CGNC), made compulsory by the dahir n° 1-92-138 of 25 December 1992. Five
+texts in the register, none of them the consolidated 2026 Code read directly —
+the Direction générale des Impôts' own PDF defeated every extraction attempt
+this session made, and the pack's reading of articles 91, 92, 95, 96, 99, 101,
+104, 106, 108, 115 and 145 rests on several independent professional
+commentaries that agree with each other, recorded article by article in
+`packs/ma/README.md`. Two things this session met and worked around rather
+than patched.
+
+### A poste the CGNC continues on the next heading, and a range rule that stops at the boundary
+
+The CGNC's *compte de produits et charges* groups "Autres charges externes"
+under one poste of the model normal, but the chart of accounts behind it
+allocates the poste's divisionnaire accounts across **two** three-digit
+headings, 613 and 614, because a three-digit heading has room for nine —
+6131 to 6139 — and the poste needs more: rent, leasing, maintenance,
+insurance, outside staff, fees, transport, postage and banking charges do not
+fit under 613 alone, so the CGNC's own nomenclature continues the same poste
+at 614. `statements.json`'s `code_range` rule is a closed interval read by
+`ruleCatches()` in `packages/cli/src/pack/read.ts` — `code.slice(0,
+from.length) >= from && code.slice(0, to.length) <= to` — so a single rule
+`{ code_from: "613", code_to: "613" }` catches every account whose three-digit
+prefix is exactly `613` and silently drops one whose prefix is `614`, even
+though both belong to the one poste the CGNC names. `pack check` caught it
+immediately, as `statements.json default: account 6141 (Transports) reaches no
+line of any statement of this chart` — three accounts short of a home, not
+computed wrong. The fix needed no change to the compiler: a poste that spans
+two headings takes two rules, `613` to `613` and `614` to `614`, exactly as a
+country whose poste spans a true numeric range already writes one rule with
+two different bounds. The trap is only that a *continued* heading looks, from
+the rule's two identical bounds, like a single account rather than a poste
+still being enumerated — a shape more than one plan comptable inherited from
+the French 1957 model may share, wherever a class ran out of digits before it
+ran out of accounts to name.
+
+### A law that enacts an obligation, and a decree that has not enacted it
+
+Article 145-IX of the Code général des impôts already requires a taxpayer to
+adopt an electronic invoicing system meeting technical criteria the
+administration sets, on terms a *décret d'application* is to fix — the
+paragraph was written into the law by the finance law for 2018 and its
+entry into force accelerated by the finance law for 2024. No such decree is
+published in the Bulletin officiel at the date of this pack; the professional
+press reports a draft transmitted to the Secretariat General of the
+Government and a deployment the Director General of Taxes said, in April
+2026, would start with large B2B taxpayers, with no threshold, no date and no
+technical format fixed by a published text. `einvoicing.obligation` is a
+closed vocabulary of `mandatory`, `on_request` and `none` (`read.ts`'s
+`EinvoiceObligation`), and none of the three says what is actually true here:
+the statute already exists, unconditionally, and nothing is yet due under it.
+`mandatory` would need a `mandatory_from` this pack cannot write without
+guessing a date the decree alone will fix; `none` is what the pack declares,
+and it says less than the statute does — a reader of `describe_pack` is told
+Morocco has no electronic invoicing obligation, when what is true is closer to
+*enacted, not yet triggered*. The gap is written here rather than closed by
+a guess: a fourth value, something like `enacted_pending_decree`, would let a
+pack distinguish a country that has said nothing from one whose administration
+has already legislated the principle and left only the timetable to reglement,
+which at least one other Union candidate for a pack (Tunisia's decree-by-
+arrêté rollout, not yet attempted here) is likely to want the same word for.

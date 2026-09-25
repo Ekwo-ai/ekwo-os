@@ -845,3 +845,29 @@ on conflict (code) do update set
   eu_vat_to       = excluded.eu_vat_to,
   vat_prefix      = excluded.vat_prefix,
   legal_reference = excluded.legal_reference;
+
+-- ---------------------------------------------------------------------------
+-- The row — Morocco
+--
+-- A State outside the common system of VAT the way Saudi Arabia or the United
+-- Arab Emirates are: the Kingdom of Morocco levies a value added tax of its
+-- own under the Code général des impôts, article 1er, at a standard rate of
+-- 20 % (article 99-A) since the 2024-2026 convergence calendar (finance laws
+-- n° 55-23, 60-24 and 50-25) folded the former 7 % and 14 % rates into it or
+-- into the 10 % reduced rate, and no Union instrument reaches it.
+-- `vat_prefix` is null: a Moroccan identifiant fiscal carries no country
+-- prefix of this table's kind.
+-- ---------------------------------------------------------------------------
+
+insert into territories (code, code_source, name, parent_code, eu_vat_scope, eu_vat_from, eu_vat_to, vat_prefix, legal_reference) values
+  ('MA', 'iso_3166_1', 'Morocco', null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. Morocco levies a value added tax of its own under the Code général des impôts, articles 1er and 89 to 125, at a standard rate of 20 % (article 99-A, édition 2026, Direction générale des Impôts).')
+on conflict (code) do update set
+  code_source     = excluded.code_source,
+  name            = excluded.name,
+  parent_code     = excluded.parent_code,
+  eu_vat_scope    = excluded.eu_vat_scope,
+  eu_vat_from     = excluded.eu_vat_from,
+  eu_vat_to       = excluded.eu_vat_to,
+  vat_prefix      = excluded.vat_prefix,
+  legal_reference = excluded.legal_reference;

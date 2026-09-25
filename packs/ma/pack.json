@@ -1,0 +1,135 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "MA",
+  "name": "Maroc",
+  "version": "0.1.0",
+  "schema_min": "20260923110000",
+  "seed_sequence": 84,
+  "released_at": "2026-09-25",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "cgi2026",
+        "title": "Code général des impôts, édition 2026",
+        "publisher": "Direction générale des Impôts — Ministère de l'Économie et des Finances",
+        "url": "https://www.finances.gov.ma/Publication/dgi/2025/CGI-2026-FR.pdf",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "simpl-guide",
+        "title": "Guide de la Télé déclaration TVA (SIMPL-TVA)",
+        "publisher": "Direction générale des Impôts",
+        "url": "https://portail.tax.gov.ma/wps/wcm/connect/647d98f0-d163-4b78-b351-aef38e1f8f7a/NOUVEAU+GUIDE+DE+LA+TVA.pdf?MOD=AJPERES",
+        "consulted_on": "2026-09-25",
+        "kind": "guidance"
+      },
+      {
+        "key": "lf2026-note",
+        "title": "Note synthétique des mesures fiscales de la loi de finances n° 50-25 pour l'année budgétaire 2026",
+        "publisher": "Direction générale des Impôts",
+        "url": "https://www.finances.gov.ma/Publication/dgi/2025/note-synthetique-mesures-fiscalesLF20265.pdf",
+        "consulted_on": "2026-09-25",
+        "kind": "guidance"
+      },
+      {
+        "key": "loi9-88",
+        "title": "Dahir n° 1-92-138 du 30 joumada II 1413 (25 décembre 1992) portant promulgation de la loi n° 9-88 relative aux obligations comptables des commerçants, rendant obligatoire le Code général de normalisation comptable",
+        "publisher": "Secrétariat général du Gouvernement — Bulletin officiel du Royaume du Maroc",
+        "url": "https://www.finances.gov.ma/fr/Nos-metiers/Pages/normalisation-comptable.aspx",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "cgnc",
+        "title": "Code général de normalisation comptable (C.G.N.C.) — norme générale comptable et plan comptable général des entreprises",
+        "publisher": "Conseil national de la comptabilité",
+        "url": "https://www.befec.ma/documentation/comptabilite/Plan_comptable/CGNC/cgnc.pdf",
+        "consulted_on": "2026-09-25",
+        "kind": "standard"
+      },
+      {
+        "key": "simpl-portal",
+        "title": "SIMPL — téléservices de la Direction générale des Impôts (espace professionnel, SIMPL-TVA)",
+        "publisher": "Direction générale des Impôts",
+        "url": "https://www.tax.gov.ma",
+        "consulted_on": "2026-09-25",
+        "kind": "portal"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "MAD",
+    "language": "fr",
+    "rounding_method": "half_up",
+    "closing_style": "result_accounts",
+    "roles": {
+      "receivable": "3421",
+      "payable": "4411",
+      "retained_earnings": "1161",
+      "current_year_result_profit": "1191",
+      "current_year_result_loss": "1191",
+      "sales": "7111",
+      "purchase": "6111",
+      "bank": "5141",
+      "cash": "5161",
+      "tax_payable": "4456",
+      "tax_receivable": "3456"
+    },
+    "journal_roles": {
+      "sales": "VT",
+      "purchase": "AC",
+      "miscellaneous": "OD",
+      "opening": "AN"
+    },
+    "fiscal_year_default": "calendar"
+  },
+  "languages": [],
+  "journals": [
+    { "code": "VT", "type": "sales", "name": "Journal des ventes", "sequence": 10 },
+    { "code": "AC", "type": "purchase", "name": "Journal des achats", "sequence": 20 },
+    { "code": "BQ", "type": "bank", "name": "Journal de banque", "sequence": 30 },
+    { "code": "CA", "type": "cash", "name": "Journal de caisse", "sequence": 40 },
+    { "code": "OD", "type": "general", "name": "Journal des opérations diverses", "sequence": 50 },
+    { "code": "AN", "type": "opening", "name": "Journal des à-nouveaux", "sequence": 60 }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "PCGE — Plan comptable général des entreprises (modèle normal)",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": ["MA-CGNC-BL", "MA-CGNC-CPC"],
+      "legal_reference": "Dahir n° 1-92-138 du 25 décembre 1992 portant loi n° 9-88 relative aux obligations comptables des commerçants, art. 1er — tenue de la comptabilité selon la loi et ses textes d'application ; Code général de normalisation comptable, deuxième partie, Titre III — plan de comptes du modèle normal, classes 1 à 8. Le pack reprend les rubriques (postes) du cadre comptable et une sélection de comptes divisionnaires suffisante pour tenir des livres et tirer les états de synthèse ; une entreprise ouvre les comptes supplémentaires dont elle a besoin, dans le respect de la nomenclature du CGNC.",
+      "source": "cgnc"
+    }
+  ],
+  "documents": {
+    "numbering": "sequential",
+    "number_format": "{CODE}/{YYYY}/{NNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "invoice_if_issued",
+    "references": {
+      "numbering": {
+        "legal_reference": "Code général des impôts, art. 145-III — tout achat de biens ou de services effectué par un contribuable auprès d'un fournisseur soumis à la taxe professionnelle doit être appuyé d'une facture régulière comportant, entre autres mentions, un numéro pris dans une série continue et ininterrompue. Le paragraphe n'impose ni forme ni remise à zéro annuelle, que le format proposé ici (`{CODE}/{YYYY}/{NNNN}`) permet sans l'exiger. Le libellé exact du paragraphe III n'a pas pu être extrait du PDF officiel pour ce pack et a été recoupé sur plusieurs commentaires professionnels concordants — voir la section « From Morocco » de docs/international.md.",
+        "source": "cgi2026"
+      },
+      "tax_point": {
+        "legal_reference": "Code général des impôts, art. 95 — le fait générateur de la taxe est constitué par l'encaissement total ou partiel du prix des marchandises, des travaux ou des services (régime de l'encaissement, applicable de plein droit) ; les redevables qui en font la déclaration avant le 1er janvier, ou dans les trente jours de leur début d'activité, sont autorisés à acquitter la taxe d'après le régime des débits, la facturation valant alors fait générateur. invoice_if_issued dit le régime des débits sur option, qui devance l'encaissement de droit commun dès qu'il est retenu ; le pack ne code pas l'option elle-même, qui est un choix de l'entreprise et non une règle du texte.",
+        "source": "cgi2026"
+      }
+    }
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "party_scheme": null,
+    "vat_scheme": null,
+    "obligation": "none",
+    "legal_reference": "Le principe d'une obligation de facturation électronique existe dans la loi, à l'art. 145-IX du Code général des impôts (introduit par la loi de finances pour 2018 et dont l'entrée en application a été accélérée par la loi de finances pour 2024) : le contribuable doit se doter d'un système informatique de facturation répondant à des critères techniques fixés par l'administration, selon des modalités renvoyées à un décret d'application. Aucun décret d'application n'était publié au Bulletin officiel à la date de ce pack — la presse professionnelle rapportait, en avril 2026, un avant-projet transmis au secrétariat général du gouvernement et un déploiement par vagues annoncé par la Direction générale des Impôts en commençant par les grandes entreprises en B2B, sans date ni seuil de chiffre d'affaires officialisés, ni format technique arrêté par un texte publié. Le pack laisse donc `obligation` à `none` et le reste du bloc vide plutôt que d'anticiper un décret non publié : voir la section « From Morocco » de docs/international.md.",
+    "source": null
+  }
+}

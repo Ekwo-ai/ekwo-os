@@ -1,0 +1,197 @@
+code,parent,type,reconcilable,name,sequence
+1,,equity,false,FINANCEMENT PERMANENT,10
+11,1,equity,false,CAPITAUX PROPRES,20
+111,11,equity,false,Capital social,30
+1111,111,equity,false,Capital social,40
+112,11,equity,false,"Primes d'émission, de fusion et d'apport",50
+114,11,equity_retained,false,Réserve légale,60
+115,11,equity_retained,false,Autres réserves,70
+116,11,equity_retained,false,Report à nouveau,80
+1161,116,equity_retained,false,Report à nouveau,90
+118,11,equity,false,Résultats nets en instance d'affectation,100
+119,11,equity,false,Résultat net de l'exercice,110
+1191,119,equity,false,Résultat net de l'exercice,120
+13,1,liability_non_current,false,CAPITAUX PROPRES ASSIMILÉS,130
+131,13,liability_non_current,false,Subventions d'investissement,140
+135,13,liability_non_current,false,Provisions réglementées,150
+14,1,liability_non_current,false,DETTES DE FINANCEMENT,160
+141,14,liability_non_current,false,Emprunts obligataires,170
+148,14,liability_non_current,false,Autres dettes de financement,180
+15,1,liability_non_current,false,PROVISIONS DURABLES POUR RISQUES ET CHARGES,190
+151,15,liability_non_current,false,Provisions pour risques,200
+155,15,liability_non_current,false,Provisions pour charges,210
+17,1,liability_non_current,false,ÉCARTS DE CONVERSION - PASSIF (éléments durables),220
+1710,17,liability_non_current,false,Augmentation des créances immobilisées,230
+1720,17,liability_non_current,false,Diminution des dettes de financement,240
+2,,asset_fixed,false,ACTIF IMMOBILISÉ,250
+21,2,asset_fixed,false,IMMOBILISATIONS EN NON-VALEURS,260
+211,21,asset_fixed,false,Frais préliminaires,270
+212,21,asset_fixed,false,Charges à répartir sur plusieurs exercices,280
+213,21,asset_fixed,false,Primes de remboursement des obligations,290
+22,2,asset_fixed,false,IMMOBILISATIONS INCORPORELLES,300
+221,22,asset_fixed,false,Immobilisations en recherche et développement,310
+222,22,asset_fixed,false,"Brevets, marques, droits et valeurs similaires",320
+223,22,asset_fixed,false,Fonds commercial,330
+228,22,asset_fixed,false,Autres immobilisations incorporelles,340
+23,2,asset_fixed,false,IMMOBILISATIONS CORPORELLES,350
+231,23,asset_fixed,false,Terrains,360
+232,23,asset_fixed,false,Constructions,370
+233,23,asset_fixed,false,"Installations techniques, matériel et outillage",380
+234,23,asset_fixed,false,Matériel de transport,390
+235,23,asset_fixed,false,"Mobilier, matériel de bureau et aménagements divers",400
+238,23,asset_fixed,false,Autres immobilisations corporelles,410
+239,23,asset_fixed,false,Immobilisations corporelles en cours,420
+24,2,asset_non_current,false,IMMOBILISATIONS FINANCIÈRES,430
+2411,24,asset_non_current,false,Prêts immobilisés,440
+2415,24,asset_non_current,false,Titres de participation,450
+2488,24,asset_non_current,false,Autres créances financières,460
+27,2,asset_fixed,false,ÉCARTS DE CONVERSION - ACTIF (éléments durables),470
+2710,27,asset_fixed,false,Diminution des créances immobilisées,480
+2720,27,asset_fixed,false,Augmentation des dettes de financement,490
+28,2,asset_fixed,false,AMORTISSEMENTS DES IMMOBILISATIONS,500
+2821,28,asset_fixed,false,Amortissements des immobilisations en non-valeurs,510
+2822,28,asset_fixed,false,Amortissements des immobilisations incorporelles,520
+2823,28,asset_fixed,false,Amortissements des immobilisations corporelles,530
+28233,2823,asset_fixed,false,"Amortissements des installations techniques, matériel et outillage",540
+28234,2823,asset_fixed,false,Amortissements du matériel de transport,550
+28235,2823,asset_fixed,false,Amortissements du mobilier et du matériel de bureau,560
+29,2,asset_non_current,false,PROVISIONS POUR DÉPRÉCIATION DES IMMOBILISATIONS,570
+292,29,asset_non_current,false,Provisions pour dépréciation des immobilisations incorporelles,580
+293,29,asset_non_current,false,Provisions pour dépréciation des immobilisations corporelles,590
+294,29,asset_non_current,false,Provisions pour dépréciation des immobilisations financières,600
+3,,asset_current,false,ACTIF CIRCULANT (HORS TRÉSORERIE),610
+31,3,asset_current,false,STOCKS,620
+311,31,asset_current,false,Marchandises,630
+312,31,asset_current,false,Matières et fournitures consommables,640
+313,31,asset_current,false,Produits en cours,650
+315,31,asset_current,false,Produits finis,660
+34,3,asset_current,false,CRÉANCES DE L'ACTIF CIRCULANT,670
+341,34,asset_current,false,"Fournisseurs débiteurs, avances et acomptes",680
+342,34,asset_receivable,true,Clients et comptes rattachés,690
+3421,342,asset_receivable,true,Clients,700
+3425,342,asset_receivable,true,Clients douteux ou litigieux,710
+3427,342,asset_receivable,true,Clients - retenues de garantie,720
+345,34,asset_current,false,ÉTAT - DÉBITEUR,730
+3455,345,asset_current,false,État - TVA récupérable,740
+34551,3455,asset_current,false,État - TVA récupérable sur immobilisations,750
+34552,3455,asset_current,false,État - TVA récupérable sur charges,760
+3456,345,asset_current,true,État - crédit de TVA,770
+3458,345,asset_current,false,Autres comptes débiteurs de l'État,780
+346,34,asset_current,false,Comptes d'associés débiteurs,790
+348,34,asset_current,false,Autres débiteurs,800
+349,34,asset_prepayments,false,Comptes de régularisation - actif,810
+35,3,asset_current,false,TITRES ET VALEURS DE PLACEMENT,820
+350,35,asset_current,false,Titres et valeurs de placement,830
+37,3,asset_current,false,ÉCARTS DE CONVERSION - ACTIF (éléments circulants),840
+3701,37,asset_current,false,Diminution des créances circulantes,850
+3702,37,asset_current,false,Augmentation des dettes circulantes,860
+39,3,asset_current,false,PROVISIONS POUR DÉPRÉCIATION DES COMPTES DE L'ACTIF CIRCULANT,870
+391,39,asset_current,false,Provisions pour dépréciation des stocks,880
+394,39,asset_current,false,Provisions pour dépréciation des créances de l'actif circulant,890
+4,,liability_current,false,PASSIF CIRCULANT (HORS TRÉSORERIE),900
+44,4,liability_current,false,DETTES DU PASSIF CIRCULANT,910
+441,44,liability_payable,true,Fournisseurs et comptes rattachés,920
+4411,441,liability_payable,true,Fournisseurs,930
+4415,441,liability_payable,true,Fournisseurs - effets à payer,940
+4417,441,liability_payable,true,Fournisseurs - retenues de garantie,950
+442,44,liability_current,false,"Clients créditeurs, avances et acomptes",960
+443,44,liability_current,false,Personnel - créditeur,970
+4432,443,liability_current,false,Rémunérations dues au personnel,980
+444,44,liability_current,false,Organismes sociaux,990
+445,44,liability_current,false,État - créditeur,1000
+4452,445,liability_current,false,État - Impôts et taxes assimilées,1010
+4453,445,liability_current,false,État - Impôt sur les résultats,1020
+4455,445,liability_current,false,État - TVA facturée,1030
+4456,445,liability_current,true,État - TVA due,1040
+4458,445,liability_current,false,Autres comptes créditeurs de l'État,1050
+446,44,liability_current,false,Comptes d'associés créditeurs,1060
+448,44,liability_current,false,Autres créanciers,1070
+449,44,liability_current,false,Comptes de régularisation - passif,1080
+45,4,liability_current,false,AUTRES PROVISIONS POUR RISQUES ET CHARGES,1090
+450,45,liability_current,false,Autres provisions pour risques et charges,1100
+47,4,liability_current,false,ÉCARTS DE CONVERSION - PASSIF (éléments circulants),1110
+4701,47,liability_current,false,Augmentation des créances circulantes,1120
+4702,47,liability_current,false,Diminution des dettes circulantes,1130
+5,,asset_cash,false,TRÉSORERIE,1140
+51,5,asset_cash,false,TRÉSORERIE - ACTIF,1150
+511,51,asset_cash,false,Chèques et valeurs à encaisser,1160
+514,51,asset_cash,false,"Banques, Trésorerie Générale et chèques postaux débiteurs",1170
+5141,514,asset_cash,false,Banques (soldes débiteurs),1180
+516,51,asset_cash,false,"Caisses, régies d'avances et accréditifs",1190
+5161,516,asset_cash,false,Caisses,1200
+55,5,liability_current,false,TRÉSORERIE - PASSIF,1210
+552,55,liability_current,false,Crédits d'escompte,1220
+553,55,liability_current,false,Crédits de trésorerie,1230
+554,55,liability_current,false,Banques (soldes créditeurs),1240
+59,5,asset_cash,false,PROVISIONS POUR DÉPRÉCIATION DES COMPTES DE TRÉSORERIE,1250
+590,59,asset_cash,false,Provisions pour dépréciation des comptes de trésorerie,1260
+6,,expense,false,CHARGES,1270
+61,6,expense,false,CHARGES D'EXPLOITATION,1280
+611,61,expense_direct_cost,false,Achats revendus de marchandises,1290
+6111,611,expense_direct_cost,false,Achats de marchandises,1300
+6114,611,expense_direct_cost,false,Variation des stocks de marchandises,1310
+612,61,expense_direct_cost,false,Achats consommés de matières et fournitures,1320
+6121,612,expense_direct_cost,false,Achats de matières premières,1330
+6125,612,expense_direct_cost,false,Achats non stockés de matières et fournitures,1340
+6134,612,expense_direct_cost,false,Variation des stocks de matières et fournitures,1350
+613,61,expense,false,Autres charges externes,1360
+6131,613,expense,false,Locations et charges locatives,1370
+6133,613,expense,false,Entretien et réparations,1380
+6136,613,expense,false,"Rémunérations d'intermédiaires et honoraires",1390
+6141,613,expense,false,Transports,1400
+6145,613,expense,false,Frais postaux et frais de télécommunications,1410
+6147,613,expense,false,Services bancaires,1420
+616,61,expense,false,IMPÔTS ET TAXES,1430
+6161,616,expense,false,Impôts et taxes directs,1440
+6165,616,expense,false,Taxes non récupérables,1450
+617,61,expense,false,CHARGES DE PERSONNEL,1460
+6171,617,expense,false,Rémunérations du personnel,1470
+6174,617,expense,false,Charges sociales,1480
+618,61,expense,false,AUTRES CHARGES D'EXPLOITATION,1490
+6181,618,expense,false,Jetons de présence,1500
+6188,618,expense,false,Autres charges d'exploitation diverses,1510
+619,61,expense_depreciation,false,DOTATIONS D'EXPLOITATION,1520
+6191,619,expense_depreciation,false,Dotations d'exploitation aux amortissements de l'immobilisation en non-valeurs,1530
+6193,619,expense_depreciation,false,Dotations d'exploitation aux amortissements des immobilisations corporelles,1540
+6194,619,expense,false,Dotations d'exploitation aux provisions pour dépréciation des immobilisations,1550
+6196,619,expense,false,Dotations d'exploitation aux provisions pour risques et charges,1560
+63,6,expense,false,CHARGES FINANCIÈRES,1570
+631,63,expense,false,Charges d'intérêts,1580
+6311,631,expense,false,Intérêts des emprunts et dettes,1590
+633,63,expense,false,Pertes de change,1600
+638,63,expense,false,Autres charges financières,1610
+639,63,expense,false,Dotations financières,1620
+65,6,expense,false,CHARGES NON COURANTES,1630
+651,65,expense,false,Valeurs nettes d'amortissements des immobilisations cédées,1640
+656,65,expense,false,Subventions accordées,1650
+658,65,expense,false,Autres charges non courantes,1660
+6583,658,expense,false,Pénalités et amendes fiscales ou pénales,1670
+659,65,expense,false,Dotations non courantes,1680
+67,6,expense,false,IMPÔTS SUR LES RÉSULTATS,1690
+670,67,expense,false,Impôts sur les bénéfices,1700
+6701,670,expense,false,Impôt sur les résultats,1710
+7,,income,false,PRODUITS,1720
+71,7,income,false,PRODUITS D'EXPLOITATION,1730
+711,71,income,false,Ventes de marchandises,1740
+7111,711,income,false,Ventes de marchandises au Maroc,1750
+7113,711,income,false,Ventes de marchandises à l'étranger,1760
+712,71,income,false,Ventes de biens et services produits,1770
+7121,712,income,false,Ventes de biens produits au Maroc,1780
+7124,712,income,false,Ventes de services produits au Maroc,1790
+7126,712,income,false,Ventes de biens et services produits à l'étranger,1800
+713,71,income,false,Variation des stocks de produits,1810
+714,71,income,false,Immobilisations produites par l'entreprise pour elle-même,1820
+716,71,income,false,Subventions d'exploitation,1830
+718,71,income,false,Autres produits d'exploitation,1840
+719,71,income_other,false,Reprises d'exploitation; transferts de charges,1850
+73,7,income,false,PRODUITS FINANCIERS,1860
+732,73,income,false,Produits des titres de participation et autres titres immobilisés,1870
+733,73,income,false,Gains de change,1880
+738,73,income,false,Intérêts et autres produits financiers,1890
+739,73,income_other,false,Reprises financières; transferts de charges,1900
+75,7,income_other,false,PRODUITS NON COURANTS,1910
+751,75,income_other,false,Produits des cessions d'immobilisations,1920
+756,75,income_other,false,Subventions d'équilibre,1930
+757,75,income_other,false,Reprises sur subventions d'investissement,1940
+758,75,income_other,false,Autres produits non courants,1950
+759,75,income_other,false,Reprises non courantes; transferts de charges,1960
