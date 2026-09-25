@@ -1,0 +1,248 @@
+[
+  {
+    "code": "KE-S-16",
+    "name": "Sale, standard rate 16 %",
+    "description": "The general rate on a taxable supply made in Kenya",
+    "kind": "vat",
+    "rate": 16,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2013-09-02",
+    "legal_reference": "Value Added Tax Act, s. 5(1)(a) — tax is charged on a taxable supply made by a registered person in Kenya; s. 5(2)(b) — at sixteen per cent of the taxable value in any case other than a zero-rated supply. Form VAT 3, Section M, row 1 — Taxable Sales (General Rate).",
+    "source": "vat-act",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "1" },
+        { "type": "tax", "account": "2100", "box": "1" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "1", "box_factor": -100 },
+        { "type": "tax", "account": "2100", "box": "1", "box_factor": -100 }
+      ]
+    },
+    "sequence": 10
+  },
+  {
+    "code": "KE-S-ZR-DOM",
+    "name": "Sale, zero-rated (domestic)",
+    "description": "A local sale of a good the Second Schedule zero-rates without it leaving Kenya — liquefied petroleum gas",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2023-07-01",
+    "legal_reference": "Value Added Tax Act, s. 7(1) and (2) — no tax is charged on a supply of a description specified in the Second Schedule, which is in all other respects a taxable supply; Second Schedule, Part A, paragraph 27 — Liquefied Petroleum Gas, inserted by the Finance Act, 2023 (Act No. 4 of 2023, s. 38(a)(iii)). Form VAT 3, Section M, row 3 — Sales (Zero Rated).",
+    "source": "vat-act",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "3" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "3", "box_factor": -100 }
+      ]
+    },
+    "sequence": 20
+  },
+  {
+    "code": "KE-S-ZR-EXP",
+    "name": "Sale, zero-rated (export of goods)",
+    "description": "Goods exported from Kenya",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2013-09-02",
+    "legal_reference": "Value Added Tax Act, s. 7(1) and (2); Second Schedule, Part A, paragraph 1 — the exportation of goods. Form VAT 3, Section M, row 3 — Sales (Zero Rated).",
+    "source": "vat-act",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "3" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "3", "box_factor": -100 }
+      ]
+    },
+    "sequence": 30
+  },
+  {
+    "code": "KE-S-EXP-SVC",
+    "name": "Sale, zero-rated (export of services)",
+    "description": "A taxable service supplied to a customer outside Kenya",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2023-07-01",
+    "legal_reference": "Value Added Tax Act, s. 7(1) and (2); Second Schedule, Part A, paragraph 23 — the exportation of taxable services, inserted by the Finance Act, 2022 (Act No. 22 of 2022, s. 31(a)) and restated by the Finance Act, 2023 (Act No. 4 of 2023, s. 38(a)(ii)) in line with the OECD destination principle. Form VAT 3, Section M, row 3 — Sales (Zero Rated).",
+    "source": "vat-act",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "3" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "3", "box_factor": -100 }
+      ]
+    },
+    "sequence": 40
+  },
+  {
+    "code": "KE-S-EX-FIN",
+    "name": "Sale, exempt (financial services)",
+    "description": "A money-transfer or account-operation service, including agency banking and mobile-money commission",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2013-09-02",
+    "legal_reference": "Value Added Tax Act, s. 22(1) — an exempt supply is not a taxable supply; First Schedule, Part II, paragraph 1(b) — the issue, transfer, receipt or any other dealing with money, including money transfer services and accepting over-the-counter payments of household bills, excluding the carriage of cash, restocking of cash machines, and sorting or counting of money. Form VAT 3, Section M, row 4 — Sales (Exempt).",
+    "source": "vat-act",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "4" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "4", "box_factor": -100 }
+      ]
+    },
+    "sequence": 50
+  },
+  {
+    "code": "KE-P-16",
+    "name": "Purchase, standard rate 16 %, deductible",
+    "description": "A local purchase at the general rate, used to make taxable supplies",
+    "kind": "vat",
+    "rate": 16,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2013-09-02",
+    "legal_reference": "Value Added Tax Act, s. 17(1) — input tax on a taxable supply to a registered person may be deducted, to the extent the supply was acquired to make taxable supplies, subject to the documentation of s. 17(3); s. 5(2)(b) — the rate. Form VAT 3, Section N, row 7 — Taxable Purchases (General Rate).",
+    "source": "vat-act",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "7" },
+        { "type": "tax", "account": "1150", "box": "7" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "7", "box_factor": -100 },
+        { "type": "tax", "account": "1150", "box": "7", "box_factor": -100 }
+      ]
+    },
+    "sequence": 110
+  },
+  {
+    "code": "KE-P-16-BL",
+    "name": "Purchase, standard rate 16 %, input tax disallowed",
+    "description": "A passenger car or minibus and its running costs, or entertainment, restaurant and accommodation services bought other than in the ordinary course of a business that provides them",
+    "kind": "vat",
+    "rate": 16,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "recoverable": false,
+    "valid_from": "2013-09-02",
+    "legal_reference": "Value Added Tax Act, s. 17(4)(a) — a registered person shall not deduct input tax relating to the acquisition, leasing or hiring of passenger cars or minibuses and their repair and maintenance, unless acquired for resale, leasing or hiring in the ordinary course of a continuous and regular business of dealing in them; s. 17(4)(b) — nor of entertainment, restaurant and accommodation services, with the exceptions that paragraph lists. The disallowed tax is not a claim on Form VAT 3, so it lands on the account of the line and reaches no box.",
+    "source": "vat-act",
+    "postings": {
+      "invoice": [
+        { "type": "base" },
+        { "type": "tax_on_base" }
+      ],
+      "credit_note": [
+        { "type": "base" },
+        { "type": "tax_on_base" }
+      ]
+    },
+    "sequence": 120
+  },
+  {
+    "code": "KE-P-ZR",
+    "name": "Purchase, zero-rated",
+    "description": "A purchase of a good the Second Schedule zero-rates, from a registered supplier",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2013-09-02",
+    "legal_reference": "Value Added Tax Act, s. 7(2) — the supply is in all other respects a taxable supply, at a rate of nil, so there is no input tax to deduct. Form VAT 3, Section N, row 9 — Purchases (Zero Rated).",
+    "source": "vat-act",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "9" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "9", "box_factor": -100 }
+      ]
+    },
+    "sequence": 130
+  },
+  {
+    "code": "KE-P-EX",
+    "name": "Purchase, exempt",
+    "description": "An insurance premium, or another exempt supply bought for the business",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "exempt",
+    "valid_from": "2013-09-02",
+    "legal_reference": "Value Added Tax Act, s. 22(1); First Schedule, Part II, paragraph 2 — insurance and reinsurance services, other than management and related consultancy, actuarial services, and the services of assessors and loss adjusters, are exempt supplies, so there is no VAT to deduct. Form VAT 3, Section N, row 10 — Exempt Purchases.",
+    "source": "vat-act",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "10" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "10", "box_factor": -100 }
+      ]
+    },
+    "sequence": 140
+  },
+  {
+    "code": "KE-P-IMP",
+    "name": "Import of goods, VAT paid at the border",
+    "description": "VAT collected by the Commissioner of Customs on importation and claimed as input tax once paid",
+    "kind": "vat",
+    "rate": 16,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2013-09-02",
+    "legal_reference": "Value Added Tax Act, s. 5(1)(b) and (5) — tax on the importation of taxable goods is charged as if it were a duty of customs and becomes due and payable by the importer at the time of importation; s. 14 — the taxable value of imported goods; s. 22(1) and (3)(a) — a person may not take delivery of imported goods from customs control without having paid the tax in full, which the Commissioner of Customs collects at that time; s. 17(1) — the tax so paid is then deductible as input tax. Form VAT 3, Section N, row 7 — Taxable Purchases (General Rate), which the workbook does not further split between local and imported goods. The tax is owed to KRA at the border and not to the supplier, so it waits on 2125 until the import declaration is settled.",
+    "source": "vat-act",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "7" },
+        { "type": "tax", "account": "1150", "box": "7" },
+        { "type": "tax", "factor": -100, "account": "2125" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "7", "box_factor": -100 },
+        { "type": "tax", "account": "1150", "box": "7", "box_factor": -100 },
+        { "type": "tax", "factor": -100, "account": "2125" }
+      ]
+    },
+    "sequence": 150
+  },
+  {
+    "code": "KE-P-RC-IMPSVC",
+    "name": "Imported service, self-charged and claimed",
+    "description": "A service supplied by a person with no place of business in Kenya, wholly used to make taxable supplies",
+    "kind": "vat",
+    "rate": 16,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2013-09-02",
+    "legal_reference": "Value Added Tax Act, s. 10(1) — a registered person receiving a supply of imported taxable services is deemed to have made a taxable supply to himself; s. 10(2)(b) — where entitled to a full input tax credit, the value of that deemed supply is reduced to zero; s. 10(3) — the output tax on it is payable at the time of the supply. In practice the registered person raises a Self-Assessment payment on iTax and remits the tax directly to KRA rather than through the ordinary output side of Form VAT 3, then claims it back at Section O, row 15 — VAT Claimable on Services Imported into Kenya — so the deemed output liability reaches the ledger but no box, and only the claim does.",
+    "source": "vat-act",
+    "postings": {
+      "invoice": [
+        { "type": "base" },
+        { "type": "tax", "account": "1150", "box": "15" },
+        { "type": "tax", "factor": -100, "account": "2100" }
+      ],
+      "credit_note": [
+        { "type": "base" },
+        { "type": "tax", "account": "1150", "box": "15", "box_factor": -100 },
+        { "type": "tax", "factor": -100, "account": "2100" }
+      ]
+    },
+    "sequence": 160
+  }
+]

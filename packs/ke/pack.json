@@ -1,0 +1,164 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "KE",
+  "name": "Kenya",
+  "version": "0.1.0",
+  "schema_min": "20260923110000",
+  "seed_sequence": 89,
+  "released_at": "2026-09-25",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "vat-act",
+        "title": "Value Added Tax Act (Cap. 476), consolidated as at 27 December 2024",
+        "publisher": "National Council for Law Reporting (Kenya Law)",
+        "url": "https://new.kenyalaw.org/akn/ke/act/2013/35/eng@2024-12-27/",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "tpa",
+        "title": "Tax Procedures Act (Cap. 469B), consolidated as at 27 December 2024, s. 23A — electronic tax invoices",
+        "publisher": "National Council for Law Reporting (Kenya Law)",
+        "url": "https://new.kenyalaw.org/akn/ke/act/2015/29/eng@2024-12-27/",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "vat-etr-regs-2020",
+        "title": "Value Added Tax (Electronic Tax Invoice) Regulations, 2020 — Legal Notice No. 189 of 2020",
+        "publisher": "Kenya Revenue Authority, gazetted by the Government Printer",
+        "url": "https://www.kra.go.ke/images/publications/L.N.-189---VAT-ELECTRONIC-TAX-INVOICE-REGULATIONS-2020.pdf",
+        "consulted_on": "2026-09-25",
+        "kind": "regulation"
+      },
+      {
+        "key": "companies-act-2015",
+        "title": "Companies Act (Cap. 486, No. 17 of 2015), consolidated as at 27 December 2024, ss. 628 and 636 to 638 — accounting records and financial statements",
+        "publisher": "National Council for Law Reporting (Kenya Law)",
+        "url": "https://new.kenyalaw.org/akn/ke/act/2015/17/eng@2024-12-27/",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "icpak-ifrs-sme",
+        "title": "Illustrative generic IFRS for SMEs financial statements — Kenya SME Limited",
+        "publisher": "Institute of Certified Public Accountants of Kenya (ICPAK)",
+        "url": "https://www.icpak.com/wp-content/uploads/2023/03/Kenya-SME-Ltd-Illustrative-SME-Financial-Statements-2022-ICPAK-v1.1.pdf",
+        "consulted_on": "2026-09-25",
+        "kind": "guidance"
+      },
+      {
+        "key": "kra-vat",
+        "title": "Value Added Tax (VAT) — rates, filing and eTIMS on-boarding",
+        "publisher": "Kenya Revenue Authority",
+        "url": "https://www.kra.go.ke/individual/filing-paying/types-of-taxes/value-added-tax",
+        "consulted_on": "2026-09-25",
+        "kind": "guidance"
+      },
+      {
+        "key": "vat3-form",
+        "title": "VAT Monthly Return, form VAT 3 (workbook template)",
+        "publisher": "Kenya Revenue Authority",
+        "url": "https://www.kra.go.ke/images/publications/VAT3_Return-11.0.4-2.xls",
+        "consulted_on": "2026-09-25",
+        "kind": "form"
+      },
+      {
+        "key": "itax",
+        "title": "iTax — where the VAT 3 return is filed and self-assessment payments are registered",
+        "publisher": "Kenya Revenue Authority",
+        "url": "https://itax.kra.go.ke/",
+        "consulted_on": "2026-09-25",
+        "kind": "portal"
+      },
+      {
+        "key": "etims",
+        "title": "eTIMS — the electronic tax invoicing system of section 23A of the Tax Procedures Act",
+        "publisher": "Kenya Revenue Authority",
+        "url": "https://etims.kra.go.ke/",
+        "consulted_on": "2026-09-25",
+        "kind": "portal"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "KES",
+    "language": "en",
+    "rounding_method": "half_up",
+    "closing_style": "retained_earnings",
+    "fiscal_year_default": "calendar",
+    "roles": {
+      "receivable": "1100",
+      "payable": "2000",
+      "suspense": "2990",
+      "rounding": "6990",
+      "retained_earnings": "3200",
+      "sales": "4000",
+      "purchase": "5000",
+      "bank": "1010",
+      "cash": "1000",
+      "fx_gain": "4700",
+      "fx_loss": "6950",
+      "asset_disposal_gain": "4750",
+      "asset_disposal_loss": "6960",
+      "tax_payable": "2110",
+      "tax_receivable": "1155"
+    },
+    "journal_roles": {
+      "sales": "SAL",
+      "purchase": "PUR",
+      "miscellaneous": "GEN",
+      "opening": "OPN"
+    }
+  },
+  "languages": [],
+  "journals": [
+    { "code": "SAL", "type": "sales", "name": "Sales journal", "sequence": 10 },
+    { "code": "PUR", "type": "purchase", "name": "Purchases journal", "sequence": 20 },
+    { "code": "BNK", "type": "bank", "name": "Bank", "sequence": 30 },
+    { "code": "CSH", "type": "cash", "name": "Petty cash", "sequence": 40 },
+    { "code": "GEN", "type": "general", "name": "General journal", "sequence": 50 },
+    { "code": "OPN", "type": "opening", "name": "Opening balances", "sequence": 60 }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Kenya reference chart of accounts",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": ["KE-ICPAK-SFP", "KE-ICPAK-IS"],
+      "legal_reference": "There is no legal chart of accounts in Kenya. Companies Act (Cap. 486), s. 628(1) requires every company to keep proper accounting records, s. 628(3)(b) requires those records to comply with the prescribed financial accounting standards, and s. 638 requires the directors' individual financial statements — a balance sheet, a profit and loss account, a statement of cash flow and a statement of changes in equity — to give a true and fair view and to comply with those same prescribed standards; the Institute of Certified Public Accountants of Kenya, the standard-setting body the Accountants Act, 2008 recognises, has adopted the IFRS Accounting Standards and, for an entity with no public accountability, the IFRS for SMEs Accounting Standard. This chart is original: four digits, blocked so that each range reaches one line of the IFRS for SMEs statements below, with the accounts a Kenyan company actually keeps — VAT input and output tax, import VAT owed to KRA at the border, NSSF and SHIF contributions, the NITA training levy, withholding tax, amounts due to directors.",
+      "source": "companies-act-2015"
+    }
+  ],
+  "documents": {
+    "numbering": "sequential",
+    "number_format": "{CODE}-{YYYY}-{NNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "earliest_of_delivery_or_payment",
+    "references": {
+      "numbering": {
+        "legal_reference": "Tax Procedures Act, s. 23A(2A)(d) — an electronic tax invoice states the serial number of the invoice; the section asks that each invoice be identified, and not that the series carry no gap, which is why the style is `sequential`. Value Added Tax Act, s. 42(1) requires a tax invoice with the prescribed details at the time of every taxable supply.",
+        "source": "tpa"
+      },
+      "tax_point": {
+        "legal_reference": "Value Added Tax Act, s. 12(1) — subject to subsection (3), the time of supply, including a supply of imported services, is the EARLIEST of: (a) the date the goods are delivered or the services performed; (b) the date a supervising architect, surveyor or consultant issues a certificate; (c) the date the invoice for the supply is issued; or (d) the date payment is received, in whole or in part. This is a four-way earliest-of test and Ekwo's closed vocabulary only expresses a two-way one; `earliest_of_delivery_or_payment` is the nearest value, and the gap — an invoice issued, or a consultant's certificate, ahead of both delivery and payment, which would fix the tax point in Kenya but not in Ekwo's own reading of this word — is recorded in docs/international.md. Section 19(1) then makes the tax due and payable at the time of that supply.",
+        "source": "vat-act"
+      }
+    },
+    "mentions": []
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "obligation": "none",
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "No Kenyan statute obliges a business to exchange a structured electronic invoice with another business, or to accept one, in the sense Ekwo's vocabulary gives the word — there is no Kenyan Peppol authority, no published profile and no ISO 6523 scheme a party is addressed by, so `profile`, `party_scheme` and `vat_scheme` are all null and `obligation` is `none`. What Kenya has instead is eTIMS, a clearance system: Tax Procedures Act, s. 23A(1) lets the Commissioner establish an electronic system for the issue of tax invoices and the keeping of stock records; s. 23A(2), as amended by the Finance Act, 2023 (Act No. 4 of 2023, s. 52) and the Tax Laws (Amendment) Act, 2024 (Act No. 21 of 2024, s. 3), requires every person carrying on business to issue an electronic tax invoice through that system and to maintain its stock records in it; s. 23A(2A) lists the fields such an invoice carries; s. 23A(3A) excuses the purchaser from a small business or small-scale farmer under KES 5,000,000 of annual turnover from generating one themselves. The Value Added Tax (Electronic Tax Invoice) Regulations, 2020 (Legal Notice No. 189 of 2020) rolled the requirement out to VAT-registered persons from 1 August 2021; the Finance Act, 2023 extended it to every business from 1 September 2023 and, from 1 January 2024, disallows an expense for income tax purposes when it is not backed by an eTIMS invoice. This is a real-time validation of an invoice already issued to a Kenyan buyer or kept on the seller's own stock records — a clearance with the tax administration through an ETR device, the OSCU or VSCU software, or the free eTIMS Lite web and USSD channels — and not a peer-to-peer exchange of a structured document between two businesses in the sense `einvoicing.profile` describes; the gap is recorded in docs/international.md and in this pack's README, and the socle is not patched to fit it.",
+    "source": "tpa"
+  }
+}

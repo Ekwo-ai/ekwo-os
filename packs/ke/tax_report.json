@@ -1,0 +1,195 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "KE-VAT3",
+  "name": "VAT Monthly Return (form VAT 3)",
+  "period": ["month"],
+  "period_default": "month",
+  "valid_from": "2013-09-02",
+  "legal_reference": "Value Added Tax Act, s. 2(1) — a \"tax period\" means one calendar month or such other period as may be prescribed; s. 44(1) — a registered person submits a return for each tax period, in the prescribed form, which is form VAT 3. The workbook lays sales and purchases out in Section M (rows 1 to 6), Section N (rows 7 to 12) and Section O (rows 13 to 28). This pack carries rows 1 to 15 and the final row 20; rows 16 to 18 (an apportionment of input tax between taxable and exempt use, expressed as a ratio of a ratio the pack's declaration format cannot state as a plus/minus list or a single rate) and rows 21 to 28 (credit brought forward, withheld-VAT credits, payments already made and adjustment vouchers — period-to-period settlement rather than a figure a document posts) are not carried; both gaps are recorded in docs/international.md.",
+  "source": "vat3-form",
+  "deadline": {
+    "rule": "day_of_month_after_period",
+    "day": 20,
+    "legal_reference": "Value Added Tax Act, s. 44(1) — a return is submitted not later than the twentieth day after the end of the tax period; s. 19(2) — payment may be deferred to the same day. KRA, Value Added Tax (VAT): \"VAT is due on or before the 20th day of the following month. This includes both the return and payment.\"",
+    "source": "vat-act"
+  },
+  "boxes": [
+    {
+      "box": "1",
+      "kind": "base",
+      "name": "Taxable Sales (General Rate) — value",
+      "sequence": 10,
+      "legal_reference": "Form VAT 3, Section M, row 1 — the value excluding VAT of sales taxed at the general rate.",
+      "source": "vat3-form"
+    },
+    {
+      "box": "1",
+      "kind": "tax",
+      "name": "Taxable Sales (General Rate) — output VAT",
+      "sequence": 15,
+      "legal_reference": "Form VAT 3, Section M, row 1 — the output VAT column beside the general-rate sales.",
+      "source": "vat3-form"
+    },
+    {
+      "box": "2",
+      "kind": "base",
+      "name": "Taxable Sales (Other Rate) — value",
+      "sequence": 20,
+      "legal_reference": "Form VAT 3, Section M, row 2 — sales taxed at a rate the Cabinet Secretary has varied by an order under s. 6(1) of the Value Added Tax Act, published in the Gazette (most recently Legal Notice No. 69 of 2026 and Legal Notice No. 70 of 2026, an 8 % rate on specified petroleum products from 16 April to 14 October 2026). Such an order is administratively varied every few months and reversed as often, which is exactly the kind of rate feed docs/packs.md says does not belong in a pack; this pack carries the row so the form reads as it prints, without a tax code ever posting to it.",
+      "source": "vat-act"
+    },
+    {
+      "box": "2",
+      "kind": "tax",
+      "name": "Taxable Sales (Other Rate) — output VAT",
+      "sequence": 25,
+      "legal_reference": "Form VAT 3, Section M, row 2 — declared and empty, for the reason given at box 2.",
+      "source": "vat3-form"
+    },
+    {
+      "box": "3",
+      "kind": "base",
+      "name": "Sales (Zero Rated)",
+      "sequence": 30,
+      "legal_reference": "Form VAT 3, Section M, row 3 — sales zero-rated under s. 7 of the Value Added Tax Act and the Second Schedule, domestic and exported alike.",
+      "source": "vat3-form"
+    },
+    {
+      "box": "4",
+      "kind": "base",
+      "name": "Sales (Exempt)",
+      "sequence": 40,
+      "legal_reference": "Form VAT 3, Section M, row 4 — sales exempt under s. 22 of the Value Added Tax Act and the First Schedule.",
+      "source": "vat3-form"
+    },
+    {
+      "box": "5",
+      "kind": "total",
+      "name": "Total Sales",
+      "sequence": 50,
+      "plus": ["1:base", "2:base", "3", "4"],
+      "legal_reference": "Form VAT 3, Section M, row 5 — Total Sales (1+2+3+4).",
+      "source": "vat3-form"
+    },
+    {
+      "box": "6",
+      "kind": "total",
+      "name": "Total Output VAT",
+      "sequence": 60,
+      "plus": ["1:tax", "2:tax"],
+      "legal_reference": "Form VAT 3, Section M, row 6 — Total Output VAT (1+2+3); box 3 contributes nothing, since a zero-rated sale carries no output VAT by definition, so it is left out of the sum without changing the figure.",
+      "source": "vat3-form"
+    },
+    {
+      "box": "7",
+      "kind": "base",
+      "name": "Taxable Purchases (General Rate) — value",
+      "sequence": 70,
+      "legal_reference": "Form VAT 3, Section N, row 7 — the value excluding VAT of purchases, local or imported, taxed at the general rate and whose input tax is claimable.",
+      "source": "vat3-form"
+    },
+    {
+      "box": "7",
+      "kind": "tax",
+      "name": "Taxable Purchases (General Rate) — input VAT",
+      "sequence": 75,
+      "legal_reference": "Form VAT 3, Section N, row 7 — the input VAT column beside the general-rate purchases.",
+      "source": "vat3-form"
+    },
+    {
+      "box": "8",
+      "kind": "base",
+      "name": "Taxable Purchases (Other Rate) — value",
+      "sequence": 80,
+      "legal_reference": "Form VAT 3, Section N, row 8 — purchases taxed at a rate the Cabinet Secretary has varied under s. 6(1), for the reason given at box 2. Declared and empty.",
+      "source": "vat-act"
+    },
+    {
+      "box": "8",
+      "kind": "tax",
+      "name": "Taxable Purchases (Other Rate) — input VAT",
+      "sequence": 85,
+      "legal_reference": "Form VAT 3, Section N, row 8 — declared and empty, for the reason given at box 2.",
+      "source": "vat3-form"
+    },
+    {
+      "box": "9",
+      "kind": "base",
+      "name": "Purchases (Zero Rated)",
+      "sequence": 90,
+      "legal_reference": "Form VAT 3, Section N, row 9 — purchases of a good or service the Second Schedule zero-rates.",
+      "source": "vat3-form"
+    },
+    {
+      "box": "10",
+      "kind": "base",
+      "name": "Exempt Purchases",
+      "sequence": 100,
+      "legal_reference": "Form VAT 3, Section N, row 10 — purchases exempt under s. 22 and the First Schedule.",
+      "source": "vat3-form"
+    },
+    {
+      "box": "11",
+      "kind": "total",
+      "name": "Total Purchases",
+      "sequence": 110,
+      "plus": ["7:base", "8:base", "9", "10"],
+      "legal_reference": "Form VAT 3, Section N, row 11 — Total Purchases (7+8+9+10).",
+      "source": "vat3-form"
+    },
+    {
+      "box": "12",
+      "kind": "total",
+      "name": "Total Input VAT",
+      "sequence": 120,
+      "plus": ["7:tax", "8:tax"],
+      "legal_reference": "Form VAT 3, Section N, row 12 — Total Input VAT (7+8+9); box 9 and box 10 carry no input VAT by definition, so they are left out of the sum without changing the figure.",
+      "source": "vat3-form"
+    },
+    {
+      "box": "13",
+      "kind": "total",
+      "name": "Output VAT",
+      "sequence": 130,
+      "plus": ["6"],
+      "legal_reference": "Form VAT 3, Section O, row 13 — Output VAT (6).",
+      "source": "vat3-form"
+    },
+    {
+      "box": "14",
+      "kind": "total",
+      "name": "Input VAT",
+      "sequence": 140,
+      "plus": ["12"],
+      "legal_reference": "Form VAT 3, Section O, row 14 — Input VAT (12).",
+      "source": "vat3-form"
+    },
+    {
+      "box": "15",
+      "kind": "tax",
+      "name": "VAT Claimable on Services Imported into Kenya",
+      "sequence": 150,
+      "legal_reference": "Form VAT 3, Section O, row 15, from the detail of Section J — VAT Claimable on Services Imported into Kenya; Value Added Tax Act, s. 10(2).",
+      "source": "vat3-form"
+    },
+    {
+      "box": "19",
+      "kind": "total",
+      "name": "Deductible Input VAT",
+      "sequence": 190,
+      "plus": ["14", "15"],
+      "legal_reference": "Form VAT 3, Section O, row 19 — Deductible Input VAT (14+15-16-18); rows 16 and 18, the apportionment of input tax between taxable and exempt use, are not carried by this pack (see the top-level legal_reference), so this total is the sum of rows 14 and 15 alone — the figure a wholly taxable business files.",
+      "source": "vat3-form"
+    },
+    {
+      "box": "20",
+      "kind": "total",
+      "name": "VAT Payable / Credit Due for the period",
+      "sequence": 200,
+      "plus": ["13"],
+      "minus": ["19"],
+      "legal_reference": "Form VAT 3, Section O, row 20 — VAT Payable / Credit Due for the period (13-19). A positive figure is payable to KRA by the twentieth of the following month (s. 19(2), s. 44(1)); a negative figure is a credit, carried forward under s. 17(5) or refunded within the conditions that subsection sets, which rows 21 to 28 of the workbook track and this pack does not carry.",
+      "source": "vat3-form"
+    }
+  ]
+}

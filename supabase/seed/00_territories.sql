@@ -894,3 +894,27 @@ on conflict (code) do update set
   eu_vat_to       = excluded.eu_vat_to,
   vat_prefix      = excluded.vat_prefix,
   legal_reference = excluded.legal_reference;
+
+--
+-- A State outside the common system of VAT the way the United Arab Emirates,
+-- Singapore or Saudi Arabia are: Kenya levies a value added tax of its own
+-- under the Value Added Tax Act (Cap. 476), whose section 5(2)(b) sets the
+-- rate at sixteen per cent, and no Union instrument reaches it. Kenya belongs
+-- to the East African Community, whose Customs Management Act, 2004
+-- harmonises the customs union alone; VAT itself is not one of the taxes the
+-- Community's own instruments harmonise, so there is no regional VAT regime
+-- to test a supply against either, only the Kenyan Act.
+-- ---------------------------------------------------------------------------
+
+insert into territories (code, code_source, name, parent_code, eu_vat_scope, eu_vat_from, eu_vat_to, vat_prefix, legal_reference) values
+  ('KE', 'iso_3166_1', 'Kenya', null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. Kenya levies a value added tax of its own under the Value Added Tax Act (Cap. 476), section 5(2)(b), at sixteen per cent of the taxable value since the Act commenced on 2 September 2013.')
+on conflict (code) do update set
+  code_source     = excluded.code_source,
+  name            = excluded.name,
+  parent_code     = excluded.parent_code,
+  eu_vat_scope    = excluded.eu_vat_scope,
+  eu_vat_from     = excluded.eu_vat_from,
+  eu_vat_to       = excluded.eu_vat_to,
+  vat_prefix      = excluded.vat_prefix,
+  legal_reference = excluded.legal_reference;

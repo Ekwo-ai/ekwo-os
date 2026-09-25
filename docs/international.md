@@ -5436,3 +5436,94 @@ added to `00_territories.sql` outside the common system of VAT, so
 the way every non-EU pack's are, and so that an exempt or zero-rated line
 states its article in `legal_reference` rather than being asked for a VATEX
 code that names a Directive no South African seller is bound by.
+
+## From Kenya
+
+### eTIMS is a clearance, not an exchange the vocabulary has a word for
+
+Tax Procedures Act, s. 23A(2), as amended by the Finance Act, 2023 and the Tax
+Laws (Amendment) Act, 2024, requires a person carrying on business to issue an
+electronic tax invoice through the system the Commissioner establishes under
+s. 23A(1) — an ETR device, KRA's OSCU or VSCU software, or the free eTIMS Lite
+web and USSD channels — and, since 1 January 2024, disallows the expense for
+income tax where the invoice was not so generated. `einvoicing.obligation` asks
+whether a statute obliges two businesses to exchange a structured invoice
+between themselves, in the sense a Peppol BIS or a PINT is exchanged; s. 23A
+obliges a seller to clear its own invoice with the tax administration before or
+as it is issued, which is a different relationship — the buyer receives
+whatever document the seller always sent it, and nothing about the two
+businesses' own exchange changes. `packs/ke/` declares `obligation: "none"`
+and `profile: null`, which is true of the vocabulary's own question and reads,
+out of context, as though Kenya required nothing at all. *Fix*: a fourth value
+of `obligation` — `cleared`, or a sibling boolean naming a clearance regime a
+seller submits to the administration, distinct from the network-exchange
+question the current three values ask — would let a pack say both "no exchange
+is required between businesses" and "a submission to the tax administration is,
+in substance, compulsory" without one crowding out the other. eTIMS is not the
+only such regime — Italy's SDI and several Latin American systems clear an
+invoice with the administration before delivery — so the gap is not Kenya's
+alone.
+
+### A four-way earliest test, not a two-way one
+
+Value Added Tax Act, s. 12(1) fixes the time of supply at the earliest of four
+events: delivery or performance, a supervising architect's or consultant's
+certificate, the invoice date, or receipt of payment in whole or in part.
+`tax_point` names five values, and the closest, `earliest_of_delivery_or_payment`,
+is a two-way test; Kenya's invoice-date branch and its certificate branch are
+both left out. Unlike Belgium's or Luxembourg's derogation shape — a principle
+displaced by an invoice where the country requires one — Kenya's four triggers
+are stated as equals in one paragraph, with no principle and no derogation to
+name separately, so `invoice_if_issued` fits no better than the value chosen.
+`packs/ke/documents.tax_point` declares the two-way value and says so at length
+in its own `legal_reference`. This is the same shape *From Vietnam* and *From
+Saudi Arabia* already record for Điều 8 of Luật số 48/2024/QH15 and article
+23(1) of the Common VAT Agreement of the Gulf Cooperation Council: a closed
+vocabulary of five values describes at most two triggers at once, and a fourth
+country now needs the same third or fourth trigger the first three did.
+
+### A third party to the document: withholding VAT
+
+Kenya appoints withholding VAT agents — mostly government entities and large
+taxpayers the Commissioner names — who deduct a percentage of the taxable
+value of a supply made to them and remit it directly to KRA, crediting the
+supplier's own VAT account for the amount withheld; the rate has been reduced
+more than once, most recently to 2 % from 16 % effective 2023. A `taxes.json`
+posting is written for the two parties to the one document it taxes — the
+seller and the buyer — and has no way to name a third party who intercepts
+part of the payment between them and remits it on the supplier's behalf. This
+is not the same gap as a reverse charge, where the buyer stands in for the
+seller: here both the seller and the buyer are exactly who they are on the
+document, and a party neither of them is nonetheless moves money and reports
+it. `packs/ke/` carries no withholding VAT code and records the gap here
+instead of inventing a treatment the format was not built to hold. *Fix*: this
+belongs beside the withheld-VAT credit form VAT 3 already reports at Section O,
+row 22 — a document format that could name a withholding agent distinct from
+both parties would let a future pack state the rate and the remittance without
+pretending the agent is the buyer.
+
+### A row that is a ratio of a ratio
+
+Form VAT 3, Section O, row 18 states "Less: Non-Deductible Input VAT" as
+`17 - (((1+2+3)/5)*17)` — the proportion of input tax a partly exempt business
+may not deduct, computed from the ratio of taxable to total turnover applied to
+the input tax attributable to both taxable and exempt supplies. `tax_report.json`
+expresses a total as a list to add, a list to subtract, a floor at zero, or a
+single rate applied to a single other box; none of those shapes reaches a
+ratio of five boxes multiplying a sixth. `packs/ke/tax_report.json` does not
+carry rows 16 to 18 and computes row 19, "Deductible Input VAT", as the sum of
+rows 14 and 15 alone — correct for a wholly taxable business and silent for a
+partly exempt one. This is the shape *From Saudi Arabia* already records for
+the Kingdom's own proportional-deduction adjustment at field 9 of its return:
+a country's apportionment of input tax is a computation over a ratio of
+figures the form itself states as a fraction, and a form language built from
+totals of boxes has no fraction to give it.
+
+### KES and KE
+
+`KES` is added to `00_currencies.sql` at two decimals. `KE` is added to
+`00_territories.sql` outside the common system of VAT, so `vat_category`,
+`exemption_code` and the five `intracom_*` treatments are read the way every
+non-EU pack's are; `vat_prefix` is null, since a Kenyan PIN carries no VAT
+prefix of that table's kind and this pack declares no e-invoicing profile that
+would need one.

@@ -1,0 +1,192 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "A month of books of a Nairobi trading company, VAT-registered and filing monthly",
+  "chart": "default",
+  "fiscal_year": { "name": "Financial year 2026", "start": "2026-01-01", "end": "2026-12-31" },
+  "periods": [
+    { "code": "2026-01", "from": "2026-01-01", "to": "2026-01-31" }
+  ],
+  "statements": ["KE-ICPAK-SFP", "KE-ICPAK-IS"],
+  "contacts": [
+    { "ref": "cust-nairobi", "name": "Jamii Retailers Limited", "type": "customer", "country": "KE" },
+    { "ref": "cust-uganda", "name": "Kampala Fresh Foods Ltd", "type": "customer", "country": "UG" },
+    { "ref": "cust-uk", "name": "Chalmers Consulting Ltd", "type": "customer", "country": "GB" },
+    { "ref": "supp-nairobi", "name": "Mombasa Wholesalers Ltd", "type": "supplier", "country": "KE" },
+    { "ref": "supp-china", "name": "Guangzhou Trading Co.", "type": "supplier", "country": "CN" },
+    { "ref": "supp-us", "name": "CloudWorks Inc.", "type": "supplier", "country": "US" }
+  ],
+  "documents": [
+    {
+      "ref": "INV-001",
+      "type": "sale_invoice",
+      "contact": "cust-nairobi",
+      "date": "2026-01-10",
+      "why": "A domestic sale at the standard rate of 16 %: box 1 and the output VAT of box 6.",
+      "lines": [
+        { "name": "Office furniture, retail sale", "quantity": 5, "unit_price": 8000, "tax": "KE-S-16", "account": "4000" }
+      ]
+    },
+    {
+      "ref": "INV-002",
+      "type": "sale_invoice",
+      "contact": "cust-nairobi",
+      "date": "2026-01-15",
+      "why": "A money-transfer agency commission, exempt under paragraph 1(b) of Part II of the First Schedule: box 4, no output VAT, and a matched payment later on.",
+      "lines": [
+        { "name": "Mobile money agency commission", "quantity": 1, "unit_price": 15000, "tax": "KE-S-EX-FIN", "account": "4010" }
+      ]
+    },
+    {
+      "ref": "INV-003",
+      "type": "sale_invoice",
+      "contact": "cust-uganda",
+      "date": "2026-01-18",
+      "why": "An export of goods, zero-rated under paragraph 1 of Part A of the Second Schedule: box 3, no output VAT, and a matched payment later on.",
+      "lines": [
+        { "name": "Packaged tea, export consignment", "quantity": 200, "unit_price": 300, "tax": "KE-S-ZR-EXP", "account": "4020" }
+      ]
+    },
+    {
+      "ref": "INV-004",
+      "type": "sale_invoice",
+      "contact": "cust-uk",
+      "date": "2026-01-20",
+      "why": "An export of a service to a customer with no place of business in Kenya, zero-rated under paragraph 23 of Part A of the Second Schedule: box 3.",
+      "lines": [
+        { "name": "Market research report", "quantity": 1, "unit_price": 90000, "tax": "KE-S-EXP-SVC", "account": "4030" }
+      ]
+    },
+    {
+      "ref": "INV-005",
+      "type": "sale_invoice",
+      "contact": "cust-nairobi",
+      "date": "2026-01-21",
+      "why": "A domestic sale of a good the Second Schedule zero-rates without it leaving Kenya, so a zero rate is proven that is neither a domestic reverse charge nor an export: box 3.",
+      "lines": [
+        { "name": "Liquefied petroleum gas cylinders, retail sale", "quantity": 100, "unit_price": 250, "tax": "KE-S-ZR-DOM", "account": "4000" }
+      ]
+    },
+    {
+      "ref": "CN-001",
+      "type": "sale_credit_note",
+      "contact": "cust-nairobi",
+      "date": "2026-01-25",
+      "why": "A credit note for one unit returned from INV-001, so box 1 and box 6 fall back down and a sale_credit_note is exercised.",
+      "lines": [
+        { "name": "Office furniture, retail sale — one unit returned", "quantity": 1, "unit_price": 8000, "tax": "KE-S-16", "account": "4000" }
+      ]
+    },
+    {
+      "ref": "PINV-001",
+      "type": "purchase_invoice",
+      "contact": "supp-nairobi",
+      "date": "2026-01-12",
+      "why": "A domestic purchase at the standard rate, deductible in full: box 7 and the input VAT of box 12, and a matched payment later on.",
+      "lines": [
+        { "name": "Trading stock purchased for resale", "quantity": 1, "unit_price": 25000, "tax": "KE-P-16", "account": "5000" }
+      ]
+    },
+    {
+      "ref": "PINV-002",
+      "type": "purchase_invoice",
+      "contact": "supp-nairobi",
+      "date": "2026-01-14",
+      "why": "A passenger car whose input tax is disallowed under section 17(4)(a): the VAT becomes part of the cost of the vehicle and reaches no box.",
+      "lines": [
+        { "name": "Passenger motor vehicle for the sales manager", "quantity": 1, "unit_price": 1200000, "tax": "KE-P-16-BL", "account": "1660" }
+      ]
+    },
+    {
+      "ref": "PINV-003",
+      "type": "purchase_invoice",
+      "contact": "supp-nairobi",
+      "date": "2026-01-16",
+      "why": "A purchase of a zero-rated good from a registered supplier: no input tax, reported in box 9.",
+      "lines": [
+        { "name": "LPG cylinders purchased for resale", "quantity": 50, "unit_price": 800, "tax": "KE-P-ZR", "account": "5000" }
+      ]
+    },
+    {
+      "ref": "PINV-004",
+      "type": "purchase_invoice",
+      "contact": "supp-nairobi",
+      "date": "2026-01-19",
+      "why": "An insurance premium, exempt under paragraph 2 of Part II of the First Schedule: no input tax, box 10.",
+      "lines": [
+        { "name": "Annual business insurance premium", "quantity": 1, "unit_price": 60000, "tax": "KE-P-EX", "account": "6410" }
+      ]
+    },
+    {
+      "ref": "PINV-005",
+      "type": "purchase_invoice",
+      "contact": "supp-china",
+      "date": "2026-01-22",
+      "why": "An import of goods: VAT collected by KRA at the border under section 22, claimed as input tax through box 7 and box 12, and held on the customs control account until settled.",
+      "lines": [
+        { "name": "Imported electronics for resale", "quantity": 1, "unit_price": 500000, "tax": "KE-P-IMP", "account": "5000" }
+      ]
+    },
+    {
+      "ref": "PINV-006",
+      "type": "purchase_invoice",
+      "contact": "supp-us",
+      "date": "2026-01-28",
+      "why": "A service imported from a supplier with no place of business in Kenya: the recipient self-charges the output tax under section 10 and claims it back through box 15, netting to nothing on a wholly taxable purchase.",
+      "lines": [
+        { "name": "Cloud hosting subscription", "quantity": 1, "unit_price": 100000, "tax": "KE-P-RC-IMPSVC", "account": "6350" }
+      ]
+    },
+    {
+      "ref": "PCN-001",
+      "type": "purchase_credit_note",
+      "contact": "supp-nairobi",
+      "date": "2026-01-30",
+      "why": "A purchase credit note for a short delivery on PINV-001, so box 7 and box 12 fall back down and a purchase_credit_note is exercised.",
+      "lines": [
+        { "name": "Trading stock purchased for resale — short-delivery credit", "quantity": 1, "unit_price": 5000, "tax": "KE-P-16", "account": "5000" }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "PAY-001",
+      "direction": "inbound",
+      "date": "2026-02-05",
+      "amount": 15000,
+      "contact": "cust-nairobi",
+      "journal": "BNK",
+      "match": "INV-002",
+      "why": "The agency commission of INV-002 collected in full: a matched inbound payment on an exempt sale."
+    },
+    {
+      "ref": "PAY-002",
+      "direction": "inbound",
+      "date": "2026-02-06",
+      "amount": 60000,
+      "contact": "cust-uganda",
+      "journal": "BNK",
+      "match": "INV-003",
+      "why": "The export of INV-003 collected in full: a matched inbound payment in a foreign trade relationship."
+    },
+    {
+      "ref": "PAY-003",
+      "direction": "outbound",
+      "date": "2026-02-07",
+      "amount": 29000,
+      "contact": "supp-nairobi",
+      "journal": "BNK",
+      "match": "PINV-001",
+      "why": "PINV-001 settled in full, VAT included: a matched outbound payment."
+    },
+    {
+      "ref": "PAY-004",
+      "direction": "inbound",
+      "date": "2026-02-10",
+      "amount": 20000,
+      "contact": "cust-uk",
+      "journal": "BNK",
+      "match": null,
+      "why": "An advance received from Chalmers Consulting Ltd before its next invoice, matched to nothing: reconcile() has to survive an open item."
+    }
+  ]
+}
