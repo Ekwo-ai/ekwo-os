@@ -1,0 +1,110 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "PH-VAT-2550Q",
+  "name": "BIR Form No. 2550Q — Quarterly Value-Added Tax Return",
+  "period": ["quarter"],
+  "period_default": "quarter",
+  "valid_from": "2023-01-01",
+  "legal_reference": "National Internal Revenue Code of 1997, Section 114(A), as amended by Republic Act No. 11976 (Ease of Paying Taxes Act) section 22, read directly this session: 'Every person liable to pay the value-added tax ... shall file ... a quarterly return of the amount of his gross sales within twenty-five (25) days following the close of each taxable quarter ... Provided, finally, That beginning January 1, 2023, the filing and payment required under this Subsection shall be done within twenty-five (25) days following the close of each taxable quarter.' The same subsection carries an earlier proviso requiring VAT-registered persons to pay on a monthly basis; the January-2023 proviso quoted above is read as superseding it for filing and payment alike, which matches Revenue Memorandum Circular No. 5-2023's own instruction (read only through a secondary summary this session, not the Circular's primary text) that BIR Form No. 2550M (Monthly Value-Added Tax Declaration) is no longer required beginning 1 January 2023 and that only BIR Form No. 2550Q remains. The box numbers below (`31` to `61`) reproduce the item numbers printed on BIR Form No. 2550Q, April 2024 (ENCS), read directly from the form itself; the boxes this pack does not model — items `15`-`30` (tax credits, penalties and payment details), `34`-`43` (the running total, uncollected-receivables adjustment, and carried-over/transitional/presumptive input tax), `46`-`50` (importations and other current purchases) and `52`-`60` (deductions from input tax and their schedules) — are named in the pack's README.",
+  "source": "bir-2550q-form",
+  "deadline": {
+    "rule": "day_of_month_after_period",
+    "day": 25,
+    "legal_reference": "National Internal Revenue Code of 1997, Section 114(A), as quoted above: 'within twenty-five (25) days following the close of each taxable quarter'.",
+    "source": "ra-11976"
+  },
+  "boxes": [
+    {
+      "box": "31",
+      "kind": "base",
+      "name": "VATable Sales",
+      "sequence": 10,
+      "legal_reference": "BIR Form No. 2550Q, April 2024 (ENCS), Part IV item 31, column A — sales for the quarter, exclusive of value-added tax, taxed under Sections 106(A)/108(A) at the standard rate. See PH-S-STD.",
+      "source": "bir-2550q-form"
+    },
+    {
+      "box": "31",
+      "kind": "tax",
+      "name": "Output Tax on VATable Sales",
+      "sequence": 20,
+      "legal_reference": "BIR Form No. 2550Q, April 2024 (ENCS), Part IV item 31, column B. See PH-S-STD.",
+      "source": "bir-2550q-form"
+    },
+    {
+      "box": "32",
+      "kind": "base",
+      "name": "Zero-Rated Sales",
+      "sequence": 30,
+      "legal_reference": "BIR Form No. 2550Q, April 2024 (ENCS), Part IV item 32 — the value of a sale taxed at zero percent under Section 106(A)(2) or Section 108(B). See PH-S-ZR-EXP and PH-S-ZR-SVC.",
+      "source": "bir-2550q-form"
+    },
+    {
+      "box": "33",
+      "kind": "base",
+      "name": "Exempt Sales",
+      "sequence": 40,
+      "legal_reference": "BIR Form No. 2550Q, April 2024 (ENCS), Part IV item 33 — the value of a sale exempt under Section 109. See PH-S-EX.",
+      "source": "bir-2550q-form"
+    },
+    {
+      "box": "37",
+      "kind": "total",
+      "name": "Total Adjusted Output Tax Due",
+      "sequence": 50,
+      "plus": ["31:tax"],
+      "legal_reference": "BIR Form No. 2550Q, April 2024 (ENCS), Part IV item 37 — 'Item 34B Less Item 35B Add Item 36B'. This pack does not model item 34's own running total, nor items 35 and 36 (the Ease of Paying Taxes Act's output-tax adjustment for uncollected and recovered receivables under Section 110(D)); item 37 is therefore taken directly from item 31's own output tax, named as a gap in the README.",
+      "source": "bir-2550q-form"
+    },
+    {
+      "box": "44",
+      "kind": "base",
+      "name": "Domestic Purchases",
+      "sequence": 60,
+      "legal_reference": "BIR Form No. 2550Q, April 2024 (ENCS), Part IV item 44, column A. See PH-P-STD.",
+      "source": "bir-2550q-form"
+    },
+    {
+      "box": "44",
+      "kind": "tax",
+      "name": "Input Tax on Domestic Purchases",
+      "sequence": 70,
+      "legal_reference": "BIR Form No. 2550Q, April 2024 (ENCS), Part IV item 44, column B. See PH-P-STD.",
+      "source": "bir-2550q-form"
+    },
+    {
+      "box": "45",
+      "kind": "base",
+      "name": "Services Rendered by Non-Residents",
+      "sequence": 80,
+      "legal_reference": "BIR Form No. 2550Q, April 2024 (ENCS), Part IV item 45, column A. See PH-P-RC.",
+      "source": "bir-2550q-form"
+    },
+    {
+      "box": "45",
+      "kind": "tax",
+      "name": "Input Tax on Services Rendered by Non-Residents",
+      "sequence": 90,
+      "legal_reference": "BIR Form No. 2550Q, April 2024 (ENCS), Part IV item 45, column B — the input tax credit a payer of a non-resident's service claims once the value-added tax withheld on it has been remitted on BIR Form No. 1600-VT. See PH-P-RC, whose README entry names the two-return timing this pack does not reproduce.",
+      "source": "bir-2550q-form"
+    },
+    {
+      "box": "51",
+      "kind": "total",
+      "name": "Total Available Input Tax",
+      "sequence": 100,
+      "plus": ["44:tax", "45:tax"],
+      "legal_reference": "BIR Form No. 2550Q, April 2024 (ENCS), Part IV item 51 — 'Sum of Items 43B and 50B'. This pack does not model item 43 (input tax carried over, deferred on capital goods, transitional or presumptive) nor the rest of item 50 (importations and other current purchases); item 51 is therefore taken directly from items 44 and 45.",
+      "source": "bir-2550q-form"
+    },
+    {
+      "box": "61",
+      "kind": "total",
+      "name": "Net VAT Payable/(Excess Input Tax)",
+      "sequence": 110,
+      "plus": ["37"],
+      "minus": ["51"],
+      "legal_reference": "BIR Form No. 2550Q, April 2024 (ENCS), Part IV item 61 — 'Item 37B Less Item 60B'. This pack does not model items 52 to 60 (deductions from and adjustments to input tax); item 61 is therefore item 37 less item 51. A negative figure is not floored to zero: it is an excess input tax a taxpayer carries to the next quarter (item 38 of that later return) rather than a refund claimed automatically, and this session did not read Section 112 closely enough to model the choice between carry-over and refund.",
+      "source": "bir-2550q-form"
+    }
+  ]
+}

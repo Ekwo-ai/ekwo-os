@@ -997,3 +997,29 @@ on conflict (code) do update set
   eu_vat_to       = excluded.eu_vat_to,
   vat_prefix      = excluded.vat_prefix,
   legal_reference = excluded.legal_reference;
+
+
+-- ---------------------------------------------------------------------------
+-- The row — the Philippines
+--
+-- A value added tax of its own under Title IV of the National Internal
+-- Revenue Code of 1997 (sections 105 to 115, as amended by the TRAIN Law,
+-- Republic Act No. 10963, and the Ease of Paying Taxes Act, Republic Act
+-- No. 11976), unrelated to the Union's common system. `vat_prefix` is null:
+-- a Philippine VAT-registered taxpayer is identified by a twelve-digit
+-- Taxpayer Identification Number, the last three digits of which are the
+-- branch code, and which carries no ISO country prefix of this table's kind.
+-- ---------------------------------------------------------------------------
+
+insert into territories (code, code_source, name, parent_code, eu_vat_scope, eu_vat_from, eu_vat_to, vat_prefix, legal_reference) values
+  ('PH', 'iso_3166_1', 'Philippines', null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. The Philippines levies a value added tax of its own under the National Internal Revenue Code of 1997, Title IV, sections 105 to 115, as amended by Republic Act No. 10963 (TRAIN Law) and Republic Act No. 11976 (Ease of Paying Taxes Act) (Supreme Court of the Philippines, E-Library, https://elibrary.judiciary.gov.ph/thebookshelf/showdocs/2/96948, read directly 25 September 2026), unrelated to the Union''s common system.')
+on conflict (code) do update set
+  code_source     = excluded.code_source,
+  name            = excluded.name,
+  parent_code     = excluded.parent_code,
+  eu_vat_scope    = excluded.eu_vat_scope,
+  eu_vat_from     = excluded.eu_vat_from,
+  eu_vat_to       = excluded.eu_vat_to,
+  vat_prefix      = excluded.vat_prefix,
+  legal_reference = excluded.legal_reference;

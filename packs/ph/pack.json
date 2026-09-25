@@ -1,0 +1,155 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "PH",
+  "name": "Philippines",
+  "version": "0.1.0",
+  "schema_min": "20260923110000",
+  "seed_sequence": 92,
+  "released_at": "2026-09-25",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "ra-11976",
+        "title": "Republic Act No. 11976 — Ease of Paying Taxes Act, amending Sections 106, 108, 109, 110, 113, 114, 236, 237 and 238 of the National Internal Revenue Code of 1997, among others",
+        "publisher": "Supreme Court of the Philippines — E-Library",
+        "url": "https://elibrary.judiciary.gov.ph/thebookshelf/showdocs/2/96948",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "ra-10963",
+        "title": "Republic Act No. 10963 — Tax Reform for Acceleration and Inclusion (TRAIN) Act, amending Sections 106, 107, 108 and 109 of the National Internal Revenue Code of 1997, among others — the zero-rated sales and exempt-transactions lists this pack reads",
+        "publisher": "Supreme Court of the Philippines — E-Library",
+        "url": "https://elibrary.judiciary.gov.ph/thebookshelf/showdocs/2/80559",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "ra-12066",
+        "title": "Republic Act No. 12066 — CREATE MORE Act, amending Sections 106, 108, 109 and 237-A of the National Internal Revenue Code of 1997, among others (VAT zero-rating of export-oriented registered enterprises)",
+        "publisher": "Supreme Court of the Philippines — E-Library",
+        "url": "https://elibrary.judiciary.gov.ph/thebookshelf/showdocs/2/98085",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "bir-2550q-form",
+        "title": "BIR Form No. 2550Q, April 2024 (ENCS) — Quarterly Value-Added Tax Return",
+        "publisher": "Bureau of Internal Revenue",
+        "url": "https://bir-cdn.bir.gov.ph/BIR/pdf/2550Q%20%20April%202024%20ENCS_Final.pdf",
+        "consulted_on": "2026-09-25",
+        "kind": "form"
+      },
+      {
+        "key": "bir-2550q-guidelines",
+        "title": "Guidelines and Instructions for BIR Form No. 2550Q, April 2024 (ENCS)",
+        "publisher": "Bureau of Internal Revenue",
+        "url": "https://bir-cdn.bir.gov.ph/BIR/pdf/2550Q%20guidelines%20April%202024_final.pdf",
+        "consulted_on": "2026-09-25",
+        "kind": "form"
+      },
+      {
+        "key": "rr-8-2022",
+        "title": "Revenue Regulations No. 8-2022 — policies and guidelines for the use of the Electronic Invoicing/Receipting System (EIS) under Sections 237 and 237-A of the Tax Code, as amended by the TRAIN Law",
+        "publisher": "Bureau of Internal Revenue",
+        "url": "https://bir-cdn.bir.gov.ph/local/pdf/RR%208-2022.pdf",
+        "consulted_on": "2026-09-25",
+        "kind": "regulation"
+      },
+      {
+        "key": "bir-1600vt-guidelines",
+        "title": "Guidelines and Instructions for BIR Form No. 1600-VT (January 2018) — Monthly Remittance Return of Value-Added Tax Withheld, filed by a private withholding agent making payments to a non-resident subject to VAT",
+        "publisher": "Bureau of Internal Revenue",
+        "url": "https://bir-cdn.bir.gov.ph/local/pdf/BIR%20Form%20No.%201600-VT%202018%20Guidelines.pdf",
+        "consulted_on": "2026-09-25",
+        "kind": "form"
+      },
+      {
+        "key": "bir-efps",
+        "title": "Electronic Filing and Payment System (eFPS) — where BIR Form 2550Q is filed and paid electronically",
+        "publisher": "Bureau of Internal Revenue",
+        "url": "https://efps.bir.gov.ph",
+        "consulted_on": "2026-09-25",
+        "kind": "portal"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "PHP",
+    "language": "en",
+    "closing_style": "retained_earnings",
+    "fiscal_year_default": "calendar",
+    "roles": {
+      "receivable": "1100",
+      "payable": "2000",
+      "suspense": "2990",
+      "rounding": "6990",
+      "retained_earnings": "3200",
+      "sales": "4000",
+      "purchase": "5000",
+      "bank": "1010",
+      "cash": "1000",
+      "fx_gain": "4700",
+      "fx_loss": "6950",
+      "asset_disposal_gain": "4750",
+      "asset_disposal_loss": "6960",
+      "tax_payable": "2110",
+      "tax_receivable": "1155"
+    },
+    "journal_roles": {
+      "sales": "SAL",
+      "purchase": "PUR",
+      "miscellaneous": "GEN",
+      "opening": "OPN"
+    }
+  },
+  "journals": [
+    { "code": "SAL", "type": "sales", "name": "Sales journal", "sequence": 10 },
+    { "code": "PUR", "type": "purchase", "name": "Purchase journal", "sequence": 20 },
+    { "code": "BNK", "type": "bank", "name": "Bank journal", "sequence": 30 },
+    { "code": "CSH", "type": "cash", "name": "Petty cash journal", "sequence": 40 },
+    { "code": "GEN", "type": "general", "name": "General journal", "sequence": 50 },
+    { "code": "OPN", "type": "opening", "name": "Opening balances", "sequence": 60 }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Ekwo reference chart of accounts for the Philippines",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": ["PH-BS", "PH-IS"],
+      "legal_reference": "The Philippines prescribes no chart of accounts. What this session could verify is that the Financial and Sustainability Reporting Standards Council (FSRSC), under the authority of the Board of Accountancy (Republic Act No. 9298, the Philippine Accountancy Act of 2004), adopts the Philippine Financial Reporting Standards, the Philippine Financial Reporting Standard for Small and Medium-sized Entities and the Philippine Financial Reporting Standard for Small Entities, and that the Securities and Exchange Commission requires financial statements filed with it to follow one of those frameworks (Revised Securities Regulation Code Rule 68) — none of which prescribes a numbered account code. This chart is therefore original, not transcribed: four digits by class in the numbering the sibling Southeast Asian packs (Thailand, Vietnam, Singapore) use — 1 assets, 2 liabilities, 3 equity, 4 revenue, 5 cost of sales, 6 operating expenses, 7 finance items, 8 income tax — with the accounts a VAT-registered Philippine company's books hold: output and input value-added tax, the VAT payable or refundable account a filed return settles to, VAT withheld on services from a non-resident pending remittance, and the SSS, PhilHealth and Pag-IBIG contributions and 13th-month pay every Philippine payroll carries. Its statements, `PH-BS` and `PH-IS` in `statements.json`, are original: lines grouped by the code ranges this chart's own numbering gives its accounts, current and non-current, without transcribing a PFRS taxonomy's own line items or their numbering.",
+      "source": null
+    }
+  ],
+  "documents": {
+    "numbering": "sequential",
+    "number_format": "{CODE}-{YYYY}-{NNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "invoice_if_issued",
+    "references": {
+      "numbering": {
+        "legal_reference": "Section 238 of the National Internal Revenue Code, as amended by Republic Act No. 11976, section 36 — an invoice printed under a Bureau of Internal Revenue authority to print (or system permit to use) has to be 'serially numbered', which asks for an identifying number rather than, in so many words, a series with no gap across a whole registration; numbering is therefore `sequential` and the pattern in `number_format` is one a business may choose within that requirement.",
+        "source": "ra-11976"
+      },
+      "tax_point": {
+        "legal_reference": "Section 113(A) and (B) of the National Internal Revenue Code, as amended, ties the value-added tax invoice to 'every sale, barter, exchange, or lease of goods or properties, and for every sale, barter or exchange of services', issued at the point of the transaction (Section 237(A)); the accrual basis the Ease of Paying Taxes Act adopted for both goods and services (Revenue Regulations No. 3-2024, read only through the Bureau's own two-page digest this session, not the regulation's full text) makes the invoice, rather than collection, the trigger for both. `invoice_if_issued` is the closest of this format's five values; it does not carry Revenue Regulations No. 3-2024's own transitory rule crediting output tax on a receivable only once collected for a service billed before the Regulations took effect, which is named as a gap in the pack's README.",
+        "source": "ra-11976"
+      },
+      "payment_terms": {
+        "legal_reference": "No statute setting a payment term between businesses in the absence of an agreement was found this session; the search was not exhaustive, and Republic Act No. 9510 (the Credit Information System Act) and sector-specific rules on suppliers to large enterprises (Republic Act No. 9501 and its implementing rules for micro, small and medium enterprises) may bear on parts of this question without answering it in general. `legal_payment_days` and `late_payment_reference` are left null rather than guessed."
+      }
+    }
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "The Bureau of Internal Revenue operates the Electronic Invoicing/Receipting System (EIS) under Sections 237 and 237-A of the National Internal Revenue Code (introduced by the TRAIN Law, Republic Act No. 10963, and implemented by Revenue Regulations No. 8-2022): a taxpayer the Regulations cover — initially large taxpayers, taxpayers engaged in e-commerce, and taxpayers exporting goods and services — issues a structured electronic invoice and transmits its sales data to the Bureau's own platform (eis.bir.gov.ph) rather than exchanging a document with the buyer's own access point. It is a clearance/reporting regime the way `packs/mx/`'s CFDI, `packs/vn/`'s hóa đơn có mã and `packs/sa/`'s FATOORA are, and not an exchange built on EN 16931: `profile` names a profile a brick of `packages/formats/` actually writes — `peppol-bis-3`, `factur-x-en16931`, a PINT — and none of them describes a document the Bureau itself stamps or receives sales data from in near-real time. No component of `packages/formats/` writes the EIS's own JSON schema or talks to its API, so a document Ekwo posts is not an Electronic Invoice within the Bureau's own meaning. `profile`, `mandatory_from` and `obligation` are therefore left empty although the obligation itself is real and, by secondary reporting this session could not verify against a primary Revenue Memorandum Circular, due to reach the large-taxpayer and exporter group covered by Revenue Regulations No. 8-2022 by 31 December 2026 — the schema itself ties the three fields together (`mandatory` needs a `mandatory_from`, which needs a `profile`), so a pack in this position cannot say the one true thing it knows without a fourth field for the exchange model, which `docs/international.md`'s 'From Saudi Arabia' section already asks for. `party_scheme` and `vat_scheme` are empty because the Philippines carries no ISO 6523 identifier: it is absent from the Peppol participant identifier scheme list. What a Philippine invoice carries instead is the twelve-digit Taxpayer Identification Number, the last three digits of which are the branch code (BIR Form 2550Q guidelines, April 2024).",
+    "source": "rr-8-2022"
+  }
+}

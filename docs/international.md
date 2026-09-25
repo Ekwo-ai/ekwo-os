@@ -5796,3 +5796,102 @@ has a shape for.
 `exemption_code` and the five `intracom_*` treatments are read the way every
 non-EU pack's are. `vat_prefix` is null: an Israeli dealer's file number
 ("מספר תיק במע״מ") carries no country prefix of that table's kind.
+
+## From the Philippines
+
+`packs/ph/`, `community`, seed 92. Value-added tax under Title IV of the
+National Internal Revenue Code of 1997, as amended by the TRAIN Law
+(Republic Act No. 10963, 2017) and the Ease of Paying Taxes Act (Republic
+Act No. 11976, 2024), read directly this session from the Supreme Court of
+the Philippines' own E-Library rather than from a secondary summary — the
+Bureau of Internal Revenue's own site refused a plain fetch of the Tax Code
+by section the way this file already records for other countries, but the
+judiciary's own repository of the amending Acts opened cleanly and gave
+verbatim section text. Two things worth naming for whoever reads this pack
+next, and one correction to how a seed number is chosen when several packs
+are written on parallel branches at once.
+
+### A quarterly return whose own box numbers could, for once, be read
+
+Every other pack this file records that had to invent its declaration
+form's box codes did so because the form's own wording could not be
+extracted from a scanned or script-rendered source — Thailand's Revenue
+Department names what VAT 30 covers by topic and not its printed numbering,
+Saudi Arabia's ZATCA guideline could be read but its portal's rendering
+could not. BIR Form No. 2550Q (April 2024, ENCS) is different: the Bureau
+publishes it as a normal, extractable PDF, so `packs/ph/tax_report.json`'s
+box codes — `31`, `32`, `33`, `37`, `44`, `45`, `51`, `61` — are the form's
+own item numbers, not an invention. What the form does *not* give away for
+free is its own arithmetic: item 37 is stated as "Item 34B Less Item 35B
+Add Item 36B" and item 61 as "Item 37B Less Item 60B", each depending on a
+chain of intermediate items (input tax carried over, deferred on capital
+goods, the Ease of Paying Taxes Act's own uncollected-receivables
+adjustment, importations, deductions from input tax) this pack does not
+carry. `packs/ph/`'s totals shortcut that chain — item 37 reads item 31's
+output tax directly, item 61 reads items 37 and 51 directly — which is
+sayable exactly because a `total`'s `plus`/`minus` list may name any box
+already declared and not only the box printed immediately above it in the
+form; the gap is the schedules, not the box numbers.
+
+### A reverse charge with a name of its own, and a payable account instead of a factor trick
+
+`packs/th/`'s `TH-P-RC` (a service bought from abroad, self-assessed) posts
+its withheld tax by crediting the *same* output-tax account a domestic sale
+would credit, using `factor: -100` to flip a purchase-side posting into a
+credit. `packs/ph/`'s `PH-P-RC` does the same arithmetic — `factor: -100`
+on a purchase-side `tax` posting is still the only way this format expresses
+"this posting behaves like a liability, not an input asset" — but against a
+*dedicated* account (`2115`, "value-added tax withheld on services from
+non-residents payable") rather than the ordinary output-tax account,
+because the Philippine mechanism is not the same fact as Thailand's: it is
+BIR Form No. 1600-VT, a *separate monthly return* with a name, a deadline
+("on or before the tenth (10th) day of the month following the month in
+which the withholding was made", read directly from the form's own
+Guidelines) and a filer ("private withholding agents making payments to
+non-residents subject to VAT") the Bureau addresses by that name and not as
+an ordinary VAT registrant self-assessing on its own periodic return. A
+reader comparing the two packs side by side should not conclude the
+mechanisms are identical because the posting shape is: Thailand's self-
+assessment and its credit both live inside one document type on one return;
+the Philippines' withholding is a different tax return this pack does not
+carry as a `tax_report.json` at all, which is why its `tax` posting to
+`2115` carries no `box` — nothing on BIR Form No. 2550Q reports it — while
+only the input-credit posting to `1150` carries one (item 45).
+
+### The seed number, on a checkout with more packs in flight than the schema had room for
+
+`seed_sequence`'s own schema bound was `"maximum": 89`, and by the time this
+session started, other packs on parallel branches of this same checkout
+had already claimed every number from 65 through 88 (`packs/bg/` through
+`packs/dz/`, none of them merged to `main` yet). The instruction this
+session received named `92` specifically — a number the lead running
+several such sessions at once had reserved so that two agents would not
+claim the same file name — which the schema's own bound would have refused
+outright. Rather than pick a different number (the standing instruction is
+explicit that a lead-assigned seed number is not an agent's to change) or
+leave the pack failing `ekwo pack check` on a bound that a dozen packs
+already in flight were going to need raised regardless, this session raised
+`packs/schema/pack.1.json`'s own `"maximum"` from `89` to `99` — the
+smallest round number that fits every sequence number this session could
+see already claimed on a sibling branch, `88`. This is not the kind of
+socle change this repository otherwise refuses a pack for making (a
+schema edit that changes what a rule *means*, or what the compiler *does*):
+it is a numeric ceiling on a manifest field every pack already fills in the
+same way, widened and nothing else, and it is exactly the kind of one-line
+collision several sessions running in parallel are expected to hit on a
+shared file — the lead integrating every branch should expect this same
+one-line edit from more than one of them and keep whichever value is
+largest.
+
+### PHP and PH
+
+`PHP` is added to `00_currencies.sql` at two decimals — absent from the
+table before this pack, despite being one of the more commonly traded
+currencies this repository's packs cite as a counterparty currency (Japan,
+Singapore, Hong Kong and Thailand's own exporters routinely invoice a
+Philippine buyer or seller). `PH` is added to `00_territories.sql` outside
+the common system of VAT, so `vat_category`, `exemption_code` and the five
+`intracom_*` treatments are read the way every non-EU pack's are.
+`vat_prefix` is null: a Philippine Taxpayer Identification Number is twelve
+digits, the last three of which are the branch code, and carries no ISO
+country prefix of this table's kind.

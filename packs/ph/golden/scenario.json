@@ -1,0 +1,191 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "A year of a value-added-tax-registered Philippine trading and consulting company, filing BIR Form 2550Q every quarter, for the financial year 2026",
+  "chart": "default",
+  "fiscal_year": {
+    "name": "Financial year ended 31 December 2026",
+    "start": "2026-01-01",
+    "end": "2026-12-31"
+  },
+  "periods": [
+    { "code": "2026-Q1", "from": "2026-01-01", "to": "2026-03-31" },
+    { "code": "2026-Q2", "from": "2026-04-01", "to": "2026-06-30" },
+    { "code": "2026-Q3", "from": "2026-07-01", "to": "2026-09-30" },
+    { "code": "2026-Q4", "from": "2026-10-01", "to": "2026-12-31" }
+  ],
+  "statements": ["PH-BS", "PH-IS"],
+  "contacts": [
+    { "ref": "cust-ph", "name": "Mabuhay Home Furnishings Corp.", "type": "customer", "country": "PH" },
+    { "ref": "cust-sg", "name": "Marina Bay Trading Pte. Ltd.", "type": "customer", "country": "SG" },
+    { "ref": "cust-jp", "name": "Kyoto Design Partners K.K.", "type": "customer", "country": "JP" },
+    { "ref": "tenant-ph", "name": "Reyes — residential tenant, Makati unit", "type": "customer", "country": "PH" },
+    { "ref": "supp-ph", "name": "Quezon City Wholesale Supplies Inc.", "type": "supplier", "country": "PH" },
+    { "ref": "landlord-ph", "name": "Santos — individual landlord", "type": "supplier", "country": "PH" },
+    { "ref": "supp-us", "name": "CloudWorks Software Inc.", "type": "supplier", "country": "US" },
+    { "ref": "supp-ph2", "name": "Villanueva & Co., CPAs", "type": "supplier", "country": "PH" }
+  ],
+  "documents": [
+    {
+      "ref": "S1",
+      "type": "sale_invoice",
+      "contact": "cust-ph",
+      "date": "2026-01-15",
+      "why": "A standard-rated domestic sale: item 31A takes the 50,000.00 base and item 31B the 12%, 6,000.00.",
+      "lines": [
+        { "name": "Home furnishings, domestic sale", "quantity": 1, "unit_price": 50000, "tax": "PH-S-STD", "account": "4000" }
+      ]
+    },
+    {
+      "ref": "P1",
+      "type": "purchase_invoice",
+      "contact": "supp-ph",
+      "date": "2026-01-20",
+      "why": "A standard-rated domestic purchase of trading stock: item 44A takes 20,000.00 and item 44B the 12%, 2,400.00.",
+      "lines": [
+        { "name": "Goods for resale", "quantity": 1, "unit_price": 20000, "tax": "PH-P-STD", "account": "5000" }
+      ]
+    },
+    {
+      "ref": "S2",
+      "type": "sale_invoice",
+      "contact": "cust-sg",
+      "date": "2026-02-10",
+      "why": "An export of goods, zero-rated under Section 106(A)(2)(a)(1): item 32 alone, 200,000.00, no output tax.",
+      "lines": [
+        { "name": "Furnishings shipped to Singapore", "quantity": 1, "unit_price": 200000, "tax": "PH-S-ZR-EXP", "account": "4020" }
+      ]
+    },
+    {
+      "ref": "P2",
+      "type": "purchase_invoice",
+      "contact": "landlord-ph",
+      "date": "2026-02-15",
+      "why": "Office space rented from an individual landlord at a monthly rental below the Section 109(Q) threshold of P15,000: exempt, no input tax, no box.",
+      "lines": [
+        { "name": "Office rent, February", "quantity": 1, "unit_price": 12000, "tax": "PH-P-EX", "account": "6100" }
+      ]
+    },
+    {
+      "ref": "S3",
+      "type": "sale_invoice",
+      "contact": "cust-jp",
+      "date": "2026-03-05",
+      "why": "A design service performed in the Philippines for a client engaged in business in Japan, paid in US dollars: zero-rated under Section 108(B)(2), item 32, 80,000.00.",
+      "lines": [
+        { "name": "Interior design consultancy for a Kyoto client", "quantity": 1, "unit_price": 80000, "tax": "PH-S-ZR-SVC", "account": "4030" }
+      ]
+    },
+    {
+      "ref": "P3",
+      "type": "purchase_invoice",
+      "contact": "supp-us",
+      "date": "2026-03-12",
+      "why": "A software subscription bought from a United States supplier and used in the Philippines: the company withholds and remits 12% under the mechanism BIR Form 1600-VT serves, and claims the same amount as input tax on the same document (a simplification the README names) — item 45A 15,000.00, item 45B 1,800.00, net nil.",
+      "lines": [
+        { "name": "Design software subscription, one year", "quantity": 1, "unit_price": 15000, "tax": "PH-P-RC", "account": "6350" }
+      ]
+    },
+    {
+      "ref": "S4",
+      "type": "sale_invoice",
+      "contact": "tenant-ph",
+      "date": "2026-04-08",
+      "why": "Residential rent at a monthly rental below the Section 109(Q) threshold: exempt, item 33, 12,000.00.",
+      "lines": [
+        { "name": "Rent of the Makati residential unit, April", "quantity": 1, "unit_price": 12000, "tax": "PH-S-EX", "account": "4500" }
+      ]
+    },
+    {
+      "ref": "P4",
+      "type": "purchase_invoice",
+      "contact": "supp-ph2",
+      "date": "2026-04-18",
+      "why": "A standard-rated domestic purchase of professional services: item 44A takes 18,000.00 and item 44B the 12%, 2,160.00.",
+      "lines": [
+        { "name": "Statutory audit fee", "quantity": 1, "unit_price": 18000, "tax": "PH-P-STD", "account": "6270" }
+      ]
+    },
+    {
+      "ref": "S5",
+      "type": "sale_credit_note",
+      "contact": "cust-ph",
+      "date": "2026-05-06",
+      "why": "A credit note on S1 for goods returned: item 31A and item 31B go down, 5,000.00 and 600.00, in the quarter it is issued.",
+      "lines": [
+        { "name": "Returned home furnishings", "quantity": 1, "unit_price": 5000, "tax": "PH-S-STD", "account": "4000" }
+      ]
+    },
+    {
+      "ref": "P5",
+      "type": "purchase_credit_note",
+      "contact": "supp-ph",
+      "date": "2026-06-10",
+      "why": "A credit note received on P1 for goods returned, after P1 was already paid in full: item 44A and item 44B go down, 2,000.00 and 240.00, and this credit stays unmatched by any payment.",
+      "lines": [
+        { "name": "Returned stock", "quantity": 1, "unit_price": 2000, "tax": "PH-P-STD", "account": "5000" }
+      ]
+    },
+    {
+      "ref": "S6",
+      "type": "sale_invoice",
+      "contact": "cust-ph",
+      "date": "2026-07-15",
+      "why": "A second standard-rated domestic sale, in a later quarter: item 31A 30,000.00, item 31B 3,600.00.",
+      "lines": [
+        { "name": "Home furnishings, second order", "quantity": 1, "unit_price": 30000, "tax": "PH-S-STD", "account": "4000" }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "D1",
+      "direction": "outbound",
+      "date": "2026-02-10",
+      "amount": 22400,
+      "contact": "supp-ph",
+      "journal": "BNK",
+      "match": "P1",
+      "why": "A payment that settles P1 exactly, value plus value-added tax, before the credit note P5 is issued in the next quarter."
+    },
+    {
+      "ref": "R1",
+      "direction": "inbound",
+      "date": "2026-02-20",
+      "amount": 200000,
+      "contact": "cust-sg",
+      "journal": "BNK",
+      "match": "S2",
+      "why": "A receipt that settles the export sale S2 in full, no value-added tax to collect."
+    },
+    {
+      "ref": "D2",
+      "direction": "outbound",
+      "date": "2026-03-01",
+      "amount": 12000,
+      "contact": "landlord-ph",
+      "journal": "BNK",
+      "match": "P2",
+      "why": "A payment that settles the exempt office rent P2 in full."
+    },
+    {
+      "ref": "D3",
+      "direction": "outbound",
+      "date": "2026-05-01",
+      "amount": 20160,
+      "contact": "supp-ph2",
+      "journal": "BNK",
+      "match": "P4",
+      "why": "A payment that settles the audit fee P4 in full, value plus value-added tax."
+    },
+    {
+      "ref": "R2",
+      "direction": "inbound",
+      "date": "2026-12-20",
+      "amount": 10000,
+      "contact": "cust-ph",
+      "journal": "BNK",
+      "match": null,
+      "why": "A payment on account that matches no invoice and stays open."
+    }
+  ]
+}

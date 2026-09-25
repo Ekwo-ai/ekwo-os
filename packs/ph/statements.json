@@ -1,0 +1,84 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/statements",
+  "statements": [
+    {
+      "code": "PH-BS",
+      "kind": "balance_sheet",
+      "framework": "PH-ORIGINAL",
+      "name": "Statement of Financial Position",
+      "legal_reference": "The Philippines prescribes no line items of its own that this session could read: the Financial and Sustainability Reporting Standards Council adopts the Philippine Financial Reporting Standards and the Philippine Financial Reporting Standard for Small Entities, and this session could not open either standard's own text (see the pack's README, \"Sources\"). This statement is original: it groups this chart's own accounts by the code ranges accounts.csv gives them — current and non-current, receivables and payables split from other balances — the same classification IFRS for SMEs, section 4, uses without transcribing that section's own line items or their numbering.",
+      "source": null,
+      "lines": [
+        { "code": "A-C-CASH", "parent": "A-C", "name": "Cash and cash equivalents", "sequence": 10,
+          "rules": [ { "kind": "code_range", "code_from": "1000", "code_to": "1099" } ] },
+        { "code": "A-C-REC", "parent": "A-C", "name": "Trade and other receivables", "sequence": 20,
+          "rules": [ { "kind": "code_range", "code_from": "1100", "code_to": "1119" } ] },
+        { "code": "A-C-OTH", "parent": "A-C", "name": "Input value-added tax, other current receivables and inventories", "sequence": 30,
+          "rules": [ { "kind": "code_range", "code_from": "1120", "code_to": "1299" } ] },
+        { "code": "A-C-PREP", "parent": "A-C", "name": "Prepaid expenses and deposits", "sequence": 40,
+          "rules": [ { "kind": "code_range", "code_from": "1300", "code_to": "1399" } ] },
+        { "code": "A-C", "name": "Current assets", "sequence": 50, "is_total": true,
+          "plus": ["A-C-CASH", "A-C-REC", "A-C-OTH", "A-C-PREP"] },
+        { "code": "A-NC-FIX", "parent": "A-NC", "name": "Property and equipment, net of accumulated depreciation", "sequence": 60,
+          "rules": [ { "kind": "code_range", "code_from": "1600", "code_to": "1699" } ] },
+        { "code": "A-NC-OTH", "parent": "A-NC", "name": "Intangible and other non-current assets", "sequence": 70,
+          "rules": [ { "kind": "code_range", "code_from": "1700", "code_to": "1799" } ] },
+        { "code": "A-NC", "name": "Non-current assets", "sequence": 80, "is_total": true,
+          "plus": ["A-NC-FIX", "A-NC-OTH"] },
+        { "code": "A-TOT", "name": "Total assets", "sequence": 90, "is_total": true, "plus": ["A-C", "A-NC"] },
+        { "code": "L-C-PAY", "parent": "L-C", "name": "Trade and other payables", "sequence": 100, "sign": -1,
+          "rules": [ { "kind": "code_range", "code_from": "2000", "code_to": "2009" } ] },
+        { "code": "L-C-OTH", "parent": "L-C", "name": "Output value-added tax, statutory dues and other current liabilities", "sequence": 110, "sign": -1,
+          "rules": [
+            { "kind": "code_range", "code_from": "2010", "code_to": "2499", "sequence": 10 },
+            { "kind": "code_range", "code_from": "2900", "code_to": "2999", "sequence": 20 }
+          ] },
+        { "code": "L-C", "name": "Current liabilities", "sequence": 120, "is_total": true, "plus": ["L-C-PAY", "L-C-OTH"] },
+        { "code": "L-NC", "parent": "L-TOT", "name": "Non-current liabilities", "sequence": 130, "sign": -1,
+          "rules": [ { "kind": "code_range", "code_from": "2500", "code_to": "2599" } ] },
+        { "code": "L-TOT", "name": "Total liabilities", "sequence": 140, "is_total": true, "plus": ["L-C", "L-NC"] },
+        { "code": "E-CAP", "parent": "E-TOT", "name": "Share capital and reserves", "sequence": 150, "sign": -1,
+          "rules": [ { "kind": "code_range", "code_from": "3000", "code_to": "3199" } ] },
+        { "code": "E-RET", "parent": "E-TOT", "name": "Retained earnings", "sequence": 160, "sign": -1,
+          "rules": [ { "kind": "code_range", "code_from": "3200", "code_to": "3299" } ] },
+        { "code": "E-RESULT", "parent": "E-TOT", "name": "Result for the period, not yet closed", "sequence": 170, "sign": -1,
+          "rules": [
+            { "kind": "code_range", "code_from": "4000", "code_to": "5999", "sequence": 10 },
+            { "kind": "code_range", "code_from": "6000", "code_to": "8999", "sequence": 20 }
+          ] },
+        { "code": "E-TOT", "name": "Total equity", "sequence": 180, "is_total": true, "plus": ["E-CAP", "E-RET", "E-RESULT"] },
+        { "code": "EL-TOT", "name": "Total liabilities and equity", "sequence": 190, "is_total": true, "plus": ["L-TOT", "E-TOT"] }
+      ]
+    },
+    {
+      "code": "PH-IS",
+      "kind": "income_statement",
+      "framework": "PH-ORIGINAL",
+      "name": "Statement of Comprehensive Income",
+      "legal_reference": "As PH-BS: original, grouped by the code ranges accounts.csv gives this chart's revenue, cost and expense accounts.",
+      "source": null,
+      "lines": [
+        { "code": "REV", "name": "Revenue", "sequence": 10, "sign": -1,
+          "rules": [ { "kind": "code_range", "code_from": "4000", "code_to": "4599" } ] },
+        { "code": "COST", "name": "Cost of sales", "sequence": 20,
+          "rules": [ { "kind": "code_range", "code_from": "5000", "code_to": "5099" } ] },
+        { "code": "GROSS", "name": "Gross profit", "sequence": 30, "is_total": true, "plus": ["REV"], "minus": ["COST"] },
+        { "code": "OTH-INC", "name": "Other income", "sequence": 40, "sign": -1,
+          "rules": [ { "kind": "code_range", "code_from": "4700", "code_to": "4999" } ] },
+        { "code": "OPEX", "name": "Operating and finance expenses", "sequence": 50,
+          "rules": [
+            { "kind": "code_range", "code_from": "6000", "code_to": "6969", "sequence": 10 },
+            { "kind": "code_range", "code_from": "6980", "code_to": "7099", "sequence": 20 }
+          ] },
+        { "code": "DEPR", "name": "Depreciation and amortization", "sequence": 60,
+          "rules": [ { "kind": "code_range", "code_from": "6970", "code_to": "6979" } ] },
+        { "code": "PRETAX", "name": "Income before income tax", "sequence": 70, "is_total": true,
+          "plus": ["GROSS", "OTH-INC"], "minus": ["OPEX", "DEPR"] },
+        { "code": "TAX", "name": "Income tax expense", "sequence": 80,
+          "rules": [ { "kind": "code_range", "code_from": "8000", "code_to": "8099" } ] },
+        { "code": "PROFIT", "name": "Net income for the period", "sequence": 90, "is_total": true,
+          "plus": ["PRETAX"], "minus": ["TAX"] }
+      ]
+    }
+  ]
+}

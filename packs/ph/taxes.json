@@ -1,0 +1,165 @@
+[
+  {
+    "code": "PH-S-STD",
+    "name": "Sale — value-added tax at 12%",
+    "description": "A sale, barter or exchange of goods, properties or services in the ordinary course of trade or business in the Philippines.",
+    "kind": "vat",
+    "rate": 12,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2006-02-01",
+    "legal_reference": "National Internal Revenue Code of 1997, Sections 106(A) and 108(A), as amended by Republic Act No. 11976 (Ease of Paying Taxes Act), sections 16 and 17 — 'a value-added tax equivalent to twelve percent (12%) of the gross sales', read directly this session from the Supreme Court E-Library's text of the amending Act. The 12% rate itself dates from Republic Act No. 9337, effective 1 February 2006, which this session did not re-verify against its own primary text; Republic Act No. 11976 restates the rate as already 12% and only renames 'gross selling price'/'gross value in money'/'gross receipts' to 'gross sales'.",
+    "source": "ra-11976",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "31" },
+        { "type": "tax", "account": "2100", "box": "31" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "31", "box_factor": -100 },
+        { "type": "tax", "account": "2100", "box": "31", "box_factor": -100 }
+      ]
+    },
+    "sequence": 10
+  },
+  {
+    "code": "PH-P-STD",
+    "name": "Purchase — value-added tax at 12%, creditable",
+    "description": "A purchase of goods or services in the Philippines from a VAT-registered supplier, whose input tax this pack takes as fully creditable.",
+    "kind": "vat",
+    "rate": 12,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2006-02-01",
+    "legal_reference": "National Internal Revenue Code of 1997, Sections 106(A)/108(A) as for PH-S-STD, and Section 110(A), as amended by Republic Act No. 11976 section 19 — an input tax evidenced by a VAT invoice issued under Section 113 is creditable against output tax where the purchase is for sale, for use as materials or supplies, or for use in trade or business. This session did not read a primary text listing purchases whose input tax the law excludes from credit (entertainment expenses not directly connected to the trade, non-depreciable vehicles above a ceiling, by secondary reputation and not by an article read this session); this code assumes every standard-rated purchase is fully creditable, and the gap is named in the pack's README.",
+    "source": "ra-11976",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "44" },
+        { "type": "tax", "account": "1150", "box": "44" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "44", "box_factor": -100 },
+        { "type": "tax", "account": "1150", "box": "44", "box_factor": -100 }
+      ]
+    },
+    "sequence": 20
+  },
+  {
+    "code": "PH-S-ZR-EXP",
+    "name": "Sale — export of goods, zero-rated",
+    "description": "The sale and actual shipment of goods from the Philippines to a foreign country, paid for in acceptable foreign currency and accounted for under Bangko Sentral ng Pilipinas rules.",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2018-01-01",
+    "conditions": ["transport_evidence"],
+    "legal_reference": "National Internal Revenue Code of 1997, Section 106(A)(2)(a)(1), as amended by Republic Act No. 10963 (TRAIN Law) section 31, read directly this session from the Supreme Court E-Library's text of the amending Act: 'export sales' at zero percent (0%) includes 'the sale and actual shipment of goods from the Philippines to a foreign country ... and paid for in acceptable foreign currency or its equivalent in goods or services, and accounted for in accordance with the rules and regulations of the Bangko Sentral ng Pilipinas (BSP)'. This subparagraph is not one of the export-sale categories a conditional sunset clause of the same section reduces to 12% once an enhanced VAT-refund system is certified (subparagraphs (3), (4) and (5) only), and this session found nothing suggesting that clause has been triggered for it. Republic Act No. 12066 (CREATE MORE Act) touches Sections 106, 108 and 109 to broaden zero-rating for local purchases of IPA-registered export-oriented enterprises; that regime is separate from this ordinary direct-exporter zero-rating and is out of scope of this pack (see README).",
+    "source": "ra-10963",
+    "vat_category": "G",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "32" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "32", "box_factor": -100 }
+      ]
+    },
+    "sequence": 30
+  },
+  {
+    "code": "PH-S-ZR-SVC",
+    "name": "Sale — service rendered to a person doing business outside the Philippines, zero-rated",
+    "description": "A service performed in the Philippines for a person engaged in business conducted outside the Philippines, or for a nonresident person not engaged in business who is outside the Philippines when the service is performed, paid for in acceptable foreign currency and accounted for under Bangko Sentral ng Pilipinas rules.",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2018-01-01",
+    "conditions": ["supply_nature", "buyer_status"],
+    "legal_reference": "National Internal Revenue Code of 1997, Section 108(B)(2), as amended by Republic Act No. 10963 (TRAIN Law) section 33, read directly this session: zero-rated services include those 'rendered to a person engaged in business conducted outside the Philippines or to a nonresident person not engaged in business who is outside the Philippines when the services are performed, the consideration for which is paid for in acceptable foreign currency and accounted for in accordance with the rules and regulations of the Bangko Sentral ng Pilipinas (BSP)'. Whether the buyer is engaged in business outside the Philippines, and whether the service's benefit is received there, is a fact of the engagement the ledger does not hold, which is why this code carries `conditions` rather than a rule the core evaluates.",
+    "source": "ra-10963",
+    "vat_category": "G",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "32" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "32", "box_factor": -100 }
+      ]
+    },
+    "sequence": 40
+  },
+  {
+    "code": "PH-S-EX",
+    "name": "Sale — exempt, lease of a residential unit at or below the threshold rental",
+    "description": "Lease of a residential unit with a monthly rental not exceeding the statutory threshold.",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2018-01-01",
+    "conditions": ["supply_nature"],
+    "legal_reference": "National Internal Revenue Code of 1997, Section 109(Q), as amended by Republic Act No. 10963 (TRAIN Law) section 34, read directly this session: exempt transactions include 'lease of a residential unit with a monthly rental not exceeding Fifteen thousand pesos (P15,000)'. This session did not verify whether this threshold is one of the amounts Section 109(CC) and Republic Act No. 11976 subject to triennial adjustment by the Consumer Price Index — the text of (CC) speaks only of its own paragraph's three-million-peso figure — so P15,000 is carried as the amount the Act itself states, not re-indexed. It carries no report box: nothing read this session shows BIR Form 2550Q asking for the value of an exempt sale on a line of its own the way it asks for zero-rated sales at item 32; box 33 (Exempt Sales) is where this pack reports it instead.",
+    "source": "ra-10963",
+    "vat_category": "E",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "33" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "33", "box_factor": -100 }
+      ]
+    },
+    "sequence": 50
+  },
+  {
+    "code": "PH-P-EX",
+    "name": "Purchase — exempt, lease of a residential unit at or below the threshold rental",
+    "description": "Lease of a residential unit with a monthly rental not exceeding the statutory threshold, bought from an individual lessor.",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "exempt",
+    "valid_from": "2018-01-01",
+    "legal_reference": "National Internal Revenue Code of 1997, Section 109(Q), as for PH-S-EX: what is leased carries no value-added tax, so there is no input tax and no box.",
+    "source": "ra-10963",
+    "postings": {
+      "invoice": [
+        { "type": "base" }
+      ],
+      "credit_note": [
+        { "type": "base" }
+      ]
+    },
+    "sequence": 60
+  },
+  {
+    "code": "PH-P-RC",
+    "name": "Purchase — service from a non-resident, value-added tax withheld and remitted",
+    "description": "A service performed for the company by a person not established in the Philippines, used in the Philippines: the company withholds and remits the value-added tax itself rather than the supplier charging it.",
+    "kind": "vat",
+    "rate": 12,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2018-01-01",
+    "conditions": ["buyer_status"],
+    "legal_reference": "National Internal Revenue Code of 1997, Section 108(A), which taxes 'the performance of all kinds of services in the Philippines for others', read together with BIR Form No. 1600-VT and its Guidelines and Instructions (January 2018), read directly this session: 'Private withholding agents making payments to non-residents subject to VAT' file the Monthly Remittance Return of Value-Added Tax Withheld 'on or before the tenth (10th) day of the month following the month in which the withholding was made'. This session did not read the Revenue Regulations that first imposed this withholding mechanism (secondary sources name Revenue Regulations No. 4-2007's amendment of the VAT withholding rules, not read here in its primary text) against Section 114(C) of the Code. **The two-return timing is not modelled**: BIR Form 1600-VT is a monthly return this pack does not carry as a `tax_report.json` — it names no box of BIR Form 2550Q — while the corresponding input tax credit is claimed on 2550Q's own item 45; this code posts the withholding liability and the credit on the same document, which is faster than the separate monthly remittance the law requires, exactly the simplification `packs/th/`'s TH-P-RC names for Thailand's VAT 36/VAT 30 pair.",
+    "source": "bir-1600vt-guidelines",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "45" },
+        { "type": "tax", "factor": -100, "account": "2115" },
+        { "type": "tax", "account": "1150", "box": "45" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "45", "box_factor": -100 },
+        { "type": "tax", "factor": -100, "account": "2115", "box_factor": -100 },
+        { "type": "tax", "account": "1150", "box": "45", "box_factor": -100 }
+      ]
+    },
+    "sequence": 70
+  }
+]
