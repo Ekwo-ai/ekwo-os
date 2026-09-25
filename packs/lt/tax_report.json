@@ -1,0 +1,234 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "LT-FR0600",
+  "name": "PVM deklaracija (forma FR0600)",
+  "period": ["month", "quarter", "half_year"],
+  "valid_from": "2026-01-01",
+  "legal_reference": "Valstybinės mokesčių inspekcijos prie Lietuvos Respublikos finansų ministerijos viršininko 2004 m. kovo 1 d. įsakymas Nr. VA-29 „Dėl Pridėtinės vertės mokesčio deklaracijos ir kitų su šiuo mokesčiu susijusių formų bei jų užpildymo taisyklių patvirtinimo“ patvirtina formą FR0600 ir jos pildymo taisykles. Nuo 2026-01-01 forma papildyta 29A laukeliu lengvatiniam 12 proc. PVM tarifui, patvirtinus VMI viršininko 2025 m. gruodžio 22 d. įsakymu Nr. VA-129. Šis pakas kodus laukelių žymėms perima tiksliai tokius, kokie spausdinami formoje (pvz. „29A“); jokio ženklo transliteravimo, priešingai nei Estijos KMD formoje, nereikia.",
+  "source": "fr0600-taisykles",
+  "boxes": [
+    {
+      "box": "11",
+      "kind": "base",
+      "name": "PVM apmokestinami sandoriai",
+      "sequence": 10,
+      "legal_reference": "FR0600 forma, 11 laukelis — PVM mokėtojas nurodo apmokestinamąją vertę tų per mokestinį laikotarpį patiektų prekių ir suteiktų paslaugų, kurių tiekimo (teikimo) vieta laikoma Lietuva ir kurios apmokestinamos taikant standartinį bei lengvatinius PVM tarifus, išskyrus 12, 14, 15 ir 16 laukeliuose deklaruotinas sumas. Šis pakas laukelį naudoja tik standartinio, 12, 9 (istorinio) ir 5 procentų tarifų bazei; savų poreikių suvartojimas (14), pasigaminimas (15) ir maržos schema (16) šiame pake nemodeliuojami.",
+      "source": "fr0600-km1739"
+    },
+    {
+      "box": "12",
+      "kind": "base",
+      "name": "PVM apmokestinami sandoriai, kai PVM išskaito pirkėjas (96 str. nustatytais atvejais)",
+      "sequence": 20,
+      "legal_reference": "FR0600 forma, 12 laukelis — apmokestinamoji vertė tų patiektų prekių (suteiktų paslaugų), kurių pirkimo PVM pagal PVMĮ 96 straipsnio nuostatas privalo išskaityti ir sumokėti pirkėjas (statybos darbai, nekilnojamojo turto ar juodųjų ir spalvotųjų metalų atliekų ir laužo tiekimas). Pardavėjas šį laukelį pildo vietoje 11 laukelio ir prie sumos jokios pardavimo PVM sumos nedeklaruoja.",
+      "source": "fr0600-km1739"
+    },
+    {
+      "box": "13",
+      "kind": "base",
+      "name": "PVM neapmokestinami sandoriai",
+      "sequence": 30,
+      "legal_reference": "FR0600 forma, 13 laukelis — apmokestinamoji vertė patiektų PVM neapmokestinamų prekių ir suteiktų paslaugų, išvardytų PVMĮ 20–33 straipsniuose, bei neapmokestinamo investicinio aukso ir su juo susijusių atstovavimo paslaugų, nurodytų PVMĮ 112 straipsnio 1 ir 2 dalyse.",
+      "source": "fr0600-km1739"
+    },
+    {
+      "box": "14",
+      "kind": "base",
+      "name": "Suvartojimas privatiems poreikiams",
+      "sequence": 40,
+      "legal_reference": "FR0600 forma, 14 laukelis — PVM mokėtojo privatiems poreikiams sunaudotų prekių ir (ar) paslaugų apmokestinamoji vertė (PVMĮ 5 straipsnio 4 dalis). Šis pakas šio laukelio nenaudoja: golden scenarijuje savų poreikių suvartojimo sandorio nėra.",
+      "source": "fr0600-km1739"
+    },
+    {
+      "box": "15",
+      "kind": "base",
+      "name": "Ilgalaikio materialiojo turto pasigaminimas",
+      "sequence": 50,
+      "legal_reference": "FR0600 forma, 15 laukelis — PVMĮ 6 straipsnyje nurodytas PVM mokėtojo nuosavybės teise priklausančio pastato (statinio) esminio pagerinimo ar ilgalaikio materialiojo turto pasigaminimo apmokestinamoji vertė. Šis pakas šio laukelio nenaudoja.",
+      "source": "fr0600-km1739"
+    },
+    {
+      "box": "16",
+      "kind": "base",
+      "name": "Sandorių, kuriems taikoma speciali apmokestinimo schema, marža",
+      "sequence": 60,
+      "legal_reference": "FR0600 forma, 16 laukelis — kelionių organizatorių ir naudotų prekių, meno kūrinių bei kolekcinių ir antikvarinių daiktų prekybos maržos schemos apskaičiuota marža. Šis pakas maržos schemos nemodeliuoja.",
+      "source": "fr0600-km1739"
+    },
+    {
+      "box": "17",
+      "kind": "base",
+      "name": "Prekių eksportas",
+      "sequence": 70,
+      "legal_reference": "FR0600 forma, 17 laukelis — per mokestinį laikotarpį patiektų ir iš Europos Sąjungos teritorijos išgabentų (eksportuotų) prekių apmokestinamoji vertė (PVMĮ 41 straipsnis).",
+      "source": "fr0600-km1739"
+    },
+    {
+      "box": "18",
+      "kind": "base",
+      "name": "ES PVM mokėtojams patiektos prekės",
+      "sequence": 80,
+      "legal_reference": "FR0600 forma, 18 laukelis — kitų Europos Sąjungos valstybių narių PVM mokėtojams patiektų ir iš Lietuvos išgabentų prekių apmokestinamoji vertė (PVMĮ 49 straipsnis).",
+      "source": "fr0600-km1739"
+    },
+    {
+      "box": "19",
+      "kind": "base",
+      "name": "Kiti PVM apmokestinami sandoriai (0 proc.)",
+      "sequence": 90,
+      "legal_reference": "FR0600 forma, 19 laukelis — kitų, nei 17 ir 18 laukeliuose nurodytų, Lietuvos teritorijoje patiektų prekių ir suteiktų paslaugų, apmokestinamų taikant 0 proc. PVM tarifą, apmokestinamoji vertė (tarptautinis vežimas, laivai, orlaiviai, diplomatinės ir konsulinės įstaigos ir kt., PVMĮ VI skyrius). Šis pakas šio laukelio nenaudoja.",
+      "source": "fr0600-km1739"
+    },
+    {
+      "box": "20",
+      "kind": "base",
+      "name": "Už Lietuvos ribų įvykę sandoriai (ne PVM objektas Lietuvoje)",
+      "sequence": 100,
+      "legal_reference": "FR0600 forma, 20 laukelis — PVM mokėtojo už Lietuvos teritorijos ribų patiektų prekių ir suteiktų paslaugų, kurių pirkimo (importo) PVM pagal PVMĮ 58 straipsnio 1 dalies 2 punkto nuostatas gali būti atskaitomas, apmokestinamoji vertė — įskaitant paslaugas, kurių teikimo vieta pagal PVMĮ 13 straipsnio 2 dalies 1 punkto bendrąją taisyklę yra paslaugos pirkėjo — kito ES valstybės narės PVM mokėtojo — įsisteigimo vieta.",
+      "source": "fr0600-km1739"
+    },
+    {
+      "box": "21",
+      "kind": "base",
+      "name": "Iš ES įsigytos prekės",
+      "sequence": 110,
+      "legal_reference": "FR0600 forma, 21 laukelis — iš kitos Europos Sąjungos valstybės narės PVM mokėtojo įsigytų prekių, kurių įsigijimas laikomas įvykusiu Lietuvoje, apmokestinamoji vertė (PVMĮ 8 straipsnis).",
+      "source": "fr0600-km1739"
+    },
+    {
+      "box": "22",
+      "kind": "base",
+      "name": "Iš ES įsigytos prekės trikampei prekybai",
+      "sequence": 120,
+      "legal_reference": "FR0600 forma, 22 laukelis — trikampėje prekyboje tarpininkaujančio PVM mokėtojo iš vienos ES valstybės narės PVM mokėtojo įsigytų prekių, kurios iš karto buvo patiektos kitoje ES valstybėje narėje esančiam PVM mokėtojui, apmokestinamoji vertė. Šis pakas trikampės prekybos nemodeliuoja.",
+      "source": "fr0600-km1739"
+    },
+    {
+      "box": "23",
+      "kind": "base",
+      "name": "Iš užsienio valstybių įsigytos paslaugos",
+      "sequence": 130,
+      "legal_reference": "FR0600 forma, 23 laukelis — iš užsienio asmenų įsigytų paslaugų, kurių teikimo vieta laikoma Lietuvos teritorija ir kurių pardavimo PVM pagal PVMĮ 95 straipsnio nuostatas privalo apskaičiuoti ir sumokėti paslaugų pirkėjas — PVM mokėtojas, apmokestinamoji vertė.",
+      "source": "fr0600-km1739"
+    },
+    {
+      "box": "24",
+      "kind": "base",
+      "name": "Iš jų: įsigytos iš ES PVM mokėtojų",
+      "sequence": 140,
+      "legal_reference": "FR0600 forma, 24 laukelis — 23 laukelyje deklaruotos apmokestinamosios vertės dalis, tenkanti paslaugoms, įsigytoms iš kitų ES valstybių narių PVM mokėtojų. Informacinis laukelis, jau įtrauktas į 23 laukelio sumą.",
+      "source": "fr0600-km1739"
+    },
+    {
+      "box": "25",
+      "kind": "tax",
+      "name": "Įsigytų prekių ir paslaugų pirkimo PVM",
+      "sequence": 150,
+      "legal_reference": "FR0600 forma, 25 laukelis — PVM mokėtojo įsigytų prekių ir paslaugų pirkimo PVM suma, nurodyta pirkimo dokumentuose, prieš taikant proporcinio PVM atskaitos procento ar konkrečių straipsnių (pvz. reprezentacinėms sąnaudoms, lengvajam automobiliui) ribojimus. Importo PVM (26, 27 laukeliai) į šį laukelį netraukiamas.",
+      "source": "fr0600-km1739"
+    },
+    {
+      "box": "26",
+      "kind": "tax",
+      "name": "Sumokėta importo PVM",
+      "sequence": 160,
+      "legal_reference": "FR0600 forma, 26 laukelis — nuo importuojamų prekių apmokestinamosios vertės apskaičiuota ir muitinei sumokėta (ar įskaityta) importo PVM suma, išskyrus atvejus, kai importo PVM sumokėjimo kontrolę vykdo VMI. Šis pakas importo neturi savo golden scenarijuje.",
+      "source": "fr0600-km1739"
+    },
+    {
+      "box": "27",
+      "kind": "tax",
+      "name": "Importo PVM, kurio įskaitymą kontroliuoja VMI",
+      "sequence": 170,
+      "legal_reference": "FR0600 forma, 27 laukelis — importo PVM suma, kurios sumokėjimą (įskaitymą) kontroliuoja VMI, o ne muitinė. Šis pakas šio laukelio nenaudoja.",
+      "source": "fr0600-km1739"
+    },
+    {
+      "box": "28",
+      "kind": "tax",
+      "name": "Kalendorinių metų proporcinis PVM atskaitos procentas",
+      "sequence": 180,
+      "legal_reference": "FR0600 forma, 28 laukelis — mišrią (apmokestinamąją ir neapmokestinamąją) veiklą vykdančio PVM mokėtojo kalendoriniams metams taikytinas, pagal PVMĮ 60 straipsnio 1 dalies „pajamų“ kriterijų apskaičiuotas PVM atskaitos procentas. Rankomis įvedamas dydis, ne iš apyvartos susumuojamas; šis pakas mišrios veiklos proporcijos nemodeliuoja, todėl niekas šio laukelio nepildo.",
+      "source": "fr0600-km1739"
+    },
+    {
+      "box": "29",
+      "kind": "tax",
+      "name": "Standartinio tarifo pardavimo PVM",
+      "sequence": 190,
+      "legal_reference": "FR0600 forma, 29 laukelis — nuo 11 (ir prireikus 14, 15, 16) laukeliuose deklaruotos, standartiniu PVM tarifu (PVMĮ 19 straipsnio 1 dalis) apmokestinamos apmokestinamosios vertės apskaičiuota pardavimo PVM suma.",
+      "source": "fr0600-km1739"
+    },
+    {
+      "box": "29A",
+      "kind": "tax",
+      "name": "Lengvatinio 12 proc. tarifo pardavimo PVM",
+      "sequence": 200,
+      "legal_reference": "FR0600 forma, 29A laukelis, įtrauktas nuo 2026-01-01 VMI viršininko 2025 m. gruodžio 22 d. įsakymu Nr. VA-129 — nuo 11 laukelyje deklaruotos, lengvatiniu 12 proc. PVM tarifu (PVMĮ 19 straipsnio 3 dalis, galiojanti nuo 2026-01-01: apgyvendinimo paslaugos, reguliaraus susisiekimo keleivių vežimas, meno ir kultūros įstaigų bei renginių lankymas) apmokestinamos apmokestinamosios vertės apskaičiuota pardavimo PVM suma.",
+      "source": "fr0600-km1739"
+    },
+    {
+      "box": "30",
+      "kind": "tax",
+      "name": "9 proc. pardavimo PVM",
+      "sequence": 210,
+      "legal_reference": "FR0600 forma, 30 laukelis — nuo 11 laukelyje deklaruotos, lengvatiniu 9 proc. PVM tarifu apmokestinamos apmokestinamosios vertės apskaičiuota pardavimo PVM suma. Iki 2025-12-31 galiojusi PVMĮ 19 straipsnio 3 dalies redakcija šį tarifą taikė šildymui, knygoms ir neperiodiniams leidiniams, apgyvendinimui, reguliaraus susisiekimo keleivių vežimui bei meno ir kultūros renginių lankymui; nuo 2026-01-01 šios prekių ir paslaugų grupės perkeltos į 21, 5 arba 12 proc. tarifus (žr. LT-S-12, LT-S-05 legal_reference), todėl laukelis nuo tos datos naujų sandorių nebeturėtų kaupti — jis paliktas formoje ir šiame pake ankstesnių laikotarpių sandoriams.",
+      "source": "fr0600-km1739"
+    },
+    {
+      "box": "31",
+      "kind": "tax",
+      "name": "5 proc. pardavimo PVM",
+      "sequence": 220,
+      "legal_reference": "FR0600 forma, 31 laukelis — nuo 11 laukelyje deklaruotos, lengvatiniu 5 proc. PVM tarifu (PVMĮ 19 straipsnio 4 ir 5 dalys) apmokestinamos apmokestinamosios vertės apskaičiuota pardavimo PVM suma.",
+      "source": "fr0600-km1739"
+    },
+    {
+      "box": "32",
+      "kind": "tax",
+      "name": "Pardavimo PVM (95 str. nustatytais atvejais)",
+      "sequence": 230,
+      "legal_reference": "FR0600 forma, 32 laukelis — prekių (paslaugų) pirkėjo „atvirkštiniu“ būdu apskaičiuota pardavimo PVM suma PVMĮ 95 straipsnyje nustatytais atvejais (paslaugos iš užsienio asmenų, 23 laukelis). Jei įsigytos paslaugos skirtos apmokestinamajai veiklai, ta pati suma įtraukiama į 25 ir 35 laukelius kaip atskaitomas PVM.",
+      "source": "fr0600-km1739"
+    },
+    {
+      "box": "33",
+      "kind": "tax",
+      "name": "Pardavimo PVM (96 str. nustatytais atvejais)",
+      "sequence": 240,
+      "legal_reference": "FR0600 forma, 33 laukelis — prekių (paslaugų) pirkėjo apskaičiuota pardavimo PVM suma PVMĮ 96 straipsnyje nustatytais atvejais (statybos darbai, turto perleidimas kaip turtinis įnašas ar reorganizavimo atveju, juodųjų ir spalvotųjų metalų atliekos ir laužas, 12 laukelis). Jei įsigyti darbai, prekės ar paslaugos skirti apmokestinamajai veiklai, ta pati suma įtraukiama į 25 ir 35 laukelius kaip atskaitomas PVM.",
+      "source": "fr0600-km1739"
+    },
+    {
+      "box": "34",
+      "kind": "tax",
+      "name": "Iš ES įsigytų prekių pardavimo PVM",
+      "sequence": 250,
+      "legal_reference": "FR0600 forma, 34 laukelis — nuo 21 laukelyje deklaruotos apmokestinamosios vertės, taikant tokį PVM tarifą, koks būtų taikomas Lietuvoje tiekiamoms analogiškoms prekėms, pirkėjo apskaičiuota pardavimo PVM suma. Jei prekės skirtos apmokestinamajai veiklai, ta pati suma įtraukiama į 25 ir 35 laukelius kaip atskaitomas PVM.",
+      "source": "fr0600-km1739"
+    },
+    {
+      "box": "35",
+      "kind": "tax",
+      "name": "Atskaitomas PVM",
+      "sequence": 260,
+      "legal_reference": "FR0600 forma, 35 laukelis — PVM mokėtojo per mokestinį laikotarpį atskaitoma įsigytų (importuotų) prekių ir paslaugų pirkimo (importo) PVM suma: jei vykdoma vien apmokestinama veikla, visa 25, 26 ir 27 laukeliuose deklaruota suma; jei veikla mišri, jos dalis, apskaičiuota taikant 28 laukelio proporcinį procentą. PVMĮ 30 straipsnio 1 dalis, 62 straipsnio 2–3 dalys ir 30 straipsnio 3 dalis riboja ar visai atima atskaitos teisę reprezentacinėms sąnaudoms (50 proc. atskaitoma) ir tam tikroms pramogoms bei ne visai ūkinei veiklai skirtiems lengviesiems automobiliams skirtoms prekėms ir paslaugoms (neatskaitoma) — tokios sumos deklaruojamos 25 laukelyje, bet į 35 laukelį įtraukiamos tik ta dalimi, kuri lieka atskaitoma.",
+      "source": "fr0600-km1739"
+    },
+    {
+      "box": "36",
+      "kind": "total",
+      "name": "Mokėtinas į biudžetą arba grąžintinas iš biudžeto (-) PVM",
+      "sequence": 270,
+      "plus": ["29", "29A", "30", "31", "32", "33", "34"],
+      "minus": ["35"],
+      "legal_reference": "FR0600 forma, 36 laukelis — apskaičiuojamas automatiškai kaip 29+29A+30+31+32+33+34 laukelių suma, atėmus 35 laukelį. Jei rezultatas teigiamas, tai mokėtina į biudžetą suma, mokėtina iki deklaracijos pateikimo termino pabaigos; jei neigiamas, tai iš biudžeto grąžintinas PVM skirtumas, grąžinamas PVMĮ 91 straipsnyje nustatyta tvarka. Skirtingai nei Estijos KMD forma (atskiri 12 ir 13 laukeliai), Lietuvos forma abi kryptis rašo ženklu tame pačiame laukelyje, todėl šis pakas jam netaiko floor_zero.",
+      "source": "fr0600-km1739"
+    }
+  ],
+  "deadline": {
+    "rule": "day_of_month_after_period",
+    "day": 25,
+    "legal_reference": "VMI viršininko 2004 m. kovo 1 d. įsakymu Nr. VA-29 patvirtintos PVM deklaracijos ir kitų su šiuo mokesčiu susijusių formų užpildymo taisyklės: „PVM mokėtojai, kurių mokestinis laikotarpis yra kalendorinis mėnuo, mėnesio PVM deklaraciją turi pateikti iki kito mėnesio 25 dienos, tie, kurių mokestinis laikotarpis kalendorinis ketvirtis – iki kito ketvirčio pirmo mėnesio 25 dienos, o tie, kurių mokestinis laikotarpis yra kalendorinis pusmetis, pusmečio PVM deklaraciją – iki kito pusmečio pirmo mėnesio 25 dienos.“ Ta pati 25-oji diena galioja visoms trims deklaravimo trukmėms, todėl viena taisyklė apima visą period sąrašą. Kuris mokestinis laikotarpis konkrečiam PVM mokėtojui taikomas (paprastai kalendorinis mėnuo juridiniam asmeniui, galimybė rinktis ketvirtį įmonei, kurios apyvarta praėjusiais metais neviršijo 300 000 eurų) nustato mokesčių administratorius pagal PVM mokėtojo statusą ir apyvartą, o ne vienas visiems bendras įstatymo atsakymas — todėl šis pakas period_default nedeklaruoja, panašiai kaip Liuksemburgo pakas savo PVM deklaracijai."
+  }
+}

@@ -1,0 +1,103 @@
+code,parent,type,reconcilable,name,sequence
+1010,,asset_fixed,false,Plėtros darbai,10
+1015,,asset_fixed,false,Plėtros darbų amortizacija,20
+1020,,asset_fixed,false,Prekių ženklai ir licencijos,30
+1025,,asset_fixed,false,Prekių ženklų ir licencijų amortizacija,40
+1030,,asset_fixed,false,Programinė įranga,50
+1035,,asset_fixed,false,Programinės įrangos amortizacija,60
+1040,,asset_fixed,false,Prestižas,70
+1045,,asset_fixed,false,Prestižo amortizacija,80
+1100,,asset_fixed,false,Žemė,90
+1110,,asset_fixed,false,Pastatai ir statiniai,100
+1115,,asset_fixed,false,Pastatų ir statinių nusidėvėjimas,110
+1120,,asset_fixed,false,Mašinos ir įrenginiai,120
+1125,,asset_fixed,false,Mašinų ir įrenginių nusidėvėjimas,130
+1130,,asset_fixed,false,Transporto priemonės,140
+1135,,asset_fixed,false,Transporto priemonių nusidėvėjimas,150
+1140,,asset_fixed,false,"Kita įranga, prietaisai ir įrankiai",160
+1145,,asset_fixed,false,Kitos įrangos nusidėvėjimas,170
+1190,,asset_fixed,false,Nebaigta statyba ir išankstiniai apmokėjimai už ilgalaikį turtą,180
+1200,,asset_non_current,false,Investicinis turtas,190
+1300,,asset_non_current,false,Investicijos į dukterines ir asocijuotas įmones,200
+1310,,asset_non_current,false,Kitos ilgalaikės finansinės investicijos,210
+1350,,asset_non_current,false,Po vienų metų gautinos sumos,220
+1360,,asset_non_current,false,Atidėtojo pelno mokesčio turtas,230
+2000,,asset_current,false,Žaliavos ir komplektavimo gaminiai,240
+2010,,asset_current,false,Nebaigta gamyba,250
+2020,,asset_current,false,Pagaminta produkcija,260
+2030,,asset_current,false,"Pirktos prekės, skirtos perparduoti",270
+2040,,asset_prepayments,false,Išankstiniai apmokėjimai už atsargas,280
+2100,,asset_receivable,true,Pirkėjų skolos,290
+2110,,asset_current,false,Abejotinos skolos,300
+2120,,asset_current,false,Kitos gautinos sumos,310
+2130,,asset_current,false,Susijusių šalių skolos,320
+2140,,asset_prepayments,false,Būsimų laikotarpių sąnaudos,330
+2200,,asset_current,true,PVM permoka — patikslinta deklaracijos suma,340
+2210,,asset_current,false,Pirkimo PVM,350
+2220,,asset_current,false,Kitų mokesčių permokos,360
+2300,,asset_current,false,Trumpalaikės investicijos,370
+2400,,asset_cash,false,Kasa,380
+2410,,asset_cash,false,Banko sąskaitos,390
+2420,,asset_cash,false,Pinigai kelyje,400
+3000,,equity,false,Įstatinis kapitalas,410
+3010,,equity,false,Nepaskirstytasis (pasirašytasis neapmokėtas) kapitalas,420
+3020,,equity,false,Akcijų priedai,430
+3100,,equity,false,Perkainojimo rezervas,440
+3200,,equity,false,Privalomasis rezervas,450
+3210,,equity,false,Kiti rezervai,460
+3300,,equity_retained,false,Ankstesnių metų nepaskirstytasis pelnas (nuostoliai),470
+3310,,equity_retained,false,Ataskaitinių metų pelnas (nuostoliai),480
+4000,,liability_non_current,false,Po vienų metų mokėtinos paskolos,490
+4010,,liability_non_current,false,Kiti ilgalaikiai įsipareigojimai,500
+4020,,liability_non_current,false,Ilgalaikiai atidėjiniai,510
+4100,,liability_current,false,Per vienus metus mokėtinos paskolų dalys,520
+4110,,liability_current,false,Trumpalaikės paskolos,530
+4200,,liability_payable,true,Skolos tiekėjams,540
+4210,,liability_current,false,Gauti išankstiniai apmokėjimai,550
+4300,,liability_current,false,Su darbo santykiais susiję įsipareigojimai,560
+4310,,liability_current,false,Su socialiniu draudimu susiję įsipareigojimai,570
+4400,,liability_current,false,Pardavimo PVM,580
+4410,,liability_current,false,Mokėtinas pelno mokestis,590
+4420,,liability_current,false,Mokėtinas gyventojų pajamų mokestis,600
+4430,,liability_current,true,PVM mokėtina suma — patikslinta deklaracijos suma,610
+4500,,liability_current,false,Kitos mokėtinos sumos,620
+4510,,liability_current,false,Neaiškūs gauti mokėjimai,630
+4520,,liability_current,false,Trumpalaikiai atidėjiniai,640
+4530,,liability_current,false,Būsimų laikotarpių pajamos ir gauti išankstiniai apmokėjimai,650
+5000,,income,false,Pardavimo pajamos Lietuvoje,660
+5010,,income,false,Prekių tiekimas į kitas ES valstybes nares,670
+5020,,income,false,Paslaugų teikimas į kitas ES valstybes nares,680
+5030,,income,false,Eksportas,690
+5040,,income,false,Neapmokestinamos PVM pajamos,700
+5100,,income_other,false,Kitos veiklos pajamos,710
+5110,,income_other,false,Ilgalaikio turto perleidimo pelnas,720
+5800,,income_other,false,Palūkanų pajamos,730
+5810,,income_other,false,Gautos baudos ir delspinigiai,740
+5820,,income_other,false,Teigiama valiutos kurso pasikeitimo įtaka,750
+6000,,expense_direct_cost,false,Parduotų prekių savikaina,760
+6010,,expense_direct_cost,false,Žaliavų ir medžiagų sąnaudos,770
+6020,,expense_direct_cost,false,Paslaugų savikaina,780
+6100,,expense,false,Patalpų nuomos ir išlaikymo sąnaudos,790
+6110,,expense,false,Komunalinės paslaugos,800
+6120,,expense,false,Ryšio ir informacinių technologijų paslaugos,810
+6130,,expense,false,Transporto sąnaudos,820
+6140,,expense,false,Komandiruočių sąnaudos,830
+6150,,expense,false,Reklamos ir rinkodaros sąnaudos,840
+6160,,expense,false,Biuro sąnaudos,850
+6170,,expense,false,"Konsultacinės, teisinės ir audito paslaugos",860
+6180,,expense,false,Mokymo sąnaudos,870
+6190,,expense,false,Draudimo sąnaudos,880
+6200,,expense,false,Banko paslaugų sąnaudos,890
+6210,,expense,false,Reprezentacinės sąnaudos,900
+6220,,expense,false,Kitos veiklos sąnaudos,910
+6400,,expense,false,Darbo užmokesčio sąnaudos,920
+6410,,expense,false,Socialinio draudimo įmokų sąnaudos,930
+6420,,expense,false,Kitos su darbo santykiais susijusios sąnaudos,940
+6600,,expense_depreciation,false,Ilgalaikio turto nusidėvėjimo ir amortizacijos sąnaudos,950
+6610,,expense_depreciation,false,Ilgalaikio turto vertės sumažėjimas,960
+6700,,expense,false,Atsargų nurašymas ir vertės sumažėjimas,970
+6800,,expense,false,Palūkanų sąnaudos,980
+6810,,expense,false,Neigiama valiutos kurso pasikeitimo įtaka,990
+6820,,expense,false,Kitos finansinės ir investicinės veiklos sąnaudos,1000
+6830,,expense,false,Apvalinimo skirtumai,1010
+6900,,expense,false,Pelno mokesčio sąnaudos,1020

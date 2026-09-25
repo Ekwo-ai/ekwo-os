@@ -4603,3 +4603,74 @@ the seller crossed, not a certificate a customs office issued. `packs/sk/`
 models only the ordinary route, VAT paid to customs and deducted once paid
 (`SK-P-DOVOZ-23`), and leaves § 84a's own boxes (11c–12e, 23a–23c)
 undeclared.
+
+## From Lithuania
+
+`packs/lt/`, `community`, seed 77, inside the common system of VAT since
+1 May 2004. Its PVM rates and its declaration, form FR0600, are read from the
+consolidated Pridėtinės vertės mokesčio įstatymas (PVMĮ) and VMI's own
+completion instructions for the form; one thing the vocabulary could not say
+exactly, and one reporting duty the format has no field for.
+
+**A tax point that is the invoice, except when there is none.** PVMĮ article
+14(1)–(2) fixes the moment PVM becomes due at the day the PVM invoice is
+issued, and only falls back to the earliest of delivery or payment where no
+invoice was issued at all. `documents.tax_point`'s five words each name a
+whole rule — `invoice_date` says the invoice fixes it and nothing displaces
+that; `invoice_if_issued` says the opposite shape, the supply is the
+principle and an invoice is the derogation. Lithuania's rule is neither: the
+invoice **is** the principle, and the residual branch is the one that never
+fires in the ordinary case, because article 80 already requires one on
+practically every supply. `packs/lt/` declares `invoice_date`, the closer of
+the two words to a rule an invoice-issuing taxpayer actually lives under, and
+writes the missed branch out in full in
+`documents.references.tax_point.legal_reference` — the same choice
+`docs/packs.md` asks a pack to make when no word fits, and the same gap that
+already reached `packs/ee/`, whose KMS § 11(1) carries the same two branches
+in the opposite order and was declared `earliest_of_delivery_or_payment`
+because Estonia's principle is not invoice-shaped in the first place. A sixth
+word — "the invoice, and absent one the earliest of delivery or payment" —
+would close both readings with the same field and cost nothing existing packs
+say.
+
+**i.SAF, a periodic register with no place beside `einvoicing`.** VMI
+viršininko 2016-09-28 įsakymas Nr. VA-119 obliges every PVM payer to submit
+the data of their issued and received PVM invoices to i.SAF, a sub-system of
+the Smart Tax Administration System (i.MAS), on a recurring basis aligned
+with the PVM period. This is not the clearance shape `packs/pl/` already
+named above — an i.SAF submission does not decide when an invoice is issued
+or received, the way Poland's KSeF does, so it changes no tax point and no
+document status — and it is not an e-invoicing profile either: the invoice
+itself still moves however the two parties agree, on paper, by e-mail or on
+Peppol, and i.SAF is a second, later transmission **of the data already on
+it** to the tax administration. `einvoicing` describes how an invoice is
+exchanged and `documents.numbering` how it is numbered; neither section, nor
+any other of the manifest, has a place for "the data of a posted document is
+also owed, periodically, to a named authority" — the shape a growing number
+of countries' digital reporting requirements take, with or without a
+clearance step attached to them. `packs/lt/README.md` states the gap and
+carries no `i.SAF` field rather than stretching `einvoicing` to cover a
+mechanism it was not written for.
+
+**A box that wants a figure no live posting can carry.** FR0600 asks for the
+*full* incurred purchase VAT in box 25 and only the *actually deductible*
+share in box 35 — the two differ whenever article 30 or article 62 of the
+PVMĮ restricts the deduction, which `docs/packs.md`'s own worked example (the
+Belgian and Estonian 50 % car) never has to face, because both of those
+countries keep one combined box for the restricted amount rather than a gross
+one and a net one side by side. `post_document()` skips a `tax_postings` row
+entirely — box included — the moment its own `factor_percent` computes a zero
+ledger amount (`if v_amount = 0 then continue`, in
+`supabase/migrations/20260921145425_a_supply_measured_against_its_seller.sql`),
+which is otherwise the right call: a posting nobody's ledger felt is a
+posting that never happened. It also means `box_factor_percent`'s
+independence from `factor_percent`, real as it is everywhere else, cannot be
+used to carry a box-only figure with **no** ledger effect at all — there is
+no `factor: 0` that survives to report a box. `packs/lt/`'s two restricted
+purchase codes (`LT-P-REPR`, 50 % deductible; `LT-P-ND`, 0 %) both settle for
+reporting box 25 at the same figure as box 35 rather than the form's own
+gross one, or not reporting box 25 at all where nothing is deductible — box
+35 and box 36, the figure actually owed, come out exactly right either way,
+and only the cross-check box reads low. A posting type that carries a box and
+no ledger line — `type: "box_only"`, carrying no `account` and skipping the
+`entry_lines` insert altogether — is the shape a fix would take.

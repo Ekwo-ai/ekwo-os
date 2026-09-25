@@ -1,0 +1,253 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "LT",
+  "name": "Lietuva",
+  "version": "0.1.0",
+  "schema_min": "20260923110000",
+  "seed_sequence": 77,
+  "released_at": "2026-09-25",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "pvmi",
+        "title": "Lietuvos Respublikos pridėtinės vertės mokesčio įstatymas Nr. IX-751, konsoliduotas tekstas su Valstybinės mokesčių inspekcijos komentaru (aktuali redakcija 2026-09-23)",
+        "publisher": "Valstybinė mokesčių inspekcija prie Lietuvos Respublikos finansų ministerijos",
+        "url": "https://www.vmi.lt/evmi/documents/20142/390965/PVM%C4%AE+komentaras+(aktuali+redakcija+2026-07-02).pdf",
+        "consulted_on": "2026-09-25",
+        "kind": "guidance"
+      },
+      {
+        "key": "pvmi-eseimas",
+        "title": "Lietuvos Respublikos pridėtinės vertės mokesčio įstatymas Nr. IX-751, konsoliduota redakcija",
+        "publisher": "Lietuvos Respublikos Seimas — e-seimas.lrs.lt",
+        "url": "https://e-seimas.lrs.lt/portal/legalAct/lt/TAD/TAIS.163423/asr",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "fr0600-taisykles",
+        "title": "Valstybinės mokesčių inspekcijos prie Lietuvos Respublikos finansų ministerijos viršininko 2004 m. kovo 1 d. įsakymas Nr. VA-29 „Dėl Pridėtinės vertės mokesčio deklaracijos ir kitų su šiuo mokesčiu susijusių formų bei jų užpildymo taisyklių patvirtinimo“",
+        "publisher": "Valstybinė mokesčių inspekcija prie Lietuvos Respublikos finansų ministerijos",
+        "url": "https://e-seimas.lrs.lt/portal/legalAct/lt/TAD/TAIS.229389/asr",
+        "consulted_on": "2026-09-25",
+        "kind": "regulation"
+      },
+      {
+        "key": "fr0600-km1739",
+        "title": "KM1739 „Mokestinio laikotarpio PVM deklaracijos FR0600 formos užpildymas“",
+        "publisher": "Valstybinė mokesčių inspekcija prie Lietuvos Respublikos finansų ministerijos",
+        "url": "https://www.vmi.lt/evmi/documents/20142/391077/KM1739+%E2%80%9EMokestinio+laikotarpio+PVM+deklaracijos+FR0600+formos+u%C5%BEpildymas%E2%80%9C.pdf",
+        "consulted_on": "2026-09-25",
+        "kind": "form"
+      },
+      {
+        "key": "imas",
+        "title": "Valstybinės mokesčių inspekcijos prie Lietuvos Respublikos finansų ministerijos viršininko 2016 m. rugsėjo 28 d. įsakymas Nr. VA-119 „Dėl Išmaniosios mokesčių administravimo informacinės sistemos naudojimo taisyklių patvirtinimo“",
+        "publisher": "Valstybinė mokesčių inspekcija prie Lietuvos Respublikos finansų ministerijos",
+        "url": "https://e-seimas.lrs.lt/portal/legalAct/lt/TAD/fa6832b0860511e6a0f68fd135e6f40c/asr",
+        "consulted_on": "2026-09-25",
+        "kind": "regulation"
+      },
+      {
+        "key": "vpi",
+        "title": "Lietuvos Respublikos viešųjų pirkimų įstatymas Nr. I-1491, konsoliduota redakcija, 22 straipsnio 3 dalis",
+        "publisher": "Lietuvos Respublikos Seimas — e-seimas.lrs.lt",
+        "url": "https://e-seimas.lrs.lt/portal/legalAct/lt/TAD/TAIS.30614/asr",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "fai",
+        "title": "Lietuvos Respublikos finansinės apskaitos įstatymas Nr. IX-574, konsoliduota redakcija nuo 2025-05-01",
+        "publisher": "Lietuvos Respublikos Seimas — e-seimas.lrs.lt",
+        "url": "https://e-seimas.lrs.lt/portal/legalActEditions/lt/TAD/TAIS.154657",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "avnt-planas",
+        "title": "Pavyzdinis sąskaitų planas, patvirtintas Audito ir apskaitos tarnybos direktoriaus 2015 m. balandžio 13 d. įsakymu Nr. VAS-15",
+        "publisher": "Audito, apskaitos, turto vertinimo ir nemokumo valdymo tarnyba prie Lietuvos Respublikos finansų ministerijos (AVNT)",
+        "url": "https://www.avnt.lt/assets/Apskaita/VAS-2020/Pavyzdinis-saskaitu-planas.pdf",
+        "consulted_on": "2026-09-25",
+        "kind": "guidance"
+      },
+      {
+        "key": "velavimo-prevencija",
+        "title": "Lietuvos Respublikos mokėjimų, atliekamų pagal komercinius sandorius, vėlavimo prevencijos įstatymas Nr. IX-1873, konsoliduota redakcija nuo 2017-07-01",
+        "publisher": "Lietuvos Respublikos Seimas — e-seimas.lrs.lt",
+        "url": "https://e-seimas.lrs.lt/portal/legalAct/lt/TAD/TAIS.224224/asr",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "euro-istatymas",
+        "title": "Lietuvos Respublikos euro įvedimo Lietuvos Respublikoje įstatymas Nr. XII-828",
+        "publisher": "Lietuvos Respublikos Seimas — e-seimas.lrs.lt",
+        "url": "https://e-seimas.lrs.lt/portal/legalAct/lt/TAD/c1f2e0c2cab811e3afd8f519d03d5f2d",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "e-saskaita",
+        "title": "SABIS — sąskaitų administravimo bendroji informacinė sistema, B2G elektroninių sąskaitų faktūrų platforma nuo 2024-09-01",
+        "publisher": "Registrų centras",
+        "url": "https://nbfc.lrv.lt/uploads/nbfc/documents/files/SABIS%20pirkimo%20Technine%20specifikacija.pdf",
+        "consulted_on": "2026-09-25",
+        "kind": "portal"
+      },
+      {
+        "key": "en-16931",
+        "title": "EN 16931-1 — semantic data model of the electronic invoice, conformant with Directive 2014/55/EU",
+        "publisher": "European Commission",
+        "url": "https://ec.europa.eu/digital-building-blocks/sites/spaces/DIGITAL/pages/467108950/EN+16931+compliance",
+        "consulted_on": "2026-09-25",
+        "kind": "standard"
+      },
+      {
+        "key": "uncl5305",
+        "title": "UNCL5305 — code list of VAT categories (BT-118 and BT-151), subset published for EN 16931",
+        "publisher": "OpenPEPPOL — list published by the European Commission",
+        "url": "https://docs.peppol.eu/poacc/billing/3.0/codelist/UNCL5305/",
+        "consulted_on": "2026-09-25",
+        "kind": "standard"
+      },
+      {
+        "key": "vatex",
+        "title": "VATEX — code list of VAT exemption reasons (BT-121)",
+        "publisher": "OpenPEPPOL — list published by the European Commission",
+        "url": "https://docs.peppol.eu/poacc/billing/3.0/codelist/vatex/",
+        "consulted_on": "2026-09-25",
+        "kind": "standard"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "EUR",
+    "language": "lt",
+    "rounding_method": "half_up",
+    "closing_style": "result_accounts",
+    "roles": {
+      "receivable": "2100",
+      "payable": "4200",
+      "suspense": "4510",
+      "rounding": "6830",
+      "retained_earnings": "3300",
+      "current_year_result_profit": "3310",
+      "current_year_result_loss": "3310",
+      "sales": "5000",
+      "purchase": "6000",
+      "bank": "2410",
+      "cash": "2400",
+      "fx_gain": "5820",
+      "fx_loss": "6810",
+      "tax_payable": "4430",
+      "tax_receivable": "2200"
+    },
+    "journal_roles": {
+      "sales": "PRD",
+      "purchase": "PRK",
+      "miscellaneous": "BEN",
+      "opening": "PRA"
+    },
+    "fiscal_year_default": "calendar"
+  },
+  "languages": [],
+  "journals": [
+    { "code": "PRD", "type": "sales", "name": "Pardavimų žurnalas", "sequence": 10 },
+    { "code": "PRK", "type": "purchase", "name": "Pirkimų žurnalas", "sequence": 20 },
+    { "code": "BNK", "type": "bank", "name": "Banko žurnalas", "sequence": 30 },
+    { "code": "KAS", "type": "cash", "name": "Kasos žurnalas", "sequence": 40 },
+    { "code": "BEN", "type": "general", "name": "Bendrasis žurnalas", "sequence": 50 },
+    { "code": "PRA", "type": "opening", "name": "Pradinių likučių žurnalas", "sequence": 60 }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Sąskaitų planas pagal AVNT pavyzdinio plano klasių struktūrą",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": ["LT-VAS-BS", "LT-VAS-IS"],
+      "legal_reference": "Finansinės apskaitos įstatymo 2 straipsnio 3 dalis apibrėžia sąskaitų planą kaip „subjekto naudojamų sąskaitų sąrašą“, o 8 straipsnio 1 dalis palieka apskaitos registrų skaičių, sudarymo būdą ir formą pasirinkti pačiam subjektui: Lietuva, kaip ir Estija, neturi įstatymu nustatyto privalomojo įmonių sąskaitų plano (12 straipsnio 5 dalies 2 punktas numato privalomąjį planą tik viešojo sektoriaus subjektams). Audito, apskaitos, turto vertinimo ir nemokumo valdymo tarnyba (AVNT) skelbia pavyzdinį, neprivalomą sąskaitų planą (12 straipsnio 6 dalies 1 punktas), kurio klasių struktūra (1 ilgalaikis turtas, 2 trumpalaikis turtas, 3 nuosavas kapitalas, 4 mokėtinos sumos ir įsipareigojimai, 5 pajamos, 6 sąnaudos) yra plačiai naudojama lietuviškoje apskaitos praktikoje. Šis pakas seka šią klasių struktūrą, bet sąskaitų numeriai ir jų grupavimas yra originalūs ir nekopijuoja AVNT plano eilutė po eilutės — kiekviena sąskaita priskirta VAS 2 (balansas) ir VAS 3 (pelno (nuostolių) ataskaita, 1-oji schema) eilutei, kuriai ji priklauso.",
+      "source": "avnt-planas"
+    }
+  ],
+  "documents": {
+    "numbering": "sequential",
+    "number_format": "{CODE}-{NNNN}",
+    "legal_payment_days": 30,
+    "late_payment_reference": "Lietuvos Respublikos mokėjimų, atliekamų pagal komercinius sandorius, vėlavimo prevencijos įstatymo 2 straipsnio 5 dalis — pavėluoto mokėjimo palūkanų norma yra 8 procentiniais punktais padidinta vėliausiai pagrindinei Europos centrinio banko refinansavimo operacijai taikoma fiksuotoji palūkanų norma. Kreditorius, be palūkanų, turi teisę be atskiro įspėjimo reikalauti iš skolininko 40 eurų dydžio išieškojimo išlaidų kompensacijos.",
+    "tax_point": "invoice_date",
+    "references": {
+      "numbering": {
+        "legal_reference": "PVMĮ 80 straipsnio 1 dalies 2 punktas — PVM sąskaitos faktūros numeris turi būti sudaromas didėjančia seka ir turi būti paremtas viena ar daugiau serijų, o skirtingose PVM sąskaitose faktūrose negali būti nurodomas tas pats numeris. Įstatymas reikalauja didėjančios sekos, bet nereikalauja nei ištisinio (be spragų) numeravimo, nei kasmetinio numerio atkūrimo iš naujo, todėl numbering yra sequential, o ne gapless_per_year.",
+        "source": "pvmi"
+      },
+      "payment_terms": {
+        "legal_reference": "Mokėjimų, atliekamų pagal komercinius sandorius, vėlavimo prevencijos įstatymo 4 straipsnio 2 dalis — jei sutartyje mokėjimo terminas nenustatytas, mokėjimas turi būti atliktas per 30 kalendorinių dienų nuo sąskaitos faktūros gavimo dienos arba nuo prekių ar paslaugų gavimo dienos, jei sąskaitos gavimo diena neaiški. 4 straipsnio 1 dalis leidžia sutartyje nustatyti ilgesnį, bet ne ilgesnį kaip 60 kalendorinių dienų terminą, nebent aiškiai susitarta kitaip ir tai nėra nesąžininga kreditoriaus atžvilgiu.",
+        "source": "velavimo-prevencija"
+      },
+      "tax_point": {
+        "legal_reference": "PVMĮ 14 straipsnio 1 ir 2 dalys — prievolė apskaičiuoti PVM atsiranda PVM sąskaitos faktūros išrašymo momentu; jei sąskaita faktūra neišrašoma, prievolė atsiranda anksčiausią iš dviejų momentų: prekių patiekimo ar paslaugos suteikimo, arba atlygio (ar jo dalies) gavimo. Uždaras šio pako naudojamas žodynas neturi reikšmės, kuri tiksliai perteiktų „sąskaita faktūra yra taisyklė, o anksčiausias iš patiekimo ar apmokėjimo — tik jos nebuvimo atveju“: invoice_date yra artimiausias žodis, nes praktikoje PVM mokėtojas beveik visada išrašo sąskaitą faktūrą (80 straipsnis reikalauja ją išrašyti), o antroji šaka lieka liekamoji. Šis socle'o žodyno spragas žymima docs/international.md skiltyje „From Lithuania“.",
+        "source": "pvmi"
+      }
+    },
+    "mentions": [
+      {
+        "code": "reverse_charge",
+        "applies_when": "reverse_charge",
+        "text": "Pardavimo PVM apskaičiuoja ir sumoka pirkėjas — PVMĮ 96 straipsnis.",
+        "sequence": 10,
+        "legal_reference": "PVMĮ 80 straipsnio 1 dalies 12 punktas — kai prekių ar paslaugų pirkėjas turi prievolę apskaičiuoti PVM, PVM sąskaitoje faktūroje turi būti nuoroda į šio įstatymo nuostatą arba Tarybos direktyvos 2006/112/EB atitinkamą straipsnį, arba kitą nuorodą, kad prekių tiekimui ar paslaugų teikimui taikoma atvirkštinio apmokestinimo schema.",
+        "source": "pvmi"
+      },
+      {
+        "code": "intracom_goods",
+        "applies_when": "intra_eu_goods",
+        "text": "Prekių tiekimas į kitą Europos Sąjungos valstybę narę, neapmokestinamas PVM 0 proc. tarifu — PVMĮ 49 straipsnis; Tarybos direktyvos 2006/112/EB 138 straipsnis.",
+        "sequence": 20,
+        "legal_reference": "PVMĮ 80 straipsnio 1 dalies 11 punktas — kai prekių tiekimas neapmokestinamas PVM, PVM sąskaitoje faktūroje turi būti nuoroda į šio įstatymo nuostatą arba Tarybos direktyvos 2006/112/EB atitinkamą straipsnį, kuriais remiantis toks prekių tiekimas ar paslaugų teikimas neapmokestinamas PVM.",
+        "source": "pvmi"
+      },
+      {
+        "code": "intracom_services",
+        "applies_when": "intra_eu_services",
+        "text": "Paslauga apmokestinama pirkėjo valstybėje narėje, PVM apskaičiuoja paslaugos pirkėjas — Tarybos direktyvos 2006/112/EB 44 ir 196 straipsniai.",
+        "sequence": 30,
+        "legal_reference": "PVMĮ 80 straipsnio 1 dalies 12 punktas kartu su 13 straipsnio 2 dalimi — kai paslaugos teikimo vieta pagal bendrąją verslo klientui teikiamų paslaugų taisyklę yra ne Lietuva, o paslaugos pirkėjas privalo apskaičiuoti PVM.",
+        "source": "pvmi"
+      },
+      {
+        "code": "exempt",
+        "applies_when": "exempt",
+        "text": "PVM neapmokestinama — PVMĮ IV skyrius.",
+        "sequence": 40,
+        "legal_reference": "PVMĮ 80 straipsnio 1 dalies 11 punktas — kai prekių tiekimas ar paslaugų teikimas PVM neapmokestinamas, būtina nuoroda į konkrečią šio įstatymo nuostatą.",
+        "source": "pvmi"
+      },
+      {
+        "code": "late_payment",
+        "applies_when": "late_payment",
+        "text": "Pavėluoto mokėjimo atveju taikomos Lietuvos Respublikos mokėjimų, atliekamų pagal komercinius sandorius, vėlavimo prevencijos įstatymo 2 straipsnio 5 dalyje nustatytos palūkanos (ECB pagrindinės refinansavimo operacijos norma + 8 procentiniai punktai) ir 40 eurų išieškojimo išlaidų kompensacija.",
+        "sequence": 50,
+        "legal_reference": "Mokėjimų, atliekamų pagal komercinius sandorius, vėlavimo prevencijos įstatymo 2 straipsnio 5 dalis — mentioninė nuoroda skirta informuoti, ji nėra sąskaitoje privaloma įstatymo tekste nurodyta formuluotė.",
+        "source": "velavimo-prevencija"
+      }
+    ]
+  },
+  "einvoicing": {
+    "profile": "peppol-bis-3",
+    "obligation": "none",
+    "mandatory_from": null,
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "Viešųjų pirkimų įstatymo 22 straipsnio 3 dalis ir Finansinės apskaitos įstatymo 6 straipsnio 4 dalis — perkančiosioms organizacijoms vykdant pirkimo sutartis privaloma priimti ir apdoroti elektronines sąskaitas faktūras, atitinkančias Europos elektroninių sąskaitų faktūrų standartą (EN 16931), teikiamas per informacinę sistemą „E. sąskaita“ (nuo 2024-09-01 pakeistą SABIS platforma), o standarto neatitinkančias elektronines sąskaitas — tik per šią sistemą. Tai yra pareiga viešojo pirkimo tiekėjui, o ne bendra pareiga tarp dviejų įmonių, todėl obligation lieka none: jokio bendro B2B mandato Lietuvoje šio pako rengimo dieną (2026-09-25) nerasta nei įstatyme, nei paskelbtame teisės akto projekte. profile peppol-bis-3 aprašo formatą, kuriuo SABIS faktiškai keičiasi sąskaitomis (Peppol BIS Billing 3.0, atitinkantis EN 16931), o ne bendrą įmonių tarpusavio pareigą. party_scheme ir vat_scheme lieka tušti: šio pako rengimo metu nepatvirtinta, kad SABIS naudoja ISO 6523 keturženklį schemos identifikatorių Peppol tinkle analogišką Estijos ar Lenkijos pakams — žr. docs/international.md, skiltis „From Lithuania“.",
+    "source": "vpi"
+  },
+  "bank": {
+    "statement_formats": ["camt.053"],
+    "payment_formats": ["pain.001"]
+  }
+}

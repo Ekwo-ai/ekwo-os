@@ -1,0 +1,470 @@
+[
+  {
+    "code": "LT-S-21",
+    "name": "Pardavimas 21%",
+    "description": "Standartinis tarifas",
+    "rate": 21,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2009-09-01",
+    "legal_reference": "PVMĮ 19 straipsnio 1 dalis — standartinis PVM tarifas yra 21 procentas apmokestinamosios vertės, taikomas nuo 2009-09-01 (anksčiau — 19 procentų).",
+    "source": "pvmi",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "11" },
+        { "type": "tax", "account": "4400", "box": "29" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "11", "box_factor": -100 },
+        { "type": "tax", "account": "4400", "box": "29", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 10
+  },
+  {
+    "code": "LT-S-12",
+    "name": "Pardavimas 12%",
+    "description": "Apgyvendinimo paslaugos, reguliaraus susisiekimo keleivių vežimas, meno ir kultūros įstaigų bei renginių lankymas",
+    "rate": 12,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "legal_reference": "PVMĮ 19 straipsnio 3 dalis, redakcija galiojanti nuo 2026-01-01 (Seimo 2025 m. birželio 17 d. įstatymas Nr. XV-287): „Lengvatinis 12 procentų PVM tarifas taikomas: 1) turizmo veiklą reglamentuojančių teisės aktų nustatyta tvarka teikiamoms apgyvendinimo paslaugoms; 2) keleivių vežimo Lietuvos Respublikos susisiekimo ministerijos ar jos įgaliotos institucijos arba savivaldybių nustatytais reguliaraus susisiekimo maršrutais paslaugoms, taip pat šiame punkte nurodytų keleivių bagažo vežimo paslaugoms; 3) visų rūšių meno ir kultūros įstaigų, meno ir kultūros renginių lankymui, kai netaikomos šio Įstatymo 23 straipsnio nuostatos.“ Iki 2025-12-31 šios paslaugos buvo apmokestinamos 9 procentų tarifu (žr. LT-S-09).",
+    "source": "pvmi",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "11" },
+        { "type": "tax", "account": "4400", "box": "29A" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "11", "box_factor": -100 },
+        { "type": "tax", "account": "4400", "box": "29A", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 20
+  },
+  {
+    "code": "LT-S-09",
+    "name": "Pardavimas 9%",
+    "description": "Iki 2025-12-31 galiojęs lengvatinis tarifas — šildymas, apgyvendinimas, reguliarus keleivių vežimas, meno ir kultūros renginiai, knygos ir neperiodiniai leidiniai",
+    "rate": 9,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2009-01-01",
+    "valid_to": "2025-12-31",
+    "legal_reference": "PVMĮ 19 straipsnio 3 dalis, redakcija galiojusi iki 2025-12-31. Šis vienas kodas apima kelias skirtingas prekių ir paslaugų grupes (šilumos energija, gyvenamųjų patalpų šildymas, apgyvendinimo paslaugos, reguliarus keleivių vežimas, meno ir kultūros renginių lankymas, knygos ir neperiodiniai informaciniai leidiniai), kurios į 9 procentų tarifą buvo įtrauktos ne tuo pačiu metu — tiksli kiekvienos grupės pradinė data šio pako rengimo metu nebuvo patikrinta straipsnis po straipsnio, todėl valid_from žymi tik ankstyviausią patikimai žinomą datą, o ne kiekvienos grupės atskirą įsigaliojimą. Nuo 2026-01-01 šios grupės perskirstytos tarp 21, 12 ir 5 procentų tarifų (žr. LT-S-21, LT-S-12, LT-S-05).",
+    "source": "pvmi",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "11" },
+        { "type": "tax", "account": "4400", "box": "30" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "11", "box_factor": -100 },
+        { "type": "tax", "account": "4400", "box": "30", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 30
+  },
+  {
+    "code": "LT-S-05",
+    "name": "Pardavimas 5%",
+    "description": "Vaistai, medicinos pagalbos priemonės, techninės pagalbos priemonės neįgaliesiems, spausdinti ir elektroniniai laikraščiai bei žurnalai, nuo 2026-01-01 — spausdintos ir elektroninės knygos bei neperiodiniai informaciniai leidiniai",
+    "rate": 5,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "legal_reference": "PVMĮ 19 straipsnio 4 ir 5 dalys: vaistams ir kompensuojamosioms medicinos pagalbos priemonėms bei specialiosios medicininės paskirties maisto produktams 5 proc. tarifas taikomas nuo 2004-01-01 (nekompensuojamiesiems receptiniams vaistams — nuo 2017-01-01), asmenų su negalia techninės pagalbos priemonėms ir jų remontui — nuo 2013-01-01, spausdintiems laikraščiams, žurnalams ir kitiems periodiniams leidiniams — nuo 2019-01-01 (elektroniniams — nuo 2021-01-01), o spausdintoms ir elektroninėms knygoms bei neperiodiniams informaciniams leidiniams (įskaitant vadovėlius) — nuo 2026-01-01. Šis kodas modeliuoja dabartinę (nuo 2026-01-01 galiojančią) prekių grupių visumą; ankstesniam laikotarpiui tiksliam kiekvienos grupės atskyrimui reikėtų atskirų kodų, kurių šis pakas nepateikia — žr. README.",
+    "source": "pvmi",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "11" },
+        { "type": "tax", "account": "4400", "box": "31" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "11", "box_factor": -100 },
+        { "type": "tax", "account": "4400", "box": "31", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 40
+  },
+  {
+    "code": "LT-S-00-EXP",
+    "name": "Prekių eksportas",
+    "description": "Prekių išgabenimas iš Europos Sąjungos teritorijos, 0 proc. tarifas",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2004-05-01",
+    "legal_reference": "PVMĮ 41 straipsnis — prekių eksportas apmokestinamas taikant 0 procentų PVM tarifą.",
+    "source": "pvmi",
+    "vat_category": "G",
+    "exemption_code": "VATEX-EU-G",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "17" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "17", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 50
+  },
+  {
+    "code": "LT-S-00-ICG",
+    "name": "Prekių tiekimas į ES",
+    "description": "Prekių tiekimas kitos ES valstybės narės PVM mokėtojui, 0 proc. tarifas",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "intracom_goods",
+    "valid_from": "2004-05-01",
+    "legal_reference": "PVMĮ 49 straipsnis — prekių tiekimas kitoje valstybėje narėje įregistruotam PVM mokėtojui apmokestinamas taikant 0 procentų PVM tarifą; Tarybos direktyvos 2006/112/EB 138 straipsnis.",
+    "source": "pvmi",
+    "vat_category": "K",
+    "exemption_code": "VATEX-EU-IC",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "18" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "18", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 60
+  },
+  {
+    "code": "LT-S-00-ICS",
+    "name": "Paslaugų teikimas ES PVM mokėtojui",
+    "description": "Paslauga apmokestinama pirkėjo valstybėje narėje pagal bendrąją verslo klientui teikiamų paslaugų taisyklę; PVM apskaičiuoja paslaugos pirkėjas",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "intracom_services",
+    "valid_from": "2010-01-01",
+    "legal_reference": "PVMĮ 13 straipsnio 2 dalies 1 punktas — verslo klientui teikiamos paslaugos teikimo vieta yra kliento įsisteigimo vieta; Tarybos direktyvos 2006/112/EB 44 ir 196 straipsniai — paslaugos pirkėjas privalo apskaičiuoti PVM. Sandoris Lietuvoje PVM objektu nelaikomas, todėl apmokestinamoji vertė deklaruojama FR0600 20 laukelyje, o ne 11 ar 19 laukelyje.",
+    "source": "pvmi",
+    "vat_category": "K",
+    "exemption_code": "VATEX-EU-IC",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "20" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "20", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 70
+  },
+  {
+    "code": "LT-S-PM",
+    "name": "Sandoriai, kai PVM išskaito pirkėjas (96 str.)",
+    "description": "Statybos darbai, turto perleidimas kaip turtinis įnašas ar reorganizavimo atveju, juodųjų ir spalvotųjų metalų atliekos ir laužas — pardavimo PVM apskaičiuoja ir sumoka pirkėjas",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "domestic_reverse_charge",
+    "valid_from": "2015-07-01",
+    "legal_reference": "PVMĮ 96 straipsnio 1 dalies 3 punktas — statybos darbams (PVMĮ 2 straipsnio 90 dalies prasme) taikoma atvirkštinio apmokestinimo schema nuo 2015-07-01, neterminuotai; 1 dalies 4 punktas — juodųjų ir spalvotųjų metalų atliekoms ir laužui. Pardavėjas apmokestinamąją vertę deklaruoja FR0600 12 laukelyje ir jokios pardavimo PVM sumos nedeklaruoja — ją apskaičiuoja pirkėjas (žr. LT-P-PM).",
+    "source": "pvmi",
+    "vat_category": "AE",
+    "exemption_code": "VATEX-EU-AE",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "12" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "12", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 80
+  },
+  {
+    "code": "LT-S-VABA",
+    "name": "PVM neapmokestinamas sandoris",
+    "description": "PVMĮ IV skyriuje išvardyti neapmokestinami sandoriai (sveikatos priežiūra, švietimas, socialinės paslaugos, draudimas, finansinės paslaugos, nekilnojamojo pagal prigimtį turto nuoma ir kt.)",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2004-05-01",
+    "legal_reference": "PVMĮ 20–32 straipsniai — PVM neapmokestinami sandoriai. Šio pako auksinis scenarijus naudoja PVMĮ 28 straipsnį (finansinės paslaugos).",
+    "source": "pvmi",
+    "vat_category": "E",
+    "exemption_code": "VATEX-EU-132",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "13" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "13", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 90
+  },
+  {
+    "code": "LT-P-21",
+    "name": "Pirkimas 21%",
+    "description": "Vietinis įsigijimas, pilna atskaita",
+    "rate": 21,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2009-09-01",
+    "legal_reference": "PVMĮ 19 straipsnio 1 dalis ir 58 straipsnio 1 dalis — pirkimo PVM atskaitomas, jei prekės ar paslaugos skirtos PVM apmokestinamai veiklai.",
+    "source": "pvmi",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "tax", "account": "2210", "box": ["25", "35"] }
+      ],
+      "credit_note": [
+        { "type": "tax", "account": "2210", "box": ["25", "35"], "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 100
+  },
+  {
+    "code": "LT-P-12",
+    "name": "Pirkimas 12%",
+    "description": "Vietinis įsigijimas, pilna atskaita",
+    "rate": 12,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "legal_reference": "PVMĮ 19 straipsnio 3 dalis (nuo 2026-01-01) ir 58 straipsnio 1 dalis.",
+    "source": "pvmi",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "tax", "account": "2210", "box": ["25", "35"] }
+      ],
+      "credit_note": [
+        { "type": "tax", "account": "2210", "box": ["25", "35"], "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 110
+  },
+  {
+    "code": "LT-P-09",
+    "name": "Pirkimas 9%",
+    "description": "Iki 2025-12-31 galiojęs lengvatinis tarifas, pilna atskaita",
+    "rate": 9,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2009-01-01",
+    "valid_to": "2025-12-31",
+    "legal_reference": "PVMĮ 19 straipsnio 3 dalis, redakcija galiojusi iki 2025-12-31, ir 58 straipsnio 1 dalis. Žr. LT-S-09 dėl datų tikslumo pastabos.",
+    "source": "pvmi",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "tax", "account": "2210", "box": ["25", "35"] }
+      ],
+      "credit_note": [
+        { "type": "tax", "account": "2210", "box": ["25", "35"], "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 120
+  },
+  {
+    "code": "LT-P-05",
+    "name": "Pirkimas 5%",
+    "description": "Vietinis įsigijimas, pilna atskaita",
+    "rate": 5,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "legal_reference": "PVMĮ 19 straipsnio 4 ir 5 dalys ir 58 straipsnio 1 dalis. Žr. LT-S-05 dėl datų tikslumo pastabos.",
+    "source": "pvmi",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "tax", "account": "2210", "box": ["25", "35"] }
+      ],
+      "credit_note": [
+        { "type": "tax", "account": "2210", "box": ["25", "35"], "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 130
+  },
+  {
+    "code": "LT-P-ICG-21",
+    "name": "Prekių įsigijimas iš ES, 21%",
+    "description": "Pirkėjas pats apskaičiuoja PVM",
+    "rate": 21,
+    "scope": "purchase",
+    "treatment": "intracom_acquisition_goods",
+    "valid_from": "2009-09-01",
+    "legal_reference": "PVMĮ 8 straipsnis — prekių įsigijimas iš kitos ES valstybės narės PVM mokėtojo laikomas įvykusiu Lietuvoje; 3 straipsnio 4 dalis — pirkėjas apskaičiuoja PVM; 34 straipsnio 4 punktas ir 58 straipsnio 1 dalis — apskaičiuota PVM suma yra atskaitoma pirkimo PVM.",
+    "source": "pvmi",
+    "vat_category": "K",
+    "exemption_code": "VATEX-EU-IC",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "21" },
+        { "type": "tax", "account": "2210", "box": ["25", "35"] },
+        { "type": "tax", "factor": -100, "account": "4400", "box": "34" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "21", "box_factor": -100 },
+        { "type": "tax", "account": "2210", "box": ["25", "35"], "box_factor": -100 },
+        { "type": "tax", "factor": -100, "account": "4400", "box": "34", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 140
+  },
+  {
+    "code": "LT-P-VS-EU-21",
+    "name": "Paslaugos iš kitos ES valstybės narės PVM mokėtojo, 21%",
+    "description": "Atvirkštinis apmokestinimas — pirkėjas apskaičiuoja PVM pagal bendrąją verslo klientui teikiamų paslaugų taisyklę",
+    "rate": 21,
+    "scope": "purchase",
+    "treatment": "intracom_acquisition_services",
+    "valid_from": "2010-01-01",
+    "legal_reference": "PVMĮ 13 straipsnio 2 dalies 1 punktas ir 95 straipsnio 2 dalis — kai paslaugos teikimo vieta yra Lietuva ir paslaugą teikia kitos ES valstybės narės PVM mokėtojas, pirkėjas privalo apskaičiuoti ir sumokėti PVM; 58 straipsnio 1 dalis — apskaičiuota suma yra atskaitoma pirkimo PVM.",
+    "source": "pvmi",
+    "vat_category": "K",
+    "exemption_code": "VATEX-EU-IC",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": ["23", "24"] },
+        { "type": "tax", "account": "2210", "box": ["25", "35"] },
+        { "type": "tax", "factor": -100, "account": "4400", "box": "32" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": ["23", "24"], "box_factor": -100 },
+        { "type": "tax", "account": "2210", "box": ["25", "35"], "box_factor": -100 },
+        { "type": "tax", "factor": -100, "account": "4400", "box": "32", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 150
+  },
+  {
+    "code": "LT-P-VS-XU-21",
+    "name": "Paslaugos iš ne ES valstybės asmens, 21%",
+    "description": "Pirkėjas apskaičiuoja PVM pagal bendrąją verslo klientui teikiamų paslaugų taisyklę",
+    "rate": 21,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2010-01-01",
+    "legal_reference": "PVMĮ 13 straipsnio 2 dalies 1 punktas ir 95 straipsnio 2 dalis — kai paslaugos teikimo vieta yra Lietuva ir paslaugą teikia Europos Sąjungai nepriklausančioje valstybėje įsisteigęs asmuo, pirkėjas privalo apskaičiuoti ir sumokėti PVM; Tarybos direktyvos 2006/112/EB 44 ir 196 straipsniai; 58 straipsnio 1 dalis — apskaičiuota suma yra atskaitoma pirkimo PVM.",
+    "source": "pvmi",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "23" },
+        { "type": "tax", "account": "2210", "box": ["25", "35"] },
+        { "type": "tax", "factor": -100, "account": "4400", "box": "32" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "23", "box_factor": -100 },
+        { "type": "tax", "account": "2210", "box": ["25", "35"], "box_factor": -100 },
+        { "type": "tax", "factor": -100, "account": "4400", "box": "32", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 160
+  },
+  {
+    "code": "LT-P-PM",
+    "name": "Sandoriai, kai PVM išskaito pirkėjas (96 str.)",
+    "description": "Statybos darbai, juodųjų ir spalvotųjų metalų atliekos ir laužas — pirkėjas apskaičiuoja pardavimo PVM ir tuo pačiu atskaito pirkimo PVM",
+    "rate": 21,
+    "scope": "purchase",
+    "treatment": "domestic_reverse_charge",
+    "valid_from": "2015-07-01",
+    "legal_reference": "PVMĮ 96 straipsnio 3 ir 4 dalys — pirkėjas apskaičiuotą tiekėjo prekių (paslaugų) vertę ir PVM apskaito mokestinio laikotarpio, kurį gavo PVM sąskaitą faktūrą, deklaracijoje ir tuo pačiu mokestiniu laikotarpiu turi teisę atskaityti apskaičiuotą PVM. Forma FR0600 pirkėjui apmokestinamosios vertės laukelio neskiria — deklaruojama tik apskaičiuota PVM suma (33 laukelis).",
+    "source": "pvmi",
+    "vat_category": "AE",
+    "exemption_code": "VATEX-EU-AE",
+    "postings": {
+      "invoice": [
+        { "type": "tax", "account": "2210", "box": ["25", "35"] },
+        { "type": "tax", "factor": -100, "account": "4400", "box": "33" }
+      ],
+      "credit_note": [
+        { "type": "tax", "account": "2210", "box": ["25", "35"], "box_factor": -100 },
+        { "type": "tax", "factor": -100, "account": "4400", "box": "33", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 170
+  },
+  {
+    "code": "LT-P-REPR",
+    "name": "Reprezentacinių sąnaudų pirkimas 21%, atskaita 50%",
+    "description": "Prekės ir paslaugos, kurių įsigijimo išlaidos priskiriamos prie reprezentacinių sąnaudų pagal pelno mokesčio teisės aktus — atskaitoma pusė pirkimo PVM",
+    "rate": 21,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2009-09-01",
+    "legal_reference": "FR0600 formos pildymo taisyklės (VA-29), 35 laukelio paaiškinimas — 50 procentų pirkimo ir (arba) importo PVM už reprezentacijai skirtas prekes ir paslaugas, kurių įsigijimo išlaidos pagal pelno mokesčio įstatymą priskiriamos prie reprezentacinių sąnaudų, neįtraukiama į atskaitomą PVM (35 laukelis), nors visa suma deklaruojama 25 laukelyje. Lietuvos Respublikos pelno mokesčio įstatymo 22 straipsnis riboja pačias reprezentacines sąnaudas iki 75 procentų jų sumos, tačiau šis pakas PVM atskaitos ribojimą modeliuoja atskirai nuo pelno mokesčio. Variklis (post_document()) praleidžia visą sąskaitos eilutę, kai jos faktorius yra nulis — todėl 25 laukelio bruto (100 %) sumos, nepriklausomos nuo į didžiąją knygą įtraukiamos sumos, šis pakas gauti negali be antros, apnulintos eilutės, kurios variklis nepalaiko. 25 ir 35 laukeliai čia todėl abu rodo tik atskaitomą pusę (50 %), o ne 25 laukelio buhalterinę bruto sumą — žr. docs/international.md, skiltis „From Lithuania“.",
+    "source": "fr0600-km1739",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "tax", "factor": 50, "account": "2210", "box": ["25", "35"], "box_factor": 50 },
+        { "type": "tax_on_base", "factor": 50 }
+      ],
+      "credit_note": [
+        { "type": "tax", "factor": 50, "account": "2210", "box": ["25", "35"], "box_factor": -50 },
+        { "type": "tax_on_base", "factor": 50 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 180
+  },
+  {
+    "code": "LT-P-ND",
+    "name": "Pramogoms ir reprezentacijai skirtas pirkimas be atskaitos",
+    "description": "Prekės ir paslaugos, kurių įsigijimo išlaidos pagal pelno mokesčio teisės aktus nepriskiriamos prie reprezentacinių sąnaudų — atskaita neleidžiama",
+    "rate": 21,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "recoverable": false,
+    "valid_from": "2009-09-01",
+    "legal_reference": "FR0600 formos pildymo taisyklės (VA-29), 35 laukelio paaiškinimas — pirkimo ir (arba) importo PVM už pramogoms ir reprezentacijai skirtas prekes ir paslaugas, kurių įsigijimo išlaidos pagal pelno mokesčio įstatymą nepriskiriamos prie reprezentacinių sąnaudų, į atskaitomą PVM (35 laukelis) visai neįtraukiamas, nors deklaruojamas 25 laukelyje. Kadangi visas pirkimo PVM lieka neatskaitomas, šiam kodui nėra jokios eilutės, kuri didžiąją knygą paveiktų ir tuo pačiu galėtų nešti 25 laukelio bruto sumą — variklis (post_document()) praleidžia visą eilutę, kurios faktorius yra nulis, įskaitant jos case reikšmę. Todėl šis pakas 25 laukelio šiam kodui visai nedeklaruoja, o ne deklaruoja klaidingą sumą — žr. docs/international.md, skiltis „From Lithuania“. 35 ir 36 laukeliai (mokėtina suma) nepaveikiami: visa suma teisingai lieka tik sąnaudų sąskaitoje per tax_on_base.",
+    "source": "fr0600-km1739",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "tax_on_base" }
+      ],
+      "credit_note": [
+        { "type": "tax_on_base" }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 190
+  },
+  {
+    "code": "LT-P-VABA",
+    "name": "PVM neapmokestinamas pirkimas",
+    "description": "Arve be PVM",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "exempt",
+    "valid_from": "2004-05-01",
+    "legal_reference": "PVMĮ 20–32 straipsniai — tiekėjo PVM neapmokestinamas sandoris; pirkėjo gautoje sąskaitoje PVM nenurodomas.",
+    "source": "pvmi",
+    "vat_category": "E",
+    "exemption_code": "VATEX-EU-132",
+    "postings": {},
+    "kind": "vat",
+    "sequence": 200
+  }
+]

@@ -1,0 +1,225 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "Lietuvos PVM mokėtojo prekybos ir paslaugų įmonės metai",
+  "chart": "default",
+  "fiscal_year": { "name": "2026 finansiniai metai", "start": "2026-01-01", "end": "2026-12-31" },
+  "periods": [
+    { "code": "2026-01", "from": "2026-01-01", "to": "2026-01-31" },
+    { "code": "2026-02", "from": "2026-02-01", "to": "2026-02-28" },
+    { "code": "2026-03", "from": "2026-03-01", "to": "2026-03-31" },
+    { "code": "2026-04", "from": "2026-04-01", "to": "2026-04-30" }
+  ],
+  "statements": ["LT-VAS-BS", "LT-VAS-IS"],
+  "contacts": [
+    { "ref": "klientas-lt", "name": "Vilniaus Prekyba UAB", "type": "customer", "country": "LT" },
+    { "ref": "klientas-de", "name": "Berliner Handels GmbH", "type": "customer", "country": "DE", "vat_number": "DE999999999" },
+    { "ref": "klientas-us", "name": "Chicago Trading Inc.", "type": "customer", "country": "US" },
+    { "ref": "tiekejas-lt", "name": "Kauno Statyba UAB", "type": "supplier", "country": "LT" },
+    { "ref": "tiekejas-de", "name": "Hamburger Zulieferer GmbH", "type": "supplier", "country": "DE", "vat_number": "DE888888888" },
+    { "ref": "tiekejas-us", "name": "Boston Consulting Partners LLC", "type": "supplier", "country": "US" }
+  ],
+  "documents": [
+    {
+      "ref": "V1",
+      "type": "sale_invoice",
+      "contact": "klientas-lt",
+      "date": "2026-01-15",
+      "why": "Vietinis pardavimas standartiniu 21 proc. tarifu: 11 ir 29 laukeliai.",
+      "lines": [
+        { "name": "Prekės", "quantity": 10, "unit_price": 500, "tax": "LT-S-21", "account": "5000" }
+      ]
+    },
+    {
+      "ref": "V2",
+      "type": "sale_invoice",
+      "contact": "klientas-lt",
+      "date": "2026-01-20",
+      "why": "Apgyvendinimo paslauga nuo 2026-01-01 apmokestinama lengvatiniu 12 proc. tarifu: 11 ir naujas 29A laukelis.",
+      "lines": [
+        { "name": "Apgyvendinimo paslauga", "quantity": 5, "unit_price": 100, "tax": "LT-S-12", "account": "5000" }
+      ]
+    },
+    {
+      "ref": "V3",
+      "type": "sale_invoice",
+      "contact": "klientas-lt",
+      "date": "2026-01-25",
+      "why": "Knygų pardavimas nuo 2026-01-01 apmokestinamas 5 proc. tarifu: 11 ir 31 laukeliai.",
+      "lines": [
+        { "name": "Knygos", "quantity": 200, "unit_price": 10, "tax": "LT-S-05", "account": "5000" }
+      ]
+    },
+    {
+      "ref": "V4",
+      "type": "sale_credit_note",
+      "contact": "klientas-lt",
+      "date": "2026-01-28",
+      "why": "Kreditinė sąskaita standartiniam tarifui: sumažina 11 ir 29 laukelius, o ne sukuria antrą apmokestinamosios vertės apibrėžimą.",
+      "lines": [
+        { "name": "Grąžintos prekės", "quantity": 2, "unit_price": 500, "tax": "LT-S-21", "account": "5000" }
+      ]
+    },
+    {
+      "ref": "V5",
+      "type": "sale_invoice",
+      "contact": "klientas-us",
+      "date": "2026-02-05",
+      "why": "Prekių eksportas už Europos Sąjungos ribų, 0 proc. tarifas: 17 laukelis.",
+      "lines": [
+        { "name": "Prekės eksportui į JAV", "quantity": 1, "unit_price": 8000, "tax": "LT-S-00-EXP", "account": "5030" }
+      ]
+    },
+    {
+      "ref": "V6",
+      "type": "sale_invoice",
+      "contact": "klientas-de",
+      "date": "2026-02-10",
+      "why": "Prekių tiekimas kitos ES valstybės narės PVM mokėtojui, 0 proc. tarifas: 18 laukelis.",
+      "lines": [
+        { "name": "Prekės Vokietijos pirkėjui", "quantity": 1, "unit_price": 6000, "tax": "LT-S-00-ICG", "account": "5010" }
+      ]
+    },
+    {
+      "ref": "V7",
+      "type": "sale_invoice",
+      "contact": "klientas-de",
+      "date": "2026-02-18",
+      "why": "Paslauga ES PVM mokėtojui pagal bendrąją taisyklę: ne PVM objektas Lietuvoje, PVM apskaičiuoja pirkėjas — 20 laukelis, o ne 11 ar 19.",
+      "lines": [
+        { "name": "Konsultacinė paslauga Vokietijos pirkėjui", "quantity": 1, "unit_price": 3000, "tax": "LT-S-00-ICS", "account": "5020" }
+      ]
+    },
+    {
+      "ref": "V8",
+      "type": "sale_invoice",
+      "contact": "klientas-lt",
+      "date": "2026-03-03",
+      "why": "Statybos darbai pagal PVMĮ 96 straipsnį: PVM apskaičiuoja pirkėjas, pardavėjas deklaruoja tik apmokestinamąją vertę 12 laukelyje ir jokios PVM sumos.",
+      "lines": [
+        { "name": "Statybos darbai", "quantity": 1, "unit_price": 15000, "tax": "LT-S-PM", "account": "5000" }
+      ]
+    },
+    {
+      "ref": "V9",
+      "type": "sale_invoice",
+      "contact": "klientas-lt",
+      "date": "2026-03-12",
+      "why": "Finansinė tarpininkavimo paslauga, PVM neapmokestinama pagal PVMĮ 28 straipsnį: 13 laukelis.",
+      "lines": [
+        { "name": "Paskolos tarpininkavimo paslauga", "quantity": 1, "unit_price": 4000, "tax": "LT-S-VABA", "account": "5040" }
+      ]
+    },
+    {
+      "ref": "O1",
+      "type": "purchase_invoice",
+      "contact": "tiekejas-lt",
+      "date": "2026-01-12",
+      "why": "Vietinis pirkimas standartiniu tarifu, pilna atskaita: 25 ir 35 laukeliai.",
+      "lines": [
+        { "name": "Biuro prekės", "quantity": 1, "unit_price": 2000, "tax": "LT-P-21", "account": "6160" }
+      ]
+    },
+    {
+      "ref": "O2",
+      "type": "purchase_invoice",
+      "contact": "tiekejas-de",
+      "date": "2026-01-28",
+      "why": "Prekių įsigijimas iš kitos ES valstybės narės PVM mokėtojo: pirkėjas pats apskaičiuoja PVM, 21, 34 ir 25/35 laukeliai.",
+      "lines": [
+        { "name": "Žaliavos iš Vokietijos", "quantity": 1, "unit_price": 4000, "tax": "LT-P-ICG-21", "account": "6010" }
+      ]
+    },
+    {
+      "ref": "O3",
+      "type": "purchase_invoice",
+      "contact": "tiekejas-de",
+      "date": "2026-02-14",
+      "why": "Paslauga iš kitos ES valstybės narės PVM mokėtojo: atvirkštinis apmokestinimas, 23, 24, 32 ir 25/35 laukeliai.",
+      "lines": [
+        { "name": "IT paslauga iš Vokietijos", "quantity": 1, "unit_price": 2500, "tax": "LT-P-VS-EU-21", "account": "6120" }
+      ]
+    },
+    {
+      "ref": "O4",
+      "type": "purchase_invoice",
+      "contact": "tiekejas-us",
+      "date": "2026-02-20",
+      "why": "Paslauga iš ne ES valstybės asmens: atvirkštinis apmokestinimas be 24 laukelio, 23, 32 ir 25/35 laukeliai.",
+      "lines": [
+        { "name": "Konsultacinė paslauga iš JAV", "quantity": 1, "unit_price": 1800, "tax": "LT-P-VS-XU-21", "account": "6170" }
+      ]
+    },
+    {
+      "ref": "O5",
+      "type": "purchase_invoice",
+      "contact": "tiekejas-lt",
+      "date": "2026-03-05",
+      "why": "Statybos darbų įsigijimas pagal PVMĮ 96 straipsnį: pirkėjas apskaičiuoja pardavimo PVM (33 laukelis) ir tuo pačiu mokestiniu laikotarpiu atskaito (25/35), be jokios apmokestinamosios vertės laukelio.",
+      "lines": [
+        { "name": "Statybos darbai", "quantity": 1, "unit_price": 15000, "tax": "LT-P-PM", "account": "6100" }
+      ]
+    },
+    {
+      "ref": "O6",
+      "type": "purchase_invoice",
+      "contact": "tiekejas-lt",
+      "date": "2026-03-15",
+      "why": "Reprezentacinės sąnaudos: 35 laukelyje atskaitoma tik pusė pirkimo PVM, kita pusė lieka sąnaudų sąskaitoje.",
+      "lines": [
+        { "name": "Reprezentacinė vakarienė", "quantity": 1, "unit_price": 600, "tax": "LT-P-REPR", "account": "6210" }
+      ]
+    },
+    {
+      "ref": "O7",
+      "type": "purchase_invoice",
+      "contact": "tiekejas-lt",
+      "date": "2026-03-22",
+      "why": "Pramogoms skirtos išlaidos, nepriskiriamos reprezentacinėms sąnaudoms: PVM atskaita neleidžiama visai, 35 laukelis lieka be šios sumos.",
+      "lines": [
+        { "name": "Pramogų paslauga", "quantity": 1, "unit_price": 400, "tax": "LT-P-ND", "account": "6220" }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "L1",
+      "direction": "inbound",
+      "date": "2026-02-05",
+      "amount": 6050,
+      "contact": "klientas-lt",
+      "journal": "BNK",
+      "match": "V1",
+      "why": "Laekėjimas, padengiantis V1 sąskaitą iki cento."
+    },
+    {
+      "ref": "M1",
+      "direction": "outbound",
+      "date": "2026-02-10",
+      "amount": 2420,
+      "contact": "tiekejas-lt",
+      "journal": "BNK",
+      "match": "O1",
+      "why": "Apmokėjimas, uždarantis O1 pirkimo sąskaitą."
+    },
+    {
+      "ref": "M2",
+      "direction": "outbound",
+      "date": "2026-03-25",
+      "amount": 15000,
+      "contact": "tiekejas-lt",
+      "journal": "BNK",
+      "match": "O5",
+      "why": "Statybos darbų apmokėjimas be PVM sumos, nes PVM autoliquidžia pirkėjas ir tiekėjui skolinga tik apmokestinamoji vertė."
+    },
+    {
+      "ref": "L2",
+      "direction": "inbound",
+      "date": "2026-04-10",
+      "amount": 1500,
+      "contact": "klientas-lt",
+      "journal": "BNK",
+      "match": null,
+      "why": "Avansas be sąskaitos: lieka neuždarytas likutis, kurį pagrindinė knyga ir iš jos apskaičiuota deklaracija turi atlaikyti."
+    }
+  ]
+}
