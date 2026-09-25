@@ -6092,45 +6092,19 @@ pack's research could find in the Peppol participant identifier scheme list.
 
 ## From Chile
 
-`packs/cl/`, `community`, seed 94, the second pack of Latin America after
+`packs/cl/`, `community`, seed 46, the second pack of Latin America after
 `packs/mx/`. Its value added tax is Decreto Ley N° 825, de 1974, read from
 the Servicio de Impuestos Internos' own consolidated copy; its financial
 statements answer article 74 of the Ley N° 18.046, sobre Sociedades
-Anónimas. Eight texts in the register. What follows is one thing this pack
-could not even build with, and four things the core could not say, none of
-them patched in `packages/` — the chart, the compiler and the checks are
-exactly as `packs/mx/` and every other pack left them.
-
-### `seed_sequence` above the schema's own ceiling
-
-`packs/schema/pack.1.json` bounds `seed_sequence` to `minimum: 10,
-maximum: 89` — every seed number a pack of this checkout has taken so far
-fits under ninety. This pack was assigned **94**, by the lead coordinating
-several country packs written in parallel on the same base, none of them
-free to pick their own number the way a solo contributor would. Declaring
-94 makes `readPack()` refuse the manifest outright, which is not a defect
-of this pack's own files: `pack build cl`, `pack check cl`, `pack check
---all` (which then refuses every pack alphabetically after `cl` too, since
-a pack that fails validation stops the run before the ones after it) and
-every test that calls `listPacks()` — `tests/golden.test.ts`,
-`tests/packs.test.ts`, `tests/pack_install.test.ts`,
-`tests/cli/bootstrap.test.ts`, `tests/languages.test.ts`,
-`tests/statements.test.ts`, `tests/filing_golden.test.ts`,
-`tests/peppol_ubl.test.ts` among them — throw during collection and run no
-test at all, for every pack in the checkout, not only this one. That is
-confirmed by hand: with `seed_sequence` temporarily lowered to 89 to test
-everything *else*, `pack build cl` writes a seed of 46 accounts, 8 taxes and
-2 statements without a single problem beyond the one warning every pack
-with a `csv` bank format already carries, and `UPDATE_GOLDEN=1 npx vitest
-run tests/golden.test.ts` replays the pack's twelve documents and four
-payments and balances to the cent, in every period, by hand. `packs/cl/`
-is therefore committed with its real number, 94, exactly as assigned, and
-not with the number that happens to build today: the fix is one line of
-`packs/schema/pack.1.json`, `maximum: 89` raised to whatever the batch of
-packs sharing the nineties needs, and it is the lead's line to write, not
-this session's — the instructions this session runs under are explicit that
-a change to the schema is never made from inside a country pack's own pull
-request.
+Anónimas. Eight texts in the register. This pack was first committed with
+`seed_sequence` 94, above `packs/schema/pack.1.json`'s own ceiling of 89 —
+an earlier version of this section recorded that as a gap the core would
+have to close. It was a numbering mistake of the batch, not a ceiling the
+core actually needed raising: 46 was free under 90 all along, and the pack
+now takes it, builds and checks like every other pack in the checkout, with
+`packs/schema/` untouched. What follows is three things the core could not
+say, none of them patched in `packages/` — the chart, the compiler and the
+checks are exactly as `packs/mx/` and every other pack left them.
 
 ### A folio authorised in advance, signed by the issuer, reported afterwards
 

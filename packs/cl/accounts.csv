@@ -45,3 +45,76 @@ code,parent,type,reconcilable,name,sequence
 5108,,expense,false,Diferencias de Redondeo,440
 5109,,expense,false,Impuesto a la Renta,450
 5110,,expense,false,Servicios Recibidos del Exterior,460
+1104,,asset_current,false,Documentos por Cobrar,35
+1107,,asset_current,true,IVA Crédito Fiscal Remanente,55
+1116,,asset_current,false,Materias Primas,61
+1117,,asset_current,false,Productos en Proceso,62
+1118,,asset_current,false,Productos Terminados,63
+1119,,asset_current,false,Mercaderías,64
+1120,,asset_current,false,Materiales y Repuestos,65
+1121,,asset_current,false,Provisión por Obsolescencia de Existencias,66
+1122,,asset_prepayments,false,Seguros Pagados por Anticipado,71
+1123,,asset_prepayments,false,Arriendos Pagados por Anticipado,72
+1110,,asset_current,false,Anticipos a Proveedores,81
+1111,,asset_current,false,Otras Cuentas por Cobrar,82
+1112,,asset_current,false,Cuentas por Cobrar a Empresas Relacionadas,83
+1113,,asset_current,false,Préstamos al Personal,84
+1114,,asset_current,false,Pagos Provisionales Mensuales por Recuperar,85
+1115,,asset_current,false,Impuesto a la Renta por Recuperar,86
+1210,,asset_fixed,false,Obras en Construcción,151
+1211,,asset_fixed,false,Herramientas y Equipos Menores,152
+1212,,asset_fixed,false,Instalaciones,153
+1213,,asset_fixed,false,Mejoras en Bienes Arrendados,154
+1214,,asset_fixed,false,Depreciación Acumulada Herramientas y Equipos Menores,155
+1215,,asset_fixed,false,Depreciación Acumulada Instalaciones,156
+1216,,asset_fixed,false,Depreciación Acumulada Mejoras en Bienes Arrendados,157
+1310,,asset_non_current,false,Amortización Acumulada de Intangibles,161
+1311,,asset_non_current,false,Inversiones en Empresas Relacionadas,162
+1312,,asset_non_current,false,Depósitos en Garantía,163
+2108,,liability_current,false,Documentos por Pagar,231
+2109,,liability_current,false,Otras Cuentas por Pagar,232
+2110,,liability_current,false,Cuentas por Pagar a Empresas Relacionadas,233
+2111,,liability_current,false,Dividendos por Pagar,234
+2112,,liability_current,false,Impuesto a la Renta por Pagar,235
+2113,,liability_current,false,AFP por Pagar,236
+2114,,liability_current,false,Salud (Isapre/Fonasa) por Pagar,237
+2115,,liability_current,false,Mutual de Seguridad por Pagar,238
+2116,,liability_current,false,Seguro de Cesantía (AFC) por Pagar,239
+2117,,liability_current,false,Impuesto Único de Segunda Categoría por Pagar,241
+2118,,liability_current,false,Provisión de Vacaciones,242
+2119,,liability_current,false,Provisión de Gratificaciones,243
+2120,,liability_current,false,Provisión de Indemnización por Años de Servicio,244
+2210,,liability_non_current,false,Leasing por Pagar Largo Plazo,245
+2211,,liability_non_current,false,Provisiones Largo Plazo,246
+3107,,equity,false,Reserva Legal,301
+3108,,equity,false,Otras Reservas de Capital,302
+4107,,income,false,Devoluciones y Bonificaciones sobre Ventas,361
+4108,,income_other,false,Descuentos Obtenidos por Pronto Pago,362
+4109,,income_other,false,Arriendos Ganados,363
+5111,,expense,false,Sueldos y Salarios,401
+5112,,expense,false,Leyes Sociales,402
+5113,,expense,false,Gratificaciones,403
+5114,,expense,false,Indemnización por Años de Servicio,404
+5115,,expense,false,Vacaciones,405
+5116,,expense,false,Honorarios Profesionales,406
+5117,,expense,false,Arriendos,407
+5118,,expense,false,Seguros Generales,408
+5119,,expense,false,Servicios Básicos,409
+5120,,expense,false,Mantención y Reparaciones,411
+5121,,expense,false,Materiales de Oficina,412
+5122,,expense,false,Publicidad y Marketing,413
+5123,,expense,false,Gastos de Representación,414
+5124,,expense,false,Viáticos y Gastos de Viaje,415
+5125,,expense,false,Fletes y Transportes,416
+5126,,expense,false,Comunicaciones,417
+5128,,expense_depreciation,false,Amortización de Intangibles,418
+5129,,expense,false,Castigo de Cuentas Incobrables,419
+5131,,expense,false,Donaciones,421
+5132,,expense,false,Patentes Municipales,422
+5133,,expense,false,Capacitación del Personal,423
+5127,,expense,false,Gastos Bancarios,431
+5130,,expense,false,Multas e Intereses Fiscales,432
+5134,,expense,false,Intereses por Préstamos,433
+5140,,expense_direct_cost,false,Mano de Obra Directa,461
+5141,,expense_direct_cost,false,Materiales Directos,462
+5142,,expense_direct_cost,false,Gastos Indirectos de Fabricación,463

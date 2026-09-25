@@ -84,8 +84,19 @@ This pack's `accounts.csv` is therefore **Ekwo's own numbering**, classes 1
 to 5 with no official correlate, built so that every account reaches a line
 of the balance sheet or the income statement below. Any company can install
 a different chart of its own instead; this is the one `ekwo init` proposes.
+Beyond the accounts a first invoice or payslip needs, it carries the detail
+a trading or manufacturing company's books actually use day to day: fixed
+assets and their accumulated depreciation by nature rather than in one
+lump account, raw materials, work in progress, finished goods and
+merchandise as separate lines of `Existencias`, the other receivables and
+payables a company carries beside its customers and suppliers, the payroll
+liabilities a Chilean employer withholds and remits — AFP, Isapre or
+Fonasa, the mutual de seguridad and the Seguro de Cesantía — and expense
+accounts by nature (remuneraciones, arriendos, honorarios, publicidad and
+the rest) beside the two `Gastos de Administración y Ventas` and `Costo de
+Ventas` a smaller company can post everything to instead.
 
-Four decisions:
+Five decisions:
 
 - **The IVA accounts follow the cash-basis pairs a services tax needs.**
   `2104` *IVA Débito Fiscal Servicios (Devengado no Percibido)* and `2102`
@@ -93,12 +104,14 @@ Four decisions:
   (Devengado no Pagado)* and `1105` *IVA Crédito Fiscal* on the purchase
   side — see *Taxes* below for why services need a transition account and
   goods do not.
-- **The declaration settles to `2103` *IVA por Pagar*** (`tax_payable`), kept
-  apart from the two posting accounts above and reconcilable, as the format
-  requires. `tax_receivable` is left out: art. 26 of the D.L. N° 825 carries
-  a period's excess credit forward inside the same mechanism the return
-  computes, and this pack keeps one control account for both signs rather
-  than inventing a second one no text names.
+- **The declaration settles to `2103` *IVA por Pagar*** (`tax_payable`) or,
+  when a period's input credit exceeds its output tax, to `1107` *IVA
+  Crédito Fiscal Remanente* (`tax_receivable`) — art. 26 of the D.L. N° 825
+  carries that excess forward to the following period. Both are kept apart
+  from the four posting accounts above (`1105`, `1106`, `2102`, `2104`) and
+  reconcilable, as the format requires: a control account a payment or a
+  later declaration settles against has to be the one thing the postings of
+  the period never touch themselves.
 - **The suspense account is `1150` *Partidas Pendientes de
   Identificación*.** No text asks for one; a debit balance is reported as an
   asset and a credit balance as a liability, the same solution Mexico's pack
@@ -108,6 +121,20 @@ Four decisions:
   74 of the Ley N° 18.046 implies, since the results it has the directors
   present to the shareholders' meeting are not yet allocated to retained
   earnings until that meeting acts on them.
+- **No corrección monetaria account.** Until the 2015 reform of the Ley
+  sobre Impuesto a la Renta (Ley N° 20.780, complemented by Ley N° 20.899),
+  Chilean tax law required every non-monetary asset, liability and equity
+  account to be restated once a year for inflation, with the net effect
+  posted to a *corrección monetaria* result account of its own; a company
+  reporting under IFRS in a non-hyperinflationary economy carries no such
+  restatement in its financial books at all, and the mechanism that
+  remains for tax purposes now runs inside the renta líquida imponible the
+  annual Formulario 22 computes, not through a monthly posting this pack's
+  documents or its Formulario 29 section reach. Ekwo posts what a document
+  or a payment records as it happens, in nominal pesos, the same way every
+  other pack in this repository does; a company whose auditor still
+  restates its own books for inflation adds the account and the year-end
+  entry itself, outside what this pack carries.
 
 ## Taxes
 

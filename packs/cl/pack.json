@@ -4,7 +4,7 @@
   "name": "Chile",
   "version": "0.1.0",
   "schema_min": "20260921084143",
-  "seed_sequence": 94,
+  "seed_sequence": 46,
   "released_at": "2026-09-25",
   "certification": {
     "status": "community",
@@ -96,7 +96,8 @@
       "cash": "1101",
       "fx_gain": "4106",
       "fx_loss": "5107",
-      "tax_payable": "2103"
+      "tax_payable": "2103",
+      "tax_receivable": "1107"
     },
     "journal_roles": {
       "sales": "VEN",
