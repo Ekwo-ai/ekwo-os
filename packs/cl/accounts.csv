@@ -1,0 +1,47 @@
+code,parent,type,reconcilable,name,sequence
+1101,,asset_cash,false,Caja,10
+1102,,asset_cash,false,Banco,20
+1103,,asset_receivable,true,Clientes,30
+1105,,asset_current,false,IVA Crédito Fiscal,40
+1106,,asset_current,false,IVA Crédito Fiscal Servicios (Devengado no Pagado),50
+1108,,asset_current,false,Existencias,60
+1109,,asset_prepayments,false,Gastos Pagados por Anticipado,70
+1150,,asset_current,false,Partidas Pendientes de Identificación,80
+1201,,asset_fixed,false,Terrenos,90
+1202,,asset_fixed,false,Construcciones y Edificios,100
+1203,,asset_fixed,false,Maquinarias y Equipos,110
+1204,,asset_fixed,false,Muebles y Útiles,120
+1205,,asset_fixed,false,Equipos Computacionales,130
+1206,,asset_fixed,false,Vehículos,140
+1207,,asset_fixed,false,Depreciación Acumulada,150
+1301,,asset_non_current,false,Activos Intangibles,160
+2101,,liability_payable,true,Proveedores,170
+2102,,liability_current,false,IVA Débito Fiscal,180
+2103,,liability_current,true,IVA por Pagar,190
+2104,,liability_current,false,IVA Débito Fiscal Servicios (Devengado no Percibido),200
+2105,,liability_current,false,Retenciones y Otros Impuestos por Pagar,210
+2106,,liability_current,false,Remuneraciones por Pagar,220
+2107,,liability_current,false,Provisiones,230
+2201,,liability_non_current,false,Préstamos Bancarios Largo Plazo,240
+3101,,equity,false,Capital,250
+3102,,equity,false,Reservas,260
+3103,,equity_retained,false,Utilidades Acumuladas,270
+3104,,equity_retained,false,Pérdidas Acumuladas,280
+3105,,equity_retained,false,Resultado del Ejercicio (Utilidad),290
+3106,,equity_retained,false,Resultado del Ejercicio (Pérdida),300
+4101,,income,false,Ventas Nacionales,310
+4102,,income,false,Ventas de Exportación,320
+4103,,income,false,Servicios Prestados,330
+4104,,income_other,false,Otros Ingresos de Explotación,340
+4105,,income_other,false,Ingresos Financieros,350
+4106,,income_other,false,Utilidad por Diferencia de Cambio,360
+5101,,expense_direct_cost,false,Costo de Ventas,370
+5102,,expense_direct_cost,false,Compras,380
+5103,,expense,false,Gastos de Administración y Ventas,390
+5104,,expense,false,Remuneraciones,400
+5105,,expense_depreciation,false,Depreciación del Ejercicio,410
+5106,,expense,false,Gastos Financieros,420
+5107,,expense,false,Pérdida por Diferencia de Cambio,430
+5108,,expense,false,Diferencias de Redondeo,440
+5109,,expense,false,Impuesto a la Renta,450
+5110,,expense,false,Servicios Recibidos del Exterior,460

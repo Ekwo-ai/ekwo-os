@@ -1,0 +1,196 @@
+[
+  {
+    "code": "CL-S-19-BIENES",
+    "name": "Ventas de bienes, tasa general 19 %",
+    "description": "Venta de bienes corporales muebles gravada a la tasa general",
+    "kind": "vat",
+    "rate": 19,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "1975-01-01",
+    "legal_reference": "Decreto Ley N° 825, art. 14 — «Los contribuyentes afectos a las disposiciones del presente Título pagarán el impuesto con una tasa de 19 % sobre la base imponible»; art. 8° — hecho gravado; art. 2° N° 1° — definición de «venta». El devengo sigue la regla general de tax_point (delivery_date): el art. 9°, letra a), fija el devengo en la fecha de la factura, salvo que la entrega sea anterior, y el art. 55 exige que la factura de una venta de bienes se emita «en el mismo momento» de la entrega real o simbólica de las especies, de modo que ambas fechas coinciden en el caso regular",
+    "source": "dl825",
+    "vat_category": "S",
+    "sequence": 10,
+    "postings": {
+      "invoice": [
+        { "type": "base" },
+        { "type": "tax", "account": "2102", "box": "502" }
+      ],
+      "credit_note": [
+        { "type": "base", "box_factor": -100 },
+        { "type": "tax", "account": "2102", "box": "502", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "CL-S-19-SERVICIOS",
+    "name": "Prestaciones de servicios, tasa general 19 %",
+    "description": "Servicio gravado a la tasa general, devengado al percibirse o ponerse a disposición la remuneración",
+    "kind": "vat",
+    "rate": 19,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "1975-01-01",
+    "cash_basis": true,
+    "cash_basis_transition_account": "2104",
+    "legal_reference": "Decreto Ley N° 825, art. 14 — tasa de 19 %; art. 8° — hecho gravado; art. 2° N° 2° — definición de «servicio». Devengo: art. 9°, letra a) — en las prestaciones de servicios el impuesto se devenga en la fecha de emisión de la factura o boleta y, si no se hubieren emitido, «en cualquier forma, a disposición del prestador del servicio»; art. 55, inciso tercero — la factura de un servicio «deberá emitirse en el mismo periodo tributario en que la remuneración se perciba o se ponga, en cualquier forma, a disposición del prestador del servicio», de modo que el devengo de un servicio coincide con su cobro. Este paquete lo declara cash_basis, sobre la cuenta de tránsito 2104, porque el formato fija un solo tax_point por país (delivery_date, que sigue el caso general de los bienes) y reserva cash_basis para la regla distinta de un tipo de operación — el mismo mecanismo que usa el paquete de Francia para sus servicios",
+    "source": "dl825",
+    "vat_category": "S",
+    "sequence": 20,
+    "postings": {
+      "invoice": [
+        { "type": "base" },
+        { "type": "tax", "account": "2102", "box": "502" }
+      ],
+      "credit_note": [
+        { "type": "base", "box_factor": -100 },
+        { "type": "tax", "account": "2102", "box": "502", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "CL-S-0-EXP-BIENES",
+    "name": "Exportación de bienes",
+    "description": "Especies exportadas en su venta al exterior",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "1975-01-01",
+    "conditions": ["transport_evidence"],
+    "legal_reference": "Decreto Ley N° 825, art. 12, letra D — «Estarán exentas del impuesto establecido en este Título: … D.- Las especies exportadas en su venta al exterior». El exportador no traslada IVA en la exportación y, en cambio, tiene derecho a recuperar el impuesto soportado en sus compras e importaciones destinadas a esa actividad conforme al art. 36 — véase CL-P-19-BIENES y CL-P-19-SERVICIOS, que dan ese crédito, y la línea 37 (Cód. 593) del Formulario 29, que declara la devolución solicitada por el art. 36. La aduana certifica la salida de las especies (Documento Único de Salida)",
+    "source": "dl825",
+    "vat_category": "G",
+    "sequence": 30,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "20" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "20", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "CL-S-0-EXP-SERVICIOS",
+    "name": "Exportación de servicios",
+    "description": "Servicios prestados a personas sin domicilio ni residencia en Chile, calificados como exportación por el Servicio Nacional de Aduanas",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "1975-01-01",
+    "conditions": ["supply_nature"],
+    "legal_reference": "Decreto Ley N° 825, art. 12, letra E, N° 16 — «Los ingresos percibidos por la prestación de servicios a personas sin domicilio ni residencia en Chile, siempre que el Servicio Nacional de Aduanas califique dichos servicios como exportación… La exención procederá respecto de aquellos servicios que sean prestados total o parcialmente en Chile para ser utilizados en el extranjero»; art. 36, inciso cuarto — los prestadores de estos servicios gozan del mismo derecho a recuperar el IVA soportado que un exportador de bienes",
+    "source": "dl825",
+    "vat_category": "G",
+    "sequence": 40,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "20" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "20", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "CL-S-EXE-EDU",
+    "name": "Ingresos de establecimientos de educación",
+    "description": "Ingresos por la actividad docente propiamente tal de un establecimiento de educación",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "1975-01-01",
+    "conditions": ["supply_nature"],
+    "legal_reference": "Decreto Ley N° 825, art. 13 — «Estarán liberadas del impuesto de este Título las siguientes empresas e instituciones: … 4.- Los establecimientos de educación. Esta exención se limitará a los ingresos que perciban en razón de su actividad docente propiamente tal»",
+    "source": "dl825",
+    "vat_category": "E",
+    "sequence": 50,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "142" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "142", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "CL-P-19-BIENES",
+    "name": "Compras de bienes, tasa general 19 %",
+    "description": "Adquisición de bienes corporales muebles del giro, con derecho a crédito fiscal",
+    "kind": "vat",
+    "rate": 19,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "1975-01-01",
+    "legal_reference": "Decreto Ley N° 825, art. 14 — tasa de 19 %; art. 23 — «Los contribuyentes afectos al pago del tributo de este Título tendrán derecho a un crédito fiscal… equivalente al impuesto de este Título recargado en las facturas que acrediten sus adquisiciones». Formulario 29, línea 28 (Cód. 519/520): «Facturas recibidas del giro y Facturas de compra emitidas, con derecho a crédito fiscal»",
+    "source": "dl825",
+    "vat_category": "S",
+    "sequence": 60,
+    "postings": {
+      "invoice": [
+        { "type": "base" },
+        { "type": "tax", "account": "1105", "box": "520" }
+      ],
+      "credit_note": [
+        { "type": "base", "box_factor": -100 },
+        { "type": "tax", "account": "1105", "box": "520", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "CL-P-19-SERVICIOS",
+    "name": "Compras de servicios, tasa general 19 %",
+    "description": "Servicio recibido del giro, con derecho a crédito fiscal, acreditable al pagarse",
+    "kind": "vat",
+    "rate": 19,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "1975-01-01",
+    "cash_basis": true,
+    "cash_basis_transition_account": "1106",
+    "legal_reference": "Decreto Ley N° 825, art. 14 y art. 23 — mismo derecho a crédito fiscal que CL-P-19-BIENES; art. 9°, letra a), y art. 55, inciso tercero — el proveedor del servicio devenga y factura su IVA al percibir o disponer de la remuneración, de modo que el crédito fiscal del comprador nace en esa misma fecha. Se declara cash_basis, sobre la cuenta de tránsito 1106, por la razón dada en CL-S-19-SERVICIOS",
+    "source": "dl825",
+    "vat_category": "S",
+    "sequence": 70,
+    "postings": {
+      "invoice": [
+        { "type": "base" },
+        { "type": "tax", "account": "1105", "box": "520" }
+      ],
+      "credit_note": [
+        { "type": "base", "box_factor": -100 },
+        { "type": "tax", "account": "1105", "box": "520", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "CL-P-FSR-19",
+    "name": "Servicio recibido de un prestador domiciliado en el extranjero",
+    "description": "El beneficiario del servicio, contribuyente de este impuesto, es el sujeto pasivo cuando el prestador no está domiciliado ni reside en Chile",
+    "kind": "vat",
+    "rate": 19,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "1975-01-01",
+    "legal_reference": "Decreto Ley N° 825, art. 11, letra e) — son sujetos del impuesto «el beneficiario del servicio que sea contribuyente de este impuesto, siempre que la prestación sea realizada por un prestador domiciliado o residente en el extranjero»; art. 10, inciso segundo, y art. 5° — el servicio se entiende prestado en Chile cuando la actividad que lo genera se desarrolla en Chile, cualquiera sea el lugar donde se utilice, o cuando se usa en Chile aunque la remuneración se pague en el extranjero. El beneficiario se autofactura el débito y, al mismo tiempo, el crédito fiscal de la misma operación (art. 23), por lo que el efecto neto en la declaración es nulo salvo que el gasto sea sólo parcialmente afecto a IVA en manos del beneficiario. No hay categoría EN 16931 que registrar (ningún comprobante del prestador extranjero está gobernado por esa norma) ni código de exención, porque la operación no es una exención sino un traslado de la calidad de sujeto del impuesto",
+    "source": "dl825",
+    "sequence": 80,
+    "postings": {
+      "invoice": [
+        { "type": "base" },
+        { "type": "tax", "account": "2102", "box": "502" },
+        { "type": "tax", "factor": -100, "account": "1105", "box": "520" }
+      ],
+      "credit_note": [
+        { "type": "base", "box_factor": -100 },
+        { "type": "tax", "account": "2102", "box": "502", "box_factor": -100 },
+        { "type": "tax", "factor": -100, "account": "1105", "box": "520", "box_factor": -100 }
+      ]
+    }
+  }
+]

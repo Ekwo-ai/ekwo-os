@@ -1,0 +1,90 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "CL-F29-IVA",
+  "name": "Formulario 29 — Declaración Mensual y Pago Simultáneo de Impuestos, sección Impuesto al Valor Agregado",
+  "period": ["month"],
+  "period_default": "month",
+  "valid_from": "1975-01-01",
+  "legal_reference": "Decreto Ley N° 825, art. 64, inciso primero — «Los contribuyentes afectos a la presente ley deberán pagar en la Tesorería Comunal respectiva, o en las oficinas bancarias autorizadas por el Servicio de Tesorerías, hasta el día 12 de cada mes, los impuestos devengados en el mes anterior… En el mismo acto deberán presentar una declaración jurada del monto total de las operaciones realizadas en el mes anterior, incluso las exentas de impuesto». Los campos son los códigos del Formulario 29, versión Internet, sección «Impuesto al Valor Agregado D.L. 825/74»; este paquete transcribe sólo los campos que el Impuesto al Valor Agregado alimenta y omite los de los demás tributos y regímenes que declara el mismo formulario (impuesto adicional a las ventas, cambio de sujeto, retenciones de la Ley de la Renta y pagos provisionales mensuales) — véase «Lo que este paquete no transcribe» en el README",
+  "source": "f29-instrucciones",
+  "deadline": {
+    "rule": "day_of_month_after_period",
+    "day": 12,
+    "legal_reference": "Decreto Ley N° 825, art. 64, inciso primero — pago hasta el día 12 del mes siguiente al de la operación. Un contribuyente que declara y paga por Internet obtiene, por resolución administrativa del Servicio de Impuestos Internos y no por esta ley, una prórroga hasta el día 20 (con pago) o el día 28 (sin pago) del mismo mes; este paquete declara el día que la ley fija a todo contribuyente, no la prórroga condicionada al canal de declaración",
+    "source": "f29-plazos"
+  },
+  "boxes": [
+    {
+      "box": "20",
+      "kind": "base",
+      "name": "Exportaciones (monto neto)",
+      "sequence": 10,
+      "legal_reference": "Formulario 29, línea 1: «Exportaciones» — Cód. 585 (cantidad de documentos de exportación), Cód. 20 (monto neto contenido en los documentos registrados en el Cód. 585)",
+      "source": "f29-formulario"
+    },
+    {
+      "box": "142",
+      "kind": "base",
+      "name": "Ventas y/o servicios prestados exentos, o no gravados del giro (monto neto)",
+      "sequence": 20,
+      "legal_reference": "Formulario 29, línea 2: «Ventas y/o Servicios prestados Exentos, o No Gravados del giro» — Cód. 586 (cantidad de documentos), Cód. 142 (monto neto de los documentos registrados en el Cód. 586)",
+      "source": "f29-formulario"
+    },
+    {
+      "box": "502",
+      "kind": "tax",
+      "name": "Débito fiscal — facturas emitidas por ventas y servicios del giro",
+      "sequence": 30,
+      "legal_reference": "Formulario 29, línea 7: «Facturas emitidas por ventas y servicios del giro, o por cuenta de terceros» — Cód. 503 (cantidad de facturas emitidas durante el período), Cód. 502 (monto del impuesto recargado en las facturas registradas en el Cód. 503)",
+      "source": "f29-instrucciones"
+    },
+    {
+      "box": "538",
+      "kind": "total",
+      "name": "Total débitos",
+      "sequence": 40,
+      "plus": ["502"],
+      "legal_reference": "Formulario 29, línea 23: «Registre el valor que resulte de realizar la operación aritmética de los montos de la línea 7 a 22» — este paquete suma únicamente el Cód. 502, la única línea de esa sección que sus impuestos alimentan",
+      "source": "f29-instrucciones"
+    },
+    {
+      "box": "520",
+      "kind": "tax",
+      "name": "Crédito fiscal — facturas recibidas del giro",
+      "sequence": 50,
+      "legal_reference": "Formulario 29, línea 28: «Facturas recibidas del giro y Facturas de compra emitidas» — Cód. 519 (cantidad de facturas recibidas durante el período, por adquisición de bienes o utilización de servicios que dan derecho a crédito fiscal), Cód. 520 (monto de crédito fiscal recargado en las facturas registradas en el Cód. 519)",
+      "source": "f29-formulario"
+    },
+    {
+      "box": "537",
+      "kind": "total",
+      "name": "Total créditos",
+      "sequence": 60,
+      "plus": ["520"],
+      "legal_reference": "Formulario 29, línea 49: «Registre el valor que resulte de realizar la operación aritmética de los montos de la línea 28 a 48» — este paquete suma únicamente el Cód. 520, la única línea de esa sección que sus impuestos alimentan",
+      "source": "f29-instrucciones"
+    },
+    {
+      "box": "89",
+      "kind": "total",
+      "name": "Impuesto determinado (IVA a pagar)",
+      "sequence": 70,
+      "plus": ["538"],
+      "minus": ["537"],
+      "floor_zero": true,
+      "legal_reference": "Formulario 29, línea 50, Cód. 89 — el resultado positivo de restar el Total de Créditos (Cód. 537) del Total de Débitos (Cód. 538) es el impuesto determinado del período",
+      "source": "f29-formulario"
+    },
+    {
+      "box": "77",
+      "kind": "total",
+      "name": "Remanente de crédito fiscal para el período siguiente",
+      "sequence": 80,
+      "plus": ["537"],
+      "minus": ["538"],
+      "floor_zero": true,
+      "legal_reference": "Formulario 29, línea 50, Cód. 77 — cuando el Total de Créditos (Cód. 537) excede al Total de Débitos (Cód. 538), la diferencia es el remanente de crédito fiscal que el art. 26 del D.L. N° 825 acumula a los créditos del período tributario siguiente",
+      "source": "f29-formulario"
+    }
+  ]
+}

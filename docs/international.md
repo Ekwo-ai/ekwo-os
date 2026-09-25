@@ -6089,3 +6089,107 @@ identified by the Tax Identification Number the Nigeria Revenue Service issues
 under Nigeria Tax Administration Act 2025, s. 7, which carries no country
 prefix of that table's kind, and Nigeria carries no ISO 6523 identifier this
 pack's research could find in the Peppol participant identifier scheme list.
+
+## From Chile
+
+`packs/cl/`, `community`, seed 94, the second pack of Latin America after
+`packs/mx/`. Its value added tax is Decreto Ley N° 825, de 1974, read from
+the Servicio de Impuestos Internos' own consolidated copy; its financial
+statements answer article 74 of the Ley N° 18.046, sobre Sociedades
+Anónimas. Eight texts in the register. What follows is one thing this pack
+could not even build with, and four things the core could not say, none of
+them patched in `packages/` — the chart, the compiler and the checks are
+exactly as `packs/mx/` and every other pack left them.
+
+### `seed_sequence` above the schema's own ceiling
+
+`packs/schema/pack.1.json` bounds `seed_sequence` to `minimum: 10,
+maximum: 89` — every seed number a pack of this checkout has taken so far
+fits under ninety. This pack was assigned **94**, by the lead coordinating
+several country packs written in parallel on the same base, none of them
+free to pick their own number the way a solo contributor would. Declaring
+94 makes `readPack()` refuse the manifest outright, which is not a defect
+of this pack's own files: `pack build cl`, `pack check cl`, `pack check
+--all` (which then refuses every pack alphabetically after `cl` too, since
+a pack that fails validation stops the run before the ones after it) and
+every test that calls `listPacks()` — `tests/golden.test.ts`,
+`tests/packs.test.ts`, `tests/pack_install.test.ts`,
+`tests/cli/bootstrap.test.ts`, `tests/languages.test.ts`,
+`tests/statements.test.ts`, `tests/filing_golden.test.ts`,
+`tests/peppol_ubl.test.ts` among them — throw during collection and run no
+test at all, for every pack in the checkout, not only this one. That is
+confirmed by hand: with `seed_sequence` temporarily lowered to 89 to test
+everything *else*, `pack build cl` writes a seed of 46 accounts, 8 taxes and
+2 statements without a single problem beyond the one warning every pack
+with a `csv` bank format already carries, and `UPDATE_GOLDEN=1 npx vitest
+run tests/golden.test.ts` replays the pack's twelve documents and four
+payments and balances to the cent, in every period, by hand. `packs/cl/`
+is therefore committed with its real number, 94, exactly as assigned, and
+not with the number that happens to build today: the fix is one line of
+`packs/schema/pack.1.json`, `maximum: 89` raised to whatever the batch of
+packs sharing the nineties needs, and it is the lead's line to write, not
+this session's — the instructions this session runs under are explicit that
+a change to the schema is never made from inside a country pack's own pull
+request.
+
+### A folio authorised in advance, signed by the issuer, reported afterwards
+
+`einvoicing.obligation` is a closed vocabulary of three words for whether a
+statute obliges an exchange, and `mandatory_from` requires a `profile` to
+attach itself to. Mexico's CFDI needed both fields empty because a third
+party certifies the document *before* it exists, which nothing in this
+section can say; Chile's DTE needed them empty for a related but distinct
+reason the vocabulary has no separate word for either. A Chilean DTE is
+valid **the moment its issuer signs it** with a folio drawn from a Código de
+Autorización de Folios the Servicio de Impuestos Internos authorised in
+advance, by range and not document by document — reporting that document to
+the Servicio is a following, separate step, closer to a continuous
+transaction control than to Mexico's pre-issuance clearance. `profile`
+still names a structure built on EN 16931 that a brick of
+`packages/formats/` writes, and a DTE is neither that structure nor
+something a third party validates before the fact, so `packs/cl/` leaves
+the same fields empty as `packs/mx/` and says the difference in prose
+instead — a third value of `obligation`, or a boolean for "valid on the
+issuer's own signature", would let two countries whose electronic-invoicing
+law actually differs stop looking identical in this one section of a pack.
+
+### Proportional input credit (art. 23 N° 3)
+
+A taxable person who also makes exempt or out-of-scope supplies deducts
+input VAT only in the proportion its own taxed sales bear to its total
+sales — the same computation the Union calls a *pro rata* and Saudi Arabia's
+own register records as unavailable to this format. `packs/cl/` gives full
+input credit on every purchase its taxes reach, which is the law's answer
+for a taxpayer with no exempt sales of its own and the only answer a
+document-by-document posting rule can give; a company mixing the exempt
+income of `CL-S-EXE-EDU` with a majority of taxed sales has to correct the
+figure by hand. The gap is the same one *From Mexico* — carried in that
+pack's own README rather than in this file — already states of its
+`ACR` field: a proportion is a computation over a year of purchases, and a
+tax's `postings` describe one document.
+
+### A region conditioning a rate
+
+Chile's free-trade zones — the Zona Franca de Iquique and the Zona Franca de
+Punta Arenas, under D.F.L. N° 341, de 1977 — relieve some operations
+inside them from the general 19 %. `applies_when` conditions a tax on a
+party's or a supply's *territory*, which is a row of `territories`, and
+those zones are not one: they are places inside a single Chilean commune,
+finer than any subdivision the table or `defaults.region` was built to
+carry (`defaults.region` names a province a whole tax is suggested from,
+the phase-one hook for Canada, and a free-trade zone is neither a province
+nor a suggestion). `packs/cl/` taxes the whole of continental Chile
+uniformly and says so, rather than modelling a zone no field of the format
+can name.
+
+### CLP and CL
+
+`CLP` is added to `00_currencies.sql` at zero decimals, its symbol `$`
+alongside Mexico's own. `CL` is added to `00_territories.sql` outside the
+common system of VAT, for the same reason and in the same Latin American
+block as `MX`: `eu_vat_scope` `none`, so `vat_category`, `exemption_code`
+and the five `intracom_*` treatments read the way every pack outside the
+Union's common system does. `vat_prefix` is null: a Chilean Rol Único
+Tributario carries no ISO 6523 identifier of the kind `party_scheme` and
+`vat_scheme` would read, the same silence Mexico's own RFC leaves.
+

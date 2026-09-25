@@ -1,0 +1,103 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "Un trimestre de una comercializadora chilena, con exportación, un servicio de capacitación exento y un servicio recibido del exterior",
+  "chart": "default",
+  "fiscal_year": { "name": "Ejercicio 2026", "start": "2026-01-01", "end": "2026-12-31" },
+  "periods": [
+    { "code": "2026-01", "from": "2026-01-01", "to": "2026-01-31" },
+    { "code": "2026-02", "from": "2026-02-01", "to": "2026-02-28" },
+    { "code": "2026-03", "from": "2026-03-01", "to": "2026-03-31" }
+  ],
+  "statements": ["CL-BAL", "CL-RES"],
+  "contacts": [
+    { "ref": "cliente-nacional", "name": "Distribuidora Andina SpA", "type": "customer", "country": "CL" },
+    { "ref": "cliente-extranjero", "name": "Pacific Trading LLC", "type": "customer", "country": "US" },
+    { "ref": "proveedor-nacional", "name": "Suministros del Maipo Ltda.", "type": "supplier", "country": "CL" },
+    { "ref": "proveedor-servicios", "name": "Contadores Asociados Ltda.", "type": "supplier", "country": "CL" },
+    { "ref": "proveedor-extranjero", "name": "Cloudworks Inc.", "type": "supplier", "country": "US" }
+  ],
+  "documents": [
+    {
+      "ref": "V1", "type": "sale_invoice", "contact": "cliente-nacional", "date": "2026-01-10",
+      "why": "Una venta nacional de mercadería a la tasa general: prueba la base sin casilla propia y el débito fiscal del Cód. 502.",
+      "lines": [{ "name": "Mercadería surtida", "quantity": 10, "unit_price": 100000, "tax": "CL-S-19-BIENES", "account": "4101" }]
+    },
+    {
+      "ref": "V2", "type": "sale_invoice", "contact": "cliente-nacional", "date": "2026-01-15",
+      "why": "Un servicio de mantención mensual, de flujo de efectivo: el débito fiscal espera en la cuenta 2104 hasta que el pago P1 lo liquide en febrero.",
+      "lines": [{ "name": "Servicio de mantención mensual", "quantity": 1, "unit_price": 500000, "tax": "CL-S-19-SERVICIOS", "account": "4103" }]
+    },
+    {
+      "ref": "V3", "type": "sale_credit_note", "contact": "cliente-nacional", "date": "2026-01-20",
+      "why": "Nota de crédito por la devolución de parte de la mercadería de V1: prueba box_factor -100 del Cód. 502, el único corrector de un débito facturado en exceso que admite el art. 21 N° 2°.",
+      "lines": [{ "name": "Devolución de mercadería", "quantity": 2, "unit_price": 100000, "tax": "CL-S-19-BIENES", "account": "4101" }]
+    },
+    {
+      "ref": "V4", "type": "sale_invoice", "contact": "cliente-extranjero", "date": "2026-02-05",
+      "why": "Una exportación de mercadería al exterior, tasa 0 % del art. 12, letra D: prueba el Cód. 20 y el derecho a recuperación del IVA soportado que da el art. 36 (véase C1 y C5).",
+      "lines": [{ "name": "Mercadería de exportación", "quantity": 1, "unit_price": 2000000, "tax": "CL-S-0-EXP-BIENES", "account": "4102" }]
+    },
+    {
+      "ref": "V5", "type": "sale_invoice", "contact": "cliente-extranjero", "date": "2026-02-10",
+      "why": "Un servicio de consultoría prestado a un cliente sin domicilio ni residencia en Chile, calificado como exportación por el art. 12, letra E, N° 16: prueba un segundo código de impuesto que comparte el Cód. 20 con V4.",
+      "lines": [{ "name": "Consultoría técnica", "quantity": 1, "unit_price": 800000, "tax": "CL-S-0-EXP-SERVICIOS", "account": "4103" }]
+    },
+    {
+      "ref": "V6", "type": "sale_invoice", "contact": "cliente-nacional", "date": "2026-02-12",
+      "why": "Ingresos por un curso de capacitación, actividad docente propiamente tal exenta por el art. 13 N° 4: prueba el Cód. 142 de ventas y servicios exentos del giro.",
+      "lines": [{ "name": "Curso de capacitación", "quantity": 1, "unit_price": 350000, "tax": "CL-S-EXE-EDU", "account": "4103" }]
+    },
+    {
+      "ref": "V7", "type": "sale_invoice", "contact": "cliente-nacional", "date": "2026-03-05",
+      "why": "Una segunda venta nacional, en marzo, sin pago calzado: prueba un tercer período con actividad y un documento que queda abierto.",
+      "lines": [{ "name": "Mercadería surtida", "quantity": 5, "unit_price": 120000, "tax": "CL-S-19-BIENES", "account": "4101" }]
+    },
+    {
+      "ref": "C1", "type": "purchase_invoice", "contact": "proveedor-nacional", "date": "2026-01-08",
+      "why": "Una compra nacional de mercadería del giro, con derecho a crédito fiscal del art. 23: prueba el Cód. 520.",
+      "lines": [{ "name": "Mercadería para reventa", "quantity": 8, "unit_price": 60000, "tax": "CL-P-19-BIENES", "account": "5102" }]
+    },
+    {
+      "ref": "C2", "type": "purchase_invoice", "contact": "proveedor-servicios", "date": "2026-01-18",
+      "why": "Un servicio de asesoría contable, de flujo de efectivo: el crédito fiscal espera en la cuenta 1106 hasta que el pago P3 lo libere en febrero.",
+      "lines": [{ "name": "Asesoría contable mensual", "quantity": 1, "unit_price": 300000, "tax": "CL-P-19-SERVICIOS", "account": "5103" }]
+    },
+    {
+      "ref": "C3", "type": "purchase_credit_note", "contact": "proveedor-nacional", "date": "2026-01-25",
+      "why": "Nota de crédito recibida por la devolución de parte de la mercadería de C1: prueba el crédito fiscal corregido en sentido inverso.",
+      "lines": [{ "name": "Devolución de mercadería", "quantity": 1, "unit_price": 60000, "tax": "CL-P-19-BIENES", "account": "5102" }]
+    },
+    {
+      "ref": "C4", "type": "purchase_invoice", "contact": "proveedor-extranjero", "date": "2026-02-08",
+      "why": "Una suscripción de software recibida de un prestador sin domicilio ni residencia en Chile: prueba el traslado de la calidad de sujeto del art. 11, letra e), simétrico entre los Cód. 502 y 520, con efecto neto nulo.",
+      "lines": [{ "name": "Suscripción anual de software", "quantity": 1, "unit_price": 900000, "tax": "CL-P-FSR-19", "account": "5110" }]
+    },
+    {
+      "ref": "C5", "type": "purchase_invoice", "contact": "proveedor-nacional", "date": "2026-03-02",
+      "why": "Una compra nacional en marzo, sin pago: prueba actividad de crédito fiscal en el tercer período.",
+      "lines": [{ "name": "Mercadería para reventa", "quantity": 4, "unit_price": 70000, "tax": "CL-P-19-BIENES", "account": "5102" }]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "P1", "direction": "inbound", "date": "2026-02-18", "amount": 595000,
+      "contact": "cliente-nacional", "journal": "BAN", "match": "V2",
+      "why": "Cobro del servicio de mantención V2: liquida en febrero su IVA de flujo de efectivo, devengado en enero."
+    },
+    {
+      "ref": "P2", "direction": "inbound", "date": "2026-03-20", "amount": 300000,
+      "contact": "cliente-nacional", "journal": "BAN", "match": null,
+      "why": "Un anticipo del cliente nacional que no calza con ningún documento: queda como partida abierta, la mitad de la prueba de un pago sin calce."
+    },
+    {
+      "ref": "P3", "direction": "outbound", "date": "2026-02-20", "amount": 357000,
+      "contact": "proveedor-servicios", "journal": "BAN", "match": "C2",
+      "why": "Pago de la asesoría contable C2: libera en febrero su crédito fiscal de flujo de efectivo, devengado en enero."
+    },
+    {
+      "ref": "P4", "direction": "outbound", "date": "2026-01-28", "amount": 571200,
+      "contact": "proveedor-nacional", "journal": "BAN", "match": "C1",
+      "why": "Pago de la compra C1 dentro del mismo mes: un pago calzado ordinario, sin flujo de efectivo de por medio."
+    }
+  ]
+}

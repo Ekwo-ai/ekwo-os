@@ -1,0 +1,202 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "CL",
+  "name": "Chile",
+  "version": "0.1.0",
+  "schema_min": "20260921084143",
+  "seed_sequence": 94,
+  "released_at": "2026-09-25",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "dl825",
+        "title": "Decreto Ley N° 825, de 1974, Ley sobre Impuesto a las Ventas y Servicios — texto refundido, coordinado y sistematizado por el Decreto Ley N° 1.606, de 1976, actualizado a la Ley N° 21.462, D.O. de 26 de julio de 2022",
+        "publisher": "Ministerio de Hacienda — Servicio de Impuestos Internos",
+        "url": "https://www.sii.cl/normativa_legislacion/sobreventasyservicios.pdf",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "ley18046",
+        "title": "Ley N° 18.046, sobre Sociedades Anónimas, artículo 74",
+        "publisher": "Servicio de Impuestos Internos — copia de normativa complementaria",
+        "url": "https://www.sii.cl/pagina/jurisprudencia/legislacion/complementaria/ley_18046b.htm",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "ley20727",
+        "title": "Ley N° 20.727, que introduce modificaciones a la legislación tributaria en materia de factura electrónica y dispone otras medidas que indica",
+        "publisher": "Servicio de Impuestos Internos — Factura Electrónica",
+        "url": "https://www.sii.cl/factura_electronica/ley/ley_fe_20727.htm",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "sii-fe-2018",
+        "title": "«A partir de hoy todas las empresas del país deben facturar electrónicamente» — noticia oficial del 1 de febrero de 2018, fin del calendario de obligatoriedad de la Ley N° 20.727",
+        "publisher": "Servicio de Impuestos Internos — Noticias",
+        "url": "https://www.sii.cl/noticias/2018/010218noti01er.htm",
+        "consulted_on": "2026-09-25",
+        "kind": "guidance"
+      },
+      {
+        "key": "ley21131",
+        "title": "Ley N° 21.131, que establece pago a treinta días, que modifica diversos cuerpos legales para establecer el pago en 30 días corridos posterior a la recepción de la factura",
+        "publisher": "Ministerio de Economía, Fomento y Turismo — Biblioteca del Congreso Nacional (Ley Chile)",
+        "url": "https://www.bcn.cl/leychile/navegar?idNorma=1127890",
+        "consulted_on": "2026-09-25",
+        "kind": "law"
+      },
+      {
+        "key": "f29-instrucciones",
+        "title": "Instrucciones para llenar el Formulario 29 (F29) de Declaración Mensual y Pago Simultáneo de Impuestos: IVA, impuestos adicionales a las ventas, retenciones de impuestos a la renta y pagos provisionales mensuales",
+        "publisher": "Servicio de Impuestos Internos",
+        "url": "https://www.sii.cl/servicios_online/instrucciones_f29_20241112.pdf",
+        "consulted_on": "2026-09-25",
+        "kind": "form"
+      },
+      {
+        "key": "f29-formulario",
+        "title": "Formulario 29 — versión Internet, con los códigos de cada línea",
+        "publisher": "Servicio de Impuestos Internos",
+        "url": "https://www.sii.cl/formularios/imagen/F29.pdf",
+        "consulted_on": "2026-09-25",
+        "kind": "form"
+      },
+      {
+        "key": "f29-plazos",
+        "title": "Plazos para presentar el Formulario 29",
+        "publisher": "Servicio de Impuestos Internos — Preguntas Frecuentes",
+        "url": "https://www.sii.cl/preguntas_frecuentes/impuestos_mensuales/001_130_1060.htm",
+        "consulted_on": "2026-09-25",
+        "kind": "guidance"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "CLP",
+    "language": "es",
+    "rounding_method": "half_up",
+    "opening_entry_label": "Asiento de apertura",
+    "closing_style": "result_accounts",
+    "roles": {
+      "receivable": "1103",
+      "payable": "2101",
+      "suspense": "1150",
+      "rounding": "5108",
+      "retained_earnings": "3103",
+      "retained_earnings_loss": "3104",
+      "current_year_result_profit": "3105",
+      "current_year_result_loss": "3106",
+      "sales": "4101",
+      "purchase": "5102",
+      "bank": "1102",
+      "cash": "1101",
+      "fx_gain": "4106",
+      "fx_loss": "5107",
+      "tax_payable": "2103"
+    },
+    "journal_roles": {
+      "sales": "VEN",
+      "purchase": "COM",
+      "miscellaneous": "DIA",
+      "opening": "APE"
+    },
+    "fiscal_year_default": "calendar"
+  },
+  "languages": [],
+  "journals": [
+    { "code": "VEN", "type": "sales", "name": "Libro de Ventas", "sequence": 10 },
+    { "code": "COM", "type": "purchase", "name": "Libro de Compras", "sequence": 20 },
+    { "code": "BAN", "type": "bank", "name": "Banco", "sequence": 30 },
+    { "code": "CAJ", "type": "cash", "name": "Caja", "sequence": 40 },
+    { "code": "DIA", "type": "general", "name": "Libro Diario", "sequence": 50 },
+    { "code": "APE", "type": "opening", "name": "Asiento de Apertura", "sequence": 60 }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Plan de cuentas Ekwo para Chile (sin catálogo oficial)",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": ["CL-BAL", "CL-RES"],
+      "legal_reference": "Chile no fija por ley un plan de cuentas: el Código Tributario, art. 17, sólo exige llevar «contabilidad fidedigna» en los libros que el Servicio de Impuestos Internos autoriza, sin imponer códigos ni nombres de cuenta — a diferencia del código agrupador que el Anexo 24 de la RMF mexicana publica. Este plan es una numeración propia de Ekwo (clases 1 a 5, sin correlato oficial), pensada para que cada cuenta alcance una línea del Estado de Situación Financiera y del Estado de Resultados del artículo 74 de la Ley N° 18.046. Una empresa puede llevar cualquier otro plan de cuentas: éste es el que Ekwo instala por defecto",
+      "source": "dl825"
+    }
+  ],
+  "documents": {
+    "numbering": "sequential",
+    "number_format": "{CODE}-{NNNN}",
+    "legal_payment_days": 30,
+    "late_payment_reference": "Ley N° 21.131, que establece un plazo máximo de 30 días corridos desde la recepción de la factura para su pago, salvo pacto escrito en contrario que cumpla los requisitos legales; desde el primer día de mora se aplica el interés corriente para operaciones no reajustables en moneda nacional (según el monto y plazo de la operación) más una comisión fija de recuperación de pago del 1 % del saldo insoluto (art. 2° bis de la ley, que incorpora los arts. 2 bis y siguientes a la Ley N° 19.983)",
+    "tax_point": "delivery_date",
+    "posted_edit_policy": "reversal_only",
+    "references": {
+      "numbering": {
+        "legal_reference": "Decreto Ley N° 825, art. 54 — los documentos tributarios (facturas, boletas, guías de despacho, notas de débito y de crédito) son documentos electrónicos con «folio» dentro de un «Código de Autorización de Folios» (CAF) que el Servicio de Impuestos Internos autoriza previamente por rangos, correlativo por tipo de documento y no reiniciado cada año. El folio de un CAF lo asigna y usa el propio emisor dentro del rango autorizado — no es asignado documento a documento por el Servicio, a diferencia del folio fiscal (UUID) del CFDI mexicano. El número que declara este paquete es el de la pieza contable, correlativo por diario, y no un folio de un CAF que Ekwo no solicita: véase «Ekwo no emite un DTE chileno» en el README",
+        "source": "dl825"
+      },
+      "payment_terms": {
+        "legal_reference": "Ley N° 21.131, de 2019 (D.O. 16.01.2019, vigencia 17.05.2019), que modifica la Ley N° 19.983: plazo máximo de pago de 30 días corridos desde la recepción de la factura, salvo acuerdo escrito excepcional entre las partes que cumpla los requisitos legales (identificación de las partes, giro, fecha, plazo, vigencia, inscripción en el Registro de Acuerdos de Pago del Ministerio de Economía dentro de 5 días hábiles) y no constituya una cláusula abusiva",
+        "source": "ley21131"
+      },
+      "tax_point": {
+        "legal_reference": "Decreto Ley N° 825, art. 9°, letra a) — «El impuesto establecido en este Título se devengará: a) En las ventas de bienes corporales muebles y prestaciones de servicios, en la fecha de emisión de la factura o boleta. En la venta de bienes corporales muebles, en caso que la entrega de las especies sea anterior a dicha fecha o bien, cuando por la naturaleza del acto que da origen a la transferencia no se emitan dichos documentos, el impuesto se devengará en la fecha de la entrega real o simbólica de las especies. En las prestaciones de servicios, si no se hubieren emitido facturas o boletas, según corresponda, o no correspondiere emitirlas, el tributo se devengará, en cualquier forma, a disposición del prestador del servicio». El art. 55 exige que, en la venta de bienes, la factura se emita «en el mismo momento» de la entrega, de modo que factura y entrega coinciden salvo mora del emisor — caso en que la entrega, más temprana, sigue fijando el devengo: por eso este paquete declara delivery_date como regla general, igual que Francia. En los servicios el art. 55 exige la factura «en el momento en que se perciba o se ponga, en cualquier forma, a disposición del prestador del servicio» la remuneración, de modo que el devengo de un servicio coincide con su cobro: los códigos de impuesto de servicios de este paquete llevan cash_basis, con la cuenta de tránsito que exige ese campo, en vez de un segundo valor de tax_point que el formato no admite",
+        "source": "dl825"
+      },
+      "posted_edit_policy": {
+        "legal_reference": "Decreto Ley N° 825, arts. 21 N° 2° y 57 — un débito fiscal facturado en exceso, o una venta o servicio resciliado, anulado o devuelto, se corrige con una nota de crédito que individualiza el documento que rectifica, nunca con la modificación del documento original; el art. 29-A del Código Fiscal (por analogía con el criterio del Servicio) y el propio DTE, una vez con folio de un CAF y enviado, no admiten edición. Ekwo no emite folios de un CAF (véase el README), pero conserva la misma regla: un documento contabilizado se corrige con un comprobante de egreso (nota de crédito) que lo nombra",
+        "source": "dl825"
+      }
+    },
+    "mentions": [
+      {
+        "code": "dte_not_issued",
+        "applies_when": "always",
+        "text": "Este documento no es un Documento Tributario Electrónico (DTE) chileno: no lleva folio de un Código de Autorización de Folios (CAF) del Servicio de Impuestos Internos ni su timbre electrónico. Sólo el DTE con folio de un CAF ampara la operación para efectos tributarios en Chile.",
+        "sequence": 10,
+        "legal_reference": "Decreto Ley N° 825, art. 54, y art. 54, incisos siguientes, sobre la exigencia de que los documentos tributarios sean documentos electrónicos con folio de un CAF autorizado por el Servicio de Impuestos Internos; Ley N° 20.727. Ekwo no solicita CAF, no timbra ni transmite DTE: la frase evita que el documento que Ekwo produce se tome por el comprobante fiscal chileno",
+        "source": "dl825"
+      },
+      {
+        "code": "export",
+        "applies_when": "export",
+        "text": "Exportación — venta o servicio exento del Impuesto al Valor Agregado (artículo 12, letra D, o letra E, N° 16, del D.L. N° 825, de 1974).",
+        "sequence": 20,
+        "legal_reference": "Decreto Ley N° 825, art. 12, letra D («Las especies exportadas en su venta al exterior») y letra E, N° 16 (ingresos por servicios prestados a personas sin domicilio ni residencia en Chile, calificados como exportación por el Servicio Nacional de Aduanas)",
+        "source": "dl825"
+      },
+      {
+        "code": "exempt",
+        "applies_when": "exempt",
+        "text": "Operación exenta del Impuesto al Valor Agregado (artículo 12 o 13 del D.L. N° 825, de 1974, según el caso).",
+        "sequence": 30,
+        "legal_reference": "Decreto Ley N° 825, arts. 12 y 13 — ventas, servicios, empresas e instituciones exentas del impuesto de este Título",
+        "source": "dl825"
+      },
+      {
+        "code": "reverse_charge",
+        "applies_when": "reverse_charge",
+        "text": "El impuesto de este servicio lo declara y entera el beneficiario del servicio, contribuyente de este impuesto (artículo 11, letra e), del D.L. N° 825, de 1974).",
+        "sequence": 40,
+        "legal_reference": "Decreto Ley N° 825, art. 11, letra e) — es sujeto del impuesto «el beneficiario del servicio que sea contribuyente de este impuesto, siempre que la prestación sea realizada por un prestador domiciliado o residente en el extranjero»",
+        "source": "dl825"
+      }
+    ]
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "Decreto Ley N° 825, art. 54, y art. 54, incisos siguientes (según los sustituyó la Ley N° 20.727, D.O. 31.01.2014) — las facturas, facturas de compra, guías de despacho, boletas, liquidaciones-factura y notas de débito y de crédito se emiten exclusivamente como documentos tributarios electrónicos (DTE), con folio de un Código de Autorización de Folios (CAF) que el Servicio de Impuestos Internos autoriza por rangos, timbre electrónico del emisor y envío del documento al Servicio dentro del plazo que fija la resolución respectiva. La obligatoriedad se implementó de forma escalonada según tamaño de la empresa desde noviembre de 2014 y alcanzó a todas las empresas del país el 1 de febrero de 2018 («A partir de hoy todas las empresas del país deben facturar electrónicamente», noticia SII del 01.02.2018): desde esa fecha, un documento en papel «no tendrá validez legal». Es un régimen de autorización previa de folios y envío al Servicio (más próximo a un reporte continuo de operaciones que a la validación documento a documento de un tercero certificador, como el PAC mexicano) y no un intercambio entre empresas gobernado por un perfil construido sobre EN 16931. EKWO NO SOLICITA CAF, NO TIMBRA NI TRANSMITE DTE: ningún componente de packages/formats emite el XML del DTE chileno ni se comunica con el Servicio de Impuestos Internos, y un documento emitido desde Ekwo no es un comprobante tributario chileno. Por eso profile, mandatory_from y party_scheme/vat_scheme quedan vacíos aunque la obligación exista: profile nombra un perfil construido sobre EN 16931 que una pieza de packages/formats escribe, el DTE no lo es, y el formato refuse un mandatory_from sin profile. El Rol Único Tributario (RUT) identifica a emisor y receptor y no tiene código ISO 6523 de la lista que el formato usa para party_scheme y vat_scheme",
+    "source": "ley20727"
+  },
+  "bank": {
+    "statement_formats": ["csv"],
+    "payment_formats": []
+  }
+}

@@ -50,5 +50,6 @@ insert into currencies (code, name, symbol, decimal_places) values
   ('ILS', 'Israeli new shekel',   E'₪', 2),
   ('PHP', 'Philippine peso',      E'₱', 2),
   ('ARS', 'Argentine peso',       '$',       2),
-  ('NGN', 'Nigerian naira',       E'₦', 2)
+  ('NGN', 'Nigerian naira',       E'₦', 2),
+  ('CLP', 'Chilean peso',         '$',       0)
 on conflict (code) do nothing;
