@@ -155,7 +155,7 @@ depreciation twice a no-op rather than a duplicate. A test over every file of
 ## Install on your own Supabase project
 
 Create a project at [supabase.com](https://supabase.com) — the free plan is
-enough to start — and point the installer at it. Node 20 or later is the only
+enough to start — and point the installer at it. Node 22 or later is the only
 thing you need locally: no Supabase CLI, no Docker, no clone.
 
 ```sh
