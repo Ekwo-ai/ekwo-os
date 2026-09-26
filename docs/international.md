@@ -5002,3 +5002,101 @@ arithmetic on the base itself (Ley, arts. 31-32) that `taxes.json`'s `rate`
 and `postings` were not built to compute. A pack declares one form's boxes at
 a time, the same reasoning Colombia's Formulario 350 (retenciones) is left
 for a dedicated pack or a later version — see the Colombian section above.
+
+## From Georgia
+
+`packs/ge/`, `community`, seed 110, outside the common system of VAT for the
+same reason as Turkey and Ukraine: Georgia is not a Member State of the
+European Union and Directive 2006/112/EC, article 5(2), reaches only the
+territory of the Community as the Treaties define it. `GEL` is added to
+`00_currencies.sql` at two decimals; `GE` is added to `00_territories.sql`
+with `eu_vat_scope` `none`. Four things the format could not say, read from
+the Tax Code of Georgia (საქართველოს საგადასახადო კოდექსი, Part III,
+articles 156-181).
+
+**`ekwo pack check`'s own coverage check does not read `account_type` rules,
+although the schema and `docs/packs.md` both name it as a fourth kind of
+statement rule.** `readPack`'s `ruleCatches` (`packages/cli/src/pack/read.ts`)
+implements `account_code`, `code_prefix` and `code_range` and returns `false`
+by default for anything else, including `account_type` — so a chart with no
+statutory codes that tried to write its `statements.json` the way
+`packs/generic/` does (`account_type` rules only, which is what the eighteen
+account types are for) would have every one of its accounts reported as
+reaching no line of any statement, because the one check that walks a chart
+looking for coverage never recognises the rule that was supposed to prove it.
+`packs/generic/` itself never meets this, because it carries no `accounts.csv`
+of its own for the check to walk. `packs/ge/` has no statutory chart to
+transcribe — the Law on Accounting, Reporting and Auditing sets a reporting
+*standard* (IFRS, IFRS for SMEs, or the Service's simplified standard) by
+category of entity, never a national list of account codes — and so is
+exactly the pack this gap would have reached first among charts that ship
+one; `packs/gb/` and `packs/us/`, the two country packs already outside a
+statutory chart, sidestepped it by writing `code_range`/`account_code` rules
+against their own numbering instead, and `packs/ge/statements.json` does the
+same. The pack's own README names this so the next contributor who reaches
+for `account_type` in a country pack does not lose a day to it.
+
+**The tax point has a third trigger no vocabulary here reads.** Article 161,
+first paragraph, subparagraph (a.b), sets the moment of supply as the rule and
+the moment the supplier presents the invoice as one derogation that overrides
+it — captured well enough by `invoice_if_issued`, the same word Belgium and
+Luxembourg declare for their own principle-and-derogation pair. Subparagraph
+(a.b.d) adds a second, independent derogation the vocabulary has no branch
+for at all: where payment is made *before* the supply, the tax point is the
+moment of that payment, ahead of both the supply and any invoice. Belgium and
+Luxembourg's own advance-payment rule is carried through `cash_basis` on the
+tax itself; Georgia's is a rule about *which date the whole taxable
+transaction is fixed on*, not about which period a particular tax falls due
+in, and there is no field of `documents.tax_point` for "the earliest of a
+supply, an invoice, or a prepayment." `packs/ge/pack.json` declares
+`invoice_if_issued` and states the missing branch in
+`documents.references.tax_point`.
+
+**A national registry decides a buyer's right to deduct, on a mechanism built
+for confirmation rather than exchange, and no field of `einvoicing` reads
+either half of it.** A საგადასახადო ანგარიშ-ფაქტურა (tax invoice) that a
+seller registers electronically through the Revenue Service's own portal
+(rs.ge) becomes visible to the buyer directly in the registry — there is no
+document one party hands the other the way a Peppol BIS invoice or a
+Hungarian NAV-confirmed XML is exchanged, and registration is what article
+173, second paragraph, subparagraph (a), conditions the buyer's deduction on,
+independently of whether the seller's own liability is affected. This is
+close to the Ukrainian ЄРПН this section already describes above and not the
+same shape: Ukraine's registry runs on a fixed half-month deadline from the
+document's own date, and Georgia's runs on rules this research could not
+confirm with enough confidence to transcribe into `einvoicing.mandatory_from`
+without guessing at a date nobody read. `packs/ge/pack.json` leaves
+`einvoicing.profile`, `party_scheme`, `vat_scheme` and `obligation` empty for
+the same reason `packs/ua/` does — the mechanism is not built on EN 16931's
+semantic model and Georgia carries no ISO 6523 participant scheme in the
+Peppol list — and states what is known of the registry in prose, in
+`einvoicing.legal_reference`.
+
+**A proportional deduction on mixed turnover, recomputed once a year, is not
+modelled — the same gap the India section above names for rules 42 and 43 of
+the CGST Rules, and the same one Uruguay's split of credit between domestic
+sales and exports meets.** Article 174, paragraphs 6 and 7, apportion the VAT
+a seller paid on goods and services used partly in taxable transactions and
+partly in transactions exempt without the right to deduct, by the share of
+exempt turnover in total turnover, with the December return of each year
+correcting the running estimate against the year's actual shares
+(`tax_report.json`'s lines 20 and 21, themselves not carried in
+`packs/ge/tax_report.json` for the same reason: no tax of this pack reaches
+them). Nothing in the core computes a pro rata of this kind for any pack.
+
+**Self-assessment on a service received from a non-resident (article 176,
+first paragraph, subparagraph (a)) is not modelled**, for the same reason
+`packs/ua/` does not model article 208 of the Tax Code of Ukraine: the
+mechanic is the double posting `docs/packs.md` shows for Estonia's
+intra-Community acquisition of goods, and this first `community` version of
+the pack does not yet carry a tax with the treatment `foreign_services_received`.
+`packs/ge/README.md` names the gap.
+
+**A turnover-tax substitute for income tax, entirely outside the document-level
+tax engine.** Articles 88 to 93 give an individual entrepreneur below a
+turnover threshold a flat rate on gross turnover (1 %, 3 % above the
+threshold) instead of ordinary income tax — a mechanism `taxes.json` has no
+shape for, because it is not a tax a document posts, is not deductible or
+recoverable by anyone, and is reported once a month on the entrepreneur's own
+income rather than per transaction. `packs/ge/README.md` names it and does
+not attempt a `tax` code for it.

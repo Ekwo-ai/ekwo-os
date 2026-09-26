@@ -236,6 +236,7 @@ says what they say. `ekwo pack describe <cc>` is everything one of them says.
 | [`fr`](../packs/fr/) | France | `11_pack_fr.sql` | fr, en | `maintained` |
 | [`ga`](../packs/ga/) | Gabon | `28_pack_ga.sql` | fr | `community` |
 | [`gb`](../packs/gb/) | United Kingdom | `14_pack_gb.sql` | en | `community` |
+| [`ge`](../packs/ge/) | საქართველო | `110_pack_ge.sql` | ka, en | `community` |
 | [`gn`](../packs/gn/) | Guinée | `29_pack_gn.sql` | fr | `community` |
 | [`gq`](../packs/gq/) | Guinée équatoriale | `31_pack_gq.sql` | fr | `community` |
 | [`gr`](../packs/gr/) | Ελλάδα | `76_pack_gr.sql` | el, en | `community` |

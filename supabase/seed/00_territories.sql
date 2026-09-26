@@ -1566,3 +1566,29 @@ on conflict (code) do update set
   eu_vat_to       = excluded.eu_vat_to,
   vat_prefix      = excluded.vat_prefix,
   legal_reference = excluded.legal_reference;
+
+-- ---------------------------------------------------------------------------
+-- Georgia is outside the common system of VAT: Directive 2006/112/EC binds
+-- only Member States of the European Union, and Georgia is neither a Member
+-- State nor part of the European Economic Area. Georgia levies a value added
+-- tax of its own, დამატებული ღირებულების გადასახადი (VAT), under Part III of
+-- the Tax Code of Georgia (Law of Georgia of 17 September 2010, as amended),
+-- articles 156-181, at a standard rate of 18 % under article 169, first
+-- paragraph, subparagraph (a) (matsne.gov.ge/en/document/view/1043717).
+-- `vat_prefix` is null: a Georgian VAT payer is addressed by the taxpayer's
+-- identification number, which carries no country prefix of this table's
+-- kind.
+-- ---------------------------------------------------------------------------
+
+insert into territories (code, code_source, name, parent_code, eu_vat_scope, eu_vat_from, eu_vat_to, vat_prefix, legal_reference) values
+  ('GE', 'iso_3166_1', 'Georgia', null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. Georgia levies a value added tax of its own under Part III of the Tax Code of Georgia, articles 156-181, at a standard rate of 18 % under article 169, first paragraph, subparagraph (a) (matsne.gov.ge/en/document/view/1043717, consulted 2026-09-26).')
+on conflict (code) do update set
+  code_source     = excluded.code_source,
+  name            = excluded.name,
+  parent_code     = excluded.parent_code,
+  eu_vat_scope    = excluded.eu_vat_scope,
+  eu_vat_from     = excluded.eu_vat_from,
+  eu_vat_to       = excluded.eu_vat_to,
+  vat_prefix      = excluded.vat_prefix,
+  legal_reference = excluded.legal_reference;

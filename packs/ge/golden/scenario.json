@@ -1,0 +1,211 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "წლის წიგნები ქართული დღგ-ის გადამხდელისთვის, რომელიც ყოველთვიურად ანგარიშვალდებულია",
+  "chart": "default",
+  "fiscal_year": { "name": "2026 წელი", "start": "2026-01-01", "end": "2026-12-31" },
+  "periods": [
+    { "code": "2026-01", "from": "2026-01-01", "to": "2026-01-31" },
+    { "code": "2026-02", "from": "2026-02-01", "to": "2026-02-28" }
+  ],
+  "statements": ["GE-IFRS-BS", "GE-IFRS-IS"],
+  "contacts": [
+    { "ref": "client-ge", "name": "შპს „თბილისის სავაჭრო სახლი“", "type": "customer", "country": "GE" },
+    { "ref": "client-export", "name": "Gulf Anatolia Trading LLC", "type": "customer", "country": "AE" },
+    { "ref": "supplier-ge", "name": "შპს „კავკასიის მომწოდებელი“", "type": "supplier", "country": "GE" },
+    { "ref": "supplier-import", "name": "Shenzhen Textile Import Co.", "type": "supplier", "country": "CN" }
+  ],
+  "documents": [
+    {
+      "ref": "V1",
+      "type": "sale_invoice",
+      "contact": "client-ge",
+      "date": "2026-01-10",
+      "why": "საქონლის მიწოდება საქართველოს ტერიტორიაზე, სტანდარტული 18 %-იანი განაკვეთით — ხაზი 2 (ბაზა) და ხაზი 1 (გადასახადი).",
+      "lines": [
+        { "name": "სამშენებლო მასალები", "quantity": 10, "unit_price": 1000, "tax": "GE-S-18", "account": "4000" }
+      ]
+    },
+    {
+      "ref": "V2",
+      "type": "sale_invoice",
+      "contact": "client-ge",
+      "date": "2026-01-14",
+      "why": "მომსახურების გაწევა 18 %-იანი განაკვეთით — იგივე ხაზები, სხვა ანგარიშზე, რომ დადასტურდეს განაკვეთის შეჯამება ანგარიშთა მიხედვით.",
+      "lines": [
+        { "name": "საკონსულტაციო მომსახურება", "quantity": 5, "unit_price": 500, "tax": "GE-S-18", "account": "4010" }
+      ]
+    },
+    {
+      "ref": "V3",
+      "type": "sale_invoice",
+      "contact": "client-export",
+      "date": "2026-01-18",
+      "why": "საქონლის ექსპორტი ნულოვანი განაკვეთით — ხაზი 3, გადასახადის გარეშე, კოდექსის 168-ე მუხლის მე-4 ნაწილის „ა“ ქვეპუნქტის თანახმად.",
+      "lines": [
+        { "name": "ტექსტილის პარტია ექსპორტისთვის", "quantity": 1, "unit_price": 8000, "tax": "GE-S-EXPORT", "account": "4020" }
+      ]
+    },
+    {
+      "ref": "V4",
+      "type": "sale_invoice",
+      "contact": "client-ge",
+      "date": "2026-01-20",
+      "why": "დღგ-სგან გათავისუფლებული მომსახურება ჩათვლის უფლების გარეშე (მუხლი 168, მე-2 ნაწილის „ე“ ქვეპუნქტი) — ხაზი 5, არანაირი ჩასათვლელი თანხის გარეშე მიმღებთან.",
+      "lines": [
+        { "name": "სამედიცინო კონსულტაცია", "quantity": 1, "unit_price": 3000, "tax": "GE-S-EXEMPT", "account": "4010" }
+      ]
+    },
+    {
+      "ref": "CN1",
+      "type": "sale_credit_note",
+      "contact": "client-ge",
+      "date": "2026-01-25",
+      "why": "V1-დან ორი ერთეულის ნაწილობრივი დაბრუნება — ამცირებს იმავე პერიოდის მე-2 და 1-ლ ხაზებს, გაცემის პერიოდში, და არ ასწორებს თავად V1-ს (მუხლი 179).",
+      "lines": [
+        { "name": "სამშენებლო მასალების დაბრუნება", "quantity": 2, "unit_price": 1000, "tax": "GE-S-18", "account": "4000" }
+      ]
+    },
+    {
+      "ref": "V5",
+      "type": "sale_invoice",
+      "contact": "client-ge",
+      "date": "2026-02-08",
+      "why": "გაყიდვა მეორე საანგარიშო პერიოდში — ამოწმებს, რომ თებერვლის დეკლარაცია ითვლის მხოლოდ საკუთარ პერიოდს.",
+      "lines": [
+        { "name": "სამშენებლო მასალები", "quantity": 3, "unit_price": 1000, "tax": "GE-S-18", "account": "4000" }
+      ]
+    },
+    {
+      "ref": "V6",
+      "type": "sale_invoice",
+      "contact": "client-ge",
+      "date": "2026-02-15",
+      "why": "მეორე გაყიდვა თებერვალში — ამდიდრებს გადახდის დამთხვევის სცენარს მეორე პერიოდში.",
+      "lines": [
+        { "name": "საკონსულტაციო მომსახურება", "quantity": 2, "unit_price": 2000, "tax": "GE-S-18", "account": "4010" }
+      ]
+    },
+    {
+      "ref": "P1",
+      "type": "purchase_invoice",
+      "contact": "supplier-ge",
+      "date": "2026-01-11",
+      "why": "შემდგომი გასაყიდი საქონლის შესყიდვა ადგილობრივი მომწოდებლისგან, სტანდარტული 18 %-იანი განაკვეთით — ჩასათვლელი დღგ ხაზი 9.",
+      "lines": [
+        { "name": "სამშენებლო მასალები გადასაყიდად", "quantity": 1, "unit_price": 6000, "tax": "GE-P-18", "account": "1030" }
+      ]
+    },
+    {
+      "ref": "P2",
+      "type": "purchase_invoice",
+      "contact": "supplier-ge",
+      "date": "2026-01-13",
+      "why": "საოფისე ფართის ქირავნობა — ადმინისტრაციული ხარჯი, ჩასათვლელი დღგ ხაზი 9.",
+      "lines": [
+        { "name": "საოფისე ფართის ქირა", "quantity": 1, "unit_price": 2000, "tax": "GE-P-18", "account": "6020" }
+      ]
+    },
+    {
+      "ref": "P3",
+      "type": "purchase_invoice",
+      "contact": "supplier-import",
+      "date": "2026-01-16",
+      "why": "საქონლის იმპორტი (საბაჟო ოპერაცია) — ჩასათვლელი დღგ ხაზი 10, საბაჟო დეკლარაციის საფუძველზე (მუხლი 174, მე-2 ნაწილის „ბ“ ქვეპუნქტი).",
+      "lines": [
+        { "name": "იმპორტირებული ტექსტილის ნედლეული", "quantity": 1, "unit_price": 4000, "tax": "GE-P-IMPORT", "account": "1030" }
+      ]
+    },
+    {
+      "ref": "P4",
+      "type": "purchase_invoice",
+      "contact": "supplier-ge",
+      "date": "2026-02-09",
+      "why": "პროფესიული მომსახურების შესყიდვა მეორე პერიოდში — ადმინისტრაციული ხარჯი.",
+      "lines": [
+        { "name": "საბუღალტრო მომსახურება", "quantity": 1, "unit_price": 1500, "tax": "GE-P-18", "account": "6060" }
+      ]
+    },
+    {
+      "ref": "P5",
+      "type": "purchase_invoice",
+      "contact": "supplier-ge",
+      "date": "2026-02-12",
+      "why": "კომუნალური მომსახურების შესყიდვა მეორე პერიოდში — ადმინისტრაციული ხარჯი.",
+      "lines": [
+        { "name": "ელექტროენერგია და წყალი", "quantity": 1, "unit_price": 800, "tax": "GE-P-18", "account": "6030" }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "E1",
+      "direction": "inbound",
+      "date": "2026-01-31",
+      "amount": 11800,
+      "contact": "client-ge",
+      "journal": "BNK",
+      "match": "V1",
+      "why": "შემოსავალი, რომელიც ზუსტად ფარავს V1-ს (10 000 + 1 800 დღგ)."
+    },
+    {
+      "ref": "E2",
+      "direction": "inbound",
+      "date": "2026-01-22",
+      "amount": 8000,
+      "contact": "client-export",
+      "journal": "BNK",
+      "match": "V3",
+      "why": "შემოსავალი, რომელიც ზუსტად ფარავს ექსპორტის ინვოისს V3-ს, დღგ-ის გარეშე."
+    },
+    {
+      "ref": "E3",
+      "direction": "inbound",
+      "date": "2026-02-20",
+      "amount": 2950,
+      "contact": "client-ge",
+      "journal": "BNK",
+      "match": "V2",
+      "why": "შემოსავალი, რომელიც ზუსტად ფარავს V2-ს (2 500 + 450 დღგ), მომდევნო თვეში მიღებული."
+    },
+    {
+      "ref": "E4",
+      "direction": "inbound",
+      "date": "2026-02-25",
+      "amount": 1000,
+      "contact": "client-ge",
+      "journal": "BNK",
+      "match": null,
+      "why": "შემოსავალი, კონკრეტულ დოკუმენტთან მიბმის გარეშე — რჩება ღია თანხად მყიდველის ანგარიშზე."
+    },
+    {
+      "ref": "S1",
+      "direction": "outbound",
+      "date": "2026-01-25",
+      "amount": 7080,
+      "contact": "supplier-ge",
+      "journal": "BNK",
+      "match": "P1",
+      "why": "გადახდა, რომელიც ზუსტად ფარავს P1-ს (6 000 + 1 080 დღგ)."
+    },
+    {
+      "ref": "S2",
+      "direction": "outbound",
+      "date": "2026-01-20",
+      "amount": 2360,
+      "contact": "supplier-ge",
+      "journal": "BNK",
+      "match": "P2",
+      "why": "გადახდა, რომელიც ზუსტად ფარავს P2-ს (2 000 + 360 დღგ)."
+    },
+    {
+      "ref": "S3",
+      "direction": "outbound",
+      "date": "2026-01-30",
+      "amount": 4720,
+      "contact": "supplier-import",
+      "journal": "BNK",
+      "match": "P3",
+      "why": "გადახდა უცხოელი მომწოდებლისთვის, რომელიც ზუსტად ფარავს საიმპორტო ინვოისს P3-ს (4 000 + 720 დღგ)."
+    }
+  ]
+}
