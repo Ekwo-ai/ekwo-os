@@ -5226,3 +5226,48 @@ deadline; a second, parallel recording obligation on the same figures, filed
 through the invoicing platform rather than the tax administration's own
 portal, has no field to be true in. The pack's README names the gap; nothing
 in `packages/formats/` writes that record.
+
+## From North Macedonia
+
+`packs/mk/`, `community`, seed 115, outside the common system of VAT the way
+Ukraine and Turkey are: a candidate for accession, not a member, and Directive
+2006/112/EC, article 5(2), reaches the territory of the Community as the
+Treaties define it and nothing a candidacy announces. `MKD` is added to
+`00_currencies.sql` at two decimals; `MK` is added to `00_territories.sql`
+with `eu_vat_scope` `none`, on the same footing as `UA` and `TR`. Three things
+the format could not say, read from the Law on Value Added Tax (Закон за
+данокот на додадена вредност) and the ДДВ-04 return.
+
+**A domestic reverse charge under article 32-а, read across ten boxes of one
+form, is not modelled.** Sections of ДДВ-04 give the transferee of a
+construction-sector or similarly designated supply six pairs of boxes
+(11 through 19) to declare a domestic reverse charge both as output and as
+input in the same filing — the shape `docs/packs.md` shows for Estonia's
+intra-Community acquisition, doubled again because Macedonian law also taxes
+a purchase received from a taxpayer with no seat in the country under article
+32(4)-(5) on its own separate pair of boxes. Both mechanics exist in the law
+and neither is carried by a tax of this pack; `packs/mk/README.md` names the
+gap under "Данокот на додадена вредност".
+
+**A national e-invoicing platform announced, piloted and not yet legislated
+on the day this pack was released.** УЈП told the Chamber of Commerce on 10
+December 2025 that an API-based e-Фактура system enters testing on 1 January
+2026, with integration specifications still being published; private
+consultancies report a mandatory date of 1 October 2026 for VAT payers, but
+no text of the Службен весник confirming an obligation and its date was found
+by the day this pack was released. `einvoicing.obligation` therefore reads
+`none` rather than `mandatory` with an unverified date — the same caution
+`packs/gb/` applies to an obligation "announced for 2029 and not legislated".
+A reader who finds the statute before this pack's next release moves it to
+`mandatory` with the date and the citation, not before.
+
+**No prescribed line-by-line balance sheet and income statement scheme was
+found for a trading company within this pack's research window.** Article
+472 of the Law on Trading Companies requires financial statements under IFRS,
+or IFRS for SMEs; a separate, simplified "годишна сметка" template exists for
+micro and small entities (Правилник за формата и содржината на годишната
+сметка), but its numbered boxes were not located in time. `packs/mk/
+statements.json` states its own scheme, grouped by the synthetic classes of
+the prescribed chart of accounts rather than transcribed from a numbered
+official form — `packs/mk/README.md` says so under "Биланс на состојба и
+Биланс на успех", and names it as the first thing for a reviewer to check.

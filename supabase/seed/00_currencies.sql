@@ -66,5 +66,6 @@ insert into currencies (code, name, symbol, decimal_places) values
   ('GEL', 'Georgian lari',        E'₾', 2),
   ('MDL', 'Moldovan leu',         'L',       2),
   ('BAM', 'Convertible mark',     'KM',      2),
-  ('RSD', 'Serbian dinar',        E'дин.', 2)
+  ('RSD', 'Serbian dinar',        E'дин.', 2),
+  ('MKD', 'Macedonian denar',     E'ден.', 2)
 on conflict (code) do nothing;

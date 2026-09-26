@@ -1670,3 +1670,25 @@ on conflict (code) do update set
   eu_vat_to       = excluded.eu_vat_to,
   vat_prefix      = excluded.vat_prefix,
   legal_reference = excluded.legal_reference;
+
+-- ---------------------------------------------------------------------------
+-- North Macedonia is outside the common system of VAT: Directive 2006/112/EC
+-- binds the Member States of the European Union, and North Macedonia is a
+-- candidate for accession, not a member -- article 5(2) of the Directive.
+-- The country levies a value added tax of its own, Данок на додадена
+-- вредност, under the Law on Value Added Tax (consolidated text), articles
+-- 28 to 30-б, which set the rates.
+-- ---------------------------------------------------------------------------
+
+insert into territories (code, code_source, name, parent_code, eu_vat_scope, eu_vat_from, eu_vat_to, vat_prefix, legal_reference) values
+  ('MK', 'iso_3166_1', 'North Macedonia', null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries, candidate for accession or not. North Macedonia levies a value added tax of its own, Данок на додадена вредност, under the Law on Value Added Tax (consolidated text), articles 28 to 30-б, which set the standard rate of 18% and the reduced rates of 10% and 5%.')
+on conflict (code) do update set
+  code_source     = excluded.code_source,
+  name            = excluded.name,
+  parent_code     = excluded.parent_code,
+  eu_vat_scope    = excluded.eu_vat_scope,
+  eu_vat_from     = excluded.eu_vat_from,
+  eu_vat_to       = excluded.eu_vat_to,
+  vat_prefix      = excluded.vat_prefix,
+  legal_reference = excluded.legal_reference;

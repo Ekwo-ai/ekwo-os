@@ -1,0 +1,170 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "Една година книги на македонски обврзник на ДДВ, кој пријавува тримесечно",
+  "chart": "default",
+  "fiscal_year": { "name": "2026 година", "start": "2026-01-01", "end": "2026-12-31" },
+  "periods": [
+    { "code": "2026-Q1", "from": "2026-01-01", "to": "2026-03-31" },
+    { "code": "2026-Q2", "from": "2026-04-01", "to": "2026-06-30" }
+  ],
+  "statements": ["MK-BS", "MK-IS"],
+  "contacts": [
+    { "ref": "client-mk", "name": "Трговско друштво Вардар ДООЕЛ Скопје", "type": "customer", "country": "MK" },
+    { "ref": "client-foreign", "name": "Rheinbau Handels GmbH", "type": "customer", "country": "DE" },
+    { "ref": "supplier-mk", "name": "Трговско друштво Пелагонија ДОО Битола", "type": "supplier", "country": "MK" }
+  ],
+  "documents": [
+    {
+      "ref": "V1",
+      "type": "sale_invoice",
+      "contact": "client-mk",
+      "date": "2026-01-15",
+      "why": "Продажба на стока по општата стапка од 18% — поле 01 (основа) и поле 02 (ДДВ), збир во поле 20.",
+      "lines": [
+        { "name": "Градежни материјали", "quantity": 10, "unit_price": 1000, "tax": "MK-S-18", "account": "740" }
+      ]
+    },
+    {
+      "ref": "V2",
+      "type": "sale_invoice",
+      "contact": "client-mk",
+      "date": "2026-01-18",
+      "why": "Услуга на исхрана на лице место по повластената стапка од 10% — поле 03/04.",
+      "lines": [
+        { "name": "Кетеринг услуга", "quantity": 1, "unit_price": 2000, "tax": "MK-S-10", "account": "740" }
+      ]
+    },
+    {
+      "ref": "V3",
+      "type": "sale_invoice",
+      "contact": "client-mk",
+      "date": "2026-01-20",
+      "why": "Продажба на основни прехранбени производи по повластената стапка од 5% — поле 05/06.",
+      "lines": [
+        { "name": "Основни прехранбени производи", "quantity": 50, "unit_price": 40, "tax": "MK-S-5", "account": "741" }
+      ]
+    },
+    {
+      "ref": "V4",
+      "type": "sale_invoice",
+      "contact": "client-foreign",
+      "date": "2026-01-22",
+      "why": "Извоз на добра надвор од царинското подрачје — поле 07, без данок.",
+      "lines": [
+        { "name": "Пратка градежни материјали за извоз", "quantity": 1, "unit_price": 5000, "tax": "MK-S-EXPORT", "account": "742" }
+      ]
+    },
+    {
+      "ref": "V5",
+      "type": "sale_invoice",
+      "contact": "client-mk",
+      "date": "2026-01-25",
+      "why": "Образовна услуга ослободена без право на одбивка — поле 09, без данок кај примателот.",
+      "lines": [
+        { "name": "Курс за стручно усовршување", "quantity": 1, "unit_price": 3000, "tax": "MK-S-EXEMPT-EDU", "account": "740" }
+      ]
+    },
+    {
+      "ref": "CN1",
+      "type": "sale_credit_note",
+      "contact": "client-mk",
+      "date": "2026-01-28",
+      "why": "Делумно враќање на две единици од V1 — ја намалува истата основа и данок на поле 01/02 во периодот на издавање, а не го исправа V1.",
+      "lines": [
+        { "name": "Враќање градежни материјали", "quantity": 2, "unit_price": 1000, "tax": "MK-S-18", "account": "740" }
+      ]
+    },
+    {
+      "ref": "V6",
+      "type": "sale_invoice",
+      "contact": "client-mk",
+      "date": "2026-04-10",
+      "why": "Продажба по општата стапка во второто тримесечје — проверува дека пријавата за 2026-Q2 го смета само својот период.",
+      "lines": [
+        { "name": "Градежни материјали", "quantity": 4, "unit_price": 1000, "tax": "MK-S-18", "account": "740" }
+      ]
+    },
+    {
+      "ref": "P1",
+      "type": "purchase_invoice",
+      "contact": "supplier-mk",
+      "date": "2026-01-16",
+      "why": "Набавка на стока наменета за понатамошна продажба по општата стапка од 18% — претходен данок во поле 21/22.",
+      "lines": [
+        { "name": "Стока за препродажба", "quantity": 1, "unit_price": 6000, "tax": "MK-P-18", "account": "660" }
+      ]
+    },
+    {
+      "ref": "P2",
+      "type": "purchase_invoice",
+      "contact": "supplier-mk",
+      "date": "2026-01-19",
+      "why": "Сместување за службено патување по повластената стапка од 10% — одбивно, за разлика од репрезентацијата исклучена со член 35 точка 3.",
+      "lines": [
+        { "name": "Хотелско сместување за службен пат", "quantity": 1, "unit_price": 2000, "tax": "MK-P-10", "account": "440" }
+      ]
+    },
+    {
+      "ref": "P3",
+      "type": "purchase_invoice",
+      "contact": "supplier-mk",
+      "date": "2026-01-21",
+      "why": "Набавка на софтвер по повластената стапка од 5% — член 30 став (1) точка 10.",
+      "lines": [
+        { "name": "Софтверска лиценца", "quantity": 1, "unit_price": 1000, "tax": "MK-P-5", "account": "003" }
+      ]
+    },
+    {
+      "ref": "P4",
+      "type": "purchase_invoice",
+      "contact": "supplier-mk",
+      "date": "2026-04-12",
+      "why": "Набавка на услуга по општата стапка во второто тримесечје — претходен данок на 2026-Q2.",
+      "lines": [
+        { "name": "Консултантска услуга", "quantity": 1, "unit_price": 2000, "tax": "MK-P-18", "account": "419" }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "E1",
+      "direction": "inbound",
+      "date": "2026-01-26",
+      "amount": 2200,
+      "contact": "client-mk",
+      "journal": "BNK",
+      "match": "V2",
+      "why": "Наплата што точно ја погасува V2 (2 000 + 200 ДДВ)."
+    },
+    {
+      "ref": "E2",
+      "direction": "inbound",
+      "date": "2026-02-02",
+      "amount": 2100,
+      "contact": "client-mk",
+      "journal": "BNK",
+      "match": "V3",
+      "why": "Наплата што точно ја погасува V3 (2 000 + 100 ДДВ)."
+    },
+    {
+      "ref": "E3",
+      "direction": "inbound",
+      "date": "2026-02-10",
+      "amount": 3000,
+      "contact": "client-mk",
+      "journal": "BNK",
+      "match": null,
+      "why": "Наплата без врска со конкретен документ — останува отворен износ на сметката на купувачот."
+    },
+    {
+      "ref": "S1",
+      "direction": "outbound",
+      "date": "2026-01-27",
+      "amount": 7080,
+      "contact": "supplier-mk",
+      "journal": "BNK",
+      "match": "P1",
+      "why": "Плаќање што точно ја погасува P1 (6 000 + 1 080 ДДВ)."
+    }
+  ]
+}
