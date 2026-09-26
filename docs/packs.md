@@ -308,7 +308,7 @@ anything now. `ekwo pack check` refuses a pack that declares no number, and
 | Source | Output |
 |---|---|
 | `packs/generic/` | `supabase/seed/05_framework_generic.sql` |
-| `packs/<cc>/` | `supabase/seed/<n>_pack_<cc>.sql`, where `<n>` is the number the manifest declares in `seed_sequence` — the table [above](#the-packs-of-this-checkout) gives each pack's. **A number that has shipped never moves**, whatever is added beside it |
+| `packs/<cc>/` | `supabase/seed/<n>_pack_<cc>.sql`, where `<n>` is the number the manifest declares in `seed_sequence` — the table [above](#the-packs-of-this-checkout) gives each pack's. Packs take 10 to 89, then 100 to 899; 90 to 99 are kept for what runs after every pack (the demo company at 90). **A number that has shipped never moves**, whatever is added beside it |
 | `packs/<cc>/assets.json`, where the pack has one | `supabase/seed/modules/assets/<n>_pack_<cc>.sql`, applied by the module migration runner and by nothing else |
 | every pack, together | the lists that name them outside `packs/`: `[db.seed] sql_paths` in `supabase/config.toml`, the `psql -f` lines of the README, the `/packs/<cc>/` lines of `.github/CODEOWNERS` and the table above. Only the block between `generated:<name>` and `/generated` is written; the prose around it is not. A handle written on a pack's CODEOWNERS line is kept, and a new pack gets the owner of `*` |
 

@@ -39,8 +39,9 @@
     "seed_sequence": {
       "type": "integer",
       "minimum": 10,
-      "maximum": 89,
-      "description": "The number this pack's compiled seed carries: `13` gives `supabase/seed/13_pack_ee.sql`. Immutable once published — the seeds are applied in file-name order and listed by name in supabase/config.toml, so a release that renamed one would rename a file an installation already holds. Take the first number no pack of the checkout has taken; `ekwo pack build` refuses two packs claiming one. It is declared rather than derived because the alphabetical rank it used to be moved every country after the one being added."
+      "maximum": 899,
+      "not": { "minimum": 90, "maximum": 99 },
+      "description": "The number this pack's compiled seed carries: `13` gives `supabase/seed/13_pack_ee.sql`. Immutable once published — the seeds are applied in file-name order and listed by name in supabase/config.toml, so a release that renamed one would rename a file an installation already holds. Packs take 10 to 89, then 100 to 899; 90 to 99 are kept for what runs after every pack, such as the demo company at 90 — in file-name order a three-digit name sorts after `05_framework_generic.sql` and before `90_demo_company.sql`, which is what an installation applying the folder by hand relies on. Take the first number no pack of the checkout has taken; `ekwo pack build` refuses two packs claiming one. It is declared rather than derived because the alphabetical rank it used to be moved every country after the one being added."
     },
     "released_at": {
       "$ref": "#/$defs/date",
