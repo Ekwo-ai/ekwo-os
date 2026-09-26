@@ -1,0 +1,190 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "PY",
+  "name": "Paraguay",
+  "version": "0.1.0",
+  "schema_min": "20260923110000",
+  "seed_sequence": 103,
+  "released_at": "2026-09-26",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "ley-6380",
+        "title": "Ley N° 6.380/2019, De Modernización y Simplificación del Sistema Tributario Nacional — Libro III, Impuesto al Valor Agregado (IVA), arts. 80 a 103",
+        "publisher": "Dirección Nacional de Ingresos Tributarios (DNIT)",
+        "url": "https://www.dnit.gov.py/documents/20123/399318/LEY+6380-2019.pdf/7437353b-7f7e-28e6-c41a-da57f1af1439?t=1708599743388",
+        "consulted_on": "2026-09-26",
+        "kind": "law"
+      },
+      {
+        "key": "comerciante-1034",
+        "title": "Ley N° 1.034/1983, Del Comerciante — Título II, De los libros y la documentación comercial, arts. 74 a 89",
+        "publisher": "Biblioteca y Archivo del Congreso Nacional (BACN)",
+        "url": "https://www.bacn.gov.py/leyes-paraguayas/2538/ley-n-1034-del-comerciante",
+        "consulted_on": "2026-09-26",
+        "kind": "law"
+      },
+      {
+        "key": "codigo-civil",
+        "title": "Código Civil, Ley N° 1.183/1985 — Libro Segundo, Título II, De las sociedades, Capítulo IX, De las sociedades anónimas, arts. 1079 a 1081",
+        "publisher": "Comisión Nacional de Telecomunicaciones (CONATEL), texto del Código Civil paraguayo",
+        "url": "https://www.conatel.gov.py/conatel/wp-content/uploads/2019/10/ley-1183_1985-cdigo-civil-paraguayo.pdf",
+        "consulted_on": "2026-09-26",
+        "kind": "law"
+      },
+      {
+        "key": "f120-instructivo",
+        "title": "Instructivo del Formulario N.° 120 — Declaración Jurada del Impuesto al Valor Agregado (IVA), Versión 4",
+        "publisher": "Dirección Nacional de Ingresos Tributarios (DNIT)",
+        "url": "https://www.dnit.gov.py/documents/47797/47809/Instructivo+del+Formulario+N%C2%B0+120+IVA+Versi%C3%B3n+4.pdf/63799cd8-6212-3c22-779b-51b2f97a136b?t=1680624028092",
+        "consulted_on": "2026-09-26",
+        "kind": "form"
+      },
+      {
+        "key": "marangatu-portal",
+        "title": "IVA — presentación de la Declaración Jurada a través del Sistema de Gestión Tributaria Marangatú",
+        "publisher": "Dirección Nacional de Ingresos Tributarios (DNIT)",
+        "url": "https://www.dnit.gov.py/en/web/portal-institucional/iva",
+        "consulted_on": "2026-09-26",
+        "kind": "portal"
+      },
+      {
+        "key": "sifen-manual",
+        "title": "Manual Técnico del Sistema Integrado de Facturación Electrónica Nacional (SIFEN), Versión 150 — sección 4.2, Fundamento legal, y sección 6, Modelo Operativo",
+        "publisher": "Dirección Nacional de Ingresos Tributarios (DNIT)",
+        "url": "https://www.dnit.gov.py/documents/20123/420592/Manual+T%C3%A9cnico+Versi%C3%B3n+150.pdf",
+        "consulted_on": "2026-09-26",
+        "kind": "regulation"
+      },
+      {
+        "key": "ekuatia-portal",
+        "title": "e-Kuatia — Sistema Integrado de Facturación Electrónica Nacional, emisión y consulta de documentos tributarios electrónicos",
+        "publisher": "Dirección Nacional de Ingresos Tributarios (DNIT)",
+        "url": "https://www.dnit.gov.py/en/web/e-kuatia",
+        "consulted_on": "2026-09-26",
+        "kind": "portal"
+      },
+      {
+        "key": "vencimientos-38-2020",
+        "title": "Resolución General N.° 38/2020, por la cual se establece el Calendario Perpetuo de Vencimientos para la presentación de declaraciones juradas determinativas y el pago de las obligaciones tributarias",
+        "publisher": "Dirección Nacional de Ingresos Tributarios (DNIT)",
+        "url": "https://www.dnit.gov.py/en/web/portal-institucional/w/resolucion-general-n-38-20",
+        "consulted_on": "2026-09-26",
+        "kind": "regulation"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "PYG",
+    "fiscal_year_default": "calendar",
+    "language": "es",
+    "opening_entry_label": "Asiento de apertura",
+    "closing_style": "result_accounts",
+    "roles": {
+      "receivable": "1021",
+      "payable": "2011",
+      "suspense": "106",
+      "rounding": "563",
+      "retained_earnings": "341",
+      "retained_earnings_loss": "342",
+      "current_year_result_profit": "351",
+      "current_year_result_loss": "352",
+      "sales": "411",
+      "purchase": "511",
+      "bank": "1012",
+      "cash": "1011",
+      "fx_gain": "462",
+      "fx_loss": "562",
+      "tax_payable": "2032",
+      "tax_receivable": "1042"
+    },
+    "journal_roles": {
+      "sales": "VTA",
+      "purchase": "CPR",
+      "miscellaneous": "DIA",
+      "opening": "APE"
+    }
+  },
+  "languages": [],
+  "journals": [
+    { "code": "VTA", "type": "sales", "name": "Diario de ventas", "sequence": 10 },
+    { "code": "CPR", "type": "purchase", "name": "Diario de compras", "sequence": 20 },
+    { "code": "BCO", "type": "bank", "name": "Bancos", "sequence": 30 },
+    { "code": "CAJ", "type": "cash", "name": "Caja", "sequence": 40 },
+    { "code": "DIA", "type": "general", "name": "Diario general", "sequence": 50 },
+    { "code": "APE", "type": "opening", "name": "Asiento de apertura", "sequence": 60 }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Plan de cuentas de referencia sobre el libro de inventario y el balance general de la Ley N.° 1.034/1983",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": ["PY-ESP", "PY-ER"],
+      "legal_reference": "La República del Paraguay no impone un plan de cuentas único ni numerado. La Ley N.° 1.034/1983, Del Comerciante, art. 75, sólo exige llevar «indispensablemente un libro Diario y uno de Inventario», y su art. 82 fija el contenido mínimo del libro de Inventario: la situación patrimonial al iniciar las operaciones y, al cierre de cada ejercicio, la situación patrimonial con el «cuadro demostrativo de ganancias y pérdidas» — sin prescribir cuentas. El Código Civil, art. 1079, añade que la asamblea ordinaria de una sociedad anónima debe considerar el «balance y cuenta de ganancias y pérdidas» del ejercicio. Este plan es original: sigue una numeración propia de tres a cinco dígitos y cada bloque de códigos corresponde a una línea de PY-ESP o de PY-ER, de modo que las cuentas de este paquete se leen directamente sobre esos dos esquemas — véase el README.md",
+      "source": "comerciante-1034"
+    }
+  ],
+  "documents": {
+    "numbering": "gapless",
+    "number_format": "{CODE}-{NNNNNNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "earliest_of_delivery_or_payment",
+    "posted_edit_policy": "reversal_only",
+    "references": {
+      "numbering": {
+        "legal_reference": "Ley N.° 1.034/1983, Del Comerciante, art. 76 — el libro Diario debe llevarse con asientos que permitan la individualización de las operaciones, así como sus correspondientes cuentas deudoras y acreedoras y su posterior verificación. El número que declara este paquete es el de la pieza contable, correlativo por diario, y no el número de timbrado, establecimiento y punto de expedición que el Sistema Integrado de Facturación Electrónica Nacional (SIFEN) asigna al comprobante de venta electrónico — véase «Ekwo no emite un comprobante de venta paraguayo»",
+        "source": "comerciante-1034"
+      },
+      "tax_point": {
+        "legal_reference": "Ley N.° 6.380/2019, art. 83, numeral 1 — la configuración del hecho imponible se produce con el primero de estos hechos: a) la entrega del bien o la prestación del servicio; b) la percepción del importe total o de un pago parcial; c) el vencimiento del plazo previsto para el pago del servicio. Los incisos a) y b) son la entrega y el cobro, el primero que ocurra — earliest_of_delivery_or_payment en el vocabulario de este formato —; el inciso c), un tercer hecho que adelanta la obligación al vencimiento de un plazo de pago aun sin cobro ni entrega, no tiene una palabra en este vocabulario y queda sin representar — véase el README. El art. 92 exige además que el comprobante de venta se emita coincidiendo con el nacimiento de la obligación, salvo los casos de los numerales 4, 5 y 6 del art. 83 (suministros por vencimiento de plazo, importaciones y servicios desde el exterior)",
+        "source": "ley-6380"
+      },
+      "posted_edit_policy": {
+        "legal_reference": "Ley N.° 1.034/1983, art. 79 — no podrán hacerse enmiendas, raspaduras ni cualquier otra alteración en los libros de contabilidad, y si fuere necesaria alguna rectificación, ésta debe practicarse mediante el correspondiente contraasiento. Un documento contabilizado se anula con una nota de crédito que lo referencia, nunca volviendo a borrador",
+        "source": "comerciante-1034"
+      }
+    },
+    "mentions": [
+      {
+        "code": "dte_not_issued",
+        "applies_when": "always",
+        "text": "Este documento no es un Documento Tributario Electrónico (DTE) del Sistema Integrado de Facturación Electrónica Nacional (SIFEN): no ha sido firmado digitalmente por un facturador electrónico ni validado por la Dirección Nacional de Ingresos Tributarios (DNIT). Sólo el DTE aprobado por el SIFEN, o el comprobante de venta timbrado, respalda la operación para efectos tributarios.",
+        "sequence": 10,
+        "legal_reference": "Decreto N.° 7.795/2017, art. 2° — el documento tributario electrónico es el emitido por el facturador electrónico con firma digital, validado formalmente por la Administración Tributaria, y que sirve para respaldar el débito y el crédito fiscal del IVA. Ekwo no emite, no firma digitalmente ni transmite documentos al SIFEN: ningún componente de packages/formats habla con el SIFEN — véase «Ekwo no emite un comprobante de venta paraguayo»",
+        "source": "sifen-manual"
+      },
+      {
+        "code": "export",
+        "applies_when": "export",
+        "text": "Exportación de bienes, exonerada del Impuesto al Valor Agregado (artículo 100, numeral 2, de la Ley N.° 6.380/2019).",
+        "sequence": 20,
+        "legal_reference": "Ley N.° 6.380/2019, art. 100, numeral 2 — está exonerada del IVA la exportación de bienes, debiendo el contribuyente conservar la documentación que acredite el arribo de la mercadería al destino previsto en el extranjero",
+        "source": "ley-6380"
+      },
+      {
+        "code": "exempt",
+        "applies_when": "exempt",
+        "text": "Operación exonerada del Impuesto al Valor Agregado (artículo 100 de la Ley N.° 6.380/2019).",
+        "sequence": 30,
+        "legal_reference": "Ley N.° 6.380/2019, art. 100 — enumera las enajenaciones, prestaciones de servicios e importaciones exoneradas del IVA",
+        "source": "ley-6380"
+      }
+    ]
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "El comprobante de venta exigido en Paraguay es, para un número creciente de contribuyentes, un Documento Tributario Electrónico (DTE) del Sistema Integrado de Facturación Electrónica Nacional (SIFEN), cuya marca pública es e-Kuatia: Decreto N.° 7.795/2017, que crea el SIFEN y faculta a la Administración Tributaria a implementar la obligación de manera gradual, en fases de plan piloto, adhesión voluntaria y obligatoriedad; sucesivas Resoluciones Generales (entre ellas la N.° 95/2021) incorporan nuevos grupos de contribuyentes obligados, y desde enero de 2026 alcanzan a los proveedores del Estado y a nuevos grupos incorporados hasta 2027. El DTE sólo existe una vez que su archivo XML, firmado digitalmente, es transmitido al SIFEN y validado por éste — antes o después de la entrega al receptor, según el modelo de aprobación elegido —, control de tipo «clearance» y no un intercambio directo entre las partes. Ekwo no genera, no firma digitalmente ni transmite el XML del DTE: ningún componente de packages/formats habla con el SIFEN. Por eso profile y mandatory_from quedan vacíos aunque la obligación exista y esté en expansión: profile nombra un perfil construido sobre EN 16931 que una pieza de packages/formats redacta y transmite por Peppol, y el DTE paraguayo no es ni lo uno ni lo otro; el formato tampoco tiene una palabra para «válido sólo tras la validación del SIFEN» — véase «Ekwo no emite un comprobante de venta paraguayo» y docs/international.md. El RUC identifica al emisor y al receptor y no tiene código ISO 6523 propio: party_scheme y vat_scheme quedan vacíos",
+    "source": "sifen-manual"
+  },
+  "bank": {
+    "statement_formats": [],
+    "payment_formats": []
+  }
+}

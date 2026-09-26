@@ -1,0 +1,236 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "PY-F120",
+  "name": "Formulario N.° 120 — Declaración Jurada del Impuesto al Valor Agregado (IVA)",
+  "period": ["month"],
+  "period_default": "month",
+  "valid_from": "2020-01-01",
+  "legal_reference": "Ley N.° 6.380/2019, art. 86 — el impuesto se liquida mensualmente por la diferencia entre el IVA Débito y el IVA Crédito; art. 96 — el impuesto se liquida por declaración jurada, en la forma y oportunidad que establezca la Administración Tributaria. El Formulario N.° 120, Versión 4, es de uso obligatorio desde el período fiscal de enero de 2020 y se presenta exclusivamente por vía electrónica a través del Sistema de Gestión Tributaria Marangatú; las casillas de este paquete son las de su instructivo oficial",
+  "source": "f120-instructivo",
+  "deadline": {
+    "rule": "depends_on_taxpayer",
+    "legal_reference": "Resolución General N.° 38/2020 — Calendario Perpetuo de Vencimientos: la fecha de vencimiento mensual de cada contribuyente se fija según el último dígito de su RUC, sin contar el dígito verificador, entre el día 7 (dígito 0) y el día 25 (dígito 9) del mes siguiente al que se liquida, avanzando de dos en dos días por dígito; si la fecha recae en día no laborable, se traslada al día hábil siguiente. El día exacto depende del RUC de cada contribuyente y no de una regla que el paquete pueda calcular por sí sola",
+    "source": "vencimientos-38-2020"
+  },
+  "boxes": [
+    {
+      "box": "10",
+      "kind": "base",
+      "name": "Enajenación de bienes y/o prestación de servicios gravados con tasa del 10 %",
+      "sequence": 10,
+      "legal_reference": "Instructivo del Formulario N.° 120 — «En la casilla 10 se debe consignar el monto imponible de las operaciones gravadas a la tasa del 10 % por enajenación de bienes y/o prestación de servicios»",
+      "source": "f120-instructivo"
+    },
+    {
+      "box": "22",
+      "kind": "tax",
+      "name": "IVA Débito — operaciones gravadas al 10 %",
+      "sequence": 20,
+      "legal_reference": "Instructivo del Formulario N.° 120 — «En la casilla 22 se consigna el IVA Débito correspondiente» a la casilla 10",
+      "source": "f120-instructivo"
+    },
+    {
+      "box": "15",
+      "kind": "base",
+      "name": "Ajustes de precios, devoluciones y descuentos, ventas a la tasa del 10 %",
+      "sequence": 30,
+      "legal_reference": "Formulario N.° 120, Versión 3, Rubro 1, inciso f) — ajustes de precios, devoluciones realizadas, descuentos obtenidos y recupero de impuestos por operaciones incobrables, declaradas a la tasa del 10 %",
+      "source": "f120-instructivo"
+    },
+    {
+      "box": "23",
+      "kind": "tax",
+      "name": "IVA Débito — ajustes de ventas al 10 %",
+      "sequence": 40,
+      "legal_reference": "Instructivo del Formulario N.° 120 — «En la casilla 23 se debe consignar el IVA Débito correspondiente» a la casilla 15",
+      "source": "f120-instructivo"
+    },
+    {
+      "box": "151",
+      "kind": "base",
+      "name": "Enajenación de otros bienes y/o servicios gravados con tasa del 5 %",
+      "sequence": 50,
+      "legal_reference": "Instructivo del Formulario N.° 120 — «En la casilla 151 se debe consignar el monto imponible de las operaciones gravadas a la tasa del 5 % por enajenación de otros bienes (distintos a los productos agrícolas en estado natural del inciso b) y/o prestación de servicios»",
+      "source": "f120-instructivo"
+    },
+    {
+      "box": "157",
+      "kind": "tax",
+      "name": "IVA Débito — operaciones gravadas al 5 %",
+      "sequence": 60,
+      "legal_reference": "Instructivo del Formulario N.° 120 — «En la casilla 157 se consigna el IVA Débito correspondiente» a la casilla 151",
+      "source": "f120-instructivo"
+    },
+    {
+      "box": "16",
+      "kind": "base",
+      "name": "Ajustes de precios, devoluciones y descuentos, ventas a la tasa del 5 %",
+      "sequence": 70,
+      "legal_reference": "Formulario N.° 120, Versión 3, Rubro 1, inciso g) — ajustes de precios, devoluciones realizadas, descuentos obtenidos y recupero de impuestos por operaciones incobrables, declaradas a la tasa del 5 %",
+      "source": "f120-instructivo"
+    },
+    {
+      "box": "20",
+      "kind": "tax",
+      "name": "IVA Débito — ajustes de ventas al 5 %",
+      "sequence": 80,
+      "legal_reference": "Formulario N.° 120, Versión 3, Rubro 1 — columna IVA Débito al 5 % de la fila de ajustes del inciso g)",
+      "source": "f120-instructivo"
+    },
+    {
+      "box": "12",
+      "kind": "base",
+      "name": "Enajenación de bienes y/o prestación de servicios exonerados o no alcanzados",
+      "sequence": 90,
+      "legal_reference": "Instructivo del Formulario N.° 120 — «En la casilla 12 se debe consignar el monto correspondiente a las operaciones de enajenación de bienes y/o prestación de servicios exoneradas o no alcanzadas por el impuesto, incluidos los servicios digitales prestados para el exterior»",
+      "source": "f120-instructivo"
+    },
+    {
+      "box": "17",
+      "kind": "base",
+      "name": "Ajustes de precios, devoluciones y descuentos, ventas exoneradas o no alcanzadas",
+      "sequence": 100,
+      "legal_reference": "Instructivo del Formulario N.° 120 — «En la casilla 17 se debe consignar el monto de los ajustes de precios, devoluciones realizadas y descuentos obtenidos, por operaciones exoneradas o no alcanzadas por el impuesto»",
+      "source": "f120-instructivo"
+    },
+    {
+      "box": "14",
+      "kind": "base",
+      "name": "Exportación de bienes",
+      "sequence": 110,
+      "legal_reference": "Instructivo del Formulario N.° 120 — «En la casilla 14 se debe consignar el monto de la exportación de otros bienes», es decir, la exportación de bienes distinta de los productos agrícolas en estado natural del artículo 90, inciso d), numeral 1, y de los fletes de exportación",
+      "source": "f120-instructivo"
+    },
+    {
+      "box": "32",
+      "kind": "base",
+      "name": "Compras gravadas al 5 %, crédito atribuido directamente al mercado interno",
+      "sequence": 120,
+      "legal_reference": "Formulario N.° 120, Versión 3, Rubro 3, inciso a) — crédito fiscal atribuido directamente a operaciones gravadas en el mercado interno, columna «al 5 %»",
+      "source": "f120-instructivo"
+    },
+    {
+      "box": "35",
+      "kind": "base",
+      "name": "Compras gravadas al 10 %, crédito atribuido directamente al mercado interno",
+      "sequence": 130,
+      "legal_reference": "Formulario N.° 120, Versión 3, Rubro 3, inciso a) — crédito fiscal atribuido directamente a operaciones gravadas en el mercado interno, columna «al 10 %»",
+      "source": "f120-instructivo"
+    },
+    {
+      "box": "38",
+      "kind": "tax",
+      "name": "IVA Crédito atribuido directamente al mercado interno",
+      "sequence": 140,
+      "legal_reference": "Instructivo del Formulario N.° 120 — «En la casilla 38 se debe consignar la suma del IVA Crédito resultante de la aplicación de dichas tasas» a las casillas 32 y 35",
+      "source": "f120-instructivo"
+    },
+    {
+      "box": "43",
+      "kind": "total",
+      "name": "Total de crédito fiscal para operaciones en el mercado interno",
+      "sequence": 180,
+      "plus": ["38"],
+      "legal_reference": "Instructivo del Formulario N.° 120 — «En la casilla 43 se debe consignar el total del IVA Crédito atribuido a operaciones gravadas en el mercado interno, resultante de la suma de las casillas 38, 164, 165 y 42». Este paquete no atribuye crédito de forma indistinta ni proporcional, ni declara los ajustes de la casilla 42 (Rubro 3, inciso e — cuyo propio instructivo los describe, de forma inconsistente con el resto del Rubro 3, como referidos a «ventas ya declaradas»), por lo que la suma se limita a la casilla 38 y las notas de crédito de compra se declaran con signo negativo sobre las mismas casillas 32/35/38 de la factura original — véase el README",
+      "source": "f120-instructivo"
+    },
+    {
+      "box": "59",
+      "kind": "base",
+      "name": "Compras con crédito fiscal del 10 %, relacionadas directamente a operaciones exoneradas o no alcanzadas",
+      "sequence": 190,
+      "legal_reference": "Formulario N.° 120, Versión 3, Rubro 6, inciso a) — compras con crédito fiscal del 10 % relacionadas directamente a operaciones exoneradas o no alcanzadas",
+      "source": "f120-instructivo"
+    },
+    {
+      "box": "65",
+      "kind": "base",
+      "name": "IVA de las compras al 10 % relacionadas a operaciones exoneradas",
+      "sequence": 200,
+      "legal_reference": "Formulario N.° 120, Versión 3, Rubro 6, inciso a) — IVA correspondiente a la casilla 59",
+      "source": "f120-instructivo"
+    },
+    {
+      "box": "60",
+      "kind": "base",
+      "name": "Compras con crédito fiscal del 5 %, relacionadas directamente a operaciones exoneradas o no alcanzadas",
+      "sequence": 210,
+      "legal_reference": "Formulario N.° 120, Versión 3, Rubro 6, inciso b) — compras con crédito fiscal del 5 % relacionadas directamente a operaciones exoneradas o no alcanzadas",
+      "source": "f120-instructivo"
+    },
+    {
+      "box": "66",
+      "kind": "base",
+      "name": "IVA de las compras al 5 % relacionadas a operaciones exoneradas",
+      "sequence": 220,
+      "legal_reference": "Formulario N.° 120, Versión 3, Rubro 6, inciso b) — IVA correspondiente a la casilla 60",
+      "source": "f120-instructivo"
+    },
+    {
+      "box": "62",
+      "kind": "base",
+      "name": "Compras exentas relacionadas a operaciones exoneradas o no alcanzadas",
+      "sequence": 230,
+      "legal_reference": "Formulario N.° 120, Versión 3, Rubro 6, inciso d) — compras exentas relacionadas a operaciones exoneradas o no alcanzadas",
+      "source": "f120-instructivo"
+    },
+    {
+      "box": "64",
+      "kind": "total",
+      "name": "IVA Costo/Gasto",
+      "sequence": 240,
+      "plus": ["65", "66"],
+      "legal_reference": "Instructivo del Formulario N.° 120 — la casilla 64 consigna la suma correspondiente al IVA Costo y/o Gasto del período, entre otros conceptos, la sumatoria de las casillas 65 y 66 del Rubro 6",
+      "source": "f120-instructivo"
+    },
+    {
+      "box": "44",
+      "kind": "total",
+      "name": "Débito fiscal",
+      "sequence": 250,
+      "plus": ["22", "157", "23", "20"],
+      "legal_reference": "Formulario N.° 120, Versión 3, Rubro 4, inciso a) — débito fiscal, proveniente del Rubro 1, columnas II y III del inciso «Total»",
+      "source": "f120-instructivo"
+    },
+    {
+      "box": "45",
+      "kind": "total",
+      "name": "Crédito fiscal",
+      "sequence": 260,
+      "plus": ["43"],
+      "legal_reference": "Formulario N.° 120, Versión 3, Rubro 4, inciso b) — crédito fiscal, proveniente del Rubro 3, inciso f) (casilla 43 en este paquete)",
+      "source": "f120-instructivo"
+    },
+    {
+      "box": "48",
+      "kind": "total",
+      "name": "Saldo a favor del Fisco",
+      "sequence": 270,
+      "plus": ["44"],
+      "minus": ["45"],
+      "floor_zero": true,
+      "legal_reference": "Formulario N.° 120, Versión 3, Rubro 4, inciso e) — saldo a favor del Fisco, cuando el débito fiscal (inciso a) es mayor que la suma del crédito fiscal (inciso b) más el saldo a favor del período anterior (inciso c), aquí no declarado",
+      "source": "f120-instructivo"
+    },
+    {
+      "box": "47",
+      "kind": "total",
+      "name": "Saldo a favor del contribuyente",
+      "sequence": 280,
+      "plus": ["45"],
+      "minus": ["44"],
+      "floor_zero": true,
+      "legal_reference": "Formulario N.° 120, Versión 3, Rubro 4, inciso d) — saldo a favor del contribuyente, a trasladar al período fiscal siguiente, cuando el débito fiscal (inciso a) es menor que el crédito fiscal (inciso b)",
+      "source": "f120-instructivo"
+    },
+    {
+      "box": "50",
+      "kind": "total",
+      "name": "Impuesto determinado",
+      "sequence": 290,
+      "plus": ["48"],
+      "legal_reference": "Formulario N.° 120, Versión 3, Rubro 4, inciso g) — impuesto determinado, diferencia entre el saldo a favor del Fisco (inciso e) y el crédito fiscal por exportación utilizado en el período (inciso f), aquí no declarado por no modelar este paquete el Anexo del Exportador — véase el README",
+      "source": "f120-instructivo"
+    }
+  ]
+}

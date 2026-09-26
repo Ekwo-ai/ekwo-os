@@ -4542,3 +4542,47 @@ a total's dependencies to be declared before it in the array, but a reader
 of the pack meets an unfamiliar box name (`BASE13`) before meeting the
 casilla it belongs to, and `packs/bo/README.md` says so at length for that
 reason.
+
+## From Paraguay
+
+`packs/py/`, `community`, seed 103, outside the common system of VAT on the
+same footing as every other South American pack. Its value added tax is the
+Impuesto al Valor Agregado of Ley N.° 6.380/2019; its invoicing regime is the
+Sistema Integrado de Facturación Electrónica Nacional (SIFEN, public brand
+e-Kuatia), created by Decreto N.° 7.795/2017 and phased in group by group
+since 2018. Eight texts in the register. What follows is what the core could
+not say, in addition to the clearance-invoicing gap Peru, Argentina and
+Mexico already named.
+
+**A tax point with three legs, where the vocabulary reads only two.** Art.
+83, numeral 1, of Ley N.° 6.380/2019 fixes the hecho imponible at the first
+of *three* events: delivery or the rendering of the service, collection of
+the price in full or in part, or the expiry of a term set for payment.
+`earliest_of_delivery_or_payment` reads the first two branches correctly and
+in the order the law gives them, but the third — an obligation that can be
+born from the mere passage of a payment deadline, with neither a delivery
+nor a collection behind it — has no word in this vocabulary at all. This is
+not the shape Ukraine's point 187.1 already named here (two branches, no
+principle-and-derogation reading): it is a third, independent trigger a
+two-branch word cannot carry regardless of which two branches it names.
+`packs/py/` declares `earliest_of_delivery_or_payment` and states the third
+leg in `documents.references.tax_point.legal_reference`, in prose, because
+the schema has no fourth value that would read it.
+
+**A proportional export credit `taxes.json` cannot express.** Art. 101
+lets an exporter recover the IVA Crédito of a purchase it cannot attribute
+directly to an export, in the proportion its export turnover bears to its
+total turnover for the period — the Anexo del Exportador and the Hoja de
+Cálculo of Formulario N.° 120 (casillas 148 to 220) exist to compute exactly
+that ratio. A tax's `postings` describe one document at a time, by kind;
+there is no primitive here for an amount that depends on a ratio of a whole
+period's turnover, the way there already is none for Canada's input tax
+credit apportionment or Estonia's mixed-use VAT recovery ratio.
+`packs/py/README.md` leaves the Anexo undeclared rather than approximate the
+ratio with a fixed code.
+
+**PYG and PY.** `PYG` is added to `00_currencies.sql` with no minor unit —
+the guaraní has none, the way the yen and the CFA franc have none. `PY` is
+added to `00_territories.sql` outside the common system of VAT, on the same
+footing as `PE` and `AR`, so `vat_category`, `exemption_code` and the five
+`intracom_*` treatments are read the way every non-EU pack's are.

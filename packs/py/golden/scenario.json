@@ -1,0 +1,107 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "Un trimestre de una comercializadora paraguaya, declarante mensual del IVA",
+  "chart": "default",
+  "fiscal_year": { "name": "Ejercicio 2026", "start": "2026-01-01", "end": "2026-12-31" },
+  "periods": [
+    { "code": "2026-01", "from": "2026-01-01", "to": "2026-01-31" },
+    { "code": "2026-02", "from": "2026-02-01", "to": "2026-02-28" },
+    { "code": "2026-03", "from": "2026-03-01", "to": "2026-03-31" }
+  ],
+  "statements": ["PY-ESP", "PY-ER"],
+  "contacts": [
+    { "ref": "client-py", "name": "Comercial Ñandutí S.A.", "type": "customer", "country": "PY" },
+    { "ref": "client-us", "name": "Rio Plate Trading LLC", "type": "customer", "country": "US" },
+    { "ref": "supplier-py", "name": "Distribuidora Asunción S.A.", "type": "supplier", "country": "PY" },
+    { "ref": "supplier-exo", "name": "Cooperativa Yvy Porã", "type": "supplier", "country": "PY" }
+  ],
+  "documents": [
+    {
+      "ref": "V1", "type": "sale_invoice", "contact": "client-py", "date": "2026-01-10",
+      "why": "Una venta gravada a la tasa general del 10 %: la base de la casilla 10 y el débito fiscal de la casilla 22.",
+      "lines": [{ "name": "Mercadería A", "quantity": 10, "unit_price": 100000, "tax": "PY-V-10", "account": "411" }]
+    },
+    {
+      "ref": "V2", "type": "sale_invoice", "contact": "client-py", "date": "2026-01-15",
+      "why": "Una venta gravada a la tasa reducida del 5 % (medicamentos, art. 90, inciso f): la base de la casilla 151 y el débito fiscal de la casilla 157.",
+      "lines": [{ "name": "Medicamentos", "quantity": 5, "unit_price": 200000, "tax": "PY-V-5", "account": "411" }]
+    },
+    {
+      "ref": "V3", "type": "sale_credit_note", "contact": "client-py", "date": "2026-01-20",
+      "why": "Una devolución parcial de V1: reduce la base y el débito fiscal en las casillas 15 y 23, distintas de las 10 y 22.",
+      "lines": [{ "name": "Devolución de Mercadería A", "quantity": 2, "unit_price": 100000, "tax": "PY-V-10", "account": "411" }]
+    },
+    {
+      "ref": "V4", "type": "sale_invoice", "contact": "client-py", "date": "2026-02-05",
+      "why": "Una venta exonerada, servicio de enseñanza reconocida (art. 100, numeral 3, inciso f): la base va a la casilla 12 y no genera IVA.",
+      "lines": [{ "name": "Servicio de capacitación técnica reconocida", "quantity": 1, "unit_price": 500000, "tax": "PY-V-EXO", "account": "413" }]
+    },
+    {
+      "ref": "V5", "type": "sale_invoice", "contact": "client-py", "date": "2026-02-12",
+      "why": "Una segunda venta gravada al 10 %, en febrero, para que ese período declare movimiento propio.",
+      "lines": [{ "name": "Mercadería A", "quantity": 20, "unit_price": 100000, "tax": "PY-V-10", "account": "411" }]
+    },
+    {
+      "ref": "V6", "type": "sale_invoice", "contact": "client-us", "date": "2026-03-08",
+      "why": "Una exportación de bienes, exonerada (art. 100, numeral 2): la base va a la casilla 14 y no genera IVA.",
+      "lines": [{ "name": "Mercadería B, exportación", "quantity": 10, "unit_price": 150000, "tax": "PY-V-EXP", "account": "412" }]
+    },
+    {
+      "ref": "C1", "type": "purchase_invoice", "contact": "supplier-py", "date": "2026-01-12",
+      "why": "Una compra gravada al 10 %, con derecho a crédito fiscal pleno: la base y el crédito de las casillas 35 y 38.",
+      "lines": [{ "name": "Mercadería A, compra", "quantity": 8, "unit_price": 80000, "tax": "PY-C-10", "account": "511" }]
+    },
+    {
+      "ref": "C2", "type": "purchase_invoice", "contact": "supplier-py", "date": "2026-01-22",
+      "why": "Una compra gravada al 5 %, con derecho a crédito fiscal pleno: la base y el crédito de las casillas 32 y 38.",
+      "lines": [{ "name": "Medicamentos, compra", "quantity": 5, "unit_price": 150000, "tax": "PY-C-5", "account": "511" }]
+    },
+    {
+      "ref": "C3", "type": "purchase_invoice", "contact": "supplier-py", "date": "2026-02-03",
+      "why": "Una compra gravada al 10 % destinada exclusivamente a la venta exonerada V4: sin derecho a crédito fiscal (art. 89), casillas 59 y 65, el IVA queda como costo.",
+      "lines": [{ "name": "Materiales de capacitación", "quantity": 1, "unit_price": 300000, "tax": "PY-C-10-NOCRED", "account": "511" }]
+    },
+    {
+      "ref": "C4", "type": "purchase_invoice", "contact": "supplier-exo", "date": "2026-02-18",
+      "why": "Una compra no gravada, de una cooperativa: casilla 62, sin IVA.",
+      "lines": [{ "name": "Productos agropecuarios", "quantity": 1, "unit_price": 250000, "tax": "PY-C-EXO", "account": "511" }]
+    },
+    {
+      "ref": "C5", "type": "purchase_credit_note", "contact": "supplier-py", "date": "2026-02-25",
+      "why": "Una nota de crédito de compra: reduce, en las casillas 37 y 42, la base y el crédito fiscal ya declarados por C1.",
+      "lines": [{ "name": "Devolución de Mercadería A", "quantity": 1, "unit_price": 80000, "tax": "PY-C-10", "account": "511" }]
+    },
+    {
+      "ref": "C6", "type": "purchase_invoice", "contact": "supplier-py", "date": "2026-03-14",
+      "why": "Una compra de marzo, para comprobar el crédito fiscal de un período distinto al de enero.",
+      "lines": [{ "name": "Mercadería A, compra", "quantity": 15, "unit_price": 80000, "tax": "PY-C-10", "account": "511" }]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "P1", "direction": "inbound", "date": "2026-02-01", "amount": 1050000,
+      "contact": "client-py", "journal": "BCO", "match": "V2",
+      "why": "Un cobro que salda exactamente la venta gravada al 5 % V2."
+    },
+    {
+      "ref": "P2", "direction": "inbound", "date": "2026-02-20", "amount": 500000,
+      "contact": "client-py", "journal": "BCO", "match": "V4",
+      "why": "Un cobro que salda exactamente la venta exonerada V4, sin IVA."
+    },
+    {
+      "ref": "P3", "direction": "inbound", "date": "2026-03-20", "amount": 300000,
+      "contact": "client-py", "journal": "BCO", "match": null,
+      "why": "Un cobro a cuenta, sin factura que saldar: queda como partida abierta."
+    },
+    {
+      "ref": "P4", "direction": "outbound", "date": "2026-02-28", "amount": 250000,
+      "contact": "supplier-exo", "journal": "BCO", "match": "C4",
+      "why": "Un pago que salda exactamente la compra no gravada C4."
+    },
+    {
+      "ref": "P5", "direction": "outbound", "date": "2026-03-25", "amount": 1320000,
+      "contact": "supplier-py", "journal": "BCO", "match": "C6",
+      "why": "Un pago que salda exactamente la compra C6."
+    }
+  ]
+}

@@ -1,0 +1,207 @@
+[
+  {
+    "code": "PY-V-10",
+    "name": "Venta gravada, tasa general 10 %",
+    "description": "Enajenación de bienes y prestación de servicios gravada a la tasa general del Impuesto al Valor Agregado",
+    "kind": "vat",
+    "rate": 10,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2020-01-01",
+    "legal_reference": "Ley N.° 6.380/2019, art. 90, inciso g) — 10 % (diez por ciento) para todos los demás casos, distintos de los enumerados en los incisos a) a f) del mismo artículo",
+    "source": "ley-6380",
+    "sequence": 10,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "10" },
+        { "type": "tax", "account": "2031", "box": "22" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "15" },
+        { "type": "tax", "account": "2031", "box": "23" }
+      ]
+    }
+  },
+  {
+    "code": "PY-V-5",
+    "name": "Venta gravada, tasa reducida 5 %",
+    "description": "Enajenación de bienes y prestación de servicios gravada a la tasa reducida del 5 %: arrendamiento de inmuebles para vivienda, enajenación de inmuebles, productos de la canasta familiar, productos pecuarios, medicamentos de uso humano",
+    "kind": "vat",
+    "rate": 5,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2020-01-01",
+    "legal_reference": "Ley N.° 6.380/2019, art. 90, incisos a), b), c), e) y f) — 5 % para el arrendamiento de inmuebles destinados a la vivienda de manera exclusiva; para la enajenación de bienes inmuebles; para la enajenación e importación de los productos de la canasta familiar (arroz, fideos, aceite vegetal, yerba mate, leche, huevos, harina y sal yodada); para los productos pecuarios y sus derivados primarios sin transformación; y para los productos registrados como medicamentos de uso humano ante el Ministerio de Salud Pública y Bienestar Social. No incluye los productos agrícolas, hortícolas y frutícolas del inciso d), que este paquete no distingue de los demás bienes al 5 % — véase el README",
+    "source": "ley-6380",
+    "sequence": 20,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "151" },
+        { "type": "tax", "account": "2031", "box": "157" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "16" },
+        { "type": "tax", "account": "2031", "box": "20" }
+      ]
+    }
+  },
+  {
+    "code": "PY-V-EXP",
+    "name": "Exportación de bienes, exonerada",
+    "description": "Exportación de bienes",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2020-01-01",
+    "conditions": ["transport_evidence"],
+    "legal_reference": "Ley N.° 6.380/2019, art. 100, numeral 2 — está exonerada del IVA la exportación de bienes; el contribuyente debe conservar la copia de la documentación correspondiente debidamente contabilizada, y la Administración Tributaria puede exigir otros instrumentos que demuestren el arribo de la mercadería al destino previsto en el extranjero. A falta de esa documentación se presume de derecho que los bienes fueron enajenados en el mercado interno, debiendo abonarse el IVA. El paquete declara la exportación ordinaria de bienes; no distingue la exportación de productos agrícolas en estado natural, sujeta a un tratamiento distinto del crédito fiscal del exportador (art. 101) — véase el README",
+    "source": "ley-6380",
+    "sequence": 30,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "14" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "14", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "PY-V-EXO",
+    "name": "Venta exonerada",
+    "description": "Enajenación de bienes o prestación de servicios comprendida en las exoneraciones del artículo 100 de la Ley del IVA",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2020-01-01",
+    "conditions": ["supply_nature"],
+    "legal_reference": "Ley N.° 6.380/2019, art. 100 — enumera las enajenaciones e importaciones exoneradas (moneda extranjera y valores; libros y periódicos; bienes donados a entidades educativas sin fines de lucro) y las prestaciones de servicios exoneradas (intereses de valores públicos y privados; depósitos bancarios y financieros; enseñanza inicial, preescolar, básica, media, técnica, terciaria y universitaria reconocida; transporte público urbano e interurbano de pasajeros de hasta 100 km de recorrido total). El paquete declara la exoneración con esta cita genérica; el bien o servicio exonerado concreto y su inciso corresponden a cada operación y no al código — véase el README",
+    "source": "ley-6380",
+    "sequence": 40,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "12" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "17" }
+      ]
+    }
+  },
+  {
+    "code": "PY-C-10",
+    "name": "Compra gravada, tasa general 10 %, con derecho a crédito fiscal",
+    "description": "Adquisición de bienes o servicios gravada a la tasa general, atribuida directamente a operaciones gravadas en el mercado interno",
+    "kind": "vat",
+    "rate": 10,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2020-01-01",
+    "legal_reference": "Ley N.° 6.380/2019, art. 88, numeral 1 — el IVA Crédito se integra con la suma del impuesto incluido en los comprobantes de compras en plaza realizadas en el mes; art. 89 — la deducción sólo procede cuando el bien o servicio esté afectado directa o indistintamente a operaciones gravadas, represente una erogación real y el comprobante identifique al comprador y el bien o servicio adquirido; art. 90, inciso g) — tasa del 10 %",
+    "source": "ley-6380",
+    "sequence": 110,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "35" },
+        { "type": "tax", "account": "1041", "box": "38" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "35", "box_factor": -100 },
+        { "type": "tax", "account": "1041", "box": "38", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "PY-C-5",
+    "name": "Compra gravada, tasa reducida 5 %, con derecho a crédito fiscal",
+    "description": "Adquisición de bienes o servicios gravada a la tasa reducida, atribuida directamente a operaciones gravadas en el mercado interno",
+    "kind": "vat",
+    "rate": 5,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2020-01-01",
+    "legal_reference": "Ley N.° 6.380/2019, art. 88, numeral 1, y art. 89 — requisitos del crédito fiscal; art. 90, incisos a), b), c), e) y f) — tasa del 5 %",
+    "source": "ley-6380",
+    "sequence": 120,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "32" },
+        { "type": "tax", "account": "1041", "box": "38" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "32", "box_factor": -100 },
+        { "type": "tax", "account": "1041", "box": "38", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "PY-C-10-NOCRED",
+    "name": "Compra gravada, tasa general 10 %, sin derecho a crédito fiscal",
+    "description": "Adquisición gravada a la tasa general, destinada exclusivamente a operaciones exoneradas o no alcanzadas por el impuesto",
+    "kind": "vat",
+    "rate": 10,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2020-01-01",
+    "recoverable": false,
+    "legal_reference": "Ley N.° 6.380/2019, art. 89, numeral 1 — el IVA Crédito sólo se deduce cuando el bien o servicio esté afectado directa o indistintamente a operaciones gravadas por el impuesto; art. 91 — para quien enajene bienes o preste servicios exonerados o no gravados, el impuesto consignado en los comprobantes de las compras relacionadas constituye un costo o gasto para el Impuesto a la Renta. El Formulario N.° 120 declara esta adquisición y su IVA en las casillas 59 y 65 del Rubro 6",
+    "source": "ley-6380",
+    "sequence": 130,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "59" },
+        { "type": "tax_on_base", "factor": 100, "box": "65" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "59", "box_factor": -100 },
+        { "type": "tax_on_base", "factor": 100, "box": "65", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "PY-C-5-NOCRED",
+    "name": "Compra gravada, tasa reducida 5 %, sin derecho a crédito fiscal",
+    "description": "Adquisición gravada a la tasa reducida, destinada exclusivamente a operaciones exoneradas o no alcanzadas por el impuesto",
+    "kind": "vat",
+    "rate": 5,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2020-01-01",
+    "recoverable": false,
+    "legal_reference": "Ley N.° 6.380/2019, art. 89, numeral 1, y art. 91 — el IVA de una adquisición destinada a una operación no gravada constituye costo o gasto para el Impuesto a la Renta. El Formulario N.° 120 declara esta adquisición y su IVA en las casillas 60 y 66 del Rubro 6",
+    "source": "ley-6380",
+    "sequence": 140,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "60" },
+        { "type": "tax_on_base", "factor": 100, "box": "66" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "60", "box_factor": -100 },
+        { "type": "tax_on_base", "factor": 100, "box": "66", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "PY-C-EXO",
+    "name": "Compra no gravada",
+    "description": "Adquisición de bienes o servicios exentos, exonerados o no alcanzados por el IVA, relacionada a operaciones exoneradas o no alcanzadas",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "exempt",
+    "valid_from": "2020-01-01",
+    "legal_reference": "Ley N.° 6.380/2019, art. 100 — bienes y servicios exonerados que el vendedor no traslada como IVA. El Formulario N.° 120 declara esta adquisición en la casilla 62 del Rubro 6, «Compras exentas relacionadas a operaciones exoneradas o no alcanzadas»",
+    "source": "ley-6380",
+    "sequence": 150,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "62" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "62", "box_factor": -100 }
+      ]
+    }
+  }
+]

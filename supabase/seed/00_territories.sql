@@ -1265,3 +1265,32 @@ on conflict (code) do update set
   eu_vat_to       = excluded.eu_vat_to,
   vat_prefix      = excluded.vat_prefix,
   legal_reference = excluded.legal_reference;
+
+
+-- ---------------------------------------------------------------------------
+-- The row — Paraguay
+--
+-- A South American country, no candidate to any accession to the European
+-- Union and no party to any agreement extending Directive 2006/112/EC to its
+-- territory: article 5(2) of the Directive confines the common system of VAT
+-- to the territory of the Community as the Treaties define it, and Paraguay
+-- lies outside it. Paraguay levies its own Impuesto al Valor Agregado (IVA)
+-- under Ley N.° 6.380/2019, De Modernización y Simplificación del Sistema
+-- Tributario Nacional, Libro III, unrelated to the Union's common system.
+-- `vat_prefix` is null: a taxpayer is identified by the Registro Único del
+-- Contribuyente (RUC), which carries no ISO country prefix comparable to an
+-- EU VAT number.
+-- ---------------------------------------------------------------------------
+
+insert into territories (code, code_source, name, parent_code, eu_vat_scope, eu_vat_from, eu_vat_to, vat_prefix, legal_reference) values
+  ('PY', 'iso_3166_1', 'Paraguay', null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and Paraguay is a third country for every rule the Directive carries. Paraguay levies a value added tax of its own, the Impuesto al Valor Agregado, under Ley N.° 6.380/2019, Libro III, arts. 80 a 103.')
+on conflict (code) do update set
+  code_source     = excluded.code_source,
+  name            = excluded.name,
+  parent_code     = excluded.parent_code,
+  eu_vat_scope    = excluded.eu_vat_scope,
+  eu_vat_from     = excluded.eu_vat_from,
+  eu_vat_to       = excluded.eu_vat_to,
+  vat_prefix      = excluded.vat_prefix,
+  legal_reference = excluded.legal_reference;
