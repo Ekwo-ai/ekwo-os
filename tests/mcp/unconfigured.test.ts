@@ -132,7 +132,7 @@ describe('what is wrong rather than missing', () => {
 
   it('still refuses a user id that is not a uuid', async () => {
     await expect(
-      serverFromEnvironment({ [ENV.dbUrl]: 'postgresql://nobody@127.0.0.1:1/none', [ENV.actAsUserId]: 'me' }),
+      serverFromEnvironment({ [ENV.dbUrl]: 'postgresql://nobody@127.0.0.1:1/none', [ENV.actAsUserId]: 'not-a-uuid' }),
     ).rejects.toThrow(/bad_act_as_user/);
   });
 });
