@@ -284,6 +284,7 @@ says what they say. `ekwo pack describe <cc>` is everything one of them says.
 | [`py`](../packs/py/) | Paraguay | `103_pack_py.sql` | es | `community` |
 | [`ro`](../packs/ro/) | Romania | `72_pack_ro.sql` | ro | `community` |
 | [`rs`](../packs/rs/) | Srbija | `112_pack_rs.sql` | sr, en | `community` |
+| [`rw`](../packs/rw/) | Rwanda | `122_pack_rw.sql` | en, fr | `community` |
 | [`sa`](../packs/sa/) | Saudi Arabia | `71_pack_sa.sql` | en | `community` |
 | [`se`](../packs/se/) | Sverige | `61_pack_se.sql` | sv | `community` |
 | [`sg`](../packs/sg/) | Singapore | `50_pack_sg.sql` | en | `community` |

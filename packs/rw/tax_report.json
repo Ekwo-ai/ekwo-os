@@ -1,0 +1,138 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "RW-VAT",
+  "name": "Monthly VAT Declaration Form (RRA-VAT-DF1)",
+  "period": ["month", "quarter"],
+  "valid_from": "2023-09-14",
+  "legal_reference": "Value Added Tax Law, article 28(1) — value added tax is declared after the end of a month or after a quarter of three months; article 28(2) — a taxpayer whose annual turnover is equal to or less than FRW 200,000,000 declares quarterly; article 28(3) — a taxpayer whose annual turnover is more than FRW 200,000,000 declares monthly; article 28(4) — a taxpayer under the threshold may opt for a monthly declaration. The cadence follows a fact about the company (its turnover) rather than a rule the law gives everybody, so no `period_default` is declared. The form lays sales out in section 5 (lines 5 to 20) and the calculation of tax due in lines 25 to 95; this pack carries lines 5 to 70. Lines 75 (credit carried forward from a previous period), 76 and 80 (invoices to and VAT withheld by public institutions, a mechanism a third party to the sale executes) and 90/95 (the administrative split of line 70 between a refund claim and an amount due) are period-to-period settlement or a third party's own declaration rather than a figure this document posts; both gaps are recorded in docs/international.md.",
+  "source": "vat-df1-form",
+  "deadline": {
+    "rule": "day_of_month_after_period",
+    "day": 15,
+    "legal_reference": "Value Added Tax Law, article 28(2) and (3) — a taxpayer declares within fifteen days after the end of the quarter or the month; article 29(1) — the value added tax declared is paid within fifteen days following each month or quarter of declaration.",
+    "source": "vat-law"
+  },
+  "boxes": [
+    {
+      "box": "5",
+      "kind": "base",
+      "name": "Total Value of Supplies During the Month (VAT Exclusive)",
+      "sequence": 10,
+      "legal_reference": "Monthly VAT Declaration Form, line 5 — the value excluding VAT of every supply made during the period, taxable and non-taxable alike.",
+      "source": "vat-df1-form"
+    },
+    {
+      "box": "10",
+      "kind": "base",
+      "name": "Exempted Sales",
+      "sequence": 20,
+      "legal_reference": "Monthly VAT Declaration Form, line 10 — sales exempt under article 8 of the Value Added Tax Law.",
+      "source": "vat-df1-form"
+    },
+    {
+      "box": "15",
+      "kind": "base",
+      "name": "Zero Rated Sales",
+      "sequence": 30,
+      "legal_reference": "Monthly VAT Declaration Form, line 15 — domestic sales zero-rated under article 7 of the Value Added Tax Law, other than exports.",
+      "source": "vat-df1-form"
+    },
+    {
+      "box": "20",
+      "kind": "base",
+      "name": "Exports",
+      "sequence": 40,
+      "legal_reference": "Monthly VAT Declaration Form, line 20 — exported goods and services, zero-rated under article 7(1)(a) and (b) of the Value Added Tax Law.",
+      "source": "vat-df1-form"
+    },
+    {
+      "box": "25",
+      "kind": "total",
+      "name": "Total Not Taxable",
+      "sequence": 50,
+      "plus": ["10", "15", "20"],
+      "legal_reference": "Monthly VAT Declaration Form, line 25 — Total Not Taxable (Line 10+15+20).",
+      "source": "vat-df1-form"
+    },
+    {
+      "box": "30",
+      "kind": "total",
+      "name": "Taxable Sales Subject to VAT",
+      "sequence": 60,
+      "plus": ["5"],
+      "minus": ["25"],
+      "legal_reference": "Monthly VAT Declaration Form, line 30 — Taxable Sales Subject to VAT (Line 5 - Line 25).",
+      "source": "vat-df1-form"
+    },
+    {
+      "box": "35",
+      "kind": "total",
+      "name": "VAT on Taxable Sales",
+      "sequence": 70,
+      "rate": 18,
+      "rate_of": "30",
+      "legal_reference": "Monthly VAT Declaration Form, line 35 — VAT on Taxable Sales (18 % of Line 30).",
+      "source": "vat-df1-form"
+    },
+    {
+      "box": "40",
+      "kind": "tax",
+      "name": "VAT Reverse Charge",
+      "sequence": 80,
+      "legal_reference": "Monthly VAT Declaration Form, line 40 — the output tax self-charged under article 14 of the Value Added Tax Law on a service acquired from a person residing outside Rwanda.",
+      "source": "vat-df1-form"
+    },
+    {
+      "box": "45",
+      "kind": "total",
+      "name": "VAT Payable",
+      "sequence": 90,
+      "plus": ["35", "40"],
+      "legal_reference": "Monthly VAT Declaration Form, line 45 — VAT Payable (Line 35+Line 40).",
+      "source": "vat-df1-form"
+    },
+    {
+      "box": "50",
+      "kind": "tax",
+      "name": "VAT Paid on Imports",
+      "sequence": 100,
+      "legal_reference": "Monthly VAT Declaration Form, line 50 — value added tax paid at the customs point on imported goods, deductible under article 17(1) of the Value Added Tax Law.",
+      "source": "vat-df1-form"
+    },
+    {
+      "box": "55",
+      "kind": "tax",
+      "name": "VAT Paid on Local Purchase",
+      "sequence": 110,
+      "legal_reference": "Monthly VAT Declaration Form, line 55 — value added tax paid on a local purchase, deductible under article 17(1) of the Value Added Tax Law.",
+      "source": "vat-df1-form"
+    },
+    {
+      "box": "60",
+      "kind": "total",
+      "name": "VAT Paid on Input",
+      "sequence": 120,
+      "plus": ["50", "55"],
+      "legal_reference": "Monthly VAT Declaration Form, line 60 — VAT Paid on Input (Line 50+Line 55).",
+      "source": "vat-df1-form"
+    },
+    {
+      "box": "65",
+      "kind": "tax",
+      "name": "VAT Reverse Charge deductible",
+      "sequence": 130,
+      "legal_reference": "Monthly VAT Declaration Form, line 65 — the input tax of line 40 the taxpayer may deduct under article 14(3) of the Value Added Tax Law, where the service received is not available on the local market.",
+      "source": "vat-df1-form"
+    },
+    {
+      "box": "70",
+      "kind": "total",
+      "name": "VAT Payable/Credit Refundable",
+      "sequence": 140,
+      "plus": ["45"],
+      "minus": ["60", "65"],
+      "legal_reference": "Monthly VAT Declaration Form, line 70 — VAT Payable/Credit Refundable [(Line 45-(Line 60+Line 65))]. A positive figure is payable to the Rwanda Revenue Authority within fifteen days of the end of the period (article 29(1)); a negative figure is a credit, which article 26 refunds within thirty days of the declaration or carries forward, which the form's lines 75, 90 and 95 track and this pack does not carry.",
+      "source": "vat-df1-form"
+    }
+  ]
+}

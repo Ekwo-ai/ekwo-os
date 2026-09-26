@@ -1,0 +1,173 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "A month of books of a Kigali trading company, VAT-registered and filing monthly",
+  "chart": "default",
+  "fiscal_year": { "name": "Financial year 2026", "start": "2026-01-01", "end": "2026-12-31" },
+  "periods": [
+    { "code": "2026-01", "from": "2026-01-01", "to": "2026-01-31" }
+  ],
+  "statements": ["RW-ICPAR-SFP", "RW-ICPAR-IS"],
+  "contacts": [
+    { "ref": "cust-kigali", "name": "Nyarugenge Retailers Ltd", "type": "customer", "country": "RW" },
+    { "ref": "cust-uganda", "name": "Kampala Traders Ltd", "type": "customer", "country": "UG" },
+    { "ref": "cust-drc", "name": "Goma Fresh Imports SARL", "type": "customer", "country": "CD" },
+    { "ref": "supp-kigali", "name": "Nyabugogo Wholesalers Ltd", "type": "supplier", "country": "RW" },
+    { "ref": "supp-china", "name": "Guangzhou Trading Co.", "type": "supplier", "country": "CN" },
+    { "ref": "supp-us", "name": "CloudWorks Inc.", "type": "supplier", "country": "US" },
+    { "ref": "supp-fr", "name": "Atelier Graphique Lyon SARL", "type": "supplier", "country": "FR" }
+  ],
+  "documents": [
+    {
+      "ref": "INV-001",
+      "type": "sale_invoice",
+      "contact": "cust-kigali",
+      "date": "2026-01-08",
+      "why": "A domestic sale at the standard rate of 18 %: box 5 and the VAT on taxable sales of box 35.",
+      "lines": [
+        { "name": "Office furniture, retail sale", "quantity": 5, "unit_price": 150000, "tax": "RW-S-18", "account": "4000" }
+      ]
+    },
+    {
+      "ref": "INV-002",
+      "type": "sale_invoice",
+      "contact": "cust-uganda",
+      "date": "2026-01-10",
+      "why": "An export of goods, zero-rated under article 7(1)(a): box 5 and box 20, no output VAT, and a matched payment later on.",
+      "lines": [
+        { "name": "Green coffee beans, export consignment", "quantity": 2000, "unit_price": 3000, "tax": "RW-S-ZR-EXP", "account": "4020" }
+      ]
+    },
+    {
+      "ref": "INV-003",
+      "type": "sale_invoice",
+      "contact": "cust-kigali",
+      "date": "2026-01-12",
+      "why": "A domestic sale of minerals, zero-rated under article 7(1)(c) without the goods leaving Rwanda: box 5 and box 15.",
+      "lines": [
+        { "name": "Cassiterite concentrate, domestic sale", "quantity": 500, "unit_price": 8000, "tax": "RW-S-ZR-MIN", "account": "4000" }
+      ]
+    },
+    {
+      "ref": "INV-004",
+      "type": "sale_invoice",
+      "contact": "cust-kigali",
+      "date": "2026-01-14",
+      "why": "A sale of unprocessed agricultural produce, exempt under article 8(1)(k): box 5 and box 10, no output VAT, and a matched payment later on.",
+      "lines": [
+        { "name": "Fresh Irish potatoes, wholesale", "quantity": 10000, "unit_price": 250, "tax": "RW-S-EX-AGRI", "account": "4000" }
+      ]
+    },
+    {
+      "ref": "CN-001",
+      "type": "sale_credit_note",
+      "contact": "cust-kigali",
+      "date": "2026-01-20",
+      "why": "A credit note for one unit returned from INV-001, so box 5 and box 35 fall back down and a sale_credit_note is exercised.",
+      "lines": [
+        { "name": "Office furniture, retail sale — one unit returned", "quantity": 1, "unit_price": 150000, "tax": "RW-S-18", "account": "4000" }
+      ]
+    },
+    {
+      "ref": "PINV-001",
+      "type": "purchase_invoice",
+      "contact": "supp-kigali",
+      "date": "2026-01-09",
+      "why": "A domestic purchase at the standard rate, deductible in full: box 55 and box 60, and a matched payment later on.",
+      "lines": [
+        { "name": "Trading stock purchased for resale", "quantity": 1, "unit_price": 2000000, "tax": "RW-P-18", "account": "5000" }
+      ]
+    },
+    {
+      "ref": "PINV-002",
+      "type": "purchase_invoice",
+      "contact": "supp-kigali",
+      "date": "2026-01-11",
+      "why": "A passenger vehicle whose input tax is disallowed under article 20(a): the VAT becomes part of the cost of the vehicle and reaches no box.",
+      "lines": [
+        { "name": "Passenger motor vehicle for the sales manager", "quantity": 1, "unit_price": 15000000, "tax": "RW-P-18-BL", "account": "1660" }
+      ]
+    },
+    {
+      "ref": "PINV-003",
+      "type": "purchase_invoice",
+      "contact": "supp-china",
+      "date": "2026-01-15",
+      "why": "An import of goods: VAT due at the customs point under article 29(2), claimed as input tax through box 50 and box 60, and held on the customs control account until settled.",
+      "lines": [
+        { "name": "Imported electronics for resale", "quantity": 1, "unit_price": 6000000, "tax": "RW-P-IMP", "account": "5000" }
+      ]
+    },
+    {
+      "ref": "PINV-004",
+      "type": "purchase_invoice",
+      "contact": "supp-us",
+      "date": "2026-01-18",
+      "why": "A service acquired from a supplier outside Rwanda, not available on the local market: the recipient self-charges the output tax under article 14 and claims it back through box 65, netting to nothing on a wholly taxable purchase.",
+      "lines": [
+        { "name": "Cloud hosting subscription", "quantity": 1, "unit_price": 1200000, "tax": "RW-P-RC-FOREIGN", "account": "6350" }
+      ]
+    },
+    {
+      "ref": "PINV-005",
+      "type": "purchase_invoice",
+      "contact": "supp-fr",
+      "date": "2026-01-22",
+      "why": "A service acquired from a supplier outside Rwanda, available from an identical service on the local market: the self-charged output tax of box 40 cannot be offset under article 14(3), so it becomes part of the cost of the line.",
+      "lines": [
+        { "name": "Graphic design services, product catalogue", "quantity": 1, "unit_price": 500000, "tax": "RW-P-RC-FOREIGN-BL", "account": "6360" }
+      ]
+    },
+    {
+      "ref": "PCN-001",
+      "type": "purchase_credit_note",
+      "contact": "supp-kigali",
+      "date": "2026-01-27",
+      "why": "A purchase credit note for a short delivery on PINV-001, so box 55 and box 60 fall back down and a purchase_credit_note is exercised.",
+      "lines": [
+        { "name": "Trading stock purchased for resale — short-delivery credit", "quantity": 1, "unit_price": 200000, "tax": "RW-P-18", "account": "5000" }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "PAY-001",
+      "direction": "inbound",
+      "date": "2026-02-04",
+      "amount": 6000000,
+      "contact": "cust-uganda",
+      "journal": "BNK",
+      "match": "INV-002",
+      "why": "The export of INV-002 collected in full: a matched inbound payment in a foreign trade relationship."
+    },
+    {
+      "ref": "PAY-002",
+      "direction": "inbound",
+      "date": "2026-02-05",
+      "amount": 2500000,
+      "contact": "cust-kigali",
+      "journal": "BNK",
+      "match": "INV-004",
+      "why": "The exempt sale of INV-004 collected in full: a matched inbound payment on an exempt supply."
+    },
+    {
+      "ref": "PAY-003",
+      "direction": "outbound",
+      "date": "2026-02-06",
+      "amount": 2360000,
+      "contact": "supp-kigali",
+      "journal": "BNK",
+      "match": "PINV-001",
+      "why": "PINV-001 settled in full, VAT included: a matched outbound payment."
+    },
+    {
+      "ref": "PAY-004",
+      "direction": "inbound",
+      "date": "2026-02-09",
+      "amount": 1000000,
+      "contact": "cust-drc",
+      "journal": "BNK",
+      "match": null,
+      "why": "An advance received from Goma Fresh Imports SARL before its next invoice, matched to nothing: reconcile() has to survive an open item."
+    }
+  ]
+}

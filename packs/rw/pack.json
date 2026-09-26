@@ -1,0 +1,156 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "RW",
+  "name": "Rwanda",
+  "version": "0.1.0",
+  "schema_min": "20260923110000",
+  "seed_sequence": 122,
+  "released_at": "2026-09-26",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "vat-law",
+        "title": "Law N° 049/2023 of 05/09/2023 establishing value added tax, repealing Law N° 37/2012 of 09/11/2012",
+        "publisher": "Official Gazette of the Republic of Rwanda, n° Special of 14/09/2023",
+        "url": "https://www.rra.gov.rw/fileadmin/user_upload/LAW_ESTABLISHING_VALUE_ADDED_TAX.pdf",
+        "consulted_on": "2026-09-26",
+        "kind": "law"
+      },
+      {
+        "key": "tax-procedures-law",
+        "title": "Law N° 020/2023 of 31/03/2023 on tax procedures, articles on the electronic invoicing system and its administrative fine",
+        "publisher": "Official Gazette of the Republic of Rwanda, n° Special ter of 31/03/2023",
+        "url": "https://www.rra.gov.rw/fileadmin/user_upload/NEW_TAX_PROCEDURES_LAW_2023.pdf",
+        "consulted_on": "2026-09-26",
+        "kind": "law"
+      },
+      {
+        "key": "companies-law",
+        "title": "Law N° 007/2021 of 05/02/2021 governing companies, articles 121 to 133 (accounting records, annual accounts, audit)",
+        "publisher": "Official Gazette of the Republic of Rwanda, n° 04 ter of 08/02/2021",
+        "url": "https://www.minicom.gov.rw/fileadmin/user_upload/Minicom/Publications/Laws/Companies/10.8.2.1.Companies-Law-No-007-of-2021.pdf",
+        "consulted_on": "2026-09-26",
+        "kind": "law"
+      },
+      {
+        "key": "rra-tax-handbook",
+        "title": "RRA Tax Handbook, 2nd edition, 2025 — Value Added Tax (VAT) chapter",
+        "publisher": "Rwanda Revenue Authority",
+        "url": "https://www.rra.gov.rw/fileadmin/Folder_for_2025/RRA_Tax_Handbook_2025_Final.pdf",
+        "consulted_on": "2026-09-26",
+        "kind": "guidance"
+      },
+      {
+        "key": "vat-df1-form",
+        "title": "Monthly VAT Declaration Form, form RRA-VAT-DF1",
+        "publisher": "Rwanda Revenue Authority, published on the Rwanda Development Board business procedures portal",
+        "url": "https://businessprocedures.rdb.rw/media/RRA-VAT-DF1-E08.pdf",
+        "consulted_on": "2026-09-26",
+        "kind": "form"
+      },
+      {
+        "key": "etax",
+        "title": "e-Tax — where the VAT declaration is filed and paid",
+        "publisher": "Rwanda Revenue Authority",
+        "url": "https://etax.rra.gov.rw/",
+        "consulted_on": "2026-09-26",
+        "kind": "portal"
+      },
+      {
+        "key": "ebm-portal",
+        "title": "The Electronic Billing Machine and the Electronic Invoicing System",
+        "publisher": "Rwanda Revenue Authority",
+        "url": "https://www.rra.gov.rw/en/about-ebm",
+        "consulted_on": "2026-09-26",
+        "kind": "portal"
+      },
+      {
+        "key": "ifac-rwanda",
+        "title": "Rwanda — Member Country, on ICPAR's adoption of the IFRS Accounting Standards and the IFRS for SMEs Accounting Standard under Law N° 11/2008 of 06/05/2008 establishing the Institute of Certified Public Accountants of Rwanda",
+        "publisher": "International Federation of Accountants (IFAC)",
+        "url": "https://www.ifac.org/about-ifac/membership/profile/rwanda",
+        "consulted_on": "2026-09-26",
+        "kind": "guidance"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "RWF",
+    "language": "en",
+    "rounding_method": "half_up",
+    "closing_style": "retained_earnings",
+    "fiscal_year_default": "calendar",
+    "roles": {
+      "receivable": "1100",
+      "payable": "2000",
+      "suspense": "2990",
+      "rounding": "6990",
+      "retained_earnings": "3200",
+      "sales": "4000",
+      "purchase": "5000",
+      "bank": "1010",
+      "cash": "1000",
+      "fx_gain": "4700",
+      "fx_loss": "6950",
+      "asset_disposal_gain": "4750",
+      "asset_disposal_loss": "6960",
+      "tax_payable": "2110",
+      "tax_receivable": "1155"
+    },
+    "journal_roles": {
+      "sales": "SAL",
+      "purchase": "PUR",
+      "miscellaneous": "GEN",
+      "opening": "OPN"
+    }
+  },
+  "languages": ["fr"],
+  "journals": [
+    { "code": "SAL", "type": "sales", "name": "Sales journal", "sequence": 10 },
+    { "code": "PUR", "type": "purchase", "name": "Purchases journal", "sequence": 20 },
+    { "code": "BNK", "type": "bank", "name": "Bank", "sequence": 30 },
+    { "code": "CSH", "type": "cash", "name": "Petty cash", "sequence": 40 },
+    { "code": "GEN", "type": "general", "name": "General journal", "sequence": 50 },
+    { "code": "OPN", "type": "opening", "name": "Opening balances", "sequence": 60 }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Rwanda reference chart of accounts",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": ["RW-ICPAR-SFP", "RW-ICPAR-IS"],
+      "legal_reference": "There is no legal chart of accounts in Rwanda. Law N° 007/2021 of 05/02/2021 governing companies, article 121 requires every company to keep accounting records; article 122 requires annual accounts comprising a balance sheet, a profit and loss account, cash flow statements, equity and a statement of changes; article 123 requires the balance sheet of a company to comply with international standards, with explanatory notes on significant policies, trends, risks and uncertainties. The Institute of Certified Public Accountants of Rwanda (ICPAR), the standard-setting body Law N° 11/2008 of 06/05/2008 establishes, has adopted the IFRS Accounting Standards for an entity with public accountability and the IFRS for SMEs Accounting Standard for other entities. This chart is original: four digits, blocked so that each range reaches one line of the IFRS for SMEs statements below, carrying the accounts a Rwandan company actually keeps — VAT input and output tax, import VAT owed to the Rwanda Revenue Authority (RRA) at the border, Rwanda Social Security Board (RSSB) and medical insurance contributions, Pay As You Earn (PAYE), withholding tax and amounts due to directors.",
+      "source": "companies-law"
+    }
+  ],
+  "documents": {
+    "numbering": "sequential",
+    "number_format": "{CODE}-{YYYY}-{NNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "earliest_of_delivery_or_payment",
+    "references": {
+      "numbering": {
+        "legal_reference": "Law N° 020/2023 of 31/03/2023 on tax procedures requires every person carrying out a taxable activity to issue an electronic tax invoice through the electronic invoicing system (EIS/EBM), which the Tax Administration certifies and numbers; the requirement identifies each invoice rather than forbidding a hole in the series, which is why `numbering` is `sequential` and not gapless.",
+        "source": "tax-procedures-law"
+      },
+      "tax_point": {
+        "legal_reference": "Value Added Tax Law, article 12(1) — the value added tax point for the supply of goods and services is the earliest among: (a) the date the invoice is issued; (b) the date payment (including partial payment) is made, except an advance payment for construction services; (c) the date goods are removed from the supplier's premises or given to the recipient; (d) the date a service is delivered; (e) the date a taxpayer applies for deregistration. This is a five-way earliest-of test and Ekwo's closed vocabulary only expresses a two-way one; `earliest_of_delivery_or_payment` is the nearest value, and the gap — an invoice issued ahead of both delivery and payment, or a deregistration application, which would fix the tax point in Rwanda but not in Ekwo's own reading of this word — is recorded in docs/international.md.",
+        "source": "vat-law"
+      }
+    },
+    "mentions": []
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "obligation": "none",
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "No Rwandan statute obliges a business to exchange a structured electronic invoice with another business, or to accept one, in the sense Ekwo's vocabulary gives the word — there is no Rwandan Peppol authority, no published profile and no ISO 6523 scheme a party is addressed by, so `profile`, `party_scheme` and `vat_scheme` are all null and `obligation` is `none`. What Rwanda has instead is the Electronic Invoicing System (EIS), a clearance system built on the Electronic Billing Machine (EBM): Law N° 020/2023 of 31/03/2023 on tax procedures requires every person carrying out a taxable activity, whether registered for VAT or not, to request and use an EIS/EBM device — an ETR, e-invoicing software (OSCU/VSCU), a mobile application or another certified channel — to issue every tax invoice, which is validated and reported to the Rwanda Revenue Authority in real time; a person who fails to comply is liable to an administrative fine. This is a real-time clearance of an invoice already addressed to a Rwandan buyer and not a peer-to-peer exchange of a structured document between two businesses in the sense `einvoicing.profile` describes; the gap is recorded in docs/international.md and in this pack's README, and the socle is not patched to fit it.",
+    "source": "tax-procedures-law"
+  }
+}

@@ -1,0 +1,234 @@
+[
+  {
+    "code": "RW-S-18",
+    "name": "Sale, standard rate 18 %",
+    "description": "The general rate on a taxable supply made in Rwanda",
+    "kind": "vat",
+    "rate": 18,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2023-09-14",
+    "legal_reference": "Value Added Tax Law, article 3(1)(a) — value added tax is charged on taxable goods and services supplied in Rwanda; article 4(b) — at eighteen per cent for other goods and services supplied in Rwanda or imported. Monthly VAT Declaration Form, line 5 (total value of supplies) and line 35 (VAT on taxable sales, 18 % of line 30).",
+    "source": "vat-law",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "5" },
+        { "type": "tax", "account": "2100" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "5", "box_factor": -100 },
+        { "type": "tax", "account": "2100", "box_factor": -100 }
+      ]
+    },
+    "sequence": 10
+  },
+  {
+    "code": "RW-S-ZR-EXP",
+    "name": "Sale, zero-rated (export of goods)",
+    "description": "Goods exported from Rwanda and their auxiliary services",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2023-09-14",
+    "legal_reference": "Value Added Tax Law, article 7(1)(a) — exported goods and their auxiliary services, including those that are already exempted, are zero-rated. Monthly VAT Declaration Form, line 5 (total value of supplies) and line 20 (Exports).",
+    "source": "vat-law",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": ["5", "20"] }
+      ],
+      "credit_note": [
+        { "type": "base", "box": ["5", "20"], "box_factor": -100 }
+      ]
+    },
+    "sequence": 20
+  },
+  {
+    "code": "RW-S-ZR-EXP-SVC",
+    "name": "Sale, zero-rated (export of services)",
+    "description": "A service exported outside Rwanda",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2023-09-14",
+    "legal_reference": "Value Added Tax Law, article 7(1)(b) — exported services are zero-rated; article 2, 15° defines an exported service as one provided for use or consumption outside Rwanda, whether supplied in Rwanda or both inside and outside Rwanda, but which has no impact on the recipient's interest in Rwanda. Monthly VAT Declaration Form, line 5 and line 20 (Exports).",
+    "source": "vat-law",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": ["5", "20"] }
+      ],
+      "credit_note": [
+        { "type": "base", "box": ["5", "20"], "box_factor": -100 }
+      ]
+    },
+    "sequence": 30
+  },
+  {
+    "code": "RW-S-ZR-MIN",
+    "name": "Sale, zero-rated (minerals sold on the domestic market)",
+    "description": "A domestic sale of minerals, which stays zero-rated without the goods leaving Rwanda",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2023-09-14",
+    "legal_reference": "Value Added Tax Law, article 7(1)(c) — minerals sold on the domestic market are zero-rated. Monthly VAT Declaration Form, line 5 and line 15 (Zero Rated Sales).",
+    "source": "vat-law",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": ["5", "15"] }
+      ],
+      "credit_note": [
+        { "type": "base", "box": ["5", "15"], "box_factor": -100 }
+      ]
+    },
+    "sequence": 40
+  },
+  {
+    "code": "RW-S-EX-AGRI",
+    "name": "Sale, exempt (unprocessed agricultural and livestock products)",
+    "description": "Agricultural and livestock products in their unprocessed state",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2023-09-14",
+    "legal_reference": "Value Added Tax Law, article 8(1)(k) — all agricultural and livestock products, except processed ones, are exempt from value added tax; processed maize, rice and milk remain exempt, except powdered milk and milk-derived products. Monthly VAT Declaration Form, line 5 and line 10 (Exempted Sales).",
+    "source": "vat-law",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": ["5", "10"] }
+      ],
+      "credit_note": [
+        { "type": "base", "box": ["5", "10"], "box_factor": -100 }
+      ]
+    },
+    "sequence": 50
+  },
+  {
+    "code": "RW-P-18",
+    "name": "Purchase, standard rate 18 %, deductible",
+    "description": "A local purchase at the general rate, used to make taxable supplies",
+    "kind": "vat",
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2023-09-14",
+    "legal_reference": "Value Added Tax Law, article 17(1) — a taxpayer who supplies taxable goods or services during a tax period is entitled to a credit of the input tax paid in respect of taxable acquisitions during the period for the purposes of selling taxable goods or delivering taxable services; article 4(b) — the rate. Monthly VAT Declaration Form, line 55 (VAT Paid on Local Purchase) and line 60 (VAT Paid on Input).",
+    "source": "vat-law",
+    "postings": {
+      "invoice": [
+        { "type": "base" },
+        { "type": "tax", "account": "1150", "box": "55" }
+      ],
+      "credit_note": [
+        { "type": "base" },
+        { "type": "tax", "account": "1150", "box": "55", "box_factor": -100 }
+      ]
+    },
+    "sequence": 110
+  },
+  {
+    "code": "RW-P-18-BL",
+    "name": "Purchase, standard rate 18 %, input tax disallowed (passenger vehicle)",
+    "description": "A passenger vehicle, its spare parts and its repair and maintenance services, bought other than by a taxpayer who deals, rents or teaches driving with such vehicles",
+    "kind": "vat",
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "recoverable": false,
+    "valid_from": "2023-09-14",
+    "legal_reference": "Value Added Tax Law, article 20(a) — no input tax is allowed on a passenger vehicle, its spare parts and its repair and maintenance services, unless the taxpayer conducts a business of sale or rent of passenger vehicles, or has a driving school. The disallowed tax is not a claim on the Monthly VAT Declaration Form, so it lands on the account of the line and reaches no box.",
+    "source": "vat-law",
+    "postings": {
+      "invoice": [
+        { "type": "base" },
+        { "type": "tax_on_base" }
+      ],
+      "credit_note": [
+        { "type": "base" },
+        { "type": "tax_on_base" }
+      ]
+    },
+    "sequence": 120
+  },
+  {
+    "code": "RW-P-IMP",
+    "name": "Import of goods, VAT paid at the border",
+    "description": "VAT due at the customs point on the importation of taxable goods, claimed as input tax once paid",
+    "kind": "vat",
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2023-09-14",
+    "legal_reference": "Value Added Tax Law, article 3(1)(b) — tax is charged on taxable imported goods and services; article 15 — goods are considered imported on the date they enter Rwandan territory under customs law; article 16 — the basic value for taxation of imported goods; article 29(2) — the value added tax payable by an importer is due when the imported goods enter the customs point. Article 17(1) — the tax so paid is then deductible as input tax. Monthly VAT Declaration Form, line 50 (VAT Paid on Imports) and line 60 (VAT Paid on Input). The tax is owed to the Rwanda Revenue Authority at the border and not to the supplier, so it waits on 2125 until the import declaration is settled.",
+    "source": "vat-law",
+    "postings": {
+      "invoice": [
+        { "type": "base" },
+        { "type": "tax", "account": "1150", "box": "50" },
+        { "type": "tax", "factor": -100, "account": "2125" }
+      ],
+      "credit_note": [
+        { "type": "base" },
+        { "type": "tax", "account": "1150", "box": "50", "box_factor": -100 },
+        { "type": "tax", "factor": -100, "account": "2125" }
+      ]
+    },
+    "sequence": 130
+  },
+  {
+    "code": "RW-P-RC-FOREIGN",
+    "name": "Imported service, self-charged and claimed",
+    "description": "A service acquired from a person residing outside Rwanda, not available on the local market, self-assessed and fully deductible",
+    "kind": "vat",
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "conditions": ["supply_nature"],
+    "valid_from": "2023-09-14",
+    "legal_reference": "Value Added Tax Law, article 14(1) — a taxpayer who acquires a service from a person outside Rwanda is considered to have received a taxable service and an output tax from that person; article 14(2) — the output tax is payable on the date of declaration for the period the service was delivered, and the receipt justifying payment to the foreign supplier is considered the value added tax invoice; article 14(3) — the recipient may deduct that input tax only if the service is not available on the local market. Monthly VAT Declaration Form, line 40 (VAT Reverse Charge) and line 65 (VAT Reverse Charge deductible).",
+    "source": "vat-law",
+    "postings": {
+      "invoice": [
+        { "type": "base" },
+        { "type": "tax", "account": "1150", "box": "65" },
+        { "type": "tax", "factor": -100, "account": "2100", "box": "40", "box_factor": 100 }
+      ],
+      "credit_note": [
+        { "type": "base" },
+        { "type": "tax", "account": "1150", "box": "65", "box_factor": -100 },
+        { "type": "tax", "factor": -100, "account": "2100", "box": "40", "box_factor": -100 }
+      ]
+    },
+    "sequence": 140
+  },
+  {
+    "code": "RW-P-RC-FOREIGN-BL",
+    "name": "Imported service, self-charged, input tax disallowed (available locally)",
+    "description": "A service acquired from a person residing outside Rwanda, available from an identical or similar provider on the local market, so the self-assessed tax cannot be offset as input tax",
+    "kind": "vat",
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "recoverable": false,
+    "conditions": ["supply_nature"],
+    "valid_from": "2023-09-14",
+    "legal_reference": "Value Added Tax Law, article 14(1) and (2) — the taxpayer self-charges and pays the output tax on the service received. Article 14(3) and (4) — this VAT may be offset as input tax only if the service received is not available on the local market; a service is not considered available in Rwanda if there is no one who can deliver an identical or similar service. Where the service is available locally, the tax is not offset, and the disallowed amount is not a claim on the Monthly VAT Declaration Form, so it lands on the account of the line. Monthly VAT Declaration Form, line 40 (VAT Reverse Charge).",
+    "source": "vat-law",
+    "postings": {
+      "invoice": [
+        { "type": "base" },
+        { "type": "tax", "factor": -100, "account": "2100", "box": "40", "box_factor": 100 },
+        { "type": "tax_on_base" }
+      ],
+      "credit_note": [
+        { "type": "base" },
+        { "type": "tax", "factor": -100, "account": "2100", "box": "40", "box_factor": -100 },
+        { "type": "tax_on_base" }
+      ]
+    },
+    "sequence": 150
+  }
+]

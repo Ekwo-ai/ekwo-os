@@ -5595,3 +5595,65 @@ for a purchase from outside the GCC — it is simply that no invoice this
 pack's research could find yet exercises the intra-GCC branch anywhere in
 the Council, the same footing `packs/ae/` and `packs/sa/` record for the
 same three boxes of their own returns.
+
+## From Rwanda
+
+**A five-way tax point, where the closed vocabulary offers a two-way one.**
+Article 12(1) of the Value Added Tax Law fixes the tax point at the earliest
+of the invoice date, the date payment (including a partial one) is made —
+excluding an advance payment for construction services — the date goods are
+removed or delivered, the date a service is delivered, or the date a
+taxpayer applies for deregistration. `earliest_of_delivery_or_payment` is
+the nearest of the five, and the same two branches the word cannot state
+that Kenya's `packs/ke/` and Nigeria's `packs/ng/` already record apply here:
+an invoice issued ahead of both delivery and payment, and — new to this
+pack — a deregistration application preceding either, which article 12(1)(e)
+would still make the tax point.
+
+**VAT withheld by a public institution, a mechanism a third party to the
+sale executes.** Article 3(3) of the Value Added Tax Law obliges "a public
+procuring entity" that has contracted a supplier to withhold VAT on every
+payment for taxable goods and services from a successful VAT-registered
+bidder, and to pay it to the Rwanda Revenue Authority on the supplier's
+behalf, within the same fifteen-day deadline as an ordinary return
+(RRA Tax Handbook, "What is VAT Retained by Public Institutions?"). The
+Monthly VAT Declaration Form carries it at lines 76 and 80 — the invoices
+to public institutions and the amount they withheld — crediting the
+supplier's own line 85. A `taxes.json` posting always speaks of the two
+parties to the document being posted, and a public institution withholding
+on a *supplier's* declaration is neither of them, the same shape
+`docs/packs.md` already gives Kenya's appointed VAT withholding agents. A
+first `community` version of this pack carries no tax and no account role
+for it beyond the memo account `2130`, and does not carry lines 76, 80, 85,
+90 or 95 of the form.
+
+**The Electronic Invoicing System (EIS), built on the Electronic Billing
+Machine (EBM), is a real-time clearance and not a profile of EN 16931.**
+Law N° 020/2023 of 31/03/2023 on tax procedures requires every person
+carrying out a taxable activity, VAT-registered or not, to issue every tax
+invoice through a certified EIS/EBM channel — an ETR device, e-invoicing
+software (OSCU/VSCU), a mobile application, or another certified method —
+which reports the invoice to the Rwanda Revenue Authority as it is issued
+and carries an administrative fine for non-compliance. This is the same
+shape as Kenya's eTIMS (`packs/ke/`) and Nigeria's Merchant-Buyer Solution
+(`packs/ng/`): a seller's own system clears an invoice with the tax
+administration before or as it reaches the buyer, addressed by no ISO 6523
+scheme and built to no profile any brick of `packages/formats/` writes.
+`einvoicing.profile`, `party_scheme` and `vat_scheme` stay null and
+`obligation` stays `none`, for the reason those two packs give: the field
+describes a peer-to-peer exchange between two businesses, and a domestic
+clearance requirement is a different shape the vocabulary was not built for.
+
+**A reverse charge whose deductibility turns on a fact the ledger does not
+hold, and that this pack's `conditions` vocabulary was not built to
+narrow further.** Article 14(3) of the Value Added Tax Law lets the
+recipient of a self-charged imported service deduct the input tax only if
+the service is "not available on the local market" — a question of fact
+about the Rwandan market on the day of the purchase, settled in practice by
+the Ministry's own authorisation under article 14(5), and not a property of
+either party to the document. `docs/packs.md`'s `conditions` field
+documents that such a question exists and answers none of it; `supply_nature`
+is the nearest of its five words, and it is what `packs/rw/taxes.json`
+declares on both `RW-P-RC-FOREIGN` and `RW-P-RC-FOREIGN-BL` — one tax code
+per answer, chosen by whoever books the purchase, the way `docs/packs.md`
+already describes an American resale certificate under `buyer_certificate`.
