@@ -1,0 +1,247 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/statements",
+  "statements": [
+    {
+      "code": "XK-IFRS-BS",
+      "kind": "balance_sheet",
+      "framework": "IFRS-SME",
+      "name": "Pasqyra e pozicionit financiar",
+      "legal_reference": "Ligji Nr. 06/L-032 për Kontabilitet, Raportim Financiar dhe Auditim, neni 8 — organizatat e vogla dhe të mesme (neni 5, paragrafët 3 dhe 4) përgatisin pasqyrat financiare sipas IFRS for SMEs; neni 7 — organizatat e mëdha (neni 5, paragrafi 5) përgatisin sipas IFRS-ve të plota. Ligji Nr. 06/L-032 nuk përcakton një formë të vetme e të detyrueshme të bilancit me rreshta të caktuar (ndryshe, për shembull, nga plani kombëtar serb apo boshnjak). Ky paket përdor grupimin minimal të parashikuar nga seksioni 4 i IFRS for SMEs, sipas diapazoneve të kodeve të llogarive të vetë këtij paketi (shih README.md) — kodet e llogarive nuk janë të përcaktuara me ligj.",
+      "source": "ligji-kontabiliteti",
+      "lines": [
+        {
+          "code": "A-NC-FIX",
+          "parent": "A-NC",
+          "name": "Prona, impiantet, pajisjet dhe aktivet jomateriale",
+          "sequence": 10,
+          "rules": [
+            { "kind": "code_range", "code_from": "0100", "code_to": "0299" }
+          ]
+        },
+        {
+          "code": "A-NC-OTH",
+          "parent": "A-NC",
+          "name": "Aktive të tjera afatgjata",
+          "sequence": 20,
+          "rules": [
+            { "kind": "code_range", "code_from": "0300", "code_to": "0399" }
+          ]
+        },
+        {
+          "code": "A-NC",
+          "name": "Aktive afatgjata",
+          "sequence": 30,
+          "is_total": true,
+          "plus": ["A-NC-FIX", "A-NC-OTH"]
+        },
+        {
+          "code": "A-C-REC",
+          "parent": "A-C",
+          "name": "Të arkëtueshme tregtare dhe të tjera",
+          "sequence": 40,
+          "rules": [
+            { "kind": "code_range", "code_from": "1100", "code_to": "1130" }
+          ]
+        },
+        {
+          "code": "A-C-OTH",
+          "parent": "A-C",
+          "name": "Stoqe, parapagime dhe aktive të tjera afatshkurtra",
+          "sequence": 50,
+          "rules": [
+            { "kind": "code_range", "code_from": "1000", "code_to": "1050", "sequence": 10 },
+            { "kind": "code_range", "code_from": "1200", "code_to": "1220", "sequence": 20 },
+            { "kind": "code_range", "code_from": "1450", "code_to": "1490", "sequence": 30 }
+          ]
+        },
+        {
+          "code": "A-C-CASH",
+          "parent": "A-C",
+          "name": "Mjete monetare dhe ekuivalentë",
+          "sequence": 60,
+          "rules": [
+            { "kind": "code_range", "code_from": "1300", "code_to": "1330" }
+          ]
+        },
+        {
+          "code": "A-C",
+          "name": "Aktive afatshkurtra",
+          "sequence": 70,
+          "is_total": true,
+          "plus": ["A-C-REC", "A-C-OTH", "A-C-CASH"]
+        },
+        {
+          "code": "A-TOT",
+          "name": "Totali i aktiveve",
+          "sequence": 80,
+          "is_total": true,
+          "plus": ["A-NC", "A-C"]
+        },
+        {
+          "code": "E-CAP",
+          "parent": "E-TOT",
+          "name": "Kapitali dhe rezervat",
+          "sequence": 90,
+          "sign": -1,
+          "rules": [
+            { "kind": "code_range", "code_from": "3000", "code_to": "3050" }
+          ]
+        },
+        {
+          "code": "E-RET",
+          "parent": "E-TOT",
+          "name": "Fitimi i pashpërndarë",
+          "sequence": 100,
+          "sign": -1,
+          "rules": [
+            { "kind": "account_code", "code_from": "3100" }
+          ]
+        },
+        {
+          "code": "E-RESULT",
+          "parent": "E-TOT",
+          "name": "Rezultati i periudhës, ende i pashpërndarë",
+          "sequence": 105,
+          "sign": -1,
+          "rules": [
+            { "kind": "code_range", "code_from": "4000", "code_to": "4050", "sequence": 10 },
+            { "kind": "code_range", "code_from": "4200", "code_to": "4250", "sequence": 20 },
+            { "kind": "code_range", "code_from": "5000", "code_to": "5040", "sequence": 30 },
+            { "kind": "code_range", "code_from": "6000", "code_to": "6220", "sequence": 40 },
+            { "kind": "code_range", "code_from": "6900", "code_to": "6920", "sequence": 50 },
+            { "kind": "code_range", "code_from": "7000", "code_to": "7060", "sequence": 60 }
+          ]
+        },
+        {
+          "code": "E-TOT",
+          "name": "Totali i kapitalit",
+          "sequence": 110,
+          "is_total": true,
+          "plus": ["E-CAP", "E-RET", "E-RESULT"]
+        },
+        {
+          "code": "L-NC",
+          "parent": "L-TOT",
+          "name": "Detyrime afatgjata",
+          "sequence": 120,
+          "sign": -1,
+          "rules": [
+            { "kind": "code_range", "code_from": "2400", "code_to": "2440" }
+          ]
+        },
+        {
+          "code": "L-C-PAY",
+          "parent": "L-C",
+          "name": "Detyrime tregtare dhe të tjera",
+          "sequence": 130,
+          "sign": -1,
+          "rules": [
+            { "kind": "code_range", "code_from": "2000", "code_to": "2020" }
+          ]
+        },
+        {
+          "code": "L-C-OTH",
+          "parent": "L-C",
+          "name": "Detyrime të tjera afatshkurtra",
+          "sequence": 140,
+          "sign": -1,
+          "rules": [
+            { "kind": "code_range", "code_from": "2100", "code_to": "2200", "sequence": 10 },
+            { "kind": "account_code", "code_from": "2250", "sequence": 20 },
+            { "kind": "account_code", "code_from": "2300", "sequence": 30 }
+          ]
+        },
+        {
+          "code": "L-C",
+          "name": "Detyrime afatshkurtra",
+          "sequence": 150,
+          "is_total": true,
+          "plus": ["L-C-PAY", "L-C-OTH"]
+        },
+        {
+          "code": "L-TOT",
+          "name": "Totali i detyrimeve",
+          "sequence": 160,
+          "is_total": true,
+          "plus": ["L-NC", "L-C"]
+        },
+        {
+          "code": "EL-TOT",
+          "name": "Totali i kapitalit dhe detyrimeve",
+          "sequence": 170,
+          "is_total": true,
+          "plus": ["E-TOT", "L-TOT"]
+        }
+      ]
+    },
+    {
+      "code": "XK-IFRS-IS",
+      "kind": "income_statement",
+      "framework": "IFRS-SME",
+      "name": "Pasqyra e të ardhurave gjithëpërfshirëse",
+      "legal_reference": "Ligji Nr. 06/L-032 për Kontabilitet, Raportim Financiar dhe Auditim, neni 8; IFRS for SMEs, seksioni 5 — zërat minimalë të pasqyrës së të ardhurave gjithëpërfshirëse. Struktura këtu është sipas diapazoneve të kodeve të llogarive të vetë këtij paketi, jo sipas kodeve të një formulari zyrtar që nuk ekziston — shih README.md.",
+      "source": "ligji-kontabiliteti",
+      "lines": [
+        {
+          "code": "REV",
+          "name": "Të hyrat",
+          "sequence": 10,
+          "sign": -1,
+          "rules": [
+            { "kind": "code_range", "code_from": "4000", "code_to": "4050" }
+          ]
+        },
+        {
+          "code": "COST",
+          "name": "Kostoja e shitjes",
+          "sequence": 20,
+          "rules": [
+            { "kind": "code_range", "code_from": "5000", "code_to": "5040" }
+          ]
+        },
+        {
+          "code": "GROSS",
+          "name": "Fitimi bruto",
+          "sequence": 30,
+          "is_total": true,
+          "plus": ["REV"],
+          "minus": ["COST"]
+        },
+        {
+          "code": "OTH-INC",
+          "name": "Të hyra të tjera",
+          "sequence": 40,
+          "sign": -1,
+          "rules": [
+            { "kind": "code_range", "code_from": "4200", "code_to": "4250" }
+          ]
+        },
+        {
+          "code": "OPEX",
+          "name": "Shpenzime operative",
+          "sequence": 50,
+          "rules": [
+            { "kind": "code_range", "code_from": "6000", "code_to": "6220", "sequence": 10 },
+            { "kind": "code_range", "code_from": "7000", "code_to": "7060", "sequence": 20 }
+          ]
+        },
+        {
+          "code": "DEPR",
+          "name": "Zhvlerësimi dhe amortizimi",
+          "sequence": 60,
+          "rules": [
+            { "kind": "code_range", "code_from": "6900", "code_to": "6920" }
+          ]
+        },
+        {
+          "code": "PROFIT",
+          "name": "Fitimi (humbja) i periudhës",
+          "sequence": 70,
+          "is_total": true,
+          "plus": ["GROSS", "OTH-INC"],
+          "minus": ["OPEX", "DEPR"]
+        }
+      ]
+    }
+  ]
+}

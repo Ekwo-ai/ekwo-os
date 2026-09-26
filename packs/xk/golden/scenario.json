@@ -1,0 +1,165 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "Një vit i shoqërisë tregtare kosovare, obliguese e TVSH-së, që deklaron mujore",
+  "chart": "default",
+  "fiscal_year": { "name": "Viti financiar 2026", "start": "2026-01-01", "end": "2026-12-31" },
+  "periods": [
+    { "code": "2026-01", "from": "2026-01-01", "to": "2026-01-31" },
+    { "code": "2026-02", "from": "2026-02-01", "to": "2026-02-28" }
+  ],
+  "statements": ["XK-IFRS-BS", "XK-IFRS-IS"],
+  "contacts": [
+    { "ref": "bleres-vendas", "name": "Dyqani Prishtina Trade Sh.p.k.", "type": "customer", "country": "XK" },
+    { "ref": "bleres-eksport", "name": "Alpen Möbel GmbH", "type": "customer", "country": "DE" },
+    { "ref": "bleres-arsim", "name": "Qendra e Trajnimit Profesional „Dardania”", "type": "customer", "country": "XK" },
+    { "ref": "furnitor-vendas", "name": "Zyra Plus Sh.p.k.", "type": "supplier", "country": "XK" },
+    { "ref": "furnitor-uji", "name": "Kompania Rajonale e Ujësjellësit Sh.a.", "type": "supplier", "country": "XK" },
+    { "ref": "furnitor-sigurim", "name": "Sigal Kosova Sh.a.", "type": "supplier", "country": "XK" },
+    { "ref": "furnitor-import", "name": "Bavaria Maschinenbau GmbH", "type": "supplier", "country": "DE" },
+    { "ref": "furnitor-konsulence", "name": "Wien Consulting GmbH", "type": "supplier", "country": "AT" }
+  ],
+  "documents": [
+    {
+      "ref": "V1",
+      "type": "sale_invoice",
+      "contact": "bleres-vendas",
+      "date": "2026-01-10",
+      "why": "Shitje me normën standarde 18%: mbush kutinë 03 (baza) dhe 03T (TVSH).",
+      "lines": [
+        { "name": "Mobilje zyre", "quantity": 5, "unit_price": 200, "tax": "XK-S-18", "account": "4000" }
+      ]
+    },
+    {
+      "ref": "V2",
+      "type": "sale_invoice",
+      "contact": "bleres-vendas",
+      "date": "2026-01-15",
+      "why": "Shitje librash shkollorë me normën e reduktuar 8% (neni 26.2.9): mbush kutinë 04/04T, normën e dytë pozitive përveç 18%.",
+      "lines": [
+        { "name": "Libra shkollorë", "quantity": 50, "unit_price": 10, "tax": "XK-S-8", "account": "4000" }
+      ]
+    },
+    {
+      "ref": "A1",
+      "type": "sale_credit_note",
+      "contact": "bleres-vendas",
+      "date": "2026-01-25",
+      "why": "Notë krediti e pjesshme mbi faturën V1 (kthim i një njësie): teston drejtimin e kundërt të kutive 03/03T me të njëjtin kod tatimor, pa fshirë faturën origjinale (neni 2, paragrafët 1.33–1.34).",
+      "lines": [
+        { "name": "Mobilje zyre — kthim 1 njësi", "quantity": 1, "unit_price": 200, "tax": "XK-S-18", "account": "4000" }
+      ]
+    },
+    {
+      "ref": "V3",
+      "type": "sale_invoice",
+      "contact": "bleres-eksport",
+      "date": "2026-01-20",
+      "why": "Eksport mallrash jashtë Kosovës, i liruar me të drejtë zbritjeje: mbush kutinë 02, normë zero.",
+      "lines": [
+        { "name": "Eksport mobiljesh", "quantity": 3, "unit_price": 300, "tax": "XK-S-EXPORT", "account": "4020" }
+      ]
+    },
+    {
+      "ref": "V4",
+      "type": "sale_invoice",
+      "contact": "bleres-arsim",
+      "date": "2026-01-22",
+      "why": "Shërbim arsimor (kurs trajnimi profesional), i liruar pa të drejtë zbritjeje: mbush kutinë 01, asnjë TVSH për të zbritur.",
+      "lines": [
+        { "name": "Kurs trajnimi profesional", "quantity": 1, "unit_price": 2000, "tax": "XK-S-EXEMPT-EDU", "account": "4010" }
+      ]
+    },
+    {
+      "ref": "N1",
+      "type": "purchase_invoice",
+      "contact": "furnitor-vendas",
+      "date": "2026-01-12",
+      "why": "Blerje me normën standarde, TVSH e zbritshme: mbush kutinë 09 (baza) dhe 09T (TVSH e zbritshme).",
+      "lines": [
+        { "name": "Material dhe furnizime zyre", "quantity": 1, "unit_price": 3000, "tax": "XK-P-18", "account": "6040" }
+      ]
+    },
+    {
+      "ref": "N2",
+      "type": "purchase_invoice",
+      "contact": "furnitor-uji",
+      "date": "2026-01-18",
+      "why": "Faturë uji me normën e reduktuar 8% (neni 26.2.1): normën e dytë pozitive në anën e blerjeve.",
+      "lines": [
+        { "name": "Furnizim me ujë", "quantity": 1, "unit_price": 400, "tax": "XK-P-8", "account": "6030" }
+      ]
+    },
+    {
+      "ref": "N3",
+      "type": "purchase_invoice",
+      "contact": "furnitor-sigurim",
+      "date": "2026-01-20",
+      "why": "Policë sigurimi: furnitori kryen veprimtari të liruar (neni 28.1.1), nuk ngarkon TVSH — asnjë TVSH për t'u regjistruar apo zbritur.",
+      "lines": [
+        { "name": "Policë sigurimi i pronës për vitin 2026", "quantity": 1, "unit_price": 600, "tax": "XK-P-EXEMPT", "account": "6090" }
+      ]
+    },
+    {
+      "ref": "N4",
+      "type": "purchase_invoice",
+      "contact": "furnitor-import",
+      "date": "2026-02-05",
+      "why": "Import pajisjesh prodhimi nga jashtë: TVSH e paguar në doganë, e zbritshme në periudhën e pagesës — mbush kutinë 08/08T.",
+      "lines": [
+        { "name": "Pajisje prodhimi e importuar", "quantity": 1, "unit_price": 10000, "tax": "XK-P-IMPORT", "account": "0220" }
+      ]
+    },
+    {
+      "ref": "N5",
+      "type": "purchase_invoice",
+      "contact": "furnitor-konsulence",
+      "date": "2026-02-10",
+      "why": "Shërbim konsulence i pranuar nga furnizues i pathemeluar në Kosovë: pranuesi vetë e ngarkon dhe e zbret TVSH-në (neni 52.1.2) — teston vetëngarkimin mbi shërbimet e jorezidentëve.",
+      "lines": [
+        { "name": "Konsulencë strategjike", "quantity": 1, "unit_price": 5000, "tax": "XK-P-RC-FOREIGN", "account": "6060" }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "U1",
+      "direction": "inbound",
+      "date": "2026-01-20",
+      "amount": 1180,
+      "contact": "bleres-vendas",
+      "journal": "BNK",
+      "match": "V1",
+      "why": "Pagesa që shlyen saktësisht faturën V1, para lëshimit të notës së kreditit A1."
+    },
+    {
+      "ref": "U2",
+      "direction": "inbound",
+      "date": "2026-02-01",
+      "amount": 900,
+      "contact": "bleres-eksport",
+      "journal": "BNK",
+      "match": "V3",
+      "why": "Arkëtimi i plotë i faturës së eksportit V3, pa TVSH."
+    },
+    {
+      "ref": "U3",
+      "direction": "outbound",
+      "date": "2026-01-25",
+      "amount": 3540,
+      "contact": "furnitor-vendas",
+      "journal": "BNK",
+      "match": "N1",
+      "why": "Pagesa që shlyen saktësisht faturën N1."
+    },
+    {
+      "ref": "U4",
+      "direction": "inbound",
+      "date": "2026-02-10",
+      "amount": 300,
+      "contact": "bleres-vendas",
+      "journal": "BNK",
+      "match": null,
+      "why": "Pagesë e pranuar pa saktësuar cilën faturë shlyen: mbetet zë i hapur që tepricë duhet ta mbijetojë."
+    }
+  ]
+}

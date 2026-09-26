@@ -1,0 +1,182 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "XK-TVSH",
+  "name": "Deklarata e TVSH-së",
+  "period": ["month"],
+  "period_default": "month",
+  "valid_from": "2015-09-01",
+  "legal_reference": "Ligji Nr. 05/L-037 për TVSH-në, neni 53, paragrafi 1 — periudha tatimore e të gjithë personave të tatueshëm është çdo muaj kalendarik, pa asnjë kadencë tjetër që varet nga qarkullimi (ndryshe nga Serbia ose Bosnja fqinje). Neni 54, paragrafi 1 përcakton përmbajtjen e detyrueshme të deklaratës: (1.1) shuma e furnizimeve të tatueshme dhe të liruara, e eksporteve dhe furnizimeve të trajtuara si eksporte, si dhe TVSH-ja e ngarkuar; (1.2) shuma e blerjeve dhe importeve dhe TVSH-ja e zbritshme; (1.3) shuma e blerjeve me TVSH të vetëngarkuar sipas nenit 52.1.4; (1.5) shuma neto për pagesë ose tepricë. Kutitë e këtij paketi janë organizimi i vet paketit i këtyre kategorive — numërimi ekzakt i ekranit aktual të sistemit elektronik EDI nuk u verifikua në mënyrë të pavarur, pasi specimeni i fundit publik i formularit (TV-E-3, rishikuar më 20.02.2008) i paraprin reformës së dy normave pozitive (2015) dhe sistemit EDI; shih README.md.",
+  "source": "ligji-tvsh",
+  "deadline": {
+    "rule": "day_of_month_after_period",
+    "day": 20,
+    "legal_reference": "Ligji Nr. 05/L-037 për TVSH-në, neni 54, paragrafi 1 — personi i tatueshëm duhet të dorëzojë deklaratën tatimore dhe të bëjë pagesën përkatëse më së voni deri në datën 20 të muajit kalendarik që pason pas fundit të periudhës tatimore.",
+    "source": "ligji-tvsh"
+  },
+  "boxes": [
+    {
+      "box": "01",
+      "kind": "base",
+      "name": "Furnizime të liruara pa të drejtën e zbritjes",
+      "sequence": 10,
+      "legal_reference": "Ligji Nr. 05/L-037 për TVSH-në, neni 54, paragrafi 1, nën-paragrafi 1.1 — shuma e furnizimeve të liruara.",
+      "source": "ligji-tvsh"
+    },
+    {
+      "box": "02",
+      "kind": "base",
+      "name": "Furnizime me normën zero — eksporte dhe furnizime të trajtuara si eksporte",
+      "sequence": 20,
+      "legal_reference": "Ligji Nr. 05/L-037 për TVSH-në, neni 54, paragrafi 1, nën-paragrafi 1.1 — shuma e eksportimeve dhe furnizimeve të trajtuara si eksporte (nenet 31 dhe 33).",
+      "source": "ligji-tvsh"
+    },
+    {
+      "box": "03",
+      "kind": "base",
+      "name": "Furnizime të tatueshme me normën standarde 18% — baza",
+      "sequence": 30,
+      "legal_reference": "Ligji Nr. 05/L-037 për TVSH-në, neni 54, paragrafi 1, nën-paragrafi 1.1, dhe neni 26, paragrafi 1.",
+      "source": "ligji-tvsh"
+    },
+    {
+      "box": "03T",
+      "kind": "tax",
+      "name": "Furnizime të tatueshme me normën standarde 18% — TVSH e ngarkuar",
+      "sequence": 40,
+      "legal_reference": "Ligji Nr. 05/L-037 për TVSH-në, neni 54, paragrafi 1, nën-paragrafi 1.1 — obligimi i tatimit të llogaritur.",
+      "source": "ligji-tvsh"
+    },
+    {
+      "box": "04",
+      "kind": "base",
+      "name": "Furnizime të tatueshme me normën e reduktuar 8% — baza",
+      "sequence": 50,
+      "legal_reference": "Ligji Nr. 05/L-037 për TVSH-në, neni 54, paragrafi 1, nën-paragrafi 1.1, dhe neni 26, paragrafi 2.",
+      "source": "ligji-tvsh"
+    },
+    {
+      "box": "04T",
+      "kind": "tax",
+      "name": "Furnizime të tatueshme me normën e reduktuar 8% — TVSH e ngarkuar",
+      "sequence": 60,
+      "legal_reference": "Ligji Nr. 05/L-037 për TVSH-në, neni 54, paragrafi 1, nën-paragrafi 1.1.",
+      "source": "ligji-tvsh"
+    },
+    {
+      "box": "05",
+      "kind": "base",
+      "name": "Shërbime të pranuara nga furnizues jorezidentë, objekt vetëngarkimi — baza (dalje)",
+      "sequence": 70,
+      "legal_reference": "Ligji Nr. 05/L-037 për TVSH-në, neni 52, paragrafi 1, nën-paragrafi 1.2 — personi i regjistruar për TVSH e ngarkon vetë TVSH-në për shërbimet e pranuara nga furnizues jorezidentë.",
+      "source": "ligji-tvsh"
+    },
+    {
+      "box": "05T",
+      "kind": "tax",
+      "name": "TVSH e vetëngarkuar mbi shërbimet nga jorezidentë — obligim (dalje)",
+      "sequence": 80,
+      "legal_reference": "Ligji Nr. 05/L-037 për TVSH-në, neni 52, paragrafi 1, nën-paragrafi 1.2.",
+      "source": "ligji-tvsh"
+    },
+    {
+      "box": "06",
+      "kind": "total",
+      "name": "Obligimi total i TVSH-së mbi furnizimet",
+      "sequence": 90,
+      "plus": ["03T", "04T", "05T"],
+      "legal_reference": "Ligji Nr. 05/L-037 për TVSH-në, neni 54, paragrafi 1, nën-paragrafi 1.1 — obligimi i tatimit të llogaritur në furnizimet e tatueshme.",
+      "source": "ligji-tvsh"
+    },
+    {
+      "box": "07",
+      "kind": "base",
+      "name": "Blerje të liruara ose me TVSH jo të zbritshme",
+      "sequence": 100,
+      "legal_reference": "Ligji Nr. 05/L-037 për TVSH-në, neni 54, paragrafi 1, nën-paragrafi 1.2 — shuma e blerjeve pa TVSH të zbritshme.",
+      "source": "ligji-tvsh"
+    },
+    {
+      "box": "08",
+      "kind": "base",
+      "name": "Importe — baza",
+      "sequence": 110,
+      "legal_reference": "Ligji Nr. 05/L-037 për TVSH-në, neni 54, paragrafi 1, nën-paragrafi 1.2, dhe neni 52, paragrafi 3.",
+      "source": "ligji-tvsh"
+    },
+    {
+      "box": "08T",
+      "kind": "tax",
+      "name": "Importe — TVSH e zbritshme",
+      "sequence": 120,
+      "legal_reference": "Ligji Nr. 05/L-037 për TVSH-në, neni 36, paragrafi 2, nën-paragrafi 2.2.",
+      "source": "ligji-tvsh"
+    },
+    {
+      "box": "09",
+      "kind": "base",
+      "name": "Blerje vendase me normën standarde 18% — baza",
+      "sequence": 130,
+      "legal_reference": "Ligji Nr. 05/L-037 për TVSH-në, neni 54, paragrafi 1, nën-paragrafi 1.2.",
+      "source": "ligji-tvsh"
+    },
+    {
+      "box": "09T",
+      "kind": "tax",
+      "name": "Blerje vendase me normën standarde 18% — TVSH e zbritshme",
+      "sequence": 140,
+      "legal_reference": "Ligji Nr. 05/L-037 për TVSH-në, neni 36, paragrafi 2, nën-paragrafi 2.1.",
+      "source": "ligji-tvsh"
+    },
+    {
+      "box": "10",
+      "kind": "base",
+      "name": "Blerje vendase me normën e reduktuar 8% — baza",
+      "sequence": 150,
+      "legal_reference": "Ligji Nr. 05/L-037 për TVSH-në, neni 54, paragrafi 1, nën-paragrafi 1.2.",
+      "source": "ligji-tvsh"
+    },
+    {
+      "box": "10T",
+      "kind": "tax",
+      "name": "Blerje vendase me normën e reduktuar 8% — TVSH e zbritshme",
+      "sequence": 160,
+      "legal_reference": "Ligji Nr. 05/L-037 për TVSH-në, neni 36, paragrafi 2, nën-paragrafi 2.1.",
+      "source": "ligji-tvsh"
+    },
+    {
+      "box": "11",
+      "kind": "base",
+      "name": "Shërbime të pranuara nga furnizues jorezidentë, objekt vetëngarkimi — baza (hyrje)",
+      "sequence": 170,
+      "legal_reference": "Ligji Nr. 05/L-037 për TVSH-në, neni 54, paragrafi 1, nën-paragrafi 1.3 — shuma e blerjeve me TVSH e cila i ngarkohet pranuesit.",
+      "source": "ligji-tvsh"
+    },
+    {
+      "box": "11T",
+      "kind": "tax",
+      "name": "TVSH e zbritshme mbi vetëngarkimin e shërbimeve nga jorezidentë (hyrje)",
+      "sequence": 180,
+      "legal_reference": "Ligji Nr. 05/L-037 për TVSH-në, neni 36, paragrafi 2, nën-paragrafi 2.1.",
+      "source": "ligji-tvsh"
+    },
+    {
+      "box": "12",
+      "kind": "total",
+      "name": "Total TVSH e zbritshme",
+      "sequence": 190,
+      "plus": ["08T", "09T", "10T", "11T"],
+      "legal_reference": "Ligji Nr. 05/L-037 për TVSH-në, neni 54, paragrafi 1, nën-paragrafi 1.2.",
+      "source": "ligji-tvsh"
+    },
+    {
+      "box": "13",
+      "kind": "total",
+      "name": "Shuma neto e TVSH-së për pagesë ose tepricë për kreditim",
+      "sequence": 200,
+      "plus": ["06"],
+      "minus": ["12"],
+      "legal_reference": "Ligji Nr. 05/L-037 për TVSH-në, neni 54, paragrafi 1, nën-paragrafi 1.5 — shuma neto e obligimit të TVSH-së që duhet t'i paguhet ATK-së, ose shuma neto e tepërt për atë periudhë tatimore.",
+      "source": "ligji-tvsh"
+    }
+  ]
+}

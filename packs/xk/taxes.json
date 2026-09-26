@@ -1,0 +1,223 @@
+[
+  {
+    "code": "XK-S-18",
+    "name": "TVSH 18% — norma standarde (furnizim)",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 18,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2015-09-01",
+    "legal_reference": "Ligji Nr. 05/L-037 për TVSH-në, neni 26, paragrafi 1 — TVSH-ja ngarkohet me normën standarde prej tetëmbëdhjetë përqind (18%).",
+    "source": "ligji-tvsh",
+    "vat_category": "S",
+    "sequence": 10,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "03" },
+        { "type": "tax", "account": "2100", "box": "03T" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "03", "box_factor": -100 },
+        { "type": "tax", "account": "2100", "box": "03T", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "XK-S-8",
+    "name": "TVSH 8% — norma e reduktuar (furnizim)",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 8,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2015-09-01",
+    "legal_reference": "Ligji Nr. 05/L-037 për TVSH-në, neni 26, paragrafi 2 — norma e reduktuar prej tetë përqind (8%) llogaritet dhe paguhet për furnizimin e mallrave dhe shërbimeve, si dhe importin e tyre, të renditura taksativisht në nën-paragrafët 2.1–2.13 (ujë përveç atij të ambalazhuar, energji elektrike dhe ngrohje qendrore, drithëra dhe prodhime buke, vajra gatimi, qumësht, kripë, vezë, libra shkollorë dhe botime, pajisje të teknologjisë së informacionit, barna dhe pajisje mjekësore, pajisje për personat me aftësi të kufizuara).",
+    "source": "ligji-tvsh",
+    "vat_category": "S",
+    "sequence": 20,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "04" },
+        { "type": "tax", "account": "2102", "box": "04T" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "04", "box_factor": -100 },
+        { "type": "tax", "account": "2102", "box": "04T", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "XK-S-EXPORT",
+    "name": "Eksport mallrash — i liruar me të drejtë zbritjeje",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2015-09-01",
+    "legal_reference": "Ligji Nr. 05/L-037 për TVSH-në, neni 31, paragrafi 1, nën-paragrafi 1.1 — furnizimi i mallrave të dërguara ose të transportuara për destinim jashtë Kosovës nga ose në interes të shitësit është i liruar nga TVSH-ja. E drejta e zbritjes së TVSH-së hyrëse mbetet, sipas nenit 36, paragrafi 3, nën-paragrafi 3.2 — transaksionet e liruara sipas Kapitullit X (ku bën pjesë neni 31) ruajnë të drejtën e zbritjes.",
+    "source": "ligji-tvsh",
+    "vat_category": "G",
+    "exemption_code": null,
+    "sequence": 30,
+    "recoverable": true,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "02" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "02", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "XK-S-EXEMPT-EDU",
+    "name": "Shërbime arsimore — të liruara pa të drejtë zbritjeje",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2015-09-01",
+    "legal_reference": "Ligji Nr. 05/L-037 për TVSH-në, neni 27, paragrafi 1, nën-paragrafi 1.8 — ofrimi i edukimit të fëmijëve dhe të rinjve, edukimi shkollor apo universitar, trajnimi profesional apo ritrajnimi, nga organet e rregulluara me ligjet e Kosovës, është i liruar nga TVSH-ja. Kapitulli VIII, ku bën pjesë ky nen, titullohet „Lirimet pa të drejtën e zbritjes së TVSH-së së zbritshme” dhe neni 36 nuk e përfshin këtë kapitull ndër transaksionet që ruajnë të drejtën e zbritjes.",
+    "source": "ligji-tvsh",
+    "vat_category": "E",
+    "exemption_code": null,
+    "sequence": 40,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "01" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "01", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "XK-P-18",
+    "name": "TVSH 18% — norma standarde (blerje), e zbritshme",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2015-09-01",
+    "legal_reference": "Ligji Nr. 05/L-037 për TVSH-në, neni 26, paragrafi 1 dhe neni 36, paragrafi 2, nën-paragrafi 2.1 — personi i tatueshëm mund të zbresë TVSH-në e ngarkuar mbi blerjet e mallrave ose shërbimeve brenda territorit të Kosovës, nëse ato shfrytëzohen për qëllime të transaksioneve të tij të tatueshme.",
+    "source": "ligji-tvsh",
+    "vat_category": "S",
+    "sequence": 50,
+    "recoverable": true,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "09" },
+        { "type": "tax", "account": "1450", "box": "09T" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "09", "box_factor": -100 },
+        { "type": "tax", "account": "1450", "box": "09T", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "XK-P-8",
+    "name": "TVSH 8% — norma e reduktuar (blerje), e zbritshme",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 8,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2015-09-01",
+    "legal_reference": "Ligji Nr. 05/L-037 për TVSH-në, neni 26, paragrafi 2 dhe neni 36, paragrafi 2, nën-paragrafi 2.1 — e njëjta e drejtë zbritjeje, për blerjet e tatuara me normën e reduktuar.",
+    "source": "ligji-tvsh",
+    "vat_category": "S",
+    "sequence": 60,
+    "recoverable": true,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "10" },
+        { "type": "tax", "account": "1452", "box": "10T" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "10", "box_factor": -100 },
+        { "type": "tax", "account": "1452", "box": "10T", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "XK-P-EXEMPT",
+    "name": "Blerje pa TVSH — furnizuesi kryen veprimtari të liruar (p.sh. sigurim)",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "exempt",
+    "valid_from": "2015-09-01",
+    "legal_reference": "Ligji Nr. 05/L-037 për TVSH-në, neni 28, paragrafi 1, nën-paragrafi 1.1 — transaksionet e sigurimit dhe risigurimit të jetës dhe shëndetit janë të liruara nga TVSH-ja; furnizuesi nuk e ngarkon TVSH-në në faturë, kështu që blerësi nuk ka TVSH për të zbritur.",
+    "source": "ligji-tvsh",
+    "vat_category": "E",
+    "exemption_code": null,
+    "sequence": 70,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "07" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "07", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "XK-P-IMPORT",
+    "name": "Import mallrash — TVSH paguar në doganë, e zbritshme",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2015-09-01",
+    "legal_reference": "Ligji Nr. 05/L-037 për TVSH-në, neni 52, paragrafi 3 — në importim, TVSH-ja paguhet nga personi i caktuar si i obliguar sipas legjislacionit doganor në fuqi, njëkohësisht me borxhin doganor. Neni 36, paragrafi 2, nën-paragrafi 2.2 — TVSH-ja e paguar për importimin e mallrave brenda territorit të Kosovës është e zbritshme.",
+    "source": "ligji-tvsh",
+    "vat_category": null,
+    "sequence": 80,
+    "recoverable": true,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "08" },
+        { "type": "tax", "account": "1454", "box": "08T" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "08", "box_factor": -100 },
+        { "type": "tax", "account": "1454", "box": "08T", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "XK-P-RC-FOREIGN",
+    "name": "Shërbim i pranuar nga furnizues jorezident — vetëngarkim",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2015-09-01",
+    "legal_reference": "Ligji Nr. 05/L-037 për TVSH-në, neni 52, paragrafi 1, nën-paragrafi 1.2 — personi i regjistruar për TVSH në Kosovë të cilit i janë furnizuar shërbime nga një person i tatueshëm i pathemeluar në Kosovë, kur vendi i furnizimit konsiderohet Kosova (neni 20), është vetë i obliguar për TVSH-në. Neni 36, paragrafi 2, nën-paragrafi 2.1 — e njëjta TVSH e vetëngarkuar është e zbritshme nëse shërbimi shfrytëzohet për transaksionet e tatueshme të personit.",
+    "source": "ligji-tvsh",
+    "vat_category": null,
+    "exemption_code": null,
+    "sequence": 90,
+    "recoverable": true,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": ["05", "11"] },
+        { "type": "tax", "account": "1456", "box": "11T" },
+        { "type": "tax", "factor": -100, "account": "2104", "box": "05T" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": ["05", "11"], "box_factor": -100 },
+        { "type": "tax", "account": "1456", "box": "11T", "box_factor": -100 },
+        { "type": "tax", "factor": -100, "account": "2104", "box": "05T", "box_factor": -100 }
+      ]
+    }
+  }
+]

@@ -1,0 +1,138 @@
+code,parent,type,reconcilable,name,sequence
+0100,,asset_fixed,false,Emri i mirë (goodwill),10
+0101,,asset_fixed,false,Emri i mirë — amortizimi i akumuluar,20
+0110,,asset_fixed,false,Software dhe aktive të tjera jomateriale,30
+0111,,asset_fixed,false,Software — amortizimi i akumuluar,40
+0120,,asset_fixed,false,Shpenzime të kapitalizuara kërkimi dhe zhvillimi,50
+0121,,asset_fixed,false,Shpenzime kërkimi dhe zhvillimi — amortizimi i akumuluar,60
+0200,,asset_fixed,false,Toka,70
+0210,,asset_fixed,false,Ndërtesa,80
+0211,,asset_fixed,false,Ndërtesa — zhvlerësimi i akumuluar,90
+0220,,asset_fixed,false,Makineri dhe pajisje,100
+0221,,asset_fixed,false,Makineri dhe pajisje — zhvlerësimi i akumuluar,110
+0230,,asset_fixed,false,Mjete transporti,120
+0231,,asset_fixed,false,Mjete transporti — zhvlerësimi i akumuluar,130
+0240,,asset_fixed,false,Mobilje dhe inventar zyre,140
+0241,,asset_fixed,false,Mobilje dhe inventar zyre — zhvlerësimi i akumuluar,150
+0250,,asset_fixed,false,Pajisje kompjuterike,160
+0251,,asset_fixed,false,Pajisje kompjuterike — zhvlerësimi i akumuluar,170
+0260,,asset_fixed,false,Ndërtim në vazhdim dhe investime kapitale në proces,180
+0270,,asset_fixed,false,Përmirësime në pronën e marrë me qira,190
+0271,,asset_fixed,false,Përmirësime në pronën e marrë me qira — zhvlerësimi i akumuluar,200
+0280,,asset_fixed,false,Aktivi i së drejtës së përdorimit (qiraja),210
+0281,,asset_fixed,false,Aktivi i së drejtës së përdorimit — zhvlerësimi i akumuluar,220
+0300,,asset_non_current,false,Investime financiare afatgjata,230
+0310,,asset_non_current,false,Pjesëmarrje në shoqëri të varura dhe të asociuara,240
+0320,,asset_non_current,false,Kredi afatgjata dhënë palëve të treta,250
+0330,,asset_non_current,false,Aktivi i shtyrë tatimor,260
+0340,,asset_non_current,false,Të arkëtueshme afatgjata,270
+0350,,asset_non_current,false,Prona e investimit,280
+1000,,asset_current,false,Lëndë e parë dhe materiale,290
+1010,,asset_current,false,Prodhim në proces,300
+1020,,asset_current,false,Produkte të gatshme,310
+1030,,asset_current,false,Stoqe mallrash,320
+1040,,asset_current,false,Mallra në rrugë (të patranzituara),330
+1050,,asset_current,false,Sende me vlerë të vogël dhe konsumim të shpejtë,340
+1100,,asset_receivable,true,Të arkëtueshme nga blerësit,350
+1110,,asset_receivable,true,Provizioni për borxhe të dyshimta,360
+1120,,asset_receivable,true,Të arkëtueshme të tjera,370
+1130,,asset_receivable,true,Të arkëtueshme nga palët e lidhura,380
+1200,,asset_prepayments,false,Paradhënie dhëna furnitorëve,390
+1210,,asset_prepayments,false,Shpenzime të parapaguara,400
+1220,,asset_prepayments,false,Primi i sigurimit i parapaguar,410
+1300,,asset_cash,false,Arka (para në dorë),420
+1310,,asset_cash,false,Llogari bankare në euro,430
+1320,,asset_cash,false,Llogari bankare në valutë të huaj,440
+1330,,asset_cash,false,Mjete monetare në tranzit (inkasim),450
+1450,,asset_current,false,TVSH e zbritshme — blerje vendase me normën standarde 18%,460
+1452,,asset_current,false,TVSH e zbritshme — blerje vendase me normën e reduktuar 8%,470
+1454,,asset_current,false,TVSH e zbritshme — importe,480
+1456,,asset_current,false,TVSH e zbritshme — vetëngarkim mbi shërbimet nga jorezidentë,490
+1458,,asset_current,true,Llogaria e shlyerjes së TVSH-së — tepricë e arkëtueshme,500
+1460,,asset_current,false,Llogaria me buxhetin — tatime të tjera,510
+1470,,asset_current,false,Paradhënie dhe të arkëtueshme nga punonjësit,520
+1480,,asset_current,false,Investime financiare afatshkurtra,530
+1490,,asset_current,false,Aktive të tjera afatshkurtra,540
+2000,,liability_payable,true,Detyrime ndaj furnitorëve,550
+2010,,liability_payable,true,Detyrime ndaj palëve të lidhura,560
+2020,,liability_payable,true,Paradhënie të pranuara nga blerësit,570
+2100,,liability_current,false,TVSH e ngarkuar — furnizime vendase me normën standarde 18%,580
+2102,,liability_current,false,TVSH e ngarkuar — furnizime vendase me normën e reduktuar 8%,590
+2104,,liability_current,false,TVSH e vetëngarkuar — shërbime të pranuara nga jorezidentë,600
+2108,,liability_current,true,Llogaria e shlyerjes së TVSH-së — detyrim për pagesë,610
+2120,,liability_current,false,Detyrimi i tatimit në fitim,620
+2130,,liability_current,false,Detyrime ndaj punonjësve për paga,630
+2140,,liability_current,false,Detyrime për tatimin në të ardhurat personale dhe kontribute,640
+2150,,liability_current,false,Shpenzime të përllogaritura afatshkurtra,650
+2160,,liability_current,false,Kredi dhe huamarrje afatshkurtra,660
+2170,,liability_current,false,Detyrimi afatshkurtër i qirasë,670
+2180,,liability_current,false,Detyrimi për dividendë,680
+2190,,liability_current,false,Provizione afatshkurtra,690
+2200,,liability_current,false,Detyrime të tjera afatshkurtra,700
+2250,,liability_credit_card,false,Detyrimi për kartelën e kreditit,710
+2300,,liability_current,false,Llogaria e pritjes (shumat e paidentifikuara),720
+2400,,liability_non_current,false,Kredi dhe huamarrje afatgjata,730
+2410,,liability_non_current,false,Detyrimi afatgjatë i qirasë,740
+2420,,liability_non_current,false,Detyrimi i shtyrë tatimor,750
+2430,,liability_non_current,false,Provizione afatgjata (pensione etj.),760
+2440,,liability_non_current,false,Obligacione afatgjata,770
+3000,,equity,false,Kapitali themeltar,780
+3010,,equity,false,Primi i emetimit,790
+3020,,equity,false,Instrumente të kapitalit vetjak të riblera,800
+3030,,equity,false,Rezerva e rivlerësimit,810
+3040,,equity,false,Rezerva të tjera,820
+3050,,equity,false,Rezerva e konvertimit të operacioneve në valutë të huaj,830
+3100,,equity_retained,false,Fitimi i pashpërndarë (humbja e pambuluar),840
+4000,,income,false,Të hyra nga shitja e mallrave,850
+4010,,income,false,Të hyra nga ofrimi i shërbimeve,860
+4020,,income,false,Të hyra nga eksporti,870
+4030,,income,false,Zbritje dhe kthime nga shitja,880
+4040,,income,false,Të hyra nga kontratat e ndërtimit,890
+4050,,income,false,Të hyra nga qiraja,900
+4200,,income_other,false,Të hyra nga interesi,910
+4210,,income_other,false,Të hyra nga dividendët,920
+4220,,income_other,false,Fitimi nga diferencat e këmbimit,930
+4230,,income_other,false,Fitimi nga shitja e mjeteve themelore,940
+4240,,income_other,false,Të hyra nga grante dhe subvencione shtetërore,950
+4250,,income_other,false,Të hyra të tjera operative,960
+5000,,expense_direct_cost,false,Kostoja e mallrave të shitura,970
+5010,,expense_direct_cost,false,Kostoja e lëndës së parë të konsumuar,980
+5020,,expense_direct_cost,false,Kosto direkte e punës në prodhim,990
+5030,,expense_direct_cost,false,Shpenzime të përgjithshme prodhimi,1000
+5040,,expense_direct_cost,false,Shpenzimet e transportit të blerjeve,1010
+6000,,expense,false,Paga dhe shpërblime,1020
+6010,,expense,false,Kontribute të sigurimeve shoqërore (punëdhënësi),1030
+6020,,expense,false,Qiraja,1040
+6030,,expense,false,Shërbimet komunale,1050
+6040,,expense,false,Furnizime dhe shpenzime zyre,1060
+6050,,expense,false,Telekomunikacion,1070
+6060,,expense,false,Shërbime profesionale dhe konsulencë,1080
+6070,,expense,false,Marketing dhe reklamë,1090
+6080,,expense,false,Shpenzime udhëtimi,1100
+6090,,expense,false,Sigurimi,1110
+6100,,expense,false,Riparime dhe mirëmbajtje,1120
+6110,,expense,false,Komisione dhe shpenzime bankare,1130
+6120,,expense,false,Qira afatshkurtra dhe aktive me vlerë të vogël,1140
+6130,,expense,false,Humbje nga borxhe të pambledhshme dhe të dyshimta,1150
+6140,,expense,false,Shpenzime përfaqësimi,1160
+6150,,expense,false,Trajnim dhe zhvillim i personelit,1170
+6160,,expense,false,Sigurim fizik dhe roje,1180
+6170,,expense,false,Karburant dhe mirëmbajtje automjetesh,1190
+6180,,expense,false,"Licenca, taksa dhe leje",1200
+6190,,expense,false,Donacione dhe kontribute bamirëse,1210
+6200,,expense,false,Shpenzime të tjera administrative,1220
+6210,,expense,false,Shpenzimi i rezervave të sigurimit,1230
+6220,,expense,false,Kërkim dhe zhvillim i pakapitalizuar,1240
+6900,,expense_depreciation,false,Zhvlerësimi i mjeteve themelore,1250
+6910,,expense_depreciation,false,Amortizimi i aktiveve jomateriale,1260
+6920,,expense_depreciation,false,Zhvlerësimi i aktivit të së drejtës së përdorimit,1270
+7000,,expense,false,Shpenzime interesi mbi huatë,1280
+7010,,expense,false,Humbje nga diferencat e këmbimit,1290
+7020,,expense,false,Humbje nga shitja e mjeteve themelore,1300
+7030,,expense,false,Shpenzimi i tatimit në fitim,1310
+7040,,expense,false,Gjoba dhe kamatëvonesa,1320
+7050,,expense,false,Shpenzime të tjera joperative,1330
+7060,,expense,false,Diferenca e rrumbullakimit,1340
+9000,,off_balance,false,Aktive të marra me qira jashtë bilancit,1350
+9010,,off_balance,false,Mallra të marra në përgjegjësi,1360
+9020,,off_balance,false,Garanci dhe dorëzani të dhëna,1370

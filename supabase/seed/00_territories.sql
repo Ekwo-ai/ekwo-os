@@ -1944,3 +1944,36 @@ on conflict (code) do update set
   eu_vat_to       = excluded.eu_vat_to,
   vat_prefix      = excluded.vat_prefix,
   legal_reference = excluded.legal_reference;
+
+-- ---------------------------------------------------------------------------
+-- Kosovo — outside the common system of VAT, code XK
+--
+-- Directive 2006/112/EC, article 5(2): the common system of VAT applies in
+-- the territory of the Community as defined by the Treaties, and Kosovo is
+-- not a Member State. Kosovo levies its own value added tax under Law No.
+-- 05/L-037 on Value Added Tax (Official Gazette of the Republic of Kosovo,
+-- No. 23, 17 August 2015), article 26, at a standard rate of 18% and a
+-- reduced rate of 8%.
+--
+-- `code` is "XK", the user-assigned code the European Union, the IMF and
+-- most systems use for Kosovo in the absence of an ISO 3166-1 code: Kosovo's
+-- statehood is contested and no such code has been allocated to it.
+-- `code_source` is left "iso_3166_1" for consistency with every other row of
+-- this table — the column names the standard a territory's row is keyed by,
+-- not a claim that ISO itself has allocated the code — and the true origin
+-- of "XK" is documented here rather than invented as a fifth `code_source`
+-- value for one row.
+-- ---------------------------------------------------------------------------
+
+insert into territories (code, code_source, name, parent_code, eu_vat_scope, eu_vat_from, eu_vat_to, vat_prefix, legal_reference) values
+  ('XK', 'iso_3166_1', 'Kosovo', null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2) — the common system of VAT applies in the territory of the Community as defined by the Treaties; Kosovo is not a Member State. Kosovo levies its own value added tax, Tatimi mbi Vlerën e Shtuar (TVSH), under Law No. 05/L-037 on Value Added Tax (Official Gazette of the Republic of Kosovo, No. 23, 17 August 2015), article 26, at a standard rate of 18% and a reduced rate of 8% since the law''s entry into force on 1 September 2015. The code "XK" is not an ISO 3166-1 code — Kosovo''s statehood is contested and ISO has allocated it none — but the "user-assigned" code the European Union, the International Monetary Fund and most other systems use for it in practice.')
+on conflict (code) do update set
+  code_source     = excluded.code_source,
+  name            = excluded.name,
+  parent_code     = excluded.parent_code,
+  eu_vat_scope    = excluded.eu_vat_scope,
+  eu_vat_from     = excluded.eu_vat_from,
+  eu_vat_to       = excluded.eu_vat_to,
+  vat_prefix      = excluded.vat_prefix,
+  legal_reference = excluded.legal_reference;

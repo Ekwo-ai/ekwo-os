@@ -5733,3 +5733,52 @@ the right to deduct the input tax it would otherwise carry, without relieving
 the seller of the liability — an asymmetric effect no `treatment` value
 describes, the same shape already recorded for Ukraine's register of tax
 invoices above.
+
+## From Kosovo
+
+**A reverse charge the statute leaves to a ministerial act, and a pack that
+would rather carry none than guess whether it exists.** Law No. 05/L-037 on
+Value Added Tax, article 52, paragraph 1, sub-paragraph 1.4, does not itself
+move the liability for construction work, waste and a handful of other
+supplies to the recipient the way Serbia's article 10 or Bosnia's articles
+40–43 do: it says the Minister of Finance *may* issue a sub-legal act
+providing for it. This research did not find, and could not verify, such an
+act in force. A tax posted under `domestic_reverse_charge` on the strength
+of a permissive clause nobody has confirmed was exercised would be inventing
+a rule the statute itself has not yet made — so `packs/xk/` carries no tax
+under that treatment, and the gap, together with the one clause of the
+statute that would close it, is named in the pack's own README rather than
+guessed at.
+
+**A declaration form modelled on what the law requires rather than on a
+verified screen.** Article 54, paragraph 1 fixes the content of Kosovo's
+monthly VAT return in five enumerated points — taxable, exempt and
+zero-rated supplies with the tax charged; purchases and imports with the
+tax deductible; purchases on which the recipient self-charged VAT under
+article 52.1.4; adjustments; the net amount due or in credit — but the last
+publicly reachable specimen of the paper form (TV-E-3, revised 20 February
+2008) still carries a single 15% rate and references to "intra FRY"
+transactions, both from before the two-positive-rate law of 2015 and before
+the ATK's own EDI electronic-filing platform existed. Neither of the two
+Balkan neighbours in this repository faced quite this shape of gap: Serbia's
+and Bosnia's forms are current administrative acts with numbered fields this
+research could open and read. Rather than transcribe an obsolete specimen's
+field numbers as though the current EDI screen still carried them, or invent
+plausible-looking ones, `packs/xk/tax_report.json` organises the boxes
+article 54 itself enumerates under the pack's own two-character codes, and
+says so in its own README — a form nobody can verify against a live screen
+is not a form to be presented as one.
+
+**A chart of accounts with no register to transcribe from, which is not the
+same gap as a register nobody could reach.** Every other pack in this
+repository that opens a "chart of accounts, and why these accounts" section
+is reading a Pravilnik, a Plan Comptable or a Kontenrahmen a ministry or a
+standard-setting body has published with codes attached. Law No. 06/L-032 on
+Accounting, Financial Reporting and Auditing gives the Kosovo Council for
+Financial Reporting (KCFR) the power to approve IFRS, IFRS for SMEs and a
+micro-entity regime of its own (articles 7–9), and this research found no
+publication of the KCFR that fixes a numbered chart for any of the three —
+unlike Georgia's equally IFRS-only regime, which this repository already
+carries the same way (`packs/ge`). `packs/xk/accounts.csv` is therefore the
+pack's own numbering, declared as such in its README, and not a transcription
+of a register this research failed to locate.
