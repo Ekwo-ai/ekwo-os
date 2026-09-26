@@ -1,0 +1,563 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/statements",
+  "statements": [
+    {
+      "code": "GH-ICAG-SFP",
+      "kind": "balance_sheet",
+      "framework": "IFRS-SME",
+      "name": "Statement of financial position",
+      "valid_from": "2019-08-02",
+      "legal_reference": "Companies Act, 2019 (Act 992), s. 127(5)(a)(i) — the financial statements of a company comprise a statement of financial position; s. 127(5)(b) — they are prepared in compliance with the International Financial Reporting Standards adopted by the Institute of Chartered Accountants, Ghana, or any other standards the Institute approves or adopts; Sixth Schedule, Part Two, paragraph 13 — assets and liabilities are classified under headings appropriate to the business, distinguishing current from non-current assets and current from other liabilities, in accordance with the IFRS. The Institute adopted the IFRS as Ghana National Accounting Standards in 2007 and the IFRS for SMEs in 2010, for periods ending on or after 31 December 2015 after a two-year moratorium. There is no prescribed layout: the lines below are the minimum line items of section 4 of the IFRS for SMEs, which a full-IFRS company expands under IAS 1.",
+      "source": "companies-act-2019",
+      "lines": [
+        {
+          "code": "CA",
+          "name": "Current assets",
+          "sequence": 10,
+          "is_total": true,
+          "plus": [
+            "CA.1",
+            "CA.2",
+            "CA.3",
+            "CA.4",
+            "CA.5",
+            "CA.6"
+          ]
+        },
+        {
+          "code": "CA.1",
+          "name": "Cash and cash equivalents",
+          "sequence": 11,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1000",
+              "code_to": "1040"
+            }
+          ]
+        },
+        {
+          "code": "CA.2",
+          "name": "Trade and other receivables",
+          "sequence": 12,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1100",
+              "code_to": "1160"
+            }
+          ]
+        },
+        {
+          "code": "CA.3",
+          "name": "Inventories",
+          "sequence": 13,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1200",
+              "code_to": "1230"
+            }
+          ]
+        },
+        {
+          "code": "CA.4",
+          "name": "Financial assets",
+          "sequence": 14,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1300"
+            }
+          ]
+        },
+        {
+          "code": "CA.5",
+          "name": "Current tax recoverable",
+          "sequence": 15,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1350"
+            }
+          ]
+        },
+        {
+          "code": "CA.6",
+          "name": "Prepayments and accrued income",
+          "sequence": 16,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1400",
+              "code_to": "1410"
+            }
+          ]
+        },
+        {
+          "code": "NCA",
+          "name": "Non-current assets",
+          "sequence": 20,
+          "is_total": true,
+          "plus": [
+            "NCA.1",
+            "NCA.2",
+            "NCA.3",
+            "NCA.4",
+            "NCA.5",
+            "NCA.6",
+            "NCA.7"
+          ]
+        },
+        {
+          "code": "NCA.1",
+          "name": "Property, plant and equipment",
+          "sequence": 21,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1600",
+              "code_to": "1671"
+            }
+          ]
+        },
+        {
+          "code": "NCA.2",
+          "name": "Investment property",
+          "sequence": 22,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1700"
+            }
+          ]
+        },
+        {
+          "code": "NCA.3",
+          "name": "Intangible assets",
+          "sequence": 23,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1750",
+              "code_to": "1760"
+            }
+          ]
+        },
+        {
+          "code": "NCA.4",
+          "name": "Investments in associates",
+          "sequence": 24,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1800"
+            }
+          ]
+        },
+        {
+          "code": "NCA.5",
+          "name": "Investments in joint ventures",
+          "sequence": 25,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1810"
+            }
+          ]
+        },
+        {
+          "code": "NCA.6",
+          "name": "Financial assets",
+          "sequence": 26,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1830",
+              "code_to": "1840"
+            }
+          ]
+        },
+        {
+          "code": "NCA.7",
+          "name": "Deferred tax assets",
+          "sequence": 27,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1900"
+            }
+          ]
+        },
+        {
+          "code": "TA",
+          "name": "Total assets",
+          "sequence": 30,
+          "is_total": true,
+          "plus": [
+            "CA",
+            "NCA"
+          ]
+        },
+        {
+          "code": "CL",
+          "name": "Current liabilities",
+          "sequence": 40,
+          "is_total": true,
+          "plus": [
+            "CL.1",
+            "CL.2",
+            "CL.3",
+            "CL.4",
+            "CL.5"
+          ]
+        },
+        {
+          "code": "CL.1",
+          "name": "Trade and other payables",
+          "sequence": 41,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "2000",
+              "code_to": "2190"
+            },
+            {
+              "kind": "account_code",
+              "code_from": "2990",
+              "side": "credit"
+            }
+          ]
+        },
+        {
+          "code": "CL.2",
+          "name": "Borrowings and other financial liabilities",
+          "sequence": 42,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "2200",
+              "code_to": "2240"
+            }
+          ]
+        },
+        {
+          "code": "CL.3",
+          "name": "Amounts due to directors",
+          "sequence": 43,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "2250"
+            }
+          ]
+        },
+        {
+          "code": "CL.4",
+          "name": "Current tax payable",
+          "sequence": 44,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "2300"
+            }
+          ]
+        },
+        {
+          "code": "CL.5",
+          "name": "Provisions",
+          "sequence": 45,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "2350",
+              "code_to": "2360"
+            }
+          ]
+        },
+        {
+          "code": "NCL",
+          "name": "Non-current liabilities",
+          "sequence": 50,
+          "is_total": true,
+          "plus": [
+            "NCL.1",
+            "NCL.2",
+            "NCL.3"
+          ]
+        },
+        {
+          "code": "NCL.1",
+          "name": "Borrowings and other financial liabilities",
+          "sequence": 51,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "2400",
+              "code_to": "2430"
+            }
+          ]
+        },
+        {
+          "code": "NCL.2",
+          "name": "Deferred tax liabilities",
+          "sequence": 52,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "2500"
+            }
+          ]
+        },
+        {
+          "code": "NCL.3",
+          "name": "Provisions",
+          "sequence": 53,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "2550"
+            }
+          ]
+        },
+        {
+          "code": "TL",
+          "name": "Total liabilities",
+          "sequence": 60,
+          "is_total": true,
+          "plus": [
+            "CL",
+            "NCL"
+          ]
+        },
+        {
+          "code": "NA",
+          "name": "Net assets",
+          "sequence": 70,
+          "is_total": true,
+          "plus": [
+            "TA"
+          ],
+          "minus": [
+            "TL"
+          ]
+        },
+        {
+          "code": "EQ",
+          "name": "Equity",
+          "sequence": 80,
+          "is_total": true,
+          "plus": [
+            "EQ.1",
+            "EQ.2",
+            "EQ.3"
+          ]
+        },
+        {
+          "code": "EQ.1",
+          "name": "Share capital",
+          "sequence": 81,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "3000",
+              "code_to": "3010"
+            }
+          ]
+        },
+        {
+          "code": "EQ.2",
+          "name": "Other reserves",
+          "sequence": 82,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "3100",
+              "code_to": "3110"
+            }
+          ]
+        },
+        {
+          "code": "EQ.3",
+          "name": "Retained earnings",
+          "sequence": 83,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "3200",
+              "code_to": "3210"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "code": "GH-ICAG-IS",
+      "kind": "income_statement",
+      "framework": "IFRS-SME",
+      "name": "Statement of profit or loss",
+      "valid_from": "2019-08-02",
+      "legal_reference": "Companies Act, 2019 (Act 992), s. 127(5)(a)(ii) — the financial statements comprise a statement of comprehensive income, prepared under s. 127(5)(b) in compliance with the IFRS adopted by the Institute of Chartered Accountants, Ghana; the definition of \"financial year\" in s. 383 is the period that statement covers. The lines are the analysis of expenses by nature that section 5 of the IFRS for SMEs allows, down to profit for the year; other comprehensive income is not booked by any account of this chart, so the statement stops at profit or loss.",
+      "source": "companies-act-2019",
+      "lines": [
+        {
+          "code": "1",
+          "name": "Revenue",
+          "sequence": 10,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "4000",
+              "code_to": "4030"
+            }
+          ]
+        },
+        {
+          "code": "2",
+          "name": "Other income",
+          "sequence": 20,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "4500",
+              "code_to": "4790"
+            }
+          ]
+        },
+        {
+          "code": "3",
+          "name": "Purchases and changes in inventories",
+          "sequence": 30,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "5000",
+              "code_to": "5100"
+            }
+          ]
+        },
+        {
+          "code": "4",
+          "name": "Employee benefits expense",
+          "sequence": 40,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "6000",
+              "code_to": "6080"
+            }
+          ]
+        },
+        {
+          "code": "5",
+          "name": "Depreciation and amortisation",
+          "sequence": 50,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "6200",
+              "code_to": "6220"
+            }
+          ]
+        },
+        {
+          "code": "6",
+          "name": "Other operating expenses",
+          "sequence": 60,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "6300",
+              "code_to": "6990"
+            }
+          ]
+        },
+        {
+          "code": "7",
+          "name": "Finance costs",
+          "sequence": 70,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "7000",
+              "code_to": "7030"
+            }
+          ]
+        },
+        {
+          "code": "8",
+          "name": "Profit before tax",
+          "sequence": 80,
+          "is_total": true,
+          "plus": [
+            "1",
+            "2"
+          ],
+          "minus": [
+            "3",
+            "4",
+            "5",
+            "6",
+            "7"
+          ]
+        },
+        {
+          "code": "9",
+          "name": "Income tax expense",
+          "sequence": 90,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "8000",
+              "code_to": "8020"
+            }
+          ]
+        },
+        {
+          "code": "10",
+          "name": "Profit for the year",
+          "sequence": 100,
+          "is_total": true,
+          "plus": [
+            "8"
+          ],
+          "minus": [
+            "9"
+          ]
+        }
+      ]
+    }
+  ]
+}

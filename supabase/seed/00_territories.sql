@@ -1749,3 +1749,30 @@ on conflict (code) do update set
   eu_vat_to       = excluded.eu_vat_to,
   vat_prefix      = excluded.vat_prefix,
   legal_reference = excluded.legal_reference;
+
+
+-- ---------------------------------------------------------------------------
+-- Ghana — outside the common system of VAT
+--
+-- A State outside the common system of VAT the way Kenya or Nigeria are:
+-- Ghana levies a value added tax of its own under the Value Added Tax Act,
+-- 2025 (Act 1151), in force since 1 January 2026, whose section 3 sets the
+-- rate at fifteen per cent of the taxable value; the National Health
+-- Insurance Levy and the Ghana Education Trust Fund Levy, 2.5 % each, are
+-- charged on the same value and, since the same date, deducted as input tax.
+-- Ghana belongs to ECOWAS, whose instruments do not harmonise VAT, so there
+-- is no regional regime to test a supply against, only the Ghanaian Act.
+-- ---------------------------------------------------------------------------
+
+insert into territories (code, code_source, name, parent_code, eu_vat_scope, eu_vat_from, eu_vat_to, vat_prefix, legal_reference) values
+  ('GH', 'iso_3166_1', 'Ghana', null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. Ghana levies a value added tax of its own under the Value Added Tax Act, 2025 (Act 1151), section 3, at fifteen per cent of the value of the taxable supply or import since the Act came into force on 1 January 2026 (section 75), replacing the Value Added Tax Act, 2013 (Act 870).')
+on conflict (code) do update set
+  code_source     = excluded.code_source,
+  name            = excluded.name,
+  parent_code     = excluded.parent_code,
+  eu_vat_scope    = excluded.eu_vat_scope,
+  eu_vat_from     = excluded.eu_vat_from,
+  eu_vat_to       = excluded.eu_vat_to,
+  vat_prefix      = excluded.vat_prefix,
+  legal_reference = excluded.legal_reference;

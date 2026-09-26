@@ -1,0 +1,234 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "GH-DT0135",
+  "name": "Monthly Standard VAT Return (form DT 0135)",
+  "period": [
+    "month"
+  ],
+  "period_default": "month",
+  "valid_from": "2026-01-01",
+  "legal_reference": "Value Added Tax Act, 2025 (Act 1151), s. 59(1) — a taxable person accounts for the Tax for each tax period on a tax return; s. 59(2)(a) — in the form and manner the Commissioner-General prescribes; s. 72 — \"tax period\" means one calendar month, for every taxable person, which is why the period is fixed. The form the Commissioner-General still publishes is DT 0135 ver 1.5, the standard rate return of VAT, NHIL, GETFund and COVID-19 levy; the return is filed on the GRA Taxpayers' Portal. The pack carries its boxes i to iv and 1 to 25 with the adaptations the 2026 reform requires, each said on its box: no flat rate inputs (boxes 9 to 11), no withholding VAT credits (18 to 20), no credit brought forward (26), no rates (2, 13, 16, 19).",
+  "source": "vat-act-2025",
+  "deadline": {
+    "rule": "last_day_of_month_after_period",
+    "legal_reference": "Value Added Tax Act, 2025 (Act 1151), s. 59(5) — the tax return is submitted not later than the last working day of the month immediately following the month to which it relates, whether or not Tax is payable; s. 60(1) — the Tax is paid by the same date. Ekwo's rule is the last calendar day of that month; a month that ends on a Saturday, a Sunday or a public holiday brings the Ghanaian date forward to the working day before, which the rule does not see.",
+    "source": "vat-act-2025"
+  },
+  "boxes": [
+    {
+      "box": "i",
+      "kind": "base",
+      "name": "Taxable supplies",
+      "sequence": 10,
+      "legal_reference": "Form DT 0135, line i — the value of taxable supplies of goods and services made during the month, excluding the Tax and the levies (Value Added Tax Act, 2025, s. 44(1)(a)).",
+      "source": "dt-0135"
+    },
+    {
+      "box": "ii",
+      "kind": "tax",
+      "name": "NHIL",
+      "sequence": 20,
+      "legal_reference": "Form DT 0135, line ii — the National Health Insurance Levy, 2.5 % of the value on line i since 1 January 2026 (Guideline GRA/AG/25/002, § 15.3).",
+      "source": "gra-ag-25-002"
+    },
+    {
+      "box": "iii",
+      "kind": "tax",
+      "name": "GET Fund Levy",
+      "sequence": 30,
+      "legal_reference": "Form DT 0135, line iii — the Ghana Education Trust Fund Levy, 2.5 % of the value on line i since 1 January 2026 (Guideline GRA/AG/25/002, § 15.3).",
+      "source": "gra-ag-25-002"
+    },
+    {
+      "box": "iv",
+      "kind": "tax",
+      "name": "COVID-19 Levy",
+      "sequence": 40,
+      "legal_reference": "Form DT 0135, line iv — the COVID-19 Health Recovery Levy. The levy was abolished on 1 January 2026 by the repeal of the COVID-19 Health Recovery Levy Act, 2021 (Act 1068); the Guideline, § 15.6, tells taxpayers to ignore the COVID-19 field of the form still in use. The line is carried so the form reads as it prints, and no tax code of this pack ever posts to it.",
+      "source": "gra-notice-2026"
+    },
+    {
+      "box": "1",
+      "kind": "total",
+      "name": "Taxable value inclusive of levies",
+      "sequence": 50,
+      "plus": [
+        "i",
+        "ii",
+        "iii",
+        "iv"
+      ],
+      "legal_reference": "Form DT 0135, box 1 — the VAT-exclusive value of taxable supplies, which includes items i to iv. Under the repealed Act 870 this was the base of the VAT; under Act 1151 the VAT is charged on the value of line i alone, so box 1 is kept as the form prints it and box 3 is no longer box 1 multiplied by box 2.",
+      "source": "dt-0135"
+    },
+    {
+      "box": "3",
+      "kind": "tax",
+      "name": "VAT",
+      "sequence": 60,
+      "legal_reference": "Form DT 0135, box 3 — the amount of VAT charged, 15 % of the value of the taxable supply (Value Added Tax Act, 2025, s. 3). Box 2, the rate, is a percentage and not an amount, and is not carried.",
+      "source": "dt-0135"
+    },
+    {
+      "box": "4",
+      "kind": "base",
+      "name": "Zero rated",
+      "sequence": 70,
+      "legal_reference": "Form DT 0135, box 4 — the value of zero-rated supplies (e.g. exports) made during the month; Value Added Tax Act, 2025, s. 36 and the Second Schedule.",
+      "source": "dt-0135"
+    },
+    {
+      "box": "5",
+      "kind": "base",
+      "name": "Relief",
+      "sequence": 80,
+      "legal_reference": "Form DT 0135, box 5 — the value of supplies on which authority has been granted to remit or relieve the VAT; Value Added Tax Act, 2025, s. 38 and the Third Schedule.",
+      "source": "dt-0135"
+    },
+    {
+      "box": "6",
+      "kind": "total",
+      "name": "Total value of taxable supplies",
+      "sequence": 90,
+      "plus": [
+        "1",
+        "4",
+        "5"
+      ],
+      "legal_reference": "Form DT 0135, box 6 — the sum of boxes 1, 4 and 5.",
+      "source": "dt-0135"
+    },
+    {
+      "box": "7",
+      "kind": "base",
+      "name": "Exempt supplies",
+      "sequence": 100,
+      "legal_reference": "Form DT 0135, box 7 — the value of exempt supplies made during the month; Value Added Tax Act, 2025, s. 35 and the First Schedule.",
+      "source": "dt-0135"
+    },
+    {
+      "box": "8",
+      "kind": "total",
+      "name": "Total value of supplies",
+      "sequence": 110,
+      "plus": [
+        "6",
+        "7"
+      ],
+      "legal_reference": "Form DT 0135, box 8 — the sum of boxes 6 and 7.",
+      "source": "dt-0135"
+    },
+    {
+      "box": "12",
+      "kind": "base",
+      "name": "Local input (standard) — value",
+      "sequence": 120,
+      "legal_reference": "Form DT 0135, box 12 — the VAT-exclusive value of taxable local purchases and expenses taxed at the standard rate. Boxes 9 to 11, local inputs from a VAT flat rate taxpayer, are not carried: the VAT Flat Rate Scheme was abolished on 1 January 2026 (GRA notice to VAT registered taxpayers; Guideline, § 15.2).",
+      "source": "dt-0135"
+    },
+    {
+      "box": "14",
+      "kind": "tax",
+      "name": "Local input (standard) — VAT and levies",
+      "sequence": 130,
+      "legal_reference": "Form DT 0135, box 14 — the tax charged on the purchases of box 12. Since the NHIL and the GETFund Levy are deductible as input tax from 1 January 2026, this pack reports the VAT and both levies here, the single tax column the form has on its input side; box 13, the rate, is not carried.",
+      "source": "gra-notice-2026"
+    },
+    {
+      "box": "15",
+      "kind": "base",
+      "name": "Imports — value",
+      "sequence": 140,
+      "legal_reference": "Form DT 0135, box 15 — the VAT-exclusive value of imports made during the period; Value Added Tax Act, 2025, s. 45(1).",
+      "source": "dt-0135"
+    },
+    {
+      "box": "17",
+      "kind": "tax",
+      "name": "Imports — VAT and levies",
+      "sequence": 150,
+      "legal_reference": "Form DT 0135, box 17 — the tax charged on imports, here the VAT and both levies paid on the bill of entry; box 16, the rate, is not carried.",
+      "source": "dt-0135"
+    },
+    {
+      "box": "21",
+      "kind": "total",
+      "name": "Total value of inputs",
+      "sequence": 160,
+      "plus": [
+        "12",
+        "15"
+      ],
+      "legal_reference": "Form DT 0135, box 21 — the sum of boxes 9, 12, 15 and 18. Box 9 (flat rate inputs, abolished) and box 18 (supplies on which a withholding VAT certificate was received, a figure that comes from the certificates and not from a posting) are not carried, so the total is boxes 12 and 15.",
+      "source": "dt-0135"
+    },
+    {
+      "box": "22",
+      "kind": "total",
+      "name": "Total VAT on inputs",
+      "sequence": 170,
+      "plus": [
+        "14",
+        "17"
+      ],
+      "legal_reference": "Form DT 0135, box 22 — the sum of boxes 11, 14, 17 and 20; boxes 11 and 20 are not carried, for the reasons given at box 21, so the total is boxes 14 and 17. A withholding VAT credit (box 20) is claimed by hand from the certificate the agent issued (Value Added Tax Act, 2025, s. 56; Guideline, § 12.1 D).",
+      "source": "dt-0135"
+    },
+    {
+      "box": "23",
+      "kind": "total",
+      "name": "Deductible input VAT",
+      "sequence": 180,
+      "plus": [
+        "22"
+      ],
+      "legal_reference": "Form DT 0135, box 23 — the input tax the taxable person is entitled to offset; for a fully taxable person the completion notes say it may be the figure of box 22. Apportionment for a person who also makes exempt supplies (Value Added Tax Act, 2025, s. 52 and the Fifth Schedule) is not carried, so box 23 is box 22 — the figure a wholly taxable business files.",
+      "source": "dt-0135"
+    },
+    {
+      "box": "OUT",
+      "kind": "total",
+      "name": "Output VAT and levies",
+      "sequence": 185,
+      "plus": [
+        "3",
+        "ii",
+        "iii",
+        "iv"
+      ],
+      "hidden": true,
+      "legal_reference": "Not a box of form DT 0135: the tax charged on the month's supplies — the VAT of box 3 and the levies of lines ii to iv — which the portal return settles together since the levies are paid to GRA on the same return and, from 1 January 2026, deducted against the same inputs.",
+      "source": "gra-ag-25-002"
+    },
+    {
+      "box": "24",
+      "kind": "total",
+      "name": "Net payment due",
+      "sequence": 190,
+      "plus": [
+        "OUT"
+      ],
+      "minus": [
+        "23"
+      ],
+      "floor_zero": true,
+      "legal_reference": "Form DT 0135, box 24 — box 3 minus box 23 when the output figure is greater. Box 3 on the printed form is the VAT of a levy-inclusive value, which carried the levies with it; under Act 1151 the levies are charged beside the VAT, so this pack takes the output VAT and the levies together (the hidden total OUT) less box 23. Payable by the day the return is due (Value Added Tax Act, 2025, s. 60(1)).",
+      "source": "dt-0135"
+    },
+    {
+      "box": "25",
+      "kind": "total",
+      "name": "Net credit or overpayment",
+      "sequence": 200,
+      "plus": [
+        "23"
+      ],
+      "minus": [
+        "OUT"
+      ],
+      "floor_zero": true,
+      "legal_reference": "Form DT 0135, box 25 — box 23 minus the output figure when the input is greater, dealt with under s. 48(2) and s. 53 of the Value Added Tax Act, 2025 (refund or credit). Box 26, the credit brought forward from the last month, is period-to-period settlement and not a figure a document posts, and is not carried.",
+      "source": "dt-0135"
+    }
+  ]
+}

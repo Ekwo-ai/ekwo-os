@@ -1,0 +1,333 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "A month of books of an Accra trading company, VAT-registered and filing monthly under the Value Added Tax Act, 2025",
+  "chart": "default",
+  "fiscal_year": {
+    "name": "Financial year 2026",
+    "start": "2026-01-01",
+    "end": "2026-12-31"
+  },
+  "periods": [
+    {
+      "code": "2026-02",
+      "from": "2026-02-01",
+      "to": "2026-02-28"
+    }
+  ],
+  "statements": [
+    "GH-ICAG-SFP",
+    "GH-ICAG-IS"
+  ],
+  "contacts": [
+    {
+      "ref": "cust-accra",
+      "name": "Osu Office Supplies Limited",
+      "type": "customer",
+      "country": "GH"
+    },
+    {
+      "ref": "cust-embassy",
+      "name": "Embassy of a foreign State in Accra",
+      "type": "customer",
+      "country": "GH"
+    },
+    {
+      "ref": "cust-togo",
+      "name": "Lomé Distribution SARL",
+      "type": "customer",
+      "country": "TG"
+    },
+    {
+      "ref": "cust-uk",
+      "name": "Chalmers Consulting Ltd",
+      "type": "customer",
+      "country": "GB"
+    },
+    {
+      "ref": "supp-kumasi",
+      "name": "Kumasi Wholesale Traders Limited",
+      "type": "supplier",
+      "country": "GH"
+    },
+    {
+      "ref": "supp-bank",
+      "name": "Ridge Commercial Bank PLC",
+      "type": "supplier",
+      "country": "GH"
+    },
+    {
+      "ref": "supp-china",
+      "name": "Shenzhen Electronics Co.",
+      "type": "supplier",
+      "country": "CN"
+    }
+  ],
+  "documents": [
+    {
+      "ref": "INV-001",
+      "type": "sale_invoice",
+      "contact": "cust-accra",
+      "date": "2026-02-05",
+      "why": "A domestic sale at the standard 20 %: line i, and the tax split 75/12.5/12.5 into the VAT of box 3, the NHIL of line ii and the GETFund Levy of line iii — 7,500, 1,250 and 1,250 on a value of 50,000.",
+      "lines": [
+        {
+          "name": "Laptop computers",
+          "quantity": 10,
+          "unit_price": 5000,
+          "tax": "GH-S-20",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "INV-002",
+      "type": "sale_invoice",
+      "contact": "cust-accra",
+      "date": "2026-02-09",
+      "why": "A standard-rate sale on an awkward value, 333.33, so the rounding of the split is on record: 20 % is 66.67 once rounded, where three rates each rounded on the value would make 66.66.",
+      "lines": [
+        {
+          "name": "Set-up of an office network, one hour",
+          "quantity": 1,
+          "unit_price": 333.33,
+          "tax": "GH-S-20",
+          "account": "4010"
+        }
+      ]
+    },
+    {
+      "ref": "INV-003",
+      "type": "sale_invoice",
+      "contact": "cust-togo",
+      "date": "2026-02-11",
+      "why": "An export of goods, zero-rated under paragraph 2(1) of the Second Schedule: box 4, no VAT and no levy, and a matched payment later on.",
+      "lines": [
+        {
+          "name": "Processed cashew kernels, export consignment",
+          "quantity": 200,
+          "unit_price": 150,
+          "tax": "GH-S-ZR-EXP",
+          "account": "4020"
+        }
+      ]
+    },
+    {
+      "ref": "INV-004",
+      "type": "sale_invoice",
+      "contact": "cust-accra",
+      "date": "2026-02-12",
+      "why": "A sale of unprocessed local maize, exempt under paragraph 2(1)(a) of the First Schedule: box 7.",
+      "lines": [
+        {
+          "name": "Maize, local, unprocessed — 100 kg bags",
+          "quantity": 50,
+          "unit_price": 400,
+          "tax": "GH-S-EX",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "INV-005",
+      "type": "sale_invoice",
+      "contact": "cust-accra",
+      "date": "2026-02-16",
+      "why": "A domestic supply the Second Schedule zero-rates without the goods leaving Ghana (paragraph 2(11), locally manufactured sanitary towels): box 4 beside the export.",
+      "lines": [
+        {
+          "name": "Sanitary towels, locally manufactured — cartons",
+          "quantity": 500,
+          "unit_price": 12,
+          "tax": "GH-S-ZR-DOM",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "INV-006",
+      "type": "sale_invoice",
+      "contact": "cust-embassy",
+      "date": "2026-02-18",
+      "why": "A supply to an embassy relieved under paragraph 3 of the Third Schedule: box 5.",
+      "lines": [
+        {
+          "name": "Office furniture for the chancery",
+          "quantity": 1,
+          "unit_price": 8000,
+          "tax": "GH-S-RELIEF",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "INV-007",
+      "type": "sale_invoice",
+      "contact": "cust-uk",
+      "date": "2026-02-19",
+      "why": "A professional service used by a recipient in the United Kingdom, supplied outside Ghana under s. 42(2)(b) and 42(4): outside the Tax, in no box, and still revenue.",
+      "lines": [
+        {
+          "name": "Market study of the Ghanaian office supplies market",
+          "quantity": 1,
+          "unit_price": 25000,
+          "tax": "GH-S-NS-SVC",
+          "account": "4030"
+        }
+      ]
+    },
+    {
+      "ref": "CN-001",
+      "type": "sale_credit_note",
+      "contact": "cust-accra",
+      "date": "2026-02-24",
+      "why": "A credit note for one laptop returned from INV-001 (s. 46), so line i, box 3 and lines ii and iii fall back down together.",
+      "lines": [
+        {
+          "name": "Laptop computer returned",
+          "quantity": 1,
+          "unit_price": 5000,
+          "tax": "GH-S-20",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-001",
+      "type": "purchase_invoice",
+      "contact": "supp-kumasi",
+      "date": "2026-02-06",
+      "why": "A local purchase at the standard 20 %, the VAT and both levies deductible since 1 January 2026: box 12 and box 14, on three input accounts, and a matched payment later on.",
+      "lines": [
+        {
+          "name": "Trading stock purchased for resale",
+          "quantity": 1,
+          "unit_price": 20000,
+          "tax": "GH-P-20",
+          "account": "5000"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-002",
+      "type": "purchase_invoice",
+      "contact": "supp-kumasi",
+      "date": "2026-02-10",
+      "why": "A motor vehicle bought by a company that neither deals in nor hires vehicles: input tax disallowed by s. 50(1), so the 20 % joins the cost of the vehicle and reaches no box.",
+      "lines": [
+        {
+          "name": "Pick-up truck for deliveries",
+          "quantity": 1,
+          "unit_price": 250000,
+          "tax": "GH-P-20-BL",
+          "account": "1660"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-003",
+      "type": "purchase_invoice",
+      "contact": "supp-bank",
+      "date": "2026-02-13",
+      "why": "Bank charges, a financial service exempt under paragraph 17 of the First Schedule: no tax, and no box on the form.",
+      "lines": [
+        {
+          "name": "Account maintenance and transfer charges",
+          "quantity": 1,
+          "unit_price": 1500,
+          "tax": "GH-P-EX",
+          "account": "6450"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-004",
+      "type": "purchase_invoice",
+      "contact": "supp-china",
+      "date": "2026-02-14",
+      "why": "An import of goods: the VAT and the levies paid to GRA Customs on the bill of entry, deducted through box 15 and box 17, and owed on account 2125 until paid.",
+      "lines": [
+        {
+          "name": "Imported printers for resale",
+          "quantity": 1,
+          "unit_price": 100000,
+          "tax": "GH-P-IMP",
+          "account": "5000"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-005",
+      "type": "purchase_invoice",
+      "contact": "supp-kumasi",
+      "date": "2026-02-17",
+      "why": "A purchase of a zero-rated good for resale: no tax, no box.",
+      "lines": [
+        {
+          "name": "Sanitary towels, locally manufactured — cartons",
+          "quantity": 250,
+          "unit_price": 10,
+          "tax": "GH-P-ZR",
+          "account": "5000"
+        }
+      ]
+    },
+    {
+      "ref": "PCN-001",
+      "type": "purchase_credit_note",
+      "contact": "supp-kumasi",
+      "date": "2026-02-26",
+      "why": "A purchase credit note for a short delivery on PINV-001, so box 12 and box 14 fall back down and the three input accounts with them.",
+      "lines": [
+        {
+          "name": "Trading stock — short delivery credit",
+          "quantity": 1,
+          "unit_price": 2000,
+          "tax": "GH-P-20",
+          "account": "5000"
+        }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "PAY-001",
+      "direction": "inbound",
+      "date": "2026-03-04",
+      "amount": 30000,
+      "contact": "cust-togo",
+      "journal": "BNK",
+      "match": "INV-003",
+      "why": "The export of INV-003 collected in full: a matched inbound payment."
+    },
+    {
+      "ref": "PAY-002",
+      "direction": "inbound",
+      "date": "2026-03-05",
+      "amount": 60000,
+      "contact": "cust-accra",
+      "journal": "BNK",
+      "match": "INV-001",
+      "why": "INV-001 collected in full, VAT and levies included, before the credit note is offset: a matched inbound payment on a standard-rate sale."
+    },
+    {
+      "ref": "PAY-003",
+      "direction": "outbound",
+      "date": "2026-03-06",
+      "amount": 24000,
+      "contact": "supp-kumasi",
+      "journal": "BNK",
+      "match": "PINV-001",
+      "why": "PINV-001 settled in full, VAT and levies included: a matched outbound payment."
+    },
+    {
+      "ref": "PAY-004",
+      "direction": "inbound",
+      "date": "2026-03-10",
+      "amount": 5000,
+      "contact": "cust-uk",
+      "journal": "BNK",
+      "match": null,
+      "why": "An advance received from Chalmers Consulting Ltd before its next invoice, matched to nothing: reconcile() has to survive an open item."
+    }
+  ]
+}

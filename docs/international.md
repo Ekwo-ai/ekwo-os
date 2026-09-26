@@ -5419,3 +5419,54 @@ belongs on, since it answers "does this company file at all" rather than
 anything about a filed return, so it stays in the pack's README as prose next
 to the article that states it, the way Uruguay's and Paraguay's own
 thresholds do.
+
+## From Ghana
+
+**Stacked levies that are rounded once, where the administration rounds
+three times.** Ghana charges VAT at 15 % and two levies, the NHIL and the
+GETFund Levy, at 2.5 % each, all three on the same value (Value Added Tax
+Act, 2025 (Act 1151), s. 3 and s. 44(1)(a); GRA Administrative Guideline
+GRA/AG/25/002, § 15.3). `packs/gh/` models them as `packs/ca/` models Québec:
+one 20 % code with three `tax` postings at factors 75, 12.5 and 12.5, each on
+its own account and in its own box. The engine rounds the 20 % once and gives
+the last posting the remainder, while `box_factor` applies 12.5 % to the
+rounded tax: on a value of 333.33 the GETFund account receives 8.34 and line
+iii of the return says 8.33, where GRA, reading each charge on the value,
+says 8.33 for each levy and 50.00 for the VAT — 66.66 against Ekwo's 66.67.
+A tax with several postings has no way to say "round each share on the base"
+rather than "share the rounded total", and the box of a posting is not the
+amount that posting wrote. The difference is a cent per invoice whose value
+does not divide by eight.
+
+**A return form that the law has overtaken.** The form GRA publishes, DT 0135
+ver 1.5, was drawn for Act 870: VAT computed on a value that includes the
+levies (box 1 = lines i to iv, box 3 = box 1 × rate), a COVID-19 levy line, a
+flat-rate input line. Act 1151 keeps the levies beside the VAT, not under
+it, and abolishes the COVID-19 levy and the flat rate. The pack keeps the
+printed boxes and states on each what changed; boxes 24 and 25 net the
+output VAT and levies together through a hidden total. Whether the portal
+does the same is not published.
+
+**The deadline is a working day.** Act 1151, s. 59(5): the last *working*
+day of the month after the period. `last_day_of_month_after_period` is the
+calendar day, and the deadline vocabulary has no business-day adjustment.
+
+**The time of supply has five limbs.** Act 1151, s. 39(1)(c): the earliest
+of removal of the goods, making them available, completion of the service,
+payment and the issue of the tax invoice. `earliest_of_delivery_or_payment`
+is the nearest value and misses an invoice issued first.
+
+**Clearance invoicing.** Act 1151, s. 43(2), requires every tax invoice to be
+issued through a Certified Invoicing System integrated with the
+Commissioner-General's (GRA's E-VAT: signature, QR code, time stamp). Ekwo
+does not connect to it, and `einvoicing` has no value for a clearance with
+the administration: `obligation` is `none`, as for Kenya's eTIMS.
+
+**VAT withholding and imported services have no document to ride on.** An
+appointed agent withholds 7 % of the value at payment and the supplier
+claims the certificate on its return (ss. 55 to 57); an imported service is
+taxed only to the extent it serves exempt supplies, on a separate declaration
+paid within twenty-one days (s. 61). The first is a payment-time mechanism
+and the second a second form; neither is a tax code of the pack, and
+`settle_filing()` would sweep a separate import-of-services account into the
+monthly return's settlement if one were modelled.

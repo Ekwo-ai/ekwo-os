@@ -1,0 +1,221 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "GH",
+  "name": "Ghana",
+  "version": "0.1.0",
+  "schema_min": "20260923110000",
+  "seed_sequence": 119,
+  "released_at": "2026-09-26",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "vat-act-2025",
+        "title": "Value Added Tax Act, 2025 (Act 1151), assented to on 9 December 2025, in force on 1 January 2026 (s. 75) — ss. 1 to 3 (imposition and the 15 % rate), 35 and 36 (exempt and zero-rated supplies), 38 (relief), 39 (time of supply), 43 (tax invoice through a Certified Invoicing System), 44 (taxable value, excluding the Tax, the GETFund Levy and the NHIL), 49 and 50 (deductible input tax, motor vehicles), 55 to 57 (VAT withholding), 59 and 60 (monthly return and payment), 72 (\"tax period\" means one calendar month), 73 (repeal of Act 870); First, Second and Third Schedules",
+        "publisher": "Ghana Revenue Authority",
+        "url": "https://gra.gov.gh/wp-content/uploads/2026/01/VALUE-ADDED-TAX-ACT-2025-ACT-1151.pdf",
+        "consulted_on": "2026-09-26",
+        "kind": "law"
+      },
+      {
+        "key": "gra-ag-25-002",
+        "title": "VAT Administrative Guidelines for the Value Added Tax Act, 2025 (Act 1151), Administrative Guideline GRA/AG/25/002 of 31 December 2025 — computation of the Tax and the levies on the same taxable value (§ 6.0, § 15.3), NHIL and GETFund 2.5 % each and a combined 20 % (appendix), abolition of the flat rate and conversion to the standard rate (§ 15.2), filing of returns (§ 15.4), the COVID-19 levy field to be ignored since its Act was repealed (§ 15.6), VAT withholding at 7 % (§ 12.1)",
+        "publisher": "Ghana Revenue Authority",
+        "url": "https://gra.gov.gh/wp-content/uploads/2026/01/VAT-Guidelines-for-VAT-ACT-1151.pdf",
+        "consulted_on": "2026-09-26",
+        "kind": "guidance"
+      },
+      {
+        "key": "gra-notice-2026",
+        "title": "Notice to all VAT registered taxpayers — Value Added Tax Act, 2025 (Act 1151) effective 1 January 2026: registration threshold for goods raised to GH₵750,000, COVID-19 Health Recovery Levy abolished, NHIL and GETFund recoupled and deductible as input tax, VAT Flat Rate Scheme abolished",
+        "publisher": "Ghana Revenue Authority",
+        "url": "https://gra.gov.gh/news/portfolio/notice-to-all-vat-registered-taxpayers/",
+        "consulted_on": "2026-09-26",
+        "kind": "guidance"
+      },
+      {
+        "key": "gra-vat",
+        "title": "Value Added Tax — rates (VAT 15 %, NHIL 2.5 %, GETFund 2.5 %), zero-rated supplies, filing and payment by the last working day of the following month",
+        "publisher": "Ghana Revenue Authority",
+        "url": "https://gra.gov.gh/domestic-tax/tax-types/vat/",
+        "consulted_on": "2026-09-26",
+        "kind": "guidance"
+      },
+      {
+        "key": "dt-0135",
+        "title": "Monthly Standard VAT Return, form DT 0135 ver 1.5 (VAT, NHIL, GETFund and COVID-19 levy standard rate return) with its completion notes, boxes i to iv and 1 to 26",
+        "publisher": "Ghana Revenue Authority",
+        "url": "https://gra.gov.gh/wp-content/uploads/2021/06/DT-0135-VAT-NHIL-COVID-19-Standard-Rate-Return-Form-20082018-Ver1.5.pdf",
+        "consulted_on": "2026-09-26",
+        "kind": "form"
+      },
+      {
+        "key": "gra-forms",
+        "title": "GRA forms — the list of return forms the Authority publishes, DT 0135 being the standard-rate VAT return still listed",
+        "publisher": "Ghana Revenue Authority",
+        "url": "https://gra.gov.gh/forms/",
+        "consulted_on": "2026-09-26",
+        "kind": "guidance"
+      },
+      {
+        "key": "taxpayers-portal",
+        "title": "GRA Taxpayers' Portal — where the monthly VAT return is filed and paid",
+        "publisher": "Ghana Revenue Authority",
+        "url": "https://taxpayersportal.com/",
+        "consulted_on": "2026-09-26",
+        "kind": "portal"
+      },
+      {
+        "key": "e-vat",
+        "title": "E-VAT — the Certified Invoicing System of the Commissioner-General: invoices signed by the Commissioner-General, with a QR code and a time stamp, standalone or integrated with the taxpayer's own system",
+        "publisher": "Ghana Revenue Authority",
+        "url": "https://gra.gov.gh/e-services/e-vat/",
+        "consulted_on": "2026-09-26",
+        "kind": "portal"
+      },
+      {
+        "key": "gra-vat-withholding",
+        "title": "VAT withholding — appointed withholding agents, rate and certificates",
+        "publisher": "Ghana Revenue Authority",
+        "url": "https://gra.gov.gh/domestic-tax/tax-types/vat-withholding/",
+        "consulted_on": "2026-09-26",
+        "kind": "guidance"
+      },
+      {
+        "key": "companies-act-2019",
+        "title": "Companies Act, 2019 (Act 992), s. 127 — accounting records and financial statements prepared in compliance with the IFRS adopted by the Institute of Chartered Accountants, Ghana; Sixth Schedule",
+        "publisher": "Ghana Investment Promotion Centre",
+        "url": "https://gipc.gov.gh/wp-content/uploads/2023/04/COMPANIES-ACT-2019-ACT-992.pdf",
+        "consulted_on": "2026-09-26",
+        "kind": "law"
+      },
+      {
+        "key": "icag-ifrs-sme",
+        "title": "Adoption of the IFRS for SMEs — publication of the Institute of Chartered Accountants (Ghana)",
+        "publisher": "Institute of Chartered Accountants (Ghana)",
+        "url": "https://icagh.org/wp-content/uploads/2021/03/Adoption-of-IFRS-for-SMEs-publication.pdf",
+        "consulted_on": "2026-09-26",
+        "kind": "guidance"
+      },
+      {
+        "key": "ifrs-ghana",
+        "title": "Use of IFRS Standards by jurisdiction — Ghana: IFRS adopted in 2007, IFRS for SMEs in 2010",
+        "publisher": "IFRS Foundation",
+        "url": "https://www.ifrs.org/use-around-the-world/use-of-ifrs-standards-by-jurisdiction/view-jurisdiction/ghana/",
+        "consulted_on": "2026-09-26",
+        "kind": "guidance"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "GHS",
+    "language": "en",
+    "rounding_method": "half_up",
+    "closing_style": "retained_earnings",
+    "fiscal_year_default": "calendar",
+    "roles": {
+      "receivable": "1100",
+      "payable": "2000",
+      "suspense": "2990",
+      "rounding": "6990",
+      "retained_earnings": "3200",
+      "sales": "4000",
+      "purchase": "5000",
+      "bank": "1010",
+      "cash": "1000",
+      "fx_gain": "4700",
+      "fx_loss": "6950",
+      "asset_disposal_gain": "4750",
+      "asset_disposal_loss": "6960",
+      "tax_payable": "2110",
+      "tax_receivable": "1155"
+    },
+    "journal_roles": {
+      "sales": "SAL",
+      "purchase": "PUR",
+      "miscellaneous": "GEN",
+      "opening": "OPN"
+    }
+  },
+  "languages": [],
+  "journals": [
+    {
+      "code": "SAL",
+      "type": "sales",
+      "name": "Sales journal",
+      "sequence": 10
+    },
+    {
+      "code": "PUR",
+      "type": "purchase",
+      "name": "Purchases journal",
+      "sequence": 20
+    },
+    {
+      "code": "BNK",
+      "type": "bank",
+      "name": "Bank",
+      "sequence": 30
+    },
+    {
+      "code": "CSH",
+      "type": "cash",
+      "name": "Petty cash",
+      "sequence": 40
+    },
+    {
+      "code": "GEN",
+      "type": "general",
+      "name": "General journal",
+      "sequence": 50
+    },
+    {
+      "code": "OPN",
+      "type": "opening",
+      "name": "Opening balances",
+      "sequence": 60
+    }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Ghana reference chart of accounts",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": [
+        "GH-ICAG-SFP",
+        "GH-ICAG-IS"
+      ],
+      "legal_reference": "There is no legal chart of accounts in Ghana. Companies Act, 2019 (Act 992), s. 127(1) requires every company to keep proper accounting records of the sums received and spent, of its sales and purchases and of its assets and liabilities; s. 127(2) says records that do not give a true and fair view are not proper records; s. 127(5) requires the financial statements — a statement of financial position, a statement of comprehensive income, a statement of cash flows, a statement of changes in equity and the notes — to be prepared in compliance with the International Financial Reporting Standards adopted by the Institute of Chartered Accountants, Ghana, which adopted the IFRS in 2007 and the IFRS for SMEs in 2010. This chart is original: four digits, blocked so that each range reaches one line of the IFRS for SMEs statements below, with the accounts a Ghanaian company actually keeps — VAT, NHIL and GETFund output and input accounts kept apart, the net VAT and levies due to or from GRA after a return, import VAT and levies owed to GRA Customs at the border, VAT withheld by an appointed agent, SSNIT first-tier and second-tier pension contributions, PAYE.",
+      "source": "companies-act-2019"
+    }
+  ],
+  "documents": {
+    "numbering": "sequential",
+    "number_format": "{CODE}-{YYYY}-{NNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "earliest_of_delivery_or_payment",
+    "references": {
+      "numbering": {
+        "legal_reference": "Value Added Tax Act, 2025 (Act 1151), s. 43(4) — a taxable person, on issuing a tax invoice, retains a copy of it in a sequential identifying number order; s. 43(7) — only one tax invoice or sales receipt for each taxable supply. The Act asks for a sequence and not that it carry no gap, which is why the style is `sequential`.",
+        "source": "vat-act-2025"
+      },
+      "tax_point": {
+        "legal_reference": "Value Added Tax Act, 2025 (Act 1151), s. 39(1)(c) — except for own use and gifts, a supply occurs on the EARLIEST of the dates on which (i) the goods are removed from the premises of the taxable person, (ii) the goods are made available to the recipient, (iii) the performance of the service is completed, (iv) payment is received, or (v) a tax invoice or sales receipt is issued; s. 39(2) limits (iv) and (v) to the part paid or invoiced. Ekwo's closed vocabulary expresses only a two-way earliest-of; `earliest_of_delivery_or_payment` is the nearest value, and the gap — an invoice issued ahead of both delivery and payment, which fixes the time of supply in Ghana — is recorded in docs/international.md and in the README of this pack.",
+        "source": "vat-act-2025"
+      }
+    },
+    "mentions": []
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "obligation": "none",
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "No Ghanaian statute obliges a business to exchange a structured electronic invoice with another business in the sense Ekwo's vocabulary gives the word — there is no Ghanaian Peppol authority, no published profile and no ISO 6523 scheme a party is addressed by, so `profile`, `party_scheme` and `vat_scheme` are null and `obligation` is `none`. What Ghana has instead is a clearance system: Value Added Tax Act, 2025 (Act 1151), s. 43(2) requires a taxable person to issue a tax invoice through a Certified Invoicing System and to integrate it into the invoicing system of the Commissioner-General; s. 43(3) lets the Commissioner-General access it; s. 43(10) requires the taxable person to report within twenty-four hours a system that goes offline; s. 66(2) penalises failing to issue through it or to integrate it; s. 72 defines a tax invoice as an electronic invoice issued through a Certified Invoicing System or any other invoice the Commissioner-General approves. GRA's E-VAT signs each invoice with the Commissioner-General's signature, a QR code and a time stamp. That is a real-time validation of an invoice with the tax administration, not a peer-to-peer exchange between two businesses in the sense `einvoicing.profile` describes; Ekwo does not connect to E-VAT, and the gap is recorded in docs/international.md and in this pack's README.",
+    "source": "vat-act-2025"
+  }
+}
