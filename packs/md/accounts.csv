@@ -1,0 +1,212 @@
+code,parent,type,reconcilable,name,sequence
+11,,asset_fixed,false,Imobilizări necorporale,10
+111,11,asset_fixed,false,Imobilizări necorporale în curs de execuție,20
+112,11,asset_fixed,false,Imobilizări necorporale în exploatare,30
+1121,112,asset_fixed,false,"Concesiuni, licențe și mărci",40
+1122,112,asset_fixed,false,Drepturi de autor și titluri de protecție,50
+1123,112,asset_fixed,false,Programe informatice,60
+1124,112,asset_fixed,false,Alte imobilizări necorporale,70
+113,11,asset_fixed,false,Amortizarea imobilizărilor necorporale,80
+114,11,asset_fixed,false,Deprecierea imobilizărilor necorporale,90
+115,11,asset_fixed,false,Fond comercial pozitiv,100
+116,11,asset_fixed,false,Fond comercial negativ,110
+117,11,asset_fixed,false,Deprecierea fondului comercial pozitiv,120
+12,,asset_fixed,false,"Imobilizări corporale, terenuri, mijloace fixe și resurse minerale",130
+121,12,asset_fixed,false,Imobilizări corporale în curs de execuție,140
+122,12,asset_fixed,false,Terenuri,150
+123,12,asset_fixed,false,Mijloace fixe,160
+1231,123,asset_fixed,false,Clădiri,170
+1232,123,asset_fixed,false,Construcții speciale,180
+1233,123,asset_fixed,false,"Mașini, utilaje și instalații tehnice",190
+1234,123,asset_fixed,false,Mijloace de transport,200
+1235,123,asset_fixed,false,Inventar și mobilier,210
+124,12,asset_fixed,false,Amortizarea mijloacelor fixe,220
+125,12,asset_fixed,false,Resurse minerale,230
+126,12,asset_fixed,false,Amortizarea și deprecierea resurselor minerale,240
+127,12,asset_fixed,false,Deprecierea imobilizărilor corporale în curs de execuție,250
+128,12,asset_fixed,false,Deprecierea terenurilor,260
+129,12,asset_fixed,false,Deprecierea mijloacelor fixe,270
+13,,asset_fixed,false,Active biologice imobilizate,280
+131,13,asset_fixed,false,Active biologice imobilizate în curs de execuție,290
+132,13,asset_fixed,false,Active biologice imobilizate în exploatare,300
+133,13,asset_fixed,false,Amortizarea și deprecierea activelor biologice imobilizate,310
+14,,asset_non_current,false,Investiții financiare pe termen lung,320
+141,14,asset_non_current,false,Investiții financiare pe termen lung în părți neafiliate,330
+1411,141,asset_non_current,false,Valori mobiliare,340
+1412,141,asset_non_current,false,Cote de participație,350
+1413,141,asset_non_current,false,Depozite,360
+1414,141,asset_non_current,false,Împrumuturi acordate,370
+142,14,asset_non_current,false,Investiții financiare pe termen lung în părți afiliate,380
+143,14,asset_non_current,false,Deprecierea investițiilor financiare pe termen lung,390
+15,,asset_non_current,false,Investiții imobiliare,400
+151,15,asset_non_current,false,Investiții imobiliare,410
+152,15,asset_non_current,false,Amortizarea și deprecierea investițiilor imobiliare,420
+16,,asset_non_current,false,Creanțe și avansuri acordate pe termen lung,430
+161,16,asset_non_current,false,Creanțe pe termen lung,440
+162,16,asset_non_current,false,Creanțe ale părților afiliate pe termen lung,450
+163,16,asset_non_current,false,Avansuri acordate pe termen lung,460
+17,,asset_non_current,false,Alte active imobilizate,470
+171,17,asset_non_current,false,Cheltuieli anticipate pe termen lung,480
+172,17,asset_non_current,false,Alte active imobilizate,490
+21,,asset_current,false,Stocuri,500
+211,21,asset_current,false,Materiale,510
+2111,211,asset_current,false,Materii prime și materiale de bază,520
+2112,211,asset_current,false,Materiale auxiliare,530
+2113,211,asset_current,false,Piese de schimb,540
+2114,211,asset_current,false,Combustibil,550
+2115,211,asset_current,false,Ambalaje,560
+212,21,asset_current,false,Active biologice circulante,570
+213,21,asset_current,false,Obiecte de mică valoare și scurtă durată,580
+214,21,asset_current,false,Uzura obiectelor de mică valoare și scurtă durată,590
+215,21,asset_current,false,Producția în curs de execuție,600
+216,21,asset_current,false,Produse,610
+2161,216,asset_current,false,Produse finite,620
+217,21,asset_current,false,Mărfuri,630
+2171,217,asset_current,false,Bunuri procurate în vederea revânzării,640
+218,21,asset_current,false,Ajustări pentru deprecierea stocurilor,650
+22,,asset_current,false,Creanțe comerciale și calculate,660
+221,22,asset_receivable,true,Creanțe comerciale,670
+2211,221,asset_receivable,true,Creanțe comerciale din țară,680
+2212,221,asset_receivable,true,Creanțe comerciale din străinătate,690
+222,22,asset_current,false,Corecții privind creanțele compromise,700
+223,22,asset_current,false,Creanțe ale părților afiliate,710
+224,22,asset_current,false,Avansuri acordate curente,720
+225,22,asset_current,false,Creanțe ale bugetului,730
+2251,225,asset_current,false,Creanțe privind impozitul pe venit,740
+2252,225,asset_current,true,Creanțe privind taxa pe valoarea adăugată,750
+2253,225,asset_current,false,Creanțe privind accizele,760
+2254,225,asset_current,false,Creanțe privind alte impozite și taxe,770
+226,22,asset_current,false,Creanțe ale personalului,780
+23,,asset_current,false,Alte creanțe curente,790
+231,23,asset_current,false,Creanțe privind veniturile din utilizarea de către terți a activelor entității,800
+232,23,asset_current,false,Creanțe preliminate,810
+233,23,asset_current,false,Creanțe curente privind asigurările,820
+234,23,asset_current,false,Alte creanțe curente,830
+24,,asset_cash,false,Numerar,840
+241,24,asset_cash,false,Casa,850
+242,24,asset_cash,false,Conturi curente în monedă națională,860
+243,24,asset_cash,false,Conturi curente în valută străină,870
+244,24,asset_cash,false,Alte conturi bancare,880
+245,24,asset_cash,false,Transferuri de numerar în expediție,890
+246,24,asset_cash,false,Documente bănești,900
+25,,asset_current,false,Investiții financiare curente,910
+251,25,asset_current,false,Investiții financiare curente în părți neafiliate,920
+252,25,asset_current,false,Investiții financiare curente în părți afiliate,930
+253,25,asset_current,false,Provizioane pentru pierderi din împrumuturi neachitate la termen,940
+254,25,asset_current,false,Ajustări pentru deprecierea investițiilor financiare curente,950
+26,,asset_current,false,Alte active circulante,960
+261,26,asset_prepayments,false,Cheltuieli anticipate curente,970
+262,26,asset_current,false,Alte active circulante,980
+31,,equity,false,"Capital social, neînregistrat și prime de capital",990
+311,31,equity,false,Capital social,1000
+313,31,equity,false,Capital nevărsat,1010
+314,31,equity,false,Capital neînregistrat,1020
+315,31,equity,false,Capital retras,1030
+316,31,equity,false,Patrimoniul primit de la stat cu drept de proprietate,1040
+317,31,equity,false,Prime de capital,1050
+32,,equity,false,Rezerve,1060
+321,32,equity,false,Capital de rezervă,1070
+322,32,equity,false,Rezerve statutare,1080
+323,32,equity,false,Alte rezerve,1090
+33,,equity_retained,false,Profit nerepartizat (pierdere neacoperită),1100
+331,33,equity_retained,false,Corecții ale rezultatelor anilor precedenți,1110
+332,33,equity_retained,false,Profit nerepartizat (pierdere neacoperită) al anilor precedenți,1120
+333,33,equity_retained,false,Profit net (pierdere netă) al perioadei de gestiune,1130
+334,33,equity_retained,false,Profit utilizat al perioadei de gestiune,1140
+335,33,equity_retained,false,Rezultat din tranziția la noile reglementări contabile,1150
+336,33,equity_retained,false,Excedent net (deficit net) al perioadei de gestiune,1160
+34,,equity,false,Alte elemente de capital propriu,1170
+341,34,equity,false,Fonduri,1180
+342,34,equity,false,Subvenții aferente activelor entităților cu proprietate publică,1190
+343,34,equity,false,Rezerve din reevaluare,1200
+344,34,equity,false,Alte elemente de capital propriu,1210
+35,,equity_retained,false,Rezultat financiar total,1220
+351,35,equity_retained,false,Rezultat financiar total,1230
+41,,liability_non_current,false,Datorii financiare pe termen lung,1240
+411,41,liability_non_current,false,Credite bancare pe termen lung,1250
+412,41,liability_non_current,false,Împrumuturi pe termen lung,1260
+414,41,liability_non_current,false,Datorii privind depunerile de economii pe termen lung ale membrilor asociațiilor de economii și împrumut,1270
+42,,liability_non_current,false,Alte datorii pe termen lung,1280
+421,42,liability_non_current,false,Datorii comerciale pe termen lung,1290
+422,42,liability_non_current,false,Datorii față de părțile afiliate pe termen lung,1300
+423,42,liability_non_current,false,Avansuri primite pe termen lung,1310
+424,42,liability_non_current,false,Venituri anticipate pe termen lung,1320
+425,42,liability_non_current,false,Finanțări și încasări cu destinație specială pe termen lung,1330
+426,42,liability_non_current,false,Provizioane pe termen lung,1340
+427,42,liability_non_current,false,Datorii pe termen lung privind bunurile primite în gestiune economică,1350
+428,42,liability_non_current,false,Alte datorii pe termen lung,1360
+51,,liability_current,false,Datorii financiare curente,1370
+511,51,liability_current,false,Credite bancare pe termen scurt,1380
+512,51,liability_current,false,Împrumuturi pe termen scurt,1390
+513,51,liability_current,false,Datorii privind depunerile de economii pe termen scurt ale membrilor asociațiilor de economii și împrumut,1400
+52,,liability_current,false,Datorii comerciale curente,1410
+521,52,liability_payable,true,Datorii comerciale curente,1420
+522,52,liability_current,false,Datorii curente față de părțile afiliate,1430
+523,52,liability_current,false,Avansuri primite curente,1440
+53,,liability_current,false,Datorii calculate curente,1450
+531,53,liability_current,false,Datorii față de personal privind retribuirea muncii,1460
+532,53,liability_current,false,Datorii față de personal privind alte operații,1470
+533,53,liability_current,false,Datorii privind asigurările sociale și medicale,1480
+534,53,liability_current,false,Datorii față de buget,1490
+5341,534,liability_current,false,Datorii privind impozitul pe venit din activitatea de întreprinzător și profesională,1500
+5342,534,liability_current,false,Datorii privind impozitul pe venit din salariu,1510
+5343,534,liability_current,false,Datorii privind impozitul pe venit reținut la sursa de plată,1520
+5344,534,liability_current,true,Datorii privind taxa pe valoarea adăugată,1530
+53441,5344,liability_current,false,TVA colectată,1540
+53442,5344,liability_current,false,TVA deductibilă,1550
+53443,5344,liability_current,false,TVA aferentă serviciilor importate,1555
+5345,534,liability_current,false,Datorii privind accizele,1560
+5346,534,liability_current,false,Datorii privind alte impozite și taxe,1570
+535,53,liability_current,false,Venituri anticipate curente,1580
+536,53,liability_current,false,Datorii față de proprietari,1590
+537,53,liability_current,false,Finanțări și încasări cu destinație specială curente,1600
+538,53,liability_current,false,Provizioane curente,1610
+54,,liability_current,false,Alte datorii curente,1620
+541,54,liability_current,false,Datorii preliminate,1630
+542,54,liability_current,false,Datorii privind asigurarea bunurilor și a persoanelor,1640
+543,54,liability_current,false,Datorii curente privind bunurile primite în gestiune economică,1650
+544,54,liability_current,false,Alte datorii curente,1660
+61,,income,false,Venituri din activitatea operațională,1670
+611,61,income,false,Venituri din vânzări,1680
+6111,611,income,false,Venituri din vânzarea produselor,1690
+6112,611,income,false,Venituri din vânzarea mărfurilor,1700
+6113,611,income,false,Venituri din prestarea serviciilor,1710
+612,61,income,false,Alte venituri din activitatea operațională,1720
+613,61,income,false,Venituri din dobânzile aferente împrumuturilor acordate,1730
+616,61,income,false,Venituri aferente mijloacelor cu destinație specială,1740
+617,61,income,false,Alte venituri (cu excepția veniturilor din activitatea economică),1750
+618,61,income,false,Venituri din activitatea economică,1760
+62,,income_other,false,Venituri din alte activități,1770
+621,62,income_other,false,Venituri din operațiuni cu active imobilizate,1780
+6211,621,income_other,false,Venituri din ieșirea imobilizărilor necorporale,1790
+6212,621,income_other,false,Venituri din ieșirea imobilizărilor corporale,1800
+622,62,income_other,false,Venituri financiare,1810
+6221,622,income_other,false,Venituri din interese de participare,1820
+6222,622,income_other,false,Venituri din dobânzi,1830
+6226,622,income_other,false,Venituri din diferențe de curs valutar,1840
+6227,622,income_other,false,Venituri din diferențe de sumă,1850
+623,62,income_other,false,Venituri excepționale,1860
+71,,expense,false,Cheltuieli ale activității operaționale,1870
+711,71,expense_direct_cost,false,Costul vânzărilor,1880
+7111,711,expense_direct_cost,false,Valoarea contabilă a produselor vândute,1890
+7112,711,expense_direct_cost,false,Valoarea contabilă a mărfurilor vândute,1900
+7113,711,expense_direct_cost,false,Costul serviciilor prestate,1910
+712,71,expense,false,Cheltuieli de distribuire,1920
+713,71,expense,false,Cheltuieli administrative,1930
+714,71,expense,false,Alte cheltuieli din activitatea operațională,1940
+7148,714,expense,false,Alte cheltuieli operaționale,1950
+715,71,expense,false,Cheltuieli aferente dobânzilor calculate,1960
+716,71,expense,false,Cheltuieli aferente mijloacelor cu destinație specială,1970
+717,71,expense,false,Alte cheltuieli (cu excepția cheltuielilor din activitatea economică),1980
+718,71,expense,false,Cheltuieli din activitatea economică,1990
+72,,expense,false,Cheltuieli ale altor activități,2000
+721,72,expense,false,Cheltuieli cu active imobilizate,2010
+7211,721,expense,false,Valoarea contabilă și cheltuielile aferente imobilizărilor necorporale ieșite,2020
+7212,721,expense,false,Valoarea contabilă și cheltuielile aferente imobilizărilor corporale ieșite,2030
+722,72,expense,false,Cheltuieli financiare,2040
+7221,722,expense,false,Cheltuieli privind dobânzile,2050
+7224,722,expense,false,Cheltuieli din diferențe de curs valutar,2060
+7225,722,expense,false,Cheltuieli din diferențe de sumă,2070
+723,72,expense,false,Cheltuieli excepționale,2080
+73,,expense,false,Cheltuieli privind impozitul pe venit,2090
+731,73,expense,false,Cheltuieli privind impozitul pe venit,2100

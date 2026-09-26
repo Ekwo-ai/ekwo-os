@@ -1,0 +1,199 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "MD",
+  "name": "Moldova",
+  "version": "0.1.0",
+  "schema_min": "20260923110000",
+  "seed_sequence": 111,
+  "released_at": "2026-09-26",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "codul-fiscal",
+        "title": "Codul fiscal al Republicii Moldova nr. 1163-XIII din 24 aprilie 1997, Titlul III — Taxa pe valoarea adăugată, formă consolidată",
+        "publisher": "Parlamentul Republicii Moldova — Serviciul Fiscal de Stat",
+        "url": "https://www.legis.md/cautare/getResults?doc_id=79111&lang=ro",
+        "consulted_on": "2026-09-26",
+        "kind": "law"
+      },
+      {
+        "key": "sfs-cotele-tva",
+        "title": "Baza generalizată a practicii fiscale — cotele TVA aplicabile conform art. 96 din Codul fiscal",
+        "publisher": "Serviciul Fiscal de Stat",
+        "url": "https://sfs.md/ro/intrebare-baza-de-date-generalizare/9",
+        "consulted_on": "2026-09-26",
+        "kind": "guidance"
+      },
+      {
+        "key": "sfs-horeca-8",
+        "title": "Începând cu 31 decembrie 2023, se va aplica cota TVA de 8% pentru domeniul HORECA",
+        "publisher": "Serviciul Fiscal de Stat",
+        "url": "https://sfs.md/ro/stiri/incepand-cu-31-decembrie-2023-se-va-aplica-cota-tva-de-8-pentru-domeniul-horeca",
+        "consulted_on": "2026-09-26",
+        "kind": "guidance"
+      },
+      {
+        "key": "oifps-1164-2012",
+        "title": "Ordinul Inspectoratului Fiscal Principal de Stat nr. 1164 din 25.10.2012 privind aprobarea formularului Declarației privind TVA (forma TVA12) și a Modului de completare a acesteia",
+        "publisher": "Inspectoratul Fiscal Principal de Stat / Serviciul Fiscal de Stat",
+        "url": "https://www.legis.md/cautare/getResults?lang=ro&doc_id=126104",
+        "consulted_on": "2026-09-26",
+        "kind": "form"
+      },
+      {
+        "key": "efactura-achizitii",
+        "title": "Comunicat privind utilizarea obligatorie în cadrul achizițiilor publice a serviciului electronic „e-Factura” — art. 117 alin. (12) din Codul fiscal, Legea nr. 102/2020",
+        "publisher": "Agenția Achiziții Publice",
+        "url": "https://tender.gov.md/ro/content/comunicat-privind-utilizarea-obligatorie-%C3%AEn-cadrul-achizi%C8%9Biilor-publice-serviciului-1",
+        "consulted_on": "2026-09-26",
+        "kind": "guidance"
+      },
+      {
+        "key": "sfs-raportare-portal",
+        "title": "SIA „Declarație electronică” — portalul de depunere a declarațiilor fiscale, inclusiv Declarația privind TVA (forma TVA12) și facturile fiscale electronice ale sistemului e-Factura",
+        "publisher": "Serviciul Fiscal de Stat",
+        "url": "https://raportare.gov.md/reports-sfs",
+        "consulted_on": "2026-09-26",
+        "kind": "portal"
+      },
+      {
+        "key": "omf119-2013",
+        "title": "Ordinul Ministerului Finanțelor nr. 119 din 06.08.2013 privind aprobarea Planului general de conturi contabile",
+        "publisher": "Ministerul Finanțelor al Republicii Moldova",
+        "url": "https://mf.gov.md/sites/default/files/legislatie/Planul%20general%20de%20conturi%20contabile.pdf",
+        "consulted_on": "2026-09-26",
+        "kind": "regulation"
+      },
+      {
+        "key": "legea-287-2017",
+        "title": "Legea contabilității și raportării financiare nr. 287 din 15.12.2017",
+        "publisher": "Parlamentul Republicii Moldova — Ministerul Finanțelor",
+        "url": "https://mf.gov.md/ro/content/legea-contabilit%C4%83%C8%9Bii-%C8%99i-raport%C4%83rii-financiare-nr-287",
+        "consulted_on": "2026-09-26",
+        "kind": "law"
+      },
+      {
+        "key": "snc-prezentarea",
+        "title": "Standardul Național de Contabilitate „Prezentarea situațiilor financiare” (S.N.C. 5), aprobat prin ordinul Ministerului Finanțelor nr. 118 din 29.07.2013, modificat prin ordinul nr. 194 din 2018 — formularele Bilanțul contabil (Forma nr. 1) și Raportul de profit și pierderi (Forma nr. 2)",
+        "publisher": "Ministerul Finanțelor al Republicii Moldova",
+        "url": "https://old.mf.gov.md/files/files/Standardele%20Na%C8%9Bionale%20de%20Contabilitate.pdf",
+        "consulted_on": "2026-09-26",
+        "kind": "regulation"
+      },
+      {
+        "key": "codul-civil-942",
+        "title": "Codul civil al Republicii Moldova nr. 1107/2002, art. 942 — dobânda de întârziere în executarea obligațiilor pecuniare",
+        "publisher": "Parlamentul Republicii Moldova",
+        "url": "https://www.legis.md/cautare/getResults?doc_id=112573&lang=ro",
+        "consulted_on": "2026-09-26",
+        "kind": "law"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "MDL",
+    "language": "ro",
+    "rounding_method": "half_up",
+    "opening_entry_label": "Notă contabilă de deschidere",
+    "closing_style": "result_accounts",
+    "fiscal_year_default": "calendar",
+    "roles": {
+      "receivable": "221",
+      "payable": "521",
+      "suspense": "544",
+      "rounding": "7148",
+      "retained_earnings": "332",
+      "current_year_result_profit": "333",
+      "current_year_result_loss": "333",
+      "sales": "611",
+      "purchase": "711",
+      "bank": "242",
+      "cash": "241",
+      "fx_gain": "6226",
+      "fx_loss": "7224",
+      "asset_disposal_gain": "6212",
+      "asset_disposal_loss": "7212",
+      "tax_payable": "5344",
+      "tax_receivable": "2252"
+    },
+    "journal_roles": {
+      "sales": "VNZ",
+      "purchase": "CMP",
+      "miscellaneous": "DIV",
+      "opening": "DES"
+    }
+  },
+  "languages": ["en"],
+  "journals": [
+    { "code": "VNZ", "type": "sales", "name": "Registrul de evidență a livrărilor", "sequence": 10 },
+    { "code": "CMP", "type": "purchase", "name": "Registrul de evidență a procurărilor", "sequence": 20 },
+    { "code": "BNC", "type": "bank", "name": "Jurnal de bancă", "sequence": 30 },
+    { "code": "CAS", "type": "cash", "name": "Jurnal de casă", "sequence": 40 },
+    { "code": "DIV", "type": "general", "name": "Operațiuni diverse", "sequence": 50 },
+    { "code": "DES", "type": "opening", "name": "Notă de deschidere", "sequence": 60 }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Planul general de conturi contabile",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": ["MD-SNC-BS", "MD-SNC-IS"],
+      "legal_reference": "Ordinul Ministerului Finanțelor nr. 119 din 06.08.2013, în vigoare de la 01.01.2014, obligatoriu de la 01.01.2015 pentru entitățile care nu aplică Standardele Internaționale de Raportare Financiară și nu sunt instituții publice — Planul general de conturi contabile, cu nouă clase (1-9). Acest pachet transcrie clasele 1-7 (active imobilizate, active circulante, capital propriu, datorii pe termen lung, datorii curente, venituri, cheltuieli), care poartă conturile de bilanț și de rezultate; clasa 8 (conturi de gestiune) și clasa 9 (conturi extrabilanțiere), declarate de recomandare de textul ordinului și fără corespondent în Declarația privind TVA sau în situațiile financiare, nu sunt reluate — a se vedea README.md. Subconturile 53441 și 53442 (TVA colectată/deductibilă) sunt o convenție a acestui pachet pentru a distinge contul de decontare a TVA (5344, reconciliabil) de conturile de postare ale taxelor, absentă din nomenclatorul oficial care nu detaliază contul 5344 la gradul II — semnalată în README.",
+      "source": "omf119-2013"
+    }
+  ],
+  "documents": {
+    "numbering": "gapless",
+    "number_format": "{CODE}{NNNNNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": "Codul civil, art. 942 alin. (1)-(2) — dacă o sumă de bani nu este plătită la scadență, creditorul are dreptul la dobânda de întârziere asupra acestei sume din ziua imediat următoare datei scadenței pînă în ziua plății, la rata prevăzută de acest articol (rata de bază stabilită semianual de Banca Națională a Moldovei, majorată cu un număr de puncte procentuale), fie la o altă rată prevăzută de dispoziții legale speciale sau de contract. Dispozițiile art. 942-945, introduse prin Legea nr. 133/2018, se aplică de la 1 martie 2019. Codul fiscal nu fixează un termen de plată implicit între profesioniști, spre deosebire de Directiva europeană 2011/7/UE: termenul rămîne o clauză a contractului.",
+    "tax_point": "invoice_if_issued",
+    "references": {
+      "numbering": {
+        "legal_reference": "Codul fiscal, art. 117 alin. (2) pct. 1) — factura fiscală trebuie să includă în mod obligatoriu «numărul curent al facturii». Legea cere doar un număr curent (secvențial), fără să impute o remitere la zero anuală; seria facturii fiscale este fie atribuită de Serviciul Fiscal de Stat pentru un formular imprimat tipografic, fie autoimprimată cu o serie și un număr alocate de acesta, potrivit art. 117 și normelor de completare aprobate prin ordinul Ministerului Finanțelor nr. 118 din 28.08.2017 — formatul indicat aici, cu un cod de serie și un contor, este un exemplu de conformare al acestui pachet și nu forma unică impusă de text.",
+        "source": "codul-fiscal"
+      },
+      "tax_point": {
+        "legal_reference": "Codul fiscal, art. 108 alin. (1) — data obligației fiscale este, ca regulă, data livrării (predarea mărfurilor, prestarea serviciului); alin. (4)-(5) — pentru servicii, sau dacă factura fiscală este eliberată ori plata este primită înainte de livrare, data obligației devine data eliberării facturii sau data plății, oricare intervine mai devreme. Principiul este livrarea, iar factura (sau plata anticipată) devansează data — exact structura pe care valoarea închisă «invoice_if_issued» o descrie; devansarea produsă exclusiv de o plată anticipată fără factură emisă anterior nu este exprimabilă separat de acest cîmp și rămîne nemodelată, ca și în cazul pachetului românesc — a se vedea secțiunea «From Moldova» din docs/international.md.",
+        "source": "codul-fiscal"
+      }
+    },
+    "mentions": [
+      {
+        "code": "reverse_charge",
+        "applies_when": "reverse_charge",
+        "text": "TVA se calculează și se achită la buget de către beneficiar, în conformitate cu art. 94 lit. c) și art. 115 din Codul fiscal.",
+        "sequence": 10,
+        "legal_reference": "Codul fiscal, art. 94 lit. c) — subiect impozabil este și persoana care importă servicii; art. 115 alin. (1) — obligația de declarare a TVA aferente serviciilor importate. Textul menționat pe factură este o formulare a acestui pachet: legea nu impune o mențiune tipizată pentru acest caz.",
+        "source": "codul-fiscal"
+      },
+      {
+        "code": "export",
+        "applies_when": "export",
+        "text": "Livrare impozitată la cota zero a TVA, conform art. 104 lit. a) din Codul fiscal.",
+        "sequence": 20,
+        "legal_reference": "Codul fiscal, art. 104 lit. a) — mărfurile, serviciile pentru export și toate tipurile de transporturi internaționale de mărfuri și pasageri se impozitează la cota zero a TVA.",
+        "source": "codul-fiscal"
+      },
+      {
+        "code": "exempt",
+        "applies_when": "exempt",
+        "text": "Livrare scutită de TVA fără drept de deducere, conform art. 103 din Codul fiscal.",
+        "sequence": 30,
+        "legal_reference": "Codul fiscal, art. 103 alin. (1) — T.V.A. nu se aplică livrărilor enumerate la acest alineat, printre care, la pct. 1), locuința, pămîntul, arenda acestora.",
+        "source": "codul-fiscal"
+      }
+    ]
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "Codul fiscal, art. 117 alin. (12), introdus prin Legea nr. 102 din 18.06.2020 — la efectuarea livrărilor impozabile în cadrul achizițiilor publice pe teritoriul țării (inclusiv achizițiile sectoriale, concesiunile și achizițiile de valoare mică), subiectul impozabil este obligat să prezinte cumpărătorului (beneficiarului) o factură fiscală electronică prin sistemul informațional automatizat SIA „e-Factura”, cu excepția livrărilor de energie electrică, energie termică, gaze naturale, servicii comunale și servicii de comunicații electronice — obligație în vigoare de la 1 ianuarie 2021. Domeniul de aplicare a fost extins de la 1 ianuarie 2025 la livrările către agenții economici care nu au relații fiscale cu sistemul bugetar al Republicii Moldova și la mărfurile/serviciile finanțate din proiecte de asistență tehnică realizate prin granturi și tratate internaționale. `profile` rămîne vid: SIA „e-Factura” este un serviciu al Serviciul Fiscal de Stat prin care factura fiscală electronică este generată și transmisă direct în platforma de stat — cercetarea acestui pachet nu a găsit o confirmare oficială că documentul schimbat urmează un model semantic interoperabil de tipul EN 16931 (Peppol BIS, Factur-X, XRechnung, un PINT); niciun brick din packages/formats/ nu scrie, validează sau transmite azi o asemenea factură. `party_scheme` și `vat_scheme` rămîn de asemenea vide: contribuabilul este identificat prin codul fiscal (IDNO/IDNP) atribuit de Serviciul Fiscal de Stat, fără o schemă ISO 6523 înregistrată — a se vedea secțiunea «From Moldova» din docs/international.md.",
+    "source": "efactura-achizitii"
+  }
+}

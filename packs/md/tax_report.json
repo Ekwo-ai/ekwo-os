@@ -1,0 +1,37 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "MD-TVA12",
+  "name": "Declarația privind TVA (forma TVA12)",
+  "period": ["month"],
+  "period_default": "month",
+  "valid_from": "2012-10-25",
+  "legal_reference": "Ordinul Inspectoratului Fiscal Principal de Stat nr. 1164 din 25.10.2012, anexa nr. 1 (formularul TVA12) și anexa nr. 2 (Modul de completare). Acest pachet transcrie boxele pe care taxele sale le declară și cele patru totaluri pe care le poate calcula fără starea din perioada fiscală precedentă; sub-boxele 1.1, 2.1 și 11.1 (informative, nu se completează sau condiționate de un avans încasat în altă perioadă decît livrarea) și boxele 17, 21, 22 (suma trecută în cont din perioada precedentă, suma destinată trecerii în cont în perioada următoare, suma solicitată spre restituire) nu sunt reluate — a se vedea README.md și secțiunea «From Moldova» din docs/international.md.",
+  "source": "oifps-1164-2012",
+  "deadline": {
+    "rule": "day_of_month_after_period",
+    "day": 25,
+    "legal_reference": "Codul fiscal, art. 115 alin. (1) — declarația privind TVA se prezintă Serviciului Fiscal de Stat pentru fiecare perioadă fiscală, în termenul stabilit de acest articol. Cercetarea acestui pachet nu a putut confirma formularea la zi a art. 115 alin. (1) pe un text consolidat deschis fără autentificare (legis.md refuză o cerere fără navigator, ca Légifrance — a se vedea docs/packs.md); practica de raportare curentă (formularul TVA12, prezentat prin SIA „Declarație electronică”) fixează termenul la ziua 25 a lunii următoare încheierii perioadei fiscale, dată reținută aici — de reverificat pe textul oficial de un contabil autorizat.",
+    "source": "sfs-raportare-portal"
+  },
+  "boxes": [
+    { "box": "1", "kind": "base", "name": "Livrări de mărfuri și servicii impozitate la cota standard, efectuate pe teritoriul Republicii Moldova", "sequence": 10, "legal_reference": "Formularul TVA12, rd. 1; Modul de completare, pct. 4.2.", "source": "oifps-1164-2012" },
+    { "box": "2", "kind": "tax", "name": "Suma TVA calculată de la valoarea livrărilor de la rd. 1", "sequence": 20, "legal_reference": "Formularul TVA12, rd. 2; Modul de completare, pct. 4.3.", "source": "oifps-1164-2012" },
+    { "box": "3", "kind": "base", "name": "Livrări de mărfuri și servicii la cota redusă", "sequence": 30, "legal_reference": "Formularul TVA12, rd. 3; Modul de completare, pct. 4.5.", "source": "oifps-1164-2012" },
+    { "box": "4", "kind": "tax", "name": "Suma TVA calculată de la valoarea livrărilor de la rd. 3", "sequence": 40, "legal_reference": "Formularul TVA12, rd. 4; Modul de completare, pct. 4.6.", "source": "oifps-1164-2012" },
+    { "box": "5", "kind": "base", "name": "Livrări scutite de TVA cu drept de deducere (cota zero)", "sequence": 50, "legal_reference": "Formularul TVA12, rd. 5; Modul de completare, pct. 4.7.", "source": "oifps-1164-2012" },
+    { "box": "6", "kind": "base", "name": "Livrări scutite de TVA fără drept de deducere", "sequence": 60, "legal_reference": "Formularul TVA12, rd. 6; Modul de completare, pct. 4.8.", "source": "oifps-1164-2012" },
+    { "box": "7", "kind": "base", "name": "Import de servicii", "sequence": 70, "legal_reference": "Formularul TVA12, rd. 7; Modul de completare, pct. 4.9.", "source": "oifps-1164-2012" },
+    { "box": "8", "kind": "tax", "name": "Suma TVA calculată de la valoarea de la rd. 7", "sequence": 80, "legal_reference": "Formularul TVA12, rd. 8; Modul de completare, pct. 4.10.", "source": "oifps-1164-2012" },
+    { "box": "9", "kind": "tax", "name": "Ajustarea TVA aferentă livrărilor", "sequence": 90, "legal_reference": "Formularul TVA12, rd. 9; Modul de completare, pct. 4.11 — corectarea erorilor din perioadele precedente, datoriile compromise (art. 116 alin. (1)) și ajustările conform art. 98 pentru livrările efectuate.", "source": "oifps-1164-2012" },
+    { "box": "10", "kind": "total", "name": "Total — volumul livrărilor efectuate în perioada fiscală", "sequence": 100, "plus": ["1", "3", "5", "6"], "legal_reference": "Formularul TVA12, rd. 10; Modul de completare, pct. 4.12.", "source": "oifps-1164-2012" },
+    { "box": "11", "kind": "total", "name": "Total — suma TVA aferentă livrărilor efectuate în perioada fiscală", "sequence": 110, "plus": ["2", "4", "9"], "legal_reference": "Formularul TVA12, rd. 11; Modul de completare, pct. 4.13.", "source": "oifps-1164-2012" },
+    { "box": "12", "kind": "base", "name": "Procurări de mărfuri, servicii pe teritoriul Republicii Moldova", "sequence": 120, "legal_reference": "Formularul TVA12, rd. 12; Modul de completare, pct. 4.15.", "source": "oifps-1164-2012" },
+    { "box": "13", "kind": "tax", "name": "Suma TVA pentru procurările de la rd. 12, spre trecere în cont", "sequence": 130, "legal_reference": "Formularul TVA12, rd. 13; Modul de completare, pct. 4.16.", "source": "oifps-1164-2012" },
+    { "box": "14", "kind": "base", "name": "Importul de mărfuri, servicii", "sequence": 140, "legal_reference": "Formularul TVA12, rd. 14; Modul de completare, pct. 4.17.", "source": "oifps-1164-2012" },
+    { "box": "15", "kind": "tax", "name": "Suma TVA aferentă mărfurilor, serviciilor de la rd. 14, spre trecere în cont", "sequence": 150, "legal_reference": "Formularul TVA12, rd. 15; Modul de completare, pct. 4.18.", "source": "oifps-1164-2012" },
+    { "box": "16", "kind": "tax", "name": "Ajustarea TVA aferentă procurărilor", "sequence": 160, "legal_reference": "Formularul TVA12, rd. 16; Modul de completare, pct. 4.19 — corectarea erorilor, datoriile compromise (art. 116 alin. (3)) și ajustările conform art. 98 și art. 102 alin. (3) pentru procurările efectuate.", "source": "oifps-1164-2012" },
+    { "box": "18", "kind": "total", "name": "Total TVA spre deducere", "sequence": 170, "plus": ["13", "15", "16"], "legal_reference": "Formularul TVA12, rd. 18 (13+15+16+17); Modul de completare, pct. 4.21. rd. 17 (suma trecută în cont din perioada fiscală precedentă) nu este reluat de acest pachet — a se vedea README.md.", "source": "oifps-1164-2012" },
+    { "box": "19", "kind": "total", "name": "TVA aferentă bugetului", "sequence": 180, "plus": ["11"], "minus": ["18"], "floor_zero": true, "legal_reference": "Formularul TVA12, rd. 19 (11-18); Modul de completare, pct. 4.22 — se completează numai cînd rd. 11 depășește rd. 18; cazul invers (suma spre trecere în cont sau spre restituire, rd. 21-22) nu este reluat de acest pachet.", "source": "oifps-1164-2012" },
+    { "box": "20", "kind": "total", "name": "TVA aferentă bugetului pentru import de servicii", "sequence": 190, "plus": ["8"], "legal_reference": "Formularul TVA12, rd. 20 (echivalentă cu suma reflectată la rd. 8); Modul de completare, pct. 4.23.", "source": "oifps-1164-2012" }
+  ]
+}

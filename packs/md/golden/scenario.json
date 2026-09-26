@@ -1,0 +1,177 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "Un an de contabilitate al unei societăți moldovenești de comerț și consultanță, plătitoare de TVA, care declară lunar",
+  "chart": "default",
+  "fiscal_year": { "name": "Exercițiul 2026", "start": "2026-01-01", "end": "2026-12-31" },
+  "periods": [
+    { "code": "2026-01", "from": "2026-01-01", "to": "2026-01-31" },
+    { "code": "2026-02", "from": "2026-02-01", "to": "2026-02-28" },
+    { "code": "2026-03", "from": "2026-03-01", "to": "2026-03-31" },
+    { "code": "2026-04", "from": "2026-04-01", "to": "2026-04-30" }
+  ],
+  "statements": ["MD-SNC-BS", "MD-SNC-IS"],
+  "contacts": [
+    { "ref": "cust-md", "name": "Atelier Nistru SRL", "type": "customer", "country": "MD" },
+    { "ref": "cust-md2", "name": "Comerț Bălți SRL", "type": "customer", "country": "MD" },
+    { "ref": "cust-export", "name": "Bukowski Handel GmbH", "type": "customer", "country": "DE" },
+    { "ref": "cust-locatar", "name": "Studio Chișinău SRL", "type": "customer", "country": "MD" },
+    { "ref": "supp-md", "name": "Birotică Centru SRL", "type": "supplier", "country": "MD" },
+    { "ref": "supp-md2", "name": "Panificație Orhei SRL", "type": "supplier", "country": "MD" },
+    { "ref": "supp-import", "name": "Kraków Metal Components Sp. z o.o.", "type": "supplier", "country": "PL" },
+    { "ref": "supp-foreign-svc", "name": "Vienna Digital Consulting GmbH", "type": "supplier", "country": "AT" }
+  ],
+  "documents": [
+    {
+      "ref": "INV-S20-1",
+      "type": "sale_invoice",
+      "contact": "cust-md",
+      "date": "2026-01-15",
+      "why": "O vânzare de servicii de consultanță la cota standard de 20% — alimentează rd. 1 (bază) și rd. 2 (TVA) ale formularului TVA12, și va fi parțial stornată de CN-S20-1.",
+      "lines": [
+        { "name": "Servicii de consultanță, luna ianuarie", "quantity": 1, "unit_price": 50000, "tax": "MD-S-20", "account": "611" }
+      ]
+    },
+    {
+      "ref": "INV-S8-1",
+      "type": "sale_invoice",
+      "contact": "cust-md2",
+      "date": "2026-01-22",
+      "why": "O vânzare de produse de panificație la cota redusă de 8% (art. 96 lit. b)) — alimentează rd. 3/rd. 4.",
+      "lines": [
+        { "name": "Pâine și produse de panificație", "quantity": 2000, "unit_price": 12, "tax": "MD-S-8", "account": "611" }
+      ]
+    },
+    {
+      "ref": "INV-EXP-1",
+      "type": "sale_invoice",
+      "contact": "cust-export",
+      "date": "2026-02-10",
+      "why": "Export de mărfuri către Germania, impozitat la cota zero conform art. 104 lit. a) — alimentează rd. 5, fără TVA calculată.",
+      "lines": [
+        { "name": "Mobilier de birou, export FCA Chișinău", "quantity": 1, "unit_price": 80000, "tax": "MD-S-0-EXPORT", "account": "611" }
+      ]
+    },
+    {
+      "ref": "INV-EXE-1",
+      "type": "sale_invoice",
+      "contact": "cust-locatar",
+      "date": "2026-02-18",
+      "why": "Chirie pentru un spațiu locativ, scutită de TVA fără drept de deducere conform art. 103 alin. (1) pct. 1) — alimentează rd. 6, fără TVA calculată.",
+      "lines": [
+        { "name": "Chirie spațiu locativ, luna februarie", "quantity": 1, "unit_price": 15000, "tax": "MD-S-EXE", "account": "611" }
+      ]
+    },
+    {
+      "ref": "CN-S20-1",
+      "type": "sale_credit_note",
+      "contact": "cust-md",
+      "date": "2026-02-25",
+      "why": "Stornare parțială a INV-S20-1 — o zi de consultanță anulată de client; dovedește că rd. 9 (ajustarea TVA aferentă livrărilor) primește corect suma negativă, fără să modifice rd. 1.",
+      "lines": [
+        { "name": "Stornare: o zi de consultanță", "quantity": 1, "unit_price": 5000, "tax": "MD-S-20", "account": "611" }
+      ]
+    },
+    {
+      "ref": "INV-S20-2",
+      "type": "sale_invoice",
+      "contact": "cust-md",
+      "date": "2026-03-12",
+      "why": "A doua vânzare la cota standard, într-o a treia perioadă fiscală — dovedește continuitatea declarației pe mai multe luni.",
+      "lines": [
+        { "name": "Servicii de consultanță, luna martie", "quantity": 1, "unit_price": 60000, "tax": "MD-S-20", "account": "611" }
+      ]
+    },
+    {
+      "ref": "BILL-P20-1",
+      "type": "purchase_invoice",
+      "contact": "supp-md",
+      "date": "2026-01-18",
+      "why": "Procurare de rechizite de birou pe teritoriul țării, la cota standard, integral deductibilă — alimentează rd. 12/rd. 13; va fi parțial stornată de CN-P20-1 și parțial achitată de PMT-OUT-1.",
+      "lines": [
+        { "name": "Rechizite și consumabile de birou", "quantity": 1, "unit_price": 12000, "tax": "MD-P-20", "account": "713" }
+      ]
+    },
+    {
+      "ref": "BILL-P8-1",
+      "type": "purchase_invoice",
+      "contact": "supp-md2",
+      "date": "2026-01-26",
+      "why": "Procurare de pâine și produse de panificație destinate revânzării, la cota redusă de 8% — alimentează tot rd. 12/rd. 13, formularul necunoscând o distincție pe cotă la procurări.",
+      "lines": [
+        { "name": "Pâine și produse de panificație, pentru revânzare", "quantity": 1500, "unit_price": 9, "tax": "MD-P-8", "account": "2171" }
+      ]
+    },
+    {
+      "ref": "BILL-IMPORT-1",
+      "type": "purchase_invoice",
+      "contact": "supp-import",
+      "date": "2026-02-14",
+      "why": "Import de materiale din Polonia, TVA calculată la valoarea în vamă și achitată organelor vamale înainte de introducerea mărfii pe teritoriul țării, apoi trecută în cont — alimentează rd. 14/rd. 15.",
+      "lines": [
+        { "name": "Materiale importate, valoare în vamă", "quantity": 1, "unit_price": 40000, "tax": "MD-P-IMPORT", "account": "211" }
+      ]
+    },
+    {
+      "ref": "BILL-IMPORT-SRV-1",
+      "type": "purchase_invoice",
+      "contact": "supp-foreign-svc",
+      "date": "2026-03-20",
+      "why": "Servicii de consultanță IT importate de la un prestator din Austria, autolichidate conform art. 94 lit. c) — alimentează rd. 7/rd. 8, și separat rd. 20 (TVA aferentă bugetului pentru import de servicii).",
+      "lines": [
+        { "name": "Servicii de consultanță IT, prestator străin", "quantity": 1, "unit_price": 18000, "tax": "MD-P-IMPORT-SRV", "account": "713" }
+      ]
+    },
+    {
+      "ref": "CN-P20-1",
+      "type": "purchase_credit_note",
+      "contact": "supp-md",
+      "date": "2026-03-05",
+      "why": "Stornare parțială a BILL-P20-1 — o parte din rechizite returnată furnizorului; dovedește că rd. 16 (ajustarea TVA aferentă procurărilor) primește corect suma negativă.",
+      "lines": [
+        { "name": "Retur parțial rechizite de birou", "quantity": 1, "unit_price": 2000, "tax": "MD-P-20", "account": "713" }
+      ]
+    },
+    {
+      "ref": "BILL-P20-2",
+      "type": "purchase_invoice",
+      "contact": "supp-md",
+      "date": "2026-04-08",
+      "why": "A doua procurare la cota standard, într-o a patra perioadă fiscală — dovedește continuitatea declarației pe mai multe luni.",
+      "lines": [
+        { "name": "Rechizite și consumabile de birou, luna aprilie", "quantity": 1, "unit_price": 8000, "tax": "MD-P-20", "account": "713" }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "PMT-IN-1",
+      "direction": "inbound",
+      "date": "2026-04-05",
+      "amount": 72000.0,
+      "contact": "cust-md",
+      "journal": "BNC",
+      "match": "INV-S20-2",
+      "why": "Încasarea integrală a INV-S20-2 prin virament bancar."
+    },
+    {
+      "ref": "PMT-OUT-1",
+      "direction": "outbound",
+      "date": "2026-01-30",
+      "amount": 14400.0,
+      "contact": "supp-md",
+      "journal": "BNC",
+      "match": "BILL-P20-1",
+      "why": "Achitarea integrală a BILL-P20-1 prin virament bancar."
+    },
+    {
+      "ref": "PMT-IN-2",
+      "direction": "inbound",
+      "date": "2026-04-20",
+      "amount": 10000.0,
+      "contact": "cust-md2",
+      "journal": "BNC",
+      "match": null,
+      "why": "Un avans încasat, neîncă asociat unei facturi — dovedește că un sold deschis subzistă și într-o contabilitate reală."
+    }
+  ]
+}

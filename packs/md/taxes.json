@@ -1,0 +1,168 @@
+[
+  {
+    "code": "MD-S-20",
+    "name": "Livrări — cota standard 20%",
+    "kind": "vat",
+    "rate": 20,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2016-01-01",
+    "legal_reference": "Codul fiscal, art. 96 lit. a) — cota standard, în mărime de 20% din valoarea impozabilă a livrărilor efectuate pe teritoriul Republicii Moldova.",
+    "source": "codul-fiscal",
+    "sequence": 10,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "1" },
+        { "type": "tax", "account": "53441", "box": "2" }
+      ],
+      "credit_note": [
+        { "type": "tax", "account": "53441", "box": "9", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "MD-S-8",
+    "name": "Livrări — cota redusă 8%",
+    "kind": "vat",
+    "rate": 8,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2023-12-31",
+    "legal_reference": "Codul fiscal, art. 96 lit. b) — cotă redusă de 8%, aplicabilă, printre altele: pîinii și produselor de panificație și laptelui și produselor lactate (cu excepția produselor alimentare pentru copii, scutite conform art. 103 alin. (1) pct. 2)); medicamentelor înscrise în Nomenclatorul de stat sau autorizate de Ministerul Sănătății, inclusiv preparate în farmacii conform prescripțiilor magistrale; unor mărfuri și articole cu destinație medicală de la pozițiile tarifare indicate expres de lege; gazelor naturale și gazelor lichefiate; producției din zootehnie și horticultură în formă naturală, livrate de producători; zahărului din sfeclă de zahăr; biocombustibilului solid; produselor de igienă feminină de la poziția tarifară ex. 9619; serviciilor de cazare, indiferent de categoria de confort, și produselor alimentare și/sau băuturilor nealcoolice preparate sau nepreparate, însoțite de servicii ce permit consumul imediat, în cadrul activităților din secțiunea I a Clasificatorului Activităților din Economia Moldovei (domeniul HORECA) — cota de 8% aplicabilă domeniului HORECA este permanentă începînd cu 31 decembrie 2023, dată la care a încetat starea de urgență ce menținea temporar o cotă redusă la 8% din 2022, potrivit modificării aduse prin Legea nr. 212/2023.",
+    "source": "sfs-horeca-8",
+    "sequence": 20,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "3" },
+        { "type": "tax", "account": "53441", "box": "4" }
+      ],
+      "credit_note": [
+        { "type": "tax", "account": "53441", "box": "9", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "MD-S-0-EXPORT",
+    "name": "Export de mărfuri, servicii și transport internațional — cota zero",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2008-01-01",
+    "conditions": ["transport_evidence"],
+    "legal_reference": "Codul fiscal, art. 104 lit. a) — se impozitează la cota zero a TVA mărfurile, serviciile pentru export și toate tipurile de transporturi internaționale de mărfuri (inclusiv de expediție) și pasageri; art. 102 alin. (8) — dreptul la restituirea TVA aferente valorilor materiale, serviciilor procurate pentru o astfel de livrare este condiționat de confirmarea organelor vamale privind livrarea mărfurilor pentru export și de documentele de transport internațional.",
+    "source": "codul-fiscal",
+    "sequence": 30,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "5" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "5", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "MD-S-EXE",
+    "name": "Livrare scutită de TVA fără drept de deducere — locuință, pămînt, arendă",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2016-01-01",
+    "conditions": ["supply_nature"],
+    "legal_reference": "Codul fiscal, art. 103 alin. (1) pct. 1) — T.V.A. nu se aplică livrărilor de mărfuri, servicii ce constituie rezultatul activității de întreprinzător, printre care locuința, pămîntul, arenda acestora, dreptul de livrare și arendare a acestora, cu excepția plăților de comision aferente tranzacțiilor respective.",
+    "source": "codul-fiscal",
+    "sequence": 40,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "6" }
+      ]
+    }
+  },
+  {
+    "code": "MD-P-20",
+    "name": "Procurări pe teritoriul țării — cota standard 20%, deductibilă",
+    "kind": "vat",
+    "rate": 20,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2016-01-01",
+    "legal_reference": "Codul fiscal, art. 102 alin. (1) — subiecților impozabili înregistrați li se permite trecerea în cont a sumei TVA achitate sau care urmează a fi achitată furnizorilor plătitori de TVA pe valorile materiale, serviciile procurate pentru efectuarea livrărilor impozabile, dacă dispun de factura fiscală a furnizorului (art. 102 alin. (6) lit. a)).",
+    "source": "codul-fiscal",
+    "sequence": 50,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "12" },
+        { "type": "tax", "account": "53442", "box": "13" }
+      ],
+      "credit_note": [
+        { "type": "tax", "account": "53442", "box": "16", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "MD-P-8",
+    "name": "Procurări pe teritoriul țării — cota redusă 8%, deductibilă",
+    "kind": "vat",
+    "rate": 8,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2023-12-31",
+    "legal_reference": "Codul fiscal, art. 96 lit. b) pentru cota aplicată de furnizor; art. 102 alin. (1) pentru dreptul de trecere în cont al cumpărătorului, în aceleași condiții ca la MD-P-20.",
+    "source": "codul-fiscal",
+    "sequence": 60,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "12" },
+        { "type": "tax", "account": "53442", "box": "13" }
+      ],
+      "credit_note": [
+        { "type": "tax", "account": "53442", "box": "16", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "MD-P-IMPORT",
+    "name": "Import de mărfuri — cota standard 20%, deductibilă",
+    "kind": "vat",
+    "rate": 20,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2016-01-01",
+    "legal_reference": "Codul fiscal, art. 100 — valoarea impozabilă a mărfurilor importate este valoarea lor vamală; art. 101 alin. (7) — TVA se achită pînă la sau la momentul depunerii declarației vamale; art. 102 alin. (6) lit. b) — trecerea în cont este condiționată de documentul eliberat de autoritățile vamale ce confirmă achitarea TVA la mărfurile importate.",
+    "source": "codul-fiscal",
+    "sequence": 70,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "14" },
+        { "type": "tax", "account": "53442", "box": "15" }
+      ],
+      "credit_note": [
+        { "type": "tax", "account": "53442", "box": "16", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "MD-P-IMPORT-SRV",
+    "name": "Import de servicii — autolichidare, cota standard 20%",
+    "kind": "vat",
+    "rate": 20,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2016-01-01",
+    "legal_reference": "Codul fiscal, art. 94 lit. c) — persoana care importă servicii pentru desfășurarea activității de întreprinzător este subiect impozabil; art. 101 alin. (4) — TVA se achită la momentul achitării plății pentru serviciul importat; art. 115 alin. (1) — obligația de a declara TVA aferentă serviciilor importate pentru fiecare perioadă fiscală, chiar și de o persoană neînregistrată ca plătitor de TVA.",
+    "source": "codul-fiscal",
+    "sequence": 80,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "7" },
+        { "type": "tax", "account": "53443", "box": "8" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "7", "box_factor": -100 },
+        { "type": "tax", "account": "53443", "box": "8", "box_factor": -100 }
+      ]
+    }
+  }
+]

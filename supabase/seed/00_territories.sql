@@ -1592,3 +1592,28 @@ on conflict (code) do update set
   eu_vat_to       = excluded.eu_vat_to,
   vat_prefix      = excluded.vat_prefix,
   legal_reference = excluded.legal_reference;
+
+-- ---------------------------------------------------------------------------
+-- Moldova is outside the common system of VAT: Directive 2006/112/EC binds
+-- the Member States of the European Union, and Moldova, a candidate for
+-- accession since June 2022, is not one of them. It levies a value added tax
+-- of its own, TVA, under Titlul III of the Codul fiscal (Legea nr. 1163-XIII
+-- din 24 aprilie 1997), articles 93-118, at a standard rate of 20% (art. 96
+-- lit. a)). `vat_prefix` is null: a Moldovan taxpayer is identified by the
+-- cod fiscal (IDNO for a legal person, IDNP for a natural one) the State Tax
+-- Service assigns, which carries no ISO country prefix comparable to an EU
+-- VAT number.
+-- ---------------------------------------------------------------------------
+
+insert into territories (code, code_source, name, parent_code, eu_vat_scope, eu_vat_from, eu_vat_to, vat_prefix, legal_reference) values
+  ('MD', 'iso_3166_1', 'Moldova', null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries, candidate for accession or not. Moldova levies a value added tax of its own, TVA, under Titlul III of the Codul fiscal (Legea nr. 1163-XIII din 24 aprilie 1997), articles 93-118, which sets the rates at art. 96.')
+on conflict (code) do update set
+  code_source     = excluded.code_source,
+  name            = excluded.name,
+  parent_code     = excluded.parent_code,
+  eu_vat_scope    = excluded.eu_vat_scope,
+  eu_vat_from     = excluded.eu_vat_from,
+  eu_vat_to       = excluded.eu_vat_to,
+  vat_prefix      = excluded.vat_prefix,
+  legal_reference = excluded.legal_reference;

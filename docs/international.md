@@ -5100,3 +5100,51 @@ shape for, because it is not a tax a document posts, is not deductible or
 recoverable by anyone, and is reported once a month on the entrepreneur's own
 income rather than per transaction. `packs/ge/README.md` names it and does
 not attempt a `tax` code for it.
+
+## From Moldova
+
+`packs/md/`, `community`, seed 111, outside the common system of VAT: a
+value added tax of its own, TVA, under Titlul III of the Codul fiscal (Legea
+nr. 1163-XIII din 24 aprilie 1997). `MDL` is added to `00_currencies.sql` at
+two decimals; `MD` is added to `00_territories.sql` with `eu_vat_scope`
+`none`, a candidate for accession since June 2022 and not a member. What the
+format could say, and what it could not.
+
+**A state e-invoicing platform, and no writer for it.** SIA "e-Factura" is
+mandatory for a taxable delivery within public procurement since 1 January
+2021 (Codul fiscal art. 117 alin. (12)), extended from 1 January 2025 to
+deliveries to economic agents with no fiscal relationship with Moldova's
+budgetary system. This pack's research found no official confirmation that
+the document generated inside the platform follows an interoperable semantic
+model of the EN 16931 kind, so `einvoicing.profile` stays null — the same
+choice `packs/tr/` and `packs/ro/` make for their own state-run channels, each
+for its own reason.
+
+**A declaration box with no counterpart, and a mechanism this pack could not
+verify.** Forma TVA12's row 14 reports, on one line, both the ordinary import
+of goods and a purchase from a resident with no fiscal relationship with the
+budgetary system — the second half without a self-assessed output side the way
+row 7 plainly carries one for services (through row 20). Whether the goods
+case self-assesses an output liability somewhere this pack's research did not
+find, or is a deduction booked on trust, could not be established from the
+sources reached; `packs/md/` models the plain import only and leaves the
+second half out, named in its own README rather than guessed at.
+
+**A carried-forward VAT credit, again.** Rows 17, 21 and 22 of forma TVA12
+hold a balance across fiscal periods — the same shape already recorded for
+Poland's `P_39`/`P_62` and Romania's rows 38/39/41/42 — and are not modelled
+for the same reason: `vat_return()` reads one period's postings and nothing
+a previous return settled.
+
+**Two derogations to one tax point, again.** Codul fiscal art. 108 alin.
+(4)-(5) moves the tax point to an invoice issued before delivery or to a
+payment received before delivery, whichever comes first; `tax_point` carries
+one word, `invoice_if_issued`, and the payment branch is the same gap already
+recorded for Belgium, Estonia and Romania.
+
+**A text this pack's research could not open.** `legis.md`, the Ministry of
+Justice's own legislative portal, answers a request with no browser behind it
+the way Légifrance does; the filing deadline of art. 115 alin. (1) is
+therefore sourced from 2024-2025 secondary confirmation rather than from the
+consolidated text directly — named in the pack's own README rather than
+silently assumed.
