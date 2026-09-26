@@ -59,5 +59,6 @@ insert into currencies (code, name, symbol, decimal_places) values
   ('BOB', 'Bolivian boliviano',   'Bs',      2),
   ('PYG', 'Paraguayan guaraní',   E'₲', 0),
   ('CNY', 'Chinese yuan',         E'¥', 2),
-  ('DOP', 'Dominican peso',       'RD$',     2)
+  ('DOP', 'Dominican peso',       'RD$',     2),
+  ('INR', 'Indian rupee',         E'₹', 2)
 on conflict (code) do nothing;

@@ -1,0 +1,337 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "IN",
+  "name": "India",
+  "version": "0.1.0",
+  "schema_min": "20260921145425",
+  "seed_sequence": 108,
+  "released_at": "2026-09-26",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "cgst-s9",
+        "title": "Central Goods and Services Tax Act, 2017 (12 of 2017), section 9 — levy of the central tax on intra-State supplies at rates not exceeding twenty per cent; alcoholic liquor excluded and five petroleum products deferred (9(1), 9(2)); reverse charge on notified supplies (9(3)) and on notified supplies from unregistered suppliers (9(4))",
+        "publisher": "Central Board of Indirect Taxes and Customs — CBIC Tax Information Portal",
+        "url": "https://taxinformation.cbic.gov.in/content/html/tax_repository/gst/acts/2017_CGST_act/active/chapter3/section9_v1.00.html",
+        "consulted_on": "2026-09-26",
+        "kind": "law"
+      },
+      {
+        "key": "cgst-s11",
+        "title": "Central Goods and Services Tax Act, 2017, section 11 — power to exempt goods or services from the whole or any part of the tax by notification",
+        "publisher": "Central Board of Indirect Taxes and Customs — CBIC Tax Information Portal",
+        "url": "https://taxinformation.cbic.gov.in/content/html/tax_repository/gst/acts/2017_CGST_act/active/chapter3/section11_v1.00.html",
+        "consulted_on": "2026-09-26",
+        "kind": "law"
+      },
+      {
+        "key": "cgst-s12",
+        "title": "Central Goods and Services Tax Act, 2017, section 12 — time of supply of goods: the earlier of the date of the invoice, or the last date by which section 31 requires it, and the date the payment is received",
+        "publisher": "Central Board of Indirect Taxes and Customs — CBIC Tax Information Portal",
+        "url": "https://taxinformation.cbic.gov.in/content/html/tax_repository/gst/acts/2017_CGST_act/active/chapter4/section12_v1.00.html",
+        "consulted_on": "2026-09-26",
+        "kind": "law"
+      },
+      {
+        "key": "cgst-s16",
+        "title": "Central Goods and Services Tax Act, 2017, section 16 — eligibility and conditions for taking input tax credit",
+        "publisher": "Central Board of Indirect Taxes and Customs — CBIC Tax Information Portal",
+        "url": "https://taxinformation.cbic.gov.in/content/html/tax_repository/gst/acts/2017_CGST_act/active/chapter5/section16_v1.00.html",
+        "consulted_on": "2026-09-26",
+        "kind": "law"
+      },
+      {
+        "key": "cgst-s17",
+        "title": "Central Goods and Services Tax Act, 2017, section 17 — apportionment of credit and blocked credits (17(5))",
+        "publisher": "Central Board of Indirect Taxes and Customs — CBIC Tax Information Portal",
+        "url": "https://taxinformation.cbic.gov.in/content/html/tax_repository/gst/acts/2017_CGST_act/active/chapter5/section17_v1.00.html",
+        "consulted_on": "2026-09-26",
+        "kind": "law"
+      },
+      {
+        "key": "cgst-s31",
+        "title": "Central Goods and Services Tax Act, 2017, section 31 — tax invoice",
+        "publisher": "Central Board of Indirect Taxes and Customs — CBIC Tax Information Portal",
+        "url": "https://taxinformation.cbic.gov.in/content/html/tax_repository/gst/acts/2017_CGST_act/active/chapter7/section31_v1.00.html",
+        "consulted_on": "2026-09-26",
+        "kind": "law"
+      },
+      {
+        "key": "cgst-s36",
+        "title": "Central Goods and Services Tax Act, 2017, section 36 — retention of accounts and records until seventy-two months after the due date of the annual return",
+        "publisher": "Central Board of Indirect Taxes and Customs — CBIC Tax Information Portal",
+        "url": "https://taxinformation.cbic.gov.in/content/html/tax_repository/gst/acts/2017_CGST_act/active/chapter8/section36_v1.00.html",
+        "consulted_on": "2026-09-26",
+        "kind": "law"
+      },
+      {
+        "key": "cgst-s37",
+        "title": "Central Goods and Services Tax Act, 2017, section 37 — furnishing details of outward supplies (FORM GSTR-1)",
+        "publisher": "Central Board of Indirect Taxes and Customs — CBIC Tax Information Portal",
+        "url": "https://taxinformation.cbic.gov.in/content/html/tax_repository/gst/acts/2017_CGST_act/active/chapter9/section37_v1.00.html",
+        "consulted_on": "2026-09-26",
+        "kind": "law"
+      },
+      {
+        "key": "cgst-s39",
+        "title": "Central Goods and Services Tax Act, 2017, section 39 — furnishing of returns, monthly, or quarterly for a notified class of registered persons",
+        "publisher": "Central Board of Indirect Taxes and Customs — CBIC Tax Information Portal",
+        "url": "https://taxinformation.cbic.gov.in/content/html/tax_repository/gst/acts/2017_CGST_act/active/chapter9/section39_v1.00.html",
+        "consulted_on": "2026-09-26",
+        "kind": "law"
+      },
+      {
+        "key": "cgst-s49",
+        "title": "Central Goods and Services Tax Act, 2017, section 49 — payment of tax through the electronic cash and credit ledgers, and the order in which credit of each head is set off (49(5))",
+        "publisher": "Central Board of Indirect Taxes and Customs — CBIC Tax Information Portal",
+        "url": "https://taxinformation.cbic.gov.in/content/html/tax_repository/gst/acts/2017_CGST_act/active/chapter10/section49_v1.00.html",
+        "consulted_on": "2026-09-26",
+        "kind": "law"
+      },
+      {
+        "key": "igst-s5",
+        "title": "Integrated Goods and Services Tax Act, 2017 (13 of 2017), section 5 — levy of the integrated tax on inter-State supplies at rates not exceeding forty per cent, on imported goods under section 3 of the Customs Tariff Act, and on reverse charge (5(3), 5(4))",
+        "publisher": "Central Board of Indirect Taxes and Customs — CBIC Tax Information Portal",
+        "url": "https://taxinformation.cbic.gov.in/content/html/tax_repository/gst/acts/2017_IGST_Act/active/chapteriii/section5_v1.00.html",
+        "consulted_on": "2026-09-26",
+        "kind": "law"
+      },
+      {
+        "key": "igst-s7",
+        "title": "Integrated Goods and Services Tax Act, 2017, section 7 — inter-State supply, including imports (7(2), 7(4)) and supplies outside India or to a Special Economic Zone (7(5))",
+        "publisher": "Central Board of Indirect Taxes and Customs — CBIC Tax Information Portal",
+        "url": "https://taxinformation.cbic.gov.in/content/html/tax_repository/gst/acts/2017_IGST_Act/active/chapteriv/section7_v1.00.html",
+        "consulted_on": "2026-09-26",
+        "kind": "law"
+      },
+      {
+        "key": "igst-s8",
+        "title": "Integrated Goods and Services Tax Act, 2017, section 8 — intra-State supply: supplier and place of supply in the same State or Union territory",
+        "publisher": "Central Board of Indirect Taxes and Customs — CBIC Tax Information Portal",
+        "url": "https://taxinformation.cbic.gov.in/content/html/tax_repository/gst/acts/2017_IGST_Act/active/chapteriv/section8_v1.00.html",
+        "consulted_on": "2026-09-26",
+        "kind": "law"
+      },
+      {
+        "key": "igst-s16",
+        "title": "Integrated Goods and Services Tax Act, 2017, section 16 — zero rated supply: exports and supplies to a Special Economic Zone, credit kept, and supply under bond or Letter of Undertaking without payment of integrated tax",
+        "publisher": "Central Board of Indirect Taxes and Customs — CBIC Tax Information Portal",
+        "url": "https://taxinformation.cbic.gov.in/content/html/tax_repository/gst/acts/2017_IGST_Act/active/chaptervii/section16_v1.00.html",
+        "consulted_on": "2026-09-26",
+        "kind": "law"
+      },
+      {
+        "key": "igst-rate-9-2025",
+        "title": "Notification No. 9/2025-Integrated Tax (Rate), 17 September 2025, as corrected on 18 September 2025, in force from 22 September 2025 — integrated tax on goods at 5 % (Schedule I), 18 % (II), 40 % (III), 3 % (IV), 0.25 % (V), 1.5 % (VI) and 28 % (VII), superseding Notification No. 1/2017-Integrated Tax (Rate); the Central Tax (Rate) notification of the same number prints the same schedules at half the rate",
+        "publisher": "Central Board of Indirect Taxes and Customs (text as compiled by the GST & Indirect Taxes Committee of the Institute of Chartered Accountants of India)",
+        "url": "https://courier.cbic.gov.in/ECCS/advisory/2025/NOTIFICATION%20NO.%209_2025-INTEGRATED%20TAX%20(RATE)%20-1759486719.pdf",
+        "consulted_on": "2026-09-26",
+        "kind": "regulation"
+      },
+      {
+        "key": "tobacco-2026",
+        "title": "Government notifies 1 February 2026 as the date from which additional excise duty is levied on tobacco products — pan masala, cigarettes and tobacco at 40 % GST, biris at 18 %, the compensation cess replaced",
+        "publisher": "Prasar Bharati — All India Radio News (News Services Division)",
+        "url": "https://www.newsonair.gov.in/govt-notifies-february-1st-as-date-from-which-additional-excise-duty-to-be-levied-on-tobacco-products/",
+        "consulted_on": "2026-09-26",
+        "kind": "guidance"
+      },
+      {
+        "key": "cgst-rule46",
+        "title": "Central Goods and Services Tax Rules, 2017, rule 46 — particulars of a tax invoice: a consecutive serial number of up to sixteen characters unique for a financial year, the place of supply, the reverse-charge statement, the QR code with the IRN, the export endorsement",
+        "publisher": "Central Board of Indirect Taxes and Customs — CBIC Tax Information Portal",
+        "url": "https://taxinformation.cbic.gov.in/content/html/tax_repository/gst/rules/cgst_rules/active/chapter6/rule46_v1.00.html",
+        "consulted_on": "2026-09-26",
+        "kind": "regulation"
+      },
+      {
+        "key": "cgst-rule48",
+        "title": "Central Goods and Services Tax Rules, 2017, rule 48 — manner of issuing an invoice; 48(4) and 48(5): the notified class prepares it with the particulars of FORM GST INV-01 after obtaining an Invoice Reference Number, and any other invoice is not an invoice",
+        "publisher": "Central Board of Indirect Taxes and Customs — CBIC Tax Information Portal",
+        "url": "https://taxinformation.cbic.gov.in/content/html/tax_repository/gst/rules/cgst_rules/active/chapter6/rule48_v1.00.html",
+        "consulted_on": "2026-09-26",
+        "kind": "regulation"
+      },
+      {
+        "key": "cgst-rule59",
+        "title": "Central Goods and Services Tax Rules, 2017, rule 59 — form and manner of furnishing details of outward supplies in FORM GSTR-1, and the invoice furnishing facility of the quarterly scheme",
+        "publisher": "Central Board of Indirect Taxes and Customs — CBIC Tax Information Portal",
+        "url": "https://taxinformation.cbic.gov.in/content/html/tax_repository/gst/rules/cgst_rules/active/chapter8/rule59_v1.00.html",
+        "consulted_on": "2026-09-26",
+        "kind": "regulation"
+      },
+      {
+        "key": "cgst-rule61",
+        "title": "Central Goods and Services Tax Rules, 2017, rule 61 — FORM GSTR-3B for each month by the twentieth day of the following month, or for each quarter by the twenty-second or twenty-fourth day by State; monthly payment in FORM GST PMT-06 under the quarterly scheme",
+        "publisher": "Central Board of Indirect Taxes and Customs — CBIC Tax Information Portal",
+        "url": "https://taxinformation.cbic.gov.in/content/html/tax_repository/gst/rules/cgst_rules/active/chapter8/rule61_v1.00.html",
+        "consulted_on": "2026-09-26",
+        "kind": "regulation"
+      },
+      {
+        "key": "gstr-3b-form",
+        "title": "Central Goods and Services Tax Rules, 2017, Part B — Forms: FORM GSTR-3B [See rule 61(5)], tables 3.1, 3.2, 4, 5, 6.1 and 6.2 and their instructions",
+        "publisher": "Central Board of Indirect Taxes and Customs — GST Policy Wing",
+        "url": "https://cbic-gst.gov.in/pdf/18052021-CGST-Rules-2017-Part-B-Forms.pdf",
+        "consulted_on": "2026-09-26",
+        "kind": "form"
+      },
+      {
+        "key": "einvoice-10-2023",
+        "title": "Notification No. 10/2023-Central Tax, 10 May 2023 — e-invoicing under rule 48(4) extended to registered persons whose aggregate turnover in any financial year from 2017-18 exceeds five crore rupees, from 1 August 2023",
+        "publisher": "Goods and Services Tax Council Secretariat",
+        "url": "https://www.gstcouncil.gov.in/node/4365",
+        "consulted_on": "2026-09-26",
+        "kind": "regulation"
+      },
+      {
+        "key": "gst-portal",
+        "title": "Goods and Services Tax common portal — where FORM GSTR-1 and FORM GSTR-3B are filed and the tax is paid, under rules 59 and 61",
+        "publisher": "Goods and Services Tax Network",
+        "url": "https://www.gst.gov.in/",
+        "consulted_on": "2026-09-26",
+        "kind": "portal"
+      },
+      {
+        "key": "schedule-iii",
+        "title": "Companies Act, 2013, Schedule III, Division I — general instructions and the forms of the Balance Sheet (Part I) and of the Statement of Profit and Loss (Part II) for a company that complies with the Companies (Accounting Standards) Rules, 2006",
+        "publisher": "The Institute of Chartered Accountants of India (text of the Schedule as reproduced in its study material)",
+        "url": "https://www.icai.org/resource/56994bos46206cp5annex.pdf",
+        "consulted_on": "2026-09-26",
+        "kind": "law"
+      }
+    ]
+  },
+  "languages": [],
+  "defaults": {
+    "currency": "INR",
+    "language": "en",
+    "rounding_method": "half_up",
+    "closing_style": "retained_earnings",
+    "fiscal_year_default": "april",
+    "roles": {
+      "receivable": "1500",
+      "payable": "2000",
+      "suspense": "2390",
+      "rounding": "6990",
+      "retained_earnings": "3200",
+      "sales": "4000",
+      "purchase": "5100",
+      "bank": "1560",
+      "cash": "1550",
+      "fx_gain": "4550",
+      "fx_loss": "6300",
+      "asset_disposal_gain": "4560",
+      "asset_disposal_loss": "6310",
+      "tax_payable": "2280",
+      "tax_receivable": "1650"
+    },
+    "journal_roles": {
+      "sales": "SAL",
+      "purchase": "PUR",
+      "miscellaneous": "GEN",
+      "opening": "OPN"
+    }
+  },
+  "journals": [
+    {
+      "code": "SAL",
+      "type": "sales",
+      "name": "Sales journal",
+      "sequence": 10
+    },
+    {
+      "code": "PUR",
+      "type": "purchase",
+      "name": "Purchase journal",
+      "sequence": 20
+    },
+    {
+      "code": "BNK",
+      "type": "bank",
+      "name": "Bank",
+      "sequence": 30
+    },
+    {
+      "code": "CSH",
+      "type": "cash",
+      "name": "Cash",
+      "sequence": 40
+    },
+    {
+      "code": "GEN",
+      "type": "general",
+      "name": "Journal",
+      "sequence": 50
+    },
+    {
+      "code": "OPN",
+      "type": "opening",
+      "name": "Opening balances",
+      "sequence": 60
+    }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Indian reference chart of accounts (Schedule III)",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": [
+        "IN-SCH3-BS",
+        "IN-SCH3-PL"
+      ],
+      "legal_reference": "No statute of India prescribes a chart of accounts for a company. What is prescribed is the form of the financial statements: section 129(1) of the Companies Act, 2013 requires them to be in the form Schedule III provides, and Division I of that Schedule is the form for a company that applies the Accounting Standards rather than Ind AS. This chart is original. It follows the ledger-and-group convention Indian bookkeeping software shares — sundry debtors and creditors, input and output CGST, SGST/UTGST and IGST held apart, duties and taxes under current liabilities — and every block of codes is cut so that it reaches exactly one line of the two Schedule III statements this pack carries. The labels are English, the language Schedule III and the GST forms are printed in for a company; no official chart exists in Hindi or in any other language of the Eighth Schedule to transcribe, so the pack declares no second language.",
+      "source": "schedule-iii"
+    }
+  ],
+  "documents": {
+    "numbering": "gapless",
+    "number_format": "{CODE}-{NNNN}",
+    "tax_point": "invoice_date",
+    "posted_edit_policy": "reversal_only",
+    "references": {
+      "numbering": {
+        "legal_reference": "Rule 46(b) of the Central Goods and Services Tax Rules: a tax invoice carries “a consecutive serial number not exceeding sixteen characters, in one or multiple series, containing alphabets or numerals or special characters- hyphen or dash and slash … and any combination thereof, unique for a financial year”. Consecutive is `gapless`. Unique for a financial year is satisfied by a counter that never restarts, which is what this pack declares: the core restarts a `_per_year` counter on the calendar year, and an Indian financial year runs from April to March, so a restart in January would be the wrong restart. `{CODE}-{NNNN}` stays well inside sixteen characters; a series that restarts each April, the common Indian practice, is the preparer's choice and not something the core can number yet.",
+        "source": "cgst-rule46"
+      },
+      "tax_point": {
+        "legal_reference": "Section 12(2) of the Central Goods and Services Tax Act: the time of supply of goods is the earlier of the date of issue of the invoice, or the last date by which section 31 requires it to be issued, and the date on which the supplier receives the payment; section 13(2) says the same of services, with the date of provision of the service where the invoice is late. The payment branch no longer reaches goods — Notification No. 66/2017-Central Tax takes advances for goods out of it for a supplier outside the composition levy — and reaches services only through an advance, a document Ekwo has no concept of (docs/international.md records the limit). Section 31(1) requires the invoice of goods before or at their removal or delivery, and section 31(2) the invoice of services within the period rule 47 prescribes, so an invoiced supply takes its tax point from the invoice, which is what `invoice_date` says.",
+        "source": "cgst-s12"
+      },
+      "posted_edit_policy": {
+        "legal_reference": "Section 34 of the Central Goods and Services Tax Act corrects a tax invoice by a credit note or a debit note that refers to it, and section 36 requires the accounts and records to be retained until seventy-two months after the due date of the annual return for the year. A posted document of an Indian company is therefore undone by a credit note that names it, and in no other way. Since 1 April 2023 rule 3(1) of the Companies (Accounts) Rules, 2014 also requires the accounting software of a company to keep an audit trail of every change that cannot be disabled, which is the same answer from the company-law side.",
+        "source": "cgst-s36"
+      }
+    },
+    "mentions": [
+      {
+        "code": "export_lut",
+        "applies_when": "export",
+        "text": "SUPPLY MEANT FOR EXPORT/SUPPLY TO SEZ UNIT OR SEZ DEVELOPER FOR AUTHORISED OPERATIONS UNDER BOND OR LETTER OF UNDERTAKING WITHOUT PAYMENT OF INTEGRATED TAX",
+        "sequence": 10,
+        "legal_reference": "Rule 46 of the Central Goods and Services Tax Rules, proviso: in the case of the export of goods or services the invoice carries this endorsement where the supply is made under bond or Letter of Undertaking, and names the recipient, the address of delivery and the country of destination. The one export code of this pack is that supply.",
+        "source": "cgst-rule46"
+      }
+    ]
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "Electronic invoicing is obligatory in India above a turnover, and this pack leaves all four fields above empty for the reason packs/sa/, packs/mx/ and packs/vn/ leave them empty: it is a clearance regime, not an exchange between two parties' access points, and `profile` names an EN 16931 profile a brick of packages/formats writes. The obligation: rule 48(4) of the Central Goods and Services Tax Rules makes the class of registered persons the Government notifies prepare their invoice with the particulars of FORM GST INV-01 after obtaining an Invoice Reference Number (IRN) by uploading it to the Invoice Registration Portal, and rule 48(5) says that an invoice such a person issues in any other manner “shall not be treated as an invoice”; rule 46(r) puts the QR code embedding the IRN on it. Notification No. 13/2020-Central Tax defines the class by aggregate turnover, and Notification No. 10/2023-Central Tax lowered the threshold to five crore rupees in any financial year from 2017-18 onwards with effect from 1 August 2023 — the threshold still in force at `released_at`. Government departments, Special Economic Zone units and a few sectors (insurers, banking companies, goods transport agencies, passenger transport, cinema admission) are outside it. The obligation covers invoices, credit notes and debit notes to registered persons and exports, not supplies to consumers. INV-01 is a JSON schema of the GST Network and not a PINT or an EN 16931 profile, and no brick of this repository writes it, signs it, talks to the Invoice Registration Portal or prints the QR code: a document issued from Ekwo by a company above the threshold is not an invoice in the sense of rule 48(5) until it has been registered elsewhere. `obligation` is left out because the schema refuses `mandatory` without `mandatory_from`, and `mandatory_from` without a `profile`. `party_scheme` and `vat_scheme` are empty: India has no ISO 6523 identifier scheme in the Peppol list; an Indian party is identified by its fifteen-character GSTIN, whose first two digits are the State code. docs/international.md carries the rest.",
+    "source": "cgst-rule48"
+  },
+  "bank": {
+    "statement_formats": [
+      "mt940",
+      "csv"
+    ],
+    "payment_formats": [
+      "csv"
+    ]
+  }
+}

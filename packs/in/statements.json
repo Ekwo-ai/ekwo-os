@@ -1,0 +1,782 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/statements",
+  "statements": [
+    {
+      "code": "IN-SCH3-BS",
+      "kind": "balance_sheet",
+      "framework": "Schedule III, Division I",
+      "name": "Balance Sheet — Schedule III, Division I",
+      "legal_reference": "Section 129(1) of the Companies Act, 2013: the financial statements shall be in the form or forms provided for different classes of companies in Schedule III. Division I of Schedule III is the form for a company whose financial statements comply with the Companies (Accounting Standards) Rules, 2006 — the Accounting Standards, which a company not required to apply Ind AS reports under; Division II is the Ind AS form and is not carried. This is Part I, the Balance Sheet, line for line down to the sub-heads of the face of the statement, as amended with effect from 1 April 2021. The Notes the Schedule requires, the comparatives of the previous period and the rounding of general instruction 4 are the preparer's and not the ledger's.",
+      "source": "schedule-iii",
+      "taxonomy": null,
+      "lines": [
+        {
+          "code": "A11",
+          "name": "Share capital",
+          "sequence": 10,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "3000",
+              "code_to": "3099"
+            }
+          ],
+          "legal_reference": "Schedule III to the Companies Act, 2013, Division I, Part I — Balance Sheet, EQUITY AND LIABILITIES, 1(a).",
+          "source": "schedule-iii"
+        },
+        {
+          "code": "A12",
+          "name": "Reserves and surplus",
+          "sequence": 20,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "3100",
+              "code_to": "3299"
+            }
+          ],
+          "legal_reference": "Schedule III to the Companies Act, 2013, Division I, Part I — Balance Sheet, 1(b). Note B of the general instructions classifies it — capital reserve, securities premium, general reserve and the surplus, which is the balance of the Statement of Profit and Loss.",
+          "source": "schedule-iii"
+        },
+        {
+          "code": "A13",
+          "name": "Money received against share warrants",
+          "sequence": 30,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "3300",
+              "code_to": "3399"
+            }
+          ],
+          "legal_reference": "Schedule III to the Companies Act, 2013, Division I, Part I — Balance Sheet, 1(c).",
+          "source": "schedule-iii"
+        },
+        {
+          "code": "A1",
+          "name": "Shareholders' funds",
+          "sequence": 40,
+          "is_total": true,
+          "plus": [
+            "A11",
+            "A12",
+            "A13"
+          ]
+        },
+        {
+          "code": "A2",
+          "name": "Share application money pending allotment",
+          "sequence": 50,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "3400",
+              "code_to": "3499"
+            }
+          ],
+          "legal_reference": "Schedule III to the Companies Act, 2013, Division I, Part I — Balance Sheet, 2.",
+          "source": "schedule-iii"
+        },
+        {
+          "code": "A31",
+          "name": "Long-term borrowings",
+          "sequence": 60,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "2500",
+              "code_to": "2599"
+            }
+          ],
+          "legal_reference": "Schedule III to the Companies Act, 2013, Division I, Part I — Balance Sheet, 3(a).",
+          "source": "schedule-iii"
+        },
+        {
+          "code": "A32",
+          "name": "Deferred tax liabilities (net)",
+          "sequence": 70,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "2600",
+              "code_to": "2649"
+            }
+          ],
+          "legal_reference": "Schedule III to the Companies Act, 2013, Division I, Part I — Balance Sheet, 3(b).",
+          "source": "schedule-iii"
+        },
+        {
+          "code": "A33",
+          "name": "Other long-term liabilities",
+          "sequence": 80,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "2650",
+              "code_to": "2699"
+            }
+          ],
+          "legal_reference": "Schedule III to the Companies Act, 2013, Division I, Part I — Balance Sheet, 3(c).",
+          "source": "schedule-iii"
+        },
+        {
+          "code": "A34",
+          "name": "Long-term provisions",
+          "sequence": 90,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "2700",
+              "code_to": "2799"
+            }
+          ],
+          "legal_reference": "Schedule III to the Companies Act, 2013, Division I, Part I — Balance Sheet, 3(d).",
+          "source": "schedule-iii"
+        },
+        {
+          "code": "A3",
+          "name": "Non-current liabilities",
+          "sequence": 100,
+          "is_total": true,
+          "plus": [
+            "A31",
+            "A32",
+            "A33",
+            "A34"
+          ]
+        },
+        {
+          "code": "A41",
+          "name": "Short-term borrowings",
+          "sequence": 110,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "2100",
+              "code_to": "2199"
+            }
+          ],
+          "legal_reference": "Schedule III to the Companies Act, 2013, Division I, Part I — Balance Sheet, 4(a) — bank overdraft, cash credit, loans repayable on demand and the current maturities of long-term borrowings, which the 2021 amendment of Schedule III moved here.",
+          "source": "schedule-iii"
+        },
+        {
+          "code": "A42",
+          "name": "Trade payables",
+          "sequence": 120,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "2000",
+              "code_to": "2099"
+            }
+          ],
+          "legal_reference": "Schedule III to the Companies Act, 2013, Division I, Part I — Balance Sheet, 4(b), which asks for the dues of micro and small enterprises (A) apart from the others (B); the chart keeps one creditors account and the split is a note on the contact, not a line of this statement.",
+          "source": "schedule-iii"
+        },
+        {
+          "code": "A43",
+          "name": "Other current liabilities",
+          "sequence": 130,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "2200",
+              "code_to": "2399"
+            }
+          ],
+          "legal_reference": "Schedule III to the Companies Act, 2013, Division I, Part I — Balance Sheet, 4(c). Note G of the general instructions classifies it and ends with (j) “Other payables (specify nature)”, which is where the output GST, the reverse-charge GST, the GST liability ledger and the other statutory dues of this chart sit.",
+          "source": "schedule-iii"
+        },
+        {
+          "code": "A44",
+          "name": "Short-term provisions",
+          "sequence": 140,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "2400",
+              "code_to": "2499"
+            }
+          ],
+          "legal_reference": "Schedule III to the Companies Act, 2013, Division I, Part I — Balance Sheet, 4(d).",
+          "source": "schedule-iii"
+        },
+        {
+          "code": "A4",
+          "name": "Current liabilities",
+          "sequence": 150,
+          "is_total": true,
+          "plus": [
+            "A41",
+            "A42",
+            "A43",
+            "A44"
+          ]
+        },
+        {
+          "code": "A",
+          "name": "TOTAL EQUITY AND LIABILITIES",
+          "sequence": 160,
+          "is_total": true,
+          "plus": [
+            "A1",
+            "A2",
+            "A3",
+            "A4"
+          ]
+        },
+        {
+          "code": "B1ai",
+          "name": "Property, plant and equipment",
+          "sequence": 170,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1000",
+              "code_to": "1099"
+            }
+          ],
+          "legal_reference": "Schedule III to the Companies Act, 2013, Division I, Part I — Balance Sheet, ASSETS, 1(a)(i), tangible assets, shown net of accumulated depreciation.",
+          "source": "schedule-iii"
+        },
+        {
+          "code": "B1aii",
+          "name": "Intangible assets",
+          "sequence": 180,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1100",
+              "code_to": "1149"
+            }
+          ],
+          "legal_reference": "Schedule III to the Companies Act, 2013, Division I, Part I — Balance Sheet, 1(a)(ii), net of accumulated amortisation.",
+          "source": "schedule-iii"
+        },
+        {
+          "code": "B1aiii",
+          "name": "Capital work-in-progress",
+          "sequence": 190,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1150",
+              "code_to": "1179"
+            }
+          ],
+          "legal_reference": "Schedule III to the Companies Act, 2013, Division I, Part I — Balance Sheet, 1(a)(iii).",
+          "source": "schedule-iii"
+        },
+        {
+          "code": "B1aiv",
+          "name": "Intangible assets under development",
+          "sequence": 200,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1180",
+              "code_to": "1199"
+            }
+          ],
+          "legal_reference": "Schedule III to the Companies Act, 2013, Division I, Part I — Balance Sheet, 1(a)(iv).",
+          "source": "schedule-iii"
+        },
+        {
+          "code": "B1b",
+          "name": "Non-current investments",
+          "sequence": 210,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1200",
+              "code_to": "1249"
+            }
+          ],
+          "legal_reference": "Schedule III to the Companies Act, 2013, Division I, Part I — Balance Sheet, 1(b).",
+          "source": "schedule-iii"
+        },
+        {
+          "code": "B1c",
+          "name": "Deferred tax assets (net)",
+          "sequence": 220,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1250",
+              "code_to": "1269"
+            }
+          ],
+          "legal_reference": "Schedule III to the Companies Act, 2013, Division I, Part I — Balance Sheet, 1(c).",
+          "source": "schedule-iii"
+        },
+        {
+          "code": "B1d",
+          "name": "Long-term loans and advances",
+          "sequence": 230,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1270",
+              "code_to": "1299"
+            }
+          ],
+          "legal_reference": "Schedule III to the Companies Act, 2013, Division I, Part I — Balance Sheet, 1(d).",
+          "source": "schedule-iii"
+        },
+        {
+          "code": "B1e",
+          "name": "Other non-current assets",
+          "sequence": 240,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1300",
+              "code_to": "1399"
+            }
+          ],
+          "legal_reference": "Schedule III to the Companies Act, 2013, Division I, Part I — Balance Sheet, 1(e).",
+          "source": "schedule-iii"
+        },
+        {
+          "code": "B1",
+          "name": "Non-current assets",
+          "sequence": 250,
+          "is_total": true,
+          "plus": [
+            "B1ai",
+            "B1aii",
+            "B1aiii",
+            "B1aiv",
+            "B1b",
+            "B1c",
+            "B1d",
+            "B1e"
+          ]
+        },
+        {
+          "code": "B2a",
+          "name": "Current investments",
+          "sequence": 260,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1400",
+              "code_to": "1449"
+            }
+          ],
+          "legal_reference": "Schedule III to the Companies Act, 2013, Division I, Part I — Balance Sheet, 2(a).",
+          "source": "schedule-iii"
+        },
+        {
+          "code": "B2b",
+          "name": "Inventories",
+          "sequence": 270,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1450",
+              "code_to": "1499"
+            }
+          ],
+          "legal_reference": "Schedule III to the Companies Act, 2013, Division I, Part I — Balance Sheet, 2(b).",
+          "source": "schedule-iii"
+        },
+        {
+          "code": "B2c",
+          "name": "Trade receivables",
+          "sequence": 280,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1500",
+              "code_to": "1549"
+            }
+          ],
+          "legal_reference": "Schedule III to the Companies Act, 2013, Division I, Part I — Balance Sheet, 2(c), net of the provision for doubtful debts.",
+          "source": "schedule-iii"
+        },
+        {
+          "code": "B2d",
+          "name": "Cash and cash equivalents",
+          "sequence": 290,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1550",
+              "code_to": "1599"
+            }
+          ],
+          "legal_reference": "Schedule III to the Companies Act, 2013, Division I, Part I — Balance Sheet, 2(d).",
+          "source": "schedule-iii"
+        },
+        {
+          "code": "B2e",
+          "name": "Short-term loans and advances",
+          "sequence": 300,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1600",
+              "code_to": "1699"
+            }
+          ],
+          "legal_reference": "Schedule III to the Companies Act, 2013, Division I, Part I — Balance Sheet, 2(e). Note R of the general instructions classifies them as loans and advances to related parties and “Others (specify nature)”, which is where the input GST, the income tax paid in advance and the GST credit and cash ledger balance of this chart sit.",
+          "source": "schedule-iii"
+        },
+        {
+          "code": "B2f",
+          "name": "Other current assets",
+          "sequence": 310,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1700",
+              "code_to": "1799"
+            }
+          ],
+          "legal_reference": "Schedule III to the Companies Act, 2013, Division I, Part I — Balance Sheet, 2(f).",
+          "source": "schedule-iii"
+        },
+        {
+          "code": "B2",
+          "name": "Current assets",
+          "sequence": 320,
+          "is_total": true,
+          "plus": [
+            "B2a",
+            "B2b",
+            "B2c",
+            "B2d",
+            "B2e",
+            "B2f"
+          ]
+        },
+        {
+          "code": "B",
+          "name": "TOTAL ASSETS",
+          "sequence": 330,
+          "is_total": true,
+          "plus": [
+            "B1",
+            "B2"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "IN-SCH3-PL",
+      "kind": "income_statement",
+      "framework": "Schedule III, Division I",
+      "name": "Statement of Profit and Loss — Schedule III, Division I",
+      "legal_reference": "Schedule III to the Companies Act, 2013, Division I, Part II — Statement of Profit and Loss, lines I to XV. Lines XII to XIV, profit and tax of discontinuing operations, and line XVI, earnings per share, are not carried: a ledger holds no discontinuing operation apart from the others and no share count, so line XV here is line XI of the Schedule. The 2021 amendment calls line III “Total Income”, the wording kept here.",
+      "source": "schedule-iii",
+      "taxonomy": null,
+      "lines": [
+        {
+          "code": "I",
+          "name": "Revenue from operations",
+          "sequence": 10,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "4000",
+              "code_to": "4499"
+            }
+          ],
+          "legal_reference": "Schedule III to the Companies Act, 2013, Division I, Part II — Statement of Profit and Loss, I. Note 2(A) of the general instructions: sale of products, sale of services and other operating revenues, disclosed separately in the notes. GST collected is not revenue and never reaches this line.",
+          "source": "schedule-iii"
+        },
+        {
+          "code": "II",
+          "name": "Other income",
+          "sequence": 20,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "4500",
+              "code_to": "4999"
+            }
+          ],
+          "legal_reference": "Schedule III to the Companies Act, 2013, Division I, Part II — Statement of Profit and Loss, II. Note 4 of the general instructions classifies it: interest, dividends, net gain on sale of investments, other non-operating income.",
+          "source": "schedule-iii"
+        },
+        {
+          "code": "III",
+          "name": "Total income (I + II)",
+          "sequence": 30,
+          "is_total": true,
+          "plus": [
+            "I",
+            "II"
+          ]
+        },
+        {
+          "code": "IVa",
+          "name": "Cost of materials consumed",
+          "sequence": 40,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "5000",
+              "code_to": "5099"
+            }
+          ],
+          "legal_reference": "Schedule III to the Companies Act, 2013, Division I, Part II — Statement of Profit and Loss, IV.",
+          "source": "schedule-iii"
+        },
+        {
+          "code": "IVb",
+          "name": "Purchases of stock-in-trade",
+          "sequence": 50,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "5100",
+              "code_to": "5199"
+            }
+          ],
+          "legal_reference": "Schedule III to the Companies Act, 2013, Division I, Part II — Statement of Profit and Loss, IV.",
+          "source": "schedule-iii"
+        },
+        {
+          "code": "IVc",
+          "name": "Changes in inventories of finished goods, work-in-progress and stock-in-trade",
+          "sequence": 60,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "5200",
+              "code_to": "5299"
+            }
+          ],
+          "legal_reference": "Schedule III to the Companies Act, 2013, Division I, Part II — Statement of Profit and Loss, IV.",
+          "source": "schedule-iii"
+        },
+        {
+          "code": "IVd",
+          "name": "Employee benefits expense",
+          "sequence": 70,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "5300",
+              "code_to": "5499"
+            }
+          ],
+          "legal_reference": "Schedule III to the Companies Act, 2013, Division I, Part II — Statement of Profit and Loss, IV.",
+          "source": "schedule-iii"
+        },
+        {
+          "code": "IVe",
+          "name": "Finance costs",
+          "sequence": 80,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "5500",
+              "code_to": "5599"
+            }
+          ],
+          "legal_reference": "Schedule III to the Companies Act, 2013, Division I, Part II — Statement of Profit and Loss, IV.",
+          "source": "schedule-iii"
+        },
+        {
+          "code": "IVf",
+          "name": "Depreciation and amortisation expense",
+          "sequence": 90,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "5600",
+              "code_to": "5699"
+            }
+          ],
+          "legal_reference": "Schedule III to the Companies Act, 2013, Division I, Part II — Statement of Profit and Loss, IV.",
+          "source": "schedule-iii"
+        },
+        {
+          "code": "IVg",
+          "name": "Other expenses",
+          "sequence": 100,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "6000",
+              "code_to": "6999"
+            }
+          ],
+          "legal_reference": "Schedule III to the Companies Act, 2013, Division I, Part II — Statement of Profit and Loss, IV. Note 5 of the general instructions asks for the detail of several of its items in the notes.",
+          "source": "schedule-iii"
+        },
+        {
+          "code": "IV",
+          "name": "Total expenses",
+          "sequence": 110,
+          "is_total": true,
+          "plus": [
+            "IVa",
+            "IVb",
+            "IVc",
+            "IVd",
+            "IVe",
+            "IVf",
+            "IVg"
+          ]
+        },
+        {
+          "code": "V",
+          "name": "Profit before exceptional and extraordinary items and tax (III - IV)",
+          "sequence": 120,
+          "is_total": true,
+          "plus": [
+            "III"
+          ],
+          "minus": [
+            "IV"
+          ]
+        },
+        {
+          "code": "VI",
+          "name": "Exceptional items",
+          "sequence": 130,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "7000",
+              "code_to": "7099"
+            }
+          ],
+          "legal_reference": "Schedule III to the Companies Act, 2013, Division I, Part II — Statement of Profit and Loss, VI.",
+          "source": "schedule-iii"
+        },
+        {
+          "code": "VII",
+          "name": "Profit before extraordinary items and tax (V - VI)",
+          "sequence": 140,
+          "is_total": true,
+          "plus": [
+            "V"
+          ],
+          "minus": [
+            "VI"
+          ]
+        },
+        {
+          "code": "VIII",
+          "name": "Extraordinary items",
+          "sequence": 150,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "7100",
+              "code_to": "7199"
+            }
+          ],
+          "legal_reference": "Schedule III to the Companies Act, 2013, Division I, Part II — Statement of Profit and Loss, VIII.",
+          "source": "schedule-iii"
+        },
+        {
+          "code": "IX",
+          "name": "Profit before tax (VII - VIII)",
+          "sequence": 160,
+          "is_total": true,
+          "plus": [
+            "VII"
+          ],
+          "minus": [
+            "VIII"
+          ]
+        },
+        {
+          "code": "X1",
+          "name": "Current tax",
+          "sequence": 170,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "8000",
+              "code_to": "8049"
+            }
+          ],
+          "legal_reference": "Schedule III to the Companies Act, 2013, Division I, Part II — Statement of Profit and Loss, X(1).",
+          "source": "schedule-iii"
+        },
+        {
+          "code": "X2",
+          "name": "Deferred tax",
+          "sequence": 180,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "8050",
+              "code_to": "8099"
+            }
+          ],
+          "legal_reference": "Schedule III to the Companies Act, 2013, Division I, Part II — Statement of Profit and Loss, X(2).",
+          "source": "schedule-iii"
+        },
+        {
+          "code": "X",
+          "name": "Tax expense",
+          "sequence": 190,
+          "is_total": true,
+          "plus": [
+            "X1",
+            "X2"
+          ]
+        },
+        {
+          "code": "XV",
+          "name": "Profit (loss) for the period",
+          "sequence": 200,
+          "is_total": true,
+          "plus": [
+            "IX"
+          ],
+          "minus": [
+            "X"
+          ]
+        }
+      ]
+    }
+  ]
+}

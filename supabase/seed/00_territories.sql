@@ -1376,3 +1376,108 @@ on conflict (code) do update set
   eu_vat_to       = excluded.eu_vat_to,
   vat_prefix      = excluded.vat_prefix,
   legal_reference = excluded.legal_reference;
+
+
+-- ---------------------------------------------------------------------------
+-- The rows — India, and its twenty-eight States and eight Union territories
+--
+-- India is outside the common system of VAT and levies a goods and services
+-- tax of its own, in two layers that follow the place of supply: on a supply
+-- inside one State the Centre levies the central tax and the State (or the
+-- Union territory) the State tax, each at half the rate; on a supply between
+-- two States, and on imports, the Centre levies the integrated tax alone —
+-- sections 7 and 8 of the Integrated Goods and Services Tax Act. `packs/in/`
+-- therefore conditions every intra-State code on `supply_vs_seller: same` and
+-- every inter-State code on `other`, and those need a row per State to compare
+-- a seller and a place of supply at. Codes are those of ISO 3166-2:IN as
+-- revised in November 2023 (IN-CG, IN-OD, IN-TS, IN-UK). The State codes of
+-- a GSTIN (29 for Karnataka, 27 for Maharashtra…) are the administration's own
+-- numbering and are not this table's key.
+--
+-- `vat_prefix` is null on all thirty-seven: a GSTIN carries no country prefix.
+-- ---------------------------------------------------------------------------
+
+insert into territories (code, code_source, name, parent_code, eu_vat_scope, eu_vat_from, eu_vat_to, vat_prefix, legal_reference) values
+  ('IN', 'iso_3166_1', 'India', null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. India levies a goods and services tax of its own under article 246A of the Constitution: the central tax of the Central Goods and Services Tax Act, 2017 and the State or Union territory tax on an intra-State supply, the integrated tax of the Integrated Goods and Services Tax Act, 2017 on an inter-State supply and on imports.'),
+  ('IN-AN', 'iso_3166_2', 'Andaman and Nicobar Islands',              'IN', 'none', null, null, null,
+   'ISO 3166-2:IN for the code. A Union territory without a legislature: the Union Territory Goods and Services Tax Act, 2017 levies the Union territory tax on an intra-State supply made there, in place of a State tax and at the same half rate, beside the central tax; a supply from or to another State or Union territory is inter-State under section 7 of the Integrated Goods and Services Tax Act.'),
+  ('IN-AP', 'iso_3166_2', 'Andhra Pradesh',                           'IN', 'none', null, null, null,
+   'ISO 3166-2:IN for the code. A State: the State Goods and Services Tax Act it enacted in 2017 levies the State tax on an intra-State supply made there, beside the central tax of section 9 of the Central Goods and Services Tax Act, each at half the rate; a supply from or to another State is inter-State under section 7 of the Integrated Goods and Services Tax Act and bears the integrated tax instead.'),
+  ('IN-AR', 'iso_3166_2', 'Arunachal Pradesh',                        'IN', 'none', null, null, null,
+   'ISO 3166-2:IN for the code. A State: the State Goods and Services Tax Act it enacted in 2017 levies the State tax on an intra-State supply made there, beside the central tax of section 9 of the Central Goods and Services Tax Act, each at half the rate; a supply from or to another State is inter-State under section 7 of the Integrated Goods and Services Tax Act and bears the integrated tax instead.'),
+  ('IN-AS', 'iso_3166_2', 'Assam',                                    'IN', 'none', null, null, null,
+   'ISO 3166-2:IN for the code. A State: the State Goods and Services Tax Act it enacted in 2017 levies the State tax on an intra-State supply made there, beside the central tax of section 9 of the Central Goods and Services Tax Act, each at half the rate; a supply from or to another State is inter-State under section 7 of the Integrated Goods and Services Tax Act and bears the integrated tax instead.'),
+  ('IN-BR', 'iso_3166_2', 'Bihar',                                    'IN', 'none', null, null, null,
+   'ISO 3166-2:IN for the code. A State: the State Goods and Services Tax Act it enacted in 2017 levies the State tax on an intra-State supply made there, beside the central tax of section 9 of the Central Goods and Services Tax Act, each at half the rate; a supply from or to another State is inter-State under section 7 of the Integrated Goods and Services Tax Act and bears the integrated tax instead.'),
+  ('IN-CH', 'iso_3166_2', 'Chandigarh',                               'IN', 'none', null, null, null,
+   'ISO 3166-2:IN for the code. A Union territory without a legislature: the Union Territory Goods and Services Tax Act, 2017 levies the Union territory tax on an intra-State supply made there, in place of a State tax and at the same half rate, beside the central tax; a supply from or to another State or Union territory is inter-State under section 7 of the Integrated Goods and Services Tax Act.'),
+  ('IN-CG', 'iso_3166_2', 'Chhattisgarh',                             'IN', 'none', null, null, null,
+   'ISO 3166-2:IN for the code. A State: the State Goods and Services Tax Act it enacted in 2017 levies the State tax on an intra-State supply made there, beside the central tax of section 9 of the Central Goods and Services Tax Act, each at half the rate; a supply from or to another State is inter-State under section 7 of the Integrated Goods and Services Tax Act and bears the integrated tax instead.'),
+  ('IN-DH', 'iso_3166_2', 'Dadra and Nagar Haveli and Daman and Diu', 'IN', 'none', null, null, null,
+   'ISO 3166-2:IN for the code. A Union territory without a legislature: the Union Territory Goods and Services Tax Act, 2017 levies the Union territory tax on an intra-State supply made there, in place of a State tax and at the same half rate, beside the central tax; a supply from or to another State or Union territory is inter-State under section 7 of the Integrated Goods and Services Tax Act.'),
+  ('IN-DL', 'iso_3166_2', 'Delhi',                                    'IN', 'none', null, null, null,
+   'ISO 3166-2:IN for the code. A Union territory with a legislature: for the purposes of the Goods and Services Tax it is a State, levies the State tax under a State Goods and Services Tax Act of its own (section 2(103) of the Central Goods and Services Tax Act counts it among the States), and a supply from or to another State or Union territory is inter-State under section 7 of the Integrated Goods and Services Tax Act.'),
+  ('IN-GA', 'iso_3166_2', 'Goa',                                      'IN', 'none', null, null, null,
+   'ISO 3166-2:IN for the code. A State: the State Goods and Services Tax Act it enacted in 2017 levies the State tax on an intra-State supply made there, beside the central tax of section 9 of the Central Goods and Services Tax Act, each at half the rate; a supply from or to another State is inter-State under section 7 of the Integrated Goods and Services Tax Act and bears the integrated tax instead.'),
+  ('IN-GJ', 'iso_3166_2', 'Gujarat',                                  'IN', 'none', null, null, null,
+   'ISO 3166-2:IN for the code. A State: the State Goods and Services Tax Act it enacted in 2017 levies the State tax on an intra-State supply made there, beside the central tax of section 9 of the Central Goods and Services Tax Act, each at half the rate; a supply from or to another State is inter-State under section 7 of the Integrated Goods and Services Tax Act and bears the integrated tax instead.'),
+  ('IN-HR', 'iso_3166_2', 'Haryana',                                  'IN', 'none', null, null, null,
+   'ISO 3166-2:IN for the code. A State: the State Goods and Services Tax Act it enacted in 2017 levies the State tax on an intra-State supply made there, beside the central tax of section 9 of the Central Goods and Services Tax Act, each at half the rate; a supply from or to another State is inter-State under section 7 of the Integrated Goods and Services Tax Act and bears the integrated tax instead.'),
+  ('IN-HP', 'iso_3166_2', 'Himachal Pradesh',                         'IN', 'none', null, null, null,
+   'ISO 3166-2:IN for the code. A State: the State Goods and Services Tax Act it enacted in 2017 levies the State tax on an intra-State supply made there, beside the central tax of section 9 of the Central Goods and Services Tax Act, each at half the rate; a supply from or to another State is inter-State under section 7 of the Integrated Goods and Services Tax Act and bears the integrated tax instead.'),
+  ('IN-JK', 'iso_3166_2', 'Jammu and Kashmir',                        'IN', 'none', null, null, null,
+   'ISO 3166-2:IN for the code. A Union territory with a legislature: for the purposes of the Goods and Services Tax it is a State, levies the State tax under a State Goods and Services Tax Act of its own (section 2(103) of the Central Goods and Services Tax Act counts it among the States), and a supply from or to another State or Union territory is inter-State under section 7 of the Integrated Goods and Services Tax Act.'),
+  ('IN-JH', 'iso_3166_2', 'Jharkhand',                                'IN', 'none', null, null, null,
+   'ISO 3166-2:IN for the code. A State: the State Goods and Services Tax Act it enacted in 2017 levies the State tax on an intra-State supply made there, beside the central tax of section 9 of the Central Goods and Services Tax Act, each at half the rate; a supply from or to another State is inter-State under section 7 of the Integrated Goods and Services Tax Act and bears the integrated tax instead.'),
+  ('IN-KA', 'iso_3166_2', 'Karnataka',                                'IN', 'none', null, null, null,
+   'ISO 3166-2:IN for the code. A State: the State Goods and Services Tax Act it enacted in 2017 levies the State tax on an intra-State supply made there, beside the central tax of section 9 of the Central Goods and Services Tax Act, each at half the rate; a supply from or to another State is inter-State under section 7 of the Integrated Goods and Services Tax Act and bears the integrated tax instead.'),
+  ('IN-KL', 'iso_3166_2', 'Kerala',                                   'IN', 'none', null, null, null,
+   'ISO 3166-2:IN for the code. A State: the State Goods and Services Tax Act it enacted in 2017 levies the State tax on an intra-State supply made there, beside the central tax of section 9 of the Central Goods and Services Tax Act, each at half the rate; a supply from or to another State is inter-State under section 7 of the Integrated Goods and Services Tax Act and bears the integrated tax instead.'),
+  ('IN-LA', 'iso_3166_2', 'Ladakh',                                   'IN', 'none', null, null, null,
+   'ISO 3166-2:IN for the code. A Union territory without a legislature: the Union Territory Goods and Services Tax Act, 2017 levies the Union territory tax on an intra-State supply made there, in place of a State tax and at the same half rate, beside the central tax; a supply from or to another State or Union territory is inter-State under section 7 of the Integrated Goods and Services Tax Act.'),
+  ('IN-LD', 'iso_3166_2', 'Lakshadweep',                              'IN', 'none', null, null, null,
+   'ISO 3166-2:IN for the code. A Union territory without a legislature: the Union Territory Goods and Services Tax Act, 2017 levies the Union territory tax on an intra-State supply made there, in place of a State tax and at the same half rate, beside the central tax; a supply from or to another State or Union territory is inter-State under section 7 of the Integrated Goods and Services Tax Act.'),
+  ('IN-MP', 'iso_3166_2', 'Madhya Pradesh',                           'IN', 'none', null, null, null,
+   'ISO 3166-2:IN for the code. A State: the State Goods and Services Tax Act it enacted in 2017 levies the State tax on an intra-State supply made there, beside the central tax of section 9 of the Central Goods and Services Tax Act, each at half the rate; a supply from or to another State is inter-State under section 7 of the Integrated Goods and Services Tax Act and bears the integrated tax instead.'),
+  ('IN-MH', 'iso_3166_2', 'Maharashtra',                              'IN', 'none', null, null, null,
+   'ISO 3166-2:IN for the code. A State: the State Goods and Services Tax Act it enacted in 2017 levies the State tax on an intra-State supply made there, beside the central tax of section 9 of the Central Goods and Services Tax Act, each at half the rate; a supply from or to another State is inter-State under section 7 of the Integrated Goods and Services Tax Act and bears the integrated tax instead.'),
+  ('IN-MN', 'iso_3166_2', 'Manipur',                                  'IN', 'none', null, null, null,
+   'ISO 3166-2:IN for the code. A State: the State Goods and Services Tax Act it enacted in 2017 levies the State tax on an intra-State supply made there, beside the central tax of section 9 of the Central Goods and Services Tax Act, each at half the rate; a supply from or to another State is inter-State under section 7 of the Integrated Goods and Services Tax Act and bears the integrated tax instead.'),
+  ('IN-ML', 'iso_3166_2', 'Meghālaya',                                'IN', 'none', null, null, null,
+   'ISO 3166-2:IN for the code. A State: the State Goods and Services Tax Act it enacted in 2017 levies the State tax on an intra-State supply made there, beside the central tax of section 9 of the Central Goods and Services Tax Act, each at half the rate; a supply from or to another State is inter-State under section 7 of the Integrated Goods and Services Tax Act and bears the integrated tax instead.'),
+  ('IN-MZ', 'iso_3166_2', 'Mizoram',                                  'IN', 'none', null, null, null,
+   'ISO 3166-2:IN for the code. A State: the State Goods and Services Tax Act it enacted in 2017 levies the State tax on an intra-State supply made there, beside the central tax of section 9 of the Central Goods and Services Tax Act, each at half the rate; a supply from or to another State is inter-State under section 7 of the Integrated Goods and Services Tax Act and bears the integrated tax instead.'),
+  ('IN-NL', 'iso_3166_2', 'Nagaland',                                 'IN', 'none', null, null, null,
+   'ISO 3166-2:IN for the code. A State: the State Goods and Services Tax Act it enacted in 2017 levies the State tax on an intra-State supply made there, beside the central tax of section 9 of the Central Goods and Services Tax Act, each at half the rate; a supply from or to another State is inter-State under section 7 of the Integrated Goods and Services Tax Act and bears the integrated tax instead.'),
+  ('IN-OD', 'iso_3166_2', 'Odisha',                                   'IN', 'none', null, null, null,
+   'ISO 3166-2:IN for the code. A State: the State Goods and Services Tax Act it enacted in 2017 levies the State tax on an intra-State supply made there, beside the central tax of section 9 of the Central Goods and Services Tax Act, each at half the rate; a supply from or to another State is inter-State under section 7 of the Integrated Goods and Services Tax Act and bears the integrated tax instead.'),
+  ('IN-PY', 'iso_3166_2', 'Puducherry',                               'IN', 'none', null, null, null,
+   'ISO 3166-2:IN for the code. A Union territory with a legislature: for the purposes of the Goods and Services Tax it is a State, levies the State tax under a State Goods and Services Tax Act of its own (section 2(103) of the Central Goods and Services Tax Act counts it among the States), and a supply from or to another State or Union territory is inter-State under section 7 of the Integrated Goods and Services Tax Act.'),
+  ('IN-PB', 'iso_3166_2', 'Punjab',                                   'IN', 'none', null, null, null,
+   'ISO 3166-2:IN for the code. A State: the State Goods and Services Tax Act it enacted in 2017 levies the State tax on an intra-State supply made there, beside the central tax of section 9 of the Central Goods and Services Tax Act, each at half the rate; a supply from or to another State is inter-State under section 7 of the Integrated Goods and Services Tax Act and bears the integrated tax instead.'),
+  ('IN-RJ', 'iso_3166_2', 'Rajasthan',                                'IN', 'none', null, null, null,
+   'ISO 3166-2:IN for the code. A State: the State Goods and Services Tax Act it enacted in 2017 levies the State tax on an intra-State supply made there, beside the central tax of section 9 of the Central Goods and Services Tax Act, each at half the rate; a supply from or to another State is inter-State under section 7 of the Integrated Goods and Services Tax Act and bears the integrated tax instead.'),
+  ('IN-SK', 'iso_3166_2', 'Sikkim',                                   'IN', 'none', null, null, null,
+   'ISO 3166-2:IN for the code. A State: the State Goods and Services Tax Act it enacted in 2017 levies the State tax on an intra-State supply made there, beside the central tax of section 9 of the Central Goods and Services Tax Act, each at half the rate; a supply from or to another State is inter-State under section 7 of the Integrated Goods and Services Tax Act and bears the integrated tax instead.'),
+  ('IN-TN', 'iso_3166_2', 'Tamil Nadu',                               'IN', 'none', null, null, null,
+   'ISO 3166-2:IN for the code. A State: the State Goods and Services Tax Act it enacted in 2017 levies the State tax on an intra-State supply made there, beside the central tax of section 9 of the Central Goods and Services Tax Act, each at half the rate; a supply from or to another State is inter-State under section 7 of the Integrated Goods and Services Tax Act and bears the integrated tax instead.'),
+  ('IN-TS', 'iso_3166_2', 'Telangana',                                'IN', 'none', null, null, null,
+   'ISO 3166-2:IN for the code. A State: the State Goods and Services Tax Act it enacted in 2017 levies the State tax on an intra-State supply made there, beside the central tax of section 9 of the Central Goods and Services Tax Act, each at half the rate; a supply from or to another State is inter-State under section 7 of the Integrated Goods and Services Tax Act and bears the integrated tax instead.'),
+  ('IN-TR', 'iso_3166_2', 'Tripura',                                  'IN', 'none', null, null, null,
+   'ISO 3166-2:IN for the code. A State: the State Goods and Services Tax Act it enacted in 2017 levies the State tax on an intra-State supply made there, beside the central tax of section 9 of the Central Goods and Services Tax Act, each at half the rate; a supply from or to another State is inter-State under section 7 of the Integrated Goods and Services Tax Act and bears the integrated tax instead.'),
+  ('IN-UP', 'iso_3166_2', 'Uttar Pradesh',                            'IN', 'none', null, null, null,
+   'ISO 3166-2:IN for the code. A State: the State Goods and Services Tax Act it enacted in 2017 levies the State tax on an intra-State supply made there, beside the central tax of section 9 of the Central Goods and Services Tax Act, each at half the rate; a supply from or to another State is inter-State under section 7 of the Integrated Goods and Services Tax Act and bears the integrated tax instead.'),
+  ('IN-UK', 'iso_3166_2', 'Uttarakhand',                              'IN', 'none', null, null, null,
+   'ISO 3166-2:IN for the code. A State: the State Goods and Services Tax Act it enacted in 2017 levies the State tax on an intra-State supply made there, beside the central tax of section 9 of the Central Goods and Services Tax Act, each at half the rate; a supply from or to another State is inter-State under section 7 of the Integrated Goods and Services Tax Act and bears the integrated tax instead.'),
+  ('IN-WB', 'iso_3166_2', 'West Bengal',                              'IN', 'none', null, null, null,
+   'ISO 3166-2:IN for the code. A State: the State Goods and Services Tax Act it enacted in 2017 levies the State tax on an intra-State supply made there, beside the central tax of section 9 of the Central Goods and Services Tax Act, each at half the rate; a supply from or to another State is inter-State under section 7 of the Integrated Goods and Services Tax Act and bears the integrated tax instead.')
+on conflict (code) do update set
+  code_source     = excluded.code_source,
+  name            = excluded.name,
+  parent_code     = excluded.parent_code,
+  eu_vat_scope    = excluded.eu_vat_scope,
+  eu_vat_from     = excluded.eu_vat_from,
+  eu_vat_to       = excluded.eu_vat_to,
+  vat_prefix      = excluded.vat_prefix,
+  legal_reference = excluded.legal_reference;

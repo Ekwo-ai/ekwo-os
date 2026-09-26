@@ -1,0 +1,2037 @@
+[
+  {
+    "code": "IN-S-5-INTRA",
+    "name": "Sale within the State — GST 5 % (CGST 2.5 % + SGST/UTGST 2.5 %)",
+    "description": "Seller and place of supply in the same State: central tax and State tax, half each",
+    "rate": 5,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2017-07-01",
+    "applies_when": {
+      "supply_vs_seller": "same"
+    },
+    "legal_reference": "Section 8 of the Integrated Goods and Services Tax Act: a supply where the location of the supplier and the place of supply are in the same State or the same Union territory is an intra-State supply, and on it section 9(1) of the Central Goods and Services Tax Act levies the central tax and the State Goods and Services Tax Act of that State (the Union Territory Goods and Services Tax Act, in a Union territory without a legislature) levies the State or Union territory tax, each at half the rate — the Central Tax (Rate) notification and each State's own notification print the same schedules at half the integrated rate. One code carries the whole rate and its postings split it: half to the central tax account and to the Central Tax column of the line, half to the State/UT tax account and to the State/UT Tax column. `applies_when.supply_vs_seller: same` is section 8 in the vocabulary of the core: the place of supply lies in the State the seller is registered in, which is the State of its GSTIN, so the company's own territory has to be set to that State. The rate: Schedule I of Notification No. 9/2025-Integrated Tax (Rate) and of the Central Tax (Rate) notification of the same number, both of 17 September 2025 and in force from 22 September 2025, which superseded Notification No. 1/2017 of 28 June 2017; the rate stood at 5 % under the 2017 notification as well. Services at the same rate are those of Notification No. 11/2017-Central Tax (Rate), as amended with effect from the same day. The taxable value goes to column 2 of line 3.1(a) of FORM GSTR-3B and the two halves of the tax to its columns 4 and 5.",
+    "source": "igst-rate-9-2025",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "31a"
+        },
+        {
+          "type": "tax",
+          "factor": 50,
+          "account": "2200",
+          "box": "31aCGST",
+          "box_factor": 50
+        },
+        {
+          "type": "tax",
+          "factor": 50,
+          "account": "2210",
+          "box": "31aSGST",
+          "box_factor": 50
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "31a",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": 50,
+          "account": "2200",
+          "box": "31aCGST",
+          "box_factor": -50
+        },
+        {
+          "type": "tax",
+          "factor": 50,
+          "account": "2210",
+          "box": "31aSGST",
+          "box_factor": -50
+        }
+      ]
+    },
+    "kind": "gst",
+    "sequence": 10
+  },
+  {
+    "code": "IN-S-5-INTER",
+    "name": "Sale to another State — IGST 5 %",
+    "description": "Seller and place of supply in different States: integrated tax, one posting",
+    "rate": 5,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2017-07-01",
+    "applies_when": {
+      "supply_vs_seller": "other"
+    },
+    "legal_reference": "Section 7 of the Integrated Goods and Services Tax Act: a supply where the location of the supplier and the place of supply are in two different States, two Union territories or a State and a Union territory is an inter-State supply, and section 5(1) of the same Act levies the integrated tax on it at the whole rate, collected by the Centre alone. `applies_when.supply_vs_seller: other` is section 7 in the vocabulary of the core: the place of supply lies outside the State of the seller's registration. The rate: Schedule I of Notification No. 9/2025-Integrated Tax (Rate) and of the Central Tax (Rate) notification of the same number, both of 17 September 2025 and in force from 22 September 2025, which superseded Notification No. 1/2017 of 28 June 2017; the rate stood at 5 % under the 2017 notification as well. Services at the same rate are those of Notification No. 11/2017-Central Tax (Rate), as amended with effect from the same day. The taxable value goes to column 2 of line 3.1(a) of FORM GSTR-3B and the tax to its column 3.",
+    "source": "igst-rate-9-2025",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "31a"
+        },
+        {
+          "type": "tax",
+          "account": "2220",
+          "box": "31aIGST"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "31a",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2220",
+          "box": "31aIGST",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "gst",
+    "sequence": 20
+  },
+  {
+    "code": "IN-S-12-INTRA",
+    "name": "Sale within the State — GST 12 % (CGST 6 % + SGST/UTGST 6 %)",
+    "description": "Seller and place of supply in the same State: central tax and State tax, half each",
+    "rate": 12,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2017-07-01",
+    "valid_to": "2025-09-21",
+    "applies_when": {
+      "supply_vs_seller": "same"
+    },
+    "legal_reference": "Section 8 of the Integrated Goods and Services Tax Act: a supply where the location of the supplier and the place of supply are in the same State or the same Union territory is an intra-State supply, and on it section 9(1) of the Central Goods and Services Tax Act levies the central tax and the State Goods and Services Tax Act of that State (the Union Territory Goods and Services Tax Act, in a Union territory without a legislature) levies the State or Union territory tax, each at half the rate — the Central Tax (Rate) notification and each State's own notification print the same schedules at half the integrated rate. One code carries the whole rate and its postings split it: half to the central tax account and to the Central Tax column of the line, half to the State/UT tax account and to the State/UT Tax column. `applies_when.supply_vs_seller: same` is section 8 in the vocabulary of the core: the place of supply lies in the State the seller is registered in, which is the State of its GSTIN, so the company's own territory has to be set to that State. The rate: Schedule II of Notification No. 1/2017-Integrated Tax (Rate) and of the Central Tax (Rate) notification of the same number, 28 June 2017. Notification No. 9/2025 superseded both with effect from 22 September 2025 and carries no schedule at 12 %: the goods it held were moved to 5 % or to 18 %, which is why this code closes on 21 September 2025. It stays in the pack so that a supply invoiced before that day keeps its code. The taxable value goes to column 2 of line 3.1(a) of FORM GSTR-3B and the two halves of the tax to its columns 4 and 5.",
+    "source": "igst-rate-9-2025",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "31a"
+        },
+        {
+          "type": "tax",
+          "factor": 50,
+          "account": "2200",
+          "box": "31aCGST",
+          "box_factor": 50
+        },
+        {
+          "type": "tax",
+          "factor": 50,
+          "account": "2210",
+          "box": "31aSGST",
+          "box_factor": 50
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "31a",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": 50,
+          "account": "2200",
+          "box": "31aCGST",
+          "box_factor": -50
+        },
+        {
+          "type": "tax",
+          "factor": 50,
+          "account": "2210",
+          "box": "31aSGST",
+          "box_factor": -50
+        }
+      ]
+    },
+    "kind": "gst",
+    "sequence": 30
+  },
+  {
+    "code": "IN-S-12-INTER",
+    "name": "Sale to another State — IGST 12 %",
+    "description": "Seller and place of supply in different States: integrated tax, one posting",
+    "rate": 12,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2017-07-01",
+    "valid_to": "2025-09-21",
+    "applies_when": {
+      "supply_vs_seller": "other"
+    },
+    "legal_reference": "Section 7 of the Integrated Goods and Services Tax Act: a supply where the location of the supplier and the place of supply are in two different States, two Union territories or a State and a Union territory is an inter-State supply, and section 5(1) of the same Act levies the integrated tax on it at the whole rate, collected by the Centre alone. `applies_when.supply_vs_seller: other` is section 7 in the vocabulary of the core: the place of supply lies outside the State of the seller's registration. The rate: Schedule II of Notification No. 1/2017-Integrated Tax (Rate) and of the Central Tax (Rate) notification of the same number, 28 June 2017. Notification No. 9/2025 superseded both with effect from 22 September 2025 and carries no schedule at 12 %: the goods it held were moved to 5 % or to 18 %, which is why this code closes on 21 September 2025. It stays in the pack so that a supply invoiced before that day keeps its code. The taxable value goes to column 2 of line 3.1(a) of FORM GSTR-3B and the tax to its column 3.",
+    "source": "igst-rate-9-2025",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "31a"
+        },
+        {
+          "type": "tax",
+          "account": "2220",
+          "box": "31aIGST"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "31a",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2220",
+          "box": "31aIGST",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "gst",
+    "sequence": 40
+  },
+  {
+    "code": "IN-S-18-INTRA",
+    "name": "Sale within the State — GST 18 % (CGST 9 % + SGST/UTGST 9 %)",
+    "description": "Seller and place of supply in the same State: central tax and State tax, half each",
+    "rate": 18,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2017-07-01",
+    "applies_when": {
+      "supply_vs_seller": "same"
+    },
+    "legal_reference": "Section 8 of the Integrated Goods and Services Tax Act: a supply where the location of the supplier and the place of supply are in the same State or the same Union territory is an intra-State supply, and on it section 9(1) of the Central Goods and Services Tax Act levies the central tax and the State Goods and Services Tax Act of that State (the Union Territory Goods and Services Tax Act, in a Union territory without a legislature) levies the State or Union territory tax, each at half the rate — the Central Tax (Rate) notification and each State's own notification print the same schedules at half the integrated rate. One code carries the whole rate and its postings split it: half to the central tax account and to the Central Tax column of the line, half to the State/UT tax account and to the State/UT Tax column. `applies_when.supply_vs_seller: same` is section 8 in the vocabulary of the core: the place of supply lies in the State the seller is registered in, which is the State of its GSTIN, so the company's own territory has to be set to that State. The rate: Schedule II of Notification No. 9/2025-Integrated Tax (Rate) and of the Central Tax (Rate) notification of the same number, 17 September 2025, in force from 22 September 2025, whose entry 639 also makes 18 % the rate of any goods no other schedule names; the rate stood at 18 % under Schedule III of Notification No. 1/2017 as well. Most services are taxed at the same rate under Notification No. 11/2017-Central Tax (Rate). The taxable value goes to column 2 of line 3.1(a) of FORM GSTR-3B and the two halves of the tax to its columns 4 and 5.",
+    "source": "igst-rate-9-2025",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "31a"
+        },
+        {
+          "type": "tax",
+          "factor": 50,
+          "account": "2200",
+          "box": "31aCGST",
+          "box_factor": 50
+        },
+        {
+          "type": "tax",
+          "factor": 50,
+          "account": "2210",
+          "box": "31aSGST",
+          "box_factor": 50
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "31a",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": 50,
+          "account": "2200",
+          "box": "31aCGST",
+          "box_factor": -50
+        },
+        {
+          "type": "tax",
+          "factor": 50,
+          "account": "2210",
+          "box": "31aSGST",
+          "box_factor": -50
+        }
+      ]
+    },
+    "kind": "gst",
+    "sequence": 50
+  },
+  {
+    "code": "IN-S-18-INTER",
+    "name": "Sale to another State — IGST 18 %",
+    "description": "Seller and place of supply in different States: integrated tax, one posting",
+    "rate": 18,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2017-07-01",
+    "applies_when": {
+      "supply_vs_seller": "other"
+    },
+    "legal_reference": "Section 7 of the Integrated Goods and Services Tax Act: a supply where the location of the supplier and the place of supply are in two different States, two Union territories or a State and a Union territory is an inter-State supply, and section 5(1) of the same Act levies the integrated tax on it at the whole rate, collected by the Centre alone. `applies_when.supply_vs_seller: other` is section 7 in the vocabulary of the core: the place of supply lies outside the State of the seller's registration. The rate: Schedule II of Notification No. 9/2025-Integrated Tax (Rate) and of the Central Tax (Rate) notification of the same number, 17 September 2025, in force from 22 September 2025, whose entry 639 also makes 18 % the rate of any goods no other schedule names; the rate stood at 18 % under Schedule III of Notification No. 1/2017 as well. Most services are taxed at the same rate under Notification No. 11/2017-Central Tax (Rate). The taxable value goes to column 2 of line 3.1(a) of FORM GSTR-3B and the tax to its column 3.",
+    "source": "igst-rate-9-2025",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "31a"
+        },
+        {
+          "type": "tax",
+          "account": "2220",
+          "box": "31aIGST"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "31a",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2220",
+          "box": "31aIGST",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "gst",
+    "sequence": 60
+  },
+  {
+    "code": "IN-S-28-INTRA",
+    "name": "Sale within the State — GST 28 % (CGST 14 % + SGST/UTGST 14 %)",
+    "description": "Seller and place of supply in the same State: central tax and State tax, half each",
+    "rate": 28,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2017-07-01",
+    "valid_to": "2026-01-31",
+    "applies_when": {
+      "supply_vs_seller": "same"
+    },
+    "legal_reference": "Section 8 of the Integrated Goods and Services Tax Act: a supply where the location of the supplier and the place of supply are in the same State or the same Union territory is an intra-State supply, and on it section 9(1) of the Central Goods and Services Tax Act levies the central tax and the State Goods and Services Tax Act of that State (the Union Territory Goods and Services Tax Act, in a Union territory without a legislature) levies the State or Union territory tax, each at half the rate — the Central Tax (Rate) notification and each State's own notification print the same schedules at half the integrated rate. One code carries the whole rate and its postings split it: half to the central tax account and to the Central Tax column of the line, half to the State/UT tax account and to the State/UT Tax column. `applies_when.supply_vs_seller: same` is section 8 in the vocabulary of the core: the place of supply lies in the State the seller is registered in, which is the State of its GSTIN, so the company's own territory has to be set to that State. The rate: Schedule VII of Notification No. 9/2025-Integrated Tax (Rate), 17 September 2025, which kept 28 % for pan masala and tobacco products only (the 2017 notification had it as Schedule IV and reached far more goods). The Government moved those goods to 40 % and ended the compensation cess on them from 1 February 2026, when an additional excise duty and a Health and National Security Cess took the cess's place, so this code closes on 31 January 2026. The taxable value goes to column 2 of line 3.1(a) of FORM GSTR-3B and the two halves of the tax to its columns 4 and 5.",
+    "source": "igst-rate-9-2025",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "31a"
+        },
+        {
+          "type": "tax",
+          "factor": 50,
+          "account": "2200",
+          "box": "31aCGST",
+          "box_factor": 50
+        },
+        {
+          "type": "tax",
+          "factor": 50,
+          "account": "2210",
+          "box": "31aSGST",
+          "box_factor": 50
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "31a",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": 50,
+          "account": "2200",
+          "box": "31aCGST",
+          "box_factor": -50
+        },
+        {
+          "type": "tax",
+          "factor": 50,
+          "account": "2210",
+          "box": "31aSGST",
+          "box_factor": -50
+        }
+      ]
+    },
+    "kind": "gst",
+    "sequence": 70
+  },
+  {
+    "code": "IN-S-28-INTER",
+    "name": "Sale to another State — IGST 28 %",
+    "description": "Seller and place of supply in different States: integrated tax, one posting",
+    "rate": 28,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2017-07-01",
+    "valid_to": "2026-01-31",
+    "applies_when": {
+      "supply_vs_seller": "other"
+    },
+    "legal_reference": "Section 7 of the Integrated Goods and Services Tax Act: a supply where the location of the supplier and the place of supply are in two different States, two Union territories or a State and a Union territory is an inter-State supply, and section 5(1) of the same Act levies the integrated tax on it at the whole rate, collected by the Centre alone. `applies_when.supply_vs_seller: other` is section 7 in the vocabulary of the core: the place of supply lies outside the State of the seller's registration. The rate: Schedule VII of Notification No. 9/2025-Integrated Tax (Rate), 17 September 2025, which kept 28 % for pan masala and tobacco products only (the 2017 notification had it as Schedule IV and reached far more goods). The Government moved those goods to 40 % and ended the compensation cess on them from 1 February 2026, when an additional excise duty and a Health and National Security Cess took the cess's place, so this code closes on 31 January 2026. The taxable value goes to column 2 of line 3.1(a) of FORM GSTR-3B and the tax to its column 3.",
+    "source": "igst-rate-9-2025",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "31a"
+        },
+        {
+          "type": "tax",
+          "account": "2220",
+          "box": "31aIGST"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "31a",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2220",
+          "box": "31aIGST",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "gst",
+    "sequence": 80
+  },
+  {
+    "code": "IN-S-40-INTRA",
+    "name": "Sale within the State — GST 40 % (CGST 20 % + SGST/UTGST 20 %)",
+    "description": "Seller and place of supply in the same State: central tax and State tax, half each",
+    "rate": 40,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2025-09-22",
+    "applies_when": {
+      "supply_vs_seller": "same"
+    },
+    "legal_reference": "Section 8 of the Integrated Goods and Services Tax Act: a supply where the location of the supplier and the place of supply are in the same State or the same Union territory is an intra-State supply, and on it section 9(1) of the Central Goods and Services Tax Act levies the central tax and the State Goods and Services Tax Act of that State (the Union Territory Goods and Services Tax Act, in a Union territory without a legislature) levies the State or Union territory tax, each at half the rate — the Central Tax (Rate) notification and each State's own notification print the same schedules at half the integrated rate. One code carries the whole rate and its postings split it: half to the central tax account and to the Central Tax column of the line, half to the State/UT tax account and to the State/UT Tax column. `applies_when.supply_vs_seller: same` is section 8 in the vocabulary of the core: the place of supply lies in the State the seller is registered in, which is the State of its GSTIN, so the company's own territory has to be set to that State. The rate: Schedule III of Notification No. 9/2025-Integrated Tax (Rate) and of the Central Tax (Rate) notification of the same number, 17 September 2025, in force from 22 September 2025 — the rate the notification sets for the goods it lists there (aerated and caffeinated beverages, motor cars above the thresholds it prints, and from 1 February 2026 pan masala, cigarettes and manufactured tobacco other than biris). Sub-section (1) of section 5 of the Integrated Goods and Services Tax Act caps the integrated tax at forty per cent and sub-section (1) of section 9 of the Central Goods and Services Tax Act caps the central tax at twenty, which is this rate split in two. The taxable value goes to column 2 of line 3.1(a) of FORM GSTR-3B and the two halves of the tax to its columns 4 and 5.",
+    "source": "igst-rate-9-2025",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "31a"
+        },
+        {
+          "type": "tax",
+          "factor": 50,
+          "account": "2200",
+          "box": "31aCGST",
+          "box_factor": 50
+        },
+        {
+          "type": "tax",
+          "factor": 50,
+          "account": "2210",
+          "box": "31aSGST",
+          "box_factor": 50
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "31a",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": 50,
+          "account": "2200",
+          "box": "31aCGST",
+          "box_factor": -50
+        },
+        {
+          "type": "tax",
+          "factor": 50,
+          "account": "2210",
+          "box": "31aSGST",
+          "box_factor": -50
+        }
+      ]
+    },
+    "kind": "gst",
+    "sequence": 90
+  },
+  {
+    "code": "IN-S-40-INTER",
+    "name": "Sale to another State — IGST 40 %",
+    "description": "Seller and place of supply in different States: integrated tax, one posting",
+    "rate": 40,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2025-09-22",
+    "applies_when": {
+      "supply_vs_seller": "other"
+    },
+    "legal_reference": "Section 7 of the Integrated Goods and Services Tax Act: a supply where the location of the supplier and the place of supply are in two different States, two Union territories or a State and a Union territory is an inter-State supply, and section 5(1) of the same Act levies the integrated tax on it at the whole rate, collected by the Centre alone. `applies_when.supply_vs_seller: other` is section 7 in the vocabulary of the core: the place of supply lies outside the State of the seller's registration. The rate: Schedule III of Notification No. 9/2025-Integrated Tax (Rate) and of the Central Tax (Rate) notification of the same number, 17 September 2025, in force from 22 September 2025 — the rate the notification sets for the goods it lists there (aerated and caffeinated beverages, motor cars above the thresholds it prints, and from 1 February 2026 pan masala, cigarettes and manufactured tobacco other than biris). Sub-section (1) of section 5 of the Integrated Goods and Services Tax Act caps the integrated tax at forty per cent and sub-section (1) of section 9 of the Central Goods and Services Tax Act caps the central tax at twenty, which is this rate split in two. The taxable value goes to column 2 of line 3.1(a) of FORM GSTR-3B and the tax to its column 3.",
+    "source": "igst-rate-9-2025",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "31a"
+        },
+        {
+          "type": "tax",
+          "account": "2220",
+          "box": "31aIGST"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "31a",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2220",
+          "box": "31aIGST",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "gst",
+    "sequence": 100
+  },
+  {
+    "code": "IN-S-3-INTRA",
+    "name": "Sale within the State — GST 3 % (CGST 1.5 % + SGST/UTGST 1.5 %)",
+    "description": "Seller and place of supply in the same State: central tax and State tax, half each",
+    "rate": 3,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2017-07-01",
+    "applies_when": {
+      "supply_vs_seller": "same"
+    },
+    "legal_reference": "Section 8 of the Integrated Goods and Services Tax Act: a supply where the location of the supplier and the place of supply are in the same State or the same Union territory is an intra-State supply, and on it section 9(1) of the Central Goods and Services Tax Act levies the central tax and the State Goods and Services Tax Act of that State (the Union Territory Goods and Services Tax Act, in a Union territory without a legislature) levies the State or Union territory tax, each at half the rate — the Central Tax (Rate) notification and each State's own notification print the same schedules at half the integrated rate. One code carries the whole rate and its postings split it: half to the central tax account and to the Central Tax column of the line, half to the State/UT tax account and to the State/UT Tax column. `applies_when.supply_vs_seller: same` is section 8 in the vocabulary of the core: the place of supply lies in the State the seller is registered in, which is the State of its GSTIN, so the company's own territory has to be set to that State. The rate: Schedule IV of Notification No. 9/2025-Integrated Tax (Rate), 17 September 2025 — gold, silver, platinum and articles of jewellery; the rate stood at 3 % under Schedule V of Notification No. 1/2017 as well. The taxable value goes to column 2 of line 3.1(a) of FORM GSTR-3B and the two halves of the tax to its columns 4 and 5.",
+    "source": "igst-rate-9-2025",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "31a"
+        },
+        {
+          "type": "tax",
+          "factor": 50,
+          "account": "2200",
+          "box": "31aCGST",
+          "box_factor": 50
+        },
+        {
+          "type": "tax",
+          "factor": 50,
+          "account": "2210",
+          "box": "31aSGST",
+          "box_factor": 50
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "31a",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": 50,
+          "account": "2200",
+          "box": "31aCGST",
+          "box_factor": -50
+        },
+        {
+          "type": "tax",
+          "factor": 50,
+          "account": "2210",
+          "box": "31aSGST",
+          "box_factor": -50
+        }
+      ]
+    },
+    "kind": "gst",
+    "sequence": 110
+  },
+  {
+    "code": "IN-S-3-INTER",
+    "name": "Sale to another State — IGST 3 %",
+    "description": "Seller and place of supply in different States: integrated tax, one posting",
+    "rate": 3,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2017-07-01",
+    "applies_when": {
+      "supply_vs_seller": "other"
+    },
+    "legal_reference": "Section 7 of the Integrated Goods and Services Tax Act: a supply where the location of the supplier and the place of supply are in two different States, two Union territories or a State and a Union territory is an inter-State supply, and section 5(1) of the same Act levies the integrated tax on it at the whole rate, collected by the Centre alone. `applies_when.supply_vs_seller: other` is section 7 in the vocabulary of the core: the place of supply lies outside the State of the seller's registration. The rate: Schedule IV of Notification No. 9/2025-Integrated Tax (Rate), 17 September 2025 — gold, silver, platinum and articles of jewellery; the rate stood at 3 % under Schedule V of Notification No. 1/2017 as well. The taxable value goes to column 2 of line 3.1(a) of FORM GSTR-3B and the tax to its column 3.",
+    "source": "igst-rate-9-2025",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "31a"
+        },
+        {
+          "type": "tax",
+          "account": "2220",
+          "box": "31aIGST"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "31a",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2220",
+          "box": "31aIGST",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "gst",
+    "sequence": 120
+  },
+  {
+    "code": "IN-P-5-INTRA",
+    "name": "Purchase within the State — GST 5 % (CGST 2.5 % + SGST/UTGST 2.5 %), input tax credit",
+    "description": "Both halves credited, each to its own ledger and its own column of Table 4",
+    "rate": 5,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2017-07-01",
+    "applies_when": {
+      "supply_vs_seller": "same"
+    },
+    "legal_reference": "Section 8 of the Integrated Goods and Services Tax Act: a supply where the location of the supplier and the place of supply are in the same State or the same Union territory is an intra-State supply, and on it section 9(1) of the Central Goods and Services Tax Act levies the central tax and the State Goods and Services Tax Act of that State (the Union Territory Goods and Services Tax Act, in a Union territory without a legislature) levies the State or Union territory tax, each at half the rate — the Central Tax (Rate) notification and each State's own notification print the same schedules at half the integrated rate. One code carries the whole rate and its postings split it: half to the central tax account and to the Central Tax column of the line, half to the State/UT tax account and to the State/UT Tax column. `applies_when.supply_vs_seller: same` is section 8 in the vocabulary of the core: the place of supply lies in the State the seller is registered in, which is the State of its GSTIN, so the company's own territory has to be set to that State. The rate: Schedule I of Notification No. 9/2025-Integrated Tax (Rate) and of the Central Tax (Rate) notification of the same number, both of 17 September 2025 and in force from 22 September 2025, which superseded Notification No. 1/2017 of 28 June 2017; the rate stood at 5 % under the 2017 notification as well. Services at the same rate are those of Notification No. 11/2017-Central Tax (Rate), as amended with effect from the same day. Section 16(1) of the Central Goods and Services Tax Act entitles a registered person to credit of the input tax charged on a supply used in the course or furtherance of business, subject to the conditions of section 16(2) — a tax invoice, the supplier having reported it in FORM GSTR-1 so that it reaches the recipient's FORM GSTR-2B, the goods or services received, the tax paid to the Government. The credit is declared in Table 4(A)(5), “All other ITC”, of FORM GSTR-3B, the central half in column 3 and the State half in column 4; the base of a taxable purchase reaches no box, because the form has none for it.",
+    "source": "cgst-s16",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "factor": 50,
+          "account": "1610",
+          "box": "4A5CGST",
+          "box_factor": 50
+        },
+        {
+          "type": "tax",
+          "factor": 50,
+          "account": "1615",
+          "box": "4A5SGST",
+          "box_factor": 50
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "factor": 50,
+          "account": "1610",
+          "box": "4A5CGST",
+          "box_factor": -50
+        },
+        {
+          "type": "tax",
+          "factor": 50,
+          "account": "1615",
+          "box": "4A5SGST",
+          "box_factor": -50
+        }
+      ]
+    },
+    "kind": "gst",
+    "sequence": 130
+  },
+  {
+    "code": "IN-P-5-INTER",
+    "name": "Purchase from another State — IGST 5 %, input tax credit",
+    "description": "Integrated tax charged by a supplier registered in another State, credited in full",
+    "rate": 5,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2017-07-01",
+    "applies_when": {
+      "supply_vs_seller": "other"
+    },
+    "legal_reference": "Section 7 of the Integrated Goods and Services Tax Act: a supply where the location of the supplier and the place of supply are in two different States, two Union territories or a State and a Union territory is an inter-State supply, and section 5(1) of the same Act levies the integrated tax on it at the whole rate, collected by the Centre alone. `applies_when.supply_vs_seller: other` is section 7 in the vocabulary of the core: the place of supply lies outside the State of the seller's registration. The rate: Schedule I of Notification No. 9/2025-Integrated Tax (Rate) and of the Central Tax (Rate) notification of the same number, both of 17 September 2025 and in force from 22 September 2025, which superseded Notification No. 1/2017 of 28 June 2017; the rate stood at 5 % under the 2017 notification as well. Services at the same rate are those of Notification No. 11/2017-Central Tax (Rate), as amended with effect from the same day. Credit of the integrated tax under section 16(1) of the Central Goods and Services Tax Act, on the conditions of section 16(2), declared in column 2 of Table 4(A)(5) of FORM GSTR-3B.",
+    "source": "cgst-s16",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1620",
+          "box": "4A5IGST"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1620",
+          "box": "4A5IGST",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "gst",
+    "sequence": 140
+  },
+  {
+    "code": "IN-P-12-INTRA",
+    "name": "Purchase within the State — GST 12 % (CGST 6 % + SGST/UTGST 6 %), input tax credit",
+    "description": "Both halves credited, each to its own ledger and its own column of Table 4",
+    "rate": 12,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2017-07-01",
+    "valid_to": "2025-09-21",
+    "applies_when": {
+      "supply_vs_seller": "same"
+    },
+    "legal_reference": "Section 8 of the Integrated Goods and Services Tax Act: a supply where the location of the supplier and the place of supply are in the same State or the same Union territory is an intra-State supply, and on it section 9(1) of the Central Goods and Services Tax Act levies the central tax and the State Goods and Services Tax Act of that State (the Union Territory Goods and Services Tax Act, in a Union territory without a legislature) levies the State or Union territory tax, each at half the rate — the Central Tax (Rate) notification and each State's own notification print the same schedules at half the integrated rate. One code carries the whole rate and its postings split it: half to the central tax account and to the Central Tax column of the line, half to the State/UT tax account and to the State/UT Tax column. `applies_when.supply_vs_seller: same` is section 8 in the vocabulary of the core: the place of supply lies in the State the seller is registered in, which is the State of its GSTIN, so the company's own territory has to be set to that State. The rate: Schedule II of Notification No. 1/2017-Integrated Tax (Rate) and of the Central Tax (Rate) notification of the same number, 28 June 2017. Notification No. 9/2025 superseded both with effect from 22 September 2025 and carries no schedule at 12 %: the goods it held were moved to 5 % or to 18 %, which is why this code closes on 21 September 2025. It stays in the pack so that a supply invoiced before that day keeps its code. Section 16(1) of the Central Goods and Services Tax Act entitles a registered person to credit of the input tax charged on a supply used in the course or furtherance of business, subject to the conditions of section 16(2) — a tax invoice, the supplier having reported it in FORM GSTR-1 so that it reaches the recipient's FORM GSTR-2B, the goods or services received, the tax paid to the Government. The credit is declared in Table 4(A)(5), “All other ITC”, of FORM GSTR-3B, the central half in column 3 and the State half in column 4; the base of a taxable purchase reaches no box, because the form has none for it.",
+    "source": "cgst-s16",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "factor": 50,
+          "account": "1610",
+          "box": "4A5CGST",
+          "box_factor": 50
+        },
+        {
+          "type": "tax",
+          "factor": 50,
+          "account": "1615",
+          "box": "4A5SGST",
+          "box_factor": 50
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "factor": 50,
+          "account": "1610",
+          "box": "4A5CGST",
+          "box_factor": -50
+        },
+        {
+          "type": "tax",
+          "factor": 50,
+          "account": "1615",
+          "box": "4A5SGST",
+          "box_factor": -50
+        }
+      ]
+    },
+    "kind": "gst",
+    "sequence": 150
+  },
+  {
+    "code": "IN-P-12-INTER",
+    "name": "Purchase from another State — IGST 12 %, input tax credit",
+    "description": "Integrated tax charged by a supplier registered in another State, credited in full",
+    "rate": 12,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2017-07-01",
+    "valid_to": "2025-09-21",
+    "applies_when": {
+      "supply_vs_seller": "other"
+    },
+    "legal_reference": "Section 7 of the Integrated Goods and Services Tax Act: a supply where the location of the supplier and the place of supply are in two different States, two Union territories or a State and a Union territory is an inter-State supply, and section 5(1) of the same Act levies the integrated tax on it at the whole rate, collected by the Centre alone. `applies_when.supply_vs_seller: other` is section 7 in the vocabulary of the core: the place of supply lies outside the State of the seller's registration. The rate: Schedule II of Notification No. 1/2017-Integrated Tax (Rate) and of the Central Tax (Rate) notification of the same number, 28 June 2017. Notification No. 9/2025 superseded both with effect from 22 September 2025 and carries no schedule at 12 %: the goods it held were moved to 5 % or to 18 %, which is why this code closes on 21 September 2025. It stays in the pack so that a supply invoiced before that day keeps its code. Credit of the integrated tax under section 16(1) of the Central Goods and Services Tax Act, on the conditions of section 16(2), declared in column 2 of Table 4(A)(5) of FORM GSTR-3B.",
+    "source": "cgst-s16",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1620",
+          "box": "4A5IGST"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1620",
+          "box": "4A5IGST",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "gst",
+    "sequence": 160
+  },
+  {
+    "code": "IN-P-18-INTRA",
+    "name": "Purchase within the State — GST 18 % (CGST 9 % + SGST/UTGST 9 %), input tax credit",
+    "description": "Both halves credited, each to its own ledger and its own column of Table 4",
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2017-07-01",
+    "applies_when": {
+      "supply_vs_seller": "same"
+    },
+    "legal_reference": "Section 8 of the Integrated Goods and Services Tax Act: a supply where the location of the supplier and the place of supply are in the same State or the same Union territory is an intra-State supply, and on it section 9(1) of the Central Goods and Services Tax Act levies the central tax and the State Goods and Services Tax Act of that State (the Union Territory Goods and Services Tax Act, in a Union territory without a legislature) levies the State or Union territory tax, each at half the rate — the Central Tax (Rate) notification and each State's own notification print the same schedules at half the integrated rate. One code carries the whole rate and its postings split it: half to the central tax account and to the Central Tax column of the line, half to the State/UT tax account and to the State/UT Tax column. `applies_when.supply_vs_seller: same` is section 8 in the vocabulary of the core: the place of supply lies in the State the seller is registered in, which is the State of its GSTIN, so the company's own territory has to be set to that State. The rate: Schedule II of Notification No. 9/2025-Integrated Tax (Rate) and of the Central Tax (Rate) notification of the same number, 17 September 2025, in force from 22 September 2025, whose entry 639 also makes 18 % the rate of any goods no other schedule names; the rate stood at 18 % under Schedule III of Notification No. 1/2017 as well. Most services are taxed at the same rate under Notification No. 11/2017-Central Tax (Rate). Section 16(1) of the Central Goods and Services Tax Act entitles a registered person to credit of the input tax charged on a supply used in the course or furtherance of business, subject to the conditions of section 16(2) — a tax invoice, the supplier having reported it in FORM GSTR-1 so that it reaches the recipient's FORM GSTR-2B, the goods or services received, the tax paid to the Government. The credit is declared in Table 4(A)(5), “All other ITC”, of FORM GSTR-3B, the central half in column 3 and the State half in column 4; the base of a taxable purchase reaches no box, because the form has none for it.",
+    "source": "cgst-s16",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "factor": 50,
+          "account": "1610",
+          "box": "4A5CGST",
+          "box_factor": 50
+        },
+        {
+          "type": "tax",
+          "factor": 50,
+          "account": "1615",
+          "box": "4A5SGST",
+          "box_factor": 50
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "factor": 50,
+          "account": "1610",
+          "box": "4A5CGST",
+          "box_factor": -50
+        },
+        {
+          "type": "tax",
+          "factor": 50,
+          "account": "1615",
+          "box": "4A5SGST",
+          "box_factor": -50
+        }
+      ]
+    },
+    "kind": "gst",
+    "sequence": 170
+  },
+  {
+    "code": "IN-P-18-INTER",
+    "name": "Purchase from another State — IGST 18 %, input tax credit",
+    "description": "Integrated tax charged by a supplier registered in another State, credited in full",
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2017-07-01",
+    "applies_when": {
+      "supply_vs_seller": "other"
+    },
+    "legal_reference": "Section 7 of the Integrated Goods and Services Tax Act: a supply where the location of the supplier and the place of supply are in two different States, two Union territories or a State and a Union territory is an inter-State supply, and section 5(1) of the same Act levies the integrated tax on it at the whole rate, collected by the Centre alone. `applies_when.supply_vs_seller: other` is section 7 in the vocabulary of the core: the place of supply lies outside the State of the seller's registration. The rate: Schedule II of Notification No. 9/2025-Integrated Tax (Rate) and of the Central Tax (Rate) notification of the same number, 17 September 2025, in force from 22 September 2025, whose entry 639 also makes 18 % the rate of any goods no other schedule names; the rate stood at 18 % under Schedule III of Notification No. 1/2017 as well. Most services are taxed at the same rate under Notification No. 11/2017-Central Tax (Rate). Credit of the integrated tax under section 16(1) of the Central Goods and Services Tax Act, on the conditions of section 16(2), declared in column 2 of Table 4(A)(5) of FORM GSTR-3B.",
+    "source": "cgst-s16",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1620",
+          "box": "4A5IGST"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1620",
+          "box": "4A5IGST",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "gst",
+    "sequence": 180
+  },
+  {
+    "code": "IN-P-28-INTRA",
+    "name": "Purchase within the State — GST 28 % (CGST 14 % + SGST/UTGST 14 %), input tax credit",
+    "description": "Both halves credited, each to its own ledger and its own column of Table 4",
+    "rate": 28,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2017-07-01",
+    "valid_to": "2026-01-31",
+    "applies_when": {
+      "supply_vs_seller": "same"
+    },
+    "legal_reference": "Section 8 of the Integrated Goods and Services Tax Act: a supply where the location of the supplier and the place of supply are in the same State or the same Union territory is an intra-State supply, and on it section 9(1) of the Central Goods and Services Tax Act levies the central tax and the State Goods and Services Tax Act of that State (the Union Territory Goods and Services Tax Act, in a Union territory without a legislature) levies the State or Union territory tax, each at half the rate — the Central Tax (Rate) notification and each State's own notification print the same schedules at half the integrated rate. One code carries the whole rate and its postings split it: half to the central tax account and to the Central Tax column of the line, half to the State/UT tax account and to the State/UT Tax column. `applies_when.supply_vs_seller: same` is section 8 in the vocabulary of the core: the place of supply lies in the State the seller is registered in, which is the State of its GSTIN, so the company's own territory has to be set to that State. The rate: Schedule VII of Notification No. 9/2025-Integrated Tax (Rate), 17 September 2025, which kept 28 % for pan masala and tobacco products only (the 2017 notification had it as Schedule IV and reached far more goods). The Government moved those goods to 40 % and ended the compensation cess on them from 1 February 2026, when an additional excise duty and a Health and National Security Cess took the cess's place, so this code closes on 31 January 2026. Section 16(1) of the Central Goods and Services Tax Act entitles a registered person to credit of the input tax charged on a supply used in the course or furtherance of business, subject to the conditions of section 16(2) — a tax invoice, the supplier having reported it in FORM GSTR-1 so that it reaches the recipient's FORM GSTR-2B, the goods or services received, the tax paid to the Government. The credit is declared in Table 4(A)(5), “All other ITC”, of FORM GSTR-3B, the central half in column 3 and the State half in column 4; the base of a taxable purchase reaches no box, because the form has none for it.",
+    "source": "cgst-s16",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "factor": 50,
+          "account": "1610",
+          "box": "4A5CGST",
+          "box_factor": 50
+        },
+        {
+          "type": "tax",
+          "factor": 50,
+          "account": "1615",
+          "box": "4A5SGST",
+          "box_factor": 50
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "factor": 50,
+          "account": "1610",
+          "box": "4A5CGST",
+          "box_factor": -50
+        },
+        {
+          "type": "tax",
+          "factor": 50,
+          "account": "1615",
+          "box": "4A5SGST",
+          "box_factor": -50
+        }
+      ]
+    },
+    "kind": "gst",
+    "sequence": 190
+  },
+  {
+    "code": "IN-P-28-INTER",
+    "name": "Purchase from another State — IGST 28 %, input tax credit",
+    "description": "Integrated tax charged by a supplier registered in another State, credited in full",
+    "rate": 28,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2017-07-01",
+    "valid_to": "2026-01-31",
+    "applies_when": {
+      "supply_vs_seller": "other"
+    },
+    "legal_reference": "Section 7 of the Integrated Goods and Services Tax Act: a supply where the location of the supplier and the place of supply are in two different States, two Union territories or a State and a Union territory is an inter-State supply, and section 5(1) of the same Act levies the integrated tax on it at the whole rate, collected by the Centre alone. `applies_when.supply_vs_seller: other` is section 7 in the vocabulary of the core: the place of supply lies outside the State of the seller's registration. The rate: Schedule VII of Notification No. 9/2025-Integrated Tax (Rate), 17 September 2025, which kept 28 % for pan masala and tobacco products only (the 2017 notification had it as Schedule IV and reached far more goods). The Government moved those goods to 40 % and ended the compensation cess on them from 1 February 2026, when an additional excise duty and a Health and National Security Cess took the cess's place, so this code closes on 31 January 2026. Credit of the integrated tax under section 16(1) of the Central Goods and Services Tax Act, on the conditions of section 16(2), declared in column 2 of Table 4(A)(5) of FORM GSTR-3B.",
+    "source": "cgst-s16",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1620",
+          "box": "4A5IGST"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1620",
+          "box": "4A5IGST",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "gst",
+    "sequence": 200
+  },
+  {
+    "code": "IN-P-40-INTRA",
+    "name": "Purchase within the State — GST 40 % (CGST 20 % + SGST/UTGST 20 %), input tax credit",
+    "description": "Both halves credited, each to its own ledger and its own column of Table 4",
+    "rate": 40,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2025-09-22",
+    "applies_when": {
+      "supply_vs_seller": "same"
+    },
+    "legal_reference": "Section 8 of the Integrated Goods and Services Tax Act: a supply where the location of the supplier and the place of supply are in the same State or the same Union territory is an intra-State supply, and on it section 9(1) of the Central Goods and Services Tax Act levies the central tax and the State Goods and Services Tax Act of that State (the Union Territory Goods and Services Tax Act, in a Union territory without a legislature) levies the State or Union territory tax, each at half the rate — the Central Tax (Rate) notification and each State's own notification print the same schedules at half the integrated rate. One code carries the whole rate and its postings split it: half to the central tax account and to the Central Tax column of the line, half to the State/UT tax account and to the State/UT Tax column. `applies_when.supply_vs_seller: same` is section 8 in the vocabulary of the core: the place of supply lies in the State the seller is registered in, which is the State of its GSTIN, so the company's own territory has to be set to that State. The rate: Schedule III of Notification No. 9/2025-Integrated Tax (Rate) and of the Central Tax (Rate) notification of the same number, 17 September 2025, in force from 22 September 2025 — the rate the notification sets for the goods it lists there (aerated and caffeinated beverages, motor cars above the thresholds it prints, and from 1 February 2026 pan masala, cigarettes and manufactured tobacco other than biris). Sub-section (1) of section 5 of the Integrated Goods and Services Tax Act caps the integrated tax at forty per cent and sub-section (1) of section 9 of the Central Goods and Services Tax Act caps the central tax at twenty, which is this rate split in two. Section 16(1) of the Central Goods and Services Tax Act entitles a registered person to credit of the input tax charged on a supply used in the course or furtherance of business, subject to the conditions of section 16(2) — a tax invoice, the supplier having reported it in FORM GSTR-1 so that it reaches the recipient's FORM GSTR-2B, the goods or services received, the tax paid to the Government. The credit is declared in Table 4(A)(5), “All other ITC”, of FORM GSTR-3B, the central half in column 3 and the State half in column 4; the base of a taxable purchase reaches no box, because the form has none for it.",
+    "source": "cgst-s16",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "factor": 50,
+          "account": "1610",
+          "box": "4A5CGST",
+          "box_factor": 50
+        },
+        {
+          "type": "tax",
+          "factor": 50,
+          "account": "1615",
+          "box": "4A5SGST",
+          "box_factor": 50
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "factor": 50,
+          "account": "1610",
+          "box": "4A5CGST",
+          "box_factor": -50
+        },
+        {
+          "type": "tax",
+          "factor": 50,
+          "account": "1615",
+          "box": "4A5SGST",
+          "box_factor": -50
+        }
+      ]
+    },
+    "kind": "gst",
+    "sequence": 210
+  },
+  {
+    "code": "IN-P-40-INTER",
+    "name": "Purchase from another State — IGST 40 %, input tax credit",
+    "description": "Integrated tax charged by a supplier registered in another State, credited in full",
+    "rate": 40,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2025-09-22",
+    "applies_when": {
+      "supply_vs_seller": "other"
+    },
+    "legal_reference": "Section 7 of the Integrated Goods and Services Tax Act: a supply where the location of the supplier and the place of supply are in two different States, two Union territories or a State and a Union territory is an inter-State supply, and section 5(1) of the same Act levies the integrated tax on it at the whole rate, collected by the Centre alone. `applies_when.supply_vs_seller: other` is section 7 in the vocabulary of the core: the place of supply lies outside the State of the seller's registration. The rate: Schedule III of Notification No. 9/2025-Integrated Tax (Rate) and of the Central Tax (Rate) notification of the same number, 17 September 2025, in force from 22 September 2025 — the rate the notification sets for the goods it lists there (aerated and caffeinated beverages, motor cars above the thresholds it prints, and from 1 February 2026 pan masala, cigarettes and manufactured tobacco other than biris). Sub-section (1) of section 5 of the Integrated Goods and Services Tax Act caps the integrated tax at forty per cent and sub-section (1) of section 9 of the Central Goods and Services Tax Act caps the central tax at twenty, which is this rate split in two. Credit of the integrated tax under section 16(1) of the Central Goods and Services Tax Act, on the conditions of section 16(2), declared in column 2 of Table 4(A)(5) of FORM GSTR-3B.",
+    "source": "cgst-s16",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1620",
+          "box": "4A5IGST"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1620",
+          "box": "4A5IGST",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "gst",
+    "sequence": 220
+  },
+  {
+    "code": "IN-P-3-INTRA",
+    "name": "Purchase within the State — GST 3 % (CGST 1.5 % + SGST/UTGST 1.5 %), input tax credit",
+    "description": "Both halves credited, each to its own ledger and its own column of Table 4",
+    "rate": 3,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2017-07-01",
+    "applies_when": {
+      "supply_vs_seller": "same"
+    },
+    "legal_reference": "Section 8 of the Integrated Goods and Services Tax Act: a supply where the location of the supplier and the place of supply are in the same State or the same Union territory is an intra-State supply, and on it section 9(1) of the Central Goods and Services Tax Act levies the central tax and the State Goods and Services Tax Act of that State (the Union Territory Goods and Services Tax Act, in a Union territory without a legislature) levies the State or Union territory tax, each at half the rate — the Central Tax (Rate) notification and each State's own notification print the same schedules at half the integrated rate. One code carries the whole rate and its postings split it: half to the central tax account and to the Central Tax column of the line, half to the State/UT tax account and to the State/UT Tax column. `applies_when.supply_vs_seller: same` is section 8 in the vocabulary of the core: the place of supply lies in the State the seller is registered in, which is the State of its GSTIN, so the company's own territory has to be set to that State. The rate: Schedule IV of Notification No. 9/2025-Integrated Tax (Rate), 17 September 2025 — gold, silver, platinum and articles of jewellery; the rate stood at 3 % under Schedule V of Notification No. 1/2017 as well. Section 16(1) of the Central Goods and Services Tax Act entitles a registered person to credit of the input tax charged on a supply used in the course or furtherance of business, subject to the conditions of section 16(2) — a tax invoice, the supplier having reported it in FORM GSTR-1 so that it reaches the recipient's FORM GSTR-2B, the goods or services received, the tax paid to the Government. The credit is declared in Table 4(A)(5), “All other ITC”, of FORM GSTR-3B, the central half in column 3 and the State half in column 4; the base of a taxable purchase reaches no box, because the form has none for it.",
+    "source": "cgst-s16",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "factor": 50,
+          "account": "1610",
+          "box": "4A5CGST",
+          "box_factor": 50
+        },
+        {
+          "type": "tax",
+          "factor": 50,
+          "account": "1615",
+          "box": "4A5SGST",
+          "box_factor": 50
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "factor": 50,
+          "account": "1610",
+          "box": "4A5CGST",
+          "box_factor": -50
+        },
+        {
+          "type": "tax",
+          "factor": 50,
+          "account": "1615",
+          "box": "4A5SGST",
+          "box_factor": -50
+        }
+      ]
+    },
+    "kind": "gst",
+    "sequence": 230
+  },
+  {
+    "code": "IN-P-3-INTER",
+    "name": "Purchase from another State — IGST 3 %, input tax credit",
+    "description": "Integrated tax charged by a supplier registered in another State, credited in full",
+    "rate": 3,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2017-07-01",
+    "applies_when": {
+      "supply_vs_seller": "other"
+    },
+    "legal_reference": "Section 7 of the Integrated Goods and Services Tax Act: a supply where the location of the supplier and the place of supply are in two different States, two Union territories or a State and a Union territory is an inter-State supply, and section 5(1) of the same Act levies the integrated tax on it at the whole rate, collected by the Centre alone. `applies_when.supply_vs_seller: other` is section 7 in the vocabulary of the core: the place of supply lies outside the State of the seller's registration. The rate: Schedule IV of Notification No. 9/2025-Integrated Tax (Rate), 17 September 2025 — gold, silver, platinum and articles of jewellery; the rate stood at 3 % under Schedule V of Notification No. 1/2017 as well. Credit of the integrated tax under section 16(1) of the Central Goods and Services Tax Act, on the conditions of section 16(2), declared in column 2 of Table 4(A)(5) of FORM GSTR-3B.",
+    "source": "cgst-s16",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1620",
+          "box": "4A5IGST"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1620",
+          "box": "4A5IGST",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "gst",
+    "sequence": 240
+  },
+  {
+    "code": "IN-P-18-INTRA-BLOCKED",
+    "name": "Purchase within the State — GST 18 %, credit blocked by section 17(5)",
+    "description": "The tax is a cost; shown in Table 4(A)(5) and reversed in Table 4(B)(1)",
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "recoverable": false,
+    "valid_from": "2017-07-01",
+    "applies_when": {
+      "supply_vs_seller": "same"
+    },
+    "legal_reference": "Section 17(5) of the Central Goods and Services Tax Act: notwithstanding section 16(1), no input tax credit is available on the supplies it lists — among them motor vehicles for the transport of persons of up to thirteen seats and their repair, maintenance and insurance under clauses (a) and (ab), food and beverages, outdoor catering, beauty treatment, health services and club memberships under clause (b), works contract services for immovable property under clauses (c) and (d), and goods or services used for personal consumption under clause (g). The tax is charged by the supplier all the same, so it is part of what the thing cost: a `tax_on_base` posting puts the whole of it on the account of the line. Since the change of Table 4 in September 2022 the form asks for such credit to be shown in Table 4(A) and reversed in Table 4(B)(1), “As per rules 38, 42 & 43 of CGST Rules and section 17(5)”, so that the net credit of Table 4(C) excludes it: a pair of `tax` postings on the input account, one in and one straight back out, prints the amount in both rows and leaves the account where it was, and 4(C) is 4(A) less 4(B). Section 8 of the Integrated Goods and Services Tax Act: a supply where the location of the supplier and the place of supply are in the same State or the same Union territory is an intra-State supply, and on it section 9(1) of the Central Goods and Services Tax Act levies the central tax and the State Goods and Services Tax Act of that State (the Union Territory Goods and Services Tax Act, in a Union territory without a legislature) levies the State or Union territory tax, each at half the rate — the Central Tax (Rate) notification and each State's own notification print the same schedules at half the integrated rate. One code carries the whole rate and its postings split it: half to the central tax account and to the Central Tax column of the line, half to the State/UT tax account and to the State/UT Tax column. `applies_when.supply_vs_seller: same` is section 8 in the vocabulary of the core: the place of supply lies in the State the seller is registered in, which is the State of its GSTIN, so the company's own territory has to be set to that State. The rate: Schedule II of Notification No. 9/2025-Central Tax (Rate).",
+    "source": "cgst-s17",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax_on_base"
+        },
+        {
+          "type": "tax",
+          "factor": 50,
+          "account": "1610",
+          "box": "4A5CGST",
+          "box_factor": 50
+        },
+        {
+          "type": "tax",
+          "factor": 50,
+          "account": "1615",
+          "box": "4A5SGST",
+          "box_factor": 50
+        },
+        {
+          "type": "tax",
+          "factor": -50,
+          "account": "1610",
+          "box": "4B1CGST",
+          "box_factor": 50
+        },
+        {
+          "type": "tax",
+          "factor": -50,
+          "account": "1615",
+          "box": "4B1SGST",
+          "box_factor": 50
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax_on_base"
+        },
+        {
+          "type": "tax",
+          "factor": 50,
+          "account": "1610",
+          "box": "4A5CGST",
+          "box_factor": -50
+        },
+        {
+          "type": "tax",
+          "factor": 50,
+          "account": "1615",
+          "box": "4A5SGST",
+          "box_factor": -50
+        },
+        {
+          "type": "tax",
+          "factor": -50,
+          "account": "1610",
+          "box": "4B1CGST",
+          "box_factor": -50
+        },
+        {
+          "type": "tax",
+          "factor": -50,
+          "account": "1615",
+          "box": "4B1SGST",
+          "box_factor": -50
+        }
+      ]
+    },
+    "kind": "gst",
+    "sequence": 250
+  },
+  {
+    "code": "IN-P-18-INTER-BLOCKED",
+    "name": "Purchase from another State — IGST 18 %, credit blocked by section 17(5)",
+    "description": "The tax is a cost; shown in Table 4(A)(5) and reversed in Table 4(B)(1)",
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "recoverable": false,
+    "valid_from": "2017-07-01",
+    "applies_when": {
+      "supply_vs_seller": "other"
+    },
+    "legal_reference": "Section 17(5) of the Central Goods and Services Tax Act: notwithstanding section 16(1), no input tax credit is available on the supplies it lists — among them motor vehicles for the transport of persons of up to thirteen seats and their repair, maintenance and insurance under clauses (a) and (ab), food and beverages, outdoor catering, beauty treatment, health services and club memberships under clause (b), works contract services for immovable property under clauses (c) and (d), and goods or services used for personal consumption under clause (g). The tax is charged by the supplier all the same, so it is part of what the thing cost: a `tax_on_base` posting puts the whole of it on the account of the line. Since the change of Table 4 in September 2022 the form asks for such credit to be shown in Table 4(A) and reversed in Table 4(B)(1), “As per rules 38, 42 & 43 of CGST Rules and section 17(5)”, so that the net credit of Table 4(C) excludes it: a pair of `tax` postings on the input account, one in and one straight back out, prints the amount in both rows and leaves the account where it was, and 4(C) is 4(A) less 4(B). Section 7 of the Integrated Goods and Services Tax Act: a supply where the location of the supplier and the place of supply are in two different States, two Union territories or a State and a Union territory is an inter-State supply, and section 5(1) of the same Act levies the integrated tax on it at the whole rate, collected by the Centre alone. `applies_when.supply_vs_seller: other` is section 7 in the vocabulary of the core: the place of supply lies outside the State of the seller's registration. The rate: Schedule II of Notification No. 9/2025-Integrated Tax (Rate).",
+    "source": "cgst-s17",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax_on_base"
+        },
+        {
+          "type": "tax",
+          "account": "1620",
+          "box": "4A5IGST"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "1620",
+          "box": "4B1IGST"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax_on_base"
+        },
+        {
+          "type": "tax",
+          "account": "1620",
+          "box": "4A5IGST",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "1620",
+          "box": "4B1IGST",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "gst",
+    "sequence": 260
+  },
+  {
+    "code": "IN-S-ZR-LUT",
+    "name": "Zero-rated supply — export or supply to an SEZ, under bond or Letter of Undertaking",
+    "description": "No integrated tax charged; the credit behind it stays available and its refund is claimed",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2017-07-01",
+    "conditions": [
+      "transport_evidence",
+      "buyer_status"
+    ],
+    "legal_reference": "Section 16(1) of the Integrated Goods and Services Tax Act: a zero rated supply is an export of goods or services, or a supply for authorised operations to a Special Economic Zone developer or unit. Section 16(2) keeps the input tax credit available for making it, notwithstanding that the supply may be exempt, and section 16(3) lets the supplier make it without payment of integrated tax under bond or Letter of Undertaking and claim refund of the unutilised credit under section 54 of the Central Goods and Services Tax Act — which is what this code is. Section 7(5) makes such a supply inter-State whatever the States involved, so no State tax arises. Rule 46 of the Central Goods and Services Tax Rules requires the invoice to carry the endorsement “SUPPLY MEANT FOR EXPORT/SUPPLY TO SEZ UNIT OR SEZ DEVELOPER FOR AUTHORISED OPERATIONS UNDER BOND OR LETTER OF UNDERTAKING WITHOUT PAYMENT OF INTEGRATED TAX”, and the value goes to column 2 of line 3.1(b) of FORM GSTR-3B. The other route of section 16(3), export on payment of integrated tax with a refund of the tax paid, is not carried by this pack: the README says why.",
+    "source": "igst-s16",
+    "vat_category": "G",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "31b"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "31b",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "gst",
+    "sequence": 270
+  },
+  {
+    "code": "IN-S-NIL",
+    "name": "Nil-rated supply",
+    "description": "Goods or services the rate notifications tax at zero",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2017-07-01",
+    "conditions": [
+      "supply_nature"
+    ],
+    "legal_reference": "A supply of goods or services the rate notifications tax at nil, reported with the exempted supplies in column 2 of line 3.1(c) of FORM GSTR-3B, “Other outward supplies (Nil rated, exempted)”. Unlike a zero-rated supply under section 16 of the Integrated Goods and Services Tax Act, it gives no right to a refund of the credit behind it, and rule 42 of the Central Goods and Services Tax Rules reverses the common credit attributable to it.",
+    "source": "gstr-3b-form",
+    "vat_category": "Z",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "31c"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "31c",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "gst",
+    "sequence": 280
+  },
+  {
+    "code": "IN-S-EXEMPT",
+    "name": "Exempt supply",
+    "description": "A supply a notification under section 11 exempts from the whole of the tax",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2017-07-01",
+    "conditions": [
+      "supply_nature"
+    ],
+    "legal_reference": "Section 11(1) of the Central Goods and Services Tax Act lets the Government, on the recommendations of the Council, exempt goods or services of any specified description from the whole of the tax; the exemptions are those of Notification No. 2/2017-Central Tax (Rate) for goods and No. 12/2017-Central Tax (Rate) for services, and their integrated tax twins — among the services, the renting of a residential dwelling for use as a residence to a person who is not registered, and a loan or deposit whose consideration is interest. Section 17(2) and rule 42 of the Central Goods and Services Tax Rules take back the credit attributable to it. The value goes to column 2 of line 3.1(c) of FORM GSTR-3B.",
+    "source": "cgst-s11",
+    "vat_category": "E",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "31c"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "31c",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "gst",
+    "sequence": 290
+  },
+  {
+    "code": "IN-S-NONGST",
+    "name": "Non-GST supply",
+    "description": "Alcoholic liquor for human consumption and the five petroleum products not yet under GST",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "not_subject",
+    "valid_from": "2017-07-01",
+    "conditions": [
+      "supply_nature"
+    ],
+    "legal_reference": "Section 9(1) of the Central Goods and Services Tax Act levies the tax on all intra-State supplies except the supply of alcoholic liquor for human consumption, and section 9(2) defers the tax on petroleum crude, high speed diesel, motor spirit, natural gas and aviation turbine fuel to a date the Government has not notified; section 5(1) and (2) of the Integrated Goods and Services Tax Act say the same of inter-State supplies. Those supplies are outside the tax, and FORM GSTR-3B reports their value on its own line, 3.1(e), “Non-GST outward supplies”.",
+    "source": "cgst-s9",
+    "vat_category": "O",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "31e"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "31e",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "gst",
+    "sequence": 300
+  },
+  {
+    "code": "IN-P-RCM-5-INTRA",
+    "name": "Purchase within the State under reverse charge — GST 5 % (CGST 2.5 % + SGST/UTGST 2.5 %)",
+    "description": "The recipient owes both halves and takes them back as credit",
+    "rate": 5,
+    "scope": "purchase",
+    "treatment": "domestic_reverse_charge",
+    "valid_from": "2017-07-01",
+    "conditions": [
+      "supply_nature"
+    ],
+    "applies_when": {
+      "supply_vs_seller": "same"
+    },
+    "legal_reference": "Section 9(3) of the Central Goods and Services Tax Act and section 5(3) of the Integrated Goods and Services Tax Act: for the categories of supply the Government notifies, the tax is paid by the recipient on reverse charge as if the recipient were the person liable. The categories are those of Notification No. 13/2017-Central Tax (Rate) for services — among them goods transport agency services, legal services of an advocate, services of a director to the company, sponsorship, security services and the renting of a residential dwelling to a registered person — and of Notification No. 4/2017-Central Tax (Rate) for goods; section 9(4) adds the supplies a notified class of registered persons receives from unregistered suppliers. The recipient declares the value and the tax on line 3.1(d) of FORM GSTR-3B, “Inward supplies (liable to reverse charge)”, pays that tax in cash — section 49(4) lets the electronic credit ledger pay only output tax, which section 2(82) defines to exclude tax payable on reverse charge — and takes the same tax back as credit in Table 4(A)(3), subject to section 16. Rule 46(p) of the Central Goods and Services Tax Rules requires the supplier's invoice to say that the tax is payable on reverse charge. Section 8 of the Integrated Goods and Services Tax Act: a supply where the location of the supplier and the place of supply are in the same State or the same Union territory is an intra-State supply, and on it section 9(1) of the Central Goods and Services Tax Act levies the central tax and the State Goods and Services Tax Act of that State (the Union Territory Goods and Services Tax Act, in a Union territory without a legislature) levies the State or Union territory tax, each at half the rate — the Central Tax (Rate) notification and each State's own notification print the same schedules at half the integrated rate. One code carries the whole rate and its postings split it: half to the central tax account and to the Central Tax column of the line, half to the State/UT tax account and to the State/UT Tax column. `applies_when.supply_vs_seller: same` is section 8 in the vocabulary of the core: the place of supply lies in the State the seller is registered in, which is the State of its GSTIN, so the company's own territory has to be set to that State. The rate is the one the supply would bear at the supplier's: 5 % is Schedule I or II of the rate notification, and the rate of goods transport agency services where the transporter charges no tax is 5 %.",
+    "source": "cgst-s9",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "31d"
+        },
+        {
+          "type": "tax",
+          "factor": 50,
+          "account": "1610",
+          "box": "4A3CGST",
+          "box_factor": 50
+        },
+        {
+          "type": "tax",
+          "factor": 50,
+          "account": "1615",
+          "box": "4A3SGST",
+          "box_factor": 50
+        },
+        {
+          "type": "tax",
+          "factor": -50,
+          "account": "2240",
+          "box": "31dCGST",
+          "box_factor": 50
+        },
+        {
+          "type": "tax",
+          "factor": -50,
+          "account": "2250",
+          "box": "31dSGST",
+          "box_factor": 50
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "31d",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": 50,
+          "account": "1610",
+          "box": "4A3CGST",
+          "box_factor": -50
+        },
+        {
+          "type": "tax",
+          "factor": 50,
+          "account": "1615",
+          "box": "4A3SGST",
+          "box_factor": -50
+        },
+        {
+          "type": "tax",
+          "factor": -50,
+          "account": "2240",
+          "box": "31dCGST",
+          "box_factor": -50
+        },
+        {
+          "type": "tax",
+          "factor": -50,
+          "account": "2250",
+          "box": "31dSGST",
+          "box_factor": -50
+        }
+      ]
+    },
+    "kind": "gst",
+    "sequence": 310
+  },
+  {
+    "code": "IN-P-RCM-5-INTER",
+    "name": "Purchase from another State under reverse charge — IGST 5 %",
+    "description": "The recipient owes the integrated tax and takes it back as credit",
+    "rate": 5,
+    "scope": "purchase",
+    "treatment": "domestic_reverse_charge",
+    "valid_from": "2017-07-01",
+    "conditions": [
+      "supply_nature"
+    ],
+    "applies_when": {
+      "supply_vs_seller": "other"
+    },
+    "legal_reference": "Section 9(3) of the Central Goods and Services Tax Act and section 5(3) of the Integrated Goods and Services Tax Act: for the categories of supply the Government notifies, the tax is paid by the recipient on reverse charge as if the recipient were the person liable. The categories are those of Notification No. 13/2017-Central Tax (Rate) for services — among them goods transport agency services, legal services of an advocate, services of a director to the company, sponsorship, security services and the renting of a residential dwelling to a registered person — and of Notification No. 4/2017-Central Tax (Rate) for goods; section 9(4) adds the supplies a notified class of registered persons receives from unregistered suppliers. The recipient declares the value and the tax on line 3.1(d) of FORM GSTR-3B, “Inward supplies (liable to reverse charge)”, pays that tax in cash — section 49(4) lets the electronic credit ledger pay only output tax, which section 2(82) defines to exclude tax payable on reverse charge — and takes the same tax back as credit in Table 4(A)(3), subject to section 16. Rule 46(p) of the Central Goods and Services Tax Rules requires the supplier's invoice to say that the tax is payable on reverse charge. Section 7 of the Integrated Goods and Services Tax Act: a supply where the location of the supplier and the place of supply are in two different States, two Union territories or a State and a Union territory is an inter-State supply, and section 5(1) of the same Act levies the integrated tax on it at the whole rate, collected by the Centre alone. `applies_when.supply_vs_seller: other` is section 7 in the vocabulary of the core: the place of supply lies outside the State of the seller's registration. ",
+    "source": "cgst-s9",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "31d"
+        },
+        {
+          "type": "tax",
+          "account": "1620",
+          "box": "4A3IGST"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2260",
+          "box": "31dIGST"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "31d",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1620",
+          "box": "4A3IGST",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2260",
+          "box": "31dIGST",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "gst",
+    "sequence": 320
+  },
+  {
+    "code": "IN-P-RCM-18-INTRA",
+    "name": "Purchase within the State under reverse charge — GST 18 % (CGST 9 % + SGST/UTGST 9 %)",
+    "description": "The recipient owes both halves and takes them back as credit",
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "domestic_reverse_charge",
+    "valid_from": "2017-07-01",
+    "conditions": [
+      "supply_nature"
+    ],
+    "applies_when": {
+      "supply_vs_seller": "same"
+    },
+    "legal_reference": "Section 9(3) of the Central Goods and Services Tax Act and section 5(3) of the Integrated Goods and Services Tax Act: for the categories of supply the Government notifies, the tax is paid by the recipient on reverse charge as if the recipient were the person liable. The categories are those of Notification No. 13/2017-Central Tax (Rate) for services — among them goods transport agency services, legal services of an advocate, services of a director to the company, sponsorship, security services and the renting of a residential dwelling to a registered person — and of Notification No. 4/2017-Central Tax (Rate) for goods; section 9(4) adds the supplies a notified class of registered persons receives from unregistered suppliers. The recipient declares the value and the tax on line 3.1(d) of FORM GSTR-3B, “Inward supplies (liable to reverse charge)”, pays that tax in cash — section 49(4) lets the electronic credit ledger pay only output tax, which section 2(82) defines to exclude tax payable on reverse charge — and takes the same tax back as credit in Table 4(A)(3), subject to section 16. Rule 46(p) of the Central Goods and Services Tax Rules requires the supplier's invoice to say that the tax is payable on reverse charge. Section 8 of the Integrated Goods and Services Tax Act: a supply where the location of the supplier and the place of supply are in the same State or the same Union territory is an intra-State supply, and on it section 9(1) of the Central Goods and Services Tax Act levies the central tax and the State Goods and Services Tax Act of that State (the Union Territory Goods and Services Tax Act, in a Union territory without a legislature) levies the State or Union territory tax, each at half the rate — the Central Tax (Rate) notification and each State's own notification print the same schedules at half the integrated rate. One code carries the whole rate and its postings split it: half to the central tax account and to the Central Tax column of the line, half to the State/UT tax account and to the State/UT Tax column. `applies_when.supply_vs_seller: same` is section 8 in the vocabulary of the core: the place of supply lies in the State the seller is registered in, which is the State of its GSTIN, so the company's own territory has to be set to that State. The rate is the one the supply would bear at the supplier's: 18 % is Schedule I or II of the rate notification, and the rate of goods transport agency services where the transporter charges no tax is 5 %.",
+    "source": "cgst-s9",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "31d"
+        },
+        {
+          "type": "tax",
+          "factor": 50,
+          "account": "1610",
+          "box": "4A3CGST",
+          "box_factor": 50
+        },
+        {
+          "type": "tax",
+          "factor": 50,
+          "account": "1615",
+          "box": "4A3SGST",
+          "box_factor": 50
+        },
+        {
+          "type": "tax",
+          "factor": -50,
+          "account": "2240",
+          "box": "31dCGST",
+          "box_factor": 50
+        },
+        {
+          "type": "tax",
+          "factor": -50,
+          "account": "2250",
+          "box": "31dSGST",
+          "box_factor": 50
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "31d",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": 50,
+          "account": "1610",
+          "box": "4A3CGST",
+          "box_factor": -50
+        },
+        {
+          "type": "tax",
+          "factor": 50,
+          "account": "1615",
+          "box": "4A3SGST",
+          "box_factor": -50
+        },
+        {
+          "type": "tax",
+          "factor": -50,
+          "account": "2240",
+          "box": "31dCGST",
+          "box_factor": -50
+        },
+        {
+          "type": "tax",
+          "factor": -50,
+          "account": "2250",
+          "box": "31dSGST",
+          "box_factor": -50
+        }
+      ]
+    },
+    "kind": "gst",
+    "sequence": 330
+  },
+  {
+    "code": "IN-P-RCM-18-INTER",
+    "name": "Purchase from another State under reverse charge — IGST 18 %",
+    "description": "The recipient owes the integrated tax and takes it back as credit",
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "domestic_reverse_charge",
+    "valid_from": "2017-07-01",
+    "conditions": [
+      "supply_nature"
+    ],
+    "applies_when": {
+      "supply_vs_seller": "other"
+    },
+    "legal_reference": "Section 9(3) of the Central Goods and Services Tax Act and section 5(3) of the Integrated Goods and Services Tax Act: for the categories of supply the Government notifies, the tax is paid by the recipient on reverse charge as if the recipient were the person liable. The categories are those of Notification No. 13/2017-Central Tax (Rate) for services — among them goods transport agency services, legal services of an advocate, services of a director to the company, sponsorship, security services and the renting of a residential dwelling to a registered person — and of Notification No. 4/2017-Central Tax (Rate) for goods; section 9(4) adds the supplies a notified class of registered persons receives from unregistered suppliers. The recipient declares the value and the tax on line 3.1(d) of FORM GSTR-3B, “Inward supplies (liable to reverse charge)”, pays that tax in cash — section 49(4) lets the electronic credit ledger pay only output tax, which section 2(82) defines to exclude tax payable on reverse charge — and takes the same tax back as credit in Table 4(A)(3), subject to section 16. Rule 46(p) of the Central Goods and Services Tax Rules requires the supplier's invoice to say that the tax is payable on reverse charge. Section 7 of the Integrated Goods and Services Tax Act: a supply where the location of the supplier and the place of supply are in two different States, two Union territories or a State and a Union territory is an inter-State supply, and section 5(1) of the same Act levies the integrated tax on it at the whole rate, collected by the Centre alone. `applies_when.supply_vs_seller: other` is section 7 in the vocabulary of the core: the place of supply lies outside the State of the seller's registration. ",
+    "source": "cgst-s9",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "31d"
+        },
+        {
+          "type": "tax",
+          "account": "1620",
+          "box": "4A3IGST"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2260",
+          "box": "31dIGST"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "31d",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1620",
+          "box": "4A3IGST",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2260",
+          "box": "31dIGST",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "gst",
+    "sequence": 340
+  },
+  {
+    "code": "IN-P-IMPORT-SERVICES-18",
+    "name": "Import of services — IGST 18 % under reverse charge",
+    "description": "A service from a supplier outside India: the recipient owes the integrated tax and takes it back as credit",
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2017-07-01",
+    "legal_reference": "Section 7(4) of the Integrated Goods and Services Tax Act makes a supply of services imported into India an inter-State supply, and section 5(3) with Notification No. 10/2017-Integrated Tax (Rate) makes the recipient in India of a service from a supplier located outside India pay the integrated tax on it on reverse charge. The value and the tax go to line 3.1(d) of FORM GSTR-3B and the credit to Table 4(A)(2), “Import of services”; the tax itself is paid in cash, for the reason section 49(4) and section 2(82) of the Central Goods and Services Tax Act give for every reverse charge. 18 % is the rate of most services under Notification No. 11/2017-Central Tax (Rate) and its integrated tax twin; a service taxed at another rate needs another code.",
+    "source": "igst-s5",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "31d"
+        },
+        {
+          "type": "tax",
+          "account": "1620",
+          "box": "4A2IGST"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2260",
+          "box": "31dIGST"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "31d",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1620",
+          "box": "4A2IGST",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2260",
+          "box": "31dIGST",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "gst",
+    "sequence": 350
+  },
+  {
+    "code": "IN-P-IMPORT-GOODS-5",
+    "name": "Import of goods — IGST 5 % paid at customs",
+    "description": "Assessed on the bill of entry and not on the supplier's invoice",
+    "rate": 5,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2017-07-01",
+    "legal_reference": "Section 5(1) of the Integrated Goods and Services Tax Act, first proviso: the integrated tax on goods imported into India is levied and collected under section 3 of the Customs Tariff Act, 1975, on the value determined under that Act, at the point when duties of customs are levied under section 12 of the Customs Act, 1962 — on the bill of entry, and by the customs authority, not by the foreign seller. Section 7(2) makes the import an inter-State supply until the goods cross the customs frontier. The credit is declared in column 2 of Table 4(A)(1), “Import of goods”, of FORM GSTR-3B. The tax posts to the credit account and, as a counterpart, to the account the customs payment clears, because the supplier's invoice carries no tax: the base on this code must be the value customs assessed the tax on, which is the assessable value plus the basic customs duty and not the price on the invoice.",
+    "source": "igst-s5",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1620",
+          "box": "4A1IGST"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2270"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1620",
+          "box": "4A1IGST",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2270"
+        }
+      ]
+    },
+    "kind": "gst",
+    "sequence": 360
+  },
+  {
+    "code": "IN-P-IMPORT-GOODS-18",
+    "name": "Import of goods — IGST 18 % paid at customs",
+    "description": "Assessed on the bill of entry and not on the supplier's invoice",
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2017-07-01",
+    "legal_reference": "Section 5(1) of the Integrated Goods and Services Tax Act, first proviso: the integrated tax on goods imported into India is levied and collected under section 3 of the Customs Tariff Act, 1975, on the value determined under that Act, at the point when duties of customs are levied under section 12 of the Customs Act, 1962 — on the bill of entry, and by the customs authority, not by the foreign seller. Section 7(2) makes the import an inter-State supply until the goods cross the customs frontier. The credit is declared in column 2 of Table 4(A)(1), “Import of goods”, of FORM GSTR-3B. The tax posts to the credit account and, as a counterpart, to the account the customs payment clears, because the supplier's invoice carries no tax: the base on this code must be the value customs assessed the tax on, which is the assessable value plus the basic customs duty and not the price on the invoice.",
+    "source": "igst-s5",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1620",
+          "box": "4A1IGST"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2270"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1620",
+          "box": "4A1IGST",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2270"
+        }
+      ]
+    },
+    "kind": "gst",
+    "sequence": 370
+  },
+  {
+    "code": "IN-P-EXEMPT-INTRA",
+    "name": "Purchase within the State — exempt, nil-rated or from a composition supplier",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "exempt",
+    "valid_from": "2017-07-01",
+    "applies_when": {
+      "supply_vs_seller": "same"
+    },
+    "legal_reference": "An inward supply on which no tax is charged because it is exempt under section 11 of the Central Goods and Services Tax Act, taxed at nil, or made by a supplier paying tax under the composition levy of section 10, who may not collect tax from the recipient. Table 5 of FORM GSTR-3B, “Values of exempt, nil-rated and non-GST inward supplies”, asks for them in two columns, inter-State and intra-State, and in two rows — “From a supplier under composition scheme, Exempt and Nil rated supply” and “Non GST supply”. This code is the intra-State column: seller and place of supply in the same State.",
+    "source": "gstr-3b-form",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "5EXINTRA"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "5EXINTRA",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "gst",
+    "sequence": 380
+  },
+  {
+    "code": "IN-P-EXEMPT-INTER",
+    "name": "Purchase from another State — exempt, nil-rated or from a composition supplier",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "exempt",
+    "valid_from": "2017-07-01",
+    "applies_when": {
+      "supply_vs_seller": "other"
+    },
+    "legal_reference": "An inward supply on which no tax is charged because it is exempt under section 11 of the Central Goods and Services Tax Act, taxed at nil, or made by a supplier paying tax under the composition levy of section 10, who may not collect tax from the recipient. Table 5 of FORM GSTR-3B, “Values of exempt, nil-rated and non-GST inward supplies”, asks for them in two columns, inter-State and intra-State, and in two rows — “From a supplier under composition scheme, Exempt and Nil rated supply” and “Non GST supply”. This code is the inter-State column: seller and place of supply in different States.",
+    "source": "gstr-3b-form",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "5EXINTER"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "5EXINTER",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "gst",
+    "sequence": 390
+  },
+  {
+    "code": "IN-P-NONGST-INTRA",
+    "name": "Purchase within the State — outside GST",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "not_subject",
+    "valid_from": "2017-07-01",
+    "applies_when": {
+      "supply_vs_seller": "same"
+    },
+    "legal_reference": "An inward supply of alcoholic liquor for human consumption or of one of the five petroleum products section 9(2) of the Central Goods and Services Tax Act keeps outside the tax for now. Table 5 of FORM GSTR-3B, “Values of exempt, nil-rated and non-GST inward supplies”, asks for them in two columns, inter-State and intra-State, and in two rows — “From a supplier under composition scheme, Exempt and Nil rated supply” and “Non GST supply”. This code is the intra-State column: seller and place of supply in the same State.",
+    "source": "gstr-3b-form",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "5NGINTRA"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "5NGINTRA",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "gst",
+    "sequence": 400
+  },
+  {
+    "code": "IN-P-NONGST-INTER",
+    "name": "Purchase from another State — outside GST",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "not_subject",
+    "valid_from": "2017-07-01",
+    "applies_when": {
+      "supply_vs_seller": "other"
+    },
+    "legal_reference": "An inward supply of alcoholic liquor for human consumption or of one of the five petroleum products section 9(2) of the Central Goods and Services Tax Act keeps outside the tax for now. Table 5 of FORM GSTR-3B, “Values of exempt, nil-rated and non-GST inward supplies”, asks for them in two columns, inter-State and intra-State, and in two rows — “From a supplier under composition scheme, Exempt and Nil rated supply” and “Non GST supply”. This code is the inter-State column: seller and place of supply in different States.",
+    "source": "gstr-3b-form",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "5NGINTER"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "5NGINTER",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "gst",
+    "sequence": 410
+  }
+]

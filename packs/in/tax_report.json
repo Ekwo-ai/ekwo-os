@@ -1,0 +1,352 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "IN-GSTR-3B",
+  "name": "FORM GSTR-3B — summary return of outward and inward supplies, input tax credit and tax paid",
+  "period": [
+    "month",
+    "quarter"
+  ],
+  "period_default": "month",
+  "valid_from": "2017-07-01",
+  "legal_reference": "Section 39(1) of the Central Goods and Services Tax Act: every registered person other than an Input Service Distributor, a non-resident taxable person and a person paying tax under section 10, 51 or 52 furnishes a return of inward and outward supplies, input tax credit, tax payable and tax paid for every calendar month or part of it — the proviso lets the Government notify a class of registered persons who furnish it for every quarter. Rule 61(1) of the Central Goods and Services Tax Rules makes that return FORM GSTR-3B, furnished electronically through the common portal, for each month under clause (i) and for each quarter under clause (ii) for the class the proviso reaches: the Quarterly Return Monthly Payment scheme, open to a registered person whose aggregate turnover did not exceed five crore rupees in the preceding financial year, who pays the tax of each of the first two months of the quarter in FORM GST PMT-06 by the twenty-fifth day of the following month under rule 61(3). So the form is filed on two cadences, the monthly one is what the statute gives everybody who has not opted in, and that is `period_default`. The statement of outward supplies, FORM GSTR-1 of section 37 and rule 59, is a separate filing invoice by invoice, which this pack does not carry; the README says what it leaves out.",
+  "source": "cgst-rule61",
+  "deadline": {
+    "rule": "day_of_month_after_period",
+    "day": 20,
+    "legal_reference": "Rule 61(1)(i) of the Central Goods and Services Tax Rules: FORM GSTR-3B for each month is furnished “on or before the twentieth day of the month succeeding such month”. A quarterly filer under rule 61(1)(ii) files on the twenty-second or the twenty-fourth day of the month after the quarter, according to the State of its principal place of business, which the Table of that clause lists — a second deadline this field cannot hold beside the first, and the README records it. Section 39(7) makes the tax due by the same last date as the return.",
+    "source": "cgst-rule61"
+  },
+  "boxes": [
+    {
+      "box": "31a",
+      "kind": "base",
+      "name": "3.1(a) Outward taxable supplies (other than zero rated, nil rated and exempted) — total taxable value",
+      "sequence": 10,
+      "legal_reference": "FORM GSTR-3B [See rule 61(5)], Table 3.1 “Details of Outward Supplies and inward supplies liable to reverse charge”, row (a), column 2 “Total Taxable value”. Instruction 1 of the form: value of invoices plus debit notes less credit notes, plus advances not yet invoiced and less advances adjusted — the last two are not carried by this pack.",
+      "source": "gstr-3b-form"
+    },
+    {
+      "box": "31aIGST",
+      "kind": "tax",
+      "name": "3.1(a) Outward taxable supplies — integrated tax",
+      "sequence": 20,
+      "legal_reference": "FORM GSTR-3B [See rule 61(5)], Table 3.1, row (a), column 3 “Integrated Tax”.",
+      "source": "gstr-3b-form"
+    },
+    {
+      "box": "31aCGST",
+      "kind": "tax",
+      "name": "3.1(a) Outward taxable supplies — central tax",
+      "sequence": 30,
+      "legal_reference": "FORM GSTR-3B [See rule 61(5)], Table 3.1, row (a), column 4 “Central Tax”.",
+      "source": "gstr-3b-form"
+    },
+    {
+      "box": "31aSGST",
+      "kind": "tax",
+      "name": "3.1(a) Outward taxable supplies — State/UT tax",
+      "sequence": 40,
+      "legal_reference": "FORM GSTR-3B [See rule 61(5)], Table 3.1, row (a), column 5 “State/UT Tax”.",
+      "source": "gstr-3b-form"
+    },
+    {
+      "box": "31b",
+      "kind": "base",
+      "name": "3.1(b) Outward taxable supplies (zero rated) — total taxable value",
+      "sequence": 50,
+      "legal_reference": "FORM GSTR-3B [See rule 61(5)], Table 3.1, row (b), column 2. Exports and supplies to a Special Economic Zone, section 16 of the Integrated Goods and Services Tax Act.",
+      "source": "gstr-3b-form"
+    },
+    {
+      "box": "31c",
+      "kind": "base",
+      "name": "3.1(c) Other outward supplies (nil rated, exempted) — total taxable value",
+      "sequence": 60,
+      "legal_reference": "FORM GSTR-3B [See rule 61(5)], Table 3.1, row (c), column 2.",
+      "source": "gstr-3b-form"
+    },
+    {
+      "box": "31d",
+      "kind": "base",
+      "name": "3.1(d) Inward supplies (liable to reverse charge) — total taxable value",
+      "sequence": 70,
+      "legal_reference": "FORM GSTR-3B [See rule 61(5)], Table 3.1, row (d), column 2: the supplies on which the recipient pays the tax under section 9(3) or 9(4) of the Central Goods and Services Tax Act or section 5(3) or 5(4) of the Integrated Goods and Services Tax Act, the import of services included.",
+      "source": "gstr-3b-form"
+    },
+    {
+      "box": "31dIGST",
+      "kind": "tax",
+      "name": "3.1(d) Inward supplies liable to reverse charge — integrated tax",
+      "sequence": 80,
+      "legal_reference": "FORM GSTR-3B [See rule 61(5)], Table 3.1, row (d), column 3.",
+      "source": "gstr-3b-form"
+    },
+    {
+      "box": "31dCGST",
+      "kind": "tax",
+      "name": "3.1(d) Inward supplies liable to reverse charge — central tax",
+      "sequence": 90,
+      "legal_reference": "FORM GSTR-3B [See rule 61(5)], Table 3.1, row (d), column 4.",
+      "source": "gstr-3b-form"
+    },
+    {
+      "box": "31dSGST",
+      "kind": "tax",
+      "name": "3.1(d) Inward supplies liable to reverse charge — State/UT tax",
+      "sequence": 100,
+      "legal_reference": "FORM GSTR-3B [See rule 61(5)], Table 3.1, row (d), column 5.",
+      "source": "gstr-3b-form"
+    },
+    {
+      "box": "31e",
+      "kind": "base",
+      "name": "3.1(e) Non-GST outward supplies — total value",
+      "sequence": 110,
+      "legal_reference": "FORM GSTR-3B [See rule 61(5)], Table 3.1, row (e), column 2.",
+      "source": "gstr-3b-form"
+    },
+    {
+      "box": "4A1IGST",
+      "kind": "tax",
+      "name": "4(A)(1) ITC available — import of goods — integrated tax",
+      "sequence": 120,
+      "legal_reference": "FORM GSTR-3B [See rule 61(5)], Table 4 “Eligible ITC”, (A) “ITC Available (whether in full or part)”, row (1) “Import of goods”, column 2 “Integrated Tax”.",
+      "source": "gstr-3b-form"
+    },
+    {
+      "box": "4A2IGST",
+      "kind": "tax",
+      "name": "4(A)(2) ITC available — import of services — integrated tax",
+      "sequence": 130,
+      "legal_reference": "FORM GSTR-3B [See rule 61(5)], Table 4, (A), row (2) “Import of services”, column 2.",
+      "source": "gstr-3b-form"
+    },
+    {
+      "box": "4A3IGST",
+      "kind": "tax",
+      "name": "4(A)(3) ITC available — inward supplies liable to reverse charge — integrated tax",
+      "sequence": 140,
+      "legal_reference": "FORM GSTR-3B [See rule 61(5)], Table 4, (A), row (3) “Inward supplies liable to reverse charge (other than 1 & 2 above)”, column 2.",
+      "source": "gstr-3b-form"
+    },
+    {
+      "box": "4A3CGST",
+      "kind": "tax",
+      "name": "4(A)(3) ITC available — inward supplies liable to reverse charge — central tax",
+      "sequence": 150,
+      "legal_reference": "FORM GSTR-3B [See rule 61(5)], Table 4, (A), row (3), column 3 “Central Tax”.",
+      "source": "gstr-3b-form"
+    },
+    {
+      "box": "4A3SGST",
+      "kind": "tax",
+      "name": "4(A)(3) ITC available — inward supplies liable to reverse charge — State/UT tax",
+      "sequence": 160,
+      "legal_reference": "FORM GSTR-3B [See rule 61(5)], Table 4, (A), row (3), column 4 “State/UT Tax”.",
+      "source": "gstr-3b-form"
+    },
+    {
+      "box": "4A5IGST",
+      "kind": "tax",
+      "name": "4(A)(5) ITC available — all other ITC — integrated tax",
+      "sequence": 170,
+      "legal_reference": "FORM GSTR-3B [See rule 61(5)], Table 4, (A), row (5) “All other ITC”, column 2.",
+      "source": "gstr-3b-form"
+    },
+    {
+      "box": "4A5CGST",
+      "kind": "tax",
+      "name": "4(A)(5) ITC available — all other ITC — central tax",
+      "sequence": 180,
+      "legal_reference": "FORM GSTR-3B [See rule 61(5)], Table 4, (A), row (5), column 3.",
+      "source": "gstr-3b-form"
+    },
+    {
+      "box": "4A5SGST",
+      "kind": "tax",
+      "name": "4(A)(5) ITC available — all other ITC — State/UT tax",
+      "sequence": 190,
+      "legal_reference": "FORM GSTR-3B [See rule 61(5)], Table 4, (A), row (5), column 4.",
+      "source": "gstr-3b-form"
+    },
+    {
+      "box": "4B1IGST",
+      "kind": "tax",
+      "name": "4(B)(1) ITC reversed — rules 38, 42 & 43 and section 17(5) — integrated tax",
+      "sequence": 200,
+      "legal_reference": "FORM GSTR-3B [See rule 61(5)], Table 4, (B) “ITC Reversed”, row (1). The form reproduced in the CBIC compilation of 18 May 2021 labels the row “As per rules 42 & 43 of CGST Rules” and carried blocked credit in a row 4(D)(1); the amendment of 2022 (Notification No. 14/2022-Central Tax, applied on the common portal from September 2022) relabelled it “As per rules 38, 42 & 43 of CGST Rules and section 17(5)”, and blocked credit is now shown in 4(A) and reversed here. This pack follows the form as the portal presents it now. Column 2.",
+      "source": "gstr-3b-form"
+    },
+    {
+      "box": "4B1CGST",
+      "kind": "tax",
+      "name": "4(B)(1) ITC reversed — rules 38, 42 & 43 and section 17(5) — central tax",
+      "sequence": 210,
+      "legal_reference": "FORM GSTR-3B [See rule 61(5)], Table 4, (B) “ITC Reversed”, row (1). The form reproduced in the CBIC compilation of 18 May 2021 labels the row “As per rules 42 & 43 of CGST Rules” and carried blocked credit in a row 4(D)(1); the amendment of 2022 (Notification No. 14/2022-Central Tax, applied on the common portal from September 2022) relabelled it “As per rules 38, 42 & 43 of CGST Rules and section 17(5)”, and blocked credit is now shown in 4(A) and reversed here. This pack follows the form as the portal presents it now. Column 3.",
+      "source": "gstr-3b-form"
+    },
+    {
+      "box": "4B1SGST",
+      "kind": "tax",
+      "name": "4(B)(1) ITC reversed — rules 38, 42 & 43 and section 17(5) — State/UT tax",
+      "sequence": 220,
+      "legal_reference": "FORM GSTR-3B [See rule 61(5)], Table 4, (B) “ITC Reversed”, row (1). The form reproduced in the CBIC compilation of 18 May 2021 labels the row “As per rules 42 & 43 of CGST Rules” and carried blocked credit in a row 4(D)(1); the amendment of 2022 (Notification No. 14/2022-Central Tax, applied on the common portal from September 2022) relabelled it “As per rules 38, 42 & 43 of CGST Rules and section 17(5)”, and blocked credit is now shown in 4(A) and reversed here. This pack follows the form as the portal presents it now. Column 4.",
+      "source": "gstr-3b-form"
+    },
+    {
+      "box": "4CIGST",
+      "kind": "total",
+      "name": "4(C) Net ITC available — integrated tax",
+      "sequence": 230,
+      "plus": [
+        "4A1IGST",
+        "4A2IGST",
+        "4A3IGST",
+        "4A5IGST"
+      ],
+      "minus": [
+        "4B1IGST"
+      ],
+      "legal_reference": "FORM GSTR-3B [See rule 61(5)], Table 4, (C) “Net ITC Available (A) – (B)”. Row 4(A)(4), credit distributed by an Input Service Distributor, and row 4(B)(2), other reversals, are not posted by any tax of this pack and are left out of the sum. Column 2.",
+      "source": "gstr-3b-form"
+    },
+    {
+      "box": "4CCGST",
+      "kind": "total",
+      "name": "4(C) Net ITC available — central tax",
+      "sequence": 240,
+      "plus": [
+        "4A3CGST",
+        "4A5CGST"
+      ],
+      "minus": [
+        "4B1CGST"
+      ],
+      "legal_reference": "FORM GSTR-3B [See rule 61(5)], Table 4, (C) “Net ITC Available (A) – (B)”. Row 4(A)(4), credit distributed by an Input Service Distributor, and row 4(B)(2), other reversals, are not posted by any tax of this pack and are left out of the sum. Column 3.",
+      "source": "gstr-3b-form"
+    },
+    {
+      "box": "4CSGST",
+      "kind": "total",
+      "name": "4(C) Net ITC available — State/UT tax",
+      "sequence": 250,
+      "plus": [
+        "4A3SGST",
+        "4A5SGST"
+      ],
+      "minus": [
+        "4B1SGST"
+      ],
+      "legal_reference": "FORM GSTR-3B [See rule 61(5)], Table 4, (C) “Net ITC Available (A) – (B)”. Row 4(A)(4), credit distributed by an Input Service Distributor, and row 4(B)(2), other reversals, are not posted by any tax of this pack and are left out of the sum. Column 4.",
+      "source": "gstr-3b-form"
+    },
+    {
+      "box": "5EXINTER",
+      "kind": "base",
+      "name": "5 From a supplier under composition scheme, exempt and nil rated supply — inter-State",
+      "sequence": 260,
+      "legal_reference": "FORM GSTR-3B [See rule 61(5)], Table 5 “Values of exempt, nil-rated and non-GST inward supplies”, first row, column 2 “Inter-State supplies”.",
+      "source": "gstr-3b-form"
+    },
+    {
+      "box": "5EXINTRA",
+      "kind": "base",
+      "name": "5 From a supplier under composition scheme, exempt and nil rated supply — intra-State",
+      "sequence": 270,
+      "legal_reference": "FORM GSTR-3B [See rule 61(5)], Table 5 “Values of exempt, nil-rated and non-GST inward supplies”, first row, column 3 “Intra-State supplies”.",
+      "source": "gstr-3b-form"
+    },
+    {
+      "box": "5NGINTER",
+      "kind": "base",
+      "name": "5 Non GST supply — inter-State",
+      "sequence": 280,
+      "legal_reference": "FORM GSTR-3B [See rule 61(5)], Table 5 “Values of exempt, nil-rated and non-GST inward supplies”, second row, column 2.",
+      "source": "gstr-3b-form"
+    },
+    {
+      "box": "5NGINTRA",
+      "kind": "base",
+      "name": "5 Non GST supply — intra-State",
+      "sequence": 290,
+      "legal_reference": "FORM GSTR-3B [See rule 61(5)], Table 5 “Values of exempt, nil-rated and non-GST inward supplies”, second row, column 3.",
+      "source": "gstr-3b-form"
+    },
+    {
+      "box": "61IGST",
+      "kind": "total",
+      "name": "6.1 Tax payable — integrated tax",
+      "sequence": 300,
+      "plus": [
+        "31aIGST",
+        "31dIGST"
+      ],
+      "legal_reference": "FORM GSTR-3B [See rule 61(5)], Table 6.1 “Payment of tax”, column 2 “Tax payable”, row “Integrated Tax”: the integrated tax of line 3.1, outward and reverse charge together. Row 3.1(b) carries integrated tax only on an export on payment of tax, which this pack does not carry.",
+      "source": "gstr-3b-form"
+    },
+    {
+      "box": "61CGST",
+      "kind": "total",
+      "name": "6.1 Tax payable — central tax",
+      "sequence": 310,
+      "plus": [
+        "31aCGST",
+        "31dCGST"
+      ],
+      "legal_reference": "FORM GSTR-3B [See rule 61(5)], Table 6.1 “Payment of tax”, column 2 “Tax payable”, row “Central Tax”.",
+      "source": "gstr-3b-form"
+    },
+    {
+      "box": "61SGST",
+      "kind": "total",
+      "name": "6.1 Tax payable — State/UT tax",
+      "sequence": 320,
+      "plus": [
+        "31aSGST",
+        "31dSGST"
+      ],
+      "legal_reference": "FORM GSTR-3B [See rule 61(5)], Table 6.1 “Payment of tax”, column 2 “Tax payable”, row “State/UT Tax”.",
+      "source": "gstr-3b-form"
+    },
+    {
+      "box": "NETDUE",
+      "kind": "total",
+      "name": "Net GST payable for the period, before the order of set-off of section 49(5)",
+      "sequence": 330,
+      "plus": [
+        "61IGST",
+        "61CGST",
+        "61SGST"
+      ],
+      "minus": [
+        "4CIGST",
+        "4CCGST",
+        "4CSGST"
+      ],
+      "floor_zero": true,
+      "hidden": true,
+      "source": "cgst-s49",
+      "legal_reference": "Not a line of the form. Section 49(5) of the Central Goods and Services Tax Act orders how the credit of Table 4(C) pays the liability of Table 6.1 — integrated tax credit first against integrated tax and then against central and State tax; central tax credit against central and then integrated tax; State tax credit against State and then integrated tax; central credit never against State tax, nor State credit against central tax — and section 49(4) with section 2(82) keeps the reverse-charge tax out of reach of the credit ledger. The common portal works that order out itself, head by head, in Table 6.1. This total is the same arithmetic without the order: all heads of 6.1 less all heads of 4(C), which is what the period settles to when no head is short of credit; where one head is, the portal asks for cash on that head and carries credit forward on another, and this figure understates the cash. Floored at zero; the opposite case is NETCRED."
+    },
+    {
+      "box": "NETCRED",
+      "kind": "total",
+      "name": "Net input tax credit carried forward, before the order of set-off of section 49(5)",
+      "sequence": 340,
+      "plus": [
+        "4CIGST",
+        "4CCGST",
+        "4CSGST"
+      ],
+      "minus": [
+        "61IGST",
+        "61CGST",
+        "61SGST"
+      ],
+      "floor_zero": true,
+      "hidden": true,
+      "source": "cgst-s49",
+      "legal_reference": "Not a line of the form. Section 49(5) of the Central Goods and Services Tax Act orders how the credit of Table 4(C) pays the liability of Table 6.1 — integrated tax credit first against integrated tax and then against central and State tax; central tax credit against central and then integrated tax; State tax credit against State and then integrated tax; central credit never against State tax, nor State credit against central tax — and section 49(4) with section 2(82) keeps the reverse-charge tax out of reach of the credit ledger. The common portal works that order out itself, head by head, in Table 6.1. This total is the same arithmetic without the order: all heads of 6.1 less all heads of 4(C), which is what the period settles to when no head is short of credit; where one head is, the portal asks for cash on that head and carries credit forward on another, and this figure understates the cash. Floored at zero; the opposite case is NETDUE."
+    }
+  ]
+}

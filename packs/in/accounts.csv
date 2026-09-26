@@ -1,0 +1,165 @@
+code,parent,type,reconcilable,name,sequence
+1000,,asset_fixed,false,Freehold land,10
+1005,,asset_fixed,false,Buildings,20
+1010,,asset_fixed,false,Plant and machinery,30
+1015,,asset_fixed,false,Furniture and fixtures,40
+1020,,asset_fixed,false,Vehicles,50
+1025,,asset_fixed,false,Office equipment,60
+1030,,asset_fixed,false,Computers and data processing units,70
+1035,,asset_fixed,false,Electrical installations,80
+1040,,asset_fixed,false,Leasehold improvements,90
+1050,,asset_fixed,false,Accumulated depreciation — buildings,100
+1055,,asset_fixed,false,Accumulated depreciation — plant and machinery,110
+1060,,asset_fixed,false,Accumulated depreciation — furniture and fixtures,120
+1065,,asset_fixed,false,Accumulated depreciation — vehicles,130
+1070,,asset_fixed,false,Accumulated depreciation — office equipment,140
+1075,,asset_fixed,false,Accumulated depreciation — computers,150
+1080,,asset_fixed,false,Accumulated depreciation — electrical installations and leasehold improvements,160
+1100,,asset_non_current,false,Computer software,170
+1105,,asset_non_current,false,Trademarks and licences,180
+1110,,asset_non_current,false,Goodwill,190
+1130,,asset_non_current,false,Accumulated amortisation — intangible assets,200
+1150,,asset_non_current,false,Capital work-in-progress,210
+1180,,asset_non_current,false,Intangible assets under development,220
+1200,,asset_non_current,false,Non-current investments — equity instruments,230
+1210,,asset_non_current,false,Non-current investments — debentures and bonds,240
+1250,,asset_non_current,false,Deferred tax assets (net),250
+1270,,asset_non_current,false,Security deposits — long term,260
+1275,,asset_non_current,false,Capital advances,270
+1300,,asset_non_current,false,Bank deposits with more than twelve months maturity,280
+1310,,asset_non_current,false,Other non-current assets,290
+1400,,asset_current,false,Current investments — mutual funds,300
+1450,,asset_current,false,Inventory — raw materials,310
+1455,,asset_current,false,Inventory — work-in-progress,320
+1460,,asset_current,false,Inventory — finished goods,330
+1465,,asset_current,false,Inventory — stock-in-trade,340
+1470,,asset_current,false,Inventory — stores and spares,350
+1500,,asset_receivable,true,Trade receivables (sundry debtors),360
+1510,,asset_current,false,Provision for doubtful debts,370
+1550,,asset_cash,false,Cash in hand,380
+1555,,asset_cash,false,Petty cash,390
+1560,,asset_cash,false,Bank — current account,400
+1565,,asset_cash,false,Bank — savings account,410
+1570,,asset_cash,false,Bank — EEFC account (foreign currency),420
+1575,,asset_cash,false,Cheques in hand,430
+1580,,asset_cash,false,Bank deposits up to three months maturity,440
+1600,,asset_current,false,Advances to suppliers,450
+1605,,asset_current,false,Advances to employees,460
+1610,,asset_current,false,Input CGST,470
+1615,,asset_current,false,Input SGST/UTGST,480
+1620,,asset_current,false,Input IGST,490
+1625,,asset_current,false,Input compensation cess,500
+1630,,asset_current,false,TDS receivable (income tax),510
+1635,,asset_current,false,Advance income tax,520
+1640,,asset_current,false,GST TDS and TCS credit receivable,530
+1650,,asset_current,true,GST — electronic credit and cash ledger balance,540
+1660,,asset_current,false,Loans and advances to related parties,550
+1700,,asset_prepayments,false,Prepaid expenses,560
+1710,,asset_current,false,Accrued income,570
+1720,,asset_current,false,Interest accrued on deposits,580
+1730,,asset_current,false,Security deposits — short term,590
+1740,,asset_current,false,Other current assets,600
+2000,,liability_payable,true,Trade payables (sundry creditors),610
+2010,,liability_current,false,Trade payables — goods received and not yet invoiced,620
+2100,,liability_current,false,Bank overdraft and cash credit,630
+2110,,liability_current,false,Short-term loans from banks,640
+2120,,liability_current,false,Loans repayable on demand from related parties,650
+2130,,liability_current,false,Current maturities of long-term borrowings,660
+2140,,liability_credit_card,false,Corporate credit card,670
+2200,,liability_current,false,Output CGST,680
+2210,,liability_current,false,Output SGST/UTGST,690
+2220,,liability_current,false,Output IGST,700
+2230,,liability_current,false,Output compensation cess,710
+2240,,liability_current,false,CGST payable under reverse charge,720
+2250,,liability_current,false,SGST/UTGST payable under reverse charge,730
+2260,,liability_current,false,IGST payable under reverse charge,740
+2270,,liability_current,false,IGST and customs duty payable on imports,750
+2280,,liability_current,true,GST payable — electronic liability ledger,760
+2300,,liability_current,false,TDS payable (income tax),770
+2305,,liability_current,false,TCS payable (income tax),780
+2310,,liability_current,false,GST TDS payable,790
+2315,,liability_current,false,Professional tax payable,800
+2320,,liability_current,false,Provident fund and ESI payable,810
+2330,,liability_current,false,Advances from customers,820
+2340,,liability_current,false,Salaries and wages payable,830
+2350,,liability_current,false,Expenses payable,840
+2360,,liability_current,false,Security deposits received,850
+2370,,liability_current,false,Unpaid dividends,860
+2380,,liability_current,false,Payables for capital goods,870
+2390,,liability_current,false,Suspense account,880
+2400,,liability_current,false,Provision for income tax,890
+2410,,liability_current,false,Provision for bonus,900
+2420,,liability_current,false,Provision for gratuity — current,910
+2430,,liability_current,false,Provision for leave encashment — current,920
+2500,,liability_non_current,false,Term loans from banks,930
+2510,,liability_non_current,false,Vehicle loans,940
+2520,,liability_non_current,false,Loans from directors,950
+2600,,liability_non_current,false,Deferred tax liabilities (net),960
+2650,,liability_non_current,false,Other long-term liabilities,970
+2700,,liability_non_current,false,Provision for gratuity — non-current,980
+2710,,liability_non_current,false,Provision for leave encashment — non-current,990
+3000,,equity,false,Equity share capital,1000
+3010,,equity,false,Preference share capital,1010
+3100,,equity,false,Capital reserve,1020
+3110,,equity,false,Securities premium,1030
+3120,,equity,false,General reserve,1040
+3200,,equity_retained,false,Surplus in the Statement of Profit and Loss,1050
+3300,,equity,false,Money received against share warrants,1060
+3400,,equity,false,Share application money pending allotment,1070
+4000,,income,false,Sale of goods — domestic,1080
+4010,,income,false,Sale of goods — export,1090
+4100,,income,false,Sale of services — domestic,1100
+4110,,income,false,Sale of services — export,1110
+4200,,income,false,Other operating revenue,1120
+4210,,income,false,Export incentives,1130
+4290,,income,false,Sales returns and discounts,1140
+4500,,income_other,false,Interest income,1150
+4510,,income_other,false,Dividend income,1160
+4520,,income_other,false,Rent received,1170
+4550,,income_other,false,Foreign exchange gain,1180
+4560,,income_other,false,Profit on sale of fixed assets,1190
+4590,,income_other,false,Miscellaneous income,1200
+5000,,expense_direct_cost,false,Raw materials consumed,1210
+5010,,expense_direct_cost,false,Packing materials consumed,1220
+5100,,expense_direct_cost,false,Purchases of stock-in-trade,1230
+5110,,expense_direct_cost,false,Freight inward,1240
+5200,,expense_direct_cost,false,"Changes in inventories of finished goods, work-in-progress and stock-in-trade",1250
+5300,,expense,false,"Salaries, wages and bonus",1260
+5310,,expense,false,Contribution to provident and other funds,1270
+5320,,expense,false,Gratuity,1280
+5330,,expense,false,Staff welfare expenses,1290
+5500,,expense,false,Interest on borrowings,1300
+5510,,expense,false,Other borrowing costs,1310
+5520,,expense,false,Interest on delayed payment of taxes,1320
+5600,,expense_depreciation,false,"Depreciation on property, plant and equipment",1330
+5610,,expense_depreciation,false,Amortisation of intangible assets,1340
+6000,,expense,false,Rent,1350
+6010,,expense,false,Power and fuel,1360
+6020,,expense,false,Repairs to buildings,1370
+6030,,expense,false,Repairs to machinery,1380
+6040,,expense,false,Repairs and maintenance — others,1390
+6050,,expense,false,Vehicle running and maintenance,1400
+6060,,expense,false,Insurance,1410
+6070,,expense,false,Rates and taxes,1420
+6080,,expense,false,Legal and professional fees,1430
+6090,,expense,false,Payments to the auditor,1440
+6100,,expense,false,Travelling and conveyance,1450
+6110,,expense,false,Communication expenses,1460
+6120,,expense,false,Printing and stationery,1470
+6130,,expense,false,Books and periodicals,1480
+6140,,expense,false,Software subscriptions and cloud services,1490
+6150,,expense,false,Advertisement and sales promotion,1500
+6160,,expense,false,Freight outward and forwarding,1510
+6170,,expense,false,Bank charges,1520
+6180,,expense,false,Corporate social responsibility expenditure,1530
+6190,,expense,false,Bad debts written off,1540
+6200,,expense,false,Provision for doubtful debts,1550
+6300,,expense,false,Foreign exchange loss,1560
+6310,,expense,false,Loss on sale of fixed assets,1570
+6900,,expense,false,Miscellaneous expenses,1580
+6990,,expense,false,Rounding off,1590
+7000,,expense,false,Exceptional items,1600
+7100,,expense,false,Extraordinary items,1610
+8000,,expense,false,Current tax,1620
+8010,,expense,false,Tax relating to earlier years,1630
+8050,,expense,false,Deferred tax,1640

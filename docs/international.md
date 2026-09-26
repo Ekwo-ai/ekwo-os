@@ -4763,3 +4763,69 @@ licensed as, and not a fact `applies_when` or `conditions` was built to
 carry. `packs/do/` declares no tax for it, and says so in its README rather
 than forcing a seller's sectoral licence into `seller_threshold` or
 `supply_nature`, neither of which asks the right question.
+
+## From India
+
+`packs/in/`, `community`, seed 108, outside the common system of VAT: a goods
+and services tax in three layers under the Central Goods and Services Tax Act,
+2017, the State and Union Territory Acts, and the Integrated Goods and Services
+Tax Act, 2017. `INR` is added to `00_currencies.sql` at two decimals; `IN` and
+its twenty-eight States and eight Union territories are added to
+`00_territories.sql` with `eu_vat_scope` `none`, under ISO 3166-2:IN as revised
+in 2023. What the format could say, and what it could not.
+
+**Two layers on one line, by factor, as Canada.** An intra-State supply bears
+central and State tax at half the rate each, an inter-State supply the
+integrated tax at the whole rate. One code per rate and per layer carries the
+whole rate, and an intra-State code splits it into two `tax` postings of 50 %,
+each to its own account and its own column of FORM GSTR-3B. The halves are
+exact in law, so no factor carries a rounded share the way Québec's 33.389 %
+does. `applies_when.supply_vs_seller` — written for a Californian shipment out
+of the State — turned out to be section 7 and section 8 of the IGST Act word
+for word: `same` on every intra-State code, `other` on every inter-State one,
+with the company's territory set to the State of its GSTIN. The cost is that
+every Indian party needs a State; that is also what rule 46 asks of an invoice.
+
+**The order of set-off is a formula, and a total is a sum.** Section 49(5)
+of the CGST Act pays each head of liability from credit of the heads it allows,
+in an order: IGST credit against IGST and then the other two, CGST against CGST
+and then IGST, SGST against SGST and then IGST, never CGST against SGST, and
+reverse-charge tax only in cash. What a period settles to, head by head, is a
+min-and-carry across three heads. `plus`, `minus` and `floor_zero` state the
+sum of all heads less all credit, which is right whenever no head runs short
+and wrong when one does. The pack keeps that sum as two hidden totals and names
+the gap in its README.
+
+**A box per territory.** Table 3.2 of GSTR-3B reports inter-State supplies to
+unregistered persons by State of destination. A declaration box is a fixed
+identifier; there is no way to say "one line per place of supply", so the
+table is not carried.
+
+**Two forms and two deadlines on one tax.** GSTR-1 (invoice-level statement,
+the 11th) and GSTR-3B (summary return, the 20th, or the 22nd/24th by State for
+a quarterly filer) are both due every period. The pack carries GSTR-3B only,
+with the monthly deadline; the quarterly ones depend on the State of the
+principal place of business, which `depends_on_taxpayer` would state only by
+giving up the monthly date everybody else files by.
+
+**A financial year that is not the calendar year, and a counter that restarts
+on it.** Rule 46(b) wants invoice numbers unique for an April-to-March
+financial year. `fiscal_year_default: april` exists; a numbering that restarts
+on the fiscal year does not — `gapless_per_year` restarts in January — so the
+pack declares a counter that never restarts.
+
+**Clearance e-invoicing, the fifth pack to meet it.** Rule 48(4) and (5): above
+five crore rupees of aggregate turnover an invoice not registered on the Invoice
+Registration Portal is not an invoice. INV-01 is a JSON schema of the GST
+Network, not a profile of EN 16931, so `profile`, `mandatory_from` and
+`obligation` stay empty, as in `packs/sa/`, `packs/mx/`, `packs/vn/` and
+`packs/uy/`.
+
+**Withholding, again.** TDS and TCS under sections 51 and 52 of the CGST Act,
+and the TDS and TCS of the Income-tax Act, are deductions on a payment; the
+core has none.
+
+**A proportional reversal.** Rules 42 and 43 reverse common input credit in
+the ratio of exempt to total turnover, recomputed each period and trued up
+annually — the same shape as Uruguay's split of credit between domestic sales
+and exports, and no more expressible.
