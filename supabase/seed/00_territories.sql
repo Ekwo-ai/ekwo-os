@@ -1718,3 +1718,34 @@ on conflict (code) do update set
   eu_vat_to       = excluded.eu_vat_to,
   vat_prefix      = excluded.vat_prefix,
   legal_reference = excluded.legal_reference;
+
+-- ---------------------------------------------------------------------------
+-- Montenegro is outside the common system of VAT: Directive 2006/112/EC
+-- binds the Member States it lists, and Montenegro is a candidate for
+-- accession to the Union, not a member of it, and candidacy is not
+-- accession. Montenegro levies a value added tax of its own, porez na
+-- dodatu vrijednost, under the Zakon o porezu na dodatu vrijednost
+-- ("Službeni list Republike Crne Gore", br. 065/01 od 31.12.2001, sa
+-- kasnijim izmjenama i dopunama, poslednja "Službeni list Crne Gore", br.
+-- 094/24 od 30.09.2024), unrelated to the Union's common system. Montenegro
+-- adopted the euro unilaterally in 2002, by decision of its own government
+-- and with no seat on the Governing Council that sets the currency's policy
+-- — a political fact this table has no column for, and which the pack's
+-- README states in prose next to the currency it declares. `vat_prefix` is
+-- null: a Montenegrin VAT payer is identified by the Poreski identifikacioni
+-- broj (PIB) the Uprava prihoda i carina assigns, which carries no ISO 6523
+-- code comparable to an EU VAT number.
+-- ---------------------------------------------------------------------------
+
+insert into territories (code, code_source, name, parent_code, eu_vat_scope, eu_vat_from, eu_vat_to, vat_prefix, legal_reference) values
+  ('ME', 'iso_3166_1', 'Montenegro', null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries, candidate for accession or not. Montenegro levies a value added tax of its own, under the Zakon o porezu na dodatu vrijednost ("Službeni list Republike Crne Gore", br. 065/01 od 31.12.2001, sa kasnijim izmjenama i dopunama), articles 24, 24a and 25, which set the rates.')
+on conflict (code) do update set
+  code_source     = excluded.code_source,
+  name            = excluded.name,
+  parent_code     = excluded.parent_code,
+  eu_vat_scope    = excluded.eu_vat_scope,
+  eu_vat_from     = excluded.eu_vat_from,
+  eu_vat_to       = excluded.eu_vat_to,
+  vat_prefix      = excluded.vat_prefix,
+  legal_reference = excluded.legal_reference;

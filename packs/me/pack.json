@@ -1,0 +1,159 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "ME",
+  "name": "Crna Gora",
+  "version": "0.1.0",
+  "schema_min": "20260917170000",
+  "seed_sequence": 116,
+  "released_at": "2026-09-26",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "pdv-zakon",
+        "title": "Zakon o porezu na dodatu vrijednost (prečišćeni tekst koji uključuje Zakon o izmjenama i dopuni, \"Službeni list Crne Gore\", br. 094/24 od 30.09.2024, u primjeni od 01.01.2025)",
+        "publisher": "Uprava prihoda i carina / Ministarstvo finansija Crne Gore (gov.me)",
+        "url": "https://www.gov.me/dokumenta/2c9e967b-8998-4356-b601-2f0ecd85cb6f",
+        "consulted_on": "2026-09-26",
+        "kind": "law"
+      },
+      {
+        "key": "pdv-prijava-obrazac",
+        "title": "Obrazac PR PDV-2 — Mjesečna prijava za obračun poreza na dodatu vrijednost, sa uputstvom za popunjavanje",
+        "publisher": "Uprava prihoda i carina Crne Gore",
+        "url": "https://wapi.gov.me/download/e3d2b1f2-341b-487e-8e2a-d77868bbf52e?version=1.0",
+        "consulted_on": "2026-09-26",
+        "kind": "form"
+      },
+      {
+        "key": "eprijava-portal",
+        "title": "ePorezi / Elektronska prijava — portal za podnošenje poreskih prijava",
+        "publisher": "Uprava prihoda i carina Crne Gore",
+        "url": "https://eprijava.tax.gov.me/",
+        "consulted_on": "2026-09-26",
+        "kind": "portal"
+      },
+      {
+        "key": "racunovodstvo-zakon",
+        "title": "Zakon o računovodstvu (\"Službeni list Crne Gore\", br. 052/16 od 09.08.2016), usklađen sa Direktivom 2013/34/EU",
+        "publisher": "Institut internih revizora Crne Gore / Ministarstvo finansija",
+        "url": "https://iircg.co.me/wp-content/uploads/2022/01/Zakon-o-racunovodstvu.pdf",
+        "consulted_on": "2026-09-26",
+        "kind": "law"
+      },
+      {
+        "key": "kontni-okvir",
+        "title": "Pravilnik o kontnom okviru i sadržini računa u kontnom okviru za privredna društva i druga pravna lica (izvorno \"Službeni list CG\", br. 5/11 od 21.01.2011, zamijenjen Pravilnikom objavljenim u \"Službenom listu Crne Gore\", br. 11/20 od 06.03.2020, iste strukture klasa i grupa računa)",
+        "publisher": "Ministarstvo finansija Crne Gore",
+        "url": "https://www.ucg.ac.me/skladiste/blog_5675/objava_150439/fajlovi/Kontni%20okvir%20za%20privredna%20drustva%20i%20druga%20pravna%20lica.pdf",
+        "consulted_on": "2026-09-26",
+        "kind": "regulation"
+      },
+      {
+        "key": "fin-iskazi-obrazac",
+        "title": "Iskaz o finansijskoj poziciji /Bilans stanja/ i Iskaz o ukupnom rezultatu /Bilans uspjeha/ — obrasci usklađeni sa članom 4. Zakona o računovodstvu (\"Sl. list CG\" broj 052/16) i Direktivom 2013/34/EU, primjer popunjenog iskaza koji prikazuje sve pozicije i AOP brojeve obrasca",
+        "publisher": "Uprava prihoda i carina Crne Gore (obrazac), primjer podnesenog iskaza",
+        "url": "https://www.nvocoe.me/dms/izvjestaji/Finansijski%20izvje%C5%A1taj%20-%202021%20(NVO%20COE).pdf",
+        "consulted_on": "2026-09-26",
+        "kind": "form"
+      },
+      {
+        "key": "fiskalizacija-zakon",
+        "title": "Zakon o fiskalizaciji u prometu proizvoda i usluga (\"Službeni list Crne Gore\", br. 046/19 od 07.08.2019, sa izmjenama 073/19, 080/20 i 008/21)",
+        "publisher": "Ministarstvo finansija Crne Gore (gov.me)",
+        "url": "https://www.gov.me/dokumenta/6a29403c-2397-4107-a591-7aac91c38ecf",
+        "consulted_on": "2026-09-26",
+        "kind": "law"
+      },
+      {
+        "key": "efiskalizacija-portal",
+        "title": "Elektronska fiskalizacija — portal za registraciju i fiskalizaciju prometa u realnom vremenu",
+        "publisher": "Uprava prihoda i carina Crne Gore",
+        "url": "https://www.elektronskafiskalizacija.me/",
+        "consulted_on": "2026-09-26",
+        "kind": "portal"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "EUR",
+    "language": "sr",
+    "rounding_method": "half_up",
+    "closing_style": "retained_earnings",
+    "fiscal_year_default": "calendar",
+    "roles": {
+      "receivable": "202",
+      "payable": "433",
+      "suspense": "469",
+      "rounding": "4698",
+      "retained_earnings": "341",
+      "retained_earnings_loss": "351",
+      "sales": "612",
+      "purchase": "510",
+      "bank": "241",
+      "cash": "243",
+      "fx_gain": "663",
+      "fx_loss": "563",
+      "tax_payable": "479",
+      "tax_receivable": "279"
+    },
+    "journal_roles": {
+      "sales": "SAL",
+      "purchase": "PUR",
+      "miscellaneous": "GEN",
+      "opening": "OPN"
+    }
+  },
+  "languages": ["en"],
+  "journals": [
+    { "code": "SAL", "type": "sales", "name": "Dnevnik prodaje", "sequence": 10 },
+    { "code": "PUR", "type": "purchase", "name": "Dnevnik nabavke", "sequence": 20 },
+    { "code": "BNK", "type": "bank", "name": "Dnevnik banke", "sequence": 30 },
+    { "code": "CSH", "type": "cash", "name": "Dnevnik blagajne", "sequence": 40 },
+    { "code": "GEN", "type": "general", "name": "Opšti dnevnik", "sequence": 50 },
+    { "code": "OPN", "type": "opening", "name": "Dnevnik otvaranja", "sequence": 60 }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Kontni okvir za privredna društva i druga pravna lica",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": ["ME-FS-BS", "ME-FS-IS"],
+      "legal_reference": "Pravilnik o kontnom okviru i sadržini računa u kontnom okviru za privredna društva i druga pravna lica (\"Sl. list CG\", br. 11/20, koji zamjenjuje Pravilnik iz 2011 — \"Sl. list CG\", br. 5/11, iste podjele na klase 0-9). Ovaj paket transkribuje klase 0 do 6 (stalna imovina, zalihe, kratkoročna potraživanja i gotovina, kapital, dugoročna rezervisanja i obaveze, rashodi, prihodi) i njihove najčešće korišćene grupe i konta prvog reda; klase 7 (otvaranje i zaključak računa), 8 (vanbilansna evidencija) i 9 (obračun troškova i učinaka) nijesu transkribovane jer ih socle ne zahtijeva — zatvaranje poslovne godine obavlja `close_fiscal_year()` preko uloga (`defaults.roles`), a vanbilansna evidencija i obračun troškova po mjestima troškova nijesu dio ovog izdanja. Uputstvo o primjeni Pravilnika izričito dozvoljava pravnim licima da uvedu podračune višeg reda uz zadržavanje brojčane oznake konta iz Kontnog okvira; na toj osnovi ovaj paket dodaje četvorocifrene podračune 2715/2717 (ulazni PDV po stopama od 15% i 7%, koje Kontni okvir iz 2011/2020 ne razlikuje jer je stopa od 15% uvedena tek 01.01.2025), 4711/4717 (odgovarajuće obaveze za PDV po izdatim fakturama) i 4698 (razlike po osnovu zaokruživanja, konto koji Kontni okvir ne imenuje posebno). Vidjeti README.md.",
+      "source": "kontni-okvir"
+    }
+  ],
+  "documents": {
+    "numbering": "sequential",
+    "number_format": "{CODE}-{NNNNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "invoice_if_issued",
+    "posted_edit_policy": "reversal_only",
+    "references": {
+      "numbering": {
+        "legal_reference": "Zakon o porezu na dodatu vrijednost, član 31 stav 1 — poreski obveznik je dužan da za izvršeni promet proizvoda, odnosno usluga izda račun ili drugi dokument koji služi kao račun; član 32 propisuje obavezne podatke računa, uključujući mjesto, datum izdavanja i redni broj računa (stav 1 tačka 1), ali ne nameće jedan oblik numeracije. Format ovdje je primjer sekvencijalne numeracije, a ne jedini dozvoljeni.",
+        "source": "pdv-zakon"
+      },
+      "tax_point": {
+        "legal_reference": "Zakon o porezu na dodatu vrijednost, član 18 st. 1 i 2 — PDV se obračunava u trenutku isporuke proizvoda, odnosno u trenutku izvršenja usluge, a smatra se da je proizvod isporučen, odnosno usluga izvršena u trenutku izdavanja računa (fakture). Ako račun nije izdat, PDV se obračunava osam dana od dana isporuke, odnosno izvršenja usluge (stav 3); ako je plaćanje u cjelini ili djelimično izvršeno prije izdavanja računa, PDV se obračunava na dan prijema naknade (stav 4).",
+        "source": "pdv-zakon"
+      },
+      "posted_edit_policy": {
+        "legal_reference": "Zakon o računovodstvu, obaveza vjerodostojnog, urednog i ažurnog knjigovodstva; ispravka poslovne promjene koja je već proknjižena vrši se novim knjigovodstvenim dokumentom (stornom ili knjigom uz obrazloženje), a ne brisanjem prethodnog zapisa. Zakon o porezu na dodatu vrijednost, član 39 (ispravka odbitka ulaznog PDV) i praksa izdavanja knjigovodstvenih obavještenja za izmjenu poreske osnovice iz člana 20 stav 9 potvrđuju isti princip za izlazne fakture.",
+        "source": "racunovodstvo-zakon"
+      }
+    }
+  },
+  "einvoicing": {
+    "profile": null,
+    "obligation": "none",
+    "mandatory_from": null,
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "Crna Gora ne nameće razmjenu strukturiranih elektronskih faktura između preduzeća izgrađenih na semantičkom modelu EN 16931 (Peppol BIS, Factur-X, XRechnung, PINT); nijedan propis to ne zahtijeva na dan izdavanja ovog paketa (`released_at`), pa je `obligation` postavljeno na `none`, a ne na `on_request`. Crna Gora umjesto toga poznaje fiskalizaciju prometa: Zakon o fiskalizaciji u prometu proizvoda i usluga (\"Sl. list CG\", br. 046/19, 073/19, 080/20, 008/21) nameće poreskom obvezniku da podatke o prometu proizvoda i usluga i fiskalne račune dostavlja Poreskoj upravi u realnom vremenu preko fiskalne službe (obavezno od 01.06.2021 za obveznike koji naplaćuju gotovinom ili platnim karticama). To je izvještavanje državnog servera o pojedinačnom računu u trenutku izdavanja (clearance), a ne razmjena strukturiranog dokumenta između prodavca i kupca — socle ovog izdanja Ekwo OS-a nema modul za fiskalizaciju u realnom vremenu prema državnom serveru; vidjeti README.md i docs/international.md, odjeljak «From Montenegro».",
+    "source": "fiskalizacija-zakon"
+  }
+}

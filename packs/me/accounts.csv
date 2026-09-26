@@ -1,0 +1,218 @@
+code,parent,type,reconcilable,name,sequence
+00,,asset_non_current,false,Neuplaćeni upisani kapital,10
+000,00,asset_non_current,false,Neuplaćene upisane akcije,20
+001,00,asset_non_current,false,Neuplaćeni upisani udjeli,30
+01,,asset_fixed,false,Nematerijalna ulaganja,40
+010,01,asset_fixed,false,Ulaganja u razvoj,50
+011,01,asset_fixed,false,Koncesije patenti licence i slična prava,60
+012,01,asset_fixed,false,Goodwill,70
+014,01,asset_fixed,false,Ostala nematerijalna ulaganja,80
+015,01,asset_fixed,false,Nematerijalna ulaganja u pripremi,90
+016,01,asset_fixed,false,Avansi za nematerijalna ulaganja,100
+02,,asset_fixed,false,Nekretnine postrojenja oprema i biološka sredstva,110
+020,02,asset_fixed,false,Zemljišta,120
+021,02,asset_fixed,false,Šume i višegodišnji zasadi,130
+022,02,asset_fixed,false,Građevinski objekti,140
+023,02,asset_fixed,false,Postrojenja i oprema,150
+024,02,asset_fixed,false,Investicione nekretnine,160
+025,02,asset_fixed,false,Osnovno stado,170
+026,02,asset_fixed,false,Ostale nekretnine postrojenja i oprema,180
+027,02,asset_fixed,false,Nekretnine postrojenja oprema i biološka sredstva u pripremi,190
+028,02,asset_fixed,false,Avansi za nekretnine postrojenja opremu i biološka sredstva,200
+029,02,asset_fixed,false,Ulaganja na tuđim nekretninama postrojenjima i opremi,210
+03,,asset_non_current,false,Dugoročni finansijski plasmani,220
+030,03,asset_non_current,false,Učešća u kapitalu zavisnih pravnih lica,230
+031,03,asset_non_current,false,Učešća u kapitalu pridruženih pravnih lica,240
+032,03,asset_non_current,false,Učešća u kapitalu ostalih pravnih lica,250
+033,03,asset_non_current,false,Dugoročni krediti povezanim pravnim licima,260
+034,03,asset_non_current,false,Dugoročni krediti u zemlji,270
+035,03,asset_non_current,false,Dugoročni krediti u inostranstvu,280
+036,03,asset_non_current,false,Hartije od vrijednosti koje se drže do dospijeća,290
+038,03,asset_non_current,false,Ostali dugoročni finansijski plasmani,300
+04,,asset_non_current,false,Stalna sredstva namijenjena prodaji,310
+10,,asset_current,false,Zalihe materijala,320
+101,10,asset_current,false,Materijal,330
+102,10,asset_current,false,Rezervni djelovi,340
+103,10,asset_current,false,Alat i inventar,350
+11,,asset_current,false,Nedovršena proizvodnja,360
+110,11,asset_current,false,Nedovršena proizvodnja,370
+111,11,asset_current,false,Nedovršene usluge,380
+12,,asset_current,false,Gotovi proizvodi,390
+120,12,asset_current,false,Gotovi proizvodi,400
+13,,asset_current,false,Roba,410
+131,13,asset_current,false,Roba u magacinu,420
+132,13,asset_current,false,Roba u prometu na veliko,430
+134,13,asset_current,false,Roba u prometu na malo,440
+137,13,asset_current,false,Roba na putu,450
+15,,asset_prepayments,false,Dati avansi,460
+150,15,asset_prepayments,false,Dati avansi za zalihe i usluge,470
+20,,asset_current,false,Potraživanja po osnovu prodaje,480
+202,20,asset_receivable,true,Kupci u zemlji,490
+203,20,asset_receivable,true,Kupci u inostranstvu,500
+21,,asset_current,false,Potraživanja iz specifičnih poslova,510
+210,21,asset_current,false,Potraživanja od izvoznika,520
+22,,asset_current,false,Druga potraživanja,530
+220,22,asset_current,false,Potraživanja za kamatu i dividende,540
+221,22,asset_current,false,Potraživanja od zaposlenih,550
+222,22,asset_current,false,Potraživanja od državnih organa i organizacija,560
+23,,asset_current,false,Kratkoročni finansijski plasmani,570
+232,23,asset_current,false,Kratkoročni krediti u zemlji,580
+24,,asset_cash,false,Gotovina i gotovinski ekvivalenti,590
+241,24,asset_cash,false,Tekući računi,600
+243,24,asset_cash,false,Blagajna,610
+244,24,asset_cash,false,Devizni račun,620
+27,,asset_current,false,Porez na dodatu vrijednost,630
+270,27,asset_current,false,PDV u primljenim fakturama po opštoj stopi od 21%,640
+271,27,asset_current,false,PDV u primljenim fakturama po sniženim stopama,650
+2715,271,asset_current,false,PDV u primljenim fakturama po sniženoj stopi od 15%,660
+2717,271,asset_current,false,PDV u primljenim fakturama po sniženoj stopi od 7%,670
+274,27,asset_current,false,PDV plaćen pri uvozu proizvoda po opštoj stopi,680
+275,27,asset_current,false,PDV plaćen pri uvozu proizvoda po sniženim stopama,690
+276,27,asset_current,false,PDV obračunat na usluge inostranih lica,700
+279,27,asset_current,true,Potraživanja za više plaćeni porez na dodatu vrijednost,710
+28,,asset_prepayments,false,Aktivna vremenska razgraničenja,720
+280,28,asset_prepayments,false,Unaprijed plaćeni troškovi,730
+281,28,asset_prepayments,false,Potraživanja za nefakturisani prihod,740
+288,28,asset_non_current,false,Odložena poreska sredstva,750
+30,,equity,false,Osnovni kapital,760
+300,30,equity,false,Akcijski kapital,770
+301,30,equity,false,Udjeli društava sa ograničenom odgovornošću,780
+303,30,equity,false,Državni kapital,790
+31,,equity,false,Neuplaćeni upisani kapital,800
+310,31,equity,false,Neuplaćene upisane akcije,810
+311,31,equity,false,Neuplaćeni upisani udjeli,820
+32,,equity,false,Rezerve,830
+320,32,equity,false,Emisiona premija,840
+321,32,equity,false,Zakonske rezerve,850
+322,32,equity,false,Statutarne i druge rezerve,860
+33,,equity,false,Revalorizacione rezerve i nerealizovani dobici i gubici,870
+330,33,equity,false,Revalorizacione rezerve,880
+333,33,equity,false,Nerealizovani dobici po osnovu hartija od vrijednosti raspoloživih za prodaju,890
+334,33,equity,false,Nerealizovani gubici po osnovu hartija od vrijednosti raspoloživih za prodaju,900
+34,,equity_retained,false,Neraspoređeni dobitak,910
+340,34,equity_retained,false,Neraspoređeni dobitak ranijih godina,920
+341,34,equity_retained,false,Neraspoređeni dobitak tekuće godine,930
+35,,equity_retained,false,Gubitak,940
+350,35,equity_retained,false,Gubitak ranijih godina,950
+351,35,equity_retained,false,Gubitak tekuće godine,960
+40,,liability_non_current,false,Dugoročna rezervisanja,970
+400,40,liability_non_current,false,Rezervisanja za troškove u garantnom roku,980
+404,40,liability_non_current,false,Rezervisanja za naknade i druge beneficije zaposlenih,990
+41,,liability_non_current,false,Dugoročne obaveze,1000
+414,41,liability_non_current,false,Dugoročni krediti u zemlji,1010
+415,41,liability_non_current,false,Dugoročni krediti u inostranstvu,1020
+419,41,liability_non_current,false,Ostale dugoročne obaveze,1030
+42,,liability_current,false,Kratkoročne finansijske obaveze,1040
+422,42,liability_current,false,Kratkoročni krediti u zemlji,1050
+423,42,liability_current,false,Kratkoročni krediti u inostranstvu,1060
+424,42,liability_current,false,Dio dugoročnih kredita koji dospijeva do jedne godine,1070
+43,,liability_current,false,Obaveze iz poslovanja,1080
+430,43,liability_current,false,Primljeni avansi depoziti i kaucije,1090
+433,43,liability_payable,true,Dobavljači u zemlji,1100
+434,43,liability_payable,true,Dobavljači u inostranstvu,1110
+439,43,liability_current,false,Ostale obaveze iz poslovanja,1120
+44,,liability_current,false,Obaveze iz specifičnih poslova,1130
+440,44,liability_current,false,Obaveze prema uvozniku,1140
+45,,liability_current,false,Obaveze po osnovu zarada i naknada zarada,1150
+450,45,liability_current,false,Obaveze za neto zarade i naknade zarada,1160
+451,45,liability_current,false,Obaveze za porez na zarade i naknade zarada na teret zaposlenog,1170
+452,45,liability_current,false,Obaveze za doprinose na zarade i naknade zarada na teret zaposlenog,1180
+453,45,liability_current,false,Obaveze za poreze i doprinose na zarade i naknade zarada na teret poslodavca,1190
+46,,liability_current,false,Ostale obaveze,1200
+460,46,liability_current,false,Obaveze po osnovu kamata i troškova finansiranja,1210
+461,46,liability_current,false,Obaveze za dividende,1220
+463,46,liability_current,false,Obaveze prema zaposlenima,1230
+465,46,liability_current,false,Obaveze prema fizičkim licima za naknade po ugovorima,1240
+469,46,liability_current,false,Ostale obaveze,1250
+4698,46,liability_current,false,Razlike po osnovu zaokruživanja,1260
+47,,liability_current,false,Obaveze za porez na dodatu vrijednost,1270
+470,47,liability_current,false,Obaveze za PDV po izdatim fakturama po opštoj stopi od 21%,1280
+471,47,liability_current,false,Obaveze za PDV po izdatim fakturama po sniženim stopama,1290
+4711,471,liability_current,false,Obaveze za PDV po izdatim fakturama po stopi od 15%,1300
+4717,471,liability_current,false,Obaveze za PDV po izdatim fakturama po stopi od 7%,1310
+472,47,liability_current,false,Obaveze za PDV po primljenim avansima po opštoj stopi,1320
+473,47,liability_current,false,Obaveze za PDV po primljenim avansima po sniženim stopama,1330
+476,47,liability_current,false,Obaveze za PDV po osnovu prodaje za gotovinu,1340
+479,47,liability_current,true,Obaveze za PDV po osnovu razlike obračunatog i prethodnog poreza,1350
+48,,liability_current,false,Obaveze za ostale poreze doprinose i druge dažbine,1360
+480,48,liability_current,false,Obaveze za akcize,1370
+481,48,liability_current,false,Obaveze za porez iz rezultata,1380
+482,48,liability_current,false,Obaveze za poreze carine i druge dažbine iz nabavke ili na teret troškova,1390
+49,,liability_current,false,Pasivna vremenska razgraničenja,1400
+490,49,liability_current,false,Unaprijed obračunati troškovi,1410
+491,49,liability_current,false,Obračunati prihodi budućeg perioda,1420
+495,49,liability_current,false,Odloženi prihodi i primljene donacije,1430
+498,49,liability_non_current,false,Odložene poreske obaveze,1440
+499,49,liability_current,false,Ostala pasivna vremenska razgraničenja,1450
+50,,expense_direct_cost,false,Nabavna vrijednost prodate robe,1460
+500,50,expense_direct_cost,false,Nabavka robe,1470
+501,50,expense_direct_cost,false,Nabavna vrijednost prodate robe,1480
+51,,expense_direct_cost,false,Troškovi materijala,1490
+510,51,expense_direct_cost,false,Nabavka materijala,1500
+511,51,expense_direct_cost,false,Troškovi materijala za izradu,1510
+512,51,expense_direct_cost,false,Troškovi ostalog materijala,1520
+513,51,expense_direct_cost,false,Troškovi goriva i energije,1530
+52,,expense,false,Troškovi zarada naknada zarada i ostali lični rashodi,1540
+520,52,expense,false,Troškovi zarada i naknada zarada bruto,1550
+521,52,expense,false,Troškovi poreza i doprinosa na zarade i naknade zarada na teret poslodavca,1560
+522,52,expense,false,Troškovi naknada po ugovoru o djelu,1570
+526,52,expense,false,Troškovi naknada članovima upravnog i nadzornog odbora,1580
+53,,expense,false,Troškovi proizvodnih usluga,1590
+530,53,expense,false,Troškovi usluga na izradi učinaka,1600
+531,53,expense,false,Troškovi transportnih usluga,1610
+532,53,expense,false,Troškovi usluga održavanja,1620
+533,53,expense,false,Troškovi zakupnina,1630
+535,53,expense,false,Troškovi reklame i propagande,1640
+539,53,expense,false,Troškovi ostalih usluga,1650
+54,,expense_depreciation,false,Troškovi amortizacije i rezervisanja,1660
+540,54,expense_depreciation,false,Troškovi amortizacije,1670
+541,54,expense,false,Troškovi rezervisanja za garantni rok,1680
+55,,expense,false,Nematerijalni troškovi,1690
+550,55,expense,false,Troškovi neproizvodnih usluga,1700
+551,55,expense,false,Troškovi reprezentacije,1710
+552,55,expense,false,Troškovi premija osiguranja,1720
+553,55,expense,false,Troškovi platnog prometa,1730
+554,55,expense,false,Troškovi članarina,1740
+555,55,expense,false,Troškovi poreza,1750
+556,55,expense,false,Troškovi doprinosa,1760
+56,,expense,false,Finansijski rashodi,1770
+562,56,expense,false,Rashodi kamata,1780
+563,56,expense,false,Negativne kursne razlike,1790
+57,,expense,false,Ostali rashodi,1800
+570,57,expense,false,Gubici po osnovu rashodovanja i prodaje nematerijalnih ulaganja nekretnina postrojenja i opreme,1810
+573,57,expense,false,Gubici od prodaje materijala,1820
+574,57,expense,false,Manjkovi,1830
+576,57,expense,false,Rashodi po osnovu direktnih otpisa potraživanja,1840
+58,,expense,false,Rashodi po osnovu usklađivanja vrijednosti imovine,1850
+582,58,expense,false,Rashodi po osnovu usklađivanja vrijednosti nekretnina postrojenja i opreme,1860
+584,58,expense,false,Rashodi po osnovu usklađivanja vrijednosti zaliha materijala i robe,1870
+585,58,expense,false,Rashodi po osnovu usklađivanja vrijednosti potraživanja i kratkoročnih finansijskih plasmana,1880
+60,,income,false,Prihodi od prodaje robe,1890
+602,60,income,false,Prihodi od prodaje robe na domaćem tržištu,1900
+603,60,income,false,Prihodi od prodaje robe na inostranom tržištu,1910
+61,,income,false,Prihodi od prodaje proizvoda i usluga,1920
+612,61,income,false,Prihodi od prodaje proizvoda i usluga na domaćem tržištu,1930
+613,61,income,false,Prihodi od prodaje proizvoda i usluga na inostranom tržištu,1940
+62,,income,false,Prihodi od aktiviranja učinaka i robe,1950
+620,62,income,false,Prihodi od aktiviranja ili potrošnje robe za sopstvene potrebe,1960
+621,62,income,false,Prihodi od aktiviranja ili potrošnje proizvoda i usluga za sopstvene potrebe,1970
+63,,income,false,Promjena vrijednosti zaliha učinaka,1980
+630,63,income,false,Povećanje vrijednosti zaliha nedovršenih i gotovih proizvoda i nedovršenih usluga,1990
+631,63,income,false,Smanjenje vrijednosti zaliha nedovršenih i gotovih proizvoda i nedovršenih usluga,2000
+64,,income,false,Prihodi od premija subvencija dotacija i donacija,2010
+640,64,income,false,Prihodi od premija subvencija dotacija regresa kompenzacija i povraćaja poreskih dažbina,2020
+65,,income,false,Drugi poslovni prihodi,2030
+650,65,income,false,Prihodi od zakupnina,2040
+651,65,income,false,Prihodi od članarina,2050
+659,65,income,false,Ostali poslovni prihodi,2060
+66,,income,false,Finansijski prihodi,2070
+662,66,income,false,Prihodi od kamata,2080
+663,66,income,false,Pozitivne kursne razlike,2090
+67,,income,false,Ostali prihodi,2100
+670,67,income,false,Dobici od prodaje nematerijalnih ulaganja nekretnina postrojenja i opreme,2110
+674,67,income,false,Viškovi,2120
+675,67,income,false,Naplaćena otpisana potraživanja,2130
+68,,income,false,Prihodi od usklađivanja vrijednosti imovine,2140
+682,68,income,false,Prihodi od usklađivanja vrijednosti nekretnina postrojenja i opreme,2150
+684,68,income,false,Prihodi od usklađivanja vrijednosti zaliha materijala i robe,2160
+685,68,income,false,Prihodi od usklađivanja vrijednosti potraživanja i kratkoročnih finansijskih plasmana,2170

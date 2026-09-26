@@ -1,0 +1,138 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "ME-PR-PDV-2",
+  "name": "Mjesečna prijava za obračun poreza na dodatu vrijednost — Obrazac PR PDV-2",
+  "period": ["month"],
+  "period_default": "month",
+  "valid_from": "2025-01-01",
+  "legal_reference": "Obrazac PR PDV-2, propisan od strane Uprave prihoda i carina. Zakon o porezu na dodatu vrijednost, član 33 stav 2 — poreski period je period od prvog do zadnjeg dana u mjesecu (kalendarski mjesec), jedina propisana dinamika. Ovaj paket transkribuje redne brojeve obrasca koje njegovi porezi dosežu: oporezivi promet i PDV po stopama od 21%, 15% i 7% (redni brojevi 10/16, 11/17, 12/18), promet po nultoj stopi (13) i oslobođeni promet (14), ulazni PDV na domaći promet (19) i PDV na usluge inostranih lica (21), te zbirne redne brojeve 24, 25, 28 i 29. Nijesu transkribovani: redni broj 9 (obilježje \"bez transakcija\", nije numerička vrijednost), 15 i 23 (promet/PDV prirodnog gasa, električne energije i energije za grijanje ili hlađenje za koji je izvršen prenos poreske obaveze — uska energetska šema van obima ovog izdanja), 20 (PDV plaćen na uvoz — socle ovog izdanja nema modul carinskog uvoza), 22 (paušalna nadoknada poljoprivredniku po stopi od 8% — posebna šema van obima), 26 i 27 (razdvajanje ulaznog PDV bez i sa pravom na odbitak — ovaj paket pretpostavlja puno pravo na odbitak i ne modeluje srazmjerni odbitak iz člana 38), i 30 (zahtjev za povraćaj PDV kredita, administrativno polje). Vidjeti README.md i docs/international.md, odjeljak «From Montenegro».",
+  "source": "pdv-prijava-obrazac",
+  "deadline": {
+    "rule": "day_of_month_after_period",
+    "day": 15,
+    "legal_reference": "Zakon o porezu na dodatu vrijednost, član 35 stav 2 — poreski obveznik prijavu za obračun PDV podnosi elektronskim putem nadležnom poreskom organu do 15. dana narednog mjeseca po isteku poreskog perioda; član 36 stav 1 — poreska obaveza za poreski period dospijeva za plaćanje istog dana, 15. dana u mjesecu po isteku poreskog perioda. Ovo polje modeluje samo rok za podnošenje prijave; socle ne razlikuje rok podnošenja od roka plaćanja, koji se ovdje poklapaju.",
+    "source": "pdv-zakon"
+  },
+  "boxes": [
+    {
+      "box": "10",
+      "kind": "base",
+      "name": "Oporezivi promet (isporuke) po stopi od 21%",
+      "sequence": 10,
+      "legal_reference": "Obrazac PR PDV-2, redni broj 10.",
+      "source": "pdv-prijava-obrazac"
+    },
+    {
+      "box": "11",
+      "kind": "base",
+      "name": "Oporezivi promet (isporuke) po stopi od 15%",
+      "sequence": 20,
+      "legal_reference": "Obrazac PR PDV-2, redni broj 11.",
+      "source": "pdv-prijava-obrazac"
+    },
+    {
+      "box": "12",
+      "kind": "base",
+      "name": "Oporezivi promet (isporuke) po stopi od 7%",
+      "sequence": 30,
+      "legal_reference": "Obrazac PR PDV-2, redni broj 12.",
+      "source": "pdv-prijava-obrazac"
+    },
+    {
+      "box": "13",
+      "kind": "base",
+      "name": "Oporezivi promet (isporuke) po stopi od 0%",
+      "sequence": 40,
+      "legal_reference": "Obrazac PR PDV-2, redni broj 13; Zakon o porezu na dodatu vrijednost, član 25.",
+      "source": "pdv-prijava-obrazac"
+    },
+    {
+      "box": "14",
+      "kind": "base",
+      "name": "Oslobođeni promet — isporuke",
+      "sequence": 50,
+      "legal_reference": "Obrazac PR PDV-2, redni broj 14; Zakon o porezu na dodatu vrijednost, čl. 26 i 27.",
+      "source": "pdv-prijava-obrazac"
+    },
+    {
+      "box": "16",
+      "kind": "tax",
+      "name": "PDV na domaći promet proizvoda i usluga po stopi od 21%",
+      "sequence": 60,
+      "legal_reference": "Obrazac PR PDV-2, redni broj 16.",
+      "source": "pdv-prijava-obrazac"
+    },
+    {
+      "box": "17",
+      "kind": "tax",
+      "name": "PDV na domaći promet proizvoda i usluga po stopi od 15%",
+      "sequence": 70,
+      "legal_reference": "Obrazac PR PDV-2, redni broj 17.",
+      "source": "pdv-prijava-obrazac"
+    },
+    {
+      "box": "18",
+      "kind": "tax",
+      "name": "PDV na domaći promet proizvoda i usluga po stopi od 7%",
+      "sequence": 80,
+      "legal_reference": "Obrazac PR PDV-2, redni broj 18.",
+      "source": "pdv-prijava-obrazac"
+    },
+    {
+      "box": "19",
+      "kind": "tax",
+      "name": "Ulazni PDV na domaći promet proizvoda i usluga",
+      "sequence": 90,
+      "legal_reference": "Obrazac PR PDV-2, redni broj 19.",
+      "source": "pdv-prijava-obrazac"
+    },
+    {
+      "box": "21",
+      "kind": "tax",
+      "name": "PDV na usluge inostranih lica",
+      "sequence": 100,
+      "legal_reference": "Obrazac PR PDV-2, redni broj 21; Zakon o porezu na dodatu vrijednost, član 12 stav 1 tačka 2 — istovremeno dio izlaznog PDV (redni broj 24) i ulaznog PDV (redni broj 25).",
+      "source": "pdv-prijava-obrazac"
+    },
+    {
+      "box": "24",
+      "kind": "total",
+      "name": "Ukupan izlazni PDV na isporuke",
+      "sequence": 110,
+      "plus": ["16", "17", "18", "21"],
+      "legal_reference": "Obrazac PR PDV-2, redni broj 24 — zbir rednih brojeva 16+17+18+21.",
+      "source": "pdv-prijava-obrazac"
+    },
+    {
+      "box": "25",
+      "kind": "total",
+      "name": "Ukupan ulazni PDV — pretporez",
+      "sequence": 120,
+      "plus": ["19", "21"],
+      "legal_reference": "Obrazac PR PDV-2, redni broj 25 — zbir rednih brojeva 19+20+21+22; ovaj paket ne transkribuje redne brojeve 20 (uvoz) i 22 (paušalna nadoknada poljoprivredniku), pa ovdje zbraja samo 19+21. Vidjeti napomenu na vrhu ovog fajla.",
+      "source": "pdv-prijava-obrazac"
+    },
+    {
+      "box": "28",
+      "kind": "total",
+      "name": "Dospjeli PDV za uplatu",
+      "sequence": 130,
+      "plus": ["24"],
+      "minus": ["25"],
+      "floor_zero": true,
+      "legal_reference": "Obrazac PR PDV-2, redni broj 28 — razlika rednih brojeva 24-27; ovaj paket ne transkribuje redni broj 26 (ulazni PDV bez prava na odbitak) niti 27 (25 minus 26) i pretpostavlja puno pravo na odbitak, pa ovdje oduzima direktno redni broj 25.",
+      "source": "pdv-prijava-obrazac"
+    },
+    {
+      "box": "29",
+      "kind": "total",
+      "name": "PDV kredit",
+      "sequence": 140,
+      "plus": ["25"],
+      "minus": ["24"],
+      "floor_zero": true,
+      "legal_reference": "Obrazac PR PDV-2, redni broj 29 — razlika rednih brojeva 27-24, ovdje 25-24 iz istog razloga kao redni broj 28.",
+      "source": "pdv-prijava-obrazac"
+    }
+  ]
+}

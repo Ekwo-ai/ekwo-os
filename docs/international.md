@@ -5349,3 +5349,73 @@ empty; the phased effective dates (2021-01-01 for the public sector,
 2021-07-01 business to business, 2021-09-01 every cash transaction) are
 recorded in `pack.json`'s own `legal_reference` and nowhere the schema could
 compile a date from without a profile to hang it on.
+
+## From Montenegro
+
+`packs/me/`, `community`, seed 116, outside the common system of VAT the way
+Ukraine and Turkey are: a candidate for accession, not a member, and Directive
+2006/112/EC, article 5(2), reaches the territory of the Union as the Treaties
+define it and nothing a candidacy announces. `EUR` already exists in
+`00_currencies.sql` (Montenegro adopted it unilaterally in 2002, with no
+seat on the Governing Council that decides it, which is a political fact this
+column has no way to carry and a footnote in the pack's README states
+instead); `ME` is added to `00_territories.sql` with `eu_vat_scope` `none`, on
+the same footing as `UA` and `TR`. Three things the format could not say, read
+from the Zakon o porezu na dodatu vrijednost (Law on Value Added Tax) and the
+periodic return it is filed on, Obrazac PR PDV-2.
+
+**A third rate born eight years into the pack format's design.** Article 24a
+carried one reduced rate, 7 %, until the Law of 30 September 2024
+("Službeni list Crne Gore", No. 94/24, in force 1 January 2025) split it in
+two: the necessities stay at 7 %, and hospitality — accommodation, and food
+and drink served on the premises, other than alcohol, sugared carbonated
+drinks and coffee — moves to a new 15 %. The chart of accounts the Ministry of
+Finance prescribes (Pravilnik o kontnom okviru, 2011, restated 2020) has
+exactly one account for "the reduced rate", 271, because it was written when
+there was only one. The Instruction that comes with the Pravilnik allows a
+company to add sub-accounts of its own numbering under a prescribed one without
+touching the prescribed code itself; the pack does that twice — `2715`/`2717`
+for input VAT, `4711`/`4717` for output VAT payable — rather than either
+inventing a fifth digit the state never assigned or forcing two rates through
+one account the way a company that has not yet relabelled its own books still
+does today.
+
+**One box, printed once, and counted in two totals that are not one another's
+sum.** Row 21 of Obrazac PR PDV-2, "PDV na usluge inostranih lica", is a
+single reported figure for a service self-assessed under article 12(1)(2) —
+the recipient is the tax debtor when a non-resident supplier names no local
+representative — and the form's own arithmetic adds it into both row 24
+(output VAT, 16+17+18+21) and row 25 (input VAT, 19+20+21+22) unchanged. That
+is not the base-printed-twice shape article "A base is written once" in
+`docs/packs.md` was written for, because 21 is a `tax` box and not a `base`
+one, and it is not Estonia's shape either, because Estonia's KMD prints the
+acquisition in two *different* boxes (4 and 5) for the two sides while
+Montenegro's form prints the *same* box twice, once per total. The pack
+reaches it with one `tax` posting carrying `box: "21"` (the deductible side,
+account 276) and a second `tax` posting of the opposite sign carrying no box
+at all (the payable side, account 470, `factor: -100`) — a single reported
+number that both totals sum, and a second ledger line the return never prints
+because the first one already speaks for it.
+
+**Clearance for the cash register, not for the invoice.** The Zakon o
+fiskalizaciji u prometu proizvoda i usluga ("Sl. list CG", No. 46/19, in force
+1 June 2021 for cash and card sales) requires a taxpayer to report every sale
+and its fiscal receipt to the Tax Administration's server in real time through
+a certified fiscal service — a state-side clearance step, the same shape
+Poland's KSeF and Hungary's NAV live invoice reporting have. But what it
+clears is the retail receipt of a cash or card sale, not a structured invoice
+built on the semantic model of EN 16931 the way Peppol BIS, Factur-X or
+XRechnung are: `einvoicing.profile` stays null and `obligation` reads `none`
+rather than naming fiscalization as if it were one of those profiles, for the
+same reason `packs/ua/` left the Єдиний реєстр податкових накладних out of
+that field. Nothing in this release reports a document to a tax
+administration's server as it is issued; a company that sells for cash needs
+that reporting from elsewhere until a fiscalization module exists.
+
+**A registration threshold with nowhere to live.** Article 42 makes a person
+whose turnover over the last twelve months does not exceed €30,000 not a
+taxpayer at all; there is no field of `defaults` or of `tax_report.json` this
+belongs on, since it answers "does this company file at all" rather than
+anything about a filed return, so it stays in the pack's README as prose next
+to the article that states it, the way Uruguay's and Paraguay's own
+thresholds do.

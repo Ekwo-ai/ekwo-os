@@ -1,0 +1,181 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "Godina knjiga crnogorskog PDV obveznika koji podnosi mjesečnu prijavu",
+  "chart": "default",
+  "fiscal_year": { "name": "2026. godina", "start": "2026-01-01", "end": "2026-12-31" },
+  "periods": [
+    { "code": "2026-01", "from": "2026-01-01", "to": "2026-01-31" },
+    { "code": "2026-02", "from": "2026-02-01", "to": "2026-02-28" }
+  ],
+  "statements": ["ME-FS-BS", "ME-FS-IS"],
+  "contacts": [
+    { "ref": "client-me", "name": "DOO \"Bjelasica Trade\" Podgorica", "type": "customer", "country": "ME" },
+    { "ref": "client-foreign", "name": "Alpine Handels GmbH", "type": "customer", "country": "DE" },
+    { "ref": "supplier-me", "name": "DOO \"Durmitor Snabdijevanje\" Podgorica", "type": "supplier", "country": "ME" },
+    { "ref": "supplier-foreign", "name": "Nordic Consulting GmbH", "type": "supplier", "country": "DE" }
+  ],
+  "documents": [
+    {
+      "ref": "V1",
+      "type": "sale_invoice",
+      "contact": "client-me",
+      "date": "2026-01-10",
+      "why": "Prodaja konsultantskih usluga po opštoj stopi 21% — redni broj 10/16.",
+      "lines": [
+        { "name": "Konsultantske usluge", "quantity": 1, "unit_price": 5000, "tax": "ME-S-21", "account": "612" }
+      ]
+    },
+    {
+      "ref": "V2",
+      "type": "sale_invoice",
+      "contact": "client-me",
+      "date": "2026-01-11",
+      "why": "Usluga smještaja u hotelu, snižena stopa 15% od 01.01.2025 (član 24a stav 2 tačka 2) — redni broj 11/17.",
+      "lines": [
+        { "name": "Usluga smještaja u hotelu", "quantity": 1, "unit_price": 2000, "tax": "ME-S-15", "account": "612" }
+      ]
+    },
+    {
+      "ref": "V3",
+      "type": "sale_invoice",
+      "contact": "client-me",
+      "date": "2026-01-12",
+      "why": "Prodaja hljeba i mliječnih proizvoda, snižena stopa 7% (član 24a stav 1 tačka 1) — redni broj 12/18.",
+      "lines": [
+        { "name": "Hljeb i mliječni proizvodi", "quantity": 500, "unit_price": 2, "tax": "ME-S-7", "account": "612" }
+      ]
+    },
+    {
+      "ref": "V4",
+      "type": "sale_invoice",
+      "contact": "client-foreign",
+      "date": "2026-01-13",
+      "why": "Izvoz opreme, nulta stopa (član 25 stav 1 tačka 1) — redni broj 13, bez iznosa poreza.",
+      "lines": [
+        { "name": "Izvoz opreme", "quantity": 1, "unit_price": 8000, "tax": "ME-S-EXPORT", "account": "613" }
+      ]
+    },
+    {
+      "ref": "V5",
+      "type": "sale_invoice",
+      "contact": "client-me",
+      "date": "2026-01-14",
+      "why": "Zakup stambenog prostora na 12 mjeseci, oslobođeno PDV (član 27 stav 1 tačka 3, stalno stanovanje duže od 60 dana) — redni broj 14, bez odbitka ulaznog PDV kod zakupca.",
+      "lines": [
+        { "name": "Zakup stambenog prostora, mjesečna rata", "quantity": 1, "unit_price": 1500, "tax": "ME-S-EXEMPT-LEASE", "account": "612" }
+      ]
+    },
+    {
+      "ref": "CN1",
+      "type": "sale_credit_note",
+      "contact": "client-me",
+      "date": "2026-01-20",
+      "why": "Djelimično umanjenje V1 zbog reklamacije dijela konsultantskih usluga — umanjuje istu osnovicu i porez rednog broja 10/16 u periodu izdavanja, a ne ispravlja V1.",
+      "lines": [
+        { "name": "Umanjenje konsultantskih usluga", "quantity": 1, "unit_price": 1000, "tax": "ME-S-21", "account": "612" }
+      ]
+    },
+    {
+      "ref": "V6",
+      "type": "sale_invoice",
+      "contact": "client-me",
+      "date": "2026-02-05",
+      "why": "Prodaja po opštoj stopi u drugom poreskom periodu — provjerava da prijava za februar računa samo svoj period.",
+      "lines": [
+        { "name": "Konsultantske usluge", "quantity": 1, "unit_price": 3000, "tax": "ME-S-21", "account": "612" }
+      ]
+    },
+    {
+      "ref": "P1",
+      "type": "purchase_invoice",
+      "contact": "supplier-me",
+      "date": "2026-01-15",
+      "why": "Nabavka kancelarijskog materijala i usluga po opštoj stopi 21% — pravo na odbitak, redni broj 19.",
+      "lines": [
+        { "name": "Kancelarijski materijal i usluge", "quantity": 1, "unit_price": 2000, "tax": "ME-P-21", "account": "539" }
+      ]
+    },
+    {
+      "ref": "P2",
+      "type": "purchase_invoice",
+      "contact": "supplier-me",
+      "date": "2026-01-16",
+      "why": "Smještaj na službenom putu, snižena stopa 15% — pravo na odbitak, redni broj 19.",
+      "lines": [
+        { "name": "Smještaj na službenom putu", "quantity": 1, "unit_price": 500, "tax": "ME-P-15", "account": "550" }
+      ]
+    },
+    {
+      "ref": "P3",
+      "type": "purchase_invoice",
+      "contact": "supplier-me",
+      "date": "2026-01-17",
+      "why": "Namirnice za ishranu zaposlenih, snižena stopa 7% — pravo na odbitak, redni broj 19.",
+      "lines": [
+        { "name": "Namirnice za zaposlene", "quantity": 1, "unit_price": 300, "tax": "ME-P-7", "account": "512" }
+      ]
+    },
+    {
+      "ref": "P4",
+      "type": "purchase_invoice",
+      "contact": "supplier-foreign",
+      "date": "2026-01-18",
+      "why": "Konsultantske usluge inostranog pružaoca bez sjedišta u Crnoj Gori — poreski dužnik je primalac usluge (član 12 stav 1 tačka 2), samooporezivanje po opštoj stopi 21%, redni broj 21, istovremeno u izlaznom i ulaznom PDV.",
+      "lines": [
+        { "name": "Konsultantske usluge inostranog pružaoca", "quantity": 1, "unit_price": 4000, "tax": "ME-P-FOREIGN", "account": "539" }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "E1",
+      "direction": "inbound",
+      "date": "2026-01-25",
+      "amount": 2300,
+      "contact": "client-me",
+      "journal": "BNK",
+      "match": "V2",
+      "why": "Uplata koja tačno izmiruje V2 (2000 + 300 PDV)."
+    },
+    {
+      "ref": "E2",
+      "direction": "inbound",
+      "date": "2026-01-26",
+      "amount": 1070,
+      "contact": "client-me",
+      "journal": "BNK",
+      "match": "V3",
+      "why": "Uplata koja tačno izmiruje V3 (1000 + 70 PDV)."
+    },
+    {
+      "ref": "E3",
+      "direction": "inbound",
+      "date": "2026-02-01",
+      "amount": 8000,
+      "contact": "client-foreign",
+      "journal": "BNK",
+      "match": "V4",
+      "why": "Uplata koja tačno izmiruje izvozni račun V4, bez PDV."
+    },
+    {
+      "ref": "S1",
+      "direction": "outbound",
+      "date": "2026-01-28",
+      "amount": 2420,
+      "contact": "supplier-me",
+      "journal": "BNK",
+      "match": "P1",
+      "why": "Plaćanje koje tačno izmiruje P1 (2000 + 420 PDV)."
+    },
+    {
+      "ref": "E4",
+      "direction": "inbound",
+      "date": "2026-02-10",
+      "amount": 1500,
+      "contact": "client-me",
+      "journal": "BNK",
+      "match": null,
+      "why": "Uplata bez vezivanja za konkretan dokument — ostaje otvoren iznos na računu klijenta."
+    }
+  ]
+}

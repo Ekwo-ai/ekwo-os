@@ -1,0 +1,180 @@
+[
+  {
+    "code": "ME-S-21",
+    "name": "PDV 21% — opšta stopa (prodaja)",
+    "rate": 21,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2018-01-01",
+    "legal_reference": "Zakon o porezu na dodatu vrijednost, član 24 — PDV se obračunava i plaća po opštoj stopi od 21% od svakog prometa proizvoda, usluga i uvoza proizvoda, osim prometa za koji je propisana snižena ili nulta stopa.",
+    "source": "pdv-zakon",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "10" },
+        { "type": "tax", "account": "470", "box": "16" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "10", "box_factor": -100 },
+        { "type": "tax", "account": "470", "box": "16", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "ME-S-15",
+    "name": "PDV 15% — smještaj, hrana i piće u ugostiteljstvu, knjige i dr. (prodaja)",
+    "rate": 15,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2025-01-01",
+    "legal_reference": "Zakon o porezu na dodatu vrijednost, član 24a stav 2 — snižena stopa od 15% se, između ostalog, obračunava i plaća na usluge smještaja u ugostiteljskim objektima za smještaj (tačka 2), na usluge pripremanja i usluživanja hrane, pića i napitaka u ugostiteljskim objektima, osim alkoholnih pića, gaziranih i negaziranih pića sa dodatkom šećera i kafe (tačka 3), i na knjige, monografske i serijske publikacije (tačka 1). Izmjena je uvedena Zakonom o izmjenama i dopuni Zakona o porezu na dodatu vrijednost, \"Sl. list CG\", br. 094/24 od 30.09.2024, u primjeni od 01.01.2025 (prije toga usluge smještaja bile su oporezovane po stopi od 7%).",
+    "source": "pdv-zakon",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "11" },
+        { "type": "tax", "account": "4711", "box": "17" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "11", "box_factor": -100 },
+        { "type": "tax", "account": "4711", "box": "17", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "ME-S-7",
+    "name": "PDV 7% — osnovni proizvodi za ljudsku ishranu i dr. (prodaja)",
+    "rate": 7,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2025-01-01",
+    "legal_reference": "Zakon o porezu na dodatu vrijednost, član 24a stav 1 tačka 1 — snižena stopa od 7% se obračunava i plaća na promet osnovnih proizvoda za ljudsku ishranu (hljeb, brašno, mlijeko i mliječni proizvodi, hrana za odojčad, mast, ulje, meso, jaja i šećer). Rate carries the same 7% since the amendment of \"Sl. list CG\", br. 094/24 od 30.09.2024 (u primjeni od 01.01.2025), koja je samo dio proizvoda i usluga sa stope 7% prebacila na novu stopu od 15%.",
+    "source": "pdv-zakon",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "12" },
+        { "type": "tax", "account": "4717", "box": "18" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "12", "box_factor": -100 },
+        { "type": "tax", "account": "4717", "box": "18", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "ME-S-EXPORT",
+    "name": "PDV 0% — izvoz proizvoda (prodaja)",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2018-01-01",
+    "legal_reference": "Zakon o porezu na dodatu vrijednost, član 25 stav 1 tačka 1 — PDV se plaća po stopi od 0% na proizvode koje iz Crne Gore izvozi prodavac, odnosno proizvode koje za njegov račun izvozi drugo lice.",
+    "source": "pdv-zakon",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "13" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "13", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "ME-S-EXEMPT-LEASE",
+    "name": "Oslobođeno PDV — dugoročni zakup stambenog prostora (prodaja)",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2018-01-01",
+    "legal_reference": "Zakon o porezu na dodatu vrijednost, član 27 stav 1 tačka 3 — plaćanja PDV su oslobođene usluge davanja u zakup ili podzakup kuća za stanovanje, stanova, odnosno stambenih prostora za stalno stanovanje duže od 60 dana, kao i zakup poljoprivrednog zemljišta ili šuma, koji su upisani u zemljišne knjige. Crna Gora je izvan zajedničkog sistema PDV Evropske unije (Direktiva 2006/112/EZ, član 5 stav 2, ne obavezuje kandidata za pristupanje), pa ovaj paket ne pripisuje kôd VATEX niti kategoriju BT-118/BT-151 ovoj tarifi — vidjeti docs/packs.md, odjeljak o zemljama van zajedničkog sistema PDV.",
+    "source": "pdv-zakon",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "14" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "14", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "ME-P-21",
+    "name": "PDV 21% — opšta stopa (nabavka)",
+    "rate": 21,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2018-01-01",
+    "legal_reference": "Zakon o porezu na dodatu vrijednost, član 24 (stopa) i član 37 (uslovi za odbijanje ulaznog PDV) — poreski obveznik može odbiti PDV koji je dužan da plati ili je platio prilikom nabavke proizvoda, odnosno usluga, ako ih koristi u svrhe ostvarivanja prihoda pri obavljanju oporezive djelatnosti.",
+    "source": "pdv-zakon",
+    "postings": {
+      "invoice": [
+        { "type": "base" },
+        { "type": "tax", "account": "270", "box": "19" }
+      ],
+      "credit_note": [
+        { "type": "base", "box_factor": -100 },
+        { "type": "tax", "account": "270", "box": "19", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "ME-P-15",
+    "name": "PDV 15% — smještaj, hrana i piće u ugostiteljstvu, knjige i dr. (nabavka)",
+    "rate": 15,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2025-01-01",
+    "legal_reference": "Zakon o porezu na dodatu vrijednost, član 24a stav 2 i član 37 — pravo na odbitak ulaznog PDV obračunatog po sniženoj stopi od 15% (usluge smještaja, hrane i pića u ugostiteljstvu, knjige), pod uslovima člana 37.",
+    "source": "pdv-zakon",
+    "postings": {
+      "invoice": [
+        { "type": "base" },
+        { "type": "tax", "account": "2715", "box": "19" }
+      ],
+      "credit_note": [
+        { "type": "base", "box_factor": -100 },
+        { "type": "tax", "account": "2715", "box": "19", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "ME-P-7",
+    "name": "PDV 7% — osnovni proizvodi za ljudsku ishranu i dr. (nabavka)",
+    "rate": 7,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2018-01-01",
+    "legal_reference": "Zakon o porezu na dodatu vrijednost, član 24a stav 1 tačka 1 i član 37 — pravo na odbitak ulaznog PDV obračunatog po sniženoj stopi od 7% na osnovne proizvode za ljudsku ishranu.",
+    "source": "pdv-zakon",
+    "postings": {
+      "invoice": [
+        { "type": "base" },
+        { "type": "tax", "account": "2717", "box": "19" }
+      ],
+      "credit_note": [
+        { "type": "base", "box_factor": -100 },
+        { "type": "tax", "account": "2717", "box": "19", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "ME-P-FOREIGN",
+    "name": "PDV 21% — usluge inostranih lica, poreski dužnik primalac (nabavka)",
+    "rate": 21,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2018-01-01",
+    "legal_reference": "Zakon o porezu na dodatu vrijednost, član 12 stav 1 tačka 2 — poreski dužnik PDV je poreski zastupnik, odnosno, kada ga poreski obveznik koji nema sjedište u Crnoj Gori ne imenuje, primalac proizvoda, odnosno usluga plaća PDV. Obrazac PR PDV-2, redni broj 21 (\"PDV na usluge inostranih lica\") — iznos se istovremeno iskazuje kao dio izlaznog PDV (obračunat na uslugu, redni broj 24) i kao dio ulaznog PDV (pretporez, redni broj 25), pod uslovom da poreski obveznik ima pravo na odbitak prema članu 37. Ovaj paket pretpostavlja opštu stopu od 21% za samooporezovanu uslugu; kad bi osnovna usluga, da je izvršio rezident, nosila sniženu stopu, treba provjeriti sa računovođom.",
+    "source": "pdv-zakon",
+    "postings": {
+      "invoice": [
+        { "type": "base" },
+        { "type": "tax", "account": "276", "box": "21" },
+        { "type": "tax", "account": "470", "factor": -100 }
+      ],
+      "credit_note": [
+        { "type": "base", "box_factor": -100 },
+        { "type": "tax", "account": "276", "box": "21", "box_factor": -100 },
+        { "type": "tax", "account": "470", "factor": -100, "box_factor": -100 }
+      ]
+    }
+  }
+]
