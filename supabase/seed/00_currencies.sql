@@ -70,5 +70,6 @@ insert into currencies (code, name, symbol, decimal_places) values
   ('MKD', 'Macedonian denar',     E'ден.', 2),
   ('ALL', 'Albanian lek',         'L',       2),
   ('GHS', 'Ghanaian cedi',        E'GH₵', 2),
-  ('TZS', 'Tanzanian shilling',   'TSh',     2)
+  ('TZS', 'Tanzanian shilling',   'TSh',     2),
+  ('BHD', 'Bahraini dinar',       E'.د.ب', 3)
 on conflict (code) do nothing;

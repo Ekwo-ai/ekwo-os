@@ -1809,3 +1809,28 @@ on conflict (code) do update set
   eu_vat_to       = excluded.eu_vat_to,
   vat_prefix      = excluded.vat_prefix,
   legal_reference = excluded.legal_reference;
+
+-- ---------------------------------------------------------------------------
+-- Bahrain — a State outside the common system of VAT, member of the GCC
+--
+-- Directive 2006/112/EC, article 5(2): the common system of VAT applies in
+-- the territory of the Community as defined by the Treaties, and a State
+-- outside it is a third country for every rule the Directive carries. The
+-- Kingdom of Bahrain levies a value added tax of its own under Legislative
+-- Decree No. (48) of 2018, article 3, at a standard rate of 10% since
+-- 1 January 2022 (Law No. (33) of 2021), the rate having been 5% from
+-- 1 January 2019.
+-- ---------------------------------------------------------------------------
+
+insert into territories (code, code_source, name, parent_code, eu_vat_scope, eu_vat_from, eu_vat_to, vat_prefix, legal_reference) values
+  ('BH', 'iso_3166_1', 'Bahrain', null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. The Kingdom of Bahrain levies a value added tax of its own under Legislative Decree No. (48) of 2018, article 3, as amended by Law No. (33) of 2021, at a standard rate of 10% since 1 January 2022 — 5% from 1 January 2019 before that (Legislation and Legal Opinion Commission, consolidated English rendering).')
+on conflict (code) do update set
+  code_source     = excluded.code_source,
+  name            = excluded.name,
+  parent_code     = excluded.parent_code,
+  eu_vat_scope    = excluded.eu_vat_scope,
+  eu_vat_from     = excluded.eu_vat_from,
+  eu_vat_to       = excluded.eu_vat_to,
+  vat_prefix      = excluded.vat_prefix,
+  legal_reference = excluded.legal_reference;

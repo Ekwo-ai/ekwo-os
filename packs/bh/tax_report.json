@@ -1,0 +1,108 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "BH-VAT-RETURN",
+  "name": "الإقرار الضريبي — ضريبة القيمة المضافة",
+  "period": ["month", "quarter"],
+  "valid_from": "2019-01-01",
+  "legal_reference": "VAT Law, Article 35: the Tax Period is set by the Regulations, no shorter than one month. Executive Regulations, Article 48(A): a Taxable Person whose annual Supplies declared for registration exceed BHD 3,000,000 files monthly, on the Gregorian calendar month; one whose annual Supplies do not exceed that figure files quarterly, on the calendar quarters 1 January to 31 March, 1 April to 30 June, 1 July to 30 September and 1 October to 31 December (VAT General Guide, section 12.2, repeats the same threshold and the same quarters). No cadence is proposed as the one every registrant gets: which of the two a company files on turns entirely on its own annual Supplies, the same shape packs/lu records for its own VAT return. Article 48(C) additionally lets a Taxable Person below the BHD 3,000,000 threshold ask the Bureau to move to monthly filing, and Article 48(B) lets the Bureau reassign a Taxable Person's period for reasons it determines, on three months' notice — elections and adjustments this pack's `period` list does not need a third cadence to state, since both outcomes are `month`.",
+  "source": "vat-exec-reg",
+  "deadline": {
+    "rule": "last_day_of_month_after_period",
+    "legal_reference": "VAT Law, Article 36, first paragraph: a Taxable Person submits a Tax Return for each Tax Period 'by no later than the last day of the month following the end of the Tax Period concerned.' VAT General Guide, section 12.3.2: 'A VATable person should submit a VAT return using the NBR's online portal and make the payment of the VAT due by the last day of the month following the end of the VAT period' — filing and payment share the one deadline. Article 36, second paragraph: a return is due even where the Taxable Person made no purchase, import or supply in the Tax Period.",
+    "source": "vat-law"
+  },
+  "boxes": [
+    {
+      "box": "a1",
+      "kind": "base",
+      "name": "قيمة المبيعات الخاضعة للمعدل القياسي 10%",
+      "legal_reference": "VAT Law, Article 3, as replaced by Law No. 33 of 2021: the value of a domestic supply taxed at the standard rate of 10%. VAT Law, Article 36: the return discloses 'all Imports and Supplies he has made or received during that Tax Period' — this pack's research could not open a directly-fetchable, currently-in-force NBR text naming the exact on-screen boxes of the live return, so the boxes here are this pack's own construction, built letter by letter on that requirement and on section 12.3.1 of the VAT General Guide ('the total output VAT due, and the total input VAT recoverable'). A reviewer who has filed on the NBR portal should check this first.",
+      "source": "vat-law",
+      "sequence": 10
+    },
+    {
+      "box": "a2",
+      "kind": "tax",
+      "name": "الضريبة المستحقة على قيمة الصندوق a1",
+      "legal_reference": "Output Tax charged on box a1, VAT Law Article 3.",
+      "source": "vat-law",
+      "sequence": 20
+    },
+    {
+      "box": "b",
+      "kind": "base",
+      "name": "قيمة المبيعات الخاضعة لنسبة الصفر",
+      "legal_reference": "VAT Law, Article 53: every transaction the zero-rate chapter names — the export of goods and of services, basic food items, healthcare, education, the construction of new buildings, local transportation, and oil, oil derivatives and gas among them — carries no Tax and is stated once in this box, exactly as Chapter Thirteen of the Law states the zero rate once for all of them.",
+      "source": "vat-law",
+      "sequence": 30
+    },
+    {
+      "box": "c",
+      "kind": "base",
+      "name": "قيمة المبيعات المعفاة",
+      "legal_reference": "VAT Law, Articles 54 and 55: the value of an exempt supply of financial services or of real estate.",
+      "source": "vat-law",
+      "sequence": 40
+    },
+    {
+      "box": "e1",
+      "kind": "base",
+      "name": "قيمة السلع والخدمات المستلمة من مورد غير مقيم، احتساب عكسي",
+      "legal_reference": "VAT Law, Article 4, second indent: the value of Goods or Services a taxable customer receives in the Kingdom from a non-resident supplier, self-assessed under the Reverse Charge Mechanism.",
+      "source": "vat-law",
+      "sequence": 50
+    },
+    {
+      "box": "e2",
+      "kind": "tax",
+      "name": "الضريبة المحتسبة ذاتيًا على قيمة الصندوق e1",
+      "legal_reference": "The Tax the customer self-assesses on box e1 under the Reverse Charge Mechanism, VAT Law Article 4; no clause of Article 36 names this figure separately from the value in e1, but a value reported without the Tax it carries would leave the Due Tax of box h short by exactly this amount, the same reasoning packs/ae and packs/eg record for their own self-assessment box.",
+      "source": "vat-law",
+      "sequence": 60
+    },
+    {
+      "box": "f1",
+      "kind": "base",
+      "name": "قيمة المشتريات التي تخصم عنها الضريبة",
+      "legal_reference": "VAT Law, Article 42: the value of Goods and Services, whether purchased domestically, imported or received under the Reverse Charge Mechanism, whose Input Tax the Taxable Person seeks to deduct.",
+      "source": "vat-law",
+      "sequence": 70
+    },
+    {
+      "box": "f2",
+      "kind": "tax",
+      "name": "الضريبة القابلة للخصم على قيمة الصندوق f1، متضمنة نصيب الصندوق e2 القابل للخصم",
+      "legal_reference": "VAT Law, Article 42: the Deductible Tax on box f1, including the recoverable share of the Tax self-assessed in box e2 to the extent it is used to make a Taxable Supply.",
+      "source": "vat-law",
+      "sequence": 80
+    },
+    {
+      "box": "h",
+      "kind": "total",
+      "name": "إجمالي الضريبة المستحقة عن الفترة",
+      "legal_reference": "The period's total Tax due before deduction of Input Tax: the output Tax of box a2 and the Tax self-assessed in box e2.",
+      "source": "vat-law",
+      "plus": ["a2", "e2"],
+      "sequence": 90
+    },
+    {
+      "box": "i",
+      "kind": "total",
+      "name": "إجمالي الضريبة القابلة للخصم عن الفترة",
+      "legal_reference": "The period's total Deductible Tax, box f2.",
+      "source": "vat-law",
+      "plus": ["f2"],
+      "sequence": 100
+    },
+    {
+      "box": "j",
+      "kind": "total",
+      "name": "صافي الضريبة المستحقة السداد أو الفائض القابل للترحيل",
+      "legal_reference": "VAT Law, Article 58: the Taxable Person may ask the Bureau to carry forward excess net recoverable Tax to a subsequent Tax Period; Article 57 lets the Bureau refund Tax paid in excess instead. No floor at zero: a negative figure is the excess this pack carries forward or lets the Taxable Person reclaim.",
+      "source": "vat-law",
+      "plus": ["h"],
+      "minus": ["i"],
+      "sequence": 110
+    }
+  ]
+}

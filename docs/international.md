@@ -5526,3 +5526,35 @@ two parties to the document being posted; an agent who is neither of them
 has no field to be named in, the same gap Kenya's own withholding VAT
 agents left open above. `packs/tz/` carries no tax under this mechanism and
 states the gap in its own README.
+
+## From Bahrain
+
+**An elective domestic reverse charge granted by certificate, where the
+format has a flat `treatment` and no field for an approval.** Executive
+Regulations Article 66 lets a Taxable Person "primarily engaged in making
+Intra-GCC Supplies or Exports of Goods" apply to the Bureau for a certificate
+to self-account for Tax on certain standard-rated purchases instead of
+paying it to the supplier — a right granted per applicant, on conditions the
+Bureau verifies, and revocable, none of which a `treatment` on a tax code can
+state: `domestic_reverse_charge` in this vocabulary is a flat rule the law
+applies to everyone who meets it, not a certificate a named company holds.
+`packs/bh/` carries no tax under this mechanism and states the gap in its own
+README rather than writing a code that would apply whether or not the buyer
+actually holds the certificate.
+
+**Deferred import VAT, where the ledger has one posting moment for an
+import.** Executive Regulations Article 22 lets an NBR-approved, Customs-
+bonded importer defer the cash otherwise due at the border (Article 65(A))
+to the periodic return instead, a postponed-accounting scheme close to the
+double posting `docs/packs.md` shows for Estonia's intra-Community
+acquisition of goods. `packs/bh/`'s own `BH-P-IMPORT` models only the
+ordinary case paid at Customs; the deferral is an approval a company applies
+for and not a fact its invoices carry, so a first `community` version does
+not model it.
+
+**A periodic return whose live, on-screen boxes this pack's research could
+not verify against a directly-fetchable primary NBR text**, the same gap
+`packs/sa/` and `packs/eg/` record for their own returns. `tax_report.json`
+is built letter by letter on what article 36 of the VAT Law requires a
+return to disclose, not on a transcription of the portal a filer actually
+sees.

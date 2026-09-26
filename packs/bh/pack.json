@@ -1,0 +1,151 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "BH",
+  "name": "البحرين",
+  "version": "0.1.0",
+  "schema_min": "20260923110000",
+  "seed_sequence": 117,
+  "released_at": "2026-09-26",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "vat-law",
+        "title": "Legislative Decree No. (48) of 2018 Promulgating the Value Added Tax Law, Official Gazette No. 3387 of 6 October 2018 (Legislation and Legal Opinion Commission English rendering)",
+        "publisher": "Legislation and Legal Opinion Commission (LLOC)",
+        "url": "https://www.lloc.gov.bh/FullEn/L4818.docx",
+        "consulted_on": "2026-09-26",
+        "kind": "law"
+      },
+      {
+        "key": "vat-amendment",
+        "title": "Law No. (33) of 2021 Amending Some Provisions of the Value Added Tax Law Promulgated by Legislative Decree No. (48) of 2018, Official Gazette No. 3572, issued 23 December 2021 — the increase of the standard rate from 5% to 10%",
+        "publisher": "Legislation and Legal Opinion Commission (LLOC)",
+        "url": "https://www.lloc.gov.bh/FullEn/K3321.docx",
+        "consulted_on": "2026-09-26",
+        "kind": "law"
+      },
+      {
+        "key": "vat-exec-reg",
+        "title": "Resolution No. (12) of 2018 Issuing the Executive Regulations of the Value Added Tax Law (unofficial English translation)",
+        "publisher": "National Bureau for Revenue — unofficial translation circulated by Grant Thornton Bahrain, no official NBR or LLOC English text of this Resolution could be opened by this pack's research",
+        "url": "https://www.grantthornton.bh/globalassets/1.-member-firms/uae/new-blocks/insights/executive-regulations-of-the-vat-law.pdf",
+        "consulted_on": "2026-09-26",
+        "kind": "regulation"
+      },
+      {
+        "key": "vat-general-guide",
+        "title": "Kingdom of Bahrain VAT General Guide, Version 1.13",
+        "publisher": "National Bureau for Revenue (NBR)",
+        "url": "https://s3-me-south-1.amazonaws.com/nbrproduserdata-bh/media/SKcLyyq0ZSdlU2yvo1qBqgpsLECjzxfHnC9mG1dk.pdf",
+        "consulted_on": "2026-09-26",
+        "kind": "guidance"
+      },
+      {
+        "key": "nbr-vat-portal",
+        "title": "Value Added Tax — the National Bureau for Revenue's own VAT section, where a registrant files and pays",
+        "publisher": "National Bureau for Revenue (NBR)",
+        "url": "https://www.nbr.gov.bh/vat",
+        "consulted_on": "2026-09-26",
+        "kind": "portal"
+      },
+      {
+        "key": "ifrs-profile",
+        "title": "IFRS Standards — Application Around the World, Jurisdictional Profile: Bahrain (profile last updated 16 June 2016)",
+        "publisher": "IFRS Foundation",
+        "url": "https://www.ifrs.org/content/dam/ifrs/publications/jurisdictions/pdf-profiles/bahrain-ifrs-profile.pdf",
+        "consulted_on": "2026-09-26",
+        "kind": "guidance"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "BHD",
+    "language": "ar",
+    "rounding_method": "half_up",
+    "closing_style": "retained_earnings",
+    "fiscal_year_default": "calendar",
+    "roles": {
+      "receivable": "1100",
+      "payable": "2000",
+      "suspense": "2990",
+      "rounding": "6990",
+      "retained_earnings": "3200",
+      "sales": "4000",
+      "purchase": "5000",
+      "bank": "1010",
+      "cash": "1000",
+      "fx_gain": "4700",
+      "fx_loss": "6950",
+      "asset_disposal_gain": "4750",
+      "asset_disposal_loss": "6960",
+      "tax_payable": "2110",
+      "tax_receivable": "1155"
+    },
+    "journal_roles": {
+      "sales": "SAL",
+      "purchase": "PUR",
+      "miscellaneous": "GEN",
+      "opening": "OPN"
+    }
+  },
+  "languages": [
+    "en"
+  ],
+  "journals": [
+    { "code": "SAL", "type": "sales", "name": "دفتر يومية المبيعات", "sequence": 10 },
+    { "code": "PUR", "type": "purchase", "name": "دفتر يومية المشتريات", "sequence": 20 },
+    { "code": "BNK", "type": "bank", "name": "البنك", "sequence": 30 },
+    { "code": "CSH", "type": "cash", "name": "الصندوق", "sequence": 40 },
+    { "code": "GEN", "type": "general", "name": "دفتر اليومية العامة", "sequence": 50 },
+    { "code": "OPN", "type": "opening", "name": "أرصدة افتتاحية", "sequence": 60 }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "الدليل المحاسبي المرجعي لمملكة البحرين",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": ["BH-IFRSSME-SFP", "BH-IFRSSME-IS"],
+      "legal_reference": "This pack's research found no legally mandated chart of accounts for a Bahraini company. What the law prescribes is the reporting framework: Article 219 of the Commercial Companies Law (Legislative Decree No. 21 of 2001) conditions a clean audit opinion on financial statements 'prepared according to the international accounting standards or to the standards approved by the competent authority', and the IFRS Foundation's own Jurisdictional Profile records that Bahrain has adopted IFRS Accounting Standards and the IFRS for SMEs Standard, that there is no local GAAP, and that 'all SMEs are permitted to use the IFRS for SMEs Standard'. This pack's research did not open a Ministry of Industry, Commerce and Tourism text naming a chart of accounts of its own, and none is known to exist alongside a framework requirement stated this way. The chart below is therefore this pack's own construction, exactly as packs/ae and packs/sa build theirs on the same absence of a national numbering: four digits, blocked so that each range reaches one line item of the statement of financial position and the income statement below, carrying the accounts a Bahraini company actually keeps — VAT input and output tax apart from the net amount due to or from the National Bureau for Revenue, VAT deferred at import, and an end-of-service gratuity provision under the Labour Law for the Private Sector (Law No. 36 of 2012). A reviewer should check it against a real Bahraini company's books before it is trusted.",
+      "source": "ifrs-profile"
+    }
+  ],
+  "documents": {
+    "numbering": "sequential",
+    "number_format": "{CODE}-{YYYY}-{NNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "earliest_of_delivery_or_payment",
+    "references": {
+      "numbering": {
+        "legal_reference": "Executive Regulations, Article 52(A)(5): a Tax Invoice states 'a sequential invoice number.' The article asks for a number that runs in sequence and not, in the text this pack's research could open, that the series carry no gap, which is why the style is `sequential` and not a gapless one.",
+        "source": "vat-exec-reg"
+      },
+      "tax_point": {
+        "legal_reference": "VAT Law, Article 12: 'Tax is due on the date of the Supply of the Goods or Services, the date of issue of a Tax Invoice, or the date of receipt of Consideration in full or in part, to the extent of the received amount, whichever comes first.' That is a three-way earliest test — supply, invoice, payment — and the closed vocabulary of this field has no value for three triggers at once. `earliest_of_delivery_or_payment` is the nearest of the five and is what the rule reduces to in the ordinary case, because Article 39 of the Law already requires the Tax Invoice by the fifteenth day of the month following the month of supply; a supply invoiced ahead of delivery is the case this approximation misses, the same gap packs/sa, packs/ae and packs/eg record for their own three-way wording.",
+        "source": "vat-law"
+      }
+    },
+    "mentions": [
+      {
+        "code": "reverse_charge",
+        "applies_when": "reverse_charge",
+        "text": "Reverse charge: the Customer must account for the Tax due on this supply under Article 4 of Legislative Decree No. 48 of 2018.",
+        "sequence": 10,
+        "legal_reference": "VAT Law, Article 4: a taxable customer who receives Goods or Services in the Kingdom from a non-resident supplier accounts for the Tax 'in accordance with the Reverse Charge Mechanism by declaring it on the Tax Return.' This pack's research found no article requiring a specific printed sentence on the non-resident supplier's own invoice for this case, unlike Saudi Arabia's Article 53(5)(d); the wording here is this pack's own.",
+        "source": "vat-law"
+      }
+    ]
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "obligation": "none",
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "At the day this pack was released, no statute obliges a Bahraini business to exchange electronic invoices with another. The VAT General Guide, section 9.2.1, records only that 'a VAT registered person may issue and retain VAT Invoices, credit and debit notes and other documents that evidence his supply in an electronic form' without prior approval from the NBR once its own systems meet Articles 52 to 54 of the Executive Regulations — a permission to keep an invoice as a PDF, not a structured-format exchange or a clearance regime, and this pack's research found no NBR or LLOC text past that point naming a format, a network, a party identifier or an effective date. Public reporting from mid-2026 describes a nationwide business-to-business e-invoicing platform at the tender and procurement stage since 2022, with no technical specification or legislated date published; this pack's own research could not open a directly-fetchable primary NBR text confirming any of it, so nothing beyond the permission the General Guide itself states is carried here. docs/international.md records the gap.",
+    "source": "vat-general-guide"
+  }
+}

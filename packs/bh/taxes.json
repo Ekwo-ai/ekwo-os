@@ -1,0 +1,352 @@
+[
+  {
+    "code": "BH-S-STD",
+    "name": "بيع، معدل قياسي 10%",
+    "description": "A domestic supply of Goods or Services that is neither zero-rated nor exempt.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 10,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2022-01-01",
+    "legal_reference": "Law No. 33 of 2021, Article Three, replacing Paragraph One of Article 3 of the VAT Law: 'Tax shall be imposed at a standard rate of (10%) of the value of a supply or import, unless a specific provision is made in this Law to exempt from Tax or to impose Tax at a zero rate.' Article Five of Law No. 33 of 2021 brings this into force on 1 January 2022; before that day the same Article 3 of the VAT Law set the rate at 5% from 1 January 2019, the day the tax itself took effect. Article Four of Law No. 33 of 2021 keeps a contract concluded before the amendment at 5% until the earlier of the contract's own term, its amendment or renewal, or one year from 1 January 2022 — a transitional rule this pack's golden scenario, dated 2026, does not need to exercise.",
+    "source": "vat-amendment",
+    "vat_category": "S",
+    "sequence": 10,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "a1" },
+        { "type": "tax", "account": "2100", "box": "a2" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "a1", "box_factor": -100 },
+        { "type": "tax", "account": "2100", "box": "a2", "box_factor": -100 }
+      ]
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "BH-S-EXPORT-GOODS",
+    "name": "بيع، تصدير سلع",
+    "description": "Goods exported outside the territory of the Implementing States of the GCC Unified VAT Agreement.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2019-01-01",
+    "legal_reference": "VAT Law, Article 53, first transaction of the zero-rate chapter: 'The export of Goods outside the territory of the Implementing States.' Bahrain is outside the common system of VAT the Union directive governs, so this pack carries no `exemption_code` and states the article here instead — see BH-S-EXEMPT-FIN below and supabase/seed/00_territories.sql.",
+    "source": "vat-law",
+    "vat_category": "G",
+    "sequence": 20,
+    "postings": {
+      "invoice": [ { "type": "base", "box": "b" } ],
+      "credit_note": [ { "type": "base", "box": "b", "box_factor": -100 } ]
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "BH-S-EXPORT-SVC",
+    "name": "بيع، خدمات لعميل غير مقيم خارج دول المجلس",
+    "description": "A service supplied by a resident taxable supplier to a customer who has no place of residence in the Kingdom or in any other Implementing State and who was outside the Kingdom when the service was performed, the service and its benefit both taking place outside the Implementing States.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2019-01-01",
+    "legal_reference": "Executive Regulations, Article 73: the zero rate applies to a supply of services by a resident taxable supplier where the customer 'has no Place of Residence in the Kingdom or any Implementing State and who was outside the Kingdom' when the service was performed, the service relates to tangible goods or real estate located outside the Implementing States, is performed outside their territory, and is enjoyed outside it — four conditions this pack's golden scenario states are all met by its own export-of-services line.",
+    "source": "vat-exec-reg",
+    "vat_category": "G",
+    "sequence": 30,
+    "postings": {
+      "invoice": [ { "type": "base", "box": "b" } ],
+      "credit_note": [ { "type": "base", "box": "b", "box_factor": -100 } ]
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "BH-S-ZR-FOOD",
+    "name": "بيع، سلع غذائية أساسية",
+    "description": "Food items on the list ratified by the Financial and Economic Cooperation Committee of the GCC, for human consumption, not supplied by a restaurant, coffee shop or similar establishment and not supplied by a caterer.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2019-01-01",
+    "legal_reference": "VAT Law, Article 53: the zero rate applies to 'the Supply and import of food as stipulated in Clause 1 of Article 31 of the [GCC Unified VAT] Agreement.' Executive Regulations, Article 80, the operative conditions: the zero rate reaches only goods that are not supplied by a restaurant, coffee shop or similar establishment and not supplied by caterers — a meal sold ready to eat is a supply of a restaurant service and stays at the standard rate however basic the food. VAT General Guide, section 6.3.5: 'the list of basic food items qualifying for the zero-rate [is] available on NBR website'; this pack's research did not open that list, so it carries the rule and not the schedule, exactly as `conditions` and its own limits describe.",
+    "source": "vat-exec-reg",
+    "vat_category": "Z",
+    "sequence": 40,
+    "postings": {
+      "invoice": [ { "type": "base", "box": "b" } ],
+      "credit_note": [ { "type": "base", "box": "b", "box_factor": -100 } ]
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "BH-S-ZR-CONSTRUCTION",
+    "name": "بيع، خدمات تشييد مبانٍ جديدة",
+    "description": "Construction services relating to a new building — a residential, commercial or industrial building not yet occupied — and the goods the constructor supplies in the course of that construction, used, installed or incorporated into the building or the land.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2019-01-01",
+    "legal_reference": "VAT Law, Article 53: 'The construction of new buildings' is zero-rated. Executive Regulations, Article 76: a 'building' is 'residential, commercial or industrial', new meaning 'it has not been occupied yet', and an extension of an existing building qualifies while demolition, architects' and interior design fees, restoration works and any service supplied after completion do not; a good qualifies only where it is 'used, installed or incorporated into the building or the land' by the person constructing it, which is why furniture not affixed to the building, landscaping, swimming pools and decorative fittings are excluded (VAT General Guide, section 6.3.9).",
+    "source": "vat-exec-reg",
+    "vat_category": "Z",
+    "sequence": 50,
+    "postings": {
+      "invoice": [ { "type": "base", "box": "b" } ],
+      "credit_note": [ { "type": "base", "box": "b", "box_factor": -100 } ]
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "BH-S-ZR-EDUCATION",
+    "name": "بيع، خدمات تعليم وما يرتبط بها",
+    "description": "Educational services and related goods and services supplied by a nursery, or a pre-primary, primary, secondary or higher education institution licensed by the competent authority in the Kingdom, to a student enrolled in it.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2019-01-01",
+    "legal_reference": "VAT Law, Article 53: educational services and associated goods and services supplied by nurseries and pre-school, primary, secondary and higher education institutions are zero-rated. Executive Regulations, Article 77: the zero rate applies 'only if the Supplies are made by a school or educational institution licensed by the competent authority in the Kingdom and provided to a student who is enrolled in that school or institution' — a licence and an enrolled student are both conditions, and a service bought by somebody other than the institution itself, or supplied to somebody not enrolled, stays at the standard rate.",
+    "source": "vat-exec-reg",
+    "vat_category": "Z",
+    "sequence": 60,
+    "postings": {
+      "invoice": [ { "type": "base", "box": "b" } ],
+      "credit_note": [ { "type": "base", "box": "b", "box_factor": -100 } ]
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "BH-S-ZR-HEALTHCARE",
+    "name": "بيع، خدمات رعاية صحية أساسية ووقائية",
+    "description": "Preventive and basic healthcare services and the goods and services associated with them, being qualifying medical services provided by a qualified medical professional or institution under the laws in force in the Kingdom.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2019-01-01",
+    "legal_reference": "VAT Law, Article 53: 'The Supply of preventive and basic healthcare Services and associated Goods and Services' is zero-rated. Executive Regulations, Article 69: the service must be 'qualifying medical Services provided by qualified medical professionals or qualified medical institutions pursuant to the laws and legislation in force in the Kingdom', and Paragraph B lists general medical health services, specialist services including surgery, and dental services among its examples. Article 71 zero-rates the supply or import of medicines and medical equipment on the same coordination with the Kingdom's medical bodies the Law itself asks for.",
+    "source": "vat-exec-reg",
+    "vat_category": "Z",
+    "sequence": 70,
+    "postings": {
+      "invoice": [ { "type": "base", "box": "b" } ],
+      "credit_note": [ { "type": "base", "box": "b", "box_factor": -100 } ]
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "BH-S-ZR-TRANSPORT",
+    "name": "بيع، نقل محلي للركاب والبضائع",
+    "description": "Transport of goods or passengers by land, water or air from a place inside the Kingdom to another place inside the Kingdom, by a person who meets the regulatory and licensing requirements to supply such services.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2019-01-01",
+    "legal_reference": "VAT Law, Article 53: 'the local transportation sector' is zero-rated. Executive Regulations, Article 78: the zero rate reaches transport of goods and passengers by land, water or air 'from a place inside the Kingdom to another place in the Kingdom', and Paragraph B refuses it to transport supplied by a person who does not meet the licensing requirements of the authorised body, and to the rental of a car without a driver — a chauffeured taxi or bus service qualifies, a self-drive rental does not.",
+    "source": "vat-exec-reg",
+    "vat_category": "Z",
+    "sequence": 80,
+    "postings": {
+      "invoice": [ { "type": "base", "box": "b" } ],
+      "credit_note": [ { "type": "base", "box": "b", "box_factor": -100 } ]
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "BH-S-ZR-OILGAS",
+    "name": "بيع، نفط ومشتقات نفطية وغاز",
+    "description": "The import and supply of oil, gas and other hydrocarbons, processed or unprocessed, the grant of a right to explore, extract or produce them, and oil and gas exploration services.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2019-01-01",
+    "legal_reference": "VAT Law, Article 53: 'Oil, oil derivatives and the gas sector' are zero-rated. Executive Regulations, Article 79(A): the zero rate covers 'the Import and Supply of oil, gas and other hydrocarbons, whether processed or unprocessed', the grant of a right to use, explore or exploit any part of the Kingdom to search for, extract or produce them, and the supply of oil and gas exploration services and the services related to oil and gas fields the article lists — design, drilling, rig installation, extraction, retrieval, separation, evaluation, feasibility studies and seismic surveys among them.",
+    "source": "vat-exec-reg",
+    "vat_category": "Z",
+    "sequence": 90,
+    "postings": {
+      "invoice": [ { "type": "base", "box": "b" } ],
+      "credit_note": [ { "type": "base", "box": "b", "box_factor": -100 } ]
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "BH-S-EXEMPT-FIN",
+    "name": "بيع، خدمات مالية معفاة",
+    "description": "A financial service related to a cash transaction — a loan, a Shari'ah-compliant equivalent, currency or derivative trading held for margin, a life insurance or reinsurance contract, or the transfer of an equity or debt security — remunerated otherwise than by an explicit fee, commission or commercial discount.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2019-01-01",
+    "legal_reference": "VAT Law, Article 54: 'The Supply of financial Services specified in the Regulations is exempt from Tax, except where the payment for the Service is expressed as a fee, commission or commercial discount.' Executive Regulations, Article 81(B): financial services means services related to cash transactions, including transactions the VAT General Guide, section 6.4.3, lists as interest on a loan and its Shari'ah-compliant equivalent, currency and derivative trading held for margin rather than a fee, and the provision or transfer of a life insurance or reinsurance contract; general insurance, and a brokerage, agency or asset-management service remunerated by a transaction or management fee, do not fall under the exemption and are taxed at the standard rate instead. Bahrain is outside the common system of VAT the Union directive governs, so `exemption_code` carries no VATEX code and the exempting article is stated here instead.",
+    "source": "vat-exec-reg",
+    "vat_category": "E",
+    "sequence": 100,
+    "postings": {
+      "invoice": [ { "type": "base", "box": "c" } ],
+      "credit_note": [ { "type": "base", "box": "c", "box_factor": -100 } ]
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "BH-S-EXEMPT-REALESTATE",
+    "name": "بيع أو تأجير عقار",
+    "description": "The sale, lease or licence of real estate — residential, commercial or bare land alike — other than hotel accommodation, short-term car parking, a function room or hall, serviced office space with no exclusive designated area, and utilities charged separately from the rent.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2019-01-01",
+    "legal_reference": "VAT Law, Article 55: 'The Supply of bare land and buildings by way of sale or rental shall be exempt from Tax.' VAT General Guide, section 6.4.2: the exemption reaches a sale, lease or licence of real estate 'regardless of whether the real estate is residential, commercial or land' — there is no zero-rated first supply of a new residential building in Bahrain, unlike the United Arab Emirates: a Bahraini new building's construction services are zero-rated under BH-S-ZR-CONSTRUCTION, and the completed building's own sale or lease is exempt under this code. Executive Regulations, Article 82(A): hotel accommodation, paid car parking for periods under one month, serviced office space where the customer has no exclusive designated space, a function room, hall or similar facility, and management, utility, telecommunications, internet or television charges billed separately from the rent are not treated as a sale or lease of real estate and stay at the standard rate. Bahrain is outside the common system of VAT the Union directive governs, so `exemption_code` carries no VATEX code and the exempting article is stated here instead.",
+    "source": "vat-exec-reg",
+    "vat_category": "E",
+    "sequence": 110,
+    "postings": {
+      "invoice": [ { "type": "base", "box": "c" } ],
+      "credit_note": [ { "type": "base", "box": "c", "box_factor": -100 } ]
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "BH-P-STD",
+    "name": "شراء، معدل قياسي 10%، ضريبة قابلة للخصم",
+    "description": "A domestic purchase taxed at the standard rate, whose input tax is deducted against the tax due on the buyer's own supplies.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 10,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2022-01-01",
+    "legal_reference": "VAT Law, Article 42: the Deductible Tax for a Taxable Person is 'the Input Tax paid or receivable on Goods and Services supplied to him ... for the purpose of carrying out Taxable Supplies.' Executive Regulations, Article 57, and Article 48 of the Law on the return declaring it.",
+    "source": "vat-law",
+    "vat_category": "S",
+    "sequence": 120,
+    "recoverable": true,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "f1" },
+        { "type": "tax", "account": "1150", "box": "f2" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "f1", "box_factor": -100 },
+        { "type": "tax", "account": "1150", "box": "f2", "box_factor": -100 }
+      ]
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "BH-P-IMPORT",
+    "name": "استيراد سلع، ضريبة تحصّل عند الإفراج الجمركي",
+    "description": "Imported goods, VAT paid to Customs Affairs at the Ministry of Interior on release of the goods, then deducted as an ordinary recoverable input.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 10,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2022-01-01",
+    "legal_reference": "Executive Regulations, Article 65(A): 'Tax due at import shall be paid to Customs Affairs at the Ministry of Interior ... in accordance with the established procedures for the payment and collection of customs duties.' VAT Law, Article 4, third indent, makes 'every Person appointed or recognised as an Importer' liable for it. Article 22 of the Executive Regulations lets an NBR-approved, Customs-bonded importer defer that cash payment to the periodic return instead; this pack models the ordinary case paid at the border and not that election — see the pack's README.",
+    "source": "vat-exec-reg",
+    "vat_category": null,
+    "sequence": 130,
+    "recoverable": true,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "f1" },
+        { "type": "tax", "account": "1150", "box": "f2" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "f1", "box_factor": -100 },
+        { "type": "tax", "account": "1150", "box": "f2", "box_factor": -100 }
+      ]
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "BH-P-RC",
+    "name": "شراء من مورد غير مقيم، احتساب عكسي",
+    "description": "Goods or Services received in the Kingdom from a supplier with no place of residence in the Kingdom, self-assessed by the Bahraini taxable customer and declared on the Tax Return.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 10,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2022-01-01",
+    "legal_reference": "VAT Law, Article 4, second indent: 'A taxable Customer who receives Goods or Services in the Kingdom from a Supplier who is a non-resident, in accordance with the Reverse Charge Mechanism by declaring it on the Tax Return' is liable for the Tax. The value of the supply for this purpose is the purchase price (Executive Regulations, Article 24, Paragraph on Reverse Charge value). The Tax self-assessed nets to zero on the amount due for a fully taxable buyer: recorded on account 2105 and box e2 as the amount payable, and recovered again in box f2 to the extent it is used to make a taxable supply, the same reasoning packs/eg and packs/sa record for their own import-of-services box.",
+    "source": "vat-law",
+    "vat_category": null,
+    "sequence": 140,
+    "recoverable": true,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "e1" },
+        { "type": "tax", "account": "1150", "box": "f2" },
+        { "type": "tax", "factor": -100, "account": "2105", "box": "e2" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "e1", "box_factor": -100 },
+        { "type": "tax", "account": "1150", "box": "f2", "box_factor": -100 },
+        { "type": "tax", "factor": -100, "account": "2105", "box": "e2", "box_factor": -100 }
+      ]
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "BH-P-ZR",
+    "name": "شراء سلع أو خدمات خاضعة لنسبة الصفر",
+    "description": "A domestic purchase of goods or services taxed at the zero rate — for instance the construction services of BH-S-ZR-CONSTRUCTION, or the basic food items of BH-S-ZR-FOOD, bought rather than sold — with no input tax to deduct because none was charged.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2019-01-01",
+    "legal_reference": "VAT Law, Article 53, the same zero-rate chapter cited on the sale side: a purchase of a zero-rated Good or Service carries a value but no Tax, so box f1 is stated and box f2 stays at zero for this line.",
+    "source": "vat-law",
+    "vat_category": "Z",
+    "sequence": 150,
+    "recoverable": true,
+    "postings": {
+      "invoice": [ { "type": "base", "box": "f1" } ],
+      "credit_note": [ { "type": "base", "box": "f1", "box_factor": -100 } ]
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "BH-P-EXEMPT",
+    "name": "شراء سلع أو خدمات معفاة",
+    "description": "A purchase of an exempt good or service — a financial service or a real estate rental — on which the supplier charges no VAT and the buyer has no input tax to deduct.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "exempt",
+    "valid_from": "2019-01-01",
+    "legal_reference": "VAT Law, Articles 54 and 55: a financial service and a sale or lease of real estate are exempt, so the supplier charges no Tax on them and there is none for the buyer to deduct under Article 42.",
+    "source": "vat-law",
+    "vat_category": "E",
+    "sequence": 160,
+    "postings": {
+      "invoice": [],
+      "credit_note": []
+    },
+    "exemption_code": null
+  }
+]
