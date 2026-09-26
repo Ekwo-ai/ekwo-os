@@ -1,0 +1,114 @@
+code,parent,type,reconcilable,name,sequence
+1,,asset_current,false,ACTIVO,10
+1.1,1,asset_current,false,ACTIVO CORRIENTE,20
+1.1.01,1.1,asset_cash,false,Efectivo y equivalentes de efectivo,30
+1.1.01.01,1.1.01,asset_cash,false,Caja general,40
+1.1.01.02,1.1.01,asset_cash,false,Caja chica,50
+1.1.01.03,1.1.01,asset_cash,false,Bancos,60
+1.1.02,1.1,asset_current,false,Activos financieros,70
+1.1.02.01,1.1.02,asset_current,false,Inversiones a corto plazo,80
+1.1.02.02,1.1.02,asset_current,false,Documentos por cobrar a corto plazo,90
+1.1.03,1.1,asset_current,false,Cuentas y documentos por cobrar comerciales,100
+1.1.03.01,1.1.03,asset_receivable,true,Clientes locales,110
+1.1.03.02,1.1.03,asset_receivable,true,Clientes del exterior,120
+1.1.03.03,1.1.03,asset_current,false,(-) Provision cuentas incobrables,130
+1.1.04,1.1,asset_current,false,Otras cuentas por cobrar,140
+1.1.04.01,1.1.04,asset_current,false,Anticipos a proveedores,150
+1.1.04.02,1.1.04,asset_current,false,Cuentas por cobrar empleados,160
+1.1.04.03,1.1.04,asset_current,false,Depositos en garantia,170
+1.1.05,1.1,asset_current,false,Inventarios,180
+1.1.05.01,1.1.05,asset_current,false,Inventario de mercaderias,190
+1.1.05.02,1.1.05,asset_current,false,Inventario de materia prima,200
+1.1.06,1.1,asset_prepayments,false,Servicios y otros pagos anticipados,210
+1.1.06.01,1.1.06,asset_prepayments,false,Seguros pagados por anticipado,220
+1.1.06.02,1.1.06,asset_prepayments,false,Arriendos pagados por anticipado,230
+1.1.07,1.1,asset_current,false,Activos por impuestos corrientes,240
+1.1.07.01,1.1.07,asset_current,true,Credito tributario de IVA por compensar,250
+1.1.07.02,1.1.07,asset_current,false,Retenciones en la fuente de impuesto a la renta que le han sido efectuadas,260
+1.1.07.03,1.1.07,asset_current,false,Anticipo de impuesto a la renta,270
+1.2,1,asset_non_current,false,ACTIVO NO CORRIENTE,280
+1.2.01,1.2,asset_fixed,false,Propiedades planta y equipo,290
+1.2.01.01,1.2.01,asset_fixed,false,Terrenos,300
+1.2.01.02,1.2.01,asset_fixed,false,Edificios,310
+1.2.01.03,1.2.01,asset_fixed,false,Muebles y enseres,320
+1.2.01.04,1.2.01,asset_fixed,false,Equipo de computacion,330
+1.2.01.05,1.2.01,asset_fixed,false,Vehiculos,340
+1.2.01.06,1.2.01,asset_fixed,false,Equipo de oficina,350
+1.2.01.07,1.2.01,asset_fixed,false,(-) Depreciacion acumulada edificios,360
+1.2.01.08,1.2.01,asset_fixed,false,(-) Depreciacion acumulada muebles y enseres,370
+1.2.01.09,1.2.01,asset_fixed,false,(-) Depreciacion acumulada equipo de computacion,380
+1.2.01.10,1.2.01,asset_fixed,false,(-) Depreciacion acumulada vehiculos,390
+1.2.01.11,1.2.01,asset_fixed,false,(-) Depreciacion acumulada equipo de oficina,400
+1.2.02,1.2,asset_non_current,false,Activos intangibles,410
+1.2.02.01,1.2.02,asset_non_current,false,Marcas y patentes,420
+1.2.02.02,1.2.02,asset_non_current,false,(-) Amortizacion acumulada activos intangibles,430
+2,,liability_current,false,PASIVO,440
+2.1,2,liability_current,false,PASIVO CORRIENTE,450
+2.1.01,2.1,liability_current,false,Cuentas y documentos por pagar,460
+2.1.01.01,2.1.01,liability_payable,true,Proveedores locales,470
+2.1.01.02,2.1.01,liability_payable,true,Proveedores del exterior,480
+2.1.01.03,2.1.01,liability_payable,true,Documentos por pagar proveedores,490
+2.1.02,2.1,liability_current,false,Obligaciones con instituciones financieras,500
+2.1.02.01,2.1.02,liability_current,false,Prestamos bancarios a corto plazo,510
+2.1.03,2.1,liability_current,false,Otras obligaciones corrientes con la administracion tributaria,520
+2.1.03.01,2.1.03,liability_current,false,Retenciones en la fuente de impuesto a la renta por pagar,530
+2.1.03.02,2.1.03,liability_current,false,Retenciones en la fuente de IVA por pagar,540
+2.1.03.03,2.1.03,liability_current,false,Impuesto a la renta por pagar del ejercicio,550
+2.1.04,2.1,liability_current,false,Impuesto al valor agregado,560
+2.1.04.01,2.1.04,liability_current,false,IVA en ventas tarifa 15%,570
+2.1.04.02,2.1.04,liability_current,false,Credito tributario de IVA en compras tarifa 15%,580
+2.1.04.03,2.1.04,liability_current,true,IVA por pagar del periodo,590
+2.1.05,2.1,liability_current,false,Otras cuentas por pagar,600
+2.1.05.01,2.1.05,liability_current,false,Anticipos de clientes,610
+2.1.05.02,2.1.05,liability_current,false,Obligaciones con el IESS,620
+2.1.05.03,2.1.05,liability_current,false,Participacion trabajadores por pagar,630
+2.2,2,liability_non_current,false,PASIVO NO CORRIENTE,640
+2.2.01,2.2,liability_non_current,false,Prestamos bancarios a largo plazo,650
+3,,equity,false,PATRIMONIO NETO,660
+3.1,3,equity,false,Capital,670
+3.1.01,3.1,equity,false,Capital suscrito y/o asignado,680
+3.1.02,3.1,equity,false,Aportes de socios o accionistas para futura capitalizacion,690
+3.3,3,equity,false,Reservas,700
+3.3.01,3.3,equity,false,Reserva legal,710
+3.6,3,equity_retained,false,Resultados acumulados,720
+3.6.01,3.6,equity_retained,false,Utilidades acumuladas,730
+3.6.02,3.6,equity_retained,false,(-) Perdidas acumuladas,740
+3.7,3,equity_retained,false,Resultados del ejercicio,750
+3.7.01,3.7,equity_retained,false,Ganancia neta del periodo,760
+3.7.02,3.7,equity_retained,false,(-) Perdida neta del periodo,770
+4,,income,false,INGRESOS,780
+4.1,4,income,false,Ingresos de actividades ordinarias,790
+4.1.01,4.1,income,false,Venta de bienes,800
+4.1.02,4.1,income,false,Prestacion de servicios,810
+4.1.03,4.1,income,false,Venta de bienes al exterior (exportaciones),820
+4.1.04,4.1,income,false,(-) Devoluciones en ventas,830
+4.2,4,income_other,false,Otros ingresos,840
+4.2.01,4.2,income_other,false,Intereses financieros ganados,850
+4.2.02,4.2,income_other,false,Ganancia en cambio,860
+4.2.03,4.2,income_other,false,Ajuste por redondeo,870
+5,,expense,false,GASTOS Y COSTOS,880
+5.1,5,expense_direct_cost,false,Costo de ventas,890
+5.1.01,5.1,expense_direct_cost,false,Costo de mercaderias vendidas,900
+5.1.02,5.1,expense_direct_cost,false,Compras netas,910
+5.2,5,expense,false,Gastos de administracion,920
+5.2.01,5.2,expense,false,Sueldos y beneficios sociales,930
+5.2.02,5.2,expense,false,Honorarios profesionales,940
+5.2.03,5.2,expense,false,Arrendamientos,950
+5.2.04,5.2,expense,false,Suministros y materiales,960
+5.2.05,5.2,expense,false,Mantenimiento y reparaciones,970
+5.2.06,5.2,expense_depreciation,false,Depreciacion propiedades planta y equipo,980
+5.2.07,5.2,expense,false,Servicios basicos,990
+5.2.08,5.2,expense,false,Seguros,1000
+5.2.09,5.2,expense,false,Impuestos contribuciones y otros,1010
+5.2.10,5.2,expense,false,Gastos de viaje,1020
+5.3,5,expense,false,Gastos de venta,1030
+5.3.01,5.3,expense,false,Publicidad y promocion,1040
+5.3.02,5.3,expense,false,Comisiones en ventas,1050
+5.3.03,5.3,expense,false,Transporte y fletes en ventas,1060
+5.3.04,5.3,expense,false,Empaques y embalajes,1070
+5.4,5,expense,false,Gastos financieros,1080
+5.4.01,5.4,expense,false,Intereses pagados,1090
+5.4.02,5.4,expense,false,Perdida en cambio,1100
+5.4.03,5.4,expense,false,Comisiones bancarias,1110
+5.5,5,expense,false,Gasto por impuesto a la renta,1120
+5.5.01,5.5,expense,false,Impuesto a la renta corriente,1130

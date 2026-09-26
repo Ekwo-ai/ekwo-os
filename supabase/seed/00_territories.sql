@@ -1294,3 +1294,32 @@ on conflict (code) do update set
   eu_vat_to       = excluded.eu_vat_to,
   vat_prefix      = excluded.vat_prefix,
   legal_reference = excluded.legal_reference;
+
+
+-- ---------------------------------------------------------------------------
+-- The row — Ecuador
+--
+-- A State of the Americas outside the common system of VAT the way Colombia
+-- and Peru are: Directive 2006/112/EC, article 5(2), applies the common
+-- system only in the territory of the Community as the Treaties define it.
+-- Ecuador levies an impuesto al valor agregado (IVA) of its own under the Ley
+-- de Régimen Tributario Interno (Codificación No. 2004-026), whose article 65
+-- sets the general rate — 15 per cent since 1 April 2024, by Decreto
+-- Ejecutivo No. 198 of 15 March 2024, within the 13-to-15 per cent range the
+-- article itself fixes. `vat_prefix` is null: an Ecuadorian taxpayer is
+-- identified by the Registro Único de Contribuyentes (RUC), which carries no
+-- ISO country prefix comparable to an EU VAT number.
+-- ---------------------------------------------------------------------------
+
+insert into territories (code, code_source, name, parent_code, eu_vat_scope, eu_vat_from, eu_vat_to, vat_prefix, legal_reference) values
+  ('EC', 'iso_3166_1', 'Ecuador', null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. Ecuador levies an impuesto al valor agregado (IVA) of its own under the Ley de Régimen Tributario Interno, whose article 65 sets the general rate, currently 15 per cent by Decreto Ejecutivo No. 198 of 15 March 2024.')
+on conflict (code) do update set
+  code_source     = excluded.code_source,
+  name            = excluded.name,
+  parent_code     = excluded.parent_code,
+  eu_vat_scope    = excluded.eu_vat_scope,
+  eu_vat_from     = excluded.eu_vat_from,
+  eu_vat_to       = excluded.eu_vat_to,
+  vat_prefix      = excluded.vat_prefix,
+  legal_reference = excluded.legal_reference;

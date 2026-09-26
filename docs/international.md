@@ -4586,3 +4586,58 @@ the guaraní has none, the way the yen and the CFA franc have none. `PY` is
 added to `00_territories.sql` outside the common system of VAT, on the same
 footing as `PE` and `AR`, so `vat_category`, `exemption_code` and the five
 `intracom_*` treatments are read the way every non-EU pack's are.
+
+## From Ecuador
+
+`packs/ec/`, `community`, seed 101, outside the common system of VAT the way
+Colombia and Peru are: `EC` is added to `00_territories.sql` with
+`eu_vat_scope` `none`; `USD` was already in `00_currencies.sql`, at two
+decimals, for the United States. Four things the format could not say, read
+from the Ley de Régimen Tributario Interno (LRTI) and its Reglamento
+(RALRTI).
+
+**A tax point that a single word cannot split by document type.**
+`documents.tax_point` reads a country's rule as one word for every document;
+LRTI art. 61 gives two different rules in the same article. Numeral 1, for a
+local transfer of goods, is `earliest_of_delivery_or_payment` almost exactly
+— delivery or payment, whichever happens first — and `packs/ec/` declares
+`delivery_date` instead, because the Reglamento de Comprobantes de Venta,
+art. 8, requires the invoice to be issued at the moment of delivery, which
+makes delivery the date a ledger actually holds in the ordinary case.
+Numeral 2, for a service, gives a **choice** rather than an order: the
+taxpayer elects between the service being effectively rendered and the
+payment being made, with neither the fixed principle nor a fixed derogation
+the closed vocabulary's five words can name. A service invoiced on collection
+under that election reads no differently from one invoiced on delivery in
+this pack, which is the gap `packs/ec/README.md` states under its own
+`documents.references.tax_point`.
+
+**A proportionality factor for input tax that turns on a fact outside any
+one document.** LRTI art. 66, inciso segundo, and RALRTI arts. 153 and 157
+prorate the credit tributario of a taxpayer who cannot attribute a purchase
+directly to a taxed sale or to a tarifa-cero sale with no right to credit, by
+a factor computed from the *previous fiscal year's* sales — a fact no
+document of the current year carries and no formula field of `tax_report.json`
+(`rate`/`rate_of`, a fixed percentage of one box) can compute, since the
+factor is not fixed but changes every year. `packs/ec/`'s box 564 takes the
+full input tax instead, correct only where every purchase can be attributed
+directly — true of its own golden scenario, not of every real company; see
+`packs/ec/README.md`.
+
+**A tax that falls due on collection where the sale itself is not cash-basis.**
+LRTI art. 67 defers the IVA of a sale made on credit for a month or longer to
+the instalment in which each part of the price is actually collected
+(Formulario 104, casilleros 480 to 486): not a `cash_basis` tax in this
+format's sense, where the whole tax of a document waits for its own payment
+in full, but a single invoice whose tax is split and dated by several later,
+partial collections the format has no way to attach to one posting. `packs/ec/`
+declares its general-rate sale tax without `cash_basis` and states the boxes
+it does not populate in its own README.
+
+**Two withholding regimes computed and remitted on a return this pack does
+not carry.** Retención en la fuente de IVA (a percentage — 10, 20, 30, 50, 70
+or 100 — of a supplier's invoiced IVA that a designated agent withholds and
+remits directly to the SRI) and retención en la fuente del impuesto a la
+renta (a withholding against a different tax altogether) are both filed on
+Formulario 103, which no pack of this repository models — the same shape as
+Colombia's ReteIVA and ReteFuente, left out for the same reason.

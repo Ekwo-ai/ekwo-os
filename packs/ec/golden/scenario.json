@@ -1,0 +1,103 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "name": "Un año de una comercializadora ecuatoriana, declarante mensual de IVA",
+  "chart": "default",
+  "fiscal_year": { "name": "Ejercicio 2026", "start": "2026-01-01", "end": "2026-12-31" },
+  "periods": [
+    { "code": "2026-01", "from": "2026-01-01", "to": "2026-01-31" },
+    { "code": "2026-02", "from": "2026-02-01", "to": "2026-02-28" }
+  ],
+  "statements": ["EC-NIIF-ESF", "EC-NIIF-ER"],
+  "contacts": [
+    { "ref": "cust-mercado", "name": "Comercial El Mercado S.A.", "type": "customer", "country": "EC" },
+    { "ref": "cust-estado", "name": "Gobierno Autónomo Descentralizado Municipal", "type": "customer", "country": "EC" },
+    { "ref": "cust-export", "name": "Andes Trading LLC", "type": "customer", "country": "US" },
+    { "ref": "sup-distribuidora", "name": "Distribuidora Nacional S.A.", "type": "supplier", "country": "EC" },
+    { "ref": "sup-panaderia", "name": "Panificadora San Jorge S.A.", "type": "supplier", "country": "EC" },
+    { "ref": "sup-tecnologia", "name": "Tecnología y Equipos del Ecuador S.A.", "type": "supplier", "country": "EC" }
+  ],
+  "documents": [
+    {
+      "ref": "V1", "type": "sale_invoice", "contact": "cust-mercado", "date": "2026-01-15",
+      "why": "Una venta de mercadería general a la tarifa del 15 %: prueba el casillero 401 y el IVA generado del 421.",
+      "lines": [{ "name": "Mercadería general", "quantity": 1, "unit_price": 5000.00, "tax": "EC-S-15", "account": "4.1.01" }]
+    },
+    {
+      "ref": "V2", "type": "sale_invoice", "contact": "cust-mercado", "date": "2026-01-18",
+      "why": "Una venta de pan, producto alimenticio de origen agrícola en estado natural gravado con tarifa cero sin derecho a crédito tributario (art. 55, numeral 1): prueba el casillero 403, sin impuesto generado.",
+      "lines": [{ "name": "Pan", "quantity": 1, "unit_price": 800.00, "tax": "EC-S-0", "account": "4.1.01" }]
+    },
+    {
+      "ref": "V3", "type": "sale_invoice", "contact": "cust-estado", "date": "2026-01-20",
+      "why": "Una venta de suministros de oficina a un gobierno autónomo descentralizado: tarifa cero con derecho a crédito tributario por tratarse de una venta a una institución del Estado (art. 57 y el artículo innumerado a continuación del art. 66): prueba el casillero 405, distinto del 403.",
+      "lines": [{ "name": "Suministros de oficina", "quantity": 1, "unit_price": 3000.00, "tax": "EC-S-0-PUBLICO", "account": "4.1.01" }]
+    },
+    {
+      "ref": "V4", "type": "sale_invoice", "contact": "cust-export", "date": "2026-02-05",
+      "why": "Una exportación de bienes, tarifa cero del art. 55, numeral 14: prueba el casillero 407.",
+      "lines": [{ "name": "Mercadería exportada", "quantity": 1, "unit_price": 8000.00, "tax": "EC-S-EXP", "account": "4.1.03" }]
+    },
+    {
+      "ref": "CN1", "type": "sale_credit_note", "contact": "cust-mercado", "date": "2026-02-10",
+      "why": "Una devolución parcial de la venta V1: prueba que la nota de crédito reduce los casilleros 401 y 421 del segundo período en vez de sumar una segunda base.",
+      "lines": [{ "name": "Devolución de mercadería general", "quantity": 1, "unit_price": 500.00, "tax": "EC-S-15", "account": "4.1.01" }]
+    },
+    {
+      "ref": "V5", "type": "sale_invoice", "contact": "cust-mercado", "date": "2026-02-12",
+      "why": "Una venta a la tarifa general en el segundo período, menor que las compras del mismo período: prueba que el saldo del formulario se calcula por período y exercita el casillero 602 (saldo a favor).",
+      "lines": [{ "name": "Mercadería general", "quantity": 1, "unit_price": 2000.00, "tax": "EC-S-15", "account": "4.1.01" }]
+    },
+    {
+      "ref": "C1", "type": "purchase_invoice", "contact": "sup-distribuidora", "date": "2026-01-10",
+      "why": "Una compra de mercadería general a la tarifa general, con derecho a crédito tributario: prueba el casillero 500 y el crédito del 520.",
+      "lines": [{ "name": "Mercadería general", "quantity": 1, "unit_price": 3000.00, "tax": "EC-P-15", "account": "5.1.02" }]
+    },
+    {
+      "ref": "C2", "type": "purchase_invoice", "contact": "sup-panaderia", "date": "2026-01-12",
+      "why": "Una compra de pan para su reventa, gravada con tarifa cero: prueba el casillero 507, sin crédito tributario.",
+      "lines": [{ "name": "Pan para reventa", "quantity": 1, "unit_price": 500.00, "tax": "EC-P-0", "account": "5.1.02" }]
+    },
+    {
+      "ref": "C3", "type": "purchase_invoice", "contact": "sup-tecnologia", "date": "2026-01-22",
+      "why": "Una compra local de un activo fijo (equipo de computación) a la tarifa general: prueba que el crédito tributario de un activo fijo cae en los casilleros 501 y 521, distintos de los 500 y 520 de una compra ordinaria.",
+      "lines": [{ "name": "Equipo de computación", "quantity": 1, "unit_price": 1200.00, "tax": "EC-P-15-FIJO", "account": "1.2.01.04" }]
+    },
+    {
+      "ref": "CN2", "type": "purchase_credit_note", "contact": "sup-distribuidora", "date": "2026-02-08",
+      "why": "Una devolución parcial de la compra C1: prueba que la nota de crédito de una compra reduce los casilleros 500 y 520 en vez de sumar una segunda base.",
+      "lines": [{ "name": "Devolución de mercadería general", "quantity": 1, "unit_price": 300.00, "tax": "EC-P-15", "account": "5.1.02" }]
+    },
+    {
+      "ref": "C4", "type": "purchase_invoice", "contact": "sup-distribuidora", "date": "2026-02-15",
+      "why": "Una compra grande en el segundo período, mayor que las ventas de ese mismo período: deja el período en crédito tributario, para probar el casillero 602 junto con V4 y V5.",
+      "lines": [{ "name": "Mercadería general", "quantity": 1, "unit_price": 6000.00, "tax": "EC-P-15", "account": "5.1.02" }]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "P1", "direction": "inbound", "date": "2026-01-25", "amount": 5750.00,
+      "contact": "cust-mercado", "journal": "BAN", "match": "V1",
+      "why": "El cliente paga exactamente la factura V1, antes de la nota de crédito: un pago que concilia una línea de clientes."
+    },
+    {
+      "ref": "P2", "direction": "inbound", "date": "2026-02-06", "amount": 8000.00,
+      "contact": "cust-export", "journal": "BAN", "match": "V4",
+      "why": "El cobro de la exportación V4, sin impuesto por tratarse de tarifa cero."
+    },
+    {
+      "ref": "P3", "direction": "outbound", "date": "2026-01-28", "amount": 3450.00,
+      "contact": "sup-distribuidora", "journal": "BAN", "match": "C1",
+      "why": "El pago de la compra C1 al proveedor, antes de la nota de crédito, dentro del mismo período."
+    },
+    {
+      "ref": "P4", "direction": "inbound", "date": "2026-01-30", "amount": 400.00,
+      "contact": "cust-mercado", "journal": "BAN", "match": null,
+      "why": "Un anticipo del cliente sin factura que salda: deja abierta la partida de V2 y V3, como sostiene un libro real."
+    },
+    {
+      "ref": "P5", "direction": "outbound", "date": "2026-02-20", "amount": 6900.00,
+      "contact": "sup-distribuidora", "journal": "BAN", "match": "C4",
+      "why": "El pago de la compra grande C4 del segundo período, para probar una conciliación de proveedores en ese período."
+    }
+  ]
+}

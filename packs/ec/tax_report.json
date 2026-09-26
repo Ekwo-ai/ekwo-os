@@ -1,0 +1,135 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "code": "EC-IVA-104",
+  "name": "Declaración del Impuesto al Valor Agregado — Formulario 104",
+  "period": ["month", "half_year"],
+  "legal_reference": "Ley de Régimen Tributario Interno, art. 67 — los sujetos pasivos del IVA declaran mensualmente dentro del mes siguiente a aquel en que se realizaron las operaciones; quienes transfieran exclusivamente bienes o presten exclusivamente servicios gravados con tarifa cero o no gravados, así como quienes estén sujetos a la retención total del IVA causado, presentan una declaración semestral. La ley no da una sola respuesta a todo declarante — depende de un hecho propio de cada uno, si sus ventas son exclusivamente de tarifa cero — por lo que este formulario no declara un period_default",
+  "source": "lrti",
+  "deadline": {
+    "rule": "depends_on_taxpayer",
+    "legal_reference": "Reglamento para la Aplicación de la Ley de Régimen Tributario Interno, art. 158 — el plazo para presentar la declaración y pago del IVA se asigna según el noveno dígito del Registro Único de Contribuyentes (RUC), entre el día 10 y el día 28 del mes siguiente al que se declara; los contribuyentes especiales, el sector público y los domiciliados en Galápagos tienen fechas propias fijadas por el mismo artículo",
+    "source": "ralrti"
+  },
+  "boxes": [
+    {
+      "box": "401",
+      "kind": "base",
+      "name": "Ventas locales (excluye activos fijos) gravadas tarifa diferente de cero",
+      "sequence": 10,
+      "legal_reference": "Formulario 104, casillero 401 — operaciones locales gravadas con tarifa diferente de cero, conforme los arts. 52 y 53 de la Ley de Régimen Tributario Interno",
+      "source": "form104"
+    },
+    {
+      "box": "421",
+      "kind": "tax",
+      "name": "IVA generado tarifa diferente de cero",
+      "sequence": 20,
+      "legal_reference": "Formulario 104, casillero 421 — impuesto generado sobre las ventas locales gravadas con tarifa diferente de cero del casillero 401",
+      "source": "form104"
+    },
+    {
+      "box": "403",
+      "kind": "base",
+      "name": "Ventas locales gravadas tarifa 0% que no dan derecho a crédito tributario",
+      "sequence": 30,
+      "legal_reference": "Formulario 104, casillero 403 — operaciones locales gravadas con tarifa 0%, conforme los arts. 55 y 56 de la Ley de Régimen Tributario Interno, sujetas a la regla general del art. 66 que no da derecho a crédito tributario",
+      "source": "form104"
+    },
+    {
+      "box": "405",
+      "kind": "base",
+      "name": "Ventas locales gravadas tarifa 0% que dan derecho a crédito tributario",
+      "sequence": 40,
+      "legal_reference": "Formulario 104, casillero 405 — operaciones gravadas con tarifa 0% de las excepciones del art. 57 y del artículo innumerado agregado a continuación del art. 66 de la Ley de Régimen Tributario Interno, entre ellas la venta a instituciones del Estado y empresas públicas",
+      "source": "form104"
+    },
+    {
+      "box": "407",
+      "kind": "base",
+      "name": "Exportaciones de bienes",
+      "sequence": 50,
+      "legal_reference": "Formulario 104, casillero 407 — exportaciones de bienes, tarifa cero del art. 55, numeral 14 de la Ley de Régimen Tributario Interno",
+      "source": "form104"
+    },
+    {
+      "box": "429",
+      "kind": "total",
+      "name": "Total impuesto generado",
+      "sequence": 60,
+      "plus": ["421"],
+      "legal_reference": "Formulario 104, casillero 429 — total del impuesto generado en las ventas y otras operaciones del período; este paquete solo declara el impuesto del casillero 421",
+      "source": "form104"
+    },
+    {
+      "box": "500",
+      "kind": "base",
+      "name": "Adquisiciones y pagos (excluye activos fijos) gravados tarifa diferente de cero, con derecho a crédito tributario",
+      "sequence": 70,
+      "legal_reference": "Formulario 104, casillero 500",
+      "source": "form104"
+    },
+    {
+      "box": "520",
+      "kind": "tax",
+      "name": "IVA en adquisiciones y pagos gravados tarifa diferente de cero",
+      "sequence": 80,
+      "legal_reference": "Formulario 104, casillero 520 — impuesto pagado en las adquisiciones del casillero 500",
+      "source": "form104"
+    },
+    {
+      "box": "501",
+      "kind": "base",
+      "name": "Adquisiciones locales de activos fijos gravados tarifa diferente de cero, con derecho a crédito tributario",
+      "sequence": 90,
+      "legal_reference": "Formulario 104, casillero 501",
+      "source": "form104"
+    },
+    {
+      "box": "521",
+      "kind": "tax",
+      "name": "IVA en adquisiciones locales de activos fijos gravados tarifa diferente de cero",
+      "sequence": 100,
+      "legal_reference": "Formulario 104, casillero 521 — impuesto pagado en las adquisiciones del casillero 501",
+      "source": "form104"
+    },
+    {
+      "box": "507",
+      "kind": "base",
+      "name": "Adquisiciones y pagos (incluye activos fijos) gravados con tarifa 0%",
+      "sequence": 110,
+      "legal_reference": "Formulario 104, casillero 507",
+      "source": "form104"
+    },
+    {
+      "box": "564",
+      "kind": "total",
+      "name": "Crédito tributario aplicable en este período",
+      "sequence": 120,
+      "plus": ["520", "521"],
+      "legal_reference": "Formulario 104, casillero 564 — de acuerdo al factor de proporcionalidad o a la contabilidad del sujeto pasivo, conforme los arts. 66 de la Ley de Régimen Tributario Interno y 153 y 157 de su Reglamento. Este paquete simplifica el casillero al total del impuesto pagado en las adquisiciones que dan derecho a crédito tributario (520 más 521): el factor de proporcionalidad del art. 66, inciso segundo, para quien no puede atribuir directamente sus adquisiciones a una actividad gravada o a una gravada con tarifa cero sin derecho a crédito, no está modelado — véase el README de este paquete",
+      "source": "form104"
+    },
+    {
+      "box": "601",
+      "kind": "total",
+      "name": "Impuesto causado",
+      "sequence": 130,
+      "plus": ["429"],
+      "minus": ["564"],
+      "floor_zero": true,
+      "legal_reference": "Formulario 104, casillero 601 — diferencia entre el total del impuesto generado (429) y el crédito tributario aplicable (564), cuando esa diferencia es mayor que cero; este paquete no modela la liquidación de casilleros 482 a 499 (que difiere el impuesto de una venta a crédito) ni el arrastre de crédito tributario de períodos anteriores (casilleros 605 a 619) — véase el README de este paquete",
+      "source": "form104"
+    },
+    {
+      "box": "602",
+      "kind": "total",
+      "name": "Crédito tributario aplicable en este período (saldo a favor)",
+      "sequence": 140,
+      "plus": ["564"],
+      "minus": ["429"],
+      "floor_zero": true,
+      "legal_reference": "Formulario 104, casillero 602 — diferencia entre el crédito tributario aplicable (564) y el total del impuesto generado (429), cuando esa diferencia es mayor que cero; el Formulario 104 exige que, si el casillero 601 tiene un valor, el casillero 602 quede en blanco, y viceversa",
+      "source": "form104"
+    }
+  ]
+}

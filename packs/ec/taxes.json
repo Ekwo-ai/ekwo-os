@@ -1,0 +1,155 @@
+[
+  {
+    "code": "EC-S-15",
+    "name": "Transferencias y servicios a la tarifa general",
+    "description": "Transferencia de dominio de bienes muebles de naturaleza corporal y prestación de servicios en el territorio nacional, a la tarifa general del impuesto al valor agregado",
+    "kind": "vat",
+    "rate": 15,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2024-04-01",
+    "legal_reference": "Ley de Régimen Tributario Interno, art. 65, en la redacción vigente desde la Ley Orgánica para Enfrentar el Conflicto Armado Interno, la Crisis Social y Económica (R.O. Suplemento 516, 14-III-2024), que faculta al Presidente de la República a fijar la tarifa entre el 13 % y el 15 %; Decreto Ejecutivo No. 198 del 15 de marzo de 2024, art. 2 — aplica la tarifa general del 15 % a partir del 1 de abril de 2024",
+    "source": "decreto198",
+    "vat_category": "S",
+    "sequence": 10,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "401" },
+        { "type": "tax", "account": "2.1.04.01", "box": "421" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "401", "box_factor": -100 },
+        { "type": "tax", "account": "2.1.04.01", "box": "421", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "EC-S-0",
+    "name": "Transferencias y servicios con tarifa cero, sin derecho a crédito tributario",
+    "description": "Bienes y servicios de primera necesidad y demás casos del régimen general de tarifa cero — por ejemplo el pan, producto alimenticio de origen agrícola en estado natural",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "1989-12-29",
+    "legal_reference": "Ley de Régimen Tributario Interno, art. 55, numeral 1 (productos alimenticios de origen agrícola, avícola, pecuario, apícola, cunícola, bioacuáticos, y de la pesca que se mantengan en estado natural, es decir que no hayan sido objeto de elaboración, proceso o tratamiento que implique modificación de su naturaleza, como el pan) — en concordancia con el art. 66, inciso primero, numeral 3: quien produce o comercializa bienes gravados con tarifa cero no tiene, por regla general, derecho a crédito tributario por el IVA pagado en las adquisiciones destinadas a esa actividad",
+    "source": "lrti",
+    "vat_category": "E",
+    "sequence": 20,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "403" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "403", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "EC-S-0-PUBLICO",
+    "name": "Transferencias con tarifa cero a instituciones del Estado, con derecho a crédito tributario",
+    "description": "Venta de bienes o prestación de servicios a las instituciones del Estado y empresas públicas, uno de los casos de excepción en que la tarifa cero sí da derecho a crédito tributario",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "1989-12-29",
+    "legal_reference": "Ley de Régimen Tributario Interno, art. 57, y el artículo innumerado agregado a continuación del art. 66 — quienes vendan bienes o presten servicios a las instituciones del Estado y empresas públicas tienen derecho a crédito tributario por el IVA pagado en las adquisiciones destinadas a esas transferencias, a diferencia de la regla general del art. 66, inciso primero, numeral 3; Reglamento para la Aplicación de la Ley de Régimen Tributario Interno, art. 153",
+    "source": "lrti",
+    "vat_category": "Z",
+    "sequence": 30,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "405" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "405", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "EC-S-EXP",
+    "name": "Exportación de bienes",
+    "description": "Bienes corporales muebles exportados, gravados con tarifa cero, siempre que la exportación se perfeccione con la declaración aduanera de exportación",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "1989-12-29",
+    "legal_reference": "Ley de Régimen Tributario Interno, art. 55, numeral 14 — tienen tarifa cero las transferencias e importaciones de los bienes que se exporten, entendiéndose que ello incluye a los proveedores de las empresas exportadoras; la tarifa cero exige que el bien efectivamente salga del país, lo que se acredita con la declaración aduanera de exportación (DAE)",
+    "source": "lrti",
+    "vat_category": "G",
+    "sequence": 40,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "407" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "407", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "EC-P-15",
+    "name": "Adquisiciones y pagos a la tarifa general, con derecho a crédito tributario",
+    "description": "Adquisición de bienes (excepto activos fijos) o de servicios gravados a la tarifa general, destinados a la producción o comercialización de bienes y servicios gravados",
+    "kind": "vat",
+    "recoverable": true,
+    "rate": 15,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2024-04-01",
+    "legal_reference": "Ley de Régimen Tributario Interno, art. 66, inciso primero, numeral 1 — el IVA pagado en la adquisición local de bienes y servicios utilizados en la producción y comercialización de otros bienes y servicios gravados con tarifa distinta de cero, o en la exportación de bienes y servicios, da derecho a crédito tributario; art. 65 y Decreto Ejecutivo No. 198 del 15 de marzo de 2024 para la tarifa del 15 %",
+    "source": "lrti",
+    "sequence": 50,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "500" },
+        { "type": "tax", "account": "2.1.04.02", "box": "520" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "500", "box_factor": -100 },
+        { "type": "tax", "account": "2.1.04.02", "box": "520", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "EC-P-15-FIJO",
+    "name": "Adquisiciones locales de activos fijos a la tarifa general, con derecho a crédito tributario",
+    "description": "Adquisición local de propiedades, planta y equipo gravada a la tarifa general y destinada a la actividad económica del sujeto pasivo",
+    "kind": "vat",
+    "recoverable": true,
+    "rate": 15,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2024-04-01",
+    "legal_reference": "Ley de Régimen Tributario Interno, art. 66, inciso primero, numeral 1, en los mismos términos que la adquisición de bienes y servicios; el Formulario 104 declara la adquisición de activos fijos en una casilla distinta de la de los demás bienes y servicios (casilla 501/521 frente a 500/520)",
+    "source": "form104",
+    "sequence": 60,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "501" },
+        { "type": "tax", "account": "2.1.04.02", "box": "521" }
+      ]
+    }
+  },
+  {
+    "code": "EC-P-0",
+    "name": "Adquisiciones y pagos gravados con tarifa cero",
+    "description": "Adquisición de bienes (incluidos activos fijos) o de servicios gravados con tarifa cero del impuesto al valor agregado",
+    "kind": "vat",
+    "recoverable": false,
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "1989-12-29",
+    "legal_reference": "Ley de Régimen Tributario Interno, arts. 55 y 56 — la adquisición de un bien o servicio gravado con tarifa cero no liquida impuesto que pudiera generar crédito tributario",
+    "source": "lrti",
+    "sequence": 70,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "507" }
+      ]
+    }
+  }
+]

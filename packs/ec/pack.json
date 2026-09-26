@@ -1,0 +1,190 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "EC",
+  "name": "Ecuador",
+  "version": "0.1.0",
+  "schema_min": "20260923110000",
+  "seed_sequence": 101,
+  "released_at": "2026-09-26",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "lrti",
+        "title": "Ley de Régimen Tributario Interno (Codificación No. 2004-026), con sus reformas — incluida la Ley Orgánica para Enfrentar el Conflicto Armado Interno, la Crisis Social y Económica (Registro Oficial Suplemento 516, 14 de marzo de 2024), que reformó el artículo 65",
+        "publisher": "Servicio de Rentas Internas (SRI) — Dirección Nacional Jurídica",
+        "url": "https://www.sri.gob.ec/o/sri-portlet-biblioteca-alfresco-internet/descargar/1c04850c-093e-44bf-ba98-e9bc8baae57e/Ley_Regimen_Tributario_Interno_20_jun_2023.pdf",
+        "consulted_on": "2026-09-26",
+        "kind": "law"
+      },
+      {
+        "key": "decreto198",
+        "title": "Decreto Ejecutivo No. 198 del 15 de marzo de 2024 — aplica la tarifa general del impuesto al valor agregado del 15 % a partir del 1 de abril de 2024, dentro del rango del 13 % al 15 % que fija el artículo 65 de la Ley de Régimen Tributario Interno",
+        "publisher": "Servicio Nacional de Aduana del Ecuador (SENAE) — publicación oficial del decreto",
+        "url": "https://www.aduana.gob.ec/gaceta-boletin/aplicacion-de-la-tarifa-15-del-impuesto-al-valor-agregado-iva-a-la-importacion-de-bienes-a-partir-del-01-de-abril-de-2024/",
+        "consulted_on": "2026-09-26",
+        "kind": "regulation"
+      },
+      {
+        "key": "ralrti",
+        "title": "Reglamento para la Aplicación de la Ley de Régimen Tributario Interno (RALRTI)",
+        "publisher": "Servicio de Rentas Internas (SRI)",
+        "url": "https://www.sri.gob.ec/o/sri-portlet-biblioteca-alfresco-internet/descargar/aa569bb7-b871-458c-a8c7-6bcf49841843/Reglamento_LRTI_24Nov2023.pdf",
+        "consulted_on": "2026-09-26",
+        "kind": "regulation"
+      },
+      {
+        "key": "form104",
+        "title": "Formulario IVA (Formulario 104) y Guía para contribuyentes — Elaboración y envío de la declaración del Impuesto al Valor Agregado",
+        "publisher": "Servicio de Rentas Internas (SRI)",
+        "url": "https://www.sri.gob.ec/o/sri-portlet-biblioteca-alfresco-internet/descargar/e084fae5-9677-450c-8161-21e7c3a9f65b/Gu%C3%ADa%20para%20el%20llenado%20del%20Formulario%20Impuesto%20al%20Valor%20Agregado%20IVA.PDF",
+        "consulted_on": "2026-09-26",
+        "kind": "form"
+      },
+      {
+        "key": "reglamento-comprobantes",
+        "title": "Reglamento de Comprobantes de Venta, Retención y Documentos Complementarios",
+        "publisher": "Servicio de Rentas Internas (SRI)",
+        "url": "https://www.sri.gob.ec/o/sri-portlet-biblioteca-alfresco-internet/descargar?id=142f0d6e-b156-4ac6-b804-0bd4938bc7b8&nombre=Reglamento+de+Comprobantes+de+Venta%2C+Retenci%EF%BF%BDn+y+Documentos+Complementarios.pdf",
+        "consulted_on": "2026-09-26",
+        "kind": "regulation"
+      },
+      {
+        "key": "sri-facturacion",
+        "title": "Facturación electrónica — esquema de validación previa (autorización, clave de acceso), esquema offline y transmisión inmediata de comprobantes",
+        "publisher": "Servicio de Rentas Internas (SRI)",
+        "url": "https://www.sri.gob.ec/en/facturacion-electronica",
+        "consulted_on": "2026-09-26",
+        "kind": "guidance"
+      },
+      {
+        "key": "sri-en-linea",
+        "title": "SRI en línea — portal de declaración de impuestos (Declaraciones / Declaración de Impuestos / Elaboración y envío de declaraciones)",
+        "publisher": "Servicio de Rentas Internas (SRI)",
+        "url": "https://srienlinea.sri.gob.ec",
+        "consulted_on": "2026-09-26",
+        "kind": "portal"
+      },
+      {
+        "key": "lrti-contabilidad",
+        "title": "Ley de Régimen Tributario Interno, arts. 19 a 21 — obligación de llevar contabilidad, principios generales y estados financieros",
+        "publisher": "Servicio de Rentas Internas (SRI) — SRinforma",
+        "url": "https://www.sri.gob.ec/o/sri-portlet-biblioteca-alfresco-internet/descargar/e48abc39-3dee-49d2-93d7-3cbe5d01c704/Art.+19+Contabilidad+y+Estados+Financieros.pdf",
+        "consulted_on": "2026-09-26",
+        "kind": "guidance"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "USD",
+    "language": "es",
+    "rounding_method": "half_up",
+    "opening_entry_label": "Asiento de apertura",
+    "closing_style": "result_accounts",
+    "roles": {
+      "receivable": "1.1.03.01",
+      "payable": "2.1.01.01",
+      "suspense": "2.1.05.01",
+      "rounding": "4.2.03",
+      "retained_earnings": "3.6.01",
+      "current_year_result_profit": "3.7.01",
+      "current_year_result_loss": "3.7.02",
+      "sales": "4.1.01",
+      "purchase": "5.1.02",
+      "bank": "1.1.01.03",
+      "cash": "1.1.01.01",
+      "fx_gain": "4.2.02",
+      "fx_loss": "5.4.02",
+      "tax_payable": "2.1.04.03",
+      "tax_receivable": "1.1.07.01"
+    },
+    "journal_roles": {
+      "sales": "VEN",
+      "purchase": "COM",
+      "miscellaneous": "DIA",
+      "opening": "APE"
+    },
+    "fiscal_year_default": "calendar"
+  },
+  "languages": [],
+  "journals": [
+    { "code": "VEN", "type": "sales", "name": "Diario de ventas", "sequence": 10 },
+    { "code": "COM", "type": "purchase", "name": "Diario de compras", "sequence": 20 },
+    { "code": "BAN", "type": "bank", "name": "Bancos", "sequence": 30 },
+    { "code": "CAJ", "type": "cash", "name": "Caja", "sequence": 40 },
+    { "code": "DIA", "type": "general", "name": "Diario general", "sequence": 50 },
+    { "code": "APE", "type": "opening", "name": "Asiento de apertura", "sequence": 60 }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Plan de cuentas — clasificación NIIF",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": ["EC-NIIF-ESF", "EC-NIIF-ER"],
+      "legal_reference": "No existe en Ecuador un catálogo de cuentas obligatorio para toda sociedad. La Ley de Régimen Tributario Interno, art. 20 (reformado por el art. 80 de la Ley s/n, R.O. 242-3S, 29-XII-2007), exige llevar la contabilidad por el sistema de partida doble, en idioma castellano y en dólares de los Estados Unidos de América, tomando en consideración los principios contables de general aceptación — en la práctica actual, las Normas Internacionales de Información Financiera (NIIF completas o NIIF para las PYMES, según el tamaño de la compañía) que adoptó la Superintendencia de Compañías, Valores y Seguros; y el art. 21 dispone que esos mismos estados financieros sirven de base tanto para las declaraciones de impuestos como para su presentación a la Superintendencia de Compañías. Este plan es original: sigue la clasificación en activo, pasivo, patrimonio, ingresos y gastos que las NIIF prescriben, de modo que cada cuenta de detalle alcanza exactamente una línea de EC-NIIF-ESF o de EC-NIIF-ER, tal como lo hacen los planes de cuentas de los paquetes de Estados Unidos y del Reino Unido para el mismo motivo",
+      "source": "lrti-contabilidad"
+    }
+  ],
+  "documents": {
+    "numbering": "gapless",
+    "number_format": "{CODE}-{NNNNNNNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "delivery_date",
+    "posted_edit_policy": "reversal_only",
+    "references": {
+      "numbering": {
+        "legal_reference": "Reglamento de Comprobantes de Venta, Retención y Documentos Complementarios, art. 17 y 18 — la numeración de los comprobantes es secuencial, de nueve dígitos, autorizada por establecimiento y por punto de emisión (cada uno identificado por tres dígitos), y no se reinicia por año; el código de esta pieza contable es la combinación establecimiento-punto de emisión y el consecutivo, los nueve dígitos del secuencial",
+        "source": "reglamento-comprobantes"
+      },
+      "tax_point": {
+        "legal_reference": "Ley de Régimen Tributario Interno, art. 61, numeral 1 — en las transferencias locales de dominio de bienes, sean al contado o a crédito, el hecho generador del IVA se verifica en el momento de la entrega del bien, o en el momento del pago total o parcial del precio o acreditación en cuenta, lo que suceda primero; el Reglamento de Comprobantes de Venta, art. 8, exige que el comprobante se emita en el momento de esa transferencia, por lo que entrega y facturación coinciden en la práctica general. El numeral 2 del mismo artículo 61 da una segunda regla para la prestación de servicios (el hecho generador se verifica a elección del contribuyente entre la fecha en que efectivamente se presta el servicio y la del pago o abono en cuenta), que el vocabulario cerrado de esta casilla no distingue de la regla de los bienes — ver la sección de este paquete en docs/international.md",
+        "source": "lrti"
+      },
+      "posted_edit_policy": {
+        "legal_reference": "Reglamento de Comprobantes de Venta, Retención y Documentos Complementarios, y Resolución Nro. NAC-DGERCGC25-00000017 (Registro Oficial Tercer Suplemento 92, 30 de julio de 2025), en vigor desde el 1 de enero de 2026 — un comprobante electrónico transmitido y autorizado por el SRI solo se corrige mediante una nota de crédito o una nota de débito que lo referencie; la anulación de un comprobante ya autorizado es excepcional y, desde el 1 de enero de 2026, está prohibida para una factura emitida a consumidor final",
+        "source": "sri-facturacion"
+      }
+    },
+    "mentions": [
+      {
+        "code": "sri_authorization_pending",
+        "applies_when": "always",
+        "text": "Este documento no constituye un comprobante de venta autorizado por el Servicio de Rentas Internas: no lleva la clave de acceso ni el número de autorización que asigna la validación previa del SRI. Solo el comprobante electrónico autorizado ampara la operación para efectos tributarios.",
+        "sequence": 10,
+        "legal_reference": "Reglamento de Comprobantes de Venta, Retención y Documentos Complementarios, en concordancia con la normativa de facturación electrónica del SRI — el sistema de comprobantes electrónicos exige la validación previa del documento por el SRI, que le asigna una clave de acceso de 49 dígitos y un número de autorización; Ekwo no genera ni transmite el XML de un comprobante electrónico ecuatoriano ni dialoga con el SRI: ver la sección de facturación electrónica de este paquete",
+        "source": "sri-facturacion"
+      },
+      {
+        "code": "export",
+        "applies_when": "export",
+        "text": "Exportación de bienes — bien gravado con tarifa cero por ciento del impuesto al valor agregado, siempre que la exportación se perfeccione con la declaración aduanera de exportación (DAE).",
+        "sequence": 20,
+        "legal_reference": "Ley de Régimen Tributario Interno, art. 55, numeral 14 (transferencias e importaciones con tarifa cero) — las que se exporten, tarifa que se aplica siempre que el bien efectivamente salga del país",
+        "source": "lrti"
+      },
+      {
+        "code": "exempt",
+        "applies_when": "exempt",
+        "text": "Bien o servicio gravado con tarifa cero por ciento del impuesto al valor agregado, sin derecho a crédito tributario por el impuesto pagado en su producción.",
+        "sequence": 30,
+        "legal_reference": "Ley de Régimen Tributario Interno, arts. 55 y 56 (bienes y servicios con tarifa cero) en concordancia con el art. 66, inciso primero, numeral 3 — quien produce o comercializa bienes o presta servicios gravados con tarifa cero no tiene, por regla general, derecho a crédito tributario por el IVA pagado en las adquisiciones destinadas a esa actividad",
+        "source": "lrti"
+      }
+    ]
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "Ley de Régimen Tributario Interno, art. 61-A y Reglamento de Comprobantes de Venta, Retención y Documentos Complementarios — todo sujeto obligado a emitir comprobantes de venta debe hacerlo, según el calendario de incorporación fijado por sucesivas resoluciones del SRI (entre ellas la Resolución NAC-DGERCGC19-00000433), como comprobante electrónico. Es un régimen de validación previa (clearance): antes de su emisión, el comprobante se transmite al SRI —en esquema en línea (Facturador SRI) o en esquema offline, con contingencia— que lo autoriza de oficio si cumple la ficha técnica y le asigna una clave de acceso de 49 dígitos y un número de autorización, y no un intercambio par a par construido sobre el modelo semántico de EN 16931. Desde el 1 de enero de 2026, la Resolución Nro. NAC-DGERCGC25-00000017 exige además la transmisión inmediata (en tiempo real o casi inmediato) de cada comprobante al SRI. EKWO NO GENERA, NO CALCULA LA CLAVE DE ACCESO NI TRANSMITE NINGÚN COMPROBANTE AL SRI: ningún componente de packages/formats dialoga con el SRI. Por eso profile y mandatory_from quedan vacíos aunque la obligación exista: profile nombra un perfil construido sobre EN 16931 que una pieza de packages/formats escribe (peppol-bis-3, factur-x-en16931, xrechnung, un PINT), y el comprobante electrónico ecuatoriano no es ninguno de ellos; el calendario de incorporación es, además, escalonado por tipo de contribuyente y no una fecha única para todos. El Registro Único de Contribuyentes (RUC) no tiene un esquema ISO 6523 registrado: party_scheme y vat_scheme quedan vacíos por la misma razón que en los paquetes de México y Colombia",
+    "source": "sri-facturacion"
+  },
+  "bank": {
+    "statement_formats": ["csv"],
+    "payment_formats": []
+  }
+}
