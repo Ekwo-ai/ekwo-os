@@ -72,5 +72,6 @@ insert into currencies (code, name, symbol, decimal_places) values
   ('GHS', 'Ghanaian cedi',        E'GH₵', 2),
   ('TZS', 'Tanzanian shilling',   'TSh',     2),
   ('BHD', 'Bahraini dinar',       E'.د.ب', 3),
-  ('OMR', 'Omani rial',           E'ر.ع.', 3)
+  ('OMR', 'Omani rial',           E'ر.ع.', 3),
+  ('UGX', 'Uganda shilling',      'USh',     0)
 on conflict (code) do nothing;

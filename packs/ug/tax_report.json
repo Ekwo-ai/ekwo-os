@@ -1,0 +1,176 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "UG-VAT-DT2031",
+  "name": "Monthly Value Added Tax Return (form DT-2031)",
+  "period": ["month"],
+  "period_default": "month",
+  "valid_from": "1996-07-01",
+  "legal_reference": "Value Added Tax Act, s. 1(1)(v) — \"tax period\" means the calendar month; s. 31(1) — a taxable person shall lodge a tax return with the Commissioner General for each tax period within fifteen days after the end of the period. Form DT-2031, revision 07/2018, is laid out in Section C — Sales (rows 1 to 10), Section D — Purchases (rows 11 to 22), Section E — for an investment trader only (rows 23 to 28), Section F — the apportionment of input tax credit for a partly exempt business (rows 29 to 33), Section G — VAT withheld payable and creditable, and Section H — the calculation of the tax due. This pack carries the sales and purchases rows every VAT-registered company files (1 to 4, 8, 9(i), 10, 11, 13, 15, 20, 21(i) and 22) and the final net calculation of Section H; the gaps are recorded in this pack's README and in docs/international.md.",
+  "source": "dt-2031-form",
+  "deadline": {
+    "rule": "day_of_month_after_period",
+    "day": 15,
+    "legal_reference": "Value Added Tax Act, s. 31(1) — a taxable person shall lodge a tax return for each tax period within fifteen days after the end of the period; s. 34(1)(a) — the tax payable for that period is due and payable on the date the return must be lodged. Form DT-2031 itself: \"To be completed and submitted by the 15th day of the month following the period of return.\"",
+    "source": "vat-act"
+  },
+  "boxes": [
+    {
+      "box": "1",
+      "kind": "base",
+      "name": "Zero Rated Sales — Local",
+      "sequence": 10,
+      "legal_reference": "Form DT-2031, Section C, row 1 — the value of local sales the Third Schedule zero-rates.",
+      "source": "dt-2031-form"
+    },
+    {
+      "box": "2",
+      "kind": "base",
+      "name": "Zero Rated Sales — Exports",
+      "sequence": 20,
+      "legal_reference": "Form DT-2031, Section C, row 2 — the value of sales the Third Schedule zero-rates as exports.",
+      "source": "dt-2031-form"
+    },
+    {
+      "box": "3",
+      "kind": "base",
+      "name": "Exempt Local Sales",
+      "sequence": 30,
+      "legal_reference": "Form DT-2031, Section C, row 3 — the value of local sales exempt under the Second Schedule.",
+      "source": "dt-2031-form"
+    },
+    {
+      "box": "4",
+      "kind": "base",
+      "name": "Standard Rated Sales — VAT Charged — value",
+      "sequence": 40,
+      "legal_reference": "Form DT-2031, Section C, row 4 — the value exclusive of VAT of sales taxed at the standard rate.",
+      "source": "dt-2031-form"
+    },
+    {
+      "box": "4",
+      "kind": "tax",
+      "name": "Standard Rated Sales — VAT Charged",
+      "sequence": 45,
+      "legal_reference": "Form DT-2031, Section C, row 4 — the VAT Charged column beside the standard-rated sales.",
+      "source": "dt-2031-form"
+    },
+    {
+      "box": "8",
+      "kind": "total",
+      "name": "Total Output tax",
+      "sequence": 80,
+      "plus": ["4:tax"],
+      "legal_reference": "Form DT-2031, Section C, row 8 — Total Output tax (4b + 5b + 6b + 7b − 5b − 7b). Rows 5, 6 and 7 (VAT charged and deemed on capital goods sold, and VAT deemed on ordinary sales) are not carried by this pack — see the top-level legal_reference — and the deemed columns the form does carry cancel algebraically in its own formula (+5b−5b, +7b−7b), so the row reduces to 4b alone for the company this pack models.",
+      "source": "dt-2031-form"
+    },
+    {
+      "box": "9i",
+      "kind": "base",
+      "name": "Adjustments to Output tax — Imported Services — value",
+      "sequence": 90,
+      "legal_reference": "Form DT-2031, Section C, row 9(i) — the value of a service imported under section 4(c) of the Value Added Tax Act.",
+      "source": "dt-2031-form"
+    },
+    {
+      "box": "9i",
+      "kind": "tax",
+      "name": "Adjustments to Output tax — Imported Services",
+      "sequence": 95,
+      "legal_reference": "Form DT-2031, Section C, row 9(i) — the VAT self-charged on an imported service, under Value Added Tax Act, s. 4(c) and s. 5(c).",
+      "source": "dt-2031-form"
+    },
+    {
+      "box": "10",
+      "kind": "total",
+      "name": "Total Tax Charged for the Period",
+      "sequence": 100,
+      "plus": ["8", "9i:tax"],
+      "legal_reference": "Form DT-2031, Section C, row 10 — Total Tax Charged for the Period (8b + 9(i)b + 9(ii)b + 9(iii)b + 9(iv)b + 9(v)b). Rows 9(ii) to 9(v) (VAT deferred at importation, and tax charges from bad debts recovered, a change of accounting basis or an end-of-year apportionment) are not carried by this pack — see the top-level legal_reference.",
+      "source": "dt-2031-form"
+    },
+    {
+      "box": "11",
+      "kind": "base",
+      "name": "Zero Rated Purchases — Local",
+      "sequence": 110,
+      "legal_reference": "Form DT-2031, Section D, row 11 — the value of local purchases of a good the Third Schedule zero-rates.",
+      "source": "dt-2031-form"
+    },
+    {
+      "box": "13",
+      "kind": "base",
+      "name": "Standard Rated Purchases Local — VAT Incurred — value",
+      "sequence": 130,
+      "legal_reference": "Form DT-2031, Section D, row 13 — the value exclusive of VAT of local purchases taxed at the standard rate and actually invoiced.",
+      "source": "dt-2031-form"
+    },
+    {
+      "box": "13",
+      "kind": "tax",
+      "name": "Standard Rated Purchases Local — VAT Incurred",
+      "sequence": 135,
+      "legal_reference": "Form DT-2031, Section D, row 13 — the VAT Incurred column beside the standard-rated local purchases.",
+      "source": "dt-2031-form"
+    },
+    {
+      "box": "15",
+      "kind": "base",
+      "name": "Standard Rated Imports (Goods) — VAT Incurred — value",
+      "sequence": 150,
+      "legal_reference": "Form DT-2031, Section D, row 15 — the customs value of imports of goods taxed at the standard rate and actually paid.",
+      "source": "dt-2031-form"
+    },
+    {
+      "box": "15",
+      "kind": "tax",
+      "name": "Standard Rated Imports (Goods) — VAT Incurred",
+      "sequence": 155,
+      "legal_reference": "Form DT-2031, Section D, row 15 — the VAT Incurred column beside the standard-rated imports.",
+      "source": "dt-2031-form"
+    },
+    {
+      "box": "20",
+      "kind": "total",
+      "name": "Total Input Tax",
+      "sequence": 200,
+      "plus": ["13:tax", "15:tax"],
+      "legal_reference": "Form DT-2031, Section D, row 20 — Total Input Tax (13b + 14b − 14b + 15b + 16b − 16b + 17b + 18b − 19b − 19b). Rows 14, 16 and 19 (VAT deemed on purchases and capital goods) and rows 17 and 18 (administrative expenses and capital goods bought, carried separately by the form but not modelled by a tax code of their own in this pack) are not carried — see the top-level legal_reference — and the deemed columns the form does carry cancel algebraically in its own formula, so the row reduces to 13b + 15b for the company this pack models.",
+      "source": "dt-2031-form"
+    },
+    {
+      "box": "21i",
+      "kind": "base",
+      "name": "Adjustment of input tax — Imported Services — value",
+      "sequence": 210,
+      "legal_reference": "Form DT-2031, Section D, row 21(i) — the value of a service imported under section 4(c) of the Value Added Tax Act, claimed as input tax under section 28(1).",
+      "source": "dt-2031-form"
+    },
+    {
+      "box": "21i",
+      "kind": "tax",
+      "name": "Adjustment of input tax — Imported Services",
+      "sequence": 215,
+      "legal_reference": "Form DT-2031, Section D, row 21(i) — the input tax claimed on an imported service self-charged at row 9(i).",
+      "source": "dt-2031-form"
+    },
+    {
+      "box": "22",
+      "kind": "total",
+      "name": "Total Input Tax for the Period",
+      "sequence": 220,
+      "plus": ["20", "21i:tax"],
+      "legal_reference": "Form DT-2031, Section D, row 22 — Total Input Tax for the Period (20c + 21(i)c − 21(ii)c + 21(iii)c + 21(iv)c). Rows 21(ii) to 21(iv) (deferred VAT discharged, tax claims from bad debts written off or a change of accounting basis) are not carried by this pack — see the top-level legal_reference.",
+      "source": "dt-2031-form"
+    },
+    {
+      "box": "NET",
+      "kind": "total",
+      "name": "Net VAT Due / Claimable",
+      "sequence": 300,
+      "plus": ["10"],
+      "minus": ["22"],
+      "legal_reference": "Form DT-2031, Section H — Calculation of Tax Due: Output tax Charged, less Total Input tax Allowed, gives the Total VAT Payable/Claimable. This pack does not carry the further lines of Section H — an offset brought forward from a previous month and a credit for VAT withheld by an appointed agent — so this total is the figure before either adjustment; both gaps are recorded in this pack's README. A positive figure is payable by the fifteenth of the following month (s. 31(1), s. 34(1)(a)); a negative figure is a credit a taxable person may offset against a future period or, where it exceeds five million shillings, claim as a cash refund (Section H itself; Value Added Tax Act, s. 42).",
+      "source": "dt-2031-form"
+    }
+  ]
+}

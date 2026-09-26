@@ -1,0 +1,171 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "A month of books of a Kampala trading company, VAT-registered and filing monthly",
+  "chart": "default",
+  "fiscal_year": { "name": "Financial year 2026", "start": "2026-01-01", "end": "2026-12-31" },
+  "periods": [
+    { "code": "2026-08", "from": "2026-08-01", "to": "2026-08-31" }
+  ],
+  "statements": ["UG-ICPAU-SFP", "UG-ICPAU-IS"],
+  "contacts": [
+    { "ref": "cust-kampala", "name": "Nakasero General Traders Ltd", "type": "customer", "country": "UG" },
+    { "ref": "cust-kenya", "name": "Eldoret Highlands Coffee Ltd", "type": "customer", "country": "KE" },
+    { "ref": "supp-kampala", "name": "Industrial Area Wholesalers Ltd", "type": "supplier", "country": "UG" },
+    { "ref": "supp-china", "name": "Guangzhou Trading Co.", "type": "supplier", "country": "CN" },
+    { "ref": "supp-us", "name": "CloudPeak Hosting Inc.", "type": "supplier", "country": "US" }
+  ],
+  "documents": [
+    {
+      "ref": "INV-001",
+      "type": "sale_invoice",
+      "contact": "cust-kampala",
+      "date": "2026-08-05",
+      "why": "A domestic sale at the standard rate of 18 %: box 4 and the output VAT of box 8.",
+      "lines": [
+        { "name": "Office stationery, retail sale", "quantity": 5, "unit_price": 200000, "tax": "UG-S-18", "account": "4000" }
+      ]
+    },
+    {
+      "ref": "INV-002",
+      "type": "sale_invoice",
+      "contact": "cust-kampala",
+      "date": "2026-08-07",
+      "why": "A residential lease exempt under paragraph 1(f) of the Second Schedule: box 3, no output VAT, and a matched payment later on.",
+      "lines": [
+        { "name": "Monthly rent, residential unit", "quantity": 1, "unit_price": 1500000, "tax": "UG-S-EX", "account": "4520" }
+      ]
+    },
+    {
+      "ref": "INV-003",
+      "type": "sale_invoice",
+      "contact": "cust-kenya",
+      "date": "2026-08-10",
+      "why": "An export of goods, zero-rated under paragraph 1(a) of the Third Schedule: box 2, no output VAT, and a matched payment later on.",
+      "lines": [
+        { "name": "Roasted coffee beans, export consignment", "quantity": 500, "unit_price": 6000, "tax": "UG-S-Z-EXP", "account": "4020" }
+      ]
+    },
+    {
+      "ref": "INV-004",
+      "type": "sale_invoice",
+      "contact": "cust-kampala",
+      "date": "2026-08-12",
+      "why": "A domestic sale of a good the Third Schedule zero-rates without it leaving Uganda, so a zero rate is proven that is neither a domestic reverse charge nor an export: box 1.",
+      "lines": [
+        { "name": "Essential drugs, wholesale", "quantity": 200, "unit_price": 5000, "tax": "UG-S-Z-DOM", "account": "4000" }
+      ]
+    },
+    {
+      "ref": "CN-001",
+      "type": "sale_credit_note",
+      "contact": "cust-kampala",
+      "date": "2026-08-14",
+      "why": "A credit note for one unit returned from INV-001, so box 4 and box 8 fall back down and a sale_credit_note is exercised.",
+      "lines": [
+        { "name": "Office stationery, retail sale — one unit returned", "quantity": 1, "unit_price": 200000, "tax": "UG-S-18", "account": "4000" }
+      ]
+    },
+    {
+      "ref": "PINV-001",
+      "type": "purchase_invoice",
+      "contact": "supp-kampala",
+      "date": "2026-08-06",
+      "why": "A domestic purchase at the standard rate, deductible in full: box 13 and the input VAT of box 20, and a matched payment later on.",
+      "lines": [
+        { "name": "Trading stock purchased for resale", "quantity": 1, "unit_price": 2000000, "tax": "UG-P-18", "account": "5000" }
+      ]
+    },
+    {
+      "ref": "PINV-002",
+      "type": "purchase_invoice",
+      "contact": "supp-kampala",
+      "date": "2026-08-08",
+      "why": "A purchase of a zero-rated good from a registered supplier: no input tax, reported in box 11.",
+      "lines": [
+        { "name": "Essential drugs purchased for resale", "quantity": 300, "unit_price": 4000, "tax": "UG-P-Z", "account": "5000" }
+      ]
+    },
+    {
+      "ref": "PINV-003",
+      "type": "purchase_invoice",
+      "contact": "supp-kampala",
+      "date": "2026-08-11",
+      "why": "An insurance premium, exempt under paragraph 1(d) of the Second Schedule: no input tax, and this pack's form has no box for an exempt purchase.",
+      "lines": [
+        { "name": "Annual business insurance premium", "quantity": 1, "unit_price": 500000, "tax": "UG-P-EX", "account": "6410" }
+      ]
+    },
+    {
+      "ref": "PINV-004",
+      "type": "purchase_invoice",
+      "contact": "supp-china",
+      "date": "2026-08-15",
+      "why": "An import of goods: VAT charged at the border under section 4(b), claimed as input tax through box 15, and held on the customs control account until settled.",
+      "lines": [
+        { "name": "Imported hardware for resale", "quantity": 1, "unit_price": 4000000, "tax": "UG-P-IMP", "account": "5000" }
+      ]
+    },
+    {
+      "ref": "PINV-005",
+      "type": "purchase_invoice",
+      "contact": "supp-us",
+      "date": "2026-08-18",
+      "why": "A service imported from a supplier with no place of business in Uganda: the recipient self-charges the output tax of box 9(i) under section 4(c) and claims it back through box 21(i), netting to nothing on a wholly taxable purchase.",
+      "lines": [
+        { "name": "Cloud hosting subscription", "quantity": 1, "unit_price": 1000000, "tax": "UG-P-RC-SVC", "account": "6350" }
+      ]
+    },
+    {
+      "ref": "PCN-001",
+      "type": "purchase_credit_note",
+      "contact": "supp-kampala",
+      "date": "2026-08-20",
+      "why": "A purchase credit note for a short delivery on PINV-001, so box 13 and box 20 fall back down and a purchase_credit_note is exercised.",
+      "lines": [
+        { "name": "Trading stock purchased for resale — short-delivery credit", "quantity": 1, "unit_price": 100000, "tax": "UG-P-18", "account": "5000" }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "PAY-001",
+      "direction": "inbound",
+      "date": "2026-09-05",
+      "amount": 1500000,
+      "contact": "cust-kampala",
+      "journal": "BNK",
+      "match": "INV-002",
+      "why": "The residential rent of INV-002 collected in full: a matched inbound payment on an exempt sale."
+    },
+    {
+      "ref": "PAY-002",
+      "direction": "inbound",
+      "date": "2026-09-06",
+      "amount": 3000000,
+      "contact": "cust-kenya",
+      "journal": "BNK",
+      "match": "INV-003",
+      "why": "The export of INV-003 collected in full: a matched inbound payment in a foreign trade relationship."
+    },
+    {
+      "ref": "PAY-003",
+      "direction": "outbound",
+      "date": "2026-09-07",
+      "amount": 2360000,
+      "contact": "supp-kampala",
+      "journal": "BNK",
+      "match": "PINV-001",
+      "why": "PINV-001 settled in full, VAT included: a matched outbound payment."
+    },
+    {
+      "ref": "PAY-004",
+      "direction": "inbound",
+      "date": "2026-09-10",
+      "amount": 500000,
+      "contact": "cust-kenya",
+      "journal": "BNK",
+      "match": null,
+      "why": "An advance received from Eldoret Highlands Coffee Ltd before its next shipment, matched to nothing: reconcile() has to survive an open item."
+    }
+  ]
+}

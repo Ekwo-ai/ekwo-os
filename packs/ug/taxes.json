@@ -1,0 +1,203 @@
+[
+  {
+    "code": "UG-S-18",
+    "name": "Sale, standard rate 18 %",
+    "description": "The general rate on a taxable supply made in Uganda",
+    "kind": "vat",
+    "rate": 18,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2005-07-01",
+    "legal_reference": "Value Added Tax Act, s. 4(a) — tax is charged on every taxable supply in Uganda made by a taxable person; s. 24(1) and (3) — the tax payable on a taxable transaction is the rate applied to the taxable value, the rate being the one specified under section 78(2); s. 78(2) — the Minister may by statutory order specify the rate, exercised by the Value Added Tax (Rate of Tax) Order, 2005 (Statutory Instrument 2005 No. 51), made 8 June 2005 and in force from 1 July 2005, which fixes the rate at eighteen per cent of the taxable value. Form DT-2031, Section C, row 4 — Standard Rated Sales, VAT Charged.",
+    "source": "vat-act",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "4" },
+        { "type": "tax", "account": "2100", "box": "4" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "4", "box_factor": -100 },
+        { "type": "tax", "account": "2100", "box": "4", "box_factor": -100 }
+      ]
+    },
+    "sequence": 10
+  },
+  {
+    "code": "UG-S-Z-EXP",
+    "name": "Sale, zero-rated (export)",
+    "description": "A supply of goods or services exported from Uganda",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "1996-07-01",
+    "legal_reference": "Value Added Tax Act, s. 24(4) — the rate of tax imposed on a taxable supply specified in the Third Schedule is zero; Third Schedule, paragraph 1(a) — a supply of goods or services where the goods or services are exported from Uganda as part of the supply; paragraph 2 — goods are treated as exported if delivered to, or made available at, an address outside Uganda as evidenced by documentary proof, and services if supplied for use or consumption outside Uganda as evidenced by documentary proof. Form DT-2031, Section C, row 2 — Zero Rated Sales, Exports.",
+    "source": "vat-act",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "2" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "2", "box_factor": -100 }
+      ]
+    },
+    "sequence": 20
+  },
+  {
+    "code": "UG-S-Z-DOM",
+    "name": "Sale, zero-rated (domestic — drugs and medicines)",
+    "description": "A local supply of drugs and medicines, a good the Third Schedule zero-rates without it leaving Uganda",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "1996-07-01",
+    "legal_reference": "Value Added Tax Act, s. 24(4); Third Schedule, paragraph 1(c) — the supply of drugs and medicines. Form DT-2031, Section C, row 1 — Zero Rated Sales, Local.",
+    "source": "vat-act",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "1" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "1", "box_factor": -100 }
+      ]
+    },
+    "sequence": 30
+  },
+  {
+    "code": "UG-S-EX",
+    "name": "Sale, exempt (residential lease)",
+    "description": "A lease or letting of immovable property other than commercial premises, hotel or holiday accommodation, a short lease, parking or storage, or a serviced apartment",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "1996-07-01",
+    "legal_reference": "Value Added Tax Act, s. 19(1) — a supply of goods or services is an exempt supply if it is specified in the Second Schedule; Second Schedule, paragraph 1(f) — a supply by way of lease or letting of immovable property, other than a lease or letting of commercial premises, of hotel or holiday accommodation, for a period not exceeding three months, for parking or storing cars or other vehicles, or of a serviced apartment. Form DT-2031, Section C, row 3 — Exempt Local Sales.",
+    "source": "vat-act",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "3" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "3", "box_factor": -100 }
+      ]
+    },
+    "sequence": 40
+  },
+  {
+    "code": "UG-P-18",
+    "name": "Purchase, standard rate 18 %, deductible",
+    "description": "A local purchase at the general rate, used in the business of the taxable person",
+    "kind": "vat",
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2005-07-01",
+    "legal_reference": "Value Added Tax Act, s. 28(1) — a credit is allowed for the tax payable in respect of a taxable supply made to the taxable person during the tax period, if the supply is for use in the business of the taxable person; s. 28(11) — the credit may not be claimed until the tax period in which the person holds an original tax invoice. Form DT-2031, Section D, row 13 — Standard Rated Purchases Local, VAT Incurred.",
+    "source": "vat-act",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "13" },
+        { "type": "tax", "account": "1150", "box": "13" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "13", "box_factor": -100 },
+        { "type": "tax", "account": "1150", "box": "13", "box_factor": -100 }
+      ]
+    },
+    "sequence": 110
+  },
+  {
+    "code": "UG-P-Z",
+    "name": "Purchase, zero-rated (local — drugs and medicines)",
+    "description": "A local purchase of a good the Third Schedule zero-rates, from a registered supplier",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "1996-07-01",
+    "legal_reference": "Value Added Tax Act, s. 24(4); Third Schedule, paragraph 1(c) — there is no input tax to deduct on a supply taxed at nil. Form DT-2031, Section D, row 11 — Zero Rated Purchases, Local.",
+    "source": "vat-act",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "11" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "11", "box_factor": -100 }
+      ]
+    },
+    "sequence": 120
+  },
+  {
+    "code": "UG-P-EX",
+    "name": "Purchase, exempt (insurance)",
+    "description": "An insurance premium, or another exempt supply bought for the business",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "exempt",
+    "valid_from": "1996-07-01",
+    "legal_reference": "Value Added Tax Act, s. 19(1); Second Schedule, paragraph 1(d) — the supply of insurance services is an exempt supply, so there is no VAT to deduct. Form DT-2031 carries no box for an exempt purchase: unlike the sales side (row 3), the purchase side of the form only lists the rated and zero-rated rows a credit could be claimed on, so this base is not printed anywhere.",
+    "source": "vat-act",
+    "postings": {
+      "invoice": [
+        { "type": "base" }
+      ],
+      "credit_note": [
+        { "type": "base" }
+      ]
+    },
+    "sequence": 130
+  },
+  {
+    "code": "UG-P-IMP",
+    "name": "Import of goods, VAT paid at the border",
+    "description": "VAT charged on the importation of taxable goods, paid to the Commissioner of Customs and claimed as input tax once paid",
+    "kind": "vat",
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2005-07-01",
+    "legal_reference": "Value Added Tax Act, s. 4(b) — tax is charged on every import of goods other than an exempt import; s. 5(b) — the importer pays it; s. 17 — an import of goods takes place where customs duty is payable, or otherwise when the goods are brought into Uganda; s. 23 — the taxable value of an import is the customs value plus duty and other fiscal charges; s. 28(1) — the tax so paid is deductible as input tax once the person holds the bill of entry required by s. 28(11)(b). Form DT-2031, Section D, row 15 — Standard Rated Imports (Goods), VAT Incurred. The tax is owed to URA at the border and not to the supplier, so it waits on 2125 until the import declaration is settled.",
+    "source": "vat-act",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "15" },
+        { "type": "tax", "account": "1150", "box": "15" },
+        { "type": "tax", "factor": -100, "account": "2125" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "15", "box_factor": -100 },
+        { "type": "tax", "account": "1150", "box": "15", "box_factor": -100 },
+        { "type": "tax", "factor": -100, "account": "2125" }
+      ]
+    },
+    "sequence": 140
+  },
+  {
+    "code": "UG-P-RC-SVC",
+    "name": "Imported service, self-charged and claimed",
+    "description": "A service supplied by a person from outside Uganda, taxed to the recipient and claimed where used to make taxable supplies",
+    "kind": "vat",
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2005-07-01",
+    "legal_reference": "Value Added Tax Act, s. 4(c) — tax is charged on the supply of any imported services by any person; s. 5(c) — the tax is paid by the recipient of the imported services; s. 28(1) — a credit is allowed for that tax where the service is for use in the business of the taxable person. Form DT-2031, Section C, row 9(i) — Adjustments to Output tax, Imported Services, and Section D, row 21(i) — Adjustment of input tax, Imported Services: the return carries the self-charge as an output adjustment and, in the same period, its claim as an input adjustment, rather than folding it into the ordinary rows of standard-rated sales or purchases.",
+    "source": "vat-act",
+    "postings": {
+      "invoice": [
+        { "type": "base" },
+        { "type": "tax", "factor": -100, "account": "2100", "box": "9i" },
+        { "type": "tax", "account": "1150", "box": "21i" }
+      ],
+      "credit_note": [
+        { "type": "base" },
+        { "type": "tax", "factor": -100, "account": "2100", "box": "9i", "box_factor": -100 },
+        { "type": "tax", "account": "1150", "box": "21i", "box_factor": -100 }
+      ]
+    },
+    "sequence": 150
+  }
+]

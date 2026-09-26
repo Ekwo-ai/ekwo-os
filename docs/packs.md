@@ -298,6 +298,7 @@ says what they say. `ekwo pack describe <cc>` is everything one of them says.
 | [`tw`](../packs/tw/) | 臺灣 | `53_pack_tw.sql` | zh, en | `community` |
 | [`tz`](../packs/tz/) | Tanzania | `120_pack_tz.sql` | en | `community` |
 | [`ua`](../packs/ua/) | Україна | `57_pack_ua.sql` | uk, en | `community` |
+| [`ug`](../packs/ug/) | Uganda | `121_pack_ug.sql` | en | `community` |
 | [`us`](../packs/us/) | United States | `15_pack_us.sql` | en | `community` |
 | [`uy`](../packs/uy/) | Uruguay | `100_pack_uy.sql` | es | `community` |
 | [`vn`](../packs/vn/) | Việt Nam | `55_pack_vn.sql` | vi | `community` |

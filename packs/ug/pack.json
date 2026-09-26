@@ -1,0 +1,156 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "UG",
+  "name": "Uganda",
+  "version": "0.1.0",
+  "schema_min": "20260923110000",
+  "seed_sequence": 121,
+  "released_at": "2026-09-26",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "vat-act",
+        "title": "Value Added Tax Act, Chapter 349, revised and consolidated by the Law Reform Commission of Uganda, as researched and applied by Laws.Africa for the Uganda Legal Information Institute",
+        "publisher": "Uganda Legal Information Institute (ULII) / Laws.Africa",
+        "url": "https://ulii.org/akn/ug/act/statute/1996/8",
+        "consulted_on": "2026-09-26",
+        "kind": "law"
+      },
+      {
+        "key": "tpca",
+        "title": "Tax Procedures Code Act, Chapter 343, s. 92 — electronic receipting and electronic invoicing",
+        "publisher": "Uganda Legal Information Institute (ULII) / Laws.Africa",
+        "url": "https://ulii.org/akn/ug/act/2014/14",
+        "consulted_on": "2026-09-26",
+        "kind": "law"
+      },
+      {
+        "key": "companies-act-2012",
+        "title": "Companies Act, 2012 (Act 1 of 2012), Chapter 106, ss. 150 and 152 — books of accounts and the true and fair view a balance sheet and profit and loss account must give",
+        "publisher": "Uganda Legal Information Institute (ULII) / Laws.Africa",
+        "url": "https://ulii.org/akn/ug/act/2012/1",
+        "consulted_on": "2026-09-26",
+        "kind": "law"
+      },
+      {
+        "key": "icpau-ifrs-sme",
+        "title": "Information paper on the adoption and publication of IFRS, ISA, IFRS for SMEs and IPSAS in Uganda",
+        "publisher": "Institute of Certified Public Accountants of Uganda (ICPAU)",
+        "url": "https://www.icpau.co.ug/sites/default/files/Resources/INFORMATION%20PAPER%20ON%20ADOPTION%20AND%20PUBLICATION%20OF%20STANDARDS%20IN%20UGANDA.pdf",
+        "consulted_on": "2026-09-26",
+        "kind": "guidance"
+      },
+      {
+        "key": "ura-vat-guide",
+        "title": "A Simplified Guide — Value Added Tax: the standard rate, zero-rated and exempt supplies, registration, filing and EFRIS",
+        "publisher": "Uganda Revenue Authority (The Taxman)",
+        "url": "https://thetaxman.ura.go.ug/?p=2193",
+        "consulted_on": "2026-09-26",
+        "kind": "guidance"
+      },
+      {
+        "key": "dt-2031-form",
+        "title": "Form DT-2031 — Monthly Value Added Tax Return (revision 07/2018)",
+        "publisher": "Uganda Revenue Authority",
+        "url": "https://ura.go.ug/en/download/dt-2031-monthly-vat-return-form/",
+        "consulted_on": "2026-09-26",
+        "kind": "form"
+      },
+      {
+        "key": "etax",
+        "title": "e-Tax — where the monthly VAT return, form DT-2031, is filed",
+        "publisher": "Uganda Revenue Authority",
+        "url": "https://etax.ura.go.ug/",
+        "consulted_on": "2026-09-26",
+        "kind": "portal"
+      },
+      {
+        "key": "efris",
+        "title": "EFRIS — the Electronic Fiscal Receipting and Invoicing Solution of s. 92 of the Tax Procedures Code Act",
+        "publisher": "Uganda Revenue Authority",
+        "url": "https://ura.go.ug/en/efris/",
+        "consulted_on": "2026-09-26",
+        "kind": "portal"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "UGX",
+    "language": "en",
+    "rounding_method": "half_up",
+    "closing_style": "retained_earnings",
+    "fiscal_year_default": "calendar",
+    "roles": {
+      "receivable": "1100",
+      "payable": "2000",
+      "suspense": "2990",
+      "rounding": "6990",
+      "retained_earnings": "3200",
+      "sales": "4000",
+      "purchase": "5000",
+      "bank": "1010",
+      "cash": "1000",
+      "fx_gain": "4700",
+      "fx_loss": "6950",
+      "asset_disposal_gain": "4750",
+      "asset_disposal_loss": "6960",
+      "tax_payable": "2110",
+      "tax_receivable": "1155"
+    },
+    "journal_roles": {
+      "sales": "SAL",
+      "purchase": "PUR",
+      "miscellaneous": "GEN",
+      "opening": "OPN"
+    }
+  },
+  "languages": [],
+  "journals": [
+    { "code": "SAL", "type": "sales", "name": "Sales journal", "sequence": 10 },
+    { "code": "PUR", "type": "purchase", "name": "Purchases journal", "sequence": 20 },
+    { "code": "BNK", "type": "bank", "name": "Bank", "sequence": 30 },
+    { "code": "CSH", "type": "cash", "name": "Petty cash", "sequence": 40 },
+    { "code": "GEN", "type": "general", "name": "General journal", "sequence": 50 },
+    { "code": "OPN", "type": "opening", "name": "Opening balances", "sequence": 60 }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Uganda reference chart of accounts",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": ["UG-ICPAU-SFP", "UG-ICPAU-IS"],
+      "legal_reference": "There is no legal chart of accounts in Uganda. Companies Act, 2012 (Act 1 of 2012), s. 150(1) requires every company to keep proper books of accounts with respect to money received and expended, sales and purchases, and assets and liabilities, of a kind necessary to give a true and fair view of the company's affairs; s. 152(1) requires the balance sheet and the profit and loss account themselves to give that true and fair view. The Institute of Certified Public Accountants of Uganda, the standard-setting body the Accountants Act, 2013 recognises, has applied the IFRS Accounting Standards without modification since 1998 and has adopted the IFRS for SMEs Accounting Standard for an entity with no public accountability. This chart is original: four digits, blocked so that each range reaches one line of the IFRS for SMEs statements below, with the accounts a Ugandan company actually keeps — VAT input and output tax, import VAT owed to URA at the border, NSSF contributions, withholding tax and local service tax payable, VAT withheld by an appointed agent, and amounts due to directors.",
+      "source": "companies-act-2012"
+    }
+  ],
+  "documents": {
+    "numbering": "sequential",
+    "number_format": "{CODE}-{YYYY}-{NNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "earliest_of_delivery_or_payment",
+    "references": {
+      "numbering": {
+        "legal_reference": "Value Added Tax Act, s. 29(1) — a taxable person making a taxable supply to any person shall provide that person, at the time of supply, with an original tax invoice; s. 29(8) — a tax invoice is an invoice containing the particulars specified in section 2 of the Fourth Schedule, which includes an individualised serial number. The Act asks for a serial number identifying each invoice and not for a series with no gap, which is why `numbering` is `sequential` and not `gapless_per_year`.",
+        "source": "vat-act"
+      },
+      "tax_point": {
+        "legal_reference": "Value Added Tax Act, s. 14(1) — except as otherwise provided, a supply of goods or services occurs, in any case other than an own-use application or a gift, on the EARLIEST of the date the goods are delivered or made available or the performance of the service is completed, the date payment is made, or the date a tax invoice is issued. That is a three-way earliest test and Ekwo's closed vocabulary only expresses a two-way one; `earliest_of_delivery_or_payment` is the nearest value, and the gap — an invoice issued ahead of both delivery and payment, which section 14(1)(c) would still make the tax point but this word would not — is recorded in docs/international.md, as it is for the same three-way rule found in Kenya and Nigeria.",
+        "source": "vat-act"
+      }
+    },
+    "mentions": []
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "obligation": "none",
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "No Ugandan statute obliges a business to exchange a structured electronic invoice with another business, or to accept one, in the sense Ekwo's vocabulary gives the word — there is no Ugandan Peppol authority, no published profile and no ISO 6523 scheme a party is addressed by, so `profile`, `party_scheme` and `vat_scheme` are all null and `obligation` is `none`. What Uganda has instead is EFRIS, a clearance system: Tax Procedures Code Act, s. 92(1) lets a taxpayer issue an e-invoice or e-receipt, or employ an electronic fiscal device linked to the Uganda Revenue Authority's own centralised invoicing and receipting system, and s. 92(2) lets the Commissioner General designate, by notice in the Gazette, the taxpayers for whom that becomes mandatory; s. 92(3) then binds a designated taxpayer to issue e-invoices or e-receipts, or use such a device, in every business transaction; s. 93 sets a penal tax for a designated taxpayer who does not. The Commissioner General's Gazette notice of 23 June 2020 required VAT-registered taxpayers to comply from 1 July 2020, twice extended, first to 1 October 2020 and then, finally, to 1 January 2021; the scope has since been widened by further Gazette notices to businesses outside the VAT register. This is a real-time clearance with the tax administration — the invoice is validated by the centralised system, or generated on a device linked to it, before or as it reaches the buyer — and not a peer-to-peer exchange of a structured document between two businesses in the sense `einvoicing.profile` describes; the gap is recorded in docs/international.md and in this pack's README, and the socle is not patched to fit it.",
+    "source": "tpca"
+  }
+}

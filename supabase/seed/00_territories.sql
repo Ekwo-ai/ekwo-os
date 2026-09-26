@@ -1860,3 +1860,33 @@ on conflict (code) do update set
   eu_vat_to       = excluded.eu_vat_to,
   vat_prefix      = excluded.vat_prefix,
   legal_reference = excluded.legal_reference;
+
+-- ---------------------------------------------------------------------------
+-- Uganda — a State outside the common system of VAT
+--
+-- Directive 2006/112/EC, article 5(2): the common system of VAT applies in
+-- the territory of the Community as defined by the Treaties, and a State
+-- outside it is a third country for every rule the Directive carries. Uganda
+-- levies a value added tax of its own under the Value Added Tax Act, Chapter
+-- 349, whose section 78(2) lets the Minister fix the rate by statutory order
+-- — the Value Added Tax (Rate of Tax) Order, 2005 (Statutory Instrument 2005
+-- No. 51), in force from 1 July 2005, sets it at eighteen per cent. Uganda
+-- belongs to the East African Community, whose Protocol on the Establishment
+-- of the East African Community Customs Union harmonises the customs union
+-- alone; VAT itself is not one of the taxes the Community's own instruments
+-- harmonise, so there is no regional VAT regime to test a supply against
+-- either, only the Ugandan Act.
+-- ---------------------------------------------------------------------------
+
+insert into territories (code, code_source, name, parent_code, eu_vat_scope, eu_vat_from, eu_vat_to, vat_prefix, legal_reference) values
+  ('UG', 'iso_3166_1', 'Uganda', null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. Uganda levies a value added tax of its own under the Value Added Tax Act, Chapter 349, at eighteen per cent of the taxable value under the Value Added Tax (Rate of Tax) Order, 2005 (Statutory Instrument 2005 No. 51), made under section 78(2) of the Act and in force since 1 July 2005.')
+on conflict (code) do update set
+  code_source     = excluded.code_source,
+  name            = excluded.name,
+  parent_code     = excluded.parent_code,
+  eu_vat_scope    = excluded.eu_vat_scope,
+  eu_vat_from     = excluded.eu_vat_from,
+  eu_vat_to       = excluded.eu_vat_to,
+  vat_prefix      = excluded.vat_prefix,
+  legal_reference = excluded.legal_reference;
