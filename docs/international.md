@@ -5470,3 +5470,59 @@ paid within twenty-one days (s. 61). The first is a payment-time mechanism
 and the second a second form; neither is a tax code of the pack, and
 `settle_filing()` would sweep a separate import-of-services account into the
 monthly return's settlement if one were modelled.
+
+## From Tanzania
+
+**A tax point of three independent triggers, where the vocabulary holds
+two.** Section 15 fixes the tax point at whichever of three events comes
+first: the time the invoice for the supply is issued, the time the
+consideration is received in whole or in part, or the time of supply
+itself. `earliest_of_delivery_or_payment` — the value Kenya's four-way test
+and Bosnia and Herzegovina's three-way test above are also read onto — names
+two of the three branches and fits the shape exactly except for the third:
+an invoice issued ahead of both delivery and payment moves the tax point
+here in a way this value does not read, because the value itself carries no
+invoice branch at all. `packs/tz/` declares it anyway, as the closer of the
+two derogation values to the law, and states the gap in its own README
+rather than inventing a third value for one more country.
+
+**A zero rate for a movement that crosses a VAT frontier without crossing a
+customs one, where the vocabulary's `treatment` only offers `export`.**
+Section 55A zero-rates locally manufactured goods a Mainland Tanzanian
+manufacturer supplies to a taxable person registered under the separate
+value added tax law of Tanzania Zanzibar — goods that leave Mainland
+Tanzania's VAT territory while staying inside the United Republic and its
+customs union. `treatment`'s closed vocabulary reads `export` as a supply
+of goods removed to outside the United Republic (the shape Directive
+2006/112/EC and every third-country pack give the word), `domestic` as a
+supply that stays inside one VAT territory, and nothing in between for a
+movement that crosses a VAT boundary drawn inside a single customs union
+and a single state. `packs/tz/` declares `TZ-S-ZR-ZNZ` as `export`, the
+nearer of the two, and states the gap in its own README rather than
+inventing a value this is the only pack, so far, to need.
+
+**A reverse charge that lands on both sides of the same box pair, where
+most packs' `foreign_services_received` reaches only a claim.** Kenya's
+section 10 above books a deemed output liability that reaches the ledger
+but no box, sending only the input claim to the return; Tanzania's own
+definition of "taxable supply" (s. 2(1)(b)), read with s. 4(c) and s. 68,
+makes the same reverse-charged amount both the purchaser's output tax and
+its input tax within the one return, explicitly, rather than leaving the
+output side unreported. `taxes.json`'s `box` field on a posting is free
+enough to carry this without a schema change — `packs/tz/`'s
+`TZ-P-RC-IMPSVC` posts to two boxes of its own numbering instead of one —
+but it is worth naming here because it is the opposite shape from Kenya's
+own `foreign_services_received` tax on the same page, and a reader
+comparing the two packs should not conclude that one of them mis-modelled
+the mechanic.
+
+**A withholding VAT agent, again, and still a fact about a third party no
+posting reads.** As in Kenya, a designated withholding agent — here, under
+a Finance Act, 2025 amendment to the Value Added Tax Act with effect from 1
+July 2025 — deducts part of the VAT on a standard-rated supply when paying
+the supplier and remits it directly to the Tanzania Revenue Authority,
+crediting the supplier with a certificate. `taxes.json` speaks only of the
+two parties to the document being posted; an agent who is neither of them
+has no field to be named in, the same gap Kenya's own withholding VAT
+agents left open above. `packs/tz/` carries no tax under this mechanism and
+states the gap in its own README.

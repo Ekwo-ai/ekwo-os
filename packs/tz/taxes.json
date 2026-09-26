@@ -1,0 +1,247 @@
+[
+  {
+    "code": "TZ-S-18",
+    "name": "Sale, standard rate 18 %",
+    "description": "A taxable supply made in Mainland Tanzania that is neither zero-rated nor exempt",
+    "kind": "vat",
+    "rate": 18,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2015-07-01",
+    "legal_reference": "Value Added Tax Act (Cap. 148), s. 3 — value added tax is imposed and payable on taxable supplies and taxable imports; s. 5(1) — the amount of value added tax payable is calculated by multiplying the value of the supply by the value added tax rate, which is eighteen per cent. `vat_category` and `exemption_code` are left null: this pack declares no `einvoicing.profile`, so BT-118/BT-151/BT-121 are not terms of any invoice a Mainland Tanzanian company issues.",
+    "source": "vat-act",
+    "vat_category": null,
+    "exemption_code": null,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "1" },
+        { "type": "tax", "account": "2100", "box": "1" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "1", "box_factor": -100 },
+        { "type": "tax", "account": "2100", "box": "1", "box_factor": -100 }
+      ]
+    },
+    "sequence": 10
+  },
+  {
+    "code": "TZ-S-ZR-EXP",
+    "name": "Sale, zero-rated (export of goods)",
+    "description": "Goods exported from Mainland Tanzania within the meaning the Act gives to \"export\"",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2015-07-01",
+    "legal_reference": "Value Added Tax Act, s. 5(2) — where the supply is zero-rated, the value added tax rate is zero per cent; s. 55(1) — a supply of goods is zero-rated if the goods are exported within the meaning of \"export\" under s. 2, that is, the removal of goods from a place in Mainland Tanzania to a place outside the United Republic.",
+    "source": "vat-act",
+    "vat_category": null,
+    "exemption_code": null,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "2" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "2", "box_factor": -100 }
+      ]
+    },
+    "sequence": 20
+  },
+  {
+    "code": "TZ-S-ZR-SVC",
+    "name": "Sale, zero-rated (export of services)",
+    "description": "A service whose customer is outside the United Republic at the time of supply and who effectively uses or enjoys it there",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2016-07-01",
+    "legal_reference": "Value Added Tax Act, s. 61A(1), inserted by the Finance Act, 2016 (Act No. 2 of 2016, s. 96) — a supply of services is zero-rated if the customer is outside the United Republic at the time of supply and effectively uses or enjoys the services outside the United Republic, and the services are neither directly related to land situated in the United Republic nor physically performed on goods situated in the United Republic at the time of supply; s. 61A(2) — not zero-rated where the supply is of a right or option to receive a subsequent supply of something else in the United Republic, or is rendered under an agreement with a non-resident to a person in the United Republic who is not a registered person.",
+    "source": "vat-act",
+    "vat_category": null,
+    "exemption_code": null,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "2" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "2", "box_factor": -100 }
+      ]
+    },
+    "sequence": 30
+  },
+  {
+    "code": "TZ-S-ZR-ZNZ",
+    "name": "Sale, zero-rated (locally manufactured goods supplied to Tanzania Zanzibar)",
+    "description": "Locally manufactured goods supplied by a local manufacturer to a taxable person registered under the value added tax law of Tanzania Zanzibar",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2016-07-01",
+    "legal_reference": "Value Added Tax Act, s. 55A, inserted by the Finance Act, 2016 (Act No. 2 of 2016, s. 94) — a supply of locally manufactured goods by a local manufacturer is zero-rated if the goods are supplied to a taxable person registered under the value added tax law administered in Tanzania Zanzibar and are removed from Mainland Tanzania without being effectively used or enjoyed in Mainland Tanzania. Zanzibar administers its own value added tax under a separate law, so this movement is zero-rated the way an export to a country outside the United Republic is, and not treated as a domestic supply; `treatment` is declared `export` for that reason, and the gap between this and a true cross-border export is recorded in docs/international.md.",
+    "source": "vat-act",
+    "vat_category": null,
+    "exemption_code": null,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "2" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "2", "box_factor": -100 }
+      ]
+    },
+    "sequence": 40
+  },
+  {
+    "code": "TZ-S-EX-HEALTH",
+    "name": "Sale, exempt (health care services)",
+    "description": "Medical, dental, nursing, rehabilitation or similar services provided by or in an institution approved by the Government and by or under the supervision of a person registered to perform the service",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2015-07-01",
+    "legal_reference": "Value Added Tax Act, s. 6(1) — except as otherwise provided in this Act or the Schedule, a supply not listed there is not exempt; First Schedule, Part I, item 10(1) — a supply of medical, dental, nursing, convalescent, rehabilitation, midwifery, paramedical, optical or other similar services is exempt where the services are provided by or in an institution approved for their provision by the Government, and by or under the supervision and control of a person registered as qualified to perform that service under Tanzanian law.",
+    "source": "vat-act",
+    "vat_category": null,
+    "exemption_code": null,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "3" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "3", "box_factor": -100 }
+      ]
+    },
+    "sequence": 50
+  },
+  {
+    "code": "TZ-P-18",
+    "name": "Purchase, standard rate 18 %, deductible",
+    "description": "A local purchase at the general rate, acquired for the purpose of making taxable supplies",
+    "kind": "vat",
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2015-07-01",
+    "legal_reference": "Value Added Tax Act, s. 68(1) — a taxable person is allowed a credit for input tax incurred if the goods, services or immovable property were acquired in Mainland Tanzania by the person in the course of the person's economic activity and for the purpose of making taxable supplies, and the person paid, or is liable to pay, the consideration for the supply.",
+    "source": "vat-act",
+    "vat_category": null,
+    "exemption_code": null,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "7" },
+        { "type": "tax", "account": "1150", "box": "7" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "7", "box_factor": -100 },
+        { "type": "tax", "account": "1150", "box": "7", "box_factor": -100 }
+      ]
+    },
+    "sequence": 110
+  },
+  {
+    "code": "TZ-P-18-BL",
+    "name": "Purchase, standard rate 18 %, input tax disallowed",
+    "description": "Entertainment, a club or association membership, or a passenger vehicle and its running costs, bought other than in the ordinary course of a business that deals in, hires out or provides transport services in them",
+    "kind": "vat",
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "recoverable": false,
+    "valid_from": "2015-07-01",
+    "legal_reference": "Value Added Tax Act, s. 68(3) — a taxable person is not allowed an input tax credit for an acquisition, to the extent it is used to provide entertainment (unless the person's economic activity involves providing entertainment in the ordinary course of that activity); for a membership or right of entry to a club, association or society of a sporting, social or recreational nature; or for the acquisition or import of a passenger vehicle, or of spare parts or repair and maintenance services for one, unless the person's economic activity involves dealing in, hiring out, or providing transport services in passenger vehicles and the vehicle was acquired for that purpose. The disallowed tax is not a claim on the return, so it lands on the account of the line it taxes and reaches no box.",
+    "source": "vat-act",
+    "vat_category": null,
+    "exemption_code": null,
+    "postings": {
+      "invoice": [
+        { "type": "base" },
+        { "type": "tax_on_base" }
+      ],
+      "credit_note": [
+        { "type": "base" },
+        { "type": "tax_on_base" }
+      ]
+    },
+    "sequence": 120
+  },
+  {
+    "code": "TZ-P-EX",
+    "name": "Purchase, exempt",
+    "description": "An insurance premium, or another exempt supply bought for the business",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "exempt",
+    "valid_from": "2015-07-01",
+    "legal_reference": "Value Added Tax Act, s. 6(1); First Schedule, Part I, item 13 — life insurance or health insurance, and insurance for workers compensation, are exempt intermediary services, so there is no value added tax to deduct on the premium.",
+    "source": "vat-act",
+    "vat_category": null,
+    "exemption_code": null,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "8" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "8", "box_factor": -100 }
+      ]
+    },
+    "sequence": 130
+  },
+  {
+    "code": "TZ-P-IMP",
+    "name": "Import of goods, VAT paid at the border",
+    "description": "Value added tax collected by the Commissioner General on importation and claimed as input tax once paid",
+    "kind": "vat",
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2015-07-01",
+    "legal_reference": "Value Added Tax Act, s. 8(1) and (3) — the value added tax payable on a taxable import is paid where goods are entered for home consumption, in accordance with the East African Customs Management Act, and the Commissioner General collects it at the time of import; s. 9 — the value of an import; s. 68(1)(c) — input tax includes value added tax paid under this Act on a taxable import. The tax is owed to the Tanzania Revenue Authority at the border and not to the supplier, so it waits on 2125 until the import declaration is settled.",
+    "source": "vat-act",
+    "vat_category": null,
+    "exemption_code": null,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "9" },
+        { "type": "tax", "account": "1150", "box": "9" },
+        { "type": "tax", "factor": -100, "account": "2125" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "9", "box_factor": -100 },
+        { "type": "tax", "account": "1150", "box": "9", "box_factor": -100 },
+        { "type": "tax", "factor": -100, "account": "2125" }
+      ]
+    },
+    "sequence": 140
+  },
+  {
+    "code": "TZ-P-RC-IMPSVC",
+    "name": "Imported service, self-charged and claimed",
+    "description": "A service supplied by a person with no place of business in Mainland Tanzania, acquired for a taxable economic activity",
+    "kind": "vat",
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2015-07-01",
+    "legal_reference": "Value Added Tax Act, s. 2(1), definition of \"taxable supply\", paragraph (b) — a supply of imported services to a taxable person who acquires them in the course of an economic activity is itself a taxable supply where, had the supply been made in Mainland Tanzania, it would have been taxed at a rate other than zero and the purchaser would not have been entitled to a credit for ninety per cent or more of the tax; s. 4(c) — the purchaser of a taxable supply of imported services is the person liable to pay the tax; s. 68(1)(a) and s. 68(2) — input tax includes value added tax payable by the person on a taxable supply of imported services, and the purchaser is not allowed the input tax credit unless the output tax has been accounted for in the same return. Unlike a jurisdiction where a reverse charge reaches only an input-side box, the Tanzanian Act makes the same amount both the purchaser's output tax and input tax in one return, so this code posts the deemed output liability to box 5 and the matching claim to box 10.",
+    "source": "vat-act",
+    "vat_category": null,
+    "exemption_code": null,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "5" },
+        { "type": "tax", "account": "1150", "box": "10" },
+        { "type": "tax", "factor": -100, "account": "2100", "box": "5" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "5", "box_factor": -100 },
+        { "type": "tax", "account": "1150", "box": "10", "box_factor": -100 },
+        { "type": "tax", "factor": -100, "account": "2100", "box": "5", "box_factor": -100 }
+      ]
+    },
+    "sequence": 150
+  }
+]

@@ -1776,3 +1776,36 @@ on conflict (code) do update set
   eu_vat_to       = excluded.eu_vat_to,
   vat_prefix      = excluded.vat_prefix,
   legal_reference = excluded.legal_reference;
+
+
+-- ---------------------------------------------------------------------------
+-- Tanzania — a third country the way Kenya is, and one Union of two VAT laws
+--
+-- Directive 2006/112/EC, article 5(2): the common system of VAT applies in
+-- the territory of the Community as defined by the Treaties, and a State
+-- outside it is a third country for every rule the Directive carries.
+-- Tanzania levies a value added tax of its own under the Value Added Tax Act
+-- (Cap. 148), whose section 5(1) sets the rate at eighteen per cent, and no
+-- Union instrument reaches it. Tanzania belongs to the East African
+-- Community, whose Customs Management Act, 2004 harmonises the customs union
+-- alone; VAT itself is not one of the taxes the Community's own instruments
+-- harmonise, so there is no regional VAT regime to test a supply against
+-- either, only the Tanzanian Act. This code is for Mainland Tanzania alone:
+-- Tanzania Zanzibar administers a separate value added tax law of its own
+-- (Value Added Tax Act, s. 2(1), definitions of "Zanzibar input tax" and of
+-- "resident", both confined to Mainland Tanzania), which this pack does not
+-- cover — see packs/tz/README.md.
+-- ---------------------------------------------------------------------------
+
+insert into territories (code, code_source, name, parent_code, eu_vat_scope, eu_vat_from, eu_vat_to, vat_prefix, legal_reference) values
+  ('TZ', 'iso_3166_1', 'Tanzania', null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. Tanzania levies a value added tax of its own under the Value Added Tax Act (Cap. 148), s. 5(1), at eighteen per cent of the value of the supply or import since the Act commenced on 1 July 2015. This code covers Mainland Tanzania only; Tanzania Zanzibar administers a separate value added tax law.')
+on conflict (code) do update set
+  code_source     = excluded.code_source,
+  name            = excluded.name,
+  parent_code     = excluded.parent_code,
+  eu_vat_scope    = excluded.eu_vat_scope,
+  eu_vat_from     = excluded.eu_vat_from,
+  eu_vat_to       = excluded.eu_vat_to,
+  vat_prefix      = excluded.vat_prefix,
+  legal_reference = excluded.legal_reference;

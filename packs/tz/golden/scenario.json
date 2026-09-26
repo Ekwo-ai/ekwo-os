@@ -1,0 +1,196 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "A month of books of a Dar es Salaam trading company, VAT-registered and filing monthly",
+  "chart": "default",
+  "fiscal_year": { "name": "Financial year 2026", "start": "2026-01-01", "end": "2026-12-31" },
+  "periods": [
+    { "code": "2026-01", "from": "2026-01-01", "to": "2026-01-31" }
+  ],
+  "statements": ["TZ-NBAA-SFP", "TZ-NBAA-IS"],
+  "contacts": [
+    { "ref": "cust-dar", "name": "Kariakoo Traders Ltd", "type": "customer", "country": "TZ" },
+    { "ref": "cust-ke", "name": "Nairobi Fresh Exports Ltd", "type": "customer", "country": "KE" },
+    { "ref": "cust-uk", "name": "Bristol Analytics Ltd", "type": "customer", "country": "GB" },
+    { "ref": "cust-znz", "name": "Zanzibar Retail Company Ltd", "type": "customer", "country": "TZ" },
+    { "ref": "cust-patient", "name": "Amina Juma", "type": "customer", "country": "TZ" },
+    { "ref": "supp-dar", "name": "Mwenge Wholesalers Ltd", "type": "supplier", "country": "TZ" },
+    { "ref": "supp-motors", "name": "Quality Motors Tanzania Ltd", "type": "supplier", "country": "TZ" },
+    { "ref": "supp-insurer", "name": "Jubilee Insurance Tanzania Ltd", "type": "supplier", "country": "TZ" },
+    { "ref": "supp-cn", "name": "Guangzhou Trading Co.", "type": "supplier", "country": "CN" },
+    { "ref": "supp-us", "name": "CloudWorks Inc.", "type": "supplier", "country": "US" }
+  ],
+  "documents": [
+    {
+      "ref": "INV-001",
+      "type": "sale_invoice",
+      "contact": "cust-dar",
+      "date": "2026-01-10",
+      "why": "A domestic sale at the standard rate of 18 %: box 1 and the output VAT of box 6.",
+      "lines": [
+        { "name": "Office furniture, retail sale", "quantity": 5, "unit_price": 100000, "tax": "TZ-S-18", "account": "4000" }
+      ]
+    },
+    {
+      "ref": "INV-002",
+      "type": "sale_invoice",
+      "contact": "cust-ke",
+      "date": "2026-01-13",
+      "why": "An export of goods within the meaning of s. 2 of the Act, zero-rated under s. 55(1): box 2, no output VAT, and a matched payment later on.",
+      "lines": [
+        { "name": "Packaged cashew nuts, export consignment", "quantity": 500, "unit_price": 4000, "tax": "TZ-S-ZR-EXP", "account": "4020" }
+      ]
+    },
+    {
+      "ref": "INV-003",
+      "type": "sale_invoice",
+      "contact": "cust-uk",
+      "date": "2026-01-16",
+      "why": "An export of a service to a customer outside the United Republic who effectively uses it there, zero-rated under s. 61A: box 2, and an unmatched advance payment later on.",
+      "lines": [
+        { "name": "Market research report", "quantity": 1, "unit_price": 1500000, "tax": "TZ-S-ZR-SVC", "account": "4030" }
+      ]
+    },
+    {
+      "ref": "INV-004",
+      "type": "sale_invoice",
+      "contact": "cust-znz",
+      "date": "2026-01-19",
+      "why": "Locally manufactured goods supplied to a taxable person registered under the VAT law of Tanzania Zanzibar, zero-rated under s. 55A — a zero rate that is neither an ordinary export nor a domestic sale: box 2, and a matched payment later on.",
+      "lines": [
+        { "name": "Bottled cooking oil, locally manufactured", "quantity": 1000, "unit_price": 3000, "tax": "TZ-S-ZR-ZNZ", "account": "4020" }
+      ]
+    },
+    {
+      "ref": "INV-005",
+      "type": "sale_invoice",
+      "contact": "cust-patient",
+      "date": "2026-01-21",
+      "why": "An outpatient consultation, exempt under First Schedule, Part I, item 10(1): box 3, no output VAT, and a matched payment later on.",
+      "lines": [
+        { "name": "Outpatient consultation fees", "quantity": 1, "unit_price": 250000, "tax": "TZ-S-EX-HEALTH", "account": "4010" }
+      ]
+    },
+    {
+      "ref": "CN-001",
+      "type": "sale_credit_note",
+      "contact": "cust-dar",
+      "date": "2026-01-26",
+      "why": "A credit note for one unit returned from INV-001, so box 1 and box 6 fall back down and a sale_credit_note is exercised.",
+      "lines": [
+        { "name": "Office furniture, retail sale — one unit returned", "quantity": 1, "unit_price": 100000, "tax": "TZ-S-18", "account": "4000" }
+      ]
+    },
+    {
+      "ref": "PINV-001",
+      "type": "purchase_invoice",
+      "contact": "supp-dar",
+      "date": "2026-01-11",
+      "why": "A domestic purchase at the standard rate, deductible in full under s. 68(1): box 7 and the input VAT of box 12, and a matched payment later on.",
+      "lines": [
+        { "name": "Trading stock purchased for resale", "quantity": 1, "unit_price": 400000, "tax": "TZ-P-18", "account": "5000" }
+      ]
+    },
+    {
+      "ref": "PINV-002",
+      "type": "purchase_invoice",
+      "contact": "supp-motors",
+      "date": "2026-01-14",
+      "why": "A passenger vehicle whose input tax is disallowed under s. 68(3): the VAT becomes part of the cost of the vehicle and reaches no box.",
+      "lines": [
+        { "name": "Passenger motor vehicle for the sales manager", "quantity": 1, "unit_price": 60000000, "tax": "TZ-P-18-BL", "account": "1660" }
+      ]
+    },
+    {
+      "ref": "PINV-003",
+      "type": "purchase_invoice",
+      "contact": "supp-insurer",
+      "date": "2026-01-17",
+      "why": "A group life insurance premium, exempt under First Schedule, Part I, item 13: no input tax, box 8.",
+      "lines": [
+        { "name": "Group life insurance premium", "quantity": 1, "unit_price": 500000, "tax": "TZ-P-EX", "account": "6410" }
+      ]
+    },
+    {
+      "ref": "PINV-004",
+      "type": "purchase_invoice",
+      "contact": "supp-cn",
+      "date": "2026-01-23",
+      "why": "An import of goods: VAT collected by the Commissioner General at the border under s. 8, claimed as input tax through box 9 and held on the customs control account until settled.",
+      "lines": [
+        { "name": "Imported machinery parts for resale", "quantity": 1, "unit_price": 8000000, "tax": "TZ-P-IMP", "account": "5000" }
+      ]
+    },
+    {
+      "ref": "PINV-005",
+      "type": "purchase_invoice",
+      "contact": "supp-us",
+      "date": "2026-01-28",
+      "why": "A service imported from a supplier with no place of business in Mainland Tanzania: the recipient self-charges the output tax on box 5 and claims it back on box 10, netting to nothing on a wholly taxable purchase.",
+      "lines": [
+        { "name": "Cloud hosting subscription", "quantity": 1, "unit_price": 1000000, "tax": "TZ-P-RC-IMPSVC", "account": "6350" }
+      ]
+    },
+    {
+      "ref": "PCN-001",
+      "type": "purchase_credit_note",
+      "contact": "supp-dar",
+      "date": "2026-01-30",
+      "why": "A purchase credit note for a short delivery on PINV-001, so box 7 and box 12 fall back down and a purchase_credit_note is exercised.",
+      "lines": [
+        { "name": "Trading stock purchased for resale — short-delivery credit", "quantity": 1, "unit_price": 50000, "tax": "TZ-P-18", "account": "5000" }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "PAY-001",
+      "direction": "inbound",
+      "date": "2026-02-05",
+      "amount": 250000,
+      "contact": "cust-patient",
+      "journal": "BNK",
+      "match": "INV-005",
+      "why": "The consultation fee of INV-005 collected in full: a matched inbound payment on an exempt sale."
+    },
+    {
+      "ref": "PAY-002",
+      "direction": "inbound",
+      "date": "2026-02-06",
+      "amount": 3000000,
+      "contact": "cust-znz",
+      "journal": "BNK",
+      "match": "INV-004",
+      "why": "The Zanzibar zero-rated supply of INV-004 collected in full: a matched inbound payment."
+    },
+    {
+      "ref": "PAY-003",
+      "direction": "inbound",
+      "date": "2026-02-07",
+      "amount": 2000000,
+      "contact": "cust-ke",
+      "journal": "BNK",
+      "match": "INV-002",
+      "why": "The export of INV-002 collected in full: a matched inbound payment in a foreign trade relationship."
+    },
+    {
+      "ref": "PAY-004",
+      "direction": "outbound",
+      "date": "2026-02-08",
+      "amount": 472000,
+      "contact": "supp-dar",
+      "journal": "BNK",
+      "match": "PINV-001",
+      "why": "PINV-001 settled in full, VAT included: a matched outbound payment."
+    },
+    {
+      "ref": "PAY-005",
+      "direction": "inbound",
+      "date": "2026-02-10",
+      "amount": 500000,
+      "contact": "cust-uk",
+      "journal": "BNK",
+      "match": null,
+      "why": "An advance received from Bristol Analytics Ltd before its next invoice, matched to nothing: reconcile() has to survive an open item."
+    }
+  ]
+}

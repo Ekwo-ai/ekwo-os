@@ -1,0 +1,140 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "TZ",
+  "name": "Tanzania",
+  "version": "0.1.0",
+  "schema_min": "20260923110000",
+  "seed_sequence": 120,
+  "released_at": "2026-09-26",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "vat-act",
+        "title": "The Value Added Tax Act, Chapter 148, Revised Edition 2019",
+        "publisher": "Attorney General's Chambers, United Republic of Tanzania",
+        "url": "https://www.mof.go.tz/uploads/documents/en-1676548670-THE%20VALUE%20ADDED%20TAX%20ACT,%20CAP%20148%20R.E.%202019.pdf",
+        "consulted_on": "2026-09-26",
+        "kind": "law"
+      },
+      {
+        "key": "companies-act-2002",
+        "title": "The Companies Act, 2002, Chapter 212 — ss. 151, 153, 154 (accounts and audit)",
+        "publisher": "Tanzania Legal Information Institute (TanzLII) / Laws.Africa",
+        "url": "https://media.tanzlii.org/media/legislation/323287/source_file/9e4d2bac245b2936/2002-12.pdf",
+        "consulted_on": "2026-09-26",
+        "kind": "law"
+      },
+      {
+        "key": "tra-vat",
+        "title": "Value Added Tax (VAT) — rate, registration threshold, filing",
+        "publisher": "Tanzania Revenue Authority",
+        "url": "https://www.tra.go.tz/page/value-added-tax-vat",
+        "consulted_on": "2026-09-26",
+        "kind": "guidance"
+      },
+      {
+        "key": "efd-guidance",
+        "title": "Know about Electronic Fiscal Devices (EFD)",
+        "publisher": "Tanzania Revenue Authority",
+        "url": "https://www.tra.go.tz/page/know-about-e-fiscal-devices-efd",
+        "consulted_on": "2026-09-26",
+        "kind": "guidance"
+      },
+      {
+        "key": "idras",
+        "title": "IDRAS — the Integrated Domestic Revenue Administration System, where a value added tax return is filed",
+        "publisher": "Tanzania Revenue Authority",
+        "url": "https://gateway.tra.go.tz/Efiling/login.aspx",
+        "consulted_on": "2026-09-26",
+        "kind": "portal"
+      },
+      {
+        "key": "ifac-tanzania",
+        "title": "Tanzania, United Republic of — Member Country (National Board of Accountants and Auditors: adoption of the IFRS Accounting Standards and the IFRS for SMEs Accounting Standard)",
+        "publisher": "International Federation of Accountants",
+        "url": "https://www.ifac.org/about-ifac/membership/profile/tanzania-united-republic",
+        "consulted_on": "2026-09-26",
+        "kind": "guidance"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "TZS",
+    "language": "en",
+    "rounding_method": "half_up",
+    "closing_style": "retained_earnings",
+    "fiscal_year_default": "calendar",
+    "roles": {
+      "receivable": "1100",
+      "payable": "2000",
+      "suspense": "2990",
+      "rounding": "6990",
+      "retained_earnings": "3200",
+      "sales": "4000",
+      "purchase": "5000",
+      "bank": "1010",
+      "cash": "1000",
+      "fx_gain": "4700",
+      "fx_loss": "6950",
+      "asset_disposal_gain": "4750",
+      "asset_disposal_loss": "6960",
+      "tax_payable": "2110",
+      "tax_receivable": "1155"
+    },
+    "journal_roles": {
+      "sales": "SAL",
+      "purchase": "PUR",
+      "miscellaneous": "GEN",
+      "opening": "OPN"
+    }
+  },
+  "languages": [],
+  "journals": [
+    { "code": "SAL", "type": "sales", "name": "Sales journal", "sequence": 10 },
+    { "code": "PUR", "type": "purchase", "name": "Purchases journal", "sequence": 20 },
+    { "code": "BNK", "type": "bank", "name": "Bank", "sequence": 30 },
+    { "code": "CSH", "type": "cash", "name": "Petty cash", "sequence": 40 },
+    { "code": "GEN", "type": "general", "name": "General journal", "sequence": 50 },
+    { "code": "OPN", "type": "opening", "name": "Opening balances", "sequence": 60 }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Tanzania reference chart of accounts",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": ["TZ-NBAA-SFP", "TZ-NBAA-IS"],
+      "legal_reference": "There is no legal chart of accounts in Tanzania. Companies Act, 2002 (Cap. 212), s. 151(1) requires every company to keep proper books of account sufficient to disclose the company's financial position and to enable the directors to ensure that a balance sheet, profit and loss account and cash flow statement comply with the requirements of the Act; s. 153 requires the directors to prepare, for each accounting period, a profit and loss account, a balance sheet and a cash flow statement; s. 154(1) requires each of them to give a true and fair view; s. 154(2) requires them to comply with the requirements prescribed by the Minister or the National Board of Accountants and Auditors, having regard to generally accepted principles of accounting. NBAA, the standard-setting body the Auditors and Accountants (Registration) Act (Cap. 286) recognises, adopted the IFRS Accounting Standards and, for a commercial entity that is not a public-interest entity, the IFRS for SMEs Accounting Standard. This chart is original: four digits, blocked so that each range reaches one line of the IFRS for SMEs statements below, with the accounts a Tanzanian company actually keeps — VAT input and output tax, import VAT owed to TRA at the border, NSSF, Workers Compensation Fund and Skills Development Levy contributions, withholding tax, amounts due to directors.",
+      "source": "companies-act-2002"
+    }
+  ],
+  "documents": {
+    "numbering": "sequential",
+    "number_format": "{CODE}-{YYYY}-{NNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "earliest_of_delivery_or_payment",
+    "references": {
+      "numbering": {
+        "legal_reference": "Value Added Tax Act, s. 86(1) — a registered person making a taxable supply issues, no later than the day value added tax becomes payable on it, a serially numbered true and correct tax invoice generated by an electronic fiscal device; the section asks that each invoice be identified in sequence by the device, and not that a company's own document series carry no gap, which is why the style is `sequential`.",
+        "source": "vat-act"
+      },
+      "tax_point": {
+        "legal_reference": "Value Added Tax Act, s. 15 — value added tax imposed on a taxable supply becomes payable at the EARLIEST of: (a) the time the invoice for the supply is issued by the supplier; (b) the time the consideration is received, in whole or in part; or (c) the time of supply. This is a three-way earliest-of test, and Ekwo's closed vocabulary expresses only a two-way one; `earliest_of_delivery_or_payment` is the nearer of the two derogation values, matching branches (b) and (c) of section 15. The gap — an invoice issued ahead of both delivery and payment, which fixes the tax point in Tanzania under branch (a) but which this value does not itself read — is recorded in docs/international.md, the same reading Bosnia and Herzegovina's three-way test under article 17(1) was given.",
+        "source": "vat-act"
+      }
+    },
+    "mentions": []
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "obligation": "none",
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "No Tanzanian statute obliges a business to exchange a structured electronic invoice with another business, or to accept one, in the sense Ekwo's vocabulary gives the word — there is no Tanzanian Peppol authority, no published profile and no ISO 6523 scheme a party is addressed by, so `profile`, `party_scheme` and `vat_scheme` are all null and `obligation` is `none`. What Tanzania has instead is a clearance system built into the tax invoice itself: Value Added Tax Act, s. 86(1) requires a registered person to issue, no later than the day the tax becomes payable, a serially numbered true and correct tax invoice generated by an electronic fiscal device (EFD) or, since 2020, its software equivalent, a virtual fiscal device (VFD); the device or the VFD channel reports the transaction to the Tanzania Revenue Authority's Electronic Fiscal Device Management System in real time. This validates an invoice already addressed to a Tanzanian buyer through the seller's own device, and is not a peer-to-peer exchange of a structured document between two businesses in the sense `einvoicing.profile` describes; the gap is recorded in docs/international.md and in this pack's README, and the socle is not patched to fit it.",
+    "source": "vat-act"
+  }
+}

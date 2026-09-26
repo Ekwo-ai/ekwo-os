@@ -1,0 +1,160 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "TZ-VAT-RETURN",
+  "name": "VAT return",
+  "period": ["month"],
+  "period_default": "month",
+  "valid_from": "2015-07-01",
+  "legal_reference": "Value Added Tax Act (Cap. 148), s. 2(1) — a \"tax period\" means a calendar month; s. 66(1) — a taxable person lodges a value added tax return in the form and manner prescribed by the Minister, on the twentieth day of the month after the tax period, whether or not a net amount is payable for that period; s. 67(1) — the net amount payable is calculated by adding all output tax that becomes payable in the tax period, subtracting all input tax credits allowed in that period, and adjusting the result by any increasing or decreasing adjustments. No box-by-box specification of the on-screen field layout of the Tanzania Revenue Authority's electronic return (filed through the IDRAS portal, which superseded the paper form ITX 240.02.B) could be independently verified from an official source at the time this pack was written — the archived paper form no longer resolves on tra.go.tz. The boxes below are this pack's own numbering of the return the Act itself describes in ss. 66 to 68, not a transcription of TRA's field numbers; a reviewer who can check the current IDRAS screen against them is asked to in packs/tz/README.md.",
+  "source": "vat-act",
+  "deadline": {
+    "rule": "day_of_month_after_period",
+    "day": 20,
+    "legal_reference": "Value Added Tax Act, s. 66(1) — the return is lodged, and s. 67(3)(a) — the net amount is paid, on the twentieth day of the month after the tax period; s. 66(7) — where the twentieth day falls on a Saturday, Sunday or public holiday, the return is lodged on the first working day following it.",
+    "source": "vat-act"
+  },
+  "boxes": [
+    {
+      "box": "1",
+      "kind": "base",
+      "name": "Standard-rated sales — value",
+      "sequence": 10,
+      "legal_reference": "Value Added Tax Act, s. 5(1) — the value of a taxable supply taxed at the general rate.",
+      "source": "vat-act"
+    },
+    {
+      "box": "1",
+      "kind": "tax",
+      "name": "Standard-rated sales — output VAT",
+      "sequence": 15,
+      "legal_reference": "Value Added Tax Act, s. 5(1) — the value added tax charged on the supply at eighteen per cent.",
+      "source": "vat-act"
+    },
+    {
+      "box": "2",
+      "kind": "base",
+      "name": "Zero-rated sales",
+      "sequence": 20,
+      "legal_reference": "Value Added Tax Act, ss. 55, 55A and 61A — exports of goods, locally manufactured goods supplied to Tanzania Zanzibar, and exports of services, all zero-rated under Part IV(b) of the Act.",
+      "source": "vat-act"
+    },
+    {
+      "box": "3",
+      "kind": "base",
+      "name": "Exempt sales",
+      "sequence": 30,
+      "legal_reference": "Value Added Tax Act, s. 6(1) and the First Schedule — a supply exempted by the Schedule.",
+      "source": "vat-act"
+    },
+    {
+      "box": "4",
+      "kind": "total",
+      "name": "Total sales",
+      "sequence": 40,
+      "plus": ["1:base", "2", "3"],
+      "legal_reference": "The sum of standard-rated, zero-rated and exempt sales for the tax period.",
+      "source": "vat-act"
+    },
+    {
+      "box": "5",
+      "kind": "base",
+      "name": "Imported services — deemed value",
+      "sequence": 50,
+      "legal_reference": "Value Added Tax Act, s. 2(1), definition of \"taxable supply\", paragraph (b) — the value of a taxable supply of imported services the purchaser is deemed to have made to itself.",
+      "source": "vat-act"
+    },
+    {
+      "box": "5",
+      "kind": "tax",
+      "name": "Imported services — output VAT self-charged",
+      "sequence": 55,
+      "legal_reference": "Value Added Tax Act, s. 4(c) and s. 2(1) definition of \"output tax\", paragraph (b) — value added tax payable by the purchaser on a taxable supply of imported services acquired.",
+      "source": "vat-act"
+    },
+    {
+      "box": "6",
+      "kind": "total",
+      "name": "Total output tax",
+      "sequence": 60,
+      "plus": ["1:tax", "5:tax"],
+      "legal_reference": "Value Added Tax Act, s. 67(1)(a) — all output tax that becomes payable by the taxable person in the tax period.",
+      "source": "vat-act"
+    },
+    {
+      "box": "7",
+      "kind": "base",
+      "name": "Standard-rated purchases — value",
+      "sequence": 70,
+      "legal_reference": "Value Added Tax Act, s. 68(1) — the value of a local purchase whose input tax is claimable.",
+      "source": "vat-act"
+    },
+    {
+      "box": "7",
+      "kind": "tax",
+      "name": "Standard-rated purchases — input VAT",
+      "sequence": 75,
+      "legal_reference": "Value Added Tax Act, s. 68(1) — the input tax credit allowed on the purchase.",
+      "source": "vat-act"
+    },
+    {
+      "box": "8",
+      "kind": "base",
+      "name": "Exempt purchases",
+      "sequence": 80,
+      "legal_reference": "Value Added Tax Act, s. 6(1) and the First Schedule — a purchase exempted by the Schedule, carrying no value added tax to deduct.",
+      "source": "vat-act"
+    },
+    {
+      "box": "9",
+      "kind": "base",
+      "name": "Import of goods — value",
+      "sequence": 90,
+      "legal_reference": "Value Added Tax Act, s. 9 — the value of an import of goods.",
+      "source": "vat-act"
+    },
+    {
+      "box": "9",
+      "kind": "tax",
+      "name": "Import of goods — input VAT",
+      "sequence": 95,
+      "legal_reference": "Value Added Tax Act, s. 8 and s. 68(1)(c) — value added tax paid to the Commissioner General on a taxable import, claimed as input tax.",
+      "source": "vat-act"
+    },
+    {
+      "box": "10",
+      "kind": "tax",
+      "name": "Imported services — input VAT claimed",
+      "sequence": 100,
+      "legal_reference": "Value Added Tax Act, s. 68(1)(a) and s. 68(2) — value added tax payable on a taxable supply of imported services is also input tax of the purchaser, claimable once the matching output tax is accounted for in the same return.",
+      "source": "vat-act"
+    },
+    {
+      "box": "11",
+      "kind": "total",
+      "name": "Total purchases",
+      "sequence": 110,
+      "plus": ["7:base", "8", "9:base"],
+      "legal_reference": "The sum of standard-rated, exempt and imported purchases for the tax period.",
+      "source": "vat-act"
+    },
+    {
+      "box": "12",
+      "kind": "total",
+      "name": "Total input tax credit",
+      "sequence": 120,
+      "plus": ["7:tax", "9:tax", "10"],
+      "legal_reference": "Value Added Tax Act, s. 67(1)(b) — all input tax credits allowed in the tax period.",
+      "source": "vat-act"
+    },
+    {
+      "box": "13",
+      "kind": "total",
+      "name": "Net VAT payable / (credit)",
+      "sequence": 130,
+      "plus": ["6"],
+      "minus": ["12"],
+      "legal_reference": "Value Added Tax Act, s. 67(1) and (3) — the net amount payable for the tax period is output tax less input tax credits, adjusted for any increasing or decreasing adjustment; a positive amount is accounted for and paid by the day the return is due, s. 67(3)(a); a negative amount is a negative net amount, carried forward under s. 81 or refunded within the conditions s. 82 sets, neither of which this pack carries — see packs/tz/README.md.",
+      "source": "vat-act"
+    }
+  ]
+}
