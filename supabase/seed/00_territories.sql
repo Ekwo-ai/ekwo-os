@@ -1644,3 +1644,29 @@ on conflict (code) do update set
   eu_vat_to       = excluded.eu_vat_to,
   vat_prefix      = excluded.vat_prefix,
   legal_reference = excluded.legal_reference;
+
+-- ---------------------------------------------------------------------------
+-- Serbia — a candidate country, outside the common system of VAT
+--
+-- Directive 2006/112/EC, article 5(2): the common system of VAT applies in
+-- the territory of the Community as defined by the Treaties, and a State
+-- outside it is a third country for every rule the Directive carries.
+-- Serbia is a candidate for accession (European Council decision of 1 March
+-- 2012) and negotiates under the acquis, but has not acceded and levies its
+-- own value added tax — Zakon o porezu na dodatu vrednost ("Službeni glasnik
+-- RS", broj 84/2004 and later amendments), article 23, at a standard rate of
+-- 20% and a reduced rate of 10%.
+-- ---------------------------------------------------------------------------
+
+insert into territories (code, code_source, name, parent_code, eu_vat_scope, eu_vat_from, eu_vat_to, vat_prefix, legal_reference) values
+  ('RS', 'iso_3166_1', 'Serbia', null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2) — the common system of VAT applies in the territory of the Community as defined by the Treaties; Serbia is a candidate country (European Council, 1 March 2012) and not a Member State. Serbia levies its own value added tax, Porez na dodatu vrednost, under the Zakon o porezu na dodatu vrednost ("Službeni glasnik RS", broj 84/2004 and later amendments), article 23, at a standard rate of 20% since 1 October 2012 (Sl. glasnik RS 93/2012) and a reduced ("posebna") rate of 10%.')
+on conflict (code) do update set
+  code_source     = excluded.code_source,
+  name            = excluded.name,
+  parent_code     = excluded.parent_code,
+  eu_vat_scope    = excluded.eu_vat_scope,
+  eu_vat_from     = excluded.eu_vat_from,
+  eu_vat_to       = excluded.eu_vat_to,
+  vat_prefix      = excluded.vat_prefix,
+  legal_reference = excluded.legal_reference;

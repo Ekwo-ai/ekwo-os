@@ -5203,3 +5203,26 @@ reason as Ukraine's article 208 above: the mechanic is the double posting
 `docs/packs.md` shows for Estonia's intra-Community acquisition of goods, and
 a first `community` version of this pack does not yet carry a tax under the
 treatment `foreign_services_received`.
+
+## From Serbia
+
+**Clearance e-invoicing, again, and still not a profile of EN 16931.** The
+Sistem e-Faktura (SEF) is a state platform through which private-sector
+invoices must be issued, sent, received and stored from 1 January 2023
+(Zakon o elektronskom fakturisanju, article 24), earlier still for the public
+sector. Its XML is set by the Ministry of Finance's own rulebook, not by one
+of the profiles built on the semantic model of EN 16931 — the same shape met
+in `packs/sa/`, `packs/mx/`, `packs/vn/`, `packs/uy/` and `packs/in/` — so
+`profile`, `mandatory_from` and `obligation` stay empty and the mandatory
+dates are prose in `legal_reference` and in the pack's README.
+
+**A second, dated obligation riding on the same law, with nowhere of its own
+to be stated.** Article 4 of the same statute makes the electronic recording
+of calculated VAT inside SEF ("elektronsko evidentiranje obračuna PDV") a
+distinct duty from filing the periodic return itself — due on the same
+deadline, but a transaction-level ledger rather than the boxed totals
+`tax_report.json` carries. The format's declaration is one form and one
+deadline; a second, parallel recording obligation on the same figures, filed
+through the invoicing platform rather than the tax administration's own
+portal, has no field to be true in. The pack's README names the gap; nothing
+in `packages/formats/` writes that record.

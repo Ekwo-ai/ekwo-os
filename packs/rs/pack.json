@@ -1,0 +1,189 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "RS",
+  "name": "Srbija",
+  "version": "0.1.0",
+  "schema_min": "20260923110000",
+  "seed_sequence": 112,
+  "released_at": "2026-09-26",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "zakon-pdv",
+        "title": "Zakon o porezu na dodatu vrednost („Službeni glasnik RS”, br. 84/2004, 86/2004 – ispravka, 61/2005, 61/2007, 93/2012, 108/2013, 68/2014 – dr. zakon, 142/2014, 83/2015, 108/2016, 113/2017, 30/2018, 72/2019, 153/2020, 138/2022, 94/2024, 109/2025, 80/2026), nezvanično prečišćen tekst redakcije Službenog glasnika",
+        "publisher": "Ministarstvo finansija Republike Srbije",
+        "url": "https://mfin.gov.rs/sr/propisi-1/zakon-o-porezu-na-dodatu-vrednost--21",
+        "consulted_on": "2026-09-26",
+        "kind": "law"
+      },
+      {
+        "key": "pravilnik-kontni-okvir",
+        "title": "Pravilnik o Kontnom okviru i sadržini računa u Kontnom okviru za privredna društva, zadruge i preduzetnike („Službeni glasnik RS”, broj 89/2020)",
+        "publisher": "Ministarstvo finansija Republike Srbije",
+        "url": "https://www.mfin.gov.rs/sr/propisi-1/pravilnik-o-kontnom-okviru-i-sadrzini-racuna-u-kontnom-okviru-za-privredna-drustva-zadruge-i-preduzetnike-sluzbeni-glasnik-rs-br-892020-1",
+        "consulted_on": "2026-09-26",
+        "kind": "regulation"
+      },
+      {
+        "key": "pravilnik-fin-izvestaji",
+        "title": "Pravilnik o sadržini i formi obrazaca finansijskih izveštaja i sadržini i formi obrasca Statističkog izveštaja za privredna društva, zadruge i preduzetnike („Službeni glasnik RS”, broj 89/2020) — Prilog 1 (Bilans stanja) i Prilog 2 (Bilans uspeha)",
+        "publisher": "Ministarstvo finansija Republike Srbije",
+        "url": "https://mfin.gov.rs/sr/propisi-1/pravilnik-o-sadrzini-i-formi-obrazaca-finansijskih-izvestaja-i-sadrzini-i-formi-obrasca-statistickog-izvestaja-za-privredna-drustva-zadruge-i-preduzetnike-sluzbeni-glasnik-rs-br-892020-1",
+        "consulted_on": "2026-09-26",
+        "kind": "regulation"
+      },
+      {
+        "key": "apr-bilans-obrazac",
+        "title": "Izveštaj o bonitetu za javne nabavke (BON-JN) — deo „Sažeti bilans stanja” i „Sažeti bilans uspeha”, obrasci sastavljeni po pozicijama Priloga 1 i 2 Pravilnika 89/2020",
+        "publisher": "Agencija za privredne registre — Registar finansijskih izveštaja",
+        "url": "https://apr.gov.rs/upload/Portals/0/GFI_2024/Obrasci/BON_JN_priv.drus.pdf",
+        "consulted_on": "2026-09-26",
+        "kind": "form"
+      },
+      {
+        "key": "pravilnik-pppdv",
+        "title": "Pravilnik o obliku i sadržini prijave za evidentiranje obveznika PDV, postupku evidentiranja i brisanja iz evidencije i o obliku i sadržini poreske prijave PDV („Službeni glasnik RS”, br. 123/2012 i izmene) — čl. 11–13 (Obrazac PPPDV) i čl. 26 (dinari, bez decimala)",
+        "publisher": "Poreska uprava Republike Srbije",
+        "url": "https://www.purs.gov.rs/sr/fizicka-lica/pdv/podzakonska-akta/1277/pravilnik-o-obliku-i-sadrzini-prijave-za-evidentiranje-obveznika-pdv-postupku-evidentiranja-i-brisanja-iz-evidencije-i-o-obliku-i-sadrzini-poreske-prijave-pdv.html",
+        "consulted_on": "2026-09-26",
+        "kind": "form"
+      },
+      {
+        "key": "eporezi",
+        "title": "ePorezi — portal Poreske uprave za elektronsko podnošenje poreske prijave PDV (Obrazac PPPDV)",
+        "publisher": "Poreska uprava Republike Srbije",
+        "url": "https://eporezi.purs.gov.rs/",
+        "consulted_on": "2026-09-26",
+        "kind": "portal"
+      },
+      {
+        "key": "zakon-efakturisanje",
+        "title": "Zakon o elektronskom fakturisanju („Službeni glasnik RS”, br. 44/2021, 129/2021, 138/2022, 92/2023, 94/2024, 109/2025, 80/2026), redakcijski prečišćen tekst",
+        "publisher": "Sistem elektronskih faktura (efaktura.gov.rs)",
+        "url": "https://www.efaktura.gov.rs/tekst/387/zakon-o-elektronskom-fakturisanju.php",
+        "consulted_on": "2026-09-26",
+        "kind": "law"
+      },
+      {
+        "key": "sef-portal",
+        "title": "Sistem e-Faktura (SEF) — državna platforma za izdavanje, slanje, prijem i elektronsko evidentiranje obračuna PDV",
+        "publisher": "Ministarstvo finansija Republike Srbije",
+        "url": "https://www.efaktura.gov.rs/",
+        "consulted_on": "2026-09-26",
+        "kind": "portal"
+      },
+      {
+        "key": "zakon-rokovi-placanja",
+        "title": "Zakon o rokovima izmirenja novčanih obaveza u komercijalnim transakcijama („Službeni glasnik RS”, br. 119/2012, 68/2015, 113/2017, 91/2019)",
+        "publisher": "Sistem elektronskih faktura (efaktura.gov.rs), zvanični tekst zakona",
+        "url": "https://www.efaktura.gov.rs/tekst/408/zakon-o-rokovima-izmirenja-novcanih-obaveza-u-komercijalnim-transakcijama.php",
+        "consulted_on": "2026-09-26",
+        "kind": "law"
+      },
+      {
+        "key": "zakon-racunovodstvo",
+        "title": "Zakon o računovodstvu („Službeni glasnik RS”, broj 73/2019)",
+        "publisher": "Ministarstvo finansija Republike Srbije",
+        "url": "https://www.mfin.gov.rs/sr/propisi-1/-zakon-o-racunovodstvu-sluzbeni-glasnik-rs-br-732019-1",
+        "consulted_on": "2026-09-26",
+        "kind": "law"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "RSD",
+    "language": "sr",
+    "rounding_method": "half_up",
+    "closing_style": "result_accounts",
+    "fiscal_year_default": "calendar",
+    "roles": {
+      "receivable": "204",
+      "payable": "435",
+      "suspense": "4999",
+      "rounding": "579",
+      "retained_earnings": "340",
+      "retained_earnings_loss": "350",
+      "current_year_result_profit": "341",
+      "current_year_result_loss": "351",
+      "sales": "614",
+      "purchase": "501",
+      "bank": "241",
+      "cash": "243",
+      "fx_gain": "663",
+      "fx_loss": "563",
+      "tax_payable": "479",
+      "tax_receivable": "279"
+    },
+    "journal_roles": {
+      "sales": "SAL",
+      "purchase": "PUR",
+      "miscellaneous": "GEN",
+      "opening": "OPN"
+    }
+  },
+  "languages": ["en"],
+  "journals": [
+    { "code": "SAL", "type": "sales", "name": "Dnevnik prodaje", "sequence": 10 },
+    { "code": "PUR", "type": "purchase", "name": "Dnevnik nabavke", "sequence": 20 },
+    { "code": "BNK", "type": "bank", "name": "Dnevnik banke", "sequence": 30 },
+    { "code": "CSH", "type": "cash", "name": "Dnevnik blagajne", "sequence": 40 },
+    { "code": "GEN", "type": "general", "name": "Opšti dnevnik", "sequence": 50 },
+    { "code": "OPN", "type": "opening", "name": "Dnevnik otvaranja", "sequence": 60 }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Kontni okvir za privredna društva, zadruge i preduzetnike (Pravilnik 89/2020)",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": ["RS-BS", "RS-IS"],
+      "legal_reference": "Pravilnik o Kontnom okviru i sadržini računa u Kontnom okviru za privredna društva, zadruge i preduzetnike („Službeni glasnik RS”, broj 89/2020), koji je obavezujući za sva pravna lica i preduzetnike koji vode poslovne knjige po sistemu dvojnog knjigovodstva (čl. 1). Ovaj paket transkribuje osnovne (trocifrene) račune i najčešće korišćene analitičke podračune; član 3. stav 2. Pravilnika izričito dozvoljava raščlanjavanje propisanih trocifrenih računa na analitičke račune, na osnovu čega ovaj paket dodaje četvorocifrene podračune 4999 (sredstva i sume čije se poreklo utvrđuje — prelazni račun) — vidi README.md.",
+      "source": "pravilnik-kontni-okvir"
+    }
+  ],
+  "documents": {
+    "numbering": "sequential",
+    "number_format": "{CODE}-{YYYY}-{NNNN}",
+    "legal_payment_days": 60,
+    "late_payment_reference": "Zakon o rokovima izmirenja novčanih obaveza u komercijalnim transakcijama, član 5 — poverilac ima pravo na naknadu za kašnjenje u iznosu od 20.000 dinara po neizmirenoj obavezi, pored zatezne kamate koju uređuje poseban zakon.",
+    "tax_point": "earliest_of_delivery_or_payment",
+    "posted_edit_policy": "reversal_only",
+    "references": {
+      "numbering": {
+        "legal_reference": "Zakon o porezu na dodatu vrednost, član 42. stav 5. tačka 2) — račun sadrži mesto i datum izdavanja i redni broj računa. Zakon ne propisuje da niz mora biti bez prekida; format ovde je primer redosleda po seriji i godini, a ne jedini nametnuti oblik.",
+        "source": "zakon-pdv"
+      },
+      "payment_terms": {
+        "legal_reference": "Zakon o rokovima izmirenja novčanih obaveza u komercijalnim transakcijama, član 3. st. 1. i 2. — ugovorom između privrednih subjekata ne može se predvideti rok duži od 60 dana; ako rok nije ugovoren, ili ne postoji pisani ugovor, ili je ugovoren duži rok, dužnik je dužan da bez prethodne opomene izmiri obavezu najkasnije u roku od 60 dana.",
+        "source": "zakon-rokovi-placanja"
+      },
+      "tax_point": {
+        "legal_reference": "Zakon o porezu na dodatu vrednost, član 16. stav 1. — poreska obaveza nastaje danom kada se najranije izvrši promet dobara i usluga, ili naplata odnosno plaćanje ako je naknada naplaćena pre prometa, ili nastanak obaveze plaćanja carinskog duga kod uvoza. Nijedna od dve prve radnje ne pretpostavlja drugu, pa je ovo pravilo najbliže vokabularu `earliest_of_delivery_or_payment`, a ne izuzetku od pravila računa kao u Belgiji ili Luksemburgu.",
+        "source": "zakon-pdv"
+      },
+      "posted_edit_policy": {
+        "legal_reference": "Zakon o računovodstvu, član 9 — ispravka greške u poslovnim knjigama vrši se na način koji ne dozvoljava brisanje ili izmenu bez traga; Zakon o porezu na dodatu vrednost, član 42. stav 10. i član 21 — ispravka osnovice i obračunatog PDV vrši se sastavljanjem računa o smanjenju/povećanju osnovice (knjižnog odobrenja/zaduženja), nikada brisanjem izdatog računa.",
+        "source": "zakon-racunovodstvo"
+      }
+    },
+    "mentions": [
+      {
+        "code": "reverse_charge",
+        "applies_when": "reverse_charge",
+        "text": "PDV obračunava i plaća primalac dobara/usluga, u skladu sa članom 10. Zakona o porezu na dodatu vrednost.",
+        "sequence": 10,
+        "legal_reference": "Zakon o porezu na dodatu vrednost, član 10. stav 2. tačka 3) i stav 1. tačka 3) — poreski dužnik je primalac dobara i usluga iz oblasti građevinarstva čija je vrednost prometa veća od 500.000 dinara bez PDV, odnosno primalac usluge od stranog lica koje nije evidentirani obveznik PDV u Republici."
+      }
+    ]
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "Zakon o elektronskom fakturisanju, član 24 — obaveza izdavanja i čuvanja elektronske fakture u transakcijama između subjekata privatnog sektora primenjuje se od 1. januara 2023. godine; obaveza subjekta privatnog sektora da izda elektronsku fakturu subjektu javnog sektora primenjuje se od 1. maja 2022, a obaveza prijema i čuvanja faktura izdatih od javnog sektora od 1. jula 2022. Sistem elektronskih faktura (SEF, efaktura.gov.rs) je državna platforma preko koje se fakture obavezno izdaju, šalju i primaju (član 5); nije reč o razmeni preko mreže vršnjaka kao kod Peppol-a, i faktura se ne sastavlja prema jednom od profila izgrađenih na semantičkom modelu EN 16931 (Peppol BIS, Factur-X, XRechnung, PINT), nego u XML formatu koji propisuje Ministarstvo finansija (Pravilnik o elektronskom fakturisanju). `profile` je zato ostavljen prazan, a ne popunjen uslovnim nacionalnim nazivom. `party_scheme` i `vat_scheme` su takođe prazni: Srbija nema ISO 6523 identifikacionu šemu registrovanu u mreži Peppol — poreski identifikacioni broj (PIB) i matični broj se razmenjuju u samom XML zapisu SEF-a, van ove šeme. Zakon takođe uvodi posebnu obavezu elektronskog evidentiranja obračuna PDV u sistemu elektronskih faktura (član 4), sa rokom jednakim roku za podnošenje poreske prijave (član 4. stav pretposlednji) — ovaj vid evidentiranja je odvojen od same deklaracije PPPDV koju ovaj paket modeluje kao tax_report.json i nije nešto što socle danas ume da predstavi; vidi README.md i docs/international.md, odeljak „From Serbia”.",
+    "source": "zakon-efakturisanje"
+  }
+}

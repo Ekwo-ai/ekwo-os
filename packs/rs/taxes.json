@@ -1,0 +1,269 @@
+[
+  {
+    "code": "RS-S-20",
+    "name": "PDV 20% — opšta stopa (promet)",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 20,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2012-10-01",
+    "legal_reference": "Zakon o porezu na dodatu vrednost, član 23. stav 1 — opšta stopa PDV za oporezivi promet dobara i usluga ili uvoz dobara iznosi 20%.",
+    "source": "zakon-pdv",
+    "vat_category": "S",
+    "sequence": 10,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "003" },
+        { "type": "tax", "account": "470", "box": "103" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "003", "box_factor": -100 },
+        { "type": "tax", "account": "470", "box": "103", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "RS-S-10",
+    "name": "PDV 10% — posebna stopa (promet)",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 10,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2012-10-01",
+    "legal_reference": "Zakon o porezu na dodatu vrednost, član 23. stav 2 — po posebnoj stopi PDV od 10% oporezuje se promet dobara i usluga taksativno nabrojanih u tač. 1)–21) ovog stava (hleb i pekarski proizvodi, mleko, brašno, šećer, jestivo ulje; sveže, rashlađeno i smrznuto voće, povrće, meso, riba i jaja; lekovi; ortotička i protetička sredstva; đubriva i seme; udžbenici; dnevne novine; ogrevno drvo; usluge smeštaja u ugostiteljskim objektima; ulaznice za bioskop, pozorište, koncerte, muzeje i sl.; prirodni gas; toplotna energija za grejanje; prenos prava raspolaganja na stambenim objektima; voda za piće i usluge vodovodne mreže; prečišćavanje otpadnih voda; upravljanje komunalnim otpadom; prevoz putnika i dr.).",
+    "source": "zakon-pdv",
+    "vat_category": "S",
+    "sequence": 20,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "004" },
+        { "type": "tax", "account": "471", "box": "104" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "004", "box_factor": -100 },
+        { "type": "tax", "account": "471", "box": "104", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "RS-S-EXPORT",
+    "name": "Izvoz dobara — oslobođeno sa pravom na odbitak",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2004-07-24",
+    "legal_reference": "Zakon o porezu na dodatu vrednost, član 24. stav 1. tač. 2) i 3) — PDV se ne plaća na promet dobara koja obveznik, ili treće lice po njegovom nalogu, odnosno inostrani primalac, šalje ili otprema u inostranstvo; obveznik zadržava pravo na odbitak prethodnog poreza po ovom prometu.",
+    "source": "zakon-pdv",
+    "vat_category": "G",
+    "exemption_code": null,
+    "sequence": 30,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "001" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "001", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "RS-S-EXEMPT-EDU",
+    "name": "Usluge obrazovanja — oslobođeno bez prava na odbitak",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2004-07-24",
+    "legal_reference": "Zakon o porezu na dodatu vrednost, član 25. stav 2. tačka 13) — PDV se ne plaća na promet usluga obrazovanja (predškolsko, osnovno, srednje, više i visoko) i stručne prekvalifikacije, kao i sa njima neposredno povezanog prometa dobara i usluga od strane lica registrovanih za obavljanje tih delatnosti, ako se te delatnosti obavljaju u skladu sa propisima koji uređuju tu oblast. Nema prava na odbitak prethodnog poreza po ovom prometu (član 30).",
+    "source": "zakon-pdv",
+    "vat_category": "E",
+    "exemption_code": null,
+    "sequence": 40,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "002" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "002", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "RS-S-RC-CONSTR",
+    "name": "Građevinski radovi preko 500.000 dinara — PDV plaća primalac",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "domestic_reverse_charge",
+    "valid_from": "2015-10-15",
+    "legal_reference": "Zakon o porezu na dodatu vrednost, član 10. stav 2. tačka 3) — poreski dužnik je primalac dobara i usluga iz oblasti građevinarstva, obveznik PDV, za promet izvršen od strane drugog obveznika PDV, ako je vrednost tog prometa veća od 500.000 dinara bez PDV; izvršilac ne obračunava PDV na računu i navodi napomenu o odredbi zakona na osnovu koje PDV nije obračunat (član 42. stav 5. tačka 9)). Osnovica ovog prometa se, prema opisu polja 003 Obrasca PPPDV (član 13. Pravilnika o obliku i sadržini poreske prijave PDV), iskazuje u istoj rubrici prometa po opštoj stopi kao i redovna prodaja po toj stopi — ovaj paket prati to tumačenje jer PPPDV/POPDV ne razlikuje posebnu rubriku za samo ovu vrstu prometa; potvrditi sa knjigovođom pre primene na stvarnu transakciju (vidi README.md).",
+    "source": "zakon-pdv",
+    "vat_category": "AE",
+    "exemption_code": null,
+    "sequence": 50,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "003" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "003", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "RS-P-20",
+    "name": "PDV 20% — opšta stopa (nabavka), odbitni",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 20,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2012-10-01",
+    "legal_reference": "Zakon o porezu na dodatu vrednost, član 23. stav 1. i član 28 — obveznik ima pravo da od PDV koji duguje odbije prethodni porez koji mu je iskazan u računu za nabavku dobara i usluga korišćenih za promet dobara i usluga sa pravom na odbitak.",
+    "source": "zakon-pdv",
+    "vat_category": "S",
+    "sequence": 60,
+    "recoverable": true,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "008" },
+        { "type": "tax", "account": "270", "box": "108" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "008", "box_factor": -100 },
+        { "type": "tax", "account": "270", "box": "108", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "RS-P-10",
+    "name": "PDV 10% — posebna stopa (nabavka), odbitni",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 10,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2012-10-01",
+    "legal_reference": "Zakon o porezu na dodatu vrednost, član 23. stav 2. i član 28 — pravo na odbitak prethodnog poreza po istim pravilima, za nabavke oporezovane posebnom stopom.",
+    "source": "zakon-pdv",
+    "vat_category": "S",
+    "sequence": 70,
+    "recoverable": true,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "008" },
+        { "type": "tax", "account": "271", "box": "108" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "008", "box_factor": -100 },
+        { "type": "tax", "account": "271", "box": "108", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "RS-P-EXEMPT",
+    "name": "Nabavka bez PDV — oslobođena delatnost dobavljača (npr. osiguranje, finansijske usluge)",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "exempt",
+    "valid_from": "2004-07-24",
+    "legal_reference": "Zakon o porezu na dodatu vrednost, član 25 — dobavljač ne obračunava PDV na promet oslobođen bez prava na odbitak (npr. usluge osiguranja i reosiguranja iz stava 2. tačka 1)), pa račun ne sadrži iznos PDV koji bi kupac mogao da odbije.",
+    "source": "zakon-pdv",
+    "vat_category": "E",
+    "exemption_code": null,
+    "sequence": 80,
+    "postings": {
+      "invoice": [],
+      "credit_note": []
+    }
+  },
+  {
+    "code": "RS-P-IMPORT",
+    "name": "Uvoz dobara — PDV plaćen na carini, opšta stopa, odbitni",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 20,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2012-10-01",
+    "legal_reference": "Zakon o porezu na dodatu vrednost, član 10. stav 1. tačka 5) — poreski dužnik je lice koje uvozi dobro; član 26 i 46 — osnovica kod uvoza je vrednost dobra utvrđena po carinskim propisima, uvećana za carinu i druge dažbine, a PDV se plaća istovremeno sa carinskim dugom. Član 28 — PDV plaćen pri uvozu odbija se u poreskom periodu u kojem je plaćen (član 49. stav 5).",
+    "source": "zakon-pdv",
+    "vat_category": null,
+    "sequence": 90,
+    "recoverable": true,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "006" },
+        { "type": "tax", "account": "274", "box": "106" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "006", "box_factor": -100 },
+        { "type": "tax", "account": "274", "box": "106", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "RS-P-RC-CONSTR",
+    "name": "Građevinski radovi preko 500.000 dinara — samoobračunati PDV",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 20,
+    "scope": "purchase",
+    "treatment": "domestic_reverse_charge",
+    "valid_from": "2015-10-15",
+    "legal_reference": "Zakon o porezu na dodatu vrednost, član 10. stav 2. tačka 3) — primalac dobara i usluga iz oblasti građevinarstva je poreski dužnik za promet veći od 500.000 dinara bez PDV izvršen od strane obveznika PDV; sačinjava interni račun (član 42. stav 10) na kojem sam obračunava PDV po stopi koju bi primenio izvođač, i istovremeno ostvaruje pravo na odbitak prethodnog poreza (član 28) ako dobra/usluge koristi za sopstveni oporezovani promet.",
+    "source": "zakon-pdv",
+    "vat_category": "AE",
+    "exemption_code": null,
+    "sequence": 100,
+    "recoverable": true,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": ["003", "008"] },
+        { "type": "tax", "account": "270", "box": "108" },
+        { "type": "tax", "factor": -100, "account": "470", "box": "103" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": ["003", "008"], "box_factor": -100 },
+        { "type": "tax", "account": "270", "box": "108", "box_factor": -100 },
+        { "type": "tax", "factor": -100, "account": "470", "box": "103", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "RS-P-RC-FOREIGN",
+    "name": "Usluga stranog lica koje nije obveznik PDV u Republici — samoobračunati PDV",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 20,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2004-07-24",
+    "legal_reference": "Zakon o porezu na dodatu vrednost, član 10. stav 1. tačka 3) — poreski dužnik je primalac dobara i usluga ako strano lice nije obveznik PDV u Republici, nezavisno od toga da li u Republici ima stalnu poslovnu jedinicu. Primalac sačinjava interni račun (član 42. stav 10) i sam obračunava i deklariše PDV po stopi koja bi se primenila da je uslugu pružio domaći obveznik; pravo na odbitak prethodnog poreza po članu 28 postoji ako se usluga koristi za sopstveni oporezovani promet.",
+    "source": "zakon-pdv",
+    "vat_category": null,
+    "exemption_code": null,
+    "sequence": 110,
+    "recoverable": true,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": ["003", "008"] },
+        { "type": "tax", "account": "270", "box": "108" },
+        { "type": "tax", "factor": -100, "account": "470", "box": "103" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": ["003", "008"], "box_factor": -100 },
+        { "type": "tax", "account": "270", "box": "108", "box_factor": -100 },
+        { "type": "tax", "factor": -100, "account": "470", "box": "103", "box_factor": -100 }
+      ]
+    }
+  }
+]

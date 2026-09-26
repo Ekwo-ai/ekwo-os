@@ -1,0 +1,187 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "Godina poslovanja srpskog privrednog društva, obveznika PDV koji prijavljuje tromesečno",
+  "chart": "default",
+  "fiscal_year": { "name": "Poslovna 2026. godina", "start": "2026-01-01", "end": "2026-12-31" },
+  "periods": [
+    { "code": "2026-Q1", "from": "2026-01-01", "to": "2026-03-31" },
+    { "code": "2026-Q2", "from": "2026-04-01", "to": "2026-06-30" }
+  ],
+  "statements": ["RS-BS", "RS-IS"],
+  "contacts": [
+    { "ref": "kupac-domaci", "name": "Prodavnica Vidik d.o.o.", "type": "customer", "country": "RS" },
+    { "ref": "kupac-izvoz", "name": "Balkan Trading LLC", "type": "customer", "country": "US" },
+    { "ref": "kupac-skola", "name": "Osnovna škola „Sveti Sava”", "type": "customer", "country": "RS" },
+    { "ref": "kupac-gradjevina", "name": "Investgradnja d.o.o.", "type": "customer", "country": "RS" },
+    { "ref": "dobavljac-domaci", "name": "Kancelarija Plus d.o.o.", "type": "supplier", "country": "RS" },
+    { "ref": "dobavljac-pekara", "name": "Pekara Zlatno Zrno d.o.o.", "type": "supplier", "country": "RS" },
+    { "ref": "dobavljac-osiguranje", "name": "Dunav osiguranje a.d.o.", "type": "supplier", "country": "RS" },
+    { "ref": "dobavljac-uvoz", "name": "Alpen Maschinen GmbH", "type": "supplier", "country": "DE" },
+    { "ref": "dobavljac-gradjevinar", "name": "Fasada Ekspert d.o.o.", "type": "supplier", "country": "RS" },
+    { "ref": "dobavljac-konsalting", "name": "Nordic Consulting Oy", "type": "supplier", "country": "FI" }
+  ],
+  "documents": [
+    {
+      "ref": "V1",
+      "type": "sale_invoice",
+      "contact": "kupac-domaci",
+      "date": "2026-01-20",
+      "why": "Jedna prodaja po opštoj stopi od 20%: puni kutiju 003 (osnovica) i 103 (PDV).",
+      "lines": [
+        { "name": "Kancelarijski nameštaj", "quantity": 10, "unit_price": 12000, "tax": "RS-S-20", "account": "614" }
+      ]
+    },
+    {
+      "ref": "V2",
+      "type": "sale_invoice",
+      "contact": "kupac-domaci",
+      "date": "2026-01-25",
+      "why": "Jedna prodaja po posebnoj (sniženoj) stopi od 10%: puni kutiju 004 (osnovica) i 104 (PDV), drugu pozitivnu stopu pored 20%.",
+      "lines": [
+        { "name": "Pekarski proizvodi za kantinu", "quantity": 20, "unit_price": 500, "tax": "RS-S-10", "account": "614" }
+      ]
+    },
+    {
+      "ref": "A1",
+      "type": "sale_credit_note",
+      "contact": "kupac-domaci",
+      "date": "2026-02-10",
+      "why": "Delimično knjižno odobrenje na fakturu V1 (reklamacija dva komada): testira suprotan smer kutija 003/103 istim poreskim kodom.",
+      "lines": [
+        { "name": "Kancelarijski nameštaj — povraćaj 2 komada", "quantity": 2, "unit_price": 12000, "tax": "RS-S-20", "account": "614" }
+      ]
+    },
+    {
+      "ref": "V3",
+      "type": "sale_invoice",
+      "contact": "kupac-izvoz",
+      "date": "2026-02-05",
+      "why": "Izvoz dobara van Republike Srbije, oslobođen PDV sa pravom na odbitak: puni kutiju 001, nulta stopa.",
+      "lines": [
+        { "name": "Izvoz nameštaja", "quantity": 5, "unit_price": 20000, "tax": "RS-S-EXPORT", "account": "615" }
+      ]
+    },
+    {
+      "ref": "V4",
+      "type": "sale_invoice",
+      "contact": "kupac-skola",
+      "date": "2026-02-12",
+      "why": "Usluga obrazovanja (kurs), oslobođena PDV bez prava na odbitak: puni kutiju 002, nijedan PDV ne postoji da se odbije.",
+      "lines": [
+        { "name": "Kurs stručnog usavršavanja nastavnika", "quantity": 1, "unit_price": 50000, "tax": "RS-S-EXEMPT-EDU", "account": "614" }
+      ]
+    },
+    {
+      "ref": "V5",
+      "type": "sale_invoice",
+      "contact": "kupac-gradjevina",
+      "date": "2026-03-02",
+      "why": "Građevinski radovi preko 500.000 dinara: prodavac ne obračunava PDV, primalac (obveznik PDV) je poreski dužnik — testira stranu prodaje autoliquidacije u građevinarstvu.",
+      "lines": [
+        { "name": "Izgradnja magacina — I faza radova", "quantity": 1, "unit_price": 600000, "tax": "RS-S-RC-CONSTR", "account": "614" }
+      ]
+    },
+    {
+      "ref": "N1",
+      "type": "purchase_invoice",
+      "contact": "dobavljac-domaci",
+      "date": "2026-01-18",
+      "why": "Nabavka po opštoj stopi, odbitni PDV: puni kutiju 008 (osnovica) i 108 (odbitni PDV).",
+      "lines": [
+        { "name": "Kancelarijski materijal", "quantity": 1, "unit_price": 50000, "tax": "RS-P-20", "account": "512" }
+      ]
+    },
+    {
+      "ref": "N2",
+      "type": "purchase_invoice",
+      "contact": "dobavljac-pekara",
+      "date": "2026-01-22",
+      "why": "Nabavka po posebnoj stopi, odbitni PDV: drugu pozitivnu stopu na strani nabavke.",
+      "lines": [
+        { "name": "Hleb i pekarski proizvodi za kantinu zaposlenih", "quantity": 100, "unit_price": 80, "tax": "RS-P-10", "account": "512" }
+      ]
+    },
+    {
+      "ref": "N3",
+      "type": "purchase_invoice",
+      "contact": "dobavljac-osiguranje",
+      "date": "2026-02-01",
+      "why": "Premija osiguranja imovine: dobavljač ne obračunava PDV jer je njegova delatnost oslobođena bez prava na odbitak — nema PDV da se knjiži ni odbije.",
+      "lines": [
+        { "name": "Polisa osiguranja imovine za 2026. godinu", "quantity": 1, "unit_price": 30000, "tax": "RS-P-EXEMPT", "account": "552" }
+      ]
+    },
+    {
+      "ref": "N4",
+      "type": "purchase_invoice",
+      "contact": "dobavljac-uvoz",
+      "date": "2026-04-10",
+      "why": "Uvoz opreme iz inostranstva: PDV plaćen na carini po opštoj stopi, odbitni u periodu plaćanja — puni kutiju 006/106.",
+      "lines": [
+        { "name": "Uvezena proizvodna oprema", "quantity": 1, "unit_price": 200000, "tax": "RS-P-IMPORT", "account": "023" }
+      ]
+    },
+    {
+      "ref": "N5",
+      "type": "purchase_invoice",
+      "contact": "dobavljac-gradjevinar",
+      "date": "2026-04-15",
+      "why": "Građevinski radovi preko 500.000 dinara primljeni od izvođača: primalac sam obračunava PDV (interni račun) i istovremeno ostvaruje pravo na odbitak — testira stranu nabavke autoliquidacije u građevinarstvu.",
+      "lines": [
+        { "name": "Radovi na fasadi poslovnog objekta", "quantity": 1, "unit_price": 700000, "tax": "RS-P-RC-CONSTR", "account": "022" }
+      ]
+    },
+    {
+      "ref": "N6",
+      "type": "purchase_invoice",
+      "contact": "dobavljac-konsalting",
+      "date": "2026-05-05",
+      "why": "Konsultantska usluga primljena od stranog lica koje nije evidentirani obveznik PDV u Srbiji: primalac sam obračunava i odbija PDV (interni račun) — testira drugi oblik autoliquidacije, van građevinarstva.",
+      "lines": [
+        { "name": "Strateško savetovanje", "quantity": 1, "unit_price": 150000, "tax": "RS-P-RC-FOREIGN", "account": "550" }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "U1",
+      "direction": "inbound",
+      "date": "2026-02-15",
+      "amount": 144000,
+      "contact": "kupac-domaci",
+      "journal": "BNK",
+      "match": "V1",
+      "why": "Naplata koja tačno izmiruje fakturu V1."
+    },
+    {
+      "ref": "U2",
+      "direction": "inbound",
+      "date": "2026-02-20",
+      "amount": 100000,
+      "contact": "kupac-izvoz",
+      "journal": "BNK",
+      "match": "V3",
+      "why": "Naplata izvozne fakture V3 u punom iznosu, bez PDV."
+    },
+    {
+      "ref": "U3",
+      "direction": "outbound",
+      "date": "2026-02-05",
+      "amount": 60000,
+      "contact": "dobavljac-domaci",
+      "journal": "BNK",
+      "match": "N1",
+      "why": "Plaćanje dobavljaču koje tačno izmiruje fakturu N1."
+    },
+    {
+      "ref": "U4",
+      "direction": "inbound",
+      "date": "2026-03-10",
+      "amount": 50000,
+      "contact": "kupac-domaci",
+      "journal": "BNK",
+      "match": null,
+      "why": "Uplata na račun bez naznake koju fakturu izmiruje: ostaje otvorena stavka koju povraćaj mora da preživi."
+    }
+  ]
+}

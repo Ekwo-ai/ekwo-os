@@ -1,0 +1,164 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "RS-PPPDV",
+  "name": "Poreska prijava poreza na dodatu vrednost (Obrazac PPPDV)",
+  "period": ["month", "quarter"],
+  "valid_from": "2018-01-01",
+  "legal_reference": "Pravilnik o obliku i sadržini prijave za evidentiranje obveznika PDV, postupku evidentiranja i brisanja iz evidencije i o obliku i sadržini poreske prijave PDV, čl. 11–13 — obveznik podnosi poresku prijavu na Obrascu PPPDV; ovaj paket transkribuje deo III (promet dobara i usluga), deo IV (prethodni porez) i deo V (poreska obaveza) tog obrasca, čija se polja pune na osnovu odgovarajućih polja Obrasca POPDV. Redni brojevi 1 (polje 001, promet oslobođen sa pravom na odbitak), 2 (polje 002, promet oslobođen bez prava na odbitak), 7 (polja 007/107, PDV nadoknada isplaćena poljoprivrednicima po posebnom paušalnom režimu iz čl. 34 Zakona) i indikator povraćaja (polje 011) nisu dostignuti nijednom porezom ovog paketa i ostaju deklarisani, ali prazni u zlatnom scenariju — vidi README.md.",
+  "source": "pravilnik-pppdv",
+  "deadline": {
+    "rule": "day_of_month_after_period",
+    "day": 15,
+    "legal_reference": "Zakon o porezu na dodatu vrednost, član 50. stav 1 — obveznik podnosi poresku prijavu poreskom organu na propisanom obrascu, u roku od 15 dana po isteku poreskog perioda; isti rok važi za plaćanje PDV.",
+    "source": "zakon-pdv"
+  },
+  "rounding": {
+    "unit": 1,
+    "legal_reference": "Pravilnik o obliku i sadržini prijave za evidentiranje obveznika PDV..., član 26 — u obrasce EPPDV i PPPDV iznosi se upisuju, odnosno iskazuju u dinarima, bez decimala.",
+    "source": "pravilnik-pppdv"
+  },
+  "boxes": [
+    {
+      "box": "001",
+      "kind": "base",
+      "name": "Promet dobara i usluga oslobođen PDV sa pravom na odbitak prethodnog poreza",
+      "sequence": 10,
+      "legal_reference": "Pravilnik o obliku i sadržini prijave..., član 13. stav 3. tačka 1) — iznos naknade za promet iz polja 1.5 Obrasca POPDV.",
+      "source": "pravilnik-pppdv"
+    },
+    {
+      "box": "002",
+      "kind": "base",
+      "name": "Promet dobara i usluga oslobođen PDV bez prava na odbitak prethodnog poreza",
+      "sequence": 20,
+      "legal_reference": "Pravilnik o obliku i sadržini prijave..., član 13. stav 3. tačka 2) — iznos naknade za promet iz polja 2.5 Obrasca POPDV.",
+      "source": "pravilnik-pppdv"
+    },
+    {
+      "box": "003",
+      "kind": "base",
+      "name": "Promet dobara i usluga po opštoj stopi — osnovica",
+      "sequence": 30,
+      "legal_reference": "Pravilnik o obliku i sadržini prijave..., član 13. stav 3. tačka 3) podtačka (1) — iznos osnovice iz polja 5.1 Obrasca POPDV.",
+      "source": "pravilnik-pppdv"
+    },
+    {
+      "box": "103",
+      "kind": "tax",
+      "name": "Promet dobara i usluga po opštoj stopi — obračunati PDV",
+      "sequence": 40,
+      "legal_reference": "Pravilnik o obliku i sadržini prijave..., član 13. stav 3. tačka 3) podtačka (2) — iznos obračunatog PDV iz polja 5.3 Obrasca POPDV.",
+      "source": "pravilnik-pppdv"
+    },
+    {
+      "box": "004",
+      "kind": "base",
+      "name": "Promet dobara i usluga po posebnoj stopi — osnovica",
+      "sequence": 50,
+      "legal_reference": "Pravilnik o obliku i sadržini prijave..., član 13. stav 3. tačka 4) podtačka (1) — iznos osnovice iz polja 5.4 Obrasca POPDV.",
+      "source": "pravilnik-pppdv"
+    },
+    {
+      "box": "104",
+      "kind": "tax",
+      "name": "Promet dobara i usluga po posebnoj stopi — obračunati PDV",
+      "sequence": 60,
+      "legal_reference": "Pravilnik o obliku i sadržini prijave..., član 13. stav 3. tačka 4) podtačka (2) — iznos obračunatog PDV iz polja 5.5 Obrasca POPDV.",
+      "source": "pravilnik-pppdv"
+    },
+    {
+      "box": "005",
+      "kind": "total",
+      "name": "Promet dobara i usluga po opštoj i posebnoj stopi — zbir osnovice",
+      "sequence": 70,
+      "plus": ["003", "004"],
+      "legal_reference": "Pravilnik o obliku i sadržini prijave..., član 13. stav 3. tačka 5) podtačka (1) — ukupan iznos osnovice iz polja 5.6 Obrasca POPDV.",
+      "source": "pravilnik-pppdv"
+    },
+    {
+      "box": "105",
+      "kind": "total",
+      "name": "Promet dobara i usluga po opštoj i posebnoj stopi — zbir obračunatog PDV",
+      "sequence": 80,
+      "plus": ["103", "104"],
+      "legal_reference": "Pravilnik o obliku i sadržini prijave..., član 13. stav 3. tačka 5) podtačka (2) — ukupno obračunati PDV iz polja 5.7 Obrasca POPDV.",
+      "source": "pravilnik-pppdv"
+    },
+    {
+      "box": "006",
+      "kind": "base",
+      "name": "Prethodni porez plaćen prilikom uvoza — vrednost uvezenih dobara",
+      "sequence": 90,
+      "legal_reference": "Pravilnik o obliku i sadržini prijave..., član 13. stav 4. tačka 1) podtačka (1) — vrednost uvezenih dobara stavljenih u slobodan promet iz polja 6.3 Obrasca POPDV.",
+      "source": "pravilnik-pppdv"
+    },
+    {
+      "box": "106",
+      "kind": "tax",
+      "name": "Prethodni porez plaćen prilikom uvoza — odbitni PDV",
+      "sequence": 100,
+      "legal_reference": "Pravilnik o obliku i sadržini prijave..., član 13. stav 4. tačka 1) podtačka (2) — iznos prethodnog poreza po osnovu uvoza iz polja 9a.1 Obrasca POPDV.",
+      "source": "pravilnik-pppdv"
+    },
+    {
+      "box": "007",
+      "kind": "base",
+      "name": "PDV naknada plaćena poljoprivredniku — iznos naknade",
+      "sequence": 110,
+      "legal_reference": "Pravilnik o obliku i sadržini prijave..., član 13. stav 4. tačka 2) podtačka (1) — iznos naknade za dobra i usluge nabavljene od poljoprivrednika iz polja 7.1 Obrasca POPDV.",
+      "source": "pravilnik-pppdv"
+    },
+    {
+      "box": "107",
+      "kind": "tax",
+      "name": "PDV naknada plaćena poljoprivredniku — odbitni iznos",
+      "sequence": 120,
+      "legal_reference": "Pravilnik o obliku i sadržini prijave..., član 13. stav 4. tačka 2) podtačka (2) — iznos prethodnog poreza po osnovu nabavke od poljoprivrednika iz polja 9a.2 Obrasca POPDV.",
+      "source": "pravilnik-pppdv"
+    },
+    {
+      "box": "008",
+      "kind": "base",
+      "name": "Prethodni porez, osim prethodnog poreza sa red. br. 6. i 7 — osnovica",
+      "sequence": 130,
+      "legal_reference": "Pravilnik o obliku i sadržini prijave..., član 13. stav 4. tačka 3) podtačka (1) — iznos naknade, osnovice, odnosno vrednosti nabavljenih dobara i usluga iz polja 8đ Obrasca POPDV.",
+      "source": "pravilnik-pppdv"
+    },
+    {
+      "box": "108",
+      "kind": "tax",
+      "name": "Prethodni porez, osim prethodnog poreza sa red. br. 6. i 7 — odbitni PDV",
+      "sequence": 140,
+      "legal_reference": "Pravilnik o obliku i sadržini prijave..., član 13. stav 4. tačka 3) podtačka (2) — iznos prethodnog poreza iz polja 9a.3 Obrasca POPDV.",
+      "source": "pravilnik-pppdv"
+    },
+    {
+      "box": "009",
+      "kind": "total",
+      "name": "Prethodni porez — ukupna osnovica",
+      "sequence": 150,
+      "plus": ["006", "007", "008"],
+      "legal_reference": "Pravilnik o obliku i sadržini prijave..., član 13. stav 4. tačka 4) podtačka (1) — ukupan iznos iz polja 9 Obrasca POPDV.",
+      "source": "pravilnik-pppdv"
+    },
+    {
+      "box": "109",
+      "kind": "total",
+      "name": "Prethodni porez — ukupan odbitni PDV",
+      "sequence": 160,
+      "plus": ["106", "107", "108"],
+      "legal_reference": "Pravilnik o obliku i sadržini prijave..., član 13. stav 4. tačka 4) podtačka (2) — ukupan iznos prethodnog poreza iz polja 9a.4 Obrasca POPDV.",
+      "source": "pravilnik-pppdv"
+    },
+    {
+      "box": "110",
+      "kind": "total",
+      "name": "Iznos PDV za uplatu ili za povraćaj u poreskom periodu",
+      "sequence": 170,
+      "plus": ["105"],
+      "minus": ["109"],
+      "legal_reference": "Pravilnik o obliku i sadržini prijave..., član 13. stav 5. tačka 1) — iznos PDV za uplatu ili za povraćaj iz dela 10. Obrasca POPDV. Zakon o porezu na dodatu vrednost, član 52. st. 1. i 2 — ako je iznos prethodnog poreza veći od iznosa obračunatog PDV, obveznik ima pravo na povraćaj razlike ili je ta razlika, ako se ne opredeli za povraćaj, priznaje kao poreski kredit; pozitivna razlika (PDV za uplatu) uplaćuje se u roku iz člana 50.",
+      "source": "zakon-pdv"
+    }
+  ]
+}
