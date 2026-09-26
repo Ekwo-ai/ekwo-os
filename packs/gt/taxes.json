@@ -1,0 +1,160 @@
+[
+  {
+    "code": "GT-V-12",
+    "name": "Venta o servicio gravado, 12 %",
+    "description": "Venta o permuta de bienes muebles, prestación de servicios, arrendamiento e importaciones gravadas por la tarifa única del Impuesto al Valor Agregado",
+    "kind": "vat",
+    "rate": 12,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "1992-07-01",
+    "legal_reference": "Decreto Número 27-92, Ley del Impuesto al Valor Agregado, art. 1 — hecho generador; art. 3, numerales 1, 2, 4, 5, 8 y 9 — la venta o permuta de bienes muebles o inmuebles, la prestación de servicios, el arrendamiento y las adjudicaciones en pago están gravados; art. 10 — «los contribuyentes afectos a las disposiciones de esta ley pagarán el impuesto con una tarifa del doce por ciento (12%) sobre la base imponible. La tarifa del impuesto en todos los casos deberá estar incluida en el precio de venta de los bienes o el valor de los servicios». Guatemala no forma parte del sistema común del IVA de la Unión Europea: este paquete no declara `exemption_code` ni ningún tratamiento `intracom_*`, y el artículo que exime cada operación va en `legal_reference`",
+    "source": "ley-iva",
+    "sequence": 10,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "VG" },
+        { "type": "tax", "account": "2131", "box": "DF" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "VG", "box_factor": -100 },
+        { "type": "tax", "account": "2131", "box": "DF", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "GT-V-EXP",
+    "name": "Exportación de bienes y servicios",
+    "description": "Exportación de bienes muebles nacionales o nacionalizados, y exportación de servicios prestados en el país a usuarios sin domicilio ni residencia, destinados exclusivamente a ser utilizados en el exterior",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "1992-07-01",
+    "conditions": ["transport_evidence"],
+    "legal_reference": "Decreto Número 27-92, art. 2, numeral 4 — define «exportación de bienes» como la venta, cumplidos todos los trámites legales, de bienes muebles nacionales o nacionalizados para su uso o consumo en el exterior, y «exportación de servicios» como la prestación de servicios en el país a usuarios que no tienen domicilio ni residencia en el mismo, destinados exclusivamente a ser utilizados en el exterior, siempre que las divisas hayan sido negociadas conforme a la legislación cambiaria vigente; art. 7, numeral 2 — «están exentas del impuesto establecido en esta ley: … las exportaciones de bienes y las exportaciones de servicios, conforme la definición del artículo 2 numeral 4 de esta ley»; art. 16, segundo párrafo, y art. 23 — el exportador tiene derecho a la devolución del crédito fiscal vinculado a la actividad exportadora, en efectivo, por período mensual vencido. Este paquete declara la exportación ordinaria de bienes y servicios; no distingue los servicios de exportación asimilados que enumera el Apéndice V ni el Régimen especial de devolución del artículo 25 (75 % o 60 % del crédito fiscal según el monto), que es un mecanismo administrativo de reintegro y no una tarifa ni una exención — véase el README",
+    "source": "ley-iva",
+    "sequence": 20,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "VEXP" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "VEXP", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "GT-V-EXO",
+    "name": "Venta o servicio exento",
+    "description": "Venta de bienes o prestación de servicios comprendidos en las exenciones generales del artículo 7 del Decreto Número 27-92 (distintas de la exportación)",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "1992-07-01",
+    "conditions": ["supply_nature"],
+    "legal_reference": "Decreto Número 27-92, art. 7 — enumera las exenciones generales: entre otras, la transferencia de bienes por fusión de sociedades, herencias, legados y donaciones por causa de muerte (numeral 3); los servicios de las instituciones fiscalizadas por la Superintendencia de Bancos y las bolsas de valores autorizadas (numeral 4); las operaciones de las cooperativas con sus asociados (numeral 5); los aportes y donaciones a asociaciones, fundaciones e instituciones educativas, culturales, de asistencia o de servicio social y religiosas no lucrativas (numeral 9); la venta al menudeo de carnes, pescado, mariscos, frutas, verduras, cereales, legumbres y granos básicos en mercados cantonales y municipales hasta cien quetzales (Q.100.00) por transacción (numeral 11); la venta de vivienda popular y de lotes urbanizados dentro de los límites de valor y superficie del numeral 12; y los servicios que prestan las asociaciones, fundaciones e instituciones educativas, de asistencia o de servicio social y religiosas no lucrativas (numeral 13). Este paquete declara un único código para el conjunto de estas exenciones; el numeral exacto de cada operación se cita en el asiento, no en el código — véase el README",
+    "source": "ley-iva",
+    "sequence": 30,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "VEXO" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "VEXO", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "GT-C-12",
+    "name": "Compra o servicio gravado, 12 %, con derecho a crédito fiscal",
+    "description": "Adquisición de bienes o utilización de servicios gravados, destinados a actos gravados o a operaciones afectas por la ley",
+    "kind": "vat",
+    "rate": 12,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "1992-07-01",
+    "legal_reference": "Decreto Número 27-92, art. 15 — el crédito fiscal es la suma del impuesto cargado al contribuyente por las operaciones afectas realizadas durante el período; art. 16, primer párrafo, reformado por el art. 14 del Decreto Número 80-2000 — «procede el derecho al crédito fiscal, por la importación o adquisición de bienes y la utilización de servicios, que se apliquen a actos gravados o a operaciones afectas por esta ley», salvo activos fijos no vinculados directamente al proceso productivo; art. 18, reformado por el art. 8 del Decreto Número 4-2012 — documentación del crédito fiscal: factura, factura especial, nota de débito o crédito, o el recibo de pago en una importación, a nombre del contribuyente y con su Número de Identificación Tributaria, registrada en el libro de compras del artículo 37 y en la contabilidad",
+    "source": "ley-iva",
+    "sequence": 110,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "CG" },
+        { "type": "tax", "account": "1141", "box": "CF" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "CG", "box_factor": -100 },
+        { "type": "tax", "account": "1141", "box": "CF", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "GT-C-12-NOCRED",
+    "name": "Compra o servicio gravado, 12 %, sin derecho a crédito fiscal",
+    "description": "Adquisición gravada destinada a operaciones no gravadas o exentas, o que no reúne los requisitos de documentación del crédito fiscal",
+    "kind": "vat",
+    "rate": 12,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "1992-07-01",
+    "recoverable": false,
+    "legal_reference": "Decreto Número 27-92, art. 16, primer párrafo — el crédito fiscal procede por adquisiciones que se apliquen a actos gravados o a operaciones afectas por la ley; contrario sensu, la adquisición destinada a una operación exenta o no gravada, o que no reúne los requisitos de documentación del art. 18, no genera crédito fiscal y el impuesto pagado integra el costo del bien o servicio adquirido. Este paquete declara ese caso con una posición `tax_on_base`, sin casilla propia: el Formulario SAT-2237 no separa el impuesto no acreditable de la base de la compra",
+    "source": "ley-iva",
+    "sequence": 120,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "CNOCRED" },
+        { "type": "tax_on_base", "factor": 100 }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "CNOCRED", "box_factor": -100 },
+        { "type": "tax_on_base", "factor": 100, "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "GT-C-EXO",
+    "name": "Compra o servicio no gravado",
+    "description": "Adquisición de bienes o servicios exentos, o a un proveedor que no carga el impuesto",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "exempt",
+    "valid_from": "1992-07-01",
+    "legal_reference": "Decreto Número 27-92, art. 7 — exenciones generales; art. 9 — las personas y entidades del art. 8 no cargan el impuesto en sus ventas ni en la prestación de sus servicios",
+    "source": "ley-iva",
+    "sequence": 130,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "CEXO" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "CEXO", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "GT-C-IMP-12",
+    "name": "Importación gravada, 12 %",
+    "description": "Importación de bienes muebles, con derecho a crédito fiscal por el impuesto pagado en la aduana",
+    "kind": "vat",
+    "rate": 12,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "1992-07-01",
+    "legal_reference": "Decreto Número 27-92, art. 3, numeral 3 — las importaciones están gravadas; art. 4, numeral 2 — el impuesto se paga en la fecha en que se efectúe el pago de los derechos respectivos, conforme recibo legalmente extendido, y las aduanas no autorizan el retiro de los bienes sin que estén cancelados los impuestos correspondientes; art. 13, numeral 1 — la base imponible es el valor CIF de las mercancías importadas más los derechos arancelarios y demás recargos; art. 16, primer párrafo — procede el crédito fiscal por la importación de bienes que se apliquen a actos gravados",
+    "source": "ley-iva",
+    "sequence": 140,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "IMP" },
+        { "type": "tax", "account": "1141", "box": "CFIMP" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "IMP", "box_factor": -100 },
+        { "type": "tax", "account": "1141", "box": "CFIMP", "box_factor": -100 }
+      ]
+    }
+  }
+]

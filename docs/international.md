@@ -4829,3 +4829,67 @@ core has none.
 the ratio of exempt to total turnover, recomputed each period and trued up
 annually — the same shape as Uruguay's split of credit between domestic sales
 and exports, and no more expressible.
+
+## From Guatemala
+
+`packs/gt/`, `community`, seed 106, outside the common system of VAT the
+same way Mexico, Peru and Argentina are: Directive 2006/112/EC, article
+5(2), reaches only the territory of the Community, and Guatemala levies its
+own Impuesto al Valor Agregado under Decreto Número 27-92, at a single rate
+of twelve per cent. `GTQ` is added to `00_currencies.sql` at two decimals;
+`GT` is added to `00_territories.sql` with `eu_vat_scope` `none`. Three
+things the format could not say, read from the Ley del IVA and from Decreto
+Número 4-2012, which reformed it in 2012.
+
+**A turnover tax that replaces the VAT mechanism rather than sitting beside
+it, for a taxpayer under a threshold.** Every other value this format's
+`kind: "vat"` has met is a rate applied within one débito/crédito ledger:
+zero for an export, none for an exemption, a fixed percentage for a
+domestic sale. Guatemala's Régimen de Pequeño Contribuyente is a different
+shape: a taxpayer under Q.150,000.00 of annual sales who registers for it
+pays five per cent of gross monthly income, in place of the twelve per cent
+régimen general altogether, and Decreto Número 4-2012's reform of art. 49
+makes the factura such a taxpayer issues generate **no crédito fiscal
+whatsoever** for the buyer — not a reduced one, not a zero-rated one, none.
+There is no débito fiscal, no crédito fiscal and no monthly declaration of
+the kind `tax_report.json` describes for such a taxpayer to file: art. 50
+relieves a Pequeño Contribuyente who elects the flat rate of even the annual
+declaration a Pequeño Contribuyente otherwise owes. A tax of this format
+posts a rate to a document's lines and reports it on a form both parties to
+the sale are presumed to share; a régimen that changes which mechanism
+applies to the *seller* depending on a threshold nobody but that seller's
+own accumulated turnover determines is not a rate this format's `taxes.json`
+can express, because the buyer's side of the same document would need to
+know a fact about the seller the ledger has no field for. `packs/gt/README.md`
+documents the régimen and its threshold; no tax of this pack declares it.
+
+**A cash refund mechanism paid outside the declaration, by a third party
+that is not the tax administration.** Article 25 of the Ley del IVA lets an
+exporter recover 75 % (or 60 %, above Q.500,000.00) of a period's crédito
+fiscal in cash, before the ordinary carry-forward of articles 21-22 would
+otherwise apply, paid not by the Superintendencia de Administración
+Tributaria but by the Banco de Guatemala from a dedicated fund it is
+required to keep, on a request the exporter files within thirty days of the
+declaration's own deadline. `tax_report.json` has a vocabulary for what a
+declaration computes — bases, taxes, totals — and none for a second
+institution disbursing a fraction of a box's own figure through a channel
+the declaration itself does not carry a line for. The mechanism is
+administrative refund plumbing, not a rate, a box or an exemption, and nothing
+in this pack represents it.
+
+**A clearance régime whose two effects on one document — validity and the
+right to deduct — this format cannot pull apart.** The Régimen de Factura
+Electrónica en Línea (Acuerdo de Directorio 13-2018) is a clearance model
+like Mexico's CFDI or Peru's comprobante electrónico, which `einvoicing`
+already has no field for (see the Peru and Mexico sections' own reasoning,
+which applies here without change). Guatemala's version adds one thing
+neither of those two needed a word for: art. 18 of the Ley del IVA, reformed
+by Decreto Número 4-2012, ties a buyer's crédito fiscal to the document
+having been "emitida a través de un Generador de Facturas Electrónicas
+autorizado" — so a DTE the Certificador refuses to certify is not merely an
+invalid comprobante for the seller, it is a purchase that never happens for
+the buyer's ledger either. `packages/formats/` has no brick that speaks to a
+Certificador, so this pack cannot model the refusal at all, and treats every
+purchase as if the certification the buyer's crédito fiscal depends on had
+already succeeded — the same simplification every clearance-country pack of
+this repository makes at its documents' edge.

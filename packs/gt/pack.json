@@ -1,0 +1,206 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "GT",
+  "name": "Guatemala",
+  "version": "0.1.0",
+  "schema_min": "20260921084143",
+  "seed_sequence": 106,
+  "released_at": "2026-09-26",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "ley-iva",
+        "title": "Decreto Número 27-92, Ley del Impuesto al Valor Agregado, texto con sus reformas (Decretos 29-94, 60-94, 142-96, 39-99, 44-2000, 80-2000, 32-2001, 48-2001, 62-2001, 66-2002, 88-2002 y 4-2012)",
+        "publisher": "Congreso de la República de Guatemala — Departamento de Información Legislativa",
+        "url": "https://www.congreso.gob.gt/detalle_pdf/decretos/1196",
+        "consulted_on": "2026-09-26",
+        "kind": "law"
+      },
+      {
+        "key": "decreto-4-2012",
+        "title": "Decreto Número 4-2012, Disposiciones para el Fortalecimiento del Sistema Tributario y el Combate a la Defraudación y al Contrabando — Libro II, reformas a la Ley del Impuesto al Valor Agregado (régimen de Pequeño Contribuyente, documentación del crédito fiscal, documentos obligatorios)",
+        "publisher": "Congreso de la República de Guatemala",
+        "url": "https://www.congreso.gob.gt/assets/uploads/info_legislativo/decretos/2012/004-2012.pdf",
+        "consulted_on": "2026-09-26",
+        "kind": "law"
+      },
+      {
+        "key": "reglamento-iva",
+        "title": "Acuerdo Gubernativo Número 5-2013, Reglamento de la Ley del Impuesto al Valor Agregado",
+        "publisher": "Ministerio de Finanzas Públicas de Guatemala",
+        "url": "https://www.minfin.gob.gt/images/leyes%20solicitadas/Leyes%20tributarias/ACUERDO%20GUBERNATIVO%205-2013%20(Reglamento%20ley%20del%20IVA).doc",
+        "consulted_on": "2026-09-26",
+        "kind": "regulation"
+      },
+      {
+        "key": "codigo-comercio",
+        "title": "Decreto Número 2-70, Código de Comercio de Guatemala, texto con sus reformas",
+        "publisher": "Congreso de la República de Guatemala",
+        "url": "https://www.congreso.gob.gt/assets/uploads/info_legislativo/decretos/1970/gtdcx00021970np.pdf",
+        "consulted_on": "2026-09-26",
+        "kind": "law"
+      },
+      {
+        "key": "niif-pymes-ccpag",
+        "title": "Resolución de la Asamblea General Extraordinaria del Colegio de Contadores Públicos y Auditores de Guatemala, del 29 de junio de 2010, que adopta la Norma Internacional de Información Financiera para Pequeñas y Medianas Entidades (NIIF para PYMES), publicada en el Diario de Centro América el 13 de julio de 2010, de aplicación obligatoria desde el 1 de enero de 2011",
+        "publisher": "Colegio de Contadores Públicos y Auditores de Guatemala",
+        "url": "https://cpa.org.gt/",
+        "consulted_on": "2026-09-26",
+        "kind": "guidance"
+      },
+      {
+        "key": "sat-2237-guia",
+        "title": "Cumplimiento Tributario — preguntas frecuentes sobre la Declaración Jurada y Pago Mensual del Impuesto al Valor Agregado, Formulario SAT-2237, Régimen General",
+        "publisher": "Superintendencia de Administración Tributaria — Portal SAT",
+        "url": "https://portal.sat.gob.gt/portal/preguntas-frecuentes/cumplimiento-tributario/",
+        "consulted_on": "2026-09-26",
+        "kind": "guidance"
+      },
+      {
+        "key": "declaraguate",
+        "title": "Declaraguate — sistema electrónico de declaraciones y boletas de pago de la Superintendencia de Administración Tributaria",
+        "publisher": "Superintendencia de Administración Tributaria",
+        "url": "https://declaraguate.sat.gob.gt/",
+        "consulted_on": "2026-09-26",
+        "kind": "portal"
+      },
+      {
+        "key": "fel-acuerdo-13-2018",
+        "title": "Acuerdo de Directorio Número 13-2018, que establece el Régimen de Factura Electrónica en Línea (FEL), modificado por el Acuerdo de Directorio Número 26-2019",
+        "publisher": "Superintendencia de Administración Tributaria",
+        "url": "https://portal.sat.gob.gt/portal/descarga/1740/factura-electronica/25094/acuerdo-de-directorio-13-2018.pdf",
+        "consulted_on": "2026-09-26",
+        "kind": "regulation"
+      },
+      {
+        "key": "sat-efactura",
+        "title": "Factura Electrónica en Línea (FEL) — información institucional del régimen y de los certificadores autorizados",
+        "publisher": "Superintendencia de Administración Tributaria — Portal SAT",
+        "url": "https://portal.sat.gob.gt/portal/efactura/",
+        "consulted_on": "2026-09-26",
+        "kind": "portal"
+      },
+      {
+        "key": "sat-pequeno-contribuyente",
+        "title": "Libro Electrónico Tributario — Régimen de Pequeño Contribuyente del Impuesto al Valor Agregado",
+        "publisher": "Superintendencia de Administración Tributaria — Portal SAT",
+        "url": "https://portal.sat.gob.gt/portal/libro-electronico-tributario/pequeno-contribuyente/",
+        "consulted_on": "2026-09-26",
+        "kind": "guidance"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "GTQ",
+    "language": "es",
+    "opening_entry_label": "Asiento de apertura",
+    "closing_style": "result_accounts",
+    "roles": {
+      "receivable": "1121",
+      "payable": "2111",
+      "suspense": "119",
+      "rounding": "544",
+      "retained_earnings": "341",
+      "retained_earnings_loss": "342",
+      "current_year_result_profit": "351",
+      "current_year_result_loss": "352",
+      "sales": "411",
+      "purchase": "511",
+      "bank": "1113",
+      "cash": "1111",
+      "fx_gain": "462",
+      "fx_loss": "542",
+      "tax_payable": "2132",
+      "tax_receivable": "1142"
+    },
+    "journal_roles": {
+      "sales": "VEN",
+      "purchase": "COM",
+      "miscellaneous": "DIA",
+      "opening": "APE"
+    },
+    "fiscal_year_default": "calendar"
+  },
+  "languages": [],
+  "journals": [
+    { "code": "VEN", "type": "sales", "name": "Ventas", "sequence": 10 },
+    { "code": "COM", "type": "purchase", "name": "Compras", "sequence": 20 },
+    { "code": "BAN", "type": "bank", "name": "Bancos", "sequence": 30 },
+    { "code": "CAJ", "type": "cash", "name": "Caja", "sequence": 40 },
+    { "code": "DIA", "type": "general", "name": "Diario general", "sequence": 50 },
+    { "code": "APE", "type": "opening", "name": "Asiento de apertura", "sequence": 60 }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Plan de cuentas de referencia, sobre la NIIF para PYMES",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": ["GT-EF-ESF", "GT-EF-ER"],
+      "legal_reference": "Guatemala no impone un catálogo de cuentas único ni numerado: el Código de Comercio, Decreto Número 2-70, art. 368, exige sólo que la contabilidad se lleve de forma organizada, por partida doble y conforme a los principios de contabilidad generalmente aceptados, sin prescribir cuentas. La Resolución del 29 de junio de 2010 del Colegio de Contadores Públicos y Auditores de Guatemala adopta la NIIF para PYMES como esos principios generalmente aceptados desde el 1 de enero de 2011, y sus secciones 4 y 5 fijan el contenido mínimo del estado de situación financiera y del estado de resultados que GT-EF-ESF y GT-EF-ER siguen. Este plan es original: sigue una numeración propia y cada bloque de códigos corresponde a una línea de esos dos esquemas — véase el README",
+      "source": "codigo-comercio"
+    }
+  ],
+  "documents": {
+    "numbering": "gapless",
+    "number_format": "{CODE}-{NNNNNNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "invoice_if_issued",
+    "posted_edit_policy": "reversal_only",
+    "references": {
+      "numbering": {
+        "legal_reference": "Decreto Número 27-92, art. 29, reformado por el art. 9 del Decreto Número 4-2012 — los contribuyentes están obligados a emitir, con caracteres legibles y permanentes o por medio electrónico, facturas, notas de débito y notas de crédito por sus ventas y servicios. Bajo el Régimen de Factura Electrónica en Línea (Acuerdo de Directorio 13-2018), cada documento recibe un número de autorización (UUID) que asigna el certificador autorizado, además del número y la serie que el propio emisor lleva. El número que declara este paquete es el de la pieza contable, correlativo por diario, y no el número de autorización ni la serie-número del Documento Tributario Electrónico — véase «Ekwo no emite un Documento Tributario Electrónico guatemalteco»",
+        "source": "ley-iva"
+      },
+      "tax_point": {
+        "legal_reference": "Decreto Número 27-92, art. 4, numeral 1 — en la venta o permuta de bienes muebles, el impuesto se paga en la fecha de la emisión de la factura, y si la entrega es anterior a la emisión, en la fecha de la entrega real del bien; en la prestación de servicios, en la fecha de la emisión de la factura o, si no se ha emitido, en la fecha en que el contribuyente perciba la remuneración. El art. 34 exige emitir la factura en el momento de la entrega real del bien o, en los servicios, en el momento de recibir la remuneración, de modo que la emisión coincide en la práctica con el hecho que la ley toma como principio o lo antecede — de ahí invoice_if_issued",
+        "source": "ley-iva"
+      },
+      "posted_edit_policy": {
+        "legal_reference": "Decreto Número 27-92, art. 29, inciso c) — las notas de crédito son el documento para devoluciones, anulaciones o descuentos sobre operaciones ya facturadas. Bajo el Régimen de Factura Electrónica en Línea, un Documento Tributario Electrónico certificado sólo se anula dentro de un plazo breve tras su emisión o se corrige mediante una nota de crédito o de débito que lo referencia; no existe un procedimiento para devolver a borrador un documento ya certificado. Un documento contabilizado en Ekwo se anula con una nota de crédito que lo nombra, nunca volviendo a borrador",
+        "source": "fel-acuerdo-13-2018"
+      }
+    },
+    "mentions": [
+      {
+        "code": "dte_not_issued",
+        "applies_when": "always",
+        "text": "Este documento no es un Documento Tributario Electrónico (DTE): no ha sido certificado por un Certificador autorizado ni firmado por la Superintendencia de Administración Tributaria conforme al Régimen de Factura Electrónica en Línea (FEL). Solo el DTE certificado sustenta la operación para efectos tributarios.",
+        "sequence": 10,
+        "legal_reference": "Acuerdo de Directorio Número 13-2018, que crea el Régimen FEL: el emisor genera el documento, lo transmite a un Certificador autorizado por la SAT, que valida las reglas del régimen y lo firma electrónicamente antes de que exista como comprobante válido — un modelo de validación previa (clearance) y no un intercambio directo entre las partes. Ekwo no genera, no certifica ni transmite Documentos Tributarios Electrónicos: ningún componente de packages/formats habla con un Certificador ni con la SAT — véase «Ekwo no emite un Documento Tributario Electrónico guatemalteco»",
+        "source": "fel-acuerdo-13-2018"
+      },
+      {
+        "code": "export",
+        "applies_when": "export",
+        "text": "Exportación de bienes o de servicios, exenta del Impuesto al Valor Agregado (artículo 7, numeral 2, del Decreto Número 27-92).",
+        "sequence": 20,
+        "legal_reference": "Decreto Número 27-92, art. 7, numeral 2, y art. 2, numeral 4 — la exportación de bienes y de servicios, conforme se define en esta ley, está exenta del impuesto",
+        "source": "ley-iva"
+      },
+      {
+        "code": "exempt",
+        "applies_when": "exempt",
+        "text": "Operación exenta del Impuesto al Valor Agregado (artículo 7 del Decreto Número 27-92).",
+        "sequence": 30,
+        "legal_reference": "Decreto Número 27-92, art. 7 — enumera las exenciones generales del impuesto",
+        "source": "ley-iva"
+      }
+    ]
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "Toda factura, nota de débito y nota de crédito que respalda una venta, un servicio o una exportación en Guatemala es, desde marzo de 2023, un Documento Tributario Electrónico (DTE) del Régimen de Factura Electrónica en Línea (FEL): Acuerdo de Directorio Número 13-2018 y su modificatoria, el Acuerdo de Directorio Número 26-2019, ambos de la Superintendencia de Administración Tributaria. El emisor genera el DTE, lo transmite a un Certificador autorizado por la SAT — o a la propia SAT, que actúa como certificador de última instancia — que valida las reglas vigentes del régimen y lo firma electrónicamente antes de que el documento exista como comprobante válido: un régimen de validación previa (clearance), no un intercambio directo entre las partes. La incorporación fue gradual según el volumen de facturación de cada contribuyente y alcanzó al cien por ciento de los contribuyentes, incluidos los del Régimen de Pequeño Contribuyente, en marzo de 2023. Ekwo no genera, no certifica ni transmite el XML de un Documento Tributario Electrónico: ningún componente de packages/formats habla con un Certificador ni con la SAT, y un documento emitido desde Ekwo no es un comprobante de pago guatemalteco. Por eso profile y mandatory_from quedan vacíos aunque la obligación exista en los hechos: profile nombra un perfil construido sobre EN 16931 que una pieza de packages/formats escribe y transmite por Peppol, y el DTE guatemalteco no es ni lo uno ni lo otro; el formato tampoco tiene una palabra para «válido sólo tras la certificación de un tercero» — véase el README y docs/international.md. El Número de Identificación Tributaria (NIT) identifica al emisor y al receptor y no tiene un código ISO 6523 propio: party_scheme y vat_scheme quedan vacíos, como en los paquetes de México y el Perú",
+    "source": "fel-acuerdo-13-2018"
+  },
+  "bank": {
+    "statement_formats": [],
+    "payment_formats": []
+  }
+}

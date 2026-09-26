@@ -1,0 +1,114 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "Un trimestre de una comercializadora guatemalteca, declarante mensual del IVA",
+  "chart": "default",
+  "fiscal_year": { "name": "Ejercicio 2026", "start": "2026-01-01", "end": "2026-12-31" },
+  "periods": [
+    { "code": "2026-01", "from": "2026-01-01", "to": "2026-01-31" },
+    { "code": "2026-02", "from": "2026-02-01", "to": "2026-02-28" },
+    { "code": "2026-03", "from": "2026-03-01", "to": "2026-03-31" }
+  ],
+  "statements": ["GT-EF-ESF", "GT-EF-ER"],
+  "contacts": [
+    { "ref": "client-gt", "name": "Comercial Antigua, S.A.", "type": "customer", "country": "GT" },
+    { "ref": "client-us", "name": "Sunrise Imports LLC", "type": "customer", "country": "US" },
+    { "ref": "client-exento", "name": "Universidad Exenta de Occidente", "type": "customer", "country": "GT" },
+    { "ref": "supplier-gt", "name": "Distribuidora Zona Viva, S.A.", "type": "supplier", "country": "GT" },
+    { "ref": "supplier-exo", "name": "Cooperativa Agrícola Chimaltenango", "type": "supplier", "country": "GT" },
+    { "ref": "agente-aduanero", "name": "Agencia Aduanera Puerto Quetzal, S.A.", "type": "supplier", "country": "GT" }
+  ],
+  "documents": [
+    {
+      "ref": "V1", "type": "sale_invoice", "contact": "client-gt", "date": "2026-01-15",
+      "why": "Una venta gravada al 12 %: la base de la casilla VG y el débito fiscal de la casilla DF.",
+      "lines": [{ "name": "Mercadería A", "quantity": 10, "unit_price": 100, "tax": "GT-V-12", "account": "411" }]
+    },
+    {
+      "ref": "V2", "type": "sale_invoice", "contact": "client-us", "date": "2026-01-20",
+      "why": "Una exportación de bienes, exenta y declarada en la casilla VEXP, sin IVA.",
+      "lines": [{ "name": "Mercadería B, exportación", "quantity": 5, "unit_price": 200, "tax": "GT-V-EXP", "account": "412" }]
+    },
+    {
+      "ref": "V3", "type": "sale_credit_note", "contact": "client-gt", "date": "2026-01-25",
+      "why": "Una devolución parcial de V1: reduce, dentro de las mismas casillas VG y DF, la base y el débito fiscal ya declarados por V1.",
+      "lines": [{ "name": "Devolución de Mercadería A", "quantity": 2, "unit_price": 100, "tax": "GT-V-12", "account": "415" }]
+    },
+    {
+      "ref": "V4", "type": "sale_invoice", "contact": "client-exento", "date": "2026-02-10",
+      "why": "Una venta a una universidad autorizada, exenta de soportar el impuesto conforme a los artículos 8, numeral 2, y 9 del Decreto 27-92: la base va a la casilla VEXO y no genera débito fiscal.",
+      "lines": [{ "name": "Mobiliario para biblioteca", "quantity": 1, "unit_price": 500, "tax": "GT-V-EXO", "account": "413" }]
+    },
+    {
+      "ref": "V5", "type": "sale_invoice", "contact": "client-gt", "date": "2026-03-05",
+      "why": "Una segunda venta gravada, en marzo, para que ese período declare movimiento propio.",
+      "lines": [{ "name": "Mercadería A", "quantity": 20, "unit_price": 100, "tax": "GT-V-12", "account": "411" }]
+    },
+    {
+      "ref": "V6", "type": "sale_invoice", "contact": "client-us", "date": "2026-03-15",
+      "why": "Una segunda exportación, para que la casilla VEXP tenga movimiento en dos períodos.",
+      "lines": [{ "name": "Mercadería B, exportación", "quantity": 4, "unit_price": 200, "tax": "GT-V-EXP", "account": "412" }]
+    },
+    {
+      "ref": "C1", "type": "purchase_invoice", "contact": "supplier-gt", "date": "2026-01-18",
+      "why": "Una compra gravada destinada a ventas gravadas: la base y el crédito fiscal pleno de las casillas CG y CF.",
+      "lines": [{ "name": "Mercadería A, compra", "quantity": 8, "unit_price": 80, "tax": "GT-C-12", "account": "511" }]
+    },
+    {
+      "ref": "C2", "type": "purchase_invoice", "contact": "supplier-gt", "date": "2026-02-05",
+      "why": "Una compra gravada destinada exclusivamente a la venta exenta V4: sin derecho a crédito fiscal (art. 16, primer párrafo), casilla CNOCRED, el IVA queda en el costo de la cuenta 512 sin casilla propia.",
+      "lines": [{ "name": "Mobiliario, compra", "quantity": 1, "unit_price": 300, "tax": "GT-C-12-NOCRED", "account": "512" }]
+    },
+    {
+      "ref": "C3", "type": "purchase_invoice", "contact": "supplier-exo", "date": "2026-02-12",
+      "why": "Una compra a una cooperativa que no carga el impuesto en sus operaciones con terceros conforme al artículo 7, numeral 5: casilla CEXO, sin IVA.",
+      "lines": [{ "name": "Productos agropecuarios", "quantity": 1, "unit_price": 250, "tax": "GT-C-EXO", "account": "511" }]
+    },
+    {
+      "ref": "C4", "type": "purchase_credit_note", "contact": "supplier-gt", "date": "2026-02-20",
+      "why": "Una nota de crédito de compra: reduce, dentro de las mismas casillas CG y CF, la base y el crédito fiscal ya declarados por C1.",
+      "lines": [{ "name": "Devolución de Mercadería A", "quantity": 1, "unit_price": 80, "tax": "GT-C-12", "account": "511" }]
+    },
+    {
+      "ref": "C5", "type": "purchase_invoice", "contact": "supplier-gt", "date": "2026-03-10",
+      "why": "Una compra de marzo, para comprobar el crédito fiscal de un período distinto al de enero.",
+      "lines": [{ "name": "Mercadería A, compra", "quantity": 15, "unit_price": 80, "tax": "GT-C-12", "account": "511" }]
+    },
+    {
+      "ref": "C6", "type": "purchase_invoice", "contact": "supplier-exo", "date": "2026-03-20",
+      "why": "Una segunda compra no gravada, para que la casilla CEXO tenga movimiento en dos períodos.",
+      "lines": [{ "name": "Productos agropecuarios", "quantity": 1, "unit_price": 150, "tax": "GT-C-EXO", "account": "511" }]
+    },
+    {
+      "ref": "C7", "type": "purchase_invoice", "contact": "agente-aduanero", "date": "2026-03-08",
+      "why": "Una importación definitiva de mercaderías liquidada con el recibo de pago de derechos de importación: la base de la casilla IMP y el crédito fiscal de la casilla CFIMP.",
+      "lines": [{ "name": "Importación definitiva de mercadería", "quantity": 1, "unit_price": 2000, "tax": "GT-C-IMP-12", "account": "511" }]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "P1", "direction": "inbound", "date": "2026-02-05", "amount": 1120.00,
+      "contact": "client-gt", "journal": "BAN", "match": "V1",
+      "why": "Un cobro que salda exactamente la factura V1."
+    },
+    {
+      "ref": "P2", "direction": "inbound", "date": "2026-02-20", "amount": 500.00,
+      "contact": "client-exento", "journal": "BAN", "match": "V4",
+      "why": "Un cobro que salda exactamente la venta exenta V4, sin IVA."
+    },
+    {
+      "ref": "P3", "direction": "inbound", "date": "2026-03-25", "amount": 300.00,
+      "contact": "client-gt", "journal": "BAN", "match": null,
+      "why": "Un cobro a cuenta, sin factura que saldar: queda como partida abierta."
+    },
+    {
+      "ref": "P4", "direction": "outbound", "date": "2026-03-25", "amount": 1344.00,
+      "contact": "supplier-gt", "journal": "BAN", "match": "C5",
+      "why": "Un pago que salda exactamente la compra C5."
+    },
+    {
+      "ref": "P5", "direction": "outbound", "date": "2026-03-01", "amount": 336.00,
+      "contact": "supplier-gt", "journal": "BAN", "match": "C2",
+      "why": "Un pago que salda exactamente la compra C2, cuyo IVA no deducible forma parte del costo pagado."
+    }
+  ]
+}

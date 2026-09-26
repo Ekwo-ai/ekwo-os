@@ -1,0 +1,107 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "GT-SAT-2237",
+  "name": "Formulario SAT-2237 — Declaración Jurada y Pago Mensual del Impuesto al Valor Agregado, Régimen General",
+  "period": ["month"],
+  "period_default": "month",
+  "valid_from": "1992-07-01",
+  "legal_reference": "Decreto Número 27-92, art. 19 — la suma neta que el contribuyente debe enterar al fisco en cada período impositivo es la diferencia entre el total de débitos y el total de créditos fiscales generados; art. 40 — los contribuyentes deben presentar, dentro del mes calendario siguiente al del vencimiento de cada período impositivo, una declaración del monto total de las operaciones realizadas en el mes calendario anterior, incluso las exentas, y pagar el impuesto resultante junto con la declaración. El Formulario SAT-2237 sustituyó a los formularios impresos y se presenta a través de la Agencia Virtual SAT o de Declaraguate; sus campos son secciones nombradas del formulario electrónico y no casillas numeradas de un formulario impreso, así que este paquete les da un acrónimo propio con el nombre exacto del campo — véase el README",
+  "source": "sat-2237-guia",
+  "deadline": {
+    "rule": "last_day_of_month_after_period",
+    "legal_reference": "Decreto Número 27-92, art. 40 — la declaración y el pago del impuesto deben presentarse «dentro del mes calendario siguiente al del vencimiento de cada período impositivo»: la ley no fija un día del mes siguiente, sino que abre todo el mes calendario siguiente, sin escalonamiento por dígito del Número de Identificación Tributaria",
+    "source": "ley-iva"
+  },
+  "boxes": [
+    {
+      "box": "VG",
+      "kind": "base",
+      "name": "Ventas gravadas (Débito Fiscal) — base imponible",
+      "sequence": 10,
+      "legal_reference": "Formulario SAT-2237, sección de Débito Fiscal — monto de las ventas y prestaciones de servicios gravadas con el 12 %, sin incluir el impuesto",
+      "source": "sat-2237-guia"
+    },
+    {
+      "box": "DF",
+      "kind": "tax",
+      "name": "Ventas gravadas — Impuesto al Valor Agregado (Débito Fiscal)",
+      "sequence": 20,
+      "legal_reference": "Decreto Número 27-92, art. 14 — el débito fiscal es la suma del impuesto cargado por el contribuyente en las operaciones afectas realizadas en el período impositivo",
+      "source": "ley-iva"
+    },
+    {
+      "box": "VEXP",
+      "kind": "base",
+      "name": "Exportaciones",
+      "sequence": 30,
+      "legal_reference": "Formulario SAT-2237, sección de Débito Fiscal — monto de las exportaciones de bienes y de servicios facturadas en el período",
+      "source": "sat-2237-guia"
+    },
+    {
+      "box": "VEXO",
+      "kind": "base",
+      "name": "Ventas y servicios exentos",
+      "sequence": 40,
+      "legal_reference": "Decreto Número 27-92, art. 40, segundo párrafo — la declaración informa el monto total de las operaciones realizadas en el mes, incluso las exentas del impuesto",
+      "source": "ley-iva"
+    },
+    {
+      "box": "CG",
+      "kind": "base",
+      "name": "Compras gravadas con derecho a crédito fiscal — base imponible",
+      "sequence": 50,
+      "legal_reference": "Formulario SAT-2237, sección de Crédito Fiscal — monto de las adquisiciones internas gravadas con derecho a crédito fiscal, sin incluir el impuesto",
+      "source": "sat-2237-guia"
+    },
+    {
+      "box": "CF",
+      "kind": "tax",
+      "name": "Compras gravadas — Crédito Fiscal",
+      "sequence": 60,
+      "legal_reference": "Decreto Número 27-92, art. 15 — el crédito fiscal es la suma del impuesto cargado al contribuyente por las operaciones afectas realizadas durante el mismo período",
+      "source": "ley-iva"
+    },
+    {
+      "box": "CNOCRED",
+      "kind": "base",
+      "name": "Compras que no generan derecho a crédito fiscal",
+      "sequence": 70,
+      "legal_reference": "Formulario SAT-2237, sección de Crédito Fiscal — monto de las adquisiciones gravadas que, conforme al artículo 16 de la ley, no otorgan derecho a crédito fiscal",
+      "source": "sat-2237-guia"
+    },
+    {
+      "box": "CEXO",
+      "kind": "base",
+      "name": "Compras y servicios exentos",
+      "sequence": 80,
+      "legal_reference": "Formulario SAT-2237, sección de Crédito Fiscal — monto de las adquisiciones no gravadas o exentas del período",
+      "source": "sat-2237-guia"
+    },
+    {
+      "box": "IMP",
+      "kind": "base",
+      "name": "Importaciones — base imponible",
+      "sequence": 90,
+      "legal_reference": "Formulario SAT-2237, sección de Crédito Fiscal — monto de las importaciones gravadas del período, según el recibo de pago de derechos de importación",
+      "source": "sat-2237-guia"
+    },
+    {
+      "box": "CFIMP",
+      "kind": "tax",
+      "name": "Importaciones — Crédito Fiscal",
+      "sequence": 100,
+      "legal_reference": "Decreto Número 27-92, art. 16, primer párrafo — procede el crédito fiscal por la importación de bienes que se apliquen a actos gravados o a operaciones afectas por la ley",
+      "source": "ley-iva"
+    },
+    {
+      "box": "TOTAL",
+      "kind": "total",
+      "name": "Impuesto a pagar o remanente de crédito fiscal",
+      "sequence": 110,
+      "plus": ["DF"],
+      "minus": ["CF", "CFIMP"],
+      "legal_reference": "Decreto Número 27-92, art. 19 — «la suma neta que el contribuyente debe enterar al fisco en cada período impositivo, es la diferencia entre el total de débitos y el total de créditos fiscales generados»; art. 21 y 22 — si el resultado es un remanente de crédito a favor del contribuyente, se acumula al período impositivo siguiente hasta agotarlo mediante compensación de débitos fiscales, salvo el caso de devolución a exportadores del artículo 23. Este paquete no aplica un piso en cero: un resultado negativo es el remanente de crédito fiscal que la ley traslada al período siguiente, y no declara las casillas de arrastre del remanente del período anterior, de percepciones ni de retenciones del IVA — véase el README",
+      "source": "ley-iva"
+    }
+  ]
+}
