@@ -1537,3 +1537,32 @@ on conflict (code) do update set
   eu_vat_to       = excluded.eu_vat_to,
   vat_prefix      = excluded.vat_prefix,
   legal_reference = excluded.legal_reference;
+
+
+-- ---------------------------------------------------------------------------
+-- The row — Costa Rica
+--
+-- Directive 2006/112/EC, article 5(2), reaches only the territory of the
+-- Community as the Treaties define it; Costa Rica is a third country under
+-- every rule the Directive carries. It levies a value added tax of its own,
+-- the Impuesto sobre el Valor Agregado, under the Ley del Impuesto sobre el
+-- Valor Agregado (Ley N.° 6826 of 8 November 1982, integrally reformed by
+-- Ley N.° 9635 of 3 December 2018, in force from 1 July 2019), unrelated to
+-- the Union's common system. `vat_prefix` is null: a Costa Rican taxpayer is
+-- identified by the cédula jurídica or física the Registro Único Tributario
+-- assigns, which carries no ISO country prefix comparable to an EU VAT
+-- number.
+-- ---------------------------------------------------------------------------
+
+insert into territories (code, code_source, name, parent_code, eu_vat_scope, eu_vat_from, eu_vat_to, vat_prefix, legal_reference) values
+  ('CR', 'iso_3166_1', 'Costa Rica', null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. Costa Rica levies a value added tax of its own, the Impuesto sobre el Valor Agregado, under the Ley del Impuesto sobre el Valor Agregado (Ley N.° 6826 of 8 November 1982, reformed by Ley N.° 9635 of 3 December 2018, in force from 1 July 2019), articles 10 and 11, which set its rates.')
+on conflict (code) do update set
+  code_source     = excluded.code_source,
+  name            = excluded.name,
+  parent_code     = excluded.parent_code,
+  eu_vat_scope    = excluded.eu_vat_scope,
+  eu_vat_from     = excluded.eu_vat_from,
+  eu_vat_to       = excluded.eu_vat_to,
+  vat_prefix      = excluded.vat_prefix,
+  legal_reference = excluded.legal_reference;

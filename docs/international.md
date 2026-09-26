@@ -4948,3 +4948,57 @@ already carried by the American pack. `PA` is added to
 `00_territories.sql` outside the common system of VAT, on the same footing
 as `MX`, `CO` and `PE`, so `vat_category`, `exemption_code` and the five
 `intracom_*` treatments are read the way every non-EU pack's are.
+
+## From Costa Rica
+
+`packs/cr/`, `community`, seed 105, outside the common system of VAT. `CRC` is
+added to `00_currencies.sql` at two decimals; `CR` is added to
+`00_territories.sql` with `eu_vat_scope` `none`. Three things the format
+could not say, read from the Ley del Impuesto sobre el Valor Agregado (Ley
+6826, reformada por la Ley 9635), its Reglamento (Decreto 41779-H) and the
+Resolución MH-DGT-RES-0033-2025.
+
+**Clearance, again, and a form that names its fields by label and not by
+number.** The comprobante electrónico is validated by the Ministerio de
+Hacienda before it can be delivered, the same shape as the Mexican CFDI and
+the Colombian factura electrónica: `einvoicing.profile` stays null because
+this format's profiles are built on EN 16931 and the version-4.4 comprobante
+is not one of them, and there is no word here for "valid only once a third
+party validates it" — see the Mexican section above. What is new is the
+declaration form itself: Resolución MH-DGT-RES-0033-2025's Anexo 1 carries no
+box **numbers**, only field names — "Total ventas a 13%", "Impuesto
+determinado" — so `tax_report.json.boxes[].box` here holds a short code this
+pack invented (`V13`, `IMPDET`) and `name` carries the official label
+verbatim. Every other pack with a numbered form uses the number as the
+natural key a reviewer checks the diff against; a Costa Rican reviewer checks
+the label instead, which the format already carries and needed no change to
+hold.
+
+**A proportional credit computed monthly and settled once a year, where
+`recoverable` is a single yes or no.** A business that makes both taxed and
+exempt sales does not deduct all or none of its input tax: Reglamento,
+arts. 33 to 36, compute a provisional proportion from the trailing months and
+apply it through the year, then a definitive one in December that corrects
+every month behind it — exactly the mechanic TRIBU-CR's own form encodes in
+its sections "Compras y cálculo de la proporcionalidad" and "Liquidación de
+créditos por regla de proporcionalidad". A tax's `recoverable` field, and the
+`recoverable`/non-`recoverable` pair `CR-P-13`/`CR-P-EXE` of this pack model,
+is a property of the *tax*, decided once when the pack is written; a
+proportion is a property of the *company's mix of sales*, decided again every
+period from figures no single document carries. There is no field here for a
+ratio computed from a company's own trailing turnover, the same gap the
+American resale-certificate and economic-nexus cases of `docs/packs.md`'s
+`conditions` describe from the other side — a question the ledger cannot
+answer, stated rather than pretended away. `packs/cr/README.md` states the
+gap; a business that mixes taxed and exempt sales needs a professional's
+proportion until the core can hold one.
+
+**Two régimen-specific forms this pack does not carry.** Resolución
+MH-DGT-RES-0033-2025 names four forms in one resolución — the Régimen
+Tradicional this pack reads, and three more for the Régimen Especial de
+Bienes Usados (modalities b and c) and the Régimen Especial Agropecuario
+(cuatrimestral and anual), each with its own boxes and its own margin-scheme
+arithmetic on the base itself (Ley, arts. 31-32) that `taxes.json`'s `rate`
+and `postings` were not built to compute. A pack declares one form's boxes at
+a time, the same reasoning Colombia's Formulario 350 (retenciones) is left
+for a dedicated pack or a later version — see the Colombian section above.

@@ -1,0 +1,93 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "name": "Un mes de una comercializadora costarricense, declarante mensual del Impuesto al Valor Agregado",
+  "chart": "default",
+  "fiscal_year": { "name": "Ejercicio 2026", "start": "2026-01-01", "end": "2026-12-31" },
+  "periods": [
+    { "code": "2026-01", "from": "2026-01-01", "to": "2026-01-31" }
+  ],
+  "statements": ["CR-CCOM-ESF", "CR-CCOM-ER"],
+  "contacts": [
+    { "ref": "cust-nacional", "name": "Supermercados del Valle S.A.", "type": "customer", "country": "CR" },
+    { "ref": "cust-paciente", "name": "Corporación Andina de Seguros S.A.", "type": "customer", "country": "CR" },
+    { "ref": "cust-lector", "name": "Librería y Papelería Central S.A.", "type": "customer", "country": "CR" },
+    { "ref": "cust-export", "name": "Tropical Fresh Imports LLC", "type": "customer", "country": "US" },
+    { "ref": "sup-mercancia", "name": "Proveedora Nacional de Mercancías S.A.", "type": "supplier", "country": "CR" },
+    { "ref": "sup-farmaceutica", "name": "Distribuidora Farmacéutica S.A.", "type": "supplier", "country": "CR" },
+    { "ref": "sup-donacion", "name": "Fundación Cultural Costarricense", "type": "supplier", "country": "CR" }
+  ],
+  "documents": [
+    {
+      "ref": "V1", "type": "sale_invoice", "contact": "cust-nacional", "date": "2026-01-10",
+      "why": "Una venta de mercancía general a la tarifa general del 13%: prueba la casilla \"Total ventas a 13%\" y \"Monto de impuesto a 13%\".",
+      "lines": [{ "name": "Mercancía general", "quantity": 1, "unit_price": 500000, "tax": "CR-S-13", "account": "411" }]
+    },
+    {
+      "ref": "V2", "type": "sale_invoice", "contact": "cust-paciente", "date": "2026-01-12",
+      "why": "Un servicio de salud humana privado a la tarifa reducida del 4%: prueba la casilla \"Total ventas a 4%\".",
+      "lines": [{ "name": "Servicio de salud humana privado", "quantity": 1, "unit_price": 200000, "tax": "CR-S-4", "account": "413" }]
+    },
+    {
+      "ref": "V3", "type": "sale_invoice", "contact": "cust-nacional", "date": "2026-01-14",
+      "why": "Una venta de medicamentos a la tarifa reducida del 2%: prueba la casilla \"Total ventas a 2%\".",
+      "lines": [{ "name": "Medicamentos", "quantity": 1, "unit_price": 150000, "tax": "CR-S-2", "account": "411" }]
+    },
+    {
+      "ref": "V4", "type": "sale_invoice", "contact": "cust-nacional", "date": "2026-01-16",
+      "why": "Una venta de arroz de la Canasta Básica Tributaria a la tarifa reducida del 1%: prueba la casilla \"Total ventas a 1%\".",
+      "lines": [{ "name": "Arroz — Canasta Básica Tributaria", "quantity": 1, "unit_price": 100000, "tax": "CR-S-1", "account": "411" }]
+    },
+    {
+      "ref": "V5", "type": "sale_invoice", "contact": "cust-export", "date": "2026-01-18",
+      "why": "Una exportación de café especial, exenta con derecho a crédito fiscal pleno: prueba la casilla \"Total ventas exentas con derecho a crédito pleno\", distinta de la exención sin derecho a crédito.",
+      "lines": [{ "name": "Café especial de exportación", "quantity": 1, "unit_price": 800000, "tax": "CR-S-EXP", "account": "412" }]
+    },
+    {
+      "ref": "V6", "type": "sale_invoice", "contact": "cust-lector", "date": "2026-01-20",
+      "why": "Una venta de libros, exenta sin derecho a crédito fiscal: prueba la casilla \"Total ventas exentas sin derecho a crédito\", distinta de la exportación.",
+      "lines": [{ "name": "Libros", "quantity": 1, "unit_price": 90000, "tax": "CR-S-EXE", "account": "411" }]
+    },
+    {
+      "ref": "CN1", "type": "sale_credit_note", "contact": "cust-nacional", "date": "2026-01-25",
+      "why": "Una devolución parcial de la venta V1: prueba que la nota de crédito reduce la casilla \"Total ventas a 13%\" y \"Monto de impuesto a 13%\" en vez de sumar una segunda base.",
+      "lines": [{ "name": "Devolución de mercancía general", "quantity": 1, "unit_price": 50000, "tax": "CR-S-13", "account": "411" }]
+    },
+    {
+      "ref": "C1", "type": "purchase_invoice", "contact": "sup-mercancia", "date": "2026-01-05",
+      "why": "Una compra de mercancía general a la tarifa general del 13%, con derecho a crédito fiscal: prueba \"Total importe compras a 13%\" e \"Impuesto soportado a 13%\".",
+      "lines": [{ "name": "Mercancía general", "quantity": 1, "unit_price": 300000, "tax": "CR-P-13", "account": "511" }]
+    },
+    {
+      "ref": "C2", "type": "purchase_invoice", "contact": "sup-farmaceutica", "date": "2026-01-07",
+      "why": "Una compra de medicamentos para su reventa a la tarifa reducida del 2%, con derecho a crédito fiscal: prueba \"Total importe compras a 2%\" e \"Impuesto soportado a 2%\".",
+      "lines": [{ "name": "Medicamentos para reventa", "quantity": 1, "unit_price": 80000, "tax": "CR-P-2", "account": "511" }]
+    },
+    {
+      "ref": "C3", "type": "purchase_invoice", "contact": "sup-donacion", "date": "2026-01-08",
+      "why": "Una compra de libros exentos, sin derecho a crédito fiscal: prueba la casilla \"Bienes y servicios exentos\" de la sección de compras sin IVA soportado o no acreditable.",
+      "lines": [{ "name": "Libros para reventa", "quantity": 1, "unit_price": 40000, "tax": "CR-P-EXE", "account": "511" }]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "P1", "direction": "inbound", "date": "2026-01-20", "amount": 153000,
+      "contact": "cust-nacional", "journal": "BAN", "match": "V3",
+      "why": "El cliente paga exactamente la factura V3 (medicamentos): un pago que concilia una línea de clientes."
+    },
+    {
+      "ref": "P2", "direction": "inbound", "date": "2026-01-28", "amount": 800000,
+      "contact": "cust-export", "journal": "BAN", "match": "V5",
+      "why": "El cobro de la exportación V5, sin impuesto."
+    },
+    {
+      "ref": "P3", "direction": "outbound", "date": "2026-01-15", "amount": 339000,
+      "contact": "sup-mercancia", "journal": "BAN", "match": "C1",
+      "why": "El pago de la compra C1 al proveedor de mercancía general."
+    },
+    {
+      "ref": "P4", "direction": "inbound", "date": "2026-01-29", "amount": 50000,
+      "contact": "cust-nacional", "journal": "BAN", "match": null,
+      "why": "Un anticipo del cliente sin factura que salda: deja abiertas las partidas de V1, V4 y CN1, como sostiene un libro real."
+    }
+  ]
+}

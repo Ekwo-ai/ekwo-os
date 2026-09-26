@@ -1,0 +1,206 @@
+[
+  {
+    "code": "CR-S-13",
+    "name": "Ventas y servicios a la tarifa general",
+    "description": "Venta de bienes y prestación de servicios en el territorio nacional a la tarifa general del Impuesto sobre el Valor Agregado",
+    "kind": "vat",
+    "rate": 13,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2019-07-01",
+    "legal_reference": "Ley del Impuesto al Valor Agregado, art. 10 — la tarifa general del impuesto es del trece por ciento (13%); Reglamento, art. 22 — reitera esa tarifa general",
+    "source": "liva",
+    "sequence": 10,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "V13" },
+        { "type": "tax", "account": "2131", "box": "T13" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "V13", "box_factor": -100 },
+        { "type": "tax", "account": "2131", "box": "T13", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "CR-S-4",
+    "name": "Servicios de salud humana privados",
+    "description": "Servicios personales de salud humana prestados por centros de salud o profesionales en ciencias de la salud debidamente autorizados, a la tarifa reducida del cuatro por ciento",
+    "kind": "vat",
+    "rate": 4,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2019-07-01",
+    "legal_reference": "Ley del IVA, art. 11, numeral 1, inciso b) — tarifa reducida del cuatro por ciento (4%) para los servicios de salud humana privados; Reglamento, art. 23, numeral 1, inciso b) — precisa qué se consideran servicios de salud humana privados, incluidos los de laboratorios clínicos privados",
+    "source": "liva",
+    "sequence": 20,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "V4" },
+        { "type": "tax", "account": "2132", "box": "T4" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "V4", "box_factor": -100 },
+        { "type": "tax", "account": "2132", "box": "T4", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "CR-S-2",
+    "name": "Medicamentos",
+    "description": "Venta de medicamentos incluidos en la lista que fija resolución general del Ministerio de Hacienda, a la tarifa reducida del dos por ciento",
+    "kind": "vat",
+    "rate": 2,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2019-07-01",
+    "legal_reference": "Ley del IVA, art. 11, numeral 2, inciso a) — tarifa reducida del dos por ciento (2%) para los medicamentos; Reglamento, art. 23, numeral 2, inciso a) — el Ministerio de Hacienda establece mediante resolución general la lista de medicamentos sujetos a esta tarifa reducida",
+    "source": "liva",
+    "sequence": 30,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "V2" },
+        { "type": "tax", "account": "2133", "box": "T2" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "V2", "box_factor": -100 },
+        { "type": "tax", "account": "2133", "box": "T2", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "CR-S-1",
+    "name": "Canasta Básica Tributaria",
+    "description": "Venta de artículos incluidos en la Lista de la Canasta Básica Tributaria, a la tarifa reducida del uno por ciento",
+    "kind": "vat",
+    "rate": 1,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2019-07-01",
+    "legal_reference": "Ley del IVA, art. 11, numeral 3, inciso a) — tarifa reducida del uno por ciento (1%) para los artículos de la Canasta Básica Tributaria; Reglamento, art. 23, numeral 3, inciso a) — la lista se fija por decreto ejecutivo conjunto del Ministerio de Hacienda y el Ministerio de Economía, Industria y Comercio",
+    "source": "liva",
+    "sequence": 40,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "V1" },
+        { "type": "tax", "account": "2134", "box": "T1" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "V1", "box_factor": -100 },
+        { "type": "tax", "account": "2134", "box": "T1", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "CR-S-EXP",
+    "name": "Exportación de bienes",
+    "description": "Exportación de bienes, exenta con derecho a crédito fiscal pleno",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2019-07-01",
+    "legal_reference": "Ley del IVA, art. 8, numeral 1, inciso a) — están exentas del impuesto las exportaciones de bienes; Reglamento, art. 30, numeral 2, inciso c) — las exportaciones y las operaciones relacionadas con ellas dan derecho a crédito fiscal pleno, por excepción a la regla general del numeral 1 de ese mismo artículo. En el formulario de declaración se declaran junto con las demás ventas exentas con derecho a crédito pleno del artículo 30 del Reglamento",
+    "source": "liva",
+    "sequence": 50,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "VEXECP" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "VEXECP", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "CR-S-EXE",
+    "name": "Bienes exentos — libros",
+    "description": "Venta local de libros, con independencia de su formato, exenta sin derecho a crédito fiscal",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2019-07-01",
+    "legal_reference": "Ley del IVA, art. 8 — bienes exentos del impuesto; Reglamento, art. 11, numeral 4, inciso b) — están exentos los libros, con independencia de su formato, exención que no alcanza a los medios electrónicos que permiten el acceso y la lectura de libros en soporte diferente del papel. A diferencia de la exportación, el libro no figura entre las excepciones de crédito pleno del numeral 2 del artículo 30 del Reglamento, por lo que la regla general del numeral 1 de ese artículo se aplica: no da derecho a crédito fiscal",
+    "source": "rliva",
+    "sequence": 60,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "VEXESC" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "VEXESC", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "CR-P-13",
+    "name": "Compras a la tarifa general",
+    "description": "Adquisición de bienes y servicios gravados a la tarifa general, destinados a operaciones sujetas y no exentas",
+    "kind": "vat",
+    "recoverable": true,
+    "rate": 13,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2019-07-01",
+    "legal_reference": "Ley del IVA, art. 25 — el impuesto se determina por la diferencia entre el débito y el crédito fiscal del período; Reglamento, art. 30, numeral 1 — como regla general, solo da derecho a crédito fiscal el impuesto soportado en bienes y servicios destinados a operaciones sujetas y no exentas",
+    "source": "rliva",
+    "sequence": 70,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "CB13" },
+        { "type": "tax", "account": "1151", "box": "CF13" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "CB13", "box_factor": -100 },
+        { "type": "tax", "account": "1151", "box": "CF13", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "CR-P-2",
+    "name": "Compras de medicamentos para la reventa",
+    "description": "Adquisición de medicamentos gravados a la tarifa reducida del dos por ciento, para su reventa gravada",
+    "kind": "vat",
+    "recoverable": true,
+    "rate": 2,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2019-07-01",
+    "legal_reference": "Ley del IVA, art. 11, numeral 2, inciso a), y art. 25; Reglamento, art. 30, numeral 1 — el impuesto facturado en la compra de medicamentos gravados a tarifa reducida es descontable para quien los revende gravados a esa misma tarifa",
+    "source": "rliva",
+    "sequence": 80,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "CB2" },
+        { "type": "tax", "account": "1153", "box": "CF2" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "CB2", "box_factor": -100 },
+        { "type": "tax", "account": "1153", "box": "CF2", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "CR-P-EXE",
+    "name": "Compras de bienes y servicios exentos",
+    "description": "Adquisición de bienes y servicios exentos del impuesto, sin derecho a crédito fiscal",
+    "kind": "vat",
+    "recoverable": false,
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "exempt",
+    "valid_from": "2019-07-01",
+    "legal_reference": "Ley del IVA, art. 8, y Reglamento, art. 30, numeral 1 — la compra de un bien o servicio exento no soporta impuesto, y aun cuando lo soportara por error del proveedor, no daría derecho a crédito fiscal al no estar destinada a una operación gravada; el formulario de declaración reúne estas compras en la casilla \"Bienes y servicios exentos\" de la sección de compras sin IVA soportado o no acreditable",
+    "source": "res0033-2025",
+    "sequence": 90,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "CBEXE" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "CBEXE", "box_factor": -100 }
+      ]
+    }
+  }
+]

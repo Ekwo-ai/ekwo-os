@@ -1,0 +1,191 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "CR",
+  "name": "Costa Rica",
+  "version": "0.1.0",
+  "schema_min": "20260921084143",
+  "seed_sequence": 105,
+  "released_at": "2026-09-26",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "liva",
+        "title": "Ley del Impuesto sobre el Valor Agregado (Ley N.° 6826 del 8 de noviembre de 1982), texto integralmente reformado por la Ley N.° 9635 de Fortalecimiento de las Finanzas Públicas del 3 de diciembre de 2018, vigente a partir del 1 de julio de 2019",
+        "publisher": "Sistema Costarricense de Información Jurídica (SCIJ) — Procuraduría General de la República",
+        "url": "https://pgrweb.go.cr/scij/Busqueda/Normativa/Normas/nrm_texto_completo.aspx?param1=NRTC&nValor1=1&nValor2=87720&nValor3=125773&strTipM=TC",
+        "consulted_on": "2026-09-26",
+        "kind": "law"
+      },
+      {
+        "key": "rliva",
+        "title": "Reglamento a la Ley del Impuesto sobre el Valor Agregado (Decreto Ejecutivo N.° 41779-H del 3 de junio de 2019 y sus reformas)",
+        "publisher": "Sistema Costarricense de Información Jurídica (SCIJ) — Poder Ejecutivo, Ministerio de Hacienda",
+        "url": "https://pgrweb.go.cr/scij/Busqueda/Normativa/Normas/nrm_texto_completo.aspx?param1=NRTC&nValor1=1&nValor2=88953&nValor3=116520&strTipM=TC",
+        "consulted_on": "2026-09-26",
+        "kind": "regulation"
+      },
+      {
+        "key": "ccom",
+        "title": "Código de Comercio (Ley N.° 3284 del 30 de abril de 1964), Capítulo V del Título I — De la Contabilidad y de la Correspondencia, y Capítulo VIII de las sociedades anónimas",
+        "publisher": "Sistema Costarricense de Información Jurídica (SCIJ) — Procuraduría General de la República",
+        "url": "https://pgrweb.go.cr/scij/Busqueda/Normativa/Normas/nrm_texto_completo.aspx?param1=NRTC&nValor1=1&nValor2=6239&nValor3=6635&strTipM=TC",
+        "consulted_on": "2026-09-26",
+        "kind": "law"
+      },
+      {
+        "key": "res0033-2025",
+        "title": "Resolución N.° MH-DGT-RES-0033-2025, \"Formularios y medio para la presentación de declaraciones del Impuesto al Valor Agregado\", publicada en el Alcance N.° 113 a La Gaceta N.° 163 del 2 de setiembre de 2025, vigente desde el 6 de octubre de 2025",
+        "publisher": "Ministerio de Hacienda — Dirección General de Tributación, Imprenta Nacional (Diario Oficial La Gaceta)",
+        "url": "https://www.imprentanacional.go.cr/pub/2025/09/02/ALCA113_02_09_2025.pdf",
+        "consulted_on": "2026-09-26",
+        "kind": "form"
+      },
+      {
+        "key": "reg-comprobantes",
+        "title": "Reglamento de Comprobantes Electrónicos para Efectos Tributarios (Decreto Ejecutivo N.° 44739-H, publicado en La Gaceta el 8 de noviembre de 2024)",
+        "publisher": "Ministerio de Hacienda — Dirección General de Tributación",
+        "url": "https://www.hacienda.go.cr/docs/REGLAMENTO_DE_COMPROBANTES_ELECTRONICOS.pdf",
+        "consulted_on": "2026-09-26",
+        "kind": "regulation"
+      },
+      {
+        "key": "res0027-2024",
+        "title": "Resolución General MH-DGT-RES-0027-2024 sobre las disposiciones técnicas de los comprobantes electrónicos para efectos tributarios (Anexos y Estructuras versión 4.4), publicada el 19 de noviembre de 2024, obligatoria desde el 1 de setiembre de 2025",
+        "publisher": "Ministerio de Hacienda — Dirección General de Tributación",
+        "url": "https://www.hacienda.go.cr/docs/Resolucion_General_sobre_disposiciones_tecnicas_comprobantes_electronicos_para.pdf",
+        "consulted_on": "2026-09-26",
+        "kind": "regulation"
+      },
+      {
+        "key": "tribucr",
+        "title": "TRIBU-CR — sistema integrado de administración tributaria, plataforma única de presentación de declaraciones desde el 6 de octubre de 2025",
+        "publisher": "Ministerio de Hacienda",
+        "url": "https://www.hacienda.go.cr/TRIBU-CR.html",
+        "consulted_on": "2026-09-26",
+        "kind": "portal"
+      },
+      {
+        "key": "ccpa-niif",
+        "title": "Normas de Información Financiera aplicables en Costa Rica: NIIF completas y NIIF para las PYMES, adoptadas por Acuerdo N.° 324-2002 y actualizadas por circulares del Colegio",
+        "publisher": "Colegio de Contadores Públicos de Costa Rica (CCPA)",
+        "url": "https://ccpa.or.cr/niif-para-las-pymes/",
+        "consulted_on": "2026-09-26",
+        "kind": "guidance"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "CRC",
+    "language": "es",
+    "rounding_method": "half_up",
+    "opening_entry_label": "Asiento de apertura",
+    "closing_style": "result_accounts",
+    "roles": {
+      "receivable": "1131",
+      "payable": "2111",
+      "suspense": "117",
+      "rounding": "563",
+      "retained_earnings": "341",
+      "retained_earnings_loss": "342",
+      "current_year_result_profit": "351",
+      "current_year_result_loss": "352",
+      "sales": "411",
+      "purchase": "511",
+      "bank": "1112",
+      "cash": "1111",
+      "fx_gain": "462",
+      "fx_loss": "562",
+      "tax_payable": "2135",
+      "tax_receivable": "1155"
+    },
+    "journal_roles": {
+      "sales": "VEN",
+      "purchase": "COM",
+      "miscellaneous": "DIA",
+      "opening": "APE"
+    },
+    "fiscal_year_default": "calendar"
+  },
+  "languages": [],
+  "journals": [
+    { "code": "VEN", "type": "sales", "name": "Diario de ventas", "sequence": 10 },
+    { "code": "COM", "type": "purchase", "name": "Diario de compras", "sequence": 20 },
+    { "code": "BAN", "type": "bank", "name": "Bancos", "sequence": 30 },
+    { "code": "CAJ", "type": "cash", "name": "Caja", "sequence": 40 },
+    { "code": "DIA", "type": "general", "name": "Asientos de diario", "sequence": 50 },
+    { "code": "APE", "type": "opening", "name": "Asiento de apertura", "sequence": 60 }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Plan de cuentas de referencia sobre el contenido mínimo del Código de Comercio y las NIIF para las PYMES",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": ["CR-CCOM-ESF", "CR-CCOM-ER"],
+      "legal_reference": "Costa Rica no impone un plan de cuentas único ni numerado. El Código de Comercio, art. 251, exige llevar los registros contables y financieros \"en medios que permitan conocer, de forma fácil, clara y precisa, de sus operaciones comerciales y su situación económica\", sin que deban legalizarse; el art. 258 fija en cambio el contenido mínimo de los estados que se asientan cada cierre de ejercicio en el libro de Balances: Balance de Comprobación, Estado de Ganancias y Pérdidas, Balance General de Situación y, en las sociedades, Estado de superávit o aplicación de sobrantes. El Colegio de Contadores Públicos de Costa Rica (CCPA), como ente profesional y no estatal, adoptó las Normas Internacionales de Información Financiera y las NIIF para las PYMES como marco de preparación (Acuerdo N.° 324-2002 y circulares posteriores), pero ese marco no numera cuentas — cada entidad define su propio catálogo. Este plan es original: sigue una numeración propia de tres a cinco dígitos, y cada grupo de códigos corresponde a una línea de CR-CCOM-ESF o de CR-CCOM-ER, de modo que las cuentas de este paquete se leen directamente sobre esos dos esquemas. El texto de las NIIF pertenece al IASB y el de su adopción al CCPA; ninguno de los dos se transcribe aquí — ver README.md",
+      "source": "ccom"
+    }
+  ],
+  "documents": {
+    "numbering": "sequential",
+    "number_format": "{CODE}/{YYYY}/{NNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "invoice_if_issued",
+    "posted_edit_policy": "reversal_only",
+    "references": {
+      "numbering": {
+        "legal_reference": "Reglamento de Comprobantes Electrónicos para Efectos Tributarios (Decreto 44739-H) — todo comprobante fiscal se identifica por la clave numérica de cincuenta dígitos que asigna la estructura del documento electrónico, validada por el sistema de Hacienda al momento de su recepción; no es un número que el emisor elija libremente. El número que declara este paquete es el de la pieza contable — correlativo por diario — y no la clave numérica del comprobante electrónico, que Ekwo no calcula ni asigna: ver la sección de facturación electrónica de este README",
+        "source": "reg-comprobantes"
+      },
+      "tax_point": {
+        "legal_reference": "Reglamento a la Ley del IVA, art. 4 — en la venta de bienes el impuesto se devenga \"en el momento de la emisión del comprobante electrónico autorizado o la entrega del bien, el acto que se realice primero\"; art. 6 — en la prestación de servicios, \"al momento de la emisión del comprobante electrónico o de la prestación del servicio, lo que se configure primero\". La entrega o la prestación es el principio y el comprobante electrónico — obligatorio para prácticamente todo contribuyente desde la versión 4.4 — lo desplaza cuando se emite antes, de ahí invoice_if_issued en el sentido del vocabulario de este formato",
+        "source": "rliva"
+      },
+      "posted_edit_policy": {
+        "legal_reference": "Reglamento a la Ley del IVA, art. 15, numeral 2 — un descuento posterior a la emisión del comprobante se reconoce \"por medio de una nota de crédito electrónica debidamente autorizada por la Administración Tributaria\", declarada en el período en que se emite dicha nota; el Reglamento de Comprobantes Electrónicos exige la misma vía — una nota de crédito o de débito electrónica que referencia el comprobante original — para toda corrección de un comprobante ya validado por el sistema de Hacienda. No existe un procedimiento para devolver a borrador un comprobante aceptado",
+        "source": "rliva"
+      }
+    },
+    "mentions": [
+      {
+        "code": "clave_no_asignada",
+        "applies_when": "always",
+        "text": "Este documento no es un comprobante electrónico: no lleva la clave numérica de cincuenta dígitos ni el mensaje de aceptación del sistema de Hacienda. Solo el comprobante electrónico validado ampara la operación para efectos tributarios.",
+        "sequence": 10,
+        "legal_reference": "Reglamento de Comprobantes Electrónicos para Efectos Tributarios (Decreto 44739-H) y Resolución MH-DGT-RES-0027-2024 — todo comprobante debe transmitirse al sistema de Hacienda, que lo valida, le asigna la clave numérica y devuelve un mensaje de aceptación o rechazo, antes de poder entregarse al receptor. Ekwo no genera, no timbra ni transmite comprobantes electrónicos: ver la sección de facturación electrónica de este paquete",
+        "source": "reg-comprobantes"
+      },
+      {
+        "code": "export",
+        "applies_when": "export",
+        "text": "Exportación de bienes — exenta del Impuesto sobre el Valor Agregado con derecho a crédito fiscal pleno (artículo 8, numeral 1, de la Ley del IVA, y artículo 30, numeral 2, inciso c), de su Reglamento).",
+        "sequence": 20,
+        "legal_reference": "Ley del IVA, art. 8, numeral 1, inciso a) — exención en las exportaciones de bienes; Reglamento, art. 30, numeral 2, inciso c) — las exportaciones dan derecho a crédito fiscal pleno por excepción a la regla general del numeral 1 del mismo artículo, que solo da crédito por operaciones gravadas y no exentas",
+        "source": "liva"
+      },
+      {
+        "code": "exento",
+        "applies_when": "exempt",
+        "text": "Bien o servicio exento del Impuesto sobre el Valor Agregado, sin derecho a crédito fiscal (artículo 8 de la Ley del IVA).",
+        "sequence": 30,
+        "legal_reference": "Ley del IVA, art. 8 — bienes, servicios y operaciones exentos del impuesto; Reglamento, art. 30, numeral 1 — como regla general solo da derecho a crédito fiscal el impuesto soportado en la adquisición de bienes y servicios destinados a operaciones sujetas y no exentas, por lo que una venta exenta del artículo 8 que no figura entre las excepciones de crédito pleno del numeral 2 de ese mismo artículo no genera derecho a crédito",
+        "source": "liva"
+      }
+    ]
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "Reglamento de Comprobantes Electrónicos para Efectos Tributarios (Decreto 44739-H) y Resolución General MH-DGT-RES-0027-2024 — todo obligado tributario que vende bienes o presta servicios debe emitir comprobante electrónico, en el formato de los Anexos y Estructuras del Comprobante Electrónico versión 4.4 (obligatoria desde el 1 de setiembre de 2025), y transmitirlo al sistema del Ministerio de Hacienda para su validación previa: el sistema recibe el XML firmado digitalmente, lo valida contra el esquema y las reglas de negocio publicadas, le asigna la clave numérica de cincuenta dígitos y devuelve un mensaje de aceptación, aceptación parcial o rechazo. Es un régimen de validación previa (clearance) — como el CFDI mexicano o la factura electrónica colombiana — y no un intercambio entre partes construido sobre el modelo semántico de EN 16931: no hay Peppol, no hay perfil semántico europeo. EKWO NO GENERA, NO FIRMA NI TRANSMITE COMPROBANTES ELECTRÓNICOS AL SISTEMA DE HACIENDA: ningún componente de packages/formats escribe el XML de la versión 4.4 ni dialoga con ese sistema; un documento emitido desde Ekwo registra la operación en la contabilidad y no es el comprobante fiscal. Por eso profile, mandatory_from, party_scheme y vat_scheme quedan vacíos aunque la obligación exista: profile nombra un perfil construido sobre EN 16931 que una pieza de packages/formats escribe (peppol-bis-3, factur-x-en16931, xrechnung, un PINT), y la versión 4.4 no es ninguno de ellos; el formato tampoco tiene una palabra para \"válido solo tras la validación previa de un tercero\" — ver docs/international.md. La cédula jurídica o física identifica al emisor y al receptor y no tiene un código ISO 6523 registrado: party_scheme y vat_scheme quedan vacíos por la misma razón que en los paquetes de México y Colombia",
+    "source": "reg-comprobantes"
+  },
+  "bank": {
+    "statement_formats": ["csv"],
+    "payment_formats": []
+  }
+}

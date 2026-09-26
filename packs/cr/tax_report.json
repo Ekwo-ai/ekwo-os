@@ -1,0 +1,195 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "code": "CR-IVA",
+  "name": "Declaración del Impuesto al Valor Agregado — Régimen Tradicional",
+  "period": ["month"],
+  "period_default": "month",
+  "legal_reference": "Reglamento a la Ley del IVA, art. 24 — el período del impuesto es de un mes calendario. Resolución MH-DGT-RES-0033-2025, Anexo 1 — formulario denominado \"Impuesto al Valor Agregado\" para los contribuyentes inscritos en el Régimen Tradicional, presentado por el sistema TRIBU-CR. Este paquete declara los campos de las secciones I (Ventas y otras operaciones del período) y IV (Cálculo del impuesto) del Anexo 1 que sus impuestos alcanzan; no modela la sección II en su mecánica completa de proporcionalidad de créditos, los regímenes especiales de bienes usados o agropecuario, la actividad de casinos y juegos de azar, el pago diferido de ventas a crédito, la autorrepercusión del impuesto por servicios del exterior ni la devolución del IVA de servicios de salud pagados con tarjeta — ver README.md",
+  "source": "res0033-2025",
+  "deadline": {
+    "rule": "day_of_month_after_period",
+    "day": 15,
+    "legal_reference": "Resolución MH-DGT-RES-0033-2025, art. 4 — remite al artículo 27 de la Ley del Impuesto al Valor Agregado; Reglamento, art. 40 — la declaración jurada de las ventas de un mes debe presentarse a más tardar el decimoquinto día natural del mes siguiente al que se refiere",
+    "source": "rliva"
+  },
+  "boxes": [
+    {
+      "box": "V13",
+      "kind": "base",
+      "name": "Total ventas a 13%",
+      "sequence": 10,
+      "legal_reference": "Resolución MH-DGT-RES-0033-2025, Anexo 1, sección I — monto de las ventas realizadas durante el período fiscal con tarifa del 13% del IVA",
+      "source": "res0033-2025"
+    },
+    {
+      "box": "T13",
+      "kind": "tax",
+      "name": "Monto de impuesto a 13%",
+      "sequence": 20,
+      "legal_reference": "Resolución MH-DGT-RES-0033-2025, Anexo 1, sección I — resultado de multiplicar el valor de la casilla \"Total ventas a 13%\" por 13%",
+      "source": "res0033-2025"
+    },
+    {
+      "box": "V4",
+      "kind": "base",
+      "name": "Total ventas a 4%",
+      "sequence": 30,
+      "legal_reference": "Resolución MH-DGT-RES-0033-2025, Anexo 1, sección I — monto de las ventas realizadas durante el período fiscal con tarifa del 4% del IVA",
+      "source": "res0033-2025"
+    },
+    {
+      "box": "T4",
+      "kind": "tax",
+      "name": "Monto de impuesto a 4%",
+      "sequence": 40,
+      "legal_reference": "Resolución MH-DGT-RES-0033-2025, Anexo 1, sección I — resultado de multiplicar el valor de la casilla \"Total ventas a 4%\" por 4%",
+      "source": "res0033-2025"
+    },
+    {
+      "box": "V2",
+      "kind": "base",
+      "name": "Total ventas a 2%",
+      "sequence": 50,
+      "legal_reference": "Resolución MH-DGT-RES-0033-2025, Anexo 1, sección I — monto de las ventas realizadas durante el período fiscal con tarifa del 2% del IVA",
+      "source": "res0033-2025"
+    },
+    {
+      "box": "T2",
+      "kind": "tax",
+      "name": "Monto de impuesto a 2%",
+      "sequence": 60,
+      "legal_reference": "Resolución MH-DGT-RES-0033-2025, Anexo 1, sección I — resultado de multiplicar el valor de la casilla \"Total ventas a 2%\" por 2%",
+      "source": "res0033-2025"
+    },
+    {
+      "box": "V1",
+      "kind": "base",
+      "name": "Total ventas a 1%",
+      "sequence": 70,
+      "legal_reference": "Resolución MH-DGT-RES-0033-2025, Anexo 1, sección I — monto de las ventas realizadas durante el período fiscal con tarifa del 1% del IVA",
+      "source": "res0033-2025"
+    },
+    {
+      "box": "T1",
+      "kind": "tax",
+      "name": "Monto de impuesto a 1%",
+      "sequence": 80,
+      "legal_reference": "Resolución MH-DGT-RES-0033-2025, Anexo 1, sección I — resultado de multiplicar el valor de la casilla \"Total ventas a 1%\" por 1%",
+      "source": "res0033-2025"
+    },
+    {
+      "box": "VEXECP",
+      "kind": "base",
+      "name": "Total ventas exentas con derecho a crédito pleno",
+      "sequence": 90,
+      "legal_reference": "Resolución MH-DGT-RES-0033-2025, Anexo 1, sección I — monto de las ventas exentas, exoneradas o no sujetas realizadas durante el período que dan derecho a crédito fiscal pleno de acuerdo con el artículo 30 del Reglamento a la Ley del IVA, entre ellas las exportaciones",
+      "source": "res0033-2025"
+    },
+    {
+      "box": "VEXESC",
+      "kind": "base",
+      "name": "Total ventas exentas sin derecho a crédito",
+      "sequence": 100,
+      "legal_reference": "Resolución MH-DGT-RES-0033-2025, Anexo 1, sección I — monto de las ventas exentas, exoneradas o no sujetas realizadas durante el período que no dan derecho a crédito fiscal de acuerdo con el artículo 30 del Reglamento a la Ley del IVA",
+      "source": "res0033-2025"
+    },
+    {
+      "box": "VGRAV",
+      "kind": "total",
+      "name": "Total ventas gravadas",
+      "sequence": 110,
+      "plus": ["V13", "V4", "V2", "V1"],
+      "legal_reference": "Resolución MH-DGT-RES-0033-2025, Anexo 1, sección I — suma de las casillas de ventas gravadas a cada tarifa; este paquete solo declara las tarifas del 13%, 4%, 2% y 1% vigentes",
+      "source": "res0033-2025"
+    },
+    {
+      "box": "VGEN",
+      "kind": "total",
+      "name": "Total ventas generales",
+      "sequence": 120,
+      "plus": ["VGRAV", "VEXECP", "VEXESC"],
+      "legal_reference": "Resolución MH-DGT-RES-0033-2025, Anexo 1, sección I — suma de las casillas de ventas gravadas y de ventas exentas, exoneradas o no sujetas, con y sin derecho a crédito pleno",
+      "source": "res0033-2025"
+    },
+    {
+      "box": "DEBITO",
+      "kind": "total",
+      "name": "Monto del impuesto ventas generales",
+      "sequence": 130,
+      "plus": ["T13", "T4", "T2", "T1"],
+      "legal_reference": "Resolución MH-DGT-RES-0033-2025, Anexo 1, sección I — suma de las casillas \"Monto de impuesto a 13%\", \"Monto de impuesto a 4%\", \"Monto de impuesto a 2%\" y \"Monto de impuesto a 1%\", que constituye el débito del período",
+      "source": "res0033-2025"
+    },
+    {
+      "box": "CB13",
+      "kind": "base",
+      "name": "Total importe compras a 13%",
+      "sequence": 140,
+      "legal_reference": "Resolución MH-DGT-RES-0033-2025, Anexo 1, sección II — importe de las compras del período gravadas a la tarifa del 13%",
+      "source": "res0033-2025"
+    },
+    {
+      "box": "CF13",
+      "kind": "tax",
+      "name": "Impuesto soportado a 13%",
+      "sequence": 150,
+      "legal_reference": "Resolución MH-DGT-RES-0033-2025, Anexo 1, sección II — impuesto soportado en las compras del período a la tarifa del 13%",
+      "source": "res0033-2025"
+    },
+    {
+      "box": "CB2",
+      "kind": "base",
+      "name": "Total importe compras a 2%",
+      "sequence": 160,
+      "legal_reference": "Resolución MH-DGT-RES-0033-2025, Anexo 1, sección II — importe de las compras del período gravadas a la tarifa del 2%",
+      "source": "res0033-2025"
+    },
+    {
+      "box": "CF2",
+      "kind": "tax",
+      "name": "Impuesto soportado a 2%",
+      "sequence": 170,
+      "legal_reference": "Resolución MH-DGT-RES-0033-2025, Anexo 1, sección II — impuesto soportado en las compras del período a la tarifa del 2%",
+      "source": "res0033-2025"
+    },
+    {
+      "box": "CBEXE",
+      "kind": "base",
+      "name": "Bienes y servicios exentos",
+      "sequence": 180,
+      "legal_reference": "Resolución MH-DGT-RES-0033-2025, Anexo 1, sección II, \"Compras sin IVA soportado o no acreditable\" — importe de los bienes y servicios exentos adquiridos durante el período",
+      "source": "res0033-2025"
+    },
+    {
+      "box": "CFTOTAL",
+      "kind": "total",
+      "name": "Total crédito fiscal del periodo",
+      "sequence": 190,
+      "plus": ["CF13", "CF2"],
+      "legal_reference": "Resolución MH-DGT-RES-0033-2025, Anexo 1, sección II — suma del impuesto soportado en las compras que dan derecho a crédito fiscal; este paquete no aplica la regla de proporcionalidad del artículo 34 del Reglamento, por lo que solo es exacto para un contribuyente cuyas ventas son en su totalidad gravadas o exentas con derecho a crédito pleno",
+      "source": "res0033-2025"
+    },
+    {
+      "box": "IMPDET",
+      "kind": "total",
+      "name": "Impuesto determinado",
+      "sequence": 200,
+      "plus": ["DEBITO"],
+      "minus": ["CFTOTAL"],
+      "floor_zero": true,
+      "legal_reference": "Resolución MH-DGT-RES-0033-2025, Anexo 1, sección IV — resultado de restar del \"Total monto del impuesto\" el \"Total crédito fiscal para el IVA\"; si el resultado es negativo se completa la casilla \"Saldo a favor\" y no esta",
+      "source": "res0033-2025"
+    },
+    {
+      "box": "SAFAVOR",
+      "kind": "total",
+      "name": "Saldo a favor",
+      "sequence": 210,
+      "plus": ["CFTOTAL"],
+      "minus": ["DEBITO"],
+      "floor_zero": true,
+      "legal_reference": "Resolución MH-DGT-RES-0033-2025, Anexo 1, sección IV — cuando el crédito fiscal supera el débito del período, la diferencia se declara en esta casilla y no en \"Impuesto determinado\"",
+      "source": "res0033-2025"
+    }
+  ]
+}
