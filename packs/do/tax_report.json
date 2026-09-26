@@ -1,0 +1,160 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "code": "DO-ITBIS-IT1",
+  "name": "Declaración Jurada del Impuesto sobre Transferencias de Bienes Industrializados y Servicios (Formulario IT-1)",
+  "period": ["month"],
+  "period_default": "month",
+  "legal_reference": "Código Tributario, art. 353, y ficha del ITBIS de la Dirección General de Impuestos Internos (DGII) — todo responsable del ITBIS declara y paga mensualmente, sobre las operaciones del mes calendario anterior, mediante el Formulario IT-1",
+  "source": "dgii-itbis",
+  "deadline": {
+    "rule": "day_of_month_after_period",
+    "day": 20,
+    "legal_reference": "Dirección General de Impuestos Internos, ficha del ITBIS — el Formulario IT-1 se presenta y se paga dentro de los primeros veinte (20) días del mes siguiente al período declarado",
+    "source": "dgii-itbis"
+  },
+  "boxes": [
+    {
+      "box": "2",
+      "kind": "base",
+      "name": "Ingresos por Exportaciones de Bienes según Art. 342 CT",
+      "sequence": 10,
+      "legal_reference": "Formulario IT-1, casilla 2 — monto de las ventas de bienes al exterior durante el período a declarar, gravadas con tasa cero según el artículo 342 del Código Tributario",
+      "source": "form-it1"
+    },
+    {
+      "box": "4",
+      "kind": "base",
+      "name": "Ingresos por ventas locales de bienes o servicios exentos Art. 343 CT",
+      "sequence": 20,
+      "legal_reference": "Formulario IT-1, casilla 4 — monto de las ventas de bienes o servicios prestados en el país, exentos del impuesto según el artículo 343 del Código Tributario",
+      "source": "form-it1"
+    },
+    {
+      "box": "9",
+      "kind": "total",
+      "name": "Total Ingresos por Operaciones No Gravadas",
+      "sequence": 30,
+      "plus": ["2", "4"],
+      "legal_reference": "Formulario IT-1, casilla 9 — suma de los valores declarados en las casillas 2 a 8; este paquete sólo declara las casillas 2 y 4",
+      "source": "form-it1"
+    },
+    {
+      "box": "11",
+      "kind": "base",
+      "name": "Operaciones gravadas al 18%",
+      "sequence": 40,
+      "legal_reference": "Formulario IT-1, casilla 11 — total de las operaciones gravadas con la tarifa general del 18 % durante el período a declarar",
+      "source": "form-it1"
+    },
+    {
+      "box": "12",
+      "kind": "base",
+      "name": "Operaciones gravadas al 16%",
+      "sequence": 50,
+      "legal_reference": "Formulario IT-1, casilla 12 — total de las operaciones gravadas con la tarifa reducida del 16 % durante el período a declarar",
+      "source": "form-it1"
+    },
+    {
+      "box": "10",
+      "kind": "total",
+      "name": "Total Ingresos por Operaciones Gravadas",
+      "sequence": 60,
+      "plus": ["11", "12"],
+      "legal_reference": "Formulario IT-1, casilla 10 — el formulario oficial la obtiene restando la casilla 9 de la casilla 1; este paquete, que no modela el Anexo A de comprobantes por tipo de NCF, la declara como la suma de las casillas 11 a 15 que efectivamente alcanza (11 y 12), coherente con la nota del propio formulario según la cual la sumatoria de las casillas 11 a 15 debe igualar la casilla 10",
+      "source": "form-it1"
+    },
+    {
+      "box": "1",
+      "kind": "total",
+      "name": "Total de Operaciones del Período",
+      "sequence": 70,
+      "plus": ["9", "10"],
+      "legal_reference": "Formulario IT-1, casilla 1 — en el formulario oficial proviene de la casilla 11 del Anexo A (resumen de comprobantes emitidos); este paquete, que no modela ese anexo, la declara como la suma de las operaciones no gravadas y gravadas que sí modela",
+      "source": "form-it1"
+    },
+    {
+      "box": "16",
+      "kind": "total",
+      "name": "ITBIS cobrado (18% de la casilla 11)",
+      "sequence": 80,
+      "rate": 18,
+      "rate_of": "11",
+      "legal_reference": "Formulario IT-1, casilla 16 — dieciocho por ciento (18 %) del valor declarado en la casilla 11",
+      "source": "form-it1"
+    },
+    {
+      "box": "17",
+      "kind": "total",
+      "name": "ITBIS cobrado (16% de la casilla 12)",
+      "sequence": 90,
+      "rate": 16,
+      "rate_of": "12",
+      "legal_reference": "Formulario IT-1, casilla 17 — dieciséis por ciento (16 %) del valor declarado en la casilla 12",
+      "source": "form-it1"
+    },
+    {
+      "box": "21",
+      "kind": "total",
+      "name": "Total ITBIS Cobrado",
+      "sequence": 100,
+      "plus": ["16", "17"],
+      "legal_reference": "Formulario IT-1, casilla 21 — suma de los valores de las casillas 16 a 20; este paquete sólo declara las casillas 16 y 17",
+      "source": "form-it1"
+    },
+    {
+      "box": "22",
+      "kind": "tax",
+      "name": "ITBIS Pagado en Compras Locales de Bienes",
+      "sequence": 110,
+      "legal_reference": "Formulario IT-1, casilla 22 — ITBIS deducible pagado en compras locales de bienes, proveniente de la casilla 56 (columna Compras Locales) del Anexo A",
+      "source": "form-it1"
+    },
+    {
+      "box": "23",
+      "kind": "tax",
+      "name": "ITBIS Pagado por Servicios Deducibles",
+      "sequence": 120,
+      "legal_reference": "Formulario IT-1, casilla 23 — ITBIS deducible pagado en servicios, proveniente de la casilla 56 (columna Servicios) del Anexo A",
+      "source": "form-it1"
+    },
+    {
+      "box": "24",
+      "kind": "tax",
+      "name": "ITBIS Pagado en Importaciones",
+      "sequence": 130,
+      "legal_reference": "Formulario IT-1, casilla 24 — ITBIS deducible pagado en importaciones, proveniente de la casilla 56 (columna Importaciones) del Anexo A",
+      "source": "form-it1"
+    },
+    {
+      "box": "25",
+      "kind": "total",
+      "name": "Total ITBIS Deducible",
+      "sequence": 140,
+      "plus": ["22", "23", "24"],
+      "legal_reference": "Formulario IT-1, casilla 25 — suma de las casillas 22, 23 y 24",
+      "source": "form-it1"
+    },
+    {
+      "box": "26",
+      "kind": "total",
+      "name": "Impuesto a Pagar",
+      "sequence": 150,
+      "plus": ["21"],
+      "minus": ["25"],
+      "floor_zero": true,
+      "legal_reference": "Formulario IT-1, casilla 26 — resultado de restar la casilla 25 (total ITBIS deducible) de la casilla 21 (total ITBIS cobrado), cuando el resultado es positivo",
+      "source": "form-it1"
+    },
+    {
+      "box": "27",
+      "kind": "total",
+      "name": "Saldo a Favor",
+      "sequence": 160,
+      "plus": ["25"],
+      "minus": ["21"],
+      "floor_zero": true,
+      "legal_reference": "Formulario IT-1, casilla 27 — resultado de restar la casilla 25 (total ITBIS deducible) de la casilla 21 (total ITBIS cobrado), cuando el resultado es negativo",
+      "source": "form-it1"
+    }
+  ]
+}

@@ -4707,3 +4707,59 @@ columns.
 one's Simplified. `defaults.language` is two letters with no script subtag
 (`zh-Hans`, `zh-Hant`), so a reader asking for "Chinese" gets whichever pack
 it opened.
+
+## From Dominican Republic
+
+`packs/do/`, `community`, seed 104, outside the common system of VAT the way
+every State of the Americas is: Directive 2006/112/EC, article 5(2), reaches
+only the territory of the Community as the Treaties define it, and the
+Dominican Republic levies a value added tax of its own, the Impuesto sobre
+Transferencias de Bienes Industrializados y Servicios (ITBIS), under the
+Código Tributario (Ley No. 11-92), Título III. `DOP` is added to
+`00_currencies.sql` at two decimals; `DO` is added to `00_territories.sql`
+with `eu_vat_scope` `none`, on the same footing as every pack of the region.
+Three things the format could not say, read from the Código Tributario and
+from the Ley No. 32-23 of Facturación Electrónica.
+
+**A clearance regime whose mandatory date depends on the size of the
+taxpayer, and not on the country.** `einvoicing.mandatory_from` is one date
+for the whole country; the Ley No. 32-23 of 16 May 2023 sets three: twelve
+months from its entry into force for Grandes Contribuyentes Nacionales,
+twenty-four for Grandes Contribuyentes Locales y Medianos, thirty-six for
+every other taxpayer — and the Dirección General de Impuestos Internos
+(DGII) narrows each of the three further still, by administrative notice
+(aviso) issued as the date approaches, rather than by a calendar the law
+itself fixes for good. `packs/do/` leaves `profile` and `mandatory_from`
+null, exactly as `packs/co/` and `packs/mx/` do for their own clearance
+regimes, and states the three tranches as prose in `einvoicing.legal_reference`
+rather than as a date the core could read and act on — a size-dependent
+calendar has nowhere else to go.
+
+**A tax point that is an earliest-of-three, and the vocabulary only names
+an earliest-of-two.** `documents.tax_point` reads a country's general rule
+as one of five fixed words, and the closest one to the Dominican rule for a
+transfer of goods, `invoice_if_issued`, is exact for that case — article
+338, numeral 1. Numeral 3 gives the provision of services a third branch no
+value here names: the tax becomes chargeable on whichever of the invoice's
+emission, the completion of the service, or the collection of the price —
+in whole or in part — comes first. `earliest_of_delivery_or_payment` names
+two branches with a fixed pair between them, and a third has nowhere to
+attach. `packs/do/` declares the rule that governs a transfer of goods, the
+one every tax of this pack needs, and states the three-branch rule for
+services only in prose, in `documents.references.tax_point`'s own
+`legal_reference`.
+
+**No word for a rate that turns on the seller's own sectoral licence.**
+`applies_when` composes facts about the parties' territory and the relation
+between the supply and the seller's own territory; `conditions` names what
+a tax turns on that the ledger cannot see, down to a buyer's status, a
+threshold the seller crossed, or the nature of what was supplied — but
+never a status of the *seller*, granted by a separate regulatory regime, that
+has nothing to do with the territory, the buyer or the good or service sold.
+The Ley No. 690-16 rates of 9 % and 8 % — the Formulario IT-1 reserves boxes
+13, 14, 18 and 19 for them — apply only to a hotel registered under the
+all-inclusive modality that law defines: a fact about who the seller is
+licensed as, and not a fact `applies_when` or `conditions` was built to
+carry. `packs/do/` declares no tax for it, and says so in its README rather
+than forcing a seller's sectoral licence into `seller_threshold` or
+`supply_nature`, neither of which asks the right question.

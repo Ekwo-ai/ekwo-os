@@ -1,0 +1,98 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "name": "Un año de una comercializadora dominicana, declarante mensual de ITBIS",
+  "chart": "default",
+  "fiscal_year": { "name": "Ejercicio 2026", "start": "2026-01-01", "end": "2026-12-31" },
+  "periods": [
+    { "code": "2026-01", "from": "2026-01-01", "to": "2026-01-31" },
+    { "code": "2026-02", "from": "2026-02-01", "to": "2026-02-28" }
+  ],
+  "statements": ["DO-IR2-A1", "DO-IR2-B1"],
+  "contacts": [
+    { "ref": "cust-capital", "name": "Supermercados Capital S.R.L.", "type": "customer", "country": "DO" },
+    { "ref": "cust-arrocera", "name": "Distribuidora de Arroz del Cibao S.R.L.", "type": "customer", "country": "DO" },
+    { "ref": "cust-export", "name": "Caribbean Sugar Trading LLC", "type": "customer", "country": "US" },
+    { "ref": "sup-mercancia", "name": "Almacenes Duarte S.R.L.", "type": "supplier", "country": "DO" },
+    { "ref": "sup-logistica", "name": "Transporte y Logística Ozama S.R.L.", "type": "supplier", "country": "DO" },
+    { "ref": "sup-arroz", "name": "Molinos del Cibao S.R.L.", "type": "supplier", "country": "DO" }
+  ],
+  "documents": [
+    {
+      "ref": "V1", "type": "sale_invoice", "contact": "cust-capital", "date": "2026-01-15",
+      "why": "Una venta de mercancía general a la tarifa del 18 %: prueba la casilla 11 de operaciones gravadas y la 16 de ITBIS cobrado.",
+      "lines": [{ "name": "Mercancía general", "quantity": 1, "unit_price": 100000.00, "tax": "DO-S-18", "account": "4101" }]
+    },
+    {
+      "ref": "V2", "type": "sale_invoice", "contact": "cust-capital", "date": "2026-01-20",
+      "why": "Una venta de azúcar a la tarifa reducida del 16 % del párrafo II del artículo 345: prueba la casilla 12 y la 17.",
+      "lines": [{ "name": "Azúcar refinada", "quantity": 1, "unit_price": 50000.00, "tax": "DO-S-16", "account": "4101" }]
+    },
+    {
+      "ref": "V3", "type": "sale_invoice", "contact": "cust-export", "date": "2026-01-25",
+      "why": "Una exportación de bienes, gravada con tasa cero del artículo 342 con derecho a deducción y reembolso: prueba la casilla 2.",
+      "lines": [{ "name": "Azúcar exportada", "quantity": 1, "unit_price": 200000.00, "tax": "DO-S-EXP", "account": "4102" }]
+    },
+    {
+      "ref": "V4", "type": "sale_invoice", "contact": "cust-arrocera", "date": "2026-01-28",
+      "why": "Una venta local de arroz, bien exento del artículo 343, sin derecho a deducción: prueba la casilla 4.",
+      "lines": [{ "name": "Arroz", "quantity": 1, "unit_price": 30000.00, "tax": "DO-S-EXE", "account": "4101" }]
+    },
+    {
+      "ref": "C1", "type": "purchase_invoice", "contact": "sup-mercancia", "date": "2026-01-10",
+      "why": "Una compra de mercancía general a la tarifa general: prueba la casilla 22 de ITBIS pagado en compras locales de bienes.",
+      "lines": [{ "name": "Mercancía general", "quantity": 1, "unit_price": 40000.00, "tax": "DO-P-18-BIENES", "account": "5001" }]
+    },
+    {
+      "ref": "C2", "type": "purchase_invoice", "contact": "sup-logistica", "date": "2026-01-18",
+      "why": "Una compra de un servicio de transporte a la tarifa general: prueba que el ITBIS deducible de un servicio cae en la casilla 23 y no en la 22 de bienes.",
+      "lines": [{ "name": "Servicio de transporte", "quantity": 1, "unit_price": 15000.00, "tax": "DO-P-18-SERVICIOS", "account": "5202" }]
+    },
+    {
+      "ref": "C3", "type": "purchase_invoice", "contact": "sup-arroz", "date": "2026-01-22",
+      "why": "Una compra de arroz, bien exento, para su reventa: no genera ITBIS deducible en ninguna casilla del Formulario IT-1.",
+      "lines": [{ "name": "Arroz", "quantity": 1, "unit_price": 20000.00, "tax": "DO-P-EXE", "account": "5001" }]
+    },
+    {
+      "ref": "CN1", "type": "sale_credit_note", "contact": "cust-capital", "date": "2026-02-05",
+      "why": "Una devolución parcial de la venta V1, fechada en el segundo período: prueba que la nota de crédito reduce la casilla 11 y la 16 de febrero en vez de sumar una segunda base en enero.",
+      "lines": [{ "name": "Devolución de mercancía general", "quantity": 1, "unit_price": 10000.00, "tax": "DO-S-18", "account": "4101" }]
+    },
+    {
+      "ref": "V5", "type": "sale_invoice", "contact": "cust-capital", "date": "2026-02-10",
+      "why": "Una venta en el segundo período, menor que la compra C4 del mismo período: prueba que la casilla 26/27 se calcula por período y no se acumula del anterior.",
+      "lines": [{ "name": "Mercancía general", "quantity": 1, "unit_price": 60000.00, "tax": "DO-S-18", "account": "4101" }]
+    },
+    {
+      "ref": "C4", "type": "purchase_invoice", "contact": "sup-mercancia", "date": "2026-02-15",
+      "why": "Una compra grande en el segundo período, que deja ese período en saldo a favor: prueba la casilla 27.",
+      "lines": [{ "name": "Mercancía general", "quantity": 1, "unit_price": 90000.00, "tax": "DO-P-18-BIENES", "account": "5001" }]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "P1", "direction": "inbound", "date": "2026-02-02", "amount": 118000.00,
+      "contact": "cust-capital", "journal": "BAN", "match": "V1",
+      "why": "El cliente paga exactamente la factura V1: un pago que concilia una línea de cliente."
+    },
+    {
+      "ref": "P2", "direction": "inbound", "date": "2026-03-01", "amount": 200000.00,
+      "contact": "cust-export", "journal": "BAN", "match": "V3",
+      "why": "El cobro de la exportación V3, en la misma cuenta de clientes que las ventas locales."
+    },
+    {
+      "ref": "P3", "direction": "outbound", "date": "2026-02-01", "amount": 47200.00,
+      "contact": "sup-mercancia", "journal": "BAN", "match": "C1",
+      "why": "El pago de la factura C1 al proveedor, dentro del mismo período."
+    },
+    {
+      "ref": "P4", "direction": "inbound", "date": "2026-02-15", "amount": 20000.00,
+      "contact": "cust-capital", "journal": "BAN", "match": null,
+      "why": "Un anticipo del cliente sin factura que salda: deja abierta la partida de V2 y V4, como sostiene un libro real."
+    },
+    {
+      "ref": "P5", "direction": "outbound", "date": "2026-03-20", "amount": 106200.00,
+      "contact": "sup-mercancia", "journal": "BAN", "match": "C4",
+      "why": "El pago de la compra grande C4, para probar una conciliación en el tercer mes."
+    }
+  ]
+}

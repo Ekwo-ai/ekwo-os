@@ -1,0 +1,110 @@
+code,parent,type,reconcilable,name,sequence
+11,,asset_cash,false,Disponible,10
+1101,11,asset_cash,false,Caja,20
+110101,1101,asset_cash,false,Caja General,30
+1102,11,asset_cash,false,Bancos,40
+110201,1102,asset_cash,false,Banco Cuenta Corriente DOP,50
+12,,asset_current,false,Cuentas por Cobrar,60
+1201,12,asset_receivable,true,Clientes,70
+1202,12,asset_current,false,Cuentas por Cobrar a Relacionadas,80
+1203,12,asset_current,false,Otras Cuentas por Cobrar,90
+120301,1203,asset_current,false,Anticipo de Impuesto Sobre la Renta,100
+120302,1203,asset_current,true,ITBIS Saldo a Favor,110
+1204,12,asset_current,false,Provisión para Cuentas Incobrables,120
+13,,asset_current,false,Inventarios,130
+1301,13,asset_current,false,Inventario de Mercancías,140
+1302,13,asset_current,false,Inventario de Materia Prima,150
+1303,13,asset_current,false,Inventario de Productos en Proceso,160
+1304,13,asset_current,false,Mercancías en Tránsito,170
+14,,asset_prepayments,false,Gastos Pagados por Anticipado,180
+1401,14,asset_prepayments,false,Seguros Pagados por Anticipado,190
+1402,14,asset_prepayments,false,Alquileres Pagados por Anticipado,200
+15,,asset_fixed,false,Activo Fijo,210
+1501,15,asset_fixed,false,Terrenos,220
+1502,15,asset_fixed,false,Edificaciones,230
+1503,15,asset_fixed,false,Automóviles y Equipos de Transporte (Categoría 2),240
+1504,15,asset_fixed,false,Mobiliario y Equipo de Oficina (Categoría 2),250
+1505,15,asset_fixed,false,Equipos de Computación (Categoría 2),260
+1506,15,asset_fixed,false,Otros Activos Fijos (Categoría 3),270
+1507,15,asset_fixed,false,Depreciación Acumulada de Activos Fijos,280
+16,,asset_non_current,false,Inversiones,290
+1601,16,asset_non_current,false,Depósitos a Plazo,300
+1602,16,asset_non_current,false,Acciones en Otras Compañías,310
+17,,asset_non_current,false,Otros Activos,320
+1701,17,asset_non_current,false,Activos Intangibles,330
+1702,17,asset_non_current,false,Impuesto Sobre la Renta Diferido,340
+21,,liability_current,false,Pasivo Corriente,350
+2101,21,liability_current,false,Préstamos por Pagar a Corto Plazo,360
+2102,21,liability_payable,true,Proveedores,370
+2103,21,liability_current,false,Cuentas por Pagar Diversas,380
+2104,21,liability_current,false,Impuestos por Pagar,390
+210401,2104,liability_current,false,ITBIS Cobrado Tarifa 18%,400
+210402,2104,liability_current,false,ITBIS Cobrado Tarifa 16%,410
+210403,2104,liability_current,false,ITBIS Pagado en Compras Locales de Bienes,420
+210404,2104,liability_current,false,ITBIS Pagado en Servicios,430
+210405,2104,liability_current,false,ITBIS Pagado en Importaciones,440
+210406,2104,liability_current,true,ITBIS por Pagar,450
+210407,2104,liability_current,false,Retenciones de ISR por Pagar,460
+210408,2104,liability_current,false,Retenciones de TSS por Pagar,470
+210409,2104,liability_current,false,Impuesto Sobre la Renta por Pagar,480
+2105,21,liability_current,false,Cobros Anticipados de Clientes,490
+2106,21,liability_current,false,Cuentas de Orden por Clasificar,500
+22,,liability_non_current,false,Pasivo a Largo Plazo,510
+2201,22,liability_non_current,false,Préstamos por Pagar a Largo Plazo,520
+2202,22,liability_non_current,false,Préstamos con Accionistas,530
+2203,22,liability_non_current,false,Préstamos con Entidades Relacionadas,540
+31,,equity,false,Capital,550
+3101,31,equity,false,Capital Suscrito y Pagado,560
+32,,equity,false,Reservas,570
+3201,32,equity,false,Reserva Legal,580
+3202,32,equity,false,Otras Reservas,590
+33,,equity_retained,false,Resultados,600
+3301,33,equity_retained,false,Utilidades Acumuladas,610
+3302,33,equity_retained,false,Pérdidas Acumuladas,620
+3303,33,equity_retained,false,Utilidad del Ejercicio,630
+3304,33,equity_retained,false,Pérdida del Ejercicio,640
+3305,33,equity,false,Superávit por Revaluación de Activos,650
+41,,income,false,Ingresos de Operaciones,660
+4101,41,income,false,Ingresos por Ventas Locales,670
+4102,41,income,false,Ingresos por Exportaciones,680
+4103,41,income,false,Devoluciones en Ventas,690
+4104,41,income,false,Descuentos en Ventas,700
+42,,income_other,false,Ingresos Financieros,710
+4201,42,income_other,false,Intereses Ganados,720
+4202,42,income_other,false,Ganancia por Diferencia Cambiaria,730
+4203,42,income_other,false,Ajuste por Redondeo,740
+43,,income_other,false,Ingresos Extraordinarios,750
+4301,43,income_other,false,Ganancia en Venta de Activos Depreciables,760
+4302,43,income_other,false,Otros Ingresos,770
+50,,expense_direct_cost,false,Costo de Venta,780
+5001,50,expense_direct_cost,false,Costo de Mercancías Vendidas,790
+5002,50,expense_direct_cost,false,Costo de Materia Prima Consumida,800
+51,,expense,false,Gastos de Personal,810
+5101,51,expense,false,Sueldos y Salarios,820
+5102,51,expense,false,Aportes a la Tesorería de la Seguridad Social (TSS),830
+5103,51,expense,false,Aporte al INFOTEP,840
+5104,51,expense,false,Otros Gastos de Personal,850
+52,,expense,false,"Gastos por Trabajos, Suministros y Servicios",860
+5201,52,expense,false,Honorarios Profesionales,870
+5202,52,expense,false,"Seguridad, Mensajería y Transporte",880
+5203,52,expense,false,Otros Gastos por Servicios,890
+53,,expense,false,Arrendamientos,900
+5301,53,expense,false,Alquiler de Inmuebles,910
+5302,53,expense,false,Otros Arrendamientos,920
+54,,expense_depreciation,false,Gastos de Activos Fijos,930
+5401,54,expense_depreciation,false,Depreciación de Activos Fijos,940
+5402,54,expense,false,Reparaciones y Mantenimiento,950
+5403,54,expense,false,Amortización de Activos Intangibles,960
+55,,expense,false,Gastos de Representación,970
+5501,55,expense,false,Publicidad y Promoción,980
+5502,55,expense,false,Relaciones Públicas,990
+5503,55,expense,false,Viajes,1000
+56,,expense,false,Gastos Financieros,1010
+5601,56,expense,false,Intereses Pagados,1020
+5602,56,expense,false,Pérdida por Diferencia Cambiaria,1030
+5603,56,expense,false,Comisiones Bancarias,1040
+57,,expense,false,Gastos Extraordinarios,1050
+5701,57,expense,false,Pérdida en Venta de Activos Depreciables,1060
+5702,57,expense,false,Pérdidas por Cuentas Incobrables,1070
+58,,expense,false,Impuesto Sobre la Renta,1080
+5801,58,expense,false,Impuesto Sobre la Renta del Ejercicio,1090

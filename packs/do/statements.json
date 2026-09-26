@@ -1,0 +1,101 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "statements": [
+    {
+      "code": "DO-IR2-A1",
+      "kind": "balance_sheet",
+      "framework": "DO-IR2",
+      "name": "Balance General (Anexo A-1)",
+      "legal_reference": "Instructivo de la Declaración Jurada del Impuesto sobre la Renta Persona Jurídica (IR-2) — el Anexo A-1, Balance General, es el estado de activos, pasivos y patrimonio que toda persona jurídica de los sectores manufactura, comercio, agropecuaria u hoteles declara junto con el IR-2; no es un estado bajo NIIF para PYMES en su forma completa, sino el resumen administrativo que la Dirección General de Impuestos Internos exige de todo contribuyente, en ausencia de un catálogo o de un formato de estados financieros único impuesto por la ley dominicana",
+      "source": "ir2-instructivo",
+      "lines": [
+        { "code": "11", "parent": "AC", "name": "Disponible", "sequence": 10, "sign": 1,
+          "rules": [{ "kind": "code_prefix", "code_from": "11" }] },
+        { "code": "12", "parent": "AC", "name": "Cuentas por Cobrar", "sequence": 20, "sign": 1,
+          "rules": [{ "kind": "code_prefix", "code_from": "12" }] },
+        { "code": "13", "parent": "AC", "name": "Inventarios", "sequence": 30, "sign": 1,
+          "rules": [{ "kind": "code_prefix", "code_from": "13" }] },
+        { "code": "14", "parent": "AC", "name": "Gastos Pagados por Anticipado", "sequence": 40, "sign": 1,
+          "rules": [{ "kind": "code_prefix", "code_from": "14" }] },
+        { "code": "AC", "parent": "ACT", "name": "Total Activo Corriente", "sequence": 50, "is_total": true,
+          "plus": ["11", "12", "13", "14"] },
+
+        { "code": "15", "parent": "ANC", "name": "Activo Fijo", "sequence": 60, "sign": 1,
+          "rules": [{ "kind": "code_prefix", "code_from": "15" }] },
+        { "code": "16", "parent": "ANC", "name": "Inversiones", "sequence": 70, "sign": 1,
+          "rules": [{ "kind": "code_prefix", "code_from": "16" }] },
+        { "code": "17", "parent": "ANC", "name": "Otros Activos", "sequence": 80, "sign": 1,
+          "rules": [{ "kind": "code_prefix", "code_from": "17" }] },
+        { "code": "ANC", "parent": "ACT", "name": "Total Activo No Corriente", "sequence": 90, "is_total": true,
+          "plus": ["15", "16", "17"] },
+
+        { "code": "ACT", "parent": null, "name": "Total Activo", "sequence": 100, "is_total": true,
+          "plus": ["AC", "ANC"] },
+
+        { "code": "21", "parent": "PAS", "name": "Pasivo Corriente", "sequence": 110, "sign": -1,
+          "rules": [{ "kind": "code_prefix", "code_from": "21" }] },
+        { "code": "22", "parent": "PAS", "name": "Pasivo a Largo Plazo", "sequence": 120, "sign": -1,
+          "rules": [{ "kind": "code_prefix", "code_from": "22" }] },
+        { "code": "PAS", "parent": null, "name": "Total Pasivo", "sequence": 130, "is_total": true,
+          "plus": ["21", "22"] },
+
+        { "code": "31", "parent": "PAT", "name": "Capital", "sequence": 140, "sign": -1,
+          "rules": [{ "kind": "code_prefix", "code_from": "31" }] },
+        { "code": "32", "parent": "PAT", "name": "Reservas", "sequence": 150, "sign": -1,
+          "rules": [{ "kind": "code_prefix", "code_from": "32" }] },
+        { "code": "33", "parent": "PAT", "name": "Resultados", "sequence": 160, "sign": -1,
+          "rules": [{ "kind": "code_prefix", "code_from": "33" }] },
+        { "code": "PAT", "parent": null, "name": "Total Patrimonio", "sequence": 170, "is_total": true,
+          "plus": ["31", "32", "33"] }
+      ]
+    },
+    {
+      "code": "DO-IR2-B1",
+      "kind": "income_statement",
+      "framework": "DO-IR2",
+      "name": "Estado de Resultados (Anexo B-1)",
+      "legal_reference": "Instructivo de la Declaración Jurada del Impuesto sobre la Renta Persona Jurídica (IR-2) — el Anexo B-1, Estado de Resultados, es el estado de ingresos, costos y gastos que toda persona jurídica de los sectores manufactura, comercio y agropecuaria declara junto con el IR-2",
+      "source": "ir2-instructivo",
+      "lines": [
+        { "code": "41", "parent": "ING", "name": "Ingresos de Operaciones", "sequence": 10, "sign": -1,
+          "rules": [{ "kind": "code_prefix", "code_from": "41" }] },
+        { "code": "42", "parent": "ING", "name": "Ingresos Financieros", "sequence": 20, "sign": -1,
+          "rules": [{ "kind": "code_prefix", "code_from": "42" }] },
+        { "code": "43", "parent": "ING", "name": "Ingresos Extraordinarios", "sequence": 30, "sign": -1,
+          "rules": [{ "kind": "code_prefix", "code_from": "43" }] },
+        { "code": "ING", "parent": null, "name": "Total Ingresos", "sequence": 40, "is_total": true,
+          "plus": ["41", "42", "43"] },
+
+        { "code": "50", "parent": "CV", "name": "Costo de Venta", "sequence": 50, "sign": 1,
+          "rules": [{ "kind": "code_prefix", "code_from": "50" }] },
+        { "code": "CV", "parent": null, "name": "Total Costo de Venta", "sequence": 60, "is_total": true,
+          "plus": ["50"] },
+
+        { "code": "51", "parent": "GO", "name": "Gastos de Personal", "sequence": 70, "sign": 1,
+          "rules": [{ "kind": "code_prefix", "code_from": "51" }] },
+        { "code": "52", "parent": "GO", "name": "Gastos por Trabajos, Suministros y Servicios", "sequence": 80, "sign": 1,
+          "rules": [{ "kind": "code_prefix", "code_from": "52" }] },
+        { "code": "53", "parent": "GO", "name": "Arrendamientos", "sequence": 90, "sign": 1,
+          "rules": [{ "kind": "code_prefix", "code_from": "53" }] },
+        { "code": "54", "parent": "GO", "name": "Gastos de Activos Fijos", "sequence": 100, "sign": 1,
+          "rules": [{ "kind": "code_prefix", "code_from": "54" }] },
+        { "code": "55", "parent": "GO", "name": "Gastos de Representación", "sequence": 110, "sign": 1,
+          "rules": [{ "kind": "code_prefix", "code_from": "55" }] },
+        { "code": "GO", "parent": null, "name": "Total Gastos Operacionales", "sequence": 120, "is_total": true,
+          "plus": ["51", "52", "53", "54", "55"] },
+
+        { "code": "56", "parent": null, "name": "Gastos Financieros", "sequence": 130, "sign": 1,
+          "rules": [{ "kind": "code_prefix", "code_from": "56" }] },
+
+        { "code": "57", "parent": null, "name": "Gastos Extraordinarios", "sequence": 140, "sign": 1,
+          "rules": [{ "kind": "code_prefix", "code_from": "57" }] },
+
+        { "code": "58", "parent": null, "name": "Impuesto Sobre la Renta", "sequence": 150, "sign": 1,
+          "rules": [{ "kind": "code_prefix", "code_from": "58" }] },
+
+        { "code": "UN", "parent": null, "name": "Beneficio (Pérdida) del Ejercicio", "sequence": 160, "is_total": true,
+          "plus": ["ING"], "minus": ["CV", "GO", "56", "57", "58"] }
+      ]
+    }
+  ]
+}

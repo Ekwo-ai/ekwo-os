@@ -1,0 +1,191 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "DO",
+  "name": "Dominican Republic",
+  "version": "0.1.0",
+  "schema_min": "20260923110000",
+  "seed_sequence": 104,
+  "released_at": "2026-09-26",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "ct-titulo3",
+        "title": "Código Tributario de la República Dominicana (Ley No. 11-92), Título III — Del Impuesto sobre Transferencias de Bienes Industrializados y Servicios (ITBIS), en su redacción vigente",
+        "publisher": "Dirección General de Impuestos Internos (DGII)",
+        "url": "https://dgii.gov.do/legislacion/codigotributario/cdigo%20tributario/titulo3.pdf",
+        "consulted_on": "2026-09-26",
+        "kind": "law"
+      },
+      {
+        "key": "ley253-12",
+        "title": "Ley No. 253-12, de fecha 9 de noviembre de 2012, sobre Fortalecimiento de la Capacidad Recaudatoria del Estado para la Sostenibilidad Fiscal y el Desarrollo Sostenible — modifica los artículos 341, 343, 344 y 345 del Código Tributario",
+        "publisher": "Congreso Nacional de la República Dominicana",
+        "url": "https://dgii.gov.do/legislacion/codigotributario/cdigo%20tributario/titulo3.pdf",
+        "consulted_on": "2026-09-26",
+        "kind": "law"
+      },
+      {
+        "key": "dgii-itbis",
+        "title": "ITBIS — Impuesto sobre Transferencias de Bienes Industrializados y Servicios, ficha del ciclo del contribuyente",
+        "publisher": "Dirección General de Impuestos Internos (DGII)",
+        "url": "https://dgii.gov.do/cicloContribuyente/obligacionesTributarias/principalesImpuestos/Paginas/Itbis.aspx",
+        "consulted_on": "2026-09-26",
+        "kind": "guidance"
+      },
+      {
+        "key": "form-it1",
+        "title": "Formulario IT-1 — Declaración Jurada y/o Pago del Impuesto sobre Transferencias de Bienes Industrializados y Servicios, e Instructivo de Llenado del Formulario IT-1 (2020)",
+        "publisher": "Dirección General de Impuestos Internos (DGII)",
+        "url": "https://dgii.gov.do/herramientas/formularios/formularioDeclaraciones/Paginas/ITBIS.aspx",
+        "consulted_on": "2026-09-26",
+        "kind": "form"
+      },
+      {
+        "key": "ir2-instructivo",
+        "title": "Instructivo de la Declaración Jurada del Impuesto sobre la Renta Persona Jurídica (IR-2) y sus Anexos — Anexo A-1 (Balance General) y Anexo B-1 (Estado de Resultados) para los sectores manufactura, comercio y agropecuaria",
+        "publisher": "Dirección General de Impuestos Internos (DGII)",
+        "url": "https://dgii.gov.do/publicacionesOficiales/bibliotecaVirtual/contribuyentes/isr/ISR%20Persona%20Jurdica/9-Instructivo-IR-2-y-ANEXOS.pdf",
+        "consulted_on": "2026-09-26",
+        "kind": "form"
+      },
+      {
+        "key": "icpard-niif",
+        "title": "Resolución de confirmación de la implementación de las Normas Internacionales de Información Financiera para Pequeñas y Medianas Entidades (NIIF para PYMES), Acta 22-2014",
+        "publisher": "Instituto de Contadores Públicos Autorizados de la República Dominicana (ICPARD)",
+        "url": "https://icpard.org/wp-content/uploads/2022/01/10-RESOLUCION-CONFIRMACION-IMPLEMENTACION-DE-LAS-NIIFS-ACTA-22-2014.pdf",
+        "consulted_on": "2026-09-26",
+        "kind": "guidance"
+      },
+      {
+        "key": "ley32-23",
+        "title": "Ley No. 32-23, de fecha 16 de mayo de 2023, de Facturación Electrónica de la República Dominicana",
+        "publisher": "Congreso Nacional de la República Dominicana / Dirección General de Impuestos Internos (DGII)",
+        "url": "https://dgii.gov.do/cicloContribuyente/facturacion/comprobantesFiscalesElectronicosE-CF/Paginas/Listados-contribuyentes-obligados-implementar-facturacion-electronica.aspx",
+        "consulted_on": "2026-09-26",
+        "kind": "law"
+      },
+      {
+        "key": "dgii-calendario",
+        "title": "Calendario y avisos de obligatoriedad de la facturación electrónica (e-CF) por categoría de contribuyente",
+        "publisher": "Dirección General de Impuestos Internos (DGII)",
+        "url": "https://dgii.gov.do/cicloContribuyente/facturacion/comprobantesFiscalesElectronicosE-CF/Paginas/default.aspx",
+        "consulted_on": "2026-09-26",
+        "kind": "portal"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "DOP",
+    "language": "es",
+    "rounding_method": "half_up",
+    "opening_entry_label": "Comprobante de apertura",
+    "closing_style": "result_accounts",
+    "roles": {
+      "receivable": "1201",
+      "payable": "2102",
+      "suspense": "2106",
+      "rounding": "4203",
+      "retained_earnings": "3301",
+      "retained_earnings_loss": "3302",
+      "current_year_result_profit": "3303",
+      "current_year_result_loss": "3304",
+      "sales": "4101",
+      "purchase": "5001",
+      "bank": "110201",
+      "cash": "110101",
+      "fx_gain": "4202",
+      "fx_loss": "5602",
+      "tax_payable": "210406",
+      "tax_receivable": "120302"
+    },
+    "journal_roles": {
+      "sales": "VEN",
+      "purchase": "COM",
+      "miscellaneous": "DIA",
+      "opening": "APE"
+    },
+    "fiscal_year_default": "calendar"
+  },
+  "languages": [],
+  "journals": [
+    { "code": "VEN", "type": "sales", "name": "Diario de ventas", "sequence": 10 },
+    { "code": "COM", "type": "purchase", "name": "Diario de compras", "sequence": 20 },
+    { "code": "BAN", "type": "bank", "name": "Bancos", "sequence": 30 },
+    { "code": "CAJ", "type": "cash", "name": "Caja", "sequence": 40 },
+    { "code": "DIA", "type": "general", "name": "Comprobantes diversos", "sequence": 50 },
+    { "code": "APE", "type": "opening", "name": "Comprobante de apertura", "sequence": 60 }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Catálogo de cuentas de referencia (sin plan único oficial)",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": ["DO-IR2-A1", "DO-IR2-B1"],
+      "legal_reference": "La República Dominicana no impone un catálogo de cuentas único: la Ley No. 479-08 (Sociedades Comerciales) no prescribe una numeración, y desde la Resolución del ICPARD que confirma la implementación de las Normas Internacionales de Información Financiera para Pequeñas y Medianas Entidades (NIIF para PYMES), a partir del 1 de enero de 2014, cada entidad clasificada en los grupos correspondientes define su propio catálogo bajo NIIF o NIIF para PYMES. Este paquete usa, como catálogo propio, una numeración construida para este proyecto — sin pretender ser oficial — organizada para calzar con los renglones del Anexo A-1 (Balance General) y del Anexo B-1 (Estado de Resultados) que la Dirección General de Impuestos Internos (DGII) exige como anexos de la Declaración Jurada del Impuesto sobre la Renta (IR-2) de toda persona jurídica del sector de manufactura, comercio o agropecuaria: la identidad de agrupación es la asociación, no una obligación legal de usar precisamente esta numeración, de la misma manera que el paquete de Colombia usa una selección del Plan Único de Cuentas como catálogo propio tras la convergencia a NIIF",
+      "source": "icpard-niif"
+    }
+  ],
+  "documents": {
+    "numbering": "gapless",
+    "number_format": "{CODE}{NNNNNNNNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "invoice_if_issued",
+    "posted_edit_policy": "reversal_only",
+    "references": {
+      "numbering": {
+        "legal_reference": "Código Tributario, art. 335 y siguientes, y Ley No. 32-23 de Facturación Electrónica — todo comprobante fiscal debe llevar una numeración consecutiva y única, hoy asignada y validada por la Dirección General de Impuestos Internos (DGII) a través del sistema de comprobantes fiscales electrónicos (e-CF) o, transitoriamente, del Número de Comprobante Fiscal (NCF) en papel. El consecutivo que este paquete usa es el de la pieza contable; no es el e-CF ni el sello de validación de la DGII, que Ekwo no calcula ni transmite — ver la sección de facturación electrónica",
+        "source": "ley32-23"
+      },
+      "tax_point": {
+        "legal_reference": "Código Tributario, art. 338 — la obligación tributaria del ITBIS nace, en la transferencia de bienes, en el momento en que se emita el documento que ampara la transferencia o, a falta de documento, desde que se entregue o retire el bien; en la prestación de servicios, desde la emisión de la factura o desde el momento en que se termina la prestación o desde la percepción total o parcial del precio, el que fuere anterior. Este paquete declara la regla general de la transferencia de bienes, invoice_if_issued; la prestación de servicios añade un tercer punto de anclaje (la terminación del servicio) que el vocabulario cerrado de esta casilla no nombra — ver docs/international.md",
+        "source": "ct-titulo3"
+      },
+      "posted_edit_policy": {
+        "legal_reference": "Ley No. 32-23 de Facturación Electrónica y su normativa de desarrollo — un comprobante fiscal electrónico (e-CF) validado por la DGII se corrige o anula mediante una nota de crédito o una nota de débito que lo referencie; no existe un mecanismo para devolver a borrador un documento ya validado",
+        "source": "ley32-23"
+      }
+    },
+    "mentions": [
+      {
+        "code": "ecf_not_assigned",
+        "applies_when": "always",
+        "text": "Este documento no es un Comprobante Fiscal Electrónico (e-CF): no ha sido transmitido a la Dirección General de Impuestos Internos (DGII) ni validado por esta. Solo el e-CF validado, o el Número de Comprobante Fiscal (NCF) autorizado durante el período de transición, amparan la operación para efectos tributarios.",
+        "sequence": 10,
+        "legal_reference": "Ley No. 32-23 de Facturación Electrónica — el comprobante fiscal electrónico se transmite a la DGII, o a un proveedor tecnológico autorizado, para su validación antes de amparar la operación. Ekwo no genera, no transmite y no calcula el sello de un e-CF dominicano: ver la sección de facturación electrónica de este paquete",
+        "source": "ley32-23"
+      },
+      {
+        "code": "export",
+        "applies_when": "export",
+        "text": "Exportación de bienes gravada con tasa cero del Impuesto sobre Transferencias de Bienes Industrializados y Servicios (ITBIS), con derecho del exportador a deducir y, en su caso, a que se le reembolse el impuesto adelantado en su producción (artículo 342 del Código Tributario).",
+        "sequence": 20,
+        "legal_reference": "Código Tributario, art. 342 (modificado por el artículo 8 de la Ley No. 557-05) — quedan gravados con tasa cero los bienes que se exporten; los exportadores tienen derecho a deducir de cualquier otra obligación tributaria el valor del impuesto que se hubiere cargado al adquirir bienes y servicios destinados a su actividad de exportación, y a que se les devuelva el saldo a favor resultante",
+        "source": "ct-titulo3"
+      },
+      {
+        "code": "exempt",
+        "applies_when": "exempt",
+        "text": "Bien exento del Impuesto sobre Transferencias de Bienes Industrializados y Servicios (ITBIS): su transferencia no causa el impuesto y no da derecho a deducir el impuesto pagado en su producción o adquisición (artículo 343 del Código Tributario).",
+        "sequence": 30,
+        "legal_reference": "Código Tributario, art. 343 (modificado por la Ley No. 253-12) — la transferencia y la importación de los bienes que se detallan en su anexo, entre ellos el arroz (partida arancelaria 10.06), están exentas del impuesto establecido en el artículo 335; art. 346 y el instructivo del Formulario IT-1, casilla 45 — el impuesto pagado en la producción de un bien exento no es deducible",
+        "source": "ct-titulo3"
+      }
+    ]
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "Ley No. 32-23 de Facturación Electrónica, del 16 de mayo de 2023, crea el marco legal del Comprobante Fiscal Electrónico (e-CF) y lo hace obligatorio de forma escalonada según la categoría del contribuyente: doce meses desde su entrada en vigor para los Grandes Contribuyentes Nacionales (a partir de mayo de 2024), veinticuatro meses para los Grandes Contribuyentes Locales y Medianos, y treinta y seis meses para los Pequeños, Micro y no Clasificados. Es un régimen de validación previa (clearance): el comprobante se transmite a la DGII, o a un proveedor tecnológico autorizado, para su validación antes de amparar la operación, y no un intercambio par a par construido sobre el modelo semántico de EN 16931. La Dirección General de Impuestos Internos ajusta las fechas exactas de cada categoría mediante avisos oficiales sucesivos, consultables en su portal de facturación electrónica. EKWO NO GENERA, NO CALCULA EL SELLO NI TRANSMITE NINGÚN e-CF: ningún componente de packages/formats dialoga con la DGII ni con un proveedor tecnológico autorizado. Por eso profile, mandatory_from, party_scheme y vat_scheme quedan vacíos aunque la obligación exista y avance por etapas: profile nombra un perfil construido sobre EN 16931 (peppol-bis-3, factur-x-en16931, xrechnung, un PINT) y el e-CF dominicano no es ninguno de ellos; el formato tampoco tiene una palabra para «válido sólo tras la validación previa de un tercero» ni para una obligación que depende del tamaño del contribuyente — véase docs/international.md. El Registro Nacional de Contribuyentes (RNC) no tiene un código de esquema ISO 6523 registrado: party_scheme y vat_scheme quedan vacíos por la misma razón que en los paquetes de México y Colombia",
+    "source": "ley32-23"
+  },
+  "bank": {
+    "statement_formats": ["csv"],
+    "payment_formats": []
+  }
+}

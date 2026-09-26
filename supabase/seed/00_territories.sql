@@ -1348,3 +1348,31 @@ on conflict (code) do update set
   eu_vat_to       = excluded.eu_vat_to,
   vat_prefix      = excluded.vat_prefix,
   legal_reference = excluded.legal_reference;
+
+
+-- ---------------------------------------------------------------------------
+-- The row — the Dominican Republic
+--
+-- Outside the common system of VAT the way every State of the Americas is:
+-- Directive 2006/112/EC, article 5(2), reaches only the territory of the
+-- Community as the Treaties define it. The Dominican Republic levies its own
+-- Impuesto sobre Transferencias de Bienes Industrializados y Servicios
+-- (ITBIS), under the Código Tributario (Ley No. 11-92 of 16 May 1992),
+-- Título III, articles 335 to 353, unrelated to the Union's common system.
+-- `vat_prefix` is null: a Dominican taxpayer is identified by the Registro
+-- Nacional de Contribuyentes (RNC), which carries no ISO 6523 scheme
+-- registered and no prefix comparable to an EU VAT number.
+-- ---------------------------------------------------------------------------
+
+insert into territories (code, code_source, name, parent_code, eu_vat_scope, eu_vat_from, eu_vat_to, vat_prefix, legal_reference) values
+  ('DO', 'iso_3166_1', 'Dominican Republic', null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. The Dominican Republic levies a value added tax of its own, the Impuesto sobre Transferencias de Bienes Industrializados y Servicios (ITBIS), under the Código Tributario (Ley No. 11-92 of 16 May 1992), Título III, articles 335-353, which sets the rates.')
+on conflict (code) do update set
+  code_source     = excluded.code_source,
+  name            = excluded.name,
+  parent_code     = excluded.parent_code,
+  eu_vat_scope    = excluded.eu_vat_scope,
+  eu_vat_from     = excluded.eu_vat_from,
+  eu_vat_to       = excluded.eu_vat_to,
+  vat_prefix      = excluded.vat_prefix,
+  legal_reference = excluded.legal_reference;

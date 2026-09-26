@@ -1,0 +1,188 @@
+[
+  {
+    "code": "DO-S-18",
+    "name": "Ventas y servicios a la tarifa general",
+    "description": "Transferencia de bienes industrializados y prestación de servicios gravados a la tarifa general del ITBIS",
+    "kind": "vat",
+    "rate": 18,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2016-01-01",
+    "legal_reference": "Código Tributario, art. 345 (modificado por el artículo 23 de la Ley No. 253-12) — la tasa a aplicar a las transferencias gravadas y/o a los servicios prestados es del 18 % para los años 2013 y 2014, y del 16 % a partir del año 2015, en la medida en que ello permita alcanzar y mantener la meta de presión tributaria del artículo 26 de la Ley No. 1-12 (párrafo I); la Dirección General de Impuestos Internos publica en su ficha del ITBIS que la tasa a aplicar a partir del 2016 es del 18 %, la reducción condicionada del párrafo I no se ha activado",
+    "source": "ley253-12",
+    "vat_category": "S",
+    "sequence": 10,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "11" },
+        { "type": "tax", "account": "210401" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "11", "box_factor": -100 },
+        { "type": "tax", "account": "210401" }
+      ]
+    }
+  },
+  {
+    "code": "DO-S-16",
+    "name": "Ventas a la tarifa reducida",
+    "description": "Transferencia de azúcares (partida arancelaria 17.01) y demás bienes del párrafo II del artículo 345, gravados a la tarifa reducida",
+    "kind": "vat",
+    "rate": 16,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2016-01-01",
+    "legal_reference": "Código Tributario, art. 345, párrafo II (modificado por la Ley No. 253-12) — se establece una tasa reducida del ITBIS para los bienes que se indican en su anexo, entre ellos los azúcares de la partida arancelaria 17.01, según la tabla de tasas por año: 8 % en 2013, 11 % en 2014, 13 % en 2015 y 16 % a partir de 2016",
+    "source": "ley253-12",
+    "vat_category": "S",
+    "sequence": 20,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "12" },
+        { "type": "tax", "account": "210402" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "12", "box_factor": -100 },
+        { "type": "tax", "account": "210402" }
+      ]
+    }
+  },
+  {
+    "code": "DO-S-EXP",
+    "name": "Exportación de bienes",
+    "description": "Bienes corporales muebles exportados, gravados con tasa cero y con derecho del exportador a deducir y a que se le reembolse el impuesto adelantado",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2005-12-13",
+    "legal_reference": "Código Tributario, art. 342 (modificado por el artículo 8 de la Ley No. 557-05, de fecha 13 de diciembre de 2005) — quedan gravados con tasa cero los bienes que se exporten; los exportadores tendrán derecho a deducir de cualquier otra obligación tributaria el valor del impuesto que se hubiere cargado al adquirir bienes y servicios destinados a su actividad de exportación, con reembolso del saldo a favor por la DGII",
+    "source": "ct-titulo3",
+    "vat_category": "G",
+    "sequence": 30,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "2" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "2", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "DO-S-EXE",
+    "name": "Ventas locales de bienes exentos",
+    "description": "Transferencia local de arroz (partida arancelaria 10.06) y demás bienes exentos del artículo 343, sin derecho a deducir el impuesto pagado en su producción o adquisición",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2012-11-09",
+    "legal_reference": "Código Tributario, art. 343 (modificado por la Ley No. 253-12, de fecha 9 de noviembre de 2012) — la transferencia y la importación de los bienes que se detallan en su anexo están exentas del impuesto establecido en el artículo 335, entre ellos el arroz de la partida arancelaria 10.06; a diferencia de la exportación del artículo 342, el productor de un bien exento del artículo 343 no deduce el impuesto que le fue facturado en su producción (Formulario IT-1, casilla 45)",
+    "source": "ct-titulo3",
+    "vat_category": "E",
+    "sequence": 40,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "4" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "4", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "DO-P-18-BIENES",
+    "name": "Compras de bienes a la tarifa general",
+    "description": "Adquisición local de bienes gravados a la tarifa general, destinados a operaciones gravadas",
+    "kind": "vat",
+    "recoverable": true,
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2016-01-01",
+    "legal_reference": "Código Tributario, art. 336, párrafo II, y art. 346 (modificado por la Ley No. 147-00) — el contribuyente tiene derecho a deducir del impuesto bruto los importes que por concepto de este impuesto haya adelantado a sus proveedores locales por la adquisición de bienes gravados; el Formulario IT-1 declara el ITBIS pagado en compras locales de bienes en su casilla 22, sin que el formulario pida la base imponible de la compra",
+    "source": "form-it1",
+    "sequence": 50,
+    "postings": {
+      "invoice": [
+        { "type": "base" },
+        { "type": "tax", "account": "210403", "box": "22" }
+      ],
+      "credit_note": [
+        { "type": "base" },
+        { "type": "tax", "account": "210403", "box": "22", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "DO-P-18-SERVICIOS",
+    "name": "Compras de servicios a la tarifa general",
+    "description": "Adquisición local de servicios gravados a la tarifa general, destinados a operaciones gravadas",
+    "kind": "vat",
+    "recoverable": true,
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2016-01-01",
+    "legal_reference": "Código Tributario, art. 336, párrafo II, y art. 346, en los mismos términos que la compra de bienes; el Formulario IT-1 declara el ITBIS pagado en servicios deducibles en una casilla distinta de la de bienes (casilla 23 frente a la 22)",
+    "source": "form-it1",
+    "sequence": 60,
+    "postings": {
+      "invoice": [
+        { "type": "base" },
+        { "type": "tax", "account": "210404", "box": "23" }
+      ],
+      "credit_note": [
+        { "type": "base" },
+        { "type": "tax", "account": "210404", "box": "23", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "DO-P-18-IMPORTACION",
+    "name": "Importación de bienes a la tarifa general",
+    "description": "Importación de bienes gravados a la tarifa general, destinados a operaciones gravadas",
+    "kind": "vat",
+    "recoverable": true,
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2016-01-01",
+    "legal_reference": "Código Tributario, art. 335, numeral 2, y art. 339, numeral 2 — la importación de bienes industrializados está gravada, sobre una base que agrega al valor en aduana los tributos a la importación; el Formulario IT-1 declara el ITBIS pagado en importaciones en su casilla 24, distinta de las compras locales",
+    "source": "form-it1",
+    "sequence": 70,
+    "postings": {
+      "invoice": [
+        { "type": "base" },
+        { "type": "tax", "account": "210405", "box": "24" }
+      ],
+      "credit_note": [
+        { "type": "base" },
+        { "type": "tax", "account": "210405", "box": "24", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "DO-P-EXE",
+    "name": "Compras de bienes exentos",
+    "description": "Adquisición local de arroz y demás bienes exentos del artículo 343, destinados a la reventa",
+    "kind": "vat",
+    "recoverable": false,
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "exempt",
+    "valid_from": "2012-11-09",
+    "legal_reference": "Código Tributario, art. 343 — la compra de un bien exento, como el arroz, no causa el impuesto; no hay ITBIS que declarar en ninguna casilla del Formulario IT-1 por esta adquisición",
+    "source": "ct-titulo3",
+    "sequence": 80,
+    "postings": {
+      "invoice": [
+        { "type": "base" }
+      ],
+      "credit_note": [
+        { "type": "base" }
+      ]
+    }
+  }
+]
