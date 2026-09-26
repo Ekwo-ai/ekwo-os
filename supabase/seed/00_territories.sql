@@ -1239,3 +1239,29 @@ on conflict (code) do update set
   eu_vat_to       = excluded.eu_vat_to,
   vat_prefix      = excluded.vat_prefix,
   legal_reference = excluded.legal_reference;
+
+-- ---------------------------------------------------------------------------
+-- The row — Bolivia
+--
+-- Outside the common system of VAT the way Peru and Argentina are: Directive
+-- 2006/112/EC, article 5(2), reaches only the territory of the Community as
+-- the Treaties define it. Bolivia levies an Impuesto al Valor Agregado of its
+-- own under Ley N.° 843 (Ley de Reforma Tributaria de 20 de mayo de 1986),
+-- Título I, articles 1° to 18°, unrelated to the Union's common system.
+-- `vat_prefix` is null: a Bolivian taxpayer is identified by the Número de
+-- Identificación Tributaria (NIT), which carries no ISO 6523 code comparable
+-- to an EU VAT number.
+-- ---------------------------------------------------------------------------
+
+insert into territories (code, code_source, name, parent_code, eu_vat_scope, eu_vat_from, eu_vat_to, vat_prefix, legal_reference) values
+  ('BO', 'iso_3166_1', 'Bolivia', null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. Bolivia levies a value added tax of its own, the Impuesto al Valor Agregado, under Ley N.° 843 (Ley de Reforma Tributaria de 20 de mayo de 1986), Título I, articles 1°-18°, which sets the rate.')
+on conflict (code) do update set
+  code_source     = excluded.code_source,
+  name            = excluded.name,
+  parent_code     = excluded.parent_code,
+  eu_vat_scope    = excluded.eu_vat_scope,
+  eu_vat_from     = excluded.eu_vat_from,
+  eu_vat_to       = excluded.eu_vat_to,
+  vat_prefix      = excluded.vat_prefix,
+  legal_reference = excluded.legal_reference;

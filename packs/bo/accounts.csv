@@ -1,0 +1,131 @@
+code,parent,type,reconcilable,name,sequence
+100,,asset_current,false,Activo,10
+110,100,asset_current,false,Activo corriente,20
+111,110,asset_cash,false,Caja y bancos moneda nacional,30
+1111,111,asset_cash,false,Caja moneda nacional,40
+1112,111,asset_cash,false,Bancos moneda nacional,50
+1113,111,asset_cash,false,Caja moneda extranjera,60
+1114,111,asset_cash,false,Bancos moneda extranjera,70
+112,110,asset_current,false,Inversiones corrientes,80
+113,110,asset_receivable,true,Cuentas por cobrar comerciales,90
+1131,113,asset_receivable,true,Deudores por ventas - mercado interno,100
+1132,113,asset_receivable,true,Deudores por ventas - exportación,110
+1133,113,asset_receivable,true,Documentos por cobrar,120
+1134,113,asset_current,false,Previsión para incobrables,130
+114,110,asset_current,false,Otros créditos,140
+1141,114,asset_current,false,Anticipo a proveedores,150
+1142,114,asset_prepayments,false,Gastos pagados por anticipado,160
+1143,114,asset_current,false,Anticipo del Impuesto sobre las Utilidades de las Empresas (IUE),170
+1144,114,asset_current,false,Préstamos a empresas relacionadas,180
+1145,114,asset_current,false,Créditos con socios,190
+1146,114,asset_current,false,Depósitos en garantía otorgados,200
+115,110,asset_current,false,Créditos fiscales,210
+1151,115,asset_current,false,IVA Crédito Fiscal,220
+1152,115,asset_current,true,IVA Saldo a Favor del Contribuyente,230
+116,110,asset_current,false,Existencias,240
+1161,116,asset_current,false,Materias primas,250
+1162,116,asset_current,false,Productos en proceso,260
+1163,116,asset_current,false,Productos terminados,270
+1164,116,asset_current,false,Mercaderías,280
+1165,116,asset_current,false,Envases y embalajes,290
+117,110,asset_current,false,Partidas pendientes de imputación,300
+120,100,asset_non_current,false,Activo no corriente,310
+121,120,asset_non_current,false,Créditos no corrientes,320
+122,120,asset_fixed,false,Activo fijo,330
+1221,122,asset_fixed,false,Activo fijo - Valor de origen,340
+12211,1221,asset_fixed,false,Terrenos,350
+12212,1221,asset_fixed,false,Edificios y construcciones,360
+12213,1221,asset_fixed,false,Maquinaria y equipo,370
+12214,1221,asset_fixed,false,Muebles y enseres,380
+12215,1221,asset_fixed,false,Vehículos,390
+12216,1221,asset_fixed,false,Equipos de computación,400
+12217,1221,asset_fixed,false,Instalaciones,410
+1222,122,asset_fixed,false,Activo fijo - Depreciación acumulada,420
+12221,1222,asset_fixed,false,Depreciación acumulada - Edificios y construcciones,430
+12222,1222,asset_fixed,false,Depreciación acumulada - Maquinaria y equipo,440
+12223,1222,asset_fixed,false,Depreciación acumulada - Muebles y enseres,450
+12224,1222,asset_fixed,false,Depreciación acumulada - Vehículos,460
+12225,1222,asset_fixed,false,Depreciación acumulada - Equipos de computación,470
+12226,1222,asset_fixed,false,Depreciación acumulada - Instalaciones,480
+123,120,asset_non_current,false,Activos intangibles,490
+1231,123,asset_non_current,false,Marcas y patentes,500
+1232,123,asset_non_current,false,Programas y licencias informáticas,510
+1233,123,asset_non_current,false,Derecho de llave,520
+200,,liability_current,false,Pasivo,530
+210,200,liability_current,false,Pasivo corriente,540
+211,210,liability_payable,true,Cuentas por pagar comerciales,550
+2111,211,liability_payable,true,Proveedores - mercado interno,560
+2112,211,liability_payable,true,Proveedores del exterior,570
+2113,211,liability_payable,true,Documentos por pagar,580
+212,210,liability_current,false,Sueldos y cargas sociales por pagar,590
+2121,212,liability_current,false,Sueldos por pagar,600
+2122,212,liability_current,false,Aportes laborales a las AFP por pagar,610
+2123,212,liability_current,false,Aportes patronales a las AFP por pagar,620
+2124,212,liability_current,false,Retenciones RC-IVA por pagar,630
+2125,212,liability_current,false,Provisión para aguinaldo,640
+2126,212,liability_current,false,Provisión para prima,650
+2127,212,liability_current,false,Provisión para indemnización,660
+213,210,liability_current,false,Cargas fiscales por pagar,670
+2131,213,liability_current,false,IVA Débito Fiscal,680
+2132,213,liability_current,true,IVA por Pagar,690
+2133,213,liability_current,false,Impuesto sobre las Utilidades de las Empresas (IUE) por pagar,700
+2134,213,liability_current,false,Impuesto a las Transacciones (IT) por pagar,710
+214,210,liability_current,false,Anticipos de clientes,720
+215,210,liability_current,false,Provisiones,730
+220,200,liability_non_current,false,Pasivo no corriente,740
+221,220,liability_non_current,false,Deudas bancarias a largo plazo,750
+222,220,liability_non_current,false,Otras deudas no corrientes,760
+2221,222,liability_non_current,false,Deudas con socios,770
+2222,222,liability_non_current,false,Deudas por arrendamiento financiero,780
+2223,222,liability_non_current,false,Depósitos en garantía recibidos,790
+300,,equity,false,Patrimonio,800
+310,300,equity,false,Capital social,810
+320,300,equity,false,Reserva legal,820
+330,300,equity,false,Ajuste de capital y otras reservas,830
+340,300,equity_retained,false,Resultados acumulados,840
+341,340,equity_retained,false,Resultados acumulados - Ganancias,850
+342,340,equity_retained,false,Resultados acumulados - Pérdidas,860
+350,300,equity,false,Resultado del ejercicio,870
+351,350,equity,false,Resultado del ejercicio - Ganancia,880
+352,350,equity,false,Resultado del ejercicio - Pérdida,890
+400,,income,false,Ingresos,900
+410,400,income,false,Ventas,910
+411,410,income,false,Ventas de mercaderías - mercado interno,920
+412,410,income,false,Ventas de mercaderías - exportación,930
+413,410,income,false,Ventas de servicios,940
+414,410,income,false,Ventas gravadas a tasa cero,950
+460,400,income_other,false,Resultados financieros y por tenencia positivos,960
+461,460,income_other,false,Intereses ganados,970
+462,460,income_other,false,Diferencia de cambio positiva,980
+463,460,income_other,false,Descuentos obtenidos,990
+480,400,income_other,false,Otros ingresos,1000
+500,,expense,false,Costos y gastos,1010
+510,500,expense_direct_cost,false,Costo de ventas,1020
+511,510,expense_direct_cost,false,Compra de mercaderías,1030
+520,500,expense,false,Gastos de comercialización,1040
+521,520,expense,false,Publicidad y propaganda,1050
+522,520,expense,false,Comisiones sobre ventas,1060
+523,520,expense,false,Fletes sobre ventas,1070
+530,500,expense,false,Gastos de administración,1080
+531,530,expense,false,Sueldos y cargas sociales,1090
+5311,531,expense,false,Sueldos,1100
+5312,531,expense,false,Aportes patronales,1110
+5313,531,expense,false,Provisión para aguinaldo,1120
+5314,531,expense,false,Provisión para prima e indemnización,1130
+532,530,expense,false,Honorarios profesionales,1140
+533,530,expense,false,Gastos generales de administración,1150
+5331,533,expense,false,Alquileres,1160
+5332,533,expense,false,Servicios básicos,1170
+5333,533,expense,false,Materiales de escritorio,1180
+5334,533,expense,false,Mantenimiento y reparaciones,1190
+5335,533,expense,false,Seguros,1200
+5336,533,expense,false,Patentes municipales e impuestos no recuperables,1210
+534,530,expense_depreciation,false,Depreciación del activo fijo,1220
+560,500,expense,false,Resultados financieros y por tenencia negativos,1230
+561,560,expense,false,Intereses pagados,1240
+562,560,expense,false,Diferencia de cambio negativa,1250
+563,560,expense,false,Redondeo,1260
+564,560,expense,false,Descuentos otorgados,1270
+565,560,expense,false,Gastos e intereses bancarios,1280
+570,500,expense,false,Impuesto sobre las Utilidades de las Empresas (IUE) del ejercicio,1290
+580,500,expense,false,Otros egresos,1300

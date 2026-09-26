@@ -1,0 +1,215 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "BO",
+  "name": "Bolivia",
+  "version": "0.1.0",
+  "schema_min": "20260921084143",
+  "seed_sequence": 102,
+  "released_at": "2026-09-26",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "ley-843",
+        "title": "Ley N.° 843 (Texto Ordenado), Ley de Reforma Tributaria de 20 de mayo de 1986 — Título I (Impuesto al Valor Agregado, arts. 1° a 18°) y Título VI (Impuesto a las Transacciones, arts. 72° a 79°)",
+        "publisher": "Servicio de Impuestos Nacionales (SIN) — Biblioteca Virtual",
+        "url": "https://sac.impuestos.gob.bo/formularios/pdf/1.-LEY%20N%C2%B0%20843-06-24.pdf",
+        "consulted_on": "2026-09-26",
+        "kind": "law"
+      },
+      {
+        "key": "ds-21530",
+        "title": "Decreto Supremo N.° 21530 de 27 de febrero de 1987, Reglamento del Impuesto al Valor Agregado, texto ordenado y concordado",
+        "publisher": "LexiVox — Fundación Ciencia y Cultura, compilación de la Gaceta Oficial del Estado Plurinacional de Bolivia",
+        "url": "https://www.lexivox.org/norms/BO-DS-21530.html",
+        "consulted_on": "2026-09-26",
+        "kind": "regulation"
+      },
+      {
+        "key": "ley-2492",
+        "title": "Ley N.° 2492 de 2 de agosto de 2003, Código Tributario Boliviano, texto actualizado",
+        "publisher": "Servicio de Impuestos Nacionales (SIN) — Legislación tributaria",
+        "url": "https://www.impuestos.gob.bo/wp-content/uploads/2025/10/2.-LEY-N%C2%B0-2492-09-25.pdf",
+        "consulted_on": "2026-09-26",
+        "kind": "law"
+      },
+      {
+        "key": "ley-366",
+        "title": "Ley N.° 366 de 29 de abril de 2013, Ley del Libro y la Lectura \"Óscar Alfaro\", y su Reglamento (Decreto Supremo N.° 1768)",
+        "publisher": "Servicio de Impuestos Nacionales (SIN) — Legislación tributaria",
+        "url": "https://www.impuestos.gob.bo/wp-content/uploads/2025/11/LEY366.pdf",
+        "consulted_on": "2026-09-26",
+        "kind": "law"
+      },
+      {
+        "key": "ley-3249",
+        "title": "Ley N.° 3249 de 1 de diciembre de 2005, tasa cero del IVA para el transporte internacional de carga por carretera",
+        "publisher": "LexiVox — Fundación Ciencia y Cultura, compilación de la Gaceta Oficial del Estado Plurinacional de Bolivia",
+        "url": "https://www.lexivox.org/norms/BO-L-3249.html",
+        "consulted_on": "2026-09-26",
+        "kind": "law"
+      },
+      {
+        "key": "codigo-comercio",
+        "title": "Código de Comercio, Decreto Ley N.° 14379 de 25 de febrero de 1977 — Libro Primero, Título II (arts. 36°, 37° y 331°)",
+        "publisher": "Organización de los Estados Americanos — Mecanismo de Seguimiento de la Convención Interamericana contra la Corrupción",
+        "url": "https://www.oas.org/juridico/spanish/mesicic3_blv_codcomer.pdf",
+        "consulted_on": "2026-09-26",
+        "kind": "law"
+      },
+      {
+        "key": "ctnac-01-2012",
+        "title": "Resolución CTNAC N.° 01/2012 del Consejo Técnico Nacional de Auditoría y Contabilidad, que ratifica las Normas de Contabilidad Generalmente Aceptadas en Bolivia y adopta las NIIF como marco supletorio",
+        "publisher": "HLB Bolivia — reseña del marco normativo contable boliviano",
+        "url": "https://www.hlbbolivia.com/marco-normativo-para-la-preparacion-de-estados-financieros-de-proposito-general-en-bolivia/",
+        "consulted_on": "2026-09-26",
+        "kind": "guidance"
+      },
+      {
+        "key": "formulario-200",
+        "title": "Formulario 200 v.5 Extendido — Impuesto al Valor Agregado, Declaración Jurada mensual, e instructivo de llenado",
+        "publisher": "Servicio de Impuestos Nacionales (SIN)",
+        "url": "https://www.impuestos.gob.bo/wp-content/uploads/2025/10/200v5-extendido.pdf",
+        "consulted_on": "2026-09-26",
+        "kind": "form"
+      },
+      {
+        "key": "calendario-2026",
+        "title": "Calendario Tributario 2026",
+        "publisher": "Servicio de Impuestos Nacionales (SIN)",
+        "url": "https://www.impuestos.gob.bo/wp-content/uploads/2026/01/CALENDARIO-TRIBUTARIO-2026.pdf",
+        "consulted_on": "2026-09-26",
+        "kind": "guidance"
+      },
+      {
+        "key": "rnd-facturacion",
+        "title": "Resolución Normativa de Directorio N.° 102100000011 de 11 de agosto de 2021, Sistema de Facturación, texto compilado con sus modificaciones",
+        "publisher": "Servicio de Impuestos Nacionales (SIN)",
+        "url": "https://www.impuestos.gob.bo/wp-content/uploads/2025/10/RND11.pdf",
+        "consulted_on": "2026-09-26",
+        "kind": "regulation"
+      },
+      {
+        "key": "oficina-virtual",
+        "title": "Oficina Virtual del Servicio de Impuestos Nacionales",
+        "publisher": "Servicio de Impuestos Nacionales (SIN)",
+        "url": "https://www.impuestos.gob.bo",
+        "consulted_on": "2026-09-26",
+        "kind": "portal"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "BOB",
+    "language": "es",
+    "opening_entry_label": "Asiento de apertura",
+    "closing_style": "result_accounts",
+    "rounding_method": "half_up",
+    "roles": {
+      "receivable": "1131",
+      "payable": "2111",
+      "suspense": "117",
+      "rounding": "563",
+      "retained_earnings": "341",
+      "retained_earnings_loss": "342",
+      "current_year_result_profit": "351",
+      "current_year_result_loss": "352",
+      "sales": "411",
+      "purchase": "511",
+      "bank": "1112",
+      "cash": "1111",
+      "fx_gain": "462",
+      "fx_loss": "562",
+      "tax_payable": "2132",
+      "tax_receivable": "1152"
+    },
+    "journal_roles": {
+      "sales": "VEN",
+      "purchase": "COM",
+      "miscellaneous": "DIA",
+      "opening": "APE"
+    },
+    "fiscal_year_default": "calendar"
+  },
+  "languages": ["en"],
+  "journals": [
+    { "code": "VEN", "type": "sales", "name": "Diario de ventas", "sequence": 10 },
+    { "code": "COM", "type": "purchase", "name": "Diario de compras", "sequence": 20 },
+    { "code": "BAN", "type": "bank", "name": "Bancos", "sequence": 30 },
+    { "code": "CAJ", "type": "cash", "name": "Caja", "sequence": 40 },
+    { "code": "DIA", "type": "general", "name": "Diario general", "sequence": 50 },
+    { "code": "APE", "type": "opening", "name": "Asiento de apertura", "sequence": 60 }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Plan de cuentas de referencia sobre los arts. 36°, 37° y 331° del Código de Comercio y las Normas de Contabilidad",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": ["BO-EF-BG", "BO-EF-ER"],
+      "legal_reference": "Bolivia no impone un plan de cuentas único ni numerado: el Código de Comercio (Decreto Ley N.° 14379), art. 36°, exige sólo que todo comerciante lleve una contabilidad \"adecuada a la naturaleza, importancia y organización de la empresa\" sobre una base uniforme, y el art. 37° enumera los libros indispensables — Diario, Mayor, de Inventario y Balances — sin prescribir cuentas. El art. 331° exige que la memoria anual de una sociedad anónima contenga el balance general y el estado de resultados del ejercicio. El marco técnico es el de las Normas de Contabilidad Generalmente Aceptadas que emite el Consejo Técnico Nacional de Auditoría y Contabilidad (CTNAC) del Colegio de Auditores o Contadores Públicos de Bolivia, con las NIIF como marco supletorio desde la Resolución CTNAC N.° 01/2012; ninguna de las dos prescribe cuentas de detalle. Este plan es por tanto original: sigue una numeración propia de hasta cinco dígitos en la que el primer dígito es Activo (1), Pasivo (2), Patrimonio (3), Ingresos (4) o Costos y Gastos (5), y cada bloque de tres dígitos corresponde a una línea de BO-EF-BG o de BO-EF-ER — véase el README",
+      "source": "codigo-comercio"
+    }
+  ],
+  "documents": {
+    "numbering": "gapless",
+    "number_format": "{CODE}-{NNNNNNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "invoice_if_issued",
+    "posted_edit_policy": "reversal_only",
+    "references": {
+      "numbering": {
+        "legal_reference": "Resolución Normativa de Directorio N.° 102100000011 (Sistema de Facturación), que exige la dosificación previa de rangos de numeración correlativa por punto de venta y modalidad de facturación, sin saltos dentro del rango autorizado. El número que declara este paquete es el de la pieza contable, correlativo por diario, y no el número de Factura, Nota Fiscal o Documento Equivalente que el Sistema de Facturación del SIN dosifica y que Ekwo no emite — véase «Ekwo no emite una Factura boliviana» en el README",
+        "source": "rnd-facturacion"
+      },
+      "tax_point": {
+        "legal_reference": "Ley N.° 843, art. 4° — en la venta de bienes, el hecho imponible se perfecciona con la entrega del bien o acto equivalente que suponga la transferencia de dominio, la cual deberá obligatoriamente estar respaldada por la emisión de la factura, nota fiscal o documento equivalente; en los contratos de obras o de prestación de servicios, en el momento en que se finalice la ejecución o prestación, o en el de la percepción total o parcial del precio, el que fuere anterior. La Resolución Normativa de Directorio N.° 102100000011 exige emitir la factura en el momento de la entrega del bien o de la conclusión del servicio, de modo que la emisión coincide en la práctica con el hecho que la ley toma como principio; el paquete declara invoice_if_issued por esa razón. Queda sin representar el caso en que el servicio se cobra, total o parcialmente, antes de concluirse y antes de emitirse la factura, que adelantaría el nacimiento del hecho imponible a la fecha de cobro — véase el README",
+        "source": "ley-843"
+      },
+      "posted_edit_policy": {
+        "legal_reference": "Ley N.° 2492, art. 87°, numeral 4 — el sujeto pasivo debe respaldar sus actividades con los libros, registros generales y especiales, y demás documentos, sin alterar los hechos registrados; Resolución Normativa de Directorio N.° 102100000011, que sólo admite corregir una factura ya emitida mediante una Nota de Crédito-Débito que la referencia. Un documento contabilizado se anula con una nota de crédito que lo nombra, nunca volviendo a borrador",
+        "source": "rnd-facturacion"
+      }
+    },
+    "mentions": [
+      {
+        "code": "factura_not_issued",
+        "applies_when": "always",
+        "text": "Este documento no es una Factura, Nota Fiscal o Documento Equivalente boliviano: no ha sido generado con la dosificación del Sistema de Facturación del Servicio de Impuestos Nacionales (SIN) ni lleva el Código Único de Facturación (CUF) que la valida. Sólo la Factura, Nota Fiscal o Documento Equivalente válido respalda el crédito fiscal, el gasto y la operación a efectos tributarios.",
+        "sequence": 10,
+        "legal_reference": "Resolución Normativa de Directorio N.° 102100000011 (Sistema de Facturación) — toda venta de bienes o prestación de servicios debe respaldarse con una Factura, Nota Fiscal o Documento Equivalente emitida bajo una de las modalidades de facturación que la resolución autoriza (Manual, Prevalorada, Computarizada, Electrónica en Línea, entre otras), dosificada por el SIN y, en las modalidades en línea, validada con un Código Único de Facturación (CUF) generado a partir de un Código Único de Facturación Diario (CUFD). Ekwo no genera, transmite ni valida ninguno de los dos códigos: ningún componente de packages/formats habla con el Sistema de Facturación del SIN — véase «Ekwo no emite una Factura boliviana»",
+        "source": "rnd-facturacion"
+      },
+      {
+        "code": "export",
+        "applies_when": "export",
+        "text": "Operación de exportación, liberada del débito fiscal del Impuesto al Valor Agregado (artículo 11° de la Ley N.° 843).",
+        "sequence": 20,
+        "legal_reference": "Ley N.° 843, art. 11° — las exportaciones quedan liberadas del débito fiscal que les corresponda; el crédito fiscal vinculado da lugar al cómputo contra el impuesto del mercado interno y, en su caso, a la devolución mediante Certificados de Devolución de Impuestos (CEDEIM)",
+        "source": "ley-843"
+      },
+      {
+        "code": "zero_rate_book",
+        "applies_when": "exempt",
+        "text": "TASA CERO - SIN DERECHO A CREDITO FISCAL, LEY N.º 366, DEL LIBRO Y LA LECTURA.",
+        "sequence": 30,
+        "legal_reference": "Ley N.° 366, art. 8°, y su Reglamento (Decreto Supremo N.° 1768) — la venta de libros de producción nacional e importados, y de las publicaciones oficiales de las instituciones del Estado Plurinacional, en versión impresa, está sujeta a tasa cero del Impuesto al Valor Agregado, sin derecho a crédito fiscal; el contribuyente cuya actividad económica sea la venta de libros debe emitir la factura con la leyenda «TASA CERO - SIN DERECHO A CREDITO FISCAL, LEY N.° 366, DEL LIBRO Y LA LECTURA»",
+        "source": "ley-366"
+      }
+    ]
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "El comprobante boliviano exigido para toda venta o servicio es una Factura, Nota Fiscal o Documento Equivalente del Sistema de Facturación del Servicio de Impuestos Nacionales (SIN), regulado por la Resolución Normativa de Directorio N.° 102100000011 (Sistema de Facturación, «NSF-07»), de 11 de agosto de 2021, que reemplazó al sistema aprobado por la Resolución Normativa de Directorio N.° 10-0016-07 de 2007. La resolución define varias modalidades — Manual, Prevalorada, Computarizada, Electrónica en Línea, Computarizada en Línea, Portal Web — y asigna a cada contribuyente la suya mediante resoluciones sucesivas que designan «grupos» por su actividad, tamaño o facturación (entre otras, las Resoluciones Normativas de Directorio N.° 102400000004, 102400000005, 102400000012 y 102400000025, del noveno al duodécimo grupo, y la Resolución N.° 102600000007, que amplió el plazo de adecuación al 30 de septiembre de 2026 antes de exigir el uso exclusivo de la modalidad asignada desde el 1 de octubre de 2026). En las modalidades en línea, cada documento se genera con un Código Único de Facturación (CUF) calculado a partir de un Código Único de Facturación Diario (CUFD) que el sistema del SIN emite por adelantado — una validación distinta de una compensación (clearance) en tiempo real de tipo Peppol, pero igualmente ajena a cualquier pieza de packages/formats. Ekwo no genera, no envía ni valida el CUF ni el CUFD de ninguna modalidad: por eso profile y mandatory_from quedan vacíos aunque la obligación exista para prácticamente todo contribuyente desde 2026; profile nombra un perfil construido sobre EN 16931 que una pieza de packages/formats escribe y transmite por Peppol, y el comprobante boliviano no es ni lo uno ni lo otro. El NIT identifica al emisor y al receptor y no tiene código ISO 6523 propio: party_scheme y vat_scheme quedan vacíos — véase «Ekwo no emite una Factura boliviana» y docs/international.md",
+    "source": "rnd-facturacion"
+  },
+  "bank": {
+    "statement_formats": [],
+    "payment_formats": []
+  }
+}

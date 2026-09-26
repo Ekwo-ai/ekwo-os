@@ -210,6 +210,7 @@ says what they say. `ekwo pack describe <cc>` is everything one of them says.
 | [`bf`](../packs/bf/) | Burkina Faso | `23_pack_bf.sql` | fr | `community` |
 | [`bg`](../packs/bg/) | България | `73_pack_bg.sql` | bg | `community` |
 | [`bj`](../packs/bj/) | Bénin | `22_pack_bj.sql` | fr | `community` |
+| [`bo`](../packs/bo/) | Bolivia | `102_pack_bo.sql` | es, en | `community` |
 | [`ca`](../packs/ca/) | Canada | `58_pack_ca.sql` | en, fr | `community` |
 | [`cd`](../packs/cd/) | République démocratique du Congo | `34_pack_cd.sql` | fr | `community` |
 | [`cf`](../packs/cf/) | Centrafrique | `25_pack_cf.sql` | fr | `community` |

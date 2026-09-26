@@ -4499,3 +4499,46 @@ country whose structured invoice is real, mandatory and dated, but is not
 built on the semantic model the field was written for — has no way to say
 "mandatory" in the one column an installer reads without opening the prose
 behind it.
+
+## From Bolivia
+
+`packs/bo/`, `community`, seed 102, outside the common system of VAT the way
+Peru and Argentina are. `BOB` is added to `00_currencies.sql` at two
+decimals; `BO` is added to `00_territories.sql` with `eu_vat_scope` `none`.
+Two things the format could not say, read from Ley N.° 843 and the
+Formulario 200 of the Servicio de Impuestos Nacionales (SIN).
+
+**A tax-inclusive rate computed the other way round from `price_include`'s
+own formula.** Ley N.° 843, art. 5°, makes the 13 % IVA "an integral part of
+the net price of the sale […] not shown separately," and art. 15° applies
+that 13 % to the same tax-inclusive total — a débito fiscal of exactly 13 %
+of the invoiced gross, confirmed by the Formulario 200's own casilla 39,
+"(C13 \* 13 %)" where C13 is the total facturado. `price_include`'s formula
+in `packages/core` (`tax = gross - gross / (1 + rate/100)`) is built for the
+opposite shape: a rate stated on the *net* price, then grossed up — applying
+it with `rate: 13` would compute 13/113 of the gross (11,50 %), not the
+13/87 (14,94 %) Bolivian law actually charges. `packs/bo/` reaches the
+correct figure by declaring the **effective** rate, `14.9425` — the four
+decimals `tax_templates.rate` holds of 13/87 — which is not a rate a reader
+of Ley N.° 843 recognises at a glance, and it is fully explained, arithmetic
+included, in `packs/bo/README.md`. A field for "the nominal rate applies to
+the gross itself, not to the net the gross ungrosses to" would let a
+Bolivia-shaped pack state 13 rather than 14,9425 and would remove a source
+of confusion for the next reader; no such field exists yet.
+
+**Two boxes of a declaration that want the gross figure a `base` posting
+never holds.** Casillas 13 and 26 of the Formulario 200 ask for the
+importe total facturado — the gross, precisely because art. 5° folds the
+tax into it — while a `base` posting is, by construction across every pack
+of this repository, the tax-*exclusive* amount that lands on the ledger's
+revenue or expense account. `packs/bo/` reconstructs each casilla as a
+`total` of a hidden bookkeeping box (`BASE13`, `BASE26`, not casillas of the
+form) and the tax box next to it (`39`, `114`), which is the "second base is
+a sum" pattern `docs/packs.md` already names for the case where the second
+place a base is printed is a sum of what the postings wrote — read here in
+the direction the ledger produces the figures rather than the direction the
+form prints them in. `evaluate_totals()` accepts it because nothing requires
+a total's dependencies to be declared before it in the array, but a reader
+of the pack meets an unfamiliar box name (`BASE13`) before meeting the
+casilla it belongs to, and `packs/bo/README.md` says so at length for that
+reason.

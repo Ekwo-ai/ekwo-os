@@ -1,0 +1,123 @@
+[
+  {
+    "code": "BO-V-13",
+    "name": "Venta gravada, 13 % (por dentro)",
+    "description": "Venta de bienes muebles, contratos de obra o prestación de servicios en el mercado interno",
+    "kind": "vat",
+    "rate": 14.9425,
+    "price_include": true,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "1987-01-01",
+    "legal_reference": "Ley N.° 843, art. 1° — objeto del impuesto: ventas de bienes muebles en el territorio nacional, contratos de obras y toda prestación de servicios; art. 5° — «el impuesto de este Título forma parte integrante del precio neto de la venta, el contrato de obra o de prestación de servicio y se facturará juntamente con éste, es decir, no se mostrará por separado»; art. 15° — «la alícuota general única del impuesto será del 13 % (TRECE POR CIENTO)». Como el 13 % legal se aplica sobre un precio que ya lo contiene, el impuesto equivale a 13/87 del precio neto de venta sin el impuesto — 14,942528…, redondeado a los cuatro decimales que admite este campo (14,9425) — y no a 13/100: sobre una venta facturada en 1.000,00 Bs, el débito fiscal es 130,00 Bs y no 113,27 Bs. El paquete declara price_include con esta tasa efectiva para que el motor, que separa la base del impuesto sobre el precio ya cargado con él, reproduzca exactamente ese resultado; véase «El IVA se calcula por dentro» en el README",
+    "source": "ley-843",
+    "vat_category": "S",
+    "sequence": 10,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "BASE13" },
+        { "type": "tax", "account": "2131", "box": "39" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "BASE13", "box_factor": -100 },
+        { "type": "tax", "account": "2131", "box": "39", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "BO-V-EXP",
+    "name": "Exportación, liberada del débito fiscal",
+    "description": "Exportación de bienes y operaciones asimiladas a exportación",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "1987-01-01",
+    "conditions": ["transport_evidence"],
+    "legal_reference": "Ley N.° 843, art. 11° — «las exportaciones quedan liberadas del débito fiscal que les corresponda. Los exportadores podrán computar contra el impuesto que en definitiva adeudaren por sus operaciones gravadas en el mercado interno, el crédito fiscal correspondiente a las compras o insumos efectuados en el mercado interno con destino a operaciones de exportación […]»; el saldo no compensado da lugar a la devolución mediante Certificados de Devolución de Impuestos (CEDEIM), conforme el Decreto Supremo N.° 25465. Formulario 200 v.5 Extendido, casilla 14 — «Exportación de bienes y operaciones exentas»",
+    "source": "ley-843",
+    "vat_category": "G",
+    "sequence": 20,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "14" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "14", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "BO-V-CERO",
+    "name": "Venta gravada a tasa cero, sin derecho a crédito fiscal",
+    "description": "Venta de libros de producción nacional o importados, y otras operaciones sujetas a tasa cero por ley especial",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2013-04-29",
+    "conditions": ["supply_nature"],
+    "legal_reference": "Ley N.° 366, art. 8°, y su Reglamento (Decreto Supremo N.° 1768) — la venta de libros de producción nacional e importados, y de las publicaciones oficiales de las instituciones del Estado Plurinacional, en versión impresa, está sujeta a tasa cero del Impuesto al Valor Agregado. A diferencia de la exportación del art. 11° de la Ley N.° 843, esta tasa cero no da derecho a crédito fiscal: el contribuyente debe emitir la factura con la leyenda «TASA CERO - SIN DERECHO A CREDITO FISCAL, LEY N.° 366». Formulario 200 v.5 Extendido, casilla 15 — «Ventas gravadas a Tasa Cero (Venta de Libros Ley N.° 366, Transporte Internacional Ley N.° 3249 y otras establecidas por Ley)» — casilla distinta de la 14 precisamente porque las compras vinculadas a esta tasa cero quedan excluidas de la casilla 26 del crédito fiscal (instructivo del Formulario 200, fila 13). El transporte internacional de carga por carretera goza de la misma tasa cero y de la misma exclusión de crédito fiscal bajo la Ley N.° 3249, que este paquete no transcribe en un código separado por no llevar el paquete una actividad de transporte en su plan de cuentas",
+    "source": "ley-366",
+    "vat_category": "E",
+    "sequence": 30,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "15" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "15", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "BO-C-13",
+    "name": "Compra gravada, 13 % (por dentro), con derecho a crédito fiscal",
+    "description": "Compra, contratación o importación definitiva directamente vinculada a operaciones gravadas, a la exportación o a operaciones exentas con derecho a crédito",
+    "kind": "vat",
+    "rate": 14.9425,
+    "price_include": true,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "1987-01-01",
+    "legal_reference": "Ley N.° 843, art. 8° — el crédito fiscal computable es el impuesto que, en el período fiscal, se hubiera facturado al sujeto pasivo por compras, adquisiciones, contrataciones o importaciones definitivas, en la medida en que se vinculen con las operaciones gravadas; art. 5° — el impuesto forma parte integrante del precio facturado, sin mostrarse por separado. La misma tasa efectiva 14,9425 (13/87, redondeada) de BO-V-13 se aplica en compras porque el crédito fiscal se determina, igual que el débito, aplicando el 13 % sobre el importe total facturado por el proveedor (Formulario 200 v.5 Extendido, casilla 26 y su fórmula C26*13%), y no sobre un precio neto distinto del facturado. Decreto Supremo N.° 21530, art. 8° — requisitos formales del crédito fiscal (factura del proveedor con los requisitos del Sistema de Facturación, registro en el Libro de Compras IVA)",
+    "source": "ley-843",
+    "vat_category": "S",
+    "sequence": 110,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "BASE26" },
+        { "type": "tax", "account": "1151", "box": "114" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "BASE26", "box_factor": -100 },
+        { "type": "tax", "account": "1151", "box": "114", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "BO-C-13-NOCRED",
+    "name": "Compra gravada, 13 % (por dentro), sin derecho a crédito fiscal",
+    "description": "Compra gravada a la tasa general, destinada exclusivamente a una venta gravada a tasa cero sin derecho a crédito",
+    "kind": "vat",
+    "rate": 14.9425,
+    "price_include": true,
+    "scope": "purchase",
+    "treatment": "exempt",
+    "valid_from": "1987-01-01",
+    "recoverable": false,
+    "legal_reference": "Ley N.° 843, art. 8° — el crédito fiscal sólo es computable en la medida en que la compra se vincule con operaciones gravadas; una compra destinada exclusivamente a una venta gravada a tasa cero sin derecho a crédito (Ley N.° 366, art. 8°) no genera crédito fiscal y el impuesto facturado forma parte del costo de la adquisición. Formulario 200 v.5 Extendido, instructivo de la casilla 26 — «Excepto compras destinadas a actividades gravadas con tasa cero»: el formulario no lleva casilla propia para esta compra, que queda fuera de la determinación del crédito fiscal del período; véase el README",
+    "source": "ley-843",
+    "sequence": 120,
+    "postings": {
+      "invoice": [
+        { "type": "base" },
+        { "type": "tax_on_base", "factor": 100 }
+      ],
+      "credit_note": [
+        { "type": "base" },
+        { "type": "tax_on_base", "factor": 100 }
+      ]
+    }
+  }
+]

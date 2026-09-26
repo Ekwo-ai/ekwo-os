@@ -1,0 +1,125 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "BO-SIN-200",
+  "name": "Formulario 200 — Impuesto al Valor Agregado, Declaración Jurada mensual",
+  "period": ["month"],
+  "period_default": "month",
+  "valid_from": "2026-01-01",
+  "legal_reference": "Ley N.° 843, art. 7° y art. 10° — el impuesto resultante de cada período se determina mensualmente, restando del débito fiscal el crédito fiscal computable; Ley N.° 2492, art. 78° — la declaración jurada se presenta en la forma, medios, plazos y lugares que fije la Administración Tributaria. El Formulario 200 v.5 (Resumido y Extendido) es la declaración jurada mensual del IVA de uso obligatorio; las casillas de este paquete son las del Formulario 200 v.5 Extendido, que desagrega exportaciones, tasa cero y operaciones no gravadas — el Resumido reúne las tres en la sola casilla 13",
+  "source": "formulario-200",
+  "deadline": {
+    "rule": "depends_on_taxpayer",
+    "legal_reference": "Ley N.° 2492, art. 78° — la Administración Tributaria fija en sus reglamentaciones la forma y el plazo de la declaración jurada; en la práctica el Servicio de Impuestos Nacionales escalona el vencimiento del IVA entre el día 13 y el día 22 del mes siguiente al período declarado, según el último dígito del Número de Identificación Tributaria (NIT) del contribuyente, en el calendario tributario que publica cada año. El día exacto depende del NIT de cada contribuyente y no de una regla que el paquete pueda calcular",
+    "source": "calendario-2026"
+  },
+  "boxes": [
+    {
+      "box": "BASE13",
+      "kind": "base",
+      "name": "Ventas gravadas en el mercado interno, netas del impuesto (uso interno del paquete)",
+      "sequence": 5,
+      "hidden": true,
+      "legal_reference": "No es una casilla del Formulario 200: es el importe neto del impuesto que el motor separa de un precio facturado con el impuesto ya incluido (art. 5° de la Ley N.° 843). La casilla 13 del formulario, que pide el importe total facturado, se reconstruye como el total de esta casilla más el débito fiscal de la casilla 39 — véase «El IVA se calcula por dentro» en el README",
+      "source": "ley-843"
+    },
+    {
+      "box": "13",
+      "kind": "total",
+      "name": "Ventas de bienes y/o servicios gravados en el mercado interno, excepto ventas gravadas con Tasa Cero",
+      "sequence": 10,
+      "plus": ["BASE13:base", "39:tax"],
+      "legal_reference": "Formulario 200 v.5 Extendido, fila 1, casilla 13 — «Consignar el importe total por actividades gravadas […] que constituye el precio neto de venta, conforme establece el Artículo 5 de la Ley N.° 843». Como ese «precio neto» ya incluye el impuesto (art. 5°, Ley N.° 843), esta casilla es aquí la suma del importe neto (BASE13) y el débito fiscal (39) que el motor determinó sobre el mismo precio facturado",
+      "source": "formulario-200"
+    },
+    {
+      "box": "14",
+      "kind": "base",
+      "name": "Exportación de bienes y operaciones exentas",
+      "sequence": 20,
+      "legal_reference": "Formulario 200 v.5 Extendido, fila 2, casilla 14 — «Consignar el importe total correspondiente a ventas por exportación de bienes y operaciones exentas»",
+      "source": "formulario-200"
+    },
+    {
+      "box": "15",
+      "kind": "base",
+      "name": "Ventas gravadas a Tasa Cero",
+      "sequence": 30,
+      "legal_reference": "Formulario 200 v.5 Extendido, fila 3, casilla 15 — «Consignar el importe total correspondiente a ventas gravadas a Tasa Cero (Venta de Libros Ley N.° 366, Transporte Internacional Ley N.° 3249 y otras establecidas por Ley)»",
+      "source": "formulario-200"
+    },
+    {
+      "box": "39",
+      "kind": "tax",
+      "name": "Débito Fiscal correspondiente a ventas gravadas",
+      "sequence": 40,
+      "legal_reference": "Formulario 200 v.5 Extendido, fila 8, casilla 39 — «Débito Fiscal correspondiente a: [(C13+C16+C17+C18) * 13 %]». Este paquete no lleva cuentas ni documentos para el valor atribuido a bienes retirados (C16), las devoluciones y rescisiones efectuadas (C17) ni los descuentos obtenidos (C18): la nota de crédito de este paquete resta directamente de esta misma casilla y de la 13, en vez de sumarse en C17. La casilla 39 es aquí la suma del débito fiscal que cada venta gravada contabilizó, y no una segunda multiplicación sobre la 13 — las dos maneras de calcularla coinciden porque una sola tasa nominal (13 %) grava toda venta interna de este paquete",
+      "source": "formulario-200"
+    },
+    {
+      "box": "1002",
+      "kind": "total",
+      "name": "Total Débito Fiscal del período",
+      "sequence": 50,
+      "plus": ["39"],
+      "legal_reference": "Formulario 200 v.5 Extendido, fila 11, casilla 1002 — «Total Débito Fiscal del período (C39+C55+C19)». Este paquete no lleva reintegros de crédito fiscal por donaciones (C55, art. 8° del Decreto Supremo N.° 21530) ni conciliaciones (C19)",
+      "source": "formulario-200"
+    },
+    {
+      "box": "BASE26",
+      "kind": "base",
+      "name": "Compras vinculadas a actividades gravadas, netas del impuesto (uso interno del paquete)",
+      "sequence": 55,
+      "hidden": true,
+      "legal_reference": "No es una casilla del Formulario 200: es el importe neto del impuesto que el motor separa de un precio facturado por el proveedor con el impuesto ya incluido. La casilla 26 del formulario, que pide el importe total de la compra, se reconstruye como el total de esta casilla más el crédito fiscal de la casilla 114",
+      "source": "ley-843"
+    },
+    {
+      "box": "26",
+      "kind": "total",
+      "name": "Compras directamente vinculadas a actividades gravadas",
+      "sequence": 60,
+      "plus": ["BASE26:base", "114:tax"],
+      "legal_reference": "Formulario 200 v.5 Extendido, fila 13, casilla 26 — «Consignar el total de compras, contrataciones e importaciones definitivas directamente vinculadas con operaciones gravadas, incluyendo las compras vinculadas a exportación de bienes y operaciones exentas. Excepto compras destinadas a actividades gravadas con tasa cero»",
+      "source": "formulario-200"
+    },
+    {
+      "box": "114",
+      "kind": "tax",
+      "name": "Crédito Fiscal correspondiente a compras vinculadas a actividades gravadas",
+      "sequence": 70,
+      "legal_reference": "Formulario 200 v.5 Extendido, fila 17, casilla 114 — «Crédito Fiscal correspondiente a: [(C26+C27+C28)*13%]». Este paquete no lleva devoluciones y rescisiones recibidas (C27) ni descuentos otorgados (C28): la nota de crédito de una compra resta directamente de esta misma casilla y de la 26",
+      "source": "formulario-200"
+    },
+    {
+      "box": "1004",
+      "kind": "total",
+      "name": "Total Crédito Fiscal del período",
+      "sequence": 80,
+      "plus": ["114"],
+      "legal_reference": "Formulario 200 v.5 Extendido, fila 20, casilla 1004 — «Total Crédito Fiscal del período (C114+C30+C1003)». Este paquete no lleva conciliaciones de crédito (C30) ni el crédito fiscal proporcional de compras no discriminables (C1003, art. 8° del Decreto Supremo N.° 21530) — véase el README",
+      "source": "formulario-200"
+    },
+    {
+      "box": "909",
+      "kind": "total",
+      "name": "Diferencia a favor del Fisco o Impuesto Determinado",
+      "sequence": 90,
+      "plus": ["1002"],
+      "minus": ["1004"],
+      "floor_zero": true,
+      "legal_reference": "Formulario 200 v.5 Extendido, fila 22, casilla 909 — «Diferencia a favor del Fisco o Impuesto Determinado (C1002-C1004; Si >0)»",
+      "source": "formulario-200"
+    },
+    {
+      "box": "693",
+      "kind": "total",
+      "name": "Diferencia a favor del Contribuyente",
+      "sequence": 100,
+      "plus": ["1004"],
+      "minus": ["1002"],
+      "floor_zero": true,
+      "legal_reference": "Formulario 200 v.5 Extendido, fila 21, casilla 693 — «Diferencia a favor del Contribuyente (C1004-C1002; Si >0)»",
+      "source": "formulario-200"
+    }
+  ]
+}

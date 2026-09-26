@@ -1,0 +1,186 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "Un trimestre de una comercializadora boliviana que declara el IVA cada mes",
+  "chart": "default",
+  "fiscal_year": { "name": "Gestión 2026", "start": "2026-01-01", "end": "2026-12-31" },
+  "periods": [
+    { "code": "2026-01", "from": "2026-01-01", "to": "2026-01-31" },
+    { "code": "2026-02", "from": "2026-02-01", "to": "2026-02-28" },
+    { "code": "2026-03", "from": "2026-03-01", "to": "2026-03-31" }
+  ],
+  "statements": ["BO-EF-BG", "BO-EF-ER"],
+  "contacts": [
+    { "ref": "cliente-1", "name": "Comercial La Paz S.R.L.", "type": "customer", "country": "BO" },
+    { "ref": "cliente-2", "name": "Distribuidora Cochabamba S.A.", "type": "customer", "country": "BO" },
+    { "ref": "cliente-libros", "name": "Librería Andina S.R.L.", "type": "customer", "country": "BO" },
+    { "ref": "cliente-3", "name": "Comercial Oruro S.A.", "type": "customer", "country": "BO" },
+    { "ref": "cliente-exterior", "name": "Andina Exports Argentina S.A.", "type": "customer", "country": "AR" },
+    { "ref": "proveedor-mercaderias", "name": "Mayorista Santa Cruz S.R.L.", "type": "supplier", "country": "BO" },
+    { "ref": "proveedor-inmueble", "name": "Inmobiliaria Illimani S.A.", "type": "supplier", "country": "BO" },
+    { "ref": "proveedor-embalajes", "name": "Papelera Cochabamba S.A.", "type": "supplier", "country": "BO" }
+  ],
+  "documents": [
+    {
+      "ref": "V1",
+      "type": "sale_invoice",
+      "contact": "cliente-1",
+      "date": "2026-01-10",
+      "why": "Una venta de mercaderías a la tasa general del 13 % por dentro: el precio facturado de 8.000,00 Bs ya contiene el impuesto, que por el art. 5 de la Ley 843 se determina como el 13 % del propio precio facturado (1.040,00 Bs), y no del precio sin el impuesto.",
+      "lines": [
+        { "name": "Mercaderías varias", "quantity": 1, "unit_price": 8000.00, "tax": "BO-V-13", "account": "411" }
+      ]
+    },
+    {
+      "ref": "CN1",
+      "type": "sale_credit_note",
+      "contact": "cliente-1",
+      "date": "2026-01-20",
+      "why": "Una devolución parcial de la venta V1: resta 1.000,00 Bs de la casilla 13 y 130,00 Bs de la casilla 39, exactamente en la proporción del precio facturado que se devuelve.",
+      "lines": [
+        { "name": "Devolución de mercaderías", "quantity": 1, "unit_price": 1000.00, "tax": "BO-V-13", "account": "411" }
+      ]
+    },
+    {
+      "ref": "V2",
+      "type": "sale_invoice",
+      "contact": "cliente-2",
+      "date": "2026-02-05",
+      "why": "Una segunda venta gravada a la tasa general, en el mes de febrero: prueba que la casilla 13 y la 39 se acumulan período a período y no arrastran el saldo de enero.",
+      "lines": [
+        { "name": "Mercaderías varias", "quantity": 1, "unit_price": 5000.00, "tax": "BO-V-13", "account": "411" }
+      ]
+    },
+    {
+      "ref": "V3",
+      "type": "sale_invoice",
+      "contact": "cliente-exterior",
+      "date": "2026-02-15",
+      "why": "Una exportación de mercaderías, liberada del débito fiscal por el art. 11 de la Ley 843: la base de la casilla 14, sin débito fiscal ni efecto sobre la 13 o la 39.",
+      "lines": [
+        { "name": "Mercaderías exportadas", "quantity": 1, "unit_price": 10000.00, "tax": "BO-V-EXP", "account": "412" }
+      ]
+    },
+    {
+      "ref": "V4",
+      "type": "sale_invoice",
+      "contact": "cliente-libros",
+      "date": "2026-03-05",
+      "why": "Una venta de libros a tasa cero por la Ley 366: la base de la casilla 15, sin débito fiscal y sin derecho a crédito fiscal para quien la compra, a diferencia de la exportación.",
+      "lines": [
+        { "name": "Libros de producción nacional", "quantity": 1, "unit_price": 2000.00, "tax": "BO-V-CERO", "account": "414" }
+      ]
+    },
+    {
+      "ref": "V5",
+      "type": "sale_invoice",
+      "contact": "cliente-3",
+      "date": "2026-03-20",
+      "why": "Una tercera venta gravada a la tasa general, en marzo: cierra el trimestre con otro período en el que la 13 y la 39 vuelven a nacer de cero.",
+      "lines": [
+        { "name": "Mercaderías varias", "quantity": 1, "unit_price": 3000.00, "tax": "BO-V-13", "account": "411" }
+      ]
+    },
+    {
+      "ref": "C1",
+      "type": "purchase_invoice",
+      "contact": "proveedor-mercaderias",
+      "date": "2026-01-15",
+      "why": "Una compra de mercaderías a la tasa general, con derecho a crédito fiscal: la base de la casilla 26 y el crédito de la casilla 114, calculados igual que el débito fiscal, sobre el propio precio facturado por el proveedor.",
+      "lines": [
+        { "name": "Mercaderías para reventa", "quantity": 1, "unit_price": 4000.00, "tax": "BO-C-13", "account": "511" }
+      ]
+    },
+    {
+      "ref": "CN2",
+      "type": "purchase_credit_note",
+      "contact": "proveedor-mercaderias",
+      "date": "2026-01-25",
+      "why": "Una devolución parcial de la compra C1: resta 500,00 Bs de la casilla 26 y 65,00 Bs de la casilla 114.",
+      "lines": [
+        { "name": "Devolución de mercaderías", "quantity": 1, "unit_price": 500.00, "tax": "BO-C-13", "account": "511" }
+      ]
+    },
+    {
+      "ref": "C2",
+      "type": "purchase_invoice",
+      "contact": "proveedor-inmueble",
+      "date": "2026-02-10",
+      "why": "Un alquiler gravado a la tasa general, con derecho a crédito fiscal: otra compra de la casilla 26 y 114, en un mes distinto del de C1.",
+      "lines": [
+        { "name": "Alquiler del local comercial", "quantity": 1, "unit_price": 1500.00, "tax": "BO-C-13", "account": "5331" }
+      ]
+    },
+    {
+      "ref": "C3",
+      "type": "purchase_invoice",
+      "contact": "proveedor-embalajes",
+      "date": "2026-02-20",
+      "why": "Una compra gravada a la tasa general, pero destinada exclusivamente a la venta de libros a tasa cero sin derecho a crédito: el impuesto facturado por el proveedor no se separa como crédito fiscal, sino que se suma al costo de la línea — sin casilla, porque el Formulario 200 no lleva una para esta compra.",
+      "lines": [
+        { "name": "Material de embalaje para libros", "quantity": 1, "unit_price": 1000.00, "tax": "BO-C-13-NOCRED", "account": "5333" }
+      ]
+    },
+    {
+      "ref": "C4",
+      "type": "purchase_invoice",
+      "contact": "proveedor-mercaderias",
+      "date": "2026-03-10",
+      "why": "Una compra de mercaderías a la tasa general, en marzo: cierra el trimestre con un período en que el crédito fiscal (780,00 Bs) supera al débito fiscal del mismo mes (390,00 Bs de V5), dejando un saldo a favor del contribuyente en la casilla 693.",
+      "lines": [
+        { "name": "Mercaderías para reventa", "quantity": 1, "unit_price": 6000.00, "tax": "BO-C-13", "account": "511" }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "E1",
+      "direction": "inbound",
+      "date": "2026-02-20",
+      "amount": 5000.00,
+      "contact": "cliente-2",
+      "journal": "BAN",
+      "match": "V2",
+      "why": "Un cobro que salda exactamente la factura V2."
+    },
+    {
+      "ref": "E2",
+      "direction": "outbound",
+      "date": "2026-01-30",
+      "amount": 3500.00,
+      "contact": "proveedor-mercaderias",
+      "journal": "BAN",
+      "match": "C1",
+      "why": "Un pago que salda la factura C1 neta de la nota de crédito CN2 (4.000,00 - 500,00 Bs)."
+    },
+    {
+      "ref": "E3",
+      "direction": "inbound",
+      "date": "2026-03-25",
+      "amount": 10000.00,
+      "contact": "cliente-exterior",
+      "journal": "BAN",
+      "match": "V3",
+      "why": "Un cobro que salda la exportación V3."
+    },
+    {
+      "ref": "E4",
+      "direction": "inbound",
+      "date": "2026-01-28",
+      "amount": 2000.00,
+      "contact": "cliente-1",
+      "journal": "BAN",
+      "match": null,
+      "why": "Un anticipo de un cliente sin factura asociada todavía: queda como una partida abierta, sin conciliar."
+    },
+    {
+      "ref": "E5",
+      "direction": "outbound",
+      "date": "2026-03-15",
+      "amount": 6000.00,
+      "contact": "proveedor-mercaderias",
+      "journal": "BAN",
+      "match": "C4",
+      "why": "Un pago que salda exactamente la factura C4."
+    }
+  ]
+}
