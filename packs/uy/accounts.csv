@@ -1,0 +1,117 @@
+code,parent,type,reconcilable,name,sequence
+1101,,asset_cash,false,Caja,10
+1102,,asset_cash,false,Banco,20
+1103,,asset_receivable,true,Clientes,30
+1104,,asset_current,false,Documentos por Cobrar,40
+1105,,asset_current,false,IVA Compras - Crédito Fiscal,50
+1106,,asset_current,false,Anticipos a Proveedores,60
+1107,,asset_current,false,Otras Cuentas por Cobrar,70
+1108,,asset_current,true,IVA a Favor - Remanente,80
+1109,,asset_current,false,Anticipo de IRAE,90
+1110,,asset_current,false,Cuentas por Cobrar a Empresas Vinculadas,100
+1111,,asset_current,false,Préstamos al Personal,110
+1112,,asset_current,false,Provisión para Deudores Incobrables,120
+1120,,asset_current,false,Mercaderías,130
+1121,,asset_current,false,Materias Primas,140
+1122,,asset_current,false,Productos en Proceso,150
+1123,,asset_current,false,Productos Terminados,160
+1124,,asset_current,false,Materiales y Repuestos,170
+1125,,asset_current,false,Provisión por Obsolescencia de Existencias,180
+1130,,asset_prepayments,false,Gastos Pagados por Anticipado,190
+1131,,asset_prepayments,false,Seguros Pagados por Anticipado,200
+1132,,asset_prepayments,false,Alquileres Pagados por Anticipado,210
+1150,,asset_current,false,Partidas Pendientes de Identificación,220
+1201,,asset_fixed,false,Terrenos,230
+1202,,asset_fixed,false,Construcciones y Edificios,240
+1203,,asset_fixed,false,Maquinaria y Equipos,250
+1204,,asset_fixed,false,Muebles y Útiles,260
+1205,,asset_fixed,false,Equipos de Computación,270
+1206,,asset_fixed,false,Vehículos,280
+1207,,asset_fixed,false,Instalaciones,290
+1208,,asset_fixed,false,Mejoras en Bienes Arrendados,300
+1210,,asset_fixed,false,Depreciación Acumulada Construcciones y Edificios,310
+1211,,asset_fixed,false,Depreciación Acumulada Maquinaria y Equipos,320
+1212,,asset_fixed,false,Depreciación Acumulada Muebles y Útiles,330
+1213,,asset_fixed,false,Depreciación Acumulada Equipos de Computación,340
+1214,,asset_fixed,false,Depreciación Acumulada Vehículos,350
+1215,,asset_fixed,false,Depreciación Acumulada Instalaciones,360
+1216,,asset_fixed,false,Depreciación Acumulada Mejoras en Bienes Arrendados,370
+1220,,asset_fixed,false,Obras en Construcción,380
+1301,,asset_non_current,false,Activos Intangibles,390
+1302,,asset_non_current,false,Amortización Acumulada de Intangibles,400
+1303,,asset_non_current,false,Inversiones en Empresas Vinculadas,410
+1304,,asset_non_current,false,Depósitos en Garantía,420
+2101,,liability_payable,true,Proveedores,430
+2102,,liability_current,false,Documentos por Pagar,440
+2103,,liability_current,false,IVA Ventas - Débito Fiscal,450
+2104,,liability_current,false,Anticipos de Clientes,460
+2105,,liability_current,false,Otras Cuentas por Pagar,470
+2106,,liability_current,true,IVA por Pagar,480
+2107,,liability_current,false,Cuentas por Pagar a Empresas Vinculadas,490
+2108,,liability_current,false,Remuneraciones por Pagar,500
+2109,,liability_current,false,BPS - Aportes Personales por Pagar,510
+2110,,liability_current,false,BPS - Aportes Patronales por Pagar,520
+2111,,liability_current,false,Fondo de Reconversión Laboral por Pagar,530
+2112,,liability_current,false,IRPF Retenido por Pagar,540
+2113,,liability_current,false,Provisión de Aguinaldo,550
+2114,,liability_current,false,Provisión de Licencias y Salario Vacacional,560
+2115,,liability_current,false,Provisión de Despidos,570
+2116,,liability_current,false,IRAE por Pagar,580
+2117,,liability_current,false,Impuesto al Patrimonio por Pagar,590
+2201,,liability_non_current,false,Préstamos Bancarios a Largo Plazo,600
+2202,,liability_non_current,false,Leasing por Pagar Largo Plazo,610
+2203,,liability_non_current,false,Provisiones Largo Plazo,620
+3101,,equity,false,Capital Integrado,630
+3102,,equity,false,Capital a Integrar,640
+3103,,equity_retained,false,Resultados Acumulados,650
+3104,,equity_retained,false,Pérdidas Acumuladas,660
+3105,,equity_retained,false,Resultado del Ejercicio - Ganancia,670
+3106,,equity_retained,false,Resultado del Ejercicio - Pérdida,680
+3107,,equity,false,Reserva Legal,690
+3108,,equity,false,Otras Reservas,700
+3109,,equity,false,Ajustes al Patrimonio,710
+4101,,income,false,Ventas Nacionales,720
+4102,,income,false,Ventas de Exportación,730
+4103,,income,false,Servicios Prestados,740
+4104,,income,false,Arrendamientos Ganados,750
+4105,,income,false,Devoluciones y Bonificaciones en Ventas,760
+4106,,income,false,Descuentos Obtenidos por Pronto Pago,770
+4107,,income_other,false,Ingresos Financieros,780
+4108,,income_other,false,Diferencia de Cambio - Ganancia,790
+4109,,income,false,Otros Ingresos de Explotación,800
+4110,,income_other,false,Ingresos Extraordinarios,810
+5101,,expense_direct_cost,false,Costo de Mercaderías Vendidas,820
+5102,,expense_direct_cost,false,Compras,830
+5103,,expense_direct_cost,false,Mano de Obra Directa,840
+5104,,expense_direct_cost,false,Gastos Indirectos de Fabricación,850
+5110,,expense,false,Sueldos y Jornales,860
+5111,,expense,false,Cargas Sociales - BPS Patronal,870
+5112,,expense,false,Aguinaldo,880
+5113,,expense,false,Salario Vacacional,890
+5114,,expense,false,Seguro de Accidentes de Trabajo (BSE),900
+5115,,expense,false,Honorarios Profesionales,910
+5116,,expense,false,Arrendamientos,920
+5117,,expense,false,Servicios Contratados en el Exterior,930
+5118,,expense,false,Seguros Generales,940
+5119,,expense,false,"Servicios Básicos (UTE, OSE, Antel)",950
+5120,,expense,false,Mantenimiento y Reparaciones,960
+5121,,expense,false,Materiales de Oficina,970
+5122,,expense,false,Publicidad y Marketing,980
+5123,,expense,false,Gastos de Representación,990
+5124,,expense,false,Viáticos y Gastos de Viaje,1000
+5125,,expense,false,Fletes y Transportes,1010
+5126,,expense,false,Comunicaciones,1020
+5127,,expense_depreciation,false,Depreciación del Ejercicio,1030
+5128,,expense_depreciation,false,Amortización de Intangibles,1040
+5129,,expense,false,Deudores Incobrables,1050
+5130,,expense,false,Donaciones,1060
+5131,,expense,false,Patente Única de Rodados,1070
+5132,,expense,false,Capacitación del Personal,1080
+5133,,expense,false,Diferencia de Cambio - Pérdida,1090
+5134,,expense,false,Gastos Bancarios,1100
+5135,,expense,false,Intereses por Préstamos,1110
+5136,,expense,false,Impuesto a la Renta (IRAE),1120
+5137,,expense,false,Impuesto al Patrimonio,1130
+5138,,expense,false,Multas y Recargos Fiscales,1140
+5139,,expense,false,Gastos Extraordinarios,1150
+5140,,expense,false,Diferencias de Redondeo,1160

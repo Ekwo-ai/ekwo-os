@@ -4442,3 +4442,60 @@ same tax, crediting the recoverable side — and Ukraine's own version of it
 needs the same shape a first `community` version of this pack did not yet
 write. `packs/ua/README.md` names the gap; no tax of this pack carries the
 treatment `foreign_services_received`.
+
+## From Uruguay
+
+`packs/uy/`, `community`, seed 100, outside the common system of VAT: a
+value added tax of its own under Título 10 of the Texto Ordenado 2023,
+administered by the Dirección General Impositiva (DGI). `UYU` is added to
+`00_currencies.sql` at two decimals; `UY` is added to `00_territories.sql`
+with `eu_vat_scope` `none`, on the same footing as `CL` and `PE`. Two things
+the format could not say.
+
+**One tax, two forms, on two different cadences, and `tax_report.json` holds
+one form.** A Uruguayan taxpayer of the CEDE group or of the División
+Grandes Contribuyentes files the Impuesto al Valor Agregado monthly, on
+Formulario 1376; every other taxpayer files it annually, with monthly
+provisional advances and a year-end settlement, on Formulario 2178 — two
+forms with different boxes and a different mechanic, not one form filed on
+two cadences the way Belgium's or France's periodic return is. `period` and
+`period_default` name the cadences *a single form* accepts; they have no
+word for two forms of the same tax, chosen by which group a taxpayer falls
+in rather than by an election the company makes. `packs/uy/` declares only
+Formulario 1376 — the cleaner, fully boxed form, and the one this format can
+actually represent — and states the annual regime as a gap rather than
+inventing a second `tax_report` entry the compiler has no way to tell apart
+from the first by `report_code` alone, since both would declare themselves
+the country's IVA return.
+
+**A credit split by a monthly, cumulative proportion of revenue, where a box
+is a sum or a single rate and nothing between.** Formulario 1376 divides a
+period's deductible input credit between its line 19 (attributable to
+taxable domestic sales) and its line 27 (attributable to exports) by a
+table that compares, month by month and cumulatively since the start of the
+fiscal year, each category's share of total revenue — a genuine formula,
+recomputed every period from boxes that are themselves sums of the ledger,
+and not the fixed percentage `rate` and `rate_of` exist for (California's
+*six per cent of line 12*, applied once, to one box, by a number the statute
+itself prints). No combination of `plus`, `minus` and `rate_of` states "this
+box's share of that one, this month and every month before it in the same
+year." `packs/uy/README.md` names the simplification: the whole of a
+period's input credit is posted to line 19, which leaves line 27 always at
+zero and overstates line 19 for an exporting taxpayer, with no effect on the
+total credit or on the balance the form settles to.
+
+**`einvoicing.obligation: mandatory` needs a day, and `mandatory_from` needs
+a profile — so a universal obligation with no EN 16931 profile behind it can
+be declared as neither.** The Comprobante Fiscal Electrónico became
+mandatory for every taxpayer of the tax on 1 January 2025, a single day
+binding everybody the way `mandatory_from` is meant to hold; but that field
+is refused unless `profile` names one, on the reading that a date with
+nothing to date is a half-declared pack, and the CFE is not a profile built
+on EN 16931. `obligation: mandatory` is refused in the same breath, since it
+requires `mandatory_from` to be set. Chile's pack met the same wall first
+and left both fields out, the day stated only in `legal_reference`;
+`packs/uy/` does the same, and the two rules together mean this shape — a
+country whose structured invoice is real, mandatory and dated, but is not
+built on the semantic model the field was written for — has no way to say
+"mandatory" in the one column an installer reads without opening the prose
+behind it.

@@ -1,0 +1,207 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "UY",
+  "name": "Uruguay",
+  "version": "0.1.0",
+  "schema_min": "20260923110000",
+  "seed_sequence": 100,
+  "released_at": "2026-09-26",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "to2023-t10",
+        "title": "Texto Ordenado 2023 (Decreto N° 101/024, de 4 de abril de 2024), Título 10 — Impuesto al Valor Agregado (IVA), actualizado a diciembre de 2025",
+        "publisher": "Dirección General Impositiva — Centro de Información Oficial (IMPO)",
+        "url": "https://www.impo.com.uy/bases/todgi-2023/10-2024",
+        "consulted_on": "2026-09-26",
+        "kind": "law"
+      },
+      {
+        "key": "decreto220-998",
+        "title": "Decreto N° 220/998, de 12 de agosto de 1998 — reglamentario del Impuesto al Valor Agregado (Capítulo III, Exportaciones, arts. 29 a 35; Capítulo IV, Exoneraciones)",
+        "publisher": "Dirección General Impositiva — Centro de Información Oficial (IMPO)",
+        "url": "https://www.impo.com.uy/bases/decretos/220-1998",
+        "consulted_on": "2026-09-26",
+        "kind": "regulation"
+      },
+      {
+        "key": "ley16060",
+        "title": "Ley N° 16.060, de Sociedades Comerciales, de 4 de setiembre de 1989 (arts. 87 y 90, sobre el balance general y el estado de resultados)",
+        "publisher": "Centro de Información Oficial (IMPO)",
+        "url": "https://www.impo.com.uy/bases/leyes/16060-1989",
+        "consulted_on": "2026-09-26",
+        "kind": "law"
+      },
+      {
+        "key": "decreto36-012",
+        "title": "Decreto N° 36/012, de 8 de febrero de 2012 — fíjase el régimen de documentación fiscal electrónica (Comprobantes Fiscales Electrónicos, CFE)",
+        "publisher": "Dirección General Impositiva — Centro de Información Oficial (IMPO)",
+        "url": "https://www.impo.com.uy/bases/decretos/36-2012",
+        "consulted_on": "2026-09-26",
+        "kind": "regulation"
+      },
+      {
+        "key": "efactura-obligados",
+        "title": "¿Quiénes están obligados a ser emisores electrónicos?",
+        "publisher": "Dirección General Impositiva",
+        "url": "https://www.gub.uy/direccion-general-impositiva/comunicacion/publicaciones/estan-obligados-emisores-electronicos",
+        "consulted_on": "2026-09-26",
+        "kind": "guidance"
+      },
+      {
+        "key": "efactura-restantes",
+        "title": "Facturación Electrónica: incorporación de restantes contribuyentes de IVA",
+        "publisher": "Dirección General Impositiva",
+        "url": "https://www.gub.uy/direccion-general-impositiva/comunicacion/noticias/facturacion-electronica-incorporacion-restantes-contribuyentes-iva",
+        "consulted_on": "2026-09-26",
+        "kind": "guidance"
+      },
+      {
+        "key": "form1376-sujetos",
+        "title": "Sujetos obligados y plazos de presentación del Formulario 1376",
+        "publisher": "Dirección General Impositiva",
+        "url": "https://www.gub.uy/direccion-general-impositiva/comunicacion/publicaciones/sujetos-obligados-plazos-presentacion-del-formulario-1376",
+        "consulted_on": "2026-09-26",
+        "kind": "form"
+      },
+      {
+        "key": "form1376-panel1",
+        "title": "Panel 1 — IVA Ventas e IVA Compras, Formulario 1376",
+        "publisher": "Dirección General Impositiva",
+        "url": "https://www.gub.uy/direccion-general-impositiva/comunicacion/publicaciones/panel-1-iva-ventas-iva-compras-formulario-1376",
+        "consulted_on": "2026-09-26",
+        "kind": "form"
+      },
+      {
+        "key": "vencimientos2026",
+        "title": "Vencimientos 2026. Calendario general actualizado",
+        "publisher": "Dirección General Impositiva",
+        "url": "https://www.gub.uy/direccion-general-impositiva/comunicacion/publicaciones/vencimientos-2026-calendario-general-actualizado",
+        "consulted_on": "2026-09-26",
+        "kind": "guidance"
+      },
+      {
+        "key": "efactura-portal",
+        "title": "e-Factura — portal de Comprobantes Fiscales Electrónicos",
+        "publisher": "Dirección General Impositiva",
+        "url": "https://www.efactura.dgi.gub.uy/",
+        "consulted_on": "2026-09-26",
+        "kind": "portal"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "UYU",
+    "language": "es",
+    "rounding_method": "half_up",
+    "opening_entry_label": "Asiento de apertura",
+    "closing_style": "result_accounts",
+    "fiscal_year_default": "calendar",
+    "roles": {
+      "receivable": "1103",
+      "payable": "2101",
+      "suspense": "1150",
+      "rounding": "5140",
+      "retained_earnings": "3103",
+      "retained_earnings_loss": "3104",
+      "current_year_result_profit": "3105",
+      "current_year_result_loss": "3106",
+      "sales": "4101",
+      "purchase": "5102",
+      "bank": "1102",
+      "cash": "1101",
+      "fx_gain": "4108",
+      "fx_loss": "5133",
+      "tax_payable": "2106",
+      "tax_receivable": "1108"
+    },
+    "journal_roles": {
+      "sales": "VEN",
+      "purchase": "COM",
+      "miscellaneous": "DIA",
+      "opening": "APE"
+    }
+  },
+  "languages": [],
+  "journals": [
+    { "code": "VEN", "type": "sales", "name": "Libro de Ventas", "sequence": 10 },
+    { "code": "COM", "type": "purchase", "name": "Libro de Compras", "sequence": 20 },
+    { "code": "BAN", "type": "bank", "name": "Banco", "sequence": 30 },
+    { "code": "CAJ", "type": "cash", "name": "Caja", "sequence": 40 },
+    { "code": "DIA", "type": "general", "name": "Libro Diario", "sequence": 50 },
+    { "code": "APE", "type": "opening", "name": "Asiento de Apertura", "sequence": 60 }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Plan de cuentas Ekwo para Uruguay (sin catálogo oficial)",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": ["UY-BAL", "UY-RES"],
+      "legal_reference": "Uruguay no fija por ley un plan de cuentas con códigos obligatorios: la Ley N° 16.060, de Sociedades Comerciales, art. 87, sólo exige que los administradores formulen, dentro de los cuatro meses del cierre del ejercicio, el inventario y el balance general, y el art. 89 remite a las normas contables adecuadas (hoy las Normas Internacionales de Información Financiera, adoptadas por el Decreto N° 291/014, o el régimen simplificado que ese decreto habilita a las empresas de menor dimensión), sin imponer una numeración de cuentas — a diferencia del código agrupador que el Anexo 24 de la RMF mexicana publica. Este plan es una numeración propia de Ekwo (clases 1 a 5, sin correlato oficial), pensada para que cada cuenta alcance una línea del Estado de Situación Patrimonial y del Estado de Resultados de los arts. 87 y 90 de la Ley N° 16.060",
+      "source": "ley16060"
+    }
+  ],
+  "documents": {
+    "numbering": "sequential",
+    "number_format": "{CODE}-{NNNNNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "invoice_if_issued",
+    "posted_edit_policy": "reversal_only",
+    "references": {
+      "numbering": {
+        "legal_reference": "Decreto N° 36/012, de 8 de febrero de 2012, y Resolución de la Dirección General Impositiva N° 798/012 — el Comprobante Fiscal Electrónico (CFE) se identifica por un tipo de comprobante, una serie y un número correlativo que el propio emisor electrónico asigna dentro del régimen que la Dirección General Impositiva autoriza, y que ésta valida mediante un Código de Autorización de Emisión (CAE) previamente otorgado por rangos — un mecanismo de autorización previa de numeración y reporte posterior, no la certificación documento a documento de un tercero como el PAC mexicano. El número que declara este paquete es el de la pieza contable, correlativo por diario, y no un número de un CAE que Ekwo no solicita: véase «Ekwo no emite un CFE uruguayo» en el README",
+        "source": "decreto36-012"
+      },
+      "tax_point": {
+        "legal_reference": "Texto Ordenado 2023, Título 10, art. 3° — el hecho gravado se considera configurado cuando el contrato o acto equivalente tenga ejecución mediante la entrega o la introducción de los bienes o la prestación de los servicios, pero «las entregas de bienes y prestaciones de servicios se presumirán realizadas en la fecha de la factura respectiva, sin perjuicio de las facultades de la Administración de fijar la misma, cuando existiera omisión, anticipación o retardo en la facturación». Este paquete declara invoice_if_issued por esa presunción legal, que hace coincidir en la generalidad de los casos la fecha del hecho gravado con la de la factura",
+        "source": "to2023-t10"
+      },
+      "posted_edit_policy": {
+        "legal_reference": "Texto Ordenado 2023, Título 10, art. 3°, inciso quinto — el contribuyente tiene derecho a la deducción del impuesto facturado cuando la contraprestación no se hace efectiva por devolución de mercadería, bonificación, descuento o ajuste posterior de precio, entre otras causas, deducción que en la práctica documental del CFE y de todo comprobante fiscal se instrumenta mediante una nota de crédito que individualiza el comprobante que corrige. Un documento contabilizado se corrige con una nota de crédito que lo nombra, nunca con la edición del documento original",
+        "source": "to2023-t10"
+      }
+    },
+    "mentions": [
+      {
+        "code": "cfe_not_issued",
+        "applies_when": "always",
+        "text": "Este documento no es un Comprobante Fiscal Electrónico (CFE): no lleva Código de Autorización de Emisión (CAE) de la Dirección General Impositiva ni su representación validada. Sólo el CFE con CAE ampara la operación para efectos tributarios en Uruguay.",
+        "sequence": 10,
+        "legal_reference": "Decreto N° 36/012, de 8 de febrero de 2012, y Resolución de la Dirección General Impositiva N° 798/012, que fijan el régimen de documentación fiscal electrónica; desde el 1° de enero de 2025 todos los contribuyentes del Impuesto al Valor Agregado, incluidos los del IVA mínimo, revisten la calidad de emisores electrónicos desde su inscripción, salvo excepciones puntuales. Ekwo no solicita CAE, no firma ni transmite CFE: la frase evita que el documento que Ekwo produce se tome por el comprobante fiscal uruguayo",
+        "source": "efactura-obligados"
+      },
+      {
+        "code": "export",
+        "applies_when": "export",
+        "text": "Exportación — operación no gravada por el Impuesto al Valor Agregado (artículo 5° del Título 10 del Texto Ordenado 2023).",
+        "sequence": 20,
+        "legal_reference": "Texto Ordenado 2023, Título 10, art. 5° — «Tampoco estarán gravadas aquellas exportaciones de bienes … y no lo estarán aquellas exportaciones de servicios que determine el Poder Ejecutivo», enumeradas por el Decreto N° 220/998, art. 34",
+        "source": "to2023-t10"
+      },
+      {
+        "code": "exempt",
+        "applies_when": "exempt",
+        "text": "Operación exonerada del Impuesto al Valor Agregado (artículo 38 del Título 10 del Texto Ordenado 2023).",
+        "sequence": 30,
+        "legal_reference": "Texto Ordenado 2023, Título 10, art. 38 — exoneraciones de determinados bienes, prestaciones de servicios e importaciones",
+        "source": "to2023-t10"
+      }
+    ]
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "Decreto N° 36/012, de 8 de febrero de 2012, que fija el régimen de documentación fiscal electrónica, y Resolución de la Dirección General Impositiva de Interés General N° 798/012, que lo implementa; la incorporación se extendió de forma escalonada desde 2012 según el volumen de ingresos del contribuyente hasta alcanzar, a partir del 1° de enero de 2025, a todos los contribuyentes del Impuesto al Valor Agregado, incluso los del IVA mínimo, con excepciones puntuales (actividad agropecuaria de reducida dimensión, agregación de valor en la construcción, contribuyentes del Impuesto a las Rentas de los No Residentes, Monotributo y Monotributo Social MIDES). El Comprobante Fiscal Electrónico (CFE) — e-Factura para operaciones entre contribuyentes, e-Ticket para el consumo final — se emite firmado electrónicamente por el emisor y validado mediante un Código de Autorización de Emisión (CAE) que la Dirección General Impositiva otorga por rangos, un régimen de autorización previa y reporte posterior más próximo al de Chile que a la certificación documento a documento de un tercero. La obligación es real y universal desde el 1° de enero de 2025 (con las excepciones puntuales arriba dichas), pero este paquete no puede escribirla en `mandatory_from`: ese campo exige un `profile` no nulo — un perfil construido sobre EN 16931 que una pieza de packages/formats escribe — y el CFE no lo es, por lo que `obligation: mandatory` tampoco puede declararse sin `mandatory_from`; véase «From Uruguay» en docs/international.md. EKWO NO SOLICITA CAE, NO FIRMA NI TRANSMITE CFE: ningún componente de packages/formats emite el XML del CFE uruguayo ni se comunica con la Dirección General Impositiva, y un documento emitido desde Ekwo no es un comprobante tributario uruguayo. El Registro Único Tributario (RUT) identifica a emisor y receptor y no tiene código ISO 6523 de la lista que el formato usa para party_scheme y vat_scheme",
+    "source": "decreto36-012"
+  },
+  "bank": {
+    "statement_formats": ["csv"],
+    "payment_formats": []
+  }
+}

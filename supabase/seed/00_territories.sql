@@ -1214,3 +1214,28 @@ on conflict (code) do update set
   eu_vat_to       = excluded.eu_vat_to,
   vat_prefix      = excluded.vat_prefix,
   legal_reference = excluded.legal_reference;
+
+
+-- ---------------------------------------------------------------------------
+-- The row — Uruguay
+--
+-- A State of the Americas levies a value added tax of its own, and the
+-- common system of VAT of Directive 2006/112/EC does not reach it: what this
+-- table says of it is what it says of Chile and Peru. Uruguay levies the
+-- Impuesto al Valor Agregado under Título 10 of the Texto Ordenado 2023
+-- (Decreto N° 101/024, de 4 de abril de 2024), whose art. 34 sets the rates
+-- at 22 % and 10 %.
+-- ---------------------------------------------------------------------------
+
+insert into territories (code, code_source, name, parent_code, eu_vat_scope, eu_vat_from, eu_vat_to, vat_prefix, legal_reference) values
+  ('UY', 'iso_3166_1', 'Uruguay', null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. Uruguay levies a value added tax of its own under Título 10 of the Texto Ordenado 2023 (Decreto N° 101/024, de 4 de abril de 2024), whose art. 34 sets the basic rate at 22 % and the minimum rate at 10 %.')
+on conflict (code) do update set
+  code_source     = excluded.code_source,
+  name            = excluded.name,
+  parent_code     = excluded.parent_code,
+  eu_vat_scope    = excluded.eu_vat_scope,
+  eu_vat_from     = excluded.eu_vat_from,
+  eu_vat_to       = excluded.eu_vat_to,
+  vat_prefix      = excluded.vat_prefix,
+  legal_reference = excluded.legal_reference;

@@ -1,0 +1,113 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "UY-F1376-IVA",
+  "name": "Formulario 1376 — Declaración Mensual de IVA (grupo CEDE y División Grandes Contribuyentes), sección Impuesto al Valor Agregado",
+  "period": ["month"],
+  "period_default": "month",
+  "valid_from": "2021-10-01",
+  "legal_reference": "El Formulario 1376 sustituyó al Formulario 2176 para las declaraciones de períodos iguales o posteriores a octubre de 2021, y comprende la declaración de IVA y los anticipos de IRAE, Impuesto al Patrimonio (IPAT) e ICOSA de los contribuyentes del grupo CEDE y de la División Grandes Contribuyentes. Este paquete transcribe únicamente los campos que alimentan la determinación del Impuesto al Valor Agregado del panel «IVA Ventas e IVA Compras» y del panel «Determinación de IVA», con los números de línea que expone la aplicación PADI de la Dirección General Impositiva; omite los anticipos de IRAE, IPAT e ICOSA, que no son Impuesto al Valor Agregado — véase «Lo que este paquete no transcribe» en el README",
+  "source": "form1376-sujetos",
+  "deadline": {
+    "rule": "depends_on_taxpayer",
+    "legal_reference": "La Dirección General Impositiva fija cada año, mediante resolución (para 2026, la que fija el calendario de vencimientos publicado como «Vencimientos 2026»), un día de vencimiento distinto según el grupo del contribuyente y la terminación de su Registro Único Tributario (RUT): los contribuyentes CEDE y de la División Grandes Contribuyentes vencen entre los días 22 y 24 de cada mes, según esa terminación",
+    "source": "vencimientos2026"
+  },
+  "boxes": [
+    {
+      "box": "8",
+      "kind": "base",
+      "name": "Ventas e ingresos no gravados o exentos (monto neto)",
+      "sequence": 10,
+      "legal_reference": "Formulario 1376, panel «IVA Ventas e IVA Compras», cuadro «Ventas e IVA Ventas», línea 8: «No gravadas»",
+      "source": "form1376-panel1"
+    },
+    {
+      "box": "9",
+      "kind": "base",
+      "name": "Ventas de exportación y asimiladas (monto neto)",
+      "sequence": 20,
+      "legal_reference": "Formulario 1376, panel «IVA Ventas e IVA Compras», cuadro «Ventas e IVA Ventas», línea 9: «De exportación y asimiladas»",
+      "source": "form1376-panel1"
+    },
+    {
+      "box": "11",
+      "kind": "base",
+      "name": "Ventas gravadas a la tasa mínima (monto neto)",
+      "sequence": 30,
+      "legal_reference": "Formulario 1376, panel «IVA Ventas e IVA Compras», cuadro «Ventas e IVA Ventas», línea 11: «Gravadas tasa mínima»",
+      "source": "form1376-panel1"
+    },
+    {
+      "box": "12",
+      "kind": "base",
+      "name": "Ventas gravadas a la tasa básica (monto neto)",
+      "sequence": 40,
+      "legal_reference": "Formulario 1376, panel «IVA Ventas e IVA Compras», cuadro «Ventas e IVA Ventas», línea 12: «Gravadas tasa básica»",
+      "source": "form1376-panel1"
+    },
+    {
+      "box": "14",
+      "kind": "total",
+      "name": "Total de ventas e ingresos del período",
+      "sequence": 50,
+      "plus": ["8", "9", "11", "12"],
+      "legal_reference": "Formulario 1376, panel «IVA Ventas e IVA Compras», cuadro «Ventas e IVA Ventas», línea 14 «TOTAL» — este paquete suma únicamente las líneas que sus impuestos alimentan",
+      "source": "form1376-panel1"
+    },
+    {
+      "box": "15",
+      "kind": "tax",
+      "name": "IVA ventas — tasa mínima",
+      "sequence": 60,
+      "legal_reference": "Formulario 1376, panel «IVA Ventas e IVA Compras», cuadro «IVA ventas», línea 15: «Tasa mínima»",
+      "source": "form1376-panel1"
+    },
+    {
+      "box": "16",
+      "kind": "tax",
+      "name": "IVA ventas — tasa básica",
+      "sequence": 70,
+      "legal_reference": "Formulario 1376, panel «IVA Ventas e IVA Compras», cuadro «IVA ventas», línea 16: «Tasa básica»",
+      "source": "form1376-panel1"
+    },
+    {
+      "box": "18",
+      "kind": "total",
+      "name": "Total IVA ventas (débito fiscal)",
+      "sequence": 80,
+      "plus": ["15", "16"],
+      "legal_reference": "Formulario 1376, panel «IVA Ventas e IVA Compras», cuadro «IVA ventas», línea 18 «TOTAL»; retomado como primera línea del panel «Determinación de IVA» («IVA VENTAS»)",
+      "source": "form1376-panel1"
+    },
+    {
+      "box": "19",
+      "kind": "tax",
+      "name": "IVA compras deducible por operaciones gravadas",
+      "sequence": 90,
+      "legal_reference": "Formulario 1376, panel «Determinación de IVA», línea 19: «IVA COMPRAS deducible por operaciones gravadas». El formulario oficial reparte el crédito fiscal del período entre esta línea y la línea 27 (compras atribuibles a la exportación) mediante un cuadro de prorrateo sobre la composición de las ventas del ejercicio; este paquete no reproduce ese prorrateo — un contribuyente que también exporta declara aquí, de forma simplificada, la totalidad del crédito fiscal del período — véase «Lo que este paquete no transcribe» en el README",
+      "source": "form1376-panel1"
+    },
+    {
+      "box": "43",
+      "kind": "total",
+      "name": "Saldo a pagar",
+      "sequence": 100,
+      "plus": ["18"],
+      "minus": ["19"],
+      "floor_zero": true,
+      "legal_reference": "Formulario 1376, panel «Determinación de IVA», línea 43: «Saldo a pagar» — la diferencia positiva entre el IVA Ventas (línea 18) y el IVA Compras deducible (línea 19). El formulario oficial encadena antes de esta línea los excedentes de crédito fiscal de meses anteriores y otros créditos que este paquete no transcribe — véase el README",
+      "source": "form1376-panel1"
+    },
+    {
+      "box": "22",
+      "kind": "total",
+      "name": "Crédito fiscal que pasa al próximo mes",
+      "sequence": 110,
+      "plus": ["19"],
+      "minus": ["18"],
+      "floor_zero": true,
+      "legal_reference": "Formulario 1376, panel «Determinación de IVA», línea 22: «IVA COMPRAS excedente que pasa al próximo mes» — el remanente de crédito fiscal cuando el IVA Compras deducible (línea 19) excede el IVA Ventas (línea 18)",
+      "source": "form1376-panel1"
+    }
+  ]
+}

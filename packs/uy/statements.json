@@ -1,0 +1,1850 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/statements",
+  "statements": [
+    {
+      "code": "UY-BAL",
+      "kind": "balance_sheet",
+      "framework": "UY-Ekwo",
+      "name": "Estado de Situación Patrimonial",
+      "legal_reference": "Ley N° 16.060, de Sociedades Comerciales, art. 87 — dentro de los cuatro meses de la fecha de cierre del ejercicio los administradores deben formular, cuando menos, el inventario y el balance general (estado de situación patrimonial y de resultados). Uruguay no fija una estructura de líneas obligatoria para ese balance fuera de las Normas Internacionales de Información Financiera que adopta el Decreto N° 291/014 para las empresas obligadas a aplicarlas (cuyo texto no se transcribe aquí): esta es la estructura mínima que Ekwo instala por defecto, agrupada por naturaleza (activo corriente, activo fijo, pasivo corriente, pasivo no corriente, patrimonio), sobre el plan de cuentas propio del paquete",
+      "source": "ley16060",
+      "lines": [
+        {
+          "code": "ACT",
+          "parent": null,
+          "name": "Total Activo",
+          "sequence": 10,
+          "is_total": true,
+          "plus": [
+            "AC",
+            "AF",
+            "AO"
+          ]
+        },
+        {
+          "code": "AC",
+          "parent": "ACT",
+          "name": "Activo Corriente",
+          "sequence": 20,
+          "is_total": true,
+          "plus": [
+            "1101",
+            "1102",
+            "1103",
+            "1104",
+            "1105",
+            "1106",
+            "1107",
+            "1108",
+            "1109",
+            "1110",
+            "1111",
+            "1112",
+            "1120",
+            "1121",
+            "1122",
+            "1123",
+            "1124",
+            "1125",
+            "1130",
+            "1131",
+            "1132",
+            "1150D"
+          ]
+        },
+        {
+          "code": "1101",
+          "parent": "AC",
+          "name": "Caja",
+          "sequence": 40,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1101"
+            }
+          ]
+        },
+        {
+          "code": "1102",
+          "parent": "AC",
+          "name": "Banco",
+          "sequence": 50,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1102"
+            }
+          ]
+        },
+        {
+          "code": "1103",
+          "parent": "AC",
+          "name": "Clientes",
+          "sequence": 60,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1103"
+            }
+          ]
+        },
+        {
+          "code": "1104",
+          "parent": "AC",
+          "name": "Documentos por Cobrar",
+          "sequence": 70,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1104"
+            }
+          ]
+        },
+        {
+          "code": "1105",
+          "parent": "AC",
+          "name": "IVA Compras - Crédito Fiscal",
+          "sequence": 80,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1105"
+            }
+          ]
+        },
+        {
+          "code": "1106",
+          "parent": "AC",
+          "name": "Anticipos a Proveedores",
+          "sequence": 90,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1106"
+            }
+          ]
+        },
+        {
+          "code": "1107",
+          "parent": "AC",
+          "name": "Otras Cuentas por Cobrar",
+          "sequence": 100,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1107"
+            }
+          ]
+        },
+        {
+          "code": "1108",
+          "parent": "AC",
+          "name": "IVA a Favor - Remanente",
+          "sequence": 110,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1108"
+            }
+          ]
+        },
+        {
+          "code": "1109",
+          "parent": "AC",
+          "name": "Anticipo de IRAE",
+          "sequence": 120,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1109"
+            }
+          ]
+        },
+        {
+          "code": "1110",
+          "parent": "AC",
+          "name": "Cuentas por Cobrar a Empresas Vinculadas",
+          "sequence": 130,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1110"
+            }
+          ]
+        },
+        {
+          "code": "1111",
+          "parent": "AC",
+          "name": "Préstamos al Personal",
+          "sequence": 140,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1111"
+            }
+          ]
+        },
+        {
+          "code": "1112",
+          "parent": "AC",
+          "name": "Provisión para Deudores Incobrables",
+          "sequence": 150,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1112"
+            }
+          ]
+        },
+        {
+          "code": "1120",
+          "parent": "AC",
+          "name": "Mercaderías",
+          "sequence": 160,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1120"
+            }
+          ]
+        },
+        {
+          "code": "1121",
+          "parent": "AC",
+          "name": "Materias Primas",
+          "sequence": 170,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1121"
+            }
+          ]
+        },
+        {
+          "code": "1122",
+          "parent": "AC",
+          "name": "Productos en Proceso",
+          "sequence": 180,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1122"
+            }
+          ]
+        },
+        {
+          "code": "1123",
+          "parent": "AC",
+          "name": "Productos Terminados",
+          "sequence": 190,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1123"
+            }
+          ]
+        },
+        {
+          "code": "1124",
+          "parent": "AC",
+          "name": "Materiales y Repuestos",
+          "sequence": 200,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1124"
+            }
+          ]
+        },
+        {
+          "code": "1125",
+          "parent": "AC",
+          "name": "Provisión por Obsolescencia de Existencias",
+          "sequence": 210,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1125"
+            }
+          ]
+        },
+        {
+          "code": "1130",
+          "parent": "AC",
+          "name": "Gastos Pagados por Anticipado",
+          "sequence": 220,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1130"
+            }
+          ]
+        },
+        {
+          "code": "1131",
+          "parent": "AC",
+          "name": "Seguros Pagados por Anticipado",
+          "sequence": 230,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1131"
+            }
+          ]
+        },
+        {
+          "code": "1132",
+          "parent": "AC",
+          "name": "Alquileres Pagados por Anticipado",
+          "sequence": 240,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1132"
+            }
+          ]
+        },
+        {
+          "code": "1150D",
+          "parent": "AC",
+          "name": "Partidas Pendientes de Identificación (saldo deudor)",
+          "sequence": 250,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1150",
+              "side": "debit"
+            }
+          ]
+        },
+        {
+          "code": "AF",
+          "parent": "ACT",
+          "name": "Activo Fijo",
+          "sequence": 250,
+          "is_total": true,
+          "plus": [
+            "1201",
+            "1202",
+            "1203",
+            "1204",
+            "1205",
+            "1206",
+            "1207",
+            "1208",
+            "1210",
+            "1211",
+            "1212",
+            "1213",
+            "1214",
+            "1215",
+            "1216",
+            "1220"
+          ]
+        },
+        {
+          "code": "1201",
+          "parent": "AF",
+          "name": "Terrenos",
+          "sequence": 270,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1201"
+            }
+          ]
+        },
+        {
+          "code": "1202",
+          "parent": "AF",
+          "name": "Construcciones y Edificios",
+          "sequence": 280,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1202"
+            }
+          ]
+        },
+        {
+          "code": "1203",
+          "parent": "AF",
+          "name": "Maquinaria y Equipos",
+          "sequence": 290,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1203"
+            }
+          ]
+        },
+        {
+          "code": "1204",
+          "parent": "AF",
+          "name": "Muebles y Útiles",
+          "sequence": 300,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1204"
+            }
+          ]
+        },
+        {
+          "code": "1205",
+          "parent": "AF",
+          "name": "Equipos de Computación",
+          "sequence": 310,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1205"
+            }
+          ]
+        },
+        {
+          "code": "1206",
+          "parent": "AF",
+          "name": "Vehículos",
+          "sequence": 320,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1206"
+            }
+          ]
+        },
+        {
+          "code": "1207",
+          "parent": "AF",
+          "name": "Instalaciones",
+          "sequence": 330,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1207"
+            }
+          ]
+        },
+        {
+          "code": "1208",
+          "parent": "AF",
+          "name": "Mejoras en Bienes Arrendados",
+          "sequence": 340,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1208"
+            }
+          ]
+        },
+        {
+          "code": "1210",
+          "parent": "AF",
+          "name": "Depreciación Acumulada Construcciones y Edificios",
+          "sequence": 350,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1210"
+            }
+          ]
+        },
+        {
+          "code": "1211",
+          "parent": "AF",
+          "name": "Depreciación Acumulada Maquinaria y Equipos",
+          "sequence": 360,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1211"
+            }
+          ]
+        },
+        {
+          "code": "1212",
+          "parent": "AF",
+          "name": "Depreciación Acumulada Muebles y Útiles",
+          "sequence": 370,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1212"
+            }
+          ]
+        },
+        {
+          "code": "1213",
+          "parent": "AF",
+          "name": "Depreciación Acumulada Equipos de Computación",
+          "sequence": 380,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1213"
+            }
+          ]
+        },
+        {
+          "code": "1214",
+          "parent": "AF",
+          "name": "Depreciación Acumulada Vehículos",
+          "sequence": 390,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1214"
+            }
+          ]
+        },
+        {
+          "code": "1215",
+          "parent": "AF",
+          "name": "Depreciación Acumulada Instalaciones",
+          "sequence": 400,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1215"
+            }
+          ]
+        },
+        {
+          "code": "1216",
+          "parent": "AF",
+          "name": "Depreciación Acumulada Mejoras en Bienes Arrendados",
+          "sequence": 410,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1216"
+            }
+          ]
+        },
+        {
+          "code": "1220",
+          "parent": "AF",
+          "name": "Obras en Construcción",
+          "sequence": 420,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1220"
+            }
+          ]
+        },
+        {
+          "code": "AO",
+          "parent": "ACT",
+          "name": "Otros Activos",
+          "sequence": 420,
+          "is_total": true,
+          "plus": [
+            "1301",
+            "1302",
+            "1303",
+            "1304"
+          ]
+        },
+        {
+          "code": "1301",
+          "parent": "AO",
+          "name": "Activos Intangibles",
+          "sequence": 440,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1301"
+            }
+          ]
+        },
+        {
+          "code": "1302",
+          "parent": "AO",
+          "name": "Amortización Acumulada de Intangibles",
+          "sequence": 450,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1302"
+            }
+          ]
+        },
+        {
+          "code": "1303",
+          "parent": "AO",
+          "name": "Inversiones en Empresas Vinculadas",
+          "sequence": 460,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1303"
+            }
+          ]
+        },
+        {
+          "code": "1304",
+          "parent": "AO",
+          "name": "Depósitos en Garantía",
+          "sequence": 470,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1304"
+            }
+          ]
+        },
+        {
+          "code": "PYP",
+          "parent": null,
+          "name": "Total Pasivo y Patrimonio",
+          "sequence": 470,
+          "is_total": true,
+          "plus": [
+            "PAS",
+            "PAT"
+          ]
+        },
+        {
+          "code": "PAS",
+          "parent": "PYP",
+          "name": "Total Pasivo",
+          "sequence": 480,
+          "is_total": true,
+          "plus": [
+            "PC",
+            "PNC"
+          ]
+        },
+        {
+          "code": "PC",
+          "parent": "PAS",
+          "name": "Pasivo Corriente",
+          "sequence": 490,
+          "is_total": true,
+          "plus": [
+            "2101",
+            "2102",
+            "2103",
+            "2104",
+            "2105",
+            "2106",
+            "2107",
+            "2108",
+            "2109",
+            "2110",
+            "2111",
+            "2112",
+            "2113",
+            "2114",
+            "2115",
+            "2116",
+            "2117",
+            "1150C"
+          ]
+        },
+        {
+          "code": "2101",
+          "parent": "PC",
+          "name": "Proveedores",
+          "sequence": 510,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "2101"
+            }
+          ]
+        },
+        {
+          "code": "2102",
+          "parent": "PC",
+          "name": "Documentos por Pagar",
+          "sequence": 520,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "2102"
+            }
+          ]
+        },
+        {
+          "code": "2103",
+          "parent": "PC",
+          "name": "IVA Ventas - Débito Fiscal",
+          "sequence": 530,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "2103"
+            }
+          ]
+        },
+        {
+          "code": "2104",
+          "parent": "PC",
+          "name": "Anticipos de Clientes",
+          "sequence": 540,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "2104"
+            }
+          ]
+        },
+        {
+          "code": "2105",
+          "parent": "PC",
+          "name": "Otras Cuentas por Pagar",
+          "sequence": 550,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "2105"
+            }
+          ]
+        },
+        {
+          "code": "2106",
+          "parent": "PC",
+          "name": "IVA por Pagar",
+          "sequence": 560,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "2106"
+            }
+          ]
+        },
+        {
+          "code": "2107",
+          "parent": "PC",
+          "name": "Cuentas por Pagar a Empresas Vinculadas",
+          "sequence": 570,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "2107"
+            }
+          ]
+        },
+        {
+          "code": "2108",
+          "parent": "PC",
+          "name": "Remuneraciones por Pagar",
+          "sequence": 580,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "2108"
+            }
+          ]
+        },
+        {
+          "code": "2109",
+          "parent": "PC",
+          "name": "BPS - Aportes Personales por Pagar",
+          "sequence": 590,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "2109"
+            }
+          ]
+        },
+        {
+          "code": "2110",
+          "parent": "PC",
+          "name": "BPS - Aportes Patronales por Pagar",
+          "sequence": 600,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "2110"
+            }
+          ]
+        },
+        {
+          "code": "2111",
+          "parent": "PC",
+          "name": "Fondo de Reconversión Laboral por Pagar",
+          "sequence": 610,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "2111"
+            }
+          ]
+        },
+        {
+          "code": "2112",
+          "parent": "PC",
+          "name": "IRPF Retenido por Pagar",
+          "sequence": 620,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "2112"
+            }
+          ]
+        },
+        {
+          "code": "2113",
+          "parent": "PC",
+          "name": "Provisión de Aguinaldo",
+          "sequence": 630,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "2113"
+            }
+          ]
+        },
+        {
+          "code": "2114",
+          "parent": "PC",
+          "name": "Provisión de Licencias y Salario Vacacional",
+          "sequence": 640,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "2114"
+            }
+          ]
+        },
+        {
+          "code": "2115",
+          "parent": "PC",
+          "name": "Provisión de Despidos",
+          "sequence": 650,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "2115"
+            }
+          ]
+        },
+        {
+          "code": "2116",
+          "parent": "PC",
+          "name": "IRAE por Pagar",
+          "sequence": 660,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "2116"
+            }
+          ]
+        },
+        {
+          "code": "2117",
+          "parent": "PC",
+          "name": "Impuesto al Patrimonio por Pagar",
+          "sequence": 670,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "2117"
+            }
+          ]
+        },
+        {
+          "code": "1150C",
+          "parent": "PC",
+          "name": "Partidas Pendientes de Identificación (saldo acreedor)",
+          "sequence": 680,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1150",
+              "side": "credit"
+            }
+          ]
+        },
+        {
+          "code": "PNC",
+          "parent": "PAS",
+          "name": "Pasivo No Corriente",
+          "sequence": 680,
+          "is_total": true,
+          "plus": [
+            "2201",
+            "2202",
+            "2203"
+          ]
+        },
+        {
+          "code": "2201",
+          "parent": "PNC",
+          "name": "Préstamos Bancarios a Largo Plazo",
+          "sequence": 700,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "2201"
+            }
+          ]
+        },
+        {
+          "code": "2202",
+          "parent": "PNC",
+          "name": "Leasing por Pagar Largo Plazo",
+          "sequence": 710,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "2202"
+            }
+          ]
+        },
+        {
+          "code": "2203",
+          "parent": "PNC",
+          "name": "Provisiones Largo Plazo",
+          "sequence": 720,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "2203"
+            }
+          ]
+        },
+        {
+          "code": "PAT",
+          "parent": "PYP",
+          "name": "Patrimonio",
+          "sequence": 720,
+          "is_total": true,
+          "plus": [
+            "3101",
+            "3102",
+            "3103",
+            "3104",
+            "3105",
+            "3106",
+            "3107",
+            "3108",
+            "3109"
+          ]
+        },
+        {
+          "code": "3101",
+          "parent": "PAT",
+          "name": "Capital Integrado",
+          "sequence": 740,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "3101"
+            }
+          ]
+        },
+        {
+          "code": "3102",
+          "parent": "PAT",
+          "name": "Capital a Integrar",
+          "sequence": 750,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "3102"
+            }
+          ]
+        },
+        {
+          "code": "3103",
+          "parent": "PAT",
+          "name": "Resultados Acumulados",
+          "sequence": 760,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "3103"
+            }
+          ]
+        },
+        {
+          "code": "3104",
+          "parent": "PAT",
+          "name": "Pérdidas Acumuladas",
+          "sequence": 770,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "3104"
+            }
+          ]
+        },
+        {
+          "code": "3105",
+          "parent": "PAT",
+          "name": "Resultado del Ejercicio - Ganancia",
+          "sequence": 780,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "3105"
+            }
+          ]
+        },
+        {
+          "code": "3106",
+          "parent": "PAT",
+          "name": "Resultado del Ejercicio - Pérdida",
+          "sequence": 790,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "3106"
+            }
+          ]
+        },
+        {
+          "code": "3107",
+          "parent": "PAT",
+          "name": "Reserva Legal",
+          "sequence": 800,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "3107"
+            }
+          ]
+        },
+        {
+          "code": "3108",
+          "parent": "PAT",
+          "name": "Otras Reservas",
+          "sequence": 810,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "3108"
+            }
+          ]
+        },
+        {
+          "code": "3109",
+          "parent": "PAT",
+          "name": "Ajustes al Patrimonio",
+          "sequence": 820,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "3109"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "code": "UY-RES",
+      "kind": "income_statement",
+      "framework": "UY-Ekwo",
+      "name": "Estado de Resultados",
+      "legal_reference": "Ley N° 16.060, de Sociedades Comerciales, art. 90 — el estado de resultados del ejercicio debe indicar separadamente los resultantes de la actividad ordinaria de la sociedad y los provenientes de operaciones extraordinarias, discriminando los rubros positivos y negativos en la medida necesaria para permitir formarse un juicio claro sobre la magnitud y el contenido de cada uno de ellos. Estructura mínima propia de Ekwo, con los subtotales de utilidad bruta, operativa, antes de impuesto y neta",
+      "source": "ley16060",
+      "lines": [
+        {
+          "code": "ING",
+          "parent": null,
+          "name": "Ingresos",
+          "sequence": 10,
+          "is_total": true,
+          "plus": [
+            "4101",
+            "4102",
+            "4103",
+            "4104",
+            "4105",
+            "4106",
+            "4107",
+            "4108",
+            "4109",
+            "4110"
+          ]
+        },
+        {
+          "code": "4101",
+          "parent": "ING",
+          "name": "Ventas Nacionales",
+          "sequence": 30,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "4101"
+            }
+          ]
+        },
+        {
+          "code": "4102",
+          "parent": "ING",
+          "name": "Ventas de Exportación",
+          "sequence": 40,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "4102"
+            }
+          ]
+        },
+        {
+          "code": "4103",
+          "parent": "ING",
+          "name": "Servicios Prestados",
+          "sequence": 50,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "4103"
+            }
+          ]
+        },
+        {
+          "code": "4104",
+          "parent": "ING",
+          "name": "Arrendamientos Ganados",
+          "sequence": 60,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "4104"
+            }
+          ]
+        },
+        {
+          "code": "4105",
+          "parent": "ING",
+          "name": "Devoluciones y Bonificaciones en Ventas",
+          "sequence": 70,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "4105"
+            }
+          ]
+        },
+        {
+          "code": "4106",
+          "parent": "ING",
+          "name": "Descuentos Obtenidos por Pronto Pago",
+          "sequence": 80,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "4106"
+            }
+          ]
+        },
+        {
+          "code": "4107",
+          "parent": "ING",
+          "name": "Ingresos Financieros",
+          "sequence": 90,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "4107"
+            }
+          ]
+        },
+        {
+          "code": "4108",
+          "parent": "ING",
+          "name": "Diferencia de Cambio - Ganancia",
+          "sequence": 100,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "4108"
+            }
+          ]
+        },
+        {
+          "code": "4109",
+          "parent": "ING",
+          "name": "Otros Ingresos de Explotación",
+          "sequence": 110,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "4109"
+            }
+          ]
+        },
+        {
+          "code": "4110",
+          "parent": "ING",
+          "name": "Ingresos Extraordinarios",
+          "sequence": 120,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "4110"
+            }
+          ]
+        },
+        {
+          "code": "CV",
+          "parent": null,
+          "name": "Costo de Ventas",
+          "sequence": 120,
+          "is_total": true,
+          "plus": [
+            "5101",
+            "5102",
+            "5103",
+            "5104"
+          ]
+        },
+        {
+          "code": "5101",
+          "parent": "CV",
+          "name": "Costo de Mercaderías Vendidas",
+          "sequence": 140,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "5101"
+            }
+          ]
+        },
+        {
+          "code": "5102",
+          "parent": "CV",
+          "name": "Compras",
+          "sequence": 150,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "5102"
+            }
+          ]
+        },
+        {
+          "code": "5103",
+          "parent": "CV",
+          "name": "Mano de Obra Directa",
+          "sequence": 160,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "5103"
+            }
+          ]
+        },
+        {
+          "code": "5104",
+          "parent": "CV",
+          "name": "Gastos Indirectos de Fabricación",
+          "sequence": 170,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "5104"
+            }
+          ]
+        },
+        {
+          "code": "UB",
+          "parent": null,
+          "name": "Utilidad (Pérdida) Bruta",
+          "sequence": 170,
+          "is_total": true,
+          "plus": [
+            "ING"
+          ],
+          "minus": [
+            "CV"
+          ]
+        },
+        {
+          "code": "GO",
+          "parent": null,
+          "name": "Gastos de Operación",
+          "sequence": 180,
+          "is_total": true,
+          "plus": [
+            "5110",
+            "5111",
+            "5112",
+            "5113",
+            "5114",
+            "5115",
+            "5116",
+            "5117",
+            "5118",
+            "5119",
+            "5120",
+            "5121",
+            "5122",
+            "5123",
+            "5124",
+            "5125",
+            "5126",
+            "5127",
+            "5128",
+            "5129",
+            "5130",
+            "5131",
+            "5132"
+          ]
+        },
+        {
+          "code": "5110",
+          "parent": "GO",
+          "name": "Sueldos y Jornales",
+          "sequence": 200,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "5110"
+            }
+          ]
+        },
+        {
+          "code": "5111",
+          "parent": "GO",
+          "name": "Cargas Sociales - BPS Patronal",
+          "sequence": 210,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "5111"
+            }
+          ]
+        },
+        {
+          "code": "5112",
+          "parent": "GO",
+          "name": "Aguinaldo",
+          "sequence": 220,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "5112"
+            }
+          ]
+        },
+        {
+          "code": "5113",
+          "parent": "GO",
+          "name": "Salario Vacacional",
+          "sequence": 230,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "5113"
+            }
+          ]
+        },
+        {
+          "code": "5114",
+          "parent": "GO",
+          "name": "Seguro de Accidentes de Trabajo (BSE)",
+          "sequence": 240,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "5114"
+            }
+          ]
+        },
+        {
+          "code": "5115",
+          "parent": "GO",
+          "name": "Honorarios Profesionales",
+          "sequence": 250,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "5115"
+            }
+          ]
+        },
+        {
+          "code": "5116",
+          "parent": "GO",
+          "name": "Arrendamientos",
+          "sequence": 260,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "5116"
+            }
+          ]
+        },
+        {
+          "code": "5117",
+          "parent": "GO",
+          "name": "Servicios Contratados en el Exterior",
+          "sequence": 270,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "5117"
+            }
+          ]
+        },
+        {
+          "code": "5118",
+          "parent": "GO",
+          "name": "Seguros Generales",
+          "sequence": 280,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "5118"
+            }
+          ]
+        },
+        {
+          "code": "5119",
+          "parent": "GO",
+          "name": "Servicios Básicos (UTE, OSE, Antel)",
+          "sequence": 290,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "5119"
+            }
+          ]
+        },
+        {
+          "code": "5120",
+          "parent": "GO",
+          "name": "Mantenimiento y Reparaciones",
+          "sequence": 300,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "5120"
+            }
+          ]
+        },
+        {
+          "code": "5121",
+          "parent": "GO",
+          "name": "Materiales de Oficina",
+          "sequence": 310,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "5121"
+            }
+          ]
+        },
+        {
+          "code": "5122",
+          "parent": "GO",
+          "name": "Publicidad y Marketing",
+          "sequence": 320,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "5122"
+            }
+          ]
+        },
+        {
+          "code": "5123",
+          "parent": "GO",
+          "name": "Gastos de Representación",
+          "sequence": 330,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "5123"
+            }
+          ]
+        },
+        {
+          "code": "5124",
+          "parent": "GO",
+          "name": "Viáticos y Gastos de Viaje",
+          "sequence": 340,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "5124"
+            }
+          ]
+        },
+        {
+          "code": "5125",
+          "parent": "GO",
+          "name": "Fletes y Transportes",
+          "sequence": 350,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "5125"
+            }
+          ]
+        },
+        {
+          "code": "5126",
+          "parent": "GO",
+          "name": "Comunicaciones",
+          "sequence": 360,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "5126"
+            }
+          ]
+        },
+        {
+          "code": "5127",
+          "parent": "GO",
+          "name": "Depreciación del Ejercicio",
+          "sequence": 370,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "5127"
+            }
+          ]
+        },
+        {
+          "code": "5128",
+          "parent": "GO",
+          "name": "Amortización de Intangibles",
+          "sequence": 380,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "5128"
+            }
+          ]
+        },
+        {
+          "code": "5129",
+          "parent": "GO",
+          "name": "Deudores Incobrables",
+          "sequence": 390,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "5129"
+            }
+          ]
+        },
+        {
+          "code": "5130",
+          "parent": "GO",
+          "name": "Donaciones",
+          "sequence": 400,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "5130"
+            }
+          ]
+        },
+        {
+          "code": "5131",
+          "parent": "GO",
+          "name": "Patente Única de Rodados",
+          "sequence": 410,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "5131"
+            }
+          ]
+        },
+        {
+          "code": "5132",
+          "parent": "GO",
+          "name": "Capacitación del Personal",
+          "sequence": 420,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "5132"
+            }
+          ]
+        },
+        {
+          "code": "UO",
+          "parent": null,
+          "name": "Utilidad (Pérdida) Operativa",
+          "sequence": 420,
+          "is_total": true,
+          "plus": [
+            "UB"
+          ],
+          "minus": [
+            "GO"
+          ]
+        },
+        {
+          "code": "RNO",
+          "parent": null,
+          "name": "Resultado No Operativo",
+          "sequence": 430,
+          "is_total": true,
+          "plus": [
+            "5133",
+            "5134",
+            "5135",
+            "5138",
+            "5139",
+            "5140"
+          ]
+        },
+        {
+          "code": "5133",
+          "parent": "RNO",
+          "name": "Diferencia de Cambio - Pérdida",
+          "sequence": 450,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "5133"
+            }
+          ]
+        },
+        {
+          "code": "5134",
+          "parent": "RNO",
+          "name": "Gastos Bancarios",
+          "sequence": 460,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "5134"
+            }
+          ]
+        },
+        {
+          "code": "5135",
+          "parent": "RNO",
+          "name": "Intereses por Préstamos",
+          "sequence": 470,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "5135"
+            }
+          ]
+        },
+        {
+          "code": "5138",
+          "parent": "RNO",
+          "name": "Multas y Recargos Fiscales",
+          "sequence": 480,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "5138"
+            }
+          ]
+        },
+        {
+          "code": "5139",
+          "parent": "RNO",
+          "name": "Gastos Extraordinarios",
+          "sequence": 490,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "5139"
+            }
+          ]
+        },
+        {
+          "code": "5140",
+          "parent": "RNO",
+          "name": "Diferencias de Redondeo",
+          "sequence": 500,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "5140"
+            }
+          ]
+        },
+        {
+          "code": "UAI",
+          "parent": null,
+          "name": "Utilidad (Pérdida) Antes de Impuesto",
+          "sequence": 500,
+          "is_total": true,
+          "plus": [
+            "UO"
+          ],
+          "minus": [
+            "RNO"
+          ]
+        },
+        {
+          "code": "IMP",
+          "parent": null,
+          "name": "Impuestos a la Renta y al Patrimonio",
+          "sequence": 510,
+          "is_total": true,
+          "plus": [
+            "5136",
+            "5137"
+          ]
+        },
+        {
+          "code": "5136",
+          "parent": "IMP",
+          "name": "Impuesto a la Renta (IRAE)",
+          "sequence": 530,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "5136"
+            }
+          ]
+        },
+        {
+          "code": "5137",
+          "parent": "IMP",
+          "name": "Impuesto al Patrimonio",
+          "sequence": 540,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "5137"
+            }
+          ]
+        },
+        {
+          "code": "UN",
+          "parent": null,
+          "name": "Utilidad (Pérdida) Neta",
+          "sequence": 540,
+          "is_total": true,
+          "plus": [
+            "UAI"
+          ],
+          "minus": [
+            "IMP"
+          ]
+        }
+      ]
+    }
+  ]
+}

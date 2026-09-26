@@ -1,0 +1,166 @@
+[
+  {
+    "code": "UY-S-22",
+    "name": "Ventas y servicios, tasa básica 22 %",
+    "description": "Circulación de bienes o prestación de servicios gravada a la tasa básica",
+    "kind": "vat",
+    "rate": 22,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2007-07-01",
+    "legal_reference": "Texto Ordenado 2023, Título 10, art. 34, literal A) — «Fíjanse las siguientes tasas: A) Básica del 22% (veintidós por ciento)» (fuente: Ley N° 18.083, de 27 de diciembre de 2006, art. 25); art. 1° — hecho gravado (circulación de bienes, prestación de servicios); art. 3° — el hecho generador se presume configurado en la fecha de la factura",
+    "source": "to2023-t10",
+    "vat_category": "S",
+    "sequence": 10,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "12" },
+        { "type": "tax", "account": "2103", "box": "16" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "12", "box_factor": -100 },
+        { "type": "tax", "account": "2103", "box": "16", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "UY-S-10",
+    "name": "Ventas y servicios, tasa mínima 10 %",
+    "description": "Circulación de bienes o prestación de servicios de primera necesidad gravada a la tasa mínima (p. ej. arroz, harina, servicios de hotelería)",
+    "kind": "vat",
+    "rate": 10,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2007-07-01",
+    "legal_reference": "Texto Ordenado 2023, Título 10, art. 34, literal B) — tasa mínima del 10% (fuente: Ley N° 18.083, de 27 de diciembre de 2006, art. 25); art. 36, literal A) — están sujetos a esta tasa, entre otros bienes, «arroz; harina de cereales y subproductos de su molienda»",
+    "source": "to2023-t10",
+    "vat_category": "S",
+    "sequence": 20,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "11" },
+        { "type": "tax", "account": "2103", "box": "15" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "11", "box_factor": -100 },
+        { "type": "tax", "account": "2103", "box": "15", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "UY-S-0-EXP-BIENES",
+    "name": "Exportación de bienes",
+    "description": "Enajenación de bienes exportados, no gravada por el Impuesto al Valor Agregado",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2007-07-01",
+    "conditions": ["transport_evidence"],
+    "legal_reference": "Texto Ordenado 2023, Título 10, art. 5° — «Estarán gravadas las entregas de bienes y las prestaciones de servicios realizadas en el territorio nacional … y no lo estarán aquellas exportaciones de bienes». El exportador no traslada IVA en la exportación y, en cambio, conserva el derecho a deducir el impuesto que integre directa o indirectamente el costo del producto exportado (art. 14, inciso quinto) — véase UY-P-22 y UY-P-10, que dan ese crédito, y el Formulario 1376, panel «Determinación de IVA», línea 27, que declara el crédito de compras atribuible a la exportación, no transcrita por este paquete (véase el README)",
+    "source": "to2023-t10",
+    "vat_category": "G",
+    "sequence": 30,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "9" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "9", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "UY-S-0-EXP-SERVICIOS",
+    "name": "Exportación de servicios",
+    "description": "Servicios de diseño, desarrollo o implementación de soportes lógicos (software) prestados a un usuario del exterior y aprovechados exclusivamente allí, calificados como exportación de servicios",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2007-07-01",
+    "conditions": ["supply_nature"],
+    "legal_reference": "Texto Ordenado 2023, Título 10, art. 5°, inciso primero — «no lo estarán aquellas exportaciones de servicios que determine el Poder Ejecutivo»; Decreto N° 220/998, art. 34, numeral 11, literal b) — se consideran exportación «los servicios prestados para el diseño, desarrollo o implementación de soportes lógicos específicos», siempre que sean aprovechados exclusivamente en el exterior",
+    "source": "decreto220-998",
+    "vat_category": "G",
+    "sequence": 40,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "9" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "9", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "UY-S-EXE-INMUEBLE",
+    "name": "Arrendamiento de inmuebles",
+    "description": "Prestación de servicios de arrendamiento de bienes inmuebles, exonerada del Impuesto al Valor Agregado",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2007-07-01",
+    "legal_reference": "Texto Ordenado 2023, Título 10, art. 38, numeral 2), literal C) — «Exonéranse … 2) Las siguientes prestaciones de servicios: … C) Arrendamientos de inmuebles»",
+    "source": "to2023-t10",
+    "vat_category": "E",
+    "sequence": 50,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "8" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "8", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "UY-P-22",
+    "name": "Compras y servicios, tasa básica 22 %",
+    "description": "Adquisición de bienes o servicios del giro, gravada a la tasa básica, con derecho a crédito fiscal",
+    "kind": "vat",
+    "rate": 22,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2007-07-01",
+    "legal_reference": "Texto Ordenado 2023, Título 10, art. 34, literal A) — tasa básica 22%; art. 14 — el impuesto correspondiente a las compras de bienes y servicios adquiridos por el sujeto pasivo, documentado en la forma del art. 13, se deduce del impuesto a pagar, en tanto integre directa o indirectamente el costo de bienes y servicios destinados a las operaciones gravadas. Formulario 1376, panel «IVA Ventas e IVA Compras», línea 19 «IVA COMPRAS deducible por operaciones gravadas»",
+    "source": "to2023-t10",
+    "vat_category": "S",
+    "sequence": 60,
+    "postings": {
+      "invoice": [
+        { "type": "base" },
+        { "type": "tax", "account": "1105", "box": "19" }
+      ],
+      "credit_note": [
+        { "type": "base", "box_factor": -100 },
+        { "type": "tax", "account": "1105", "box": "19", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "UY-P-10",
+    "name": "Compras y servicios, tasa mínima 10 %",
+    "description": "Adquisición de bienes de primera necesidad gravada a la tasa mínima, con derecho a crédito fiscal",
+    "kind": "vat",
+    "rate": 10,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2007-07-01",
+    "legal_reference": "Texto Ordenado 2023, Título 10, art. 34, literal B), y art. 36, literal A) — tasa mínima 10% sobre, entre otros, arroz y harina de cereales; art. 14 — derecho a crédito fiscal sobre las compras del giro. Formulario 1376, panel «IVA Ventas e IVA Compras», línea 19",
+    "source": "to2023-t10",
+    "vat_category": "S",
+    "sequence": 70,
+    "postings": {
+      "invoice": [
+        { "type": "base" },
+        { "type": "tax", "account": "1105", "box": "19" }
+      ],
+      "credit_note": [
+        { "type": "base", "box_factor": -100 },
+        { "type": "tax", "account": "1105", "box": "19", "box_factor": -100 }
+      ]
+    }
+  }
+]

@@ -1,0 +1,104 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "Un trimestre de una comercializadora uruguaya, con exportación de bienes y de servicios, un arrendamiento exonerado y compras a las dos tasas",
+  "chart": "default",
+  "fiscal_year": { "name": "Ejercicio 2026", "start": "2026-01-01", "end": "2026-12-31" },
+  "periods": [
+    { "code": "2026-01", "from": "2026-01-01", "to": "2026-01-31" },
+    { "code": "2026-02", "from": "2026-02-01", "to": "2026-02-28" },
+    { "code": "2026-03", "from": "2026-03-01", "to": "2026-03-31" }
+  ],
+  "statements": ["UY-BAL", "UY-RES"],
+  "contacts": [
+    { "ref": "cliente-nacional", "name": "Almacén del Litoral S.A.", "type": "customer", "country": "UY" },
+    { "ref": "cliente-exterior-bienes", "name": "Pampa Grains S.R.L.", "type": "customer", "country": "AR" },
+    { "ref": "cliente-exterior-servicios", "name": "Northbridge Software Inc.", "type": "customer", "country": "US" },
+    { "ref": "proveedor-nacional", "name": "Distribuidora Rambla S.A.", "type": "supplier", "country": "UY" },
+    { "ref": "proveedor-servicios", "name": "Estudio Contable Rincón Ltda.", "type": "supplier", "country": "UY" },
+    { "ref": "proveedor-alimentos", "name": "Molino del Este S.A.", "type": "supplier", "country": "UY" }
+  ],
+  "documents": [
+    {
+      "ref": "V1", "type": "sale_invoice", "contact": "cliente-nacional", "date": "2026-01-10",
+      "why": "Una venta nacional de mercadería a la tasa básica: prueba la casilla 12 (ventas gravadas tasa básica) y la casilla 16 (IVA ventas tasa básica) del Formulario 1376.",
+      "lines": [{ "name": "Mercadería surtida", "quantity": 10, "unit_price": 5000, "tax": "UY-S-22", "account": "4101" }]
+    },
+    {
+      "ref": "V2", "type": "sale_invoice", "contact": "cliente-nacional", "date": "2026-01-15",
+      "why": "Una venta de arroz, bien de primera necesidad del art. 36, literal A): prueba la casilla 11 (ventas gravadas tasa mínima) y la casilla 15 (IVA ventas tasa mínima).",
+      "lines": [{ "name": "Arroz en bolsas de 25 kg", "quantity": 20, "unit_price": 800, "tax": "UY-S-10", "account": "4101" }]
+    },
+    {
+      "ref": "V3", "type": "sale_credit_note", "contact": "cliente-nacional", "date": "2026-01-20",
+      "why": "Nota de crédito por la devolución de parte de la mercadería de V1: prueba box_factor -100 de las casillas 12 y 16, la corrección que exige el art. 3°, inciso quinto, del Título 10.",
+      "lines": [{ "name": "Devolución de mercadería", "quantity": 2, "unit_price": 5000, "tax": "UY-S-22", "account": "4101" }]
+    },
+    {
+      "ref": "V4", "type": "sale_invoice", "contact": "cliente-exterior-bienes", "date": "2026-02-05",
+      "why": "Una exportación de mercadería, no gravada por el art. 5° del Título 10: prueba la casilla 9 (ventas de exportación y asimiladas) y el derecho a deducir el IVA de compras que da el art. 14 (véase C1 y C5).",
+      "lines": [{ "name": "Granos a granel", "quantity": 1, "unit_price": 300000, "tax": "UY-S-0-EXP-BIENES", "account": "4102" }]
+    },
+    {
+      "ref": "V5", "type": "sale_invoice", "contact": "cliente-exterior-servicios", "date": "2026-02-10",
+      "why": "Un servicio de desarrollo de software prestado a una empresa sin domicilio en Uruguay y aprovechado exclusivamente en el exterior, exportación de servicios del art. 34, numeral 11, literal b), del Decreto N° 220/998: prueba un segundo impuesto que comparte la casilla 9 con V4.",
+      "lines": [{ "name": "Desarrollo de software a medida", "quantity": 1, "unit_price": 150000, "tax": "UY-S-0-EXP-SERVICIOS", "account": "4103" }]
+    },
+    {
+      "ref": "V6", "type": "sale_invoice", "contact": "cliente-nacional", "date": "2026-02-12",
+      "why": "Un arrendamiento de un local comercial, exonerado por el art. 38, numeral 2), literal C), del Título 10: prueba la casilla 8 (ventas e ingresos no gravados o exentos).",
+      "lines": [{ "name": "Arrendamiento de local comercial - febrero 2026", "quantity": 1, "unit_price": 40000, "tax": "UY-S-EXE-INMUEBLE", "account": "4104" }]
+    },
+    {
+      "ref": "V7", "type": "sale_invoice", "contact": "cliente-nacional", "date": "2026-03-05",
+      "why": "Una segunda venta nacional, en marzo, sin pago calzado: prueba un tercer período con actividad y un documento que queda abierto.",
+      "lines": [{ "name": "Mercadería surtida", "quantity": 8, "unit_price": 6000, "tax": "UY-S-22", "account": "4101" }]
+    },
+    {
+      "ref": "C1", "type": "purchase_invoice", "contact": "proveedor-nacional", "date": "2026-01-08",
+      "why": "Una compra nacional de mercadería del giro, con derecho a crédito fiscal del art. 14: prueba la casilla 19 (IVA compras deducible por operaciones gravadas).",
+      "lines": [{ "name": "Mercadería para reventa", "quantity": 15, "unit_price": 3000, "tax": "UY-P-22", "account": "5102" }]
+    },
+    {
+      "ref": "C2", "type": "purchase_invoice", "contact": "proveedor-servicios", "date": "2026-01-18",
+      "why": "Un servicio de asesoría contable mensual, gravado a la tasa básica.",
+      "lines": [{ "name": "Honorarios de asesoría contable", "quantity": 1, "unit_price": 25000, "tax": "UY-P-22", "account": "5115" }]
+    },
+    {
+      "ref": "C3", "type": "purchase_credit_note", "contact": "proveedor-nacional", "date": "2026-01-25",
+      "why": "Nota de crédito recibida por la devolución de parte de la mercadería de C1: prueba el crédito fiscal corregido en sentido inverso.",
+      "lines": [{ "name": "Devolución de mercadería", "quantity": 3, "unit_price": 3000, "tax": "UY-P-22", "account": "5102" }]
+    },
+    {
+      "ref": "C4", "type": "purchase_invoice", "contact": "proveedor-alimentos", "date": "2026-02-08",
+      "why": "Una compra de arroz para reventa, a la tasa mínima: prueba que la casilla 19 también recibe el crédito fiscal de compras a la tasa mínima, sin una casilla separada por tasa del lado de las compras.",
+      "lines": [{ "name": "Arroz a granel para reventa", "quantity": 100, "unit_price": 500, "tax": "UY-P-10", "account": "5102" }]
+    },
+    {
+      "ref": "C5", "type": "purchase_invoice", "contact": "proveedor-nacional", "date": "2026-03-02",
+      "why": "Una compra nacional en marzo, sin pago: prueba actividad de crédito fiscal en el tercer período.",
+      "lines": [{ "name": "Mercadería para reventa", "quantity": 10, "unit_price": 3200, "tax": "UY-P-22", "account": "5102" }]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "P1", "direction": "inbound", "date": "2026-02-03", "amount": 17600,
+      "contact": "cliente-nacional", "journal": "BAN", "match": "V2",
+      "why": "Cobro de la venta de arroz V2, un mes después de emitida."
+    },
+    {
+      "ref": "P2", "direction": "inbound", "date": "2026-03-20", "amount": 20000,
+      "contact": "cliente-nacional", "journal": "BAN", "match": null,
+      "why": "Un anticipo del cliente nacional que no calza con ningún documento: queda como partida abierta, la mitad de la prueba de un pago sin calce."
+    },
+    {
+      "ref": "P3", "direction": "outbound", "date": "2026-02-20", "amount": 30500,
+      "contact": "proveedor-servicios", "journal": "BAN", "match": "C2",
+      "why": "Pago de la asesoría contable C2, un mes después de recibida."
+    },
+    {
+      "ref": "P4", "direction": "outbound", "date": "2026-01-28", "amount": 54900,
+      "contact": "proveedor-nacional", "journal": "BAN", "match": "C1",
+      "why": "Pago de la compra C1 dentro del mismo mes: un pago calzado ordinario, sin flujo de efectivo especial de por medio."
+    }
+  ]
+}
