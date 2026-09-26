@@ -1834,3 +1834,29 @@ on conflict (code) do update set
   eu_vat_to       = excluded.eu_vat_to,
   vat_prefix      = excluded.vat_prefix,
   legal_reference = excluded.legal_reference;
+
+-- ---------------------------------------------------------------------------
+-- Oman — a Gulf Cooperation Council member, outside the common system of VAT
+--
+-- Directive 2006/112/EC, article 5(2): the common system of VAT applies in
+-- the territory of the Community as defined by the Treaties, and a State
+-- outside it is a third country for every rule the Directive carries. The
+-- Sultanate of Oman is a member of the Gulf Cooperation Council and applies
+-- the Common VAT Agreement of the States of the GCC between its own member
+-- states, which is not the Union's common system; it levies its own value
+-- added tax under the Value Added Tax Law, Royal Decree No. 121/2020, at a
+-- single standard rate of 5% since 16 April 2021.
+-- ---------------------------------------------------------------------------
+
+insert into territories (code, code_source, name, parent_code, eu_vat_scope, eu_vat_from, eu_vat_to, vat_prefix, legal_reference) values
+  ('OM', 'iso_3166_1', 'Oman', null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2) — the common system of VAT applies in the territory of the Community as defined by the Treaties, and Oman is a third country, a member of the Gulf Cooperation Council and not of the European Union. Oman levies its own value added tax under the Value Added Tax Law (Royal Decree No. 121/2020), article 36, at a standard rate of 5% since 16 April 2021.')
+on conflict (code) do update set
+  code_source     = excluded.code_source,
+  name            = excluded.name,
+  parent_code     = excluded.parent_code,
+  eu_vat_scope    = excluded.eu_vat_scope,
+  eu_vat_from     = excluded.eu_vat_from,
+  eu_vat_to       = excluded.eu_vat_to,
+  vat_prefix      = excluded.vat_prefix,
+  legal_reference = excluded.legal_reference;

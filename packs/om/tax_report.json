@@ -1,0 +1,239 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "OM-VAT-RETURN",
+  "name": "VAT return",
+  "period": ["quarter"],
+  "period_default": "quarter",
+  "valid_from": "2021-04-16",
+  "legal_reference": "Value Added Tax Law (Royal Decree No. 121/2020), Article 71 — the Regulations determine the Tax Period a Taxable Person must file a Tax Return for, provided it is not less than one month; the VAT Taxpayer Guide — VAT Return Filing states the Tax Period for VAT in practice as 'three months i.e., a quarter of a year', starting 1 January, 1 April, 1 July or 1 October, and this pack's research found no text assigning any Omani taxpayer a shorter period, unlike the Federal Tax Authority's own administrative practice packs/ae records for larger taxpayers. Only `quarter` is therefore carried. The boxes below reproduce the live VAT return this pack's research opened at Step 2 of the Guide's own screenshots ('Content of VAT return'), letter for letter, and not a construction from the Law's Article 72 alone.",
+  "source": "return-filing-guide",
+  "deadline": {
+    "rule": "day_of_month_after_period",
+    "day": 30,
+    "legal_reference": "Value Added Tax Law, Article 72 — 'The Taxable Person shall file a Tax Return to the Authority within (30) thirty days following the end of the Tax Period... per the form prepared for this purpose.' Article 82 sets the same day for payment.",
+    "source": "vat-law"
+  },
+  "boxes": [
+    {
+      "box": "1a",
+      "kind": "base",
+      "name": "Supplies of goods / services taxed at 5% — taxable base",
+      "legal_reference": "VAT Taxpayer Guide — VAT Return Filing, box 1(a): 'Total value of standard rated supplies of goods and services in the Sultanate, including deemed supplies. Report the VAT-exclusive value only.'",
+      "source": "return-filing-guide",
+      "sequence": 10
+    },
+    {
+      "box": "1a2",
+      "kind": "tax",
+      "name": "Supplies of goods / services taxed at 5% — VAT due",
+      "legal_reference": "VAT Taxpayer Guide — VAT Return Filing, box 1(a): 'VAT is calculated automatically.'",
+      "source": "return-filing-guide",
+      "sequence": 20
+    },
+    {
+      "box": "1b",
+      "kind": "base",
+      "name": "Supplies of goods / services taxed at 0%",
+      "legal_reference": "VAT Taxpayer Guide — VAT Return Filing, box 1(b): 'Total value of zero-rated supplies of goods and services in the Sultanate, excluding exports of goods or services.'",
+      "source": "return-filing-guide",
+      "sequence": 30
+    },
+    {
+      "box": "1c",
+      "kind": "base",
+      "name": "Supplies of goods / services tax exempt",
+      "legal_reference": "VAT Taxpayer Guide — VAT Return Filing, box 1(c): 'Total value of exempt supplies of goods and services in the Sultanate. Excludes any out of scope supplies.'",
+      "source": "return-filing-guide",
+      "sequence": 40
+    },
+    {
+      "box": "1d",
+      "kind": "base",
+      "name": "Supplies of goods, tax levy shifted to recipient inside GCC",
+      "legal_reference": "VAT Taxpayer Guide — VAT Return Filing, box 1(d): 'Supplies of goods, tax levy shifted to recipient inside GCC (supplies made by you that are subject to Reverse Charge Mechanism): Not activated until GCC rules apply.' No tax code of this pack posts here: the intra-GCC electronic services database the Common VAT Agreement conditions this box on is not yet in force between the Sultanate and another Implementing State.",
+      "source": "return-filing-guide",
+      "sequence": 50
+    },
+    {
+      "box": "1e",
+      "kind": "base",
+      "name": "Supplies of services, tax levy shifted to recipient inside GCC",
+      "legal_reference": "VAT Taxpayer Guide — VAT Return Filing, box 1(e): 'Supplies of services, tax levy shifted to recipient inside GCC (supplies made by you that are subject to Reverse Charge Mechanism): Not activated until GCC rules apply.' Undriven, for the reason given at box 1(d).",
+      "source": "return-filing-guide",
+      "sequence": 60
+    },
+    {
+      "box": "1f",
+      "kind": "base",
+      "name": "Supply of goods as per profit margin scheme",
+      "legal_reference": "VAT Taxpayer Guide — VAT Return Filing, box 1(f): 'Total profit margin for any supplies of goods as per profit margin scheme (profit margin excluding VAT).' Value Added Tax Law, Article 39, refers the profit margin mechanism for used goods to the Regulations; this pack carries no tax code for it, matching neither an ordinary sale nor an ordinary purchase code, and the box stays at zero in the golden scenario.",
+      "source": "vat-law",
+      "sequence": 70
+    },
+    {
+      "box": "1f2",
+      "kind": "tax",
+      "name": "Supply of goods as per profit margin scheme — VAT due",
+      "legal_reference": "VAT Taxpayer Guide — VAT Return Filing, box 1(f): 'VAT is calculated automatically.' Undriven, for the reason given at box 1(f).",
+      "source": "return-filing-guide",
+      "sequence": 80
+    },
+    {
+      "box": "2a",
+      "kind": "base",
+      "name": "Purchases from the GCC subject to Reverse Charge Mechanism",
+      "legal_reference": "VAT Taxpayer Guide — VAT Return Filing, box 2(a): 'Not activated until GCC rules apply.' Undriven, for the reason given at box 1(d).",
+      "source": "return-filing-guide",
+      "sequence": 90
+    },
+    {
+      "box": "2a2",
+      "kind": "tax",
+      "name": "Purchases from the GCC subject to Reverse Charge Mechanism — VAT due",
+      "legal_reference": "Undriven, for the reason given at box 1(d); carried only so the formula of box 5(a) can name it.",
+      "source": "return-filing-guide",
+      "sequence": 100
+    },
+    {
+      "box": "2b",
+      "kind": "base",
+      "name": "Purchases from outside of GCC subject to Reverse Charge Mechanism",
+      "legal_reference": "VAT Taxpayer Guide — VAT Return Filing, box 2(b): 'Total value of standard rated supplies received (excluding VAT), which are subject to Reverse Charge Mechanism.'",
+      "source": "return-filing-guide",
+      "sequence": 110
+    },
+    {
+      "box": "2b2",
+      "kind": "tax",
+      "name": "Purchases from outside of GCC subject to Reverse Charge Mechanism — VAT due",
+      "legal_reference": "VAT Taxpayer Guide — VAT Return Filing, box 2(b): 'VAT is calculated automatically.'",
+      "source": "return-filing-guide",
+      "sequence": 120
+    },
+    {
+      "box": "3a",
+      "kind": "base",
+      "name": "Exports",
+      "legal_reference": "VAT Taxpayer Guide — VAT Return Filing, box 3(a): 'Total value of supplies of goods and services exported on which zero rating for exportation applies. Excludes any out of scope supplies.'",
+      "source": "return-filing-guide",
+      "sequence": 130
+    },
+    {
+      "box": "4a",
+      "kind": "base",
+      "name": "Import of Goods (Postponed payment)",
+      "legal_reference": "VAT Taxpayer Guide — VAT Return Filing, box 4(a): 'Total value of goods imported (excluding VAT) where VAT was postponed on import.'",
+      "source": "return-filing-guide",
+      "sequence": 140
+    },
+    {
+      "box": "4a2",
+      "kind": "tax",
+      "name": "Import of Goods (Postponed payment) — VAT due",
+      "legal_reference": "VAT Taxpayer Guide — VAT Return Filing, box 4(a): 'VAT is calculated automatically.'",
+      "source": "return-filing-guide",
+      "sequence": 150
+    },
+    {
+      "box": "4b",
+      "kind": "base",
+      "name": "Total goods imported",
+      "legal_reference": "VAT Taxpayer Guide — VAT Return Filing, box 4(b): 'Total value of all imports (excluding VAT), including exempt/zero rated goods and those where import VAT has been paid to the Directorate General of Customs. Excludes imports reported in Box 4(a).' This pack models only the postponed-payment path of box 4(a); an import whose VAT is paid directly at Customs is not driven by any tax code, so this box stays at zero in the golden scenario, which is a gap of coverage and not a claim that no such import exists.",
+      "source": "return-filing-guide",
+      "sequence": 160
+    },
+    {
+      "box": "5a",
+      "kind": "total",
+      "name": "Total VAT due",
+      "legal_reference": "VAT Taxpayer Guide — VAT Return Filing, box 5(a): 'Total VAT due under (1(a)+1(f)+2(a)+2(b)+4(a)). Amount is calculated automatically.'",
+      "source": "return-filing-guide",
+      "plus": ["1a2", "1f2", "2a2", "2b2", "4a2"],
+      "sequence": 170
+    },
+    {
+      "box": "5b",
+      "kind": "tax",
+      "name": "Adjustment of VAT due",
+      "legal_reference": "VAT Taxpayer Guide — VAT Return Filing, box 5(b): 'Any adjustments to Output VAT due that must be declared in this period including bad debts related to standard rated supplies, refunds, returns, and any other adjustments affecting VAT due.' No tax code of this pack posts an adjustment; it stays at zero in the golden scenario.",
+      "source": "return-filing-guide",
+      "sequence": 180
+    },
+    {
+      "box": "6a",
+      "kind": "base",
+      "name": "Purchases (except import of goods)",
+      "legal_reference": "VAT Taxpayer Guide — VAT Return Filing, box 6(a), column 1: 'Total value of all purchases (excluding VAT) including exempt/standard/zero rated purchases and reverse charge purchases. Excludes imported goods, out of scope expenses and purchases of fixed (capital) assets.' This pack does not duplicate into this box the base value of a reverse-charge purchase already reported at box 2(b), only its deductible Tax at box 6(a2): the duplicate base carries no further arithmetic consequence for the return, and no total of this form sums box 6(a) itself.",
+      "source": "return-filing-guide",
+      "sequence": 190
+    },
+    {
+      "box": "6a2",
+      "kind": "tax",
+      "name": "Purchases (except import of goods) — recoverable VAT",
+      "legal_reference": "VAT Taxpayer Guide — VAT Return Filing, box 6(a), column 2: 'deductible VAT related to your purchases. Amount declared must be after applying any required apportionment. Excludes deductible VAT on fixed (capital) assets.'",
+      "source": "return-filing-guide",
+      "sequence": 200
+    },
+    {
+      "box": "6b",
+      "kind": "base",
+      "name": "Import of goods",
+      "legal_reference": "VAT Taxpayer Guide — VAT Return Filing, box 6(b), column 1: 'Total value (excluding VAT) of standard rated imports of goods whether or not postponed.' Not driven by any posting of this pack: the base value of an import already reported at box 4(a) is not duplicated here, only its deductible Tax at box 6(b2).",
+      "source": "return-filing-guide",
+      "sequence": 210
+    },
+    {
+      "box": "6b2",
+      "kind": "tax",
+      "name": "Import of goods — recoverable VAT",
+      "legal_reference": "VAT Taxpayer Guide — VAT Return Filing, box 6(b), column 2: 'deductible VAT related to your imported goods. Amount declared must be after applying any required apportionment.'",
+      "source": "return-filing-guide",
+      "sequence": 220
+    },
+    {
+      "box": "6c2",
+      "kind": "tax",
+      "name": "VAT on acquisition of fixed assets",
+      "legal_reference": "VAT Taxpayer Guide — VAT Return Filing, box 6(c): 'deductible VAT related to purchase, acquisition or construction of capital assets. Amount declared must be after applying any required apportionment.' No tax code of this pack distinguishes a capital asset from an ordinary purchase; it stays at zero in the golden scenario, which is a gap of coverage and not a claim that no Omani company buys one.",
+      "source": "return-filing-guide",
+      "sequence": 230
+    },
+    {
+      "box": "6d2",
+      "kind": "tax",
+      "name": "Adjustment of input VAT credit",
+      "legal_reference": "VAT Taxpayer Guide — VAT Return Filing, box 6(d): 'Any adjustments to VAT deductible that must be declared in this period including bad debts related to standard rated supplies, refunds, returns, and any other adjustments affecting VAT deductible.' No tax code of this pack posts an adjustment; it stays at zero in the golden scenario.",
+      "source": "return-filing-guide",
+      "sequence": 240
+    },
+    {
+      "box": "7a",
+      "kind": "total",
+      "name": "Total VAT due",
+      "legal_reference": "VAT Taxpayer Guide — VAT Return Filing, box 7(a): 'Total VAT due (5(a) + 5(b)). Amount calculated automatically.'",
+      "source": "return-filing-guide",
+      "plus": ["5a", "5b"],
+      "sequence": 250
+    },
+    {
+      "box": "7b",
+      "kind": "total",
+      "name": "Total input VAT credit",
+      "legal_reference": "VAT Taxpayer Guide — VAT Return Filing, box 7(b): 'Total value of deductible input VAT in this period (6(a)+6(b)+6(c)+6(d)). Amount calculated automatically.'",
+      "source": "return-filing-guide",
+      "plus": ["6a2", "6b2", "6c2", "6d2"],
+      "sequence": 260
+    },
+    {
+      "box": "7c",
+      "kind": "total",
+      "name": "Net VAT due (7(a) − 7(b))",
+      "legal_reference": "VAT Taxpayer Guide — VAT Return Filing, box 7(c): 'Net (7(a) + 7(b)). Net VAT which maybe either payable or refundable.' Read together with Article 38 of the Law, which entitles the Taxable Person to a refund where Input Tax exceeds Output Tax, or to carry the excess to a later Tax Period; this pack applies no floor at zero.",
+      "source": "return-filing-guide",
+      "plus": ["7a"],
+      "minus": ["7b"],
+      "sequence": 270
+    }
+  ]
+}

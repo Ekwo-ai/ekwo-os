@@ -1,0 +1,174 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "A year of a VAT-registered Omani trading and consulting company, filing quarterly, for the financial year 2026",
+  "chart": "default",
+  "fiscal_year": {
+    "name": "Financial year ended 31 December 2026",
+    "start": "2026-01-01",
+    "end": "2026-12-31"
+  },
+  "periods": [
+    { "code": "2026-Q1", "from": "2026-01-01", "to": "2026-03-31" },
+    { "code": "2026-Q2", "from": "2026-04-01", "to": "2026-06-30" },
+    { "code": "2026-Q3", "from": "2026-07-01", "to": "2026-09-30" },
+    { "code": "2026-Q4", "from": "2026-10-01", "to": "2026-12-31" }
+  ],
+  "statements": [
+    "OM-IFRS-SFP",
+    "OM-IFRS-IS"
+  ],
+  "contacts": [
+    { "ref": "cust-om", "name": "Muscat Bay Advisory LLC", "type": "customer", "country": "OM" },
+    { "ref": "cust-export", "name": "Meridian Trading FZE", "type": "customer", "country": "AE" },
+    { "ref": "cust-food", "name": "Ruwi Grocers LLC", "type": "customer", "country": "OM" },
+    { "ref": "cust-edu", "name": "Sohar Training Institute LLC", "type": "customer", "country": "OM" },
+    { "ref": "supp-om", "name": "Qurum Office Supplies LLC", "type": "supplier", "country": "OM" },
+    { "ref": "supp-hosp", "name": "Al Mouj Hospitality LLC", "type": "supplier", "country": "OM" },
+    { "ref": "supp-foreign", "name": "Thames Valley Advisory Ltd", "type": "supplier", "country": "GB" },
+    { "ref": "supp-import", "name": "Zhejiang Precision Parts Co. Ltd", "type": "supplier", "country": "CN" }
+  ],
+  "documents": [
+    {
+      "ref": "INV-OM-SR-1",
+      "type": "sale_invoice",
+      "contact": "cust-om",
+      "date": "2026-01-15",
+      "why": "Standard-rated domestic sale, to book the ordinary VAT box 1a/1a2 and to be partly returned by CN-OM-SR-1.",
+      "lines": [
+        { "name": "Management consulting services — January engagement", "quantity": 1, "unit_price": 10000, "tax": "OM-S-SR", "account": "4010" }
+      ]
+    },
+    {
+      "ref": "INV-OM-ZR-EXPORT-1",
+      "type": "sale_invoice",
+      "contact": "cust-export",
+      "date": "2026-01-20",
+      "why": "Export of goods to a customer outside the GCC territory, zero-rated under Article 52(1) of the Law — box 3a.",
+      "lines": [
+        { "name": "Export of finished goods, FOB Sohar", "quantity": 1, "unit_price": 20000, "tax": "OM-S-ZR-EXPORT", "account": "4020" }
+      ]
+    },
+    {
+      "ref": "INV-OM-ZR-FOOD-1",
+      "type": "sale_invoice",
+      "contact": "cust-food",
+      "date": "2026-02-05",
+      "why": "Domestic sale of a specified basic food item, zero-rated under Article 51(1) of the Law — box 1b, not an export.",
+      "lines": [
+        { "name": "Specified basic food commodity, Chairman's decision list", "quantity": 1, "unit_price": 8000, "tax": "OM-S-ZR-FOOD", "account": "4000" }
+      ]
+    },
+    {
+      "ref": "INV-OM-EX-EDU-1",
+      "type": "sale_invoice",
+      "contact": "cust-edu",
+      "date": "2026-02-15",
+      "why": "Educational service, exempt under Article 47(3) of the Law — box 1c.",
+      "lines": [
+        { "name": "Vocational training course, one term", "quantity": 1, "unit_price": 15000, "tax": "OM-S-EX-EDU", "account": "4050" }
+      ]
+    },
+    {
+      "ref": "CN-OM-SR-1",
+      "type": "sale_credit_note",
+      "contact": "cust-om",
+      "date": "2026-03-10",
+      "why": "Partial credit note against INV-OM-SR-1, two days of consulting cancelled by the client — proves box 1a/1a2 subtract correctly and a credit note flips the ledger side.",
+      "lines": [
+        { "name": "Credit: two days of consulting cancelled", "quantity": 1, "unit_price": 2000, "tax": "OM-S-SR", "account": "4010" }
+      ]
+    },
+    {
+      "ref": "INV-OM-SR-2",
+      "type": "sale_invoice",
+      "contact": "cust-om",
+      "date": "2026-08-12",
+      "why": "A second standard-rated sale, in the third quarter, so the return is proved across more than one period.",
+      "lines": [
+        { "name": "Management consulting services — August engagement", "quantity": 1, "unit_price": 12000, "tax": "OM-S-SR", "account": "4010" }
+      ]
+    },
+    {
+      "ref": "BILL-OM-SR-1",
+      "type": "purchase_invoice",
+      "contact": "supp-om",
+      "date": "2026-01-18",
+      "why": "Ordinary standard-rated purchase whose input tax is fully recoverable — box 6a/6a2.",
+      "lines": [
+        { "name": "Office supplies and stationery", "quantity": 1, "unit_price": 4000, "tax": "OM-P-SR", "account": "6220" }
+      ]
+    },
+    {
+      "ref": "BILL-OM-BL-ENT-1",
+      "type": "purchase_invoice",
+      "contact": "supp-hosp",
+      "date": "2026-02-01",
+      "why": "Client entertainment, input tax blocked — the tax lands on the expense line, not on box 6a2.",
+      "lines": [
+        { "name": "Client entertainment — annual dinner", "quantity": 1, "unit_price": 3000, "tax": "OM-P-BL-ENT", "account": "6310" }
+      ]
+    },
+    {
+      "ref": "BILL-OM-RC-SVC-1",
+      "type": "purchase_invoice",
+      "contact": "supp-foreign",
+      "date": "2026-04-10",
+      "why": "Consulting services received from a supplier with no place of residence in the GCC states, self-assessed under Article 12(2) and Article 20(2) of the Law — box 2b/2b2, fully recoverable folded into box 6a2.",
+      "lines": [
+        { "name": "Management consulting services from a non-resident supplier", "quantity": 1, "unit_price": 10000, "tax": "OM-P-RC-SVC", "account": "6400" }
+      ]
+    },
+    {
+      "ref": "BILL-OM-IMP-1",
+      "type": "purchase_invoice",
+      "contact": "supp-import",
+      "date": "2026-04-20",
+      "why": "Goods imported for the business, VAT payment postponed under Article 86 of the Law — box 4a/4a2, fully recoverable in box 6b2.",
+      "lines": [
+        { "name": "Imported raw materials", "quantity": 1, "unit_price": 15000, "tax": "OM-P-IMP", "account": "1210" }
+      ]
+    },
+    {
+      "ref": "BILL-OM-SR-2",
+      "type": "purchase_invoice",
+      "contact": "supp-om",
+      "date": "2026-11-05",
+      "why": "A second standard-rated purchase, in the fourth quarter, so the return is proved across every quarter of the year.",
+      "lines": [
+        { "name": "Office supplies and stationery — fourth quarter", "quantity": 1, "unit_price": 5000, "tax": "OM-P-SR", "account": "6220" }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "PMT-IN-1",
+      "direction": "inbound",
+      "date": "2026-08-25",
+      "amount": 12600.0,
+      "contact": "cust-om",
+      "journal": "BNK",
+      "match": "INV-OM-SR-2",
+      "why": "Full settlement of INV-OM-SR-2 by bank transfer."
+    },
+    {
+      "ref": "PMT-OUT-1",
+      "direction": "outbound",
+      "date": "2026-01-25",
+      "amount": 4200.0,
+      "contact": "supp-om",
+      "journal": "BNK",
+      "match": "BILL-OM-SR-1",
+      "why": "Full settlement of BILL-OM-SR-1 by bank transfer."
+    },
+    {
+      "ref": "PMT-IN-2",
+      "direction": "inbound",
+      "date": "2026-12-10",
+      "amount": 3000.0,
+      "contact": "cust-food",
+      "journal": "BNK",
+      "match": null,
+      "why": "Advance on account from cust-food, not yet matched to an invoice — leaves an open item, which is what a real ledger holds."
+    }
+  ]
+}

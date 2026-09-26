@@ -1,0 +1,386 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/statements",
+  "statements": [
+    {
+      "code": "OM-IFRS-SFP",
+      "kind": "balance_sheet",
+      "framework": "OM-IFRS",
+      "taxonomy": null,
+      "name": "Statement of financial position — full IFRS Accounting Standards",
+      "legal_reference": "Unlike packs/ae and packs/sa, this pack does not build its statements on the IFRS for SMEs Accounting Standard: the IFRS Foundation's own Jurisdictional Profile for Oman records that the Sultanate has not adopted that Standard and that every company not required to use it prepares under 'Full IFRS Standards' instead — which in Oman's case, on this pack's reading of the Profile, is every company, not only one whose securities trade in a public market. The lines below are therefore built on the minimum line items of IAS 1 Presentation of Financial Statements, paragraph 54 (the statement of financial position), and paragraph 60 (current and non-current presented separately, which this pack's research found no Omani text displacing in favour of a liquidity presentation). This is the first thing a reviewer familiar with a real Omani company's accounts should check.",
+      "source": "ifrs-oman-profile",
+      "lines": [
+        {
+          "code": "CA",
+          "name": "Current assets",
+          "sequence": 10,
+          "is_total": true,
+          "plus": ["CA.1", "CA.2", "CA.3", "CA.4", "CA.5", "CA.6"],
+          "legal_reference": "IAS 1, paragraph 60 — current and non-current assets are presented as separate classifications unless a liquidity presentation provides information that is reliable and more relevant.",
+          "source": null
+        },
+        {
+          "code": "CA.1",
+          "name": "Cash and cash equivalents",
+          "sequence": 20,
+          "parent": "CA",
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "1000", "code_to": "1050" }],
+          "legal_reference": "IAS 1, paragraph 54(i).",
+          "source": null
+        },
+        {
+          "code": "CA.2",
+          "name": "Trade and other receivables",
+          "sequence": 30,
+          "parent": "CA",
+          "sign": 1,
+          "rules": [
+            { "kind": "code_range", "code_from": "1100", "code_to": "1160" },
+            { "kind": "account_code", "code_from": "2990", "side": "debit" }
+          ],
+          "legal_reference": "IAS 1, paragraph 54(h). VAT input tax and the amount refundable by the Tax Authority are presented here rather than as current tax, which paragraph 54(n) keeps for income tax under the Income Tax Law.",
+          "source": null
+        },
+        {
+          "code": "CA.3",
+          "name": "Inventories",
+          "sequence": 40,
+          "parent": "CA",
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "1200", "code_to": "1230" }],
+          "legal_reference": "IAS 1, paragraph 54(g).",
+          "source": null
+        },
+        {
+          "code": "CA.4",
+          "name": "Financial assets",
+          "sequence": 50,
+          "parent": "CA",
+          "sign": 1,
+          "rules": [{ "kind": "account_code", "code_from": "1300" }],
+          "legal_reference": "IAS 1, paragraph 54(d), the part realised within twelve months.",
+          "source": null
+        },
+        {
+          "code": "CA.5",
+          "name": "Current tax assets",
+          "sequence": 60,
+          "parent": "CA",
+          "sign": 1,
+          "rules": [{ "kind": "account_code", "code_from": "1350" }],
+          "legal_reference": "IAS 1, paragraph 54(n) — assets for current tax, income tax under the Income Tax Law (Royal Decree 28/2009), which this VAT-focused pack does not otherwise carry.",
+          "source": null
+        },
+        {
+          "code": "CA.6",
+          "name": "Prepayments and accrued income",
+          "sequence": 70,
+          "parent": "CA",
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "1400", "code_to": "1430" }],
+          "legal_reference": "IAS 1, paragraph 55 — an additional line item relevant to an understanding of the financial position.",
+          "source": null
+        },
+        {
+          "code": "NCA",
+          "name": "Non-current assets",
+          "sequence": 80,
+          "is_total": true,
+          "plus": ["NCA.1", "NCA.2", "NCA.3", "NCA.4"],
+          "legal_reference": "IAS 1, paragraph 60 — every asset that is not current is non-current.",
+          "source": null
+        },
+        {
+          "code": "NCA.1",
+          "name": "Property, plant and equipment",
+          "sequence": 90,
+          "parent": "NCA",
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "1600", "code_to": "1691" }],
+          "legal_reference": "IAS 1, paragraph 54(a).",
+          "source": null
+        },
+        {
+          "code": "NCA.2",
+          "name": "Investments",
+          "sequence": 100,
+          "parent": "NCA",
+          "sign": 1,
+          "rules": [{ "kind": "account_code", "code_from": "1700" }],
+          "legal_reference": "IAS 1, paragraph 54(e).",
+          "source": null
+        },
+        {
+          "code": "NCA.3",
+          "name": "Other non-current assets",
+          "sequence": 110,
+          "parent": "NCA",
+          "sign": 1,
+          "rules": [{ "kind": "account_code", "code_from": "1710" }],
+          "legal_reference": "IAS 1, paragraph 55 — a long-term deposit or retention held is not one of the named items of paragraph 54 and is presented as an additional line.",
+          "source": null
+        },
+        {
+          "code": "NCA.4",
+          "name": "Intangible assets",
+          "sequence": 120,
+          "parent": "NCA",
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "1730", "code_to": "1751" }],
+          "legal_reference": "IAS 1, paragraph 54(c), goodwill with them.",
+          "source": null
+        },
+        {
+          "code": "TA",
+          "name": "Total assets",
+          "sequence": 130,
+          "is_total": true,
+          "plus": ["CA", "NCA"]
+        },
+        {
+          "code": "CL",
+          "name": "Current liabilities",
+          "sequence": 140,
+          "is_total": true,
+          "plus": ["CL.1", "CL.2", "CL.3", "CL.4"],
+          "legal_reference": "IAS 1, paragraph 60.",
+          "source": null
+        },
+        {
+          "code": "CL.1",
+          "name": "Trade and other payables",
+          "sequence": 150,
+          "parent": "CL",
+          "sign": -1,
+          "rules": [
+            { "kind": "code_range", "code_from": "2000", "code_to": "2060" },
+            { "kind": "code_range", "code_from": "2100", "code_to": "2110" },
+            { "kind": "account_code", "code_from": "2990", "side": "credit" }
+          ],
+          "legal_reference": "IAS 1, paragraph 54(k). VAT output tax and the amount payable to the Tax Authority are presented here.",
+          "source": null
+        },
+        {
+          "code": "CL.2",
+          "name": "Borrowings and other financial liabilities",
+          "sequence": 160,
+          "parent": "CL",
+          "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "2200", "code_to": "2210" }],
+          "legal_reference": "IAS 1, paragraph 54(m), the part due within twelve months.",
+          "source": null
+        },
+        {
+          "code": "CL.3",
+          "name": "Current tax liabilities",
+          "sequence": 170,
+          "parent": "CL",
+          "sign": -1,
+          "rules": [{ "kind": "account_code", "code_from": "2130" }],
+          "legal_reference": "IAS 1, paragraph 54(n) — liabilities for current tax.",
+          "source": null
+        },
+        {
+          "code": "CL.4",
+          "name": "Provisions",
+          "sequence": 180,
+          "parent": "CL",
+          "sign": -1,
+          "rules": [{ "kind": "account_code", "code_from": "2150" }],
+          "legal_reference": "IAS 1, paragraph 54(l), the part expected to be settled within twelve months — the current portion of the end-of-service benefits provision.",
+          "source": null
+        },
+        {
+          "code": "NCL",
+          "name": "Non-current liabilities",
+          "sequence": 190,
+          "is_total": true,
+          "plus": ["NCL.1", "NCL.2"],
+          "legal_reference": "IAS 1, paragraph 60.",
+          "source": null
+        },
+        {
+          "code": "NCL.1",
+          "name": "Borrowings and other financial liabilities",
+          "sequence": 200,
+          "parent": "NCL",
+          "sign": -1,
+          "rules": [{ "kind": "account_code", "code_from": "2300" }],
+          "legal_reference": "IAS 1, paragraph 54(m), the part not due within twelve months.",
+          "source": null
+        },
+        {
+          "code": "NCL.2",
+          "name": "Provisions",
+          "sequence": 210,
+          "parent": "NCL",
+          "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "2320", "code_to": "2350" }],
+          "legal_reference": "IAS 1, paragraph 54(l), the part not expected to be settled within twelve months — the end-of-service benefits provision, which this pack's research did not trace to a specific article of the Labour Law and which a reviewer should check.",
+          "source": null
+        },
+        {
+          "code": "TL",
+          "name": "Total liabilities",
+          "sequence": 220,
+          "is_total": true,
+          "plus": ["CL", "NCL"]
+        },
+        {
+          "code": "NA",
+          "name": "Net assets",
+          "sequence": 230,
+          "is_total": true,
+          "plus": ["TA"],
+          "minus": ["TL"],
+          "legal_reference": "IAS 1, paragraph 55 — an additional subtotal. It equals total equity once the year is closed; before, it exceeds equity by the result of the open year.",
+          "source": null
+        },
+        {
+          "code": "EQ",
+          "name": "Equity",
+          "sequence": 240,
+          "is_total": true,
+          "plus": ["EQ.1", "EQ.2", "EQ.3"],
+          "legal_reference": "IAS 1, paragraph 54(r) — equity attributable to owners of the parent, and paragraph 79 for its classes.",
+          "source": null
+        },
+        {
+          "code": "EQ.1",
+          "name": "Share capital",
+          "sequence": 250,
+          "parent": "EQ",
+          "sign": -1,
+          "rules": [{ "kind": "account_code", "code_from": "3000" }],
+          "legal_reference": "IAS 1, paragraph 79(a)(i).",
+          "source": null
+        },
+        {
+          "code": "EQ.2",
+          "name": "Reserves",
+          "sequence": 260,
+          "parent": "EQ",
+          "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "3010", "code_to": "3030" }],
+          "legal_reference": "IAS 1, paragraph 79(b) — the statutory reserve an Omani company is commonly required to build from its annual profit, which this pack's research did not trace to a specific article of the Commercial Companies Law (Royal Decree 18/2019) and which a reviewer should check, and any other reserve.",
+          "source": null
+        },
+        {
+          "code": "EQ.3",
+          "name": "Retained earnings",
+          "sequence": 270,
+          "parent": "EQ",
+          "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "3200", "code_to": "3210" }],
+          "legal_reference": "IAS 1, paragraph 79(b) — retained earnings, after the dividends paid booked beside them.",
+          "source": null
+        }
+      ]
+    },
+    {
+      "code": "OM-IFRS-IS",
+      "kind": "income_statement",
+      "framework": "OM-IFRS",
+      "taxonomy": null,
+      "name": "Income statement — full IFRS Accounting Standards, expenses by nature",
+      "legal_reference": "As with OM-IFRS-SFP, this pack builds on IAS 1 rather than the simplified sections of the IFRS for SMEs Standard. The lines below are the minimum line items of IAS 1, paragraph 82 (profit or loss), by nature (paragraph 102), which a small Omani company's ledger holds without an allocation to functions.",
+      "source": "ifrs-oman-profile",
+      "lines": [
+        {
+          "code": "1",
+          "name": "Revenue",
+          "sequence": 10,
+          "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "4000", "code_to": "4050" }],
+          "legal_reference": "IAS 1, paragraph 82(a).",
+          "source": null
+        },
+        {
+          "code": "2",
+          "name": "Other income",
+          "sequence": 20,
+          "sign": -1,
+          "rules": [{ "kind": "code_range", "code_from": "4700", "code_to": "4790" }],
+          "legal_reference": "IAS 1, paragraph 85 — an additional line item: exchange gains and gains on disposal.",
+          "source": null
+        },
+        {
+          "code": "3",
+          "name": "Cost of sales",
+          "sequence": 30,
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "5000", "code_to": "5030" }],
+          "legal_reference": "IAS 1, paragraph 102 — expenses analysed by their nature.",
+          "source": null
+        },
+        {
+          "code": "4",
+          "name": "Employee benefits expense",
+          "sequence": 40,
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "6100", "code_to": "6140" }],
+          "legal_reference": "IAS 1, paragraph 102 — employee benefits, the end-of-service benefits charge among them.",
+          "source": null
+        },
+        {
+          "code": "5",
+          "name": "Depreciation and amortisation",
+          "sequence": 50,
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "6500", "code_to": "6510" }],
+          "legal_reference": "IAS 1, paragraph 102.",
+          "source": null
+        },
+        {
+          "code": "6",
+          "name": "Other operating expenses",
+          "sequence": 60,
+          "sign": 1,
+          "rules": [
+            { "kind": "code_range", "code_from": "6200", "code_to": "6440" },
+            { "kind": "code_range", "code_from": "6950", "code_to": "6990" }
+          ],
+          "legal_reference": "IAS 1, paragraph 102 — the other expenses by nature, non-recoverable VAT and exchange losses among them.",
+          "source": null
+        },
+        {
+          "code": "7",
+          "name": "Finance costs",
+          "sequence": 70,
+          "sign": 1,
+          "rules": [{ "kind": "code_range", "code_from": "7100", "code_to": "7110" }],
+          "legal_reference": "IAS 1, paragraph 82(b).",
+          "source": null
+        },
+        {
+          "code": "8",
+          "name": "Profit before income tax",
+          "sequence": 80,
+          "is_total": true,
+          "plus": ["1", "2"],
+          "minus": ["3", "4", "5", "6", "7"]
+        },
+        {
+          "code": "9",
+          "name": "Income tax expense",
+          "sequence": 90,
+          "sign": 1,
+          "rules": [{ "kind": "account_code", "code_from": "8000" }],
+          "legal_reference": "IAS 1, paragraph 82(d) — tax expense. The Income Tax Law (Royal Decree 28/2009), which taxes an Omani company at a standard rate of 15%, is outside this VAT-focused pack's research; the account exists for a company to book the charge by hand.",
+          "source": null
+        },
+        {
+          "code": "10",
+          "name": "Profit for the year",
+          "sequence": 100,
+          "is_total": true,
+          "plus": ["8"],
+          "minus": ["9"],
+          "legal_reference": "IAS 1, paragraph 81A(a) — profit or loss. The pack carries no item of other comprehensive income, so it is also the total comprehensive income.",
+          "source": null
+        }
+      ]
+    }
+  ]
+}

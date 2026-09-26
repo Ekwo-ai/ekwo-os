@@ -1,0 +1,534 @@
+[
+  {
+    "code": "OM-S-SR",
+    "name": "Sale, standard-rated, VAT 5%",
+    "description": "A taxable supply of goods or services made in the Sultanate that is not zero-rated or exempt.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 5,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2021-04-16",
+    "legal_reference": "Value Added Tax Law (Royal Decree No. 121/2020), Article 36 — 'the Tax on the import and supply of taxable Goods or Services shall be computed as (5%) five percent of the Taxable Value', in force since the Law commenced on 16 April 2021 (180 days after publication of Royal Decree No. 121/2020 on 18 October 2020, under its own Article Four). Reported in box 1(a) of the VAT return ('Supplies of goods / services taxed at 5%: Total value of standard rated supplies of goods and services in the Sultanate, including deemed supplies. Report the VAT-exclusive value only. VAT is calculated automatically.').",
+    "source": "vat-law",
+    "vat_category": "S",
+    "sequence": 10,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "1a" },
+        { "type": "tax", "account": "2100", "box": "1a2" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "1a", "box_factor": -100 },
+        { "type": "tax", "account": "2100", "box": "1a2", "box_factor": -100 }
+      ]
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "OM-S-ZR-EXPORT",
+    "name": "Sale, zero-rated, export of goods or services",
+    "description": "An export of goods to outside the Sultanate, or a supply of services to a customer with no place of residence in the GCC states who benefits from the service outside those states.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2021-04-16",
+    "legal_reference": "Value Added Tax Law, Article 52 — supplies made to outside the GCC territory are subject to Tax at the zero rate, including 'Export of Goods' (clause 1) and a supply of Services by a taxable Supplier resident in the Sultanate to a Customer with no Place of Residence in the GCC States who benefits from it outside those States (clause 4); Article 53 extends the zero rate to a supply that would otherwise be exempt in the Sultanate once it is supplied to outside the GCC States. Reported in box 3(a) of the VAT return ('Exports: Total value of supplies of goods and services exported on which zero rating for exportation applies. Excludes any out of scope supplies.').",
+    "source": "vat-law",
+    "vat_category": "G",
+    "sequence": 20,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "3a" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "3a", "box_factor": -100 }
+      ]
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "OM-S-ZR-FOOD",
+    "name": "Sale, zero-rated, specified basic food items",
+    "description": "A food item on the list the Chairman of the Tax Authority has specified as zero-rated.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2021-04-16",
+    "legal_reference": "Value Added Tax Law, Article 51(1) — 'Supply of Food items specified by a decision from the Chairman' is subject to Tax at the zero rate. This pack's research located, without opening their full text, two decisions the Tax Authority's own VAT Law & Regulations page lists under this article — Decision No. 65/2021 and Decision No. 89/2022, both captioned 'zero-rate food commodities' — and does not reproduce the list of items itself, which a reviewer should obtain before relying on this code for a specific product. Reported in box 1(b) of the VAT return alongside every other domestic zero-rated supply ('Supplies of goods / services taxed at 0%: Total value of zero-rated supplies of goods and services in the Sultanate, excluding exports of goods or services.').",
+    "source": "vat-law",
+    "vat_category": "Z",
+    "sequence": 30,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "1b" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "1b", "box_factor": -100 }
+      ]
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "OM-S-ZR-MED",
+    "name": "Sale, zero-rated, medicines and medical equipment",
+    "description": "A medicine or medical equipment specified by a decision of the Chairman, issued after coordination with the specialised authorities.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2021-04-16",
+    "legal_reference": "Value Added Tax Law, Article 51(2) — 'Supply of Medicines and medical equipment in accordance with the rules determined by the issuance of a decision by the Chairman and after coordination with the specialized authorities' is subject to Tax at the zero rate. Reported in box 1(b) of the VAT return, as OM-S-ZR-FOOD.",
+    "source": "vat-law",
+    "vat_category": "Z",
+    "sequence": 40,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "1b" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "1b", "box_factor": -100 }
+      ]
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "OM-S-ZR-METAL",
+    "name": "Sale, zero-rated, investment gold, silver and platinum",
+    "description": "Investment-grade gold, silver or platinum.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2021-04-16",
+    "legal_reference": "Value Added Tax Law, Article 51(3) — 'The supply of investment gold, silver, and platinum' is subject to Tax at the zero rate. This pack's research did not open a Regulations article fixing a minimum purity, unlike the 99% the Executive Regulation of Federal Decree-Law No. 8 of 2017 sets for the United Arab Emirates (packs/ae, AE-S-ZR-METAL) — a reviewer should check the Executive Regulations of Decision No. 53/2021 for the equivalent Omani threshold before this code is trusted on a marginal-purity supply. Reported in box 1(b) of the VAT return, as OM-S-ZR-FOOD.",
+    "source": "vat-law",
+    "vat_category": "Z",
+    "sequence": 50,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "1b" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "1b", "box_factor": -100 }
+      ]
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "OM-S-ZR-TRANSPORT",
+    "name": "Sale, zero-rated, international and intra-GCC transport",
+    "description": "International or intra-GCC transport of goods or passengers, related services, and a means of transport designated for the commercial transport of goods or passengers, with its related goods and services.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2021-04-16",
+    "legal_reference": "Value Added Tax Law, Article 51(4) and (5) — 'Supplies of international and intra GCC transport of Goods or passengers, and supply of Services in connection with this transport' and 'The supply of air, sea and land means of transport that are designated for the transportation of passengers and Goods for commercial purposes and the supply of Goods and Services related to transport' are subject to Tax at the zero rate. This code does not carry Article 51(6), rescue planes and rescue and assistance boats, which this pack's research judged too narrow a case to model separately; a reviewer needing it should add a code rather than stretch this one. Reported in box 1(b) of the VAT return, as OM-S-ZR-FOOD.",
+    "source": "vat-law",
+    "vat_category": "Z",
+    "sequence": 60,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "1b" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "1b", "box_factor": -100 }
+      ]
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "OM-S-EX-FIN",
+    "name": "Sale, exempt, financial services",
+    "description": "A financial service exempted under the conditions and controls the Regulations determine.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2021-04-16",
+    "legal_reference": "Value Added Tax Law, Article 47(1) — 'Financial Services' are exempt from Tax, subject to the conditions and controls the Regulations determine; this pack's research did not open the Executive Regulations article that lists which financial services qualify, unlike the explicit margin-versus-fee test packs/ae and packs/sa cite from their own Executive Regulations. Reported in box 1(c) of the VAT return ('Supplies of goods / services tax exempt: Total value of exempt supplies of goods and services in the Sultanate. Excludes any out of scope supplies.').",
+    "source": "vat-law",
+    "vat_category": "E",
+    "sequence": 70,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "1c" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "1c", "box_factor": -100 }
+      ]
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "OM-S-EX-HEALTH",
+    "name": "Sale, exempt, healthcare",
+    "description": "Healthcare services and related goods and services.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2021-04-16",
+    "legal_reference": "Value Added Tax Law, Article 47(2) — 'Healthcare Services and related Goods and Services' are exempt from Tax. Reported in box 1(c) of the VAT return, as OM-S-EX-FIN.",
+    "source": "vat-law",
+    "vat_category": "E",
+    "sequence": 80,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "1c" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "1c", "box_factor": -100 }
+      ]
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "OM-S-EX-EDU",
+    "name": "Sale, exempt, education",
+    "description": "Educational services and related goods and services.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2021-04-16",
+    "legal_reference": "Value Added Tax Law, Article 47(3) — 'Educational Services and related Goods and Services' are exempt from Tax. Reported in box 1(c) of the VAT return, as OM-S-EX-FIN.",
+    "source": "vat-law",
+    "vat_category": "E",
+    "sequence": 90,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "1c" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "1c", "box_factor": -100 }
+      ]
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "OM-S-EX-LAND",
+    "name": "Sale, exempt, undeveloped land",
+    "description": "A supply of bare land not covered by a completed or partially completed building or by civil engineering works.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2021-04-16",
+    "legal_reference": "Value Added Tax Law, Article 47(4) — 'Undeveloped land (bare land)' is exempt from Tax. Reported in box 1(c) of the VAT return, as OM-S-EX-FIN.",
+    "source": "vat-law",
+    "vat_category": "E",
+    "sequence": 100,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "1c" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "1c", "box_factor": -100 }
+      ]
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "OM-S-EX-RESI",
+    "name": "Sale, exempt, resale of a residential property",
+    "description": "A resale of a residential property.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2021-04-16",
+    "legal_reference": "Value Added Tax Law, Article 47(5) — 'Resale of residential properties' is exempt from Tax. Unlike packs/ae and packs/sa, this pack's research found no article granting the zero rate to a first supply of a new residential building: every residential sale this Law names is exempt, not zero-rated, which is why this pack carries no OM-S-ZR-RESI code. Reported in box 1(c) of the VAT return, as OM-S-EX-FIN.",
+    "source": "vat-law",
+    "vat_category": "E",
+    "sequence": 110,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "1c" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "1c", "box_factor": -100 }
+      ]
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "OM-S-EX-TRANSPORT",
+    "name": "Sale, exempt, local passenger transport",
+    "description": "Local passenger transport.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2021-04-16",
+    "legal_reference": "Value Added Tax Law, Article 47(6) — 'Local passenger transport' is exempt from Tax. Reported in box 1(c) of the VAT return, as OM-S-EX-FIN.",
+    "source": "vat-law",
+    "vat_category": "E",
+    "sequence": 120,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "1c" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "1c", "box_factor": -100 }
+      ]
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "OM-S-EX-RENT",
+    "name": "Sale, exempt, residential rental",
+    "description": "Rental of a property for residential purposes.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2021-04-16",
+    "legal_reference": "Value Added Tax Law, Article 47(7) — 'Rental of properties for residential purposes' is exempt from Tax. Reported in box 1(c) of the VAT return, as OM-S-EX-FIN.",
+    "source": "vat-law",
+    "vat_category": "E",
+    "sequence": 130,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "1c" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "1c", "box_factor": -100 }
+      ]
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "OM-S-OS",
+    "name": "Sale, out of scope",
+    "description": "A supply whose place of supply is outside the Sultanate under the place-of-supply rules of Chapter Three of the Law.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "not_subject",
+    "valid_from": "2021-04-16",
+    "legal_reference": "Value Added Tax Law, Articles 21 to 25 (place of supply of goods and services). Not reported on any box of the return: the VAT Taxpayer Guide's own account of box 1(c) and box 3(a) each excludes 'any out of scope supplies' in terms, and no other box of section 1 to 4 names one.",
+    "source": "vat-law",
+    "vat_category": "O",
+    "sequence": 140,
+    "exemption_code": null
+  },
+  {
+    "code": "OM-P-SR",
+    "name": "Purchase, standard-rated, VAT recoverable",
+    "description": "A standard-rated purchase used to make a taxable supply, whose input tax may be recovered in full.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 5,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2021-04-16",
+    "legal_reference": "Value Added Tax Law, Article 41 — a Taxable Person is entitled to deduct the Input Tax for a Tax Period that he bore on Taxable Supplies made to him during that period. Reported in box 6(a) of the VAT return ('Purchases (except import of goods): Column 1: Total value of all purchases (excluding VAT)... Column 2: deductible VAT related to your purchases.').",
+    "source": "vat-law",
+    "vat_category": "S",
+    "sequence": 150,
+    "recoverable": true,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "6a" },
+        { "type": "tax", "account": "1150", "box": "6a2" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "6a", "box_factor": -100 },
+        { "type": "tax", "account": "1150", "box": "6a2", "box_factor": -100 }
+      ]
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "OM-P-BL-ENT",
+    "name": "Purchase, standard-rated, entertainment — input tax not recoverable",
+    "description": "Goods or services used for entertainment — hospitality, accommodation, food and beverage or admission to an event provided otherwise than in the ordinary course of a meeting.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 5,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2021-04-16",
+    "legal_reference": "This pack's research confirmed, from secondary guidance rather than a directly-fetchable article of the Executive Regulations (Decision No. 53/2021, as amended), that input tax on goods or services used for entertainment is blocked from deduction unless later re-supplied — the same restriction packs/ae records at Article 53(1)(a) of its own Executive Regulation and packs/sa at Article 50 of its own Implementing Regulations. The exact article number of the Omani Executive Regulations could not be verified in this pass and a reviewer should locate and cite it before this code is trusted. The Tax is not recoverable and lands on the account of the line it taxes rather than on 1150, and is not reported in any box of the return, whose box 6(a) reports only a purchase whose Input Tax is sought.",
+    "source": "vat-exec-reg",
+    "vat_category": "S",
+    "sequence": 160,
+    "recoverable": false,
+    "postings": {
+      "invoice": [
+        { "type": "base" },
+        { "type": "tax_on_base" }
+      ],
+      "credit_note": [
+        { "type": "base" },
+        { "type": "tax_on_base" }
+      ]
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "OM-P-BL-CAR",
+    "name": "Purchase, standard-rated, motor vehicle available for personal use — input tax not recoverable",
+    "description": "A motor vehicle purchased, rented or leased for use in the business and available for the personal use of any person, other than a vehicle used in a vehicle rental business or registered as an emergency vehicle.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 5,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2021-04-16",
+    "legal_reference": "This pack's research confirmed, from the same secondary guidance as OM-P-BL-ENT and with the same gap in the primary citation, that input tax on a motor vehicle available for personal use is blocked from deduction unless later re-supplied, subject to the exceptions above. The Tax is not recoverable and lands on the account of the line it taxes rather than on 1150, and is not reported in any box of the return.",
+    "source": "vat-exec-reg",
+    "vat_category": "S",
+    "sequence": 170,
+    "recoverable": false,
+    "postings": {
+      "invoice": [
+        { "type": "base" },
+        { "type": "tax_on_base" }
+      ],
+      "credit_note": [
+        { "type": "base" },
+        { "type": "tax_on_base" }
+      ]
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "OM-P-ZR",
+    "name": "Purchase, zero-rated",
+    "description": "A zero-rated purchase from a taxable supplier resident in the Sultanate.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2021-04-16",
+    "legal_reference": "Value Added Tax Law, Article 41 — a zero-rated supply is a Taxable Supply, so its Input Tax may be sought like any other, there being none to deduct at a zero rate. Reported in box 6(a) of the VAT return, whose column 1 asks for 'all purchases... including exempt/standard/zero rated purchases'.",
+    "source": "vat-law",
+    "vat_category": "Z",
+    "sequence": 180,
+    "recoverable": true,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "6a" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "6a", "box_factor": -100 }
+      ]
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "OM-P-EX",
+    "name": "Purchase, exempt",
+    "description": "A purchase of an exempt supply.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "exempt",
+    "valid_from": "2021-04-16",
+    "legal_reference": "Value Added Tax Law, Article 47 — an exempt supply carries no Input Tax to deduct. Not reported on any box: the VAT return's box 6(a) reports a purchase 'including exempt' supplies in its base column for information, but there is no Tax to enter in its deductible-VAT column, and this pack does not report a zero figure into a box no posting otherwise reaches.",
+    "source": "vat-law",
+    "vat_category": "E",
+    "sequence": 190,
+    "postings": {
+      "invoice": [],
+      "credit_note": []
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "OM-P-NR",
+    "name": "Purchase, not registered for VAT",
+    "description": "A purchase from a supplier resident in the Sultanate who is not registered for VAT, so no tax was charged.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "not_subject",
+    "valid_from": "2021-04-16",
+    "legal_reference": "No Tax is charged because the supplier is not a Taxable Person (Value Added Tax Law, Article 1, definition of 'Taxable Person'). Not reported on any box.",
+    "source": "vat-law",
+    "vat_category": "O",
+    "sequence": 200,
+    "postings": {
+      "invoice": [],
+      "credit_note": []
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "OM-P-IMP",
+    "name": "Purchase, import of goods under postponed accounting",
+    "description": "Goods imported into the Sultanate by a taxable person for the purposes of the business, whose import VAT payment is deferred to the VAT return of the tax period in which the goods entered the Sultanate.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 5,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2021-04-16",
+    "legal_reference": "Value Added Tax Law, Article 29 (Tax due upon importation) and Article 86 — 'A Taxable Person may request to defer payment of the tax due upon import until submission of the Tax Return for the Tax Period in which the import took place in accordance with the conditions and by following the procedures determined by the Regulations.' Reported in box 4(a) of the VAT return ('Import of Goods (Postponed payment): Total value of goods imported (excluding VAT) where VAT was postponed on import. VAT is calculated automatically.'), and recovered in box 6(b) ('Import of goods: Column 1: Total value (excluding VAT) of standard rated imports of goods whether or not postponed. Column 2: deductible VAT related to your imported goods.'). This pack does not model an import whose VAT is paid directly to Customs rather than postponed, which the Guide's box 4(b) — a total this pack's postings do not drive — otherwise carries; a reviewer needing that path should add a second code rather than stretch this one.",
+    "source": "vat-law",
+    "vat_category": null,
+    "sequence": 210,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "4a" },
+        { "type": "tax", "account": "1150", "box": "6b2" },
+        { "type": "tax", "factor": -100, "account": "2100", "box": "4a2" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "4a", "box_factor": -100 },
+        { "type": "tax", "account": "1150", "box": "6b2", "box_factor": -100 },
+        { "type": "tax", "factor": -100, "account": "2100", "box": "4a2", "box_factor": -100 }
+      ]
+    },
+    "exemption_code": null
+  },
+  {
+    "code": "OM-P-RC-SVC",
+    "name": "Purchase, imported services under the reverse charge",
+    "description": "A supply of services received by a taxable person resident in the Sultanate from a supplier with no place of residence in the GCC states, who charges no tax on it.",
+    "kind": "vat",
+    "amount_type": "percent",
+    "rate": 5,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2021-04-16",
+    "legal_reference": "Value Added Tax Law, Article 12(2) and Article 20(2) — where a Taxable Person receives Services from a Supplier with no Place of Residence in any GCC State, 'he shall be considered as if he has supplied the Services to himself. Such supply shall be subject to Tax in accordance with the Reverse Calculation (Charge) Mechanism'; Executive Regulations, Article 151, requires the Customer to record the value of the Tax due in Omani Rial. Reported in box 2(b) of the VAT return ('Purchases from outside of GCC subject to Reverse Charge Mechanism: Total value of standard rated supplies received (excluding VAT), which are subject to Reverse Charge Mechanism. VAT is calculated automatically.'), and its deductible share folded into box 6(a) alongside ordinary purchases, whose column 1 the Guide describes as covering 'all purchases... including... reverse charge purchases' — this pack does not duplicate the base value of box 2(b) into box 6(a), only the deductible Tax, because the duplicate base carries no further arithmetic consequence for the return.",
+    "source": "vat-law",
+    "vat_category": null,
+    "sequence": 220,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "2b" },
+        { "type": "tax", "account": "1150", "box": "6a2" },
+        { "type": "tax", "factor": -100, "account": "2100", "box": "2b2" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "2b", "box_factor": -100 },
+        { "type": "tax", "account": "1150", "box": "6a2", "box_factor": -100 },
+        { "type": "tax", "factor": -100, "account": "2100", "box": "2b2", "box_factor": -100 }
+      ]
+    },
+    "exemption_code": null
+  }
+]

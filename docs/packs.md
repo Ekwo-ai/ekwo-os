@@ -275,6 +275,7 @@ says what they say. `ekwo pack describe <cc>` is everything one of them says.
 | [`nl`](../packs/nl/) | Nederland | `17_pack_nl.sql` | nl, en | `community` |
 | [`no`](../packs/no/) | Norge | `66_pack_no.sql` | nb | `community` |
 | [`nz`](../packs/nz/) | New Zealand | `41_pack_nz.sql` | en | `community` |
+| [`om`](../packs/om/) | Oman | `118_pack_om.sql` | ar, en | `community` |
 | [`pa`](../packs/pa/) | Panamá | `107_pack_pa.sql` | es | `community` |
 | [`pe`](../packs/pe/) | Perú | `48_pack_pe.sql` | es, en | `community` |
 | [`ph`](../packs/ph/) | Philippines | `44_pack_ph.sql` | en | `community` |

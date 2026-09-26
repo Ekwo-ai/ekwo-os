@@ -5558,3 +5558,40 @@ not verify against a directly-fetchable primary NBR text**, the same gap
 is built letter by letter on what article 36 of the VAT Law requires a
 return to disclose, not on a transcription of the portal a filer actually
 sees.
+
+## From Oman
+
+`packs/om/`, `community`, seed 118, a Gulf Cooperation Council member outside
+the common system of VAT. `OMR` is added to `00_currencies.sql` at three
+decimals, the same shape `TND` already carries; `OM` is added to
+`00_territories.sql` with `eu_vat_scope` `none`. Two things the format could
+not say, read from the Value Added Tax Law (Royal Decree No. 121/2020) and
+its Executive Regulations (Decision No. 53/2021).
+
+**A margin scheme with no field to carry it.** Article 39 of the Law refers
+the tax on a taxable person's sale of used goods bought from a non-taxable
+person to "the profit margin mechanism as determined in the Regulations" —
+the taxable value is the seller's margin, not the price charged, exactly the
+shape the return's own box 1(f) prints a taxable base and a VAT-due column
+for. No field of `taxes.json` reads a base other than the line's own amount:
+a `percent` rate is applied to a document line, and a margin computed from a
+purchase cost this pack's own postings do not track is a fact about the
+document — its cost basis, its earlier acquisition — that neither `base` nor
+`tax_on_base` can name without a acquisition-cost input no posting carries.
+`packs/om/` carries no tax under this mechanism, and box 1(f)/1(f2) of
+`tax_report.json` stay undriven and are named in the pack's own README
+rather than approximated with an ordinary standard-rated line.
+
+**Two GCC-wide reverse-charge boxes the return prints and holds at zero, for
+a reason that is the Council's and not the core's.** Boxes 1(d), 1(e) and
+2(a) of the live return — supplies and purchases whose tax levy shifts to a
+recipient inside another GCC state — carry, in the Tax Authority's own
+words, "Not activated until GCC rules apply": the intra-GCC verification
+mechanism the Common VAT Agreement conditions them on is not yet in force
+between the Sultanate and another Implementing State. This is not a gap of
+the format the way the margin scheme above is one — `domestic_reverse_charge`
+and `foreign_services_received` both exist and `packs/om/` uses the second
+for a purchase from outside the GCC — it is simply that no invoice this
+pack's research could find yet exercises the intra-GCC branch anywhere in
+the Council, the same footing `packs/ae/` and `packs/sa/` record for the
+same three boxes of their own returns.

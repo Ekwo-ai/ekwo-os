@@ -1,0 +1,170 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "OM",
+  "name": "Oman",
+  "version": "0.1.0",
+  "schema_min": "20260917170000",
+  "seed_sequence": 118,
+  "released_at": "2026-09-26",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "vat-law",
+        "title": "Royal Decree No. 121/2020 Promulgating the Value Added Tax Law (Tax Authority's own English translation)",
+        "publisher": "Sultanate of Oman Tax Authority",
+        "url": "https://tms.taxoman.gov.om/portal/documents/20126/1414820/VAT+Law+.pdf/9cbe8926-066b-d48d-2b7f-14f41b4c19a8?t=1733169733344",
+        "consulted_on": "2026-09-26",
+        "kind": "law"
+      },
+      {
+        "key": "vat-exec-reg",
+        "title": "Decision No. 53/2021 Issuing the Executive Regulations of the Value Added Tax Law, as amended by Decision No. 456/2022, Decision No. 521/2023 and Decision No. 81/2025 (Arabic official text; this pack's research found no Tax Authority English translation of the Executive Regulations, unlike the Law itself)",
+        "publisher": "Sultanate of Oman Tax Authority",
+        "url": "https://tms.taxoman.gov.om/portal/documents/20126/0/Decision+No.+53-2021+Issuing+the+Executive+Regulations+of+the+Value+Added+Tax+%28VAT%29+Law.pdf/6150f022-0d7f-4f9b-831f-8b50c69af118?t=1748250290518",
+        "consulted_on": "2026-09-26",
+        "kind": "regulation"
+      },
+      {
+        "key": "registration-thresholds",
+        "title": "Chairman's Decision Determining the Mandatory and Voluntary Registration Thresholds",
+        "publisher": "Sultanate of Oman Tax Authority",
+        "url": "https://tms.taxoman.gov.om/portal/documents/20126/1414820/Determining+the+Mandatory+and+Voluntary+Registration+Thresholds.pdf/4c5d8dcb-5b81-34ae-a1d2-e3c6d8431988?t=1733169610184",
+        "consulted_on": "2026-09-26",
+        "kind": "regulation"
+      },
+      {
+        "key": "return-filing-guide",
+        "title": "VAT Taxpayer Guide — VAT Return Filing, Version 1, June 2021",
+        "publisher": "Sultanate of Oman Tax Authority",
+        "url": "https://tms.taxoman.gov.om/portal/documents/20126/1414820/VAT+Taxpayer+Guide+-+VAT+Return+Filing.pdf/fae31d0c-e7e7-0014-9f28-a4c506b36614?t=1733169613409",
+        "consulted_on": "2026-09-26",
+        "kind": "guidance"
+      },
+      {
+        "key": "vat-returns-portal",
+        "title": "VAT Returns — the e-service a return is filed on",
+        "publisher": "Sultanate of Oman Tax Authority",
+        "url": "https://tms.taxoman.gov.om/portal/vat-returns",
+        "consulted_on": "2026-09-26",
+        "kind": "portal"
+      },
+      {
+        "key": "fawtara-faq",
+        "title": "Fawtara (E-invoicing) Frequently Asked Questions, last updated 30 June 2026",
+        "publisher": "Sultanate of Oman Tax Authority",
+        "url": "https://tms.taxoman.gov.om/portal/documents/d/taxportal/monthly-faq-s-1-pdf",
+        "consulted_on": "2026-09-26",
+        "kind": "guidance"
+      },
+      {
+        "key": "fawtara-portal",
+        "title": "Fawtara — the national e-invoicing project portal",
+        "publisher": "Sultanate of Oman Tax Authority",
+        "url": "https://tms.taxoman.gov.om/portal/fawtara1",
+        "consulted_on": "2026-09-26",
+        "kind": "portal"
+      },
+      {
+        "key": "ifrs-oman-profile",
+        "title": "IFRS Standards — Application Around the World, Jurisdictional Profile: Oman",
+        "publisher": "IFRS Foundation",
+        "url": "https://www.ifrs.org/content/dam/ifrs/publications/jurisdictions/pdf-profiles/oman-ifrs-profile.pdf",
+        "consulted_on": "2026-09-26",
+        "kind": "guidance"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "OMR",
+    "language": "ar",
+    "rounding_method": "half_up",
+    "closing_style": "retained_earnings",
+    "fiscal_year_default": "calendar",
+    "roles": {
+      "receivable": "1100",
+      "payable": "2000",
+      "suspense": "2990",
+      "rounding": "6990",
+      "retained_earnings": "3200",
+      "sales": "4000",
+      "purchase": "5000",
+      "bank": "1010",
+      "cash": "1000",
+      "fx_gain": "4700",
+      "fx_loss": "6950",
+      "asset_disposal_gain": "4750",
+      "asset_disposal_loss": "6960",
+      "tax_payable": "2110",
+      "tax_receivable": "1155"
+    },
+    "journal_roles": {
+      "sales": "SAL",
+      "purchase": "PUR",
+      "miscellaneous": "GEN",
+      "opening": "OPN"
+    }
+  },
+  "languages": [
+    "en"
+  ],
+  "journals": [
+    { "code": "SAL", "type": "sales", "name": "Sales journal", "sequence": 10 },
+    { "code": "PUR", "type": "purchase", "name": "Purchases journal", "sequence": 20 },
+    { "code": "BNK", "type": "bank", "name": "Bank", "sequence": 30 },
+    { "code": "CSH", "type": "cash", "name": "Petty cash", "sequence": 40 },
+    { "code": "GEN", "type": "general", "name": "General journal", "sequence": 50 },
+    { "code": "OPN", "type": "opening", "name": "Opening balances", "sequence": 60 }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Oman reference chart of accounts",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": [
+        "OM-IFRS-SFP",
+        "OM-IFRS-IS"
+      ],
+      "legal_reference": "There is no legal chart of accounts in the Sultanate, as far as this pack's research could establish: neither the Tax Authority nor the Capital Market Authority (CMA) publishes one. What is prescribed is the reporting framework, and unlike packs/ae and packs/sa this is not the IFRS for SMEs Accounting Standard: the IFRS Foundation's own Jurisdictional Profile for Oman records that the Sultanate has not adopted the IFRS for SMEs Standard and that 'For those SMEs that are not required to use the IFRS for SMEs Accounting Standard, what other accounting framework do they use? Full IFRS Standards' — every company, listed or not, prepares under full IFRS Accounting Standards. The Profile traces the commitment to three texts this pack's research could not open at a directly-fetchable primary source in this pass — Article 282 of the Executive Regulation of the Capital Market Law (Royal Decree 80/1998), which binds an issuer; Article 30 of the Law of Organising the Accountancy and Auditing Profession (Royal Decree 77/1986), which binds an accountant preparing any company's accounts until the Minister of Commerce and Industry says otherwise; and Article 79 of the Income Tax Law with Article 61 of its Executive Regulations (Royal Decree 47/1981), which is limited to finance leases. A reviewer who can open uaelegislation-equivalent primary Omani legislation should check these three articles before this paragraph is trusted on faith in the IFRS Foundation's own secondary reading. The chart itself is this pack's own construction — four digits, blocked so that each range reaches one line item of the statement of financial position and the income statement below, IAS 1 and not the simplified sections of the IFRS for SMEs Standard — carrying the accounts an Omani company actually keeps: VAT input and output tax, the amount payable to and refundable by the Tax Authority, import VAT self-assessed under the postponed accounting Article 86 permits, corporate income tax under the Income Tax Law (Royal Decree 28/2009, standard rate 15%), and an end-of-service benefits provision under the Labour Law, which this pack's research did not trace to a specific article and which a reviewer should check.",
+      "source": "ifrs-oman-profile"
+    }
+  ],
+  "documents": {
+    "numbering": "sequential",
+    "number_format": "{CODE}-{YYYY}-{NNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "earliest_of_delivery_or_payment",
+    "references": {
+      "numbering": {
+        "legal_reference": "Executive Regulations (Decision No. 53/2021, as amended), Article 144(3) — a Tax Invoice carries 'the sequential number of the Tax Invoice' (الرقم التسلسلي للفاتورة الضريبية). The article asks for a running, identifying number and not, in the text this pack's research could open, that the series carry no gap, which is why the style is `sequential` and not a gapless one. The pattern in `number_format` is one a business may choose.",
+        "source": "vat-exec-reg"
+      },
+      "tax_point": {
+        "legal_reference": "Value Added Tax Law (Royal Decree No. 121/2020), Article 26 — 'The Tax on the supply of Goods or Services shall be due on any of the following dates whichever is earlier: 1. Date of the supply. 2. Date of issuance of the Tax Invoice. 3. Date of partial or full receipt of the Consideration, and to the extent of the received amount.' That is a three-way earliest test — supply, invoice, payment — and the closed vocabulary of this field has no value for three triggers at once. `earliest_of_delivery_or_payment` is the nearest of the five and is what the rule reduces to in the ordinary case, exactly the gap packs/ae and packs/sa record for the same three-way wording in Federal Decree-Law No. 8 of 2017 and the Common VAT Agreement; a supply invoiced ahead of delivery or payment is the case this approximation misses.",
+        "source": "vat-law"
+      }
+    },
+    "mentions": [
+      {
+        "code": "reverse_charge",
+        "applies_when": "reverse_charge",
+        "text": "Reverse charge: the Customer is liable to account for the Value Added Tax due on this supply, and must record its value in Omani Rial, under Article 20 and Article 151 of the Executive Regulations of the Value Added Tax Law.",
+        "sequence": 10,
+        "legal_reference": "Executive Regulations, Article 151 — 'The Customer who is liable for the payment of Tax must, in the cases where the Reverse Calculation (Charge) mechanism applies, record in the Tax Invoice issued in his favour by the Supplier who has no Place of Residence in the Sultanate the value of the Tax due on the supply in Omani Rial, and the supply is subject to the Reverse Calculation (Charge) mechanism.' This pack's research found no article requiring a printed sentence on the invoice itself, unlike the Saudi Implementing Regulations packs/sa records for the same case; the wording above is this pack's own, addressed to whoever reads the invoice rather than transcribed from the text.",
+        "source": "vat-exec-reg"
+      }
+    ]
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "obligation": "none",
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "At released_at no statute obliges an Omani taxable person to exchange electronic invoices: the Tax Authority's own Fawtara FAQ, updated 30 June 2026, answers 'Are there released or upcoming regulations for e-invoicing compliance?' with 'Regulation for e-invoicing will be released in due time' — the executive legislation the FAQ elsewhere calls 'the upcoming legislation' has not been issued. What exists instead is a project, not yet a law: the Tax Authority became an OpenPeppol Authority and published the PINT OM technical specification (Billing and Self-Billing) in 2026, built on a five-corner Peppol model in which an accredited Service Provider (Corner 2 or 3) validates and exchanges the structured invoice and reports tax data to the Authority (Corner 5); the FAQ's own timeline answer is narrower than the four-phase calendar this pack's research found repeated on unofficial tax-technology sites, and this pack does not carry a date no official text confirms: 'The first rollout is in August 2026. Subsequent rollouts will follow according to the timeline that will be prescribed in the legislation.' That first rollout is a named, individually-notified group of about 100 large taxpayers, checked one VATIN at a time at the Authority's own 'rollout-checking' service — not a rule reaching every registrant, which is why `obligation` is `none` and not `mandatory` with a date this pack cannot cite. No brick of packages/formats writes PINT OM (a UBL 2.1 profile derived from Peppol BIS Billing 3.0 with an Oman-specific data dictionary) or talks to an Accredited Service Provider, so the four fields above would describe a capability this pack does not have even for the taxpayers already onboarded. The Peppol participant identifier scheme list carries one Omani entry, ICD 0248, 'Oman Value Added Tax Identification Number (VATIN)' — the figure a party would be addressed by if this pack modelled the network — named here and not in `party_scheme` or `vat_scheme` because nothing yet obliges its use. docs/international.md carries the rest of what the core cannot say about a project still short of its own legislation.",
+    "source": "fawtara-faq"
+  }
+}
