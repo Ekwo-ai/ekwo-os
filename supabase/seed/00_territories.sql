@@ -1323,3 +1323,28 @@ on conflict (code) do update set
   eu_vat_to       = excluded.eu_vat_to,
   vat_prefix      = excluded.vat_prefix,
   legal_reference = excluded.legal_reference;
+
+
+-- ---------------------------------------------------------------------------
+-- The row — China
+--
+-- A State of East Asia levies a value added tax of its own, and the common
+-- system of VAT of Directive 2006/112/EC does not reach it: what this table
+-- says of it is what it says of Japan and Korea. China levies 增值税 under
+-- the Value-Added Tax Law of the People's Republic of China, adopted on
+-- 25 December 2024 and in force since 1 January 2026, whose article 10 sets
+-- the rates at 13 %, 9 % and 6 %, and zero on exports.
+-- ---------------------------------------------------------------------------
+
+insert into territories (code, code_source, name, parent_code, eu_vat_scope, eu_vat_from, eu_vat_to, vat_prefix, legal_reference) values
+  ('CN', 'iso_3166_1', 'China', null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. China levies a value added tax of its own under the Value-Added Tax Law of the People''s Republic of China (中华人民共和国增值税法, in force since 1 January 2026), whose article 10 sets the rates at 13 %, 9 % and 6 %, and zero on exports.')
+on conflict (code) do update set
+  code_source     = excluded.code_source,
+  name            = excluded.name,
+  parent_code     = excluded.parent_code,
+  eu_vat_scope    = excluded.eu_vat_scope,
+  eu_vat_from     = excluded.eu_vat_from,
+  eu_vat_to       = excluded.eu_vat_to,
+  vat_prefix      = excluded.vat_prefix,
+  legal_reference = excluded.legal_reference;

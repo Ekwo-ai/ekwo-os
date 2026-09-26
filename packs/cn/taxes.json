@@ -1,0 +1,836 @@
+[
+  {
+    "code": "CN-S-13-G",
+    "name": "销售货物 13%",
+    "description": "一般计税方法：销售货物、进口货物以外的13%税率应税交易中的货物部分",
+    "kind": "vat",
+    "rate": 13,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "legal_reference": "中华人民共和国增值税法第十条第一项 — 纳税人销售货物、加工修理修配服务、有形动产租赁服务，进口货物，除第二项、第四项、第五项规定外，税率为百分之十三. The sale base is reported on line 2 (应税货物销售额) of 增值税及附加税费申报表（一般纳税人适用）, inside line 1, and the output tax on line 11 (销项税额). The same 13% rate applied before 2026 under the repealed 增值税暂行条例 as amended; this code starts on the day the VAT Law took effect (article 38) and carries no earlier period.",
+    "source": "vat-law",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "2"
+        },
+        {
+          "type": "tax",
+          "account": "22210107",
+          "box": "11"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "2",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "22210107",
+          "box": "11",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 10
+  },
+  {
+    "code": "CN-S-13-S",
+    "name": "加工修理修配、有形动产租赁 13%",
+    "description": "一般计税方法：加工修理修配服务、有形动产租赁服务",
+    "kind": "vat",
+    "rate": 13,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "legal_reference": "中华人民共和国增值税法第十条第一项 — processing, repair and replacement services and the leasing of tangible movable property are taxed at 13%. Reported on line 3 (应税劳务销售额) of the general-taxpayer return: 国家税务总局公告2026年第6号 附件1 redefines line 3 as the sales of taxable services (including 加工修理修配服务), intangible assets and immovable property taxed at an applicable rate; output tax on line 11.",
+    "source": "vat-law",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "3"
+        },
+        {
+          "type": "tax",
+          "account": "22210107",
+          "box": "11"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "3",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "22210107",
+          "box": "11",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 20
+  },
+  {
+    "code": "CN-S-9-G",
+    "name": "销售货物 9%",
+    "description": "一般计税方法：农产品、食用植物油、食用盐、自来水、暖气、天然气、图书报纸、饲料化肥农药农机农膜等货物",
+    "kind": "vat",
+    "rate": 9,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "conditions": [
+      "supply_nature"
+    ],
+    "legal_reference": "中华人民共和国增值税法第十条第二项 — the goods listed in its four sub-items (agricultural products, edible vegetable oil and salt; tap water, heating, gas and the other utilities listed; books, newspapers, magazines, audio-visual and electronic publications; feed, fertiliser, pesticides, agricultural machinery and film) are taxed at 9%. 财政部 税务总局公告2026年第9号 附件1 defines their scope; this pack has not transcribed it. Line 2 and line 11 of the general-taxpayer return.",
+    "source": "vat-law",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "2"
+        },
+        {
+          "type": "tax",
+          "account": "22210107",
+          "box": "11"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "2",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "22210107",
+          "box": "11",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 30
+  },
+  {
+    "code": "CN-S-9-S",
+    "name": "交通运输、邮政、基础电信、建筑、不动产 9%",
+    "description": "一般计税方法：交通运输、邮政、基础电信、建筑、不动产租赁服务，销售不动产，转让土地使用权",
+    "kind": "vat",
+    "rate": 9,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "conditions": [
+      "supply_nature"
+    ],
+    "legal_reference": "中华人民共和国增值税法第十条第二项 — transport, postal, basic telecommunications, construction and immovable-property leasing services, the sale of immovable property and the transfer of land use rights are taxed at 9%. Line 3 (as redefined by 国家税务总局公告2026年第6号) and line 11 of the general-taxpayer return.",
+    "source": "vat-law",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "3"
+        },
+        {
+          "type": "tax",
+          "account": "22210107",
+          "box": "11"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "3",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "22210107",
+          "box": "11",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 40
+  },
+  {
+    "code": "CN-S-6",
+    "name": "销售服务、无形资产 6%",
+    "description": "一般计税方法：第十条第一项、第二项、第五项以外的服务和无形资产",
+    "kind": "vat",
+    "rate": 6,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "legal_reference": "中华人民共和国增值税法第十条第三项 — services and intangible assets not covered by items 1, 2 and 5 of the article are taxed at 6%. Line 3 and line 11 of the general-taxpayer return.",
+    "source": "vat-law",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "3"
+        },
+        {
+          "type": "tax",
+          "account": "22210107",
+          "box": "11"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "3",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "22210107",
+          "box": "11",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 50
+  },
+  {
+    "code": "CN-S-0-EXP-G",
+    "name": "出口货物 零税率",
+    "description": "出口货物，适用免、抵、退税办法",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2026-01-01",
+    "conditions": [
+      "transport_evidence"
+    ],
+    "legal_reference": "中华人民共和国增值税法第十条第四项 — 纳税人出口货物，税率为零；国务院另有规定的除外; 增值税法实施条例第八条 defines an exported good as one declared to Customs, physically leaving the country and sold to a foreign entity or individual. Article 33 of the Law and article 47 of 增值税法实施条例 make the zero rate a refund procedure: the exporter declares 退（免）税 to the tax office, computed at the export refund rate the State Council sets per product (出口退税率), by the 免抵退 method for a producer or the 免退 method for a trading company. Reported on line 7 (免、抵、退办法出口销售额) of the general-taxpayer return. The refund itself — its rate per product, the 免抵退 computation of line 15 and the separate refund declaration — is not modelled by this pack; see the README.",
+    "source": "vat-law",
+    "vat_category": "G",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "7"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "7",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 60
+  },
+  {
+    "code": "CN-S-0-EXP-S",
+    "name": "跨境销售服务、无形资产 零税率",
+    "description": "境内单位和个人跨境销售国务院规定范围内的服务、无形资产",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2026-01-01",
+    "conditions": [
+      "supply_nature"
+    ],
+    "legal_reference": "中华人民共和国增值税法第十条第五项 — cross-border sales of the services and intangible assets within the scope the State Council sets are zero-rated; 增值税法实施条例第九条 lists them — R&D, energy performance contracting, design, film and broadcast production, software, circuit design and testing, information systems, business process management and offshore outsourcing services sold to a foreign entity and wholly consumed abroad; technology transferred to a foreign entity and wholly used abroad; international and space transport and repair services for foreign parties. A general-method taxpayer declares them under the 免抵退 method and reports them on line 7, the column the return's own instructions reserve for zero-rated sales under that method (line 10, as redefined by 国家税务总局公告2026年第6号, carries only the zero-rated services that are not under it). Which services qualify, and whether a given seller is under 免抵退 or 免税, is not a fact of the ledger: to be reviewed case by case.",
+    "source": "vat-law",
+    "vat_category": "G",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "7"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "7",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 70
+  },
+  {
+    "code": "CN-S-EXO-G",
+    "name": "免税货物",
+    "description": "免征增值税的货物，如农业生产者销售的自产农产品",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2026-01-01",
+    "conditions": [
+      "supply_nature"
+    ],
+    "legal_reference": "中华人民共和国增值税法第二十四条 — the article lists nine items exempt from VAT, among them (item 1) agricultural products sold by the agricultural producer who grew them and (item 3) antique books; 财政部 税务总局公告2026年第10号 adds time-limited exemptions. Article 22 item 2 denies the deduction of the input tax attributable to an exempt item. Reported on line 9 (免税货物销售额), inside line 8. A seller may waive an exemption (article 27), which is a fact about the seller this code does not record.",
+    "source": "vat-law",
+    "vat_category": "E",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "9"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "9",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 80
+  },
+  {
+    "code": "CN-S-EXO-S",
+    "name": "免税服务",
+    "description": "免征增值税的服务，如技术转让、技术开发及相关技术咨询、技术服务",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2026-01-01",
+    "conditions": [
+      "supply_nature",
+      "buyer_certificate"
+    ],
+    "legal_reference": "中华人民共和国增值税法第二十四条 and 财政部 税务总局公告2026年第10号 第二条第（二）项 — among the services exempt from 1 January 2026 to 31 December 2027, item 2: technology transfer, technology development and the technical consultancy and services related to them, provided they are invoiced together with the transfer or development and the written contract has been recognised by the provincial science and technology or industry authority. Reported on line 10 (免税劳务销售额), inside line 8.",
+    "source": "vat-bridge",
+    "vat_category": "E",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "10"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "10",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 90
+  },
+  {
+    "code": "CN-S-3-SIMPLE",
+    "name": "简易计税 3%（一般纳税人）",
+    "description": "一般纳税人按规定选择简易计税方法的应税交易",
+    "kind": "vat",
+    "rate": 3,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "conditions": [
+      "supply_nature"
+    ],
+    "legal_reference": "中华人民共和国增值税法第十一条 — the levy rate of the simplified method is 3%; 财政部 税务总局公告2026年第10号 第三条第（三）项 lists the transactions for which a general taxpayer may elect it (public transport, among others). Reported on line 5 (按简易办法计税销售额) and line 21 (简易计税办法计算的应纳税额) of the general-taxpayer return; booked on 应交税费—简易计税 as 财会〔2016〕22号 requires. Article 22 item 1 of the Law denies the deduction of the input tax attributable to it.",
+    "source": "vat-bridge",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "5"
+        },
+        {
+          "type": "tax",
+          "account": "222108",
+          "box": "21"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "5",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "222108",
+          "box": "21",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 100
+  },
+  {
+    "code": "CN-S-NA",
+    "name": "不征收增值税",
+    "description": "不属于应税交易，如存款利息、依法被征收征用取得的补偿",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "not_subject",
+    "valid_from": "2026-01-01",
+    "legal_reference": "中华人民共和国增值税法第六条 — four receipts are not taxable transactions and bear no VAT: wages of an employee, administrative fees and government funds collected, compensation for expropriation, and interest on deposits. Reported on no line of the return.",
+    "source": "vat-law",
+    "vat_category": "O",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        }
+      ]
+    },
+    "sequence": 110
+  },
+  {
+    "code": "CN-S-SS-3",
+    "name": "小规模纳税人 3%",
+    "description": "小规模纳税人简易计税方法，征收率3%",
+    "kind": "vat",
+    "rate": 3,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "conditions": [
+      "seller_threshold"
+    ],
+    "legal_reference": "中华人民共和国增值税法第八条第二款、第九条、第十一条 — a small-scale taxpayer (annual taxable sales not above 5 million yuan) computes VAT on the simplified method at the 3% levy rate, with no deduction of input tax. Booked on 应交税费—应交增值税, the one detail account 财会〔2016〕22号 gives a small-scale taxpayer. It is declared on 增值税及附加税费申报表（小规模纳税人适用）, a different form from the one this pack models, so the code reports on no box here; see the README. Below the threshold of 财政部 税务总局公告2026年第10号 第一条 (100 000 yuan a month, 300 000 a quarter) the sales are exempt, which is a total over a period and not a fact of one invoice.",
+    "source": "vat-law",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "222101"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "222101"
+        }
+      ]
+    },
+    "sequence": 120
+  },
+  {
+    "code": "CN-S-SS-1",
+    "name": "小规模纳税人 减按1%",
+    "description": "小规模纳税人3%征收率的应税交易，减按1%征收（2026年1月1日至2027年12月31日）",
+    "kind": "vat",
+    "rate": 1,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "valid_to": "2027-12-31",
+    "conditions": [
+      "seller_threshold",
+      "supply_nature"
+    ],
+    "legal_reference": "财政部 税务总局公告2026年第10号 第三条第（三）项第6点 — from 1 January 2026 to 31 December 2027, a small-scale taxpayer's taxable transactions other than the sale or leasing of immovable property and the transfer of land use rights, taxable at the 3% levy rate, are taxed at 1%; 国家税务总局公告2026年第4号 第四条 requires the invoice to be issued at 1%, unless the seller waives the reduction for all or part of its sales and issues a special VAT invoice at 3%. Same account and same form as CN-S-SS-3.",
+    "source": "vat-bridge",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "222101"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "222101"
+        }
+      ]
+    },
+    "sequence": 130
+  },
+  {
+    "code": "CN-P-13",
+    "name": "购进货物、加工修理修配、有形动产租赁 13%（可抵扣）",
+    "description": "凭增值税专用发票等扣税凭证抵扣的进项税额",
+    "kind": "vat",
+    "rate": 13,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "legal_reference": "中华人民共和国增值税法第十条第一项 (the rate or levy rate the supplier charges) and 第十六条 — input tax is deducted on the strength of a VAT deduction voucher (增值税扣税凭证); 增值税法实施条例第十一条 names them, the special VAT invoice (增值税专用发票) first among them, and 第十二条第一项 deducts the tax stated on it. Reported on line 12 (进项税额) of the general-taxpayer return; booked on 应交税费—应交增值税（进项税额）. An ordinary invoice (普通发票) carries no deductible tax and is booked with a non-deductible code instead.",
+    "source": "vat-law",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "22210101",
+          "box": "12"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "22210101",
+          "box": "12",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 200
+  },
+  {
+    "code": "CN-P-9",
+    "name": "购进 9% 税率项目（可抵扣）",
+    "description": "凭增值税专用发票等扣税凭证抵扣的进项税额",
+    "kind": "vat",
+    "rate": 9,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "legal_reference": "中华人民共和国增值税法第十条第二项 (the rate or levy rate the supplier charges) and 第十六条 — input tax is deducted on the strength of a VAT deduction voucher (增值税扣税凭证); 增值税法实施条例第十一条 names them, the special VAT invoice (增值税专用发票) first among them, and 第十二条第一项 deducts the tax stated on it. Reported on line 12 (进项税额) of the general-taxpayer return; booked on 应交税费—应交增值税（进项税额）. An ordinary invoice (普通发票) carries no deductible tax and is booked with a non-deductible code instead.",
+    "source": "vat-law",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "22210101",
+          "box": "12"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "22210101",
+          "box": "12",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 210
+  },
+  {
+    "code": "CN-P-6",
+    "name": "购进服务、无形资产 6%（可抵扣）",
+    "description": "凭增值税专用发票等扣税凭证抵扣的进项税额",
+    "kind": "vat",
+    "rate": 6,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "legal_reference": "中华人民共和国增值税法第十条第三项 (the rate or levy rate the supplier charges) and 第十六条 — input tax is deducted on the strength of a VAT deduction voucher (增值税扣税凭证); 增值税法实施条例第十一条 names them, the special VAT invoice (增值税专用发票) first among them, and 第十二条第一项 deducts the tax stated on it. Reported on line 12 (进项税额) of the general-taxpayer return; booked on 应交税费—应交增值税（进项税额）. An ordinary invoice (普通发票) carries no deductible tax and is booked with a non-deductible code instead.",
+    "source": "vat-law",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "22210101",
+          "box": "12"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "22210101",
+          "box": "12",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 220
+  },
+  {
+    "code": "CN-P-3",
+    "name": "取得小规模纳税人3%专用发票（可抵扣）",
+    "description": "凭增值税专用发票等扣税凭证抵扣的进项税额",
+    "kind": "vat",
+    "rate": 3,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "legal_reference": "中华人民共和国增值税法第十一条 (the rate or levy rate the supplier charges) and 第十六条 — input tax is deducted on the strength of a VAT deduction voucher (增值税扣税凭证); 增值税法实施条例第十一条 names them, the special VAT invoice (增值税专用发票) first among them, and 第十二条第一项 deducts the tax stated on it. Reported on line 12 (进项税额) of the general-taxpayer return; booked on 应交税费—应交增值税（进项税额）. An ordinary invoice (普通发票) carries no deductible tax and is booked with a non-deductible code instead.",
+    "source": "vat-law",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "22210101",
+          "box": "12"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "22210101",
+          "box": "12",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 230
+  },
+  {
+    "code": "CN-P-1",
+    "name": "取得小规模纳税人1%专用发票（可抵扣）",
+    "description": "凭增值税专用发票等扣税凭证抵扣的进项税额",
+    "kind": "vat",
+    "rate": 1,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "valid_to": "2027-12-31",
+    "legal_reference": "中华人民共和国增值税法第十一条 and 财政部 税务总局公告2026年第10号 第三条第（三）项第6点 (the rate or levy rate the supplier charges) and 第十六条 — input tax is deducted on the strength of a VAT deduction voucher (增值税扣税凭证); 增值税法实施条例第十一条 names them, the special VAT invoice (增值税专用发票) first among them, and 第十二条第一项 deducts the tax stated on it. Reported on line 12 (进项税额) of the general-taxpayer return; booked on 应交税费—应交增值税（进项税额）. An ordinary invoice (普通发票) carries no deductible tax and is booked with a non-deductible code instead.",
+    "source": "vat-law",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "22210101",
+          "box": "12"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "22210101",
+          "box": "12",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 240
+  },
+  {
+    "code": "CN-P-6-ND",
+    "name": "购进餐饮、居民日常服务、娱乐服务 6%（不得抵扣）",
+    "description": "购进并直接用于消费的餐饮服务、居民日常服务和娱乐服务",
+    "kind": "vat",
+    "rate": 6,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "conditions": [
+      "supply_nature"
+    ],
+    "legal_reference": "中华人民共和国增值税法第二十二条第五项 — the input tax on catering, everyday residential and entertainment services bought and directly consumed may not be deducted. The tax is part of the cost of the line (tax_on_base) and reaches no line of the return.",
+    "source": "vat-law",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax_on_base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax_on_base"
+        }
+      ]
+    },
+    "sequence": 250
+  },
+  {
+    "code": "CN-P-13-ND",
+    "name": "购进用于集体福利或个人消费 13%（不得抵扣）",
+    "description": "购进并用于集体福利或者个人消费的货物",
+    "kind": "vat",
+    "rate": 13,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "conditions": [
+      "supply_nature"
+    ],
+    "legal_reference": "中华人民共和国增值税法第二十二条第四项 — the input tax on goods, services, intangible assets and immovable property bought and used for collective welfare or personal consumption may not be deducted. The tax is part of the cost of the line (tax_on_base) and reaches no line of the return.",
+    "source": "vat-law",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax_on_base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax_on_base"
+        }
+      ]
+    },
+    "sequence": 260
+  },
+  {
+    "code": "CN-P-FS-6",
+    "name": "境外单位提供服务 代扣代缴 6%",
+    "description": "境外单位和个人在境内发生应税交易，购买方为扣缴义务人",
+    "kind": "vat",
+    "rate": 6,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2026-01-01",
+    "legal_reference": "中华人民共和国增值税法第十五条 — where a foreign entity or individual makes a taxable transaction within China, the buyer is the withholding agent, and withholds the sales amount multiplied by the rate; 增值税法实施条例第十二条第三项 lets the buyer deduct the tax stated on the tax payment certificate (完税凭证) of a service or intangible asset bought from abroad. One posting books the deductible input tax (line 12); the other books the tax withheld on 应交税费—代扣代交增值税, which the withholding agent pays under article 30 paragraph 3 and which reaches no line of the buyer's own return. The supplier is owed the price net of nothing: the two postings cancel on the document total.",
+    "source": "vat-law",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "22210101",
+          "box": "12"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "222110"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "22210101",
+          "box": "12",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "222110"
+        }
+      ]
+    },
+    "sequence": 270
+  },
+  {
+    "code": "CN-P-EXO",
+    "name": "购进免税项目",
+    "description": "取得免税发票的购进，或从小规模纳税人取得未注明税额的普通发票",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "exempt",
+    "valid_from": "2026-01-01",
+    "legal_reference": "中华人民共和国增值税法第二十三条、第二十四条 — the supplier's sale is exempt, or below the small-scale threshold, so the invoice states no tax the buyer could deduct. Reported on no line of the general-taxpayer return.",
+    "source": "vat-law",
+    "vat_category": "E",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        }
+      ]
+    },
+    "sequence": 280
+  },
+  {
+    "code": "CN-P-NA",
+    "name": "不征收增值税的支出",
+    "description": "不属于应税交易的支出，如工资、行政事业性收费",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "not_subject",
+    "valid_from": "2026-01-01",
+    "legal_reference": "中华人民共和国增值税法第六条 — wages, administrative fees and government funds, compensation for expropriation and deposit interest are not taxable transactions. Reported on no line of the return.",
+    "source": "vat-law",
+    "vat_category": "O",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        }
+      ]
+    },
+    "sequence": 290
+  }
+]

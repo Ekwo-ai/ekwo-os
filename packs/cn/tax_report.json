@@ -1,0 +1,197 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "CN-VAT-GENERAL",
+  "name": "增值税及附加税费申报表（一般纳税人适用） — VAT and surcharges return, general taxpayer, main table",
+  "period": [
+    "month",
+    "quarter"
+  ],
+  "valid_from": "2026-01-01",
+  "legal_reference": "中华人民共和国增值税法第三十条 — the taxable period is ten days, fifteen days, one month or one quarter, fixed for each taxpayer by the competent tax office according to the amount of tax it owes; 增值税法实施条例第四十三条 limits the quarter to small-scale taxpayers, banks, finance companies, trust companies and credit cooperatives among general taxpayers, and whoever the State Council's tax and finance authorities add. This pack carries the month and the quarter, and proposes neither: the period is assigned by the tax office, not chosen. The form is the main table of 增值税及附加税费申报表（一般纳税人适用）, issued by 国家税务总局公告2021年第20号 and still in use, with the filling instructions 国家税务总局公告2026年第6号 adjusts for the VAT Law (\"增值税纳税人暂使用《增值税及附加税费申报表（一般纳税人适用）》及其附列资料…有关栏次按本公告调整后的填报要求填写\"). Its four schedules and the surcharge lines 39 to 41 are not modelled; see the README. Amounts are in yuan to the fen (\"金额单位：元（列至角分）\"), so the form carries no rounding of its own.",
+  "source": "vat-law",
+  "deadline": {
+    "rule": "day_of_month_after_period",
+    "day": 15,
+    "legal_reference": "中华人民共和国增值税法第三十条第二款 — a taxpayer on a one-month or one-quarter period files and pays within fifteen days of its end (\"自期满之日起十五日内申报纳税\"). A deadline falling on a public holiday is moved by the State Taxation Administration's yearly filing calendar, which this rule does not know.",
+    "source": "vat-law"
+  },
+  "boxes": [
+    {
+      "box": "2",
+      "kind": "base",
+      "name": "其中：应税货物销售额",
+      "sequence": 10,
+      "legal_reference": "增值税及附加税费申报表（一般纳税人适用），第2栏 — the sales of taxable goods at an applicable rate, a part of line 1.",
+      "source": "form-general"
+    },
+    {
+      "box": "3",
+      "kind": "base",
+      "name": "应税劳务销售额",
+      "sequence": 20,
+      "legal_reference": "增值税及附加税费申报表（一般纳税人适用），第3栏 — as redefined by 国家税务总局公告2026年第6号 附件1: the sales of taxable services (including processing, repair and replacement services), intangible assets and immovable property at an applicable rate, a part of line 1.",
+      "source": "form-general"
+    },
+    {
+      "box": "1",
+      "kind": "total",
+      "name": "（一）按适用税率计税销售额",
+      "sequence": 30,
+      "plus": [
+        "2",
+        "3"
+      ],
+      "print_sequence": 5,
+      "legal_reference": "增值税及附加税费申报表（一般纳税人适用），第1栏 — the sales taxed at an applicable rate. Line 1 is lines 2 and 3 plus line 4 (纳税检查调整的销售额, adjustments found by a tax inspection), which is not a fact of the ledger and is not declared here.",
+      "source": "form-general"
+    },
+    {
+      "box": "5",
+      "kind": "base",
+      "name": "（二）按简易办法计税销售额",
+      "sequence": 40,
+      "legal_reference": "增值税及附加税费申报表（一般纳税人适用），第5栏 — the sales taxed on the simplified method (line 6, the inspection adjustment inside it, is not declared).",
+      "source": "form-general"
+    },
+    {
+      "box": "7",
+      "kind": "base",
+      "name": "（三）免、抵、退办法出口销售额",
+      "sequence": 50,
+      "legal_reference": "增值税及附加税费申报表（一般纳税人适用），第7栏 — the export sales declared under the exemption-credit-refund method.",
+      "source": "form-general"
+    },
+    {
+      "box": "9",
+      "kind": "base",
+      "name": "其中：免税货物销售额",
+      "sequence": 60,
+      "legal_reference": "增值税及附加税费申报表（一般纳税人适用），第9栏 — the sales of exempt goods, a part of line 8.",
+      "source": "form-general"
+    },
+    {
+      "box": "10",
+      "kind": "base",
+      "name": "免税劳务销售额",
+      "sequence": 70,
+      "legal_reference": "增值税及附加税费申报表（一般纳税人适用），第10栏 — as redefined by 国家税务总局公告2026年第6号 附件1: the exempt and zero-rated sales of services, intangible assets and immovable property, excluding zero-rated sales under the exemption-credit-refund method.",
+      "source": "form-general"
+    },
+    {
+      "box": "8",
+      "kind": "total",
+      "name": "（四）免税销售额",
+      "sequence": 80,
+      "plus": [
+        "9",
+        "10"
+      ],
+      "print_sequence": 55,
+      "legal_reference": "增值税及附加税费申报表（一般纳税人适用），第8栏 — lines 9 and 10, the exempt sales.",
+      "source": "form-general"
+    },
+    {
+      "box": "11",
+      "kind": "tax",
+      "name": "销项税额",
+      "sequence": 90,
+      "legal_reference": "增值税及附加税费申报表（一般纳税人适用），第11栏 — the output tax of the period.",
+      "source": "form-general"
+    },
+    {
+      "box": "12",
+      "kind": "tax",
+      "name": "进项税额",
+      "sequence": 100,
+      "legal_reference": "增值税及附加税费申报表（一般纳税人适用），第12栏 — the input tax of the period, from the deduction vouchers the buyer has confirmed for deduction.",
+      "source": "form-general"
+    },
+    {
+      "box": "17",
+      "kind": "total",
+      "name": "应抵扣税额合计",
+      "sequence": 110,
+      "plus": [
+        "12"
+      ],
+      "legal_reference": "增值税及附加税费申报表（一般纳税人适用），第17栏 — printed as 12+13-14-15+16. Line 13 (上期留抵税额, the credit carried in from the previous period) is what the previous return came to and not a fact this period's ledger holds; line 14 (进项税额转出), line 15 (免、抵、退应退税额) and line 16 (纳税检查应补缴税额) come from procedures this pack does not model. This pack therefore declares line 17 as line 12 alone; see the README.",
+      "source": "form-general"
+    },
+    {
+      "box": "19",
+      "kind": "total",
+      "name": "应纳税额",
+      "sequence": 120,
+      "plus": [
+        "11"
+      ],
+      "minus": [
+        "17"
+      ],
+      "floor_zero": true,
+      "legal_reference": "增值税及附加税费申报表（一般纳税人适用），第19栏 — printed as 11-18. Line 18 is 17 where 17 is below 11 and 11 otherwise, so 11-18 is 11-17 floored at zero, which is how it is computed here.",
+      "source": "form-general"
+    },
+    {
+      "box": "18",
+      "kind": "total",
+      "name": "实际抵扣税额",
+      "sequence": 130,
+      "plus": [
+        "11"
+      ],
+      "minus": [
+        "19"
+      ],
+      "print_sequence": 115,
+      "legal_reference": "增值税及附加税费申报表（一般纳税人适用），第18栏 — printed as \"如17<11，则为17，否则为11\", the smaller of lines 17 and 11. The format has no minimum; 11 less line 19 is that minimum, whichever of the two is smaller.",
+      "source": "form-general"
+    },
+    {
+      "box": "20",
+      "kind": "total",
+      "name": "期末留抵税额",
+      "sequence": 140,
+      "plus": [
+        "17"
+      ],
+      "minus": [
+        "11"
+      ],
+      "floor_zero": true,
+      "legal_reference": "增值税及附加税费申报表（一般纳税人适用），第20栏 — printed as 17-18: the input tax left over, carried to the next period's line 13 (or refunded under article 21 of 中华人民共和国增值税法). Computed as 17-11 floored at zero, which is the same figure.",
+      "source": "form-general"
+    },
+    {
+      "box": "21",
+      "kind": "tax",
+      "name": "简易计税办法计算的应纳税额",
+      "sequence": 150,
+      "legal_reference": "增值税及附加税费申报表（一般纳税人适用），第21栏 — the tax computed on the simplified method.",
+      "source": "form-general"
+    },
+    {
+      "box": "24",
+      "kind": "total",
+      "name": "应纳税额合计",
+      "sequence": 160,
+      "plus": [
+        "19",
+        "21"
+      ],
+      "legal_reference": "增值税及附加税费申报表（一般纳税人适用），第24栏 — printed as 19+21-23; line 23 (应纳税额减征额, reductions such as the tax-control equipment credit) is not modelled.",
+      "source": "form-general"
+    },
+    {
+      "box": "34",
+      "kind": "total",
+      "name": "本期应补(退)税额",
+      "sequence": 170,
+      "plus": [
+        "24"
+      ],
+      "legal_reference": "增值税及附加税费申报表（一般纳税人适用），第34栏 — printed as 24-28-29, the tax to pay this period net of the instalments prepaid during it (line 28, 分次预缴税额) and of the tax prepaid on special export payment books (line 29). Neither is booked by a tax code of this pack, so line 34 comes to line 24.",
+      "source": "form-general"
+    }
+  ]
+}

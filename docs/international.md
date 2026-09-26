@@ -4641,3 +4641,69 @@ remits directly to the SRI) and retención en la fuente del impuesto a la
 renta (a withholding against a different tax altogether) are both filed on
 Formulario 103, which no pack of this repository models — the same shape as
 Colombia's ReteIVA and ReteFuente, left out for the same reason.
+
+## From China
+
+`packs/cn/` transcribes the VAT Law of the People's Republic of China in force
+since 1 January 2026, its Implementing Regulations, the main table of the
+general taxpayer's return, and the chart and statements of the Accounting
+Standards for Business Enterprises. What it could not say, and did not patch
+the core for:
+
+**The invoice is the State's, not the seller's.** Since 1 December 2024 a
+Chinese invoice is a fully digitalised invoice (数电发票) issued on the tax
+authority's own platform, which numbers it (twenty digits, "号码全国统一赋予"),
+caps the monthly amount a taxpayer may invoice, delivers it to the buyer's tax
+digital account, and holds the buyer's confirmation of which invoices it will
+deduct. Ekwo has no clearance path: a document is booked, and the invoice is
+issued elsewhere. Three things would be needed to close the gap — a field for
+the number an external platform returns, a state on a purchase document for
+"confirmed for deduction" (which is what line 12 of the return is built from,
+rather than the booking date), and a word in `documents.numbering` for "the
+administration assigns the number". `einvoicing.obligation` is `none` because
+the field asks about EN 16931 between businesses, and the pack says so in its
+reference rather than in the one column an installer reads.
+
+**A tax on the tax.** The urban maintenance and construction tax (7 %, 5 % or
+1 % by where the taxpayer is), the education surcharge (3 %) and the local
+education surcharge (2 %) are assessed on the VAT a period actually comes to,
+and declared on lines 39 to 41 of the same return. The format can compute a
+rate of one box (`rate`, `rate_of`), which covers the two surcharges whose
+rate is national — but not the first, whose rate is a fact about the company
+the pack does not hold, nor the reliefs small taxpayers get on all three. A
+per-company rate on a computed box, or a territory finer than a province,
+would be needed. The pack leaves the three lines out and they are booked by
+hand.
+
+**One pack, one form.** A small-scale taxpayer files 增值税及附加税费申报表（小规模纳税人适用）,
+a different form from the general taxpayer's, and a pack carries one
+`tax_report.json`. The small-scale codes (3 %, and 1 % until 31 December 2027)
+therefore post to their account and to no box. A pack able to carry a second
+form, chosen by a property of the company rather than of the tax, would let
+the same country pack serve both regimes; Canada's second form is chosen by
+province, which is not the same question.
+
+**The carried credit.** Line 13 of the return is last period's line 20. The
+same gap Taiwan and Equatorial Guinea note: `vat_return()` evaluates one
+period from its own ledger, so line 17 is declared as line 12 alone.
+
+**No minimum.** Line 18 is "17 if 17 is below 11, else 11". The pack writes it
+as 11 − 19, where line 19 is 11 − 17 floored at zero, which is the same number;
+a `min` would have said it in the form's own words.
+
+**The export refund.** A zero-rated export is a refund procedure at a rate
+the State Council sets per product, by the exemption-credit-refund method,
+declared apart from the return. Nothing in the core computes a refund at a
+rate different from the rate charged.
+
+**The columns of an account.** 财会〔2016〕22号 keeps 应交增值税 as one account
+with ten columns (专栏). The pack makes each column an account; the balance
+sheet rule that presents a debit balance of 应交税费 under 其他流动资产 then
+reads each column apart, so an unsettled period shows input and output tax
+gross. A column dimension on a ledger line would let one account keep its
+columns.
+
+**`zh` is two scripts.** The Taiwan pack's `zh` is Traditional Chinese, this
+one's Simplified. `defaults.language` is two letters with no script subtag
+(`zh-Hans`, `zh-Hant`), so a reader asking for "Chinese" gets whichever pack
+it opened.

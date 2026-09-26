@@ -1,0 +1,255 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "CN",
+  "name": "中国",
+  "version": "0.1.0",
+  "schema_min": "20260917170000",
+  "seed_sequence": 109,
+  "released_at": "2026-09-26",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "vat-law",
+        "title": "中华人民共和国增值税法（2024年12月25日第十四届全国人民代表大会常务委员会第十三次会议通过，自2026年1月1日起施行）— Value-Added Tax Law of the People's Republic of China",
+        "publisher": "国家税务总局 State Taxation Administration — 税收政策库",
+        "url": "https://fgk.chinatax.gov.cn/zcfgk/c100009/c5237365/content.html",
+        "consulted_on": "2026-09-26",
+        "kind": "law"
+      },
+      {
+        "key": "vat-regs",
+        "title": "中华人民共和国增值税法实施条例（国务院令第826号，自2026年1月1日起施行）— Implementing Regulations of the VAT Law",
+        "publisher": "国家税务总局 State Taxation Administration — 税收政策库",
+        "url": "https://fgk.chinatax.gov.cn/zcfgk/c100010/c5246349/content.html",
+        "consulted_on": "2026-09-26",
+        "kind": "regulation"
+      },
+      {
+        "key": "vat-bridge",
+        "title": "财政部 税务总局关于增值税法施行后增值税优惠政策衔接事项的公告（财政部 税务总局公告2026年第10号）— the preferential VAT policies continued after the VAT Law took effect",
+        "publisher": "国家税务总局 State Taxation Administration — 税收政策库",
+        "url": "https://fgk.chinatax.gov.cn/zcfgk/c102416/c5247434/content.html",
+        "consulted_on": "2026-09-26",
+        "kind": "regulation"
+      },
+      {
+        "key": "sta-2026-4",
+        "title": "国家税务总局关于起征点标准等增值税征管事项的公告（国家税务总局公告2026年第4号）— thresholds and the 1% small-scale rate, administration",
+        "publisher": "国家税务总局 State Taxation Administration — 税收政策库",
+        "url": "https://fgk.chinatax.gov.cn/zcfgk/c100012/c5247426/content.html",
+        "consulted_on": "2026-09-26",
+        "kind": "guidance"
+      },
+      {
+        "key": "form-general",
+        "title": "增值税及附加税费申报表（一般纳税人适用）— VAT and surcharges return, general taxpayer: the form, its schedules and filling instructions",
+        "publisher": "国家税务总局 12366纳税服务平台 State Taxation Administration, 12366 taxpayer service platform",
+        "url": "https://12366.chinatax.gov.cn/bzds/009/009.html",
+        "consulted_on": "2026-09-26",
+        "kind": "form"
+      },
+      {
+        "key": "form-2021-20",
+        "title": "国家税务总局关于增值税消费税与附加税费申报表整合有关事项的公告（国家税务总局公告2021年第20号）— the notice that issued the combined VAT and surcharges return",
+        "publisher": "国家税务总局 State Taxation Administration — 税收政策库",
+        "url": "https://fgk.chinatax.gov.cn/zcfgk/c100012/c5194981/content.html",
+        "consulted_on": "2026-09-26",
+        "kind": "form"
+      },
+      {
+        "key": "form-2026-6",
+        "title": "国家税务总局关于调整增值税纳税申报有关事项的公告（国家税务总局公告2026年第6号）— the filling instructions adjusted for the VAT Law",
+        "publisher": "国家税务总局 State Taxation Administration — 税收政策库",
+        "url": "https://fgk.chinatax.gov.cn/zcfgk/c100012/c5247507/content.html",
+        "consulted_on": "2026-09-26",
+        "kind": "form"
+      },
+      {
+        "key": "etax-portal",
+        "title": "全国统一规范电子税务局 — the national electronic tax bureau, where the return is filed and the digital invoices are issued (linked from the home page of www.chinatax.gov.cn)",
+        "publisher": "国家税务总局 State Taxation Administration",
+        "url": "https://etax.chinatax.gov.cn/",
+        "consulted_on": "2026-09-26",
+        "kind": "portal"
+      },
+      {
+        "key": "einvoice-2024-11",
+        "title": "国家税务总局关于推广应用全面数字化电子发票的公告（国家税务总局公告2024年第11号）— the fully digitalised electronic invoice, nationwide from 1 December 2024",
+        "publisher": "中国政府网 国务院部门文件 — www.gov.cn",
+        "url": "https://www.gov.cn/zhengce/zhengceku/202411/content_6989164.htm",
+        "consulted_on": "2026-09-26",
+        "kind": "regulation"
+      },
+      {
+        "key": "asbe-guide",
+        "title": "财政部关于印发《企业会计准则——应用指南》的通知（财会〔2006〕18号），附录：会计科目和主要账务处理 — Accounting Standards for Business Enterprises, Application Guidance, appendix: the accounts and their main entries",
+        "publisher": "商务部 全球法规网 Ministry of Commerce, legal database (reproducing the Ministry of Finance notice)",
+        "url": "https://policy.mofcom.gov.cn/claw/clawContent.shtml?id=13655",
+        "consulted_on": "2026-09-26",
+        "kind": "regulation"
+      },
+      {
+        "key": "vat-accounting",
+        "title": "财政部关于印发《增值税会计处理规定》的通知（财会〔2016〕22号）— VAT accounting rules",
+        "publisher": "中华人民共和国财政部 Ministry of Finance",
+        "url": "https://www.mof.gov.cn/gp/xxgkml/hjs/201612/t20161214_2512803.htm",
+        "consulted_on": "2026-09-26",
+        "kind": "regulation"
+      },
+      {
+        "key": "fs-format",
+        "title": "财政部关于修订印发2019年度一般企业财务报表格式的通知（财会〔2019〕6号）— financial statement formats for general enterprises",
+        "publisher": "中华人民共和国财政部会计司 Ministry of Finance, Accounting Regulatory Department",
+        "url": "https://kjs.mof.gov.cn/zhengcefabu/201905/t20190510_3254992.htm",
+        "consulted_on": "2026-09-26",
+        "kind": "regulation"
+      },
+      {
+        "key": "umct-law",
+        "title": "中华人民共和国城市维护建设税法 — Urban Maintenance and Construction Tax Law",
+        "publisher": "国家税务总局 State Taxation Administration — 税收政策库",
+        "url": "https://fgk.chinatax.gov.cn/zcfgk/c100009/c5193055/content.html",
+        "consulted_on": "2026-09-26",
+        "kind": "law"
+      },
+      {
+        "key": "edu-surcharge",
+        "title": "征收教育费附加的暂行规定 — Interim Provisions on the Collection of the Education Surcharge",
+        "publisher": "司法部 国家行政法规库 Ministry of Justice, national database of administrative regulations",
+        "url": "https://xzfg.moj.gov.cn/front/law/detail?LawID=762",
+        "consulted_on": "2026-09-26",
+        "kind": "regulation"
+      },
+      {
+        "key": "local-edu",
+        "title": "财政部关于统一地方教育附加政策有关问题的通知（财综〔2010〕98号）— the local education surcharge",
+        "publisher": "国家税务总局 State Taxation Administration — 税收政策库",
+        "url": "https://fgk.chinatax.gov.cn/zcfgk/c102416/c5194201/content.html",
+        "consulted_on": "2026-09-26",
+        "kind": "regulation"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "CNY",
+    "language": "zh",
+    "rounding_method": "half_up",
+    "closing_style": "result_accounts",
+    "fiscal_year_default": "calendar",
+    "roles": {
+      "receivable": "1122",
+      "payable": "2202",
+      "suspense": "2241",
+      "rounding": "660399",
+      "retained_earnings": "410406",
+      "retained_earnings_loss": "410406",
+      "current_year_result_profit": "4103",
+      "current_year_result_loss": "4103",
+      "sales": "6001",
+      "purchase": "1405",
+      "bank": "1002",
+      "cash": "1001",
+      "fx_gain": "660303",
+      "fx_loss": "660303",
+      "asset_disposal_gain": "6115",
+      "asset_disposal_loss": "6115",
+      "tax_payable": "222102",
+      "tax_receivable": "222102"
+    },
+    "journal_roles": {
+      "sales": "SAL",
+      "purchase": "PUR",
+      "miscellaneous": "GEN",
+      "opening": "OPN"
+    }
+  },
+  "languages": [
+    "en"
+  ],
+  "journals": [
+    {
+      "code": "SAL",
+      "type": "sales",
+      "name": "销售日记账",
+      "sequence": 10
+    },
+    {
+      "code": "PUR",
+      "type": "purchase",
+      "name": "采购日记账",
+      "sequence": 20
+    },
+    {
+      "code": "BNK",
+      "type": "bank",
+      "name": "银行存款日记账",
+      "sequence": 30
+    },
+    {
+      "code": "CSH",
+      "type": "cash",
+      "name": "现金日记账",
+      "sequence": 40
+    },
+    {
+      "code": "GEN",
+      "type": "general",
+      "name": "转账凭证",
+      "sequence": 50
+    },
+    {
+      "code": "OPN",
+      "type": "opening",
+      "name": "期初余额",
+      "sequence": 60
+    }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "企业会计准则 会计科目（节选）— Accounts of the Accounting Standards for Business Enterprises, abridged",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": [
+        "CN-ASBE-BS",
+        "CN-ASBE-IS"
+      ],
+      "legal_reference": "《企业会计准则——应用指南》（财会〔2006〕18号）附录《会计科目和主要账务处理》 — the first-level accounts and their four-digit codes are transcribed from the appendix, leaving out those of banks, insurers and securities firms, and 6403 carries the name 税金及附加 that 财会〔2016〕22号 gave 营业税金及附加. The appendix lets an enterprise add, split or merge accounts and set its own detail accounts and numbers (\"对于明细科目，企业可以比照本附录中的规定自行设置。会计科目编号供企业…参考，企业可结合实际情况自行确定会计科目编号\"): the detail accounts of 应付职工薪酬, 盈余公积, 利润分配 and 所得税费用 are the ones the appendix names for them; those of 应交税费 are the ones 财会〔2016〕22号 prescribes; the columns (专栏) of 应交增值税 are carried as accounts 22210101 to 22210110 beside 222101, which the same rule gives a small-scale taxpayer as its one VAT account. Four codes are this pack's own, for accounts later standards introduced and the 2006 appendix does not number: 6115 资产处置损益, 6117 其他收益, 6702 信用减值损失, and the six-digit expense details of 销售费用, 管理费用 and 财务费用. See the README.",
+      "source": "asbe-guide"
+    }
+  ],
+  "documents": {
+    "numbering": "sequential",
+    "number_format": "{CODE}/{YYYY}/{NNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "earliest_of_delivery_or_payment",
+    "posted_edit_policy": "reversal_only",
+    "references": {
+      "numbering": {
+        "legal_reference": "国家税务总局公告2024年第11号 第四条 — the number of a fully digitalised invoice is twenty digits, assigned nationwide by the tax authority's platform (\"号码全国统一赋予\"): two for the year, two for the provincial tax bureau, one for the issuing channel and fifteen of sequence. The seller does not choose it and Ekwo does not draw it; the number above is the internal reference of the document in the books, and the invoice number the platform returns is a fact to record beside it. See the README.",
+        "source": "einvoice-2024-11"
+      },
+      "tax_point": {
+        "legal_reference": "中华人民共和国增值税法第二十八条第一款第一项 — the VAT obligation arises on the day the sale proceeds are received or the right to claim them is obtained (\"收讫销售款项或者取得销售款项索取凭据的当日\"), or on the day the invoice is issued where it is issued first (\"先开具发票的，为开具发票的当日\"). The first two branches are the earliest of a payment and of the right to payment, which ordinarily arises with the supply; the third, an invoice issued before either, is not a word of this vocabulary and makes the tax due on the invoice date. 增值税法实施条例第四十一条 moves an export to the day of the customs declaration where it comes first.",
+        "source": "vat-law"
+      },
+      "posted_edit_policy": {
+        "legal_reference": "国家税务总局公告2024年第11号 第八条 — once issued, a digital invoice is corrected, for a return, an error, an interrupted service or a price allowance, by a red-letter invoice (红字数电发票) and never by editing it; 增值税法实施条例 also bars reducing output tax or sales for a special invoice that has not been voided or reversed in the prescribed way. A posted document is therefore undone by a credit note.",
+        "source": "einvoice-2024-11"
+      }
+    },
+    "mentions": []
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "obligation": "none",
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "No statute obliges a Chinese business to exchange a structured invoice under EN 16931 or a Peppol profile with its trading partner: there is no Peppol Authority for China, and none of peppol-bis-3, factur-x-en16931, xrechnung or a PINT applies. This is a null answer to a European-shaped question and not a statement that China has no electronic invoicing — the opposite is true. 中华人民共和国增值税法第三十四条 requires invoices to be issued according to law and gives the electronic invoice the paper one's legal force; 国家税务总局公告2024年第11号 generalised the fully digitalised invoice (数电发票) from 1 December 2024: issued on the tax authority's own platform, numbered by it, capped by a monthly invoicing limit the authority grants, delivered to the buyer's tax digital account, and confirmed there by the buyer before its tax can be deducted. That is a real-time clearance model the pack format cannot express; see the README and docs/international.md, \"From China\".",
+    "source": "einvoice-2024-11"
+  }
+}

@@ -1,0 +1,315 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden_scenario",
+  "name": "一家中国一般纳税人的一个会计年度，按月申报增值税",
+  "chart": "default",
+  "fiscal_year": {
+    "name": "2026年度",
+    "start": "2026-01-01",
+    "end": "2026-12-31"
+  },
+  "periods": [
+    {
+      "code": "2026-01",
+      "from": "2026-01-01",
+      "to": "2026-01-31"
+    },
+    {
+      "code": "2026-02",
+      "from": "2026-02-01",
+      "to": "2026-02-28"
+    },
+    {
+      "code": "2026-03",
+      "from": "2026-03-01",
+      "to": "2026-03-31"
+    }
+  ],
+  "statements": [
+    "CN-ASBE-BS",
+    "CN-ASBE-IS"
+  ],
+  "contacts": [
+    {
+      "ref": "client-cn",
+      "name": "上海明远贸易有限公司",
+      "type": "customer",
+      "country": "CN"
+    },
+    {
+      "ref": "client-foreign",
+      "name": "Lumen Handel GmbH",
+      "type": "customer",
+      "country": "DE"
+    },
+    {
+      "ref": "supplier-cn",
+      "name": "杭州华信材料有限公司",
+      "type": "supplier",
+      "country": "CN"
+    },
+    {
+      "ref": "supplier-small",
+      "name": "苏州小河文印店",
+      "type": "supplier",
+      "country": "CN"
+    },
+    {
+      "ref": "supplier-foreign",
+      "name": "Cloudline Software Inc.",
+      "type": "supplier",
+      "country": "US"
+    }
+  ],
+  "documents": [
+    {
+      "ref": "V1",
+      "type": "sale_invoice",
+      "contact": "client-cn",
+      "date": "2026-01-10",
+      "why": "A domestic sale of goods at 13%: 50 000.00 on line 2 (and so line 1), 6 500.00 of output tax on line 11.",
+      "lines": [
+        {
+          "name": "商品一批",
+          "quantity": 100,
+          "unit_price": 500,
+          "tax": "CN-S-13-G",
+          "account": "6001"
+        }
+      ]
+    },
+    {
+      "ref": "V2",
+      "type": "sale_invoice",
+      "contact": "client-cn",
+      "date": "2026-01-15",
+      "why": "A consulting service at 6%: 20 000.00 on line 3, 1 200.00 more output tax on line 11 — the second positive rate.",
+      "lines": [
+        {
+          "name": "咨询服务",
+          "quantity": 1,
+          "unit_price": 20000,
+          "tax": "CN-S-6",
+          "account": "6001"
+        }
+      ]
+    },
+    {
+      "ref": "P1",
+      "type": "purchase_invoice",
+      "contact": "supplier-cn",
+      "date": "2026-01-08",
+      "why": "Raw materials on a special VAT invoice at 13%: 3 900.00 of deductible input tax on line 12. January then owes 7 700.00 − 3 900.00 = 3 800.00 (lines 19, 24 and 34).",
+      "lines": [
+        {
+          "name": "原材料",
+          "quantity": 200,
+          "unit_price": 150,
+          "tax": "CN-P-13",
+          "account": "1403"
+        }
+      ]
+    },
+    {
+      "ref": "P2",
+      "type": "purchase_invoice",
+      "contact": "supplier-cn",
+      "date": "2026-01-20",
+      "why": "A business meal: article 22 item 5 of the VAT Law denies the deduction, so the 60.00 of tax is added to the entertainment expense (1 060.00) and reaches no line of the return.",
+      "lines": [
+        {
+          "name": "业务招待餐费",
+          "quantity": 1,
+          "unit_price": 1000,
+          "tax": "CN-P-6-ND",
+          "account": "660206"
+        }
+      ]
+    },
+    {
+      "ref": "V3",
+      "type": "sale_invoice",
+      "contact": "client-foreign",
+      "date": "2026-02-05",
+      "why": "An export of goods at the zero rate: 40 000.00 on line 7, declared under the exemption-credit-refund method, with no output tax.",
+      "lines": [
+        {
+          "name": "出口商品",
+          "quantity": 40,
+          "unit_price": 1000,
+          "tax": "CN-S-0-EXP-G",
+          "account": "6001"
+        }
+      ]
+    },
+    {
+      "ref": "V4",
+      "type": "sale_invoice",
+      "contact": "client-cn",
+      "date": "2026-02-12",
+      "why": "A recognised technology-development contract, exempt until the end of 2027: 30 000.00 on line 10 and so line 8, no output tax.",
+      "lines": [
+        {
+          "name": "技术开发服务",
+          "quantity": 1,
+          "unit_price": 30000,
+          "tax": "CN-S-EXO-S",
+          "account": "6001"
+        }
+      ]
+    },
+    {
+      "ref": "V5",
+      "type": "sale_invoice",
+      "contact": "client-cn",
+      "date": "2026-02-25",
+      "why": "A freight service at 9%, booked as other operating revenue: 8 000.00 on line 3, 720.00 on line 11.",
+      "lines": [
+        {
+          "name": "运输服务",
+          "quantity": 1,
+          "unit_price": 8000,
+          "tax": "CN-S-9-S",
+          "account": "6051"
+        }
+      ]
+    },
+    {
+      "ref": "P3",
+      "type": "purchase_invoice",
+      "contact": "supplier-foreign",
+      "date": "2026-02-10",
+      "why": "A software service from a supplier established abroad: the buyer withholds 600.00 of VAT (article 15), books it on 代扣代交增值税, and deducts the same 600.00 as input tax on line 12 on the strength of the tax payment certificate. The supplier is owed 10 000.00.",
+      "lines": [
+        {
+          "name": "软件服务",
+          "quantity": 1,
+          "unit_price": 10000,
+          "tax": "CN-P-FS-6",
+          "account": "660299"
+        }
+      ]
+    },
+    {
+      "ref": "P4",
+      "type": "purchase_invoice",
+      "contact": "supplier-small",
+      "date": "2026-02-22",
+      "why": "Printing from a small-scale taxpayer invoicing at the reduced 1%: 20.00 of input tax on line 12. February owes 720.00 − 620.00 = 100.00.",
+      "lines": [
+        {
+          "name": "印刷费",
+          "quantity": 1,
+          "unit_price": 2000,
+          "tax": "CN-P-1",
+          "account": "660204"
+        }
+      ]
+    },
+    {
+      "ref": "CN1",
+      "type": "sale_credit_note",
+      "contact": "client-cn",
+      "date": "2026-03-05",
+      "why": "A return of ten units against V1, corrected by a red-letter invoice: −5 000.00 on line 2 and −650.00 on line 11.",
+      "lines": [
+        {
+          "name": "销售退回",
+          "quantity": 10,
+          "unit_price": 500,
+          "tax": "CN-S-13-G",
+          "account": "6001"
+        }
+      ]
+    },
+    {
+      "ref": "V6",
+      "type": "sale_invoice",
+      "contact": "client-cn",
+      "date": "2026-03-12",
+      "why": "Agricultural products at 9%: 10 000.00 on line 2, 900.00 on line 11. With CN1, March's output tax comes to 250.00.",
+      "lines": [
+        {
+          "name": "农产品",
+          "quantity": 50,
+          "unit_price": 200,
+          "tax": "CN-S-9-G",
+          "account": "6001"
+        }
+      ]
+    },
+    {
+      "ref": "P5",
+      "type": "purchase_invoice",
+      "contact": "supplier-cn",
+      "date": "2026-03-15",
+      "why": "Office equipment bought as a fixed asset at 13%: 1 560.00 of input tax on line 12.",
+      "lines": [
+        {
+          "name": "办公设备",
+          "quantity": 1,
+          "unit_price": 12000,
+          "tax": "CN-P-13",
+          "account": "1601"
+        }
+      ]
+    },
+    {
+      "ref": "P6",
+      "type": "purchase_credit_note",
+      "contact": "supplier-cn",
+      "date": "2026-03-20",
+      "why": "Twenty units of P1 sent back: −390.00 on line 12. March's input tax (1 170.00) exceeds its output tax (250.00): nothing is owed, line 18 is 250.00 and 920.00 is carried forward on line 20.",
+      "lines": [
+        {
+          "name": "退回原材料",
+          "quantity": 20,
+          "unit_price": 150,
+          "tax": "CN-P-13",
+          "account": "1403"
+        }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "E1",
+      "direction": "inbound",
+      "date": "2026-02-10",
+      "amount": 21200,
+      "contact": "client-cn",
+      "journal": "BNK",
+      "match": "V2",
+      "why": "A collection that exactly settles V2, tax included."
+    },
+    {
+      "ref": "E2",
+      "direction": "outbound",
+      "date": "2026-01-25",
+      "amount": 33900,
+      "contact": "supplier-cn",
+      "journal": "BNK",
+      "match": "P1",
+      "why": "A payment that exactly settles P1, tax included."
+    },
+    {
+      "ref": "E3",
+      "direction": "inbound",
+      "date": "2026-03-25",
+      "amount": 40000,
+      "contact": "client-foreign",
+      "journal": "BNK",
+      "match": "V3",
+      "why": "The foreign customer pays the export of V3."
+    },
+    {
+      "ref": "E4",
+      "direction": "inbound",
+      "date": "2026-03-28",
+      "amount": 10000,
+      "contact": "client-cn",
+      "journal": "BNK",
+      "match": null,
+      "why": "A payment on account, left unmatched to prove an open line survives the replay."
+    }
+  ]
+}

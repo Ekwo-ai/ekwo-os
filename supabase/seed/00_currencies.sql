@@ -57,5 +57,6 @@ insert into currencies (code, name, symbol, decimal_places) values
   ('UAH', 'Ukrainian hryvnia',    E'₴', 2),
   ('UYU', 'Uruguayan peso',       E'$U', 2),
   ('BOB', 'Bolivian boliviano',   'Bs',      2),
-  ('PYG', 'Paraguayan guaraní',   E'₲', 0)
+  ('PYG', 'Paraguayan guaraní',   E'₲', 0),
+  ('CNY', 'Chinese yuan',         E'¥', 2)
 on conflict (code) do nothing;
