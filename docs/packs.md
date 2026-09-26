@@ -206,6 +206,7 @@ says what they say. `ekwo pack describe <cc>` is everything one of them says.
 | [`ar`](../packs/ar/) | Argentina | `45_pack_ar.sql` | es | `community` |
 | [`at`](../packs/at/) | Austria | `63_pack_at.sql` | de, en | `community` |
 | [`au`](../packs/au/) | Australia | `40_pack_au.sql` | en | `community` |
+| [`ba`](../packs/ba/) | Bosna i Hercegovina | `113_pack_ba.sql` | bs, en | `community` |
 | [`be`](../packs/be/) | Belgium | `10_pack_be.sql` | fr, nl, de, en | `maintained` |
 | [`bf`](../packs/bf/) | Burkina Faso | `23_pack_bf.sql` | fr | `community` |
 | [`bg`](../packs/bg/) | България | `73_pack_bg.sql` | bg | `community` |

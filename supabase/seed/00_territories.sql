@@ -1617,3 +1617,30 @@ on conflict (code) do update set
   eu_vat_to       = excluded.eu_vat_to,
   vat_prefix      = excluded.vat_prefix,
   legal_reference = excluded.legal_reference;
+
+
+-- ---------------------------------------------------------------------------
+-- The row — Bosnia and Herzegovina
+--
+-- A candidate for accession (European Council decision of 15 December 2022)
+-- and not a Member State: the common system of VAT of Directive 2006/112/EC
+-- does not reach it, exactly as it does not reach Turkey and Ukraine above.
+-- Bosnia and Herzegovina levies a value added tax of its own, state-wide and
+-- collected by a single administration for both entities and the Brčko
+-- District — Law on Value Added Tax ("Official Gazette of Bosnia and
+-- Herzegovina", No. 9/05, 35/05 and 100/08), article 23, which sets the
+-- single rate at 17 %.
+-- ---------------------------------------------------------------------------
+
+insert into territories (code, code_source, name, parent_code, eu_vat_scope, eu_vat_from, eu_vat_to, vat_prefix, legal_reference) values
+  ('BA', 'iso_3166_1', 'Bosnia and Herzegovina', null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries, candidate for accession or not. Bosnia and Herzegovina levies a value added tax of its own under the Law on Value Added Tax ("Official Gazette of Bosnia and Herzegovina", No. 9/05, 35/05 and 100/08), article 23, which sets the single rate at 17 %.')
+on conflict (code) do update set
+  code_source     = excluded.code_source,
+  name            = excluded.name,
+  parent_code     = excluded.parent_code,
+  eu_vat_scope    = excluded.eu_vat_scope,
+  eu_vat_from     = excluded.eu_vat_from,
+  eu_vat_to       = excluded.eu_vat_to,
+  vat_prefix      = excluded.vat_prefix,
+  legal_reference = excluded.legal_reference;

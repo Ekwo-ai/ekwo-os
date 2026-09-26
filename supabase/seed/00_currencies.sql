@@ -64,5 +64,6 @@ insert into currencies (code, name, symbol, decimal_places) values
   ('GTQ', 'Guatemalan quetzal',   'Q',       2),
   ('CRC', 'Costa Rican colón',    E'₡', 2),
   ('GEL', 'Georgian lari',        E'₾', 2),
-  ('MDL', 'Moldovan leu',         'L',       2)
+  ('MDL', 'Moldovan leu',         'L',       2),
+  ('BAM', 'Convertible mark',     'KM',      2)
 on conflict (code) do nothing;

@@ -1,0 +1,134 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/statements",
+  "statements": [
+    {
+      "code": "BA-FBIH-BS",
+      "kind": "balance_sheet",
+      "framework": "MRS/MSFI za MSP (FBiH)",
+      "name": "Bilans stanja — Izvještaj o finansijskom položaju",
+      "valid_from": "2022-01-01",
+      "legal_reference": "Pravilnik o sadržaju i formi obrazaca finansijskih izvještaja za privredna društva (\"Službene novine Federacije BiH\", broj 82/10), Prilog 1 — Bilans stanja, čije su pozicije (A-E, rimski i arapski podnaslovi) preuzete od reda do reda; naslijedio ga je od 01.01.2022. istoimeni obrazac uz Pravilnik o kontnom okviru i sadržaju konta za privredna društva (\"Službene novine Federacije BiH\", broj 81/21), čiji puni tekst ovaj paket nije mogao strojno pročitati. Ovaj paket transkribuje strukturu i nazive pozicija onako kako ih nosi Prilog 1 Pravilnika 82/10 (grupe konta po pozicijama), a ne doslovne AOP oznake obrasca 81/21, koje bi trebalo provjeriti prije podnošenja stvarnog izvještaja — vidjeti README.md.",
+      "source": "fs-2010",
+      "lines": [
+        { "code": "R00", "name": "UKUPNO AKTIVA", "sequence": 10, "is_total": true, "plus": ["R10", "R20"] },
+        { "code": "R10", "name": "A) STALNA SREDSTVA I DUGOROČNI PLASMANI", "sequence": 20, "is_total": true,
+          "plus": ["R11", "R12", "R13", "R14", "R15", "R16", "R17", "R18"] },
+        { "code": "R11", "name": "I. Nematerijalna sredstva", "sequence": 30, "sign": 1,
+          "rules": [ { "kind": "code_prefix", "code_from": "01" } ] },
+        { "code": "R12", "name": "II. Nekretnine, postrojenja i oprema", "sequence": 40, "sign": 1,
+          "rules": [ { "kind": "code_prefix", "code_from": "02" } ] },
+        { "code": "R13", "name": "III. Investicijske nekretnine", "sequence": 50, "sign": 1,
+          "rules": [ { "kind": "code_prefix", "code_from": "03" } ] },
+        { "code": "R14", "name": "IV. Biološka sredstva", "sequence": 60, "sign": 1,
+          "rules": [ { "kind": "code_prefix", "code_from": "04" } ] },
+        { "code": "R15", "name": "V. Ostala (specifična) stalna materijalna sredstva", "sequence": 70, "sign": 1,
+          "rules": [ { "kind": "code_prefix", "code_from": "05" } ] },
+        { "code": "R16", "name": "VI. Dugoročni finansijski plasmani", "sequence": 80, "sign": 1,
+          "rules": [ { "kind": "code_prefix", "code_from": "06" } ] },
+        { "code": "R17", "name": "VII. Druga dugoročna potraživanja", "sequence": 90, "sign": 1,
+          "rules": [ { "kind": "code_prefix", "code_from": "07" } ] },
+        { "code": "R18", "name": "VIII. Odložena porezna sredstva i dugoročna razgraničenja", "sequence": 100, "sign": 1,
+          "rules": [ { "kind": "code_prefix", "code_from": "09" } ] },
+        { "code": "R20", "name": "B) TEKUĆA SREDSTVA", "sequence": 110, "is_total": true,
+          "plus": ["R21", "R22", "R23", "R24"] },
+        { "code": "R21", "name": "I. Zalihe i sredstva namijenjena prodaji", "sequence": 120, "sign": 1,
+          "rules": [ { "kind": "code_range", "code_from": "10", "code_to": "14" } ] },
+        { "code": "R22", "name": "II. Dati avansi", "sequence": 130, "sign": 1,
+          "rules": [ { "kind": "code_prefix", "code_from": "15" } ] },
+        { "code": "R23", "name": "III. Kratkoročna potraživanja i kratkoročni plasmani", "sequence": 140, "sign": 1,
+          "rules": [
+            { "kind": "code_prefix", "code_from": "21" },
+            { "kind": "code_prefix", "code_from": "22" },
+            { "kind": "code_prefix", "code_from": "23" },
+            { "kind": "code_prefix", "code_from": "24" },
+            { "kind": "code_prefix", "code_from": "27" },
+            { "kind": "code_prefix", "code_from": "28" }
+          ] },
+        { "code": "R24", "name": "IV. Gotovina i gotovinski ekvivalenti", "sequence": 150, "sign": 1,
+          "rules": [ { "kind": "code_prefix", "code_from": "20" } ] },
+        { "code": "R99", "name": "UKUPNO PASIVA", "sequence": 160, "is_total": true, "plus": ["R30", "R40", "R50"] },
+        { "code": "R30", "name": "C) KAPITAL", "sequence": 170, "is_total": true, "plus": ["R31", "R32", "R33"] },
+        { "code": "R31", "name": "I. Osnovni i upisani neuplaćeni kapital", "sequence": 180, "sign": -1,
+          "rules": [
+            { "kind": "code_prefix", "code_from": "30" },
+            { "kind": "code_prefix", "code_from": "31" }
+          ] },
+        { "code": "R32", "name": "II. Rezerve i revalorizacijske rezerve", "sequence": 190, "sign": -1,
+          "rules": [
+            { "kind": "code_prefix", "code_from": "32" },
+            { "kind": "code_prefix", "code_from": "33" }
+          ] },
+        { "code": "R33", "name": "III. Neraspoređena dobit, gubitak i otkupljene vlastite dionice", "sequence": 200, "sign": -1,
+          "rules": [
+            { "kind": "code_prefix", "code_from": "34" },
+            { "kind": "code_prefix", "code_from": "35" },
+            { "kind": "code_prefix", "code_from": "36" }
+          ] },
+        { "code": "R40", "name": "D) DUGOROČNA REZERVISANJA I DUGOROČNE OBAVEZE", "sequence": 210, "sign": -1,
+          "rules": [
+            { "kind": "code_prefix", "code_from": "40" },
+            { "kind": "code_prefix", "code_from": "41" }
+          ] },
+        { "code": "R50", "name": "E) KRATKOROČNE OBAVEZE I RAZGRANIČENJA", "sequence": 220, "sign": -1,
+          "rules": [
+            { "kind": "code_prefix", "code_from": "42" },
+            { "kind": "code_prefix", "code_from": "43" },
+            { "kind": "code_prefix", "code_from": "44" },
+            { "kind": "code_prefix", "code_from": "45" },
+            { "kind": "code_prefix", "code_from": "46" },
+            { "kind": "code_prefix", "code_from": "47" },
+            { "kind": "code_prefix", "code_from": "48" },
+            { "kind": "code_prefix", "code_from": "49" }
+          ] }
+      ]
+    },
+    {
+      "code": "BA-FBIH-IS",
+      "kind": "income_statement",
+      "framework": "MRS/MSFI za MSP (FBiH)",
+      "name": "Bilans uspjeha — Izvještaj o ukupnom rezultatu za period",
+      "valid_from": "2022-01-01",
+      "legal_reference": "Pravilnik o sadržaju i formi obrazaca finansijskih izvještaja za privredna društva (\"Službene novine Federacije BiH\", broj 82/10), Prilog 2 — Bilans uspjeha, čije su pozicije preuzete od reda do reda; naslijedio ga je od 01.01.2022. istoimeni obrazac uz Pravilnik o kontnom okviru i sadržaju konta za privredna društva (\"Službene novine Federacije BiH\", broj 81/21), čiji puni tekst ovaj paket nije mogao strojno pročitati. Ovaj paket ne razlikuje, kao službeni obrazac, poseban red za dobit i poseban red za gubitak istog međuzbira: svaki takav red ovdje je jedan red sa predznakom (pozitivna vrijednost — dobit, negativna — gubitak). Porez na dobit nije uključen — vidjeti README.md.",
+      "source": "fs-2010",
+      "lines": [
+        { "code": "R10", "name": "I. Poslovni prihodi", "sequence": 10, "sign": -1,
+          "rules": [
+            { "kind": "code_prefix", "code_from": "60" },
+            { "kind": "code_prefix", "code_from": "61" },
+            { "kind": "code_prefix", "code_from": "62" },
+            { "kind": "code_prefix", "code_from": "64" },
+            { "kind": "code_prefix", "code_from": "65" }
+          ] },
+        { "code": "R20", "name": "II. Poslovni rashodi", "sequence": 20, "sign": 1,
+          "rules": [
+            { "kind": "code_prefix", "code_from": "50" },
+            { "kind": "code_prefix", "code_from": "51" },
+            { "kind": "code_prefix", "code_from": "52" },
+            { "kind": "code_prefix", "code_from": "53" },
+            { "kind": "code_prefix", "code_from": "54" },
+            { "kind": "code_prefix", "code_from": "55" }
+          ] },
+        { "code": "R30", "name": "Poslovni dobitak (gubitak)", "sequence": 30, "is_total": true, "plus": ["R10"], "minus": ["R20"] },
+        { "code": "R40", "name": "III. Finansijski prihodi", "sequence": 40, "sign": -1,
+          "rules": [ { "kind": "code_prefix", "code_from": "66" } ] },
+        { "code": "R50", "name": "IV. Finansijski rashodi", "sequence": 50, "sign": 1,
+          "rules": [ { "kind": "code_prefix", "code_from": "56" } ] },
+        { "code": "R60", "name": "Dobitak (gubitak) iz finansiranja", "sequence": 60, "is_total": true, "plus": ["R40"], "minus": ["R50"] },
+        { "code": "R70", "name": "V. Ostali prihodi", "sequence": 70, "sign": -1,
+          "rules": [
+            { "kind": "code_prefix", "code_from": "67" },
+            { "kind": "code_prefix", "code_from": "68" },
+            { "kind": "code_prefix", "code_from": "69" }
+          ] },
+        { "code": "R80", "name": "VI. Ostali rashodi", "sequence": 80, "sign": 1,
+          "rules": [
+            { "kind": "code_prefix", "code_from": "57" },
+            { "kind": "code_prefix", "code_from": "58" },
+            { "kind": "code_prefix", "code_from": "59" }
+          ] },
+        { "code": "R90", "name": "Ostali dobitak (gubitak)", "sequence": 90, "is_total": true, "plus": ["R70"], "minus": ["R80"] },
+        { "code": "R99", "name": "NETO DOBITAK (GUBITAK) PERIODA", "sequence": 100, "is_total": true, "plus": ["R30", "R60", "R90"] }
+      ]
+    }
+  ]
+}

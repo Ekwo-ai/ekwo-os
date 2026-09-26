@@ -1,0 +1,98 @@
+[
+  {
+    "code": "BA-S-17",
+    "name": "PDV 17 % — promet dobara i usluga na teritoriji BiH (prodaja)",
+    "rate": 17,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2006-01-01",
+    "legal_reference": "Zakon o porezu na dodanu vrijednost (\"Službeni glasnik BiH\", br. 9/05, 35/05, 100/08, 33/17 i 46/23), član 23 — standardna stopa PDV-a na oporezivi promet dobara i usluga i uvoz dobara u Bosnu i Hercegovinu iznosi 17 %. Ovo je jedina pozitivna stopa koju Zakon poznaje: nema snižene stope.",
+    "source": "vat-law",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "11" },
+        { "type": "tax", "account": "470", "box": "51" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "11", "box_factor": -100 },
+        { "type": "tax", "account": "470", "box": "51", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "BA-S-EXPORT",
+    "name": "PDV 0 % — izvoz dobara iz Bosne i Hercegovine (prodaja)",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2006-01-01",
+    "legal_reference": "Zakon o porezu na dodanu vrijednost, član 27, stav 1, tačka 1 — oslobođen je (oporezuje se po nultoj stopi) izvoz dobara iz Bosne i Hercegovine od strane ili u ime prodavca.",
+    "source": "vat-law",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "12" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "12", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "BA-S-EXEMPT-EDU",
+    "name": "Oslobođeno od PDV-a — usluge obrazovanja (prodaja)",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2006-01-01",
+    "legal_reference": "Zakon o porezu na dodanu vrijednost, član 24, stav 1, tačka 4 — od PDV-a su oslobođene usluge obrazovanja (predškolsko, osnovno, srednje obrazovanje, obrazovanje u okviru daljnjeg obrazovanja i univerziteta), kao i promet dobara i usluga usko povezanih s tim djelatnostima, ako se te djelatnosti obavljaju u skladu s propisima koji uređuju tu oblast.",
+    "source": "vat-law",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "13" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "13", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "BA-P-17",
+    "name": "PDV 17 % — nabavke od registrovanih obveznika PDV-a u BiH (kupovina)",
+    "rate": 17,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2006-01-01",
+    "legal_reference": "Zakon o porezu na dodanu vrijednost, član 23 (standardna stopa 17 %) u vezi s članom 32 — poreski obveznik ima pravo odbiti PDV koji je obavezan platiti ili ga je platio na nabavku dobara ili usluga od drugog poreskog obveznika, ako ta dobra ili usluge koristi za promet dobara i usluga koji podliježe PDV-u.",
+    "source": "vat-law",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "21" },
+        { "type": "tax", "account": "270", "box": "41" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "21", "box_factor": -100 },
+        { "type": "tax", "account": "270", "box": "41", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "BA-P-IMPORT",
+    "name": "PDV 17 % — uvoz dobara u Bosnu i Hercegovinu (kupovina)",
+    "rate": 17,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2006-01-01",
+    "legal_reference": "Zakon o porezu na dodanu vrijednost, član 23 (standardna stopa 17 %) u vezi s članom 21 (poreska osnovica pri uvozu dobara) — PDV na uvoz obračunava i naplaćuje Uprava za indirektno oporezivanje po carinskim propisima, a obveznik ga odbija kao ulazni porez u skladu s članom 32, stav 8, tačka 2 Zakona.",
+    "source": "vat-law",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "22" },
+        { "type": "tax", "account": "271", "box": "42" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "22", "box_factor": -100 },
+        { "type": "tax", "account": "271", "box": "42", "box_factor": -100 }
+      ]
+    }
+  }
+]

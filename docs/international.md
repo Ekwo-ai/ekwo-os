@@ -5148,3 +5148,58 @@ the way Légifrance does; the filing deadline of art. 115 alin. (1) is
 therefore sourced from 2024-2025 secondary confirmation rather than from the
 consolidated text directly — named in the pack's own README rather than
 silently assumed.
+
+## From Bosnia and Herzegovina
+
+`packs/ba/`, `community`, seed 113, outside the common system of VAT the way
+Turkey and Ukraine are: a candidate for accession (European Council decision
+of 15 December 2022), not a member, and Directive 2006/112/EC, article 5(2),
+reaches the territory of the Community as the Treaties define it and nothing
+a candidacy announces. `BAM` is added to `00_currencies.sql` at two decimals;
+`BA` is added to `00_territories.sql` with `eu_vat_scope` `none`. Four things
+the format could not say, read from the Law on Value Added Tax ("Official
+Gazette of Bosnia and Herzegovina", No. 9/05, 35/05, 100/08, 33/17 and 46/23).
+
+**A tax point of three independent triggers, where the vocabulary holds
+two.** Article 17(1) fixes the tax point at whichever of three events comes
+first: delivery of the goods or performance of the service, **issuing of an
+invoice**, or payment made before an invoice is issued. `earliest_of_
+delivery_or_payment` — the word Estonia's KMS § 11(1) reads onto, and Ukraine's
+point 187.1 above — names two branches and fits the shape exactly except for
+the third one: an invoice issued before either delivery or payment moves the
+tax point here in a way this value does not read, because the value itself
+carries no invoice branch at all. `packs/ba/` declares it anyway, as the
+closer of the two derogation values to the law, and states the gap in its
+own README rather than inventing a third value for one country.
+
+**A reverse charge internal to the country, tied to a threshold and to joint
+liability, where `domestic_reverse_charge` was built for a flat rule.**
+Articles 40 to 43 move the liability to pay VAT on construction work to the
+person the work is done for, but only above 25,000 KM of total value
+(article 40(2)), and article 42 makes the sub-contractor jointly and
+severally liable with the contractor until proof of payment is produced. A
+tax declared `domestic_reverse_charge` carries neither a threshold nor a
+joint-liability flag — both belong to a fact about the document and the
+parties that no field of `taxes.json` reads — so `packs/ba/` carries no tax
+under this treatment and states the gap rather than writing a reverse-charge
+code that would apply to every construction invoice regardless of its value.
+
+**A box that reports by sub-national entity, where a declaration box is one
+box.** Part III of Obrazac P PDV (fields 32 to 34) splits VAT on supplies to
+persons who are not VAT payers by which of the country's three
+administrative entities — the Federation of Bosnia and Herzegovina, Republika
+Srpska, the Brčko District — the recipient is in, the same shape India's
+table 3.2 above needs for a State of destination. Fields 21 to 34 of the same
+form already read the buyer as a fact of the transaction, `applies_when`
+resolves a party to one territory of `territories`, and the internal
+boundary between the three entities is not itself a VAT frontier — no tax
+rate nor exemption turns on it — so there is no tax whose treatment would
+carry a per-entity box the way an intra-Community acquisition carries a
+country. `packs/ba/` carries none of the three boxes.
+
+**Self-assessment on a service received from a supplier not established in
+Bosnia and Herzegovina (article 13(1)(3)) is not modelled**, for the same
+reason as Ukraine's article 208 above: the mechanic is the double posting
+`docs/packs.md` shows for Estonia's intra-Community acquisition of goods, and
+a first `community` version of this pack does not yet carry a tax under the
+treatment `foreign_services_received`.

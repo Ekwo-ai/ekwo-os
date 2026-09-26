@@ -1,0 +1,117 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "BA-PDV",
+  "name": "Prijava poreza na dodanu vrijednost (Obrazac P PDV)",
+  "period": ["month"],
+  "period_default": "month",
+  "valid_from": "2006-01-01",
+  "legal_reference": "Zakon o porezu na dodanu vrijednost (\"Službeni glasnik BiH\", br. 9/05, 35/05, 100/08, 33/17 i 46/23), član 38 — poreski period za koji se obračunava PDV je jedan kalendarski mjesec — i Pravilnik o primjeni Zakona o porezu na dodanu vrijednost, koji propisuje Obrazac P PDV. Ovaj paket transcribuje dio I (Isporuke i nabavke) i dio II (Izlazni/Ulazni PDV) obrasca, koje njegovi porezi dosežu; dio III (Podaci o krajnjoj potrošnji, kutije 32-34 — raspodjela prometa fizičkim licima po entitetima FBiH/RS/Brčko distrikt) nije transkribovan — vidjeti README.md.",
+  "source": "vat-form",
+  "deadline": {
+    "rule": "day_of_month_after_period",
+    "day": 10,
+    "legal_reference": "Zakon o porezu na dodanu vrijednost, član 39, stav 2 — poreski obveznik podnosi prijavu Upravi za indirektno oporezivanje do 10-og u mjesecu po isteku poreskog perioda.",
+    "source": "vat-law"
+  },
+  "boxes": [
+    {
+      "box": "11",
+      "kind": "base",
+      "name": "Isporuke (uključujući i one u vanposlovne svrhe), osim onih u poljima 12 i 13 — vrijednost bez PDV-a",
+      "sequence": 10,
+      "legal_reference": "Obrazac P PDV, dio I, polje 11.",
+      "source": "vat-form"
+    },
+    {
+      "box": "12",
+      "kind": "base",
+      "name": "Vrijednost izvoza — vrijednost bez PDV-a",
+      "sequence": 20,
+      "legal_reference": "Obrazac P PDV, dio I, polje 12; Zakon o porezu na dodanu vrijednost, član 27.",
+      "source": "vat-form"
+    },
+    {
+      "box": "13",
+      "kind": "base",
+      "name": "Isporuke oslobođene plaćanja PDV-a — vrijednost bez PDV-a",
+      "sequence": 30,
+      "legal_reference": "Obrazac P PDV, dio I, polje 13; Zakon o porezu na dodanu vrijednost, čl. 24 i 25.",
+      "source": "vat-form"
+    },
+    {
+      "box": "21",
+      "kind": "base",
+      "name": "Sve nabavke osim onih u poljima 22 i 23 — vrijednost bez PDV-a",
+      "sequence": 40,
+      "legal_reference": "Obrazac P PDV, dio I, polje 21.",
+      "source": "vat-form"
+    },
+    {
+      "box": "22",
+      "kind": "base",
+      "name": "Vrijednost uvoza — vrijednost bez PDV-a",
+      "sequence": 50,
+      "legal_reference": "Obrazac P PDV, dio I, polje 22.",
+      "source": "vat-form"
+    },
+    {
+      "box": "23",
+      "kind": "base",
+      "name": "Vrijednost nabavke od poljoprivrednika — vrijednost bez PDV-a",
+      "sequence": 60,
+      "legal_reference": "Obrazac P PDV, dio I, polje 23; Zakon o porezu na dodanu vrijednost, član 45 (paušalna naknada). Nijedan porez ovog paketa ne postira u ovu kutiju — vidjeti README.md.",
+      "source": "vat-form"
+    },
+    {
+      "box": "41",
+      "kind": "tax",
+      "name": "PDV obračunat na ulaze (dobra i usluge) od registrovanih obveznika PDV-a, osim iznosa u poljima 42 i 43",
+      "sequence": 70,
+      "legal_reference": "Obrazac P PDV, dio II, polje 41.",
+      "source": "vat-form"
+    },
+    {
+      "box": "42",
+      "kind": "tax",
+      "name": "PDV na uvoz",
+      "sequence": 80,
+      "legal_reference": "Obrazac P PDV, dio II, polje 42.",
+      "source": "vat-form"
+    },
+    {
+      "box": "43",
+      "kind": "tax",
+      "name": "Paušalna naknada za poljoprivrednike",
+      "sequence": 90,
+      "legal_reference": "Obrazac P PDV, dio II, polje 43; Zakon o porezu na dodanu vrijednost, član 45. Nijedan porez ovog paketa ne postira u ovu kutiju — vidjeti README.md.",
+      "source": "vat-form"
+    },
+    {
+      "box": "51",
+      "kind": "tax",
+      "name": "PDV obračunat na izlaze (dobra i usluge)",
+      "sequence": 100,
+      "legal_reference": "Obrazac P PDV, dio II, polje 51.",
+      "source": "vat-form"
+    },
+    {
+      "box": "61",
+      "kind": "total",
+      "name": "Ulazni PDV (ukupno)",
+      "sequence": 110,
+      "plus": ["41", "42", "43"],
+      "legal_reference": "Obrazac P PDV, dio II, polje 61 — zbir polja 41, 42 i 43.",
+      "source": "vat-form"
+    },
+    {
+      "box": "71",
+      "kind": "total",
+      "name": "Iznos PDV-a za uplatu/povrat (razlika polja 51 i 61)",
+      "sequence": 120,
+      "plus": ["51"],
+      "minus": ["61"],
+      "legal_reference": "Obrazac P PDV, dio II, polje 71; Zakon o porezu na dodanu vrijednost, član 52 — ako je iznos ulaznog poreza veći od iznosa izlaznog poreza, poreski obveznik ima pravo na povrat razlike ili na zadržavanje poreskog kredita. Polje se ne ograničava na nulu: negativna vrijednost je iznos koji se vraća ili prenosi kao poreski kredit.",
+      "source": "vat-law"
+    }
+  ]
+}

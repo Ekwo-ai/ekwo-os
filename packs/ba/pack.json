@@ -1,0 +1,137 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "BA",
+  "name": "Bosna i Hercegovina",
+  "version": "0.1.0",
+  "schema_min": "20260917170000",
+  "seed_sequence": 113,
+  "released_at": "2026-09-26",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "vat-law",
+        "title": "Zakon o porezu na dodanu vrijednost (\"Službeni glasnik BiH\", br. 9/05, 35/05, 100/08, 33/17 i 46/23) — Law on Value Added Tax, official English translation",
+        "publisher": "Uprava za indirektno oporezivanje Bosne i Hercegovine (UIO)",
+        "url": "https://www.uino.gov.ba/portal/wp-content/uploads/95-ENGLESKI-PROPISI/1-VAT-PDV/1-Law_on_VAT_BiH.pdf",
+        "consulted_on": "2026-09-26",
+        "kind": "law"
+      },
+      {
+        "key": "vat-law-amendment-2023",
+        "title": "Zakon o izmjeni Zakona o porezu na dodatu vrijednost, \"Službeni glasnik BiH\", broj 80/23 od 24.11.2023 (prag za registraciju povećan na 100.000 KM, član 57)",
+        "publisher": "Parlamentarna skupština Bosne i Hercegovine, objavljeno na uino.gov.ba",
+        "url": "https://www.uino.gov.ba/portal/wp-content/uploads/PROPISI/2_Porezi/1_PDV/1_Zakon_o_PDV/B/B-H-S-1-5-Z-o-PDV-sl-list-80-23-24-11-23.pdf",
+        "consulted_on": "2026-09-26",
+        "kind": "law"
+      },
+      {
+        "key": "vat-form",
+        "title": "Obrazac P PDV — Prijava poreza na dodanu vrijednost, uz Pravilnik o primjeni Zakona o porezu na dodatu vrijednost",
+        "publisher": "Uprava za indirektno oporezivanje Bosne i Hercegovine (UIO)",
+        "url": "https://www.uino.gov.ba/portal/wp-content/uploads/PROPISI/2_Porezi/1_PDV/2_Pravilnici/B/B-1-1-PDV_prijava_240806.pdf",
+        "consulted_on": "2026-09-26",
+        "kind": "form"
+      },
+      {
+        "key": "vat-portal",
+        "title": "e-Porezi / e-VAT — elektronsko podnošenje prijave PDV-a",
+        "publisher": "Uprava za indirektno oporezivanje Bosne i Hercegovine (UIO)",
+        "url": "https://www.uino.gov.ba/portal/en/e-services/e-vat/",
+        "consulted_on": "2026-09-26",
+        "kind": "portal"
+      },
+      {
+        "key": "coa-2021",
+        "title": "Pravilnik o kontnom okviru i sadržaju konta za privredna društva (\"Službene novine Federacije BiH\", broj 81/21), na snazi od 01.01.2022.",
+        "publisher": "Federalno ministarstvo finansija",
+        "url": "https://privrednastampa.ba/pravilnik-o-kontnom-okviru-i-sadrzaju-konta-za-privredna-drustva-sluzbene-novine-fbih-81-21/",
+        "consulted_on": "2026-09-26",
+        "kind": "regulation"
+      },
+      {
+        "key": "coa-2010",
+        "title": "Pravilnik o kontnom okviru, sadržaju konta i primjeni kontnog okvira za privredna društva (\"Službene novine FBiH\", broj 82/10), Prilog — kontni okvir za privredna društva",
+        "publisher": "Federalno ministarstvo finansija",
+        "url": "https://www.finpol.gov.ba/pdf/pravilnici/Pravilnik_o_kontnom_okviru_za_privredna_drustva.pdf",
+        "consulted_on": "2026-09-26",
+        "kind": "regulation"
+      },
+      {
+        "key": "fs-2010",
+        "title": "Pravilnik o sadržaju i formi obrazaca finansijskih izvještaja za privredna društva (\"Službene novine FBiH\", broj 82/10), Prilog 1 (Bilans stanja) i Prilog 2 (Bilans uspjeha)",
+        "publisher": "Federalno ministarstvo finansija",
+        "url": "https://finpol.gov.ba/pdf/pravilnici/Pravilnik_o_sadrzini_i_formi_obrazaca_finansijskih_izvjestaja_za_privredna_drustva.pdf",
+        "consulted_on": "2026-09-26",
+        "kind": "regulation"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "BAM",
+    "language": "bs",
+    "rounding_method": "half_up",
+    "closing_style": "retained_earnings",
+    "fiscal_year_default": "calendar",
+    "roles": {
+      "receivable": "211",
+      "payable": "432",
+      "suspense": "4699",
+      "rounding": "5599",
+      "retained_earnings": "340",
+      "sales": "611",
+      "purchase": "500",
+      "bank": "200",
+      "cash": "206",
+      "fx_gain": "662",
+      "fx_loss": "562",
+      "tax_payable": "479",
+      "tax_receivable": "279"
+    },
+    "journal_roles": {
+      "sales": "SAL",
+      "purchase": "PUR",
+      "miscellaneous": "GEN",
+      "opening": "OPN"
+    }
+  },
+  "languages": ["en"],
+  "journals": [
+    { "code": "SAL", "type": "sales", "name": "Dnevnik prodaje", "sequence": 10 },
+    { "code": "PUR", "type": "purchase", "name": "Dnevnik nabavke", "sequence": 20 },
+    { "code": "BNK", "type": "bank", "name": "Dnevnik banke", "sequence": 30 },
+    { "code": "CSH", "type": "cash", "name": "Dnevnik blagajne", "sequence": 40 },
+    { "code": "GEN", "type": "general", "name": "Opći dnevnik", "sequence": 50 },
+    { "code": "OPN", "type": "opening", "name": "Dnevnik otvaranja", "sequence": 60 }
+  ],
+  "documents": {
+    "numbering": "sequential",
+    "number_format": "{CODE}-{NNNNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "earliest_of_delivery_or_payment",
+    "posted_edit_policy": "reversal_only",
+    "references": {
+      "numbering": {
+        "legal_reference": "Zakon o porezu na dodanu vrijednost, član 55 — poreski obveznik je obavezan izdati fakturu ili drugi dokument koji služi kao faktura za svaki promet dobara i usluga, osim za promet oslobođen po čl. 24 i 25. Zakon ne propisuje jedinstven oblik broja fakture; format ovog paketa je primjer sekvencijalnog numerisanja, a ne jedina zakonom nametnuta forma.",
+        "source": "vat-law"
+      },
+      "tax_point": {
+        "legal_reference": "Zakon o porezu na dodanu vrijednost, član 17, stav 1 — poreska obaveza nastaje u trenutku koji nastupi najranije od sljedećih događaja: isporuke dobara ili izvršenja usluga, izdavanja fakture u skladu sa Zakonom, plaćanja ili djelimičnog plaćanja prije izdavanja fakture, odnosno nastanka obaveze plaćanja carinskog duga pri uvozu. Ovo je pravilo 'najranijeg od tri događaja', gdje je izdavanje fakture samostalan okidač jednako kao isporuka i plaćanje — nijedna od tih triju činjenica nema prednost po pravilu formata (za razliku od Belgije ili Luksemburga, gdje je datum isporuke princip a datum fakture izuzetak). `earliest_of_delivery_or_payment` ovdje je približna vrijednost: obuhvata isporuku i plaćanje, ali ne i samostalno izdavanje fakture prije jednog od njih dvoje kao treći okidač. Propust je zabilježen u README.md i u docs/international.md, odjeljak 'From Bosnia and Herzegovina'.",
+        "source": "vat-law"
+      },
+      "posted_edit_policy": {
+        "legal_reference": "Zakon o porezu na dodanu vrijednost, član 55, stav 6 — knjižno odobrenje (credit note) izdaje se kada je roba vraćena nakon izdavanja fakture, kada dobavljač naknadno odobri sniženje cijene ili popust, ili kada dobavljač naknadno primi dodatno plaćanje za isporučena dobra ili usluge; ispravka se, dakle, vrši novim dokumentom, a ne izmjenom već izdate fakture.",
+        "source": "vat-law"
+      }
+    }
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "Zakon o porezu na dodanu vrijednost, član 55 — faktura se izdaje kupcu, a njen sadržaj i uvjeti izdavanja bliže se uređuju podzakonskim aktom UIO-a (Pravilnik o primjeni Zakona o porezu na dodatu vrijednost); nijedan od pročitanih izvora ne propisuje opću obavezu strukturirane elektronske fakture (e-Faktura) niti državnu platformu za razmjenu ili validaciju faktura između poslovnih subjekata — postoji isključivo elektronsko podnošenje same prijave PDV-a (obavezno od januara 2019.) preko portala e-Porezi. `profile` ostaje prazan jer nijedan profil izgrađen na semantičkom modelu EN 16931 (Peppol BIS, Factur-X, XRechnung, PINT) nije zakonski propisan niti poznat iz istraženih izvora. Propust je zabilježen u README.md i u docs/international.md, odjeljak 'From Bosnia and Herzegovina'.",
+    "source": "vat-law"
+  }
+}

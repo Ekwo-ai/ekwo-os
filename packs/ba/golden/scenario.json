@@ -1,0 +1,171 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "Godina knjiga bosanskohercegovačkog obveznika PDV-a koji prijavljuje mjesečno",
+  "chart": "default",
+  "fiscal_year": { "name": "2026. godina", "start": "2026-01-01", "end": "2026-12-31" },
+  "periods": [
+    { "code": "2026-01", "from": "2026-01-01", "to": "2026-01-31" },
+    { "code": "2026-02", "from": "2026-02-01", "to": "2026-02-28" }
+  ],
+  "statements": ["BA-FBIH-BS", "BA-FBIH-IS"],
+  "contacts": [
+    { "ref": "client-ba", "name": "Trgovina Vrbas d.o.o. Banja Luka", "type": "customer", "country": "BA" },
+    { "ref": "client-foreign", "name": "Alpen Technik GmbH", "type": "customer", "country": "DE" },
+    { "ref": "supplier-ba", "name": "Usluge Sarajevo d.o.o.", "type": "supplier", "country": "BA" },
+    { "ref": "supplier-foreign", "name": "Nordmaschinen AG", "type": "supplier", "country": "DE" }
+  ],
+  "documents": [
+    {
+      "ref": "V1",
+      "type": "sale_invoice",
+      "contact": "client-ba",
+      "date": "2026-01-10",
+      "why": "Prodaja konsultantskih usluga po standardnoj stopi 17 % — polje 11 (osnovica) i polje 51 (izlazni PDV).",
+      "lines": [
+        { "name": "Konsultantske usluge", "quantity": 1, "unit_price": 10000, "tax": "BA-S-17", "account": "611" }
+      ]
+    },
+    {
+      "ref": "V2",
+      "type": "sale_invoice",
+      "contact": "client-foreign",
+      "date": "2026-01-14",
+      "why": "Izvoz opreme kupcu u Njemačkoj po nultoj stopi — polje 12, bez PDV-a.",
+      "lines": [
+        { "name": "Izvoz opreme", "quantity": 1, "unit_price": 8000, "tax": "BA-S-EXPORT", "account": "611" }
+      ]
+    },
+    {
+      "ref": "V3",
+      "type": "sale_invoice",
+      "contact": "client-ba",
+      "date": "2026-01-18",
+      "why": "Kurs stručnog usavršavanja oslobođen PDV-a po članu 24, stav 1, tačka 4 — polje 13, bez ulaznog poreza kod primaoca.",
+      "lines": [
+        { "name": "Kurs stručnog usavršavanja", "quantity": 1, "unit_price": 3000, "tax": "BA-S-EXEMPT-EDU", "account": "611" }
+      ]
+    },
+    {
+      "ref": "CN1",
+      "type": "sale_credit_note",
+      "contact": "client-ba",
+      "date": "2026-01-25",
+      "why": "Naknadno odobreno sniženje cijene na V1 (član 55, stav 6) — umanjuje osnovicu i porez istog perioda u polju 11 i 51, a ne ispravlja V1.",
+      "lines": [
+        { "name": "Sniženje cijene konsultantskih usluga", "quantity": 1, "unit_price": 2000, "tax": "BA-S-17", "account": "611" }
+      ]
+    },
+    {
+      "ref": "V4",
+      "type": "sale_invoice",
+      "contact": "client-ba",
+      "date": "2026-02-05",
+      "why": "Prodaja robe po standardnoj stopi u drugom poreskom periodu — provjerava da februarska prijava računa samo svoj period.",
+      "lines": [
+        { "name": "Prodaja robe", "quantity": 5, "unit_price": 400, "tax": "BA-S-17", "account": "601" }
+      ]
+    },
+    {
+      "ref": "P1",
+      "type": "purchase_invoice",
+      "contact": "supplier-ba",
+      "date": "2026-01-12",
+      "why": "Nabavka kancelarijskog materijala od registrovanog obveznika PDV-a u BiH po standardnoj stopi — polje 21 (osnovica) i polje 41 (ulazni PDV).",
+      "lines": [
+        { "name": "Kancelarijski materijal", "quantity": 1, "unit_price": 4000, "tax": "BA-P-17", "account": "550" }
+      ]
+    },
+    {
+      "ref": "P2",
+      "type": "purchase_invoice",
+      "contact": "supplier-foreign",
+      "date": "2026-01-16",
+      "why": "Uvoz opreme iz Njemačke — polje 22 (vrijednost uvoza) i polje 42 (PDV na uvoz), obračunat i naplaćen od strane UIO-a po carinskim propisima.",
+      "lines": [
+        { "name": "Uvezena proizvodna oprema", "quantity": 1, "unit_price": 5000, "tax": "BA-P-IMPORT", "account": "022" }
+      ]
+    },
+    {
+      "ref": "P3",
+      "type": "purchase_invoice",
+      "contact": "supplier-ba",
+      "date": "2026-02-07",
+      "why": "Zakup poslovnog prostora u drugom poreskom periodu po standardnoj stopi.",
+      "lines": [
+        { "name": "Zakup poslovnog prostora", "quantity": 1, "unit_price": 1500, "tax": "BA-P-17", "account": "533" }
+      ]
+    },
+    {
+      "ref": "P4",
+      "type": "purchase_invoice",
+      "contact": "supplier-ba",
+      "date": "2026-01-20",
+      "why": "Usluge održavanja opreme od registrovanog obveznika PDV-a u BiH po standardnoj stopi.",
+      "lines": [
+        { "name": "Usluge održavanja opreme", "quantity": 1, "unit_price": 1000, "tax": "BA-P-17", "account": "532" }
+      ]
+    },
+    {
+      "ref": "PCN1",
+      "type": "purchase_credit_note",
+      "contact": "supplier-ba",
+      "date": "2026-01-28",
+      "why": "Naknadno odobreno sniženje cijene na P4 (član 55, stav 6) — umanjuje osnovicu i ulazni porez istog perioda u polju 21 i 41.",
+      "lines": [
+        { "name": "Sniženje cijene usluga održavanja", "quantity": 1, "unit_price": 200, "tax": "BA-P-17", "account": "532" }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "E1",
+      "direction": "inbound",
+      "date": "2026-01-15",
+      "amount": 11700,
+      "contact": "client-ba",
+      "journal": "BNK",
+      "match": "V1",
+      "why": "Uplata koja tačno podmiruje V1 (10 000 + 1 700 PDV), prije naknadno odobrenog sniženja cijene u CN1."
+    },
+    {
+      "ref": "E2",
+      "direction": "inbound",
+      "date": "2026-02-10",
+      "amount": 2340,
+      "contact": "client-ba",
+      "journal": "BNK",
+      "match": "V4",
+      "why": "Uplata koja tačno podmiruje V4 (2 000 + 340 PDV)."
+    },
+    {
+      "ref": "E3",
+      "direction": "inbound",
+      "date": "2026-02-15",
+      "amount": 1000,
+      "contact": "client-ba",
+      "journal": "BNK",
+      "match": null,
+      "why": "Uplata bez vezivanja za konkretan dokument — ostaje kao otvoren iznos na kontu kupca."
+    },
+    {
+      "ref": "S1",
+      "direction": "outbound",
+      "date": "2026-01-25",
+      "amount": 4680,
+      "contact": "supplier-ba",
+      "journal": "BNK",
+      "match": "P1",
+      "why": "Plaćanje koje tačno podmiruje P1 (4 000 + 680 PDV)."
+    },
+    {
+      "ref": "S2",
+      "direction": "outbound",
+      "date": "2026-02-12",
+      "amount": 1755,
+      "contact": "supplier-ba",
+      "journal": "BNK",
+      "match": "P3",
+      "why": "Plaćanje koje tačno podmiruje P3 (1 500 + 255 PDV)."
+    }
+  ]
+}
