@@ -67,6 +67,21 @@
       }
     ]
   },
+  "charts": [
+    {
+      "code": "default",
+      "name": "Kontni okvir za privredna društva (Federacija BiH)",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": [
+        "BA-FBIH-BS",
+        "BA-FBIH-IS"
+      ],
+      "legal_reference": "Pravilnik o kontnom okviru i sadržaju konta za privredna društva (\"Službene novine Federacije BiH\", broj 81/21), u primjeni od 01.01.2022.",
+      "source": "coa-2021"
+    }
+  ],
   "defaults": {
     "currency": "BAM",
     "language": "bs",
@@ -95,14 +110,46 @@
       "opening": "OPN"
     }
   },
-  "languages": ["en"],
+  "languages": [
+    "en"
+  ],
   "journals": [
-    { "code": "SAL", "type": "sales", "name": "Dnevnik prodaje", "sequence": 10 },
-    { "code": "PUR", "type": "purchase", "name": "Dnevnik nabavke", "sequence": 20 },
-    { "code": "BNK", "type": "bank", "name": "Dnevnik banke", "sequence": 30 },
-    { "code": "CSH", "type": "cash", "name": "Dnevnik blagajne", "sequence": 40 },
-    { "code": "GEN", "type": "general", "name": "Opći dnevnik", "sequence": 50 },
-    { "code": "OPN", "type": "opening", "name": "Dnevnik otvaranja", "sequence": 60 }
+    {
+      "code": "SAL",
+      "type": "sales",
+      "name": "Dnevnik prodaje",
+      "sequence": 10
+    },
+    {
+      "code": "PUR",
+      "type": "purchase",
+      "name": "Dnevnik nabavke",
+      "sequence": 20
+    },
+    {
+      "code": "BNK",
+      "type": "bank",
+      "name": "Dnevnik banke",
+      "sequence": 30
+    },
+    {
+      "code": "CSH",
+      "type": "cash",
+      "name": "Dnevnik blagajne",
+      "sequence": 40
+    },
+    {
+      "code": "GEN",
+      "type": "general",
+      "name": "Opći dnevnik",
+      "sequence": 50
+    },
+    {
+      "code": "OPN",
+      "type": "opening",
+      "name": "Dnevnik otvaranja",
+      "sequence": 60
+    }
   ],
   "documents": {
     "numbering": "sequential",
