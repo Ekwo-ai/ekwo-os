@@ -1,0 +1,264 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "PA-DGI-430",
+  "name": "Declaración Jurada del Impuesto de Transferencia de Bienes Corporales Muebles y la Prestación de Servicios (Formulario 430)",
+  "period": ["month", "quarter"],
+  "period_default": "month",
+  "valid_from": "2016-01-01",
+  "legal_reference": "Código Fiscal, artículo 1057-V, parágrafo 11 — el impuesto se liquida y paga en el formulario que señale la Dirección General de Ingresos, dentro de los primeros quince días del mes siguiente al período declarado. El Instructivo V6 del Formulario 430 (sección B) fija la periodicidad: mensual para toda persona natural o jurídica, salvo la persona natural que preste servicios profesionales u oficios por cuenta propia o en forma independiente, que liquida y paga trimestralmente — un hecho propio de cada contribuyente y no una regla que aplique a toda persona jurídica, por lo que este paquete declara el mes como period_default y deja la cuatrimestralidad de los profesionales independientes fuera de esa proposición. Este paquete declara sólo las casillas de las operaciones y del crédito fiscal directo a operaciones gravadas del Instructivo V6; no declara las devoluciones y descuentos (casillas 20, 201, 402, 403), el crédito fiscal proporcional a operaciones mixtas (casillas 26 a 37, 43 y 47), el crédito de retención (casilla 52), el saldo a favor del período anterior (casilla 51) ni el recargo, la multa y el interés (casillas 56 a 57) — véase el README de este paquete",
+  "source": "instructivo-430",
+  "deadline": {
+    "rule": "day_of_month_after_period",
+    "day": 15,
+    "legal_reference": "Código Fiscal, artículo 1057-V, parágrafo 11 — la declaración con saldo a pagar presentada después de los quince (15) días siguientes a aquel en que termine el período declarado causa un recargo del 10 % sobre el impuesto a pagar, lo que fija el plazo de presentación en los primeros quince días del mes siguiente al período",
+    "source": "instructivo-430"
+  },
+  "boxes": [
+    {
+      "box": "11",
+      "kind": "base",
+      "name": "Operaciones gravadas del período 7 % (ventas y prestación de servicios)",
+      "sequence": 10,
+      "legal_reference": "Instructivo V6, casilla 11 — monto de las operaciones gravadas del período a la tarifa del 7 %. Este paquete no declara la casilla 12 (transporte aéreo de pasajeros al 7 %), un numeral especial del parágrafo 1 que su escenario no ejercita",
+      "source": "instructivo-430"
+    },
+    {
+      "box": "111",
+      "kind": "tax",
+      "name": "Impuesto causado — operaciones gravadas del período 7 %",
+      "sequence": 20,
+      "legal_reference": "Instructivo V6, casilla 111 (columna «Impuesto causado» de la casilla 11)",
+      "source": "instructivo-430"
+    },
+    {
+      "box": "13",
+      "kind": "base",
+      "name": "Operaciones gravadas del período 10 % (bebidas alcohólicas)",
+      "sequence": 30,
+      "legal_reference": "Instructivo V6, casilla 13 — monto de las operaciones de venta de bebidas alcohólicas, a la tarifa del 10 %",
+      "source": "instructivo-430"
+    },
+    {
+      "box": "131",
+      "kind": "tax",
+      "name": "Impuesto causado — bebidas alcohólicas 10 %",
+      "sequence": 40,
+      "legal_reference": "Instructivo V6, casilla 131 (columna «Impuesto causado» de la casilla 13)",
+      "source": "instructivo-430"
+    },
+    {
+      "box": "14",
+      "kind": "base",
+      "name": "Servicios gravados del período 10 % (hospedaje o alojamiento público)",
+      "sequence": 50,
+      "legal_reference": "Instructivo V6, casilla 14 — monto de las operaciones del servicio de hospedaje o alojamiento público, a la tarifa del 10 %",
+      "source": "instructivo-430"
+    },
+    {
+      "box": "141",
+      "kind": "tax",
+      "name": "Impuesto causado — hospedaje 10 %",
+      "sequence": 60,
+      "legal_reference": "Instructivo V6, casilla 141 (columna «Impuesto causado» de la casilla 14)",
+      "source": "instructivo-430"
+    },
+    {
+      "box": "15",
+      "kind": "base",
+      "name": "Operaciones gravadas del período 15 % (cigarrillos)",
+      "sequence": 70,
+      "legal_reference": "Instructivo V6, casilla 15 — monto de las operaciones de venta al por mayor y al detal de cigarrillos, a la tarifa del 15 %",
+      "source": "instructivo-430"
+    },
+    {
+      "box": "151",
+      "kind": "tax",
+      "name": "Impuesto causado — cigarrillos 15 %",
+      "sequence": 80,
+      "legal_reference": "Instructivo V6, casilla 151 (columna «Impuesto causado» de la casilla 15)",
+      "source": "instructivo-430"
+    },
+    {
+      "box": "16",
+      "kind": "base",
+      "name": "Operaciones de exportación y reexportación de bienes (ventas)",
+      "sequence": 90,
+      "legal_reference": "Instructivo V6, casilla 16 — monto de las operaciones de exportación y reexportación de bienes gravados y no gravados",
+      "source": "instructivo-430"
+    },
+    {
+      "box": "17",
+      "kind": "base",
+      "name": "Otras operaciones exentas (ventas y prestación de servicios)",
+      "sequence": 100,
+      "legal_reference": "Instructivo V6, casilla 17 — monto de las operaciones exentas del parágrafo 8 del artículo 1057-V realizadas en el período",
+      "source": "instructivo-430"
+    },
+    {
+      "box": "18",
+      "kind": "base",
+      "name": "Operaciones no gravadas (ventas y prestación de servicios)",
+      "sequence": 110,
+      "legal_reference": "Instructivo V6, casilla 18 — monto de las operaciones que no causan el impuesto, del parágrafo 7 del artículo 1057-V",
+      "source": "instructivo-430"
+    },
+    {
+      "box": "19",
+      "kind": "total",
+      "name": "Total de operaciones del período",
+      "sequence": 120,
+      "plus": ["11", "13", "14", "15", "16", "17", "18"],
+      "legal_reference": "Instructivo V6, casilla 19 — totaliza las casillas 11 a 18; este paquete omite la casilla 12 (transporte aéreo de pasajeros), que su escenario no ejercita, de la suma que en el formulario oficial también la incluye",
+      "source": "instructivo-430"
+    },
+    {
+      "box": "191",
+      "kind": "total",
+      "name": "Total impuesto causado",
+      "sequence": 130,
+      "plus": ["111", "131", "141", "151"],
+      "legal_reference": "Instructivo V6, casilla 191 — totaliza las casillas 111, 121, 131, 141 y 151; este paquete omite la casilla 121 (impuesto de la casilla 12, no declarada)",
+      "source": "instructivo-430"
+    },
+    {
+      "box": "211",
+      "kind": "total",
+      "name": "Total débito fiscal",
+      "sequence": 140,
+      "plus": ["191"],
+      "legal_reference": "Instructivo V6, casilla 211 — totaliza la casilla 191 más la casilla 201 (impuesto de las devoluciones y descuentos en ventas); este paquete no declara la casilla 201, de modo que la casilla 211 iguala aquí la 191",
+      "source": "instructivo-430"
+    },
+    {
+      "box": "222",
+      "kind": "base",
+      "name": "Compras e importaciones gravadas al 7 %, imputables directamente a operaciones gravadas",
+      "sequence": 150,
+      "legal_reference": "Instructivo V6, casilla 222 — monto total (compras locales de la casilla 22 más importaciones de la casilla 221) de las compras e importaciones gravadas al 7 % imputables directamente a operaciones gravadas; este paquete no separa la compra local de la importación",
+      "source": "instructivo-430"
+    },
+    {
+      "box": "223",
+      "kind": "tax",
+      "name": "ITBMS cargado al 7 % — crédito fiscal directo",
+      "sequence": 160,
+      "legal_reference": "Instructivo V6, casilla 223 — columna «ITBMS cargado» de la casilla 222",
+      "source": "instructivo-430"
+    },
+    {
+      "box": "232",
+      "kind": "base",
+      "name": "Compras e importaciones gravadas al 10 %, imputables directamente a operaciones gravadas",
+      "sequence": 170,
+      "legal_reference": "Instructivo V6, casilla 232 — monto total de las compras e importaciones gravadas al 10 % imputables directamente a operaciones gravadas",
+      "source": "instructivo-430"
+    },
+    {
+      "box": "233",
+      "kind": "tax",
+      "name": "ITBMS cargado al 10 % — crédito fiscal directo",
+      "sequence": 180,
+      "legal_reference": "Instructivo V6, casilla 233 — columna «ITBMS cargado» de la casilla 232",
+      "source": "instructivo-430"
+    },
+    {
+      "box": "242",
+      "kind": "base",
+      "name": "Compras e importaciones gravadas al 15 %, imputables directamente a operaciones gravadas",
+      "sequence": 190,
+      "legal_reference": "Instructivo V6, casilla 242 — monto total de las compras e importaciones gravadas al 15 % imputables directamente a operaciones gravadas",
+      "source": "instructivo-430"
+    },
+    {
+      "box": "243",
+      "kind": "tax",
+      "name": "ITBMS cargado al 15 % — crédito fiscal directo",
+      "sequence": 200,
+      "legal_reference": "Instructivo V6, casilla 243 — columna «ITBMS cargado» de la casilla 242",
+      "source": "instructivo-430"
+    },
+    {
+      "box": "253",
+      "kind": "total",
+      "name": "Total ITBMS cargado — crédito fiscal directo a operaciones gravadas",
+      "sequence": 210,
+      "plus": ["223", "233", "243"],
+      "legal_reference": "Instructivo V6, casilla 253 — totaliza las casillas 223, 233 y 243",
+      "source": "instructivo-430"
+    },
+    {
+      "box": "34",
+      "kind": "base",
+      "name": "Compras e importaciones gravadas al 7 %, destinadas directamente a operaciones exentas",
+      "sequence": 220,
+      "legal_reference": "Instructivo V6, casilla 34 — monto de las compras e importaciones gravadas al 7 % que el contribuyente destina directamente a operaciones exentas del parágrafo 8, salvo la exportación del numeral 2) del literal a); el impuesto de esta casilla no da derecho a crédito fiscal y queda en el costo, sin casilla propia",
+      "source": "instructivo-430"
+    },
+    {
+      "box": "39",
+      "kind": "base",
+      "name": "Compras locales e importaciones exentas",
+      "sequence": 230,
+      "legal_reference": "Instructivo V6, casilla 39 — monto de las compras locales e importaciones exentas, sin ITBMS facturado por el proveedor",
+      "source": "instructivo-430"
+    },
+    {
+      "box": "42",
+      "kind": "total",
+      "name": "Crédito fiscal directo a operaciones gravadas",
+      "sequence": 240,
+      "plus": ["253"],
+      "legal_reference": "Instructivo V6, casilla 42 — traslada el resultado de la casilla 253",
+      "source": "instructivo-430"
+    },
+    {
+      "box": "45",
+      "kind": "total",
+      "name": "Crédito fiscal deducible por operaciones gravadas del período",
+      "sequence": 250,
+      "plus": ["42"],
+      "legal_reference": "Instructivo V6, casilla 45 — suma de las casillas 42, 43 y 44; este paquete no declara el crédito fiscal proporcional (casilla 43) ni el crédito por devoluciones y descuentos en ventas gravadas (casilla 44), de modo que la casilla 45 iguala aquí la 42",
+      "source": "instructivo-430"
+    },
+    {
+      "box": "49",
+      "kind": "total",
+      "name": "Débito fiscal del período",
+      "sequence": 260,
+      "plus": ["211"],
+      "legal_reference": "Instructivo V6, casilla 49 — traslada el importe del débito fiscal consignado en la casilla 211",
+      "source": "instructivo-430"
+    },
+    {
+      "box": "50",
+      "kind": "total",
+      "name": "Crédito fiscal deducible por operaciones gravadas del período",
+      "sequence": 270,
+      "plus": ["45"],
+      "legal_reference": "Instructivo V6, casilla 50 — traslada el importe determinado en la casilla 45",
+      "source": "instructivo-430"
+    },
+    {
+      "box": "54",
+      "kind": "total",
+      "name": "Saldo a favor del contribuyente que se trasladará al siguiente período fiscal",
+      "sequence": 280,
+      "plus": ["50"],
+      "minus": ["49"],
+      "floor_zero": true,
+      "legal_reference": "Instructivo V6, casilla 54 — casillas 50 + 51 + 52 + 53 menos la casilla 49, cuando la primera suma es mayor; este paquete no declara el saldo a favor del período anterior (casilla 51), el crédito de retención (casilla 52) ni el crédito fiscal por operaciones al exterior susceptible de Certificado con Poder Cancelatorio (casilla 53)",
+      "source": "instructivo-430"
+    },
+    {
+      "box": "55",
+      "kind": "total",
+      "name": "Impuesto a pagar",
+      "sequence": 290,
+      "plus": ["49"],
+      "minus": ["50"],
+      "floor_zero": true,
+      "legal_reference": "Instructivo V6, casilla 55 — la casilla 49 menos las casillas 50 + 51 + 52 + 53, cuando la primera es mayor",
+      "source": "instructivo-430"
+    }
+  ]
+}

@@ -1,0 +1,275 @@
+[
+  {
+    "code": "PA-S-7",
+    "name": "Operaciones gravadas a la tarifa general del 7 %",
+    "description": "Transferencia de bienes corporales muebles y prestación de servicios en general, a la tarifa general",
+    "kind": "vat",
+    "rate": 7,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2010-07-01",
+    "legal_reference": "Código Fiscal, artículo 1057-V, parágrafo 1, literales a) y b), en la redacción del artículo 6 de la Ley 33 de 30 de junio de 2010 — la tarifa general del impuesto es del 7 %, vigente desde el 1 de julio de 2010 (artículo 73 de la Ley 8 de 15 de marzo de 2010)",
+    "source": "ley-33-2010",
+    "sequence": 10,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "11" },
+        { "type": "tax", "account": "240501", "box": "111" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "11", "box_factor": -100 },
+        { "type": "tax", "account": "240501", "box": "111", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "PA-S-10-ALC",
+    "name": "Operaciones gravadas a la tarifa del 10 % — bebidas alcohólicas",
+    "description": "Venta de bebidas alcohólicas",
+    "kind": "vat",
+    "rate": 10,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2001-01-01",
+    "legal_reference": "Código Fiscal, artículo 1057-V, parágrafo 6, numeral 1, en la redacción del artículo 1 de la Ley 28 de 2001 — las operaciones de venta de bebidas alcohólicas están gravadas a la tarifa del 10 %",
+    "source": "codigo-fiscal",
+    "sequence": 20,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "13" },
+        { "type": "tax", "account": "240501", "box": "131" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "13", "box_factor": -100 },
+        { "type": "tax", "account": "240501", "box": "131", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "PA-S-10-HOSP",
+    "name": "Operaciones gravadas a la tarifa del 10 % — hospedaje",
+    "description": "Servicio de hospedaje o alojamiento público",
+    "kind": "vat",
+    "rate": 10,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2010-07-01",
+    "legal_reference": "Código Fiscal, artículo 1057-V, parágrafo 1, numeral 7, en la redacción del artículo 73 de la Ley 8 de 15 de marzo de 2010 — el servicio de hospedaje o alojamiento público está gravado a la tarifa del 10 %",
+    "source": "ley-8-2010",
+    "sequence": 30,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "14" },
+        { "type": "tax", "account": "240501", "box": "141" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "14", "box_factor": -100 },
+        { "type": "tax", "account": "240501", "box": "141", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "PA-S-15-TAB",
+    "name": "Operaciones gravadas a la tarifa del 15 % — tabaco",
+    "description": "Venta al por mayor y al detal de cigarrillos y demás derivados del tabaco",
+    "kind": "vat",
+    "rate": 15,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2001-01-01",
+    "legal_reference": "Código Fiscal, artículo 1057-V, parágrafo 6, numeral 2, en la redacción del artículo 1 de la Ley 28 de 2001 — las operaciones de venta de cigarrillos están gravadas a la tarifa del 15 %",
+    "source": "codigo-fiscal",
+    "sequence": 40,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "15" },
+        { "type": "tax", "account": "240501", "box": "151" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "15", "box_factor": -100 },
+        { "type": "tax", "account": "240501", "box": "151", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "PA-S-EXP",
+    "name": "Exportación y reexportación de bienes",
+    "description": "Operaciones de exportación y reexportación de bienes gravados y no gravados",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "1976-12-22",
+    "legal_reference": "Código Fiscal, artículo 1057-V, parágrafo 8, literal a), numeral 2 — la exportación y reexportación de bienes no causa el impuesto, y da derecho a recuperar, mediante Certificado con Poder Cancelatorio, el ITBMS pagado en las compras e importaciones destinadas directamente a ella",
+    "source": "codigo-fiscal",
+    "sequence": 50,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "16" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "16", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "PA-S-EXE",
+    "name": "Otras operaciones exentas",
+    "description": "Transferencias de bienes y prestaciones de servicios exentas del parágrafo 8 del artículo 1057-V — entre otras, los servicios de salud, la educación, el arrendamiento de vivienda por más de seis meses, el transporte de carga y de pasajeros, los seguros y los alimentos servidos en locales sin venta de bebidas alcohólicas",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "1976-12-22",
+    "legal_reference": "Código Fiscal, artículo 1057-V, parágrafo 8, con excepción del numeral 2) del literal a), en la redacción del artículo 39 de la Ley 6 de 2 de febrero de 2005 — transferencias de bienes y prestaciones de servicios exentas del impuesto",
+    "source": "ley-6-2005",
+    "sequence": 60,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "17" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "17", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "PA-S-NG",
+    "name": "Operaciones no gravadas",
+    "description": "Transmisiones en capitulaciones matrimoniales, expropiación y ventas que haga el Estado, adjudicaciones judiciales de bienes, transferencia de documentos negociables y de títulos y valores, pagos e intereses de servicios financieros y de fondos de pensión, entre otras operaciones que el parágrafo 7 no somete al hecho generador",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "not_subject",
+    "valid_from": "2005-02-02",
+    "legal_reference": "Código Fiscal, artículo 1057-V, parágrafo 7, en la redacción de la Ley 6 de 2 de febrero de 2005 — operaciones que no causan el impuesto",
+    "source": "ley-6-2005",
+    "sequence": 70,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "18" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "18", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "PA-P-7",
+    "name": "Compras gravadas a la tarifa general del 7 %, con derecho a crédito fiscal",
+    "description": "Adquisición de bienes, servicios e importaciones gravadas al 7 %, imputables directamente a operaciones gravadas",
+    "kind": "vat",
+    "recoverable": true,
+    "rate": 7,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2010-07-01",
+    "legal_reference": "Código Fiscal, artículo 1057-V, parágrafo 12 — el contribuyente tiene derecho a un crédito fiscal contra el débito fiscal del mismo período, por el impuesto pagado en la adquisición de bienes y servicios destinados a operaciones gravadas",
+    "source": "codigo-fiscal",
+    "sequence": 110,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "222" },
+        { "type": "tax", "account": "139501", "box": "223" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "222", "box_factor": -100 },
+        { "type": "tax", "account": "139501", "box": "223", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "PA-P-10",
+    "name": "Compras gravadas a la tarifa del 10 %, con derecho a crédito fiscal",
+    "description": "Adquisición de bienes, servicios e importaciones gravadas al 10 % (bebidas alcohólicas u hospedaje), imputables directamente a operaciones gravadas",
+    "kind": "vat",
+    "recoverable": true,
+    "rate": 10,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2010-07-01",
+    "legal_reference": "Código Fiscal, artículo 1057-V, parágrafo 12, en los mismos términos que la compra a la tarifa general; el Formulario 430 declara el crédito fiscal de la tarifa del 10 % en una casilla distinta de la del 7 %",
+    "source": "codigo-fiscal",
+    "sequence": 120,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "232" },
+        { "type": "tax", "account": "139501", "box": "233" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "232", "box_factor": -100 },
+        { "type": "tax", "account": "139501", "box": "233", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "PA-P-15",
+    "name": "Compras gravadas a la tarifa del 15 %, con derecho a crédito fiscal",
+    "description": "Adquisición de bienes, servicios e importaciones gravadas al 15 % (cigarrillos y derivados del tabaco), imputables directamente a operaciones gravadas",
+    "kind": "vat",
+    "recoverable": true,
+    "rate": 15,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2010-07-01",
+    "legal_reference": "Código Fiscal, artículo 1057-V, parágrafo 12, en los mismos términos que la compra a la tarifa general; el Formulario 430 declara el crédito fiscal de la tarifa del 15 % en una casilla distinta de la del 7 %",
+    "source": "codigo-fiscal",
+    "sequence": 130,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "242" },
+        { "type": "tax", "account": "139501", "box": "243" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "242", "box_factor": -100 },
+        { "type": "tax", "account": "139501", "box": "243", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "PA-P-7-NOCRED",
+    "name": "Compra gravada al 7 %, sin derecho a crédito fiscal",
+    "description": "Adquisición gravada al 7 %, destinada directamente a una operación exenta o no gravada",
+    "kind": "vat",
+    "recoverable": false,
+    "rate": 7,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2010-07-01",
+    "legal_reference": "Código Fiscal, artículo 1057-V, parágrafo 12 — el crédito fiscal exige que la adquisición se destine a una operación gravada; el impuesto de una adquisición gravada destinada directamente a una operación exenta o no gravada no da derecho a crédito fiscal y forma parte del costo o gasto de la adquisición. El Formulario 430 declara la base en la casilla 34, «destinadas directamente a operaciones exentas», sin casilla propia de impuesto",
+    "source": "instructivo-430",
+    "sequence": 140,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "34" },
+        { "type": "tax_on_base", "factor": 100 }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "34", "box_factor": -100 },
+        { "type": "tax_on_base", "factor": 100, "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "PA-P-EXE",
+    "name": "Compra exenta o no gravada",
+    "description": "Adquisición de bienes o servicios exentos o no gravados, sin ITBMS facturado por el proveedor",
+    "kind": "vat",
+    "recoverable": false,
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "exempt",
+    "valid_from": "1976-12-22",
+    "legal_reference": "Código Fiscal, artículo 1057-V, parágrafos 7 y 8 — la compra de un bien o servicio exento o no gravado no liquida impuesto; el Formulario 430 la declara en la casilla 39, «compras locales e importaciones exentas»",
+    "source": "instructivo-430",
+    "sequence": 150,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "39" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "39", "box_factor": -100 }
+      ]
+    }
+  }
+]

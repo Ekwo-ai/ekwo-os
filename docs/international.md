@@ -4893,3 +4893,58 @@ Certificador, so this pack cannot model the refusal at all, and treats every
 purchase as if the certification the buyer's crédito fiscal depends on had
 already succeeded — the same simplification every clearance-country pack of
 this repository makes at its documents' edge.
+
+## From Panama
+
+`packs/pa/`, `community`, seed 107, the sixth pack of Latin America. Its
+value added tax is the Impuesto de Transferencia de Bienes Corporales
+Muebles y la Prestación de Servicios (ITBMS), article 1057-V of the Código
+Fiscal (Ley 8 de 1956); its electronic-invoicing regime is the Sistema de
+Facturación Electrónica de Panamá (SFEP). Fourteen texts in the register.
+What follows is what the core could not say, in addition to the
+clearance-invoicing gap Mexico already named.
+
+**A tax point with three anchors, where the vocabulary has room for two.**
+Article 1057-V, parágrafo 2, fixes the moment the obligation arises at
+whichever of the invoice and the delivery of the good comes first, which
+`invoice_if_issued` already reads correctly — that is exactly the shape
+Belgium and Luxembourg use the word for. Services get a *different* pair,
+completion of the service or receipt of payment, and the format has one word
+per country: `packs/pa/` declares the goods rule, the more general of the
+two hechos gravados, and states the services rule in prose in
+`documents.references.tax_point`, the same choice the Colombian pack made
+for its own third anchor.
+
+**A proportional credit the declaration computes as a ratio, which
+`tax_report.json` has no operator for.** Formulario 430's casillas 26 to 37
+apportion a purchase that serves both taxed and exempt operations by the
+share of the period's revenue that is taxed (casilla 41's formula divides
+casilla 373 and a share of casilla 293 by casilla 19), and casillas 43 and 47
+repeat the same division for the credit side. `tax_report.json` has `rate`
+and `rate_of` for a box stated as a fixed percentage of another box — the
+shape a sales tax return states as a multiplication in words — and no way to
+state one box divided by another, whose divisor changes every period.
+`packs/pa/` states only the direct credit (a purchase attributed wholly to a
+taxed or wholly to an exempt operation, casillas 22 to 25 and 34 to 37,
+simplified here to 222/223, 232/233, 242/243 and 34) and leaves the
+proportional buckets for a company to compute by hand, the same gap Peru's
+detracciones section already names for a different mechanism.
+
+**Retention of the ITBMS by a designated agent, credited on a separate
+annex.** Since 2016 the DGI has progressively widened the list of
+government entities, large taxpayers and card processors required to
+withhold a share of the ITBMS invoiced to them (most recently Resolución N.°
+201-8066 de 24 de agosto de 2023); the amount withheld is credited through
+Anexo 95 of Formulario 430 (casilla 52), a running balance the return itself
+does not compute from the period's own documents. It is the same shape
+Colombia's ReteIVA is for the Colombian pack: a separate collection
+mechanism with its own accounts and its own casilla, not a rate or an
+exemption a `tax` posting can express, and not invented here.
+
+**USD and PA.** No row is added to `00_currencies.sql`: the balboa is at par
+with the United States dollar and Panama's own law makes the dollar legal
+tender for all but coin, so this pack declares `defaults.currency: "USD"`,
+already carried by the American pack. `PA` is added to
+`00_territories.sql` outside the common system of VAT, on the same footing
+as `MX`, `CO` and `PE`, so `vat_category`, `exemption_code` and the five
+`intracom_*` treatments are read the way every non-EU pack's are.

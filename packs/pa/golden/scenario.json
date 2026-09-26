@@ -1,0 +1,106 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "Un primer trimestre de una comercializadora panameña, declarante mensual del ITBMS",
+  "chart": "default",
+  "fiscal_year": { "name": "Ejercicio 2026", "start": "2026-01-01", "end": "2026-12-31" },
+  "periods": [
+    { "code": "2026-01", "from": "2026-01-01", "to": "2026-01-31" },
+    { "code": "2026-02", "from": "2026-02-01", "to": "2026-02-28" },
+    { "code": "2026-03", "from": "2026-03-01", "to": "2026-03-31" }
+  ],
+  "statements": ["PA-NIIFPYME-ESF", "PA-NIIFPYME-ERI"],
+  "contacts": [
+    { "ref": "client-pa", "name": "Distribuidora Istmeña, S.A.", "type": "customer", "country": "PA" },
+    { "ref": "client-us", "name": "Coastal Trading LLC", "type": "customer", "country": "US" },
+    { "ref": "supplier-pa", "name": "Suministros del Pacífico, S.A.", "type": "supplier", "country": "PA" }
+  ],
+  "documents": [
+    {
+      "ref": "V1", "type": "sale_invoice", "contact": "client-pa", "date": "2026-01-15",
+      "why": "Una venta gravada a la tarifa general del 7 %: la base de la casilla 11 y el impuesto causado de la casilla 111.",
+      "lines": [{ "name": "Mercancía general", "quantity": 10, "unit_price": 100, "tax": "PA-S-7", "account": "410501" }]
+    },
+    {
+      "ref": "V2", "type": "sale_invoice", "contact": "client-pa", "date": "2026-01-20",
+      "why": "Una venta de bebidas alcohólicas a la tarifa del 10 %: la base de la casilla 13 y el impuesto causado de la casilla 131.",
+      "lines": [{ "name": "Bebidas alcohólicas", "quantity": 5, "unit_price": 40, "tax": "PA-S-10-ALC", "account": "410502" }]
+    },
+    {
+      "ref": "V3", "type": "sale_invoice", "contact": "client-pa", "date": "2026-02-05",
+      "why": "Un servicio de hospedaje a la tarifa del 10 %: la base de la casilla 14 y el impuesto causado de la casilla 141.",
+      "lines": [{ "name": "Hospedaje, 3 noches", "quantity": 3, "unit_price": 100, "tax": "PA-S-10-HOSP", "account": "410503" }]
+    },
+    {
+      "ref": "V4", "type": "sale_invoice", "contact": "client-pa", "date": "2026-02-10",
+      "why": "Una venta de cigarrillos a la tarifa del 15 %: la base de la casilla 15 y el impuesto causado de la casilla 151.",
+      "lines": [{ "name": "Cigarrillos", "quantity": 20, "unit_price": 10, "tax": "PA-S-15-TAB", "account": "410504" }]
+    },
+    {
+      "ref": "V5", "type": "sale_invoice", "contact": "client-us", "date": "2026-03-05",
+      "why": "Una exportación de bienes, declarada en la casilla 16 y sin ITBMS.",
+      "lines": [{ "name": "Mercancía de exportación", "quantity": 50, "unit_price": 20, "tax": "PA-S-EXP", "account": "410505" }]
+    },
+    {
+      "ref": "V6", "type": "sale_invoice", "contact": "client-pa", "date": "2026-03-08",
+      "why": "Un servicio de salud exento, declarado en la casilla 17.",
+      "lines": [{ "name": "Servicio de salud", "quantity": 1, "unit_price": 500, "tax": "PA-S-EXE", "account": "410506" }]
+    },
+    {
+      "ref": "V7", "type": "sale_credit_note", "contact": "client-pa", "date": "2026-02-12",
+      "why": "Una devolución parcial de V1: reduce, dentro de la misma tarifa del 7 %, la base y el impuesto ya declarados por V1 en las casillas 11 y 111.",
+      "lines": [{ "name": "Devolución de mercancía general", "quantity": 2, "unit_price": 100, "tax": "PA-S-7", "account": "4190" }]
+    },
+    {
+      "ref": "C1", "type": "purchase_invoice", "contact": "supplier-pa", "date": "2026-01-18",
+      "why": "Una compra gravada al 7 %, destinada a operaciones gravadas: la base y el crédito fiscal directo de las casillas 222 y 223.",
+      "lines": [{ "name": "Mercancía general, compra", "quantity": 10, "unit_price": 80, "tax": "PA-P-7", "account": "510501" }]
+    },
+    {
+      "ref": "C2", "type": "purchase_invoice", "contact": "supplier-pa", "date": "2026-02-08",
+      "why": "Una compra gravada al 10 %, destinada a operaciones gravadas: la base y el crédito fiscal directo de las casillas 232 y 233.",
+      "lines": [{ "name": "Insumos para bebidas", "quantity": 5, "unit_price": 40, "tax": "PA-P-10", "account": "5110" }]
+    },
+    {
+      "ref": "C3", "type": "purchase_invoice", "contact": "supplier-pa", "date": "2026-03-10",
+      "why": "Una compra gravada al 15 %, destinada a operaciones gravadas: la base y el crédito fiscal directo de las casillas 242 y 243.",
+      "lines": [{ "name": "Cigarrillos, compra para reventa", "quantity": 20, "unit_price": 10, "tax": "PA-P-15", "account": "510501" }]
+    },
+    {
+      "ref": "C4", "type": "purchase_invoice", "contact": "supplier-pa", "date": "2026-03-12",
+      "why": "Una compra gravada al 7 %, destinada directamente al servicio de salud exento V6: sin derecho a crédito fiscal (parágrafo 12), casilla 34, el ITBMS queda en el costo sin casilla propia.",
+      "lines": [{ "name": "Insumos médicos gravados", "quantity": 5, "unit_price": 100, "tax": "PA-P-7-NOCRED", "account": "6170" }]
+    },
+    {
+      "ref": "C5", "type": "purchase_invoice", "contact": "supplier-pa", "date": "2026-03-15",
+      "why": "Una compra exenta, sin ITBMS facturado por el proveedor: la base de la casilla 39.",
+      "lines": [{ "name": "Alimentos exentos", "quantity": 1, "unit_price": 300, "tax": "PA-P-EXE", "account": "6170" }]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "P1", "direction": "inbound", "date": "2026-02-05", "amount": 1070.00,
+      "contact": "client-pa", "journal": "BAN", "match": "V1",
+      "why": "Un cobro que salda exactamente la factura V1."
+    },
+    {
+      "ref": "P2", "direction": "inbound", "date": "2026-02-20", "amount": 330.00,
+      "contact": "client-pa", "journal": "BAN", "match": "V3",
+      "why": "Un cobro que salda exactamente la factura V3, del servicio de hospedaje."
+    },
+    {
+      "ref": "P3", "direction": "inbound", "date": "2026-02-25", "amount": 150.00,
+      "contact": "client-pa", "journal": "BAN", "match": null,
+      "why": "Un cobro a cuenta, sin factura que saldar: queda como partida abierta."
+    },
+    {
+      "ref": "P4", "direction": "outbound", "date": "2026-03-20", "amount": 856.00,
+      "contact": "supplier-pa", "journal": "BAN", "match": "C1",
+      "why": "Un pago que salda exactamente la compra C1."
+    },
+    {
+      "ref": "P5", "direction": "outbound", "date": "2026-03-22", "amount": 535.00,
+      "contact": "supplier-pa", "journal": "BAN", "match": "C4",
+      "why": "Un pago que salda exactamente la compra C4, cuyo ITBMS no acreditable forma parte del costo pagado."
+    }
+  ]
+}

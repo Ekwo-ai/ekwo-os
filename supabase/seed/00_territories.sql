@@ -1508,3 +1508,32 @@ on conflict (code) do update set
   eu_vat_to       = excluded.eu_vat_to,
   vat_prefix      = excluded.vat_prefix,
   legal_reference = excluded.legal_reference;
+
+
+-- ---------------------------------------------------------------------------
+-- The row — Panama
+--
+-- Directive 2006/112/EC, article 5(2): the common system of VAT applies in
+-- the territory of the Community as defined by the Treaties, and a State
+-- outside it is a third country for every rule the Directive carries.
+-- Panama levies a value added tax of its own, the Impuesto de Transferencia
+-- de Bienes Corporales Muebles y la Prestación de Servicios (ITBMS), under
+-- article 1057-V of the Código Fiscal (Ley 8 de 1956, as added by Ley 75 de
+-- 1976 and since reformed), unrelated to the Union's common system.
+-- `vat_prefix` is null: a Panamanian taxpayer is identified by the Registro
+-- Único de Contribuyente (RUC), which carries no ISO country prefix
+-- comparable to an EU VAT number.
+-- ---------------------------------------------------------------------------
+
+insert into territories (code, code_source, name, parent_code, eu_vat_scope, eu_vat_from, eu_vat_to, vat_prefix, legal_reference) values
+  ('PA', 'iso_3166_1', 'Panama', null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. Panama levies a value added tax of its own, the Impuesto de Transferencia de Bienes Corporales Muebles y la Prestación de Servicios (ITBMS), under article 1057-V of the Código Fiscal, which sets the rates.')
+on conflict (code) do update set
+  code_source     = excluded.code_source,
+  name            = excluded.name,
+  parent_code     = excluded.parent_code,
+  eu_vat_scope    = excluded.eu_vat_scope,
+  eu_vat_from     = excluded.eu_vat_from,
+  eu_vat_to       = excluded.eu_vat_to,
+  vat_prefix      = excluded.vat_prefix,
+  legal_reference = excluded.legal_reference;

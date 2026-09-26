@@ -1,0 +1,110 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "statements": [
+    {
+      "code": "PA-NIIFPYME-ESF",
+      "kind": "balance_sheet",
+      "framework": "PA-NIIF-PYME",
+      "name": "Estado de situación financiera",
+      "legal_reference": "Resolución N.° 03-2010 de 28 de octubre de 2010 de la Junta Técnica de Contabilidad — adopción de la NIIF para las PYMES como marco de los estados financieros con propósito general de la entidad panameña sin obligación pública de rendir cuentas; sección 4 de esa norma (Estado de situación financiera), que clasifica activos y pasivos entre corrientes y no corrientes. Panamá no impone una numeración de cuentas ni un formato de estado impreso: las líneas de este estado agrupan el catálogo propio de este paquete por esas secciones",
+      "source": "niif-pymes",
+      "lines": [
+        { "code": "11", "parent": "AC", "name": "Efectivo y equivalentes de efectivo", "sequence": 10, "sign": 1,
+          "rules": [{ "kind": "code_prefix", "code_from": "11" }] },
+        { "code": "12", "parent": "AC", "name": "Inversiones", "sequence": 20, "sign": 1,
+          "rules": [{ "kind": "code_prefix", "code_from": "12" }] },
+        { "code": "13", "parent": "AC", "name": "Cuentas por cobrar", "sequence": 30, "sign": 1,
+          "rules": [{ "kind": "code_prefix", "code_from": "13" }] },
+        { "code": "14", "parent": "AC", "name": "Inventarios", "sequence": 40, "sign": 1,
+          "rules": [{ "kind": "code_prefix", "code_from": "14" }] },
+        { "code": "15", "parent": "AC", "name": "Gastos pagados por anticipado", "sequence": 50, "sign": 1,
+          "rules": [{ "kind": "code_prefix", "code_from": "15" }] },
+        { "code": "AC", "parent": "ACT", "name": "Total activo corriente", "sequence": 60, "is_total": true,
+          "plus": ["11", "12", "13", "14", "15"] },
+
+        { "code": "16", "parent": "ANC", "name": "Propiedad, planta y equipo", "sequence": 70, "sign": 1,
+          "rules": [{ "kind": "code_prefix", "code_from": "16" }] },
+        { "code": "17", "parent": "ANC", "name": "Activos intangibles", "sequence": 80, "sign": 1,
+          "rules": [{ "kind": "code_prefix", "code_from": "17" }] },
+        { "code": "18", "parent": "ANC", "name": "Otros activos no corrientes", "sequence": 90, "sign": 1,
+          "rules": [{ "kind": "code_prefix", "code_from": "18" }] },
+        { "code": "19", "parent": "ANC", "name": "Inversiones a largo plazo", "sequence": 100, "sign": 1,
+          "rules": [{ "kind": "code_prefix", "code_from": "19" }] },
+        { "code": "ANC", "parent": "ACT", "name": "Total activo no corriente", "sequence": 110, "is_total": true,
+          "plus": ["16", "17", "18", "19"] },
+
+        { "code": "ACT", "parent": null, "name": "Total activo", "sequence": 120, "is_total": true,
+          "plus": ["AC", "ANC"] },
+
+        { "code": "21", "parent": "PC", "name": "Obligaciones financieras a corto plazo", "sequence": 130, "sign": -1,
+          "rules": [{ "kind": "code_prefix", "code_from": "21" }] },
+        { "code": "22", "parent": "PC", "name": "Proveedores", "sequence": 140, "sign": -1,
+          "rules": [{ "kind": "code_prefix", "code_from": "22" }] },
+        { "code": "23", "parent": "PC", "name": "Cuentas por pagar", "sequence": 150, "sign": -1,
+          "rules": [{ "kind": "code_prefix", "code_from": "23" }] },
+        { "code": "24", "parent": "PC", "name": "Impuestos por pagar", "sequence": 160, "sign": -1,
+          "rules": [{ "kind": "code_prefix", "code_from": "24" }] },
+        { "code": "25", "parent": "PC", "name": "Obligaciones laborales", "sequence": 170, "sign": -1,
+          "rules": [{ "kind": "code_prefix", "code_from": "25" }] },
+        { "code": "26", "parent": "PC", "name": "Pasivos estimados y provisiones", "sequence": 180, "sign": -1,
+          "rules": [{ "kind": "code_prefix", "code_from": "26" }] },
+        { "code": "27", "parent": "PC", "name": "Ingresos diferidos", "sequence": 190, "sign": -1,
+          "rules": [{ "kind": "code_prefix", "code_from": "27" }] },
+        { "code": "28", "parent": "PC", "name": "Otros pasivos corrientes", "sequence": 200, "sign": -1,
+          "rules": [{ "kind": "code_prefix", "code_from": "28" }] },
+        { "code": "PC", "parent": "PAS", "name": "Total pasivo corriente", "sequence": 210, "is_total": true,
+          "plus": ["21", "22", "23", "24", "25", "26", "27", "28"] },
+
+        { "code": "29", "parent": "PNC", "name": "Obligaciones a largo plazo", "sequence": 220, "sign": -1,
+          "rules": [{ "kind": "code_prefix", "code_from": "29" }] },
+        { "code": "PNC", "parent": "PAS", "name": "Total pasivo no corriente", "sequence": 230, "is_total": true,
+          "plus": ["29"] },
+
+        { "code": "PAS", "parent": null, "name": "Total pasivo", "sequence": 240, "is_total": true,
+          "plus": ["PC", "PNC"] },
+
+        { "code": "31", "parent": "PAT", "name": "Capital", "sequence": 250, "sign": -1,
+          "rules": [{ "kind": "code_prefix", "code_from": "31" }] },
+        { "code": "32", "parent": "PAT", "name": "Reservas", "sequence": 260, "sign": -1,
+          "rules": [{ "kind": "code_prefix", "code_from": "32" }] },
+        { "code": "33", "parent": "PAT", "name": "Resultados acumulados", "sequence": 270, "sign": -1,
+          "rules": [{ "kind": "code_prefix", "code_from": "33" }] },
+        { "code": "34", "parent": "PAT", "name": "Resultado del ejercicio", "sequence": 280, "sign": -1,
+          "rules": [{ "kind": "code_prefix", "code_from": "34" }] },
+        { "code": "PAT", "parent": null, "name": "Total patrimonio", "sequence": 290, "is_total": true,
+          "plus": ["31", "32", "33", "34"] }
+      ]
+    },
+    {
+      "code": "PA-NIIFPYME-ERI",
+      "kind": "income_statement",
+      "framework": "PA-NIIF-PYME",
+      "name": "Estado de resultado integral",
+      "legal_reference": "Resolución N.° 03-2010 de 28 de octubre de 2010 de la Junta Técnica de Contabilidad — adopción de la NIIF para las PYMES; sección 5 de esa norma (Estado del resultado integral), que clasifica el gasto por función. Este paquete presenta el resultado por función, sobre el catálogo propio agrupado por secciones",
+      "source": "niif-pymes",
+      "lines": [
+        { "code": "41", "parent": "ING", "name": "Ingresos operacionales", "sequence": 10, "sign": -1,
+          "rules": [{ "kind": "code_prefix", "code_from": "41" }] },
+        { "code": "42", "parent": "ING", "name": "Otros ingresos", "sequence": 20, "sign": -1,
+          "rules": [{ "kind": "code_prefix", "code_from": "42" }] },
+        { "code": "ING", "parent": null, "name": "Total ingresos", "sequence": 30, "is_total": true,
+          "plus": ["41", "42"] },
+
+        { "code": "51", "parent": null, "name": "Costo de ventas", "sequence": 40, "sign": 1,
+          "rules": [{ "kind": "code_prefix", "code_from": "51" }] },
+
+        { "code": "61", "parent": null, "name": "Gastos de administración", "sequence": 50, "sign": 1,
+          "rules": [{ "kind": "code_prefix", "code_from": "61" }] },
+        { "code": "62", "parent": null, "name": "Gastos de venta", "sequence": 60, "sign": 1,
+          "rules": [{ "kind": "code_prefix", "code_from": "62" }] },
+        { "code": "63", "parent": null, "name": "Gastos financieros", "sequence": 70, "sign": 1,
+          "rules": [{ "kind": "code_prefix", "code_from": "63" }] },
+        { "code": "64", "parent": null, "name": "Impuesto sobre la renta", "sequence": 80, "sign": 1,
+          "rules": [{ "kind": "code_prefix", "code_from": "64" }] },
+
+        { "code": "UN", "parent": null, "name": "Utilidad o pérdida del ejercicio", "sequence": 90, "is_total": true,
+          "plus": ["ING"], "minus": ["51", "61", "62", "63", "64"] }
+      ]
+    }
+  ]
+}

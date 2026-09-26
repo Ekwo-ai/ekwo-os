@@ -1,0 +1,239 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "PA",
+  "name": "Panamá",
+  "version": "0.1.0",
+  "schema_min": "20260923110000",
+  "seed_sequence": 107,
+  "released_at": "2026-09-26",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "codigo-fiscal",
+        "title": "Código Fiscal de la República de Panamá — Ley N.° 8 de 27 de enero de 1956, texto con sus reformas",
+        "publisher": "Ministerio de Economía y Finanzas",
+        "url": "https://www.mef.gob.pa/wp-content/uploads/2019/11/Codigo-Fiscal-Ley-8.pdf",
+        "consulted_on": "2026-09-26",
+        "kind": "law"
+      },
+      {
+        "key": "ley-75-1976",
+        "title": "Ley 75 de 22 de diciembre de 1976 — adiciona el artículo 1057-V al Código Fiscal, creando el Impuesto de Transferencia de Bienes Corporales Muebles y la Prestación de Servicios (ITBMS)",
+        "publisher": "Dirección General de Ingresos — Ministerio de Economía y Finanzas",
+        "url": "https://dgi.mef.gob.pa/itbms/Normativa/Ley-75-22-diciembre-1976.pdf",
+        "consulted_on": "2026-09-26",
+        "kind": "law"
+      },
+      {
+        "key": "ley-61-2002",
+        "title": "Ley 61 de 26 de diciembre de 2002 — medidas de reordenamiento y simplificación del sistema tributario (Gaceta Oficial N.° 24,708)",
+        "publisher": "Dirección General de Ingresos — Ministerio de Economía y Finanzas",
+        "url": "https://dgi.mef.gob.pa/itbms/Normativa/Ley-61-2002-Reforma-Fiscal-2002-itbms.pdf",
+        "consulted_on": "2026-09-26",
+        "kind": "law"
+      },
+      {
+        "key": "ley-6-2005",
+        "title": "Ley 6 de 2 de febrero de 2005 — programa de equidad fiscal, que reforma el artículo 1057-V del Código Fiscal",
+        "publisher": "Dirección General de Ingresos — Ministerio de Economía y Finanzas",
+        "url": "https://dgi.mef.gob.pa/itbms/Normativa/Ley-6-2-febrero-2005.pdf",
+        "consulted_on": "2026-09-26",
+        "kind": "law"
+      },
+      {
+        "key": "ley-49-2009",
+        "title": "Ley 49 de 17 de septiembre de 2009 — medidas fiscales adicionales, que reforma el artículo 1057-V del Código Fiscal",
+        "publisher": "Dirección General de Ingresos — Ministerio de Economía y Finanzas",
+        "url": "https://dgi.mef.gob.pa/itbms/Normativa/Ley-49-17-septiembre-2009.pdf",
+        "consulted_on": "2026-09-26",
+        "kind": "law"
+      },
+      {
+        "key": "ley-8-2010",
+        "title": "Ley 8 de 15 de marzo de 2010 — que reforma el Código Fiscal y crea el Tribunal Administrativo Tributario; eleva la tarifa general del ITBMS al 7 %",
+        "publisher": "Dirección General de Ingresos — Ministerio de Economía y Finanzas",
+        "url": "https://dgi.mef.gob.pa/itbms/Normativa/Ley-8-15-marzo-2010.pdf",
+        "consulted_on": "2026-09-26",
+        "kind": "law"
+      },
+      {
+        "key": "ley-33-2010",
+        "title": "Ley 33 de 30 de junio de 2010 — normas de adecuación a los convenios para evitar la doble tributación internacional, que reforma el artículo 1057-V del Código Fiscal",
+        "publisher": "Dirección General de Ingresos — Ministerio de Economía y Finanzas",
+        "url": "https://dgi.mef.gob.pa/itbms/Normativa/Ley-33-30-junio-2010-ITBMS.pdf",
+        "consulted_on": "2026-09-26",
+        "kind": "law"
+      },
+      {
+        "key": "itbms-generalidades",
+        "title": "Generalidades del ITBMS — tarifas, hecho generador y plazo de presentación",
+        "publisher": "Dirección General de Ingresos — Ministerio de Economía y Finanzas",
+        "url": "https://dgi.mef.gob.pa/itbms/Generalidades",
+        "consulted_on": "2026-09-26",
+        "kind": "guidance"
+      },
+      {
+        "key": "itbms-exentos",
+        "title": "Servicios exentos de ITBMS (artículo 1057 del Código Fiscal)",
+        "publisher": "Dirección General de Ingresos — Ministerio de Economía y Finanzas",
+        "url": "https://dgi.mef.gob.pa/itbms/SE-Itbms",
+        "consulted_on": "2026-09-26",
+        "kind": "guidance"
+      },
+      {
+        "key": "instructivo-430",
+        "title": "Instructivo V6 para llenar la Declaración Jurada del ITBMS (Formulario 430)",
+        "publisher": "Dirección General de Ingresos — Departamento de Sistemas de Información Tributaria",
+        "url": "https://dgi.mef.gob.pa/DInforme/pdf/Instructivo-ITBMS-2023-V6-(002).pdf",
+        "consulted_on": "2026-09-26",
+        "kind": "form"
+      },
+      {
+        "key": "formulario-430",
+        "title": "Formulario 430 — Declaración Jurada de ITBMS",
+        "publisher": "Dirección General de Ingresos — Ministerio de Economía y Finanzas",
+        "url": "https://dgi.mef.gob.pa/DInforme/Formulario430",
+        "consulted_on": "2026-09-26",
+        "kind": "form"
+      },
+      {
+        "key": "etax",
+        "title": "e-Tax 2.0 — portal de declaraciones y pagos en línea de la Dirección General de Ingresos",
+        "publisher": "Dirección General de Ingresos — Ministerio de Economía y Finanzas",
+        "url": "https://etax2.mef.gob.pa/",
+        "consulted_on": "2026-09-26",
+        "kind": "portal"
+      },
+      {
+        "key": "dgi-facturacion-legal",
+        "title": "Base legal de la facturación electrónica — Sistema de Facturación Electrónica de Panamá (SFEP), incluida la Resolución N.° 201-6299 de 29 de julio de 2025",
+        "publisher": "Dirección General de Ingresos — Ministerio de Economía y Finanzas",
+        "url": "https://dgi.mef.gob.pa/_7FacturaElectronica/Blegales",
+        "consulted_on": "2026-09-26",
+        "kind": "guidance"
+      },
+      {
+        "key": "niif-pymes",
+        "title": "Panamá y el compromiso de establecer el uso de normas contables estándares y de aceptación a nivel mundial — reseña de la Resolución N.° 03-2010 de 28 de octubre de 2010, por la que la Junta Técnica de Contabilidad adopta la NIIF para las PYMES",
+        "publisher": "Colegio de Contadores Públicos Autorizados de Panamá",
+        "url": "https://www.colegiocpapanama.org/articulos/sala-de-expresidentes/panam%C3%A1-y-el-compromiso-de-establecer-el-uso-de-normas-contables-est%C3%A1ndares-y-de-aceptaci%C3%B3n-a-nivel-mundial",
+        "consulted_on": "2026-09-26",
+        "kind": "guidance"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "USD",
+    "language": "es",
+    "rounding_method": "half_up",
+    "opening_entry_label": "Asiento de apertura",
+    "closing_style": "result_accounts",
+    "roles": {
+      "receivable": "130501",
+      "payable": "220501",
+      "suspense": "280501",
+      "rounding": "629905",
+      "retained_earnings": "330501",
+      "retained_earnings_loss": "331001",
+      "current_year_result_profit": "340501",
+      "current_year_result_loss": "341001",
+      "sales": "410501",
+      "purchase": "510501",
+      "bank": "111001",
+      "cash": "110501",
+      "fx_gain": "421501",
+      "fx_loss": "631501",
+      "tax_payable": "241501",
+      "tax_receivable": "139502"
+    },
+    "journal_roles": {
+      "sales": "VEN",
+      "purchase": "COM",
+      "miscellaneous": "DIA",
+      "opening": "APE"
+    },
+    "fiscal_year_default": "calendar"
+  },
+  "languages": [],
+  "journals": [
+    { "code": "VEN", "type": "sales", "name": "Diario de ventas", "sequence": 10 },
+    { "code": "COM", "type": "purchase", "name": "Diario de compras", "sequence": 20 },
+    { "code": "BAN", "type": "bank", "name": "Bancos", "sequence": 30 },
+    { "code": "CAJ", "type": "cash", "name": "Caja", "sequence": 40 },
+    { "code": "DIA", "type": "general", "name": "Diario general", "sequence": 50 },
+    { "code": "APE", "type": "opening", "name": "Asiento de apertura", "sequence": 60 }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Catálogo de cuentas propio, organizado sobre la NIIF para las PYMES",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": ["PA-NIIFPYME-ESF", "PA-NIIFPYME-ERI"],
+      "legal_reference": "Panamá no impone un catálogo de cuentas único: la Resolución N.° 03-2010 de 28 de octubre de 2010 de la Junta Técnica de Contabilidad adopta la NIIF para las PYMES del IASB como marco de preparación de los estados financieros con propósito general de toda entidad panameña sin obligación pública de rendir cuentas, sin fijar una numeración de cuentas. Este paquete usa, como catálogo propio, una selección de cuentas ordenadas por las secciones de esa norma (activo, pasivo, patrimonio, ingresos y gastos), de la misma manera que los paquetes de México y Colombia usan un catálogo propio ordenado sobre su propio marco",
+      "source": "niif-pymes"
+    }
+  ],
+  "documents": {
+    "numbering": "sequential",
+    "number_format": "{CODE}/{YYYY}/{NNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "invoice_if_issued",
+    "posted_edit_policy": "reversal_only",
+    "references": {
+      "numbering": {
+        "legal_reference": "El Código Fiscal no fija un régimen de numeración consecutiva de la factura interna, y el Sistema de Facturación Electrónica de Panamá (SFEP) asigna su propio Código Único de Factura Electrónica (CUFE) al validar el documento — ver la sección de facturación electrónica. El número que declara este paquete es el de la pieza contable, correlativo por diario y por año, y no el CUFE",
+        "source": "dgi-facturacion-legal"
+      },
+      "tax_point": {
+        "legal_reference": "Código Fiscal, artículo 1057-V, parágrafo 2 — en la transferencia de bienes corporales muebles, la obligación de pagar el impuesto nace en el momento de emitir la factura o al momento de la entrega del bien, lo que ocurra primero. Para la prestación de servicios, el mismo parágrafo hace nacer la obligación con la terminación del servicio prestado, o con la percepción del pago total o parcial, un tercer punto de anclaje que el vocabulario cerrado de esta casilla no nombra en una sola palabra — véase docs/international.md. Este paquete declara la regla de los bienes, invoice_if_issued, que es también la más cercana a la práctica general de la factura como hecho generador",
+        "source": "codigo-fiscal"
+      },
+      "posted_edit_policy": {
+        "legal_reference": "El Código Fiscal no prevé un mecanismo para devolver a borrador un documento contabilizado; una factura se corrige mediante una nota de crédito que la nombra, nunca volviendo a borrador",
+        "source": "codigo-fiscal"
+      }
+    },
+    "mentions": [
+      {
+        "code": "sfep_not_cleared",
+        "applies_when": "always",
+        "text": "Este documento no es una factura del Sistema de Facturación Electrónica de Panamá (SFEP): no lleva el Código Único de Factura Electrónica (CUFE) ni ha sido validado por un Proveedor Autorizado Calificado (PAC) ni por la Dirección General de Ingresos. Sólo la factura electrónica validada ampara la operación para efectos fiscales.",
+        "sequence": 10,
+        "legal_reference": "Resolución N.° 201-6299 de 29 de julio de 2025 y demás normativa del SFEP — la factura electrónica se transmite a un PAC o a la DGI para su validación antes de amparar la operación. Ekwo no genera, no transmite ni valida ningún documento del SFEP: ningún componente de packages/formats habla con un PAC ni con la DGI — ver la sección de facturación electrónica de este paquete",
+        "source": "dgi-facturacion-legal"
+      },
+      {
+        "code": "export",
+        "applies_when": "export",
+        "text": "Exportación o reexportación de bienes — tarifa del 0 % del Impuesto de Transferencia de Bienes Corporales Muebles y la Prestación de Servicios (artículo 1057-V, parágrafo 8, literal a, numeral 2, del Código Fiscal).",
+        "sequence": 20,
+        "legal_reference": "Código Fiscal, artículo 1057-V, parágrafo 8, literal a), numeral 2 — las exportaciones y reexportaciones de bienes gravados y no gravados dan derecho a recuperar, mediante Certificado con Poder Cancelatorio, el ITBMS pagado en las compras e importaciones destinadas a ellas",
+        "source": "codigo-fiscal"
+      },
+      {
+        "code": "exempt",
+        "applies_when": "exempt",
+        "text": "Operación exenta del Impuesto de Transferencia de Bienes Corporales Muebles y la Prestación de Servicios (artículo 1057-V, parágrafo 8, del Código Fiscal).",
+        "sequence": 30,
+        "legal_reference": "Código Fiscal, artículo 1057-V, parágrafo 8 — transferencias de bienes y prestaciones de servicios exentas del impuesto",
+        "source": "codigo-fiscal"
+      }
+    ]
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "Panamá exige la factura electrónica del Sistema de Facturación Electrónica de Panamá (SFEP) por fases desde 2022: todos los nuevos Registros Únicos de Contribuyente (RUC) desde 2023, los proveedores del Estado desde octubre de 2023, y los profesionales independientes y prestadores de servicios desde 2024; desde el 1 de enero de 2026, la Resolución N.° 201-6299 de 29 de julio de 2025 exige el uso exclusivo de un Proveedor Autorizado Calificado (PAC) a todo contribuyente cuyos ingresos brutos anuales superen los treinta y seis mil balboas (B/.36,000.00) o que emita más de cien documentos electrónicos al mes. Es un régimen de validación previa (clearance): antes de su expedición, el documento se transmite a un PAC o a la herramienta gratuita de la DGI para su validación, que le asigna un Código Único de Factura Electrónica (CUFE) — no un intercambio par a par entre el emisor y el comprador construido sobre el modelo semántico de EN 16931. EKWO NO GENERA, NO CALCULA EL CUFE Y NO TRANSMITE NINGÚN DOCUMENTO AL SFEP: ningún componente de packages/formats escribe el XML de la factura electrónica panameña ni dialoga con un PAC o con la DGI. Por eso profile, mandatory_from, party_scheme y vat_scheme quedan vacíos aunque la obligación exista: profile nombra un perfil construido sobre EN 16931 (peppol-bis-3, factur-x-en16931, xrechnung, un PINT), y la factura electrónica panameña no es ninguno de ellos; el formato tampoco tiene una palabra para «válida sólo tras la validación previa de un tercero» — véase docs/international.md. El Registro Único de Contribuyente (RUC) identifica al emisor y al receptor y no tiene un código ISO 6523 registrado: party_scheme y vat_scheme quedan vacíos por la misma razón que en México y Colombia",
+    "source": "dgi-facturacion-legal"
+  },
+  "bank": {
+    "statement_formats": ["csv"],
+    "payment_formats": []
+  }
+}
