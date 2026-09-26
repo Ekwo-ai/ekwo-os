@@ -1,0 +1,35 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "AL-TVSH-FDP",
+  "name": "Deklarata e TVSH-së — Formulari i Deklarimit dhe Pagesës (FDP)",
+  "period": ["month"],
+  "period_default": "month",
+  "valid_from": "2015-01-01",
+  "legal_reference": "Ligji Nr. 92/2014, neni 106 — çdo person i tatueshëm duhet të dorëzojë një deklaratë TVSH-je; neni 107, pika 1 dhe 2 — deklarata dorëzohet jo më vonë se 14 ditë pas përfundimit të periudhës tatimore, e cila është muaji kalendarik. Neni 107, pika 5, lejon Ministrin e Financave të caktojë me udhëzim një periudhë tatimore më të gjatë për ndonjë kategori tatimpaguesish; kërkimi për këtë paketim ka gjetur një referencë administrative për një kategori me deklarim tremujor për tatimpagues me qarkullim 2-5 milionë lekë, praktikë e mëparshme e lidhur me pragun e vjetër të regjistrimit (2 milionë lekë) — e pambuluar nga ky pack, siç shënohet në README.md, pasi pragu aktual i regjistrimit (10 milionë lekë, VKM 576/2020) e ka lënë pa objekt shumicën e rasteve të asaj kategorie. Kutitë e mëposhtme janë emërtimet e vetë këtij paketimi, jo numra rreshtash të një formulari me kuti të numëruara: kërkimi i këtij paketimi ka gjetur vetëm kategoritë me emra të Librit të Shitjeve dhe Librit të Blerjeve (burimi «deklarata-tvsh-librat»), të cilat FDP-ja i mbledh; asnjë kopje e drejtpërdrejtë dhe e verifikueshme e ekranit të vetë formularit FDP nuk është gjetur, siç ndodhi edhe me ekranin e e-Beyanname turk (shih packs/tr).",
+  "source": "ligji-92-2014",
+  "deadline": {
+    "rule": "day_of_month_after_period",
+    "day": 14,
+    "legal_reference": "Ligji Nr. 92/2014, neni 107, pika 1 — deklarata e TVSH-së dorëzohet jo më vonë se 14 ditë pas përfundimit të periudhës tatimore; neni 89 — TVSH-ja e pagueshme paguhet jo më vonë se data e paraqitjes së deklaratës.",
+    "source": "ligji-92-2014"
+  },
+  "boxes": [
+    { "box": "S20B", "kind": "base", "name": "Vlera e tatueshme e shitjeve me shkallë standarde 20%", "sequence": 10, "legal_reference": "Ligji Nr. 92/2014, neni 48; DEKLARATA E TVSH-SË — Librat e shitjes dhe blerjes: kategoria «shitje të tatueshme me TVSH 20%» e Librit të shitjeve.", "source": "deklarata-tvsh-librat" },
+    { "box": "S20T", "kind": "tax", "name": "TVSH e llogaritur mbi shitjet me shkallë standarde 20%", "sequence": 20, "legal_reference": "Ligji Nr. 92/2014, neni 48.", "source": "ligji-92-2014" },
+    { "box": "S06B", "kind": "base", "name": "Vlera e tatueshme e shitjeve me shkallë të reduktuar 6%", "sequence": 30, "legal_reference": "Ligji Nr. 92/2014, neni 49, pika 3; Buletini Fiskal 2024, pika II.1.1.", "source": "buletini-fiskal-2024" },
+    { "box": "S06T", "kind": "tax", "name": "TVSH e llogaritur mbi shitjet me shkallë të reduktuar 6%", "sequence": 40, "legal_reference": "Ligji Nr. 92/2014, neni 49, pika 3.", "source": "ligji-92-2014" },
+    { "box": "EXP0", "kind": "base", "name": "Vlera e shitjeve me shkallë zero, eksporte", "sequence": 50, "legal_reference": "Ligji Nr. 92/2014, neni 57; DEKLARATA E TVSH-SË — Librat e shitjes dhe blerjes: kategoria «shitje me TVSH zero %, eksporte».", "source": "deklarata-tvsh-librat" },
+    { "box": "SEXE", "kind": "base", "name": "Vlera e shitjeve të përjashtuara nga TVSH-ja", "sequence": 60, "legal_reference": "Ligji Nr. 92/2014, neni 51 dhe neni 53; DEKLARATA E TVSH-SË — Librat e shitjes dhe blerjes: kategoria «shitje të përjashtuara».", "source": "deklarata-tvsh-librat" },
+    { "box": "TDET", "kind": "total", "name": "TVSH e llogaritur (detyrimi bruto i periudhës)", "sequence": 70, "legal_reference": "Ligji Nr. 92/2014, neni 76, pika 1 — TVSH-ja e llogaritur mbi vlerën totale të tatueshme të të gjitha furnizimeve të tatueshme të kryera gjatë periudhës tatimore.", "source": "ligji-92-2014", "plus": ["S20T", "S06T", "AGT"] },
+    { "box": "BVB", "kind": "base", "name": "Vlera e tatueshme e blerjeve brenda vendit me TVSH të zbritshme", "sequence": 80, "legal_reference": "Ligji Nr. 92/2014, neni 68; DEKLARATA E TVSH-SË — Librat e shitjes dhe blerjes: kategoria «blerje brenda vendit» e Librit të blerjeve.", "source": "deklarata-tvsh-librat" },
+    { "box": "BVT", "kind": "tax", "name": "TVSH e zbritshme mbi blerjet brenda vendit", "sequence": 90, "legal_reference": "Ligji Nr. 92/2014, neni 68 dhe neni 75, shkronja «a».", "source": "ligji-92-2014" },
+    { "box": "BIB", "kind": "base", "name": "Vlera e tatueshme e importeve me TVSH të zbritshme", "sequence": 100, "legal_reference": "Ligji Nr. 92/2014, neni 50 dhe neni 34; DEKLARATA E TVSH-SË — Librat e shitjes dhe blerjes: kategoria «importe» e Librit të blerjeve.", "source": "deklarata-tvsh-librat" },
+    { "box": "BIT", "kind": "tax", "name": "TVSH e paguar dhe e zbritshme në import", "sequence": 110, "legal_reference": "Ligji Nr. 92/2014, neni 75, shkronja «c».", "source": "ligji-92-2014" },
+    { "box": "AGB", "kind": "base", "name": "Vlera e shërbimeve të marra nga jashtë, subjekt i vetëngarkimit", "sequence": 120, "legal_reference": "Ligji Nr. 92/2014, neni 86, pika 2.", "source": "ligji-92-2014" },
+    { "box": "AGT", "kind": "tax", "name": "TVSH e vetëngarkuar mbi shërbimet e marra nga jashtë", "sequence": 130, "legal_reference": "Ligji Nr. 92/2014, neni 86, pika 2.", "source": "ligji-92-2014" },
+    { "box": "AGZ", "kind": "tax", "name": "TVSH e zbritshme mbi vetëngarkimin e shërbimeve nga jashtë", "sequence": 140, "legal_reference": "Ligji Nr. 92/2014, neni 75, shkronja «ç».", "source": "ligji-92-2014" },
+    { "box": "TZBR", "kind": "total", "name": "TVSH e zbritshme (totali i periudhës)", "sequence": 150, "legal_reference": "Ligji Nr. 92/2014, neni 76, pika 1.", "source": "ligji-92-2014", "plus": ["BVT", "BIT", "AGZ"] },
+    { "box": "TPAG", "kind": "total", "name": "TVSH për t'u paguar", "sequence": 160, "legal_reference": "Ligji Nr. 92/2014, neni 76, pika 1 — kur TVSH-ja e llogaritur tejkalon TVSH-në e zbritshme, diferenca është TVSH-ja për t'u paguar.", "source": "ligji-92-2014", "plus": ["TDET"], "minus": ["TZBR"], "floor_zero": true },
+    { "box": "TBART", "kind": "total", "name": "Teprica e TVSH-së e mbartur për periudhën pasardhëse", "sequence": 170, "legal_reference": "Ligji Nr. 92/2014, neni 76, pika 2 — kur TVSH-ja e zbritshme tejkalon TVSH-në e llogaritur, teprica mbartet për t'u zbritur në periudhën pasardhëse; neni 77 — rimbursimi mund të kërkohet pas 3 muajsh radhazi me tepricë, kur shuma e kërkuar tejkalon 400 000 lekë (procedurë e jashtme këtij formulari, jo një kuti e vet).", "source": "ligji-92-2014", "plus": ["TZBR"], "minus": ["TDET"], "floor_zero": true }
+  ]
+}

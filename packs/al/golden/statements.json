@@ -1,0 +1,68 @@
+{
+  "statements": [
+    {
+      "code": "AL-SKK2-BS",
+      "from": "2026-01-01",
+      "to": "2026-12-31",
+      "lines": {
+        "AL-BS-A-INTANG": "0.00",
+        "AL-BS-A-LAND": "0.00",
+        "AL-BS-A-PPE": "0.00",
+        "AL-BS-A-WIP": "0.00",
+        "AL-BS-A-FIN-LT": "0.00",
+        "AL-BS-A-NONCURRENT": "0.00",
+        "AL-BS-A-INV": "0.00",
+        "AL-BS-A-CLIENTS": "248900.00",
+        "AL-BS-A-OTHREC": "0.00",
+        "AL-BS-A-VATREC": "34000.00",
+        "AL-BS-A-FIN-ST": "0.00",
+        "AL-BS-A-CASH": "98000.00",
+        "AL-BS-A-CURRENT": "380900.00",
+        "AL-BS-A-TOTAL": "380900.00",
+        "AL-BS-E-CAPITAL": "0.00",
+        "AL-BS-E-PREMIUM": "0.00",
+        "AL-BS-E-RESERVES": "0.00",
+        "AL-BS-E-RETAINED": "0.00",
+        "AL-BS-E-RESULT": "0.00",
+        "AL-BS-E-TOTAL": "0.00",
+        "AL-BS-L-GRANTS": "0.00",
+        "AL-BS-L-PROV-LT": "0.00",
+        "AL-BS-L-DEBT-LT": "0.00",
+        "AL-BS-L-NONCURRENT": "0.00",
+        "AL-BS-L-SUPPLIERS": "124000.00",
+        "AL-BS-L-STAFF": "0.00",
+        "AL-BS-L-TAX": "0.00",
+        "AL-BS-L-VATPAY": "31900.00",
+        "AL-BS-L-BANKLOAN-ST": "0.00",
+        "AL-BS-L-GROUP": "0.00",
+        "AL-BS-L-OTHPAY": "0.00",
+        "AL-BS-L-CURRENT": "155900.00",
+        "AL-BS-L-TOTAL": "155900.00",
+        "AL-BS-LE-TOTAL": "155900.00"
+      }
+    },
+    {
+      "code": "AL-SKK2-IS",
+      "from": "2026-01-01",
+      "to": "2026-12-31",
+      "lines": {
+        "AL-IS-SALES": "395000.00",
+        "AL-IS-OTHINC": "0.00",
+        "AL-IS-STOCKVAR": "0.00",
+        "AL-IS-COGS": "130000.00",
+        "AL-IS-OTHOPEX": "40000.00",
+        "AL-IS-STAFFCOST": "0.00",
+        "AL-IS-DEPREC": "0.00",
+        "AL-IS-OPRESULT": "225000.00",
+        "AL-IS-FININC": "0.00",
+        "AL-IS-FXGAIN": "0.00",
+        "AL-IS-FINEXP": "0.00",
+        "AL-IS-FXLOSS": "0.00",
+        "AL-IS-FINRESULT": "0.00",
+        "AL-IS-PRETAX": "225000.00",
+        "AL-IS-TAXEXP": "0.00",
+        "AL-IS-NETRESULT": "225000.00"
+      }
+    }
+  ]
+}

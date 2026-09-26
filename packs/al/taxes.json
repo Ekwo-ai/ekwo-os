@@ -1,0 +1,184 @@
+[
+  {
+    "code": "AL-S-20",
+    "name": "TVSH 20% — shitje me shkallë standarde",
+    "rate": 20,
+    "scope": "sale",
+    "treatment": "domestic",
+    "vat_category": "S",
+    "valid_from": "2015-01-01",
+    "legal_reference": "Ligji Nr. 92/2014, neni 48 — shkalla standarde e TVSH-së për furnizimet e mallrave dhe shërbimeve, e aplikuar si përqindje e vlerës së tatueshme, është 20%; neni 32 — lindja dhe kërkueshmëria e tatimit ndodhin kur furnizimi kryhet.",
+    "source": "ligji-92-2014",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "S20B" },
+        { "type": "tax", "account": "4427", "box": "S20T" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "S20B", "box_factor": -100 },
+        { "type": "tax", "account": "4427", "box": "S20T", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "AL-S-6-ACCOM",
+    "name": "TVSH 6% — shërbimi i akomodimit dhe i strukturave akomoduese",
+    "rate": 6,
+    "scope": "sale",
+    "treatment": "domestic",
+    "vat_category": "S",
+    "valid_from": "2017-06-05",
+    "legal_reference": "Ligji Nr. 92/2014, neni 49, pika 3, shtuar me Ligjin Nr. 71/2017 — shkalla e reduktuar 6% zbatohet për furnizimin e shërbimit të akomodimit në strukturat akomoduese; Buletini Fiskal 2024 (Ministria e Financave), pika II.1.1, konfirmon normën 6% për akomodimin ende në fuqi për vitin 2024, si dhe shtrirjen e saj te shërbimet e strukturave 'Hotel/Resort me pesë yje, status special' me markë tregtare të njohur ndërkombëtarisht dhe te akomodimi/restoranti (pa pije) i agroturizmit të certifikuar.",
+    "source": "ligji-92-2014",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "S06B" },
+        { "type": "tax", "account": "4427", "box": "S06T" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "S06B", "box_factor": -100 },
+        { "type": "tax", "account": "4427", "box": "S06T", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "AL-S-6-BOOKS",
+    "name": "TVSH 6% — furnizimi i librave të çdo lloji",
+    "rate": 6,
+    "scope": "sale",
+    "treatment": "domestic",
+    "vat_category": "S",
+    "valid_from": "2021-01-01",
+    "legal_reference": "Buletini Fiskal 2024 (Ministria e Financave), pika II.1.1 — shkalla e reduktuar 6% zbatohet për furnizimin e librave të çdo lloji. Ligji Nr. 92/2014, neni 53, shkronja «j», në tekstin origjinal të vitit 2014, e trajtonte furnizimin e librave si të përjashtuar nga TVSH-ja; kërkimi për këtë paketim nuk ka mundur të gjejë numrin e saktë të ligjit ndryshues që e ka kaluar librin nga furnizim i përjashtuar në furnizim me shkallë të reduktuar 6% — data e mësipërme (2021-01-01) është një supozim i arsyeshëm bazuar në kohën kur norma 6% e librave shfaqet në praktikën e administratës, dhe duhet verifikuar me një kontabilist vendas, siç shënohet në README.md.",
+    "source": "buletini-fiskal-2024",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "S06B" },
+        { "type": "tax", "account": "4427", "box": "S06T" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "S06B", "box_factor": -100 },
+        { "type": "tax", "account": "4427", "box": "S06T", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "AL-S-EXPORT",
+    "name": "TVSH 0% — eksport mallrash",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "vat_category": "G",
+    "valid_from": "2015-01-01",
+    "legal_reference": "Ligji Nr. 92/2014, neni 57 (KREU VIII, furnizimet me shkallë zero) — trajtohet me shkallë zero për qind furnizimi i mallrave të eksportuara jashtë territorit doganor të Republikës së Shqipërisë. Shqipëria është jashtë sistemit të përbashkët të TVSH-së të Bashkimit Evropian (Direktiva 2006/112/KE, neni 5(2)); asnjë kod VATEX dhe asnjë nga trajtimet 'intracom_*' nuk zbatohen këtu, siç shënohet për vendet jashtë BE-së në docs/packs.md.",
+    "source": "ligji-92-2014",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "EXP0" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "EXP0", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "AL-S-EXEMPT-FIN",
+    "name": "Përjashtuar nga TVSH — shërbime financiare dhe sigurimi",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "vat_category": "E",
+    "valid_from": "2015-01-01",
+    "legal_reference": "Ligji Nr. 92/2014, neni 53, shkronjat «a»-«d» — janë furnizime të përjashtuara nga TVSH-ja shërbimet e sigurimit dhe risigurimit, dhënia dhe negocimi i kredive, garancitë e kredive, dhe transaksionet mbi llogaritë, depozitat, valutën dhe letrat me vlerë.",
+    "source": "ligji-92-2014",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "SEXE" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "SEXE", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "AL-S-EXEMPT-RENT",
+    "name": "Përjashtuar nga TVSH — dhënie me qira e pasurisë së paluajtshme",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "vat_category": "E",
+    "valid_from": "2015-01-01",
+    "legal_reference": "Ligji Nr. 92/2014, neni 53, shkronja «h» — dhënia me qira e pasurive të paluajtshme është e përjashtuar nga TVSH-ja, me përjashtimet e numëruara në nën-shkronjat (i)-(v) të së njëjtës shkronjë (qira deri në dy muaj, strehim hotelier, parkim, pajisje të fiksuara, kasaforta), të cilat mbeten të tatueshme dhe nuk përdorin këtë kod.",
+    "source": "ligji-92-2014",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "SEXE" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "SEXE", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "AL-P-20",
+    "name": "TVSH 20% — blerje brenda vendit",
+    "rate": 20,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2015-01-01",
+    "legal_reference": "Ligji Nr. 92/2014, neni 48 dhe neni 68 — e drejta e zbritjes së TVSH-së mbi blerjet e përdorura për qëllime të veprimtarisë ekonomike të tatueshme; neni 75, shkronja «a» — kriteri i zotërimit të një fature të lëshuar sipas neneve 96-105.",
+    "source": "ligji-92-2014",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "BVB" },
+        { "type": "tax", "account": "4426", "box": "BVT" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "BVB", "box_factor": -100 },
+        { "type": "tax", "account": "4426", "box": "BVT", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "AL-P-IMPORT-20",
+    "name": "TVSH 20% — import mallrash",
+    "rate": 20,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2015-01-01",
+    "legal_reference": "Ligji Nr. 92/2014, neni 50 — shkalla e TVSH-së në importim është ajo e zbatueshme për shitjen e të njëjtit mall brenda territorit; neni 34 — lindja e tatimit dhe kërkueshmëria ndodhin kur importimi kryhet; neni 75, shkronja «c» — e drejta e zbritjes kërkon dokumentin doganor të çlirimit për qarkullim të lirë, ku shënohet shuma e TVSH-së së paguar.",
+    "source": "ligji-92-2014",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "BIB" },
+        { "type": "tax", "account": "4456", "box": "BIT" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "BIB", "box_factor": -100 },
+        { "type": "tax", "account": "4456", "box": "BIT", "box_factor": -100 }
+      ]
+    }
+  },
+  {
+    "code": "AL-P-REVCHG-20",
+    "name": "TVSH 20% — vetëngarkim mbi shërbime të marra nga jashtë",
+    "rate": 20,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2015-01-01",
+    "legal_reference": "Ligji Nr. 92/2014, neni 86, pika 2 — TVSH-ja paguhet nga personi i tatueshëm marrës i shërbimeve të përcaktuara në nenin 24, pika 1 (rregulli i përgjithshëm i vendit të furnizimit të shërbimeve mes personave të tatueshëm), kur furnizuesi nuk është i vendosur në Republikën e Shqipërisë; neni 75, shkronja «ç» — e drejta e zbritjes kërkon formalitetet e përcaktuara me udhëzim të Ministrit të Financave. Shqipëria është jashtë sistemit të përbashkët të TVSH-së; ky mekanizëm i vetëngarkimit korrespondon me kategorinë 'foreign_services_received' të docs/packs.md dhe jo me një 'reverse charge' brenda BE-së.",
+    "source": "ligji-92-2014",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "AGB" },
+        { "type": "tax", "factor": -100, "account": "44281", "box": "AGT" },
+        { "type": "tax", "account": "44282", "box": "AGZ" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "AGB", "box_factor": -100 },
+        { "type": "tax", "factor": -100, "account": "44281", "box": "AGT", "box_factor": -100 },
+        { "type": "tax", "account": "44282", "box": "AGZ", "box_factor": -100 }
+      ]
+    }
+  }
+]

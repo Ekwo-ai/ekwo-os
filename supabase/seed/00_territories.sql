@@ -1692,3 +1692,29 @@ on conflict (code) do update set
   eu_vat_to       = excluded.eu_vat_to,
   vat_prefix      = excluded.vat_prefix,
   legal_reference = excluded.legal_reference;
+
+-- ---------------------------------------------------------------------------
+-- The row — Albania
+--
+-- A candidate country for accession to the European Union, and outside the
+-- common system of VAT until it joins: Shqipëria levies a value added tax of
+-- its own (TVSH — Tatimi mbi Vlerën e Shtuar) under Ligji Nr. 92/2014, datë
+-- 24.7.2014, whose article 48 sets the standard rate at 20%, and whose
+-- article 49 carries reduced rates the Ministry of Finance's own Buletini
+-- Fiskal 2024 states at 6% and 10%. `vat_prefix` is null: a taxable person
+-- is addressed by a NIPT (Numri i Identifikimit të Personit të Tatueshëm)
+-- that carries no ISO-style country prefix of this table's kind.
+-- ---------------------------------------------------------------------------
+
+insert into territories (code, code_source, name, parent_code, eu_vat_scope, eu_vat_from, eu_vat_to, vat_prefix, legal_reference) values
+  ('AL', 'iso_3166_1', 'Albania', null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. Albania is a candidate for accession (European Council decision of 24 June 2014) and levies a value added tax of its own, TVSH, under Ligji Nr. 92/2014, datë 24.7.2014, article 48, at a standard rate of 20%.')
+on conflict (code) do update set
+  code_source     = excluded.code_source,
+  name            = excluded.name,
+  parent_code     = excluded.parent_code,
+  eu_vat_scope    = excluded.eu_vat_scope,
+  eu_vat_from     = excluded.eu_vat_from,
+  eu_vat_to       = excluded.eu_vat_to,
+  vat_prefix      = excluded.vat_prefix,
+  legal_reference = excluded.legal_reference;

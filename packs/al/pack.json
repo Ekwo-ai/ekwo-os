@@ -1,0 +1,170 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "AL",
+  "name": "Albania",
+  "version": "0.1.0",
+  "schema_min": "20260923110000",
+  "seed_sequence": 114,
+  "released_at": "2026-09-26",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "ligji-92-2014",
+        "title": "Ligj Nr. 92/2014, datë 24.7.2014, «Për tatimin mbi vlerën e shtuar në Republikën e Shqipërisë», i ndryshuar — botim i Drejtorisë së Përgjithshme të Tatimeve, Legjislacioni Tatimor",
+        "publisher": "Drejtoria e Përgjithshme e Tatimeve",
+        "url": "https://www.tatime.gov.al/eng/shkarko.php?id=36",
+        "consulted_on": "2026-09-26",
+        "kind": "law"
+      },
+      {
+        "key": "buletini-fiskal-2024",
+        "title": "Buletini Fiskal 2024 — Drejtoria e Politikave Tatimore, seksioni II.1 «Tatimi mbi Vlerën e Shtuar (TVSH)»: normat tatimore të zbatuara përgjatë vitit 2024 (20%, 6%, 10%, 0%) dhe listat e furnizimeve që përfitojnë secilën normë të reduktuar",
+        "publisher": "Ministria e Financave",
+        "url": "https://financa.gov.al/wp-content/uploads/2025/03/Buletini-Fiskal-2024-Drejtoria-e-Politikave-Tatimore2-Copy.pdf",
+        "consulted_on": "2026-09-26",
+        "kind": "regulation"
+      },
+      {
+        "key": "vkm-576-2020",
+        "title": "Vendim i Këshillit të Ministrave Nr. 576, datë 22.7.2020, «Për disa ndryshime dhe shtesa në vendimin nr. 953, datë 29.12.2014» — kufiri minimal i regjistrimit për TVSH-në në 10 000 000 lekë, në fuqi nga 1 janari 2021",
+        "publisher": "Këshilli i Ministrave — Qendra e Botimeve Zyrtare (QBZ)",
+        "url": "https://qbz.gov.al/eli/vendim/2020/07/22/576/fa14cde6-0154-4107-8936-eed6743b8a2d",
+        "consulted_on": "2026-09-26",
+        "kind": "regulation"
+      },
+      {
+        "key": "ligji-25-2018",
+        "title": "Ligj Nr. 25/2018, datë 10.5.2018, «Për kontabilitetin dhe pasqyrat financiare»",
+        "publisher": "Kuvendi i Shqipërisë — botuar nga Këshilli Kombëtar i Kontabilitetit",
+        "url": "https://kkk.gov.al/wp-content/uploads/2025/02/ligj-nr.-25-dt.-10.5.2018.pdf",
+        "consulted_on": "2026-09-26",
+        "kind": "law"
+      },
+      {
+        "key": "skk-2",
+        "title": "Standardi Kombëtar i Kontabilitetit Nr. 2, «Paraqitja e Pasqyrave Financiare», Shtojca 1 (zërat e bilancit) dhe Shtojca 2, Formati 1 (pasqyra e të ardhurave dhe shpenzimeve)",
+        "publisher": "Këshilli Kombëtar i Kontabilitetit",
+        "url": "https://kkk.gov.al/wp-content/uploads/2025/03/SKK-02-Paraqitja-e-pasqyrave-financiare.pdf",
+        "consulted_on": "2026-09-26",
+        "kind": "standard"
+      },
+      {
+        "key": "ligji-87-2019",
+        "title": "Ligj Nr. 87/2019, datë 18.12.2019, «Për faturën dhe sistemin e monitorimit të qarkullimit» (fiskalizimi), botuar në Fletoren Zyrtare Nr. 3, datë 20.1.2020 — njoftim i Drejtorisë së Përgjithshme të Tatimeve mbi zbatimin me faza",
+        "publisher": "Drejtoria e Përgjithshme e Tatimeve",
+        "url": "https://www.tatime.gov.al/d/8/45/45/1506/njoftim-per-faturen-dhe-sistemin-e-monitorimit-te-qarkulllimit",
+        "consulted_on": "2026-09-26",
+        "kind": "guidance"
+      },
+      {
+        "key": "deklarata-tvsh-librat",
+        "title": "DEKLARATA E TVSH-SË — Librat e Shitjes dhe Blerjes: përshkrimi zyrtar i kategorive të detyrueshme të Librit të Shitjeve dhe të Librit të Blerjeve që ushqejnë Formularin e Deklarimit dhe Pagesës (FDP)",
+        "publisher": "Drejtoria e Përgjithshme e Tatimeve",
+        "url": "https://www.tatime.gov.al/shkarko.php?id=6235",
+        "consulted_on": "2026-09-26",
+        "kind": "guidance"
+      },
+      {
+        "key": "efiling-portal",
+        "title": "e-Filing — portali i deklarimit elektronik të Drejtorisë së Përgjithshme të Tatimeve, ku dorëzohet deklarata e TVSH-së",
+        "publisher": "Drejtoria e Përgjithshme e Tatimeve",
+        "url": "https://efiling.tatime.gov.al/cats_public/Account/LogOn",
+        "consulted_on": "2026-09-26",
+        "kind": "portal"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "ALL",
+    "language": "sq",
+    "rounding_method": "half_up",
+    "opening_entry_label": "Regjistrimi i hapjes",
+    "closing_style": "result_accounts",
+    "fiscal_year_default": "calendar",
+    "roles": {
+      "receivable": "411",
+      "payable": "401",
+      "suspense": "473",
+      "rounding": "6588",
+      "retained_earnings": "117",
+      "current_year_result_profit": "121",
+      "current_year_result_loss": "121",
+      "sales": "700",
+      "purchase": "600",
+      "bank": "512",
+      "cash": "531",
+      "fx_gain": "765",
+      "fx_loss": "665",
+      "tax_payable": "4423",
+      "tax_receivable": "4424"
+    },
+    "journal_roles": {
+      "sales": "SHT",
+      "purchase": "BLE",
+      "miscellaneous": "GJN",
+      "opening": "HAP"
+    }
+  },
+  "languages": ["en"],
+  "journals": [
+    { "code": "SHT", "type": "sales", "name": "Regjistri i shitjeve", "sequence": 10 },
+    { "code": "BLE", "type": "purchase", "name": "Regjistri i blerjeve", "sequence": 20 },
+    { "code": "BNK", "type": "bank", "name": "Regjistri i bankës", "sequence": 30 },
+    { "code": "ARK", "type": "cash", "name": "Regjistri i arkës", "sequence": 40 },
+    { "code": "GJN", "type": "general", "name": "Regjistër i përgjithshëm", "sequence": 50 },
+    { "code": "HAP", "type": "opening", "name": "Regjistrimi i hapjes", "sequence": 60 }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Plani kontabël (klasat 1-7)",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": ["AL-SKK2-BS", "AL-SKK2-IS"],
+      "legal_reference": "Ligji Nr. 25/2018 «Për kontabilitetin dhe pasqyrat financiare» detyron çdo njësi ekonomike të mbajë kontabilitet sipas Standardeve Kombëtare të Kontabilitetit (SKK); asnjë tekst zyrtar shqiptar nuk boton një plan kontabël të detyrueshëm me kode numerike fikse siç bën udhëzimi francez apo ai rumun — SKK përcaktojnë njohjen, matjen dhe paraqitjen, jo numërtimin e llogarive. Kodet e këtij plani (klasa 1 kapitalet, 2 aktivet afatgjata, 3 inventari, 4 të tretët, 5 thesari, 6 shpenzimet, 7 të ardhurat) transkriptojnë numërtimin kontinental me shtatë klasa që praktika kontabël shqiptare e përdor prej reformës së vitit 1993 dhe që literatura e IEKA-s (Institutit të Ekspertëve Kontabël të Autorizuar) e mëson ende sot; janë një konvencion i këtij paketimi dhe jo një kërkesë ligjore e numrave të saktë, siç shënohet në README.md.",
+      "source": "ligji-25-2018"
+    }
+  ],
+  "documents": {
+    "numbering": "sequential",
+    "number_format": "{CODE}-{YYYY}-{NNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "invoice_if_issued",
+    "posted_edit_policy": "reversal_only",
+    "references": {
+      "numbering": {
+        "legal_reference": "Ligji Nr. 92/2014, neni 99, pika 1, 3 dhe 4 — fatura lëshohet në momentin e furnizimit të mallit ose të kryerjes së shërbimit; neni 98 përjashton nga detyrimi i faturës tatimore me përmbajtje të plotë furnizimet deri në 40 000 lekë, përveç kur blerësi e kërkon. Ligji nuk imponon një format specifik numrash rendorë me vit e numërues; formati këtu është një shembull i pranueshëm dhe jo i vetmi.",
+        "source": "ligji-92-2014"
+      },
+      "tax_point": {
+        "legal_reference": "Ligji Nr. 92/2014, neni 32 — lindja e tatimit ndodh dhe TVSH-ja bëhet e kërkueshme kur furnizimi i mallrave ose shërbimeve kryhet, rregulli i përgjithshëm; neni 33, pika 3 — për çdo pagesë të kryer para furnizimit, TVSH-ja lind në momentin e arkëtimit; pika 4 — kur fatura tatimore lëshohet përpara furnizimit, TVSH-ja bëhet e kërkueshme në momentin e lëshimit të faturës. Furnizimi është rregulli, fatura e lëshuar më parë përjashtimi — e njëjta strukturë si neni 16/17 i ligjit belg dhe neni 21-24, par. 1, i ligjit luksemburgez.",
+        "source": "ligji-92-2014"
+      },
+      "posted_edit_policy": {
+        "legal_reference": "Ligji Nr. 92/2014, neni 95, shkronja «c» — një notë krediti apo notë debiti trajtohet si faturë vetëm nëse ndryshon dhe i referohet në mënyrë specifike e të qartë faturës fillestare, pasi kjo e fundit është lëshuar. Vini re shenjën e kundërt me zakonin: sipas nenit 95(c)(i), «nota e kreditit» RRIT detyrimin e TVSH-së, dhe «nota e debitit» (c)(ii) e ZBRET — e kundërta e emërtimit të zakonshëm anglez apo francez, ku një «credit note»/«note de crédit» zvogëlon shitjen. Dokumenti i korrigjimit të Ekwo (credit_note, që zvogëlon një shitje të postuar) korrespondon pra me «notën e debitit» të nenit 95(c)(ii) të këtij ligji, jo me «notën e kreditit» të tij — shih README.md.",
+        "source": "ligji-92-2014"
+      }
+    },
+    "mentions": [
+      {
+        "code": "reverse_charge",
+        "applies_when": "reverse_charge",
+        "text": "TVSH-ja deklarohet dhe paguhet nga marrësi i shërbimit, sipas pikës 2, të nenit 86, të Ligjit Nr. 92/2014.",
+        "sequence": 10,
+        "legal_reference": "Ligji Nr. 92/2014, neni 86, pika 2 — TVSH-ja është e pagueshme nga personi i tatueshëm, të cilit i janë furnizuar shërbimet e përcaktuara në nenin 24, pika 1, nëse furnizuesi nuk është i vendosur në territorin e Republikës së Shqipërisë.",
+        "source": "ligji-92-2014"
+      }
+    ]
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "Ligji Nr. 87/2019, datë 18.12.2019, «Për faturën dhe sistemin e monitorimit të qarkullimit» (fiskalizimi) detyron çdo tatimpagues të lëshojë fatura elektronike, të nënshkruara me certifikatë elektronike të lëshuar nga AKSHI, dhe t'i transmetojë në kohë reale në Platformën Qendrore të Faturave të administratës tatimore (CIS), e cila u kthen një Numër Identifikues i Vlefshmërisë së Faturës (NIVF) përpara se fatura t'i konsiderohet e vlefshme — një model *clearance*, jo një shkëmbim i drejtpërdrejtë ndërmjet palëve. Zbatimi u bë me faza, sipas njoftimit të Drejtorisë së Përgjithshme të Tatimeve: transaksionet pa para në dorë ndërmjet tatimpaguesve dhe organeve publike, nga 1 janari 2021; transaksionet pa para në dorë ndërmjet tatimpaguesve, nga 1 korrik 2021; të gjitha transaksionet me para në dorë, pavarësisht xhiros, nga 1 shtator 2021. `mandatory_from` mbetet bosh sepse fusha, sipas skemës së këtij formati, emërton ditën kur bëhet i detyrueshëm profili i EN 16931 që `profile` do të kishte emërtuar — dhe asnjë profil i tillë nuk ekziston këtu; datat e sipërpërmendura mbeten vetëm në këtë `legal_reference`, si te pako `tr` dhe `ro` për mekanizma të ngjashëm *clearance* jo-EN16931. `profile` mbetet bosh: formati i faturës elektronike shqiptare nuk është ndërtuar mbi modelin semantik të EN 16931 (as Peppol BIS, as Factur-X, as XRechnung, as ndonjë PINT) por mbi skemën e vet XML të Drejtorisë së Përgjithshme të Tatimeve, dhe asnjë pjesë e packages/formats/ nuk e shkruan apo transmeton sot këtë skemë — shih seksionin «From Albania» të docs/international.md. `party_scheme` dhe `vat_scheme` mbeten bosh për të njëjtën arsye: një tatimpagues shqiptar identifikohet me NIPT-in e vet (Numri i Identifikimit të Personit të Tatueshëm), jo me një skemë ISO 6523 të regjistruar në rrjetin Peppol.",
+    "source": "ligji-87-2019"
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "Një vit i një shoqërie tregtare shqiptare, subjekt i TVSH-së, deklaruese mujore",
+  "chart": "default",
+  "fiscal_year": { "name": "Ushtrimi 2026", "start": "2026-01-01", "end": "2026-12-31" },
+  "periods": [
+    { "code": "2026-01", "from": "2026-01-01", "to": "2026-01-31" },
+    { "code": "2026-02", "from": "2026-02-01", "to": "2026-02-28" }
+  ],
+  "statements": ["AL-SKK2-BS", "AL-SKK2-IS"],
+  "contacts": [
+    { "ref": "client-al", "name": "Al Trade Shpk", "type": "customer", "country": "AL" },
+    { "ref": "client-export", "name": "EuroPartner GmbH", "type": "customer", "country": "DE" },
+    { "ref": "supplier-al", "name": "Furnitori Shqiptar Shpk", "type": "supplier", "country": "AL" },
+    { "ref": "supplier-import", "name": "Guangzhou Trading Co.", "type": "supplier", "country": "CN" },
+    { "ref": "supplier-foreign", "name": "London Consulting Ltd", "type": "supplier", "country": "GB" }
+  ],
+  "documents": [
+    { "ref": "V1", "type": "sale_invoice", "contact": "client-al", "date": "2026-01-10",
+      "why": "Një shitje me shkallën standarde 20%: provon kutinë S20B dhe TVSH-në e mbledhur S20T.",
+      "lines": [ { "name": "Mallra tregtare", "quantity": 100, "unit_price": 1000, "tax": "AL-S-20", "account": "700" } ] },
+    { "ref": "V2", "type": "sale_invoice", "contact": "client-al", "date": "2026-01-12",
+      "why": "Një shërbim akomodimi me shkallën e reduktuar 6%: provon një shkallë të dytë pozitive (S06B/S06T) dhe kodin AL-S-6-ACCOM veçmas nga AL-S-6-BOOKS.",
+      "lines": [ { "name": "Shërbim akomodimi", "quantity": 1, "unit_price": 50000, "tax": "AL-S-6-ACCOM", "account": "706" } ] },
+    { "ref": "V3", "type": "sale_invoice", "contact": "client-al", "date": "2026-01-15",
+      "why": "Një shitje librash me shkallën e reduktuar 6%: provon kodin AL-S-6-BOOKS mbi të njëjtat kuti si akomodimi.",
+      "lines": [ { "name": "Libra shkollorë", "quantity": 200, "unit_price": 100, "tax": "AL-S-6-BOOKS", "account": "700" } ] },
+    { "ref": "CN1", "type": "sale_credit_note", "contact": "client-al", "date": "2026-01-28",
+      "why": "Kthim i pjesshëm librash nga V3: provon një notë korrigjuese në krah të shitjes (neni 95(c)(ii) i Ligjit 92/2014 — 'notë debiti' në terma të ligjit shqiptar).",
+      "lines": [ { "name": "Kthim librash shkollorë", "quantity": 50, "unit_price": 100, "tax": "AL-S-6-BOOKS", "account": "700" } ] },
+    { "ref": "V4", "type": "sale_invoice", "contact": "client-export", "date": "2026-02-03",
+      "why": "Një eksport mallrash me shkallë zero: provon kutinë EXP0 dhe kodin AL-S-EXPORT, pa TVSH të mbledhur.",
+      "lines": [ { "name": "Mallra për eksport", "quantity": 50, "unit_price": 4000, "tax": "AL-S-EXPORT", "account": "700" } ] },
+    { "ref": "V5", "type": "sale_invoice", "contact": "client-al", "date": "2026-02-05",
+      "why": "Dhënie me qira afatgjatë e një zyre: provon kodin e përjashtuar AL-S-EXEMPT-RENT (neni 53, shkronja h).",
+      "lines": [ { "name": "Qira zyre, muaji shkurt", "quantity": 1, "unit_price": 30000, "tax": "AL-S-EXEMPT-RENT", "account": "706" } ] },
+    { "ref": "A1", "type": "purchase_invoice", "contact": "supplier-al", "date": "2026-01-14",
+      "why": "Një blerje mallrash brenda vendit me shkallën standarde 20%: provon kutinë BVB/BVT dhe TVSH-në e zbritshme mbi llogarinë 4426.",
+      "lines": [ { "name": "Mallra tregtare", "quantity": 60, "unit_price": 1000, "tax": "AL-P-20", "account": "600" } ] },
+    { "ref": "A4", "type": "purchase_credit_note", "contact": "supplier-al", "date": "2026-02-18",
+      "why": "Kthim i pjesshëm mallrash te A1: provon një notë korrigjuese në krah të blerjes.",
+      "lines": [ { "name": "Kthim mallrash tregtare", "quantity": 10, "unit_price": 1000, "tax": "AL-P-20", "account": "600" } ] },
+    { "ref": "A2", "type": "purchase_invoice", "contact": "supplier-import", "date": "2026-02-06",
+      "why": "Një import mallrash: provon kutinë BIB/BIT dhe llogarinë e veçantë 4456 (TVSH e paguar në import), të ndryshme nga 4426.",
+      "lines": [ { "name": "Mallra të importuara", "quantity": 80, "unit_price": 1000, "tax": "AL-P-IMPORT-20", "account": "600" } ] },
+    { "ref": "A3", "type": "purchase_invoice", "contact": "supplier-foreign", "date": "2026-02-10",
+      "why": "Një shërbim konsulence i marrë nga një furnizues jorezident (Mbretëria e Bashkuar): provon vetëngarkimin AL-P-REVCHG-20 me dy nën-llogaritë 44281/44282, sipas nenit 86, pika 2.",
+      "lines": [ { "name": "Shërbim konsulence nga jashtë", "quantity": 1, "unit_price": 40000, "tax": "AL-P-REVCHG-20", "account": "628" } ] }
+  ],
+  "payments": [
+    { "ref": "P1", "direction": "inbound", "date": "2026-02-01", "amount": 120000, "contact": "client-al", "journal": "BNK", "match": "V1",
+      "why": "Një arkëtim që solde saktësisht faturën V1." },
+    { "ref": "P2", "direction": "inbound", "date": "2026-02-12", "amount": 50000, "contact": "client-al", "journal": "BNK", "match": null,
+      "why": "Një parapagim i arkëtuar pa u lidhur ende me asnjë faturë — një zë i hapur, siç e mban një regjistër i vërtetë." },
+    { "ref": "P3", "direction": "outbound", "date": "2026-02-20", "amount": 72000, "contact": "supplier-al", "journal": "BNK", "match": "A1",
+      "why": "Një pagesë që solde saktësisht faturën A1 të furnitorit." }
+  ]
+}

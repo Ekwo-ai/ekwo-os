@@ -5271,3 +5271,81 @@ statements.json` states its own scheme, grouped by the synthetic classes of
 the prescribed chart of accounts rather than transcribed from a numbered
 official form — `packs/mk/README.md` says so under "Биланс на состојба и
 Биланс на успех", and names it as the first thing for a reviewer to check.
+
+## From Albania
+
+`packs/al/`, `community`, seed 114, outside the common system of VAT: a
+candidate country levying its own value added tax (TVSH) under Ligji Nr.
+92/2014, article 48 (standard rate 20 %) and article 49 (reduced rates, 6 %
+and 10 % per the Ministry of Finance's own Buletini Fiskal 2024, the law's
+text itself never stating a figure). `ALL` is added to `00_currencies.sql` at
+two decimals — SIX's list one gives it a minor unit of 2, against the popular
+belief that the lek has none. `AL` is added to `00_territories.sql` with
+`eu_vat_scope` `none`. What the format could say, and what it could not.
+
+**No numbered box grid to transcribe.** Belgium, France and most European
+packs transcribe a form whose boxes are numbered by the administration
+itself. Albania's periodic return (Formulari i Deklarimit dhe Pagesës, FDP)
+is filed alongside two summary registers, the Libri i Shitjes and the Libri i
+Blerjes, whose categories this research could read from an official DPT
+notice — but no verifiable, directly-opened copy of the FDP screen's own box
+numbers was found, the same gap `packs/tr/` met on GİB's e-Beyanname screen.
+`tax_report.json` therefore carries the *content* the law and that notice
+state, under this pack's own short box names (`S20B`, `BVT`, `TPAG`…), the box
+identifier pattern's eight-character ceiling shaping the vocabulary as much as
+the law did.
+
+**A reduced rate whose amending law this research could not pin down.**
+Article 53(j) of the 2014 text itself exempted the supply of books; the
+Ministry of Finance's 2024 bulletin states a 6 % reduced rate for them
+instead. Which amending law moved books from one regime to the other, and
+when, this research did not find — `AL-S-6-BOOKS.valid_from` is a documented
+guess, flagged in the pack's own README for a local accountant to correct
+before anyone relies on an early period.
+
+**A self-assessed tax with two ledger accounts and one sign to flip.**
+`AL-P-REVCHG-20` (`foreign_services_received`, article 86.2) posts one
+collected leg and one deductible leg on the same purchase invoice, netting to
+zero cash effect exactly as Estonia's intra-Community acquisition does in
+`docs/packs.md` — and needed the same device: without `"factor": -100` on the
+collected leg, both legs post to the same side of the ledger, because a
+`tax` posting's default direction follows the document's *scope* and not the
+account named. `ekwo pack check` and the schema are silent about it; only the
+golden's own trial balance, read account by account, showed the mistake — a
+reason to read what `UPDATE_GOLDEN=1` writes rather than only running it.
+
+**A reversed vocabulary for a correction.** Article 95(c) of the law itself
+names the increasing correction document a *notë krediti* and the decreasing
+one a *notë debiti* — the opposite of the French or Belgian sense of "credit
+note", which decreases a sale. Ekwo's `credit_note` (which decreases) is
+therefore the Albanian *notë debiti*; nothing in the pack's postings changes
+for it since `credit_note` is the format's own neutral word, but the pack's
+README opens on this point precisely because a reviewer's first instinct
+would be to call it a defect.
+
+**A carried-forward credit and a refund that stay two different things.**
+Article 76.2-3 carries a deductible excess to the following period as a
+matter of right; article 77 conditions a *refund* of that same excess on
+three consecutive periods in credit and a threshold of 400 000 lekë, with a
+shorter window for exporters. `tax_report.json` states the carry-forward as a
+total (`TBART`); the refund is a procedure before the tax administration, not
+a box, and is not modelled.
+
+**A small-taxpayer quarterly period this research could not confirm still
+exists.** An official DPT document mentions a quarterly filing category for
+taxpayers whose turnover falls between 2 and 5 million lekë — tied to a
+registration threshold (2 million lekë) that VKM Nr. 576/2020 raised to 10
+million in 2021. Whether the category still binds anyone above the new
+threshold, or was left to apply to nobody, this research did not settle;
+`tax_report.json.period` states `month` alone.
+
+**Fiscalization, the sixth pack to meet a clearance model of its own.** Ligji
+Nr. 87/2019 makes every invoice pass through the tax administration's own
+Central Information System before it is valid, on a schema of the
+administration's own and not a profile built on EN 16931 — the same shape
+`packs/tr/`, `packs/ro/`, `packs/sa/`, `packs/mx/` and `packs/vn/` each met in
+their own country's system. `profile`, `party_scheme` and `vat_scheme` stay
+empty; the phased effective dates (2021-01-01 for the public sector,
+2021-07-01 business to business, 2021-09-01 every cash transaction) are
+recorded in `pack.json`'s own `legal_reference` and nowhere the schema could
+compile a date from without a profile to hang it on.

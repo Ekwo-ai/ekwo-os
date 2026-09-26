@@ -203,6 +203,7 @@ says what they say. `ekwo pack describe <cc>` is everything one of them says.
 | Pack | Country | Seed | Languages | Certification |
 |---|---|---|---|---|
 | [`ae`](../packs/ae/) | United Arab Emirates | `60_pack_ae.sql` | en | `community` |
+| [`al`](../packs/al/) | Albania | `114_pack_al.sql` | sq, en | `community` |
 | [`ar`](../packs/ar/) | Argentina | `45_pack_ar.sql` | es | `community` |
 | [`at`](../packs/at/) | Austria | `63_pack_at.sql` | de, en | `community` |
 | [`au`](../packs/au/) | Australia | `40_pack_au.sql` | en | `community` |
