@@ -1915,3 +1915,32 @@ on conflict (code) do update set
   eu_vat_to       = excluded.eu_vat_to,
   vat_prefix      = excluded.vat_prefix,
   legal_reference = excluded.legal_reference;
+
+-- ---------------------------------------------------------------------------
+-- Kazakhstan — a member of the Eurasian Economic Union, outside the common
+-- system of VAT
+--
+-- Directive 2006/112/EC, article 5(2): the common system of VAT applies in
+-- the territory of the Community as defined by the Treaties. Kazakhstan is
+-- not a candidate for accession to the European Union and is not bound by
+-- the Treaties at all — its indirect-tax integration runs instead through
+-- the Treaty on the Eurasian Economic Union of 29 May 2014, a separate legal
+-- order. Kazakhstan levies its own value added tax under the Tax Code (Law
+-- No. 214-VIII of 18 July 2025, in force from 1 January 2026), article 503,
+-- at a standard rate of 16%, reduced rates of 5% (2026) rising to 10% (2027)
+-- for medicines, medical devices and medical services, and 10% for domestic
+-- printed periodicals.
+-- ---------------------------------------------------------------------------
+
+insert into territories (code, code_source, name, parent_code, eu_vat_scope, eu_vat_from, eu_vat_to, vat_prefix, legal_reference) values
+  ('KZ', 'iso_3166_1', 'Kazakhstan', null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2) — the common system of VAT applies in the territory of the Community as defined by the Treaties; Kazakhstan is a member of the Eurasian Economic Union, not of the European Union, and is not a candidate for accession to it. Kazakhstan levies its own value added tax under the Tax Code (Law No. 214-VIII of 18 July 2025, in force from 1 January 2026), article 503, at a standard rate of 16% since 1 January 2026 (previously 12% under the repealed Code No. 120-VI of 25 December 2017, article 422).')
+on conflict (code) do update set
+  code_source     = excluded.code_source,
+  name            = excluded.name,
+  parent_code     = excluded.parent_code,
+  eu_vat_scope    = excluded.eu_vat_scope,
+  eu_vat_from     = excluded.eu_vat_from,
+  eu_vat_to       = excluded.eu_vat_to,
+  vat_prefix      = excluded.vat_prefix,
+  legal_reference = excluded.legal_reference;

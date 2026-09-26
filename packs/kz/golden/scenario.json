@@ -1,0 +1,170 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "Тоқсан сайын есеп беретін қазақстандық ҚҚС төлеушісінің бір жылдық кітаптары",
+  "chart": "default",
+  "fiscal_year": { "name": "2026 қаржы жылы", "start": "2026-01-01", "end": "2026-12-31" },
+  "periods": [
+    { "code": "2026-Q1", "from": "2026-01-01", "to": "2026-03-31" },
+    { "code": "2026-Q2", "from": "2026-04-01", "to": "2026-06-30" }
+  ],
+  "statements": ["KZ-IFRS-BS", "KZ-IFRS-IS"],
+  "contacts": [
+    { "ref": "client-kz", "name": "«Алатау сауда» ЖШС", "type": "customer", "country": "KZ" },
+    { "ref": "client-foreign", "name": "Muster Handels GmbH", "type": "customer", "country": "DE" },
+    { "ref": "supplier-kz", "name": "«Есіл жеткізу» ЖШС", "type": "supplier", "country": "KZ" }
+  ],
+  "documents": [
+    {
+      "ref": "V1",
+      "type": "sale_invoice",
+      "contact": "client-kz",
+      "date": "2026-01-15",
+      "why": "Негізгі 16 % мөлшерлеме бойынша тауар сатылымы — 001-жолдың базасы мен салығы.",
+      "lines": [
+        { "name": "Құрылыс материалдары", "quantity": 10, "unit_price": 5000, "tax": "KZ-S-16", "account": "6010" }
+      ]
+    },
+    {
+      "ref": "V2",
+      "type": "sale_invoice",
+      "contact": "client-kz",
+      "date": "2026-01-18",
+      "why": "Тіркелген дәрілік затты 5 % төмендетілген мөлшерлеме бойынша сату — 503-баптың 2-тармағы.",
+      "lines": [
+        { "name": "Тіркелген дәрілік зат", "quantity": 5, "unit_price": 2000, "tax": "KZ-S-MED-5", "account": "6010" }
+      ]
+    },
+    {
+      "ref": "V3",
+      "type": "sale_invoice",
+      "contact": "client-kz",
+      "date": "2026-01-20",
+      "why": "Отандық мерзімді баспа басылымын 10 % мөлшерлеме бойынша сату — 503-баптың 3-тармағы.",
+      "lines": [
+        { "name": "Отандық журналдың жазылымы", "quantity": 20, "unit_price": 300, "tax": "KZ-S-PRESS-10", "account": "6010" }
+      ]
+    },
+    {
+      "ref": "CN1",
+      "type": "sale_credit_note",
+      "contact": "client-kz",
+      "date": "2026-01-25",
+      "why": "V3-тен ақаулы даналардың ішінара қайтарылуы — сол кезеңдегі 001-жолдың базасы мен салығын азайтады.",
+      "lines": [
+        { "name": "Ақаулы журналдардың қайтарылуы", "quantity": 5, "unit_price": 300, "tax": "KZ-S-PRESS-10", "account": "6010" }
+      ]
+    },
+    {
+      "ref": "V4",
+      "type": "sale_invoice",
+      "contact": "client-foreign",
+      "date": "2026-02-05",
+      "why": "Тауарды Еуразиялық экономикалық одақтың кедендік аумағынан тыс экспорттау — нөлдік мөлшерлеме, 002-жол.",
+      "lines": [
+        { "name": "Экспортқа арналған тауар партиясы", "quantity": 1, "unit_price": 20000, "tax": "KZ-S-EXPORT", "account": "6010" }
+      ]
+    },
+    {
+      "ref": "V5",
+      "type": "sale_invoice",
+      "contact": "client-kz",
+      "date": "2026-02-10",
+      "why": "Отандық басылымдағы кітаптарды сату, 474-баптың 46) тармақшасы бойынша босатылған — 005-жол, сатып алушыда есепке жатқызу құқығынсыз.",
+      "lines": [
+        { "name": "Отандық басылымдағы кітаптар", "quantity": 10, "unit_price": 2000, "tax": "KZ-S-EXEMPT-BOOKS", "account": "6010" }
+      ]
+    },
+    {
+      "ref": "P1",
+      "type": "purchase_invoice",
+      "contact": "supplier-kz",
+      "date": "2026-01-12",
+      "why": "Қайта сатуға арналған тауарды негізгі 16 % мөлшерлеме бойынша сатып алу — 013-жолдың есепке жатқызылатын салығы.",
+      "lines": [
+        { "name": "Қайта сатуға арналған тауар", "quantity": 1, "unit_price": 30000, "tax": "KZ-P-16", "account": "1330" }
+      ]
+    },
+    {
+      "ref": "P2",
+      "type": "purchase_invoice",
+      "contact": "supplier-kz",
+      "date": "2026-01-16",
+      "why": "Қайта сатуға арналған тіркелген дәрілік затты 5 % мөлшерлеме бойынша сатып алу.",
+      "lines": [
+        { "name": "Қайта сатуға арналған дәрілік зат", "quantity": 5, "unit_price": 1500, "tax": "KZ-P-MED-5", "account": "1330" }
+      ]
+    },
+    {
+      "ref": "P3",
+      "type": "purchase_invoice",
+      "contact": "supplier-kz",
+      "date": "2026-01-22",
+      "why": "Кеңсе жалдау ақысы, негізгі 16 % мөлшерлеме — әкімшілік шығыс.",
+      "lines": [
+        { "name": "Кеңсе үй-жайын жалдау", "quantity": 1, "unit_price": 10000, "tax": "KZ-P-16", "account": "7200" }
+      ]
+    },
+    {
+      "ref": "V6",
+      "type": "sale_invoice",
+      "contact": "client-kz",
+      "date": "2026-04-10",
+      "why": "Екінші есептік кезеңдегі негізгі мөлшерлеме бойынша сатылым — сәуір-маусым декларациясы тек өз кезеңін есептейтінін тексереді.",
+      "lines": [
+        { "name": "Құрылыс материалдары", "quantity": 4, "unit_price": 5000, "tax": "KZ-S-16", "account": "6010" }
+      ]
+    },
+    {
+      "ref": "P4",
+      "type": "purchase_invoice",
+      "contact": "supplier-kz",
+      "date": "2026-04-12",
+      "why": "Екінші кезеңдегі кеңсе жалдау ақысы, негізгі мөлшерлеме.",
+      "lines": [
+        { "name": "Кеңсе үй-жайын жалдау", "quantity": 1, "unit_price": 8000, "tax": "KZ-P-16", "account": "7200" }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "E1",
+      "direction": "inbound",
+      "date": "2026-02-01",
+      "amount": 58000,
+      "contact": "client-kz",
+      "journal": "BNK",
+      "match": "V1",
+      "why": "V1-ді дәл жабатын түсім (50 000 + 8 000 ҚҚС)."
+    },
+    {
+      "ref": "E2",
+      "direction": "inbound",
+      "date": "2026-02-02",
+      "amount": 10500,
+      "contact": "client-kz",
+      "journal": "BNK",
+      "match": "V2",
+      "why": "V2-ні дәл жабатын түсім (10 000 + 500 ҚҚС)."
+    },
+    {
+      "ref": "E3",
+      "direction": "inbound",
+      "date": "2026-02-15",
+      "amount": 5000,
+      "contact": "client-kz",
+      "journal": "BNK",
+      "match": null,
+      "why": "Нақты құжатқа байланыссыз түсім — клиенттің шотында ашық сома болып қалады."
+    },
+    {
+      "ref": "S1",
+      "direction": "outbound",
+      "date": "2026-01-30",
+      "amount": 34800,
+      "contact": "supplier-kz",
+      "journal": "BNK",
+      "match": "P1",
+      "why": "P1-ді дәл жабатын төлем (30 000 + 4 800 ҚҚС)."
+    }
+  ]
+}

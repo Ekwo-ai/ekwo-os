@@ -5657,3 +5657,79 @@ is the nearest of its five words, and it is what `packs/rw/taxes.json`
 declares on both `RW-P-RC-FOREIGN` and `RW-P-RC-FOREIGN-BL` — one tax code
 per answer, chosen by whoever books the purchase, the way `docs/packs.md`
 already describes an American resale certificate under `buyer_certificate`.
+
+## From Kazakhstan
+
+`packs/kz/`, `community`, seed 124, a member of the Eurasian Economic Union
+and not of the European Union: Directive 2006/112/EC, article 5(2), reaches
+only the territory the Treaties define, so `KZ` is added to
+`00_territories.sql` with `eu_vat_scope` `none`, and `KZT` to
+`00_currencies.sql` at two decimals. The new Tax Code (Law No. 214-VIII of
+18 July 2025, in force from 1 January 2026) raised the standard VAT rate from
+12 % to 16 % (article 503(1), superseding article 422 of the repealed Code
+No. 120-VI of 2017) and introduced two reduced rates — 5 % rising to 10 % in
+2027 for medicines, medical devices and medical services, and 10 % for
+domestic printed periodicals (article 503(2)-(3)) — the same shift Bosnia
+and Serbia's packs above record for a single-rate law becoming a multi-rate
+one, here read directly from the two consecutive codes rather than from a
+single amended one. Four things the format could not say.
+
+**A form box shared by three positive rates, absent evidence that the
+approved form splits it.** Order of the Minister of Finance No. 695 of
+12 November 2025 approved form 300.00 for periods from 2026 onward; every
+secondary description of it reached by this pack's research still shows one
+line — 300.00.001 — for "turnover taxed at a rate other than zero," carried
+over unchanged from the single-rate (12 %) form that preceded it. Whether the
+approved annexes in fact break that line down by rate (16 %, 5 %, 10 %) once
+three positive rates coexist could not be confirmed from the text this
+research could open. `packs/kz/taxes.json` therefore posts `KZ-S-16`,
+`KZ-S-MED-5`, `KZ-S-MED-10` and `KZ-S-PRESS-10` to the same box `001` — the
+conservative reading that matches every description found, and the box
+`packs/kz/README.md` names first for a reviewer to check against the primary
+text of the order.
+
+**A deadline of two months, resolved exactly rather than approximately, for
+once.** Article 505 sets the return due no earlier than the 15th of the
+month after the quarter and no later than the 15th of the second month
+after it — the same two-month shape already recorded for Japan above, where
+`last_day_of_month_after_period` plus a fixed number of `plus_days` could
+only approximate the true date because a day of the next month plus a fixed
+count does not always land on the same day of the month after that. Here it
+does, exactly, every quarter: the last day of month M+1 is always day 30 or
+31, and either one plus 15 days is always the 15th of month M+2, an identity
+of the calendar rather than a coincidence of this particular law. `deadline`
+is declared `last_day_of_month_after_period` with `plus_days: 15`, and
+nothing is approximated. **The earliest filing date is the gap that remains**:
+article 505 also forbids filing before the 15th of the month after the
+period, and the vocabulary has no shape for a window with two ends —
+`packs/kz/README.md` names it, and `filing_deadline()` still answers only
+the late end, which is the one a taxpayer risks a penalty on.
+
+**Self-assessment on a service received from a non-resident is not
+modelled**, for the same reason `packs/ua/` does not model article 208 of
+the Tax Code of Ukraine and `packs/ge/` does not model article 176 of
+Georgia's: the mechanic is the double posting `docs/packs.md` shows for
+Estonia's intra-Community acquisition of goods, and this first `community`
+version of the pack does not yet carry a tax under the treatment
+`self_assessed` or `foreign_services_received` for it. `pack.json` carries the
+legal mention as a plain sentence, naming the gap rather than a tax code that
+does not exist.
+
+**Clearance e-invoicing through a state registry, and no writer for it,
+again.** The Information System of Electronic Invoices (ИС ЭШФ, esf.gov.kz),
+operated by the Committee of State Revenues, is where article 492 requires an
+invoice to be issued from 2026 as the general rule — paper is the narrow
+exception, for the absence of a public telecommunications network at the
+taxpayer's registered address or a confirmed technical failure of the portal
+itself, each opening a fixed catch-up window (15 days, 30 under a state of
+emergency) rather than restoring free choice. The document is filed straight
+into the state's own single registry rather than exchanged between equal
+parties, is not built on the semantic model of EN 16931 and carries no ISO
+6523 participant scheme — the same shape `packs/ua/` and `packs/ge/` already
+record for their own state platforms — so `einvoicing.profile` stays null and
+the mandatory dates live in `legal_reference` and in the pack's README rather
+than in `mandatory_from`. An invoice not registered in ИС ЭШФ denies the buyer
+the right to deduct the input tax it would otherwise carry, without relieving
+the seller of the liability — an asymmetric effect no `treatment` value
+describes, the same shape already recorded for Ukraine's register of tax
+invoices above.

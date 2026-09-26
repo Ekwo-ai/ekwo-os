@@ -1,0 +1,69 @@
+{
+  "statements": [
+    {
+      "code": "KZ-IFRS-BS",
+      "from": "2026-01-01",
+      "to": "2026-12-31",
+      "lines": {
+        "AS-CASH": "38700.00",
+        "AS-STFA": "0.00",
+        "AS-STREC": "63150.00",
+        "AS-INV": "37500.00",
+        "AS-CTAX": "8055.00",
+        "AS-OCA": "0.00",
+        "AS-CA-TOTAL": "147405.00",
+        "AS-LTFA": "0.00",
+        "AS-LTREC": "0.00",
+        "AS-INVEST": "0.00",
+        "AS-INVPROP": "0.00",
+        "AS-PPE": "0.00",
+        "AS-EXPLOR": "0.00",
+        "AS-INTANG": "0.00",
+        "AS-DTA": "0.00",
+        "AS-ONCA": "0.00",
+        "AS-NCA-TOTAL": "0.00",
+        "AS-TOTAL": "147405.00",
+        "EQ-SHARE": "0.00",
+        "EQ-UNPAID": "0.00",
+        "EQ-PREMIUM": "0.00",
+        "EQ-RESERVES": "0.00",
+        "EQ-RETAINED": "0.00",
+        "EQ-TOTAL": "0.00",
+        "LI-STFIN": "0.00",
+        "LI-TAX": "12150.00",
+        "LI-OTHERMAND": "0.00",
+        "LI-STPAY": "28755.00",
+        "LI-STPROV": "0.00",
+        "LI-OTHERST": "0.00",
+        "LI-CL-TOTAL": "40905.00",
+        "LI-LTFIN": "0.00",
+        "LI-LTPAY": "0.00",
+        "LI-LTPROV": "0.00",
+        "LI-DTL": "0.00",
+        "LI-OTHERLT": "0.00",
+        "LI-NCL-TOTAL": "0.00",
+        "EQLI-TOTAL": "40905.00"
+      }
+    },
+    {
+      "code": "KZ-IFRS-IS",
+      "from": "2026-01-01",
+      "to": "2026-12-31",
+      "lines": {
+        "IS-REV": "124500.00",
+        "IS-COGS": "0.00",
+        "IS-GROSS": "124500.00",
+        "IS-SELL": "0.00",
+        "IS-ADMIN": "18000.00",
+        "IS-OPINC": "0.00",
+        "IS-OPEXP": "0.00",
+        "IS-OPRESULT": "106500.00",
+        "IS-FININC": "0.00",
+        "IS-FINEXP": "0.00",
+        "IS-PRETAX": "106500.00",
+        "IS-CIT": "0.00",
+        "IS-NET": "106500.00"
+      }
+    }
+  ]
+}

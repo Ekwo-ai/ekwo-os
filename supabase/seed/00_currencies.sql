@@ -74,5 +74,6 @@ insert into currencies (code, name, symbol, decimal_places) values
   ('BHD', 'Bahraini dinar',       E'.د.ب', 3),
   ('OMR', 'Omani rial',           E'ر.ع.', 3),
   ('UGX', 'Uganda shilling',      'USh',     0),
-  ('RWF', 'Rwandan franc',        E'FRw', 0)
+  ('RWF', 'Rwandan franc',        E'FRw', 0),
+  ('KZT', 'Kazakhstani tenge',    E'₸', 2)
 on conflict (code) do nothing;
