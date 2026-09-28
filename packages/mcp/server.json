@@ -61,5 +61,11 @@
         }
       ]
     }
+  ],
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://mcp.ekwo.ai/mcp"
+    }
   ]
 }

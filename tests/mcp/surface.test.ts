@@ -116,6 +116,23 @@ describe('what the server says it is', () => {
     expect(manifest.version).toBe(SERVER_VERSION);
   });
 
+  it('offers the hosted server to the registry, not only the package', async () => {
+    // Somebody asking an assistant to set Ekwo up gets told there is no public
+    // MCP server unless the registry lists one: the npm package is a command to
+    // run, the remote is a URL to add. Without this block, the shortest way in
+    // is invisible to the directory assistants read.
+    const described = JSON.parse(
+      await readFile(join(repoRoot, 'packages', 'mcp', 'server.json'), 'utf8'),
+    ) as { remotes?: { type: string; url: string }[] };
+    expect(described.remotes, 'server.json declares no remote').toBeDefined();
+    expect(described.remotes).toHaveLength(1);
+    const [remote] = described.remotes ?? [];
+    expect(remote?.type).toBe('streamable-http');
+    // The path matters: the server answers at /mcp, and a connector added
+    // without it never reaches the handshake.
+    expect(remote?.url).toBe('https://mcp.ekwo.ai/mcp');
+  });
+
   it('is described to the MCP registry under the name and the version the package carries', async () => {
     // The registry proves ownership by reading `mcpName` out of the package on
     // npm, and lists the version `server.json` names. A release that bumps the
@@ -131,6 +148,7 @@ describe('what the server says it is', () => {
       description: string;
       version: string;
       packages: { registryType: string; identifier: string; version: string; environmentVariables: { name: string }[] }[];
+      remotes?: { type: string; url: string }[];
     };
     expect(described.name).toBe(manifest.mcpName);
     expect(described.version).toBe(manifest.version);
