@@ -46,11 +46,15 @@ What we are building, in order:
    and it applies the schema, seeds the country rules, creates the first
    administrator and the first company, in one command. Done; see
    [`packages/cli`](packages/cli/).
-3. **The MCP server** — `npx @ekwo-ai/mcp`, so any AI agent can operate
-   the books: read the ledger, raise an invoice, post it, match a payment,
-   pull the VAT return or the FEC. Done; see [`packages/mcp`](packages/mcp/).
-   The web application is [Ekwo Cloud](https://cloud.ekwo.ai), and it opens
-   an instance you run yourself as well as one we host.
+3. **The MCP server** — so any AI agent can operate the books: read the
+   ledger, raise an invoice, post it, match a payment, pull the VAT return or
+   the FEC. Two ways to reach it, and they are the same server:
+   **`https://mcp.ekwo.ai/mcp`**, hosted, which a client that speaks
+   Streamable HTTP and OAuth adds as a URL, and `npx @ekwo-ai/mcp` over stdio,
+   for a client that launches its servers itself. Done; see
+   [`packages/mcp`](packages/mcp/). The web application is
+   [Ekwo Cloud](https://cloud.ekwo.ai), and it opens an instance you run
+   yourself as well as one we host.
 4. **Any country as a versioned pack of data**, with one golden test per
    country. Every folder of [`packs/`](packs/) ships today — the list is under
    [What is in this repository](#what-is-in-this-repository) — and more arrive
@@ -569,6 +573,29 @@ so nothing in the server writes an `entries` row, and nothing in it can unpost
 an entry. Configuration is a block of environment variables in
 `claude_desktop_config.json` or `.mcp.json`; see
 [`packages/mcp`](packages/mcp/).
+
+### Hosted, at `https://mcp.ekwo.ai/mcp`
+
+The same server, reachable as a URL, for a client that adds remote servers
+rather than launching them — claude.ai, or any other that speaks **Streamable
+HTTP**. Nothing is installed and no key is written into a configuration file:
+the server answers an unauthenticated call with `401` and a
+`WWW-Authenticate` header naming its protected-resource metadata, the client
+follows it to the authorization server, and the person approves the connection
+in their browser. Dynamic client registration (RFC 7591) means the client
+needs no credentials of its own, and the scope asked for is `books`.
+
+Point a client at the URL and it discovers the rest:
+
+```
+https://mcp.ekwo.ai/mcp
+```
+
+An agent reading this without a browser can start from
+[`/.well-known/oauth-protected-resource`](https://mcp.ekwo.ai/.well-known/oauth-protected-resource),
+which names the authorization server and the scope.
+
+### Over stdio, as a local process
 
 ```sh
 npx -y @ekwo-ai/mcp@latest
