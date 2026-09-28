@@ -9,7 +9,26 @@ somewhere has already run it.
 
 ## [Unreleased]
 
+## [0.9.0] — 2026-09-28
+
 ### Added
+
+- **60 more country packs**, bringing the set to 107: al, ar, ba, bg, bh, bo, ca, cl, cn, co, cr, cy, cz, dk, do, dz, ec, eg, fi, ge, gh, gr, gt, hr, hu, id, il, in, is, ke, kz, lt, lv, ma, md, me, mk, mt, my, ng, no, om, pa, pe, ph, py, ro, rs, rw, se, si, sk, tn, tr, tz, ua, ug, uy, xk, za. Each
+  carries its own chart of accounts, its taxes and the return its country
+  files, as data rather than as code, and each arrives at the status
+  `community` — nobody has reviewed it, and the pack says so itself.
+
+- **The hosted MCP server is offered to the registry** (`remotes` in
+  `packages/mcp/server.json`): `https://mcp.ekwo.ai/mcp`, Streamable HTTP. The
+  npm package is a command to run and the remote is a URL to add — until now
+  only the first was listed, so a directory had nothing to show somebody whose
+  assistant went looking for a server.
+
+- **`AGENTS.md` tells an assistant that an Ekwo account exists**, what it is
+  worth today — a daily backup, and handing an agent the books through one URL
+  and a browser approval instead of a key in a file — what is coming, and what
+  is not true: Ekwo does not host the database, and `init` still runs against a
+  project the person owns.
 
 - **The MCP server answers over HTTP too** (`handleHttpRequest`,
   `handleNodeRequest` in `@ekwo-ai/mcp`): the Streamable HTTP transport,
@@ -3711,6 +3730,7 @@ against the latest tag, and a mistake is corrected by a new migration, always.
   roles, and a golden FEC export.
 
 [Unreleased]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.8.0...HEAD
+[0.9.0]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.8.0...v0.9.0
 [0.8.0]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.7.0...v0.8.0
 [0.7.0]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.6.0...v0.7.0
 [0.6.0]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.5.0...v0.6.0
