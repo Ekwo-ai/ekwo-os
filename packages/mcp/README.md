@@ -6,11 +6,40 @@ the books in your own Postgres: read the ledger, raise an invoice, post it, matc
 a payment, pull the VAT return or the French FEC — **as you**, under the row
 level security of your own installation.
 
+There are two ways to reach it, and they are the same server.
+
+## Hosted, at `https://mcp.ekwo.ai/mcp`
+
+For a client that adds remote servers rather than launching them — claude.ai,
+or any other that speaks **Streamable HTTP**. Nothing is installed, and no
+password or key is written into a configuration file.
+
+```
+https://mcp.ekwo.ai/mcp
+```
+
+Point a client at that address and it discovers the rest. An unauthenticated
+call is answered with `401` and a `WWW-Authenticate` header naming the
+server's protected-resource metadata (RFC 9728); the client follows it to the
+authorization server (RFC 8414), registers itself (RFC 7591, so it needs no
+credentials of its own) and sends the person to their browser to approve the
+connection. The scope asked for is `books`.
+
+An agent reading this without a browser can start from
+[`/.well-known/oauth-protected-resource`](https://mcp.ekwo.ai/.well-known/oauth-protected-resource).
+
+The books stay where they are: the hosted server holds none, and connects to
+the instance the person names when they approve it.
+
+## Locally, over stdio
+
 ```sh
 npx -y @ekwo-ai/mcp@latest
 ```
 
-It speaks MCP over stdio and is started by a client, never by hand. Keep the
+For a client that launches its own servers — Claude Desktop, Claude Code, any
+editor that reads `.mcp.json`. It speaks MCP over stdio and is started by a
+client, never by hand. Keep the
 version in the command: run from inside a clone of the Ekwo repository, a bare
 `npx @ekwo-ai/mcp` finds the workspace package of the same name, which has no
 built command, and answers `ekwo-mcp: command not found`. With `@latest`, `npx`
