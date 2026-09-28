@@ -8,7 +8,7 @@
  * rather than in somebody's Claude Desktop.
  */
 
-import { readFile } from 'node:fs/promises';
+import { readdir, readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { Client } from '@modelcontextprotocol/sdk/client/index.js';
 import { InMemoryTransport } from '@modelcontextprotocol/sdk/inMemory.js';
@@ -114,6 +114,28 @@ describe('what the server says it is', () => {
     ) as { name: string; version: string };
     expect(manifest.name).toBe(SERVER_NAME);
     expect(manifest.version).toBe(SERVER_VERSION);
+  });
+
+  it('says what it is in the only two fields the registry gives it', async () => {
+    // The registry schema has no keywords, no tags and no categories: `title`
+    // and `description`, a hundred characters each, are the whole of what
+    // somebody searching it can match on. So they carry the words — accounting,
+    // ledger, invoices, VAT, Supabase, Postgres — rather than the brand alone.
+    const described = JSON.parse(
+      await readFile(join(repoRoot, 'packages', 'mcp', 'server.json'), 'utf8'),
+    ) as { title: string; description: string };
+    for (const field of ['title', 'description'] as const) {
+      expect(described[field].length, `${field} is longer than the registry allows`)
+        .toBeLessThanOrEqual(100);
+    }
+    for (const word of ['accounting', 'invoices', 'VAT', 'Supabase']) {
+      expect(`${described.title} ${described.description}`).toContain(word);
+    }
+    // The count of packs is a fact, and a fact left to age is a lie by
+    // omission: it is read from the directory rather than written by hand.
+    const packs = (await readdir(join(repoRoot, 'packs'), { withFileTypes: true }))
+      .filter((entry) => entry.isDirectory()).length;
+    expect(described.description).toContain(`${packs} country packs`);
   });
 
   it('offers the hosted server to the registry, not only the package', async () => {

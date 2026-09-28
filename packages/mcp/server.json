@@ -1,8 +1,8 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "ai.ekwo/mcp",
-  "title": "Ekwo OS",
-  "description": "Open source accounting data infrastructure on your own Postgres, acting as the user under RLS.",
+  "title": "Ekwo OS — open source accounting: ledger, invoices and VAT on your own Supabase or Postgres",
+  "description": "Double-entry books an agent keeps as the user: invoices, VAT returns, 107 country packs.",
   "version": "0.9.0",
   "repository": {
     "url": "https://github.com/Ekwo-ai/ekwo-os",
