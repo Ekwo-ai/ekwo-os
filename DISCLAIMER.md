@@ -7,7 +7,7 @@ adviser and not a financial, legal or investment adviser, and installing it,
 using it or reading this site does not make Ekwo, or anyone who contributed to
 it, your accountant or your adviser.
 
-*Version 2.0 — 21 September 2026. This page applies to Ekwo OS, the software
+*Version 2.1 — 28 September 2026. This page applies to Ekwo OS, the software
 of this repository, and to the site at ekwo.ai. The managed edition is
 governed by its own terms.*
 
@@ -142,6 +142,24 @@ Accounting, tax and audit are regulated activities in many countries, and the
 titles that go with them are protected. Before relying on the software for a
 filing, an election or a decision, consult a professional who is authorised to
 advise you in the country concerned.
+
+**Ekwo works with that profession rather than around it.** Saying that Ekwo
+gives no advice is not a way of keeping its distance: it is how the work is
+divided. Ekwo builds the infrastructure — the schema, the rules of a country
+written as data, the tools — and the judgement stays with people who are
+qualified to exercise it and answerable for it. A country pack can be read by
+a named professional, and its status says so: `reviewed` carries their name
+and the date they read it (§4). Those same people are who a business turns to
+for the work itself — setting the books up, taking them over, answering for a
+filing — and the tools are built so they can read and check everything the
+software produced.
+
+A way to find professionals who offer that support is **being prepared and is
+not here yet**. Until it is, the right person is the one you already work with,
+or one you find through the body that registers them in your country — the
+sections below name those bodies. Ekwo does not appoint, endorse, employ or
+vouch for anyone, receives nothing for naming a professional, and engaging one
+is a contract between you and them to which Ekwo is not a party.
 
 ### European Union
 
