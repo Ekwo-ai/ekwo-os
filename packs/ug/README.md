@@ -245,7 +245,7 @@ socle was not changed to fit it.
   effective 1 July 2026.
 - **Income tax withholding** other than VAT (Income Tax Act, s. 119 and
   following): out of scope of a VAT pack.
-- **Fixed assets.** No `assets.json`: Uganda's capital allowances are an
+- **Fixed assets.** No `fixed_assets.json`: Uganda's capital allowances are an
   income tax table (Income Tax Act, Second Schedule), not a useful-life the
   IFRS for SMEs Accounting Standard leaves to the entity.
 - **Bank formats.** Nothing checked says which formats Ugandan banks send.

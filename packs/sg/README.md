@@ -293,7 +293,7 @@ names its PINT SG code in its legal reference, for a renderer to map.
   boxes 15 and 16: this pack is for a business established in Singapore.
 - **Deemed supplies** — gifts over $200, business assets put to private use.
 - **Box 13 and the exchange gains of box 3**, which are not documents.
-- **Fixed assets.** No `assets.json`: SFRS leave the useful life to the entity,
+- **Fixed assets.** No `fixed_assets.json`: SFRS leave the useful life to the entity,
   and the capital allowances are an income tax table.
 - **Bank formats.** Nothing checked says which formats Singapore banks send.
 - **Filing.** The return is filed on myTax Portal; submitting it is a credential

@@ -1,7 +1,7 @@
 # `budgets` — what was planned, against what was booked
 
 One Postgres schema, `budgets`. It is the module that proves the mechanism
-holds for something that is not `assets`: **no country data at all** and **not
+holds for something that is not the fixed assets module: **no country data at all** and **not
 one line written to the ledger**.
 
 | Object | What it is |
@@ -44,7 +44,7 @@ as a variance of exactly minus the budget. It is the same exclusion
 ## It writes no `can_disable`
 
 That is deliberate, and it is the other half of the convention
-`disable_module()` follows. `assets.can_disable()` answers with a sentence
+`disable_module()` follows. `fixed_assets.can_disable()` answers with a sentence
 while depreciation has been booked, and the disable is refused. `budgets` has
 no such function at all, so disabling it is allowed whatever it holds: the rows
 stay where they are, row level security hides them, and enabling the module

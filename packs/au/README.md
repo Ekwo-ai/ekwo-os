@@ -317,7 +317,7 @@ describes and no statute enacts; both bind the buyer and not the supplier.
   accounting methods for food retailers, GST groups and branches.
 - **Taxable importations paid at the border**, where the ABF collects the GST
   on an import declaration rather than on the supplier's invoice.
-- **Fixed assets.** No `assets.json`: AASB 116 leaves the useful life to the
+- **Fixed assets.** No `fixed_assets.json`: AASB 116 leaves the useful life to the
   entity, and the Commissioner's effective lives are an income tax table.
 - **Bank formats.** No statement format is declared: Ekwo reads camt.053, and
   nothing checked says which Australian banks send it.

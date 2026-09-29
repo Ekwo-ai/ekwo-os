@@ -1942,6 +1942,7 @@ Constraints:
 | `aged_balance(p_company_id uuid, p_at date, p_group text)` | Ageing of what is still open, read from the ledger and from the matching, written at the decimals of the company's currency. Two groups, receivable and payable; anything else is refused by name. |
 | `amount_text_format(p_rounding money_rounding)` | The to_char mask an amount of this currency is written with. Two decimals for the euro, none for the yen, three for the dinar. |
 | `api_key_company()` | The company of the machine key presented in this transaction, or nothing. What `is_company_member()` asks so that a key is on the company it was minted for, and the only thing of a key the policy helpers read. |
+| `archive_under_current_names(p_archive jsonb)` | A company archive with every table a module has since renamed filed under its name of today, as each module declares in `<schema>.archive_former_names()`. Only names move: the rows, and the checksums over them, are untouched. |
 | `assert_may_export_company(p_company_id uuid)` | The two conditions of leaving: company.export on the company, and a caller that row level security applies to. Invoker, so `current_user` is the role that asked. |
 | `assert_period_open(p_company_id uuid, p_date date, p_is_tax boolean)` | Raises when a date is protected by a lock date or a closed fiscal year. |
 | `audit_changes()` | The generic audit trigger. One jsonb argument names the company column, the natural key, the columns to redact and the acts an insert or a delete stands for. |
@@ -2033,7 +2034,7 @@ Constraints:
 | `has_opening_entry(p_fiscal_year_id uuid)` | Whether a fiscal year already carries an opening entry that still stands — an imported balance or the re-opening of the year before. |
 | `import_bank_statement(p_company_id uuid, p_file jsonb, p_source jsonb, p_bank_account_id uuid)` | Writes what a format reader read out of a bank file into bank_statements and bank_transactions, and nothing else: no entry, no payment, no matching. Idempotent on import_key — a replayed file imports nothing, an overlapping statement imports what is new and lists the rest. Refuses, by name and before writing anything: an account the company does not have (unknown_bank_account), a statement that does not add up (unbalanced_statement) or has no balances, a booked line it cannot hold as it is (unreadable_statement_line), a currency that is not the account's, and the same statement with other balances (statement_conflict). Signals and does not refuse: an opening balance that is not the previous closing one, a hole in the bank's numbering. One row per statement of the file; the whole file is imported or none of it. |
 | `import_books(p_company_id uuid, p_books jsonb, p_dry_run boolean, p_open_years boolean, p_allow_result_accounts boolean)` | Takes over books read from another system, whole or not at all: the fiscal years they need (p_open_years), their parties, every entry posted through post_entry() and a trial balance through opening_balance(). Account codes arrive already translated into the company's chart. p_dry_run does all of it and rolls it back, so the answer and the refusals are the real ones. The same files twice are refused (import_already_done). |
-| `import_company(p_archive jsonb, p_owner_user_id uuid)` | Takes one company archive into this installation, whole or not at all. Checks the manifest against the values of the rows — `values_sha256`, which a reader reproduces after parsing the archive — and against their bytes for an archive written before 0.9.0. |
+| `import_company(p_archive jsonb, p_owner_user_id uuid)` | Takes one company archive into this installation, whole or not at all. Checks the manifest against the values of the rows — `values_sha256`, which a reader reproduces after parsing the archive — and against their bytes for an archive written before 0.9.0. A table a module has renamed since is read under its name of today. |
 | `import_fiscal_year_for(p_company_id uuid, p_date date)` | The fiscal year a date falls in, opened when there is none as a year of the same length and on the same first day as the company's earliest one. Called by import_books() when the caller asks for years to be opened. |
 | `init_instance(p_organization_name text, p_country character, p_edition instance_edition)` | Records the installation. Called once, by the installer. Leaves the registration fields empty. |
 | `install_country_template(p_company_id uuid, p_country character, p_language character, p_chart_code text)` | Copies one chart of a country pack into a company in one language, with the country's journals and taxes, wires the default roles, pins the accounts it wired, and records the pack version and the chart in company_packs. A tax posting is copied with every declaration box it prints in. |
@@ -2138,7 +2139,7 @@ One Postgres schema each, beside the socle. A module depends on `public` by fore
 and reaches the ledger only through `post_module_entry()`. It is enabled per company, and
 PostgREST serves its schema only once the project exposes it.
 
-## `assets` — Fixed assets
+## `fixed_assets` — Fixed assets
 
 Fixed assets, their depreciation schedule and their disposal. Durations, declining coefficients and the prorata convention are country pack data.
 
@@ -2146,56 +2147,13 @@ Fixed assets, their depreciation schedule and their disposal. Durations, declini
 
 | Table | Purpose |
 |---|---|
-| [`assets`](#assets-assets) | One fixed asset: what it cost, how it is depreciated, and the three accounts that carry it. The schedule is assets.depreciation_lines. |
-| [`category_templates`](#assets-category_templates) | The usual duration and method of a kind of asset in one country, with the source it comes from. A suggestion an asset may depart from, which is why it is never copied into a company. |
-| [`country_rules`](#assets-country_rules) | How one country depreciates and derecognises. Filled by `ekwo pack build` from packs/<cc>/assets.json, read where it stands, never copied into a company. |
-| [`depreciation_lines`](#assets-depreciation_lines) | One planned period of depreciation. `entry_id` is the entry that booked it, and is what makes running the depreciation of a period twice a no-op. |
-| [`disposals`](#assets-disposals) | What leaving the books cost or earned: one row per asset, written by assets.dispose_asset(). There is no undo, for the reason there is no unpost. |
+| [`category_templates`](#fixed_assets-category_templates) | The usual duration and method of a kind of asset in one country, with the source it comes from. A suggestion an asset may depart from, which is why it is never copied into a company. |
+| [`country_rules`](#fixed_assets-country_rules) | How one country depreciates and derecognises. Filled by `ekwo pack build` from packs/<cc>/fixed_assets.json, read where it stands, never copied into a company. |
+| [`depreciation_lines`](#fixed_assets-depreciation_lines) | One planned period of depreciation. `entry_id` is the entry that booked it, and is what makes running the depreciation of a period twice a no-op. |
+| [`disposals`](#fixed_assets-disposals) | What leaving the books cost or earned: one row per fixed asset, written by fixed_assets.dispose_fixed_asset(). There is no undo, for the reason there is no unpost. |
+| [`fixed_assets`](#fixed_assets-fixed_assets) | One fixed asset: what it cost, how it is depreciated, and the three accounts that carry it. The schedule is fixed_assets.depreciation_lines. Called assets.assets until version 2.0.0 of the module. |
 
-<a id="assets-assets"></a>
-
-#### `assets`
-
-One fixed asset: what it cost, how it is depreciated, and the three accounts that carry it. The schedule is assets.depreciation_lines.
-
-| Column | Type | Notes |
-|---|---|---|
-| `id` | `uuid` | not null |
-| `company_id` | `uuid` | not null |
-| `code` | `text` | not null |
-| `name` | `text` | not null |
-| `description` | `text` |  |
-| `category_code` | `text` |  |
-| `document_line_id` | `uuid` |  |
-| `contact_id` | `uuid` |  |
-| `product_id` | `uuid` |  |
-| `acquisition_date` | `date` | not null |
-| `in_service_date` | `date` |  |
-| `cost` | `numeric(16,2)` | not null |
-| `residual_value` | `numeric(16,2)` | not null |
-| `method` | `assets.depreciation_method` | not null |
-| `duration_months` | `integer` | not null |
-| `coefficient` | `numeric(7,3)` | Multiplier of the straight-line rate under a declining balance. France 1,25 / 1,75 / 2,25 by duration; Belgium doubles the rate. Required by a check constraint for that method, because a declining balance with no coefficient is a straight line nobody asked for. |
-| `prorata` | `assets.prorata_rule` | How much of the first period this asset takes. Null reads the country rule for its method, and an asset in a country whose pack says nothing is refused by name rather than given another country's convention. |
-| `asset_account_id` | `uuid` | not null |
-| `depreciation_account_id` | `uuid` | not null |
-| `expense_account_id` | `uuid` | not null |
-| `state` | `assets.asset_state` | not null |
-| `notes` | `text` |  |
-| `created_at` | `timestamp with time zone` | not null |
-| `updated_at` | `timestamp with time zone` | not null |
-
-Constraints:
-
-- `CHECK ((cost > (0)::numeric))`
-- `CHECK (((method <> 'declining_balance'::assets.depreciation_method) OR (coefficient IS NOT NULL)))`
-- `CHECK ((duration_months > 0))`
-- `CHECK (((in_service_date IS NULL) OR (in_service_date >= acquisition_date)))`
-- `CHECK (((residual_value >= (0)::numeric) AND (residual_value < cost)))`
-- `PRIMARY KEY (id)`
-- `UNIQUE (company_id, code)`
-
-<a id="assets-category_templates"></a>
+<a id="fixed_assets-category_templates"></a>
 
 #### `category_templates`
 
@@ -2207,35 +2165,35 @@ The usual duration and method of a kind of asset in one country, with the source
 | `code` | `text` | not null |
 | `name` | `text` | not null |
 | `name_i18n` | `jsonb` | not null |
-| `method` | `assets.depreciation_method` | not null |
+| `method` | `fixed_assets.depreciation_method` | not null |
 | `duration_months` | `integer` | not null |
 | `coefficient` | `numeric(7,3)` |  |
-| `prorata` | `assets.prorata_rule` | Overrides the country rule for this category. Null is the ordinary case: the rule of the country, for the method this category uses. |
+| `prorata` | `fixed_assets.prorata_rule` | Overrides the country rule for this category. Null is the ordinary case: the rule of the country, for the method this category uses. |
 | `account_type` | `account_type` | Which of the eighteen account types the asset account of this category is, so a client can propose the accounts of a chart it has never seen. Advisory: nothing resolves an account from it. |
 | `sequence` | `integer` | not null |
 | `legal_reference` | `text` |  |
 
 Constraints:
 
-- `CHECK (((method <> 'declining_balance'::assets.depreciation_method) OR (coefficient IS NOT NULL)))`
+- `CHECK (((method <> 'declining_balance'::fixed_assets.depreciation_method) OR (coefficient IS NOT NULL)))`
 - `CHECK ((duration_months > 0))`
 - `PRIMARY KEY (country, code)`
 
-<a id="assets-country_rules"></a>
+<a id="fixed_assets-country_rules"></a>
 
 #### `country_rules`
 
-How one country depreciates and derecognises. Filled by `ekwo pack build` from packs/<cc>/assets.json, read where it stands, never copied into a company.
+How one country depreciates and derecognises. Filled by `ekwo pack build` from packs/<cc>/fixed_assets.json, read where it stands, never copied into a company.
 
 | Column | Type | Notes |
 |---|---|---|
 | `country` | `character(2)` | not null |
-| `prorata_straight_line` | `assets.prorata_rule` | not null |
-| `prorata_declining` | `assets.prorata_rule` | not null |
-| `day_count` | `assets.day_count` | not null |
+| `prorata_straight_line` | `fixed_assets.prorata_rule` | not null |
+| `prorata_declining` | `fixed_assets.prorata_rule` | not null |
+| `day_count` | `fixed_assets.day_count` | not null |
 | `declining_cap_percent` | `numeric(7,3)` | Largest annuity a declining balance may take in one period, as a percentage of the acquisition value. Null where the country caps nothing. |
 | `declining_switch_to_linear` | `boolean` | not null — Whether the declining balance switches to the straight line over the remaining periods once that gives the larger annuity. True everywhere the declining balance is a tax incentive rather than a valuation method. |
-| `disposal_style` | `assets.disposal_style` |  |
+| `disposal_style` | `fixed_assets.disposal_style` |  |
 | `legal_reference` | `text` |  |
 
 Constraints:
@@ -2244,7 +2202,7 @@ Constraints:
 - `CHECK ((country ~ '^[A-Z]{2}$'::text))`
 - `PRIMARY KEY (country)`
 
-<a id="assets-depreciation_lines"></a>
+<a id="fixed_assets-depreciation_lines"></a>
 
 #### `depreciation_lines`
 
@@ -2274,11 +2232,11 @@ Constraints:
 - `UNIQUE (asset_id, period_end)`
 - `UNIQUE (asset_id, sequence)`
 
-<a id="assets-disposals"></a>
+<a id="fixed_assets-disposals"></a>
 
 #### `disposals`
 
-What leaving the books cost or earned: one row per asset, written by assets.dispose_asset(). There is no undo, for the reason there is no unpost.
+What leaving the books cost or earned: one row per fixed asset, written by fixed_assets.dispose_fixed_asset(). There is no undo, for the reason there is no unpost.
 
 | Column | Type | Notes |
 |---|---|---|
@@ -2302,19 +2260,63 @@ Constraints:
 - `PRIMARY KEY (id)`
 - `UNIQUE (asset_id)`
 
+<a id="fixed_assets-fixed_assets"></a>
+
+#### `fixed_assets`
+
+One fixed asset: what it cost, how it is depreciated, and the three accounts that carry it. The schedule is fixed_assets.depreciation_lines. Called assets.assets until version 2.0.0 of the module.
+
+| Column | Type | Notes |
+|---|---|---|
+| `id` | `uuid` | not null |
+| `company_id` | `uuid` | not null |
+| `code` | `text` | not null |
+| `name` | `text` | not null |
+| `description` | `text` |  |
+| `category_code` | `text` |  |
+| `document_line_id` | `uuid` |  |
+| `contact_id` | `uuid` |  |
+| `product_id` | `uuid` |  |
+| `acquisition_date` | `date` | not null |
+| `in_service_date` | `date` |  |
+| `cost` | `numeric(16,2)` | not null |
+| `residual_value` | `numeric(16,2)` | not null |
+| `method` | `fixed_assets.depreciation_method` | not null |
+| `duration_months` | `integer` | not null |
+| `coefficient` | `numeric(7,3)` | Multiplier of the straight-line rate under a declining balance. France 1,25 / 1,75 / 2,25 by duration; Belgium doubles the rate. Required by a check constraint for that method, because a declining balance with no coefficient is a straight line nobody asked for. |
+| `prorata` | `fixed_assets.prorata_rule` | How much of the first period this asset takes. Null reads the country rule for its method, and an asset in a country whose pack says nothing is refused by name rather than given another country's convention. |
+| `asset_account_id` | `uuid` | not null |
+| `depreciation_account_id` | `uuid` | not null |
+| `expense_account_id` | `uuid` | not null |
+| `state` | `fixed_assets.asset_state` | not null |
+| `notes` | `text` |  |
+| `created_at` | `timestamp with time zone` | not null |
+| `updated_at` | `timestamp with time zone` | not null |
+
+Constraints:
+
+- `CHECK ((cost > (0)::numeric))`
+- `CHECK (((method <> 'declining_balance'::fixed_assets.depreciation_method) OR (coefficient IS NOT NULL)))`
+- `CHECK ((duration_months > 0))`
+- `CHECK (((in_service_date IS NULL) OR (in_service_date >= acquisition_date)))`
+- `CHECK (((residual_value >= (0)::numeric) AND (residual_value < cost)))`
+- `PRIMARY KEY (id)`
+- `UNIQUE (company_id, code)`
+
 ### Functions
 
 | Function | Purpose |
 |---|---|
-| `accounts_in_use(p_company_id uuid)` | The accounts this module points at for one company: what its assets are booked, depreciated and charged on, and what a disposal was settled against. Read by public.accounts_in_use() through the module convention. |
+| `accounts_in_use(p_company_id uuid)` | The accounts this module points at for one company: what its fixed assets are booked, depreciated and charged on, and what a disposal was settled against. Read by public.accounts_in_use() through the module convention. |
+| `archive_former_names()` | The names an archive of version 1 of this module filed its tables under, with the name each has today. Read by `public.archive_under_current_names()` before an import. |
 | `archive_tables()` | What an archive of one company does with each table of this module. Read by `public.company_archive_tables()`. |
-| `can_disable(p_company_id uuid)` | Why this company cannot disable the assets module, or null when it can. The convention disable_module() reads. |
-| `create_asset(p_company_id uuid, p_code text, p_name text, p_acquisition_date date, p_cost numeric, p_asset_account text, p_depreciation_account text, p_expense_account text, p_category_code text, p_duration_months integer, p_method assets.depreciation_method, p_coefficient numeric, p_residual_value numeric, p_in_service_date date, p_document_line_id uuid, p_contact_id uuid, p_description text)` | Creates an asset and its schedule in one call. A category of the country pack fills in the method, the duration and the coefficient; anything the caller passes wins over it. |
+| `can_disable(p_company_id uuid)` | Why this company cannot disable the fixed assets module, or null when it can. The convention disable_module() reads. |
+| `create_fixed_asset(p_company_id uuid, p_code text, p_name text, p_acquisition_date date, p_cost numeric, p_asset_account text, p_depreciation_account text, p_expense_account text, p_category_code text, p_duration_months integer, p_method fixed_assets.depreciation_method, p_coefficient numeric, p_residual_value numeric, p_in_service_date date, p_document_line_id uuid, p_contact_id uuid, p_description text)` | Creates an asset and its schedule in one call. A category of the country pack fills in the method, the duration and the coefficient; anything the caller passes wins over it. |
 | `days360(p_from date, p_to date)` | Days between two dates on a year of 360 days and months of 30, the day capped at the 30th. Half-open: days360(1 January, 1 January of the next year) is 360. |
-| `dispose_asset(p_asset_id uuid, p_date date, p_proceeds numeric, p_counterpart_account text, p_contact_id uuid)` | Takes an asset off the books on a date: clears its cost and its accumulated depreciation, books the proceeds, and presents the result the way the country's pack says — one gain or loss line, or the value and the proceeds in full. |
+| `dispose_fixed_asset(p_asset_id uuid, p_date date, p_proceeds numeric, p_counterpart_account text, p_contact_id uuid)` | Takes an asset off the books on a date: clears its cost and its accumulated depreciation, books the proceeds, and presents the result the way the country's pack says — one gain or loss line, or the value and the proceeds in full. |
 | `generate_schedule(p_asset_id uuid)` | Writes the depreciation schedule of an asset, period by period, rounded at the decimals of the company's currency with the last line taking the remainder. Refuses to rewrite a schedule whose lines are already booked. |
 | `movements(p_company_id uuid, p_from date, p_to date)` | What came in, what was written off and what went out between two dates, per asset — the movement table an annual account asks for beside the register. |
-| `prorata_fraction(p_rule assets.prorata_rule, p_day_count assets.day_count, p_start date, p_period_start date, p_period_end date)` | The share of a period that runs from the day an asset entered service. A prorata in days counts the day of entry into service itself, which is the convention that makes a full year come to exactly one. |
+| `prorata_fraction(p_rule fixed_assets.prorata_rule, p_day_count fixed_assets.day_count, p_start date, p_period_start date, p_period_end date)` | The share of a period that runs from the day an asset entered service. A prorata in days counts the day of entry into service itself, which is the convention that makes a full year come to exactly one. |
 | `register(p_company_id uuid, p_at date)` | The table of fixed assets at a date: what each one cost, what has been written off it, and what is left. Reads what has been booked, so it ties to the ledger. |
 | `rules(p_company_id uuid)` | The depreciation rules of this company's country, or an empty row when its pack says nothing. The callers name what is missing rather than borrowing another country's answer. |
 | `run_depreciation(p_company_id uuid, p_period_end date)` | Books every planned period that ends on or before a date, one entry per period, through post_module_entry(). Idempotent: a period already booked is skipped, and the unique tag on the entry refuses a second one anyway. A closed financial year refuses the posting, because post_entry() asserts the period is open. |

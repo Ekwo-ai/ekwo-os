@@ -226,7 +226,7 @@ izmirenja novčanih obaveza; `documents.legal_payment_days` ostaje `null`.
 - **Paušalna naknada za poljoprivrednike (čl. 45).**
 - **Porez na dobit** i njegov uticaj na Bilans uspjeha.
 - **Rok plaćanja između preduzeća** u odsustvu ugovora.
-- **Osnovna sredstva.** `assets.json` ne postoji; entitetske stope
+- **Osnovna sredstva.** `fixed_assets.json` ne postoji; entitetske stope
   amortizacije su izvan opsega ovog istraživanja.
 - **Bankarski formati.** Nijedan format izvoda bosanskohercegovačkih banaka
   nije potvrđen ovim istraživanjem; odjeljak `bank` u `pack.json` ne postoji.

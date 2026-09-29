@@ -252,7 +252,7 @@ the socle was not changed to fit it.
   duty-free vendor's own documentary evidence requirement, narrower than
   the export and Zanzibar zero rates this pack does carry.
 - **Income tax withholding** other than VAT: out of scope of a VAT pack.
-- **Fixed assets.** No `assets.json`: capital allowances are an income tax
+- **Fixed assets.** No `fixed_assets.json`: capital allowances are an income tax
   table (the Income Tax Act's own schedule), not a useful-life the IFRS for
   SMEs Accounting Standard leaves to the entity.
 - **Bank formats.** Nothing checked says which formats Tanzanian banks send.

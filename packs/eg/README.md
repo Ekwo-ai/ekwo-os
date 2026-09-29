@@ -257,7 +257,7 @@ these fields hold.
   regime this VAT-focused pack's research did not open.
 - **Corporate tax**, named only where the balance sheet needs an account for
   it (`1350`, `2130`, `8000`).
-- **Fixed assets.** No `assets.json`: whether a usual depreciation duration
+- **Fixed assets.** No `fixed_assets.json`: whether a usual depreciation duration
   is prescribed by a text this research pass could open was not
   established.
 - **Bank formats.** Nothing checked here says which formats Egyptian banks

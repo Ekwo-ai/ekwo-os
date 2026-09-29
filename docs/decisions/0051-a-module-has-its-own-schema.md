@@ -71,3 +71,4 @@ of the rules are listed for an accountant in the module's README.
 - [`modules.md`](../modules.md), [`modules/README.md`](../../modules/README.md)
 - `tests/modules.test.ts`
 - [0004 A permission is a capability](0004-a-permission-is-a-capability.md)
+- [0063 A module code outlives its names](0063-a-module-code-outlives-its-names.md)

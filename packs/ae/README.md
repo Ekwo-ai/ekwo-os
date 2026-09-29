@@ -328,7 +328,7 @@ category in its own `legal_reference`, for a renderer to map.
 - **Corporate tax** (Federal Decree-Law No. 47 of 2022), named only where a
   balance sheet needs an account for it, and deliberately outside this
   VAT-focused pack's research — see "Sources".
-- **Fixed assets.** No `assets.json`: whether the UAE's tax rules recognise
+- **Fixed assets.** No `fixed_assets.json`: whether the UAE's tax rules recognise
   a depreciation schedule at all was not established in this research pass,
   since it is a corporate tax question and out of scope here.
 - **Bank formats.** Nothing checked says which formats UAE banks send.

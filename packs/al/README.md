@@ -214,7 +214,7 @@ kërkim; `documents.legal_payment_days` mbetet `null`.
   `golden/` nuk është fermer apo biznes nën pragun e regjistrimit.
 - **Rimbursimi i TVSH-së** (neni 77) si procedurë — vetëm mbartja e tepricës
   (neni 76) është një kuti e formularit.
-- **Aktivet afatgjata.** `assets.json` mungon; normat e amortizimit tatimor
+- **Aktivet afatgjata.** `fixed_assets.json` mungon; normat e amortizimit tatimor
   dhe kontabël janë jashtë këtij kërkimi.
 - **Formatet bankare.** Asnjë format i pasqyrës bankare apo pagesës shqiptare
   nuk është konfirmuar; seksioni `bank` mungon në `pack.json`.

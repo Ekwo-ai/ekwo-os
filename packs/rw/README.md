@@ -185,7 +185,7 @@ already carries in full at line 70, and not a second fact.
   `einvoicing.profile` describes; see `pack.json`'s own `einvoicing.legal_reference`
   and [`docs/international.md`](../../docs/international.md) under "Rwanda".
 - **Income tax withholding** other than VAT: out of scope of a VAT pack.
-- **Fixed assets.** No `assets.json`: Rwanda's capital allowances are an
+- **Fixed assets.** No `fixed_assets.json`: Rwanda's capital allowances are an
   income tax schedule, not a useful life the IFRS for SMEs Accounting
   Standard leaves to the entity.
 - **Bank formats.** Nothing checked says which formats Rwandan banks send.

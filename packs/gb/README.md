@@ -279,7 +279,7 @@ and it is a computation nobody can derive from the ledger. The chart carries
 
 ## Fixed assets
 
-`assets.json` exists and is the part of this pack that is most plainly
+`fixed_assets.json` exists and is the part of this pack that is most plainly
 **practice rather than law**. The United Kingdom has no legal or fiscal table of
 useful lives: FRS 102, Section 17 asks an entity to estimate the life of its own
 asset, and capital allowances are a tax computation that never touches the

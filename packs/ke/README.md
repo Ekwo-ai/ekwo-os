@@ -195,7 +195,7 @@ socle was not changed to fit it.
   and are not pack data for the reason given under "Taxes".
 - **Income tax withholding** other than VAT (s. 35 of the Income Tax Act):
   out of scope of a VAT pack.
-- **Fixed assets.** No `assets.json`: capital allowances are an income tax
+- **Fixed assets.** No `fixed_assets.json`: capital allowances are an income tax
   table (the Second Schedule to the Income Tax Act), not a useful-life the
   IFRS for SMEs Accounting Standard leaves to the entity.
 - **Bank formats.** Nothing checked says which formats Kenyan banks send.

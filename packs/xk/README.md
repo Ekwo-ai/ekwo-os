@@ -232,7 +232,7 @@ zbatojnë IFRS for SMEs sipas nenit 8, mbeten të mbuluara nga skema aktuale.
   publikuar nuk u gjet me zëra pasqyre specifikë.
 - **Pajisja Elektronike Fiskale (PEF)** dhe kuponi fiskal i shitjeve me
   pakicë — shih „Faturimi elektronik” më lart.
-- **Aktive themelore.** `assets.json` nuk ekziston; normat e amortizimit
+- **Aktive themelore.** `fixed_assets.json` nuk ekziston; normat e amortizimit
   për qëllime tatimore dhe kontabël janë jashtë këtij kërkimi.
 - **Formatet bankare.** Asnjë format i deklaratave bankare kosovare nuk
   është verifikuar nga ky kërkim; seksioni `bank` te `pack.json` nuk

@@ -239,7 +239,7 @@ has one line for it either way; the manifest names `2050` twice, as
   pack cannot support.
 - **Form KMD INF equivalent, and any recapitulative statement beyond the
   boxes of VSRALVKV itself.**
-- **The fixed assets module.** There is no `assets.json`: Finnish usual
+- **The fixed assets module.** There is no `fixed_assets.json`: Finnish usual
   depreciation durations by category come from guidance rather than from a
   single citable text, and this pack cites texts.
 - **The XBRL taxonomy of the annual report**, filed to the Finnish Trade

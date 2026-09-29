@@ -194,7 +194,7 @@ Lithuania* in `docs/international.md`.
   pack's author did not find a stable, verifiable per-line taxonomy mapping to
   cite — `xbrl` and `taxonomy` are left null on both statements, on the same
   principle Estonia's pack states: a wrong key is worse than no key.
-- **The fixed assets module.** There is no `assets.json`.
+- **The fixed assets module.** There is no `fixed_assets.json`.
 
 ## Reviewing this pack
 

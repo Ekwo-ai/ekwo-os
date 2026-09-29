@@ -218,7 +218,7 @@ portal.
 - **Sections 78, 78/1, 82/3**, read only through secondary guidance after a
   server error on every direct attempt.
 - **A Thai financial reporting standard's own line items.**
-- **Fixed assets.** No `assets.json`: this session found no capital allowance
+- **Fixed assets.** No `fixed_assets.json`: this session found no capital allowance
   table it could read in the time available.
 - **Bank formats.** Nothing checked says which formats Thai banks send.
 

@@ -119,7 +119,7 @@ OpenAPI description, and row level security decides who sees what.
 - **The French FEC.** Eighteen columns, the arrêté du 29 juillet 2013, with
   the reconciliation letter and the sub-ledger code the format requires.
 - **Modules, one Postgres schema each.** Fixed assets and budgets ship with
-  this release, in `assets` and `budgets`. A module depends on the socle by
+  this release, in `fixed_assets` and `budgets`. A module depends on the socle by
   foreign key, reaches the ledger only through one function, and is enabled per
   company. The socle ignores its modules.
 - **Tested on real Postgres.** The test suite runs the migrations, the seeds,
@@ -131,9 +131,9 @@ OpenAPI description, and row level security decides who sees what.
 The socle is `public`. Beside it, a module is a schema of its own with its own
 migrations, its own row level security and its own tests.
 
-| Module | Schema | What it does |
+| Module code | Schema | What it does |
 |---|---|---|
-| [`assets`](modules/assets/) | `assets` | Fixed assets, their depreciation schedule and their disposal. Durations, declining coefficients and the prorata convention are country pack data. |
+| [`assets`](modules/fixed-assets/) | `fixed_assets` | Fixed assets, their depreciation schedule and their disposal. Durations, declining coefficients and the prorata convention are country pack data. |
 | [`budgets`](modules/budgets/) | `budgets` | A budget per financial year and the variance against what the ledger holds. No country data, and nothing written to the ledger. |
 
 ```sh

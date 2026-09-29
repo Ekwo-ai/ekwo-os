@@ -274,7 +274,7 @@ This gap is named rather than patched — see `docs/international.md` under
   Prohibition Law concern rather than a VAT one, and out of scope here.
 - **Corporate tax** (פקודת מס הכנסה), named only where a balance sheet needs
   an account for it (`8000`).
-- **Fixed assets.** No `assets.json`.
+- **Fixed assets.** No `fixed_assets.json`.
 - **Bank formats.** Nothing checked says which formats Israeli banks send.
 - **Filing.** The return is filed on the Tax Authority's own site; submitting
   it is a credential and a format, not a pack.

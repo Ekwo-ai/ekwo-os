@@ -243,7 +243,7 @@ against the Bureau's own announcements before relying on this pack's silence.
   The chart carries payable accounts for both (`2140`, `2141`) because a
   Philippine company's books hold them, but no tax code posts to them: this
   pack's scope is value-added tax, and these are a different tax entirely.
-- **Fixed assets.** No `assets.json`: this session found no capital
+- **Fixed assets.** No `fixed_assets.json`: this session found no capital
   allowance table it could read in the time available.
 - **Bank formats.** Nothing checked says which formats Philippine banks
   send.

@@ -671,13 +671,14 @@ for a statement. [`docs/import.md`](../../docs/import.md) is the long form.
 
 ## `ekwo module`
 
-A module is a Postgres schema beside the socle — `assets` for fixed assets,
+A module is a Postgres schema beside the socle — `fixed_assets` for fixed assets,
 `budgets` for a plan against the ledger. Its migrations travel with this
 package, and `ekwo migrate` applies them by default.
 
 ```sh
 ekwo module list                          # what this release carries, and what the database holds
 ekwo module migrate [<code>]              # the migrations, and the country seeds they need
+                                          # (the code, `assets`, or the folder, `fixed-assets`)
 ekwo module enable assets --company "…"   # turn it on for one company
 ekwo module disable assets --company "…"  # turn it off; nothing it wrote is deleted
 ```
@@ -692,6 +693,14 @@ schema other than `public` only once the project lists it under its exposed
 schemas. That is a setting of the API, not of the database, so `ekwo module
 enable` prints the line to add — Supabase dashboard → Project Settings → API,
 or `[api] schemas` in `supabase/config.toml`.
+
+**When a release renames a module's schema**, `ekwo migrate` applies the
+rename and says so: the exposed schemas of the project still name the old one,
+and only the operator can change that. The fixed assets module moved from
+`assets` to `fixed_assets` in its version 2.0.0 — replace one with the other in
+Project Settings → API. Its code, `assets`, is what `ekwo module` takes, and
+never changes; [`modules/fixed-assets/README.md`](../../modules/fixed-assets/README.md#upgrading-from-version-1-of-the-module)
+is the whole upgrade.
 
 **Before `supabase db push`**, run `ekwo migrate --no-modules`. The Supabase
 CLI knows the socle's migration files and not a module's, so it would report
@@ -819,7 +828,8 @@ statements, the sentences the country requires on an invoice, the translations,
 and a year of books with the figures it produces. The compiler turns one into
 `supabase/seed/<n>_pack_<cc>.sql`, which is committed — and, where a pack
 carries a section for a module, into
-`supabase/seed/modules/<code>/<n>_pack_<cc>.sql`, applied by the module
+`supabase/seed/modules/<section>/<n>_pack_<cc>.sql` — `fixed_assets` for the
+fixed assets module — applied by the module
 migration runner and by nothing else.
 
 ```sh

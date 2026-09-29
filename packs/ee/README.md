@@ -207,7 +207,7 @@ loss account, so the manifest names `2980` twice.
   form in the pack, and `vat_return()` takes the form in force at the end of
   the period. The historical 20 % and 22 % codes are here for the documents and
   the credit notes, which the current form does have boxes for.
-- **The fixed assets module.** There is no `assets.json`: the usual
+- **The fixed assets module.** There is no `fixed_assets.json`: the usual
   depreciation durations of Estonian practice come from guidance rather than
   from a text, and this pack cites texts.
 - **The XBRL fact keys of the annual report.** See below.

@@ -231,7 +231,7 @@ rest of this pack: there is no VAT identifier for either to carry.
 - **Salaries tax and the Mandatory Provident Fund as a payroll module.** The
   chart carries the accounts a payroll would post to; nothing computes a
   payroll.
-- **`assets.json`.** No fixed-asset depreciation module: this pack could not
+- **`fixed_assets.json`.** No fixed-asset depreciation module: this pack could not
   verify a Hong Kong accounting convention for useful lives distinct from the
   Inland Revenue Department's own depreciation allowances, which are a tax
   computation and not an accounting one, and declined to invent a table.

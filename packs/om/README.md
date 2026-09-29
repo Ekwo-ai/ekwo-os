@@ -248,7 +248,7 @@ Added Tax Identification Number (VATIN)" — named in
   mandatory, OMR 19,250 voluntary — the Chairman's Decision this pack cites
   in `certification.sources`. The core has no registration threshold of its
   own to enforce in any country.
-- **Fixed assets.** No `assets.json`: whether a usual depreciation duration
+- **Fixed assets.** No `fixed_assets.json`: whether a usual depreciation duration
   is prescribed by a text this research pass could open was not
   established.
 - **Bank formats.** Nothing checked here says which formats Omani banks
