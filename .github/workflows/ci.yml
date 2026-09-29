@@ -142,6 +142,12 @@ jobs:
       # Prose is where a conflict is most likely and least visible.
       - name: No conflict marker in a tracked file
         run: node scripts/check-no-conflict-markers.mjs
+      # The core serves every country: the abbreviation of the European Union,
+      # or "intra-community" said bare in a comment or a message, says it was
+      # written for one zone. A normative identifier is allowed, in a list
+      # with its reason.
+      - name: The European Union is named in full, never assumed
+        run: node scripts/check-no-bare-eu.mjs
       # Ekwo is described by what it does and the standards it follows, never
       # against a named product. Published migrations that predate the rule
       # are listed in the script, frozen.

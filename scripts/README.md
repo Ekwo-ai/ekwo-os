@@ -3,6 +3,7 @@
 | Script | Purpose | Runs in CI |
 |---|---|---|
 | `check-no-private-data.mjs` | Refuses the build if any file mentions a term from its deny list (customer and company names of the maintainers' own installations). Keep the list current; extend it before adding a seed or a fixture | yes |
+| `check-no-bare-eu.mjs` | Refuses the build if the core abbreviates the European Union, calls it a bare "Union", or says "intra-community" with no zone named beside it, outside a normative identifier or a file of its explicit allow-list, each entry with its reason. The zone has its own page, `docs/zones/european-union.md` | yes |
 | `check-no-competitor-names.mjs` | Refuses the build if a tracked file names a competing product the project has decided never to name. Published migrations that predate the rule are listed in the script and frozen | yes |
 | `generate-schema-doc.mjs` | Rewrites `docs/schema.md` from `supabase/migrations/`, splicing `docs/schema.intro.md` at the top. Needs Node 22.18+ or 24 (it imports a `.ts` file directly) | no — run it and commit the result |
 | `generate-expected-objects.mjs` | Rewrites `packages/cli/assets/expected-objects.json`: every table, column, view, function, policy, trigger and type this release defines, and under `grants` which of `anon`, `authenticated` and `service_role` may reach each of them. `ekwo doctor` compares a live database against it. Same Node requirement as above | yes — it regenerates and refuses a diff |

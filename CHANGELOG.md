@@ -9,6 +9,40 @@ somewhere has already run it.
 
 ## [Unreleased]
 
+### Added
+
+- **A bank account is not an IBAN, and the European Union is one zone among
+  others** (`20260929141500`). The installer asked every administrator for an
+  IBAN, and a company in the United States, the United Kingdom, Australia,
+  India, Mexico or Japan does not have one. A pack now declares how its banks
+  identify an account — `bank.account_scheme` in `pack.json`, stored in
+  `country_defaults.bank_account_scheme` — and one registry in `@ekwo-ai/core`
+  reads and checks each scheme: `iban`, `aba-routing-account`,
+  `sort-code-account`, `bsb-account`, `ifsc-account`, `clabe`, `zengin` and
+  `transit-institution-account`. A pack that declares none is asked for an
+  account number as the bank wrote it, never for an IBAN. `bank_accounts` gains
+  `account_scheme` and `account_identifier`; `iban` stays, is filled for the
+  `iban` scheme and stays empty for every other, and every existing account is
+  backfilled as the IBAN it was. `ekwo init --bank-identifier` and the
+  `account_identifier` argument of `create_bank_account` take the value (`--iban`
+  and `iban` remain, for IBAN countries only). Every pack that names a scheme
+  bumped a minor version and its `schema_min`.
+
+  Packs also declare `zones` (`european-union` for the twenty-seven Member
+  States), and `ekwo pack check` refuses a zone that has no page under
+  [`docs/zones/`](docs/zones/). The rules that exist only inside the European
+  Union — intra-community VAT, the recapitulative statement, VIES, the
+  One-Stop Shop, EN 16931 — are on [that page](docs/zones/european-union.md),
+  beside what the [United Kingdom](docs/zones/united-kingdom.md) and the
+  [United States](docs/zones/united-states.md) packs actually do. Every prose
+  mention of the Union in the core now says "European Union", and
+  `npm run check:no-bare-eu` keeps it so.
+
+  **Upgrading an installation:** `ekwo migrate` applies the migration and
+  re-applies the seeds, which is what writes each country's scheme into
+  `country_defaults`. Nothing has to be re-entered, and no company has to be
+  upgraded: the scheme is read from the country, not copied into the company.
+
 ### Changed
 
 - **The `ee/` directory is gone, and the paid line is described as what it is:
