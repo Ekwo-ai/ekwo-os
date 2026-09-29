@@ -60,7 +60,7 @@ async function guard(run: () => Promise<unknown>): Promise<CallToolResult> {
 export interface ServerOptions {
   /**
    * The modules this installation carries, from `public.modules`. Their tools
-   * are registered under the module's own prefix — `assets_list`,
+   * are registered under the module's own prefix — `fixed_assets_list`,
    * `budgets_variance` — and a module that is not installed is not offered,
    * because a tool a model cannot use is worse than a tool it cannot see.
    * `bin.ts` asks the database; a test passes the list it wants.
@@ -933,16 +933,33 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
 
   for (const toolset of toolsetsFor(options.modules ?? [])) {
     for (const tool of toolset.tools) {
+      const name = `${toolset.prefix}_${tool.verb}`;
+      const run = async (args: unknown) => guard(() => tool.run(backend, args as Record<string, never>));
       server.registerTool(
-        `${toolset.prefix}_${tool.verb}`,
+        name,
         {
           title: tool.title,
           description: tool.description,
           inputSchema: tool.input.shape,
           annotations: { readOnlyHint: tool.readOnly, openWorldHint: false },
         },
-        async (args) => guard(() => tool.run(backend, args as Record<string, never>)),
+        run,
       );
+      // The former name of the same tool, for a client that was configured
+      // against it, until the release that retires it.
+      const former = toolset.deprecatedPrefix;
+      if (former !== undefined) {
+        server.registerTool(
+          `${former.prefix}_${tool.verb}`,
+          {
+            title: `${tool.title} (deprecated name)`,
+            description: `Deprecated: the former name of ${name}, which does the same and should be called instead. This name is removed in ${former.until}. ${tool.description}`,
+            inputSchema: tool.input.shape,
+            annotations: { readOnlyHint: tool.readOnly, openWorldHint: false },
+          },
+          run,
+        );
+      }
     }
   }
 
