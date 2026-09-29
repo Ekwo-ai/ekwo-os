@@ -396,7 +396,7 @@ async function checkOrphanAdmins(db: SqlClient): Promise<Check> {
  * from the default account of its journal — and the country template wires
  * that second one, so this is never an error. It is the configuration an
  * operator meant to finish and did not: without a bank account there is no
- * IBAN on an invoice, no statement to import and nothing to reconcile
+ * account on an invoice for a customer to pay into, no statement to import and nothing to reconcile
  * against. So: a warning, naming the companies and the command that fixes it.
  */
 async function checkBankAccounts(db: SqlClient): Promise<Check> {
@@ -425,9 +425,9 @@ async function checkBankAccounts(db: SqlClient): Promise<Check> {
     summary: `${rows.length} company/companies with no bank account`,
     details: [
       ...rows.map((r) => r.name),
-      'Payments still book — the bank journal carries a default account — but there is no IBAN to',
+      'Payments still book — the bank journal carries a default account — but there is no account to',
       'put on an invoice and no statement to reconcile against.',
-      'Add one with `ekwo init --iban …` on the same project, or the create_bank_account tool of the MCP server.',
+      'Add one with `ekwo init --bank-identifier …` on the same project, or the create_bank_account tool of the MCP server.',
     ],
   };
 }

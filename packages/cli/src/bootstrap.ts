@@ -13,6 +13,7 @@
  * one reports whether it did the work or found it already done.
  */
 
+import { FALLBACK_BANK_ACCOUNT_SCHEME, readBankAccountIdentifier } from '@ekwo-ai/core';
 import type { SqlClient } from './sql.js';
 import { first, scalar } from './sql.js';
 
@@ -25,11 +26,20 @@ export interface Step {
 }
 
 export interface BankAccountOptions {
-  /** The only field that is required to create one; without it, none is. */
-  iban: string;
+  /**
+   * The only field that is required to create one; without it, none is. What
+   * identifies the account at its bank, as a person typed it: it is read
+   * against `scheme` and stored in that scheme's canonical form.
+   */
+  identifier: string;
+  /**
+   * The scheme the country's pack declares (`country_defaults.bank_account_scheme`).
+   * Null or left out is a free-text account number — never an IBAN.
+   */
+  scheme?: string | null | undefined;
   bic?: string | undefined;
   bankName?: string | undefined;
-  /** What it is called in the books. Defaults to the bank name, then to `Compte courant`. */
+  /** What it is called in the books. Defaults to the bank name, then to `Bank account`. */
   label?: string | undefined;
 }
 
@@ -192,7 +202,7 @@ export interface FilingForm {
  *
  * `ekwo init` asks once per form, because a company is subject to several
  * declarations and each has a cadence of its own: the recapitulative statement
- * of intra-Community supplies is not filed on the cadence of the return in any
+ * of supplies between Member States of the European Union is not filed on the cadence of the return in any
  * country read so far. An empty list means the installation carries no form for
  * that country, and then there is nothing to ask.
  */
@@ -304,6 +314,20 @@ export async function countryCharts(db: SqlClient, country: string): Promise<Cha
     certificationStatus: r.certification_status,
     accounts: Number(r.accounts),
   }));
+}
+
+/**
+ * How a bank of this country identifies an account, as its pack declares it.
+ * Null where the pack declares none — which the caller reads as a free-text
+ * account number, and never as an IBAN.
+ */
+export async function bankAccountSchemeOf(db: SqlClient, country: string): Promise<string | null> {
+  const row = await first<{ bank_account_scheme: string | null }>(
+    db,
+    'select bank_account_scheme from country_defaults where country = $1',
+    [country.toUpperCase()],
+  );
+  return row?.bank_account_scheme ?? null;
 }
 
 /** What a pack says about itself: version and how much anyone has read it. */
@@ -658,8 +682,8 @@ export async function bootstrap(
     steps.push({ name: 'financial year', outcome: 'already', detail: existingYear.name });
   }
 
-  // 7. The main bank account, when an IBAN was given. Without one there is
-  //    nothing to create: a bank account with no IBAN identifies nothing, and
+  // 7. The main bank account, when an identifier was given. Without one there
+  //    is nothing to create: a bank account with no identifier names nothing, and
   //    `ekwo doctor` says so rather than this step inventing a placeholder.
   let bankAccountId: string | undefined;
   if (options.bankAccount !== undefined) {
@@ -668,7 +692,7 @@ export async function bootstrap(
     steps.push({
       name: 'bank account',
       outcome: outcome.outcome,
-      detail: `${outcome.label} — ${options.bankAccount.iban}${outcome.accountCode === undefined ? '' : ` on ${outcome.accountCode}`}`,
+      detail: `${outcome.label} — ${outcome.identifier}${outcome.accountCode === undefined ? '' : ` on ${outcome.accountCode}`}`,
     });
   }
 
@@ -693,6 +717,8 @@ interface BankAccountOutcome {
   id: string;
   outcome: StepOutcome;
   label: string;
+  /** The identifier in the canonical form of its scheme, as it was stored. */
+  identifier: string;
   accountCode?: string | undefined;
 }
 
@@ -702,8 +728,11 @@ interface BankAccountOutcome {
  *
  * `install_country_template` already points the bank journal at 550000 or
  * 512000, so the ledger side is known and this step does not ask for it. The
- * IBAN is the natural key — `bank_accounts_company_iban_idx` — so running
- * `init` again with the same one finds it rather than creating a second.
+ * The identifier is the natural key — `bank_accounts_company_identifier_idx` —
+ * so running `init` again with the same one finds it rather than creating a
+ * second. Its scheme is the country's: an IBAN, a routing number and an
+ * account number, a sort code and an account number — see `bankAccountScheme`
+ * of the core, which reads and checks each one.
  */
 export async function ensureBankAccount(
   db: SqlClient,
@@ -711,8 +740,9 @@ export async function ensureBankAccount(
   currencyCode: string,
   options: BankAccountOptions,
 ): Promise<BankAccountOutcome> {
-  const iban = options.iban.replace(/\s+/g, '').toUpperCase();
-  const label = options.label ?? options.bankName ?? 'Compte courant';
+  const read = readBankAccountIdentifier(options.scheme, options.identifier);
+  if (!read.ok) throw new Error(read.error);
+  const label = options.label ?? options.bankName ?? 'Bank account';
 
   const journal = await first<{ id: string; default_account_id: string | null; code: string }>(
     db,
@@ -736,8 +766,8 @@ export async function ensureBankAccount(
 
   const existing = await first<{ id: string; name: string }>(
     db,
-    'select id, name from bank_accounts where company_id = $1 and iban = $2',
-    [companyId, iban],
+    'select id, name from bank_accounts where company_id = $1 and account_identifier = $2',
+    [companyId, read.identifier],
   );
 
   let id: string;
@@ -745,14 +775,17 @@ export async function ensureBankAccount(
   if (existing === undefined) {
     const created = await first<{ id: string }>(
       db,
-      `insert into bank_accounts (company_id, name, iban, bic, bank_name, currency_code,
-                                  account_id, journal_id)
-       values ($1, $2, $3, $4, $5, $6, $7, $8)
+      // `iban` is not written here: the table fills it when the scheme is
+      // `iban` and leaves it empty for every other scheme.
+      `insert into bank_accounts (company_id, name, account_scheme, account_identifier, bic,
+                                  bank_name, currency_code, account_id, journal_id)
+       values ($1, $2, $3, $4, $5, $6, $7, $8, $9)
        returning id`,
       [
         companyId,
         label,
-        iban,
+        read.scheme === FALLBACK_BANK_ACCOUNT_SCHEME ? null : read.scheme,
+        read.identifier,
         options.bic ?? null,
         options.bankName ?? null,
         currencyCode,
@@ -775,7 +808,7 @@ export async function ensureBankAccount(
     [id, journal.id],
   );
 
-  // And the company points at it, so the first invoice carries an IBAN a
+  // And the company points at it, so the first invoice carries an account a
   // customer can pay into. Only when nothing was chosen: the operator picking
   // a different account later is a choice this step must not take back.
   await db.query(
@@ -783,5 +816,5 @@ export async function ensureBankAccount(
     [id, companyId],
   );
 
-  return { id, outcome, label, accountCode };
+  return { id, outcome, label, identifier: read.identifier, accountCode };
 }

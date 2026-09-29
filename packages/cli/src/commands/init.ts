@@ -28,7 +28,15 @@ import {
   type ParsedArgs,
 } from '../args.js';
 import { createAuthUser, type CreateAuthUser } from '../auth.js';
-import { bootstrap, claimInstance, countryFilingForms, countryPack, installedPacks } from '../bootstrap.js';
+import { bankAccountScheme, readBankAccountIdentifier } from '@ekwo-ai/core';
+import {
+  bankAccountSchemeOf,
+  bootstrap,
+  claimInstance,
+  countryFilingForms,
+  countryPack,
+  installedPacks,
+} from '../bootstrap.js';
 import { printOperatorChecklist } from '../checklist.js';
 import {
   chooseChart,
@@ -70,6 +78,7 @@ export const INIT_FLAGS = [
   'vat-period',
   'filing-period',
   'iban',
+  'bank-identifier',
   'bic',
   'bank-name',
   'demo',
@@ -98,6 +107,7 @@ const COMPANY_ONLY_FLAGS = [
   'vat-period',
   'filing-period',
   'iban',
+  'bank-identifier',
   'bic',
   'bank-name',
 ] as const;
@@ -274,19 +284,50 @@ export async function initCommand(args: ParsedArgs, deps: InitDeps = {}): Promis
 
     // The main bank account. Optional everywhere: a company can be installed
     // and book sales without one, and `ekwo doctor` is what notices later.
-    const iban =
-      stringFlag(args, 'iban') ??
-      (interactive
-        ? emptyToUndefined(await askText('IBAN of the main bank account? (optional, Enter to skip)'))
-        : undefined);
+    // What it is asked for is the country's to say: an IBAN in one, a routing
+    // number and an account number in another, a sort code and an account
+    // number in a third. A pack that declares nothing is asked for an account
+    // number as the bank wrote it, and never for an IBAN.
+    const schemeKey = await bankAccountSchemeOf(db, country);
+    const scheme = bankAccountScheme(schemeKey);
+    if (scheme === undefined) {
+      throw new UsageError(
+        `unknown_bank_account_scheme: the ${country} pack declares ${schemeKey ?? 'none'}, which this release does not read.`,
+      );
+    }
+    const legacyIban = stringFlag(args, 'iban');
+    if (legacyIban !== undefined && scheme.key !== 'iban') {
+      throw new UsageError(
+        `not_an_iban_country: banks in ${country} identify an account by its ${scheme.label}, not by an IBAN. ` +
+          `Pass --bank-identifier "<${scheme.example}>" instead.`,
+      );
+    }
+    let identifier = stringFlag(args, 'bank-identifier') ?? legacyIban;
+    if (identifier === undefined && interactive) {
+      for (;;) {
+        identifier = emptyToUndefined(
+          await askText(`${scheme.prompt} of the main bank account? (${scheme.example}; optional, Enter to skip)`),
+        );
+        if (identifier === undefined || readBankAccountIdentifier(scheme.key, identifier).ok) break;
+        const refused = readBankAccountIdentifier(scheme.key, identifier);
+        warn(refused.ok ? '' : refused.error);
+      }
+    }
+    if (identifier !== undefined && identifier.length > 0) {
+      const read = readBankAccountIdentifier(scheme.key, identifier);
+      if (!read.ok) throw new UsageError(read.error);
+    }
     const bankAccount =
-      iban === undefined || iban.length === 0
+      identifier === undefined || identifier.length === 0
         ? undefined
         : {
-            iban,
+            identifier,
+            scheme: scheme.key,
             bic:
               stringFlag(args, 'bic') ??
-              (interactive ? emptyToUndefined(await askText('BIC? (optional)')) : undefined),
+              (interactive && scheme.key === 'iban'
+                ? emptyToUndefined(await askText('BIC? (optional)'))
+                : undefined),
             bankName:
               stringFlag(args, 'bank-name') ??
               (interactive ? emptyToUndefined(await askText('Name of the bank? (optional)')) : undefined),
@@ -389,7 +430,7 @@ export async function initCommand(args: ParsedArgs, deps: InitDeps = {}): Promis
           : `${pack.version} — ${describeCertification({ status: pack.certificationStatus, by: pack.certifiedBy, on: pack.certifiedAt })}`,
       ],
       ['financial year', `${outcome.fiscalYearName} — ${outcome.fiscalYearStart} to ${outcome.fiscalYearEnd}`],
-      ['bank account', bankAccount === undefined ? 'none — ekwo doctor will say so' : bankAccount.iban],
+      ['bank account', bankAccount === undefined ? 'none — ekwo doctor will say so' : bankAccount.identifier],
       ['schema version', schemaVersion ?? 'unknown'],
       ['config', configFile],
     ]);

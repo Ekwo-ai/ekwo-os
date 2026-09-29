@@ -60,7 +60,7 @@ either.
    It asks for the connection string, the country, the chart of accounts and
    the language where the pack offers a choice, your organisation, the
    currency, the first company, the address of the first administrator and —
-   optionally — the IBAN of your main bank account, then does the rest. Five
+   optionally — the identifier of your main bank account (an IBAN, a routing number and an account number, a sort code… whatever your country's banks use), then does the rest. Five
    to ten seconds on a free project. Nothing is preselected for you on the
    three questions whose wrong answer is expensive: the country, the chart and
    the language.
@@ -90,7 +90,7 @@ npx -y ekwo-os@latest init \
   --admin-email "you@example.com" \
   --admin-password "a-long-password" \
   --fiscal-year 2026 \
-  --iban "BE71096123456769" \
+  --bank-identifier "BE71096123456769" \
   --yes
 ```
 
@@ -151,7 +151,7 @@ first administrator, `init_instance()` and `claim_instance_admin()`, and
 nothing else. The instance row records no country. A flag that only describes
 a company — `--country`, `--company`, `--chart`, `--language`, `--currency`,
 `--fiscal-year`, `--fiscal-year-start`, `--vat-period`, `--filing-period`,
-`--iban`, `--bic`, `--bank-name` — is refused with it, exit code 2, before the
+`--bank-identifier` (and its old spelling `--iban`), `--bic`, `--bank-name` — is refused with it, exit code 2, before the
 database is touched: it would describe nothing.
 
 **`ekwo company new` is `create_company()`**, the function the `create_company`
@@ -274,7 +274,7 @@ and read by a person.
 | 1 | Applies `supabase/migrations/*.sql` in order | Recorded in `supabase_migrations.schema_migrations`, the Supabase CLI's own history table, so `supabase db push` and `ekwo migrate` stay interchangeable |
 | 2 | Applies every reference seed of `supabase/seed/`, in file-name order: `00_currencies.sql`, `00_territories.sql`, `05_framework_generic.sql`, then one `<n>_pack_<cc>.sql` per country pack, in the order of the number each pack declares | The currencies, the territories the tax rules name, the country-less financial statements every chart falls back on, and every country pack of the release — so a company in any of them can be created later without installing anything. They are exactly the seeds `supabase/config.toml` lists (a list `ekwo pack build` writes from `packs/`), so `supabase db push` installs the same set; a test compares both paths row by row. `90_demo_company.sql` is sample data and is never applied here |
 | 3 | Creates the first administrator through the Supabase Auth admin API | See below: a database connection cannot be a signed-in user |
-| 4 | `init_instance()`, `claim_instance_admin()`, the company, `company_members` as owner, `install_country_template()`, the first financial year, and the bank account when an IBAN was given | The six steps of the root README, in the same order, plus the one thing nobody can derive |
+| 4 | `init_instance()`, `claim_instance_admin()`, the company, `company_members` as owner, `install_country_template()`, the first financial year, and the bank account when an identifier was given | The six steps of the root README, in the same order, plus the one thing nobody can derive |
 | 5 | Writes `ekwo.json` | The installation: project URL and schema version. Nothing else, ever — no country, since each company carries its own. A file written by 0.6 or earlier also names a country; it is still read, and the key is taken for nothing |
 | 6 | Asks whether to register with Ekwo | The default answer is no, and no is a supported answer forever |
 
@@ -920,8 +920,8 @@ dashboard under Connect → Session pooler, is the form that is never derived.
 | `--fiscal-year-start <date>` | The day that year opens, as `YYYY-MM-DD`. Needed only where the pack names no usual opening month (`defaults.fiscal_year_default`). |
 | `--currency <code>` | Currency of the company. Defaults to the pack's `defaults.currency`. |
 | `--language <xx>` | Language of the books, two letters. Defaults to `country_defaults.language_default`, which the pack fills. It decides which label of the pack lands on each account; the others are kept in `name_i18n`. |
-| `--iban <iban>` | Creates the main bank account, wired to the bank journal and its ledger account. Omitted, no bank account is created and `ekwo doctor` says so. |
-| `--bic <bic>` | Optional, on that account. |
+| `--bank-identifier <value>` | Creates the main bank account, wired to the bank journal and its ledger account. What it is written in is the country's: an IBAN, an ABA routing number and an account number (`"021000021 123456789"`), a sort code and an account number, a BSB, an IFSC, a CLABE… `ekwo pack describe <cc>` names it, and it is checked. A country whose pack declares none is asked for an account number as the bank wrote it. `--iban` is the old spelling and is refused where the banks do not use IBANs. Omitted, no bank account is created and `ekwo doctor` says so. |
+| `--bic <bic>` | Optional, on that account, for a bank that has one. |
 | `--bank-name <name>` | Optional. It also names the account in the books. |
 | `--demo` | Also load the sample company. |
 | `--register` | Register without being asked. `--register-email` sets the address. |
@@ -1065,7 +1065,7 @@ node packages/cli/dist/bin.js init \
   --country BE --chart default --language fr \
   --org "Scratch" --company "Scratch BV" \
   --admin-email "you@example.com" --admin-password "a-long-password" \
-  --fiscal-year 2026 --iban "BE71096123456769" --yes
+  --fiscal-year 2026 --bank-identifier "BE71096123456769" --yes
 
 # 2. Everything should be green, and nothing pending.
 node packages/cli/dist/bin.js status --db-url "$URL"

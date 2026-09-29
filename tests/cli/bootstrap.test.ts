@@ -236,7 +236,7 @@ describe('bootstrap', () => {
     );
   });
 
-  it('creates no bank account when no IBAN is given', async () => {
+  it('creates no bank account when no account identifier is given', async () => {
     const userId = await makeAuthUser(db);
     const result = await bootstrap(db, {
       organization: 'Example Group',
@@ -263,7 +263,7 @@ describe('bootstrap', () => {
       company: 'Example One',
       fiscalYear: 2026,
       adminUserId: userId,
-      bankAccount: { iban: 'BE71 0961 2345 6769', bic: 'GKCCBEBB', bankName: 'Banque Exemple' },
+      bankAccount: { identifier: 'BE71 0961 2345 6769', scheme: 'iban', bic: 'GKCCBEBB', bankName: 'Banque Exemple' },
     });
 
     const bank = await db.query<{
@@ -309,7 +309,7 @@ describe('bootstrap', () => {
       company: 'Example One',
       fiscalYear: 2026,
       adminUserId: userId,
-      bankAccount: { iban: 'BE71096123456769' },
+      bankAccount: { identifier: 'BE71096123456769', scheme: 'iban' },
     };
 
     const first = await bootstrap(db, options);

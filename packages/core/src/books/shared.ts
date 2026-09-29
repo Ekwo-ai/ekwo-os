@@ -98,6 +98,31 @@ export async function companyCurrency(backend: Backend, company: string): Promis
   return currency;
 }
 
+/**
+ * How a bank of the company's country identifies an account, as its pack
+ * declares it. Null where the pack declares none, which readers take as a
+ * free-text account number and never as an IBAN.
+ */
+export async function companyBankAccountScheme(backend: Backend, company: string): Promise<string | null> {
+  const companies = await backend.select<{ country: string }>({
+    table: 'companies',
+    columns: ['country'],
+    where: [{ column: 'id', op: 'eq', value: company }],
+  });
+  const country = companies[0]?.country;
+  if (country === undefined) {
+    throw new BooksError(
+      `not_found: company ${company}. Either it does not exist or you are not a member of it.`,
+    );
+  }
+  const rows = await backend.select<{ bank_account_scheme: string | null }>({
+    table: 'country_defaults',
+    columns: ['bank_account_scheme'],
+    where: [{ column: 'country', op: 'eq', value: country }],
+  });
+  return rows[0]?.bank_account_scheme ?? null;
+}
+
 export async function idsByCode(
   backend: Backend,
   table: 'accounts' | 'taxes' | 'journals',

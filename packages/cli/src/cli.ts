@@ -195,6 +195,11 @@ ${bold('ekwo init')}
                             month the country pack opens a year on; required
                             when the pack names none.
   --language <xx>           Language of the books. Defaults to the country pack's.
+  --bank-identifier <v>     The main bank account, in the scheme of the country: an IBAN,
+                            a routing number and an account number, a sort code and
+                            an account number… ekwo pack describe <cc> names it.
+                            Optional. --iban is the old spelling, for IBAN countries.
+  --bic <bic>, --bank-name <name>   On that account. Optional.
   --vat-period <cadence>    How often the company files its VAT return: month,
                             bimonth, quarter, four_month, half_year or year.
                             Asked when the country's form offers several and

@@ -18,14 +18,18 @@ import { z } from 'zod';
 import { EkwoMcpError, type Backend, type Filter, type Row } from '../backend.js';
 import {
   DOC_TYPES,
+  FALLBACK_BANK_ACCOUNT_SCHEME,
   STATEMENT_FORMATS,
   amountIn,
+  bankAccountScheme,
   columns,
+  companyBankAccountScheme,
   companyCurrency,
   idsByCode,
   importStatementFile,
   moneyFields,
   only,
+  readBankAccountIdentifier,
 } from '@ekwo-ai/core';
 import { companyId, isoDate, uuid } from './read.js';
 
@@ -402,15 +406,20 @@ export const UnreconcileInput = z.object({
 
 export const CreateBankAccountInput = z.object({
   company_id: companyId,
-  iban: z.string().min(5).describe('The IBAN. Spaces are removed and the value is upper-cased; it is the natural key of a bank account in a company.'),
-  label: z.string().min(1).optional().describe('What it is called in the books. Defaults to the bank name, then to the IBAN.'),
-  bic: z.string().min(1).optional(),
+  account_identifier: z
+    .string()
+    .min(1)
+    .optional()
+    .describe("What identifies the account at its bank, in the scheme of the company's country: an IBAN, an ABA routing number and an account number, a sort code and an account number, a BSB and an account number, an IFSC and an account number, a CLABE… `list_bank_accounts` and `describe_pack` say which. Separators are ignored and the value is stored in the canonical form of its scheme; it is the natural key of a bank account in a company. Where the country's pack declares no scheme, any account number as the bank wrote it."),
+  iban: z.string().min(5).optional().describe('Deprecated: an alias of account_identifier, accepted only where the country identifies accounts by IBAN.'),
+  label: z.string().min(1).optional().describe('What it is called in the books. Defaults to the bank name, then to the identifier.'),
+  bic: z.string().min(1).optional().describe('The bank identifier code, where the bank has one.'),
   bank_name: z.string().min(1).optional(),
   currency_code: z.string().length(3).optional().describe("Defaults to the company's own currency."),
   journal_id: uuid.optional(),
   journal_code: z.string().min(1).optional().describe('The financial journal it books through. Left out, the bank journal of the company.'),
   account_id: uuid.optional(),
-  account_code: z.string().min(1).optional().describe("The ledger account behind it. Left out, the journal's default account — 550000 in Belgium, 512000 in France."),
+  account_code: z.string().min(1).optional().describe("The ledger account behind it. Left out, the journal's default account, which the country template chose."),
 });
 
 /**
@@ -418,15 +427,36 @@ export const CreateBankAccountInput = z.object({
  *
  * Both of those have an answer already: `install_country_template` points the
  * bank journal at the country's bank account, so neither has to be asked for.
- * What nobody can derive is the IBAN, which is why this tool exists at all —
- * an installation with no bank account has no IBAN to put on an invoice and
- * nothing to reconcile a statement against.
+ * What nobody can derive is the identifier, which is why this tool exists at
+ * all — an installation with no bank account has nothing to put on an invoice
+ * for a customer to pay into and nothing to reconcile a statement against. Its
+ * scheme is the country's, read from its pack and checked by the core.
  */
 export async function createBankAccount(
   backend: Backend,
   args: z.infer<typeof CreateBankAccountInput>,
 ): Promise<unknown> {
-  const iban = args.iban.replace(/\s+/g, '').toUpperCase();
+  const schemeKey = await companyBankAccountScheme(backend, args.company_id);
+  const scheme = bankAccountScheme(schemeKey);
+  if (scheme === undefined) {
+    throw new EkwoMcpError(
+      `unknown_bank_account_scheme: the pack of this company's country declares ${schemeKey ?? 'none'}, which this server does not read.`,
+    );
+  }
+  const given = args.account_identifier ?? args.iban;
+  if (given === undefined) {
+    throw new EkwoMcpError(
+      `missing_account_identifier: give account_identifier — for this company's country, its ${scheme.label} (${scheme.example}).`,
+    );
+  }
+  if (args.iban !== undefined && scheme.key !== 'iban') {
+    throw new EkwoMcpError(
+      `not_an_iban_country: banks in this company's country identify an account by its ${scheme.label}, not by an IBAN. Give account_identifier.`,
+    );
+  }
+  const read = readBankAccountIdentifier(scheme.key, given);
+  if (!read.ok) throw new EkwoMcpError(read.error);
+  const identifier = read.identifier;
 
   let journalId = args.journal_id;
   if (journalId === undefined && args.journal_code !== undefined) {
@@ -473,14 +503,14 @@ export async function createBankAccount(
     columns: columns.BANK_ACCOUNT,
     where: [
       { column: 'company_id', op: 'eq', value: args.company_id },
-      { column: 'iban', op: 'eq', value: iban },
+      { column: 'account_identifier', op: 'eq', value: identifier },
     ],
   });
   if (existing[0] !== undefined) {
     return {
       bank_account: existing[0],
       created: false,
-      note: 'A bank account with this IBAN was already there; nothing was created.',
+      note: 'A bank account with this identifier was already there; nothing was created.',
     };
   }
 
@@ -492,8 +522,9 @@ export async function createBankAccount(
       [
         {
           company_id: args.company_id,
-          name: args.label ?? args.bank_name ?? iban,
-          iban,
+          name: args.label ?? args.bank_name ?? identifier,
+          account_scheme: read.scheme === FALLBACK_BANK_ACCOUNT_SCHEME ? null : read.scheme,
+          account_identifier: identifier,
           bic: args.bic ?? null,
           bank_name: args.bank_name ?? null,
           currency_code: currency,

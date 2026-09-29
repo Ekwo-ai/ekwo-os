@@ -240,7 +240,7 @@ Every write names its company explicitly.
 | `general_ledger` | Every posted line of an account, with a running balance |
 | `aged_balance` | What is still owed, bucketed by age, read from the ledger |
 | `vat_return` | The boxes for a period, summed from the ledger |
-| `ec_sales_list` | The recapitulative statement of intra-Community supplies: one line per customer VAT number and per nature |
+| `ec_sales_list` | The recapitulative statement of European Union supplies: one line per customer VAT number and per nature |
 | `portfolio_upcoming_filings` | *Portfolio* = the companies you may read: for an accounting firm, its clients ([`docs/firms.md`](../../docs/firms.md)). What falls due between two dates in every company you hold `filings.read` on. One row per company at least: a pack that names no deadline is listed without a date, and says so |
 | `portfolio_filings_touched_since` | Declarations that have gone and whose period received entries afterwards, across the same companies, with the company named |
 | `list_statements` / `financial_statement` | The schemes a company can be presented on, and one statement |
@@ -262,7 +262,7 @@ Every write names its company explicitly.
 | `reverse_entry` | Undoes a posted entry keyed by hand: its mirror, posted under the next number and matched against it. Same rule for the date |
 | `record_payment` | Books money in or out and matches it against open invoices — or, with `document_id`, against that document alone, which then names the contact and the direction. With `client_ref`, recording twice records once |
 | `reconcile` / `unreconcile` | Matches two ledger lines, or undoes one matching |
-| `create_bank_account` | Registers an account from its IBAN and wires it to the bank journal. Running it twice with the same IBAN creates nothing |
+| `create_bank_account` | Registers an account from its identifier, in the scheme the company's country uses (an IBAN, a routing number and an account number, a sort code and an account number…), and wires it to the bank journal. Running it twice with the same identifier creates nothing |
 | `create_bank_transaction` | One statement line by hand, for an installation with no feed |
 | `import_bank_statement` | A statement file (`camt.053`, `coda`, `cfonb120`) into statements and pending lines. Books nothing; the same file twice creates nothing; an unknown account or a statement that does not add up is refused by name, a missing statement is signalled |
 | `lock_period` | Moves the accounting and VAT lock dates. Needs `company.write`. |
@@ -374,7 +374,7 @@ A payment needs somewhere to book the bank side. On a company installed from a
 country model the bank and cash journals already point at their account
 (`550000` and `570000` in Belgium, `512000` and `530000` in France), so
 `record_payment` works with nothing else set up. `create_bank_account` names
-the real account — the IBAN is the one thing nobody can derive — and wires it
+the real account — its identifier is the one thing nobody can derive — and wires it
 to the journal; `bank_account_id` on the payment then says which one the money
 moved on, which is what you need with several accounts in one journal. Until a
 company has one, `ekwo doctor` says so.
