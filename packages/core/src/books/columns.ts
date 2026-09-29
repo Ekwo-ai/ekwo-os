@@ -329,6 +329,8 @@ export const BANK_ACCOUNT = [
   'id',
   'name',
   'iban',
+  'account_scheme',
+  'account_identifier',
   'bic',
   'bank_name',
   'currency_code',

@@ -17,6 +17,7 @@
  * the opposite — they need a connection and know nothing about `packs/`.
  */
 
+import { bankAccountScheme } from '@ekwo-ai/core';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { rejectUnknownFlags, boolFlag, stringFlag, UsageError, type ParsedArgs } from '../args.js';
@@ -491,6 +492,7 @@ function describeToTerminal(description: PackDescription): void {
     ]);
   }
   if (description.declarations.length === 0) rows.push(['declaration', 'none declared']);
+  if (description.zones.length > 0) rows.splice(1, 0, ['zones', description.zones.join(', ')]);
   rows.push([
     'e-invoicing',
     description.einvoicing === null
@@ -508,6 +510,12 @@ function describeToTerminal(description: PackDescription): void {
     'tax balance',
     `payable ${description.vatBalance.payable ?? 'no account named'} · ` +
       `receivable ${description.vatBalance.receivable ?? 'no account named'}`,
+  ]);
+  rows.push([
+    'bank account',
+    description.bankAccountScheme === null
+      ? 'a free-text account number — the pack declares no scheme'
+      : (bankAccountScheme(description.bankAccountScheme)?.label ?? description.bankAccountScheme),
   ]);
   rows.push([
     'bank statements',

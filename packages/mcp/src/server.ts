@@ -262,9 +262,9 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
   server.registerTool(
     'ec_sales_list',
     {
-      title: 'Recapitulative statement of intra-Community supplies',
+      title: 'Recapitulative statement of European Union supplies',
       description:
-        'Who, in another Member State, was supplied without VAT over a period, and for how much: one line per customer VAT number and per nature — goods, services — read from the treatment of the tax on each sale line, with credit notes deducted. The totals tie back to the intra-Community boxes of vat_return for the same period. A line that carries an issue cannot be filed as it stands, most often because the customer has no VAT number recorded: say so rather than leaving it out of the answer. Name a report_code to have the period checked against the cadence this company files that statement on — it has one of its own, and it is rarely the cadence of the return. No country rule lives in this tool. It prepares a statement; it files nothing.',
+        'Who, in another Member State, was supplied without VAT over a period, and for how much: one line per customer VAT number and per nature — goods, services — read from the treatment of the tax on each sale line, with credit notes deducted. The totals tie back to the European Union boxes of vat_return for the same period. A line that carries an issue cannot be filed as it stands, most often because the customer has no VAT number recorded: say so rather than leaving it out of the answer. Name a report_code to have the period checked against the cadence this company files that statement on — it has one of its own, and it is rarely the cadence of the return. No country rule lives in this tool. It prepares a statement; it files nothing.',
       inputSchema: read.EcSalesListInput.shape,
       annotations: { readOnlyHint: true, openWorldHint: false },
     },
@@ -518,7 +518,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     {
       title: 'Add a bank account',
       description:
-        "Registers a bank account of the company from its IBAN, and wires it to the bank journal and to the ledger account behind it — both of which the country template has already chosen, so neither has to be given. Running it twice with the same IBAN returns the one that exists rather than creating a second. Do this once per account: until a company has one, an invoice carries no IBAN and record_payment can only book on the journal's default account.",
+        "Registers a bank account of the company from its identifier — an IBAN, an ABA routing number and an account number, a sort code and an account number, whatever the banks of the company's country use; the pack of the country says which, and it is checked — and wires it to the bank journal and to the ledger account behind it — both of which the country template has already chosen, so neither has to be given. Running it twice with the same identifier returns the one that exists rather than creating a second. Do this once per account: until a company has one, an invoice carries no account to pay into and record_payment can only book on the journal's default account.",
       inputSchema: write.CreateBankAccountInput.shape,
       annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: true, openWorldHint: false },
     },
@@ -530,7 +530,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     {
       title: 'Bank accounts',
       description:
-        'The bank accounts of a company, with their IBAN, the journal they book through and the ledger account behind each. Read it before recording a payment on a particular account, and to find out whether the company has one at all.',
+        'The bank accounts of a company, with their identifier and the scheme it is written in, the journal they book through and the ledger account behind each. Read it before recording a payment on a particular account, and to find out whether the company has one at all.',
       inputSchema: read.ListBankAccountsInput.shape,
       annotations: { readOnlyHint: true, openWorldHint: false },
     },
@@ -913,7 +913,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
               '1. vat_return for the period. Report every box with its amount, and say which ones are computed from the others.',
               '2. Check that nothing is missing: list_documents with state "draft" over the period. A draft invoice is in no box, and that is usually the error.',
               '3. Tie the VAT accounts back to the ledger: general_ledger on the VAT payable and VAT recoverable accounts for the period, and compare with the boxes.',
-              '4. If the company supplied anything to another Member State: ec_sales_list for the period, and check its total against the intra-Community boxes of the return. Name every line it flags — a customer with no VAT number is a statement that cannot be filed.',
+              '4. If the company supplied anything to another Member State: ec_sales_list for the period, and check its total against the European Union boxes of the return. Name every line it flags — a customer with no VAT number is a statement that cannot be filed.',
               '5. Say what is due or refundable, and what would have to be corrected before filing.',
               '',
               'This prepares figures. It files nothing, and it changes nothing in the books.',

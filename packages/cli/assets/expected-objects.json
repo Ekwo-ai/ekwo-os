@@ -359,6 +359,14 @@
             "type": "uuid"
           },
           {
+            "name": "account_identifier",
+            "type": "text"
+          },
+          {
+            "name": "account_scheme",
+            "type": "text"
+          },
+          {
             "name": "active",
             "type": "boolean"
           },
@@ -1328,6 +1336,10 @@
           },
           {
             "name": "bank_account_code",
+            "type": "text"
+          },
+          {
+            "name": "bank_account_scheme",
             "type": "text"
           },
           {
@@ -3804,6 +3816,10 @@
         "arguments": "p_company_id uuid, p_at date"
       },
       {
+        "name": "bank_accounts_read_identifier",
+        "arguments": ""
+      },
+      {
         "name": "bank_statement_lines_refresh_balance",
         "arguments": ""
       },
@@ -5137,6 +5153,10 @@
       {
         "table": "bank_accounts",
         "name": "bank_accounts_currency_of_company"
+      },
+      {
+        "table": "bank_accounts",
+        "name": "bank_accounts_read_identifier"
       },
       {
         "table": "bank_accounts",
@@ -7014,6 +7034,14 @@
           "service_role": [
             "execute"
           ]
+        },
+        {
+          "name": "bank_accounts_read_identifier",
+          "arguments": "",
+          "trigger": true,
+          "anon": [],
+          "authenticated": [],
+          "service_role": []
         },
         {
           "name": "bank_statement_lines_refresh_balance",

@@ -86,7 +86,7 @@ The installer asks its questions one by one:
 | The first day of the financial year | Only where the country does not fix one — for example the United Kingdom, where each company chooses its year |
 | The chart of accounts and the language of the books | Only where the country publishes more than one |
 | How often the company files its VAT return | Only where that depends on the company |
-| An IBAN | Optional. Enter skips it |
+| Your main bank account | Optional, and asked the way your country's banks write it: an IBAN, a routing number and an account number, a sort code and an account number… Enter skips it |
 | The administrator's e-mail address, the `service_role` key and a password | This is **you**: the user Claude will sign in as. Choose a real password and keep it |
 
 It takes a few seconds and ends with a summary: the company, its chart, the

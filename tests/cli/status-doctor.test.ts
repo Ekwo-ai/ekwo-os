@@ -43,7 +43,7 @@ beforeEach(async () => {
     company: 'Example One',
     fiscalYear: 2026,
     adminUserId: userId,
-    bankAccount: { iban: 'BE71 0961 2345 6769', bic: 'GKCCBEBB', bankName: 'Banque Exemple' },
+    bankAccount: { identifier: 'BE71 0961 2345 6769', scheme: 'iban', bic: 'GKCCBEBB', bankName: 'Banque Exemple' },
   });
   companyId = result.companyId;
 });

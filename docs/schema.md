@@ -105,7 +105,7 @@ shows one figure in boxes that are not sums of one another.
 - the declaration box receives `round(tax x box_factor / 100, 2)`,
   independently of which side the ledger amount landed on.
 
-A Belgian intra-community purchase of goods at 21 % is therefore four rows:
+A Belgian purchase of goods from another Member State of the European Union at 21 % is therefore four rows:
 
 | kind | type | factor | account | box | box factor |
 |---|---|---|---|---|---|
@@ -387,6 +387,8 @@ Bank and card accounts, each mapped to a ledger account and a journal.
 | `active` | `boolean` | not null |
 | `created_at` | `timestamp with time zone` | not null |
 | `updated_at` | `timestamp with time zone` | not null |
+| `account_scheme` | `text` | The scheme account_identifier is written in, as the country pack names it. Null on a free-text account number. |
+| `account_identifier` | `text` | What identifies the account at its bank, in the canonical form of its scheme: the parts in order, one space between them. An IBAN is one such identifier and has its own column too, kept for what already reads it. |
 
 Constraints:
 
@@ -867,6 +869,7 @@ Which template account plays which role, per country.
 | `posted_edit_policy_legal_reference` | `text` | The article behind posted_edit_policy, as the pack cites it. |
 | `posted_edit_policy_source_key` | `text` | Key of the entry in the pack's source register where that article is read. |
 | `einvoice_obligation` | `text` | Whether a statute obliges companies of this country to exchange electronic invoices between themselves: mandatory (from einvoice_mandatory_from), on_request (a seller has to issue one when a buyer the law entitles to ask does; no date binds everybody) or none (no such statute at the day the pack was released). An obligation towards the public sector alone is said in einvoice_legal_reference. Null where the pack says nothing. |
+| `bank_account_scheme` | `text` | How a bank of this country identifies an account: iban, aba-routing-account, sort-code-account, bsb-account, ifsc-account, clabe, zengin, transit-institution-account. From the pack. Null where the pack declares none, which clients read as a free-text account number and never as an IBAN. |
 
 Constraints:
 
@@ -1950,6 +1953,7 @@ Constraints:
 | `audit_state_change()` | Records the act a state column stands for — a document posted, a payment booked, a year closed — with the fields that identify the row and never the whole of it. |
 | `auto_settle(p_company_id uuid, p_from date, p_to date, p_apply boolean)` | Walks the pending statement lines of a period and settles the ones a single piece of evidence identifies — a reference, or an exact amount with one candidate. Everything else comes back with the reason it was left: a combination, a partial payment, an internal transfer, nothing open that fits, or a refusal the database made, quoted. With p_apply false it changes nothing and says what it would do. |
 | `available_statements(p_company_id uuid, p_at date)` | Statements a company may ask for: those of its country and chart, plus the generic framework. `is_default` marks the ones its chart declares. |
+| `bank_accounts_read_identifier()` | Keeps iban, account_scheme and account_identifier saying one thing: an IBAN fills the identifier, an identifier of the iban scheme fills iban, and no other scheme ever writes iban. |
 | `bank_statement_movement(p_statement_id uuid)` | The sum of the lines a statement lists or holds, each counted once. What balance_end_computed adds to balance_start. |
 | `can_write_company(p_company_id uuid)` | Whether the current caller may write the books of a company. One capability, not a role, and false rather than NULL for a stranger. |
 | `cancel_document(p_document_id uuid, p_date date)` | Undoes a posted invoice: writes its credit note — the same lines, taxes, accounts, contact, currency and rate — naming it in reversed_document_id, posts it through post_document(), matches the two entries and marks the invoice cancelled. Returns the credit note. Dated on the invoice's booking day while that period is open, and otherwise refused until a date is given (reversal_date_needed). Refused for a document that is not a posted invoice, is already cancelled or credited, or is settled in part or in full (unreconcile() first). |
@@ -1991,7 +1995,7 @@ Constraints:
 | `document_share_refusal(p_document documents)` | Why this document may not be shared, or null when it may. Sales only, never cancelled, never an unposted invoice, always numbered. |
 | `document_territory(p_document_id uuid, p_party text)` | The territory of one party to a document: seller, buyer or supply. The seller is the company on a sale and the contact on a purchase, each resolving to its own territory_code and failing that to its country. The supply is the document's supply_territory_code, failing that its delivery_country (BG-15), failing that the buyer's territory. Null where none of those was ever recorded. |
 | `documents_allocate_included_tax(p_document_id uuid)` | Turns the gross of every tax group quoted with the tax in it into a base: the tax rounded once on the group (BR-CO-14), the base the gross less that tax, shared over the lines in proportion to their gross with the remainder on the last. Refuses a group that is half inclusive, by name. |
-| `documents_default_payee_iban()` | A sales document with no payee IBAN takes the company's default bank account. A purchase document never does: the payee there is somebody else. |
+| `documents_default_payee_iban()` | A sales document with no payee account takes the company's default bank account, whatever scheme it is written in. A purchase document never does: the payee there is somebody else. |
 | `documents_guard_language()` | Fills documents.language from the customer, then the company, then the country pack when a document is created, keeps a draft in step with the customer it is addressed to, and refuses document_language_frozen on anything that is no longer a draft. |
 | `documents_guard_posted()` | Once a document has left draft: it is not deleted, no column moves but the closed list of what happens to a document after it is issued — amount_paid (to the figure the matching gives, and no other), payment_state, sent_at, peppol_status, peppol_message_id — and its state has two ways out. Posted to cancelled, taken by cancel_document(): held to a posted credit note of the matching type that names it, carries its total and settles it in full, for a caller holding documents.post (document_cancelled_by_hand otherwise). Posted to draft, taken by unpost_document(): held to the row it records in document_unpostings for this document and its entry in the same transaction, with nothing moving but the state, the entry and what posting derived. Refuses document_posted, by name, to everybody else. Becoming posted is held to what post_document() writes — a posted entry built for this document, booked on its day, that gave it its number — document_posted_by_hand otherwise; and nobody inserts a document that is already posted (document_born_posted). |
 | `documents_refresh_amount_paid(p_document_id uuid)` | Recomputes what a document has been settled by, from the matched amounts on its third-party lines. |

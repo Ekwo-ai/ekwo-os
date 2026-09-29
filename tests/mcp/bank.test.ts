@@ -68,7 +68,7 @@ describe('create_bank_account', () => {
 
   it('is refused to a viewer, by the policy and not by this package', async () => {
     await expect(
-      writeTools.createBankAccount(viewer, { company_id: one.companyId, iban: 'BE00000000000000' }),
+      writeTools.createBankAccount(viewer, { company_id: one.companyId, iban: 'BE68539007547034' }),
     ).rejects.toThrow(/not_found|row-level security|violates/);
 
     const still = await rows(db, 'select id from bank_accounts where company_id = $1', [
