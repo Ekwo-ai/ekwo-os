@@ -56,9 +56,31 @@ The threat model is short, and its reasons are in the decision records
 - **The ledger is append-only in effect.** Any path that changes a posted
   entry, or posts one without its document, without a journal, or unbalanced,
   is a vulnerability.
+- **No client rewrites the history.** A member, a machine key,
+  `service_role` or any login other than the owner of the tables updating,
+  deleting or truncating a row of `audit_log`, or a purge that drops a row
+  not older than the date it names or leaves no `audit_log_purged` line, is a
+  vulnerability.
+- **A setting is not a credential.** Any session may write an `ekwo.*`
+  setting. A caller who gains a capability, or the installer's exemption, by
+  setting one is a vulnerability.
 - **No secret reaches the disk.** The CLI writing a password, a
   `service_role` key or a token anywhere but memory is a vulnerability. The
   MCP server accepting a `service_role` key is one too.
+
+What the schema does not hold against, because PostgreSQL gives it no way to:
+
+- **The owner of the database.** Every rule above is a function or a
+  trigger, and the owner of a table may disable its triggers; a superuser may
+  do anything. The guarantees bind clients. A trail that its own operator
+  cannot edit is a copy that has already left the database.
+- **The identity a direct connection declares.** Over the API, `auth.uid()`
+  comes from a token Supabase Auth signed. On a direct connection it comes
+  from `request.jwt.claims`, which is a setting like any other: a login that
+  holds the grants of `authenticated` can declare itself any member. Give a
+  direct login only to somebody you would trust with the rights of every
+  member of the installation — or give it `select` on what it needs to read
+  and no membership in `authenticated`.
 
 Out of scope: a misconfigured Supabase project (a disabled RLS on a table you
 created yourself, an exposed `service_role` key in your own environment), and

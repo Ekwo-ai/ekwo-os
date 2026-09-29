@@ -93,7 +93,9 @@ export async function connect(connectionString: string): Promise<SqlClient> {
   // `is_installer()` rather than "is there no session", so the runner has to
   // say so out loud; `asUser()` below withdraws it for the length of the call
   // it makes on somebody's behalf. A caller reaching the database through
-  // PostgREST cannot set this, which is the whole point of it being a setting.
+  // PostgREST cannot set this. Any other login on a direct connection can, so
+  // the setting is not enough on its own: `is_installer()` also asks that this
+  // login own the tables (20260929094126) — the login that created them does.
   // `set_config(..., false)` is session-wide, and the pool is capped at one.
   //
   // Not swallowed. A connection that cannot say it is installing is one every

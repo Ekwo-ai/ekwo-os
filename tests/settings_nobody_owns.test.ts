@@ -258,3 +258,37 @@ describe('a person who raises a year-end flag by hand', () => {
     expect(message).toMatch(/not_allowed: closing or re-opening a financial year needs year_end\.close/);
   });
 });
+
+describe('what a direct connection is trusted with', () => {
+  // Not a guarantee but its limit, written as a test so that SECURITY.md
+  // cannot say less than the truth. On a direct connection `auth.uid()` is
+  // read from `request.jwt.claims`, a setting like `ekwo.installing`, and no
+  // guard of the schema can tell a declared identity from a signed one. What
+  // closes this is not the schema: it is not giving such a login the grants
+  // of `authenticated`.
+
+  it('lets a login holding the grants of authenticated declare itself a member', async () => {
+    // Without the claim the same login reads nothing: what lets it in below
+    // is the identity it declared, and nothing else.
+    const unseen = await asSecondLogin(() =>
+      one<{ n: number }>(db, `select count(*)::int as n from companies where id = $1`, [companyId]),
+    );
+    expect(unseen.n).toBe(0);
+
+    const seen = await asSecondLogin(async () => {
+      await db.query(`select set_config('request.jwt.claims', $1, false)`, [
+        JSON.stringify({ sub: ownerId, role: 'authenticated' }),
+      ]);
+      try {
+        return await one<{ n: number }>(
+          db,
+          `select count(*)::int as n from companies where id = $1`,
+          [companyId],
+        );
+      } finally {
+        await db.exec(`select set_config('request.jwt.claims', '', false);`);
+      }
+    });
+    expect(seen.n).toBe(1);
+  });
+});
