@@ -1,6 +1,6 @@
 import type { VatCategory } from './types.js';
 
-/** EU member states, ISO 3166-1 alpha-2. */
+/** Member States of the European Union, ISO 3166-1 alpha-2. */
 export const EU_COUNTRIES: ReadonlySet<string> = new Set([
   'AT', 'BE', 'BG', 'CY', 'CZ', 'DE', 'DK', 'EE', 'ES', 'FI', 'FR', 'GR', 'HR', 'HU',
   'IE', 'IT', 'LT', 'LU', 'LV', 'MT', 'NL', 'PL', 'PT', 'RO', 'SE', 'SI', 'SK',
@@ -12,9 +12,9 @@ export function isEuCountry(code: string): boolean {
 
 /**
  * Picks the VAT category of a line when the caller does not state it.
- * Positive rate → standard. Zero rate: domestic → zero-rated; EU buyer with a
- * VAT identifier → intra-community supply; EU buyer without → exempt;
- * non-EU buyer → export.
+ * Positive rate → standard. Zero rate: domestic → zero-rated; buyer in the European Union with a
+ * VAT identifier → supply between Member States; such a buyer without → exempt;
+ * buyer outside the European Union → export.
  */
 export function defaultVatCategory(input: {
   rate: number;
@@ -45,7 +45,7 @@ export const EXEMPTION_REASON_CODES: Readonly<Partial<Record<VatCategory, string
 export const DEFAULT_EXEMPTION_REASONS: Readonly<Record<Exclude<VatCategory, 'S' | 'Z'>, string>> = {
   E: 'Exempt from VAT',
   AE: 'Reverse charge: VAT to be accounted for by the recipient',
-  K: 'Intra-community supply, exempt from VAT',
+  K: 'Supply between Member States of the European Union, exempt from VAT',
   G: 'Export outside the European Union, exempt from VAT',
   O: 'Not subject to VAT',
 };

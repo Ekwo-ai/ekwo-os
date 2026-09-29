@@ -206,7 +206,7 @@ function runGolden(pack: Pack, golden: PackGolden): void {
       }
     });
 
-    it('exercises an intra-Union reverse charge, in both directions where the pack has both', () => {
+    it('exercises a European Union reverse charge, in both directions where the pack has both', () => {
       const used = new Set(golden.documents.flatMap((d) => d.lines.map((l) => l.tax)));
       const taxes = inForce(pack.taxes, golden.fiscalYear.start);
       const treatments = new Set(

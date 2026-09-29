@@ -16,8 +16,8 @@ export type CurrencyCode = string;
  * - `Z` zero rated
  * - `E` exempt
  * - `AE` reverse charge
- * - `K` intra-community supply
- * - `G` export outside the EU
+ * - `K` supply between Member States of the European Union
+ * - `G` export outside the European Union
  * - `O` not subject to VAT
  */
 export type VatCategory = 'S' | 'Z' | 'E' | 'AE' | 'K' | 'G' | 'O';

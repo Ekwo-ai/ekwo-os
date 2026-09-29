@@ -60,8 +60,8 @@ const back = await extractFacturX(pdf);                    // { filename: 'factu
 ### VAT categories
 
 Each line carries a `vatRate`. The category (BT-151) is derived when you do not state it:
-positive rate → `S`; zero rate at home → `Z`; zero rate to an EU business with a VAT id → `K`
-(intra-community); to an EU buyer without one → `E`; outside the EU → `G`. Set `vatCategory`
+positive rate → `S`; zero rate at home → `Z`; zero rate to a business in another Member State of the European Union with a VAT id → `K`
+(supply between Member States); to a buyer there without one → `E`; outside the European Union → `G`. Set `vatCategory`
 on the line to override (`AE` reverse charge, `O` not subject to VAT…). Exempt groups get a
 reason text (BT-120, override with `invoice.exemptionReasons`) and the VATEX code where one
 exists.

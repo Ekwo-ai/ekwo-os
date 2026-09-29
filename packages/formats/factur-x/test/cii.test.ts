@@ -21,9 +21,9 @@ describe('generateCiiXml', () => {
     expect(generateCiiXml(exampleInvoice, { profile: 'en16931' })).toContain('<ram:ID>urn:cen.eu:en16931:2017</ram:ID>');
   });
 
-  it('classifies a zero-rated sale to an EU business as intra-community (K) with reason and code', () => {
+  it('classifies a zero-rated sale to a business in another Member State of the European Union as a supply between Member States (K) with reason and code', () => {
     expect(xml).toContain('<ram:CategoryCode>K</ram:CategoryCode>');
-    expect(xml).toContain('<ram:ExemptionReason>Intra-community supply, exempt from VAT</ram:ExemptionReason>');
+    expect(xml).toContain('<ram:ExemptionReason>Supply between Member States of the European Union, exempt from VAT</ram:ExemptionReason>');
     expect(xml).toContain('<ram:ExemptionReasonCode>VATEX-EU-IC</ram:ExemptionReasonCode>');
     expect(xml).toContain('<ram:RateApplicablePercent>0.00</ram:RateApplicablePercent>');
   });

@@ -466,10 +466,10 @@ describe('a tax of a territory the common system reaches for goods alone', () =>
     }
   }
 
-  /** What an intra-Community supply of goods says on the invoice. */
+  /** What a European Union supply of goods says on the invoice. */
   const supply = {
     code: 'XX-ICG',
-    name: 'Intra-Community supply of goods from the territory of limited scope',
+    name: 'European Union supply of goods from the territory of limited scope',
     treatment: 'intracom_goods',
     vat_category: 'K',
     exemption_code: 'VATEX-EU-IC',

@@ -103,7 +103,7 @@ describe('the Belgian listing, from a year of Belgian books', () => {
   });
 
   it('deducts the credit note of the year from the customer, not from a box', () => {
-    // The Belgian return reports a credit note on an intra-Community supply in
+    // The Belgian return reports a credit note on a European Union supply in
     // box 48, positively and in a box of its own. The listing has no such box:
     // it lowers the customer's line. That the two do not read alike is the
     // whole reason this statement is a function and not a box of the return.

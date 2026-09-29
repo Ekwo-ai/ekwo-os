@@ -7,7 +7,7 @@
  * UNCL5305 subset the standard publishes; and its `exemption_code`, which is
  * BT-121, taken from the VATEX list. Nothing until now compared them, so a
  * pack could declare an export taxed at the standard rate, or an
- * intra-Community supply with the reverse-charge reason code, and every test
+ * European Union supply with the reverse-charge reason code, and every test
  * in the repository would pass — because neither column is read by the ledger
  * or by the declaration. They are read by whoever renders the invoice, which
  * is the one reader that is not in this repository.
@@ -15,17 +15,17 @@
  * The tables below are transcribed, not decided. Three sources say all of it:
  *
  * - **UNCL5305 (UN/CEFACT D.16B, OpenPEPPOL subset)** for what each category
- *   code means. `K` is *VAT exempt for EEA intra-community supply of goods and
+ *   code means. `K` is *VAT exempt for EEA European Union supply of goods and
  *   services* — goods **and services**, which is what settles the question the
  *   Ekwo vocabulary asks twice; `AE` is *VAT reverse charge*; `G` is *free
  *   export item, VAT not charged*; `O` is *services outside scope of tax*.
  * - **Technical guidance for tax codes in EN 16931, version 1** (European
  *   Commission, Technical Advisory Group on Electronic Invoicing, use cases
  *   dated 1 July 2024), whose six use cases give the pair to use for each
- *   case: exemption in general `E` + a VATEX code, intra-Community supply
+ *   case: exemption in general `E` + a VATEX code, European Union supply
  *   between Member States `K` + `VATEX-EU-IC`, reverse charge **within** a
  *   Member State `AE` + `VATEX-EU-AE`, and the case it calls export outside the
- *   Union `G` + `VATEX-EU-G` — which is the Union's border because the seller
+ *   Union `G` + `VATEX-EU-G` — which is the European Union's border because the seller
  *   the guidance addresses is established in a Member State. What UNCL5305
  *   itself says of `G` is *free export item, VAT not charged*: the goods leave
  *   the territory of whoever levies the tax.
@@ -37,7 +37,7 @@
  * Four decisions were taken where the sources leave a choice, and all four are
  * written up in `docs/packs.md`.
  *
- * **The table above is the Union's, and it applies where the Union's VAT
+ * **The table above is the European Union's, and it applies where the European Union's VAT
  * does.** EN 16931 is a European standard and the VATEX list is published by
  * the European Commission: its own codes name articles of Directive
  * 2006/112/EC and its national codes belong to Member States that publish
@@ -46,10 +46,10 @@
  * claims an article of the Directive that does not bind the seller — and what
  * an exempt line states there is its own article, in `legal_reference`, with
  * BT-121 left empty. The categories are unaffected: UNCL5305 is a UN/CEFACT
- * list, `E`, `G`, `O` and `AE` keep their meanings, and a pack outside the
- * Union goes on being held to them. The treatments of the common system
+ * list, `E`, `G`, `O` and `AE` keep their meanings, and a pack outside
+ * the European Union goes on being held to them. The treatments of the common system
  * itself — the five `intracom_*` values — are refused there outright, because
- * an intra-Community supply is an operation of a system the country is not in.
+ * a European Union supply is an operation of a system the country is not in.
  * Whether it is in it is not a fact this file holds: it is a row of
  * `territories`, read through `./territories.js`, on the day the pack's
  * manifest says it speaks of.
@@ -66,14 +66,14 @@
  * caller's answer. Outside both, the column is free and everything it may say
  * is unchanged: a value that contradicts the treatment is refused there
  * exactly as it is here. This is the same border ST38-1 drew for the reason
- * code, one field over: the Union's lists reach the packs the Union's law
+ * code, one field over: the European Union's lists reach the packs the European Union's law
  * reaches.
  *
  * **A category is a term of the invoice, so on a purchase it is the
  * supplier's.** An Ekwo purchase tax describes how the buyer books and
  * declares somebody else's invoice; BT-151 on that invoice was chosen by the
- * seller. An intra-Community acquisition is therefore `K`, because the
- * supplier made an intra-Community supply and rule BR-IC-10 binds them to `K`
+ * seller. A European Union acquisition is therefore `K`, because the
+ * supplier made a European Union supply and rule BR-IC-10 binds them to `K`
  * and `VATEX-EU-IC` — not `AE`, which is the guidance's case for a reverse
  * charge *within* one Member State. A pack that does not want to record the
  * seller's category may leave it null on a purchase-only tax; a value that
@@ -81,7 +81,7 @@
  *
  * **Where no invoice governed by the standard exists, the category is
  * absent.** An import of goods is assessed on a customs document, and a
- * service received from a supplier the Union's rules do not reach comes on an
+ * service received from a supplier the European Union's rules do not reach comes on an
  * invoice the Directive does not govern. There is no seller's category to
  * record, so `import` and `foreign_services_received` carry none: `S` there
  * would claim the supplier levied the standard rate, which is the one thing
@@ -94,7 +94,7 @@
  * the seller's State, article 141 of Directive 2006/112/EC relieves the seller
  * of registering where they arrive, and article 197 puts the tax on a customer
  * in a third State. What the line is, in the words of UNCL5305, is *VAT exempt
- * for EEA intra-community supply of goods and services* — `K`, with
+ * for EEA European Union supply of goods and services* — `K`, with
  * `VATEX-EU-IC`, which the VATEX list reserves for it. That the *sentence* on
  * that invoice is the reverse-charge one is a different question in a different
  * vocabulary, and it is answered by `applies_when`.
@@ -113,14 +113,14 @@
  * file has not heard of. So an exemption code is checked for its shape, and
  * for the pairings the list itself states.
  *
- * The same limit applies to the other end. No country outside the Union
+ * The same limit applies to the other end. No country outside the European Union
  * publishes a list of exemption reason codes today; one may, and PINT is where
  * it would surface. So the field is provided for and the content is not: a pack
  * outside the common system may carry a reason code that is not a VATEX one,
  * on the condition that its register declares a published list — the entry of
  * `certification.sources` that says so of itself, with `reason_codes`. What is
  * checked is that a list is named, not that the code is in it, which is exactly
- * what is checked of a VATEX code inside the Union.
+ * what is checked of a VATEX code inside the European Union.
  *
  * That flag is new and it closes a trap. `reasonList` used to be the title of
  * the **first** entry whose `kind` was `standard`, and `standard` means "a
@@ -201,14 +201,14 @@ export const TREATMENT_CODES: Record<string, TreatmentCodes> = {
     goods: true,
     scopes: ['sale'],
     categories: ['K'],
-    because: `an intra-Community supply is K (${GUIDANCE}, use case 2, and rule BR-IC-10)`,
+    because: `a European Union supply is K (${GUIDANCE}, use case 2, and rule BR-IC-10)`,
   },
   intracom_services: {
     commonSystem: true,
     scopes: ['sale'],
     categories: ['K'],
     because:
-      `K is VAT exempt for EEA intra-community supply of goods and services (${UNCL5305}); ` +
+      `K is VAT exempt for EEA European Union supply of goods and services (${UNCL5305}); ` +
       `AE is the case of a reverse charge within one Member State (${GUIDANCE}, use case 3)`,
   },
   intracom_triangular: {
@@ -218,7 +218,7 @@ export const TREATMENT_CODES: Record<string, TreatmentCodes> = {
     categories: ['K'],
     because:
       'the middle supply of a triangular arrangement is an exempt supply of goods between two ' +
-      `Member States, which is what K names — VAT exempt for EEA intra-community supply (${UNCL5305}); ` +
+      `Member States, which is what K names — VAT exempt for EEA European Union supply (${UNCL5305}); ` +
       `AE is reserved for a reverse charge within one Member State (${GUIDANCE}, use case 3), and this ` +
       "one is not: the goods leave the seller's State and article 197 of Directive 2006/112/EC puts " +
       'the tax on a customer in a third',
@@ -229,8 +229,8 @@ export const TREATMENT_CODES: Record<string, TreatmentCodes> = {
     scopes: ['purchase'],
     categories: ['K'],
     because:
-      'a category is a term of the invoice, and the supplier of an intra-Community acquisition ' +
-      `made an intra-Community supply, which is K (${GUIDANCE}, use case 2)`,
+      'a category is a term of the invoice, and the supplier of a European Union acquisition ' +
+      `made a European Union supply, which is K (${GUIDANCE}, use case 2)`,
   },
   intracom_acquisition_services: {
     commonSystem: true,
@@ -252,7 +252,7 @@ export const TREATMENT_CODES: Record<string, TreatmentCodes> = {
     categories: ['G'],
     because:
       `G is free export item, VAT not charged (${UNCL5305}) — goods leaving the territory of ` +
-      `whoever levies the tax, which for a seller in a Member State is the Union's border ` +
+      `whoever levies the tax, which for a seller in a Member State is the European Union's border ` +
       `(${GUIDANCE}, use case 4) and for a seller outside it is that country's own`,
   },
   import: {
@@ -304,7 +304,7 @@ export const CATEGORY_CODES: Record<string, CategoryCodes> = {
 };
 
 /**
- * A reason code of the VATEX list: the Union's own codes, and the national
+ * A reason code of the VATEX list: the European Union's own codes, and the national
  * ones a Member State publishes beside them.
  *
  * The shape, and not the membership. A national list grows without this
@@ -381,14 +381,14 @@ export interface VatRegime {
   /**
    * The published list of reason codes the pack's register declares — the
    * title of the entry of `certification.sources` that says so of itself, with
-   * `reason_codes`. Null where the pack declares none, which outside the Union
+   * `reason_codes`. Null where the pack declares none, which outside the European Union
    * means BT-121 has no list to come from and stays empty.
    */
   reasonList: string | null;
 }
 
 /**
- * The regime every pack was held to until a country outside the Union arrived.
+ * The regime every pack was held to until a country outside the European Union arrived.
  *
  * The default of `taxCodes`, so that a caller with no opinion gets the table as
  * the European Commission publishes it. `readPack` always has an opinion.
@@ -509,7 +509,7 @@ function reasonOutside(
  * source says instead, and the source. A pack author who has never read
  * EN 16931 should be able to fix the line from the message alone.
  *
- * `regime` says whether the Union's own lists reach this pack at all. It
+ * `regime` says whether the European Union's own lists reach this pack at all. It
  * defaults to the case every pack was in before a third country arrived.
  */
 export function taxCodes(

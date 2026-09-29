@@ -1,6 +1,6 @@
 /**
  * The Estonian **form VD** — *ühendusesisese käibe aruanne*, the report of
- * intra-Community turnover — as the e-MTA loads it from a file.
+ * European Union turnover — as the e-MTA loads it from a file.
  *
  * One XML document, `VD_deklaratsioon`, described by the schema the tax and
  * customs board publishes beside the form. Give it the rows of a
