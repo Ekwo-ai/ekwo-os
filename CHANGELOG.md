@@ -9,6 +9,29 @@ somewhere has already run it.
 
 ## [Unreleased]
 
+### Changed
+
+- **The `ee/` directory is gone, and the paid line is described as what it is:
+  a set of services.** The folder had been there since the first release, empty,
+  with a commercial licence of its own, waiting for code that would ship beside
+  the core. Nothing ever belonged in it. Every paid thing Ekwo offers — bank
+  connections, a Peppol access point, transmission to an administration, the
+  agents, a firm's portfolio across installations, the running of an instance —
+  is a contract, a certificate, a credential or a machine somebody keeps alive,
+  and none of that is a feature one could put behind a flag in source other
+  people install.
+
+  What replaces it is [`docs/cloud-services.md`](docs/cloud-services.md): the
+  optional services, operated by Ekwo (Karuna Co OÜ), outside the AGPL, with
+  the one test that draws the line — *does it keep working on its own, with us
+  or without us?* — what comes back from a filing and stays the business's, and
+  what will never be sold. `0061` is rewritten to say it, the
+  README, `firms.md`, `filing.md`, `0039`, `0050` and the CLI's own comments
+  point there, and the
+  packaging guard of `tests/cli/package.test.ts` is stated positively: every
+  file of the published package has a source in `supabase/`, in `modules/` or
+  in the CLI's assets, and a fourth place would fail the test.
+
 ## [0.9.0] — 2026-09-28
 
 ### Added

@@ -77,7 +77,7 @@ export interface DescribedDeadline {
  * `brick` names the package of `packages/formats/` the pack points at. `null`
  * is the ordinary case and it is not a gap: filing by hand on the
  * administration's portal is complete and free, which is what
- * [`docs/filing.md`](../../../docs/filing.md) says at step 4.
+ * [`docs/filing.md`](../../../../docs/filing.md) says at step 4.
  */
 export interface DescribedFile {
   brick: string | null;
@@ -159,7 +159,7 @@ export interface DescribedStatement {
  * `status` is the pack's own word — `community`, `maintained` or `reviewed` —
  * and `reviewedBy` is a named professional or nobody. There is no status that
  * means certified by Ekwo, and writing a pack is not reviewing it: that is
- * invariant 6 of [`CONTRIBUTING.md`](../../../CONTRIBUTING.md), and this reader
+ * invariant 6 of [`CONTRIBUTING.md`](../../../../CONTRIBUTING.md), and this reader
  * repeats what the manifest says rather than grading it.
  *
  * `lastConsultedOn` is the most recent day somebody opened one of the texts the
@@ -182,11 +182,12 @@ export interface DescribedCertification {
  *
  * The line is operational and not functional: the test is whether the thing
  * keeps working on its own, with Ekwo or without it
- * ([`ee/README.md`](../../../ee/README.md)). Writing a file and validating it
+ * ([`docs/cloud-services.md`](../../../../docs/cloud-services.md)). Writing a
+ * file and validating it
  * needs nobody; handing it to an administration, a Peppol access point or a
  * bank needs credentials, often a certificate, and a channel somebody keeps
  * running — which is the only step of the eight in
- * [`docs/filing.md`](../../../docs/filing.md) that is operated.
+ * [`docs/filing.md`](../../../../docs/filing.md) that is operated.
  *
  * Every row here is derived from something the pack declares. A country that
  * declares no e-invoicing profile has no e-invoicing row, rather than a row
@@ -418,10 +419,10 @@ function invoicingOf(pack: Pack): DescribedInvoicing {
  *
  * Nothing here is a judgement about what is worth charging for. Each row names
  * a thing the pack declares, says what the core does with it, and says what has
- * to be operated for it to reach somebody else — the three rows of
- * `ee/README.md` that a country pack can actually produce: filing a
+ * to be operated for it to reach somebody else — the three services of
+ * `docs/cloud-services.md` that a country pack can actually produce: filing a
  * declaration, sending an electronic invoice, and receiving a bank statement.
- * The fourth and fifth rows of that table, the agents and the control plane,
+ * The others — the agents, a firm's portfolio, the running of an instance —
  * are not facts about a country and are not invented here.
  */
 function boundaryOf(

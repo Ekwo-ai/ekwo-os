@@ -93,7 +93,8 @@ writes one `VATConsignment` holding as many declarations as it is given, under
 the `Representative` who files them — each taken from the figures that company
 froze, never recomputed.
 
-Sending the file is the operated side (`ee/`). What comes back — the deposit
+Sending the file is an operated service
+([`cloud-services.md`](cloud-services.md)). What comes back — the deposit
 number, the acknowledgement, the administration's words — is recorded in each
 client's own `tax_filing_deposits`, in the open core: a client who leaves keeps
 every proof that their returns were filed.
@@ -105,7 +106,7 @@ every proof that their returns were filed.
 | Who owns the installation | the firm | the client |
 | The client is | a guest (`client`) | the owner; the firm's collaborator is invited as `accountant` |
 | Suits | small businesses and the self-employed: the firm does everything | a company that keeps part of its own books |
-| The portfolio | one call, in the firm's installation | crosses installations, so it is a control plane: `ee/` |
+| The portfolio | one call, in the firm's installation | crosses installations, so it is a control plane, which is operated, not installed |
 | The client leaves | `export_company()`: their company, whole, as an archive another installation takes in | `pg_dump`, and nothing else |
 
 Both are meant to exist. **A** is what this schema serves today.
@@ -153,7 +154,9 @@ which the manifest lists for somebody to copy.
   ([`machine-access.md`](machine-access.md)). What is still missing is a key
   across a firm's whole portfolio, which is one key on several companies and
   therefore a different object.
-- **The portfolio across installations** (arrangement B), which is `ee/`.
+- **The portfolio across installations** (arrangement B), which is a control
+  plane somebody operates ([`cloud-services.md`](cloud-services.md)), not a
+  table of this schema.
 
 What is deliberately not here: billing a firm's clients and tracking its time
 (the firm's trade, not its accounting), and a `tenant_id` that would let several

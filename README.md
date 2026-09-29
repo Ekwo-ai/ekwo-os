@@ -655,8 +655,13 @@ is here and always will be.
 | Everything above, forever, for nothing | Transmission to Intervat, Teledec, the NBB, on the business's instruction |
 
 The test is simple: does it keep working on its own, with us or without us? If
-yes, it belongs here. `ee/` holds the commercial layer and has its own
-licence.
+yes, it belongs here, under AGPL, and no licence key gates it. If no, it is a
+service, because something has to be kept alive for it to work: a contract, a
+certificate, a credential, a machine. Those services are operated by Ekwo
+(Karuna Co OÜ) and are not part of this repository — there is no commercial
+subdirectory here, and nothing here needs them.
+[`docs/cloud-services.md`](docs/cloud-services.md) lists them, and says what
+will never be sold.
 
 ## Security
 
@@ -703,7 +708,7 @@ Each folder carries a short README saying what lives there and the rule
 that applies to it: [`supabase/`](supabase/), [`supabase/migrations/`](supabase/migrations/),
 [`supabase/seed/`](supabase/seed/), [`packages/core/`](packages/core/),
 [`packages/cli/`](packages/cli/), [`packages/mcp/`](packages/mcp/), [`modules/`](modules/),
-[`tests/`](tests/), [`docs/`](docs/), [`scripts/`](scripts/) and [`ee/`](ee/). The long-form
+[`tests/`](tests/), [`docs/`](docs/) and [`scripts/`](scripts/). The long-form
 reference is in `docs/`.
 
 ## Development

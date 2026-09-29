@@ -50,7 +50,9 @@ and nothing is lost because the refused send is a row. A corrective is for
 what an administration holds; a refused declaration is held by nobody.
 
 **Sending is operated; what comes back is not.** Credentials, certificates and
-portal sessions stay in `ee/`. The proof — deposit number, acknowledgement,
+portal sessions belong to whoever operates the sending
+([`cloud-services.md`](../cloud-services.md)), never to this repository.
+The proof — deposit number, acknowledgement,
 the file — lives in the company's database under the same policies as its
 books, so stopping a subscription never takes the proof away. The channel is
 `portal` (a person uploads) or `service` (named as text); the core keeps no

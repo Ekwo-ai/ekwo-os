@@ -17,14 +17,21 @@ running it internally, modified or not, obliges the installer to nothing.
 **A contributor licence agreement is mandatory**, so the project can change
 its licence if it ever must.
 
-**`ee/` lives in this repository, with its own licence.** A separate repository
-would make every schema change a two-repository coordination.
-
 **The line between free and paid is operational, not functional.** If it keeps
 working when Ekwo disappears, it is free. Removing the footer attribution is
 never sold: it is an attribution, not a toll. What is operated — transmission
-through certified access points, deposits with an administration, credentials —
-is in `ee/`; the proof it produces lives in the customer's database.
+through certified access points, deposits with an administration, bank
+connections, credentials, instances watched over time — is a service; the proof
+it produces lives in the customer's database.
+
+**The paid line is a set of services, not a directory of this repository.**
+There was once an `ee/` folder here, with its own licence, waiting for
+commercial code to ship beside the core. Nothing ever belonged in it: every
+paid thing is a contract, a certificate, a credential or a machine somebody
+keeps running, and none of that is a feature one could put behind a flag in
+source that other people install. The folder is gone, and what this repository
+publishes is the whole of what it ships. The services are operated by Ekwo
+(Karuna Co OÜ) and described in [`cloud-services.md`](../cloud-services.md).
 
 **No adapter imitating another product's API.** Nobody consumes an imitation
 server; integrations read the real product. The route to national filing tools
@@ -42,5 +49,7 @@ against named products; `check:no-competitor-names` enforces it.
 ## See also
 
 - [`LICENSE`](../../LICENSE), [`MANIFESTO.md`](../../MANIFESTO.md)
+- [`cloud-services.md`](../cloud-services.md) — the optional paid services,
+  where the line falls, and what will never be sold
 - [`mapping.md`](../mapping.md)
 - [0048 Format libraries are MIT](0048-format-libraries-are-mit-one-package-per-format.md)

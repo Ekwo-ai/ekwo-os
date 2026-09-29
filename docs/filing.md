@@ -8,7 +8,9 @@ what is free and what is operated.
 
 The short version: **everything up to the transmission is open core, and
 everything that comes back is too.** What Ekwo sells in the middle is holding
-the credentials, the certificate and the responsibility of sending on time.
+the credentials, the certificate and the responsibility of sending on time —
+one of the optional services of [`cloud-services.md`](cloud-services.md), and
+the only one this cycle needs.
 
 ---
 

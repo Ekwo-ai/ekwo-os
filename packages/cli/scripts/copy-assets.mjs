@@ -16,8 +16,9 @@
  * by the module migration runner rather than by the socle's seed step, which
  * reads a flat directory on purpose.
  *
- * `ee/supabase/migrations` is not copied. The commercial layer has its own
- * migrations and its own installer; a Community installation gets the core.
+ * There is nothing else to copy. This repository holds one set of migrations,
+ * under `supabase/`; the paid line is a set of operated services
+ * (`docs/cloud-services.md`), not SQL that ships beside the core.
  *
  * Usage: node scripts/copy-assets.mjs <destination>
  */

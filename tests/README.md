@@ -42,7 +42,7 @@ The installer and the MCP server have their own folders, `tests/cli/` and
 | `cli/auth.test.ts` | the Supabase Auth admin call: created, already registered, invite link, refused |
 | `cli/status-doctor.test.ts` | what `status` reports, and each doctor check with exactly one thing broken — including the privileges: a grant the database lost, a table opened to `anon`, a verb no policy accepts, a default privilege put back by hand |
 | `cli/registry.test.ts` | registering writes the instance row and posts six fields, an unreachable endpoint is not a failure, unregistering puts it back, and a non-administrator is refused |
-| `cli/package.test.ts` | the SQL copied into the published package is byte for byte the repository's, and nothing from `ee/` ships |
+| `cli/package.test.ts` | the SQL copied into the published package is byte for byte the repository's, and every file in it has a source in `supabase/`, `modules/` or the CLI's assets — nowhere else |
 | `cli/cli.test.ts` | argument parsing and its refusals, the connection-string helpers, and what the help promises |
 
 And `tests/mcp/`, which calls the MCP server's tools the way the protocol

@@ -74,22 +74,29 @@ describe('the assets copied into the package', () => {
     expect(await digest(join(temp, 'expected-objects.json'))).toBe(await digest(source));
   });
 
-  it('contain nothing from ee/', async () => {
+  it('come from nowhere but supabase/, modules/ and the CLI assets', async () => {
     temp = await mkdtemp(join(tmpdir(), 'ekwo-assets-'));
     const copied = await copyAssets(temp);
 
-    const eeMigrations = join(repoRoot, 'ee', 'supabase', 'migrations');
-    const eeFiles = await readdir(eeMigrations).catch(() => [] as string[]);
-    for (const file of eeFiles.filter((f) => f.endsWith('.sql'))) {
-      expect(copied, 'an ee/ migration must never ship in the Community package').not.toContain(
-        `migrations/${file}`,
-      );
+    // Stated positively, on purpose. There is no commercial subdirectory in
+    // this repository for anything to leak out of: the paid line is a set of
+    // operated services (`docs/cloud-services.md`), not SQL that ships beside
+    // the core. So the guard is that every file of the package has a source
+    // in one of three known places, and a fourth would fail here.
+    for (const file of copied) {
+      const source = file.startsWith('migrations/')
+        ? join(repoRoot, 'supabase', file)
+        : file.startsWith('seed/')
+          ? join(repoRoot, 'supabase', file)
+          : file.startsWith('modules/')
+            ? join(repoRoot, file)
+            : join(repoRoot, 'packages', 'cli', 'assets', file);
+      expect(await stat(source), `${file} has no source in this repository`).toBeTruthy();
     }
 
-    // And the runtime resolver never points there either.
-    // country-literal: `ee/` is the enterprise-edition folder of this
-    // repository. It is not the Estonian pack, which lives in `packs/ee/`.
-    expect(migrationsDir(resolveBundleDir())).not.toContain(`${join('ee', 'supabase')}`);
+    // And the runtime resolver reads the repository's own folder, never
+    // another one sitting at the same depth.
+    expect(migrationsDir(resolveBundleDir())).toContain(join('supabase', 'migrations'));
   });
 });
 

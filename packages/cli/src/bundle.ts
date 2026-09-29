@@ -11,9 +11,10 @@
  * `supabase/` folder is used. Both layouts sit at the same depth relative to
  * this file, which is why the fallback is a fixed path and not a search.
  *
- * `ee/supabase/migrations` is never one of the candidates. The commercial
- * layer has its own migrations and its own installer; a Community
- * installation gets the core and nothing else.
+ * There is no second set of migrations to pick up by accident: this
+ * repository holds one, under `supabase/`. The paid line is a set of operated
+ * services ([`docs/cloud-services.md`](../../../docs/cloud-services.md)), not
+ * SQL that ships beside the core.
  */
 
 import { existsSync } from 'node:fs';

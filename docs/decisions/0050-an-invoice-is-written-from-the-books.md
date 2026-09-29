@@ -12,7 +12,8 @@ the core publishes, without options patched in by the caller.
 
 **`@ekwo-ai/peppol-ubl` writes the UBL syntax of EN 16931.** Invoicing itself
 is `documents` and `post_document()` in the core; transmission through an
-access point stays in `ee/`.
+access point is an operated service
+([`cloud-services.md`](../cloud-services.md)).
 
 **It reads the rows the views publish** — `document_header`,
 `document_line_items`, `document_tax_summary` — and writes the figures as
