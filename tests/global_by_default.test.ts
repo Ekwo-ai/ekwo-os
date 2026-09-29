@@ -4,7 +4,7 @@
  * A company in a country that does not belong to it — here the United States,
  * which levies no VAT at all, and the United Kingdom, which left the common
  * system — is created and asked for its bank account. Nothing it is shown may
- * talk about intra-community VAT, and the identifier it is asked for is its
+ * talk about intra-community VAT of the European Union, and the identifier it is asked for is its
  * own, never an IBAN.
  *
  * Setting up may name a country; what is expected comes from the pack.
@@ -56,7 +56,7 @@ describe.each([['a company of the first country', usa], ['a company of the secon
       expect(described).not.toMatch(UNION_ONLY);
     });
 
-    it('sees no sentence, tax name or document mention about intra-community VAT', async () => {
+    it('sees no sentence, tax name or document mention about VAT between Member States of the European Union', async () => {
       const country = given.pack.manifest.country;
       const texts = await rows<{ text: string }>(
         db,
@@ -79,7 +79,7 @@ describe.each([['a company of the first country', usa], ['a company of the secon
         ok: true,
         identifier: given.canonical,
       });
-      // An IBAN is not a valid answer here, and the refusal does not talk about the Union either.
+      // An IBAN is not a valid answer here, and the refusal does not talk about the European Union either.
       const refused = readBankAccountIdentifier(scheme.key, 'BE71 0961 2345 6769');
       expect(refused.ok).toBe(false);
       expect(refused.ok ? '' : refused.error).not.toMatch(UNION_ONLY);
