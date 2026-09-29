@@ -889,6 +889,50 @@ export async function revokeInvitation(
   return { invitation: answer };
 }
 
+export const RemoveMemberInput = z.object({
+  company_id: companyId,
+  user_id: uuid.describe('The member to take out. Your own id leaves the company, which needs no members.manage.'),
+});
+
+export async function removeMember(
+  backend: Backend,
+  args: z.infer<typeof RemoveMemberInput>,
+): Promise<unknown> {
+  const removed = only(
+    await backend.rpc<Row>('remove_member', { p_company_id: args.company_id, p_user_id: args.user_id }),
+    'the member could not be removed',
+  );
+  return { removed };
+}
+
+export const SetMemberRoleInput = z.object({
+  company_id: companyId,
+  user_id: uuid,
+  role: z
+    .enum(['owner', 'accountant', 'viewer', 'client'])
+    .describe('The new preset. The capabilities granted or revoked on this member so far are cleared.'),
+  capabilities: z
+    .array(z.string())
+    .optional()
+    .describe('Capability codes granted on top of the new preset, as invite_member takes them. Default none.'),
+});
+
+export async function setMemberRole(
+  backend: Backend,
+  args: z.infer<typeof SetMemberRoleInput>,
+): Promise<unknown> {
+  const member = only(
+    await backend.rpc<Row>('set_member_role', {
+      p_company_id: args.company_id,
+      p_user_id: args.user_id,
+      p_role: args.role,
+      p_capabilities: args.capabilities ?? [],
+    }),
+    'the role could not be changed',
+  );
+  return { member };
+}
+
 export const ShareDocumentInput = z.object({
   document_id: uuid.describe('The sales document to publish. A purchase document and a draft are refused.'),
   expires_at: z

@@ -9,6 +9,20 @@ somewhere has already run it.
 
 ## [Unreleased]
 
+### Added
+
+- **A member can be removed, and moved to another preset.** Membership had a
+  way in — `invite_member()`, `accept_invitation()` — and no way out but a
+  hand-written `delete from company_members`. `remove_member(company, user)`
+  needs `members.manage`, except to leave a company oneself;
+  `set_member_role(company, user, role, capabilities)` needs it always and
+  resets the member's adjustments the way `accept_invitation()` writes a new
+  member. Both refuse the last owner of a company (`last_owner`), and both
+  are recorded by the existing `company_members` audit trigger.
+  `company_members_list(company)` reads the members with their address from
+  `auth.users`, for whoever holds `members.manage`. The MCP server gains
+  `remove_member` and `set_member_role`.
+
 ### Changed
 
 - **The `ee/` directory is gone, and the paid line is described as what it is:

@@ -121,6 +121,43 @@ describe('invitations through the server', () => {
   });
 });
 
+describe('removing a member and changing a role through the server', () => {
+  it('moves a member to another preset, then takes them out', async () => {
+    const member = await newUser(db, 'moving@mcp.test');
+    await db.query(
+      `insert into company_members (company_id, user_id, role) values ($1, $2, 'viewer')`,
+      [fx.companyId, member],
+    );
+
+    const changed = record(
+      await writeTools.setMemberRole(asOwner, {
+        company_id: fx.companyId,
+        user_id: member,
+        role: 'accountant',
+      }),
+    );
+    expect(record(changed['member'])['role']).toBe('accountant');
+
+    const removed = record(
+      await writeTools.removeMember(asOwner, { company_id: fx.companyId, user_id: member }),
+    );
+    expect(record(removed['removed'])['user_id']).toBe(member);
+  });
+
+  it('hands back the refusals of the database: members.manage, and the last owner', async () => {
+    await expect(
+      writeTools.setMemberRole(asAccountant, {
+        company_id: fx.companyId,
+        user_id: fx.ownerId,
+        role: 'viewer',
+      }),
+    ).rejects.toThrow(/members\.manage/);
+    await expect(
+      writeTools.removeMember(asOwner, { company_id: fx.companyId, user_id: fx.ownerId }),
+    ).rejects.toThrow(/last_owner/);
+  });
+});
+
 describe('preferences through the server', () => {
   it('saves what the caller named, and resolves the language chain', async () => {
     const saved = record(await writeTools.setPreferences(asOwner, { language: 'nl' }));

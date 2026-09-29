@@ -273,6 +273,7 @@ Every write names its company explicitly.
 | `update_company_profile` | What a company says about itself on its documents |
 | `set_preferences` | Your own language, timezone, formats and default company |
 | `invite_member` / `revoke_invitation` | Invites an address into a company, or withdraws the invitation. The token is shown once |
+| `remove_member` / `set_member_role` | Takes a member out of a company — leaving oneself needs no `members.manage` — or moves them to another preset, clearing their per-member adjustments. The last owner is neither removed nor demoted |
 | `create_api_key` / `revoke_api_key` | A key for a machine, scoped to one company and a list of capabilities |
 
 **`list_accounts` answers with the working chart, not the whole one.** A
@@ -290,8 +291,8 @@ tool still accepts one.
 
 `post_document`, `cancel_document`, `reverse_entry`, `record_payment`,
 `update_document_lines`, `unreconcile`, `lock_period`, `opening_balance`, `import_books`,
-`close_fiscal_year`, `reopen_fiscal_year`, `revoke_invitation` and
-`revoke_api_key` are annotated destructive in the protocol, so a client can ask
+`close_fiscal_year`, `reopen_fiscal_year`, `revoke_invitation`, `remove_member`,
+`set_member_role` and `revoke_api_key` are annotated destructive in the protocol, so a client can ask
 before calling them.
 
 **What a tool may do is the capability the user holds**, not the tool's own

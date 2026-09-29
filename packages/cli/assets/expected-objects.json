@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.9.0",
-  "migration": "20260929103358",
+  "migration": "20260929170005",
   "socle": {
     "schema": "public",
     "tables": [
@@ -3896,6 +3896,10 @@
         "arguments": ""
       },
       {
+        "name": "company_members_list",
+        "arguments": "p_company_id uuid"
+      },
+      {
         "name": "company_role",
         "arguments": "p_company_id uuid"
       },
@@ -4384,6 +4388,10 @@
         "arguments": "p_document_id uuid"
       },
       {
+        "name": "remove_member",
+        "arguments": "p_company_id uuid, p_user_id uuid"
+      },
+      {
         "name": "reopen_filing",
         "arguments": "p_filing_id uuid"
       },
@@ -4426,6 +4434,10 @@
       {
         "name": "rounding_of",
         "arguments": "p_company_id uuid, p_currency_code text"
+      },
+      {
+        "name": "set_member_role",
+        "arguments": "p_company_id uuid, p_user_id uuid, p_role member_role, p_capabilities jsonb"
       },
       {
         "name": "set_preferences",
@@ -7234,6 +7246,17 @@
           "service_role": []
         },
         {
+          "name": "company_members_list",
+          "arguments": "p_company_id uuid",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
           "name": "company_role",
           "arguments": "p_company_id uuid",
           "anon": [
@@ -8526,6 +8549,17 @@
           ]
         },
         {
+          "name": "remove_member",
+          "arguments": "p_company_id uuid, p_user_id uuid",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
           "name": "reopen_filing",
           "arguments": "p_filing_id uuid",
           "anon": [],
@@ -8638,6 +8672,17 @@
         {
           "name": "rounding_of",
           "arguments": "p_company_id uuid, p_currency_code text",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "set_member_role",
+          "arguments": "p_company_id uuid, p_user_id uuid, p_role member_role, p_capabilities jsonb",
           "anon": [],
           "authenticated": [
             "execute"

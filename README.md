@@ -497,6 +497,15 @@ An invitation is single use, expires, and is withdrawn with
 `list_invitations` and `revoke_invitation`; accepting is the invitee's own act
 and has no tool.
 
+**Removing a member, or changing their preset.** `remove_member(:company,
+:user)` takes somebody out — leaving a company oneself needs no
+`members.manage` — and `set_member_role(:company, :user, 'viewer')` moves a
+member to another preset, clearing the capabilities granted or revoked on them
+so far. Neither lets the last owner of a company go: promote the successor
+first. `company_members_list(:company)` lists the members with the address
+each signed up with, for whoever holds `members.manage`. The MCP server offers
+`remove_member` and `set_member_role`.
+
 ## Keys for machines
 
 A script — a nightly import, a till, a bank feed — has no browser to sign in

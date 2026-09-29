@@ -71,6 +71,8 @@ const WRITE_TOOLS = [
   'create_api_key',
   'revoke_api_key',
   'revoke_invitation',
+  'remove_member',
+  'set_member_role',
   'share_document',
   'revoke_share',
   'lock_period',

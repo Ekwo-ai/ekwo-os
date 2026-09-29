@@ -638,11 +638,35 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     {
       title: 'Withdraw an invitation',
       description:
-        'Withdraws an invitation that has not been accepted, so its token stops working. An invitation that has already become a membership is refused: a member is removed from the company, which is a different act and not one this server does.',
+        'Withdraws an invitation that has not been accepted, so its token stops working. An invitation that has already become a membership is refused: a member is taken out with remove_member.',
       inputSchema: write.RevokeInvitationInput.shape,
       annotations: { readOnlyHint: false, destructiveHint: true, idempotentHint: true, openWorldHint: false },
     },
     async (args) => guard(() => write.revokeInvitation(backend, args)),
+  );
+
+  server.registerTool(
+    'remove_member',
+    {
+      title: 'Take somebody out of a company',
+      description:
+        'Removes a member from a company, now: they stop reading and writing its books. Needs members.manage, except to leave a company yourself. The last owner of a company is refused, themself included; make somebody else owner with set_member_role first. Their pending invitations are not touched. Say who is being removed before calling it.',
+      inputSchema: write.RemoveMemberInput.shape,
+      annotations: { readOnlyHint: false, destructiveHint: true, idempotentHint: false, openWorldHint: false },
+    },
+    async (args) => guard(() => write.removeMember(backend, args)),
+  );
+
+  server.registerTool(
+    'set_member_role',
+    {
+      title: 'Move a member to another preset',
+      description:
+        'Changes the preset of a member of a company — viewer reads, client reads and hands pieces over, accountant keeps the books, owner also administers. Needs members.manage. The capabilities granted or revoked on that member so far are cleared, and the ones you pass are granted on top of the new preset, the way an invitation writes a new member. The last owner of a company cannot be demoted: promote the successor first.',
+      inputSchema: write.SetMemberRoleInput.shape,
+      annotations: { readOnlyHint: false, destructiveHint: true, idempotentHint: true, openWorldHint: false },
+    },
+    async (args) => guard(() => write.setMemberRole(backend, args)),
   );
 
   server.registerTool(

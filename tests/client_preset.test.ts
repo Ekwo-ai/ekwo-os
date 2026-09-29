@@ -962,6 +962,12 @@ describe('a client writes nothing else — by the function', () => {
         params: [mine.companyId],
       },
       'public.revoke_invitation': { sql: `select revoke_invitation($1)`, params: [mine.invitationId] },
+      // Leaving is theirs to do; taking the firm's accountant out is not.
+      'public.remove_member': { sql: `select remove_member($1, $2)`, params: [mine.companyId, accountantId] },
+      'public.set_member_role': {
+        sql: `select set_member_role($1, $2, 'owner')`,
+        params: [mine.companyId, clientId],
+      },
       'public.create_api_key': {
         sql: `select * from create_api_key($1, 'A key of their own', '["entries.write"]'::jsonb)`,
         params: [mine.companyId],
