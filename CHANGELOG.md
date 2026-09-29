@@ -57,6 +57,53 @@ somewhere has already run it.
 
 ### Changed
 
+- **The fixed assets module says which assets it means** (`20260929151742`,
+  module version 2.0.0). In accounting English *assets* is the whole left side
+  of the balance sheet — stock and receivables included — and this module keeps
+  only fixed assets: a register, its depreciation and its disposals. Every name
+  that said `assets` alone now says `fixed_assets`:
+
+  | Before | From this release |
+  |---|---|
+  | schema `assets` | `fixed_assets` |
+  | table `assets.assets` | `fixed_assets.fixed_assets` |
+  | `assets.create_asset()`, `assets.dispose_asset()` | `fixed_assets.create_fixed_asset()`, `fixed_assets.dispose_fixed_asset()` |
+  | constraints, indexes, policies and triggers `assets_…` | `fixed_assets_…` |
+  | MCP tools `assets_list`, `assets_create`, `assets_schedule`, `assets_run_depreciation`, `assets_dispose` | `fixed_assets_list`, `fixed_assets_create`, `fixed_assets_schedule`, `fixed_assets_run_depreciation`, `fixed_assets_dispose` |
+  | pack section `packs/<cc>/assets.json` | `packs/<cc>/fixed_assets.json` |
+  | seeds `supabase/seed/modules/assets/` | `supabase/seed/modules/fixed_assets/` |
+  | folder `modules/assets/` | `modules/fixed-assets/` |
+  | refusal `no_assets_country_rules` | `no_fixed_assets_country_rules` |
+
+  **What does not change: the module code, `assets`.** It is the key of
+  `public.modules` and it is written on every entry the module has posted, and
+  a posted entry does not move. So `ekwo module enable assets`,
+  `enable_module(company, 'assets')` and the capabilities `assets.read`,
+  `assets.write` and `assets.post` stay, and so does every right a member or a
+  key holds. [Decision 0063](docs/decisions/0063-a-module-code-outlives-its-names.md)
+  says why.
+
+  **Upgrading.** `ekwo migrate` renames in place — `alter schema … rename`,
+  every row, schedule and posted entry kept to the cent, safe to run twice —
+  and a fresh installation applies the same migration after the others, so
+  both reach one catalogue. Then **replace `assets` with `fixed_assets` in the
+  exposed schemas of the project** (Supabase → Project Settings → API), which
+  no migration can do; `ekwo migrate` says so when it has renamed a schema. A
+  pack of your own renames `assets.json` to `fixed_assets.json`, and
+  `ekwo pack check` names the file until it is done. French labels are
+  unchanged: the categories are still « immobilisations ».
+
+  A company archive written before the rename is taken in as it is: a module
+  now declares the names its tables were once exported under in
+  `<schema>.archive_former_names()`, and `import_company()` reads an archive
+  under the names of today through `archive_under_current_names()`
+  (`20260929151700`). Only names move; the checksums are over the rows.
+
+  In the command line's library, `Pack.assets` is `Pack.fixedAssets`, and
+  `compileAssetsSeed` and `PackAssets` are `compileFixedAssetsSeed` and
+  `PackFixedAssets`; a module folder is found by its manifest, and need not be
+  named after its code.
+
 - **The `ee/` directory is gone, and the paid line is described as what it is:
   a set of services.** The folder had been there since the first release, empty,
   with a commercial licence of its own, waiting for code that would ship beside
@@ -77,6 +124,17 @@ somewhere has already run it.
   packaging guard of `tests/cli/package.test.ts` is stated positively: every
   file of the published package has a source in `supabase/`, in `modules/` or
   in the CLI's assets, and a fourth place would fail the test.
+
+### Deprecated
+
+- **The MCP tools `assets_list`, `assets_create`, `assets_schedule`,
+  `assets_run_depreciation` and `assets_dispose`** are the former names of the
+  `fixed_assets_*` tools. They are still registered, do the same thing and say
+  in their description that they are deprecated; they are removed in 0.11.0.
+  The same goes for `compileAssetsSeed` and `PackAssets` in the command line's
+  library. The tool `fixed_assets_list` answers the register under
+  `fixed_assets`, where `assets_list` answered it under `assets`, and the
+  deprecated name answers the same way.
 
 ### Security
 

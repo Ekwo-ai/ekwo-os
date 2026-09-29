@@ -288,7 +288,7 @@ mandatory had been introduced in Parliament at the date of this pack.
 - **Employees' tax (PAYE), UIF, the Skills Development Levy and provisional
   tax** as anything but placeholder accounts: Ekwo has no payroll or income
   tax module.
-- **Fixed assets.** No `assets.json`.
+- **Fixed assets.** No `fixed_assets.json`.
 - **Bank formats.** No statement format is declared.
 
 ## Reviewing this pack

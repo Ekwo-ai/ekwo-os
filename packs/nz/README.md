@@ -357,7 +357,7 @@ invented fact this pack's sourcing rule forbids.
   for electronic marketplaces: both are obligations of an offshore supplier or
   a marketplace operator, never of the New Zealand business this pack books.
 - **GST groups and branches**, and the margin scheme for secondhand goods.
-- **Fixed assets.** No `assets.json`.
+- **Fixed assets.** No `fixed_assets.json`.
 - **Bank formats.** No statement format is declared.
 - **myIR filing.** The return is lodged through myIR or accounting software;
   submitting it is a format library and a credential, not a pack.

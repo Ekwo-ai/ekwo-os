@@ -271,7 +271,7 @@ General Guide's own permission. `einvoicing.obligation` is `none`: at
   whether Bahrain levies one.
 - **The hydrocarbon sector's own income tax regime**, beyond the two
   accounts named for it.
-- **Fixed assets.** No `assets.json`: whether a usual depreciation duration
+- **Fixed assets.** No `fixed_assets.json`: whether a usual depreciation duration
   is prescribed by a text this research pass could open was not
   established.
 - **Bank formats.** Nothing checked here says which formats Bahraini banks

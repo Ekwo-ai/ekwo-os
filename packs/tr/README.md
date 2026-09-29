@@ -224,7 +224,7 @@ tutan hiçbir mükellef kâğıt fatura düzenleyemez.
   bir özel entegratöre ileten bir `packages/formats/` bileşeni yoktur.
 - **Kurumlar vergisi.** `370` hesabı elle kayıt için vardır, hiçbir vergi
   kodu ona kayıt yapmaz.
-- **Sabit kıymetler.** `assets.json` yoktur; VUK'un amortisman oranları ve
+- **Sabit kıymetler.** `fixed_assets.json` yoktur; VUK'un amortisman oranları ve
   faydalı ömürleri bu araştırmanın dışındadır.
 - **Banka formatları.** Türk bankalarının hangi dosya biçimini
   gönderdiği bu araştırmada doğrulanmamıştır; `pack.json`'da `bank` bölümü

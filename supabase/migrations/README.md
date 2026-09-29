@@ -197,7 +197,7 @@ doc. A migration without a test is a migration nobody has run.
 
 ## A module's migrations are not in this folder
 
-They live in `modules/<code>/supabase/migrations/` and follow every rule above,
+They live in `modules/<folder>/supabase/migrations/` and follow every rule above,
 with two of their own. They are recorded in **the same history** —
 `supabase_migrations.schema_migrations`, the plain timestamp as `version`, the
 module in the `name` (`assets/assets`) — and **their timestamps sort after every

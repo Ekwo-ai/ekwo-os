@@ -362,7 +362,7 @@ pack computes nothing.
 
 ## Fixed assets
 
-`assets.json` is the part of this pack that is most plainly **practice rather
+`fixed_assets.json` is the part of this pack that is most plainly **practice rather
 than law**, and it is worth saying why in one sentence: the United States has
 two depreciation systems and they have nothing to do with each other.
 

@@ -1071,10 +1071,10 @@ or mid-quarter convention, a mid-month convention for real property, and a
 switch from double declining balance to the straight line. They are not
 variations of one thing — they are two computations over the same asset that an
 American company keeps side by side for its whole life, and the difference
-between them is a deferred tax. `assets.json` carries one plan per category.
+between them is a deferred tax. `fixed_assets.json` carries one plan per category.
 *Fix*: a second plan per category, or a category that names a purpose, so that
 one asset can carry an accounting schedule and a tax schedule. *Until then*:
-`packs/us/assets.json` is the accounting one, every category says so, and
+`packs/us/fixed_assets.json` is the accounting one, every category says so, and
 `docs/international.md` has always listed MACRS as deliberately out of scope —
 which was the right call for a module and is not an answer for a country.
 

@@ -255,7 +255,7 @@ izdatog računa.
   nivou pojedinačnog reda — vidi „Bilans stanja i Bilans uspeha” gore.
 - **Paušalna nadoknada PDV poljoprivrednicima** (kutija 007/107, član 34.
   Zakona) — kutija postoji, nijedan porez je ne dostiže.
-- **Osnovna sredstva.** `assets.json` ne postoji; stope amortizacije za
+- **Osnovna sredstva.** `fixed_assets.json` ne postoji; stope amortizacije za
   poreske i računovodstvene svrhe su van ovog istraživanja.
 - **Bankarski formati.** Nijedan format izvoda ili naloga za plaćanje
   srpskih banaka nije proveren ovim istraživanjem; odeljak `bank` u

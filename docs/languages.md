@@ -47,7 +47,7 @@ Everything a person reads off the screen because a country said so:
 | Boxes of a declaration | `tax_report_box_templates.name` / `name_i18n` |
 | Lines of a financial statement | `statement_line_templates.name` / `name_i18n` |
 | Sentences an invoice must print | `legal_mention_templates.text` / `text_i18n` |
-| Fixed-asset categories | `assets.category_templates.name` / `name_i18n` |
+| Fixed-asset categories | `fixed_assets.category_templates.name` / `name_i18n` |
 | The country's own name | `country_defaults.name` / `name_i18n` |
 
 The shape is always the same. `name` holds the label in one language, and

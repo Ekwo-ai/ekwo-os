@@ -4,10 +4,10 @@ The socle is `public`: companies, accounts, taxes, entries, documents, the
 reports. What is built beside it lives here, one folder and one schema per
 module.
 
-| Module | Schema | Posts to the ledger | Country data |
-|---|---|---|---|
-| [`assets`](assets/) | `assets` | yes, through `post_module_entry()` | `packs/<cc>/assets.json` |
-| [`budgets`](budgets/) | `budgets` | no | none |
+| Module code | Folder | Schema | Posts to the ledger | Country data |
+|---|---|---|---|---|
+| `assets` | [`fixed-assets`](fixed-assets/) | `fixed_assets` | yes, through `post_module_entry()` | `packs/<cc>/fixed_assets.json` |
+| `budgets` | [`budgets`](budgets/) | `budgets` | no | none |
 
 `schema/module.1.json` is the published shape of a `module.json`, and
 `ekwo module list` refuses one that does not match it.
@@ -24,14 +24,17 @@ module.
 4. **A module does its own grants.** `public` gets them from Supabase; a schema
    a migration created gets nothing.
 5. **A country is data.** No module names one. What Belgium decides is in
-   `packs/be/<section>.json` and compiles into `supabase/seed/modules/<code>/`.
+   `packs/be/<section>.json` and compiles into `supabase/seed/modules/<section>/`.
 6. **The registry is a table.** The last statement of a module's first
    migration writes its row into `public.modules`.
 
-Migrations live in `<code>/supabase/migrations/`, share the socle's history
+Migrations live in `<folder>/supabase/migrations/`, share the socle's history
 with the module in the recorded `name`, and their timestamps sort after the
-socle migration the manifest declares it needs, `requires_socle_min`. Tests live in `<code>/tests/` and the root `npm test` runs
-them.
+socle migration the manifest declares it needs, `requires_socle_min`. Tests live in `<folder>/tests/` and the root `npm test` runs
+them. The folder is named after what the module is and need not be its code:
+the code is written on every entry a module posts and never changes, a folder
+and a schema may be renamed — `fixed-assets` and `fixed_assets` were both
+`assets` until version 2.0.0 of that module.
 
 The full version, and how to write a module in a day, is
 [`docs/modules.md`](../docs/modules.md). Why it is shaped this way is in

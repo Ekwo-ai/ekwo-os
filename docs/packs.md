@@ -19,7 +19,7 @@ packs/be/
 ├── taxes.json         taxes and their postings, per kind of document
 ├── tax_report.json    the boxes of the periodic return and their totals
 ├── statements.json    the balance sheet, the income statement and their rules
-├── assets.json        the section of the fixed assets module, where the country has one
+├── fixed_assets.json  the section of the fixed assets module, where the country has one
 ├── golden/
 │   ├── scenario.json  one year of books: documents, payments, the periods filed
 │   ├── vat_return.json    what the declaration comes to, period by period
@@ -334,7 +334,7 @@ anything now. `ekwo pack check` refuses a pack that declares no number, and
 |---|---|
 | `packs/generic/` | `supabase/seed/05_framework_generic.sql` |
 | `packs/<cc>/` | `supabase/seed/<n>_pack_<cc>.sql`, where `<n>` is the number the manifest declares in `seed_sequence` — the table [above](#the-packs-of-this-checkout) gives each pack's. Packs take 10 to 89, then 100 to 899; 90 to 99 are kept for what runs after every pack (the demo company at 90). **A number that has shipped never moves**, whatever is added beside it |
-| `packs/<cc>/assets.json`, where the pack has one | `supabase/seed/modules/assets/<n>_pack_<cc>.sql`, applied by the module migration runner and by nothing else |
+| `packs/<cc>/fixed_assets.json`, where the pack has one | `supabase/seed/modules/fixed_assets/<n>_pack_<cc>.sql`, applied by the module migration runner and by nothing else |
 | every pack, together | the lists that name them outside `packs/`: `[db.seed] sql_paths` in `supabase/config.toml`, the `psql -f` lines of the README, the `/packs/<cc>/` lines of `.github/CODEOWNERS` and the table above. Only the block between `generated:<name>` and `/generated` is written; the prose around it is not. A handle written on a pack's CODEOWNERS line is kept, and a new pack gets the owner of `*` |
 
 The compiler writes `chart_templates`, `account_templates`,
@@ -342,7 +342,7 @@ The compiler writes `chart_templates`, `account_templates`,
 `tax_report_templates`, `tax_report_box_templates`, `statement_templates`,
 `statement_line_templates`, `statement_line_rules`, `legal_mention_templates`,
 `country_defaults`, `country_packs` and — for a module section —
-`assets.country_rules` and `assets.category_templates`, and **nothing that
+`fixed_assets.country_rules` and `fixed_assets.category_templates`, and **nothing that
 belongs to a company**. Every insert upserts on the natural key —
 `(country, chart_code, code)` for an account, `(country, code)` for the rest —
 which matters more than it sounds: the seeds used to say
@@ -379,7 +379,7 @@ Checking
   · 05_framework_generic.sql
 ✗ 10_pack_be.sql is not the output of packs/be
           golden: 12 documents, 4 payments, 4 period(s) of Exercice 2026
-  · modules/assets/10_pack_be.sql
+  · modules/fixed_assets/10_pack_be.sql
   · 21_pack_ci.sql
           golden: 12 documents, 4 payments, 4 period(s) of Exercice 2026
   …
@@ -1472,7 +1472,7 @@ edit, which is how the return of a past period keeps giving the same answer.
 
 The pack's own files are written in `defaults.language`. Every other language
 is one file, `i18n/<lang>.json`, and that file is the only place a translation
-lives — the manifest carries no second wording and neither does `assets.json`.
+lives — the manifest carries no second wording and neither does `fixed_assets.json`.
 One file per language means a contributor edits one file and a reviewer reads
 one file.
 
@@ -1848,7 +1848,7 @@ be an `account_type` rule, because the other three kinds name a chart and a
 framework has none; and the exemption from a golden is required, in at least a
 sentence.
 
-**The module sections.** For `assets`: a disposal style that does not name the
+**The module sections.** For `fixed_assets`: a disposal style that does not name the
 accounts it needs — `net_result` the gain, `gross` both the proceeds and the
 value — two categories with the same code, a declining balance with no
 coefficient, a coefficient on a method that is not declining, and a category
@@ -2345,7 +2345,7 @@ node packages/cli/dist/bin.js pack check --all
 ```
 
 `build` writes `supabase/seed/<n>_pack_xx.sql` — and
-`supabase/seed/modules/assets/<n>_pack_xx.sql` if your pack carries an `assets`
+`supabase/seed/modules/fixed_assets/<n>_pack_xx.sql` if your pack carries a `fixed_assets`
 section — and then **every list that names the packs outside `packs/`**: the
 seed goes into `[db.seed] sql_paths` of `supabase/config.toml` and into the
 `psql -f` lines of the README, your country into the README's list and into

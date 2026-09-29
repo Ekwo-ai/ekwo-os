@@ -216,7 +216,7 @@ accounts, a tax or a declaration form.
   acquisition is; the pack has no customs document to hang it on.
 - **The frivillig registrering (voluntary registration) for letting of
   immovable property**, § 51, noted above under Taxes.
-- **The fixed assets module.** There is no `assets.json`: the usual
+- **The fixed assets module.** There is no `fixed_assets.json`: the usual
   depreciation practice under årsregnskabsloven is a matter of estimate
   (§ 43) rather than a table a statute sets out, and this pack cites texts.
 - **The XBRL fact keys of the annual report.** Danish annual reports are

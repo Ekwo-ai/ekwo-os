@@ -84,6 +84,7 @@ records it relies on). New records take the next free number.
 - [0049](0049-a-statement-reader-reports-and-never-corrects.md) — A statement reader reports and never corrects
 - [0050](0050-an-invoice-is-written-from-the-books.md) — An invoice file is written from the books
 - [0051](0051-a-module-has-its-own-schema.md) — A module has its own schema and posts through a function
+- [0063](0063-a-module-code-outlives-its-names.md) — A module code outlives its names
 
 ## Installer, command line and MCP server
 

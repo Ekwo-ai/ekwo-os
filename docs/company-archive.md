@@ -142,7 +142,7 @@ Everything the database holds about the company:
 | Declarations | `tax_filings`, the figures each was frozen with in `tax_filing_boxes`, and the proof each one went in `tax_filing_deposits` |
 | Pieces | `attachments` — the rows |
 | The trail | `audit_log` of the company |
-| Modules | `assets.assets`, `assets.depreciation_lines`, `assets.disposals`, `budgets.budgets`, `budgets.lines` |
+| Modules | `fixed_assets.fixed_assets`, `fixed_assets.depreciation_lines`, `fixed_assets.disposals`, `budgets.budgets`, `budgets.lines` |
 
 ## What does not, and why
 
@@ -286,7 +286,7 @@ A module answers for its own tables with a function in its own schema, looked
 up the way `can_disable()` is:
 
 ```sql
-create function assets.archive_tables()
+create function fixed_assets.archive_tables()
 returns table (table_name text, disposition text, reason text,
                via_column text, via_table text, load_order integer) …
 ```
