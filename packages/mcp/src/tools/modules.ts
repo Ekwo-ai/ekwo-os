@@ -2,9 +2,14 @@
  * The tools of the modules, and the loader that puts them on the server.
  *
  * A module is a schema of its own, so its tools are named after it —
- * `assets_list`, `budgets_variance` — and a model reading a tool list can tell
- * which module answers for what. The prefix is in `module.json`, and a test
- * holds the tool names to it.
+ * `fixed_assets_list`, `budgets_variance` — and a model reading a tool list
+ * can tell which module answers for what. The prefix is in `module.json`, and
+ * a test holds the tool names to it.
+ *
+ * **A prefix that changed keeps its former name for one release.** The fixed
+ * assets tools were `assets_*` until 0.10.0; a client configured against those
+ * names still finds them, marked deprecated in their description, until the
+ * release `deprecatedPrefix.until` names.
  *
  * **Nothing here decides what is installed.** `public.modules` does, and the
  * server asks it at startup: a module whose migrations have never run has no
@@ -31,6 +36,11 @@ export interface ModuleToolset {
   code: string;
   /** Every tool of this module is `<prefix>_<verb>`. */
   prefix: string;
+  /**
+   * A prefix this module's tools had before, still registered beside the new
+   * one — every tool under both names — until the release it names.
+   */
+  deprecatedPrefix?: { prefix: string; until: string };
   /** The schema its objects live in, for the message when it is not exposed. */
   schema: string;
   tools: ModuleTool[];
@@ -67,13 +77,14 @@ export async function inSchema<T>(schema: string, run: () => Promise<T>): Promis
 }
 
 // ---------------------------------------------------------------------------
-// assets
+// fixed assets — module code `assets`, schema `fixed_assets`
 // ---------------------------------------------------------------------------
 
-const ASSETS: ModuleToolset = {
+const FIXED_ASSETS: ModuleToolset = {
   code: 'assets',
-  prefix: 'assets',
-  schema: 'assets',
+  prefix: 'fixed_assets',
+  deprecatedPrefix: { prefix: 'assets', until: '0.11.0' },
+  schema: 'fixed_assets',
   tools: [
     {
       verb: 'list',
@@ -87,12 +98,12 @@ const ASSETS: ModuleToolset = {
       }),
       async run(backend, args) {
         const at = args['at'] as unknown as string;
-        const rows = await inSchema('assets', () =>
-          backend.rpc<Row>('register', { p_company_id: args['company_id'], p_at: at }, 'assets'),
+        const rows = await inSchema('fixed_assets', () =>
+          backend.rpc<Row>('register', { p_company_id: args['company_id'], p_at: at }, 'fixed_assets'),
         );
         return {
           at,
-          assets: rows.map((row) => ({
+          fixed_assets: rows.map((row) => ({
             ...row,
             cost: money(row['cost']),
             accumulated: money(row['accumulated']),
@@ -106,7 +117,7 @@ const ASSETS: ModuleToolset = {
       title: 'Record a fixed asset',
       readOnly: false,
       description:
-        'Creates a fixed asset and writes its depreciation schedule in one call. Give a `category_code` from the country pack — assets_categories lists them — and the method, the duration and the coefficient come from it; anything you pass yourself wins over the category. The three accounts are the asset account, the accumulated depreciation account and the depreciation charge. Nothing is booked here: assets_run_depreciation is what posts.',
+        'Creates a fixed asset and writes its depreciation schedule in one call. Give a `category_code` of the country pack — the categories are those of its `fixed_assets.json` — and the method, the duration and the coefficient come from it; anything you pass yourself wins over the category. The three accounts are the asset account, the accumulated depreciation account and the depreciation charge. Nothing is booked here: fixed_assets_run_depreciation is what posts.',
       input: z.object({
         company_id: companyId,
         code: z.string().min(1).describe('Your own reference for the asset. Unique in the company.'),
@@ -127,9 +138,9 @@ const ASSETS: ModuleToolset = {
       async run(backend, args) {
         // A function returning a scalar comes back as the scalar, on either
         // backend: `opening_balance` is read the same way.
-        const created = await inSchema('assets', () =>
+        const created = await inSchema('fixed_assets', () =>
           backend.rpc<string>(
-            'create_asset',
+            'create_fixed_asset',
             {
               p_company_id: args['company_id'],
               p_code: args['code'],
@@ -147,7 +158,7 @@ const ASSETS: ModuleToolset = {
               p_in_service_date: args['in_service_date'] ?? null,
               p_description: args['description'] ?? null,
             },
-            'assets',
+            'fixed_assets',
           ),
         );
         return { asset_id: created[0] ?? null };
@@ -161,9 +172,9 @@ const ASSETS: ModuleToolset = {
         'The planned depreciation of one asset, period by period, with the amount, the accumulated total and the net book value after each one, and the entry that booked it where it has been booked. The schedule always sums to exactly the cost less the residual value: the last line takes the remainder.',
       input: z.object({ company_id: companyId, asset_id: uuid }),
       async run(backend, args) {
-        const lines = await inSchema('assets', () =>
+        const lines = await inSchema('fixed_assets', () =>
           backend.select<Row>({
-            schema: 'assets',
+            schema: 'fixed_assets',
             table: 'depreciation_lines',
             columns: [
               'sequence',
@@ -196,11 +207,11 @@ const ASSETS: ModuleToolset = {
         period_end: isoDate.describe('Book everything up to and including this date.'),
       }),
       async run(backend, args) {
-        const result = await inSchema('assets', () =>
+        const result = await inSchema('fixed_assets', () =>
           backend.rpc<{ entries: unknown[] }>(
             'run_depreciation',
             { p_company_id: args['company_id'], p_period_end: args['period_end'] },
-            'assets',
+            'fixed_assets',
           ),
         );
         return result[0] ?? { entries: [] };
@@ -211,7 +222,7 @@ const ASSETS: ModuleToolset = {
       title: 'Dispose of a fixed asset',
       readOnly: false,
       description:
-        'Takes an asset off the books on a date: clears its cost and its accumulated depreciation, books the proceeds against the account you name, and presents the result the way the country pack says — one gain or loss line, or the value sold and the proceeds in full. Run assets_run_depreciation first: a disposal is refused while a period that has already ended is still unbooked. There is no undo.',
+        'Takes an asset off the books on a date: clears its cost and its accumulated depreciation, books the proceeds against the account you name, and presents the result the way the country pack says — one gain or loss line, or the value sold and the proceeds in full. Run fixed_assets_run_depreciation first: a disposal is refused while a period that has already ended is still unbooked. There is no undo.',
       input: z.object({
         company_id: companyId,
         asset_id: uuid,
@@ -224,9 +235,9 @@ const ASSETS: ModuleToolset = {
         contact_id: uuid.optional().describe('Who bought it.'),
       }),
       async run(backend, args) {
-        const result = await inSchema('assets', () =>
+        const result = await inSchema('fixed_assets', () =>
           backend.rpc<string>(
-            'dispose_asset',
+            'dispose_fixed_asset',
             {
               p_asset_id: args['asset_id'],
               p_date: args['disposal_date'],
@@ -234,7 +245,7 @@ const ASSETS: ModuleToolset = {
               p_counterpart_account: args['counterpart_account'] ?? null,
               p_contact_id: args['contact_id'] ?? null,
             },
-            'assets',
+            'fixed_assets',
           ),
         );
         return { entry_id: result[0] ?? null };
@@ -393,7 +404,7 @@ const BUDGETS: ModuleToolset = {
 };
 
 /** Every module this release knows how to expose, by module code. */
-export const MODULE_TOOLSETS: readonly ModuleToolset[] = [ASSETS, BUDGETS];
+export const MODULE_TOOLSETS: readonly ModuleToolset[] = [FIXED_ASSETS, BUDGETS];
 
 /** The toolsets for a set of installed module codes, in a fixed order. */
 export function toolsetsFor(installed: readonly string[]): ModuleToolset[] {

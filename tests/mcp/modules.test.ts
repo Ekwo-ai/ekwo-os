@@ -4,7 +4,7 @@
  * What is checked here is the loader as much as the tools: a module that is
  * not installed is not offered, one that is installed is, and every tool name
  * is the prefix its `module.json` declares. The handlers themselves are thin —
- * the arithmetic is tested in `modules/assets/tests` — so what they are held to
+ * the arithmetic is tested in `modules/fixed-assets/tests` — so what they are held to
  * is the shape a model receives.
  */
 
@@ -69,7 +69,9 @@ describe('the loader', () => {
   it('offers nothing when no module is installed', async () => {
     const client = await connect([]);
     const names = (await client.listTools()).tools.map((tool) => tool.name);
-    expect(names.filter((name) => name.startsWith('assets_') || name.startsWith('budgets_'))).toEqual([]);
+    expect(
+      names.filter((name) => /^(fixed_assets|assets|budgets)_/.test(name)),
+    ).toEqual([]);
     await client.close();
   });
 
@@ -93,18 +95,37 @@ describe('the loader', () => {
       }
     }
 
-    expect(names.filter((name) => name.startsWith('assets_')).sort()).toEqual([
-      'assets_create',
-      'assets_dispose',
-      'assets_list',
-      'assets_run_depreciation',
-      'assets_schedule',
+    expect(names.filter((name) => name.startsWith('fixed_assets_')).sort()).toEqual([
+      'fixed_assets_create',
+      'fixed_assets_dispose',
+      'fixed_assets_list',
+      'fixed_assets_run_depreciation',
+      'fixed_assets_schedule',
     ]);
     expect(names.filter((name) => name.startsWith('budgets_')).sort()).toEqual([
       'budgets_list',
       'budgets_upsert_lines',
       'budgets_variance',
     ]);
+    await client.close();
+  });
+
+  it('keeps a former prefix as a deprecated name of the same tool, for one release', async () => {
+    const client = await connect(['assets']);
+    const tools = (await client.listTools()).tools;
+    const former = tools.filter((tool) => tool.name.startsWith('assets_'));
+    expect(former.map((tool) => tool.name).sort()).toEqual([
+      'assets_create',
+      'assets_dispose',
+      'assets_list',
+      'assets_run_depreciation',
+      'assets_schedule',
+    ]);
+    for (const tool of former) {
+      expect(tool.description).toMatch(
+        new RegExp(`^Deprecated: the former name of fixed_${tool.name}\\b.*removed in 0\\.11\\.0`),
+      );
+    }
     await client.close();
   });
 
@@ -116,7 +137,7 @@ describe('the loader', () => {
   });
 });
 
-describe('the assets tools', () => {
+describe('the fixed assets tools', () => {
   let client: Client;
 
   beforeAll(async () => {
@@ -129,7 +150,7 @@ describe('the assets tools', () => {
 
   it('create an asset, read its schedule, book it and dispose of it', async () => {
     const created = record(
-      await call(client, 'assets_create', {
+      await call(client, 'fixed_assets_create', {
         company_id: companyId,
         code: 'IT-01',
         name: 'Portable',
@@ -144,7 +165,7 @@ describe('the assets tools', () => {
     expect(created['asset_id']).toBeTruthy();
 
     const schedule = record(
-      await call(client, 'assets_schedule', {
+      await call(client, 'fixed_assets_schedule', {
         company_id: companyId,
         asset_id: created['asset_id'],
       }),
@@ -153,15 +174,15 @@ describe('the assets tools', () => {
     expect(lines.map((line) => line.amount)).toEqual(['1200.00', '1200.00', '1200.00']);
 
     const run = record(
-      await call(client, 'assets_run_depreciation', {
+      await call(client, 'fixed_assets_run_depreciation', {
         company_id: companyId,
         period_end: '2026-12-31',
       }),
     );
     expect((run['entries'] as { amount: string }[]).map((e) => e.amount)).toEqual(['1200.00']);
 
-    const register = record(await call(client, 'assets_list', { company_id: companyId, at: '2026-12-31' }));
-    expect(register['assets']).toEqual([
+    const register = record(await call(client, 'fixed_assets_list', { company_id: companyId, at: '2026-12-31' }));
+    expect(register['fixed_assets']).toEqual([
       {
         code: 'IT-01',
         name: 'Portable',
@@ -175,7 +196,7 @@ describe('the assets tools', () => {
     ]);
 
     const disposal = record(
-      await call(client, 'assets_dispose', {
+      await call(client, 'fixed_assets_dispose', {
         company_id: companyId,
         asset_id: created['asset_id'],
         disposal_date: '2027-01-10',
@@ -200,10 +221,10 @@ describe('the assets tools', () => {
     ]);
   });
 
-  it('report the socle refusal rather than paraphrasing it', async () => {
+  it('report the socle refusal rather than paraphrasing it, under the deprecated name too', async () => {
     await db.query(`update companies set lock_date = date '2027-12-31' where id = $1`, [companyId]);
     await db.query(
-      `select assets.create_asset($1, 'IT-02', 'Ecran', date '2027-01-01', 600,
+      `select fixed_assets.create_fixed_asset($1, 'IT-02', 'Ecran', date '2027-01-01', 600,
               '241000', '241900', '630200', 'it-equipment')`,
       [companyId],
     );

@@ -302,9 +302,12 @@ that reason.
 
 **The modules.** A module of this installation gets its own tools, under the
 prefix its `module.json` declares, and the server reads `public.modules` at
-startup to know which: `assets_list`, `assets_create`, `assets_schedule`,
-`assets_run_depreciation`, `assets_dispose`, `budgets_list`,
-`budgets_upsert_lines`, `budgets_variance`. A module that is not installed is
+startup to know which: `fixed_assets_list`, `fixed_assets_create`,
+`fixed_assets_schedule`, `fixed_assets_run_depreciation`,
+`fixed_assets_dispose`, `budgets_list`, `budgets_upsert_lines`,
+`budgets_variance`. The fixed assets tools were called `assets_*` until
+0.10.0; those names are still registered, as deprecated aliases that say so in
+their description, and are removed in 0.11.0. A module that is not installed is
 not offered, because a tool a model cannot use is worse than a tool it cannot
 see. PostgREST serves a module's schema only once the project exposes it, and
 the refusal it answers with is a profile error that says nothing useful — so

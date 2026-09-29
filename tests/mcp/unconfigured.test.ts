@@ -55,7 +55,7 @@ describe('with an empty environment', () => {
     }
     // Which modules an installation carries is read from its database; with
     // none, none is offered.
-    expect(names.some((name) => name.startsWith('assets_') || name.startsWith('budgets_'))).toBe(false);
+    expect(names.some((name) => /^(fixed_assets|assets|budgets)_/.test(name))).toBe(false);
   });
 
   it('answers the prompts and the resource templates, which need no database to describe', async () => {
