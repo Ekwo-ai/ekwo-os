@@ -4,9 +4,14 @@
  * Three claims are made here and each has its own group. The trail records
  * what was changed and by whom, on every table that decides how a future
  * entry is booked. It records the *acts* — posted, cancelled, reversed,
- * matched, closed — without recording the ledger itself. And it is
- * append-only for everybody, table owner included, which is the part a policy
- * alone cannot give.
+ * matched, closed — without recording the ledger itself. And no client
+ * rewrites it — not a member, not a machine key, not `service_role` — which is
+ * the part a policy alone cannot give.
+ *
+ * The owner of the database is not a client. It is bound by the triggers for
+ * as long as it leaves them on, and it may switch them off: the last group
+ * says so as a test, so that the claim above cannot quietly grow back into
+ * "table owner included", which a trigger cannot keep.
  */
 
 import type { PGlite } from '@electric-sql/pglite';
@@ -432,7 +437,7 @@ describe('append-only', () => {
     expect(rewritten.count).toBe('0');
   });
 
-  it('refuses an update and a delete to the table owner too', async () => {
+  it('refuses a plain update and delete to the table owner, while its triggers are on', async () => {
     expect(await expectError(db, `update audit_log set action = 'rewritten'`)).toContain(
       'audit_log_append_only',
     );
@@ -511,5 +516,138 @@ describe('the purge', () => {
     );
     expect(purged.action).toBe('audit_log_purged');
     expect(purged.new_values['rows']).toBe(1);
+  });
+});
+
+/** Runs `fn` with `ekwo.audit_purge` set by hand, the way the audit described. */
+async function withPurgeSetting<T>(value: string, fn: () => Promise<T>): Promise<T> {
+  await db.query(`select set_config('ekwo.audit_purge', $1, false)`, [value]);
+  try {
+    return await fn();
+  } finally {
+    await db.exec(`select set_config('ekwo.audit_purge', '', false);`);
+  }
+}
+
+async function oldRow(daysAgo: number, key: string): Promise<void> {
+  await db.query(
+    `insert into audit_log (occurred_at, company_id, table_name, record_key, operation)
+     values (now() - make_interval(days => $2), $1, 'accounts', $3, 'insert')`,
+    [companyId, daysAgo, key],
+  );
+}
+
+async function lastRow(): Promise<{ action: string | null; record_key: string; new_values: Record<string, unknown> }> {
+  return one(db, `select action, record_key, new_values from audit_log order by id desc limit 1`);
+}
+
+describe('a purge made by hand', () => {
+  // `ekwo.audit_purge` is a setting, and the owner may set it without going
+  // through `purge_audit_log()`. It used to lift the guard whole, with no
+  // cutoff and no record. The cutoff and the record are now the table's.
+
+  it('is refused when the setting is not a date', async () => {
+    const message = await withPurgeSetting('on', () => expectError(db, `delete from audit_log`));
+    expect(message).toContain('audit_purge_needs_a_date');
+  });
+
+  it('is refused when the date is in the future', async () => {
+    const tomorrow = await one<{ d: string }>(db, `select to_char(current_date + 1, 'YYYY-MM-DD') as d`);
+    const message = await withPurgeSetting(tomorrow.d, () => expectError(db, `delete from audit_log`));
+    expect(message).toContain('audit_purge_in_the_future');
+  });
+
+  it('drops nothing written on or after the date it names', async () => {
+    const before = await one<{ count: string }>(db, `select count(*)::text as count from audit_log`);
+    const cutoff = await one<{ d: string }>(db, `select to_char(current_date - 30, 'YYYY-MM-DD') as d`);
+    // Every row of this trail is recent, so a delete of all of them is a
+    // delete past the cutoff, and the whole statement fails.
+    const message = await withPurgeSetting(cutoff.d, () => expectError(db, `delete from audit_log`));
+    expect(message).toContain('audit_purge_after_the_cutoff');
+    const after = await one<{ count: string }>(db, `select count(*)::text as count from audit_log`);
+    expect(after.count).toBe(before.count);
+  });
+
+  it('drops what is older, and leaves the same record the function leaves', async () => {
+    await oldRow(400, 'purged-by-hand');
+    const cutoff = await one<{ d: string }>(db, `select to_char(current_date - 30, 'YYYY-MM-DD') as d`);
+    await withPurgeSetting(cutoff.d, () =>
+      db.query(`delete from audit_log where record_key = 'purged-by-hand'`),
+    );
+
+    const { count } = await one<{ count: string }>(
+      db,
+      `select count(*)::text as count from audit_log where record_key = 'purged-by-hand'`,
+    );
+    expect(count).toBe('0');
+    const { session } = await one<{ session: string }>(db, `select session_user::text as session`);
+    const purged = await lastRow();
+    expect(purged.action).toBe('audit_log_purged');
+    expect(purged.record_key).toBe(cutoff.d);
+    expect(purged.new_values).toEqual({ before: cutoff.d, rows: 1, login: session });
+  });
+
+  it('is refused to a role that is not the owner, whatever it was granted', async () => {
+    // `service_role` holds no DELETE here unless somebody grants it, which the
+    // group above did. With the grant and the setting it still does not purge:
+    // only the owner does, and `purge_audit_log()` is how it lends that.
+    await oldRow(400, 'not-for-service-role');
+    const cutoff = await one<{ d: string }>(db, `select to_char(current_date - 30, 'YYYY-MM-DD') as d`);
+    const message = await asUser(
+      db,
+      '00000000-0000-0000-0000-000000000000',
+      () =>
+        withPurgeSetting(cutoff.d, () =>
+          expectError(db, `delete from audit_log where record_key = 'not-for-service-role'`),
+        ),
+      'service_role',
+    );
+    expect(message).toContain('audit_purge_not_the_owner');
+  });
+
+  it('cannot empty the table with a truncate, which no row trigger sees', async () => {
+    expect(await expectError(db, `truncate audit_log`)).toContain('audit_log_append_only');
+  });
+});
+
+describe('what the trail does not promise', () => {
+  // These two tests pass because of what PostgreSQL is, not because of
+  // anything this schema does, and they are here so that nobody reads the
+  // comments of the schema as promising more. The owner of a table may switch
+  // its triggers off. What the trail holds against is a client.
+
+  it('lets the owner switch the guard off by name — and the purge is still recorded', async () => {
+    await oldRow(400, 'guard-off');
+    await db.exec(`alter table audit_log disable trigger audit_log_append_only`);
+    try {
+      await db.query(`delete from audit_log where record_key = 'guard-off'`);
+    } finally {
+      await db.exec(`alter table audit_log enable trigger audit_log_append_only`);
+    }
+    const purged = await lastRow();
+    expect(purged.action).toBe('audit_log_purged');
+    expect(purged.record_key).toBe('(no cutoff)');
+    expect(purged.new_values['rows']).toBe(1);
+  });
+
+  it('lets the owner switch every trigger off, and then nothing is recorded', async () => {
+    await oldRow(400, 'all-off');
+    const { last } = await one<{ last: string }>(db, `select max(id)::text as last from audit_log`);
+    await db.exec(`alter table audit_log disable trigger user`);
+    try {
+      await db.query(`delete from audit_log where record_key = 'all-off'`);
+    } finally {
+      await db.exec(`alter table audit_log enable trigger user`);
+    }
+    // The row is gone, and nothing was written after it: the deletion left no
+    // line. Only a copy that has already left the database would show it.
+    const after = await one<{ gone: number; since: number }>(
+      db,
+      `select count(*) filter (where record_key = 'all-off')::int as gone,
+              count(*) filter (where id > $1::bigint)::int as since
+         from audit_log`,
+      [last],
+    );
+    expect(after).toEqual({ gone: 0, since: 0 });
   });
 });

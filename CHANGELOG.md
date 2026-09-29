@@ -34,6 +34,23 @@ somewhere has already run it.
 
 ### Security
 
+- **The audit trail says what it holds against: clients, not the owner of the
+  database** (`20260929103358`). The schema said the guard of `audit_log` held
+  "for everyone, owner included". A trigger cannot: the owner of a table may
+  disable it, and could until now simply `set local ekwo.audit_purge = 'on'`,
+  which let any delete through with no cutoff and no record — both lived only
+  inside `purge_audit_log()`. The claim is narrowed to what is true, in the
+  comments of the table, its guard and its policy, in decision 0017 and in
+  `tests/audit.test.ts`: no client rewrites the history. Within that, the purge
+  moves into the table. `ekwo.audit_purge` now carries the cutoff as a date;
+  the guard lets a row go only if it is older than that date, the date is not
+  in the future, and the role deleting is the table's owner; a trigger of its
+  own writes `audit_log_purged` after every delete, with the cutoff, the count
+  and the login, so a purge by hand leaves the same line as the function's.
+  `truncate audit_log` is refused. `ekwo doctor` reports a trigger of the trail
+  that has been disabled. `purge_audit_log(date)` keeps its signature and its
+  answer. Reported by an outside reader of the migrations.
+
 - **A setting any session may write no longer makes a login the installer**
   (`20260929094126`). Custom settings carry no privileges, so on a direct
   connection a second login — a reporting user, a BI tool, a bookkeeper given

@@ -209,6 +209,22 @@ describe('doctor', () => {
     expect(report.warnings).toBeGreaterThan(0);
   });
 
+  it('names a trigger of the audit trail that the owner switched off', async () => {
+    // Nothing in the schema can stop the owner of `audit_log` from disabling
+    // its triggers. The doctor can refuse to call the trail sound while one is.
+    await db.exec(`alter table audit_log disable trigger audit_log_append_only`);
+    try {
+      const report = await doctor(db, migrations);
+      const check = report.checks.find((c) => c.name === 'audit trail');
+      expect(check?.severity).toBe('problem');
+      expect(check?.details).toEqual([
+        'trigger audit_log_append_only on audit_log is disabled: turn it back on with `alter table audit_log enable trigger audit_log_append_only`',
+      ]);
+    } finally {
+      await db.exec(`alter table audit_log enable trigger audit_log_append_only`);
+    }
+  });
+
   it('names a table that was added without row level security', async () => {
     await db.exec('create table forgotten (id uuid primary key, company_id uuid);');
     const report = await doctor(db, migrations);

@@ -555,13 +555,26 @@ async function checkAuditTrail(db: SqlClient): Promise<Check> {
 
   const faults: string[] = [];
 
-  const guarded = await db.query<{ tgname: string }>(
-    `select t.tgname from pg_trigger t
+  const guarded = await db.query<{ tgname: string; enabled: boolean }>(
+    `select t.tgname, t.tgenabled <> 'D' as enabled from pg_trigger t
        join pg_class c on c.oid = t.tgrelid
-      where c.relname = 'audit_log' and not t.tgisinternal`,
+      where c.relname = 'audit_log' and not t.tgisinternal
+      order by t.tgname`,
   );
-  if (guarded.length === 0) {
-    faults.push('no trigger on audit_log: nothing refuses an update or a delete on it any more');
+  // By name: the table carries more than one trigger since `20260929103358`,
+  // and the one that refuses an update or a delete is the one that matters.
+  if (!guarded.some((t) => t.tgname === 'audit_log_append_only')) {
+    faults.push(
+      'no trigger on audit_log refuses an update or a delete any more: audit_log_append_only is gone',
+    );
+  }
+  // The owner of the table can switch a trigger off, and nothing in the schema
+  // can stop it: that is the limit of what the trail promises. What can be
+  // done is to say so, here, rather than let it pass for a trail that holds.
+  for (const trigger of guarded.filter((t) => !t.enabled)) {
+    faults.push(
+      `trigger ${trigger.tgname} on audit_log is disabled: turn it back on with \`alter table audit_log enable trigger ${trigger.tgname}\``,
+    );
   }
 
   const rls =

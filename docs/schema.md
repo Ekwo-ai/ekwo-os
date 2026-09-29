@@ -145,7 +145,7 @@ the return say the same thing, because they are the same rows.
 | [`analytic_values`](#analytic_values) | Values of an axis, optionally hierarchical. |
 | [`api_keys`](#api_keys) | Machine access to one company. Hashed at rest, scoped to an explicit list of capabilities, and never wider than the person who issued it. |
 | [`attachments`](#attachments) | Files attached to any record. `entity_type` is constrained rather than free text. |
-| [`audit_log`](#audit_log) | Append-only record of every change to the configuration and reference data of a company, and of the acts that change the state of a document, a payment, a financial year or a pack. Written by trigger, never by a client; no update and no delete, for anyone. |
+| [`audit_log`](#audit_log) | Append-only record of every change to the configuration and reference data of a company, and of the acts that change the state of a document, a payment, a financial year or a pack. Written by trigger, never by a client, and no client rewrites it: no role is granted update, delete or truncate, and triggers refuse them. The owner of the database is bound only while it leaves those triggers enabled. |
 | [`bank_accounts`](#bank_accounts) | Bank and card accounts, each mapped to a ledger account and a journal. |
 | [`bank_statement_lines`](#bank_statement_lines) | Which lines a statement lists. A line is stored once, in bank_transactions, under the first statement that brought it; a later statement that overlaps the first lists the same line here instead of duplicating it, and its closing balance is proved over the list. |
 | [`bank_statements`](#bank_statements) | Imported statements. `is_consistent` compares the declared closing balance with the sum of the lines. |
@@ -347,7 +347,7 @@ Constraints:
 
 ### `audit_log`
 
-Append-only record of every change to the configuration and reference data of a company, and of the acts that change the state of a document, a payment, a financial year or a pack. Written by trigger, never by a client; no update and no delete, for anyone.
+Append-only record of every change to the configuration and reference data of a company, and of the acts that change the state of a document, a payment, a financial year or a pack. Written by trigger, never by a client, and no client rewrites it: no role is granted update, delete or truncate, and triggers refuse them. The owner of the database is bound only while it leaves those triggers enabled.
 
 | Column | Type | Notes |
 |---|---|---|
@@ -1943,7 +1943,9 @@ Constraints:
 | `assert_period_open(p_company_id uuid, p_date date, p_is_tax boolean)` | Raises when a date is protected by a lock date or a closed fiscal year. |
 | `audit_changes()` | The generic audit trigger. One jsonb argument names the company column, the natural key, the columns to redact and the acts an insert or a delete stands for. |
 | `audit_entry_posting()` | Records that an entry was posted, cancelled, or posted as the reversal of another. The lines themselves are not audited: a posted entry is immutable and is corrected by a reversal. |
-| `audit_log_is_append_only()` | Refuses every update and every delete on audit_log, table owner included. purge_audit_log() sets ekwo.audit_purge for its own transaction, which is the one exception. |
+| `audit_log_is_append_only()` | Refuses every update and every delete on audit_log to any role a grant reaches — no client holds those verbs, and this refuses them again. A delete passes only while ekwo.audit_purge names a date, for a row older than it, by the owner of the table, which is how purge_audit_log() runs. The owner can disable this trigger: it keeps clients from rewriting the history, not the owner of the database. |
+| `audit_log_purge_is_recorded()` | Writes audit_log_purged after every delete on audit_log — the cutoff, the number of rows and the login — whether it came through purge_audit_log() or not. A trigger of its own, so switching the guard off by name leaves it on. |
+| `audit_log_refuses_truncate()` | Refuses TRUNCATE on audit_log, which a row trigger never sees. |
 | `audit_record(p_company_id uuid, p_table text, p_record_id uuid, p_record_key text, p_operation audit_operation, p_action text, p_old jsonb, p_new jsonb)` | Writes one row of the audit trail. Called by the triggers of this schema and by the functions that perform an act; never by a client. |
 | `audit_state_change()` | Records the act a state column stands for — a document posted, a payment booked, a year closed — with the fields that identify the row and never the whole of it. |
 | `auto_settle(p_company_id uuid, p_from date, p_to date, p_apply boolean)` | Walks the pending statement lines of a period and settles the ones a single piece of evidence identifies — a reference, or an exact amount with one candidate. Everything else comes back with the reason it was left: a combination, a partial payment, an internal transfer, nothing open that fits, or a refusal the database made, quoted. With p_apply false it changes nothing and says what it would do. |
@@ -2074,7 +2076,7 @@ Constraints:
 | `preferred_languages(p_language text, p_company_id uuid)` | The languages to try, in order, from a starting point the caller names: that one, then the company's, then the one the country pack declares. Feed it to label_for(). The starting point is a person's preference for a reader who is signed in, and documents.language for a document being rendered. |
 | `prepare_filing(p_company_id uuid, p_from date, p_to date, p_report_code text)` | Computes the declaration and keeps the answer, box by box and kind by kind, each figure at the unit the form is filed in (filing_rounding()). Called again on a draft it refreshes; on a declaration that has gone it refuses and says the word for what is needed instead — a corrective. |
 | `present_api_key(p_secret text)` | Presents a machine key for the current transaction and answers nothing. What `ekwo_pre_request()` calls, and the only form of the question an anonymous caller may ask: the refusals of use_api_key() word for word, and no row. |
-| `purge_audit_log(p_before date)` | Drops audit rows older than a date the caller names, and records that it did. service_role only: retention is the operator's decision and no signed-in user may make it. |
+| `purge_audit_log(p_before date)` | Drops audit rows older than a date the caller names; the table checks the date again and records the purge. service_role only: retention is the operator's decision and no signed-in user may make it. |
 | `reconcile(p_line_a uuid, p_line_b uuid, p_amount numeric)` | Matches a debit line against a credit line, in the currency the two share when it is not the company's, and books what the matching reveals: the realised exchange difference, and the share of a cash-basis tax that has become due. |
 | `reconciliations_guard_cancelled()` | Refuses to undo a matching on the entry of a cancelled document: cancel_document() matched it against its credit note, and that matching is what makes cancelled true. Unmatching it would leave a document that says cancelled and not_paid at once. document_cancelled_stays_matched, for everybody. |
 | `record_filing_outcome(p_filing_id uuid, p_state tax_filing_state, p_reference text, p_message text)` | What came back: accepted, rejected, or paid, written on the declaration and on the send it answers — with the administration's own words where it gave any. Paying follows acceptance, and a declaration that never went cannot come back at all. |

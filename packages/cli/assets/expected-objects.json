@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.9.0",
-  "migration": "20260929094126",
+  "migration": "20260929103358",
   "socle": {
     "schema": "public",
     "tables": [
@@ -3780,6 +3780,14 @@
         "arguments": ""
       },
       {
+        "name": "audit_log_purge_is_recorded",
+        "arguments": ""
+      },
+      {
+        "name": "audit_log_refuses_truncate",
+        "arguments": ""
+      },
+      {
         "name": "audit_record",
         "arguments": "p_company_id uuid, p_table text, p_record_id uuid, p_record_key text, p_operation audit_operation, p_action text, p_old jsonb, p_new jsonb"
       },
@@ -5101,6 +5109,14 @@
       {
         "table": "audit_log",
         "name": "audit_log_append_only"
+      },
+      {
+        "table": "audit_log",
+        "name": "audit_log_no_truncate"
+      },
+      {
+        "table": "audit_log",
+        "name": "audit_log_purge_recorded"
       },
       {
         "table": "bank_accounts",
@@ -6926,6 +6942,22 @@
         },
         {
           "name": "audit_log_is_append_only",
+          "arguments": "",
+          "trigger": true,
+          "anon": [],
+          "authenticated": [],
+          "service_role": []
+        },
+        {
+          "name": "audit_log_purge_is_recorded",
+          "arguments": "",
+          "trigger": true,
+          "anon": [],
+          "authenticated": [],
+          "service_role": []
+        },
+        {
+          "name": "audit_log_refuses_truncate",
           "arguments": "",
           "trigger": true,
           "anon": [],
