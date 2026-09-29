@@ -1034,7 +1034,7 @@ export async function readAuditLog(
   return {
     changes: entries,
     count: entries.length,
-    note: 'Append-only. Nothing writes this trail but the database itself, and nothing removes a row from it.',
+    note: 'Append-only for every client. Nothing writes this trail but the database itself, and no client removes a row from it: rows leave only through a dated purge by the operator, which leaves a line saying so.',
   };
 }
 
