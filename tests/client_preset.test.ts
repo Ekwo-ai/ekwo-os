@@ -81,7 +81,7 @@ let viewerId: string;
 let mine: Books;
 let theirs: Books;
 
-const SCHEMAS = ['public', 'assets', 'budgets'];
+const SCHEMAS = ['public', 'fixed_assets', 'budgets'];
 
 async function asClient<T>(fn: () => Promise<T>): Promise<T> {
   return asUser(db, clientId, fn);
@@ -1011,18 +1011,18 @@ describe('a client writes nothing else — by the function', () => {
         params: [mine.draftDocumentId],
       },
       'public.ekwo_pre_request': { sql: `select ekwo_pre_request()`, params: [] },
-      'assets.create_asset': {
-        sql: `select assets.create_asset($1, 'CLI', 'A van', $2::date, 1000, $3, $4, $5, null, 36)`,
+      'fixed_assets.create_fixed_asset': {
+        sql: `select fixed_assets.create_fixed_asset($1, 'CLI', 'A van', $2::date, 1000, $3, $4, $5, null, 36)`,
         params: [mine.companyId, FROM, ...mine.accountCodes],
       },
-      'assets.run_depreciation': {
-        sql: `select assets.run_depreciation($1, $2::date)`,
+      'fixed_assets.run_depreciation': {
+        sql: `select fixed_assets.run_depreciation($1, $2::date)`,
         params: [mine.companyId, TO],
       },
-      'assets.generate_schedule': { sql: `select assets.generate_schedule($1)`, params: [mine.companyId] },
-      'assets.split_into_months': { sql: `select assets.split_into_months($1)`, params: [mine.companyId] },
-      'assets.dispose_asset': {
-        sql: `select assets.dispose_asset($1, $2::date, 0, null, null)`,
+      'fixed_assets.generate_schedule': { sql: `select fixed_assets.generate_schedule($1)`, params: [mine.companyId] },
+      'fixed_assets.split_into_months': { sql: `select fixed_assets.split_into_months($1)`, params: [mine.companyId] },
+      'fixed_assets.dispose_fixed_asset': {
+        sql: `select fixed_assets.dispose_fixed_asset($1, $2::date, 0, null, null)`,
         params: [mine.companyId, TO],
       },
     };
@@ -1057,7 +1057,7 @@ describe('a client writes nothing else — by the function', () => {
    * books did not move.
    */
   const QUIET = [
-    'assets.run_depreciation',
+    'fixed_assets.run_depreciation',
     'public.auto_settle',
     'public.confirm_contact',
     'public.documents_allocate_included_tax',

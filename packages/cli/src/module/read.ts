@@ -6,6 +6,12 @@
  * are the list, `module.json` is what each one says about itself, and
  * `public.modules` is what the database holds once its migrations have run.
  *
+ * The folder is named after what the module is — `fixed-assets` — and the
+ * manifest carries its code, `assets`, which is the key it was published
+ * under and is written on every entry it posts. The two usually read the
+ * same; they are allowed not to, because a code never changes and a name may
+ * become more precise.
+ *
  * Nothing in this file talks to a database. Reading and validating a manifest
  * is the same work whether the next step is `ekwo module list` in a checkout
  * or `ekwo migrate` against a Supabase project, so it is done once, here.
@@ -25,7 +31,10 @@ export interface ModuleMcp {
 }
 
 export interface ModulePack {
-  /** `assets` → a country pack may carry `packs/<cc>/assets.json`. */
+  /**
+   * `fixed_assets` → a country pack may carry `packs/<cc>/fixed_assets.json`,
+   * and it compiles into `supabase/seed/modules/fixed_assets/`.
+   */
   section: string;
 }
 
@@ -44,7 +53,7 @@ export interface ModuleManifest {
 
 export interface EkwoModule {
   manifest: ModuleManifest;
-  /** Absolute path of `modules/<code>/`. */
+  /** Absolute path of `modules/<folder>/`. */
   dir: string;
   /** Its own migrations, in the order they must be applied. */
   migrations: Migration[];
@@ -78,7 +87,10 @@ export async function readModuleSchema(dir: string): Promise<Record<string, unkn
   return JSON.parse(raw) as Record<string, unknown>;
 }
 
-/** The module folders of `dir`, by code, in the order they are applied. */
+/** A module folder is lower case, its words joined by hyphens: `fixed-assets`. */
+const FOLDER_NAME = /^[a-z][a-z0-9-]{1,40}$/;
+
+/** The module folders of `dir`, in the order they are applied. */
 export async function listModules(dir = resolveModulesDir()): Promise<EkwoModule[]> {
   if (dir === undefined) return [];
   const entries = await readdir(dir, { withFileTypes: true }).catch(() => []);
@@ -89,20 +101,48 @@ export async function listModules(dir = resolveModulesDir()): Promise<EkwoModule
     if (!entry.isDirectory() || entry.name === 'schema') continue;
     const folder = join(dir, entry.name);
     if (!existsSync(join(folder, 'module.json'))) continue;
-    modules.push(await readModule(entry.name, dir, schema));
+    const module = await readModuleFolder(entry.name, dir, schema);
+    const twin = modules.find((m) => m.manifest.code === module.manifest.code);
+    if (twin !== undefined) {
+      throw new ModuleError(
+        `module_code_duplicate: modules/${entry.name} and ${twin.dir} both call themselves "${module.manifest.code}"`,
+      );
+    }
+    modules.push(module);
   }
   return modules;
 }
 
-/** One module, with its manifest validated and its migrations listed. */
-export async function readModule(
-  code: string,
-  dir = resolveModulesDir(),
+/**
+ * One module, by its code — `assets` — or by the name of its folder,
+ * `fixed-assets`, with its manifest validated and its migrations listed.
+ */
+export async function readModule(code: string, dir = resolveModulesDir()): Promise<EkwoModule> {
+  if (dir === undefined) throw new ModuleError('modules_missing: this installation carries no modules folder');
+  const modules = await listModules(dir);
+  const found =
+    modules.find((m) => m.manifest.code === code) ??
+    modules.find((m) => m.dir === join(dir, code));
+  if (found !== undefined) return found;
+  throw new ModuleError(
+    `unknown_module: this release carries no module "${code}"` +
+      (modules.length === 0 ? '' : ` — it carries ${modules.map((m) => m.manifest.code).join(', ')}`),
+  );
+}
+
+/** The module in `modules/<folder>/`, its manifest checked against the published schema. */
+async function readModuleFolder(
+  folderName: string,
+  dir: string,
   schema?: Record<string, unknown>,
 ): Promise<EkwoModule> {
-  if (dir === undefined) throw new ModuleError('modules_missing: this installation carries no modules folder');
-  const folder = join(dir, code);
+  const folder = join(dir, folderName);
   const manifestPath = join(folder, 'module.json');
+  if (!FOLDER_NAME.test(folderName)) {
+    throw new ModuleError(
+      `module_folder_invalid: modules/${folderName} — a module folder is lower case, its words joined by hyphens`,
+    );
+  }
 
   const raw = await readFile(manifestPath, 'utf8').catch(() => {
     throw new ModuleError(`unknown_module: ${manifestPath} does not exist`);
@@ -111,19 +151,14 @@ export async function readModule(
   try {
     manifest = JSON.parse(raw) as ModuleManifest;
   } catch (error) {
-    throw new ModuleError(`module_manifest_invalid: ${code}/module.json — ${(error as Error).message}`);
+    throw new ModuleError(`module_manifest_invalid: ${folderName}/module.json — ${(error as Error).message}`);
   }
 
   const issues = validate(manifest, schema ?? (await readModuleSchema(dir)));
   if (issues.length > 0) {
     throw new ModuleError(
-      `module_manifest_invalid: ${code}/module.json\n` +
+      `module_manifest_invalid: ${folderName}/module.json\n` +
         issues.map((issue) => `  ${issue.path}: ${issue.message}`).join('\n'),
-    );
-  }
-  if (manifest.code !== code) {
-    throw new ModuleError(
-      `module_code_mismatch: modules/${code}/module.json calls itself "${manifest.code}"`,
     );
   }
 
@@ -154,7 +189,7 @@ export async function moduleMigrations(
     const parsed = parseMigrationFile(file);
     if (parsed === undefined) {
       throw new ModuleError(
-        `migration_name_invalid: modules/${manifest.code}/supabase/migrations/${file} — expected YYYYMMDDHHMMSS_subject.sql`,
+        `migration_name_invalid: ${join(dir, file)} — expected YYYYMMDDHHMMSS_subject.sql`,
       );
     }
     return {
@@ -194,15 +229,16 @@ export function allModuleMigrations(modules: readonly EkwoModule[]): Migration[]
 
 /**
  * The seeds compiled from the `<section>.json` of a country pack, for one
- * module: `supabase/seed/modules/<code>/*.sql`.
+ * module: `supabase/seed/modules/<section>/*.sql`, the section being the one
+ * its manifest names under `pack`.
  *
  * They are not reference data of the socle and are deliberately not in
  * `supabase/seed/` itself, where `ekwo migrate` and the test harness read a
  * flat directory: a module's country data has no business landing on an
  * installation that does not carry the module.
  */
-export async function moduleSeeds(code: string, seedDir: string): Promise<string[]> {
-  const dir = join(seedDir, 'modules', code);
+export async function moduleSeeds(section: string, seedDir: string): Promise<string[]> {
+  const dir = join(seedDir, 'modules', section);
   if (!existsSync(dir)) return [];
   return (await readdir(dir))
     .filter((f) => f.endsWith('.sql'))

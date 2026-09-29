@@ -210,6 +210,7 @@ export async function applyModuleMigrations(
 
   await ensureHistory(db);
   const known = new Set(await appliedVersions(db));
+  const schemasBefore = new Map((await registry(db)).map((row) => [row.code, row.schema_name]));
   const pending = migrations.filter((m) => !known.has(m.version));
 
   if (options.heading === true) {
@@ -221,8 +222,21 @@ export async function applyModuleMigrations(
     step(`${migration.name} (${migration.file})`);
   });
 
+  // A migration may rename a module's schema — `assets` became `fixed_assets`
+  // — and the API still serves the old name until somebody changes a setting
+  // no migration can reach. Said here, the moment it happens.
+  for (const row of await registry(db)) {
+    const before = schemasBefore.get(row.code);
+    if (before === undefined || before === row.schema_name) continue;
+    warn(`The ${row.name} module now lives in the schema \`${row.schema_name}\`, no longer \`${before}\`.`);
+    note(dim(`  Replace \`${before}\` with \`${row.schema_name}\` in the exposed schemas of the project.`));
+    for (const sentence of exposeSchemaNote(row.schema_name)) note(dim(`  ${sentence}`));
+  }
+
   for (const module of modules) {
-    for (const path of await moduleSeeds(module.manifest.code, seedDir())) {
+    const section = module.manifest.pack?.section;
+    if (section === undefined) continue;
+    for (const path of await moduleSeeds(section, seedDir())) {
       await applySeed(db, { file: path.split('/').at(-1) as string, path });
       step(dim(`${module.manifest.code}: ${path.split('/').at(-1)}`));
     }

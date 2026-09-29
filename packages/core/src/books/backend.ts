@@ -37,7 +37,7 @@ export interface SelectQuery {
   table: string;
   /**
    * The Postgres schema the table lives in. Undefined is `public`, which is
-   * the socle; a module names its own — `assets`, `budgets` — and PostgREST
+   * the socle; a module names its own — `fixed_assets`, `budgets` — and PostgREST
    * serves it only once the project lists it under its exposed schemas.
    */
   schema?: string;
@@ -111,7 +111,7 @@ const IDENTIFIER = /^[a-z_][a-z0-9_]*$/;
  * rather than a defence against it, and it costs nothing to keep true.
  */
 /**
- * `assets.assets`, or `assets` when there is no schema to name.
+ * `fixed_assets.disposals`, or `disposals` when there is no schema to name.
  *
  * Both halves go through `identifier()`, so a module code that came from the
  * registry rather than from this package still cannot be anything but a plain

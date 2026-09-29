@@ -329,7 +329,7 @@ describe.each(filers.map((pack) => [pack.slug, pack] as const))(
       expect(empty, `${slug}: tables the journey never exercised`).toEqual(
         [
           // A disposal posts to the ledger under rules a pack may not carry.
-          'assets.disposals',
+          'fixed_assets.disposals',
           ...(empty.includes('public.company_filing_periods') ? ['public.company_filing_periods'] : []),
         ].sort(),
       );

@@ -8,6 +8,7 @@ import {
   freshDatabase,
   migrationFiles,
   moduleCodes,
+  moduleFolders,
   moduleMigrationFiles,
   one,
   repoRoot,
@@ -51,7 +52,10 @@ describe('the registry', () => {
       `select code, schema_name, status::text from modules order by code`,
     );
     expect(installed.map((m) => m.code)).toEqual(await moduleCodes());
-    for (const module of installed) expect(module.schema_name).toBe(module.code);
+    // A code is forever and a schema may be renamed, so the two need not read
+    // the same; the manifest says which schema, and the next test holds the
+    // registry to it.
+    for (const module of installed) expect(module.schema_name).not.toBe('public');
   });
 
   it('agrees with the manifest each module ships', async () => {
@@ -478,18 +482,18 @@ describe('every module', () => {
 
   it('validates its manifest against the published schema', async () => {
     const schema = await readModuleSchema(modulesDir);
-    for (const code of await moduleCodes()) {
+    for (const { folder } of await moduleFolders()) {
       const manifest = JSON.parse(
-        await readFile(join(modulesDir, code, 'module.json'), 'utf8'),
+        await readFile(join(modulesDir, folder, 'module.json'), 'utf8'),
       ) as unknown;
-      expect(validate(manifest, schema), `modules/${code}/module.json`).toEqual([]);
+      expect(validate(manifest, schema), `modules/${folder}/module.json`).toEqual([]);
     }
   });
 
   it('ships a README next to its manifest', async () => {
-    for (const code of await moduleCodes()) {
-      const files = await readdir(join(modulesDir, code));
-      expect(files, `modules/${code}`).toContain('README.md');
+    for (const { folder } of await moduleFolders()) {
+      const files = await readdir(join(modulesDir, folder));
+      expect(files, `modules/${folder}`).toContain('README.md');
     }
   });
 });
@@ -677,10 +681,10 @@ describe('a module’s own capabilities', () => {
       ).toBe(1);
 
       // And nothing of the register: not a read, and not a write.
-      expect(await rows(db, `select id from assets.assets`)).toEqual([]);
+      expect(await rows(db, `select id from fixed_assets.fixed_assets`)).toEqual([]);
       const refused = await expectError(
         db,
-        `insert into assets.assets (company_id, code, name, acquisition_date, cost,
+        `insert into fixed_assets.fixed_assets (company_id, code, name, acquisition_date, cost,
                                     asset_account_id, depreciation_account_id, expense_account_id,
                                     duration_months, method)
          values ($1, 'IM-1', 'Machine', date '2026-01-01', 1000,

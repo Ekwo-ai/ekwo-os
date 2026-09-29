@@ -42,7 +42,7 @@ function sectionsOf(pack: (typeof allPacks)[number]): [string, string[]][] {
     ['tax_report_boxes', (pack.report?.boxes ?? []).map((b) => `${b.box}|${b.kind}`)],
     ['statement_lines', pack.statements.flatMap((st) => st.lines.map((l) => `${st.code}:${l.code}`))],
     ['legal_mentions', pack.documents.mentions.map((m) => m.code)],
-    ['asset_categories', (pack.assets?.categories ?? []).map((c) => c.code)],
+    ['asset_categories', (pack.fixedAssets?.categories ?? []).map((c) => c.code)],
   ];
 }
 
@@ -255,10 +255,10 @@ describe('what the seeds carry', () => {
         );
         expect(Object.keys(row.text_i18n).sort(), `${pack.slug} ${mention.code}`).toEqual(declared);
       }
-      for (const category of pack.assets?.categories ?? []) {
+      for (const category of pack.fixedAssets?.categories ?? []) {
         const row = await one<{ name_i18n: Record<string, string> }>(
           db,
-          `select name_i18n from assets.category_templates where country = $1 and code = $2`,
+          `select name_i18n from fixed_assets.category_templates where country = $1 and code = $2`,
           [pack.manifest.country, category.code],
         );
         // A pack with no translation file carries no labels for the category,

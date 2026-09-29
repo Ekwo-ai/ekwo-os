@@ -19,7 +19,7 @@ export interface Options {
   /** Apply `supabase/seed/*.sql` after the migrations. Default true. */
   seed?: boolean;
   /**
-   * Apply `modules/<code>/supabase/migrations/*.sql` after the socle's, and
+   * Apply `modules/<folder>/supabase/migrations/*.sql` after the socle's, and
    * the country seeds those modules compiled. Default true — a module is a
    * schema whose tables are empty until a company enables it, so a database
    * that carries them is the ordinary one.
@@ -52,13 +52,36 @@ export interface ModuleFile {
   version: string;
 }
 
-/** The module codes this checkout carries, in the order they are applied. */
-export async function moduleCodes(): Promise<string[]> {
+export interface ModuleFolder {
+  /** `assets`, the code its manifest gives. */
+  code: string;
+  /** `fixed-assets`, the folder under `modules/`. */
+  folder: string;
+  /** `fixed_assets`, the pack section it compiles its seeds under, if any. */
+  section: string | null;
+}
+
+/**
+ * The module folders this checkout carries, with what each manifest says, in
+ * the order the folders sort. The folder is named after what the module is,
+ * and the code is the key it was published under: they may differ.
+ */
+export async function moduleFolders(): Promise<ModuleFolder[]> {
   const entries = await readdir(modulesDir, { withFileTypes: true }).catch(() => []);
-  return entries
-    .filter((entry) => entry.isDirectory() && entry.name !== 'schema')
-    .map((entry) => entry.name)
-    .sort();
+  const out: ModuleFolder[] = [];
+  for (const entry of entries.filter((e) => e.isDirectory() && e.name !== 'schema').sort((a, b) => a.name.localeCompare(b.name))) {
+    const manifest = JSON.parse(await readFile(join(modulesDir, entry.name, 'module.json'), 'utf8')) as {
+      code: string;
+      pack?: { section: string };
+    };
+    out.push({ code: manifest.code, folder: entry.name, section: manifest.pack?.section ?? null });
+  }
+  return out;
+}
+
+/** The module codes this checkout carries, sorted. */
+export async function moduleCodes(): Promise<string[]> {
+  return (await moduleFolders()).map((m) => m.code).sort();
 }
 
 /**
@@ -70,8 +93,8 @@ export async function moduleCodes(): Promise<string[]> {
  */
 export async function moduleMigrationFiles(): Promise<ModuleFile[]> {
   const out: ModuleFile[] = [];
-  for (const code of await moduleCodes()) {
-    const dir = join(modulesDir, code, 'supabase', 'migrations');
+  for (const { code, folder } of await moduleFolders()) {
+    const dir = join(modulesDir, folder, 'supabase', 'migrations');
     const exists = await stat(dir).catch(() => undefined);
     if (exists === undefined) continue;
     for (const file of (await readdir(dir)).filter((f) => f.endsWith('.sql')).sort()) {
@@ -81,11 +104,12 @@ export async function moduleMigrationFiles(): Promise<ModuleFile[]> {
   return out.sort((a, b) => a.version.localeCompare(b.version));
 }
 
-/** The pack seeds a module compiled: `supabase/seed/modules/<code>/*.sql`. */
+/** The pack seeds a module compiled: `supabase/seed/modules/<section>/*.sql`. */
 export async function moduleSeedFiles(): Promise<ModuleFile[]> {
   const out: ModuleFile[] = [];
-  for (const code of await moduleCodes()) {
-    const dir = join(seedDir, 'modules', code);
+  for (const { code, section } of await moduleFolders()) {
+    if (section === null) continue;
+    const dir = join(seedDir, 'modules', section);
     const exists = await stat(dir).catch(() => undefined);
     if (exists === undefined) continue;
     for (const file of (await readdir(dir)).filter((f) => f.endsWith('.sql')).sort()) {

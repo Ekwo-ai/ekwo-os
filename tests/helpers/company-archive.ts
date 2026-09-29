@@ -208,7 +208,7 @@ export async function furnish(db: PGlite, pack: Pack, name: string, tag: string)
   });
   const asset = await one<{ id: string }>(
     db,
-    `insert into assets.assets (company_id, code, name, acquisition_date, cost, method, duration_months,
+    `insert into fixed_assets.fixed_assets (company_id, code, name, acquisition_date, cost, method, duration_months,
                                 asset_account_id, depreciation_account_id, expense_account_id)
      select $1, 'A-1', $2, $3::date, 6000, 'straight_line', 60, x.ids[1], x.ids[2], x.ids[3]
        from (select array_agg(id order by code) as ids from accounts where company_id = $1) x
@@ -216,7 +216,7 @@ export async function furnish(db: PGlite, pack: Pack, name: string, tag: string)
     [companyId, `Asset ${tag}`, golden.fiscalYear.start],
   );
   await db.query(
-    `insert into assets.depreciation_lines (asset_id, company_id, sequence, period_start, period_end,
+    `insert into fixed_assets.depreciation_lines (asset_id, company_id, sequence, period_start, period_end,
                                             amount, accumulated, net_book_value)
      values ($1, $2, 1, $3::date, $4::date, 1200, 1200, 4800)`,
     [asset.id, companyId, golden.fiscalYear.start, golden.fiscalYear.end],

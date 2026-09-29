@@ -773,7 +773,7 @@ describe('the pack format', () => {
           `mention ${mention.code}`,
           mention.source,
         ]),
-        ...(pack.assets?.categories ?? []).map((category): [string, string | null] => [
+        ...(pack.fixedAssets?.categories ?? []).map((category): [string, string | null] => [
           `asset ${category.code}`,
           category.source,
         ]),

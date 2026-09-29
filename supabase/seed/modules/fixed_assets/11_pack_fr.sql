@@ -1,17 +1,17 @@
 -- Ekwo OS — France: how this country depreciates and derecognises a fixed asset.
 --
--- Generated from packs/fr/assets.json at version 1.16.0, do not edit.
+-- Generated from packs/fr/fixed_assets.json at version 1.16.0, do not edit.
 -- Change the pack and run `ekwo pack build fr`; `ekwo pack check --all`
 -- refuses a seed that is not the exact output of its pack, and the CI runs it.
 --
 -- Applied by the module migration runner — `ekwo migrate`, or `ekwo module
 -- migrate` — and never by the socle seed step: these tables exist only on an
--- installation that carries the `assets` module.
+-- installation that carries the fixed assets module.
 --
 -- The accounts a disposal lands on are not here. They are roles of the chart,
 -- in `country_defaults`, written by the pack seed beside every other role.
 
-insert into assets.country_rules
+insert into fixed_assets.country_rules
   (country, prorata_straight_line, prorata_declining, day_count,
    declining_cap_percent, declining_switch_to_linear, disposal_style, legal_reference)
 values
@@ -25,12 +25,12 @@ on conflict (country) do update set
   disposal_style             = excluded.disposal_style,
   legal_reference            = excluded.legal_reference;
 
-insert into assets.category_templates
+insert into fixed_assets.category_templates
   (country, code, name, name_i18n, method, duration_months, coefficient,
    prorata, account_type, sequence, legal_reference)
 select v.country::char(2), v.code, v.name, v.name_i18n::jsonb,
-       v.method::assets.depreciation_method, v.duration_months::integer,
-       v.coefficient::numeric, v.prorata::assets.prorata_rule,
+       v.method::fixed_assets.depreciation_method, v.duration_months::integer,
+       v.coefficient::numeric, v.prorata::fixed_assets.prorata_rule,
        v.account_type::account_type, v.sequence::integer, v.legal_reference
   from (values
     ('FR', 'software', 'Logiciels', '{"en":"Software"}'::jsonb, 'straight_line', 36, null, null, 'asset_fixed', 10, 'Durée d''usage de trois ans (BOI-BIC-AMT-10-40-10). L''amortissement exceptionnel sur douze mois des logiciels acquis est une option fiscale distincte, art. 236, II du code général des impôts.'),

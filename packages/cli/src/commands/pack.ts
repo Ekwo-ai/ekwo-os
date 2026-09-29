@@ -227,10 +227,10 @@ export async function packCommand(args: ParsedArgs, deps: CommandDeps = {}): Pro
       );
     }
 
-    // The sections of a module compile beside the pack seed, under the module's
-    // own folder: `assets.category_templates` exists only on an installation
-    // that carries `assets`, and a seed applied where its tables are missing is
-    // a seed nobody can re-run.
+    // The sections of a module compile beside the pack seed, under a folder
+    // named after the section: `fixed_assets.category_templates` exists only on
+    // an installation that carries the fixed assets module, and a seed applied
+    // where its tables are missing is a seed nobody can re-run.
     for (const [module, moduleSql] of compileModuleSeeds(pack)) {
       const modulePath = join(seedDir, 'modules', module, file);
       const moduleCurrent = await readFile(modulePath, 'utf8').catch(() => undefined);
