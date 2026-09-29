@@ -29,9 +29,14 @@ nobody prepared, which is why that second instance exists.
 **The installation itself is named, not inferred.** Guards once exempted "no
 session" to let migrations and seeds run, which also exempted a machine key
 and `service_role` (both have no `auth.uid()`). `is_installer()` is true only
-when the runner set `ekwo.installing` on its own connection, and false when
-there is a session or a key. A PostgREST caller cannot set a GUC, and a key
-has one set for it, so neither can be the installer.
+when the runner set `ekwo.installing` on its own connection **and** the login
+that opened that connection — `session_user` — is a member of the role that
+owns the tables; it is false when there is a session or a key. A PostgREST
+caller cannot set a GUC, and a key has one set for it, so neither can be the
+installer. A second login on a direct connection — a reporting user, a BI
+tool — can set any GUC it likes, which is why the setting alone is not enough:
+the exemption goes only to a login that could already disable every trigger
+of the schema, because it owns the tables they hang on.
 
 **A `security definer` function checks its caller on its first line**, and is
 included in the sweep of `tests/client_preset.test.ts`. A definer function
@@ -49,7 +54,11 @@ running" for a function that runs as its caller. Where the schema needs to let
 exactly one act through, it uses a row written by a definer function in the
 same transaction (see [0016](0016-a-correction-is-one-gesture.md)), or judges
 the facts the act leaves behind (see
-[0014](0014-a-posted-entry-is-immutable.md)).
+[0014](0014-a-posted-entry-is-immutable.md)). The settings that remain —
+`ekwo.year_end_entry` and `ekwo.closing_fiscal_year`, raised by the invoker
+functions that open, close and re-open a year — are honoured only for a caller
+who holds the capability of the act, so raising one by hand buys nothing the
+caller could not already do through the function.
 
 **`service_role` bypasses row level security by its platform's design.** It
 does not bypass a function that raises, which is why the rules of an
@@ -63,6 +72,6 @@ installation live in functions.
 ## See also
 
 - `tests/hardening.test.ts`, `tests/fresh_session.test.ts`,
-  `tests/client_preset.test.ts`
+  `tests/client_preset.test.ts`, `tests/settings_nobody_owns.test.ts`
 - [0004 A permission is a capability](0004-a-permission-is-a-capability.md)
 - [0006 A machine key is a narrow caller](0006-a-machine-key-is-a-narrow-caller.md)

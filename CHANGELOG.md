@@ -32,6 +32,32 @@ somewhere has already run it.
   file of the published package has a source in `supabase/`, in `modules/` or
   in the CLI's assets, and a fourth place would fail the test.
 
+### Security
+
+- **A setting any session may write no longer makes a login the installer**
+  (`20260929094126`). Custom settings carry no privileges, so on a direct
+  connection a second login — a reporting user, a BI tool, a bookkeeper given
+  fewer rights than the owner — could `set ekwo.installing = 'on'`, and with
+  no session and no key that was all `is_installer()` asked. Every guard
+  written `if not is_installer() and not has_capability(…)` then stood aside:
+  such a login, a member of `authenticated` and nothing else, could issue
+  itself a machine key carrying every capability of a company. PostgREST
+  cannot issue a `SET`, so the API was never the way in. `is_installer()` now
+  also asks whether `session_user` is a member of the role that owns the
+  tables — the login that could already disable every trigger of the schema.
+  The migration runner, `ekwo init` and a superuser are unaffected.
+
+  The two settings the year-end functions raise while they write,
+  `ekwo.year_end_entry` and `ekwo.closing_fiscal_year`, could be raised by
+  hand the same way, by a person on a direct connection with no right to close
+  a year: an entry labelled a closing entry leaves the income statement, and
+  `closed_at` moved with no `year_end.close`. The guards now honour them only
+  for the installer or a caller holding the capability of the act —
+  `year_end.close`, or `entries.post` for an opening balance — and answer
+  otherwise what the capability guard of the act would have answered.
+  Reported by an outside reader of the migrations;
+  `tests/settings_nobody_owns.test.ts` is the second login they described.
+
 ## [0.9.0] — 2026-09-28
 
 ### Added
