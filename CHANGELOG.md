@@ -49,7 +49,8 @@ somewhere has already run it.
   and the login, so a purge by hand leaves the same line as the function's.
   `truncate audit_log` is refused. `ekwo doctor` reports a trigger of the trail
   that has been disabled. `purge_audit_log(date)` keeps its signature and its
-  answer. Reported by an outside reader of the migrations.
+  answer. Reported by [@https-shubhamsahu](https://github.com/https-shubhamsahu),
+  who read the migrations and said where an auditor would push.
 
 - **A setting any session may write no longer makes a login the installer**
   (`20260929094126`). Custom settings carry no privileges, so on a direct
@@ -72,7 +73,7 @@ somewhere has already run it.
   for the installer or a caller holding the capability of the act —
   `year_end.close`, or `entries.post` for an opening balance — and answer
   otherwise what the capability guard of the act would have answered.
-  Reported by an outside reader of the migrations;
+  Reported by [@https-shubhamsahu](https://github.com/https-shubhamsahu);
   `tests/settings_nobody_owns.test.ts` is the second login they described.
 
 ## [0.9.0] — 2026-09-28
