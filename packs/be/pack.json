@@ -2,8 +2,8 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "BE",
   "name": "Belgium",
-  "version": "1.15.0",
-  "schema_min": "20260919190727",
+  "version": "1.16.0",
+  "schema_min": "20260929141500",
   "seed_sequence": 10,
   "released_at": "2026-09-19",
   "certification": {
@@ -131,6 +131,9 @@
       }
     ]
   },
+  "zones": [
+    "european-union"
+  ],
   "defaults": {
     "currency": "EUR",
     "language": "fr",
@@ -330,6 +333,7 @@
     "source": "facturation-electronique"
   },
   "bank": {
+    "account_scheme": "iban",
     "statement_formats": [
       "coda",
       "camt.053"

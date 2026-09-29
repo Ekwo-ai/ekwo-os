@@ -2,8 +2,8 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "CR",
   "name": "Costa Rica",
-  "version": "0.1.0",
-  "schema_min": "20260921084143",
+  "version": "0.2.0",
+  "schema_min": "20260929141500",
   "seed_sequence": 105,
   "released_at": "2026-09-26",
   "certification": {
@@ -185,6 +185,7 @@
     "source": "reg-comprobantes"
   },
   "bank": {
+    "account_scheme": "iban",
     "statement_formats": ["csv"],
     "payment_formats": []
   }

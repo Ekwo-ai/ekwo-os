@@ -2,8 +2,8 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "TD",
   "name": "Tchad",
-  "version": "0.1.0",
-  "schema_min": "20260917170000",
+  "version": "0.2.0",
+  "schema_min": "20260929141500",
   "seed_sequence": 35,
   "released_at": "2026-09-21",
   "certification": {
@@ -213,5 +213,8 @@
     "vat_scheme": null,
     "legal_reference": "Loi de finances pour 2023, art. 17 ; loi de finances pour 2024, art. 43 ; loi de finances pour 2026, art. 33, modifiant l'art. 246-II du Code général des impôts — « Sont également non déductibles de la TVA... les factures non électroniques normalisées, à exception des factures des fournisseurs étrangers » : depuis le 1er janvier 2026, une facture qui n'est pas une facture électronique normalisée (FEN), délivrée par une machine certifiée reliée au système de la Direction générale des Impôts, n'ouvre plus droit à déduction, sauf lorsqu'elle émane d'un fournisseur étranger. Loi de finances pour 2026, art. 46 — liste des contribuables tenus d'émettre une FEN ; art. 71 — aucune dépense publique ne peut être engagée ni payée sur la base d'une facture qui n'est pas une FEN. C'est une condition de déduction (et, pour la dépense publique, de paiement), non une obligation générale d'échange dématérialisé entre entreprises au sens de ce champ : aucun profil technique normalisé (UBL, schéma d'échange), aucun schéma d'identifiant des parties et aucune obligation d'émission au sens strict n'ont été trouvés publiés par la DGI à la date de ce pack. Le portail fen.finances.gouv.td n'a pas été lu comme une spécification technique.",
     "source": "fen"
+  },
+  "bank": {
+    "account_scheme": "iban"
   }
 }

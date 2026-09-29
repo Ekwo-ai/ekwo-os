@@ -2,8 +2,8 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "ML",
   "name": "Mali",
-  "version": "0.1.0",
-  "schema_min": "20260921084143",
+  "version": "0.2.0",
+  "schema_min": "20260929141500",
   "seed_sequence": 32,
   "released_at": "2026-09-21",
   "certification": {
@@ -210,5 +210,8 @@
     "vat_scheme": null,
     "legal_reference": "Décret n° 2022-0733/PT-RM du 25 novembre 2022 institue un système sécurisé de facture normalisée (facture sécurisée par un sticker, seul document faisant foi dans les opérations commerciales) ; la loi de finances 2024 annonce « l'introduction » de la facture normalisée et la soumission à la TVA des plateformes de commerce électronique, ce qui indique que le dispositif n'était pas encore en service fin 2023. Aucun arrêté d'application, aucun format technique et aucune date d'obligation effective n'ont été trouvés à la date de ce pack : le profil et la date restent vides.",
     "source": "decret-facture-normalisee"
+  },
+  "bank": {
+    "account_scheme": "iban"
   }
 }

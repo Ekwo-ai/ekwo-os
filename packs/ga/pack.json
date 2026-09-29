@@ -2,8 +2,8 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "GA",
   "name": "Gabon",
-  "version": "0.1.0",
-  "schema_min": "20260917170000",
+  "version": "0.2.0",
+  "schema_min": "20260929141500",
   "seed_sequence": 28,
   "released_at": "2026-09-21",
   "certification": {
@@ -170,5 +170,8 @@
     "vat_scheme": null,
     "legal_reference": "Code général des impôts, art. P-832 ter, créé par la loi de finances pour 2026 et réécrit par la loi de finances rectificative 2026 (art. 1) — toute opération d'une personne soumise à l'impôt sur les sociétés, à l'impôt sur les bénéfices professionnels, à l'impôt synthétique libératoire ou assujettie à la TVA fait l'objet d'une facture électronique normalisée, délivrée au moyen d'un dispositif électronique de facturation homologué par l'administration fiscale, ou d'un document en tenant lieu admis par voie réglementaire ; un crédit d'impôt de 25 %, 25 % puis 50 % sur trois ans est accordé pour l'achat d'un dispositif physique. Art. 223 nouveau — seule la TVA figurant sur une facture électronique normalisée, ou un document en tenant lieu, est déductible. Le dispositif est nommé « E-Fact » par la DGI (page dgi.ga/e-fact/, injoignable depuis ce poste, connue seulement par un résumé de moteur de recherche, donc non retenue comme source). Aucun texte officiel lu ne fixe une date d'entrée en vigueur ni un calendrier de généralisation par catégorie de contribuable : une source secondaire (Deloitte, avril 2026) avance le 1er janvier 2026, non vérifiable ici. L'identifiant fiscal est le numéro d'identification fiscale (NIF, art. 232), sans code ISO 6523.",
     "source": "lfr-2026"
+  },
+  "bank": {
+    "account_scheme": "iban"
   }
 }

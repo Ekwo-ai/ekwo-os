@@ -2,8 +2,8 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "PL",
   "name": "Polska",
-  "version": "0.1.0",
-  "schema_min": "20260921145425",
+  "version": "0.2.0",
+  "schema_min": "20260929141500",
   "seed_sequence": 64,
   "released_at": "2026-09-22",
   "certification": {
@@ -139,6 +139,7 @@
       }
     ]
   },
+  "zones": ["european-union"],
   "defaults": {
     "currency": "PLN",
     "language": "pl",
@@ -268,6 +269,7 @@
     "source": "ustawa-ksef-2023"
   },
   "bank": {
+    "account_scheme": "iban",
     "statement_formats": ["mt940", "camt.053"],
     "payment_formats": ["pain.001"]
   }

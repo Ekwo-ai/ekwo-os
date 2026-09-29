@@ -2,8 +2,8 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "EE",
   "name": "Estonia",
-  "version": "1.10.0",
-  "schema_min": "20260921084143",
+  "version": "1.11.0",
+  "schema_min": "20260929141500",
   "seed_sequence": 13,
   "released_at": "2026-09-21",
   "certification": {
@@ -107,6 +107,9 @@
       }
     ]
   },
+  "zones": [
+    "european-union"
+  ],
   "defaults": {
     "currency": "EUR",
     "language": "et",
@@ -274,6 +277,7 @@
     "obligation": "on_request"
   },
   "bank": {
+    "account_scheme": "iban",
     "statement_formats": [
       "camt.053",
       "camt.052"

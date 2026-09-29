@@ -2,8 +2,8 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "CA",
   "name": "Canada",
-  "version": "0.1.0",
-  "schema_min": "20260921145425",
+  "version": "0.2.0",
+  "schema_min": "20260929141500",
   "seed_sequence": 58,
   "released_at": "2026-09-25",
   "certification": {
@@ -307,6 +307,7 @@
     "source": "itc-regs"
   },
   "bank": {
+    "account_scheme": "transit-institution-account",
     "statement_formats": [
       "bai2",
       "ofx",

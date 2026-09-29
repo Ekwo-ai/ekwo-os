@@ -2,8 +2,8 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "MD",
   "name": "Moldova",
-  "version": "0.1.0",
-  "schema_min": "20260923110000",
+  "version": "0.2.0",
+  "schema_min": "20260929141500",
   "seed_sequence": 111,
   "released_at": "2026-09-26",
   "certification": {
@@ -195,5 +195,8 @@
     "vat_scheme": null,
     "legal_reference": "Codul fiscal, art. 117 alin. (12), introdus prin Legea nr. 102 din 18.06.2020 — la efectuarea livrărilor impozabile în cadrul achizițiilor publice pe teritoriul țării (inclusiv achizițiile sectoriale, concesiunile și achizițiile de valoare mică), subiectul impozabil este obligat să prezinte cumpărătorului (beneficiarului) o factură fiscală electronică prin sistemul informațional automatizat SIA „e-Factura”, cu excepția livrărilor de energie electrică, energie termică, gaze naturale, servicii comunale și servicii de comunicații electronice — obligație în vigoare de la 1 ianuarie 2021. Domeniul de aplicare a fost extins de la 1 ianuarie 2025 la livrările către agenții economici care nu au relații fiscale cu sistemul bugetar al Republicii Moldova și la mărfurile/serviciile finanțate din proiecte de asistență tehnică realizate prin granturi și tratate internaționale. `profile` rămîne vid: SIA „e-Factura” este un serviciu al Serviciul Fiscal de Stat prin care factura fiscală electronică este generată și transmisă direct în platforma de stat — cercetarea acestui pachet nu a găsit o confirmare oficială că documentul schimbat urmează un model semantic interoperabil de tipul EN 16931 (Peppol BIS, Factur-X, XRechnung, un PINT); niciun brick din packages/formats/ nu scrie, validează sau transmite azi o asemenea factură. `party_scheme` și `vat_scheme` rămîn de asemenea vide: contribuabilul este identificat prin codul fiscal (IDNO/IDNP) atribuit de Serviciul Fiscal de Stat, fără o schemă ISO 6523 înregistrată — a se vedea secțiunea «From Moldova» din docs/international.md.",
     "source": "efactura-achizitii"
+  },
+  "bank": {
+    "account_scheme": "iban"
   }
 }

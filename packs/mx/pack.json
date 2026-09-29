@@ -2,8 +2,8 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "MX",
   "name": "México",
-  "version": "0.1.0",
-  "schema_min": "20260921084143",
+  "version": "0.2.0",
+  "schema_min": "20260929141500",
   "seed_sequence": 42,
   "released_at": "2026-09-21",
   "certification": {
@@ -348,6 +348,7 @@
     "source": "cff"
   },
   "bank": {
+    "account_scheme": "clabe",
     "statement_formats": [
       "csv"
     ],

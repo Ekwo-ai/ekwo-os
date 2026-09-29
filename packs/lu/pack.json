@@ -2,8 +2,8 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "LU",
   "name": "Luxembourg",
-  "version": "1.9.0",
-  "schema_min": "20260919190727",
+  "version": "1.10.0",
+  "schema_min": "20260929141500",
   "seed_sequence": 12,
   "released_at": "2026-09-21",
   "certification": {
@@ -139,6 +139,7 @@
       }
     ]
   },
+  "zones": ["european-union"],
   "defaults": {
     "currency": "EUR",
     "language": "fr",
@@ -287,6 +288,7 @@
     "source": "facturation-electronique"
   },
   "bank": {
+    "account_scheme": "iban",
     "statement_formats": ["camt.053", "mt940"],
     "payment_formats": ["pain.001", "pain.008"]
   }

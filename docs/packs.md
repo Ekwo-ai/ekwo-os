@@ -518,7 +518,7 @@ That is the first way, and it is the one to reach for: the second place is a
 sum of things the postings already wrote, so it is written down as a sum.
 
 The second way is for a parent that is **not** a sum. Form KMD reports an
-intra-Community acquisition of goods in box 6.1, in box 6 around it and in box
+acquisition of goods from another Member State of the European Union in box 6.1, in box 6 around it and in box
 1 around that — and box 6 is not the total of the boxes printed under it,
 because the rest of box 6 is services received, which the form never prints on
 its own. The British VAT Return does the same sideways: the value of a service
@@ -574,7 +574,7 @@ opinion:
 - **Technical guidance for tax codes in EN 16931, version 1** (European
   Commission, Technical Advisory Group on Electronic Invoicing, use cases
   dated 1 July 2024), whose six use cases give the pair for each case. Its
-  fourth is "export outside the EU", which is the Union's border because the
+  fourth is the export of goods to a place outside the European Union, which is that zone's border because the
   seller it addresses is established in a Member State; what UNCL5305 itself
   says of `G` is *free export item, VAT not charged*, so the border is the one
   of whoever levies the tax.
@@ -599,7 +599,7 @@ opinion:
 | `exempt` | either | `E` | the article claimed, from the VATEX list |
 | `not_subject` | either | `O` | `VATEX-EU-O` |
 
-**That table is the Union's, and the last column applies where the Union's VAT
+**That table is the European Union's, and the last column applies where the European Union's VAT
 does.** EN 16931 is a European standard and the VATEX list is published by the
 European Commission: its own codes name articles of Directive 2006/112/EC, and
 its national codes — `VATEX-FR-CGI261-1` and the rest — belong to Member States
@@ -634,7 +634,7 @@ to its rate, everywhere. The categories are UNCL5305, a UN/CEFACT list: `E`, `G`
 `O` and `AE` keep their meanings, a sale still has to name one, and the rate
 rules of EN 16931 still fix what it may be charged at.
 
-Should a country outside the Union one day publish reason codes of its own —
+Should a country outside the European Union one day publish reason codes of its own —
 none has, and PINT is where it would surface — the column takes them, on one
 condition: the pack's register declares that list, as the entry of
 `certification.sources` that says so of itself with `"reason_codes": true`.
@@ -650,7 +650,7 @@ silently authorised a code on any of its taxes. At most one entry of a register
 may carry the flag, and it has to be a `standard`, because a published list of
 codes is one; `ekwo pack check` refuses a second and refuses the flag on any
 other kind. That is exactly what is checked of a VATEX code inside
-the Union, where the check holds no copy of the list either.
+the European Union, where the check holds no copy of the list either.
 
 Which side of that line a pack is on is **not** written anywhere in the code.
 It is a row of `territories`, the reference table of the framework that
@@ -693,7 +693,7 @@ way, and a tax that can reach a sale has to name one.
 
 **Where no invoice governed by the standard exists, the category is absent.**
 Import tax is assessed on a customs document, and a service received from a
-supplier the Union's rules do not reach arrives on an invoice the Directive
+supplier the European Union's rules do not reach arrives on an invoice the Directive
 does not govern. There is no seller's category to record, so `import` and
 `foreign_services_received` carry none. `S` there would claim the supplier
 levied the standard rate, which is the one thing that certainly did not
@@ -1016,7 +1016,7 @@ picks from, and this is the body of tax law a party is under. California levies
 a sales tax and the United States does not; Northern Ireland is inside the
 common system of VAT for supplies of goods and Great Britain is outside it
 altogether, under one registration. Neither can be composed out of a country
-and a region — `XI` is not spelled `GB-NI` in any register the Union uses — so
+and a region — `XI` is not spelled `GB-NI` in any register the European Union uses — so
 a territory is a column of its own and a key of `territories`.
 
 ```json
@@ -1169,10 +1169,44 @@ it was posted, which is the stricter answer rather than another country's.
   "source": "facturation-electronique"
 },
 "bank": {
+  "account_scheme": "iban",
   "statement_formats": ["coda", "camt.053"],
   "payment_formats": ["pain.001"]
 }
 ```
+
+**How an account is identified.** `bank.account_scheme` says what the banks of
+the country call an account, and it is what `ekwo init` and
+`create_bank_account` ask for. An IBAN is one answer among several, and about
+half the world does not have one:
+
+| Scheme | The identifier is | Typical of |
+|---|---|---|
+| `iban` | an IBAN, with its check digits | countries of the IBAN registry |
+| `aba-routing-account` | a 9-digit ABA routing number, then the account number | the United States |
+| `sort-code-account` | a 6-digit sort code, then the account number | the United Kingdom |
+| `bsb-account` | a 6-digit BSB, then the account number | Australia |
+| `ifsc-account` | an 11-character IFSC, then the account number | India |
+| `clabe` | 18 digits, the last a check digit | Mexico |
+| `zengin` | a bank code, a branch code, then the account number | Japan |
+| `transit-institution-account` | a transit number, an institution number, then the account number | Canada |
+| `account-number` | a number as the bank wrote it | the fallback |
+
+A pack that declares nothing is asked for `account-number` and never for an
+IBAN. The keys are the ones of `BANK_ACCOUNT_SCHEMES` in `@ekwo-ai/core`, which
+holds the one validator of each; the schema of the pack accepts exactly those
+keys, and `tests/bank_account_schemes.test.ts` keeps the two equal. Adding a
+scheme is adding it to the registry, to the schema and to a test — it is a
+reader and not a pack. The value is stored in `country_defaults.bank_account_scheme`,
+and a pack that declares it needs `schema_min` of `20260929141500` or later.
+
+**The zones a country belongs to.** `zones` is a list of lower-case names at
+the root of the manifest — `["european-union"]` for a Member State — and it is
+how a country says it shares rules with others. Nothing in the core reads a
+zone; what only exists inside one (intra-community VAT, the recapitulative
+statement, VIES, the One-Stop Shop) is described on `docs/zones/<zone>.md`, and
+`ekwo pack check` refuses a zone with no page there. A country that stands
+alone declares none.
 
 **The number.** `numbering` is `gapless_per_year`, `gapless`, `sequential` or
 `free`, and the first two compile to `numbering_gapless = true`. Whether the
@@ -1252,7 +1286,7 @@ exactly as it did: null means the entry's own date. Two limits are written down
 in [`docs/international.md`](international.md): the payment branch is honoured
 only through `cash_basis`, because Ekwo has no prepayment document, and the
 recapitulative statement still reads the entry date, because the moment an
-intra-Community supply arises is a different article in every country.
+supply between Member States of the European Union arises is a different article in every country.
 
 **The schemes** are ISO 6523 identifier codes, four digits, and there are two
 because they are not the same identifier: `party_scheme` is how a party is
@@ -1318,7 +1352,7 @@ condition would be a pack that executes.
 | `reverse_charge` | a line carries a tax the **customer** owes: a domestic reverse charge, a service received from a supplier who is not established here, or the middle supply of a triangular arrangement — three articles behind one sentence |
 | `intra_eu_goods` | a line carries an intra-Union supply or acquisition of goods |
 | `intra_eu_services` | the same, for services |
-| `export` | a line carries a supply outside the Union |
+| `export` | a line carries a supply outside the European Union |
 | `exempt` | a line carries an exemption that is none of the above |
 | `late_payment` | the document is one the seller issues |
 | `cash_basis` | a line carries a tax that falls due on collection |
@@ -1584,8 +1618,8 @@ installs a company on each from what that pack's scenario declares, replays the
 documents and the payments through `post_document`, `post_payment` and
 `reconcile`, and compares. Nothing in it knows a country — what it asks of a
 scenario, it asks of the *pack*: both directions, more than one positive rate,
-a credit note, a matched payment and an unmatched one; an intra-Union reverse
-charge on each side the pack offers one; a tax due on collection and a partly
+a credit note, a matched payment and an unmatched one; a reverse charge between
+Member States of the European Union on each side the pack offers one; a tax due on collection and a partly
 recoverable tax **where the pack has them**. A country with no cash-basis tax
 is not asked for one.
 
@@ -1770,6 +1804,8 @@ article at all — that one is a warning on every other status, including
 normal state of a new pack and not a defect of it. The exception is
 `posted_edit_policy: unpost_if_untouched`, which lets a posted entry be taken
 away: it is refused without an article on every status.
+
+**The zones and the bank scheme.** A `zones` entry with no `docs/zones/<zone>.md` beside the pack, and a `bank.account_scheme` that `BANK_ACCOUNT_SCHEMES` does not carry (the schema refuses it before anything else runs).
 
 **The bank formats, as a warning.** A `bank.statement_formats` entry that no
 brick of `packages/formats/` reads is printed once per format, and never
@@ -2072,7 +2108,7 @@ reconstruct from a rate you no longer remember reading.
 to do before step 1**, and it is the only edit a pack ever makes outside its own
 folder. `ekwo pack check` decides whether the VATEX list of EN 16931 reaches
 your taxes by looking your country up in `territories`, and a country the table
-carries no row for is held to the Union's table — so an exempt sale with no
+carries no row for is held to the European Union's table — so an exempt sale with no
 `exemption_code` would be refused and you would be told to write a code that
 names an article of a Directive your seller is not bound by. Add a row to
 `supabase/seed/00_territories.sql`: your ISO code, `eu_vat_scope` `none`, no

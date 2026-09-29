@@ -2,8 +2,8 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "XK",
   "name": "Kosova",
-  "version": "0.1.0",
-  "schema_min": "20260923110000",
+  "version": "0.2.0",
+  "schema_min": "20260929141500",
   "seed_sequence": 123,
   "released_at": "2026-09-26",
   "certification": {
@@ -147,5 +147,8 @@
     "obligation": "none",
     "legal_reference": "Kërkimi për këtë paket nuk gjeti asnjë ligj apo akt nënligjor që të detyrojë shkëmbimin e faturave elektronike të strukturuara ndërmjet subjekteve private në Kosovë, as një platformë shtetërore vërtetimi (clearance) si SEF-i serb apo e-Faktura shqiptare. Ligji Nr. 05/L-037 për TVSH-në, neni 44, paragrafi 1 lejon që fatura t'i dërgohet blerësit „me mjete elektronike”, me kusht që të ketë pëlqimin e blerësit dhe autenticiteti e integriteti i përmbajtjes të garantohen — kjo është leje (`on_request`-like), jo detyrim mbi një profil të ndërtuar mbi modelin semantik të EN 16931. Ligji parasheh në vend të kësaj **Pajisjen Elektronike Fiskale (PEF)** (neni 2, paragrafi 1.17) — arka fiskale të licencuara nga Ministria e Financave — për regjistrimin dhe lëshimin e kuponëve fiskal të shitjeve me pakicë; kjo është një mekanizëm tjetër (arkë fiskale me kupon, jo faturë e strukturuar e shkëmbyer mes palëve) që socle-ja e Ekwo-s nuk e ka të përfaqësuar sot. Shih README.md dhe docs/international.md, seksioni «From Kosovo».",
     "source": "ligji-tvsh"
+  },
+  "bank": {
+    "account_scheme": "iban"
   }
 }

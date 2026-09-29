@@ -2,8 +2,8 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "RS",
   "name": "Srbija",
-  "version": "0.1.0",
-  "schema_min": "20260923110000",
+  "version": "0.2.0",
+  "schema_min": "20260929141500",
   "seed_sequence": 112,
   "released_at": "2026-09-26",
   "certification": {
@@ -185,5 +185,8 @@
     "vat_scheme": null,
     "legal_reference": "Zakon o elektronskom fakturisanju, član 24 — obaveza izdavanja i čuvanja elektronske fakture u transakcijama između subjekata privatnog sektora primenjuje se od 1. januara 2023. godine; obaveza subjekta privatnog sektora da izda elektronsku fakturu subjektu javnog sektora primenjuje se od 1. maja 2022, a obaveza prijema i čuvanja faktura izdatih od javnog sektora od 1. jula 2022. Sistem elektronskih faktura (SEF, efaktura.gov.rs) je državna platforma preko koje se fakture obavezno izdaju, šalju i primaju (član 5); nije reč o razmeni preko mreže vršnjaka kao kod Peppol-a, i faktura se ne sastavlja prema jednom od profila izgrađenih na semantičkom modelu EN 16931 (Peppol BIS, Factur-X, XRechnung, PINT), nego u XML formatu koji propisuje Ministarstvo finansija (Pravilnik o elektronskom fakturisanju). `profile` je zato ostavljen prazan, a ne popunjen uslovnim nacionalnim nazivom. `party_scheme` i `vat_scheme` su takođe prazni: Srbija nema ISO 6523 identifikacionu šemu registrovanu u mreži Peppol — poreski identifikacioni broj (PIB) i matični broj se razmenjuju u samom XML zapisu SEF-a, van ove šeme. Zakon takođe uvodi posebnu obavezu elektronskog evidentiranja obračuna PDV u sistemu elektronskih faktura (član 4), sa rokom jednakim roku za podnošenje poreske prijave (član 4. stav pretposlednji) — ovaj vid evidentiranja je odvojen od same deklaracije PPPDV koju ovaj paket modeluje kao tax_report.json i nije nešto što socle danas ume da predstavi; vidi README.md i docs/international.md, odeljak „From Serbia”.",
     "source": "zakon-efakturisanje"
+  },
+  "bank": {
+    "account_scheme": "iban"
   }
 }

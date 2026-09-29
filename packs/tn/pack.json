@@ -2,8 +2,8 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "TN",
   "name": "Tunisie",
-  "version": "0.1.0",
-  "schema_min": "20260923110000",
+  "version": "0.2.0",
+  "schema_min": "20260929141500",
   "seed_sequence": 85,
   "released_at": "2026-09-25",
   "certification": {
@@ -168,5 +168,8 @@
     "vat_scheme": null,
     "legal_reference": "La facture électronique « El Fatoora » existe depuis la loi de finances pour 2016 (loi n° 2015-53 du 25 décembre 2015), art. 22, qui assimile la facture électronique à la facture papier et désigne Tunisie TradeNet (TTN) comme opérateur technique du système ; le décret gouvernemental n° 2016-1066 du 15 août 2016 en fixe les conditions et modalités d'émission et d'archivage. L'obligation, à la date de ce pack, ne couvre pas toutes les entreprises : elle porte sur les opérations avec les marchés publics (B2G) et sur les grandes entreprises rattachées à la Direction des Grandes Entreprises (DGE), sans que cette recherche ait pu ouvrir un texte daté et exhaustif fixant le périmètre exact et son calendrier d'extension — `obligation` reste donc vide plutôt que `mandatory` pour tout le pack, à vérifier auprès d'un professionnel local avant de fier une entreprise donnée sur ce point. `profile`, `mandatory_from`, `party_scheme` et `vat_scheme` restent vides pour la même raison que packs/sa/, packs/mx/ et packs/vn/ : TTN est un système de validation (« clearance »), la facture est un XML propre au standard tunisien (TEIF) transmis à TTN puis à l'administration, et aucune brique de packages/formats/ n'écrit ce XML, ne le signe, ni ne dialogue avec TTN — un document émis par Ekwo n'est donc pas une facture électronique El Fatoora. La déclaration mensuelle de TVA, elle, est obligatoirement télé-déclarée sur le portail de la DGI (Code de la TVA, art. 18-V).",
     "source": "el-fatoora"
+  },
+  "bank": {
+    "account_scheme": "iban"
   }
 }

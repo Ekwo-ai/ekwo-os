@@ -2,8 +2,8 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "DK",
   "name": "Danmark",
-  "version": "0.1.0",
-  "schema_min": "20260923110000",
+  "version": "0.2.0",
+  "schema_min": "20260929141500",
   "seed_sequence": 65,
   "released_at": "2026-09-25",
   "certification": {
@@ -139,6 +139,7 @@
       }
     ]
   },
+  "zones": ["european-union"],
   "defaults": {
     "currency": "DKK",
     "language": "da",
@@ -277,6 +278,7 @@
     "source": "elektronisk-afregning"
   },
   "bank": {
+    "account_scheme": "iban",
     "statement_formats": ["camt.053", "mt940"],
     "payment_formats": ["pain.001"]
   }

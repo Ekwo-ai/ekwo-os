@@ -256,6 +256,8 @@ export interface PackDescription {
    * `--fiscal-year-start`.
    */
   fiscalYearDefault: string | null;
+  /** Zones the country declares, e.g. `european-union`. Empty where it declares none. */
+  zones: string[];
   charts: DescribedChart[];
   taxes: DescribedTaxes;
   invoicing: DescribedInvoicing;
@@ -263,6 +265,8 @@ export interface PackDescription {
   declarations: DescribedDeclaration[];
   einvoicing: DescribedEinvoicing | null;
   vatBalance: DescribedVatBalance;
+  /** How a bank of this country identifies an account. Null where the pack says nothing: a free-text account number, never an IBAN. */
+  bankAccountScheme: string | null;
   bankStatementFormats: DescribedBankFormat[];
   paymentFormats: string[];
   statements: DescribedStatement[];
@@ -346,6 +350,7 @@ export function describePack(pack: Pack, options: DescribeOptions = {}): PackDes
     languages: pack.languages,
     currency: pack.manifest.defaults.currency,
     fiscalYearDefault: pack.documents.fiscal_year_default,
+    zones: pack.zones,
     charts: pack.charts.map((chart) => ({
       code: chart.code,
       name: chart.name,
@@ -368,6 +373,7 @@ export function describePack(pack: Pack, options: DescribeOptions = {}): PackDes
       payable: filing.taxPayable,
       receivable: typeof receivable === 'string' ? receivable : null,
     },
+    bankAccountScheme: pack.documents.bank_account_scheme,
     bankStatementFormats,
     paymentFormats: pack.documents.payment_formats,
     statements: pack.statements.map((statement) => ({

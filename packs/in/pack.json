@@ -2,8 +2,8 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "IN",
   "name": "India",
-  "version": "0.1.0",
-  "schema_min": "20260921145425",
+  "version": "0.2.0",
+  "schema_min": "20260929141500",
   "seed_sequence": 108,
   "released_at": "2026-09-26",
   "certification": {
@@ -326,6 +326,7 @@
     "source": "cgst-rule48"
   },
   "bank": {
+    "account_scheme": "ifsc-account",
     "statement_formats": [
       "mt940",
       "csv"

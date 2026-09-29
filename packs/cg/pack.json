@@ -2,8 +2,8 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "CG",
   "name": "Congo",
-  "version": "0.1.0",
-  "schema_min": "20260921145425",
+  "version": "0.2.0",
+  "schema_min": "20260929141500",
   "seed_sequence": 27,
   "released_at": "2026-09-21",
   "certification": {
@@ -221,5 +221,8 @@
     "vat_scheme": null,
     "legal_reference": "Système de Facturation Électronique Certifié (SFEC), institué par la loi n° 77-2022 du 27 décembre 2022 (LF 2023), modifié par la loi n° 47-2024 du 30 décembre 2024 (LF 2025), réglementé par le décret n° 2026-101 du 31 mars 2026 (homologation des terminaux et logiciels, distributeurs agréés, obligation d'interconnexion, délai transitoire de 3 mois). D'après le communiqué DGID et le site officiel SFEC, le déploiement est étagé par catégorie de contribuable — 1er août 2026 pour les entreprises des unités de gestion des entreprises (UGE), des moyennes entreprises (UME) et des petites et très petites entreprises du secteur pétrolier (USTPG) et, sans distinction de taille ni de résidence fiscale, leurs fournisseurs et prestataires ; 1er décembre 2026 pour les très petites entreprises — avec repli temporaire possible sur le portail e-Facture. Loi de finances pour 2026, § 4.d et art. 25 d) : une facture qui n'émane pas du SFEC (sans NIU) rend la charge non déductible à l'IS ; § 11 (Deloitte, secondaire) : la TVA n'est pas davantage déductible sur une facture non certifiée. C'est une condition de déduction et non une obligation générale d'émission dématérialisée valable le même jour pour tous : `mandatory_from` reste vide faute d'une date unique que le pack puisse défendre.",
     "source": "sfec"
+  },
+  "bank": {
+    "account_scheme": "iban"
   }
 }

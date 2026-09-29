@@ -2,8 +2,8 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "BH",
   "name": "البحرين",
-  "version": "0.1.0",
-  "schema_min": "20260923110000",
+  "version": "0.2.0",
+  "schema_min": "20260929141500",
   "seed_sequence": 117,
   "released_at": "2026-09-26",
   "certification": {
@@ -147,5 +147,8 @@
     "vat_scheme": null,
     "legal_reference": "At the day this pack was released, no statute obliges a Bahraini business to exchange electronic invoices with another. The VAT General Guide, section 9.2.1, records only that 'a VAT registered person may issue and retain VAT Invoices, credit and debit notes and other documents that evidence his supply in an electronic form' without prior approval from the NBR once its own systems meet Articles 52 to 54 of the Executive Regulations — a permission to keep an invoice as a PDF, not a structured-format exchange or a clearance regime, and this pack's research found no NBR or LLOC text past that point naming a format, a network, a party identifier or an effective date. Public reporting from mid-2026 describes a nationwide business-to-business e-invoicing platform at the tender and procurement stage since 2022, with no technical specification or legislated date published; this pack's own research could not open a directly-fetchable primary NBR text confirming any of it, so nothing beyond the permission the General Guide itself states is carried here. docs/international.md records the gap.",
     "source": "vat-general-guide"
+  },
+  "bank": {
+    "account_scheme": "iban"
   }
 }

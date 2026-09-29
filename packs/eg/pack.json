@@ -2,8 +2,8 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "EG",
   "name": "مصر",
-  "version": "0.1.0",
-  "schema_min": "20260917170000",
+  "version": "0.2.0",
+  "schema_min": "20260929141500",
   "seed_sequence": 83,
   "released_at": "2026-09-25",
   "certification": {
@@ -151,5 +151,8 @@
     "vat_scheme": null,
     "legal_reference": "Electronic invoicing is obligatory in Egypt and this pack still leaves all four fields above empty, for the reason packs/sa/, packs/vn/ and packs/kr/ leave them empty: the ETA electronic invoice (B2B) and electronic receipt (B2C) systems are a clearance regime, not an exchange between two parties' own access points — a document is submitted to ETA, which validates it against its own schema and returns a UUID and, for a business invoice, a digital signature reference before the document is valid — and none of it is an EN 16931 profile a brick of packages/formats writes, so `mandatory_from` would name a day with no `profile` to say what became obligatory on it. This pack's research verified one fact at a directly-fetchable ETA page: 'As of April 1, 2023, no entity will be allowed to import, export or deal with the customs system except for entities that issue and deal with electronic tax invoices' (eta.gov.eg, home page). The rollout itself was phased over several years by taxpayer size, starting with large taxpayers registered at the Large Taxpayers Centre from November 2020 under Ministerial Decision No. 188 of 2020, and reaching the last waves of ordinary VAT-registered businesses by 2023; this pack's research could not open Ministerial Decision No. 188 of 2020 itself, nor the later wave-by-wave decisions, at a directly-fetchable official text, and does not invent the dates of intermediate waves from a secondary source. A second, separate obligation reaches business-to-consumer receipts (e-receipt), phased from 2022 and tightened by ETA Decision No. 281 of 2025 for taxpayers on a published list from 15 September 2025; this pack's research could not open Decision No. 281 of 2025 either. `party_scheme` and `vat_scheme` stay null because Egypt is not on the Peppol participant identifier scheme list and issues no ISO 6523 identifier: what an Egyptian electronic invoice carries instead is the seller's and buyer's Tax Registration Numbers and the ETA-issued UUID, neither of which this pack's fields hold. docs/international.md carries the rest of what the core cannot say about a clearance system.",
     "source": "eta-home"
+  },
+  "bank": {
+    "account_scheme": "iban"
   }
 }
