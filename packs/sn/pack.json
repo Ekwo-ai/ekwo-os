@@ -2,8 +2,8 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "SN",
   "name": "Sénégal",
-  "version": "0.1.0",
-  "schema_min": "20260917170000",
+  "version": "0.2.0",
+  "schema_min": "20260929141500",
   "seed_sequence": 20,
   "released_at": "2026-09-21",
   "certification": {
@@ -226,5 +226,8 @@
     "vat_scheme": null,
     "legal_reference": "Code général des impôts, art. 447-II, créé par la loi de finances pour 2025 (loi n° 2025-02 du 6 janvier 2025) — les assujettis délivrent une facture électronique émise, transmise et reçue sous forme dématérialisée, par un portail public de facturation ou une plateforme mise en place par l'administration, les modalités étant fixées par arrêté du ministre des Finances ; art. 667-IV — amende de 25 % de la taxe, plafonnée à 5 millions de francs par facture. Aucun arrêté d'application, aucun format et aucune date d'obligation n'ont été publiés à la date de ce pack : le profil et la date restent vides. L'identifiant fiscal est le NINEA (art. 446), qui n'a pas de code ISO 6523.",
     "source": "lfi-2025"
+  },
+  "bank": {
+    "account_scheme": "iban"
   }
 }

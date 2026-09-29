@@ -2,8 +2,8 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "BA",
   "name": "Bosna i Hercegovina",
-  "version": "0.1.0",
-  "schema_min": "20260917170000",
+  "version": "0.2.0",
+  "schema_min": "20260929141500",
   "seed_sequence": 113,
   "released_at": "2026-09-26",
   "certification": {
@@ -180,5 +180,8 @@
     "vat_scheme": null,
     "legal_reference": "Zakon o porezu na dodanu vrijednost, član 55 — faktura se izdaje kupcu, a njen sadržaj i uvjeti izdavanja bliže se uređuju podzakonskim aktom UIO-a (Pravilnik o primjeni Zakona o porezu na dodatu vrijednost); nijedan od pročitanih izvora ne propisuje opću obavezu strukturirane elektronske fakture (e-Faktura) niti državnu platformu za razmjenu ili validaciju faktura između poslovnih subjekata — postoji isključivo elektronsko podnošenje same prijave PDV-a (obavezno od januara 2019.) preko portala e-Porezi. `profile` ostaje prazan jer nijedan profil izgrađen na semantičkom modelu EN 16931 (Peppol BIS, Factur-X, XRechnung, PINT) nije zakonski propisan niti poznat iz istraženih izvora. Propust je zabilježen u README.md i u docs/international.md, odjeljak 'From Bosnia and Herzegovina'.",
     "source": "vat-law"
+  },
+  "bank": {
+    "account_scheme": "iban"
   }
 }

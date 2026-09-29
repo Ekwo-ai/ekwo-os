@@ -2,8 +2,8 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "GT",
   "name": "Guatemala",
-  "version": "0.1.0",
-  "schema_min": "20260921084143",
+  "version": "0.2.0",
+  "schema_min": "20260929141500",
   "seed_sequence": 106,
   "released_at": "2026-09-26",
   "certification": {
@@ -200,6 +200,7 @@
     "source": "fel-acuerdo-13-2018"
   },
   "bank": {
+    "account_scheme": "iban",
     "statement_formats": [],
     "payment_formats": []
   }

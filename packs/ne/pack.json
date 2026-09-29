@@ -2,8 +2,8 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "NE",
   "name": "Niger",
-  "version": "0.1.0",
-  "schema_min": "20260917170000",
+  "version": "0.2.0",
+  "schema_min": "20260929141500",
   "seed_sequence": 33,
   "released_at": "2026-09-21",
   "certification": {
@@ -193,5 +193,8 @@
     "vat_scheme": null,
     "legal_reference": "Arrêté n° 473/MF/DGI/DL/CFI/DIV.L du 20 novembre 2020 portant commercialisation des Systèmes électroniques certifiés de facturation (SECeF) — dispositif institué par la loi de finances 2020 et renforcé par celle de 2021, phase pilote au 1er octobre 2020, obligatoire depuis le 31 août 2021 pour les assujettis au régime réel normal et au régime réel simplifié ; une facture porte le numéro d'identification de la machine (NIM), le code SECeF/DGI et un code QR. L'obligation elle-même est datée (31 août 2021), mais aucun profil de norme n'est publié et la SECeF n'est pas un format d'échange de la famille EN 16931 : mandatory_from reste vide, une date n'ayant de sens qu'à côté du profil qu'elle rend obligatoire. L'identifiant fiscal est le numéro d'identification fiscale (NIF), sans code ISO 6523 connu.",
     "source": "secef"
+  },
+  "bank": {
+    "account_scheme": "iban"
   }
 }

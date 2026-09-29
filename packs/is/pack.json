@@ -2,8 +2,8 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "IS",
   "name": "Ísland",
-  "version": "0.1.0",
-  "schema_min": "20260923110000",
+  "version": "0.2.0",
+  "schema_min": "20260929141500",
   "seed_sequence": 81,
   "released_at": "2026-09-25",
   "certification": {
@@ -193,6 +193,7 @@
     "source": "reglugerd44-2019"
   },
   "bank": {
+    "account_scheme": "iban",
     "statement_formats": ["camt.053", "csv"],
     "payment_formats": ["pain.001", "csv"]
   }

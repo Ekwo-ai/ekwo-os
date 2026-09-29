@@ -2,8 +2,8 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "GW",
   "name": "Guinée-Bissau",
-  "version": "0.1.0",
-  "schema_min": "20260917170000",
+  "version": "0.2.0",
+  "schema_min": "20260929141500",
   "seed_sequence": 30,
   "released_at": "2026-09-21",
   "certification": {
@@ -218,5 +218,8 @@
     "vat_scheme": null,
     "legal_reference": "Código do IVA, art. 29.º, n.º 3 — le contenu des factures et les conditions de leur émission sont fixés par arrêté du ministre des Finances, délégation exercée par le Despacho MF n.º 1/2023 (Regulamento das Faturas), obligatoire pour tout assujetti depuis la mise en application de l'IVA le 1er janvier 2025 (Despacho n.º 130/GMF/2024) : toute facture est autorisée au préalable par la DGCI (numérotation, série, code QR et URL de vérification, art. 7.º et 11.º du règlement) et émise en ligne sur Kontaktu, par un logiciel autorisé ou par une imprimerie agréée — un mécanisme d'autorisation préalable et non un profil structuré au sens d'EN 16931, ce qui laisse `profile` vide. L'identifiant fiscal porté sur la facture est le NIF (art. 7.º, n.º 3, alínea a) du règlement), qui n'a pas de code ISO 6523.",
     "source": "regulamento-faturas"
+  },
+  "bank": {
+    "account_scheme": "iban"
   }
 }

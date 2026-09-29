@@ -2,8 +2,8 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "AE",
   "name": "United Arab Emirates",
-  "version": "0.1.0",
-  "schema_min": "20260917170000",
+  "version": "0.2.0",
+  "schema_min": "20260929141500",
   "seed_sequence": 60,
   "released_at": "2026-09-22",
   "certification": {
@@ -202,5 +202,8 @@
     "vat_scheme": null,
     "legal_reference": "Federal Decree-Law No. 8 of 2017, Articles 65(5) and 70(4) (both added by Federal Decree-Law No. 16 of 2024) make a Registrant 'subject to the Electronic Invoicing System' issue and transmit Tax Invoices and Tax Credit Notes as Electronic Invoices and Electronic Credit Notes. Who is subject, and from when, is set by Ministerial Decision No. 243 of 2025 (the Electronic Invoicing System itself) and Ministerial Decision No. 244 of 2025 (its implementation timeline), read here from the Ministry of Finance's own UAE Electronic Invoicing Guidelines, Version 1.1 of 1 June 2026: a voluntary pilot and a general voluntary phase both open on 1 July 2026, and mandatory implementation is phased by the Person's annual revenue — by 1 January 2027 for a Person with revenue of AED 50,000,000 or more (Accredited Service Provider appointed by 31 July 2026), by 1 July 2027 for every other Person (Accredited Service Provider appointed by 31 March 2027), and by 1 October 2027 for a Government Entity (Accredited Service Provider appointed by 31 March 2027); a 24-month grace period from 1 January 2027 applies to transactions between members of the same VAT group. `mandatory_from` carries the earliest of these dates, 1 January 2027, the day the obligation first binds anyone; docs/international.md carries the rest of the calendar, which this field cannot hold on its own. The exchange is a 5-corner model the Guidelines call DCTCE (Decentralised Continuous Transaction Control and Exchange): the supplier's Accredited Service Provider (Corner 2) and the buyer's (Corner 3) exchange the Electronic Invoice over the OpenPeppol Interoperability Framework and each report the Tax Data to the Federal Tax Authority (Corner 5). Accreditation of a Service Provider is Ministerial Decision No. 64 of 2025, as amended by Ministerial Decision No. 56 of 2026; penalties for non-compliance are Cabinet Decision No. 106 of 2025. The format is PINT AE, the Peppol International invoicing specification localised for the UAE. A party's Participant Identifier on the network is ICD `0235` followed by its 10-digit Tax Identification Number (TIN), the first 10 digits of its 15-digit Tax Registration Number (TRN); `vat_scheme` is left empty because no separate ISO 6523 code is registered for the 15-digit TRN itself, which Article 59 of the Executive Regulation asks a Tax Invoice to print in full. PINT AE's own tax categories — Standard Rate, Exempt from VAT, Out of scope, Reverse Charge, Zero rated, Margin scheme — are a closed list of six the Guidelines print in full (section 10.5) and are not the UNCL5305 letters `vat_category` holds; each tax names the PINT AE category its treatment maps to in its own legal_reference.",
     "source": "mof-einvoicing-guide"
+  },
+  "bank": {
+    "account_scheme": "iban"
   }
 }

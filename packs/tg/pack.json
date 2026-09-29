@@ -2,8 +2,8 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "TG",
   "name": "Togo",
-  "version": "0.1.0",
-  "schema_min": "20260917170000",
+  "version": "0.2.0",
+  "schema_min": "20260929141500",
   "seed_sequence": 36,
   "released_at": "2026-09-21",
   "certification": {
@@ -194,5 +194,8 @@
     "vat_scheme": null,
     "legal_reference": "La loi de finances 2026 aurait introduit une facture électronique certifiée (FEC) pour les opérations entre assujettis, par un nouvel article 62 du Livre des procédures fiscales et un arrêté n° 029/MFB/CAB/UPF du 19/02/2026, connus uniquement par des sources secondaires (patronat, presse économique) : ni le texte de la loi de finances 2026, ni celui de l'arrêté, ni la nouvelle rédaction de l'art. 62 du LPF n'ont été lus. Le Code général des impôts mis à jour 2025 cité dans ce registre (source « cgi ») ne porte que la facture normalisée à vignette de l'art. 64 du LPF, obligatoire (arrêté du ministre chargé des finances pour ses conditions d'édition et de gestion, liste annuelle des entreprises autorisées à s'auto-éditer) et sans profil structuré : le profil, la date d'obligation et les identifiants restent vides tant que le texte de la FEC n'a pas été lu.",
     "source": "cgi"
+  },
+  "bank": {
+    "account_scheme": "iban"
   }
 }

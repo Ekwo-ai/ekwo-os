@@ -2,8 +2,8 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "SA",
   "name": "Saudi Arabia",
-  "version": "0.1.0",
-  "schema_min": "20260917170000",
+  "version": "0.2.0",
+  "schema_min": "20260929141500",
   "seed_sequence": 71,
   "released_at": "2026-09-22",
   "certification": {
@@ -265,5 +265,8 @@
     "vat_scheme": null,
     "legal_reference": "Electronic invoicing is obligatory in the Kingdom and this pack still leaves all four fields above empty, for the reason packs/mx/, packs/vn/ and packs/kr/ leave them empty: FATOORA is a clearance regime, not an exchange between two parties' access points, and `profile` names an EN 16931 profile that a brick of packages/formats actually writes. The obligation itself: the E-invoicing Regulation published 4 December 2020 binds every taxable person resident in the Kingdom, and any customer or third party issuing on their behalf (Article 3(A)), to issue Electronic Invoices for every transaction requiring a tax invoice (Article 3(B)), with twelve months from publication to do so (Article 7(B)) — so 4 December 2021. The Governor's Decision No. (62738) dated 23/11/1443H splits the obligation in two: the **Generation** phase, \"applied to all Persons subject to the E-Invoicing Regulation effective 4th of December 2021\", and the **Integration** phase, \"in phases starting from 1st of January 2023\", each wave being a group ZATCA names and notifies at least six months ahead (Clause Sixth). In the Integration phase a Tax Invoice between businesses is **cleared**: the invoice is transmitted to ZATCA, which verifies it against the resolution and its annexes and \"shall insert the Cryptographic Stamp only on the Invoices and Notes which fulfil the aforesaid controls ... prior to sharing them with the customers\" — an invoice the Authority has not stamped is not an invoice the seller may give the buyer. A Simplified Tax Invoice, the business-to-consumer document, is instead **reported** to ZATCA \"within a period which must not exceed (24) hours from its generation\". The format is XML, or PDF/A-3 with the XML embedded, written against ZATCA's own Electronic Invoice XML Implementation Standard — a UBL 2.1 subset whose business rules are a subset of EN 16931 but which is not a PINT profile and is exchanged over ZATCA's API rather than over a four-corner network. No brick of packages/formats writes that XML, signs it with the ECDSA key the standard requires, embeds the invoice hash chain or the QR code, or talks to ZATCA: a document issued from Ekwo is not an Electronic Invoice, and `mandatory_from` with no `profile` would claim it was. `obligation` is left out for the same reason and not because nobody looked: the schema refuses `mandatory` without `mandatory_from`, and `mandatory_from` without a `profile`, so the three fields stand or fall together. `party_scheme` and `vat_scheme` are empty because the Kingdom has no ISO 6523 identifier: it is absent from the Peppol participant identifier scheme list v9.7, which carries AE and OM and no SA. What a Saudi invoice carries instead is the 15-digit VAT registration number whose first and last digits are 3 (Electronic Invoice XML Implementation Standard, rules BR-KSA-39 and BR-KSA-40). docs/international.md carries the rest.",
     "source": "einvoicing-resolution"
+  },
+  "bank": {
+    "account_scheme": "iban"
   }
 }

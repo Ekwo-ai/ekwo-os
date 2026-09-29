@@ -2,8 +2,8 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "AL",
   "name": "Albania",
-  "version": "0.1.0",
-  "schema_min": "20260923110000",
+  "version": "0.2.0",
+  "schema_min": "20260929141500",
   "seed_sequence": 114,
   "released_at": "2026-09-26",
   "certification": {
@@ -166,5 +166,8 @@
     "vat_scheme": null,
     "legal_reference": "Ligji Nr. 87/2019, datë 18.12.2019, «Për faturën dhe sistemin e monitorimit të qarkullimit» (fiskalizimi) detyron çdo tatimpagues të lëshojë fatura elektronike, të nënshkruara me certifikatë elektronike të lëshuar nga AKSHI, dhe t'i transmetojë në kohë reale në Platformën Qendrore të Faturave të administratës tatimore (CIS), e cila u kthen një Numër Identifikues i Vlefshmërisë së Faturës (NIVF) përpara se fatura t'i konsiderohet e vlefshme — një model *clearance*, jo një shkëmbim i drejtpërdrejtë ndërmjet palëve. Zbatimi u bë me faza, sipas njoftimit të Drejtorisë së Përgjithshme të Tatimeve: transaksionet pa para në dorë ndërmjet tatimpaguesve dhe organeve publike, nga 1 janari 2021; transaksionet pa para në dorë ndërmjet tatimpaguesve, nga 1 korrik 2021; të gjitha transaksionet me para në dorë, pavarësisht xhiros, nga 1 shtator 2021. `mandatory_from` mbetet bosh sepse fusha, sipas skemës së këtij formati, emërton ditën kur bëhet i detyrueshëm profili i EN 16931 që `profile` do të kishte emërtuar — dhe asnjë profil i tillë nuk ekziston këtu; datat e sipërpërmendura mbeten vetëm në këtë `legal_reference`, si te pako `tr` dhe `ro` për mekanizma të ngjashëm *clearance* jo-EN16931. `profile` mbetet bosh: formati i faturës elektronike shqiptare nuk është ndërtuar mbi modelin semantik të EN 16931 (as Peppol BIS, as Factur-X, as XRechnung, as ndonjë PINT) por mbi skemën e vet XML të Drejtorisë së Përgjithshme të Tatimeve, dhe asnjë pjesë e packages/formats/ nuk e shkruan apo transmeton sot këtë skemë — shih seksionin «From Albania» të docs/international.md. `party_scheme` dhe `vat_scheme` mbeten bosh për të njëjtën arsye: një tatimpagues shqiptar identifikohet me NIPT-in e vet (Numri i Identifikimit të Personit të Tatueshëm), jo me një skemë ISO 6523 të regjistruar në rrjetin Peppol.",
     "source": "ligji-87-2019"
+  },
+  "bank": {
+    "account_scheme": "iban"
   }
 }

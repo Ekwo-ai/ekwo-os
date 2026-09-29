@@ -2,8 +2,8 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "LT",
   "name": "Lietuva",
-  "version": "0.1.0",
-  "schema_min": "20260923110000",
+  "version": "0.2.0",
+  "schema_min": "20260929141500",
   "seed_sequence": 77,
   "released_at": "2026-09-25",
   "certification": {
@@ -123,6 +123,7 @@
       }
     ]
   },
+  "zones": ["european-union"],
   "defaults": {
     "currency": "EUR",
     "language": "lt",
@@ -247,6 +248,7 @@
     "source": "vpi"
   },
   "bank": {
+    "account_scheme": "iban",
     "statement_formats": ["camt.053"],
     "payment_formats": ["pain.001"]
   }

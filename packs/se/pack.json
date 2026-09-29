@@ -2,8 +2,8 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "SE",
   "name": "Sverige",
-  "version": "0.1.0",
-  "schema_min": "20260921145425",
+  "version": "0.2.0",
+  "schema_min": "20260929141500",
   "seed_sequence": 61,
   "released_at": "2026-09-22",
   "certification": {
@@ -139,6 +139,7 @@
       }
     ]
   },
+  "zones": ["european-union"],
   "defaults": {
     "currency": "SEK",
     "language": "sv",
@@ -274,6 +275,7 @@
     "source": "lag-2018-1277"
   },
   "bank": {
+    "account_scheme": "iban",
     "statement_formats": ["camt.053"],
     "payment_formats": ["pain.001"]
   }

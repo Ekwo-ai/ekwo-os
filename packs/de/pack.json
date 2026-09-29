@@ -2,8 +2,8 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "DE",
   "name": "Germany",
-  "version": "0.1.0",
-  "schema_min": "20260921084143",
+  "version": "0.2.0",
+  "schema_min": "20260929141500",
   "seed_sequence": 18,
   "released_at": "2026-09-21",
   "certification": {
@@ -147,6 +147,9 @@
       }
     ]
   },
+  "zones": [
+    "european-union"
+  ],
   "defaults": {
     "currency": "EUR",
     "language": "de",
@@ -326,6 +329,7 @@
     "source": "ustg"
   },
   "bank": {
+    "account_scheme": "iban",
     "statement_formats": [
       "camt.053"
     ],

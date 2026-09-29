@@ -95,7 +95,7 @@ export function sourcesOf(certification: PackCertification | null | undefined): 
 /**
  * Which VAT the country of a pack levies, as the three code lists see it.
  *
- * Two of those lists are the Union's — EN 16931 is a European standard and the
+ * Two of those lists are the European Union's — EN 16931 is a European standard and the
  * VATEX list is published by the European Commission — so whether a pack may
  * carry a code from them is a question about its country. The answer is a row
  * of `territories`, read from the seed the database reads, and never a country
@@ -116,19 +116,19 @@ export function sourcesOf(certification: PackCertification | null | undefined): 
  *
  * **A table that says nothing is not a table saying no.** `eu_vat_scope_of()`
  * answers `none` for a code it does not carry, which is right for its own
- * question — a supply to a place the Union has never heard of is not an
- * intra-Community one. It is not right for this one. Every refusal below
+ * question — a supply to a place the European Union has never heard of is not an
+ * European Union one. It is not right for this one. Every refusal below
  * *narrows* what a pack may say, and narrowing on the strength of a missing
  * row would refuse a valid pack for a country somebody has not added to the
  * reference data yet. So a country the table carries no row for is held to the
- * table as published — the Union's — and the gap is closed where it belongs:
+ * table as published — the European Union's — and the gap is closed where it belongs:
  * `tests/territories.test.ts` refuses a pack of this repository whose country
  * is not in `territories`, and the test beside it says the same of the seed the
  * CLI reads.
  *
  * `full` and nothing else counts as being in the system **for a pack**. The
  * third value, `goods`, is Northern Ireland, and it is not a fact about a pack
- * at all: the Union's rules reach goods there and not services, so half the
+ * at all: the European Union's rules reach goods there and not services, so half the
  * table applies and which half depends on the tax. A pack whose country is
  * such a territory is therefore still held to the rules of a country outside
  * the system, which refuses a code rather than accepting a wrong one — and a
@@ -215,7 +215,7 @@ function packDay(manifest: Manifest): string {
  * This is the half of Northern Ireland a pack could not have. `packs/gb/` is
  * keyed on a country the common system left on 31 December 2020, so every tax
  * in it is outside the system — and a tax that says `seller_in: "XI"` is not:
- * `eu_vat_scope` of `XI` is `goods`, which means the Union's rules reach a
+ * `eu_vat_scope` of `XI` is `goods`, which means the European Union's rules reach a
  * supply or an acquisition of goods there and nothing else. So the answer is
  * the territory's scope, narrowed by what the treatment is about:
  *
@@ -546,6 +546,8 @@ export interface PackDocumentRules {
   /** ISO 6523 ICD, four digits. */
   party_scheme: string | null;
   vat_scheme: string | null;
+  /** How a bank of this country identifies an account. Null where the pack says nothing. */
+  bank_account_scheme: string | null;
   bank_statement_formats: string[];
   payment_formats: string[];
   fiscal_year_default: string | null;
@@ -759,6 +761,8 @@ export interface Pack {
   slug: string;
   dir: string;
   manifest: Manifest;
+  /** Zones the country declares, e.g. `european-union`. Empty where it declares none. */
+  zones: string[];
   /** Charts of this country, the default one first. Never empty. */
   charts: PackChart[];
   /** Accounts of the default chart. The chart a pack has when it declares only one. */
@@ -824,6 +828,8 @@ export interface Manifest {
     journal_roles?: Record<string, string | undefined>;
     [key: string]: unknown;
   };
+  /** Zones the country belongs to, e.g. `european-union`; each has a page under docs/zones/. */
+  zones?: string[];
   languages?: string[];
   journals: { code: string; type: string; name: string; sequence?: number }[];
   charts?: {
@@ -1156,6 +1162,7 @@ export async function readPack(slug: string, dir = packsDir()): Promise<Pack> {
   // A language the manifest declares is a promise that every label exists in
   // it. A language that is only a file may be partial, and falls back.
   issues.push(...languageCoverage(manifest, languages, labels, charts, taxes, statements, report, documents, assets));
+  issues.push(...zonePages(manifest, root));
 
   // The rows that carry a translation get theirs from the language files, so
   // that one file is the whole of one language.
@@ -1179,7 +1186,7 @@ export async function readPack(slug: string, dir = packsDir()): Promise<Pack> {
   // The three code lists a tax tells the same fact in: its treatment, its
   // EN 16931 category and its VATEX reason. Nothing in the ledger reads the
   // last two, so nothing else would ever notice them disagreeing. Two of the
-  // three lists are the Union's, so which of them reach this pack at all is
+  // three lists are the European Union's, so which of them reach this pack at all is
   // read from `territories` first — and, where a tax names the territory it
   // applies in, from that territory rather than from the pack's country, which
   // is what makes a territory of limited scope expressible at all.
@@ -1236,6 +1243,7 @@ export async function readPack(slug: string, dir = packsDir()): Promise<Pack> {
     slug,
     dir: root,
     manifest,
+    zones: manifest.zones ?? [],
     charts,
     accounts,
     taxes,
@@ -1728,6 +1736,32 @@ function codesOfCharts(charts: PackChart[]): Set<string> {
  * the pack's own label. That is the way to contribute a language one section
  * at a time without promising a reader something the pack cannot keep.
  */
+/**
+ * A zone a pack declares has a page that says what belongs to it.
+ *
+ * `zones` in the manifest is how a country says it belongs to a zone; the rules
+ * that exist only inside one live on `docs/zones/<zone>.md`, and a zone with no
+ * page would be a label nothing explains. The page is looked for in the
+ * repository the pack sits in (`<root>/../../docs/zones`); a pack read outside
+ * a checkout, where there is no `docs/` beside `packs/`, has nothing to be
+ * compared with and is not refused for it.
+ */
+function zonePages(manifest: Manifest, root: string): Issue[] {
+  const zones = manifest.zones ?? [];
+  if (zones.length === 0) return [];
+  const docs = join(root, '..', '..', 'docs');
+  if (!existsSync(docs)) return [];
+  const issues: Issue[] = [];
+  for (const zone of zones) {
+    if (existsSync(join(docs, 'zones', `${zone}.md`))) continue;
+    issues.push({
+      path: 'pack.json zones',
+      message: `${zone} is declared and docs/zones/${zone}.md does not exist; a zone is a page before it is a label`,
+    });
+  }
+  return issues;
+}
+
 function languageCoverage(
   manifest: Manifest,
   found: string[],
@@ -2264,6 +2298,7 @@ function normaliseDocumentRules(manifest: Manifest): PackDocumentRules {
     einvoice_reference: ruleReference(einvoicing),
     party_scheme: (einvoicing['party_scheme'] as string | null | undefined) ?? null,
     vat_scheme: (einvoicing['vat_scheme'] as string | null | undefined) ?? null,
+    bank_account_scheme: (bank['account_scheme'] as string | undefined) ?? null,
     bank_statement_formats: (bank['statement_formats'] as string[] | undefined) ?? [],
     payment_formats: (bank['payment_formats'] as string[] | undefined) ?? [],
     fiscal_year_default: (manifest.defaults['fiscal_year_default'] as string | undefined) ?? null,

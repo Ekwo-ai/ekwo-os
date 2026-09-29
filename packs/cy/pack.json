@@ -2,8 +2,8 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "CY",
   "name": "Cyprus",
-  "version": "0.1.0",
-  "schema_min": "20260923110000",
+  "version": "0.2.0",
+  "schema_min": "20260929141500",
   "seed_sequence": 79,
   "released_at": "2026-09-25",
   "certification": {
@@ -139,6 +139,7 @@
       }
     ]
   },
+  "zones": ["european-union"],
   "defaults": {
     "currency": "EUR",
     "language": "en",
@@ -272,6 +273,7 @@
     "source": "ec-einvoicing-cy"
   },
   "bank": {
+    "account_scheme": "iban",
     "statement_formats": ["camt.053"],
     "payment_formats": []
   }

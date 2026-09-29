@@ -2,8 +2,8 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "GQ",
   "name": "Guinée équatoriale",
-  "version": "0.1.0",
-  "schema_min": "20260917170000",
+  "version": "0.2.0",
+  "schema_min": "20260929141500",
   "seed_sequence": 31,
   "released_at": "2026-09-21",
   "certification": {
@@ -197,5 +197,8 @@
     "vat_scheme": null,
     "legal_reference": "Ley n° 1/2024, General Tributaria, art. 24-1 — la facture peut être « manual o electrónica » ; art. 24-4 — une facture n'est électronique que si elle est produite par un « Sistema de Facturación Electrónico » agréé et certifié par l'administration fiscale, qui en garantit l'inaltérabilité, la sécurité, la conservation et l'archivage ; art. 1-40 définit l'« Emisor Electrónico » agréé. Aucune obligation générale de facture électronique, de facture normalisée ni de dispositif certifié n'a été trouvée : le dispositif décrit par la loi est facultatif et encadré, pas imposé à une date donnée — d'où les trois champs nuls. L'art. 164 dit seulement que la publication en ligne de la liste des NIF assujettis « contribuirá a la certificación de las facturas », sans fixer de système.",
     "source": "ley-1-2024"
+  },
+  "bank": {
+    "account_scheme": "iban"
   }
 }

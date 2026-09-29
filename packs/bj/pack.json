@@ -2,8 +2,8 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "BJ",
   "name": "Bénin",
-  "version": "0.1.0",
-  "schema_min": "20260917170000",
+  "version": "0.2.0",
+  "schema_min": "20260929141500",
   "seed_sequence": 22,
   "released_at": "2026-09-21",
   "certification": {
@@ -210,5 +210,8 @@
     "vat_scheme": null,
     "legal_reference": "Code général des impôts, art. 481-1 — sauf dérogation du directeur général des Impôts, toute opération d'une personne soumise à l'impôt sur les sociétés, à l'impôt sur les bénéfices d'affaires, à la taxe professionnelle synthétique ou assujettie à la TVA doit faire l'objet d'une facture normalisée ; art. 482-1 — elle est émise et transmise par une machine électronique certifiée de facturation (MECeF), en version matérielle ou dématérialisée (e-MECeF), homologuée par la DGI ; art. 244-1-d — la TVA n'est déductible que si elle figure sur une facture normalisée. C'est un modèle de clearance : la machine certifiante attribue son numéro d'identification (art. 481-2-k) et un code électronique (art. 481-2-l) sans lesquels la facture n'est pas valable. `einvoicing.profile` ne nomme qu'un profil EN 16931 et aucune brique de ce dépôt ne génère, ne certifie ni ne transmet à une MECeF/e-MECeF : le profil, la date d'obligation et le schéma de parties restent vides plutôt que de prétendre couvrir un mécanisme que rien ici n'exécute.",
     "source": "cgi"
+  },
+  "bank": {
+    "account_scheme": "iban"
   }
 }

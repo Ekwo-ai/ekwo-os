@@ -2,8 +2,8 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "BF",
   "name": "Burkina Faso",
-  "version": "0.1.0",
-  "schema_min": "20260917170000",
+  "version": "0.2.0",
+  "schema_min": "20260929141500",
   "seed_sequence": 23,
   "released_at": "2026-09-21",
   "certification": {
@@ -194,5 +194,8 @@
     "vat_scheme": null,
     "legal_reference": "Code général des impôts, art. 564, tel que modifié par la loi de finances pour 2025 (loi n° 042-2024/ALT, art. 44) — pour compter du 1er janvier 2025, les contribuables de la Direction des grandes entreprises et des directions des moyennes entreprises délivrent exclusivement une facture électronique certifiée (FEC), éditée par un système électronique certifié de facturation (SECeF) homologué par l'administration fiscale, avec numéro d'identification du SECeF, code d'authentification de la transaction et code QR ; les conditions d'émission et de commercialisation des SECeF sont fixées par arrêté du ministre chargé des finances. Aucun arrêté d'application, aucun format technique et aucune spécification d'API n'ont été lus dans une source officielle chargée ici : le profil et la date d'obligation restent vides. L'identifiant fiscal est l'IFU (identifiant financier unique), qui n'a pas de code ISO 6523.",
     "source": "lf-2025"
+  },
+  "bank": {
+    "account_scheme": "iban"
   }
 }

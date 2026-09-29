@@ -2,8 +2,8 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "GB",
   "name": "United Kingdom",
-  "version": "0.8.0",
-  "schema_min": "20260921084143",
+  "version": "0.9.0",
+  "schema_min": "20260929141500",
   "seed_sequence": 14,
   "released_at": "2026-09-21",
   "certification": {
@@ -422,6 +422,7 @@
     "source": "einvoicing-response"
   },
   "bank": {
+    "account_scheme": "sort-code-account",
     "statement_formats": [
       "camt.053",
       "ofx",

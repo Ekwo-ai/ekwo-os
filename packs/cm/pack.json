@@ -2,8 +2,8 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "CM",
   "name": "Cameroun",
-  "version": "0.1.0",
-  "schema_min": "20260917170000",
+  "version": "0.2.0",
+  "schema_min": "20260929141500",
   "seed_sequence": 24,
   "released_at": "2026-09-21",
   "certification": {
@@ -194,5 +194,8 @@
     "vat_scheme": null,
     "legal_reference": "Code général des impôts, Livre des procédures fiscales, art. L 8 bis (1)-(2) — suivi électronique de la facturation par la DGI, dans les conditions fixées par arrêté du ministre en charge des finances, pour les secteurs et entreprises désignés (TIC, commerce en ligne, électricité, jeux, assurances, boissons, oléagineux, bouquets numériques, et toute entreprise de la Direction des grandes entreprises) ; art. 143 (1) b) — la TVA n'est déductible que si elle figure sur une facture délivrée à travers ce système par un fournisseur immatriculé, actif et au réel ; art. 8 bis (2), modifié par la loi n° 2024/13 du 23 décembre 2024 (loi de finances 2025) — une charge n'est déductible à l'IS que si sa facture est passée par ce système. Loi de finances 2026, Livre des procédures fiscales art. L 8 sexies nouveau — taxation en temps réel pour certaines opérations, équipements ou logiciels agréés, factures électroniques, transmission continue, modalités renvoyées à un arrêté (circulaire n° 008/MINFI/DGI/LRI/L du 2 mars 2026, § 507-511). Aucun arrêté d'application n'est publié à la date de ce pack ; aucun profil, aucune date de généralisation et aucun schéma de facture électronique n'ont été identifiés dans un texte officiel : profile et mandatory_from restent vides. Ekwo ne génère, ne transmet et ne certifie aucune facture par ce système.",
     "source": "cgi"
+  },
+  "bank": {
+    "account_scheme": "iban"
   }
 }

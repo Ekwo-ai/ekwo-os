@@ -2,8 +2,8 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "AU",
   "name": "Australia",
-  "version": "0.1.0",
-  "schema_min": "20260917170000",
+  "version": "0.2.0",
+  "schema_min": "20260929141500",
   "seed_sequence": 40,
   "released_at": "2026-09-21",
   "certification": {
@@ -422,5 +422,8 @@
     "vat_scheme": "0151",
     "legal_reference": "No Australian statute obliges a business to issue or to accept an electronic invoice from another business, so the obligation is `none` and mandatory_from is empty. Australia exchanges electronic invoices on the Peppol network, of which the ATO is the Australian Peppol Authority, under the PINT A-NZ Billing specification that Australia shares with New Zealand (customization urn:peppol:pint:billing-1@aunz-1). Towards the public sector the obligation is the buyer's: ATO, eInvoicing for government, records the 2022 mandate for non-corporate Commonwealth entities to be able to receive eInvoices and the policy, announced in the Budget 2024–25 and not yet enacted, making eInvoicing their default method with 30 % of invoices received by 1 July 2026; nothing in it binds a supplier. ATO, Tax invoices, accepts an eInvoice issued under the A-NZ specification with its mandatory data as a document intended to be a tax invoice. Both identifiers are the Australian Business Number, ISO 6523 ICD 0151 of the Peppol electronic address scheme list: an Australian business is addressed by its ABN, and the ABN is also the identifier under which it is registered for GST, a branch appending its three-digit branch number.",
     "source": "pint-aunz"
+  },
+  "bank": {
+    "account_scheme": "bsb-account"
   }
 }

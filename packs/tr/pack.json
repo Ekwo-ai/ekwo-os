@@ -2,8 +2,8 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "TR",
   "name": "Türkiye",
-  "version": "0.1.0",
-  "schema_min": "20260917170000",
+  "version": "0.2.0",
+  "schema_min": "20260929141500",
   "seed_sequence": 82,
   "released_at": "2026-09-25",
   "certification": {
@@ -160,5 +160,8 @@
     "vat_scheme": null,
     "legal_reference": "e-Fatura ve e-Arşiv Fatura, Gelir İdaresi Başkanlığı'nın (GİB) kendi platformu veya GİB onaylı özel entegratörler üzerinden, ciro eşiğini aşan mükellefler için 213 sayılı Vergi Usul Kanunu'nun mükerrer 257'nci maddesindeki yetkiye dayanan 509 Sıra No'lu Vergi Usul Kanunu Genel Tebliği (ve 535, 550, 573, 589 sıra no'lu değişiklik tebliğleri) ile zorunlu kılınmıştır — bu pack'in araştırmasının ulaştığı en güncel eşik, bir önceki yıl brüt satış hasılatı 3.000.000 TL ve üzerinde olan mükellefler için genel olarak, e-ticaret/gayrimenkul ve motorlu taşıt ticareti yapanlar için 500.000 TL olarak, izleyen yılın 1 Temmuz'undan itibaren geçerlidir; 1 Ocak 2026'dan itibaren bilanço esasına göre defter tutan hiçbir mükellef artık kâğıt fatura düzenleyemez, tutarı ne olursa olsun e-Fatura veya e-Arşiv Fatura düzenlemek zorundadır. `profile` bu yüzden boş bırakılmıştır: e-Fatura ve e-Arşiv Fatura, UBL-TR (UBL 2.1'in GİB tarafından yerelleştirilmiş bir alt kümesi) biçiminde yazılır ve GİB'in kendi platformu ya da bir özel entegratör üzerinden GİB'e iletilir — iki taraf arasında doğrudan bir EN 16931 profili (Peppol BIS, Factur-X, XRechnung, bir PINT) değişimi değil, idarenin kendisinin arada durduğu bir teyit (clearance benzeri) modelidir; packages/formats'ın hiçbir bileşeni bu XML'i yazmaz, imzalamaz ya da GİB'e iletmez. `party_scheme` ve `vat_scheme` de bu yüzden boştur: Türkiye'nin ISO 6523 kayıtlı bir katılımcı kimlik şeması yoktur (Peppol katılımcı kimlik şeması listesi v9.7'de TR yer almaz); bir e-Fatura mükellefi GİB tarafından atanan bir Posta Kutusu Etiketi (PK etiketi, ör. urn:mail:defaultpk@... biçiminde) ile adreslenir, VKN/TCKN ise ayrı bir alanda taşınır.",
     "source": "gib-efatura"
+  },
+  "bank": {
+    "account_scheme": "iban"
   }
 }

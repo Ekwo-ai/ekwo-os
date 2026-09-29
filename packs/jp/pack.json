@@ -2,8 +2,8 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "JP",
   "name": "日本",
-  "version": "0.1.0",
-  "schema_min": "20260917170000",
+  "version": "0.2.0",
+  "schema_min": "20260929141500",
   "seed_sequence": 51,
   "released_at": "2026-09-21",
   "certification": {
@@ -300,5 +300,8 @@
     "vat_scheme": "0221",
     "legal_reference": "No Japanese statute obliges a business to issue or accept an electronic invoice. 消費税法 art. 57-4(5) lets a qualified invoice issuer provide the particulars of a qualified invoice as an electromagnetic record instead of paper, which is what a Peppol invoice is. The Digital Agency is the Japan Peppol Authority and maintains JP PINT, the Japanese specification of the Peppol International model (Peppol BIS Standard Invoice JP PINT 1.1.3, customization urn:peppol:pint:billing-1@jp-1). Its tax categories are S (standard), AA (lower rate), E, G and O. A party is addressed by its 法人番号 (corporate number, EAS 0188), as the JP PINT examples show, and the seller's tax registration identifier is the registration number of the qualified invoice issuer (EAS 0221), which the NTA's register publishes as T followed by thirteen digits. JP PINT asks the tax per rate to be rounded to the yen, between the floor and the ceiling, and leaves the direction to the issuer.",
     "source": "jp-pint"
+  },
+  "bank": {
+    "account_scheme": "zengin"
   }
 }

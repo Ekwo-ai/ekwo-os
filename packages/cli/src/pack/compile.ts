@@ -805,10 +805,10 @@ function defaults(pack: Pack, country: string): string[] {
  * than the `default` keyword the rounding columns use: there is nothing for
  * the schema to decide.
  *
- * `einvoice_obligation` is the one column written only when the pack says it.
- * It arrived with `20260921084143`, and a pack that declares no obligation
- * keeps a seed that runs on a schema from before it — the column would only
- * ever have received a null.
+ * `einvoice_obligation` and `bank_account_scheme` are the columns written only
+ * when the pack says them. They arrived with `20260921084143` and
+ * `20260929141500`, and a pack that declares neither keeps a seed that runs on
+ * a schema from before them — the column would only ever have received a null.
  */
 function documentRules(pack: Pack, country: string): string[] {
   const rules = pack.documents;
@@ -816,6 +816,10 @@ function documentRules(pack: Pack, country: string): string[] {
     rules.einvoice_obligation === null
       ? []
       : [`  einvoice_obligation           = ${text(rules.einvoice_obligation)},`];
+  const bankScheme =
+    rules.bank_account_scheme === null
+      ? []
+      : [`  bank_account_scheme           = ${text(rules.bank_account_scheme)},`];
   const out = [
     '',
     'update country_defaults set',
@@ -840,6 +844,7 @@ function documentRules(pack: Pack, country: string): string[] {
     `  einvoice_source_key           = ${text(rules.einvoice_reference.source)},`,
     `  party_scheme                  = ${text(rules.party_scheme)},`,
     `  vat_scheme                    = ${text(rules.vat_scheme)},`,
+    ...bankScheme,
     `  bank_statement_formats        = ${listOrNull(rules.bank_statement_formats)},`,
     `  payment_formats               = ${listOrNull(rules.payment_formats)},`,
     `  fiscal_year_default           = ${text(rules.fiscal_year_default)}`,

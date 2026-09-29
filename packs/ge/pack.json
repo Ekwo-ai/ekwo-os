@@ -2,8 +2,8 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "GE",
   "name": "საქართველო",
-  "version": "0.1.0",
-  "schema_min": "20260923110000",
+  "version": "0.2.0",
+  "schema_min": "20260929141500",
   "seed_sequence": 110,
   "released_at": "2026-09-26",
   "certification": {
@@ -156,6 +156,7 @@
     "source": "tax-invoice-order"
   },
   "bank": {
+    "account_scheme": "iban",
     "statement_formats": ["csv"]
   }
 }

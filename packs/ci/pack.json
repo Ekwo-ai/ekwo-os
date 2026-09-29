@@ -2,8 +2,8 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "CI",
   "name": "Côte d’Ivoire",
-  "version": "0.1.0",
-  "schema_min": "20260917170000",
+  "version": "0.2.0",
+  "schema_min": "20260929141500",
   "seed_sequence": 21,
   "released_at": "2026-09-21",
   "certification": {
@@ -209,5 +209,8 @@
     "vat_scheme": null,
     "legal_reference": "Code général des impôts, art. 384, et Livre de procédures fiscales, art. 13 bis à 13 sexies, 144 et 145, dans la rédaction de la loi de finances pour 2025 (loi n° 2024-1109 du 18 décembre 2024, art. 6) — facture normalisée électronique (FNE) obligatoire pour toute livraison et toute prestation ; arrêté n° 0337 du 9 mai 2025, art. 3, 4 et 8 — émission sur la plateforme de la DGI ou par interfaçage API, sticker électronique composé du visuel FNE, d'un QR code et du numéro, obligation au plus tard le 1er juin 2025 pour le réel normal, le 1er juillet 2025 pour le réel simplifié, le 1er août 2025 pour les microentreprises et le 1er septembre 2025 pour les entreprenants ; fin de la facture normalisée papier le 1er décembre 2025 pour les régimes réels. La FNE n'est pas un profil de la norme EN 16931 et son API (codes TVA, TVAB, TVAC, TVAD) n'est lue par aucune brique : le profil reste vide et la date avec lui, faute de profil à rendre obligatoire. L'identifiant fiscal est le numéro de compte contribuable (NCC), sept chiffres et une lettre, sans code ISO 6523.",
     "source": "arrete-fne"
+  },
+  "bank": {
+    "account_scheme": "iban"
   }
 }

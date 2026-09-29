@@ -2,8 +2,8 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "KM",
   "name": "Comores",
-  "version": "0.1.0",
-  "schema_min": "20260917170000",
+  "version": "0.2.0",
+  "schema_min": "20260929141500",
   "seed_sequence": 26,
   "released_at": "2026-09-21",
   "certification": {
@@ -194,5 +194,8 @@
     "vat_scheme": null,
     "legal_reference": "Code général des impôts, art. 41-2 — caisse enregistreuse obligatoire pour un contribuable exerçant une activité commerciale avec un chiffre d'affaires supérieur ou égal à 20 000 000 KMF, dans les conditions d'un arrêté du ministre chargé des finances qui n'a pas été trouvé ; aucun dispositif de facture normalisée, d'e-facturation ou de machine fiscale certifiée n'a été trouvé à la date de ce pack. La télédéclaration des impôts, dont la TC (art. 149), devient obligatoire à compter du 1er janvier 2026 pour les moyennes et grandes entreprises (loi de finances pour 2024, art. L.4 du livre de procédures fiscales modifié), mais aucune plateforme opérationnelle ni URL de télédéclaration n'a été trouvée : le FMI cite encore ce chantier comme un objectif au 31 décembre 2026.",
     "source": "cgi"
+  },
+  "bank": {
+    "account_scheme": "iban"
   }
 }

@@ -2,8 +2,8 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "FR",
   "name": "France",
-  "version": "1.15.0",
-  "schema_min": "20260921084143",
+  "version": "1.16.0",
+  "schema_min": "20260929141500",
   "seed_sequence": 11,
   "released_at": "2026-09-21",
   "certification": {
@@ -123,6 +123,9 @@
       }
     ]
   },
+  "zones": [
+    "european-union"
+  ],
   "defaults": {
     "currency": "EUR",
     "language": "fr",
@@ -296,6 +299,7 @@
     "source": "facturation-electronique"
   },
   "bank": {
+    "account_scheme": "iban",
     "statement_formats": [
       "camt.053",
       "cfonb120"

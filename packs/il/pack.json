@@ -2,8 +2,8 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "IL",
   "name": "Israel",
-  "version": "0.1.0",
-  "schema_min": "20260921145425",
+  "version": "0.2.0",
+  "schema_min": "20260929141500",
   "seed_sequence": 87,
   "released_at": "2026-09-25",
   "certification": {
@@ -182,5 +182,8 @@
     "obligation": "none",
     "legal_reference": "No statute this pack's research found obliges an Israeli business to exchange a structured electronic invoice — a Peppol-style document a buyer's software can read — with another business. What the Economic Efficiency Law (Legislative Amendments to Achieve the Budget Targets for the 2023 and 2024 Budget Years), 5783-2023 requires instead, from 1 January 2024, is a real-time control of a different shape: a seller who wants a buyer to be able to deduct the input tax of a tax invoice above a declining threshold must first request an 'allocation number' (מספר הקצאה) from the Tax Authority's own system for that specific invoice, and print it on the document — the threshold itself falling from NIS 25,000 in May 2024 to NIS 20,000 from 1 January 2025, NIS 10,000 from 1 January 2026 and NIS 5,000 from 1 June 2026. The invoice a buyer receives is not itself required to be a structured document of any named format; the control is an authorisation number requested and returned over the Tax Authority's own API before or when the invoice is issued, closer to a real-time clearance model than to a Peppol exchange. This pack format has a field for the profile of a structured invoice exchanged between two parties and none for a clearance control of this shape, so `profile` and `mandatory_from` stay empty rather than naming something this is not; the allocation-number regime itself is documented in this pack's README and in docs/international.md under \"Israel\", and is not patched into the schema.",
     "source": "invoice-allocation-threshold"
+  },
+  "bank": {
+    "account_scheme": "iban"
   }
 }

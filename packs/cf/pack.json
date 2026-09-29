@@ -2,8 +2,8 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "CF",
   "name": "Centrafrique",
-  "version": "0.1.0",
-  "schema_min": "20260917170000",
+  "version": "0.2.0",
+  "schema_min": "20260929141500",
   "seed_sequence": 25,
   "released_at": "2026-09-21",
   "certification": {
@@ -178,5 +178,8 @@
     "vat_scheme": null,
     "legal_reference": "Code général des impôts, art. 271 (loi de finances pour 2007) — chaque vente d'un assujetti donne lieu à un ticket de caisse émis par une « machine à bande enregistreuse » portant le nom, le NIF et le montant TTC et de la TVA du vendeur ; c'est une obligation de caisse enregistreuse au détail, pas une facture électronique ni un système de clearance B2B. Aucune facture normalisée, aucune machine certifiante fiscale (MCF) ni obligation d'e-facturation entre entreprises n'ont été trouvées dans le CGI 2023 lu. Le portail e-Tax de la DGID, lancé le 24 mars 2025 selon des sources de presse (non chargées comme source officielle : l'une renvoie HTTP 403), sert à la télédéclaration et au télépaiement — aucune URL officielle du portail ni aucune spécification technique d'échange n'a été trouvée. profile et mandatory_from restent vides.",
     "source": "cgi"
+  },
+  "bank": {
+    "account_scheme": "iban"
   }
 }

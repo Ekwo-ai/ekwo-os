@@ -50,6 +50,15 @@
     "certification": {
       "$ref": "#/$defs/certification"
     },
+    "zones": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z]+(-[a-z]+)*$"
+      },
+      "description": "The economic or legal zones this country belongs to, as lower-case kebab-case names: `european-union`, for a Member State of the European Union. A zone is a fact about a country and lives here, in the pack, never in the core: the rules that only exist inside a zone (intra-community VAT, the one-stop shop, VIES, the recapitulative statement) are described on `docs/zones/<zone>.md`, and `ekwo pack check` refuses a zone that has no page there. A pack in no zone omits the field; the United Kingdom and the United States have pages of their own because their rules stand alone, and they declare none."
+    },
     "defaults": {
       "$ref": "#/$defs/defaults"
     },
@@ -790,9 +799,23 @@
     },
     "bank": {
       "type": "object",
-      "description": "The file formats a bank of this country delivers and accepts, most usual first. A known list rather than free text, because a parser is written against a format and not against a name somebody typed.",
+      "description": "How a bank of this country identifies an account, and the file formats it delivers and accepts, most usual first. A known list rather than free text, because a parser is written against a format and not against a name somebody typed.",
       "additionalProperties": false,
       "properties": {
+        "account_scheme": {
+          "enum": [
+            "iban",
+            "aba-routing-account",
+            "sort-code-account",
+            "bsb-account",
+            "ifsc-account",
+            "clabe",
+            "zengin",
+            "transit-institution-account",
+            "account-number"
+          ],
+          "description": "How an account is identified where this country banks: an IBAN, an ABA routing number and an account number, a sort code and an account number, a BSB, an IFSC, a CLABE, a Zengin bank/branch/account, a Canadian transit and institution, or `account-number` for a number as the bank wrote it. What the installer asks for, and what it checks. The keys are those of `BANK_ACCOUNT_SCHEMES` in `@ekwo-ai/core`, which holds the one validator of each. A pack that omits the field is asked for a free-text account number: never for an IBAN."
+        },
         "statement_formats": {
           "type": "array",
           "items": {
