@@ -7,7 +7,7 @@
  * the operator is about to reach for `supabase db push`.
  */
 
-import { join } from 'node:path';
+import { basename, join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { allPacks } from '../helpers/packs.js';
 import {
@@ -29,10 +29,14 @@ const modulesDir = join(repoRoot, 'modules');
 describe('reading the modules of a checkout', () => {
   it('finds them, validates each manifest and lists its migrations', async () => {
     const modules = await listModules(modulesDir);
-    expect(modules.map((m) => m.manifest.code)).toEqual(['assets', 'budgets']);
+    // In the order of their folders, which is not the order of their codes:
+    // `fixed-assets` carries the module whose code is `assets`.
+    expect(modules.map((m) => [basename(m.dir), m.manifest.code, m.manifest.schema])).toEqual([
+      ['budgets', 'budgets', 'budgets'],
+      ['fixed-assets', 'assets', 'fixed_assets'],
+    ]);
     for (const module of modules) {
       expect(module.migrations.length).toBeGreaterThan(0);
-      expect(module.manifest.schema).toBe(module.manifest.code);
     }
   });
 
@@ -116,7 +120,7 @@ describe('applying them', () => {
       const socle = await listMigrations(migrationsPath);
       await applyMigrations(db, socle);
       const schemas = await db.query<{ nspname: string }>(
-        `select nspname from pg_namespace where nspname in ('assets', 'budgets')`,
+        `select nspname from pg_namespace where nspname in ('assets', 'fixed_assets', 'budgets')`,
       );
       expect(schemas).toEqual([]);
       const registry = await db.query<{ code: string }>(`select code from modules`);
@@ -133,11 +137,11 @@ describe('the country data of a module', () => {
     // number that pack's manifest declares. Listing them by hand was a list of
     // countries a test had to be told about, and the first pack added after it
     // was written is what said so.
-    const seeds = await moduleSeeds('assets', seedPath);
+    const seeds = await moduleSeeds('fixed_assets', seedPath);
     expect(seeds.map((path) => path.slice(seedPath.length + 1))).toEqual(
       allPacks
-        .filter((pack) => pack.assets !== null)
-        .map((pack) => `modules/assets/${pack.manifest.seed_sequence}_pack_${pack.slug}.sql`)
+        .filter((pack) => pack.fixedAssets !== null)
+        .map((pack) => `modules/fixed_assets/${pack.manifest.seed_sequence}_pack_${pack.slug}.sql`)
         .sort(),
     );
     expect(await moduleSeeds('budgets', seedPath)).toEqual([]);
@@ -146,9 +150,9 @@ describe('the country data of a module', () => {
 
 describe('what the CLI cannot do', () => {
   it('says which setting exposes a module schema, because no migration can', () => {
-    const note = exposeSchemaNote('assets').join(' ');
+    const note = exposeSchemaNote('fixed_assets').join(' ');
     expect(note).toMatch(/Exposed schemas/);
     expect(note).toMatch(/\[api\] schemas/);
-    expect(note).toMatch(/assets/);
+    expect(note).toMatch(/fixed_assets/);
   });
 });

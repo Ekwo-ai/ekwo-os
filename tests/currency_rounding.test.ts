@@ -201,7 +201,7 @@ describe('the lookup', () => {
     const readers = await rows<{ proname: string }>(
       db,
       `select p.proname from pg_proc p join pg_namespace n on n.oid = p.pronamespace
-        where n.nspname in ('public', 'assets', 'budgets')
+        where n.nspname in ('public', 'fixed_assets', 'budgets')
           and p.prosrc ~ 'decimal_places|\\.rounding_method' order by 1`,
     );
     expect(readers.map((r) => r.proname)).toEqual(['rounding_of']);
@@ -421,7 +421,7 @@ describe('no hard-coded rounding is left in the live schema', () => {
       db,
       `select ns.nspname as schema, p.proname as name, p.prosrc as src
          from pg_proc p join pg_namespace ns on ns.oid = p.pronamespace
-        where ns.nspname in ('public', 'assets', 'budgets')
+        where ns.nspname in ('public', 'fixed_assets', 'budgets')
         order by 1, 2`,
     );
     const guilty = bodies

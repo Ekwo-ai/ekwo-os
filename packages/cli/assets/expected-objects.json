@@ -3760,6 +3760,10 @@
         "arguments": ""
       },
       {
+        "name": "archive_under_current_names",
+        "arguments": "p_archive jsonb"
+      },
+      {
         "name": "assert_may_close_year",
         "arguments": ""
       },
@@ -6911,6 +6915,17 @@
           ]
         },
         {
+          "name": "archive_under_current_names",
+          "arguments": "p_archive jsonb",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
           "name": "assert_may_close_year",
           "arguments": "",
           "trigger": true,
@@ -9085,110 +9100,9 @@
   "modules": [
     {
       "code": "assets",
-      "version": "1.0.0",
-      "schema": "assets",
+      "version": "2.0.0",
+      "schema": "fixed_assets",
       "tables": [
-        {
-          "name": "assets",
-          "columns": [
-            {
-              "name": "acquisition_date",
-              "type": "date"
-            },
-            {
-              "name": "asset_account_id",
-              "type": "uuid"
-            },
-            {
-              "name": "category_code",
-              "type": "text"
-            },
-            {
-              "name": "code",
-              "type": "text"
-            },
-            {
-              "name": "coefficient",
-              "type": "numeric(7,3)"
-            },
-            {
-              "name": "company_id",
-              "type": "uuid"
-            },
-            {
-              "name": "contact_id",
-              "type": "uuid"
-            },
-            {
-              "name": "cost",
-              "type": "numeric(16,2)"
-            },
-            {
-              "name": "created_at",
-              "type": "timestamp with time zone"
-            },
-            {
-              "name": "depreciation_account_id",
-              "type": "uuid"
-            },
-            {
-              "name": "description",
-              "type": "text"
-            },
-            {
-              "name": "document_line_id",
-              "type": "uuid"
-            },
-            {
-              "name": "duration_months",
-              "type": "integer"
-            },
-            {
-              "name": "expense_account_id",
-              "type": "uuid"
-            },
-            {
-              "name": "id",
-              "type": "uuid"
-            },
-            {
-              "name": "in_service_date",
-              "type": "date"
-            },
-            {
-              "name": "method",
-              "type": "assets.depreciation_method"
-            },
-            {
-              "name": "name",
-              "type": "text"
-            },
-            {
-              "name": "notes",
-              "type": "text"
-            },
-            {
-              "name": "product_id",
-              "type": "uuid"
-            },
-            {
-              "name": "prorata",
-              "type": "assets.prorata_rule"
-            },
-            {
-              "name": "residual_value",
-              "type": "numeric(16,2)"
-            },
-            {
-              "name": "state",
-              "type": "assets.asset_state"
-            },
-            {
-              "name": "updated_at",
-              "type": "timestamp with time zone"
-            }
-          ]
-        },
         {
           "name": "category_templates",
           "columns": [
@@ -9218,7 +9132,7 @@
             },
             {
               "name": "method",
-              "type": "assets.depreciation_method"
+              "type": "fixed_assets.depreciation_method"
             },
             {
               "name": "name",
@@ -9230,7 +9144,7 @@
             },
             {
               "name": "prorata",
-              "type": "assets.prorata_rule"
+              "type": "fixed_assets.prorata_rule"
             },
             {
               "name": "sequence",
@@ -9247,7 +9161,7 @@
             },
             {
               "name": "day_count",
-              "type": "assets.day_count"
+              "type": "fixed_assets.day_count"
             },
             {
               "name": "declining_cap_percent",
@@ -9259,7 +9173,7 @@
             },
             {
               "name": "disposal_style",
-              "type": "assets.disposal_style"
+              "type": "fixed_assets.disposal_style"
             },
             {
               "name": "legal_reference",
@@ -9267,11 +9181,11 @@
             },
             {
               "name": "prorata_declining",
-              "type": "assets.prorata_rule"
+              "type": "fixed_assets.prorata_rule"
             },
             {
               "name": "prorata_straight_line",
-              "type": "assets.prorata_rule"
+              "type": "fixed_assets.prorata_rule"
             }
           ]
         },
@@ -9384,6 +9298,107 @@
               "type": "numeric(16,2)"
             }
           ]
+        },
+        {
+          "name": "fixed_assets",
+          "columns": [
+            {
+              "name": "acquisition_date",
+              "type": "date"
+            },
+            {
+              "name": "asset_account_id",
+              "type": "uuid"
+            },
+            {
+              "name": "category_code",
+              "type": "text"
+            },
+            {
+              "name": "code",
+              "type": "text"
+            },
+            {
+              "name": "coefficient",
+              "type": "numeric(7,3)"
+            },
+            {
+              "name": "company_id",
+              "type": "uuid"
+            },
+            {
+              "name": "contact_id",
+              "type": "uuid"
+            },
+            {
+              "name": "cost",
+              "type": "numeric(16,2)"
+            },
+            {
+              "name": "created_at",
+              "type": "timestamp with time zone"
+            },
+            {
+              "name": "depreciation_account_id",
+              "type": "uuid"
+            },
+            {
+              "name": "description",
+              "type": "text"
+            },
+            {
+              "name": "document_line_id",
+              "type": "uuid"
+            },
+            {
+              "name": "duration_months",
+              "type": "integer"
+            },
+            {
+              "name": "expense_account_id",
+              "type": "uuid"
+            },
+            {
+              "name": "id",
+              "type": "uuid"
+            },
+            {
+              "name": "in_service_date",
+              "type": "date"
+            },
+            {
+              "name": "method",
+              "type": "fixed_assets.depreciation_method"
+            },
+            {
+              "name": "name",
+              "type": "text"
+            },
+            {
+              "name": "notes",
+              "type": "text"
+            },
+            {
+              "name": "product_id",
+              "type": "uuid"
+            },
+            {
+              "name": "prorata",
+              "type": "fixed_assets.prorata_rule"
+            },
+            {
+              "name": "residual_value",
+              "type": "numeric(16,2)"
+            },
+            {
+              "name": "state",
+              "type": "fixed_assets.asset_state"
+            },
+            {
+              "name": "updated_at",
+              "type": "timestamp with time zone"
+            }
+          ]
         }
       ],
       "views": [],
@@ -9391,6 +9406,10 @@
         {
           "name": "accounts_in_use",
           "arguments": "p_company_id uuid"
+        },
+        {
+          "name": "archive_former_names",
+          "arguments": ""
         },
         {
           "name": "archive_tables",
@@ -9405,15 +9424,15 @@
           "arguments": "p_company_id uuid"
         },
         {
-          "name": "create_asset",
-          "arguments": "p_company_id uuid, p_code text, p_name text, p_acquisition_date date, p_cost numeric, p_asset_account text, p_depreciation_account text, p_expense_account text, p_category_code text, p_duration_months integer, p_method assets.depreciation_method, p_coefficient numeric, p_residual_value numeric, p_in_service_date date, p_document_line_id uuid, p_contact_id uuid, p_description text"
+          "name": "create_fixed_asset",
+          "arguments": "p_company_id uuid, p_code text, p_name text, p_acquisition_date date, p_cost numeric, p_asset_account text, p_depreciation_account text, p_expense_account text, p_category_code text, p_duration_months integer, p_method fixed_assets.depreciation_method, p_coefficient numeric, p_residual_value numeric, p_in_service_date date, p_document_line_id uuid, p_contact_id uuid, p_description text"
         },
         {
           "name": "days360",
           "arguments": "p_from date, p_to date"
         },
         {
-          "name": "dispose_asset",
+          "name": "dispose_fixed_asset",
           "arguments": "p_asset_id uuid, p_date date, p_proceeds numeric, p_counterpart_account text, p_contact_id uuid"
         },
         {
@@ -9438,7 +9457,7 @@
         },
         {
           "name": "prorata_fraction",
-          "arguments": "p_rule assets.prorata_rule, p_day_count assets.day_count, p_start date, p_period_start date, p_period_end date"
+          "arguments": "p_rule fixed_assets.prorata_rule, p_day_count fixed_assets.day_count, p_start date, p_period_start date, p_period_end date"
         },
         {
           "name": "register",
@@ -9459,58 +9478,58 @@
       ],
       "policies": [
         {
-          "table": "assets",
-          "name": "assets_select",
-          "command": "select"
-        },
-        {
-          "table": "assets",
-          "name": "assets_write",
-          "command": "all"
-        },
-        {
           "table": "category_templates",
-          "name": "assets_category_templates_select",
+          "name": "fixed_assets_category_templates_select",
           "command": "select"
         },
         {
           "table": "country_rules",
-          "name": "assets_country_rules_select",
+          "name": "fixed_assets_country_rules_select",
           "command": "select"
         },
         {
           "table": "depreciation_lines",
-          "name": "assets_lines_select",
+          "name": "fixed_assets_lines_select",
           "command": "select"
         },
         {
           "table": "depreciation_lines",
-          "name": "assets_lines_write",
+          "name": "fixed_assets_lines_write",
           "command": "all"
         },
         {
           "table": "disposals",
-          "name": "assets_disposals_select",
+          "name": "fixed_assets_disposals_select",
           "command": "select"
         },
         {
           "table": "disposals",
-          "name": "assets_disposals_write",
+          "name": "fixed_assets_disposals_write",
+          "command": "all"
+        },
+        {
+          "table": "fixed_assets",
+          "name": "fixed_assets_select",
+          "command": "select"
+        },
+        {
+          "table": "fixed_assets",
+          "name": "fixed_assets_write",
           "command": "all"
         }
       ],
       "triggers": [
         {
-          "table": "assets",
-          "name": "assets_set_updated_at"
-        },
-        {
           "table": "depreciation_lines",
-          "name": "assets_lines_assert_may_post"
+          "name": "fixed_assets_lines_assert_may_post"
         },
         {
           "table": "disposals",
-          "name": "assets_disposals_assert_may_post"
+          "name": "fixed_assets_disposals_assert_may_post"
+        },
+        {
+          "table": "fixed_assets",
+          "name": "fixed_assets_set_updated_at"
         }
       ],
       "types": [
@@ -9560,7 +9579,7 @@
         }
       ],
       "grants": {
-        "schema": "assets",
+        "schema": "fixed_assets",
         "usage": {
           "anon": [
             "usage"
@@ -9573,22 +9592,6 @@
           ]
         },
         "tables": [
-          {
-            "name": "assets",
-            "anon": [],
-            "authenticated": [
-              "delete",
-              "insert",
-              "select",
-              "update"
-            ],
-            "service_role": [
-              "delete",
-              "insert",
-              "select",
-              "update"
-            ]
-          },
           {
             "name": "category_templates",
             "anon": [],
@@ -9640,6 +9643,22 @@
               "select",
               "update"
             ]
+          },
+          {
+            "name": "fixed_assets",
+            "anon": [],
+            "authenticated": [
+              "delete",
+              "insert",
+              "select",
+              "update"
+            ],
+            "service_role": [
+              "delete",
+              "insert",
+              "select",
+              "update"
+            ]
           }
         ],
         "views": [],
@@ -9648,6 +9667,17 @@
           {
             "name": "accounts_in_use",
             "arguments": "p_company_id uuid",
+            "anon": [],
+            "authenticated": [
+              "execute"
+            ],
+            "service_role": [
+              "execute"
+            ]
+          },
+          {
+            "name": "archive_former_names",
+            "arguments": "",
             "anon": [],
             "authenticated": [
               "execute"
@@ -9687,8 +9717,8 @@
             ]
           },
           {
-            "name": "create_asset",
-            "arguments": "p_company_id uuid, p_code text, p_name text, p_acquisition_date date, p_cost numeric, p_asset_account text, p_depreciation_account text, p_expense_account text, p_category_code text, p_duration_months integer, p_method assets.depreciation_method, p_coefficient numeric, p_residual_value numeric, p_in_service_date date, p_document_line_id uuid, p_contact_id uuid, p_description text",
+            "name": "create_fixed_asset",
+            "arguments": "p_company_id uuid, p_code text, p_name text, p_acquisition_date date, p_cost numeric, p_asset_account text, p_depreciation_account text, p_expense_account text, p_category_code text, p_duration_months integer, p_method fixed_assets.depreciation_method, p_coefficient numeric, p_residual_value numeric, p_in_service_date date, p_document_line_id uuid, p_contact_id uuid, p_description text",
             "anon": [],
             "authenticated": [
               "execute"
@@ -9709,7 +9739,7 @@
             ]
           },
           {
-            "name": "dispose_asset",
+            "name": "dispose_fixed_asset",
             "arguments": "p_asset_id uuid, p_date date, p_proceeds numeric, p_counterpart_account text, p_contact_id uuid",
             "anon": [],
             "authenticated": [
@@ -9776,7 +9806,7 @@
           },
           {
             "name": "prorata_fraction",
-            "arguments": "p_rule assets.prorata_rule, p_day_count assets.day_count, p_start date, p_period_start date, p_period_end date",
+            "arguments": "p_rule fixed_assets.prorata_rule, p_day_count fixed_assets.day_count, p_start date, p_period_start date, p_period_end date",
             "anon": [],
             "authenticated": [
               "execute"

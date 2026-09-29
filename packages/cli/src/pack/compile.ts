@@ -96,12 +96,12 @@ export function compilePack(pack: Pack): string {
 
 /**
  * The country data of one module, for one pack:
- * `supabase/seed/modules/assets/10_pack_be.sql`.
+ * `supabase/seed/modules/fixed_assets/10_pack_be.sql`.
  *
  * It is a seed of its own, under the module's own folder, and deliberately not
  * part of the pack seed. The pack seed is applied by every installation;
- * `assets.category_templates` does not exist on one that does not carry the
- * module, and a seed that half fails is a seed nobody can re-run. So the
+ * `fixed_assets.category_templates` does not exist on one that does not carry
+ * the module, and a seed that half fails is a seed nobody can re-run. So the
  * module migration runner applies these, and only for the modules it installed.
  *
  * The numbering is the pack's own — `10_pack_be`, `13_pack_ee` — so the file
@@ -116,40 +116,41 @@ export function moduleSeedFileName(
 }
 
 /**
- * `packs/<cc>/assets.json` → the two reference tables of the `assets` module.
+ * `packs/<cc>/fixed_assets.json` → the two reference tables of the fixed
+ * assets module.
  *
  * Returns `undefined` when the pack says nothing about fixed assets, which is
- * not a gap to fill: `assets.generate_schedule` refuses by name where it needs
+ * not a gap to fill: `fixed_assets.generate_schedule` refuses by name where it needs
  * a prorata convention nobody has declared, rather than taking another
  * country's.
  */
-export function compileAssetsSeed(pack: Pack): string | undefined {
-  const assets = pack.assets;
-  if (assets === null) return undefined;
+export function compileFixedAssetsSeed(pack: Pack): string | undefined {
+  const fixedAssets = pack.fixedAssets;
+  if (fixedAssets === null) return undefined;
   const country = pack.manifest.country;
 
   const out: string[] = [
     `-- Ekwo OS — ${pack.manifest.name}: how this country depreciates and derecognises a fixed asset.`,
     '--',
-    `-- Generated from packs/${pack.slug}/assets.json at version ${pack.manifest.version}, do not edit.`,
+    `-- Generated from packs/${pack.slug}/fixed_assets.json at version ${pack.manifest.version}, do not edit.`,
     `-- Change the pack and run \`ekwo pack build ${pack.slug}\`; \`ekwo pack check --all\``,
     '-- refuses a seed that is not the exact output of its pack, and the CI runs it.',
     '--',
     '-- Applied by the module migration runner — `ekwo migrate`, or `ekwo module',
     '-- migrate` — and never by the socle seed step: these tables exist only on an',
-    '-- installation that carries the `assets` module.',
+    '-- installation that carries the fixed assets module.',
     '--',
     '-- The accounts a disposal lands on are not here. They are roles of the chart,',
     '-- in `country_defaults`, written by the pack seed beside every other role.',
     '',
-    'insert into assets.country_rules',
+    'insert into fixed_assets.country_rules',
     '  (country, prorata_straight_line, prorata_declining, day_count,',
     '   declining_cap_percent, declining_switch_to_linear, disposal_style, legal_reference)',
     'values',
-    `  (${text(country)}, ${text(assets.prorata_straight_line)}, ${text(assets.prorata_declining)}, ` +
-      `${text(assets.day_count)}, ${orNull(assets.declining_cap_percent, number)}, ` +
-      `${bool(assets.declining_switch_to_linear)}, ${text(assets.disposal_style)}, ` +
-      `${text(assets.legal_reference)})`,
+    `  (${text(country)}, ${text(fixedAssets.prorata_straight_line)}, ${text(fixedAssets.prorata_declining)}, ` +
+      `${text(fixedAssets.day_count)}, ${orNull(fixedAssets.declining_cap_percent, number)}, ` +
+      `${bool(fixedAssets.declining_switch_to_linear)}, ${text(fixedAssets.disposal_style)}, ` +
+      `${text(fixedAssets.legal_reference)})`,
     'on conflict (country) do update set',
     '  prorata_straight_line      = excluded.prorata_straight_line,',
     '  prorata_declining          = excluded.prorata_declining,',
@@ -161,9 +162,9 @@ export function compileAssetsSeed(pack: Pack): string | undefined {
     '',
   ];
 
-  if (assets.categories.length === 0) return `${out.join('\n')}\n`;
+  if (fixedAssets.categories.length === 0) return `${out.join('\n')}\n`;
 
-  const values = [...assets.categories]
+  const values = [...fixedAssets.categories]
     .sort((a, b) => a.sequence - b.sequence || (a.code < b.code ? -1 : 1))
     .map(
       (c) =>
@@ -174,12 +175,12 @@ export function compileAssetsSeed(pack: Pack): string | undefined {
     );
 
   out.push(
-    'insert into assets.category_templates',
+    'insert into fixed_assets.category_templates',
     '  (country, code, name, name_i18n, method, duration_months, coefficient,',
     '   prorata, account_type, sequence, legal_reference)',
     'select v.country::char(2), v.code, v.name, v.name_i18n::jsonb,',
-    '       v.method::assets.depreciation_method, v.duration_months::integer,',
-    '       v.coefficient::numeric, v.prorata::assets.prorata_rule,',
+    '       v.method::fixed_assets.depreciation_method, v.duration_months::integer,',
+    '       v.coefficient::numeric, v.prorata::fixed_assets.prorata_rule,',
     '       v.account_type::account_type, v.sequence::integer, v.legal_reference',
     '  from (values',
     values.join(',\n'),
@@ -200,13 +201,20 @@ export function compileAssetsSeed(pack: Pack): string | undefined {
   return `${out.join('\n')}\n`;
 }
 
-/** Every module seed a pack compiles to, by module code. */
+/**
+ * Every module seed a pack compiles to, by pack section: the section is the
+ * name of the file under `packs/<cc>/` and of the folder under
+ * `supabase/seed/modules/`.
+ */
 export function compileModuleSeeds(pack: Pack): Map<string, string> {
   const seeds = new Map<string, string>();
-  const assets = compileAssetsSeed(pack);
-  if (assets !== undefined) seeds.set('assets', assets);
+  const fixedAssets = compileFixedAssetsSeed(pack);
+  if (fixedAssets !== undefined) seeds.set('fixed_assets', fixedAssets);
   return seeds;
 }
+
+/** @deprecated Renamed `compileFixedAssetsSeed` in 0.10.0; this name goes in 0.11.0. */
+export const compileAssetsSeed = compileFixedAssetsSeed;
 
 /** `packs/generic` → `05_framework_generic.sql`. It sorts before every pack. */
 export function frameworkSeedFileName(slug: string): string {
@@ -701,7 +709,7 @@ function defaults(pack: Pack, country: string): string[] {
     // Where the disposal of a fixed asset lands. Four, because two countries
     // present a disposal differently and neither is a variant of the other:
     // one gain-or-loss line, or the value sold and the proceeds in full. Which
-    // of the two a country follows is in `assets.json`, with the rest of that
+    // of the two a country follows is in `fixed_assets.json`, with the rest of that
     // module's country model; these are the accounts, and an account that
     // plays a part is a role, so it is named where every other role is.
     text(roles['asset_disposal_gain'] ?? null),

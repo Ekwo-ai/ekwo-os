@@ -1,34 +1,48 @@
-# `assets` — fixed assets, depreciation and disposal
+# Fixed assets — the register, depreciation and disposal
 
-One Postgres schema, `assets`. It depends on the socle by foreign key and
-reaches the ledger only through `public.post_module_entry()`.
+One Postgres schema, `fixed_assets`. It depends on the socle by foreign key
+and reaches the ledger only through `public.post_module_entry()`.
+
+The module keeps **fixed assets** only — what a business holds to use over
+several years, and writes off as it does. In accounting English *assets* is
+the whole left side of the balance sheet, stock and receivables included, so
+every name here says *fixed*: the folder, the schema, its main table, the MCP
+tools and the section of a country pack.
+
+| Name | What it is |
+|---|---|
+| module code | `assets` — the key of `public.modules`, written on every entry the module posts. A code never changes, so it kept the name it was published under |
+| schema | `fixed_assets` (called `assets` until version 2.0.0 of the module) |
+| MCP tools | `fixed_assets_list`, `fixed_assets_create`, `fixed_assets_schedule`, `fixed_assets_run_depreciation`, `fixed_assets_dispose` |
+| capabilities | `assets.read`, `assets.write`, `assets.post` — their area is the module code |
+| pack section | `packs/<cc>/fixed_assets.json` |
 
 | Object | What it is |
 |---|---|
-| `assets.country_rules` | How one country prorates a first period, whether its declining balance is capped, and how it derecognises an asset. Pack data. |
-| `assets.category_templates` | The usual duration, method and coefficient of a kind of asset, with the source it comes from. Pack data. |
-| `assets.assets` | One fixed asset: what it cost, how it is depreciated, and the three accounts that carry it. |
-| `assets.depreciation_lines` | The schedule, one row per period, with the entry that booked it. |
-| `assets.disposals` | What leaving the books cost or earned. One row per asset. |
+| `fixed_assets.country_rules` | How one country prorates a first period, whether its declining balance is capped, and how it derecognises an asset. Pack data. |
+| `fixed_assets.category_templates` | The usual duration, method and coefficient of a kind of asset, with the source it comes from. Pack data. |
+| `fixed_assets.fixed_assets` | One fixed asset: what it cost, how it is depreciated, and the three accounts that carry it. |
+| `fixed_assets.depreciation_lines` | The schedule, one row per period, with the entry that booked it. |
+| `fixed_assets.disposals` | What leaving the books cost or earned. One row per asset. |
 
 ## The five functions
 
 ```sql
-select assets.create_asset(
+select fixed_assets.create_fixed_asset(
   company, 'IT-01', 'Laptop', date '2026-07-01', 3000,
   '241000',              -- the asset account
   '241900',              -- accumulated depreciation
   '630200',              -- the depreciation charge
   'it-equipment');       -- a category of the country pack, which fills in the rest
 
-select assets.generate_schedule(asset);              -- rewrites the plan
-select assets.run_depreciation(company, date '2026-12-31');
-select assets.dispose_asset(asset, date '2028-01-15', 15000, '400000');
-select * from assets.register(company, date '2026-12-31');
-select * from assets.movements(company, date '2026-01-01', date '2026-12-31');
+select fixed_assets.generate_schedule(asset);              -- rewrites the plan
+select fixed_assets.run_depreciation(company, date '2026-12-31');
+select fixed_assets.dispose_fixed_asset(asset, date '2028-01-15', 15000, '400000');
+select * from fixed_assets.register(company, date '2026-12-31');
+select * from fixed_assets.movements(company, date '2026-01-01', date '2026-12-31');
 ```
 
-`assets.can_disable(company)` is the convention `disable_module()` reads: it
+`fixed_assets.can_disable(company)` is the convention `disable_module()` reads: it
 answers with a sentence while depreciation has been booked, and null otherwise.
 
 ## How a schedule is worked out
@@ -92,7 +106,7 @@ A machine of 100 000 €, five years, declining balance at the 1,75 of article
 ## Disposals
 
 A country derecognises an asset one of two ways, and neither is a variant of
-the other. `assets.country_rules.disposal_style` says which, and the accounts
+the other. `fixed_assets.country_rules.disposal_style` says which, and the accounts
 are roles of the chart, in `country_defaults`:
 
 - **`net_result`** (Belgium) — clear the asset and its accumulated
@@ -142,6 +156,31 @@ ekwo module migrate assets          # its migrations and its country seeds
 ekwo module enable assets --company "…"
 ```
 
-Then add `assets` to the project's exposed schemas — Supabase dashboard →
+`assets` is the module code; the folder name, `fixed-assets`, is accepted as
+well. Then add `fixed_assets` to the project's exposed schemas — Supabase
+dashboard →
 Project Settings → API, or `[api] schemas` in `supabase/config.toml`. No
 migration can do that: it is a setting of the API and not of the database.
+
+## Upgrading from version 1 of the module
+
+Version 2.0.0 renames the schema in place: `assets` becomes `fixed_assets`,
+`assets.assets` becomes `fixed_assets.fixed_assets`, and `create_asset()` and
+`dispose_asset()` become `create_fixed_asset()` and `dispose_fixed_asset()`.
+Every row, every schedule and every posted entry stays what it was, to the
+cent, and so does every right a member or a key holds — the migration is
+`20260929151742_assets_schema_is_fixed_assets.sql`, and it can be run twice.
+
+1. `ekwo migrate`, as for any release. It applies the rename and then the
+   country seeds, which now write into `fixed_assets`.
+2. **Replace `assets` with `fixed_assets` in the exposed schemas of the
+   project** — no migration can do that. Until it is done, PostgREST answers a
+   call to the module with a profile error.
+3. A client that calls the API by name moves to the new names. The MCP tools
+   keep their former names, `assets_*`, as deprecated aliases until 0.11.0.
+4. A pack of your own that carries `assets.json` renames it
+   `fixed_assets.json`; `ekwo pack check` says so if it has not.
+
+A company archive written before the rename is taken in as it is:
+`import_company()` reads `assets.assets` as `fixed_assets.fixed_assets`
+through `fixed_assets.archive_former_names()`.

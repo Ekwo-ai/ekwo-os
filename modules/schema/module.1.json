@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://ekwo.ai/schemas/module/1.json",
   "title": "Ekwo module manifest, version 1",
-  "description": "What a module of Ekwo OS says about itself. One file, `modules/<code>/module.json`, read by `ekwo module list|enable|migrate`, by the MCP loader and by the guard tests. Everything a module *does* is in its migrations; this says where it lives and what it is allowed to reach.",
+  "description": "What a module of Ekwo OS says about itself. One file, `modules/<folder>/module.json`, read by `ekwo module list|enable|migrate`, by the MCP loader and by the guard tests. Everything a module *does* is in its migrations; this says where it lives and what it is allowed to reach.",
   "type": "object",
   "required": ["code", "name", "schema", "version", "status"],
   "additionalProperties": false,
@@ -10,7 +10,7 @@
     "$schema": { "type": "string" },
     "code": {
       "$ref": "#/$defs/identifier",
-      "description": "The module's identifier, and the key of `public.modules`. Immutable once published: it is written on every entry the module posts."
+      "description": "The module's identifier, and the key of `public.modules`. Immutable once published: it is written on every entry the module posts, so a module whose name becomes more precise renames its folder and its schema and keeps its code."
     },
     "name": { "type": "string", "minLength": 1, "maxLength": 120 },
     "description": { "type": "string", "minLength": 1, "maxLength": 400 },
@@ -55,7 +55,7 @@
       "properties": {
         "section": {
           "$ref": "#/$defs/identifier",
-          "description": "The file a country pack carries for this module: `packs/<cc>/<section>.json`, compiled by `ekwo pack build` into `supabase/seed/modules/<code>/`."
+          "description": "The file a country pack carries for this module: `packs/<cc>/<section>.json`, compiled by `ekwo pack build` into `supabase/seed/modules/<section>/`."
         }
       }
     }

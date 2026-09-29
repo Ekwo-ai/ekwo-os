@@ -718,7 +718,7 @@ export interface PackGoldenPayment {
   why: string;
 }
 
-/** One line of `assets.json`: what a kind of asset is usually depreciated over. */
+/** One line of `fixed_assets.json`: what a kind of asset is usually depreciated over. */
 export interface PackAssetCategory {
   code: string;
   name: string;
@@ -735,15 +735,17 @@ export interface PackAssetCategory {
 }
 
 /**
- * `packs/<cc>/assets.json` — the country data of the `assets` module.
+ * `packs/<cc>/fixed_assets.json` — the country data of the fixed assets
+ * module.
  *
  * It is read here, with the rest of the pack, rather than by the module: a
  * pack is one object with one checksum and one `ekwo pack check`, and a module
  * that read its own section would be a second reader of the same folder with
  * its own idea of what a valid pack is. What is module-specific is where the
- * compiler writes it — `supabase/seed/modules/assets/` and not the pack seed.
+ * compiler writes it — `supabase/seed/modules/fixed_assets/` and not the pack
+ * seed.
  */
-export interface PackAssets {
+export interface PackFixedAssets {
   prorata_straight_line: string;
   prorata_declining: string;
   day_count: string;
@@ -755,6 +757,9 @@ export interface PackAssets {
   source: string | null;
   categories: PackAssetCategory[];
 }
+
+/** @deprecated Renamed `PackFixedAssets` in 0.10.0; this name goes in 0.11.0. */
+export type PackAssets = PackFixedAssets;
 
 export interface Pack {
   /** Lower-case directory name, e.g. `be`. */
@@ -784,8 +789,8 @@ export interface Pack {
   report: PackReport | null;
   /** Code of the periodic return. The default of every box. */
   reportCode: string | null;
-  /** `assets.json`, or null where this country says nothing about fixed assets. */
-  assets: PackAssets | null;
+  /** `fixed_assets.json`, or null where this country says nothing about fixed assets. */
+  fixedAssets: PackFixedAssets | null;
   /** `golden/scenario.json`, or null where the manifest says why there is none. */
   golden: PackGolden | null;
   /** The reason the manifest gives for carrying no golden. Null where it carries one. */
@@ -1043,12 +1048,20 @@ export async function readPack(slug: string, dir = packsDir()): Promise<Pack> {
 
   // The section of a module. A pack that carries none simply has no country
   // rule for that module, and the module refuses by name where it needs one.
-  let assets: PackAssets | null = null;
+  let fixedAssets: PackFixedAssets | null = null;
+  // The section was called `assets.json` until 0.10.0. A pack that still
+  // carries it is told so, rather than having its depreciation rules ignored.
   if (existsSync(join(root, 'assets.json'))) {
-    const raw = await readJson(join(root, 'assets.json'));
-    issues.push(...validate(raw, defs['module_assets'] ?? {}, schema, 'assets.json'));
-    assets = normaliseAssets(raw as Record<string, unknown>);
-    issues.push(...assetReferences(assets, manifest));
+    issues.push({
+      path: 'assets.json',
+      message: 'the fixed assets section is called fixed_assets.json since 0.10.0 — rename the file, its content is unchanged',
+    });
+  }
+  if (existsSync(join(root, 'fixed_assets.json'))) {
+    const raw = await readJson(join(root, 'fixed_assets.json'));
+    issues.push(...validate(raw, defs['module_fixed_assets'] ?? {}, schema, 'fixed_assets.json'));
+    fixedAssets = normaliseFixedAssets(raw as Record<string, unknown>);
+    issues.push(...assetReferences(fixedAssets, manifest));
   }
 
   // The golden scenario. Read after the taxes, the charts and the form,
@@ -1127,7 +1140,7 @@ export async function readPack(slug: string, dir = packsDir()): Promise<Pack> {
       byCode('journals', new Set(manifest.journals.map((j) => j.code)), 'a journal');
       byCode('taxes', new Set(taxes.map((t) => t.code)), 'a tax');
       byCode('legal_mentions', new Set(documents.mentions.map((m) => m.code)), 'a legal mention');
-      byCode('asset_categories', new Set((assets?.categories ?? []).map((c) => c.code)), 'a fixed-asset category');
+      byCode('asset_categories', new Set((fixedAssets?.categories ?? []).map((c) => c.code)), 'a fixed-asset category');
 
       // A box is translated by the same reference the formulas use: `54`, or
       // `08:tax` where the form carries a base and a tax on one line.
@@ -1161,14 +1174,14 @@ export async function readPack(slug: string, dir = packsDir()): Promise<Pack> {
 
   // A language the manifest declares is a promise that every label exists in
   // it. A language that is only a file may be partial, and falls back.
-  issues.push(...languageCoverage(manifest, languages, labels, charts, taxes, statements, report, documents, assets));
+  issues.push(...languageCoverage(manifest, languages, labels, charts, taxes, statements, report, documents, fixedAssets));
   issues.push(...zonePages(manifest, root));
 
   // The rows that carry a translation get theirs from the language files, so
   // that one file is the whole of one language.
   for (const chart of charts) chart.name_i18n = labels.charts[chart.code] ?? {};
   for (const mention of documents.mentions) mention.text_i18n = labels.legal_mentions[mention.code] ?? {};
-  for (const category of assets?.categories ?? []) {
+  for (const category of fixedAssets?.categories ?? []) {
     category.name_i18n = labels.asset_categories[category.code] ?? {};
   }
 
@@ -1220,7 +1233,7 @@ export async function readPack(slug: string, dir = packsDir()): Promise<Pack> {
   // The register, and every rule that points into it. Last of the cross-checks,
   // because a source is named by a tax, a box, a statement line and a mention,
   // and all four have to have been read before the references can be resolved.
-  const register = sourceRegister(manifest, charts, taxes, report, statements, documents, assets);
+  const register = sourceRegister(manifest, charts, taxes, report, statements, documents, fixedAssets);
   issues.push(...register.issues);
   warnings.push(...register.warnings);
 
@@ -1260,7 +1273,7 @@ export async function readPack(slug: string, dir = packsDir()): Promise<Pack> {
     documents,
     report,
     reportCode,
-    assets,
+    fixedAssets,
     golden,
     goldenExemption,
     checksum: await checksum(root),
@@ -1307,7 +1320,7 @@ function sourceRegister(
   report: PackReport | null,
   statements: PackStatement[],
   documents: PackDocumentRules,
-  assets: PackAssets | null,
+  fixedAssets: PackFixedAssets | null,
 ): { sources: PackSource[]; issues: Issue[]; warnings: string[] } {
   const issues: Issue[] = [];
   const warnings: string[] = [];
@@ -1419,9 +1432,9 @@ function sourceRegister(
       source: mention.source,
       kind: 'other' as const,
     })),
-    ...(assets === null ? [] : [{ path: 'assets.json', source: assets.source, kind: 'other' as const }]),
-    ...(assets?.categories ?? []).map((category) => ({
-      path: `assets.json ${category.code}`,
+    ...(fixedAssets === null ? [] : [{ path: 'fixed_assets.json', source: fixedAssets.source, kind: 'other' as const }]),
+    ...(fixedAssets?.categories ?? []).map((category) => ({
+      path: `fixed_assets.json ${category.code}`,
       source: category.source,
       kind: 'other' as const,
     })),
@@ -1547,7 +1560,7 @@ function documentRules(
   ];
 }
 
-function normaliseAssets(raw: Record<string, unknown>): PackAssets {
+function normaliseFixedAssets(raw: Record<string, unknown>): PackFixedAssets {
   const depreciation = (raw['depreciation'] ?? {}) as Record<string, unknown>;
   const disposal = (raw['disposal'] ?? null) as Record<string, unknown> | null;
   const categories = (raw['categories'] ?? []) as Record<string, unknown>[];
@@ -1592,7 +1605,7 @@ function normaliseAssets(raw: Record<string, unknown>): PackAssets {
 }
 
 /**
- * What an `assets.json` obliges the rest of the pack to say.
+ * What an `fixed_assets.json` obliges the rest of the pack to say.
  *
  * The same shape as `closingRules`, and for the same reason: a disposal style
  * is a promise about which accounts exist, and a pack that makes it without
@@ -1600,18 +1613,18 @@ function normaliseAssets(raw: Record<string, unknown>): PackAssets {
  * codes themselves are checked against every chart by `crossReferences`, so
  * what is left here is which roles a style needs.
  */
-function assetReferences(assets: PackAssets, manifest: Manifest): Issue[] {
+function assetReferences(fixedAssets: PackFixedAssets, manifest: Manifest): Issue[] {
   const issues: Issue[] = [];
   const roles = manifest.defaults.roles;
   const named = (role: string): boolean => roles[role] !== undefined && roles[role] !== null;
 
-  if (assets.disposal_style === 'net_result' && !named('asset_disposal_gain')) {
+  if (fixedAssets.disposal_style === 'net_result' && !named('asset_disposal_gain')) {
     issues.push({
       path: 'defaults.roles.asset_disposal_gain',
       message: 'a pack that disposes on the net result has to name the account the gain lands on',
     });
   }
-  if (assets.disposal_style === 'gross') {
+  if (fixedAssets.disposal_style === 'gross') {
     for (const role of ['asset_disposal_proceeds', 'asset_disposal_value']) {
       if (!named(role)) {
         issues.push({
@@ -1623,26 +1636,26 @@ function assetReferences(assets: PackAssets, manifest: Manifest): Issue[] {
   }
 
   const seen = new Set<string>();
-  for (const category of assets.categories) {
+  for (const category of fixedAssets.categories) {
     if (seen.has(category.code)) {
-      issues.push({ path: `assets.json ${category.code}`, message: 'duplicate category code' });
+      issues.push({ path: `fixed_assets.json ${category.code}`, message: 'duplicate category code' });
     }
     seen.add(category.code);
     if (category.method === 'declining_balance' && category.coefficient === null) {
       issues.push({
-        path: `assets.json ${category.code}`,
+        path: `fixed_assets.json ${category.code}`,
         message: 'a declining balance with no coefficient is a straight line nobody asked for',
       });
     }
     if (category.method !== 'declining_balance' && category.coefficient !== null) {
       issues.push({
-        path: `assets.json ${category.code}`,
+        path: `fixed_assets.json ${category.code}`,
         message: `a ${category.method} category takes no coefficient`,
       });
     }
     if (category.legal_reference === null) {
       issues.push({
-        path: `assets.json ${category.code}`,
+        path: `fixed_assets.json ${category.code}`,
         message: 'a usual duration comes from somewhere; name the source',
       });
     }
@@ -1771,7 +1784,7 @@ function languageCoverage(
   statements: PackStatement[],
   report: PackReport | null,
   documents: PackDocumentRules,
-  assets: PackAssets | null,
+  fixedAssets: PackFixedAssets | null,
 ): Issue[] {
   const issues: Issue[] = [];
   const own = manifest.defaults.language;
@@ -1787,7 +1800,7 @@ function languageCoverage(
       statements.flatMap((st) => st.lines.map((line) => `${st.code}:${line.code}`)),
     ],
     ['legal_mentions', documents.mentions.map((m) => m.code)],
-    ['asset_categories', (assets?.categories ?? []).map((c) => c.code)],
+    ['asset_categories', (fixedAssets?.categories ?? []).map((c) => c.code)],
   ];
 
   for (const language of manifest.languages ?? []) {

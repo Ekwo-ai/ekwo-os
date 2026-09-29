@@ -1,17 +1,17 @@
 -- Ekwo OS — United Kingdom: how this country depreciates and derecognises a fixed asset.
 --
--- Generated from packs/gb/assets.json at version 0.9.0, do not edit.
+-- Generated from packs/gb/fixed_assets.json at version 0.9.0, do not edit.
 -- Change the pack and run `ekwo pack build gb`; `ekwo pack check --all`
 -- refuses a seed that is not the exact output of its pack, and the CI runs it.
 --
 -- Applied by the module migration runner — `ekwo migrate`, or `ekwo module
 -- migrate` — and never by the socle seed step: these tables exist only on an
--- installation that carries the `assets` module.
+-- installation that carries the fixed assets module.
 --
 -- The accounts a disposal lands on are not here. They are roles of the chart,
 -- in `country_defaults`, written by the pack seed beside every other role.
 
-insert into assets.country_rules
+insert into fixed_assets.country_rules
   (country, prorata_straight_line, prorata_declining, day_count,
    declining_cap_percent, declining_switch_to_linear, disposal_style, legal_reference)
 values
@@ -25,12 +25,12 @@ on conflict (country) do update set
   disposal_style             = excluded.disposal_style,
   legal_reference            = excluded.legal_reference;
 
-insert into assets.category_templates
+insert into fixed_assets.category_templates
   (country, code, name, name_i18n, method, duration_months, coefficient,
    prorata, account_type, sequence, legal_reference)
 select v.country::char(2), v.code, v.name, v.name_i18n::jsonb,
-       v.method::assets.depreciation_method, v.duration_months::integer,
-       v.coefficient::numeric, v.prorata::assets.prorata_rule,
+       v.method::fixed_assets.depreciation_method, v.duration_months::integer,
+       v.coefficient::numeric, v.prorata::fixed_assets.prorata_rule,
        v.account_type::account_type, v.sequence::integer, v.legal_reference
   from (values
     ('GB', 'goodwill', 'Goodwill', '{}'::jsonb, 'straight_line', 120, null, null, 'asset_fixed', 10, 'FRS 102, Section 19 — goodwill is amortised over its useful life, and where that cannot be reliably estimated the life shall not exceed ten years. Ten years is therefore the ceiling this category starts from and not a life anybody estimated. There is no legal or fiscal table of useful lives in the United Kingdom. FRS 102, Section 17, paragraphs 17.16 to 17.21 require the depreciable amount of an item of property, plant and equipment to be allocated on a systematic basis over its useful life, which the entity reviews and estimates for itself; capital allowances under the capital allowances legislation are a tax computation and are never the accounting charge. The duration below is therefore common British practice and not a rule, and an asset that depreciates differently says so in its own columns.'),

@@ -458,7 +458,7 @@
             "string",
             "null"
           ],
-          "description": "Net-result disposal of a fixed asset: where a gain lands (BE 763). Read by the `assets` module. Leave it out where the country files a gross disposal."
+          "description": "Net-result disposal of a fixed asset: where a gain lands (BE 763). Read by the fixed assets module. Leave it out where the country files a gross disposal."
         },
         "asset_disposal_loss": {
           "type": [
@@ -2063,13 +2063,13 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "By category code of assets.json, the section of the fixed assets module."
+          "description": "By category code of fixed_assets.json, the section of the fixed assets module."
         }
       }
     },
-    "module_assets": {
+    "module_fixed_assets": {
       "type": "object",
-      "description": "packs/<cc>/assets.json — what this country says about depreciating and derecognising a fixed asset. Compiled by `ekwo pack build` into supabase/seed/modules/assets/, and applied only on an installation that carries the `assets` module. The accounts a disposal lands on are deliberately not here: an account that plays a part is a role of the chart, and defaults.roles is the one place a pack names one.",
+      "description": "packs/<cc>/fixed_assets.json — what this country says about depreciating and derecognising a fixed asset. Compiled by `ekwo pack build` into supabase/seed/modules/fixed_assets/, and applied only on an installation that carries the fixed assets module. The accounts a disposal lands on are deliberately not here: an account that plays a part is a role of the chart, and defaults.roles is the one place a pack names one.",
       "required": [
         "depreciation"
       ],
@@ -2160,7 +2160,7 @@
         },
         "categories": {
           "type": "array",
-          "description": "The usual duration and method of a kind of asset in this country. What `assets.create_asset` pre-fills from, never a rule: an asset that departs from one says so in its own columns.",
+          "description": "The usual duration and method of a kind of asset in this country. What `fixed_assets.create_fixed_asset` pre-fills from, never a rule: an asset that departs from one says so in its own columns.",
           "items": {
             "type": "object",
             "required": [

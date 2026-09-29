@@ -388,7 +388,7 @@ describe('a database whose roles start with nothing at all', () => {
       `select count(*)::text as n
          from pg_default_acl d
          join pg_namespace n on n.oid = d.defaclnamespace
-        where n.nspname in ('public', 'assets', 'budgets')`,
+        where n.nspname in ('public', 'fixed_assets', 'budgets')`,
     );
     expect(left[0]?.n).toBe('0');
   });
