@@ -61,7 +61,7 @@ ask why, and get an article of law rather than a probability.
 
 The next ten years of finance are already written into other people's
 regulations: structured electronic invoicing becoming the norm and then the law
-across the Union, filings that are read by machines before they are read by
+across the European Union, filings that are read by machines before they are read by
 people, instant settlement, crypto-assets that a business holds and now has to
 report on — MiCA, and the reporting obligations that start to bite in 2026 —
 and, close behind, the emissions that will sit in a report next to the

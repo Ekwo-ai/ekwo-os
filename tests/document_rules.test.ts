@@ -279,7 +279,7 @@ describe('the mentions that apply to one document', () => {
     expect(await mentionsOf(documentId)).toEqual(['reverse_charge', 'late_payment']);
   });
 
-  it('prints the intra-Union exemption on a supply of goods, and not the one for services', async () => {
+  it('prints the European Union exemption on a supply of goods, and not the one for services', async () => {
     const { companyId } = await newCompany(db, { name: 'Intracom SRL' });
     const contactId = await newContact(db, companyId, { country: 'NL' });
     const documentId = await newDocument(db, companyId, {
@@ -313,7 +313,7 @@ describe('the mentions that apply to one document', () => {
       )
     ).code;
 
-    const { companyId } = await newCompany(db, { name: 'Hors Union SRL', country });
+    const { companyId } = await newCompany(db, { name: 'Hors Union européenne SRL', country });
     const contactId = await newContact(db, companyId, { type: 'supplier', country });
     const documentId = await newDocument(db, companyId, {
       docType: 'purchase_invoice',

@@ -139,9 +139,9 @@ export type TaxPostingType = 'base' | 'tax';
  * established in the buyer's country and who charges no tax on it, the buyer
  * accounting for it themselves under the general business-to-business rule of
  * articles 44 and 196 of Directive 2006/112/EC. It is the sibling of
- * `intracom_acquisition_services` for a supplier the intra-Union rules do not
+ * `intracom_acquisition_services` for a supplier the European Union rules do not
  * reach, and it says nothing about where that supplier is: the rule is about
- * establishment, not about membership of the Union.
+ * establishment, not about membership of the European Union.
  *
  * `self_assessed` is a tax a buyer owes **directly to an administration under
  * that administration's own law**, and computes and declares themselves:

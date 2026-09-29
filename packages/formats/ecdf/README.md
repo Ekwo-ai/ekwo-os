@@ -2,7 +2,7 @@
 
 The Luxembourg **eCDF** interface file, version 2.0, in TypeScript, with no
 dependencies — and the four forms it carries that are a recapitulative
-statement of intra-Community supplies.
+statement of European Union supplies.
 
 ```ts
 import { generateEcdf } from '@ekwo-ai/ecdf';

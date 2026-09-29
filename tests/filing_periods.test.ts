@@ -10,7 +10,7 @@ import { allPacks, declarationPeriods, packWhere } from './helpers/packs.js';
 //
 // `companies.vat_period` held how often a company files, named after the return
 // it was about. A company is subject to several declarations and each has a
-// cadence of its own: the recapitulative statement of intra-Community supplies
+// cadence of its own: the recapitulative statement of European Union supplies
 // is filed monthly from the first euro in one of the countries read here, above
 // a threshold counting goods alone in another, on separately chosen cadences
 // for goods and services in a third, and with the return in the fourth. So the

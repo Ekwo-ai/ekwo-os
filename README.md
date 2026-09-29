@@ -372,7 +372,7 @@ added there is in them without anybody editing this page. Leave `05_framework_ge
 has a chart of accounts but no financial statements for a chart that declares
 none of its own; leave `00_territories.sql` out and the recapitulative
 statement refuses to run at all, by name, rather than reporting every customer
-as outside the Union.
+as outside the European Union.
 
 Skip `supabase/seed/90_demo_company.sql` unless you want the sample data, and
 then run the six steps of [What it does underneath](#what-it-does-underneath)
@@ -629,7 +629,7 @@ that can produce those columns can use them:
   [`@ekwo-ai/des`](packages/formats/des/),
   [`@ekwo-ai/ecdf`](packages/formats/ecdf/) and
   [`@ekwo-ai/vd`](packages/formats/vd/) — the recapitulative statements of
-  intra-Community supplies, for Belgium, France, Luxembourg and Estonia.
+  European Union supplies, for Belgium, France, Luxembourg and Estonia.
 
 - [`@ekwo-ai/camt053`](packages/formats/camt053/) — the one that reads: an
   ISO 20022 bank statement (camt.053, versions 02 to 14) into statements and

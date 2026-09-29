@@ -431,7 +431,7 @@ export function check(model: DocumentModel): Violation[] {
     } else if (!sellerVat) {
       out.push({ code: `BR-${family}-02`, message: `A line is in VAT category ${category} and the seller has no VAT identifier.` });
     } else if (category === 'K' && !buyerVat) {
-      out.push({ code: 'BR-IC-02', message: 'An intra-community supply names the VAT identifier of the buyer, and the buyer has none.' });
+      out.push({ code: 'BR-IC-02', message: 'A European Union supply names the VAT identifier of the buyer, and the buyer has none.' });
     } else if (category === 'AE' && !buyerVat && model.buyer.legalId === null) {
       out.push({ code: 'BR-AE-02', message: 'A reverse charge names the buyer by a VAT identifier or a registration number, and the buyer has neither.' });
     }
@@ -446,10 +446,10 @@ export function check(model: DocumentModel): Violation[] {
   }
   if (categories.has('K')) {
     if (model.delivery?.date == null) {
-      out.push({ code: 'BR-IC-11', message: 'An intra-community supply says when the goods were delivered, and this one has no delivery date.' });
+      out.push({ code: 'BR-IC-11', message: 'A European Union supply says when the goods were delivered, and this one has no delivery date.' });
     }
     if (model.delivery?.address?.country == null) {
-      out.push({ code: 'BR-IC-12', message: 'An intra-community supply says which country the goods were delivered to, and this one has no delivery country.' });
+      out.push({ code: 'BR-IC-12', message: 'A European Union supply says which country the goods were delivered to, and this one has no delivery country.' });
     }
   }
 

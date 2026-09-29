@@ -1,7 +1,7 @@
 # `@ekwo-ai/vd`
 
 The Estonian **form VD** — *ühendusesisese käibe aruanne*, the report of
-intra-Community turnover — in TypeScript, with no dependencies.
+European Union turnover — in TypeScript, with no dependencies.
 
 Give it the rows of a recapitulative statement and it gives you the XML the
 e-MTA loads, a name for it, and the list of what could not be put in it.
@@ -104,7 +104,7 @@ month — against the report it is being loaded into, and nothing else.
 
 - **A load replaces everything already in the report**, whether it was loaded
   before or typed in, and only works on a report that has not been confirmed.
-- **There is no nil report.** Where there was no intra-Community supply, form VD
+- **There is no nil report.** Where there was no European Union supply, form VD
   is not filed at all.
 
 ## What is out of scope, on purpose

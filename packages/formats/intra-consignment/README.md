@@ -1,6 +1,6 @@
 # `@ekwo-ai/intra-consignment`
 
-The Belgian **intra-Community sales listing** — the XML Intervat takes for
+The Belgian **sales listing of supplies within the European Union** — the XML Intervat takes for
 form 723 — in TypeScript, with no dependencies.
 
 Give it the rows of a recapitulative statement and it gives you the file, a

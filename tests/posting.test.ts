@@ -159,7 +159,7 @@ describe('post_document — Belgian purchases', () => {
     ]);
   });
 
-  it('self-assesses an intra-community acquisition of goods: boxes 86, 55 and 59', async () => {
+  it('self-assesses a European Union acquisition of goods: boxes 86, 55 and 59', async () => {
     const supplier = await newContact(db, fx.companyId, {
       name: 'Leverancier NL',
       type: 'supplier',
@@ -192,7 +192,7 @@ describe('post_document — Belgian purchases', () => {
     expect(doc2.amount_total).toBe('1000.00');
   });
 
-  it('sends an intra-community service to box 88 rather than 86', async () => {
+  it('sends a European Union service to box 88 rather than 86', async () => {
     const supplier = await newContact(db, fx.companyId, {
       name: 'Dienst NL',
       type: 'supplier',

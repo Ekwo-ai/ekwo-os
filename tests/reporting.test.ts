@@ -90,14 +90,14 @@ describe('vat_return on the demo company', () => {
 
     expect(byBox['01']).toBeCloseTo(400, 2); // 6 % sales
     expect(byBox['03']).toBeCloseTo(4500, 2); // 21 % sales, net of the credit note base
-    expect(byBox['44']).toBeCloseTo(3200, 2); // intra-community services supplied
+    expect(byBox['44']).toBeCloseTo(3200, 2); // European Union services supplied
     expect(byBox['47']).toBeCloseTo(5400, 2); // exports
     expect(byBox['49']).toBeCloseTo(300, 2); // credit note issued
     expect(byBox['54']).toBeCloseTo(969, 2); // 4500 x 21 % + 400 x 6 %
     expect(byBox['64']).toBeCloseTo(63, 2); // VAT on the credit note
     expect(byBox['82']).toBeCloseTo(2650, 2); // services purchased
     expect(byBox['83']).toBeCloseTo(2400, 2); // capital goods
-    expect(byBox['88']).toBeCloseTo(990, 2); // intra-community services received
+    expect(byBox['88']).toBeCloseTo(990, 2); // European Union services received
     expect(byBox['55']).toBeCloseTo(207.9, 2); // self-assessed on box 88
     expect(byBox['59']).toBeCloseTo(1268.4, 2); // deductible, self-assessment included
   });
@@ -118,7 +118,7 @@ describe('vat_return on the demo company', () => {
   });
 
   it('leaves the ledger and the return in step on a self-assessed purchase', async () => {
-    // The two VAT lines of the intra-community purchase cancel each other in
+    // The two VAT lines of the European Union purchase cancel each other in
     // the ledger while both boxes are still filled.
     const net = await one<{ balance: string }>(
       db,

@@ -192,7 +192,7 @@ describe('the books, through the tools', () => {
     const document = record(await readTools.getDocument(backend, { document_id: documentId }));
 
     // A domestic sale at the standard rate owes one sentence — the late
-    // payment terms — and the reverse charge and the intra-Union exemptions
+    // payment terms — and the reverse charge and the European Union exemptions
     // stay off it, because the view reads the treatment of the tax on each
     // line rather than a flag somebody remembered to set.
     const mentions = list(document['legal_mentions']);

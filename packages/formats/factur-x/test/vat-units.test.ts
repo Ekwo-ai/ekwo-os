@@ -5,7 +5,7 @@ describe('defaultVatCategory', () => {
   it('standard rate whenever the rate is positive', () => {
     expect(defaultVatCategory({ rate: 21, sellerCountry: 'BE', buyerCountry: 'US', buyerHasVatId: false })).toBe('S');
   });
-  it('zero-rated at home, intra-community for EU businesses, exempt for EU consumers, export elsewhere', () => {
+  it('zero-rated at home, a supply between Member States of the European Union for businesses there, exempt for consumers there, export elsewhere', () => {
     expect(defaultVatCategory({ rate: 0, sellerCountry: 'BE', buyerCountry: 'be', buyerHasVatId: true })).toBe('Z');
     expect(defaultVatCategory({ rate: 0, sellerCountry: 'BE', buyerCountry: 'FR', buyerHasVatId: true })).toBe('K');
     expect(defaultVatCategory({ rate: 0, sellerCountry: 'BE', buyerCountry: 'FR', buyerHasVatId: false })).toBe('E');

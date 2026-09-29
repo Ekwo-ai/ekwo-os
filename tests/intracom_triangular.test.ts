@@ -37,11 +37,11 @@ import { allPacks, packWhere } from './helpers/packs.js';
  *   - the format bricks were published before the value existed and already
  *     carry its column and its code;
  *   - the invoice says the customer owes the tax, which is the sentence the
- *     Directive requires and not the intra-Community exemption.
+ *     Directive requires and not the European Union exemption.
  */
 
 const supplier = packWhere(
-  'a tax on an intra-Community supply of goods, with a year of books behind it',
+  'a tax on a European Union supply of goods, with a year of books behind it',
   (pack) => pack.golden !== null && pack.taxes.some((t) => t.treatment === 'intracom_goods'),
 );
 
@@ -92,7 +92,7 @@ describe(`${supplier.slug} — a triangular supply, from a tax of the company`, 
     });
     companyId = fixture.companyId;
 
-    // The fixture: the company's own intra-Community supply of goods, treated
+    // The fixture: the company's own European Union supply of goods, treated
     // as the middle supply of a triangular arrangement. One column, on one
     // row, of one company — and no file under `packs/` moves.
     await db.query(
@@ -146,7 +146,7 @@ describe(`${supplier.slug} — a triangular supply, from a tax of the company`, 
     expect(Number(listed[0]?.amount)).toBe(4000);
   });
 
-  it('puts the reverse-charge sentence on the invoice, and not the intra-Union exemption', async () => {
+  it('puts the reverse-charge sentence on the invoice, and not the European Union exemption', async () => {
     // The sentence under `intra_eu_goods` is the exemption of article 138, and
     // this supply is not exempt under it: it takes place where the goods
     // arrive, and article 197 makes the customer liable. So it is the sentence

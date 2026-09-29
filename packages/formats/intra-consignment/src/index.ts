@@ -1,5 +1,5 @@
 /**
- * The Belgian intra-Community sales listing, as Intervat takes it.
+ * The Belgian sales listing of supplies within the European Union, as Intervat takes it.
  *
  * One XML document, `IntraConsignment`, described by the schema the SPF
  * Finances publishes as `NewICO-in_v0_9.xsd`. Give it the rows of a

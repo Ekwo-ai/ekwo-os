@@ -7,7 +7,7 @@ import { replayScenario } from './helpers/golden-scenario.js';
 import { allPacks, packWhere, packsWhere } from './helpers/packs.js';
 
 /**
- * `ec_sales_list()` — the recapitulative statement of intra-Community supplies.
+ * `ec_sales_list()` — the recapitulative statement of European Union supplies.
  *
  * Two things are proved here and they are not the same thing.
  *
@@ -17,7 +17,7 @@ import { allPacks, packWhere, packsWhere } from './helpers/packs.js';
  * to other Member States, one of them is wrong, and until now nothing could
  * notice. That comparison is the first half of this file, and it is derived
  * from the pack rather than written down: which boxes report an
- * intra-Community supply and with which sign is something `taxes.json` already
+ * European Union supply and with which sign is something `taxes.json` already
  * says, so the test reads it there and reconciles every pack that has such
  * taxes — including the one whose form puts its credit notes in a box of their
  * own, which is the case a per-box equality would have got wrong.
@@ -29,7 +29,7 @@ import { allPacks, packWhere, packsWhere } from './helpers/packs.js';
  */
 
 // ---------------------------------------------------------------------------
-// What the pack says about its own intra-Community boxes
+// What the pack says about its own European Union boxes
 // ---------------------------------------------------------------------------
 
 /** A tax that reports a supply to another Member State, not an acquisition. */
@@ -85,7 +85,7 @@ function basePostings(pack: Pack): BasePosting[] {
  * when the form mixes them with something this statement does not carry.
  *
  * France is why this returns null rather than a best effort: line 05 of the
- * CA3 reports intra-Community services *and* domestic reverse charge, so the
+ * CA3 reports European Union services *and* domestic reverse charge, so the
  * services half of a French statement cannot be read off the return at all.
  * Saying so is the answer; inventing a subtraction would not be.
  */
@@ -106,7 +106,7 @@ function boxesReporting(pack: Pack, natures: string[]): Map<string, number> | nu
   }
 
   // One posting counted once. A posting may print in several boxes — Estonia
-  // reports an intra-Community supply of goods in box 3, in box 3.1 and in box
+  // reports a European Union supply of goods in box 3, in box 3.1 and in box
   // 3.1.1 — so the widest usable box goes first and the boxes it already
   // covers are not read a second time. A posting no usable box reaches is a
   // supply this form does not print apart from something else, and the answer
@@ -158,7 +158,7 @@ interface ListRow {
   issue: string | null;
 }
 
-const withSupplies = packsWhere('taxes on an intra-Community supply', (pack) =>
+const withSupplies = packsWhere('taxes on a European Union supply', (pack) =>
   pack.taxes.some(isSupply),
 );
 
@@ -188,7 +188,7 @@ for (const pack of withSupplies) {
     });
 
     it('has a form that keeps at least one nature of supply to itself', () => {
-      // A pack whose every intra-Community box is shared with something else
+      // A pack whose every European Union box is shared with something else
       // would make the comparison below vacuous, and the failure should name
       // that rather than pass silently.
       expect(reconcilableGroups(pack).length).toBeGreaterThan(0);
@@ -294,7 +294,7 @@ for (const pack of withSupplies) {
  * code or a rate.
  */
 const supplier = packWhere(
-  'taxes on an intra-Community supply of goods and of services',
+  'taxes on a European Union supply of goods and of services',
   (pack) =>
     pack.golden !== null &&
     pack.taxes.some((t) => t.treatment === 'intracom_goods') &&
@@ -324,7 +324,7 @@ const supplyLine = { account: goodsSupply.account };
  *
  * Every country in this file comes from here. `territories` is framework data
  * the release seeds, so the Member State a supply is made to, the prefix a
- * customer identifies under and the State that left the Union are all read
+ * customer identifies under and the State that left the European Union are all read
  * from the database that is being tested — which is also why a new accession
  * changes nothing in this file.
  */
@@ -554,11 +554,11 @@ describe(`${supplier.slug} — a supply that cannot be declared comes back`, () 
 
   it('says vat_country_outside_the_union for a territory the common system does not reach', async () => {
     // A territory of a Member State that article 6 of the Directive takes out
-    // of the VAT territory of the Union. Nothing about the customer is wrong
+    // of the VAT territory of the European Union. Nothing about the customer is wrong
     // except where they are, which is what the reason has to say.
     const outside = await territory(
       db,
-      'excluded from the VAT territory of the Union and coded in two letters',
+      'excluded from the VAT territory of the European Union and coded in two letters',
       `eu_vat_scope = 'none' and code ~ '^[A-Z]{2}$'`,
     );
 
@@ -595,7 +595,7 @@ describe(`${supplier.slug} — a supply that cannot be declared comes back`, () 
 
   it('lists goods to a territory inside the system for goods, and refuses services there', async () => {
     // Northern Ireland, and the reason `eu_vat_scope` has three values rather
-    // than two: the Protocol keeps the Union's rules on goods and drops its
+    // than two: the Protocol keeps the European Union's rules on goods and drops its
     // rules on services, so one customer produces a declarable line and an
     // undeclarable one out of the same books.
     const partly = await territory(
@@ -713,7 +713,7 @@ describe('the statement has a cadence of its own', () => {
 });
 
 describe('every pack is read by this file', () => {
-  it('has at least one pack with an intra-Community supply, and says so if not', () => {
+  it('has at least one pack with a European Union supply, and says so if not', () => {
     expect(withSupplies.length).toBeGreaterThan(0);
     expect(withSupplies.length).toBeLessThanOrEqual(allPacks.length);
   });

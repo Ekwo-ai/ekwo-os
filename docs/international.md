@@ -29,7 +29,7 @@ and never by country.
 Every country is a directory under [`packs/`](../packs/) and a compiled seed,
 each carrying a year of books and the figures it produces; the
 [table of packs](packs.md#the-packs-of-this-checkout) is generated from them.
-The United Kingdom was the first that is not a Member State of the Union, the
+The United Kingdom was the first that is not a Member State of the European Union, the
 United States the first that levies no value added tax at all, and Senegal and
 Côte d'Ivoire the first two of seventeen States sharing one chart; each was
 written for that reason.
@@ -45,7 +45,7 @@ The list this plan started from, with what phase 0 closed and what it did not.
 | No year-end close, no opening balances | **Closed.** `opening_balance()`, `close_fiscal_year()`, `reopen_fiscal_year()` and a `closing_style` the pack declares; shifted and 52/53-week years were always covered by `fiscal_years` | UK years run April to March; US retail runs 52/53 weeks; every migration starts with an opening balance |
 | Currencies without realised gains or revaluation | **Half closed.** A matching that realises an exchange difference books it on the accounts the pack names; revaluation of open items is still out | Mandatory the day a company invoices outside its functional currency |
 | Accrual only | **Half closed.** A tax can fall due on collection, which is what French services needed; cash accounting as a ledger is still out | UK and US small businesses report on a cash basis; French VAT on services is due on collection; the UK has a cash accounting scheme |
-| A tax engine that knows only EU VAT | **Closed except stacked taxes on one line.** Kind, recoverability, jurisdiction, tax-inclusive prices, non-deductible VAT on the account of the line it taxes, rounding method per country | GST with input credits (Canada, Australia, Singapore); stacked taxes on one line (GST + QST in Québec, phase 1); non-recoverable sales tax (US, Canadian PST); withholding (Spain, Italy, Portugal); tax-inclusive pricing (UK, Australia retail) |
+| A tax engine that knows only the VAT of the European Union | **Closed except stacked taxes on one line.** Kind, recoverability, jurisdiction, tax-inclusive prices, non-deductible VAT on the account of the line it taxes, rounding method per country | GST with input credits (Canada, Australia, Singapore); stacked taxes on one line (GST + QST in Québec, phase 1); non-recoverable sales tax (US, Canadian PST); withholding (Spain, Italy, Portugal); tax-inclusive pricing (UK, Australia retail) |
 | No cash-flow statement | **Open**, and deliberately: `statements.json` already accepts `cash_flow` as a kind, and no pack here prescribes one | Expected before tax compliance in the English-speaking world |
 | Nothing proved a pack against figures | **Closed.** A golden year of books per pack, and a legal source required on every tax and every box | A pack that cannot be wrong in a way anyone notices is a pack nobody can review |
 
@@ -196,7 +196,7 @@ The original six-item list, for the record:
   rather than recorded, because leaving it would have meant shipping the
   damage.
 - **United Kingdom** — **done, 15 September 2026**, and the first pack of a
-  country outside the Union: no intra-Community tax on either side, retail
+  country outside the European Union: no European Union tax on either side, retail
   prices quoted with the tax in them, an exemption the European code lists have
   no code for, and a nine-box return that prints one amount in two boxes at
   once. A British-style chart mapped onto the statutory small-company formats,
@@ -362,8 +362,8 @@ says, for each one it does not carry, why.
 ### United Kingdom
 
 The fifth pack, and the first of a country that is **not** a Member State of
-the Union. It was written for that reason: every pack before it could lean on
-the VAT Directive, on the intra-Community mechanism and on the European code
+the European Union. It was written for that reason: every pack before it could lean on
+the VAT Directive, on the European Union mechanism and on the European code
 lists, and nobody knew how much of the format silently assumed them.
 
 It carries an original chart of 190 accounts, 25 taxes with the standard rate
@@ -381,20 +381,20 @@ asset under FRS 102. Four things are worth knowing beyond the pack's own
   transcribed, exactly as Luxembourg's are, while the chart underneath them is
   written: the codes are the four-digit convention a British nominal ledger
   uses, blocked so that each range reaches one item of Schedule 1 Format 1.
-- **Nothing here is intra-Community, on either side.** Since 1 January 2021 a
+- **Nothing here is European Union, on either side.** Since 1 January 2021 a
   supply from Great Britain to a Member State is an export and an arrival is an
   import, so four of the eleven treatments never occur. What replaced them is
   postponed VAT accounting, which the pack models as an `import` posting to
   boxes 1, 4 and 7 that nets to nothing in the ledger.
 - **Northern Ireland is deliberately absent.** The Windsor Framework keeps it
-  inside the Union's rules for goods under one registration with Great Britain,
+  inside the European Union's rules for goods under one registration with Great Britain,
   and boxes 2, 8 and 9 of the return are about that trade alone. They are
   declared and empty; see the last gap below for why the pack could not carry
   them.
 - **It is `community`.** Nobody who files a British return has read it, and the
   pack's README ends on the points a reviewer should look at first. The first
   two of them were the exemption reason code this pack had to invent and the
-  Union's export code it had to borrow; both are gone with pack version 0.1.1,
+  European Union's export code it had to borrow; both are gone with pack version 0.1.1,
   which leaves no `exemption_code` on any British tax.
 
 ## What a new country shows the core cannot say
@@ -478,19 +478,19 @@ the `declaration_box` it starts at, and `vat_return()` sums a line into every
 box the posting behind it names. The second fix — a posting type that reports
 and books nothing — was not needed and would have been worse: it would have put
 a row on the ledger side of the format for something that is not a ledger fact.
-The Estonian pack now posts an intra-Community acquisition to boxes 1, 6 and
+The Estonian pack now posts a European Union acquisition to boxes 1, 6 and
 6.1 at once, and its six `hidden` boxes are gone, with every figure of the
 golden scenario unchanged to the cent. What is *not* closed is the rule that
 caused it: a tax still carries one `base` posting per kind of document, and a
 parent that **is** a sum is still a `total`. Only a parent that is not a sum is
 named by the posting.
 
-~~**There is no treatment for a service received from outside the Union.**~~
+~~**There is no treatment for a service received from outside the European Union.**~~
 **Closed, 15 September 2026**, and not under the name this note proposed. The
 value is `foreign_services_received`, not `import_services`, because the rule
 it names — articles 44 and 196 of Directive 2006/112/EC — turns on whether the
 supplier is **established** in the buyer's country and not on whether the
-service crossed the Union's border; a name built on "import" would have been
+service crossed the European Union's border; a name built on "import" would have been
 as wrong for it as `import` already was, and `import` in this vocabulary means
 goods declared to customs, which is a different mechanism behind a different
 document. The Estonian `EE-P-VS-24` carries it and has dropped the sentence of
@@ -533,8 +533,8 @@ September 2026**, by `print_sequence` and by the removal of that rule.
 
 ### From the United Kingdom
 
-Seven things the first pack outside the Union could not say precisely. Four of
-them are about the same assumption — that a country's VAT is the Union's VAT —
+Seven things the first pack outside the European Union could not say precisely. Four of
+them are about the same assumption — that a country's VAT is the European Union's VAT —
 and the other three are about what a price, a rounding rule and a filing cadence
 belong to. None blocked the pack. None was patched for its sake: the first two
 were closed afterwards, on their own, with the pack already landed and its own
@@ -545,7 +545,7 @@ the test suite that had never been contradicted, and that were fixed rather than
 worked around, because a test reading the pack is what this repository asks for
 in as many words.
 
-~~**A VAT exemption outside the Union has no reason code, and one is
+~~**A VAT exemption outside the European Union has no reason code, and one is
 required.**~~ **Closed, 15 September 2026.** `ekwo pack check` demanded an
 `exemption_code` as soon as `vat_category` was `E`, and checked its shape
 against `VATEX-EU-<article>` or `VATEX-<country>-<article>`. The VATEX list is
@@ -556,7 +556,7 @@ that publish them. A British exemption is Schedule 9 to the Value Added Tax Act
 that would publish one has any reason to. The rule was right for a Member State
 and had no answer for a third country.
 The fix is the one proposed, generalised: the last column of the table under
-"What a tax says on the invoice" now applies where the Union's VAT does, and
+"What a tax says on the invoice" now applies where the European Union's VAT does, and
 nowhere else. For a pack whose country the common system does not reach,
 `exemption_code` stays null, the article goes in `legal_reference` where it was
 going anyway, a `VATEX-*` code is refused by name, and the five `intracom_*`
@@ -571,13 +571,13 @@ carries. Should a third country ever publish reason codes of its own, the
 column takes them where the pack's register declares that list with
 `kind: standard`; the field is provided for and the content is not, because
 nobody has published one. `packs/gb/` 0.1.1 drops `VATEX-GB-SCH9` and the three
-Union codes it had borrowed, and its README's first two review points are gone
+European Union codes it had borrowed, and its README's first two review points are gone
 with them.
 
-~~**`G` and `VATEX-EU-G` say "export outside the EU", and a third country's
+~~**`G` and `VATEX-EU-G` say "export outside the European Union", and a third country's
 export is not that.**~~ **Closed, 15 September 2026**, as the same change and
 by reading the standard more carefully. The claim that `G` describes the
-Union's border came from use case 4 of the Commission's technical guidance,
+European Union's border came from use case 4 of the Commission's technical guidance,
 which is written for a seller established in a Member State. UNCL5305 itself
 says of `G` *free export item, VAT not charged*: the goods leave the territory
 of whoever levies the tax, and a supply from Great Britain to a Member State is
@@ -585,7 +585,7 @@ one. So the category was never wrong for a British export and the refusal
 message was — it now says what UNCL5305 says, with the guidance's use case
 named as the Member State's case of it, and `docs/packs.md` reads the same way.
 The code was the wrong half: `VATEX-EU-G` names article 146 of a Directive that
-does not bind the seller, and it is refused outside the Union along with the
+does not bind the seller, and it is refused outside the European Union along with the
 rest of the list. `GB-S-EXPORT` carries `G` and nothing else, with s. 30(6) of
 the Value Added Tax Act 1994 in its `legal_reference`.
 
@@ -694,9 +694,9 @@ proposed landed the same day, from the recapitulative statement's own list:
 the day it left the common system. What that buys is a **reader** — the
 statement asks the table and stops listing supplies to the United Kingdom after
 2020. What it does not buy is a **pack**. Since 1 January 2021 one VAT
-registration covers Great Britain, where the Union's rules do not apply, **and**
+registration covers Great Britain, where the European Union's rules do not apply, **and**
 Northern Ireland, where they do for goods: a Northern Irish seller identifies
-under `XI`, makes intra-Community supplies of goods, and files boxes 2, 8 and 9
+under `XI`, makes European Union supplies of goods, and files boxes 2, 8 and 9
 of the same nine-box return. A pack is keyed on a country and has no unit below
 it; `companies.region` and `contacts.region` exist and nothing reads them; and
 no tax may be conditioned on either. So `packs/gb/` cannot carry the Northern
@@ -764,12 +764,12 @@ never saw any of them, because none of them spelled a country code.
 | `country_packs` in slug order is `allPacks` order | the first pack whose name does not sort where its slug does — United Kingdom after Luxembourg | sorted the way the query asks, by name |
 | a closing style is `appropriation_accounts` or `result_accounts` | the first pack that closes straight into retained earnings, which the schema has always allowed and `docs/packs.md` names the United Kingdom for | the enum of `packs/schema/pack.1.json`, beside the statuses and the cadences already read there |
 | every pack names an account for the result of the year | under `retained_earnings` there is no such account and the schema says the roles are null | the roles, nullable |
-| every pack's country is a Member State | it is in `territories` with the day it left | the country has to be *known* to the table, and a Member State exactly where the pack's own treatments are intra-Community |
+| every pack's country is a Member State | it is in `territories` with the day it left | the country has to be *known* to the table, and a Member State exactly where the pack's own treatments are European Union |
 
 The last one arrived with `territories` on the same day, and is the sharpest of
 them: the table was written so that the core could say whether a country is in
 the common system, and the test that read it asked every pack's country to be a
-Member State. It now asks the pack. A pack whose taxes are intra-Community has
+Member State. It now asks the pack. A pack whose taxes are European Union has
 to be inside the system and one whose taxes are not has to be outside it, which
 is a stronger claim than the one it replaces and the only one a pack of a third
 country can satisfy.
@@ -792,7 +792,7 @@ proposed.
 
 Fourteen things the first pack of a country with **no value added tax** could not
 say precisely, and they are not the same kind of thing as the seven the United
-Kingdom returned. Those were about a VAT that is not the Union's. These are
+Kingdom returned. Those were about a VAT that is not the European Union's. These are
 about a tax that is not a VAT at all, levied by a government the pack format has
 no unit for, on a return that has no national version, against accounts no
 statute prescribes. None of them blocked the pack. None was patched for its
@@ -802,7 +802,7 @@ which turned out to be one change, because a box worked out from another box is
 what makes a print order and an evaluation order two different questions.
 
 Two are recorded at the end and are of a different kind: one row of framework
-reference data a pack outside the Union cannot do without, and one assertion of
+reference data a pack outside the European Union cannot do without, and one assertion of
 the test suite that had never been contradicted.
 
 **Six of the fourteen were answered on 16 September 2026.** Four of them are
@@ -984,7 +984,7 @@ would have been authorised by a financial reporting standard. Neither pack
 carries an `exemption_code` anywhere, so nothing wrong was ever emitted. No
 pack of this repository declares `reason_codes` today and a test says so: the
 field is provided for and the content does not exist yet, because no country
-outside the Union publishes exemption reason codes and PINT is where one would
+outside the European Union publishes exemption reason codes and PINT is where one would
 surface.
 
 **An exemption that depends on a document the buyer signed cannot be recorded,
@@ -1116,7 +1116,7 @@ not one of the two places a pack is written.** `docs/packs.md` says adding a
 country touches `packs/<cc>/` and `packs/<cc>/golden/` and nothing else. That is
 true of a Member State and false of a third country: `vatRegime()` reads
 `territories` to decide whether the VATEX list reaches the pack, and a country
-the table carries no row for is held to the Union's table — so an American
+the table carries no row for is held to the European Union's table — so an American
 exempt sale with no `exemption_code` would be refused, and the pack would be
 told to write a code naming an article of a Directive its seller is not bound
 by. `tests/territories.test.ts` refuses such a pack from the other side, for the
@@ -1372,7 +1372,7 @@ granted to `authenticated` and `service_role`, and the public door is still one
 
 ### From the recapitulative statement
 
-The statement of intra-Community supplies — `ec_sales_list()` and the four
+The statement of European Union supplies — `ec_sales_list()` and the four
 format bricks beside it — was the first thing written that is European rather
 than national: one engine, four files, no `packs/eu/`. Five things it could not
 say precisely, each a change to the core rather than to a pack.
@@ -1442,7 +1442,7 @@ line**, so a statement for a period in 2020 still reports supplies to the
 United Kingdom and one for 2021 does not, and a supply to a territory the
 system did not reach comes back as `vat_country_outside_the_union` instead of
 being listed. Two decisions are worth knowing: the columns are named for VAT
-and not for membership — the United Kingdom left the Union on 31 January 2020
+and not for membership — the United Kingdom left the European Union on 31 January 2020
 and the common system on 31 December 2020, and the reader of this table is VAT
 code — and Northern Ireland is a **row of its own** with a parent rather than a
 flag on the United Kingdom, with an `eu_vat_scope` of `goods`, because it is
@@ -1461,7 +1461,7 @@ number and the contact's ISO country alike, which means a number typed `GR…` i
 corrected as readily as one typed with none. It also fixed a defect nobody in
 Belgium or France could have seen: the company's own country was compared raw,
 so `vat_country_is_the_company_country` would never have fired for a Greek
-filer and a domestic supply would have been listed as an intra-Community one.
+filer and a domestic supply would have been listed as a European Union one.
 A territory the table does not carry keeps its own two letters, so a third
 country is still readable on the statement that then refuses it.
 
@@ -1489,9 +1489,9 @@ form of the Luxembourg envelope and the `kolmnurktehing` column of the Estonian
 form VD, while the French DES says by name that a supply of goods belongs on
 another file. It is the middle supply of the arrangement — B's sale to C,
 relieved by article 141 of Directive 2006/112/EC and reverse-charged to C by
-article 197 — and not A's, which is an ordinary intra-Community supply. On the
+article 197 — and not A's, which is an ordinary European Union supply. On the
 invoice it resolves to the **reverse-charge** mention and not to the
-intra-Community one, which is the sentence article 226(11a) requires: the
+European Union one, which is the sentence article 226(11a) requires: the
 supply is not exempt under article 138, it takes place where the goods arrive
 and the customer owes the tax. **No pack of this repository declares a
 triangular tax**, and a test insists on that — the path is proved on a fixture,
@@ -1519,7 +1519,7 @@ core computes, a format package per administration.
 
 Two things the second one will need that the first did not. **One of them now
 exists.** It needs to know which country a customer is in *and whether that
-country is in the Union*, because the scheme applies to consumers and not to
+country is in the European Union*, because the scheme applies to consumers and not to
 identified businesses, so the VAT number is not the key — and that is
 `territories`, asked as at a date, which is what `ec_sales_list()` already does
 line by line. A consumer in a territory the system does not reach is not a
@@ -1591,7 +1591,7 @@ from was wrong.
   supply — "1) the goods are dispatched or made available to the purchaser, or
   the services are provided; 2) full or partial payment is received" — and the
   invoice is not one of them: it belongs to lg 2, the separate rule for
-  intra-Community supply. → `earliest_of_delivery_or_payment`, two branches and
+  European Union supply. → `earliest_of_delivery_or_payment`, two branches and
   not three.
 * **France** was read and left alone. CGI art. 269, 1, a and 2, a put goods on
   the supply, art. 269, 2, c puts services on collection unless the taxpayer
@@ -1619,12 +1619,12 @@ before, so no existing ledger and no golden moves.
   when a payment is matched, which is a design discussion and not a column.
 * **The recapitulative statement still reads the entry date.**
   `ec_sales_list()` was deliberately not moved onto the tax point, because the
-  moment an intra-Community supply arises is a different article in both
+  moment a European Union supply arises is a different article in both
   countries read here — KMS § 11 lg 2 in Estonia, art. 17, § 2 in Belgium, both
   of them the fifteenth of the following month or the invoice if earlier — and
   none of that is the rule `tax_point_rule` carries. Computing the statement
   from the general rule would make it wrong in a new way. *Fix*: a second rule
-  on the country model for the intra-Community tax point, once a pack needs it.
+  on the country model for the European Union tax point, once a pack needs it.
 * **BT-7 does not cross to a renderer.** `documents.tax_point_date` is the
   field EN 16931 calls the value added tax point date, and `document_header` —
   the view an invoice is printed and an e-invoice emitted from — does not
@@ -2335,7 +2335,7 @@ a change to the core:
   does not belong. *Until then*: Kennzahl 62 is declared and nothing posts to
   it.
 - **The recapitulative statement has an engine and no German file.**
-  `ec_sales_list()` already lists every line whose treatment is intra-Community,
+  `ec_sales_list()` already lists every line whose treatment is European Union,
   so a German company gets its Zusammenfassende Meldung figures for free; what
   is missing is a brick writing the format the Bundeszentralamt für Steuern
   takes, and a second form in the pack to record its cadence — the gap written
@@ -3532,8 +3532,8 @@ Código do IVA lets the Azores and Madeira set VAT rates of their own —
 4/9/16 % and 5-or-4/12/22 %, against the mainland's 6/13/23 % — under the
 same tax, filed on the same national declaration. `applies_when.supply_in`
 correctly restricts the Azorean and Madeiran codes to the territory rows this
-pack adds, `PT-20` and `PT-30` (full EU VAT scope, not
-`outside_parent_tax`: unlike the Canary Islands, Union VAT reaches both
+pack adds, `PT-20` and `PT-30` (full European Union VAT scope, not
+`outside_parent_tax`: unlike the Canary Islands, European Union VAT reaches both
 regions exactly as it reaches the mainland — only the rate differs). What it
 cannot do is restrict the *mainland* codes to "not the Azores, not Madeira":
 `docs/packs.md`'s own words for `applies_when` are "a tax cannot name a place
@@ -3613,12 +3613,12 @@ be the wrong place for it anyway.** Article 51 of the Executive Regulation
 treats a Cabinet-designated, fenced and Customs-controlled area as outside
 the State for goods (not services, except in the narrow cases Clauses 6 to 8
 carve back in) — the same shape `applies_when.supply_in` already expresses
-for a sub-national EU territory such as the Canary Islands. What breaks the
+for a sub-national territory of the European Union such as the Canary Islands. What breaks the
 analogy is Clause 2 of the same article: a designated zone reverts to being
 treated as inside the State the moment it changes how it operates or
 breaches the conditions of Clause 1, by the Cabinet's own administrative
 finding, with no fixed date and no accession treaty to cite — `territories`
-is reference data precisely because Union membership is Union law that
+is reference data precisely because membership of the European Union is European Union law that
 changes on a dated, citable event, and a status that can flip on an
 unannounced compliance finding is not that. `packs/ae/` does not model a
 designated zone at all rather than force it through a table built for a
@@ -3809,13 +3809,13 @@ README rather than in a rule of this section.
 **VND** is added to `00_currencies.sql` at no decimals, the dong having no
 minor unit in use. `VN` is added to `00_territories.sql`, outside the common
 system of VAT, so `vat_category`, `exemption_code` and the five `intracom_*`
-treatments are read the way every non-EU pack's are.
+treatments are read the way every non-European-Union pack's are.
 
 ## From Switzerland
 
 `packs/ch/`, `community`, seed 37, the first pack of a country outside the
 common system of VAT whose own tax nonetheless looks the closest to it of
-any non-EU pack so far — three rates, an acquisition tax on services bought
+any non-European-Union pack so far — three rates, an acquisition tax on services bought
 from abroad, an export exemption with full input deduction. Two things the
 format could not say, neither patched.
 
@@ -3887,7 +3887,7 @@ section together so a reader of any one of the three finds the other two.
 
 **A periodic return that reports a reverse charge's tax with no base at
 all.** Every European pack this format has met so far gives a domestic or
-intra-Union reverse charge two Kennzahlen — a `base` posting on one box, a
+European Union reverse charge two Kennzahlen — a `base` posting on one box, a
 `tax` posting on the neighbouring one — because the form prints both. Form
 U30 does not, on the purchase side: Kennzahl `057` (§ 19 Abs. 1 zweiter Satz,
 a service from abroad) and Kennzahl `048` (§ 19 Abs. 1a, a construction
@@ -4126,13 +4126,13 @@ readings are defensible from UNCL5305; only one of them is what a Saudi
 invoice carries. `packs/sa/` leaves `vat_category` null on its two export taxes
 rather than declare a category its own administration contradicts, which it may
 because the requirement is lifted outside the common system. *Fix*: the table
-is the Union's answer, stated as universal. Where a country's own tax
+is the European Union's answer, stated as universal. Where a country's own tax
 administration publishes a UNCL5305 subset, that subset is the one its invoices
 are written against, and the check has no way to be told so.
 
 ### `VATEX-SA-*` is refused by its prefix, by the very check built to allow it
 
-ST38-1 provided for exactly this case: a pack outside the Union may carry a
+ST38-1 provided for exactly this case: a pack outside the European Union may carry a
 reason code from another published list, "on the condition that its register
 declares a published list — the entry of `certification.sources` carrying
 `reason_codes`". ZATCA publishes such a list, in the same standard and the same
@@ -4143,7 +4143,7 @@ VATEX-SA-MLTRY, VATEX-SA-OOS. But `reasonOutside()` tests
 `reason.startsWith('VATEX-')` *before* it looks at the declared list, and
 refuses every one of them as "a code of the VATEX list, whose codes name
 articles of Directive 2006/112/EC". The Kingdom happens to have named its codes
-in the shape the Union uses for a Member State's national codes —
+in the shape the European Union uses for a Member State's national codes —
 `VATEX-<country>-<article>` — and the check reads the shape as provenance.
 `packs/sa/` therefore carries no reason code at all and states each article in
 `legal_reference`, which is what the message asks for, and its register does not
@@ -4163,7 +4163,7 @@ as separate values and nothing that means "not at the standard rate".
 international transport, qualifying medicines, investment metals — carries no
 mention although the article asks for one. *Fix*: a tenth value, `zero_rated`,
 or one meaning "any relieved line", which more than one country outside the
-Union will want: the shape "say why, whenever it is not the normal rate" is
+European Union will want: the shape "say why, whenever it is not the normal rate" is
 common wherever the invoice, rather than a code list, carries the explanation.
 
 ### A box with an adjustment column
@@ -4199,7 +4199,7 @@ Agreement, so four packs will declare the same approximation.
 `SAR` is added to `00_currencies.sql` at two decimals. `SA` is added to
 `00_territories.sql` outside the common system of VAT, so `vat_category`,
 `exemption_code` and the five `intracom_*` treatments are read the way every
-non-EU pack's are. `vat_prefix` is null: a Saudi VAT registration number is
+non-European-Union pack's are. `vat_prefix` is null: a Saudi VAT registration number is
 fifteen digits whose first and last are 3 (Electronic Invoice XML
 Implementation Standard, rules BR-KSA-39 and BR-KSA-40), and carries no country
 prefix of that table's kind. The Kingdom has no ISO 6523 identifier either — it
@@ -4275,7 +4275,7 @@ left its DIOT and its *IVA retenciones* declaration.
 **PEN and PE.** `PEN` is added to `00_currencies.sql` at two decimals. `PE`
 is added to `00_territories.sql` outside the common system of VAT, on the
 same footing as `MX`, so `vat_category`, `exemption_code` and the five
-`intracom_*` treatments are read the way every non-EU pack's are.
+`intracom_*` treatments are read the way every non-European-Union pack's are.
 
 ## From Canada
 
@@ -4436,7 +4436,7 @@ same field's `legal_reference`.
 
 **Self-assessment on a service received from a supplier established
 outside Ukraine (article 208) is not modelled.** The mechanic is the double
-posting `docs/packs.md` shows for Estonia's intra-Community acquisition of
+posting `docs/packs.md` shows for Estonia's European Union acquisition of
 goods — one `tax` posting for the self-assessed liability, a second, on the
 same tax, crediting the recoverable side — and Ukraine's own version of it
 needs the same shape a first `community` version of this pack did not yet
@@ -4585,7 +4585,7 @@ ratio with a fixed code.
 the guaraní has none, the way the yen and the CFA franc have none. `PY` is
 added to `00_territories.sql` outside the common system of VAT, on the same
 footing as `PE` and `AR`, so `vat_category`, `exemption_code` and the five
-`intracom_*` treatments are read the way every non-EU pack's are.
+`intracom_*` treatments are read the way every non-European-Union pack's are.
 
 ## From Ecuador
 
@@ -4947,7 +4947,7 @@ tender for all but coin, so this pack declares `defaults.currency: "USD"`,
 already carried by the American pack. `PA` is added to
 `00_territories.sql` outside the common system of VAT, on the same footing
 as `MX`, `CO` and `PE`, so `vat_category`, `exemption_code` and the five
-`intracom_*` treatments are read the way every non-EU pack's are.
+`intracom_*` treatments are read the way every non-European-Union pack's are.
 
 ## From Costa Rica
 
@@ -5088,7 +5088,7 @@ them). Nothing in the core computes a pro rata of this kind for any pack.
 first paragraph, subparagraph (a)) is not modelled**, for the same reason
 `packs/ua/` does not model article 208 of the Tax Code of Ukraine: the
 mechanic is the double posting `docs/packs.md` shows for Estonia's
-intra-Community acquisition of goods, and this first `community` version of
+European Union acquisition of goods, and this first `community` version of
 the pack does not yet carry a tax with the treatment `foreign_services_received`.
 `packs/ge/README.md` names the gap.
 
@@ -5194,13 +5194,13 @@ form already read the buyer as a fact of the transaction, `applies_when`
 resolves a party to one territory of `territories`, and the internal
 boundary between the three entities is not itself a VAT frontier — no tax
 rate nor exemption turns on it — so there is no tax whose treatment would
-carry a per-entity box the way an intra-Community acquisition carries a
+carry a per-entity box the way a European Union acquisition carries a
 country. `packs/ba/` carries none of the three boxes.
 
 **Self-assessment on a service received from a supplier not established in
 Bosnia and Herzegovina (article 13(1)(3)) is not modelled**, for the same
 reason as Ukraine's article 208 above: the mechanic is the double posting
-`docs/packs.md` shows for Estonia's intra-Community acquisition of goods, and
+`docs/packs.md` shows for Estonia's European Union acquisition of goods, and
 a first `community` version of this pack does not yet carry a tax under the
 treatment `foreign_services_received`.
 
@@ -5243,7 +5243,7 @@ form, is not modelled.** Sections of ДДВ-04 give the transferee of a
 construction-sector or similarly designated supply six pairs of boxes
 (11 through 19) to declare a domestic reverse charge both as output and as
 input in the same filing — the shape `docs/packs.md` shows for Estonia's
-intra-Community acquisition, doubled again because Macedonian law also taxes
+European Union acquisition, doubled again because Macedonian law also taxes
 a purchase received from a taxpayer with no seat in the country under article
 32(4)-(5) on its own separate pair of boxes. Both mechanics exist in the law
 and neither is carried by a tax of this pack; `packs/mk/README.md` names the
@@ -5306,7 +5306,7 @@ before anyone relies on an early period.
 **A self-assessed tax with two ledger accounts and one sign to flip.**
 `AL-P-REVCHG-20` (`foreign_services_received`, article 86.2) posts one
 collected leg and one deductible leg on the same purchase invoice, netting to
-zero cash effect exactly as Estonia's intra-Community acquisition does in
+zero cash effect exactly as Estonia's European Union acquisition does in
 `docs/packs.md` — and needed the same device: without `"factor": -100` on the
 collected leg, both legs post to the same side of the ledger, because a
 `tax` posting's default direction follows the document's *scope* and not the
@@ -5354,7 +5354,7 @@ compile a date from without a profile to hang it on.
 
 `packs/me/`, `community`, seed 116, outside the common system of VAT the way
 Ukraine and Turkey are: a candidate for accession, not a member, and Directive
-2006/112/EC, article 5(2), reaches the territory of the Union as the Treaties
+2006/112/EC, article 5(2), reaches the territory of the European Union as the Treaties
 define it and nothing a candidacy announces. `EUR` already exists in
 `00_currencies.sql` (Montenegro adopted it unilaterally in 2002, with no
 seat on the Governing Council that decides it, which is a political fact this
@@ -5546,7 +5546,7 @@ actually holds the certificate.
 import.** Executive Regulations Article 22 lets an NBR-approved, Customs-
 bonded importer defer the cash otherwise due at the border (Article 65(A))
 to the periodic return instead, a postponed-accounting scheme close to the
-double posting `docs/packs.md` shows for Estonia's intra-Community
+double posting `docs/packs.md` shows for Estonia's European Union
 acquisition of goods. `packs/bh/`'s own `BH-P-IMPORT` models only the
 ordinary case paid at Customs; the deferral is an approval a company applies
 for and not a fact its invoices carry, so a first `community` version does
@@ -5709,7 +5709,7 @@ the late end, which is the one a taxpayer risks a penalty on.
 modelled**, for the same reason `packs/ua/` does not model article 208 of
 the Tax Code of Ukraine and `packs/ge/` does not model article 176 of
 Georgia's: the mechanic is the double posting `docs/packs.md` shows for
-Estonia's intra-Community acquisition of goods, and this first `community`
+Estonia's European Union acquisition of goods, and this first `community`
 version of the pack does not yet carry a tax under the treatment
 `self_assessed` or `foreign_services_received` for it. `pack.json` carries the
 legal mention as a plain sentence, naming the gap rather than a tax code that

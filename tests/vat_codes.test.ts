@@ -20,7 +20,7 @@
  *   4. the check actually refuses each way of contradicting it, asked of a
  *      copy of a pack broken on purpose.
  *
- * Two of the three lists are the Union's, so a fifth claim was added when a
+ * Two of the three lists are the European Union's, so a fifth claim was added when a
  * country outside it arrived: that the CLI reads where the common system
  * applies from the same seed the database does, and gets the same answer as
  * `eu_vat_scope_of()` for every territory on every day the table names.
@@ -92,7 +92,7 @@ const OUTSIDE: VatRegime = {
   because: 'the check was asked about a country the common system of VAT does not reach',
   // A pack that declares an e-invoicing profile: its sellers issue invoices
   // that carry BT-151, so the category is read and therefore required. This is
-  // the case every pack outside the Union has been in so far.
+  // the case every pack outside the European Union has been in so far.
   readsCategories: true,
   reasonList: null,
 };
@@ -175,7 +175,7 @@ describe('the tax treatments', () => {
       refusalFor({ treatment: 'self_assessed', scope: 'purchase', vat_category: 'AE' }),
     ).toContain('it carries none');
     // And it is not an operation of the common system, so a pack outside the
-    // Union may declare it — which is the whole reason it exists.
+    // European Union may declare it — which is the whole reason it exists.
     expect(
       refusalFor({ treatment: 'self_assessed', scope: 'purchase', rate: 7.25 }, OUTSIDE),
     ).toBe('');
@@ -246,7 +246,7 @@ describe('what the check refuses', () => {
     );
   });
 
-  it('a reverse-charge reason on an intra-Community supply', () => {
+  it('a reverse-charge reason on a European Union supply', () => {
     expect(
       refusalFor({ treatment: 'intracom_goods', vat_category: 'K', exemption_code: 'VATEX-EU-AE' }),
     ).toContain('reserves VATEX-EU-IC');
@@ -328,7 +328,7 @@ describe('what the check refuses', () => {
     // The mirror of the rule above, and the reason it is narrowed to sales: a
     // purchase-side reverse charge carries the rate the buyer computes, on a
     // line the supplier invoiced at zero. Applied there, BR-IC-05 would refuse
-    // every intra-Community acquisition ever written.
+    // every European Union acquisition ever written.
     expect(
       refusalFor({
         treatment: 'intracom_acquisition_goods',
@@ -385,7 +385,7 @@ describe('where the common system of VAT applies', () => {
   });
 
   it('carries every pack of this repository, so none falls back on not knowing', async () => {
-    // `vatRegime` holds a pack to the Union's table where `territories` has no
+    // `vatRegime` holds a pack to the European Union's table where `territories` has no
     // row for its country, because a missing row is silence and not a no. That
     // fallback must never be what a pack of this repository is judged by, and
     // this is the CLI-side half of the invariant `tests/territories.test.ts`
@@ -506,7 +506,7 @@ describe('what the check refuses outside the common system of VAT', () => {
 
   it('a sale with no category, where an invoice of this country carries one', () => {
     // The pack declares an e-invoicing profile, so its sellers put BT-151 on
-    // an invoice and the requirement holds outside the Union exactly as in it.
+    // an invoice and the requirement holds outside the European Union exactly as in it.
     expect(refusalFor({ vat_category: null }, OUTSIDE)).toContain('names no vat_category');
   });
 
@@ -629,7 +629,7 @@ describe('which entry of a register publishes the reason codes', () => {
 
   it('is claimed by no pack of this repository, because no such list is published', async () => {
     // The field is provided for and its content does not exist yet: no country
-    // outside the Union publishes exemption reason codes, and PINT is where one
+    // outside the European Union publishes exemption reason codes, and PINT is where one
     // would surface. A pack that starts claiming it should have to say so here.
     for (const pack of allPacks) {
       expect(

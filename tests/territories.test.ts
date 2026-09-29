@@ -62,17 +62,17 @@ describe('the territories of the common system of VAT', () => {
     expect(all.length).toBeGreaterThan(40);
   });
 
-  it('carries every country the packs of this repository book in, and says which are in the Union', async () => {
+  it('carries every country the packs of this repository book in, and says which are in the European Union', async () => {
     // Read from the packs rather than counted: a pack whose country this table
     // did not carry would produce a statement in which every one of its own
-    // customers was outside the Union.
+    // customers was outside the European Union.
     //
     // Being *in* the table is what every pack needs. Being a Member State is
-    // what only a pack that makes intra-Community supplies needs, and the two
+    // what only a pack that makes European Union supplies needs, and the two
     // were the same assertion until the first pack of a country outside the
-    // Union arrived — one that is in the table, with the day it left. So the
+    // European Union arrived — one that is in the table, with the day it left. So the
     // membership is asked of the pack's own taxes: a pack whose treatments are
-    // intra-Community has to be inside the system, and one whose treatments
+    // European Union has to be inside the system, and one whose treatments
     // are not has to be outside it.
     for (const pack of allPacks) {
       const row = await one<{ known: boolean; member: boolean }>(
@@ -86,17 +86,17 @@ describe('the territories of the common system of VAT', () => {
       const intracom = pack.taxes.some((tax) => tax.treatment.startsWith('intracom_'));
       expect(
         row.member,
-        `${pack.slug} ${intracom ? 'carries intra-Community taxes and is outside the common system' : 'carries none and is inside it'}`,
+        `${pack.slug} ${intracom ? 'carries European Union taxes and is outside the common system' : 'carries none and is inside it'}`,
       ).toBe(intracom);
     }
   });
 
-  it('holds the whole Union and no more States than it has', () => {
+  it('holds the whole European Union and no more States than it has', () => {
     const states = all.filter(
       (row) => row.parent_code === null && row.eu_vat_scope === 'full' && row.eu_vat_to === null,
     );
     // Twenty-seven, and a number rather than a list: the claim is the size of
-    // the Union on the day this was written, and a twenty-eighth accession is
+    // the European Union on the day this was written, and a twenty-eighth accession is
     // one row and one line here.
     expect(states).toHaveLength(27);
   });
@@ -149,7 +149,7 @@ describe('the territories of the common system of VAT', () => {
     );
     expect(sources.length).toBeGreaterThan(1);
     for (const row of all) {
-      // A two-letter code claims to be ISO 3166-1 or the Union's own; anything
+      // A two-letter code claims to be ISO 3166-1 or the European Union's own; anything
       // longer claims ISO 3166-2 or nothing at all. A row that got that the
       // wrong way round is a row a reader cannot look up.
       const short = /^[A-Z]{2}$/.test(row.code);

@@ -105,7 +105,7 @@ shows one figure in boxes that are not sums of one another.
 - the declaration box receives `round(tax x box_factor / 100, 2)`,
   independently of which side the ledger amount landed on.
 
-A Belgian intra-community purchase of goods at 21 % is therefore four rows:
+A Belgian purchase of goods from another Member State of the European Union at 21 % is therefore four rows:
 
 | kind | type | factor | account | box | box factor |
 |---|---|---|---|---|---|
