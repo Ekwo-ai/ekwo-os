@@ -1,3 +1,7 @@
+# Both forms on purpose: `node_modules/` alone does not cover a symlink named
+# `node_modules`, and one was committed by accident on 29/09/2026 — an
+# absolute path of the machine that made it, which every clone then carried.
+node_modules
 node_modules/
 dist/
 coverage/
