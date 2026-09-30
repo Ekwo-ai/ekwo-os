@@ -222,7 +222,7 @@ describe('what the grants say, against what the policies say', () => {
     // at all without the header. Both answer `void`. `use_api_key()` is not
     // granted and must not be — it returns the row, `key_hash` included.
     //
-    // `api_key_company` and `is_known_caller` are policy helpers of the same
+    // `api_key_on_company` and `is_known_caller` are policy helpers of the same
     // kind as the rest: `is_company_member()` and the reference tables call
     // them, `anon` already evaluates those on behalf of a policy, and without
     // a key presented they answer the same nothing.
@@ -237,7 +237,7 @@ describe('what the grants say, against what the policies say', () => {
       .flatMap((s) => s.functions.filter((f) => f.anon.length > 0).map((f) => `${s.schema}.${f.name}`))
       .sort();
     expect(callable).toEqual([
-      'public.api_key_company',
+      'public.api_key_on_company',
       'public.can_write_company',
       'public.company_has_no_member',
       'public.company_role',

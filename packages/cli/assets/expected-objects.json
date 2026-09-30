@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.9.0",
-  "migration": "20260929170005",
+  "migration": "20260930103815",
   "socle": {
     "schema": "public",
     "tables": [
@@ -3724,6 +3724,7 @@
       }
     ],
     "views": [
+      "api_key_reach",
       "bank_statement_continuity",
       "document_header",
       "document_legal_mentions",
@@ -3756,8 +3757,8 @@
         "arguments": "p_rounding money_rounding"
       },
       {
-        "name": "api_key_company",
-        "arguments": ""
+        "name": "api_key_on_company",
+        "arguments": "p_company_id uuid"
       },
       {
         "name": "archive_under_current_names",
@@ -4244,6 +4245,10 @@
         "arguments": ""
       },
       {
+        "name": "key_holds",
+        "arguments": "p_key api_keys, p_company_id uuid, p_capability text"
+      },
+      {
         "name": "label_for",
         "arguments": "p_name text, p_i18n jsonb, p_languages text[]"
       },
@@ -4270,6 +4275,10 @@
       {
         "name": "member_capabilities",
         "arguments": "p_company_id uuid, p_user_id uuid"
+      },
+      {
+        "name": "member_holds",
+        "arguments": "p_member company_members, p_capability text"
       },
       {
         "name": "module_enabled",
@@ -6779,6 +6788,16 @@
       ],
       "views": [
         {
+          "name": "api_key_reach",
+          "anon": [],
+          "authenticated": [
+            "select"
+          ],
+          "service_role": [
+            "select"
+          ]
+        },
+        {
           "name": "bank_statement_continuity",
           "anon": [],
           "authenticated": [
@@ -6902,8 +6921,8 @@
           ]
         },
         {
-          "name": "api_key_company",
-          "arguments": "",
+          "name": "api_key_on_company",
+          "arguments": "p_company_id uuid",
           "anon": [
             "execute"
           ],
@@ -8148,6 +8167,17 @@
           ]
         },
         {
+          "name": "key_holds",
+          "arguments": "p_key api_keys, p_company_id uuid, p_capability text",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
           "name": "label_for",
           "arguments": "p_name text, p_i18n jsonb, p_languages text[]",
           "anon": [],
@@ -8213,6 +8243,17 @@
         {
           "name": "member_capabilities",
           "arguments": "p_company_id uuid, p_user_id uuid",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "member_holds",
+          "arguments": "p_member company_members, p_capability text",
           "anon": [],
           "authenticated": [
             "execute"

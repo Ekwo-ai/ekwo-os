@@ -101,7 +101,7 @@ describe('the anonymous role', () => {
     // what presenting a bearer credential means, and the answer to a secret
     // they do not hold is the refusal every wrong key gets.
     //
-    // `api_key_company` and `is_known_caller` are hinges: `is_company_member`
+    // `api_key_on_company` and `is_known_caller` are hinges: `is_company_member`
     // and the policies of the reference tables call them, and `anon` already
     // executes those on behalf of a policy. Both answer about the key
     // presented in this transaction, which for `anon` without a header is
@@ -111,7 +111,7 @@ describe('the anonymous role', () => {
     // (`20260922161500`): the grant is for the screen that checks a pasted key
     // before presenting it, and an anonymous call learns nothing.
     expect(callable.map((r) => r.proname)).toEqual([
-      'api_key_company',
+      'api_key_on_company',
       'can_write_company',
       'company_has_no_member',
       'company_role',

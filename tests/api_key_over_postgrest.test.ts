@@ -149,17 +149,18 @@ describe('a request that carries a key', () => {
   it('leaves `anon` for `authenticated`, and is still nobody in particular', async () => {
     const secret = await issue('Lectrice', ['entries.read']);
     const who = await request(secret, async () =>
-      one<{ role: string; uid: string | null; company: string | null }>(
+      one<{ role: string; uid: string | null; on_company: boolean }>(
         db,
         `select current_user::text as role, auth.uid()::text as uid,
-                api_key_company()::text as company`,
+                api_key_on_company($1) as on_company`,
+        [companyId],
       ),
     );
     expect(who.role).toBe('authenticated');
     // A key is not a session: every policy that asks for a signed-in user
     // still answers no, which is the whole of decision 0006.
     expect(who.uid).toBeNull();
-    expect(who.company).toBe(companyId);
+    expect(who.on_company).toBe(true);
   });
 
   it('is refused whole when the key is not one', async () => {
@@ -221,6 +222,37 @@ describe('what a key is on', () => {
     const after = await one<{ n: number }>(db, `select count(*)::int as n from contacts`);
     expect(after.n).toBe(before.n);
   });
+  it('is nothing once the person who issued it has left the company', async () => {
+    // Decision 0006, as amended: a key holds only what its issuer still holds
+    // there, and a key that holds nothing is on no company — not even its row.
+    const issuer = await newUser(db, 'leaving@keys-over-rest.test');
+    await db.query(
+      `insert into company_members (company_id, user_id, role, capabilities_granted)
+       values ($1, $2, 'accountant', array['members.manage'])`,
+      [companyId, issuer],
+    );
+    const key = await asUser(db, issuer, () =>
+      one<{ secret: string }>(
+        db,
+        `select * from create_api_key($1, 'Partie avec elle', '["entries.read", "settings.read"]'::jsonb, null)`,
+        [companyId],
+      ),
+    );
+    const read = () =>
+      request(key.secret, async () =>
+        one<{ companies: number; lines: number }>(
+          db,
+          `select (select count(*)::int from companies) as companies,
+                  (select count(*)::int from entry_lines) as lines`,
+        ),
+      );
+    const before = await read();
+    expect(before.companies).toBe(1);
+    expect(before.lines).toBeGreaterThan(0);
+
+    await asUser(db, ownerId, () => one(db, `select * from remove_member($1, $2)`, [companyId, issuer]));
+    expect(await read()).toEqual({ companies: 0, lines: 0 });
+  });
 });
 
 describe('a read request, which is what PostgREST opens for a GET', () => {
@@ -232,16 +264,17 @@ describe('a read request, which is what PostgREST opens for a GET', () => {
     const seen = await request(
       secret,
       async () =>
-        one<{ role: string; company: string | null; n: number }>(
+        one<{ role: string; on_company: boolean; n: number }>(
           db,
-          `select current_user::text as role, api_key_company()::text as company,
+          `select current_user::text as role, api_key_on_company($1) as on_company,
                   (select count(*)::int from companies) as n`,
+          [companyId],
         ),
       db,
       true,
     );
     expect(seen.role).toBe('authenticated');
-    expect(seen.company).toBe(companyId);
+    expect(seen.on_company).toBe(true);
     expect(seen.n).toBe(1);
   });
 
