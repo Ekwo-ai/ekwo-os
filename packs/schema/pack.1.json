@@ -2064,6 +2064,13 @@
             "type": "string"
           },
           "description": "By category code of fixed_assets.json, the section of the fixed assets module."
+        },
+        "corporate_tax": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "The labels of corporate_tax.json, the section of the corporate income tax module: `tax` for the tax itself, then `parameter:<code>`, `rule:<code>`, `rate:<code>` and `credit:<code>`. A rule or a rate that has several dated versions is translated once, by its code."
         }
       }
     },
@@ -2226,6 +2233,946 @@
               },
               "source": {
                 "$ref": "#/$defs/source_ref"
+              }
+            }
+          }
+        }
+      }
+    },
+    "module_corporate_tax": {
+      "type": "object",
+      "description": "packs/<cc>/corporate_tax.json — what this country says about the tax on a company's profit: which line of which income statement the computation starts from, what is added back and deducted, how far a loss carries, the rates and the conditions of each, the prepayments and the credits. Compiled by `ekwo pack build` into supabase/seed/modules/corporate_tax/, and applied only on an installation that carries the corporate income tax module. Every figure carries the article it comes from and the day it applies from; a figure nobody could verify is left out rather than guessed.",
+      "required": [
+        "tax",
+        "result",
+        "accounts",
+        "rates"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "$schema": {
+          "type": "string"
+        },
+        "tax": {
+          "type": "object",
+          "description": "What this country calls the tax.",
+          "required": [
+            "code",
+            "name",
+            "legal_reference"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "code": {
+              "$ref": "#/$defs/code",
+              "description": "Immutable once published. Written on every computation a company records."
+            },
+            "name": {
+              "type": "string",
+              "minLength": 1,
+              "description": "In the pack's own language. The other languages are in i18n/<lang>.json, under corporate_tax, key `tax`."
+            },
+            "legal_reference": {
+              "type": "string",
+              "minLength": 1,
+              "description": "The article this comes from, cited as the country cites it. Required: a rule nobody can trace to a text is a rule nobody can review."
+            },
+            "source": {
+              "$ref": "#/$defs/source_ref"
+            }
+          }
+        },
+        "result": {
+          "type": "object",
+          "description": "The accounting result the computation starts from: one line of one income statement of this pack. A country whose statement prints a result before income tax names that line; one that prints only the net result names it and adds the tax charge back by an adjustment rule.",
+          "required": [
+            "statement",
+            "line",
+            "legal_reference"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "statement": {
+              "$ref": "#/$defs/code",
+              "description": "Code of a statement in statements.json. `ekwo pack check` refuses one the pack does not carry."
+            },
+            "line": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Code of a line of that statement."
+            },
+            "legal_reference": {
+              "type": "string",
+              "minLength": 1,
+              "description": "The article this comes from, cited as the country cites it. Required: a rule nobody can trace to a text is a rule nobody can review."
+            },
+            "source": {
+              "$ref": "#/$defs/source_ref"
+            }
+          }
+        },
+        "accounts": {
+          "type": "object",
+          "description": "The accounts of the chart the tax is booked on. `ekwo pack check` refuses a code that is missing from any chart of the pack. Declared for the provision entry of a later version of the module; this version posts nothing.",
+          "required": [
+            "expense",
+            "payable",
+            "legal_reference"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "expense": {
+              "type": "string",
+              "minLength": 1,
+              "description": "The charge of the year (BE 670000, FR 695000)."
+            },
+            "payable": {
+              "type": "string",
+              "minLength": 1,
+              "description": "The estimated debt to the administration (BE 450000, FR 444000)."
+            },
+            "receivable": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "description": "A prepayment or a refund to come, where the chart keeps one apart (BE 412000). Null where the payable account carries both signs."
+            },
+            "legal_reference": {
+              "type": "string",
+              "minLength": 1,
+              "description": "The article this comes from, cited as the country cites it. Required: a rule nobody can trace to a text is a rule nobody can review."
+            },
+            "source": {
+              "$ref": "#/$defs/source_ref"
+            }
+          }
+        },
+        "parameters": {
+          "type": "array",
+          "description": "What a company has to declare for a financial year: a judgement or an amount. The conditions of a rate name them. Nothing infers one from the books.",
+          "items": {
+            "type": "object",
+            "required": [
+              "code",
+              "name",
+              "type",
+              "legal_reference"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "code": {
+                "$ref": "#/$defs/code"
+              },
+              "name": {
+                "type": "string",
+                "minLength": 1,
+                "description": "The question, in the pack's own language, in a form that reads with a yes, a no or an amount."
+              },
+              "type": {
+                "enum": [
+                  "boolean",
+                  "amount"
+                ]
+              },
+              "sequence": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "legal_reference": {
+                "type": "string",
+                "minLength": 1,
+                "description": "The article this comes from, cited as the country cites it. Required: a rule nobody can trace to a text is a rule nobody can review."
+              },
+              "source": {
+                "$ref": "#/$defs/source_ref"
+              }
+            }
+          }
+        },
+        "adjustment_rules": {
+          "type": "array",
+          "description": "What separates the accounting result from the taxable one. Only rules somebody can cite. A code may appear several times with different validities: that is how a percentage changes.",
+          "items": {
+            "type": "object",
+            "required": [
+              "code",
+              "name",
+              "direction",
+              "valid_from",
+              "legal_reference"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "code": {
+                "$ref": "#/$defs/code"
+              },
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "direction": {
+                "enum": [
+                  "add_back",
+                  "deduction"
+                ],
+                "description": "add_back: an expense the books carry and the tax refuses, in whole or in part. deduction: an income the tax leaves out, or an allowance the books do not carry."
+              },
+              "percent": {
+                "type": "number",
+                "minimum": 0,
+                "description": "The share of the base the rule moves: 100 for an expense refused in full, 31 for one refused for 31 %. Either this or `formula`."
+              },
+              "formula": {
+                "type": "object",
+                "description": "A closed vocabulary for a percentage that depends on what the company states about the expense. A straight line of one variable: intercept + slope × coefficient × variable, rounded to `decimals` where the law rounds it, held between `min` and `max`, then replaced by the `percent` of the last step whose `from` the variable reaches. Data, not an expression language.",
+                "required": [
+                  "yields",
+                  "variable",
+                  "intercept",
+                  "slope"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                  "yields": {
+                    "enum": [
+                      "deductible_percent",
+                      "adjustment_percent"
+                    ],
+                    "description": "What the line gives. deductible_percent: the share the tax accepts, so the rule moves what is left of a hundred. adjustment_percent: the share the rule moves."
+                  },
+                  "variable": {
+                    "$ref": "#/$defs/code",
+                    "description": "The name under which an adjustment states the figure, in tax.adjustments.parameters."
+                  },
+                  "intercept": {
+                    "type": "number"
+                  },
+                  "slope": {
+                    "type": "number"
+                  },
+                  "coefficient": {
+                    "type": "object",
+                    "required": [
+                      "parameter",
+                      "values"
+                    ],
+                    "additionalProperties": false,
+                    "properties": {
+                      "parameter": {
+                        "$ref": "#/$defs/code",
+                        "description": "The name under which an adjustment states the word the coefficient is picked by."
+                      },
+                      "values": {
+                        "type": "object",
+                        "additionalProperties": {
+                          "type": "number"
+                        },
+                        "description": "By the word stated."
+                      }
+                    }
+                  },
+                  "decimals": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 6
+                  },
+                  "min": {
+                    "type": "number"
+                  },
+                  "max": {
+                    "type": "number"
+                  },
+                  "steps": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "from",
+                        "percent"
+                      ],
+                      "additionalProperties": false,
+                      "properties": {
+                        "from": {
+                          "type": "number"
+                        },
+                        "percent": {
+                          "type": "number"
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "accounts": {
+                "type": "array",
+                "description": "The accounts of this pack's charts whose whole balance falls under the rule, in the vocabulary a statement line maps accounts with. Left out where the chart keeps no account for it alone: a company then says which of its accounts, or which amount, the rule applies to.",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "kind",
+                    "code_from"
+                  ],
+                  "additionalProperties": false,
+                  "properties": {
+                    "kind": {
+                      "enum": [
+                        "account_code",
+                        "code_prefix",
+                        "code_range"
+                      ]
+                    },
+                    "code_from": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "code_to": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  }
+                }
+              },
+              "valid_from": {
+                "$ref": "#/$defs/date",
+                "description": "The first day this applies to, read on the day of the financial year `valid_on` names."
+              },
+              "valid_to": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
+                "description": "The last day this applies to. Null while it is in force. A figure that changes is a new entry with a new valid_from and a valid_to on this one, never an edit."
+              },
+              "valid_on": {
+                "enum": [
+                  "period_start",
+                  "period_end"
+                ],
+                "description": "Which day of a financial year the validity is read on. period_start for a law that applies to financial years opened from a date, period_end for one that applies to financial years closed from a date — which is also how an assessment year is said. Defaults to period_start."
+              },
+              "sequence": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "legal_reference": {
+                "type": "string",
+                "minLength": 1,
+                "description": "The article this comes from, cited as the country cites it. Required: a rule nobody can trace to a text is a rule nobody can review."
+              },
+              "source": {
+                "$ref": "#/$defs/source_ref"
+              }
+            }
+          }
+        },
+        "rates": {
+          "type": "array",
+          "minItems": 1,
+          "description": "The rates, each for the days it is in force. One with `up_to` applies to the slice of the taxable base below that amount; the one without applies to what is left. A rate whose conditions are not all met is not applied.",
+          "items": {
+            "type": "object",
+            "required": [
+              "code",
+              "name",
+              "rate",
+              "valid_from",
+              "legal_reference"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "code": {
+                "$ref": "#/$defs/code"
+              },
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "rate": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 100
+              },
+              "up_to": {
+                "type": [
+                  "number",
+                  "null"
+                ],
+                "minimum": 0,
+                "description": "The top of the slice this rate applies to. Null on the rate that takes what is left."
+              },
+              "up_to_prorata": {
+                "enum": [
+                  "none",
+                  "months"
+                ],
+                "description": "none: the threshold holds whatever the length of the financial year. months: it is stated for twelve months and shared out over the months the year has. Defaults to none."
+              },
+              "conditions": {
+                "type": "array",
+                "description": "Every one has to be met, by what the company declared for the year. A parameter that is not declared is not met.",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "parameter",
+                    "test"
+                  ],
+                  "additionalProperties": false,
+                  "properties": {
+                    "parameter": {
+                      "$ref": "#/$defs/code",
+                      "description": "A code of `parameters`."
+                    },
+                    "test": {
+                      "enum": [
+                        "is_true",
+                        "is_false",
+                        "at_least",
+                        "at_most",
+                        "below",
+                        "above"
+                      ]
+                    },
+                    "amount": {
+                      "type": "number",
+                      "description": "What an amount is compared with. Required by the four tests that compare."
+                    },
+                    "or_at_least": {
+                      "enum": [
+                        "taxable_base"
+                      ],
+                      "description": "The one alternative the vocabulary carries: the amount fails the test and is still at least the taxable base of the year."
+                    },
+                    "waived_by": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/$defs/code"
+                      },
+                      "description": "Boolean parameters any one of which, declared true, lifts this condition."
+                    }
+                  }
+                }
+              },
+              "valid_from": {
+                "$ref": "#/$defs/date",
+                "description": "The first day this applies to, read on the day of the financial year `valid_on` names."
+              },
+              "valid_to": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
+                "description": "The last day this applies to. Null while it is in force. A figure that changes is a new entry with a new valid_from and a valid_to on this one, never an edit."
+              },
+              "valid_on": {
+                "enum": [
+                  "period_start",
+                  "period_end"
+                ],
+                "description": "Which day of a financial year the validity is read on. period_start for a law that applies to financial years opened from a date, period_end for one that applies to financial years closed from a date — which is also how an assessment year is said. Defaults to period_start."
+              },
+              "sequence": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "legal_reference": {
+                "type": "string",
+                "minLength": 1,
+                "description": "The article this comes from, cited as the country cites it. Required: a rule nobody can trace to a text is a rule nobody can review."
+              },
+              "source": {
+                "$ref": "#/$defs/source_ref"
+              }
+            }
+          }
+        },
+        "loss_carryforward": {
+          "type": "array",
+          "description": "How far a loss of an earlier year may be set against the profit of this one, for the days the rule is in force. Left out where the pack says nothing, and then a company that carries a loss is refused by name rather than given another country's limit.",
+          "items": {
+            "type": "object",
+            "required": [
+              "valid_from",
+              "legal_reference"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "floor": {
+                "type": [
+                  "number",
+                  "null"
+                ],
+                "minimum": 0,
+                "description": "The amount of profit losses may absorb in full. Null, with percent_above, where there is no limit."
+              },
+              "percent_above": {
+                "type": [
+                  "number",
+                  "null"
+                ],
+                "minimum": 0,
+                "maximum": 100,
+                "description": "The share of the profit beyond the floor that losses may still absorb."
+              },
+              "years": {
+                "type": [
+                  "integer",
+                  "null"
+                ],
+                "minimum": 1,
+                "description": "How many years a loss may be carried. Null where it never lapses."
+              },
+              "valid_from": {
+                "$ref": "#/$defs/date",
+                "description": "The first day this applies to, read on the day of the financial year `valid_on` names."
+              },
+              "valid_to": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
+                "description": "The last day this applies to. Null while it is in force. A figure that changes is a new entry with a new valid_from and a valid_to on this one, never an edit."
+              },
+              "valid_on": {
+                "enum": [
+                  "period_start",
+                  "period_end"
+                ],
+                "description": "Which day of a financial year the validity is read on. period_start for a law that applies to financial years opened from a date, period_end for one that applies to financial years closed from a date — which is also how an assessment year is said. Defaults to period_start."
+              },
+              "legal_reference": {
+                "type": "string",
+                "minLength": 1,
+                "description": "The article this comes from, cited as the country cites it. Required: a rule nobody can trace to a text is a rule nobody can review."
+              },
+              "source": {
+                "$ref": "#/$defs/source_ref"
+              }
+            }
+          }
+        },
+        "prepayments": {
+          "type": "array",
+          "description": "When the tax is paid in advance and what each payment is worth, for the days the figures are in force. Declared for the prepayment plan of a later version of the module; nothing reads it yet.",
+          "items": {
+            "type": "object",
+            "required": [
+              "method",
+              "month_basis",
+              "instalments",
+              "valid_from",
+              "legal_reference"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "method": {
+                "enum": [
+                  "surcharge_on_shortfall",
+                  "share_of_reference_tax"
+                ],
+                "description": "surcharge_on_shortfall: no instalment is compulsory, the tax is raised by surcharge_percent and each instalment paid in time earns its credit_percent. share_of_reference_tax: each instalment is share_percent of the tax of a reference year, and none is asked where that tax does not exceed exempt_up_to."
+              },
+              "month_basis": {
+                "enum": [
+                  "fiscal",
+                  "calendar"
+                ],
+                "description": "fiscal: `month` counts from the first month of the financial year. calendar: it is a month of the calendar."
+              },
+              "instalments": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "sequence",
+                    "month",
+                    "day"
+                  ],
+                  "additionalProperties": false,
+                  "properties": {
+                    "sequence": {
+                      "type": "integer",
+                      "minimum": 1
+                    },
+                    "month": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 12
+                    },
+                    "day": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 31
+                    },
+                    "share_percent": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 100
+                    },
+                    "credit_percent": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 100
+                    }
+                  }
+                }
+              },
+              "surcharge_percent": {
+                "type": [
+                  "number",
+                  "null"
+                ],
+                "minimum": 0,
+                "maximum": 100
+              },
+              "exempt_up_to": {
+                "type": [
+                  "number",
+                  "null"
+                ],
+                "minimum": 0
+              },
+              "valid_from": {
+                "$ref": "#/$defs/date",
+                "description": "The first day this applies to, read on the day of the financial year `valid_on` names."
+              },
+              "valid_to": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
+                "description": "The last day this applies to. Null while it is in force. A figure that changes is a new entry with a new valid_from and a valid_to on this one, never an edit."
+              },
+              "valid_on": {
+                "enum": [
+                  "period_start",
+                  "period_end"
+                ],
+                "description": "Which day of a financial year the validity is read on. period_start for a law that applies to financial years opened from a date, period_end for one that applies to financial years closed from a date — which is also how an assessment year is said. Defaults to period_start."
+              },
+              "legal_reference": {
+                "type": "string",
+                "minLength": 1,
+                "description": "The article this comes from, cited as the country cites it. Required: a rule nobody can trace to a text is a rule nobody can review."
+              },
+              "source": {
+                "$ref": "#/$defs/source_ref"
+              }
+            }
+          }
+        },
+        "credits": {
+          "type": "array",
+          "description": "The credits a company may set against the tax. The pack says that a credit exists, whether what exceeds the tax is paid back, and the article; the amount is the company's to declare.",
+          "items": {
+            "type": "object",
+            "required": [
+              "code",
+              "name",
+              "valid_from",
+              "legal_reference"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "code": {
+                "$ref": "#/$defs/code"
+              },
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "refundable": {
+                "type": "boolean",
+                "description": "Whether the part of the credit that exceeds the tax is paid back. Defaults to false."
+              },
+              "valid_from": {
+                "$ref": "#/$defs/date",
+                "description": "The first day this applies to, read on the day of the financial year `valid_on` names."
+              },
+              "valid_to": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
+                "description": "The last day this applies to. Null while it is in force. A figure that changes is a new entry with a new valid_from and a valid_to on this one, never an edit."
+              },
+              "valid_on": {
+                "enum": [
+                  "period_start",
+                  "period_end"
+                ],
+                "description": "Which day of a financial year the validity is read on. period_start for a law that applies to financial years opened from a date, period_end for one that applies to financial years closed from a date — which is also how an assessment year is said. Defaults to period_start."
+              },
+              "sequence": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "legal_reference": {
+                "type": "string",
+                "minLength": 1,
+                "description": "The article this comes from, cited as the country cites it. Required: a rule nobody can trace to a text is a rule nobody can review."
+              },
+              "source": {
+                "$ref": "#/$defs/source_ref"
+              }
+            }
+          }
+        }
+      }
+    },
+    "golden_corporate_tax": {
+      "type": "object",
+      "description": "packs/<cc>/golden/corporate_tax.json — fictitious companies whose tax was worked out by hand, and what the module has to make of each to the cent. Evidence about the pack rather than part of it: like the other expectation files under golden/, it is outside the pack checksum. Replayed by modules/corporate-tax/tests/golden.test.ts.",
+      "required": [
+        "fiscal_year",
+        "companies"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "$schema": {
+          "type": "string"
+        },
+        "why": {
+          "type": "string"
+        },
+        "fiscal_year": {
+          "type": "object",
+          "required": [
+            "name",
+            "start",
+            "end"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "name": {
+              "type": "string",
+              "minLength": 1
+            },
+            "start": {
+              "$ref": "#/$defs/date"
+            },
+            "end": {
+              "$ref": "#/$defs/date"
+            }
+          }
+        },
+        "companies": {
+          "type": "array",
+          "minItems": 3,
+          "items": {
+            "type": "object",
+            "required": [
+              "ref",
+              "name",
+              "why",
+              "entries",
+              "expected"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "ref": {
+                "$ref": "#/$defs/code"
+              },
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "why": {
+                "type": "string",
+                "minLength": 1,
+                "description": "What this company is there to prove."
+              },
+              "entries": {
+                "type": "array",
+                "minItems": 1,
+                "description": "The books of the year, as journal entries on accounts of the pack's default chart.",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "date",
+                    "description",
+                    "lines"
+                  ],
+                  "additionalProperties": false,
+                  "properties": {
+                    "date": {
+                      "$ref": "#/$defs/date"
+                    },
+                    "description": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "lines": {
+                      "type": "array",
+                      "minItems": 2,
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "account"
+                        ],
+                        "additionalProperties": false,
+                        "properties": {
+                          "account": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "debit": {
+                            "type": "string",
+                            "pattern": "^-?[0-9]+(\\.[0-9]+)?$",
+                            "description": "A decimal string, as every amount of a golden file is."
+                          },
+                          "credit": {
+                            "type": "string",
+                            "pattern": "^-?[0-9]+(\\.[0-9]+)?$",
+                            "description": "A decimal string, as every amount of a golden file is."
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "parameters": {
+                "type": "object",
+                "description": "What the company declares for the year, by parameter code: true, false or an amount as a decimal string.",
+                "additionalProperties": {
+                  "type": [
+                    "boolean",
+                    "string"
+                  ]
+                }
+              },
+              "adjustments": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "rule"
+                  ],
+                  "additionalProperties": false,
+                  "properties": {
+                    "rule": {
+                      "$ref": "#/$defs/code"
+                    },
+                    "account": {
+                      "type": "string",
+                      "minLength": 1,
+                      "description": "An account whose balance over the year is the base. Either this or `amount`."
+                    },
+                    "amount": {
+                      "type": "string",
+                      "pattern": "^-?[0-9]+(\\.[0-9]+)?$",
+                      "description": "A decimal string, as every amount of a golden file is."
+                    },
+                    "parameters": {
+                      "type": "object"
+                    }
+                  }
+                }
+              },
+              "losses": {
+                "type": "array",
+                "description": "The losses the company carried in from before the year.",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "origin_period_end",
+                    "amount"
+                  ],
+                  "additionalProperties": false,
+                  "properties": {
+                    "origin_period_end": {
+                      "$ref": "#/$defs/date"
+                    },
+                    "amount": {
+                      "type": "string",
+                      "pattern": "^-?[0-9]+(\\.[0-9]+)?$",
+                      "description": "A decimal string, as every amount of a golden file is."
+                    }
+                  }
+                }
+              },
+              "expected": {
+                "type": "object",
+                "required": [
+                  "computation",
+                  "lines",
+                  "tax"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                  "computation": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "The arithmetic, by hand, one step per sentence. What a reviewer reads before the figures."
+                  },
+                  "lines": {
+                    "type": "array",
+                    "minItems": 1,
+                    "description": "Every line tax.estimate() returns, in order.",
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "kind"
+                      ],
+                      "additionalProperties": false,
+                      "properties": {
+                        "kind": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "code": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "note": {
+                          "type": [
+                            "string",
+                            "null"
+                          ],
+                          "description": "For a line that says why something was not applied: the reason it gives."
+                        },
+                        "base": {
+                          "type": [
+                            "string",
+                            "null"
+                          ],
+                          "pattern": "^-?[0-9]+(\\.[0-9]+)?$"
+                        },
+                        "rate": {
+                          "type": [
+                            "string",
+                            "null"
+                          ],
+                          "pattern": "^-?[0-9]+(\\.[0-9]+)?$"
+                        },
+                        "amount": {
+                          "type": [
+                            "string",
+                            "null"
+                          ],
+                          "pattern": "^-?[0-9]+(\\.[0-9]+)?$"
+                        }
+                      }
+                    }
+                  },
+                  "tax": {
+                    "type": "string",
+                    "pattern": "^-?[0-9]+(\\.[0-9]+)?$",
+                    "description": "A decimal string, as every amount of a golden file is."
+                  }
+                }
               }
             }
           }

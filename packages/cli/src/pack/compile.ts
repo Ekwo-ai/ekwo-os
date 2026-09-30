@@ -23,6 +23,7 @@
 
 import { describeCertification } from './certification.js';
 import { sourcesOf, type FrameworkPack, type Pack, type PackSource, type PackStatement } from './read.js';
+import { compileCorporateTaxSection } from './corporate-tax.js';
 
 /**
  * Which number each pack's compiled seed carries, by slug.
@@ -210,7 +211,27 @@ export function compileModuleSeeds(pack: Pack): Map<string, string> {
   const seeds = new Map<string, string>();
   const fixedAssets = compileFixedAssetsSeed(pack);
   if (fixedAssets !== undefined) seeds.set('fixed_assets', fixedAssets);
+  const corporateTax = compileCorporateTaxSeed(pack);
+  if (corporateTax !== undefined) seeds.set('corporate_tax', corporateTax);
   return seeds;
+}
+
+/**
+ * `packs/<cc>/corporate_tax.json` → the reference tables of the corporate
+ * income tax module.
+ *
+ * Returns `undefined` when the pack says nothing about the tax on a company's
+ * profit, which is not a gap to fill: `tax.estimate()` refuses by name,
+ * `no_corporate_tax_rules`, rather than taking another country's rates.
+ */
+export function compileCorporateTaxSeed(pack: Pack): string | undefined {
+  if (pack.corporateTax === null) return undefined;
+  return compileCorporateTaxSection(pack.corporateTax, {
+    slug: pack.slug,
+    name: pack.manifest.name,
+    version: pack.manifest.version,
+    country: pack.manifest.country,
+  });
 }
 
 /** @deprecated Renamed `compileFixedAssetsSeed` in 0.10.0; this name goes in 0.11.0. */

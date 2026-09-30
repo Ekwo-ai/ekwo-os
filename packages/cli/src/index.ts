@@ -60,6 +60,7 @@ export {
 } from './pack/describe.js';
 export {
   compileAssetsSeed,
+  compileCorporateTaxSeed,
   compileFixedAssetsSeed,
   compileFrameworkPack,
   compileModuleSeeds,
@@ -103,6 +104,7 @@ export {
   type PackAssets,
   type PackFixedAssets,
   type PackAssetCategory,
+  type PackCorporateTax,
   type PackGolden,
   type PackGoldenContact,
   type PackGoldenDocument,

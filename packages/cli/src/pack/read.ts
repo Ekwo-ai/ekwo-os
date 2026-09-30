@@ -12,6 +12,14 @@ import { existsSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { validate, type Issue } from './schema.js';
+import {
+  applyCorporateTaxLabels,
+  corporateTaxLabelKeys,
+  corporateTaxReferences,
+  corporateTaxSources,
+  normaliseCorporateTax,
+  type PackCorporateTax,
+} from './corporate-tax.js';
 import { taxCodes, TREATMENT_CODES, type TaxCodes, type VatRegime } from './vat-codes.js';
 import {
   euVatScopeOf,
@@ -761,6 +769,8 @@ export interface PackFixedAssets {
 /** @deprecated Renamed `PackFixedAssets` in 0.10.0; this name goes in 0.11.0. */
 export type PackAssets = PackFixedAssets;
 
+export type { PackCorporateTax } from './corporate-tax.js';
+
 export interface Pack {
   /** Lower-case directory name, e.g. `be`. */
   slug: string;
@@ -791,6 +801,8 @@ export interface Pack {
   reportCode: string | null;
   /** `fixed_assets.json`, or null where this country says nothing about fixed assets. */
   fixedAssets: PackFixedAssets | null;
+  /** `corporate_tax.json`, or null where this country says nothing about the tax on a company's profit. */
+  corporateTax: PackCorporateTax | null;
   /** `golden/scenario.json`, or null where the manifest says why there is none. */
   golden: PackGolden | null;
   /** The reason the manifest gives for carrying no golden. Null where it carries one. */
@@ -890,6 +902,8 @@ export interface PackLabels {
   legal_mentions: Record<string, Record<string, string>>;
   /** By fixed-asset category code. */
   asset_categories: Record<string, Record<string, string>>;
+  /** The labels of `corporate_tax.json`: `tax`, then `parameter:`, `rule:`, `rate:` and `credit:` with a code. */
+  corporate_tax: Record<string, Record<string, string>>;
 }
 
 /** A pack with no country: statements by account type, and nothing else. */
@@ -1064,6 +1078,30 @@ export async function readPack(slug: string, dir = packsDir()): Promise<Pack> {
     issues.push(...assetReferences(fixedAssets, manifest));
   }
 
+  // The section of the corporate income tax module, read the same way. Its
+  // worked examples sit beside the other golden files and are validated here
+  // so that a malformed one is a pack problem and not a test failure.
+  let corporateTax: PackCorporateTax | null = null;
+  if (existsSync(join(root, 'corporate_tax.json'))) {
+    const raw = await readJson(join(root, 'corporate_tax.json'));
+    issues.push(...validate(raw, defs['module_corporate_tax'] ?? {}, schema, 'corporate_tax.json'));
+    corporateTax = normaliseCorporateTax(raw as Record<string, unknown>);
+    issues.push(...corporateTaxReferences(corporateTax, charts, statements));
+    const worked = join(root, 'golden', 'corporate_tax.json');
+    if (existsSync(worked)) {
+      issues.push(
+        ...validate(await readJson(worked), defs['golden_corporate_tax'] ?? {}, schema, 'golden/corporate_tax.json'),
+      );
+    } else {
+      issues.push({
+        path: 'golden/corporate_tax.json',
+        message:
+          'is missing. A corporate_tax section comes with companies whose tax was worked out by hand: ' +
+          'a profit under the reduced rate, a loss, and a profit outside its conditions',
+      });
+    }
+  }
+
   // The golden scenario. Read after the taxes, the charts and the form,
   // because every reference it makes is checked against them.
   const goldenExemption =
@@ -1103,6 +1141,7 @@ export async function readPack(slug: string, dir = packsDir()): Promise<Pack> {
     statement_lines: {},
     legal_mentions: {},
     asset_categories: {},
+    corporate_tax: {},
   };
   const languages: string[] = [];
   const i18nDir = join(root, 'i18n');
@@ -1142,6 +1181,20 @@ export async function readPack(slug: string, dir = packsDir()): Promise<Pack> {
       byCode('legal_mentions', new Set(documents.mentions.map((m) => m.code)), 'a legal mention');
       byCode('asset_categories', new Set((fixedAssets?.categories ?? []).map((c) => c.code)), 'a fixed-asset category');
 
+      // The labels of the corporate tax section are keyed by what they label
+      // and its code — `rule:restaurant` — because a rule and a rate may share one.
+      const taxKeys = new Set(corporateTaxLabelKeys(corporateTax));
+      for (const [key, label] of Object.entries(section('corporate_tax'))) {
+        if (!taxKeys.has(key)) {
+          issues.push({
+            path: `i18n/${file} corporate_tax`,
+            message: `${key} is not a label of corporate_tax.json; write tax, parameter:<code>, rule:<code>, rate:<code> or credit:<code>`,
+          });
+          continue;
+        }
+        (labels.corporate_tax[key] ??= {})[language] = label;
+      }
+
       // A box is translated by the same reference the formulas use: `54`, or
       // `08:tax` where the form carries a base and a tax on one line.
       for (const [ref, label] of Object.entries(section('tax_report_boxes'))) {
@@ -1174,7 +1227,7 @@ export async function readPack(slug: string, dir = packsDir()): Promise<Pack> {
 
   // A language the manifest declares is a promise that every label exists in
   // it. A language that is only a file may be partial, and falls back.
-  issues.push(...languageCoverage(manifest, languages, labels, charts, taxes, statements, report, documents, fixedAssets));
+  issues.push(...languageCoverage(manifest, languages, labels, charts, taxes, statements, report, documents, fixedAssets, corporateTax));
   issues.push(...zonePages(manifest, root));
 
   // The rows that carry a translation get theirs from the language files, so
@@ -1184,6 +1237,7 @@ export async function readPack(slug: string, dir = packsDir()): Promise<Pack> {
   for (const category of fixedAssets?.categories ?? []) {
     category.name_i18n = labels.asset_categories[category.code] ?? {};
   }
+  applyCorporateTaxLabels(corporateTax, labels.corporate_tax);
 
   // A posting with a box belongs to a form. The pack names one in
   // `tax_report.json`; a posting may override it the day a country files two.
@@ -1233,7 +1287,7 @@ export async function readPack(slug: string, dir = packsDir()): Promise<Pack> {
   // The register, and every rule that points into it. Last of the cross-checks,
   // because a source is named by a tax, a box, a statement line and a mention,
   // and all four have to have been read before the references can be resolved.
-  const register = sourceRegister(manifest, charts, taxes, report, statements, documents, fixedAssets);
+  const register = sourceRegister(manifest, charts, taxes, report, statements, documents, fixedAssets, corporateTax);
   issues.push(...register.issues);
   warnings.push(...register.warnings);
 
@@ -1274,6 +1328,7 @@ export async function readPack(slug: string, dir = packsDir()): Promise<Pack> {
     report,
     reportCode,
     fixedAssets,
+    corporateTax,
     golden,
     goldenExemption,
     checksum: await checksum(root),
@@ -1321,6 +1376,7 @@ function sourceRegister(
   statements: PackStatement[],
   documents: PackDocumentRules,
   fixedAssets: PackFixedAssets | null,
+  corporateTax: PackCorporateTax | null,
 ): { sources: PackSource[]; issues: Issue[]; warnings: string[] } {
   const issues: Issue[] = [];
   const warnings: string[] = [];
@@ -1438,6 +1494,7 @@ function sourceRegister(
       source: category.source,
       kind: 'other' as const,
     })),
+    ...corporateTaxSources(corporateTax).map((reference) => ({ ...reference, kind: 'other' as const })),
   ];
 
   for (const reference of references) {
@@ -1785,6 +1842,7 @@ function languageCoverage(
   report: PackReport | null,
   documents: PackDocumentRules,
   fixedAssets: PackFixedAssets | null,
+  corporateTax: PackCorporateTax | null,
 ): Issue[] {
   const issues: Issue[] = [];
   const own = manifest.defaults.language;
@@ -1801,6 +1859,7 @@ function languageCoverage(
     ],
     ['legal_mentions', documents.mentions.map((m) => m.code)],
     ['asset_categories', (fixedAssets?.categories ?? []).map((c) => c.code)],
+    ['corporate_tax', corporateTaxLabelKeys(corporateTax)],
   ];
 
   for (const language of manifest.languages ?? []) {
