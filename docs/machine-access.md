@@ -58,8 +58,9 @@ by `pgrst.db_pre_request` on its login role. Here that is
 
 `auth.uid()` stays null through all of it. A key is not a session: the policies
 that ask for a signed-in user still answer no, and what the caller may do is
-decided by `has_capability()`, which consults the key's own list. The role is
-the door; the capabilities are the rooms.
+decided by `has_capability()`, which consults the key's own list and what the
+person who issued it holds today. The role is the door; the capabilities are
+the rooms.
 
 **The pre-request writes nothing**, and it cannot. PostgREST opens a GET — and
 an RPC whose function is not volatile — inside a **read-only transaction**, so
@@ -75,7 +76,8 @@ audit trail as it always did.
 
 ## What a key may read and write
 
-Its own company, and what its capabilities name.
+Its own company, and what its capabilities name — as far as the person who
+issued it still holds them.
 
 - **The company it was minted on.** Since
   [decision 0062](decisions/0062-a-key-reaches-the-api.md) a key is *on* that
@@ -83,15 +85,19 @@ Its own company, and what its capabilities name.
   members, the modules it has on, its filing periods, its matching settings and
   its audit trail. That is what the narrowest member of that company reads, and
   nothing of any other company — `api_keys.company_id` is one company and there
-  is no second one to name.
+  is no second one to name. A key that no longer reaches any capability there
+  is not on the company either, and reads none of this.
 - **Everything else asks a capability.** `entries.read` for the ledger,
   `documents.write` to draft, `entries.post` to post, `company.export` to
-  leave with the books. A key is never wider than the person who issued it:
-  `create_api_key()` refuses a capability the issuer does not hold.
+  leave with the books. A key is never wider than the person who issued it,
+  and that is checked twice: `create_api_key()` refuses a capability the
+  issuer does not hold, and at every use `key_holds()` asks whether the issuer
+  still holds it on that company. A key the installation issued itself —
+  `created_by` null — is bounded by its list alone.
 - **The reference data of the installation** — currencies, charts of accounts,
   taxes, the boxes of the declaration forms, the statement schemes — is
-  readable by any caller this installation knows, which now includes the holder
-  of a live key.
+  readable by any caller this installation knows, which includes the holder
+  of a live key that still reaches something.
 
 ## Backing a company up
 
@@ -117,6 +123,12 @@ The secret comes back once. What is stored is its sha256, and the audit trail
 of every act the key performs records `api_key_id` beside a null `actor_id`, so
 the trail says a machine acted and which one.
 
+A backup key issued from somebody's session is that person's delegation: the
+day they leave the company, or move to a preset that no longer reads what the
+archive carries, the next backup is refused. Issue it from an owner who is
+staying, and issue it again from their successor when that changes: the old
+key is then revoked, not left to fail.
+
 ## Checking the installation is set up for it
 
 The setting lives on the `authenticator` role and is configuration of the API,
@@ -139,10 +151,43 @@ line and the MCP server do.
 
 `revoke_api_key(id)`, which needs `members.manage`, and there is no
 un-withdraw. `api_keys.last_used_at` says when the key was last presented, so a
-key nobody uses is visible before it is a problem. Revoking a person's
-capability revokes it from the keys they issued, because a key's list is
-checked against the issuer's every time it is minted and the key was never
-wider than them.
+key nobody uses is visible before it is a problem.
+
+**Withdrawing a person's right withdraws it from their keys.** A key holds a
+capability only while the person who issued it holds it on that company, and
+that is worked out at every call — by `key_holds()`, which `has_capability()`
+asks — never copied onto the key when the right changes. So:
+
+- a capability revoked from the issuer, by `capabilities_revoked` or by a move
+  to a narrower preset, is gone from their keys on the next call;
+- an issuer removed from the company leaves keys that reach nothing there, not
+  even the company row;
+- a right given back to the issuer is given back to their keys, because
+  nothing was written down when it went.
+
+What each key really reaches is readable, for whoever may read the keys:
+
+```sql
+select name, prefix, capability, reaches
+  from api_key_reach
+ where company_id = '<the company>'
+ order by name, capability;
+```
+
+`api_key_reach` calls the function `has_capability()` calls, so it cannot
+disagree with what a request will be answered. `ekwo doctor` lists every live
+key whose list goes beyond its issuer under *keys beyond their issuer*, with
+the capabilities it no longer reaches: revoke it and issue a new one from
+somebody who holds what it needs, or give the issuer the rights back.
+
+**A deleted account keeps bounding its keys while its membership stays.**
+`company_members` has no foreign key to `auth.users`, on purpose
+([decision 0001](decisions/0001-one-installation-is-one-customer.md)), so
+deleting a person from Supabase Auth leaves their membership rows — and a key
+they issued is still bounded by those rows, which may hold everything it
+carries. `ekwo doctor` reports such a row under *company members*. Removing it
+(`remove_member()`) is what withdraws the keys; deleting the account alone
+does not.
 
 ## See also
 

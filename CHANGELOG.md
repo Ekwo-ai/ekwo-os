@@ -138,6 +138,29 @@ somewhere has already run it.
 
 ### Security
 
+- **A machine key holds only what the person who issued it still holds**
+  (`20260930103815`). `create_api_key()` refused a capability its issuer did
+  not hold, and that was the only time the issuer was consulted: at use,
+  `has_capability()` read the key's own list and nothing else, so a key issued
+  by somebody who then left the company, or lost a capability, kept working
+  until somebody withdrew it by hand. Decision 0006, `docs/machine-access.md`
+  and the comment of `create_api_key()` all said otherwise. A key now holds a
+  capability on its company only while its issuer holds it there, worked out
+  at every call by `key_holds()` and never stored; a key the installation
+  issued itself (`created_by` null) is bounded by its list alone. One brick,
+  `member_holds(member, capability)`, decides a person's rights for
+  `has_capability()`, `key_holds()` and `member_capabilities()`.
+  `api_key_on_company(company)` replaces `api_key_company()` in
+  `is_company_member()`, `is_any_company_member()`, `is_known_caller()` and
+  `installed_schema_version()`, so a key that reaches nothing is on no company
+  and reads no reference data. A key issued while another key is presented
+  records the person behind that key instead of looking like the
+  installation's own. The view `api_key_reach` says, per key and capability,
+  what each key really reaches, and `ekwo doctor` lists the live keys that go
+  beyond their issuer under *keys beyond their issuer* — before the migration
+  as well, from the tables alone. **Upgrading stops those keys**, which is the
+  point: run `ekwo doctor` first to see them. No table changes.
+
 - **The audit trail says what it holds against: clients, not the owner of the
   database** (`20260929103358`). The schema said the guard of `audit_log` held
   "for everyone, owner included". A trigger cannot: the owner of a table may

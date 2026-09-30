@@ -58,7 +58,10 @@ been proven, never before. Three things make that sound:
   The role is the door; the capabilities are the rooms.
 
 **A key of a company is on that company.** `is_company_member()` answers true
-for the company the presented key belongs to, and every policy that asks it
+for the company the presented key belongs to — as long as the key still
+reaches something there, which since the amendment of
+[0006](0006-a-machine-key-is-a-narrow-caller.md) depends on its issuer too
+(`api_key_on_company()`) — and every policy that asks it
 follows without being rewritten — `companies`, `company_members`,
 `company_modules`, `company_filing_periods`, `matching_settings`, `audit_log`,
 and `module_enabled()` for a module's tables. This is the open question of 0006
@@ -76,7 +79,7 @@ reads. Everything with a capability keeps asking for it.
 the socle and two of the assets module asked `auth.uid() is not null`, which
 reads "somebody signed in" and was right while a person was the only caller.
 They now ask `is_known_caller()` — a signed-in user, or the holder of a live
-key. They hold no customer data: a chart of accounts and a currency are the
+key that still reaches something. They hold no customer data: a chart of accounts and a currency are the
 same rows on every installation. A caller that cannot read `modules` cannot be
 told which tables an archive carries, which is how an export refused a key that
 held `company.export` over a list of module codes.
@@ -84,8 +87,9 @@ held `company.export` over a list of module codes.
 **`anon` gains five functions, and no table.** `ekwo_pre_request()` and
 `present_api_key()` are the door, and both answer `void` — `use_api_key()` is
 not granted and must not be, because it returns the row with `key_hash` in it.
-`api_key_company()` and `is_known_caller()` are policy helpers of the same kind
-as the eight of 0002: without a key presented they answer the same nothing
+`api_key_on_company()` (which replaced `api_key_company()`) and
+`is_known_caller()` are policy helpers of the same kind as the eight of 0002:
+without a key presented they answer the same nothing
 `auth.uid()` gives. `installed_schema_version()` is granted and answers `anon`
 with zero rows, so the screen that checks a pasted key can call it and a
 scanner learns nothing.
