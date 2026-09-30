@@ -49,10 +49,13 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run typecheck
+      # Vitest slices files by ceil(files / 16): with 177 files the first fifteen
+      # shards take them all and the sixteenth is empty, which vitest reports as a
+      # failure. --passWithNoTests keeps an empty shard green.
       # Sixteen shards of two workers, without the golden replay, which has
       # its own job below. A worker keeps the memory of every PGlite database
       # the files it ran have opened, and a hosted runner has 16 GB (issue #28).
-      - run: npm test -- --maxWorkers=2 --shard=${{ matrix.shard }}/16 --exclude tests/golden.test.ts
+      - run: npm test -- --maxWorkers=2 --shard=${{ matrix.shard }}/16 --exclude tests/golden.test.ts --passWithNoTests
       # Builds both workspaces; the CLI also copies supabase/ into its dist.
       - run: npm run build
       # The published binary has to run. A broken shebang or a missing export
