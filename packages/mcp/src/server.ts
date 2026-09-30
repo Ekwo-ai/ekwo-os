@@ -614,7 +614,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     {
       title: 'Issue a key to a machine',
       description:
-        'Issues a key so a script — a nightly import, a till, a bank feed — can work in one company without a person signing in. It carries an explicit list of capabilities and nothing else, it can never reach another company, and it cannot hold a capability you do not hold yourself. The secret comes back once and is stored only as a hash: show it to the user and say it cannot be read back. Prefer this to sharing anybody\u2019s password, and never suggest a service key.',
+        'Issues a key so a script — a nightly import, a till, a bank feed — can work in one company without a person signing in. It carries an explicit list of capabilities and nothing else, it can never reach another company, and it cannot hold a capability you do not hold yourself — at issuance and at every use: if you lose a capability or leave the company, the key loses it too. The secret comes back once and is stored only as a hash: show it to the user and say it cannot be read back. Prefer this to sharing anybody\u2019s password, and never suggest a service key.',
       inputSchema: write.CreateApiKeyInput.shape,
       annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: false, openWorldHint: false },
     },

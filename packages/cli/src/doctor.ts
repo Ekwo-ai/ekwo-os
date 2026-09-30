@@ -76,6 +76,7 @@ export async function doctor(
   checks.push(await checkPolicies(db));
   checks.push(await checkGrants(db, expected));
   checks.push(await checkPreRequest(db));
+  checks.push(await checkKeysBeyondIssuer(db));
 
   checks.push(await checkOrphanMembers(db));
   checks.push(await checkOrphanAdmins(db));
@@ -356,7 +357,8 @@ async function checkOrphanMembers(db: SqlClient): Promise<Check> {
     summary: `${rows.length} membership row(s) whose user no longer exists in Supabase Auth`,
     details: [
       ...rows.map((r) => `${r.company}: ${r.user_id}`),
-      'These grant nothing — auth.uid() can never match them — but they misreport who has access.',
+      'These grant nothing to a person — auth.uid() can never match them — but they misreport who has access,',
+      'and a machine key that person issued is still bounded by them, so it keeps working until the row goes.',
       'Delete them, or re-invite the person, once you know which it should be.',
     ],
   };
@@ -474,6 +476,122 @@ async function checkPreRequest(db: SqlClient): Promise<Check> {
     ],
   };
 }
+
+/**
+ * The keys that carry more than the person who issued them holds today.
+ *
+ * A key is a delegation from a person: since `20260930103815` it holds a
+ * capability on its company only while its issuer still holds it there,
+ * worked out at every call by `key_holds()`. A key issued by somebody who has
+ * since left the company, changed preset or had a capability revoked keeps
+ * its list and silently loses what the list says — which is the rule, and
+ * also something an operator should see rather than discover when a nightly
+ * backup starts to fail. So this lists every live key whose list goes beyond
+ * its issuer, and the capabilities it no longer reaches.
+ *
+ * On a database that has the migration, the answer is read from
+ * `api_key_reach`, which calls the function `has_capability()` calls. On one
+ * that does not yet, it is `KEYS_BEYOND_ISSUER_BEFORE_MIGRATION`: the same rule
+ * written against the tables alone, so that the keys an upgrade is about to
+ * stop can be named before `ekwo migrate` runs. `tests/cli/status-doctor.test.ts`
+ * holds the two to the same answer.
+ *
+ * A warning: the keys are doing what the rule says, and the decision — revoke,
+ * or issue again from somebody who holds the rights — is the operator's.
+ */
+async function checkKeysBeyondIssuer(db: SqlClient): Promise<Check> {
+  const name = 'keys beyond their issuer';
+  const hasView =
+    (await scalar<boolean>(db, `select to_regclass('public.api_key_reach') is not null`)) === true;
+  const found = await db.query<KeyBeyondIssuer>(
+    hasView ? KEYS_BEYOND_ISSUER : KEYS_BEYOND_ISSUER_BEFORE_MIGRATION,
+  );
+  if (found.length === 0) {
+    return {
+      name,
+      severity: 'ok',
+      summary: 'every live key is within what the person who issued it holds today',
+    };
+  }
+  return {
+    name,
+    severity: 'warning',
+    summary: hasView
+      ? `${found.length} live key(s) carry capabilities their issuer no longer holds, and no longer reach them`
+      : `${found.length} live key(s) carry capabilities their issuer no longer holds, and will stop reaching them once \`ekwo migrate\` has run`,
+    details: [
+      ...cap(
+        found.map(
+          (k) =>
+            `${k.company}: ${k.name} (${k.prefix}…), issued by ${k.created_by}` +
+            `${k.member ? '' : ', who is no longer a member'} — beyond: ${k.beyond.join(', ')}`,
+        ),
+      ),
+      'Revoke the key and issue a new one from somebody who holds what it needs, or give the issuer the rights back.',
+    ],
+    data: { keys: found },
+  };
+}
+
+export interface KeyBeyondIssuer {
+  company: string;
+  api_key_id: string;
+  name: string;
+  prefix: string;
+  created_by: string;
+  /** Whether the issuer is still a member of the key's company at all. */
+  member: boolean;
+  /** The capabilities on the key's list it does not reach, in order. */
+  beyond: string[];
+}
+
+/** From `api_key_reach`, on a database that has it. */
+export const KEYS_BEYOND_ISSUER = `
+  select c.name as company, k.id::text as api_key_id, k.name, k.prefix,
+         k.created_by::text as created_by,
+         exists (select 1 from company_members m
+                  where m.company_id = k.company_id and m.user_id = k.created_by) as member,
+         array_agg(r.capability order by r.capability) as beyond
+    from api_key_reach r
+    join api_keys k on k.id = r.api_key_id
+    join companies c on c.id = r.company_id
+   where not r.reaches
+     and k.revoked_at is null
+     and (k.expires_at is null or k.expires_at > now())
+   group by c.name, k.id, k.name, k.prefix, k.created_by, k.company_id
+   order by c.name, k.name, k.id`;
+
+/**
+ * The same list on a database that predates `20260930103815`, from the tables
+ * alone and reading nothing but what was already there. The member rule is
+ * the one `member_holds()` carries — revoked beats granted, granted beats the
+ * preset — restated here because the function does not exist yet on the
+ * database this runs against. It is also the query to run by hand on an
+ * installation before upgrading it.
+ */
+export const KEYS_BEYOND_ISSUER_BEFORE_MIGRATION = `
+  select c.name as company, k.id::text as api_key_id, k.name, k.prefix,
+         k.created_by::text as created_by,
+         (m.user_id is not null) as member,
+         array_agg(cap.code order by cap.code) as beyond
+    from api_keys k
+    join companies c on c.id = k.company_id
+   cross join lateral unnest(k.capabilities) as cap(code)
+    left join company_members m
+           on m.company_id = k.company_id and m.user_id = k.created_by
+   where k.revoked_at is null
+     and (k.expires_at is null or k.expires_at > now())
+     and k.created_by is not null
+     and not coalesce(
+           case
+             when cap.code = any (m.capabilities_revoked) then false
+             when cap.code = any (m.capabilities_granted) then true
+             else exists (select 1 from role_capabilities rc
+                           where rc.role = m.role and rc.capability = cap.code)
+           end,
+           false)
+   group by c.name, k.id, k.name, k.prefix, k.created_by, m.user_id
+   order by c.name, k.name, k.id`;
 
 async function checkStatements(db: SqlClient): Promise<Check> {
   const rows = await db.query<{

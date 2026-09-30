@@ -210,7 +210,16 @@ export {
   type Connection,
   type Probe,
 } from './connection.js';
-export { doctor, type Check, type DoctorOptions, type DoctorReport, type Severity } from './doctor.js';
+export {
+  doctor,
+  KEYS_BEYOND_ISSUER,
+  KEYS_BEYOND_ISSUER_BEFORE_MIGRATION,
+  type Check,
+  type DoctorOptions,
+  type DoctorReport,
+  type KeyBeyondIssuer,
+  type Severity,
+} from './doctor.js';
 export {
   compareCatalogue,
   describeDifferences,

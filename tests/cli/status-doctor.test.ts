@@ -11,6 +11,8 @@ import {
   applySeeds,
   bootstrap,
   doctor,
+  KEYS_BEYOND_ISSUER,
+  KEYS_BEYOND_ISSUER_BEFORE_MIGRATION,
   applyMigration,
   allModuleMigrations,
   listMigrations,
@@ -168,6 +170,7 @@ describe('doctor', () => {
       'policies',
       'grants',
       'api keys over the API',
+      'keys beyond their issuer',
       'company members',
       'instance administrators',
       'bank accounts',
@@ -263,6 +266,48 @@ describe('doctor', () => {
     expect(check?.summary).toContain('1 membership row');
     expect(check?.details?.[0]).toContain(ghost);
     expect(report.problems).toBe(0);
+  });
+
+  it('names a key whose list goes beyond what its issuer holds today', async () => {
+    // A key holds a capability only while the person who issued it still does
+    // (`key_holds()`, `20260930103815`). Four keys: one within its issuer's
+    // preset, one beyond it, one whose issuer left, one the installation
+    // issued — and a withdrawn one, which reaches nothing and is not news.
+    const viewer = await makeAuthUser(db, 'viewer@example.test');
+    const gone = await makeAuthUser(db, 'gone@example.test');
+    await db.query(`insert into company_members (company_id, user_id, role) values ($1, $2, 'viewer')`, [
+      companyId,
+      viewer,
+    ]);
+    const key = async (name: string, capabilities: string[], createdBy: string | null, revoked = false) =>
+      db.query(
+        `insert into api_keys (company_id, name, prefix, key_hash, capabilities, created_by, revoked_at)
+         values ($1, $2, $3, md5($2), $4::text[], $5, case when $6 then now() end)`,
+        [companyId, name, name.slice(0, 6), capabilities, createdBy, revoked],
+      );
+    await key('within', ['documents.read'], viewer);
+    await key('beyond', ['documents.read', 'documents.write', 'entries.post'], viewer);
+    await key('orphan', ['documents.read'], gone);
+    await key('installation', ['company.write'], null);
+    await key('withdrawn', ['company.write'], viewer, true);
+
+    const report = await doctor(db, migrations);
+    const check = report.checks.find((c) => c.name === 'keys beyond their issuer');
+    expect(check?.severity).toBe('warning');
+    expect(check?.summary).toContain('2 live key(s)');
+    expect(check?.details?.[0]).toContain('Example One: beyond (beyond…)');
+    expect(check?.details?.[0]).toContain(`issued by ${viewer} — beyond: documents.write, entries.post`);
+    expect(check?.details?.[1]).toContain('orphan');
+    expect(check?.details?.[1]).toContain('who is no longer a member — beyond: documents.read');
+    expect(report.problems).toBe(0);
+
+    // The query that runs on a database without the migration gives the same
+    // answer as the view, on the same rows: one rule, two spellings, held
+    // together here.
+    const fromView = await db.query(KEYS_BEYOND_ISSUER);
+    const fromTables = await db.query(KEYS_BEYOND_ISSUER_BEFORE_MIGRATION);
+    expect(fromTables).toEqual(fromView);
+    expect(fromView).toHaveLength(2);
   });
 
   it('names a migration that has not been applied', async () => {
