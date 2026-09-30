@@ -147,8 +147,8 @@ Running the service means using three suppliers, and they see what passing
 through them requires: **Supabase** (the database of the control plane and the
 storage where the copies of your books are kept, in the European Union),
 **Netlify** (serving the site and the application, and running the functions
-that take copies and apply updates — your books pass through those functions
-in transit and are not stored there) and **Mailjet**, which sends the sign-in
+that take copies and apply updates, in Frankfurt — your books pass through
+those functions in transit and are not stored there) and **Mailjet**, which sends the sign-in
 codes and receives your email address only. Each holds data under its own terms
 as our processor, and none of them is given your books to do anything with.
 The list, with where each one keeps data, is in Annex 3 of `DPA.md`.
