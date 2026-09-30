@@ -1,0 +1,543 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "why": "Trois sociétés fictives dont l'impôt a été calculé à la main, pour l'exercice comptable 2025 (exercice d'imposition 2026) : une petite société bénéficiaire au taux réduit, une année en perte, et une petite société exclue du taux réduit qui impute des pertes antérieures au-delà du plafond de la corbeille.",
+  "fiscal_year": {
+    "name": "Exercice 2025",
+    "start": "2025-01-01",
+    "end": "2025-12-31"
+  },
+  "companies": [
+    {
+      "ref": "sme-profit",
+      "name": "Atelier Lumen SRL",
+      "why": "Une petite société bénéficiaire qui remplit les conditions du taux réduit : 20 % sur la première tranche de 100 000 EUR, 25 % au-delà. Quatre dépenses non admises, dont une calculée par la formule CO2 et une lue sur un compte que la société désigne. La charge d'impôt déjà comptabilisée ne change rien : le calcul part du résultat avant impôts.",
+      "entries": [
+        {
+          "date": "2025-06-30",
+          "description": "Ventes de l'exercice",
+          "lines": [
+            {
+              "account": "550000",
+              "debit": "412350.00"
+            },
+            {
+              "account": "700000",
+              "credit": "412350.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-06-30",
+          "description": "Loyers, honoraires et prestations",
+          "lines": [
+            {
+              "account": "610000",
+              "debit": "36000.00"
+            },
+            {
+              "account": "613000",
+              "debit": "58420.75"
+            },
+            {
+              "account": "550000",
+              "credit": "94420.75"
+            }
+          ]
+        },
+        {
+          "date": "2025-06-30",
+          "description": "Rémunération du dirigeant",
+          "lines": [
+            {
+              "account": "618000",
+              "debit": "54000.00"
+            },
+            {
+              "account": "550000",
+              "credit": "54000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-06-30",
+          "description": "Rémunérations et cotisations patronales",
+          "lines": [
+            {
+              "account": "620000",
+              "debit": "92300.40"
+            },
+            {
+              "account": "621000",
+              "debit": "24118.30"
+            },
+            {
+              "account": "550000",
+              "credit": "116418.70"
+            }
+          ]
+        },
+        {
+          "date": "2025-09-30",
+          "description": "Restaurants (3 127,45) et réceptions (1 045,30)",
+          "lines": [
+            {
+              "account": "615200",
+              "debit": "4172.75"
+            },
+            {
+              "account": "550000",
+              "credit": "4172.75"
+            }
+          ]
+        },
+        {
+          "date": "2025-09-30",
+          "description": "Frais de voiture — diesel, 110 g CO2/km, achetée en 2022",
+          "lines": [
+            {
+              "account": "615100",
+              "debit": "8412.60"
+            },
+            {
+              "account": "550000",
+              "credit": "8412.60"
+            }
+          ]
+        },
+        {
+          "date": "2025-10-15",
+          "description": "Amende administrative",
+          "lines": [
+            {
+              "account": "664100",
+              "debit": "250.00"
+            },
+            {
+              "account": "550000",
+              "credit": "250.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Charge fiscale estimée de l'exercice",
+          "lines": [
+            {
+              "account": "670000",
+              "debit": "25000.00"
+            },
+            {
+              "account": "450000",
+              "credit": "25000.00"
+            }
+          ]
+        }
+      ],
+      "parameters": {
+        "small_company": true,
+        "holds_participations_above_half": false,
+        "held_half_by_companies": false,
+        "investment_company": false,
+        "director_remuneration": "54000.00"
+      },
+      "adjustments": [
+        {
+          "rule": "restaurant",
+          "amount": "3127.45"
+        },
+        {
+          "rule": "reception-gifts",
+          "amount": "1045.30"
+        },
+        {
+          "rule": "fines",
+          "account": "664100"
+        },
+        {
+          "rule": "car-costs-before-2023-07",
+          "amount": "8412.60",
+          "parameters": {
+            "co2_g_km": 110,
+            "fuel": "diesel"
+          }
+        }
+      ],
+      "expected": {
+        "computation": [
+          "Résultat avant impôts (rubrique 9903) : 412 350,00 − 36 000,00 − 58 420,75 − 54 000,00 − 92 300,40 − 24 118,30 − 4 172,75 − 8 412,60 − 250,00 = 134 675,20. La charge fiscale de 25 000,00 est sous la rubrique 9903 et n'y entre pas.",
+          "Restaurant : 3 127,45 × 31 % = 969,5095, soit 969,51.",
+          "Réceptions et cadeaux : 1 045,30 × 50 % = 522,65.",
+          "Amendes : solde du compte 664100, 250,00 × 100 % = 250,00.",
+          "Voiture : taux de déduction 120 % − (0,5 % × 1 × 110) = 65,0 %, entre 50 % et 100 % ; quotité non admise 35 % ; 8 412,60 × 35 % = 2 944,41.",
+          "Résultat fiscal : 134 675,20 + 969,51 + 522,65 + 250,00 + 2 944,41 = 139 361,77. Aucune perte antérieure : la base imposable est 139 361,77.",
+          "Taux réduit, conditions remplies (petite société, rémunération du dirigeant 54 000,00 ≥ 45 000) : 100 000,00 × 20 % = 20 000,00.",
+          "Taux ordinaire sur le solde : 39 361,77 × 25 % = 9 840,4425, soit 9 840,44.",
+          "Impôt estimé : 20 000,00 + 9 840,44 = 29 840,44."
+        ],
+        "lines": [
+          {
+            "kind": "accounting_result",
+            "code": "9903",
+            "amount": "134675.20"
+          },
+          {
+            "kind": "adjustment",
+            "code": "restaurant",
+            "base": "3127.45",
+            "rate": "31",
+            "amount": "969.51"
+          },
+          {
+            "kind": "adjustment",
+            "code": "reception-gifts",
+            "base": "1045.30",
+            "rate": "50",
+            "amount": "522.65"
+          },
+          {
+            "kind": "adjustment",
+            "code": "fines",
+            "base": "250.00",
+            "rate": "100",
+            "amount": "250.00"
+          },
+          {
+            "kind": "adjustment",
+            "code": "car-costs-before-2023-07",
+            "base": "8412.60",
+            "rate": "35",
+            "amount": "2944.41"
+          },
+          {
+            "kind": "fiscal_result",
+            "amount": "139361.77"
+          },
+          {
+            "kind": "taxable_base",
+            "amount": "139361.77"
+          },
+          {
+            "kind": "rate",
+            "code": "reduced-small",
+            "base": "100000.00",
+            "rate": "20",
+            "amount": "20000.00"
+          },
+          {
+            "kind": "rate",
+            "code": "standard",
+            "base": "39361.77",
+            "rate": "25",
+            "amount": "9840.44"
+          },
+          {
+            "kind": "tax_before_credits",
+            "base": "139361.77",
+            "amount": "29840.44"
+          },
+          {
+            "kind": "estimated_tax",
+            "code": "BE-ISOC",
+            "base": "139361.77",
+            "amount": "29840.44"
+          }
+        ],
+        "tax": "29840.44"
+      }
+    },
+    {
+      "ref": "loss-year",
+      "name": "Verger des Trois Tilleuls SRL",
+      "why": "Une année en perte : pas de base, pas d'impôt, et la perte fiscale — la perte comptable diminuée de la dépense non admise — est ce qu'un exercice ultérieur pourra imputer.",
+      "entries": [
+        {
+          "date": "2025-06-30",
+          "description": "Ventes de l'exercice",
+          "lines": [
+            {
+              "account": "550000",
+              "debit": "120000.00"
+            },
+            {
+              "account": "700000",
+              "credit": "120000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-06-30",
+          "description": "Loyers, honoraires et prestations",
+          "lines": [
+            {
+              "account": "610000",
+              "debit": "48000.00"
+            },
+            {
+              "account": "613000",
+              "debit": "31250.80"
+            },
+            {
+              "account": "550000",
+              "credit": "79250.80"
+            }
+          ]
+        },
+        {
+          "date": "2025-06-30",
+          "description": "Rémunération du dirigeant",
+          "lines": [
+            {
+              "account": "618000",
+              "debit": "45000.00"
+            },
+            {
+              "account": "550000",
+              "credit": "45000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-06-30",
+          "description": "Rémunérations",
+          "lines": [
+            {
+              "account": "620000",
+              "debit": "22400.00"
+            },
+            {
+              "account": "550000",
+              "credit": "22400.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-09-30",
+          "description": "Restaurants",
+          "lines": [
+            {
+              "account": "615200",
+              "debit": "1200.00"
+            },
+            {
+              "account": "550000",
+              "credit": "1200.00"
+            }
+          ]
+        }
+      ],
+      "parameters": {
+        "small_company": true,
+        "holds_participations_above_half": false,
+        "held_half_by_companies": false,
+        "investment_company": false,
+        "director_remuneration": "45000.00"
+      },
+      "adjustments": [
+        {
+          "rule": "restaurant",
+          "amount": "1200.00"
+        }
+      ],
+      "expected": {
+        "computation": [
+          "Résultat avant impôts : 120 000,00 − 48 000,00 − 31 250,80 − 45 000,00 − 22 400,00 − 1 200,00 = −27 850,80.",
+          "Restaurant : 1 200,00 × 31 % = 372,00.",
+          "Résultat fiscal : −27 850,80 + 372,00 = −27 478,80. La base imposable est nulle et la perte de la période est de 27 478,80.",
+          "Impôt estimé : 0,00."
+        ],
+        "lines": [
+          {
+            "kind": "accounting_result",
+            "code": "9903",
+            "amount": "-27850.80"
+          },
+          {
+            "kind": "adjustment",
+            "code": "restaurant",
+            "base": "1200.00",
+            "rate": "31",
+            "amount": "372.00"
+          },
+          {
+            "kind": "fiscal_result",
+            "amount": "-27478.80"
+          },
+          {
+            "kind": "taxable_base",
+            "amount": "0.00"
+          },
+          {
+            "kind": "loss_of_period",
+            "amount": "27478.80"
+          },
+          {
+            "kind": "tax_before_credits",
+            "base": "0.00",
+            "amount": "0.00"
+          },
+          {
+            "kind": "estimated_tax",
+            "code": "BE-ISOC",
+            "base": "0.00",
+            "amount": "0.00"
+          }
+        ],
+        "tax": "0.00"
+      }
+    },
+    {
+      "ref": "sme-outside-conditions",
+      "name": "Comptoir Meuse Logistique SA",
+      "why": "Une petite société dont la moitié des actions est détenue par une autre société : le taux réduit lui est refusé et tout est imposé à 25 %. Elle impute des pertes antérieures, la plus ancienne d'abord, dans la limite de la corbeille : 1 000 000 EUR plus 70 % du bénéfice qui excède ce montant.",
+      "entries": [
+        {
+          "date": "2025-06-30",
+          "description": "Ventes de l'exercice",
+          "lines": [
+            {
+              "account": "550000",
+              "debit": "4850000.00"
+            },
+            {
+              "account": "700000",
+              "credit": "4850000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-06-30",
+          "description": "Loyers, honoraires et prestations",
+          "lines": [
+            {
+              "account": "610000",
+              "debit": "250000.00"
+            },
+            {
+              "account": "613000",
+              "debit": "1100000.00"
+            },
+            {
+              "account": "550000",
+              "credit": "1350000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-06-30",
+          "description": "Rémunérations",
+          "lines": [
+            {
+              "account": "620000",
+              "debit": "2200000.00"
+            },
+            {
+              "account": "550000",
+              "credit": "2200000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-10-15",
+          "description": "Amende administrative",
+          "lines": [
+            {
+              "account": "664100",
+              "debit": "2400.00"
+            },
+            {
+              "account": "550000",
+              "credit": "2400.00"
+            }
+          ]
+        }
+      ],
+      "parameters": {
+        "small_company": true,
+        "holds_participations_above_half": false,
+        "held_half_by_companies": true,
+        "investment_company": false,
+        "director_remuneration": "60000.00"
+      },
+      "adjustments": [
+        {
+          "rule": "fines",
+          "amount": "2400.00"
+        }
+      ],
+      "losses": [
+        {
+          "origin_period_end": "2023-12-31",
+          "amount": "1500000.00"
+        },
+        {
+          "origin_period_end": "2024-12-31",
+          "amount": "500000.00"
+        }
+      ],
+      "expected": {
+        "computation": [
+          "Résultat avant impôts : 4 850 000,00 − 250 000,00 − 1 100 000,00 − 2 200 000,00 − 2 400,00 = 1 297 600,00.",
+          "Amendes : 2 400,00 × 100 % = 2 400,00. Résultat fiscal : 1 300 000,00.",
+          "Pertes antérieures disponibles : 1 500 000,00 (2023) + 500 000,00 (2024) = 2 000 000,00.",
+          "Limite de la corbeille : 1 000 000,00 + 70 % × (1 300 000,00 − 1 000 000,00) = 1 210 000,00, imputés sur la perte de 2023, la plus ancienne, qui conserve 290 000,00.",
+          "Base imposable : 1 300 000,00 − 1 210 000,00 = 90 000,00.",
+          "Taux réduit refusé : les actions sont détenues pour au moins la moitié par une autre société (art. 215, al. 3, 2°).",
+          "Taux ordinaire : 90 000,00 × 25 % = 22 500,00."
+        ],
+        "lines": [
+          {
+            "kind": "accounting_result",
+            "code": "9903",
+            "amount": "1297600.00"
+          },
+          {
+            "kind": "adjustment",
+            "code": "fines",
+            "base": "2400.00",
+            "rate": "100",
+            "amount": "2400.00"
+          },
+          {
+            "kind": "fiscal_result",
+            "amount": "1300000.00"
+          },
+          {
+            "kind": "loss_used",
+            "code": "2023-12-31",
+            "base": "1500000.00",
+            "amount": "-1210000.00"
+          },
+          {
+            "kind": "taxable_base",
+            "amount": "90000.00"
+          },
+          {
+            "kind": "rate_not_applied",
+            "code": "reduced-small",
+            "note": "not_met: held_half_by_companies",
+            "rate": "20"
+          },
+          {
+            "kind": "rate",
+            "code": "standard",
+            "base": "90000.00",
+            "rate": "25",
+            "amount": "22500.00"
+          },
+          {
+            "kind": "tax_before_credits",
+            "base": "90000.00",
+            "amount": "22500.00"
+          },
+          {
+            "kind": "estimated_tax",
+            "code": "BE-ISOC",
+            "base": "90000.00",
+            "amount": "22500.00"
+          }
+        ],
+        "tax": "22500.00"
+      }
+    }
+  ]
+}

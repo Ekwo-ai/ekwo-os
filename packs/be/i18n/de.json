@@ -504,5 +504,28 @@
     "furniture": "Mobiliar",
     "it-equipment": "Büro- und EDV-Ausstattung",
     "vehicle": "Fuhrpark"
+  },
+  "corporate_tax": {
+    "tax": "Gesellschaftssteuer",
+    "parameter:small_company": "Die Gesellschaft ist eine kleine Gesellschaft im Sinne von Artikel 1:24 §§ 1 bis 6 des Gesetzbuches der Gesellschaften und Vereinigungen",
+    "parameter:approved_cooperative": "Die Gesellschaft ist eine gemäß Artikel 8:4 des Gesetzbuches der Gesellschaften und Vereinigungen zugelassene Genossenschaft",
+    "parameter:holds_participations_above_half": "Die Gesellschaft hält Aktien oder Anteile, deren Investitionswert 50 % des neu bewerteten eingezahlten Kapitals oder des eingezahlten Kapitals zuzüglich der besteuerten Rücklagen und der gebuchten Mehrwerte übersteigt",
+    "parameter:held_half_by_companies": "Die Aktien oder Anteile der Gesellschaft werden mindestens zur Hälfte von einer oder mehreren anderen Gesellschaften gehalten",
+    "parameter:director_remuneration": "Höchste Entlohnung, die einem Unternehmensleiter zu Lasten des Ergebnisses des Besteuerungszeitraums gewährt wurde",
+    "parameter:within_first_four_periods": "Der Besteuerungszeitraum ist einer der ersten vier seit der Gründung der Gesellschaft",
+    "parameter:investment_company": "Die Gesellschaft ist eine Investmentgesellschaft, eine beaufsichtigte Immobiliengesellschaft oder ein Organismus für die Finanzierung von Pensionen im Sinne von Artikel 215 Absatz 3 Nr. 6",
+    "parameter:director_remuneration_condition_met": "Die Gesellschaft ist nicht durch die Bedingung der Mindestentlohnung eines Unternehmensleiters, wie sie ab dem Steuerjahr 2027 gilt, vom ermäßigten Satz ausgeschlossen",
+    "parameter:excessive_benefits_in_kind": "Die Gesellschaft gewährt ihren Unternehmensleitern einen übermäßigen Anteil an Vorteilen jeglicher Art im Sinne von Artikel 2 § 1 Nr. 25",
+    "rule:restaurant": "Restaurantkosten — nicht abzugsfähiger Anteil",
+    "rule:reception-gifts": "Empfangskosten und Geschäftsgeschenke — nicht abzugsfähiger Anteil",
+    "rule:fines": "Geldbußen, Einziehungen und Strafen jeglicher Art",
+    "rule:clothing": "Nicht spezifische Kleidung",
+    "rule:car-benefit-with-fuel": "Zur persönlichen Nutzung überlassenes Fahrzeug, Kraftstoff übernommen — 40 % des Vorteils jeglicher Art",
+    "rule:car-benefit-without-fuel": "Zur persönlichen Nutzung überlassenes Fahrzeug, ohne Kraftstoff — 17 % des Vorteils jeglicher Art",
+    "rule:car-costs-before-2023-07": "Fahrzeugkosten — vor dem 1. Juli 2023 gekaufte, geleaste oder gemietete Fahrzeuge",
+    "rule:car-costs-2023-07-to-2025": "Fahrzeugkosten — vom 1. Juli 2023 bis zum 31. Dezember 2025 gekaufte, geleaste oder gemietete Fahrzeuge mit CO2-Ausstoß",
+    "rule:car-costs-from-2026": "Fahrzeugkosten — ab dem 1. Januar 2026 gekaufte, geleaste oder gemietete Fahrzeuge mit CO2-Ausstoß",
+    "rate:standard": "Normaler Satz",
+    "rate:reduced-small": "Ermäßigter Satz für kleine Gesellschaften auf die erste Teilbetragsstufe"
   }
 }

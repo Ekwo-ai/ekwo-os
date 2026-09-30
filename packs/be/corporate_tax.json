@@ -1,0 +1,461 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "tax": {
+    "code": "BE-ISOC",
+    "name": "Impôt des sociétés",
+    "legal_reference": "Code des impôts sur les revenus 1992, titre III — impôt des sociétés",
+    "source": "cir-92"
+  },
+  "result": {
+    "statement": "BE-BNB-ABBR-IS",
+    "line": "9903",
+    "legal_reference": "Arrêté royal du 29 avril 2019, annexe — compte de résultats abrégé, rubrique 9903 « Bénéfice (Perte) de l'exercice avant impôts » ; Code des impôts sur les revenus 1992, art. 198, § 1er, 1° — l'impôt des sociétés et les sommes versées à valoir sur celui-ci ne sont pas des frais professionnels, de sorte que le calcul part du résultat avant impôts",
+    "source": "comptes-annuels"
+  },
+  "accounts": {
+    "expense": "670000",
+    "payable": "450000",
+    "receivable": "412000",
+    "legal_reference": "Arrêté royal du 21 octobre 2018, annexe 1 — comptes 670 « Impôts belges sur le résultat de l'exercice », 450 « Dettes fiscales estimées » et 412 « Impôts et versements fiscaux à récupérer »",
+    "source": "pcmn"
+  },
+  "parameters": [
+    {
+      "code": "small_company",
+      "name": "La société est une petite société au sens de l'article 1:24, §§ 1er à 6, du Code des sociétés et des associations",
+      "type": "boolean",
+      "sequence": 10,
+      "legal_reference": "Code des impôts sur les revenus 1992, art. 215, al. 2 — le taux réduit est réservé aux sociétés considérées comme petites sociétés sur la base de l'article 1:24, §§ 1er à 6, du Code des sociétés et des associations",
+      "source": "cir-92-ex-2026"
+    },
+    {
+      "code": "approved_cooperative",
+      "name": "La société est une société coopérative agréée conformément à l'article 8:4 du Code des sociétés et des associations",
+      "type": "boolean",
+      "sequence": 20,
+      "legal_reference": "Code des impôts sur les revenus 1992, art. 215, al. 3, 1°, 2° et 4° — ces exclusions ne visent pas les sociétés coopératives agréées",
+      "source": "cir-92-ex-2026"
+    },
+    {
+      "code": "holds_participations_above_half",
+      "name": "La société détient des actions ou parts dont la valeur d'investissement excède 50 % de la valeur réévaluée du capital libéré, ou du capital libéré augmenté des réserves taxées et des plus-values comptabilisées",
+      "type": "boolean",
+      "sequence": 30,
+      "legal_reference": "Code des impôts sur les revenus 1992, art. 215, al. 3, 1° — il n'est pas tenu compte des actions ou parts qui représentent au moins 75 % du capital libéré de la société qui les a émises",
+      "source": "cir-92-ex-2026"
+    },
+    {
+      "code": "held_half_by_companies",
+      "name": "Les actions ou parts de la société sont détenues à concurrence d'au moins la moitié par une ou plusieurs autres sociétés",
+      "type": "boolean",
+      "sequence": 40,
+      "legal_reference": "Code des impôts sur les revenus 1992, art. 215, al. 3, 2°",
+      "source": "cir-92-ex-2026"
+    },
+    {
+      "code": "director_remuneration",
+      "name": "Rémunération la plus élevée allouée à un dirigeant d'entreprise à charge du résultat de la période imposable",
+      "type": "amount",
+      "sequence": 50,
+      "legal_reference": "Code des impôts sur les revenus 1992, art. 215, al. 3, 4°, tel qu'applicable à l'exercice d'imposition 2026",
+      "source": "cir-92-ex-2026"
+    },
+    {
+      "code": "within_first_four_periods",
+      "name": "La période imposable est l'une des quatre premières depuis la constitution de la société",
+      "type": "boolean",
+      "sequence": 60,
+      "legal_reference": "Code des impôts sur les revenus 1992, art. 215, al. 3, 4° — la condition de rémunération s'applique à partir de la cinquième période imposable depuis la constitution",
+      "source": "cir-92-ex-2026"
+    },
+    {
+      "code": "investment_company",
+      "name": "La société est une société d'investissement, une société immobilière réglementée ou un organisme de financement de pensions visés à l'article 215, alinéa 3, 6°",
+      "type": "boolean",
+      "sequence": 70,
+      "legal_reference": "Code des impôts sur les revenus 1992, art. 215, al. 3, 6°",
+      "source": "cir-92-ex-2026"
+    },
+    {
+      "code": "director_remuneration_condition_met",
+      "name": "La société n'est pas exclue du taux réduit par la condition de rémunération minimale d'un dirigeant d'entreprise, telle qu'elle s'applique à partir de l'exercice d'imposition 2027",
+      "type": "boolean",
+      "sequence": 80,
+      "legal_reference": "Code des impôts sur les revenus 1992, art. 215, al. 3, 4°, remplacé par la loi du 15 juillet 2026, art. 80 et 88 — rémunération au moins égale à un montant indexé chaque année, ou au moins égale au revenu imposable de la société. Le montant indexé n'est pas repris dans ce pack : la société déclare si la condition est remplie.",
+      "source": "loi-2026-07-15"
+    },
+    {
+      "code": "excessive_benefits_in_kind",
+      "name": "La société alloue à ses dirigeants d'entreprise une part excessive d'avantages de toute nature au sens de l'article 2, § 1er, 25°",
+      "type": "boolean",
+      "sequence": 90,
+      "legal_reference": "Code des impôts sur les revenus 1992, art. 215, al. 3, 5°, rétabli par la loi du 15 juillet 2026, art. 80 et 88 — applicable à partir de l'exercice d'imposition 2027",
+      "source": "loi-2026-07-15"
+    }
+  ],
+  "adjustment_rules": [
+    {
+      "code": "restaurant",
+      "name": "Frais de restaurant — quotité non déductible",
+      "direction": "add_back",
+      "percent": 31,
+      "valid_from": "2025-12-31",
+      "valid_on": "period_end",
+      "sequence": 10,
+      "legal_reference": "Code des impôts sur les revenus 1992, art. 53, 8°bis — 31 % de la quotité professionnelle des frais de restaurant ; art. 53/1 — sauf les frais refacturés à des tiers de manière explicite et séparée",
+      "source": "cir-92-ex-2026"
+    },
+    {
+      "code": "reception-gifts",
+      "name": "Frais de réception et cadeaux d'affaires — quotité non déductible",
+      "direction": "add_back",
+      "percent": 50,
+      "valid_from": "2025-12-31",
+      "valid_on": "period_end",
+      "sequence": 20,
+      "legal_reference": "Code des impôts sur les revenus 1992, art. 53, 8° — 50 % de la quotité professionnelle des frais de réception et de cadeaux d'affaires, à l'exclusion des articles publicitaires portant la dénomination de l'entreprise",
+      "source": "cir-92-ex-2026"
+    },
+    {
+      "code": "fines",
+      "name": "Amendes, confiscations et pénalités de toute nature",
+      "direction": "add_back",
+      "percent": 100,
+      "valid_from": "2025-12-31",
+      "valid_on": "period_end",
+      "sequence": 30,
+      "legal_reference": "Code des impôts sur les revenus 1992, art. 53, 6° — les amendes, y compris transactionnelles et administratives, les confiscations et les pénalités de toute nature",
+      "source": "cir-92-ex-2026"
+    },
+    {
+      "code": "clothing",
+      "name": "Vêtements non spécifiques",
+      "direction": "add_back",
+      "percent": 100,
+      "valid_from": "2025-12-31",
+      "valid_on": "period_end",
+      "sequence": 40,
+      "legal_reference": "Code des impôts sur les revenus 1992, art. 53, 7° — les frais de vêtements, sauf s'il s'agit de vêtements professionnels spécifiques",
+      "source": "cir-92-ex-2026"
+    },
+    {
+      "code": "car-benefit-with-fuel",
+      "name": "Véhicule mis à disposition à des fins personnelles, carburant pris en charge — 40 % de l'avantage de toute nature",
+      "direction": "add_back",
+      "percent": 40,
+      "valid_from": "2025-12-31",
+      "valid_on": "period_end",
+      "sequence": 50,
+      "legal_reference": "Code des impôts sur les revenus 1992, art. 198, § 1er, 9° et 9°bis — frais de véhicules à concurrence de 40 % du montant de l'avantage de toute nature lorsque les frais de carburant liés à l'utilisation personnelle sont pris en charge par la société",
+      "source": "isoc-275-1-2026"
+    },
+    {
+      "code": "car-benefit-without-fuel",
+      "name": "Véhicule mis à disposition à des fins personnelles, sans carburant — 17 % de l'avantage de toute nature",
+      "direction": "add_back",
+      "percent": 17,
+      "valid_from": "2025-12-31",
+      "valid_on": "period_end",
+      "sequence": 60,
+      "legal_reference": "Code des impôts sur les revenus 1992, art. 198, § 1er, 9° et 9°bis — frais de véhicules à concurrence de 17 % du montant de l'avantage de toute nature lorsque la société ne prend pas le carburant en charge",
+      "source": "isoc-275-1-2026"
+    },
+    {
+      "code": "car-costs-before-2023-07",
+      "name": "Frais de voiture — véhicules achetés, pris en leasing ou en location avant le 1er juillet 2023",
+      "direction": "add_back",
+      "formula": {
+        "yields": "deductible_percent",
+        "variable": "co2_g_km",
+        "intercept": 120,
+        "slope": -0.5,
+        "coefficient": {
+          "parameter": "fuel",
+          "values": {
+            "diesel": 1,
+            "other": 0.95,
+            "natural_gas_under_12_hp": 0.9
+          }
+        },
+        "decimals": 1,
+        "min": 50,
+        "max": 100,
+        "steps": [
+          {
+            "from": 200,
+            "percent": 40
+          }
+        ]
+      },
+      "valid_from": "2025-12-31",
+      "valid_on": "period_end",
+      "sequence": 70,
+      "legal_reference": "Code des impôts sur les revenus 1992, art. 66, § 1er — 120 % − (0,5 % × coefficient × grammes de CO2 par kilomètre), coefficient 1 pour le diesel, 0,95 pour les autres véhicules et 0,90 pour le gaz naturel sous 12 chevaux fiscaux, taux arrondi au dixième, au moins 50 % et au plus 100 %, et 40 % à partir de 200 grammes. Un véhicule commandé avant le 1er juillet 2023 est réputé acheté. Le carburant suit le taux du véhicule ; les hybrides rechargeables dont l'émission est recalculée (art. 66, § 1er, al. 4) déclarent l'émission recalculée.",
+      "source": "cir-92-ex-2026"
+    },
+    {
+      "code": "car-costs-2023-07-to-2025",
+      "name": "Frais de voiture — véhicules émettant du CO2 achetés, pris en leasing ou en location du 1er juillet 2023 au 31 décembre 2025",
+      "direction": "add_back",
+      "formula": {
+        "yields": "deductible_percent",
+        "variable": "co2_g_km",
+        "intercept": 120,
+        "slope": -0.5,
+        "coefficient": {
+          "parameter": "fuel",
+          "values": {
+            "diesel": 1,
+            "other": 0.95,
+            "natural_gas_under_12_hp": 0.9
+          }
+        },
+        "decimals": 1,
+        "min": 0,
+        "max": 75
+      },
+      "valid_from": "2025-12-31",
+      "valid_to": "2026-12-30",
+      "valid_on": "period_end",
+      "sequence": 80,
+      "legal_reference": "Code des impôts sur les revenus 1992, art. 66, § 1er, et art. 550 — véhicules émettant du CO2 achetés, pris en leasing ou en location du 1er juillet 2023 au 31 décembre 2025 : la formule 120 % − (0,5 % × coefficient × grammes de CO2 par kilomètre) s'applique sans minimum, y compris à partir de 200 grammes, et le taux est plafonné à 75 % pour l'exercice d'imposition 2026",
+      "source": "cir-92-ex-2026"
+    },
+    {
+      "code": "car-costs-2023-07-to-2025",
+      "name": "Frais de voiture — véhicules émettant du CO2 achetés, pris en leasing ou en location du 1er juillet 2023 au 31 décembre 2025",
+      "direction": "add_back",
+      "formula": {
+        "yields": "deductible_percent",
+        "variable": "co2_g_km",
+        "intercept": 120,
+        "slope": -0.5,
+        "coefficient": {
+          "parameter": "fuel",
+          "values": {
+            "diesel": 1,
+            "other": 0.95,
+            "natural_gas_under_12_hp": 0.9
+          }
+        },
+        "decimals": 1,
+        "min": 0,
+        "max": 50
+      },
+      "valid_from": "2026-12-31",
+      "valid_to": "2027-12-30",
+      "valid_on": "period_end",
+      "sequence": 80,
+      "legal_reference": "Code des impôts sur les revenus 1992, art. 66, § 1er, et art. 550 — véhicules émettant du CO2 achetés, pris en leasing ou en location du 1er juillet 2023 au 31 décembre 2025 : la formule 120 % − (0,5 % × coefficient × grammes de CO2 par kilomètre) s'applique sans minimum, y compris à partir de 200 grammes, et le taux est plafonné à 50 % pour l'exercice d'imposition 2027 (loi du 18 décembre 2025, art. 26)",
+      "source": "loi-2025-12-18"
+    },
+    {
+      "code": "car-costs-2023-07-to-2025",
+      "name": "Frais de voiture — véhicules émettant du CO2 achetés, pris en leasing ou en location du 1er juillet 2023 au 31 décembre 2025",
+      "direction": "add_back",
+      "formula": {
+        "yields": "deductible_percent",
+        "variable": "co2_g_km",
+        "intercept": 120,
+        "slope": -0.5,
+        "coefficient": {
+          "parameter": "fuel",
+          "values": {
+            "diesel": 1,
+            "other": 0.95,
+            "natural_gas_under_12_hp": 0.9
+          }
+        },
+        "decimals": 1,
+        "min": 0,
+        "max": 25
+      },
+      "valid_from": "2027-12-31",
+      "valid_to": "2028-12-30",
+      "valid_on": "period_end",
+      "sequence": 80,
+      "legal_reference": "Code des impôts sur les revenus 1992, art. 66, § 1er, et art. 550 — véhicules émettant du CO2 achetés, pris en leasing ou en location du 1er juillet 2023 au 31 décembre 2025 : la formule 120 % − (0,5 % × coefficient × grammes de CO2 par kilomètre) s'applique sans minimum, y compris à partir de 200 grammes, et le taux est plafonné à 25 % pour l'exercice d'imposition 2028 (circulaire relative au verdissement fiscal de la mobilité)",
+      "source": "verdissement-mobilite"
+    },
+    {
+      "code": "car-costs-2023-07-to-2025",
+      "name": "Frais de voiture — véhicules émettant du CO2 achetés, pris en leasing ou en location du 1er juillet 2023 au 31 décembre 2025",
+      "direction": "add_back",
+      "percent": 100,
+      "valid_from": "2028-12-31",
+      "valid_on": "period_end",
+      "sequence": 80,
+      "legal_reference": "Circulaire relative au verdissement fiscal de la mobilité — à partir de l'exercice d'imposition 2029, les frais des véhicules émettant du CO2 achetés, pris en leasing ou en location du 1er juillet 2023 au 31 décembre 2025 ne sont plus déductibles",
+      "source": "verdissement-mobilite"
+    },
+    {
+      "code": "car-costs-from-2026",
+      "name": "Frais de voiture — véhicules émettant du CO2 achetés, pris en leasing ou en location à partir du 1er janvier 2026",
+      "direction": "add_back",
+      "percent": 100,
+      "valid_from": "2025-12-31",
+      "valid_on": "period_end",
+      "sequence": 90,
+      "legal_reference": "Code des impôts sur les revenus 1992, art. 66, § 1er, et art. 198bis ; circulaire relative au verdissement fiscal de la mobilité — les frais des véhicules dont l'émission de CO2 est supérieure à zéro achetés, pris en leasing ou en location à partir du 1er janvier 2026 ne sont plus déductibles. Dans le chef des sociétés, le régime transitoire des hybrides rechargeables (art. 66, § 1er/1) ne s'applique pas.",
+      "source": "verdissement-mobilite"
+    }
+  ],
+  "rates": [
+    {
+      "code": "standard",
+      "name": "Taux ordinaire",
+      "rate": 25,
+      "valid_from": "2020-01-01",
+      "valid_on": "period_start",
+      "sequence": 20,
+      "legal_reference": "Code des impôts sur les revenus 1992, art. 215, al. 1er — 25 %, à partir de l'exercice d'imposition 2021 et pour les périodes imposables débutant au plus tôt le 1er janvier 2020",
+      "source": "cir-92-ex-2026"
+    },
+    {
+      "code": "reduced-small",
+      "name": "Taux réduit des petites sociétés sur la première tranche",
+      "rate": 20,
+      "up_to": 100000,
+      "up_to_prorata": "none",
+      "conditions": [
+        {
+          "parameter": "small_company",
+          "test": "is_true"
+        },
+        {
+          "parameter": "holds_participations_above_half",
+          "test": "is_false",
+          "waived_by": [
+            "approved_cooperative"
+          ]
+        },
+        {
+          "parameter": "held_half_by_companies",
+          "test": "is_false",
+          "waived_by": [
+            "approved_cooperative"
+          ]
+        },
+        {
+          "parameter": "director_remuneration",
+          "test": "at_least",
+          "amount": 45000,
+          "or_at_least": "taxable_base",
+          "waived_by": [
+            "within_first_four_periods",
+            "approved_cooperative"
+          ]
+        },
+        {
+          "parameter": "investment_company",
+          "test": "is_false"
+        }
+      ],
+      "valid_from": "2025-12-31",
+      "valid_to": "2026-12-30",
+      "valid_on": "period_end",
+      "sequence": 10,
+      "legal_reference": "Code des impôts sur les revenus 1992, art. 215, al. 2 et 3, exercice d'imposition 2026 — 20 % sur la première tranche de 0 à 100 000 EUR pour les petites sociétés, sauf les exclusions de l'alinéa 3 : participations (1°), détention par d'autres sociétés (2°), rémunération d'un dirigeant inférieure à 45 000 EUR et au revenu imposable à partir de la cinquième période imposable (4°), sociétés d'investissement (6°)",
+      "source": "cir-92-ex-2026"
+    },
+    {
+      "code": "reduced-small",
+      "name": "Taux réduit des petites sociétés sur la première tranche",
+      "rate": 20,
+      "up_to": 100000,
+      "up_to_prorata": "none",
+      "conditions": [
+        {
+          "parameter": "small_company",
+          "test": "is_true"
+        },
+        {
+          "parameter": "holds_participations_above_half",
+          "test": "is_false",
+          "waived_by": [
+            "approved_cooperative"
+          ]
+        },
+        {
+          "parameter": "held_half_by_companies",
+          "test": "is_false",
+          "waived_by": [
+            "approved_cooperative"
+          ]
+        },
+        {
+          "parameter": "director_remuneration_condition_met",
+          "test": "is_true",
+          "waived_by": [
+            "within_first_four_periods",
+            "approved_cooperative"
+          ]
+        },
+        {
+          "parameter": "excessive_benefits_in_kind",
+          "test": "is_false"
+        },
+        {
+          "parameter": "investment_company",
+          "test": "is_false"
+        }
+      ],
+      "valid_from": "2026-12-31",
+      "valid_on": "period_end",
+      "sequence": 10,
+      "legal_reference": "Code des impôts sur les revenus 1992, art. 215, al. 2 et 3, tel que modifié par la loi du 15 juillet 2026, art. 80 et 88, à partir de l'exercice d'imposition 2027 — 20 % sur la première tranche de 0 à 100 000 EUR ; la condition de rémunération du 4° porte sur un montant indexé chaque année et le 5° exclut les sociétés qui allouent une part excessive d'avantages de toute nature à leurs dirigeants",
+      "source": "loi-2026-07-15"
+    }
+  ],
+  "loss_carryforward": [
+    {
+      "floor": 1000000,
+      "percent_above": 70,
+      "years": null,
+      "valid_from": "2025-12-31",
+      "valid_on": "period_end",
+      "legal_reference": "Code des impôts sur les revenus 1992, art. 206, § 1er — les pertes professionnelles antérieures sont déduites successivement des revenus de chacune des périodes imposables suivantes ; art. 207, al. 3 et 5 — le total des déductions de la « corbeille », dont les pertes antérieures, est limité à 1 000 000 EUR majoré de 70 % de la quotité du bénéfice qui excède ce montant. Les autres déductions de la corbeille et l'exception des petites sociétés pendant leurs quatre premières périodes imposables (al. 6) ne sont pas calculées ici.",
+      "source": "cir-92-ex-2026"
+    }
+  ],
+  "prepayments": [
+    {
+      "method": "surcharge_on_shortfall",
+      "month_basis": "calendar",
+      "instalments": [
+        {
+          "sequence": 1,
+          "month": 4,
+          "day": 10,
+          "credit_percent": 9
+        },
+        {
+          "sequence": 2,
+          "month": 7,
+          "day": 10,
+          "credit_percent": 7.5
+        },
+        {
+          "sequence": 3,
+          "month": 10,
+          "day": 10,
+          "credit_percent": 6
+        },
+        {
+          "sequence": 4,
+          "month": 12,
+          "day": 20,
+          "credit_percent": 4.5
+        }
+      ],
+      "surcharge_percent": 6.75,
+      "exempt_up_to": null,
+      "valid_from": "2026-12-31",
+      "valid_to": "2027-12-30",
+      "valid_on": "period_end",
+      "legal_reference": "Code des impôts sur les revenus 1992, art. 159, 161 et 218 — majoration pour absence ou insuffisance de versements anticipés ; taux de l'exercice d'imposition 2027 (revenus 2026) publiés par le SPF Finances : majoration de 6,75 %, avantages de 9 %, 7,5 %, 6 % et 4,5 %. Échéances légales d'une société dont l'exercice coïncide avec l'année civile : 10 avril, 10 juillet, 10 octobre et 20 décembre ; une échéance qui tombe un jour non ouvrable est reportée. Aucune majoration n'est due par une petite société pour ses trois premiers exercices comptables (art. 218, § 2).",
+      "source": "versements-anticipes"
+    }
+  ],
+  "credits": []
+}

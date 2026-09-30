@@ -2,10 +2,10 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "FR",
   "name": "France",
-  "version": "1.16.0",
+  "version": "1.17.0",
   "schema_min": "20260929141500",
   "seed_sequence": 11,
-  "released_at": "2026-09-21",
+  "released_at": "2026-09-30",
   "certification": {
     "status": "maintained",
     "sources": [
@@ -120,6 +120,46 @@
         "url": "https://docs.peppol.eu/poacc/billing/3.0/codelist/vatex/",
         "consulted_on": "2026-09-15",
         "kind": "standard"
+      },
+      {
+        "key": "boi-is-liq-20-20",
+        "title": "BOI-IS-LIQ-20-20 — IS, liquidation, taux réduits : taux réduit en faveur des petites et moyennes entreprises, limite et modalités d'application",
+        "publisher": "Direction générale des finances publiques — BOFiP-Impôts",
+        "url": "https://bofip.impots.gouv.fr/bofip/2065-PGP.html/identifiant=BOI-IS-LIQ-20-20-20230621",
+        "consulted_on": "2026-09-30",
+        "kind": "guidance"
+      },
+      {
+        "key": "boi-is-def-10-30",
+        "title": "BOI-IS-DEF-10-30 — IS, déficits et moins-values nettes à long terme : report en avant des déficits",
+        "publisher": "Direction générale des finances publiques — BOFiP-Impôts",
+        "url": "https://bofip.impots.gouv.fr/bofip/2103-PGP.html/identifiant=BOI-IS-DEF-10-30-20130410",
+        "consulted_on": "2026-09-30",
+        "kind": "guidance"
+      },
+      {
+        "key": "boi-is-decla-20-10",
+        "title": "BOI-IS-DECLA-20-10 — IS, obligations déclaratives et de paiement : acomptes d'impôt sur les sociétés",
+        "publisher": "Direction générale des finances publiques — BOFiP-Impôts",
+        "url": "https://bofip.impots.gouv.fr/bofip/3558-PGP.html/identifiant=BOI-IS-DECLA-20-10-20200610",
+        "consulted_on": "2026-09-30",
+        "kind": "guidance"
+      },
+      {
+        "key": "notice-2571",
+        "title": "Notice n° 2571-NOT-SD, millésime 2026 — relevé d'acompte d'impôt sur les sociétés",
+        "publisher": "Direction générale des finances publiques",
+        "url": "https://www.impots.gouv.fr/sites/default/files/formulaires/2571-sd/2026/2571-sd_5289.pdf",
+        "consulted_on": "2026-09-30",
+        "kind": "form"
+      },
+      {
+        "key": "notice-2857",
+        "title": "Notice n° 2857-FC-NOT-SD — taxes annuelles sur l'affectation des véhicules de tourisme à des fins économiques",
+        "publisher": "Direction générale des finances publiques",
+        "url": "https://www.impots.gouv.fr/sites/default/files/formulaires/2857-fc-sd/2025/2857-fc-sd_5281.pdf",
+        "consulted_on": "2026-09-30",
+        "kind": "form"
       }
     ]
   },

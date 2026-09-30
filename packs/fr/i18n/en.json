@@ -627,5 +627,18 @@
     "it-equipment": "Office and computer equipment",
     "it-equipment-declining": "Computer equipment — declining balance",
     "vehicle": "Vehicles"
+  },
+  "corporate_tax": {
+    "tax": "Corporate income tax",
+    "parameter:turnover_twelve_months": "Turnover excluding tax for the financial year, restated to twelve months where needed",
+    "parameter:capital_fully_paid_up": "The share capital is fully paid up",
+    "parameter:held_75_percent_by_individuals": "At least 75 % of the capital is held continuously by individuals, or by a company meeting the same conditions",
+    "rule:corporate-income-tax": "Corporate income tax",
+    "rule:fines-penalties": "Fines and penalties",
+    "rule:vehicle-taxes": "Annual taxes on passenger vehicles used for business purposes",
+    "rule:excess-depreciation": "Excess depreciation of passenger vehicles",
+    "rule:sumptuary-expenses": "Sumptuary expenses",
+    "rate:standard": "Standard rate",
+    "rate:reduced-sme": "Reduced rate for small and medium-sized enterprises"
   }
 }

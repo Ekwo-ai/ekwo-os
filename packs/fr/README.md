@@ -128,3 +128,25 @@ form's and the declarant can fill them: **15** and **5B** (inside 16), **21**,
 
 Line **14** of earlier versions of the form is not on the form in
 force: the rates it used to gather from an annex are lines T1 to T7 now.
+
+## Corporate income tax: what `corporate_tax.json` leaves out
+
+The section carries what was read on an official page on 30 September 2026,
+and nothing else. A rule that is missing makes an estimate too high or too low
+by something a reader can name; these are the ones to name.
+
+| Not carried | Why |
+|---|---|
+| The ceilings on the depreciation of passenger vehicles (CGI art. 39, 4: 30 000, 20 300, 18 300 and 9 900 € by CO2 band, with different bands for WLTP and NEDC registrations and by year of acquisition) | The excess depends on two figures of each vehicle — its price and its emission — and the formula vocabulary of a rule takes one. The company declares the excess under `excess-depreciation`. |
+| The account of fines since the 2025 chart | The pack's chart still carries `671200`; règlement ANC n° 2022-06 moves fines to `6582` for financial years opened from 1 January 2025. The rule `fines-penalties` names the account the chart has, and a company that books on another names it in `tax.adjustments`. |
+| An account for the annual taxes on vehicles | The chart carries none (`63514` in the plan), so `vehicle-taxes` applies to what the company names. The rule is dated from 1 January 2024, the version of CGI art. 39, 1, 4° that was read; the same taxes were non-deductible before under art. 213. |
+| The social contribution of 3,3 % (CGI art. 235 ter ZC) and the exceptional contribution on the profits of large companies | Both are a tax on the tax, above a turnover of 7 630 000 € and of 1 billion € respectively. The section has no shape for one yet. |
+| Carry-back of a loss (CGI art. 220 quinquies) | An option, not a rule: nothing computes it. |
+| Rounding of the base and of the tax to the euro | Not read. The estimate is kept at the cent. |
+| Tax credits | `credits` is empty: the shape is published and no credit was cited. |
+| Excess interest, personal benefits, non-deductible provisions (form 2058-A, lines SU, XZ, WD, WI) | No flat rule could be cited for any of them. |
+
+The instalments are the four of CGI art. 1668 at a quarter of the reference
+tax each. The order in which a company whose year is not the calendar year
+pays them, and the large-company rule for the last one, are in the legal
+reference and not in the data; nothing reads the schedule yet.

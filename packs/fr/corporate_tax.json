@@ -1,0 +1,206 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "tax": {
+    "code": "FR-IS",
+    "name": "Impôt sur les sociétés",
+    "legal_reference": "Code général des impôts, art. 205 et suivants — impôt sur les sociétés",
+    "source": "cgi"
+  },
+  "result": {
+    "statement": "FR-2052",
+    "line": "HN",
+    "legal_reference": "Formulaire n° 2058-A-SD « Détermination du résultat fiscal » — le calcul part du bénéfice comptable (ligne WA) ou de la perte comptable (ligne WS) de l'exercice, qui est la ligne HN du compte de résultat",
+    "source": "liasse-2050"
+  },
+  "accounts": {
+    "expense": "695000",
+    "payable": "444000",
+    "receivable": null,
+    "legal_reference": "Règlement ANC n° 2014-03 modifié par le règlement n° 2022-06 — le compte 444 « État — Impôts sur les bénéfices » est crédité de l'impôt dû par le débit du compte 695 « Impôts sur les bénéfices », et débité des acomptes et du solde versés",
+    "source": "anc-2022-06"
+  },
+  "parameters": [
+    {
+      "code": "turnover_twelve_months",
+      "name": "Chiffre d'affaires hors taxes de l'exercice, ramené s'il y a lieu à douze mois",
+      "type": "amount",
+      "sequence": 10,
+      "legal_reference": "Code général des impôts, art. 219, I, b — chiffre d'affaires n'excédant pas 10 millions d'euros au cours de l'exercice ou de la période d'imposition, ramené s'il y a lieu à douze mois ; pour la société mère d'un groupe, somme des chiffres d'affaires des sociétés membres",
+      "source": "cgi"
+    },
+    {
+      "code": "capital_fully_paid_up",
+      "name": "Le capital est entièrement libéré",
+      "type": "boolean",
+      "sequence": 20,
+      "legal_reference": "Code général des impôts, art. 219, I, b",
+      "source": "cgi"
+    },
+    {
+      "code": "held_75_percent_by_individuals",
+      "name": "Le capital est détenu de manière continue pour 75 % au moins par des personnes physiques, ou par une société répondant aux mêmes conditions",
+      "type": "boolean",
+      "sequence": 30,
+      "legal_reference": "Code général des impôts, art. 219, I, b",
+      "source": "cgi"
+    }
+  ],
+  "adjustment_rules": [
+    {
+      "code": "corporate-income-tax",
+      "name": "Impôt sur les sociétés",
+      "direction": "add_back",
+      "percent": 100,
+      "accounts": [
+        {
+          "kind": "code_prefix",
+          "code_from": "695"
+        }
+      ],
+      "valid_from": "2022-01-01",
+      "valid_on": "period_start",
+      "sequence": 10,
+      "legal_reference": "Code général des impôts, art. 213 — l'impôt sur les sociétés n'est pas admis dans les charges déductibles ; formulaire n° 2058-A-SD, ligne I7",
+      "source": "cgi"
+    },
+    {
+      "code": "fines-penalties",
+      "name": "Amendes et pénalités",
+      "direction": "add_back",
+      "percent": 100,
+      "accounts": [
+        {
+          "kind": "account_code",
+          "code_from": "671200"
+        }
+      ],
+      "valid_from": "2022-01-01",
+      "valid_on": "period_start",
+      "sequence": 20,
+      "legal_reference": "Code général des impôts, art. 39, 2 — les sanctions pécuniaires et pénalités de toute nature mises à la charge des contrevenants à des obligations légales ; formulaire n° 2058-A-SD, ligne WJ",
+      "source": "cgi"
+    },
+    {
+      "code": "vehicle-taxes",
+      "name": "Taxes annuelles sur les véhicules de tourisme affectés à des fins économiques",
+      "direction": "add_back",
+      "percent": 100,
+      "valid_from": "2024-01-01",
+      "valid_on": "period_start",
+      "sequence": 30,
+      "legal_reference": "Code général des impôts, art. 39, 1, 4° — taxes prévues au 1° de l'article L. 421-94 du code des impositions sur les biens et services ; notice n° 2857-FC-NOT-SD : la taxe annuelle sur les émissions de dioxyde de carbone et la taxe annuelle sur les émissions de polluants atmosphériques ne sont pas déductibles du résultat imposable ; formulaire n° 2058-A-SD, ligne WG",
+      "source": "notice-2857"
+    },
+    {
+      "code": "excess-depreciation",
+      "name": "Amortissements excédentaires des véhicules de tourisme",
+      "direction": "add_back",
+      "percent": 100,
+      "valid_from": "2022-01-01",
+      "valid_on": "period_start",
+      "sequence": 40,
+      "legal_reference": "Code général des impôts, art. 39, 4 — amortissement des véhicules de tourisme pour la fraction de leur prix d'acquisition qui dépasse le plafond applicable selon leurs émissions de dioxyde de carbone ; formulaire n° 2058-A-SD, ligne WE. Le plafond n'est pas calculé ici : la société déclare la fraction excédentaire de l'amortissement.",
+      "source": "cgi"
+    },
+    {
+      "code": "sumptuary-expenses",
+      "name": "Dépenses somptuaires",
+      "direction": "add_back",
+      "percent": 100,
+      "valid_from": "2022-01-01",
+      "valid_on": "period_start",
+      "sequence": 50,
+      "legal_reference": "Code général des impôts, art. 39, 4 — dépenses et charges ayant trait à l'exercice de la chasse et à l'exercice non professionnel de la pêche, et charges des résidences de plaisance ou d'agrément ; formulaire n° 2058-A-SD, ligne WF",
+      "source": "cgi"
+    }
+  ],
+  "rates": [
+    {
+      "code": "standard",
+      "name": "Taux normal",
+      "rate": 25,
+      "valid_from": "2022-01-01",
+      "valid_on": "period_start",
+      "sequence": 20,
+      "legal_reference": "Code général des impôts, art. 219, I, al. 2 — le taux normal de l'impôt est fixé à 25 % ; exercices ouverts à compter du 1er janvier 2022 (BOI-IS-LIQ-10)",
+      "source": "cgi"
+    },
+    {
+      "code": "reduced-sme",
+      "name": "Taux réduit des petites et moyennes entreprises",
+      "rate": 15,
+      "up_to": 42500,
+      "up_to_prorata": "months",
+      "conditions": [
+        {
+          "parameter": "turnover_twelve_months",
+          "test": "at_most",
+          "amount": 10000000
+        },
+        {
+          "parameter": "capital_fully_paid_up",
+          "test": "is_true"
+        },
+        {
+          "parameter": "held_75_percent_by_individuals",
+          "test": "is_true"
+        }
+      ],
+      "valid_from": "2022-12-31",
+      "valid_on": "period_end",
+      "sequence": 10,
+      "legal_reference": "Code général des impôts, art. 219, I, b — 15 % dans la limite de 42 500 € de bénéfice imposable par période de douze mois ; BOI-IS-LIQ-20-20 — la limite de 42 500 € s'applique aux exercices clos à compter du 31 décembre 2022 et, pour un exercice d'une durée différente de douze mois, elle est affectée du rapport entre le nombre de mois de l'exercice et 12",
+      "source": "boi-is-liq-20-20"
+    }
+  ],
+  "loss_carryforward": [
+    {
+      "floor": 1000000,
+      "percent_above": 50,
+      "years": null,
+      "valid_from": "2012-12-31",
+      "valid_on": "period_end",
+      "legal_reference": "Code général des impôts, art. 209, I, al. 3 — le déficit est déduit du bénéfice de l'exercice suivant dans la limite de 1 000 000 € majoré de 50 % du bénéfice imposable qui excède ce montant, et l'excédent est reporté dans les mêmes conditions sur les exercices suivants ; BOI-IS-DEF-10-30 — exercices clos à compter du 31 décembre 2012, report sans limitation de durée",
+      "source": "boi-is-def-10-30"
+    }
+  ],
+  "prepayments": [
+    {
+      "method": "share_of_reference_tax",
+      "month_basis": "calendar",
+      "instalments": [
+        {
+          "sequence": 1,
+          "month": 3,
+          "day": 15,
+          "share_percent": 25
+        },
+        {
+          "sequence": 2,
+          "month": 6,
+          "day": 15,
+          "share_percent": 25
+        },
+        {
+          "sequence": 3,
+          "month": 9,
+          "day": 15,
+          "share_percent": 25
+        },
+        {
+          "sequence": 4,
+          "month": 12,
+          "day": 15,
+          "share_percent": 25
+        }
+      ],
+      "surcharge_percent": null,
+      "exempt_up_to": 3000,
+      "valid_from": "2022-01-01",
+      "valid_on": "period_start",
+      "legal_reference": "Code général des impôts, art. 1668, 1 — acomptes trimestriels déterminés à partir des résultats du dernier exercice clos, payés au plus tard les 15 mars, 15 juin, 15 septembre et 15 décembre ; BOI-IS-DECLA-20-10 — chacun des quatre acomptes est égal au quart de l'impôt de référence, et le premier, calculé sur l'avant-dernier exercice, est régularisé ensuite ; notice n° 2571-NOT-SD — dispense d'acomptes lorsque l'impôt de référence n'excède pas 3 000 €, et ordre des acomptes selon la date de clôture. Une société nouvelle est dispensée d'acomptes au cours de son premier exercice.",
+      "source": "notice-2571"
+    }
+  ],
+  "credits": []
+}

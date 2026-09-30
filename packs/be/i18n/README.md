@@ -4,8 +4,8 @@ Belgium keeps its books in three languages, and the law is published in three.
 This folder is what makes that true of the software: `nl.json`, `de.json` and
 `en.json` each carry every label of the pack — the two charts of accounts, the
 journals, the VAT codes, the boxes of the periodic return, the lines of the
-annual accounts, the sentences an invoice has to print and the fixed-asset
-categories.
+annual accounts, the sentences an invoice has to print, the fixed-asset
+categories and the labels of the corporate income tax section.
 
 `pack.json` declares `"languages": ["nl", "de", "en"]`, and that declaration is
 a promise: `ekwo pack check` fails, naming every missing key, if any of the
@@ -21,6 +21,7 @@ which is what `defaults.language` says; French is therefore not a file here.
 | VAT return boxes | The periodic VAT return as Intervat presents it. |
 | Annual accounts | The abbreviated model of the Central Balance Sheet Office of the National Bank of Belgium. |
 | Legal mentions | The wording the VAT Code and its implementing decrees prescribe, in the language of the version concerned. |
+| Corporate income tax: parameters, rules and rates | Translated here. Each label summarises an article of the Income Tax Code 1992 in the pack's own words, so it has no statutory wording in any language: the article is on the rule, and the Dutch and German texts of the Code are what to read against. |
 
 Two things to know before you rely on the German. The Commission publishes its
 German chart of accounts as an **unofficial translation** — it says so itself —

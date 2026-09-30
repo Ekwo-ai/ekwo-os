@@ -504,5 +504,28 @@
     "furniture": "Furniture",
     "it-equipment": "Office and computer equipment",
     "vehicle": "Vehicles"
+  },
+  "corporate_tax": {
+    "tax": "Corporate income tax",
+    "parameter:small_company": "The company is a small company within the meaning of article 1:24, §§ 1 to 6, of the Code of companies and associations",
+    "parameter:approved_cooperative": "The company is a cooperative company approved under article 8:4 of the Code of companies and associations",
+    "parameter:holds_participations_above_half": "The company holds shares whose investment value exceeds 50 % of the revalued paid-up capital, or of the paid-up capital plus taxed reserves and recorded capital gains",
+    "parameter:held_half_by_companies": "At least half of the shares of the company are held by one or more other companies",
+    "parameter:director_remuneration": "Highest remuneration granted to a company director and charged to the result of the taxable period",
+    "parameter:within_first_four_periods": "The taxable period is one of the first four since the company was incorporated",
+    "parameter:investment_company": "The company is an investment company, a regulated real estate company or an organisation for financing pensions covered by article 215, third paragraph, 6°",
+    "parameter:director_remuneration_condition_met": "The company is not excluded from the reduced rate by the minimum director remuneration condition, as it applies from assessment year 2027",
+    "parameter:excessive_benefits_in_kind": "The company grants its directors an excessive share of benefits in kind within the meaning of article 2, § 1, 25°",
+    "rule:restaurant": "Restaurant costs — non-deductible share",
+    "rule:reception-gifts": "Reception costs and business gifts — non-deductible share",
+    "rule:fines": "Fines, confiscations and penalties of any kind",
+    "rule:clothing": "Non-specific clothing",
+    "rule:car-benefit-with-fuel": "Vehicle made available for private use, fuel paid by the company — 40 % of the benefit in kind",
+    "rule:car-benefit-without-fuel": "Vehicle made available for private use, no fuel paid — 17 % of the benefit in kind",
+    "rule:car-costs-before-2023-07": "Car costs — vehicles bought, leased or rented before 1 July 2023",
+    "rule:car-costs-2023-07-to-2025": "Car costs — vehicles emitting CO2 bought, leased or rented from 1 July 2023 to 31 December 2025",
+    "rule:car-costs-from-2026": "Car costs — vehicles emitting CO2 bought, leased or rented from 1 January 2026",
+    "rate:standard": "Standard rate",
+    "rate:reduced-small": "Reduced rate for small companies on the first bracket"
   }
 }

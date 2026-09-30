@@ -504,5 +504,28 @@
     "furniture": "Meubilair",
     "it-equipment": "Kantoormaterieel en informaticamaterieel",
     "vehicle": "Rollend materieel"
+  },
+  "corporate_tax": {
+    "tax": "Vennootschapsbelasting",
+    "parameter:small_company": "De vennootschap is een kleine vennootschap in de zin van artikel 1:24, §§ 1 tot 6, van het Wetboek van vennootschappen en verenigingen",
+    "parameter:approved_cooperative": "De vennootschap is een coöperatieve vennootschap erkend overeenkomstig artikel 8:4 van het Wetboek van vennootschappen en verenigingen",
+    "parameter:holds_participations_above_half": "De vennootschap bezit aandelen waarvan de beleggingswaarde meer bedraagt dan 50 % van de gerevaloriseerde waarde van het gestorte kapitaal, of van het gestorte kapitaal verhoogd met de belaste reserves en de geboekte meerwaarden",
+    "parameter:held_half_by_companies": "De aandelen van de vennootschap zijn voor ten minste de helft in het bezit van een of meer andere vennootschappen",
+    "parameter:director_remuneration": "Hoogste bezoldiging toegekend aan een bedrijfsleider ten laste van het resultaat van het belastbare tijdperk",
+    "parameter:within_first_four_periods": "Het belastbare tijdperk is een van de eerste vier sinds de oprichting van de vennootschap",
+    "parameter:investment_company": "De vennootschap is een beleggingsvennootschap, een gereglementeerde vastgoedvennootschap of een organisme voor de financiering van pensioenen bedoeld in artikel 215, derde lid, 6°",
+    "parameter:director_remuneration_condition_met": "De vennootschap is niet uitgesloten van het verlaagd tarief door de voorwaarde van de minimumbezoldiging van een bedrijfsleider, zoals die geldt vanaf aanslagjaar 2027",
+    "parameter:excessive_benefits_in_kind": "De vennootschap kent haar bedrijfsleiders een overdreven deel voordelen van alle aard toe in de zin van artikel 2, § 1, 25°",
+    "rule:restaurant": "Restaurantkosten — niet-aftrekbaar gedeelte",
+    "rule:reception-gifts": "Receptiekosten en relatiegeschenken — niet-aftrekbaar gedeelte",
+    "rule:fines": "Geldboeten, verbeurdverklaringen en straffen van alle aard",
+    "rule:clothing": "Niet-specifieke kledij",
+    "rule:car-benefit-with-fuel": "Voertuig ter beschikking gesteld voor persoonlijk gebruik, brandstof ten laste genomen — 40 % van het voordeel van alle aard",
+    "rule:car-benefit-without-fuel": "Voertuig ter beschikking gesteld voor persoonlijk gebruik, zonder brandstof — 17 % van het voordeel van alle aard",
+    "rule:car-costs-before-2023-07": "Autokosten — voertuigen aangekocht, geleased of gehuurd vóór 1 juli 2023",
+    "rule:car-costs-2023-07-to-2025": "Autokosten — voertuigen met CO2-uitstoot aangekocht, geleased of gehuurd van 1 juli 2023 tot 31 december 2025",
+    "rule:car-costs-from-2026": "Autokosten — voertuigen met CO2-uitstoot aangekocht, geleased of gehuurd vanaf 1 januari 2026",
+    "rate:standard": "Gewoon tarief",
+    "rate:reduced-small": "Verlaagd tarief voor kleine vennootschappen op de eerste schijf"
   }
 }

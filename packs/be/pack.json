@@ -2,10 +2,10 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "BE",
   "name": "Belgium",
-  "version": "1.16.0",
+  "version": "1.17.0",
   "schema_min": "20260929141500",
   "seed_sequence": 10,
-  "released_at": "2026-09-19",
+  "released_at": "2026-09-30",
   "certification": {
     "status": "maintained",
     "sources": [
@@ -128,6 +128,54 @@
         "url": "https://docs.peppol.eu/poacc/billing/3.0/codelist/vatex/",
         "consulted_on": "2026-09-15",
         "kind": "standard"
+      },
+      {
+        "key": "cir-92-ex-2026",
+        "title": "Code des impôts sur les revenus 1992 — revenus de 2025, exercice d'imposition 2026, édition mise à jour au Moniteur belge du 31 décembre 2024",
+        "publisher": "SPF Finances — Fisconetplus, édition reproduite par le SPW Finances",
+        "url": "https://finances.wallonie.be/files/NOSTRA/textes%20legaux/code%20des%20impots%20sur%20le%20revenu%20-%20exercice%202022.pdf",
+        "consulted_on": "2026-09-30",
+        "kind": "law"
+      },
+      {
+        "key": "isoc-275-1-2026",
+        "title": "Explications relatives à la déclaration à l'impôt des sociétés, exercice d'imposition 2026 (modèle 275.1)",
+        "publisher": "SPF Finances",
+        "url": "https://finances.belgium.be/sites/default/files/downloads/121-declaration-isoc-explications-2026.pdf",
+        "consulted_on": "2026-09-30",
+        "kind": "form"
+      },
+      {
+        "key": "verdissement-mobilite",
+        "title": "Circulaire relative au verdissement fiscal de la mobilité — questions fréquemment posées",
+        "publisher": "SPF Finances",
+        "url": "https://finances.belgium.be/sites/default/files/downloads/000-circulaire-verdissement-fiscal-mobilite.pdf",
+        "consulted_on": "2026-09-30",
+        "kind": "guidance"
+      },
+      {
+        "key": "versements-anticipes",
+        "title": "Versements anticipés des sociétés — taux de majoration et d'avantage, échéances",
+        "publisher": "SPF Finances",
+        "url": "https://finances.belgium.be/fr/entreprises/impot_des_societes/versements_anticipes",
+        "consulted_on": "2026-09-30",
+        "kind": "guidance"
+      },
+      {
+        "key": "loi-2025-12-18",
+        "title": "Loi du 18 décembre 2025 portant des dispositions diverses",
+        "publisher": "SPF Justice — Moniteur belge (Justel)",
+        "url": "https://www.ejustice.just.fgov.be/cgi_loi/article.pl?language=fr&lg_txt=f&cn_search=2025121806&caller=eli&view_numac=2025121806fr",
+        "consulted_on": "2026-09-30",
+        "kind": "law"
+      },
+      {
+        "key": "loi-2026-07-15",
+        "title": "Loi du 15 juillet 2026 portant réforme de l'impôt des personnes physiques",
+        "publisher": "SPF Justice — Moniteur belge du 29 juillet 2026",
+        "url": "https://www.ejustice.just.fgov.be/cgi/article.pl?language=fr&sum_date=2026-07-29&lg_txt=f&caller=sum&s_editie=1&2026005724=2&numac_search=2026005724&view_numac=",
+        "consulted_on": "2026-09-30",
+        "kind": "law"
       }
     ]
   },
