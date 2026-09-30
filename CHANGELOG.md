@@ -11,6 +11,49 @@ somewhere has already run it.
 
 ### Added
 
+- **Corporate income tax, estimated from the books** — a third module, code
+  `tax`, in a schema of its own (`modules/corporate-tax`, migration
+  `20260930104417`). `tax.estimate(company, fiscal_year, at)` reads the
+  accounting result from the income statement the country pack names and
+  returns, line by line and with the article behind each, the adjustments, the
+  losses of earlier years as far as they reach, the taxable base, each rate
+  with the slice it takes, the credits and the figure — called
+  `estimated_tax`. It reads and writes nothing, and no country rule lives in
+  it. A company declares what only it can state — small company or not, the
+  remuneration of a director — in `tax.company_parameters`; a condition that
+  is not declared is not met, and the estimate says which. It names the
+  expenses that fall under a rule in `tax.adjustments`, by account or by
+  amount, and the losses it carried in in `tax.losses`.
+  `tax.record_computation()` keeps an estimate, numbered per year;
+  `tax.finalise_computation()` calls one final — `tax_due` — for a whole year
+  whose ledger still gives the same lines, and needs the new capability
+  `tax.finalize`, which the owner preset holds and the accountant preset does
+  not; `tax.withdraw_computation()` takes a final one back. The loss stock
+  moves with final computations only. The module posts nothing: the provision
+  entry, the prepayment plan, the declaration forms and the MCP tools are
+  later versions. Add `tax` to the exposed schemas of the project to reach it
+  over the API.
+
+- **A country pack may say how a profit is taxed**: `packs/<cc>/corporate_tax.json`,
+  described in `packs/schema/pack.1.json` and in `docs/packs.md`, compiled
+  into `supabase/seed/modules/corporate_tax/`. The line the computation starts
+  from, the accounts the tax is booked on, the parameters a company declares,
+  the adjustment rules — a percentage, or a formula in a closed vocabulary —
+  the rates with their thresholds and their conditions, the limit on losses,
+  the prepayments and the credits. Every figure carries its article and the
+  day it applies from, read on the first or the last day of the financial year
+  as the law words it, and a figure that changes is a new dated entry. A
+  section comes with `golden/corporate_tax.json`: fictitious companies whose
+  tax was worked out by hand, replayed to the cent. **Belgium and France carry
+  the section** (both packs 1.17.0): the 25 % rate and the reduced rate of
+  each with its conditions, the disallowed expenses that could be cited —
+  Belgian restaurant, reception, fines, clothing, company cars by CO2; French
+  corporate tax, fines, vehicle taxes, excess depreciation, sumptuary
+  expenses — the limit on losses of each, and the prepayment schedule of each.
+  `ekwo pack check` refuses a section that names a statement, a line, an
+  account or a parameter the pack does not carry, two versions of a rule in
+  force on one day, and a section without its worked examples.
+
 - **A member can be removed, and moved to another preset.** Membership had a
   way in — `invite_member()`, `accept_invitation()` — and no way out but a
   hand-written `delete from company_members`. `remove_member(company, user)`

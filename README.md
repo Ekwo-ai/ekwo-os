@@ -118,10 +118,10 @@ OpenAPI description, and row level security decides who sees what.
   are in [`docs/packs.md`](docs/packs.md#the-packs-of-this-checkout).
 - **The French FEC.** Eighteen columns, the arrêté du 29 juillet 2013, with
   the reconciliation letter and the sub-ledger code the format requires.
-- **Modules, one Postgres schema each.** Fixed assets and budgets ship with
-  this release, in `fixed_assets` and `budgets`. A module depends on the socle by
-  foreign key, reaches the ledger only through one function, and is enabled per
-  company. The socle ignores its modules.
+- **Modules, one Postgres schema each.** Fixed assets, budgets and corporate
+  income tax ship with this release, in `fixed_assets`, `budgets` and `tax`. A
+  module depends on the socle by foreign key, reaches the ledger only through
+  one function, and is enabled per company. The socle ignores its modules.
 - **Tested on real Postgres.** The test suite runs the migrations, the seeds,
   the accounting scenarios, the installer and the MCP server against Postgres
   compiled to WebAssembly.
@@ -135,6 +135,7 @@ migrations, its own row level security and its own tests.
 |---|---|---|
 | [`assets`](modules/fixed-assets/) | `fixed_assets` | Fixed assets, their depreciation schedule and their disposal. Durations, declining coefficients and the prorata convention are country pack data. |
 | [`budgets`](modules/budgets/) | `budgets` | A budget per financial year and the variance against what the ledger holds. No country data, and nothing written to the ledger. |
+| [`tax`](modules/corporate-tax/) | `tax` | Corporate income tax estimated from the books, line by line: the adjustments, the losses, the rates and their conditions are country pack data, and what a company declares about itself is its own. An estimate until an owner calls it final. Nothing written to the ledger. |
 
 ```sh
 npx -y ekwo-os@latest module list                          # what is here, and what the database holds

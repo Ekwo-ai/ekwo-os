@@ -1,0 +1,268 @@
+# Corporate income tax — estimated from the books
+
+One Postgres schema, `tax`. It depends on the socle by foreign key, reads the
+ledger through the socle's own financial statements, and **writes nothing to
+it**: this version estimates a tax, keeps the estimate, and lets an owner call
+one final. The provision entry and the prepayment plan are a later version.
+
+Corporate income tax starts from the accounting result. Everything after that
+is a rule of a country — data, in `packs/<cc>/corporate_tax.json` — plus a
+handful of facts only the company can state. The engine knows no country: no
+rate, no threshold, no account and no article is written in its SQL.
+
+**This is an estimate, computed from what is booked and from a reading of the
+rules. It is not tax advice and it files nothing.** Read
+[`DISCLAIMER.md`](../../DISCLAIMER.md), and have a qualified professional check
+the declarations of a company and its first computations.
+
+| Name | What it is |
+|---|---|
+| module code | `tax` — the key of `public.modules` |
+| schema | `tax` |
+| capabilities | `tax.read`, `tax.write`, `tax.finalize` — their area is the module code |
+| pack section | `packs/<cc>/corporate_tax.json`, with its worked examples in `packs/<cc>/golden/corporate_tax.json` |
+| posts to the ledger | no, and a test holds it to that |
+
+## What it holds
+
+**What a country says** — reference data, filled by `ekwo pack build`, read
+where it stands and never copied into a company:
+
+| Table | What it is |
+|---|---|
+| `tax.country_rules` | What the country calls its tax, the line of the income statement the computation starts from, and the accounts the tax is booked on. |
+| `tax.parameter_templates` | The facts a company has to declare for a year: a judgement or an amount. |
+| `tax.adjustment_rule_templates` | What is added back or deducted: a percentage, or a formula of what the company states about an expense. Dated. |
+| `tax.rate_templates` | The rates, the slice each applies to and the conditions of each. Dated. |
+| `tax.loss_rule_templates` | How far a loss of an earlier year may be set against a profit. Dated. |
+| `tax.prepayment_templates` | When the tax is paid in advance and what each payment is worth. Dated. **Declared, no reader yet.** |
+| `tax.credit_templates` | The credits a company may set against the tax. Dated. |
+
+**What a company declares** — written with `tax.write`:
+
+| Table | What it is |
+|---|---|
+| `tax.company_parameters` | The company's answer to each parameter, per financial year. |
+| `tax.adjustments` | What falls under a rule: an account whose balance is read from the ledger each time, or an amount stated for one year. |
+| `tax.credits` | A credit the company holds for one year. |
+| `tax.losses` | The losses by year of origin: the ones the company carried in, and the ones a final computation recorded. |
+
+**What was computed and kept** — written by three functions and by nothing
+else; no role holds a write privilege on these tables:
+
+| Table | What it is |
+|---|---|
+| `tax.computations` | One computation of one year as it stood on a day, numbered per year: `estimate`, `final` or `superseded`. |
+| `tax.computation_lines` | Its lines, as `tax.estimate()` returned them. |
+| `tax.loss_uses` | How much of each earlier loss a final computation used. |
+
+## The functions
+
+```sql
+-- The tax of a year as the ledger stands on a day; the whole year with no day.
+select * from tax.estimate(company, fiscal_year, date '2026-06-30');
+
+-- Keep what it says as the next computation of the year.
+select tax.record_computation(company, fiscal_year);
+
+-- Call the latest one final, or take a final one back. Needs tax.finalize.
+select tax.finalise_computation(computation);
+select tax.withdraw_computation(computation);
+
+-- What is left of each loss.
+select * from tax.loss_stock(company);
+```
+
+`tax.estimate()` reads and writes nothing, and answers line by line:
+
+| `kind` | What the line says |
+|---|---|
+| `accounting_result` | The line of the income statement the pack names, for the period. |
+| `adjustment` | One rule applied: its base, its percentage, what it moves, and the article. |
+| `adjustment_not_applied` | An expense the company named under a rule that is not in force for the year. |
+| `fiscal_result` | The result after the adjustments. |
+| `loss_used` | A loss of an earlier year set against the profit, by its year of origin. |
+| `taxable_base` | What the rates apply to. Never below zero. |
+| `loss_of_period` | What the year lost, where it ended below zero: the stock a later year draws on. |
+| `rate` | One rate, the slice it takes and the tax on it, with the article. |
+| `rate_not_applied` | A rate whose conditions are not met, and the parameter that stands in the way: `not_declared` or `not_met`. |
+| `tax_before_credits`, `credit`, `credit_not_applied` | The credits the company holds. |
+| `estimated_tax` | The figure, under the only name an estimate gives it. |
+
+## How the figure is worked out
+
+1. **The accounting result** is one line of the income statement the pack
+   names, asked of `public.financial_statement()` from the first day of the
+   year to the day of the estimate. A closed year reads as it did before its
+   close, because that statement leaves the closing entry out.
+2. **The adjustments.** For each rule in force: what the pack's own account
+   rules catch, then each account the company named, then each amount it
+   stated. The base times the percentage, rounded, added back or deducted. An
+   account the company names is taken out of what the pack's rules catch, so
+   nothing is counted twice. Balances come from
+   `public.statement_account_matches()`, which is what the statement itself is
+   summed from — the two cannot disagree.
+3. **The losses** of earlier years, oldest first, up to the limit the country
+   sets: in full, or a floor plus a share of the profit beyond it.
+4. **The base** is what is left, and never below zero. A year that ends below
+   zero carries its loss in a line of its own.
+5. **The rates.** Each rate in force whose conditions are all met takes its
+   slice: the ones with a threshold first, lowest threshold first, then the
+   one without. A condition is a test on a parameter the company declared for
+   the year; **one that is not declared is not met**, and the estimate says
+   which. A threshold stated for twelve months is shared out over the months
+   of a shorter or longer year where the pack says so.
+6. **The credits** the company holds: one that is not paid back stops at the
+   tax, one that is may take the figure below zero.
+
+Every amount is rounded by `public.round_amount()` at the decimals of the
+company's currency. Percentages are `numeric`; nothing here is a float.
+
+**An estimate during the year is the tax on the year so far**, as if it
+stopped on that day. It annualises nothing and forecasts nothing: a threshold
+is the year's own, and a profit of six months is taxed as the profit of the
+year.
+
+## Estimate, final, superseded
+
+`tax.estimate()` says `estimated_tax`. The words `tax_due` appear only on a
+computation somebody holding **`tax.finalize`** has called final — the owner
+preset holds it, the accountant preset does not. `finalise_computation()`
+accepts the latest computation of a year, only if it reads the whole year, and
+only while an estimate run again gives the same lines: a ledger that moved
+since the recording makes the recorded computation history, and it is refused
+by name, `computation_stale`.
+
+The loss stock moves with final computations and with nothing else. A final
+loss year writes its loss into `tax.losses`; a final profit year writes what
+it used into `tax.loss_uses`. `withdraw_computation()` takes both back and
+marks the computation `superseded` — kept, never deleted.
+
+**The years are called final in their order, and taken back in the reverse of
+it.** A later year that is already final read the loss stock as it stood, so
+an earlier year is refused — `later_year_final` — until the later one is
+withdrawn. A loss a final computation has used keeps its amount and its year
+(`loss_in_use`).
+
+**Nothing here locks the books.** A final computation says what the ledger
+said on the day it was called final; an entry booked in that year afterwards
+changes what `tax.estimate()` answers and not the final computation. Keeping
+the two together is the socle's lock date and the close of the year.
+
+## Worked example, Belgium
+
+*Atelier Lumen SRL*, financial year 2025 (assessment year 2026), a small
+company that meets the conditions of the reduced rate. The books show a result
+before income tax of 134 675,20.
+
+| Line | Base | % | Amount |
+|---|---|---|---|
+| Result before income tax (9903) | | | 134 675,20 |
+| Restaurant — art. 53, 8°bis | 3 127,45 | 31 | 969,51 |
+| Reception and gifts — art. 53, 8° | 1 045,30 | 50 | 522,65 |
+| Fines — art. 53, 6°, from account 664100 | 250,00 | 100 | 250,00 |
+| Car, diesel, 110 g — art. 66: 120 − 0,5 × 1 × 110 = 65 % deductible | 8 412,60 | 35 | 2 944,41 |
+| **Fiscal result and taxable base** | | | **139 361,77** |
+| Reduced rate on the first 100 000 — art. 215, al. 2 | 100 000,00 | 20 | 20 000,00 |
+| Ordinary rate — art. 215, al. 1 | 39 361,77 | 25 | 9 840,44 |
+| **Estimated tax** | | | **29 840,44** |
+
+## Worked example, France
+
+*Négoce Atlantique SAS*, financial year 2025. Its capital is not held at 75 %
+by individuals, so the reduced rate is refused; it carries 900 000 of losses
+from 2023 and 600 000 from 2024.
+
+| Line | Amount |
+|---|---|
+| Accounting profit (HN) | 1 399 120,00 |
+| Fines, from account 671200 — CGI art. 39, 2 | 880,00 |
+| **Fiscal result** | **1 400 000,00** |
+| Limit on losses — CGI art. 209, I: 1 000 000 + 50 % × 400 000 | 1 200 000,00 |
+| Loss of 2023 used | −900 000,00 |
+| Loss of 2024 used, 300 000 left | −300 000,00 |
+| **Taxable base** | **200 000,00** |
+| Reduced rate | not applied — `not_met: held_75_percent_by_individuals` |
+| Standard rate, 25 % — CGI art. 219, I | 50 000,00 |
+| **Estimated tax** | **50 000,00** |
+
+Both are replayed to the cent, with four others, by
+[`tests/golden.test.ts`](tests/golden.test.ts) from
+`packs/<cc>/golden/corporate_tax.json`, where the arithmetic is written out
+step by step.
+
+## For an accountant to read
+
+Seven things here are a reading of the mechanics or a limit of this version,
+and an accountant should say whether each is acceptable for the company.
+
+1. **Only what is declared is adjusted.** The pack adds back by itself only
+   what a chart keeps on an account of its own — the tax charge and the fines
+   in France. Everything else waits for the company to name an account or
+   state an amount: a chart that books restaurants and receptions on one
+   account cannot say which is which.
+2. **A condition is the company's word.** "Small company", "held at 75 % by
+   individuals", the remuneration of a director: none is checked against the
+   books. The estimate applies the reduced rate because the company said so.
+3. **The Belgian basket holds more than losses.** Article 207 CIR 92 limits
+   the total of several carried-forward deductions; only earlier losses are
+   computed here, and the exception for small companies in their first four
+   periods is not applied.
+4. **Belgian car costs follow the purchase date.** Three rules, by the day the
+   vehicle was bought, leased or rented; the company picks the one that fits.
+   A vehicle with no CO2 figure, the recalculated emission of some plug-in
+   hybrids and the cap on their fuel are not computed: the company states the
+   emission to use. The schedule for zero-emission vehicles bought from 2027
+   is not in the pack yet.
+5. **The French ceilings on car depreciation are not computed.** The company
+   states the excess; the pack cites the article.
+6. **No surtax.** The French social contribution of 3,3 % and the exceptional
+   contribution on large companies, and the Belgian separate assessments, are
+   outside this version. None applies to a small company with an ordinary
+   year, and all of them apply to somebody.
+7. **Figures are kept at the cent.** A country that files its base and its
+   tax rounded to the unit says so on its form; forms are a later version.
+
+## Rights
+
+| Capability | Holds it by default | Lets somebody |
+|---|---|---|
+| `tax.read` | viewer, client, accountant, owner | read the declarations, the estimates and the final computations, and run `tax.estimate()` |
+| `tax.write` | accountant, owner | declare parameters, adjustments, losses and credits; record an estimate |
+| `tax.finalize` | owner | call a computation final, or withdraw one |
+
+Recording and finalising run the estimate, so both need `tax.read` as well: a
+key or a member given `tax.write` alone is told so by name.
+
+Every policy asks `module_enabled(company_id, 'tax')` first: a company that
+has not enabled the module sees none of it, and neither does a stranger.
+Disabling hides the rows and deletes nothing.
+
+## Enabling it
+
+```sh
+ekwo module migrate tax          # its migration and its country seeds
+ekwo module enable tax --company "…"
+```
+
+`tax` is the module code; the folder name, `corporate-tax`, is accepted as
+well. Then add `tax` to the project's exposed schemas — Supabase dashboard →
+Project Settings → API, or `[api] schemas` in `supabase/config.toml`. No
+migration can do that: it is a setting of the API and not of the database.
+
+An installation that already exists gets the module by upgrading as for any
+release: `ekwo migrate` applies `20260930104417_corporate_tax.sql` after the
+socle's migrations, then the seeds under
+`supabase/seed/modules/corporate_tax/`. Nothing of the socle changes, and no
+company is touched until it enables the module.
+
+## What is not here yet
+
+- The provision entry, and the plan of prepayments: the accounts and the
+  instalments are in the pack, and nothing reads them.
+- The declaration forms.
+- MCP tools.
+- A country other than the ones whose pack carries a `corporate_tax.json`. A
+  company of any other country is refused by name, `no_corporate_tax_rules`,
+  rather than given a neighbour's rates. [`docs/packs.md`](../../docs/packs.md)
+  says how a pack writes the section.

@@ -1,8 +1,10 @@
 # Modules
 
 A module is a Postgres schema beside the socle. `fixed_assets` holds fixed
-assets and their depreciation; `budgets` holds a plan and compares it to the ledger. The
-socle stays in `public` and knows nothing about either of them.
+assets and their depreciation; `budgets` holds a plan and compares it to the ledger;
+`tax` estimates the corporate income tax of a year from the books and from the
+rules a country pack carries. The socle stays in `public` and knows nothing
+about any of them.
 
 The decision behind this, with what it rules out, is in
 [decision 0051](decisions/0051-a-module-has-its-own-schema.md). This document is how to write one.
@@ -46,6 +48,13 @@ packs/<cc>/fixed_assets.json          the source of that data
 | `posts` | Whether it writes to the ledger. A module that says `false` is held to it by a test. |
 | `mcp.prefix` | Every MCP tool of the module is `<prefix>_<verb>`. |
 | `pack.section` | The file a country pack carries for it, `packs/<cc>/<section>.json`, and the folder it compiles into, `supabase/seed/modules/<section>/`. |
+
+The three that ship are three different shapes, and a new one is usually like
+one of them. `fixed-assets` has country data and posts. `budgets` has neither.
+`corporate-tax` — code `tax` — has the most country data of the three and, in
+its first version, posts nothing: every table that holds a result is written
+by a `security definer` function and by no role, which is how "only an owner
+calls a computation final" holds for psql and PostgREST alike.
 
 The folder under `modules/` is named after what the module is, lower case with
 hyphens — `fixed-assets` — and need not be the code. `ekwo module` takes
@@ -213,7 +222,7 @@ $$;
 ```
 
 A module that holds nothing a company would lose writes none at all, which is
-what `budgets` does — turning it off hides the rows and turning it back on
+what `budgets` and `tax` do — turning it off hides the rows and turning it back on
 gives them back. Nothing a module wrote is ever deleted by a disable.
 
 ### `archive_tables`, and why it is not optional

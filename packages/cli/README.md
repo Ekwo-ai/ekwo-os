@@ -672,8 +672,9 @@ for a statement. [`docs/import.md`](../../docs/import.md) is the long form.
 ## `ekwo module`
 
 A module is a Postgres schema beside the socle — `fixed_assets` for fixed assets,
-`budgets` for a plan against the ledger. Its migrations travel with this
-package, and `ekwo migrate` applies them by default.
+`budgets` for a plan against the ledger, `tax` for the corporate income tax
+estimated from the books. Its migrations travel with this package, and
+`ekwo migrate` applies them by default.
 
 ```sh
 ekwo module list                          # what this release carries, and what the database holds

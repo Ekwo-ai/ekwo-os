@@ -2393,6 +2393,418 @@ Constraints:
 | `archive_tables()` | What an archive of one company does with each table of this module. Read by `public.company_archive_tables()`. |
 | `variance(p_company_id uuid, p_budget_id uuid, p_from date, p_to date)` | Budget against ledger, per account, over a period, at the decimals of the company's currency. Both figures are in the sign a business states them in — an income account's credit balance is flipped — and the variance is the actual less the plan. Reads posted entries of kind `normal` only: a closing or appropriation entry is not what a period earned. |
 
+## `tax` — Corporate income tax
+
+Corporate income tax estimated from the books: the accounting result, the adjustments, the losses, the rates and their conditions of a country are pack data, and what a company declares about itself is its own. Writes nothing to the ledger.
+
+### Tables
+
+| Table | Purpose |
+|---|---|
+| [`adjustment_rule_templates`](#tax-adjustment_rule_templates) | One rule of a country between the accounting result and the taxable one, for the days it is in force. A rule is never edited: a percentage that changes is a new row with a new valid_from and a valid_to on the old one, so a past year keeps its answer. |
+| [`adjustments`](#tax-adjustments) | What a company says falls under a rule of its country, in one of two ways. An account: its balance over the year is the base, read from the ledger each time, for one year or — with no fiscal_year_id — for every year. An amount: stated once, for one year. The rule, its percentage and its article stay in the pack. |
+| [`company_parameters`](#tax-company_parameters) | What a company states about itself for one financial year, under a code its country pack declares: a judgement or an amount. Stated per year because both change from one year to the next, and never worked out from the books. |
+| [`computation_lines`](#tax-computation_lines) | The lines tax.estimate() returned when a computation was recorded, as they were: the result, each adjustment with its rule and its article, the losses used, the base, each rate with its slice, the credits and the tax. |
+| [`computations`](#tax-computations) | One computation of the tax of one financial year as it stood on a day, numbered per year. Written by tax.record_computation() and by nothing else: no role holds a write privilege on it. The four figures on the row are read off its lines when it is recorded. |
+| [`country_rules`](#tax-country_rules) | What one country calls its corporate income tax, which line of which income statement the computation starts from, and the accounts of its chart the tax is booked on. Filled by `ekwo pack build` from packs/<cc>/corporate_tax.json, read where it stands, never copied into a company. |
+| [`credit_templates`](#tax-credit_templates) | A credit a company of this country may set against its tax. The amount is the company's to declare; what the pack says is that the credit exists, whether what exceeds the tax is paid back, and the article it comes from. |
+| [`credits`](#tax-credits) | A credit a company holds against the tax of one financial year, under a code its country pack declares. The amount is declared: working out a credit is the business of whatever grants it. |
+| [`loss_rule_templates`](#tax-loss_rule_templates) | How far a loss of an earlier year may be set against the profit of this one: in full where the two limits are null, otherwise up to floor_amount plus percent_above of the profit beyond it. carry_forward_years is null where a loss never lapses. |
+| [`loss_uses`](#tax-loss_uses) | How much of one loss a final computation set against its profit. Written when the computation is finalised and removed when it is withdrawn, so the stock is always what the final computations say. |
+| [`losses`](#tax-losses) | The tax losses of a company by the year they come from. A row with no computation_id is declared: the stock a company brought in from before these books. A row with one was written when that computation was finalised. What is left of each is tax.loss_stock(). |
+| [`parameter_templates`](#tax-parameter_templates) | The facts a company of one country has to declare for its tax to be computed: a judgement (is it a small company) or an amount (what it paid its director). The conditions of a rate name them, and nothing infers one. |
+| [`prepayment_templates`](#tax-prepayment_templates) | When a company of this country pays its tax in advance, and what each payment is worth. **Declared, no reader yet**: the prepayment plan is a later version of this module, and the shape is published now so a pack can carry the figures of a year before anything reads them. |
+| [`rate_templates`](#tax-rate_templates) | One rate of a country, for the days it is in force. A rate with up_to applies to the slice of the taxable base below that amount; the one without applies to what is left. A rate whose conditions are not all met is not applied, and the estimate says which condition failed. |
+
+<a id="tax-adjustment_rule_templates"></a>
+
+#### `adjustment_rule_templates`
+
+One rule of a country between the accounting result and the taxable one, for the days it is in force. A rule is never edited: a percentage that changes is a new row with a new valid_from and a valid_to on the old one, so a past year keeps its answer.
+
+| Column | Type | Notes |
+|---|---|---|
+| `country` | `character(2)` | not null |
+| `code` | `text` | not null |
+| `valid_from` | `date` | not null |
+| `valid_to` | `date` |  |
+| `valid_on` | `tax.validity_basis` | not null |
+| `name` | `text` | not null |
+| `name_i18n` | `jsonb` | not null |
+| `direction` | `tax.adjustment_direction` | not null |
+| `percent` | `numeric(9,6)` | The share of the base the rule moves: 100 for an expense refused in full, 31 for one refused for 31 %. Null where a formula works it out from what the company declares. |
+| `formula` | `jsonb` | A closed vocabulary, read by tax.formula_percent(): a straight line of one declared variable, with an optional coefficient picked by a declared word, a floor, a ceiling and steps. Data, not an expression language. |
+| `account_rules` | `jsonb` | not null — The accounts of the pack's chart whose whole balance falls under this rule, in the vocabulary of statement_line_rules: account_code, code_prefix, code_range. Empty where the chart keeps no account for it, and then a company says which of its accounts, or which amount, the rule applies to. |
+| `legal_reference` | `text` | not null |
+| `source_key` | `text` |  |
+| `sequence` | `integer` | not null |
+
+Constraints:
+
+- `CHECK ((jsonb_typeof(account_rules) = 'array'::text))`
+- `CHECK (((percent IS NULL) OR (percent >= (0)::numeric)))`
+- `CHECK (((percent IS NULL) <> (formula IS NULL)))`
+- `CHECK (((valid_to IS NULL) OR (valid_to >= valid_from)))`
+- `PRIMARY KEY (country, code, valid_from)`
+
+<a id="tax-adjustments"></a>
+
+#### `adjustments`
+
+What a company says falls under a rule of its country, in one of two ways. An account: its balance over the year is the base, read from the ledger each time, for one year or — with no fiscal_year_id — for every year. An amount: stated once, for one year. The rule, its percentage and its article stay in the pack.
+
+| Column | Type | Notes |
+|---|---|---|
+| `id` | `uuid` | not null |
+| `company_id` | `uuid` | not null |
+| `fiscal_year_id` | `uuid` |  |
+| `rule_code` | `text` | not null |
+| `account_id` | `uuid` | An account of the company whose whole balance is the base of the rule. An account named here is taken out of what the pack's own account rules catch, so it is never counted twice. |
+| `amount` | `numeric` |  |
+| `parameters` | `jsonb` | not null — What a rule with a formula needs to know about this expense — the emission of a car, its fuel — under the names the formula uses. |
+| `note` | `text` |  |
+| `created_at` | `timestamp with time zone` | not null |
+| `updated_at` | `timestamp with time zone` | not null |
+
+Constraints:
+
+- `CHECK (((account_id IS NULL) <> (amount IS NULL)))`
+- `CHECK (((amount IS NULL) OR (fiscal_year_id IS NOT NULL)))`
+- `CHECK (((amount IS NULL) OR (amount >= (0)::numeric)))`
+- `CHECK ((jsonb_typeof(parameters) = 'object'::text))`
+- `PRIMARY KEY (id)`
+
+<a id="tax-company_parameters"></a>
+
+#### `company_parameters`
+
+What a company states about itself for one financial year, under a code its country pack declares: a judgement or an amount. Stated per year because both change from one year to the next, and never worked out from the books.
+
+| Column | Type | Notes |
+|---|---|---|
+| `id` | `uuid` | not null |
+| `company_id` | `uuid` | not null |
+| `fiscal_year_id` | `uuid` | not null |
+| `code` | `text` | not null |
+| `value_boolean` | `boolean` |  |
+| `value_amount` | `numeric` |  |
+| `note` | `text` |  |
+| `declared_by` | `uuid` |  |
+| `created_at` | `timestamp with time zone` | not null |
+| `updated_at` | `timestamp with time zone` | not null |
+
+Constraints:
+
+- `CHECK (((value_boolean IS NULL) <> (value_amount IS NULL)))`
+- `PRIMARY KEY (id)`
+- `UNIQUE (company_id, fiscal_year_id, code)`
+
+<a id="tax-computation_lines"></a>
+
+#### `computation_lines`
+
+The lines tax.estimate() returned when a computation was recorded, as they were: the result, each adjustment with its rule and its article, the losses used, the base, each rate with its slice, the credits and the tax.
+
+| Column | Type | Notes |
+|---|---|---|
+| `id` | `uuid` | not null |
+| `computation_id` | `uuid` | not null |
+| `company_id` | `uuid` | not null |
+| `sequence` | `integer` | not null |
+| `kind` | `text` | not null |
+| `code` | `text` |  |
+| `name` | `text` |  |
+| `base` | `numeric` |  |
+| `rate` | `numeric` |  |
+| `amount` | `numeric` |  |
+| `legal_reference` | `text` |  |
+| `source_key` | `text` |  |
+
+Constraints:
+
+- `PRIMARY KEY (id)`
+- `UNIQUE (computation_id, sequence)`
+
+<a id="tax-computations"></a>
+
+#### `computations`
+
+One computation of the tax of one financial year as it stood on a day, numbered per year. Written by tax.record_computation() and by nothing else: no role holds a write privilege on it. The four figures on the row are read off its lines when it is recorded.
+
+| Column | Type | Notes |
+|---|---|---|
+| `id` | `uuid` | not null |
+| `company_id` | `uuid` | not null |
+| `fiscal_year_id` | `uuid` | not null |
+| `version` | `integer` | not null |
+| `status` | `tax.computation_status` | not null |
+| `computed_at` | `date` | not null — The day the ledger was read up to. A final computation is read up to the last day of the financial year. |
+| `tax_code` | `text` | not null |
+| `currency_code` | `character(3)` | not null |
+| `accounting_result` | `numeric` | not null |
+| `taxable_base` | `numeric` | not null |
+| `loss_of_period` | `numeric` | not null |
+| `tax` | `numeric` | not null — The tax this computation comes to. An estimate while status is estimate; what the company holds to be due once status is final. |
+| `recorded_by` | `uuid` |  |
+| `recorded_at` | `timestamp with time zone` | not null |
+| `finalised_by` | `uuid` |  |
+| `finalised_at` | `timestamp with time zone` |  |
+| `superseded_by` | `uuid` |  |
+| `superseded_at` | `timestamp with time zone` |  |
+
+Constraints:
+
+- `CHECK (((status = 'estimate'::tax.computation_status) = (finalised_at IS NULL)))`
+- `CHECK (((status = 'superseded'::tax.computation_status) = (superseded_at IS NOT NULL)))`
+- `CHECK ((version > 0))`
+- `PRIMARY KEY (id)`
+- `UNIQUE (company_id, fiscal_year_id, version)`
+
+<a id="tax-country_rules"></a>
+
+#### `country_rules`
+
+What one country calls its corporate income tax, which line of which income statement the computation starts from, and the accounts of its chart the tax is booked on. Filled by `ekwo pack build` from packs/<cc>/corporate_tax.json, read where it stands, never copied into a company.
+
+| Column | Type | Notes |
+|---|---|---|
+| `country` | `character(2)` | not null |
+| `tax_code` | `text` | not null |
+| `name` | `text` | not null |
+| `name_i18n` | `jsonb` | not null |
+| `result_statement_code` | `text` | not null |
+| `result_line_code` | `text` | not null — The line of result_statement_code that is the accounting result the tax starts from. A country whose statement prints a result before income tax names that line; one that prints only the net result names it and adds the tax charge back by a rule. |
+| `result_legal_reference` | `text` | not null |
+| `result_source_key` | `text` |  |
+| `expense_account_code` | `text` | not null — The account the tax charge of the year is booked on. **Declared, no reader yet**: this version posts nothing. |
+| `payable_account_code` | `text` | not null — The account the estimated tax debt is carried on. **Declared, no reader yet**: this version posts nothing. |
+| `receivable_account_code` | `text` | The account a prepayment or a refund to come is carried on, where the chart keeps one apart. **Declared, no reader yet.** |
+| `accounts_legal_reference` | `text` | not null |
+| `accounts_source_key` | `text` |  |
+| `legal_reference` | `text` | not null |
+| `source_key` | `text` |  |
+
+Constraints:
+
+- `CHECK ((country ~ '^[A-Z]{2}$'::text))`
+- `PRIMARY KEY (country)`
+
+<a id="tax-credit_templates"></a>
+
+#### `credit_templates`
+
+A credit a company of this country may set against its tax. The amount is the company's to declare; what the pack says is that the credit exists, whether what exceeds the tax is paid back, and the article it comes from.
+
+| Column | Type | Notes |
+|---|---|---|
+| `country` | `character(2)` | not null |
+| `code` | `text` | not null |
+| `valid_from` | `date` | not null |
+| `valid_to` | `date` |  |
+| `valid_on` | `tax.validity_basis` | not null |
+| `name` | `text` | not null |
+| `name_i18n` | `jsonb` | not null |
+| `refundable` | `boolean` | not null |
+| `legal_reference` | `text` | not null |
+| `source_key` | `text` |  |
+| `sequence` | `integer` | not null |
+
+Constraints:
+
+- `CHECK (((valid_to IS NULL) OR (valid_to >= valid_from)))`
+- `PRIMARY KEY (country, code, valid_from)`
+
+<a id="tax-credits"></a>
+
+#### `credits`
+
+A credit a company holds against the tax of one financial year, under a code its country pack declares. The amount is declared: working out a credit is the business of whatever grants it.
+
+| Column | Type | Notes |
+|---|---|---|
+| `id` | `uuid` | not null |
+| `company_id` | `uuid` | not null |
+| `fiscal_year_id` | `uuid` | not null |
+| `credit_code` | `text` | not null |
+| `amount` | `numeric` | not null |
+| `note` | `text` |  |
+| `created_at` | `timestamp with time zone` | not null |
+| `updated_at` | `timestamp with time zone` | not null |
+
+Constraints:
+
+- `CHECK ((amount > (0)::numeric))`
+- `PRIMARY KEY (id)`
+
+<a id="tax-loss_rule_templates"></a>
+
+#### `loss_rule_templates`
+
+How far a loss of an earlier year may be set against the profit of this one: in full where the two limits are null, otherwise up to floor_amount plus percent_above of the profit beyond it. carry_forward_years is null where a loss never lapses.
+
+| Column | Type | Notes |
+|---|---|---|
+| `country` | `character(2)` | not null |
+| `valid_from` | `date` | not null |
+| `valid_to` | `date` |  |
+| `valid_on` | `tax.validity_basis` | not null |
+| `floor_amount` | `numeric` |  |
+| `percent_above` | `numeric(9,6)` |  |
+| `carry_forward_years` | `integer` |  |
+| `legal_reference` | `text` | not null |
+| `source_key` | `text` |  |
+
+Constraints:
+
+- `CHECK (((floor_amount IS NULL) = (percent_above IS NULL)))`
+- `CHECK (((valid_to IS NULL) OR (valid_to >= valid_from)))`
+- `CHECK (((carry_forward_years IS NULL) OR (carry_forward_years > 0)))`
+- `PRIMARY KEY (country, valid_from)`
+
+<a id="tax-loss_uses"></a>
+
+#### `loss_uses`
+
+How much of one loss a final computation set against its profit. Written when the computation is finalised and removed when it is withdrawn, so the stock is always what the final computations say.
+
+| Column | Type | Notes |
+|---|---|---|
+| `id` | `uuid` | not null |
+| `company_id` | `uuid` | not null |
+| `loss_id` | `uuid` | not null |
+| `computation_id` | `uuid` | not null |
+| `amount` | `numeric` | not null |
+| `created_at` | `timestamp with time zone` | not null |
+
+Constraints:
+
+- `CHECK ((amount > (0)::numeric))`
+- `PRIMARY KEY (id)`
+- `UNIQUE (loss_id, computation_id)`
+
+<a id="tax-losses"></a>
+
+#### `losses`
+
+The tax losses of a company by the year they come from. A row with no computation_id is declared: the stock a company brought in from before these books. A row with one was written when that computation was finalised. What is left of each is tax.loss_stock().
+
+| Column | Type | Notes |
+|---|---|---|
+| `id` | `uuid` | not null |
+| `company_id` | `uuid` | not null |
+| `origin_period_end` | `date` | not null — The last day of the financial year the loss was made in. Losses are used oldest first. |
+| `amount` | `numeric` | not null |
+| `computation_id` | `uuid` |  |
+| `note` | `text` |  |
+| `created_at` | `timestamp with time zone` | not null |
+| `updated_at` | `timestamp with time zone` | not null |
+
+Constraints:
+
+- `CHECK ((amount > (0)::numeric))`
+- `PRIMARY KEY (id)`
+- `UNIQUE (company_id, origin_period_end)`
+
+<a id="tax-parameter_templates"></a>
+
+#### `parameter_templates`
+
+The facts a company of one country has to declare for its tax to be computed: a judgement (is it a small company) or an amount (what it paid its director). The conditions of a rate name them, and nothing infers one.
+
+| Column | Type | Notes |
+|---|---|---|
+| `country` | `character(2)` | not null |
+| `code` | `text` | not null |
+| `name` | `text` | not null |
+| `name_i18n` | `jsonb` | not null |
+| `value_type` | `tax.parameter_type` | not null |
+| `legal_reference` | `text` | not null |
+| `source_key` | `text` |  |
+| `sequence` | `integer` | not null |
+
+Constraints:
+
+- `PRIMARY KEY (country, code)`
+
+<a id="tax-prepayment_templates"></a>
+
+#### `prepayment_templates`
+
+When a company of this country pays its tax in advance, and what each payment is worth. **Declared, no reader yet**: the prepayment plan is a later version of this module, and the shape is published now so a pack can carry the figures of a year before anything reads them.
+
+| Column | Type | Notes |
+|---|---|---|
+| `country` | `character(2)` | not null |
+| `valid_from` | `date` | not null |
+| `valid_to` | `date` |  |
+| `valid_on` | `tax.validity_basis` | not null |
+| `method` | `text` | not null — surcharge_on_shortfall: nothing is compulsory, the tax is raised by surcharge_percent and each instalment paid in time earns the credit_percent it carries. share_of_reference_tax: each instalment is share_percent of the tax of a reference year, and none is asked where that tax does not exceed exempt_up_to. |
+| `month_basis` | `text` | not null — fiscal: an instalment falls in the n-th month of the financial year. calendar: it falls in a month of the calendar, whatever the financial year. |
+| `instalments` | `jsonb` | not null |
+| `surcharge_percent` | `numeric(9,6)` |  |
+| `exempt_up_to` | `numeric` |  |
+| `legal_reference` | `text` | not null |
+| `source_key` | `text` |  |
+
+Constraints:
+
+- `CHECK ((jsonb_typeof(instalments) = 'array'::text))`
+- `CHECK ((method = ANY (ARRAY['surcharge_on_shortfall'::text, 'share_of_reference_tax'::text])))`
+- `CHECK ((month_basis = ANY (ARRAY['fiscal'::text, 'calendar'::text])))`
+- `CHECK (((valid_to IS NULL) OR (valid_to >= valid_from)))`
+- `PRIMARY KEY (country, valid_from)`
+
+<a id="tax-rate_templates"></a>
+
+#### `rate_templates`
+
+One rate of a country, for the days it is in force. A rate with up_to applies to the slice of the taxable base below that amount; the one without applies to what is left. A rate whose conditions are not all met is not applied, and the estimate says which condition failed.
+
+| Column | Type | Notes |
+|---|---|---|
+| `country` | `character(2)` | not null |
+| `code` | `text` | not null |
+| `valid_from` | `date` | not null |
+| `valid_to` | `date` |  |
+| `valid_on` | `tax.validity_basis` | not null |
+| `name` | `text` | not null |
+| `name_i18n` | `jsonb` | not null |
+| `rate` | `numeric(9,6)` | not null |
+| `up_to` | `numeric` |  |
+| `up_to_prorata` | `text` | not null — none: the threshold is the same whatever the length of the financial year. months: it is stated for twelve months and shared out over the months the year actually has. |
+| `conditions` | `jsonb` | not null — Every one has to be met. Each names a parameter the company declares and a test from a closed list — is_true, is_false, at_least, at_most, below, above — read by tax.condition_failure(). |
+| `legal_reference` | `text` | not null |
+| `source_key` | `text` |  |
+| `sequence` | `integer` | not null |
+
+Constraints:
+
+- `CHECK (((rate >= (0)::numeric) AND (rate <= (100)::numeric)))`
+- `CHECK ((jsonb_typeof(conditions) = 'array'::text))`
+- `CHECK ((up_to_prorata = ANY (ARRAY['none'::text, 'months'::text])))`
+- `CHECK (((up_to IS NULL) OR (up_to > (0)::numeric)))`
+- `CHECK (((valid_to IS NULL) OR (valid_to >= valid_from)))`
+- `PRIMARY KEY (country, code, valid_from)`
+
+### Functions
+
+| Function | Purpose |
+|---|---|
+| `account_matches(p_account_code text, p_account_rules jsonb)` | Whether an account code is caught by the account rules of an adjustment rule. The three kinds are the ones a statement line maps accounts with, compared the same way. |
+| `accounts_in_use(p_company_id uuid)` | The accounts this module points at for one company: every account it says falls under an adjustment rule. Read by public.accounts_in_use() through the module convention. |
+| `archive_tables()` | What an archive of one company does with each table of this module: all seven travel. The seven reference tables belong to the installation and to no company. Read by `public.company_archive_tables()`. |
+| `condition_failure(p_condition jsonb, p_values jsonb, p_taxable_base numeric)` | Null when a condition of a rate is met by what the company declared, otherwise which parameter stands in the way and how: not_declared, or not_met. A parameter nobody declared is never assumed either way. |
+| `estimate(p_company_id uuid, p_fiscal_year_id uuid, p_at date)` | The corporate income tax of one financial year as the ledger stands on a day — the whole year when no day is given — line by line: the accounting result the country pack names, each adjustment with its rule and its article, the losses of earlier years as far as they reach, the taxable base, each rate with the slice it takes, the credits, and the figure, called estimated_tax. Reads and writes nothing. A condition the company has not declared is not met and is said so in a rate_not_applied line. No country rule lives in this function. |
+| `finalise_computation(p_computation_id uuid)` | Calls the latest computation of a financial year final: what the company holds to be the tax of the year. Only a computation of the whole year, only while the ledger, the declarations and the rules still give the same lines, and only while no later year is final. Its last line becomes tax_due, the losses it used leave the stock and the loss it made enters it. Needs tax.finalize, which the owner preset holds and the accountant preset does not. |
+| `formula_percent(p_formula jsonb, p_parameters jsonb)` | The percentage of its base a rule with a formula moves, from what an adjustment states. A straight line of one variable — intercept plus slope times coefficient times the variable — rounded where the law rounds it, held between a floor and a ceiling, then replaced by a step where one is reached. A formula that yields the deductible share answers with what is left of a hundred. Raises by name when the adjustment does not state what the formula needs. |
+| `guard_declaration()` | Holds what a company declares to the codes its country pack carries — a parameter and its type, a rule, a credit — and to a financial year of its own, and writes every declared amount at the decimals of the company's currency. |
+| `guard_loss()` | Writes a loss at the decimals of the company's currency, and refuses to change the amount or the year of one a final computation has used. |
+| `in_force(p_valid_from date, p_valid_to date, p_valid_on tax.validity_basis, p_start date, p_end date)` | Whether a dated rule applies to a financial year: its validity read on the first or on the last day of the year, as the rule itself says. The only place valid_on is read. |
+| `line(p_kind text, p_code text, p_name text, p_base numeric, p_rate numeric, p_amount numeric, p_legal_reference text, p_source_key text)` | One line of an estimate, as tax.estimate() gathers them before returning them in order. |
+| `loss_stock(p_company_id uuid, p_before date)` | The losses of a company by year of origin: what each was, what final computations have used of it, and what is left. With a date, as the stock stood for a financial year opening on that day: losses of earlier years, less what earlier years used. |
+| `record_computation(p_company_id uuid, p_fiscal_year_id uuid, p_at date)` | Keeps what tax.estimate() says on a day as the next computation of the year, with every line. An estimate, and called one. Refused once the year has a final computation. Needs tax.write. |
+| `withdraw_computation(p_computation_id uuid)` | Withdraws a final computation: it becomes superseded and is kept, the losses it used go back to the stock and the loss it recorded leaves it. Refused while a later financial year has a final computation: the years are taken back in the reverse of their order. Needs tax.finalize. |
+
 ---
 
 *This file is generated by `scripts/generate-schema-doc.mjs`. Edit the

@@ -20,11 +20,13 @@ packs/be/
 ├── tax_report.json    the boxes of the periodic return and their totals
 ├── statements.json    the balance sheet, the income statement and their rules
 ├── fixed_assets.json  the section of the fixed assets module, where the country has one
+├── corporate_tax.json the section of the corporate income tax module, where the country has one
 ├── golden/
 │   ├── scenario.json  one year of books: documents, payments, the periods filed
 │   ├── vat_return.json    what the declaration comes to, period by period
 │   ├── statements.json    what every line of every statement comes to
-│   └── trial_balance.json every account that moved, to the cent
+│   ├── trial_balance.json every account that moved, to the cent
+│   └── corporate_tax.json companies whose tax was worked out by hand, beside the section
 └── i18n/
     ├── README.md      where each language's wording comes from
     ├── nl.json        every label of the pack, in one more language
@@ -328,13 +330,14 @@ between `be` and `fr` moved France and Luxembourg one place each. Nothing sorts
 anything now. `ekwo pack check` refuses a pack that declares no number, and
 `ekwo pack build` refuses two packs claiming the same one.
 
-**Four kinds of file are generated, and `check` compares all four.**
+**Five kinds of file are generated, and `check` compares all five.**
 
 | Source | Output |
 |---|---|
 | `packs/generic/` | `supabase/seed/05_framework_generic.sql` |
 | `packs/<cc>/` | `supabase/seed/<n>_pack_<cc>.sql`, where `<n>` is the number the manifest declares in `seed_sequence` — the table [above](#the-packs-of-this-checkout) gives each pack's. Packs take 10 to 89, then 100 to 899; 90 to 99 are kept for what runs after every pack (the demo company at 90). **A number that has shipped never moves**, whatever is added beside it |
 | `packs/<cc>/fixed_assets.json`, where the pack has one | `supabase/seed/modules/fixed_assets/<n>_pack_<cc>.sql`, applied by the module migration runner and by nothing else |
+| `packs/<cc>/corporate_tax.json`, where the pack has one | `supabase/seed/modules/corporate_tax/<n>_pack_<cc>.sql`, applied the same way |
 | every pack, together | the lists that name them outside `packs/`: `[db.seed] sql_paths` in `supabase/config.toml`, the `psql -f` lines of the README, the `/packs/<cc>/` lines of `.github/CODEOWNERS` and the table above. Only the block between `generated:<name>` and `/generated` is written; the prose around it is not. A handle written on a pack's CODEOWNERS line is kept, and a new pack gets the owner of `*` |
 
 The compiler writes `chart_templates`, `account_templates`,
@@ -342,7 +345,8 @@ The compiler writes `chart_templates`, `account_templates`,
 `tax_report_templates`, `tax_report_box_templates`, `statement_templates`,
 `statement_line_templates`, `statement_line_rules`, `legal_mention_templates`,
 `country_defaults`, `country_packs` and — for a module section —
-`fixed_assets.country_rules` and `fixed_assets.category_templates`, and **nothing that
+`fixed_assets.country_rules` and `fixed_assets.category_templates`, or the
+seven reference tables of the `tax` schema, and **nothing that
 belongs to a company**. Every insert upserts on the natural key —
 `(country, chart_code, code)` for an account, `(country, code)` for the rest —
 which matters more than it sounds: the seeds used to say
@@ -1472,7 +1476,8 @@ edit, which is how the return of a past period keeps giving the same answer.
 
 The pack's own files are written in `defaults.language`. Every other language
 is one file, `i18n/<lang>.json`, and that file is the only place a translation
-lives — the manifest carries no second wording and neither does `fixed_assets.json`.
+lives — the manifest carries no second wording, and neither does `fixed_assets.json` or
+`corporate_tax.json`.
 One file per language means a contributor edits one file and a reviewer reads
 one file.
 
@@ -1649,6 +1654,235 @@ read. It is also
 worth knowing what the balance sheet of an open year looks like — the result
 is not on it until `close_fiscal_year()` puts it there, so assets exceed
 liabilities by exactly the result of the income statement, in every country.
+
+## The corporate tax section
+
+`packs/<cc>/corporate_tax.json` is what a country says about the tax on a
+company's profit. It is the section of the corporate income tax module
+([`modules/corporate-tax`](../modules/corporate-tax/)), compiled into
+`supabase/seed/modules/corporate_tax/` and applied only where that module is
+installed. A pack without the file says nothing, and a company of that country
+is refused by name — `no_corporate_tax_rules` — rather than given a
+neighbour's rates.
+
+The computation it feeds is always the same, and the file is its seven
+inputs:
+
+```
+accounting result  →  adjustments  →  losses  →  base  →  rates  →  credits  →  tax
+   result            adjustment_rules  loss_carryforward    rates      credits
+```
+
+```json
+{
+  "tax":    { "code": "XX-CIT", "name": "…", "legal_reference": "…", "source": "…" },
+  "result": { "statement": "XX-IS", "line": "PBT", "legal_reference": "…" },
+  "accounts": { "expense": "695000", "payable": "444000", "receivable": null, "legal_reference": "…" },
+  "parameters":        [ … ],
+  "adjustment_rules":  [ … ],
+  "rates":             [ … ],
+  "loss_carryforward": [ … ],
+  "prepayments":       [ … ],
+  "credits":           [ … ]
+}
+```
+
+**One discipline above the others: a figure nobody verified is left out.**
+Every rate, rule, limit, schedule and credit carries a `legal_reference` and a
+`valid_from`, both required by the schema, and a `source` naming the entry of
+the [register](#the-register-of-sources) where the text was read. A rule that
+is missing makes an estimate too high by something a reader can see is
+missing; a figure that was guessed makes it wrong in a way nobody can see.
+The Belgian pack carries the prepayment rates of one assessment year and not
+of the one before, because only one was read on the administration's own
+page.
+
+### Where the computation starts: `result`
+
+One line of one income statement of the pack. The module asks
+`financial_statement()` for it, so the accounting result is the socle's own
+figure and a closed year still reads as the year it was.
+
+A country whose statement prints a **result before income tax** names that
+line, and the tax charge never enters the computation — Belgium names `9903`.
+A country that prints only the **net result** names it and adds the charge
+back by a rule on its accounts — France names `HN`, the figure form 2058-A
+starts from, and carries a rule on `695`. Both are one decision, written once.
+
+A chart that does not report on that statement — the Belgian chart of
+associations — cannot be estimated, and says so: `no_result_statement`.
+
+### The accounts: `accounts`
+
+`expense`, `payable` and, where the chart keeps one apart, `receivable`.
+`ekwo pack check` refuses a code missing from any chart of the pack. They are
+declared for the provision entry of a later version of the module; this
+version posts nothing, and the columns say *declared, no reader yet*.
+
+### What a company declares: `parameters`
+
+```json
+{ "code": "small_company", "type": "boolean",
+  "name": "La société est une petite société au sens de l'article 1:24 …",
+  "legal_reference": "Code des impôts sur les revenus 1992, art. 215, al. 2", "source": "…" }
+```
+
+A judgement (`boolean`) or an amount (`amount`), stated by the company for
+each financial year in `tax.company_parameters`. **Nothing infers one.** A
+turnover ceiling is a declared amount even though a ledger holds a turnover:
+the law's figure is restated to twelve months and summed over a group, and the
+books know neither. The `name` is the question, written to be answered with a
+yes, a no or a figure.
+
+Where a threshold is indexed every year and the indexed figure could not be
+read, the parameter becomes the judgement itself — *the company is not
+excluded by the condition of article …* — and the pack carries no amount. The
+Belgian pack does this for the director remuneration condition from
+assessment year 2027.
+
+### What is added back and deducted: `adjustment_rules`
+
+```json
+{ "code": "restaurant", "name": "Frais de restaurant — quotité non déductible",
+  "direction": "add_back", "percent": 31,
+  "valid_from": "2025-12-31", "valid_on": "period_end",
+  "legal_reference": "Code des impôts sur les revenus 1992, art. 53, 8°bis", "source": "…" }
+```
+
+| Field | Is |
+|---|---|
+| `direction` | `add_back` for an expense the tax refuses, `deduction` for an income it leaves out or an allowance the books do not carry |
+| `percent` | the share of the base the rule moves — **the refused share**, so a restaurant bill deductible for 69 % is a rule of 31 |
+| `formula` | instead of `percent`, where the share depends on what the company states about the expense — see below |
+| `accounts` | the accounts of the pack's chart whose **whole** balance falls under the rule, in the vocabulary of a statement rule: `account_code`, `code_prefix`, `code_range` |
+
+**`accounts` is for an account that holds nothing else.** The French chart
+keeps fines on `671200` and the tax charge on `695`, so both rules name their
+account and apply by themselves. The Belgian chart keeps restaurants and
+receptions on one account, 69 % and 50 % deductible: no rule names it, and a
+company says which amount is which. Naming an account that mixes two
+treatments adds back too much, silently.
+
+Without `accounts`, a rule waits for the company: `tax.adjustments` names an
+account of its own whose balance is the base, or states an amount for a year.
+
+**A formula is a closed vocabulary, not an expression.** One variable the
+adjustment states, a straight line, an optional coefficient picked by a word
+the adjustment states, a rounding, a floor, a ceiling, and steps:
+
+```json
+"formula": {
+  "yields": "deductible_percent",
+  "variable": "co2_g_km", "intercept": 120, "slope": -0.5,
+  "coefficient": { "parameter": "fuel", "values": { "diesel": 1, "other": 0.95 } },
+  "decimals": 1, "min": 50, "max": 100,
+  "steps": [ { "from": 200, "percent": 40 } ]
+}
+```
+
+reads: *120 − 0,5 × coefficient × grams, rounded to a tenth, at least 50 and at
+most 100, and 40 from 200 grams up*. `yields` says what the line gives —
+`deductible_percent`, and the rule moves what is left of a hundred, or
+`adjustment_percent`, the share moved. A rule that needs two variables is a
+design discussion, not a second vocabulary: the French ceiling on car
+depreciation is left to the company to state for that reason.
+
+### The rates: `rates`
+
+```json
+{ "code": "reduced-sme", "name": "Taux réduit des petites et moyennes entreprises",
+  "rate": 15, "up_to": 42500, "up_to_prorata": "months",
+  "conditions": [
+    { "parameter": "turnover_twelve_months", "test": "at_most", "amount": 10000000 },
+    { "parameter": "capital_fully_paid_up", "test": "is_true" } ],
+  "valid_from": "2022-12-31", "valid_on": "period_end",
+  "legal_reference": "Code général des impôts, art. 219, I, b", "source": "…" }
+```
+
+A rate with `up_to` takes the slice of the base below that amount; the one
+without takes what is left. `up_to_prorata: "months"` shares a threshold
+stated for twelve months over the months the year has.
+
+**Conditions are tests on declared parameters**, all of which have to be met:
+`is_true`, `is_false`, `at_least`, `at_most`, `below`, `above`. Two more words
+cover what the two first countries needed and nothing else:
+
+- `or_at_least: "taxable_base"` — the amount fails the test and is still at
+  least the taxable base of the year, which is how Belgium words its
+  remuneration condition;
+- `waived_by: ["…"]` — boolean parameters any one of which, declared true,
+  lifts the condition: a company in its first years, an approved cooperative.
+
+A parameter that was not declared is not met. The estimate says so in a line
+of its own, `rate_not_applied`, with the parameter — `not_declared:
+small_company` — so a company is never quietly taxed at the wrong rate.
+
+A pack carries one rate that applies **unconditionally to the whole base**, or
+it is refused: a reduced rate needs the ordinary one beside it.
+
+### Losses, prepayments, credits
+
+`loss_carryforward` is a limit: `floor` and `percent_above` together — France,
+1 000 000 and 50 — or both null for none, and `years` where a loss lapses.
+Losses are used oldest first. A pack that says nothing refuses a company that
+carries a loss, by name.
+
+`prepayments` is **declared, with no reader yet**: the prepayment plan is a
+later version of the module. Two methods cover the two shapes met so far —
+`surcharge_on_shortfall`, where nothing is compulsory and each instalment paid
+in time earns a `credit_percent` against a `surcharge_percent`, and
+`share_of_reference_tax`, where each instalment is a `share_percent` of a
+reference year's tax and none is asked under `exempt_up_to`.
+
+`credits` says that a credit exists, whether what exceeds the tax is paid back
+(`refundable`), and the article. The amount is the company's to declare. Both
+first packs carry an empty list: the shape is published, and no credit was
+cited yet.
+
+### A date, and the day it is read on
+
+Every dated entry has `valid_from`, an optional `valid_to`, and `valid_on`:
+
+| `valid_on` | Reads the validity on | For a law that applies to |
+|---|---|---|
+| `period_start` (the default) | the first day of the financial year | *financial years opened from* a date |
+| `period_end` | the last day | *financial years closed from* a date — which is also how an **assessment year** is said: Belgian assessment year 2026 is `"valid_from": "2025-12-31", "valid_on": "period_end"` |
+
+**A figure that changes is a new entry, never an edit**: the same `code`, a
+new `valid_from`, and a `valid_to` the day before on the old one. The Belgian
+ceiling on the cars of 2023 to 2025 is four entries of one code — 75 %, 50 %,
+25 %, then nothing deductible. `ekwo pack check` refuses two versions in force
+on one day, and versions of one code that disagree about `valid_on`.
+
+### The worked examples: `golden/corporate_tax.json`
+
+A section comes with **at least three fictitious companies whose tax was
+worked out by hand**, and `ekwo pack check` refuses a section without them:
+a small company with a profit under the reduced rate, a year that ends in a
+loss, and a small company kept out of the reduced rate. Each carries the
+journal entries of its year, what it declares, the losses it carried in, and
+under `expected` every line `tax.estimate()` has to return — with the
+arithmetic written out, one step per sentence, in `computation`:
+
+```json
+"computation": [
+  "Restaurant : 3 127,45 × 31 % = 969,5095, soit 969,51.",
+  "Taux réduit, conditions remplies : 100 000,00 × 20 % = 20 000,00.",
+  "Taux ordinaire sur le solde : 39 361,77 × 25 % = 9 840,4425, soit 9 840,44."
+]
+```
+
+`modules/corporate-tax/tests/golden.test.ts` replays every one of them to the
+cent, for every pack that carries the section, and prints that arithmetic when
+a figure disagrees. Like the other files under `golden/` apart from the
+scenario, it is outside the pack checksum: it is evidence about the pack.
+
+### The translations
+
+`i18n/<lang>.json` gains one section, `corporate_tax`, keyed by what is
+labelled: `tax`, then `parameter:<code>`, `rule:<code>`, `rate:<code>` and
+`credit:<code>`. A rule with four dated versions is translated once. A
+language the manifest declares has to cover every key.
 
 ## What `ekwo pack check` refuses
 
@@ -1853,6 +2087,28 @@ accounts it needs — `net_result` the gain, `gross` both the proceeds and the
 value — two categories with the same code, a declining balance with no
 coefficient, a coefficient on a method that is not declining, and a category
 with no `legal_reference`, because a usual duration comes from somewhere.
+
+For `corporate_tax`: a `result` naming a statement the pack does not carry,
+one that is not an income statement, or a line that statement does not have.
+An account of `accounts` missing from **any** chart of the pack, as for a
+role. A rule that carries both a `percent` and a `formula`, or neither, or a
+`formula` together with `accounts`; an
+`account_code` matcher naming an account that is not in every chart reporting
+on the result statement; a `code_to` on anything but a `code_range`. A
+condition naming a parameter the section does not declare, a comparison asked
+of a boolean or `is_true` asked of an amount, a comparison with no `amount`,
+and a `waived_by` that is not a boolean parameter. Two versions of one rule,
+rate or credit — or two loss rules, or two prepayment schedules — in force on
+the same day, a `valid_to` before its `valid_from`, and versions of one code
+that read their validity on different days of the year. No rate that applies
+unconditionally to the whole base. A `floor` without a `percent_above`. An
+instalment of `share_of_reference_tax` with no `share_percent`, a
+`surcharge_on_shortfall` with no `surcharge_percent` or an instalment with no
+`credit_percent`. A label in `i18n/` under a key the section does not carry.
+And a section with no `golden/corporate_tax.json` beside it. A
+`legal_reference` and a `valid_from` are required by the schema on every rule,
+rate, limit, schedule and credit, so a pack that cannot cite a figure cannot
+write it.
 
 **What it does not refuse, and why that is worth knowing.** An extra column in
 the CSV is ignored rather than rejected. A posting whose `report` names a form
@@ -2346,7 +2602,8 @@ node packages/cli/dist/bin.js pack check --all
 
 `build` writes `supabase/seed/<n>_pack_xx.sql` — and
 `supabase/seed/modules/fixed_assets/<n>_pack_xx.sql` if your pack carries a `fixed_assets`
-section — and then **every list that names the packs outside `packs/`**: the
+section, `supabase/seed/modules/corporate_tax/<n>_pack_xx.sql` if it carries a
+`corporate_tax` one — and then **every list that names the packs outside `packs/`**: the
 seed goes into `[db.seed] sql_paths` of `supabase/config.toml` and into the
 `psql -f` lines of the README, your country into the README's list and into
 the [table of packs](#the-packs-of-this-checkout), and `packs/xx/` gets its line
