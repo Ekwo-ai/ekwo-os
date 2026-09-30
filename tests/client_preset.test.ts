@@ -81,7 +81,7 @@ let viewerId: string;
 let mine: Books;
 let theirs: Books;
 
-const SCHEMAS = ['public', 'fixed_assets', 'budgets'];
+const SCHEMAS = ['public', 'fixed_assets', 'budgets', 'tax'];
 
 async function asClient<T>(fn: () => Promise<T>): Promise<T> {
   return asUser(db, clientId, fn);
@@ -1031,6 +1031,20 @@ describe('a client writes nothing else — by the function', () => {
         sql: `select fixed_assets.dispose_fixed_asset($1, $2::date, 0, null, null)`,
         params: [mine.companyId, TO],
       },
+      // Reading the tax is a client's; keeping a computation is tax.write, and
+      // calling one final or taking it back is tax.finalize.
+      'tax.record_computation': {
+        sql: `select tax.record_computation($1, $2)`,
+        params: [mine.companyId, mine.fiscalYearId],
+      },
+      'tax.finalise_computation': {
+        sql: `select tax.finalise_computation(gen_random_uuid())`,
+        params: [],
+      },
+      'tax.withdraw_computation': {
+        sql: `select tax.withdraw_computation(gen_random_uuid())`,
+        params: [],
+      },
     };
   });
 
@@ -1081,10 +1095,11 @@ describe('a client writes nothing else — by the function', () => {
   ];
 
   it('is refused by each of them, or changes nothing, and the books are what they were', async () => {
-    // Both modules on, so that a refusal is about the person and not about
+    // Every module on, so that a refusal is about the person and not about
     // the company having no such thing.
     await db.query(`select enable_module($1, 'budgets')`, [mine.companyId]);
     await db.query(`select enable_module($1, 'assets')`, [mine.companyId]);
+    await db.query(`select enable_module($1, 'tax')`, [mine.companyId]);
     const before = await fingerprint();
     const outcomes: Record<string, string> = {};
     for (const [name, call] of Object.entries(refused)) {

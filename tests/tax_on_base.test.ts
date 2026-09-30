@@ -554,7 +554,7 @@ describe('no country decided anywhere but in a pack', () => {
     const reading = await rows<{ proname: string }>(
       db,
       `select p.proname from pg_proc p join pg_namespace n on n.oid = p.pronamespace
-        where n.nspname in ('public', 'fixed_assets', 'budgets')
+        where n.nspname in ('public', 'fixed_assets', 'budgets', 'tax')
           and p.prosrc ~ 'decimal_places|\\.rounding_method' order by 1`,
     );
     expect(reading.map((r) => r.proname)).toEqual(['rounding_of']);

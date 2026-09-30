@@ -311,7 +311,7 @@ describe.each(filers.map((pack) => [pack.slug, pack] as const))(
       expect(archive.manifest.format_version).toBe(1);
       expect(archive.manifest.company.id).toBe(leaves.companyId);
       expect(archive.manifest.packs.map((p) => p.country)).toEqual([pack.manifest.country]);
-      expect(archive.manifest.modules.map((m) => m.code)).toEqual(['assets', 'budgets']);
+      expect(archive.manifest.modules.map((m) => m.code)).toEqual(['assets', 'budgets', 'tax']);
       expect(Object.keys(archive.tables).sort()).toEqual(archive.manifest.tables.map((t) => t.name).sort());
 
       // The files are listed, and said not to be carried.

@@ -21,7 +21,7 @@ import {
   readModule,
   resolveModulesDir,
 } from '../../packages/cli/src/index.js';
-import { repoRoot } from '../helpers/db.js';
+import { moduleCodes, repoRoot } from '../helpers/db.js';
 import { emptyDatabase, migrationsPath, seedPath } from './helpers.js';
 
 const modulesDir = join(repoRoot, 'modules');
@@ -33,6 +33,7 @@ describe('reading the modules of a checkout', () => {
     // `fixed-assets` carries the module whose code is `assets`.
     expect(modules.map((m) => [basename(m.dir), m.manifest.code, m.manifest.schema])).toEqual([
       ['budgets', 'budgets', 'budgets'],
+      ['corporate-tax', 'tax', 'tax'],
       ['fixed-assets', 'assets', 'fixed_assets'],
     ]);
     for (const module of modules) {
@@ -104,7 +105,7 @@ describe('applying them', () => {
 
       // The registry the modules wrote for themselves.
       const registry = await db.query<{ code: string }>(`select code from modules order by code`);
-      expect(registry.map((row) => row.code)).toEqual(['assets', 'budgets']);
+      expect(registry.map((row) => row.code)).toEqual(await moduleCodes());
 
       // And nothing at all the second time.
       const again = await applyMigrations(db, all);

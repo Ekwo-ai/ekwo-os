@@ -26,6 +26,7 @@ import {
   type Migration,
   type SqlClient,
 } from '../../packages/cli/src/index.js';
+import { moduleCodes } from '../helpers/db.js';
 import { emptyDatabase, migrationsPath, seedPath } from './helpers.js';
 
 let db: SqlClient;
@@ -63,12 +64,12 @@ async function anyPolicy(): Promise<{ table: string; name: string }> {
 }
 
 describe('the inventory', () => {
-  it('is shipped by this checkout and describes a schema version', () => {
+  it('is shipped by this checkout and describes a schema version', async () => {
     expect(resolveInventoryPath()).toMatch(/packages\/cli\/assets\/expected-objects\.json$/);
     expect(expected.schemaVersion).toMatch(/^\d+\.\d+\.\d+$/);
     expect(expected.migration).toMatch(/^\d{14}$/);
     expect(expected.socle.tables.length).toBeGreaterThan(30);
-    expect(expected.modules.map((m) => m.code)).toEqual(['assets', 'budgets']);
+    expect(expected.modules.map((m) => m.code)).toEqual(await moduleCodes());
   });
 
   it('holds no object twice, so a key identifies one thing', () => {
@@ -259,7 +260,7 @@ describe('the shape a machine reads', () => {
     ]);
 
     const sections = (check?.data as { sections: Record<string, unknown>[] }).sections;
-    expect(sections.map((s) => s['code'])).toEqual(['socle', 'assets', 'budgets']);
+    expect(sections.map((s) => s['code'])).toEqual(['socle', ...(await moduleCodes())]);
     expect(Object.keys(sections[0] ?? {}).sort()).toEqual([
       'code',
       'columns',

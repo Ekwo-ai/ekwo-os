@@ -610,6 +610,9 @@ describe('a module’s own capabilities', () => {
       { code: 'assets.write', area: 'assets' },
       { code: 'budgets.read', area: 'budgets' },
       { code: 'budgets.write', area: 'budgets' },
+      { code: 'tax.finalize', area: 'tax' },
+      { code: 'tax.read', area: 'tax' },
+      { code: 'tax.write', area: 'tax' },
     ]);
   });
 
@@ -626,20 +629,27 @@ describe('a module’s own capabilities', () => {
         )
       ).map((r) => r.capability);
 
-    expect(await preset('viewer')).toEqual(['assets.read', 'budgets.read']);
+    expect(await preset('viewer')).toEqual(['assets.read', 'budgets.read', 'tax.read']);
     expect(await preset('accountant')).toEqual([
       'assets.post',
       'assets.read',
       'assets.write',
       'budgets.read',
       'budgets.write',
+      'tax.read',
+      'tax.write',
     ]);
+    // Calling a computation of the tax final is the company saying what it
+    // owes: the owner's, and not the accountant's.
     expect(await preset('owner')).toEqual([
       'assets.post',
       'assets.read',
       'assets.write',
       'budgets.read',
       'budgets.write',
+      'tax.finalize',
+      'tax.read',
+      'tax.write',
     ]);
   });
 

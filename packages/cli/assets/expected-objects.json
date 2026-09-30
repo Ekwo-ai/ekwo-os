@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.9.0",
-  "migration": "20260930103815",
+  "migration": "20260930104417",
   "socle": {
     "schema": "public",
     "tables": [
@@ -10129,6 +10129,1252 @@
           {
             "name": "variance",
             "arguments": "p_company_id uuid, p_budget_id uuid, p_from date, p_to date",
+            "anon": [],
+            "authenticated": [
+              "execute"
+            ],
+            "service_role": [
+              "execute"
+            ]
+          }
+        ],
+        "defaultPrivileges": []
+      }
+    },
+    {
+      "code": "tax",
+      "version": "1.0.0",
+      "schema": "tax",
+      "tables": [
+        {
+          "name": "adjustment_rule_templates",
+          "columns": [
+            {
+              "name": "account_rules",
+              "type": "jsonb"
+            },
+            {
+              "name": "code",
+              "type": "text"
+            },
+            {
+              "name": "country",
+              "type": "character(2)"
+            },
+            {
+              "name": "direction",
+              "type": "tax.adjustment_direction"
+            },
+            {
+              "name": "formula",
+              "type": "jsonb"
+            },
+            {
+              "name": "legal_reference",
+              "type": "text"
+            },
+            {
+              "name": "name",
+              "type": "text"
+            },
+            {
+              "name": "name_i18n",
+              "type": "jsonb"
+            },
+            {
+              "name": "percent",
+              "type": "numeric(9,6)"
+            },
+            {
+              "name": "sequence",
+              "type": "integer"
+            },
+            {
+              "name": "source_key",
+              "type": "text"
+            },
+            {
+              "name": "valid_from",
+              "type": "date"
+            },
+            {
+              "name": "valid_on",
+              "type": "tax.validity_basis"
+            },
+            {
+              "name": "valid_to",
+              "type": "date"
+            }
+          ]
+        },
+        {
+          "name": "adjustments",
+          "columns": [
+            {
+              "name": "account_id",
+              "type": "uuid"
+            },
+            {
+              "name": "amount",
+              "type": "numeric"
+            },
+            {
+              "name": "company_id",
+              "type": "uuid"
+            },
+            {
+              "name": "created_at",
+              "type": "timestamp with time zone"
+            },
+            {
+              "name": "fiscal_year_id",
+              "type": "uuid"
+            },
+            {
+              "name": "id",
+              "type": "uuid"
+            },
+            {
+              "name": "note",
+              "type": "text"
+            },
+            {
+              "name": "parameters",
+              "type": "jsonb"
+            },
+            {
+              "name": "rule_code",
+              "type": "text"
+            },
+            {
+              "name": "updated_at",
+              "type": "timestamp with time zone"
+            }
+          ]
+        },
+        {
+          "name": "company_parameters",
+          "columns": [
+            {
+              "name": "code",
+              "type": "text"
+            },
+            {
+              "name": "company_id",
+              "type": "uuid"
+            },
+            {
+              "name": "created_at",
+              "type": "timestamp with time zone"
+            },
+            {
+              "name": "declared_by",
+              "type": "uuid"
+            },
+            {
+              "name": "fiscal_year_id",
+              "type": "uuid"
+            },
+            {
+              "name": "id",
+              "type": "uuid"
+            },
+            {
+              "name": "note",
+              "type": "text"
+            },
+            {
+              "name": "updated_at",
+              "type": "timestamp with time zone"
+            },
+            {
+              "name": "value_amount",
+              "type": "numeric"
+            },
+            {
+              "name": "value_boolean",
+              "type": "boolean"
+            }
+          ]
+        },
+        {
+          "name": "computation_lines",
+          "columns": [
+            {
+              "name": "amount",
+              "type": "numeric"
+            },
+            {
+              "name": "base",
+              "type": "numeric"
+            },
+            {
+              "name": "code",
+              "type": "text"
+            },
+            {
+              "name": "company_id",
+              "type": "uuid"
+            },
+            {
+              "name": "computation_id",
+              "type": "uuid"
+            },
+            {
+              "name": "id",
+              "type": "uuid"
+            },
+            {
+              "name": "kind",
+              "type": "text"
+            },
+            {
+              "name": "legal_reference",
+              "type": "text"
+            },
+            {
+              "name": "name",
+              "type": "text"
+            },
+            {
+              "name": "rate",
+              "type": "numeric"
+            },
+            {
+              "name": "sequence",
+              "type": "integer"
+            },
+            {
+              "name": "source_key",
+              "type": "text"
+            }
+          ]
+        },
+        {
+          "name": "computations",
+          "columns": [
+            {
+              "name": "accounting_result",
+              "type": "numeric"
+            },
+            {
+              "name": "company_id",
+              "type": "uuid"
+            },
+            {
+              "name": "computed_at",
+              "type": "date"
+            },
+            {
+              "name": "currency_code",
+              "type": "character(3)"
+            },
+            {
+              "name": "finalised_at",
+              "type": "timestamp with time zone"
+            },
+            {
+              "name": "finalised_by",
+              "type": "uuid"
+            },
+            {
+              "name": "fiscal_year_id",
+              "type": "uuid"
+            },
+            {
+              "name": "id",
+              "type": "uuid"
+            },
+            {
+              "name": "loss_of_period",
+              "type": "numeric"
+            },
+            {
+              "name": "recorded_at",
+              "type": "timestamp with time zone"
+            },
+            {
+              "name": "recorded_by",
+              "type": "uuid"
+            },
+            {
+              "name": "status",
+              "type": "tax.computation_status"
+            },
+            {
+              "name": "superseded_at",
+              "type": "timestamp with time zone"
+            },
+            {
+              "name": "superseded_by",
+              "type": "uuid"
+            },
+            {
+              "name": "tax",
+              "type": "numeric"
+            },
+            {
+              "name": "tax_code",
+              "type": "text"
+            },
+            {
+              "name": "taxable_base",
+              "type": "numeric"
+            },
+            {
+              "name": "version",
+              "type": "integer"
+            }
+          ]
+        },
+        {
+          "name": "country_rules",
+          "columns": [
+            {
+              "name": "accounts_legal_reference",
+              "type": "text"
+            },
+            {
+              "name": "accounts_source_key",
+              "type": "text"
+            },
+            {
+              "name": "country",
+              "type": "character(2)"
+            },
+            {
+              "name": "expense_account_code",
+              "type": "text"
+            },
+            {
+              "name": "legal_reference",
+              "type": "text"
+            },
+            {
+              "name": "name",
+              "type": "text"
+            },
+            {
+              "name": "name_i18n",
+              "type": "jsonb"
+            },
+            {
+              "name": "payable_account_code",
+              "type": "text"
+            },
+            {
+              "name": "receivable_account_code",
+              "type": "text"
+            },
+            {
+              "name": "result_legal_reference",
+              "type": "text"
+            },
+            {
+              "name": "result_line_code",
+              "type": "text"
+            },
+            {
+              "name": "result_source_key",
+              "type": "text"
+            },
+            {
+              "name": "result_statement_code",
+              "type": "text"
+            },
+            {
+              "name": "source_key",
+              "type": "text"
+            },
+            {
+              "name": "tax_code",
+              "type": "text"
+            }
+          ]
+        },
+        {
+          "name": "credit_templates",
+          "columns": [
+            {
+              "name": "code",
+              "type": "text"
+            },
+            {
+              "name": "country",
+              "type": "character(2)"
+            },
+            {
+              "name": "legal_reference",
+              "type": "text"
+            },
+            {
+              "name": "name",
+              "type": "text"
+            },
+            {
+              "name": "name_i18n",
+              "type": "jsonb"
+            },
+            {
+              "name": "refundable",
+              "type": "boolean"
+            },
+            {
+              "name": "sequence",
+              "type": "integer"
+            },
+            {
+              "name": "source_key",
+              "type": "text"
+            },
+            {
+              "name": "valid_from",
+              "type": "date"
+            },
+            {
+              "name": "valid_on",
+              "type": "tax.validity_basis"
+            },
+            {
+              "name": "valid_to",
+              "type": "date"
+            }
+          ]
+        },
+        {
+          "name": "credits",
+          "columns": [
+            {
+              "name": "amount",
+              "type": "numeric"
+            },
+            {
+              "name": "company_id",
+              "type": "uuid"
+            },
+            {
+              "name": "created_at",
+              "type": "timestamp with time zone"
+            },
+            {
+              "name": "credit_code",
+              "type": "text"
+            },
+            {
+              "name": "fiscal_year_id",
+              "type": "uuid"
+            },
+            {
+              "name": "id",
+              "type": "uuid"
+            },
+            {
+              "name": "note",
+              "type": "text"
+            },
+            {
+              "name": "updated_at",
+              "type": "timestamp with time zone"
+            }
+          ]
+        },
+        {
+          "name": "loss_rule_templates",
+          "columns": [
+            {
+              "name": "carry_forward_years",
+              "type": "integer"
+            },
+            {
+              "name": "country",
+              "type": "character(2)"
+            },
+            {
+              "name": "floor_amount",
+              "type": "numeric"
+            },
+            {
+              "name": "legal_reference",
+              "type": "text"
+            },
+            {
+              "name": "percent_above",
+              "type": "numeric(9,6)"
+            },
+            {
+              "name": "source_key",
+              "type": "text"
+            },
+            {
+              "name": "valid_from",
+              "type": "date"
+            },
+            {
+              "name": "valid_on",
+              "type": "tax.validity_basis"
+            },
+            {
+              "name": "valid_to",
+              "type": "date"
+            }
+          ]
+        },
+        {
+          "name": "loss_uses",
+          "columns": [
+            {
+              "name": "amount",
+              "type": "numeric"
+            },
+            {
+              "name": "company_id",
+              "type": "uuid"
+            },
+            {
+              "name": "computation_id",
+              "type": "uuid"
+            },
+            {
+              "name": "created_at",
+              "type": "timestamp with time zone"
+            },
+            {
+              "name": "id",
+              "type": "uuid"
+            },
+            {
+              "name": "loss_id",
+              "type": "uuid"
+            }
+          ]
+        },
+        {
+          "name": "losses",
+          "columns": [
+            {
+              "name": "amount",
+              "type": "numeric"
+            },
+            {
+              "name": "company_id",
+              "type": "uuid"
+            },
+            {
+              "name": "computation_id",
+              "type": "uuid"
+            },
+            {
+              "name": "created_at",
+              "type": "timestamp with time zone"
+            },
+            {
+              "name": "id",
+              "type": "uuid"
+            },
+            {
+              "name": "note",
+              "type": "text"
+            },
+            {
+              "name": "origin_period_end",
+              "type": "date"
+            },
+            {
+              "name": "updated_at",
+              "type": "timestamp with time zone"
+            }
+          ]
+        },
+        {
+          "name": "parameter_templates",
+          "columns": [
+            {
+              "name": "code",
+              "type": "text"
+            },
+            {
+              "name": "country",
+              "type": "character(2)"
+            },
+            {
+              "name": "legal_reference",
+              "type": "text"
+            },
+            {
+              "name": "name",
+              "type": "text"
+            },
+            {
+              "name": "name_i18n",
+              "type": "jsonb"
+            },
+            {
+              "name": "sequence",
+              "type": "integer"
+            },
+            {
+              "name": "source_key",
+              "type": "text"
+            },
+            {
+              "name": "value_type",
+              "type": "tax.parameter_type"
+            }
+          ]
+        },
+        {
+          "name": "prepayment_templates",
+          "columns": [
+            {
+              "name": "country",
+              "type": "character(2)"
+            },
+            {
+              "name": "exempt_up_to",
+              "type": "numeric"
+            },
+            {
+              "name": "instalments",
+              "type": "jsonb"
+            },
+            {
+              "name": "legal_reference",
+              "type": "text"
+            },
+            {
+              "name": "method",
+              "type": "text"
+            },
+            {
+              "name": "month_basis",
+              "type": "text"
+            },
+            {
+              "name": "source_key",
+              "type": "text"
+            },
+            {
+              "name": "surcharge_percent",
+              "type": "numeric(9,6)"
+            },
+            {
+              "name": "valid_from",
+              "type": "date"
+            },
+            {
+              "name": "valid_on",
+              "type": "tax.validity_basis"
+            },
+            {
+              "name": "valid_to",
+              "type": "date"
+            }
+          ]
+        },
+        {
+          "name": "rate_templates",
+          "columns": [
+            {
+              "name": "code",
+              "type": "text"
+            },
+            {
+              "name": "conditions",
+              "type": "jsonb"
+            },
+            {
+              "name": "country",
+              "type": "character(2)"
+            },
+            {
+              "name": "legal_reference",
+              "type": "text"
+            },
+            {
+              "name": "name",
+              "type": "text"
+            },
+            {
+              "name": "name_i18n",
+              "type": "jsonb"
+            },
+            {
+              "name": "rate",
+              "type": "numeric(9,6)"
+            },
+            {
+              "name": "sequence",
+              "type": "integer"
+            },
+            {
+              "name": "source_key",
+              "type": "text"
+            },
+            {
+              "name": "up_to",
+              "type": "numeric"
+            },
+            {
+              "name": "up_to_prorata",
+              "type": "text"
+            },
+            {
+              "name": "valid_from",
+              "type": "date"
+            },
+            {
+              "name": "valid_on",
+              "type": "tax.validity_basis"
+            },
+            {
+              "name": "valid_to",
+              "type": "date"
+            }
+          ]
+        }
+      ],
+      "views": [],
+      "functions": [
+        {
+          "name": "account_matches",
+          "arguments": "p_account_code text, p_account_rules jsonb"
+        },
+        {
+          "name": "accounts_in_use",
+          "arguments": "p_company_id uuid"
+        },
+        {
+          "name": "archive_tables",
+          "arguments": ""
+        },
+        {
+          "name": "condition_failure",
+          "arguments": "p_condition jsonb, p_values jsonb, p_taxable_base numeric"
+        },
+        {
+          "name": "estimate",
+          "arguments": "p_company_id uuid, p_fiscal_year_id uuid, p_at date"
+        },
+        {
+          "name": "finalise_computation",
+          "arguments": "p_computation_id uuid"
+        },
+        {
+          "name": "formula_percent",
+          "arguments": "p_formula jsonb, p_parameters jsonb"
+        },
+        {
+          "name": "guard_declaration",
+          "arguments": ""
+        },
+        {
+          "name": "guard_loss",
+          "arguments": ""
+        },
+        {
+          "name": "in_force",
+          "arguments": "p_valid_from date, p_valid_to date, p_valid_on tax.validity_basis, p_start date, p_end date"
+        },
+        {
+          "name": "line",
+          "arguments": "p_kind text, p_code text, p_name text, p_base numeric, p_rate numeric, p_amount numeric, p_legal_reference text, p_source_key text"
+        },
+        {
+          "name": "loss_stock",
+          "arguments": "p_company_id uuid, p_before date"
+        },
+        {
+          "name": "record_computation",
+          "arguments": "p_company_id uuid, p_fiscal_year_id uuid, p_at date"
+        },
+        {
+          "name": "withdraw_computation",
+          "arguments": "p_computation_id uuid"
+        }
+      ],
+      "policies": [
+        {
+          "table": "adjustment_rule_templates",
+          "name": "tax_adjustment_rule_templates_select",
+          "command": "select"
+        },
+        {
+          "table": "adjustments",
+          "name": "tax_adjustments_select",
+          "command": "select"
+        },
+        {
+          "table": "adjustments",
+          "name": "tax_adjustments_write",
+          "command": "all"
+        },
+        {
+          "table": "company_parameters",
+          "name": "tax_company_parameters_select",
+          "command": "select"
+        },
+        {
+          "table": "company_parameters",
+          "name": "tax_company_parameters_write",
+          "command": "all"
+        },
+        {
+          "table": "computation_lines",
+          "name": "tax_computation_lines_select",
+          "command": "select"
+        },
+        {
+          "table": "computations",
+          "name": "tax_computations_select",
+          "command": "select"
+        },
+        {
+          "table": "country_rules",
+          "name": "tax_country_rules_select",
+          "command": "select"
+        },
+        {
+          "table": "credit_templates",
+          "name": "tax_credit_templates_select",
+          "command": "select"
+        },
+        {
+          "table": "credits",
+          "name": "tax_credits_select",
+          "command": "select"
+        },
+        {
+          "table": "credits",
+          "name": "tax_credits_write",
+          "command": "all"
+        },
+        {
+          "table": "loss_rule_templates",
+          "name": "tax_loss_rule_templates_select",
+          "command": "select"
+        },
+        {
+          "table": "loss_uses",
+          "name": "tax_loss_uses_select",
+          "command": "select"
+        },
+        {
+          "table": "losses",
+          "name": "tax_losses_select",
+          "command": "select"
+        },
+        {
+          "table": "losses",
+          "name": "tax_losses_write",
+          "command": "all"
+        },
+        {
+          "table": "parameter_templates",
+          "name": "tax_parameter_templates_select",
+          "command": "select"
+        },
+        {
+          "table": "prepayment_templates",
+          "name": "tax_prepayment_templates_select",
+          "command": "select"
+        },
+        {
+          "table": "rate_templates",
+          "name": "tax_rate_templates_select",
+          "command": "select"
+        }
+      ],
+      "triggers": [
+        {
+          "table": "adjustments",
+          "name": "tax_adjustments_guard"
+        },
+        {
+          "table": "adjustments",
+          "name": "tax_adjustments_set_updated_at"
+        },
+        {
+          "table": "company_parameters",
+          "name": "tax_company_parameters_guard"
+        },
+        {
+          "table": "company_parameters",
+          "name": "tax_company_parameters_set_updated_at"
+        },
+        {
+          "table": "credits",
+          "name": "tax_credits_guard"
+        },
+        {
+          "table": "credits",
+          "name": "tax_credits_set_updated_at"
+        },
+        {
+          "table": "losses",
+          "name": "tax_losses_guard"
+        },
+        {
+          "table": "losses",
+          "name": "tax_losses_set_updated_at"
+        }
+      ],
+      "types": [
+        {
+          "name": "adjustment_direction",
+          "kind": "enum",
+          "labels": [
+            "add_back",
+            "deduction"
+          ]
+        },
+        {
+          "name": "computation_status",
+          "kind": "enum",
+          "labels": [
+            "estimate",
+            "final",
+            "superseded"
+          ]
+        },
+        {
+          "name": "parameter_type",
+          "kind": "enum",
+          "labels": [
+            "boolean",
+            "amount"
+          ]
+        },
+        {
+          "name": "validity_basis",
+          "kind": "enum",
+          "labels": [
+            "period_start",
+            "period_end"
+          ]
+        }
+      ],
+      "grants": {
+        "schema": "tax",
+        "usage": {
+          "anon": [
+            "usage"
+          ],
+          "authenticated": [
+            "usage"
+          ],
+          "service_role": [
+            "usage"
+          ]
+        },
+        "tables": [
+          {
+            "name": "adjustment_rule_templates",
+            "anon": [],
+            "authenticated": [
+              "select"
+            ],
+            "service_role": [
+              "select"
+            ]
+          },
+          {
+            "name": "adjustments",
+            "anon": [],
+            "authenticated": [
+              "delete",
+              "insert",
+              "select",
+              "update"
+            ],
+            "service_role": [
+              "delete",
+              "insert",
+              "select",
+              "update"
+            ]
+          },
+          {
+            "name": "company_parameters",
+            "anon": [],
+            "authenticated": [
+              "delete",
+              "insert",
+              "select",
+              "update"
+            ],
+            "service_role": [
+              "delete",
+              "insert",
+              "select",
+              "update"
+            ]
+          },
+          {
+            "name": "computation_lines",
+            "anon": [],
+            "authenticated": [
+              "select"
+            ],
+            "service_role": [
+              "select"
+            ]
+          },
+          {
+            "name": "computations",
+            "anon": [],
+            "authenticated": [
+              "select"
+            ],
+            "service_role": [
+              "select"
+            ]
+          },
+          {
+            "name": "country_rules",
+            "anon": [],
+            "authenticated": [
+              "select"
+            ],
+            "service_role": [
+              "select"
+            ]
+          },
+          {
+            "name": "credit_templates",
+            "anon": [],
+            "authenticated": [
+              "select"
+            ],
+            "service_role": [
+              "select"
+            ]
+          },
+          {
+            "name": "credits",
+            "anon": [],
+            "authenticated": [
+              "delete",
+              "insert",
+              "select",
+              "update"
+            ],
+            "service_role": [
+              "delete",
+              "insert",
+              "select",
+              "update"
+            ]
+          },
+          {
+            "name": "loss_rule_templates",
+            "anon": [],
+            "authenticated": [
+              "select"
+            ],
+            "service_role": [
+              "select"
+            ]
+          },
+          {
+            "name": "loss_uses",
+            "anon": [],
+            "authenticated": [
+              "select"
+            ],
+            "service_role": [
+              "select"
+            ]
+          },
+          {
+            "name": "losses",
+            "anon": [],
+            "authenticated": [
+              "delete",
+              "insert",
+              "select",
+              "update"
+            ],
+            "service_role": [
+              "delete",
+              "insert",
+              "select",
+              "update"
+            ]
+          },
+          {
+            "name": "parameter_templates",
+            "anon": [],
+            "authenticated": [
+              "select"
+            ],
+            "service_role": [
+              "select"
+            ]
+          },
+          {
+            "name": "prepayment_templates",
+            "anon": [],
+            "authenticated": [
+              "select"
+            ],
+            "service_role": [
+              "select"
+            ]
+          },
+          {
+            "name": "rate_templates",
+            "anon": [],
+            "authenticated": [
+              "select"
+            ],
+            "service_role": [
+              "select"
+            ]
+          }
+        ],
+        "views": [],
+        "sequences": [],
+        "functions": [
+          {
+            "name": "account_matches",
+            "arguments": "p_account_code text, p_account_rules jsonb",
+            "anon": [],
+            "authenticated": [
+              "execute"
+            ],
+            "service_role": [
+              "execute"
+            ]
+          },
+          {
+            "name": "accounts_in_use",
+            "arguments": "p_company_id uuid",
+            "anon": [],
+            "authenticated": [
+              "execute"
+            ],
+            "service_role": [
+              "execute"
+            ]
+          },
+          {
+            "name": "archive_tables",
+            "arguments": "",
+            "anon": [],
+            "authenticated": [
+              "execute"
+            ],
+            "service_role": [
+              "execute"
+            ]
+          },
+          {
+            "name": "condition_failure",
+            "arguments": "p_condition jsonb, p_values jsonb, p_taxable_base numeric",
+            "anon": [],
+            "authenticated": [
+              "execute"
+            ],
+            "service_role": [
+              "execute"
+            ]
+          },
+          {
+            "name": "estimate",
+            "arguments": "p_company_id uuid, p_fiscal_year_id uuid, p_at date",
+            "anon": [],
+            "authenticated": [
+              "execute"
+            ],
+            "service_role": [
+              "execute"
+            ]
+          },
+          {
+            "name": "finalise_computation",
+            "arguments": "p_computation_id uuid",
+            "anon": [],
+            "authenticated": [
+              "execute"
+            ],
+            "service_role": [
+              "execute"
+            ]
+          },
+          {
+            "name": "formula_percent",
+            "arguments": "p_formula jsonb, p_parameters jsonb",
+            "anon": [],
+            "authenticated": [
+              "execute"
+            ],
+            "service_role": [
+              "execute"
+            ]
+          },
+          {
+            "name": "guard_declaration",
+            "arguments": "",
+            "trigger": true,
+            "anon": [],
+            "authenticated": [],
+            "service_role": []
+          },
+          {
+            "name": "guard_loss",
+            "arguments": "",
+            "trigger": true,
+            "anon": [],
+            "authenticated": [],
+            "service_role": []
+          },
+          {
+            "name": "in_force",
+            "arguments": "p_valid_from date, p_valid_to date, p_valid_on tax.validity_basis, p_start date, p_end date",
+            "anon": [],
+            "authenticated": [
+              "execute"
+            ],
+            "service_role": [
+              "execute"
+            ]
+          },
+          {
+            "name": "line",
+            "arguments": "p_kind text, p_code text, p_name text, p_base numeric, p_rate numeric, p_amount numeric, p_legal_reference text, p_source_key text",
+            "anon": [],
+            "authenticated": [
+              "execute"
+            ],
+            "service_role": [
+              "execute"
+            ]
+          },
+          {
+            "name": "loss_stock",
+            "arguments": "p_company_id uuid, p_before date",
+            "anon": [],
+            "authenticated": [
+              "execute"
+            ],
+            "service_role": [
+              "execute"
+            ]
+          },
+          {
+            "name": "record_computation",
+            "arguments": "p_company_id uuid, p_fiscal_year_id uuid, p_at date",
+            "anon": [],
+            "authenticated": [
+              "execute"
+            ],
+            "service_role": [
+              "execute"
+            ]
+          },
+          {
+            "name": "withdraw_computation",
+            "arguments": "p_computation_id uuid",
             "anon": [],
             "authenticated": [
               "execute"

@@ -139,7 +139,7 @@ sql_paths = [
 # database. `ekwo module enable` prints the line to add, and on a hosted
 # project it is Project Settings → API → Exposed schemas.
 #
-#   schemas = ["public", "fixed_assets", "budgets"]
+#   schemas = ["public", "fixed_assets", "budgets", "tax"]
 #
 # They are left out by default: a module nobody enabled is a schema nobody
 # should be able to reach over the API.

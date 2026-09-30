@@ -12,7 +12,7 @@
 
 import type { PGlite } from '@electric-sql/pglite';
 import type { Pack, PackGolden } from '../../packages/cli/src/index.js';
-import { asUser, one, rows } from './db.js';
+import { asUser, one, rows, withoutTrigger } from './db.js';
 import { newCompany, newUser } from './factory.js';
 import { replayScenario, type Replayed } from './golden-scenario.js';
 import { allPacks, monthsOf } from './packs.js';
@@ -220,6 +220,53 @@ export async function furnish(db: PGlite, pack: Pack, name: string, tag: string)
                                             amount, accumulated, net_book_value)
      values ($1, $2, 1, $3::date, $4::date, 1200, 1200, 4800)`,
     [asset.id, companyId, golden.fiscalYear.start, golden.fiscalYear.end],
+  );
+
+  // A third module: what a company declared for its corporate income tax, a
+  // computation that was called final and the loss it used. Written by hand,
+  // with the guard that holds a declaration to the codes of its country pack
+  // switched off for the length of it — which rules a country carries is not
+  // the subject, that the rows travel is.
+  await asUser(db, ownerId, async () => {
+    await db.query(`select enable_module($1, 'tax')`, [companyId]);
+  });
+  for (const [table, trigger, columns, values] of [
+    ['tax.company_parameters', 'tax_company_parameters_guard', 'code, value_boolean', `'declared-${tag}', true`],
+    ['tax.adjustments', 'tax_adjustments_guard', 'rule_code, amount', `'rule-${tag}', 321.09`],
+    ['tax.credits', 'tax_credits_guard', 'credit_code, amount', `'credit-${tag}', 12.34`],
+  ] as const) {
+    await withoutTrigger(db, table, trigger, () =>
+      db.query(
+        `insert into ${table} (company_id, fiscal_year_id, ${columns})
+         select $1, f.id, ${values} from fiscal_years f where f.company_id = $1 order by f.start_date limit 1`,
+        [companyId],
+      ),
+    );
+  }
+  const computation = await one<{ id: string }>(
+    db,
+    `insert into tax.computations (company_id, fiscal_year_id, version, status, computed_at, tax_code,
+                                   currency_code, accounting_result, taxable_base, tax, finalised_at)
+     select c.id, f.id, 1, 'final', f.end_date, $2, c.currency_code, 5000, 4000, 1000, now()
+       from companies c join fiscal_years f on f.company_id = c.id
+      where c.id = $1 order by f.start_date limit 1
+     returning id`,
+    [companyId, `TAX-${tag}`],
+  );
+  await db.query(
+    `insert into tax.computation_lines (computation_id, company_id, sequence, kind, code, base, rate, amount)
+     values ($1, $2, 1, 'tax_due', $3, 4000, 25, 1000)`,
+    [computation.id, companyId, `TAX-${tag}`],
+  );
+  const loss = await one<{ id: string }>(
+    db,
+    `insert into tax.losses (company_id, origin_period_end, amount)
+     values ($1, ($2::date - 1), 1000) returning id`,
+    [companyId, golden.fiscalYear.start],
+  );
+  await db.query(
+    `insert into tax.loss_uses (company_id, loss_id, computation_id, amount) values ($1, $2, $3, 1000)`,
+    [companyId, loss.id, computation.id],
   );
 
   // A piece on a document.

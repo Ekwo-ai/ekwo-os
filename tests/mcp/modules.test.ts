@@ -19,7 +19,7 @@ import {
   type Backend,
 } from '../../packages/mcp/src/index.js';
 import { listModules } from '../../packages/cli/src/module/read.js';
-import { asUser, freshDatabase, one, repoRoot, rows } from '../helpers/db.js';
+import { asUser, freshDatabase, moduleCodes, one, repoRoot, rows } from '../helpers/db.js';
 import { newCompany } from '../helpers/factory.js';
 import { backendFor, record } from './helpers.js';
 import { join } from 'node:path';
@@ -130,9 +130,10 @@ describe('the loader', () => {
   });
 
   it('reads the installed modules off the registry, leaving a draft out', async () => {
-    expect(await installedModules(backend)).toEqual(['assets', 'budgets']);
+    const codes = await moduleCodes();
+    expect(await installedModules(backend)).toEqual(codes);
     await db.query(`update modules set status = 'draft' where code = 'budgets'`);
-    expect(await installedModules(backend)).toEqual(['assets']);
+    expect(await installedModules(backend)).toEqual(codes.filter((code) => code !== 'budgets'));
     await db.query(`update modules set status = 'available' where code = 'budgets'`);
   });
 });
