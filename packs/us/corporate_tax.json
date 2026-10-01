@@ -1,0 +1,131 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "tax": {
+    "code": "US-FCIT",
+    "name": "Federal corporate income tax",
+    "legal_reference": "Internal Revenue Code, 26 U.S.C. § 11 — a tax is imposed for each taxable year on the taxable income of every corporation, and the amount of it is 21 percent of taxable income. The tax of the states and of their cities on the profit of a company is a different tax under different laws and is not computed here.",
+    "source": "irc-11"
+  },
+  "result": {
+    "statement": "US-SX-IS",
+    "line": "10",
+    "legal_reference": "Regulation S-X, 17 CFR 210.5-03, caption 10 — income or loss before income tax expense and appropriate items below. The computation starts from the line that is printed before the federal and the state income tax expense, so neither enters it; the state tax the law allows as a deduction is a rule of its own below.",
+    "source": "reg-s-x"
+  },
+  "accounts": {
+    "expense": "8000",
+    "payable": "2230",
+    "receivable": "1460",
+    "legal_reference": "The chart of this pack, which is original and prescribed by no statute: 8000 is the federal income tax expense of the year, 2230 the federal income taxes payable and 1460 the income taxes receivable.",
+    "source": "reg-s-x"
+  },
+  "parameters": [],
+  "adjustment_rules": [
+    {
+      "code": "meals",
+      "name": "Business meals — the half the law does not allow",
+      "direction": "add_back",
+      "percent": 50,
+      "valid_from": "2018-01-01",
+      "valid_on": "period_start",
+      "sequence": 10,
+      "legal_reference": "Internal Revenue Code, 26 U.S.C. § 274(n)(1) — the amount allowable as a deduction for any expense for food or beverages shall not exceed 50 percent of the amount of the expense that would otherwise be allowable; the exceptions of § 274(n)(2) are not applied. The chart books meals and entertainment on one account, 6130, so the company states the amount of the meals.",
+      "source": "irc-274"
+    },
+    {
+      "code": "entertainment",
+      "name": "Entertainment, amusement and recreation",
+      "direction": "add_back",
+      "percent": 100,
+      "valid_from": "2018-01-01",
+      "valid_on": "period_start",
+      "sequence": 20,
+      "legal_reference": "Internal Revenue Code, 26 U.S.C. § 274(a)(1) — no deduction otherwise allowable is allowed for an activity of a type generally considered to constitute entertainment, amusement or recreation, or for a facility used in connection with it; § 274(a)(2) treats club dues as facilities. Applies to amounts paid or incurred after 31 December 2017 (Pub. L. 115-97, § 13304(e)). The company states the amount.",
+      "source": "irc-274"
+    },
+    {
+      "code": "fines",
+      "name": "Fines, penalties and other amounts paid to a government",
+      "direction": "add_back",
+      "percent": 100,
+      "valid_from": "2017-12-22",
+      "valid_on": "period_start",
+      "sequence": 30,
+      "legal_reference": "Internal Revenue Code, 26 U.S.C. § 162(f)(1) — no deduction is allowed for an amount paid or incurred, by suit, agreement or otherwise, to or at the direction of a government in relation to the violation of any law or the investigation of a potential violation. The company states the amount: the amounts that § 162(f)(2) excepts (restitution, compliance, and amounts the order identifies as such) are for it to leave out. Applies from 22 December 2017 (Pub. L. 115-97, § 13306(a)(2)).",
+      "source": "irc-162"
+    },
+    {
+      "code": "state-income-tax",
+      "name": "State income tax of the year — the deduction the law allows",
+      "direction": "deduction",
+      "percent": 100,
+      "valid_from": "1954-08-16",
+      "valid_on": "period_start",
+      "sequence": 40,
+      "legal_reference": "Internal Revenue Code, 26 U.S.C. § 164(a)(3) — state and local income taxes are allowed as a deduction for the taxable year within which paid or accrued. The statement line the computation starts from is printed before income tax expense, so the state income tax booked on 8020 has not reduced it. The company states the amount of the current state income tax accrued for the year: the deferred tax on 8030 is not a tax of the year, and the module reads a deduction from an income account only, not from an expense account. The federal income tax needs no rule: § 275(a)(1) denies its deduction, and the starting line already leaves it out.",
+      "source": "irc-164"
+    }
+  ],
+  "rates": [
+    {
+      "code": "federal-standard",
+      "name": "Federal corporate income tax rate",
+      "rate": 21,
+      "valid_from": "2018-01-01",
+      "valid_on": "period_start",
+      "sequence": 10,
+      "legal_reference": "Internal Revenue Code, 26 U.S.C. § 11(b) — the amount of the tax is 21 percent of taxable income, on all of it; Instructions for Form 1120 (2025), Schedule J, line 1a: multiply taxable income by 21 percent. Applies to taxable years beginning after 31 December 2017 (Pub. L. 115-97, § 13001).",
+      "source": "irc-11"
+    }
+  ],
+  "loss_carryforward": [
+    {
+      "floor": 0,
+      "percent_above": 80,
+      "years": null,
+      "valid_from": "2021-01-01",
+      "valid_on": "period_start",
+      "legal_reference": "Internal Revenue Code, 26 U.S.C. § 172(a)(2)(B) and (b)(1)(A)(ii)(II) — a net operating loss arising in a taxable year beginning after 31 December 2017 is carried to each later year without lapsing, and the deduction of it is limited, for taxable years beginning after 31 December 2020, to 80 percent of taxable income computed without regard to the deduction of § 172 and to sections 199A and 250. Losses of years beginning before 1 January 2018 follow § 172(a)(2)(A) and are not computed here.",
+      "source": "irc-172"
+    }
+  ],
+  "prepayments": [
+    {
+      "method": "share_of_reference_tax",
+      "month_basis": "fiscal",
+      "instalments": [
+        {
+          "sequence": 1,
+          "month": 4,
+          "day": 15,
+          "share_percent": 25
+        },
+        {
+          "sequence": 2,
+          "month": 6,
+          "day": 15,
+          "share_percent": 25
+        },
+        {
+          "sequence": 3,
+          "month": 9,
+          "day": 15,
+          "share_percent": 25
+        },
+        {
+          "sequence": 4,
+          "month": 12,
+          "day": 15,
+          "share_percent": 25
+        }
+      ],
+      "surcharge_percent": null,
+      "exempt_up_to": null,
+      "valid_from": "2018-01-01",
+      "valid_on": "period_start",
+      "legal_reference": "Internal Revenue Code, 26 U.S.C. § 6655(c) and (d)(1) — four required installments, due on the 15th day of the 4th, 6th, 9th and 12th months of the taxable year (15 April, 15 June, 15 September and 15 December for a calendar year; § 6655(i)(1) substitutes the corresponding months for any other year), each of 25 percent of the required annual payment. The required annual payment is the lesser of 100 percent of the tax of the year and 100 percent of the tax of the preceding year, and a large corporation (§ 6655(g)(2)) may use the preceding year for the first installment only; neither the choice of the reference nor the annualised income method of § 6655(e) is in the data, and the $500 exception of § 6655(f) is not either.",
+      "source": "irc-6655"
+    }
+  ],
+  "credits": []
+}

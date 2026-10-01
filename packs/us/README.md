@@ -482,6 +482,41 @@ document that is in both statements and in no return it files.
   Regulation S-X articles other than article 5 — a bank reports on article 9 and
   an insurance company on article 7.
 
+## Corporate income tax: what `corporate_tax.json` leaves out
+
+The section carries what was read on an official page on 1 October 2026, and
+nothing else. It is the **federal** tax: the rate is 21 percent on all of the
+base (26 U.S.C. § 11(b)), the computation starts from line 10 of the income
+statement, income before income tax expense, and the tax is named
+`US-FCIT`, federal corporate income tax. It adds back meals at 50 percent
+(§ 274(n)), entertainment (§ 274(a)), and fines (§ 162(f)), deducts the current
+state income tax the company states (§ 164(a)(3)), limits losses to 80 percent of
+the result with no lapse (§ 172), and declares the four installments of § 6655.
+The federal income tax itself needs no rule, because the starting line is
+printed before it (§ 275(a)(1)). A rule that is missing makes an estimate too
+high or too low by something a reader can name; these are the ones to name.
+
+| Not carried | Why |
+|---|---|
+| The corporate income, franchise and gross receipts taxes of the states and of the cities | They are other taxes under other laws, fifty of them, and the section is one federal tax. The name of the tax says so. A company that owes one computes it elsewhere; the current state income tax it accrues is deducted here, in the amount the company states. |
+| The meals and entertainment on one account | The chart books both on 6130, and the two are treated differently, so the company states the amount of each. The exceptions of § 274(n)(2) and the rule of § 274(o) for amounts paid after 31 December 2025 are not computed. |
+| The account of fines | The chart has no account for them, so the company states the amount, after taking out restitution and compliance amounts (§ 162(f)(2)). |
+| Losses of years beginning before 1 January 2018 | They carry for 20 years and are not held to 80 percent (§ 172(a)(2)(A), (b)(1)(A)(ii)(I)). The data has one limit for all the losses of a company, so it holds them to 80 percent and uses too little of them. Only a company with such a loss is concerned. |
+| The base of the 80 percent limit | § 172(a)(2)(B)(ii) reads taxable income before the deduction of section 250. The estimate takes the fiscal result as the base, and no deduction under section 250 is computed. |
+| The deductions of sections 163(j), 168 and 179, 174, 170 and the others | Each rests on facts the books do not hold. Only what a flat rule could be cited for is in the section. |
+| The corporate alternative minimum tax (§ 55, § 59A) and the base erosion tax | A tax on a different base, above a threshold of income; the section has no shape for a second tax or for a minimum. |
+| Tax on the tax: the excise tax on repurchases (§ 4501) and the other chapter 1 and 4 taxes | Not read, and the section has no shape for them. |
+| Tax credits | `credits` is empty: the shape is published and no credit was cited. |
+| The estimated tax: its reference, its annualised method, the $500 exception, the first installment of a large corporation | The four dates and the 25 percent are in the data; § 6655(d), (e), (f) and (g)(2) decide on the tax of which year they are taken and whether any is due, and the data says one thing only. Nothing reads the schedule yet. |
+| Dates before 2018 | The rate, the rules on meals and fines and the instalments are dated from the Tax Cuts and Jobs Act and the text read; the earlier law was not read. |
+| Rounding to the dollar | Not read. The estimate is kept at the cent. |
+
+The state income tax is stated and not read from 8020: the module reads a
+deduction as an income the books carry, so a deduction rule that names an
+expense account would move the result the wrong way. The company states the
+state income tax accrued for the year (§ 164(a) allows it in the year paid or
+accrued), and leaves out the deferred tax on 8030.
+
 ## Reviewing this pack
 
 Open an issue titled "Review: United States". What a review is, and what it is

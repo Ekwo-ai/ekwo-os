@@ -1,0 +1,582 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "why": "Three fictitious companies whose federal tax was worked out by hand for financial year 2025: a profitable company with stated meals, entertainment and a fine and the state income tax deducted, a year that ends in a loss, and a larger company whose carried-forward losses are held to 80 percent of its result. The United States has no reduced rate to keep a company out of, so the third example exercises the limit on losses instead.",
+  "fiscal_year": {
+    "name": "Financial year 2025",
+    "start": "2025-01-01",
+    "end": "2025-12-31"
+  },
+  "companies": [
+    {
+      "ref": "profit",
+      "name": "Lakeshore Print Works, Inc.",
+      "why": "A profitable company with no loss behind it. Meals, entertainment and a fine are stated, the current state income tax is stated as a deduction, and the federal income tax already booked changes nothing, because the computation starts before it. Everything is taxed at 21 percent.",
+      "entries": [
+        {
+          "date": "2025-12-31",
+          "description": "Sales of the year",
+          "lines": [
+            {
+              "account": "1000",
+              "debit": "1250000.00"
+            },
+            {
+              "account": "4000",
+              "credit": "1250000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Cost of goods sold",
+          "lines": [
+            {
+              "account": "5000",
+              "debit": "610000.00"
+            },
+            {
+              "account": "1000",
+              "credit": "610000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Salaries and wages",
+          "lines": [
+            {
+              "account": "6010",
+              "debit": "245300.00"
+            },
+            {
+              "account": "1000",
+              "credit": "245300.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Office and shop rent",
+          "lines": [
+            {
+              "account": "6200",
+              "debit": "72000.00"
+            },
+            {
+              "account": "1000",
+              "credit": "72000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Meals and entertainment",
+          "lines": [
+            {
+              "account": "6130",
+              "debit": "9840.60"
+            },
+            {
+              "account": "1000",
+              "credit": "9840.60"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Other general expenses — a penalty paid to a state agency",
+          "lines": [
+            {
+              "account": "6950",
+              "debit": "1150.00"
+            },
+            {
+              "account": "1000",
+              "credit": "1150.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "State income tax of the year",
+          "lines": [
+            {
+              "account": "8020",
+              "debit": "21400.00"
+            },
+            {
+              "account": "2235",
+              "credit": "21400.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Federal income tax of the year",
+          "lines": [
+            {
+              "account": "8000",
+              "debit": "40000.00"
+            },
+            {
+              "account": "2230",
+              "credit": "40000.00"
+            }
+          ]
+        }
+      ],
+      "parameters": {},
+      "adjustments": [
+        {
+          "rule": "meals",
+          "amount": "8215.40"
+        },
+        {
+          "rule": "entertainment",
+          "amount": "1625.20"
+        },
+        {
+          "rule": "state-income-tax",
+          "amount": "21400.00"
+        },
+        {
+          "rule": "fines",
+          "amount": "1150.00"
+        }
+      ],
+      "expected": {
+        "computation": [
+          "Income before income tax expense (line 10): 1,250,000.00 − 610,000.00 − 245,300.00 − 72,000.00 − 9,840.60 − 1,150.00 = 311,709.40. The federal income tax of 40,000.00 and the state income tax of 21,400.00 are booked below that line and do not enter it.",
+          "Meals: 8,215.40 × 50 % = 4,107.70 (26 U.S.C. § 274(n)(1)).",
+          "Entertainment: 1,625.20 × 100 % = 1,625.20 (§ 274(a)(1)). The two amounts are the 9,840.60 of account 6130.",
+          "Penalty paid to a government: 1,150.00 × 100 % = 1,150.00 (§ 162(f)).",
+          "State income tax of the year, stated by the company (booked on 8020): 21,400.00 × 100 % = 21,400.00, deducted (§ 164(a)(3)).",
+          "Fiscal result: 311,709.40 + 4,107.70 + 1,625.20 + 1,150.00 − 21,400.00 = 297,192.30. No loss from an earlier year: the taxable base is 297,192.30.",
+          "Tax at 21 % on the whole base (§ 11(b)): 297,192.30 × 21 % = 62,410.383, or 62,410.38."
+        ],
+        "lines": [
+          {
+            "kind": "accounting_result",
+            "code": "10",
+            "amount": "311709.40"
+          },
+          {
+            "kind": "adjustment",
+            "code": "meals",
+            "base": "8215.40",
+            "rate": "50",
+            "amount": "4107.70"
+          },
+          {
+            "kind": "adjustment",
+            "code": "entertainment",
+            "base": "1625.20",
+            "rate": "100",
+            "amount": "1625.20"
+          },
+          {
+            "kind": "adjustment",
+            "code": "fines",
+            "base": "1150.00",
+            "rate": "100",
+            "amount": "1150.00"
+          },
+          {
+            "kind": "adjustment",
+            "code": "state-income-tax",
+            "base": "21400.00",
+            "rate": "100",
+            "amount": "-21400.00"
+          },
+          {
+            "kind": "fiscal_result",
+            "amount": "297192.30"
+          },
+          {
+            "kind": "taxable_base",
+            "amount": "297192.30"
+          },
+          {
+            "kind": "rate",
+            "code": "federal-standard",
+            "base": "297192.30",
+            "rate": "21",
+            "amount": "62410.38"
+          },
+          {
+            "kind": "tax_before_credits",
+            "base": "297192.30",
+            "amount": "62410.38"
+          },
+          {
+            "kind": "estimated_tax",
+            "code": "US-FCIT",
+            "base": "297192.30",
+            "amount": "62410.38"
+          }
+        ],
+        "tax": "62410.38"
+      }
+    },
+    {
+      "ref": "loss-year",
+      "name": "Prairie Wind Analytics, Inc.",
+      "why": "A year that ends in a loss: no base and no tax, and the tax loss — the accounting loss reduced by what the law disallows — is what a later year may set against its profit.",
+      "entries": [
+        {
+          "date": "2025-12-31",
+          "description": "Sales of the year",
+          "lines": [
+            {
+              "account": "1000",
+              "debit": "180000.00"
+            },
+            {
+              "account": "4000",
+              "credit": "180000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Salaries and wages",
+          "lines": [
+            {
+              "account": "6010",
+              "debit": "150000.00"
+            },
+            {
+              "account": "1000",
+              "credit": "150000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Office rent",
+          "lines": [
+            {
+              "account": "6200",
+              "debit": "36000.00"
+            },
+            {
+              "account": "1000",
+              "credit": "36000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Meals and entertainment",
+          "lines": [
+            {
+              "account": "6130",
+              "debit": "4200.00"
+            },
+            {
+              "account": "1000",
+              "credit": "4200.00"
+            }
+          ]
+        }
+      ],
+      "parameters": {},
+      "adjustments": [
+        {
+          "rule": "meals",
+          "amount": "3800.00"
+        },
+        {
+          "rule": "entertainment",
+          "amount": "400.00"
+        }
+      ],
+      "expected": {
+        "computation": [
+          "Loss before income tax expense (line 10): 180,000.00 − 150,000.00 − 36,000.00 − 4,200.00 = −10,200.00.",
+          "Meals: 3,800.00 × 50 % = 1,900.00 (26 U.S.C. § 274(n)(1)). Entertainment: 400.00 × 100 % = 400.00 (§ 274(a)(1)). Together they are the 4,200.00 of account 6130.",
+          "Fiscal result: −10,200.00 + 1,900.00 + 400.00 = −7,900.00. The taxable base is nil and the net operating loss of the year is 7,900.00, which carries forward without lapsing (§ 172(b)(1)(A)(ii)(II)).",
+          "Estimated tax: 0.00."
+        ],
+        "lines": [
+          {
+            "kind": "accounting_result",
+            "code": "10",
+            "amount": "-10200.00"
+          },
+          {
+            "kind": "adjustment",
+            "code": "meals",
+            "base": "3800.00",
+            "rate": "50",
+            "amount": "1900.00"
+          },
+          {
+            "kind": "adjustment",
+            "code": "entertainment",
+            "base": "400.00",
+            "rate": "100",
+            "amount": "400.00"
+          },
+          {
+            "kind": "fiscal_result",
+            "amount": "-7900.00"
+          },
+          {
+            "kind": "taxable_base",
+            "amount": "0.00"
+          },
+          {
+            "kind": "loss_of_period",
+            "amount": "7900.00"
+          },
+          {
+            "kind": "tax_before_credits",
+            "base": "0.00",
+            "amount": "0.00"
+          },
+          {
+            "kind": "estimated_tax",
+            "code": "US-FCIT",
+            "base": "0.00",
+            "amount": "0.00"
+          }
+        ],
+        "tax": "0.00"
+      }
+    },
+    {
+      "ref": "loss-limited",
+      "name": "Redwood Freight Holdings, Inc.",
+      "why": "A company with losses from two earlier years and a profit large enough for the 80 percent limit to bite. There is no reduced rate to be kept out of: the rate is 21 percent for everybody. The losses are used oldest first up to 80 percent of the fiscal result, and the rest of the 2024 loss is kept.",
+      "entries": [
+        {
+          "date": "2025-12-31",
+          "description": "Sales of the year",
+          "lines": [
+            {
+              "account": "1000",
+              "debit": "8400000.00"
+            },
+            {
+              "account": "4000",
+              "credit": "8400000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Cost of goods sold",
+          "lines": [
+            {
+              "account": "5000",
+              "debit": "5100000.00"
+            },
+            {
+              "account": "1000",
+              "credit": "5100000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Salaries and wages",
+          "lines": [
+            {
+              "account": "6010",
+              "debit": "1650000.00"
+            },
+            {
+              "account": "1000",
+              "credit": "1650000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Terminal and office rent",
+          "lines": [
+            {
+              "account": "6200",
+              "debit": "420000.00"
+            },
+            {
+              "account": "1000",
+              "credit": "420000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Meals and entertainment",
+          "lines": [
+            {
+              "account": "6130",
+              "debit": "62500.00"
+            },
+            {
+              "account": "1000",
+              "credit": "62500.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Other general expenses — a settlement paid to a federal agency",
+          "lines": [
+            {
+              "account": "6950",
+              "debit": "18000.00"
+            },
+            {
+              "account": "1000",
+              "credit": "18000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "State income tax of the year",
+          "lines": [
+            {
+              "account": "8020",
+              "debit": "56000.00"
+            },
+            {
+              "account": "2235",
+              "credit": "56000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Federal income tax of the year",
+          "lines": [
+            {
+              "account": "8000",
+              "debit": "220000.00"
+            },
+            {
+              "account": "2230",
+              "credit": "220000.00"
+            }
+          ]
+        }
+      ],
+      "parameters": {},
+      "adjustments": [
+        {
+          "rule": "meals",
+          "amount": "48000.00"
+        },
+        {
+          "rule": "entertainment",
+          "amount": "14500.00"
+        },
+        {
+          "rule": "state-income-tax",
+          "amount": "56000.00"
+        },
+        {
+          "rule": "fines",
+          "amount": "18000.00"
+        }
+      ],
+      "losses": [
+        {
+          "origin_period_end": "2023-12-31",
+          "amount": "700000.00"
+        },
+        {
+          "origin_period_end": "2024-12-31",
+          "amount": "500000.00"
+        }
+      ],
+      "expected": {
+        "computation": [
+          "Income before income tax expense (line 10): 8,400,000.00 − 5,100,000.00 − 1,650,000.00 − 420,000.00 − 62,500.00 − 18,000.00 = 1,149,500.00. The income taxes booked on 8000 (220,000.00) and 8020 (56,000.00) do not enter it.",
+          "Meals: 48,000.00 × 50 % = 24,000.00 (26 U.S.C. § 274(n)(1)). Entertainment: 14,500.00 × 100 % = 14,500.00 (§ 274(a)(1)). Together they are the 62,500.00 of account 6130.",
+          "Amount paid to a government: 18,000.00 × 100 % = 18,000.00 (§ 162(f)). State income tax of the year, stated by the company (booked on 8020): 56,000.00 × 100 % = 56,000.00, deducted (§ 164(a)(3)).",
+          "Fiscal result: 1,149,500.00 + 24,000.00 + 14,500.00 + 18,000.00 − 56,000.00 = 1,150,000.00.",
+          "Losses of earlier years: 700,000.00 (2023) + 500,000.00 (2024) = 1,200,000.00. Limit (§ 172(a)(2)(B)(ii)): 80 % × 1,150,000.00 = 920,000.00.",
+          "Oldest first: the 700,000.00 of 2023 are used, then 220,000.00 of the 500,000.00 of 2024, which keeps 280,000.00. Taxable base: 1,150,000.00 − 920,000.00 = 230,000.00.",
+          "Tax at 21 % (§ 11(b)): 230,000.00 × 21 % = 48,300.00."
+        ],
+        "lines": [
+          {
+            "kind": "accounting_result",
+            "code": "10",
+            "amount": "1149500.00"
+          },
+          {
+            "kind": "adjustment",
+            "code": "meals",
+            "base": "48000.00",
+            "rate": "50",
+            "amount": "24000.00"
+          },
+          {
+            "kind": "adjustment",
+            "code": "entertainment",
+            "base": "14500.00",
+            "rate": "100",
+            "amount": "14500.00"
+          },
+          {
+            "kind": "adjustment",
+            "code": "fines",
+            "base": "18000.00",
+            "rate": "100",
+            "amount": "18000.00"
+          },
+          {
+            "kind": "adjustment",
+            "code": "state-income-tax",
+            "base": "56000.00",
+            "rate": "100",
+            "amount": "-56000.00"
+          },
+          {
+            "kind": "fiscal_result",
+            "amount": "1150000.00"
+          },
+          {
+            "kind": "loss_used",
+            "code": "2023-12-31",
+            "base": "700000.00",
+            "amount": "-700000.00"
+          },
+          {
+            "kind": "loss_used",
+            "code": "2024-12-31",
+            "base": "500000.00",
+            "amount": "-220000.00"
+          },
+          {
+            "kind": "taxable_base",
+            "amount": "230000.00"
+          },
+          {
+            "kind": "rate",
+            "code": "federal-standard",
+            "base": "230000.00",
+            "rate": "21",
+            "amount": "48300.00"
+          },
+          {
+            "kind": "tax_before_credits",
+            "base": "230000.00",
+            "amount": "48300.00"
+          },
+          {
+            "kind": "estimated_tax",
+            "code": "US-FCIT",
+            "base": "230000.00",
+            "amount": "48300.00"
+          }
+        ],
+        "tax": "48300.00"
+      }
+    }
+  ]
+}

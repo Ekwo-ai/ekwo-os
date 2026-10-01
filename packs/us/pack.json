@@ -2,10 +2,10 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "US",
   "name": "United States",
-  "version": "0.9.0",
+  "version": "0.10.0",
   "schema_min": "20260929141500",
   "seed_sequence": 15,
-  "released_at": "2026-09-21",
+  "released_at": "2026-10-01",
   "certification": {
     "status": "community",
     "sources": [
@@ -176,6 +176,70 @@
         "url": "https://dbnalliance.org/",
         "consulted_on": "2026-09-16",
         "kind": "standard"
+      },
+      {
+        "key": "irc-11",
+        "title": "Internal Revenue Code, 26 U.S.C. § 11 — tax imposed on corporations; subsection (b), the amount of the tax is 21 percent of taxable income",
+        "publisher": "Legal Information Institute, Cornell Law School — United States Code, as amended through Pub. L. 119-21",
+        "url": "https://www.law.cornell.edu/uscode/text/26/11",
+        "consulted_on": "2026-10-01",
+        "kind": "law"
+      },
+      {
+        "key": "irc-162",
+        "title": "Internal Revenue Code, 26 U.S.C. § 162(f) — fines, penalties and other amounts paid to a government, and the exception for restitution and compliance",
+        "publisher": "Legal Information Institute, Cornell Law School — United States Code, as amended through Pub. L. 119-21",
+        "url": "https://www.law.cornell.edu/uscode/text/26/162",
+        "consulted_on": "2026-10-01",
+        "kind": "law"
+      },
+      {
+        "key": "irc-164",
+        "title": "Internal Revenue Code, 26 U.S.C. § 164(a) — taxes allowed as a deduction in the year paid or accrued, including state and local income taxes",
+        "publisher": "Legal Information Institute, Cornell Law School — United States Code, as amended through Pub. L. 119-21",
+        "url": "https://www.law.cornell.edu/uscode/text/26/164",
+        "consulted_on": "2026-10-01",
+        "kind": "law"
+      },
+      {
+        "key": "irc-172",
+        "title": "Internal Revenue Code, 26 U.S.C. § 172 — the net operating loss deduction: carryovers, and the 80 percent limit for years beginning after 31 December 2020",
+        "publisher": "Legal Information Institute, Cornell Law School — United States Code, as amended through Pub. L. 119-21",
+        "url": "https://www.law.cornell.edu/uscode/text/26/172",
+        "consulted_on": "2026-10-01",
+        "kind": "law"
+      },
+      {
+        "key": "irc-274",
+        "title": "Internal Revenue Code, 26 U.S.C. § 274 — disallowance of entertainment, amusement and recreation (subsection (a)) and the 50 percent limit on food and beverages (subsection (n))",
+        "publisher": "Legal Information Institute, Cornell Law School — United States Code, as amended through Pub. L. 119-21",
+        "url": "https://www.law.cornell.edu/uscode/text/26/274",
+        "consulted_on": "2026-10-01",
+        "kind": "law"
+      },
+      {
+        "key": "irc-275",
+        "title": "Internal Revenue Code, 26 U.S.C. § 275(a)(1) — no deduction for federal income taxes",
+        "publisher": "Legal Information Institute, Cornell Law School — United States Code, as amended through Pub. L. 119-21",
+        "url": "https://www.law.cornell.edu/uscode/text/26/275",
+        "consulted_on": "2026-10-01",
+        "kind": "law"
+      },
+      {
+        "key": "irc-6655",
+        "title": "Internal Revenue Code, 26 U.S.C. § 6655 — failure by a corporation to pay estimated income tax: four installments and the required annual payment",
+        "publisher": "Legal Information Institute, Cornell Law School — United States Code, as amended through Pub. L. 119-21",
+        "url": "https://www.law.cornell.edu/uscode/text/26/6655",
+        "consulted_on": "2026-10-01",
+        "kind": "law"
+      },
+      {
+        "key": "irs-i1120",
+        "title": "Instructions for Form 1120 (2025) — Schedule J, Tax Computation and Payment: the income tax is taxable income multiplied by 21 percent",
+        "publisher": "Internal Revenue Service",
+        "url": "https://www.irs.gov/instructions/i1120",
+        "consulted_on": "2026-10-01",
+        "kind": "form"
       }
     ]
   },
