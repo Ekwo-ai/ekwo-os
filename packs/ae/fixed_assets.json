@@ -1,0 +1,109 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "depreciation": {
+    "prorata_straight_line": "days",
+    "prorata_declining": "days",
+    "day_count": "actual",
+    "declining_cap_percent": null,
+    "declining_switch_to_linear": true,
+    "legal_reference": "IFRS for SMEs, Section 17, paragraph 17.20 — depreciation of an asset begins when it is available for use and ceases when it is derecognised; paragraph 17.18 asks for a systematic allocation over the useful life and paragraph 17.22 names the straight-line and the diminishing balance methods among those an entity may select, the one that reflects the pattern in which it expects to consume the asset's benefits. The standard does not say how a first period is counted: a charge from the day of availability, in real days, is the reading that follows 17.20 most closely, and a company that counts whole months sets prorata = 'months' on the asset. Neither the standard nor the Corporate Tax Decree-Law caps a declining-balance annuity, which is why no cap is declared.",
+    "source": "ifrs-sme-17"
+  },
+  "disposal": {
+    "style": "net_result",
+    "legal_reference": "IFRS for SMEs, Section 17, paragraphs 17.28 and 17.30 — the gain or loss on derecognition is the difference between the net disposal proceeds and the carrying amount, recognised in profit or loss and not classified as revenue. One figure on one account, which is the net_result style; the chart carries a gain on 4750 and a loss on 6960, and the income statement AE-IFRSSME-IS prints them as additional line items.",
+    "source": "ifrs-sme-17"
+  },
+  "categories": [
+    {
+      "code": "goodwill",
+      "name": "Goodwill",
+      "method": "straight_line",
+      "duration_months": 120,
+      "account_type": "asset_non_current",
+      "sequence": 10,
+      "legal_reference": "IFRS for SMEs, paragraph 19.23 — goodwill is amortised over its useful life, and where that cannot be established reliably the life is management's best estimate and shall not exceed ten years. Ten years is therefore the ceiling this category starts from and not a life anybody estimated. There is no legal or fiscal table of useful lives in the United Arab Emirates. IFRS for SMEs, Section 17, paragraphs 17.18 and 17.21 (read from the IFRS Foundation's module 17) require the depreciable amount to be allocated on a systematic basis over a useful life the entity estimates from its own expected usage, wear and tear, obsolescence and legal limits; Federal Decree-Law No. 47 of 2022, Article 20(1) and (2), starts the Taxable Income from the Accounting Income of financial statements prepared under the accounting standards accepted in the State, and the Decree-Law read here sets no depreciation table. The duration below is therefore common practice and not a rule, and an asset that depreciates differently says so in its own columns.",
+      "source": "ifrs-sme-19"
+    },
+    {
+      "code": "intangibles",
+      "name": "Other intangible assets, software and licences",
+      "method": "straight_line",
+      "duration_months": 60,
+      "account_type": "asset_non_current",
+      "sequence": 20,
+      "legal_reference": "IFRS for SMEs, paragraphs 18.19 and 18.20 — an intangible asset has a finite useful life, amortised from the day it is available for use (18.22), and where the life cannot be established reliably it is management's best estimate and shall not exceed ten years. Five years is practice for software and licences. There is no legal or fiscal table of useful lives in the United Arab Emirates. IFRS for SMEs, Section 17, paragraphs 17.18 and 17.21 (read from the IFRS Foundation's module 17) require the depreciable amount to be allocated on a systematic basis over a useful life the entity estimates from its own expected usage, wear and tear, obsolescence and legal limits; Federal Decree-Law No. 47 of 2022, Article 20(1) and (2), starts the Taxable Income from the Accounting Income of financial statements prepared under the accounting standards accepted in the State, and the Decree-Law read here sets no depreciation table. The duration below is therefore common practice and not a rule, and an asset that depreciates differently says so in its own columns.",
+      "source": "ifrs-sme-18"
+    },
+    {
+      "code": "buildings",
+      "name": "Buildings",
+      "method": "straight_line",
+      "duration_months": 300,
+      "account_type": "asset_fixed",
+      "sequence": 30,
+      "legal_reference": "Land is not depreciated and the building on it is, so a property is split before this category is applied to the part that has a life. There is no legal or fiscal table of useful lives in the United Arab Emirates. IFRS for SMEs, Section 17, paragraphs 17.18 and 17.21 (read from the IFRS Foundation's module 17) require the depreciable amount to be allocated on a systematic basis over a useful life the entity estimates from its own expected usage, wear and tear, obsolescence and legal limits; Federal Decree-Law No. 47 of 2022, Article 20(1) and (2), starts the Taxable Income from the Accounting Income of financial statements prepared under the accounting standards accepted in the State, and the Decree-Law read here sets no depreciation table. The duration below is therefore common practice and not a rule, and an asset that depreciates differently says so in its own columns.",
+      "source": "ifrs-sme-17"
+    },
+    {
+      "code": "leasehold-improvements",
+      "name": "Leasehold improvements",
+      "method": "straight_line",
+      "duration_months": 120,
+      "account_type": "asset_fixed",
+      "sequence": 40,
+      "legal_reference": "IFRS for SMEs, paragraph 17.21(d) names legal limits on the use of the asset, such as the expiry of a lease, among the factors of a useful life: the life is the shorter of the improvement's own and the remaining term of the lease, which is a fact about the lease and not about the category. There is no legal or fiscal table of useful lives in the United Arab Emirates. IFRS for SMEs, Section 17, paragraphs 17.18 and 17.21 (read from the IFRS Foundation's module 17) require the depreciable amount to be allocated on a systematic basis over a useful life the entity estimates from its own expected usage, wear and tear, obsolescence and legal limits; Federal Decree-Law No. 47 of 2022, Article 20(1) and (2), starts the Taxable Income from the Accounting Income of financial statements prepared under the accounting standards accepted in the State, and the Decree-Law read here sets no depreciation table. The duration below is therefore common practice and not a rule, and an asset that depreciates differently says so in its own columns.",
+      "source": "ifrs-sme-17"
+    },
+    {
+      "code": "plant-and-machinery",
+      "name": "Plant and machinery",
+      "method": "straight_line",
+      "duration_months": 120,
+      "account_type": "asset_fixed",
+      "sequence": 50,
+      "legal_reference": "There is no legal or fiscal table of useful lives in the United Arab Emirates. IFRS for SMEs, Section 17, paragraphs 17.18 and 17.21 (read from the IFRS Foundation's module 17) require the depreciable amount to be allocated on a systematic basis over a useful life the entity estimates from its own expected usage, wear and tear, obsolescence and legal limits; Federal Decree-Law No. 47 of 2022, Article 20(1) and (2), starts the Taxable Income from the Accounting Income of financial statements prepared under the accounting standards accepted in the State, and the Decree-Law read here sets no depreciation table. The duration below is therefore common practice and not a rule, and an asset that depreciates differently says so in its own columns.",
+      "source": "ifrs-sme-17"
+    },
+    {
+      "code": "furniture-and-fixtures",
+      "name": "Furniture and fixtures",
+      "method": "straight_line",
+      "duration_months": 60,
+      "account_type": "asset_fixed",
+      "sequence": 60,
+      "legal_reference": "There is no legal or fiscal table of useful lives in the United Arab Emirates. IFRS for SMEs, Section 17, paragraphs 17.18 and 17.21 (read from the IFRS Foundation's module 17) require the depreciable amount to be allocated on a systematic basis over a useful life the entity estimates from its own expected usage, wear and tear, obsolescence and legal limits; Federal Decree-Law No. 47 of 2022, Article 20(1) and (2), starts the Taxable Income from the Accounting Income of financial statements prepared under the accounting standards accepted in the State, and the Decree-Law read here sets no depreciation table. The duration below is therefore common practice and not a rule, and an asset that depreciates differently says so in its own columns.",
+      "source": "ifrs-sme-17"
+    },
+    {
+      "code": "office-equipment",
+      "name": "Office equipment",
+      "method": "straight_line",
+      "duration_months": 60,
+      "account_type": "asset_fixed",
+      "sequence": 70,
+      "legal_reference": "There is no legal or fiscal table of useful lives in the United Arab Emirates. IFRS for SMEs, Section 17, paragraphs 17.18 and 17.21 (read from the IFRS Foundation's module 17) require the depreciable amount to be allocated on a systematic basis over a useful life the entity estimates from its own expected usage, wear and tear, obsolescence and legal limits; Federal Decree-Law No. 47 of 2022, Article 20(1) and (2), starts the Taxable Income from the Accounting Income of financial statements prepared under the accounting standards accepted in the State, and the Decree-Law read here sets no depreciation table. The duration below is therefore common practice and not a rule, and an asset that depreciates differently says so in its own columns.",
+      "source": "ifrs-sme-17"
+    },
+    {
+      "code": "computer-equipment",
+      "name": "Computer equipment",
+      "method": "straight_line",
+      "duration_months": 36,
+      "account_type": "asset_fixed",
+      "sequence": 80,
+      "legal_reference": "There is no legal or fiscal table of useful lives in the United Arab Emirates. IFRS for SMEs, Section 17, paragraphs 17.18 and 17.21 (read from the IFRS Foundation's module 17) require the depreciable amount to be allocated on a systematic basis over a useful life the entity estimates from its own expected usage, wear and tear, obsolescence and legal limits; Federal Decree-Law No. 47 of 2022, Article 20(1) and (2), starts the Taxable Income from the Accounting Income of financial statements prepared under the accounting standards accepted in the State, and the Decree-Law read here sets no depreciation table. The duration below is therefore common practice and not a rule, and an asset that depreciates differently says so in its own columns.",
+      "source": "ifrs-sme-17"
+    },
+    {
+      "code": "motor-vehicles",
+      "name": "Motor vehicles",
+      "method": "straight_line",
+      "duration_months": 60,
+      "account_type": "asset_fixed",
+      "sequence": 90,
+      "legal_reference": "There is no legal or fiscal table of useful lives in the United Arab Emirates. IFRS for SMEs, Section 17, paragraphs 17.18 and 17.21 (read from the IFRS Foundation's module 17) require the depreciable amount to be allocated on a systematic basis over a useful life the entity estimates from its own expected usage, wear and tear, obsolescence and legal limits; Federal Decree-Law No. 47 of 2022, Article 20(1) and (2), starts the Taxable Income from the Accounting Income of financial statements prepared under the accounting standards accepted in the State, and the Decree-Law read here sets no depreciation table. The duration below is therefore common practice and not a rule, and an asset that depreciates differently says so in its own columns.",
+      "source": "ifrs-sme-17"
+    }
+  ]
+}

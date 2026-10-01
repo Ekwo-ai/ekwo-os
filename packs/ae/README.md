@@ -329,9 +329,8 @@ category in its own `legal_reference`, for a renderer to map.
   corporate income tax module is in `corporate_tax.json` — see "Corporate
   income tax" below for what it leaves out. The rest of the pack stays
   VAT-focused — see "Sources".
-- **Fixed assets.** No `fixed_assets.json`: whether the UAE's tax rules recognise
-  a depreciation schedule at all was not established in this research pass,
-  since it is a corporate tax question and out of scope here.
+- **Fixed assets.** `fixed_assets.json` carries the accounting rules and usual lives; see
+  "Fixed assets" below and "Fixed assets: what `fixed_assets.json` leaves out".
 - **Bank formats.** Nothing checked says which formats UAE banks send.
 - **Filing.** The return is filed on EmaraTax; submitting it is a credential
   and a format, not a pack.
@@ -388,3 +387,38 @@ ones to name.
 | Credits (foreign tax credit, art. 47; withholding tax credit, art. 46; refund, art. 49) | The amount is the company's to declare and no credit was cited, so `credits` is empty. |
 | A threshold shared out over a short period | Cabinet Decision No. 116 says "in the relevant Tax Period" and no pro-rating was read; the 375 000 is applied whole. |
 | Language of the labels | The pack declares no language besides English, so there is no `corporate_tax` key to translate. |
+
+## Fixed assets
+
+`fixed_assets.json` is practice rather than law, and says so on every category.
+The United Arab Emirates has no table of useful lives: IFRS for SMEs, Section 17
+(paragraphs 17.18 to 17.22) asks the entity to estimate the life of its own asset
+and to pick the method that reflects how it consumes it, and Federal Decree-Law
+No. 47 of 2022, Article 20, starts the Taxable Income from the Accounting Income
+of financial statements prepared under the accounting standards accepted in the
+State. The Decree-Law read here sets no depreciation table. What was read on an
+official page on 1 October 2026 is the IFRS for SMEs text (as reproduced in the
+IFRS Foundation's modules 17, 18 and 19) and the Decree-Law; the durations are
+common practice, except the ten-year ceiling of goodwill (paragraph 19.23) and of
+an intangible whose life cannot be established (paragraph 18.20).
+
+- **Prorata:** real days from the day the asset is available for use
+  (paragraph 17.20), for both methods. The standard does not fix a convention; a
+  company that counts months sets `prorata = 'months'` on the asset.
+- **Declining balance:** no cap, switch to the straight line on. No category uses
+  it: nothing read suggests a coefficient.
+- **Disposal:** `net_result`, on `4750` (gain) and `6960` (loss), as paragraphs
+  17.28 and 17.30 recognise one difference in profit or loss.
+- **Right-of-use assets** (`1690`) have no category: the pack's statements are
+  those of IFRS for SMEs, whose Section 20 does not capitalise an operating lease.
+
+## Fixed assets: what `fixed_assets.json` leaves out
+
+| Not carried | Why |
+|---|---|
+| Tax depreciation of an investment property held at fair value (Ministerial Decision No. 173 of 2025: the lower of the tax written-down value and 4 % of the original cost per twelve months, on election of the realisation basis of Decree-Law art. 20(3), with recapture on realisation) | Read only as the Ministry of Finance's announcement, not the decision's own text, and the module has one depreciation, the accounting one: it cannot keep a tax depreciation distinct from the book charge. |
+| Realisation-basis election for assets on capital account (art. 20(3)(b)) | A tax election on gains and losses; the module has no tax column. |
+| Revaluation and fair value of property, plant and equipment or investment property | The module depreciates cost only. |
+| Impairment, component depreciation (paragraph 17.16), a capitalisation threshold | The module has no such vocabulary. |
+| A depreciation by units of production | The module refuses it by name. |
+| Capital Assets Scheme of the VAT Executive Regulation (arts 57 to 58) | A VAT adjustment, not a depreciation. |

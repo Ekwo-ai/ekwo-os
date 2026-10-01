@@ -2,7 +2,7 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "AE",
   "name": "United Arab Emirates",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "schema_min": "20260929141500",
   "seed_sequence": 60,
   "released_at": "2026-10-01",
@@ -96,6 +96,30 @@
         "url": "https://mof.gov.ae/wp-content/uploads/2023/02/Cabinet-Decision-No-116-of-2022-on-CT-Article-3-Threshold-1.pdf",
         "consulted_on": "2026-10-01",
         "kind": "regulation"
+      },
+      {
+        "key": "ifrs-sme-17",
+        "title": "IFRS for SMEs Accounting Standard, Section 17 Property, Plant and Equipment (IFRS Foundation educational module 17, reproducing the text of the Standard)",
+        "publisher": "IFRS Foundation",
+        "url": "https://www.ifrs.org/content/dam/ifrs/supporting-implementation/smes/module-17.pdf",
+        "consulted_on": "2026-10-01",
+        "kind": "standard"
+      },
+      {
+        "key": "ifrs-sme-18",
+        "title": "IFRS for SMEs Accounting Standard, Section 18 Intangible Assets other than Goodwill (IFRS Foundation educational module 18, reproducing the text of the Standard)",
+        "publisher": "IFRS Foundation",
+        "url": "https://www.ifrs.org/content/dam/ifrs/supporting-implementation/smes/module-18.pdf",
+        "consulted_on": "2026-10-01",
+        "kind": "standard"
+      },
+      {
+        "key": "ifrs-sme-19",
+        "title": "IFRS for SMEs Accounting Standard, Section 19 Business Combinations and Goodwill (IFRS Foundation educational module 19, reproducing the text of the Standard)",
+        "publisher": "IFRS Foundation",
+        "url": "https://www.ifrs.org/content/dam/ifrs/supporting-implementation/smes/module-19.pdf",
+        "consulted_on": "2026-10-01",
+        "kind": "standard"
       }
     ]
   },
