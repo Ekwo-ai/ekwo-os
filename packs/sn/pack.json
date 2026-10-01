@@ -2,10 +2,10 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "SN",
   "name": "Sénégal",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "schema_min": "20260929141500",
   "seed_sequence": 20,
-  "released_at": "2026-09-21",
+  "released_at": "2026-10-01",
   "certification": {
     "status": "community",
     "sources": [
@@ -80,6 +80,14 @@
         "url": "https://www.aifo-uemoa.bj/assets/documents/directives-uemoa/directive_02_2009_CM_UEMOA.pdf",
         "consulted_on": "2026-09-21",
         "kind": "law"
+      },
+      {
+        "key": "voies-et-moyens-lfr-2025",
+        "title": "Voies et moyens — loi de finances rectificative pour l'année 2025 : projections des recettes budgétaires (impôt sur les sociétés, impôt minimum forfaitaire)",
+        "publisher": "Ministère des Finances et du Budget du Sénégal — Direction générale du Budget",
+        "url": "https://budget.sec.gouv.sn/telecharger-le-document/685db245-deb4-4a9b-8358-cc1f0a2a028a/telechargement",
+        "consulted_on": "2026-10-01",
+        "kind": "guidance"
       }
     ]
   },

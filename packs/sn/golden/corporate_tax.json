@@ -1,0 +1,558 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "why": "Trois sociétés fictives dont l'impôt a été calculé à la main, pour l'exercice 2025, en francs CFA sans décimale : une société bénéficiaire dont l'impôt comptabilisé et les pénalités sont réintégrés depuis leurs comptes, un exercice déficitaire qui porte l'impôt minimum forfaitaire, et une société qui impute des déficits antérieurs dans la limite de trois ans et déduit les dividendes de sa filiale. Le Sénégal n'a qu'un taux : aucune société n'y est écartée d'un taux, et chaque base des exemples est un multiple de mille francs, ce que la règle d'arrondi de l'article 36 ne changerait pas.",
+  "fiscal_year": {
+    "name": "Exercice 2025",
+    "start": "2025-01-01",
+    "end": "2025-12-31"
+  },
+  "companies": [
+    {
+      "ref": "profitable-company",
+      "name": "Boulangerie Teranga SARL",
+      "why": "Une société bénéficiaire. L'impôt sur les sociétés comptabilisé (compte 8911) et les pénalités des comptes 6478 et 657 sont réintégrés depuis leurs comptes, sans rien déclarer. Le taux de 30 % s'applique à toute la base.",
+      "entries": [
+        {
+          "date": "2025-12-31",
+          "description": "Ventes de l'exercice",
+          "lines": [
+            {
+              "account": "5211",
+              "debit": "148500000"
+            },
+            {
+              "account": "7011",
+              "credit": "148500000"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Achats de farine et de matières",
+          "lines": [
+            {
+              "account": "6011",
+              "debit": "71250000"
+            },
+            {
+              "account": "5211",
+              "credit": "71250000"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Loyers des locaux",
+          "lines": [
+            {
+              "account": "6222",
+              "debit": "24300000"
+            },
+            {
+              "account": "5211",
+              "credit": "24300000"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Salaires",
+          "lines": [
+            {
+              "account": "6611",
+              "debit": "33600000"
+            },
+            {
+              "account": "5211",
+              "credit": "33600000"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Pénalités fiscale et pénale",
+          "lines": [
+            {
+              "account": "6478",
+              "debit": "400000"
+            },
+            {
+              "account": "657",
+              "debit": "150000"
+            },
+            {
+              "account": "5211",
+              "credit": "550000"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Dotation aux amortissements",
+          "lines": [
+            {
+              "account": "6813",
+              "debit": "6000000"
+            },
+            {
+              "account": "2841",
+              "credit": "6000000"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Impôt sur les sociétés de l'exercice",
+          "lines": [
+            {
+              "account": "8911",
+              "debit": "3840000"
+            },
+            {
+              "account": "441",
+              "credit": "3840000"
+            }
+          ]
+        }
+      ],
+      "expected": {
+        "computation": [
+          "Résultat net (ligne XI) : 148 500 000 − 71 250 000 − 24 300 000 − 33 600 000 − 400 000 − 150 000 − 6 000 000 − 3 840 000 = 8 960 000.",
+          "Impôts sur le résultat : solde du compte 8911, 3 840 000 × 100 % = 3 840 000.",
+          "Amendes et pénalités : comptes 6478 (400 000) et 657 (150 000), soit 550 000 × 100 % = 550 000.",
+          "Résultat fiscal : 8 960 000 + 3 840 000 + 550 000 = 13 350 000. Aucun déficit antérieur : la base est 13 350 000, un multiple de mille francs.",
+          "Taux normal : 13 350 000 × 30 % = 4 005 000.",
+          "Impôt estimé : 4 005 000."
+        ],
+        "lines": [
+          {
+            "kind": "accounting_result",
+            "code": "XI",
+            "amount": "8960000"
+          },
+          {
+            "kind": "adjustment",
+            "code": "corporate-income-tax",
+            "base": "3840000",
+            "rate": "100",
+            "amount": "3840000"
+          },
+          {
+            "kind": "adjustment",
+            "code": "fines-penalties",
+            "base": "550000",
+            "rate": "100",
+            "amount": "550000"
+          },
+          {
+            "kind": "fiscal_result",
+            "amount": "13350000"
+          },
+          {
+            "kind": "taxable_base",
+            "amount": "13350000"
+          },
+          {
+            "kind": "rate",
+            "code": "standard",
+            "base": "13350000",
+            "rate": "30",
+            "amount": "4005000"
+          },
+          {
+            "kind": "tax_before_credits",
+            "base": "13350000",
+            "amount": "4005000"
+          },
+          {
+            "kind": "estimated_tax",
+            "code": "SN-IS",
+            "base": "13350000",
+            "amount": "4005000"
+          }
+        ],
+        "tax": "4005000"
+      }
+    },
+    {
+      "ref": "loss-year",
+      "name": "Cabinet Sahel Conseil SA",
+      "why": "Un exercice déficitaire. L'impôt minimum forfaitaire comptabilisé au compte 895 est réintégré comme tout impôt sur le résultat, mais il n'est pas calculé : le module ne sait pas le dire. Le déficit fiscal, qui sera imputable pendant trois exercices, est la perte comptable diminuée des réintégrations.",
+      "entries": [
+        {
+          "date": "2025-12-31",
+          "description": "Prestations de l'exercice",
+          "lines": [
+            {
+              "account": "5211",
+              "debit": "18200000"
+            },
+            {
+              "account": "7061",
+              "credit": "18200000"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Loyers des bureaux",
+          "lines": [
+            {
+              "account": "6222",
+              "debit": "9400000"
+            },
+            {
+              "account": "5211",
+              "credit": "9400000"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Annonces et publicité",
+          "lines": [
+            {
+              "account": "6271",
+              "debit": "8100000"
+            },
+            {
+              "account": "5211",
+              "credit": "8100000"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Salaires",
+          "lines": [
+            {
+              "account": "6611",
+              "debit": "7600000"
+            },
+            {
+              "account": "5211",
+              "credit": "7600000"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Pénalité pénale",
+          "lines": [
+            {
+              "account": "657",
+              "debit": "100000"
+            },
+            {
+              "account": "5211",
+              "credit": "100000"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Dotation aux amortissements",
+          "lines": [
+            {
+              "account": "6813",
+              "debit": "2000000"
+            },
+            {
+              "account": "2841",
+              "credit": "2000000"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Impôt minimum forfaitaire de l'exercice",
+          "lines": [
+            {
+              "account": "895",
+              "debit": "80000"
+            },
+            {
+              "account": "441",
+              "credit": "80000"
+            }
+          ]
+        }
+      ],
+      "expected": {
+        "computation": [
+          "Résultat net (ligne XI) : 18 200 000 − 9 400 000 − 8 100 000 − 7 600 000 − 100 000 − 2 000 000 − 80 000 = −9 080 000.",
+          "Impôts sur le résultat : solde du compte 895, 80 000 × 100 % = 80 000.",
+          "Amendes et pénalités : solde du compte 657, 100 000 × 100 % = 100 000.",
+          "Résultat fiscal : −9 080 000 + 80 000 + 100 000 = −8 900 000.",
+          "Base imposable : 0, jamais négative. Déficit de l'exercice : 8 900 000, reportable sur les trois exercices suivants.",
+          "Impôt estimé : 0 (l'impôt minimum forfaitaire de 0,5 % du chiffre d'affaires de l'année précédente est hors du calcul)."
+        ],
+        "lines": [
+          {
+            "kind": "accounting_result",
+            "code": "XI",
+            "amount": "-9080000"
+          },
+          {
+            "kind": "adjustment",
+            "code": "corporate-income-tax",
+            "base": "80000",
+            "rate": "100",
+            "amount": "80000"
+          },
+          {
+            "kind": "adjustment",
+            "code": "fines-penalties",
+            "base": "100000",
+            "rate": "100",
+            "amount": "100000"
+          },
+          {
+            "kind": "fiscal_result",
+            "amount": "-8900000"
+          },
+          {
+            "kind": "taxable_base",
+            "amount": "0"
+          },
+          {
+            "kind": "loss_of_period",
+            "amount": "8900000"
+          },
+          {
+            "kind": "tax_before_credits",
+            "base": "0",
+            "amount": "0"
+          },
+          {
+            "kind": "estimated_tax",
+            "code": "SN-IS",
+            "base": "0",
+            "amount": "0"
+          }
+        ],
+        "tax": "0"
+      }
+    },
+    {
+      "ref": "losses-and-dividends",
+      "name": "Comptoir Casamance Import SA",
+      "why": "Une société bénéficiaire qui impute des déficits antérieurs : celui de 2021 a plus de trois exercices et ne s'impute plus, ceux de 2022 et de 2024 s'imputent, le plus ancien d'abord, sans autre plafond. Elle déclare 4 000 000 de dividendes de sa filiale, déduits à 95 % (article 21).",
+      "entries": [
+        {
+          "date": "2025-12-31",
+          "description": "Ventes de l'exercice",
+          "lines": [
+            {
+              "account": "5211",
+              "debit": "412000000"
+            },
+            {
+              "account": "7011",
+              "credit": "412000000"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Dividendes reçus de la filiale",
+          "lines": [
+            {
+              "account": "5211",
+              "debit": "4000000"
+            },
+            {
+              "account": "7721",
+              "credit": "4000000"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Achats de marchandises",
+          "lines": [
+            {
+              "account": "6011",
+              "debit": "268400000"
+            },
+            {
+              "account": "5211",
+              "credit": "268400000"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Loyers des entrepôts",
+          "lines": [
+            {
+              "account": "6222",
+              "debit": "61500000"
+            },
+            {
+              "account": "5211",
+              "credit": "61500000"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Salaires",
+          "lines": [
+            {
+              "account": "6611",
+              "debit": "48200000"
+            },
+            {
+              "account": "5211",
+              "credit": "48200000"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Pénalité fiscale",
+          "lines": [
+            {
+              "account": "6478",
+              "debit": "700000"
+            },
+            {
+              "account": "5211",
+              "credit": "700000"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Dotation aux amortissements",
+          "lines": [
+            {
+              "account": "6813",
+              "debit": "9000000"
+            },
+            {
+              "account": "2841",
+              "credit": "9000000"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Impôt sur les sociétés de l'exercice",
+          "lines": [
+            {
+              "account": "8911",
+              "debit": "9000000"
+            },
+            {
+              "account": "441",
+              "credit": "9000000"
+            }
+          ]
+        }
+      ],
+      "parameters": {},
+      "adjustments": [
+        {
+          "rule": "parent-subsidiary-dividends",
+          "amount": "4000000"
+        }
+      ],
+      "losses": [
+        {
+          "origin_period_end": "2021-12-31",
+          "amount": "2500000"
+        },
+        {
+          "origin_period_end": "2022-12-31",
+          "amount": "3000000"
+        },
+        {
+          "origin_period_end": "2024-12-31",
+          "amount": "5000000"
+        }
+      ],
+      "expected": {
+        "computation": [
+          "Résultat net (ligne XI) : 412 000 000 + 4 000 000 − 268 400 000 − 61 500 000 − 48 200 000 − 700 000 − 9 000 000 − 9 000 000 = 19 200 000.",
+          "Impôts sur le résultat : solde du compte 8911, 9 000 000 × 100 % = 9 000 000.",
+          "Amendes et pénalités : solde du compte 6478, 700 000 × 100 % = 700 000.",
+          "Dividendes de la filiale, déclarés : 4 000 000 × 95 % = 3 800 000, déduits.",
+          "Résultat fiscal : 19 200 000 + 9 000 000 + 700 000 − 3 800 000 = 25 100 000.",
+          "Déficits : celui de 2021 (clos le 31 décembre 2021) n'est plus imputable sur 2025, qui est son quatrième exercice suivant ; il n'est pas utilisé.",
+          "Déficit de 2022 imputé en entier, du plus ancien au plus récent : 3 000 000. Déficit de 2024 imputé en entier : 5 000 000. Base imposable : 25 100 000 − 3 000 000 − 5 000 000 = 17 100 000.",
+          "Taux normal : 17 100 000 × 30 % = 5 130 000.",
+          "Impôt estimé : 5 130 000."
+        ],
+        "lines": [
+          {
+            "kind": "accounting_result",
+            "code": "XI",
+            "amount": "19200000"
+          },
+          {
+            "kind": "adjustment",
+            "code": "corporate-income-tax",
+            "base": "9000000",
+            "rate": "100",
+            "amount": "9000000"
+          },
+          {
+            "kind": "adjustment",
+            "code": "fines-penalties",
+            "base": "700000",
+            "rate": "100",
+            "amount": "700000"
+          },
+          {
+            "kind": "adjustment",
+            "code": "parent-subsidiary-dividends",
+            "base": "4000000",
+            "rate": "95",
+            "amount": "-3800000"
+          },
+          {
+            "kind": "fiscal_result",
+            "amount": "25100000"
+          },
+          {
+            "kind": "loss_used",
+            "code": "2022-12-31",
+            "base": "3000000",
+            "amount": "-3000000"
+          },
+          {
+            "kind": "loss_used",
+            "code": "2024-12-31",
+            "base": "5000000",
+            "amount": "-5000000"
+          },
+          {
+            "kind": "taxable_base",
+            "amount": "17100000"
+          },
+          {
+            "kind": "rate",
+            "code": "standard",
+            "base": "17100000",
+            "rate": "30",
+            "amount": "5130000"
+          },
+          {
+            "kind": "tax_before_credits",
+            "base": "17100000",
+            "amount": "5130000"
+          },
+          {
+            "kind": "estimated_tax",
+            "code": "SN-IS",
+            "base": "17100000",
+            "amount": "5130000"
+          }
+        ],
+        "tax": "5130000"
+      }
+    }
+  ]
+}

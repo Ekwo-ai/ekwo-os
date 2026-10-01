@@ -1,0 +1,146 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "tax": {
+    "code": "SN-IS",
+    "name": "Impôt sur les sociétés",
+    "legal_reference": "Code général des impôts (loi n° 2012-31 du 31 décembre 2012), art. 36 — le taux de l'impôt sur les sociétés est fixé à 30 % du bénéfice imposable ; art. 718 — les dispositions du titre premier du livre I s'appliquent aux résultats des exercices clos au 31 décembre 2012 et après",
+    "source": "cgi"
+  },
+  "result": {
+    "statement": "SN-SYSCOHADA-IS",
+    "line": "XI",
+    "legal_reference": "Code général des impôts, art. 8 et art. 16, 2 — le bénéfice imposable part du résultat comptable, augmenté des réintégrations extracomptables et diminué des déductions extracomptables ; le compte de résultat du Système normal n'imprime pas de résultat avant impôt : le calcul part du résultat net (ligne XI), qui est après la charge d'impôt du compte 89, d'où la règle de réintégration « corporate-income-tax »",
+    "source": "cgi"
+  },
+  "accounts": {
+    "expense": "8911",
+    "payable": "441",
+    "receivable": null,
+    "legal_reference": "Système comptable OHADA, plan de comptes, classes 4 et 8 — le compte 441 « État, impôt sur les bénéfices » est crédité de l'impôt dû par le débit du compte 891 « Impôts sur les bénéfices de l'exercice », ici son sous-compte 8911 « Activités exercées dans l'État » ; le plan n'a pas de compte de créance d'impôt sur les bénéfices à part",
+    "source": "syscohada"
+  },
+  "parameters": [],
+  "adjustment_rules": [
+    {
+      "code": "corporate-income-tax",
+      "name": "Impôts sur le résultat (impôt sur les sociétés et impôt minimum forfaitaire)",
+      "direction": "add_back",
+      "percent": 100,
+      "accounts": [
+        {
+          "kind": "code_prefix",
+          "code_from": "89"
+        }
+      ],
+      "valid_from": "2012-12-31",
+      "valid_on": "period_end",
+      "sequence": 10,
+      "legal_reference": "Code général des impôts, art. 9, 7 — les impôts à la charge de l'entreprise sont déductibles, à l'exception de l'impôt sur les sociétés et de l'impôt minimum forfaitaire sur les sociétés. Le compte 89 ne porte que ces impôts sur le résultat (891 impôt sur les bénéfices, 892 rappels, 895 impôt minimum forfaitaire, 899 dégrèvements) : son solde net est réintégré.",
+      "source": "cgi"
+    },
+    {
+      "code": "fines-penalties",
+      "name": "Amendes et pénalités",
+      "direction": "add_back",
+      "percent": 100,
+      "accounts": [
+        {
+          "kind": "code_prefix",
+          "code_from": "647"
+        },
+        {
+          "kind": "code_prefix",
+          "code_from": "657"
+        }
+      ],
+      "valid_from": "2012-12-31",
+      "valid_on": "period_end",
+      "sequence": 20,
+      "legal_reference": "Code général des impôts, art. 9, 9 — les transactions, amendes, confiscations et pénalités de toute nature, notamment celles mises à la charge des contrevenants à la réglementation des prix, du contrôle des changes et de l'assiette, de la liquidation et du recouvrement des impôts, ne sont pas admises en déduction. Comptes 647 « Pénalités, amendes fiscales » et 657 « Pénalités et amendes pénales » du Système comptable OHADA.",
+      "source": "cgi"
+    },
+    {
+      "code": "parent-subsidiary-dividends",
+      "name": "Produits de participations d'une société mère dans sa filiale, déduction faite de la quote-part de frais et charges",
+      "direction": "deduction",
+      "percent": 95,
+      "valid_from": "2012-12-31",
+      "valid_on": "period_end",
+      "sequence": 30,
+      "legal_reference": "Code général des impôts, art. 21 — les produits bruts des participations d'une société mère dans une filiale sont retranchés du bénéfice net total, déduction faite d'une quote-part de frais et charges fixée uniformément à 5 % du produit brut, sans pouvoir excéder le total des frais et charges de la période (ce plafond n'est pas calculé) ; art. 22 — conditions : les deux sociétés imposables à l'impôt sur les sociétés, siège de la mère au Sénégal, au moins 10 % du capital, titres conservés deux ans sous la forme nominative. La société déclare le montant brut des produits qui y répondent.",
+      "source": "cgi"
+    },
+    {
+      "code": "other-participation-income",
+      "name": "Produits de participations hors régime des sociétés mères et filiales",
+      "direction": "deduction",
+      "percent": 60,
+      "valid_from": "2012-12-31",
+      "valid_on": "period_end",
+      "sequence": 40,
+      "legal_reference": "Code général des impôts, art. 25 — lorsque les produits de participations ne sont pas éligibles au régime des sociétés mères et filiales, la société n'est imposée que sur une quote-part de 40 % du produit brut, soit une déduction de 60 %. La société déclare le montant brut des produits qui y répondent.",
+      "source": "cgi"
+    }
+  ],
+  "rates": [
+    {
+      "code": "standard",
+      "name": "Taux normal",
+      "rate": 30,
+      "valid_from": "2012-12-31",
+      "valid_on": "period_end",
+      "sequence": 10,
+      "legal_reference": "Code général des impôts, art. 36 — le taux de l'impôt sur les sociétés est fixé à 30 % du bénéfice imposable ; confirmé pour 2025 par la note « Voies et moyens » de la loi de finances rectificative pour 2025 (impôt sur les sociétés : 30 % du bénéfice imposable). La règle de l'arrondi de la base au millier de francs inférieur (art. 36, 2e phrase) n'est pas appliquée.",
+      "source": "cgi"
+    }
+  ],
+  "loss_carryforward": [
+    {
+      "floor": null,
+      "percent_above": null,
+      "years": 3,
+      "valid_from": "2012-12-31",
+      "valid_on": "period_end",
+      "legal_reference": "Code général des impôts, art. 16, 1 — le déficit d'un exercice est déduit du bénéfice de l'exercice suivant ; l'excédent est reporté successivement sur les exercices suivants, jusqu'au 3e exercice qui suit l'exercice déficitaire, sans autre plafond. Les amortissements comptabilisés en période déficitaire, réputés différés, échappent à cette limite de durée et ne sont pas calculés ici.",
+      "source": "cgi"
+    }
+  ],
+  "prepayments": [
+    {
+      "method": "share_of_reference_tax",
+      "month_basis": "calendar",
+      "instalments": [
+        {
+          "sequence": 1,
+          "month": 2,
+          "day": 15,
+          "share_percent": 33.3333
+        },
+        {
+          "sequence": 2,
+          "month": 4,
+          "day": 30,
+          "share_percent": 33.3333
+        }
+      ],
+      "surcharge_percent": null,
+      "exempt_up_to": null,
+      "valid_from": "2012-12-31",
+      "valid_on": "period_end",
+      "legal_reference": "Code général des impôts, art. 213 et 214 — deux acomptes, chacun égal au tiers de l'impôt dû sur les résultats du dernier exercice imposé, exigibles dans les quinze premiers jours de février et au plus tard le 30 avril ; le solde de l'impôt calculé d'après les résultats déclarés est acquitté au plus tard le 15 juin (note « Voies et moyens » de la loi de finances rectificative pour 2025 : deux acomptes, 15 février et 30 avril, solde le 15 juin). Le tiers est écrit 33,3333 %, faute d'un tiers exact. Le plancher du premier acompte (art. 215), l'arrondi à la centaine de francs et la dispense de l'art. 217 ne sont pas portés.",
+      "source": "cgi"
+    }
+  ],
+  "credits": [
+    {
+      "code": "withholding-tax-credit",
+      "name": "Crédit d'impôt pour la retenue à la source sur les revenus de capitaux mobiliers",
+      "refundable": false,
+      "valid_from": "2012-12-31",
+      "valid_on": "period_end",
+      "sequence": 10,
+      "legal_reference": "Code général des impôts, art. 37 — la retenue à la source opérée sur les revenus de capitaux mobiliers encaissés par une personne morale et compris dans les bénéfices imposables est imputée sur l'impôt sur les sociétés, sans excéder la retenue correspondant aux revenus bruts compris dans la base ; le crédit est reportable sur trois ans et le reliquat de la troisième année est restitué sur réclamation (le report et la restitution ne sont pas calculés : la société déclare le crédit de l'exercice)",
+      "source": "cgi"
+    }
+  ]
+}

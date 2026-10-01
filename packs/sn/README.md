@@ -80,3 +80,31 @@ October 2025 served only to date each paragraph, and is not in the register.
   is not on the real regime, is an income tax, withheld on the payment rather
   than charged on the invoice; the core has no withholding on a payment.
 - **Late-payment terms between businesses**: no Senegalese or UEMOA text found.
+
+## Corporate income tax: what `corporate_tax.json` leaves out
+
+The section carries what was read on an official page on 1 October 2026, and
+nothing else: the Code général des impôts as enacted by loi n° 2012-31 (arts.
+8, 9, 16, 21, 25, 36, 37, 213 to 215) and the Ministry's « Voies et moyens »
+note of the 2025 supplementary finance law, which restates the 30 % rate, the
+two instalments and the minimum tax. It starts from line `XI` (net result) of
+`SN-SYSCOHADA-IS`, which prints no result before tax, and adds back class 89.
+The Code is amended often; an annotated edition from a private publisher
+(October 2025) was used only to look for amendments of these articles, and it
+is not a source. A rule that is missing makes an estimate too high or too low
+by something a reader can name; these are the ones to name. The same file
+serves as a model for the other SYSCOHADA packs: only the articles, the rate
+and the three-year limit are Senegalese.
+
+| Not carried | Why |
+|---|---|
+| The minimum flat-rate tax, IMF (CGI arts. 38 to 40): 0,5 % of the previous year's turnover excluding tax, capped at 5 000 000 F, due when the company is in deficit or its tax is lower | A minimum tax is not in the vocabulary: the section computes the tax on the profit and nothing replaces it by a floor. The estimate is therefore too low for a loss-making company, or one whose tax is below the minimum. The charge booked on `895` is added back like any tax on income. The 500 000 F floor of the 2012 text is no longer applied; the amendment that removed it (loi n° 2019-17) was not read in an official text, only the Ministry's note which states the cap alone. |
+| Rounding of the taxable base down to the thousand franc (art. 36) | No rounding rule exists for a base. The estimate keeps the franc, so it can exceed the tax by up to 299 F. |
+| Deferred depreciation (arts. 10 and 16): depreciation booked in a loss year is added back and carried forward with no time limit, and is used after the ordinary deficits | The loss limit is one number of years. A company that carries deferred depreciation as a loss would see it lapse after three years; the estimate does not add it back in a deficit year either. |
+| The other ceilings of art. 9: interest paid to partners (rate of the central bank plus three points, capital ceiling), gifts (0,5 % of turnover), head-office costs (20 % of profit), insurance premiums, the 20 % phasing of retirement premiums | Each ceiling depends on a turnover, a profit, a rate or the capital, and a rule moves a fixed share or a stated amount. No rule is written for them. |
+| The ceiling of the parent–subsidiary deduction (art. 21: the 5 % share of costs cannot exceed the costs of the period) | Not computed; `parent-subsidiary-dividends` deducts 95 % of what the company declares. The conditions of art. 22 are the company's word. |
+| Payments to a foreign legal entity made without the formalities of art. 642 bis, not deductible (art. 9, 11, added by loi n° 2025-02) | The enacted text was not read: the register holds the bill, not the law. |
+| The tax-credit carry of art. 37 (three years, then refund on claim) | `withholding-tax-credit` exists and is not refundable; the company declares each year's credit. |
+| Prepayments: the first instalment may not be lower than the IMF, the amounts are rounded down to the hundred franc, a year of another length is scaled to twelve months, the second may be waived by letter (arts. 214, 215, 217) | The vocabulary has two shares of a reference tax and nothing else. The third of the tax is written `33,3333`. Nothing reads the schedule yet. |
+| Regimes of exemption and reduced rates (investment code, mining and petroleum codes, free zones, new small businesses, the contribution globale unique) | Each depends on an approval or a regime the books do not show. No rate is carried but the 30 % of art. 36. |
+| Insurance companies' tax on excess technical provisions (arts. 41 to 46) | A tax of its own, 0,33 % per month; not an income tax rate. |
