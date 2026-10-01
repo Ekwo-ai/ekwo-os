@@ -1,0 +1,100 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "tax": {
+    "code": "NL-VPB",
+    "name": "Vennootschapsbelasting",
+    "legal_reference": "Wet op de vennootschapsbelasting 1969 — de belasting naar de winst van rechtspersonen en andere belastingplichtigen als bedoeld in artikel 2",
+    "source": "wet-vpb"
+  },
+  "result": {
+    "statement": "NL-BMJ-E",
+    "line": "E19",
+    "legal_reference": "Besluit modellen jaarrekening, model E — de winst- en verliesrekening drukt het resultaat voor belastingen af vóór de post belastingen; de berekening van de winst (Wet op de vennootschapsbelasting 1969, art. 8) vertrekt van dat resultaat, zodat de belasting over de winst zelf er niet in voorkomt",
+    "source": "bmj"
+  },
+  "accounts": {
+    "expense": "WBelBgrBgr",
+    "payable": "BSchBepVpb",
+    "receivable": "BVorVbkTvv",
+    "legal_reference": "Referentie GrootboekSchema 3.8 — WBelBgrBgr «Belastingen uit huidig boekjaar» (onder «Belastingen over de winst of het verlies»), BSchBepVpb «Te betalen vennootschapsbelasting» en BVorVbkTvv «Terug te vorderen Vennootschapsbelasting»",
+    "source": "rgs"
+  },
+  "parameters": [],
+  "adjustment_rules": [
+    {
+      "code": "fines",
+      "name": "Boetes en verhogingen op belastingen en sociale premies",
+      "direction": "add_back",
+      "percent": 100,
+      "accounts": [
+        {
+          "kind": "account_code",
+          "code_from": "WBedAdlBev"
+        }
+      ],
+      "valid_from": "2025-01-01",
+      "valid_on": "period_start",
+      "sequence": 10,
+      "legal_reference": "Wet op de vennootschapsbelasting 1969, art. 8, lid 1, jo. Wet inkomstenbelasting 2001, art. 3.14, lid 1, onderdeel c — bij het bepalen van de winst komen niet in aftrek kosten en lasten die verband houden met geldboeten opgelegd door een strafrechter en met bestuurlijke boeten en daarmee vergelijkbare buitenlandse boeten. De regel leest het saldo van de rekening WBedAdlBev; een boete die de vennootschap op een andere rekening boekt, wijst zij zelf aan.",
+      "source": "wet-ib"
+    },
+    {
+      "code": "mixed-costs-fixed",
+      "name": "Gemengde kosten — niet aftrekbaar bedrag van € 5.700 of 0,4 % van de loonsom",
+      "direction": "add_back",
+      "percent": 100,
+      "valid_from": "2025-01-01",
+      "valid_on": "period_start",
+      "sequence": 20,
+      "legal_reference": "Wet op de vennootschapsbelasting 1969, art. 8, lid 5 — bij aanwezigheid van een of meer werknemers wordt de winst mede bepaald op de voet van art. 3.15, lid 1, 2, 3 en 5, Wet inkomstenbelasting 2001, met voor het bedrag van lid 1 (€ 5.700) in de plaats 0,4 % van het gezamenlijke loon van de werknemers indien die uitkomst hoger is dan € 5.700; Wet inkomstenbelasting 2001, art. 3.15, lid 1 — tot dat bedrag komen niet in aftrek de kosten en lasten van voedsel, drank en genotmiddelen, van representatie en van congressen, seminars, studiereizen en dergelijke. De vennootschap geeft het niet aftrekbare bedrag op: het laagste van haar kosten van die posten en het drempelbedrag. Dit is het alternatief voor de regel mixed-costs-elected: nooit beide op dezelfde kosten.",
+      "source": "wet-vpb"
+    },
+    {
+      "code": "mixed-costs-elected",
+      "name": "Gemengde kosten — keuze voor 73,5 % aftrek",
+      "direction": "add_back",
+      "percent": 26.5,
+      "valid_from": "2025-01-01",
+      "valid_on": "period_start",
+      "sequence": 30,
+      "legal_reference": "Wet op de vennootschapsbelasting 1969, art. 8, lid 5 — bij aanwezigheid van een of meer werknemers geldt art. 3.15, lid 5, Wet inkomstenbelasting 2001, waarbij het percentage van 80 wordt vervangen door 73,5; Wet inkomstenbelasting 2001, art. 3.15, lid 5 — indien de belastingplichtige daarvoor bij de aangifte kiest, komen de kosten en lasten van de in lid 1 genoemde posten voor dat percentage in aftrek, in afwijking van het drempelbedrag. Het niet aftrekbare deel is 26,5 % van die kosten; de vennootschap geeft het bedrag van de kosten op. Alternatief voor de regel mixed-costs-fixed.",
+      "source": "wet-vpb"
+    }
+  ],
+  "rates": [
+    {
+      "code": "reduced",
+      "name": "Eerste schijf",
+      "rate": 19,
+      "up_to": 200000,
+      "valid_from": "2023-01-01",
+      "valid_on": "period_start",
+      "sequence": 10,
+      "legal_reference": "Wet op de vennootschapsbelasting 1969, art. 22 — tabel: 19 % over het belastbare bedrag tot en met € 200.000; Belastingdienst, «Tarieven voor de vennootschapsbelasting» — de tarieven in 2026, 2025, 2024 en 2023 zijn 19,0 % tot en met € 200.000 en 25,8 % daarboven",
+      "source": "bd-tarieven"
+    },
+    {
+      "code": "standard",
+      "name": "Tweede schijf",
+      "rate": 25.8,
+      "valid_from": "2023-01-01",
+      "valid_on": "period_start",
+      "sequence": 20,
+      "legal_reference": "Wet op de vennootschapsbelasting 1969, art. 22 — tabel: € 38.000 vermeerderd met 25,8 % van het gedeelte van het belastbare bedrag dat € 200.000 te boven gaat; Belastingdienst, «Tarieven voor de vennootschapsbelasting» — 25,8 % boven € 200.000 in 2026, 2025, 2024 en 2023",
+      "source": "bd-tarieven"
+    }
+  ],
+  "loss_carryforward": [
+    {
+      "floor": 1000000,
+      "percent_above": 50,
+      "years": null,
+      "valid_from": "2022-01-01",
+      "valid_on": "period_start",
+      "legal_reference": "Wet op de vennootschapsbelasting 1969, art. 20, lid 2 — een verlies wordt verrekend met de belastbare winsten van het voorafgaande jaar en de volgende jaren, mits het door de inspecteur is vastgesteld bij voor bezwaar vatbare beschikking; verrekening in een jaar vindt slechts plaats tot € 1.000.000 vermeerderd met 50 % van de belastbare winst van dat jaar nadat die winst met € 1.000.000 is verminderd; lid 4 — de verrekening geschiedt in de volgorde waarin de verliezen zijn ontstaan; Belastingdienst, «Vpb: verrekenen van verliezen» — verliezen uit 2022 en later zijn onbeperkt voorwaarts verrekenbaar, met dat maximum voor de winsten van 2022 en later",
+      "source": "bd-verliezen"
+    }
+  ],
+  "prepayments": [],
+  "credits": []
+}

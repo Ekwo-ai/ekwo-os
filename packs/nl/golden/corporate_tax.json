@@ -1,0 +1,542 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "why": "Drie fictieve vennootschappen waarvan de belasting met de hand is berekend, voor boekjaar 2025: een winstgevende kleine B.V. in de eerste schijf, een verliesjaar, en een B.V. met bijtellingen en verliezen uit eerdere jaren boven de grens van € 1.000.000.",
+  "fiscal_year": {
+    "name": "Boekjaar 2025",
+    "start": "2025-01-01",
+    "end": "2025-12-31"
+  },
+  "companies": [
+    {
+      "ref": "profit-small",
+      "name": "Bakkerij De Gouden Korst B.V.",
+      "why": "Een bescheiden winst die geheel in de eerste schijf blijft: 19 %. De boete wordt van de rekening WBedAdlBev gelezen; voor de gemengde kosten kiest de vennootschap bij de aangifte voor 73,5 % aftrek. De boeking van de vennootschapsbelasting verandert niets: de berekening vertrekt van het resultaat voor belastingen.",
+      "entries": [
+        {
+          "date": "2025-06-30",
+          "description": "Verkoop van brood en banket",
+          "lines": [
+            {
+              "account": "BLimBanRba",
+              "debit": "612480.00"
+            },
+            {
+              "account": "WOmzNohOlh",
+              "credit": "612480.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-06-30",
+          "description": "Inkoop grondstoffen en handelsgoederen",
+          "lines": [
+            {
+              "account": "WKprInhInh",
+              "debit": "238900.50"
+            },
+            {
+              "account": "BLimBanRba",
+              "credit": "238900.50"
+            }
+          ]
+        },
+        {
+          "date": "2025-06-30",
+          "description": "Lonen en sociale lasten",
+          "lines": [
+            {
+              "account": "WPerLesLon",
+              "debit": "164200.00"
+            },
+            {
+              "account": "WPerSolPsv",
+              "debit": "38615.35"
+            },
+            {
+              "account": "BLimBanRba",
+              "credit": "202815.35"
+            }
+          ]
+        },
+        {
+          "date": "2025-06-30",
+          "description": "Huur, representatie en software",
+          "lines": [
+            {
+              "account": "WBedHuiBeh",
+              "debit": "54000.00"
+            },
+            {
+              "account": "WBedVkkRep",
+              "debit": "4318.40"
+            },
+            {
+              "account": "WBedKanSof",
+              "debit": "3296.45"
+            },
+            {
+              "account": "BLimBanRba",
+              "credit": "61614.85"
+            }
+          ]
+        },
+        {
+          "date": "2025-10-15",
+          "description": "Boete van de Belastingdienst",
+          "lines": [
+            {
+              "account": "WBedAdlBev",
+              "debit": "300.00"
+            },
+            {
+              "account": "BLimBanRba",
+              "credit": "300.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Afschrijving inventaris",
+          "lines": [
+            {
+              "account": "WAfsAmvBei",
+              "debit": "18750.00"
+            },
+            {
+              "account": "BLimBanRba",
+              "credit": "18750.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Vennootschapsbelasting boekjaar",
+          "lines": [
+            {
+              "account": "WBelBgrBgr",
+              "debit": "20000.00"
+            },
+            {
+              "account": "BSchBepVpb",
+              "credit": "20000.00"
+            }
+          ]
+        }
+      ],
+      "adjustments": [
+        {
+          "rule": "mixed-costs-elected",
+          "amount": "4318.40"
+        }
+      ],
+      "expected": {
+        "computation": [
+          "Resultaat voor belastingen (regel E19): 612.480,00 − 238.900,50 − 164.200,00 − 38.615,35 − 54.000,00 − 4.318,40 − 3.296,45 − 300,00 − 18.750,00 = 90.099,30. De boeking van 20.000,00 vennootschapsbelasting staat onder regel E20 en telt niet mee.",
+          "Boetes: saldo van rekening WBedAdlBev, 300,00 × 100 % = 300,00.",
+          "Gemengde kosten, keuze voor 73,5 % aftrek: 4.318,40 × 26,5 % = 1.144,376, afgerond 1.144,38.",
+          "Fiscaal resultaat: 90.099,30 + 300,00 + 1.144,38 = 91.543,68. Geen verlies uit eerdere jaren: het belastbare bedrag is 91.543,68.",
+          "Eerste schijf: 91.543,68 ≤ 200.000,00, dus 91.543,68 × 19 % = 17.393,2992, afgerond 17.393,30.",
+          "Geschatte belasting: 17.393,30."
+        ],
+        "lines": [
+          {
+            "kind": "accounting_result",
+            "code": "E19",
+            "amount": "90099.30"
+          },
+          {
+            "kind": "adjustment",
+            "code": "fines",
+            "base": "300.00",
+            "rate": "100",
+            "amount": "300.00"
+          },
+          {
+            "kind": "adjustment",
+            "code": "mixed-costs-elected",
+            "base": "4318.40",
+            "rate": "26.5",
+            "amount": "1144.38"
+          },
+          {
+            "kind": "fiscal_result",
+            "amount": "91543.68"
+          },
+          {
+            "kind": "taxable_base",
+            "amount": "91543.68"
+          },
+          {
+            "kind": "rate",
+            "code": "reduced",
+            "base": "91543.68",
+            "rate": "19",
+            "amount": "17393.30"
+          },
+          {
+            "kind": "tax_before_credits",
+            "base": "91543.68",
+            "amount": "17393.30"
+          },
+          {
+            "kind": "estimated_tax",
+            "code": "NL-VPB",
+            "base": "91543.68",
+            "amount": "17393.30"
+          }
+        ],
+        "tax": "17393.30"
+      }
+    },
+    {
+      "ref": "loss-year",
+      "name": "Studio Zonnebloem B.V.",
+      "why": "Een verliesjaar: geen belastbaar bedrag en geen belasting, en het fiscale verlies — het boekhoudkundige verlies verminderd met de bijtelling van de boete — is wat een later jaar kan verrekenen. De achterwaartse verrekening met het voorafgaande jaar wordt niet berekend.",
+      "entries": [
+        {
+          "date": "2025-06-30",
+          "description": "Opbrengst ontwerpdiensten",
+          "lines": [
+            {
+              "account": "BLimBanRba",
+              "debit": "148000.00"
+            },
+            {
+              "account": "WOmzNodOdh",
+              "credit": "148000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-06-30",
+          "description": "Huur, software en rente",
+          "lines": [
+            {
+              "account": "WBedHuiBeh",
+              "debit": "42000.00"
+            },
+            {
+              "account": "WBedKanSof",
+              "debit": "6120.00"
+            },
+            {
+              "account": "WFbeRlsRlk",
+              "debit": "1240.00"
+            },
+            {
+              "account": "BLimBanRba",
+              "credit": "49360.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-06-30",
+          "description": "Lonen en sociale lasten",
+          "lines": [
+            {
+              "account": "WPerLesLon",
+              "debit": "96500.00"
+            },
+            {
+              "account": "WPerSolPsv",
+              "debit": "21310.80"
+            },
+            {
+              "account": "BLimBanRba",
+              "credit": "117810.80"
+            }
+          ]
+        },
+        {
+          "date": "2025-09-30",
+          "description": "Boete wegens te late aangifte",
+          "lines": [
+            {
+              "account": "WBedAdlBev",
+              "debit": "650.00"
+            },
+            {
+              "account": "BLimBanRba",
+              "credit": "650.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Afschrijving inventaris",
+          "lines": [
+            {
+              "account": "WAfsAmvBei",
+              "debit": "9000.00"
+            },
+            {
+              "account": "BLimBanRba",
+              "credit": "9000.00"
+            }
+          ]
+        }
+      ],
+      "adjustments": [],
+      "expected": {
+        "computation": [
+          "Resultaat voor belastingen (regel E19): 148.000,00 − 42.000,00 − 6.120,00 − 1.240,00 − 96.500,00 − 21.310,80 − 650,00 − 9.000,00 = -28.820,80.",
+          "Boetes: saldo van rekening WBedAdlBev, 650,00 × 100 % = 650,00.",
+          "Fiscaal resultaat: -28.820,80 + 650,00 = -28.170,80. Het belastbare bedrag is nul en het verlies van het jaar is 28.170,80.",
+          "Geschatte belasting: 0,00."
+        ],
+        "lines": [
+          {
+            "kind": "accounting_result",
+            "code": "E19",
+            "amount": "-28820.80"
+          },
+          {
+            "kind": "adjustment",
+            "code": "fines",
+            "base": "650.00",
+            "rate": "100",
+            "amount": "650.00"
+          },
+          {
+            "kind": "fiscal_result",
+            "amount": "-28170.80"
+          },
+          {
+            "kind": "taxable_base",
+            "amount": "0.00"
+          },
+          {
+            "kind": "loss_of_period",
+            "amount": "28170.80"
+          },
+          {
+            "kind": "tax_before_credits",
+            "base": "0.00",
+            "amount": "0.00"
+          },
+          {
+            "kind": "estimated_tax",
+            "code": "NL-VPB",
+            "base": "0.00",
+            "amount": "0.00"
+          }
+        ],
+        "tax": "0.00"
+      }
+    },
+    {
+      "ref": "profit-with-losses",
+      "name": "Van den Berg Installatietechniek B.V.",
+      "why": "Een winst boven de eerste schijf, met verliezen uit eerdere jaren die de grens van artikel 20 overschrijden: € 1.000.000 plus 50 % van de winst daarboven. De loonsom is hoog genoeg voor het drempelbedrag van 0,4 %; het oudste verlies wordt het eerst verrekend.",
+      "entries": [
+        {
+          "date": "2025-06-30",
+          "description": "Opbrengst installatiewerken",
+          "lines": [
+            {
+              "account": "BLimBanRba",
+              "debit": "7430000.00"
+            },
+            {
+              "account": "WOmzNodOdh",
+              "credit": "7430000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-06-30",
+          "description": "Uitbesteed werk",
+          "lines": [
+            {
+              "account": "WKprKuwKuw",
+              "debit": "2100000.00"
+            },
+            {
+              "account": "BLimBanRba",
+              "credit": "2100000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-06-30",
+          "description": "Lonen en sociale lasten",
+          "lines": [
+            {
+              "account": "WPerLesLon",
+              "debit": "3000000.00"
+            },
+            {
+              "account": "WPerSolPsv",
+              "debit": "480000.00"
+            },
+            {
+              "account": "BLimBanRba",
+              "credit": "3480000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-06-30",
+          "description": "Huur, representatie, software",
+          "lines": [
+            {
+              "account": "WBedHuiBeh",
+              "debit": "96000.00"
+            },
+            {
+              "account": "WBedVkkRep",
+              "debit": "21400.00"
+            },
+            {
+              "account": "WBedKanSof",
+              "debit": "124600.00"
+            },
+            {
+              "account": "BLimBanRba",
+              "credit": "242000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-11-15",
+          "description": "Bestuurlijke boete",
+          "lines": [
+            {
+              "account": "WBedAdlBev",
+              "debit": "1750.00"
+            },
+            {
+              "account": "BLimBanRba",
+              "credit": "1750.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Afschrijving inventaris",
+          "lines": [
+            {
+              "account": "WAfsAmvBei",
+              "debit": "120000.00"
+            },
+            {
+              "account": "BLimBanRba",
+              "credit": "120000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Vennootschapsbelasting boekjaar",
+          "lines": [
+            {
+              "account": "WBelBgrBgr",
+              "debit": "400000.00"
+            },
+            {
+              "account": "BSchBepVpb",
+              "credit": "400000.00"
+            }
+          ]
+        }
+      ],
+      "adjustments": [
+        {
+          "rule": "mixed-costs-fixed",
+          "amount": "12000.00"
+        }
+      ],
+      "losses": [
+        {
+          "origin_period_end": "2023-12-31",
+          "amount": "900000.00"
+        },
+        {
+          "origin_period_end": "2024-12-31",
+          "amount": "700000.00"
+        }
+      ],
+      "expected": {
+        "computation": [
+          "Resultaat voor belastingen (regel E19): 7.430.000,00 − 2.100.000,00 − 3.000.000,00 − 480.000,00 − 96.000,00 − 21.400,00 − 124.600,00 − 1.750,00 − 120.000,00 = 1.486.250,00. De boeking van 400.000,00 vennootschapsbelasting telt niet mee.",
+          "Boetes: saldo van rekening WBedAdlBev, 1.750,00 × 100 % = 1.750,00.",
+          "Gemengde kosten: 0,4 % × 3.000.000,00 (loon van de werknemers, opgave van de vennootschap) = 12.000,00, hoger dan 5.700,00, dus het drempelbedrag is 12.000,00. De kosten van representatie (21.400,00) zijn hoger: niet aftrekbaar is 12.000,00 × 100 % = 12.000,00.",
+          "Fiscaal resultaat: 1.486.250,00 + 1.750,00 + 12.000,00 = 1.500.000,00.",
+          "Verliezen beschikbaar: 900.000,00 (2023) + 700.000,00 (2024) = 1.600.000,00.",
+          "Grens van artikel 20: 1.000.000,00 + 50 % × (1.500.000,00 − 1.000.000,00) = 1.250.000,00: de 900.000,00 van 2023 en daarna 350.000,00 van het verlies van 2024, dat 350.000,00 overhoudt.",
+          "Belastbaar bedrag: 1.500.000,00 − 1.250.000,00 = 250.000,00.",
+          "Eerste schijf: 200.000,00 × 19 % = 38.000,00.",
+          "Tweede schijf: (250.000,00 − 200.000,00) × 25,8 % = 50.000,00 × 25,8 % = 12.900,00.",
+          "Geschatte belasting: 38.000,00 + 12.900,00 = 50.900,00."
+        ],
+        "lines": [
+          {
+            "kind": "accounting_result",
+            "code": "E19",
+            "amount": "1486250.00"
+          },
+          {
+            "kind": "adjustment",
+            "code": "fines",
+            "base": "1750.00",
+            "rate": "100",
+            "amount": "1750.00"
+          },
+          {
+            "kind": "adjustment",
+            "code": "mixed-costs-fixed",
+            "base": "12000.00",
+            "rate": "100",
+            "amount": "12000.00"
+          },
+          {
+            "kind": "fiscal_result",
+            "amount": "1500000.00"
+          },
+          {
+            "kind": "loss_used",
+            "code": "2023-12-31",
+            "base": "900000.00",
+            "amount": "-900000.00"
+          },
+          {
+            "kind": "loss_used",
+            "code": "2024-12-31",
+            "base": "700000.00",
+            "amount": "-350000.00"
+          },
+          {
+            "kind": "taxable_base",
+            "amount": "250000.00"
+          },
+          {
+            "kind": "rate",
+            "code": "reduced",
+            "base": "200000.00",
+            "rate": "19",
+            "amount": "38000.00"
+          },
+          {
+            "kind": "rate",
+            "code": "standard",
+            "base": "50000.00",
+            "rate": "25.8",
+            "amount": "12900.00"
+          },
+          {
+            "kind": "tax_before_credits",
+            "base": "250000.00",
+            "amount": "50900.00"
+          },
+          {
+            "kind": "estimated_tax",
+            "code": "NL-VPB",
+            "base": "250000.00",
+            "amount": "50900.00"
+          }
+        ],
+        "tax": "50900.00"
+      }
+    }
+  ]
+}

@@ -523,5 +523,13 @@
     "export": "Export — 0%, table II, part a, item 2, Dutch Turnover Tax Act 1968.",
     "exempt": "Exempt from VAT under article 11 of the Dutch Turnover Tax Act 1968.",
     "late_payment": "Payment after the due date bears statutory commercial interest and compensation for collection costs of at least 40 euros."
+  },
+  "corporate_tax": {
+    "tax": "Corporate income tax",
+    "rule:fines": "Fines and surcharges on taxes and social security contributions",
+    "rule:mixed-costs-fixed": "Mixed costs — non-deductible amount of EUR 5,700 or 0.4 % of the wage bill",
+    "rule:mixed-costs-elected": "Mixed costs — election for 73.5 % deduction",
+    "rate:reduced": "First bracket",
+    "rate:standard": "Second bracket"
   }
 }

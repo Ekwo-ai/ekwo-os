@@ -2,10 +2,10 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "NL",
   "name": "Nederland",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "schema_min": "20260929141500",
   "seed_sequence": 17,
-  "released_at": "2026-09-21",
+  "released_at": "2026-10-01",
   "certification": {
     "status": "community",
     "sources": [
@@ -312,6 +312,38 @@
         "url": "https://docs.peppol.eu/poacc/billing/3.0/codelist/vatex/",
         "consulted_on": "2026-09-21",
         "kind": "standard"
+      },
+      {
+        "key": "wet-vpb",
+        "title": "Wet op de vennootschapsbelasting 1969 — art. 8 (winstbepaling, gemengde kosten), art. 20 (verliesverrekening), art. 22 (tarief)",
+        "publisher": "Overheid.nl — Wettenbank (wetten.overheid.nl)",
+        "url": "https://wetten.overheid.nl/BWBR0002672",
+        "consulted_on": "2026-10-01",
+        "kind": "law"
+      },
+      {
+        "key": "wet-ib",
+        "title": "Wet inkomstenbelasting 2001 — art. 3.14 (van aftrek uitgesloten algemene kosten) en art. 3.15 (in aftrek beperkte algemene kosten), van toepassing bij de winstbepaling van art. 8 Wet Vpb 1969",
+        "publisher": "Overheid.nl — Wettenbank (wetten.overheid.nl)",
+        "url": "https://wetten.overheid.nl/BWBR0011353",
+        "consulted_on": "2026-10-01",
+        "kind": "law"
+      },
+      {
+        "key": "bd-tarieven",
+        "title": "Tarieven voor de vennootschapsbelasting",
+        "publisher": "Belastingdienst",
+        "url": "https://www.belastingdienst.nl/wps/wcm/connect/bldcontentnl/belastingdienst/zakelijk/winst/vennootschapsbelasting/tarieven_vennootschapsbelasting",
+        "consulted_on": "2026-10-01",
+        "kind": "guidance"
+      },
+      {
+        "key": "bd-verliezen",
+        "title": "Vpb: verrekenen van verliezen",
+        "publisher": "Belastingdienst",
+        "url": "https://www.belastingdienst.nl/wps/wcm/connect/bldcontentnl/belastingdienst/zakelijk/winst/vennootschapsbelasting/verrekenen_van_verliezen",
+        "consulted_on": "2026-10-01",
+        "kind": "guidance"
       }
     ]
   },
