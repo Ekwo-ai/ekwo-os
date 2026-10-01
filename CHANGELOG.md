@@ -52,7 +52,7 @@ somewhere has already run it.
   README names what the section leaves out and why. A company of a country
   whose pack does not carry it yet is told so by name,
   `no_corporate_tax_rules`. The packs that carry it: Belgium, France, the
-  Netherlands, Singapore and the United States.
+  Netherlands, Singapore, the United Arab Emirates and the United States.
   `ekwo pack check` refuses a section that names a statement, a line, an
   account or a parameter the pack does not carry, two versions of a rule in
   force on one day, and a section without its worked examples.
