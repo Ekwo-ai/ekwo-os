@@ -638,7 +638,12 @@ describe('the pack format', () => {
     const dir = await mkdtemp(join(tmpdir(), 'ekwo-golden-'));
     await cp(join(packs, 'schema'), join(dir, 'schema'), { recursive: true });
     await cp(sampleDir, join(dir, somePack.slug), { recursive: true });
-    await rm(join(dir, somePack.slug, 'golden'), { recursive: true });
+    // The scenario and what is replayed from it. The worked examples of a
+    // corporate_tax section are another obligation, with a refusal of its own.
+    const golden = join(dir, somePack.slug, 'golden');
+    for (const file of await readdir(golden)) {
+      if (file !== 'corporate_tax.json') await rm(join(golden, file), { recursive: true });
+    }
 
     await expect(readPack(somePack.slug, dir)).rejects.toThrow(/carries no golden\/scenario\.json/);
 

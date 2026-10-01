@@ -1097,7 +1097,7 @@ export async function readPack(slug: string, dir = packsDir()): Promise<Pack> {
         path: 'golden/corporate_tax.json',
         message:
           'is missing. A corporate_tax section comes with companies whose tax was worked out by hand: ' +
-          'a profit under the reduced rate, a loss, and a profit outside its conditions',
+          'a profit, a loss, and, where a rate has conditions, a profit outside them',
       });
     }
   }
