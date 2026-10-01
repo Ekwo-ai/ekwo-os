@@ -1,0 +1,1132 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "why": "Cinco sociedades ficticias cuyo impuesto se ha calculado a mano para el ejercicio 2025: una microempresa beneficiaria, un ejercicio con pérdidas, una entidad de reducida dimensión, una sociedad fuera de los tipos reducidos con gastos no deducibles y una entidad de nueva creación.",
+  "fiscal_year": {
+    "name": "Ejercicio 2025",
+    "start": "2025-01-01",
+    "end": "2025-12-31"
+  },
+  "companies": [
+    {
+      "ref": "micro-profit",
+      "name": "Taller Ribera Mecánica, S.L.",
+      "why": "Una microempresa beneficiaria (cifra de negocios anterior de 412.800,00, inferior a 1 millón de euros): 21 % hasta 50.000,00 de base y 22 % por el resto, con la multa y el donativo declarados como gastos no deducibles.",
+      "entries": [
+        {
+          "date": "2025-12-31",
+          "description": "Prestaciones de servicios del ejercicio",
+          "lines": [
+            {
+              "account": "572",
+              "debit": "468350.00"
+            },
+            {
+              "account": "705",
+              "credit": "468350.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Arrendamientos del taller",
+          "lines": [
+            {
+              "account": "621",
+              "debit": "36000.00"
+            },
+            {
+              "account": "572",
+              "credit": "36000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Servicios de profesionales independientes",
+          "lines": [
+            {
+              "account": "623",
+              "debit": "12480.50"
+            },
+            {
+              "account": "572",
+              "credit": "12480.50"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Suministros",
+          "lines": [
+            {
+              "account": "628",
+              "debit": "8914.75"
+            },
+            {
+              "account": "572",
+              "credit": "8914.75"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Sueldos y salarios",
+          "lines": [
+            {
+              "account": "640",
+              "debit": "142300.00"
+            },
+            {
+              "account": "572",
+              "credit": "142300.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Seguridad Social a cargo de la empresa",
+          "lines": [
+            {
+              "account": "642",
+              "debit": "45336.25"
+            },
+            {
+              "account": "572",
+              "credit": "45336.25"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Amortización del inmovilizado material",
+          "lines": [
+            {
+              "account": "681",
+              "debit": "9600.00"
+            },
+            {
+              "account": "572",
+              "credit": "9600.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Multa de tráfico",
+          "lines": [
+            {
+              "account": "659",
+              "debit": "750.00"
+            },
+            {
+              "account": "572",
+              "credit": "750.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Donativo a una asociación",
+          "lines": [
+            {
+              "account": "659",
+              "debit": "1200.00"
+            },
+            {
+              "account": "572",
+              "credit": "1200.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Impuesto sobre beneficios del ejercicio",
+          "lines": [
+            {
+              "account": "6300",
+              "debit": "14000.00"
+            },
+            {
+              "account": "4752",
+              "credit": "14000.00"
+            }
+          ]
+        }
+      ],
+      "parameters": {
+        "turnover_prior_period": "412800.00",
+        "reduced_size": true,
+        "asset_holding_entity": false,
+        "new_entity": false
+      },
+      "adjustments": [
+        {
+          "rule": "fines-penalties",
+          "amount": "750.00"
+        },
+        {
+          "rule": "donations",
+          "amount": "1200.00"
+        }
+      ],
+      "expected": {
+        "computation": [
+          "Resultado antes de impuestos (línea C): 468.350,00 − 36.000,00 − 12.480,50 − 8.914,75 − 142.300,00 − 45.336,25 − 9.600,00 − 750,00 − 1.200,00 = 211.768,50. El gasto por impuesto de 14.000,00 (cuenta 6300) no entra: el cálculo parte de la línea C.",
+          "Multas y sanciones declarados (art. 15.c): 750,00 × 100 % = 750,00.",
+          "Donativos y liberalidades declarados (art. 15.e): 1.200,00 × 100 % = 1.200,00.",
+          "Resultado fiscal: 211.768,50 + 750,00 + 1.200,00 = 213.718,50.",
+          "Sin bases imponibles negativas anteriores, la base imponible es 213.718,50.",
+          "Microempresa, condiciones cumplidas (cifra de negocios anterior inferior a 1.000.000,00, ni entidad patrimonial ni de nueva creación). Primer tramo, hasta 50.000,00: 50.000,00 × 21 % = 10.500,00.",
+          "Tipo del 15 % rechazado: la entidad no es de nueva creación (art. 29.1).",
+          "Resto de la base: 163.718,50 × 22 % = 36.018,07.",
+          "Cuota estimada: 10.500,00 + 36.018,07 = 46.518,07."
+        ],
+        "lines": [
+          {
+            "kind": "accounting_result",
+            "code": "C",
+            "amount": "211768.50"
+          },
+          {
+            "kind": "adjustment",
+            "code": "fines-penalties",
+            "base": "750.00",
+            "rate": "100",
+            "amount": "750.00"
+          },
+          {
+            "kind": "adjustment",
+            "code": "donations",
+            "base": "1200.00",
+            "rate": "100",
+            "amount": "1200.00"
+          },
+          {
+            "kind": "fiscal_result",
+            "amount": "213718.50"
+          },
+          {
+            "kind": "taxable_base",
+            "amount": "213718.50"
+          },
+          {
+            "kind": "rate",
+            "code": "micro-first-slice",
+            "base": "50000.00",
+            "rate": "21",
+            "amount": "10500.00"
+          },
+          {
+            "kind": "rate_not_applied",
+            "code": "new-entity",
+            "note": "not_met: new_entity",
+            "rate": "15"
+          },
+          {
+            "kind": "rate",
+            "code": "micro-remainder",
+            "base": "163718.50",
+            "rate": "22",
+            "amount": "36018.07"
+          },
+          {
+            "kind": "tax_before_credits",
+            "base": "213718.50",
+            "amount": "46518.07"
+          },
+          {
+            "kind": "estimated_tax",
+            "code": "ES-IS",
+            "base": "213718.50",
+            "amount": "46518.07"
+          }
+        ],
+        "tax": "46518.07"
+      }
+    },
+    {
+      "ref": "loss-year",
+      "name": "Librería La Cuesta, S.L.",
+      "why": "Un ejercicio con pérdidas: ni base ni cuota. La base imponible negativa —la pérdida contable más la sanción declarada— es la que un ejercicio posterior podrá compensar.",
+      "entries": [
+        {
+          "date": "2025-12-31",
+          "description": "Ventas del ejercicio",
+          "lines": [
+            {
+              "account": "572",
+              "debit": "96500.00"
+            },
+            {
+              "account": "705",
+              "credit": "96500.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Alquiler del local",
+          "lines": [
+            {
+              "account": "621",
+              "debit": "30000.00"
+            },
+            {
+              "account": "572",
+              "credit": "30000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Gestoría y asesoría",
+          "lines": [
+            {
+              "account": "623",
+              "debit": "6250.00"
+            },
+            {
+              "account": "572",
+              "credit": "6250.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Suministros",
+          "lines": [
+            {
+              "account": "628",
+              "debit": "9480.60"
+            },
+            {
+              "account": "572",
+              "credit": "9480.60"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Sueldos y salarios",
+          "lines": [
+            {
+              "account": "640",
+              "debit": "41000.00"
+            },
+            {
+              "account": "572",
+              "credit": "41000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Seguridad Social a cargo de la empresa",
+          "lines": [
+            {
+              "account": "642",
+              "debit": "13120.00"
+            },
+            {
+              "account": "572",
+              "credit": "13120.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Amortización del inmovilizado material",
+          "lines": [
+            {
+              "account": "681",
+              "debit": "4800.00"
+            },
+            {
+              "account": "572",
+              "credit": "4800.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Recargo por declaración extemporánea",
+          "lines": [
+            {
+              "account": "659",
+              "debit": "380.00"
+            },
+            {
+              "account": "572",
+              "credit": "380.00"
+            }
+          ]
+        }
+      ],
+      "parameters": {
+        "turnover_prior_period": "118000.00",
+        "reduced_size": true,
+        "asset_holding_entity": false,
+        "new_entity": false
+      },
+      "adjustments": [
+        {
+          "rule": "fines-penalties",
+          "amount": "380.00"
+        }
+      ],
+      "expected": {
+        "computation": [
+          "Resultado antes de impuestos (línea C): 96.500,00 − 30.000,00 − 6.250,00 − 9.480,60 − 41.000,00 − 13.120,00 − 4.800,00 − 380,00 = −8.530,60.",
+          "Multas y sanciones declarados (art. 15.c): 380,00 × 100 % = 380,00.",
+          "Resultado fiscal: −8.530,60 + 380,00 = −8.150,60.",
+          "El resultado fiscal es negativo: la base imponible es 0,00 y el ejercicio deja una base imponible negativa de 8.150,60.",
+          "Microempresa, condiciones cumplidas: ninguno de los tramos grava una base nula.",
+          "Tipo del 15 % rechazado: la entidad no es de nueva creación (art. 29.1).",
+          "Cuota estimada: 0,00."
+        ],
+        "lines": [
+          {
+            "kind": "accounting_result",
+            "code": "C",
+            "amount": "-8530.60"
+          },
+          {
+            "kind": "adjustment",
+            "code": "fines-penalties",
+            "base": "380.00",
+            "rate": "100",
+            "amount": "380.00"
+          },
+          {
+            "kind": "fiscal_result",
+            "amount": "-8150.60"
+          },
+          {
+            "kind": "taxable_base",
+            "amount": "0.00"
+          },
+          {
+            "kind": "loss_of_period",
+            "amount": "8150.60"
+          },
+          {
+            "kind": "rate_not_applied",
+            "code": "new-entity",
+            "note": "not_met: new_entity",
+            "rate": "15"
+          },
+          {
+            "kind": "tax_before_credits",
+            "base": "0.00",
+            "amount": "0.00"
+          },
+          {
+            "kind": "estimated_tax",
+            "code": "ES-IS",
+            "base": "0.00",
+            "amount": "0.00"
+          }
+        ],
+        "tax": "0.00"
+      }
+    },
+    {
+      "ref": "reduced-size",
+      "name": "Conservas del Cantábrico, S.A.",
+      "why": "Una entidad de reducida dimensión, con una cifra de negocios anterior de 3.650.000,00 (de 1 a 10 millones de euros): fuera de la escala de las microempresas, tributa al 24 % sobre toda la base en 2025.",
+      "entries": [
+        {
+          "date": "2025-12-31",
+          "description": "Ventas de mercaderías del ejercicio",
+          "lines": [
+            {
+              "account": "572",
+              "debit": "4120000.00"
+            },
+            {
+              "account": "700",
+              "credit": "4120000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Compras de mercaderías",
+          "lines": [
+            {
+              "account": "600",
+              "debit": "2310000.00"
+            },
+            {
+              "account": "572",
+              "credit": "2310000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Arrendamientos y cánones",
+          "lines": [
+            {
+              "account": "621",
+              "debit": "180000.00"
+            },
+            {
+              "account": "572",
+              "credit": "180000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Suministros",
+          "lines": [
+            {
+              "account": "628",
+              "debit": "96450.30"
+            },
+            {
+              "account": "572",
+              "credit": "96450.30"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Sueldos y salarios",
+          "lines": [
+            {
+              "account": "640",
+              "debit": "740000.00"
+            },
+            {
+              "account": "572",
+              "credit": "740000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Seguridad Social a cargo de la empresa",
+          "lines": [
+            {
+              "account": "642",
+              "debit": "238000.00"
+            },
+            {
+              "account": "572",
+              "credit": "238000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Amortización del inmovilizado material",
+          "lines": [
+            {
+              "account": "681",
+              "debit": "64000.00"
+            },
+            {
+              "account": "572",
+              "credit": "64000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Intereses de préstamos bancarios",
+          "lines": [
+            {
+              "account": "6623",
+              "debit": "18250.00"
+            },
+            {
+              "account": "572",
+              "credit": "18250.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Sanción administrativa",
+          "lines": [
+            {
+              "account": "659",
+              "debit": "3100.00"
+            },
+            {
+              "account": "572",
+              "credit": "3100.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Donativo a una fundación",
+          "lines": [
+            {
+              "account": "659",
+              "debit": "8000.00"
+            },
+            {
+              "account": "572",
+              "credit": "8000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Impuesto sobre beneficios del ejercicio",
+          "lines": [
+            {
+              "account": "6300",
+              "debit": "14000.00"
+            },
+            {
+              "account": "4752",
+              "credit": "14000.00"
+            }
+          ]
+        }
+      ],
+      "parameters": {
+        "turnover_prior_period": "3650000.00",
+        "reduced_size": true,
+        "asset_holding_entity": false,
+        "new_entity": false
+      },
+      "adjustments": [
+        {
+          "rule": "fines-penalties",
+          "amount": "3100.00"
+        },
+        {
+          "rule": "donations",
+          "amount": "8000.00"
+        }
+      ],
+      "expected": {
+        "computation": [
+          "Resultado antes de impuestos (línea C): 4.120.000,00 − 2.310.000,00 − 180.000,00 − 96.450,30 − 740.000,00 − 238.000,00 − 64.000,00 − 18.250,00 − 3.100,00 − 8.000,00 = 462.199,70. El gasto por impuesto de 14.000,00 (cuenta 6300) no entra: el cálculo parte de la línea C.",
+          "Multas y sanciones declarados (art. 15.c): 3.100,00 × 100 % = 3.100,00.",
+          "Donativos y liberalidades declarados (art. 15.e): 8.000,00 × 100 % = 8.000,00.",
+          "Resultado fiscal: 462.199,70 + 3.100,00 + 8.000,00 = 473.299,70.",
+          "Sin bases imponibles negativas anteriores, la base imponible es 473.299,70.",
+          "Escala de las microempresas rechazada: la cifra de negocios anterior, 3.650.000,00, no es inferior a 1.000.000,00 (art. 29.1).",
+          "Tipo del 15 % rechazado: la entidad no es de nueva creación (art. 29.1).",
+          "Entidad de reducida dimensión, condiciones cumplidas (art. 101; no es entidad patrimonial), toda la base: 473.299,70 × 24 % = 113.591,93.",
+          "Cuota estimada: 113.591,93 = 113.591,93."
+        ],
+        "lines": [
+          {
+            "kind": "accounting_result",
+            "code": "C",
+            "amount": "462199.70"
+          },
+          {
+            "kind": "adjustment",
+            "code": "fines-penalties",
+            "base": "3100.00",
+            "rate": "100",
+            "amount": "3100.00"
+          },
+          {
+            "kind": "adjustment",
+            "code": "donations",
+            "base": "8000.00",
+            "rate": "100",
+            "amount": "8000.00"
+          },
+          {
+            "kind": "fiscal_result",
+            "amount": "473299.70"
+          },
+          {
+            "kind": "taxable_base",
+            "amount": "473299.70"
+          },
+          {
+            "kind": "rate_not_applied",
+            "code": "micro-first-slice",
+            "note": "not_met: turnover_prior_period",
+            "rate": "21"
+          },
+          {
+            "kind": "rate_not_applied",
+            "code": "new-entity",
+            "note": "not_met: new_entity",
+            "rate": "15"
+          },
+          {
+            "kind": "rate_not_applied",
+            "code": "micro-remainder",
+            "note": "not_met: turnover_prior_period",
+            "rate": "22"
+          },
+          {
+            "kind": "rate",
+            "code": "reduced-size",
+            "base": "473299.70",
+            "rate": "24",
+            "amount": "113591.93"
+          },
+          {
+            "kind": "tax_before_credits",
+            "base": "473299.70",
+            "amount": "113591.93"
+          },
+          {
+            "kind": "estimated_tax",
+            "code": "ES-IS",
+            "base": "473299.70",
+            "amount": "113591.93"
+          }
+        ],
+        "tax": "113591.93"
+      }
+    },
+    {
+      "ref": "outside-reduced",
+      "name": "Grupo Logístico Meseta, S.A.",
+      "why": "Una sociedad que supera los 10 millones de euros de cifra de negocios: ninguno de los tipos reducidos le es aplicable y tributa al 25 %, con tres gastos no deducibles declarados.",
+      "entries": [
+        {
+          "date": "2025-12-31",
+          "description": "Prestaciones de servicios del ejercicio",
+          "lines": [
+            {
+              "account": "572",
+              "debit": "16200000.00"
+            },
+            {
+              "account": "705",
+              "credit": "16200000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Compras de mercaderías",
+          "lines": [
+            {
+              "account": "600",
+              "debit": "7400000.00"
+            },
+            {
+              "account": "572",
+              "credit": "7400000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Servicios de profesionales independientes",
+          "lines": [
+            {
+              "account": "623",
+              "debit": "1250000.00"
+            },
+            {
+              "account": "572",
+              "credit": "1250000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Sueldos y salarios",
+          "lines": [
+            {
+              "account": "640",
+              "debit": "3900000.00"
+            },
+            {
+              "account": "572",
+              "credit": "3900000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Seguridad Social a cargo de la empresa",
+          "lines": [
+            {
+              "account": "642",
+              "debit": "1230000.00"
+            },
+            {
+              "account": "572",
+              "credit": "1230000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Amortización del inmovilizado material",
+          "lines": [
+            {
+              "account": "681",
+              "debit": "410000.00"
+            },
+            {
+              "account": "572",
+              "credit": "410000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Sanciones administrativas",
+          "lines": [
+            {
+              "account": "659",
+              "debit": "7900.00"
+            },
+            {
+              "account": "572",
+              "credit": "7900.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Pérdidas en juegos de azar de la empresa",
+          "lines": [
+            {
+              "account": "659",
+              "debit": "1500.00"
+            },
+            {
+              "account": "572",
+              "credit": "1500.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Donativo a una fundación",
+          "lines": [
+            {
+              "account": "659",
+              "debit": "3000.00"
+            },
+            {
+              "account": "572",
+              "credit": "3000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Impuesto sobre beneficios del ejercicio",
+          "lines": [
+            {
+              "account": "6300",
+              "debit": "14000.00"
+            },
+            {
+              "account": "4752",
+              "credit": "14000.00"
+            }
+          ]
+        }
+      ],
+      "parameters": {
+        "turnover_prior_period": "14800000.00",
+        "reduced_size": false,
+        "asset_holding_entity": false,
+        "new_entity": false
+      },
+      "adjustments": [
+        {
+          "rule": "fines-penalties",
+          "amount": "7900.00"
+        },
+        {
+          "rule": "gambling-losses",
+          "amount": "1500.00"
+        },
+        {
+          "rule": "donations",
+          "amount": "3000.00"
+        }
+      ],
+      "expected": {
+        "computation": [
+          "Resultado antes de impuestos (línea C): 16.200.000,00 − 7.400.000,00 − 1.250.000,00 − 3.900.000,00 − 1.230.000,00 − 410.000,00 − 7.900,00 − 1.500,00 − 3.000,00 = 1.997.600,00. El gasto por impuesto de 14.000,00 (cuenta 6300) no entra: el cálculo parte de la línea C.",
+          "Multas y sanciones declarados (art. 15.c): 7.900,00 × 100 % = 7.900,00.",
+          "Pérdidas del juego declarados (art. 15.d): 1.500,00 × 100 % = 1.500,00.",
+          "Donativos y liberalidades declarados (art. 15.e): 3.000,00 × 100 % = 3.000,00.",
+          "Resultado fiscal: 1.997.600,00 + 7.900,00 + 1.500,00 + 3.000,00 = 2.010.000,00.",
+          "Sin bases imponibles negativas anteriores, la base imponible es 2.010.000,00.",
+          "Escala de las microempresas rechazada: la cifra de negocios anterior, 14.800.000,00, no es inferior a 1.000.000,00 (art. 29.1).",
+          "Tipo del 15 % rechazado: la entidad no es de nueva creación (art. 29.1).",
+          "Tipo de las entidades de reducida dimensión rechazado: la entidad no cumple el art. 101 (cifra de negocios anterior de 10 millones de euros o más).",
+          "Tipo general (art. 29.1), toda la base: 2.010.000,00 × 25 % = 502.500,00.",
+          "Cuota estimada: 502.500,00 = 502.500,00."
+        ],
+        "lines": [
+          {
+            "kind": "accounting_result",
+            "code": "C",
+            "amount": "1997600.00"
+          },
+          {
+            "kind": "adjustment",
+            "code": "fines-penalties",
+            "base": "7900.00",
+            "rate": "100",
+            "amount": "7900.00"
+          },
+          {
+            "kind": "adjustment",
+            "code": "gambling-losses",
+            "base": "1500.00",
+            "rate": "100",
+            "amount": "1500.00"
+          },
+          {
+            "kind": "adjustment",
+            "code": "donations",
+            "base": "3000.00",
+            "rate": "100",
+            "amount": "3000.00"
+          },
+          {
+            "kind": "fiscal_result",
+            "amount": "2010000.00"
+          },
+          {
+            "kind": "taxable_base",
+            "amount": "2010000.00"
+          },
+          {
+            "kind": "rate_not_applied",
+            "code": "micro-first-slice",
+            "note": "not_met: turnover_prior_period",
+            "rate": "21"
+          },
+          {
+            "kind": "rate_not_applied",
+            "code": "new-entity",
+            "note": "not_met: new_entity",
+            "rate": "15"
+          },
+          {
+            "kind": "rate_not_applied",
+            "code": "micro-remainder",
+            "note": "not_met: turnover_prior_period",
+            "rate": "22"
+          },
+          {
+            "kind": "rate_not_applied",
+            "code": "reduced-size",
+            "note": "not_met: reduced_size",
+            "rate": "24"
+          },
+          {
+            "kind": "rate",
+            "code": "standard",
+            "base": "2010000.00",
+            "rate": "25",
+            "amount": "502500.00"
+          },
+          {
+            "kind": "tax_before_credits",
+            "base": "2010000.00",
+            "amount": "502500.00"
+          },
+          {
+            "kind": "estimated_tax",
+            "code": "ES-IS",
+            "base": "2010000.00",
+            "amount": "502500.00"
+          }
+        ],
+        "tax": "502500.00"
+      }
+    },
+    {
+      "ref": "new-entity",
+      "name": "Estudio Aurora Diseño, S.L.",
+      "why": "Una entidad de nueva creación en el primer período con base imponible positiva: tributa al 15 % sobre toda la base, y las escalas de las microempresas se le rechazan.",
+      "entries": [
+        {
+          "date": "2025-12-31",
+          "description": "Prestaciones de servicios del ejercicio",
+          "lines": [
+            {
+              "account": "572",
+              "debit": "85000.00"
+            },
+            {
+              "account": "705",
+              "credit": "85000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Alquiler del estudio",
+          "lines": [
+            {
+              "account": "621",
+              "debit": "12000.00"
+            },
+            {
+              "account": "572",
+              "credit": "12000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Gestoría y asesoría",
+          "lines": [
+            {
+              "account": "623",
+              "debit": "4200.00"
+            },
+            {
+              "account": "572",
+              "credit": "4200.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Suministros",
+          "lines": [
+            {
+              "account": "628",
+              "debit": "3115.40"
+            },
+            {
+              "account": "572",
+              "credit": "3115.40"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Sueldos y salarios",
+          "lines": [
+            {
+              "account": "640",
+              "debit": "21000.00"
+            },
+            {
+              "account": "572",
+              "credit": "21000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Seguridad Social a cargo de la empresa",
+          "lines": [
+            {
+              "account": "642",
+              "debit": "6700.00"
+            },
+            {
+              "account": "572",
+              "credit": "6700.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Amortización del inmovilizado material",
+          "lines": [
+            {
+              "account": "681",
+              "debit": "2500.00"
+            },
+            {
+              "account": "572",
+              "credit": "2500.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Impuesto sobre beneficios del ejercicio",
+          "lines": [
+            {
+              "account": "6300",
+              "debit": "14000.00"
+            },
+            {
+              "account": "4752",
+              "credit": "14000.00"
+            }
+          ]
+        }
+      ],
+      "parameters": {
+        "turnover_prior_period": "0.00",
+        "reduced_size": true,
+        "asset_holding_entity": false,
+        "new_entity": true
+      },
+      "adjustments": [],
+      "expected": {
+        "computation": [
+          "Resultado antes de impuestos (línea C): 85.000,00 − 12.000,00 − 4.200,00 − 3.115,40 − 21.000,00 − 6.700,00 − 2.500,00 = 35.484,60. El gasto por impuesto de 14.000,00 (cuenta 6300) no entra: el cálculo parte de la línea C.",
+          "Sin bases imponibles negativas anteriores, la base imponible es 35.484,60.",
+          "Escala de las microempresas rechazada: la entidad es de nueva creación y tributa al 15 % (art. 29.1).",
+          "Entidad de nueva creación, primer período con base positiva, toda la base: 35.484,60 × 15 % = 5.322,69.",
+          "Cuota estimada: 5.322,69 = 5.322,69."
+        ],
+        "lines": [
+          {
+            "kind": "accounting_result",
+            "code": "C",
+            "amount": "35484.60"
+          },
+          {
+            "kind": "fiscal_result",
+            "amount": "35484.60"
+          },
+          {
+            "kind": "taxable_base",
+            "amount": "35484.60"
+          },
+          {
+            "kind": "rate_not_applied",
+            "code": "micro-first-slice",
+            "note": "not_met: new_entity",
+            "rate": "21"
+          },
+          {
+            "kind": "rate",
+            "code": "new-entity",
+            "base": "35484.60",
+            "rate": "15",
+            "amount": "5322.69"
+          },
+          {
+            "kind": "rate_not_applied",
+            "code": "micro-remainder",
+            "note": "not_met: new_entity",
+            "rate": "22"
+          },
+          {
+            "kind": "tax_before_credits",
+            "base": "35484.60",
+            "amount": "5322.69"
+          },
+          {
+            "kind": "estimated_tax",
+            "code": "ES-IS",
+            "base": "35484.60",
+            "amount": "5322.69"
+          }
+        ],
+        "tax": "5322.69"
+      }
+    }
+  ]
+}

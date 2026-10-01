@@ -20,6 +20,13 @@ information, not the form. Every English label here is a translation for a
 reader and never for a filing; where an English term of art exists (*reverse
 charge*, *equivalence surcharge*, *intra-Community acquisition*) it is used.
 
+## Corporate income tax
+
+`en.json` also carries the labels of `corporate_tax.json`. Each one summarises
+an article of Ley 27/2014 in the pack's own words, so none has statutory
+wording in English: the article is on the rule, and the Spanish text of the law
+is what to read against.
+
 ## Not carried
 
 Catalan, Galician and Basque are co-official in their communities. They are

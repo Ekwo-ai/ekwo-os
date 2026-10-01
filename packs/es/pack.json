@@ -2,10 +2,10 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "ES",
   "name": "España",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "schema_min": "20260929141500",
   "seed_sequence": 19,
-  "released_at": "2026-09-21",
+  "released_at": "2026-10-01",
   "certification": {
     "status": "community",
     "sources": [
@@ -296,6 +296,30 @@
         "url": "https://docs.peppol.eu/poacc/billing/3.0/codelist/eas/",
         "consulted_on": "2026-09-21",
         "kind": "standard"
+      },
+      {
+        "key": "lis",
+        "title": "Ley 27/2014, de 27 de noviembre, del Impuesto sobre Sociedades — texto consolidado (última actualización publicada el 02/09/2026): arts. 15, 26, 29, 30, 40 y 101 y disposición transitoria cuadragésima cuarta",
+        "publisher": "Agencia Estatal Boletín Oficial del Estado",
+        "url": "https://www.boe.es/eli/es/l/2014/11/27/27/con",
+        "consulted_on": "2026-10-01",
+        "kind": "law"
+      },
+      {
+        "key": "aeat-tipos-2025",
+        "title": "Cuestiones a tener en cuenta en la liquidación del Impuesto sobre Sociedades de 2025 — Tipos de gravamen",
+        "publisher": "Agencia Estatal de Administración Tributaria",
+        "url": "https://sede.agenciatributaria.gob.es/Sede/impuesto-sobre-sociedades/campana-sociedades/cuestiones-tener-cuenta-liquidacion-impuesto-2025/tipos-gravamen.html",
+        "consulted_on": "2026-10-01",
+        "kind": "guidance"
+      },
+      {
+        "key": "aeat-manual-tipos-2025",
+        "title": "Manual práctico de Sociedades 2025 — Principales novedades: tipos de gravamen",
+        "publisher": "Agencia Estatal de Administración Tributaria",
+        "url": "https://sede.agenciatributaria.gob.es/Sede/ayuda/manuales-videos-folletos/manuales-practicos/manual-sociedades-2025/principales-novedades-impuesto-sobre-sociedades-2025/tipos-gravamen.html",
+        "consulted_on": "2026-10-01",
+        "kind": "guidance"
       }
     ]
   },

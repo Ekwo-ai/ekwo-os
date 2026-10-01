@@ -1,0 +1,432 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "tax": {
+    "code": "ES-IS",
+    "name": "Impuesto sobre Sociedades",
+    "legal_reference": "Ley 27/2014, de 27 de noviembre, del Impuesto sobre Sociedades",
+    "source": "lis"
+  },
+  "result": {
+    "statement": "ES-PGC-PGA",
+    "line": "C",
+    "legal_reference": "Real Decreto 1514/2007, Plan General de Contabilidad, tercera parte — modelo de cuenta de pérdidas y ganancias abreviada, línea C) «Resultado antes de impuestos»; Ley 27/2014, art. 15.b) — los gastos derivados de la contabilización del Impuesto sobre Sociedades no son deducibles, de modo que el cálculo parte del resultado antes de impuestos y la cuenta 630 no entra",
+    "source": "pgc"
+  },
+  "accounts": {
+    "expense": "6300",
+    "payable": "4752",
+    "receivable": "4709",
+    "legal_reference": "Real Decreto 1514/2007, Plan General de Contabilidad, cuarta parte — cuadro de cuentas: 6300 «Impuesto corriente» (grupo 63, «Impuesto sobre beneficios»), 4752 «Hacienda Pública, acreedora por impuesto sobre sociedades» y 4709 «Hacienda Pública, deudora por devolución de impuestos»",
+    "source": "pgc"
+  },
+  "parameters": [
+    {
+      "code": "turnover_prior_period",
+      "name": "Importe neto de la cifra de negocios del período impositivo inmediato anterior, determinado según el artículo 101, apartados 2 y 3, de la Ley 27/2014 (elevado al año y, en un grupo, el del conjunto)",
+      "type": "amount",
+      "sequence": 10,
+      "legal_reference": "Ley 27/2014, art. 29.1 — escala de las entidades cuyo importe neto de la cifra de negocios del período impositivo inmediato anterior sea inferior a 1 millón de euros, determinado con arreglo al art. 101, apartados 2 y 3",
+      "source": "lis"
+    },
+    {
+      "code": "reduced_size",
+      "name": "La entidad cumple las condiciones del artículo 101 de la Ley 27/2014 (entidad de reducida dimensión: cifra de negocios del período inmediato anterior inferior a 10 millones de euros, con las reglas de grupo, de nueva creación y de permanencia de ese artículo)",
+      "type": "boolean",
+      "sequence": 20,
+      "legal_reference": "Ley 27/2014, art. 101, apartados 1 a 4 — la cifra de 10 millones de euros se refiere al conjunto de un grupo (art. 42 del Código de Comercio) y se mantiene tres períodos más cuando se supera, si se cumplieron las condiciones en el período y en los dos anteriores a ese",
+      "source": "lis"
+    },
+    {
+      "code": "asset_holding_entity",
+      "name": "La entidad es una entidad patrimonial en los términos del artículo 5.2 de la Ley 27/2014",
+      "type": "boolean",
+      "sequence": 30,
+      "legal_reference": "Ley 27/2014, art. 29.1 — los tipos reducidos no se aplican a las entidades patrimoniales (art. 5.2); art. 101.1 — los incentivos del capítulo de las entidades de reducida dimensión tampoco",
+      "source": "lis"
+    },
+    {
+      "code": "new_entity",
+      "name": "La entidad es de nueva creación y realiza actividades económicas, y este es el primer período impositivo en que su base imponible resulta positiva o el siguiente (artículo 29.1 de la Ley 27/2014)",
+      "type": "boolean",
+      "sequence": 40,
+      "legal_reference": "Ley 27/2014, art. 29.1 — 15 por ciento en el primer período impositivo en que la base imponible resulte positiva y en el siguiente; no se entiende iniciada una actividad económica cuando la ejerció antes una persona o entidad vinculada o una persona física con más del 50 por ciento de la entidad, y una entidad de un grupo del art. 42 del Código de Comercio no es de nueva creación",
+      "source": "lis"
+    }
+  ],
+  "adjustment_rules": [
+    {
+      "code": "fines-penalties",
+      "name": "Multas y sanciones penales y administrativas, recargos del período ejecutivo y recargo por declaración extemporánea",
+      "direction": "add_back",
+      "percent": 100,
+      "valid_from": "2025-01-01",
+      "valid_on": "period_start",
+      "sequence": 10,
+      "legal_reference": "Ley 27/2014, art. 15.c) — no tienen la consideración de gastos fiscalmente deducibles las multas y sanciones penales y administrativas, los recargos del período ejecutivo y el recargo por declaración extemporánea sin requerimiento previo. El plan de cuentas no tiene cuenta propia para ellas: la sociedad declara el importe",
+      "source": "lis"
+    },
+    {
+      "code": "gambling-losses",
+      "name": "Pérdidas del juego",
+      "direction": "add_back",
+      "percent": 100,
+      "valid_from": "2025-01-01",
+      "valid_on": "period_start",
+      "sequence": 20,
+      "legal_reference": "Ley 27/2014, art. 15.d) — no tienen la consideración de gastos fiscalmente deducibles las pérdidas del juego",
+      "source": "lis"
+    },
+    {
+      "code": "donations",
+      "name": "Donativos y liberalidades",
+      "direction": "add_back",
+      "percent": 100,
+      "valid_from": "2025-01-01",
+      "valid_on": "period_start",
+      "sequence": 30,
+      "legal_reference": "Ley 27/2014, art. 15.e) — no son gastos fiscalmente deducibles los donativos y liberalidades; la misma letra deja fuera de ellos los gastos por atenciones a clientes o proveedores (deducibles hasta el 1 por ciento del importe neto de la cifra de negocios), los usos y costumbres con el personal, los de promoción de ventas y servicios y los correlacionados con los ingresos. La sociedad declara solo el importe que es donativo o liberalidad",
+      "source": "lis"
+    },
+    {
+      "code": "unlawful-expenses",
+      "name": "Gastos de actuaciones contrarias al ordenamiento jurídico",
+      "direction": "add_back",
+      "percent": 100,
+      "valid_from": "2025-01-01",
+      "valid_on": "period_start",
+      "sequence": 40,
+      "legal_reference": "Ley 27/2014, art. 15.f) — no tienen la consideración de gastos fiscalmente deducibles los gastos de actuaciones contrarias al ordenamiento jurídico",
+      "source": "lis"
+    }
+  ],
+  "rates": [
+    {
+      "code": "new-entity",
+      "name": "Entidades de nueva creación: tipo del 15 %",
+      "rate": 15,
+      "conditions": [
+        {
+          "parameter": "new_entity",
+          "test": "is_true"
+        },
+        {
+          "parameter": "asset_holding_entity",
+          "test": "is_false"
+        }
+      ],
+      "valid_from": "2025-01-01",
+      "valid_on": "period_start",
+      "sequence": 10,
+      "legal_reference": "Ley 27/2014, art. 29.1 — las entidades de nueva creación que realicen actividades económicas tributan al 15 por ciento en el primer período impositivo en que la base imponible resulte positiva y en el siguiente, salvo que deban tributar a un tipo inferior; no se entiende iniciada una actividad económica cuando fue realizada antes por personas o entidades vinculadas o por una persona física que posea más del 50 por ciento de la entidad, y las entidades que forman parte de un grupo del art. 42 del Código de Comercio no son de nueva creación; el tipo no se aplica a las entidades patrimoniales (art. 5.2). AEAT, Tipos de gravamen 2025: 15 %",
+      "source": "lis"
+    },
+    {
+      "code": "micro-first-slice",
+      "name": "Microempresas: tipo sobre la parte de la base hasta 50.000 euros",
+      "rate": 21,
+      "up_to": 50000,
+      "up_to_prorata": "months",
+      "conditions": [
+        {
+          "parameter": "turnover_prior_period",
+          "test": "below",
+          "amount": 1000000
+        },
+        {
+          "parameter": "asset_holding_entity",
+          "test": "is_false"
+        },
+        {
+          "parameter": "new_entity",
+          "test": "is_false"
+        }
+      ],
+      "valid_from": "2025-01-01",
+      "valid_to": "2025-12-31",
+      "valid_on": "period_start",
+      "sequence": 10,
+      "legal_reference": "Ley 27/2014, disposición transitoria cuadragésima cuarta, apartado 1.a) — períodos impositivos que se inicien dentro del año 2025: 21 por ciento hasta 50.000 euros de base imponible y 22 por ciento por el resto — importe neto de la cifra de negocios del período impositivo inmediato anterior inferior a 1 millón de euros, determinado según el art. 101, apartados 2 y 3; cuando el período sea inferior al año, el tramo es 50.000 euros por la proporción de días entre 365 (el pack lo reparte por meses); no se aplica a las entidades patrimoniales ni a las de nueva creación, que tributan al 15 por ciento",
+      "source": "lis"
+    },
+    {
+      "code": "micro-first-slice",
+      "name": "Microempresas: tipo sobre la parte de la base hasta 50.000 euros",
+      "rate": 19,
+      "up_to": 50000,
+      "up_to_prorata": "months",
+      "conditions": [
+        {
+          "parameter": "turnover_prior_period",
+          "test": "below",
+          "amount": 1000000
+        },
+        {
+          "parameter": "asset_holding_entity",
+          "test": "is_false"
+        },
+        {
+          "parameter": "new_entity",
+          "test": "is_false"
+        }
+      ],
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-12-31",
+      "valid_on": "period_start",
+      "sequence": 10,
+      "legal_reference": "Ley 27/2014, disposición transitoria cuadragésima cuarta, apartado 2.a) — períodos impositivos que se inicien dentro del año 2026: 19 por ciento hasta 50.000 euros de base imponible y 21 por ciento por el resto — importe neto de la cifra de negocios del período impositivo inmediato anterior inferior a 1 millón de euros, determinado según el art. 101, apartados 2 y 3; cuando el período sea inferior al año, el tramo es 50.000 euros por la proporción de días entre 365 (el pack lo reparte por meses); no se aplica a las entidades patrimoniales ni a las de nueva creación, que tributan al 15 por ciento",
+      "source": "lis"
+    },
+    {
+      "code": "micro-first-slice",
+      "name": "Microempresas: tipo sobre la parte de la base hasta 50.000 euros",
+      "rate": 17,
+      "up_to": 50000,
+      "up_to_prorata": "months",
+      "conditions": [
+        {
+          "parameter": "turnover_prior_period",
+          "test": "below",
+          "amount": 1000000
+        },
+        {
+          "parameter": "asset_holding_entity",
+          "test": "is_false"
+        },
+        {
+          "parameter": "new_entity",
+          "test": "is_false"
+        }
+      ],
+      "valid_from": "2027-01-01",
+      "valid_on": "period_start",
+      "sequence": 10,
+      "legal_reference": "Ley 27/2014, art. 29.1, letras a) y b) — escala de las entidades con cifra de negocios inferior a 1 millón de euros: 17 por ciento hasta 50.000 euros y 20 por ciento por el resto; la disposición transitoria cuadragésima cuarta no prevé escala propia para los períodos que se inicien desde 2027, y el manual de la AEAT (Sociedades 2025, tipos de gravamen) da 17 y 20 por ciento para 2027 y 2028 — importe neto de la cifra de negocios del período impositivo inmediato anterior inferior a 1 millón de euros, determinado según el art. 101, apartados 2 y 3; cuando el período sea inferior al año, el tramo es 50.000 euros por la proporción de días entre 365 (el pack lo reparte por meses); no se aplica a las entidades patrimoniales ni a las de nueva creación, que tributan al 15 por ciento",
+      "source": "lis"
+    },
+    {
+      "code": "micro-remainder",
+      "name": "Microempresas: tipo sobre la parte de la base que excede de 50.000 euros",
+      "rate": 22,
+      "conditions": [
+        {
+          "parameter": "turnover_prior_period",
+          "test": "below",
+          "amount": 1000000
+        },
+        {
+          "parameter": "asset_holding_entity",
+          "test": "is_false"
+        },
+        {
+          "parameter": "new_entity",
+          "test": "is_false"
+        }
+      ],
+      "valid_from": "2025-01-01",
+      "valid_to": "2025-12-31",
+      "valid_on": "period_start",
+      "sequence": 20,
+      "legal_reference": "Ley 27/2014, disposición transitoria cuadragésima cuarta, apartado 1.a) — períodos impositivos que se inicien dentro del año 2025: 21 por ciento hasta 50.000 euros de base imponible y 22 por ciento por el resto — importe neto de la cifra de negocios del período impositivo inmediato anterior inferior a 1 millón de euros, determinado según el art. 101, apartados 2 y 3; cuando el período sea inferior al año, el tramo es 50.000 euros por la proporción de días entre 365 (el pack lo reparte por meses); no se aplica a las entidades patrimoniales ni a las de nueva creación, que tributan al 15 por ciento",
+      "source": "lis"
+    },
+    {
+      "code": "micro-remainder",
+      "name": "Microempresas: tipo sobre la parte de la base que excede de 50.000 euros",
+      "rate": 21,
+      "conditions": [
+        {
+          "parameter": "turnover_prior_period",
+          "test": "below",
+          "amount": 1000000
+        },
+        {
+          "parameter": "asset_holding_entity",
+          "test": "is_false"
+        },
+        {
+          "parameter": "new_entity",
+          "test": "is_false"
+        }
+      ],
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-12-31",
+      "valid_on": "period_start",
+      "sequence": 20,
+      "legal_reference": "Ley 27/2014, disposición transitoria cuadragésima cuarta, apartado 2.a) — períodos impositivos que se inicien dentro del año 2026: 19 por ciento hasta 50.000 euros de base imponible y 21 por ciento por el resto — importe neto de la cifra de negocios del período impositivo inmediato anterior inferior a 1 millón de euros, determinado según el art. 101, apartados 2 y 3; cuando el período sea inferior al año, el tramo es 50.000 euros por la proporción de días entre 365 (el pack lo reparte por meses); no se aplica a las entidades patrimoniales ni a las de nueva creación, que tributan al 15 por ciento",
+      "source": "lis"
+    },
+    {
+      "code": "micro-remainder",
+      "name": "Microempresas: tipo sobre la parte de la base que excede de 50.000 euros",
+      "rate": 20,
+      "conditions": [
+        {
+          "parameter": "turnover_prior_period",
+          "test": "below",
+          "amount": 1000000
+        },
+        {
+          "parameter": "asset_holding_entity",
+          "test": "is_false"
+        },
+        {
+          "parameter": "new_entity",
+          "test": "is_false"
+        }
+      ],
+      "valid_from": "2027-01-01",
+      "valid_on": "period_start",
+      "sequence": 20,
+      "legal_reference": "Ley 27/2014, art. 29.1, letras a) y b) — escala de las entidades con cifra de negocios inferior a 1 millón de euros: 17 por ciento hasta 50.000 euros y 20 por ciento por el resto; la disposición transitoria cuadragésima cuarta no prevé escala propia para los períodos que se inicien desde 2027, y el manual de la AEAT (Sociedades 2025, tipos de gravamen) da 17 y 20 por ciento para 2027 y 2028 — importe neto de la cifra de negocios del período impositivo inmediato anterior inferior a 1 millón de euros, determinado según el art. 101, apartados 2 y 3; cuando el período sea inferior al año, el tramo es 50.000 euros por la proporción de días entre 365 (el pack lo reparte por meses); no se aplica a las entidades patrimoniales ni a las de nueva creación, que tributan al 15 por ciento",
+      "source": "lis"
+    },
+    {
+      "code": "reduced-size",
+      "name": "Entidades de reducida dimensión: tipo sobre toda la base",
+      "rate": 24,
+      "conditions": [
+        {
+          "parameter": "reduced_size",
+          "test": "is_true"
+        },
+        {
+          "parameter": "asset_holding_entity",
+          "test": "is_false"
+        }
+      ],
+      "valid_from": "2025-01-01",
+      "valid_to": "2025-12-31",
+      "valid_on": "period_start",
+      "sequence": 30,
+      "legal_reference": "Ley 27/2014, disposición transitoria cuadragésima cuarta, apartado 1.b) — períodos impositivos que se inicien dentro del año 2025: 24 por ciento — entidades que cumplen el art. 101 (importe neto de la cifra de negocios del período impositivo inmediato anterior inferior a 10 millones de euros, con las reglas de grupo, nueva creación y permanencia de los apartados 2 a 4 del mismo artículo); el art. 101.1 excluye a las entidades patrimoniales (art. 5.2) y el manual de la AEAT (Sociedades 2025) las mantiene al 25 por ciento",
+      "source": "lis"
+    },
+    {
+      "code": "reduced-size",
+      "name": "Entidades de reducida dimensión: tipo sobre toda la base",
+      "rate": 23,
+      "conditions": [
+        {
+          "parameter": "reduced_size",
+          "test": "is_true"
+        },
+        {
+          "parameter": "asset_holding_entity",
+          "test": "is_false"
+        }
+      ],
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-12-31",
+      "valid_on": "period_start",
+      "sequence": 30,
+      "legal_reference": "Ley 27/2014, disposición transitoria cuadragésima cuarta, apartado 2.b) — períodos impositivos que se inicien dentro del año 2026: 23 por ciento — entidades que cumplen el art. 101 (importe neto de la cifra de negocios del período impositivo inmediato anterior inferior a 10 millones de euros, con las reglas de grupo, nueva creación y permanencia de los apartados 2 a 4 del mismo artículo); el art. 101.1 excluye a las entidades patrimoniales (art. 5.2) y el manual de la AEAT (Sociedades 2025) las mantiene al 25 por ciento",
+      "source": "lis"
+    },
+    {
+      "code": "reduced-size",
+      "name": "Entidades de reducida dimensión: tipo sobre toda la base",
+      "rate": 22,
+      "conditions": [
+        {
+          "parameter": "reduced_size",
+          "test": "is_true"
+        },
+        {
+          "parameter": "asset_holding_entity",
+          "test": "is_false"
+        }
+      ],
+      "valid_from": "2027-01-01",
+      "valid_to": "2027-12-31",
+      "valid_on": "period_start",
+      "sequence": 30,
+      "legal_reference": "Ley 27/2014, disposición transitoria cuadragésima cuarta, apartado 3 — períodos impositivos que se inicien dentro del año 2027: 22 por ciento — entidades que cumplen el art. 101 (importe neto de la cifra de negocios del período impositivo inmediato anterior inferior a 10 millones de euros, con las reglas de grupo, nueva creación y permanencia de los apartados 2 a 4 del mismo artículo); el art. 101.1 excluye a las entidades patrimoniales (art. 5.2) y el manual de la AEAT (Sociedades 2025) las mantiene al 25 por ciento",
+      "source": "lis"
+    },
+    {
+      "code": "reduced-size",
+      "name": "Entidades de reducida dimensión: tipo sobre toda la base",
+      "rate": 21,
+      "conditions": [
+        {
+          "parameter": "reduced_size",
+          "test": "is_true"
+        },
+        {
+          "parameter": "asset_holding_entity",
+          "test": "is_false"
+        }
+      ],
+      "valid_from": "2028-01-01",
+      "valid_to": "2028-12-31",
+      "valid_on": "period_start",
+      "sequence": 30,
+      "legal_reference": "Ley 27/2014, disposición transitoria cuadragésima cuarta, apartado 4 — períodos impositivos que se inicien dentro del año 2028: 21 por ciento — entidades que cumplen el art. 101 (importe neto de la cifra de negocios del período impositivo inmediato anterior inferior a 10 millones de euros, con las reglas de grupo, nueva creación y permanencia de los apartados 2 a 4 del mismo artículo); el art. 101.1 excluye a las entidades patrimoniales (art. 5.2) y el manual de la AEAT (Sociedades 2025) las mantiene al 25 por ciento",
+      "source": "lis"
+    },
+    {
+      "code": "reduced-size",
+      "name": "Entidades de reducida dimensión: tipo sobre toda la base",
+      "rate": 20,
+      "conditions": [
+        {
+          "parameter": "reduced_size",
+          "test": "is_true"
+        },
+        {
+          "parameter": "asset_holding_entity",
+          "test": "is_false"
+        }
+      ],
+      "valid_from": "2029-01-01",
+      "valid_on": "period_start",
+      "sequence": 30,
+      "legal_reference": "Ley 27/2014, art. 29.1 — las entidades que cumplan las previsiones del art. 101 tributan al 20 por ciento; la disposición transitoria cuadragésima cuarta no prevé tipo propio para los períodos que se inicien desde 2029 — entidades que cumplen el art. 101 (importe neto de la cifra de negocios del período impositivo inmediato anterior inferior a 10 millones de euros, con las reglas de grupo, nueva creación y permanencia de los apartados 2 a 4 del mismo artículo); el art. 101.1 excluye a las entidades patrimoniales (art. 5.2) y el manual de la AEAT (Sociedades 2025) las mantiene al 25 por ciento",
+      "source": "lis"
+    },
+    {
+      "code": "standard",
+      "name": "Tipo general",
+      "rate": 25,
+      "valid_from": "2025-01-01",
+      "valid_on": "period_start",
+      "sequence": 40,
+      "legal_reference": "Ley 27/2014, art. 29.1 — el tipo general de gravamen de los contribuyentes del Impuesto es el 25 por ciento, salvo que deban tributar a un tipo diferente; AEAT, Tipos de gravamen 2025: 25 %",
+      "source": "lis"
+    }
+  ],
+  "loss_carryforward": [],
+  "prepayments": [
+    {
+      "method": "share_of_reference_tax",
+      "month_basis": "calendar",
+      "instalments": [
+        {
+          "sequence": 1,
+          "month": 4,
+          "day": 20,
+          "share_percent": 18
+        },
+        {
+          "sequence": 2,
+          "month": 10,
+          "day": 20,
+          "share_percent": 18
+        },
+        {
+          "sequence": 3,
+          "month": 12,
+          "day": 20,
+          "share_percent": 18
+        }
+      ],
+      "surcharge_percent": null,
+      "exempt_up_to": null,
+      "valid_from": "2025-01-01",
+      "valid_on": "period_start",
+      "legal_reference": "Ley 27/2014, art. 40.1 y 40.2 — pago fraccionado en los primeros 20 días naturales de abril, octubre y diciembre, a cuenta del período impositivo en curso el día 1 de cada uno de esos meses; su base es la cuota íntegra del último período cuyo plazo de declaración estuviese vencido, minorada en las deducciones y bonificaciones y en las retenciones e ingresos a cuenta de aquel, y la cuantía es el 18 por ciento de esa base; no lo efectúan las entidades del art. 29, apartados 4 y 5. La modalidad del art. 40.3 y el art. 40.4 (porcentajes modificables por la Ley de Presupuestos) no se calculan",
+      "source": "lis"
+    }
+  ],
+  "credits": []
+}

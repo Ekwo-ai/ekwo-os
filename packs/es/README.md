@@ -16,10 +16,11 @@ proves the pack is coherent and proves nothing about whether it is right.
 ## Sources
 
 Every rate, box, mention and statement line carries its own `legal_reference`
-and the key of the text it is in. The register in `pack.json` holds 36 texts,
-every one opened on 21 September 2026: the consolidated texts on the BOE (by
-ELI where the BOE gives one), the forms and instructions on the Sede
-electrónica of the Agencia Tributaria, and the ICAC pages.
+and the key of the text it is in. The register in `pack.json` holds 39 texts,
+36 opened on 21 September 2026 and the three of the corporate income tax
+section on 1 October 2026: the consolidated texts on the BOE (by ELI where the
+BOE gives one), the forms and instructions on the Sede electrónica of the
+Agencia Tributaria, and the ICAC pages.
 
 The BOE answers `200` for a page that does not exist and says so only in the
 title (`Error 404`), so a link checker that reads status codes alone will call
@@ -180,3 +181,47 @@ party and the VAT number.
    and not a requirement of the regulation.
 6. **The 0 % row** (150/152): the 2026 instructions keep it; which supplies
    are at 0 % in 2026, if any, was not established.
+
+## Corporate income tax: what `corporate_tax.json` leaves out
+
+The section carries what was read on an official page on 1 October 2026 — the
+consolidated text of Ley 27/2014 on the BOE (last update published on
+2 September 2026) and two pages of the Agencia Tributaria — and nothing else.
+It starts from line C of the profit and loss account, *Resultado antes de
+impuestos*, so the tax charge (account 630) never enters; it is booked on 6300,
+with 4752 for the debt and 4709 for a refund. Rates are those of tax periods
+opened from 1 January 2025: 25 %, 15 % for new entities, 24 % for
+reduced-size entities and the 21 % / 22 % scale for micro-enterprises, each
+dated up to the final rates of the law. What the company states — turnover of
+the previous period, reduced size, asset-holding entity, new entity — is its own
+word and nothing checks it against the books.
+
+| Not carried | Why |
+|---|---|
+| Set-off of negative tax bases (art. 26) | The limit is the larger of 70 % of the base and 1 000 000 €. `loss_carryforward` says a floor plus a share of the profit above it, which is a different figure (1 000 000 + 70 % of the excess), and no approximation was made. The list is empty: a company that carries a loss is refused by name. The exemption of new entities for their first three profitable periods, the cut-off at extinction and the restrictions on acquired companies (art. 26.3 and 26.4) are not carried either. |
+| Minimum net tax (art. 30.1) | A floor of 15 % (10 %, 18 % or a reduced percentage in some cases) of the base for entities of 20 million € of turnover or more and for tax groups. The section has no minimum. |
+| The Complementary Tax (Ley 7/2024) | A tax on top of the tax, outside the vocabulary of the section. |
+| Reserva de capitalización (art. 25) and reserva de nivelación (art. 105) | Reductions of the base that depend on the company's own reserves and on a five-year commitment; not carried. |
+| Entertainment of clients and suppliers (art. 15.e) | Deductible up to 1 % of net turnover: a ceiling on the year's turnover, which a rule of the section cannot say. |
+| The other lines of art. 15 (retribution of equity, tax-haven services, intra-group debt for acquisitions, severance above the limit, impairment of holdings, interest limit of art. 16) | Each depends on facts or ceilings not in a flat rule, or was not read in full. |
+| Exemption of dividends and of gains on holdings (art. 21) | Read only in part; not carried. |
+| Depreciation tables, impairment, free depreciation and tax credits (art. 12, 13, 102, 35 onwards) | Not read. `credits` is empty. |
+| The proration of the first slice of the micro-enterprise scale | The law shares 50 000 € by days over 365; the section can only share by months, so a short period is estimated within a fraction of a percent of that figure. A full year is exact. |
+| Cooperatives, non-profit entities (10 %), investment funds (1 %), credit institutions and hydrocarbon companies (30 %), and groups of tax consolidation | Other rates of art. 29 and special regimes; the pack does not carry them. |
+| Rates of periods opened before 2025 | Not read. A year before 2025 is refused with `no_rate_in_force`. |
+
+The instalments are the three of art. 40.1 and 40.2 at 18 % of the reference
+tax: the first twenty days of April, October and December. The reference tax
+is the gross tax of the last period whose filing deadline had passed, less
+deductions, allowances and withholdings, and the instalments are declared with
+no reader yet. The method of art. 40.3 (on the base of the first 3, 9 or 11
+months, compulsory above 6 million € of turnover) and the percentage the
+budget act may change (art. 40.4) are not carried.
+
+Four things for a Spanish tax adviser to read: the reading that the
+micro-enterprise scale of 2027 and later and the 20 % rate of reduced-size
+entities from 2029 are the text of art. 29.1 itself, because the transitional
+provision stops there; the exclusion of asset-holding entities from the 24 %
+rate (art. 101.1 and the manual of the Agencia Tributaria); the rate of a new
+entity that is also a micro-enterprise; and the days against months
+proration above.

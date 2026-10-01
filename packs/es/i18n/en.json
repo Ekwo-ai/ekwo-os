@@ -415,5 +415,21 @@
     "export": "Exempt export — article 21 of the Spanish VAT Act (Ley 37/1992).",
     "exempt": "Exempt supply — article 20 of the Spanish VAT Act (Ley 37/1992).",
     "cash_basis": "Special cash accounting scheme"
+  },
+  "corporate_tax": {
+    "tax": "Corporate income tax",
+    "parameter:turnover_prior_period": "Net turnover of the immediately preceding tax period, determined under article 101, paragraphs 2 and 3, of Law 27/2014 (restated to a year and, in a group, that of the whole group)",
+    "parameter:reduced_size": "The entity meets the conditions of article 101 of Law 27/2014 (reduced-size entity: turnover of the preceding period under 10 million euros, with that article's rules on groups, new entities and the three further periods)",
+    "parameter:asset_holding_entity": "The entity is an asset-holding entity within the meaning of article 5.2 of Law 27/2014",
+    "parameter:new_entity": "The entity is newly created and carries on an economic activity, and this is the first tax period in which its taxable base is positive, or the next one (article 29.1 of Law 27/2014)",
+    "rule:fines-penalties": "Criminal and administrative fines and penalties, enforcement surcharges and the surcharge for late filing",
+    "rule:gambling-losses": "Gambling losses",
+    "rule:donations": "Donations and acts of generosity",
+    "rule:unlawful-expenses": "Expenses of acts contrary to the legal order",
+    "rate:new-entity": "Newly created entities: 15 % rate",
+    "rate:micro-first-slice": "Micro-enterprises: rate on the part of the base up to 50,000 euros",
+    "rate:micro-remainder": "Micro-enterprises: rate on the part of the base above 50,000 euros",
+    "rate:reduced-size": "Reduced-size entities: rate on the whole base",
+    "rate:standard": "Standard rate"
   }
 }
