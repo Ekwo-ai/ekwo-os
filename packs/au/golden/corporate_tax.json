@@ -1,0 +1,490 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "why": "Three fictitious companies whose tax was worked out by hand for the income year ended 30 June 2025: a profitable base rate entity, a year that ends in a loss, and a company above the turnover limit of the 25 % rate that sets off earlier tax losses.",
+  "fiscal_year": {
+    "name": "Income year 2024-25",
+    "start": "2024-07-01",
+    "end": "2025-06-30"
+  },
+  "companies": [
+    {
+      "ref": "base-rate-profit",
+      "name": "Banksia Joinery Pty Ltd",
+      "why": "A small profitable company that is a base rate entity: its turnover is far below $50 million and it has little passive income, so 25 % applies to the whole base. The income tax expense it booked is not part of the starting line; the entertainment and the penalty are stated.",
+      "entries": [
+        {
+          "date": "2025-06-30",
+          "description": "Sales of the year",
+          "lines": [
+            {
+              "account": "1010",
+              "debit": "412350.00"
+            },
+            {
+              "account": "4000",
+              "credit": "412350.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-06-30",
+          "description": "Materials and subcontract purchases",
+          "lines": [
+            {
+              "account": "5000",
+              "debit": "128400.00"
+            },
+            {
+              "account": "1010",
+              "credit": "128400.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-06-30",
+          "description": "Wages and superannuation",
+          "lines": [
+            {
+              "account": "6000",
+              "debit": "96500.00"
+            },
+            {
+              "account": "6020",
+              "debit": "11097.50"
+            },
+            {
+              "account": "1010",
+              "credit": "107597.50"
+            }
+          ]
+        },
+        {
+          "date": "2025-06-30",
+          "description": "Rent, entertainment and sundry",
+          "lines": [
+            {
+              "account": "6300",
+              "debit": "36000.00"
+            },
+            {
+              "account": "6390",
+              "debit": "3280.40"
+            },
+            {
+              "account": "6490",
+              "debit": "660.00"
+            },
+            {
+              "account": "1010",
+              "credit": "39940.40"
+            }
+          ]
+        },
+        {
+          "date": "2025-06-30",
+          "description": "Depreciation",
+          "lines": [
+            {
+              "account": "6210",
+              "debit": "8400.00"
+            },
+            {
+              "account": "1010",
+              "credit": "8400.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-06-30",
+          "description": "Income tax expense booked for the year",
+          "lines": [
+            {
+              "account": "8000",
+              "debit": "32000.00"
+            },
+            {
+              "account": "2300",
+              "credit": "32000.00"
+            }
+          ]
+        }
+      ],
+      "parameters": {
+        "aggregated_turnover": "412350.00",
+        "passive_income_percent": "3.50"
+      },
+      "adjustments": [
+        {
+          "rule": "entertainment",
+          "amount": "3280.40"
+        },
+        {
+          "rule": "penalties",
+          "amount": "660.00"
+        }
+      ],
+      "expected": {
+        "computation": [
+          "Profit before income tax (line 8): 412 350,00 − 128 400,00 − 96 500,00 − 11 097,50 − 36 000,00 − 3 280,40 − 660,00 − 8 400,00 = 128 012,10. The 32 000,00 of income tax expense on account 8000 is line 9 and is not in it.",
+          "Entertainment, stated: 3 280,40 × 100 % = 3 280,40 (s. 32-5).",
+          "Penalty, stated: 660,00 × 100 % = 660,00 (s. 26-5).",
+          "Taxable income: 128 012,10 + 3 280,40 + 660,00 = 131 952,50. No loss of an earlier year: the base is 131 952,50.",
+          "Base rate entity, conditions met (aggregated turnover 412 350,00 < 50 000 000; passive income 3,5 % ≤ 80 %): 131 952,50 × 25 % = 32 988,125, that is 32 988,13 rounded half up.",
+          "Estimated tax: 32 988,13."
+        ],
+        "lines": [
+          {
+            "kind": "accounting_result",
+            "code": "8",
+            "amount": "128012.10"
+          },
+          {
+            "kind": "adjustment",
+            "code": "entertainment",
+            "base": "3280.40",
+            "rate": "100",
+            "amount": "3280.40"
+          },
+          {
+            "kind": "adjustment",
+            "code": "penalties",
+            "base": "660.00",
+            "rate": "100",
+            "amount": "660.00"
+          },
+          {
+            "kind": "fiscal_result",
+            "amount": "131952.50"
+          },
+          {
+            "kind": "taxable_base",
+            "amount": "131952.50"
+          },
+          {
+            "kind": "rate",
+            "code": "base-rate-entity",
+            "base": "131952.50",
+            "rate": "25",
+            "amount": "32988.13"
+          },
+          {
+            "kind": "tax_before_credits",
+            "base": "131952.50",
+            "amount": "32988.13"
+          },
+          {
+            "kind": "estimated_tax",
+            "code": "AU-CIT",
+            "base": "131952.50",
+            "amount": "32988.13"
+          }
+        ],
+        "tax": "32988.13"
+      }
+    },
+    {
+      "ref": "loss-year",
+      "name": "Wattle Studio Pty Ltd",
+      "why": "A year that ends in a loss: no base, no tax, and the tax loss — the accounting loss reduced by the entertainment add-back — is the stock a later year draws on.",
+      "entries": [
+        {
+          "date": "2025-06-30",
+          "description": "Fees of the year",
+          "lines": [
+            {
+              "account": "1010",
+              "debit": "74200.00"
+            },
+            {
+              "account": "4000",
+              "credit": "74200.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-06-30",
+          "description": "Wages",
+          "lines": [
+            {
+              "account": "6000",
+              "debit": "52000.00"
+            },
+            {
+              "account": "1010",
+              "credit": "52000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-06-30",
+          "description": "Rent, software and entertainment",
+          "lines": [
+            {
+              "account": "6300",
+              "debit": "30000.00"
+            },
+            {
+              "account": "6350",
+              "debit": "4560.30"
+            },
+            {
+              "account": "6390",
+              "debit": "1250.00"
+            },
+            {
+              "account": "6490",
+              "debit": "990.00"
+            },
+            {
+              "account": "1010",
+              "credit": "36800.30"
+            }
+          ]
+        }
+      ],
+      "parameters": {
+        "aggregated_turnover": "74200.00",
+        "passive_income_percent": "0.00"
+      },
+      "adjustments": [
+        {
+          "rule": "entertainment",
+          "amount": "1250.00"
+        }
+      ],
+      "expected": {
+        "computation": [
+          "Loss before income tax (line 8): 74 200,00 − 52 000,00 − 30 000,00 − 4 560,30 − 1 250,00 − 990,00 = −14 600,30.",
+          "Entertainment, stated: 1 250,00 × 100 % = 1 250,00 (s. 32-5).",
+          "Taxable income: −14 600,30 + 1 250,00 = −13 350,30. The base is zero and the tax loss of the year is 13 350,30.",
+          "Estimated tax: 0,00."
+        ],
+        "lines": [
+          {
+            "kind": "accounting_result",
+            "code": "8",
+            "amount": "-14600.30"
+          },
+          {
+            "kind": "adjustment",
+            "code": "entertainment",
+            "base": "1250.00",
+            "rate": "100",
+            "amount": "1250.00"
+          },
+          {
+            "kind": "fiscal_result",
+            "amount": "-13350.30"
+          },
+          {
+            "kind": "taxable_base",
+            "amount": "0.00"
+          },
+          {
+            "kind": "loss_of_period",
+            "amount": "13350.30"
+          },
+          {
+            "kind": "tax_before_credits",
+            "base": "0.00",
+            "amount": "0.00"
+          },
+          {
+            "kind": "estimated_tax",
+            "code": "AU-CIT",
+            "base": "0.00",
+            "amount": "0.00"
+          }
+        ],
+        "tax": "0.00"
+      }
+    },
+    {
+      "ref": "outside-base-rate-entity",
+      "name": "Kestrel Freight Holdings Pty Ltd",
+      "why": "A company whose group aggregated turnover is above $50 million: it is not a base rate entity and is taxed at 30 %. It adds back entertainment and a penalty and sets off two earlier tax losses, oldest first, in full: the law sets no limit.",
+      "entries": [
+        {
+          "date": "2025-06-30",
+          "description": "Freight revenue of the year",
+          "lines": [
+            {
+              "account": "1010",
+              "debit": "9200000.00"
+            },
+            {
+              "account": "4000",
+              "credit": "9200000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-06-30",
+          "description": "Subcontract freight",
+          "lines": [
+            {
+              "account": "5000",
+              "debit": "4100000.00"
+            },
+            {
+              "account": "1010",
+              "credit": "4100000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-06-30",
+          "description": "Wages",
+          "lines": [
+            {
+              "account": "6000",
+              "debit": "2350000.00"
+            },
+            {
+              "account": "1010",
+              "credit": "2350000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-06-30",
+          "description": "Rent, entertainment and sundry",
+          "lines": [
+            {
+              "account": "6300",
+              "debit": "840000.00"
+            },
+            {
+              "account": "6390",
+              "debit": "64250.00"
+            },
+            {
+              "account": "6490",
+              "debit": "18000.00"
+            },
+            {
+              "account": "1010",
+              "credit": "922250.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-06-30",
+          "description": "Depreciation",
+          "lines": [
+            {
+              "account": "6210",
+              "debit": "310000.00"
+            },
+            {
+              "account": "1010",
+              "credit": "310000.00"
+            }
+          ]
+        }
+      ],
+      "parameters": {
+        "aggregated_turnover": "61500000.00",
+        "passive_income_percent": "4.00"
+      },
+      "adjustments": [
+        {
+          "rule": "entertainment",
+          "amount": "64250.00"
+        },
+        {
+          "rule": "penalties",
+          "amount": "18000.00"
+        }
+      ],
+      "losses": [
+        {
+          "origin_period_end": "2023-06-30",
+          "amount": "700000.00"
+        },
+        {
+          "origin_period_end": "2024-06-30",
+          "amount": "450000.00"
+        }
+      ],
+      "expected": {
+        "computation": [
+          "Profit before income tax (line 8): 9 200 000,00 − 4 100 000,00 − 2 350 000,00 − 840 000,00 − 64 250,00 − 18 000,00 − 310 000,00 = 1 517 750,00.",
+          "Entertainment, stated: 64 250,00 × 100 % = 64 250,00 (s. 32-5). Penalty, stated: 18 000,00 × 100 % = 18 000,00 (s. 26-5).",
+          "Taxable income before losses: 1 517 750,00 + 64 250,00 + 18 000,00 = 1 600 000,00.",
+          "Tax losses carried in: 700 000,00 (income year ended 30 June 2023) then 450 000,00 (30 June 2024), 1 150 000,00 in all. Both are set off in full, oldest first, as s. 36-17 sets no limit.",
+          "Taxable base: 1 600 000,00 − 700 000,00 − 450 000,00 = 450 000,00.",
+          "Base rate entity refused: aggregated turnover 61 500 000,00 is not below 50 000 000 (s. 23AA(b)).",
+          "Company rate: 450 000,00 × 30 % = 135 000,00.",
+          "Estimated tax: 135 000,00."
+        ],
+        "lines": [
+          {
+            "kind": "accounting_result",
+            "code": "8",
+            "amount": "1517750.00"
+          },
+          {
+            "kind": "adjustment",
+            "code": "entertainment",
+            "base": "64250.00",
+            "rate": "100",
+            "amount": "64250.00"
+          },
+          {
+            "kind": "adjustment",
+            "code": "penalties",
+            "base": "18000.00",
+            "rate": "100",
+            "amount": "18000.00"
+          },
+          {
+            "kind": "fiscal_result",
+            "amount": "1600000.00"
+          },
+          {
+            "kind": "loss_used",
+            "code": "2023-06-30",
+            "base": "700000.00",
+            "amount": "-700000.00"
+          },
+          {
+            "kind": "loss_used",
+            "code": "2024-06-30",
+            "base": "450000.00",
+            "amount": "-450000.00"
+          },
+          {
+            "kind": "taxable_base",
+            "amount": "450000.00"
+          },
+          {
+            "kind": "rate_not_applied",
+            "code": "base-rate-entity",
+            "note": "not_met: aggregated_turnover",
+            "rate": "25"
+          },
+          {
+            "kind": "rate",
+            "code": "standard",
+            "base": "450000.00",
+            "rate": "30",
+            "amount": "135000.00"
+          },
+          {
+            "kind": "tax_before_credits",
+            "base": "450000.00",
+            "amount": "135000.00"
+          },
+          {
+            "kind": "estimated_tax",
+            "code": "AU-CIT",
+            "base": "450000.00",
+            "amount": "135000.00"
+          }
+        ],
+        "tax": "135000.00"
+      }
+    }
+  ]
+}

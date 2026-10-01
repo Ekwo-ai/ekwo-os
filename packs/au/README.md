@@ -325,6 +325,32 @@ describes and no statute enacts; both bind the buyer and not the supplier.
   services for business or SBR-enabled software; submitting it is a format
   library and a credential, not a pack.
 
+## Corporate income tax: what `corporate_tax.json` leaves out
+
+The section carries what was read on an official page on 1 October 2026, and
+nothing else: the rates of the Income Tax Rates Act 1986 as compiled on
+1 July 2026, and sections 26-5, 32-5, 36-17 and 165-10 to 165-13 of the Income
+Tax Assessment Act 1997 as compiled on 1 January 2025, the latest compilation
+read. It starts from line 8, « Profit before income tax », of
+`AU-AASB1060-PL`. The ATO's own pages could not be fetched; the figures below
+are those of the Acts. A rule that is missing makes an estimate too high or too
+low by something a reader can name; these are the ones to name.
+
+| Not carried | Why |
+|---|---|
+| The continuity of ownership test and the business continuity test (ITAA 1997, s. 165-10 to s. 165-13) | A loss is deductible only if the company meets one of them, and the loss rules of a pack take no condition. The company enters in `tax.losses` only the losses it may deduct; the estimate sets them all off. |
+| The company's choice of how much loss to deduct (s. 36-17(2)) | The computation sets off as much as it can, oldest first; a company that would rather deduct less cannot say so. |
+| PAYG instalments | The instalment amount is the instalment income times a rate set by the Commissioner, or a GDP-adjusted notional tax, and the due dates were not read on an official page. `prepayments` is empty. |
+| Franking credits and other offsets | No credit was read and cited; `credits` is empty. The company's franking account is not modelled. |
+| The exceptions to the entertainment rule (ITAA 1997, Subdivision 32-B) and the interaction with fringe benefits tax | The company states the amount that falls under s. 32-5, net of what an exception covers; the reference chart books entertainment on `6390` together with amounts that may be deductible. |
+| Penalties on an account of their own | The chart has none (they fall under `6490`), so the company states the amount under `penalties`. |
+| Other non-deductible amounts (for example bribes, s. 26-52 and s. 26-53, and illegal activities, s. 26-54) | Not read; none applies to an ordinary company. |
+| Tax on a company that is not a company in the ordinary sense: RSA providers, pooled development funds, non-profit companies, credit unions, life insurers (Income Tax Rates Act 1986, s. 23(3) to (5) and s. 23A) | Different rates, not read for a company of the reference chart. |
+| Income years before the one starting on 1 July 2024 | The rates are dated from that day: only the compilation of 1 July 2026 could be read, and it states 25 % and 30 % without the transition of earlier years. |
+| Aggregated turnover and the passive income share | Both are declared by the company: the first is worked out over connected entities and affiliates and as at the end of the year, the second is a share of assessable income, and the books know neither. |
+| Capital gains, deferred tax and accounting-to-tax differences other than the two add-backs | Taxable income is not the accounting profit; only the two fixed rules are carried, and any other difference is the company's to state. |
+| Rounding to the dollar | Not read. The estimate is kept at the cent. |
+
 ## Reviewing this pack
 
 Open an issue titled "Review: Australia". What a review is, and what it is not,

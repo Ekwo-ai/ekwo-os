@@ -2,10 +2,10 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "AU",
   "name": "Australia",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "schema_min": "20260929141500",
   "seed_sequence": 40,
-  "released_at": "2026-09-21",
+  "released_at": "2026-10-01",
   "certification": {
     "status": "community",
     "sources": [
@@ -288,6 +288,30 @@
         "url": "https://abr.business.gov.au/",
         "consulted_on": "2026-09-21",
         "kind": "portal"
+      },
+      {
+        "key": "itra-1986",
+        "title": "Income Tax Rates Act 1986 (No. 107, 1986), compilation of 1 July 2026 — s. 23, s. 23AA, s. 23AB",
+        "publisher": "Office of Parliamentary Counsel — Federal Register of Legislation",
+        "url": "https://www.legislation.gov.au/C2004A03348/2026-07-01/2026-07-01/text/original/epub/OEBPS/document_1/document_1.html",
+        "consulted_on": "2026-10-01",
+        "kind": "law"
+      },
+      {
+        "key": "itaa-1997-c256-v1",
+        "title": "Income Tax Assessment Act 1997 (No. 38, 1997), compilation No. 256 of 1 January 2025, volume 1 — s. 26-5, s. 32-5, s. 36-17",
+        "publisher": "Office of Parliamentary Counsel — Federal Register of Legislation",
+        "url": "https://www.legislation.gov.au/C2004A05138/2025-01-01/2025-01-01/text/original/pdf/1",
+        "consulted_on": "2026-10-01",
+        "kind": "law"
+      },
+      {
+        "key": "itaa-1997-c256-v4",
+        "title": "Income Tax Assessment Act 1997 (No. 38, 1997), compilation No. 256 of 1 January 2025, volume 4 — s. 165-10, s. 165-12, s. 165-13",
+        "publisher": "Office of Parliamentary Counsel — Federal Register of Legislation",
+        "url": "https://www.legislation.gov.au/C2004A05138/2025-01-01/2025-01-01/text/original/pdf/4",
+        "consulted_on": "2026-10-01",
+        "kind": "law"
       }
     ]
   },

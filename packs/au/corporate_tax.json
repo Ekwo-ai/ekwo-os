@@ -1,0 +1,111 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "tax": {
+    "code": "AU-CIT",
+    "name": "Company income tax",
+    "legal_reference": "Income Tax Rates Act 1986, s. 23 — the rates of tax payable by a company on its taxable income; Income Tax Assessment Act 1997 — taxable income of a corporate tax entity",
+    "source": "itra-1986"
+  },
+  "result": {
+    "statement": "AU-AASB1060-PL",
+    "line": "8",
+    "legal_reference": "AASB 1060, paragraph 35 — the income statement of the pack prints line 8, « Profit before income tax », before the income tax expense of line 9. The computation starts from that line, so the income tax expense booked on account 8000 to 8020 never enters it and needs no add-back.",
+    "source": "aasb-1060"
+  },
+  "accounts": {
+    "expense": "8000",
+    "payable": "2300",
+    "receivable": "1350",
+    "legal_reference": "There is no legal chart of accounts in Australia (Corporations Act 2001, s. 286 prescribes none); these are accounts of the reference chart of this pack: 8000 « Income tax expense — current », 2300 « Income tax payable » and 1350 « Income tax refundable ».",
+    "source": "corporations-act"
+  },
+  "parameters": [
+    {
+      "code": "aggregated_turnover",
+      "name": "Aggregated turnover of the company for the income year, worked out as at the end of that year, including the turnover of connected entities and affiliates",
+      "type": "amount",
+      "sequence": 10,
+      "legal_reference": "Income Tax Rates Act 1986, s. 23AA(b) — aggregated turnover, within the meaning of the Income Tax Assessment Act 1997, for the year of income, worked out as at the end of that year",
+      "source": "itra-1986"
+    },
+    {
+      "code": "passive_income_percent",
+      "name": "Share, in percent, of the assessable income of the year that is base rate entity passive income (distributions, franking credits, non-share dividends, interest, royalties, rent, gains on qualifying securities, net capital gains and the trust and partnership amounts referable to them)",
+      "type": "amount",
+      "sequence": 20,
+      "legal_reference": "Income Tax Rates Act 1986, s. 23AA(a) and s. 23AB — base rate entity passive income, with its exceptions for entities that lend or provide finance commercially",
+      "source": "itra-1986"
+    }
+  ],
+  "adjustment_rules": [
+    {
+      "code": "entertainment",
+      "name": "Entertainment — food, drink, recreation and the travel or accommodation that goes with it",
+      "direction": "add_back",
+      "percent": 100,
+      "valid_from": "2025-01-01",
+      "valid_on": "period_end",
+      "sequence": 10,
+      "legal_reference": "Income Tax Assessment Act 1997, s. 32-5 — to the extent that a loss or outgoing is incurred in providing entertainment, it cannot be deducted under s. 8-1, subject to the exceptions of Subdivision 32-B; s. 32-10 — what entertainment is. The company states the amount that falls under the rule, net of what an exception covers.",
+      "source": "itaa-1997-c256-v1"
+    },
+    {
+      "code": "penalties",
+      "name": "Penalties and amounts ordered by a court on conviction",
+      "direction": "add_back",
+      "percent": 100,
+      "valid_from": "2025-01-01",
+      "valid_on": "period_end",
+      "sequence": 20,
+      "legal_reference": "Income Tax Assessment Act 1997, s. 26-5(1) — an amount payable by way of penalty under an Australian or a foreign law, and an amount ordered by a court on conviction for an offence, cannot be deducted; s. 26-5(2) — except a penalty under Subdivision 162-D of the GST Act. The reference chart carries no account of penalties alone, so the company states the amount.",
+      "source": "itaa-1997-c256-v1"
+    }
+  ],
+  "rates": [
+    {
+      "code": "base-rate-entity",
+      "name": "Base rate entity rate",
+      "rate": 25,
+      "conditions": [
+        {
+          "parameter": "aggregated_turnover",
+          "test": "below",
+          "amount": 50000000
+        },
+        {
+          "parameter": "passive_income_percent",
+          "test": "at_most",
+          "amount": 80
+        }
+      ],
+      "valid_from": "2024-07-01",
+      "valid_on": "period_start",
+      "sequence": 10,
+      "legal_reference": "Income Tax Rates Act 1986, s. 23(2)(a) — 25 % where the company is a base rate entity for the year of income; s. 23AA — a base rate entity has no more than 80 % of its assessable income as base rate entity passive income and an aggregated turnover for the year, worked out as at the end of it, of less than $50 million",
+      "source": "itra-1986"
+    },
+    {
+      "code": "standard",
+      "name": "Company rate",
+      "rate": 30,
+      "valid_from": "2024-07-01",
+      "valid_on": "period_start",
+      "sequence": 20,
+      "legal_reference": "Income Tax Rates Act 1986, s. 23(2)(b) — 30 % for a company that is not a base rate entity for the year of income",
+      "source": "itra-1986"
+    }
+  ],
+  "loss_carryforward": [
+    {
+      "floor": null,
+      "percent_above": null,
+      "years": null,
+      "valid_from": "2025-01-01",
+      "valid_on": "period_end",
+      "legal_reference": "Income Tax Assessment Act 1997, s. 36-17(2) — a corporate tax entity deducts from the excess of assessable income over deductions so much of the tax loss of an earlier loss year as it chooses; the section sets no limit on the amount or on the number of years. Subject to s. 165-10 (read with s. 165-12 and s. 165-13): the company must keep the same owners or satisfy the business continuity test, which this pack does not compute.",
+      "source": "itaa-1997-c256-v1"
+    }
+  ],
+  "prepayments": [],
+  "credits": []
+}
