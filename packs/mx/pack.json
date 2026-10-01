@@ -2,7 +2,7 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "MX",
   "name": "México",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "schema_min": "20260929141500",
   "seed_sequence": 42,
   "released_at": "2026-10-01",
@@ -224,6 +224,22 @@
         "url": "https://wwwmat.sat.gob.mx/articulo/93784/articulo-57",
         "consulted_on": "2026-10-01",
         "kind": "law"
+      },
+      {
+        "key": "sat-lisr-art-31",
+        "title": "Ley del Impuesto sobre la Renta, artículo 31 — inversiones: por cientos máximos autorizados sobre el monto original, inicio de la deducción, texto consolidado publicado por el SAT",
+        "publisher": "Servicio de Administración Tributaria — Portal de trámites y servicios",
+        "url": "https://wwwmat.sat.gob.mx/articulo/42568/articulo-31",
+        "consulted_on": "2026-10-01",
+        "kind": "law"
+      },
+      {
+        "key": "sat-lisr-art-34",
+        "title": "Ley del Impuesto sobre la Renta, artículo 34 — por cientos máximos autorizados para activos fijos por tipo de bien, texto consolidado publicado por el SAT",
+        "publisher": "Servicio de Administración Tributaria — Portal de trámites y servicios",
+        "url": "https://wwwmat.sat.gob.mx/articulo/61054/articulo-34",
+        "consulted_on": "2026-10-01",
+        "kind": "law"
       }
     ]
   },
@@ -249,7 +265,9 @@
       "fx_gain": "702.01",
       "fx_loss": "701.01",
       "tax_payable": "213.01",
-      "tax_receivable": "113.01"
+      "tax_receivable": "113.01",
+      "asset_disposal_gain": "704.23",
+      "asset_disposal_loss": "703.21"
     },
     "journal_roles": {
       "sales": "VEN",

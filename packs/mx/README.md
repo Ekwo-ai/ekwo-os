@@ -303,6 +303,48 @@ in force.
 The loss limit in the data is the one article 57 states: ten following years,
 no ceiling on the profit, oldest first. Nothing the pack says is tax advice.
 
+## Fixed assets: what `fixed_assets.json` leaves out
+
+The section carries what was read on an official page on 1 October 2026 —
+articles 31 and 34 of the *Ley del Impuesto sobre la Renta* as the SAT portal
+serves them — and nothing else. Five categories, each a straight line over
+twelve months divided by the maximum annual percentage of article 34:
+constructions 5 % (240 months), office furniture and equipment 10 % (120),
+vessels 6 % (200), cars, buses, cargo trucks, forklifts and trailers 25 % (48),
+computers, servers and printers 30 % (40). Disposal is `net_result`, on
+`704.23` for a gain and `703.21` for a loss.
+
+**These are the tax ceilings used as accounting practice, not accounting
+rules.** The percentages of article 34 are the most the law lets a company
+deduct each year on the original amount of the investment. The accounting
+standard, NIF C-6, is named and not transcribed here: the CINIF sells its text
+and no free copy was read, so no duration, method or first-year convention is
+attributed to it. The first period is prorated in months because article 31
+prorates irregular fiscal years in months of use; whether a Mexican company
+books the month of entry in service in full is practice, and a reviewer should
+say so. Article 31 lets the taxpayer start deducting in the year of use or the
+following one, at its option, which the module cannot express.
+
+| Not carried | Why |
+|---|---|
+| Machinery and equipment by activity (art. 35: 5 %, 10 % for other activities, 35 %, 50 %) | Not read on an official page; the portal pages for the article could not be reached. No machinery category is declared rather than a guessed one. |
+| Deferred expenses, deferred charges, pre-operating expenses, software and other intangibles (art. 33: 5 %, 10 %, 15 %, and the concession term in fr. IV) | Not read on an official page. Goodwill is not a deductible investment under these articles and has no category. |
+| Leasehold improvements | Article 34 gives no rate for them that was read. |
+| Dies, moulds and tooling (art. 34, fr. VIII, 35 %) | 12 months ÷ 35 % is 34.29 months and `duration_months` is an integer; rounding it would change the rate. |
+| Aircraft, railways, telephone and satellite communications, bicycles and motorcycles, usufruct, and the 100 % items (livestock, accessibility, renewable energy) | Read in the list, not carried: a specialised asset the company states itself. The 100 % items are a deduction, not a depreciation period. |
+| Tax depreciation distinct from the accounting one | The module keeps one schedule per asset. A Mexican company that applies the article 34 percentage for tax and another one in its books keeps two figures; the module carries one. |
+| The restatement by the INPC (*actualización*) of the undeducted balance and of the original amount | The module has no index. |
+| The cap on the deduction for cars (the fixed amount of article 36) and the rules for non-deductible investments | Not read. |
+| The deduction of the undeducted balance on a sale or when an asset stops being useful (art. 31) | A tax rule of the year of the sale; the disposal books the accounting difference only. |
+| Residual value, components, impairment, revaluation, small-value expensing | Not read, and several are outside the vocabulary of the module. |
+
+Account `704.23` *Otros productos* and `703.21` *Otros gastos* are general
+accounts of the grouping code. `703.21` is also the rounding account; the SAT
+code has specific *Pérdida/Ganancia en venta y/o baja* accounts only for some
+kinds of asset (`703.05`, `704.05` for office furniture, `703.06`, `704.06` for
+computers) and a disposal names one account per pack, so the pack names the
+general ones.
+
 ## What the core could not say
 
 The Mexican section of [`docs/international.md`](../../docs/international.md)

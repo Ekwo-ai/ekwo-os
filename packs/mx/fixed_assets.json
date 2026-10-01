@@ -1,0 +1,69 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "depreciation": {
+    "prorata_straight_line": "months",
+    "prorata_declining": "months",
+    "day_count": "actual",
+    "declining_cap_percent": null,
+    "declining_switch_to_linear": true,
+    "legal_reference": "Ley del Impuesto sobre la Renta, art. 31 (texto consolidado del SAT, leído el 1 de octubre de 2026) — las inversiones sólo se deducen aplicando en cada ejercicio los por cientos máximos autorizados sobre el monto original de la inversión; el contribuyente puede aplicar por cientos menores y empieza a deducir en el ejercicio en que inicia la utilización del bien o en el siguiente, a su elección. Ni la LISR ni lo leído de ella fija una convención contable de primer ejercicio: se toma la práctica de contar los meses desde aquel en que el bien se pone en uso, que es también la proporción en meses que el artículo 31 aplica a los ejercicios irregulares. La ley no conoce el saldo decreciente, de modo que no hay tope ni coeficiente que declarar.",
+    "source": "sat-lisr-art-31"
+  },
+  "disposal": {
+    "style": "net_result",
+    "legal_reference": "Anexo 24 de la RMF 2026, apartado A, inciso a) — el código agrupador del SAT tiene las cuentas 703 «Otros gastos» y 704 «Otros productos», que el estado de resultados de este paquete imprime en la línea «Otros ingresos y gastos»: la diferencia entre el producto de la venta y el valor en libros cae en una sola cuenta, ganancia en 704.23 o pérdida en 703.21, que es el estilo net_result. El paquete no usa 505.01 «Costo por venta de activo fijo», que imprimiría el valor en libros arriba de la utilidad bruta. La NIF C-6 se nombra y no se transcribe; la regla fiscal del artículo 31 (deducir en el ejercicio de la enajenación la parte aún no deducida) no está en este vocabulario.",
+    "source": "anexo-24-rmf-2026"
+  },
+  "categories": [
+    {
+      "code": "construcciones",
+      "name": "Construcciones",
+      "method": "straight_line",
+      "duration_months": 240,
+      "account_type": "asset_fixed",
+      "sequence": 10,
+      "legal_reference": "Ley del Impuesto sobre la Renta, art. 34, fracción I (texto consolidado del SAT, leído el 1 de octubre de 2026) — el por ciento máximo autorizado para las construcciones distintas de monumentos con certificado de restauración es de 5 % anual sobre el monto original de la inversión, es decir 240 meses en línea recta. Es un tope de la deducción fiscal, no una vida útil que la ley contable imponga: la depreciación contable es la que el contribuyente estima para su propio bien (NIF C-6, nombrada y no transcrita en este paquete), y muchas empresas toman el tope como su tasa; aquí es la práctica corriente y un contribuyente que deprecia de otro modo lo dice en las columnas de su propio activo. La actualización por el INPC y la deducción fiscal propiamente dicha no están en este vocabulario.",
+      "source": "sat-lisr-art-34"
+    },
+    {
+      "code": "mobiliario-equipo-oficina",
+      "name": "Mobiliario y equipo de oficina",
+      "method": "straight_line",
+      "duration_months": 120,
+      "account_type": "asset_fixed",
+      "sequence": 20,
+      "legal_reference": "Ley del Impuesto sobre la Renta, art. 34, fracción III (texto consolidado del SAT, leído el 1 de octubre de 2026) — el por ciento máximo autorizado para el mobiliario y equipo de oficina es de 10 % anual sobre el monto original de la inversión, es decir 120 meses en línea recta. Es un tope de la deducción fiscal, no una vida útil que la ley contable imponga: la depreciación contable es la que el contribuyente estima para su propio bien (NIF C-6, nombrada y no transcrita en este paquete), y muchas empresas toman el tope como su tasa; aquí es la práctica corriente y un contribuyente que deprecia de otro modo lo dice en las columnas de su propio activo. La actualización por el INPC y la deducción fiscal propiamente dicha no están en este vocabulario.",
+      "source": "sat-lisr-art-34"
+    },
+    {
+      "code": "embarcaciones",
+      "name": "Embarcaciones",
+      "method": "straight_line",
+      "duration_months": 200,
+      "account_type": "asset_fixed",
+      "sequence": 30,
+      "legal_reference": "Ley del Impuesto sobre la Renta, art. 34, fracción IV (texto consolidado del SAT, leído el 1 de octubre de 2026) — el por ciento máximo autorizado para las embarcaciones es de 6 % anual sobre el monto original de la inversión, es decir 200 meses en línea recta. Es un tope de la deducción fiscal, no una vida útil que la ley contable imponga: la depreciación contable es la que el contribuyente estima para su propio bien (NIF C-6, nombrada y no transcrita en este paquete), y muchas empresas toman el tope como su tasa; aquí es la práctica corriente y un contribuyente que deprecia de otro modo lo dice en las columnas de su propio activo. La actualización por el INPC y la deducción fiscal propiamente dicha no están en este vocabulario.",
+      "source": "sat-lisr-art-34"
+    },
+    {
+      "code": "automoviles-camiones",
+      "name": "Automóviles, autobuses, camiones de carga, tractocamiones, montacargas y remolques",
+      "method": "straight_line",
+      "duration_months": 48,
+      "account_type": "asset_fixed",
+      "sequence": 40,
+      "legal_reference": "Ley del Impuesto sobre la Renta, art. 34, fracción VI (texto consolidado del SAT, leído el 1 de octubre de 2026) — el por ciento máximo autorizado para los automóviles, autobuses, camiones de carga, tractocamiones, montacargas y remolques es de 25 % anual sobre el monto original de la inversión, es decir 48 meses en línea recta. Es un tope de la deducción fiscal, no una vida útil que la ley contable imponga: la depreciación contable es la que el contribuyente estima para su propio bien (NIF C-6, nombrada y no transcrita en este paquete), y muchas empresas toman el tope como su tasa; aquí es la práctica corriente y un contribuyente que deprecia de otro modo lo dice en las columnas de su propio activo. La actualización por el INPC y la deducción fiscal propiamente dicha no están en este vocabulario.",
+      "source": "sat-lisr-art-34"
+    },
+    {
+      "code": "equipo-computo",
+      "name": "Computadoras personales, servidores, impresoras y equipo periférico",
+      "method": "straight_line",
+      "duration_months": 40,
+      "account_type": "asset_fixed",
+      "sequence": 50,
+      "legal_reference": "Ley del Impuesto sobre la Renta, art. 34, fracción VII (texto consolidado del SAT, leído el 1 de octubre de 2026) — el por ciento máximo autorizado para las computadoras personales, los servidores, las impresoras y el equipo periférico es de 30 % anual sobre el monto original de la inversión, es decir 40 meses en línea recta. Es un tope de la deducción fiscal, no una vida útil que la ley contable imponga: la depreciación contable es la que el contribuyente estima para su propio bien (NIF C-6, nombrada y no transcrita en este paquete), y muchas empresas toman el tope como su tasa; aquí es la práctica corriente y un contribuyente que deprecia de otro modo lo dice en las columnas de su propio activo. La actualización por el INPC y la deducción fiscal propiamente dicha no están en este vocabulario.",
+      "source": "sat-lisr-art-34"
+    }
+  ]
+}

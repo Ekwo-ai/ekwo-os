@@ -449,5 +449,12 @@
     "rule:restaurants": "Restaurant consumption — non-deductible share",
     "rule:fines-penalties": "Penalties, damages and contractual penalties",
     "rate:general": "General rate for legal entities"
+  },
+  "asset_categories": {
+    "construcciones": "Constructions",
+    "mobiliario-equipo-oficina": "Office furniture and equipment",
+    "embarcaciones": "Vessels",
+    "automoviles-camiones": "Cars, buses, cargo trucks, tractor units, forklifts and trailers",
+    "equipo-computo": "Personal computers, servers, printers and peripheral equipment"
   }
 }
