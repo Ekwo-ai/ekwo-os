@@ -149,7 +149,14 @@ said on the day it was called final; an entry booked in that year afterwards
 changes what `tax.estimate()` answers and not the final computation. Keeping
 the two together is the socle's lock date and the close of the year.
 
-## Worked example, Belgium
+## Worked examples
+
+Four companies from four packs, chosen because each shows a different part of
+the computation. Every pack that carries the section has its own in
+`packs/<cc>/golden/corporate_tax.json`, with the arithmetic written out step
+by step.
+
+### A reduced rate under conditions, and a formula — Belgium
 
 *Atelier Lumen SRL*, financial year 2025 (assessment year 2026), a small
 company that meets the conditions of the reduced rate. The books show a result
@@ -167,7 +174,49 @@ before income tax of 134 675,20.
 | Ordinary rate — art. 215, al. 1 | 39 361,77 | 25 | 9 840,44 |
 | **Estimated tax** | | | **29 840,44** |
 
-## Worked example, France
+### An exemption written as slices — Singapore
+
+*Merlion Kopi Roasters Pte. Ltd.*, financial year 2025 (Year of Assessment
+2026), an established company. The partial tax exemption leaves a quarter of
+the first 10 000 and half of the next 190 000 taxable, which is the standard
+rate of 17 % on what is left: 4,25 % and 8,5 %. The company declares that it is
+not a new start-up company, so the start-up exemption is refused.
+
+| Line | Base | % | Amount |
+|---|---|---|---|
+| Profit before income tax (line 8) | | | 240 800,00 |
+| Depreciation, from account 6200 | 9 500,00 | 100 | 9 500,00 |
+| Private motor vehicle expenses, stated by the company | 4 200,00 | 100 | 4 200,00 |
+| Capital allowances, stated by the company | 11 300,00 | 100 | −11 300,00 |
+| **Fiscal result and taxable base** | | | **243 200,00** |
+| Partial exemption, first 10 000 | 10 000,00 | 4,25 | 425,00 |
+| Partial exemption, next 190 000 | 190 000,00 | 8,5 | 16 150,00 |
+| Start-up exemption | | | not applied — `not_met: new_start_up_company` |
+| Standard rate | 43 200,00 | 17 | 7 344,00 |
+| **Estimated tax** | | | **23 919,00** |
+
+### One rate for every company, and a limit on losses — United States
+
+*Redwood Freight Holdings, Inc.*, financial year 2025, federal tax only. It
+carries 700 000 of losses from 2023 and 500 000 from 2024, and the losses of
+earlier years may take 80 % of the income of the year.
+
+| Line | Amount |
+|---|---|
+| Income before income tax expense (line 10) | 1 149 500,00 |
+| Meals, 50 % of 48 000 — 26 U.S.C. § 274(n) | 24 000,00 |
+| Entertainment — § 274(a) | 14 500,00 |
+| Amount paid to a government — § 162(f) | 18 000,00 |
+| State income tax of the year, stated by the company — § 164(a)(3) | −56 000,00 |
+| **Fiscal result** | **1 150 000,00** |
+| Limit on losses — § 172(a)(2): 80 % × 1 150 000 | 920 000,00 |
+| Loss of 2023 used | −700 000,00 |
+| Loss of 2024 used, 280 000 left | −220 000,00 |
+| **Taxable base** | **230 000,00** |
+| Federal rate, 21 % — § 11(b) | 48 300,00 |
+| **Estimated tax** | **48 300,00** |
+
+### A rate refused, and a floor before the limit — France
 
 *Négoce Atlantique SAS*, financial year 2025. Its capital is not held at 75 %
 by individuals, so the reduced rate is refused; it carries 900 000 of losses
@@ -186,40 +235,38 @@ from 2023 and 600 000 from 2024.
 | Standard rate, 25 % — CGI art. 219, I | 50 000,00 |
 | **Estimated tax** | **50 000,00** |
 
-Both are replayed to the cent, with four others, by
-[`tests/golden.test.ts`](tests/golden.test.ts) from
-`packs/<cc>/golden/corporate_tax.json`, where the arithmetic is written out
-step by step.
+All four are replayed to the cent, with every other company of every pack
+that carries the section, by [`tests/golden.test.ts`](tests/golden.test.ts).
 
 ## For an accountant to read
 
 Seven things here are a reading of the mechanics or a limit of this version,
-and an accountant should say whether each is acceptable for the company.
+and an accountant should say whether each is acceptable for the company. What
+a country's section leaves out, and why, is in the README of its pack.
 
-1. **Only what is declared is adjusted.** The pack adds back by itself only
-   what a chart keeps on an account of its own — the tax charge and the fines
-   in France. Everything else waits for the company to name an account or
-   state an amount: a chart that books restaurants and receptions on one
-   account cannot say which is which.
-2. **A condition is the company's word.** "Small company", "held at 75 % by
-   individuals", the remuneration of a director: none is checked against the
-   books. The estimate applies the reduced rate because the company said so.
-3. **The Belgian basket holds more than losses.** Article 207 CIR 92 limits
-   the total of several carried-forward deductions; only earlier losses are
-   computed here, and the exception for small companies in their first four
-   periods is not applied.
-4. **Belgian car costs follow the purchase date.** Three rules, by the day the
-   vehicle was bought, leased or rented; the company picks the one that fits.
-   A vehicle with no CO2 figure, the recalculated emission of some plug-in
-   hybrids and the cap on their fuel are not computed: the company states the
-   emission to use. The schedule for zero-emission vehicles bought from 2027
-   is not in the pack yet.
-5. **The French ceilings on car depreciation are not computed.** The company
-   states the excess; the pack cites the article.
-6. **No surtax.** The French social contribution of 3,3 % and the exceptional
-   contribution on large companies, and the Belgian separate assessments, are
-   outside this version. None applies to a small company with an ordinary
-   year, and all of them apply to somebody.
+1. **Only what is declared is adjusted.** A pack adds back by itself only
+   what a chart keeps on an account of its own — a tax charge, fines where
+   they have their account. Everything else waits for the company to name an
+   account or state an amount: a chart that books two expenses with two
+   treatments on one account cannot say which is which.
+2. **A condition is the company's word.** "Small company", "new start-up
+   company", "held at 75 % by individuals", the remuneration of a director:
+   none is checked against the books. The estimate applies a reduced rate
+   because the company said so.
+3. **One limit for every loss.** A country that limits losses differently by
+   their year of origin, or that limits several carried-forward deductions
+   together, is computed for its losses under the rule in force for the year,
+   and for nothing else in the basket.
+4. **A rule takes one figure.** A deduction that depends on two figures of
+   one expense — the price of a vehicle and its emission — is left to the
+   company to state; the pack cites the article.
+5. **No tax on a tax, no minimum tax, no local rate.** Surtaxes computed on
+   the tax, minimum taxes on turnover or on group income, and the taxes of a
+   state, a province or a municipality on the same profit are outside this
+   version. None applies to a small company with an ordinary year in most
+   countries, and all of them apply to somebody.
+6. **A credit is an amount the company states.** A credit that is a share of
+   the tax, with or without a ceiling, is not computed.
 7. **Figures are kept at the cent.** A country that files its base and its
    tax rounded to the unit says so on its form; forms are a later version.
 
