@@ -1,6 +1,6 @@
 -- Ekwo OS — Australia: the rules of this country's corporate income tax.
 --
--- Generated from packs/au/corporate_tax.json at version 0.3.0, do not edit.
+-- Generated from packs/au/corporate_tax.json at version 0.4.0, do not edit.
 -- Change the pack and run `ekwo pack build au`; `ekwo pack check --all`
 -- refuses a seed that is not the exact output of its pack, and the CI runs it.
 --

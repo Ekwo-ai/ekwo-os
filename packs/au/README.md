@@ -26,8 +26,8 @@ None of it was patched for this pack's sake.
 
 Every tax, box, mention and statement line carries its own `legal_reference`,
 and beside it the key of the text that article is in. The register in
-`pack.json` holds thirty-five texts, and every one of them was opened on
-21 September 2026: the Commonwealth texts on the Federal Register of
+`pack.json` holds forty-one texts, and every one of them was opened between
+21 September and 1 October 2026: the Commonwealth texts on the Federal Register of
 Legislation, the ATO's instructions on ato.gov.au, the standard on the register
 too, where the AASB's standards are legislative instruments. The ones the rest
 of this file leans on:
@@ -317,8 +317,8 @@ describes and no statute enacts; both bind the buyer and not the supplier.
   accounting methods for food retailers, GST groups and branches.
 - **Taxable importations paid at the border**, where the ABF collects the GST
   on an import declaration rather than on the supplier's invoice.
-- **Fixed assets.** No `fixed_assets.json`: AASB 116 leaves the useful life to the
-  entity, and the Commissioner's effective lives are an income tax table.
+- **Fixed assets.** Carried by `fixed_assets.json`; what it leaves out is under
+  "Fixed assets: what `fixed_assets.json` leaves out".
 - **Bank formats.** No statement format is declared: Ekwo reads camt.053, and
   nothing checked says which Australian banks send it.
 - **Standard Business Reporting.** The statement is lodged through Online
@@ -350,6 +350,57 @@ low by something a reader can name; these are the ones to name.
 | Aggregated turnover and the passive income share | Both are declared by the company: the first is worked out over connected entities and affiliates and as at the end of the year, the second is a share of assessable income, and the books know neither. |
 | Capital gains, deferred tax and accounting-to-tax differences other than the two add-backs | Taxable income is not the accounting profit; only the two fixed rules are carried, and any other difference is the company's to state. |
 | Rounding to the dollar | Not read. The estimate is kept at the cent. |
+
+## Fixed assets: what `fixed_assets.json` leaves out
+
+The section carries what was read on 1 October 2026 in AASB 116 (compiled
+December 2022), in sections 40-65 to 40-75, 40-95 and 43-25 of the Income Tax
+Assessment Act 1997 (compilation No. 256) and in Table B of the Commissioner's
+Effective Life Determination 2025 as made. The ATO's own pages could not be
+fetched; the lives are those of the legislative instrument.
+
+**What it says.** The first-year charge is prorated in **days**, for the
+straight line and the diminishing value alike, as sections 40-70, 40-72 and
+40-75 do (days held over 365): AASB 116 prescribes no proration, so this is the
+Australian convention rather than a rule of the standard. The diminishing value
+is the 200 % of section 40-72 (coefficient 2), uncapped, switching to the
+straight line when that is larger. Disposal is `net_result`: AASB 116,
+paragraphs 68 and 71, give one gain or loss, on `4750` or `6960`. The
+categories are buildings (2.5 % a year, section 43-25), in-house software (5
+years) and standard patents (20 years) from the Act, and office furniture,
+desktop computers, laptops, cars (straight line and 200 % diminishing value) and
+light commercial vehicles from Table B. Every category is a proposal.
+
+Differences to know about: the module divides by the days of the real year, so
+366 in a leap year where the Act divides by 365; it counts the day of entry into
+service; and Division 40 never switches to the straight line, where the module
+must.
+
+What is **not** in the file, because it was not read on an official page or
+because the module has no word for it:
+
+- **A tax depreciation distinct from the accounting one.** The module keeps one
+  schedule per asset; the lives above are tax lives, and an Australian company's
+  depreciation for AASB 116 and for Division 40 often differ.
+- **Goodwill.** Not carried: it is not amortised under the standards for a
+  for-profit entity and is not a depreciating asset under Division 40, and
+  neither text was read for this pack.
+- **Leasehold improvements, plant and equipment generally, and the other assets
+  of the industry tables.** Table B has no generic line for them and the
+  Table A industry lives were not selected. Software that is not in-house, and
+  licences (their term), are not carried either.
+- **The instant asset write-off, simplified depreciation, small business
+  pooling and low-value pools** (low-value pools are Subdivision 40-E; no threshold was read):
+  a threshold under which an asset is expensed or pooled is not a notion of the
+  module, and the thresholds change by year.
+- **The capped life of section 40-102 and the 4 % capital works rate**
+  (Table 43-145): not read; the 2.5 % rate is the one carried.
+- **Residual value for tax, balancing adjustments, recalculation of effective
+  life and non-taxable use reductions** (sections 40-285, 40-110 and 40-290).
+- **Components** of a building or a machine, depreciated over their own lives,
+  and revaluation under the AASB 116 revaluation model.
+- **Right-of-use assets** (AASB 16): their term is the lease's and is no
+  category.
 
 ## Reviewing this pack
 

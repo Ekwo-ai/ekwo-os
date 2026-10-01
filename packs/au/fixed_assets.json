@@ -1,0 +1,110 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "depreciation": {
+    "prorata_straight_line": "days",
+    "prorata_declining": "days",
+    "day_count": "actual",
+    "declining_cap_percent": null,
+    "declining_switch_to_linear": true,
+    "legal_reference": "AASB 116, paragraph 55 — depreciation begins when the asset is available for use, so the first period carries only the part of the year the asset was held. Paragraph 62 prescribes no method and names the straight line, the diminishing balance and the units of production among those an entity may select, so no cap on a declining annuity is declared. The proration is in days because that is the Australian convention in the one place it is written down: Income Tax Assessment Act 1997, section 40-75(1) (prime cost) multiplies by days held over 365, and sections 40-70(1) and 40-72(1) (diminishing value, 150% before and 200% after 9 May 2006) do the same, counting days from the day the asset is first used or installed ready for use. The module counts the days of the real calendar, so a year of 366 days divides by 366 where the Act divides by 365, and the day of entry into service is counted. Division 40 is a tax computation and AASB 116 does not oblige the books to follow it; the module carries one schedule, so a company whose tax depreciation differs from its accounting depreciation keeps the difference outside. The module switches the diminishing value to the straight line over the remaining periods once that is larger, which Division 40 does not do (its balance never reaches zero) and which a schedule needs in order to end.",
+    "source": "aasb-116"
+  },
+  "disposal": {
+    "style": "net_result",
+    "legal_reference": "AASB 116, paragraphs 68 and 71 — the gain or loss arising from the derecognition of an item of property, plant and equipment is included in profit or loss, determined as the difference between the net disposal proceeds and the carrying amount, and gains are not classified as revenue. One figure on one account, which is the net_result style: account 4750 for a gain, under other income, and 6960 for a loss, where AU-AASB1060-PL prints each as its own line.",
+    "source": "aasb-116"
+  },
+  "categories": [
+    {
+      "code": "buildings",
+      "name": "Buildings (capital works)",
+      "method": "straight_line",
+      "duration_months": 480,
+      "account_type": "asset_fixed",
+      "sequence": 10,
+      "legal_reference": "Income Tax Assessment Act 1997, section 43-25(1) — the deduction for capital works begun after 26 February 1992 is 2.5% of the construction expenditure a year for most non-residential buildings, which is forty years on the straight line (4% for parts used in the manner of Table 43-145, not carried here). Division 43 is a tax deduction and not a depreciation of the accounts, and land is not depreciated, so a property is split before this category reaches the building. There is no accounting table of useful lives in Australia: AASB 116, paragraphs 50 and 51, make the entity allocate the depreciable amount over the useful life it estimates and review it at least at each year end. The duration below is the rate of the capital works deduction, a tax figure that Australian practice often adopts for the books and not an accounting rule, and an asset that depreciates differently says so in its own columns.",
+      "source": "itaa-1997-c256-v2"
+    },
+    {
+      "code": "in-house-software",
+      "name": "Software developed for own use",
+      "method": "straight_line",
+      "duration_months": 60,
+      "account_type": "asset_fixed",
+      "sequence": 20,
+      "legal_reference": "Income Tax Assessment Act 1997, section 40-95(7), item 8 — the effective life of in-house software is 5 years, fixed by the Act and not by the Commissioner. Software bought off the shelf is not in-house software and is not carried here. AASB 138 on intangible assets was not read for this pack, so the accounting treatment of the cost (capitalise or expense) is the accountant's to decide. There is no accounting table of useful lives in Australia: AASB 116, paragraphs 50 and 51, make the entity allocate the depreciable amount over the useful life it estimates and review it at least at each year end. The duration below is the life the Act gives for income tax; it is a tax figure that Australian practice often adopts for the books and not an accounting rule, and an asset that depreciates differently says so in its own columns.",
+      "source": "itaa-1997-c256-v2"
+    },
+    {
+      "code": "standard-patents",
+      "name": "Standard patents",
+      "method": "straight_line",
+      "duration_months": 240,
+      "account_type": "asset_fixed",
+      "sequence": 30,
+      "legal_reference": "Income Tax Assessment Act 1997, section 40-95(7), item 1 — the effective life of a standard patent is 20 years, fixed by the Act. Other intellectual property carries other statutory lives (registered designs 15 years, copyright the shorter of 25 years and its term, a licence its term) and is not carried here. There is no accounting table of useful lives in Australia: AASB 116, paragraphs 50 and 51, make the entity allocate the depreciable amount over the useful life it estimates and review it at least at each year end. The duration below is the life the Act gives for income tax; it is a tax figure that Australian practice often adopts for the books and not an accounting rule, and an asset that depreciates differently says so in its own columns.",
+      "source": "itaa-1997-c256-v2"
+    },
+    {
+      "code": "office-furniture",
+      "name": "Office furniture, freestanding",
+      "method": "straight_line",
+      "duration_months": 120,
+      "account_type": "asset_fixed",
+      "sequence": 40,
+      "legal_reference": "Table B of the 2025 determination, Office furniture, freestanding: chairs 10 years, general tables 10 years and reception assets 10 years. Desks, workstations, screens and boardroom tables are 20 years and metal cabinets 20 years, so ten years is the life of the seating and tables and a company with mostly desks sets a longer one. There is no accounting table of useful lives in Australia: AASB 116, paragraphs 50 and 51, make the entity allocate the depreciable amount over the useful life it estimates and review it at least at each year end. The duration below is the effective life the Commissioner of Taxation determines for income tax under section 40-100 of the Income Tax Assessment Act 1997, which a business may use or replace with its own estimate under section 40-95; it is a tax figure that Australian practice often adopts for the books and not an accounting rule, and an asset that depreciates differently says so in its own columns.",
+      "source": "effective-life-2025"
+    },
+    {
+      "code": "desktop-computers",
+      "name": "Desktop computers, monitors and servers",
+      "method": "straight_line",
+      "duration_months": 48,
+      "account_type": "asset_fixed",
+      "sequence": 50,
+      "legal_reference": "Table B of the 2025 determination, Computers and computer equipment: desktop computers (including personal computers) 4 years, computer monitors 4 years, servers 4 years, and 4 years for computer equipment not specified elsewhere. Network equipment is 5 years and mainframes 5 years, not carried here. There is no accounting table of useful lives in Australia: AASB 116, paragraphs 50 and 51, make the entity allocate the depreciable amount over the useful life it estimates and review it at least at each year end. The duration below is the effective life the Commissioner of Taxation determines for income tax under section 40-100 of the Income Tax Assessment Act 1997, which a business may use or replace with its own estimate under section 40-95; it is a tax figure that Australian practice often adopts for the books and not an accounting rule, and an asset that depreciates differently says so in its own columns.",
+      "source": "effective-life-2025"
+    },
+    {
+      "code": "portable-computers",
+      "name": "Laptops and tablets",
+      "method": "straight_line",
+      "duration_months": 24,
+      "account_type": "asset_fixed",
+      "sequence": 60,
+      "legal_reference": "Table B of the 2025 determination, Computers and computer equipment: mobile/portable computers (including laptops, tablets) 2 years. There is no accounting table of useful lives in Australia: AASB 116, paragraphs 50 and 51, make the entity allocate the depreciable amount over the useful life it estimates and review it at least at each year end. The duration below is the effective life the Commissioner of Taxation determines for income tax under section 40-100 of the Income Tax Assessment Act 1997, which a business may use or replace with its own estimate under section 40-95; it is a tax figure that Australian practice often adopts for the books and not an accounting rule, and an asset that depreciates differently says so in its own columns.",
+      "source": "effective-life-2025"
+    },
+    {
+      "code": "cars",
+      "name": "Cars, straight line",
+      "method": "straight_line",
+      "duration_months": 96,
+      "account_type": "asset_fixed",
+      "sequence": 70,
+      "legal_reference": "Table B of the 2025 determination, Motor vehicles and trailers: cars, designed to carry a load of less than one tonne and fewer than 9 passengers, generally, 8 years. Hire cars, rental cars and taxis have shorter lives and are not carried here; section 40-102 of the Income Tax Assessment Act 1997 may cap the life of a car for tax and the cap was not read. There is no accounting table of useful lives in Australia: AASB 116, paragraphs 50 and 51, make the entity allocate the depreciable amount over the useful life it estimates and review it at least at each year end. The duration below is the effective life the Commissioner of Taxation determines for income tax under section 40-100 of the Income Tax Assessment Act 1997, which a business may use or replace with its own estimate under section 40-95; it is a tax figure that Australian practice often adopts for the books and not an accounting rule, and an asset that depreciates differently says so in its own columns.",
+      "source": "effective-life-2025"
+    },
+    {
+      "code": "cars-diminishing",
+      "name": "Cars, diminishing value at 200%",
+      "method": "declining_balance",
+      "duration_months": 96,
+      "account_type": "asset_fixed",
+      "sequence": 80,
+      "legal_reference": "Income Tax Assessment Act 1997, section 40-72(1) — for an asset first held on or after 10 May 2006 the diminishing value method takes the base value times days held over 365 times 200% over the effective life, which is twice the straight-line rate: coefficient 2 on the 8 years of Table B of the 2025 determination for a car. There is no accounting table of useful lives in Australia: AASB 116, paragraphs 50 and 51, make the entity allocate the depreciable amount over the useful life it estimates and review it at least at each year end. The duration below is the effective life the Commissioner of Taxation determines for income tax under section 40-100 of the Income Tax Assessment Act 1997, which a business may use or replace with its own estimate under section 40-95; it is a tax figure that Australian practice often adopts for the books and not an accounting rule, and an asset that depreciates differently says so in its own columns.",
+      "source": "itaa-1997-c256-v2",
+      "coefficient": 2
+    },
+    {
+      "code": "light-commercial-vehicles",
+      "name": "Light commercial vehicles",
+      "method": "straight_line",
+      "duration_months": 144,
+      "account_type": "asset_fixed",
+      "sequence": 90,
+      "legal_reference": "Table B of the 2025 determination, Motor vehicles and trailers: light commercial vehicles designed to carry a load of one tonne or greater and having a gross vehicle mass of 3.5 tonnes or less, 12 years. There is no accounting table of useful lives in Australia: AASB 116, paragraphs 50 and 51, make the entity allocate the depreciable amount over the useful life it estimates and review it at least at each year end. The duration below is the effective life the Commissioner of Taxation determines for income tax under section 40-100 of the Income Tax Assessment Act 1997, which a business may use or replace with its own estimate under section 40-95; it is a tax figure that Australian practice often adopts for the books and not an accounting rule, and an asset that depreciates differently says so in its own columns.",
+      "source": "effective-life-2025"
+    }
+  ]
+}
