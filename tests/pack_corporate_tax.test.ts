@@ -10,8 +10,9 @@ import { allPacks, packsRoot } from './helpers/packs.js';
 //
 // The refusals are tried on a copy of a pack that carries the section, broken
 // one way at a time. Nothing here names a country: the pack is whichever one
-// carries a reduced rate with conditions, because that is what most of the
-// refusals are about.
+// carries everything the refusals are about — a reduced rate with conditions,
+// a judgement the company declares, a limit on losses, a prepayment schedule
+// and a language to label them in. A country may have none of them.
 
 type Section = Record<string, unknown> & {
   result: Record<string, unknown>;
@@ -23,8 +24,18 @@ type Section = Record<string, unknown> & {
   prepayments: (Record<string, unknown> & { instalments: Record<string, unknown>[] })[];
 };
 
-const source = allPacks.find((pack) => pack.corporateTax?.rates.some((rate) => rate.conditions.length > 0));
-if (source === undefined) throw new Error('no pack carries a corporate_tax section with a conditional rate');
+const source = allPacks.find((pack) => {
+  const section = pack.corporateTax;
+  return (
+    section !== null &&
+    section.rates.some((rate) => rate.conditions.length > 0) &&
+    section.parameters.some((parameter) => parameter.type === 'boolean') &&
+    section.loss_carryforward[0]?.floor != null &&
+    section.prepayments.length > 0 &&
+    (pack.manifest.languages ?? []).length > 0
+  );
+});
+if (source === undefined) throw new Error('no pack carries a corporate_tax section with everything the refusals are tried on');
 
 let dir: string;
 
