@@ -108,3 +108,59 @@ and the three-year limit are Senegalese.
 | Prepayments: the first instalment may not be lower than the IMF, the amounts are rounded down to the hundred franc, a year of another length is scaled to twelve months, the second may be waived by letter (arts. 214, 215, 217) | The vocabulary has two shares of a reference tax and nothing else. The third of the tax is written `33,3333`. Nothing reads the schedule yet. |
 | Regimes of exemption and reduced rates (investment code, mining and petroleum codes, free zones, new small businesses, the contribution globale unique) | Each depends on an approval or a regime the books do not show. No rate is carried but the 30 % of art. 36. |
 | Insurance companies' tax on excess technical provisions (arts. 41 to 46) | A tax of its own, 0,33 % per month; not an income tax rate. |
+
+## Fixed assets
+
+`fixed_assets.json` carries how Senegal depreciates a fixed asset and takes it
+off the balance sheet. It was read on 1 October 2026 in the Acte uniforme
+relatif au droit comptable et à l'information financière (art. 45) and in the
+Code général des impôts as published by the Ministry of Finance (art. 10). That
+file is the 2012 law as voted; the amending laws that were read (loi n° 2015-06,
+the 2025 finance bill) do not touch art. 10, but no consolidated current text
+of it was found, so a later amendment is not excluded. It serves as a model for
+the other SYSCOHADA packs: only the tax article and its coefficients are
+Senegalese.
+
+- **Disposal is `gross`.** The chart carries account 81 (book value of assets
+  sold) and 82 (proceeds of assets sold), and the income statement prints both
+  (lines RO and TN). The roles are `asset_disposal_value` (`812`, tangible) and
+  `asset_disposal_proceeds` (`822`, tangible); a company selling an intangible
+  or financial asset picks `811`/`821` or `816`/`826` on the entry. The text of
+  the Système comptable OHADA itself is a scanned document that could not be
+  read as text: the two accounts and their names come from the chart.
+- **The first-period prorata is practice, not text.** Art. 45 says depreciation
+  starts when the asset is in working condition at its place of use, and no
+  text says how to cut the first annuity. The section counts real days, in
+  straight line and in declining balance, and says so in its `legal_reference`.
+- **Declining balance.** CGI art. 10, 1): the straight-line rate of the normal
+  useful life times 2 for five years and 2.5 above five years, for equipment of
+  industrial companies other than residential buildings, building sites and
+  business premises. Two categories carry it (machinery, ten years at 2.5;
+  vehicles, five years at 2). The text caps no annuity, so there is no cap.
+- **No duration is fixed by law.** Art. 10 admits the depreciation "generally
+  accepted by the usages of each kind of industry, trade or operation" and art.
+  45 leaves the useful life to the entity. Every straight-line duration is
+  therefore common practice, as in the British pack, and its `legal_reference`
+  says so; none was read in an official table. A category proposes, never
+  imposes.
+
+### Fixed assets: what `fixed_assets.json` leaves out
+
+| Not carried | Why |
+|---|---|
+| Goodwill and other intangibles other than software | Their duration (and any presumption when the useful life cannot be estimated) is in the Système comptable OHADA, which could not be read as text. No duration was invented. |
+| Tax depreciation distinct from the book charge, and the derogatory depreciation account `151` | The module keeps one schedule per asset. The art. 10 rule that the cumulated declining depreciation may not fall below the cumulated straight line, on pain of losing the deduction of the deferred part, is not checked. |
+| Deferred depreciation (amortissements réputés différés, art. 10 and 16) | A tax carry-forward of depreciation booked in a loss year; the module has no such notion. |
+| Accelerated first annuity (art. 10, 1): doubled for new equipment of certain activities, duration shortened by one year) | Not in the vocabulary of a category or of a prorata. |
+| Caducity depreciation of public–private partnership concessions (art. 10, 2) | Depreciation over the term of the concession or by revenue: no such method. |
+| Units of production | Refused by the module. |
+| Revaluation of the balance sheet | Not carried. |
+| Residual value, impairment and its reversal | Not a pack rule. |
+| Threshold below which an asset is expensed | Not read in an official text, and the module has no such field. |
+| Components of an asset, with their own lives | The module has one asset, one duration. |
+| Assets held under finance leases (accounts `2316`, `2326`, `2416`…) and the lessor's depreciation, not deductible under art. 10 | The module does not tell the lessee's books from the lessor's. |
+| A prorata in months | Practice; a company that prorates by months sets `prorata = 'months'` on the asset. |
+
+The declining-balance categories also inherit the module's switch to the
+straight line when it is the larger annuity, which art. 10 does not provide
+for: the module needs it for the schedule to end.

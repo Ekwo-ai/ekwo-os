@@ -1,0 +1,111 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "depreciation": {
+    "prorata_straight_line": "days",
+    "prorata_declining": "days",
+    "day_count": "actual",
+    "declining_cap_percent": null,
+    "declining_switch_to_linear": true,
+    "legal_reference": "Acte uniforme relatif au droit comptable et à l'information financière (Brazzaville, 26 janvier 2017), art. 45 — la date de début d'amortissement est celle à laquelle l'actif est en état de fonctionner et au lieu d'utilisation prévu ; le mode linéaire, le mode dégressif à taux décroissant et le mode des unités de production sont nommés parmi les modes admis. Ni l'Acte uniforme ni le Code général des impôts, art. 10, ne disent comment couper la première annuité : compter les jours réels depuis la mise en service jusqu'à la clôture est la pratique courante et non une règle de texte, en linéaire comme en dégressif. Code général des impôts, art. 10, 1) — le coefficient du dégressif est de 2 pour cinq ans et de 2,5 au-delà ; le texte ne plafonne aucune annuité (donc aucun plafond ici) et ne prévoit pas le passage au linéaire, que le module applique pour que le plan s'achève, mais exige que le cumul des amortissements dégressifs ne soit jamais inférieur au cumul linéaire, sous peine de perdre la déduction de la fraction différée.",
+    "source": "audcif"
+  },
+  "disposal": {
+    "style": "gross",
+    "legal_reference": "Système comptable OHADA, plan de comptes de la classe 8 — compte 81 « Valeurs comptables des cessions d'immobilisations » et compte 82 « Produits des cessions d'immobilisations » : la valeur nette comptable et le prix de cession sont enregistrés pour leur montant intégral, et le compte de résultat imprime les deux lignes (RO et TN) ; le résultat de cession est leur différence.",
+    "source": "syscohada"
+  },
+  "categories": [
+    {
+      "code": "software",
+      "name": "Logiciels et sites internet",
+      "method": "straight_line",
+      "duration_months": 36,
+      "account_type": "asset_fixed",
+      "sequence": 10,
+      "legal_reference": "Acte uniforme relatif au droit comptable et à l'information financière, art. 45 — le montant amortissable est réparti sur la durée d'utilité selon un plan prédéfini. Le Sénégal ne fixe aucune durée : le Code général des impôts, art. 10, 1), admet les amortissements « dans les limites de ceux qui sont généralement admis d'après les usages de chaque nature d'industrie, de commerce ou d'exploitation », et l'Acte uniforme, art. 45, laisse l'entité fixer la durée d'utilité du bien. La durée proposée ici est la pratique courante et non une règle de texte ; elle n'a pas été lue dans un barème officiel.",
+      "source": "audcif"
+    },
+    {
+      "code": "building-commercial",
+      "name": "Bâtiments administratifs et commerciaux",
+      "method": "straight_line",
+      "duration_months": 240,
+      "account_type": "asset_fixed",
+      "sequence": 20,
+      "legal_reference": "Acte uniforme, art. 45 — amortissement sur la durée d'utilité ; Code général des impôts, art. 10, 1) — les locaux servant à l'exercice de la profession sont exclus de l'amortissement dégressif. Le Sénégal ne fixe aucune durée : le Code général des impôts, art. 10, 1), admet les amortissements « dans les limites de ceux qui sont généralement admis d'après les usages de chaque nature d'industrie, de commerce ou d'exploitation », et l'Acte uniforme, art. 45, laisse l'entité fixer la durée d'utilité du bien. La durée proposée ici est la pratique courante et non une règle de texte ; elle n'a pas été lue dans un barème officiel.",
+      "source": "audcif"
+    },
+    {
+      "code": "fixtures",
+      "name": "Aménagements, agencements et installations",
+      "method": "straight_line",
+      "duration_months": 120,
+      "account_type": "asset_fixed",
+      "sequence": 30,
+      "legal_reference": "Acte uniforme, art. 45 — amortissement sur la durée d'utilité. Le Sénégal ne fixe aucune durée : le Code général des impôts, art. 10, 1), admet les amortissements « dans les limites de ceux qui sont généralement admis d'après les usages de chaque nature d'industrie, de commerce ou d'exploitation », et l'Acte uniforme, art. 45, laisse l'entité fixer la durée d'utilité du bien. La durée proposée ici est la pratique courante et non une règle de texte ; elle n'a pas été lue dans un barème officiel.",
+      "source": "audcif"
+    },
+    {
+      "code": "machinery",
+      "name": "Matériel et outillage industriel",
+      "method": "straight_line",
+      "duration_months": 120,
+      "account_type": "asset_fixed",
+      "sequence": 40,
+      "legal_reference": "Acte uniforme, art. 45 — amortissement sur la durée d'utilité. Le Sénégal ne fixe aucune durée : le Code général des impôts, art. 10, 1), admet les amortissements « dans les limites de ceux qui sont généralement admis d'après les usages de chaque nature d'industrie, de commerce ou d'exploitation », et l'Acte uniforme, art. 45, laisse l'entité fixer la durée d'utilité du bien. La durée proposée ici est la pratique courante et non une règle de texte ; elle n'a pas été lue dans un barème officiel.",
+      "source": "audcif"
+    },
+    {
+      "code": "machinery-declining",
+      "name": "Matériel et outillage industriel — amortissement dégressif",
+      "method": "declining_balance",
+      "duration_months": 120,
+      "coefficient": 2.5,
+      "account_type": "asset_fixed",
+      "sequence": 50,
+      "legal_reference": "Code général des impôts, art. 10, 1) — les biens d'équipement acquis ou fabriqués par les entreprises industrielles peuvent être amortis selon le système dégressif, le taux linéaire de la durée normale d'utilisation étant multiplié par un coefficient fixé à 2 pour une durée de cinq ans et à 2,5 pour une durée supérieure à cinq ans ; dix ans, donc 2,5, est la durée proposée ici (pratique, non un barème). Le régime est réservé aux entreprises industrielles et exclut les immeubles d'habitation, les chantiers et les locaux professionnels.",
+      "source": "cgi"
+    },
+    {
+      "code": "vehicle",
+      "name": "Matériel de transport",
+      "method": "straight_line",
+      "duration_months": 60,
+      "account_type": "asset_fixed",
+      "sequence": 60,
+      "legal_reference": "Acte uniforme, art. 45 — amortissement sur la durée d'utilité. Le Sénégal ne fixe aucune durée : le Code général des impôts, art. 10, 1), admet les amortissements « dans les limites de ceux qui sont généralement admis d'après les usages de chaque nature d'industrie, de commerce ou d'exploitation », et l'Acte uniforme, art. 45, laisse l'entité fixer la durée d'utilité du bien. La durée proposée ici est la pratique courante et non une règle de texte ; elle n'a pas été lue dans un barème officiel.",
+      "source": "audcif"
+    },
+    {
+      "code": "vehicle-declining",
+      "name": "Matériel de transport — amortissement dégressif",
+      "method": "declining_balance",
+      "duration_months": 60,
+      "coefficient": 2,
+      "account_type": "asset_fixed",
+      "sequence": 70,
+      "legal_reference": "Code général des impôts, art. 10, 1) — le système dégressif s'applique aux biens d'équipement des entreprises industrielles, avec un coefficient de 2 lorsque la durée normale d'utilisation est de cinq ans ; cinq ans est la durée proposée ici (pratique, non un barème).",
+      "source": "cgi"
+    },
+    {
+      "code": "furniture",
+      "name": "Mobilier de bureau",
+      "method": "straight_line",
+      "duration_months": 120,
+      "account_type": "asset_fixed",
+      "sequence": 80,
+      "legal_reference": "Acte uniforme, art. 45 — amortissement sur la durée d'utilité. Le Sénégal ne fixe aucune durée : le Code général des impôts, art. 10, 1), admet les amortissements « dans les limites de ceux qui sont généralement admis d'après les usages de chaque nature d'industrie, de commerce ou d'exploitation », et l'Acte uniforme, art. 45, laisse l'entité fixer la durée d'utilité du bien. La durée proposée ici est la pratique courante et non une règle de texte ; elle n'a pas été lue dans un barème officiel.",
+      "source": "audcif"
+    },
+    {
+      "code": "it-equipment",
+      "name": "Matériel informatique et de bureau",
+      "method": "straight_line",
+      "duration_months": 36,
+      "account_type": "asset_fixed",
+      "sequence": 90,
+      "legal_reference": "Acte uniforme, art. 45 — amortissement sur la durée d'utilité. Le Sénégal ne fixe aucune durée : le Code général des impôts, art. 10, 1), admet les amortissements « dans les limites de ceux qui sont généralement admis d'après les usages de chaque nature d'industrie, de commerce ou d'exploitation », et l'Acte uniforme, art. 45, laisse l'entité fixer la durée d'utilité du bien. La durée proposée ici est la pratique courante et non une règle de texte ; elle n'a pas été lue dans un barème officiel.",
+      "source": "audcif"
+    }
+  ]
+}
