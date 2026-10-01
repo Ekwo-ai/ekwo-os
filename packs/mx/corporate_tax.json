@@ -1,0 +1,100 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "tax": {
+    "code": "MX-ISR",
+    "name": "Impuesto sobre la renta de las personas morales",
+    "legal_reference": "Ley del Impuesto sobre la Renta, Título II «De las personas morales», art. 9 — las personas morales calculan el impuesto sobre la renta aplicando al resultado fiscal del ejercicio la tasa del 30 %",
+    "source": "sat-lisr-art-9"
+  },
+  "result": {
+    "statement": "MX-SAT-ER",
+    "line": "UAI",
+    "legal_reference": "Ley del Impuesto sobre la Renta, art. 9, primer párrafo y fracción I — la ley no parte del resultado contable: la utilidad fiscal es la diferencia entre los ingresos acumulables y las deducciones autorizadas del ejercicio, menos la participación de los trabajadores en las utilidades pagada. Este paquete parte de la línea «Utilidad (pérdida) antes de impuestos a la utilidad» del estado de resultados, que se imprime antes de la cuenta 611 «Impuesto sobre la renta» y, por tanto, no contiene el impuesto, y le aplica las reintegraciones y deducciones de abajo: es una estimación hecha con los libros, no la conciliación entre el resultado contable y el fiscal",
+    "source": "sat-lisr-art-9"
+  },
+  "accounts": {
+    "expense": "611.01",
+    "payable": "213.03",
+    "receivable": "113.02",
+    "legal_reference": "Anexo 24 de la RMF 2026, apartado A, inciso a) — código agrupador de cuentas del SAT: 611.01 «Impuesto Sobre la renta» (gasto), 213.03 «ISR por pagar» (pasivo) y 113.02 «ISR a favor» (activo), cuentas del catálogo de este paquete; Ley del ISR, art. 9 — el impuesto del ejercicio se paga mediante declaración dentro de los tres meses siguientes al cierre del ejercicio",
+    "source": "sat-lisr-art-9"
+  },
+  "parameters": [],
+  "adjustment_rules": [
+    {
+      "code": "ptu-expense",
+      "name": "Participación de los trabajadores en las utilidades registrada como gasto",
+      "direction": "add_back",
+      "percent": 100,
+      "accounts": [
+        {
+          "kind": "code_prefix",
+          "code_from": "607"
+        }
+      ],
+      "valid_from": "2025-01-01",
+      "valid_on": "period_start",
+      "sequence": 10,
+      "legal_reference": "Ley del Impuesto sobre la Renta, art. 9, fracción I — la utilidad fiscal se obtiene disminuyendo de los ingresos acumulables las deducciones autorizadas y «la participación de los trabajadores en las utilidades de las empresas pagada en el ejercicio»: lo que cuenta es lo pagado, no lo registrado. El gasto de la cuenta 607 «Participación de los trabajadores en las utilidades», que no contiene otra cosa, se reintegra completo y la participación pagada se deduce en la regla ptu-paid",
+      "source": "sat-lisr-art-9"
+    },
+    {
+      "code": "ptu-paid",
+      "name": "Participación de los trabajadores en las utilidades pagada en el ejercicio",
+      "direction": "deduction",
+      "percent": 100,
+      "valid_from": "2025-01-01",
+      "valid_on": "period_start",
+      "sequence": 20,
+      "legal_reference": "Ley del Impuesto sobre la Renta, art. 9, fracción I — «la participación de los trabajadores en las utilidades de las empresas pagada en el ejercicio, en los términos del artículo 123 de la Constitución Política de los Estados Unidos Mexicanos»; la sociedad declara el monto pagado en el ejercicio, que los libros no distinguen del gasto registrado",
+      "source": "sat-lisr-art-9"
+    },
+    {
+      "code": "restaurants",
+      "name": "Consumos en restaurantes — parte no deducible",
+      "direction": "add_back",
+      "percent": 91.5,
+      "valid_from": "2025-01-01",
+      "valid_on": "period_start",
+      "sequence": 30,
+      "legal_reference": "Ley del Impuesto sobre la Renta, art. 28, fracción XX — no son deducibles «el 91.5% de los consumos en restaurantes»; para deducir la diferencia el pago debe hacerse mediante tarjeta de crédito, de débito o de servicios, o monederos electrónicos autorizados por el SAT. La sociedad declara el monto de los consumos en restaurantes que no cumplen los requisitos de la fracción V del mismo artículo (la página del SAT dice que los que sí los cumplen se deducen al 100 %, dentro de los límites de esa fracción, que no se leyó aquí); los consumos en bares no se deducen nunca",
+      "source": "sat-lisr-art-28"
+    },
+    {
+      "code": "fines-penalties",
+      "name": "Sanciones, indemnizaciones por daños y perjuicios y penas convencionales",
+      "direction": "add_back",
+      "percent": 100,
+      "valid_from": "2025-01-01",
+      "valid_on": "period_start",
+      "sequence": 40,
+      "legal_reference": "Ley del Impuesto sobre la Renta, art. 28, fracción VI — no son deducibles «las sanciones, las indemnizaciones por daños y perjuicios o las penas convencionales», con excepciones limitadas cuando la ley obliga al pago por responsabilidad objetiva o por caso fortuito o fuerza mayor, que la sociedad no declara aquí. El catálogo no tiene una cuenta propia para ellas: la sociedad declara el monto",
+      "source": "sat-lisr-art-28"
+    }
+  ],
+  "rates": [
+    {
+      "code": "general",
+      "name": "Tasa general de las personas morales",
+      "rate": 30,
+      "valid_from": "2025-01-01",
+      "valid_on": "period_start",
+      "sequence": 10,
+      "legal_reference": "Ley del Impuesto sobre la Renta, art. 9, primer párrafo — «las personas morales deberán calcular el impuesto sobre la renta, aplicando al resultado fiscal obtenido en el ejercicio la tasa del 30%». El texto leído el 1 de octubre de 2026 no menciona tasas transitorias; la fecha de entrada en vigor de la tasa no se leyó y 2025 es el primer ejercicio que este paquete cubre",
+      "source": "sat-lisr-art-9"
+    }
+  ],
+  "loss_carryforward": [
+    {
+      "floor": null,
+      "percent_above": null,
+      "years": 10,
+      "valid_from": "2025-01-01",
+      "valid_on": "period_start",
+      "legal_reference": "Ley del Impuesto sobre la Renta, art. 57 — la pérdida fiscal ocurrida en un ejercicio puede disminuirse de la utilidad fiscal de los diez ejercicios siguientes hasta agotarla; quien pudiendo disminuirla no lo hace en un ejercicio pierde el derecho a hacerlo después hasta por la cantidad en que pudo hacerlo. El derecho es personal y no se transmite por fusión. La actualización de la pérdida por inflación que ordena el mismo artículo no se calcula aquí",
+      "source": "sat-lisr-art-57"
+    }
+  ],
+  "prepayments": [],
+  "credits": []
+}

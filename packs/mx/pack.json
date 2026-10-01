@@ -2,10 +2,10 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "MX",
   "name": "México",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "schema_min": "20260929141500",
   "seed_sequence": 42,
-  "released_at": "2026-09-21",
+  "released_at": "2026-10-01",
   "certification": {
     "status": "community",
     "sources": [
@@ -192,6 +192,38 @@
         "url": "https://www.cinif.org.mx/",
         "consulted_on": "2026-09-21",
         "kind": "standard"
+      },
+      {
+        "key": "sat-lisr-art-9",
+        "title": "Ley del Impuesto sobre la Renta, artículo 9 — tasa del 30 % de las personas morales y determinación de la utilidad fiscal, texto consolidado publicado por el SAT",
+        "publisher": "Servicio de Administración Tributaria — Portal de trámites y servicios",
+        "url": "https://wwwmat.sat.gob.mx/articulo/93578/articulo-9",
+        "consulted_on": "2026-10-01",
+        "kind": "law"
+      },
+      {
+        "key": "sat-lisr-art-14",
+        "title": "Ley del Impuesto sobre la Renta, artículo 14 — pagos provisionales mensuales, texto consolidado publicado por el SAT",
+        "publisher": "Servicio de Administración Tributaria — Portal de trámites y servicios",
+        "url": "https://wwwmat.sat.gob.mx/articulo/36326/articulo-14",
+        "consulted_on": "2026-10-01",
+        "kind": "law"
+      },
+      {
+        "key": "sat-lisr-art-28",
+        "title": "Ley del Impuesto sobre la Renta, artículo 28 — gastos no deducibles, texto consolidado publicado por el SAT",
+        "publisher": "Servicio de Administración Tributaria — Portal de trámites y servicios",
+        "url": "https://wwwmat.sat.gob.mx/articulo/96585/articulo-28",
+        "consulted_on": "2026-10-01",
+        "kind": "law"
+      },
+      {
+        "key": "sat-lisr-art-57",
+        "title": "Ley del Impuesto sobre la Renta, artículo 57 — pérdidas fiscales, texto consolidado publicado por el SAT",
+        "publisher": "Servicio de Administración Tributaria — Portal de trámites y servicios",
+        "url": "https://wwwmat.sat.gob.mx/articulo/93784/articulo-57",
+        "consulted_on": "2026-10-01",
+        "kind": "law"
       }
     ]
   },

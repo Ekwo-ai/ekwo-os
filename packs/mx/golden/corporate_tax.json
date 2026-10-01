@@ -1,0 +1,528 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "why": "Tres sociedades ficticias cuyo impuesto se calculó a mano para el ejercicio 2025: una sociedad con utilidad, con participación de los trabajadores en las utilidades y consumos en restaurantes; un ejercicio con pérdida; y una sociedad con reintegraciones que aplica pérdidas de ejercicios anteriores, una de ellas ya caducada. La tasa es única, sin condiciones: no hay tasa reducida que probar.",
+  "fiscal_year": {
+    "name": "Ejercicio 2025",
+    "start": "2025-01-01",
+    "end": "2025-12-31"
+  },
+  "companies": [
+    {
+      "ref": "profit-ptu",
+      "name": "Tejidos Aurora, S.A. de C.V.",
+      "why": "Una sociedad con utilidad. El impuesto registrado en la cuenta 611.01 queda fuera del punto de partida; la PTU registrada como gasto en la cuenta 607.01 se reintegra desde su cuenta y se deduce la pagada en el ejercicio, que la sociedad declara; de los consumos de la cuenta 601.49 declara los de restaurantes.",
+      "entries": [
+        {
+          "date": "2025-06-30",
+          "description": "Ventas del ejercicio",
+          "lines": [
+            {
+              "account": "102.01",
+              "debit": "4250000.00"
+            },
+            {
+              "account": "401.01",
+              "credit": "4250000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-06-30",
+          "description": "Costo de venta",
+          "lines": [
+            {
+              "account": "501.01",
+              "debit": "1980000.00"
+            },
+            {
+              "account": "102.01",
+              "credit": "1980000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-06-30",
+          "description": "Sueldos y arrendamiento",
+          "lines": [
+            {
+              "account": "601.01",
+              "debit": "920000.00"
+            },
+            {
+              "account": "601.46",
+              "debit": "360000.00"
+            },
+            {
+              "account": "102.01",
+              "credit": "1280000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-09-30",
+          "description": "Viáticos y consumos",
+          "lines": [
+            {
+              "account": "601.49",
+              "debit": "38400.00"
+            },
+            {
+              "account": "102.01",
+              "credit": "38400.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Depreciación e intereses",
+          "lines": [
+            {
+              "account": "613.05",
+              "debit": "45000.00"
+            },
+            {
+              "account": "701.04",
+              "debit": "21600.00"
+            },
+            {
+              "account": "102.01",
+              "credit": "66600.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Provisión de la PTU",
+          "lines": [
+            {
+              "account": "607.01",
+              "debit": "214000.00"
+            },
+            {
+              "account": "215.01",
+              "credit": "214000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "ISR del ejercicio",
+          "lines": [
+            {
+              "account": "611.01",
+              "debit": "380000.00"
+            },
+            {
+              "account": "213.03",
+              "credit": "380000.00"
+            }
+          ]
+        }
+      ],
+      "adjustments": [
+        {
+          "rule": "ptu-paid",
+          "amount": "186500.00"
+        },
+        {
+          "rule": "restaurants",
+          "amount": "12000.00"
+        }
+      ],
+      "expected": {
+        "computation": [
+          "Utilidad antes de impuestos (línea UAI): 4 250 000,00 − 1 980 000,00 − 920 000,00 − 360 000,00 − 38 400,00 − 45 000,00 − 21 600,00 − 214 000,00 = 671 000,00. El ISR de la cuenta 611.01 (380 000,00) está debajo de esa línea y no entra.",
+          "PTU registrada como gasto: saldo de la cuenta 607.01, 214 000,00 × 100 % = 214 000,00, que se suma.",
+          "PTU pagada en el ejercicio, declarada: 186 500,00 × 100 % = 186 500,00, que se resta.",
+          "Restaurantes, declarado: 12 000,00 × 91,5 % = 10 980,00, que se suma.",
+          "Resultado fiscal: 671 000,00 + 214 000,00 − 186 500,00 + 10 980,00 = 709 480,00. Sin pérdidas anteriores, la base es 709 480,00.",
+          "Tasa general: 709 480,00 × 30 % = 212 844,00.",
+          "Impuesto estimado: 212 844,00."
+        ],
+        "lines": [
+          {
+            "kind": "accounting_result",
+            "code": "UAI",
+            "amount": "671000.00"
+          },
+          {
+            "kind": "adjustment",
+            "code": "ptu-expense",
+            "base": "214000.00",
+            "rate": "100",
+            "amount": "214000.00"
+          },
+          {
+            "kind": "adjustment",
+            "code": "ptu-paid",
+            "base": "186500.00",
+            "rate": "100",
+            "amount": "-186500.00"
+          },
+          {
+            "kind": "adjustment",
+            "code": "restaurants",
+            "base": "12000.00",
+            "rate": "91.5",
+            "amount": "10980.00"
+          },
+          {
+            "kind": "fiscal_result",
+            "amount": "709480.00"
+          },
+          {
+            "kind": "taxable_base",
+            "amount": "709480.00"
+          },
+          {
+            "kind": "rate",
+            "code": "general",
+            "base": "709480.00",
+            "rate": "30",
+            "amount": "212844.00"
+          },
+          {
+            "kind": "tax_before_credits",
+            "base": "709480.00",
+            "amount": "212844.00"
+          },
+          {
+            "kind": "estimated_tax",
+            "code": "MX-ISR",
+            "base": "709480.00",
+            "amount": "212844.00"
+          }
+        ],
+        "tax": "212844.00"
+      }
+    },
+    {
+      "ref": "loss-year",
+      "name": "Distribuidora Sierra Madre, S. de R.L. de C.V.",
+      "why": "Un ejercicio con pérdida: sin base y sin impuesto. La pérdida fiscal — la contable aumentada con la multa que la sociedad declara — es la que un ejercicio posterior podrá aplicar durante diez ejercicios.",
+      "entries": [
+        {
+          "date": "2025-06-30",
+          "description": "Ventas del ejercicio",
+          "lines": [
+            {
+              "account": "102.01",
+              "debit": "1200000.00"
+            },
+            {
+              "account": "401.01",
+              "credit": "1200000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-06-30",
+          "description": "Costo de venta",
+          "lines": [
+            {
+              "account": "501.01",
+              "debit": "780000.00"
+            },
+            {
+              "account": "102.01",
+              "credit": "780000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-06-30",
+          "description": "Sueldos y arrendamiento",
+          "lines": [
+            {
+              "account": "601.01",
+              "debit": "310000.00"
+            },
+            {
+              "account": "601.46",
+              "debit": "240000.00"
+            },
+            {
+              "account": "102.01",
+              "credit": "550000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-09-30",
+          "description": "Multa",
+          "lines": [
+            {
+              "account": "703.21",
+              "debit": "18000.00"
+            },
+            {
+              "account": "102.01",
+              "credit": "18000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Depreciación",
+          "lines": [
+            {
+              "account": "613.05",
+              "debit": "30000.00"
+            },
+            {
+              "account": "102.01",
+              "credit": "30000.00"
+            }
+          ]
+        }
+      ],
+      "adjustments": [
+        {
+          "rule": "fines-penalties",
+          "amount": "8500.00"
+        }
+      ],
+      "expected": {
+        "computation": [
+          "Pérdida antes de impuestos (línea UAI): 1 200 000,00 − 780 000,00 − 310 000,00 − 240 000,00 − 18 000,00 − 30 000,00 = −178 000,00.",
+          "Multas, declaradas (de los 18 000,00 de la cuenta 703.21): 8 500,00 × 100 % = 8 500,00, que se suma.",
+          "Resultado fiscal: −178 000,00 + 8 500,00 = −169 500,00. La base es cero y la pérdida fiscal del ejercicio es de 169 500,00.",
+          "Impuesto estimado: 0,00."
+        ],
+        "lines": [
+          {
+            "kind": "accounting_result",
+            "code": "UAI",
+            "amount": "-178000.00"
+          },
+          {
+            "kind": "adjustment",
+            "code": "fines-penalties",
+            "base": "8500.00",
+            "rate": "100",
+            "amount": "8500.00"
+          },
+          {
+            "kind": "fiscal_result",
+            "amount": "-169500.00"
+          },
+          {
+            "kind": "taxable_base",
+            "amount": "0.00"
+          },
+          {
+            "kind": "loss_of_period",
+            "amount": "169500.00"
+          },
+          {
+            "kind": "tax_before_credits",
+            "base": "0.00",
+            "amount": "0.00"
+          },
+          {
+            "kind": "estimated_tax",
+            "code": "MX-ISR",
+            "base": "0.00",
+            "amount": "0.00"
+          }
+        ],
+        "tax": "0.00"
+      }
+    },
+    {
+      "ref": "adjustments-and-losses",
+      "name": "Comercializadora del Bajío, S.A. de C.V.",
+      "why": "Una sociedad con reintegraciones que aplica pérdidas de ejercicios anteriores, la más antigua primero, sin tope sobre la utilidad. La pérdida de 2014 ya no puede aplicarse en 2025: el artículo 57 la permite durante los diez ejercicios siguientes, hasta 2024.",
+      "entries": [
+        {
+          "date": "2025-06-30",
+          "description": "Ventas del ejercicio",
+          "lines": [
+            {
+              "account": "102.01",
+              "debit": "9800000.00"
+            },
+            {
+              "account": "401.01",
+              "credit": "9800000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-06-30",
+          "description": "Costo de venta",
+          "lines": [
+            {
+              "account": "501.01",
+              "debit": "6200000.00"
+            },
+            {
+              "account": "102.01",
+              "credit": "6200000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-06-30",
+          "description": "Sueldos y arrendamiento",
+          "lines": [
+            {
+              "account": "601.01",
+              "debit": "1450000.00"
+            },
+            {
+              "account": "601.46",
+              "debit": "480000.00"
+            },
+            {
+              "account": "102.01",
+              "credit": "1930000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-09-30",
+          "description": "Viáticos y consumos",
+          "lines": [
+            {
+              "account": "601.49",
+              "debit": "96000.00"
+            },
+            {
+              "account": "102.01",
+              "credit": "96000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-10-31",
+          "description": "Multa y otros gastos",
+          "lines": [
+            {
+              "account": "703.21",
+              "debit": "14750.00"
+            },
+            {
+              "account": "102.01",
+              "credit": "14750.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Depreciación e intereses",
+          "lines": [
+            {
+              "account": "613.05",
+              "debit": "205000.00"
+            },
+            {
+              "account": "701.04",
+              "debit": "38000.00"
+            },
+            {
+              "account": "102.01",
+              "credit": "243000.00"
+            }
+          ]
+        }
+      ],
+      "adjustments": [
+        {
+          "rule": "restaurants",
+          "amount": "60000.00"
+        },
+        {
+          "rule": "fines-penalties",
+          "amount": "14750.00"
+        }
+      ],
+      "losses": [
+        {
+          "origin_period_end": "2014-12-31",
+          "amount": "300000.00"
+        },
+        {
+          "origin_period_end": "2019-12-31",
+          "amount": "500000.00"
+        },
+        {
+          "origin_period_end": "2023-12-31",
+          "amount": "250000.00"
+        }
+      ],
+      "expected": {
+        "computation": [
+          "Utilidad antes de impuestos (línea UAI): 9 800 000,00 − 6 200 000,00 − 1 450 000,00 − 480 000,00 − 96 000,00 − 14 750,00 − 205 000,00 − 38 000,00 = 1 316 250,00.",
+          "Restaurantes, declarado: 60 000,00 × 91,5 % = 54 900,00, que se suma.",
+          "Multas, declaradas: 14 750,00 × 100 % = 14 750,00, que se suma.",
+          "Resultado fiscal: 1 316 250,00 + 54 900,00 + 14 750,00 = 1 385 900,00.",
+          "Pérdidas anteriores: la de 2014 (300 000,00) caducó, porque los diez ejercicios siguientes son 2015 a 2024. Quedan la de 2019 (500 000,00) y la de 2023 (250 000,00); sin tope, se aplican las dos, la más antigua primero: 500 000,00 + 250 000,00 = 750 000,00.",
+          "Base: 1 385 900,00 − 750 000,00 = 635 900,00.",
+          "Tasa general: 635 900,00 × 30 % = 190 770,00.",
+          "Impuesto estimado: 190 770,00."
+        ],
+        "lines": [
+          {
+            "kind": "accounting_result",
+            "code": "UAI",
+            "amount": "1316250.00"
+          },
+          {
+            "kind": "adjustment",
+            "code": "restaurants",
+            "base": "60000.00",
+            "rate": "91.5",
+            "amount": "54900.00"
+          },
+          {
+            "kind": "adjustment",
+            "code": "fines-penalties",
+            "base": "14750.00",
+            "rate": "100",
+            "amount": "14750.00"
+          },
+          {
+            "kind": "fiscal_result",
+            "amount": "1385900.00"
+          },
+          {
+            "kind": "loss_used",
+            "code": "2019-12-31",
+            "base": "500000.00",
+            "amount": "-500000.00"
+          },
+          {
+            "kind": "loss_used",
+            "code": "2023-12-31",
+            "base": "250000.00",
+            "amount": "-250000.00"
+          },
+          {
+            "kind": "taxable_base",
+            "amount": "635900.00"
+          },
+          {
+            "kind": "rate",
+            "code": "general",
+            "base": "635900.00",
+            "rate": "30",
+            "amount": "190770.00"
+          },
+          {
+            "kind": "tax_before_credits",
+            "base": "635900.00",
+            "amount": "190770.00"
+          },
+          {
+            "kind": "estimated_tax",
+            "code": "MX-ISR",
+            "base": "635900.00",
+            "amount": "190770.00"
+          }
+        ],
+        "tax": "190770.00"
+      }
+    }
+  ]
+}

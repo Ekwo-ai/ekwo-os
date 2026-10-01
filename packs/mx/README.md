@@ -51,11 +51,14 @@ cannot yet say "mandatory, by clearance"; see *What the core could not say*.
 ## Sources
 
 Every rate, field, mention and statement carries its own `legal_reference` and
-the key of the text it is in. The register in `pack.json` holds **23 texts**,
-every one opened on 21 September 2026:
+the key of the text it is in. The register in `pack.json` holds **27 texts**,
+23 of them opened on 21 September 2026 and the four articles of the Income Tax
+Act of the corporate tax section on 1 October 2026:
 
 - the consolidated federal laws on the Cámara de Diputados site (LIVA, its
   Reglamento, CFF, LISR, Código de Comercio, LGSM);
+- articles 9, 14, 28 and 57 of the LISR as the SAT portal serves them, one page
+  per article (the Cámara's site did not answer on 1 October 2026);
 - the *Resolución Miscelánea Fiscal para 2026* and its Anexo 24 on the SAT's
   normative minisite;
 - the three border-region decrees and the 2013 compiling decree in the Diario
@@ -262,6 +265,43 @@ and 0 % goods, receives a credit note and pays an advance with no invoice.
 Credit notes carry non-cash-basis taxes on purpose: the scenario format
 refuses to match a refund to a credit note, and a cash-basis credit note
 nobody matches would wait on its transition account for ever.
+
+## Corporate income tax: what `corporate_tax.json` leaves out
+
+The section carries what was read on an official page on 1 October 2026 —
+articles 9, 14, 28 and 57 of the *Ley del Impuesto sobre la Renta* as the SAT
+portal serves them — and nothing else. It starts from *Utilidad (pérdida)
+antes de impuestos a la utilidad* (`UAI`, printed above the ISR account 611),
+applies 30 % (art. 9) to the base left after the adjustments and the losses,
+and lets a loss be applied for ten years (art. 57). It is an estimate from the
+books, not the accounting-to-tax reconciliation the law describes, which
+starts from income and authorised deductions and not from the accounting
+result.
+
+Two things to know about the dates. The rules are dated from the first day of
+2025, the year the worked examples cover, and not from the day the law
+adopted them, which was not read. And the portal pages carry no reform date:
+the pack's `lisr` entry names a text last reformed on 1 April 2024, and a
+2026 summary of the tax package that was read does not list articles 9, 28 or
+57 among the ones it changed. A reviewer should check that against the text
+in force.
+
+| Not carried | Why |
+|---|---|
+| The monthly provisional payments (art. 14) | They are the profit coefficient of the last year times the income of the year so far, less the profit sharing and the losses, at the rate of article 9, paid by the 17th of the following month. That is neither of the two methods of `prepayments` (a surcharge on a shortfall, a share of a reference tax), so `prepayments` is empty. |
+| The annual adjustment for inflation (art. 44) and the restatement of losses (art. 57) | Article 57 restates a loss by an updating factor before it is applied, and the section has no index. Losses are applied at their nominal amount, which understates what a company may apply. Article 44 was not read. |
+| Taxes on the tax | None is carried: nothing read said there was one, and the vocabulary has no shape for it. |
+| The share of restaurant consumption that is deductible, and its conditions | The rule adds back 91.5 % of the amount the company declares (art. 28, fr. XX). The company declares only what falls outside fraction V, whose limits were not read; bar consumption, never deductible, is the company's to leave in the amount. |
+| Fines: the exceptions | Article 28, fr. VI has limited exceptions (objective liability, force majeure). The company declares the amount that is not covered by one. No account of the chart holds fines alone, so the rule names none. |
+| Account 601.83 *Gastos no deducibles (sin requisitos fiscales)* | An expense that lacks the requirements of article 27 is not deductible, but article 27 was not read, so no rule names the account. A company that books on it declares the amount under a rule of its own. |
+| Employee profit sharing: the reading | The rule adds back the whole of account 607 and deducts what the company declares it paid in the year (art. 9, fr. I). A company that books the profit sharing only when it pays it gets the same figure either way. The reading that the book expense is not the deduction is the pack's, and a local accountant should confirm it. |
+| Other non-deductible items of article 28 and the limits of authorised deductions | Not read one by one: payments to related parties, gifts, vehicles, interest and the rest need a rule only where a flat percentage can be cited. |
+| RESICO for legal entities and the other special regimes | Another regime with other rates; not read. A company in one of them does not use this section. |
+| Tax credits and incentives (the border-region decrees, film projects…) | `credits` is empty: the shape is published and none was read in its text. |
+| Rounding of the tax | Not read. The estimate is kept at the cent. |
+
+The loss limit in the data is the one article 57 states: ten following years,
+no ceiling on the profit, oldest first. Nothing the pack says is tax advice.
 
 ## What the core could not say
 

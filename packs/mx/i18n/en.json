@@ -441,5 +441,13 @@
     "cfdi_ppd": "Payment in instalments or deferred (PPD): each collection is supported by a CFDI with the payment receipt complement, and the value added tax charged falls due when the consideration is actually collected.",
     "export": "Export — value added tax at 0 % (article 29 of the Value Added Tax Act).",
     "exempt": "Act or activity exempt from value added tax (articles 9, 15 or 20 of the Value Added Tax Act, depending on the act)."
+  },
+  "corporate_tax": {
+    "tax": "Corporate income tax of legal entities",
+    "rule:ptu-expense": "Employee profit sharing booked as an expense",
+    "rule:ptu-paid": "Employee profit sharing paid in the year",
+    "rule:restaurants": "Restaurant consumption — non-deductible share",
+    "rule:fines-penalties": "Penalties, damages and contractual penalties",
+    "rate:general": "General rate for legal entities"
   }
 }
