@@ -2,10 +2,10 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "SG",
   "name": "Singapore",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "schema_min": "20260917170000",
   "seed_sequence": 50,
-  "released_at": "2026-09-21",
+  "released_at": "2026-10-01",
   "certification": {
     "status": "community",
     "sources": [
@@ -200,6 +200,38 @@
         "url": "https://www.bizfile.gov.sg/",
         "consulted_on": "2026-09-21",
         "kind": "portal"
+      },
+      {
+        "key": "iras-form-c-ya2026",
+        "title": "Explanatory Notes to Form C for Year of Assessment (YA) 2026 — qualifying conditions of the tax exemption schemes, basis period, shareholding test, annex of computations of tax payable",
+        "publisher": "Inland Revenue Authority of Singapore (IRAS)",
+        "url": "https://www.iras.gov.sg/docs/default-source/uploadedfiles/pdf/explanatory-notes-to-ya-2026-form-c.pdf",
+        "consulted_on": "2026-10-01",
+        "kind": "form"
+      },
+      {
+        "key": "iras-exemption-examples",
+        "title": "Examples on computing the amount of tax exemption under the tax exemption scheme for new start-up companies and the partial tax exemption scheme",
+        "publisher": "Inland Revenue Authority of Singapore (IRAS)",
+        "url": "https://www.iras.gov.sg/media/docs/default-source/uploadedfiles/pdf/examples-on-computing-the-amount-of-tax-exemption-for-companies.pdf",
+        "consulted_on": "2026-10-01",
+        "kind": "guidance"
+      },
+      {
+        "key": "iras-unabsorbed-items",
+        "title": "IRAS e-Tax Guide — Utilising Unabsorbed Capital Allowances, Trade Losses and Donations (third edition)",
+        "publisher": "Inland Revenue Authority of Singapore (IRAS)",
+        "url": "https://www.iras.gov.sg/media/docs/default-source/e-tax/utilising-unabsorbed-items_2012-06-29.pdf",
+        "consulted_on": "2026-10-01",
+        "kind": "guidance"
+      },
+      {
+        "key": "iras-family-audits",
+        "title": "IRAS' audits on family-owned/managed companies — common mistakes in tax computations (capital expenditure and depreciation, private motor vehicle expenses, capital allowances)",
+        "publisher": "Inland Revenue Authority of Singapore (IRAS)",
+        "url": "https://www.iras.gov.sg/media/docs/default-source/uploadedfiles/pdf/industry-write-up_family-owned-companies(2)(1).pdf",
+        "consulted_on": "2026-10-01",
+        "kind": "guidance"
       }
     ]
   },

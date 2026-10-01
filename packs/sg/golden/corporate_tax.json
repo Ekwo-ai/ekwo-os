@@ -1,0 +1,753 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "why": "Four fictitious companies whose tax was worked out by hand for the financial year 2025, the basis period of year of assessment 2026: an established company under the partial tax exemption, a year that ends in a loss, a new start-up company under its exemption, and a larger company that sets two earlier losses against its profit. Depreciation is added back by the pack from account 6200; the private car expenses and the capital allowances are stated by the company; the 50 % CIT rebate of YA 2026 is not carried and none of these figures includes it.",
+  "fiscal_year": {
+    "name": "Financial year 2025",
+    "start": "2025-01-01",
+    "end": "2025-12-31"
+  },
+  "companies": [
+    {
+      "ref": "sme-partial-exemption",
+      "name": "Merlion Kopi Roasters Pte. Ltd.",
+      "why": "An established company with a profit, outside the new start-up exemption: the partial tax exemption applies — 4,25 % on the first 10 000, 8,5 % on the next 190 000 — and the rest is taxed at 17 %. Depreciation is added back from account 6200 by itself, the private car expenses and the capital allowances are stated by the company. The tax charge already booked sits below line 8 and changes nothing.",
+      "entries": [
+        {
+          "date": "2025-06-30",
+          "description": "Sales of the year",
+          "lines": [
+            {
+              "account": "1010",
+              "debit": "480000.00"
+            },
+            {
+              "account": "4000",
+              "credit": "480000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-06-30",
+          "description": "Salaries and employer CPF",
+          "lines": [
+            {
+              "account": "6000",
+              "debit": "150000.00"
+            },
+            {
+              "account": "6030",
+              "debit": "25500.00"
+            },
+            {
+              "account": "1010",
+              "credit": "175500.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-06-30",
+          "description": "Rent and professional fees",
+          "lines": [
+            {
+              "account": "6300",
+              "debit": "36000.00"
+            },
+            {
+              "account": "6420",
+              "debit": "12000.00"
+            },
+            {
+              "account": "1010",
+              "credit": "48000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Depreciation of equipment",
+          "lines": [
+            {
+              "account": "6200",
+              "debit": "9500.00"
+            },
+            {
+              "account": "1010",
+              "credit": "9500.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Motor car expenses",
+          "lines": [
+            {
+              "account": "6380",
+              "debit": "6200.00"
+            },
+            {
+              "account": "1010",
+              "credit": "6200.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Estimated income tax of the year",
+          "lines": [
+            {
+              "account": "8000",
+              "debit": "20000.00"
+            },
+            {
+              "account": "2300",
+              "credit": "20000.00"
+            }
+          ]
+        }
+      ],
+      "parameters": {
+        "new_start_up_company": false
+      },
+      "adjustments": [
+        {
+          "rule": "private-motor-vehicle",
+          "amount": "4200.00"
+        },
+        {
+          "rule": "capital-allowances",
+          "amount": "11300.00"
+        }
+      ],
+      "expected": {
+        "computation": [
+          "Profit before income tax (line 8): 480 000,00 − 150 000,00 − 25 500,00 − 36 000,00 − 12 000,00 − 9 500,00 − 6 200,00 = 240 800,00. The tax charge of 20 000,00 is on line 9 and does not enter.",
+          "Depreciation: balance of account 6200, 9 500,00 × 100 % = 9 500,00 added back.",
+          "Private motor vehicle expenses, stated by the company: 4 200,00 × 100 % = 4 200,00 added back.",
+          "Capital allowances, stated by the company: 11 300,00 × 100 % = 11 300,00 deducted.",
+          "Fiscal result: 240 800,00 + 9 500,00 + 4 200,00 − 11 300,00 = 243 200,00. No loss brought forward: the taxable base is 243 200,00.",
+          "Start-up exemption refused: the company declares that it is not a new start-up company.",
+          "Partial exemption, first slice: 10 000,00 × 4,25 % = 425,00 (17 % on the 25 % left of 10 000).",
+          "Partial exemption, second slice: 190 000,00 × 8,5 % = 16 150,00 (17 % on the 50 % left of 190 000).",
+          "Standard rate on the rest: (243 200,00 − 200 000,00) = 43 200,00 × 17 % = 7 344,00.",
+          "Estimated tax: 425,00 + 16 150,00 + 7 344,00 = 23 919,00. Check with the exempt amount: 7 500 + 95 000 = 102 500; (243 200 − 102 500) × 17 % = 140 700 × 17 % = 23 919,00."
+        ],
+        "lines": [
+          {
+            "kind": "accounting_result",
+            "code": "8",
+            "amount": "240800.00"
+          },
+          {
+            "kind": "adjustment",
+            "code": "depreciation",
+            "base": "9500.00",
+            "rate": "100",
+            "amount": "9500.00"
+          },
+          {
+            "kind": "adjustment",
+            "code": "private-motor-vehicle",
+            "base": "4200.00",
+            "rate": "100",
+            "amount": "4200.00"
+          },
+          {
+            "kind": "adjustment",
+            "code": "capital-allowances",
+            "base": "11300.00",
+            "rate": "100",
+            "amount": "-11300.00"
+          },
+          {
+            "kind": "fiscal_result",
+            "amount": "243200.00"
+          },
+          {
+            "kind": "taxable_base",
+            "amount": "243200.00"
+          },
+          {
+            "kind": "rate",
+            "code": "partial-exemption-first-10000",
+            "base": "10000.00",
+            "rate": "4.25",
+            "amount": "425.00"
+          },
+          {
+            "kind": "rate_not_applied",
+            "code": "start-up-exemption-first-100000",
+            "note": "not_met: new_start_up_company",
+            "rate": "4.25"
+          },
+          {
+            "kind": "rate",
+            "code": "partial-exemption-next-190000",
+            "base": "190000.00",
+            "rate": "8.5",
+            "amount": "16150.00"
+          },
+          {
+            "kind": "rate_not_applied",
+            "code": "start-up-exemption-next-100000",
+            "note": "not_met: new_start_up_company",
+            "rate": "8.5"
+          },
+          {
+            "kind": "rate",
+            "code": "standard",
+            "base": "43200.00",
+            "rate": "17",
+            "amount": "7344.00"
+          },
+          {
+            "kind": "tax_before_credits",
+            "base": "243200.00",
+            "amount": "23919.00"
+          },
+          {
+            "kind": "estimated_tax",
+            "code": "SG-CIT",
+            "base": "243200.00",
+            "amount": "23919.00"
+          }
+        ],
+        "tax": "23919.00"
+      }
+    },
+    {
+      "ref": "loss-year",
+      "name": "Kampong Bento Studio Pte. Ltd.",
+      "why": "A year that ends in a loss: no base, no tax, and the tax loss — the accounting loss plus the expenses the tax refuses — is the stock a later year draws on, with no time limit. The company declares itself a new start-up company, so the partial exemption is refused, and a nil base takes nothing from either scheme.",
+      "entries": [
+        {
+          "date": "2025-06-30",
+          "description": "Sales of the year",
+          "lines": [
+            {
+              "account": "1010",
+              "debit": "96000.00"
+            },
+            {
+              "account": "4000",
+              "credit": "96000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-06-30",
+          "description": "Salaries",
+          "lines": [
+            {
+              "account": "6000",
+              "debit": "84000.00"
+            },
+            {
+              "account": "1010",
+              "credit": "84000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-06-30",
+          "description": "Rent",
+          "lines": [
+            {
+              "account": "6300",
+              "debit": "30000.00"
+            },
+            {
+              "account": "1010",
+              "credit": "30000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Depreciation of equipment",
+          "lines": [
+            {
+              "account": "6200",
+              "debit": "4000.00"
+            },
+            {
+              "account": "1010",
+              "credit": "4000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Motor car expenses",
+          "lines": [
+            {
+              "account": "6380",
+              "debit": "3000.00"
+            },
+            {
+              "account": "1010",
+              "credit": "3000.00"
+            }
+          ]
+        }
+      ],
+      "parameters": {
+        "new_start_up_company": true
+      },
+      "adjustments": [
+        {
+          "rule": "private-motor-vehicle",
+          "amount": "3000.00"
+        }
+      ],
+      "expected": {
+        "computation": [
+          "Profit before income tax (line 8): 96 000,00 − 84 000,00 − 30 000,00 − 4 000,00 − 3 000,00 = −25 000,00.",
+          "Depreciation: account 6200, 4 000,00 × 100 % = 4 000,00 added back.",
+          "Private motor vehicle expenses, stated by the company: 3 000,00 × 100 % = 3 000,00 added back.",
+          "Fiscal result: −25 000,00 + 4 000,00 + 3 000,00 = −18 000,00. The base is nil and the loss of the period is 18 000,00.",
+          "Partial exemption refused: the company declares that it is a new start-up company. Its slices would take nothing from a nil base.",
+          "Estimated tax: 0,00."
+        ],
+        "lines": [
+          {
+            "kind": "accounting_result",
+            "code": "8",
+            "amount": "-25000.00"
+          },
+          {
+            "kind": "adjustment",
+            "code": "depreciation",
+            "base": "4000.00",
+            "rate": "100",
+            "amount": "4000.00"
+          },
+          {
+            "kind": "adjustment",
+            "code": "private-motor-vehicle",
+            "base": "3000.00",
+            "rate": "100",
+            "amount": "3000.00"
+          },
+          {
+            "kind": "fiscal_result",
+            "amount": "-18000.00"
+          },
+          {
+            "kind": "taxable_base",
+            "amount": "0.00"
+          },
+          {
+            "kind": "loss_of_period",
+            "amount": "18000.00"
+          },
+          {
+            "kind": "rate_not_applied",
+            "code": "partial-exemption-first-10000",
+            "note": "not_met: new_start_up_company",
+            "rate": "4.25"
+          },
+          {
+            "kind": "rate_not_applied",
+            "code": "partial-exemption-next-190000",
+            "note": "not_met: new_start_up_company",
+            "rate": "8.5"
+          },
+          {
+            "kind": "tax_before_credits",
+            "base": "0.00",
+            "amount": "0.00"
+          },
+          {
+            "kind": "estimated_tax",
+            "code": "SG-CIT",
+            "base": "0.00",
+            "amount": "0.00"
+          }
+        ],
+        "tax": "0.00"
+      }
+    },
+    {
+      "ref": "new-start-up",
+      "name": "Harbourfront Robotics Pte. Ltd.",
+      "why": "A new start-up company that meets the conditions of the exemption: 4,25 % on the first 100 000, 8,5 % on the next 100 000 — here 50 000 — and the partial exemption is refused in its place.",
+      "entries": [
+        {
+          "date": "2025-06-30",
+          "description": "Sales of the year",
+          "lines": [
+            {
+              "account": "1010",
+              "debit": "320000.00"
+            },
+            {
+              "account": "4000",
+              "credit": "320000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-06-30",
+          "description": "Salaries",
+          "lines": [
+            {
+              "account": "6000",
+              "debit": "120000.00"
+            },
+            {
+              "account": "1010",
+              "credit": "120000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-06-30",
+          "description": "Rent and software subscriptions",
+          "lines": [
+            {
+              "account": "6300",
+              "debit": "30000.00"
+            },
+            {
+              "account": "6350",
+              "debit": "18000.00"
+            },
+            {
+              "account": "1010",
+              "credit": "48000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Depreciation of equipment",
+          "lines": [
+            {
+              "account": "6200",
+              "debit": "6000.00"
+            },
+            {
+              "account": "1010",
+              "credit": "6000.00"
+            }
+          ]
+        }
+      ],
+      "parameters": {
+        "new_start_up_company": true
+      },
+      "adjustments": [
+        {
+          "rule": "capital-allowances",
+          "amount": "2000.00"
+        }
+      ],
+      "expected": {
+        "computation": [
+          "Profit before income tax (line 8): 320 000,00 − 120 000,00 − 30 000,00 − 18 000,00 − 6 000,00 = 146 000,00.",
+          "Depreciation: account 6200, 6 000,00 × 100 % = 6 000,00 added back.",
+          "Capital allowances, stated by the company: 2 000,00 × 100 % = 2 000,00 deducted.",
+          "Fiscal result: 146 000,00 + 6 000,00 − 2 000,00 = 150 000,00. No loss brought forward: the taxable base is 150 000,00.",
+          "Partial exemption refused: the company declares that it is a new start-up company.",
+          "Start-up exemption, first slice: 100 000,00 × 4,25 % = 4 250,00 (17 % on the 25 % left of 100 000).",
+          "Start-up exemption, second slice: (150 000,00 − 100 000,00) = 50 000,00 × 8,5 % = 4 250,00 (17 % on the 50 % left).",
+          "Nothing is left above 200 000,00 for the standard rate.",
+          "Estimated tax: 4 250,00 + 4 250,00 = 8 500,00. Check with the exempt amount: 75 000 + 25 000 = 100 000; (150 000 − 100 000) × 17 % = 8 500,00."
+        ],
+        "lines": [
+          {
+            "kind": "accounting_result",
+            "code": "8",
+            "amount": "146000.00"
+          },
+          {
+            "kind": "adjustment",
+            "code": "depreciation",
+            "base": "6000.00",
+            "rate": "100",
+            "amount": "6000.00"
+          },
+          {
+            "kind": "adjustment",
+            "code": "capital-allowances",
+            "base": "2000.00",
+            "rate": "100",
+            "amount": "-2000.00"
+          },
+          {
+            "kind": "fiscal_result",
+            "amount": "150000.00"
+          },
+          {
+            "kind": "taxable_base",
+            "amount": "150000.00"
+          },
+          {
+            "kind": "rate_not_applied",
+            "code": "partial-exemption-first-10000",
+            "note": "not_met: new_start_up_company",
+            "rate": "4.25"
+          },
+          {
+            "kind": "rate",
+            "code": "start-up-exemption-first-100000",
+            "base": "100000.00",
+            "rate": "4.25",
+            "amount": "4250.00"
+          },
+          {
+            "kind": "rate_not_applied",
+            "code": "partial-exemption-next-190000",
+            "note": "not_met: new_start_up_company",
+            "rate": "8.5"
+          },
+          {
+            "kind": "rate",
+            "code": "start-up-exemption-next-100000",
+            "base": "50000.00",
+            "rate": "8.5",
+            "amount": "4250.00"
+          },
+          {
+            "kind": "tax_before_credits",
+            "base": "150000.00",
+            "amount": "8500.00"
+          },
+          {
+            "kind": "estimated_tax",
+            "code": "SG-CIT",
+            "base": "150000.00",
+            "amount": "8500.00"
+          }
+        ],
+        "tax": "8500.00"
+      }
+    },
+    {
+      "ref": "large-with-losses",
+      "name": "Tanjong Pagar Freight Pte. Ltd.",
+      "why": "A company well above 200 000 of income, with losses of two earlier years: they are set against the profit oldest first, with no limit on the amount, and the base is taxed with the two slices of the partial exemption and the standard rate on the rest.",
+      "entries": [
+        {
+          "date": "2025-06-30",
+          "description": "Sales of the year",
+          "lines": [
+            {
+              "account": "1010",
+              "debit": "2350000.00"
+            },
+            {
+              "account": "4000",
+              "credit": "2350000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-06-30",
+          "description": "Purchases",
+          "lines": [
+            {
+              "account": "5000",
+              "debit": "800000.00"
+            },
+            {
+              "account": "1010",
+              "credit": "800000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-06-30",
+          "description": "Salaries",
+          "lines": [
+            {
+              "account": "6000",
+              "debit": "520000.00"
+            },
+            {
+              "account": "1010",
+              "credit": "520000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-06-30",
+          "description": "Rent and professional fees",
+          "lines": [
+            {
+              "account": "6300",
+              "debit": "96000.00"
+            },
+            {
+              "account": "6420",
+              "debit": "24000.00"
+            },
+            {
+              "account": "1010",
+              "credit": "120000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Depreciation of equipment",
+          "lines": [
+            {
+              "account": "6200",
+              "debit": "40000.00"
+            },
+            {
+              "account": "1010",
+              "credit": "40000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Motor car expenses",
+          "lines": [
+            {
+              "account": "6380",
+              "debit": "18000.00"
+            },
+            {
+              "account": "1010",
+              "credit": "18000.00"
+            }
+          ]
+        }
+      ],
+      "parameters": {
+        "new_start_up_company": false
+      },
+      "adjustments": [
+        {
+          "rule": "private-motor-vehicle",
+          "amount": "18000.00"
+        },
+        {
+          "rule": "capital-allowances",
+          "amount": "55000.00"
+        }
+      ],
+      "losses": [
+        {
+          "origin_period_end": "2023-12-31",
+          "amount": "120000.00"
+        },
+        {
+          "origin_period_end": "2024-12-31",
+          "amount": "260000.00"
+        }
+      ],
+      "expected": {
+        "computation": [
+          "Profit before income tax (line 8): 2 350 000,00 − 800 000,00 − 520 000,00 − 96 000,00 − 24 000,00 − 40 000,00 − 18 000,00 = 852 000,00.",
+          "Depreciation: account 6200, 40 000,00 × 100 % = 40 000,00 added back.",
+          "Private motor vehicle expenses, stated by the company: 18 000,00 × 100 % = 18 000,00 added back.",
+          "Capital allowances, stated by the company: 55 000,00 × 100 % = 55 000,00 deducted.",
+          "Fiscal result: 852 000,00 + 40 000,00 + 18 000,00 − 55 000,00 = 855 000,00.",
+          "Losses brought forward: 120 000,00 (2023) and 260 000,00 (2024) = 380 000,00. There is no limit on the amount or on the years, so both are set against the profit, the oldest first.",
+          "Taxable base: 855 000,00 − 380 000,00 = 475 000,00.",
+          "Start-up exemption refused: the company declares that it is not a new start-up company.",
+          "Partial exemption: 10 000,00 × 4,25 % = 425,00 and 190 000,00 × 8,5 % = 16 150,00.",
+          "Standard rate on the rest: (475 000,00 − 200 000,00) = 275 000,00 × 17 % = 46 750,00.",
+          "Estimated tax: 425,00 + 16 150,00 + 46 750,00 = 63 325,00. Check with the exempt amount: 102 500; (475 000 − 102 500) × 17 % = 372 500 × 17 % = 63 325,00."
+        ],
+        "lines": [
+          {
+            "kind": "accounting_result",
+            "code": "8",
+            "amount": "852000.00"
+          },
+          {
+            "kind": "adjustment",
+            "code": "depreciation",
+            "base": "40000.00",
+            "rate": "100",
+            "amount": "40000.00"
+          },
+          {
+            "kind": "adjustment",
+            "code": "private-motor-vehicle",
+            "base": "18000.00",
+            "rate": "100",
+            "amount": "18000.00"
+          },
+          {
+            "kind": "adjustment",
+            "code": "capital-allowances",
+            "base": "55000.00",
+            "rate": "100",
+            "amount": "-55000.00"
+          },
+          {
+            "kind": "fiscal_result",
+            "amount": "855000.00"
+          },
+          {
+            "kind": "loss_used",
+            "code": "2023-12-31",
+            "base": "120000.00",
+            "amount": "-120000.00"
+          },
+          {
+            "kind": "loss_used",
+            "code": "2024-12-31",
+            "base": "260000.00",
+            "amount": "-260000.00"
+          },
+          {
+            "kind": "taxable_base",
+            "amount": "475000.00"
+          },
+          {
+            "kind": "rate",
+            "code": "partial-exemption-first-10000",
+            "base": "10000.00",
+            "rate": "4.25",
+            "amount": "425.00"
+          },
+          {
+            "kind": "rate_not_applied",
+            "code": "start-up-exemption-first-100000",
+            "note": "not_met: new_start_up_company",
+            "rate": "4.25"
+          },
+          {
+            "kind": "rate",
+            "code": "partial-exemption-next-190000",
+            "base": "190000.00",
+            "rate": "8.5",
+            "amount": "16150.00"
+          },
+          {
+            "kind": "rate_not_applied",
+            "code": "start-up-exemption-next-100000",
+            "note": "not_met: new_start_up_company",
+            "rate": "8.5"
+          },
+          {
+            "kind": "rate",
+            "code": "standard",
+            "base": "275000.00",
+            "rate": "17",
+            "amount": "46750.00"
+          },
+          {
+            "kind": "tax_before_credits",
+            "base": "475000.00",
+            "amount": "63325.00"
+          },
+          {
+            "kind": "estimated_tax",
+            "code": "SG-CIT",
+            "base": "475000.00",
+            "amount": "63325.00"
+          }
+        ],
+        "tax": "63325.00"
+      }
+    }
+  ]
+}

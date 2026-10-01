@@ -27,8 +27,9 @@ of it was patched for this pack's sake.
 
 Every tax, box, mention and statement line carries its own `legal_reference`,
 and beside it the key of the text that article is in. The register in
-`pack.json` holds twenty-four texts, and every one of them was opened on
-21 September 2026: the statutes on Singapore Statutes Online, IRAS's pages and
+`pack.json` holds twenty-eight texts. Twenty-four were opened on
+21 September 2026, the four of the corporate income tax section on 1 October
+2026 (see below): the statutes on Singapore Statutes Online, IRAS's pages and
 e-Tax Guide on iras.gov.sg, the Peppol specification on docs.peppol.eu. The ones
 the rest of this file leans on:
 
@@ -298,6 +299,65 @@ names its PINT SG code in its legal reference, for a renderer to map.
 - **Bank formats.** Nothing checked says which formats Singapore banks send.
 - **Filing.** The return is filed on myTax Portal; submitting it is a credential
   and a format, not a pack.
+
+## Corporate income tax: what `corporate_tax.json` leaves out
+
+The section carries what was read on an IRAS document on 1 October 2026 — the
+explanatory notes of Form C for year of assessment (YA) 2026, IRAS' examples of
+the tax exemptions, the e-Tax Guide on unabsorbed items and IRAS' write-up on
+audits of family-owned companies — and nothing else. **The Income Tax Act
+itself could not be opened for this section**: Singapore Statutes Online
+answered 403 to every request. The articles cited are therefore the ones IRAS
+prints in those documents (ss. 15(1)(c), 15(1)(k), 19/19A, 37), and the
+sections of the Act that charge the 17 % rate and grant the two exemptions are
+cited by name and not by number.
+
+**How the year is dated.** Singapore assesses the income of the financial year
+that ends in the year before the YA, so the financial year 2025 of a company
+whose year is the calendar year is the basis period of YA 2026. Every entry
+reads its validity on the last day of the year (`valid_on: period_end`), and a
+`valid_from` of 1 January 2019 means *financial years closing from that day*,
+which is YA 2020, the year the current exemptions begin. The 17 % rate is dated
+from 1 January 2018 (YA 2019, the earliest year in which it was read); the
+adjustments and the loss rule from 1 January 2025 (YA 2026, the edition of the
+notes that was read). A financial year before those dates is estimated with
+what the dates leave: no rule at all for losses — a company carrying one is
+refused by name — and no adjustment. Nothing is closed: no year after YA 2026
+was read, and the entries stay open-ended.
+
+**The exemptions are written as the tax on each slice.** The partial tax
+exemption exempts 75 % of the first 10 000 and 50 % of the next 190 000 of the
+normal chargeable income; the exemption for new start-up companies, 75 % of the
+first 100 000 and 50 % of the next 100 000, for each of the first three
+consecutive years of assessment. Taxed at 17 %, what is left of a slice is
+taxed at 17 % × 25 % = 4,25 % or 17 % × 50 % = 8,5 %. That is the same
+multiplication IRAS prints (its example: 10 000 at 75 % and 190 000 at 50 % is
+an exempt amount of 102 500, and 600 000 taxed on 497 500), written slice by
+slice. One difference remains and is stated here: IRAS rounds the exempt
+amount to the dollar in its own examples (51 765 at 50 % is 25 883), where the
+estimate keeps the cent, so a base that is not a whole number of dollars can
+differ from the assessment by a few cents. The two schemes are exclusive and
+the company says which one it meets, in the parameter `new_start_up_company`;
+**a company that has not declared it is taxed at 17 % on everything**, and the
+estimate says `not_declared`.
+
+| Not carried | Why |
+|---|---|
+| The 50 % CIT Rebate of YA 2026 (capped at S$40,000), and the CIT Rebate Cash Grant of S$2,000 | Read in the explanatory notes of Form C. The rebate is a percentage of the tax, capped, and reduced by the grant; a `credit` is an amount the company states and cannot be a share of the computed tax, so the estimate is too high by up to S$40,000 for YA 2026. The company can apply the rebate to the estimate by hand. |
+| The shareholding test for losses | The test (50 % or more of the shares held by the same persons at two dates) is read, and it depends on the shareholders on dates the books do not hold. The company records in `tax.losses` only the losses that pass it; the waiver of s. 37(16) is for the Comptroller. |
+| Unabsorbed capital allowances, and donations | Their own stocks, with their own rules (donations lapse after five years). Only trade losses are in the stock of the module. The capital allowances of the year are a deduction the company states; the pool of assets that gives them is not computed. |
+| The 250 % deduction for approved donations | The multiplier is printed in an example of the notes (S$1,920 × 2.5 = S$4,800); the period it applies to, and the ceiling at the chargeable income, were not read. |
+| Depreciation of right-of-use assets (6210) and amortisation of intangible assets (6220) | The source names depreciation expenses; leases and intangible assets were not read. Only account 6200 is added back. |
+| Business cars (Q-plated, RU-plated) | Only the private cars of s. 15(1)(k) were read on an IRAS document. The cap for business cars registered before 1 April 1998 was not. |
+| Other expenses the Act refuses: fines, private and domestic expenses, entertainment, club subscriptions | No fixed percentage was read; IRAS' write-up says private expenses are not deductible and gives no share. The company has no rule to name for them and should have its adviser state the adjustment. |
+| Exempt and non-trade income: one-tier dividends, foreign-sourced income, gains exempt under s. 13W, income at a concessionary rate | Each has its own conditions and several are taxed at another rate. The estimate treats the whole profit before income tax as chargeable income at the normal rate. |
+| Estimated chargeable income, and the instalments that follow | The ECI instalment plan was not read, and `prepayments` has no shape for it: it is empty. |
+| Loss carry-back relief | The guide read describes a claim of a loss of the current year against the income of the preceding years; the module only carries a loss forward. |
+| Tax on a short or long basis period, and the first years of a new company | The notes attribute the profit of a first long period to two YAs; the estimate reads the financial year it is asked for. |
+
+Nothing names account 6380, which holds the expenses of private cars beside
+those of vehicles that may be deducted: a company states the amount, or an
+account of its own that holds nothing else.
 
 ## Reviewing this pack
 
