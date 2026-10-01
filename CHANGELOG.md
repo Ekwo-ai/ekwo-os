@@ -44,12 +44,14 @@ somewhere has already run it.
   day it applies from, read on the first or the last day of the financial year
   as the law words it, and a figure that changes is a new dated entry. A
   section comes with `golden/corporate_tax.json`: fictitious companies whose
-  tax was worked out by hand, replayed to the cent. **Belgium and France carry
-  the section** (both packs 1.17.0): the 25 % rate and the reduced rate of
-  each with its conditions, the disallowed expenses that could be cited —
-  Belgian restaurant, reception, fines, clothing, company cars by CO2; French
-  corporate tax, fines, vehicle taxes, excess depreciation, sumptuary
-  expenses — the limit on losses of each, and the prepayment schedule of each.
+  tax was worked out by hand, replayed to the cent. **The section is open to
+  every pack**: one optional file beside the others, written from the texts of
+  the country and from nothing else. A pack that carries it gives the ordinary
+  rate, the reduced rates with their conditions, the disallowed expenses that
+  could be cited, the limit on losses and the prepayment schedule, and its
+  README names what the section leaves out and why. A company of a country
+  whose pack does not carry it yet is told so by name,
+  `no_corporate_tax_rules`.
   `ekwo pack check` refuses a section that names a statement, a line, an
   account or a parameter the pack does not carry, two versions of a rule in
   force on one day, and a section without its worked examples.

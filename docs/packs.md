@@ -1805,7 +1805,7 @@ stated for twelve months over the months the year has.
 
 **Conditions are tests on declared parameters**, all of which have to be met:
 `is_true`, `is_false`, `at_least`, `at_most`, `below`, `above`. Two more words
-cover what the two first countries needed and nothing else:
+cover what the first sections needed and nothing else:
 
 - `or_at_least: "taxable_base"` — the amount fails the test and is still at
   least the taxable base of the year, which is how Belgium words its
@@ -1835,8 +1835,8 @@ in time earns a `credit_percent` against a `surcharge_percent`, and
 reference year's tax and none is asked under `exempt_up_to`.
 
 `credits` says that a credit exists, whether what exceeds the tax is paid back
-(`refundable`), and the article. The amount is the company's to declare. Both
-first packs carry an empty list: the shape is published, and no credit was
+(`refundable`), and the article. The amount is the company's to declare. The
+first sections carry an empty list: the shape is published, and no credit was
 cited yet.
 
 ### A date, and the day it is read on

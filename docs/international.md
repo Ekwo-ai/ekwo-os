@@ -1,4 +1,4 @@
-# Ekwo OS beyond Belgium and France
+# Ekwo OS in every country
 
 > The plan for making the core usable in any country. The format of a country
 > pack — the one taxonomy in this plan that will not get to be redone — was

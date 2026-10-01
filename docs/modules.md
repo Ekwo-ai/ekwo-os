@@ -144,8 +144,8 @@ alter default privileges in schema fixed_assets revoke execute on functions from
 revoke execute on all functions in schema fixed_assets from public;
 ```
 
-**5. A country is data, here too.** No module names a country. What Belgium or
-France decides goes in `packs/<cc>/<section>.json`, is described in
+**5. A country is data, here too.** No module names a country. What a country
+decides goes in `packs/<cc>/<section>.json`, is described in
 `packs/schema/pack.1.json`, compiles into `supabase/seed/modules/<section>/`, and
 lands in reference tables the module reads where they stand. A module whose
 pack says nothing refuses by name — `no_fixed_assets_country_rules` — rather than
