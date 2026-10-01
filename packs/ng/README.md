@@ -177,11 +177,10 @@ notes ask for.
   this pack's research found none of — the rate could be 7.5 %, zero, or
   nothing at all on any given day, by an instrument outside the Act. Rather
   than guess, this pack carries no tax code for them.
-- **Companies Income Tax and the Development Levy themselves.** This pack's
-  chart carries the accounts a company would post them to (2310, 2320, 8200,
-  8230) and its statements carry the line they land on, but computing what is
-  owed — the rates, the allowances, the small-company 0 % band — is a
-  different chapter of the Nigeria Tax Act this pack does not carry.
+- **The Development Levy.** This pack's chart carries the accounts a company
+  would post it to (2320, 8230) and its statements carry the line it lands on,
+  but computing it is not done: see "Corporate income tax" below. The income
+  tax itself is estimated from `corporate_tax.json`.
 - **Electronic invoicing and the Electronic Fiscal System.** The FIRS
   Merchant-Buyer Solution is a clearance platform, not an EN 16931 profile any
   brick of `packages/formats` writes, and the wider Electronic Fiscal System
@@ -206,3 +205,35 @@ notes ask for.
   and not a term of art.
 - Whether a given company is still within the small-business turnover and
   fixed-asset thresholds, which move only by regulation and not by this pack.
+
+## Corporate income tax: what `corporate_tax.json` leaves out
+
+The section carries what was read in the Nigeria Tax Act 2025 (Official
+Gazette No. 117, 26 June 2025) on 1 October 2026, and nothing else. It starts
+from line `PBT` of `NG-CAMA-IS`, and every entry is dated from 1 January 2026,
+the commencement of the Act: **a financial year opened before that date has no
+rate in the section, and the module refuses it by name rather than estimate it.**
+
+| Not carried | Why |
+|---|---|
+| The regime of the Companies Income Tax Act, Cap. C21, LFN 2004, as amended by the Finance Acts (0 % up to N25,000,000 of turnover, 20 % to N100,000,000, 30 % above), and the tertiary education tax | The Act was repealed from 1 January 2026 (Nigeria Tax Act 2025, s. 195(c)). The amended text could not be opened on an official page: the administration's site did not answer, and the copy of Cap. C21 that was read is the 2004 text without the amendments. The figures are not carried, and the section has nothing for financial years 2025 and before. |
+| Which regime governs the profits of the financial year 2025 | Nigeria Tax Act 2025, s. 22(1), takes the profits of the accounting period *immediately preceding* the year of assessment, and a year of assessment is a calendar year (s. 202). Read literally, the profits of 2025 are those of the year of assessment 2026; no transitional rule was found. This is a reading for a Nigerian adviser, and the section dates by the first day of the financial year. |
+| The Development Levy, 4 % of the assessable profits (s. 59) | A separate levy with its own base, not the tax of the section: the module computes one tax per company. Booked on accounts 8230 and 2320, below line `PBT`. |
+| The minimum effective tax rate of 15 % (s. 57) | A top-up of the tax, computed on the tax itself and on the development levy, for groups of at least EUR 750 million and companies of N50,000,000,000 of turnover and above. The section has no shape for a tax on the tax. |
+| The reduction of the rate to 25 % (s. 56, proviso) | Conditional on an order of the President that was not read; the standard rate is 30 %. |
+| Capital allowances (s. 27, First Schedule, Part I) | The rates and the pools were not read; the company declares the amount under `capital-allowances`. |
+| Amortisation of intangible assets, impairment and the other items of s. 21 (capital expenditure, private expense, payments to a connected person outside the transfer pricing rules, expenses on which VAT was not charged…) | Account 7670 and 7680 are not added back by themselves because the section on intangibles was not read; the others depend on facts only the company knows. The company names an account or states an amount against `depreciation`, `fines-penalties` or `unrealised-exchange-loss`. |
+| Unrealised exchange gains | Section 21(g) refuses the deduction of an unrealised difference; whether an unrealised gain is taxed was not read. |
+| Losses limited to the trade in which they arose (s. 27(6)(b)) and losses incurred before 2026 | The module keeps one stock of losses per company. The treatment of a loss of the Companies Income Tax Act era under the new Act was not read: the third worked example assumes it carries. |
+| Prepayments and payment dates | None was read in a form the section can hold: `prepayments` is empty. |
+| Tax credits (priority sector, economic development incentive) | `credits` is empty: no credit was cited. |
+| Companies taxed apart (petroleum, insurance, free zones, non-residents) | Different parts of the Act with their own bases. |
+
+The small-company rate is written as a rate with conditions and no threshold:
+the module applies the first rate with no threshold whose conditions are met
+to the whole base, so a company that declares a turnover and fixed assets
+within the two limits is taxed at 0 % and any other at 30 %. A company that
+declares neither is not a small company for the estimate, which says
+`not_declared`. The registry entries `nta-2025` and `ntaa-2025` pointed at each
+other's file on the Tax Appeal Tribunal's site; each URL now serves the text
+its title names.

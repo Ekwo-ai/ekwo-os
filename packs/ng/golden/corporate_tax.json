@@ -1,0 +1,717 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "why": "Four fictitious companies whose tax was worked out by hand for the financial year 2026, the first under the Nigeria Tax Act 2025: a small company with a profit, a year that ends in a loss, a company kept out of the small-company rate by its fixed assets that sets earlier losses against its profit, and a company above the turnover limit.",
+  "fiscal_year": {
+    "name": "Financial year ended 31 December 2026",
+    "start": "2026-01-01",
+    "end": "2026-12-31"
+  },
+  "companies": [
+    {
+      "ref": "small-profit",
+      "name": "Ibadan Kente Weavers Ltd",
+      "why": "A small company with a profit: gross turnover of N64,500,000 and fixed assets of N118,000,000 are within both limits of the definition, so the whole base is taxed at 0 %. The depreciation is added back from its accounts; the capital allowances and a penalty are declared.",
+      "entries": [
+        {
+          "date": "2026-06-30",
+          "description": "Sales of the year",
+          "lines": [
+            {
+              "account": "1300",
+              "debit": "64500000.00"
+            },
+            {
+              "account": "4000",
+              "credit": "64500000.00"
+            }
+          ]
+        },
+        {
+          "date": "2026-06-30",
+          "description": "Purchases of goods",
+          "lines": [
+            {
+              "account": "5000",
+              "debit": "31200000.00"
+            },
+            {
+              "account": "1300",
+              "credit": "31200000.00"
+            }
+          ]
+        },
+        {
+          "date": "2026-06-30",
+          "description": "Wages and salaries",
+          "lines": [
+            {
+              "account": "7010",
+              "debit": "12480000.00"
+            },
+            {
+              "account": "1300",
+              "credit": "12480000.00"
+            }
+          ]
+        },
+        {
+          "date": "2026-06-30",
+          "description": "Rent",
+          "lines": [
+            {
+              "account": "7100",
+              "debit": "3600000.00"
+            },
+            {
+              "account": "1300",
+              "credit": "3600000.00"
+            }
+          ]
+        },
+        {
+          "date": "2026-12-31",
+          "description": "Depreciation of plant and machinery",
+          "lines": [
+            {
+              "account": "7620",
+              "debit": "2450000.00"
+            },
+            {
+              "account": "1300",
+              "credit": "2450000.00"
+            }
+          ]
+        },
+        {
+          "date": "2026-12-31",
+          "description": "Bank interest",
+          "lines": [
+            {
+              "account": "8000",
+              "debit": "640000.00"
+            },
+            {
+              "account": "1300",
+              "credit": "640000.00"
+            }
+          ]
+        }
+      ],
+      "parameters": {
+        "gross_turnover": "64500000.00",
+        "total_fixed_assets": "118000000.00"
+      },
+      "adjustments": [
+        {
+          "rule": "capital-allowances",
+          "amount": "3100000.00"
+        },
+        {
+          "rule": "fines-penalties",
+          "amount": "85000.00"
+        }
+      ],
+      "expected": {
+        "computation": [
+          "Profit before taxation (line PBT): 64,500,000.00 - 31,200,000.00 - 12,480,000.00 - 3,600,000.00 - 2,450,000.00 - 640,000.00 = 14,130,000.00.",
+          "Depreciation: balance of account 7620, 2,450,000.00 x 100 % = 2,450,000.00, added back.",
+          "Capital allowances declared: 3,100,000.00 x 100 % = 3,100,000.00, deducted.",
+          "Penalties declared: 85,000.00 x 100 % = 85,000.00, added back.",
+          "Fiscal result: 14,130,000.00 + 2,450,000.00 + 85,000.00 - 3,100,000.00 = 13,565,000.00. No earlier loss: the base is 13,565,000.00.",
+          "Small company, conditions met (gross turnover 64,500,000.00 <= 100,000,000 and fixed assets 118,000,000.00 <= 250,000,000): 13,565,000.00 x 0 % = 0.00.",
+          "Estimated tax: 0.00."
+        ],
+        "lines": [
+          {
+            "kind": "accounting_result",
+            "code": "PBT",
+            "amount": "14130000.00"
+          },
+          {
+            "kind": "adjustment",
+            "code": "depreciation",
+            "base": "2450000.00",
+            "rate": "100",
+            "amount": "2450000.00"
+          },
+          {
+            "kind": "adjustment",
+            "code": "capital-allowances",
+            "base": "3100000.00",
+            "rate": "100",
+            "amount": "-3100000.00"
+          },
+          {
+            "kind": "adjustment",
+            "code": "fines-penalties",
+            "base": "85000.00",
+            "rate": "100",
+            "amount": "85000.00"
+          },
+          {
+            "kind": "fiscal_result",
+            "amount": "13565000.00"
+          },
+          {
+            "kind": "taxable_base",
+            "amount": "13565000.00"
+          },
+          {
+            "kind": "rate",
+            "code": "small-company",
+            "base": "13565000.00",
+            "rate": "0",
+            "amount": "0.00"
+          },
+          {
+            "kind": "tax_before_credits",
+            "base": "13565000.00",
+            "amount": "0.00"
+          },
+          {
+            "kind": "estimated_tax",
+            "code": "NG-CIT",
+            "base": "13565000.00",
+            "amount": "0.00"
+          }
+        ],
+        "tax": "0.00"
+      }
+    },
+    {
+      "ref": "loss-year",
+      "name": "Abeokuta Cassava Mills Ltd",
+      "why": "A year that ends in a loss: there is no base and no tax, and the fiscal loss - the accounting loss less the depreciation added back - is what a later year may set against its profit, with no limit of amount or of years.",
+      "entries": [
+        {
+          "date": "2026-06-30",
+          "description": "Sales of the year",
+          "lines": [
+            {
+              "account": "1300",
+              "debit": "38000000.00"
+            },
+            {
+              "account": "4000",
+              "credit": "38000000.00"
+            }
+          ]
+        },
+        {
+          "date": "2026-06-30",
+          "description": "Purchases of goods",
+          "lines": [
+            {
+              "account": "5000",
+              "debit": "24500000.00"
+            },
+            {
+              "account": "1300",
+              "credit": "24500000.00"
+            }
+          ]
+        },
+        {
+          "date": "2026-06-30",
+          "description": "Wages and salaries",
+          "lines": [
+            {
+              "account": "7010",
+              "debit": "11300000.00"
+            },
+            {
+              "account": "1300",
+              "credit": "11300000.00"
+            }
+          ]
+        },
+        {
+          "date": "2026-06-30",
+          "description": "Rent",
+          "lines": [
+            {
+              "account": "7100",
+              "debit": "2400000.00"
+            },
+            {
+              "account": "1300",
+              "credit": "2400000.00"
+            }
+          ]
+        },
+        {
+          "date": "2026-12-31",
+          "description": "Depreciation of plant and machinery",
+          "lines": [
+            {
+              "account": "7620",
+              "debit": "1200000.00"
+            },
+            {
+              "account": "1300",
+              "credit": "1200000.00"
+            }
+          ]
+        },
+        {
+          "date": "2026-12-31",
+          "description": "Bank interest",
+          "lines": [
+            {
+              "account": "8000",
+              "debit": "1150000.00"
+            },
+            {
+              "account": "1300",
+              "credit": "1150000.00"
+            }
+          ]
+        }
+      ],
+      "parameters": {
+        "gross_turnover": "38000000.00",
+        "total_fixed_assets": "95000000.00"
+      },
+      "expected": {
+        "computation": [
+          "Loss before taxation (line PBT): 38,000,000.00 - 24,500,000.00 - 11,300,000.00 - 2,400,000.00 - 1,200,000.00 - 1,150,000.00 = -2,550,000.00.",
+          "Depreciation: balance of account 7620, 1,200,000.00 x 100 % = 1,200,000.00, added back.",
+          "Fiscal result: -2,550,000.00 + 1,200,000.00 = -1,350,000.00. The base is nil and the loss of the year is 1,350,000.00.",
+          "Estimated tax: 0.00."
+        ],
+        "lines": [
+          {
+            "kind": "accounting_result",
+            "code": "PBT",
+            "amount": "-2550000.00"
+          },
+          {
+            "kind": "adjustment",
+            "code": "depreciation",
+            "base": "1200000.00",
+            "rate": "100",
+            "amount": "1200000.00"
+          },
+          {
+            "kind": "fiscal_result",
+            "amount": "-1350000.00"
+          },
+          {
+            "kind": "taxable_base",
+            "amount": "0.00"
+          },
+          {
+            "kind": "loss_of_period",
+            "amount": "1350000.00"
+          },
+          {
+            "kind": "tax_before_credits",
+            "base": "0.00",
+            "amount": "0.00"
+          },
+          {
+            "kind": "estimated_tax",
+            "code": "NG-CIT",
+            "base": "0.00",
+            "amount": "0.00"
+          }
+        ],
+        "tax": "0.00"
+      }
+    },
+    {
+      "ref": "outside-small-regime",
+      "name": "Kano Premier Packaging Ltd",
+      "why": "A company whose turnover is within the small-company limit but whose fixed assets of N310,000,000 exceed N250,000,000: the 0 % rate is refused and the whole base is taxed at 30 %. It sets two earlier losses against the profit, the oldest first, with no limit; the losses of 2024 and 2025 are assumed to be carried into the first year under the Act.",
+      "entries": [
+        {
+          "date": "2026-06-30",
+          "description": "Sales of the year",
+          "lines": [
+            {
+              "account": "1300",
+              "debit": "82000000.00"
+            },
+            {
+              "account": "4000",
+              "credit": "82000000.00"
+            }
+          ]
+        },
+        {
+          "date": "2026-06-30",
+          "description": "Purchases of raw materials",
+          "lines": [
+            {
+              "account": "5010",
+              "debit": "41300000.00"
+            },
+            {
+              "account": "1300",
+              "credit": "41300000.00"
+            }
+          ]
+        },
+        {
+          "date": "2026-06-30",
+          "description": "Wages and salaries",
+          "lines": [
+            {
+              "account": "7010",
+              "debit": "14600000.00"
+            },
+            {
+              "account": "1300",
+              "credit": "14600000.00"
+            }
+          ]
+        },
+        {
+          "date": "2026-06-30",
+          "description": "Rent",
+          "lines": [
+            {
+              "account": "7100",
+              "debit": "4800000.00"
+            },
+            {
+              "account": "1300",
+              "credit": "4800000.00"
+            }
+          ]
+        },
+        {
+          "date": "2026-09-15",
+          "description": "Penalty paid to a regulator",
+          "lines": [
+            {
+              "account": "7270",
+              "debit": "120000.00"
+            },
+            {
+              "account": "1300",
+              "credit": "120000.00"
+            }
+          ]
+        },
+        {
+          "date": "2026-12-31",
+          "description": "Depreciation of plant and machinery",
+          "lines": [
+            {
+              "account": "7620",
+              "debit": "5200000.00"
+            },
+            {
+              "account": "1300",
+              "credit": "5200000.00"
+            }
+          ]
+        },
+        {
+          "date": "2026-12-31",
+          "description": "Depreciation of motor vehicles",
+          "lines": [
+            {
+              "account": "7660",
+              "debit": "1600000.00"
+            },
+            {
+              "account": "1300",
+              "credit": "1600000.00"
+            }
+          ]
+        },
+        {
+          "date": "2026-12-31",
+          "description": "Bank interest",
+          "lines": [
+            {
+              "account": "8000",
+              "debit": "3250000.00"
+            },
+            {
+              "account": "1300",
+              "credit": "3250000.00"
+            }
+          ]
+        }
+      ],
+      "parameters": {
+        "gross_turnover": "82000000.00",
+        "total_fixed_assets": "310000000.00"
+      },
+      "adjustments": [
+        {
+          "rule": "capital-allowances",
+          "amount": "7350000.00"
+        },
+        {
+          "rule": "fines-penalties",
+          "amount": "120000.00"
+        }
+      ],
+      "losses": [
+        {
+          "origin_period_end": "2024-12-31",
+          "amount": "2400000.00"
+        },
+        {
+          "origin_period_end": "2025-12-31",
+          "amount": "1850000.00"
+        }
+      ],
+      "expected": {
+        "computation": [
+          "Profit before taxation (line PBT): 82,000,000.00 - 41,300,000.00 - 14,600,000.00 - 4,800,000.00 - 120,000.00 - 5,200,000.00 - 1,600,000.00 - 3,250,000.00 = 11,130,000.00.",
+          "Depreciation: balances of accounts 7620 and 7660, 5,200,000.00 + 1,600,000.00 = 6,800,000.00 x 100 % = 6,800,000.00, added back.",
+          "Capital allowances declared: 7,350,000.00 x 100 % = 7,350,000.00, deducted.",
+          "Penalties declared: 120,000.00 x 100 % = 120,000.00, added back.",
+          "Fiscal result: 11,130,000.00 + 6,800,000.00 + 120,000.00 - 7,350,000.00 = 10,700,000.00.",
+          "Earlier losses, with no limit, the oldest first: 2,400,000.00 (2024) then 1,850,000.00 (2025), 4,250,000.00 in all, both used in full.",
+          "Taxable base: 10,700,000.00 - 4,250,000.00 = 6,450,000.00.",
+          "Small-company rate refused: the fixed assets of 310,000,000.00 exceed 250,000,000 (gross turnover 82,000,000.00 is within 100,000,000).",
+          "Standard rate: 6,450,000.00 x 30 % = 1,935,000.00. Estimated tax: 1,935,000.00."
+        ],
+        "lines": [
+          {
+            "kind": "accounting_result",
+            "code": "PBT",
+            "amount": "11130000.00"
+          },
+          {
+            "kind": "adjustment",
+            "code": "depreciation",
+            "base": "6800000.00",
+            "rate": "100",
+            "amount": "6800000.00"
+          },
+          {
+            "kind": "adjustment",
+            "code": "capital-allowances",
+            "base": "7350000.00",
+            "rate": "100",
+            "amount": "-7350000.00"
+          },
+          {
+            "kind": "adjustment",
+            "code": "fines-penalties",
+            "base": "120000.00",
+            "rate": "100",
+            "amount": "120000.00"
+          },
+          {
+            "kind": "fiscal_result",
+            "amount": "10700000.00"
+          },
+          {
+            "kind": "loss_used",
+            "code": "2024-12-31",
+            "base": "2400000.00",
+            "amount": "-2400000.00"
+          },
+          {
+            "kind": "loss_used",
+            "code": "2025-12-31",
+            "base": "1850000.00",
+            "amount": "-1850000.00"
+          },
+          {
+            "kind": "taxable_base",
+            "amount": "6450000.00"
+          },
+          {
+            "kind": "rate_not_applied",
+            "code": "small-company",
+            "note": "not_met: total_fixed_assets",
+            "rate": "0"
+          },
+          {
+            "kind": "rate",
+            "code": "standard",
+            "base": "6450000.00",
+            "rate": "30",
+            "amount": "1935000.00"
+          },
+          {
+            "kind": "tax_before_credits",
+            "base": "6450000.00",
+            "amount": "1935000.00"
+          },
+          {
+            "kind": "estimated_tax",
+            "code": "NG-CIT",
+            "base": "6450000.00",
+            "amount": "1935000.00"
+          }
+        ],
+        "tax": "1935000.00"
+      }
+    },
+    {
+      "ref": "large-company",
+      "name": "Lagos Harbourview Logistics Plc",
+      "why": "A company above the small-company limit on turnover: the 0 % rate is refused on the first condition and the whole base is taxed at 30 %. Its turnover is below N50,000,000,000, so the minimum effective tax rate of section 57 is not in question.",
+      "entries": [
+        {
+          "date": "2026-06-30",
+          "description": "Sales of the year",
+          "lines": [
+            {
+              "account": "1300",
+              "debit": "450000000.00"
+            },
+            {
+              "account": "4000",
+              "credit": "450000000.00"
+            }
+          ]
+        },
+        {
+          "date": "2026-06-30",
+          "description": "Purchases of goods",
+          "lines": [
+            {
+              "account": "5000",
+              "debit": "268000000.00"
+            },
+            {
+              "account": "1300",
+              "credit": "268000000.00"
+            }
+          ]
+        },
+        {
+          "date": "2026-06-30",
+          "description": "Wages and salaries",
+          "lines": [
+            {
+              "account": "7010",
+              "debit": "71500000.00"
+            },
+            {
+              "account": "1300",
+              "credit": "71500000.00"
+            }
+          ]
+        },
+        {
+          "date": "2026-06-30",
+          "description": "Rent",
+          "lines": [
+            {
+              "account": "7100",
+              "debit": "18200000.00"
+            },
+            {
+              "account": "1300",
+              "credit": "18200000.00"
+            }
+          ]
+        },
+        {
+          "date": "2026-12-31",
+          "description": "Depreciation of plant and machinery",
+          "lines": [
+            {
+              "account": "7620",
+              "debit": "12000000.00"
+            },
+            {
+              "account": "1300",
+              "credit": "12000000.00"
+            }
+          ]
+        },
+        {
+          "date": "2026-12-31",
+          "description": "Bank interest",
+          "lines": [
+            {
+              "account": "8000",
+              "debit": "9300000.00"
+            },
+            {
+              "account": "1300",
+              "credit": "9300000.00"
+            }
+          ]
+        }
+      ],
+      "parameters": {
+        "gross_turnover": "450000000.00",
+        "total_fixed_assets": "620000000.00"
+      },
+      "adjustments": [
+        {
+          "rule": "capital-allowances",
+          "amount": "15500000.00"
+        }
+      ],
+      "expected": {
+        "computation": [
+          "Profit before taxation (line PBT): 450,000,000.00 - 268,000,000.00 - 71,500,000.00 - 18,200,000.00 - 12,000,000.00 - 9,300,000.00 = 71,000,000.00.",
+          "Depreciation: balance of account 7620, 12,000,000.00 x 100 % = 12,000,000.00, added back.",
+          "Capital allowances declared: 15,500,000.00 x 100 % = 15,500,000.00, deducted.",
+          "Fiscal result: 71,000,000.00 + 12,000,000.00 - 15,500,000.00 = 67,500,000.00. No earlier loss: the base is 67,500,000.00.",
+          "Small-company rate refused: gross turnover of 450,000,000.00 exceeds 100,000,000.",
+          "Standard rate: 67,500,000.00 x 30 % = 20,250,000.00. Estimated tax: 20,250,000.00."
+        ],
+        "lines": [
+          {
+            "kind": "accounting_result",
+            "code": "PBT",
+            "amount": "71000000.00"
+          },
+          {
+            "kind": "adjustment",
+            "code": "depreciation",
+            "base": "12000000.00",
+            "rate": "100",
+            "amount": "12000000.00"
+          },
+          {
+            "kind": "adjustment",
+            "code": "capital-allowances",
+            "base": "15500000.00",
+            "rate": "100",
+            "amount": "-15500000.00"
+          },
+          {
+            "kind": "fiscal_result",
+            "amount": "67500000.00"
+          },
+          {
+            "kind": "taxable_base",
+            "amount": "67500000.00"
+          },
+          {
+            "kind": "rate_not_applied",
+            "code": "small-company",
+            "note": "not_met: gross_turnover",
+            "rate": "0"
+          },
+          {
+            "kind": "rate",
+            "code": "standard",
+            "base": "67500000.00",
+            "rate": "30",
+            "amount": "20250000.00"
+          },
+          {
+            "kind": "tax_before_credits",
+            "base": "67500000.00",
+            "amount": "20250000.00"
+          },
+          {
+            "kind": "estimated_tax",
+            "code": "NG-CIT",
+            "base": "67500000.00",
+            "amount": "20250000.00"
+          }
+        ],
+        "tax": "20250000.00"
+      }
+    }
+  ]
+}
