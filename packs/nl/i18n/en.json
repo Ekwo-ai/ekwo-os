@@ -531,5 +531,18 @@
     "rule:mixed-costs-elected": "Mixed costs — election for 73.5 % deduction",
     "rate:reduced": "First bracket",
     "rate:standard": "Second bracket"
+  },
+  "asset_categories": {
+    "oprichtingskosten": "Formation and share issue costs",
+    "ontwikkelingskosten": "Development costs",
+    "intellectueel-eigendom": "Concessions, permits and intellectual property",
+    "goodwill": "Goodwill",
+    "bedrijfsgebouwen": "Business buildings",
+    "verbouwingen": "Alterations and leasehold improvements",
+    "machines-installaties": "Plant and machinery",
+    "inventaris": "Fixtures, fittings and office furniture",
+    "computers": "Computers and office automation",
+    "vervoermiddelen": "Cars and other transport equipment",
+    "overige-bedrijfsmiddelen": "Other fixed business assets"
   }
 }

@@ -2,7 +2,7 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "NL",
   "name": "Nederland",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "schema_min": "20260929141500",
   "seed_sequence": 17,
   "released_at": "2026-10-01",
@@ -344,6 +344,46 @@
         "url": "https://www.belastingdienst.nl/wps/wcm/connect/bldcontentnl/belastingdienst/zakelijk/winst/vennootschapsbelasting/verrekenen_van_verliezen",
         "consulted_on": "2026-10-01",
         "kind": "guidance"
+      },
+      {
+        "key": "bw2-386",
+        "title": "Burgerlijk Wetboek Boek 2, art. 386 — afschrijvingen (titel 9, afdeling 6)",
+        "publisher": "Overheid.nl — Wettenbank (wetten.overheid.nl)",
+        "url": "https://wetten.overheid.nl/BWBR0003045",
+        "consulted_on": "2026-10-01",
+        "kind": "law"
+      },
+      {
+        "key": "bd-afschrijving",
+        "title": "Belastingdienst: Hoe berekent u het bedrag van de afschrijving?",
+        "publisher": "Belastingdienst",
+        "url": "https://www.belastingdienst.nl/wps/wcm/connect/bldcontentnl/belastingdienst/zakelijk/winst/inkomstenbelasting/inkomstenbelasting_voor_ondernemers/afschrijving/hoe_berekent_u_het_bedrag_van_de_afschrijving",
+        "consulted_on": "2026-10-01",
+        "kind": "guidance"
+      },
+      {
+        "key": "bd-bedrijfspand",
+        "title": "Belastingdienst: Afschrijving bedrijfspand",
+        "publisher": "Belastingdienst",
+        "url": "https://www.belastingdienst.nl/wps/wcm/connect/bldcontentnl/belastingdienst/zakelijk/winst/inkomstenbelasting/inkomstenbelasting_voor_ondernemers/afschrijving/afschrijving_bedrijfspand",
+        "consulted_on": "2026-10-01",
+        "kind": "guidance"
+      },
+      {
+        "key": "wet-ib-330",
+        "title": "Wet inkomstenbelasting 2001 — art. 3.30 (afschrijving op bedrijfsmiddelen) en art. 3.30a (beperking afschrijving gebouwen), van toepassing bij de winstbepaling van art. 8 lid 1 Wet Vpb 1969",
+        "publisher": "Overheid.nl — Wettenbank (wetten.overheid.nl)",
+        "url": "https://wetten.overheid.nl/BWBR0011353",
+        "consulted_on": "2026-10-01",
+        "kind": "law"
+      },
+      {
+        "key": "rj-212",
+        "title": "Richtlijnen voor de jaarverslaggeving, hoofdstuk 212 Materiële vaste activa (RJ-Uiting 2022-8: alinea's 418 tot en met 420 en 508)",
+        "publisher": "Raad voor de Jaarverslaggeving (rjnet.nl)",
+        "url": "https://www.rjnet.nl/siteassets/rj-uitingen/2022/rj-uiting-2022-8-rj-212-alineas-hoofstuk-212-materiele-vaste-activa.pdf",
+        "consulted_on": "2026-10-01",
+        "kind": "standard"
       }
     ]
   },
@@ -371,7 +411,8 @@
       "fx_gain": "WFbeWisWis",
       "fx_loss": "WFbeWisWis",
       "tax_payable": "BSchBepBtw",
-      "tax_receivable": "BVorVbkTvo"
+      "tax_receivable": "BVorVbkTvo",
+      "asset_disposal_gain": "WAfsRvmBei"
     },
     "journal_roles": {
       "sales": "VRK",

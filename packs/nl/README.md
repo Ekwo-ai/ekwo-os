@@ -207,6 +207,64 @@ the year is closed.
     Explanatory notes; everything else was translated here — see
     [`i18n/README.md`](i18n/README.md).
 
+## Fixed assets
+
+`fixed_assets.json` is the **accounting** depreciation of the Dutch books, and
+most of it is practice rather than law. The Netherlands has no table of useful
+lives: article 2:386, paragraph 4 of the Civil Code asks for a depreciation
+system aligned with the expected future useful life, paragraph 1 makes it
+independent of the result of the year and paragraph 2 asks the notes to explain
+the method. Only three durations come from a text: formation costs, at most
+five years, and goodwill and capitalised development costs, at most ten years
+where the useful life cannot be reliably estimated (art. 2:386, paragraph 3);
+buildings, which the Belastingdienst says "usually" last 30 to 50 years, so the
+category takes forty. Every other duration says in its own `legal_reference`
+that it is common practice. Computers, vehicles and intangibles are set at
+five years because that is the shortest duration at which the books do not
+exceed the tax ceiling of article 3.30, paragraph 2 of the Income Tax Act 2001
+(20 % of cost a year, applied to corporate income tax by article 8 of the
+Corporate Income Tax Act); that is a reason for the number, not a rule on the
+books.
+
+- **First period: whole months**, for straight line and declining balance. The
+  Belastingdienst's page on how to compute depreciation allows depreciation
+  "only over the part of the year" the asset was used, and its example counts
+  months (three months of a ten-year asset is 3/12).
+- **No cap on the declining balance**, because the Civil Code caps nothing; the
+  20 % tax ceiling is described below, not declared.
+- **Disposal is `net_result`.** The chart carries one account for the book
+  result on a sale, `WAfsRvm` "Boekresultaat op materiële vaste activa", for a
+  gain and for a loss alike, and the income statement prints it under
+  depreciation (caption E10). The pack names `WAfsRvmBei` for it, the posting
+  account the chart offers for the result on inventory. A sale of a vehicle
+  belongs on `WAfsRvmTev`, and the chart has no such account for the other
+  classes of asset: whoever disposes of a machine or a building chooses the
+  account on the entry.
+- **Land is not depreciated** (the Belastingdienst: "U mag niet afschrijven over
+  grond"). Land (`BMvaTer`) has no category; a property is split into land and
+  building before the building category is applied.
+
+### Fixed assets: what `fixed_assets.json` leaves out
+
+The module has one depreciation per asset, the accounting one, and a vocabulary
+of prorata, cap, switch to straight line and disposal style. The following is
+written nowhere in `fixed_assets.json`, because the module cannot say it and
+nothing here approximates it.
+
+| Left out | Why |
+|---|---|
+| **Tax depreciation, distinct from the book depreciation** | Article 3.30, paragraph 2 Wet IB 2001, applied to corporate income tax by article 8, paragraph 1 Wet Vpb 1969, bounds the yearly deduction to 20 % of the acquisition or production cost (10 % for goodwill). It is a ceiling on a second computation, and the module keeps one schedule. A company whose books depreciate faster than that deducts less than it books and reconciles on the return. |
+| **The floor value (bodemwaarde) of a building** | Article 3.30a Wet IB 2001 stops the tax depreciation of a building at the floor value, which the Belastingdienst puts at the WOZ value from 2024 (50 % for a building in own use until then, with a transitional rule). The module has no floor and no WOZ value; a company that wants the book schedule to stop there enters it as the residual value of that asset, which is its own choice. |
+| **Immediate write-off of small items and of produced intangibles** | Article 3.30, paragraphs 3 and 4 allow the cost of produced intangibles, and of items of small value normally booked as current expense, to be written off at once. The module has no threshold above which an expenditure is not capitalised. The Belastingdienst quotes EUR 450 for small items; the pack declares none. |
+| **Components** | RJ 212, paragraphs 418 to 420, require the important components of a tangible fixed asset with a different useful life to be depreciated separately. The module depreciates one asset on one life; the accountant enters each component as an asset of its own. |
+| **Discretionary depreciation, extraordinary depreciation, revaluation, impairment** | Willekeurige afschrijving for environmental assets, a write-down to a lower value in use, and a revaluation have no mechanism in the module. |
+| **Units of production** | Refused by the module itself, which does not record the units of a period. |
+
+The text of articles 3.30 and 2:386 was read on a consolidation of the
+Wettenbank published by a third party, because the official page served only its
+table of contents to the tool that read it; the register cites the official
+address. A reviewer should read both on the Wettenbank.
+
 ## Corporate income tax: what `corporate_tax.json` leaves out
 
 The section carries what was read on an official page on 1 October 2026, and

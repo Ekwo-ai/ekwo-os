@@ -1,0 +1,59 @@
+-- Ekwo OS — Nederland: how this country depreciates and derecognises a fixed asset.
+--
+-- Generated from packs/nl/fixed_assets.json at version 0.4.0, do not edit.
+-- Change the pack and run `ekwo pack build nl`; `ekwo pack check --all`
+-- refuses a seed that is not the exact output of its pack, and the CI runs it.
+--
+-- Applied by the module migration runner — `ekwo migrate`, or `ekwo module
+-- migrate` — and never by the socle seed step: these tables exist only on an
+-- installation that carries the fixed assets module.
+--
+-- The accounts a disposal lands on are not here. They are roles of the chart,
+-- in `country_defaults`, written by the pack seed beside every other role.
+
+insert into fixed_assets.country_rules
+  (country, prorata_straight_line, prorata_declining, day_count,
+   declining_cap_percent, declining_switch_to_linear, disposal_style, legal_reference)
+values
+  ('NL', 'months', 'months', 'actual', null, true, 'net_result', 'Belastingdienst, Hoe berekent u het bedrag van de afschrijving? — "Als u een bedrijfsmiddel maar een deel van het jaar hebt gebruikt, dan mag u alleen over dat deel afschrijven" (voorbeeld: drie maanden gebruik van een bedrijfsmiddel met een gebruiksduur van tien jaar is 3/12 van de jaarlijkse afschrijving); het eerste boekjaar wordt dus naar maanden gerekend. Burgerlijk Wetboek Boek 2, art. 386 lid 4 — op vaste activa met beperkte gebruiksduur wordt jaarlijks afgeschreven volgens een stelsel dat op de verwachte toekomstige gebruiksduur is afgestemd; lid 1 — de afschrijvingen geschieden onafhankelijk van het resultaat van het boekjaar; lid 2 — de gebruikte methoden worden in de toelichting uiteengezet. De wet schrijft geen methode voor, dus ook geen plafond voor de commerciële afschrijving: de fiscale grens van art. 3.30 lid 2 Wet IB 2001 (ten hoogste 20 % van de aanschaffingskosten per jaar, goodwill 10 %) is een aparte fiscale berekening en staat hier niet.')
+on conflict (country) do update set
+  prorata_straight_line      = excluded.prorata_straight_line,
+  prorata_declining          = excluded.prorata_declining,
+  day_count                  = excluded.day_count,
+  declining_cap_percent      = excluded.declining_cap_percent,
+  declining_switch_to_linear = excluded.declining_switch_to_linear,
+  disposal_style             = excluded.disposal_style,
+  legal_reference            = excluded.legal_reference;
+
+insert into fixed_assets.category_templates
+  (country, code, name, name_i18n, method, duration_months, coefficient,
+   prorata, account_type, sequence, legal_reference)
+select v.country::char(2), v.code, v.name, v.name_i18n::jsonb,
+       v.method::fixed_assets.depreciation_method, v.duration_months::integer,
+       v.coefficient::numeric, v.prorata::fixed_assets.prorata_rule,
+       v.account_type::account_type, v.sequence::integer, v.legal_reference
+  from (values
+    ('NL', 'oprichtingskosten', 'Kosten van oprichting en van uitgifte van aandelen', '{"en":"Formation and share issue costs"}'::jsonb, 'straight_line', 60, null, null, 'asset_fixed', 10, 'Burgerlijk Wetboek Boek 2, art. 386 lid 3 — de geactiveerde kosten in verband met de oprichting en met de uitgifte van aandelen worden afgeschreven in ten hoogste vijf jaren; vijf jaar is dus het wettelijke maximum en geen geschatte duur.'),
+    ('NL', 'ontwikkelingskosten', 'Kosten van ontwikkeling', '{"en":"Development costs"}'::jsonb, 'straight_line', 60, null, null, 'asset_fixed', 20, 'Burgerlijk Wetboek Boek 2, art. 386 lid 3 — geactiveerde kosten van ontwikkeling worden afgeschreven naar gelang van de verwachte gebruiksduur, en in uitzonderlijke gevallen waarin die niet betrouwbaar kan worden geschat in ten hoogste tien jaren. art. 3.30 lid 2 Wet IB 2001 (via art. 8 lid 1 Wet Vpb 1969) laat fiscaal per jaar ten hoogste 20 % van de aanschaffings- of voortbrengingskosten toe, dus 60 maanden is de kortste duur waarop de boeking het fiscale plafond niet overschrijdt. Nederland kent geen wettelijke of fiscale tabel van gebruiksduren: art. 2:386 lid 4 BW vraagt een stelsel dat op de verwachte toekomstige gebruiksduur is afgestemd, en de fiscale afschrijving (art. 3.30 Wet IB 2001, via art. 8 Wet Vpb 1969) is een aparte berekening die nooit de commerciële afschrijving is. De duur hieronder is dus gangbare praktijk en geen regel; een bedrijfsmiddel dat anders afschrijft zegt dat in zijn eigen kolommen.'),
+    ('NL', 'intellectueel-eigendom', 'Concessies, vergunningen en intellectuele eigendom', '{"en":"Concessions, permits and intellectual property"}'::jsonb, 'straight_line', 60, null, null, 'asset_fixed', 30, 'Burgerlijk Wetboek Boek 2, art. 386 lid 4 — op vaste activa met beperkte gebruiksduur wordt jaarlijks afgeschreven volgens een stelsel dat op de verwachte toekomstige gebruiksduur is afgestemd. art. 3.30 lid 2 Wet IB 2001 (via art. 8 lid 1 Wet Vpb 1969) laat fiscaal per jaar ten hoogste 20 % van de aanschaffings- of voortbrengingskosten toe, dus 60 maanden is de kortste duur waarop de boeking het fiscale plafond niet overschrijdt. Nederland kent geen wettelijke of fiscale tabel van gebruiksduren: art. 2:386 lid 4 BW vraagt een stelsel dat op de verwachte toekomstige gebruiksduur is afgestemd, en de fiscale afschrijving (art. 3.30 Wet IB 2001, via art. 8 Wet Vpb 1969) is een aparte berekening die nooit de commerciële afschrijving is. De duur hieronder is dus gangbare praktijk en geen regel; een bedrijfsmiddel dat anders afschrijft zegt dat in zijn eigen kolommen.'),
+    ('NL', 'goodwill', 'Goodwill', '{"en":"Goodwill"}'::jsonb, 'straight_line', 120, null, null, 'asset_fixed', 40, 'Burgerlijk Wetboek Boek 2, art. 386 lid 3 — geactiveerde goodwill wordt afgeschreven naar gelang van de verwachte gebruiksduur, en als die niet betrouwbaar kan worden geschat in ten hoogste tien jaren; art. 3.30 lid 2 Wet IB 2001 (via art. 8 lid 1 Wet Vpb 1969) laat fiscaal ten hoogste 10 % per jaar toe. Tien jaar is dus het plafond waar beide teksten samenkomen en geen duur die iemand heeft geschat; een goodwill met een aantoonbaar kortere gebruiksduur zegt dat in zijn eigen kolommen.'),
+    ('NL', 'bedrijfsgebouwen', 'Bedrijfsgebouwen', '{"en":"Business buildings"}'::jsonb, 'straight_line', 480, null, null, 'asset_fixed', 50, 'Belastingdienst, afschrijving bedrijfspand — "Meestal is de gebruiksduur van een pand 30 tot 50 jaar"; veertig jaar is het midden van die bandbreedte en geen regel. Grond wordt niet afgeschreven ("U mag niet afschrijven over grond"): terreinen (BMvaTer) zijn een aparte vaste activa die niet in een categorie staat, en een pand wordt eerst gesplitst. Nederland kent geen wettelijke of fiscale tabel van gebruiksduren: art. 2:386 lid 4 BW vraagt een stelsel dat op de verwachte toekomstige gebruiksduur is afgestemd, en de fiscale afschrijving (art. 3.30 Wet IB 2001, via art. 8 Wet Vpb 1969) is een aparte berekening die nooit de commerciële afschrijving is. De duur hieronder is dus gangbare praktijk en geen regel; een bedrijfsmiddel dat anders afschrijft zegt dat in zijn eigen kolommen.'),
+    ('NL', 'verbouwingen', 'Verbouwingen', '{"en":"Alterations and leasehold improvements"}'::jsonb, 'straight_line', 120, null, null, 'asset_fixed', 60, 'Nederland kent geen wettelijke of fiscale tabel van gebruiksduren: art. 2:386 lid 4 BW vraagt een stelsel dat op de verwachte toekomstige gebruiksduur is afgestemd, en de fiscale afschrijving (art. 3.30 Wet IB 2001, via art. 8 Wet Vpb 1969) is een aparte berekening die nooit de commerciële afschrijving is. De duur hieronder is dus gangbare praktijk en geen regel; een bedrijfsmiddel dat anders afschrijft zegt dat in zijn eigen kolommen. Bij een gehuurd pand is de gebruiksduur de kortste van de eigen levensduur van de verbouwing en de resterende huurtermijn, wat een feit over de huur is en niet over de categorie.'),
+    ('NL', 'machines-installaties', 'Machines en installaties', '{"en":"Plant and machinery"}'::jsonb, 'straight_line', 120, null, null, 'asset_fixed', 70, 'Nederland kent geen wettelijke of fiscale tabel van gebruiksduren: art. 2:386 lid 4 BW vraagt een stelsel dat op de verwachte toekomstige gebruiksduur is afgestemd, en de fiscale afschrijving (art. 3.30 Wet IB 2001, via art. 8 Wet Vpb 1969) is een aparte berekening die nooit de commerciële afschrijving is. De duur hieronder is dus gangbare praktijk en geen regel; een bedrijfsmiddel dat anders afschrijft zegt dat in zijn eigen kolommen.'),
+    ('NL', 'inventaris', 'Inventaris en kantoormeubilair', '{"en":"Fixtures, fittings and office furniture"}'::jsonb, 'straight_line', 120, null, null, 'asset_fixed', 80, 'Nederland kent geen wettelijke of fiscale tabel van gebruiksduren: art. 2:386 lid 4 BW vraagt een stelsel dat op de verwachte toekomstige gebruiksduur is afgestemd, en de fiscale afschrijving (art. 3.30 Wet IB 2001, via art. 8 Wet Vpb 1969) is een aparte berekening die nooit de commerciële afschrijving is. De duur hieronder is dus gangbare praktijk en geen regel; een bedrijfsmiddel dat anders afschrijft zegt dat in zijn eigen kolommen.'),
+    ('NL', 'computers', 'Computers en kantoorautomatisering', '{"en":"Computers and office automation"}'::jsonb, 'straight_line', 60, null, null, 'asset_fixed', 90, 'art. 3.30 lid 2 Wet IB 2001 (via art. 8 lid 1 Wet Vpb 1969) laat fiscaal per jaar ten hoogste 20 % van de aanschaffings- of voortbrengingskosten toe, dus 60 maanden is de kortste duur waarop de boeking het fiscale plafond niet overschrijdt. Nederland kent geen wettelijke of fiscale tabel van gebruiksduren: art. 2:386 lid 4 BW vraagt een stelsel dat op de verwachte toekomstige gebruiksduur is afgestemd, en de fiscale afschrijving (art. 3.30 Wet IB 2001, via art. 8 Wet Vpb 1969) is een aparte berekening die nooit de commerciële afschrijving is. De duur hieronder is dus gangbare praktijk en geen regel; een bedrijfsmiddel dat anders afschrijft zegt dat in zijn eigen kolommen.'),
+    ('NL', 'vervoermiddelen', 'Automobielen en overige transportmiddelen', '{"en":"Cars and other transport equipment"}'::jsonb, 'straight_line', 60, null, null, 'asset_fixed', 100, 'art. 3.30 lid 2 Wet IB 2001 (via art. 8 lid 1 Wet Vpb 1969) laat fiscaal per jaar ten hoogste 20 % van de aanschaffings- of voortbrengingskosten toe, dus 60 maanden is de kortste duur waarop de boeking het fiscale plafond niet overschrijdt. Nederland kent geen wettelijke of fiscale tabel van gebruiksduren: art. 2:386 lid 4 BW vraagt een stelsel dat op de verwachte toekomstige gebruiksduur is afgestemd, en de fiscale afschrijving (art. 3.30 Wet IB 2001, via art. 8 Wet Vpb 1969) is een aparte berekening die nooit de commerciële afschrijving is. De duur hieronder is dus gangbare praktijk en geen regel; een bedrijfsmiddel dat anders afschrijft zegt dat in zijn eigen kolommen.'),
+    ('NL', 'overige-bedrijfsmiddelen', 'Andere vaste bedrijfsmiddelen', '{"en":"Other fixed business assets"}'::jsonb, 'straight_line', 120, null, null, 'asset_fixed', 110, 'Nederland kent geen wettelijke of fiscale tabel van gebruiksduren: art. 2:386 lid 4 BW vraagt een stelsel dat op de verwachte toekomstige gebruiksduur is afgestemd, en de fiscale afschrijving (art. 3.30 Wet IB 2001, via art. 8 Wet Vpb 1969) is een aparte berekening die nooit de commerciële afschrijving is. De duur hieronder is dus gangbare praktijk en geen regel; een bedrijfsmiddel dat anders afschrijft zegt dat in zijn eigen kolommen.')
+  ) as v (country, code, name, name_i18n, method, duration_months, coefficient,
+          prorata, account_type, sequence, legal_reference)
+on conflict (country, code) do update set
+  name            = excluded.name,
+  name_i18n       = excluded.name_i18n,
+  method          = excluded.method,
+  duration_months = excluded.duration_months,
+  coefficient     = excluded.coefficient,
+  prorata         = excluded.prorata,
+  account_type    = excluded.account_type,
+  sequence        = excluded.sequence,
+  legal_reference = excluded.legal_reference;
+
