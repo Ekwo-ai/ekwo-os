@@ -1,0 +1,539 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "why": "Three fictitious companies whose tax was worked out by hand for the financial year 2025: a profitable company that crosses the 375 000 AED band, a year that ends in a loss, and a company with add-backs that sets earlier losses against its income up to 75 %.",
+  "fiscal_year": {
+    "name": "Financial year 2025",
+    "start": "2025-01-01",
+    "end": "2025-12-31"
+  },
+  "companies": [
+    {
+      "ref": "profit-above-the-zero-band",
+      "name": "Marina Dhow Trading LLC",
+      "why": "A profitable company whose Taxable Income crosses 375 000: the first 375 000 at 0 %, the rest at 9 %. Half of the entertainment is added back from its account, a fine booked on licence fees is declared, and the tax already booked sits below line 8 and changes nothing.",
+      "entries": [
+        {
+          "date": "2025-06-30",
+          "description": "Sales of the year",
+          "lines": [
+            {
+              "account": "1010",
+              "debit": "4200000.00"
+            },
+            {
+              "account": "4000",
+              "credit": "4200000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-06-30",
+          "description": "Goods purchased and sold",
+          "lines": [
+            {
+              "account": "5000",
+              "debit": "2950000.00"
+            },
+            {
+              "account": "1010",
+              "credit": "2950000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-06-30",
+          "description": "Salaries",
+          "lines": [
+            {
+              "account": "6100",
+              "debit": "480000.00"
+            },
+            {
+              "account": "1010",
+              "credit": "480000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-06-30",
+          "description": "Office and warehouse rent",
+          "lines": [
+            {
+              "account": "6200",
+              "debit": "360000.00"
+            },
+            {
+              "account": "1010",
+              "credit": "360000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-09-15",
+          "description": "Client entertainment",
+          "lines": [
+            {
+              "account": "6310",
+              "debit": "12430.50"
+            },
+            {
+              "account": "1010",
+              "credit": "12430.50"
+            }
+          ]
+        },
+        {
+          "date": "2025-10-15",
+          "description": "Fine paid to the municipality",
+          "lines": [
+            {
+              "account": "6440",
+              "debit": "2500.00"
+            },
+            {
+              "account": "1010",
+              "credit": "2500.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Corporate tax of the year",
+          "lines": [
+            {
+              "account": "8000",
+              "debit": "2590.63"
+            },
+            {
+              "account": "2130",
+              "credit": "2590.63"
+            }
+          ]
+        }
+      ],
+      "adjustments": [
+        {
+          "rule": "fines-penalties",
+          "amount": "2500.00"
+        }
+      ],
+      "expected": {
+        "computation": [
+          "Profit before corporate tax (line 8): 4 200 000,00 − 2 950 000,00 − 480 000,00 − 360 000,00 − 12 430,50 − 2 500,00 = 395 069,50. The 2 590,63 of tax booked on 8000 is on line 9 and is not in it.",
+          "Entertainment: balance of account 6310, 12 430,50 × 50 % = 6 215,25.",
+          "Fines and penalties, declared: 2 500,00 × 100 % = 2 500,00.",
+          "Fiscal result: 395 069,50 + 6 215,25 + 2 500,00 = 403 784,75. No earlier loss: the taxable base is 403 784,75.",
+          "Zero rate on the first slice: 375 000,00 × 0 % = 0,00.",
+          "Standard rate on the rest: 28 784,75 × 9 % = 2 590,6275, i.e. 2 590,63.",
+          "Estimated tax: 0,00 + 2 590,63 = 2 590,63."
+        ],
+        "lines": [
+          {
+            "kind": "accounting_result",
+            "code": "8",
+            "amount": "395069.50"
+          },
+          {
+            "kind": "adjustment",
+            "code": "entertainment",
+            "base": "12430.50",
+            "rate": "50",
+            "amount": "6215.25"
+          },
+          {
+            "kind": "adjustment",
+            "code": "fines-penalties",
+            "base": "2500.00",
+            "rate": "100",
+            "amount": "2500.00"
+          },
+          {
+            "kind": "fiscal_result",
+            "amount": "403784.75"
+          },
+          {
+            "kind": "taxable_base",
+            "amount": "403784.75"
+          },
+          {
+            "kind": "rate",
+            "code": "zero-band",
+            "base": "375000.00",
+            "rate": "0",
+            "amount": "0.00"
+          },
+          {
+            "kind": "rate",
+            "code": "standard",
+            "base": "28784.75",
+            "rate": "9",
+            "amount": "2590.63"
+          },
+          {
+            "kind": "tax_before_credits",
+            "base": "403784.75",
+            "amount": "2590.63"
+          },
+          {
+            "kind": "estimated_tax",
+            "code": "AE-CT",
+            "base": "403784.75",
+            "amount": "2590.63"
+          }
+        ],
+        "tax": "2590.63"
+      }
+    },
+    {
+      "ref": "loss-year",
+      "name": "Khor Fakkan Date Farms LLC",
+      "why": "A year that ends in a loss: no base, no tax, and the tax loss — the accounting loss reduced by the entertainment added back — is what a later year may set against its income.",
+      "entries": [
+        {
+          "date": "2025-06-30",
+          "description": "Sales of the year",
+          "lines": [
+            {
+              "account": "1010",
+              "debit": "1100000.00"
+            },
+            {
+              "account": "4000",
+              "credit": "1100000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-06-30",
+          "description": "Goods purchased and sold",
+          "lines": [
+            {
+              "account": "5000",
+              "debit": "640000.00"
+            },
+            {
+              "account": "1010",
+              "credit": "640000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-06-30",
+          "description": "Salaries",
+          "lines": [
+            {
+              "account": "6100",
+              "debit": "330000.00"
+            },
+            {
+              "account": "1010",
+              "credit": "330000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-06-30",
+          "description": "Office and warehouse rent",
+          "lines": [
+            {
+              "account": "6200",
+              "debit": "144000.00"
+            },
+            {
+              "account": "1010",
+              "credit": "144000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-09-15",
+          "description": "Client entertainment",
+          "lines": [
+            {
+              "account": "6310",
+              "debit": "7800.00"
+            },
+            {
+              "account": "1010",
+              "credit": "7800.00"
+            }
+          ]
+        }
+      ],
+      "expected": {
+        "computation": [
+          "Profit before corporate tax (line 8): 1 100 000,00 − 640 000,00 − 330 000,00 − 144 000,00 − 7 800,00 = −21 800,00.",
+          "Entertainment: balance of account 6310, 7 800,00 × 50 % = 3 900,00.",
+          "Fiscal result: −21 800,00 + 3 900,00 = −17 900,00. The taxable base is nil and the tax loss of the period is 17 900,00.",
+          "Estimated tax: 0,00."
+        ],
+        "lines": [
+          {
+            "kind": "accounting_result",
+            "code": "8",
+            "amount": "-21800.00"
+          },
+          {
+            "kind": "adjustment",
+            "code": "entertainment",
+            "base": "7800.00",
+            "rate": "50",
+            "amount": "3900.00"
+          },
+          {
+            "kind": "fiscal_result",
+            "amount": "-17900.00"
+          },
+          {
+            "kind": "taxable_base",
+            "amount": "0.00"
+          },
+          {
+            "kind": "loss_of_period",
+            "amount": "17900.00"
+          },
+          {
+            "kind": "tax_before_credits",
+            "base": "0.00",
+            "amount": "0.00"
+          },
+          {
+            "kind": "estimated_tax",
+            "code": "AE-CT",
+            "base": "0.00",
+            "amount": "0.00"
+          }
+        ],
+        "tax": "0.00"
+      }
+    },
+    {
+      "ref": "losses-brought-forward",
+      "name": "Sharjah Coastal Logistics LLC",
+      "why": "Add-backs and earlier losses: the losses of 2023 and 2024 are set against the fiscal result oldest first, up to 75 % of it; the rest of the 2024 loss stays for a later year. The base is then taxed above 375 000.",
+      "entries": [
+        {
+          "date": "2025-06-30",
+          "description": "Sales of the year",
+          "lines": [
+            {
+              "account": "1010",
+              "debit": "9300000.00"
+            },
+            {
+              "account": "4000",
+              "credit": "9300000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-06-30",
+          "description": "Goods purchased and sold",
+          "lines": [
+            {
+              "account": "5000",
+              "debit": "5100000.00"
+            },
+            {
+              "account": "1010",
+              "credit": "5100000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-06-30",
+          "description": "Salaries",
+          "lines": [
+            {
+              "account": "6100",
+              "debit": "1500000.00"
+            },
+            {
+              "account": "1010",
+              "credit": "1500000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-06-30",
+          "description": "Office and warehouse rent",
+          "lines": [
+            {
+              "account": "6200",
+              "debit": "600000.00"
+            },
+            {
+              "account": "1010",
+              "credit": "600000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-09-15",
+          "description": "Client entertainment",
+          "lines": [
+            {
+              "account": "6310",
+              "debit": "38420.00"
+            },
+            {
+              "account": "1010",
+              "credit": "38420.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-10-15",
+          "description": "Donation to a private association",
+          "lines": [
+            {
+              "account": "6430",
+              "debit": "25000.00"
+            },
+            {
+              "account": "1010",
+              "credit": "25000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-10-15",
+          "description": "Fine for a customs offence",
+          "lines": [
+            {
+              "account": "6440",
+              "debit": "4675.00"
+            },
+            {
+              "account": "1010",
+              "credit": "4675.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Interest on the bank loan",
+          "lines": [
+            {
+              "account": "7100",
+              "debit": "60000.00"
+            },
+            {
+              "account": "1010",
+              "credit": "60000.00"
+            }
+          ]
+        }
+      ],
+      "adjustments": [
+        {
+          "rule": "fines-penalties",
+          "amount": "4675.00"
+        },
+        {
+          "rule": "non-qualifying-donations",
+          "amount": "25000.00"
+        }
+      ],
+      "losses": [
+        {
+          "origin_period_end": "2023-12-31",
+          "amount": "600000.00"
+        },
+        {
+          "origin_period_end": "2024-12-31",
+          "amount": "1100000.00"
+        }
+      ],
+      "expected": {
+        "computation": [
+          "Profit before corporate tax (line 8): 9 300 000,00 − 5 100 000,00 − 1 500 000,00 − 600 000,00 − 38 420,00 − 25 000,00 − 4 675,00 − 60 000,00 = 1 971 905,00.",
+          "Entertainment: balance of account 6310, 38 420,00 × 50 % = 19 210,00.",
+          "Fines and penalties, declared: 4 675,00 × 100 % = 4 675,00.",
+          "Donation to an entity that is not a Qualifying Public Benefit Entity, declared: 25 000,00 × 100 % = 25 000,00.",
+          "Fiscal result: 1 971 905,00 + 19 210,00 + 25 000,00 + 4 675,00 = 2 020 790,00.",
+          "Losses available: 600 000,00 (2023) + 1 100 000,00 (2024) = 1 700 000,00. Limit, art. 37: 2 020 790,00 × 75 % = 1 515 592,50.",
+          "The 2023 loss is used in full, 600 000,00; the 2024 loss for the 915 592,50 that remains under the limit, leaving 184 407,50 for a later year.",
+          "Taxable base: 2 020 790,00 − 1 515 592,50 = 505 197,50.",
+          "Zero rate on the first slice: 375 000,00 × 0 % = 0,00.",
+          "Standard rate on the rest: 130 197,50 × 9 % = 11 717,775, i.e. 11 717,78.",
+          "Estimated tax: 0,00 + 11 717,78 = 11 717,78."
+        ],
+        "lines": [
+          {
+            "kind": "accounting_result",
+            "code": "8",
+            "amount": "1971905.00"
+          },
+          {
+            "kind": "adjustment",
+            "code": "entertainment",
+            "base": "38420.00",
+            "rate": "50",
+            "amount": "19210.00"
+          },
+          {
+            "kind": "adjustment",
+            "code": "fines-penalties",
+            "base": "4675.00",
+            "rate": "100",
+            "amount": "4675.00"
+          },
+          {
+            "kind": "adjustment",
+            "code": "non-qualifying-donations",
+            "base": "25000.00",
+            "rate": "100",
+            "amount": "25000.00"
+          },
+          {
+            "kind": "fiscal_result",
+            "amount": "2020790.00"
+          },
+          {
+            "kind": "loss_used",
+            "code": "2023-12-31",
+            "base": "600000.00",
+            "amount": "-600000.00"
+          },
+          {
+            "kind": "loss_used",
+            "code": "2024-12-31",
+            "base": "1100000.00",
+            "amount": "-915592.50"
+          },
+          {
+            "kind": "taxable_base",
+            "amount": "505197.50"
+          },
+          {
+            "kind": "rate",
+            "code": "zero-band",
+            "base": "375000.00",
+            "rate": "0",
+            "amount": "0.00"
+          },
+          {
+            "kind": "rate",
+            "code": "standard",
+            "base": "130197.50",
+            "rate": "9",
+            "amount": "11717.78"
+          },
+          {
+            "kind": "tax_before_credits",
+            "base": "505197.50",
+            "amount": "11717.78"
+          },
+          {
+            "kind": "estimated_tax",
+            "code": "AE-CT",
+            "base": "505197.50",
+            "amount": "11717.78"
+          }
+        ],
+        "tax": "11717.78"
+      }
+    }
+  ]
+}

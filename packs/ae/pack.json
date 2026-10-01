@@ -2,10 +2,10 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "AE",
   "name": "United Arab Emirates",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "schema_min": "20260929141500",
   "seed_sequence": 60,
-  "released_at": "2026-09-22",
+  "released_at": "2026-10-01",
   "certification": {
     "status": "community",
     "sources": [
@@ -79,6 +79,22 @@
         "publisher": "Federal Tax Authority",
         "url": "https://tax.gov.ae//Datafolder/Files/Legislation/2026/FTA%20Decision%20No.%204%20of%202026%20on%20the%20Rules%20and%20Requirements%20-%2018%2008%202026.pdf",
         "consulted_on": "2026-09-22",
+        "kind": "regulation"
+      },
+      {
+        "key": "ct-decree-law",
+        "title": "Federal Decree-Law No. 47 of 2022 on the Taxation of Corporations and Businesses, and its amendments (English text, consolidated January 2026)",
+        "publisher": "Ministry of Finance",
+        "url": "https://mof.gov.ae/wp-content/uploads/2026/01/Federal-Decree-Law-No.-47-of-2022-and-its-amendments-en-v13.1.26.pdf",
+        "consulted_on": "2026-10-01",
+        "kind": "law"
+      },
+      {
+        "key": "cabinet-116-2022",
+        "title": "Cabinet Decision No. 116 of 2022 on the annual Taxable Income subject to Corporate Tax",
+        "publisher": "Ministry of Finance",
+        "url": "https://mof.gov.ae/wp-content/uploads/2023/02/Cabinet-Decision-No-116-of-2022-on-CT-Article-3-Threshold-1.pdf",
+        "consulted_on": "2026-10-01",
         "kind": "regulation"
       }
     ]

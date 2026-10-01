@@ -1,0 +1,122 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "tax": {
+    "code": "AE-CT",
+    "name": "Corporate Tax",
+    "legal_reference": "Federal Decree-Law No. 47 of 2022 on the Taxation of Corporations and Businesses, art. 2 — Corporate Tax is imposed on Taxable Income at the rates of art. 3",
+    "source": "ct-decree-law"
+  },
+  "result": {
+    "statement": "AE-IFRSSME-IS",
+    "line": "8",
+    "legal_reference": "Federal Decree-Law No. 47 of 2022 on the Taxation of Corporations and Businesses, art. 20, paras 1 and 2 — Taxable Income is the Accounting Income of the financial statements, adjusted as the Decree-Law provides; art. 33, para 6 — Corporate Tax itself is not deductible, so the computation starts from line 8 'Profit before corporate tax', above the tax expense of line 9",
+    "source": "ct-decree-law"
+  },
+  "accounts": {
+    "expense": "8000",
+    "payable": "2130",
+    "receivable": "1350",
+    "legal_reference": "The pack's own chart of accounts: 8000 'Corporate tax charge for the year', 2130 'Corporate tax payable', 1350 'Corporate tax recoverable'. The Decree-Law prescribes no chart of accounts.",
+    "source": "ct-decree-law"
+  },
+  "parameters": [],
+  "adjustment_rules": [
+    {
+      "code": "entertainment",
+      "name": "Entertainment, amusement and recreation expenditure — non-deductible half",
+      "direction": "add_back",
+      "percent": 50,
+      "accounts": [
+        {
+          "kind": "account_code",
+          "code_from": "6310"
+        }
+      ],
+      "valid_from": "2023-06-01",
+      "valid_on": "period_start",
+      "sequence": 10,
+      "legal_reference": "Federal Decree-Law No. 47 of 2022 on the Taxation of Corporations and Businesses, art. 32, paras 1 and 2 — 50 % of entertainment, amusement or recreation expenditure is deductible: meals, accommodation, transport, admission fees and facilities for customers, shareholders, suppliers or other business partners",
+      "source": "ct-decree-law"
+    },
+    {
+      "code": "fines-penalties",
+      "name": "Fines and penalties",
+      "direction": "add_back",
+      "percent": 100,
+      "valid_from": "2023-06-01",
+      "valid_on": "period_start",
+      "sequence": 20,
+      "legal_reference": "Federal Decree-Law No. 47 of 2022 on the Taxation of Corporations and Businesses, art. 33, para 2 — no deduction for fines and penalties, other than amounts awarded as compensation for damages or breach of contract",
+      "source": "ct-decree-law"
+    },
+    {
+      "code": "non-qualifying-donations",
+      "name": "Donations, grants and gifts to an entity that is not a Qualifying Public Benefit Entity",
+      "direction": "add_back",
+      "percent": 100,
+      "valid_from": "2023-06-01",
+      "valid_on": "period_start",
+      "sequence": 30,
+      "legal_reference": "Federal Decree-Law No. 47 of 2022 on the Taxation of Corporations and Businesses, art. 33, para 1 — no deduction for donations, grants or gifts made to an entity that is not a Qualifying Public Benefit Entity",
+      "source": "ct-decree-law"
+    },
+    {
+      "code": "illicit-payments",
+      "name": "Bribes and other illicit payments",
+      "direction": "add_back",
+      "percent": 100,
+      "valid_from": "2023-06-01",
+      "valid_on": "period_start",
+      "sequence": 40,
+      "legal_reference": "Federal Decree-Law No. 47 of 2022 on the Taxation of Corporations and Businesses, art. 33, para 3 — no deduction for bribes or other illicit payments",
+      "source": "ct-decree-law"
+    },
+    {
+      "code": "foreign-income-tax",
+      "name": "Tax on income imposed on the company outside the State",
+      "direction": "add_back",
+      "percent": 100,
+      "valid_from": "2023-06-01",
+      "valid_on": "period_start",
+      "sequence": 50,
+      "legal_reference": "Federal Decree-Law No. 47 of 2022 on the Taxation of Corporations and Businesses, art. 33, para 8 — no deduction for tax on income imposed on the Taxable Person outside the State",
+      "source": "ct-decree-law"
+    }
+  ],
+  "rates": [
+    {
+      "code": "zero-band",
+      "name": "Zero rate on the first 375 000 AED of Taxable Income",
+      "rate": 0,
+      "up_to": 375000,
+      "valid_from": "2023-06-01",
+      "valid_on": "period_start",
+      "sequence": 10,
+      "legal_reference": "Federal Decree-Law No. 47 of 2022 on the Taxation of Corporations and Businesses, art. 3, para 1(a); Cabinet Decision No. 116 of 2022, art. 2, para 1 — the portion of Taxable Income not exceeding 375 000 dirhams is subject to a 0 % rate in the Tax Period; applies to Tax Periods commencing on or after 1 June 2023 (Decree-Law art. 69)",
+      "source": "cabinet-116-2022"
+    },
+    {
+      "code": "standard",
+      "name": "Standard rate",
+      "rate": 9,
+      "valid_from": "2023-06-01",
+      "valid_on": "period_start",
+      "sequence": 20,
+      "legal_reference": "Federal Decree-Law No. 47 of 2022 on the Taxation of Corporations and Businesses, art. 3, para 1(b); Cabinet Decision No. 116 of 2022, art. 3 — 9 % on Taxable Income exceeding 375 000 dirhams; applies to Tax Periods commencing on or after 1 June 2023 (Decree-Law art. 69)",
+      "source": "cabinet-116-2022"
+    }
+  ],
+  "loss_carryforward": [
+    {
+      "floor": 0,
+      "percent_above": 75,
+      "years": null,
+      "valid_from": "2023-06-01",
+      "valid_on": "period_start",
+      "legal_reference": "Federal Decree-Law No. 47 of 2022 on the Taxation of Corporations and Businesses, art. 37, paras 1, 2 and 4 — a Tax Loss is offset against the Taxable Income of subsequent Tax Periods, oldest first, up to 75 % of the Taxable Income of the period before any Tax Loss relief, with no limit of time. Not computed here: art. 37, para 3 (losses before the commencement of Corporate Tax or before the person became a Taxable Person), art. 39 (50 % continuity of ownership), art. 38 (transfer between group companies) and art. 21, para 2(d) (no loss relief in a period of Small Business Relief).",
+      "source": "ct-decree-law"
+    }
+  ],
+  "prepayments": [],
+  "credits": []
+}

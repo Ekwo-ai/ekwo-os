@@ -325,9 +325,10 @@ category in its own `legal_reference`, for a renderer to map.
   (Articles 57 to 58).
 - **Withholding tax**: this pack's research found no UAE withholding tax
   regime on payments abroad, unlike Singapore's.
-- **Corporate tax** (Federal Decree-Law No. 47 of 2022), named only where a
-  balance sheet needs an account for it, and deliberately outside this
-  VAT-focused pack's research — see "Sources".
+- **Corporate tax** (Federal Decree-Law No. 47 of 2022): the estimate of the
+  corporate income tax module is in `corporate_tax.json` — see "Corporate
+  income tax" below for what it leaves out. The rest of the pack stays
+  VAT-focused — see "Sources".
 - **Fixed assets.** No `fixed_assets.json`: whether the UAE's tax rules recognise
   a depreciation schedule at all was not established in this research pass,
   since it is a corporate tax question and out of scope here.
@@ -361,3 +362,29 @@ should read first, roughly in the order the author is least sure of them:
    the three named only in a secondary source.
 8. **`einvoicing.mandatory_from`**, which names the earliest phase
    (≥ AED 50,000,000 revenue) and not a single date every business meets.
+
+## Corporate income tax: what `corporate_tax.json` leaves out
+
+The section carries what was read on an official page on 1 October 2026, and
+nothing else: the rates of Federal Decree-Law No. 47 of 2022, art. 3 and
+Cabinet Decision No. 116 of 2022 (0 % up to 375 000 AED, 9 % above), the 75 %
+limit on tax losses (art. 37), the half-deduction of entertainment (art. 32)
+and the non-deductible expenditure of art. 33. It starts from line 8 of
+`AE-IFRSSME-IS`, the profit before corporate tax. A rule that is missing makes
+an estimate too high or too low by something a reader can name; these are the
+ones to name.
+
+| Not carried | Why |
+|---|---|
+| Small Business Relief (art. 21; Ministerial Decision No. 73 of 2023) | An election by a company with revenue of 3 000 000 AED or less, in the period and the earlier ones. It treats the company as having no Taxable Income and switches off loss relief for the period (art. 21, para 2(d)): no loss used, none created. The module has no such election, and a rate of 0 % would still consume the stock of losses, so the section says nothing. A company that elects it overstates its estimate. The Ministry of Finance announced an extension of the relief to periods ending on or before 31 December 2029 (Ministerial Decision No. 131); the text of that decision was not read. |
+| General interest deduction limitation (art. 30: net interest deductible up to 30 % of EBITDA, carried forward ten periods) | It needs the EBITDA of the company and a de minimis amount set by the Minister, whose decision was not read. A company over the limit declares the disallowed interest as an amount. |
+| Qualifying Free Zone Persons (arts 3, para 2, and 18) | A 0 % rate on Qualifying Income, defined by a Cabinet decision that was not read. The module taxes the whole base at the rates above and has no way to split it. |
+| Top-up Tax on Multinational Enterprises at an effective 15 % (art. 3, para 3) | A tax on a group, set by a Cabinet decision not read here, on top of the company's own. The section has no shape for one. |
+| Losses: pre-regime losses (art. 37, para 3), continuity of ownership (art. 39), transfers within a group (art. 38) | They depend on facts the books do not hold. The company enters only the losses it may use. |
+| Exempt income, participation exemption, qualifying group and restructuring reliefs (arts 22 to 27) | Conditions the company must judge; no flat rule to write. |
+| Disallowed fines, donations, bribes and foreign income tax on named accounts | The chart has no account for any of them: the rules wait for the company to state an amount. Entertainment is the only rule that names an account, `6310`, which holds nothing else. |
+| Related-party and connected-person adjustments (arts 34 to 36) | Not read. |
+| Prepayments | None. The Decree-Law has no instalments, as far as the text read goes; nothing is declared. |
+| Credits (foreign tax credit, art. 47; withholding tax credit, art. 46; refund, art. 49) | The amount is the company's to declare and no credit was cited, so `credits` is empty. |
+| A threshold shared out over a short period | Cabinet Decision No. 116 says "in the relevant Tax Period" and no pro-rating was read; the 375 000 is applied whole. |
+| Language of the labels | The pack declares no language besides English, so there is no `corporate_tax` key to translate. |
