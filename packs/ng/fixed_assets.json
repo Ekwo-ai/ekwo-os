@@ -1,0 +1,109 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "depreciation": {
+    "prorata_straight_line": "days",
+    "prorata_declining": "days",
+    "day_count": "actual",
+    "declining_cap_percent": null,
+    "declining_switch_to_linear": true,
+    "legal_reference": "IFRS for SMEs, Section 17, paragraph 17.20 — depreciation of an asset begins when it is available for use, that is when it is in the location and condition necessary for it to be capable of operating in the manner intended by management, and ceases when the asset is derecognised; paragraph 17.22 names the straight-line method and the diminishing balance method among those an entity may select. The Standard does not say how a first period is cut; this pack counts the real days from the day the asset is available for use, and a company that counts whole months sets prorata = 'months' on the asset. Nothing in the Standard or in the Nigerian texts read caps an annuity, which is why no cap is declared. The Financial Reporting Council of Nigeria has adopted that Standard for small and medium-sized entities (IFRS Foundation jurisdictional profile for Nigeria).",
+    "source": "ifrs-for-smes"
+  },
+  "disposal": {
+    "style": "net_result",
+    "legal_reference": "IFRS for SMEs, Section 17, paragraphs 17.27 to 17.30 — an item is derecognised on disposal, and the gain or loss is the difference between the net disposal proceeds and the carrying amount, recognised in profit or loss and not classified as revenue. One figure, on one account, which is the net_result style; Companies and Allied Matters Act 2020, First Schedule, Section C, Profit and Loss Account Format 1, prints a profit on disposal of fixed assets in item 6 and a loss in item 11, which accounts 4230 and 7690 reach.",
+    "source": "ifrs-for-smes"
+  },
+  "categories": [
+    {
+      "code": "goodwill",
+      "name": "Goodwill",
+      "method": "straight_line",
+      "duration_months": 120,
+      "account_type": "asset_fixed",
+      "sequence": 10,
+      "legal_reference": "IFRS for SMEs, paragraph 19.34 — goodwill is measured at cost less accumulated amortisation and impairment, amortised under paragraphs 18.19 to 18.24, and where its useful life cannot be reliably established the best estimate of it shall not exceed ten years. Ten years is therefore the ceiling this category starts from and not a life anybody estimated. The Financial Reporting Council of Nigeria has adopted that Standard for small and medium-sized entities (IFRS Foundation jurisdictional profile for Nigeria).",
+      "source": "ifrs-for-smes"
+    },
+    {
+      "code": "intangibles",
+      "name": "Other intangible assets, patents and licences",
+      "method": "straight_line",
+      "duration_months": 60,
+      "account_type": "asset_fixed",
+      "sequence": 20,
+      "legal_reference": "IFRS for SMEs, Section 18, paragraphs 18.19 to 18.22 — every intangible asset has a finite useful life, never longer than the period of the contractual or legal rights it arises from; where the life cannot be established reliably it is management's best estimate and does not exceed ten years; amortisation begins when the asset is available for use and uses the straight line where the pattern cannot be determined reliably. Five years is common practice and not a rule read in a Nigerian text: a licence or a patent takes the term of its own right instead. The Financial Reporting Council of Nigeria has adopted that Standard for small and medium-sized entities (IFRS Foundation jurisdictional profile for Nigeria).",
+      "source": "ifrs-for-smes"
+    },
+    {
+      "code": "freehold-buildings",
+      "name": "Freehold buildings",
+      "method": "straight_line",
+      "duration_months": 600,
+      "account_type": "asset_fixed",
+      "sequence": 30,
+      "legal_reference": "Land is not depreciated (paragraph 17.16) and the building on it is, so a freehold property is split before this category is applied to the part that has a life. There is no legal or fiscal table of useful lives in Nigeria for the accounting charge. IFRS for SMEs, Section 17, paragraphs 17.16 to 17.22, require an entity to allocate the depreciable amount of an item of property, plant and equipment on a systematic basis over its useful life, which the entity estimates and reviews for itself, and to select the method that reflects the pattern in which it expects to consume the asset's benefits; the Financial Reporting Council of Nigeria has adopted that Standard for small and medium-sized entities (IFRS Foundation jurisdictional profile for Nigeria). Capital allowances under the Nigeria Tax Act 2025 are a tax computation and are never the accounting charge. The duration below is therefore common practice, not a rule read in a Nigerian text, and an asset that depreciates differently says so in its own columns.",
+      "source": "ifrs-for-smes"
+    },
+    {
+      "code": "leasehold-improvements",
+      "name": "Leasehold property and improvements",
+      "method": "straight_line",
+      "duration_months": 120,
+      "account_type": "asset_fixed",
+      "sequence": 40,
+      "legal_reference": "Common practice depreciates a leasehold improvement over the shorter of its own life and the remaining term of the lease (paragraph 17.21(d), legal limits such as the expiry of a lease), which is a fact about the lease and not about the category. There is no legal or fiscal table of useful lives in Nigeria for the accounting charge. IFRS for SMEs, Section 17, paragraphs 17.16 to 17.22, require an entity to allocate the depreciable amount of an item of property, plant and equipment on a systematic basis over its useful life, which the entity estimates and reviews for itself, and to select the method that reflects the pattern in which it expects to consume the asset's benefits; the Financial Reporting Council of Nigeria has adopted that Standard for small and medium-sized entities (IFRS Foundation jurisdictional profile for Nigeria). Capital allowances under the Nigeria Tax Act 2025 are a tax computation and are never the accounting charge. The duration below is therefore common practice, not a rule read in a Nigerian text, and an asset that depreciates differently says so in its own columns.",
+      "source": "ifrs-for-smes"
+    },
+    {
+      "code": "plant-and-machinery",
+      "name": "Plant and machinery",
+      "method": "straight_line",
+      "duration_months": 120,
+      "account_type": "asset_fixed",
+      "sequence": 50,
+      "legal_reference": "There is no legal or fiscal table of useful lives in Nigeria for the accounting charge. IFRS for SMEs, Section 17, paragraphs 17.16 to 17.22, require an entity to allocate the depreciable amount of an item of property, plant and equipment on a systematic basis over its useful life, which the entity estimates and reviews for itself, and to select the method that reflects the pattern in which it expects to consume the asset's benefits; the Financial Reporting Council of Nigeria has adopted that Standard for small and medium-sized entities (IFRS Foundation jurisdictional profile for Nigeria). Capital allowances under the Nigeria Tax Act 2025 are a tax computation and are never the accounting charge. The duration below is therefore common practice, not a rule read in a Nigerian text, and an asset that depreciates differently says so in its own columns.",
+      "source": "ifrs-for-smes"
+    },
+    {
+      "code": "fixtures-and-fittings",
+      "name": "Fixtures and fittings",
+      "method": "straight_line",
+      "duration_months": 120,
+      "account_type": "asset_fixed",
+      "sequence": 60,
+      "legal_reference": "There is no legal or fiscal table of useful lives in Nigeria for the accounting charge. IFRS for SMEs, Section 17, paragraphs 17.16 to 17.22, require an entity to allocate the depreciable amount of an item of property, plant and equipment on a systematic basis over its useful life, which the entity estimates and reviews for itself, and to select the method that reflects the pattern in which it expects to consume the asset's benefits; the Financial Reporting Council of Nigeria has adopted that Standard for small and medium-sized entities (IFRS Foundation jurisdictional profile for Nigeria). Capital allowances under the Nigeria Tax Act 2025 are a tax computation and are never the accounting charge. The duration below is therefore common practice, not a rule read in a Nigerian text, and an asset that depreciates differently says so in its own columns.",
+      "source": "ifrs-for-smes"
+    },
+    {
+      "code": "office-equipment",
+      "name": "Office equipment",
+      "method": "straight_line",
+      "duration_months": 60,
+      "account_type": "asset_fixed",
+      "sequence": 70,
+      "legal_reference": "There is no legal or fiscal table of useful lives in Nigeria for the accounting charge. IFRS for SMEs, Section 17, paragraphs 17.16 to 17.22, require an entity to allocate the depreciable amount of an item of property, plant and equipment on a systematic basis over its useful life, which the entity estimates and reviews for itself, and to select the method that reflects the pattern in which it expects to consume the asset's benefits; the Financial Reporting Council of Nigeria has adopted that Standard for small and medium-sized entities (IFRS Foundation jurisdictional profile for Nigeria). Capital allowances under the Nigeria Tax Act 2025 are a tax computation and are never the accounting charge. The duration below is therefore common practice, not a rule read in a Nigerian text, and an asset that depreciates differently says so in its own columns.",
+      "source": "ifrs-for-smes"
+    },
+    {
+      "code": "computer-equipment",
+      "name": "Computer equipment",
+      "method": "straight_line",
+      "duration_months": 36,
+      "account_type": "asset_fixed",
+      "sequence": 80,
+      "legal_reference": "There is no legal or fiscal table of useful lives in Nigeria for the accounting charge. IFRS for SMEs, Section 17, paragraphs 17.16 to 17.22, require an entity to allocate the depreciable amount of an item of property, plant and equipment on a systematic basis over its useful life, which the entity estimates and reviews for itself, and to select the method that reflects the pattern in which it expects to consume the asset's benefits; the Financial Reporting Council of Nigeria has adopted that Standard for small and medium-sized entities (IFRS Foundation jurisdictional profile for Nigeria). Capital allowances under the Nigeria Tax Act 2025 are a tax computation and are never the accounting charge. The duration below is therefore common practice, not a rule read in a Nigerian text, and an asset that depreciates differently says so in its own columns.",
+      "source": "ifrs-for-smes"
+    },
+    {
+      "code": "motor-vehicles",
+      "name": "Motor vehicles",
+      "method": "straight_line",
+      "duration_months": 48,
+      "account_type": "asset_fixed",
+      "sequence": 90,
+      "legal_reference": "There is no legal or fiscal table of useful lives in Nigeria for the accounting charge. IFRS for SMEs, Section 17, paragraphs 17.16 to 17.22, require an entity to allocate the depreciable amount of an item of property, plant and equipment on a systematic basis over its useful life, which the entity estimates and reviews for itself, and to select the method that reflects the pattern in which it expects to consume the asset's benefits; the Financial Reporting Council of Nigeria has adopted that Standard for small and medium-sized entities (IFRS Foundation jurisdictional profile for Nigeria). Capital allowances under the Nigeria Tax Act 2025 are a tax computation and are never the accounting charge. The duration below is therefore common practice, not a rule read in a Nigerian text, and an asset that depreciates differently says so in its own columns.",
+      "source": "ifrs-for-smes"
+    }
+  ]
+}

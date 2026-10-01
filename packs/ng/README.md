@@ -237,3 +237,44 @@ declares neither is not a small company for the estimate, which says
 `not_declared`. The registry entries `nta-2025` and `ntaa-2025` pointed at each
 other's file on the Tax Appeal Tribunal's site; each URL now serves the text
 its title names.
+
+## Fixed assets
+
+`fixed_assets.json` carries how a Nigerian company depreciates a fixed asset and
+takes it off the balance sheet. It was read on 1 October 2026 in IFRS for SMEs
+(third edition, 2025), Sections 17, 18 and 19, and in the IFRS Foundation's
+profile of Nigeria, which records that the Financial Reporting Council adopted
+that Standard for small and medium-sized entities without modification.
+
+- **Disposal is `net_result`.** Section 17, paragraphs 17.27 to 17.30, put the
+  difference between the net proceeds and the carrying amount in profit or loss
+  as one figure; the profit and loss account (Format 1, items 6 and 11) prints a
+  gain and a loss, which are the roles `asset_disposal_gain` (4230) and
+  `asset_disposal_loss` (7690).
+- **The first-period prorata is practice, not text.** Paragraph 17.20 starts the
+  charge when the asset is available for use and says nothing of how to cut the
+  first year; the section counts real days from that day, in straight line and
+  in declining balance. A company that counts whole months sets
+  `prorata = 'months'` on the asset.
+- **Durations are practice.** Nigeria has no legal or fiscal table of useful
+  lives for the accounting charge. The only figure read in a text is the ten
+  years of goodwill and of an intangible whose life cannot be established
+  (paragraphs 19.34 and 18.20), which is a ceiling and not an estimate. Every
+  other category says in its `legal_reference` that its duration is common
+  practice. A category proposes, never imposes.
+- **Capital allowances are not the charge.** They are a tax computation under
+  the Nigeria Tax Act 2025 and no category borrows their rates.
+
+### Fixed assets: what `fixed_assets.json` leaves out
+
+| Not carried | Why |
+|---|---|
+| Capital allowances (initial and annual allowances, pools) | A tax computation distinct from the book charge. The module keeps one schedule per asset, and the rates of the Nigeria Tax Act 2025 were not read for this section. |
+| A declining-balance category | Paragraph 17.22 allows the method but no Nigerian text or rate was read, and a coefficient would be invented. An asset can still be set up in declining balance by hand. |
+| Separate depreciation of major components (paragraph 17.16) | The module has one asset and one duration. |
+| Residual value, impairment (Section 27) and its reversal | Not a pack rule. |
+| Revaluation model (paragraphs 17.15B to 17.15D) | Not carried; the module has no revaluation. |
+| Threshold below which an item is expensed | Set by the company's policy; no Nigerian text read. |
+| Construction-in-progress (account 0170) | Not depreciated until available for use. |
+| Investment property, assets held for sale, leased assets (Section 20) | Not read; the module cannot stop depreciation on a reclassification. |
+| Units of production | Refused by the module. |

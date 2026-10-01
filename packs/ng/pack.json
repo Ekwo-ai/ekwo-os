@@ -2,7 +2,7 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "NG",
   "name": "Nigeria",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "schema_min": "20260917170000",
   "seed_sequence": 49,
   "released_at": "2026-10-01",
@@ -72,6 +72,22 @@
         "url": "https://frcnigeria.gov.ng/wp-content/uploads/2024/08/The-FRC-Act_merged.pdf",
         "consulted_on": "2026-09-25",
         "kind": "law"
+      },
+      {
+        "key": "ifrs-for-smes",
+        "title": "IFRS for SMEs Accounting Standard (third edition, 2025) — Section 17 Property, Plant and Equipment, Section 18 Intangible Assets other than Goodwill and Section 19 Business Combinations and Goodwill",
+        "publisher": "IFRS Foundation",
+        "url": "https://www.ifrs.org/content/dam/ifrs/publications/html-standards/english/2025/issued/html-ifrs-for-smes.html",
+        "consulted_on": "2026-10-01",
+        "kind": "standard"
+      },
+      {
+        "key": "ifrs-ng-profile",
+        "title": "IFRS Standards — Application around the world, jurisdictional profile: Nigeria — the Financial Reporting Council of Nigeria has adopted the IFRS for SMEs Standard, effective January 2014, without modification",
+        "publisher": "IFRS Foundation",
+        "url": "https://www.ifrs.org/content/dam/ifrs/publications/jurisdictions/pdf-profiles/nigeria-ifrs-profile.pdf",
+        "consulted_on": "2026-10-01",
+        "kind": "guidance"
       }
     ]
   },
