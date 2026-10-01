@@ -2,7 +2,7 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "SG",
   "name": "Singapore",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "schema_min": "20260917170000",
   "seed_sequence": 50,
   "released_at": "2026-10-01",
@@ -46,7 +46,7 @@
         "title": "Accounting standards — the financial reporting frameworks issued by the Accounting Standards Committee, SFRS for Small Entities among them",
         "publisher": "Accounting and Corporate Regulatory Authority (ACRA)",
         "url": "https://www.acra.gov.sg/regulations/accounting-standards-financial-reporting-surveillance/accounting-standards/",
-        "consulted_on": "2026-09-21",
+        "consulted_on": "2026-10-01",
         "kind": "guidance"
       },
       {

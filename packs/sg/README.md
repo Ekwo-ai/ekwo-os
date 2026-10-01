@@ -300,6 +300,44 @@ names its PINT SG code in its legal reference, for a renderer to map.
 - **Filing.** The return is filed on myTax Portal; submitting it is a credential
   and a format, not a pack.
 
+## Fixed assets
+
+`fixed_assets.json` is the part of this pack that is most plainly **practice
+rather than law**. Singapore has no legal or fiscal table of accounting useful
+lives, and the text of SFRS for Small Entities could not be opened (see
+"Sources"), so no paragraph of it is quoted: every category says in as many
+words that its duration is common practice. What was read is IRAS's side: the
+Explanatory Notes to Form C for YA 2026 list the capital allowances of the
+Income Tax Act 1947 — s. 19 over the prescribed tax useful life, s. 19A(1) over
+three years, s. 19A(2) to (4) in one year for computers and prescribed
+automation equipment, s. 19A(10A) in one year for items of no more than $5,000
+each — and IRAS's audit write-up says the depreciation of the financial
+statements is added back in the tax computation. Capital allowances are a tax
+computation and never the accounting charge, so none of them is a category.
+
+- **Prorata:** months, from the month the asset is brought into use, for the
+  straight line and the declining balance alike; real days in the year; no cap;
+  the switch to the straight line stays on. This is practice, not a quoted rule.
+- **Disposal:** `net_result`. The statements print gains on disposal as one
+  income line and losses as one expense line (paragraphs 5.9 and 5.11(a), cited
+  as `statements.json` cites them), on accounts 4750 and 6960.
+- **Categories:** nine, all straight line. Goodwill ten years, software and
+  licences, renovation, office equipment, furniture and motor vehicles five,
+  computers three, plant and machinery ten, leasehold property thirty (a
+  placeholder for the lease term).
+
+### Fixed assets: what `fixed_assets.json` leaves out
+
+| Not carried | Why |
+|---|---|
+| Capital allowances (ss. 19, 19A, the one-, two- and three-year write-offs, balancing allowances and charges) | A tax computation distinct from the book charge; the module keeps one schedule per asset. The prescribed tax useful lives were not read. |
+| Accelerated or enhanced allowances, the $5,000 low-value expensing | Outside the vocabulary of a category. |
+| Threshold below which an asset is expensed in the accounts | No field, and no official text read. |
+| Components of an asset | One asset, one duration. |
+| Revaluation, impairment, residual value | Not a pack rule. |
+| Right-of-use assets and investment property | Their life is the lease term or fair value, not a category. |
+| Units of production | Refused by the module. |
+
 ## Corporate income tax: what `corporate_tax.json` leaves out
 
 The section carries what was read on an IRAS document on 1 October 2026 — the
@@ -384,3 +422,5 @@ roughly in the order the author is least sure of them:
 9. **The chart's mapping** onto the statements, especially amounts due to
    directors among current borrowings and the GST, CPF and levy accounts among
    trade and other payables.
+10. **The fixed asset durations and the monthly prorata**, every one of which is
+    practice and says so; and the prescribed tax useful lives of s. 19, not read.

@@ -1,0 +1,109 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "depreciation": {
+    "prorata_straight_line": "months",
+    "prorata_declining": "months",
+    "day_count": "actual",
+    "declining_cap_percent": null,
+    "declining_switch_to_linear": true,
+    "legal_reference": "Singapore law prescribes no method, no prorata and no cap for the depreciation of the financial statements: the Companies Act 1967, s. 201, only requires statements that comply with the accounting standards, and the text of SFRS for Small Entities could not be opened from here, so what it says about when depreciation begins is not quoted. A charge from the month the asset is brought into use, rather than for the whole of the first year, is the common practice and the declared rule; the straight line and the reducing balance are both in use and no ceiling on an annuity is known. Capital allowances under the Income Tax Act 1947, ss. 19 and 19A are a tax computation (IRAS, Explanatory Notes to Form C for YA 2026, and its audit write-up, which says the depreciation of the financial statements is added back) and never the accounting charge.",
+    "source": "acra-standards"
+  },
+  "disposal": {
+    "style": "net_result",
+    "legal_reference": "SFRS for Small Entities, paragraph 5.9 and 5.11(a), as the pack's statements.json cites them — gains on disposal are an additional income line and losses on disposal an expense by nature, each one figure and not the proceeds and the carrying amount separately. That is the net_result style: the gain on account 4750, the loss on account 6960. The text of the standard could not be opened from here; the paragraphs are cited as that file does.",
+    "source": "acra-standards"
+  },
+  "categories": [
+    {
+      "code": "goodwill",
+      "name": "Goodwill",
+      "method": "straight_line",
+      "duration_months": 120,
+      "account_type": "asset_fixed",
+      "sequence": 10,
+      "legal_reference": "Goodwill and acquired intangibles are amortised over their useful life; ten years is a common practice and not a life anybody estimated for the company. Singapore sets no legal or fiscal table of accounting useful lives. The Companies Act 1967, s. 201, requires financial statements that comply with the accounting standards, and ACRA names SFRS for Small Entities among them; the text of that standard could not be opened from here (it is served to Singapore addresses only), so no wording of its Sections 17 to 19 is quoted. Capital allowances under the Income Tax Act 1947, ss. 19 and 19A (one year for computers, prescribed automation equipment and items of no more than $5,000 each, three years for other plant and machinery, or the prescribed tax useful life under s. 19) are a tax computation, and IRAS tells companies to add back the depreciation of the financial statements as non-deductible; they are never the accounting charge. The duration below is therefore common Singapore practice and not a rule, and an asset that depreciates differently says so in its own columns.",
+      "source": "acra-standards"
+    },
+    {
+      "code": "intangibles",
+      "name": "Other intangible assets, software and licences",
+      "method": "straight_line",
+      "duration_months": 60,
+      "account_type": "asset_fixed",
+      "sequence": 20,
+      "legal_reference": "Software, licences and similar rights are amortised over their useful life, usually the term of the licence where there is one. Singapore sets no legal or fiscal table of accounting useful lives. The Companies Act 1967, s. 201, requires financial statements that comply with the accounting standards, and ACRA names SFRS for Small Entities among them; the text of that standard could not be opened from here (it is served to Singapore addresses only), so no wording of its Sections 17 to 19 is quoted. Capital allowances under the Income Tax Act 1947, ss. 19 and 19A (one year for computers, prescribed automation equipment and items of no more than $5,000 each, three years for other plant and machinery, or the prescribed tax useful life under s. 19) are a tax computation, and IRAS tells companies to add back the depreciation of the financial statements as non-deductible; they are never the accounting charge. The duration below is therefore common Singapore practice and not a rule, and an asset that depreciates differently says so in its own columns.",
+      "source": "acra-standards"
+    },
+    {
+      "code": "leasehold-property",
+      "name": "Leasehold property",
+      "method": "straight_line",
+      "duration_months": 360,
+      "account_type": "asset_fixed",
+      "sequence": 30,
+      "legal_reference": "A leasehold is depreciated over the shorter of its life and the remaining term of the lease, which is a fact about the lease and not about the category; thirty years is a placeholder to be replaced by the lease term. Land held freehold is not depreciated. Singapore sets no legal or fiscal table of accounting useful lives. The Companies Act 1967, s. 201, requires financial statements that comply with the accounting standards, and ACRA names SFRS for Small Entities among them; the text of that standard could not be opened from here (it is served to Singapore addresses only), so no wording of its Sections 17 to 19 is quoted. Capital allowances under the Income Tax Act 1947, ss. 19 and 19A (one year for computers, prescribed automation equipment and items of no more than $5,000 each, three years for other plant and machinery, or the prescribed tax useful life under s. 19) are a tax computation, and IRAS tells companies to add back the depreciation of the financial statements as non-deductible; they are never the accounting charge. The duration below is therefore common Singapore practice and not a rule, and an asset that depreciates differently says so in its own columns.",
+      "source": "acra-standards"
+    },
+    {
+      "code": "renovation",
+      "name": "Renovation and refurbishment",
+      "method": "straight_line",
+      "duration_months": 60,
+      "account_type": "asset_fixed",
+      "sequence": 40,
+      "legal_reference": "Renovation works are depreciated over their useful life, capped in practice by the lease term. The tax deduction for renovation under s. 14N is a separate tax computation. Singapore sets no legal or fiscal table of accounting useful lives. The Companies Act 1967, s. 201, requires financial statements that comply with the accounting standards, and ACRA names SFRS for Small Entities among them; the text of that standard could not be opened from here (it is served to Singapore addresses only), so no wording of its Sections 17 to 19 is quoted. Capital allowances under the Income Tax Act 1947, ss. 19 and 19A (one year for computers, prescribed automation equipment and items of no more than $5,000 each, three years for other plant and machinery, or the prescribed tax useful life under s. 19) are a tax computation, and IRAS tells companies to add back the depreciation of the financial statements as non-deductible; they are never the accounting charge. The duration below is therefore common Singapore practice and not a rule, and an asset that depreciates differently says so in its own columns.",
+      "source": "acra-standards"
+    },
+    {
+      "code": "plant-and-machinery",
+      "name": "Plant and machinery",
+      "method": "straight_line",
+      "duration_months": 120,
+      "account_type": "asset_fixed",
+      "sequence": 50,
+      "legal_reference": "Singapore sets no legal or fiscal table of accounting useful lives. The Companies Act 1967, s. 201, requires financial statements that comply with the accounting standards, and ACRA names SFRS for Small Entities among them; the text of that standard could not be opened from here (it is served to Singapore addresses only), so no wording of its Sections 17 to 19 is quoted. Capital allowances under the Income Tax Act 1947, ss. 19 and 19A (one year for computers, prescribed automation equipment and items of no more than $5,000 each, three years for other plant and machinery, or the prescribed tax useful life under s. 19) are a tax computation, and IRAS tells companies to add back the depreciation of the financial statements as non-deductible; they are never the accounting charge. The duration below is therefore common Singapore practice and not a rule, and an asset that depreciates differently says so in its own columns.",
+      "source": "acra-standards"
+    },
+    {
+      "code": "office-equipment",
+      "name": "Office equipment",
+      "method": "straight_line",
+      "duration_months": 60,
+      "account_type": "asset_fixed",
+      "sequence": 60,
+      "legal_reference": "Singapore sets no legal or fiscal table of accounting useful lives. The Companies Act 1967, s. 201, requires financial statements that comply with the accounting standards, and ACRA names SFRS for Small Entities among them; the text of that standard could not be opened from here (it is served to Singapore addresses only), so no wording of its Sections 17 to 19 is quoted. Capital allowances under the Income Tax Act 1947, ss. 19 and 19A (one year for computers, prescribed automation equipment and items of no more than $5,000 each, three years for other plant and machinery, or the prescribed tax useful life under s. 19) are a tax computation, and IRAS tells companies to add back the depreciation of the financial statements as non-deductible; they are never the accounting charge. The duration below is therefore common Singapore practice and not a rule, and an asset that depreciates differently says so in its own columns.",
+      "source": "acra-standards"
+    },
+    {
+      "code": "computers",
+      "name": "Computers and IT equipment",
+      "method": "straight_line",
+      "duration_months": 36,
+      "account_type": "asset_fixed",
+      "sequence": 70,
+      "legal_reference": "Computers are written off in one year for capital allowances under s. 19A(2), which is a tax computation and not the three years used here. Singapore sets no legal or fiscal table of accounting useful lives. The Companies Act 1967, s. 201, requires financial statements that comply with the accounting standards, and ACRA names SFRS for Small Entities among them; the text of that standard could not be opened from here (it is served to Singapore addresses only), so no wording of its Sections 17 to 19 is quoted. Capital allowances under the Income Tax Act 1947, ss. 19 and 19A (one year for computers, prescribed automation equipment and items of no more than $5,000 each, three years for other plant and machinery, or the prescribed tax useful life under s. 19) are a tax computation, and IRAS tells companies to add back the depreciation of the financial statements as non-deductible; they are never the accounting charge. The duration below is therefore common Singapore practice and not a rule, and an asset that depreciates differently says so in its own columns.",
+      "source": "acra-standards"
+    },
+    {
+      "code": "furniture-and-fittings",
+      "name": "Furniture and fittings",
+      "method": "straight_line",
+      "duration_months": 60,
+      "account_type": "asset_fixed",
+      "sequence": 80,
+      "legal_reference": "Singapore sets no legal or fiscal table of accounting useful lives. The Companies Act 1967, s. 201, requires financial statements that comply with the accounting standards, and ACRA names SFRS for Small Entities among them; the text of that standard could not be opened from here (it is served to Singapore addresses only), so no wording of its Sections 17 to 19 is quoted. Capital allowances under the Income Tax Act 1947, ss. 19 and 19A (one year for computers, prescribed automation equipment and items of no more than $5,000 each, three years for other plant and machinery, or the prescribed tax useful life under s. 19) are a tax computation, and IRAS tells companies to add back the depreciation of the financial statements as non-deductible; they are never the accounting charge. The duration below is therefore common Singapore practice and not a rule, and an asset that depreciates differently says so in its own columns.",
+      "source": "acra-standards"
+    },
+    {
+      "code": "motor-vehicles",
+      "name": "Motor vehicles",
+      "method": "straight_line",
+      "duration_months": 60,
+      "account_type": "asset_fixed",
+      "sequence": 90,
+      "legal_reference": "Singapore sets no legal or fiscal table of accounting useful lives. The Companies Act 1967, s. 201, requires financial statements that comply with the accounting standards, and ACRA names SFRS for Small Entities among them; the text of that standard could not be opened from here (it is served to Singapore addresses only), so no wording of its Sections 17 to 19 is quoted. Capital allowances under the Income Tax Act 1947, ss. 19 and 19A (one year for computers, prescribed automation equipment and items of no more than $5,000 each, three years for other plant and machinery, or the prescribed tax useful life under s. 19) are a tax computation, and IRAS tells companies to add back the depreciation of the financial statements as non-deductible; they are never the accounting charge. The duration below is therefore common Singapore practice and not a rule, and an asset that depreciates differently says so in its own columns.",
+      "source": "acra-standards"
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 -- Ekwo OS — Singapore: the rules of this country's corporate income tax.
 --
--- Generated from packs/sg/corporate_tax.json at version 0.2.0, do not edit.
+-- Generated from packs/sg/corporate_tax.json at version 0.3.0, do not edit.
 -- Change the pack and run `ekwo pack build sg`; `ekwo pack check --all`
 -- refuses a seed that is not the exact output of its pack, and the CI runs it.
 --
