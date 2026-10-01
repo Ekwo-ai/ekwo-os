@@ -2,10 +2,10 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "GB",
   "name": "United Kingdom",
-  "version": "0.9.0",
+  "version": "0.10.0",
   "schema_min": "20260929141500",
   "seed_sequence": 14,
-  "released_at": "2026-09-21",
+  "released_at": "2026-10-01",
   "certification": {
     "status": "community",
     "sources": [
@@ -272,6 +272,94 @@
         "url": "https://docs.peppol.eu/poacc/billing/3.0/codelist/eas/",
         "consulted_on": "2026-09-15",
         "kind": "standard"
+      },
+      {
+        "key": "hmrc-ct-rates",
+        "title": "Rates and allowances: Corporation Tax — the main rate, the small profits rate, the marginal relief fraction and the limits, by financial year",
+        "publisher": "HM Revenue & Customs",
+        "url": "https://www.gov.uk/government/publications/rates-and-allowances-corporation-tax/rates-and-allowances-corporation-tax",
+        "consulted_on": "2026-10-01",
+        "kind": "guidance"
+      },
+      {
+        "key": "hmrc-marginal-relief",
+        "title": "Corporation Tax: Marginal Relief — the limits and their reduction by the number of associated companies",
+        "publisher": "HM Revenue & Customs",
+        "url": "https://www.gov.uk/guidance/corporation-tax-marginal-relief",
+        "consulted_on": "2026-10-01",
+        "kind": "guidance"
+      },
+      {
+        "key": "cta-2010-s18a",
+        "title": "Corporation Tax Act 2010, section 18A — Small profits rate: companies without ring fence profits",
+        "publisher": "The National Archives — legislation.gov.uk",
+        "url": "https://www.legislation.gov.uk/ukpga/2010/4/section/18A",
+        "consulted_on": "2026-10-01",
+        "kind": "law"
+      },
+      {
+        "key": "cta-2010-s18b",
+        "title": "Corporation Tax Act 2010, section 18B — Marginal relief for companies without ring fence profits",
+        "publisher": "The National Archives — legislation.gov.uk",
+        "url": "https://www.legislation.gov.uk/ukpga/2010/4/section/18B",
+        "consulted_on": "2026-10-01",
+        "kind": "law"
+      },
+      {
+        "key": "cta-2010-s18d",
+        "title": "Corporation Tax Act 2010, section 18D — Lower and upper limits",
+        "publisher": "The National Archives — legislation.gov.uk",
+        "url": "https://www.legislation.gov.uk/ukpga/2010/4/section/18D",
+        "consulted_on": "2026-10-01",
+        "kind": "law"
+      },
+      {
+        "key": "cta-2010-s45a",
+        "title": "Corporation Tax Act 2010, section 45A — Carry-forward of trading losses",
+        "publisher": "The National Archives — legislation.gov.uk",
+        "url": "https://www.legislation.gov.uk/ukpga/2010/4/section/45A",
+        "consulted_on": "2026-10-01",
+        "kind": "law"
+      },
+      {
+        "key": "cta-2010-s269zb",
+        "title": "Corporation Tax Act 2010, section 269ZB — Restriction on deductions from trading profits (Part 7ZA, with ss. 269ZF and 269ZW)",
+        "publisher": "The National Archives — legislation.gov.uk",
+        "url": "https://www.legislation.gov.uk/ukpga/2010/4/section/269ZB",
+        "consulted_on": "2026-10-01",
+        "kind": "law"
+      },
+      {
+        "key": "cta-2009-s1298",
+        "title": "Corporation Tax Act 2009, section 1298 — Business entertainment and gifts",
+        "publisher": "The National Archives — legislation.gov.uk",
+        "url": "https://www.legislation.gov.uk/ukpga/2009/4/section/1298",
+        "consulted_on": "2026-10-01",
+        "kind": "law"
+      },
+      {
+        "key": "bim35201",
+        "title": "BIM35201 — Capital/revenue divide: the role of accountancy: generally accepted accounting practice",
+        "publisher": "HM Revenue & Customs — Business Income Manual",
+        "url": "https://www.gov.uk/hmrc-internal-manuals/business-income-manual/bim35201",
+        "consulted_on": "2026-10-01",
+        "kind": "guidance"
+      },
+      {
+        "key": "bim38515",
+        "title": "BIM38515 — Wholly and exclusively: fines, penalties and damages: penalties for infractions of the law are not allowable",
+        "publisher": "HM Revenue & Customs — Business Income Manual",
+        "url": "https://www.gov.uk/hmrc-internal-manuals/business-income-manual/bim38515",
+        "consulted_on": "2026-10-01",
+        "kind": "guidance"
+      },
+      {
+        "key": "hmrc-capital-allowances",
+        "title": "Capital allowances",
+        "publisher": "HM Revenue & Customs",
+        "url": "https://www.gov.uk/capital-allowances",
+        "consulted_on": "2026-10-01",
+        "kind": "guidance"
       }
     ]
   },

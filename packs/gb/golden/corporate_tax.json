@@ -1,0 +1,715 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "why": "Three fictitious companies whose tax was worked out by hand for the financial year 2025 (1 April 2025 to 31 March 2026): a small company with a profit under marginal relief, a year that ends in a loss, and a company with associated companies that is refused the small profits rate and sets earlier losses against its profit.",
+  "fiscal_year": {
+    "name": "Financial year 2025",
+    "start": "2025-04-01",
+    "end": "2026-03-31"
+  },
+  "companies": [
+    {
+      "ref": "small-profit",
+      "name": "Thistledown Bakery Ltd",
+      "why": "A small company with a profit between the two limits: no associated company, a twelve-month period, no close-company status and no distribution beyond its profits. 19 % on the first £50,000 and, on the rest, the slice at 26.5 % that is marginal relief written as a rate. The tax charge and the depreciation are added back from their accounts; the client entertainment is declared and the capital allowances claimed are deducted.",
+      "entries": [
+        {
+          "date": "2025-09-30",
+          "description": "Sales of the year",
+          "lines": [
+            {
+              "account": "1300",
+              "debit": "412350.00"
+            },
+            {
+              "account": "4000",
+              "credit": "412350.00"
+            }
+          ]
+        },
+        {
+          "date": "2026-03-31",
+          "description": "Flour, ingredients and packaging",
+          "lines": [
+            {
+              "account": "5000",
+              "debit": "168420.75"
+            },
+            {
+              "account": "1300",
+              "credit": "168420.75"
+            }
+          ]
+        },
+        {
+          "date": "2026-03-31",
+          "description": "Wages",
+          "lines": [
+            {
+              "account": "7010",
+              "debit": "96500.00"
+            },
+            {
+              "account": "1300",
+              "credit": "96500.00"
+            }
+          ]
+        },
+        {
+          "date": "2026-03-31",
+          "description": "Employer's National Insurance",
+          "lines": [
+            {
+              "account": "7020",
+              "debit": "9840.20"
+            },
+            {
+              "account": "1300",
+              "credit": "9840.20"
+            }
+          ]
+        },
+        {
+          "date": "2026-03-31",
+          "description": "Rent",
+          "lines": [
+            {
+              "account": "7100",
+              "debit": "24000.00"
+            },
+            {
+              "account": "1300",
+              "credit": "24000.00"
+            }
+          ]
+        },
+        {
+          "date": "2026-03-31",
+          "description": "Light and heat",
+          "lines": [
+            {
+              "account": "7120",
+              "debit": "5215.35"
+            },
+            {
+              "account": "1300",
+              "credit": "5215.35"
+            }
+          ]
+        },
+        {
+          "date": "2026-03-31",
+          "description": "Business entertainment",
+          "lines": [
+            {
+              "account": "7330",
+              "debit": "3120.40"
+            },
+            {
+              "account": "1300",
+              "credit": "3120.40"
+            }
+          ]
+        },
+        {
+          "date": "2026-03-31",
+          "description": "Accountancy fees",
+          "lines": [
+            {
+              "account": "7400",
+              "debit": "4200.00"
+            },
+            {
+              "account": "1300",
+              "credit": "4200.00"
+            }
+          ]
+        },
+        {
+          "date": "2026-03-31",
+          "description": "Depreciation of plant and machinery",
+          "lines": [
+            {
+              "account": "7620",
+              "debit": "12800.00"
+            },
+            {
+              "account": "1300",
+              "credit": "12800.00"
+            }
+          ]
+        },
+        {
+          "date": "2026-03-31",
+          "description": "Corporation tax charge of the year",
+          "lines": [
+            {
+              "account": "8200",
+              "debit": "18000.00"
+            },
+            {
+              "account": "2280",
+              "credit": "18000.00"
+            }
+          ]
+        }
+      ],
+      "parameters": {
+        "twelve_month_period": true,
+        "no_associated_companies": true,
+        "close_investment_holding_company": false,
+        "augmented_profits_equal_taxable_profits": true
+      },
+      "adjustments": [
+        {
+          "rule": "business-entertainment",
+          "amount": "2430.40"
+        },
+        {
+          "rule": "capital-allowances",
+          "amount": "15000.00"
+        }
+      ],
+      "expected": {
+        "computation": [
+          "Profit for the financial year (item 20): 412,350.00 − 168,420.75 − 96,500.00 − 9,840.20 − 24,000.00 − 5,215.35 − 3,120.40 − 4,200.00 − 12,800.00 − 18,000.00 = 70,253.30.",
+          "Tax charge of the accounts: balance of account 8200, 18,000.00 × 100 % = 18,000.00.",
+          "Depreciation of tangible fixed assets: balance of account 7620, 12,800.00 × 100 % = 12,800.00.",
+          "Business entertainment declared (the customers' share of the 3,120.40 booked on 7330): 2,430.40 × 100 % = 2,430.40.",
+          "Capital allowances declared, deducted: 15,000.00 × 100 % = 15,000.00.",
+          "Fiscal result: 70,253.30 + 18,000.00 + 12,800.00 + 2,430.40 − 15,000.00 = 88,483.70. No earlier loss: the base is 88,483.70.",
+          "Small profits rate, conditions met (twelve months, no associated company, not a close investment-holding company, augmented profits equal to taxable profits): 50,000.00 × 19 % = 9,500.00.",
+          "Marginal relief as a rate, same conditions: (88,483.70 − 50,000.00) × 26.5 % = 38,483.70 × 26.5 % = 10,198.1805, or 10,198.18.",
+          "Check against the law: 88,483.70 × 25 % = 22,120.925, less 3/200 × (250,000.00 − 88,483.70) = 2,422.7445, is 19,698.1805, the same as 9,500.00 + 10,198.1805.",
+          "Estimated tax: 9,500.00 + 10,198.18 = 19,698.18."
+        ],
+        "lines": [
+          {
+            "kind": "accounting_result",
+            "code": "20",
+            "amount": "70253.30"
+          },
+          {
+            "kind": "adjustment",
+            "code": "corporation-tax-charge",
+            "base": "18000.00",
+            "rate": "100",
+            "amount": "18000.00"
+          },
+          {
+            "kind": "adjustment",
+            "code": "tangible-depreciation",
+            "base": "12800.00",
+            "rate": "100",
+            "amount": "12800.00"
+          },
+          {
+            "kind": "adjustment",
+            "code": "business-entertainment",
+            "base": "2430.40",
+            "rate": "100",
+            "amount": "2430.40"
+          },
+          {
+            "kind": "adjustment",
+            "code": "capital-allowances",
+            "base": "15000.00",
+            "rate": "100",
+            "amount": "-15000.00"
+          },
+          {
+            "kind": "fiscal_result",
+            "amount": "88483.70"
+          },
+          {
+            "kind": "taxable_base",
+            "amount": "88483.70"
+          },
+          {
+            "kind": "rate",
+            "code": "small-profits",
+            "base": "50000.00",
+            "rate": "19",
+            "amount": "9500.00"
+          },
+          {
+            "kind": "rate",
+            "code": "marginal-relief",
+            "base": "38483.70",
+            "rate": "26.5",
+            "amount": "10198.18"
+          },
+          {
+            "kind": "tax_before_credits",
+            "base": "88483.70",
+            "amount": "19698.18"
+          },
+          {
+            "kind": "estimated_tax",
+            "code": "GB-CT",
+            "base": "88483.70",
+            "amount": "19698.18"
+          }
+        ],
+        "tax": "19698.18"
+      }
+    },
+    {
+      "ref": "loss-year",
+      "name": "Kestrel Print Works Ltd",
+      "why": "A year that ends in a loss: the depreciation is added back, the capital allowances claimed are deducted, the base is nil, no tax is due and the tax loss is what a later year can set against a profit.",
+      "entries": [
+        {
+          "date": "2025-09-30",
+          "description": "Sales of the year",
+          "lines": [
+            {
+              "account": "1300",
+              "debit": "86400.00"
+            },
+            {
+              "account": "4010",
+              "credit": "86400.00"
+            }
+          ]
+        },
+        {
+          "date": "2026-03-31",
+          "description": "Paper, ink and materials",
+          "lines": [
+            {
+              "account": "5010",
+              "debit": "41250.60"
+            },
+            {
+              "account": "1300",
+              "credit": "41250.60"
+            }
+          ]
+        },
+        {
+          "date": "2026-03-31",
+          "description": "Wages",
+          "lines": [
+            {
+              "account": "7010",
+              "debit": "38000.00"
+            },
+            {
+              "account": "1300",
+              "credit": "38000.00"
+            }
+          ]
+        },
+        {
+          "date": "2026-03-31",
+          "description": "Employer's National Insurance",
+          "lines": [
+            {
+              "account": "7020",
+              "debit": "3120.55"
+            },
+            {
+              "account": "1300",
+              "credit": "3120.55"
+            }
+          ]
+        },
+        {
+          "date": "2026-03-31",
+          "description": "Rent",
+          "lines": [
+            {
+              "account": "7100",
+              "debit": "14400.00"
+            },
+            {
+              "account": "1300",
+              "credit": "14400.00"
+            }
+          ]
+        },
+        {
+          "date": "2026-03-31",
+          "description": "Computer and IT costs",
+          "lines": [
+            {
+              "account": "7240",
+              "debit": "2985.45"
+            },
+            {
+              "account": "1300",
+              "credit": "2985.45"
+            }
+          ]
+        },
+        {
+          "date": "2026-03-31",
+          "description": "Legal fees",
+          "lines": [
+            {
+              "account": "7410",
+              "debit": "1350.00"
+            },
+            {
+              "account": "1300",
+              "credit": "1350.00"
+            }
+          ]
+        },
+        {
+          "date": "2026-03-31",
+          "description": "Depreciation of plant and machinery",
+          "lines": [
+            {
+              "account": "7620",
+              "debit": "9600.00"
+            },
+            {
+              "account": "1300",
+              "credit": "9600.00"
+            }
+          ]
+        }
+      ],
+      "parameters": {
+        "twelve_month_period": true,
+        "no_associated_companies": true,
+        "close_investment_holding_company": false,
+        "augmented_profits_equal_taxable_profits": true
+      },
+      "adjustments": [
+        {
+          "rule": "capital-allowances",
+          "amount": "4000.00"
+        }
+      ],
+      "expected": {
+        "computation": [
+          "Loss for the financial year (item 20): 86,400.00 − 41,250.60 − 38,000.00 − 3,120.55 − 14,400.00 − 2,985.45 − 1,350.00 − 9,600.00 = −24,306.60.",
+          "Depreciation of tangible fixed assets: balance of account 7620, 9,600.00 × 100 % = 9,600.00.",
+          "Capital allowances declared, deducted: 4,000.00 × 100 % = 4,000.00.",
+          "Fiscal result: −24,306.60 + 9,600.00 − 4,000.00 = −18,706.60. The base is nil and the loss of the year is 18,706.60.",
+          "Estimated tax: 0.00."
+        ],
+        "lines": [
+          {
+            "kind": "accounting_result",
+            "code": "20",
+            "amount": "-24306.60"
+          },
+          {
+            "kind": "adjustment",
+            "code": "tangible-depreciation",
+            "base": "9600.00",
+            "rate": "100",
+            "amount": "9600.00"
+          },
+          {
+            "kind": "adjustment",
+            "code": "capital-allowances",
+            "base": "4000.00",
+            "rate": "100",
+            "amount": "-4000.00"
+          },
+          {
+            "kind": "fiscal_result",
+            "amount": "-18706.60"
+          },
+          {
+            "kind": "taxable_base",
+            "amount": "0.00"
+          },
+          {
+            "kind": "loss_of_period",
+            "amount": "18706.60"
+          },
+          {
+            "kind": "tax_before_credits",
+            "base": "0.00",
+            "amount": "0.00"
+          },
+          {
+            "kind": "estimated_tax",
+            "code": "GB-CT",
+            "base": "0.00",
+            "amount": "0.00"
+          }
+        ],
+        "tax": "0.00"
+      }
+    },
+    {
+      "ref": "outside-conditions",
+      "name": "Marlowe Freight Group Ltd",
+      "why": "A company that belongs to a group and so has associated companies: the small profits rate and marginal relief are refused and the whole base is taxed at the main rate, which is also what the law gives at this level of profit. It sets earlier losses against the profit, oldest first, up to £5,000,000 plus half of the profit above that, and declares entertainment, a fine and capital allowances.",
+      "entries": [
+        {
+          "date": "2025-09-30",
+          "description": "Sales of the year",
+          "lines": [
+            {
+              "account": "1300",
+              "debit": "24500000.00"
+            },
+            {
+              "account": "4000",
+              "credit": "24500000.00"
+            }
+          ]
+        },
+        {
+          "date": "2026-03-31",
+          "description": "Purchases of goods and haulage",
+          "lines": [
+            {
+              "account": "5000",
+              "debit": "14200000.00"
+            },
+            {
+              "account": "1300",
+              "credit": "14200000.00"
+            }
+          ]
+        },
+        {
+          "date": "2026-03-31",
+          "description": "Wages",
+          "lines": [
+            {
+              "account": "7010",
+              "debit": "1850000.00"
+            },
+            {
+              "account": "1300",
+              "credit": "1850000.00"
+            }
+          ]
+        },
+        {
+          "date": "2026-03-31",
+          "description": "Rent",
+          "lines": [
+            {
+              "account": "7100",
+              "debit": "640000.00"
+            },
+            {
+              "account": "1300",
+              "credit": "640000.00"
+            }
+          ]
+        },
+        {
+          "date": "2026-03-31",
+          "description": "Depreciation of plant and machinery",
+          "lines": [
+            {
+              "account": "7620",
+              "debit": "410000.00"
+            },
+            {
+              "account": "1300",
+              "credit": "410000.00"
+            }
+          ]
+        },
+        {
+          "date": "2026-03-31",
+          "description": "Business entertainment",
+          "lines": [
+            {
+              "account": "7330",
+              "debit": "55000.00"
+            },
+            {
+              "account": "1300",
+              "credit": "55000.00"
+            }
+          ]
+        },
+        {
+          "date": "2026-03-31",
+          "description": "Sundry expenses, including a fine",
+          "lines": [
+            {
+              "account": "7260",
+              "debit": "4750.00"
+            },
+            {
+              "account": "1300",
+              "credit": "4750.00"
+            }
+          ]
+        },
+        {
+          "date": "2026-03-31",
+          "description": "Accountancy and audit fees",
+          "lines": [
+            {
+              "account": "7400",
+              "debit": "52000.00"
+            },
+            {
+              "account": "1300",
+              "credit": "52000.00"
+            }
+          ]
+        },
+        {
+          "date": "2026-03-31",
+          "description": "Corporation tax charge of the year",
+          "lines": [
+            {
+              "account": "8200",
+              "debit": "1300000.00"
+            },
+            {
+              "account": "2280",
+              "credit": "1300000.00"
+            }
+          ]
+        }
+      ],
+      "parameters": {
+        "twelve_month_period": true,
+        "no_associated_companies": false,
+        "close_investment_holding_company": false,
+        "augmented_profits_equal_taxable_profits": true
+      },
+      "adjustments": [
+        {
+          "rule": "business-entertainment",
+          "amount": "38250.00"
+        },
+        {
+          "rule": "fines-penalties",
+          "amount": "4750.00"
+        },
+        {
+          "rule": "capital-allowances",
+          "amount": "125000.00"
+        }
+      ],
+      "losses": [
+        {
+          "origin_period_end": "2024-03-31",
+          "amount": "4000000.00"
+        },
+        {
+          "origin_period_end": "2025-03-31",
+          "amount": "3500000.00"
+        }
+      ],
+      "expected": {
+        "computation": [
+          "Profit for the financial year (item 20): 24,500,000.00 − 14,200,000.00 − 1,850,000.00 − 640,000.00 − 410,000.00 − 55,000.00 − 4,750.00 − 52,000.00 − 1,300,000.00 = 5,988,250.00.",
+          "Tax charge of the accounts: balance of account 8200, 1,300,000.00 × 100 % = 1,300,000.00.",
+          "Depreciation of tangible fixed assets: balance of account 7620, 410,000.00 × 100 % = 410,000.00.",
+          "Business entertainment declared (the customers' share of the 55,000.00 booked on 7330): 38,250.00 × 100 % = 38,250.00.",
+          "Fine declared (inside the 4,750.00 booked on 7260): 4,750.00 × 100 % = 4,750.00.",
+          "Capital allowances declared, deducted: 125,000.00 × 100 % = 125,000.00.",
+          "Fiscal result: 5,988,250.00 + 1,300,000.00 + 410,000.00 + 38,250.00 + 4,750.00 − 125,000.00 = 7,616,250.00.",
+          "Losses available: 4,000,000.00 (period ended 31 March 2024) + 3,500,000.00 (period ended 31 March 2025) = 7,500,000.00.",
+          "Limit on losses: 5,000,000.00 + 50 % × (7,616,250.00 − 5,000,000.00) = 5,000,000.00 + 1,308,125.00 = 6,308,125.00. The loss of 2024 is used in full, 4,000,000.00; 2,308,125.00 of the loss of 2025 is used and 1,191,875.00 of it is left.",
+          "Base: 7,616,250.00 − 6,308,125.00 = 1,308,125.00.",
+          "Small profits rate and marginal relief refused: the company has associated companies (s. 18D), so the limits are reduced and the pack does not apply them.",
+          "Main rate: 1,308,125.00 × 25 % = 327,031.25.",
+          "Estimated tax: 327,031.25."
+        ],
+        "lines": [
+          {
+            "kind": "accounting_result",
+            "code": "20",
+            "amount": "5988250.00"
+          },
+          {
+            "kind": "adjustment",
+            "code": "corporation-tax-charge",
+            "base": "1300000.00",
+            "rate": "100",
+            "amount": "1300000.00"
+          },
+          {
+            "kind": "adjustment",
+            "code": "tangible-depreciation",
+            "base": "410000.00",
+            "rate": "100",
+            "amount": "410000.00"
+          },
+          {
+            "kind": "adjustment",
+            "code": "business-entertainment",
+            "base": "38250.00",
+            "rate": "100",
+            "amount": "38250.00"
+          },
+          {
+            "kind": "adjustment",
+            "code": "fines-penalties",
+            "base": "4750.00",
+            "rate": "100",
+            "amount": "4750.00"
+          },
+          {
+            "kind": "adjustment",
+            "code": "capital-allowances",
+            "base": "125000.00",
+            "rate": "100",
+            "amount": "-125000.00"
+          },
+          {
+            "kind": "fiscal_result",
+            "amount": "7616250.00"
+          },
+          {
+            "kind": "loss_used",
+            "code": "2024-03-31",
+            "base": "4000000.00",
+            "amount": "-4000000.00"
+          },
+          {
+            "kind": "loss_used",
+            "code": "2025-03-31",
+            "base": "3500000.00",
+            "amount": "-2308125.00"
+          },
+          {
+            "kind": "taxable_base",
+            "amount": "1308125.00"
+          },
+          {
+            "kind": "rate_not_applied",
+            "code": "small-profits",
+            "note": "not_met: no_associated_companies",
+            "rate": "19"
+          },
+          {
+            "kind": "rate_not_applied",
+            "code": "marginal-relief",
+            "note": "not_met: no_associated_companies",
+            "rate": "26.5"
+          },
+          {
+            "kind": "rate",
+            "code": "main",
+            "base": "1308125.00",
+            "rate": "25",
+            "amount": "327031.25"
+          },
+          {
+            "kind": "tax_before_credits",
+            "base": "1308125.00",
+            "amount": "327031.25"
+          },
+          {
+            "kind": "estimated_tax",
+            "code": "GB-CT",
+            "base": "1308125.00",
+            "amount": "327031.25"
+          }
+        ],
+        "tax": "327031.25"
+      }
+    }
+  ]
+}

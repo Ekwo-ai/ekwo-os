@@ -1,0 +1,210 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "tax": {
+    "code": "GB-CT",
+    "name": "Corporation tax",
+    "legal_reference": "Corporation Tax Act 2009 and Corporation Tax Act 2010 — corporation tax on the profits of a company; the rates of Part 3 of the 2010 Act (ss. 18A to 18E, inserted by Finance Act 2021, Schedule 1) apply to financial years from 2023, and the financial years of corporation tax run from 1 April to 31 March",
+    "source": "hmrc-ct-rates"
+  },
+  "result": {
+    "statement": "GB-CA-SMALL-IS",
+    "line": "20",
+    "legal_reference": "The Small Companies and Groups (Accounts and Directors' Report) Regulations 2008 (S.I. 2008/409), Schedule 1, Profit and Loss Account Format 1 — the format of this pack prints no result before tax, so the computation starts from item 20, the profit or loss for the financial year, and a rule adds back the tax charge of item 13",
+    "source": "small-companies-regs"
+  },
+  "accounts": {
+    "expense": "8200",
+    "payable": "2280",
+    "receivable": null,
+    "legal_reference": "Corporation tax on profit or loss is item 13 of Profit and Loss Account Format 1 of S.I. 2008/409, Schedule 1, and corporation tax payable a creditor under item E of Balance Sheet Format 1; the chart of this pack keeps them on 8200 and 2280",
+    "source": "small-companies-regs"
+  },
+  "parameters": [
+    {
+      "code": "twelve_month_period",
+      "name": "The accounting period is twelve months long",
+      "type": "boolean",
+      "sequence": 10,
+      "legal_reference": "Corporation Tax Act 2010, s. 18D — for an accounting period of less than 12 months the lower limit and the upper limit are proportionately reduced; the pack does not reduce them, so a shorter period is taxed at the main rate",
+      "source": "cta-2010-s18d"
+    },
+    {
+      "code": "no_associated_companies",
+      "name": "The company has no associated companies in the accounting period",
+      "type": "boolean",
+      "sequence": 20,
+      "legal_reference": "Corporation Tax Act 2010, s. 18D and s. 18E — the lower and upper limits are reduced by the number of associated companies; HMRC's guidance gives the example of a company with 3 other associated companies, whose limits are divided by 4",
+      "source": "hmrc-marginal-relief"
+    },
+    {
+      "code": "close_investment_holding_company",
+      "name": "The company is a close investment-holding company in the accounting period",
+      "type": "boolean",
+      "sequence": 30,
+      "legal_reference": "Corporation Tax Act 2010, s. 18A(1) and s. 18N — the small profits rate and marginal relief are not available to a close investment-holding company",
+      "source": "cta-2010-s18a"
+    },
+    {
+      "code": "augmented_profits_equal_taxable_profits",
+      "name": "The company's augmented profits are the same as its taxable total profits: it received no distributions that count towards augmented profits",
+      "type": "boolean",
+      "sequence": 40,
+      "legal_reference": "Corporation Tax Act 2010, s. 18A and s. 18B — the small profits rate is for augmented profits not above the lower limit, and marginal relief is the fraction times (U − A) × N / A, with A the augmented profits and N the taxable total profits; the tranches of this pack are the same arithmetic only where A is equal to N",
+      "source": "cta-2010-s18b"
+    }
+  ],
+  "adjustment_rules": [
+    {
+      "code": "corporation-tax-charge",
+      "name": "Tax on profit or loss — the charge of the accounts",
+      "direction": "add_back",
+      "percent": 100,
+      "accounts": [
+        {
+          "kind": "code_range",
+          "code_from": "8200",
+          "code_to": "8220"
+        }
+      ],
+      "valid_from": "2023-04-01",
+      "valid_on": "period_start",
+      "sequence": 10,
+      "legal_reference": "S.I. 2008/409, Schedule 1, Profit and Loss Account Format 1, item 13 — the net result of item 20 is struck after the tax on profit or loss, which is the tax being computed here; the charge is added back to come to the profit before tax the rates apply to. This is the mechanics of the starting line, not a rule of the Corporation Tax Acts.",
+      "source": "small-companies-regs"
+    },
+    {
+      "code": "tangible-depreciation",
+      "name": "Depreciation of tangible fixed assets",
+      "direction": "add_back",
+      "percent": 100,
+      "accounts": [
+        {
+          "kind": "code_range",
+          "code_from": "7600",
+          "code_to": "7660"
+        }
+      ],
+      "valid_from": "2023-04-01",
+      "valid_on": "period_start",
+      "sequence": 20,
+      "legal_reference": "HMRC Business Income Manual, BIM35201 — for tax purposes depreciation is not an allowable deduction in computing trade profits; Corporation Tax Act 2009, s. 53 — no deduction for items of a capital nature. Intangible amortisation (7670, 7680) is not added back, and the depreciation of distribution assets (6500) is left to the company to declare, because the chart does not say what kind of asset it holds.",
+      "source": "bim35201"
+    },
+    {
+      "code": "business-entertainment",
+      "name": "Business entertainment and gifts",
+      "direction": "add_back",
+      "percent": 100,
+      "valid_from": "2023-04-01",
+      "valid_on": "period_start",
+      "sequence": 30,
+      "legal_reference": "Corporation Tax Act 2009, s. 1298 — no deduction is allowed for the expenses of business entertainment or gifts, subject to the exceptions of ss. 1299 and 1300 (entertainment of employees, among others). Account 7330 mixes entertainment of customers with entertainment of staff, so the company declares the amount the rule refuses.",
+      "source": "cta-2009-s1298"
+    },
+    {
+      "code": "fines-penalties",
+      "name": "Fines and penalties for breaches of the law",
+      "direction": "add_back",
+      "percent": 100,
+      "valid_from": "2023-04-01",
+      "valid_on": "period_start",
+      "sequence": 40,
+      "legal_reference": "HMRC Business Income Manual, BIM38515 — penalties incurred for breaching the law are not allowable; Corporation Tax Act 2009, s. 54(1) — no deduction for expenses not incurred wholly and exclusively for the purposes of the trade. The chart has no account for fines, so the company declares the amount.",
+      "source": "bim38515"
+    },
+    {
+      "code": "capital-allowances",
+      "name": "Capital allowances",
+      "direction": "deduction",
+      "percent": 100,
+      "valid_from": "2023-04-01",
+      "valid_on": "period_start",
+      "sequence": 50,
+      "legal_reference": "HMRC, Capital allowances — capital allowances let a business deduct some or all of the value of an item from its profits before it pays tax. The amount of the allowances claimed is the company's to declare: the pack computes none.",
+      "source": "hmrc-capital-allowances"
+    }
+  ],
+  "rates": [
+    {
+      "code": "small-profits",
+      "name": "Small profits rate",
+      "rate": 19,
+      "up_to": 50000,
+      "conditions": [
+        {
+          "parameter": "twelve_month_period",
+          "test": "is_true"
+        },
+        {
+          "parameter": "no_associated_companies",
+          "test": "is_true"
+        },
+        {
+          "parameter": "close_investment_holding_company",
+          "test": "is_false"
+        },
+        {
+          "parameter": "augmented_profits_equal_taxable_profits",
+          "test": "is_true"
+        }
+      ],
+      "valid_from": "2023-04-01",
+      "valid_on": "period_start",
+      "sequence": 10,
+      "legal_reference": "Corporation Tax Act 2010, s. 18A and s. 18D — the standard small profits rate is 19 % (Finance Act 2021, s. 7(2), for the financial year 2023, and the rate HMRC publishes for 2025 and 2026) on profits up to the lower limit of £50,000, for a company with a twelve-month period, no associated company, that is not a close investment-holding company and has no distribution beyond its taxable profits",
+      "source": "hmrc-ct-rates"
+    },
+    {
+      "code": "marginal-relief",
+      "name": "Profits between the small profits limit and the main rate limit, marginal relief included",
+      "rate": 26.5,
+      "up_to": 250000,
+      "conditions": [
+        {
+          "parameter": "twelve_month_period",
+          "test": "is_true"
+        },
+        {
+          "parameter": "no_associated_companies",
+          "test": "is_true"
+        },
+        {
+          "parameter": "close_investment_holding_company",
+          "test": "is_false"
+        },
+        {
+          "parameter": "augmented_profits_equal_taxable_profits",
+          "test": "is_true"
+        }
+      ],
+      "valid_from": "2023-04-01",
+      "valid_on": "period_start",
+      "sequence": 20,
+      "legal_reference": "Corporation Tax Act 2010, s. 18B and s. 18D — marginal relief is F × (U − A) × N / A with F = 3/200 (Finance Act 2021, s. 7(2); HMRC rates and allowances), U = £250,000, A the augmented profits and N the taxable total profits. Where A = N, tax at 25 % less 3/200 × (250,000 − N) is 26.5 % × N − 3,750: at £50,000 it is £9,500, the tax of the first slice at 19 %, and at £250,000 it is £62,500, 25 %. The same arithmetic is therefore 26.5 % on the slice from £50,000 to £250,000, exactly and for those conditions only: where A differs from N, or the limits are divided or shortened, it is not, and the main rate applies.",
+      "source": "hmrc-ct-rates"
+    },
+    {
+      "code": "main",
+      "name": "Main rate",
+      "rate": 25,
+      "valid_from": "2023-04-01",
+      "valid_on": "period_start",
+      "sequence": 30,
+      "legal_reference": "Finance Act 2021, s. 7(2) and HMRC, Rates and allowances: Corporation Tax — the main rate is 25 % on profits over the upper limit of £250,000, and HMRC publishes 25 % for the financial years 2025 and 2026",
+      "source": "hmrc-ct-rates"
+    }
+  ],
+  "loss_carryforward": [
+    {
+      "floor": 5000000,
+      "percent_above": 50,
+      "years": null,
+      "valid_from": "2017-04-01",
+      "valid_on": "period_start",
+      "legal_reference": "Corporation Tax Act 2010, s. 45A — a trading loss of an accounting period beginning on or after 1 April 2017 is carried forward to later periods; Part 7ZA, s. 269ZB — the deductions may not exceed the relevant maximum, which is 50 % of the relevant trading profits plus the deductions allowance; s. 269ZF — the relevant trading profits are the qualifying trading profits less the allowance; s. 269ZW(2) — the deductions allowance of a company not in a group is £5,000,000, reduced in proportion for a period under 12 months (s. 269ZW(3)). So £5,000,000 plus 50 % of the profits above it. The text read sets no number of years; the two-year limit of s. 45A is the time to make the claim.",
+      "source": "cta-2010-s269zb"
+    }
+  ],
+  "prepayments": [],
+  "credits": []
+}

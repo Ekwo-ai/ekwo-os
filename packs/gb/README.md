@@ -431,3 +431,32 @@ look at first, roughly in the order the author is least sure of them:
    for a VAT credit, under "The return". A reviewer who keeps one VAT control
    account for both signs and nets it in the notes would remove
    `tax_receivable`, and the settlement then carries a credit to `2210` too.
+
+## Corporate income tax: what `corporate_tax.json` leaves out
+
+The section carries what was read on an official page on 1 October 2026 —
+the Corporation Tax Acts of 2009 and 2010 on legislation.gov.uk, HMRC's rates
+and allowances and its guidance on marginal relief, the Business Income Manual
+— and nothing else. The computation starts from item 20 of the profit and loss
+account, because Format 1 as this pack carries it prints no result before tax,
+and adds the tax charge of accounts 8200 to 8220 back. The rates are written as
+slices: 19 % to £50,000, 26.5 % from £50,000 to £250,000 (marginal relief at
+3/200 written as a rate, which is exactly the law's arithmetic only where the
+augmented profits equal the taxable profits) and 25 % beyond. All three apply
+only to a company that says it has a twelve-month period, no associated
+company, no close-investment-holding status and no such distribution; any other
+company is taxed at 25 % and the estimate says which condition failed.
+
+| Not carried | Why |
+|---|---|
+| Division of the £50,000 and £250,000 limits by the number of associated companies plus one (CTA 2010 s. 18D) | A threshold is a number in the pack, and a company's count of associated companies is not one the section can divide by. A company with associated companies is taxed at 25 % on everything, which is too high below the divided limits. |
+| Reduction of the limits for a period under twelve months | The text read says "proportionately reduced" and not by days or by months. The pack's month proration would be an approximation, so a period that is not twelve months is taxed at 25 %. |
+| Marginal relief where the augmented profits exceed the taxable profits | The relief is F × (U − A) × N / A; the slices above are the same arithmetic only where A = N. The company declares that they are equal, and without it the main rate applies. |
+| The deductions allowance of a group, and its reduction for a short period (CTA 2010 ss. 269ZR, 269ZS, 269ZW(3)) | The floor of the loss limit is one figure, £5,000,000, for a company on its own. |
+| The restriction applies to trading losses carried forward and to profits of the same kind (ss. 269ZB, 269ZF) | Losses are set against the fiscal result as a whole; earlier losses of other kinds, and trading losses of periods before 1 April 2017, are not told apart. |
+| Fines: an account | The chart has no account for fines, so `fines-penalties` applies to an amount the company declares. |
+| Capital allowances, and the depreciation of distribution assets (6500) | The company declares the allowances it claims; the pack computes none. Account 6500 does not say which kind of asset it holds, so its depreciation is declared too; intangible amortisation (7670, 7680) is not added back. |
+| Deduction of qualifying charitable donations, group relief, R&D relief, the patent box, the rules on interest | No rule was read on an official page. |
+| Prepayments: the quarterly instalments of large companies and the date nine months and one day after the period | The instalments of a large company are shares of the tax of the period itself, which neither method of the section says; `prepayments` is empty. |
+| Tax credits | `credits` is empty: no credit was cited. |
+| Companies that are not UK-resident, and ring-fence profits | The rates read are those of s. 18A and s. 18B, which exclude ring-fence profits. |
