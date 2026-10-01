@@ -1,0 +1,119 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "depreciation": {
+    "prorata_straight_line": "months",
+    "prorata_declining": "months",
+    "day_count": "actual",
+    "declining_cap_percent": null,
+    "declining_switch_to_linear": true,
+    "legal_reference": "IFRS for SMEs, paragraph 17.20 — depreciation of an asset begins when it is available for use, ie when it is in the location and condition necessary for it to be capable of operating in the manner intended by management, so the charge runs from the month the asset is brought into use and not for the whole of the first year; paragraph 17.22 prescribes no method and names the straight-line method, the diminishing balance method and a method based on usage among those an entity may select. The standard does not say how to cut the first period, so counting whole months is practice and not text. Nothing in South African company law caps an annuity, which is why no cap is declared. What this section is **not** is the wear-and-tear allowance of section 11(e) of the Income Tax Act 58 of 1962: Interpretation Note 47 (Issue 5) apportions that allowance for an asset not used throughout the year of assessment and offers the diminishing-value and the straight-line methods, which is a tax computation and never the books.",
+    "source": "ifrs-smes-s17"
+  },
+  "disposal": {
+    "style": "net_result",
+    "legal_reference": "IFRS for SMEs, paragraphs 17.28 and 17.30 — the gain or loss on the derecognition of an item of property, plant and equipment is the difference between the net disposal proceeds and its carrying amount, recognised in profit or loss when the item is derecognised, and the entity shall not classify such a gain as revenue. One figure, on one account, which is the net_result style: the pack's statement of comprehensive income takes a gain among the other income of account 4750 and a loss among the other expenses of account 6960.",
+    "source": "ifrs-smes-s17"
+  },
+  "categories": [
+    {
+      "code": "goodwill",
+      "name": "Goodwill",
+      "method": "straight_line",
+      "duration_months": 120,
+      "account_type": "asset_fixed",
+      "sequence": 10,
+      "legal_reference": "IFRS for SMEs, paragraph 19.23 — goodwill is amortised under the principles of paragraphs 18.19 to 18.24, and where its useful life cannot be established reliably the life is management's best estimate and shall not exceed ten years. Ten years is therefore the ceiling this category starts from and not a life anybody estimated. There is no legal table of useful lives in South Africa for the books: IFRS for SMEs, Section 17, paragraphs 17.18 to 17.22, requires the depreciable amount of an item of property, plant and equipment to be allocated on a systematic basis over its useful life, which the entity estimates and reviews itself. The wear-and-tear allowance of section 11(e) of the Income Tax Act 58 of 1962 and the write-off periods in the Annexure to SARS Interpretation Note 47 (Issue 5, 9 February 2021) are a tax computation and are never the accounting charge. The duration below is therefore common South African practice and not a rule, and an asset that depreciates differently says so in its own columns.",
+      "source": "ifrs-smes-s19"
+    },
+    {
+      "code": "software",
+      "name": "Computer software",
+      "method": "straight_line",
+      "duration_months": 36,
+      "account_type": "asset_fixed",
+      "sequence": 20,
+      "legal_reference": "The Annexure to Interpretation Note 47 lists purchased main-frame software at three years, self-developed main-frame software at five years and personal-computer software at two years for the tax allowance; three years is the practice this category starts from, and the Annexure figures are not applied here. IFRS for SMEs, paragraphs 18.19 to 18.23, amortise a finite-life intangible asset over its useful life with a residual value of zero unless the paragraph says otherwise. There is no legal table of useful lives in South Africa for the books: IFRS for SMEs, Section 17, paragraphs 17.18 to 17.22, requires the depreciable amount of an item of property, plant and equipment to be allocated on a systematic basis over its useful life, which the entity estimates and reviews itself. The wear-and-tear allowance of section 11(e) of the Income Tax Act 58 of 1962 and the write-off periods in the Annexure to SARS Interpretation Note 47 (Issue 5, 9 February 2021) are a tax computation and are never the accounting charge. The duration below is therefore common South African practice and not a rule, and an asset that depreciates differently says so in its own columns.",
+      "source": "ifrs-smes-s18"
+    },
+    {
+      "code": "patents-and-licences",
+      "name": "Patents, trade marks and licences",
+      "method": "straight_line",
+      "duration_months": 60,
+      "account_type": "asset_fixed",
+      "sequence": 30,
+      "legal_reference": "IFRS for SMEs, paragraph 18.19 — the useful life of an intangible asset that arises from contractual or other legal rights shall not exceed the period of those rights; paragraph 18.20 caps at ten years the life of one whose life cannot be established reliably. The right's own term is a fact about the contract and not about the category. There is no legal table of useful lives in South Africa for the books: IFRS for SMEs, Section 17, paragraphs 17.18 to 17.22, requires the depreciable amount of an item of property, plant and equipment to be allocated on a systematic basis over its useful life, which the entity estimates and reviews itself. The wear-and-tear allowance of section 11(e) of the Income Tax Act 58 of 1962 and the write-off periods in the Annexure to SARS Interpretation Note 47 (Issue 5, 9 February 2021) are a tax computation and are never the accounting charge. The duration below is therefore common South African practice and not a rule, and an asset that depreciates differently says so in its own columns.",
+      "source": "ifrs-smes-s18"
+    },
+    {
+      "code": "buildings",
+      "name": "Buildings",
+      "method": "straight_line",
+      "duration_months": 600,
+      "account_type": "asset_fixed",
+      "sequence": 40,
+      "legal_reference": "Land is not depreciated and the building on it is, so a property is split before this category is applied to the part that has a life. Fifty years is a common practice figure; no official table of building lives was read for this pack, and the Annexure to Interpretation Note 47 lists no building. There is no legal table of useful lives in South Africa for the books: IFRS for SMEs, Section 17, paragraphs 17.18 to 17.22, requires the depreciable amount of an item of property, plant and equipment to be allocated on a systematic basis over its useful life, which the entity estimates and reviews itself. The wear-and-tear allowance of section 11(e) of the Income Tax Act 58 of 1962 and the write-off periods in the Annexure to SARS Interpretation Note 47 (Issue 5, 9 February 2021) are a tax computation and are never the accounting charge. The duration below is therefore common South African practice and not a rule, and an asset that depreciates differently says so in its own columns.",
+      "source": "ifrs-smes-s17"
+    },
+    {
+      "code": "leasehold-improvements",
+      "name": "Leasehold improvements",
+      "method": "straight_line",
+      "duration_months": 120,
+      "account_type": "asset_fixed",
+      "sequence": 50,
+      "legal_reference": "Practice depreciates an improvement over the shorter of its own life and the remaining term of the lease, which is a fact about the lease and not about the category. There is no legal table of useful lives in South Africa for the books: IFRS for SMEs, Section 17, paragraphs 17.18 to 17.22, requires the depreciable amount of an item of property, plant and equipment to be allocated on a systematic basis over its useful life, which the entity estimates and reviews itself. The wear-and-tear allowance of section 11(e) of the Income Tax Act 58 of 1962 and the write-off periods in the Annexure to SARS Interpretation Note 47 (Issue 5, 9 February 2021) are a tax computation and are never the accounting charge. The duration below is therefore common South African practice and not a rule, and an asset that depreciates differently says so in its own columns.",
+      "source": "ifrs-smes-s17"
+    },
+    {
+      "code": "plant-and-machinery",
+      "name": "Plant and machinery",
+      "method": "straight_line",
+      "duration_months": 120,
+      "account_type": "asset_fixed",
+      "sequence": 60,
+      "legal_reference": "The Annexure to Interpretation Note 47 lists specific machines at periods from four to twenty years and no general category, so ten years is the practice this category starts from and not a figure of any official text. There is no legal table of useful lives in South Africa for the books: IFRS for SMEs, Section 17, paragraphs 17.18 to 17.22, requires the depreciable amount of an item of property, plant and equipment to be allocated on a systematic basis over its useful life, which the entity estimates and reviews itself. The wear-and-tear allowance of section 11(e) of the Income Tax Act 58 of 1962 and the write-off periods in the Annexure to SARS Interpretation Note 47 (Issue 5, 9 February 2021) are a tax computation and are never the accounting charge. The duration below is therefore common South African practice and not a rule, and an asset that depreciates differently says so in its own columns.",
+      "source": "ifrs-smes-s17"
+    },
+    {
+      "code": "furniture-and-fittings",
+      "name": "Furniture and fittings",
+      "method": "straight_line",
+      "duration_months": 72,
+      "account_type": "asset_fixed",
+      "sequence": 70,
+      "legal_reference": "The Annexure to Interpretation Note 47 lists furniture and fittings at six years for the tax allowance, and practice commonly takes the same figure for the books; the two agree by habit and not by rule. There is no legal table of useful lives in South Africa for the books: IFRS for SMEs, Section 17, paragraphs 17.18 to 17.22, requires the depreciable amount of an item of property, plant and equipment to be allocated on a systematic basis over its useful life, which the entity estimates and reviews itself. The wear-and-tear allowance of section 11(e) of the Income Tax Act 58 of 1962 and the write-off periods in the Annexure to SARS Interpretation Note 47 (Issue 5, 9 February 2021) are a tax computation and are never the accounting charge. The duration below is therefore common South African practice and not a rule, and an asset that depreciates differently says so in its own columns.",
+      "source": "ifrs-smes-s17"
+    },
+    {
+      "code": "computer-equipment",
+      "name": "Computer equipment",
+      "method": "straight_line",
+      "duration_months": 36,
+      "account_type": "asset_fixed",
+      "sequence": 80,
+      "legal_reference": "The Annexure to Interpretation Note 47 lists personal computers at three years and main-frames and servers at five for the tax allowance; three years is the practice figure for a personal computer. There is no legal table of useful lives in South Africa for the books: IFRS for SMEs, Section 17, paragraphs 17.18 to 17.22, requires the depreciable amount of an item of property, plant and equipment to be allocated on a systematic basis over its useful life, which the entity estimates and reviews itself. The wear-and-tear allowance of section 11(e) of the Income Tax Act 58 of 1962 and the write-off periods in the Annexure to SARS Interpretation Note 47 (Issue 5, 9 February 2021) are a tax computation and are never the accounting charge. The duration below is therefore common South African practice and not a rule, and an asset that depreciates differently says so in its own columns.",
+      "source": "ifrs-smes-s17"
+    },
+    {
+      "code": "passenger-cars",
+      "name": "Motor vehicles, passenger cars",
+      "method": "straight_line",
+      "duration_months": 60,
+      "account_type": "asset_fixed",
+      "sequence": 90,
+      "legal_reference": "The Annexure to Interpretation Note 47 lists passenger cars at five years for the tax allowance, and practice commonly takes the same figure for the books; the two agree by habit and not by rule. There is no legal table of useful lives in South Africa for the books: IFRS for SMEs, Section 17, paragraphs 17.18 to 17.22, requires the depreciable amount of an item of property, plant and equipment to be allocated on a systematic basis over its useful life, which the entity estimates and reviews itself. The wear-and-tear allowance of section 11(e) of the Income Tax Act 58 of 1962 and the write-off periods in the Annexure to SARS Interpretation Note 47 (Issue 5, 9 February 2021) are a tax computation and are never the accounting charge. The duration below is therefore common South African practice and not a rule, and an asset that depreciates differently says so in its own columns.",
+      "source": "ifrs-smes-s17"
+    },
+    {
+      "code": "delivery-vehicles",
+      "name": "Motor vehicles, delivery vehicles",
+      "method": "straight_line",
+      "duration_months": 48,
+      "account_type": "asset_fixed",
+      "sequence": 100,
+      "legal_reference": "The Annexure to Interpretation Note 47 lists delivery vehicles at four years for the tax allowance, and practice commonly takes the same figure for the books; the two agree by habit and not by rule. There is no legal table of useful lives in South Africa for the books: IFRS for SMEs, Section 17, paragraphs 17.18 to 17.22, requires the depreciable amount of an item of property, plant and equipment to be allocated on a systematic basis over its useful life, which the entity estimates and reviews itself. The wear-and-tear allowance of section 11(e) of the Income Tax Act 58 of 1962 and the write-off periods in the Annexure to SARS Interpretation Note 47 (Issue 5, 9 February 2021) are a tax computation and are never the accounting charge. The duration below is therefore common South African practice and not a rule, and an asset that depreciates differently says so in its own columns.",
+      "source": "ifrs-smes-s17"
+    }
+  ]
+}

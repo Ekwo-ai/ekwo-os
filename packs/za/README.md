@@ -288,7 +288,7 @@ mandatory had been introduced in Parliament at the date of this pack.
 - **Employees' tax (PAYE), UIF, the Skills Development Levy and provisional
   tax** as anything but placeholder accounts: Ekwo has no payroll or income
   tax module.
-- **Fixed assets.** No `fixed_assets.json`.
+- **Fixed assets**: only what `fixed_assets.json` carries — see "Fixed assets: what `fixed_assets.json` leaves out" below.
 - **Bank formats.** No statement format is declared.
 
 ## Corporate income tax: what `corporate_tax.json` leaves out
@@ -320,6 +320,49 @@ practitioner should confirm that the account never holds anything the Act
 allows. Fines are added back by the company's own statement, because section
 23(o) refuses only those imposed for an unlawful activity and no account holds
 nothing else.
+
+## Fixed assets
+
+`fixed_assets.json` carries how a South African company depreciates a fixed
+asset in its books and takes it off the balance sheet. It was read on 1 October
+2026 in Sections 17, 18 and 19 of the IFRS for SMEs Standard (2015 text, as the
+IFRS Foundation publishes it; the edition updated in February 2025 applies from
+1 January 2027) and in SARS Interpretation Note 47 (Issue 5) with its Annexure.
+
+- **Disposal is `net_result`**: IFRS for SMEs 17.28 and 17.30 take one gain or
+  loss, the difference between the net proceeds and the carrying amount, to
+  profit or loss. The two accounts are the roles `asset_disposal_gain` (4750)
+  and `asset_disposal_loss` (6960).
+- **The first-period prorata is practice, not text.** Paragraph 17.20 starts
+  depreciation when the asset is available for use but does not say how to cut
+  the first year; the section counts whole months, in straight line and in
+  declining balance, and says so in its `legal_reference`. No cap, and the
+  switch to the straight line is kept.
+- **Durations are practice.** South Africa has no table of useful lives for the
+  books: the entity estimates them (17.18, 17.21). Goodwill is ten years, the
+  ceiling of paragraph 19.23 when the life cannot be established. Where the
+  Annexure to Interpretation Note 47 lists the asset for the tax allowance
+  (personal computers three years, furniture and fittings six, passenger cars
+  five, delivery vehicles four), the category takes the same figure and says it
+  is a habit, not a rule. Buildings (fifty years), plant and machinery (ten)
+  and leasehold improvements (ten) rest on no official figure.
+- **A category proposes, never imposes.** The wear-and-tear allowance of
+  section 11(e) is a tax computation and is never the accounting charge.
+
+### Fixed assets: what `fixed_assets.json` leaves out
+
+| Not carried | Why |
+|---|---|
+| The wear-and-tear allowance of section 11(e), its Annexure periods and its diminishing-value method, as a schedule distinct from the book charge | The module keeps one schedule per asset. A company whose books and tax returns differ carries the difference as a tax adjustment outside the module. |
+| Other tax allowances (section 12B, 12C, 12E, 13 and 13quin, and the like) | Tax computations outside the vocabulary of a category; none was read for this pack. |
+| Declining-balance categories | IFRS for SMEs names the method but gives no usual rate; the diminishing-value method of Interpretation Note 47 is a tax method. |
+| Components of an asset (17.16) | The module has one asset, one duration. |
+| Residual value, impairment (Section 27) and revaluation | Not a pack rule. |
+| Right-of-use assets (account 1670) | Section 20 of the standard, not read for this pack. |
+| Threshold below which an asset is expensed | Not read in an official text, and the module has no such field. |
+| Units of production | Refused by the module. |
+| Day-by-day convention of the first period | Practice, not text; a company that prorates in days sets `prorata = 'days'` on the asset. |
+| Depreciation of assets held for sale, and capital work in progress (account 1680) | The module cannot stop depreciation on a reclassification. |
 
 ## Reviewing this pack
 

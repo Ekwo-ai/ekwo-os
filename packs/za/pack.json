@@ -2,7 +2,7 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "ZA",
   "name": "South Africa",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "schema_min": "20260917170000",
   "seed_sequence": 88,
   "released_at": "2026-10-01",
@@ -134,6 +134,38 @@
         "title": "Tax Guide for Small Businesses 2025/2026 — paragraphs 3.2.13 (assessed loss, section 20), 3.2.15 (rates), 3.2.18 (small business corporations, section 12E) and 3.2.24 (prohibited deductions, section 23)",
         "publisher": "South African Revenue Service",
         "url": "https://www.sars.gov.za/wp-content/uploads/Ops/Guides/Legal-Pub-Guide-Gen09-Tax-Guide-for-Small-Businesses.pdf",
+        "consulted_on": "2026-10-01",
+        "kind": "guidance"
+      },
+      {
+        "key": "ifrs-smes-s17",
+        "title": "IFRS for SMEs Standard (2015), Section 17 Property, Plant and Equipment — paragraphs 17.18 to 17.22 and 17.27 to 17.30, read in the IFRS Foundation's educational module that carries the full text of the Section",
+        "publisher": "IFRS Foundation, approved for use in South Africa by the Financial Reporting Standards Council under Companies Regulation 27; the edition updated in February 2025 applies to periods beginning on or after 1 January 2027",
+        "url": "https://www.ifrs.org/content/dam/ifrs/supporting-implementation/smes/module-17.pdf",
+        "consulted_on": "2026-10-01",
+        "kind": "standard"
+      },
+      {
+        "key": "ifrs-smes-s18",
+        "title": "IFRS for SMEs Standard (2015), Section 18 Intangible Assets other than Goodwill — paragraphs 18.19 to 18.24, read in the IFRS Foundation's educational module that carries the full text of the Section",
+        "publisher": "IFRS Foundation, approved for use in South Africa by the Financial Reporting Standards Council under Companies Regulation 27",
+        "url": "https://www.ifrs.org/content/dam/ifrs/supporting-implementation/smes/module-18.pdf",
+        "consulted_on": "2026-10-01",
+        "kind": "standard"
+      },
+      {
+        "key": "ifrs-smes-s19",
+        "title": "IFRS for SMEs Standard (2015), Section 19 Business Combinations and Goodwill — paragraph 19.23, read in the IFRS Foundation's educational module that carries the full text of the Section",
+        "publisher": "IFRS Foundation, approved for use in South Africa by the Financial Reporting Standards Council under Companies Regulation 27",
+        "url": "https://www.ifrs.org/content/dam/ifrs/supporting-implementation/smes/module-19.pdf",
+        "consulted_on": "2026-10-01",
+        "kind": "standard"
+      },
+      {
+        "key": "sars-in47",
+        "title": "Interpretation Note 47 (Issue 5, 9 February 2021) — section 11(e) of the Income Tax Act 58 of 1962, wear-and-tear or depreciation allowance, with the Annexure of write-off periods acceptable to SARS",
+        "publisher": "South African Revenue Service",
+        "url": "https://www.sars.gov.za/wp-content/uploads/Legal/Notes/LAPD-IntR-IN-2012-47-Wear-And-Tear-Depreciation-Allowance.pdf",
         "consulted_on": "2026-10-01",
         "kind": "guidance"
       },
