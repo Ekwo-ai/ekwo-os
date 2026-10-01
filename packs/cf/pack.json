@@ -72,7 +72,9 @@
       "fx_gain": "756",
       "fx_loss": "656",
       "tax_payable": "4441",
-      "tax_receivable": "4449"
+      "tax_receivable": "4449",
+      "asset_disposal_value": "812",
+      "asset_disposal_proceeds": "822"
     },
     "journal_roles": {
       "sales": "VT",
