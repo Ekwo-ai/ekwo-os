@@ -291,6 +291,36 @@ mandatory had been introduced in Parliament at the date of this pack.
 - **Fixed assets.** No `fixed_assets.json`.
 - **Bank formats.** No statement format is declared.
 
+## Corporate income tax: what `corporate_tax.json` leaves out
+
+The section carries what was read on an official SARS page on 1 October 2026
+— the rates of tax for companies and small business corporations, their
+archive, and the Tax Guide for Small Businesses 2025/2026 — and nothing else.
+It starts from line 8, profit before income tax, of `ZA-IFRSSME-PL`, so the
+tax charge on 8000 to 8020 never enters the computation. The company rate of
+27 % is dated from the years of assessment ending on or after 31 March 2023,
+the small business corporation tables from those ending on or after
+1 April 2025: a year before that is estimated at 27 % with no reduced band.
+
+| Not carried | Why |
+|---|---|
+| The set-off of an assessed loss (section 20) | The law lets a company set off the **higher** of R1 million and 80 % of its taxable income before the set-off. The module's limit is a floor plus a share of the profit *above* it (`floor` and `percent_above`), which is another formula, so `loss_carryforward` is empty rather than approximated. A company that carries a loss is refused by name; losses of the year are still recorded. |
+| Provisional tax (Fourth Schedule) | Two payments — the first within six months of the start of the year, the second no later than the last day of the year — each a share of the company's **own estimate** of the year. `prepayments` knows only a share of a reference year's tax, or a surcharge on a shortfall; neither says that. The third top-up payment after the year end is not carried either. |
+| The small business corporation bands before the year ending 1 April 2025 | The table of the year ending 1 April 2023 to 31 March 2024 was read and is the same; the table of the year in between was not read. |
+| The R18 848 and R57 698 of the SARS table | SARS prints whole rands; the section computes the 7 % band to the cent, 18 847,50, and so differs from the printed table by up to 50 cents. |
+| The exception for personal services in a small business corporation | A company with three or more full-time employees may exceed the 20 % of personal service income. The company states the percentage it reaches after the exception; the pack does not test it. |
+| Short years of assessment | No text was read on how the bands or the R20 million ceiling are reduced for a year of less than twelve months, so `up_to_prorata` is `none`. |
+| Other disallowed expenses (entertainment, donations, motor vehicles, leave pay, section 23(m)) and the allowances of section 12E(1A), 12B, 12C and 12I | Not read on an official page, or each needs a ceiling or a count the vocabulary of a rule does not carry. |
+| Dividends tax, capital gains, turnover tax, the ring-fencing of section 20A, mining and other special regimes | Outside the module, or not read. |
+| Tax credits, foreign tax rebates | `credits` is empty: the shape is published and no credit was cited. |
+
+Interest on late payment of tax (`7030`) is added back from its account
+(section 23(d), (e) and (g), as SARS's guide groups them) — a local tax
+practitioner should confirm that the account never holds anything the Act
+allows. Fines are added back by the company's own statement, because section
+23(o) refuses only those imposed for an unlawful activity and no account holds
+nothing else.
+
 ## Reviewing this pack
 
 Open an issue titled "Review: South Africa". What a review is, and what it is
