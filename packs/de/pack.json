@@ -2,7 +2,7 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "DE",
   "name": "Germany",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "schema_min": "20260929141500",
   "seed_sequence": 18,
   "released_at": "2026-10-01",
@@ -155,11 +155,19 @@
       },
       {
         "key": "estg",
-        "title": "Einkommensteuergesetz (EStG) — §§ 4, 10d, 37 und 52",
+        "title": "Einkommensteuergesetz (EStG) — §§ 4, 7, 10d, 37 und 52",
         "publisher": "Bundesministerium der Justiz — gesetze-im-internet.de",
         "url": "https://www.gesetze-im-internet.de/estg/",
         "consulted_on": "2026-10-01",
         "kind": "law"
+      },
+      {
+        "key": "afa-av",
+        "title": "AfA-Tabelle für die allgemein verwendbaren Anlagegüter („AV“) — BMF-Schreiben vom 15. Dezember 2000, IV D 2 - S 1551 - 188/00 (BStBl I 2000 S. 1532)",
+        "publisher": "Bundesministerium der Finanzen",
+        "url": "https://www.bundesfinanzministerium.de/Content/DE/Standardartikel/Themen/Steuern/Weitere_Steuerthemen/Betriebspruefung/AfA-Tabellen/Ergaenzende-AfA-Tabellen/AfA-Tabelle_AV.pdf?__blob=publicationFile&v=5",
+        "consulted_on": "2026-10-01",
+        "kind": "guidance"
       }
     ]
   },
@@ -185,7 +193,9 @@
       "cash": "2410",
       "fx_gain": "8450",
       "fx_loss": "8850",
-      "tax_payable": "6820"
+      "tax_payable": "6820",
+      "asset_disposal_gain": "8410",
+      "asset_disposal_loss": "8880"
     },
     "journal_roles": {
       "sales": "VK",

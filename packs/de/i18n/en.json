@@ -369,5 +369,15 @@
     "rule:criminal-fines": "Criminal fines and conditions imposed in criminal proceedings",
     "rule:supervisory-board": "Remuneration of the supervisory board — one half",
     "rate:standard": "Corporate income tax rate"
+  },
+  "asset_categories": {
+    "goodwill": "Goodwill",
+    "buildings": "Business buildings (not used as dwellings)",
+    "passenger-cars": "Passenger cars and estate cars",
+    "passenger-cars-declining": "Passenger cars — declining balance",
+    "trucks": "Lorries, tractor units, tippers",
+    "office-furniture": "Office furniture",
+    "office-furniture-declining": "Office furniture — declining balance",
+    "it-equipment": "Workstations, personal computers, notebooks and peripherals"
   }
 }

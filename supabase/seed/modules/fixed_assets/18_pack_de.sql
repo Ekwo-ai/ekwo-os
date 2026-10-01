@@ -1,0 +1,56 @@
+-- Ekwo OS — Germany: how this country depreciates and derecognises a fixed asset.
+--
+-- Generated from packs/de/fixed_assets.json at version 0.4.0, do not edit.
+-- Change the pack and run `ekwo pack build de`; `ekwo pack check --all`
+-- refuses a seed that is not the exact output of its pack, and the CI runs it.
+--
+-- Applied by the module migration runner — `ekwo migrate`, or `ekwo module
+-- migrate` — and never by the socle seed step: these tables exist only on an
+-- installation that carries the fixed assets module.
+--
+-- The accounts a disposal lands on are not here. They are roles of the chart,
+-- in `country_defaults`, written by the pack seed beside every other role.
+
+insert into fixed_assets.country_rules
+  (country, prorata_straight_line, prorata_declining, day_count,
+   declining_cap_percent, declining_switch_to_linear, disposal_style, legal_reference)
+values
+  ('DE', 'months', 'months', 'actual', null, true, 'net_result', 'EStG § 7 Abs. 1 Satz 4 — im Jahr der Anschaffung oder Herstellung vermindert sich der Absetzungsbetrag um jeweils ein Zwölftel für jeden vollen Monat, der dem Monat der Anschaffung oder Herstellung vorangeht; der Anschaffungsmonat zählt also voll mit, was der Regel „months“ des Moduls entspricht. § 7 Abs. 2 Satz 3 erklärt Abs. 1 Satz 4 für die degressive Absetzung für entsprechend anwendbar, daher gilt dieselbe Regel für beide Verfahren. § 7 Abs. 2 Satz 2 — der unveränderliche Prozentsatz vom jeweiligen Buchwert darf höchstens das Dreifache des linearen Satzes betragen und 30 Prozent nicht übersteigen; diese Grenze ist ein Satz auf den Buchwert und kein Anteil an den Anschaffungskosten, den das Modul als declining_cap_percent kennt, weshalb sie nicht dort steht, sondern im Koeffizienten jeder degressiven Kategorie. § 7 Abs. 3 — der Übergang von der degressiven zur linearen Absetzung ist zulässig und bemisst sich nach Restwert und Restnutzungsdauer. Handelsrechtlich verlangt HGB § 253 Abs. 3 Satz 1 und 2 einen Plan, der die Anschaffungs- oder Herstellungskosten auf die Geschäftsjahre verteilt, in denen der Vermögensgegenstand voraussichtlich genutzt werden kann, ohne Verfahren und ohne Prorata vorzuschreiben.')
+on conflict (country) do update set
+  prorata_straight_line      = excluded.prorata_straight_line,
+  prorata_declining          = excluded.prorata_declining,
+  day_count                  = excluded.day_count,
+  declining_cap_percent      = excluded.declining_cap_percent,
+  declining_switch_to_linear = excluded.declining_switch_to_linear,
+  disposal_style             = excluded.disposal_style,
+  legal_reference            = excluded.legal_reference;
+
+insert into fixed_assets.category_templates
+  (country, code, name, name_i18n, method, duration_months, coefficient,
+   prorata, account_type, sequence, legal_reference)
+select v.country::char(2), v.code, v.name, v.name_i18n::jsonb,
+       v.method::fixed_assets.depreciation_method, v.duration_months::integer,
+       v.coefficient::numeric, v.prorata::fixed_assets.prorata_rule,
+       v.account_type::account_type, v.sequence::integer, v.legal_reference
+  from (values
+    ('DE', 'goodwill', 'Geschäfts- oder Firmenwert', '{"en":"Goodwill"}'::jsonb, 'straight_line', 180, null, null, 'asset_fixed', 10, 'EStG § 7 Abs. 1 Satz 3 — als betriebsgewöhnliche Nutzungsdauer des Geschäfts- oder Firmenwerts eines Gewerbebetriebs oder eines Betriebs der Land- und Forstwirtschaft gilt ein Zeitraum von 15 Jahren. Handelsrechtlich schreibt HGB § 253 Abs. 3 Satz 3 und 4 zehn Jahre nur vor, wenn die Nutzungsdauer eines entgeltlich erworbenen Geschäfts- oder Firmenwerts nicht verlässlich geschätzt werden kann; sonst gilt die geschätzte Dauer. Die 15 Jahre sind daher die steuerliche Dauer und ein Vorschlag für die Handelsbilanz, keine handelsrechtliche Vorgabe.'),
+    ('DE', 'buildings', 'Betriebsgebäude (nicht Wohnzwecken dienend)', '{"en":"Business buildings (not used as dwellings)"}'::jsonb, 'straight_line', 400, null, null, 'asset_fixed', 20, 'EStG § 7 Abs. 4 Satz 1 Nr. 1 — bei Gebäuden, soweit sie zu einem Betriebsvermögen gehören und nicht Wohnzwecken dienen und für die der Bauantrag nach dem 31. März 1985 gestellt worden ist, jährlich 3 Prozent der Anschaffungs- oder Herstellungskosten, das sind 33⅓ Jahre oder 400 Monate; nach Satz 2 darf eine kürzere tatsächliche Nutzungsdauer (unter 33 Jahren) angesetzt werden. Andere Gebäude (Wohngebäude, Bauantrag vor dem 1. April 1985) haben in Nr. 2 andere Sätze und sind hier nicht abgebildet. Grund und Boden wird nicht abgeschrieben und gehört nicht in diese Kategorie.'),
+    ('DE', 'passenger-cars', 'Personenkraftwagen und Kombiwagen', '{"en":"Passenger cars and estate cars"}'::jsonb, 'straight_line', 72, null, null, 'asset_fixed', 30, 'Die AfA-Tabelle für die allgemein verwendbaren Anlagegüter („AV“), BMF-Schreiben vom 15. Dezember 2000 (IV D 2 - S 1551 - 188/00, BStBl I 2000 S. 1532), nennt für Personenkraftwagen und Kombiwagen (Position 4.2.1) eine betriebsgewöhnliche Nutzungsdauer von 6 Jahren. Die Tabelle gilt nach ihrem Wortlaut für Anlagegüter, die nach dem 31. Dezember 2000 angeschafft oder hergestellt worden sind; sie ist ein Anhaltspunkt für die Angemessenheit der steuerlichen Absetzungen und keine Rechtsnorm. Nach § 253 Abs. 3 HGB bemisst sich die handelsrechtliche Nutzungsdauer nach der voraussichtlichen Nutzung im Unternehmen; die Dauer hier ist ein Vorschlag, den die einzelne Anlage in ihren eigenen Spalten ändern kann.'),
+    ('DE', 'passenger-cars-declining', 'Personenkraftwagen, degressiv', '{"en":"Passenger cars — declining balance"}'::jsonb, 'declining_balance', 72, 1.8, null, 'asset_fixed', 40, 'EStG § 7 Abs. 2 — degressive Absetzung für Abnutzung bei beweglichen Wirtschaftsgütern. Sechs Jahre Nutzungsdauer (AfA-Tabelle AV, Position 4.2.1) ergeben einen linearen Satz von 16⅔ Prozent, das Dreifache wären 50 Prozent; wirksam ist die Grenze von 30 Prozent, also der Koeffizient 1,8 (12/72 × 1,8 = 30 %). Die degressive Absetzung nach § 7 Abs. 2 EStG gilt nur für bewegliche Wirtschaftsgüter des Anlagevermögens, die nach dem 30. Juni 2025 und vor dem 1. Januar 2028 angeschafft oder hergestellt worden sind; der Prozentsatz vom jeweiligen Buchwert darf höchstens das Dreifache des linearen Satzes betragen und 30 Prozent nicht übersteigen (Satz 2). Der Übergang zur linearen Absetzung ist nach Abs. 3 zulässig und bemisst sich nach Restwert und Restnutzungsdauer. Der Satz wird hier als Koeffizient auf den linearen Satz ausgedrückt, weil das Modul seine Obergrenze nur als Anteil an den Anschaffungskosten kennt und nicht als Satz auf den Buchwert. Außergewöhnliche Absetzungen sind bei degressiver Absetzung nach Satz 4 nicht zulässig.'),
+    ('DE', 'trucks', 'Lastkraftwagen, Sattelschlepper, Kipper', '{"en":"Lorries, tractor units, tippers"}'::jsonb, 'straight_line', 108, null, null, 'asset_fixed', 50, 'Die AfA-Tabelle für die allgemein verwendbaren Anlagegüter („AV“), BMF-Schreiben vom 15. Dezember 2000 (IV D 2 - S 1551 - 188/00, BStBl I 2000 S. 1532), nennt für Lastkraftwagen, Sattelschlepper, Kipper (Position 4.2.3) eine betriebsgewöhnliche Nutzungsdauer von 9 Jahren. Die Tabelle gilt nach ihrem Wortlaut für Anlagegüter, die nach dem 31. Dezember 2000 angeschafft oder hergestellt worden sind; sie ist ein Anhaltspunkt für die Angemessenheit der steuerlichen Absetzungen und keine Rechtsnorm. Nach § 253 Abs. 3 HGB bemisst sich die handelsrechtliche Nutzungsdauer nach der voraussichtlichen Nutzung im Unternehmen; die Dauer hier ist ein Vorschlag, den die einzelne Anlage in ihren eigenen Spalten ändern kann.'),
+    ('DE', 'office-furniture', 'Büromöbel', '{"en":"Office furniture"}'::jsonb, 'straight_line', 156, null, null, 'asset_fixed', 60, 'Die AfA-Tabelle für die allgemein verwendbaren Anlagegüter („AV“), BMF-Schreiben vom 15. Dezember 2000 (IV D 2 - S 1551 - 188/00, BStBl I 2000 S. 1532), nennt für Büromöbel (Position 6.15) eine betriebsgewöhnliche Nutzungsdauer von 13 Jahren. Die Tabelle gilt nach ihrem Wortlaut für Anlagegüter, die nach dem 31. Dezember 2000 angeschafft oder hergestellt worden sind; sie ist ein Anhaltspunkt für die Angemessenheit der steuerlichen Absetzungen und keine Rechtsnorm. Nach § 253 Abs. 3 HGB bemisst sich die handelsrechtliche Nutzungsdauer nach der voraussichtlichen Nutzung im Unternehmen; die Dauer hier ist ein Vorschlag, den die einzelne Anlage in ihren eigenen Spalten ändern kann.'),
+    ('DE', 'office-furniture-declining', 'Büromöbel, degressiv', '{"en":"Office furniture — declining balance"}'::jsonb, 'declining_balance', 156, 3, null, 'asset_fixed', 70, 'EStG § 7 Abs. 2 — degressive Absetzung für Abnutzung bei beweglichen Wirtschaftsgütern. 13 Jahre Nutzungsdauer (AfA-Tabelle AV, Position 6.15) ergeben einen linearen Satz von rund 7,69 Prozent; das Dreifache, rund 23,08 Prozent, bleibt unter der Grenze von 30 Prozent, also der Koeffizient 3. Die degressive Absetzung nach § 7 Abs. 2 EStG gilt nur für bewegliche Wirtschaftsgüter des Anlagevermögens, die nach dem 30. Juni 2025 und vor dem 1. Januar 2028 angeschafft oder hergestellt worden sind; der Prozentsatz vom jeweiligen Buchwert darf höchstens das Dreifache des linearen Satzes betragen und 30 Prozent nicht übersteigen (Satz 2). Der Übergang zur linearen Absetzung ist nach Abs. 3 zulässig und bemisst sich nach Restwert und Restnutzungsdauer. Der Satz wird hier als Koeffizient auf den linearen Satz ausgedrückt, weil das Modul seine Obergrenze nur als Anteil an den Anschaffungskosten kennt und nicht als Satz auf den Buchwert. Außergewöhnliche Absetzungen sind bei degressiver Absetzung nach Satz 4 nicht zulässig.'),
+    ('DE', 'it-equipment', 'Workstations, Personalcomputer, Notebooks und Peripheriegeräte', '{"en":"Workstations, personal computers, notebooks and peripherals"}'::jsonb, 'straight_line', 36, null, null, 'asset_fixed', 80, 'Die AfA-Tabelle für die allgemein verwendbaren Anlagegüter („AV“), BMF-Schreiben vom 15. Dezember 2000 (IV D 2 - S 1551 - 188/00, BStBl I 2000 S. 1532), nennt für Workstations, Personalcomputer, Notebooks und deren Peripheriegeräte (Position 6.14.3.2) eine betriebsgewöhnliche Nutzungsdauer von 3 Jahren. Die Tabelle gilt nach ihrem Wortlaut für Anlagegüter, die nach dem 31. Dezember 2000 angeschafft oder hergestellt worden sind; sie ist ein Anhaltspunkt für die Angemessenheit der steuerlichen Absetzungen und keine Rechtsnorm. Nach § 253 Abs. 3 HGB bemisst sich die handelsrechtliche Nutzungsdauer nach der voraussichtlichen Nutzung im Unternehmen; die Dauer hier ist ein Vorschlag, den die einzelne Anlage in ihren eigenen Spalten ändern kann. Ein späteres BMF-Schreiben über die Nutzungsdauer von Computerhardware und Software ist in dieser Fassung nicht berücksichtigt; es wurde nicht gelesen.')
+  ) as v (country, code, name, name_i18n, method, duration_months, coefficient,
+          prorata, account_type, sequence, legal_reference)
+on conflict (country, code) do update set
+  name            = excluded.name,
+  name_i18n       = excluded.name_i18n,
+  method          = excluded.method,
+  duration_months = excluded.duration_months,
+  coefficient     = excluded.coefficient,
+  prorata         = excluded.prorata,
+  account_type    = excluded.account_type,
+  sequence        = excluded.sequence,
+  legal_reference = excluded.legal_reference;
+

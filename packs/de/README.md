@@ -17,7 +17,7 @@ proves the pack is coherent and proves nothing about whether it is right.
 
 Every rate, box, mention and statement line carries its own `legal_reference`
 and names the entry of `certification.sources` its article is in. The register
-holds nineteen texts, every one opened on the day recorded beside it:
+holds twenty texts, every one opened on the day recorded beside it:
 
 | What | Text | Publisher |
 |---|---|---|
@@ -32,7 +32,8 @@ holds nineteen texts, every one opened on the day recorded beside it:
 | Code lists | UNCL5305, VATEX, EAS | docs.peppol.eu |
 | Where the return and the recapitulative statement are filed | ELSTER, Bundeszentralamt für Steuern | elster.de, bzst.de |
 | The base rate the default interest is added to | Basiszinssatz | bundesbank.de |
-| Corporate income tax: the rate, what is not deductible, the limit on losses | Körperschaftsteuergesetz (KStG) §§ 7, 8, 10, 23; Einkommensteuergesetz (EStG) §§ 4, 10d, 37, 52 | gesetze-im-internet.de |
+| Corporate income tax: the rate, what is not deductible, the limit on losses | Körperschaftsteuergesetz (KStG) §§ 7, 8, 10, 23; Einkommensteuergesetz (EStG) §§ 4, 7, 10d, 37, 52 | gesetze-im-internet.de |
+| Useful lives of the usual fixed assets | AfA-Tabelle für die allgemein verwendbaren Anlagegüter ("AV"), BMF-Schreiben of 15 December 2000 | bundesfinanzministerium.de |
 
 The form was read from the BMF's own PDF: the Kennzahlen, the line numbers, the
 three unnumbered sums and the instructions quoted in the box references are
@@ -141,3 +142,66 @@ low by something a reader can name; these are the ones to name.
 | Business entertainment, gifts, fines, supervisory board remuneration | Fixed rules, read, but the chart holds restaurant bills with staff entertainment on `8841` and every gift on `8842`, and has no account for fines, so none of them names an account: the company states the amount. |
 | Private use of vehicles, non-deductible interest, hidden profit distributions, related-party rules | No flat rule could be cited. |
 | Tax credits | `credits` is empty: none was cited. |
+
+## Fixed assets: what `fixed_assets.json` leaves out
+
+The section carries what was read on gesetze-im-internet.de and on the BMF's
+own copy of the AfA-Tabelle AV on 1 October 2026, and nothing else.
+
+**What it says.** The first-year charge is prorated in **months**, for the
+straight line and the declining balance alike: § 7 Abs. 1 Satz 4 EStG takes
+away one twelfth for every full month before the month of acquisition, so the
+month of acquisition counts whole, and § 7 Abs. 2 Satz 3 applies the same rule
+to the declining balance. The switch to the straight line is allowed by § 7
+Abs. 3 (the module makes it as soon as the straight line is larger, which the
+law permits and does not oblige). Disposal is `net_result`: § 275 Abs. 2 HGB
+has no item for the book value or the proceeds of an asset that leaves, so the
+result is one figure on `8410` (gain, item 4) or `8880` (loss, item 8). The
+categories are goodwill (15 years, § 7 Abs. 1 Satz 3 EStG), business buildings
+(3 % a year, § 7 Abs. 4 Satz 1 Nr. 1), passenger cars (6 years), lorries (9),
+office furniture (13) and computers (3), the last four from the AfA-Tabelle AV.
+Every category is a proposal: the accountant sets the duration and the method
+of each asset, and HGB § 253 Abs. 3 bases the commercial life on the expected
+use, not on a table.
+
+**Declining balance.** § 7 Abs. 2 EStG allows it, for movable fixed assets
+acquired after 30 June 2025 and before 1 January 2028 only, at a fixed
+percentage of the book value that is at most three times the straight-line
+rate and at most 30 %. The module caps an annuity as a share of the
+*acquisition value*, which is not the same thing after the first year, so
+`declining_cap_percent` is empty and the cap is written into each declining
+category's coefficient (1.8 for a six-year car, 3 for office furniture: 30 %
+and 23.08 %). The acquisition window is stated in the category's reference and
+not enforced: nothing in the module refuses a declining balance on a machine
+bought in 2024, and the accountant has to know.
+
+What is **not** in the file, because it was not read on an official page or
+because the module has no word for it:
+
+- **A tax depreciation distinct from the commercial one.** The module carries
+  one schedule per asset; the Steuerbilanz and the Handelsbilanz of a German
+  company often differ (HGB duration against AfA-Tabelle, § 6b, special
+  depreciation).
+- **Computer hardware and software at one year.** A BMF-Schreiben lets a
+  company apply a useful life of one year to computer hardware and to software
+  for data entry and processing. The BMF site did not answer an automated
+  request, so the text was not read and the computer category keeps the three
+  years of the table. No category is declared for software: the table has no
+  line for it.
+- **Machines and technical plant** and the other branch tables of the BMF:
+  the AV table has no generic line for them and the branch tables were not
+  read.
+- **Geringwertige Wirtschaftsgüter and the Sammelposten** (§ 6 Abs. 2 and
+  2a EStG): a threshold under which an asset is expensed, or pooled and
+  written off over five years, is not a notion of the module. The chart has
+  account `1234` and `8712`, and a company books them by hand.
+- **Buildings other than business ones** (dwellings, § 7 Abs. 4 Nr. 2), the
+  other building rates of § 7 Abs. 5 and the special depreciation of the Act (not read), the 75 % depreciation
+  of electric vehicles (§ 7 Abs. 2a, a fixed percentage table), and the
+  unscheduled depreciation of § 253 Abs. 3 Satz 5 HGB and § 7 Abs. 1 Satz 7
+  EStG: the module has no unscheduled, accelerated, special or percentage-table
+  depreciation.
+- **Components** of a building or a machine, depreciated over their own lives.
+- **Accumulated depreciation accounts.** The chart is net: it has no account
+  for accumulated depreciation, which `create_fixed_asset` asks for. A company
+  adds one to its own chart.
